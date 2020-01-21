@@ -15,24 +15,29 @@ limitations under the License.
 */
 
 import React from 'react';
-import { storiesOf } from '@storybook/react';
-import { withInfo } from '@storybook/addon-info';
 import Alert from './index';
 
-storiesOf('Design/Alert', module)
-  .addDecorator(withInfo)
-  .add('Alert Component', () => {
-    return <Alert>This is an error message</Alert>;
-  })
-  .add('Danger Alert', () => {
-    return <Alert kind="danger">This is an error message</Alert>;
-  })
-  .add('Warning Alert', () => {
-    return <Alert kind="warning">This is a warning message</Alert>;
-  })
-  .add('Info Alert', () => {
-    return <Alert kind="info">This is a informational message</Alert>;
-  })
-  .add('Success Alert', () => {
-    return <Alert kind="success">This is a success message</Alert>;
-  });
+export default {
+  title: 'Design/Alert',
+  component: Alert,
+}
+
+export const Default = () => (
+  <Alert>Default is danger</Alert>
+)
+
+export const Danger = () => (
+  <Alert kind="danger">Some error message</Alert>
+)
+
+export const Warning = () => (
+  <Alert kind="warning">Some warning message</Alert>
+)
+
+export const Informational = () => (
+  <Alert kind="info">Some informational message</Alert>
+)
+
+export const Success = () => (
+  <Alert kind="success">Some success message</Alert>
+)
