@@ -15,59 +15,38 @@ limitations under the License.
 */
 
 import React from 'react'
-import { storiesOf } from '@storybook/react'
-import { withInfo } from '@storybook/addon-info'
 import Button, { ButtonPrimary, ButtonSecondary, ButtonWarning } from './Button';
-import ButtonOutlinedDefault, * as ButtonOutlined from './../ButtonOutlined';
-import ButtonIcon from './../ButtonIcon';
-import ButtonLink from './../ButtonLink';
-import { AddUsers, Trash, Ellipsis } from './../Icon';
-import styled from 'styled-components';
 
-storiesOf('Design/Button', module)
-  .addDecorator(withInfo)
-  .add('kinds', () => (
-    <StyledBox>
-      <ButtonPrimary>Primary</ButtonPrimary>
-      <ButtonSecondary>Secondary</ButtonSecondary>
-      <ButtonWarning >Warning</ButtonWarning>
-      <ButtonLink href="" >Link Button</ButtonLink>
-      <ButtonIcon> <AddUsers/></ButtonIcon>
-      <ButtonIcon> <Ellipsis /></ButtonIcon>
-      <ButtonIcon> <Trash /></ButtonIcon>
-      <ButtonIcon> <Trash /></ButtonIcon>
-      <ButtonOutlinedDefault>Default</ButtonOutlinedDefault>
-      <ButtonOutlined.OutlinedPrimary>Primary</ButtonOutlined.OutlinedPrimary>
-    </StyledBox>
-  ))
-  .add('sizes', () => (
+export default {
+  title: 'Design/Button',
+}
+
+export const Basics = () => (
+  <div>
     <div>
-      <StyledBox>
-        <Button size="large" mr={3}>Large</Button>
-        <Button size="medium" mr={3}>Medium</Button>
-        <Button size="small" mr={3}>Small</Button>
-      </StyledBox>
-      <StyledBox>
-        <ButtonIcon size={2}> <AddUsers/></ButtonIcon>
-        <ButtonIcon size={1}> <Ellipsis /></ButtonIcon>
-        <ButtonIcon size={0}> <Trash /></ButtonIcon>
-      </StyledBox>
+      <ButtonPrimary mr={3}>Primary</ButtonPrimary>
+      <ButtonSecondary mr={3}>Secondary</ButtonSecondary>
+      <ButtonWarning>Warning</ButtonWarning>
+    </div>
+    <div>
+      <Button size="large" mr={3} mt={5}>Large</Button>
+      <Button size="medium" mr={3}>Medium</Button>
+      <Button size="small">Small</Button>
+    </div>
   </div>
-  ))
-  .add('block', () => <Button block>Block Button</Button>)
-  .add('states', () => (
-    <StyledBox>
-      <Button mr={3} disabled>Disabled</Button>
-      <Button autoFocus> Focused</Button>
-    </StyledBox>
-  ));
+)
 
-const StyledBox = styled.div`
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  > * {
-    margin-left: 20px;
-    margin-bottom: 20px;
-  }
-`
+export const Block = () => (
+  <div>
+    <Button block mb={3}>Primary Block Button</Button>
+    <ButtonSecondary block mb={3}>Secondary Block Button</ButtonSecondary>
+    <ButtonWarning block>Warning Block Button</ButtonWarning>
+  </div>
+)
+
+export const States = () => (
+  <div>
+    <Button mr={3} disabled>Disabled</Button>
+    <Button autoFocus>Focused</Button>
+  </div>
+)
