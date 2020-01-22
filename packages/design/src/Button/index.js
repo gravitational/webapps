@@ -14,6 +14,10 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import Button, {  ButtonPrimary, ButtonWarning, ButtonSecondary } from './Button';
+import Button, {
+  ButtonPrimary,
+  ButtonWarning,
+  ButtonSecondary,
+} from './Button';
 export default Button;
-export {  ButtonPrimary, ButtonWarning, ButtonSecondary }
+export { ButtonPrimary, ButtonWarning, ButtonSecondary };

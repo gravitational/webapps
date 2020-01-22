@@ -14,39 +14,53 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React from 'react'
-import Button, { ButtonPrimary, ButtonSecondary, ButtonWarning } from './Button';
+import React from 'react';
+import Button, {
+  ButtonPrimary,
+  ButtonSecondary,
+  ButtonWarning,
+} from './Button';
 
 export default {
   title: 'Design/Button',
-}
+};
 
 export const Basics = () => (
-  <div>
+  <>
     <div>
       <ButtonPrimary mr={3}>Primary</ButtonPrimary>
       <ButtonSecondary mr={3}>Secondary</ButtonSecondary>
       <ButtonWarning>Warning</ButtonWarning>
     </div>
     <div>
-      <Button size="large" mr={3} mt={5}>Large</Button>
-      <Button size="medium" mr={3}>Medium</Button>
+      <Button size="large" mr={3} mt={5}>
+        Large
+      </Button>
+      <Button size="medium" mr={3}>
+        Medium
+      </Button>
       <Button size="small">Small</Button>
     </div>
-  </div>
-)
+  </>
+);
 
 export const Block = () => (
-  <div>
-    <Button block mb={3}>Primary Block Button</Button>
-    <ButtonSecondary block mb={3}>Secondary Block Button</ButtonSecondary>
+  <>
+    <Button block mb={3}>
+      Primary Block Button
+    </Button>
+    <ButtonSecondary block mb={3}>
+      Secondary Block Button
+    </ButtonSecondary>
     <ButtonWarning block>Warning Block Button</ButtonWarning>
-  </div>
-)
+  </>
+);
 
 export const States = () => (
-  <div>
-    <Button mr={3} disabled>Disabled</Button>
+  <>
+    <Button mr={3} disabled>
+      Disabled
+    </Button>
     <Button autoFocus>Focused</Button>
-  </div>
-)
+  </>
+);

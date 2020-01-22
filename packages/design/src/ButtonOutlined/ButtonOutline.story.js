@@ -14,17 +14,16 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React from 'react'
-import ButtonOutlinedDefault, {OutlinedPrimary} from './ButtonOutlined';
-
+import React from 'react';
+import ButtonOutlinedDefault, { OutlinedPrimary } from './ButtonOutlined';
 
 export default {
   title: 'Design/Button',
-}
+};
 
 export const Outlines = () => (
-  <div>
+  <>
     <ButtonOutlinedDefault mr={3}>Default</ButtonOutlinedDefault>
     <OutlinedPrimary>Primary</OutlinedPrimary>
-  </div>
-)
+  </>
+);

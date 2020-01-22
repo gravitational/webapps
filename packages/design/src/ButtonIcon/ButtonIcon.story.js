@@ -14,36 +14,49 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React from 'react'
+import React from 'react';
 import ButtonIcon from './ButtonIcon';
 import { AddUsers, Trash, Ellipsis } from './../Icon';
-import Box from './../Box';
-import styled from 'styled-components';
+import Flex from './../Flex';
 
 export default {
   title: 'Design/Button',
-}
+};
 
 export const Icons = () => (
-  <Box>
-    <FlexBox mb={3}>
-        <ButtonIcon size={2}> <AddUsers/></ButtonIcon>
-        <ButtonIcon size={2}> <Ellipsis /></ButtonIcon>
-        <ButtonIcon size={2}> <Trash /></ButtonIcon>
-    </FlexBox>
-    <FlexBox mb={4}>
-        <ButtonIcon size={1}> <AddUsers/></ButtonIcon>
-        <ButtonIcon size={1}> <Ellipsis /></ButtonIcon>
-        <ButtonIcon size={1}> <Trash /></ButtonIcon>
-    </FlexBox>
-    <FlexBox>
-        <ButtonIcon size={0}> <AddUsers/></ButtonIcon>
-        <ButtonIcon size={0}> <Ellipsis /></ButtonIcon>
-        <ButtonIcon size={0}> <Trash /></ButtonIcon>
-    </FlexBox>
-  </Box>
-)
-
-const FlexBox = styled(Box)`
-    display:flex;
-`
+  <>
+    <Flex mb={3}>
+      <ButtonIcon size={2}>
+        <AddUsers />
+      </ButtonIcon>
+      <ButtonIcon size={2}>
+        <Ellipsis />
+      </ButtonIcon>
+      <ButtonIcon size={2}>
+        <Trash />
+      </ButtonIcon>
+    </Flex>
+    <Flex mb={4}>
+      <ButtonIcon size={1}>
+        <AddUsers />
+      </ButtonIcon>
+      <ButtonIcon size={1}>
+        <Ellipsis />
+      </ButtonIcon>
+      <ButtonIcon size={1}>
+        <Trash />
+      </ButtonIcon>
+    </Flex>
+    <Flex>
+      <ButtonIcon size={0}>
+        <AddUsers />
+      </ButtonIcon>
+      <ButtonIcon size={0}>
+        <Ellipsis />
+      </ButtonIcon>
+      <ButtonIcon size={0}>
+        <Trash />
+      </ButtonIcon>
+    </Flex>
+  </>
+);
