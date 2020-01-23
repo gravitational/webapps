@@ -24,7 +24,7 @@ export default {
   title: 'Design/Flex',
 };
 
-export const basic = () => (
+export const Basic = () => (
   <Flex>
     <Box width={1 / 2} bg="pink" p={5} mr={5}>
       Box one
@@ -35,7 +35,7 @@ export const basic = () => (
   </Flex>
 );
 
-export const wrap = () => (
+export const Wrapped = () => (
   <Flex flexWrap="wrap">
     <Box width={[1, 1 / 2]} bg="pink" p={5} mb={2}>
       Box one
@@ -46,7 +46,7 @@ export const wrap = () => (
   </Flex>
 );
 
-export const justify = () => (
+export const Justified = () => (
   <Flex justifyContent="space-around">
     <Box width={1 / 3} bg="pink" p={5}>
       Box one

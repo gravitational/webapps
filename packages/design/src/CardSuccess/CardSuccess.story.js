@@ -21,4 +21,4 @@ export default {
   title: 'Design/Card',
 };
 
-export const success = () => <CardSuccess />;
+export const Success = () => <CardSuccess />;

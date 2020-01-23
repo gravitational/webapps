@@ -27,7 +27,7 @@ export default {
   title: 'Design/Dialog',
 };
 
-export const basic = () => (
+export const Basic = () => (
   <Dialog open={true}>
     <DialogHeader>
       <DialogTitle>Header title</DialogTitle>

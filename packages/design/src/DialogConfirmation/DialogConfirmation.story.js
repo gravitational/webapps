@@ -27,7 +27,7 @@ export default {
   title: 'Design/Dialog',
 };
 
-export const confirmation = () => (
+export const Confirmation = () => (
   <DialogConfirmation open={true}>
     <DialogHeader>
       <DialogTitle>Confirmation Dialog Header</DialogTitle>

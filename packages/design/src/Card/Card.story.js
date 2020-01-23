@@ -21,4 +21,4 @@ export default {
   title: 'Design/Card',
 };
 
-export const basic = () => <Card width="500px" height="200px" m="0 auto" />;
+export const Basic = () => <Card width="500px" height="200px" m="0 auto" />;

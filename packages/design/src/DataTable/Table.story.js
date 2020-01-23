@@ -31,17 +31,17 @@ export default {
   title: 'Design/DataTable',
 };
 
-export const dataTable = () => (
+export const DataTable = () => (
   <TableSample TableComponent={Table} data={data} />
 );
 
-export const empty = () => <TableSample TableComponent={Table} data={[]} />;
+export const Empty = () => <TableSample TableComponent={Table} data={[]} />;
 
-export const nothingFound = () => (
+export const NothingFound = () => (
   <TableSample TableComponent={Table} data={data} filter="no_results" />
 );
 
-export const pagedTable = () => (
+export const PagedTable = () => (
   <TableSample
     TableComponent={TablePaged}
     tableProps={{ pageSize: 3 }}

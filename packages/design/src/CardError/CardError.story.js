@@ -15,13 +15,7 @@ limitations under the License.
 */
 
 import React from 'react';
-import {
-  Offline,
-  NotFound,
-  AccessDenied,
-  Failed,
-  LoginFailed,
-} from './CardError';
+import * as CardError from './CardError';
 
 const message = 'some error message';
 
@@ -29,18 +23,18 @@ export default {
   title: 'Design/CardError',
 };
 
-export const notFound = () => <NotFound message={message} />;
+export const NotFound = () => <CardError.NotFound message={message} />;
 
-export const accessDenied = () => <AccessDenied message={message} />;
+export const AccessDenied = () => <CardError.AccessDenied message={message} />;
 
-export const failed = () => <Failed message={message} />;
+export const Failed = () => <CardError.Failed message={message} />;
 
-export const loginFailed = () => (
-  <LoginFailed message={message} loginUrl="https://localhost" />
+export const LoginFailed = () => (
+  <CardError.LoginFailed message={message} loginUrl="https://localhost" />
 );
 
-export const offline = () => (
-  <Offline
+export const Offline = () => (
+  <CardError.Offline
     title={'This cluster is not available from Gravity.'}
     message={'To access this cluster, please use its local endpoint'}
   />
