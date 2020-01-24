@@ -1,5 +1,5 @@
 /*
-Copyright 2019 Gravitational, Inc.
+Copyright 2020 Gravitational, Inc.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -15,29 +15,16 @@ limitations under the License.
 */
 
 import React from 'react';
-import Label from './Label';
-import Flex from './../Flex';
+import LabelInput from './LabelInput';
+import InputComp from './../Input';
 
 export default {
   title: 'Design/Label',
 };
 
-export const Tags = () => (
-  <Flex
-    height="100px"
-    bg="primary.main"
-    justifyContent="center"
-    alignItems="center"
-  >
-    <Label mr={4} kind="primary">
-      Primary
-    </Label>
-    <Label mr={4} kind="secondary">
-      Secondary
-    </Label>
-    <Label mr={4} kind="warning">
-      Warning
-    </Label>
-    <Label kind="danger">Danger</Label>
-  </Flex>
+export const Input = () => (
+  <>
+    <LabelInput>Label for Input</LabelInput>
+    <InputComp />
+  </>
 );
