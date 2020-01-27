@@ -15,49 +15,70 @@ limitations under the License.
 */
 
 import React from 'react';
-import { Flex, Box } from '..';
+import { Flex, Box, Text } from '..';
 import theme from './theme';
 
 export default {
   title: 'Design/Theme',
 };
 
-export const PrimaryColors = () =>
-  colorBoxGenerator(theme.colors.primary, 'primary');
+export const Colors = () => {
+  return (
+    <Flex flexDirection="column" bg="gray" p="4">
+      <Text mb="2" typography="h3" bold>
+        Brand colors
+      </Text>
+      <Flex flexDirection="column">
+        <Text mb="2" typography="h4">
+          1. Primary
+        </Text>
+        <ColorBox mb="4" colors={theme.colors.primary} themeType="primary" />
+        <Text mb="2" typography="h4">
+          2. Secondary
+        </Text>
+        <ColorBox
+          mb="4"
+          colors={theme.colors.secondary}
+          themeType="secondary"
+        />
+        <Text mb="2" typography="h4">
+          3. Text
+        </Text>
+        <ColorBox mb="4" colors={theme.colors.text} themeType="text" />
+        <Text mb="2" typography="h4">
+          4. Error
+        </Text>
+        <ColorBox mb="4" colors={theme.colors.error} themeType="error" />
+        <Text mb="2" typography="h4">
+          5. Action
+        </Text>
+        <ColorBox mb="4" colors={theme.colors.action} themeType="action" />
+      </Flex>
+      <Text mb="2" typography="h3" bold>
+        Other colors
+      </Text>
+      <ColorBox colors={theme.colors} />
+    </Flex>
+  );
+};
 
-export const SecondaryColors = () =>
-  colorBoxGenerator(theme.colors.secondary, 'secondary');
-
-export const TextColors = () => colorBoxGenerator(theme.colors.text, 'text');
-
-export const ErrorColors = () => colorBoxGenerator(theme.colors.error, 'error');
-
-export const ActionColors = () =>
-  colorBoxGenerator(theme.colors.action, 'action');
-
-export const GeneralColors = () => colorBoxGenerator(theme.colors);
-
-const keysToSkip = ['primary', 'secondary', 'text', 'grey', 'error', 'action'];
-
-const colorBoxGenerator = (colors, themeType = null) => {
+function ColorBox({ colors, themeType = null, ...styles }) {
   const list = Object.keys(colors).map(key => {
-    if (!themeType && keysToSkip.includes(key)) {
-      return false;
-    }
-
-    const commonPath = `theme.colors`;
-
     const fullPath = themeType
-      ? `${commonPath}.${themeType}.${key}`
-      : `${commonPath}.${key}`;
+      ? `theme.colors.${themeType}.${key}`
+      : `theme.colors.${key}`;
 
     return (
-      <Flex flexWrap="wrap" mb={4} key={`${key}${colors[key]}`}>
+      <Flex flexWrap="wrap" key={key} width="260px" mb={3}>
         <Box>{fullPath}</Box>
         <Box width="100%" height="50px" bg={colors[key]} p={3} mr={3} />
       </Flex>
     );
   });
 
-  return <>{list}</>;
-};
+  return (
+    <Flex flexWrap="wrap" {...styles}>
+      {list}
+    </Flex>
+  );
+}
