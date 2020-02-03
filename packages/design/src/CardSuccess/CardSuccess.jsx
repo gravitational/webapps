@@ -22,8 +22,8 @@ export default function CardSuccess({ title, children }) {
   return (
     <Card width="540px" p={7} my={4} mx="auto" textAlign="center">
       <CircleCheck mb={3} fontSize={64} color="success"/>
-      {title ? <Text typography="h1" mb="3">{title}</Text> : null}
-      {children ? <Text typography="paragraph">{children}</Text> : null}
+      {title && <Text typography="h1" mb="3">{title}</Text> }
+      {children && <Text typography="paragraph">{children}</Text> }
     </Card>
   )
 }
