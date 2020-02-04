@@ -21,7 +21,7 @@ import { Table } from './../Table';
 import Pager from './Pager';
 import usePages from './usePages';
 
-export default function PagedTable(props) {
+export default function TablePaged(props) {
   const { pageSize, data, pagerPosition, ...rest } = props;
   const pagedState = usePages({ pageSize, data });
   const tableProps = {
