@@ -20,6 +20,7 @@ import { borderRadius } from 'design/system';
 import { Table } from './../Table';
 import Pager from './Pager';
 import usePages from './usePages';
+import PropTypes from 'prop-types';
 
 export default function TablePaged(props) {
   const { pageSize, data, pagerPosition, ...rest } = props;
@@ -54,6 +55,10 @@ export default function TablePaged(props) {
       )}
     </div>
   );
+}
+
+TablePaged.propTypes = {
+  pagerPosition: PropTypes.oneOf(['top', 'bottom'])
 }
 
 export const StyledPanel = styled.nav`
