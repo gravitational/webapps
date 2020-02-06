@@ -21,18 +21,17 @@ import Icon, {
   CircleArrowRight,
 } from 'design/Icon';
 import { Text } from 'design';
+import PropTypes from 'prop-types';
 
 export default function Pager(props) {
   const { startFrom = 0, endAt = 0, totalRows = 0, onPrev, onNext } = props;
   const isPrevDisabled = totalRows === 0 || startFrom === 0;
   const isNextDisabled = totalRows === 0 || endAt === totalRows;
 
-  const start = endAt && totalRows ? startFrom + 1 : startFrom;
-
   return (
     <>
       <Text typography="body2" color="primary.contrastText">
-        SHOWING <strong>{start}</strong> to <strong>{endAt}</strong> of{' '}
+        SHOWING <strong>{startFrom + 1}</strong> to <strong>{endAt}</strong> of{' '}
         <strong>{totalRows}</strong>
       </Text>
       <StyledButtons>
@@ -49,6 +48,14 @@ export default function Pager(props) {
       </StyledButtons>
     </>
   );
+}
+
+Pager.propTypes = {
+  startFrom: PropTypes.number.isRequired,
+  endAt: PropTypes.number.isRequired,
+  totalRows: PropTypes.number.isRequired,
+  onPrev: PropTypes.func.isRequired,
+  onNext: PropTypes.func.isRequired
 }
 
 export const StyledButtons = styled.div`

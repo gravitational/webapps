@@ -20,26 +20,32 @@ import { render } from 'design/utils/testing';
 
 describe('design/DataTable Pager', () => {
   test.each`
-    startFrom    | endAt        | totalRows    | noPrevBtn | noNextBtn | expVals
-    ${undefined} | ${undefined} | ${undefined} | ${true}   | ${true}   | ${[0, 0, 0]}
-    ${2}         | ${5}         | ${10}        | ${false}  | ${false}  | ${[3, 5, 10]}
-    ${0}         | ${5}         | ${10}        | ${true}   | ${false}  | ${[1, 5, 10]}
-    ${1}         | ${5}         | ${5}         | ${false}  | ${true}   | ${[2, 5, 5]}
-    ${1}         | ${2}         | ${0}         | ${true}   | ${true}   | ${[1, 2, 0]}
+    startFrom | endAt | totalRows | expPrevNextBtns   | expNumRanges
+    ${2}      | ${5}  | ${10}     | ${[false, false]} | ${[3, 5, 10]}
+    ${0}      | ${5}  | ${10}     | ${[true, false]}  | ${[1, 5, 10]}
+    ${1}      | ${5}  | ${5}      | ${[false, true]}  | ${[2, 5, 5]}
+    ${1}      | ${2}  | ${0}      | ${[true, true]}   | ${[2, 2, 0]}
   `(
-    'respects props: startFrom=$startFrom, endAt=$endAt, totalRows=$totalRows, noPrevBtn=$noPrevBtn, noNextBtn=$noNextBtn',
-    ({ startFrom, endAt, totalRows, noPrevBtn, noNextBtn, expVals }) => {
+    'respects props: startFrom=$startFrom, endAt=$endAt, totalRows=$totalRows, disablePrevNext=$expPrevNextBtns',
+    ({ startFrom, endAt, totalRows, expPrevNextBtns, expNumRanges }) => {
+      const mockFn = jest.fn();
       const { container } = render(
-        <Pager startFrom={startFrom} endAt={endAt} totalRows={totalRows} />
+        <Pager
+          startFrom={startFrom}
+          endAt={endAt}
+          totalRows={totalRows}
+          onPrev={mockFn}
+          onNext={mockFn}
+        />
       );
 
       expect(container.firstChild.textContent).toEqual(
-        `SHOWING ${expVals[0]} to ${expVals[1]} of ${expVals[2]}`
+        `SHOWING ${expNumRanges[0]} to ${expNumRanges[1]} of ${expNumRanges[2]}`
       );
 
       const buttons = container.querySelectorAll('button');
-      expect(buttons[0].disabled).toBe(noPrevBtn);
-      expect(buttons[1].disabled).toBe(noNextBtn);
+      expect(buttons[0].disabled).toBe(expPrevNextBtns[0]);
+      expect(buttons[1].disabled).toBe(expPrevNextBtns[1]);
     }
   );
 });
