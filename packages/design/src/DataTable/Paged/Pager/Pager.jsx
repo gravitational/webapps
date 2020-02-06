@@ -24,13 +24,18 @@ import { Text } from 'design';
 
 export default function Pager(props) {
   const { startFrom, endAt, totalRows, onPrev, onNext } = props;
-  const isPrevDisabled = startFrom === 0;
-  const isNextDisabled = endAt === totalRows;
+  const isPrevDisabled = !startFrom || !totalRows || startFrom === 0;
+  const isNextDisabled = !endAt || !totalRows || endAt === totalRows;
+
+  const start = startFrom || startFrom == 0 ? startFrom + 1 : 0;
+  const end = endAt ? endAt : 0;
+  const total = totalRows ? totalRows : 0;
+
   return (
     <>
       <Text typography="body2" color="primary.contrastText">
-        SHOWING <strong>{startFrom + 1}</strong> to <strong>{endAt}</strong> of{' '}
-        <strong>{totalRows}</strong>
+        SHOWING <strong>{start}</strong> to <strong>{end}</strong> of{' '}
+        <strong>{total}</strong>
       </Text>
       <StyledButtons>
         <button
