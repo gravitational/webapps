@@ -26,25 +26,6 @@ describe('design/DataTable usePages hook', () => {
     pager = renderHook(() => usePages({ pageSize, data }));
   });
 
-  // initial values
-  it('matches inline snapshot', () => {
-    expect(pager.current).toMatchInlineSnapshot(`
-      Object {
-        "data": Array [
-          1,
-          2,
-        ],
-        "endAt": 2,
-        "hasPages": true,
-        "onNext": [Function],
-        "onPrev": [Function],
-        "pageSize": 2,
-        "startFrom": 0,
-        "totalRows": 9,
-      }
-    `);
-  });
-
   // test out of bounds on both onPrev() and onNext()
   // test correct incrementing onNext()
   // test correct decrementing onPrev()

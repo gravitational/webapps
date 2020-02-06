@@ -23,19 +23,17 @@ import Icon, {
 import { Text } from 'design';
 
 export default function Pager(props) {
-  const { startFrom, endAt, totalRows, onPrev, onNext } = props;
-  const isPrevDisabled = !startFrom || !totalRows || startFrom === 0;
-  const isNextDisabled = !endAt || !totalRows || endAt === totalRows;
+  const { startFrom = 0, endAt = 0, totalRows = 0, onPrev, onNext } = props;
+  const isPrevDisabled = totalRows === 0 || startFrom === 0;
+  const isNextDisabled = totalRows === 0 || endAt === totalRows;
 
-  const start = startFrom || startFrom == 0 ? startFrom + 1 : 0;
-  const end = endAt ? endAt : 0;
-  const total = totalRows ? totalRows : 0;
+  const start = endAt && totalRows ? startFrom + 1 : startFrom;
 
   return (
     <>
       <Text typography="body2" color="primary.contrastText">
-        SHOWING <strong>{start}</strong> to <strong>{end}</strong> of{' '}
-        <strong>{total}</strong>
+        SHOWING <strong>{start}</strong> to <strong>{endAt}</strong> of{' '}
+        <strong>{totalRows}</strong>
       </Text>
       <StyledButtons>
         <button

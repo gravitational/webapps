@@ -27,25 +27,12 @@ describe('design/Label', () => {
   ];
 
   test.each`
-    kind           | expected
-    ${undefined}   | ${colors[0]}
-    ${'primary'}   | ${colors[0]}
-    ${'secondary'} | ${colors[1]}
-    ${'warning'}   | ${colors[2]}
-    ${'danger'}    | ${colors[3]}
-  `('respect prop kind = $kind', ({ kind, expected }) => {
-    const { container } = render(<Label kind={kind} />);
-    expect(container.firstChild).toHaveStyle({
-      'background-color': expected,
-    });
-  });
-
-  test.each`
-    kind           | Component    | expected
-    ${'primary'}   | ${Primary}   | ${colors[0]}
-    ${'secondary'} | ${Secondary} | ${colors[1]}
-    ${'warning'}   | ${Warning}   | ${colors[2]}
-    ${'danger'}    | ${Danger}    | ${colors[3]}
+    kind                  | Component    | expected
+    ${'default: primary'} | ${Label}     | ${colors[0]}
+    ${'primary'}          | ${Primary}   | ${colors[0]}
+    ${'secondary'}        | ${Secondary} | ${colors[1]}
+    ${'warning'}          | ${Warning}   | ${colors[2]}
+    ${'danger'}           | ${Danger}    | ${colors[3]}
   `('component renders $kind label', ({ Component, expected }) => {
     const { container } = render(<Component />);
     expect(container.firstChild).toHaveStyle({

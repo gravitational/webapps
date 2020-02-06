@@ -20,25 +20,21 @@ import { render } from 'design/utils/testing';
 
 describe('design/DataTable Pager', () => {
   test.each`
-    startFrom    | endAt        | totalRows    | noPrevBtn | noNextBtn
-    ${undefined} | ${undefined} | ${undefined} | ${true}   | ${true}
-    ${2}         | ${5}         | ${10}        | ${false}  | ${false}
-    ${0}         | ${5}         | ${10}        | ${true}   | ${false}
-    ${1}         | ${5}         | ${5}         | ${false}  | ${true}
-    ${1}         | ${2}         | ${0}         | ${true}   | ${true}
+    startFrom    | endAt        | totalRows    | noPrevBtn | noNextBtn | expVals
+    ${undefined} | ${undefined} | ${undefined} | ${true}   | ${true}   | ${[0, 0, 0]}
+    ${2}         | ${5}         | ${10}        | ${false}  | ${false}  | ${[3, 5, 10]}
+    ${0}         | ${5}         | ${10}        | ${true}   | ${false}  | ${[1, 5, 10]}
+    ${1}         | ${5}         | ${5}         | ${false}  | ${true}   | ${[2, 5, 5]}
+    ${1}         | ${2}         | ${0}         | ${true}   | ${true}   | ${[1, 2, 0]}
   `(
     'respects props: startFrom=$startFrom, endAt=$endAt, totalRows=$totalRows, noPrevBtn=$noPrevBtn, noNextBtn=$noNextBtn',
-    ({ startFrom, endAt, totalRows, noPrevBtn, noNextBtn }) => {
+    ({ startFrom, endAt, totalRows, noPrevBtn, noNextBtn, expVals }) => {
       const { container } = render(
         <Pager startFrom={startFrom} endAt={endAt} totalRows={totalRows} />
       );
 
-      const start = startFrom == null ? 0 : startFrom + 1;
-      const end = endAt == null ? 0 : endAt;
-      const total = totalRows == null ? 0 : totalRows;
-
       expect(container.firstChild.textContent).toEqual(
-        `SHOWING ${start} to ${end} of ${total}`
+        `SHOWING ${expVals[0]} to ${expVals[1]} of ${expVals[2]}`
       );
 
       const buttons = container.querySelectorAll('button');
