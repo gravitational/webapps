@@ -33,14 +33,15 @@ export default class Dialog extends React.Component {
 }
 
 Dialog.defaultProps = {
-  disableBackdropClick: false,
-  disableEscapeKeyDown: false,
+  disableBackdropClick: true,
+  disableEscapeKeyDown: true,
 };
 
 Dialog.propTypes = {
   ...Modal.propTypes,
   disableBackdropClick: PropTypes.bool,
   disableEscapeKeyDown: PropTypes.bool,
+  open: PropTypes.bool.isRequired
 };
 
 const ModalBox = styled.div`
