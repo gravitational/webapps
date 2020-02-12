@@ -20,7 +20,9 @@ import { render, waitForElement, getByTestId } from 'design/utils/testing';
 
 describe('design/Indicator', () => {
   it('renders after timeout', async () => {
-    const { container } = render(<Indicator data-testid="spinner" />);
+    const { container } = render(
+      <Indicator data-testid="spinner" delay={'none'} />
+    );
     expect(container.firstChild).toBeNull();
 
     await waitForElement(() => getByTestId(container, 'spinner'), {
