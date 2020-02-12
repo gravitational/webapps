@@ -17,25 +17,22 @@
 import React from 'react';
 import Dialog from './Dialog';
 import DialogContent from './DialogContent';
-import { render, screen } from 'design/utils/testing';
+import { render } from 'design/utils/testing';
 
-const testPropDialogCss = () => `
-  background-color: #fff;
-  color: #000;
-`;
+const testCss = {
+  'background-color': '#fff',
+  color: '#000',
+};
 
 describe('design/Dialog', () => {
   it('respects dialogCss prop', () => {
     const { getByTestId } = render(
-      <Dialog open={true} dialogCss={testPropDialogCss}>
+      <Dialog open={true} dialogCss={() => testCss}>
         <div>hello</div>
       </Dialog>
     );
 
-    expect(getByTestId('dialogbox')).toHaveStyle({
-      'background-color': '#fff',
-      color: '#000',
-    });
+    expect(getByTestId('dialogbox')).toHaveStyle({ ...testCss });
   });
 
   it('renders content', () => {
