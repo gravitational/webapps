@@ -26,7 +26,7 @@ const renderModal = props => {
   );
 };
 
-const keyDown = {
+const excapeKey = {
   key: 'Escape',
   code: 27,
 };
@@ -42,20 +42,27 @@ describe('design/Modal', () => {
     expect(queryByTestId('Modal')).toBeNull();
   });
 
-  it('respects onBackdropClick and onEscapeKeyDown props', () => {
+  it('respects onBackdropClick prop', () => {
     const mockFn = jest.fn();
 
-    const { container, getByTestId } = renderModal({
+    const { getByTestId } = renderModal({
       onBackdropClick: mockFn,
-      onEscapeKeyDown: mockFn,
     });
 
     // handlebackdropClick
     fireEvent.click(getByTestId('backdrop'));
     expect(mockFn).toHaveBeenCalled();
+  });
+
+  it('respects onEscapeKeyDown props', () => {
+    const mockFn = jest.fn();
+
+    const { container } = renderModal({
+      onEscapeKeyDown: mockFn,
+    });
 
     // handleDocumentKeyDown
-    fireEvent.keyDown(container, keyDown);
+    fireEvent.keyDown(container, excapeKey);
     expect(mockFn).toHaveBeenCalled();
   });
 
@@ -71,7 +78,7 @@ describe('design/Modal', () => {
     expect(mockFn).toHaveBeenCalled();
 
     // handleDocumentKeyDown
-    fireEvent.keyDown(container, keyDown);
+    fireEvent.keyDown(container, excapeKey);
     expect(mockFn).toHaveBeenCalled();
   });
 
@@ -83,20 +90,27 @@ describe('design/Modal', () => {
     expect(queryByTestId('backdrop')).toBeNull();
   });
 
-  it('respects disableBackdropClick and disableEscapeKeyDown prop', () => {
+  it('respects disableBackdropClick prop', () => {
     const mockFn = jest.fn();
-    const { container, getByTestId } = renderModal({
+    const { getByTestId } = renderModal({
       disableBackdropClick: true,
-      disableEscapeKeyDown: true,
       onClose: mockFn,
     });
 
     // handleBackdropClick
     fireEvent.click(getByTestId('backdrop'));
     expect(mockFn).not.toHaveBeenCalled();
+  });
+
+  it('respects disableEscapeKeyDown prop', () => {
+    const mockFn = jest.fn();
+    const { container } = renderModal({
+      disableEscapeKeyDown: true,
+      onClose: mockFn,
+    });
 
     // handleDocumentKeyDown
-    fireEvent.keyDown(container, keyDown);
+    fireEvent.keyDown(container, excapeKey);
     expect(mockFn).not.toHaveBeenCalled();
   });
 
@@ -110,8 +124,7 @@ describe('design/Modal', () => {
 
     expect(queryByTestId('Modal')).toBeNull();
 
-    // TODO remove keydown event
-    fireEvent.keyDown(container, keyDown);
+    fireEvent.keyDown(container, excapeKey);
     expect(mockFn).not.toHaveBeenCalled();
   });
 });

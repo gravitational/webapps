@@ -196,7 +196,7 @@ export default class Modal extends React.Component {
           ref={this.handleModalRef}
         >
           {!hideBackdrop && (
-            <Backdrop data-testid="backdrop" onClick={this.handleBackdropClick} {...BackdropProps} />
+            <Backdrop onClick={this.handleBackdropClick} {...BackdropProps} />
           )}
           <RootRef rootRef={this.onRootRef}>
             {React.cloneElement(children, childProps)}
@@ -299,7 +299,7 @@ Modal.defaultProps = {
 
 function Backdrop(props) {
   const { invisible, ...rest } = props;
-  return <StyledBackdrop aria-hidden="true" invisible={invisible} {...rest} />;
+  return <StyledBackdrop data-testid="backdrop" aria-hidden="true" invisible={invisible} {...rest} />;
 }
 
 const StyledBackdrop = styled.div`
