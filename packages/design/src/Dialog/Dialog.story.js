@@ -29,18 +29,16 @@ export default {
 
 export const Basic = () => (
   <Dialog open={true}>
-    <>
-      <DialogHeader data-testid="header">
-        <DialogTitle data-testid="title">Header title</DialogTitle>
-      </DialogHeader>
-      <DialogContent width="400px" data-testid="content">
-        <p>Some text and other elements inside content</p>
-        <LabelInput>Input</LabelInput>
-        <Input />
-      </DialogContent>
-      <DialogFooter data-testid="footer">
-        <ButtonPrimary onClick={() => null}>Save And Close</ButtonPrimary>
-      </DialogFooter>
-    </>
+    <DialogHeader data-testid="header">
+      <DialogTitle data-testid="title">Header title</DialogTitle>
+    </DialogHeader>
+    <DialogContent width="400px" data-testid="content">
+      <p>Some text and other elements inside content</p>
+      <LabelInput>Input</LabelInput>
+      <Input />
+    </DialogContent>
+    <DialogFooter data-testid="footer">
+      <ButtonPrimary onClick={() => null}>Save And Close</ButtonPrimary>
+    </DialogFooter>
   </Dialog>
 );

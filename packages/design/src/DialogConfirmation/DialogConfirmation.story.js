@@ -29,16 +29,12 @@ export default {
 
 export const Confirmation = () => (
   <DialogConfirmation open={true}>
-    <>
-      <DialogHeader>
-        <DialogTitle>Confirmation Dialog Header</DialogTitle>
-      </DialogHeader>
-      <DialogContent>
-        Simplified dialog for use with confirmations
-      </DialogContent>
-      <DialogFooter>
-        <ButtonPrimary>Save and Close</ButtonPrimary>
-      </DialogFooter>
-    </>
+    <DialogHeader>
+      <DialogTitle>Confirmation Dialog Header</DialogTitle>
+    </DialogHeader>
+    <DialogContent>Simplified dialog for use with confirmations</DialogContent>
+    <DialogFooter>
+      <ButtonPrimary>Save and Close</ButtonPrimary>
+    </DialogFooter>
   </DialogConfirmation>
 );

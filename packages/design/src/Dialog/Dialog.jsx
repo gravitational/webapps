@@ -39,6 +39,7 @@ Dialog.defaultProps = {
 
 Dialog.propTypes = {
   ...Modal.propTypes,
+  children: PropTypes.node,
   disableBackdropClick: PropTypes.bool,
   disableEscapeKeyDown: PropTypes.bool,
   open: PropTypes.bool.isRequired
