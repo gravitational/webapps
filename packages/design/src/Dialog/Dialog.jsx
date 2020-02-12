@@ -25,7 +25,7 @@ export default class Dialog extends React.Component {
     return (
       <Modal role="dialog" {...modalProps}>
         <ModalBox>
-          <DialogBox dialogCss={dialogCss}>{children}</DialogBox>
+          <DialogBox data-testid="dialogbox" dialogCss={dialogCss}>{children}</DialogBox>
         </ModalBox>
       </Modal>
     );
@@ -40,9 +40,7 @@ Dialog.defaultProps = {
 Dialog.propTypes = {
   ...Modal.propTypes,
   children: PropTypes.node,
-  disableBackdropClick: PropTypes.bool,
-  disableEscapeKeyDown: PropTypes.bool,
-  open: PropTypes.bool.isRequired
+  dialogCss: PropTypes.func,
 };
 
 const ModalBox = styled.div`
