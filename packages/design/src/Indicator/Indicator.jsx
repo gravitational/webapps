@@ -61,7 +61,7 @@ class Indicator extends React.Component {
 }
 
 Indicator.propTypes = {
-  delay: PropTypes.string
+  delay: PropTypes.oneOf(['none', 'short', 'long'])
 }
 
 Indicator.defaultProps = {

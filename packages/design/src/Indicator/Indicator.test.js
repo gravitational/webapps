@@ -19,7 +19,7 @@ import Indicator from './Indicator';
 import { render, waitForElement, getByTestId } from 'design/utils/testing';
 
 describe('design/Indicator', () => {
-  it('renders after timeout', async () => {
+  it('renders', async () => {
     const { container } = render(
       <Indicator data-testid="spinner" delay={'none'} />
     );
