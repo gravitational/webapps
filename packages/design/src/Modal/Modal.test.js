@@ -16,7 +16,7 @@
 
 import React from 'react';
 import Modal from './Modal';
-import { render, fireEvent, screen } from 'design/utils/testing';
+import { render, fireEvent } from 'design/utils/testing';
 
 const renderModal = props => {
   return render(
@@ -26,7 +26,7 @@ const renderModal = props => {
   );
 };
 
-const excapeKey = {
+const escapeKey = {
   key: 'Escape',
 };
 
@@ -61,7 +61,7 @@ describe('design/Modal', () => {
     });
 
     // handleDocumentKeyDown
-    fireEvent.keyDown(container, excapeKey);
+    fireEvent.keyDown(container, escapeKey);
     expect(mockFn).toHaveBeenCalled();
   });
 
@@ -77,7 +77,7 @@ describe('design/Modal', () => {
     expect(mockFn).toHaveBeenCalled();
 
     // handleDocumentKeyDown
-    fireEvent.keyDown(container, excapeKey);
+    fireEvent.keyDown(container, escapeKey);
     expect(mockFn).toHaveBeenCalled();
   });
 
@@ -109,7 +109,7 @@ describe('design/Modal', () => {
     });
 
     // handleDocumentKeyDown
-    fireEvent.keyDown(container, excapeKey);
+    fireEvent.keyDown(container, escapeKey);
     expect(mockFn).not.toHaveBeenCalled();
   });
 
@@ -123,21 +123,17 @@ describe('design/Modal', () => {
 
     expect(queryByTestId('Modal')).toBeNull();
 
-    fireEvent.keyDown(container, excapeKey);
+    fireEvent.keyDown(container, escapeKey);
     expect(mockFn).not.toHaveBeenCalled();
   });
 
   test('respects backdropProps prop invisible', () => {
-    const mockFn = jest.fn();
-    const { container, queryByTestId, unmount } = renderModal({
-      onEscapeKeyDown: mockFn,
+    const { getByTestId } = renderModal({
+      BackdropProps: { invisible: true },
     });
 
-    unmount();
-
-    expect(queryByTestId('Modal')).toBeNull();
-
-    fireEvent.keyDown(container, excapeKey);
-    expect(mockFn).not.toHaveBeenCalled();
+    expect(getByTestId('backdrop')).toHaveStyle({
+      'background-color': 'transparent',
+    });
   });
 });
