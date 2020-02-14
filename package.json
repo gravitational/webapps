@@ -7,7 +7,7 @@
     "storybook": "start-storybook -p 9002 -c .storybook",
     "test": "jest --runInBand --coverage",
     "tdd": "jest packages --watch --runInBand",
-    "vsc-linux-coverage": "xdg-open coverage/lcov-report/index.html; sleep 2; exit",
+    "open-coverage:linux": "xdg-open coverage/lcov-report/index.html; sleep 2; exit",
     "start-force": "yarn workspace @gravitational/force run start",
     "start-gravity": "yarn workspace @gravitational/gravity run start",
     "start-teleport": "yarn workspace @gravitational/teleport run start",
