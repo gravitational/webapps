@@ -16,7 +16,7 @@
 
 import React from 'react';
 import Modal from './Modal';
-import { render, fireEvent } from 'design/utils/testing';
+import { render, fireEvent, screen } from 'design/utils/testing';
 
 const renderModal = props => {
   return render(
@@ -28,7 +28,6 @@ const renderModal = props => {
 
 const excapeKey = {
   key: 'Escape',
-  code: 27,
 };
 
 describe('design/Modal', () => {
@@ -59,6 +58,7 @@ describe('design/Modal', () => {
 
     const { container } = renderModal({
       onEscapeKeyDown: mockFn,
+      disablePortal: true,
     });
 
     // handleDocumentKeyDown
@@ -115,6 +115,20 @@ describe('design/Modal', () => {
   });
 
   test('unmount cleans up event listeners and closes modal', () => {
+    const mockFn = jest.fn();
+    const { container, queryByTestId, unmount } = renderModal({
+      onEscapeKeyDown: mockFn,
+    });
+
+    unmount();
+
+    expect(queryByTestId('Modal')).toBeNull();
+
+    fireEvent.keyDown(container, excapeKey);
+    expect(mockFn).not.toHaveBeenCalled();
+  });
+
+  test('respects backdropProps prop invisible', () => {
     const mockFn = jest.fn();
     const { container, queryByTestId, unmount } = renderModal({
       onEscapeKeyDown: mockFn,
