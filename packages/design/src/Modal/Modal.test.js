@@ -58,7 +58,6 @@ describe('design/Modal', () => {
 
     const { container } = renderModal({
       onEscapeKeyDown: mockFn,
-      disablePortal: true,
     });
 
     // handleDocumentKeyDown
@@ -142,10 +141,3 @@ describe('design/Modal', () => {
     expect(mockFn).not.toHaveBeenCalled();
   });
 });
-
-// TODO
-//     disableEnforceFocus: false,
-//     disableAutoFocus
-//     disableRestoreFocus: false,
-//     BackdropProps???
-//     removing of focus event
