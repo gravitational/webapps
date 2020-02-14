@@ -32,4 +32,6 @@ module.exports = {
     '^e-shared/(.*)$': '<rootDir>/packages/webapps.e/shared/src/$1',
     '^e-gravity/(.*)$': '<rootDir>/packages/webapps.e/gravity/src/$1',
   },
+  collectCoverageFrom: ['**/packages/design/src/**/*.jsx'],
+  coverageReporters: ['text-summary', 'lcov'],
 };
