@@ -46,7 +46,7 @@ test('basic functionality of clicking is respected', () => {
   expect(queryByTestId('Modal')).not.toBeInTheDocument();
 });
 
-const inlineCss = {
+const menuListCss = {
   style: {
     right: '10px',
     position: 'absolute',
@@ -54,7 +54,7 @@ const inlineCss = {
   },
 };
 test('menuActionProps is respected', () => {
-  const { getByTestId } = render(<ActionMenu buttonIconProps={inlineCss} />);
+  const { getByTestId } = render(<ActionMenu buttonIconProps={menuListCss} />);
 
-  expect(getByTestId('button')).toHaveStyle({ ...inlineCss.style });
+  expect(getByTestId('button')).toHaveStyle(menuListCss.style);
 });
