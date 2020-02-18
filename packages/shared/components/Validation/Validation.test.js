@@ -23,24 +23,31 @@ jest.mock('../../libs/logger', () => {
   };
 });
 
-test('validation class methods', () => {
+test('validation class methods: sub, unsub, validate', () => {
   const mockCb1 = jest.fn();
   const mockCb2 = jest.fn();
   const validator = new Validator();
 
-  // test correct constructor initiation
-  expect(validator.valid).toEqual(true);
-  expect(validator._subs).toEqual([]);
-
-  // test suscribe method correctly pushes cb into array
+  // test suscribe
   validator.subscribe(mockCb1);
   validator.subscribe(mockCb2);
-  expect(validator._subs).toHaveLength(2);
+
+  // test validate runs all subscribed cb's
+  expect(validator.validate()).toEqual(true);
+  expect(mockCb1).toHaveBeenCalledTimes(1);
+  expect(mockCb2).toHaveBeenCalledTimes(1);
+  mockCb1.mockClear();
+  mockCb2.mockClear();
 
   // test unsubscribe method removes correct cb
   validator.unsubscribe(mockCb2);
-  expect(validator._subs).toHaveLength(1);
-  expect(validator._subs.indexOf(mockCb1)).toBe(0);
+  expect(validator.validate()).toEqual(true);
+  expect(mockCb1).toHaveBeenCalledTimes(1);
+  expect(mockCb2).toHaveBeenCalledTimes(0);
+});
+
+test('validation class methods: addResult, reset', () => {
+  const validator = new Validator();
 
   // test addResult for nil object
   const result = null;
@@ -69,8 +76,4 @@ test('validation class methods', () => {
   // test addResult with correct object with "valid" prop reset to true
   validator.addResult(resultObj);
   expect(validator.valid).toBe(true);
-
-  // test validate
-  expect(validator.validate()).toEqual(true);
-  expect(mockCb1).toHaveBeenCalledTimes(1);
 });
