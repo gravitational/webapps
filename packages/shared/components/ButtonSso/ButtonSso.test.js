@@ -28,19 +28,18 @@ test('renders default type to unknown', () => {
 });
 
 test.each`
-  ssoType               | iconType
+  ssoType               | expectedIcon
   ${TypeEnum.MICROSOFT} | ${'icon-windows'}
   ${TypeEnum.GITHUB}    | ${'icon-github'}
   ${TypeEnum.BITBUCKET} | ${'icon-bitbucket'}
   ${TypeEnum.GOOGLE}    | ${'icon-google-plus'}
-`('prop ssoType set to $ssoType is respected', ({ ssoType, iconType }) => {
+`('prop ssoType set to $ssoType is respected', ({ ssoType, expectedIcon }) => {
   const { color, type } = pickSsoIcon(ssoType);
   const { getByTestId, getByText, container } = render(
     <ButtonSso ssoType={type} />
   );
 
   expect(container.firstChild).toHaveStyle({ 'background-color': color });
-  expect(getByTestId('icon')).toHaveClass(iconType);
-
+  expect(getByTestId('icon')).toHaveClass(expectedIcon);
   expect(getByText(type)).toHaveTextContent(type);
 });
