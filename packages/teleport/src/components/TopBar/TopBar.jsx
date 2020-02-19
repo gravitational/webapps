@@ -6,13 +6,7 @@ import teleportLogoSvg from 'design/assets/images/teleport-logo.svg';
 import { withState } from 'shared/hooks';
 import session from 'teleport/services/session';
 import { useStoreUser, useStoreNav } from 'teleport/teleport';
-import {
-  Image,
-  Flex,
-  ButtonPrimary,
-  TopNav,
-  TopNavItem,
-} from 'design';
+import { Image, Flex, ButtonPrimary, TopNav, TopNavItem } from 'design';
 import cfg from 'teleport/config';
 
 export class DashboardTopNav extends React.Component {

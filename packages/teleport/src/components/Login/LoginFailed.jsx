@@ -15,7 +15,7 @@ limitations under the License.
 */
 
 import React from 'react';
-import { LoginFailed as CardFailed}  from 'design/CardError';
+import { LoginFailed as CardFailed } from 'design/CardError';
 import { getUrlParameter } from 'teleport/services/history';
 
 import cfg from 'teleport/config';
@@ -26,7 +26,7 @@ export default function LoginFailed() {
   return (
     <React.Fragment>
       <LogoHero />
-      <CardFailed loginUrl={cfg.routes.login} message={message}/>
+      <CardFailed loginUrl={cfg.routes.login} message={message} />
     </React.Fragment>
-  )
+  );
 }

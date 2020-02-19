@@ -20,12 +20,12 @@ import { ButtonIcon } from 'design';
 import { Ellipsis } from 'design/Icon';
 
 class ActionMenu extends React.Component {
-  constructor(props){
-    super(props)
+  constructor(props) {
+    super(props);
     this.state = {
       open: Boolean(props.open),
       anchorEl: null,
-    }
+    };
   }
 
   onOpen = e => {
@@ -35,15 +35,19 @@ class ActionMenu extends React.Component {
 
   onClose = () => {
     this.setState({ open: false });
-  }
+  };
 
   render() {
     const { open } = this.state;
     const { children, buttonIconProps, menuProps } = this.props;
     return (
       <React.Fragment>
-        <ButtonIcon {...buttonIconProps} setRef={e => this.anchorEl = e } onClick={this.onOpen}>
-          <Ellipsis/>
+        <ButtonIcon
+          {...buttonIconProps}
+          setRef={e => (this.anchorEl = e)}
+          onClick={this.onOpen}
+        >
+          <Ellipsis />
         </ButtonIcon>
         <Menu
           menuListCss={menuListCss}
@@ -59,7 +63,7 @@ class ActionMenu extends React.Component {
             horizontal: 'center',
           }}
           {...menuProps}
-          >
+        >
           {open && this.renderItems(children)}
         </Menu>
       </React.Fragment>
@@ -70,26 +74,25 @@ class ActionMenu extends React.Component {
     const filtered = React.Children.toArray(children);
     const cloned = filtered.map(child => {
       return React.cloneElement(child, {
-        onClick: this.makeOnClick(child.props.onClick)
+        onClick: this.makeOnClick(child.props.onClick),
       });
-    })
+    });
 
     return cloned;
   }
 
-  makeOnClick(cb){
+  makeOnClick(cb) {
     return e => {
       e.stopPropagation();
       this.onClose();
       cb && cb(e);
-    }
+    };
   }
-
 }
 
 const menuListCss = () => `
   min-width: 100px;
 
-`
+`;
 
 export default ActionMenu;
