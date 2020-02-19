@@ -27,8 +27,8 @@ const kinds = ({ theme, kind, shadow }) => {
   };
 
   if (kind === 'secondary') {
-    (styles.background = theme.colors.primary.dark),
-      (styles.color = theme.colors.text.primary);
+    styles.background = theme.colors.primary.dark;
+    styles.color = theme.colors.text.primary;
   }
 
   if (kind === 'warning') {
@@ -47,10 +47,10 @@ const kinds = ({ theme, kind, shadow }) => {
   }
 
   if (shadow) {
-    styles.boxShadow = `0 0 8px ${fade(
-      styles.background,
-      0.24
-    )}, 0 4px 16px ${fade(styles.background, 0.56)}`;
+    styles.boxShadow = `
+    0 0 8px ${fade(styles.background, 0.24)}, 
+    0 4px 16px ${fade(styles.background, 0.56)}
+    `;
   }
 
   return styles;
