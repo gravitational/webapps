@@ -16,4 +16,3 @@ limitations under the License.
 
 import ResourceCard from './ResourceCard';
 export default ResourceCard;
-

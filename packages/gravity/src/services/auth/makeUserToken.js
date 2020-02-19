@@ -16,7 +16,7 @@ limitations under the License.
 
 import { UserTokenTypeEnum } from 'gravity/services/enums';
 
-export default function makeUserToken(json){
+export default function makeUserToken(json) {
   json = json || {};
   return {
     token: json.token,
@@ -25,6 +25,5 @@ export default function makeUserToken(json){
     accountId: json.account_id,
     isInvite: json.type === UserTokenTypeEnum.INVITE,
     isReset: json.type === UserTokenTypeEnum.RESET,
-  }
+  };
 }
-

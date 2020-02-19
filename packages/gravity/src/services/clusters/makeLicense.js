@@ -18,16 +18,14 @@ import { at } from 'lodash';
 import { SiteReasonEnum } from 'gravity/services/enums';
 
 export default function makeLicense(json) {
-  const [reason, raw, payload, payloadExpiration, ] = at(json,
-    [
-      'reason',
-      'license.raw',
-      'license.payload',
-      'license.payload.expiration',
-    ]
-  );
+  const [reason, raw, payload, payloadExpiration] = at(json, [
+    'reason',
+    'license.raw',
+    'license.payload',
+    'license.payload.expiration',
+  ]);
 
-  if(!payload){
+  if (!payload) {
     return null;
   }
 
@@ -42,6 +40,6 @@ export default function makeLicense(json) {
     status: {
       isActive: !isValid,
       isError: isValid,
-    }
-  }
+    },
+  };
 }

@@ -14,35 +14,33 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React from 'react'
+import React from 'react';
 import styled from 'styled-components';
-import { storiesOf } from '@storybook/react'
-import { ClusterLogs } from './Logs'
+import { storiesOf } from '@storybook/react';
+import { ClusterLogs } from './Logs';
 
-storiesOf('Gravity/Logs', module)
-  .add('Logs with error', () => {
-    return (
-      <Container>
-        <ClusterLogs {...props} />
-      </Container>
-    );
-  })
+storiesOf('Gravity/Logs', module).add('Logs with error', () => {
+  return (
+    <Container>
+      <ClusterLogs {...props} />
+    </Container>
+  );
+});
 
 const props = {
   query: '',
   logForwarderStore: null,
   isSettingsOpen: false,
   refreshCount: 0,
-  attempt: { isFailed: true, message: 'unable to load log forwarders'},
+  attempt: { isFailed: true, message: 'unable to load log forwarders' },
   onSearch: () => null,
   onRefresh: () => null,
   onOpenSettings: () => null,
   onCloseSettings: () => null,
-}
-
+};
 
 const Container = styled.div`
   position: fixed;
   width: 100%;
   height: 100%;
-`
+`;

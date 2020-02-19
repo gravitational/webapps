@@ -1,4 +1,4 @@
-test.skip('skip', () => {})
+test.skip('skip', () => {});
 
 /*
 Copyright 2019 Gravitational, Inc.

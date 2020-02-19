@@ -16,6 +16,4 @@ limitations under the License.
 
 import RangePicker, { getRangeOptions } from './RangePicker';
 export default RangePicker;
-export {
-  getRangeOptions
-}
+export { getRangeOptions };

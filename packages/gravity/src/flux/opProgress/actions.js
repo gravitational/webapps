@@ -20,10 +20,9 @@ import cfg from 'gravity/config';
 
 import { OP_PROGRESS_RECEIVE } from './actionTypes';
 
-export function fetchOpProgress(siteId, opId){
+export function fetchOpProgress(siteId, opId) {
   let url = cfg.getOperationProgressUrl(siteId, opId);
-  return api.get(url).then((data)=>{
+  return api.get(url).then(data => {
     reactor.dispatch(OP_PROGRESS_RECEIVE, data);
   });
 }
-

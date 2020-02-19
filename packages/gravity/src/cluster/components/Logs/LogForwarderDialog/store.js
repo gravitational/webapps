@@ -21,53 +21,54 @@ import { ResourceEnum } from 'gravity/services/enums';
 export const ModeEnum = {
   VIEW: 'view',
   EDIT: 'edit',
-  NEW: 'new'
-}
+  NEW: 'new',
+};
 
 export class LogforwarderStore extends Store {
-
   state = {
     siteId: null,
     isNew: false,
     mode: ModeEnum.VIEW,
     curIndex: 0,
-    items: []
-  }
+    items: [],
+  };
 
   setCurrent = curIndex => {
     this.setState({ curIndex });
-  }
+  };
 
   setViewMode() {
-    this.setState({ mode: ModeEnum.VIEW});
+    this.setState({ mode: ModeEnum.VIEW });
   }
 
-  setNewMode(){
-    this.setState({ mode: ModeEnum.NEW});
+  setNewMode() {
+    this.setState({ mode: ModeEnum.NEW });
   }
 
-  setEditMode(){
-    this.setState({ mode: ModeEnum.EDIT});
+  setEditMode() {
+    this.setState({ mode: ModeEnum.EDIT });
   }
 
-  setItems(items){
+  setItems(items) {
     this.setState({ items });
   }
 
-  fetch(){
-    return resources.getForwarders()
-      .then(items => this.setState({ curIndex: 0, items}));
+  fetch() {
+    return resources
+      .getForwarders()
+      .then(items => this.setState({ curIndex: 0, items }));
   }
 
-  save(content){
+  save(content) {
     const { items, mode } = this.state;
     const isNew = mode === ModeEnum.NEW;
-    return resources.upsert(ResourceEnum.LOG_FWRD, content, isNew)
+    return resources
+      .upsert(ResourceEnum.LOG_FWRD, content, isNew)
       .done(inserted => {
         let { curIndex } = this.state;
-        if(!isNew){
+        if (!isNew) {
           items[curIndex] = inserted[0];
-        }else{
+        } else {
           items.push(inserted[0]);
           curIndex = items.length - 1;
         }
@@ -75,26 +76,23 @@ export class LogforwarderStore extends Store {
         this.setState({
           items: [...items],
           mode: ModeEnum.VIEW,
-          curIndex
-        })
-      })
+          curIndex,
+        });
+      });
   }
 
   delete = index => {
     const { items } = this.state;
     const { name } = items[index];
-    return resources.remove(ResourceEnum.LOG_FWRD, name)
-      .then(() => {
-        items.splice(index, 1);
-        this.setState({
-          items: [...items],
-          mode: ModeEnum.VIEW,
-          curIndex: items.length -1 < index ? index -1 : index,
-        })
-      })
-  }
+    return resources.remove(ResourceEnum.LOG_FWRD, name).then(() => {
+      items.splice(index, 1);
+      this.setState({
+        items: [...items],
+        mode: ModeEnum.VIEW,
+        curIndex: items.length - 1 < index ? index - 1 : index,
+      });
+    });
+  };
 }
 
-export {
-  useStore
-}
+export { useStore };

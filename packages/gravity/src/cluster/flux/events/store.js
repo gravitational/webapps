@@ -17,23 +17,25 @@ limitations under the License.
 import { keyBy, values } from 'lodash';
 import { Store } from 'nuclear-js';
 import { Record } from 'immutable';
-import { CLUSTER_EVENTS_RECEIVE, CLUSTER_EVENTS_RECEIVE_LATEST } from './actionTypes';
+import {
+  CLUSTER_EVENTS_RECEIVE,
+  CLUSTER_EVENTS_RECEIVE_LATEST,
+} from './actionTypes';
 
 export class StoreRec extends Record({
   overflow: false,
-  events: {}
-}){
-
-  mergeEvents(events){
+  events: {},
+}) {
+  mergeEvents(events) {
     events = {
       ...this.events,
-      ...keyBy(events, 'id')
-    }
+      ...keyBy(events, 'id'),
+    };
 
-    return this.set('events', events)
+    return this.set('events', events);
   }
 
-  getEvents(){
+  getEvents() {
     return values(this.events);
   }
 }
@@ -44,12 +46,14 @@ export default Store({
   },
 
   initialize() {
-    this.on(CLUSTER_EVENTS_RECEIVE_LATEST, (state, events) => state.mergeEvents(events));
+    this.on(CLUSTER_EVENTS_RECEIVE_LATEST, (state, events) =>
+      state.mergeEvents(events)
+    );
     this.on(CLUSTER_EVENTS_RECEIVE, receiveEvents);
-  }
-})
+  },
+});
 
 function receiveEvents(state, { overflow, events }) {
-  state = state.mergeEvents(events)
+  state = state.mergeEvents(events);
   return state.set('overflow', overflow);
 }

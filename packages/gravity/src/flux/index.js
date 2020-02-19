@@ -21,6 +21,6 @@ import './userAcl';
 
 // This is legacy stores awaiting to be migrated/refactored
 reactor.registerStores({
-  'opProgress': opProgressStore,
-  'user': userStore,
+  opProgress: opProgressStore,
+  user: userStore,
 });

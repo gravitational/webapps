@@ -19,8 +19,8 @@ import store from './store';
 
 const STORE_NAME = 'cluster_apps';
 
-reactor.registerStores({ [STORE_NAME] : store });
+reactor.registerStores({ [STORE_NAME]: store });
 
 export const getters = {
-  appStore: [STORE_NAME ]
-}
+  appStore: [STORE_NAME],
+};

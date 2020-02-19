@@ -19,8 +19,8 @@ import store from './store';
 
 const STORE_NAME = 'cluster_nodes';
 
-reactor.registerStores({ [STORE_NAME] : store });
+reactor.registerStores({ [STORE_NAME]: store });
 
 export const getters = {
-  nodeStore: [STORE_NAME ]
-}
+  nodeStore: [STORE_NAME],
+};

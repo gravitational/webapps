@@ -16,4 +16,3 @@ limitations under the License.
 
 import NodeMenuAction from './NodeMenuAction';
 export default NodeMenuAction;
-

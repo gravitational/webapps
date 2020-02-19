@@ -41,33 +41,34 @@ export function loginWithSso(providerName, redirectUrl) {
   history.push(ssoUri, true);
 }
 
-export function fetchUserContext(){
+export function fetchUserContext() {
   return api.get(cfg.getSiteUserContextUrl()).done(json => {
-    logger.info("platform version", json.serverVersion);
+    logger.info('platform version', json.serverVersion);
     reactor.dispatch(USER_RECEIVE, json.user);
     reactor.dispatch(USERACL_RECEIVE, json.userAcl);
   });
 }
 
-export function changePassword(oldPsw, newPsw, token){
+export function changePassword(oldPsw, newPsw, token) {
   const data = {
-    'old_password': window.btoa(oldPsw),
-    'new_password': window.btoa(newPsw),
-    'second_factor_token': token
-  }
+    old_password: window.btoa(oldPsw),
+    new_password: window.btoa(newPsw),
+    second_factor_token: token,
+  };
 
   return api.put(cfg.getSiteChangePasswordUrl(), data);
 }
 
 function handleLoginPromise(promise) {
-  return promise.done(() => {
-    const redirect = getEntryRoute();
-    const withPageRefresh = true;
-    history.push(redirect, withPageRefresh);
-  })
-  .fail(err => {
-    logger.error('login', err);
-  });
+  return promise
+    .done(() => {
+      const redirect = getEntryRoute();
+      const withPageRefresh = true;
+      history.push(redirect, withPageRefresh);
+    })
+    .fail(err => {
+      logger.error('login', err);
+    });
 }
 
 function getEntryRoute() {
@@ -79,5 +80,4 @@ function getEntryRoute() {
   }
 
   return history.ensureBaseUrl(entryUrl);
-
 }

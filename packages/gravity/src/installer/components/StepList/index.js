@@ -16,4 +16,3 @@ limitations under the License.
 
 import StepList from './StepList';
 export default StepList;
-

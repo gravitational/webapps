@@ -19,8 +19,8 @@ import reactor from 'gravity/reactor';
 
 const STORE_NAME = 'cluster_tlscert';
 
-reactor.registerStores({ [STORE_NAME] : store });
+reactor.registerStores({ [STORE_NAME]: store });
 
 export const getters = {
-  store: [STORE_NAME]
-}
+  store: [STORE_NAME],
+};

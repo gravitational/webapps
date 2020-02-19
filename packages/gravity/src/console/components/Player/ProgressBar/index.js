@@ -17,4 +17,3 @@ limitations under the License.
 import ProgressBar from './ProgressBar';
 
 export default ProgressBar;
-

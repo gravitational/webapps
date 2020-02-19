@@ -23,25 +23,23 @@ import makeFlavors from './makeFlavors';
 import makeAgentServers from './makeAgentServer';
 
 const service = {
-
-  fetchAgentReport({ siteId, opId }){
-    return api.get(cfg.getOperationAgentUrl(siteId, opId))
-      .then(data => {
-        return makeAgentServers(data);
-      });
+  fetchAgentReport({ siteId, opId }) {
+    return api.get(cfg.getOperationAgentUrl(siteId, opId)).then(data => {
+      return makeAgentServers(data);
+    });
   },
 
-  verifyOnPrem(request){
+  verifyOnPrem(request) {
     const { siteId, opId } = request;
     return api.post(cfg.operationPrecheckPath(siteId, opId), request);
   },
 
-  startInstall(request){
+  startInstall(request) {
     const { siteId, opId } = request;
     return api.post(cfg.getOperationStartUrl(siteId, opId), request);
   },
 
-  fetchClusterDetails(siteId){
+  fetchClusterDetails(siteId) {
     return $.when(
       // fetch operation
       opService.fetchOps(siteId),
@@ -49,57 +47,58 @@ const service = {
       service.fetchClusterApp(siteId),
       // fetch flavors
       api.get(cfg.getSiteFlavorsUrl(siteId))
-    )
-      .then((...responses)=> {
-        const [operations, app, flavorsJson ] = responses;
-        const operation = operations.find(o => o.type === OpTypeEnum.OPERATION_INSTALL);
-        const flavors = makeFlavors(flavorsJson, app, operation)
-        return {
-          app,
-          flavors,
-          operation
-        }
-      }
-    )
+    ).then((...responses) => {
+      const [operations, app, flavorsJson] = responses;
+      const operation = operations.find(
+        o => o.type === OpTypeEnum.OPERATION_INSTALL
+      );
+      const flavors = makeFlavors(flavorsJson, app, operation);
+      return {
+        app,
+        flavors,
+        operation,
+      };
+    });
   },
 
-  createCluster(request){
-    return service.verifyClusterName(request.domain_name)
-      .then(() => {
-          const url = cfg.getSiteUrl({});
-          return api.post(url, request).then(json => json.site_domain);
-      })
+  createCluster(request) {
+    return service.verifyClusterName(request.domain_name).then(() => {
+      const url = cfg.getSiteUrl({});
+      return api.post(url, request).then(json => json.site_domain);
+    });
   },
 
-  setDeploymentType(license, app_package){
+  setDeploymentType(license, app_package) {
     const request = {
       license,
-      app_package
-    }
+      app_package,
+    };
 
-    return api.post(cfg.api.licenseValidationPath, request)
-      .then(() => {
-        return license;
-      });
+    return api.post(cfg.api.licenseValidationPath, request).then(() => {
+      return license;
+    });
   },
 
-  verifyClusterName(name){
+  verifyClusterName(name) {
     return api.get(cfg.getCheckDomainNameUrl(name)).then(data => {
       data = data || [];
-      if(data.length > 0){
-        return $.Deferred().reject(new Error(`Cluster "${name}" already exists`))
+      if (data.length > 0) {
+        return $.Deferred().reject(
+          new Error(`Cluster "${name}" already exists`)
+        );
       }
-    })
+    });
   },
 
-  fetchApp(...params){
+  fetchApp(...params) {
     return appService.fetchApplication(...params);
   },
 
-  fetchClusterApp(siteId){
-    return api.get(cfg.getSiteUrl({siteId, shallow: false}))
-      .then(json => makeApplication(json.app))
-  }
-}
+  fetchClusterApp(siteId) {
+    return api
+      .get(cfg.getSiteUrl({ siteId, shallow: false }))
+      .then(json => makeApplication(json.app));
+  },
+};
 
 export default service;

@@ -20,15 +20,19 @@ import Logger from 'shared/libs/logger';
 import IpSubnetCalculator from 'ip-subnet-calculator';
 const logger = Logger.create('paramUtils');
 
-export function isDomainName(value){
-  return /^((?=.{1,255}$)[0-9A-Za-z](?:(?:[0-9A-Za-z]|\b-){0,61}[0-9A-Za-z])?(?:\.[0-9A-Za-z](?:(?:[0-9A-Za-z]|\b-){0,61}[0-9A-Za-z])?)*\.?)$/i.test(value);
+export function isDomainName(value) {
+  return /^((?=.{1,255}$)[0-9A-Za-z](?:(?:[0-9A-Za-z]|\b-){0,61}[0-9A-Za-z])?(?:\.[0-9A-Za-z](?:(?:[0-9A-Za-z]|\b-){0,61}[0-9A-Za-z])?)*\.?)$/i.test(
+    value
+  );
 }
 
-export function isValidIp4(value){
-  return /^((25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?))$/i.test(value);
+export function isValidIp4(value) {
+  return /^((25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?))$/i.test(
+    value
+  );
 }
 
-export function isValidPort(value){
+export function isValidPort(value) {
   return /^[0-9]{1,5}$/i.test(value);
 }
 
@@ -37,8 +41,8 @@ export function parseWebConfig(jsonStr) {
   let webConfig = {};
 
   try {
-    jsonStr = jsonStr.replace(/\n/g, " ").replace(/\t/g, " ");
-    webConfig = JSON.parse(jsonStr)
+    jsonStr = jsonStr.replace(/\n/g, ' ').replace(/\t/g, ' ');
+    webConfig = JSON.parse(jsonStr);
   } catch (err) {
     logger.error('parseWebConfig', err);
   }
@@ -67,6 +71,6 @@ export function parseCidr(cidr) {
   let totalHost = result.ipHigh - result.ipLow;
 
   return {
-    totalHost
-  }
+    totalHost,
+  };
 }

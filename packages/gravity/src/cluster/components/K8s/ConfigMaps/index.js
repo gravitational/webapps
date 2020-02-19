@@ -16,4 +16,3 @@ limitations under the License.
 
 import ConfigMaps from './ConfigMaps';
 export default ConfigMaps;
-

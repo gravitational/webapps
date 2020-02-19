@@ -26,68 +26,74 @@ export function saveTlsCert(certificate, private_key, intermediate) {
   const data = {
     certificate,
     private_key,
-    intermediate
+    intermediate,
   };
 
   const upoader = new Uploader(cfg.getSiteTlsCertUrl());
-  return upoader.start(data)
+  return upoader
+    .start(data)
     .done(json => {
-      reactor.dispatch(SETTINGS_CERT_RECEIVE, json)
-    }).fail(err => {
-      logger.error('saveTlsCert()', err);
+      reactor.dispatch(SETTINGS_CERT_RECEIVE, json);
     })
+    .fail(err => {
+      logger.error('saveTlsCert()', err);
+    });
 }
 
 export function fetchTlsCert(siteId) {
   return api.get(cfg.getSiteTlsCertUrl(siteId)).done(json => {
-    reactor.dispatch(SETTINGS_CERT_RECEIVE, json)
-  })
+    reactor.dispatch(SETTINGS_CERT_RECEIVE, json);
+  });
 }
 
 class Uploader extends Events.EventEmitter {
-
-  constructor(url){
+  constructor(url) {
     super();
     this._xhr = new XMLHttpRequest();
     this._url = url;
   }
 
-  abort(){
+  abort() {
     this._xhr.abort();
   }
 
-  start(data = {}){
+  start(data = {}) {
     let xhr = this._xhr;
     let fd = new FormData();
     let self = this;
 
     Object.getOwnPropertyNames(data).forEach(key => {
       fd.append(key, data[key]);
-    })
+    });
 
-    return api.ajax({
-      url: this._url,
-      type: 'PUT',
-      data: fd,
-      cache : false,
-      processData: false,
-      contentType: false,
-      xhr() {
-        xhr.upload.addEventListener('progress', e => {
-          if (e.lengthComputable) {
-            let progressVal = Math.round((e.loaded/e.total)*100);
-            self.emit('progress', progressVal);
-          }
-        }, false);
+    return api
+      .ajax({
+        url: this._url,
+        type: 'PUT',
+        data: fd,
+        cache: false,
+        processData: false,
+        contentType: false,
+        xhr() {
+          xhr.upload.addEventListener(
+            'progress',
+            e => {
+              if (e.lengthComputable) {
+                let progressVal = Math.round((e.loaded / e.total) * 100);
+                self.emit('progress', progressVal);
+              }
+            },
+            false
+          );
 
-        return xhr;
-      }
-    })
-    .done(json => {
-      self.emit('completed', json);
-    })
-    .fail(err =>{
-      self.emit('failed', err.message);
-    })
+          return xhr;
+        },
+      })
+      .done(json => {
+        self.emit('completed', json);
+      })
+      .fail(err => {
+        self.emit('failed', err.message);
+      });
   }
 }

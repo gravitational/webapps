@@ -14,34 +14,38 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React from 'react'
-import { storiesOf } from '@storybook/react'
+import React from 'react';
+import { storiesOf } from '@storybook/react';
 import Flex from 'design/Flex';
 import MenuLogin from './MenuLogin';
 
-storiesOf('Gravity/Nodes/MenuLogin', module)
-  .add('Menu', () => (
-    <Flex width="400px" height="100px" alignItems="center" justifyContent="space-around" bg="primary.light">
-      <MenuLogin server="server" logins={[]} />
-      <SampleMenu isOpen/>
-    </Flex>
-  ));
+storiesOf('Gravity/Nodes/MenuLogin', module).add('Menu', () => (
+  <Flex
+    width="400px"
+    height="100px"
+    alignItems="center"
+    justifyContent="space-around"
+    bg="primary.light"
+  >
+    <MenuLogin server="server" logins={[]} />
+    <SampleMenu isOpen />
+  </Flex>
+));
 
 class SampleMenu extends React.Component {
-  componentDidMount(){
+  componentDidMount() {
     this.props.isOpen && this.menuRef.onOpen();
   }
 
-  render(){
+  render() {
     return (
-      <MenuLogin ref={e => this.menuRef = e } serverId="server" logins={logins} />
-    )
+      <MenuLogin
+        ref={e => (this.menuRef = e)}
+        serverId="server"
+        logins={logins}
+      />
+    );
   }
 }
 
-  const logins = [
-    "root",
-    "jazrafiba",
-    "evubale",
-    "ipizodu",
-  ];
+const logins = ['root', 'jazrafiba', 'evubale', 'ipizodu'];

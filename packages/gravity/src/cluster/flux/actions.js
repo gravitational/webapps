@@ -29,14 +29,13 @@ export function initCluster(siteId, features) {
   return fetchUserContext().then(() => init(features));
 }
 
-function init(features){
+function init(features) {
   return $.when(
-    service.fetchCluster({shallow: false}),
+    service.fetchCluster({ shallow: false }),
     fetchSiteInfo(),
-    fetchRemoteAccess(),
-  )
-  .then((...responses) => {
-    const [ cluster ] = responses;
+    fetchRemoteAccess()
+  ).then((...responses) => {
+    const [cluster] = responses;
     // Apply cluster web config settings
     applyConfig(cluster);
 
@@ -49,5 +48,5 @@ function init(features){
     // Initialize features
     const activator = new Activator(features);
     activator.onload({ featureFlags });
-  })
+  });
 }

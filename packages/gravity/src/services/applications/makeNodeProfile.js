@@ -17,22 +17,17 @@ limitations under the License.
 import { at } from 'lodash';
 
 export default function makeNodeProfile(json) {
-  const [
-    ram,
-    cpuCount,
-    expandPolicy,
-    description,
-    serviceRole,
-    name,
-  ] = at(json,
+  const [ram, cpuCount, expandPolicy, description, serviceRole, name] = at(
+    json,
     [
       'requirements.ram.min',
       'requirements.cpu.min',
       'expandPolicy',
       'description',
       'serviceRole',
-      'name'
-    ]);
+      'name',
+    ]
+  );
 
   const requirementsText = `RAM: ${ram}, CPU: Core x ${cpuCount}`;
 
@@ -43,6 +38,6 @@ export default function makeNodeProfile(json) {
     serviceRole,
     description,
     expandPolicy,
-    requirementsText
-  }
+    requirementsText,
+  };
 }

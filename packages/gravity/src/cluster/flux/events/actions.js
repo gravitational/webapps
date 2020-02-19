@@ -17,17 +17,25 @@ limitations under the License.
 import moment from 'moment';
 import reactor from 'gravity/reactor';
 import { fetchClusterEvents } from 'gravity/cluster/services/events';
-import { CLUSTER_EVENTS_RECEIVE, CLUSTER_EVENTS_RECEIVE_LATEST } from './actionTypes';
+import {
+  CLUSTER_EVENTS_RECEIVE,
+  CLUSTER_EVENTS_RECEIVE_LATEST,
+} from './actionTypes';
 
 export const EVENT_MAX_LIMIT = 9999;
 
 export function fetchLatest(siteId) {
-  const start = moment(new Date()).startOf('day').toDate().toISOString();
-  const end = moment(new Date()).endOf('day').toDate().toISOString();
-  return fetchClusterEvents({ siteId, start, end })
-    .done(events => {
-      reactor.dispatch(CLUSTER_EVENTS_RECEIVE_LATEST, events);
-    });
+  const start = moment(new Date())
+    .startOf('day')
+    .toDate()
+    .toISOString();
+  const end = moment(new Date())
+    .endOf('day')
+    .toDate()
+    .toISOString();
+  return fetchClusterEvents({ siteId, start, end }).done(events => {
+    reactor.dispatch(CLUSTER_EVENTS_RECEIVE_LATEST, events);
+  });
 }
 
 // Fetchs events within given date range and detects if
@@ -36,10 +44,14 @@ export function fetchEvents({ siteId, end, start }) {
   start = start.toISOString();
   end = end.toISOString();
 
-  return fetchClusterEvents({ siteId, start, end, limit: EVENT_MAX_LIMIT + 1 })
-    .done(events => {
-      const overflow = events.length > EVENT_MAX_LIMIT;
-      events = events.splice(0, EVENT_MAX_LIMIT - 1);
-      reactor.dispatch(CLUSTER_EVENTS_RECEIVE, { overflow, events });
-    });
+  return fetchClusterEvents({
+    siteId,
+    start,
+    end,
+    limit: EVENT_MAX_LIMIT + 1,
+  }).done(events => {
+    const overflow = events.length > EVENT_MAX_LIMIT;
+    events = events.splice(0, EVENT_MAX_LIMIT - 1);
+    reactor.dispatch(CLUSTER_EVENTS_RECEIVE, { overflow, events });
+  });
 }

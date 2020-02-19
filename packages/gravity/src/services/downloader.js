@@ -17,13 +17,13 @@ limitations under the License.
 import history from './history';
 import localStorage from './localStorage';
 
-export function makeDownloadable(url){
+export function makeDownloadable(url) {
   const accessToken = localStorage.getAccessToken();
   const downloadUrl = `${url}?access_token=${accessToken}`;
   return history.ensureBaseUrl(downloadUrl);
 }
 
-export function download(url){
+export function download(url) {
   const downloadUrl = makeDownloadable(url);
   const element = document.createElement('a');
   element.setAttribute('href', `${downloadUrl}`);

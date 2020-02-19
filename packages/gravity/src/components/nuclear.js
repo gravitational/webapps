@@ -22,14 +22,14 @@ export const Provider = FluxContext.Provider;
 
 export function useFluxStore(getter) {
   const reactor = React.useContext(FluxContext);
-  const [ state, setState ] = React.useState(() => {
-    return reactor.evaluate(getter)
+  const [state, setState] = React.useState(() => {
+    return reactor.evaluate(getter);
   });
 
   React.useLayoutEffect(() => {
-    function subscribe(){
+    function subscribe() {
       return reactor.observe(getter, val => {
-        setState(val)
+        setState(val);
       });
     }
 

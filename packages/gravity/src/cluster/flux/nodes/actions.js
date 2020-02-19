@@ -26,9 +26,12 @@ import opsService from 'gravity/services/operations';
 import * as featureFlags from 'gravity/cluster/featureFlags';
 
 export function startShrinkOperation(hostname) {
-  return opsService.shrink(cfg.defaultSiteId, hostname)
-    // get the cluster info to update cluster state label
-    .then(() => fetchSiteInfo());
+  return (
+    opsService
+      .shrink(cfg.defaultSiteId, hostname)
+      // get the cluster info to update cluster state label
+      .then(() => fetchSiteInfo())
+  );
 }
 
 export function fetchNodes() {
@@ -40,16 +43,15 @@ export function fetchNodes() {
     promises.push(k8s.getNodes());
   }
 
-  return $.when(...promises)
-    .then((...responses) => {
-      const [gravityNodes, k8sNodes] = responses;
-      const canSsh = acl.getSshLogins().size > 0;
-      const sshLogins = acl.getSshLogins().toJS();
-      reactor.dispatch(SITE_SERVERS_RECEIVE, {
-        gravityNodes,
-        k8sNodes,
-        canSsh,
-        sshLogins,
-      });
-    })
+  return $.when(...promises).then((...responses) => {
+    const [gravityNodes, k8sNodes] = responses;
+    const canSsh = acl.getSshLogins().size > 0;
+    const sshLogins = acl.getSshLogins().toJS();
+    reactor.dispatch(SITE_SERVERS_RECEIVE, {
+      gravityNodes,
+      k8sNodes,
+      canSsh,
+      sshLogins,
+    });
+  });
 }

@@ -28,12 +28,18 @@ export default function Console() {
     <StyledConsole>
       <Switch>
         <Route path={cfg.routes.consoleSession} component={Terminal} />
-        <Route path={cfg.routes.consoleInitSession} component={SessionCreator} />
-        <Route path={cfg.routes.consoleInitPodSession} component={SessionCreator} />
+        <Route
+          path={cfg.routes.consoleInitSession}
+          component={SessionCreator}
+        />
+        <Route
+          path={cfg.routes.consoleInitPodSession}
+          component={SessionCreator}
+        />
         <Route path={cfg.routes.consoleSessionPlayer} component={Player} />
       </Switch>
     </StyledConsole>
-  )
+  );
 }
 
 const StyledConsole = styled.div`

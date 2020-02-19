@@ -14,32 +14,28 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React from 'react'
-import { storiesOf } from '@storybook/react'
-import { Certificate } from './Certificate'
+import React from 'react';
+import { storiesOf } from '@storybook/react';
+import { Certificate } from './Certificate';
 import { TlsCert } from 'gravity/cluster/flux/tlscert/store';
 
-storiesOf('Gravity/Certificate', module)
-  .add('Certificate', () => (
-    <Certificate store={store}/>
-  )
-);
+storiesOf('Gravity/Certificate', module).add('Certificate', () => (
+  <Certificate store={store} />
+));
 
-const store = new TlsCert(
-  {
-    "issued_to": {
-      "cn": "*.gravitational.io",
-      "org": null,
-      "org_unit": ["Domain Control Validated", "EssentialSSL Wildcard"]
-    },
-    "issued_by": {
-      "cn": "COMODO RSA Domain Validation Secure Server CA",
-      "org": ["COMODO CA Limited"],
-      "org_unit": null
-    },
-    "validity": {
-      "not_before": "2017-10-13T00:00:00Z",
-      "not_after": "2020-12-20T23:59:59Z"
-    }
-  }
-);
+const store = new TlsCert({
+  issued_to: {
+    cn: '*.gravitational.io',
+    org: null,
+    org_unit: ['Domain Control Validated', 'EssentialSSL Wildcard'],
+  },
+  issued_by: {
+    cn: 'COMODO RSA Domain Validation Secure Server CA',
+    org: ['COMODO CA Limited'],
+    org_unit: null,
+  },
+  validity: {
+    not_before: '2017-10-13T00:00:00Z',
+    not_after: '2020-12-20T23:59:59Z',
+  },
+});

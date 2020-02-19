@@ -21,9 +21,9 @@ export const StatusEnum = {
   PROCESSING: 'processing',
   FAILED: 'failed',
   COMPLETED: 'completed',
-}
+};
 
-export default function makeOperation(json){
+export default function makeOperation(json) {
   const [
     id,
     siteId,
@@ -45,8 +45,8 @@ export default function makeOperation(json){
     'type',
     'provisioner',
     'install_expand',
-    'update'
-  ])
+    'update',
+  ]);
 
   const details = installExpand;
   const description = getDescription(json);
@@ -64,14 +64,14 @@ export default function makeOperation(json){
     details,
     status,
     update,
-    description
-  }
+    description,
+  };
 }
 
-function getDescription(json){
+function getDescription(json) {
   switch (json.type) {
     case OpTypeEnum.OPERATION_UPDATE:
-      const  [ app ] = at(json, 'update.update_package');
+      const [app] = at(json, 'update.update_package');
       return `Updating to ${app}`;
     case OpTypeEnum.OPERATION_INSTALL:
       return 'Installing this cluster';
@@ -86,7 +86,7 @@ function getDescription(json){
   }
 }
 
-function getStatus(state){
+function getStatus(state) {
   switch (state) {
     case OpStateEnum.UPDATE_IN_PROGRESS:
     case OpStateEnum.SHRINK_IN_PROGRESS:
@@ -103,6 +103,6 @@ function getStatus(state){
     case OpStateEnum.COMPLETED:
       return StatusEnum.COMPLETED;
     default:
-      return ''
-    }
+      return '';
+  }
 }

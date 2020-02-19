@@ -17,6 +17,6 @@ limitations under the License.
 import reactor from 'gravity/reactor';
 import { CLUSTER_APPS_RECEIVE } from './actionTypes';
 
-export function setReleases(releases){
+export function setReleases(releases) {
   reactor.dispatch(CLUSTER_APPS_RECEIVE, releases);
 }

@@ -16,18 +16,17 @@ limitations under the License.
 
 import React from 'react';
 
-const k8sContext =  React.createContext({});
+const k8sContext = React.createContext({});
 
 export default k8sContext;
 
 export function withK8sContext(Component) {
-	return function contextComponent(props) {
+  return function contextComponent(props) {
     const context = React.useContext(k8sContext);
-    return React.createElement(Component,
-      {...props, k8sContext: context});
-	}
+    return React.createElement(Component, { ...props, k8sContext: context });
+  };
 }
 
-export function useK8sContext(){
+export function useK8sContext() {
   return React.useContext(k8sContext);
 }

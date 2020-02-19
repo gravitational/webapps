@@ -14,9 +14,9 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React from 'react'
+import React from 'react';
 import $ from 'jQuery';
-import { storiesOf } from '@storybook/react'
+import { storiesOf } from '@storybook/react';
 import ResourceEditor from './ResourceEditor';
 
 storiesOf('Gravity/ResourceEditor', module)
@@ -25,38 +25,41 @@ storiesOf('Gravity/ResourceEditor', module)
       resource={{
         isNew: true,
         name: 'sample',
-        content: 'fdfd'
+        content: 'fdfd',
       }}
       title="Creating a new resource"
       name="sample"
       onSave={() => {
-        return $.Deferred() }
-      }
-      open={true} />
+        return $.Deferred();
+      }}
+      open={true}
+    />
   ))
   .add('Edit', () => (
     <ResourceEditor
       resource={{
         isNew: false,
         name: 'sample',
-        content: 'fdfd'
+        content: 'fdfd',
       }}
       title="Modifying the resource"
       name="sample"
-      onSave={() => $.Deferred() }
-      open={true} />
+      onSave={() => $.Deferred()}
+      open={true}
+    />
   ))
   .add('Directions', () => (
     <ResourceEditor
       resource={{
         isNew: false,
         name: 'sample',
-        content: 'fdfd'
+        content: 'fdfd',
       }}
       docsURL="localhost"
-      directions={ <div>fsdfdfs</div>}
+      directions={<div>fsdfdfs</div>}
       title="Modifying the resource"
       name="sample"
-      onSave={() => $.Deferred() }
-      open={true} />
+      onSave={() => $.Deferred()}
+      open={true}
+    />
   ));

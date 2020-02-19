@@ -15,4 +15,3 @@ limitations under the License.
 */
 
 export const SITE_RECEIVE_SERVICES = 'CLUSTER_RECEIVE_SERVICES';
-

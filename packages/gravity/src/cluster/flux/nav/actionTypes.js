@@ -16,4 +16,3 @@ limitations under the License.
 
 export const NAV_ADD_TOP_ITEM = 'NAV_ADD_TOP_ITEM';
 export const NAV_ADD_SIDE_ITEM = 'NAV_ADD_SIDE_ITEM';
-

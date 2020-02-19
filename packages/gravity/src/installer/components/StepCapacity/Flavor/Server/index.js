@@ -15,7 +15,4 @@ limitations under the License.
 */
 
 import { Server } from './Server';
-export {
-  Server
-}
-
+export { Server };

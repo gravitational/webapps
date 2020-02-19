@@ -16,4 +16,3 @@ limitations under the License.
 
 import Cluster from './Cluster';
 export default Cluster;
-

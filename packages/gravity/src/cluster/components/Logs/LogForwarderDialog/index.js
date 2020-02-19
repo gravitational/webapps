@@ -17,6 +17,4 @@ limitations under the License.
 import LogForwarderDialog from './LogForwarderDialog';
 import { LogforwarderStore } from './store';
 export default LogForwarderDialog;
-export {
-  LogforwarderStore
-}
+export { LogforwarderStore };

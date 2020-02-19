@@ -16,11 +16,11 @@ limitations under the License.
 
 import { at, map, keys, keyBy } from 'lodash';
 
-export default function makeFlavors(flavorsJson, app, operation){
+export default function makeFlavors(flavorsJson, app, operation) {
   // create a map from node profile array
   const nodeProfiles = keyBy(app.nodeProfiles, i => i.name);
 
-  const [ flavorItems, defaultFlavor, prompt] = at(flavorsJson, [
+  const [flavorItems, defaultFlavor, prompt] = at(flavorsJson, [
     'items',
     'default',
     'title',
@@ -32,15 +32,14 @@ export default function makeFlavors(flavorsJson, app, operation){
 
     // create new profile objects from node profiles, operation agent, and flavor profiles
     const profiles = keys(flavorProfiles).map(key => {
-      const {
-        instance_types,
-        instance_type,
-        count
-      } = flavorProfiles[key];
+      const { instance_types, instance_type, count } = flavorProfiles[key];
 
       const { description, requirementsText } = nodeProfiles[key];
 
-      const instructions = at(operation, `details.agents.${key}.instructions`)[0];
+      const instructions = at(
+        operation,
+        `details.agents.${key}.instructions`
+      )[0];
 
       return {
         name: key,
@@ -49,20 +48,20 @@ export default function makeFlavors(flavorsJson, app, operation){
         instructions,
         count,
         description,
-        requirementsText
-      }
+        requirementsText,
+      };
     });
 
     return {
       name,
       isDefault: name === defaultFlavor,
       title: description || name,
-      profiles
-    }
+      profiles,
+    };
   });
 
   return {
     options,
     prompt,
-  }
+  };
 }

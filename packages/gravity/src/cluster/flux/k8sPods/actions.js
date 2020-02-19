@@ -16,13 +16,12 @@ limitations under the License.
 
 import reactor from 'gravity/reactor';
 import k8s from 'gravity/cluster/services/k8s';
-import { SITE_RECEIVE_PODS }  from './actionTypes';
+import { SITE_RECEIVE_PODS } from './actionTypes';
 
-export function receivePods(json){
+export function receivePods(json) {
   reactor.dispatch(SITE_RECEIVE_PODS, json);
 }
 
-export function fetchPods(namespace="default"){
+export function fetchPods(namespace = 'default') {
   return k8s.getPods(namespace).done(receivePods);
 }
-

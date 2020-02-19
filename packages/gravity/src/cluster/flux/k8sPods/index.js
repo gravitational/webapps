@@ -15,23 +15,36 @@ limitations under the License.
 */
 
 import cfg from 'gravity/config';
-import { K8sPodPhaseEnum, K8sPodDisplayStatusEnum } from 'gravity/services/enums'
+import {
+  K8sPodPhaseEnum,
+  K8sPodDisplayStatusEnum,
+} from 'gravity/services/enums';
 import reactor from 'gravity/reactor';
 import store from './store';
 
 const STORE_NAME = 'cluster_k8s_pods';
 
-reactor.registerStores({[STORE_NAME] : store });
+reactor.registerStores({ [STORE_NAME]: store });
 
-const podInfoList = [[STORE_NAME], podsMap => {
+const podInfoList = [
+  [STORE_NAME],
+  podsMap => {
     const siteId = cfg.defaultSiteId;
-    return podsMap.valueSeq()
-      .filter(itemMap => itemMap.getIn(['status', 'phase']) !== K8sPodPhaseEnum.SUCCEEDED)
+    return podsMap
+      .valueSeq()
+      .filter(
+        itemMap =>
+          itemMap.getIn(['status', 'phase']) !== K8sPodPhaseEnum.SUCCEEDED
+      )
       .map(itemMap => {
-        const name = itemMap.getIn(['metadata','name']);
+        const name = itemMap.getIn(['metadata', 'name']);
         const namespace = itemMap.getIn(['metadata', 'namespace']);
         const podLogUrl = cfg.getSiteLogQueryRoute({ query: `pod:${name}` });
-        const podMonitorUrl = cfg.getSiteK8sPodMonitorRoute(siteId, namespace, name);
+        const podMonitorUrl = cfg.getSiteK8sPodMonitorRoute(
+          siteId,
+          namespace,
+          name
+        );
         const { status, statusDisplay } = getStatus(itemMap);
         return {
           containerNames: getContainerNames(itemMap),
@@ -40,27 +53,27 @@ const podInfoList = [[STORE_NAME], podsMap => {
           name,
           namespace,
           phaseValue: itemMap.getIn(['status', 'phase']),
-          podHostIp: itemMap.getIn(['status','hostIP']),
-          podIp: itemMap.getIn(['status','podIP']),
+          podHostIp: itemMap.getIn(['status', 'hostIP']),
+          podIp: itemMap.getIn(['status', 'podIP']),
           podLogUrl,
           resourceMap: itemMap,
           podMonitorUrl,
           status,
           statusDisplay,
-        }
+        };
       })
       .toJS();
-  }
+  },
 ];
 
 export const getters = {
-  podInfoList
-}
+  podInfoList,
+};
 
 // helpers
-function createContainerStatus(containerMap){
+function createContainerStatus(containerMap) {
   let phaseText = 'unknown';
-  if(containerMap.getIn(['state', 'running'])){
+  if (containerMap.getIn(['state', 'running'])) {
     phaseText = 'running';
   }
 
@@ -69,13 +82,13 @@ function createContainerStatus(containerMap){
   return {
     name,
     logUrl,
-    phaseText
-  }
+    phaseText,
+  };
 }
 
-function getLabelsText(pod){
+function getLabelsText(pod) {
   let labelMap = pod.getIn(['metadata', 'labels']);
-  if(!labelMap){
+  if (!labelMap) {
     return [];
   }
 
@@ -84,40 +97,34 @@ function getLabelsText(pod){
 
   labelMap.entrySeq().forEach(item => {
     let [labelName, lavelValue] = item;
-    let text = labelName+':'+ lavelValue;
-    if(labelName === 'app' || labelName === 'name' ){
+    let text = labelName + ':' + lavelValue;
+    if (labelName === 'app' || labelName === 'name') {
       withAppAndName.push(text);
-    }else{
+    } else {
       results.push(text);
     }
-  })
+  });
 
- return withAppAndName.concat(results);
-
+  return withAppAndName.concat(results);
 }
 
-function getContainers(pod){
+function getContainers(pod) {
   const statusList = pod.getIn(['status', 'containerStatuses']);
-  if(!statusList){
+  if (!statusList) {
     return [];
   }
 
-  return statusList
-    .map(createContainerStatus)
-    .toArray() || [];
+  return statusList.map(createContainerStatus).toArray() || [];
 }
 
-function getContainerNames(podMap){
+function getContainerNames(podMap) {
   const containerList = podMap.getIn(['spec', 'containers']);
-  if(!containerList){
+  if (!containerList) {
     return [];
   }
 
-  return containerList
-    .map(item=> item.get('name'))
-    .toArray() || [];
+  return containerList.map(item => item.get('name')).toArray() || [];
 }
-
 
 function getStatus(pod) {
   // See k8s dashboard js logic
@@ -162,6 +169,6 @@ function getStatus(pod) {
 
   return {
     status: podStatus,
-    statusDisplay: statusDisplay
-  }
+    statusDisplay: statusDisplay,
+  };
 }

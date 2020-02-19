@@ -16,4 +16,3 @@ limitations under the License.
 
 import Flavor from './Flavor';
 export default Flavor;
-

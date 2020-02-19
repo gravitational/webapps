@@ -19,7 +19,8 @@ import cfg from 'gravity/config';
 import { map } from 'lodash';
 import makeNode from './makeNode';
 
-export function fetchNodes(){
-  return api.get(cfg.getSiteServersUrl(cfg.defaultSiteId))
+export function fetchNodes() {
+  return api
+    .get(cfg.getSiteServersUrl(cfg.defaultSiteId))
     .then(json => map(json, makeNode));
 }

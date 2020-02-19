@@ -16,4 +16,3 @@ limitations under the License.
 
 import StepLicense from './StepLicense';
 export default StepLicense;
-

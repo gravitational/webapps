@@ -47,13 +47,4 @@ We may use third-party services either embedded into our Site (such as Tumblr®,
 Finally, we may be required by law or court order to provide Personally Identifiable Information or Non-personally Identifiable Information to government authorities or private parties. We fully cooperate with law enforcement agencies in identifying those who use the Services for illegal activities, and we may report to law enforcement any activities that we believe in good faith are unlawful.
 
 
-`
-
-
-
-
-
-
-
-
-
+`;

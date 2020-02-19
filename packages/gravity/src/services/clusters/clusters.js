@@ -20,46 +20,44 @@ import cfg from 'gravity/config';
 import makeCluster from './makeCluster';
 
 export const service = {
-
-  delete({siteId, secretKey, accessKey, sessionToken}){
+  delete({ siteId, secretKey, accessKey, sessionToken }) {
     const request = {
       force: true,
       variables: {
-        'secret_key': secretKey,
-        'access_key': accessKey,
-        'session_token': sessionToken
-      }
-    }
+        secret_key: secretKey,
+        access_key: accessKey,
+        session_token: sessionToken,
+      },
+    };
 
-    return api.delete(cfg.getSiteUrl({siteId}), request);
+    return api.delete(cfg.getSiteUrl({ siteId }), request);
   },
 
-  unlink(siteId){
+  unlink(siteId) {
     const request = {
-      remove_only: true
-    }
+      remove_only: true,
+    };
 
-    return api.delete(cfg.getSiteUrl({siteId}), request);
+    return api.delete(cfg.getSiteUrl({ siteId }), request);
   },
 
-  fetchCluster({ siteId, shallow = true } = {}){
+  fetchCluster({ siteId, shallow = true } = {}) {
     siteId = siteId || cfg.defaultSiteId;
-    return api.get(cfg.getSiteUrl({siteId, shallow})).then(makeCluster);
+    return api.get(cfg.getSiteUrl({ siteId, shallow })).then(makeCluster);
   },
 
-  fetchClusters({ shallow = true } = {}){
-    return api.get(cfg.getSiteUrl({shallow}))
-      .then(json => {
-        const array = Array.isArray(json) ? json : [json];
-        return map(array, makeCluster);
-      })
+  fetchClusters({ shallow = true } = {}) {
+    return api.get(cfg.getSiteUrl({ shallow })).then(json => {
+      const array = Array.isArray(json) ? json : [json];
+      return map(array, makeCluster);
+    });
   },
 
-  updateLicense(license){
+  updateLicense(license) {
     const req = {
-      license
-    }
+      license,
+    };
 
     return api.put(cfg.getSiteLicenseUrl(), req);
-  }
-}
+  },
+};

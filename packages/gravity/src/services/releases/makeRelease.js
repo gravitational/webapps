@@ -27,9 +27,9 @@ export const StatusEnum = {
   PENDING_INSTALL: 'PENDING_INSTALL',
   PENDING_UPGRADE: 'PENDING_UPGRADE',
   PENDING_ROLLBACK: 'PENDING_ROLLBACK',
-}
+};
 
-export default function makeRelease(json){
+export default function makeRelease(json) {
   const {
     name,
     namespace,
@@ -58,14 +58,14 @@ export default function makeRelease(json){
     updated: new Date(updated),
     updatedText: displayDateTime(updated),
     icon,
-  }
+  };
 }
 
-function makeEndpoint(json){
-  const { name, description = [], addresses, } = json
+function makeEndpoint(json) {
+  const { name, description = [], addresses } = json;
   return {
     name,
     description,
     addresses,
-  }
+  };
 }

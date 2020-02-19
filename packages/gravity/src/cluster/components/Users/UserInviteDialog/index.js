@@ -16,4 +16,3 @@ limitations under the License.
 
 import UserInviteDialog from './UserInviteDialog';
 export default UserInviteDialog;
-

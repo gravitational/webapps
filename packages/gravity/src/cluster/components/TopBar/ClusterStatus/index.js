@@ -16,4 +16,3 @@ limitations under the License.
 
 import ClusterStatus from './ClusterStatus';
 export default ClusterStatus;
-

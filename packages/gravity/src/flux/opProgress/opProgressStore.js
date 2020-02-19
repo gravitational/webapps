@@ -25,18 +25,19 @@ export default Store({
 
   initialize() {
     this.on(OP_PROGRESS_RECEIVE, receiveOpProgress);
-  }
-})
+  },
+});
 
-function receiveOpProgress(state, json={}){
-  let {site_domain, operation_id } = json;
-  let crashReportUrl = cfg.getSiteOperationReportUrl(site_domain, operation_id)
+function receiveOpProgress(state, json = {}) {
+  let { site_domain, operation_id } = json;
+  let crashReportUrl = cfg.getSiteOperationReportUrl(site_domain, operation_id);
   let siteUrl = cfg.getSiteRoute(site_domain);
   let prgsMap = toImmutable(json);
 
-  prgsMap = prgsMap.set('crashReportUrl', crashReportUrl)
-                   .set('siteUrl', siteUrl)
-                   .set('site_id', site_domain)
+  prgsMap = prgsMap
+    .set('crashReportUrl', crashReportUrl)
+    .set('siteUrl', siteUrl)
+    .set('site_id', site_domain);
 
   return state.set(prgsMap.get('operation_id'), prgsMap);
 }

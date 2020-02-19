@@ -36,5 +36,5 @@ export const KeyEnum = {
   Z: 90,
   ZERO: 48,
   NUMPAD_0: 96,
-  NUMPAD_9: 105
-}
+  NUMPAD_9: 105,
+};

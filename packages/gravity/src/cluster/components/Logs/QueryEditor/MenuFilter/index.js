@@ -15,7 +15,7 @@ limitations under the License.
 */
 
 import MenuFilter from './MenuFilter';
-import { MenuItem} from 'design/Menu';
+import { MenuItem } from 'design/Menu';
 
 export default MenuFilter;
 

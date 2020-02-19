@@ -17,67 +17,78 @@ import $ from 'jQuery';
 import reactor from 'gravity/reactor';
 import api from 'gravity/services/api';
 import cfg from 'gravity/config';
-import { TLPT_TERMINAL_INIT, TLPT_TERMINAL_UPDATE_SESSION, TLPT_TERMINAL_SET_STATUS } from './actionTypes';
+import {
+  TLPT_TERMINAL_INIT,
+  TLPT_TERMINAL_UPDATE_SESSION,
+  TLPT_TERMINAL_SET_STATUS,
+} from './actionTypes';
 
-export function fetchSession({ siteId, sid}){
+export function fetchSession({ siteId, sid }) {
   // because given session might not be available right away,
   // fetch all session to avoid 404 errors.
-  return api.get(cfg.getSiteSshSessionUrl({siteId}))
-    .then(json => {
-      if(!json && !json.sessions){
-        return;
-      }
-
-      const session = json.sessions.find(s => s.id === sid);
-      if(!session){
-        return;
-      }
-
-      reactor.dispatch(TLPT_TERMINAL_UPDATE_SESSION, {
-        parties: session.parties
-      })
-    })
-}
-
-export function createSession({ serverId, siteId, hostname, login, namespace, pod, container }){
-  const request = {
-    session: {
-      login
+  return api.get(cfg.getSiteSshSessionUrl({ siteId })).then(json => {
+    if (!json && !json.sessions) {
+      return;
     }
-  };
 
-  return api.post(cfg.getSiteSessionUrl(siteId), request)
-    .then(json => {
-      const sid = json.session.id;
-      reactor.dispatch(TLPT_TERMINAL_INIT, {
-        isNew: true,
-        serverId,
-        siteId,
-        login,
-        namespace,
-        hostname,
-        pod,
-        container,
-        sid
-      });
+    const session = json.sessions.find(s => s.id === sid);
+    if (!session) {
+      return;
+    }
 
-      reactor.dispatch(TLPT_TERMINAL_SET_STATUS, {
-        isReady: true
-      })
-
-      return sid;
+    reactor.dispatch(TLPT_TERMINAL_UPDATE_SESSION, {
+      parties: session.parties,
+    });
   });
 }
 
-export function joinSession(siteId, sid){
+export function createSession({
+  serverId,
+  siteId,
+  hostname,
+  login,
+  namespace,
+  pod,
+  container,
+}) {
+  const request = {
+    session: {
+      login,
+    },
+  };
+
+  return api.post(cfg.getSiteSessionUrl(siteId), request).then(json => {
+    const sid = json.session.id;
+    reactor.dispatch(TLPT_TERMINAL_INIT, {
+      isNew: true,
+      serverId,
+      siteId,
+      login,
+      namespace,
+      hostname,
+      pod,
+      container,
+      sid,
+    });
+
+    reactor.dispatch(TLPT_TERMINAL_SET_STATUS, {
+      isReady: true,
+    });
+
+    return sid;
+  });
+}
+
+export function joinSession(siteId, sid) {
   reactor.dispatch(TLPT_TERMINAL_SET_STATUS, {
-    isLoading: true
+    isLoading: true,
   });
 
   $.when(
     api.get(cfg.getSiteSessionUrl(siteId, sid)),
-    api.get(cfg.getSiteServersUrl(siteId)))
-  .then((...responses) => {
+    api.get(cfg.getSiteServersUrl(siteId))
+  )
+    .then((...responses) => {
       const [session, servers] = responses;
       const server = servers.find(s => s.id === session.server_id);
 
@@ -86,20 +97,17 @@ export function joinSession(siteId, sid){
         siteId,
         login: session.login,
         serverId: session.server_id,
-        hostname: server.hostname
-      })
+        hostname: server.hostname,
+      });
 
       reactor.dispatch(TLPT_TERMINAL_SET_STATUS, {
-        isReady: true
-      })
-
+        isReady: true,
+      });
     })
-   .fail(err => {
+    .fail(err => {
       reactor.dispatch(TLPT_TERMINAL_SET_STATUS, {
         isError: true,
-        errorText: err.message
-      })
-   })
+        errorText: err.message,
+      });
+    });
 }
-
-

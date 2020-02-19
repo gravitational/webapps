@@ -21,16 +21,17 @@ import { RepositoryEnum } from 'gravity/services/enums';
 import makeApplication from './makeApplication';
 
 const service = {
-
-  fetchApplications(){
-    return api.get(cfg.getAppsUrl(undefined, RepositoryEnum.SYSTEM, undefined))
+  fetchApplications() {
+    return api
+      .get(cfg.getAppsUrl(undefined, RepositoryEnum.SYSTEM, undefined))
       .then(json => map(json, makeApplication));
   },
 
-  fetchApplication(name, repository=RepositoryEnum.SYSTEM, version){
-    return api.get(cfg.getAppsUrl(name, repository, version))
+  fetchApplication(name, repository = RepositoryEnum.SYSTEM, version) {
+    return api
+      .get(cfg.getAppsUrl(name, repository, version))
       .then(makeApplication);
-  }
-}
+  },
+};
 
 export default service;

@@ -17,7 +17,4 @@ limitations under the License.
 import AdvancedOptions from './AdvancedOptions';
 import Subnets from './Subnets';
 export default AdvancedOptions;
-export {
-  Subnets
-}
-
+export { Subnets };

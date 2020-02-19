@@ -16,23 +16,25 @@ limitations under the License.
 
 import reactor from 'gravity/reactor';
 import Logger from 'shared/libs/logger';
-import { RECEIVE_OPERATIONS, RECEIVE_PROGRESS  } from './actionTypes';
+import { RECEIVE_OPERATIONS, RECEIVE_PROGRESS } from './actionTypes';
 import opsService from 'gravity/services/operations';
 
 const logger = Logger.create('flux/operations');
 
-export function fetchOps(){
-  return opsService.fetchOps().then(ops => {
+export function fetchOps() {
+  return opsService
+    .fetchOps()
+    .then(ops => {
       reactor.dispatch(RECEIVE_OPERATIONS, ops);
     })
     .fail(err => {
       logger.error('fetchClusterOperations', err);
       throw err;
-  })
+    });
 }
 
-export function fetchOpProgress(opId){
-  return opsService.fetchProgress({opId}).then(progress => {
+export function fetchOpProgress(opId) {
+  return opsService.fetchProgress({ opId }).then(progress => {
     reactor.dispatch(RECEIVE_PROGRESS, progress);
-  })
+  });
 }

@@ -15,32 +15,35 @@ limitations under the License.
 */
 
 import $ from 'jquery';
-import cfg from 'gravity/config'
+import cfg from 'gravity/config';
 import withFeature, { FeatureBase } from 'gravity/components/withFeature';
 import { addSideNavItem } from 'gravity/cluster/flux/nav/actions';
 import * as Icons from 'design/Icon';
 import K8s from '../components/K8s';
-import {fetchServices} from 'gravity/cluster/flux/k8sServices/actions';
-import {fetchNamespaces} from 'gravity/cluster/flux/k8sNamespaces/actions';
-import {fetchPods} from 'gravity/cluster/flux/k8sPods/actions';
-import {fetchJobs, fetchDaemonSets, fetchDeployments} from 'gravity/cluster/flux/k8s/actions';
-import {fetchCfgMaps} from 'gravity/cluster/flux/k8sConfigMaps/actions';
+import { fetchServices } from 'gravity/cluster/flux/k8sServices/actions';
+import { fetchNamespaces } from 'gravity/cluster/flux/k8sNamespaces/actions';
+import { fetchPods } from 'gravity/cluster/flux/k8sPods/actions';
+import {
+  fetchJobs,
+  fetchDaemonSets,
+  fetchDeployments,
+} from 'gravity/cluster/flux/k8s/actions';
+import { fetchCfgMaps } from 'gravity/cluster/flux/k8sConfigMaps/actions';
 
-class FeatureK8s extends FeatureBase{
-
-  constructor(){
-    super()
-    this.Component =  withFeature(this)(K8s);
+class FeatureK8s extends FeatureBase {
+  constructor() {
+    super();
+    this.Component = withFeature(this)(K8s);
   }
 
-  getRoute(){
+  getRoute() {
     return {
       path: cfg.routes.siteK8s,
-      component: this.Component
-    }
+      component: this.Component,
+    };
   }
 
-  onload({featureFlags}) {
+  onload({ featureFlags }) {
     if (!featureFlags.siteK8s()) {
       this.setDisabled();
       return;
@@ -51,7 +54,7 @@ class FeatureK8s extends FeatureBase{
       Icon: Icons.Kubernetes,
       exact: false,
       to: cfg.getSiteK8sRoute(),
-    })
+    });
 
     this.setProcessing();
     $.when(
@@ -61,7 +64,8 @@ class FeatureK8s extends FeatureBase{
       fetchPods(),
       fetchJobs(),
       fetchCfgMaps(),
-      fetchDaemonSets())
+      fetchDaemonSets()
+    )
       .done(() => this.setReady())
       .fail(this.setFailed.bind(this));
   }

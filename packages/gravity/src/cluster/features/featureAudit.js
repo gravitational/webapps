@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import cfg from 'gravity/config'
+import cfg from 'gravity/config';
 import * as Icons from 'design/Icon';
 import Audit from 'gravity/cluster/components/Audit';
 import { fetchLatest } from 'gravity/cluster/flux/events/actions';
@@ -27,17 +27,17 @@ class FeatureAudit extends FeatureBase {
     this.Component = withFeature(this)(Audit);
   }
 
-  getRoute(){
+  getRoute() {
     return {
       title: 'Audit',
       path: cfg.routes.siteAudit,
       exact: true,
-      component: this.Component
-    }
+      component: this.Component,
+    };
   }
 
   onload({ featureFlags }) {
-    if(!featureFlags.clusterEvents()){
+    if (!featureFlags.clusterEvents()) {
       this.setDisabled();
       return;
     }
@@ -46,7 +46,7 @@ class FeatureAudit extends FeatureBase {
       title: 'Audit Log',
       Icon: Icons.ListBullet,
       exact: true,
-      to: cfg.getSiteAuditRoute()
+      to: cfg.getSiteAuditRoute(),
     });
 
     this.setProcessing();

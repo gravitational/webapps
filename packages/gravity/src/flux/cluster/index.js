@@ -18,8 +18,8 @@ import reactor from 'gravity/reactor';
 import store from './store';
 const STORE_NAME = 'cluster';
 
-reactor.registerStores({ [STORE_NAME] : store });
+reactor.registerStores({ [STORE_NAME]: store });
 
 export const getters = {
-  clusterStore: [STORE_NAME]
-}
+  clusterStore: [STORE_NAME],
+};

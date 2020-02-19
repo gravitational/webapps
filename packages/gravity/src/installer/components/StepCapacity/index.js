@@ -16,4 +16,3 @@ limitations under the License.
 
 import StepCapacity from './StepCapacity';
 export default StepCapacity;
-

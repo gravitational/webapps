@@ -24,22 +24,16 @@ export const AppKindEnum = {
   APP: 'Application',
   BUNDLE: 'Bundle',
   CLUSTER: 'Cluster',
-}
+};
 
-export default function makeApplicatin(json){
-  const [ name, version, repository ] = at(json,
-    [
-      'package.name',
-      'package.version',
-      'package.repository'
-    ]
-  );
+export default function makeApplicatin(json) {
+  const [name, version, repository] = at(json, [
+    'package.name',
+    'package.version',
+    'package.repository',
+  ]);
 
-  const [ created ] = at(json,
-    [
-      'envelope.created',
-    ]
-  );
+  const [created] = at(json, ['envelope.created']);
 
   const [
     displayName,
@@ -49,24 +43,22 @@ export default function makeApplicatin(json){
     providersMap,
     licenseRequired,
     nodeProfilesJson,
-    setupEndpoint
-  ] = at(json,
-    [
-      'manifest.metadata.displayName',
-      'manifest.kind',
-      'manifest.logo',
-      'manifest.webConfig',
-      'manifest.providers',
-      'manifest.license.enabled',
-      'manifest.nodeProfiles',
-      'manifest.installer.setupEndpoints[0]'
-    ]
-  );
+    setupEndpoint,
+  ] = at(json, [
+    'manifest.metadata.displayName',
+    'manifest.kind',
+    'manifest.logo',
+    'manifest.webConfig',
+    'manifest.providers',
+    'manifest.license.enabled',
+    'manifest.nodeProfiles',
+    'manifest.installer.setupEndpoints[0]',
+  ]);
 
   // node profiles
-  const nodeProfiles = map(nodeProfilesJson, makeNodeProfile)
+  const nodeProfiles = map(nodeProfilesJson, makeNodeProfile);
   // eula agreement used during app installation
-  const [ eula = null] = at(json, 'manifest.installer.eula.source');
+  const [eula = null] = at(json, 'manifest.installer.eula.source');
   // parse web config which can be used during app installation
   const config = parseWebConfig(webConfigJsonStr);
   // generate unique id
@@ -74,12 +66,16 @@ export default function makeApplicatin(json){
   // application installer URL
   const installUrl = cfg.getInstallNewSiteRoute(name, repository, version);
   // application stand alone installer tarbar URL
-  const standaloneInstallerUrl = cfg.getStandaloneInstallerPath(name, repository, version);
+  const standaloneInstallerUrl = cfg.getStandaloneInstallerPath(
+    name,
+    repository,
+    version
+  );
   // supported providers
   const providers = keys(providersMap).map(key => ({
     name: key,
-    disabled: providersMap[key].disabled
-  }))
+    disabled: providersMap[key].disabled,
+  }));
 
   return {
     id,
@@ -99,6 +95,6 @@ export default function makeApplicatin(json){
     licenseRequired,
     eula,
     nodeProfiles,
-    bandwagon: !!setupEndpoint
-  }
+    bandwagon: !!setupEndpoint,
+  };
 }

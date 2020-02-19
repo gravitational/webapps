@@ -20,30 +20,31 @@ import cfg from 'gravity/config';
 
 const unpackItems = res => res.items || [];
 
-export function getAuthProviders(){
-  return api.get(cfg.getSiteResourcesUrl(ResourceEnum.AUTH_CONNECTORS))
-    .then(unpackItems)
+export function getAuthProviders() {
+  return api
+    .get(cfg.getSiteResourcesUrl(ResourceEnum.AUTH_CONNECTORS))
+    .then(unpackItems);
 }
 
-export function getRoles(){
-  return api.get(cfg.getSiteResourcesUrl(ResourceEnum.ROLE))
-    .then(unpackItems)
+export function getRoles() {
+  return api.get(cfg.getSiteResourcesUrl(ResourceEnum.ROLE)).then(unpackItems);
 }
 
-export function upsert(kind, yaml, isNew=false){
+export function upsert(kind, yaml, isNew = false) {
   const req = { kind, content: yaml };
-  if(isNew){
-    return api.post(cfg.getSiteResourcesUrl(), req).then(unpackItems)
+  if (isNew) {
+    return api.post(cfg.getSiteResourcesUrl(), req).then(unpackItems);
   }
 
-  return api.put(cfg.getSiteResourcesUrl(), req).then(unpackItems)
+  return api.put(cfg.getSiteResourcesUrl(), req).then(unpackItems);
 }
 
-export function remove(kind, name){
-  return api.delete(cfg.getSiteRemoveResourcesUrl(kind, name))
+export function remove(kind, name) {
+  return api.delete(cfg.getSiteRemoveResourcesUrl(kind, name));
 }
 
-export function getForwarders(){
-  return api.get(cfg.getSiteResourcesUrl(ResourceEnum.LOG_FWRD))
-    .then(unpackItems)
+export function getForwarders() {
+  return api
+    .get(cfg.getSiteResourcesUrl(ResourceEnum.LOG_FWRD))
+    .then(unpackItems);
 }

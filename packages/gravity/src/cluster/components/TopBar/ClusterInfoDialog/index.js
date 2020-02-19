@@ -16,4 +16,3 @@ limitations under the License.
 
 import ClusterInfoDialog from './ClusterInfoDialog';
 export default ClusterInfoDialog;
-

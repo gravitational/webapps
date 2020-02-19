@@ -20,34 +20,38 @@ import store from './store';
 
 const STORE_NAME = 'cluster_k8s_configmaps';
 
-reactor.registerStores({ [STORE_NAME] : store });
+reactor.registerStores({ [STORE_NAME]: store });
 
-const configMaps = [[STORE_NAME, 'configs'], configs => {
-  let filteredConfigs = configs.map(itemMap => {
-      let metadata =  itemMap.get('metadata') || toImmutable({});
-      let {name, uid, namespace, creationTimestamp} = metadata.toJS();
-      let data = getDataItems(itemMap.get('data'));
-      return {
-        name,
-        id: uid,
-        created: creationTimestamp,
-        namespace,
-        data
-      }
-    }).toJS();
+const configMaps = [
+  [STORE_NAME, 'configs'],
+  configs => {
+    let filteredConfigs = configs
+      .map(itemMap => {
+        let metadata = itemMap.get('metadata') || toImmutable({});
+        let { name, uid, namespace, creationTimestamp } = metadata.toJS();
+        let data = getDataItems(itemMap.get('data'));
+        return {
+          name,
+          id: uid,
+          created: creationTimestamp,
+          namespace,
+          data,
+        };
+      })
+      .toJS();
 
-  return filteredConfigs;
- }
+    return filteredConfigs;
+  },
 ];
 
-function getDataItems(dataMap){
+function getDataItems(dataMap) {
   let data = [];
-  if(dataMap){
-    dataMap.toKeyedSeq().forEach((item, key)=>{
+  if (dataMap) {
+    dataMap.toKeyedSeq().forEach((item, key) => {
       data.push({
         name: key,
-        content: item
-      })
+        content: item,
+      });
     });
   }
 
@@ -55,5 +59,5 @@ function getDataItems(dataMap){
 }
 
 export const getters = {
-  configMaps
-}
+  configMaps,
+};

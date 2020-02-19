@@ -14,36 +14,48 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React from 'react'
-import { storiesOf } from '@storybook/react'
-import  UserEditDialog  from './UserEditDialog'
+import React from 'react';
+import { storiesOf } from '@storybook/react';
+import UserEditDialog from './UserEditDialog';
 
 storiesOf('Gravity/Users/UserEditDialog', module)
   .add('UserEditDialog', () => {
     return (
       <UserEditDialog
-        onClose={ () => null }
+        onClose={() => null}
         user={user}
-        open={true} roles={roles} />
+        open={true}
+        roles={roles}
+      />
     );
   })
   .add('With Error', () => {
     return (
       <UserEditDialog
-        onClose={ () => null }
-        attempt={{ isFailed: true, message: "server error" }}
+        onClose={() => null}
+        attempt={{ isFailed: true, message: 'server error' }}
         user={user}
         open={true}
-        roles={roles} />
+        roles={roles}
+      />
     );
-  })
-
+  });
 
 const user = {
-  userId: "john@smith.com",
-  roles: ['admin', 'devops']
-}
+  userId: 'john@smith.com',
+  roles: ['admin', 'devops'],
+};
 
 const roles = [
-  'admin', 'devops' , 'segonlog', 'jozfekgon', 'zewibovuk', 'vekredo', 'rebwumu', 'warifif', 'upnihnuj', 'ubkuznav', 'rurlizo'
-]
+  'admin',
+  'devops',
+  'segonlog',
+  'jozfekgon',
+  'zewibovuk',
+  'vekredo',
+  'rebwumu',
+  'warifif',
+  'upnihnuj',
+  'ubkuznav',
+  'rurlizo',
+];

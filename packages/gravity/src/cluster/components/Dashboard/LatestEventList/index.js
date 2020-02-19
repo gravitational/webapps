@@ -16,4 +16,3 @@ limitations under the License.
 
 import LatestEventList from './LatestEventList';
 export default LatestEventList;
-

@@ -16,7 +16,7 @@ limitations under the License.
 
 import { at } from 'lodash';
 
-export default function makeJoinToken(json){
-  const [ token ] = at(json, [ 'token' ]);
+export default function makeJoinToken(json) {
+  const [token] = at(json, ['token']);
   return token;
 }

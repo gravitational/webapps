@@ -16,6 +16,4 @@ limitations under the License.
 
 import withAuth from './withAuth';
 
-export {
-  withAuth,
-};
+export { withAuth };

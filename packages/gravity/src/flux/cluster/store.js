@@ -15,12 +15,12 @@ limitations under the License.
 */
 
 import { Store } from 'nuclear-js';
-import { Record} from 'immutable';
+import { Record } from 'immutable';
 import { CLUSTER_SET } from './actionTypes';
 
 const StoreRec = Record({
-  cluster: { }
-})
+  cluster: {},
+});
 
 export default Store({
   getInitialState() {
@@ -29,14 +29,14 @@ export default Store({
 
   initialize() {
     this.on(CLUSTER_SET, setCluster);
-  }
-})
+  },
+});
 
-function setCluster(state, json){
+function setCluster(state, json) {
   const cluster = {
     ...state.cluster,
-    ...json
-  }
+    ...json,
+  };
 
-  return state.set('cluster', cluster)
+  return state.set('cluster', cluster);
 }

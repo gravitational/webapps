@@ -16,4 +16,3 @@ limitations under the License.
 
 import UserDeleteDialog from './UserDeleteDialog';
 export default UserDeleteDialog;
-

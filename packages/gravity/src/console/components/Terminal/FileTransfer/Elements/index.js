@@ -22,18 +22,14 @@ import Button from './Button';
 import Input from './Input';
 import Label from './Label';
 
-export {
-  Button,
-  Input,
-  Label
-}
+export { Button, Input, Label };
 
-export const Header = ({children}) => (
+export const Header = ({ children }) => (
   <Text fontSize={0} bold caps mb={3} children={children} />
-)
+);
 
 export const Form = styled(Box)`
   font-size: ${props => props.theme.fontSizes[0]}px;
   background-color: ${colors.dark};
-  color: ${colors.terminal}
-`
+  color: ${colors.terminal};
+`;

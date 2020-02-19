@@ -15,7 +15,7 @@ limitations under the License.
 */
 
 import { Store, toImmutable } from 'nuclear-js';
-import { Record} from 'immutable';
+import { Record } from 'immutable';
 import { USER_RECEIVE } from './actionTypes';
 import { AuthTypeEnum } from 'gravity/services/enums';
 
@@ -24,18 +24,17 @@ class UserRec extends Record({
   email: '',
   name: '',
   authType: '',
-  accountId: ''
-}){
-
-  constructor(props){
+  accountId: '',
+}) {
+  constructor(props) {
     super({
       ...props,
-      userId: props.email || props.name
+      userId: props.email || props.name,
     });
   }
 
   isSso() {
-    return this.authType === AuthTypeEnum.SSO
+    return this.authType === AuthTypeEnum.SSO;
   }
 }
 
@@ -46,9 +45,9 @@ export default Store({
 
   initialize() {
     this.on(USER_RECEIVE, receiveUser);
-  }
-})
+  },
+});
 
-function receiveUser(state, json){
+function receiveUser(state, json) {
   return new UserRec(json);
 }

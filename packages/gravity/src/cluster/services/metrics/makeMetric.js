@@ -16,7 +16,7 @@ limitations under the License.
 
 import { map } from 'lodash';
 
-export default function makeMetrics(json){
+export default function makeMetrics(json) {
   json = json || {};
 
   const {
@@ -31,21 +31,21 @@ export default function makeMetrics(json){
     ramTotal: total_memory_bytes,
     cpu: makeMetric(cpu_rates),
     ram: makeMetric(memory_rates),
-  }
+  };
 }
 
-function makeMetric(json){
+function makeMetric(json) {
   json = json || {};
 
-  const { current=0, max=0, historic=[] } = json;
+  const { current = 0, max = 0, historic = [] } = json;
   const data = map(historic, h => ({
     time: new Date(h.time),
-    value: h.value
-  }))
+    value: h.value,
+  }));
 
   return {
     current,
     max,
     data,
-  }
+  };
 }

@@ -16,4 +16,3 @@ limitations under the License.
 
 import SecretList from './SecretList';
 export default SecretList;
-

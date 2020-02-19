@@ -16,4 +16,3 @@ limitations under the License.
 
 import ClusterTags from './ClusterTags';
 export default ClusterTags;
-

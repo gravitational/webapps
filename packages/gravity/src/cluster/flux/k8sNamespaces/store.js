@@ -15,7 +15,7 @@ limitations under the License.
 */
 
 import { Store, toImmutable } from 'nuclear-js';
-import  { SITE_RECEIVE_NAMESPACES } from './actionTypes';
+import { SITE_RECEIVE_NAMESPACES } from './actionTypes';
 
 export default Store({
   getInitialState() {
@@ -24,9 +24,9 @@ export default Store({
 
   initialize() {
     this.on(SITE_RECEIVE_NAMESPACES, receiveNamespaces);
-  }
-})
+  },
+});
 
-function receiveNamespaces(state, namespaceDataArray){
+function receiveNamespaces(state, namespaceDataArray) {
   return toImmutable(namespaceDataArray);
 }

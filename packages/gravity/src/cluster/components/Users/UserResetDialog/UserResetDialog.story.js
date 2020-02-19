@@ -14,36 +14,34 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React from 'react'
+import React from 'react';
 import $ from 'jQuery';
-import { storiesOf } from '@storybook/react'
+import { storiesOf } from '@storybook/react';
 import UserResetDialog from './UserResetDialog';
 
 const dialogProps = {
   siteId: 'siteId',
   userId: 'john@smith.com',
-  attempt: { },
-  attemptActions: { },
+  attempt: {},
+  attemptActions: {},
   onReset: () => {
-    return $.Deferred().reject(new Error('server error'))
+    return $.Deferred().reject(new Error('server error'));
   },
-  onClose: () => null
-}
+  onClose: () => null,
+};
 
 storiesOf('Gravity/Users/UserResetDialog', module)
-  .add('UserResetDialog', () => (
-    <UserResetDialog {...dialogProps} />
-  ))
+  .add('UserResetDialog', () => <UserResetDialog {...dialogProps} />)
   .add('Reset Linkr', () => (
     <UserResetDialog
-      { ...dialogProps }
-      attempt={{isSuccess: true}}
+      {...dialogProps}
+      attempt={{ isSuccess: true }}
       resetLink="https://localhost/sample/link"
     />
   ))
   .add('Error', () => (
     <UserResetDialog
-      { ...dialogProps }
-      attempt={{isFailed: true, message: "server error"}}
+      {...dialogProps}
+      attempt={{ isFailed: true, message: 'server error' }}
     />
   ));

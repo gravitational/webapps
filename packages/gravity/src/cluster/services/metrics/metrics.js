@@ -19,16 +19,17 @@ import cfg from 'gravity/config';
 import makeMetric from './makeMetric';
 
 const service = {
-
-  fetchShort(){
-    return api.get(cfg.getSiteMetricsUrl({ interval: '1m', step: '10s' }))
+  fetchShort() {
+    return api
+      .get(cfg.getSiteMetricsUrl({ interval: '1m', step: '10s' }))
       .then(json => makeMetric(json));
   },
 
-  fetchLong(){
-    return api.get(cfg.getSiteMetricsUrl({ interval: '720h', step: '240h' }))
+  fetchLong() {
+    return api
+      .get(cfg.getSiteMetricsUrl({ interval: '720h', step: '240h' }))
       .then(json => makeMetric(json));
-  }
-}
+  },
+};
 
 export default service;

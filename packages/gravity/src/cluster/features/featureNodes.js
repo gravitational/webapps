@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import cfg from 'gravity/config'
+import cfg from 'gravity/config';
 import withFeature, { FeatureBase } from 'gravity/components/withFeature';
 import { addSideNavItem } from 'gravity/cluster/flux/nav/actions';
 import { fetchNodes } from 'gravity/cluster/flux/nodes/actions';
@@ -22,18 +22,18 @@ import * as Icons from 'design/Icon';
 import Nodes from '../components/Nodes';
 
 class FeatureNodes extends FeatureBase {
-  constructor(){
-    super()
+  constructor() {
+    super();
     this.Component = withFeature(this)(Nodes);
   }
 
-  getRoute(){
+  getRoute() {
     return {
       title: 'Nodes',
       path: cfg.routes.siteServers,
       exact: true,
-      component: this.Component
-    }
+      component: this.Component,
+    };
   }
 
   onload() {
@@ -41,8 +41,8 @@ class FeatureNodes extends FeatureBase {
       title: 'Nodes',
       Icon: Icons.Layers,
       exact: true,
-      to: cfg.getSiteServersRoute()
-    })
+      to: cfg.getSiteServersRoute(),
+    });
 
     this.setProcessing();
     fetchNodes()

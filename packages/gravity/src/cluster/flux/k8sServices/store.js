@@ -15,7 +15,7 @@ limitations under the License.
 */
 
 import { Store, toImmutable } from 'nuclear-js';
-import  { SITE_RECEIVE_SERVICES } from './actionTypes';
+import { SITE_RECEIVE_SERVICES } from './actionTypes';
 
 export default Store({
   getInitialState() {
@@ -24,14 +24,14 @@ export default Store({
 
   initialize() {
     this.on(SITE_RECEIVE_SERVICES, receiveServices);
-  }
-})
+  },
+});
 
-function receiveServices(state, serviceArrayData){
+function receiveServices(state, serviceArrayData) {
   let newState = toImmutable({});
   return newState.withMutations(state => {
-    serviceArrayData.forEach((item) => {
-        state.set(item.metadata.selfLink, toImmutable(item))
-      })
-   });
+    serviceArrayData.forEach(item => {
+      state.set(item.metadata.selfLink, toImmutable(item));
+    });
+  });
 }

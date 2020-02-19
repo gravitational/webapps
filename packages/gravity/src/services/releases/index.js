@@ -17,7 +17,4 @@ limitations under the License.
 import { service } from './releases';
 import makeRelease, { StatusEnum } from './makeRelease';
 export default service;
-export {
-  makeRelease,
-  StatusEnum
-}
+export { makeRelease, StatusEnum };

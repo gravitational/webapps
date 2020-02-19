@@ -19,10 +19,8 @@ import { Record } from 'immutable';
 import { CLUSTER_APPS_RECEIVE } from './actionTypes';
 
 const StoreRec = Record({
-  apps: {
-
-  },
-})
+  apps: {},
+});
 
 export default Store({
   getInitialState() {
@@ -30,10 +28,10 @@ export default Store({
   },
 
   initialize() {
-    this.on(CLUSTER_APPS_RECEIVE, receiveApps)
-  }
-})
+    this.on(CLUSTER_APPS_RECEIVE, receiveApps);
+  },
+});
 
-function receiveApps(state, json){
+function receiveApps(state, json) {
   return state.set('apps', json);
 }

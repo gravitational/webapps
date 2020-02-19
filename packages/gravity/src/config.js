@@ -23,13 +23,12 @@ import { Auth2faTypeEnum } from 'gravity/services/enums';
 const accountId = '00000000-0000-0000-0000-000000000001';
 
 const cfg = {
-
   defaultSiteId: 'undefined',
 
   logo: null,
 
   systemInfo: {
-    clusterName: ''
+    clusterName: '',
   },
 
   baseUrl: window.location.origin,
@@ -51,7 +50,7 @@ const cfg = {
     logo: null,
 
     login: {
-      headerText: 'Gravity'
+      headerText: 'Gravity',
     },
   },
 
@@ -60,18 +59,18 @@ const cfg = {
       interfaces: {
         ipv4: {
           labelText: 'IP Address',
-          toolipText: 'IP address used to communicate within the cluster'
-        }
+          toolipText: 'IP address used to communicate within the cluster',
+        },
       },
       mounts: {
         /*
-        *  'name': {
-        *    labelText: 'input field label',
-        *    toolipText: 'input field tooltip'
-        * }
-        */
-      }
-    }
+         *  'name': {
+         *    labelText: 'input field label',
+         *    toolipText: 'input field tooltip'
+         * }
+         */
+      },
+    },
   },
 
   routes: {
@@ -104,7 +103,8 @@ const cfg = {
     siteServers: '/web/site/:siteId/servers',
     siteLogs: '/web/site/:siteId/logs',
     siteMonitor: '/web/site/:siteId/monitor',
-    siteMonitorPod: '/web/site/:siteId/monitor/dashboard/db/pods?var-namespace=:namespace&var-podname=:podName',
+    siteMonitorPod:
+      '/web/site/:siteId/monitor/dashboard/db/pods?var-namespace=:namespace&var-podname=:podName',
     siteK8s: '/web/site/:siteId/k8s/:namespace?/:category?',
     siteK8sConfigMaps: '/web/site/:siteId/k8s/:namespace/configs',
     siteK8sSecrets: '/web/site/:siteId/k8s/:namespace/secrets',
@@ -116,7 +116,8 @@ const cfg = {
     console: '/web/site/:siteId/console',
     consoleSession: '/web/site/:siteId/console/session/:sid',
     consoleInitSession: '/web/site/:siteId/console/node/:serverId/:login',
-    consoleInitPodSession: '/web/site/:siteId/console/container/:serverId/namespace/:namespace/:pod/:container/:login',
+    consoleInitPodSession:
+      '/web/site/:siteId/console/container/:serverId/namespace/:namespace/:pod/:container/:login',
     consoleSessionPlayer: '/web/site/:siteId/console/player/:sid',
 
     // sso redirects
@@ -124,27 +125,26 @@ const cfg = {
   },
 
   modules: {
-
     site: {
       defaultNamespace: 'default',
       features: {
         license: {
-          enabled: false
+          enabled: false,
         },
         logs: {
-          enabled: true
+          enabled: true,
         },
         k8s: {
-          enabled: true
+          enabled: true,
         },
         configMaps: {
-          enabled: true
+          enabled: true,
         },
         monitoring: {
           enabled: true,
-          grafanaDefaultDashboardUrl: 'dashboard/db/cluster'
-        }
-      }
+          grafanaDefaultDashboardUrl: 'dashboard/db/cluster',
+        },
+      },
     },
 
     installer: {
@@ -155,37 +155,46 @@ const cfg = {
       licenseOptionTrialText: 'Trial without license',
       licenseOptionText: 'With a license',
       licenseUserHintText: `If you have a license, please insert it here. In the next steps you will select the location of your application and the capacity you need`,
-      progressUserHintText: 'Your infrastructure is being provisioned and your application is being installed.\n\n Once the installation is complete you will be taken to your infrastructure where you can access your application.',
+      progressUserHintText:
+        'Your infrastructure is being provisioned and your application is being installed.\n\n Once the installation is complete you will be taken to your infrastructure where you can access your application.',
       prereqUserHintText: `The cluster name will be used for issuing SSH and HTTP/TLS certificates to securely access the cluster.\n\n For this reason it is recommended to use a fully qualified domain name (FQDN) for the cluster name, e.g. prod.example.com`,
-      provisionUserHintText: 'Drag the slider to estimate the number of resources needed for that performance level. You can also add / remove resources after the installation. \n\n Once you click "Start Installation" the resources will be provisioned on your infrastructure.',
-      iamPermissionsHelpLink: 'https://gravitational.com/gravity/docs/overview/',
-    }
+      provisionUserHintText:
+        'Drag the slider to estimate the number of resources needed for that performance level. You can also add / remove resources after the installation. \n\n Once you click "Start Installation" the resources will be provisioned on your infrastructure.',
+      iamPermissionsHelpLink:
+        'https://gravitational.com/gravity/docs/overview/',
+    },
   },
 
   api: {
     // portal
     appsPath: '/app/v1/applications/:repository?/:name?/:version?',
     licenseValidationPath: '/portalapi/v1/license/validate',
-    standaloneInstallerPath: '/portalapi/v1/apps/:repository/:name/:version/installer',
+    standaloneInstallerPath:
+      '/portalapi/v1/apps/:repository/:name/:version/installer',
 
     // provider
     providerPath: '/portalapi/v1/provider',
 
     // operations
     operationPath: '/portalapi/v1/sites/:siteId/operations/:opId?',
-    operationProgressPath: '/portalapi/v1/sites/:siteId/operations/:opId/progress',
+    operationProgressPath:
+      '/portalapi/v1/sites/:siteId/operations/:opId/progress',
     operationAgentPath: '/portalapi/v1/sites/:siteId/operations/:opId/agent',
     operationStartPath: '/portalapi/v1/sites/:siteId/operations/:opId/start',
-    operationPrecheckPath: '/portalapi/v1/sites/:siteId/operations/:opId/prechecks',
+    operationPrecheckPath:
+      '/portalapi/v1/sites/:siteId/operations/:opId/prechecks',
     operationLogsPath: `/portal/v1/accounts/${accountId}/sites/:siteId/operations/common/:opId/logs?access_token=:token`,
     shrinkSitePath: '/portalapi/v1/sites/:siteId/shrink',
 
     // auth & session management
-    ssoOidc: '/proxy/v1/webapi/oidc/login/web?redirect_url=:redirect&connector_id=:providerName',
-    ssoSaml: '/proxy/v1/webapi/saml/sso?redirect_url=:redirect&connector_id=:providerName',
+    ssoOidc:
+      '/proxy/v1/webapi/oidc/login/web?redirect_url=:redirect&connector_id=:providerName',
+    ssoSaml:
+      '/proxy/v1/webapi/saml/sso?redirect_url=:redirect&connector_id=:providerName',
     renewTokenPath: '/proxy/v1/webapi/sessions/renew',
     sessionPath: '/proxy/v1/webapi/sessions',
-    u2fCreateUserChallengePath: '/proxy/v1/webapi/u2f/signuptokens/:inviteToken',
+    u2fCreateUserChallengePath:
+      '/proxy/v1/webapi/u2f/signuptokens/:inviteToken',
     u2fCreateUserPath: '/proxy/v1/webapi/u2f/users',
     u2fSessionChallengePath: '/proxy/v1/webapi/u2f/signrequest',
     u2fSessionPath: '/proxy/v1/webapi/u2f/sessions',
@@ -201,9 +210,12 @@ const cfg = {
     userStatusPath: '/portalapi/v1/user/status',
 
     // terminal
-    ttyWsAddr: 'wss://:fqdm/proxy/v1/webapi/sites/:cluster/connect?access_token=:token&params=:params',
-    ttyWsK8sPodAddr: 'wss://:fqdm/portalapi/v1/sites/:cluster/connect?access_token=:token&params=:params',
-    scp: '/proxy/v1/webapi/sites/:siteId/nodes/:serverId/:login/scp?location=:location&filename=:filename',
+    ttyWsAddr:
+      'wss://:fqdm/proxy/v1/webapi/sites/:cluster/connect?access_token=:token&params=:params',
+    ttyWsK8sPodAddr:
+      'wss://:fqdm/portalapi/v1/sites/:cluster/connect?access_token=:token&params=:params',
+    scp:
+      '/proxy/v1/webapi/sites/:siteId/nodes/:serverId/:login/scp?location=:location&filename=:filename',
 
     // site
     siteUserContextPath: '/portalapi/v1/sites/:siteId/context',
@@ -224,7 +236,8 @@ const cfg = {
     siteFlavorsPath: '/portalapi/v1/sites/:siteId/flavors',
     siteLicensePath: '/portalapi/v1/sites/:siteId/license',
     siteLogForwardersPath: '/portalapi/v1/sites/:siteId/logs/forwarders',
-    siteMetricsPath: '/portalapi/v1/sites/:siteId/monitoring/metrics?interval=:interval&step=:step',
+    siteMetricsPath:
+      '/portalapi/v1/sites/:siteId/monitoring/metrics?interval=:interval&step=:step',
     siteRemoteAccessPath: '/portalapi/v1/sites/:siteId/access',
     siteGrafanaContextPath: '/portalapi/v1/sites/:siteId/grafana',
     siteResourcePath: '/portalapi/v1/sites/:siteId/resources/:kind?',
@@ -258,13 +271,31 @@ const cfg = {
 
   getConsoleInitSessionRoute({ siteId, login, serverId, sid }) {
     siteId = siteId || cfg.defaultSiteId;
-    return generatePath(cfg.routes.consoleInitSession, { siteId, serverId, login, sid });
+    return generatePath(cfg.routes.consoleInitSession, {
+      siteId,
+      serverId,
+      login,
+      sid,
+    });
   },
 
-  getConsoleInitPodSessionRoute({ siteId, serverId, namespace, pod, container, login }) {
+  getConsoleInitPodSessionRoute({
+    siteId,
+    serverId,
+    namespace,
+    pod,
+    container,
+    login,
+  }) {
     siteId = siteId || cfg.defaultSiteId;
-    return generatePath(cfg.routes.consoleInitPodSession,
-      { namespace, pod, container, login, serverId, siteId });
+    return generatePath(cfg.routes.consoleInitPodSession, {
+      namespace,
+      pod,
+      container,
+      login,
+      serverId,
+      siteId,
+    });
   },
 
   getSiteCertificateRoute(siteId) {
@@ -293,7 +324,11 @@ const cfg = {
   },
 
   getSiteK8sPodMonitorRoute(siteId, namespace, podName) {
-    return generatePath(cfg.routes.siteMonitorPod, { siteId, namespace, podName });
+    return generatePath(cfg.routes.siteMonitorPod, {
+      siteId,
+      namespace,
+      podName,
+    });
   },
 
   getSiteMonitorRoute(siteId) {
@@ -347,12 +382,15 @@ const cfg = {
   },
 
   getInstallNewSiteRoute(name, repository, version) {
-    return generatePath(cfg.routes.installerApp,
-      { name, repository, version });
+    return generatePath(cfg.routes.installerApp, { name, repository, version });
   },
 
   getStandaloneInstallerPath(name, repository, version) {
-    return generatePath(cfg.api.standaloneInstallerPath, { name, repository, version });
+    return generatePath(cfg.api.standaloneInstallerPath, {
+      name,
+      repository,
+      version,
+    });
   },
 
   getSiteAppsUrl(siteId) {
@@ -382,7 +420,7 @@ const cfg = {
 
   getSiteRemoveResourcesUrl(kind, id) {
     const siteId = cfg.defaultSiteId;
-    return generatePath(cfg.api.siteRemoveResourcePath, { siteId, kind, id })
+    return generatePath(cfg.api.siteRemoveResourcePath, { siteId, kind, id });
   },
 
   getSiteReportUrl() {
@@ -398,7 +436,7 @@ const cfg = {
   getSiteOperationReportUrl(siteId, opId) {
     return generatePath(cfg.api.siteOperationReportPath, {
       siteId,
-      opId
+      opId,
     });
   },
 
@@ -410,7 +448,7 @@ const cfg = {
   getSiteUserUrl(siteId) {
     siteId = siteId || cfg.defaultSiteId;
     const url = generatePath(cfg.api.siteUsersPath, { siteId });
-    return url.replace(/\/$/, "");
+    return url.replace(/\/$/, '');
   },
 
   getSiteRemoteAccessUrl(siteId) {
@@ -452,7 +490,10 @@ const cfg = {
 
   getOperationUrl({ siteId, opId }) {
     siteId = siteId || cfg.defaultSiteId;
-    return generatePath(cfg.api.operationPath, { siteId, opId }).replace(/\/$/g, '');
+    return generatePath(cfg.api.operationPath, { siteId, opId }).replace(
+      /\/$/g,
+      ''
+    );
   },
 
   getOperationAgentUrl(siteId, opId) {
@@ -510,7 +551,7 @@ const cfg = {
   },
 
   getCheckDomainNameUrl(domainName) {
-    return generatePath(cfg.api.checkDomainNamePath, { domainName })
+    return generatePath(cfg.api.checkDomainNamePath, { domainName });
   },
 
   getAccountDeleteInviteUrl({ siteId, inviteId }) {
@@ -528,7 +569,11 @@ const cfg = {
   },
 
   getSsoUrl(providerUrl, providerName, redirect) {
-    return cfg.baseUrl + "/proxy" + generatePath(providerUrl, { redirect, providerName });
+    return (
+      cfg.baseUrl +
+      '/proxy' +
+      generatePath(providerUrl, { redirect, providerName })
+    );
   },
 
   getAuth2faType() {
@@ -585,7 +630,10 @@ const cfg = {
   },
 
   getSiteDefaultDashboard() {
-    let [suffix] = at(cfg, 'modules.site.features.monitoring.grafanaDefaultDashboardUrl');
+    let [suffix] = at(
+      cfg,
+      'modules.site.features.monitoring.grafanaDefaultDashboardUrl'
+    );
     return suffix;
   },
 
@@ -600,7 +648,13 @@ const cfg = {
   },
 
   getScpUrl({ siteId, serverId, login, location, filename }) {
-    return generatePath(cfg.api.scp, { siteId, serverId, login, location, filename });
+    return generatePath(cfg.api.scp, {
+      siteId,
+      serverId,
+      login,
+      location,
+      filename,
+    });
   },
 
   enableSiteLicense(value = false) {
@@ -644,9 +698,9 @@ const cfg = {
   },
 
   /**
- * getLocalSiteId returns local cluster id.
- * for remotely accessing clusters this will always be HUB cluster id.
- */
+   * getLocalSiteId returns local cluster id.
+   * for remotely accessing clusters this will always be HUB cluster id.
+   */
   getLocalSiteId() {
     const [siteId] = at(cfg, 'systemInfo.clusterName');
     return siteId;
@@ -662,7 +716,7 @@ const cfg = {
 
   init(config = {}) {
     $.extend(true, this, config);
-  }
-}
+  },
+};
 
 export default cfg;

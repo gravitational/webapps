@@ -26,15 +26,13 @@ export const StepEnum = {
   PROVISION: 'provision',
   PROGRESS: 'progress',
   USER: 'user',
-}
+};
 
 const defaultServiceSubnet = '10.100.0.0/16';
 const defaultPodSubnet = '10.244.0.0/16';
 
 export default class InstallerStore extends Store {
-
   state = {
-
     // Current installation step
     step: '',
 
@@ -54,8 +52,7 @@ export default class InstallerStore extends Store {
     eulaAccepted: false,
 
     // Application data
-    app: {
-    },
+    app: {},
 
     // Install operation data
     operation: null,
@@ -76,60 +73,59 @@ export default class InstallerStore extends Store {
 
     // Parameters for selected flavor and connected servers
     provision: {
-      profiles: {
-      },
-      servers: []
+      profiles: {},
+      servers: [],
     },
 
     // Joined onprem servers
-    agentServers: []
-  }
+    agentServers: [],
+  };
 
   acceptEula = () => {
     this.setState({
-      eulaAccepted: true
-    })
-  }
+      eulaAccepted: true,
+    });
+  };
 
   setError(err) {
     this.setState({
       status: 'error',
-      statusText: err.message
-    })
+      statusText: err.message,
+    });
   }
 
   setLicense(license) {
     this.setState({
       license,
-      step: StepEnum.NEW_APP
-    })
+      step: StepEnum.NEW_APP,
+    });
   }
 
   setClusterTags(tags) {
     this.setState({
       tags: {
-        ...tags
-      }
-    })
+        ...tags,
+      },
+    });
   }
 
   setStepProgress() {
     this.setState({
-      step: StepEnum.PROGRESS
-    })
+      step: StepEnum.PROGRESS,
+    });
   }
 
   setOnpremSubnets(serviceSubnet, podSubnet) {
     this.setState({
       serviceSubnet,
-      podSubnet
-    })
+      podSubnet,
+    });
   }
 
   setClusterName(clusterName) {
     this.setState({
-      clusterName
-    })
+      clusterName,
+    });
   }
 
   makeOnpremRequest() {
@@ -141,15 +137,15 @@ export default class InstallerStore extends Store {
       domain_name: clusterName,
       provider: null,
       license,
-      labels: tags
+      labels: tags,
     };
 
     request.provider = {
       provisioner: ProviderEnum.ONPREM,
       [ProviderEnum.ONPREM]: {
         pod_cidr: podSubnet,
-        service_cidr: serviceSubnet
-      }
+        service_cidr: serviceSubnet,
+      },
     };
 
     return request;
@@ -159,8 +155,8 @@ export default class InstallerStore extends Store {
     const { siteId, id: opId } = this.state.operation;
     return {
       siteId,
-      opId
-    }
+      opId,
+    };
   }
 
   makeStartInstallRequest() {
@@ -168,17 +164,16 @@ export default class InstallerStore extends Store {
       siteId: this.state.operation.siteId,
       opId: this.state.operation.id,
       profiles: {},
-      servers: []
+      servers: [],
     };
-
 
     keys(this.state.provision.profiles).forEach(key => {
       const { instanceType, count } = this.state.provision.profiles[key];
       request.profiles[key] = {
         instance_type: instanceType,
-        count
-      }
-    })
+        count,
+      };
+    });
 
     const serverMap = this.state.provision.servers;
     keys(serverMap).map(role => {
@@ -190,7 +185,7 @@ export default class InstallerStore extends Store {
         const hostname = server.hostname;
         const mounts = map(server.mounts, mount => ({
           name: mount.name,
-          source: mount.value
+          source: mount.value,
         }));
 
         request.servers.push({
@@ -200,9 +195,9 @@ export default class InstallerStore extends Store {
           advertise_ip,
           hostname,
           mounts,
-        })
-      })
-    })
+        });
+      });
+    });
 
     return request;
   }
@@ -215,8 +210,8 @@ export default class InstallerStore extends Store {
       { value: StepEnum.NEW_APP, title: 'Cluster name' },
       { value: StepEnum.PROVISION, title: 'Capacity' },
       { value: StepEnum.PROGRESS, title: 'Installation' },
-      { value: StepEnum.USER, title: 'Create Admin' }
-    ]
+      { value: StepEnum.USER, title: 'Create Admin' },
+    ];
 
     // remove license step
     if (!app.licenseRequired) {
@@ -226,17 +221,13 @@ export default class InstallerStore extends Store {
 
     // remove bandwagon step
     if (app.bandwagon) {
-      stepOptions.unshift()
+      stepOptions.unshift();
     }
 
-    const [
-      installerConfig,
-      agentReportConfig
-    ] = at(app,
-      [
-        'config.modules.installer',
-        'config.agentReport'
-      ]);
+    const [installerConfig, agentReportConfig] = at(app, [
+      'config.modules.installer',
+      'config.agentReport',
+    ]);
 
     // TODO: fixme
     // overrides default agent report config
@@ -249,7 +240,7 @@ export default class InstallerStore extends Store {
       app,
       step,
       config,
-    })
+    });
   }
 
   initWithCluster(details) {
@@ -260,33 +251,33 @@ export default class InstallerStore extends Store {
       flavors,
       step,
       operation,
-      eulaAccepted: true
-    })
+      eulaAccepted: true,
+    });
   }
 
   setProvisionProfiles(profiles) {
-    const provisitProfiles = {}
+    const provisitProfiles = {};
 
     forEach(profiles, p => {
       provisitProfiles[p.name] = {
-        count: p.count
-      }
+        count: p.count,
+      };
     });
 
     const provision = {
       ...this.state.provision,
-      profiles: provisitProfiles
-    }
+      profiles: provisitProfiles,
+    };
 
     this.setState({
-      provision
-    })
+      provision,
+    });
   }
 
   setAgentServers(agentServers) {
     this.setState({
-      agentServers
-    })
+      agentServers,
+    });
   }
 
   setServerVars({ role, hostname, ip, mounts }) {
@@ -294,19 +285,19 @@ export default class InstallerStore extends Store {
       role,
       hostname,
       ip,
-      mounts
-    })
+      mounts,
+    });
 
     this.setState({
-      ...this.state.provision
-    })
+      ...this.state.provision,
+    });
   }
 
   removeServerVars({ role, hostname }) {
     unset(this.state.provision, ['servers', role, hostname]);
     this.setState({
-      ...this.state.provision
-    })
+      ...this.state.provision,
+    });
   }
 }
 
@@ -335,6 +326,6 @@ export function useInstallerContext() {
 }
 
 export function useInstallerStore() {
-  const store = useInstallerContext()
+  const store = useInstallerContext();
   return useStore(store);
 }

@@ -17,7 +17,7 @@ limitations under the License.
 import React from 'react';
 import styled from 'styled-components';
 import { Flex, Text, Box, ButtonSecondary, ButtonPrimary } from 'design';
-import { DialogContent, DialogFooter} from 'design/DialogConfirmation';
+import { DialogContent, DialogFooter } from 'design/DialogConfirmation';
 
 export default function ProfileSelector(props) {
   const { value, options, onChange, onContinue, onClose } = props;
@@ -27,15 +27,13 @@ export default function ProfileSelector(props) {
         <Text typography="h6" mb="3" caps color="primary.contrastText">
           Select Profile
         </Text>
-        <RadioGroup options={options} selected={value} onChange={onChange}/>
+        <RadioGroup options={options} selected={value} onChange={onChange} />
       </DialogContent>
       <DialogFooter>
         <ButtonPrimary mr="3" onClick={onContinue}>
           Continue
         </ButtonPrimary>
-        <ButtonSecondary onClick={onClose}>
-          Cancel
-        </ButtonSecondary>
+        <ButtonSecondary onClick={onClose}>Cancel</ButtonSecondary>
       </DialogFooter>
     </React.Fragment>
   );
@@ -45,7 +43,9 @@ function RadioGroup({ selected, options, onChange, ...props }) {
   const $options = options.map((option, index) => {
     return (
       <Flex key={index} mb="4" as="label" alignItems="center">
-        <input type="radio" name="radio"
+        <input
+          type="radio"
+          name="radio"
           onChange={() => onChange(option)}
           checked={option.value === selected.value}
         />
@@ -53,18 +53,13 @@ function RadioGroup({ selected, options, onChange, ...props }) {
           {option.title}
         </Text>
       </Flex>
-    )
+    );
   });
 
-  return (
-    <StyledRadioGroup {...props}>
-      {$options}
-    </StyledRadioGroup>
-  );
+  return <StyledRadioGroup {...props}>{$options}</StyledRadioGroup>;
 }
 
 const StyledRadioGroup = styled(Box)`
-
   label {
     cursor: pointer;
   }
@@ -73,7 +68,7 @@ const StyledRadioGroup = styled(Box)`
     -webkit-appearance: none;
     margin: 0;
     background: white;
-    border: 2px solid ${ props => props.theme.colors.secondary.main};
+    border: 2px solid ${props => props.theme.colors.secondary.main};
     border-radius: 1000px;
     height: 20px;
     width: 20px;
@@ -84,11 +79,11 @@ const StyledRadioGroup = styled(Box)`
   input:checked {
     position: relative;
     background-color: white;
-    box-shadow: 0 2px 16px ${ props => props.theme.colors.secondary.main};
+    box-shadow: 0 2px 16px ${props => props.theme.colors.secondary.main};
   }
 
   input:checked::before {
-    background-color: ${ props => props.theme.colors.secondary.main };
+    background-color: ${props => props.theme.colors.secondary.main};
     position: absolute;
     content: '';
     border-radius: 1000px;
@@ -97,4 +92,4 @@ const StyledRadioGroup = styled(Box)`
     top: 4px;
     left: 4px;
   }
-`
+`;

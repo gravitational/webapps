@@ -16,4 +16,3 @@ limitations under the License.
 
 import MetricsCharts from './MetricsCharts';
 export default MetricsCharts;
-

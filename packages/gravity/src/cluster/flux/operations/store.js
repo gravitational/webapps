@@ -22,9 +22,9 @@ import { StatusEnum } from 'gravity/services/operations';
 class OperationStoreRec extends Record({
   operations: [],
   progress: {},
-}){
+}) {
   getActive() {
-    return this.operations.filter( o => o.status === StatusEnum.PROCESSING);
+    return this.operations.filter(o => o.status === StatusEnum.PROCESSING);
   }
 }
 
@@ -36,8 +36,8 @@ export default Store({
   initialize() {
     this.on(RECEIVE_OPERATIONS, receive);
     this.on(RECEIVE_PROGRESS, receiveProgress);
-  }
-})
+  },
+});
 
 function receive(state, sessions) {
   return state.set('operations', sessions);
@@ -46,8 +46,8 @@ function receive(state, sessions) {
 function receiveProgress(state, progress) {
   const progressMap = {
     ...state.progress,
-    [progress.opId]: progress
-  }
+    [progress.opId]: progress,
+  };
 
   return state.set('progress', progressMap);
 }

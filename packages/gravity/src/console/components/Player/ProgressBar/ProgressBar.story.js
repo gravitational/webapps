@@ -20,12 +20,10 @@ import ProgressBar from './ProgressBar';
 
 storiesOf('Gravity/Console/Player/ProgressBar', module)
   .add('ProgressBar (playing)', () => {
-    return (
-      <SampleProgressbar isPlaying={true} />);
+    return <SampleProgressbar isPlaying={true} />;
   })
   .add('ProgressBar (stopped)', () => {
-    return (
-      <SampleProgressbar isPlaying={false} />);
+    return <SampleProgressbar isPlaying={false} />;
   });
 
 class SampleProgressbar extends React.Component {
@@ -37,24 +35,23 @@ class SampleProgressbar extends React.Component {
       max: 200,
       value: 1,
       time: '12:12',
-      ...props
-    }
+      ...props,
+    };
   }
 
-  onChange = (value) => {
+  onChange = value => {
     this.setState({
-      value
-    })
-  }
+      value,
+    });
+  };
 
   render() {
     const props = {
       ...this.state,
       onChange: this.onChange,
       onToggle: () => null,
-    }
+    };
 
-    return (
-      <ProgressBar {...props} />);
+    return <ProgressBar {...props} />;
   }
 }

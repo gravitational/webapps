@@ -31,8 +31,8 @@ export default Store({
   initialize() {
     this.on(actionTypes.NAV_ADD_TOP_ITEM, addTopItem);
     this.on(actionTypes.NAV_ADD_SIDE_ITEM, addSiteItem);
-  }
-})
+  },
+});
 
 function addTopItem(state, item) {
   const items = [...state.topNav, item];

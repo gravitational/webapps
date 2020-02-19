@@ -16,11 +16,4 @@ limitations under the License.
 
 import { withRouter, Redirect, Router, NavLink, Route, Switch } from './Router';
 
-export {
-  withRouter,
-  Redirect,
-  Router,
-  Route,
-  Switch,
-  NavLink
-}
+export { withRouter, Redirect, Router, Route, Switch, NavLink };

@@ -16,4 +16,3 @@ limitations under the License.
 
 import FlavorSelector from './FlavorSelector';
 export default FlavorSelector;
-

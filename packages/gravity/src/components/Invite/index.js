@@ -15,4 +15,4 @@ limitations under the License.
 */
 
 import { Invite, PasswordReset } from './Invite';
-export { Invite, PasswordReset }
+export { Invite, PasswordReset };

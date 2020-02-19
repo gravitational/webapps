@@ -29,19 +29,19 @@ const Buffer = BufferModule.Buffer;
 
 export const MAX_SIZE = 5242880; // 5mg
 
-export class EventProvider{
-  constructor({url}){
+export class EventProvider {
+  constructor({ url }) {
     this.url = url;
     this.events = [];
   }
 
   getDuration() {
     const eventCount = this.events.length;
-    if(eventCount === 0) {
+    if (eventCount === 0) {
       return 0;
     }
 
-    return this.events[eventCount-1].msNormalized;
+    return this.events[eventCount - 1].msNormalized;
   }
 
   init() {
@@ -66,7 +66,7 @@ export class EventProvider{
       }
 
       return this._createEvents(json.events);
-    })
+    });
   }
 
   _fetchContent(events) {
@@ -79,31 +79,34 @@ export class EventProvider{
 
     // create a fetch request for each chunk
     const promises = [];
-    for (let i = 0; i < chunkCount; i++){
+    for (let i = 0; i < chunkCount; i++) {
       const url = `${this.url}/stream?offset=${offset}&bytes=${MAX_SIZE}`;
-      promises.push(api.ajax({
-        url,
-        processData: true,
-        dataType: 'text'
-      }));
+      promises.push(
+        api.ajax({
+          url,
+          processData: true,
+          dataType: 'text',
+        })
+      );
 
       offset = offset + MAX_SIZE;
     }
 
     // fetch all session chunks and then merge them in one
-    return $.when(...promises)
-      .then((...responses) => {
-        const allBytes = responses.reduce((byteStr, r) => byteStr + r, '');
-        return new Buffer(allBytes);
-      });
+    return $.when(...promises).then((...responses) => {
+      const allBytes = responses.reduce((byteStr, r) => byteStr + r, '');
+      return new Buffer(allBytes);
+    });
   }
 
-  _populatePrintEvents(buffer, events){
+  _populatePrintEvents(buffer, events) {
     let byteStrOffset = events[0].bytes;
     events[0].data = buffer.slice(0, byteStrOffset).toString('utf8');
-    for(var i = 1; i < events.length; i++){
-      let {bytes} = events[i];
-      events[i].data = buffer.slice(byteStrOffset, byteStrOffset + bytes).toString('utf8');
+    for (var i = 1; i < events.length; i++) {
+      let { bytes } = events[i];
+      events[i].data = buffer
+        .slice(byteStrOffset, byteStrOffset + bytes)
+        .toString('utf8');
       byteStrOffset += bytes;
     }
   }
@@ -113,11 +116,11 @@ export class EventProvider{
     let events = [];
 
     // filter print events and ensure that each has the right screen size and valid values
-    for(let i = 0; i < json.length; i++){
+    for (let i = 0; i < json.length; i++) {
       const { ms, event, offset, time, bytes } = json[i];
 
       // grab new screen size for the next events
-      if(event === EventTypeEnum.RESIZE || event === EventTypeEnum.START){
+      if (event === EventTypeEnum.RESIZE || event === EventTypeEnum.START) {
         [w, h] = json[i].size.split(':');
       }
 
@@ -129,14 +132,14 @@ export class EventProvider{
         events.push({
           eventType: event,
           ms: duration,
-          time: new Date(time)
+          time: new Date(time),
         });
 
         break;
       }
 
       // process only PRINT events
-      if(event !== EventTypeEnum.PRINT){
+      if (event !== EventTypeEnum.PRINT) {
         continue;
       }
 
@@ -148,7 +151,7 @@ export class EventProvider{
         data: null,
         w: Number(w),
         h: Number(h),
-        time: new Date(time)
+        time: new Date(time),
       });
     }
 
@@ -164,16 +167,16 @@ export class EventProvider{
       e.displayTime = formatDisplayTime(e.ms);
       e.ms = e.ms > 0 ? Math.floor(e.ms / 10) : 0;
       e.msNormalized = e.ms;
-    })
+    });
 
     let cur = events[0];
     let tmp = [];
-    for (let i = 1; i < events.length; i++){
+    for (let i = 1; i < events.length; i++) {
       const sameSize = cur.w === events[i].w && cur.h === events[i].h;
       const delay = events[i].ms - cur.ms;
 
       // merge events with tiny delay
-      if(delay < 2 && sameSize ){
+      if (delay < 2 && sameSize) {
         cur.bytes += events[i].bytes;
         continue;
       }
@@ -185,7 +188,7 @@ export class EventProvider{
       cur = events[i];
     }
 
-    if(tmp.indexOf(cur) === -1){
+    if (tmp.indexOf(cur) === -1) {
       tmp.push(cur);
     }
 
@@ -193,8 +196,8 @@ export class EventProvider{
   }
 }
 
-function formatDisplayTime(ms){
-  if(ms <= 0){
+function formatDisplayTime(ms) {
+  if (ms <= 0) {
     return '00:00';
   }
 
@@ -215,7 +218,7 @@ function shortenTime(value) {
   if (value >= 25 && value < 50) {
     return 25;
   } else if (value >= 50 && value < 100) {
-    return  50;
+    return 50;
   } else if (value >= 100) {
     return 100;
   } else {
@@ -228,7 +231,7 @@ function onlyPrintEvents(e) {
 }
 
 export class TtyPlayer extends Tty {
-  constructor({url}){
+  constructor({ url }) {
     super({});
     this.currentEventIndex = 0;
     this.current = 0;
@@ -240,20 +243,20 @@ export class TtyPlayer extends Tty {
     this.errText = '';
 
     this._posToEventIndexMap = [];
-    this._eventProvider = new EventProvider({url});
+    this._eventProvider = new EventProvider({ url });
   }
 
   // override
-  send(){
-  }
+  send() {}
 
   // override
-  connect(){
-    this._setStatusFlag({isLoading: true});
-    this._eventProvider.init()
+  connect() {
+    this._setStatusFlag({ isLoading: true });
+    this._eventProvider
+      .init()
       .then(() => {
         this._init();
-        this._setStatusFlag({isReady: true});
+        this._setStatusFlag({ isReady: true });
       })
       .fail(err => {
         logger.error('unable to init event provider', err);
@@ -267,36 +270,37 @@ export class TtyPlayer extends Tty {
   handleError(err) {
     this._setStatusFlag({
       isError: true,
-      errText: api.getErrorText(err)
-    })
+      errText: api.getErrorText(err),
+    });
   }
 
-  _init(){
+  _init() {
     this.duration = this._eventProvider.getDuration();
     this._eventProvider.events.forEach(item =>
-      this._posToEventIndexMap.push(item.msNormalized));
+      this._posToEventIndexMap.push(item.msNormalized)
+    );
   }
 
-  move(newPos){
-    if(!this.isReady){
+  move(newPos) {
+    if (!this.isReady) {
       return;
     }
 
-    if(newPos === undefined){
+    if (newPos === undefined) {
       newPos = this.current + 1;
     }
 
-    if(newPos < 0){
+    if (newPos < 0) {
       newPos = 0;
     }
 
-    if(newPos > this.duration){
+    if (newPos > this.duration) {
       this.stop();
     }
 
     const newEventIndex = this._getEventIndex(newPos) + 1;
 
-    if(newEventIndex === this.currentEventIndex){
+    if (newEventIndex === this.currentEventIndex) {
       this.current = newPos;
       this._change();
       return;
@@ -322,28 +326,27 @@ export class TtyPlayer extends Tty {
       this.currentEventIndex = newEventIndex;
       this.current = newPos;
       this._change();
-    }
-    catch(err){
+    } catch (err) {
       logger.error('move', err);
       this.handleError(err);
     }
   }
 
-  stop(){
+  stop() {
     this.isPlaying = false;
     this.timer = clearInterval(this.timer);
     this._change();
   }
 
-  play(){
-    if(this.isPlaying){
+  play() {
+    if (this.isPlaying) {
       return;
     }
 
     this.isPlaying = true;
 
     // start from the beginning if at the end
-    if(this.current >= this.duration){
+    if (this.current >= this.duration) {
       this.current = STREAM_START_INDEX;
       this.emit(TermEventEnum.RESET);
     }
@@ -352,11 +355,13 @@ export class TtyPlayer extends Tty {
     this._change();
   }
 
-  getCurrentTime(){
-    if(this.currentEventIndex){
-      let {displayTime} = this._eventProvider.events[this.currentEventIndex-1];
+  getCurrentTime() {
+    if (this.currentEventIndex) {
+      let { displayTime } = this._eventProvider.events[
+        this.currentEventIndex - 1
+      ];
       return displayTime;
-    }else{
+    } else {
       return '--:--';
     }
   }
@@ -370,23 +375,25 @@ export class TtyPlayer extends Tty {
       return;
     }
 
-    const groups = [{
-      data: [events[0].data],
-      w: events[0].w,
-      h: events[0].h
-    }];
+    const groups = [
+      {
+        data: [events[0].data],
+        w: events[0].w,
+        h: events[0].h,
+      },
+    ];
 
     let cur = groups[0];
 
     // group events by screen size and construct 1 chunk of data per group
-    for(let i = 1; i < events.length; i++){
-      if(cur.w === events[i].w && cur.h === events[i].h){
-        cur.data.push(events[i].data)
-      }else{
+    for (let i = 1; i < events.length; i++) {
+      if (cur.w === events[i].w && cur.h === events[i].h) {
+        cur.data.push(events[i].data);
+      } else {
         cur = {
           data: [events[i].data],
           w: events[i].w,
-          h: events[i].h
+          h: events[i].h,
         };
 
         groups.push(cur);
@@ -394,9 +401,9 @@ export class TtyPlayer extends Tty {
     }
 
     // render each group
-    for(let i = 0; i < groups.length; i ++){
+    for (let i = 0; i < groups.length; i++) {
       const str = groups[i].data.join('');
-      const {h, w} = groups[i];
+      const { h, w } = groups[i];
       if (str.length > 0) {
         this.emit(TermEventEnum.RESIZE, { h, w });
         this.emit(TermEventEnum.DATA, str);
@@ -404,12 +411,13 @@ export class TtyPlayer extends Tty {
     }
   }
 
-  _setStatusFlag(newStatus){
+  _setStatusFlag(newStatus) {
     const {
       isReady = false,
       isError = false,
       isLoading = false,
-      errText = '' } = newStatus;
+      errText = '',
+    } = newStatus;
 
     this.isReady = isReady;
     this.isError = isError;
@@ -417,13 +425,13 @@ export class TtyPlayer extends Tty {
     this.errText = errText;
   }
 
-  _getEventIndex(num){
+  _getEventIndex(num) {
     const arr = this._posToEventIndexMap;
     var low = 0;
     var hi = arr.length - 1;
 
     while (hi - low > 1) {
-      const mid = Math.floor ((low + hi) / 2);
+      const mid = Math.floor((low + hi) / 2);
       if (arr[mid] < num) {
         low = mid;
       } else {
@@ -438,10 +446,10 @@ export class TtyPlayer extends Tty {
     return hi;
   }
 
-  _change(){
+  _change() {
     this.emit('change');
   }
 }
 
 export default TtyPlayer;
-export { Buffer }
+export { Buffer };

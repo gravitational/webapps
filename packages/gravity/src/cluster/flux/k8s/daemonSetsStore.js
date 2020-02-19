@@ -15,18 +15,18 @@ limitations under the License.
 */
 
 import { Store, toImmutable } from 'nuclear-js';
-import  { RECEIVE_DAEMONSETS } from './actionTypes';
+import { RECEIVE_DAEMONSETS } from './actionTypes';
 
 export default Store({
   getInitialState() {
-    return toImmutable([])
+    return toImmutable([]);
   },
 
   initialize() {
-    this.on(RECEIVE_DAEMONSETS, receiveDaemonSets)
-  }
-})
+    this.on(RECEIVE_DAEMONSETS, receiveDaemonSets);
+  },
+});
 
-function receiveDaemonSets(state, jsonArray){
+function receiveDaemonSets(state, jsonArray) {
   return toImmutable(jsonArray);
 }

@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-export default function makeNode(json){
+export default function makeNode(json) {
   const role = json.role;
   const publicIp = json.public_ipv4;
   const advertiseIp = json.advertise_ip;
@@ -30,5 +30,5 @@ export default function makeNode(json){
     instanceType,
     role,
     displayRole,
-  }
+  };
 }

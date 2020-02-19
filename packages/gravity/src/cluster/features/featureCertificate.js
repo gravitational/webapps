@@ -14,32 +14,31 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import cfg from 'gravity/config'
+import cfg from 'gravity/config';
 import * as Icons from 'design/Icon';
-import Certificate from 'gravity/cluster/components/Certificate'
+import Certificate from 'gravity/cluster/components/Certificate';
 import { fetchTlsCert } from 'gravity/cluster/flux/tlscert/actions';
 import withFeature, { FeatureBase } from 'gravity/components/withFeature';
 import { addSideNavItem } from 'gravity/cluster/flux/nav/actions';
 
 class FeatureCertificate extends FeatureBase {
-
   constructor(route) {
     super();
     this._route = route;
     this.Component = withFeature(this)(Certificate);
   }
 
-  getRoute(){
+  getRoute() {
     return {
       title: 'Certificate',
       path: cfg.routes.siteCertificate,
       exact: true,
-      component: this.Component
-    }
+      component: this.Component,
+    };
   }
 
   onload({ featureFlags }) {
-    if(!featureFlags.clusterCert()){
+    if (!featureFlags.clusterCert()) {
       this.setDisabled();
       return;
     }
@@ -48,7 +47,7 @@ class FeatureCertificate extends FeatureBase {
       title: 'HTTPS Certificate',
       Icon: Icons.License,
       exact: true,
-      to: cfg.getSiteCertificateRoute()
+      to: cfg.getSiteCertificateRoute(),
     });
 
     this.setProcessing();

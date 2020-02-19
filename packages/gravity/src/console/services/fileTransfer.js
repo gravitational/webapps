@@ -23,8 +23,7 @@ const logger = Logger.create('api/fileTransfer');
 const REQ_FAILED_TXT = 'Network request failed';
 
 class Transfer extends EventEmitter {
-
-  constructor(){
+  constructor() {
     super();
     this._xhr = new XMLHttpRequest();
     const xhr = this._xhr;
@@ -32,27 +31,27 @@ class Transfer extends EventEmitter {
     xhr.onload = () => {
       const { status } = xhr;
       if (status === 200) {
-        this.handleSuccess(xhr)
+        this.handleSuccess(xhr);
         return;
       }
 
-     this.handleError(xhr)
-    }
+      this.handleError(xhr);
+    };
 
     xhr.onerror = () => {
       this.emit('error', new Error(REQ_FAILED_TXT));
-    }
+    };
 
     xhr.ontimeout = () => {
       this.emit('error', new Error(REQ_FAILED_TXT));
-    }
+    };
 
     xhr.onabort = () => {
       this.emit('error', new DOMException('Aborted', 'AbortError'));
-    }
+    };
   }
 
-  abort(){
+  abort() {
     this._xhr.abort();
   }
 
@@ -81,20 +80,19 @@ class Transfer extends EventEmitter {
     let progress = 0;
     // if Content-Length is present
     if (e.lengthComputable) {
-      progress = Math.round((e.loaded/e.total)*100);
+      progress = Math.round((e.loaded / e.total) * 100);
     } else {
       const done = e.position || e.loaded;
       const total = e.totalSize || e.total;
-      progress = Math.floor(done / total * 1000) / 10;
+      progress = Math.floor((done / total) * 1000) / 10;
     }
 
     this.emit('progress', progress);
   }
-
 }
 
 export class Uploader extends Transfer {
-  constructor(){
+  constructor() {
     super();
   }
 
@@ -102,19 +100,19 @@ export class Uploader extends Transfer {
     this.emit('completed');
   }
 
-  do(url, blob){
+  do(url, blob) {
     this._xhr.upload.addEventListener('progress', e => {
       this.handleProgress(e);
     });
 
     this._xhr.open('post', url, true);
     setHeaders(this._xhr);
-    this._xhr.send(blob)
+    this._xhr.send(blob);
   }
 }
 
 export class Downloader extends Transfer {
-  constructor(){
+  constructor() {
     super();
   }
 
@@ -122,7 +120,7 @@ export class Downloader extends Transfer {
     this._xhr.open('get', url, true);
     this._xhr.onprogress = e => {
       this.handleProgress(e);
-    }
+    };
 
     setHeaders(this._xhr);
     this._xhr.responseType = 'blob';
@@ -132,11 +130,11 @@ export class Downloader extends Transfer {
   handleSuccess(xhr) {
     const fileName = getDispositionFileName(xhr);
     if (!fileName) {
-      this.emit('error', new Error("Bad response"));
+      this.emit('error', new Error('Bad response'));
     } else {
       this.emit('completed', {
         fileName: fileName,
-        blob: xhr.response
+        blob: xhr.response,
       });
     }
   }
@@ -147,20 +145,20 @@ export class Downloader extends Transfer {
 
     reader.onerror = err => {
       this.emit('error', err);
-    }
+    };
 
     reader.onload = () => {
       const text = getErrorText(reader.result);
       this.emit('error', new Error(text));
-    }
+    };
 
     reader.readAsText(xhr.response);
   }
 }
 
 function getDispositionFileName(xhr) {
-  let fileName = "";
-  const disposition = xhr.getResponseHeader("Content-Disposition");
+  let fileName = '';
+  const disposition = xhr.getResponseHeader('Content-Disposition');
   if (disposition) {
     const filenameRegex = /filename[^;=\n]*=((['"]).*?\2|[^;\n]*)/;
     const matches = filenameRegex.exec(disposition);
@@ -187,9 +185,8 @@ function getErrorText(response, responseText) {
     }
 
     if (responseText) {
-      return responseText
+      return responseText;
     }
-
   } catch (err) {
     logger.error('faild to parse error message', err);
   }
@@ -197,14 +194,13 @@ function getErrorText(response, responseText) {
   return errText;
 }
 
-
 function setHeaders(xhr) {
   const headers = {
     ...getAuthHeaders(),
-    ...getNoCacheHeaders()
-  }
+    ...getNoCacheHeaders(),
+  };
 
   Object.keys(headers).forEach(key => {
-    xhr.setRequestHeader(key, headers[key])
+    xhr.setRequestHeader(key, headers[key]);
   });
 }

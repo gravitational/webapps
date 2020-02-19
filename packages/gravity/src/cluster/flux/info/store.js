@@ -32,8 +32,8 @@ export default Store({
   initialize() {
     this.on(actionTypes.SITE_SET_REMOTE_STATUS, setRemoteStatus);
     this.on(actionTypes.SITE_RECEIVE_INFO, receiveInfo);
-  }
-})
+  },
+});
 
 function receiveInfo(state, info) {
   return state.set('info', info);

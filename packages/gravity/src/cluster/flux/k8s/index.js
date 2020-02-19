@@ -24,18 +24,19 @@ const DAEMONSETS_STORE_NAME = 'cluster_k8s_daemonsets';
 const DEPLOYMENTS_STORE_NAME = 'cluster_k8s_deployments';
 const JOBS_STORE_NAME = 'cluster_k8s_jobs';
 
-reactor.registerStores({ [DAEMONSETS_STORE_NAME] : daemonSetsStore });
-reactor.registerStores({ [DEPLOYMENTS_STORE_NAME] : deploymentsStore });
-reactor.registerStores({ [JOBS_STORE_NAME] : jobsStore });
+reactor.registerStores({ [DAEMONSETS_STORE_NAME]: daemonSetsStore });
+reactor.registerStores({ [DEPLOYMENTS_STORE_NAME]: deploymentsStore });
+reactor.registerStores({ [JOBS_STORE_NAME]: jobsStore });
 
 export const getters = {
-	k8sJobs: [[JOBS_STORE_NAME], getJobs ],
-  k8sDaemonSets: [[DAEMONSETS_STORE_NAME], getDaemonSets ],
-  k8sDeployments: [[DEPLOYMENTS_STORE_NAME], getDeployments ],
-}
+  k8sJobs: [[JOBS_STORE_NAME], getJobs],
+  k8sDaemonSets: [[DAEMONSETS_STORE_NAME], getDaemonSets],
+  k8sDeployments: [[DEPLOYMENTS_STORE_NAME], getDeployments],
+};
 
 function getDeployments(deploymentList) {
-	return deploymentList.map(itemMap => {
+  return deploymentList
+    .map(itemMap => {
       const created = itemMap.getIn(['metadata', 'creationTimestamp']);
       return {
         resourceMap: itemMap,
@@ -46,13 +47,15 @@ function getDeployments(deploymentList) {
         desired: itemMap.getIn(['spec', 'replicas']),
         statusCurrentReplicas: itemMap.getIn(['status', 'replicas']),
         statusUpdatedReplicas: itemMap.getIn(['status', 'updatedReplicas']),
-        statusAvailableReplicas: itemMap.getIn(['status', 'availableReplicas'])
-      }
-    }).toJS();
-	}
+        statusAvailableReplicas: itemMap.getIn(['status', 'availableReplicas']),
+      };
+    })
+    .toJS();
+}
 
 function getDaemonSets(daemonList) {
-	return daemonList.map(itemMap => {
+  return daemonList
+    .map(itemMap => {
       const created = itemMap.getIn(['metadata', 'creationTimestamp']);
       return {
         resourceMap: itemMap,
@@ -60,16 +63,27 @@ function getDaemonSets(daemonList) {
         namespace: itemMap.getIn(['metadata', 'namespace']),
         created: new Date(created),
         createdDisplay: displayK8sAge(created),
-        statusCurrentNumberScheduled: itemMap.getIn(['status', 'currentNumberScheduled']),
-				statusNumberMisscheduled: itemMap.getIn(['status', 'numberMisscheduled']),
-				statusNumberReady: itemMap.getIn(['status', 'numberReady']),
-        statusDesiredNumberScheduled: itemMap.getIn(['status', 'desiredNumberScheduled'])
-      }
-    }).toJS();
-	}
+        statusCurrentNumberScheduled: itemMap.getIn([
+          'status',
+          'currentNumberScheduled',
+        ]),
+        statusNumberMisscheduled: itemMap.getIn([
+          'status',
+          'numberMisscheduled',
+        ]),
+        statusNumberReady: itemMap.getIn(['status', 'numberReady']),
+        statusDesiredNumberScheduled: itemMap.getIn([
+          'status',
+          'desiredNumberScheduled',
+        ]),
+      };
+    })
+    .toJS();
+}
 
 function getJobs(jobList) {
-  return jobList.map(itemMap => {
+  return jobList
+    .map(itemMap => {
       const created = itemMap.getIn(['metadata', 'creationTimestamp']);
       return {
         resourceMap: itemMap,
@@ -80,7 +94,8 @@ function getJobs(jobList) {
         desired: itemMap.getIn(['spec', 'completions']),
         statusSucceeded: itemMap.getIn(['status', 'succeeded']),
         statusFailed: itemMap.getIn(['status', 'failed']),
-        statusActive: itemMap.getIn(['status', 'active'])
-      }
-    }).toJS();
-  }
+        statusActive: itemMap.getIn(['status', 'active']),
+      };
+    })
+    .toJS();
+}

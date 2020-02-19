@@ -14,16 +14,13 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React from 'react'
-import { storiesOf } from '@storybook/react'
-import UserList from './UserList'
+import React from 'react';
+import { storiesOf } from '@storybook/react';
+import UserList from './UserList';
 
-storiesOf('Gravity/Users/UserList', module)
-  .add('UserList', () => {
-    return (
-      <UserList users={users} roleLabels={roleLabels} />
-    );
-  });
+storiesOf('Gravity/Users/UserList', module).add('UserList', () => {
+  return <UserList users={users} roleLabels={roleLabels} />;
+});
 
 const roleLabels = [
   '@teleadmin',
@@ -33,42 +30,58 @@ const roleLabels = [
   'Duonluv',
   'Surolel',
   'Uparouj',
-  'Ohuzadgec', 'Hohaca', 'Afutipjaw', 'Uzununo', ]
+  'Ohuzadgec',
+  'Hohaca',
+  'Afutipjaw',
+  'Uzununo',
+];
 
 const users = [
   {
-    "userId": "ijemali@example.com",
-    "isNew": false,
-    "name": "",
-    "email": "ijemali@example.com",
-    "status": "active",
-    "builtin": false,
-    "created": "2019-01-29T16:25:12.084Z",
-    "roles": [ "@teleadmin", "admin", "Ohuzadgec", "Hohaca", "Afutipjaw", "Uzununo" ],
-    "owner": false
-  },
-  {
-    "userId": "baober@example.com",
-    "isNew": false,
-    "name": "",
-    "email": "redebofan@example.com",
-    "status": "active",
-    "builtin": false,
-    "created": "2019-02-13T20:22:01.057Z",
-    "roles": [ "@teleadmin", "admin", "Ohuzadgec", "Hohaca", "Afutipjaw", "Uzununo" ],
-    "owner": false
-  },
-  {
-    "userId": "kicoges@example.com",
-    "isNew": false,
-    "name": "",
-    "email": "nimjozen@example.com",
-    "status": "active",
-    "builtin": false,
-    "created": "2019-01-14T18:19:04.463Z",
-    "roles": [
-      "@teleadmin"
+    userId: 'ijemali@example.com',
+    isNew: false,
+    name: '',
+    email: 'ijemali@example.com',
+    status: 'active',
+    builtin: false,
+    created: '2019-01-29T16:25:12.084Z',
+    roles: [
+      '@teleadmin',
+      'admin',
+      'Ohuzadgec',
+      'Hohaca',
+      'Afutipjaw',
+      'Uzununo',
     ],
-    "owner": false
+    owner: false,
   },
-]
+  {
+    userId: 'baober@example.com',
+    isNew: false,
+    name: '',
+    email: 'redebofan@example.com',
+    status: 'active',
+    builtin: false,
+    created: '2019-02-13T20:22:01.057Z',
+    roles: [
+      '@teleadmin',
+      'admin',
+      'Ohuzadgec',
+      'Hohaca',
+      'Afutipjaw',
+      'Uzununo',
+    ],
+    owner: false,
+  },
+  {
+    userId: 'kicoges@example.com',
+    isNew: false,
+    name: '',
+    email: 'nimjozen@example.com',
+    status: 'active',
+    builtin: false,
+    created: '2019-01-14T18:19:04.463Z',
+    roles: ['@teleadmin'],
+    owner: false,
+  },
+];

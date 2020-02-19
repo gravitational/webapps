@@ -20,9 +20,4 @@ import makeProgress from './makeProgress';
 import { OpTypeEnum } from 'gravity/services/enums';
 
 export default service;
-export {
-  makeOperation,
-  makeProgress,
-  OpTypeEnum,
-  StatusEnum
-}
+export { makeOperation, makeProgress, OpTypeEnum, StatusEnum };

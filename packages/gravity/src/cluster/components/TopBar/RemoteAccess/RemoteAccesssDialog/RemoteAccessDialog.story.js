@@ -14,24 +14,16 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React from 'react'
-import { storiesOf } from '@storybook/react'
-import  { RemoteAccessDialog }  from './RemoteAccessDialog'
+import React from 'react';
+import { storiesOf } from '@storybook/react';
+import { RemoteAccessDialog } from './RemoteAccessDialog';
 
 storiesOf('Gravity/TopBar/RemoteAccessDialog', module)
   .add('Enabled', () => {
-    return (
-      <RemoteAccessDialog
-        enabled={true}
-        attempt={{}} />
-    );
+    return <RemoteAccessDialog enabled={true} attempt={{}} />;
   })
   .add('Disabled', () => {
-    return (
-      <RemoteAccessDialog
-        enabled={false}
-        attempt={{}} />
-    );
+    return <RemoteAccessDialog enabled={false} attempt={{}} />;
   })
   .add('Error', () => {
     return (
@@ -39,12 +31,8 @@ storiesOf('Gravity/TopBar/RemoteAccessDialog', module)
         enabled={false}
         attempt={{
           isFailed: true,
-          message: 'server side error'
-        }} />
+          message: 'server side error',
+        }}
+      />
     );
   });
-
-
-
-
-

@@ -22,7 +22,6 @@ export class TlsCert extends Record({
   issued_by: null,
   issued_to: null,
   validity: null,
-
 }) {
   constructor(json) {
     super(toImmutable(json));
@@ -65,7 +64,6 @@ export class TlsCert extends Record({
     let date = this.getIn(['validity', 'not_after']);
     return new Date(date).toUTCString();
   }
-
 }
 
 export default Store({
@@ -75,8 +73,8 @@ export default Store({
 
   initialize() {
     this.on(SETTINGS_CERT_RECEIVE, setTlsCert);
-  }
-})
+  },
+});
 
 function setTlsCert(state, json) {
   return new TlsCert(json);

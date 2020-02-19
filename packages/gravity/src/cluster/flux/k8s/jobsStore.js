@@ -15,18 +15,18 @@ limitations under the License.
 */
 
 import { Store, toImmutable } from 'nuclear-js';
-import  { RECEIVE_JOBS } from './actionTypes';
+import { RECEIVE_JOBS } from './actionTypes';
 
 export default Store({
   getInitialState() {
-    return toImmutable([])
+    return toImmutable([]);
   },
 
   initialize() {
-    this.on(RECEIVE_JOBS, receiveJobs)
-  }
-})
+    this.on(RECEIVE_JOBS, receiveJobs);
+  },
+});
 
-function receiveJobs(state, jsonArray){
+function receiveJobs(state, jsonArray) {
   return toImmutable(jsonArray);
 }

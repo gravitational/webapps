@@ -18,20 +18,19 @@ import React from 'react';
 
 // This is the primary method to subscribe to store updates
 // using React hooks mechanism.
-export default function useStore(store){
-  const [, rerender ] = React.useState();
+export default function useStore(store) {
+  const [, rerender] = React.useState();
   const memoizedState = React.useMemo(() => store.state, [store.state]);
 
   React.useEffect(() => {
-
-    function syncState(){
+    function syncState() {
       // do not re-render if state has not changed since call
-      if(memoizedState !== store.state){
+      if (memoizedState !== store.state) {
         rerender({});
       }
     }
 
-    function onChange(){
+    function onChange() {
       syncState();
     }
 
@@ -43,12 +42,11 @@ export default function useStore(store){
     store.subscribe(onChange);
 
     // Unsubscribe from store
-    function cleanup(){
-      store.unsubscribe(onChange)
+    function cleanup() {
+      store.unsubscribe(onChange);
     }
 
     return cleanup;
-
   }, [store]);
 
   return store;

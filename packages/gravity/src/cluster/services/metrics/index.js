@@ -18,6 +18,4 @@ import service from './metrics';
 import makeMetrics from './makeMetric';
 
 export default service;
-export {
-  makeMetrics
-}
+export { makeMetrics };

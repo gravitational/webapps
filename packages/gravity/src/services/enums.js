@@ -15,8 +15,8 @@ limitations under the License.
 */
 
 export const SystemRoleEnum = {
-  TELE_ADMIN: '@teleadmin'
-}
+  TELE_ADMIN: '@teleadmin',
+};
 
 export const ResourceEnum = {
   SAML: 'saml',
@@ -24,71 +24,71 @@ export const ResourceEnum = {
   ROLE: 'role',
   AUTH_CONNECTORS: 'auth_connector',
   TRUSTED_CLUSTER: 'trusted_cluster',
-  LOG_FWRD: 'logforwarder'
-}
+  LOG_FWRD: 'logforwarder',
+};
 
 export const AuthTypeEnum = {
   LOCAL: 'local',
-  SSO: 'sso'
-}
+  SSO: 'sso',
+};
 
 export const Auth2faTypeEnum = {
   UTF: 'u2f',
   OTP: 'otp',
-  DISABLED: 'off'
-}
+  DISABLED: 'off',
+};
 
 export const AuthProviderTypeEnum = {
   OIDC: 'oidc',
-  SAML: 'saml'
-}
+  SAML: 'saml',
+};
 
 export const UserTokenTypeEnum = {
   RESET: 'reset',
-  INVITE: 'invite'
-}
+  INVITE: 'invite',
+};
 
 export const RepositoryEnum = {
-  SYSTEM: 'gravitational.io'
-}
+  SYSTEM: 'gravitational.io',
+};
 
 export const RemoteAccessEnum = {
   ON: 'on',
   OFF: 'off',
-  NA: 'n/a'
-}
+  NA: 'n/a',
+};
 
 export const RestRespCodeEnum = {
-  FORBIDDEN: 403
-}
+  FORBIDDEN: 403,
+};
 
 export const ExpandPolicyEnum = {
   FIXED: 'fixed',
-}
+};
 
 export const UserStatusEnum = {
   INVITED: 'invited',
-  ACTIVE: 'active'
-}
+  ACTIVE: 'active',
+};
 
 export const SiteReasonEnum = {
-  INVALID_LICENSE: 'license_invalid'
-}
+  INVALID_LICENSE: 'license_invalid',
+};
 
 export const ServerVarEnums = {
   INTERFACE: 'interface',
   MOUNT: 'mount',
   DOCKER_DISK: 'docker_device',
-  GRAVITY_DISK: 'system_device'
-}
+  GRAVITY_DISK: 'system_device',
+};
 
 export const OpTypeEnum = {
   OPERATION_UPDATE: 'operation_update',
   OPERATION_INSTALL: 'operation_install',
   OPERATION_EXPAND: 'operation_expand',
   OPERATION_UNINSTALL: 'operation_uninstall',
-  OPERATION_SHRINK: 'operation_shrink'
-}
+  OPERATION_SHRINK: 'operation_shrink',
+};
 
 export const OpStateEnum = {
   FAILED: 'failed',
@@ -108,8 +108,8 @@ export const OpStateEnum = {
   EXPAND_PROVISIONING: 'expand_provisioning',
   EXPAND_DEPLOYING: 'expand_deploying',
   SHRINK_IN_PROGRESS: 'shrink_in_progress',
-  UPDATE_IN_PROGRESS: 'update_in_progress'
-}
+  UPDATE_IN_PROGRESS: 'update_in_progress',
+};
 
 export const SiteStateEnum = {
   ACTIVE: 'active',
@@ -121,22 +121,22 @@ export const SiteStateEnum = {
   SHRINKING: 'shrinking',
   EXPANDING: 'expanding',
   UNINSTALLING: 'uninstalling',
-  OFFLINE: 'offline'
-}
+  OFFLINE: 'offline',
+};
 
 export const ProviderEnum = {
   ONPREM: 'onprem',
-}
+};
 
 export const K8sPodPhaseEnum = {
   SUCCEEDED: 'Succeeded',
   RUNNING: 'Running',
   PENDING: 'Pending',
   FAILED: 'Failed',
-  UNKNOWN: 'Unknown'
-}
+  UNKNOWN: 'Unknown',
+};
 
 export const K8sPodDisplayStatusEnum = {
   ...K8sPodPhaseEnum,
-  TERMINATED: 'Terminated'
-}
+  TERMINATED: 'Terminated',
+};

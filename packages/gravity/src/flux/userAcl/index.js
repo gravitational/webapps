@@ -20,14 +20,13 @@ import reactor from 'gravity/reactor';
 const STORE_NAME = 'useracl';
 
 reactor.registerStores({
-  [STORE_NAME]: store
+  [STORE_NAME]: store,
 });
 
-export function getAcl(){
+export function getAcl() {
   return reactor.evaluate([STORE_NAME]);
 }
 
 export const getters = {
-  userAcl: [STORE_NAME]
-}
-
+  userAcl: [STORE_NAME],
+};

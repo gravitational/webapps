@@ -14,35 +14,37 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React from 'react'
-import { storiesOf } from '@storybook/react'
+import React from 'react';
+import { storiesOf } from '@storybook/react';
 import Flex from 'design/Flex';
 import ContainerMenu from './ContainerMenu';
 import { Router } from 'react-router';
 import { createMemoryHistory } from 'history';
 
-storiesOf('Gravity/K8s', module)
-  .add('ContainerMenu', () => (
-    <Router history={createMemoryHistory()}>
-      <Flex width="400px" height="100px" alignItems="center" justifyContent="space-around" bg="primary.light">
-        <ContainerMenu { ...props}/>
-        <SampleMenu isOpen/>
-      </Flex>
-    </Router>
-  ));
+storiesOf('Gravity/K8s', module).add('ContainerMenu', () => (
+  <Router history={createMemoryHistory()}>
+    <Flex
+      width="400px"
+      height="100px"
+      alignItems="center"
+      justifyContent="space-around"
+      bg="primary.light"
+    >
+      <ContainerMenu {...props} />
+      <SampleMenu isOpen />
+    </Flex>
+  </Router>
+));
 
 class SampleMenu extends React.Component {
-  componentDidMount(){
+  componentDidMount() {
     this.props.isOpen && this.menuRef.onOpen();
   }
 
-  render(){
-    return (
-      <ContainerMenu ref={e => this.menuRef = e } { ...props} />
-    )
+  render() {
+    return <ContainerMenu ref={e => (this.menuRef = e)} {...props} />;
   }
 }
-
 
 const props = {
   logsEnabled: true,
@@ -52,11 +54,6 @@ const props = {
     pod: 'Tidinuv',
     serverId: 'Jotekda',
     namespace: 'Downiuwi',
-    sshLogins: [
-      "root",
-      "jazrafiba",
-      "evubale",
-      "ipizodu",
-    ]
-  }
-}
+    sshLogins: ['root', 'jazrafiba', 'evubale', 'ipizodu'],
+  },
+};

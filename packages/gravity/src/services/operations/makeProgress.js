@@ -16,17 +16,8 @@ limitations under the License.
 
 import { at } from 'lodash';
 
-export default function makeProgress(json){
-  const [
-    id,
-    opId,
-    siteId,
-    type,
-    state,
-    created,
-    step,
-    message,
-   ] = at(json, [
+export default function makeProgress(json) {
+  const [id, opId, siteId, type, state, created, step, message] = at(json, [
     'id',
     'operation_id',
     'site_domain',
@@ -35,7 +26,7 @@ export default function makeProgress(json){
     'created',
     'step',
     'message',
-   ])
+  ]);
 
   return {
     id,
@@ -46,5 +37,5 @@ export default function makeProgress(json){
     state,
     step,
     message,
-  }
+  };
 }

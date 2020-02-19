@@ -21,7 +21,7 @@ import userGetters from 'gravity/flux/user/getters';
 
 const hasK8sAccess = () => {
   return getAcl().getClusterAccess().connect;
-}
+};
 
 export function siteMonitoring() {
   return hasK8sAccess() && cfg.isSiteMonitoringEnabled();
@@ -39,8 +39,8 @@ export function siteLogs() {
   return cfg.isSiteLogsEnabled();
 }
 
-export function siteAccount(){
-  const userStore = reactor.evaluate(userGetters.user)
+export function siteAccount() {
+  const userStore = reactor.evaluate(userGetters.user);
   return !userStore.isSso();
 }
 
@@ -65,10 +65,10 @@ export function clusterCert() {
 }
 
 export function clusterLicense() {
-  return cfg.isSiteLicenseEnabled()
+  return cfg.isSiteLicenseEnabled();
 }
 
-export function hubLicenses(){
+export function hubLicenses() {
   return getAcl().getLicenseAccess().create;
 }
 

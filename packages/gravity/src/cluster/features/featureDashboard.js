@@ -14,26 +14,25 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import cfg from 'gravity/config'
+import cfg from 'gravity/config';
 import withFeature, { FeatureBase } from 'gravity/components/withFeature';
 import { addSideNavItem } from 'gravity/cluster/flux/nav/actions';
 import * as Icons from 'design/Icon';
 import Dashboard from '../components/Dashboard';
 
 class DashboardFeature extends FeatureBase {
-
-  constructor(){
-    super()
+  constructor() {
+    super();
     this.Component = withFeature(this)(Dashboard);
   }
 
-  getRoute(){
+  getRoute() {
     return {
       title: 'Dashboard',
       path: cfg.routes.siteBase,
       exact: true,
-      component: this.Component
-    }
+      component: this.Component,
+    };
   }
 
   onload() {
@@ -41,7 +40,7 @@ class DashboardFeature extends FeatureBase {
       title: 'Dashboard',
       Icon: Icons.Tablet,
       exact: true,
-      to: cfg.getSiteRoute()
+      to: cfg.getSiteRoute(),
     });
   }
 }

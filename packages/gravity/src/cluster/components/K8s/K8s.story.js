@@ -14,41 +14,39 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React from 'react'
+import React from 'react';
 import { Router } from 'react-router';
 import { createMemoryHistory } from 'history';
-import { storiesOf } from '@storybook/react'
-import { K8s } from './K8s'
+import { storiesOf } from '@storybook/react';
+import { K8s } from './K8s';
 
-storiesOf('Gravity/K8s', module)
-  .add('K8s', () => {
-    const props = {
-      siteId: 'xxx',
-      namespaces,
-      namespace: 'default',
-      k8s,
-      category: "pod",
-      history: {}
-    }
+storiesOf('Gravity/K8s', module).add('K8s', () => {
+  const props = {
+    siteId: 'xxx',
+    namespaces,
+    namespace: 'default',
+    k8s,
+    category: 'pod',
+    history: {},
+  };
 
-    return (
-      <Router history={createMemoryHistory()}>
-        <K8s {...props} />
-      </Router>
-    );
-  });
-
+  return (
+    <Router history={createMemoryHistory()}>
+      <K8s {...props} />
+    </Router>
+  );
+});
 
 const namespaces = [
-  "default",
-  "gravity-sbe",
-  "kube-public",
-  "kube-system",
-  "monitoring",
-  "tiller"
-]
+  'default',
+  'gravity-sbe',
+  'kube-public',
+  'kube-system',
+  'monitoring',
+  'tiller',
+];
 
 const k8s = {
-  "curNamespace": "default",
-  "searchValue": ""
-}
+  curNamespace: 'default',
+  searchValue: '',
+};

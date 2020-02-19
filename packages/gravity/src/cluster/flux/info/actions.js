@@ -18,22 +18,20 @@ import reactor from 'gravity/reactor';
 import service from 'gravity/cluster/services/info';
 import { SITE_SET_REMOTE_STATUS, SITE_RECEIVE_INFO } from './actionTypes';
 
-export function fetchSiteInfo(){
+export function fetchSiteInfo() {
   return service.fetchInfo().then(info => {
-    reactor.dispatch(SITE_RECEIVE_INFO, info)
-  })
+    reactor.dispatch(SITE_RECEIVE_INFO, info);
+  });
 }
 
 export function fetchRemoteAccess() {
-  return service.fetchRemoteAccess()
-    .then(status => {
-      reactor.dispatch(SITE_SET_REMOTE_STATUS, status);
-    })
+  return service.fetchRemoteAccess().then(status => {
+    reactor.dispatch(SITE_SET_REMOTE_STATUS, status);
+  });
 }
 
-export function changeRemoteAccess(enabled){
-  return service.changeRemoteAccess(enabled)
-    .then(status => {
-      reactor.dispatch(SITE_SET_REMOTE_STATUS, status);
-    })
+export function changeRemoteAccess(enabled) {
+  return service.changeRemoteAccess(enabled).then(status => {
+    reactor.dispatch(SITE_SET_REMOTE_STATUS, status);
+  });
 }

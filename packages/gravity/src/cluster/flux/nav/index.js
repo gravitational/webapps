@@ -19,8 +19,8 @@ import store from './store';
 
 const STORE_NAME = 'nav';
 
-reactor.registerStores({ [STORE_NAME] : store });
+reactor.registerStores({ [STORE_NAME]: store });
 
 export const getters = {
-  navStore: [STORE_NAME]
-}
+  navStore: [STORE_NAME],
+};

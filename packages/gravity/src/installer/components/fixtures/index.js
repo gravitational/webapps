@@ -34,35 +34,39 @@ merge(app, json, {
           interfaces: {
             ipv4: {
               labelText: '!IP Address',
-              toolipText: '!IP address used to communicate within the cluster'
-            }
+              toolipText: '!IP address used to communicate within the cluster',
+            },
           },
 
           mounts: {
             tmp: {
               labelText: '!input field label',
-              toolipText: '!input field tooltip'
-            }
-          }
-        }
+              toolipText: '!input field tooltip',
+            },
+          },
+        },
       },
       modules: {
         installer: {
-          eulaAgreeText: "!!I Agree To The Terms",
-          eulaHeaderText: "!!Welcome to the {0} Installer",
-          eulaContentLabelText: "!!License Agreement",
-          licenseHeaderText: "!!Enter your license",
-          licenseOptionTrialText: "!!Trial without license",
-          licenseOptionText: "!!With a license",
-          licenseUserHintText: "!!If you have a license, please insert it here. In the next steps you will select the location of your application and the capacity you need",
-          progressUserHintText: "!!Your infrastructure is being provisioned and your application is being installed.\n\n Once the installation is complete you will be taken to your infrastructure where you can access your application.",
+          eulaAgreeText: '!!I Agree To The Terms',
+          eulaHeaderText: '!!Welcome to the {0} Installer',
+          eulaContentLabelText: '!!License Agreement',
+          licenseHeaderText: '!!Enter your license',
+          licenseOptionTrialText: '!!Trial without license',
+          licenseOptionText: '!!With a license',
+          licenseUserHintText:
+            '!!If you have a license, please insert it here. In the next steps you will select the location of your application and the capacity you need',
+          progressUserHintText:
+            '!!Your infrastructure is being provisioned and your application is being installed.\n\n Once the installation is complete you will be taken to your infrastructure where you can access your application.',
           prereqUserHintText: `!!The cluster name will be used for issuing SSH and HTTP/TLS certificates to securely access the cluster.\n\n For this reason it is recommended to use a fully qualified domain name (FQDN) for the cluster name, e.g. prod.example.com`,
-          provisionUserHintText: "!!Drag the slider to estimate the number of resources needed for that performance level. You can also add / remove resources after the installation. \n\n Once you click Start Installation the resources will be provisioned on your infrastructure.",
-          iamPermissionsHelpLink: "!!https://gravitational.com/gravity/docs/overview/"
-        }
-      }
+          provisionUserHintText:
+            '!!Drag the slider to estimate the number of resources needed for that performance level. You can also add / remove resources after the installation. \n\n Once you click Start Installation the resources will be provisioned on your infrastructure.',
+          iamPermissionsHelpLink:
+            '!!https://gravitational.com/gravity/docs/overview/',
+        },
+      },
     }),
-  }
+  },
 });
 
 merge(cluster, clusterJson);
@@ -70,26 +74,19 @@ merge(cluster, clusterJson);
 merge(appWithLicense, json, {
   manifest: {
     license: {
-      enabled: true
+      enabled: true,
     },
-  }
-})
+  },
+});
 
 merge(appWithEula, json, {
   manifest: {
     installer: {
       eula: {
-        source: eula
-      }
+        source: eula,
+      },
     },
-  }
-})
+  },
+});
 
-export {
-  app,
-  appWithLicense,
-  appWithEula,
-  cluster,
-  flavors,
-  operations
-}
+export { app, appWithLicense, appWithEula, cluster, flavors, operations };

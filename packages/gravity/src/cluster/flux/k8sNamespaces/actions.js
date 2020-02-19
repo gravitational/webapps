@@ -18,8 +18,8 @@ import reactor from 'gravity/reactor';
 import k8s from 'gravity/cluster/services/k8s';
 import { SITE_RECEIVE_NAMESPACES } from './actionTypes';
 
-export function fetchNamespaces(){
-  return k8s.getNamespaces().done((namespaceDataArray)=>{
+export function fetchNamespaces() {
+  return k8s.getNamespaces().done(namespaceDataArray => {
     reactor.dispatch(SITE_RECEIVE_NAMESPACES, namespaceDataArray);
-  })
+  });
 }

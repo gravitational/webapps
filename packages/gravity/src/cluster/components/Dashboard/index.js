@@ -16,4 +16,3 @@ limitations under the License.
 
 import Dashboard from './Dashboard';
 export default Dashboard;
-

@@ -15,17 +15,16 @@ limitations under the License.
 */
 
 const htmlUtils = {
-
-  copyToClipboard(textToCopy){
+  copyToClipboard(textToCopy) {
     let aux = document.createElement('textarea');
     aux.value = textToCopy;
     document.body.appendChild(aux);
     aux.select();
-    document.execCommand("copy");
+    document.execCommand('copy');
     document.body.removeChild(aux);
   },
 
-  selectElementContent(element){
+  selectElementContent(element) {
     var range, selection;
     if (window.getSelection && document.createRange) {
       selection = window.getSelection();
@@ -42,10 +41,13 @@ const htmlUtils = {
 
   download(filename, text) {
     /*
-    * http://stackoverflow.com/questions/3665115/create-a-file-in-memory-for-user-to-download-not-through-server
-    */
+     * http://stackoverflow.com/questions/3665115/create-a-file-in-memory-for-user-to-download-not-through-server
+     */
     var element = document.createElement('a');
-    element.setAttribute('href', 'data:text/plain;charset=utf-8,' + encodeURIComponent(text));
+    element.setAttribute(
+      'href',
+      'data:text/plain;charset=utf-8,' + encodeURIComponent(text)
+    );
     element.setAttribute('download', filename);
     element.style.display = 'none';
 
@@ -57,7 +59,7 @@ const htmlUtils = {
 
   joinPaths(path1, path2) {
     return `${path1}/${path2}`.replace(/\/\/+/g, '/');
-  }
-}
+  },
+};
 
-export default htmlUtils
+export default htmlUtils;

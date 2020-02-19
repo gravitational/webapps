@@ -16,4 +16,3 @@ limitations under the License.
 
 import InstallLogsProvider from './InstallLogsProvider';
 export default InstallLogsProvider;
-

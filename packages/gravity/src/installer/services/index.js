@@ -20,20 +20,14 @@ import makeAgentServers from './makeAgentServer';
 
 const ServiceContext = React.createContext(service);
 
-function Provider( { value = service, children }){
-  return (
-    <ServiceContext.Provider value={value} children={children} />
-  )
+function Provider({ value = service, children }) {
+  return <ServiceContext.Provider value={value} children={children} />;
 }
 
-function useServices(){
+function useServices() {
   return React.useContext(ServiceContext);
 }
 
 export default service;
 
-export {
-  makeAgentServers,
-  Provider,
-  useServices
-}
+export { makeAgentServers, Provider, useServices };

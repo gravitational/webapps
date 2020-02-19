@@ -15,6 +15,4 @@ limitations under the License.
 */
 
 import CloseButton from './CloseButton';
-export {
-  CloseButton
-}
+export { CloseButton };

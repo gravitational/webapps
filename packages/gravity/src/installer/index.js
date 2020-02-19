@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import { hot } from 'react-hot-loader'
+import { hot } from 'react-hot-loader';
 import React from 'react';
 import cfg from 'gravity/config';
 import { Route, Switch } from 'gravity/components/Router';
@@ -22,10 +22,18 @@ import Installer from './components/Installer';
 
 function InstallerApp() {
   return (
-  <Switch>
-    <Route title="Installer" path={cfg.routes.installerApp} component={Installer} />
-    <Route title="Installer" path={cfg.routes.installerCluster} component={Installer} />
-  </Switch>
+    <Switch>
+      <Route
+        title="Installer"
+        path={cfg.routes.installerApp}
+        component={Installer}
+      />
+      <Route
+        title="Installer"
+        path={cfg.routes.installerCluster}
+        component={Installer}
+      />
+    </Switch>
   );
 }
 

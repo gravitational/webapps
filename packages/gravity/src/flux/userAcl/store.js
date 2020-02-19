@@ -23,11 +23,11 @@ const sortLogins = loginList => {
   let index = loginList.indexOf('root');
   if (index !== -1) {
     loginList = loginList.remove(index);
-    return loginList.sort().unshift('root')
+    return loginList.sort().unshift('root');
   }
 
   return loginList;
-}
+};
 
 const Access = new Record({
   connect: false,
@@ -35,8 +35,8 @@ const Access = new Record({
   read: false,
   edit: false,
   create: false,
-  remove: false
-})
+  remove: false,
+});
 
 export class AccessListRec extends Record({
   apps: new Access(),
@@ -67,7 +67,7 @@ export class AccessListRec extends Record({
       logForwarders: new Access(map.get('logForwarders')),
       apps: new Access(map.get('apps')),
       events: new Access(map.get('events')),
-    }
+    };
 
     super(params);
   }
@@ -101,15 +101,15 @@ export class AccessListRec extends Record({
   }
 
   getSshLogins() {
-    return this.get('sshLogins')
+    return this.get('sshLogins');
   }
 
   getEventAccess() {
-    return this.get('events')
+    return this.get('events');
   }
 
   getAppAccess() {
-    return this.get('apps')
+    return this.get('apps');
   }
 }
 
@@ -120,5 +120,5 @@ export default Store({
 
   initialize() {
     this.on(USERACL_RECEIVE, (state, json) => new AccessListRec(json));
-  }
-})
+  },
+});

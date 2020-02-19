@@ -14,39 +14,38 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import cfg from 'gravity/config'
+import cfg from 'gravity/config';
 import Users from './../components/Users';
 import withFeature, { FeatureBase } from 'gravity/components/withFeature';
 import { addSideNavItem } from 'gravity/cluster/flux/nav/actions';
 import { fetchUsers } from 'gravity/cluster/flux/users/actions';
 import * as Icons from 'design/Icon';
 
-export function makeNavItem(to){
+export function makeNavItem(to) {
   return {
     title: 'Users',
     Icon: Icons.Users,
     exact: true,
-    to
-  }
+    to,
+  };
 }
 
 class FeatureUsers extends FeatureBase {
-
   constructor() {
-    super()
+    super();
     this.Component = withFeature(this)(Users);
   }
 
-  getRoute(){
+  getRoute() {
     return {
       title: 'Users',
       path: cfg.routes.siteUsers,
       exact: true,
-      component: this.Component
-    }
+      component: this.Component,
+    };
   }
 
-  onload({featureFlags}) {
+  onload({ featureFlags }) {
     if (!featureFlags.siteUsers()) {
       this.setDisabled();
       return;

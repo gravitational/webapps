@@ -18,20 +18,20 @@ import reactor from 'gravity/reactor';
 import * as actionTypes from './actionTypes';
 import k8s from 'gravity/cluster/services/k8s';
 
-export function fetchDeployments(namespace){
-  return k8s.getDeployments(namespace).done(jsonArray=>{
+export function fetchDeployments(namespace) {
+  return k8s.getDeployments(namespace).done(jsonArray => {
     reactor.dispatch(actionTypes.RECEIVE_DEPLOYMENTS, jsonArray);
   });
 }
 
-export function fetchDaemonSets(namespace){
-  return k8s.getDaemonSets(namespace).done(jsonArray=>{
+export function fetchDaemonSets(namespace) {
+  return k8s.getDaemonSets(namespace).done(jsonArray => {
     reactor.dispatch(actionTypes.RECEIVE_DAEMONSETS, jsonArray);
   });
 }
 
-export function fetchJobs(namespace){
-  return k8s.getJobs(namespace).done(jsonArray=>{
+export function fetchJobs(namespace) {
+  return k8s.getJobs(namespace).done(jsonArray => {
     reactor.dispatch(actionTypes.RECEIVE_JOBS, jsonArray);
   });
 }

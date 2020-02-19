@@ -17,20 +17,18 @@ limitations under the License.
 import { at } from 'lodash';
 
 export default function makeK8sSecret(json) {
-  const [ name, namespace, created, id ] = at(json,
-    [
-      'metadata.name',
-      'metadata.namespace',
-      'metadata.creationTimestamp',
-      'metadata.uid',
-    ]
-  );
+  const [name, namespace, created, id] = at(json, [
+    'metadata.name',
+    'metadata.namespace',
+    'metadata.creationTimestamp',
+    'metadata.uid',
+  ]);
 
   return {
     id,
     name,
     namespace,
     created: new Date(created),
-    resource: json
-  }
+    resource: json,
+  };
 }

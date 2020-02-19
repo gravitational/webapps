@@ -16,64 +16,56 @@ limitations under the License.
 
 import React from 'react';
 import $ from 'jQuery';
-import { storiesOf } from '@storybook/react'
-import { Nodes } from './Nodes'
+import { storiesOf } from '@storybook/react';
+import { Nodes } from './Nodes';
 
-storiesOf('Gravity/Nodes', module)
-  .add('Nodes', () => {
-    return (
-      <Nodes onFetch={ () => $.Deferred() } nodes={nodes} />
-      );
-  });
+storiesOf('Gravity/Nodes', module).add('Nodes', () => {
+  return <Nodes onFetch={() => $.Deferred()} nodes={nodes} />;
+});
 
-const nodes = [{
-    "k8s": {
-      "advertiseIp": 'Lidzajwa',
-      "cpu": 'Robpaslic',
-      "memory": 'Segunwa',
-      "osImage": 'Nutvuub',
-      "name": 'Ogagaib',
-      "labels": {
-        "key": "value",
+const nodes = [
+  {
+    k8s: {
+      advertiseIp: 'Lidzajwa',
+      cpu: 'Robpaslic',
+      memory: 'Segunwa',
+      osImage: 'Nutvuub',
+      name: 'Ogagaib',
+      labels: {
+        key: 'value',
       },
-      "details": 'Mecabbut',
+      details: 'Mecabbut',
     },
-    "canSsh": true,
-    "sshLogins": [
-      "root",
-      "jazrafiba",
-      "evubale",
-    ],
-    "publicIp": "232.232.323.232",
-    "advertiseIp": "10.128.0.6",
-    "hostname": "demo.gravitational.io",
-    "id": "10_128_0_6.demo.gravitational.io",
-    "instanceType": "n1-standard-2",
-    "role": "node",
-    "displayRole": "Ops Center Node"
+    canSsh: true,
+    sshLogins: ['root', 'jazrafiba', 'evubale'],
+    publicIp: '232.232.323.232',
+    advertiseIp: '10.128.0.6',
+    hostname: 'demo.gravitational.io',
+    id: '10_128_0_6.demo.gravitational.io',
+    instanceType: 'n1-standard-2',
+    role: 'node',
+    displayRole: 'Ops Center Node',
   },
   {
-    "k8s": {
-      "advertiseIp": 'Acosupnoz',
-      "cpu": 'Gojzine',
-      "memory": 'Docatib',
-      "osImage": 'Ithiro',
-      "name": 'Ejeofiara',
-      "labels": {
-        "key": "value",
+    k8s: {
+      advertiseIp: 'Acosupnoz',
+      cpu: 'Gojzine',
+      memory: 'Docatib',
+      osImage: 'Ithiro',
+      name: 'Ejeofiara',
+      labels: {
+        key: 'value',
       },
-      "details": 'Refdemmi',
+      details: 'Refdemmi',
     },
-    "canSsh": true,
-    "sshLogins": [
-      "root"
-    ],
-    "publicIp": "232.232.323.232",
-    "advertiseIp": "10.128.0.6",
-    "hostname": "demo.gravitational.io",
-    "id": "10_128_0_6.demo.gravitational.io",
-    "instanceType": "projects/529920086732/machineTypes/n1-standard-2",
-    "role": "node",
-    "displayRole": "Ops Center Node"
-  }
-]
+    canSsh: true,
+    sshLogins: ['root'],
+    publicIp: '232.232.323.232',
+    advertiseIp: '10.128.0.6',
+    hostname: 'demo.gravitational.io',
+    id: '10_128_0_6.demo.gravitational.io',
+    instanceType: 'projects/529920086732/machineTypes/n1-standard-2',
+    role: 'node',
+    displayRole: 'Ops Center Node',
+  },
+];

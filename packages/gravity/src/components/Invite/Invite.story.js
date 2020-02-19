@@ -23,49 +23,40 @@ storiesOf('Gravity/Invite', module)
     const props = {
       ...defaultProps,
       submitBtnText: 'Create Account',
-    }
+    };
 
-    return (
-      <Invite
-        {...props}
-      />);
+    return <Invite {...props} />;
   })
   .add('Invite Expired', () => {
     const props = {
       ...defaultProps,
       fetchAttempt: { isFailed: true, message: 'this is error message' },
       submitBtnText: 'Create Account',
-    }
+    };
 
-    return (
-      <Invite
-        {...props}
-      />);
+    return <Invite {...props} />;
   })
   .add('Password Reset', () => {
     const props = {
       ...defaultProps,
       submitBtnText: 'Change Password',
-    }
-    return (
-      <Invite
-        {...props}
-      />);
+    };
+    return <Invite {...props} />;
   });
 
-  const defaultProps = {
-    submitAttempt: {},
-    auth2faType: "off",
-    authType: '',
-    fetchAttempt: {
-      isSuccess: true,
-    },
-    fetchUserToken: () => null,
-    onSubmit: () => null,
-    onSubmitWithU2f: () => null,
-    tokenId: 'tokenID',
-    userToken: {
-      userName: 'john@example.com',
-      url: 'https://localhost/sampleurl'
-    },
-  }
+const defaultProps = {
+  submitAttempt: {},
+  auth2faType: 'off',
+  authType: '',
+  fetchAttempt: {
+    isSuccess: true,
+  },
+  fetchUserToken: () => null,
+  onSubmit: () => null,
+  onSubmitWithU2f: () => null,
+  tokenId: 'tokenID',
+  userToken: {
+    userName: 'john@example.com',
+    url: 'https://localhost/sampleurl',
+  },
+};

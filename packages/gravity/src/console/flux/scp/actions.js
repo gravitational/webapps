@@ -18,35 +18,35 @@ import reactor from 'gravity/reactor';
 import * as AT from './actionTypes';
 
 export function addFile(json) {
-  reactor.dispatch(AT.ADD, json)
+  reactor.dispatch(AT.ADD, json);
 }
 
 export function removeFile(id) {
-  reactor.dispatch(AT.REMOVE, id)
+  reactor.dispatch(AT.REMOVE, id);
 }
 
 export function updateStatus(json) {
-  reactor.dispatch(AT.UPDATE_STATUS, json)
+  reactor.dispatch(AT.UPDATE_STATUS, json);
 }
 
-export function openUploadDialog({siteId, serverId, login}) {
+export function openUploadDialog({ siteId, serverId, login }) {
   const json = {
     siteId,
     serverId,
     login,
     isUpload: true,
-  }
-  reactor.dispatch(AT.OPEN, json)
+  };
+  reactor.dispatch(AT.OPEN, json);
 }
 
-export function openDownloadDialog({siteId, serverId, login}) {
+export function openDownloadDialog({ siteId, serverId, login }) {
   const json = {
     siteId,
     serverId,
     login,
     isUpload: false,
-  }
-  reactor.dispatch(AT.OPEN, json)
+  };
+  reactor.dispatch(AT.OPEN, json);
 }
 
 export function closeDialog() {

@@ -14,18 +14,15 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React from 'react'
+import React from 'react';
 import { Router } from 'react-router';
 import { createMemoryHistory } from 'history';
-import { storiesOf } from '@storybook/react'
-import NodeList from './NodeList'
+import { storiesOf } from '@storybook/react';
+import NodeList from './NodeList';
 
-storiesOf('Gravity/Nodes/NodeList', module)
-  .add('NodeList', () => {
-    return (
-      <ListNodeStory/>
-    );
-  });
+storiesOf('Gravity/Nodes/NodeList', module).add('NodeList', () => {
+  return <ListNodeStory />;
+});
 
 class ListNodeStory extends React.Component {
   constructor(props) {
@@ -37,59 +34,53 @@ class ListNodeStory extends React.Component {
       <Router history={createMemoryHistory()}>
         <NodeList nodes={nodes} />
       </Router>
-    )
+    );
   }
 }
 
 const nodes = [
   {
-    "k8s": {
-      "advertiseIp": 'Lidzajwa',
-      "cpu": 'Robpaslic',
-      "memory": 'Segunwa',
-      "osImage": 'Nutvuub',
-      "name": 'Ogagaib',
-      "labels": {
-        "key": "value",
+    k8s: {
+      advertiseIp: 'Lidzajwa',
+      cpu: 'Robpaslic',
+      memory: 'Segunwa',
+      osImage: 'Nutvuub',
+      name: 'Ogagaib',
+      labels: {
+        key: 'value',
       },
-      "details": 'Mecabbut',
+      details: 'Mecabbut',
     },
-    "canSsh": true,
-    "sshLogins": [
-      "root",
-      "jazrafiba",
-      "evubale",
-    ],
-    "publicIp": "232.232.323.232",
-    "advertiseIp": "10.128.0.6",
-    "hostname": "demo.gravitational.io",
-    "id": "10_128_0_6.demo.gravitational.io",
-    "instanceType": "projects/529920086732/machineTypes/n1-standard-2",
-    "role": "node",
-    "displayRole": "Ops Center Node"
+    canSsh: true,
+    sshLogins: ['root', 'jazrafiba', 'evubale'],
+    publicIp: '232.232.323.232',
+    advertiseIp: '10.128.0.6',
+    hostname: 'demo.gravitational.io',
+    id: '10_128_0_6.demo.gravitational.io',
+    instanceType: 'projects/529920086732/machineTypes/n1-standard-2',
+    role: 'node',
+    displayRole: 'Ops Center Node',
   },
   {
-    "k8s":  {
-      "advertiseIp": 'Acosupnoz',
-      "cpu": 'Gojzine',
-      "memory": 'Docatib',
-      "osImage": 'Ithiro',
-      "name": 'Ejeofiara',
-      "labels": {
-        "key": "value",
+    k8s: {
+      advertiseIp: 'Acosupnoz',
+      cpu: 'Gojzine',
+      memory: 'Docatib',
+      osImage: 'Ithiro',
+      name: 'Ejeofiara',
+      labels: {
+        key: 'value',
       },
-      "details": 'Refdemmi',
+      details: 'Refdemmi',
     },
-    "canSsh": true,
-    "sshLogins": [
-      "root"
-    ],
-    "publicIp": "232.232.323.232",
-    "advertiseIp": "10.128.0.6",
-    "hostname": "demo.gravitational.io",
-    "id": "10_128_0_6.demo.gravitational.io",
-    "instanceType": "projects/529920086732/machineTypes/n1-standard-2",
-    "role": "node",
-    "displayRole": "Ops Center Node"
-  }
-]
+    canSsh: true,
+    sshLogins: ['root'],
+    publicIp: '232.232.323.232',
+    advertiseIp: '10.128.0.6',
+    hostname: 'demo.gravitational.io',
+    id: '10_128_0_6.demo.gravitational.io',
+    instanceType: 'projects/529920086732/machineTypes/n1-standard-2',
+    role: 'node',
+    displayRole: 'Ops Center Node',
+  },
+];

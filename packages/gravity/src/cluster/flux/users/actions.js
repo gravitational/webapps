@@ -17,38 +17,41 @@ limitations under the License.
 import reactor from 'gravity/reactor';
 import api from 'gravity/services/api';
 import cfg from 'gravity/config';
-import { UserStatusEnum } from 'gravity/services/enums'
+import { UserStatusEnum } from 'gravity/services/enums';
 import Logger from 'shared/libs/logger';
 import { CLUSTER_RECEIVE_USERS } from './actionTypes';
 
 const logger = Logger.create('cluster/flux/users/actions');
 
-export function createInvite(name, roles){
+export function createInvite(name, roles) {
   const data = { name, roles };
-  return api.post(cfg.getSiteUserInvitePath(), data)
+  return api
+    .post(cfg.getSiteUserInvitePath(), data)
     .then(userToken => {
       fetchUsers();
       return userToken;
     })
     .fail(err => {
       logger.error('createInvite()', err);
-    })
+    });
 }
 
 export function resetUser(userId) {
-  return api.post(cfg.getSiteUserResetPath({userId}))
+  return api
+    .post(cfg.getSiteUserResetPath({ userId }))
     .done(userToken => {
       fetchUsers();
       return userToken;
     })
     .fail(err => {
       logger.error('resetUser()', err);
-  })
+    });
 }
 
 export function saveUser(userId, roles) {
   const data = { email: userId, roles };
-  return api.put(cfg.getSiteUserUrl(), data)
+  return api
+    .put(cfg.getSiteUserUrl(), data)
     .done(inviteLink => {
       fetchUsers();
       return inviteLink;
@@ -61,14 +64,16 @@ export function saveUser(userId, roles) {
 export function deleteUser(userRec) {
   const { userId } = userRec;
   const isInvite = userRec.status === UserStatusEnum.INVITED;
-  const url = isInvite ?
-    cfg.getAccountDeleteInviteUrl({ inviteId: userId }) : cfg.getAccountDeleteUserUrl({ userId });
+  const url = isInvite
+    ? cfg.getAccountDeleteInviteUrl({ inviteId: userId })
+    : cfg.getAccountDeleteUserUrl({ userId });
 
-  return api.delete(url)
-    .done(()=> {
+  return api
+    .delete(url)
+    .done(() => {
       fetchUsers();
     })
-    .fail(err=> {
+    .fail(err => {
       logger.error('deleteUser()', err);
     });
 }
@@ -76,5 +81,5 @@ export function deleteUser(userRec) {
 export function fetchUsers() {
   return api.get(cfg.getSiteUserUrl()).done(users => {
     reactor.dispatch(CLUSTER_RECEIVE_USERS, users);
-  })
+  });
 }

@@ -16,18 +16,18 @@ limitations under the License.
 
 import { keyBy, at, map } from 'lodash';
 
-export function makeNodes(jsonArray){
+export function makeNodes(jsonArray) {
   const nodes = map(jsonArray, makeNode);
   return keyBy(nodes, 'advertiseIp');
 }
 
-export default function makeNode(json){
-  const [ name ] = at(json, 'metadata.name');
-  const [ labels ] = at(json, 'metadata.labels');
-  const [ advertiseIp ] = at(labels, "gravitational.io/advertise-ip");
-  const [ cpu ] = at(json, 'status.capacity.cpu');
-  const [ memory ] = at(json, 'status.capacity.memory');
-  const [ osImage ] = at(json, 'status.nodeInfo.osImage');
+export default function makeNode(json) {
+  const [name] = at(json, 'metadata.name');
+  const [labels] = at(json, 'metadata.labels');
+  const [advertiseIp] = at(labels, 'gravitational.io/advertise-ip');
+  const [cpu] = at(json, 'status.capacity.cpu');
+  const [memory] = at(json, 'status.capacity.memory');
+  const [osImage] = at(json, 'status.nodeInfo.osImage');
   return {
     labels: labels || [],
     advertiseIp,
@@ -36,5 +36,5 @@ export default function makeNode(json){
     osImage,
     name,
     details: json,
-  }
+  };
 }

@@ -19,12 +19,16 @@ import { storiesOf } from '@storybook/react';
 import Switch from './Switch';
 import { Flex } from 'design';
 
-storiesOf('Gravity/TopBar', module)
-  .add('Switch', () => {
-    return (
-      <Flex alignItems="center" mb="2" width="200px" justifyContent="space-around">
-        <Switch checked={false}  />
-        <Switch checked={true}  />
-      </Flex>
-    )}
-  )
+storiesOf('Gravity/TopBar', module).add('Switch', () => {
+  return (
+    <Flex
+      alignItems="center"
+      mb="2"
+      width="200px"
+      justifyContent="space-around"
+    >
+      <Switch checked={false} />
+      <Switch checked={true} />
+    </Flex>
+  );
+});

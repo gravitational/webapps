@@ -20,7 +20,7 @@ import { SITE_SERVERS_RECEIVE } from './actionTypes';
 
 const StoreRec = Record({
   nodes: {},
-})
+});
 
 export default Store({
   getInitialState() {
@@ -29,8 +29,8 @@ export default Store({
 
   initialize() {
     this.on(SITE_SERVERS_RECEIVE, receiveNodes);
-  }
-})
+  },
+});
 
 function receiveNodes(state, { gravityNodes, k8sNodes, canSsh, sshLogins }) {
   k8sNodes = k8sNodes || {};
@@ -40,8 +40,8 @@ function receiveNodes(state, { gravityNodes, k8sNodes, canSsh, sshLogins }) {
       ...node,
       canSsh,
       sshLogins,
-      k8s
-    }
+      k8s,
+    };
   });
 
   return state.set('nodes', nodes);

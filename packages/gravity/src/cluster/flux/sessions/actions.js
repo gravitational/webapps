@@ -16,12 +16,12 @@ limitations under the License.
 
 import reactor from 'gravity/reactor';
 import Logger from 'shared/libs/logger';
-import { RECEIVE_ACTIVE_SESSIONS  } from './actionTypes';
+import { RECEIVE_ACTIVE_SESSIONS } from './actionTypes';
 import { fetchSessions } from 'gravity/cluster/services/sessions';
 
 const logger = Logger.create('flux/sessions');
 
-export function fetchActiveSessions(){
+export function fetchActiveSessions() {
   return fetchSessions()
     .then(sessions => {
       reactor.dispatch(RECEIVE_ACTIVE_SESSIONS, sessions);
@@ -29,5 +29,5 @@ export function fetchActiveSessions(){
     .fail(err => {
       logger.error('fetchActiveSessions', err);
       throw err;
-  })
+    });
 }

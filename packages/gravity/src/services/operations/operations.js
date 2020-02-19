@@ -21,17 +21,16 @@ import makeOperation from './makeOperation';
 import makeProgress from './makeProgress';
 
 const service = {
-
-  fetchProgress({siteId, opId}){
+  fetchProgress({ siteId, opId }) {
     const url = cfg.getOperationProgressUrl(siteId, opId);
     return api.get(url).then(json => {
-      return makeProgress(json)
-    })
+      return makeProgress(json);
+    });
   },
 
   fetchOps(siteId, opId) {
-    const url = cfg.getOperationUrl({siteId, opId});
-    return api.get(url).then(json => map(json, makeOperation))
+    const url = cfg.getOperationUrl({ siteId, opId });
+    return api.get(url).then(json => map(json, makeOperation));
   },
 
   shrink(siteId, hostname) {
@@ -40,8 +39,7 @@ const service = {
     };
 
     return api.post(cfg.getShrinkSiteUrl(siteId), request);
-  }
-
-}
+  },
+};
 
 export default service;

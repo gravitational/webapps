@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import cfg from 'gravity/config'
+import cfg from 'gravity/config';
 import Account from './../components/Account';
 import withFeature, { FeatureBase } from 'gravity/components/withFeature';
 import { addTopNavItem } from 'gravity/cluster/flux/nav/actions';
@@ -22,29 +22,29 @@ import * as Icons from 'design/Icon';
 
 class AccountFeature extends FeatureBase {
   constructor() {
-    super()
+    super();
     this.Component = withFeature(this)(Account);
   }
 
-  getRoute(){
+  getRoute() {
     return {
       title: 'Account',
       path: cfg.routes.siteSettings,
       exact: true,
-      component: this.Component
-    }
+      component: this.Component,
+    };
   }
 
-  onload({featureFlags}) {
-    if(!featureFlags.siteAccount()){
+  onload({ featureFlags }) {
+    if (!featureFlags.siteAccount()) {
       this.setDisabled();
-      return
+      return;
     }
 
     addTopNavItem({
       title: 'Account Settings',
       Icon: Icons.User,
-      to: cfg.getSiteSettingsRoute()
+      to: cfg.getSiteSettingsRoute(),
     });
   }
 }

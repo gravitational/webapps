@@ -17,7 +17,7 @@ limitations under the License.
 import { at } from 'lodash';
 import { makeStatus } from 'gravity/services/clusters/makeCluster';
 
-export default function makeInfo(json){
+export default function makeInfo(json) {
   const [
     clusterState,
     gravityUrl,
@@ -46,5 +46,5 @@ export default function makeInfo(json){
     proxyUrl,
     tshLogin: `tsh login --proxy=${proxyUrl}`,
     advertiseIp,
-  }
+  };
 }

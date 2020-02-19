@@ -18,16 +18,11 @@ import cfg from 'gravity/config';
 import gravityEnterpriseLogo from 'design/assets/images/gravity-logo.svg';
 import gravityCommunityLogo from 'design/assets/images/gravity-community-logo.svg';
 
-export default function applyConfig(cluster){
-  const {
-    monitoringEnabled,
-    k8sEnabled,
-    logsEnabled,
-  } = cluster.features;
-
+export default function applyConfig(cluster) {
+  const { monitoringEnabled, k8sEnabled, logsEnabled } = cluster.features;
 
   let logoSvg = cluster.logo || gravityEnterpriseLogo;
-  if(!cfg.isEnterprise){
+  if (!cfg.isEnterprise) {
     logoSvg = gravityCommunityLogo;
   }
 

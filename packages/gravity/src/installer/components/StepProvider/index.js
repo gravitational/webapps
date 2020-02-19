@@ -16,4 +16,3 @@ limitations under the License.
 
 import StepProvider from './StepProvider';
 export default StepProvider;
-

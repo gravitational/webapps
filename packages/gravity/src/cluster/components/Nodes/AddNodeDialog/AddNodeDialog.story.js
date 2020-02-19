@@ -14,60 +14,56 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React from 'react'
-import { storiesOf } from '@storybook/react'
+import React from 'react';
+import { storiesOf } from '@storybook/react';
 import { AddNodeDialog } from './AddNodeDialog';
 
 storiesOf('Gravity/Nodes/AddNodeDialog', module)
-  .add('AddNodeDialog', () => (
-    <AddNodeDialog {...props} />
-  ))
-  .add('With Instruction', () => (
-    <WithCmd />
-  ));
+  .add('AddNodeDialog', () => <AddNodeDialog {...props} />)
+  .add('With Instruction', () => <WithCmd />);
 
 const WithCmd = () => {
   const dRef = React.useRef(null);
   React.useEffect(() => {
-    dRef.current.setSelectedProfile({ value: "node"})
+    dRef.current.setSelectedProfile({ value: 'node' });
     dRef.current.onContinue();
-  }, [])
+  }, []);
 
-  return <AddNodeDialog ref={dRef} {...props}/>
-}
+  return <AddNodeDialog ref={dRef} {...props} />;
+};
 
 const profiles = [
   {
-    "name": "node",
-    "description": "Node Jadicwiw",
-    "title": "Ops Center Node",
-    "requirementsText": "RAM: 40.0GB, CPU: Core x 161",
+    name: 'node',
+    description: 'Node Jadicwiw',
+    title: 'Ops Center Node',
+    requirementsText: 'RAM: 40.0GB, CPU: Core x 161',
   },
   {
-    "name": "node3",
-    "description": "Node Hifeke",
-    "title": "Ops Center Node",
-    "requirementsText": "RAM: 29.0GB, CPU: Core x 219",
+    name: 'node3',
+    description: 'Node Hifeke',
+    title: 'Ops Center Node',
+    requirementsText: 'RAM: 29.0GB, CPU: Core x 219',
   },
   {
-    "name": "Rodoskew",
-    "description": "Node Doegeco",
-    "title": "Sally Griffin Node",
-    "requirementsText": "RAM: 33.0GB, CPU: Core x 200",
+    name: 'Rodoskew',
+    description: 'Node Doegeco',
+    title: 'Sally Griffin Node',
+    requirementsText: 'RAM: 33.0GB, CPU: Core x 200',
   },
   {
-    "name": "Jelpoutu",
-    "description": "Node Ehtataj",
-    "title": "Charlotte Dean Node",
-    "requirementsText": "RAM: 16.0GB, CPU: Core x 255",
+    name: 'Jelpoutu',
+    description: 'Node Ehtataj',
+    title: 'Charlotte Dean Node',
+    requirementsText: 'RAM: 16.0GB, CPU: Core x 255',
   },
   {
-    "name": "Vagjedzum",
-    "description": "Node Disithu",
-    "title": "Minerva Green Node",
-    "requirementsText": "RAM: 5.0GB, CPU: Core x 244",
-  }
-]
+    name: 'Vagjedzum',
+    description: 'Node Disithu',
+    title: 'Minerva Green Node',
+    requirementsText: 'RAM: 5.0GB, CPU: Core x 244',
+  },
+];
 
 const props = {
   profiles,
@@ -75,4 +71,4 @@ const props = {
   advertiseIp: '127.0.0.1',
   gravityUrl: 'https://127.0.0.1:32009/portal/v1/gravity',
   onClose: () => {},
-}
+};

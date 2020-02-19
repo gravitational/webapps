@@ -15,6 +15,4 @@ limitations under the License.
 */
 
 import InviteLink from './InviteLink';
-export {
-  InviteLink
-}
+export { InviteLink };

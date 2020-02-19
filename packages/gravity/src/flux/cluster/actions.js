@@ -18,10 +18,10 @@ import reactor from 'gravity/reactor';
 import service from 'gravity/services/clusters';
 import { CLUSTER_SET } from './actionTypes';
 
-export function setCluster(clusters){
+export function setCluster(clusters) {
   reactor.dispatch(CLUSTER_SET, clusters);
 }
 
-export function fetchCluster(){
-  return service.fetchCluster().then( cluster => setCluster(cluster) );
+export function fetchCluster() {
+  return service.fetchCluster().then(cluster => setCluster(cluster));
 }

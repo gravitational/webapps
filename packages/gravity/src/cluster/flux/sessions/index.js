@@ -19,8 +19,8 @@ import store from './store';
 
 const STORE_NAME = 'cluster_ssh_sessions';
 
-reactor.registerStores({ [STORE_NAME] : store });
+reactor.registerStores({ [STORE_NAME]: store });
 
 export const getters = {
-  sessionStore: [STORE_NAME]
-}
+  sessionStore: [STORE_NAME],
+};

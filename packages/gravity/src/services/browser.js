@@ -19,8 +19,8 @@ function detectPlatform() {
   return {
     isWin: userAgent.indexOf('Windows') >= 0,
     isMac: userAgent.indexOf('Macintosh') >= 0,
-    isLinux: userAgent.indexOf('Linux') >= 0
-  }
+    isLinux: userAgent.indexOf('Linux') >= 0,
+  };
 }
 
 export const platform = detectPlatform();

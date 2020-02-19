@@ -15,6 +15,4 @@ limitations under the License.
 */
 
 import SessionCreator from './SessionCreator';
-export {
-  SessionCreator
-}
+export { SessionCreator };

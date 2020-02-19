@@ -16,4 +16,3 @@ limitations under the License.
 
 import DebugInfoButton from './DebugInfoButton';
 export default DebugInfoButton;
-

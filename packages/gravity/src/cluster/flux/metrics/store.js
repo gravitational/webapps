@@ -25,13 +25,16 @@ const StoreRec = Record({
 });
 
 export default Store({
-
   getInitialState() {
     return new StoreRec();
   },
 
   initialize() {
-    this.on(actionTypes.METRICS_SET_SHORT, (state, short) => state.set('short', short))
-    this.on(actionTypes.METRICS_SET_LONG, (state, long) => state.set('long', long))
-  }
-})
+    this.on(actionTypes.METRICS_SET_SHORT, (state, short) =>
+      state.set('short', short)
+    );
+    this.on(actionTypes.METRICS_SET_LONG, (state, long) =>
+      state.set('long', long)
+    );
+  },
+});

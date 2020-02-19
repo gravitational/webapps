@@ -19,8 +19,4 @@ import makeCluster, { StatusEnum } from './makeCluster';
 import applyConfig from './applyConfig';
 
 export default service;
-export {
-  applyConfig,
-  StatusEnum,
-  makeCluster,
-}
+export { applyConfig, StatusEnum, makeCluster };

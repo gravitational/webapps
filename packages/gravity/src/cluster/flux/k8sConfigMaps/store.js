@@ -15,20 +15,20 @@ limitations under the License.
 */
 
 import { Store, toImmutable } from 'nuclear-js';
-import { SITE_RECEIVE_CONFIG_MAPS, } from './actionTypes';
+import { SITE_RECEIVE_CONFIG_MAPS } from './actionTypes';
 
 export default Store({
   getInitialState() {
     return toImmutable({
-      configs: []
+      configs: [],
     });
   },
 
   initialize() {
     this.on(SITE_RECEIVE_CONFIG_MAPS, receiveCfgMaps);
-  }
-})
+  },
+});
 
-function receiveCfgMaps(state, jsonArray){
+function receiveCfgMaps(state, jsonArray) {
   return state.set('configs', toImmutable(jsonArray));
 }

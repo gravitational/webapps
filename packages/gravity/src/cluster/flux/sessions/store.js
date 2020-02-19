@@ -19,8 +19,8 @@ import { Record } from 'immutable';
 import { RECEIVE_ACTIVE_SESSIONS } from './actionTypes';
 
 const SessionRec = Record({
-  sessions: []
-})
+  sessions: [],
+});
 
 export default Store({
   getInitialState() {
@@ -29,8 +29,8 @@ export default Store({
 
   initialize() {
     this.on(RECEIVE_ACTIVE_SESSIONS, receive);
-  }
-})
+  },
+});
 
 function receive(state, sessions) {
   return state.set('sessions', sessions);

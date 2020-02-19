@@ -18,14 +18,18 @@ import { Store } from 'nuclear-js';
 import { Record } from 'immutable';
 import cfg from 'gravity/config';
 import { getAccessToken } from 'gravity/services/api';
-import { TLPT_TERMINAL_INIT, TLPT_TERMINAL_UPDATE_SESSION, TLPT_TERMINAL_SET_STATUS } from './actionTypes';
+import {
+  TLPT_TERMINAL_INIT,
+  TLPT_TERMINAL_UPDATE_SESSION,
+  TLPT_TERMINAL_SET_STATUS,
+} from './actionTypes';
 
 const TermStatusRec = new Record({
   isReady: false,
   isLoading: false,
   isError: false,
   errorText: undefined,
-})
+});
 export class TermRec extends Record({
   status: TermStatusRec(),
   isNew: false,
@@ -37,47 +41,45 @@ export class TermRec extends Record({
   siteId: null,
   serverId: null,
   sid: null,
-  parties: []
+  parties: [],
 }) {
-
-  updateSession(json){
+  updateSession(json) {
     return this.merge({
-      ...json
-    })
+      ...json,
+    });
   }
 
   getClusterName() {
     return this.siteId;
   }
 
-  getTtyConfig(){
+  getTtyConfig() {
     let url = '';
 
     const ttyParams = {
       login: this.login,
-      sid: this.sid
+      sid: this.sid,
     };
 
-    if(this.pod){
-      url = cfg.api.ttyWsK8sPodAddr,
-      ttyParams.pod = {
-        name: this.pod,
-        container: this.container,
-        namespace: this.namespace,
-      }
-    }else{
-      url = cfg.api.ttyWsAddr,
-      ttyParams.server_id = this.serverId;
+    if (this.pod) {
+      (url = cfg.api.ttyWsK8sPodAddr),
+        (ttyParams.pod = {
+          name: this.pod,
+          container: this.container,
+          namespace: this.namespace,
+        });
+    } else {
+      (url = cfg.api.ttyWsAddr), (ttyParams.server_id = this.serverId);
     }
 
     const ttyUrl = url
       .replace(':fqdm', getHostName())
       .replace(':token', getAccessToken())
-      .replace(':cluster', this.siteId)
+      .replace(':cluster', this.siteId);
 
     return {
       ttyUrl,
-      ttyParams
+      ttyParams,
     };
   }
 
@@ -86,7 +88,7 @@ export class TermRec extends Record({
   }
 
   getServerLabel() {
-    if(this.pod){
+    if (this.pod) {
       return `${this.login}@${this.pod}`;
     }
 
@@ -101,12 +103,11 @@ export class TermRec extends Record({
     return 'Connecting...';
   }
 
-  init(json){
+  init(json) {
     return this.merge({
       ...json,
-    })
+    });
   }
-
 }
 
 export default Store({
@@ -116,11 +117,13 @@ export default Store({
 
   initialize() {
     this.on(TLPT_TERMINAL_SET_STATUS, (state, json) => state.setStatus(json));
-    this.on(TLPT_TERMINAL_UPDATE_SESSION, (state, json) => state.updateSession(json));
+    this.on(TLPT_TERMINAL_UPDATE_SESSION, (state, json) =>
+      state.updateSession(json)
+    );
     this.on(TLPT_TERMINAL_INIT, (state, json) => state.init(json));
-  }
+  },
 });
 
-function getHostName(){
-  return location.hostname+(location.port ? ':'+location.port: '');
+function getHostName() {
+  return location.hostname + (location.port ? ':' + location.port : '');
 }

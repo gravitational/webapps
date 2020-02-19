@@ -19,13 +19,17 @@ import store from './store';
 
 const STORE_NAME = 'cluster_k8s_namespaces';
 
-reactor.registerStores({ [STORE_NAME] : store });
+reactor.registerStores({ [STORE_NAME]: store });
 
-const namespaceNames = [ [STORE_NAME], namespaceDataArray => {
-  return namespaceDataArray.map(item=> item.getIn(['metadata', 'name'])).toArray();
- }
+const namespaceNames = [
+  [STORE_NAME],
+  namespaceDataArray => {
+    return namespaceDataArray
+      .map(item => item.getIn(['metadata', 'name']))
+      .toArray();
+  },
 ];
 
 export const getters = {
-  namespaceNames
-}
+  namespaceNames,
+};

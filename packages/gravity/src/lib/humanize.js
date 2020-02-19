@@ -41,8 +41,8 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 function numberFormat(number, decimals, decPoint, thousandsSep) {
   decimals = isNaN(decimals) ? 2 : Math.abs(decimals);
-  decPoint = (decPoint === undefined) ? '.' : decPoint;
-  thousandsSep = (thousandsSep === undefined) ? ',' : thousandsSep;
+  decPoint = decPoint === undefined ? '.' : decPoint;
+  thousandsSep = thousandsSep === undefined ? ',' : thousandsSep;
 
   var sign = number < 0 ? '-' : '';
   number = Math.abs(+number || 0);
@@ -50,7 +50,17 @@ function numberFormat(number, decimals, decPoint, thousandsSep) {
   var intPart = parseInt(number.toFixed(decimals), 10) + '';
   var j = intPart.length > 3 ? intPart.length % 3 : 0;
 
-  return sign + (j ? intPart.substr(0, j) + thousandsSep : '') + intPart.substr(j).replace(/(\d{3})(?=\d)/g, '$1' + thousandsSep) + (decimals ? decPoint + Math.abs(number - intPart).toFixed(decimals).slice(2) : '');
+  return (
+    sign +
+    (j ? intPart.substr(0, j) + thousandsSep : '') +
+    intPart.substr(j).replace(/(\d{3})(?=\d)/g, '$1' + thousandsSep) +
+    (decimals
+      ? decPoint +
+        Math.abs(number - intPart)
+          .toFixed(decimals)
+          .slice(2)
+      : '')
+  );
 }
 
 /**
@@ -59,12 +69,33 @@ function numberFormat(number, decimals, decPoint, thousandsSep) {
  * For example:
  * If value is 123456789, the output would be 117.7 MB.
  */
-export function filesize(filesize, kilo, decimals, decPoint, thousandsSep, suffixSep) {
-  kilo = (kilo === undefined) ? 1024 : kilo;
-  if (filesize <= 0) { return '0 bytes'; }
-  if (filesize < kilo && decimals === undefined) { decimals = 0; }
-  if (suffixSep === undefined) { suffixSep = ' '; }
-  return intword(filesize, ['bytes', 'KB', 'MB', 'GB', 'TB', 'PB'], kilo, decimals, decPoint, thousandsSep, suffixSep);
+export function filesize(
+  filesize,
+  kilo,
+  decimals,
+  decPoint,
+  thousandsSep,
+  suffixSep
+) {
+  kilo = kilo === undefined ? 1024 : kilo;
+  if (filesize <= 0) {
+    return '0 bytes';
+  }
+  if (filesize < kilo && decimals === undefined) {
+    decimals = 0;
+  }
+  if (suffixSep === undefined) {
+    suffixSep = ' ';
+  }
+  return intword(
+    filesize,
+    ['bytes', 'KB', 'MB', 'GB', 'TB', 'PB'],
+    kilo,
+    decimals,
+    decPoint,
+    thousandsSep,
+    suffixSep
+  );
 }
 
 /**
@@ -73,19 +104,27 @@ export function filesize(filesize, kilo, decimals, decPoint, thousandsSep, suffi
  * For example:
  * If value is 123456789, the output would be 117.7 M.
  */
-export function intword(number, units, kilo, decimals, decPoint, thousandsSep, suffixSep) {
+export function intword(
+  number,
+  units,
+  kilo,
+  decimals,
+  decPoint,
+  thousandsSep,
+  suffixSep
+) {
   var humanized, unit;
 
-  units = units || ['', 'K', 'M', 'B', 'T'],
-  unit = units.length - 1,
-  kilo = kilo || 1000,
-  decimals = isNaN(decimals) ? 2 : Math.abs(decimals),
-  decPoint = decPoint || '.',
-  thousandsSep = thousandsSep || ',',
-  suffixSep = suffixSep || '';
+  (units = units || ['', 'K', 'M', 'B', 'T']),
+    (unit = units.length - 1),
+    (kilo = kilo || 1000),
+    (decimals = isNaN(decimals) ? 2 : Math.abs(decimals)),
+    (decPoint = decPoint || '.'),
+    (thousandsSep = thousandsSep || ','),
+    (suffixSep = suffixSep || '');
 
-  for (var i=0; i < units.length; i++) {
-    if (number < Math.pow(kilo, i+1)) {
+  for (var i = 0; i < units.length; i++) {
+    if (number < Math.pow(kilo, i + 1)) {
       unit = i;
       break;
     }

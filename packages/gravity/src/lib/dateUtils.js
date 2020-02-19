@@ -19,7 +19,7 @@ limitations under the License.
 import moment from 'moment';
 import cfg from '../config';
 
-export function displayK8sAge(created){
+export function displayK8sAge(created) {
   const now = moment(new Date());
   const end = moment(created);
   const duration = moment.duration(now.diff(end));

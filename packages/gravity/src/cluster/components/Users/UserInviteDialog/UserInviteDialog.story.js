@@ -14,25 +14,21 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React from 'react'
-import { storiesOf } from '@storybook/react'
-import { UserInviteDialog } from './UserInviteDialog'
+import React from 'react';
+import { storiesOf } from '@storybook/react';
+import { UserInviteDialog } from './UserInviteDialog';
 
 storiesOf('Gravity/Users/UserInviteDialog', module)
   .add('UserInviteDialog', () => {
-    return (
-      <UserInviteDialog
-        attempt={{}}
-        open={true}
-        roles={roles} />
-    );
+    return <UserInviteDialog attempt={{}} open={true} roles={roles} />;
   })
   .add('With Error', () => {
     return (
       <UserInviteDialog
         attempt={{ isFailed: true, message: serverError }}
         open={true}
-        roles={roles} />
+        roles={roles}
+      />
     );
   })
   .add('With Invite Link', () => {
@@ -40,16 +36,28 @@ storiesOf('Gravity/Users/UserInviteDialog', module)
       <UserInviteDialog
         attempt={{ isSuccess: true, message: userToken.url }}
         open={true}
-        roles={roles} />
+        roles={roles}
+      />
     );
   });
 
 const userToken = {
-  url: 'https://172.31.28.130:3009/web/newuser/157220e7d29956398c0722bea4f38825d78de645e92e9f3980f650154957bb59',
-}
+  url:
+    'https://172.31.28.130:3009/web/newuser/157220e7d29956398c0722bea4f38825d78de645e92e9f3980f650154957bb59',
+};
 
-const serverError = "this is a long error message which should be wrapped";
+const serverError = 'this is a long error message which should be wrapped';
 
 const roles = [
-  'admin', 'devops' , 'segonlog', 'jozfekgon', 'zewibovuk', 'vekredo', 'rebwumu', 'warifif', 'upnihnuj', 'ubkuznav', 'rurlizo'
-]
+  'admin',
+  'devops',
+  'segonlog',
+  'jozfekgon',
+  'zewibovuk',
+  'vekredo',
+  'rebwumu',
+  'warifif',
+  'upnihnuj',
+  'ubkuznav',
+  'rurlizo',
+];

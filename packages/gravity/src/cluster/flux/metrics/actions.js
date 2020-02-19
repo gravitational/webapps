@@ -23,25 +23,21 @@ import * as actionTypes from './actionTypes';
 const logger = Logger.create('flux/metrics');
 
 export function fetchShortMetrics() {
-  return service.fetchShort()
-  .then(short => {
+  return service.fetchShort().then(short => {
     reactor.dispatch(actionTypes.METRICS_SET_SHORT, short);
-  })
+  });
 }
 
-export function fetchMetrics(){
-  return $.when(
-    service.fetchLong(),
-    service.fetchShort(),
-  )
-  .done((...responses) => {
-    const [ long, short ] = responses;
-    reactor.batch(() => {
-      reactor.dispatch(actionTypes.METRICS_SET_SHORT, short);
-      reactor.dispatch(actionTypes.METRICS_SET_LONG, long);
+export function fetchMetrics() {
+  return $.when(service.fetchLong(), service.fetchShort())
+    .done((...responses) => {
+      const [long, short] = responses;
+      reactor.batch(() => {
+        reactor.dispatch(actionTypes.METRICS_SET_SHORT, short);
+        reactor.dispatch(actionTypes.METRICS_SET_LONG, long);
+      });
+    })
+    .fail(err => {
+      logger.error('fetchMetrics', err);
     });
-  })
-  .fail(err => {
-    logger.error('fetchMetrics', err);
-  })
 }

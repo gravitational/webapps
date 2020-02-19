@@ -18,15 +18,14 @@ import reactor from 'gravity/reactor';
 import k8s from 'gravity/cluster/services/k8s';
 import { SITE_RECEIVE_CONFIG_MAPS } from './actionTypes';
 
-export function saveConfigMap(namespace, configName, data){
-  return k8s.saveConfigMap(namespace, configName, { data })
-    .then(() => {
-      return fetchCfgMaps();
-    })
+export function saveConfigMap(namespace, configName, data) {
+  return k8s.saveConfigMap(namespace, configName, { data }).then(() => {
+    return fetchCfgMaps();
+  });
 }
 
-export function fetchCfgMaps(){
-  return k8s.getConfigMaps().done((cfgMapsItemArray)=>{
+export function fetchCfgMaps() {
+  return k8s.getConfigMaps().done(cfgMapsItemArray => {
     reactor.dispatch(SITE_RECEIVE_CONFIG_MAPS, cfgMapsItemArray);
-  })
+  });
 }

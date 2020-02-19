@@ -19,14 +19,14 @@ import { RECEIVE_DEPLOYMENTS } from './actionTypes';
 
 export default Store({
   getInitialState() {
-    return toImmutable([])
+    return toImmutable([]);
   },
 
   initialize() {
-    this.on(RECEIVE_DEPLOYMENTS, receiveDeployments)
-  }
-})
+    this.on(RECEIVE_DEPLOYMENTS, receiveDeployments);
+  },
+});
 
-function receiveDeployments(state, jsonArray){
+function receiveDeployments(state, jsonArray) {
   return toImmutable(jsonArray);
 }

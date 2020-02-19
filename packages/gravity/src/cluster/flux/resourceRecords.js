@@ -23,56 +23,55 @@ export class ItemRec extends Record({
   kind: '',
   name: '',
   displayName: '',
-  content: ''
-}){
-  constructor(props={}){
+  content: '',
+}) {
+  constructor(props = {}) {
     super({
       displayName: props.name,
       ...props,
-    })
+    });
   }
 
-  getId(){
+  getId() {
     return this.get('id');
   }
 
-  getIsNew(){
+  getIsNew() {
     return this.get('isNew');
   }
 
-  getName(){
+  getName() {
     return this.get('name');
   }
 
-  getContent(){
+  getContent() {
     return this.get('content');
   }
 
-  getKind(){
+  getKind() {
     return this.get('kind');
   }
 }
 
 export class StoreRec extends Record({
-  items: Map()
-}){
-
-  getItems(){
+  items: Map(),
+}) {
+  getItems() {
     return this.items.valueSeq().sortBy(i => i.getName());
   }
 
-  upsertItems(jsonItems){
+  upsertItems(jsonItems) {
     let itemMap = this.get('items');
     jsonItems.forEach(json => {
       const rec = new ItemRec(json);
-      itemMap = itemMap.set(rec.id, rec)
-    })
+      itemMap = itemMap.set(rec.id, rec);
+    });
 
     return this.set('items', itemMap);
   }
 
-  findItem(item /* string|itemRec*/){
-    if(!item) {
+  findItem(item /* string|itemRec*/) {
+    if (!item) {
       return null;
     }
 
@@ -80,19 +79,19 @@ export class StoreRec extends Record({
     return this.getIn(['items', id]);
   }
 
-  removeAll(){
-    return this.set('items', new Map())
+  removeAll() {
+    return this.set('items', new Map());
   }
 
-  remove(id){
+  remove(id) {
     return this.deleteIn(['items', id]);
   }
 
-  createItem(){
+  createItem() {
     return new ItemRec({ isNew: true });
   }
 
-  setItems(jsonItems){
+  setItems(jsonItems) {
     let store = this.removeAll();
     return store.upsertItems(jsonItems);
   }

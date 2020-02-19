@@ -19,18 +19,17 @@ import api from 'gravity/services/api';
 import cfg from 'gravity/config';
 import { map } from 'lodash';
 
-export function fetchSessions(){
-  return api.get(cfg.getSiteSshSessionUrl())
-    .then(response => {
-      if(response && response.sessions){
-        return map(response.sessions, makeSession);
-      }
+export function fetchSessions() {
+  return api.get(cfg.getSiteSshSessionUrl()).then(response => {
+    if (response && response.sessions) {
+      return map(response.sessions, makeSession);
+    }
 
-      return [];
-    })
+    return [];
+  });
 }
 
-function makeSession(json){
+function makeSession(json) {
   const parties = map(json.parties, makeParticipant);
   const sid = json.id;
   const namespace = json.namespace;
@@ -50,8 +49,8 @@ function makeSession(json){
     durationText,
     serverId,
     siteId,
-    parties
-  }
+    parties,
+  };
 }
 
 function makeParticipant(json) {
@@ -59,7 +58,7 @@ function makeParticipant(json) {
   return {
     user: json.user,
     remoteAddr: remoteAddr.replace(PORT_REGEX, ''),
-  }
+  };
 }
 
 const PORT_REGEX = /:\d+$/;

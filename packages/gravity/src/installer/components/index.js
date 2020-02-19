@@ -16,4 +16,3 @@ limitations under the License.
 
 import Installer from './Installer';
 export default Installer;
-

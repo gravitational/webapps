@@ -17,8 +17,8 @@ limitations under the License.
 import { at, values, map, sortBy } from 'lodash';
 import { ServerVarEnums } from 'gravity/services/enums';
 
-export default function makeAgentServers(json){
-  const [ servers ] = at(json, [ 'servers' ]);
+export default function makeAgentServers(json) {
+  const [servers] = at(json, ['servers']);
 
   const agentServers = map(servers, srv => {
     const mountVars = makeMountVars(srv);
@@ -28,37 +28,39 @@ export default function makeAgentServers(json){
       role: srv.role,
       hostname: srv.hostname,
       vars,
-      os: srv.os
-    }
-  })
+      os: srv.os,
+    };
+  });
 
-  return sortBy(agentServers, s => s.hostname );
+  return sortBy(agentServers, s => s.hostname);
 }
 
-function makeMountVars(json){
-  const mounts =  map(json.mounts, mnt => {
+function makeMountVars(json) {
+  const mounts = map(json.mounts, mnt => {
     return {
       name: mnt.name,
       type: ServerVarEnums.MOUNT,
       value: mnt.source,
-      options: []
-    }
+      options: [],
+    };
   });
 
   return sortBy(mounts, m => m.name);
 }
 
-function makeInterfaceVars(json){
+function makeInterfaceVars(json) {
   const defaultValue = json['advertise_addr'];
   const options = values(json.interfaces)
     .map(value => {
-      return value['ipv4_addr']
+      return value['ipv4_addr'];
     })
     .sort();
 
-  return [{
-    type: ServerVarEnums.INTERFACE,
-    value: defaultValue || options[0],
-    options
-  }]
+  return [
+    {
+      type: ServerVarEnums.INTERFACE,
+      value: defaultValue || options[0],
+      options,
+    },
+  ];
 }

@@ -14,29 +14,29 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React from 'react'
+import React from 'react';
 import $ from 'jQuery';
-import { storiesOf } from '@storybook/react'
+import { storiesOf } from '@storybook/react';
 import UserDeleteDialog from './UserDeleteDialog';
 
 const dialogProps = {
   siteId: 'fdf',
   user: { userId: 'sample-role' },
-  attempt: { },
-  attemptActions: { },
+  attempt: {},
+  attemptActions: {},
   onDelete: () => {
-    return $.Deferred().reject(new Error('server error'))
+    return $.Deferred().reject(new Error('server error'));
   },
-  onClose: () => null
-}
+  onClose: () => null,
+};
 
 storiesOf('Gravity/Users/UserDeleteDialog', module)
-  .add('UserDeleteDialog', () => (
-    <UserDeleteDialog {...dialogProps} />
-  ))
+  .add('UserDeleteDialog', () => <UserDeleteDialog {...dialogProps} />)
   .add('Error', () => (
-    <UserDeleteDialog { ...dialogProps } attempt={{isFailed: true, message: serverError}}
-      />
+    <UserDeleteDialog
+      {...dialogProps}
+      attempt={{ isFailed: true, message: serverError }}
+    />
   ));
 
-  const serverError = "this is a long error message which should be wrapped";
+const serverError = 'this is a long error message which should be wrapped';

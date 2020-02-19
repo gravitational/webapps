@@ -16,4 +16,3 @@ limitations under the License.
 
 import OperationBanner from './OperationBanner';
 export default OperationBanner;
-

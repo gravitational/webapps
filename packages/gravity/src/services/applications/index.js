@@ -19,9 +19,4 @@ import makeApplication, { AppKindEnum } from './makeApplication';
 import makeNodeProfile from './makeNodeProfile';
 
 export default service;
-export {
-  AppKindEnum,
-  makeApplication,
-  makeNodeProfile
-}
-
+export { AppKindEnum, makeApplication, makeNodeProfile };

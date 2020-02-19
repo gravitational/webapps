@@ -16,7 +16,4 @@ limitations under the License.
 
 import Radio, { RadioGroup } from './Radio';
 export default Radio;
-export {
-  RadioGroup
-}
-
+export { RadioGroup };

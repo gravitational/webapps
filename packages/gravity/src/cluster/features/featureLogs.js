@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import cfg from 'gravity/config'
+import cfg from 'gravity/config';
 import withFeature, { FeatureBase } from 'gravity/components/withFeature';
 import * as Icons from 'design/Icon';
 import Logs from './../components/Logs';
@@ -22,20 +22,20 @@ import { addSideNavItem } from 'gravity/cluster/flux/nav/actions';
 
 class FeatureLogs extends FeatureBase {
   constructor() {
-    super()
+    super();
     this.Component = withFeature(this)(Logs);
   }
 
-  getRoute(){
+  getRoute() {
     return {
       title: 'Logs',
       path: cfg.routes.siteLogs,
       exact: true,
-      component: this.Component
-    }
+      component: this.Component,
+    };
   }
 
-  onload({featureFlags}) {
+  onload({ featureFlags }) {
     if (!featureFlags.siteLogs()) {
       this.setDisabled();
       return;
@@ -50,4 +50,3 @@ class FeatureLogs extends FeatureBase {
 }
 
 export default FeatureLogs;
-

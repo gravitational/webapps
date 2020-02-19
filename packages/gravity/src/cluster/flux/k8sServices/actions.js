@@ -18,10 +18,8 @@ import reactor from 'gravity/reactor';
 import k8s from 'gravity/cluster/services/k8s';
 import { SITE_RECEIVE_SERVICES } from './actionTypes';
 
-export function fetchServices(namespace='default'){
-  return k8s.getServices(namespace)
-    .done(serviceDataArray => {
-      reactor.dispatch(SITE_RECEIVE_SERVICES, serviceDataArray);
-    });
+export function fetchServices(namespace = 'default') {
+  return k8s.getServices(namespace).done(serviceDataArray => {
+    reactor.dispatch(SITE_RECEIVE_SERVICES, serviceDataArray);
+  });
 }
-

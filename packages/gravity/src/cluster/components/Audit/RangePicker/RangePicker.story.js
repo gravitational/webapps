@@ -18,10 +18,9 @@ import React from 'react';
 import { storiesOf } from '@storybook/react';
 import RangePicker from './RangePicker';
 
-storiesOf('Gravity/Audit', module)
-  .add('RangePicker', () => (
-    <RangePicker {...props} />
-  ))
+storiesOf('Gravity/Audit', module).add('RangePicker', () => (
+  <RangePicker {...props} />
+));
 
 const options = [
   {
@@ -34,12 +33,12 @@ const options = [
     isCustom: true,
     from: new Date(),
     to: new Date(),
-  }
-]
+  },
+];
 
 const props = {
   disabled: false,
   value: options[0],
   options,
-  onChange: () => {}
-}
+  onChange: () => {},
+};

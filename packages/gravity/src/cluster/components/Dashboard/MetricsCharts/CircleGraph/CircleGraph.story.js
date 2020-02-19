@@ -14,37 +14,36 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React from 'react'
-import { storiesOf } from '@storybook/react'
+import React from 'react';
+import { storiesOf } from '@storybook/react';
 import CircleGraph from './CircleGraph';
 import { Flex } from 'design';
 
-storiesOf('Gravity/Dashboard/Charts', module)
-  .add('CircleGraph', () => {
-    const subtitle = ['500 Nodes', `Heigh. ${90}%`]
-    return (
-      <Flex>
-        <CircleGraph
-          mr="3"
-          mb="4"
-          title="CPU Usage"
-          current={59}
-          subtitles={subtitle}
-        />
-          <CircleGraph
-          mr="3"
-          mb="4"
-          title="CPU Usage"
-          current={10}
-          subtitles={subtitle}
-        />
-          <CircleGraph
-          mr="3"
-          mb="4"
-          title="CPU Usage"
-          current={80}
-          subtitles={subtitle}
-        />
-      </Flex>
-    );
-  })
+storiesOf('Gravity/Dashboard/Charts', module).add('CircleGraph', () => {
+  const subtitle = ['500 Nodes', `Heigh. ${90}%`];
+  return (
+    <Flex>
+      <CircleGraph
+        mr="3"
+        mb="4"
+        title="CPU Usage"
+        current={59}
+        subtitles={subtitle}
+      />
+      <CircleGraph
+        mr="3"
+        mb="4"
+        title="CPU Usage"
+        current={10}
+        subtitles={subtitle}
+      />
+      <CircleGraph
+        mr="3"
+        mb="4"
+        title="CPU Usage"
+        current={80}
+        subtitles={subtitle}
+      />
+    </Flex>
+  );
+});

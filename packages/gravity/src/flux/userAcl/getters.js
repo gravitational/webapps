@@ -17,5 +17,5 @@ limitations under the License.
 const userAcl = ['useracl'];
 
 export default {
-  userAcl
-}
+  userAcl,
+};

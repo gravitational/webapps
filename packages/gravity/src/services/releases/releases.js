@@ -20,8 +20,9 @@ import { map } from 'lodash';
 import makeRelease from './makeRelease';
 
 export const service = {
-  fetchReleases(siteId){
-    return api.get(cfg.getSiteAppsUrl(siteId))
+  fetchReleases(siteId) {
+    return api
+      .get(cfg.getSiteAppsUrl(siteId))
       .then(response => map(response, makeRelease));
-  }
-}
+  },
+};

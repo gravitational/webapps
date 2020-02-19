@@ -14,39 +14,31 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React from 'react'
-import { storiesOf } from '@storybook/react'
+import React from 'react';
+import { storiesOf } from '@storybook/react';
 import { ButtonPrimary } from 'design';
 import LineChart from './LineChart';
 
-storiesOf('Gravity/Dashboard/Charts', module)
-  .add('LineChart', () => (
-    <TextBox/>
-  ))
+storiesOf('Gravity/Dashboard/Charts', module).add('LineChart', () => (
+  <TextBox />
+));
 
 const TextBox = () => {
   const ref = React.useRef();
-  function addData(){
+  function addData() {
     const ram = Math.floor(Math.random() * 100);
     const cpu = Math.floor(Math.random() * 100);
-    ref.current.add(
-      cpu,
-      ram,
-    )
+    ref.current.add(cpu, ram);
   }
 
-  React.useEffect( () => {
-    ref.current.init(
-      [ 39, 35, 10, 40, 37, 2, 3 ],
-      [ 10, 2, 3, 35, 37, 39, 40 ]
-    )
+  React.useEffect(() => {
+    ref.current.init([39, 35, 10, 40, 37, 2, 3], [10, 2, 3, 35, 37, 39, 40]);
   }, []);
 
   return (
     <div>
-      <LineChart mb="5" ref={ref}/>
+      <LineChart mb="5" ref={ref} />
       <ButtonPrimary onClick={addData}>Add Data</ButtonPrimary>
     </div>
-  )
-}
-
+  );
+};

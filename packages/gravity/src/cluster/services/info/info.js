@@ -23,15 +23,16 @@ import makeRemoteStatus from './makeRemoteStatus';
 import makeJoinToken from './makeJoinToken';
 
 const service = {
-
   fetchInfo() {
     return api.get(cfg.getSiteInfoUrl()).then(makeInfo);
   },
 
   fetchRemoteAccess() {
-    if(!cfg.isEnterprise){
+    if (!cfg.isEnterprise) {
       // return NA for open source version of the product
-      return $.Deferred().resolve(makeRemoteStatus( { status: RemoteAccessEnum.NA }));
+      return $.Deferred().resolve(
+        makeRemoteStatus({ status: RemoteAccessEnum.NA })
+      );
     }
 
     return api.get(cfg.getSiteRemoteAccessUrl()).then(makeRemoteStatus);
@@ -39,19 +40,17 @@ const service = {
 
   changeRemoteAccess(enabled) {
     const request = {
-      enabled: enabled === true
-    }
+      enabled: enabled === true,
+    };
 
-    return api.put(cfg.getSiteRemoteAccessUrl(), request)
+    return api
+      .put(cfg.getSiteRemoteAccessUrl(), request)
       .then(makeRemoteStatus);
   },
 
-  fetchJoinToken(){
+  fetchJoinToken() {
     return api.get(cfg.getSiteTokenJoinUrl()).then(makeJoinToken);
-  }
-
-}
+  },
+};
 
 export default service;
-
-

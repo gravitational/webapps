@@ -16,4 +16,3 @@ limitations under the License.
 
 import ActionMenu from './ActionMenu';
 export default ActionMenu;
-

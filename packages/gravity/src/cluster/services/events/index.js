@@ -18,9 +18,10 @@ import api from 'gravity/services/api';
 import cfg from 'gravity/config';
 import Event from './event';
 
-export function fetchClusterEvents({ siteId, start, end, limit }){
-  return api.get(cfg.getSiteEventsUrl({ siteId, start, end, limit }))
+export function fetchClusterEvents({ siteId, start, end, limit }) {
+  return api
+    .get(cfg.getSiteEventsUrl({ siteId, start, end, limit }))
     .then(json => {
       return json.events.map(item => new Event(item));
-    })
+    });
 }

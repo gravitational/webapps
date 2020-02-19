@@ -16,4 +16,3 @@ limitations under the License.
 
 import RemoteAccess from './RemoteAccess';
 export default RemoteAccess;
-

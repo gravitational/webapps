@@ -16,4 +16,3 @@ limitations under the License.
 
 import Description from './Description';
 export default Description;
-

@@ -27,15 +27,15 @@ export class UserRec extends Record({
   builtin: false,
   created: null,
   roles: [],
-  owner: false
+  owner: false,
 }) {
-  constructor({created, roles, userId, ...props }) {
+  constructor({ created, roles, userId, ...props }) {
     created = created || new Date();
     created = new Date(created);
     userId = userId || props.email || props.name;
     roles = roles || [];
     roles = roles.filter(name => !isHiddenRoleName(name));
-    super({ created, userId, roles, ...props});
+    super({ created, userId, roles, ...props });
   }
 }
 
@@ -48,15 +48,14 @@ export default Store({
 
   initialize() {
     this.on(CLUSTER_RECEIVE_USERS, receiveUsers);
-  }
-})
+  },
+});
 
 function receiveUsers(state, json) {
   json = json || [];
-  let userList = new List( json.map( i => new UserRec(i)) )
+  let userList = new List(json.map(i => new UserRec(i)));
   return state.setIn(['users'], userList);
 }
-
 
 function isHiddenRoleName(name) {
   name = name || '';

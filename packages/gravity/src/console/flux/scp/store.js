@@ -23,8 +23,8 @@ const defaultStatus = {
   isFailed: false,
   isProcessing: false,
   isCompleted: false,
-  error: "",
-}
+  error: '',
+};
 
 export class File extends Record({
   id: '',
@@ -32,15 +32,14 @@ export class File extends Record({
   name: '',
   isUpload: '',
   blob: null,
-  ...defaultStatus
+  ...defaultStatus,
 }) {
-
   constructor(props) {
     props = {
       ...props,
-      id: new Date().getTime() + props.name
-    }
-    super(props)
+      id: new Date().getTime() + props.name,
+    };
+    super(props);
   }
 }
 
@@ -50,21 +49,20 @@ export class FileTransferStore extends Record({
   siteId: '',
   serverId: '',
   login: '',
-  files: new OrderedMap()
-}){
-
-  constructor(params){
+  files: new OrderedMap(),
+}) {
+  constructor(params) {
     super(params);
   }
 
-  open({isUpload, siteId, serverId, login}) {
+  open({ isUpload, siteId, serverId, login }) {
     return this.merge({
       isOpen: true,
       isUpload,
       siteId,
       serverId,
-      login
-    })
+      login,
+    });
   }
 
   close() {
@@ -72,17 +70,14 @@ export class FileTransferStore extends Record({
   }
 
   makeUrl(location, filename) {
-    const {
-      siteId,
-      serverId,
-      login } = this;
+    const { siteId, serverId, login } = this;
 
     let url = cfg.getScpUrl({
       siteId,
       serverId,
       login,
       location,
-      filename
+      filename,
     });
 
     return url;
@@ -99,18 +94,18 @@ export class FileTransferStore extends Record({
       url,
       name,
       isUpload,
-      blob
-    })
+      blob,
+    });
 
-    return this.update('files', files => files.set(file.id, file))
+    return this.update('files', files => files.set(file.id, file));
   }
 
   updateStatus({ id, ...rest }) {
     let file = this.files.get(id);
     let status = {
       ...defaultStatus,
-      ...rest
-    }
+      ...rest,
+    };
 
     file = file.merge(status);
     return this.update('files', files => files.set(id, file));
@@ -119,7 +114,6 @@ export class FileTransferStore extends Record({
   isTransfering() {
     return this.files.some(f => f.isProcessing === true);
   }
-
 }
 
 export default Store({
@@ -133,5 +127,5 @@ export default Store({
     this.on(AT.ADD, (state, json) => state.addFile(json));
     this.on(AT.REMOVE, (state, id) => state.removeFile(id));
     this.on(AT.UPDATE_STATUS, (state, json) => state.updateStatus(json));
-  }
-})
+  },
+});

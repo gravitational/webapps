@@ -14,16 +14,17 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React from 'react'
-import { storiesOf } from '@storybook/react'
-import { UpdateCertDialog } from './UpdateCertDialog'
+import React from 'react';
+import { storiesOf } from '@storybook/react';
+import { UpdateCertDialog } from './UpdateCertDialog';
 
 storiesOf('Gravity/Certificate', module)
-  .add('UpdateCertDialog', () => (
-    <UpdateCertDialog {...props}/>
-  ))
+  .add('UpdateCertDialog', () => <UpdateCertDialog {...props} />)
   .add('Error', () => (
-    <UpdateCertDialog {...props} attempt={{isFailed: true, message: "Server error"}} />
+    <UpdateCertDialog
+      {...props}
+      attempt={{ isFailed: true, message: 'Server error' }}
+    />
   ));
 
 const props = {
@@ -31,5 +32,5 @@ const props = {
   onClose: () => null,
   onSubmit: () => null,
   siteId: 'samplesite',
-  attemptActions: {}
-}
+  attemptActions: {},
+};

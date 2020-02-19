@@ -15,23 +15,23 @@ limitations under the License.
 */
 
 import { Store, toImmutable } from 'nuclear-js';
-import  { SITE_RECEIVE_PODS } from './actionTypes';
+import { SITE_RECEIVE_PODS } from './actionTypes';
 
 export default Store({
   getInitialState() {
-    return toImmutable({})
+    return toImmutable({});
   },
 
   initialize() {
-    this.on(SITE_RECEIVE_PODS, receivePods)
-  }
-})
+    this.on(SITE_RECEIVE_PODS, receivePods);
+  },
+});
 
-function receivePods(state, podDataArray){
+function receivePods(state, podDataArray) {
   let newState = toImmutable({});
   return newState.withMutations(state => {
-    podDataArray.forEach((item) => {
-        state.set(item.metadata.selfLink, toImmutable(item))
-      })
-   });
+    podDataArray.forEach(item => {
+      state.set(item.metadata.selfLink, toImmutable(item));
+    });
+  });
 }

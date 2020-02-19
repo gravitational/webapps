@@ -19,39 +19,48 @@ import store from './store';
 
 const STORE_NAME = 'cluster_k8s_services';
 
-reactor.registerStores({ [STORE_NAME] : store });
+reactor.registerStores({ [STORE_NAME]: store });
 
-const serviceInfoList = [ [STORE_NAME], (servicesMap) => {
-  return servicesMap.valueSeq().map(itemMap=>{
-    return {
-      resourceMap: itemMap,
-      name: itemMap.getIn(['metadata','name']),
-      namespace: itemMap.getIn(['metadata', 'namespace']),
-      clusterIp: itemMap.getIn(['spec','clusterIP']),
-      labels: getLabelsText(itemMap),
-      ports: getPorts(itemMap.getIn(['spec', 'ports']))
-    };
-  }).toJS();
-}];
+const serviceInfoList = [
+  [STORE_NAME],
+  servicesMap => {
+    return servicesMap
+      .valueSeq()
+      .map(itemMap => {
+        return {
+          resourceMap: itemMap,
+          name: itemMap.getIn(['metadata', 'name']),
+          namespace: itemMap.getIn(['metadata', 'namespace']),
+          clusterIp: itemMap.getIn(['spec', 'clusterIP']),
+          labels: getLabelsText(itemMap),
+          ports: getPorts(itemMap.getIn(['spec', 'ports'])),
+        };
+      })
+      .toJS();
+  },
+];
 
-function getPorts(ports = []){
+function getPorts(ports = []) {
   return ports
-    .map(item=> `${item.get('protocol')}:${item.get('port')}/${item.get('targetPort')}`)
-    .toArray()
+    .map(
+      item =>
+        `${item.get('protocol')}:${item.get('port')}/${item.get('targetPort')}`
+    )
+    .toArray();
 }
 
-function getLabelsText(service){
+function getLabelsText(service) {
   var labels = service.getIn(['metadata', 'labels']);
-  if(!labels){
+  if (!labels) {
     return [];
   }
 
   return labels
-     .entrySeq()
-     .map(item => item[0]+':'+item[1])
-     .toArray();
+    .entrySeq()
+    .map(item => item[0] + ':' + item[1])
+    .toArray();
 }
 
 export const getters = {
-  serviceInfoList
-}
+  serviceInfoList,
+};
