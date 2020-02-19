@@ -16,4 +16,3 @@ limitations under the License.
 
 import Offline from './Offline';
 export default Offline;
-

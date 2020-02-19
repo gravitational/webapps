@@ -17,25 +17,25 @@ limitations under the License.
 export const AuthProviderTypeEnum = {
   OIDC: 'oidc',
   SAML: 'saml',
-  GITHUB: 'github'
-}
+  GITHUB: 'github',
+};
 
 export const RestRespCodeEnum = {
-  FORBIDDEN : 403
-}
+  FORBIDDEN: 403,
+};
 
 export const Auth2faTypeEnum = {
   UTF: 'u2f',
   OTP: 'otp',
-  DISABLED: 'off'
-}
+  DISABLED: 'off',
+};
 
 export const AuthTypeEnum = {
   LOCAL: 'local',
-  SSO: 'sso'
-}
+  SSO: 'sso',
+};
 
 export const UserTokenTypeEnum = {
   RESET: 'reset',
-  INVITE: 'invite'
-}
+  INVITE: 'invite',
+};

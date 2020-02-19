@@ -14,19 +14,16 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React from 'react'
-import { storiesOf } from '@storybook/react'
-import { OfflineCluster } from './Offline'
+import React from 'react';
+import { storiesOf } from '@storybook/react';
+import { OfflineCluster } from './Offline';
 
-storiesOf('Teleport', module)
-  .add('Offline', () => {
-    const match = {
-      params: {
-        siteId: 'mycluster'
-      }
-    };
+storiesOf('Teleport', module).add('Offline', () => {
+  const match = {
+    params: {
+      siteId: 'mycluster',
+    },
+  };
 
-    return (
-      <OfflineCluster match={match} />
-    )
-  });
+  return <OfflineCluster match={match} />;
+});

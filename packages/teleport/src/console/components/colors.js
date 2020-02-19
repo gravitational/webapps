@@ -30,4 +30,4 @@ export const colors = {
   text: '#263238',
   success: '#00BFA5',
   primary: '#00BFA5',
-}
+};

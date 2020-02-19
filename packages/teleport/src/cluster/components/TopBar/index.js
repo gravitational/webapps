@@ -16,4 +16,3 @@ limitations under the License.
 
 import TopBar from './TopBar';
 export default TopBar;
-

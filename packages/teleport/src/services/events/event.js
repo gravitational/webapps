@@ -185,9 +185,7 @@ export const eventConfig = {
   [CodeEnum.EXEC_FAILURE]: {
     desc: 'Command Execution Failed',
     formatter: ({ user, exitError, ...rest }) =>
-      `User ${user} command execution on node ${
-        rest['addr.local']
-      } failed: ${exitError}`,
+      `User ${user} command execution on node ${rest['addr.local']} failed: ${exitError}`,
   },
   [CodeEnum.GITHUB_CONNECTOR_CREATED]: {
     desc: 'GITHUB Auth Connector Created',

@@ -28,4 +28,4 @@ export {
   FeatureHeaderTitle,
   AppHorizontalSplit,
   AppVerticalSplit,
-}
+};
