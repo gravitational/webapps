@@ -24,18 +24,23 @@ import { FeatureBox, FeatureHeader, FeatureHeaderTitle } from './../Layout';
 import UpdateCertDialog from './UpdateCertDialog';
 
 export function Certificate(props) {
-  const { store, } = props;
-  const [ isOpen, setIsOpen ] = React.useState(false);
+  const { store } = props;
+  const [isOpen, setIsOpen] = React.useState(false);
   return (
     <FeatureBox>
       <FeatureHeader>
-        <FeatureHeaderTitle>
-          HTTPS Certificate
-        </FeatureHeaderTitle>
+        <FeatureHeaderTitle>HTTPS Certificate</FeatureHeaderTitle>
       </FeatureHeader>
-      <Card bg='primary.light'>
-        <Flex borderTopRightRadius="3" borderTopLeftRadius="3" pl={6} pr={4} py={4} alignItems="center">
-          <Icons.License color="text.primary" fontSize={8} mr={2}/>
+      <Card bg="primary.light">
+        <Flex
+          borderTopRightRadius="3"
+          borderTopLeftRadius="3"
+          pl={6}
+          pr={4}
+          py={4}
+          alignItems="center"
+        >
+          <Icons.License color="text.primary" fontSize={8} mr={2} />
           <Text typography="subtitle1" bold>
             {store.getToCn()}
           </Text>
@@ -43,18 +48,30 @@ export function Certificate(props) {
             Replace
           </ButtonWarning>
         </Flex>
-        <Box bg='primary.main' p={6} mb={-2} borderBottomRightRadius="3" borderBottomLeftRadius="3">
+        <Box
+          bg="primary.main"
+          p={6}
+          mb={-2}
+          borderBottomRightRadius="3"
+          borderBottomLeftRadius="3"
+        >
           <Text typography="body1" bold mb={2}>
             Issued To
           </Text>
           <CertAttr name="Common Name (CN)" value={store.getToCn()} />
           <CertAttr name="Organization (O)" value={store.getToOrg()} />
-          <CertAttr name="Organization Unit (OU)" value={store.getToOrgUnit()} />
+          <CertAttr
+            name="Organization Unit (OU)"
+            value={store.getToOrgUnit()}
+          />
           <Text typography="body1" bold mt={4} mb={2}>
             Issued by
           </Text>
           <CertAttr name="Organization (O)" value={store.getByOrg()} />
-          <CertAttr name="Organization Unit (OU)" value={store.getByOrgUnit()} />
+          <CertAttr
+            name="Organization Unit (OU)"
+            value={store.getByOrgUnit()}
+          />
           <Text typography="body1" bold mt={4} mb={2}>
             Validity Period
           </Text>
@@ -62,21 +79,21 @@ export function Certificate(props) {
           <CertAttr name="Expires On" value={store.getEndDate()} />
         </Box>
       </Card>
-      { isOpen && <UpdateCertDialog onClose={ () => setIsOpen(false) } /> }
+      {isOpen && <UpdateCertDialog onClose={() => setIsOpen(false)} />}
     </FeatureBox>
-  )
+  );
 }
 
 const CertAttr = ({ name, value }) => (
   <Box mb={2}>
-    <span style={{ width: "180px", display: "inline-block" }}>{name}</span>
+    <span style={{ width: '180px', display: 'inline-block' }}>{name}</span>
     <span>{value}</span>
   </Box>
-)
+);
 
 export default withState(() => {
   const store = useFluxStore(getters.store);
   return {
-    store
-  }
+    store,
+  };
 })(Certificate);

@@ -19,17 +19,17 @@ import Image from 'design/Image';
 import defaultLogoSvg from 'design/assets/images/gravity-medallion.svg';
 import cfg from 'gravity/config';
 
-const LogoHero = ({src, ...rest}) => {
+const LogoHero = ({ src, ...rest }) => {
   const logoSrc = src || defaultLogoSvg;
-  return <Image src={logoSrc} {...rest}/>
-}
+  return <Image src={logoSrc} {...rest} />;
+};
 
 LogoHero.defaultProps = {
   src: cfg.user.logo,
-  maxHeight: "120px",
-  maxWidth: "200px",
+  maxHeight: '120px',
+  maxWidth: '200px',
   my: 6,
-  mx: "auto"
-}
+  mx: 'auto',
+};
 
 export default LogoHero;

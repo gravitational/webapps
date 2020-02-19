@@ -15,26 +15,22 @@ limitations under the License.
 */
 
 import React from 'react';
-import  * as LabelStates from 'design/LabelState';
+import * as LabelStates from 'design/LabelState';
 import { StatusEnum } from 'gravity/services/clusters';
 
-export default function ClusterStatus({value}){
+export default function ClusterStatus({ value }) {
   let text = 'Unkown';
   let LabelState = LabelStates.StateSuccess;
-  if (value === StatusEnum.READY){
+  if (value === StatusEnum.READY) {
     text = 'Healthy';
     LabelState = LabelStates.StateSuccess;
-  } else if(value === StatusEnum.ERROR){
+  } else if (value === StatusEnum.ERROR) {
     text = 'With Issues';
     LabelState = LabelStates.StateDanger;
-  }else if(value === StatusEnum.PROCESSING){
-    text = 'In progress'
+  } else if (value === StatusEnum.PROCESSING) {
+    text = 'In progress';
     LabelState = LabelStates.StateWarning;
   }
 
-  return (
-    <LabelState shadow>
-      {text}
-    </LabelState>
-  )
+  return <LabelState shadow>{text}</LabelState>;
 }

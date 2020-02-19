@@ -20,15 +20,19 @@ import { Text, Flex } from 'design';
 import * as Icons from 'design/Icon';
 import ResourceCard from './../../components/ResourceCard';
 
-export default function SecretList({items, namespace, onEdit}){
-  if(items.length === 0){
+export default function SecretList({ items, namespace, onEdit }) {
+  if (items.length === 0) {
     return (
       <CardEmpty title="No Secrets Found">
         <Text>
-          There are no secrets for the "<Text as="span" bold>{namespace}</Text>" namespace
+          There are no secrets for the "
+          <Text as="span" bold>
+            {namespace}
+          </Text>
+          " namespace
         </Text>
       </CardEmpty>
-    )
+    );
   }
 
   const $items = items.map(item => {
@@ -42,12 +46,12 @@ export default function SecretList({items, namespace, onEdit}){
         created={created}
         onClick={() => onEdit(item)}
       />
-    )
-  })
+    );
+  });
 
   return (
     <Flex alignItems="start" flexWrap="wrap">
       {$items}
     </Flex>
-  )
+  );
 }

@@ -22,12 +22,12 @@ import { isObject } from 'lodash';
 import * as Icons from 'design/Icon';
 
 class SelectNamespace extends React.Component {
-  constructor(props){
-    super(props)
+  constructor(props) {
+    super(props);
     this.state = {
       open: Boolean(props.open),
       anchorEl: null,
-    }
+    };
   }
 
   onOpen = e => {
@@ -37,15 +37,15 @@ class SelectNamespace extends React.Component {
 
   onClose = () => {
     this.setState({ open: false });
-  }
+  };
 
   setRef = e => {
     this.anchorEl = e;
-  }
+  };
 
   findTitle(value, options) {
     const selected = options.find(o => o.value === value);
-    if(selected){
+    if (selected) {
       return selected.title || selected.value;
     }
 
@@ -67,7 +67,7 @@ class SelectNamespace extends React.Component {
           onClick={this.onOpen}
         >
           {displayValue}
-          <Icons.CarrotDown ml="3" fontSize="3" color="text.onDark"/>
+          <Icons.CarrotDown ml="3" fontSize="3" color="text.onDark" />
         </StyledButton>
         <Menu
           anchorEl={this.anchorEl}
@@ -90,7 +90,7 @@ class SelectNamespace extends React.Component {
   }
 
   renderItems(options, open) {
-    if(!open){
+    if (!open) {
       return;
     }
 
@@ -100,50 +100,50 @@ class SelectNamespace extends React.Component {
         <MenuItem key={index} onClick={this.makeOnClick(o)}>
           {title}
         </MenuItem>
-      )
-    })
+      );
+    });
 
     return items;
   }
 
-  makeOnClick(option){
+  makeOnClick(option) {
     return e => {
       e.stopPropagation();
       this.onClose();
       this.props.onChange(option.value);
-    }
+    };
   }
 }
 
-function formatOptions(options){
+function formatOptions(options) {
   options = options || [];
-  return options.map(o => !isObject(o) ? makeOption(o) : o);
+  return options.map(o => (!isObject(o) ? makeOption(o) : o));
 }
 
-function makeOption(value, title){
+function makeOption(value, title) {
   title = title || value;
   return {
     value,
-    title
-  }
+    title,
+  };
 }
 
 const menuListCss = () => `
   width: 220px;
-`
+`;
 
 const StyledButton = styled(Button)`
   background: ${({ theme }) => theme.colors.primary.main};
   text-transform: initial;
-  &:hover, &:focus {
+  &:hover,
+  &:focus {
     background: ${({ theme }) => theme.colors.primary.light};
   }
 
   &:active {
     background: ${({ theme }) => theme.colors.primary.light};
-    opacity: .56;
+    opacity: 0.56;
   }
-`
+`;
 
 export default SelectNamespace;
-

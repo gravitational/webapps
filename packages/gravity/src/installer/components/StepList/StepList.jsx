@@ -18,32 +18,38 @@ import React from 'react';
 import styled from 'styled-components';
 import { Text } from 'design';
 
-export default function StepList({ options, value }){
-  const $steps = options.map( (option, index) => (
-    <StepListItem active={value === option.value}
-       title={`${index+1}. ${option.title}`} key={option.value}
+export default function StepList({ options, value }) {
+  const $steps = options.map((option, index) => (
+    <StepListItem
+      active={value === option.value}
+      title={`${index + 1}. ${option.title}`}
+      key={option.value}
     />
-  ))
+  ));
 
-  return (
-    <StyledStepList bold children={$steps} />
-  )
+  return <StyledStepList bold children={$steps} />;
 }
 
 const StepListItem = ({ title, active }) => (
-  <StyledTabItem color="text.primary" active={active} typography="h3" mr={5} py="2" >
+  <StyledTabItem
+    color="text.primary"
+    active={active}
+    typography="h3"
+    mr={5}
+    py="2"
+  >
     {title}
   </StyledTabItem>
-)
+);
 
 const StyledTabItem = styled(Text)`
   position: relative;
-  &:last-child{
+  &:last-child {
     margin-right: 0;
   }
 
-  ${ ({ active, theme }) => {
-    if( active ){
+  ${({ active, theme }) => {
+    if (active) {
       return `
         &:after {
           background-color: ${theme.colors.accent};
@@ -54,10 +60,10 @@ const StyledTabItem = styled(Text)`
           width: 100%;
           height: 4px;
       }
-    `
+    `;
     }
   }}
-`
+`;
 
 const StyledStepList = styled.div`
   min-width: 500px;
@@ -66,4 +72,4 @@ const StyledStepList = styled.div`
   flex-shrink: 0;
   flex-wrap: wrap;
   flex: 1;
-`
+`;

@@ -16,12 +16,7 @@ limitations under the License.
 
 import React from 'react';
 import PropTypes from 'prop-types';
-import {
-  Box,
-  Text,
-  ButtonPrimary,
-  ButtonSecondary,
-} from 'design';
+import { Box, Text, ButtonPrimary, ButtonSecondary } from 'design';
 import * as Alerts from 'design/Alert';
 import { useAttempt, withState } from 'shared/hooks';
 import Dialog, {

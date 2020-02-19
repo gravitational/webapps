@@ -21,7 +21,9 @@ import { K8sPodDisplayStatusEnum } from 'gravity/services/enums';
 import { Cell } from 'design/DataTable';
 import { Flex, Label } from 'design';
 import * as States from 'design/LabelState';
-import ResourceActionCell, { MenuItem } from './../../components/ResourceActionCell';
+import ResourceActionCell, {
+  MenuItem,
+} from './../../components/ResourceActionCell';
 import ContainerMenu from './ContainerMenu';
 
 export function NameCell({ rowIndex, data }) {
@@ -29,7 +31,12 @@ export function NameCell({ rowIndex, data }) {
   return <Cell>{name}</Cell>;
 }
 
-export function ActionCell({ rowIndex, data, monitoringEnabled = false, logsEnabled = false }) {
+export function ActionCell({
+  rowIndex,
+  data,
+  monitoringEnabled = false,
+  logsEnabled = false,
+}) {
   const { podMonitorUrl, podLogUrl } = data[rowIndex];
   return (
     <ResourceActionCell rowIndex={rowIndex} data={data}>
@@ -50,7 +57,7 @@ export function ActionCell({ rowIndex, data, monitoringEnabled = false, logsEnab
 ActionCell.propTypes = {
   monitoringEnabled: PropTypes.bool.isRequired,
   logsEnabled: PropTypes.bool.isRequired,
-}
+};
 
 export function StatusCell({ rowIndex, data }) {
   const { status, statusDisplay } = data[rowIndex];

@@ -36,12 +36,12 @@ const StyledXterm = styled(Box)`
   }
 
   .terminal .xterm-viewport {
-    background-color:${colors.bgTerminal};
+    background-color: ${colors.bgTerminal};
     overflow-y: hidden;
   }
 
   .terminal * {
-    font-weight: normal!important;
+    font-weight: normal !important;
   }
 `;
 

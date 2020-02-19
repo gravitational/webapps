@@ -24,19 +24,18 @@ import { TtyPlayer } from 'gravity/lib/term/ttyPlayer';
 import { Indicator, Text, Box } from 'design';
 
 export default class Player extends React.Component {
-
   constructor(props) {
     super(props);
 
     const { sid, siteId } = this.props.match.params;
     const url = cfg.getSiteSshSessionUrl({ siteId, sid });
 
-    this.tty = new TtyPlayer({url});
+    this.tty = new TtyPlayer({ url });
     this.state = this.calculateState();
     document.title = `Player ${sid}`;
   }
 
-  calculateState(){
+  calculateState() {
     return {
       eventCount: this.tty.getEventCount(),
       duration: this.tty.duration,
@@ -47,7 +46,7 @@ export default class Player extends React.Component {
       isError: this.tty.isError,
       errText: this.tty.errText,
       current: this.tty.current,
-      canPlay: this.tty.length > 1
+      canPlay: this.tty.length > 1,
     };
   }
 
@@ -65,58 +64,51 @@ export default class Player extends React.Component {
   updateState = () => {
     const newState = this.calculateState();
     this.setState(newState);
-  }
+  };
 
   onTogglePlayStop = () => {
-    if(this.state.isPlaying){
+    if (this.state.isPlaying) {
       this.tty.stop();
-    }
-    else{
+    } else {
       this.tty.play();
     }
-  }
+  };
 
   onMove = value => {
     this.tty.move(value);
-  }
+  };
 
   render() {
-    return (
-      <Container>
-        {this.renderContent()}
-      </Container>
-    )
+    return <Container>{this.renderContent()}</Container>;
   }
 
   renderContent() {
     const { isError, errText, isLoading, eventCount } = this.state;
 
-    if(isError) {
+    if (isError) {
       return (
         <StatusBox>
-          <Danger m={10}>
-            {errText || 'Error'}
-          </Danger>
+          <Danger m={10}>{errText || 'Error'}</Danger>
         </StatusBox>
       );
     }
 
-    if(isLoading) {
+    if (isLoading) {
       return (
         <StatusBox>
           <Indicator />
         </StatusBox>
-      )
+      );
     }
 
-    if(!isLoading && eventCount === 0 ) {
+    if (!isLoading && eventCount === 0) {
       return (
         <StatusBox>
           <Text typography="h4">
             Recording for this session is not available.
           </Text>
         </StatusBox>
-      )
+      );
     }
 
     return (
@@ -128,16 +120,9 @@ export default class Player extends React.Component {
   }
 
   renderProgressBar() {
-    const {
-      isPlaying,
-      time,
-      min,
-      duration,
-      current,
-      eventCount
-    } = this.state;
+    const { isPlaying, time, min, duration, current, eventCount } = this.state;
 
-    if(eventCount <= 0) {
+    if (eventCount <= 0) {
       return null;
     }
 
@@ -149,14 +134,15 @@ export default class Player extends React.Component {
         max={duration}
         value={current}
         onToggle={this.onTogglePlayStop}
-        onChange={this.onMove}/>
+        onChange={this.onMove}
+      />
     );
   }
 }
 
 const StatusBox = props => (
-  <Box width="100%" textAlign="center" p={3} {...props}/>
-)
+  <Box width="100%" textAlign="center" p={3} {...props} />
+);
 
 const Container = styled.div`
   display: flex;
@@ -166,4 +152,4 @@ const Container = styled.div`
   flex-direction: column;
   flex: 1;
   justify-content: space-between;
-`
+`;

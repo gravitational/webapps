@@ -27,13 +27,13 @@ const Input = styled.input`
   color: ${colors.terminal};
   ${space}
   ${width}
-`
+`;
 
 Input.defaultProps = {
   mb: 3,
   mr: 2,
   px: 2,
   py: '4px',
-}
+};
 
 export default Input;

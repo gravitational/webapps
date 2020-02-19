@@ -14,38 +14,38 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React from 'react'
+import React from 'react';
 import moment from 'moment';
 import 'react-day-picker/lib/style.css';
 import { ButtonSecondary } from 'design';
 import * as Icons from 'design/Icon';
-import Menu, { MenuItem} from 'design/Menu';
+import Menu, { MenuItem } from 'design/Menu';
 import Dialog from 'design/DialogConfirmation';
 import CustomRange from './Custom';
-import { displayDate }  from 'gravity/lib/dateUtils';
+import { displayDate } from 'gravity/lib/dateUtils';
 
 export default function DataRange(props) {
   const { ml, value, onChange, disabled, options } = props;
   const { from, to, name, isCustom } = value;
 
   // state
-  const [ isPickerOpen, openDayPicker ] = React.useState(false);
-  const [ isMenuOpen, openMenu ] = React.useState(false);
-  const anchorEl = React.useRef()
+  const [isPickerOpen, openDayPicker] = React.useState(false);
+  const [isMenuOpen, openMenu] = React.useState(false);
+  const anchorEl = React.useRef();
 
-  function onCloseMenu(){
+  function onCloseMenu() {
     openMenu(false);
   }
 
-  function onOpenMenu(){
+  function onOpenMenu() {
     openMenu(true);
   }
 
-  function onMenuClick(option){
+  function onMenuClick(option) {
     openMenu(false);
-    if(option.isCustom){
+    if (option.isCustom) {
       openDayPicker(true);
-    }else{
+    } else {
       onChange(option);
     }
   }
@@ -54,19 +54,24 @@ export default function DataRange(props) {
     openDayPicker(false);
   }
 
-  function onSetRange(from, to){
+  function onSetRange(from, to) {
     onChange({ isCustom: true, from, to });
     onClosePicker();
   }
 
-  const btnText = isCustom ?
-    `${displayDate(from)} - ${displayDate(to)}` : name;
+  const btnText = isCustom ? `${displayDate(from)} - ${displayDate(to)}` : name;
 
   return (
     <>
-      <ButtonSecondary width="240px" disabled={disabled} ml={ml} setRef={anchorEl} onClick={onOpenMenu}>
+      <ButtonSecondary
+        width="240px"
+        disabled={disabled}
+        ml={ml}
+        setRef={anchorEl}
+        onClick={onOpenMenu}
+      >
         {btnText}
-        <Icons.CarrotDown ml="3" fontSize="3" color="text.onDark"/>
+        <Icons.CarrotDown ml="3" fontSize="3" color="text.onDark" />
       </ButtonSecondary>
       <Menu
         anchorEl={anchorEl.current}
@@ -77,46 +82,55 @@ export default function DataRange(props) {
         {renderOptions(options, onMenuClick)}
       </Menu>
       <Dialog
-        dialogCss={() => ({ padding: "0"}) }
+        dialogCss={() => ({ padding: '0' })}
         disableEscapeKeyDown={false}
         onClose={onClosePicker}
         open={isPickerOpen}
       >
-        <CustomRange from={from} to={to} onChange={onSetRange}/>
+        <CustomRange from={from} to={to} onChange={onSetRange} />
       </Dialog>
     </>
   );
 }
 
-function renderOptions(options, onClick){
+function renderOptions(options, onClick) {
   return options.map(o => (
-    <MenuItem key={o.name} onClick={ () => onClick(o)}>
+    <MenuItem key={o.name} onClick={() => onClick(o)}>
       {o.name}
     </MenuItem>
-  ))
+  ));
 }
 
 const menuListCss = () => `
   width: 240px;
-`
+`;
 
 export function getRangeOptions() {
   return [
     {
       name: 'Today',
-      from: moment(new Date()).startOf('day').toDate(),
-      to: moment(new Date()).endOf('day').toDate(),
+      from: moment(new Date())
+        .startOf('day')
+        .toDate(),
+      to: moment(new Date())
+        .endOf('day')
+        .toDate(),
     },
     {
       name: '7 days',
-      from: moment().subtract(6, 'day').startOf('day').toDate(),
-      to: moment(new Date()).endOf('day').toDate(),
+      from: moment()
+        .subtract(6, 'day')
+        .startOf('day')
+        .toDate(),
+      to: moment(new Date())
+        .endOf('day')
+        .toDate(),
     },
     {
       name: 'Custom Range...',
       isCustom: true,
       from: new Date(),
       to: new Date(),
-    }
-  ]
+    },
+  ];
 }

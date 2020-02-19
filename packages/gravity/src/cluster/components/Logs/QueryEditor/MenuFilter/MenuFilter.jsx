@@ -15,55 +15,54 @@ limitations under the License.
 */
 
 import React from 'react';
-import Menu, { MenuItem} from 'design/Menu';
+import Menu, { MenuItem } from 'design/Menu';
 
 class MenuFilter extends React.Component {
-
   static displayName = 'MenuFilter';
 
   static defaultProps = {
-    menuListCss: () => { },
-  }
+    menuListCss: () => {},
+  };
 
-  constructor(props){
-    super(props)
+  constructor(props) {
+    super(props);
     this.state = {
       open: Boolean(props.open),
-    }
+    };
   }
 
   onOpen = () => {
     this.setState({ open: true }, () => {
       this.props.onOpen && this.props.onOpen();
     });
-
   };
 
   onClose = () => {
     this.setState({ open: false });
-  }
+  };
 
   onPod = () => {
-    this.setState({ open: false }, () =>
-      this.props.onPod && this.props.onPod());
-  }
+    this.setState(
+      { open: false },
+      () => this.props.onPod && this.props.onPod()
+    );
+  };
 
   onContainer = () => {
-    this.setState({ open: false }, () =>
-      this.props.onContainer && this.props.onContainer());
-  }
+    this.setState(
+      { open: false },
+      () => this.props.onContainer && this.props.onContainer()
+    );
+  };
 
   render() {
-    const {
-      anchorOrigin,
-      transformOrigin,
-    } = this.props;
+    const { anchorOrigin, transformOrigin } = this.props;
 
     const { open } = this.state;
 
     return (
       <React.Fragment>
-        <button ref={e => this.anchorEl = e } onClick={this.onOpen}>
+        <button ref={e => (this.anchorEl = e)} onClick={this.onOpen}>
           Filter
         </button>
         <Menu
@@ -73,12 +72,8 @@ class MenuFilter extends React.Component {
           open={Boolean(open)}
           onClose={this.onClose}
         >
-          <MenuItem onClick={this.onContainer}>
-            Containers
-          </MenuItem>
-          <MenuItem onClick={this.onPod}>
-            Pods
-          </MenuItem>
+          <MenuItem onClick={this.onContainer}>Containers</MenuItem>
+          <MenuItem onClick={this.onPod}>Pods</MenuItem>
         </Menu>
       </React.Fragment>
     );

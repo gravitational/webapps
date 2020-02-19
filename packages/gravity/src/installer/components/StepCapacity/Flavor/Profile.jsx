@@ -47,9 +47,23 @@ export default function ProfileOnprem(props) {
   ));
 
   return (
-    <Card as={Flex} bg="primary.light" px="4" py="3" mb={mb} flexDirection="column">
+    <Card
+      as={Flex}
+      bg="primary.light"
+      px="4"
+      py="3"
+      mb={mb}
+      flexDirection="column"
+    >
       <Flex alignItems="center">
-        <LabelState shadow width="100px" mr="6" py="2" fontSize="2" style={{ flexShrink: '0' }}>
+        <LabelState
+          shadow
+          width="100px"
+          mr="6"
+          py="2"
+          fontSize="2"
+          style={{ flexShrink: '0' }}
+        >
           {labelText(count)}
         </LabelState>
         <Flex flexDirection="colum" flexWrap="wrap" alignItems="baseline">
@@ -62,8 +76,8 @@ export default function ProfileOnprem(props) {
         </Flex>
       </Flex>
       <LabelInput mt="3">
-        Copy and paste the command below into terminal. Your server will automatically appear in the
-        list
+        Copy and paste the command below into terminal. Your server will
+        automatically appear in the list
       </LabelInput>
       <CmdText cmd={instructions} />
       <Box mt="4">{$servers}</Box>

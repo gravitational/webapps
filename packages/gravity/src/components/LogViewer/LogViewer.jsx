@@ -24,43 +24,42 @@ import Viewer from './Viewer';
 
 const defaultState = {
   isLoading: false,
-  isError: false
-}
+  isError: false,
+};
 export default class LogViewer extends React.Component {
-
   static propTypes = {
     onFocus: PropTypes.func,
     autoScroll: PropTypes.bool,
-    provider: PropTypes.object.isRequired
-  }
+    provider: PropTypes.object.isRequired,
+  };
 
   constructor(props) {
-    super(props)
+    super(props);
     this.editor = null;
     this.state = {
-      ...defaultState
-    }
+      ...defaultState,
+    };
   }
 
   onData = data => {
     this.viewerRef.insert(data.trim() + '\n');
-  }
+  };
 
   onLoading = isLoading => {
     this.viewerRef.clear();
     this.setState({
       ...defaultState,
-      isLoading});
-  }
+      isLoading,
+    });
+  };
 
   onError = err => {
-    this.setState(
-      {
-        ...defaultState,
-        isError: true,
-        errorText: err.message
-      });
-  }
+    this.setState({
+      ...defaultState,
+      isError: true,
+      errorText: err.message,
+    });
+  };
 
   render() {
     const { onFocus, autoScroll, wrap, ...styles } = this.props;
@@ -68,21 +67,21 @@ export default class LogViewer extends React.Component {
     const providerProps = {
       onLoading: this.onLoading,
       onData: this.onData,
-      onError: this.onError
-    }
+      onError: this.onError,
+    };
 
     const viewerProps = {
       onFocus,
       autoScroll,
       wrap,
-    }
+    };
 
     // pass props with assigned callbacks
     const $provider = React.cloneElement(this.props.provider, providerProps);
 
     return (
       <Container bg="bgTerminal" color="#FFF" flex="1" {...styles}>
-        <Viewer ref={ e => this.viewerRef = e } {...viewerProps} />
+        <Viewer ref={e => (this.viewerRef = e)} {...viewerProps} />
         {this.renderStatus()}
         {$provider}
       </Container>
@@ -91,25 +90,25 @@ export default class LogViewer extends React.Component {
 
   renderStatus() {
     const { isLoading, isError, errorText } = this.state;
-    if (isError){
+    if (isError) {
       return (
         <StyledStatusBox>
           <Danger width="100%" mx="2">
             {errorText}
           </Danger>
         </StyledStatusBox>
-      )
+      );
     }
 
-    if (isLoading){
+    if (isLoading) {
       return (
         <StyledStatusBox>
-          <Indicator delay="none"/>
+          <Indicator delay="none" />
         </StyledStatusBox>
-      )
+      );
     }
 
-    return null
+    return null;
   }
 }
 
@@ -120,7 +119,7 @@ const Container = styled(Flex)`
   position: relative;
 
   .ace-ambiance {
-    background-color: ${ props => props.theme.colors.bgTerminal};
+    background-color: ${props => props.theme.colors.bgTerminal};
   }
 
   .ace_scrollbar::-webkit-scrollbar-track {
@@ -129,9 +128,9 @@ const Container = styled(Flex)`
 
   .ace_editor {
     font-size: 12px;
-    font-family: ${ props => props.theme.fonts.mono};
+    font-family: ${props => props.theme.fonts.mono};
   }
-`
+`;
 
 const StyledStatusBox = styled.div`
   position: absolute;
@@ -140,4 +139,4 @@ const StyledStatusBox = styled.div`
   height: 100px;
   width: 100%;
   justify-content: center;
-`
+`;

@@ -28,22 +28,27 @@ import * as featureFlags from 'gravity/cluster/featureFlags';
 
 const POLL_INTERVAL = 5000; // every 5 sec
 
-export function LatestEventList({ visible, onRefresh, events, ...rest}) {
-  if( !visible ){
+export function LatestEventList({ visible, onRefresh, events, ...rest }) {
+  if (!visible) {
     return null;
   }
 
   return (
     <Box {...rest}>
-      <Flex bg="primary.light" p="3" alignItems="center" justifyContent="space-between" borderTopLeftRadius="3" borderTopRightRadius="3">
-        <Text typography="h4">
-          Today Audit Logs
-        </Text>
+      <Flex
+        bg="primary.light"
+        p="3"
+        alignItems="center"
+        justifyContent="space-between"
+        borderTopLeftRadius="3"
+        borderTopRightRadius="3"
+      >
+        <Text typography="h4">Today Audit Logs</Text>
         <ButtonSecondary size="small" as={Link} to={cfg.getSiteAuditRoute()}>
           VIEW ALL
         </ButtonSecondary>
       </Flex>
-      <EventList events={events} limit="4"/>
+      <EventList events={events} limit="4" />
       <AjaxPoller time={POLL_INTERVAL} onFetch={onRefresh} />
     </Box>
   );
@@ -53,13 +58,13 @@ export default withState(() => {
   const store = useFluxStore(getters.store);
   const events = store.getEvents();
 
-  function onRefresh(){
+  function onRefresh() {
     return fetchLatest();
   }
 
   return {
     events,
     onRefresh,
-    visible: featureFlags.clusterEvents()
-  }
-})(LatestEventList)
+    visible: featureFlags.clusterEvents(),
+  };
+})(LatestEventList);

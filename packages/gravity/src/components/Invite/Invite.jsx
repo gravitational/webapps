@@ -20,9 +20,7 @@ import cfg from 'gravity/config';
 import auth from 'gravity/services/auth';
 import history from 'gravity/services/history';
 import Logger from 'shared/libs/logger';
-import InviteForm, {
-  Expired,
-} from 'shared/components/FormInvite';
+import InviteForm, { Expired } from 'shared/components/FormInvite';
 import LogoHero from './../LogoHero';
 
 const logger = Logger.create('components/Invite');

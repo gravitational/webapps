@@ -14,44 +14,42 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React from 'react'
+import React from 'react';
 import PropTypes from 'prop-types';
 import { ButtonSecondary, ButtonWarning, Text } from 'design';
 import * as Alerts from 'design/Alert';
 import { useAttempt, withState } from 'shared/hooks';
-import Dialog, { DialogHeader, DialogTitle, DialogContent, DialogFooter} from 'design/DialogConfirmation';
+import Dialog, {
+  DialogHeader,
+  DialogTitle,
+  DialogContent,
+  DialogFooter,
+} from 'design/DialogConfirmation';
 import { startShrinkOperation } from 'gravity/cluster/flux/nodes/actions';
 
-export function DeleteNodeDialog(props){
+export function DeleteNodeDialog(props) {
   const { node, onClose, onDelete, attempt, attemptActions } = props;
   const { hostname } = node;
 
   const onOk = () => {
-    attemptActions.do(() => onDelete(hostname))
-      .then(() => onClose());
+    attemptActions.do(() => onDelete(hostname)).then(() => onClose());
   };
 
   const isDisabled = attempt.isProcessing;
 
   return (
-    <Dialog
-      disableEscapeKeyDown={isDisabled}
-      onClose={onClose}
-      open={true}
-    >
+    <Dialog disableEscapeKeyDown={isDisabled} onClose={onClose} open={true}>
       <DialogHeader>
-        <DialogTitle>
-          Delete Node?
-        </DialogTitle>
+        <DialogTitle>Delete Node?</DialogTitle>
       </DialogHeader>
       <DialogContent maxWidth="600px">
-        {attempt.isFailed && (
-          <Alerts.Danger children={attempt.message} />
-        )}
+        {attempt.isFailed && <Alerts.Danger children={attempt.message} />}
         <Text typography="paragraph">
-          You are about to delete instance
-          {" "} <Text as="span" bold color="primary.contrastText">{hostname}</Text>
-          <br/>
+          You are about to delete instance{' '}
+          <Text as="span" bold color="primary.contrastText">
+            {hostname}
+          </Text>
+          <br />
           This operation cannot be undone. Are you sure?
         </Text>
       </DialogContent>
@@ -73,15 +71,15 @@ DeleteNodeDialog.propTypes = {
   node: PropTypes.object.isRequired,
   attempt: PropTypes.object.isRequired,
   attemptActions: PropTypes.object.isRequired,
-}
+};
 
-function mapState(){
-  const [ attempt, attemptActions ] = useAttempt();
+function mapState() {
+  const [attempt, attemptActions] = useAttempt();
   return {
     onDelete: startShrinkOperation,
     attempt,
-    attemptActions
-  }
+    attemptActions,
+  };
 }
 
 export default withState(mapState)(DeleteNodeDialog);

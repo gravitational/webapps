@@ -41,16 +41,23 @@ THE SOFTWARE.
 
 /*global define */
 
-(function (root, factory) {
+(function(root, factory) {
   if (typeof define === 'function' && define.amd) {
-    define(['react','prop-types','create-react-class'], factory);
+    define(['react', 'prop-types', 'create-react-class'], factory);
   } else if (typeof exports === 'object') {
-    module.exports = factory(require('react'),require('prop-types'),require('create-react-class'));
+    module.exports = factory(
+      require('react'),
+      require('prop-types'),
+      require('create-react-class')
+    );
   } else {
-    root.ReactSlider = factory(root.React,root.PropTypes,root.createReactClass);
+    root.ReactSlider = factory(
+      root.React,
+      root.PropTypes,
+      root.createReactClass
+    );
   }
-}(this, function (React, PropTypes, createReactClass) {
-
+})(this, function(React, PropTypes, createReactClass) {
   /**
    * To prevent text selection while dragging.
    * http://stackoverflow.com/questions/5429827/how-can-i-prevent-text-element-selection-with-cursor-drag
@@ -85,9 +92,11 @@ THE SOFTWARE.
     return x != null && x.length === 1 ? x[0] : x;
   }
 
-  var isArray = Array.isArray || function(x) {
-    return Object.prototype.toString.call(x) === '[object Array]';
-  };
+  var isArray =
+    Array.isArray ||
+    function(x) {
+      return Object.prototype.toString.call(x) === '[object Array]';
+    };
 
   // undoEnsureArray(ensureArray(x)) === x
 
@@ -95,7 +104,6 @@ THE SOFTWARE.
     displayName: 'ReactSlider',
 
     propTypes: {
-
       /**
        * The minimum value of the slider.
        */
@@ -129,7 +137,7 @@ THE SOFTWARE.
        */
       defaultValue: PropTypes.oneOfType([
         PropTypes.number,
-        PropTypes.arrayOf(PropTypes.number)
+        PropTypes.arrayOf(PropTypes.number),
       ]),
 
       /**
@@ -137,7 +145,7 @@ THE SOFTWARE.
        */
       value: PropTypes.oneOfType([
         PropTypes.number,
-        PropTypes.arrayOf(PropTypes.number)
+        PropTypes.arrayOf(PropTypes.number),
       ]),
 
       /**
@@ -215,10 +223,10 @@ THE SOFTWARE.
        *  Callback called when the the slider is clicked (handle or bars).
        *  Receives the value at the clicked position as argument.
        */
-      onSliderClick: PropTypes.func
+      onSliderClick: PropTypes.func,
     },
 
-    getDefaultProps: function () {
+    getDefaultProps: function() {
       return {
         min: 0,
         max: 100,
@@ -234,12 +242,15 @@ THE SOFTWARE.
         pearling: false,
         disabled: false,
         snapDragDisabled: false,
-        invert: false
+        invert: false,
       };
     },
 
-    getInitialState: function () {
-      var value = this._or(ensureArray(this.props.value), ensureArray(this.props.defaultValue));
+    getInitialState: function() {
+      var value = this._or(
+        ensureArray(this.props.value),
+        ensureArray(this.props.defaultValue)
+      );
 
       // reused throughout the component to store results of iterations over `value`
       this.tempArray = value.slice();
@@ -258,13 +269,13 @@ THE SOFTWARE.
         upperBound: 0,
         sliderLength: 0,
         value: value,
-        zIndices: zIndices
+        zIndices: zIndices,
       };
     },
 
     // Keep the internal `value` consistent with an outside `value` if present.
     // This basically allows the slider to be a controlled component.
-    UNSAFE_componentWillReceiveProps: function (newProps) {
+    UNSAFE_componentWillReceiveProps: function(newProps) {
       var value = this._or(ensureArray(newProps.value), this.state.value);
 
       // ensure the array keeps the same size as `value`
@@ -288,7 +299,7 @@ THE SOFTWARE.
     // If custom handles are present but neither `value` nor `defaultValue` are applicable the handles are spread out
     // equally.
     // TODO: better name? better solution?
-    _or: function (value, defaultValue) {
+    _or: function(value, defaultValue) {
       var count = React.Children.count(this.props.children);
       switch (count) {
         case 0:
@@ -299,27 +310,30 @@ THE SOFTWARE.
           return defaultValue;
         default:
           if (value.length !== count || defaultValue.length !== count) {
-            window.console.warn(this.constructor.displayName + ": Number of values does not match number of children.");
+            window.console.warn(
+              this.constructor.displayName +
+                ': Number of values does not match number of children.'
+            );
           }
           return linspace(this.props.min, this.props.max, count);
       }
     },
 
-    componentDidMount: function () {
+    componentDidMount: function() {
       window.addEventListener('resize', this._handleResize);
       this._resize();
     },
 
-    componentWillUnmount: function () {
+    componentWillUnmount: function() {
       this._clearPendingResizeTimeouts();
       window.removeEventListener('resize', this._handleResize);
     },
 
-    getValue: function () {
+    getValue: function() {
       return undoEnsureArray(this.state.value);
     },
 
-    _resize: function () {
+    _resize: function() {
       var slider = this.slider;
       var handle = this.handle0;
       var rect = slider.getBoundingClientRect();
@@ -333,17 +347,20 @@ THE SOFTWARE.
         upperBound: slider[size] - handle[size],
         sliderLength: Math.abs(sliderMax - sliderMin),
         handleSize: handle[size],
-        sliderStart: this.props.invert ? sliderMax : sliderMin
+        sliderStart: this.props.invert ? sliderMax : sliderMin,
       });
     },
 
-    _handleResize: function () {
+    _handleResize: function() {
       // setTimeout of 0 gives element enough time to have assumed its new size if it is being resized
-      var resizeTimeout = window.setTimeout(function() {
-        // drop this timeout from pendingResizeTimeouts to reduce memory usage
-        this.pendingResizeTimeouts.shift();
-        this._resize();
-      }.bind(this), 0);
+      var resizeTimeout = window.setTimeout(
+        function() {
+          // drop this timeout from pendingResizeTimeouts to reduce memory usage
+          this.pendingResizeTimeouts.shift();
+          this._resize();
+        }.bind(this),
+        0
+      );
 
       this.pendingResizeTimeouts.push(resizeTimeout);
     },
@@ -358,7 +375,7 @@ THE SOFTWARE.
     },
 
     // calculates the offset of a handle in pixels based on its value.
-    _calcOffset: function (value) {
+    _calcOffset: function(value) {
       var range = this.props.max - this.props.min;
       if (range === 0) {
         return 0;
@@ -368,32 +385,35 @@ THE SOFTWARE.
     },
 
     // calculates the value corresponding to a given pixel offset, i.e. the inverse of `_calcOffset`.
-    _calcValue: function (offset) {
+    _calcValue: function(offset) {
       var ratio = offset / this.state.upperBound;
       return ratio * (this.props.max - this.props.min) + this.props.min;
     },
 
-    _buildHandleStyle: function (offset, i) {
+    _buildHandleStyle: function(offset, i) {
       var style = {
         position: 'absolute',
         willChange: this.state.index >= 0 ? this._posMinKey() : '',
-        zIndex: this.state.zIndices.indexOf(i) + 1
+        zIndex: this.state.zIndices.indexOf(i) + 1,
       };
       style[this._posMinKey()] = offset + 'px';
       return style;
     },
 
-    _buildBarStyle: function (min, max) {
+    _buildBarStyle: function(min, max) {
       var obj = {
         position: 'absolute',
-        willChange: this.state.index >= 0 ? this._posMinKey() + ',' + this._posMaxKey() : ''
+        willChange:
+          this.state.index >= 0
+            ? this._posMinKey() + ',' + this._posMaxKey()
+            : '',
       };
       obj[this._posMinKey()] = min;
       obj[this._posMaxKey()] = max;
       return obj;
     },
 
-    _getClosestIndex: function (pixelOffset) {
+    _getClosestIndex: function(pixelOffset) {
       var minDist = Number.MAX_VALUE;
       var closestIndex = -1;
 
@@ -412,15 +432,16 @@ THE SOFTWARE.
       return closestIndex;
     },
 
-    _calcOffsetFromPosition: function (position) {
+    _calcOffsetFromPosition: function(position) {
       var pixelOffset = position - this.state.sliderStart;
-      if (this.props.invert) pixelOffset = this.state.sliderLength - pixelOffset;
-      pixelOffset -= (this.state.handleSize / 2);
+      if (this.props.invert)
+        pixelOffset = this.state.sliderLength - pixelOffset;
+      pixelOffset -= this.state.handleSize / 2;
       return pixelOffset;
     },
 
     // Snaps the nearest handle to the value corresponding to `position` and calls `callback` with that handle's index.
-    _forceValueFromPosition: function (position, callback) {
+    _forceValueFromPosition: function(position, callback) {
       var pixelOffset = this._calcOffsetFromPosition(position);
       var closestIndex = this._getClosestIndex(pixelOffset);
       var nextValue = this._trimAlignValue(this._calcValue(pixelOffset));
@@ -433,48 +454,48 @@ THE SOFTWARE.
         if (value[i + 1] - value[i] < this.props.minDistance) return;
       }
 
-      this.setState({value: value}, callback.bind(this, closestIndex));
+      this.setState({ value: value }, callback.bind(this, closestIndex));
     },
 
-    _getMousePosition: function (e) {
+    _getMousePosition: function(e) {
       return [
         e['page' + this._axisKey()],
-        e['page' + this._orthogonalAxisKey()]
+        e['page' + this._orthogonalAxisKey()],
       ];
     },
 
-    _getTouchPosition: function (e) {
+    _getTouchPosition: function(e) {
       var touch = e.touches[0];
       return [
         touch['page' + this._axisKey()],
-        touch['page' + this._orthogonalAxisKey()]
+        touch['page' + this._orthogonalAxisKey()],
       ];
     },
 
-    _getKeyDownEventMap: function () {
+    _getKeyDownEventMap: function() {
       return {
-        'keydown': this._onKeyDown,
-        'focusout': this._onBlur
-      }
+        keydown: this._onKeyDown,
+        focusout: this._onBlur,
+      };
     },
 
-    _getMouseEventMap: function () {
+    _getMouseEventMap: function() {
       return {
-        'mousemove': this._onMouseMove,
-        'mouseup': this._onMouseUp
-      }
+        mousemove: this._onMouseMove,
+        mouseup: this._onMouseUp,
+      };
     },
 
-    _getTouchEventMap: function () {
+    _getTouchEventMap: function() {
       return {
-        'touchmove': this._onTouchMove,
-        'touchend': this._onTouchEnd
-      }
+        touchmove: this._onTouchMove,
+        touchend: this._onTouchEnd,
+      };
     },
 
     // create the `keydown` handler for the i-th handle
-    _createOnKeyDown: function (i) {
-      return function (e) {
+    _createOnKeyDown: function(i) {
+      return function(e) {
         if (this.props.disabled) return;
         this._start(i);
         this._addHandlers(this._getKeyDownEventMap());
@@ -483,8 +504,8 @@ THE SOFTWARE.
     },
 
     // create the `mousedown` handler for the i-th handle
-    _createOnMouseDown: function (i) {
-      return function (e) {
+    _createOnMouseDown: function(i) {
+      return function(e) {
         if (this.props.disabled) return;
         var position = this._getMousePosition(e);
         this._start(i, position[0]);
@@ -494,8 +515,8 @@ THE SOFTWARE.
     },
 
     // create the `touchstart` handler for the i-th handle
-    _createOnTouchStart: function (i) {
-      return function (e) {
+    _createOnTouchStart: function(i) {
+      return function(e) {
         if (this.props.disabled || e.touches.length > 1) return;
         var position = this._getTouchPosition(e);
         this.startPosition = position;
@@ -506,19 +527,19 @@ THE SOFTWARE.
       }.bind(this);
     },
 
-    _addHandlers: function (eventMap) {
+    _addHandlers: function(eventMap) {
       for (var key in eventMap) {
         document.addEventListener(key, eventMap[key], false);
       }
     },
 
-    _removeHandlers: function (eventMap) {
+    _removeHandlers: function(eventMap) {
       for (var key in eventMap) {
         document.removeEventListener(key, eventMap[key], false);
       }
     },
 
-    _start: function (i, position) {
+    _start: function(i, position) {
       var activeEl = document.activeElement;
       var handleRef = this['handle' + i];
       // if activeElement is body window will lost focus in IE9
@@ -534,41 +555,45 @@ THE SOFTWARE.
       zIndices.splice(zIndices.indexOf(i), 1); // remove wherever the element is
       zIndices.push(i); // add to end
 
-      this.setState(function (prevState) {
+      this.setState(function(prevState) {
         return {
           startValue: this.state.value[i],
-          startPosition: position !== undefined ? position : prevState.startPosition,
+          startPosition:
+            position !== undefined ? position : prevState.startPosition,
           index: i,
-          zIndices: zIndices
+          zIndices: zIndices,
         };
       });
     },
 
-    _onMouseUp: function () {
+    _onMouseUp: function() {
       this._onEnd(this._getMouseEventMap());
     },
 
-    _onTouchEnd: function () {
+    _onTouchEnd: function() {
       this._onEnd(this._getTouchEventMap());
     },
 
-    _onBlur: function () {
+    _onBlur: function() {
       this._onEnd(this._getKeyDownEventMap());
     },
 
-    _onEnd: function (eventMap) {
+    _onEnd: function(eventMap) {
       this._removeHandlers(eventMap);
-      this.setState({index: -1}, this._fireChangeEvent.bind(this, 'onAfterChange'));
+      this.setState(
+        { index: -1 },
+        this._fireChangeEvent.bind(this, 'onAfterChange')
+      );
     },
 
-    _onMouseMove: function (e) {
+    _onMouseMove: function(e) {
       var position = this._getMousePosition(e);
       var diffPosition = this._getDiffPosition(position[0]);
       var newValue = this._getValueFromPosition(diffPosition);
       this._move(newValue);
     },
 
-    _onTouchMove: function (e) {
+    _onTouchMove: function(e) {
       if (e.touches.length > 1) return;
 
       var position = this._getTouchPosition(e);
@@ -580,7 +605,7 @@ THE SOFTWARE.
       }
 
       if (this.isScrolling) {
-        this.setState({index: -1});
+        this.setState({ index: -1 });
         return;
       }
 
@@ -592,50 +617,52 @@ THE SOFTWARE.
       this._move(newValue);
     },
 
-    _onKeyDown: function (e) {
+    _onKeyDown: function(e) {
       if (e.ctrlKey || e.shiftKey || e.altKey) return;
       switch (e.key) {
-        case "ArrowLeft":
-        case "ArrowUp":
+        case 'ArrowLeft':
+        case 'ArrowUp':
           e.preventDefault();
           return this._moveDownOneStep();
-        case "ArrowRight":
-        case "ArrowDown":
+        case 'ArrowRight':
+        case 'ArrowDown':
           e.preventDefault();
           return this._moveUpOneStep();
-        case "Home":
+        case 'Home':
           return this._move(this.props.min);
-        case "End":
+        case 'End':
           return this._move(this.props.max);
         default:
           return;
       }
     },
 
-    _moveUpOneStep: function () {
+    _moveUpOneStep: function() {
       var oldValue = this.state.value[this.state.index];
       var newValue = oldValue + this.props.step;
       this._move(Math.min(newValue, this.props.max));
     },
 
-    _moveDownOneStep: function () {
+    _moveDownOneStep: function() {
       var oldValue = this.state.value[this.state.index];
       var newValue = oldValue - this.props.step;
       this._move(Math.max(newValue, this.props.min));
     },
 
-    _getValueFromPosition: function (position) {
-      var diffValue = position / (this.state.sliderLength - this.state.handleSize) * (this.props.max - this.props.min);
+    _getValueFromPosition: function(position) {
+      var diffValue =
+        (position / (this.state.sliderLength - this.state.handleSize)) *
+        (this.props.max - this.props.min);
       return this._trimAlignValue(this.state.startValue + diffValue);
     },
 
-    _getDiffPosition: function (position) {
+    _getDiffPosition: function(position) {
       var diffPosition = position - this.state.startPosition;
       if (this.props.invert) diffPosition *= -1;
       return diffPosition;
     },
 
-    _move: function (newValue) {
+    _move: function(newValue) {
       this.hasMoved = true;
 
       var props = this.props;
@@ -673,8 +700,7 @@ THE SOFTWARE.
         if (newValue > oldValue) {
           this._pushSucceeding(value, minDistance, index);
           this._trimSucceeding(length, value, minDistance, props.max);
-        }
-        else if (newValue < oldValue) {
+        } else if (newValue < oldValue) {
           this._pushPreceding(value, minDistance, index);
           this._trimPreceding(length, value, minDistance, props.min);
         }
@@ -683,20 +709,25 @@ THE SOFTWARE.
       // Normally you would use `shouldComponentUpdate`, but since the slider is a low-level component,
       // the extra complexity might be worth the extra performance.
       if (newValue !== oldValue) {
-        this.setState({value: value}, this._fireChangeEvent.bind(this, 'onChange'));
+        this.setState(
+          { value: value },
+          this._fireChangeEvent.bind(this, 'onChange')
+        );
       }
     },
 
-    _pushSucceeding: function (value, minDistance, index) {
+    _pushSucceeding: function(value, minDistance, index) {
       var i, padding;
-      for (i = index, padding = value[i] + minDistance;
-           value[i + 1] != null && padding > value[i + 1];
-           i++, padding = value[i] + minDistance) {
+      for (
+        i = index, padding = value[i] + minDistance;
+        value[i + 1] != null && padding > value[i + 1];
+        i++, padding = value[i] + minDistance
+      ) {
         value[i + 1] = this._alignValue(padding);
       }
     },
 
-    _trimSucceeding: function (length, nextValue, minDistance, max) {
+    _trimSucceeding: function(length, nextValue, minDistance, max) {
       for (var i = 0; i < length; i++) {
         var padding = max - i * minDistance;
         if (nextValue[length - 1 - i] > padding) {
@@ -705,16 +736,18 @@ THE SOFTWARE.
       }
     },
 
-    _pushPreceding: function (value, minDistance, index) {
+    _pushPreceding: function(value, minDistance, index) {
       var i, padding;
-      for (i = index, padding = value[i] - minDistance;
-           value[i - 1] != null && padding < value[i - 1];
-           i--, padding = value[i] - minDistance) {
+      for (
+        i = index, padding = value[i] - minDistance;
+        value[i - 1] != null && padding < value[i - 1];
+        i--, padding = value[i] - minDistance
+      ) {
         value[i - 1] = this._alignValue(padding);
       }
     },
 
-    _trimPreceding: function (length, nextValue, minDistance, min) {
+    _trimPreceding: function(length, nextValue, minDistance, min) {
       for (var i = 0; i < length; i++) {
         var padding = min + i * minDistance;
         if (nextValue[i] < padding) {
@@ -723,41 +756,45 @@ THE SOFTWARE.
       }
     },
 
-    _axisKey: function () {
+    _axisKey: function() {
       var orientation = this.props.orientation;
       if (orientation === 'horizontal') return 'X';
       if (orientation === 'vertical') return 'Y';
     },
 
-    _orthogonalAxisKey: function () {
+    _orthogonalAxisKey: function() {
       var orientation = this.props.orientation;
       if (orientation === 'horizontal') return 'Y';
       if (orientation === 'vertical') return 'X';
     },
 
-    _posMinKey: function () {
+    _posMinKey: function() {
       var orientation = this.props.orientation;
-      if (orientation === 'horizontal') return this.props.invert ? 'right' : 'left';
-      if (orientation === 'vertical') return this.props.invert ? 'bottom' : 'top';
+      if (orientation === 'horizontal')
+        return this.props.invert ? 'right' : 'left';
+      if (orientation === 'vertical')
+        return this.props.invert ? 'bottom' : 'top';
     },
 
-    _posMaxKey: function () {
+    _posMaxKey: function() {
       var orientation = this.props.orientation;
-      if (orientation === 'horizontal') return this.props.invert ? 'left' : 'right';
-      if (orientation === 'vertical') return this.props.invert ? 'top' : 'bottom';
+      if (orientation === 'horizontal')
+        return this.props.invert ? 'left' : 'right';
+      if (orientation === 'vertical')
+        return this.props.invert ? 'top' : 'bottom';
     },
 
-    _sizeKey: function () {
+    _sizeKey: function() {
       var orientation = this.props.orientation;
       if (orientation === 'horizontal') return 'clientWidth';
       if (orientation === 'vertical') return 'clientHeight';
     },
 
-    _trimAlignValue: function (val, props) {
+    _trimAlignValue: function(val, props) {
       return this._alignValue(this._trimValue(val, props), props);
     },
 
-    _trimValue: function (val, props) {
+    _trimValue: function(val, props) {
       props = props || this.props;
 
       if (val <= props.min) val = props.min;
@@ -766,50 +803,55 @@ THE SOFTWARE.
       return val;
     },
 
-    _alignValue: function (val, props) {
+    _alignValue: function(val, props) {
       props = props || this.props;
 
       var valModStep = (val - props.min) % props.step;
       var alignValue = val - valModStep;
 
       if (Math.abs(valModStep) * 2 >= props.step) {
-        alignValue += (valModStep > 0) ? props.step : (-props.step);
+        alignValue += valModStep > 0 ? props.step : -props.step;
       }
 
       return parseFloat(alignValue.toFixed(5));
     },
 
-    _renderHandle: function (style, child, i) {
+    _renderHandle: function(style, child, i) {
       var self = this;
-      var className = this.props.handleClassName + ' ' +
-        (this.props.handleClassName + '-' + i) + ' ' +
+      var className =
+        this.props.handleClassName +
+        ' ' +
+        (this.props.handleClassName + '-' + i) +
+        ' ' +
         (this.state.index === i ? this.props.handleActiveClassName : '');
 
-      return (
-        React.createElement('div', {
-            ref: function (r) {
-              self['handle' + i] = r;
-            },
-            key: 'handle' + i,
-            className: className,
-            style: style,
-            onMouseDown: this._createOnMouseDown(i),
-            onTouchStart: this._createOnTouchStart(i),
-            onFocus: this._createOnKeyDown(i),
-            tabIndex: 0,
-            role: "slider",
-            "aria-valuenow": this.state.value[i],
-            "aria-valuemin": this.props.min,
-            "aria-valuemax": this.props.max,
-            "aria-label": isArray(this.props.ariaLabel) ? this.props.ariaLabel[i] : this.props.ariaLabel,
-            "aria-valuetext": this.props.ariaValuetext,
+      return React.createElement(
+        'div',
+        {
+          ref: function(r) {
+            self['handle' + i] = r;
           },
-          child
-        )
+          key: 'handle' + i,
+          className: className,
+          style: style,
+          onMouseDown: this._createOnMouseDown(i),
+          onTouchStart: this._createOnTouchStart(i),
+          onFocus: this._createOnKeyDown(i),
+          tabIndex: 0,
+          role: 'slider',
+          'aria-valuenow': this.state.value[i],
+          'aria-valuemin': this.props.min,
+          'aria-valuemax': this.props.max,
+          'aria-label': isArray(this.props.ariaLabel)
+            ? this.props.ariaLabel[i]
+            : this.props.ariaLabel,
+          'aria-valuetext': this.props.ariaValuetext,
+        },
+        child
       );
     },
 
-    _renderHandles: function (offset) {
+    _renderHandles: function(offset) {
       var length = offset.length;
 
       var styles = this.tempArray;
@@ -820,7 +862,7 @@ THE SOFTWARE.
       var res = [];
       var renderHandle = this._renderHandle;
       if (React.Children.count(this.props.children) > 0) {
-        React.Children.forEach(this.props.children, function (child, i) {
+        React.Children.forEach(this.props.children, function(child, i) {
           res[i] = renderHandle(styles[i], child, i);
         });
       } else {
@@ -831,21 +873,23 @@ THE SOFTWARE.
       return res;
     },
 
-    _renderBar: function (i, offsetFrom, offsetTo) {
+    _renderBar: function(i, offsetFrom, offsetTo) {
       var self = this;
-      return (
-        React.createElement('div', {
-          key: 'bar' + i,
-          ref: function (r) {
-            self['bar' + i] = r;
-          },
-          className: this.props.barClassName + ' ' + this.props.barClassName + '-' + i,
-          style: this._buildBarStyle(offsetFrom, this.state.upperBound - offsetTo)
-        })
-      );
+      return React.createElement('div', {
+        key: 'bar' + i,
+        ref: function(r) {
+          self['bar' + i] = r;
+        },
+        className:
+          this.props.barClassName + ' ' + this.props.barClassName + '-' + i,
+        style: this._buildBarStyle(
+          offsetFrom,
+          this.state.upperBound - offsetTo
+        ),
+      });
     },
 
-    _renderBars: function (offset) {
+    _renderBars: function(offset) {
       var bars = [];
       var lastIndex = offset.length - 1;
 
@@ -855,43 +899,50 @@ THE SOFTWARE.
         bars.push(this._renderBar(i + 1, offset[i], offset[i + 1]));
       }
 
-      bars.push(this._renderBar(lastIndex + 1, offset[lastIndex], this.state.upperBound));
+      bars.push(
+        this._renderBar(lastIndex + 1, offset[lastIndex], this.state.upperBound)
+      );
 
       return bars;
     },
 
-    _onSliderMouseDown: function (e) {
+    _onSliderMouseDown: function(e) {
       if (this.props.disabled) return;
       this.hasMoved = false;
       if (!this.props.snapDragDisabled) {
         var position = this._getMousePosition(e);
-        this._forceValueFromPosition(position[0], function (i) {
-          this._start(i, position[0]);
-          this._fireChangeEvent('onChange');
-          this._addHandlers(this._getMouseEventMap());
-        }.bind(this));
+        this._forceValueFromPosition(
+          position[0],
+          function(i) {
+            this._start(i, position[0]);
+            this._fireChangeEvent('onChange');
+            this._addHandlers(this._getMouseEventMap());
+          }.bind(this)
+        );
       }
 
       pauseEvent(e);
     },
 
-    _onSliderClick: function (e) {
+    _onSliderClick: function(e) {
       if (this.props.disabled) return;
 
       if (this.props.onSliderClick && !this.hasMoved) {
         var position = this._getMousePosition(e);
-        var valueAtPos = this._trimAlignValue(this._calcValue(this._calcOffsetFromPosition(position[0])));
+        var valueAtPos = this._trimAlignValue(
+          this._calcValue(this._calcOffsetFromPosition(position[0]))
+        );
         this.props.onSliderClick(valueAtPos);
       }
     },
 
-    _fireChangeEvent: function (event) {
+    _fireChangeEvent: function(event) {
       if (this.props[event]) {
         this.props[event](undoEnsureArray(this.state.value));
       }
     },
 
-    render: function () {
+    render: function() {
       var self = this;
       var state = this.state;
       var props = this.props;
@@ -906,22 +957,22 @@ THE SOFTWARE.
       var bars = props.withBars ? this._renderBars(offset) : null;
       var handles = this._renderHandles(offset);
 
-      return (
-        React.createElement('div', {
-            ref: function (r) {
-              self.slider = r;
-            },
-            style: {position: 'relative'},
-            className: props.className + (props.disabled ? ' disabled' : ''),
-            onMouseDown: this._onSliderMouseDown,
-            onClick: this._onSliderClick
+      return React.createElement(
+        'div',
+        {
+          ref: function(r) {
+            self.slider = r;
           },
-          bars,
-          handles
-        )
+          style: { position: 'relative' },
+          className: props.className + (props.disabled ? ' disabled' : ''),
+          onMouseDown: this._onSliderMouseDown,
+          onClick: this._onSliderClick,
+        },
+        bars,
+        handles
       );
-    }
+    },
   });
 
   return ReactSlider;
-}));
+});

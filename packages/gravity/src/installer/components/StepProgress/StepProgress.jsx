@@ -32,29 +32,23 @@ import Failed from './Failed';
 
 export function StepProgress(props) {
   const { progress, logProvider, ...styles } = props;
-  const [ showLogs, toggleLogs ] = React.useState(false);
+  const [showLogs, toggleLogs] = React.useState(false);
 
-  function onToggleLogs(){
-    toggleLogs(!showLogs)
+  function onToggleLogs() {
+    toggleLogs(!showLogs);
   }
 
-  const {
-    isError,
-    isCompleted,
-    step,
-    siteId,
-    crashReportUrl
-  } = progress;
+  const { isError, isCompleted, step, siteId, crashReportUrl } = progress;
 
-  const progressValue = (100 / (PROGRESS_STATE_STRINGS.length)) * (step + 1);
+  const progressValue = (100 / PROGRESS_STATE_STRINGS.length) * (step + 1);
   const isInstalling = !(isError || isCompleted);
-  const title = isInstalling ? "Installation" : '';
+  const title = isInstalling ? 'Installation' : '';
 
   return (
     <StepLayout title={title} height="100%" {...styles}>
-      { isCompleted && <Completed siteId={siteId}/> }
-      { isError && <Failed tarballUrl={crashReportUrl}/> }
-      { isInstalling && (
+      {isCompleted && <Completed siteId={siteId} />}
+      {isError && <Failed tarballUrl={crashReportUrl} />}
+      {isInstalling && (
         <>
           <ProgressBar mb="4" value={progressValue} />
           <ProgressDesc step={step} steps={PROGRESS_STATE_STRINGS} />
@@ -65,13 +59,17 @@ export function StepProgress(props) {
         title="Executable Logs"
         expanded={showLogs}
         onToggle={onToggleLogs}
-        height={ showLogs ? "100%" : "auto"  }
+        height={showLogs ? '100%' : 'auto'}
       >
-        <Flex pt="2" px="2" minHeight="400px" height="100%" bg="bgTerminal" style={{ display: showLogs ? 'inherit': 'none' }} >
-          <LogViewer
-            autoScroll={true}
-            provider={ logProvider }
-          />
+        <Flex
+          pt="2"
+          px="2"
+          minHeight="400px"
+          height="100%"
+          bg="bgTerminal"
+          style={{ display: showLogs ? 'inherit' : 'none' }}
+        >
+          <LogViewer autoScroll={true} provider={logProvider} />
         </Flex>
       </ExpandPanel>
     </StepLayout>
@@ -85,27 +83,21 @@ export default function(props) {
   const progress = useFluxStore(opProgressGetters.progressById(id));
 
   // poll operation progress status
-  function onFetchProgress(){
-    return progressActions.fetchOpProgress(siteId, id)
+  function onFetchProgress() {
+    return progressActions.fetchOpProgress(siteId, id);
   }
 
   // creates web socket connection and streams install logs
-  const $provider = (
-    <InstallLogsProvider siteId={siteId} opId={id} />
-  )
+  const $provider = <InstallLogsProvider siteId={siteId} opId={id} />;
 
   return (
     <>
-      { progress && (
-        <StepProgress
-          {...props}
-          progress={progress}
-          logProvider={$provider}
-        />
+      {progress && (
+        <StepProgress {...props} progress={progress} logProvider={$provider} />
       )}
       <AjaxPoller time={POLL_INTERVAL} onFetch={onFetchProgress} />
     </>
-  )
+  );
 }
 
 const POLL_INTERVAL = 3000; // every 5 sec
@@ -119,5 +111,5 @@ export const PROGRESS_STATE_STRINGS = [
   'Installing platform',
   'Installing application',
   'Verifying application',
-  'Connecting to application'
+  'Connecting to application',
 ];

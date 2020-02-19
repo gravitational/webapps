@@ -21,15 +21,14 @@ import * as Elements from './../Elements';
 import { colors } from '../../../colors';
 
 export default class UploadForm extends React.Component {
-
   static propTypes = {
     onUpload: PropTypes.func.isRequired,
-  }
+  };
 
   state = {
     files: [],
-    remoteLocation: "~/"
-  }
+    remoteLocation: '~/',
+  };
 
   componentWillUnmount() {
     document.removeEventListener('drop', this.onDocumentDrop);
@@ -47,7 +46,7 @@ export default class UploadForm extends React.Component {
 
   onDocumentDrop(e) {
     if (this.refDropzone && this.refDropzone.contains(e.target)) {
-      return
+      return;
     }
 
     e.preventDefault();
@@ -58,39 +57,36 @@ export default class UploadForm extends React.Component {
   onFileSelected = e => {
     this.addFiles([], e.target.files);
     this.inputRef.focus();
-  }
+  };
 
   onFilePathChanged = e => {
     this.setState({
-      remoteLocation: e.target.value
-    })
-  }
+      remoteLocation: e.target.value,
+    });
+  };
 
   onUpload = () => {
     const { files, remoteLocation } = this.state;
     for (var i = 0; i < files.length; i++) {
-      this.props.onUpload(
-        remoteLocation,
-        files[i].name,
-        files[i]);
+      this.props.onUpload(remoteLocation, files[i].name, files[i]);
     }
 
     this.setState({ files: [] });
     this.setFocus();
-  }
+  };
 
   onOpenFilePicker = () => {
     // reset all selected files
-    this.fileSelectorRef.value = "";
+    this.fileSelectorRef.value = '';
     this.fileSelectorRef.click();
-  }
+  };
 
   onDrop = e => {
     e.preventDefault();
     e.stopPropagation();
-    this.addFiles(this.state.files, e.dataTransfer.files)
+    this.addFiles(this.state.files, e.dataTransfer.files);
     this.setFocus();
-  }
+  };
 
   onKeyDown = event => {
     if (event.key === 'Enter') {
@@ -98,7 +94,7 @@ export default class UploadForm extends React.Component {
       event.stopPropagation();
       this.onOpenFilePicker();
     }
-  }
+  };
 
   setFocus() {
     this.inputRef.focus();
@@ -116,51 +112,54 @@ export default class UploadForm extends React.Component {
     }
 
     this.setState({
-      files
-    })
+      files,
+    });
   }
 
   render() {
     const { remoteLocation, files } = this.state;
     const isDldBtnDisabled = !remoteLocation || files.length === 0;
     const hasFiles = files.length > 0;
-    const dropZoneText = hasFiles ? `${files.length} files selected` :
-      `Select files to upload or drag & drop them here`;
+    const dropZoneText = hasFiles
+      ? `${files.length} files selected`
+      : `Select files to upload or drag & drop them here`;
 
     return (
       <Elements.Form color="terminal">
         <Elements.Header>(SCP) UPLOAD Files</Elements.Header>
         <Elements.Label>Upload destination </Elements.Label>
-        <Elements.Input className="grv-file-transfer-input m-r-sm"
+        <Elements.Input
+          className="grv-file-transfer-input m-r-sm"
           width="100%"
           mb={0}
-          ref={e => this.inputRef = e}
+          ref={e => (this.inputRef = e)}
           value={remoteLocation}
           autoFocus
           onFocus={this.moveCaretAtEnd}
           onChange={this.onFilePathChanged}
           onKeyDown={this.onKeyDown}
         />
-        <input ref={e => this.fileSelectorRef = e} type="file"
+        <input
+          ref={e => (this.fileSelectorRef = e)}
+          type="file"
           multiple
-          style={{ display: "none" }}
+          style={{ display: 'none' }}
           accept="*.*"
           name="file"
           onChange={this.onFileSelected}
         />
         <Dropzone
-          ref={ e => this.refDropzone = e }
+          ref={e => (this.refDropzone = e)}
           onDragOver={e => e.preventDefault()}
-          onDrop={this.onDrop}>
-          <a onClick={this.onOpenFilePicker}>
-            {dropZoneText}
-          </a>
+          onDrop={this.onDrop}
+        >
+          <a onClick={this.onOpenFilePicker}>{dropZoneText}</a>
         </Dropzone>
         <Elements.Button disabled={isDldBtnDisabled} onClick={this.onUpload}>
           Upload
         </Elements.Button>
       </Elements.Form>
-    )
+    );
   }
 }
 
@@ -174,4 +173,4 @@ const Dropzone = styled.div`
   line-height: 72px;
   text-align: center;
   text-transform: uppercase;
-`
+`;

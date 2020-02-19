@@ -18,16 +18,12 @@ import React from 'react';
 import Label from 'design/Label';
 import { Cell } from 'design/DataTable';
 
-export function NameCell({ rowIndex, data }){
+export function NameCell({ rowIndex, data }) {
   const { name } = data[rowIndex];
-  return (
-    <Cell style={{fontSize: "14px"}}>
-      {name}
-    </Cell>
-  )
+  return <Cell style={{ fontSize: '14px' }}>{name}</Cell>;
 }
 
-export function PortCell({ rowIndex, data }){
+export function PortCell({ rowIndex, data }) {
   const service = data[rowIndex];
   const $ports = service.ports.map(text => {
     const [port1, port2] = text.split('/');
@@ -39,15 +35,14 @@ export function PortCell({ rowIndex, data }){
     );
   });
 
-  return (<Cell>{$ports}</Cell>);
+  return <Cell>{$ports}</Cell>;
 }
 
-export function LabelCell({ rowIndex, data }){
+export function LabelCell({ rowIndex, data }) {
   const service = data[rowIndex];
-  const $labelItems = service.labels.map( (text, key) => (
+  const $labelItems = service.labels.map((text, key) => (
     <Label kind="secondary" mb="1" mr="1" key={key} children={text} />
-    )
- );
+  ));
 
-  return (<Cell> {$labelItems} </Cell>);
+  return <Cell> {$labelItems} </Cell>;
 }

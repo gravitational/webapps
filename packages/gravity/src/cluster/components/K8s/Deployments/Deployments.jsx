@@ -24,19 +24,16 @@ import { useK8sContext } from './../k8sContext';
 import Poller from './../components/Poller';
 import { fetchDaemonSets } from 'gravity/cluster/flux/k8s/actions';
 
-export function Deployments(props){
+export function Deployments(props) {
   let { deployments, namespace, onFetch } = props;
-  deployments = deployments.filter( item => item.namespace === namespace );
+  deployments = deployments.filter(item => item.namespace === namespace);
   deployments = sortBy(deployments, ['created']).reverse();
   return (
     <React.Fragment>
       <Poller namespace={namespace} onFetch={onFetch} />
-      <DeploymentList
-        namespace={namespace}
-        deployments={deployments}
-      />
+      <DeploymentList namespace={namespace} deployments={deployments} />
     </React.Fragment>
-  )
+  );
 }
 
 export default withState(() => {
@@ -46,5 +43,5 @@ export default withState(() => {
     namespace,
     deployments,
     onFetch: fetchDaemonSets,
-  }
+  };
 })(Deployments);

@@ -18,43 +18,36 @@ import React from 'react';
 import { withRouter, Router } from 'react-router';
 import * as RouterDOM from 'react-router-dom';
 import { DocumentTitle } from 'design';
-import { NotFound }  from 'design/CardError';
+import { NotFound } from 'design/CardError';
 
-const NoMatch = ({ location }) => (
-  <NotFound message={location.pathname}/>
-)
+const NoMatch = ({ location }) => <NotFound message={location.pathname} />;
 
 // Adds default not found handler
 const Switch = props => (
   <RouterDOM.Switch>
     {props.children}
-    <Route component={NoMatch}/>
+    <Route component={NoMatch} />
   </RouterDOM.Switch>
-)
+);
 
-const Route = ({component: Component, title, ...rest}) => (
-  <RouterDOM.Route {...rest} render={props => {
-    if(!title){
-      return <Component {...props} />
-    }
+const Route = ({ component: Component, title, ...rest }) => (
+  <RouterDOM.Route
+    {...rest}
+    render={props => {
+      if (!title) {
+        return <Component {...props} />;
+      }
 
-    return (
-      <DocumentTitle title={title}>
-        <Component {...props} />
-      </DocumentTitle>
-    )
-  }}
+      return (
+        <DocumentTitle title={title}>
+          <Component {...props} />
+        </DocumentTitle>
+      );
+    }}
   />
-)
+);
 
 const NavLink = RouterDOM.NavLink;
 const Redirect = RouterDOM.Redirect;
 
-export {
-  Router,
-  Route,
-  Switch,
-  NavLink,
-  Redirect,
-  withRouter
-}
+export { Router, Route, Switch, NavLink, Redirect, withRouter };

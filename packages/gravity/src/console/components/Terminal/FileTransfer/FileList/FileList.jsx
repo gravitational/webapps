@@ -17,46 +17,48 @@ limitations under the License.
 import React from 'react';
 import styled from 'styled-components';
 import { FileListItemReceive, FileListItemSend } from './../FileListItem';
-import { Box } from 'design'
+import { Box } from 'design';
 
-export default function FileList ({ files, onUpdate, onRemove }) {
+export default function FileList({ files, onUpdate, onRemove }) {
   if (files.length === 0) {
     return null;
   }
 
   const $files = files.map(file => {
-    const key = file.id
+    const key = file.id;
     const props = {
       onUpdate,
       key,
       file,
-      onRemove
+      onRemove,
     };
 
-    return file.isUpload ?
-      <FileListItemSend {...props}  /> :
+    return file.isUpload ? (
+      <FileListItemSend {...props} />
+    ) : (
       <FileListItemReceive {...props} />
+    );
   });
 
   return (
     <Box mt={3}>
       <ListHeaders>
         <Box width="360px">File</Box>
-        <Box width="80px" textAlign="right">Status</Box>
+        <Box width="80px" textAlign="right">
+          Status
+        </Box>
       </ListHeaders>
-      <ListItems>
-        {$files}
-      </ListItems>
+      <ListItems>{$files}</ListItems>
     </Box>
-  )
+  );
 }
 
 const ListHeaders = styled.div`
   display: flex;
   justify-content: space-between;
   text-transform: uppercase;
-  font-weight: ${ props => props.theme.bold };
-`
+  font-weight: ${props => props.theme.bold};
+`;
 
 const ListItems = styled.div`
   overflow: auto;
@@ -64,4 +66,4 @@ const ListItems = styled.div`
   // scrollbars
   padding-right: 16px;
   margin-right: -16px;
-`
+`;

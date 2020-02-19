@@ -15,54 +15,57 @@ limitations under the License.
 */
 
 import React from 'react';
-import PropTypes from 'prop-types'
+import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import * as Icons from 'design/Icon';
 import { Flex, Text } from 'design';
 import { CloseButton } from './../Elements';
 
 export default class ActionBar extends React.Component {
-
   close = () => {
     this.props.onClose && this.props.onClose();
-  }
+  };
 
   openUploadDialog = () => {
     this.openFileTransferDialog(true);
-  }
+  };
 
   openDownloadDialog = () => {
     this.openFileTransferDialog(false);
-  }
+  };
 
   render() {
     const {
       isFileTransferDialogOpen,
       onOpenUploadDialog,
       onOpenDownloadDialog,
-      title
+      title,
     } = this.props;
 
     return (
       <Flex height="32px" my={1} alignItems="flex-start">
         <Tab>
-          <CloseButton mr={2} onClick={this.close}/>
-          <Text maxWidth={2} fontSize={1}>{title}</Text>
+          <CloseButton mr={2} onClick={this.close} />
+          <Text maxWidth={2} fontSize={1}>
+            {title}
+          </Text>
         </Tab>
         <IconButton
           title="Download files"
           disabled={isFileTransferDialogOpen}
-          onClick={onOpenDownloadDialog}>
+          onClick={onOpenDownloadDialog}
+        >
           <Icons.Download />
         </IconButton>
         <IconButton
           title="Upload files"
           disabled={isFileTransferDialogOpen}
-          onClick={onOpenUploadDialog}>
+          onClick={onOpenUploadDialog}
+        >
           <Icons.Upload />
         </IconButton>
       </Flex>
-    )
+    );
   }
 }
 
@@ -78,14 +81,14 @@ const isOpen = props => {
   if (props.disabled) {
     return {
       opacity: 0.24,
-      cursor: "not-allowed"
-    }
+      cursor: 'not-allowed',
+    };
   }
-}
+};
 
 const Tab = ({ children }) => (
   <Flex mr={3} py={1} alignItems="center" children={children} />
-)
+);
 
 const IconButton = styled.button`
   background: none;
@@ -95,11 +98,11 @@ const IconButton = styled.button`
   height: 32px;
   color: rgba(255, 255, 255, 0.56);
   cursor: pointer;
-  font-size:  ${props => props.theme.fontSizes[4]}px;
+  font-size: ${props => props.theme.fontSizes[4]}px;
   display: flex;
-  opacity: .87;
+  opacity: 0.87;
   outline: none;
   align-items: center;
   justify-content: center;
   ${isOpen};
-`
+`;

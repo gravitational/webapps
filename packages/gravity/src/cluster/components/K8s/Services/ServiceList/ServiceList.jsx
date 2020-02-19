@@ -16,37 +16,25 @@ limitations under the License.
 
 import React from 'react';
 import { Table, Column, Cell, TextCell } from 'design/DataTable';
-import ResourceActionCell  from './../../components/ResourceActionCell';
-import { NameCell, PortCell, LabelCell, } from './ServiceListCells';
+import ResourceActionCell from './../../components/ResourceActionCell';
+import { NameCell, PortCell, LabelCell } from './ServiceListCells';
 
 function ServiceList(props) {
   const { namespace, services } = props;
-  const filtered = services.filter( item => item.namespace === namespace );
+  const filtered = services.filter(item => item.namespace === namespace);
   return (
     <Table data={filtered}>
-      <Column
-        header={<Cell>Name</Cell> }
-        cell={<NameCell /> }
-      />
+      <Column header={<Cell>Name</Cell>} cell={<NameCell />} />
       <Column
         columnKey="clusterIp"
-        header={<Cell>Cluster</Cell> }
-        cell={<TextCell/> }
+        header={<Cell>Cluster</Cell>}
+        cell={<TextCell />}
       />
-      <Column
-        header={<Cell>Ports</Cell> }
-        cell={<PortCell/> }
-      />
-      <Column
-        header={<Cell>Labels</Cell> }
-        cell={<LabelCell/> }
-      />
-      <Column
-        header={<Cell></Cell> }
-        cell={<ResourceActionCell/>}
-      />
+      <Column header={<Cell>Ports</Cell>} cell={<PortCell />} />
+      <Column header={<Cell>Labels</Cell>} cell={<LabelCell />} />
+      <Column header={<Cell></Cell>} cell={<ResourceActionCell />} />
     </Table>
-  )
+  );
 }
 
 export default ServiceList;

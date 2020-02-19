@@ -21,9 +21,5 @@ import { displayDateTime } from 'gravity/lib/dateUtils';
 export default function CreatedCell({ rowIndex, data }) {
   const { isSession, session, operation } = data[rowIndex];
   const created = isSession ? session.created : operation.created;
-  return (
-    <Cell>
-      {displayDateTime(created)}
-    </Cell>
-  )
+  return <Cell>{displayDateTime(created)}</Cell>;
 }

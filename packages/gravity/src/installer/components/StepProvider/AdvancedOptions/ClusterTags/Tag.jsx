@@ -17,15 +17,15 @@ limitations under the License.
 import React from 'react';
 import styled from 'styled-components';
 import { color, space, typography } from 'design/system';
-import Icon, { Close as IconClose } from 'design/Icon'
-import ButtonIcon from 'design/ButtonIcon'
+import Icon, { Close as IconClose } from 'design/Icon';
+import ButtonIcon from 'design/ButtonIcon';
 
 const StyledTag = styled.div`
   max-width: 200px;
   overflow: auto;
   display: flex;
   align-items: center;
-  background: ${props => props.theme.colors.primary.dark };
+  background: ${props => props.theme.colors.primary.dark};
   border-radius: 10px;
   > span {
     white-space: nowrap;
@@ -34,7 +34,7 @@ const StyledTag = styled.div`
   }
 
   ${Icon}{
-    color: ${ ({ theme }) => theme.colors.text.primary};
+    color: ${({ theme }) => theme.colors.text.primary};
     border-radius: 50%;
     font-size: 14px;
     min-width: 10px;
@@ -45,22 +45,25 @@ const StyledTag = styled.div`
   ${space}
 `;
 
-export default function Tag({ name, value, onClick, ...styles}){
-  function onIconClick(){
-    onClick(name)
+export default function Tag({ name, value, onClick, ...styles }) {
+  function onIconClick() {
+    onClick(name);
   }
 
   const text = value ? `${name}: ${value}` : name;
   return (
-    <StyledTag typography="body2" {...styles} bg="primary.dark" color="primary.contrastText" pl="2" pr="1" >
-      <span title={text}>
-        {text}
-      </span>
+    <StyledTag
+      typography="body2"
+      {...styles}
+      bg="primary.dark"
+      color="primary.contrastText"
+      pl="2"
+      pr="1"
+    >
+      <span title={text}>{text}</span>
       <ButtonIcon size={0} onClick={onIconClick} ml="1" bg="primary.light">
         <IconClose />
       </ButtonIcon>
     </StyledTag>
-  )
+  );
 }
-
-

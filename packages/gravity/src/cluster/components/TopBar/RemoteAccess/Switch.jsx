@@ -14,14 +14,14 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React from 'react'
+import React from 'react';
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
 import { darken, fade } from 'design/theme/utils/colorManipulator';
 
-export default function Switch({checked, onChange, ...styles}) {
-  const [ focused, { onFocused, onBlur } ] = useFocus();
-  const [ hovered, { onMouseEnter, onMouseLeave } ] = useHover();
+export default function Switch({ checked, onChange, ...styles }) {
+  const [focused, { onFocused, onBlur }] = useFocus();
+  const [hovered, { onMouseEnter, onMouseLeave }] = useHover();
   return (
     <StyledSwitch
       {...styles}
@@ -31,24 +31,30 @@ export default function Switch({checked, onChange, ...styles}) {
       onMouseEnter={onMouseEnter}
       onMouseLeave={onMouseLeave}
     >
-      <input type="checkbox" onFocus={onFocused} onBlur={onBlur} checked={checked} onChange={onChange}/>
+      <input
+        type="checkbox"
+        onFocus={onFocused}
+        onBlur={onBlur}
+        checked={checked}
+        onChange={onChange}
+      />
       <span className="slider" />
     </StyledSwitch>
-  )
+  );
 }
 
 Switch.propTypes = {
   onChange: PropTypes.func.isRequired,
   checked: PropTypes.bool.isRequired,
-}
+};
 
-function fromTheme({theme, checked, focused, hovered}){
+function fromTheme({ theme, checked, focused, hovered }) {
   const color = checked ? theme.colors.secondary.main : theme.colors.disabled;
   const brightColor = fade(color, 0.4);
 
   let sliderColor = color;
-  if(focused, hovered){
-    sliderColor = darken(color, 0.2)
+  if ((focused, hovered)) {
+    sliderColor = darken(color, 0.2);
   }
 
   return {
@@ -56,9 +62,11 @@ function fromTheme({theme, checked, focused, hovered}){
     backgroundColor: brightColor,
     '.slider': {
       backgroundColor: sliderColor,
-      boxShadow: checked ? 'rgba(0, 191, 165, 0.24) 0px 0px 0px, rgba(0, 191, 165, 0.56) 0px 4px 16px' : 'none'
-    }
-  }
+      boxShadow: checked
+        ? 'rgba(0, 191, 165, 0.24) 0px 0px 0px, rgba(0, 191, 165, 0.56) 0px 4px 16px'
+        : 'none',
+    },
+  };
 }
 
 const StyledSwitch = styled.label`
@@ -89,30 +97,30 @@ const StyledSwitch = styled.label`
     height: 18px;
     width: 18px;
     border-radius: 50%;
-    transition: .4s;
+    transition: 0.4s;
   }
 
   ${fromTheme}
-`
+`;
 
 const useFocus = () => {
-  const [focused, set] = React.useState(false)
+  const [focused, set] = React.useState(false);
   return [
     focused,
     {
       onFocus: () => set(true),
       onBlur: () => set(false),
     },
-  ]
-}
+  ];
+};
 
 const useHover = () => {
-  const [hovered, set] = React.useState(false)
+  const [hovered, set] = React.useState(false);
   return [
     hovered,
     {
       onMouseEnter: () => set(true),
       onMouseLeave: () => set(false),
     },
-  ]
-}
+  ];
+};

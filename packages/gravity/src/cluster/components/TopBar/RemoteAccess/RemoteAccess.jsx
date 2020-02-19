@@ -14,24 +14,24 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React from 'react'
+import React from 'react';
 import { Flex, Text } from 'design';
 import Switch from './Switch';
 import RemoteAccessDialog from './RemoteAccesssDialog';
 import { RemoteAccessEnum } from 'gravity/services/enums';
 
 export default function RemoteAssistance(props) {
-  const [ isOpen, setIsOpen ] = React.useState(false);
+  const [isOpen, setIsOpen] = React.useState(false);
   const { onChange, remoteAccess } = props;
 
   // do not display if remote access is not configured
-  if(remoteAccess === RemoteAccessEnum.NA){
+  if (remoteAccess === RemoteAccessEnum.NA) {
     return null;
   }
 
   const isEnabled = remoteAccess === RemoteAccessEnum.ON;
 
-  function onConfirmed(){
+  function onConfirmed() {
     return onChange(!isEnabled);
   }
 
@@ -40,9 +40,14 @@ export default function RemoteAssistance(props) {
       <Text mr="2" typography="subtitle2" color="text.primary">
         REMOTE ASSITANCE
       </Text>
-      <Switch checked={isEnabled} onChange={ () => setIsOpen(true) } />
-      { isOpen && <RemoteAccessDialog enabled={isEnabled} onConfirmed={onConfirmed} onClose={ () => setIsOpen(false) } /> }
+      <Switch checked={isEnabled} onChange={() => setIsOpen(true)} />
+      {isOpen && (
+        <RemoteAccessDialog
+          enabled={isEnabled}
+          onConfirmed={onConfirmed}
+          onClose={() => setIsOpen(false)}
+        />
+      )}
     </Flex>
-  )
+  );
 }
-

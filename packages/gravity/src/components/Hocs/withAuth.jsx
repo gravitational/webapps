@@ -22,16 +22,14 @@ import Logger from 'shared/libs/logger';
 const logger = Logger.create('/components/withAuth');
 
 const withAuth = component => {
-
-  return class AuthWrapper extends React.Component{
-
-    static displayName = `AuthWrapper`
+  return class AuthWrapper extends React.Component {
+    static displayName = `AuthWrapper`;
 
     componentDidMount() {
-      if(!session.isValid()){
-        logger.warn("invalid session");
+      if (!session.isValid()) {
+        logger.warn('invalid session');
         const rememberLocation = true;
-        history.goToLogin(rememberLocation)
+        history.goToLogin(rememberLocation);
         return;
       }
 
@@ -46,7 +44,7 @@ const withAuth = component => {
 
       return null;
     }
-  }
-}
+  };
+};
 
 export default withAuth;

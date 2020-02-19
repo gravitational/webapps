@@ -23,7 +23,10 @@ import { withState } from 'shared/hooks';
 import { useFluxStore } from 'gravity/components/nuclear';
 import * as featureFlags from 'gravity/cluster/featureFlags';
 import { getters as operationGetters } from 'gravity/cluster/flux/operations';
-import { fetchOps, fetchOpProgress } from 'gravity/cluster/flux/operations/actions';
+import {
+  fetchOps,
+  fetchOpProgress,
+} from 'gravity/cluster/flux/operations/actions';
 import { getters as sessionGetters } from 'gravity/cluster/flux/sessions';
 import { getters as nodeGetters } from 'gravity/cluster/flux/nodes';
 import { fetchActiveSessions } from 'gravity/cluster/flux/sessions/actions';
@@ -36,41 +39,54 @@ import DescCell from './DescCell';
 
 const POLL_INTERVAL = 5000; // every 5 sec
 
-export function OperationList(props){
-  const { logsEnabled, sessions, progress, nodes, operations, pageSize=3, onFetchProgress, onRefresh, ...rest } = props;
+export function OperationList(props) {
+  const {
+    logsEnabled,
+    sessions,
+    progress,
+    nodes,
+    operations,
+    pageSize = 3,
+    onFetchProgress,
+    onRefresh,
+    ...rest
+  } = props;
 
   const dataOps = operations.map(o => ({
-      isSession: false,
-      operation: o,
-    }));
+    isSession: false,
+    operation: o,
+  }));
 
   const dataSessions = sessions.map(s => ({
-      isSession: true,
-      session: s,
-    }));
+    isSession: true,
+    session: s,
+  }));
 
   const data = [
     // show terminal sessions first
     ...dataSessions,
-    ...dataOps
-  ]
+    ...dataOps,
+  ];
 
   return (
     <Box {...rest}>
       <AjaxPoller time={POLL_INTERVAL} onFetch={onRefresh} />
-      <Flex bg="primary.light" px="3" py="3" alignItems="center" borderTopRightRadius="3" borderTopLeftRadius="3">
-        <Text typography="h4">
-          Operations
-        </Text>
+      <Flex
+        bg="primary.light"
+        px="3"
+        py="3"
+        alignItems="center"
+        borderTopRightRadius="3"
+        borderTopLeftRadius="3"
+      >
+        <Text typography="h4">Operations</Text>
       </Flex>
       <TablePaged data={data} pageSize={pageSize} pagerPosition="bottom">
         <Column
           operations={operations}
           progress={progress}
-          header={
-            <Cell>Type</Cell>
-          }
-          cell={<TypeCell/> }
+          header={<Cell>Type</Cell>}
+          cell={<TypeCell />}
         />
         <Column
           nodes={nodes}
@@ -78,44 +94,40 @@ export function OperationList(props){
           progress={progress}
           onFetchProgress={onFetchProgress}
           columnKey="description"
-          header={
-            <Cell>Description</Cell>
-          }
-          cell={<DescCell/> }
+          header={<Cell>Description</Cell>}
+          cell={<DescCell />}
         />
         <Column
           operations={operations}
           progress={progress}
           columnKey="createdBy"
-          header={
-            <Cell>User</Cell>
-          }
-          cell={<UserCell/> }
+          header={<Cell>User</Cell>}
+          cell={<UserCell />}
         />
         <Column
           operations={operations}
           progress={progress}
-          header={ <Cell>Created</Cell> }
-          cell={<CreatedCell/> }
+          header={<Cell>Created</Cell>}
+          cell={<CreatedCell />}
         />
         <Column
           operations={operations}
           progress={progress}
-          header={<Cell /> }
-          cell={<ActionCell logsEnabled={logsEnabled} /> }
+          header={<Cell />}
+          cell={<ActionCell logsEnabled={logsEnabled} />}
         />
       </TablePaged>
     </Box>
-  )
+  );
 }
 
-function mapState(){
+function mapState() {
   const logsEnabled = featureFlags.siteLogs();
   const opsStore = useFluxStore(operationGetters.operationStore);
   const sessionStore = useFluxStore(sessionGetters.sessionStore);
   const nodeStore = useFluxStore(nodeGetters.nodeStore);
 
-  function onRefresh(){
+  function onRefresh() {
     return $.when(fetchOps(), fetchActiveSessions());
   }
 
@@ -129,7 +141,7 @@ function mapState(){
     logsEnabled,
     onRefresh,
     onFetchProgress: id => fetchOpProgress(id),
-  }
+  };
 }
 
 export default withState(mapState)(OperationList);

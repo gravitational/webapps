@@ -16,10 +16,10 @@ limitations under the License.
 
 import React from 'react';
 import { LabelInput, Text, ButtonSecondary } from 'design';
-import { DialogContent, DialogFooter} from 'design/DialogConfirmation';
+import { DialogContent, DialogFooter } from 'design/DialogConfirmation';
 import CmdText from 'gravity/components/CmdText';
 
-export default function ProfileInstructions(props){
+export default function ProfileInstructions(props) {
   const { joinCmd, downloadCmd, onClose } = props;
   return (
     <React.Fragment>
@@ -30,17 +30,13 @@ export default function ProfileInstructions(props){
         <LabelInput>
           Step 1: Run this command to download gravity binaries
         </LabelInput>
-        <CmdText mb="4" cmd={downloadCmd}/>
-        <LabelInput>
-         Step 2: Run this command to join the cluster
-        </LabelInput>
-        <CmdText cmd={joinCmd}/>
+        <CmdText mb="4" cmd={downloadCmd} />
+        <LabelInput>Step 2: Run this command to join the cluster</LabelInput>
+        <CmdText cmd={joinCmd} />
       </DialogContent>
       <DialogFooter>
-        <ButtonSecondary onClick={onClose}>
-          DONE
-        </ButtonSecondary>
+        <ButtonSecondary onClick={onClose}>DONE</ButtonSecondary>
       </DialogFooter>
     </React.Fragment>
-  )
+  );
 }

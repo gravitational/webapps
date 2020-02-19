@@ -24,35 +24,34 @@ import { colors } from './../../colors';
 import { CloseButton as TermCloseButton } from './../Elements';
 
 export default class FileTransferDialog extends Component {
-
   static propTypes = {
     store: PropTypes.object.isRequired,
     onTransferRemove: PropTypes.func.isRequired,
     onTransferStart: PropTypes.func.isRequired,
     onTransferUpdate: PropTypes.func.isRequired,
-    onClose: PropTypes.func.isRequired
-  }
+    onClose: PropTypes.func.isRequired,
+  };
 
-  transfer(location, name, isUpload, blob=[]) {
+  transfer(location, name, isUpload, blob = []) {
     this.props.onTransferStart({
       location,
       name,
       isUpload,
-      blob
-    })
+      blob,
+    });
   }
 
-  componentWillUnmount(){
+  componentWillUnmount() {
     this.props.onClose();
   }
 
   onDownload = location => {
-    this.transfer(location, location, false)
-  }
+    this.transfer(location, location, false);
+  };
 
   onUpload = (location, filename, blob) => {
     this.transfer(location, filename, true, blob);
-  }
+  };
 
   onKeyDown = e => {
     // escape
@@ -64,7 +63,7 @@ export default class FileTransferDialog extends Component {
     e.stopPropagation();
 
     this.onClose();
-  }
+  };
 
   onClose = () => {
     const isTransfering = this.props.store.isTransfering();
@@ -72,10 +71,13 @@ export default class FileTransferDialog extends Component {
       this.props.onClose();
     }
 
-    if (isTransfering && window.confirm("Are you sure you want to cancel file transfers?")) {
+    if (
+      isTransfering &&
+      window.confirm('Are you sure you want to cancel file transfers?')
+    ) {
       this.props.onClose();
     }
-  }
+  };
 
   render() {
     const { store, onTransferUpdate, onTransferRemove } = this.props;
@@ -88,21 +90,22 @@ export default class FileTransferDialog extends Component {
     return (
       <StyledFileTransfer onKeyDown={this.onKeyDown}>
         {!isUpload && <DownloadForm onDownload={this.onDownload} />}
-        {isUpload && <UploadForm onUpload={this.onUpload} /> }
+        {isUpload && <UploadForm onUpload={this.onUpload} />}
         <FileList
           onRemove={onTransferRemove}
           onUpdate={onTransferUpdate}
-          files={latestFirst} />
+          files={latestFirst}
+        />
         <CloseButton onClick={this.onClose} />
       </StyledFileTransfer>
-    )
+    );
   }
 }
 
 const StyledFileTransfer = styled.div`
   background: ${colors.dark};
   border-radius: 4px;
-  box-shadow: 0 8px 32px rgba(0, 0, 0, .24);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.24);
   box-sizing: border-box;
   font-size: ${props => props.theme.fontSizes[0]}px;
   color: #28fe14;
@@ -114,20 +117,20 @@ const StyledFileTransfer = styled.div`
   top: 0;
   width: 496px;
   z-index: 2;
-`
+`;
 
 const CloseButton = styled(TermCloseButton)`
   background: #0000;
   color: #fff;
   font-size: ${props => props.theme.fontSizes[4]}px;
   height: 20px;
-  opacity: .56;
+  opacity: 0.56;
   position: absolute;
   right: 8px;
   top: 8px;
-  transition: all .3s;
+  transition: all 0.3s;
   width: 20px;
   &:hover {
     opacity: 1;
   }
-`
+`;

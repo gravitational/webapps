@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React from 'react'
+import React from 'react';
 import PropTypes from 'prop-types';
 import Dialog, { DialogTitle } from 'design/Dialog';
 import { ButtonPrimary, ButtonSecondary, Flex, Text } from 'design';
@@ -29,16 +29,16 @@ export function LogForwarderDialog(props) {
   const { setCurrent } = store;
 
   const onEdit = () => {
-    store.setEditMode()
-  }
+    store.setEditMode();
+  };
 
   const onCancelEdit = () => {
     store.setViewMode();
-  }
+  };
 
   const onCreate = () => {
     store.setNewMode();
-  }
+  };
 
   const onClose = () => {
     props.onClose && props.onClose();
@@ -50,7 +50,7 @@ export function LogForwarderDialog(props) {
 
   const onDelete = () => {
     return store.delete(curIndex);
-  }
+  };
 
   const isNew = mode === ModeEnum.NEW;
   const showEmpty = items.length === 0 && !isNew;
@@ -59,16 +59,24 @@ export function LogForwarderDialog(props) {
 
   return (
     <Dialog open={true} dialogCss={dialogCss} onClose={onClose}>
-      { showEmpty && (
+      {showEmpty && (
         <Flex height="500px" width="700px">
-          <Flex width="250px" bg="primary.light" alignItems="center" justifyContent="center">
+          <Flex
+            width="250px"
+            bg="primary.light"
+            alignItems="center"
+            justifyContent="center"
+          >
             No Existing Log Forwarders
           </Flex>
-          <Flex flex="1" p="5" flexDirection="column" >
-            <DialogTitle typography="body1" bold mb="4"> Create and Manage Log Forwarders </DialogTitle>
+          <Flex flex="1" p="5" flexDirection="column">
+            <DialogTitle typography="body1" bold mb="4">
+              {' '}
+              Create and Manage Log Forwarders{' '}
+            </DialogTitle>
             <Text mb="8" typography="body1" color="primary.contrastText">
-              Create your first log forwarder to ship cluster logs to a remote log collector such as a rsyslog server.
-
+              Create your first log forwarder to ship cluster logs to a remote
+              log collector such as a rsyslog server.
             </Text>
             <ButtonPrimary mx="auto" onClick={onCreate}>
               Create a new log forwarder
@@ -81,14 +89,21 @@ export function LogForwarderDialog(props) {
           </Flex>
         </Flex>
       )}
-      { isEditMode && <EditMode height="600px" width="800px"
+      {isEditMode && (
+        <EditMode
+          height="600px"
+          width="800px"
           onSave={onSave}
           item={items[curIndex]}
           isNew={isNew}
           onCancel={onCancelEdit}
           onDelete={onDelete}
-        /> }
-      { isViewMode && <ViewMode height="600px" width="800px"
+        />
+      )}
+      {isViewMode && (
+        <ViewMode
+          height="600px"
+          width="800px"
           key={curIndex}
           curIndex={curIndex}
           items={items}
@@ -98,7 +113,7 @@ export function LogForwarderDialog(props) {
           onClose={onClose}
           onDelete={onDelete}
         />
-      }
+      )}
     </Dialog>
   );
 }
@@ -106,19 +121,19 @@ export function LogForwarderDialog(props) {
 LogForwarderDialog.propTypes = {
   resource: PropTypes.object,
   onClose: PropTypes.func.isRequired,
-}
+};
 
 const dialogCss = () => `
   max-height: 600px;
   padding: 0px;
-`
+`;
 
 export default withState(props => {
   const store = useStore(props.store);
-  const [ attempt, attemptActions ] = useAttempt();
+  const [attempt, attemptActions] = useAttempt();
   return {
     store,
     attempt,
-    attemptActions
-  }
+    attemptActions,
+  };
 })(LogForwarderDialog);

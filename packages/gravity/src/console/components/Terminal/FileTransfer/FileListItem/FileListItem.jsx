@@ -25,23 +25,22 @@ import { CloseButton as TermCloseButton } from './../../Elements';
 import { colors } from '../../../colors';
 
 export default class FileListItem extends Component {
-
   static propTypes = {
     file: PropTypes.object.isRequired,
     httpResponse: PropTypes.object,
     onRemove: PropTypes.func.isRequired,
-  }
+  };
 
   savedToDisk = false;
 
   onRemove = () => {
     this.props.onRemove(this.props.file.id);
-  }
+  };
 
   componentDidUpdate() {
     const { isCompleted, isUpload } = this.props.file;
     if (isCompleted && !isUpload) {
-      this.saveToDisk(this.props.httpResponse)
+      this.saveToDisk(this.props.httpResponse);
     }
   }
 
@@ -58,7 +57,7 @@ export default class FileListItem extends Component {
       return;
     }
 
-    const a = document.createElement("a");
+    const a = document.createElement('a');
     a.href = window.URL.createObjectURL(blob);
     a.download = fileName;
     document.body.appendChild(a);
@@ -68,14 +67,14 @@ export default class FileListItem extends Component {
 
   render() {
     const { httpProgress, file } = this.props;
-    const {name, isFailed, isProcessing, isCompleted, error} = file;
+    const { name, isFailed, isProcessing, isCompleted, error } = file;
 
     let statusText = `${httpProgress}%`;
-    if(isFailed) {
+    if (isFailed) {
       statusText = 'failed';
     }
 
-    if(isCompleted) {
+    if (isCompleted) {
       statusText = 'complete';
     }
 
@@ -85,32 +84,31 @@ export default class FileListItem extends Component {
           <ProgressIndicator isCompleted={isCompleted} progress={httpProgress}>
             {name}
           </ProgressIndicator>
-          <CancelButton show={isProcessing} onClick={this.onRemove}/>
-          <ProgressStatus isFailed={isFailed}>
-            {statusText}
-          </ProgressStatus>
+          <CancelButton show={isProcessing} onClick={this.onRemove} />
+          <ProgressStatus isFailed={isFailed}>{statusText}</ProgressStatus>
         </Progress>
-         <Error show={isFailed} text={error}/>
+        <Error show={isFailed} text={error} />
       </Box>
-    )
+    );
   }
 }
 
 const FileListItemSend = withHttpRequest(Uploader)(FileListItem);
 const FileListItemReceive = withHttpRequest(Downloader)(FileListItem);
 
-export {
-  FileListItemReceive,
-  FileListItemSend
-}
+export { FileListItemReceive, FileListItemSend };
 
-const Error = ({show, text}) => {
+const Error = ({ show, text }) => {
   return show ? <StyledError>{text}</StyledError> : null;
-}
+};
 
 const CancelButton = ({ show, onClick }) => {
-  return show ? <StyledButton onClick={onClick}><Icons.Close/></StyledButton> : null;
-}
+  return show ? (
+    <StyledButton onClick={onClick}>
+      <Icons.Close />
+    </StyledButton>
+  ) : null;
+};
 
 const StyledError = styled.div`
   height: 16px;
@@ -131,7 +129,7 @@ const ProgressStatus = styled.div`
   line-height: 24px;
   width: 80px;
   text-align: right;
-  color: ${props => props.isFailed ? colors.error : colors.terminal };
+  color: ${props => (props.isFailed ? colors.error : colors.terminal)};
 `;
 
 const ProgressIndicator = styled.div`
@@ -142,11 +140,12 @@ const ProgressIndicator = styled.div`
     to right,
     ${colors.terminalDark} 0%,
     ${colors.terminalDark} ${props => props.progress}%,
-    ${colors.bgTerminal} 0%, ${colors.bgTerminal} 100%
+    ${colors.bgTerminal} 0%,
+    ${colors.bgTerminal} 100%
   );
 
-  background: ${props => props.isCompleted ? 'none' : ''};
-  color: ${props => props.isCompleted ? colors.inverse : colors.terminal};
+  background: ${props => (props.isCompleted ? 'none' : '')};
+  color: ${props => (props.isCompleted ? colors.inverse : colors.terminal)};
 
   min-height: 24px;
   line-height: 1.75;
@@ -159,4 +158,4 @@ const StyledButton = styled(TermCloseButton)`
   font-size: 12px;
   height: 12px;
   width: 12px;
-`
+`;

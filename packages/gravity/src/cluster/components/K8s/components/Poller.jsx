@@ -19,14 +19,9 @@ import AjaxPoller from 'gravity/components/AjaxPoller';
 
 const POLL_INTERVAL = 10000; // 10 sec
 
-export default function Poller({namespace, onFetch}){
-  const onRefresh = useCallback( () => onFetch(namespace), [namespace]);
+export default function Poller({ namespace, onFetch }) {
+  const onRefresh = useCallback(() => onFetch(namespace), [namespace]);
   return (
-    <AjaxPoller
-      key={`${namespace}`}
-      time={POLL_INTERVAL}
-      onFetch={onRefresh}
-    />
-  )
+    <AjaxPoller key={`${namespace}`} time={POLL_INTERVAL} onFetch={onRefresh} />
+  );
 }
-

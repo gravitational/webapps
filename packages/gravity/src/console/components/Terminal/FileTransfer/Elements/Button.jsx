@@ -29,7 +29,7 @@ const Button = styled.button`
   &:disabled {
     border: 1px solid ${colors.subtle};
     color: ${colors.subtle};
-    opacity: .24;
+    opacity: 0.24;
   }
 
   color: ${colors.terminal};
@@ -39,9 +39,8 @@ const Button = styled.button`
 
 Button.defaultProps = {
   px: '8fdpx',
-  py: "4px",
+  py: '4px',
   border: 1,
-}
-
+};
 
 export default Button;

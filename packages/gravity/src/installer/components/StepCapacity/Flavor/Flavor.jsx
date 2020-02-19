@@ -20,9 +20,7 @@ import PropTypes from 'prop-types';
 import AjaxPoller from 'gravity/components/AjaxPoller';
 import * as Alerts from 'design/Alert';
 import { Flex, ButtonPrimary } from 'design';
-import Validation, {
-  useValidation,
-} from 'shared/components/Validation';
+import Validation, { useValidation } from 'shared/components/Validation';
 import { useServices } from 'gravity/installer/services';
 import { useAttempt } from 'shared/hooks';
 

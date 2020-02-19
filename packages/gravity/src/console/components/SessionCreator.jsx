@@ -22,45 +22,44 @@ import * as actions from './../flux/terminal/actions';
 import { Indicator, Box } from 'design';
 import * as Alerts from 'design/Alert';
 
-export default function SessionCreator({ match }){
+export default function SessionCreator({ match }) {
   const { siteId, pod, namespace, container, serverId, login } = match.params;
-  const [ sid, setSid ] = React.useState();
-  const [ attempt, { error } ] = useAttempt({
-    isProcessing: true
+  const [sid, setSid] = React.useState();
+  const [attempt, { error }] = useAttempt({
+    isProcessing: true,
   });
 
   React.useEffect(() => {
-    actions.createSession({ siteId, serverId, login, pod, namespace, container })
+    actions
+      .createSession({ siteId, serverId, login, pod, namespace, container })
       .then(sessionId => {
-        setSid(sessionId)
+        setSid(sessionId);
       })
       .fail(err => {
-        error(err)
-      })
-  }, [ siteId ]);
+        error(err);
+      });
+  }, [siteId]);
 
   // after obtaining the session id, redirect to a terminal
-  if(sid){
+  if (sid) {
     const route = cfg.getConsoleSessionRoute({ siteId, sid });
-    return <Redirect to={route}/>
+    return <Redirect to={route} />;
   }
 
   const { isProcessing, isFailed } = attempt;
 
-  if(isProcessing){
+  if (isProcessing) {
     return (
       <Box textAlign="center" m={10}>
         <Indicator />
       </Box>
-    )
+    );
   }
 
-  if(isFailed){
+  if (isFailed) {
     return (
-      <Alerts.Danger m={10}>
-        Connection error: {status.errorText}
-      </Alerts.Danger>
-    )
+      <Alerts.Danger m={10}>Connection error: {status.errorText}</Alerts.Danger>
+    );
   }
 
   return null;

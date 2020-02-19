@@ -20,20 +20,19 @@ import * as Elements from './../Elements';
 import { Flex } from 'design';
 
 export default class FileDownloadSelector extends React.Component {
-
   static propTypes = {
     onDownload: PropTypes.func.isRequired,
-  }
+  };
 
   state = {
-    path: '~/'
-  }
+    path: '~/',
+  };
 
   onChangePath = e => {
     this.setState({
-      path: e.target.value
-    })
-  }
+      path: e.target.value,
+    });
+  };
 
   isValidPath(path) {
     return path && path[path.length - 1] !== '/';
@@ -41,9 +40,9 @@ export default class FileDownloadSelector extends React.Component {
 
   onDownload = () => {
     if (this.isValidPath(this.state.path)) {
-      this.props.onDownload(this.state.path)
+      this.props.onDownload(this.state.path);
     }
-  }
+  };
 
   onKeyDown = event => {
     if (event.key === 'Enter') {
@@ -51,7 +50,7 @@ export default class FileDownloadSelector extends React.Component {
       event.stopPropagation();
       this.onDownload();
     }
-  }
+  };
 
   moveCaretAtEnd(e) {
     const tmp = e.target.value;
@@ -64,26 +63,23 @@ export default class FileDownloadSelector extends React.Component {
     const isBtnDisabled = !this.isValidPath(path);
     return (
       <Elements.Form>
-        <Elements.Header>
-          (SCP) Download Files
-        </Elements.Header>
+        <Elements.Header>(SCP) Download Files</Elements.Header>
         <Elements.Label>File Path</Elements.Label>
         <Flex>
-          <Elements.Input onChange={this.onChangePath}
-            ref={e => this.inputRef = e}
+          <Elements.Input
+            onChange={this.onChangePath}
+            ref={e => (this.inputRef = e)}
             value={path}
             mb={0}
             autoFocus
             onFocus={this.moveCaretAtEnd}
             onKeyDown={this.onKeyDown}
           />
-          <Elements.Button
-            disabled={isBtnDisabled}
-            onClick={this.onDownload}>
+          <Elements.Button disabled={isBtnDisabled} onClick={this.onDownload}>
             Download
           </Elements.Button>
         </Flex>
       </Elements.Form>
-    )
+    );
   }
 }

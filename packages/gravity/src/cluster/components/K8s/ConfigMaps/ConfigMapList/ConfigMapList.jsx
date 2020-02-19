@@ -20,15 +20,19 @@ import { Text } from 'design';
 import * as Icons from 'design/Icon';
 import ResourceCard from './../../components/ResourceCard';
 
-export default function ConfigMapList({items, namespace, onEdit}){
-  if(items.length === 0){
+export default function ConfigMapList({ items, namespace, onEdit }) {
+  if (items.length === 0) {
     return (
       <CardEmpty title="No Config Maps Found">
         <Text>
-          There are no config maps for the "<Text as="span" bold>{namespace}</Text>" namespace
+          There are no config maps for the "
+          <Text as="span" bold>
+            {namespace}
+          </Text>
+          " namespace
         </Text>
       </CardEmpty>
-    )
+    );
   }
 
   return items.map(item => {
@@ -42,6 +46,6 @@ export default function ConfigMapList({items, namespace, onEdit}){
         created={created}
         onClick={() => onEdit(name)}
       />
-    )
-  })
+    );
+  });
 }

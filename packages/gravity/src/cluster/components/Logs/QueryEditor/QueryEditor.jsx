@@ -34,28 +34,27 @@ const TRIGGER_REGEX = new RegExp(`${LABEL_REGEX}${SEPARATOR}${VALUE_REGEX}*$`);
 const withSeparator = text => `${text}${SEPARATOR}`;
 
 export class QueryEditorInput extends React.Component {
-
-  constructor(props){
-    super(props)
+  constructor(props) {
+    super(props);
   }
 
   setRef = e => {
     this.refInput = e;
-  }
+  };
 
   onChange = e => {
     this._onChange({
       value: e.target.value,
-      curPos: this.getCursor()
+      curPos: this.getCursor(),
     });
-  }
+  };
 
   onClick = () => {
     this._onChange({
       ...this.props.state,
-      curPos: this.getCursor()
+      curPos: this.getCursor(),
     });
-  }
+  };
 
   onKeyDown = e => {
     var keyCode = e.which;
@@ -76,7 +75,7 @@ export class QueryEditorInput extends React.Component {
         this.props.onDownArrow && this.props.onDownArrow(e);
         return;
     }
-  }
+  };
 
   onKeyUp = e => {
     var keyCode = e.which;
@@ -88,14 +87,14 @@ export class QueryEditorInput extends React.Component {
 
     this._onChange({
       ...this.props.state,
-      curPos: this.getCursor()
+      curPos: this.getCursor(),
     });
-  }
+  };
 
   calcNewState() {
     return {
       curPos: this.getCursor(),
-      value: this.getValue()
+      value: this.getValue(),
     };
   }
 
@@ -103,8 +102,8 @@ export class QueryEditorInput extends React.Component {
     return this.refInput.value;
   }
 
-  getCursor(){
-    if ( this.refInput.selectionEnd === this.refInput.selectionStart){
+  getCursor() {
+    if (this.refInput.selectionEnd === this.refInput.selectionStart) {
       return this.refInput.selectionEnd;
     }
 
@@ -122,7 +121,7 @@ export class QueryEditorInput extends React.Component {
 
   _onChange(state) {
     const { curPos, value } = this.props.state;
-    if(state.curPos === curPos && state.value === value){
+    if (state.curPos === curPos && state.value === value) {
       return;
     }
 
@@ -133,7 +132,7 @@ export class QueryEditorInput extends React.Component {
     this.setCursor(this.props.state.curPos);
   }
 
-  componentDidUpdate(){
+  componentDidUpdate() {
     let curPos = this.getCursor();
     if (curPos !== this.props.state.curPos) {
       this.setCursor(this.props.state.curPos);
@@ -143,7 +142,9 @@ export class QueryEditorInput extends React.Component {
   render() {
     const { value } = this.props.state;
     return (
-      <input ref={this.setRef} autoFocus
+      <input
+        ref={this.setRef}
+        autoFocus
         placeholder="Search..."
         value={value}
         onClick={this.onClick}
@@ -152,12 +153,11 @@ export class QueryEditorInput extends React.Component {
         onKeyUp={this.onKeyUp}
         onChange={this.onChange}
       />
-    )
+    );
   }
 }
 
 class QueryEditor extends React.Component {
-
   constructor(props) {
     super(props);
     const { query = '' } = this.props;
@@ -166,48 +166,48 @@ class QueryEditor extends React.Component {
       typeahead: null,
       inputState: {
         value: query,
-        curPos: query.length
-      }
+        curPos: query.length,
+      },
     };
   }
 
   onChange = newInputState => {
     this.setState(this.calcState(newInputState));
-  }
+  };
 
   onUpArrow = e => {
     this.handleArrow(e, -1);
-  }
+  };
 
   onDownArrow = e => {
     this.handleArrow(e, 1);
-  }
+  };
 
   onEnter = e => {
     e.preventDefault();
     e.stopPropagation();
     if (this.state.typeahead) {
       this.replaceWithSuggestion(this.state.menu.curItem);
-    }else{
+    } else {
       this.props.onChange && this.props.onChange(this.state.inputState.value);
     }
-  }
+  };
 
   onEscape = () => {
     this.hideSuggestions();
-  }
+  };
 
   onBlur = () => {
     this.hideSuggestions();
-  }
+  };
 
   onSuggestionMouseClick = index => {
     this.replaceWithSuggestion(index);
-  }
+  };
 
   onMenuOpen = () => {
-    this.hideSuggestions()
-  }
+    this.hideSuggestions();
+  };
 
   calcState(newInputState) {
     const typeahead = this.calcTypeaheadState(newInputState);
@@ -215,8 +215,8 @@ class QueryEditor extends React.Component {
     return {
       inputState: newInputState,
       typeahead,
-      menu
-    }
+      menu,
+    };
   }
 
   calcMenuState(typeahead) {
@@ -229,11 +229,11 @@ class QueryEditor extends React.Component {
     const curItem = normalizeSelectedIndex(selectedIndex, filtereData.length);
     return {
       options: filtereData,
-      curItem
-    }
+      curItem,
+    };
   }
 
-  calcTypeaheadState(inputState){
+  calcTypeaheadState(inputState) {
     let text = inputState.value.slice(0, inputState.curPos);
     let matchArr = TRIGGER_REGEX.exec(text);
     let start, end;
@@ -241,7 +241,7 @@ class QueryEditor extends React.Component {
       start = matchArr.index;
       end = start + matchArr[0].length;
       text = matchArr[0];
-    }else{
+    } else {
       return null;
     }
 
@@ -249,28 +249,30 @@ class QueryEditor extends React.Component {
       text,
       start,
       end,
-      selectedIndex: 0
+      selectedIndex: 0,
     };
   }
 
-  hideSuggestions(){
+  hideSuggestions() {
     this.setState({
-      typeahead: null
-    })
+      typeahead: null,
+    });
   }
 
   append(prefix) {
     let value = this.state.inputState.value;
-    let extraSpace = ''
-    if (value && !endsWith(value, ' ')){
+    let extraSpace = '';
+    if (value && !endsWith(value, ' ')) {
       extraSpace = ' ';
     }
 
     value = `${value}${extraSpace}${prefix}`;
-    this.setState(this.calcState({
-      value: value,
-      curPos: value.length
-    }));
+    this.setState(
+      this.calcState({
+        value: value,
+        curPos: value.length,
+      })
+    );
 
     this.refInput.setFocus();
   }
@@ -283,7 +285,7 @@ class QueryEditor extends React.Component {
     e.preventDefault();
     e.stopPropagation();
     this.state.typeahead.selectedIndex += nudgeAmount;
-    this.state.menu = this.calcMenuState(this.state.typeahead)
+    this.state.menu = this.calcMenuState(this.state.typeahead);
     this.setState({});
   }
 
@@ -306,11 +308,11 @@ class QueryEditor extends React.Component {
 
     const newinputState = {
       value: value,
-      curPos: start + textToInsert.length
-    }
+      curPos: start + textToInsert.length,
+    };
 
-    const newState = this.calcState(newinputState)
-    this.setState(newState)
+    const newState = this.calcState(newinputState);
+    this.setState(newState);
     this.refInput.setFocus();
     this.props.onChange && this.props.onChange(value);
   }
@@ -330,7 +332,7 @@ class QueryEditor extends React.Component {
         curItem={curItem}
         data={filtereData}
       />
-    )
+    );
   }
 
   render() {
@@ -339,13 +341,12 @@ class QueryEditor extends React.Component {
       <StyledQueryEditor>
         <MenuFilter
           onOpen={this.onMenuOpen}
-          onPod={ () => this.append(withSeparator(LABEL_POD))  }
-          onContainer={ () => this.append(withSeparator(LABEL_CONTAINER)) }
-        >
-        </MenuFilter>
+          onPod={() => this.append(withSeparator(LABEL_POD))}
+          onContainer={() => this.append(withSeparator(LABEL_CONTAINER))}
+        ></MenuFilter>
         <SuggestionBox>
           <QueryEditorInput
-            ref={e => this.refInput = e}
+            ref={e => (this.refInput = e)}
             state={inputState}
             onChange={this.onChange}
             onEscape={this.onEscape}
@@ -368,11 +369,14 @@ function normalizeSelectedIndex(selectedIndex, max) {
   return index;
 }
 
-function filterSuggestions(data=[], query) {
+function filterSuggestions(data = [], query) {
   query = query.trim();
-  let [ queryType, queryText ] = query.split(':');
+  let [queryType, queryText] = query.split(':');
   return data.filter(({ type, text }) => {
-    return type === queryType && text.toLowerCase().startsWith(queryText.toLowerCase());
+    return (
+      type === queryType &&
+      text.toLowerCase().startsWith(queryText.toLowerCase())
+    );
   });
 }
 
@@ -382,12 +386,12 @@ const SuggestionBox = styled.div`
   input {
     width: 100%;
   }
-`
+`;
 const StyledQueryEditor = styled.div`
   font-size: 14px;
   margin: 0;
   display: flex;
   width: 100%;
-`
+`;
 
 export default QueryEditor;

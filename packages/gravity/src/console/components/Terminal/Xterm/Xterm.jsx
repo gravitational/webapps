@@ -22,7 +22,6 @@ import TtyAddressResolver from 'gravity/lib/term/ttyAddressResolver';
 import StyledXterm from '../../StyledXterm';
 
 export default class XTerm extends React.Component {
-
   onRef = ref => {
     this.containerRef = ref;
   };
@@ -32,7 +31,7 @@ export default class XTerm extends React.Component {
     const addressResolver = new TtyAddressResolver(termConfig);
     this.terminal = new XTermCtrl({
       el: this.containerRef,
-      addressResolver
+      addressResolver,
     });
 
     this.terminal.open();
@@ -54,9 +53,7 @@ export default class XTerm extends React.Component {
   }
 
   render() {
-    return (
-        <StyledXterm ref={this.onRef} />
-    );
+    return <StyledXterm ref={this.onRef} />;
   }
 }
 
@@ -65,5 +62,5 @@ XTerm.propTypes = {
   termConfig: PropTypes.shape({
     ttyUrl: PropTypes.string.isRequired,
     ttyParams: PropTypes.object.isRequired,
-  })
-}
+  }),
+};

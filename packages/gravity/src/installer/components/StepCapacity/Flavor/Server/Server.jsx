@@ -22,61 +22,69 @@ import FieldMount from './FieldMount';
 import FieldInterface from './FieldInterface';
 import { Box, LabelInput, Text, Flex } from 'design';
 
-export function Server({ hostname, vars, onSetVars, onRemoveVars, role, ...styles }){
-
+export function Server({
+  hostname,
+  vars,
+  onSetVars,
+  onRemoveVars,
+  role,
+  ...styles
+}) {
   React.useEffect(() => {
-    function cleanup(){
+    function cleanup() {
       onRemoveVars({ role, hostname });
     }
 
     return cleanup;
-  }, [])
+  }, []);
 
-  const varValues = React.useMemo(() => ({
-    ip: null,
-    mounts: {}
-  }), []);
-
+  const varValues = React.useMemo(
+    () => ({
+      ip: null,
+      mounts: {},
+    }),
+    []
+  );
 
   function notify() {
     onSetVars({
       role,
       hostname,
       ip: varValues.ip,
-      mounts: values(varValues.mounts)
-    })
+      mounts: values(varValues.mounts),
+    });
   }
 
-  function onChangeIp(ip){
+  function onChangeIp(ip) {
     varValues.ip = ip;
-    notify()
+    notify();
   }
 
-  function onSetMount({ value, name }){
+  function onSetMount({ value, name }) {
     varValues.mounts[name] = {
       value,
-      name
-    }
+      name,
+    };
 
-    notify()
+    notify();
   }
 
-  const $vars = vars.map( (v, index) => {
-    if(v.type === ServerVarEnums.INTERFACE){
+  const $vars = vars.map((v, index) => {
+    if (v.type === ServerVarEnums.INTERFACE) {
       const { value, options } = v;
       return (
         <FieldInterface
           key={index}
           {...varBoxProps}
           maxWidth="200px"
-          defaultValue={ value }
+          defaultValue={value}
           options={options}
           onChange={onChangeIp}
         />
-      )
+      );
     }
 
-    if(v.type === ServerVarEnums.MOUNT){
+    if (v.type === ServerVarEnums.MOUNT) {
       const { value, name } = v;
       return (
         <FieldMount
@@ -86,39 +94,31 @@ export function Server({ hostname, vars, onSetVars, onRemoveVars, role, ...style
           name={name}
           onChange={onSetMount}
         />
-      )
+      );
     }
 
     return null;
-  })
+  });
 
   return (
     <StyledServer {...styles}>
       <Box mr="4">
-        <LabelInput>
-          Hostname
-        </LabelInput>
-        <Text typography="h5">
-          {hostname}
-        </Text>
+        <LabelInput>Hostname</LabelInput>
+        <Text typography="h5">{hostname}</Text>
       </Box>
       <Flex flexWrap="wrap" flex="1" justifyContent="flex-end">
         {$vars}
       </Flex>
     </StyledServer>
-  )
+  );
 }
 
 const StyledServer = styled(Flex)`
-  border-top: 1px solid ${ ({ theme }) => theme.colors.primary.dark };
-`
+  border-top: 1px solid ${({ theme }) => theme.colors.primary.dark};
+`;
 
 const varBoxProps = {
-  ml: "3",
-  flex: "1",
-  minWidth: "180px",
-}
-
-
-
-
+  ml: '3',
+  flex: '1',
+  minWidth: '180px',
+};

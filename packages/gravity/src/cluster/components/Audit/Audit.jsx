@@ -16,7 +16,11 @@ limitations under the License.
 
 import React from 'react';
 import moment from 'moment';
-import { EVENT_MAX_LIMIT, fetchEvents, fetchLatest } from 'gravity/cluster/flux/events/actions';
+import {
+  EVENT_MAX_LIMIT,
+  fetchEvents,
+  fetchLatest,
+} from 'gravity/cluster/flux/events/actions';
 import { getters } from 'gravity/cluster/flux/events';
 import AjaxPoller from 'gravity/components/AjaxPoller';
 import { useFluxStore } from 'gravity/components/nuclear';
@@ -30,65 +34,80 @@ import InputSearch from './../components/InputSearch';
 const POLL_INTERVAL = 5000; // every 5 sec
 
 export class Audit extends React.Component {
-
   onRangeChange = range => {
-    this.props.onRangeChange(range)
+    this.props.onRangeChange(range);
     this.props.onFetch(range);
-  }
+  };
 
-  componentDidMount(){
+  componentDidMount() {
     this.props.onFetch(this.props.range);
   }
 
   render() {
-    const { store, attempt, searchValue, range, rangeOptions, onFetchLatest, onSearchChange } = this.props;
+    const {
+      store,
+      attempt,
+      searchValue,
+      range,
+      rangeOptions,
+      onFetchLatest,
+      onSearchChange,
+    } = this.props;
     const { from, to } = range;
     const events = store.getEvents();
     const { overflow } = store;
     const { isFailed, message } = attempt;
 
-    const filtered = events.filter(
-      item => moment(item.time).isBetween(from, to));
+    const filtered = events.filter(item =>
+      moment(item.time).isBetween(from, to)
+    );
 
     return (
       <FeatureBox>
         <FeatureHeader alignItems="center">
-          <FeatureHeaderTitle mr="5">
-            Audit Log
-          </FeatureHeaderTitle>
-          <InputSearch bg="primary.light" mr="3" autoFocus onChange={onSearchChange}/>
-          <RangePicker  ml="auto"
+          <FeatureHeaderTitle mr="5">Audit Log</FeatureHeaderTitle>
+          <InputSearch
+            bg="primary.light"
+            mr="3"
+            autoFocus
+            onChange={onSearchChange}
+          />
+          <RangePicker
+            ml="auto"
             value={range}
             options={rangeOptions}
             onChange={this.onRangeChange}
           />
         </FeatureHeader>
-        { overflow && <Danger> Number of events retrieved for specified date range was exceeded the maximum limit of {EVENT_MAX_LIMIT} </Danger> }
-        { isFailed && <Danger> {message} </Danger> }
-        <EventList
-          search={searchValue}
-          events={filtered}
-        />
+        {overflow && (
+          <Danger>
+            {' '}
+            Number of events retrieved for specified date range was exceeded the
+            maximum limit of {EVENT_MAX_LIMIT}{' '}
+          </Danger>
+        )}
+        {isFailed && <Danger> {message} </Danger>}
+        <EventList search={searchValue} events={filtered} />
         <AjaxPoller time={POLL_INTERVAL} onFetch={onFetchLatest} />
       </FeatureBox>
-    )
+    );
   }
 }
 
-function mapState(){
+function mapState() {
   const store = useFluxStore(getters.store);
   const rangeOptions = React.useMemo(() => getRangeOptions(), []);
-  const [ attempt, attemptActions ] = useAttempt();
-  const [ searchValue, setSearchValue ] = React.useState('');
-  const [ range , setRange ] = React.useState(rangeOptions[0]);
+  const [attempt, attemptActions] = useAttempt();
+  const [searchValue, setSearchValue] = React.useState('');
+  const [range, setRange] = React.useState(rangeOptions[0]);
 
-  function onFetch({from, to}){
+  function onFetch({ from, to }) {
     attemptActions.do(() => {
-      return fetchEvents({start: from, end: to});
-    })
+      return fetchEvents({ start: from, end: to });
+    });
   }
 
-  function onRangeChange(range){
+  function onRangeChange(range) {
     setRange(range);
   }
 
@@ -103,7 +122,7 @@ function mapState(){
     onRangeChange,
     onSearchChange: setSearchValue,
     onFetchLatest: fetchLatest,
-  }
+  };
 }
 
 export default withState(mapState)(Audit);

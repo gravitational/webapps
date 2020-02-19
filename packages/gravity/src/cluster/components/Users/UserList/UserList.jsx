@@ -16,8 +16,8 @@ limitations under the License.
 
 import React from 'react';
 import { Table, Cell, Column } from 'design/DataTable';
-import { StatusCell, UserIdCell, RoleCell, ButtonCell, } from './UserListCells';
-import { sortBy } from 'lodash'
+import { StatusCell, UserIdCell, RoleCell, ButtonCell } from './UserListCells';
+import { sortBy } from 'lodash';
 
 const UserList = ({
   users,
@@ -25,36 +25,34 @@ const UserList = ({
   onReset,
   onEdit,
   onDelete,
-  onReInvite
+  onReInvite,
 }) => {
   users = sortBy(users, u => u.created).reverse();
   return (
     <Table data={users}>
       <Column
-        header={<Cell>Email</Cell> }
-        cell={<UserIdCell onClick={onEdit}/>}
-        />
+        header={<Cell>Email</Cell>}
+        cell={<UserIdCell onClick={onEdit} />}
+      />
       <Column
-        header={<Cell>Roles</Cell> }
+        header={<Cell>Roles</Cell>}
         columnKey="isAdmin"
-        cell={<RoleCell roleLabels={roleLabels}/> }
+        cell={<RoleCell roleLabels={roleLabels} />}
       />
+      <Column header={<Cell>Created</Cell>} cell={<StatusCell />} />
       <Column
-        header={<Cell>Created</Cell> }
-        cell={<StatusCell /> }
-      />
-      <Column
-        header={<Cell>actions</Cell> }
+        header={<Cell>actions</Cell>}
         cell={
           <ButtonCell
             onReInvite={onReInvite}
             onReset={onReset}
             onEdit={onEdit}
-            onDelete={onDelete} />
+            onDelete={onDelete}
+          />
         }
       />
     </Table>
-  )
+  );
 };
 
 export default UserList;

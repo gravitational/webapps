@@ -22,23 +22,22 @@ import { Box } from 'design';
 
 const Tabs = ({ children }) => {
   return (
-    <StyledTab
-      typography="h5"
-      color="text.primary"
-      bold
-      children={children} />
-  )
-}
+    <StyledTab typography="h5" color="text.primary" bold children={children} />
+  );
+};
 
 export const TabItem = ({ to, title, exact }) => (
-  <StyledTabItem typography="h4" mr={6} mb={2}
+  <StyledTabItem
+    typography="h4"
+    mr={6}
+    mb={2}
     as={NavLink}
     to={to}
     exact={exact}
   >
     {title}
   </StyledTabItem>
-)
+);
 
 const StyledTabItem = styled(Box)`
   outline: none;
@@ -46,15 +45,17 @@ const StyledTabItem = styled(Box)`
   color: inherit;
   cursor: pointer;
 
-  &:hover, &.active, &:focus {
-    color: ${ props => props.theme.colors.primary.contrastText};
+  &:hover,
+  &.active,
+  &:focus {
+    color: ${props => props.theme.colors.primary.contrastText};
   }
 
   &.active {
-    border-bottom: 4px solid ${({theme}) => theme.colors.accent};
+    border-bottom: 4px solid ${({ theme }) => theme.colors.accent};
     padding-top: 4px;
   }
-`
+`;
 
 const StyledTab = styled.div`
   display: flex;
@@ -62,6 +63,6 @@ const StyledTab = styled.div`
   flex-shrink: 0;
   ${typography}
   ${color}
-`
+`;
 
 export default Tabs;

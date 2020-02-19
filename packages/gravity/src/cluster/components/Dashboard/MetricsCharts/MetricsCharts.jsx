@@ -21,7 +21,10 @@ import AjaxPoller from 'gravity/components/AjaxPoller';
 import { filesize } from 'gravity/lib/humanize';
 import UsageOverTime from './OvertimeChart';
 import CircleGraph from './CircleGraph';
-import { fetchShortMetrics, fetchMetrics } from 'gravity/cluster/flux/metrics/actions';
+import {
+  fetchShortMetrics,
+  fetchMetrics,
+} from 'gravity/cluster/flux/metrics/actions';
 import { getters } from 'gravity/cluster/flux/metrics';
 import { useAttempt } from 'shared/hooks';
 
@@ -31,7 +34,7 @@ export default function MetricsCharts(props) {
   const { short, long } = useFluxStore(getters.metricsStore);
   const { cpu, cpuCoreTotal, ram, ramTotal } = short;
   const ramTotalText = filesize(ramTotal);
-  const [ attempt, attemptActions ] = useAttempt();
+  const [attempt, attemptActions] = useAttempt();
 
   // fetch initial data which has long and short metric data
   React.useEffect(() => {
@@ -40,26 +43,22 @@ export default function MetricsCharts(props) {
     });
   }, []);
 
-  const ramSubtitles = [
-    `Total ${ramTotalText}`,
-    `High ${long.ram.max}%`
-  ];
+  const ramSubtitles = [`Total ${ramTotalText}`, `High ${long.ram.max}%`];
 
-  const cpuSubtitles = [
-    `${cpuCoreTotal} CPU Cores`,
-    `High ${long.cpu.max}%`
-  ];
+  const cpuSubtitles = [`${cpuCoreTotal} CPU Cores`, `High ${long.cpu.max}%`];
 
-  function onFetchMetrics(){
+  function onFetchMetrics() {
     return fetchShortMetrics();
   }
 
   const { isSuccess } = attempt;
 
   return (
-    <Flex style={{flexShrink: "0"}} {...props}>
-      <UsageOverTime flex="1" mb="4" mr="4" metrics={short}/>
-      <CircleGraph mr="4" mb="4"
+    <Flex style={{ flexShrink: '0' }} {...props}>
+      <UsageOverTime flex="1" mb="4" mr="4" metrics={short} />
+      <CircleGraph
+        mr="4"
+        mb="4"
         title="CPU Usage"
         current={cpu.current}
         subtitles={cpuSubtitles}
@@ -70,7 +69,13 @@ export default function MetricsCharts(props) {
         current={ram.current}
         subtitles={ramSubtitles}
       />
-      { isSuccess && <AjaxPoller immediately={false} time={POLL_INTERVAL} onFetch={onFetchMetrics} />}
+      {isSuccess && (
+        <AjaxPoller
+          immediately={false}
+          time={POLL_INTERVAL}
+          onFetch={onFetchMetrics}
+        />
+      )}
     </Flex>
-  )
+  );
 }

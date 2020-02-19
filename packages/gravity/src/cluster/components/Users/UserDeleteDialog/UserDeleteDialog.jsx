@@ -14,42 +14,40 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React from 'react'
+import React from 'react';
 import PropTypes from 'prop-types';
 import { Box, ButtonSecondary, ButtonWarning, Text } from 'design';
 import * as Alerts from 'design/Alert';
 import { useAttempt, withState } from 'shared/hooks';
-import Dialog, { DialogTitle, DialogHeader, DialogContent, DialogFooter} from 'design/DialogConfirmation';
+import Dialog, {
+  DialogTitle,
+  DialogHeader,
+  DialogContent,
+  DialogFooter,
+} from 'design/DialogConfirmation';
 import * as actions from 'gravity/cluster/flux/users/actions';
 
-export function UserDeleteDialog(props){
+export function UserDeleteDialog(props) {
   const { user, onClose, onDelete, attempt, attemptActions } = props;
 
   const onOk = () => {
-    attemptActions.do(() => onDelete(user))
-      .then(() => onClose());
+    attemptActions.do(() => onDelete(user)).then(() => onClose());
   };
 
   const { userId } = user;
   const isDisabled = attempt.isProcessing;
 
   return (
-    <Dialog
-      disableEscapeKeyDown={false}
-      onClose={onClose}
-      open={true}
-    >
+    <Dialog disableEscapeKeyDown={false} onClose={onClose} open={true}>
       <Box maxWidth="500px">
         <DialogHeader>
           <DialogTitle>Remove User?</DialogTitle>
         </DialogHeader>
         <DialogContent>
-          {attempt.isFailed && (
-            <Alerts.Danger children={attempt.message} />
-          )}
+          {attempt.isFailed && <Alerts.Danger children={attempt.message} />}
           <Text typography="paragraph">
-            You are about to remove {userId}.
-            This will revoke the user's access to the current cluster. This action cannot be undone.
+            You are about to remove {userId}. This will revoke the user's access
+            to the current cluster. This action cannot be undone.
           </Text>
         </DialogContent>
         <DialogFooter>
@@ -69,15 +67,15 @@ UserDeleteDialog.propTypes = {
   onClose: PropTypes.func.isRequired,
   onDelete: PropTypes.func.isRequired,
   user: PropTypes.object,
-}
+};
 
-function mapState(){
-  const [ attempt, attemptActions ] = useAttempt();
+function mapState() {
+  const [attempt, attemptActions] = useAttempt();
   return {
     onDelete: actions.deleteUser,
     attempt,
-    attemptActions
-  }
+    attemptActions,
+  };
 }
 
-export default withState(mapState)(UserDeleteDialog)
+export default withState(mapState)(UserDeleteDialog);

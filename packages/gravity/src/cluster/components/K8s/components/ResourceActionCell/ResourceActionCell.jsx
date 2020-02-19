@@ -15,7 +15,9 @@ limitations under the License.
 */
 
 import React from 'react';
-import MenuAction, { MenuItem } from 'gravity/cluster/components/components/ActionMenu';
+import MenuAction, {
+  MenuItem,
+} from 'gravity/cluster/components/components/ActionMenu';
 import { Cell } from 'design/DataTable';
 import { useK8sContext } from '../../k8sContext';
 
@@ -23,26 +25,33 @@ export default function ResourceActionCell({ rowIndex, data, children }) {
   const { resourceMap, name } = data[rowIndex];
   return (
     <Cell align="right">
-      <ResourceActionCellMenu name={name} resourceMap={resourceMap} children={children} />
+      <ResourceActionCellMenu
+        name={name}
+        resourceMap={resourceMap}
+        children={children}
+      />
     </Cell>
-  )
+  );
 }
 
-export function ResourceActionCellMenu({ name, resourceMap, children, ...rest }) {
+export function ResourceActionCellMenu({
+  name,
+  resourceMap,
+  children,
+  ...rest
+}) {
   const { onViewResource } = useK8sContext();
   return (
     <MenuAction menuProps={menuProps} {...rest}>
-      <MenuItem onClick={ () => onViewResource(name, resourceMap)}>
+      <MenuItem onClick={() => onViewResource(name, resourceMap)}>
         Details
       </MenuItem>
       {children}
     </MenuAction>
-  )
+  );
 }
 
-export {
-  MenuItem
-}
+export { MenuItem };
 
 const menuProps = {
   anchorOrigin: {
@@ -53,4 +62,4 @@ const menuProps = {
     vertical: 'top',
     horizontal: 'center',
   },
-}
+};

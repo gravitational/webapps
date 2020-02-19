@@ -27,20 +27,18 @@ import K8sResourceDialog from './../K8sResourceDialog';
 export function Secrets(props) {
   const { attempt, secrets, namespace, onSave } = props;
   const { message, isProcessing, isFailed } = attempt;
-  const [ secretToEdit, setSecretToEdit ] = React.useState(null);
+  const [secretToEdit, setSecretToEdit] = React.useState(null);
 
-  if(isFailed){
-    return (
-      <Danger>{message} </Danger>
-    )
+  if (isFailed) {
+    return <Danger>{message} </Danger>;
   }
 
-  if(isProcessing){
+  if (isProcessing) {
     return (
       <Flex justifyContent="center">
-        <Indicator  />
+        <Indicator />
       </Flex>
-    )
+    );
   }
 
   return (
@@ -50,38 +48,41 @@ export function Secrets(props) {
         items={secrets}
         onEdit={setSecretToEdit}
       />
-      { secretToEdit && (
-        <K8sResourceDialog readOnly={false}
+      {secretToEdit && (
+        <K8sResourceDialog
+          readOnly={false}
           namespace={secretToEdit.namespace}
           name={secretToEdit.name}
           resource={secretToEdit.resource}
-          onClose={ () => setSecretToEdit(null) }
+          onClose={() => setSecretToEdit(null)}
           onSave={onSave}
         />
       )}
     </React.Fragment>
-  )
+  );
 }
 
 export default withState(() => {
   const { namespace } = useK8sContext();
-  const [ secrets, setSecrets ] = React.useState([]);
-  const [ attempt, attemptActions ] = useAttempt({ isProcessing: true});
+  const [secrets, setSecrets] = React.useState([]);
+  const [attempt, attemptActions] = useAttempt({ isProcessing: true });
 
   React.useEffect(() => {
     attemptActions.start();
-    service.getSecrets(namespace)
+    service
+      .getSecrets(namespace)
       .then(secrets => {
-      setSecrets(secrets);
-      attemptActions.stop();
-    })
-    .fail(err => {
-      attemptActions.error(err);
-    })
+        setSecrets(secrets);
+        attemptActions.stop();
+      })
+      .fail(err => {
+        attemptActions.error(err);
+      });
   }, [namespace]);
 
-  function onSave(namespace, name, data){
-    return service.saveSecret(namespace, name, data)
+  function onSave(namespace, name, data) {
+    return service
+      .saveSecret(namespace, name, data)
       .then(() => service.getSecrets(namespace))
       .then(secrets => setSecrets(secrets));
   }
@@ -89,6 +90,6 @@ export default withState(() => {
   return {
     secrets,
     attempt,
-    onSave
-  }
+    onSave,
+  };
 })(Secrets);

@@ -31,7 +31,8 @@ export default function ItemList({ items, curIndex, onSelect, ...rest }) {
         active={index === curIndex}
         onClick={() => onSelect(index)}
       />
-    )});
+    );
+  });
 
   return (
     <Flex
@@ -40,13 +41,16 @@ export default function ItemList({ items, curIndex, onSelect, ...rest }) {
       color="text.primary"
       bold
       children={$items}
-      style={{overflow: "auto"}}
-      {...rest} />
-  )
+      style={{ overflow: 'auto' }}
+      {...rest}
+    />
+  );
 }
 
-const Item = ({ name, dirty, active, onClick, ...rest}) => (
-  <StyledItem typography="body1" bold
+const Item = ({ name, dirty, active, onClick, ...rest }) => (
+  <StyledItem
+    typography="body1"
+    bold
     as="button"
     dirty={dirty}
     active={active}
@@ -55,30 +59,29 @@ const Item = ({ name, dirty, active, onClick, ...rest}) => (
   >
     <span>{name}</span>
   </StyledItem>
-)
+);
 
-function fromProps({ theme, active }){
+function fromProps({ theme, active }) {
   let styles = {
-    borderBottom: `1px solid ${theme.colors.primary.dark }`,
+    borderBottom: `1px solid ${theme.colors.primary.dark}`,
     '&:hover, &:focus': {
-      color: theme.colors.primary.contrastText
+      color: theme.colors.primary.contrastText,
     },
     '&:hover': {
       backgroundColor: theme.colors.primary.main,
-    }
-  }
+    },
+  };
 
-  if(active){
+  if (active) {
     styles = {
       ...styles,
       backgroundColor: theme.colors.primary.main,
-      color: theme.colors.primary.contrastText
-    }
+      color: theme.colors.primary.contrastText,
+    };
   }
 
   return styles;
 }
-
 
 const StyledItem = styled(Box)`
   border: none;
@@ -100,4 +103,4 @@ const StyledItem = styled(Box)`
 
   ${fromProps}
   ${typography}
-`
+`;

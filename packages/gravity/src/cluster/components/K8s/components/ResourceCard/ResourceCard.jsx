@@ -19,13 +19,28 @@ import { displayDateTime } from 'gravity/lib/dateUtils';
 import { Text, Card, Flex, ButtonPrimary } from 'design';
 import * as Icons from 'design/Icon';
 
-export default function ResourceCard({onClick, created, name, Icon=Icons.FileCode, buttonTitle='EDIT' }) {
+export default function ResourceCard({
+  onClick,
+  created,
+  name,
+  Icon = Icons.FileCode,
+  buttonTitle = 'EDIT',
+}) {
   const displayCreated = displayDateTime(created);
   return (
     <Card width="260px" bg="primary.light" px="4" py="4" mb={4} mr={4}>
-      <Flex width="100%" textAlign="center" flexDirection="column" justifyContent="center">
-        <Text typography="h6" mb="1">{name}</Text>
-        <Text typography="body2" color="text.primary">CREATED: {displayCreated}</Text>
+      <Flex
+        width="100%"
+        textAlign="center"
+        flexDirection="column"
+        justifyContent="center"
+      >
+        <Text typography="h6" mb="1">
+          {name}
+        </Text>
+        <Text typography="body2" color="text.primary">
+          CREATED: {displayCreated}
+        </Text>
       </Flex>
       <Flex alignItems="center" justifyContent="center" flexDirection="column">
         <Icon fontSize="50px" my={4} />

@@ -24,69 +24,71 @@ export default function FlavorSelector(props) {
   const { current, options, onChange, ...rest } = props;
   const total = options.length;
 
-  if(total < 2){
+  if (total < 2) {
     return null;
   }
 
-  function onSliderChange(value){
-    onChange(value-1);
+  function onSliderChange(value) {
+    onChange(value - 1);
   }
 
   return (
     <StyledFlavorBox mb="10" {...rest}>
       <Slider
         options={options}
-        valueComponent={<FlavorValueComponent options={options}/>}
+        valueComponent={<FlavorValueComponent options={options} />}
         min={1}
         max={total}
-        value={current+1}
+        value={current + 1}
         onChange={onSliderChange}
         defaultValue={1}
         withBars={true}
-        className="grv-slider"/>
+        className="grv-slider"
+      />
     </StyledFlavorBox>
   );
 }
 
 FlavorSelector.propTypes = {
   current: PropTypes.number.isRequired,
-  options: PropTypes.array
-}
+  options: PropTypes.array,
+};
 
-function Value({offset, marginLeft}) {
+function Value({ offset, marginLeft }) {
   const props = {
     className: 'grv-slider-value',
     style: {
       position: 'absolute',
       left: `${offset}px`,
-      marginLeft: `${marginLeft}px`
-    }
-  }
+      marginLeft: `${marginLeft}px`,
+    },
+  };
 
-  return ( <div {...props} /> );
+  return <div {...props} />;
 }
 
-function ValueDesc ({offset, width, marginLeft, text}) {
+function ValueDesc({ offset, width, marginLeft, text }) {
   const props = {
     className: 'grv-slider-value-desc',
     style: {
       width: `${width}px`,
       position: 'absolute',
-      marginLeft:`${(width/-2) + marginLeft}px`,
+      marginLeft: `${width / -2 + marginLeft}px`,
       left: `${offset}px`,
-      textAlign: 'center'
-    }
-  }
+      textAlign: 'center',
+    },
+  };
 
   return (
-    <div {...props} >
-      <span>{text}</span><br/>
+    <div {...props}>
+      <span>{text}</span>
+      <br />
     </div>
-  )
+  );
 }
 
 function FlavorValueComponent(props) {
-  const {options, handleSize, upperBound, sliderLength} = props;
+  const { options, handleSize, upperBound, sliderLength } = props;
 
   const $vals = [];
   const $descriptions = [];
@@ -96,31 +98,36 @@ function FlavorValueComponent(props) {
   const widthWithoutHandle = sliderLength / count;
   const marginLeft = handleSize / 2;
 
-  for(var i = 0; i < options.length; i++){
+  for (var i = 0; i < options.length; i++) {
     let offset = widthWithHandle * i;
     let { label } = options[i];
 
     let valueProps = {
       key: 'value_' + i,
       offset,
-      marginLeft
-    }
+      marginLeft,
+    };
 
     let descProps = {
       ...valueProps,
       key: 'desc_' + i,
       width: widthWithoutHandle,
       text: label,
-    }
+    };
 
-    $vals.push(<Value {...valueProps}/>);
-    $descriptions.push(<ValueDesc {...descProps}/>);
+    $vals.push(<Value {...valueProps} />);
+    $descriptions.push(<ValueDesc {...descProps} />);
   }
 
   return (
     <div>
       {$vals}
-      <div className="grv-installer-provision-flavors-range" style={{position: 'absolute', width: '100%'}}>{$descriptions}</div>
+      <div
+        className="grv-installer-provision-flavors-range"
+        style={{ position: 'absolute', width: '100%' }}
+      >
+        {$descriptions}
+      </div>
     </div>
   );
 }
@@ -138,19 +145,19 @@ const StyledFlavorBox = styled(Box)`
     height: 15px;
     top: -4px;
     z-index: 1;
-    background: #DDD;
+    background: #ddd;
   }
 
   .grv-slider-value-desc {
     top: -20px;
   }
 
-  .grv-slider-value-desc:first-child{
+  .grv-slider-value-desc:first-child {
     margin-left: 0 !important;
     text-align: start !important;
   }
 
-  .grv-slider-value-desc:last-child{
+  .grv-slider-value-desc:last-child {
     right: 0;
     width: auto !important;
     text-align: right !important;
@@ -172,15 +179,16 @@ const StyledFlavorBox = styled(Box)`
     left: -10px;
     top: -7px;
     border-radius: 14px;
-    background: ${ ({theme}) => theme.colors.success};
-    box-shadow: rgba(0, 0, 0, 0.2) 0px 1px 3px 1px, rgba(0, 0, 0, 0.14) 0px 2px 2px 0px, rgba(0, 0, 0, 0.12) 0px 3px 1px -2px;
+    background: ${({ theme }) => theme.colors.success};
+    box-shadow: rgba(0, 0, 0, 0.2) 0px 1px 3px 1px,
+      rgba(0, 0, 0, 0.14) 0px 2px 2px 0px, rgba(0, 0, 0, 0.12) 0px 3px 1px -2px;
   }
 
   .grv-slider .handle:after {
   }
 
   .grv-slider .bar-0 {
-    background: none repeat scroll 0 0 ${ ({theme}) => theme.colors.success};
+    background: none repeat scroll 0 0 ${({ theme }) => theme.colors.success};
     box-shadow: none;
   }
 
@@ -197,4 +205,4 @@ const StyledFlavorBox = styled(Box)`
     margin-left: -13px;
     border-radius: 15%;
   }
-`
+`;

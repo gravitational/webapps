@@ -18,22 +18,25 @@ import React from 'react';
 import styled from 'styled-components';
 import { Flex, Text } from 'design';
 
-export default function Radio({label, name, checked, onClick, ...styles}){
+export default function Radio({ label, name, checked, onClick, ...styles }) {
   return (
     <StyledRadio as="label" {...styles}>
-      <input type="radio"
-        name={name}
-        checked={checked}
-        onChange={onClick}
-      />
+      <input type="radio" name={name} checked={checked} onChange={onClick} />
       <Text ml="2" color="primary.contrastText" fontWeight="bold">
         {label}
       </Text>
-  </StyledRadio>
-  )
+    </StyledRadio>
+  );
 }
 
-export function RadioGroup({ selected, name, radioProps, options, onChange, ...props }) {
+export function RadioGroup({
+  selected,
+  name,
+  radioProps,
+  options,
+  onChange,
+  ...props
+}) {
   const $options = options.map((option, index) => {
     return (
       <Radio
@@ -46,14 +49,10 @@ export function RadioGroup({ selected, name, radioProps, options, onChange, ...p
         label={option.label}
         {...radioProps}
       />
-    )
+    );
   });
 
-  return (
-    <Flex {...props}>
-      {$options}
-    </Flex>
-  );
+  return <Flex {...props}>{$options}</Flex>;
 }
 
 const StyledRadio = styled(Flex)`
@@ -64,7 +63,7 @@ const StyledRadio = styled(Flex)`
     -webkit-appearance: none;
     margin: 0;
     background: white;
-    border: 2px solid ${ props => props.theme.colors.secondary.main};
+    border: 2px solid ${props => props.theme.colors.secondary.main};
     border-radius: 1000px;
     height: 20px;
     width: 20px;
@@ -75,11 +74,11 @@ const StyledRadio = styled(Flex)`
   input:checked {
     position: relative;
     background-color: white;
-    box-shadow: 0 2px 16px ${ props => props.theme.colors.secondary.main};
+    box-shadow: 0 2px 16px ${props => props.theme.colors.secondary.main};
   }
 
   input:checked::before {
-    background-color: ${ props => props.theme.colors.secondary.main };
+    background-color: ${props => props.theme.colors.secondary.main};
     position: absolute;
     content: '';
     border-radius: 1000px;
@@ -88,4 +87,4 @@ const StyledRadio = styled(Flex)`
     top: 4px;
     left: 4px;
   }
-`
+`;

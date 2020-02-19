@@ -20,17 +20,25 @@ import { Warning } from 'design/Icon/Icon';
 import { Text, Card, Box, ButtonWarning } from 'design';
 import { makeDownloadable } from 'gravity/services/downloader';
 
-export default function Failed({tarballUrl, ...styles}){
-
-  function onClick () {
-    location.href= makeDownloadable(tarballUrl);
+export default function Failed({ tarballUrl, ...styles }) {
+  function onClick() {
+    location.href = makeDownloadable(tarballUrl);
   }
 
   return (
-    <StyledCompleted flexDirection="column" bg="light" py="5" px="10" color="text.onLight" {...styles}>
+    <StyledCompleted
+      flexDirection="column"
+      bg="light"
+      py="5"
+      px="10"
+      color="text.onLight"
+      {...styles}
+    >
       <Warning mb="5" color="error.main" fontSize="100px" />
       <Box as={Text} typography="h5" mb="8">
-        Something went wrong with the install. We've attached a tarball which has diagnostic logs that our team will need to review. We sincerely apologize for any inconvenience
+        Something went wrong with the install. We've attached a tarball which
+        has diagnostic logs that our team will need to review. We sincerely
+        apologize for any inconvenience
       </Box>
       <ButtonWarning size="large" onClick={onClick}>
         Download tarball
@@ -41,4 +49,4 @@ export default function Failed({tarballUrl, ...styles}){
 
 const StyledCompleted = styled(Card)`
   text-align: center;
-`
+`;

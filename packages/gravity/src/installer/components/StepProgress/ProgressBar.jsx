@@ -19,31 +19,33 @@ import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import { Flex } from 'design';
 
-export default function ProgressBar(props){
-  const { value=0, ...styles } = props;
+export default function ProgressBar(props) {
+  const { value = 0, ...styles } = props;
   return (
-    <StyledProgressBar height="18px" {...styles}
+    <StyledProgressBar
+      height="18px"
+      {...styles}
       value={value}
       isCompleted={false}
     >
-      <span/>
+      <span />
     </StyledProgressBar>
   );
 }
 
 ProgressBar.propTypes = {
-  value: PropTypes.number.isRequired
-}
+  value: PropTypes.number.isRequired,
+};
 
 const StyledProgressBar = styled(Flex)`
   align-items: center;
   flex-shrink: 0;
 
-  background-color: ${ ({theme}) => theme.colors.light};
+  background-color: ${({ theme }) => theme.colors.light};
   border-radius: 12px;
   > span {
     border-radius: 12px;
-    ${({theme, value}) => `
+    ${({ theme, value }) => `
       height: 100%;
       width: ${value}%;
       background-color: ${theme.colors.success};

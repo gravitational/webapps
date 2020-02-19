@@ -19,70 +19,69 @@ import ReactDOM from 'react-dom';
 import styled from 'styled-components';
 
 class Suggestions extends React.Component {
-
   onMouseClick = e => {
     e.preventDefault();
     const element = e.target;
     const children = element.parentNode.children;
-    for (let i = 0; i < children.length; i++){
+    for (let i = 0; i < children.length; i++) {
       if (children[i] === element) {
         this.props.onMouseClick(i);
       }
     }
-  }
+  };
 
   componentDidUpdate() {
-    if(!this.popupMenuRef){
+    if (!this.popupMenuRef) {
       return;
     }
 
-    const [ activeItem ] = this.popupMenuRef.getElementsByClassName('--active');
-    if(activeItem){
+    const [activeItem] = this.popupMenuRef.getElementsByClassName('--active');
+    if (activeItem) {
       // scroll
       const focusedDOM = ReactDOM.findDOMNode(activeItem);
       const menuDOM = ReactDOM.findDOMNode(this.popupMenuRef);
       const focusedRect = focusedDOM.getBoundingClientRect();
       const menuRect = menuDOM.getBoundingClientRect();
-      if (focusedRect.bottom > menuRect.bottom || focusedRect.top < menuRect.top) {
-        menuDOM.scrollTop = (focusedDOM.offsetTop + focusedDOM.clientHeight - menuDOM.offsetHeight);
+      if (
+        focusedRect.bottom > menuRect.bottom ||
+        focusedRect.top < menuRect.top
+      ) {
+        menuDOM.scrollTop =
+          focusedDOM.offsetTop + focusedDOM.clientHeight - menuDOM.offsetHeight;
       }
     }
-   }
+  }
 
-  renderItems(){
+  renderItems() {
     const { curItem, data } = this.props;
     let $items = data.map((dataItem, index) => {
-      const { text, /* type */ } = dataItem;
+      const { text /* type */ } = dataItem;
       const itemClass = index === curItem ? '--active' : '';
       return (
-        <StyledMenuItem key={index} className={itemClass} onClick={this.onMouseClick}>
+        <StyledMenuItem
+          key={index}
+          className={itemClass}
+          onClick={this.onMouseClick}
+        >
           {text}
         </StyledMenuItem>
-      )
+      );
     });
 
-    if($items.length === 0){
-      $items = (
-        <StyledMenuItem>
-          No suggestions
-        </StyledMenuItem>
-      )
+    if ($items.length === 0) {
+      $items = <StyledMenuItem>No suggestions</StyledMenuItem>;
     }
 
     return $items;
   }
 
-  render(){
+  render() {
     const $items = this.renderItems();
-    if( $items.length === 0){
+    if ($items.length === 0) {
       return null;
     }
 
-    return (
-      <StyledMenu ref={ e => this.popupMenuRef = e}>
-        {$items}
-      </StyledMenu>
-    );
+    return <StyledMenu ref={e => (this.popupMenuRef = e)}>{$items}</StyledMenu>;
   }
 }
 
@@ -95,12 +94,13 @@ const StyledMenuItem = styled.div`
   white-space: nowrap;
   cursor: pointer;
 
-  &.--active, &:hover {
+  &.--active,
+  &:hover {
     text-decoration: none;
     color: #262626;
     background-color: #f5f5f5;
   }
-`
+`;
 
 const StyledMenu = styled.div`
   display: block;
@@ -116,6 +116,6 @@ const StyledMenu = styled.div`
   margin-top: -1px;
   max-height: 350px;
   overflow: auto;
-`
+`;
 
 export default Suggestions;

@@ -21,84 +21,90 @@ import cfg from 'gravity/config';
 import { generatePath } from 'react-router';
 
 export default class InstallLogsProvider extends React.Component {
-
   static propTypes = {
-   siteId: PropTypes.string.isRequired,
-   opId: PropTypes.string.isRequired,
-   onLoading: PropTypes.func,
-   onError: PropTypes.func,
-   onData: PropTypes.func
-  }
+    siteId: PropTypes.string.isRequired,
+    opId: PropTypes.string.isRequired,
+    onLoading: PropTypes.func,
+    onError: PropTypes.func,
+    onData: PropTypes.func,
+  };
 
   constructor(props) {
     super(props);
     this.socket = null;
   }
 
-  componentWillReceiveProps(nextProps){
-    let {siteId, opId} = this.props;
-    if(nextProps.opId !== opId){
+  componentWillReceiveProps(nextProps) {
+    let { siteId, opId } = this.props;
+    if (nextProps.opId !== opId) {
       this.connect(siteId, nextProps.opId);
     }
   }
 
   componentDidMount() {
-    let {siteId, opId} = this.props;
+    let { siteId, opId } = this.props;
     this.connect(siteId, opId);
   }
 
-  componentWillUnmount(){
+  componentWillUnmount() {
     this.disconnect();
   }
 
-  disconnect(){
-    if(this.socket){
+  disconnect() {
+    if (this.socket) {
       this.socket.close();
     }
   }
 
-  onLoading(value){
-    if(this.props.onLoading){
+  onLoading(value) {
+    if (this.props.onLoading) {
       this.props.onLoading(value);
     }
   }
 
-  onError(err){
-    if(this.props.onError){
+  onError(err) {
+    if (this.props.onError) {
       this.props.onError(err);
     }
   }
 
-  onData(data){
-    if(this.props.onData){
+  onData(data) {
+    if (this.props.onData) {
       this.props.onData(data.trim() + '\n');
     }
   }
 
-  connect(siteId, opId){
+  connect(siteId, opId) {
     this.disconnect();
     this.onLoading(true);
 
     this.socket = createLogStreamer(siteId, opId);
-    this.socket.onopen = () => { this.onLoading(false); };
-    this.socket.onerror = () => { this.onError(); }
-    this.socket.onclose = () => { };
-    this.socket.onmessage = e => { this.onData(e.data); };
+    this.socket.onopen = () => {
+      this.onLoading(false);
+    };
+    this.socket.onerror = () => {
+      this.onError();
+    };
+    this.socket.onclose = () => {};
+    this.socket.onmessage = e => {
+      this.onData(e.data);
+    };
   }
 
   render() {
-     return null;
+    return null;
   }
 }
 
-function createLogStreamer(siteId, opId){
+function createLogStreamer(siteId, opId) {
   const token = getAccessToken();
-  const hostport = location.hostname + (location.port ? ':' + location.port : '');
+  const hostport =
+    location.hostname + (location.port ? ':' + location.port : '');
   const hostname = `wss://${hostport}`;
   const url = generatePath(cfg.api.operationLogsPath, {
     siteId,
     token,
-    opId
+    opId,
   });
 
   return new WebSocket(hostname + url);

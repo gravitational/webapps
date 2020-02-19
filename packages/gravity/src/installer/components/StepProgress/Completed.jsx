@@ -20,24 +20,29 @@ import cfg from 'gravity/config';
 import { CircleCheck } from 'design/Icon/Icon';
 import { Text, Card, Box, ButtonPrimary } from 'design';
 
-export default function Completed(props){
+export default function Completed(props) {
   const completeInstallUrl = cfg.getInstallerLastStepUrl(props.siteId);
   return (
-    <StyledCompleted flexDirection="column" bg="light" py="5" px="10" color="text.onLight"  {...props}>
+    <StyledCompleted
+      flexDirection="column"
+      bg="light"
+      py="5"
+      px="10"
+      color="text.onLight"
+      {...props}
+    >
       <CircleCheck mb="5" color="success" fontSize="100px" />
       <Box as={Text} typography="h5" mb="8">
-        The application has been installed successfully. Please continue and configure your
-        application to finish the setup process.
+        The application has been installed successfully. Please continue and
+        configure your application to finish the setup process.
       </Box>
       <ButtonPrimary as="a" href={completeInstallUrl} size="large">
-        { `Continue & finish setup` }
+        {`Continue & finish setup`}
       </ButtonPrimary>
     </StyledCompleted>
   );
 }
 
-
 const StyledCompleted = styled(Card)`
   text-align: center;
-
-`
+`;

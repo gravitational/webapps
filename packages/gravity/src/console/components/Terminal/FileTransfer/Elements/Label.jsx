@@ -20,13 +20,13 @@ import { colors } from '../../../colors';
 
 const Label = styled(Text)`
   display: block;
-`
+`;
 
 Label.defaultProps = {
   caps: true,
   color: colors.terminal,
   mb: 2,
   mt: 2,
-}
+};
 
 export default Label;

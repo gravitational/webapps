@@ -19,22 +19,21 @@ import { Input } from 'design';
 import { KeyEnum } from './../QueryEditor/enums';
 
 export default class QueryEditorBasic extends React.Component {
-
   setRef = e => {
     this.refInput = e;
-  }
+  };
 
   onKeyDown = e => {
-    if( e.which !== KeyEnum.RETURN) {
-      return
+    if (e.which !== KeyEnum.RETURN) {
+      return;
     }
 
-    if(this.refInput.value === this.props.query){
+    if (this.refInput.value === this.props.query) {
       return;
     }
 
     this.props.onChange(this.refInput.value);
-  }
+  };
 
   setCursor(query) {
     const length = query.length;
@@ -49,11 +48,13 @@ export default class QueryEditorBasic extends React.Component {
   render() {
     const { query } = this.props;
     return (
-      <Input ref={this.setRef} autoFocus
+      <Input
+        ref={this.setRef}
+        autoFocus
         placeholder="Search..."
         defaultValue={query}
         onKeyDown={this.onKeyDown}
       />
-    )
+    );
   }
 }

@@ -25,5 +25,5 @@ export default function DebugInfoButton(styles) {
     <ButtonSecondary ml={ml} onClick={() => download(cfg.getSiteReportUrl())}>
       Download Debug Info
     </ButtonSecondary>
-  )
+  );
 }

@@ -17,7 +17,7 @@ limitations under the License.
 import React from 'react';
 import { sortBy } from 'lodash';
 import { Table, TextCell, Column, Cell } from 'design/DataTable';
-import ResourceActionCell  from './../../components/ResourceActionCell';
+import ResourceActionCell from './../../components/ResourceActionCell';
 
 function DaemonSetList(props) {
   let { daemonSets, namespace } = props;
@@ -25,11 +25,7 @@ function DaemonSetList(props) {
   daemonSets = sortBy(daemonSets, ['created']).reverse();
   return (
     <Table data={daemonSets}>
-      <Column
-        columnKey="name"
-        header={<Cell>Name</Cell>}
-        cell={<TextCell />}
-      />
+      <Column columnKey="name" header={<Cell>Name</Cell>} cell={<TextCell />} />
       <Column
         columnKey="statusDesiredNumberScheduled"
         header={<Cell>Desired</Cell>}
@@ -55,12 +51,9 @@ function DaemonSetList(props) {
         header={<Cell>Age</Cell>}
         cell={<TextCell />}
       />
-      <Column
-        header={<Cell></Cell> }
-        cell={<ResourceActionCell/>}
-      />
+      <Column header={<Cell></Cell>} cell={<ResourceActionCell />} />
     </Table>
-  )
+  );
 }
 
 export default DaemonSetList;

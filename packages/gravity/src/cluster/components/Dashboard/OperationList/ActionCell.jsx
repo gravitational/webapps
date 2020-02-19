@@ -43,7 +43,14 @@ function renderSessionCell(session) {
   const url = cfg.getConsoleSessionRoute({ sid });
   return (
     <Cell align="right">
-      <ButtonPrimary as="a" target="_blank" href={url} size="small" width="90px" children="join" />
+      <ButtonPrimary
+        as="a"
+        target="_blank"
+        href={url}
+        size="small"
+        width="90px"
+        children="join"
+      />
     </Cell>
   );
 }

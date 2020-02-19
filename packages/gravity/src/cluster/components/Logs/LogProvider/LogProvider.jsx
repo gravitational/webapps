@@ -22,22 +22,20 @@ import api, { Signal } from 'gravity/services/api';
 const logger = Logger.create('cluster/components/Logs/LogProvider');
 
 export default class LogProvider extends React.Component {
-
   static propTypes = {
     queryUrl: PropTypes.string.isRequired,
     onLoading: PropTypes.func,
     onError: PropTypes.func,
-    onData: PropTypes.func
-  }
+    onData: PropTypes.func,
+  };
 
   constructor(props) {
-    super(props)
+    super(props);
     this._signal = null;
   }
 
-
   componentDidUpdate(prevProps) {
-    if(prevProps.queryUrl !== this.props.queryUrl){
+    if (prevProps.queryUrl !== this.props.queryUrl) {
       this.fetch();
     }
   }
@@ -46,7 +44,7 @@ export default class LogProvider extends React.Component {
     this.fetch();
   }
 
-  componentWillUnmount(){
+  componentWillUnmount() {
     this.rejectCurrentRequest();
   }
 
@@ -56,14 +54,14 @@ export default class LogProvider extends React.Component {
     }
   }
 
-  onLoading(value){
-    if(this.props.onLoading){
+  onLoading(value) {
+    if (this.props.onLoading) {
       this.props.onLoading(value);
     }
   }
 
-  onError(err){
-    if(this.props.onError){
+  onError(err) {
+    if (this.props.onError) {
       this.props.onError(err);
     }
   }
@@ -85,11 +83,11 @@ export default class LogProvider extends React.Component {
       });
 
       if (parsedData.length === 0) {
-        parsedData.push('No results found')
+        parsedData.push('No results found');
       }
 
       this.props.onData(parsedData.join('\n'));
-    }catch(err){
+    } catch (err) {
       logger.error('Failed to deserialize', err);
     }
   }
@@ -108,7 +106,8 @@ export default class LogProvider extends React.Component {
     // when a user executes a new query
     this._signal = new Signal();
 
-     api.ajax( {url: queryUrl, signal: this._signal })
+    api
+      .ajax({ url: queryUrl, signal: this._signal })
       .done(data => {
         this.onLoading(false);
         this.onData(data);
@@ -116,7 +115,7 @@ export default class LogProvider extends React.Component {
       .fail(err => {
         // when a request is aborted by the user, its readyState is changed to
         // XMLHttpRequest.UNSENT (0) and the request's status code is set to 0.
-        if (err.status === 0  && err.readyState === 0){
+        if (err.status === 0 && err.readyState === 0) {
           // do not show any errors in this case
           return;
         }

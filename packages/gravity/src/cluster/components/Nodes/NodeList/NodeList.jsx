@@ -21,28 +21,30 @@ import { Label, Text } from 'design';
 import MenuLogin from './../MenuLogin';
 import NodeMenuActon from './NodeMenuAction';
 
-const LoginCell = ({ rowIndex, data}) => {
+const LoginCell = ({ rowIndex, data }) => {
   const { sshLogins, id, hostname } = data[rowIndex];
   return (
     <Cell>
       <MenuLogin serverId={id || hostname} logins={sshLogins} />
     </Cell>
   );
-}
+};
 
-export const ActionCell = ({ rowIndex, onDelete, data}) => {
+export const ActionCell = ({ rowIndex, onDelete, data }) => {
   const node = data[rowIndex];
   return (
     <Cell>
       <NodeMenuActon onDelete={() => onDelete(node)} />
     </Cell>
-  )
-}
+  );
+};
 
-function Detail({ children }){
+function Detail({ children }) {
   return (
-    <Text typography="subtitle2" color="text.primary">{children}</Text>
-  )
+    <Text typography="subtitle2" color="text.primary">
+      {children}
+    </Text>
+  );
 }
 
 const NameCell = ({ rowIndex, data }) => {
@@ -50,34 +52,32 @@ const NameCell = ({ rowIndex, data }) => {
   const { cpu, osImage, memory, name } = k8s;
 
   // show empty cell when k8s data is not available
-  if(!name){
-    return ( <Cell/>)
+  if (!name) {
+    return <Cell />;
   }
 
   const desc = `CPU: ${cpu}, RAM: ${memory}, OS: ${osImage}`;
   return (
     <Cell>
-      <Text typography="body2" mb="2" bold>{name}</Text>
+      <Text typography="body2" mb="2" bold>
+        {name}
+      </Text>
       <Detail>{desc}</Detail>
-      { instanceType && <Detail>Instance Type: {instanceType} </Detail> }
+      {instanceType && <Detail>Instance Type: {instanceType} </Detail>}
     </Cell>
-  )
+  );
 };
 
-export function LabelCell({ rowIndex, data }){
+export function LabelCell({ rowIndex, data }) {
   const { k8s } = data[rowIndex];
-  const labels  = k8s.labels || {};
+  const labels = k8s.labels || {};
   const $labels = Object.getOwnPropertyNames(labels).map(name => (
     <Label mb="1" mr="1" key={name} kind="secondary">
       {`${name}: ${labels[name]}`}
     </Label>
   ));
 
-  return (
-    <Cell>
-      {$labels}
-    </Cell>
-  )
+  return <Cell>{$labels}</Cell>;
 }
 
 class NodeList extends React.Component {
@@ -85,41 +85,32 @@ class NodeList extends React.Component {
     const { nodes, onDelete } = this.props;
     return (
       <StyledTable data={nodes}>
-        <Column
-          header={<Cell>Session</Cell> }
-          cell={<LoginCell /> }
-        />
-        <Column
-          header={<Cell>Name</Cell> }
-          cell={<NameCell /> }
-        />
+        <Column header={<Cell>Session</Cell>} cell={<LoginCell />} />
+        <Column header={<Cell>Name</Cell>} cell={<NameCell />} />
         <Column
           columnKey="hostname"
-          header={<Cell>Address</Cell> }
-          cell={<TextCell/> }
+          header={<Cell>Address</Cell>}
+          cell={<TextCell />}
         />
         <Column
           columnKey="displayRole"
-          header={<Cell>Profile</Cell> }
-          cell={<TextCell/> }
+          header={<Cell>Profile</Cell>}
+          cell={<TextCell />}
         />
+        <Column header={<Cell>Labels</Cell>} cell={<LabelCell />} />
         <Column
-          header={<Cell>Labels</Cell> }
-          cell={<LabelCell /> }
-        />
-        <Column
-          header={<Cell>Actions</Cell> }
-          cell={ <ActionCell onDelete={onDelete} /> }
+          header={<Cell>Actions</Cell>}
+          cell={<ActionCell onDelete={onDelete} />}
         />
       </StyledTable>
-    )
+    );
   }
 }
 
 const StyledTable = styled(Table)`
-  & > tbody > tr > td  {
+  & > tbody > tr > td {
     vertical-align: baseline;
   }
-`
+`;
 
 export default NodeList;

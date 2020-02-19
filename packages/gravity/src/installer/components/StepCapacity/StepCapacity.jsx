@@ -27,38 +27,39 @@ export default function StepCapacity() {
   const agentServers = store.state.agentServers;
 
   // selected flavor
-  const [ selectedFlavor, setSelectedFlavor ] = React.useState(() => {
+  const [selectedFlavor, setSelectedFlavor] = React.useState(() => {
     const index = findIndex(flavorOptions, f => f.isDefault === true);
     return index !== -1 ? index : 0;
   });
 
   // slider options
-  const sliderOptions = React.useMemo( () => {
+  const sliderOptions = React.useMemo(() => {
     return map(store.state.flavors.options, f => ({
       value: f.name,
-      label: f.title
-    }))
+      label: f.title,
+    }));
   });
 
   // profiles of selected flavor
-  const profiles = React.useMemo( () => {
-    if(flavorOptions[selectedFlavor]){
+  const profiles = React.useMemo(() => {
+    if (flavorOptions[selectedFlavor]) {
       const p = flavorOptions[selectedFlavor].profiles;
       // set new profile to configure from given flavor
-      store.setProvisionProfiles(p)
+      store.setProvisionProfiles(p);
       return p;
     }
 
     return [];
-   }, [selectedFlavor]);
+  }, [selectedFlavor]);
 
-
-  function onChangeFlavor(index){
+  function onChangeFlavor(index) {
     setSelectedFlavor(index);
   }
 
   return (
-    <StepLayout title={store.state.flavors.prompt || "Review Infrastructure Requirements" }>
+    <StepLayout
+      title={store.state.flavors.prompt || 'Review Infrastructure Requirements'}
+    >
       <FlavorSelector
         current={selectedFlavor}
         options={sliderOptions}

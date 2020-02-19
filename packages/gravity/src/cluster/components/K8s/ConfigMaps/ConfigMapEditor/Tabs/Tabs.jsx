@@ -19,7 +19,13 @@ import styled from 'styled-components';
 import { typography } from 'design/system';
 import { Box } from 'design';
 
-export default function Tabs({ items, activeTab, dirtyTabs, onSelect, ...styledProps }) {
+export default function Tabs({
+  items,
+  activeTab,
+  dirtyTabs,
+  onSelect,
+  ...styledProps
+}) {
   const $items = items.map((i, index) => {
     const { name } = i;
     return (
@@ -30,15 +36,26 @@ export default function Tabs({ items, activeTab, dirtyTabs, onSelect, ...styledP
         active={index === activeTab}
         onClick={() => onSelect(index)}
       />
-    )});
+    );
+  });
 
   return (
-    <StyledTab bg="primary.dark" typography="h5" color="text.secondary" bold children={$items} {...styledProps} />
-  )
+    <StyledTab
+      bg="primary.dark"
+      typography="h5"
+      color="text.secondary"
+      bold
+      children={$items}
+      {...styledProps}
+    />
+  );
 }
 
-const TabItem = ({ name, dirty, active, onClick}) => (
-  <StyledTabItem typography="h4" mr={1} mb={2}
+const TabItem = ({ name, dirty, active, onClick }) => (
+  <StyledTabItem
+    typography="h4"
+    mr={1}
+    mb={2}
     as="button"
     title={name}
     dirty={dirty}
@@ -46,28 +63,28 @@ const TabItem = ({ name, dirty, active, onClick}) => (
     onClick={onClick}
   >
     <span>{name}</span>
-    {dirty && <StyledDirtyFlag>{" *"}</StyledDirtyFlag>}
+    {dirty && <StyledDirtyFlag>{' *'}</StyledDirtyFlag>}
   </StyledTabItem>
-)
+);
 
-function fromProps({ theme, active }){
+function fromProps({ theme, active }) {
   let styles = {
     border: 'none',
-    borderRight: `1px solid ${theme.colors.bgTerminal }`,
+    borderRight: `1px solid ${theme.colors.bgTerminal}`,
     '&:hover, &:focus': {
       color: theme.colors.primary.contrastText,
-      transition: 'color .3s'
-    }
-  }
+      transition: 'color .3s',
+    },
+  };
 
-  if(active){
+  if (active) {
     styles = {
       ...styles,
       backgroundColor: theme.colors.bgTerminal,
       color: theme.colors.primary.contrastText,
       fontWeight: 'bold',
-      transition: 'none'
-    }
+      transition: 'none',
+    };
   }
 
   return styles;
@@ -75,7 +92,7 @@ function fromProps({ theme, active }){
 
 const StyledDirtyFlag = styled.span`
   position: absolute;
-`
+`;
 
 const StyledTabItem = styled(Box)`
   position: relative;
@@ -97,7 +114,7 @@ const StyledTabItem = styled(Box)`
   overflow: hidden;
   text-overflow: ellipsis;
 }
-`
+`;
 
 const StyledTab = styled(Box)`
   border-radius: 4px;
@@ -114,4 +131,4 @@ const StyledTab = styled(Box)`
     flex-grow: 1;
   }
   ${typography}
-`
+`;

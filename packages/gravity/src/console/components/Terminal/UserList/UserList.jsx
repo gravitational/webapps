@@ -18,15 +18,9 @@ import React from 'react';
 
 export default function UserList(props) {
   let parties = props.parties || [];
-  let userIcons = parties.map((item, index)=>(
-    <div key={index}>
-      {item.user}
-    </div>
+  let userIcons = parties.map((item, index) => (
+    <div key={index}>{item.user}</div>
   ));
 
-  return (
-    <div>
-      {userIcons}
-    </div>
-  )
+  return <div>{userIcons}</div>;
 }

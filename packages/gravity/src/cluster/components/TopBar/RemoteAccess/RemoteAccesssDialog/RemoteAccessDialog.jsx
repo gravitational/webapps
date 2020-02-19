@@ -14,26 +14,26 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React from 'react'
+import React from 'react';
 import PropTypes from 'prop-types';
 import { Box, ButtonSecondary, ButtonPrimary, Text } from 'design';
 import * as Alerts from 'design/Alert';
 import { useAttempt, withState } from 'shared/hooks';
-import Dialog, { DialogHeader, DialogTitle, DialogContent, DialogFooter} from 'design/DialogConfirmation';
+import Dialog, {
+  DialogHeader,
+  DialogTitle,
+  DialogContent,
+  DialogFooter,
+} from 'design/DialogConfirmation';
 
-export function RemoteAccessDialog(props){
+export function RemoteAccessDialog(props) {
   const { enabled, onClose, onConfirmed, attempt, attemptActions } = props;
   const onOk = () => {
-    attemptActions.do(() => onConfirmed())
-      .then(() => onClose());
+    attemptActions.do(() => onConfirmed()).then(() => onClose());
   };
 
   return (
-    <Dialog
-      disableEscapeKeyDown={false}
-      onClose={onClose}
-      open={true}
-    >
+    <Dialog disableEscapeKeyDown={false} onClose={onClose} open={true}>
       <Box maxWidth="500px">
         <DialogHeader>
           <DialogTitle> Remote Assistance </DialogTitle>
@@ -45,17 +45,18 @@ export function RemoteAccessDialog(props){
   );
 }
 
-function renderEnabled(attempt, onOk, onClose){
+function renderEnabled(attempt, onOk, onClose) {
   const isDisabled = attempt.isProcessing;
   return (
     <>
       <DialogContent>
-        {attempt.isFailed && (
-          <Alerts.Danger children={attempt.message} />
-        )}
+        {attempt.isFailed && <Alerts.Danger children={attempt.message} />}
         <Text typography="paragraph" color="primary.contrastText">
           Are you sure you want enable remote assistance?
-          <Text>Enabling remote assistance will allow vendor team to support your infrastructure.</Text>
+          <Text>
+            Enabling remote assistance will allow vendor team to support your
+            infrastructure.
+          </Text>
         </Text>
       </DialogContent>
       <DialogFooter>
@@ -67,20 +68,21 @@ function renderEnabled(attempt, onOk, onClose){
         </ButtonSecondary>
       </DialogFooter>
     </>
-  )
+  );
 }
 
-function renderDisabled(attempt, onOk, onClose){
+function renderDisabled(attempt, onOk, onClose) {
   const isDisabled = attempt.isProcessing;
   return (
     <>
       <DialogContent>
-        {attempt.isFailed && (
-          <Alerts.Danger children={attempt.message} />
-        )}
+        {attempt.isFailed && <Alerts.Danger children={attempt.message} />}
         <Text typography="paragraph" color="primary.contrastText">
           Are you sure you want disable remote assistance?
-          <Text>Disabling remote assistance will turn off remote access to your infrastructure for vendor support team.</Text>
+          <Text>
+            Disabling remote assistance will turn off remote access to your
+            infrastructure for vendor support team.
+          </Text>
         </Text>
       </DialogContent>
       <DialogFooter>
@@ -92,21 +94,21 @@ function renderDisabled(attempt, onOk, onClose){
         </ButtonSecondary>
       </DialogFooter>
     </>
-  )
+  );
 }
 
 RemoteAccessDialog.propTypes = {
   onClose: PropTypes.func.isRequired,
   onConfirmed: PropTypes.func.isRequired,
   enabled: PropTypes.bool.isRequired,
-}
+};
 
-function mapState(){
-  const [ attempt, attemptActions ] = useAttempt();
+function mapState() {
+  const [attempt, attemptActions] = useAttempt();
   return {
     attempt,
-    attemptActions
-  }
+    attemptActions,
+  };
 }
 
-export default withState(mapState)(RemoteAccessDialog)
+export default withState(mapState)(RemoteAccessDialog);

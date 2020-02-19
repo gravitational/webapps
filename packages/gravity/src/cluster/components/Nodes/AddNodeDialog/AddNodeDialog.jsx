@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React from 'react'
+import React from 'react';
 import PropTypes from 'prop-types';
 import { Box } from 'design';
 import { withState } from 'shared/hooks';
@@ -26,34 +26,35 @@ import { ExpandPolicyEnum } from 'gravity/services/enums';
 import ProfileSelector from './ProfileSelector';
 import ProfileInstructions from './ProfileInstructions';
 
-export class AddNodeDialog extends React.Component{
-
-  constructor(props){
+export class AddNodeDialog extends React.Component {
+  constructor(props) {
     super();
 
     const profileOptions = props.profiles
-      .filter( item => item.expandPolicy !== ExpandPolicyEnum.FIXED)
+      .filter(item => item.expandPolicy !== ExpandPolicyEnum.FIXED)
       .map(item => ({
         value: item.name,
-        title: `${item.description || item.serviceRole} (required -${item.requirementsText})`
+        title: `${item.description || item.serviceRole} (required -${
+          item.requirementsText
+        })`,
       }));
 
     this.state = {
       selectedProfile: profileOptions[0],
       showCommands: null,
-      profileOptions
-    }
+      profileOptions,
+    };
   }
 
   onContinue = () => {
-    this.setState({ showCommands: true})
-  }
+    this.setState({ showCommands: true });
+  };
 
   setSelectedProfile = selectedProfile => {
-    this.setState({selectedProfile})
-  }
+    this.setState({ selectedProfile });
+  };
 
-  render(){
+  render() {
     const { onClose, advertiseIp, joinToken, gravityUrl } = this.props;
     const { selectedProfile, profileOptions, showCommands } = this.state;
     const role = selectedProfile.value;
@@ -61,16 +62,10 @@ export class AddNodeDialog extends React.Component{
     const joinCmd = `gravity join ${advertiseIp} --token=${joinToken} --role=${role}`;
 
     return (
-      <Dialog
-        disableEscapeKeyDown={false}
-        onClose={onClose}
-        open={true}
-      >
+      <Dialog disableEscapeKeyDown={false} onClose={onClose} open={true}>
         <Box width="700px">
           <DialogHeader>
-            <DialogTitle>
-              ADD A NODE
-            </DialogTitle>
+            <DialogTitle>ADD A NODE</DialogTitle>
           </DialogHeader>
           {!showCommands && (
             <ProfileSelector
@@ -82,7 +77,11 @@ export class AddNodeDialog extends React.Component{
             />
           )}
           {showCommands && (
-            <ProfileInstructions downloadCmd={downloadCmd} joinCmd={joinCmd} onClose={onClose}/>
+            <ProfileInstructions
+              downloadCmd={downloadCmd}
+              joinCmd={joinCmd}
+              onClose={onClose}
+            />
           )}
         </Box>
       </Dialog>
@@ -95,7 +94,7 @@ AddNodeDialog.propTypes = {
   onClose: PropTypes.func.isRequired,
   advertiseIp: PropTypes.string.isRequired,
   gravityUrl: PropTypes.string.isRequired,
-}
+};
 
 function mapState() {
   const clusterStore = useFluxStore(getters.clusterStore);
@@ -106,7 +105,7 @@ function mapState() {
     profiles: clusterStore.cluster.nodeProfiles,
     advertiseIp,
     gravityUrl,
-  }
+  };
 }
 
 export default withState(mapState)(AddNodeDialog);

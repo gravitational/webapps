@@ -20,10 +20,10 @@ import { Flex, Box, Text, ButtonIcon } from 'design';
 import { ArrowDown, ArrowUp } from 'design/Icon';
 import ClusterTags from './ClusterTags';
 
-function AdvancedOptions({children, onChangeTags, ...styles}) {
-  const [ isExpanded, setExpanded ] = React.useState(false);
+function AdvancedOptions({ children, onChangeTags, ...styles }) {
+  const [isExpanded, setExpanded] = React.useState(false);
 
-  function onToggle(){
+  function onToggle() {
     setExpanded(!isExpanded);
   }
 
@@ -31,7 +31,15 @@ function AdvancedOptions({children, onChangeTags, ...styles}) {
 
   return (
     <Flex width="100%" flexDirection="column" bg="primary.light" {...styles}>
-      <StyledHeader height="50px" pl="3" pr="2" py="2" flex="1" bg="primary.main" alignItems="center" justifyContent="space-between"
+      <StyledHeader
+        height="50px"
+        pl="3"
+        pr="2"
+        py="2"
+        flex="1"
+        bg="primary.main"
+        alignItems="center"
+        justifyContent="space-between"
         onClick={onToggle}
       >
         <Text typography="subtitle1" caps>
@@ -41,10 +49,10 @@ function AdvancedOptions({children, onChangeTags, ...styles}) {
           <IconCmpt />
         </ButtonIcon>
       </StyledHeader>
-      { isExpanded && (
+      {isExpanded && (
         <Box p="3">
           {children}
-          <ClusterTags onChange={onChangeTags}/>
+          <ClusterTags onChange={onChangeTags} />
         </Box>
       )}
     </Flex>
@@ -58,5 +66,5 @@ const StyledHeader = styled(Flex)`
   -moz-user-select: none;
   -khtml-user-select: none;
   -ms-user-select: none;
-`
+`;
 export default AdvancedOptions;

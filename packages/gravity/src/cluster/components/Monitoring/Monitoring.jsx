@@ -31,12 +31,11 @@ import { FeatureBox, FeatureHeader, FeatureHeaderTitle } from './../Layout';
  * hosting grafana UI
  */
 export class Monitoring extends React.Component {
-
   state = {
     isInitializing: true,
     canLoadGrafana: false,
     isError: false,
-  }
+  };
 
   iframeRef = React.createRef();
 
@@ -46,32 +45,35 @@ export class Monitoring extends React.Component {
     const contextUrl = cfg.getSiteGrafanaContextUrl(siteId);
 
     // fetch grafana proxy endpoint URL
-    return api.put(contextUrl).then(json  => {
+    return api.put(contextUrl).then(json => {
       json = json || {};
-      const proxyEndpoint = json.url
+      const proxyEndpoint = json.url;
 
-      if(!proxyEndpoint){
-        return $.Deferred().reject(new Error("Could not resolve grafana endpoints"));
+      if (!proxyEndpoint) {
+        return $.Deferred().reject(
+          new Error('Could not resolve grafana endpoints')
+        );
       }
 
       return makeGrafanaUrl(proxyEndpoint, grafanaPath);
-    })
+    });
   }
 
-  componentDidMount(){
-    this.initGrafana().done(url => {
-      this.url = url;
-      this.setState({ canLoadGrafana: true }, () => {
-        this._tweakGrafana();
-      });
-    })
-    .fail(err => {
-      var errorText = api.getErrorText(err);
-      this.setState({
-        isError: true,
-        errorText
+  componentDidMount() {
+    this.initGrafana()
+      .done(url => {
+        this.url = url;
+        this.setState({ canLoadGrafana: true }, () => {
+          this._tweakGrafana();
+        });
       })
-    })
+      .fail(err => {
+        var errorText = api.getErrorText(err);
+        this.setState({
+          isError: true,
+          errorText,
+        });
+      });
   }
 
   render() {
@@ -80,51 +82,50 @@ export class Monitoring extends React.Component {
     return (
       <FeatureBox>
         <FeatureHeader alignItems="center">
-          <FeatureHeaderTitle>
-            Monitoring
-          </FeatureHeaderTitle>
+          <FeatureHeaderTitle>Monitoring</FeatureHeaderTitle>
         </FeatureHeader>
         <StyledGrafana height="100%" width="100%" borderRadius="3">
           {$status}
-          { canLoadGrafana && <iframe ref={this.iframeRef} src={this.url} frameBorder="0" /> }
+          {canLoadGrafana && (
+            <iframe ref={this.iframeRef} src={this.url} frameBorder="0" />
+          )}
         </StyledGrafana>
       </FeatureBox>
-    )
+    );
   }
 
   renderStatus() {
     const { isInitializing, isError, errorText } = this.state;
-    if (isError){
+    if (isError) {
       return (
         <StyledStatusBox>
-          <Danger width="100%">
-            {errorText}
-          </Danger>
+          <Danger width="100%">{errorText}</Danger>
         </StyledStatusBox>
-      )
+      );
     }
 
-    if (isInitializing){
+    if (isInitializing) {
       return (
         <StyledStatusBox>
           <Indicator />
         </StyledStatusBox>
-      )
+      );
     }
 
-    return null
+    return null;
   }
 
-  _tweakGrafana(){
+  _tweakGrafana() {
     const $iframe = $(this.iframeRef.current);
     $iframe.on('load', () => {
       this.setState({ isInitializing: false });
-      $iframe.contents()
+      $iframe
+        .contents()
         .find('head')
-        .append($(grafanaStyleOverrides))
+        .append($(grafanaStyleOverrides));
 
-      $iframe.addClass("--loaded");
-    })
+      $iframe.addClass('--loaded');
+    });
   }
 }
 
@@ -135,7 +136,7 @@ const StyledStatusBox = styled.div`
   height: 100px;
   width: 100%;
   justify-content: center;
-`
+`;
 
 const StyledGrafana = styled(Flex)`
   position: relative;
@@ -149,7 +150,7 @@ const StyledGrafana = styled(Flex)`
   iframe.--loaded {
     visibility: initial;
   }
-`
+`;
 /**
  * grafanaStyleOverrides is the style tag to be injected to
  * Grafana iframe for custom overrides.
@@ -167,7 +168,7 @@ const grafanaStyleOverrides = `
       display: none;
     }
   </style>
-`
+`;
 
 /**
  * parseRouteParams returns siteId and grafana path taken from
@@ -176,17 +177,17 @@ const grafanaStyleOverrides = `
  * Ex: /web/site/clusterX/monitor/dashboard/db/pods?query=""
  * Result: { siteId: 'clusterX', grafanaPath: 'dashboard/db/pods?query=""` }
  */
-function parseRouteParams(match, location){
+function parseRouteParams(match, location) {
   const featurePath = match.url;
   const { siteId } = match.params;
   const { pathname, search } = location;
 
   let grafanaPath = '';
-  if(pathname.indexOf(featurePath) === 0){
+  if (pathname.indexOf(featurePath) === 0) {
     grafanaPath = pathname.substring(featurePath.length) + search;
   }
 
-  return { siteId,  grafanaPath};
+  return { siteId, grafanaPath };
 }
 
 function makeGrafanaUrl(proxyEndpoint, dashboardUrl) {
@@ -196,12 +197,11 @@ function makeGrafanaUrl(proxyEndpoint, dashboardUrl) {
   url = url.replace(/\/\/+/g, '/');
 
   // if empty query, use default dashboard if provided
-  if (url === proxyEndpoint+'/' && grafanaDefaultDashboardUrl) {
+  if (url === proxyEndpoint + '/' && grafanaDefaultDashboardUrl) {
     url = `${proxyEndpoint}/${grafanaDefaultDashboardUrl}`;
   }
 
   return history.ensureBaseUrl(url);
 }
-
 
 export default withRouter(Monitoring);

@@ -17,91 +17,102 @@ limitations under the License.
 import React from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
-import  * as Icons from 'design/Icon/Icon';
+import * as Icons from 'design/Icon/Icon';
 import { Flex, Text } from 'design';
 
-export default function ProgressDescription(props){
-  const { step=0, steps=[], ...styles } = props;
+export default function ProgressDescription(props) {
+  const { step = 0, steps = [], ...styles } = props;
 
   const items = steps.map((name, index) => ({
     isCompleted: step > index,
     isProcessing: step === index,
-    name
-  }))
-
+    name,
+  }));
 
   const groupItems1 = items.slice(0, 3);
   const groupItems2 = items.slice(3, 6);
   const groupItems3 = items.slice(6, 10);
 
   return (
-    <Flex bg="primary.light" justifyCofntent="space-between"  {...styles} >
-      <Group IconComponent={Icons.SettingsInputComposite} title="Gathering Instances"
-        items={groupItems1} />
+    <Flex bg="primary.light" justifyCofntent="space-between" {...styles}>
+      <Group
+        IconComponent={Icons.SettingsInputComposite}
+        title="Gathering Instances"
+        items={groupItems1}
+      />
       <Group
         IconComponent={Icons.Equalizer}
         title="Configure and install"
-        items={groupItems2} />
+        items={groupItems2}
+      />
       <Group
         IconComponent={Icons.ListAddCheck}
         title="Finalizing install"
-        items={groupItems3} />
+        items={groupItems3}
+      />
     </Flex>
   );
 }
 
 ProgressDescription.propTypes = {
   steps: PropTypes.array.isRequired,
-  step: PropTypes.number.isRequired
-}
+  step: PropTypes.number.isRequired,
+};
 
-function Group({ title, items, IconComponent}){
-  const $items = items.map(item => (
-    <Item key={item.name} {...item} />
-  ))
+function Group({ title, items, IconComponent }) {
+  const $items = items.map(item => <Item key={item.name} {...item} />);
   return (
     <StyledGroup flexDirection="column" p="4" flex="1">
       <Flex as={Text} mb="4" typography="h3" alignItems="center">
-        <IconComponent mr="3" fontSize="24px" width="50px" style={{ textAlign: "center" }}/>
+        <IconComponent
+          mr="3"
+          fontSize="24px"
+          width="50px"
+          style={{ textAlign: 'center' }}
+        />
         {title}
       </Flex>
-      <Flex flexDirection="column">
-        {$items}
-      </Flex>
+      <Flex flexDirection="column">{$items}</Flex>
     </StyledGroup>
-  )
+  );
 }
 
-function Item({ isCompleted, isProcessing, name}){
+function Item({ isCompleted, isProcessing, name }) {
   let IconCmpt = () => null;
-  if(isCompleted){
+  if (isCompleted) {
     IconCmpt = Icons.CircleCheck;
   }
 
-  if(isProcessing){
-    IconCmpt =  StyledSpinner;
+  if (isProcessing) {
+    IconCmpt = StyledSpinner;
   }
 
   return (
-    <Flex as={Text} typography="h5" my="3" alignItems="center" style={{position: "relative"}}>
-      <div style={{position: "absolute"}}>
-        <IconCmpt ml="3" fontSize="20px"  />
+    <Flex
+      as={Text}
+      typography="h5"
+      my="3"
+      alignItems="center"
+      style={{ position: 'relative' }}
+    >
+      <div style={{ position: 'absolute' }}>
+        <IconCmpt ml="3" fontSize="20px" />
       </div>
-      <Text ml="9" >{name}</Text>
+      <Text ml="9">{name}</Text>
     </Flex>
-  )
+  );
 }
 
 const StyledGroup = styled(Flex)`
-  border-right: 1px solid ${ ({ theme }) => theme.colors.primary.dark};
+  border-right: 1px solid ${({ theme }) => theme.colors.primary.dark};
 
-  &:last-child{
+  &:last-child {
     border-right: none;
   }
-`
+`;
 
 const StyledSpinner = styled(Icons.Spinner)`
-  ${({fontSize="32px"}) => `
+  ${({ fontSize = '32px' }) => `
     font-size: ${fontSize};
     height: ${fontSize};
     width: ${fontSize};
@@ -110,8 +121,8 @@ const StyledSpinner = styled(Icons.Spinner)`
   animation: anim-rotate 2s infinite linear;
   color: #fff;
   display: inline-block;
-  opacity: .87;
-  text-shadow: 0 0 .25em rgba(255,255,255, .3);
+  opacity: 0.87;
+  text-shadow: 0 0 0.25em rgba(255, 255, 255, 0.3);
 
   @keyframes anim-rotate {
     0% {

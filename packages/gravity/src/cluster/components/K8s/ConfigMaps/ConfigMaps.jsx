@@ -25,14 +25,14 @@ import ConfigMapList from './ConfigMapList';
 import ConfigMapEditor from './ConfigMapEditor';
 
 export function ConfigMaps({ namespace, configMaps, onSaveMaps }) {
-  const [ mapToEdit, setMapToEdit ] = React.useState(null);
+  const [mapToEdit, setMapToEdit] = React.useState(null);
 
-  function onEdit(name){
-    setMapToEdit(configMaps.find( m => m.name === name));
+  function onEdit(name) {
+    setMapToEdit(configMaps.find(m => m.name === name));
   }
 
   function onSave(changes) {
-    return onSaveMaps(namespace, mapToEdit.name, changes)
+    return onSaveMaps(namespace, mapToEdit.name, changes);
   }
 
   const filtered = configMaps.filter(i => i.namespace === namespace);
@@ -40,15 +40,15 @@ export function ConfigMaps({ namespace, configMaps, onSaveMaps }) {
   return (
     <Flex alignItems="start" flexWrap="wrap">
       <ConfigMapList namespace={namespace} items={filtered} onEdit={onEdit} />
-      { mapToEdit && (
+      {mapToEdit && (
         <ConfigMapEditor
           configMap={mapToEdit}
           onSave={onSave}
-          onClose={ () => setMapToEdit(null)}
+          onClose={() => setMapToEdit(null)}
         />
       )}
     </Flex>
-  )
+  );
 }
 
 export default withState(() => {
@@ -58,5 +58,5 @@ export default withState(() => {
     namespace,
     configMaps,
     onSaveMaps: saveConfigMap,
-  }
+  };
 })(ConfigMaps);

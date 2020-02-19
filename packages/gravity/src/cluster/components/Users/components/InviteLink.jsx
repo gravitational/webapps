@@ -17,10 +17,12 @@ limitations under the License.
 import React from 'react';
 import { Text, Box } from 'design';
 
-export default function InviteLink({link}){
+export default function InviteLink({ link }) {
   return (
     <Box>
-      <Text breakAll typography="h6">{link} </Text>
+      <Text breakAll typography="h6">
+        {link}{' '}
+      </Text>
     </Box>
-  )
+  );
 }

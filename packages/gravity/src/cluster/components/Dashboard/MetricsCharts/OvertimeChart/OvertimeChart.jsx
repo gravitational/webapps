@@ -17,13 +17,13 @@ limitations under the License.
 import React from 'react';
 import LineChart from './LineChart';
 
-export default function UsageOverTime({ metrics, ...styles }){
+export default function UsageOverTime({ metrics, ...styles }) {
   // reference to chart component
   const chartRef = React.useRef();
   // ref to current props.metrics value to access to latest inside setInterval callback
   const metricsRef = React.useRef(metrics);
   // flag to trigger the refresh interval
-  const [ initialized, setInitialized ] = React.useState(false);
+  const [initialized, setInitialized] = React.useState(false);
 
   const hasData = metrics.cpu.data.length > 0 || metrics.ram.data.length > 0;
 
@@ -37,38 +37,34 @@ export default function UsageOverTime({ metrics, ...styles }){
     const { cpu, ram } = makeSeries(metrics);
     chartRef.current.init(cpu, ram);
     setInitialized(true);
-  }, [hasData])
+  }, [hasData]);
 
   // start refreshing the chart
   React.useEffect(() => {
-    if(!initialized){
+    if (!initialized) {
       return;
     }
 
-    function updateChart(){
+    function updateChart() {
       const { cpu, ram } = makeSeries(metricsRef.current);
-      chartRef.current.add(cpu.pop(), ram.pop())
+      chartRef.current.add(cpu.pop(), ram.pop());
     }
 
     const timerId = setInterval(updateChart, 3000);
 
     return function cleanup() {
-      clearInterval(timerId)
+      clearInterval(timerId);
     };
-
   }, [initialized]);
 
-
-  return (
-    <LineChart ref={chartRef} {...styles} />
-  )
+  return <LineChart ref={chartRef} {...styles} />;
 }
 
-function makeSeries(metrics){
+function makeSeries(metrics) {
   const cpu = metrics.cpu.data.map(r => r.value);
   const ram = metrics.ram.data.map(r => r.value);
   return {
     cpu,
-    ram
-  }
+    ram,
+  };
 }

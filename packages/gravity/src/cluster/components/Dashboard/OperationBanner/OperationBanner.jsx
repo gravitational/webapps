@@ -22,9 +22,9 @@ import { getters as operationGetters } from 'gravity/cluster/flux/operations';
 import { fetchOpProgress } from 'gravity/cluster/flux/operations/actions';
 import Progress from './Progress';
 
-function OperationBanner(props){
+function OperationBanner(props) {
   const { operations, onFetchProgress, ...rest } = props;
-  if(operations.length === 0){
+  if (operations.length === 0) {
     return null;
   }
 
@@ -32,21 +32,18 @@ function OperationBanner(props){
   const firstActive = operations[0];
   return (
     <Box {...rest}>
-      <Progress
-        operation={firstActive}
-        onFetch={onFetchProgress}
-      />
+      <Progress operation={firstActive} onFetch={onFetchProgress} />
     </Box>
-  )
+  );
 }
 
 const mapState = () => {
   const opsStore = useFluxStore(operationGetters.operationStore);
-  const operations =  opsStore.getActive();
+  const operations = opsStore.getActive();
   return {
     onFetchProgress: id => fetchOpProgress(id),
-    operations
-  }
-}
+    operations,
+  };
+};
 
 export default withState(mapState)(OperationBanner);

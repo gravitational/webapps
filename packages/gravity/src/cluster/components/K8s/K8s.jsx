@@ -21,7 +21,7 @@ import { getters as namespaceGetters } from 'gravity/cluster/flux/k8sNamespaces'
 import { Switch, Redirect, Route } from 'gravity/components/Router';
 import history from 'gravity/services/history';
 import { FeatureBox, FeatureHeader, FeatureHeaderTitle } from './../Layout';
-import { Flex, Text, Box } from 'design'
+import { Flex, Text, Box } from 'design';
 import k8sContext from './k8sContext';
 import Pods from './Pods';
 import Services from './Services';
@@ -36,32 +36,31 @@ import K8sResourceDialog from './K8sResourceDialog';
 import { withState } from 'shared/hooks';
 
 export class K8s extends React.Component {
-
   state = {
-    resourceToView: null
-  }
+    resourceToView: null,
+  };
 
   onChangeNamespace = namespace => {
     const { category, history } = this.props;
     const newRoute = cfg.getSiteK8sRoute(namespace, category);
     history.push(newRoute);
-  }
+  };
 
   onCloseResource = () => {
     this.setState({
-      resourceToView: null
-    })
-  }
+      resourceToView: null,
+    });
+  };
 
   onViewResource = (name, resourceMap) => {
     const resource = resourceMap.toJSON();
     this.setState({
       resourceToView: {
         name,
-        resource
-      }
-    })
-  }
+        resource,
+      },
+    });
+  };
 
   render() {
     const { namespace, category, namespaces } = this.props;
@@ -69,49 +68,96 @@ export class K8s extends React.Component {
     const { onViewResource } = this;
 
     // when accessing the index route, redirect to the first tab
-    if(!namespace || !category){
+    if (!namespace || !category) {
       return (
         <Switch>
-          <Redirect exact to={cfg.getSiteK8sConfigMapsRoute('default')}/>
+          <Redirect exact to={cfg.getSiteK8sConfigMapsRoute('default')} />
         </Switch>
-      )
+      );
     }
 
     return (
-      <k8sContext.Provider value={{
-        namespace,
-        onViewResource
-      }}>
+      <k8sContext.Provider
+        value={{
+          namespace,
+          onViewResource,
+        }}
+      >
         <FeatureBox>
           <FeatureHeader alignItems="center" mb="4">
-            <FeatureHeaderTitle mr="4">
-              Kubernetes
-            </FeatureHeaderTitle>
+            <FeatureHeaderTitle mr="4">Kubernetes</FeatureHeaderTitle>
             <Flex bg="primary.light" alignItems="center">
               <Text typography="body2" color="text.primary" px="3">
                 NAMESPACE:
               </Text>
-              <NamespaceMenu onChange={this.onChangeNamespace} options={namespaces} value={namespace} />
+              <NamespaceMenu
+                onChange={this.onChangeNamespace}
+                options={namespaces}
+                value={namespace}
+              />
             </Flex>
           </FeatureHeader>
           <Tabs>
-            <TabItem to={cfg.getSiteK8sConfigMapsRoute(namespace)} title="ConfigMaps" />
-            <TabItem to={cfg.getSiteK8sSecretsRoute(namespace)} title="Secrets" />
+            <TabItem
+              to={cfg.getSiteK8sConfigMapsRoute(namespace)}
+              title="ConfigMaps"
+            />
+            <TabItem
+              to={cfg.getSiteK8sSecretsRoute(namespace)}
+              title="Secrets"
+            />
             <TabItem to={cfg.getSiteK8sPodsRoute(namespace)} title="Pods" />
-            <TabItem to={cfg.getSiteK8sServicesRoute(namespace)} title="Services" />
+            <TabItem
+              to={cfg.getSiteK8sServicesRoute(namespace)}
+              title="Services"
+            />
             <TabItem to={cfg.getSiteK8sJobsRoute(namespace)} title="Jobs" />
-            <TabItem to={cfg.getSiteK8sDaemonsRoute(namespace)} title="Daemon Sets" />
-            <TabItem to={cfg.getSiteK8sDeploymentsRoute(namespace)} title="Deployments" />
+            <TabItem
+              to={cfg.getSiteK8sDaemonsRoute(namespace)}
+              title="Daemon Sets"
+            />
+            <TabItem
+              to={cfg.getSiteK8sDeploymentsRoute(namespace)}
+              title="Deployments"
+            />
           </Tabs>
           <Box mt="4">
             <Switch>
-              <Route title="Config Maps"path={cfg.routes.siteK8sConfigMaps} component={ConfigMaps}/>
-              <Route title="Pods" path={cfg.routes.siteK8sPods} component={Pods}/>
-              <Route title="Secrets" path={cfg.routes.siteK8sSecrets} component={Secrets}/>
-              <Route title="Services" path={cfg.routes.siteK8sServices} component={Services}/>
-              <Route title="Jobs" path={cfg.routes.siteK8sJobs} component={Jobs}/>
-              <Route title="Daemot Sets" path={cfg.routes.siteK8sDaemonSets} component={DaemotSets}/>
-              <Route title="Deployments" path={cfg.routes.siteK8sDeployments} component={Deployments}/>
+              <Route
+                title="Config Maps"
+                path={cfg.routes.siteK8sConfigMaps}
+                component={ConfigMaps}
+              />
+              <Route
+                title="Pods"
+                path={cfg.routes.siteK8sPods}
+                component={Pods}
+              />
+              <Route
+                title="Secrets"
+                path={cfg.routes.siteK8sSecrets}
+                component={Secrets}
+              />
+              <Route
+                title="Services"
+                path={cfg.routes.siteK8sServices}
+                component={Services}
+              />
+              <Route
+                title="Jobs"
+                path={cfg.routes.siteK8sJobs}
+                component={Jobs}
+              />
+              <Route
+                title="Daemot Sets"
+                path={cfg.routes.siteK8sDaemonSets}
+                component={DaemotSets}
+              />
+              <Route
+                title="Deployments"
+                path={cfg.routes.siteK8sDeployments}
+                component={Deployments}
+              />
             </Switch>
           </Box>
           {resourceToView && (
@@ -124,7 +170,7 @@ export class K8s extends React.Component {
           )}
         </FeatureBox>
       </k8sContext.Provider>
-    )
+    );
   }
 }
 
@@ -136,6 +182,5 @@ export default withState(props => {
     category,
     namespace,
     history,
-  }
-
+  };
 })(K8s);

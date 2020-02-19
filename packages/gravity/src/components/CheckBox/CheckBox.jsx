@@ -14,22 +14,22 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React from 'react'
+import React from 'react';
 import styled from 'styled-components';
 import { space, color } from 'design/system';
 
-export default function Checkbox({ value, onChange, label, ...styles }){
-  function onClick(){
-    onChange(!value)
+export default function Checkbox({ value, onChange, label, ...styles }) {
+  function onClick() {
+    onChange(!value);
   }
 
   return (
     <StyledLabel {...styles}>
       {label}
-      <input type="checkbox" checked={value === true} onChange={onClick}/>
-      <span className="checkmark"/>
+      <input type="checkbox" checked={value === true} onChange={onClick} />
+      <span className="checkmark" />
     </StyledLabel>
-  )
+  );
 }
 
 const StyledLabel = styled.label`
@@ -67,12 +67,12 @@ const StyledLabel = styled.label`
 
   /* When the checkbox is checked, add a blue background */
   input:checked ~ .checkmark {
-    background-color: #2196F3;
+    background-color: #2196f3;
   }
 
   /* Create the checkmark/indicator (hidden when not checked) */
   .checkmark:after {
-    content: "";
+    content: '';
     position: absolute;
     display: none;
   }
@@ -94,4 +94,4 @@ const StyledLabel = styled.label`
   }
   ${space}
   ${color}
-`
+`;

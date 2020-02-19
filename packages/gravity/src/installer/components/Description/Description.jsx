@@ -20,7 +20,7 @@ import styled from 'styled-components';
 import { StepEnum } from './../store';
 import { Flex, Text } from 'design';
 
-export default function Description({store}){
+export default function Description({ store }) {
   const { step, config } = store.state;
   const {
     licenseUserHintText,
@@ -28,7 +28,6 @@ export default function Description({store}){
     provisionUserHintText,
     progressUserHintText,
   } = config;
-
 
   let hintTexts = {};
   hintTexts[StepEnum.LICENSE] = licenseUserHintText;
@@ -43,25 +42,23 @@ export default function Description({store}){
       <Text typography="h3" mb="4">
         About this step
       </Text>
-      <Text typography="paragraph"
-        dangerouslySetInnerHTML={{ __html: text }}
-      />
+      <Text typography="paragraph" dangerouslySetInnerHTML={{ __html: text }} />
     </StyledHint>
-  )
+  );
 }
 
 Description.style = {
-  whiteSpace: 'pre-line'
-}
+  whiteSpace: 'pre-line',
+};
 
 Description.propTypes = {
-  store: PropTypes.object.isRequired
-}
+  store: PropTypes.object.isRequired,
+};
 
 const StyledHint = styled(Flex)`
   white-space: pre-line;
 
-  .ul{
-    padding-left: 10px
+  .ul {
+    padding-left: 10px;
   }
-`
+`;

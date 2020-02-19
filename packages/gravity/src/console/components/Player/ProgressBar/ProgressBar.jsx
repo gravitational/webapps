@@ -39,10 +39,11 @@ export default class ProgressBar extends React.Component {
             onChange={onChange}
             defaultValue={1}
             withBars
-            className="grv-slider" />
+            className="grv-slider"
+          />
         </SliderContainer>
       </StyledProgessBar>
-    )
+    );
   }
 }
 
@@ -50,15 +51,15 @@ const SliderContainer = styled.div`
   display: flex;
   flex: 1;
   flex-direction: column;
-`
+`;
 
 const TimeText = styled(Text)`
   font-family: ${props => props.theme.fonts.mono};
   font-size: ${props => props.theme.fontSizes[1]}px;
   line-height: 24px;
   margin-right: 16px;
-  opacity: .56;
-`
+  opacity: 0.56;
+`;
 
 const ActionButton = styled.button`
   background: ${colors.dark};
@@ -69,10 +70,10 @@ const ActionButton = styled.button`
   height: 24px;
   margin-right: 16px;
   outline: none;
-  opacity: .87;
+  opacity: 0.87;
   padding: 0;
   text-align: center;
-  transition: all .3s;
+  transition: all 0.3s;
   width: 24px;
 
   &:hover {
@@ -110,7 +111,7 @@ const StyledProgessBar = styled.div`
   .grv-slider .handle {
     background-color: ${colors.light};
     border-radius: 200px;
-    box-shadow: 0 0 4px rgba(0, 0, 0, .12), 0 4px 4px rgba(0, 0, 0, .24);
+    box-shadow: 0 0 4px rgba(0, 0, 0, 0.12), 0 4px 4px rgba(0, 0, 0, 0.24);
     width: 16px;
     height: 16px;
     left: -8px;
@@ -125,4 +126,4 @@ const StyledProgessBar = styled.div`
   .grv-slider .bar-1 {
     background-color: ${colors.text};
   }
-`
+`;

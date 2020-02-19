@@ -21,16 +21,16 @@ import AjaxPoller from 'gravity/components/AjaxPoller';
 
 const POLL_INTERVAL = 5000; // every 5 sec
 
-export default function Progress(props){
+export default function Progress(props) {
   const { progress, opId, onFetch } = props;
 
-  function onRefresh(){
-    return onFetch(opId)
+  function onRefresh() {
+    return onFetch(opId);
   }
 
-  const $poller = <AjaxPoller time={POLL_INTERVAL} onFetch={onRefresh} />
+  const $poller = <AjaxPoller time={POLL_INTERVAL} onFetch={onRefresh} />;
   // if progress is not available yet, just keep polling
-  if(!progress){
+  if (!progress) {
     return $poller;
   }
 
@@ -39,30 +39,31 @@ export default function Progress(props){
   return (
     <>
       <Flex flexDirection="column">
-        <StyledProgressBar height="10px"
+        <StyledProgressBar
+          height="10px"
           mb="1"
           value={value}
           isCompleted={false}
         >
-          <span/>
+          <span />
         </StyledProgressBar>
         <Text typography="body2">
-          {`step ${step+1} out of 10 - ${message}`}
+          {`step ${step + 1} out of 10 - ${message}`}
         </Text>
       </Flex>
       {$poller}
     </>
-  )
+  );
 }
 
 const StyledProgressBar = styled(Flex)`
   align-items: center;
   flex-shrink: 0;
-  background-color: ${ ({theme}) => theme.colors.primary.lighter};
+  background-color: ${({ theme }) => theme.colors.primary.lighter};
   border-radius: 12px;
   > span {
     border-radius: 12px;
-    ${({theme, value}) => `
+    ${({ theme, value }) => `
       height: 100%;
       width: ${value}%;
       background-color: ${theme.colors.success};

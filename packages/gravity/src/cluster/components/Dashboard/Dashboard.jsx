@@ -23,20 +23,18 @@ import DebugInfoButton from './DebugInfoButton';
 import MetricsCharts from './MetricsCharts';
 import OperationBanner from './OperationBanner';
 
-export default function Dashboard(){
+export default function Dashboard() {
   return (
     <FeatureBox>
       <FeatureHeader alignItems="center">
-        <FeatureHeaderTitle>
-          Dashboard
-        </FeatureHeaderTitle>
-        <DebugInfoButton ml="auto"/>
+        <FeatureHeaderTitle>Dashboard</FeatureHeaderTitle>
+        <DebugInfoButton ml="auto" />
       </FeatureHeader>
-      <OperationBanner mb="4"/>
-      <MetricsCharts/>
-      <LatestEventList mb="4"/>
+      <OperationBanner mb="4" />
+      <MetricsCharts />
+      <LatestEventList mb="4" />
       <OperationList mb="4" />
-      <AppList/>
+      <AppList />
     </FeatureBox>
   );
 }

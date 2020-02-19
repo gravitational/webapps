@@ -17,34 +17,47 @@ limitations under the License.
 import React from 'react';
 import { Table, Column, Cell } from 'design/DataTable';
 import isMatch from 'design/utils/match';
-import { ActionCell, NameCell, StatusCell, ContainerCell, LabelCell } from './PodListCells';
+import {
+  ActionCell,
+  NameCell,
+  StatusCell,
+  ContainerCell,
+  LabelCell,
+} from './PodListCells';
 
 const NAMESPACE_KEY = 'namespace';
 
 class PodList extends React.Component {
-
   constructor(props) {
     super(props);
     this.searchableComplexProps = ['containerNames', 'labelsText'];
-    this.searchableProps = ['podHostIp', 'podIp', 'name', 'phaseValue', ...this.searchableComplexProps];
+    this.searchableProps = [
+      'podHostIp',
+      'podIp',
+      'name',
+      'phaseValue',
+      ...this.searchableComplexProps,
+    ];
   }
 
   searchAndFilterCb = (targetValue, searchValue, propName) => {
-    if(this.searchableComplexProps.indexOf(propName)!== -1){
-      return targetValue.some((item) => {
-        return item.toLocaleUpperCase().indexOf(searchValue) !==-1;
+    if (this.searchableComplexProps.indexOf(propName) !== -1) {
+      return targetValue.some(item => {
+        return item.toLocaleUpperCase().indexOf(searchValue) !== -1;
       });
     }
-  }
+  };
 
-  sortAndFilter(data){
-    const { namespace, searchValue='' } = this.props;
+  sortAndFilter(data) {
+    const { namespace, searchValue = '' } = this.props;
     const filtered = data
-    .filter( item => item[NAMESPACE_KEY] === namespace )
-    .filter( obj=> isMatch(obj, searchValue, {
-        searchableProps: this.searchableProps,
-        cb: this.searchAndFilterCb
-      }));
+      .filter(item => item[NAMESPACE_KEY] === namespace)
+      .filter(obj =>
+        isMatch(obj, searchValue, {
+          searchableProps: this.searchableProps,
+          cb: this.searchAndFilterCb,
+        })
+      );
 
     return filtered;
   }
@@ -54,28 +67,26 @@ class PodList extends React.Component {
     const data = this.sortAndFilter(podInfos);
     return (
       <Table data={data}>
+        <Column header={<Cell>Name</Cell>} cell={<NameCell />} />
+        <Column header={<Cell>Status</Cell>} cell={<StatusCell />} />
         <Column
-          header={<Cell>Name</Cell> }
-          cell={<NameCell /> }
+          header={<Cell>Containers</Cell>}
+          cell={
+            <ContainerCell sshLogins={sshLogins} logsEnabled={logsEnabled} />
+          }
         />
+        <Column header={<Cell>Labels</Cell>} cell={<LabelCell />} />
         <Column
-          header={<Cell>Status</Cell> }
-          cell={<StatusCell/>}
-        />
-        <Column
-          header={<Cell>Containers</Cell> }
-          cell={<ContainerCell sshLogins={sshLogins} logsEnabled={logsEnabled}/>}
-        />
-        <Column
-          header={<Cell>Labels</Cell> }
-          cell={<LabelCell/>}
-          />
-        <Column
-          header={<Cell></Cell> }
-          cell={<ActionCell logsEnabled={logsEnabled} monitoringEnabled={monitoringEnabled}/>}
+          header={<Cell></Cell>}
+          cell={
+            <ActionCell
+              logsEnabled={logsEnabled}
+              monitoringEnabled={monitoringEnabled}
+            />
+          }
         />
       </Table>
-    )
+    );
   }
 }
 

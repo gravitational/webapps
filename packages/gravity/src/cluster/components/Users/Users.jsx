@@ -28,46 +28,49 @@ import UserInviteDialog from './UserInviteDialog';
 import UserResetDialog from './UserResetDialog';
 import UserEditDialog from './UserEditDialog';
 
-function getUser(userStore, userId){
-  return userStore.get('users').find( u => u.userId === userId);
+function getUser(userStore, userId) {
+  return userStore.get('users').find(u => u.userId === userId);
 }
 
 export function Users(props) {
   const { usersStore, roles } = props;
-  const [ userToDelete, setUserToDelete ] = useState(null);
-  const [ showInviteDialog, setShowInviteDialog ] = useState(false);
-  const [ userToReset, setUserToReset ] = useState(null);
-  const [ userToEdit, setUserToEdit ] = useState(null);
+  const [userToDelete, setUserToDelete] = useState(null);
+  const [showInviteDialog, setShowInviteDialog] = useState(false);
+  const [userToReset, setUserToReset] = useState(null);
+  const [userToEdit, setUserToEdit] = useState(null);
 
   const onDelete = userId => {
-     const selectedUser = getUser(usersStore, userId);
-     setUserToDelete(selectedUser);
-  }
+    const selectedUser = getUser(usersStore, userId);
+    setUserToDelete(selectedUser);
+  };
 
   const onEdit = userId => {
     const selectedUser = getUser(usersStore, userId);
     setUserToEdit(selectedUser);
-  }
+  };
 
   const onReset = userId => {
     const selectedUser = getUser(usersStore, userId);
     setUserToReset(selectedUser);
-  }
+  };
 
   const OnInvite = () => {
     setShowInviteDialog(true);
-  }
+  };
 
-  const roleLabels = !roles ? [SystemRoleEnum.TELE_ADMIN] : roles.getRoleNames();
+  const roleLabels = !roles
+    ? [SystemRoleEnum.TELE_ADMIN]
+    : roles.getRoleNames();
 
   return (
     <FeatureBox>
       <FeatureHeader>
-        <FeatureHeaderTitle>
-          Users
-        </FeatureHeaderTitle>
+        <FeatureHeaderTitle>Users</FeatureHeaderTitle>
         <Box ml="auto" width="200px" alignSelf="center">
-          <ButtonPrimary block  onClick={OnInvite}> INVITE USER</ButtonPrimary>
+          <ButtonPrimary block onClick={OnInvite}>
+            {' '}
+            INVITE USER
+          </ButtonPrimary>
         </Box>
       </FeatureHeader>
       <UserList
@@ -76,38 +79,38 @@ export function Users(props) {
         onDelete={onDelete}
         onAdd={OnInvite}
         roleLabels={roleLabels}
-        users={usersStore.get('users').toJS()} />
-        { userToDelete && (
-          <UserDeleteDialog
-            user={userToDelete}
-            onClose={ () => setUserToDelete(null)}
-          />
-        )}
-        { showInviteDialog && (
-          <UserInviteDialog
-            roles={roleLabels}
-            onClose={ () => setShowInviteDialog(false)}
-          />
-
-        )}
-        { userToReset && (
-          <UserResetDialog
-            onClose={ () => setUserToReset(null)}
-            userId={userToReset.userId}
-          />
-        )}
-        { userToEdit && (
-          <UserEditDialog
-            roles={roleLabels}
-            user={userToEdit}
-            onClose={ () => setUserToEdit(null)}
-          />
-        )}
+        users={usersStore.get('users').toJS()}
+      />
+      {userToDelete && (
+        <UserDeleteDialog
+          user={userToDelete}
+          onClose={() => setUserToDelete(null)}
+        />
+      )}
+      {showInviteDialog && (
+        <UserInviteDialog
+          roles={roleLabels}
+          onClose={() => setShowInviteDialog(false)}
+        />
+      )}
+      {userToReset && (
+        <UserResetDialog
+          onClose={() => setUserToReset(null)}
+          userId={userToReset.userId}
+        />
+      )}
+      {userToEdit && (
+        <UserEditDialog
+          roles={roleLabels}
+          user={userToEdit}
+          onClose={() => setUserToEdit(null)}
+        />
+      )}
     </FeatureBox>
   );
 }
 
-function mapState(){
+function mapState() {
   const usersStore = useFluxStore(getters.usersStore);
   return {
     usersStore,
@@ -115,7 +118,7 @@ function mapState(){
     deleteUser: storeActions.deleteUser,
     saveUser: storeActions.saveUser,
     resetUser: storeActions.resetUser,
-  }
+  };
 }
 
 export default withState(mapState)(Users);

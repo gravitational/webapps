@@ -55,7 +55,13 @@ class ContainerMenu extends React.Component {
   };
 
   render() {
-    const { logsEnabled, container, anchorOrigin, transformOrigin, ...styles } = this.props;
+    const {
+      logsEnabled,
+      container,
+      anchorOrigin,
+      transformOrigin,
+      ...styles
+    } = this.props;
     const { open } = this.state;
     const { logUrl, name, sshLogins, pod, serverId, namespace } = container;
 
@@ -99,12 +105,28 @@ class ContainerMenu extends React.Component {
 
 const LoginItemList = React.forwardRef(
   (
-    { onClick, logins, title, logsEnabled, serverId, logUrl, container, pod, namespace },
+    {
+      onClick,
+      logins,
+      title,
+      logsEnabled,
+      serverId,
+      logUrl,
+      container,
+      pod,
+      namespace,
+    },
     ref
   ) => {
     logins = logins || [];
     const $menuItems = logins.map((login, key) => {
-      const url = cfg.getConsoleInitPodSessionRoute({ login, serverId, container, pod, namespace });
+      const url = cfg.getConsoleInitPodSessionRoute({
+        login,
+        serverId,
+        container,
+        pod,
+        namespace,
+      });
       return (
         <MenuItem
           px="2"
@@ -127,7 +149,14 @@ const LoginItemList = React.forwardRef(
         </Text>
         {$menuItems}
         {logsEnabled && (
-          <ButtonPrimary mt="3" mb="2" mx="3" size="small" as={NavLink} to={logUrl}>
+          <ButtonPrimary
+            mt="3"
+            mb="2"
+            mx="3"
+            size="small"
+            as={NavLink}
+            to={logUrl}
+          >
             View Logs
           </ButtonPrimary>
         )}
@@ -138,8 +167,7 @@ const LoginItemList = React.forwardRef(
 
 LoginItemList.propTypes = {
   logsEnabled: PropTypes.bool.isRequired,
-}
-
+};
 
 const SyledMenuItem = styled.a`
   color: ${props => props.theme.colors.grey[400]};

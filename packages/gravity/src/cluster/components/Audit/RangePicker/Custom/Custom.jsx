@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React from 'react'
+import React from 'react';
 import moment from 'moment';
 import styled from 'styled-components';
 import DayPicker, { DateUtils } from 'react-day-picker';
@@ -22,29 +22,28 @@ import 'react-day-picker/lib/style.css';
 import { Flex } from 'design';
 
 export default class CustomRange extends React.Component {
-
-  constructor(props){
+  constructor(props) {
     super();
     this.startSelecting = false;
     const { from, to } = props;
     this.state = {
       from,
       to,
-    }
+    };
   }
 
   handleDayClick = day => {
-    if(moment(day) > moment(new Date()).endOf('day')){
+    if (moment(day) > moment(new Date()).endOf('day')) {
       return;
     }
 
     let { from, end } = this.state;
 
-    if(moment(from).isSame(day)){
+    if (moment(from).isSame(day)) {
       return;
     }
 
-    if(this.startSelecting === false){
+    if (this.startSelecting === false) {
       // reset the range once a user starts a new selection
       end = undefined;
       from = undefined;
@@ -53,14 +52,18 @@ export default class CustomRange extends React.Component {
 
     const range = DateUtils.addDayToRange(day, { from, end });
     this.setState(range, this.onChange);
-  }
+  };
 
-  onChange(){
+  onChange() {
     const { from, to } = this.state;
-    if(from && to && this.startSelecting){
+    if (from && to && this.startSelecting) {
       // make sure that range includes the end/start of the day
-      const start = moment(from).startOf('day').toDate();
-      const end = moment(to).endOf('day').toDate();
+      const start = moment(from)
+        .startOf('day')
+        .toDate();
+      const end = moment(to)
+        .endOf('day')
+        .toDate();
       this.props.onChange(start, end);
     }
   }
@@ -74,7 +77,9 @@ export default class CustomRange extends React.Component {
         <DayPicker
           className="Selectable"
           numberOfMonths={2}
-          month={moment(to).subtract(1, 'month').toDate()}
+          month={moment(to)
+            .subtract(1, 'month')
+            .toDate()}
           disabledDays={{
             after: new Date(),
           }}
@@ -94,13 +99,13 @@ const StyledDateRange = styled(Flex)`
     line-height: initial;
     color: black;
     background-color: white;
-    box-shadow: inset 0 2px 4px rgba(0,0,0,.24);
+    box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.24);
     box-sizing: border-box;
     border-radius: 5px;
     padding: 24px;
   }
 
-  .DayPicker-Months{
+  .DayPicker-Months {
   }
 
   .DayPicker-Day--selected:not(.DayPicker-Day--start):not(.DayPicker-Day--end):not(.DayPicker-Day--outside) {
@@ -121,4 +126,4 @@ const StyledDateRange = styled(Flex)`
     border-top-right-radius: 50% !important;
     border-bottom-right-radius: 50% !important;
   }
-`
+`;

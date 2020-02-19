@@ -24,7 +24,7 @@ export default function CloseButton(props) {
     <StyledCloseButton title="Close" {...props}>
       <CloseIcon />
     </StyledCloseButton>
-  )
+  );
 }
 
 const StyledCloseButton = styled.button`
@@ -40,4 +40,4 @@ const StyledCloseButton = styled.button`
     background: ${props => props.theme.colors.error};
   }
   ${space}
-`
+`;

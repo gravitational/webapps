@@ -19,19 +19,23 @@ import styled from 'styled-components';
 import PropTypes from 'prop-types';
 import { withState, useAttempt } from 'shared/hooks';
 import { Danger, Info } from 'design/Alert';
-import Dialog, { DialogTitle, DialogFooter, DialogHeader, DialogContent } from 'design/Dialog';
+import Dialog, {
+  DialogTitle,
+  DialogFooter,
+  DialogHeader,
+  DialogContent,
+} from 'design/Dialog';
 import { Text, Input, ButtonPrimary, ButtonSecondary, Flex, Box } from 'design';
 import { saveTlsCert } from 'gravity/cluster/flux/tlscert/actions';
 import { withRouter } from 'react-router';
 
 export class UpdateCertDialog extends React.Component {
-
   static propTypes = {
     onClose: PropTypes.func.isRequired,
     onSubmit: PropTypes.func.isRequired,
-    attempt:  PropTypes.object.isRequired,
-    attemptActions:  PropTypes.object.isRequired,
-  }
+    attempt: PropTypes.object.isRequired,
+    attemptActions: PropTypes.object.isRequired,
+  };
 
   constructor(props) {
     super(props);
@@ -49,68 +53,64 @@ export class UpdateCertDialog extends React.Component {
     this.refIntermCert = React.createRef();
   }
 
-  validate(){
+  validate() {
     const showCertRequired = this.state.certFile === null;
     const showPrivateKeyRequired = this.state.privateKeyFile === null;
     this.setState({
       showCertRequired,
-      showPrivateKeyRequired
-    })
+      showPrivateKeyRequired,
+    });
 
     return !showCertRequired && !showPrivateKeyRequired;
   }
 
   onSubmit = e => {
     e.preventDefault();
-    if(!this.validate()){
+    if (!this.validate()) {
       return;
     }
 
     const { certFile, privateKeyFile, intermCertFile } = this.state;
     const { onSubmit, attemptActions } = this.props;
     attemptActions.do(() => {
-      return onSubmit(
-        certFile,
-        privateKeyFile,
-        intermCertFile
-      );
-    })
-  }
+      return onSubmit(certFile, privateKeyFile, intermCertFile);
+    });
+  };
 
   onCertFileSelected = e => {
     this.setState({
       certFile: e.target.files[0],
-      showCertRequired: false
+      showCertRequired: false,
     });
-  }
+  };
 
   onKeyFileSelected = e => {
     this.setState({
       privateKeyFile: e.target.files[0],
-      showPrivateKeyRequired: false
+      showPrivateKeyRequired: false,
     });
-  }
+  };
 
   onIntermFileSelected = e => {
     this.setState({
-      intermCertFile: e.target.files[0]
+      intermCertFile: e.target.files[0],
     });
-  }
+  };
 
   onSelectCert = () => {
     this.refCert.current.value = null;
     this.refCert.current.click();
-  }
+  };
 
   onSelectPrivateKey = () => {
     this.refPrivateKey.current.value = null;
     this.refPrivateKey.current.click();
-  }
+  };
 
   onSelectIntermCert = () => {
     this.refIntermCert.current.value = null;
     this.refIntermCert.current.click();
-  }
+  };
 
   render() {
     const {
@@ -118,7 +118,8 @@ export class UpdateCertDialog extends React.Component {
       showCertRequired,
       showPrivateKeyRequired,
       intermCertFile,
-      privateKeyFile } = this.state;
+      privateKeyFile,
+    } = this.state;
 
     const { onClose, attempt } = this.props;
     const { isFailed, isSuccess, isProcessing, message } = attempt;
@@ -126,36 +127,38 @@ export class UpdateCertDialog extends React.Component {
     return (
       <Dialog onClose={onClose} open={true} disableEscapeKeyDown={isProcessing}>
         <DialogHeader>
-          <DialogTitle>
-            Update certificate
-          </DialogTitle>
+          <DialogTitle>Update certificate</DialogTitle>
         </DialogHeader>
         <DialogContent width="600px">
-          { isFailed && <Danger mb="4">{message}</Danger> }
-          { isSuccess && <Info mb="4">Certificate has been updated</Info> }
+          {isFailed && <Danger mb="4">{message}</Danger>}
+          {isSuccess && <Info mb="4">Certificate has been updated</Info>}
           <Box mb="4">
-            <Label text="Private Key" desc="must be in PEM format"/>
+            <Label text="Private Key" desc="must be in PEM format" />
             <FileInput
               showRequired={showPrivateKeyRequired}
               fileName={privateKeyFile && privateKeyFile.name}
-              onClick={this.onSelectPrivateKey} />
+              onClick={this.onSelectPrivateKey}
+            />
           </Box>
           <Box mb="4">
-            <Label text="Certificate" desc="must be in PEM format"/>
+            <Label text="Certificate" desc="must be in PEM format" />
             <FileInput
               showRequired={showCertRequired}
               fileName={certFile && certFile.name}
-              onClick={this.onSelectCert} />
+              onClick={this.onSelectCert}
+            />
           </Box>
           <Box mb="4">
-            <Label text="Intermediate Certificate" desc="optional"/>
-            <FileInput showRequired={false}
+            <Label text="Intermediate Certificate" desc="optional" />
+            <FileInput
+              showRequired={false}
               fileName={intermCertFile && intermCertFile.name}
-              onClick={this.onSelectIntermCert} />
+              onClick={this.onSelectIntermCert}
+            />
           </Box>
         </DialogContent>
         <DialogFooter>
-          <ButtonPrimary mr="3"  disabled={isProcessing} onClick={this.onSubmit}>
+          <ButtonPrimary mr="3" disabled={isProcessing} onClick={this.onSubmit}>
             Update Certificate
           </ButtonPrimary>
           <ButtonSecondary onClick={this.props.onClose} disabled={isProcessing}>
@@ -163,8 +166,14 @@ export class UpdateCertDialog extends React.Component {
           </ButtonSecondary>
         </DialogFooter>
         <HiddenInput ref={this.refCert} onChange={this.onCertFileSelected} />
-        <HiddenInput ref={this.refPrivateKey} onChange={this.onKeyFileSelected} />
-        <HiddenInput ref={this.refIntermCert} onChange={this.onIntermFileSelected} />
+        <HiddenInput
+          ref={this.refPrivateKey}
+          onChange={this.onKeyFileSelected}
+        />
+        <HiddenInput
+          ref={this.refIntermCert}
+          onChange={this.onIntermFileSelected}
+        />
       </Dialog>
     );
   }
@@ -172,12 +181,19 @@ export class UpdateCertDialog extends React.Component {
 
 const Label = ({ text, desc = null }) => (
   <Flex mb="1" alignItems="center">
-    <Text typography="h6" color="primary.contrastText"> {text} </Text>
-    { desc  && <Text typography="body2" ml="1">({desc})</Text> }
+    <Text typography="h6" color="primary.contrastText">
+      {' '}
+      {text}{' '}
+    </Text>
+    {desc && (
+      <Text typography="body2" ml="1">
+        ({desc})
+      </Text>
+    )}
   </Flex>
-)
+);
 
-const FileInput = ({ fileName, name, onClick, showRequired=false }) => {
+const FileInput = ({ fileName, name, onClick, showRequired = false }) => {
   return (
     <Flex flex="1">
       <Input
@@ -191,23 +207,24 @@ const FileInput = ({ fileName, name, onClick, showRequired=false }) => {
         Browse...
       </ButtonSecondary>
     </Flex>
-  )};
+  );
+};
 
 const HiddenInput = styled.input.attrs({
   type: 'file',
   accept: '*.*',
-  name: 'file'
+  name: 'file',
 })`
   display: none;
-`
+`;
 
-function mapState(){
-  const [ attempt, attemptActions ] = useAttempt();
+function mapState() {
+  const [attempt, attemptActions] = useAttempt();
   return {
     attempt,
     attemptActions,
-    onSubmit: saveTlsCert
-  }
+    onSubmit: saveTlsCert,
+  };
 }
 
-export default withRouter(withState(mapState)(UpdateCertDialog)) ;
+export default withRouter(withState(mapState)(UpdateCertDialog));

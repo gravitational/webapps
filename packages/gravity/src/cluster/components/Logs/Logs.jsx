@@ -47,51 +47,51 @@ export function ClusterLogs(props) {
   return (
     <FeatureBox pb="0">
       <FeatureHeader alignItems="center">
-        <FeatureHeaderTitle mr={3}>
-          Logs
-        </FeatureHeaderTitle>
+        <FeatureHeaderTitle mr={3}>Logs</FeatureHeaderTitle>
         <StyledInputBar>
-          <QueryEditorBasic key={query} query={query} onChange={onSearch}/>
+          <QueryEditorBasic key={query} query={query} onChange={onSearch} />
           <StyledButton mr="3" secondary onClick={onRefresh}>
             Refresh
           </StyledButton>
         </StyledInputBar>
         <Box ml="auto" flex="0 0 auto">
           <ButtonSecondary onClick={onOpenSettings} disabled={isProcessing}>
-            <Cog mr="3" ml={-2} fontSize="14px"/>
+            <Cog mr="3" ml={-2} fontSize="14px" />
             LOG FORWARDER SETTINGS
           </ButtonSecondary>
         </Box>
       </FeatureHeader>
-      {attempt.isFailed &&  (
-        <Alerts.Danger>
-          {attempt.message}
-        </Alerts.Danger>
-      )}
+      {attempt.isFailed && <Alerts.Danger>{attempt.message}</Alerts.Danger>}
       <Flex mx={-6} mb={-4} px="2" height="100%" bg="bgTerminal">
-        <LogViewer autoScroll={true} provider={
-            <LogProvider key={refreshCount} queryUrl={queryUrl} />
-        }/>
+        <LogViewer
+          autoScroll={true}
+          provider={<LogProvider key={refreshCount} queryUrl={queryUrl} />}
+        />
       </Flex>
-        { isSettingsOpen && <LogForwarderDialog store={logForwarderStore} onClose={onCloseSettings}/> }
+      {isSettingsOpen && (
+        <LogForwarderDialog
+          store={logForwarderStore}
+          onClose={onCloseSettings}
+        />
+      )}
     </FeatureBox>
-  )
+  );
 }
 
 const StyledInputBar = styled.div`
   display: flex;
   align-items: center;
   width: 60%;
-  ${Input}{
+  ${Input} {
     border-bottom-right-radius: 0;
     border-top-right-radius: 0;
   }
-`
+`;
 
 const StyledButton = styled(ButtonSecondary)`
   border-bottom-right-radius: 0;
   border-top-right-radius: 0;
-`
+`;
 
 export default withState(({ match, history }) => {
   const { siteId } = match.params;
@@ -100,9 +100,9 @@ export default withState(({ match, history }) => {
 
   // hooks
   const logForwarderStore = React.useMemo(() => new LogforwarderStore(), []);
-  const [ attempt, attemptActions ] = useAttempt();
-  const [ refreshCount, setRefreshCount ] = React.useState(0);
-  const [ isSettingsOpen, setIsSettingOpen ] = React.useState(false);
+  const [attempt, attemptActions] = useAttempt();
+  const [refreshCount, setRefreshCount] = React.useState(0);
+  const [isSettingsOpen, setIsSettingOpen] = React.useState(false);
 
   function onSearch(query) {
     history.location.search = `query=${query}`;
@@ -110,17 +110,17 @@ export default withState(({ match, history }) => {
   }
 
   function onRefresh() {
-    setRefreshCount(refreshCount+1);
+    setRefreshCount(refreshCount + 1);
   }
 
   function onOpenSettings() {
     attemptActions.do(() => {
-      return logForwarderStore.fetch().then(() => setIsSettingOpen(true))
-    })
+      return logForwarderStore.fetch().then(() => setIsSettingOpen(true));
+    });
   }
 
   function onCloseSettings() {
-    setIsSettingOpen(false)
+    setIsSettingOpen(false);
   }
 
   return {
@@ -134,4 +134,5 @@ export default withState(({ match, history }) => {
     onRefresh,
     onOpenSettings,
     onCloseSettings,
-}})(ClusterLogs);
+  };
+})(ClusterLogs);

@@ -17,7 +17,7 @@ limitations under the License.
 import React from 'react';
 import styled from 'styled-components';
 import { Switch, Route } from 'gravity/components/Router';
-import { Indicator  } from 'design';
+import { Indicator } from 'design';
 import SideNav from './SideNav';
 import { Failed } from 'design/CardError';
 import TopBar from './TopBar';
@@ -27,35 +27,35 @@ import cfg from 'gravity/config';
 import { useAttempt } from 'shared/hooks';
 
 // Cluster is main cluster component
-export default function Cluster({features, onInit}){
+export default function Cluster({ features, onInit }) {
   return (
     <Switch>
       <Route path={cfg.routes.siteOffline} component={Offline} />
-      <ClusterContent features={features} onInit={onInit}/>
+      <ClusterContent features={features} onInit={onInit} />
     </Switch>
   );
 }
 
-function ClusterContent({ features, onInit}){
-  const [ attempt, attemptActions ] = useAttempt();
+function ClusterContent({ features, onInit }) {
+  const [attempt, attemptActions] = useAttempt();
   const { isFailed, isSuccess, message } = attempt;
 
   React.useEffect(() => {
     attemptActions.do(() => {
       return onInit();
     });
-  }, [])
+  }, []);
 
-  if(isFailed){
+  if (isFailed) {
     return <Failed message={message} />;
   }
 
-  if(!isSuccess){
+  if (!isSuccess) {
     return (
       <StyledIndicator>
         <Indicator />
       </StyledIndicator>
-    )
+    );
   }
 
   // render allowed features
@@ -68,23 +68,23 @@ function ClusterContent({ features, onInit}){
         key={index}
         path={path}
         exact={exact}
-        component={component}/>
-    )})
+        component={component}
+      />
+    );
+  });
 
   return (
     <Layout.AppVerticalSplit>
       <SideNav />
       <Layout.AppHorizontalSplit>
         <TopBar pl="6" />
-        <Switch>
-          {$features}
-        </Switch>
+        <Switch>{$features}</Switch>
       </Layout.AppHorizontalSplit>
     </Layout.AppVerticalSplit>
-  )
+  );
 }
 
 const StyledIndicator = styled(Layout.AppVerticalSplit)`
   align-items: center;
   justify-content: center;
-`
+`;

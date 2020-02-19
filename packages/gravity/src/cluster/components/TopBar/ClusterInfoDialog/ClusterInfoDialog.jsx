@@ -14,48 +14,43 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React from 'react'
+import React from 'react';
 import htmlUtils from 'gravity/lib/htmlUtils';
-import Dialog, { DialogFooter, DialogTitle, DialogContent, DialogHeader } from 'design/DialogConfirmation';
-import { Text, Box, Flex, LabelInput, ButtonSecondary, ButtonPrimary } from 'design';
+import Dialog, {
+  DialogFooter,
+  DialogTitle,
+  DialogContent,
+  DialogHeader,
+} from 'design/DialogConfirmation';
+import {
+  Text,
+  Box,
+  Flex,
+  LabelInput,
+  ButtonSecondary,
+  ButtonPrimary,
+} from 'design';
 import CmdText from 'gravity/components/CmdText';
 
-
-export default function ClusterInfoDialog(props){
+export default function ClusterInfoDialog(props) {
   const { onClose, cmd, publicUrls, internalUrls } = props;
 
-  const $publicUrls = publicUrls.map(url => (
-    <BoxUrl key={url} url={url} />
-  ))
+  const $publicUrls = publicUrls.map(url => <BoxUrl key={url} url={url} />);
 
-  const $internalUrls = internalUrls.map(url => (
-    <BoxUrl key={url} url={url} />
-  ))
+  const $internalUrls = internalUrls.map(url => <BoxUrl key={url} url={url} />);
 
   return (
-    <Dialog
-      disableEscapeKeyDown={false}
-      onClose={onClose}
-      open={true}
-    >
+    <Dialog disableEscapeKeyDown={false} onClose={onClose} open={true}>
       <Box width="600px">
         <DialogHeader>
-          <DialogTitle>
-            Cluster Information
-          </DialogTitle>
+          <DialogTitle>Cluster Information</DialogTitle>
         </DialogHeader>
         <DialogContent>
-          <LabelInput>
-            Public URL
-          </LabelInput>
+          <LabelInput>Public URL</LabelInput>
           {$publicUrls}
-          <LabelInput>
-            Internal URL
-          </LabelInput>
+          <LabelInput>Internal URL</LabelInput>
           {$internalUrls}
-          <LabelInput>
-            Login to this cluster from console
-          </LabelInput>
+          <LabelInput>Login to this cluster from console</LabelInput>
           <CmdText cmd={cmd} />
         </DialogContent>
         <DialogFooter>
@@ -66,17 +61,27 @@ export default function ClusterInfoDialog(props){
   );
 }
 
-const BoxUrl = ({url}) => {
+const BoxUrl = ({ url }) => {
   const ref = React.useRef();
-  function onCopyClick(){
+  function onCopyClick() {
     htmlUtils.copyToClipboard(url);
     htmlUtils.selectElementContent(ref.current);
   }
 
   return (
-    <Flex bg="primary.light" p="2" mb="3" alignItems="center" justifyContent="space-between">
-      <Text ref={ref} style={{ wordBreak: "break-all" }} mr="3">{url}</Text>
-      <ButtonPrimary onClick={onCopyClick} size="small">Copy</ButtonPrimary>
+    <Flex
+      bg="primary.light"
+      p="2"
+      mb="3"
+      alignItems="center"
+      justifyContent="space-between"
+    >
+      <Text ref={ref} style={{ wordBreak: 'break-all' }} mr="3">
+        {url}
+      </Text>
+      <ButtonPrimary onClick={onCopyClick} size="small">
+        Copy
+      </ButtonPrimary>
     </Flex>
-  )
-}
+  );
+};

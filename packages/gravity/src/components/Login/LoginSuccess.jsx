@@ -24,5 +24,5 @@ export default function LoginSuccess() {
       <LogoHero />
       <CardSuccessLogin />
     </React.Fragment>
-  )
+  );
 }

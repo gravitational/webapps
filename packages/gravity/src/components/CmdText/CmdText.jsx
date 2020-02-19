@@ -20,24 +20,39 @@ import styled from 'styled-components';
 import htmlUtils from 'gravity/lib/htmlUtils';
 import { Flex, Text, ButtonPrimary } from 'design';
 
-export default function CmdText({cmd, ...styles}){
+export default function CmdText({ cmd, ...styles }) {
   const ref = React.useRef();
-  function onCopy(){
+  function onCopy() {
     event.preventDefault();
     htmlUtils.copyToClipboard(cmd);
     htmlUtils.selectElementContent(ref.current);
   }
 
   return (
-    <Flex bg="bgTerminal" alignItems="start" style={{borderRadius: "4px"}} {...styles} >
-      <StyledCmd ref={ref} typography="body2" px="2" py="3" color="primary.contrastText">{cmd}</StyledCmd>
-      <ButtonPrimary m="2" size="small" onClick={onCopy}>copy</ButtonPrimary>
+    <Flex
+      bg="bgTerminal"
+      alignItems="start"
+      style={{ borderRadius: '4px' }}
+      {...styles}
+    >
+      <StyledCmd
+        ref={ref}
+        typography="body2"
+        px="2"
+        py="3"
+        color="primary.contrastText"
+      >
+        {cmd}
+      </StyledCmd>
+      <ButtonPrimary m="2" size="small" onClick={onCopy}>
+        copy
+      </ButtonPrimary>
     </Flex>
-  )
+  );
 }
 
 const StyledCmd = styled(Text)`
-  font-family: ${ ({theme})=> theme.fonts.mono};
+  font-family: ${({ theme }) => theme.fonts.mono};
   width: 100%;
   word-break: break-all;
   word-wrap: break-word;
@@ -46,5 +61,5 @@ const StyledCmd = styled(Text)`
 
 CmdText.propTypes = {
   ...Flex.propTypes,
-  cmd: PropTypes.string
-}
+  cmd: PropTypes.string,
+};

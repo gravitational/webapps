@@ -28,14 +28,26 @@ import Poller from './../components/Poller';
 import PodList from './PodList/PodList';
 
 export function Pods(props) {
-  const { namespace, logsEnabled, monitoringEnabled, podInfos, userAcl, onFetch } = props;
+  const {
+    namespace,
+    logsEnabled,
+    monitoringEnabled,
+    podInfos,
+    userAcl,
+    onFetch,
+  } = props;
   const [searchValue, onSearchChange] = useState('');
   const sshLogins = userAcl.getSshLogins();
 
   return (
     <React.Fragment>
       <Poller namespace={namespace} onFetch={onFetch} />
-      <Box bg="primary.light" p="3" borderTopLeftRadius="3" borderTopRightRadius="3">
+      <Box
+        bg="primary.light"
+        p="3"
+        borderTopLeftRadius="3"
+        borderTopRightRadius="3"
+      >
         <InputSearch autoFocus onChange={onSearchChange} />
       </Box>
       <PodList

@@ -19,13 +19,12 @@ import React from 'react';
 const DEFAULT_INTERVAL = 3000; // every 3 sec
 
 export default class AjaxPoller extends React.Component {
-
   _timerId = null;
   _request = null;
 
   static defaultProps = {
-    immediately: true
-  }
+    immediately: true,
+  };
 
   constructor(props) {
     super(props);
@@ -38,10 +37,9 @@ export default class AjaxPoller extends React.Component {
       return;
     }
 
-    this._request = this.props.onFetch()
-      .always(() => {
-        this._request = null;
-      })
+    this._request = this.props.onFetch().always(() => {
+      this._request = null;
+    });
   }
 
   componentDidMount() {
@@ -49,7 +47,7 @@ export default class AjaxPoller extends React.Component {
     this._timerId = setInterval(this.fetch.bind(this), this._intervalTime);
   }
 
-  componentWillUnmount(){
+  componentWillUnmount() {
     clearInterval(this._timerId);
     if (this._request && this._request.abort) {
       this._request.abort();

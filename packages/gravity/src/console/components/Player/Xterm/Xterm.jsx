@@ -19,10 +19,9 @@ import StyledXterm from './../../StyledXterm';
 import XtermCtrl from 'gravity/lib/term/terminal';
 
 export default class Xterm extends React.Component {
-
   static propTypes = {
-    tty: PropTypes.object.isRequired
-  }
+    tty: PropTypes.object.isRequired,
+  };
 
   componentDidMount() {
     const tty = this.props.tty;
@@ -38,21 +37,20 @@ export default class Xterm extends React.Component {
     const isLoading = this.props.tty.isLoading;
     // need to hide the terminal cursor while fetching for events
     const style = {
-      visibility: isLoading ? "hidden" : "initial"
-    }
+      visibility: isLoading ? 'hidden' : 'initial',
+    };
 
-    return (<StyledXterm p="2" style={style} ref="container" />);
+    return <StyledXterm p="2" style={style} ref="container" />;
   }
 }
 
-class PlayerXtermCtrl extends XtermCtrl{
-  constructor(tty, el){
+class PlayerXtermCtrl extends XtermCtrl {
+  constructor(tty, el) {
     super({ el, scrollBack: 1000 });
     this.tty = tty;
   }
 
-  connect(){
-  }
+  connect() {}
 
   open() {
     super.open();
@@ -68,7 +66,7 @@ class PlayerXtermCtrl extends XtermCtrl{
     super.destroy();
   }
 
-  _disconnect(){}
+  _disconnect() {}
 
-  _requestResize(){}
+  _requestResize() {}
 }

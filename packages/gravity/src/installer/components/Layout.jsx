@@ -16,21 +16,26 @@ limitations under the License.
 
 import React from 'react';
 import styled from 'styled-components';
-import { Flex, Text } from 'design'
+import { Flex, Text } from 'design';
 
 export const AppLayout = styled(Flex)`
   position: absolute;
   margin: 0 auto;
   width: 100%;
   height: 100%;
-  color: ${({theme}) => theme.colors.primary.contrastText};
-`
+  color: ${({ theme }) => theme.colors.primary.contrastText};
+`;
 
-export function StepLayout({ title, children, ...styles}){
+export function StepLayout({ title, children, ...styles }) {
   return (
     <Flex flexDirection="column" {...styles}>
-      { title && ( <Text mb="4" typography="h1" style={{flexShrink: "0"}}> {title} </Text> )}
+      {title && (
+        <Text mb="4" typography="h1" style={{ flexShrink: '0' }}>
+          {' '}
+          {title}{' '}
+        </Text>
+      )}
       {children}
     </Flex>
-  )
+  );
 }

@@ -20,53 +20,51 @@ import Tag from './Tag';
 
 const ENTER_KEY = 13;
 
-function ClusterTags({onChange}) {
-  const [ value, setValue ] = React.useState('');
-  const [ tags, setTags ] = React.useState({});
+function ClusterTags({ onChange }) {
+  const [value, setValue] = React.useState('');
+  const [tags, setTags] = React.useState({});
 
   // notify parent about the change
   React.useEffect(() => {
-    onChange(tags)
-  }, [tags])
+    onChange(tags);
+  }, [tags]);
 
-  function onChangeValue(e){
-    setValue(e.target.value)
+  function onChangeValue(e) {
+    setValue(e.target.value);
   }
 
-  function onAddTags(){
-    if(value){
+  function onAddTags() {
+    if (value) {
       const tagsToAdd = {};
-      parseTags(value).forEach( t => {
+      parseTags(value).forEach(t => {
         tagsToAdd[t.key] = t.value;
-      })
+      });
 
       setTags({
         ...tags,
-        ...tagsToAdd
+        ...tagsToAdd,
       });
 
       setValue('');
     }
   }
 
-  function onKeyDown(e){
-    if(e.which === ENTER_KEY){
+  function onKeyDown(e) {
+    if (e.which === ENTER_KEY) {
       onAddTags();
     }
   }
 
-  function onDelete(key){
-    delete tags[key]
+  function onDelete(key) {
+    delete tags[key];
     setTags({
-      ...tags
+      ...tags,
     });
   }
 
   return (
     <Box>
-      <LabelInput>
-        Create cluster labels
-      </LabelInput>
+      <LabelInput>Create cluster labels</LabelInput>
       <Flex mb="4">
         <Input
           mr="3"
@@ -76,38 +74,40 @@ function ClusterTags({onChange}) {
           autoComplete="off"
           placeholder="key:value, key:value, ..."
         />
-        <ButtonPrimary onClick={onAddTags}>
-          Create
-        </ButtonPrimary>
+        <ButtonPrimary onClick={onAddTags}>Create</ButtonPrimary>
       </Flex>
-      <LabelList tags={tags} onDelete={onDelete}/>
+      <LabelList tags={tags} onDelete={onDelete} />
     </Box>
   );
 }
 
-function LabelList({ tags, onDelete }){
+function LabelList({ tags, onDelete }) {
   const $tags = Object.keys(tags).map(key => (
-    <Tag mr="2" mb="2"key={key} name={key} value={tags[key]} onClick={ () => onDelete(key) }/>
+    <Tag
+      mr="2"
+      mb="2"
+      key={key}
+      name={key}
+      value={tags[key]}
+      onClick={() => onDelete(key)}
+    />
   ));
 
-  return (
-    <Flex flexWrap="wrap">
-      {$tags}
-    </Flex>
-  )
+  return <Flex flexWrap="wrap">{$tags}</Flex>;
 }
 
-function parseTags(str){
-  return str.split(',')
+function parseTags(str) {
+  return str
+    .split(',')
     .map(t => {
-      let [ key, value ] = t.split(':');
+      let [key, value] = t.split(':');
       // remove spaces
       key = key ? key.trim() : key;
       value = value ? value.trim() : value;
       return {
         key,
-        value
-      }
+        value,
+      };
     })
     .filter(tag => tag.value && tag.key);
 }

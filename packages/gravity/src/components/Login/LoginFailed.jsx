@@ -18,14 +18,14 @@ import React from 'react';
 import { getUrlParameter } from 'gravity/services/history';
 import cfg from 'gravity/config';
 import LogoHero from './../LogoHero';
-import { LoginFailed as CardFailed}  from 'design/CardError';
+import { LoginFailed as CardFailed } from 'design/CardError';
 
 export default function LoginFailed() {
   const message = getUrlParameter('details');
   return (
     <React.Fragment>
       <LogoHero />
-      <CardFailed loginUrl={cfg.routes.login} message={message}/>
+      <CardFailed loginUrl={cfg.routes.login} message={message} />
     </React.Fragment>
-  )
+  );
 }

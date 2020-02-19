@@ -18,22 +18,20 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 const withHttpRequest = httpCtor => component => {
-
-  return class WithHttpRequestWrapper extends React.Component{
-
-    static displayName = `WithHttpRequestWrapper`
+  return class WithHttpRequestWrapper extends React.Component {
+    static displayName = `WithHttpRequestWrapper`;
 
     static propTypes = {
       onUpdate: PropTypes.func.isRequired,
-    }
+    };
 
     state = {
-      progress: "0",
-      response: null
-    }
+      progress: '0',
+      response: null,
+    };
 
     constructor(props, context) {
-      super(props, context)
+      super(props, context);
       this.http = new httpCtor();
       this.fileId = props.file.id;
       this.fileBlob = props.file.blob;
@@ -47,7 +45,7 @@ const withHttpRequest = httpCtor => component => {
 
     componentDidMount() {
       const handleProgress = completed => {
-        this.setState({ progress: completed })
+        this.setState({ progress: completed });
       };
 
       const handleCompleted = response => {
@@ -55,26 +53,26 @@ const withHttpRequest = httpCtor => component => {
         this.props.onUpdate({
           id: this.fileId,
           isCompleted: true,
-        })
+        });
       };
 
       const handleFailed = err => {
         this.props.onUpdate({
           id: this.fileId,
           isFailed: true,
-          error: err.message
-        })
-      }
+          error: err.message,
+        });
+      };
 
       this.props.onUpdate({
         id: this.fileId,
         isProcessing: true,
-      })
+      });
 
       this.http.onProgress(handleProgress);
       this.http.onCompleted(handleCompleted);
       this.http.onError(handleFailed);
-      this.http.do(this.fileUrl, this.fileBlob)
+      this.http.do(this.fileUrl, this.fileBlob);
     }
 
     render() {
@@ -85,7 +83,7 @@ const withHttpRequest = httpCtor => component => {
         httpProgress: progress,
       });
     }
-  }
-}
+  };
+};
 
 export default withHttpRequest;

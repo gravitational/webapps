@@ -28,12 +28,9 @@ export function DaemonSets(props) {
   return (
     <React.Fragment>
       <Poller namespace={namespace} onFetch={onFetch} />
-      <DaemonSetList
-        namespace={namespace}
-        daemonSets={daemonSets}
-      />
+      <DaemonSetList namespace={namespace} daemonSets={daemonSets} />
     </React.Fragment>
-  )
+  );
 }
 
 export default withState(() => {
@@ -43,5 +40,5 @@ export default withState(() => {
     namespace,
     daemonSets,
     onFetch: fetchDaemonSets,
-  }
+  };
 })(DaemonSets);

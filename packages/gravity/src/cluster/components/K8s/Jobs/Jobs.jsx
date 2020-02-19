@@ -27,13 +27,9 @@ export function Jobs({ namespace, jobs, onFetch }) {
   return (
     <React.Fragment>
       <Poller namespace={namespace} onFetch={onFetch} />
-      <JobList
-        jobs={jobs}
-        monitoringEnabled={true}
-        namespace={namespace}
-      />
+      <JobList jobs={jobs} monitoringEnabled={true} namespace={namespace} />
     </React.Fragment>
-  )
+  );
 }
 
 export default withState(() => {
@@ -43,5 +39,5 @@ export default withState(() => {
     namespace,
     jobs,
     onFetch: fetchJobs,
-  }
+  };
 })(Jobs);

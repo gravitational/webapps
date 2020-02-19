@@ -17,42 +17,49 @@ limitations under the License.
 import React from 'react';
 import { sortBy } from 'lodash';
 import isMatch from 'design/utils/match';
-import { TablePaged, Column, SortHeaderCell, Cell, TextCell, SortTypes } from 'design/DataTable';
+import {
+  TablePaged,
+  Column,
+  SortHeaderCell,
+  Cell,
+  TextCell,
+  SortTypes,
+} from 'design/DataTable';
 import EventTypeCell from './EventTypeCell';
 import EventDescCell from './EventDescCell';
 import { ActionCell, TimeCell } from './EventListCells';
 import EventDialog from './../EventDialog';
 
 class EventList extends React.Component {
-
-  searchableProps = ['codeDesc', 'message', 'user', 'time' ]
+  searchableProps = ['codeDesc', 'message', 'user', 'time'];
 
   constructor(props) {
     super(props);
     this.state = {
       detailsToShow: null,
       colSortDirs: {
-        time: SortTypes.ASC
-      }
-    }
+        time: SortTypes.ASC,
+      },
+    };
   }
 
   onSortChange = (columnKey, sortDir) => {
     this.state.colSortDirs = { [columnKey]: sortDir };
     this.setState(this.state);
-  }
+  };
 
   sortAndFilter(data, searchValue) {
     const { colSortDirs } = this.state;
-    const filtered = data
-      .filter(obj => isMatch(obj, searchValue, {
-        searchableProps: this.searchableProps
-      }));
+    const filtered = data.filter(obj =>
+      isMatch(obj, searchValue, {
+        searchableProps: this.searchableProps,
+      })
+    );
 
     const columnKey = Object.getOwnPropertyNames(colSortDirs)[0];
     const sortDir = colSortDirs[columnKey];
     const sorted = sortBy(filtered, columnKey);
-    if(sortDir === SortTypes.ASC){
+    if (sortDir === SortTypes.ASC) {
       return sorted.reverse();
     }
 
@@ -61,23 +68,23 @@ class EventList extends React.Component {
 
   showDetails = detailsToShow => {
     this.setState({
-      detailsToShow
-    })
-  }
+      detailsToShow,
+    });
+  };
 
   closeDetails = () => {
     this.setState({
-      detailsToShow: null
-    })
-  }
+      detailsToShow: null,
+    });
+  };
 
   render() {
-    const { events=[], search='', pageSize=20, limit=0 } = this.props;
+    const { events = [], search = '', pageSize = 20, limit = 0 } = this.props;
     const { detailsToShow } = this.state;
 
     let sorted = this.sortAndFilter(events, search);
 
-    if(limit > 0){
+    if (limit > 0) {
       sorted = sorted.slice(0, limit);
     }
 
@@ -86,20 +93,19 @@ class EventList extends React.Component {
         <TablePaged data={sorted} pageSize={pageSize}>
           <Column
             columnKey="codeDesc"
-            cell={<EventTypeCell /> }
+            cell={<EventTypeCell />}
             header={
               <SortHeaderCell
                 sortDir={this.state.colSortDirs.codeDesc}
                 onSortChange={this.onSortChange}
                 title="Type"
-              />}
+              />
+            }
           />
           <Column
             columnKey="message"
-            header={
-              <Cell>Description</Cell>
-            }
-            cell={<EventDescCell style={{wordBreak: "break-all"}}/> }
+            header={<Cell>Description</Cell>}
+            cell={<EventDescCell style={{ wordBreak: 'break-all' }} />}
           />
           <Column
             columnKey="user"
@@ -110,7 +116,7 @@ class EventList extends React.Component {
                 title="User"
               />
             }
-            cell={<TextCell /> }
+            cell={<TextCell />}
           />
           <Column
             columnKey="time"
@@ -121,20 +127,18 @@ class EventList extends React.Component {
                 title="Created"
               />
             }
-            cell={<TimeCell /> }
+            cell={<TimeCell />}
           />
           <Column
-            header={<Cell/>}
-            cell={ <ActionCell onViewDetails={this.showDetails} /> }
+            header={<Cell />}
+            cell={<ActionCell onViewDetails={this.showDetails} />}
           />
         </TablePaged>
-        { detailsToShow && (
-          <EventDialog event={detailsToShow}
-            onClose={this.closeDetails}  />
-          )
-        }
+        {detailsToShow && (
+          <EventDialog event={detailsToShow} onClose={this.closeDetails} />
+        )}
       </React.Fragment>
-    )
+    );
   }
 }
 

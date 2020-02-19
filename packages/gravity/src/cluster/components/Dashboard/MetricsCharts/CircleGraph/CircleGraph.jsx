@@ -15,22 +15,32 @@ limitations under the License.
 */
 
 import React from 'react';
-import styled, {keyframes} from 'styled-components';
+import styled, { keyframes } from 'styled-components';
 import { Box, Flex, Text } from 'design';
 import theme from 'design/theme';
 
-export function CircleGraph(props){
-  const { title, subtitles=[], current, ...rest} = props;
+export function CircleGraph(props) {
+  const { title, subtitles = [], current, ...rest } = props;
 
-  const $subtitles = subtitles.map( (value, index) => (
+  const $subtitles = subtitles.map((value, index) => (
     <Text key={index} color="text.primary" mx="2" typography="body2">
       {value}
     </Text>
-  ))
+  ));
 
   return (
     <Container bg="primary.main" borderRadius="3" {...rest}>
-      <Text brtr={8} brtl={8} as={Flex} color="text.primary" typography="h5" height="56px" bg="primary.light" alignItems="center" px="3">
+      <Text
+        brtr={8}
+        brtl={8}
+        as={Flex}
+        color="text.primary"
+        typography="h5"
+        height="56px"
+        bg="primary.light"
+        alignItems="center"
+        px="3"
+      >
         {title}
       </Text>
       <Chart>
@@ -43,7 +53,7 @@ export function CircleGraph(props){
           />
           <GraphProgress
             current={current}
-            strokeDasharray={`${current * .80}, 80`}
+            strokeDasharray={`${current * 0.8}, 80`}
             d="M18 2.0845
               a 15.9155 15.9155 0 0 1 0 31.831"
           />
@@ -59,20 +69,20 @@ export function CircleGraph(props){
 
 const stroke = props => {
   const { colors } = props.theme;
-  if(props.current < 50) {
-    return {stroke: colors.success}
+  if (props.current < 50) {
+    return { stroke: colors.success };
   }
 
-  if(props.current < 80) {
-    return {stroke: colors.warning}
+  if (props.current < 80) {
+    return { stroke: colors.warning };
   }
 
-  return {stroke: colors.danger}
-}
+  return { stroke: colors.danger };
+};
 
 const progress = keyframes`
   0% {stroke-dasharray: 0 100;}
-`
+`;
 
 const Chart = styled.div`
   box-sizing: border-box;
@@ -80,7 +90,7 @@ const Chart = styled.div`
   min-width: 200px;
   padding-top: 32px;
   position: relative;
-`
+`;
 
 const Graph = styled.svg`
   display: block;
@@ -88,13 +98,13 @@ const Graph = styled.svg`
   max-width: 80%;
   max-height: 120px;
   transform: rotate(215deg);
-`
+`;
 const GraphBackground = styled.path`
   fill: none;
   stroke: ${props => props.theme.colors.primary.dark};
   stroke-width: 4;
   stroke-linecap: round;
-`
+`;
 
 const GraphProgress = styled.path`
   stroke-linecap: round;
@@ -103,7 +113,7 @@ const GraphProgress = styled.path`
   stroke-width: 4;
   ${stroke}
   transition: all 1s;
-`
+`;
 const CurrentPecentage = styled.h3`
   font-size: 28px;
   font-weight: 300;
@@ -115,15 +125,15 @@ const CurrentPecentage = styled.h3`
   left: 0;
   right: 0;
   text-align: center;
-`
+`;
 
 const Container = styled(Box)`
   overflow: hidden;
-  box-shadow: 0 0 32px rgba(0, 0, 0, .12), 0 8px 32px rgba(0, 0, 0, .24);
+  box-shadow: 0 0 32px rgba(0, 0, 0, 0.12), 0 8px 32px rgba(0, 0, 0, 0.24);
   max-width: 250px;
   flex-shrink: 0;
   flex-grow: 1;
-`
+`;
 
 CircleGraph.defaultProps = {
   theme: theme,
@@ -132,7 +142,7 @@ CircleGraph.defaultProps = {
   avg: 0,
   high: 0,
   nodes: 0,
-}
+};
 
 CircleGraph.displayName = 'CircleGraph';
 

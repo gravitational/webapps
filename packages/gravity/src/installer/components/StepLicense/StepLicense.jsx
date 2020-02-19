@@ -23,37 +23,41 @@ import { Danger } from 'design/Alert';
 import { useAttempt } from 'shared/hooks';
 import { useServices } from 'gravity/installer/services';
 
-export function StepLicense({store})  {
-  const [ attempt, attemptActions ] = useAttempt();
-  const [ license, setLicense ] = React.useState('');
+export function StepLicense({ store }) {
+  const [attempt, attemptActions] = useAttempt();
+  const [license, setLicense] = React.useState('');
   const { licenseHeaderText } = store.state.config;
   const { isProcessing, isFailed, message } = attempt;
   const btnDisabled = isProcessing || !license;
   const service = useServices();
 
-  function onContinue(){
+  function onContinue() {
     attemptActions
       .do(() => {
         return service.setDeploymentType(license, store.state.app.packageId);
       })
       .done(() => {
-        store.setLicense(license)
+        store.setLicense(license);
       });
   }
 
   return (
     <StepLayout title={licenseHeaderText}>
-      { isFailed && <Danger> {message }</Danger> }
-      <StyledLicense as="textarea" px="2" py="2"  mb="4"
+      {isFailed && <Danger> {message}</Danger>}
+      <StyledLicense
+        as="textarea"
+        px="2"
+        py="2"
+        mb="4"
         value={license}
         autoComplete="off"
-        onChange={ e => setLicense(e.target.value)}
+        onChange={e => setLicense(e.target.value)}
         typography="body1"
         mono
         bg="light"
         placeholder="Insert your license key here"
-        color="text.onLight">
-      </StyledLicense>
+        color="text.onLight"
+      ></StyledLicense>
       <ButtonPrimary width="200px" disabled={btnDisabled} onClick={onContinue}>
         Continue
       </ButtonPrimary>
@@ -63,7 +67,7 @@ export function StepLicense({store})  {
 
 StepLicense.propTypes = {
   label: PropTypes.string.isRequired,
-}
+};
 
 const StyledLicense = styled(Text)`
   border-radius: 6px;

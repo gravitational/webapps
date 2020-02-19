@@ -18,9 +18,17 @@ import React from 'react';
 import Image from 'design/Image';
 import defaultLogoSvg from 'design/assets/images/gravity-logo.svg';
 
-export default function Logo({ src, ...rest}){
+export default function Logo({ src, ...rest }) {
   const logoSrc = src || defaultLogoSvg;
   return (
-    <Image mr="8" my="3" width="auto" maxWidth="120px" maxHeight="40px" src={logoSrc} {...rest}/>
-  )
+    <Image
+      mr="8"
+      my="3"
+      width="auto"
+      maxWidth="120px"
+      maxHeight="40px"
+      src={logoSrc}
+      {...rest}
+    />
+  );
 }

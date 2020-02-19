@@ -29,16 +29,15 @@ export function Services(props) {
       <ServiceList services={services} namespace={namespace} />
       <Poller namespace={namespace} onFetch={onFetch} />
     </React.Fragment>
-  )
+  );
 }
 
-export default withState( ({ match}) => {
+export default withState(({ match }) => {
   const { namespace } = match.params;
   const services = useFluxStore(getters.serviceInfoList);
   return {
     services,
     onFetch: fetchServices,
-    namespace
-
-  }
+    namespace,
+  };
 })(Services);
