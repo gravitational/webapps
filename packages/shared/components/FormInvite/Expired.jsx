@@ -29,7 +29,7 @@ export default function Expired() {
         your account administrator and request another invite.
       </Text>
       <Text typography="paragraph">
-        If you believe this is an issue with the product, please create a{' '}
+        If you believe this is an issue with the product, please create a
         <GithubLink> GitHub issue</GithubLink>.
       </Text>
     </Card>
