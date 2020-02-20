@@ -15,8 +15,70 @@
  */
 
 import React from 'react';
-import { Validation, useValidation } from './Validation';
+import Validator, { Validation, useValidation } from './Validation';
 import { render, fireEvent } from 'design/utils/testing';
+import Logger from '../../libs/logger';
+
+jest.mock('../../libs/logger', () => {
+  return {
+    create: jest.fn(() => ({ error: jest.fn() })),
+  };
+});
+
+test('class Validator methods: sub, unsub, validate', () => {
+  const mockCb1 = jest.fn();
+  const mockCb2 = jest.fn();
+  const validator = new Validator();
+
+  // test suscribe
+  validator.subscribe(mockCb1);
+  validator.subscribe(mockCb2);
+
+  // test validate runs all subscribed cb's
+  expect(validator.validate()).toEqual(true);
+  expect(mockCb1).toHaveBeenCalledTimes(1);
+  expect(mockCb2).toHaveBeenCalledTimes(1);
+  mockCb1.mockClear();
+  mockCb2.mockClear();
+
+  // test unsubscribe method removes correct cb
+  validator.unsubscribe(mockCb2);
+  expect(validator.validate()).toEqual(true);
+  expect(mockCb1).toHaveBeenCalledTimes(1);
+  expect(mockCb2).toHaveBeenCalledTimes(0);
+});
+
+test('class Validator methods: addResult, reset', () => {
+  const validator = new Validator();
+
+  // test addResult for nil object
+  const result = null;
+  validator.addResult(result);
+  expect(Logger.create).toHaveBeenCalledTimes(1);
+
+  // test addResult for boolean
+  validator.addResult(true);
+  expect(validator.valid).toBe(false);
+
+  // test addResult with incorrect object
+  let resultObj = {};
+  validator.addResult(resultObj);
+  expect(validator.valid).toBe(false);
+
+  // test addResult with correct object with "valid" prop from prior test set to false
+  resultObj = { valid: true };
+  validator.addResult(resultObj);
+  expect(validator.valid).toBe(false);
+
+  // test reset
+  validator.reset();
+  expect(validator.valid).toBe(true);
+  expect(validator.validating).toBe(false);
+
+  // test addResult with correct object with "valid" prop reset to true
+  validator.addResult(resultObj);
+  expect(validator.valid).toBe(true);
+});
 
 test('render Validation w/ non-func children', () => {
   let mockFn = null;
@@ -42,7 +104,7 @@ test('render Validation w/ non-func children', () => {
   expect(mockFn).toHaveReturnedWith(true);
 });
 
-test('render validation with function children', () => {
+test('render Validation with function children', () => {
   const mockFn = jest.fn(validator => validator.validate());
 
   const { getByText } = render(
