@@ -18,10 +18,14 @@ import React from 'react';
 import { Validation, useValidation } from './Validation';
 import { render, fireEvent } from 'design/utils/testing';
 
-test('access validator with useContext with plain children', () => {
+test('render Validation w/ non-func children', () => {
   let mockFn = null;
+
+  // access validator by using context (useValidation)
   const TestButton = prop => {
-    const validator = useValidation(); // useContext
+    const validator = useValidation();
+    expect(validator).not.toBeNull();
+
     mockFn = jest.fn(() => validator.validate());
 
     return <button onClick={mockFn}>{prop.children}</button>;
@@ -38,7 +42,7 @@ test('access validator with useContext with plain children', () => {
   expect(mockFn).toHaveReturnedWith(true);
 });
 
-test('access validator with function children', () => {
+test('render validation with function children', () => {
   const mockFn = jest.fn(validator => validator.validate());
 
   const { getByText } = render(
