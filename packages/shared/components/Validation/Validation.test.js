@@ -14,66 +14,42 @@
  * limitations under the License.
  */
 
-import Validator from './Validation';
-import Logger from '../../libs/logger';
+import React from 'react';
+import { Validation, useValidation } from './Validation';
+import { render, fireEvent } from 'design/utils/testing';
 
-jest.mock('../../libs/logger', () => {
-  return {
-    create: jest.fn(() => ({ error: jest.fn() })),
+test('access validator with useContext with plain children', () => {
+  let mockFn = null;
+  const TestButton = prop => {
+    const validator = useValidation(); // useContext
+    mockFn = jest.fn(() => validator.validate());
+
+    return <button onClick={mockFn}>{prop.children}</button>;
   };
+
+  const { getByText } = render(
+    <Validation>
+      <TestButton>hello</TestButton>
+    </Validation>
+  );
+
+  fireEvent.click(getByText(/hello/i));
+  expect(mockFn).toHaveBeenCalledTimes(1);
+  expect(mockFn).toHaveReturnedWith(true);
 });
 
-test('validation class methods: sub, unsub, validate', () => {
-  const mockCb1 = jest.fn();
-  const mockCb2 = jest.fn();
-  const validator = new Validator();
+test('access validator with function children', () => {
+  const mockFn = jest.fn(validator => validator.validate());
 
-  // test suscribe
-  validator.subscribe(mockCb1);
-  validator.subscribe(mockCb2);
+  const { getByText } = render(
+    <Validation>
+      {({ validator }) => (
+        <button onClick={() => mockFn(validator)}>hello</button>
+      )}
+    </Validation>
+  );
 
-  // test validate runs all subscribed cb's
-  expect(validator.validate()).toEqual(true);
-  expect(mockCb1).toHaveBeenCalledTimes(1);
-  expect(mockCb2).toHaveBeenCalledTimes(1);
-  mockCb1.mockClear();
-  mockCb2.mockClear();
-
-  // test unsubscribe method removes correct cb
-  validator.unsubscribe(mockCb2);
-  expect(validator.validate()).toEqual(true);
-  expect(mockCb1).toHaveBeenCalledTimes(1);
-  expect(mockCb2).toHaveBeenCalledTimes(0);
-});
-
-test('validation class methods: addResult, reset', () => {
-  const validator = new Validator();
-
-  // test addResult for nil object
-  const result = null;
-  validator.addResult(result);
-  expect(Logger.create).toHaveBeenCalledTimes(1);
-
-  // test addResult for boolean
-  validator.addResult(true);
-  expect(validator.valid).toBe(false);
-
-  // test addResult with incorrect object
-  let resultObj = {};
-  validator.addResult(resultObj);
-  expect(validator.valid).toBe(false);
-
-  // test addResult with correct object with "valid" prop from prior test set to false
-  resultObj = { valid: true };
-  validator.addResult(resultObj);
-  expect(validator.valid).toBe(false);
-
-  // test reset
-  validator.reset();
-  expect(validator.valid).toBe(true);
-  expect(validator.validating).toBe(false);
-
-  // test addResult with correct object with "valid" prop reset to true
-  validator.addResult(resultObj);
-  expect(validator.valid).toBe(true);
+  fireEvent.click(getByText(/hello/i));
+  expect(mockFn).toHaveBeenCalledTimes(1);
+  expect(mockFn).toHaveReturnedWith(true);
 });
