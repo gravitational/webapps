@@ -21,133 +21,63 @@ import {
   requiredField,
 } from './rules';
 
-test('requiredField', () => {
-  const provideValue = requiredField('mocked error message');
+describe('requiredField', () => {
+  const errMsg = 'error text';
+  const validator = requiredField(errMsg);
 
-  const fnForValidValue = provideValue('my mocked value');
-  expect(fnForValidValue()).toMatchInlineSnapshot(`
-    Object {
-      "message": "",
-      "valid": true,
-    }
-  `);
-
-  const fnForInvalidValue = provideValue('');
-  expect(fnForInvalidValue()).toMatchInlineSnapshot(`
-    Object {
-      "message": "mocked error message",
-      "valid": false,
-    }
-  `);
-
-  const fnForNilValue = provideValue(null);
-  expect(fnForNilValue()).toMatchInlineSnapshot(`
-    Object {
-      "message": "mocked error message",
-      "valid": false,
-    }
-  `);
+  test.each`
+    input                | expected
+    ${'not empty value'} | ${{ message: '', valid: true }}
+    ${''}                | ${{ message: errMsg, valid: false }}
+    ${null}              | ${{ message: errMsg, valid: false }}
+  `('test input with: $input', ({ input, expected }) => {
+    expect(validator(input)()).toEqual(expected);
+  });
 });
 
-test('requiredToken', () => {
-  const fnForValidValue = requiredToken('mocked token');
-  expect(fnForValidValue()).toMatchInlineSnapshot(`
-    Object {
-      "valid": true,
-    }
-  `);
+describe('requiredToken', () => {
+  const errMsg = 'Token is required';
 
-  const fnForInvalidValue = requiredToken('');
-  expect(fnForInvalidValue()).toMatchInlineSnapshot(`
-    Object {
-      "message": "Token is required",
-      "valid": false,
-    }
-  `);
-
-  const fnForNilValue = requiredToken(null);
-  expect(fnForNilValue()).toMatchInlineSnapshot(`
-    Object {
-      "message": "Token is required",
-      "valid": false,
-    }
-  `);
+  test.each`
+    token           | expected
+    ${'some token'} | ${{ valid: true }}
+    ${''}           | ${{ message: errMsg, valid: false }}
+    ${null}         | ${{ message: errMsg, valid: false }}
+  `('test token value with: $token', ({ token, expected }) => {
+    expect(requiredToken(token)()).toEqual(expected);
+  });
 });
 
-test('requiredPassword', () => {
-  const fnForValidValue = requiredPassword('mocked password');
-  expect(fnForValidValue()).toMatchInlineSnapshot(`
-    Object {
-      "valid": true,
-    }
-  `);
+describe('requiredPassword', () => {
+  const errMsg = 'Enter at least 6 characters';
 
-  const fnForInvalidValue = requiredPassword('');
-  expect(fnForInvalidValue()).toMatchInlineSnapshot(`
-    Object {
-      "message": "Enter at least 6 characters",
-      "valid": false,
-    }
-  `);
-
-  const fnForNilValue = requiredPassword(null);
-  expect(fnForNilValue()).toMatchInlineSnapshot(`
-    Object {
-      "message": "Enter at least 6 characters",
-      "valid": false,
-    }
-  `);
+  test.each`
+    password            | expected
+    ${'valid password'} | ${{ valid: true }}
+    ${''}               | ${{ message: errMsg, valid: false }}
+    ${null}             | ${{ message: errMsg, valid: false }}
+  `('test password value with: $password', ({ password, expected }) => {
+    expect(requiredPassword(password)()).toEqual(expected);
+  });
 });
 
-test('requiredConfirmedPassword', () => {
-  const password = 'mocked password';
-  const provideConfirmPass = requiredConfirmedPassword(password);
+describe('requiredConfirmedPassword', () => {
+  const matchingPassword = 'valid password';
+  const errMsgProvidePassword = 'Please confirm your password';
+  const errMsgMismatchPassword = 'Password does not match';
 
-  const fnForMatchingPass = provideConfirmPass(password);
-  expect(fnForMatchingPass()).toMatchInlineSnapshot(`
-    Object {
-      "valid": true,
+  test.each`
+    password            | confirmPassword     | expected
+    ${matchingPassword} | ${matchingPassword} | ${{ valid: true }}
+    ${''}               | ${'mismatch'}       | ${{ message: errMsgMismatchPassword, valid: false }}
+    ${null}             | ${'mismatch'}       | ${{ message: errMsgMismatchPassword, valid: false }}
+    ${'mistmatch'}      | ${null}             | ${{ message: errMsgProvidePassword, valid: false }}
+  `(
+    'test password: $password, confirmPassword: $confirmPassword',
+    ({ password, confirmPassword, expected }) => {
+      expect(requiredConfirmedPassword(password)(confirmPassword)()).toEqual(
+        expected
+      );
     }
-  `);
-
-  const fnForMisMatchPass = provideConfirmPass('not matching password');
-  expect(fnForMisMatchPass()).toMatchInlineSnapshot(`
-    Object {
-      "message": "Password does not match",
-      "valid": false,
-    }
-  `);
-
-  const fnForEmptyStrConfirmPass = provideConfirmPass('');
-  expect(fnForEmptyStrConfirmPass()).toMatchInlineSnapshot(`
-    Object {
-      "message": "Please confirm your password",
-      "valid": false,
-    }
-  `);
-
-  const fnForNilConfirmPass = provideConfirmPass(null);
-  expect(fnForNilConfirmPass()).toMatchInlineSnapshot(`
-    Object {
-      "message": "Please confirm your password",
-      "valid": false,
-    }
-  `);
-
-  // test with null values for both password and passwordConfirm
-  const fnNilInitialPass = requiredConfirmedPassword(null);
-  expect(fnNilInitialPass()(null)).toMatchInlineSnapshot(`
-    Object {
-      "message": "Please confirm your password",
-      "valid": false,
-    }
-  `);
-
-  // test with null password and string passwordConfirm
-  expect(fnNilInitialPass()('')).toMatchInlineSnapshot(`
-    Object {
-      "message": "Please confirm your password",
-      "valid": false,
-    }
-  `);
+  );
 });

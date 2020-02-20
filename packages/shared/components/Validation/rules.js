@@ -15,15 +15,9 @@ limitations under the License.
 */
 
 const requiredField = message => value => () => {
-  let errMsg = message;
-
-  if (!message) {
-    errMsg = '';
-  }
-
   return {
     valid: !!value,
-    message: !value ? errMsg : '',
+    message: !value ? message : '',
   };
 };
 
