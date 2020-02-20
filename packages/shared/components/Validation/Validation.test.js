@@ -25,7 +25,7 @@ jest.mock('../../libs/logger', () => {
   };
 });
 
-test('class Validator methods: sub, unsub, validate', () => {
+test('methods of Validator: sub, unsub, validate', () => {
   const mockCb1 = jest.fn();
   const mockCb2 = jest.fn();
   const validator = new Validator();
@@ -48,7 +48,7 @@ test('class Validator methods: sub, unsub, validate', () => {
   expect(mockCb2).toHaveBeenCalledTimes(0);
 });
 
-test('class Validator methods: addResult, reset', () => {
+test('methods of Validator: addResult, reset', () => {
   const validator = new Validator();
 
   // test addResult for nil object
@@ -86,7 +86,6 @@ test('render Validation w/ non-func children', () => {
   // access validator by using context (useValidation)
   const TestButton = prop => {
     const validator = useValidation();
-    expect(validator).not.toBeNull();
 
     mockFn = jest.fn(() => validator.validate());
 

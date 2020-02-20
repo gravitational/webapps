@@ -68,10 +68,10 @@ describe('requiredConfirmedPassword', () => {
   test.each`
     password       | confirmPassword | expected
     ${'pwd123'}    | ${'pwd123'}     | ${{ valid: true }}
-    ${''}          | ${'mismatch'}   | ${{ message: mismatchError, valid: false }}
-    ${null}        | ${'mismatch'}   | ${{ message: mismatchError, valid: false }}
-    ${'mistmatch'} | ${null}         | ${{ message: confirmError, valid: false }}
-    ${null}        | ${null}         | ${{ message: confirmError, valid: false }}
+    ${''}          | ${'mismatch'}   | ${{ valid: false, message: mismatchError }}
+    ${null}        | ${'mismatch'}   | ${{ valid: false, message: mismatchError }}
+    ${'mistmatch'} | ${null}         | ${{ valid: false, message: confirmError }}
+    ${null}        | ${null}         | ${{ valid: false, message: confirmError }}
   `(
     'test password: $password, confirmPassword: $confirmPassword',
     ({ password, confirmPassword, expected }) => {
