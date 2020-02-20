@@ -62,16 +62,16 @@ describe('requiredPassword', () => {
 });
 
 describe('requiredConfirmedPassword', () => {
-  const matchingPassword = 'valid password';
-  const errMsgProvidePassword = 'Please confirm your password';
-  const errMsgMismatchPassword = 'Password does not match';
+  const mismatchError = 'Password does not match';
+  const confirmError = 'Please confirm your password';
 
   test.each`
-    password            | confirmPassword     | expected
-    ${matchingPassword} | ${matchingPassword} | ${{ valid: true }}
-    ${''}               | ${'mismatch'}       | ${{ message: errMsgMismatchPassword, valid: false }}
-    ${null}             | ${'mismatch'}       | ${{ message: errMsgMismatchPassword, valid: false }}
-    ${'mistmatch'}      | ${null}             | ${{ message: errMsgProvidePassword, valid: false }}
+    password       | confirmPassword | expected
+    ${'pwd123'}    | ${'pwd123'}     | ${{ valid: true }}
+    ${''}          | ${'mismatch'}   | ${{ message: mismatchError, valid: false }}
+    ${null}        | ${'mismatch'}   | ${{ message: mismatchError, valid: false }}
+    ${'mistmatch'} | ${null}         | ${{ message: confirmError, valid: false }}
+    ${null}        | ${null}         | ${{ message: confirmError, valid: false }}
   `(
     'test password: $password, confirmPassword: $confirmPassword',
     ({ password, confirmPassword, expected }) => {
