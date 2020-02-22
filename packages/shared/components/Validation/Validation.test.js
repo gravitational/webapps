@@ -15,8 +15,8 @@
  */
 
 import React from 'react';
-import Validator, { Validation, useValidation, useRule } from './Validation';
-import { render, fireEvent, wait } from 'design/utils/testing';
+import Validator, { Validation, useValidation } from './Validation';
+import { render, fireEvent } from 'design/utils/testing';
 import Logger from '../../libs/logger';
 
 jest.mock('../../libs/logger', () => {
@@ -122,53 +122,4 @@ test('render Validation with function children', () => {
   fireEvent.click(getByText(/hello/i));
   expect(mockFn).toHaveBeenCalledTimes(1);
   expect(mockFn).toHaveReturnedWith(true);
-});
-
-describe('useRule custom hook', () => {
-  // empty component which runs useRule hook
-  const TestRules = ({ rule }) => {
-    useRule(rule);
-    return null;
-  };
-
-  test('error path', () => {
-    render(
-      <Validation>
-        <TestRules rule={'not a function'} />
-      </Validation>
-    );
-
-    expect(Logger.create().warn).toHaveBeenCalledTimes(1);
-  });
-
-  test('all Validator related methods are being called', async () => {
-    const rule = () => ({ valid: true });
-    let validatorInstance = null;
-    let spyOnSubscribe = null;
-
-    const { unmount } = render(
-      <Validation>
-        {({ validator }) => {
-          validatorInstance = validator;
-          spyOnSubscribe = jest.spyOn(validatorInstance, 'subscribe');
-          return <TestRules rule={rule} />;
-        }}
-      </Validation>
-    );
-
-    expect(spyOnSubscribe).toHaveBeenCalledTimes(1);
-
-    // test addResult is called which sets validating prop to true
-    const spyOnAddResult = jest.spyOn(validatorInstance, 'addResult');
-    await wait(() => validatorInstance.validate());
-
-    expect(spyOnAddResult).toHaveBeenCalledTimes(1);
-    expect(validatorInstance.valid).toBe(true);
-    expect(validatorInstance.validating).toBe(true);
-
-    // test unsubscribe is called when unmounting
-    const spyOnUnsubscribe = jest.spyOn(validatorInstance, 'unsubscribe');
-    unmount();
-    expect(spyOnUnsubscribe).toHaveBeenCalledTimes(1);
-  });
 });
