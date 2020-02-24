@@ -22,24 +22,24 @@ import theme from '../../../design/src/theme';
 
 jest.mock('./../Validation/useRule');
 
-const mockFnRule = jest.fn().mockName('rule');
-const label = 'test label text renders';
-const placeholder = 'text to query input by';
-
 test('valid values, autofocus, onChange, onKeyPress', () => {
+  const mockRule = jest.fn().mockName('rule');
+  const label = 'label text';
+  const placeholder = 'placeholder text';
+
   // mock positive validation
   useRule.mockImplementation(() => ({ valid: true, message: '' }));
 
-  const mockFnOnChange = jest.fn().mockName('onChange');
-  const mockFnOnKeyPress = jest.fn().mockName('onKeyPress');
+  const mockOnChange = jest.fn().mockName('onChange');
+  const mockOnKeyPress = jest.fn().mockName('onKeyPress');
   const { getByText, getByPlaceholderText } = render(
     <FieldInput
       placeholder={placeholder}
       autoFocus={true}
       label={label}
-      rule={mockFnRule}
-      onChange={mockFnOnChange}
-      onKeyPress={mockFnOnKeyPress}
+      rule={mockRule}
+      onChange={mockOnChange}
+      onKeyPress={mockOnKeyPress}
     />
   );
 
@@ -52,14 +52,17 @@ test('valid values, autofocus, onChange, onKeyPress', () => {
 
   // test onChange prop is respected
   fireEvent.change(inputEl, { target: { value: 'test' } });
-  expect(mockFnOnChange).toHaveBeenCalledTimes(1);
+  expect(mockOnChange).toHaveBeenCalledTimes(1);
 
   // test onKeyPress prop is respected
   fireEvent.keyPress(inputEl, { key: 'Enter', keyCode: 13 });
-  expect(mockFnOnKeyPress).toHaveBeenCalledTimes(1);
+  expect(mockOnKeyPress).toHaveBeenCalledTimes(1);
 });
 
-test('invalid value renders err msg and colors', () => {
+test('input validation error state', () => {
+  const mockRule = jest.fn().mockName('rule');
+  const label = 'label text';
+  const placeholder = 'placeholder text';
   const errMsg = 'some error message';
   const errorColor = theme.colors.error.main;
 
@@ -67,7 +70,7 @@ test('invalid value renders err msg and colors', () => {
   useRule.mockImplementation(() => ({ valid: false, message: errMsg }));
 
   const { getByText, getByPlaceholderText } = render(
-    <FieldInput placeholder={placeholder} label={label} rule={mockFnRule} />
+    <FieldInput placeholder={placeholder} label={label} rule={mockRule} />
   );
 
   // test !valid values renders with error message
