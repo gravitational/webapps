@@ -23,62 +23,57 @@ import theme from '../../../design/src/theme';
 jest.mock('./../Validation/useRule');
 
 test('valid values, autofocus, onChange, onKeyPress', () => {
-  const mockRule = jest.fn().mockName('rule');
-  const label = 'label text';
-  const placeholder = 'placeholder text';
+  const rule = jest.fn();
+  const onChange = jest.fn();
+  const onKeyPress = jest.fn();
 
   // mock positive validation
   useRule.mockImplementation(() => ({ valid: true, message: '' }));
 
-  const mockOnChange = jest.fn().mockName('onChange');
-  const mockOnKeyPress = jest.fn().mockName('onKeyPress');
   const { getByText, getByPlaceholderText } = render(
     <FieldInput
-      placeholder={placeholder}
+      placeholder="placeholderText"
       autoFocus={true}
-      label={label}
-      rule={mockRule}
-      onChange={mockOnChange}
-      onKeyPress={mockOnKeyPress}
+      label="labelText"
+      rule={rule}
+      onChange={onChange}
+      onKeyPress={onKeyPress}
     />
   );
 
   // test label is displayed
-  expect(getByText(label)).toBeInTheDocument();
+  expect(getByText('labelText')).toBeInTheDocument();
 
   // test autofocus prop is respected
-  const inputEl = getByPlaceholderText(placeholder);
+  const inputEl = getByPlaceholderText('placeholderText');
   expect(document.activeElement).toEqual(inputEl);
 
   // test onChange prop is respected
   fireEvent.change(inputEl, { target: { value: 'test' } });
-  expect(mockOnChange).toHaveBeenCalledTimes(1);
+  expect(onChange).toHaveBeenCalledTimes(1);
 
   // test onKeyPress prop is respected
   fireEvent.keyPress(inputEl, { key: 'Enter', keyCode: 13 });
-  expect(mockOnKeyPress).toHaveBeenCalledTimes(1);
+  expect(onKeyPress).toHaveBeenCalledTimes(1);
 });
 
 test('input validation error state', () => {
-  const mockRule = jest.fn().mockName('rule');
-  const label = 'label text';
-  const placeholder = 'placeholder text';
-  const errMsg = 'some error message';
+  const rule = jest.fn();
   const errorColor = theme.colors.error.main;
 
   // mock negative validation
-  useRule.mockImplementation(() => ({ valid: false, message: errMsg }));
+  useRule.mockImplementation(() => ({ valid: false, message: 'errorMsg' }));
 
   const { getByText, getByPlaceholderText } = render(
-    <FieldInput placeholder={placeholder} label={label} rule={mockRule} />
+    <FieldInput placeholder="placeholderText" label="labelText" rule={rule} />
   );
 
   // test !valid values renders with error message
-  const labelEl = getByText(errMsg);
+  const labelEl = getByText('errorMsg');
   expect(labelEl).toHaveStyle({ color: errorColor });
 
   // test !valid values renders error colors
-  const inputEl = getByPlaceholderText(placeholder);
+  const inputEl = getByPlaceholderText('placeholderText');
   expect(inputEl).toHaveStyle({
     'border-color': errorColor,
   });
