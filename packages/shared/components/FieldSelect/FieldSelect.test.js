@@ -24,8 +24,11 @@ jest.mock('./../Validation/useRule');
 
 test('valid values and onChange prop', () => {
   const rule = jest.fn();
-  const onChange = jest.fn();
-  const options = ['a', 'b', 'c'];
+  const onChange = jest.fn(e => e);
+  const options = [
+    { value: 'a', label: 'A' },
+    { value: 'b', label: 'B' },
+  ];
 
   useRule.mockImplementation(() => ({ valid: true, message: '' }));
   const { getByText, container } = render(
@@ -45,16 +48,11 @@ test('valid values and onChange prop', () => {
   expect(getByText('placeholderText')).toBeInTheDocument();
 
   // test onChange is respected
-  // "react-select__control" defined by react-select library
-  const selectEl = container.getElementsByClassName('react-select__control')[0];
+  const selectEl = container.querySelector('input');
+  fireEvent.focus(selectEl);
   fireEvent.keyDown(selectEl, { key: 'ArrowDown', keyCode: 40 });
-
-  // menu is only visible after clicking or keydowning the select element
-  // "react-select__menu" defined by react-select library
-  const menuEl = container.getElementsByClassName('react-select__menu')[0];
-  fireEvent.keyDown(menuEl, { key: 'Enter', keyCode: 13 });
-
-  expect(onChange).toHaveBeenCalledTimes(1);
+  fireEvent.click(getByText('B'));
+  expect(onChange).toHaveReturnedWith({ value: 'b', label: 'B' });
 });
 
 test('select element validation error state', () => {
