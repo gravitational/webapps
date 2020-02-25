@@ -27,14 +27,13 @@ const ssoProvider = [
 ];
 
 test.each`
-  auth2faType                 | isProcessing | authProviders  | expTexts
-  ${Auth2faTypeEnum.DISABLED} | ${false}     | ${ssoProvider} | ${[Type.GITHUB, Type.GOOGLE]}
-  ${Auth2faTypeEnum.DISABLED} | ${false}     | ${[]}          | ${[]}
-  ${Auth2faTypeEnum.OTP}      | ${false}     | ${[]}          | ${['two factor token', 'download google authenticator']}
-  ${Auth2faTypeEnum.UTF}      | ${true}      | ${[]}          | ${['insert your U2F key and press the button on the key']}
+  auth2faType                 | authProviders  | expTexts
+  ${Auth2faTypeEnum.DISABLED} | ${ssoProvider} | ${[Type.GITHUB, Type.GOOGLE]}
+  ${Auth2faTypeEnum.DISABLED} | ${[]}          | ${[]}
+  ${Auth2faTypeEnum.OTP}      | ${[]}          | ${['two factor token', 'download google authenticator']}
 `(
   'test render and error states w/ auth2faType: $auth2faType, w/ authProviders: $authProviders',
-  ({ auth2faType, isProcessing, authProviders, expTexts }) => {
+  ({ auth2faType, authProviders, expTexts }) => {
     const onLogin = jest.fn();
     const onLoginWithSso = jest.fn();
     const onLoginWithU2f = jest.fn();
@@ -45,7 +44,7 @@ test.each`
         title="titleText"
         auth2faType={auth2faType}
         authProviders={authProviders}
-        attempt={{ isFailed: false, isProcessing, message: '' }}
+        attempt={{ isFailed: false, isProcessing: false, message: '' }}
         onLogin={onLogin}
         onLoginWithSso={onLoginWithSso}
         onLoginWithU2f={onLoginWithU2f}
@@ -62,11 +61,6 @@ test.each`
       const re = new RegExp(text, 'i');
       expect(getByText(re)).toBeInTheDocument();
     });
-
-    if (isProcessing) {
-      expect(getByText(/login/i)).toBeDisabled();
-      return;
-    }
 
     // test input element validation error states
     fireEvent.click(getByText(/login/i));
@@ -108,6 +102,35 @@ test.each`
     });
   }
 );
+
+test('prop auth2faType U2F', () => {
+  const onLogin = jest.fn();
+  const onLoginWithSso = jest.fn();
+  const onLoginWithU2f = jest.fn();
+
+  const { getByText } = render(
+    <FormLogin
+      title="titleText"
+      auth2faType={Auth2faTypeEnum.UTF}
+      authProviders={[]}
+      attempt={{ isFailed: false, isProcessing: true, message: '' }}
+      onLogin={onLogin}
+      onLoginWithSso={onLoginWithSso}
+      onLoginWithU2f={onLoginWithU2f}
+    />
+  );
+
+  expect(getByText('titleText')).toBeInTheDocument();
+  expect(getByText(/username/i)).toBeInTheDocument();
+  expect(getByText(/password/i)).toBeInTheDocument();
+
+  const expEl = getByText(
+    /insert your U2F key and press the button on the key/i
+  );
+  expect(expEl).toBeInTheDocument();
+
+  expect(getByText(/login/i)).toBeDisabled();
+});
 
 test.each`
   auth2faType                 | authProviders  | testPurpose

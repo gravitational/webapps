@@ -149,7 +149,7 @@ LoginForm.propTypes = {
    *
    * enums are defined in shared/ButtonSso/utils.js
    */
-  authProviders: PropTypes.arrayOf(PropTypes.string),
+  authProviders: PropTypes.array,
 
   /**
    * auth2faType defines login type.
