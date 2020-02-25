@@ -162,3 +162,26 @@ test.each`
     expect(onLogin).toHaveBeenCalledTimes(1);
   }
 );
+
+test('prop attempt with isFailing and error message', () => {
+  const onLogin = jest.fn();
+  const onLoginWithSso = jest.fn();
+  const onLoginWithU2f = jest.fn();
+
+  const { getByText } = render(
+    <FormLogin
+      auth2faType={Auth2faTypeEnum.DISABLED}
+      authProviders={[]}
+      attempt={{ isFailed: true, isProcessing: false, message: 'errMsg' }}
+      onLogin={onLogin}
+      onLoginWithSso={onLoginWithSso}
+      onLoginWithU2f={onLoginWithU2f}
+    />
+  );
+
+  const errMsgEl = getByText('errMsg');
+  expect(errMsgEl).toHaveStyle({
+    background: theme.colors.danger,
+    color: theme.colors.primary.contrastText,
+  });
+});
