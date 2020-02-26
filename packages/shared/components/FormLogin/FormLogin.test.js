@@ -17,93 +17,85 @@
 import React from 'react';
 import FormLogin from './FormLogin';
 import { render, fireEvent } from 'design/utils/testing';
-import theme from '../../../design/src/theme';
 import { Auth2faTypeEnum, AuthProviderTypeEnum } from '../../services/enums';
 import { TypeEnum as Type } from '../ButtonSso/';
 
-const ssoProvider = [
-  { type: AuthProviderTypeEnum.OIDC, url: '', name: Type.GITHUB },
-  { type: AuthProviderTypeEnum.OIDC, url: '', name: Type.GOOGLE },
-];
+test('login with auth2faType: disabled with ssoProviders', () => {
+  const onLogin = jest.fn();
+  const onLoginWithSso = jest.fn();
+  const onLoginWithU2f = jest.fn();
 
-test.each`
-  auth2faType                 | authProviders  | expTexts
-  ${Auth2faTypeEnum.DISABLED} | ${ssoProvider} | ${[Type.GITHUB, Type.GOOGLE]}
-  ${Auth2faTypeEnum.DISABLED} | ${[]}          | ${[]}
-  ${Auth2faTypeEnum.OTP}      | ${[]}          | ${['two factor token', 'download google authenticator']}
-`(
-  'test render and error states w/ auth2faType: $auth2faType, w/ authProviders: $authProviders',
-  ({ auth2faType, authProviders, expTexts }) => {
-    const onLogin = jest.fn();
-    const onLoginWithSso = jest.fn();
-    const onLoginWithU2f = jest.fn();
-    const errorColor = theme.colors.error.main;
+  const { getByText, getByPlaceholderText } = render(
+    <FormLogin
+      title="titleText"
+      auth2faType={Auth2faTypeEnum.DISABLED}
+      authProviders={[
+        { type: AuthProviderTypeEnum.OIDC, url: '', name: Type.GITHUB },
+      ]}
+      attempt={{ isFailed: false, isProcessing: false, message: '' }}
+      onLogin={onLogin}
+      onLoginWithSso={onLoginWithSso}
+      onLoginWithU2f={onLoginWithU2f}
+    />
+  );
 
-    const { getByText } = render(
-      <FormLogin
-        title="titleText"
-        auth2faType={auth2faType}
-        authProviders={authProviders}
-        attempt={{ isFailed: false, isProcessing: false, message: '' }}
-        onLogin={onLogin}
-        onLoginWithSso={onLoginWithSso}
-        onLoginWithU2f={onLoginWithU2f}
-      />
-    );
+  expect(getByText('titleText')).toBeInTheDocument();
 
-    // test basics are rendered
-    expect(getByText('titleText')).toBeInTheDocument();
-    expect(getByText(/username/i)).toBeInTheDocument();
-    expect(getByText(/password/i)).toBeInTheDocument();
+  // fill form
+  fireEvent.change(getByPlaceholderText(/user name/i), {
+    target: { value: 'username' },
+  });
+  fireEvent.change(getByPlaceholderText(/password/i), {
+    target: { value: '123' },
+  });
+  fireEvent.click(getByText(/login/i));
 
-    // test prop specifics are rendered
-    expTexts.forEach(text => {
-      const re = new RegExp(text, 'i');
-      expect(getByText(re)).toBeInTheDocument();
-    });
+  expect(onLogin).toHaveBeenCalledWith('username', '123', '');
+  expect(onLoginWithSso).not.toHaveBeenCalled();
+  expect(onLoginWithU2f).not.toHaveBeenCalled();
+  jest.clearAllMocks();
 
-    // test input element validation error states
-    fireEvent.click(getByText(/login/i));
+  // test ssoProvider buttons
+  fireEvent.click(getByText(/github/i));
+  expect(onLoginWithSso).toHaveBeenCalledTimes(1);
+  expect(onLogin).not.toHaveBeenCalled();
+  expect(onLoginWithU2f).not.toHaveBeenCalled();
+});
 
-    if (auth2faType == Auth2faTypeEnum.OTP) {
-      const tokenLabel = getByText(/token is required/i);
-      expect(tokenLabel).toHaveStyle({ color: errorColor });
-      expect(tokenLabel.nextElementSibling).toHaveStyle({
-        'border-color': errorColor,
-      });
-    }
+test('login with auth2faType: OTP', () => {
+  const onLogin = jest.fn();
+  const onLoginWithSso = jest.fn();
+  const onLoginWithU2f = jest.fn();
 
-    let usernameLabel = getByText(/username is required/i);
-    expect(usernameLabel).toHaveStyle({ color: errorColor });
-    expect(usernameLabel.nextElementSibling).toHaveStyle({
-      'border-color': errorColor,
-    });
+  const { getByText, getByPlaceholderText } = render(
+    <FormLogin
+      auth2faType={Auth2faTypeEnum.OTP}
+      authProviders={[]}
+      attempt={{ isFailed: false, isProcessing: false, message: '' }}
+      onLogin={onLogin}
+      onLoginWithSso={onLoginWithSso}
+      onLoginWithU2f={onLoginWithU2f}
+    />
+  );
 
-    const passwordLabel = getByText(/password is required/i);
-    expect(passwordLabel).toHaveStyle({ color: errorColor });
-    expect(passwordLabel.nextElementSibling).toHaveStyle({
-      'border-color': errorColor,
-    });
+  // fill form
+  fireEvent.change(getByPlaceholderText(/user name/i), {
+    target: { value: 'username' },
+  });
+  fireEvent.change(getByPlaceholderText(/password/i), {
+    target: { value: '123' },
+  });
+  fireEvent.change(getByPlaceholderText(/123 456/i), {
+    target: { value: '456' },
+  });
+  fireEvent.click(getByText(/login/i));
 
-    // test changing input value removes error state
-    fireEvent.change(usernameLabel.nextElementSibling, {
-      target: { value: 'a' },
-    });
-    expect(getByText(/username/i)).toHaveStyle({ color: theme.colors.light });
+  expect(onLogin).toHaveBeenCalledWith('username', '123', '456');
+  expect(onLoginWithSso).not.toHaveBeenCalled();
+  expect(onLoginWithU2f).not.toHaveBeenCalled();
+});
 
-    // test deleting input value triggers back error state
-    fireEvent.change(getByText(/username/i).nextElementSibling, {
-      target: { value: '' },
-    });
-    usernameLabel = getByText(/username is required/i);
-    expect(usernameLabel).toHaveStyle({ color: errorColor });
-    expect(usernameLabel.nextElementSibling).toHaveStyle({
-      'border-color': errorColor,
-    });
-  }
-);
-
-test('prop auth2faType U2F', () => {
+test('login with auth2faType: U2F', () => {
   const onLogin = jest.fn();
   const onLoginWithSso = jest.fn();
   const onLoginWithU2f = jest.fn();
@@ -120,73 +112,42 @@ test('prop auth2faType U2F', () => {
     />
   );
 
-  expect(getByText('titleText')).toBeInTheDocument();
-  expect(getByText(/username/i)).toBeInTheDocument();
-  expect(getByText(/password/i)).toBeInTheDocument();
-
   const expEl = getByText(
     /insert your U2F key and press the button on the key/i
   );
-  expect(expEl).toBeInTheDocument();
 
+  expect(expEl).toBeInTheDocument();
   expect(getByText(/login/i)).toBeDisabled();
 });
 
-test.each`
-  auth2faType                 | authProviders  | testPurpose
-  ${Auth2faTypeEnum.DISABLED} | ${ssoProvider} | ${'onLoginWithSso'}
-  ${Auth2faTypeEnum.DISABLED} | ${[]}          | ${'onLogin'}
-  ${Auth2faTypeEnum.OTP}      | ${[]}          | ${'onLogin'}
-  ${Auth2faTypeEnum.UTF}      | ${[]}          | ${'onLoginWithU2f'}
-`(
-  'test prop $testPurpose is respected with auth2faType: $auth2faType',
-  ({ auth2faType, authProviders }) => {
-    const onLogin = jest.fn();
-    const onLoginWithSso = jest.fn();
-    const onLoginWithU2f = jest.fn();
+test('input validation errors with OTP', () => {
+  const onLogin = jest.fn();
+  const onLoginWithSso = jest.fn();
+  const onLoginWithU2f = jest.fn();
 
-    const { getByText } = render(
-      <FormLogin
-        auth2faType={auth2faType}
-        authProviders={authProviders}
-        attempt={{ isFailed: false, isProcessing: false, message: '' }}
-        onLogin={onLogin}
-        onLoginWithSso={onLoginWithSso}
-        onLoginWithU2f={onLoginWithU2f}
-      />
-    );
+  const { getByText } = render(
+    <FormLogin
+      title="titleText"
+      auth2faType={Auth2faTypeEnum.OTP}
+      attempt={{ isFailed: false, isProcessing: false, message: '' }}
+      onLogin={onLogin}
+      onLoginWithSso={onLoginWithSso}
+      onLoginWithU2f={onLoginWithU2f}
+    />
+  );
 
-    // fill out form
-    const usernameInput = getByText(/username/i).nextElementSibling;
-    fireEvent.change(usernameInput, { target: { value: 'a' } });
+  fireEvent.click(getByText(/login/i));
 
-    const passwordInput = getByText(/password/i).nextElementSibling;
-    fireEvent.change(passwordInput, { target: { value: 'a' } });
+  expect(onLogin).not.toHaveBeenCalled();
+  expect(onLoginWithSso).not.toHaveBeenCalled();
+  expect(onLoginWithU2f).not.toHaveBeenCalled();
 
-    if (auth2faType == Auth2faTypeEnum.OTP) {
-      const tokenInput = getByText(/two factor token/i).nextElementSibling;
-      fireEvent.change(tokenInput, { target: { value: 'a' } });
-    }
+  expect(getByText(/username is required/i)).toBeInTheDocument();
+  expect(getByText(/password is required/i)).toBeInTheDocument();
+  expect(getByText(/token is required/i)).toBeInTheDocument();
+});
 
-    // test login clicks calls the correct cb's
-    if (authProviders.length > 0) {
-      const re = new RegExp(Type.GITHUB, 'i');
-      fireEvent.click(getByText(re));
-      expect(onLoginWithSso).toHaveBeenCalledTimes(1);
-    }
-
-    fireEvent.click(getByText(/login/i));
-
-    if (auth2faType == Auth2faTypeEnum.UTF) {
-      expect(onLoginWithU2f).toHaveBeenCalledTimes(1);
-      return;
-    }
-
-    expect(onLogin).toHaveBeenCalledTimes(1);
-  }
-);
-
-test('prop attempt with isFailing and error message', () => {
+test('attempt object with prop isFailing and error message', () => {
   const onLogin = jest.fn();
   const onLoginWithSso = jest.fn();
   const onLoginWithU2f = jest.fn();
@@ -202,9 +163,5 @@ test('prop attempt with isFailing and error message', () => {
     />
   );
 
-  const errMsgEl = getByText('errMsg');
-  expect(errMsgEl).toHaveStyle({
-    background: theme.colors.danger,
-    color: theme.colors.primary.contrastText,
-  });
+  expect(getByText('errMsg')).toBeInTheDocument();
 });
