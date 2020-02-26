@@ -35,15 +35,16 @@ const placeholdConfirm = /confirm password/i;
 
 const btnSubmitText = /update password/i;
 
-const inputVal = { target: { value: 'aaaaaa' } };
+const inputValText = 'aaaaaa';
+const inputVal = { target: { value: inputValText } };
 
-test('basic form', async () => {
+test('input validation error states', async () => {
   const onChangePass = jest.fn().mockResolvedValue();
   const onChangePassWithU2f = jest.fn().mockResolvedValue();
 
-  const { getByText, getByPlaceholderText } = render(
+  const { getByText } = render(
     <FormPassword
-      auth2faType={Auth2faTypeEnum.DISABLED}
+      auth2faType={Auth2faTypeEnum.OTP}
       onChangePass={onChangePass}
       onChangePassWithU2f={onChangePassWithU2f}
     />
@@ -57,6 +58,20 @@ test('basic form', async () => {
   expect(getByText(/current password is required/i)).toBeInTheDocument();
   expect(getByText(/enter at least 6 characters/i)).toBeInTheDocument();
   expect(getByText(/please confirm your password/i)).toBeInTheDocument();
+  expect(getByText(/token is required/i)).toBeInTheDocument();
+});
+
+test('prop auth2faType: disabled', async () => {
+  const onChangePass = jest.fn().mockResolvedValue();
+  const onChangePassWithU2f = jest.fn().mockResolvedValue();
+
+  const { getByText, getByPlaceholderText } = render(
+    <FormPassword
+      auth2faType={Auth2faTypeEnum.DISABLED}
+      onChangePass={onChangePass}
+      onChangePassWithU2f={onChangePassWithU2f}
+    />
+  );
 
   // fill out form
   fireEvent.change(getByPlaceholderText(placeholdCurrPass), inputVal);
@@ -65,7 +80,7 @@ test('basic form', async () => {
 
   // test the correct cb is called when submitting
   await wait(() => fireEvent.click(getByText(btnSubmitText)));
-  expect(onChangePass).toHaveBeenCalledTimes(1);
+  expect(onChangePass).toHaveBeenCalledWith(inputValText, inputValText, '');
   expect(onChangePassWithU2f).not.toHaveBeenCalled();
 
   // test rendering of status message after submit
@@ -81,7 +96,7 @@ test('prop auth2faType: OTP form', async () => {
   const onChangePass = jest.fn().mockResolvedValue();
   const onChangePassWithU2f = jest.fn().mockResolvedValue();
 
-  const { getByText } = render(
+  const { getByText, getByPlaceholderText } = render(
     <FormPassword
       auth2faType={Auth2faTypeEnum.OTP}
       onChangePass={onChangePass}
@@ -92,7 +107,20 @@ test('prop auth2faType: OTP form', async () => {
   // test input validation error state
   await wait(() => fireEvent.click(getByText(btnSubmitText)));
 
-  expect(getByText(/token is required/i)).toBeInTheDocument();
+  // fill out form
+  fireEvent.change(getByPlaceholderText(placeholdCurrPass), inputVal);
+  fireEvent.change(getByPlaceholderText(placeholdNewPass), inputVal);
+  fireEvent.change(getByPlaceholderText(placeholdConfirm), inputVal);
+  fireEvent.change(getByPlaceholderText(/otp token/i), inputVal);
+
+  // test the correct cb is called when submitting
+  await wait(() => fireEvent.click(getByText(btnSubmitText)));
+  expect(onChangePass).toHaveBeenCalledWith(
+    inputValText,
+    inputValText,
+    inputValText
+  );
+  expect(onChangePassWithU2f).not.toHaveBeenCalled();
 });
 
 test('prop auth2faType: U2f form with mocked error', async () => {
