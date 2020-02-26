@@ -59,7 +59,7 @@ function makeActions(setState) {
         })
         .catch(err => {
           error(err);
-          // throw err;
+          throw err;
         });
     } catch (err) {
       error(err);

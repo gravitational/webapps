@@ -48,6 +48,7 @@ function FormPassword(props) {
 
     return onChangePass(oldPass, newPass, token);
   }
+
   function resetForm() {
     setOldPass('');
     setNewPass('');
@@ -62,7 +63,16 @@ function FormPassword(props) {
     }
 
     validator.reset();
-    attemptActions.do(() => submit().then(() => resetForm()));
+
+    attemptActions.start();
+    submit()
+      .then(() => {
+        attemptActions.stop();
+        resetForm();
+      })
+      .catch(err => {
+        attemptActions.error(err);
+      });
   }
 
   return (

@@ -121,6 +121,12 @@ test('prop auth2faType: OTP form', async () => {
     inputValText
   );
   expect(onChangePassWithU2f).not.toHaveBeenCalled();
+
+  // test clearing of form values after submit
+  expect(getByPlaceholderText(placeholdCurrPass).value).toBe('');
+  expect(getByPlaceholderText(placeholdNewPass).value).toBe('');
+  expect(getByPlaceholderText(placeholdConfirm).value).toBe('');
+  expect(getByPlaceholderText(/otp token/i).value).toBe('');
 });
 
 test('prop auth2faType: U2f form with mocked error', async () => {
@@ -141,6 +147,7 @@ test('prop auth2faType: U2f form with mocked error', async () => {
   fireEvent.change(getByPlaceholderText(placeholdConfirm), inputVal);
 
   // test U2F status message
+
   await wait(() => {
     fireEvent.click(getByText(btnSubmitText));
     const statusMsg = getByText(
@@ -155,4 +162,9 @@ test('prop auth2faType: U2f form with mocked error', async () => {
 
   // test rendering of status message after submit
   expect(getByText(/errMsg/i)).toBeInTheDocument();
+
+  // test forms are NOT cleared with processing errors
+  expect(getByPlaceholderText(placeholdCurrPass).value).not.toBe('');
+  expect(getByPlaceholderText(placeholdNewPass).value).not.toBe('');
+  expect(getByPlaceholderText(placeholdConfirm).value).not.toBe('');
 });
