@@ -35,15 +35,22 @@ export default class FeatureBase extends Store {
 
   onload() {}
 
+  clearStatusText() {
+    this.setState({ statusText: '' });
+  }
+
   setProcessing() {
+    this.clearStatusText();
     this.setState({ status: StatusEnum.PROCESSING });
   }
 
   setReady() {
+    this.clearStatusText();
     this.setState({ status: StatusEnum.READY });
   }
 
   setDisabled() {
+    this.clearStatusText();
     this.setState({ status: StatusEnum.DISABLED });
   }
 
