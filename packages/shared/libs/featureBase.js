@@ -33,33 +33,27 @@ export default class FeatureBase extends Store {
     status: StatusEnum.UNINITIALIZED,
   };
 
-  onload() {}
-
-  clearStatusText() {
-    this.setState({ statusText: '' });
+  _setStatus(status, statusText = '') {
+    this.setState({ status, statusText });
   }
 
+  onload() {}
+
   setProcessing() {
-    this.clearStatusText();
-    this.setState({ status: StatusEnum.PROCESSING });
+    this._setStatus(StatusEnum.PROCESSING);
   }
 
   setReady() {
-    this.clearStatusText();
-    this.setState({ status: StatusEnum.READY });
+    this._setStatus(StatusEnum.READY);
   }
 
   setDisabled() {
-    this.clearStatusText();
-    this.setState({ status: StatusEnum.DISABLED });
+    this._setStatus(StatusEnum.DISABLED);
   }
 
   setFailed(err) {
     logger.error(err);
-    this.setState({
-      status: StatusEnum.FAILED,
-      statusText: err.message,
-    });
+    this._setStatus(StatusEnum.FAILED, err.message);
   }
 
   isReady() {
