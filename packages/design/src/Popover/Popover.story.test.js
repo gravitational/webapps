@@ -25,26 +25,6 @@ test('onClick popovers renders', () => {
   expect(getByTestId('content')).toBeInTheDocument();
   fireEvent.click(getByTestId('backdrop'));
   expect(queryByTestId('content')).not.toBeInTheDocument();
-
-  fireEvent.click(getByText(/right/i));
-  expect(getByTestId('content')).toBeInTheDocument();
-  fireEvent.click(getByTestId('backdrop'));
-  expect(queryByTestId('content')).not.toBeInTheDocument();
-
-  fireEvent.click(getByText(/center center/i));
-  expect(getByTestId('content')).toBeInTheDocument();
-  fireEvent.click(getByTestId('backdrop'));
-  expect(queryByTestId('content')).not.toBeInTheDocument();
-
-  fireEvent.click(getByText(/top center/i));
-  expect(getByTestId('content')).toBeInTheDocument();
-  fireEvent.click(getByTestId('backdrop'));
-  expect(queryByTestId('content')).not.toBeInTheDocument();
-
-  fireEvent.click(getByText(/bottom center/i));
-  expect(getByTestId('content')).toBeInTheDocument();
-  fireEvent.click(getByTestId('backdrop'));
-  expect(queryByTestId('content')).not.toBeInTheDocument();
 });
 
 test('onMouse tooltip render', () => {
