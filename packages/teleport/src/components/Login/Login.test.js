@@ -17,109 +17,92 @@
 import React from 'react';
 import Login from './Login';
 import { render, fireEvent, wait } from 'design/utils/testing';
-import mockAuth from '../../services/auth/auth';
+import auth from '../../services/auth/auth';
 import { Auth2faTypeEnum, AuthProviderTypeEnum } from '../../services/enums';
-import mockCfg from 'teleport/config';
-import mockHistory from '../../services/history';
+import cfg from 'teleport/config';
+import history from '../../services/history';
 
-jest.mock('../../services/history');
-jest.mock('teleport/config');
-jest.mock('../../services/auth/auth', () => {
-  return {
-    login: jest.fn().mockResolvedValue(),
-    loginWithU2f: jest.fn().mockResolvedValue(),
-    onLoginWithSso: jest.fn().mockResolvedValue(),
-  };
+beforeEach(() => {
+  jest.spyOn(history, 'push').mockImplementation();
+  jest.spyOn(history, 'getRedirectParam').mockImplementation(() => '/');
 });
 
-test('basic login', async () => {
-  const { container, getByPlaceholderText, getByText } = render(<Login />);
-
-  // test rendering of logo and title
-  expect(container.querySelector('img')).toBeInTheDocument();
-  expect(getByText(/sign into teleport/i)).toBeInTheDocument();
-
-  // test validation errors
-  fireEvent.click(getByText(/login/i));
-  expect(mockAuth.login).not.toHaveBeenCalled();
-  expect(mockAuth.loginWithU2f).not.toHaveBeenCalled();
-
-  // fill form
-  const username = getByPlaceholderText(/user name/i);
-  const password = getByPlaceholderText(/password/i);
-  fireEvent.change(username, { target: { value: 'username' } });
-  fireEvent.change(password, { target: { value: '123' } });
-
-  // test login pathways
-  await wait(() => fireEvent.click(getByText(/login/i)));
-  expect(mockAuth.login).toHaveBeenCalledWith('username', '123', '');
-  expect(mockHistory.ensureBaseUrl).toHaveBeenCalledTimes(1);
-  expect(mockHistory.push).toHaveBeenCalledTimes(1);
-
+afterEach(() => {
   jest.clearAllMocks();
 });
 
-test('login with U2F', async () => {
-  mockCfg.getAuth2faType.mockImplementation(() => Auth2faTypeEnum.UTF);
-
-  const { container, getByPlaceholderText, getByText } = render(<Login />);
-
-  // test rendering of logo and title
-  expect(container.querySelector('img')).toBeInTheDocument();
-  expect(getByText(/sign into teleport/i)).toBeInTheDocument();
-
-  // test validation errors
-  fireEvent.click(getByText(/login/i));
-  expect(mockAuth.loginWithU2f).not.toHaveBeenCalled();
-  expect(mockAuth.login).not.toHaveBeenCalled();
-
-  // fill form
-  const username = getByPlaceholderText(/user name/i);
-  const password = getByPlaceholderText(/password/i);
-  fireEvent.change(username, { target: { value: 'username' } });
-  fireEvent.change(password, { target: { value: '123' } });
-
-  // test login pathways
-  await wait(() => fireEvent.click(getByText(/login/i)));
-  expect(mockAuth.loginWithU2f).toHaveBeenCalledWith('username', '123');
-  expect(mockHistory.ensureBaseUrl).toHaveBeenCalledTimes(1);
-  expect(mockHistory.push).toHaveBeenCalledTimes(1);
-
-  jest.clearAllMocks();
-});
-
-test('login with SSO', async () => {
-  mockCfg.getAuth2faType.mockImplementation(() => Auth2faTypeEnum.OTP);
-  mockCfg.getAuthProviders.mockImplementation(() => [
-    {
-      type: AuthProviderTypeEnum.OIDC,
-      url: '',
-      name: AuthProviderTypeEnum.GITHUB,
-    },
-  ]);
-
+test('basic rendering', () => {
   const { container, getByText } = render(<Login />);
 
   // test rendering of logo and title
   expect(container.querySelector('img')).toBeInTheDocument();
   expect(getByText(/sign into teleport/i)).toBeInTheDocument();
+});
+
+test('login with username/password', async () => {
+  jest.spyOn(auth, 'login').mockResolvedValue();
+
+  const { getByPlaceholderText, getByText } = render(<Login />);
 
   // test validation errors
   fireEvent.click(getByText(/login/i));
-  expect(mockAuth.loginWithU2f).not.toHaveBeenCalled();
-  expect(mockAuth.login).not.toHaveBeenCalled();
+  expect(auth.login).not.toHaveBeenCalled();
+
+  // fill form
+  const username = getByPlaceholderText(/user name/i);
+  const password = getByPlaceholderText(/password/i);
+  fireEvent.change(username, { target: { value: 'username' } });
+  fireEvent.change(password, { target: { value: '123' } });
+
+  // test login pathways
+  await wait(() => fireEvent.click(getByText(/login/i)));
+  expect(auth.login).toHaveBeenCalledWith('username', '123', '');
+  expect(history.push).toHaveBeenCalledWith('http://localhost/web', true);
+});
+
+test('login with U2F', async () => {
+  jest.spyOn(auth, 'loginWithU2f').mockResolvedValue();
+  jest
+    .spyOn(cfg, 'getAuth2faType')
+    .mockImplementation(() => Auth2faTypeEnum.UTF);
+
+  const { getByPlaceholderText, getByText } = render(<Login />);
+
+  // test validation errors
+  fireEvent.click(getByText(/login/i));
+  expect(auth.loginWithU2f).not.toHaveBeenCalled();
+
+  // fill form
+  const username = getByPlaceholderText(/user name/i);
+  const password = getByPlaceholderText(/password/i);
+  fireEvent.change(username, { target: { value: 'username' } });
+  fireEvent.change(password, { target: { value: '123' } });
+
+  // test login pathways
+  await wait(() => fireEvent.click(getByText(/login/i)));
+  expect(auth.loginWithU2f).toHaveBeenCalledWith('username', '123');
+  expect(history.push).toHaveBeenCalledWith('http://localhost/web', true);
+});
+
+test('login with SSO', () => {
+  jest
+    .spyOn(cfg, 'getAuth2faType')
+    .mockImplementation(() => Auth2faTypeEnum.OTP);
+  jest.spyOn(cfg, 'getAuthProviders').mockImplementation(() => [
+    {
+      type: AuthProviderTypeEnum.GITHUB,
+      name: AuthProviderTypeEnum.GITHUB,
+      url:
+        '/github/login/web?redirect_url=:redirect?connector_id=:providerName',
+    },
+  ]);
+
+  const { getByText } = render(<Login />);
 
   // test login pathways
   fireEvent.click(getByText(AuthProviderTypeEnum.GITHUB));
-  expect(mockAuth.login).not.toHaveBeenCalled();
-  expect(mockAuth.loginWithU2f).not.toHaveBeenCalled();
-  expect(mockCfg.getSsoUrl).toHaveBeenCalledWith(
-    '',
-    AuthProviderTypeEnum.GITHUB,
-    undefined
+  expect(history.push).toHaveBeenCalledWith(
+    'http://localhost/github/login/web?redirect_url=http:%2F%2Flocalhost%2Fwebconnector_id=github',
+    true
   );
-  expect(mockHistory.ensureBaseUrl).toHaveBeenCalledTimes(1);
-  expect(mockHistory.push).toHaveBeenCalledTimes(1);
-
-  jest.clearAllMocks();
 });
