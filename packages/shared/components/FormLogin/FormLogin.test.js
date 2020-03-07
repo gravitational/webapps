@@ -165,3 +165,85 @@ test('attempt object with prop isFailing and error message', () => {
 
   expect(getByText('errMsg')).toBeInTheDocument();
 });
+
+test('login with SSO providers', () => {
+  const onLogin = jest.fn();
+  const onLoginWithSso = jest.fn();
+  const onLoginWithU2f = jest.fn();
+
+  const { getByText } = render(
+    <FormLogin
+      authProviders={[
+        { name: 'github', type: '', url: '' },
+        { name: 'google', type: '', url: '' },
+      ]}
+      attempt={{ isFailed: false, isProcessing: false, message: '' }}
+      onLogin={onLogin}
+      onLoginWithSso={onLoginWithSso}
+      onLoginWithU2f={onLoginWithU2f}
+    />
+  );
+
+  expect(getByText(/github/i)).toBeInTheDocument();
+  expect(getByText(/google/i)).toBeInTheDocument();
+
+  fireEvent.click(getByText(/github/i));
+  expect(onLoginWithSso).toHaveBeenCalledTimes(1);
+  expect(onLogin).not.toHaveBeenCalled();
+  expect(onLoginWithU2f).not.toHaveBeenCalled();
+});
+
+test('login with local auth disabled with list of SSO providers', () => {
+  const fn = jest.fn();
+
+  const { getByText, queryByText } = render(
+    <FormLogin
+      auth2faType={Auth2faTypeEnum.OTP}
+      authProviders={[
+        { name: 'github', type: '', url: '' },
+        { name: 'google', type: '', url: '' },
+      ]}
+      attempt={{ isFailed: false, isProcessing: false, message: '' }}
+      onLogin={fn}
+      onLoginWithSso={fn}
+      onLoginWithU2f={fn}
+      isLocalAuthEnabled={false}
+    />
+  );
+
+  expect(getByText(/github/i)).toBeInTheDocument();
+  expect(getByText(/google/i)).toBeInTheDocument();
+
+  expect(queryByText(/username/i)).not.toBeInTheDocument();
+  expect(queryByText(/password/i)).not.toBeInTheDocument();
+  expect(queryByText(/two factor token/i)).not.toBeInTheDocument();
+  expect(queryByText(/login/i)).not.toBeInTheDocument();
+});
+
+test('login with local auth disabled but no SSO providers', () => {
+  const fn = jest.fn();
+  const errMsg =
+    'local authentication is disabled, but no SSO provider is configured yet.';
+
+  const { getByText, queryByText } = render(
+    <FormLogin
+      auth2faType={Auth2faTypeEnum.OTP}
+      authProviders={[]}
+      attempt={{ isFailed: false, isProcessing: false, message: '' }}
+      onLogin={fn}
+      onLoginWithSso={fn}
+      onLoginWithU2f={fn}
+      isLocalAuthEnabled={false}
+    />
+  );
+
+  expect(getByText(errMsg)).toBeInTheDocument();
+
+  expect(queryByText(/github/i)).not.toBeInTheDocument();
+  expect(queryByText(/google/i)).not.toBeInTheDocument();
+
+  expect(queryByText(/username/i)).not.toBeInTheDocument();
+  expect(queryByText(/password/i)).not.toBeInTheDocument();
+  expect(queryByText(/two factor token/i)).not.toBeInTheDocument();
+  expect(queryByText(/login/i)).not.toBeInTheDocument();
+});
