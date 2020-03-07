@@ -102,6 +102,10 @@ const cfg = {
     return cfg.auth ? cfg.auth.second_factor : null;
   },
 
+  getLocalAuthFlag() {
+    return cfg.auth && cfg.auth.localAuth ? cfg.auth.localAuth : true;
+  },
+
   getSsoUrl(providerUrl, providerName, redirect) {
     return cfg.baseUrl + generatePath(providerUrl, { redirect, providerName });
   },
