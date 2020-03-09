@@ -67,12 +67,6 @@ export default function LoginForm(props) {
               {title}
             </Text>
             {isFailed && <Alerts.Danger> {message} </Alerts.Danger>}
-            {!isLocalAuthEnabled && !ssoEnabled && (
-              <Alerts.Danger>
-                local authentication is disabled, but no SSO provider is
-                configured yet.
-              </Alerts.Danger>
-            )}
             {isLocalAuthEnabled && (
               <>
                 <FieldInput
