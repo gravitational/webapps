@@ -84,7 +84,7 @@ export const SSOProviders = () => {
   );
 };
 
-export const UTF = () => {
+export const Universal2ndFactor = () => {
   const attempt = {
     ...defaultProps.attempt,
     isProcessing: true,
