@@ -36,6 +36,7 @@ export const CodeEnum = {
   TERMINAL_RESIZE: 'T2002I',
   USER_LOCAL_LOGIN: 'T1000I',
   USER_LOCAL_LOGINFAILURE: 'T1000W',
+  USER_RESET_PASSWORD: 'T6000I',
   USER_SSO_LOGIN: 'T1001I',
   USER_SSO_LOGINFAILURE: 'T1001W',
   // Gravity Oss
@@ -185,9 +186,7 @@ export const eventConfig = {
   [CodeEnum.EXEC_FAILURE]: {
     desc: 'Command Execution Failed',
     formatter: ({ user, exitError, ...rest }) =>
-      `User ${user} command execution on node ${
-        rest['addr.local']
-      } failed: ${exitError}`,
+      `User ${user} command execution on node ${rest['addr.local']} failed: ${exitError}`,
   },
   [CodeEnum.GITHUB_CONNECTOR_CREATED]: {
     desc: 'GITHUB Auth Connector Created',
@@ -487,6 +486,11 @@ export const eventConfig = {
     desc: 'Local Login Failed',
     formatter: ({ user, error }) => `Local user ${user} login failed: ${error}`,
   },
+  [CodeEnum.USER_RESET_PASSWORD]: {
+    desc: 'Reset Password',
+    formatter: ({ entity }) => `Password reset request for user ${entity}`,
+    user: 'tctl',
+  },
   [CodeEnum.USER_SSO_LOGIN]: {
     desc: 'SSO Login',
     formatter: ({ user }) => `SSO user ${user} successfully logged in`,
@@ -531,7 +535,7 @@ class Event {
     this.code = json.code;
     this.codeDesc = cfg.desc;
     this.message = cfg.formatter(json);
-    this.user = json.user;
+    this.user = cfg.user ? cfg.user : json.user;
     this.time = new Date(json.time);
     this.details = json;
   }
