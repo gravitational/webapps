@@ -18,89 +18,63 @@ import renderHook from 'design/utils/renderHook';
 import ConsoleContext from './consoleContext';
 import useOnExitConfirmation from './useOnExitConfirmation';
 
-afterEach(() => {
-  jest.clearAllMocks();
-});
-
-test('blank and nodes docs', () => {
+test('confirmation dialog before terminating an active ssh session', () => {
   const ctx = new ConsoleContext();
+  const { current } = renderHook(() => useOnExitConfirmation(ctx));
+  const event = new Event('beforeunload');
+
+  // two prompts that can be called before closing session/window
+  jest.spyOn(window, 'confirm').mockReturnValue(false);
+  jest.spyOn(event, 'preventDefault');
+
   ctx.storeDocs.add({
     kind: 'nodes',
   });
+  let docs = ctx.getDocuments();
 
-  const docs = ctx.getDocuments();
-  const { current } = renderHook(() => useOnExitConfirmation(ctx));
-
-  // test blank doc
-  jest.spyOn(window, 'confirm').mockReturnValue(false);
-  let retVal = current.verifyAndConfirm(docs[0]);
+  // test blank doc does not call prompt
+  const docBlank = docs[0];
+  let retVal = current.verifyAndConfirm(docBlank);
   expect(retVal).toBe(true);
   expect(window.confirm).not.toHaveBeenCalled();
 
-  // test nodes doc
-  retVal = current.verifyAndConfirm(docs[1]);
+  // test nodes doc does not call prompt
+  const docNode = docs[1];
+  retVal = current.verifyAndConfirm(docNode);
   expect(retVal).toBe(true);
   expect(window.confirm).not.toHaveBeenCalled();
 
-  // test beforeUnload
-  const event = new Event('beforeunload');
-  jest.spyOn(event, 'preventDefault');
+  // test blank and node doc, does not trigger prompt
   window.dispatchEvent(event);
   expect(event.preventDefault).not.toHaveBeenCalled();
-});
 
-test('just created (new) terminal doc', () => {
-  const ctx = new ConsoleContext();
+  // add a new (just created) ssh doc
   ctx.storeDocs.add({
     kind: 'terminal',
     status: 'connected',
     created: new Date(),
   });
+  docs = ctx.getDocuments();
 
-  const docs = ctx.getDocuments();
-  const { current } = renderHook(() => useOnExitConfirmation(ctx));
-
-  // test maxTimeOpened
-  let retVal = current.maxTimeOpened(docs[1].created);
-  expect(retVal).toBe(false);
-
-  // test verifyAndConfirm
-  jest.spyOn(window, 'confirm').mockReturnValue(false);
-  retVal = current.verifyAndConfirm(docs[1]);
+  // test new terminal doc does not call prompt
+  const docTerminal = docs[2];
+  retVal = current.verifyAndConfirm(docTerminal);
   expect(retVal).toBe(true);
   expect(window.confirm).not.toHaveBeenCalled();
 
-  // test beforeUnload
-  const event = new Event('beforeunload');
-  jest.spyOn(event, 'preventDefault');
+  // test new terminal doc does not trigger prompt
   window.dispatchEvent(event);
   expect(event.preventDefault).not.toHaveBeenCalled();
-});
 
-test('old (active) terminal doc', () => {
-  const ctx = new ConsoleContext();
-  ctx.storeDocs.add({
-    kind: 'terminal',
-    status: 'connected',
-    created: new Date('2019-04-01'),
-  });
+  // change date to an old date
+  docTerminal.created = new Date('2019-04-01');
 
-  const docs = ctx.getDocuments();
-  const { current } = renderHook(() => useOnExitConfirmation(ctx));
-
-  // test maxTimeOpened
-  let retVal = current.maxTimeOpened(docs[1].created);
-  expect(retVal).toBe(true);
-
-  // test verifyAndConfirm
-  jest.spyOn(window, 'confirm').mockReturnValue(false);
-  retVal = current.verifyAndConfirm(docs[1]);
+  // test aged terminal doc calls prompt
+  retVal = current.verifyAndConfirm(docTerminal);
   expect(retVal).toBe(false);
   expect(window.confirm).toHaveReturnedWith(false);
 
-  // test beforeUnload
-  const event = new Event('beforeunload');
-  jest.spyOn(event, 'preventDefault');
+  // test aged terminal doc triggers prompt
   window.dispatchEvent(event);
   expect(event.preventDefault).toHaveBeenCalledTimes(1);
 });
