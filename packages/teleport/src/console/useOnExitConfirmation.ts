@@ -85,7 +85,7 @@ function useOnExitConfirmation(ctx: ConsoleContext) {
    *
    * @param doc the document in context
    */
-  function verifyAndConfirm(doc: stores.Document): boolean {
+  function verifyAndConfirm(doc: stores.Document) {
     if (hasLastingSshConnection(doc)) {
       return confirmCloseSession();
     }
