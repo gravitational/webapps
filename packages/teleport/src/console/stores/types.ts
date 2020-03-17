@@ -20,7 +20,7 @@ interface DocumentBase {
   clusterId?: string;
   url: string;
   kind: 'terminal' | 'nodes' | 'blank';
-  created?: Date;
+  created: Date;
 }
 
 export interface DocumentBlank extends DocumentBase {
