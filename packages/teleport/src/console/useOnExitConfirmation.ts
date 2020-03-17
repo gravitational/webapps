@@ -18,6 +18,9 @@ import React from 'react';
 import ConsoleContext from './consoleContext';
 import * as stores from './stores/types';
 
+// TAB_MIN_AGE defines "active terminal" session in ms
+const TAB_MIN_AGE = 30000;
+
 /**
  * useOnExitConfirmation notifies users closing active terminal sessions by:
  *    refresh, window close, window tab close, session tab close.
@@ -34,22 +37,14 @@ function useOnExitConfirmation(ctx: ConsoleContext) {
      * of document opened and how long it has been active for.
      */
     const handleBeforeunload = event => {
-      let notifyUser = false;
-      const docs: stores.Document[] = ctx.getDocuments();
+      const shouldNotify = ctx.getDocuments().some(hasLastingSshConnection);
 
-      for (let i = 0; i < docs.length; i += 1) {
-        const doc = docs[i];
-        if (doc.kind == 'terminal' && maxTimeOpened(doc.created)) {
-          notifyUser = true;
-          break;
-        }
+      if (shouldNotify) {
+        // cancel event as set by standard, but not supported in all browsers
+        event.preventDefault();
+        // required in chrome
+        event.returnValue = '';
       }
-
-      if (!notifyUser) return;
-
-      // cancel event as set by standard, but not supported in all browsers
-      event.preventDefault();
-      event.returnValue = ''; // required in chrome
     };
 
     // add event listener on mount
@@ -63,42 +58,42 @@ function useOnExitConfirmation(ctx: ConsoleContext) {
   /**
    * confirmCloseSession prompts user to confirm to close.
    */
-  function confirmCloseSession(): boolean {
+  function confirmCloseSession() {
     return window.confirm('Are you sure you want to terminate this session?');
   }
 
   /**
-   * maxTimeOpened calculates the milliseconds between given date
+   * hasLastingSshConnection calculates the milliseconds between given date
    * from when fn was called.
+   *
+   * @param doc the document in context
    */
-  function maxTimeOpened(dateCreated: Date): boolean {
-    const created = dateCreated.getTime();
-    const fromNow = new Date().getTime();
-    const timeDiff = fromNow - created;
-    const minTimeOpened = 30000; // in ms
+  function hasLastingSshConnection(doc: stores.Document) {
+    if (doc.kind !== 'terminal' || doc.status !== 'connected') {
+      return false;
+    }
 
-    return timeDiff >= minTimeOpened;
+    const created = doc.created.getTime();
+    const fromNow = new Date().getTime();
+
+    return fromNow - created > TAB_MIN_AGE;
   }
 
   /**
    * verifyAndConfirm verifies the document is of type terminal,
    * and based on how long it was active for, prompts users to confirm closing.
    *
-   * @param doc the current doc
+   * @param doc the document in context
    */
   function verifyAndConfirm(doc: stores.Document): boolean {
-    if (
-      doc.kind !== 'terminal' ||
-      doc.status !== 'connected' ||
-      !maxTimeOpened(doc.created)
-    ) {
-      return true;
+    if (hasLastingSshConnection(doc)) {
+      return confirmCloseSession();
     }
 
-    return confirmCloseSession();
+    return true;
   }
 
-  return { verifyAndConfirm, maxTimeOpened };
+  return { verifyAndConfirm, hasLastingSshConnection };
 }
 
 export default useOnExitConfirmation;

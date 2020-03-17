@@ -43,9 +43,9 @@ export default function Console() {
   }
 
   function onTabClose(doc: stores.Document) {
-    if (!verifyAndConfirm(doc)) return;
-
-    consoleCtx.closeTab(doc);
+    if (verifyAndConfirm(doc)) {
+      consoleCtx.closeTab(doc);
+    }
   }
 
   function onTabNew() {
