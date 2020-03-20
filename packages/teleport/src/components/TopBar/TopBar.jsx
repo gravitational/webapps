@@ -39,7 +39,7 @@ export class DashboardTopNav extends React.Component {
   };
 
   render() {
-    const { username, topMenuItems, pl } = this.props;
+    const { username, topMenuItems, pl, children } = this.props;
     const { open } = this.state;
     const $userMenuItems = topMenuItems.map((item, index) => (
       <MenuItem {...this.menuItemProps} key={index} to={item.to}>
@@ -62,6 +62,7 @@ export class DashboardTopNav extends React.Component {
             maxWidth="160px"
           />
         </TopNavItem>
+        {children}
         <Flex ml="auto" height="100%">
           <TopNavUserMenu
             menuListCss={menuListCss}

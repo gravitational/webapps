@@ -24,8 +24,8 @@ export default {
 export function ClusterNodes() {
   return (
     <Nodes
-      logins={['root']}
-      onFetch={() => Promise.resolve(nodes)}
+      attempt={{ isProcessing: true } as any}
+      getNodeLoginOptions={() => [{ login: 'root', url: 'fd' }]}
       nodes={nodes}
     />
   );
@@ -78,6 +78,28 @@ const nodes = [
   },
   {
     tunnel: false,
+    id: '81',
+    clusterId: 'one',
+    hostname: 'zebpecda',
+    addr: '172.10.1.1:3022',
+    tags: [
+      { name: 'cluster', value: 'one' },
+      { name: 'kernel', value: '4.15.0-51-generic' },
+    ],
+  },
+  {
+    tunnel: true,
+    id: '81',
+    clusterId: 'one',
+    hostname: 'zebpecda',
+    addr: '172.10.1.1:3022',
+    tags: [
+      { name: 'cluster', value: 'one' },
+      { name: 'kernel', value: '4.15.0-51-generic' },
+    ],
+  },
+  {
+    tunnel: true,
     id: '81',
     clusterId: 'one',
     hostname: 'zebpecda',

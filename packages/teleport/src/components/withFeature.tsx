@@ -38,7 +38,7 @@ export const withFeature = (feature: tele.Feature) => component => {
 
     if (feature.isFailed()) {
       const errorText = feature.state.statusText;
-      return <Cards.Failed message={errorText} />;
+      return <Cards.Failed alignSelf="baseline" message={errorText} />;
     }
 
     return React.createElement(component, {
