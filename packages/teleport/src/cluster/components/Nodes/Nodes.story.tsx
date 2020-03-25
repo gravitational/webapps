@@ -17,14 +17,36 @@ limitations under the License.
 import React from 'react';
 import { Nodes } from './Nodes';
 
+type PropTypes = Parameters<typeof Nodes>[0];
+
 export default {
   title: 'Teleport/ClusterNodes',
 };
 
-export function ClusterNodes() {
+export function Loaded() {
+  return render({ isSuccess: true });
+}
+
+export function Loading() {
+  return render({ isProcessing: true });
+}
+
+export function Failed() {
+  return render({ isFailed: true, message: 'server error' });
+}
+
+function render(attemptOptions: Partial<PropTypes['attempt']>) {
+  const attempt = {
+    isProcessing: false,
+    isSuccess: false,
+    isFailed: false,
+    message: '',
+    ...attemptOptions,
+  };
+
   return (
     <Nodes
-      attempt={{ isProcessing: true } as any}
+      attempt={attempt}
       getNodeLoginOptions={() => [{ login: 'root', url: 'fd' }]}
       nodes={nodes}
     />
