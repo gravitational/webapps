@@ -18,10 +18,10 @@ import React from 'react';
 import Component from './RangePicker';
 
 export default {
-  title: 'Teleport/Audit/Range',
+  title: 'Teleport/Audit/RangePicker',
 };
 
-export const PickerPicker = () => <Component {...props} />;
+export const Picker = () => <Component {...props} />;
 
 const options = [
   {
