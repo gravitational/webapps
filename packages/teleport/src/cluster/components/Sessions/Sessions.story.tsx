@@ -15,6 +15,8 @@ limitations under the License.
 */
 
 import React from 'react';
+import { Router } from 'react-router';
+import { createMemoryHistory } from 'history';
 import { keyBy } from 'lodash';
 import { Sessions } from './Sessions';
 
@@ -30,11 +32,18 @@ export function List() {
     onRefresh,
     nodes,
     attempt: {
-      isReady: true,
-    } as any,
+      isSuccess: true,
+      isProcessing: false,
+      isFailed: false,
+      message: ''
+    },
   };
 
-  return <Sessions {...props} />;
+  return (
+    <Router history={createMemoryHistory()}>
+      <Sessions {...props} />
+    </Router>
+  );
 }
 
 const onRefresh: PropTypes['onRefresh'] = () => {
