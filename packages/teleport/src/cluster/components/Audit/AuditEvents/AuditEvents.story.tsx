@@ -128,5 +128,5 @@ const defaultProps = {
   onFetchLatest: () => Promise.resolve(),
   onFetch: () => Promise.resolve(),
   searchValue: '',
-  events: events.map(e => makeEvent(e as any)),
+  events: events.map(e => makeEvent(e)),
 };

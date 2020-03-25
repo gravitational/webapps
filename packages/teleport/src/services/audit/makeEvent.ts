@@ -413,7 +413,7 @@ const unknownFormatter = {
   format: () => 'Unknown',
 };
 
-export default function makeEvent<T extends Code>(json: RawEvents[T]): Event {
+export default function makeEvent(json: any): Event {
   const formatter = formatters[json.code] || unknownFormatter;
   const event = {
     id: getId(json),
@@ -425,7 +425,7 @@ export default function makeEvent<T extends Code>(json: RawEvents[T]): Event {
     raw: json,
   };
 
-  return event as Event;
+  return event;
 }
 
 // older events might not have an uid field.

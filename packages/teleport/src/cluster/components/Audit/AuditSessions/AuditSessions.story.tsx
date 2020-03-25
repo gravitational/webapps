@@ -70,6 +70,6 @@ const events = [
 ];
 
 const defaultProps = {
-  events: (events as any).map(makeEvent),
+  events: events.map(makeEvent),
   pageSize: 3,
 };
