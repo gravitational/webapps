@@ -134,7 +134,7 @@ class Column extends React.Component {
   };
 
   render() {
-    throw new Error('Component Column should never render');
+    return null;
   }
 }
 
@@ -154,9 +154,10 @@ const Cell = props => {
   return <td {...childProps} />;
 };
 
-const TextCell = ({ rowIndex, data, columnKey, ...props }) => (
-  <Cell {...props}>{data[rowIndex][columnKey]}</Cell>
-);
+const TextCell = props => {
+  const { rowIndex, data, columnKey, ...rest } = props;
+  return <Cell {...rest}>{data[rowIndex][columnKey]}</Cell>;
+};
 
 class SortHeaderCell extends React.Component {
   onSortChange = e => {
@@ -198,9 +199,11 @@ class EmptyIndicator extends React.Component {
         <Text typography="h1" color="text.primary">
           {noResults}
         </Text>
-        {children && <Text typography="paragraph" mt="3" color="text.primary">
-          {children}
-        </Text>}
+        {children && (
+          <Text typography="paragraph" mt="3" color="text.primary">
+            {children}
+          </Text>
+        )}
       </StyledEmptyIndicator>
     );
   }

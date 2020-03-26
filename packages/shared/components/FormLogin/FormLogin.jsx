@@ -16,14 +16,7 @@ limitations under the License.
 
 import React from 'react';
 import PropTypes from 'prop-types';
-import {
-  Card,
-  Box,
-  Text,
-  Flex,
-  ButtonLink,
-  ButtonPrimary,
-} from 'design';
+import { Card, Box, Text, Flex, ButtonLink, ButtonPrimary } from 'design';
 import * as Alerts from 'design/Alert';
 import { isU2f, isOtp } from './../../services/enums';
 import SsoButtonList from './SsoButtons';
@@ -40,6 +33,7 @@ export default function LoginForm(props) {
     onLogin,
     onLoginWithSso,
     authProviders,
+    isLocalAuthEnabled = true,
   } = props;
 
   const [pass, setPass] = React.useState('');
@@ -73,59 +67,63 @@ export default function LoginForm(props) {
               {title}
             </Text>
             {isFailed && <Alerts.Danger> {message} </Alerts.Danger>}
-            <FieldInput
-              rule={requiredField('Username is required')}
-              label="Username"
-              autoFocus
-              value={user}
-              onChange={e => setUser(e.target.value)}
-              placeholder="User name"
-            />
-            <FieldInput
-              rule={requiredField('Password is required')}
-              label="Password"
-              value={pass}
-              onChange={e => setPass(e.target.value)}
-              type="password"
-              placeholder="Password"
-            />
-            {otpEnabled && (
-              <Flex flexDirection="row">
+            {isLocalAuthEnabled && (
+              <>
                 <FieldInput
-                  label="Two factor token"
-                  rule={requiredToken}
-                  autoComplete="off"
-                  width="200px"
-                  value={token}
-                  onChange={e => setToken(e.target.value)}
-                  placeholder="123 456"
+                  rule={requiredField('Username is required')}
+                  label="Username"
+                  autoFocus
+                  value={user}
+                  onChange={e => setUser(e.target.value)}
+                  placeholder="User name"
                 />
-                <ButtonLink
+                <FieldInput
+                  rule={requiredField('Password is required')}
+                  label="Password"
+                  value={pass}
+                  onChange={e => setPass(e.target.value)}
+                  type="password"
+                  placeholder="Password"
+                />
+                {otpEnabled && (
+                  <Flex flexDirection="row">
+                    <FieldInput
+                      label="Two factor token"
+                      rule={requiredToken}
+                      autoComplete="off"
+                      width="200px"
+                      value={token}
+                      onChange={e => setToken(e.target.value)}
+                      placeholder="123 456"
+                    />
+                    <ButtonLink
+                      width="100%"
+                      kind="secondary"
+                      target="_blank"
+                      size="small"
+                      href="https://support.google.com/accounts/answer/1066447?co=GENIE.Platform%3DiOS&hl=en&oco=0"
+                      rel="noreferrer"
+                    >
+                      Download Google Authenticator
+                    </ButtonLink>
+                  </Flex>
+                )}
+                <ButtonPrimary
                   width="100%"
-                  kind="secondary"
-                  target="_blank"
-                  size="small"
-                  href="https://support.google.com/accounts/answer/1066447?co=GENIE.Platform%3DiOS&hl=en&oco=0"
-                  rel="noreferrer"
+                  my="3"
+                  type="submit"
+                  size="large"
+                  onClick={e => onLoginClick(e, validator)}
+                  disabled={isProcessing}
                 >
-                  Download Google Authenticator
-                </ButtonLink>
-              </Flex>
-            )}
-            <ButtonPrimary
-              width="100%"
-              my="3"
-              type="submit"
-              size="large"
-              onClick={e => onLoginClick(e, validator)}
-              disabled={isProcessing}
-            >
-              LOGIN
-            </ButtonPrimary>
-            {isProcessing && u2fEnabled && (
-              <Text typography="paragraph2" width="100%" textAlign="center">
-                Insert your U2F key and press the button on the key
-              </Text>
+                  LOGIN
+                </ButtonPrimary>
+                {isProcessing && u2fEnabled && (
+                  <Text typography="paragraph2" width="100%" textAlign="center">
+                    Insert your U2F key and press the button on the key
+                  </Text>
+                )}
+              </>
             )}
           </Box>
           {ssoEnabled && (
@@ -150,9 +148,30 @@ export default function LoginForm(props) {
 }
 
 LoginForm.propTypes = {
+  /**
+   * authProviders is an array of Single Sign On (SSO) Providers.
+   * eg: github, google, bitbucket, microsoft, unknown, etc.
+   *
+   * enums are defined in shared/ButtonSso/utils.js
+   */
+  authProviders: PropTypes.array,
+
+  /**
+   * auth2faType defines login type.
+   * eg: u2f, otp, off (disabled).
+   *
+   * enums are defined in shared/services/enums.js
+   */
   auth2faType: PropTypes.string,
+
+  /**
+   * attempt contains props that indicate login processing status.
+   *
+   * fmt: {isFailed: bool, isProcessing: bool, message: string}
+   */
+  attempt: PropTypes.object.isRequired,
+
   onLoginWithU2f: PropTypes.func.isRequired,
   onLogin: PropTypes.func.isRequired,
   onLoginWithSso: PropTypes.func.isRequired,
-  attempt: PropTypes.object.isRequired,
 };

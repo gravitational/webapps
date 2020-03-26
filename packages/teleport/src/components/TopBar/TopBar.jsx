@@ -1,3 +1,19 @@
+/*
+Copyright 2019-2020 Gravitational, Inc.
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+*/
+
 import React from 'react';
 import { NavLink, Link } from 'react-router-dom';
 import TopNavUserMenu from 'design/TopNav/TopNavUserMenu';
@@ -5,14 +21,8 @@ import { MenuItemIcon, MenuItem } from 'design/Menu';
 import teleportLogoSvg from 'design/assets/images/teleport-logo.svg';
 import { withState } from 'shared/hooks';
 import session from 'teleport/services/session';
-import { useStoreUser, useStoreNav } from 'teleport/teleport';
-import {
-  Image,
-  Flex,
-  ButtonPrimary,
-  TopNav,
-  TopNavItem,
-} from 'design';
+import { useStoreUser, useStoreNav } from 'teleport/teleportContextProvider';
+import { Image, Flex, ButtonPrimary, TopNav, TopNavItem } from 'design';
 import cfg from 'teleport/config';
 
 export class DashboardTopNav extends React.Component {
@@ -45,7 +55,7 @@ export class DashboardTopNav extends React.Component {
   };
 
   render() {
-    const { username, version, topMenuItems, pl } = this.props;
+    const { username, topMenuItems, pl, children } = this.props;
     const { open } = this.state;
     const $userMenuItems = topMenuItems.map((item, index) => (
       <MenuItem {...this.menuItemProps} key={index} to={item.to}>
@@ -60,15 +70,15 @@ export class DashboardTopNav extends React.Component {
         pl={pl}
         style={{ zIndex: '1', boxShadow: '0 4px 16px rgba(0,0,0,.24)' }}
       >
-        <TopNavItem pr="5" as={Link} to={cfg.routes.app}>
+        <TopNavItem width="192px" pr="5" as={Link} to={cfg.routes.app}>
           <Image
             src={teleportLogoSvg}
             mx="3"
             maxHeight="40px"
             maxWidth="160px"
           />
-          <span title={version}>{version}</span>
         </TopNavItem>
+        {children}
         <Flex ml="auto" height="100%">
           <TopNavUserMenu
             menuListCss={menuListCss}
@@ -96,10 +106,9 @@ const menuListCss = () => `
 
 function mapState() {
   const topMenuItems = useStoreNav().getTopMenuItems();
-  const { username, version } = useStoreUser().state;
+  const { username } = useStoreUser().state;
   return {
     topMenuItems,
-    version,
     username,
     onLogout: () => session.logout(),
   };

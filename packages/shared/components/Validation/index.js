@@ -14,15 +14,9 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import {
-  Validation,
-  useValidation,
-  useRule,
-} from './Validation';
+import { Validation, useValidation } from './Validation';
+import useRule from './useRule';
 
 export default Validation;
 
-export {
-  useValidation,
-  useRule
-}
+export { useValidation, useRule };

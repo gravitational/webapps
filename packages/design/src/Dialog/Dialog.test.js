@@ -16,7 +16,6 @@
 
 import React from 'react';
 import Dialog from './Dialog';
-import DialogContent from './DialogContent';
 import { render } from 'design/utils/testing';
 
 const testCss = {
@@ -33,15 +32,5 @@ describe('design/Dialog', () => {
     );
 
     expect(getByTestId('dialogbox')).toHaveStyle({ ...testCss });
-  });
-
-  it('renders content', () => {
-    const { getByTestId } = render(
-      <Dialog open={true}>
-        <DialogContent data-testid="test">hello</DialogContent>
-      </Dialog>
-    );
-
-    expect(getByTestId('test')).not.toBeNull();
   });
 });

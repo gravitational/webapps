@@ -23,7 +23,6 @@ import {
   Router,
 } from 'react-router';
 import * as RouterDOM from 'react-router-dom';
-import { DocumentTitle } from 'design';
 import { NotFound } from 'design/CardError';
 
 const NoMatch = ({ location }) => <NotFound message={location.pathname} />;
@@ -36,22 +35,14 @@ const Switch = props => (
   </RouterDOM.Switch>
 );
 
-const Route = ({ component: Component, title, ...rest }) => (
-  <RouterDOM.Route
-    render={props => {
-      if (!title) {
-        return <Component {...props} />;
-      }
+const Route = props => {
+  const { title = '', ...rest } = props;
+  React.useEffect(() => {
+    document.title = title;
+  }, [title]);
 
-      return (
-        <DocumentTitle title={title}>
-          <Component {...props} />
-        </DocumentTitle>
-      );
-    }}
-    {...rest}
-  />
-);
+  return <RouterDOM.Route {...rest} />;
+};
 
 const NavLink = RouterDOM.NavLink;
 const Redirect = RouterDOM.Redirect;
