@@ -5,18 +5,26 @@ HOME_DIR = $(shell pwd)
 COMMON_SRC = $(shell find packages -type f -a \( -path 'packages/build/*' -o -path 'packages/design/*' -o -path 'packages/shared/*' \))
 BRANCH = $(shell git rev-parse --abbrev-ref HEAD)
 
-dist: packages/gravity/dist packages/teleport/dist packages/webapps.e/teleport/dist packages/webapps.e/gravity/dist
-	git clone git@github.com:gravitational/web-assets.git dist
+.PHONY: all
+all: dist packages/webapps.e/dist
+
+dist: packages/gravity/dist packages/teleport/dist
+	rm -rf dist
+	git clone git@github.com:gravitational/webassets.git dist
 	cp -r packages/gravity/dist dist/gravity
 	cp -r packages/teleport/dist dist/teleport
-	cp -r packages/webapps.e/gravity/dist dist/gravity.e
-	cp -r packages/webapps.e/teleport/dist dist/teleport.e
 
 packages/gravity/dist: $(COMMON_SRC) $(shell find packages/gravity -type f -not -path  '*/dist/*')
 	$(MAKE) docker-build PACKAGE_PATH=packages/gravity NPM_CMD=build-gravity
 
 packages/teleport/dist: $(COMMON_SRC) $(shell find packages/teleport -type f -not -path  '*/dist/*')
 	$(MAKE) docker-build PACKAGE_PATH=packages/teleport NPM_CMD=build-teleport
+
+packages/webapps.e/dist: packages/webapps.e/teleport/dist packages/webapps.e/gravity/dist 
+	rm -rf packages/webapps.e/dist
+	git clone git@github.com:gravitational/webassets.e.git packages/webapps.e/dist
+	cp -r packages/webapps.e/gravity/dist packages/webapps.e/dist/gravity.e
+	cp -r packages/webapps.e/teleport/dist packages/webapps.e/dist/teleport.e
 
 packages/webapps.e/teleport/dist: $(COMMON_SRC) $(shell find packages/webapps.e/teleport -type f -not -path  '*/dist/*')
 	$(MAKE) docker-build PACKAGE_PATH=packages/webapps.e/teleport NPM_CMD=build-teleport-e
@@ -43,7 +51,6 @@ docker-build:
 .PHONY: clean
 clean:
 	find . -name "node_modules" -type d -prune -exec rm -rf '{}' +
-	rm -rf dist
 	rm -rf packages/gravity/dist packages/teleport/dist packages/webapps.e/gravity/dist packages/webapps.e/teleport/dist
 
 .PHONY:install
@@ -55,5 +62,7 @@ init-submodules:
 	git submodule update --init --recursive
 
 .PHONY: deploy
-deploy: dist
+deploy: all
 	cd dist; git checkout -B $(BRANCH); git add -A; git commit -am 'Update build artifacts'; git push
+	cd packages/webapps.e/dist; git checkout -B $(BRANCH); git add -A; git commit -am 'Update build artifacts'; git push
+
