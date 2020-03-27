@@ -43,7 +43,7 @@ docker-clean:
 .PHONY: docker-build
 docker-build:
 	rm -rf $(HOME_DIR)/$(PACKAGE_PATH)/dist
-	docker build --force-rm=true --build-arg NPM_SCRIPT=$(NPM_CMD) --build-arg UID=$$(id -u) -t $(IMAGE_NAME) .
+	docker build --force-rm=true --build-arg NPM_SCRIPT=$(NPM_CMD) -t $(IMAGE_NAME) .
 	docker create --name $(CONTAINER_NAME) -t $(IMAGE_NAME) && \
 	docker cp $(CONTAINER_NAME):/web-apps/$(PACKAGE_PATH)/dist $(HOME_DIR)/$(PACKAGE_PATH)/
 	docker rm -f $(CONTAINER_NAME)
