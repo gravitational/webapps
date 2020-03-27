@@ -11,6 +11,7 @@ all: dist packages/webapps.e/dist
 dist: packages/gravity/dist packages/teleport/dist
 	rm -rf dist
 	git clone git@github.com:gravitational/webassets.git dist
+	git -C dist checkout -B $(BRANCH)
 	cp -r packages/gravity/dist dist/gravity
 	cp -r packages/teleport/dist dist/teleport
 
@@ -23,6 +24,7 @@ packages/teleport/dist: $(COMMON_SRC) $(shell find packages/teleport -type f -no
 packages/webapps.e/dist: packages/webapps.e/teleport/dist packages/webapps.e/gravity/dist 
 	rm -rf packages/webapps.e/dist
 	git clone git@github.com:gravitational/webassets.e.git packages/webapps.e/dist
+	git -C packages/webapps.e/dist checkout -B $(BRANCH)
 	cp -r packages/webapps.e/gravity/dist packages/webapps.e/dist/gravity.e
 	cp -r packages/webapps.e/teleport/dist packages/webapps.e/dist/teleport.e
 
@@ -63,6 +65,12 @@ init-submodules:
 
 .PHONY: deploy
 deploy: all
-	cd dist; git checkout -B $(BRANCH); git add -A; git commit -am 'Update build artifacts'; git push
-	cd packages/webapps.e/dist; git checkout -B $(BRANCH); git add -A; git commit -am 'Update build artifacts'; git push
+	@if [ "$(shell git -C dist rev-parse --abbrev-ref HEAD)" != "$(BRANCH)" ]; then \
+		echo "Branch has changed since compilation, please run 'make clean' "; exit 2; \
+	fi;
+	@if [ "$(shell git -C packages/webapps.e/dist rev-parse --abbrev-ref HEAD)" != "$(BRANCH)" ]; then \
+		echo "Branch has changed since compilation, please run 'make clean'"; exit 2; \
+	fi;
+	cd dist; git add -A; git commit -am 'Update build artifacts'; git push
+	cd packages/webapps.e/dist; git add -A; git commit -am 'Update build artifacts'; git push
 
