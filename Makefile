@@ -50,6 +50,10 @@ docker-build:
 	docker cp $(CONTAINER_NAME):/web-apps/$(PACKAGE_PATH)/dist $(HOME_DIR)/$(PACKAGE_PATH)/
 	docker rm -f $(CONTAINER_NAME)
 
+.PHONY: test
+test:
+	docker build --force-rm=true --build-arg NPM_SCRIPT=test -t $(IMAGE_NAME)-test .
+
 .PHONY: clean
 clean:
 	find . -name "node_modules" -type d -prune -exec rm -rf '{}' +
