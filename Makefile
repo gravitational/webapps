@@ -12,6 +12,7 @@ dist: packages/gravity/dist packages/teleport/dist
 	rm -rf dist
 	git clone git@github.com:gravitational/webassets.git dist
 	git --git-dir dist/.git checkout -B $(BRANCH)
+	git --git-dir dist/.git reset HEAD@{1}
 	cp -r packages/gravity/dist dist/gravity
 	cp -r packages/teleport/dist dist/teleport
 
@@ -25,6 +26,7 @@ packages/webapps.e/dist: packages/webapps.e/teleport/dist packages/webapps.e/gra
 	rm -rf packages/webapps.e/dist
 	git clone git@github.com:gravitational/webassets.e.git packages/webapps.e/dist
 	git --git-dir packages/webapps.e/dist/.git checkout -B $(BRANCH)
+	git --git-dir packages/webapps.e/dist/.git reset HEAD@{1}
 	cp -r packages/webapps.e/gravity/dist packages/webapps.e/dist/gravity.e
 	cp -r packages/webapps.e/teleport/dist packages/webapps.e/dist/teleport.e
 
