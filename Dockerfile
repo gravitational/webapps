@@ -17,11 +17,18 @@ COPY packages/teleport/package.json web-apps/packages/teleport/
 COPY README.md packages/webapps.e/gravity/package.jso[n] web-apps/packages/webapps.e/gravity/
 COPY README.md packages/webapps.e/teleport/package.jso[n] web-apps/packages/webapps.e/teleport/
 
+# A a special 'builder' user for compatibility with Jenkins
+ARG UID
+RUN useradd builder --uid=$UID -o --create-home --shell=/bin/bash
+RUN chown builder web-apps -R 
+USER builder
+
 # download and install npm dependencies
 WORKDIR web-apps
 RUN yarn install
 
 # copy the rest of the files and run yarn build command
-COPY  . .
+COPY --chown=builder . .
 ARG NPM_SCRIPT
 RUN yarn run $NPM_SCRIPT
+
