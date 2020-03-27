@@ -43,9 +43,9 @@ export default function makeCluster(json): Cluster {
     connectedText,
     status,
     url: cfg.getClusterRoute(clusterId),
-    version: authVersion,
-    nodeCount: nodeCount,
-    publicURL: publicURL,
+    authVersion,
+    nodeCount,
+    publicURL,
   };
 }
 
