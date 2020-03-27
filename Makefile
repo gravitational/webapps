@@ -11,10 +11,9 @@ all: dist packages/webapps.e/dist
 dist: packages/gravity/dist packages/teleport/dist
 	rm -rf dist
 	git clone git@github.com:gravitational/webassets.git dist
-	git --git-dir dist/.git checkout -B $(BRANCH)
-	git --git-dir dist/.git reset HEAD@{1}
-	cp -r packages/gravity/dist dist/gravity
-	cp -r packages/teleport/dist dist/teleport
+	cd dist; git checkout $(BRANCH) || git checkout -b $(BRANCH)
+	mkdir -p dist/gravity && cp -r packages/gravity/dist/* dist/gravity
+	mkdir -p dist/teleport && cp -r packages/teleport/dist/* dist/teleport
 
 packages/gravity/dist: $(COMMON_SRC) $(shell find packages/gravity -type f -not -path  '*/dist/*')
 	$(MAKE) docker-build PACKAGE_PATH=packages/gravity NPM_CMD=build-gravity
@@ -25,10 +24,9 @@ packages/teleport/dist: $(COMMON_SRC) $(shell find packages/teleport -type f -no
 packages/webapps.e/dist: packages/webapps.e/teleport/dist packages/webapps.e/gravity/dist 
 	rm -rf packages/webapps.e/dist
 	git clone git@github.com:gravitational/webassets.e.git packages/webapps.e/dist
-	git --git-dir packages/webapps.e/dist/.git checkout -B $(BRANCH)
-	git --git-dir packages/webapps.e/dist/.git reset HEAD@{1}
-	cp -r packages/webapps.e/gravity/dist packages/webapps.e/dist/gravity.e
-	cp -r packages/webapps.e/teleport/dist packages/webapps.e/dist/teleport.e
+	cd packages/webapps.e/dist; git checkout $(BRANCH) || git checkout -b $(BRANCH)
+	mkdir -p packages/webapps.e/dist/gravity.e && cp -r packages/webapps.e/gravity/dist/* packages/webapps.e/dist/gravity.e
+	mkdir -p packages/webapps.e/dist/teleport.e && cp -r packages/webapps.e/teleport/dist/* packages/webapps.e/dist/teleport.e
 
 packages/webapps.e/teleport/dist: $(COMMON_SRC) $(shell find packages/webapps.e/teleport -type f -not -path  '*/dist/*')
 	$(MAKE) docker-build PACKAGE_PATH=packages/webapps.e/teleport NPM_CMD=build-teleport-e
