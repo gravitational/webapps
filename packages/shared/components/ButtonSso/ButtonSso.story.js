@@ -15,10 +15,13 @@ limitations under the License.
 */
 
 import React from 'react';
-import { storiesOf } from '@storybook/react';
 import ButtonSso, { TypeEnum } from './ButtonSso';
 
-storiesOf('Shared/ButtonSso', module).add('color', () => (
+export default {
+  title: 'Shared',
+};
+
+export const Button = () => (
   <div style={{ width: '300px' }}>
     <ButtonSso mt={3} title="Valdez" ssoType={TypeEnum.MICROSOFT} />
     <ButtonSso mt={3} title="Norman" ssoType={TypeEnum.GITHUB} />
@@ -26,4 +29,8 @@ storiesOf('Shared/ButtonSso', module).add('color', () => (
     <ButtonSso mt={3} title="Norton" ssoType={TypeEnum.BITBUCKET} />
     <ButtonSso mt={3} title="Russell" ssoType="unknown" />
   </div>
-));
+);
+
+Button.story = {
+  name: 'ButtonSso',
+};
