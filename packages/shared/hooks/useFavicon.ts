@@ -1,5 +1,5 @@
 /*
-Copyright 2015 Gravitational, Inc.
+Copyright 2020 Gravitational, Inc.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -14,14 +14,20 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import { Store } from 'shared/libs/stores';
+import React from 'react';
 
-import service, { Session } from 'teleport/services/ssh';
+export default function useFavicon(path: string) {
+  React.useEffect(() => {
+    const link: HTMLLinkElement =
+      document.querySelector("link[rel*='icon']") ||
+      document.createElement('link');
 
-export default class StoreSessions extends Store<Session[]> {
-  state = [] as Session[];
+    link.href = path;
+    link.rel = 'shortcut icon';
+    link.type = 'image/x-icon';
 
-  fetchSessions() {
-    return service.fetchSessions().then(sessions => this.setState(sessions));
-  }
+    document.getElementsByTagName('head')[0].appendChild(link);
+  }, [path]);
+
+  return null;
 }
