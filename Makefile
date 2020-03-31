@@ -1,3 +1,4 @@
+# Some often referenced variables are declared below, to avoid repetition
 IMAGE_NAME := web-apps
 CONTAINER_NAME := web-apps-container-$(shell bash -c 'echo $$RANDOM')
 ROOT = $(shell pwd)
@@ -6,14 +7,31 @@ BRANCH = $(shell git rev-parse --abbrev-ref HEAD)
 # Below, we specify which files make up the source a particular library. We will later use those variables as
 # dependencies for each target
 COMMON_SRC = $(shell find packages -type f -a \( -path 'packages/build/*' -o -path 'packages/design/*' -o -path 'packages/shared/*' \))
-TELEPORT_SRC = $(COMMON_SRC) $(shell find packages/teleport -type f -not -path  '*/dist/*')
-TELEPORT_E_SRC = $(TELEPORT_SRC) $(shell find packages/webapps.e/teleport -type f -not -path  '*/dist/*')
+COMMON_E_SRC = $(shell find packages/webapps.e/shared -type f)
+FORCE_SRC = $(COMMON_SRC) $(shell find packages/force -type f -not -path  '*/dist/*')
 GRAVITY_SRC = $(COMMON_SRC) $(shell find packages/gravity -type f -not -path  '*/dist/*')
-GRAVITY_E_SRC = $(GRAVITY_SRC) $(shell find packages/gravity -type f -not -path  '*/dist/*')
+GRAVITY_E_SRC = $(COMMON_E_SRC) $(GRAVITY_SRC) $(shell find packages/webapps.e/gravity -type f -not -path  '*/dist/*')
+TELEPORT_SRC = $(COMMON_SRC) $(shell find packages/teleport -type f -not -path  '*/dist/*')
+TELEPORT_E_SRC = $(COMMON_E_SRC) $(TELEPORT_SRC) $(shell find packages/webapps.e/teleport -type f -not -path  '*/dist/*')
+
 
 # all is the default target which compiles all packages
 .PHONY: all
 all: packages/gravity/dist packages/teleport/dist packages/webapps.e/teleport/dist packages/webapps.e/gravity/dist
+all: packages/force/dist
+
+
+# The next few recipes are all instructions on how to build a specific target. As a reminder, Makefile recipes have
+# the following syntax:
+#
+# path_to_build_target: build_dependencies
+# 	instructions_to_build_said_target
+#
+# I.e. the following rule is for building the path `packages/force/dist`, lists all the files we listed earlier
+# in `FORCE_SRC` as dependencies for building this path, and has an instruction on how to achieve that (using
+# the `docker-build` command.
+packages/force/dist: $(FORCE_SRC)
+	$(MAKE) docker-build PACKAGE_PATH=packages/force NPM_CMD=build-force
 
 packages/gravity/dist: $(GRAVITY_SRC)
 	$(MAKE) docker-build PACKAGE_PATH=packages/gravity NPM_CMD=build-gravity
@@ -27,14 +45,10 @@ packages/teleport/dist: $(TELEPORT_SRC)
 packages/webapps.e/teleport/dist: $(TELEPORT_E_SRC)
 	$(MAKE) docker-build PACKAGE_PATH=packages/webapps.e/teleport NPM_CMD=build-teleport-e
 
-.PHONY: docker-enter
-docker-enter:
-	docker run -ti --rm=true -t $(IMAGE_NAME) /bin/bash
 
-.PHONY: docker-clean
-docker-clean:
-	docker rmi --force $(IMAGE_NAME)
-
+# docker-build lists the common instructions on how to build one of our targets using docker. See the "real" targets,
+# such as `packages/gravity/dist` on how to invoke this.
+# Calling this target without providing the necessary variables (PACKAGE_PATH and NPM_CMD) will result in errors.
 .PHONY: docker-build
 docker-build:
 	rm -rf $(ROOT)/$(PACKAGE_PATH)/dist
@@ -43,24 +57,22 @@ docker-build:
 	docker cp $(CONTAINER_NAME):/web-apps/$(PACKAGE_PATH)/dist $(ROOT)/$(PACKAGE_PATH)/
 	docker rm -f $(CONTAINER_NAME)
 
-.PHONY: test
-test:
-	docker build --force-rm=true --build-arg NPM_SCRIPT=test -t $(IMAGE_NAME)-test .
+# docker-enter is a shorthand for enterin the build image, for example for debugging, or in case yarn cannot
+# be used locally
+.PHONY: docker-enter
+docker-enter:
+	docker run -ti --rm=true -t $(IMAGE_NAME) /bin/bash
 
-.PHONY: clean
-clean:
-	find . -name "node_modules" -type d -prune -exec rm -rf '{}' +
-	rm -rf packages/gravity/dist packages/teleport/dist packages/webapps.e/gravity/dist packages/webapps.e/teleport/dist
+# docker-clean removes the existing image
+.PHONY: docker-clean
+docker-clean:
+	docker rmi --force $(IMAGE_NAME)
 
-.PHONY:install
-install:
-	bash -c "./scripts/install.sh"
 
-.PHONY: init-submodules
-init-submodules:
-	git submodule update --init --recursive
-
-# deploy uploads the latest build artifacts
+# deploy uploads the latest build artifacts for deployment. This rule is usually invoked by our CI servers,
+# but may be used manually if your account has the right permissions.
+# In essence, this target aggregates the various build artifacts that we compiled earlier & pushes them to a
+# special place.
 .PHONY: deploy
 deploy: dist packages/webapps.e/dist
 	@if [ "$(shell git --git-dir dist/.git rev-parse --abbrev-ref HEAD)" != "$(BRANCH)" ]; then \
@@ -72,10 +84,11 @@ deploy: dist packages/webapps.e/dist
 	cd dist; git add -A; git commit -am 'Update build artifacts'; git push
 	cd packages/webapps.e/dist; git add -A; git commit -am 'Update build artifacts'; git push
 
-dist: packages/gravity/dist packages/teleport/dist
+dist: packages/gravity/dist packages/teleport/dist packages/force/dist
 	rm -rf dist
 	git clone git@github.com:gravitational/webassets.git dist
 	cd dist; git checkout $(BRANCH) || git checkout -b $(BRANCH)
+	mkdir -p dist/force && cp -r packages/force/dist/* dist/force
 	mkdir -p dist/gravity && cp -r packages/gravity/dist/* dist/gravity
 	mkdir -p dist/teleport && cp -r packages/teleport/dist/* dist/teleport
 
@@ -85,4 +98,29 @@ packages/webapps.e/dist: packages/webapps.e/teleport/dist packages/webapps.e/gra
 	cd packages/webapps.e/dist; git checkout $(BRANCH) || git checkout -b $(BRANCH)
 	mkdir -p packages/webapps.e/dist/gravity.e && cp -r packages/webapps.e/gravity/dist/* packages/webapps.e/dist/gravity.e
 	mkdir -p packages/webapps.e/dist/teleport.e && cp -r packages/webapps.e/teleport/dist/* packages/webapps.e/dist/teleport.e
+
+
+# The rest of this file are some phony targets that are mainly small helper commands
+
+# test runs the test suite
+.PHONY: test
+test:
+	docker build --force-rm=true --build-arg NPM_SCRIPT=test -t $(IMAGE_NAME)-test .
+
+# clean removes files that might have been generated by this Makefile
+.PHONY: clean
+clean:
+	find . -name "node_modules" -type d -prune -exec rm -rf '{}' +
+	rm -rf packages/gravity/dist packages/teleport/dist packages/force/dist
+	rm -rf packages/webapps.e/gravity/dist packages/webapps.e/teleport/dist
+
+# install installs npm / yarn dependencies
+.PHONY:install
+install:
+	bash -c "./scripts/install.sh"
+
+# init-submodules initializes / updates the submodules in this repo
+.PHONY: init-submodules
+init-submodules:
+	git submodule update --init --recursive
 
