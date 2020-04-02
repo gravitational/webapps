@@ -14,10 +14,10 @@ pipeline {
 		}
 		stage('test') {
 			steps {
-				sh "make check"
+				sh "make clean check"
 			}
 		}
-		stage('artifacts') {
+		stage('gather artifacts') {
 			steps {
 				sh "make dist packages/webapps.e/dist"
 			}
