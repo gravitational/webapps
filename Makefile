@@ -98,6 +98,7 @@ dist: packages/gravity/dist packages/teleport/dist packages/force/dist
 	rm -rf dist
 	git clone git@github.com:gravitational/webassets.git dist
 	cd dist; git checkout $(BRANCH) || git checkout -b $(BRANCH)
+	rm -rf dist/force dist/gravity dist/teleport
 	mkdir -p dist/force && cp -r packages/force/dist/* dist/force
 	mkdir -p dist/gravity && cp -r packages/gravity/dist/* dist/gravity
 	mkdir -p dist/teleport && cp -r packages/teleport/dist/* dist/teleport
@@ -106,6 +107,7 @@ packages/webapps.e/dist: packages/webapps.e/teleport/dist packages/webapps.e/gra
 	rm -rf packages/webapps.e/dist
 	git clone git@github.com:gravitational/webassets.e.git packages/webapps.e/dist
 	cd packages/webapps.e/dist; git checkout $(BRANCH) || git checkout -b $(BRANCH)
+	rm -rf packages/webapps.e/dist/gravity.e packages/webapps.e/dist/teleport.e
 	mkdir -p packages/webapps.e/dist/gravity.e && cp -r packages/webapps.e/gravity/dist/* packages/webapps.e/dist/gravity.e
 	mkdir -p packages/webapps.e/dist/teleport.e && cp -r packages/webapps.e/teleport/dist/* packages/webapps.e/dist/teleport.e
 
