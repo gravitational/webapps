@@ -4,7 +4,7 @@ pipeline {
 	stages {
 		stage('test') {
 			steps {
-				sh "make init-submodules check"
+				sh "make clean init-submodules check"
 			}
 		}
 		stage('artifacts') {
