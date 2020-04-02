@@ -57,7 +57,7 @@ docker-build:
 	docker cp $(CONTAINER_NAME):/web-apps/$(PACKAGE_PATH)/dist $(ROOT)/$(PACKAGE_PATH)/
 	docker rm -f $(CONTAINER_NAME)
 
-# docker-enter is a shorthand for enterin the build image, for example for debugging, or in case yarn cannot
+# docker-enter is a shorthand for entering the build image, for example for debugging, or in case yarn cannot
 # be used locally
 .PHONY: docker-enter
 docker-enter:

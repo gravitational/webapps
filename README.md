@@ -163,4 +163,4 @@ and iterate on shared functionality.
 
 ### Deployment
 
-Deployment is automated through our CI system. Each commit to the `master` branch will be build & deployed.
+Deployment is automated through our CI system. Each commit to the `master` branch will be built & deployed.
