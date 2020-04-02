@@ -1,10 +1,20 @@
 pipeline {
 	agent any
 
+	options {
+		skipDefaultCheckout(true)
+	}
+
 	stages {
+		stage('checkout') {
+			steps {
+				sh "git clean -fdx"
+				checkout scm
+			}
+		}
 		stage('test') {
 			steps {
-				sh "make clean init-submodules check"
+				sh "make check"
 			}
 		}
 		stage('artifacts') {
