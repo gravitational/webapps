@@ -1,14 +1,21 @@
 pipeline {
 	agent any
+
 	stages {
 		stage('checkout') {
-			checkout scm
+			steps {
+				checkout scm
+			}
 		}
 		stage('test') {
-			sh "make check"
+			steps {
+				sh "make check"
+			}
 		}
 		stage('artifacts') {
-			sh "make dist packages/webapps.e/dist"
+			steps {
+				sh "make dist packages/webapps.e/dist"
+			}
 		}
 	}
 
