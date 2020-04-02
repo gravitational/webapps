@@ -8,7 +8,7 @@ pipeline {
 	stages {
 		stage('checkout') {
 			steps {
-				sh "git clean -fdx"
+				sh "git submodule deinit --all --force"
 				checkout scm
 			}
 		}
