@@ -3,6 +3,6 @@ node {
 		checkout scm
 	}
 	stage('test') {
-		sh "make test"
+		sh "make check"
 	}
 }
