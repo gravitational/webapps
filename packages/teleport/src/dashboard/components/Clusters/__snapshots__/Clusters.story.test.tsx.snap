@@ -327,9 +327,7 @@ exports[`render DocumentNodes 1`] = `
               localhost
             </div>
           </td>
-          <td>
-            1.2.3
-          </td>
+          <td />
           <td>
             30
           </td>
@@ -359,9 +357,7 @@ exports[`render DocumentNodes 1`] = `
               nidvojik
             </div>
           </td>
-          <td>
-            1.2.3
-          </td>
+          <td />
           <td>
             21
           </td>
@@ -391,9 +387,7 @@ exports[`render DocumentNodes 1`] = `
               lidtabih
             </div>
           </td>
-          <td>
-            1.2.3
-          </td>
+          <td />
           <td>
             35
           </td>
@@ -423,9 +417,7 @@ exports[`render DocumentNodes 1`] = `
               farovluv
             </div>
           </td>
-          <td>
-            1.2.3
-          </td>
+          <td />
           <td>
             12
           </td>
@@ -455,9 +447,7 @@ exports[`render DocumentNodes 1`] = `
               rozpaari
             </div>
           </td>
-          <td>
-            1.2.3
-          </td>
+          <td />
           <td>
             32
           </td>
@@ -487,9 +477,7 @@ exports[`render DocumentNodes 1`] = `
               wetjolune
             </div>
           </td>
-          <td>
-            1.2.3
-          </td>
+          <td />
           <td>
             8
           </td>
@@ -519,9 +507,7 @@ exports[`render DocumentNodes 1`] = `
               dashawic
             </div>
           </td>
-          <td>
-            1.2.3
-          </td>
+          <td />
           <td>
             11
           </td>
@@ -551,9 +537,7 @@ exports[`render DocumentNodes 1`] = `
               fugzucis
             </div>
           </td>
-          <td>
-            1.2.3
-          </td>
+          <td />
           <td>
             23
           </td>
