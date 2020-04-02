@@ -89,7 +89,7 @@ deploy: dist packages/webapps.e/dist
 	fi;
 	@if [ -d "packages/webapps.e/dist" ]; then \
 		cd packages/webapps.e/dist; git add -A; git commit -am 'Update build artifacts from $(COMMIT)'; \
-		git push
+		git push; \
 	fi;
 	cd dist; git add -A; git commit -am 'Update build artifacts from $(COMMIT)'; git push
 
