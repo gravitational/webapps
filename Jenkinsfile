@@ -8,7 +8,7 @@ pipeline {
 	stages {
 		stage('checkout') {
 			steps {
-				sh "git submodule deinit -f packages/webapps.e"
+				sh "[ -d 'packages/webapps.e' ] && git submodule deinit -f packages/webapps.e"
 				checkout scm
 			}
 		}
