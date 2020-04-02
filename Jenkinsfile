@@ -1,8 +1,20 @@
-node {
-	stage('checkout') {
-		checkout scm
+pipeline {
+	agent any
+	stages {
+		stage('checkout') {
+			checkout scm
+		}
+		stage('test') {
+			sh "make check"
+		}
+		stage('artifacts') {
+			sh "make dist packages/webapps.e/dist"
+		}
 	}
-	stage('test') {
-		sh "make check"
+
+	post {
+		success {
+			archiveArtifacts artifacts: 'dist/**/*,packages/webapps.e/dist/**/*', fingerprint: true
+		}
 	}
 }
