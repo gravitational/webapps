@@ -2,14 +2,9 @@ pipeline {
 	agent any
 
 	stages {
-		stage('checkout') {
-			steps {
-				checkout scm
-			}
-		}
 		stage('test') {
 			steps {
-				sh "make check"
+				sh "make init-submodules check"
 			}
 		}
 		stage('artifacts') {
