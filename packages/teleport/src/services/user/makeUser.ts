@@ -17,21 +17,23 @@ limitations under the License.
 import { at } from 'lodash';
 import makeAcl from './makeAcl';
 import { User } from './types';
+import { makeCluster } from '../clusters';
 
 export default function makeUser(json): User {
-  const [username, authType, aclJson, version] = at(json, [
+  const [username, authType, aclJSON, clusterJSON] = at(json, [
     'userName',
     'authType',
     'userAcl',
-    'version',
+    'cluster',
   ]);
 
-  const acl = makeAcl(aclJson);
+  const cluster = makeCluster(clusterJSON);
+  const acl = makeAcl(aclJSON);
 
   return {
     username,
     authType,
     acl,
-    version,
+    cluster,
   };
 }
