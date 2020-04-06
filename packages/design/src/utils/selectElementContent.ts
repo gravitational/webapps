@@ -14,8 +14,16 @@
  * limitations under the License.
  */
 
+/**
+ * selectElementContent selects the entire text contained in the HTML
+ * element that is passed in as args
+ *
+ * @param element the element that contains the text to select
+ */
 export default function selectElementContent(element: HTMLElement) {
   let range, selection;
+
+  // DELETE remove the if check when Selection API is no longer a working draft
   if (window.getSelection && document.createRange) {
     selection = window.getSelection();
     range = document.createRange();

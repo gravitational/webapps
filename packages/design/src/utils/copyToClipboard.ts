@@ -20,9 +20,9 @@
  * @param textToCopy the text to copy to clipboard
  */
 export default function copyToClipboard(textToCopy: string): Promise<any> {
-  // DELETE when navigator.clipboard is not a working draft and has good support
-  if (!navigator.clipboard) {
-    return Promise.resolve(fallbackCopyToClipboard(textToCopy));
+  // DELETE when navigator.clipboard is not a working draft
+  if (fallbackCopyToClipboard(textToCopy)) {
+    return Promise.resolve();
   }
 
   return navigator.clipboard.writeText(textToCopy).catch(err => {
@@ -37,11 +37,15 @@ export default function copyToClipboard(textToCopy: string): Promise<any> {
  *
  * @param textToCopy the text to copy to clipboard
  */
-export function fallbackCopyToClipboard(textToCopy: string) {
+function fallbackCopyToClipboard(textToCopy: string): boolean {
   let aux = document.createElement('textarea');
   aux.value = textToCopy;
   document.body.appendChild(aux);
   aux.select();
-  document.execCommand('copy');
+
+  // returns false if the command is not supported or enabled
+  let isSuccess = document.execCommand('copy');
   document.body.removeChild(aux);
+
+  return isSuccess;
 }

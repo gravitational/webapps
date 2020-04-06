@@ -83,11 +83,7 @@ export default function Cluster() {
       {viewClusterInfo && (
         <ClusterInfoDialog
           onClose={handleViewClusterInfo}
-          clusterName={teleportCtx.storeUser.state.cluster.clusterId}
-          numNodes={teleportCtx.storeUser.state.cluster.nodeCount}
-          publicURL={teleportCtx.storeUser.state.cluster.publicURL}
-          authVersion={teleportCtx.storeUser.state.cluster.authVersion}
-          proxyVersion={teleportCtx.storeUser.state.cluster.proxyVersion}
+          cluster={teleportCtx.storeUser.state.cluster}
         />
       )}
     </HorizontalSplit>

@@ -14,6 +14,7 @@ limitations under the License.
 import React from 'react';
 import copyToClipboard from 'design/utils/copyToClipboard';
 import selectElementContent from 'design/utils/selectElementContent';
+import { Cluster } from 'teleport/services/clusters/index';
 import Dialog, {
   DialogFooter,
   DialogTitle,
@@ -29,14 +30,15 @@ import {
   ButtonPrimary,
 } from 'design';
 
-export default function ClusterInfoDialog({
+type ClusterInfoDialogProps = {
+  onClose: () => void;
+  cluster: Cluster;
+};
+
+const ClusterInfoDialog: React.FC<ClusterInfoDialogProps> = ({
   onClose,
-  clusterName,
-  numNodes,
-  publicURL,
-  authVersion,
-  proxyVersion,
-}) {
+  cluster,
+}) => {
   return (
     <Dialog disableEscapeKeyDown={false} onClose={onClose} open={true}>
       <Box width="600px">
@@ -45,11 +47,16 @@ export default function ClusterInfoDialog({
         </DialogHeader>
         <DialogContent>
           <LabelInput>Public URL</LabelInput>
-          <BoxUrl url={publicURL} />
-          <TextRow labelText="Cluster Name" infoText={clusterName} />
-          <TextRow labelText="Number of Nodes" infoText={numNodes} />
-          <TextRow labelText="Auth Service Version" infoText={authVersion} />
-          <TextRow labelText="Proxy Service Version" infoText={proxyVersion} />
+          <BoxUrl url={cluster.publicURL} />
+          <TextRow labelText="Cluster Name" infoText={cluster.clusterId} />
+          <TextRow
+            labelText="Auth Service Version"
+            infoText={cluster.authVersion}
+          />
+          <TextRow
+            labelText="Proxy Service Version"
+            infoText={cluster.proxyVersion}
+          />
         </DialogContent>
         <DialogFooter>
           <ButtonSecondary onClick={onClose}>Close</ButtonSecondary>
@@ -57,9 +64,12 @@ export default function ClusterInfoDialog({
       </Box>
     </Dialog>
   );
-}
+};
 
-const TextRow = ({ labelText, infoText }) => {
+const TextRow: React.FC<{ labelText: string; infoText: string }> = ({
+  labelText,
+  infoText,
+}) => {
   return (
     <>
       <LabelInput>{labelText}</LabelInput>
@@ -68,9 +78,10 @@ const TextRow = ({ labelText, infoText }) => {
   );
 };
 
-const BoxUrl = ({ url }) => {
+const BoxUrl: React.FC<{ url: string }> = ({ url }) => {
   const ref = React.useRef();
   const [copyCmd, setCopyCmd] = React.useState(() => 'Copy');
+
   function onCopyClick() {
     copyToClipboard(url).then(() => setCopyCmd('Copied'));
     selectElementContent(ref.current);
@@ -93,3 +104,5 @@ const BoxUrl = ({ url }) => {
     </Flex>
   );
 };
+
+export default ClusterInfoDialog;

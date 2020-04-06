@@ -331,17 +331,6 @@ exports[`rendering of static texts 1`] = `
             class="c8"
             font-size="0"
           >
-            Number of Nodes
-          </label>
-          <div
-            class="c12"
-          >
-            45
-          </div>
-          <label
-            class="c8"
-            font-size="0"
-          >
             Auth Service Version
           </label>
           <div
