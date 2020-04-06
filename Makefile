@@ -44,7 +44,7 @@ build-teleport-e:
 docker-build:
 	docker build --force-rm=true --build-arg NPM_SCRIPT=$(NPM_CMD) -t $(IMAGE_NAME) .
 	@if [ "$(TO)" != "" ] || [ "$(FROM)" != "" ]; then \
-		rm -rf $(ROOT)/$(TO) && mkdir -p $(ROOT)/$(TO); \
+		mkdir -p $(ROOT)/$(TO); \
 		docker create --name $(CONTAINER_NAME) -t $(IMAGE_NAME) && \
 		docker cp $(CONTAINER_NAME):/web-apps/$(FROM)/. $(ROOT)/$(TO); \
 		docker rm -f $(CONTAINER_NAME); \
