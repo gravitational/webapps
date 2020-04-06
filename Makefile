@@ -89,7 +89,7 @@ update-webassets-repo:
 # clean removes this repo generated artifacts
 .PHONY: clean
 clean:
-	rm -rf dist
+	rm -rf dist teleport
 	find . -name "node_modules" -type d -prune -exec rm -rf '{}' +
 
 # init-submodules initializes / updates the submodules in this repo
