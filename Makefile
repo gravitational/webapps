@@ -33,11 +33,11 @@ build-teleport:
 
 .PHONY: build-gravity-e
 build-gravity-e:
-	$(MAKE) docker-build NPM_CMD=build-gravity-e FROM=dist/webassets.e/gravity/ TO=dist/webassets.e/gravity;
+	$(MAKE) docker-build NPM_CMD=build-gravity-e FROM=dist/e/gravity/ TO=dist/e/gravity;
 
 .PHONY: build-teleport-e
 build-teleport-e:
-	$(MAKE) docker-build NPM_CMD=build-teleport-e; FROM=dist/webassets.e/teleport/ TO=dist/webassets.e/teleport;
+	$(MAKE) docker-build NPM_CMD=build-teleport-e; FROM=dist/e/teleport/ TO=dist/e/teleport;
 
 # builds package dists files in docker (TODO: move it to scripts/docker-build.sh)
 .PHONY: docker-build
@@ -69,20 +69,20 @@ update-webassets-repo:
 	# prepare webassets repo
 	rm -rf dist && git clone git@github.com:gravitational/webassets.git dist
 	cd dist; git checkout $(BRANCH) || git checkout -b $(BRANCH)
-	# prepare webassets.e repo
+	# prepare e submodule
 	cd dist; git submodule update --init --recursive
-	cd dist/webassets.e; git checkout $(BRANCH) || git checkout -b $(BRANCH)
+	cd dist/e; git checkout $(BRANCH) || git checkout -b $(BRANCH)
 	# build the dist files
 	$(MAKE) build
 	# push webapps dist files to webasset repositories
-	cd dist/webassets.e; git add -A; git commit -am '$(COMMIT_DESC)' -m '$(COMMIT_URL)' --allow-empty; git push
-	cd dist; git add -A; git commit -am '$(COMMIT_DESC)' -m '$(COMMIT_URL)' --allow-empty; git push
+	cd dist/e; git add -A .; git commit -am '$(COMMIT_DESC)' -m '$(COMMIT_URL)' --allow-empty; git push
+	cd dist; git add -A .; git commit -am '$(COMMIT_DESC)' -m '$(COMMIT_URL)' --allow-empty; git push
 	WEBAPPS_HEAD=$(shell cd dist; git rev-parse HEAD)
 	# update Teleport
 	rm -rf teleport && git clone git@github.com:gravitational/teleport.git
 	cd teleport; git checkout $(TELEPORT_TARGET) || git checkout -b $(TELEPORT_TARGET)
 	cd teleport/webassets; git checkout $(WEBAPPS_HEAD)
-	cd teleport; git add -A; git commit -am 'Update webassets' -m '$(COMMIT_DESC) $(COMMIT_URL)' --allow-empty
+	cd teleport; git add -A .; git commit -am 'Update webassets' -m '$(COMMIT_DESC) $(COMMIT_URL)' --allow-empty
 	cd teleport; git push
 
 # clean removes this repo generated artifacts
