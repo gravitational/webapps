@@ -63,9 +63,9 @@ docker-clean:
 # update webassets repository with the new /dist files
 .PHONY: update-webassets-repo
 update-webassets-repo:
-	if [ -z "$(TELEPORT_TARGET))" ]; then \
+	@if [ -z "$(TELEPORT_TARGET)" ]; then \
 		echo "TELEPORT_TARGET is not set"; exit 1; \
-	fi;
+	fi
 	# prepare webassets repo
 	rm -rf dist && git clone git@github.com:gravitational/webassets.git dist
 	cd dist; git checkout $(BRANCH) || git checkout -b $(BRANCH)
