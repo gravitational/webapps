@@ -81,7 +81,7 @@ update-webassets-repo:
 	# update Teleport
 	rm -rf teleport && git clone git@github.com:gravitational/teleport.git
 	cd teleport; git checkout $(TELEPORT_TARGET) || git checkout -b $(TELEPORT_TARGET)
-	cd teleport; git submodule sync && git submodule update --init
+	cd teleport; git fetch --recurse-submodules && git submodule update --init webassets
 	cd teleport/webassets; git checkout $(WEBAPPS_HEAD)
 	cd teleport; git add -A .; git commit -am 'Update webassets' -m '$(COMMIT_DESC) $(COMMIT_URL)' --allow-empty
 	cd teleport; git push origin $(TELEPORT_TARGET)
