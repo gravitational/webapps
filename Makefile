@@ -75,15 +75,15 @@ update-webassets-repo:
 	# build the dist files
 	$(MAKE) build
 	# push webapps dist files to webasset repositories
-	cd dist/e; git add -A .; git commit -am '$(COMMIT_DESC)' -m '$(COMMIT_URL)' --allow-empty; git push
-	cd dist; git add -A .; git commit -am '$(COMMIT_DESC)' -m '$(COMMIT_URL)' --allow-empty; git push
+	cd dist/e; git add -A .; git commit -am '$(COMMIT_DESC)' -m '$(COMMIT_URL)' --allow-empty; git push origin $(BRANCH)
+	cd dist; git add -A .; git commit -am '$(COMMIT_DESC)' -m '$(COMMIT_URL)' --allow-empty; git push origin $(BRANCH)
 	WEBAPPS_HEAD=$(shell cd dist; git rev-parse HEAD)
 	# update Teleport
 	rm -rf teleport && git clone git@github.com:gravitational/teleport.git
 	cd teleport; git checkout $(TELEPORT_TARGET) || git checkout -b $(TELEPORT_TARGET)
 	cd teleport/webassets; git checkout $(WEBAPPS_HEAD)
 	cd teleport; git add -A .; git commit -am 'Update webassets' -m '$(COMMIT_DESC) $(COMMIT_URL)' --allow-empty
-	cd teleport; git push
+	cd teleport; git push origin $(TELEPORT_TARGET)
 
 # clean removes this repo generated artifacts
 .PHONY: clean
