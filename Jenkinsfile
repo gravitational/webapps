@@ -23,10 +23,4 @@ pipeline {
 			}
 		}
 	}
-
-	post {
-		success {
-			archiveArtifacts artifacts: 'dist/**/*', fingerprint: true
-		}
-	}
 }
