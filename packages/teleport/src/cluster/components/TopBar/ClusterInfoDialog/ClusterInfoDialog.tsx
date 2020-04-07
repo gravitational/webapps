@@ -14,7 +14,6 @@ limitations under the License.
 import React from 'react';
 import copyToClipboard from 'design/utils/copyToClipboard';
 import selectElementContent from 'design/utils/selectElementContent';
-import { Cluster } from 'teleport/services/clusters/index';
 import Dialog, {
   DialogFooter,
   DialogTitle,
@@ -32,12 +31,18 @@ import {
 
 type ClusterInfoDialogProps = {
   onClose: () => void;
-  cluster: Cluster;
+  clusterId: string;
+  publicURL: string;
+  authVersion: string;
+  proxyVersion: string;
 };
 
 const ClusterInfoDialog: React.FC<ClusterInfoDialogProps> = ({
   onClose,
-  cluster,
+  clusterId,
+  publicURL,
+  authVersion,
+  proxyVersion,
 }) => {
   return (
     <Dialog disableEscapeKeyDown={false} onClose={onClose} open={true}>
@@ -47,16 +52,10 @@ const ClusterInfoDialog: React.FC<ClusterInfoDialogProps> = ({
         </DialogHeader>
         <DialogContent>
           <LabelInput>Public URL</LabelInput>
-          <BoxUrl url={cluster.publicURL} />
-          <TextRow labelText="Cluster Name" infoText={cluster.clusterId} />
-          <TextRow
-            labelText="Auth Service Version"
-            infoText={cluster.authVersion}
-          />
-          <TextRow
-            labelText="Proxy Service Version"
-            infoText={cluster.proxyVersion}
-          />
+          <BoxUrl url={publicURL} />
+          <TextRow labelText="Cluster Name" infoText={clusterId} />
+          <TextRow labelText="Auth Service Version" infoText={authVersion} />
+          <TextRow labelText="Proxy Service Version" infoText={proxyVersion} />
         </DialogContent>
         <DialogFooter>
           <ButtonSecondary onClick={onClose}>Close</ButtonSecondary>
@@ -66,10 +65,7 @@ const ClusterInfoDialog: React.FC<ClusterInfoDialogProps> = ({
   );
 };
 
-const TextRow: React.FC<{ labelText: string; infoText: string }> = ({
-  labelText,
-  infoText,
-}) => {
+const TextRow = ({ labelText = '', infoText = '' }) => {
   return (
     <>
       <LabelInput>{labelText}</LabelInput>
@@ -78,7 +74,7 @@ const TextRow: React.FC<{ labelText: string; infoText: string }> = ({
   );
 };
 
-const BoxUrl: React.FC<{ url: string }> = ({ url }) => {
+const BoxUrl = ({ url = '' }) => {
   const ref = React.useRef();
   const [copyCmd, setCopyCmd] = React.useState(() => 'Copy');
 

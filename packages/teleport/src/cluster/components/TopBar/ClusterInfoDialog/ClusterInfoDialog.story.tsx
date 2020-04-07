@@ -23,17 +23,10 @@ export default {
 export const ClusterInfoDialog = () => (
   <ClusterDialog
     onClose={null}
-    cluster={{
-      clusterId: 'applePie',
-      publicURL: 'some.kind.of.host:8080',
-      proxyVersion: '4.2.2',
-      authVersion: '5.0.0',
-      lastConnected: new Date(),
-      nodeCount: 0,
-      status: '',
-      connectedText: '',
-      url: '',
-    }}
+    clusterId="applePie"
+    publicURL="some.kind.of.host:8080"
+    proxyVersion="4.2.2"
+    authVersion="5.0.0"
   />
 );
 

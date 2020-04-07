@@ -83,7 +83,7 @@ export default function Cluster() {
       {viewClusterInfo && (
         <ClusterInfoDialog
           onClose={handleViewClusterInfo}
-          cluster={teleportCtx.storeUser.state.cluster}
+          {...teleportCtx.storeUser.state.cluster}
         />
       )}
     </HorizontalSplit>

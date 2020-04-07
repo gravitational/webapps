@@ -32,17 +32,10 @@ test('button clicks', async () => {
   const onClose = jest.fn();
   const { getByText, queryByText } = render(
     <ClusterInfoDialog
-      cluster={{
-        clusterId: '',
-        publicURL: '',
-        proxyVersion: '',
-        authVersion: '',
-        lastConnected: null,
-        nodeCount: 0,
-        status: '',
-        connectedText: '',
-        url: '',
-      }}
+      clusterId=""
+      publicURL=""
+      proxyVersion=""
+      authVersion=""
       onClose={onClose}
     />
   );
