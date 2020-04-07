@@ -5,4 +5,3 @@ dist
 **/dist
 !packages/force/dist
 !packages/gravity/dist
-teleport
