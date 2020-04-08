@@ -35,11 +35,11 @@ import cfg from 'teleport/config';
 
 export default function ClustersList(props: ClusterListProps) {
   const { clusters, search = '', pageSize = 500 } = props;
-  const [sortDir, setSortDir] = React.useState<ClusterProps>({
+  const [sortDir, setSortDir] = React.useState<SortDirs>({
     clusterId: SortTypes.ASC,
   });
 
-  function onSortChange(columnKey, sortDir) {
+  function onSortChange(columnKey: SortCol, sortDir) {
     setSortDir({ [columnKey]: sortDir });
   }
 
@@ -48,7 +48,7 @@ export default function ClustersList(props: ClusterListProps) {
       return clusters;
     }
 
-    const columnKey = Object.getOwnPropertyNames(sortDir)[0];
+    const columnKey = Object.getOwnPropertyNames(sortDir)[0] as SortCol;
     const sortOrder = sortDir[columnKey].toLowerCase();
 
     return sortByRoot(clusters, columnKey, sortOrder);
@@ -164,7 +164,7 @@ function filterCb(targetValue: any[], searchValue: string, propName: string) {
  * @param columnKey the cluster prop to sort by
  * @param sortOrder order by asc or desc
  */
-function sortByRoot(clusters: Cluster[], columnKey, sortOrder) {
+function sortByRoot(clusters: Cluster[], columnKey: SortCol, sortOrder) {
   const swappedClusters = swapFirstIndexToRoot(clusters);
   if (!swappedClusters) {
     return orderBy(clusters, [columnKey], [sortOrder]);
@@ -248,10 +248,8 @@ const StyledTable = styled(TablePaged)`
   }
 `;
 
-type ClusterProps = {
-  [P in keyof Cluster]?: string;
-};
-
+type SortCol = keyof Cluster;
+type SortDirs = { [P in SortCol]?: string };
 type ClusterListProps = {
   clusters: Cluster[];
   search: string;
