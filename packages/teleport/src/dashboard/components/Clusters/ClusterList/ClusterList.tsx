@@ -76,7 +76,7 @@ export default function ClustersList(props: ClusterListProps) {
     const rows = closest.parentElement.childNodes;
     for (var i = 0; i < rows.length; i++) {
       if (rows[i] === closest) {
-        history.push(clusters[i].url);
+        history.push(data[i].url);
       }
     }
   }
