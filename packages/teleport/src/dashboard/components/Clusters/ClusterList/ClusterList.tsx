@@ -35,20 +35,16 @@ import cfg from 'teleport/config';
 
 export default function ClustersList(props: ClusterListProps) {
   const { clusters, search = '', pageSize = 500 } = props;
-  const [sortDir, setSortDir] = React.useState<ClusterProps>({});
+  const [sorting, setSorting] = React.useState<Sorting>({});
 
-  function onSortChange(columnKey, sortDir) {
-    setSortDir({ [columnKey]: sortDir });
+  function onSortChange(columnKey: SortCol, sortDir: string) {
+    setSorting({ [columnKey]: sortDir });
   }
 
   function sort(clusters: Cluster[]) {
-    const columnKey = Object.getOwnPropertyNames(sortDir)[0];
-    const sorted = sortBy(clusters, columnKey);
-    if (sortDir[columnKey] === SortTypes.DESC) {
-      return sortByRoot(sorted.reverse());
-    }
-
-    return clusters;
+    const columnName = Object.getOwnPropertyNames(sorting)[0] as SortCol;
+    const sorted = sortClusters(clusters, columnName, sorting[columnName]);
+    return rootFirst(sorted);
   }
 
   const filtered = filter(clusters, search);
@@ -88,7 +84,7 @@ export default function ClustersList(props: ClusterListProps) {
         columnKey="clusterId"
         header={
           <SortHeaderCell
-            sortDir={sortDir.clusterId}
+            sortDir={sorting.clusterId}
             onSortChange={onSortChange}
             title="Name"
           />
@@ -99,7 +95,7 @@ export default function ClustersList(props: ClusterListProps) {
         columnKey="authVersion"
         header={
           <SortHeaderCell
-            sortDir={sortDir.authVersion}
+            sortDir={sorting.authVersion}
             onSortChange={onSortChange}
             title="Version"
           />
@@ -110,7 +106,7 @@ export default function ClustersList(props: ClusterListProps) {
         columnKey="nodeCount"
         header={
           <SortHeaderCell
-            sortDir={sortDir.nodeCount}
+            sortDir={sorting.nodeCount}
             onSortChange={onSortChange}
             title="Nodes"
           />
@@ -121,7 +117,7 @@ export default function ClustersList(props: ClusterListProps) {
         columnKey="publicURL"
         header={
           <SortHeaderCell
-            sortDir={sortDir.publicURL}
+            sortDir={sorting.publicURL}
             onSortChange={onSortChange}
             title="Public URL"
           />
@@ -154,11 +150,20 @@ function filterCb(targetValue: any[], searchValue: string, propName: string) {
   }
 }
 
-function sortByRoot(clusters: Cluster[]) {
-  const proxyCluster = clusters.find(c => c.clusterId === cfg.proxyCluster);
-  if (proxyCluster) {
+function sortClusters(clusters: Cluster[], columnName: SortCol, dir: string) {
+  const sorted = sortBy(clusters, columnName);
+  if (dir === SortTypes.DESC) {
+    return sorted.reverse();
+  }
+
+  return clusters;
+}
+
+function rootFirst(clusters: Cluster[]) {
+  const root = clusters.find(c => c.clusterId === cfg.proxyCluster);
+  if (root) {
     const tmp = clusters[0];
-    const index = clusters.indexOf(proxyCluster);
+    const index = clusters.indexOf(root);
     clusters[0] = clusters[index];
     clusters[index] = tmp;
   }
@@ -205,7 +210,8 @@ const StyledTable = styled(TablePaged)`
   }
 `;
 
-type ClusterProps = {
+type SortCol = keyof Cluster;
+type Sorting = {
   [P in keyof Cluster]?: string;
 };
 
