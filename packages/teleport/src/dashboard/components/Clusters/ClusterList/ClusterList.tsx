@@ -19,7 +19,7 @@ import styled from 'styled-components';
 import isMatch from 'design/utils/match';
 import history from 'teleport/services/history';
 import { Cluster } from 'teleport/services/clusters';
-import { sortBy } from 'lodash';
+import { orderBy } from 'lodash';
 import {
   TablePaged,
   Column,
@@ -35,20 +35,23 @@ import cfg from 'teleport/config';
 
 export default function ClustersList(props: ClusterListProps) {
   const { clusters, search = '', pageSize = 500 } = props;
-  const [sortDir, setSortDir] = React.useState<ClusterProps>({});
+  const [sortDir, setSortDir] = React.useState<ClusterProps>({
+    clusterId: SortTypes.ASC,
+  });
 
   function onSortChange(columnKey, sortDir) {
     setSortDir({ [columnKey]: sortDir });
   }
 
   function sort(clusters: Cluster[]) {
-    const columnKey = Object.getOwnPropertyNames(sortDir)[0];
-    const sorted = sortBy(clusters, columnKey);
-    if (sortDir[columnKey] === SortTypes.DESC) {
-      return sortByRoot(sorted.reverse());
+    if (clusters.length <= 1) {
+      return clusters;
     }
 
-    return clusters;
+    const columnKey = Object.getOwnPropertyNames(sortDir)[0];
+    const sortOrder = sortDir[columnKey].toLowerCase();
+
+    return sortByRoot(clusters, columnKey, sortOrder);
   }
 
   const filtered = filter(clusters, search);
@@ -154,15 +157,55 @@ function filterCb(targetValue: any[], searchValue: string, propName: string) {
   }
 }
 
-function sortByRoot(clusters: Cluster[]) {
-  const proxyCluster = clusters.find(c => c.clusterId === cfg.proxyCluster);
-  if (proxyCluster) {
-    const tmp = clusters[0];
-    const index = clusters.indexOf(proxyCluster);
-    clusters[0] = clusters[index];
-    clusters[index] = tmp;
+/**
+ * sortByRoot returns a list of sorted clusters with root first in list.
+ *
+ * @param clusters the array of cluster objects to sort
+ * @param columnKey the cluster prop to sort by
+ * @param sortOrder order by asc or desc
+ */
+function sortByRoot(clusters: Cluster[], columnKey, sortOrder) {
+  const swappedClusters = swapFirstIndexToRoot(clusters);
+  if (!swappedClusters) {
+    return orderBy(clusters, [columnKey], [sortOrder]);
   }
-  return clusters;
+
+  if (swappedClusters.length <= 2) {
+    return swappedClusters;
+  }
+
+  // slice away from root cluster
+  const clustersToSort = clusters.slice(1);
+
+  // sort objects after root
+  const sorted = orderBy(clustersToSort, [columnKey], [sortOrder]);
+
+  // swap in place instead of generating new array
+  for (let i = 0; i < sorted.length; i += 1) {
+    swappedClusters[i + 1] = sorted[i];
+  }
+
+  return swappedClusters;
+}
+
+/**
+ * swapFirstIndexToRoot returns a list of clusters with the root
+ * first in list, by finding the root cluster index and swapping
+ * places with the first index.
+ *
+ * @param clusters the array of cluster objects to sort
+ */
+function swapFirstIndexToRoot(clusters: Cluster[]) {
+  const indexOfRoot = clusters.findIndex(c => c.clusterId === cfg.proxyCluster);
+
+  if (indexOfRoot >= 0) {
+    const tmp = clusters[0];
+    clusters[0] = clusters[indexOfRoot];
+    clusters[indexOfRoot] = tmp;
+    return clusters;
+  }
+
+  return null;
 }
 
 export function NameCell(props) {
