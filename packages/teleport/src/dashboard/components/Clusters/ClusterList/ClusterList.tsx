@@ -156,16 +156,15 @@ function sortClusters(clusters: Cluster[], columnName: SortCol, dir: string) {
     return sorted.reverse();
   }
 
-  return clusters;
+  return sorted;
 }
 
 function rootFirst(clusters: Cluster[]) {
   const root = clusters.find(c => c.clusterId === cfg.proxyCluster);
   if (root) {
-    const tmp = clusters[0];
     const index = clusters.indexOf(root);
-    clusters[0] = clusters[index];
-    clusters[index] = tmp;
+    clusters.splice(index, 1);
+    clusters.unshift(root);
   }
   return clusters;
 }
