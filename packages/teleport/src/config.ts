@@ -61,8 +61,9 @@ const cfg = {
     userInvite: '/web/invite/:tokenId',
     userReset: '/web/reset/:tokenId',
     // whitelist sso handlers
-    loginOIDC: '/v1/webapi/oidc/*',
-    loginSAML: '/v1/webapi/saml/*',
+    oidcHandler: '/v1/webapi/oidc/*',
+    samlHandler: '/v1/webapi/saml/*',
+    githubHandler: '/v1/webapi/github/*',
   },
 
   api: {
