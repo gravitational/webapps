@@ -88,7 +88,7 @@ export default function ClustersList(props: ClusterListProps) {
           <Pager {...paged} />
         </Flex>
       </Panel>
-      <StyledTable data={paged.data} onClick={onTableRowClick}>
+      <ClusterTable data={paged.data} onClick={onTableRowClick}>
         <Column
           header={<Cell style={{ width: '40px' }} />}
           cell={<RootLabelCell />}
@@ -138,7 +138,7 @@ export default function ClustersList(props: ClusterListProps) {
           cell={<TextCell />}
         />
         <Column header={<Cell />} cell={<ActionCell />} />
-      </StyledTable>
+      </ClusterTable>
     </>
   );
 }
@@ -227,7 +227,7 @@ type ClusterListProps = {
   pageSize?: 500;
 };
 
-const StyledTable = styled(Table)`
+const ClusterTable = styled(Table)`
   tr:hover {
     cursor: pointer;
     background-color: rgba(0, 0, 0, 0.075);
