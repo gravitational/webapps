@@ -38,11 +38,9 @@ export default function useSshSession(doc: DocumentSsh) {
       const tty = ctx.createTty(session);
 
       // subscribe to tty events to handle connect/disconnects events
-      tty.on(TermEventEnum.CLOSE, () =>
-        handleTtyDisconnect(ctx, doc, TermEventEnum.CLOSE as EventType)
-      );
+      tty.on(TermEventEnum.CLOSE, () => ctx.closeTab(doc));
       tty.on(TermEventEnum.CONN_CLOSE, () =>
-        handleTtyDisconnect(ctx, doc, TermEventEnum.CONN_CLOSE as EventType)
+        ctx.updateSshDocument(doc.id, { status: 'disconnected' })
       );
       tty.on('open', () => handleTtyConnect(ctx, session, doc.id));
 
@@ -105,20 +103,4 @@ function handleTtyConnect(
   ctx.gotoTab({ url });
 }
 
-function handleTtyDisconnect(
-  ctx: ConsoleContext,
-  doc: DocumentSsh,
-  eventType: EventType
-) {
-  if (eventType === TermEventEnum.CLOSE) {
-    ctx.closeTab(doc);
-    return;
-  }
-
-  ctx.updateSshDocument(doc.id, {
-    status: 'disconnected',
-  });
-}
-
 type Status = 'initialized' | 'loading' | 'notfound' | 'error';
-type EventType = 'terminal.close' | 'connection.close';
