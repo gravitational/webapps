@@ -21,20 +21,26 @@ import history from 'teleport/services/history';
 import { Cluster } from 'teleport/services/clusters';
 import { sortBy } from 'lodash';
 import {
-  TablePaged,
-  Column,
   SortHeaderCell,
-  Cell,
   TextCell,
+  Cell,
+  Table,
+  Column,
   SortTypes,
 } from 'design/DataTable';
-import { ButtonSecondary, Text } from 'design';
+import {
+  usePages,
+  Pager,
+  StyledPanel,
+  StyledButtons,
+} from 'design/DataTable/Paged';
+import { Flex, ButtonSecondary, Text } from 'design';
 import { NavLink } from 'shared/components/Router';
 import * as Labels from 'design/Label';
 import cfg from 'teleport/config';
 
 export default function ClustersList(props: ClusterListProps) {
-  const { clusters, search = '', pageSize = 500 } = props;
+  const { clusters, search = '', pageSize = 50 } = props;
   const [sorting, setSorting] = React.useState<Sorting>({});
 
   function onSortChange(columnKey: SortCol, sortDir: string) {
@@ -48,11 +54,8 @@ export default function ClustersList(props: ClusterListProps) {
   }
 
   const filtered = filter(clusters, search);
-  const data = sort(filtered);
-  const tableProps = {
-    pageSize,
-    data,
-  };
+  const sorted = sort(filtered);
+  const paged = usePages({ pageSize, data: sorted });
 
   function onTableRowClick(e: MouseEvent) {
     if (e.ctrlKey || e.shiftKey || e.altKey) {
@@ -69,63 +72,74 @@ export default function ClustersList(props: ClusterListProps) {
     const rows = closest.parentElement.childNodes;
     for (var i = 0; i < rows.length; i++) {
       if (rows[i] === closest) {
-        history.push(clusters[i].url);
+        history.push(paged.data[i].url);
       }
     }
   }
 
   return (
-    <StyledTable {...tableProps} onClick={onTableRowClick}>
-      <Column
-        header={<Cell style={{ width: '40px' }} />}
-        cell={<RootLabelCell />}
-      />
-      <Column
-        columnKey="clusterId"
-        header={
-          <SortHeaderCell
-            sortDir={sorting.clusterId}
-            onSortChange={onSortChange}
-            title="Name"
-          />
-        }
-        cell={<NameCell />}
-      />
-      <Column
-        columnKey="authVersion"
-        header={
-          <SortHeaderCell
-            sortDir={sorting.authVersion}
-            onSortChange={onSortChange}
-            title="Version"
-          />
-        }
-        cell={<TextCell />}
-      />
-      <Column
-        columnKey="nodeCount"
-        header={
-          <SortHeaderCell
-            sortDir={sorting.nodeCount}
-            onSortChange={onSortChange}
-            title="Nodes"
-          />
-        }
-        cell={<TextCell />}
-      />
-      <Column
-        columnKey="publicURL"
-        header={
-          <SortHeaderCell
-            sortDir={sorting.publicURL}
-            onSortChange={onSortChange}
-            title="Public URL"
-          />
-        }
-        cell={<TextCell />}
-      />
-      <Column header={<Cell />} cell={<ActionCell />} />
-    </StyledTable>
+    <>
+      <Panel
+        borderTopRightRadius="3"
+        borderTopLeftRadius="3"
+        justifyContent="space-between"
+      >
+        <Flex alignItems="center" justifyContent="space-between" flex="1">
+          <Pager {...paged} />
+        </Flex>
+      </Panel>
+      <StyledTable data={paged.data} onClick={onTableRowClick}>
+        <Column
+          header={<Cell style={{ width: '40px' }} />}
+          cell={<RootLabelCell />}
+        />
+        <Column
+          columnKey="clusterId"
+          header={
+            <SortHeaderCell
+              sortDir={sorting.clusterId}
+              onSortChange={onSortChange}
+              title="Name"
+            />
+          }
+          cell={<NameCell />}
+        />
+        <Column
+          columnKey="authVersion"
+          header={
+            <SortHeaderCell
+              sortDir={sorting.authVersion}
+              onSortChange={onSortChange}
+              title="Version"
+            />
+          }
+          cell={<TextCell />}
+        />
+        <Column
+          columnKey="nodeCount"
+          header={
+            <SortHeaderCell
+              sortDir={sorting.nodeCount}
+              onSortChange={onSortChange}
+              title="Nodes"
+            />
+          }
+          cell={<TextCell />}
+        />
+        <Column
+          columnKey="publicURL"
+          header={
+            <SortHeaderCell
+              sortDir={sorting.publicURL}
+              onSortChange={onSortChange}
+              title="Public URL"
+            />
+          }
+          cell={<TextCell />}
+        />
+        <Column header={<Cell />} cell={<ActionCell />} />
+      </StyledTable>
+    </>
   );
 }
 
@@ -160,10 +174,10 @@ function sortClusters(clusters: Cluster[], columnName: SortCol, dir: string) {
 }
 
 function rootFirst(clusters: Cluster[]) {
-  const root = clusters.find(c => c.clusterId === cfg.proxyCluster);
-  if (root) {
-    const index = clusters.indexOf(root);
-    clusters.splice(index, 1);
+  const rootIndex = clusters.findIndex(c => c.clusterId === cfg.proxyCluster);
+  if (rootIndex !== -1) {
+    const root = clusters[rootIndex];
+    clusters.splice(rootIndex, 1);
     clusters.unshift(root);
   }
   return clusters;
@@ -202,13 +216,6 @@ function ActionCell(props) {
   );
 }
 
-const StyledTable = styled(TablePaged)`
-  tr:hover {
-    cursor: pointer;
-    background-color: rgba(0, 0, 0, 0.075);
-  }
-`;
-
 type SortCol = keyof Cluster;
 type Sorting = {
   [P in keyof Cluster]?: string;
@@ -219,3 +226,16 @@ type ClusterListProps = {
   search: string;
   pageSize?: 500;
 };
+
+const StyledTable = styled(Table)`
+  tr:hover {
+    cursor: pointer;
+    background-color: rgba(0, 0, 0, 0.075);
+  }
+`;
+
+const Panel = styled(StyledPanel)`
+  ${StyledButtons} {
+    margin-left: ${props => `${props.theme.space[3]}px`};
+  }
+`;
