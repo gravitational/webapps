@@ -15,7 +15,7 @@ limitations under the License.
 */
 
 import React from 'react';
-import { TablePaged, Column, Cell } from 'design/DataTable';
+import { TablePaged, Column, Cell, TextCell } from 'design/DataTable';
 import { Box } from 'design';
 import TypeCell from './TypeCell';
 import UserCell from './UserCell';
@@ -35,14 +35,19 @@ export default function SessionList({
         <Column header={<Cell>Type</Cell>} cell={<TypeCell />} />
         <Column
           nodes={nodes}
-          columnKey="description"
           header={<Cell>Description</Cell>}
           cell={<DescCell />}
         />
+        <Column header={<Cell>User</Cell>} cell={<UserCell />} />
         <Column
-          columnKey="createdBy"
-          header={<Cell>User</Cell>}
-          cell={<UserCell />}
+          columnKey="hostname"
+          header={<Cell>Hostname</Cell>}
+          cell={<TextCell />}
+        />
+        <Column
+          columnKey="addr"
+          header={<Cell>Address</Cell>}
+          cell={<TextCell />}
         />
         <Column header={<Cell>Created</Cell>} cell={<CreatedCell />} />
         <Column header={<Cell />} cell={<ActionCell />} />
