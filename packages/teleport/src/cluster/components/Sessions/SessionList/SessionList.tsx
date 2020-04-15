@@ -25,16 +25,13 @@ import DescCell from './DescCell';
 import { Session } from 'teleport/services/ssh';
 import { Node } from 'teleport/services/nodes';
 
-export default function SessionList({
-  sessions,
-  nodes,
-  pageSize = 100,
-  ...rest
-}: Props) {
+export default function SessionList(props: Props) {
+  const { sessions, nodes, pageSize = 100, ...rest } = props;
+
   const tableProps = {
     data: sessions,
-    pagerPosition: 'bottom',
     pageSize,
+    pagerPosition: 'bottom',
   };
 
   return (
