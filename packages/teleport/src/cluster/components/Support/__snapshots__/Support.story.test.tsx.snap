@@ -1,0 +1,350 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`support 1`] = `
+.c5 {
+  display: inline-block;
+  -webkit-transition: color .3s;
+  transition: color .3s;
+  color: #FFFFFF;
+}
+
+.c1 {
+  box-sizing: border-box;
+  margin-bottom: 24px;
+  margin-top: 24px;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-shrink: 0;
+  -ms-flex-negative: 0;
+  flex-shrink: 0;
+}
+
+.c2 {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  font-weight: 300;
+  font-size: 34px;
+  line-height: 56px;
+  margin: 0px;
+  -webkit-flex-shrink: 0;
+  -ms-flex-negative: 0;
+  flex-shrink: 0;
+}
+
+.c0 {
+  box-sizing: border-box;
+  padding-left: 40px;
+  padding-right: 40px;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  overflow: auto;
+  width: 100%;
+  height: 100%;
+  -webkit-flex-direction: column;
+  -ms-flex-direction: column;
+  flex-direction: column;
+}
+
+.c0::after {
+  content: ' ';
+  padding-bottom: 24px;
+}
+
+.c0 h4 {
+  text-transform: uppercase;
+}
+
+.c0 > div:not(:first-child) {
+  padding: 6px 30px 12px 30px;
+}
+
+.c0 ul {
+  padding-left: 0;
+  list-style-type: none;
+}
+
+.c0 li {
+  margin-bottom: 15px;
+}
+
+.c3 {
+  box-sizing: border-box;
+  background-color: #222C59;
+  box-shadow: 0 8px 32px rgba(0,0,0,0.24);
+  border-radius: 8px;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: justify;
+  -webkit-justify-content: space-between;
+  -ms-flex-pack: justify;
+  justify-content: space-between;
+  -webkit-flex-wrap: wrap;
+  -ms-flex-wrap: wrap;
+  flex-wrap: wrap;
+}
+
+.c4 {
+  width: 210px;
+}
+
+.c4 .icon {
+  font-size: 26px;
+  padding-right: 8px;
+  padding-bottom: 2px;
+}
+
+.c4 h4 {
+  border-bottom: 1px solid #0C143D;
+  line-height: 40px;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+}
+
+.c4 a {
+  -webkit-text-decoration: none;
+  text-decoration: none;
+  color: inherit;
+}
+
+.c6 {
+  border: 1px solid #222C59;
+  margin: 60px 0;
+  border-radius: 8px;
+}
+
+.c6 span {
+  display: inline-block;
+  width: 130px;
+}
+
+<div
+  class="c0"
+>
+  <div
+    class="c1"
+  >
+    <h1
+      class="c2"
+    >
+      Help & Support
+    </h1>
+  </div>
+  <div
+    class="c3"
+  >
+    <div
+      class="c4"
+    >
+      <h4>
+        <span
+          class="icon icon-stars  c5"
+          color="light"
+        />
+        Support
+      </h4>
+      <ul>
+        <li>
+          <a
+            href="https://github.com/gravitational/teleport/issues/new?labels=type%3A+question&template=question.md"
+            target="_blank"
+          >
+            Create a Support Ticket
+          </a>
+        </li>
+        <li>
+          <a
+            href="https://community.gravitational.com/"
+            target="_blank"
+          >
+            Ask the Community Questions
+          </a>
+        </li>
+        <li>
+          <a
+            href="https://github.com/gravitational/teleport/issues/new?labels=type%3A+feature+request&template=feature_request.md"
+            target="_blank"
+          >
+            Request a New Feature
+          </a>
+        </li>
+        <li>
+          <a
+            href=""
+            target="_blank"
+          >
+            Send Product Feedback
+          </a>
+        </li>
+      </ul>
+    </div>
+    <div
+      class="c4"
+    >
+      <h4>
+        <span
+          class="icon icon-stars  c5"
+          color="light"
+        />
+        Resources
+      </h4>
+      <ul>
+        <li>
+          <a
+            href="https://gravitational.com/teleport/docs/quickstart/"
+            target="_blank"
+          >
+            Quickstart Guide
+          </a>
+        </li>
+        <li>
+          <a
+            href="https://gravitational.com/teleport/docs/user-manual/"
+            target="_blank"
+          >
+            tsh User Guide
+          </a>
+        </li>
+        <li>
+          <a
+            href="https://gravitational.com/teleport/docs/admin-guide/"
+            target="_blank"
+          >
+            Admin Guide
+          </a>
+        </li>
+        <li>
+          <a
+            href="https://gravitational.com/teleport/download"
+            target="_blank"
+          >
+            Download Page
+          </a>
+        </li>
+        <li>
+          <a
+            href="https://gravitational.com/teleport/docs/faq/"
+            target="_blank"
+          >
+            FAQ
+          </a>
+        </li>
+      </ul>
+    </div>
+    <div
+      class="c4"
+    >
+      <h4>
+        <span
+          class="icon icon-stars  c5"
+          color="light"
+        />
+        Troubleshooting
+      </h4>
+      <ul>
+        <li>
+          <a
+            href=""
+            target="_blank"
+          >
+            Monitoring Teleport
+          </a>
+        </li>
+        <li>
+          <a
+            href=""
+            target="_blank"
+          >
+            Collecting Debug Data
+          </a>
+        </li>
+        <li>
+          <a
+            href=""
+            target="_blank"
+          >
+            Troubleshooting FAQ
+          </a>
+        </li>
+      </ul>
+    </div>
+    <div
+      class="c4"
+    >
+      <h4>
+        <span
+          class="icon icon-stars  c5"
+          color="light"
+        />
+        Updates
+      </h4>
+      <ul>
+        <li>
+          <a
+            href=""
+            target="_blank"
+          >
+            Product Changelog
+          </a>
+        </li>
+        <li>
+          <a
+            href="https://gravitational.com/blog/"
+            target="_blank"
+          >
+            Gravitational Blog
+          </a>
+        </li>
+      </ul>
+    </div>
+  </div>
+  <div
+    class="c6"
+  >
+    <h4>
+      Cluster Information
+    </h4>
+    <ul>
+      <li>
+        <span>
+          Cluster Name
+          : 
+        </span>
+        test cluster name
+      </li>
+      <li>
+        <span>
+          Teleport Version
+          : 
+        </span>
+        5.0.0
+      </li>
+      <li>
+        <span>
+          Public Address
+          : 
+        </span>
+        test/public/url
+      </li>
+      <li>
+        <span>
+          Connected Nodes
+          : 
+        </span>
+        50
+      </li>
+    </ul>
+  </div>
+</div>
+`;

@@ -46,6 +46,7 @@ const cfg = {
     clusterAuditEvents: '/web/cluster/:clusterId/audit/events',
     clusterAuditSessions: '/web/cluster/:clusterId/audit/sessions',
     clusterNodes: '/web/cluster/:clusterId/nodes',
+    clusterSupport: '/web/cluster/:clusterId/support',
     clusterSessions: '/web/cluster/:clusterId/sessions',
     console: '/web/cluster/:clusterId/console',
     consoleNodes: '/web/cluster/:clusterId/console/nodes',
@@ -133,6 +134,11 @@ const cfg = {
   getNodesRoute() {
     const clusterId = cfg.clusterName;
     return generatePath(cfg.routes.clusterNodes, { clusterId });
+  },
+
+  getSupportRoute() {
+    const clusterId = cfg.clusterName;
+    return generatePath(cfg.routes.clusterSupport, { clusterId });
   },
 
   getSessionsRoute() {
