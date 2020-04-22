@@ -36,7 +36,7 @@ const Support = () => {
       </FeatureHeader>
       <Card px={5} pt={1} pb={6}>
         <Flex justifyContent="space-between" flexWrap="wrap">
-          <MiniBox>
+          <Box>
             <Header title="Support" icon={<Icons.Stars />} />
             <SupportLink
               title="Create a Support Ticket"
@@ -54,8 +54,8 @@ const Support = () => {
               title="Send Product Feedback"
               url="mailto:teleport-feedback@gravitational.com"
             />
-          </MiniBox>
-          <MiniBox>
+          </Box>
+          <Box>
             <Header title="Resources" icon={<Icons.Stars />} />
             <SupportLink
               title="Quickstart Guide"
@@ -77,14 +77,14 @@ const Support = () => {
               title="FAQ"
               url="https://gravitational.com/teleport/docs/faq/"
             />
-          </MiniBox>
-          <MiniBox>
+          </Box>
+          <Box>
             <Header title="Troubleshooting" icon={<Icons.Stars />} />
             <SupportLink title="Monitoring Teleport" url="" />
             <SupportLink title="Collecting Debug Data" url="" />
             <SupportLink title="Troubleshooting FAQ" url="" />
-          </MiniBox>
-          <MiniBox>
+          </Box>
+          <Box>
             <Header title="Updates" icon={<Icons.Stars />} />
             <SupportLink
               title="Product Changelog"
@@ -94,10 +94,10 @@ const Support = () => {
               title="Gravitational Blog"
               url="https://gravitational.com/blog/"
             />
-          </MiniBox>
+          </Box>
         </Flex>
       </Card>
-      <ClusterBox
+      <Box
         border="1px solid"
         borderColor="primary.light"
         mt={8}
@@ -105,21 +105,26 @@ const Support = () => {
         borderRadius={3}
         p={5}
       >
-        <Text as="h5" typography="h5" mb={4} fontWeight="bold">
+        <Text as="h5" typography="h5" mb={4} fontWeight="bold" caps>
           Cluster Information
         </Text>
         <ClusterData title="Cluster Name" data={cluster.clusterId} />
         <ClusterData title="Teleport Version" data={cluster.authVersion} />
         <ClusterData title="Public Address" data={cluster.publicURL} />
         <ClusterData title="Connected Nodes" data={cluster.nodeCount} />
-      </ClusterBox>
+      </Box>
     </FeatureBox>
   );
 };
 
 const SupportLink = ({ title = '', url = '' }) => (
   <Text mb={3}>
-    <Link href={url} target="_blank" mb={2}>
+    <Link
+      href={url}
+      target="_blank"
+      mb={2}
+      style={{ textDecoration: 'none', color: 'inherit' }}
+    >
       {title}
     </Link>
   </Text>
@@ -133,7 +138,8 @@ const ClusterData = ({ title = '', data = null }) => (
 );
 
 const Header = ({ title = '', icon = null }) => (
-  <Box
+  <Flex
+    alignItems="center"
     borderBottom="1px solid"
     borderColor="primary.dark"
     mb={3}
@@ -141,32 +147,13 @@ const Header = ({ title = '', icon = null }) => (
     mt={4}
     pb={2}
   >
-    <Flex alignItems="center">
-      <Text pr={2} fontSize={30}>
-        {icon}
-      </Text>
-      <Text as="h5" typography="h5" fontWeight="bold">
-        {title}
-      </Text>
-    </Flex>
-  </Box>
+    <Text pr={2} fontSize={30}>
+      {icon}
+    </Text>
+    <Text as="h5" typography="h5" fontWeight="bold" caps>
+      {title}
+    </Text>
+  </Flex>
 );
-
-const MiniBox = styled(Box)`
-  h5 {
-    text-transform: uppercase;
-  }
-
-  a {
-    text-decoration: none;
-    color: inherit;
-  }
-`;
-
-const ClusterBox = styled(Box)`
-  h5 {
-    text-transform: uppercase;
-  }
-`;
 
 export default Support;
