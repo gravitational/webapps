@@ -17,13 +17,12 @@
 import React from 'react';
 import * as Icons from 'design/Icon';
 import styled from 'styled-components';
-import { Card } from 'design';
+import { Card, Box, Text, Flex, Link } from 'design';
 import {
   FeatureBox,
   FeatureHeader,
   FeatureHeaderTitle,
 } from 'teleport/components/Layout';
-import theme from 'design/theme/theme';
 import { useTeleport } from 'teleport/teleportContextProvider';
 
 const Support = () => {
@@ -31,152 +30,131 @@ const Support = () => {
   const cluster = teleportCtx.storeUser.state.cluster;
 
   return (
-    <SupportBox>
+    <FeatureBox>
       <FeatureHeader>
         <FeatureHeaderTitle>Help & Support</FeatureHeaderTitle>
       </FeatureHeader>
-      <CardWrapper>
-        <MiniCard>
-          <h4>
-            <Icons.Stars />
-            Support
-          </h4>
-          <ul>
-            <Link
+      <Card px={5} pt={1} pb={6}>
+        <Flex justifyContent="space-between" flexWrap="wrap">
+          <MiniBox>
+            <Header title="Support" icon={<Icons.Stars />} />
+            <SupportLink
               title="Create a Support Ticket"
-              url="https://github.com/gravitational/teleport/issues/new?labels=type%3A+question&template=question.md"
+              url="https://gravitational.zendesk.com/hc/en-us/requests/new"
             />
-            <Link
+            <SupportLink
               title="Ask the Community Questions"
               url="https://community.gravitational.com/"
             />
-            <Link
+            <SupportLink
               title="Request a New Feature"
-              url="https://github.com/gravitational/teleport/issues/new?labels=type%3A+feature+request&template=feature_request.md"
+              url="https://github.com/gravitational/teleport/issues/new/choose"
             />
-            <Link title="Send Product Feedback" url="" />
-          </ul>
-        </MiniCard>
-        <MiniCard>
-          <h4>
-            <Icons.Stars />
-            Resources
-          </h4>
-          <ul>
-            <Link
+            <SupportLink
+              title="Send Product Feedback"
+              url="mailto:teleport-feedback@gravitational.com"
+            />
+          </MiniBox>
+          <MiniBox>
+            <Header title="Resources" icon={<Icons.Stars />} />
+            <SupportLink
               title="Quickstart Guide"
               url="https://gravitational.com/teleport/docs/quickstart/"
             />
-            <Link
+            <SupportLink
               title="tsh User Guide"
               url="https://gravitational.com/teleport/docs/user-manual/"
             />
-            <Link
+            <SupportLink
               title="Admin Guide"
               url="https://gravitational.com/teleport/docs/admin-guide/"
             />
-            <Link
+            <SupportLink
               title="Download Page"
               url="https://gravitational.com/teleport/download"
             />
-            <Link
+            <SupportLink
               title="FAQ"
               url="https://gravitational.com/teleport/docs/faq/"
             />
-          </ul>
-        </MiniCard>
-        <MiniCard>
-          <h4>
-            <Icons.Stars />
-            Troubleshooting
-          </h4>
-          <ul>
-            <Link title="Monitoring Teleport" url="" />
-            <Link title="Collecting Debug Data" url="" />
-            <Link title="Troubleshooting FAQ" url="" />
-          </ul>
-        </MiniCard>
-        <MiniCard>
-          <h4>
-            <Icons.Stars />
-            Updates
-          </h4>
-          <ul>
-            <Link title="Product Changelog" url="" />
-            <Link
+          </MiniBox>
+          <MiniBox>
+            <Header title="Troubleshooting" icon={<Icons.Stars />} />
+            <SupportLink title="Monitoring Teleport" url="" />
+            <SupportLink title="Collecting Debug Data" url="" />
+            <SupportLink title="Troubleshooting FAQ" url="" />
+          </MiniBox>
+          <MiniBox>
+            <Header title="Updates" icon={<Icons.Stars />} />
+            <SupportLink
+              title="Product Changelog"
+              url="https://github.com/gravitational/teleport/blob/master/CHANGELOG.md"
+            />
+            <SupportLink
               title="Gravitational Blog"
               url="https://gravitational.com/blog/"
             />
-          </ul>
-        </MiniCard>
-      </CardWrapper>
-      <ClusterInfo>
-        <h4>Cluster Information</h4>
-        <ul>
-          <ClusterData title="Cluster Name" data={cluster.clusterId} />
-          <ClusterData title="Teleport Version" data={cluster.authVersion} />
-          <ClusterData title="Public Address" data={cluster.publicURL} />
-          <ClusterData title="Connected Nodes" data={cluster.nodeCount} />
-        </ul>
-      </ClusterInfo>
-    </SupportBox>
+          </MiniBox>
+        </Flex>
+      </Card>
+      <ClusterBox
+        border="1px solid"
+        borderColor="primary.light"
+        mt={8}
+        mb={10}
+        borderRadius={3}
+        p={5}
+      >
+        <Text as="h5" typography="h5" mb={4} fontWeight="bold">
+          Cluster Information
+        </Text>
+        <ClusterData title="Cluster Name" data={cluster.clusterId} />
+        <ClusterData title="Teleport Version" data={cluster.authVersion} />
+        <ClusterData title="Public Address" data={cluster.publicURL} />
+        <ClusterData title="Connected Nodes" data={cluster.nodeCount} />
+      </ClusterBox>
+    </FeatureBox>
   );
 };
 
-const Link = ({ title = '', url = '' }) => (
-  <li>
-    <a href={url} target="_blank">
+const SupportLink = ({ title = '', url = '' }) => (
+  <Text mb={3}>
+    <Link href={url} target="_blank" mb={2}>
       {title}
-    </a>
-  </li>
+    </Link>
+  </Text>
 );
 
-const ClusterData = ({ title = '', data }) => (
-  <li>
-    <span>{title}: </span>
+const ClusterData = ({ title = '', data = null }) => (
+  <Flex mb={3}>
+    <Box width={130}>{title}: </Box>
     {data}
-  </li>
+  </Flex>
 );
 
-const SupportBox = styled(FeatureBox)`
-  h4 {
+const Header = ({ title = '', icon = null }) => (
+  <Box
+    borderBottom="1px solid"
+    borderColor="primary.dark"
+    mb={3}
+    width={210}
+    mt={4}
+    pb={2}
+  >
+    <Flex alignItems="center">
+      <Text pr={2} fontSize={30}>
+        {icon}
+      </Text>
+      <Text as="h5" typography="h5" fontWeight="bold">
+        {title}
+      </Text>
+    </Flex>
+  </Box>
+);
+
+const MiniBox = styled(Box)`
+  h5 {
     text-transform: uppercase;
-  }
-
-  & > div:not(:first-child) {
-    padding: 6px 30px 12px 30px;
-  }
-
-  ul {
-    padding-left: 0;
-    list-style-type: none;
-  }
-
-  li {
-    margin-bottom: 15px;
-  }
-`;
-
-const CardWrapper = styled(Card)`
-  display: flex;
-  justify-content: space-between;
-  flex-wrap: wrap;
-`;
-
-const MiniCard = styled.div`
-  width: 210px;
-
-  .icon {
-    font-size: 26px;
-    padding-right: 8px;
-    padding-bottom: 2px;
-  }
-
-  h4 {
-    border-bottom: 1px solid ${theme.colors.primary.dark};
-    line-height: 40px;
-    display: flex;
-    align-items: center;
   }
 
   a {
@@ -185,14 +163,9 @@ const MiniCard = styled.div`
   }
 `;
 
-const ClusterInfo = styled.div`
-  border: 1px solid ${theme.colors.primary.light};
-  margin: 60px 0;
-  border-radius: 8px;
-
-  span {
-    display: inline-block;
-    width: 130px;
+const ClusterBox = styled(Box)`
+  h5 {
+    text-transform: uppercase;
   }
 `;
 
