@@ -18,34 +18,51 @@ import React from 'react';
 import Support from './Support';
 import TeleportContext from 'teleport/teleportContext';
 import TeleportContextProvider from 'teleport/teleportContextProvider';
+import cfg from 'teleport/config';
 
 export default {
   title: 'Teleport/Support',
 };
 
-export const SupportPage = () => {
-  const cluster = {
-    clusterId: 'test cluster name',
-    lastConnected: null,
-    connectedText: null,
-    status: null,
-    url: 'test/url',
-    nodeCount: 50,
-    publicURL: 'test/public/url',
-    authVersion: '5.0.0',
-    proxyVersion: '6.0.0',
-  };
+export const SupportOSS = () => {
+  cfg.isEnterprise = false;
   const ctx = new TeleportContext();
-  ctx.storeUser.state = {
-    authType: null,
-    acl: null,
-    username: null,
-    cluster,
-  };
+  ctx.storeUser.state = state;
 
   return (
     <TeleportContextProvider value={ctx}>
       <Support />
     </TeleportContextProvider>
   );
+};
+
+export const SupportEnterprise = () => {
+  cfg.isEnterprise = true;
+  const ctx = new TeleportContext();
+  ctx.storeUser.state = state;
+
+  return (
+    <TeleportContextProvider value={ctx}>
+      <Support />
+    </TeleportContextProvider>
+  );
+};
+
+const cluster = {
+  clusterId: 'test cluster name',
+  lastConnected: null,
+  connectedText: null,
+  status: null,
+  url: 'test/url',
+  nodeCount: 50,
+  publicURL: 'test/public/url',
+  authVersion: '5.0.0',
+  proxyVersion: '6.0.0',
+};
+
+const state = {
+  authType: null,
+  acl: null,
+  username: null,
+  cluster,
 };

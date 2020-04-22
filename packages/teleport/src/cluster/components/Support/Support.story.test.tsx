@@ -15,10 +15,15 @@
  */
 
 import React from 'react';
-import { SupportPage } from './Support.story';
+import { SupportOSS, SupportEnterprise } from './Support.story';
 import { render } from 'design/utils/testing';
 
-test('support', () => {
-  const { container } = render(<SupportPage />);
+test('support OSS', () => {
+  const { container } = render(<SupportOSS />);
+  expect(container.firstChild).toMatchSnapshot();
+});
+
+test('support Enterprise', () => {
+  const { container } = render(<SupportEnterprise />);
   expect(container.firstChild).toMatchSnapshot();
 });
