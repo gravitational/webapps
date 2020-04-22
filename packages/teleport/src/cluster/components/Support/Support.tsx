@@ -61,42 +61,56 @@ const Support = () => {
             <Header title="Resources" icon={<Icons.Stars />} />
             <SupportLink
               title="Quickstart Guide"
-              url="https://gravitational.com/teleport/docs/quickstart/"
+              url={cfg.getVersionedDockLink(
+                'https://gravitational.com/teleport/docs/quickstart'
+              )}
             />
             <SupportLink
               title="tsh User Guide"
-              url="https://gravitational.com/teleport/docs/user-manual/"
+              url={cfg.getVersionedDockLink(
+                'https://gravitational.com/teleport/docs/user-manual'
+              )}
             />
             <SupportLink
               title="Admin Guide"
-              url="https://gravitational.com/teleport/docs/admin-guide/"
+              url={cfg.getVersionedDockLink(
+                'https://gravitational.com/teleport/docs/admin-guide'
+              )}
             />
             <SupportLink
               title="Download Page"
               url={
                 cfg.isEnterprise
                   ? 'https://dashboard.gravitational.com/web/downloads '
-                  : 'https://gravitational.com/teleport/download/'
+                  : 'https://gravitational.com/teleport/download'
               }
             />
             <SupportLink
               title="FAQ"
-              url="https://gravitational.com/teleport/docs/faq/"
+              url={cfg.getVersionedDockLink(
+                'https://gravitational.com/teleport/docs/faq'
+              )}
             />
           </Box>
           <Box>
             <Header title="Troubleshooting" icon={<Icons.Stars />} />
             <SupportLink
               title="Monitoring Teleport"
-              url="https://gravitational.com/teleport/docs/admin-guide/#troubleshooting"
+              url={cfg.getVersionedDockLink(
+                'https://gravitational.com/teleport/docs/admin-guide/#troubleshooting'
+              )}
             />
             <SupportLink
               title="Collecting Debug Data"
-              url="https://gravitational.com/teleport/docs/admin-guide/#troubleshooting"
+              url={cfg.getVersionedDockLink(
+                'https://gravitational.com/teleport/docs/admin-guide/#troubleshooting'
+              )}
             />
             <SupportLink
               title="Troubleshooting FAQ"
-              url="https://gravitational.com/teleport/docs/admin-guide/#troubleshooting"
+              url={cfg.getVersionedDockLink(
+                'https://gravitational.com/teleport/docs/admin-guide/#troubleshooting'
+              )}
             />
           </Box>
           <Box>
