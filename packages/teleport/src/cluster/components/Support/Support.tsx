@@ -16,7 +16,6 @@
 
 import React from 'react';
 import * as Icons from 'design/Icon';
-import styled from 'styled-components';
 import { Card, Box, Text, Flex, Link } from 'design';
 import {
   FeatureBox,
@@ -24,6 +23,7 @@ import {
   FeatureHeaderTitle,
 } from 'teleport/components/Layout';
 import { useTeleport } from 'teleport/teleportContextProvider';
+import cfg from 'teleport/config';
 
 const Support = () => {
   const teleportCtx = useTeleport();
@@ -38,10 +38,12 @@ const Support = () => {
         <Flex justifyContent="space-between" flexWrap="wrap">
           <Box>
             <Header title="Support" icon={<Icons.Stars />} />
-            <SupportLink
-              title="Create a Support Ticket"
-              url="https://gravitational.zendesk.com/hc/en-us/requests/new"
-            />
+            {cfg.isEnterprise && (
+              <SupportLink
+                title="Create a Support Ticket"
+                url="https://gravitational.zendesk.com/hc/en-us/requests/new"
+              />
+            )}
             <SupportLink
               title="Ask the Community Questions"
               url="https://community.gravitational.com/"
@@ -71,7 +73,11 @@ const Support = () => {
             />
             <SupportLink
               title="Download Page"
-              url="https://gravitational.com/teleport/download"
+              url={
+                cfg.isEnterprise
+                  ? 'https://dashboard.gravitational.com/web/downloads '
+                  : 'https://gravitational.com/teleport/download/'
+              }
             />
             <SupportLink
               title="FAQ"
@@ -80,9 +86,18 @@ const Support = () => {
           </Box>
           <Box>
             <Header title="Troubleshooting" icon={<Icons.Stars />} />
-            <SupportLink title="Monitoring Teleport" url="" />
-            <SupportLink title="Collecting Debug Data" url="" />
-            <SupportLink title="Troubleshooting FAQ" url="" />
+            <SupportLink
+              title="Monitoring Teleport"
+              url="https://gravitational.com/teleport/docs/admin-guide/#troubleshooting"
+            />
+            <SupportLink
+              title="Collecting Debug Data"
+              url="https://gravitational.com/teleport/docs/admin-guide/#troubleshooting"
+            />
+            <SupportLink
+              title="Troubleshooting FAQ"
+              url="https://gravitational.com/teleport/docs/admin-guide/#troubleshooting"
+            />
           </Box>
           <Box>
             <Header title="Updates" icon={<Icons.Stars />} />

@@ -18,6 +18,8 @@ import { generatePath } from 'react-router';
 import { merge } from 'lodash';
 
 const cfg = {
+  isEnterprise: false,
+
   baseUrl: window.location.origin,
 
   auth: {
