@@ -18,10 +18,7 @@ import React from 'react';
 import ConsoleContext from './consoleContext';
 
 // DIGITS defines event.key values on keyboard from 1 - 9.
-const DIGITS = ['1', '2', '3', '4', '5', '6', '7', '8', '9'];
-
-// NOT_FOUND defines the value that means not found in DIGITS list.
-const NOT_FOUND = -1;
+export const DIGITS = ['1', '2', '3', '4', '5', '6', '7', '8', '9'];
 
 /**
  * useOnAltKeyDown switches current console tab to the tab that
@@ -37,11 +34,12 @@ const useOnAltKeyDown = (ctx: ConsoleContext) => {
      * on the indicated tab, it will go to that tab.
      */
     const handleKeyDown = event => {
-      const index = DIGITS.indexOf(event.key);
-
       // windows/ubuntu uses alt key
       // mac uses command key (meta key)
-      if ((!event.altKey && !event.metaKey) || index == NOT_FOUND) return;
+      if (!event.altKey && !event.metaKey) return;
+
+      const index = DIGITS.indexOf(event.key);
+      if (index == -1) return;
 
       // prevents browsers default behavior on alt/cmd + <1-9> events
       event.preventDefault();
