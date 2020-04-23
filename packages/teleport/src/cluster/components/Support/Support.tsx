@@ -25,9 +25,15 @@ import {
 import { useTeleport } from 'teleport/teleportContextProvider';
 import cfg from 'teleport/config';
 
+/**
+ * Support component lists links to teleport's documentation
+ * and other helpful resources. Also displays an overview of the
+ * current cluster information.
+ */
 const Support = () => {
   const teleportCtx = useTeleport();
   const cluster = teleportCtx.storeUser.state.cluster;
+  const docs = getDocURLs('4.2.8');
 
   return (
     <FeatureBox>
@@ -59,24 +65,9 @@ const Support = () => {
           </Box>
           <Box>
             <Header title="Resources" icon={<Icons.Stars />} />
-            <SupportLink
-              title="Quickstart Guide"
-              url={cfg.getVersionedDockLink(
-                'https://gravitational.com/teleport/docs/quickstart'
-              )}
-            />
-            <SupportLink
-              title="tsh User Guide"
-              url={cfg.getVersionedDockLink(
-                'https://gravitational.com/teleport/docs/user-manual'
-              )}
-            />
-            <SupportLink
-              title="Admin Guide"
-              url={cfg.getVersionedDockLink(
-                'https://gravitational.com/teleport/docs/admin-guide'
-              )}
-            />
+            <SupportLink title="Quickstart Guide" url={docs.quickstart} />
+            <SupportLink title="tsh User Guide" url={docs.userManual} />
+            <SupportLink title="Admin Guide" url={docs.adminGuide} />
             <SupportLink
               title="Download Page"
               url={
@@ -85,32 +76,21 @@ const Support = () => {
                   : 'https://gravitational.com/teleport/download'
               }
             />
-            <SupportLink
-              title="FAQ"
-              url={cfg.getVersionedDockLink(
-                'https://gravitational.com/teleport/docs/faq'
-              )}
-            />
+            <SupportLink title="FAQ" url={docs.faq} />
           </Box>
           <Box>
             <Header title="Troubleshooting" icon={<Icons.Stars />} />
             <SupportLink
               title="Monitoring Teleport"
-              url={cfg.getVersionedDockLink(
-                'https://gravitational.com/teleport/docs/admin-guide/#troubleshooting'
-              )}
+              url={docs.troubleshooting}
             />
             <SupportLink
               title="Collecting Debug Data"
-              url={cfg.getVersionedDockLink(
-                'https://gravitational.com/teleport/docs/admin-guide/#troubleshooting'
-              )}
+              url={docs.troubleshooting}
             />
             <SupportLink
               title="Troubleshooting FAQ"
-              url={cfg.getVersionedDockLink(
-                'https://gravitational.com/teleport/docs/admin-guide/#troubleshooting'
-              )}
+              url={docs.troubleshooting}
             />
           </Box>
           <Box>
@@ -144,6 +124,37 @@ const Support = () => {
       </Box>
     </FeatureBox>
   );
+};
+
+/**
+ * getDocURLs returns an object of URL's appended with
+ * UTM, version, and type of teleport.
+ *
+ * @param version websites teleports documentation version.
+ */
+const getDocURLs = (version = '') => {
+  const verPrefix = cfg.isEnterprise ? 'e' : 'oss';
+
+  /**
+   * withUTM appends URL with UTM parameters.
+   * anchor hashes must be appended at end of URL otherwise it is ignored.
+   *
+   * @param url the full link to the specific documentation.
+   * @param anchorHash the hash in URL that predefines scroll location in the page.
+   */
+  const withUTM = (url = '', anchorHash = '') =>
+    `${url}?utm_source=teleport&utm_medium=${verPrefix}${version}${anchorHash}`;
+
+  return {
+    quickstart: withUTM('https://gravitational.com/teleport/docs/quickstart'),
+    userManual: withUTM('https://gravitational.com/teleport/docs/user-manual'),
+    adminGuide: withUTM('https://gravitational.com/teleport/docs/admin-guide'),
+    troubleshooting: withUTM(
+      'https://gravitational.com/teleport/docs/admin-guide',
+      '#troubleshooting'
+    ),
+    faq: withUTM('https://gravitational.com/teleport/docs/faq'),
+  };
 };
 
 const SupportLink = ({ title = '', url = '' }) => (

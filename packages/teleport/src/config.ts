@@ -20,8 +20,6 @@ import { merge } from 'lodash';
 const cfg = {
   isEnterprise: false,
 
-  docsVersion: '4.2.8',
-
   baseUrl: window.location.origin,
 
   auth: {
@@ -233,10 +231,6 @@ const cfg = {
     return generatePath(cfg.api.scp, {
       ...params,
     });
-  },
-
-  getVersionedDockLink(url: string) {
-    return `${url}?utm_source=teleport&utm_medium=oss_${cfg.docsVersion}`;
   },
 
   setClusterId(clusterId: string) {

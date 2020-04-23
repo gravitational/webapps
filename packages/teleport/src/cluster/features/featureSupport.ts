@@ -16,19 +16,17 @@
 
 import * as Icons from 'design/Icon';
 import Support from 'teleport/cluster/components/Support';
-import { withFeature, FeatureBase } from 'teleport/components/withFeature';
+import { FeatureBase } from 'teleport/components/withFeature';
 import Ctx from 'teleport/teleportContext';
 import cfg from 'teleport/config';
 
 class FeatureSupport extends FeatureBase {
-  Component = withFeature(this)(Support);
-
   getRoute() {
     return {
       title: 'Help & Support',
       path: cfg.routes.clusterSupport,
       exact: true,
-      component: this.Component,
+      component: Support,
     };
   }
 
