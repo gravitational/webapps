@@ -296,7 +296,7 @@ exports[`support Enterprise 1`] = `
         >
           <a
             class="c11"
-            href="https://gravitational.com/teleport/docs/quickstart?utm_source=teleport&utm_medium=oss_4.2.8"
+            href="https://gravitational.com/teleport/docs/quickstart?utm_source=teleport&utm_medium=e5.0.0"
             style="text-decoration: none;"
             target="_blank"
           >
@@ -308,7 +308,7 @@ exports[`support Enterprise 1`] = `
         >
           <a
             class="c11"
-            href="https://gravitational.com/teleport/docs/user-manual?utm_source=teleport&utm_medium=oss_4.2.8"
+            href="https://gravitational.com/teleport/docs/user-manual?utm_source=teleport&utm_medium=e5.0.0"
             style="text-decoration: none;"
             target="_blank"
           >
@@ -320,7 +320,7 @@ exports[`support Enterprise 1`] = `
         >
           <a
             class="c11"
-            href="https://gravitational.com/teleport/docs/admin-guide?utm_source=teleport&utm_medium=oss_4.2.8"
+            href="https://gravitational.com/teleport/docs/admin-guide?utm_source=teleport&utm_medium=e5.0.0"
             style="text-decoration: none;"
             target="_blank"
           >
@@ -344,7 +344,7 @@ exports[`support Enterprise 1`] = `
         >
           <a
             class="c11"
-            href="https://gravitational.com/teleport/docs/faq?utm_source=teleport&utm_medium=oss_4.2.8"
+            href="https://gravitational.com/teleport/docs/faq?utm_source=teleport&utm_medium=e5.0.0"
             style="text-decoration: none;"
             target="_blank"
           >
@@ -380,7 +380,7 @@ exports[`support Enterprise 1`] = `
         >
           <a
             class="c11"
-            href="https://gravitational.com/teleport/docs/admin-guide/#troubleshooting?utm_source=teleport&utm_medium=oss_4.2.8"
+            href="https://gravitational.com/teleport/docs/admin-guide?utm_source=teleport&utm_medium=e5.0.0#troubleshooting"
             style="text-decoration: none;"
             target="_blank"
           >
@@ -392,7 +392,7 @@ exports[`support Enterprise 1`] = `
         >
           <a
             class="c11"
-            href="https://gravitational.com/teleport/docs/admin-guide/#troubleshooting?utm_source=teleport&utm_medium=oss_4.2.8"
+            href="https://gravitational.com/teleport/docs/admin-guide?utm_source=teleport&utm_medium=e5.0.0#troubleshooting"
             style="text-decoration: none;"
             target="_blank"
           >
@@ -404,7 +404,7 @@ exports[`support Enterprise 1`] = `
         >
           <a
             class="c11"
-            href="https://gravitational.com/teleport/docs/admin-guide/#troubleshooting?utm_source=teleport&utm_medium=oss_4.2.8"
+            href="https://gravitational.com/teleport/docs/admin-guide?utm_source=teleport&utm_medium=e5.0.0#troubleshooting"
             style="text-decoration: none;"
             target="_blank"
           >
@@ -807,7 +807,7 @@ exports[`support OSS 1`] = `
         >
           <a
             class="c11"
-            href="https://gravitational.com/teleport/docs/quickstart?utm_source=teleport&utm_medium=oss_4.2.8"
+            href="https://gravitational.com/teleport/docs/quickstart?utm_source=teleport&utm_medium=oss5.0.0"
             style="text-decoration: none;"
             target="_blank"
           >
@@ -819,7 +819,7 @@ exports[`support OSS 1`] = `
         >
           <a
             class="c11"
-            href="https://gravitational.com/teleport/docs/user-manual?utm_source=teleport&utm_medium=oss_4.2.8"
+            href="https://gravitational.com/teleport/docs/user-manual?utm_source=teleport&utm_medium=oss5.0.0"
             style="text-decoration: none;"
             target="_blank"
           >
@@ -831,7 +831,7 @@ exports[`support OSS 1`] = `
         >
           <a
             class="c11"
-            href="https://gravitational.com/teleport/docs/admin-guide?utm_source=teleport&utm_medium=oss_4.2.8"
+            href="https://gravitational.com/teleport/docs/admin-guide?utm_source=teleport&utm_medium=oss5.0.0"
             style="text-decoration: none;"
             target="_blank"
           >
@@ -855,7 +855,7 @@ exports[`support OSS 1`] = `
         >
           <a
             class="c11"
-            href="https://gravitational.com/teleport/docs/faq?utm_source=teleport&utm_medium=oss_4.2.8"
+            href="https://gravitational.com/teleport/docs/faq?utm_source=teleport&utm_medium=oss5.0.0"
             style="text-decoration: none;"
             target="_blank"
           >
@@ -891,7 +891,7 @@ exports[`support OSS 1`] = `
         >
           <a
             class="c11"
-            href="https://gravitational.com/teleport/docs/admin-guide/#troubleshooting?utm_source=teleport&utm_medium=oss_4.2.8"
+            href="https://gravitational.com/teleport/docs/admin-guide?utm_source=teleport&utm_medium=oss5.0.0#troubleshooting"
             style="text-decoration: none;"
             target="_blank"
           >
@@ -903,7 +903,7 @@ exports[`support OSS 1`] = `
         >
           <a
             class="c11"
-            href="https://gravitational.com/teleport/docs/admin-guide/#troubleshooting?utm_source=teleport&utm_medium=oss_4.2.8"
+            href="https://gravitational.com/teleport/docs/admin-guide?utm_source=teleport&utm_medium=oss5.0.0#troubleshooting"
             style="text-decoration: none;"
             target="_blank"
           >
@@ -915,7 +915,7 @@ exports[`support OSS 1`] = `
         >
           <a
             class="c11"
-            href="https://gravitational.com/teleport/docs/admin-guide/#troubleshooting?utm_source=teleport&utm_medium=oss_4.2.8"
+            href="https://gravitational.com/teleport/docs/admin-guide?utm_source=teleport&utm_medium=oss5.0.0#troubleshooting"
             style="text-decoration: none;"
             target="_blank"
           >
