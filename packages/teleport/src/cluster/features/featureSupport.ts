@@ -21,12 +21,14 @@ import Ctx from 'teleport/teleportContext';
 import cfg from 'teleport/config';
 
 class FeatureSupport extends FeatureBase {
+  Component = Support;
+
   getRoute() {
     return {
       title: 'Help & Support',
       path: cfg.routes.clusterSupport,
       exact: true,
-      component: Support,
+      component: this.Component,
     };
   }
 
