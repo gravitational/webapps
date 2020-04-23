@@ -28,11 +28,13 @@ import DocumentNodes from './components/DocumentNodes';
 import DocumentBlank from './components/DocumentBlank';
 import useTabRouting from './useTabRouting';
 import useOnExitConfirmation from './useOnExitConfirmation';
+import useOnAltKeyDown from './useOnAltKeyDown';
 
 const POLL_INTERVAL = 5000; // every 5 sec
 
 export default function Console() {
   const consoleCtx = useConsoleContext();
+  useOnAltKeyDown(consoleCtx);
   const { verifyAndConfirm } = useOnExitConfirmation(consoleCtx);
   const { clusterId, activeDocId } = useTabRouting(consoleCtx);
   const storeDocs = consoleCtx.storeDocs;
