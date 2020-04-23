@@ -33,7 +33,7 @@ import cfg from 'teleport/config';
 const Support = () => {
   const teleportCtx = useTeleport();
   const cluster = teleportCtx.storeUser.state.cluster;
-  const docs = getDocURLs('4.2.8');
+  const docs = getDocURLs(cluster.authVersion);
 
   return (
     <FeatureBox>
@@ -130,7 +130,7 @@ const Support = () => {
  * getDocURLs returns an object of URL's appended with
  * UTM, version, and type of teleport.
  *
- * @param version websites teleports documentation version.
+ * @param version teleport version retrieved from cluster info.
  */
 const getDocURLs = (version = '') => {
   const verPrefix = cfg.isEnterprise ? 'e' : 'oss';
