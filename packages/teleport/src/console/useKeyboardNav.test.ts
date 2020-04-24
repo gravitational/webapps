@@ -16,12 +16,12 @@
 
 import renderHook from 'design/utils/renderHook';
 import ConsoleContext from './consoleContext';
-import useOnAltKeyDown from './useOnAltKeyDown';
+import useKeyboardNav from './useKeyboardNav';
 import { Document } from 'teleport/console/stores';
 
 test('keyboard press is respected', () => {
   const ctx = new ConsoleContext();
-  renderHook(() => useOnAltKeyDown(ctx));
+  renderHook(() => useKeyboardNav(ctx));
 
   jest.spyOn(ctx, 'gotoTab').mockImplementation(({ url }) => {
     return url;

@@ -18,7 +18,6 @@ import 'xterm/dist/xterm.css';
 import { debounce, isInteger } from 'lodash';
 import Logger from 'shared/libs/logger';
 import { TermEventEnum } from './enums';
-import { DIGITS } from 'teleport/console/useOnAltKeyDown';
 
 const logger = Logger.create('lib/term/terminal');
 const DISCONNECT_TXT = 'disconnected';
@@ -57,8 +56,12 @@ class TtyTerminal {
 
     // TODO deprecated, use attachCustomKeyEventHandler when we upgrade xterm
     this.term.attachCustomKeydownHandler(event => {
-      // prevents xterms default alt/cmd <1-9>
-      if ((event.altKey || event.metaKey) && DIGITS.indexOf(event.key) !== -1) {
+      const isNumeric = ['1', '2', '3', '4', '5', '6', '7', '8', '9'].includes(
+        event.key
+      );
+
+      // prevents xterms default alt + <1-9>
+      if (event.altKey && isNumeric) {
         return false;
       }
     });

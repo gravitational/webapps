@@ -17,31 +17,29 @@
 import React from 'react';
 import ConsoleContext from './consoleContext';
 
-// DIGITS defines event.key values on keyboard from 1 - 9.
-export const DIGITS = ['1', '2', '3', '4', '5', '6', '7', '8', '9'];
-
 /**
- * useOnAltKeyDown switches current console tab to the tab that
- * user indicated by numbers 1-9.
+ * useKeyboardNav defines handlers for handling hot key events.
  *
  * @param ctx data that is shared between Console related components
  */
-const useOnAltKeyDown = (ctx: ConsoleContext) => {
+const useKeyboardNav = (ctx: ConsoleContext) => {
   React.useEffect(() => {
     /**
-     * handleKeyDown listens and handles keyboard events: alt/command + <1-9>.
-     * Checks if alt or cmd was pressed with a number and if a document exists
+     * handleKeydown listens and handles keyboard events: alt + <1-9>.
+     * Checks if alt key was pressed with a number and if a document exists
      * on the indicated tab, it will go to that tab.
      */
-    const handleKeyDown = event => {
-      // windows/ubuntu uses alt key
-      // mac uses command key (meta key)
-      if (!event.altKey && !event.metaKey) return;
+    const handleKeydown = event => {
+      // 1-9 defines the event.key's on the keyboard
+      const index = ['1', '2', '3', '4', '5', '6', '7', '8', '9'].indexOf(
+        event.key
+      );
 
-      const index = DIGITS.indexOf(event.key);
-      if (index == -1) return;
+      if (!event.altKey || index == -1) {
+        return;
+      }
 
-      // prevents browsers default behavior on alt/cmd + <1-9> events
+      // prevent browsers default handling of alt + <1-9>
       event.preventDefault();
 
       // document[0], is reserved for "blank doc"
@@ -51,9 +49,9 @@ const useOnAltKeyDown = (ctx: ConsoleContext) => {
       }
     };
 
-    window.addEventListener('keydown', handleKeyDown);
-    return () => window.removeEventListener('keydown', handleKeyDown);
+    window.addEventListener('keydown', handleKeydown);
+    return () => window.removeEventListener('keydown', handleKeydown);
   }, []);
 };
 
-export default useOnAltKeyDown;
+export default useKeyboardNav;
