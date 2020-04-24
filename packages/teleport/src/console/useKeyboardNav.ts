@@ -16,6 +16,7 @@
 
 import React from 'react';
 import ConsoleContext from './consoleContext';
+import { isMac } from 'design/utils/platform';
 
 /**
  * useKeyboardNav defines handlers for handling hot key events.
@@ -25,8 +26,11 @@ import ConsoleContext from './consoleContext';
 const useKeyboardNav = (ctx: ConsoleContext) => {
   React.useEffect(() => {
     /**
-     * handleKeydown listens and handles keyboard events: alt + <1-9>.
-     * Checks if alt key was pressed with a number and if a document exists
+     * handleKeydown listens and handles keyboard events:
+     *   - windows/ubuntu: alt + <1-9>
+     *   - mac: ctrl + <1-9>
+     *
+     * Checks if alt/ctrl key was pressed with a number and if a document exists
      * on the indicated tab, it will go to that tab.
      */
     const handleKeydown = event => {
@@ -35,11 +39,12 @@ const useKeyboardNav = (ctx: ConsoleContext) => {
         event.key
       );
 
-      if (!event.altKey || index == -1) {
+      const isModifierKey = (isMac() && event.ctrlKey) || event.altKey;
+      if (!isModifierKey || index == -1) {
         return;
       }
 
-      // prevent browsers default handling of alt + <1-9>
+      // prevent browsers default handling of hot keys
       event.preventDefault();
 
       // document[0], is reserved for "blank doc"

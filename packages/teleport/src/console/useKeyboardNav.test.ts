@@ -75,6 +75,38 @@ test('keyboard press is respected', () => {
   event = new KeyboardEvent('keydown', { key: '9', altKey: true });
   window.dispatchEvent(event);
   expect(ctx.gotoTab).toHaveReturnedWith(tab9.url);
+
+  jest.clearAllMocks();
+
+  // test non-mac platform doesn't trigger end event with ctrl + num
+  event = new KeyboardEvent('keydown', { key: '4', ctrlKey: true });
+  window.dispatchEvent(event);
+  expect(ctx.gotoTab).not.toHaveBeenCalled();
+
+  // set platform to mac
+  jest.spyOn(window.navigator, 'platform', 'get').mockReturnValue('Macintosh');
+
+  // test key combo not handled on mac platform
+  event = new KeyboardEvent('keydown', { key: '0', ctrlKey: true });
+  window.dispatchEvent(event);
+  expect(ctx.gotoTab).not.toHaveBeenCalled();
+
+  // test correct tabs was called on mac platform
+  event = new KeyboardEvent('keydown', { key: '4', ctrlKey: true });
+  window.dispatchEvent(event);
+  expect(ctx.gotoTab).toHaveReturnedWith(tab4.url);
+
+  event = new KeyboardEvent('keydown', { key: '6', ctrlKey: true });
+  window.dispatchEvent(event);
+  expect(ctx.gotoTab).toHaveReturnedWith(tab6.url);
+
+  event = new KeyboardEvent('keydown', { key: '1', ctrlKey: true });
+  window.dispatchEvent(event);
+  expect(ctx.gotoTab).toHaveReturnedWith(tab1.url);
+
+  event = new KeyboardEvent('keydown', { key: '9', ctrlKey: true });
+  window.dispatchEvent(event);
+  expect(ctx.gotoTab).toHaveReturnedWith(tab9.url);
 });
 
 const tabGenerator = tab => {
