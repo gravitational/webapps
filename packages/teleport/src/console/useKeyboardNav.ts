@@ -16,39 +16,51 @@
 
 import React from 'react';
 import ConsoleContext from './consoleContext';
-import { isMac } from 'design/utils/platform';
+import { getPlatform } from 'design/theme/utils';
 
 /**
- * useKeyboardNav defines handlers for handling hot key events.
+ * getMappedAction maps keyboard hot keys pressed to the ones
+ * that this app recognizes.
+ *
+ * Registered so far:
+ * - Tab switch:
+ *   - windows/ubuntu: alt + <1-9>
+ *   - mac: ctrl + <1-9>
+ *
+ * @param event reference to the event object
+ */
+export function getMappedAction(event) {
+  // 1-9 defines the event.key's on the keyboard numbers
+  const index = ['1', '2', '3', '4', '5', '6', '7', '8', '9'].indexOf(
+    event.key
+  );
+
+  const { isMac } = getPlatform();
+  const isModifierKey = (isMac && event.ctrlKey) || event.altKey;
+
+  let tabSwitch = undefined;
+  if (isModifierKey && index !== -1) {
+    tabSwitch = { index };
+  }
+
+  return { tabSwitch };
+}
+
+/**
+ * useKeyboardNav registers handlers for handling hot key events.
  *
  * @param ctx data that is shared between Console related components
  */
 const useKeyboardNav = (ctx: ConsoleContext) => {
   React.useEffect(() => {
-    /**
-     * handleKeydown listens and handles keyboard events:
-     *   - windows/ubuntu: alt + <1-9>
-     *   - mac: ctrl + <1-9>
-     *
-     * Checks if alt/ctrl key was pressed with a number and if a document exists
-     * on the indicated tab, it will go to that tab.
-     */
     const handleKeydown = event => {
-      // 1-9 defines the event.key's on the keyboard
-      const index = ['1', '2', '3', '4', '5', '6', '7', '8', '9'].indexOf(
-        event.key
-      );
-
-      const isModifierKey = (isMac() && event.ctrlKey) || event.altKey;
-      if (!isModifierKey || index == -1) {
+      const { tabSwitch } = getMappedAction(event);
+      if (!tabSwitch) {
         return;
       }
 
-      // prevent browsers default handling of hot keys
       event.preventDefault();
-
-      // document[0], is reserved for "blank doc"
-      const doc = ctx.getDocuments()[index + 1];
+      const doc = ctx.getDocuments()[tabSwitch.index + 1];
       if (doc) {
         ctx.gotoTab(doc);
       }

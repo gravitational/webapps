@@ -18,7 +18,6 @@ import 'xterm/dist/xterm.css';
 import { debounce, isInteger } from 'lodash';
 import Logger from 'shared/libs/logger';
 import { TermEventEnum } from './enums';
-import { isMac } from 'design/utils/platform';
 
 const logger = Logger.create('lib/term/terminal');
 const DISCONNECT_TXT = 'disconnected';
@@ -53,19 +52,6 @@ class TtyTerminal {
       rows: 5,
       scrollback: this.scrollBack,
       cursorBlink: false,
-    });
-
-    // TODO deprecated, use attachCustomKeyEventHandler when we upgrade xterm
-    this.term.attachCustomKeydownHandler(event => {
-      const isModifierKey = event.altKey || (isMac() && event.ctrlKey);
-      const isNumeric = ['1', '2', '3', '4', '5', '6', '7', '8', '9'].includes(
-        event.key
-      );
-
-      // prevents xterms default alt/ctrl + <1-9>
-      if (isModifierKey && isNumeric) {
-        return false;
-      }
     });
 
     this.term.open(this._el);

@@ -84,7 +84,7 @@ test('keyboard press is respected', () => {
   expect(ctx.gotoTab).not.toHaveBeenCalled();
 
   // set platform to mac
-  jest.spyOn(window.navigator, 'platform', 'get').mockReturnValue('Macintosh');
+  jest.spyOn(window.navigator, 'userAgent', 'get').mockReturnValue('Macintosh');
 
   // test key combo not handled on mac platform
   event = new KeyboardEvent('keydown', { key: '0', ctrlKey: true });
