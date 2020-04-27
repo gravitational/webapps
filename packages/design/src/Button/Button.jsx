@@ -38,16 +38,16 @@ const size = props => {
       };
     case 'large':
       return {
-        minHeight: '48px',
-        fontSize: '14px',
-        padding: '0px 48px',
+        minHeight: '40px',
+        fontSize: '12px',
+        padding: '0px 40px',
       };
     default:
       // medium
       return {
-        minHeight: '40px',
-        fontSize: `12px`,
-        padding: '0px 32px',
+        minHeight: '32px',
+        fontSize: `11px`,
+        padding: '0px 24px',
       };
   }
 };
