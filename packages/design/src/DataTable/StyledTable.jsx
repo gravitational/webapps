@@ -23,8 +23,8 @@ export const StyledTable = styled.table`
   box-shadow: 0 8px 32px rgba(0, 0, 0, 0.24);
   border-collapse: collapse;
   border-spacing: 0;
-  border-radius: 8px;
-  font-size: 12px;
+  border-radius: 4px;
+  font-size: 11px;
   width: 100%;
 
   & > thead > tr > th,
@@ -33,19 +33,28 @@ export const StyledTable = styled.table`
   & > thead > tr > td,
   & > tbody > tr > td,
   & > tfoot > tr > td {
-    padding: 16px;
+    padding: 8px 8px;
     vertical-align: middle;
+
+    &:first-child {
+      padding-left: 24px;
+    }
+    &:last-child {
+      padding-left: 24px;
+    }
   }
 
   & > thead > tr > th {
-    background: ${props => props.theme.colors.primary.main};
+    background: ${props => props.theme.colors.primary.dark};
     color: rgba(255, 255, 255, 0.56);
     cursor: pointer;
     font-size: 10px;
-    font-weight: 600;
-    padding: 4px 16px;
+    font-weight: 400;
+    padding-bottom: 0;
+    padding-top: 0; 
     text-align: left;
     text-transform: uppercase;
+    white-space: nowrap;
 
     ${Icon} {
       font-weight: bold;
