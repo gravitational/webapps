@@ -56,10 +56,10 @@ const Label = styled.div`
   justify-content: center;
   font-size: 10px;
   font-weight: 500;
-  min-height: 24px;
-  padding: 2px 12px;
+  min-height: 16px;
+  padding: 0 8px;
   text-transform: uppercase;
-  line-height: 1.43;
+  line-height: 16px;
   ${kind}
   ${space}
 `;

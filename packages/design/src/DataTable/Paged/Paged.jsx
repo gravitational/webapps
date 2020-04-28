@@ -62,7 +62,7 @@ TablePaged.propTypes = {
 };
 
 export const StyledPanel = styled.nav`
-  padding: 16px;
+  padding: 8px 24px;
   display: flex;
   height: 24px;
   flex-shrink: 0;
