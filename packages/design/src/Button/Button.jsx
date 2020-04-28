@@ -56,6 +56,7 @@ const themedStyles = props => {
   const { colors } = props.theme;
   const style = {
     color: colors.secondary.contrastText,
+    
     '&:disabled': {
       background: colors.action.disabledBackground,
       color: colors.action.disabled,
