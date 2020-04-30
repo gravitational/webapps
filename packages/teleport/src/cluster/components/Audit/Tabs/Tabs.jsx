@@ -27,13 +27,21 @@ const Tabs = ({ children }) => {
 };
 
 export const TabItem = ({ to = '', title = '', exact = true }) => (
-  <StyledTabItem typography="h4" mr={6} as={NavLink} to={to} exact={exact}>
+  <StyledTabItem as={NavLink} to={to} exact={exact}>
     {title}
   </StyledTabItem>
 );
 
-const StyledTabItem = styled(Box)`
+const StyledTabItem = styled.button`
+  align-items: center;
+  border-bottom: 3px solid transparent; 
+  font-size: 12px;
+  font-weight: normal;
+  display: flex;
+  height: 50px; 
+  margin: 0 0 0 24px;
   outline: none;
+  padding: 3px 8px 0 8px; 
   text-decoration: none;
   color: inherit;
   cursor: pointer;
@@ -45,8 +53,8 @@ const StyledTabItem = styled(Box)`
   }
 
   &.active {
-    border-bottom: 4px solid ${({ theme }) => theme.colors.accent};
-    padding-top: 4px;
+    border-bottom: 3px solid ${({ theme }) => theme.colors.accent};
+    font-weight: bold;
   }
 `;
 
