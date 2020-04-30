@@ -34,8 +34,8 @@ const typography = {
     lineHeight: '40px',
   },
   h3: {
-    fontWeight: regular,
-    fontSize: '20px',
+    fontWeight: 300,
+    fontSize: '21px',
     lineHeight: '32px',
   },
   h4: {

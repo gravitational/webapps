@@ -24,6 +24,7 @@ import Menu, { MenuItem } from 'design/Menu';
 import Dialog from 'design/DialogConfirmation';
 import { displayDate } from 'shared/services/loc';
 import CustomRange from './Custom';
+import defaultTheme from 'design/theme';
 
 export default function DataRange(props) {
   const { ml, value, onChange, disabled, options } = props;
@@ -138,10 +139,19 @@ export function getRangeOptions() {
 }
 
 const DropDownButton = styled(ButtonOutlined)`
+  border-color: ${props => props.theme.colors.primary.lighter};
+  height: 32px;
+  padding: 0 40px 0 24px;
   position: relative;
+  width: auto; 
+
   ${Icon} {
+    color: ${props => props.theme.colors.primary.lighter};
     position: absolute;
     right: 16px;
     top: 6px;
   }
 `;
+DropDownButton.defaultProps = {
+  theme: defaultTheme
+};

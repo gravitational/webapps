@@ -16,12 +16,15 @@ limitations under the License.
 
 import styled from 'styled-components';
 import { Flex, Text } from 'design';
+import defaultTheme from 'design/theme';
 
 /**
  * Header
  */
 const FeatureHeader = styled(Flex)`
-  flex-shrink: 0;
+  border-bottom: 1px solid ${(props) => props.theme.colors.primary.main}; 
+  height: 56px; 
+  margin: 0 0 24px 0;
 `;
 
 FeatureHeader.defaultProps = {
@@ -39,7 +42,7 @@ const FeatureHeaderTitle = styled(Text)`
 FeatureHeaderTitle.defaultProps = {
   ...Text.defaultProps,
   as: 'h1',
-  typography: 'h1',
+  typography: 'h3',
 };
 
 /**
@@ -64,6 +67,7 @@ const FeatureBox = styled(Flex)`
 `;
 
 FeatureBox.defaultProps = {
+  theme: defaultTheme,
   px: 6,
 };
 
