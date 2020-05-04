@@ -17,15 +17,21 @@ limitations under the License.
 import styled from 'styled-components';
 import { borderColor } from './../system';
 import defaultTheme from './../theme';
-import Flex from './../Flex';
 
 const fromTheme = ({ theme = defaultTheme }) => {
   return {
+    background: theme.colors.primary.main,
+    color: theme.colors.text.secondary,
     fontSize: theme.fontSizes[1],
     fontWeight: theme.bold,
-    '&:active, &.active': {
+    
+    '&:active': {
       background: theme.colors.primary.light,
+      color: theme.colors.primary.contrastText,
+    },
+    '&.active': {
       borderLeftColor: theme.colors.accent,
+      background: theme.colors.primary.lighter,
       color: theme.colors.primary.contrastText,
     },
     '&:hover': {
@@ -34,15 +40,19 @@ const fromTheme = ({ theme = defaultTheme }) => {
   };
 };
 
-const SideNavItem = styled(Flex)`
-  min-height: 72px;
+const SideNavItem = styled.button`
   align-items: center;
-  cursor: pointer;
-  justify-content: flex-start;
-  outline: none;
-  text-decoration: none;
-  width: 100%;
+  border: none;
   border-left: 4px solid transparent;
+  cursor: pointer;
+  display: flex;
+  height: 56px;
+  margin: 0;
+  outline: none;
+  padding: 0 28px;
+  text-decoration: none;
+  text-align: left;
+  transition: all .3s;
   ${fromTheme}
   ${borderColor}
 `;
@@ -50,9 +60,8 @@ const SideNavItem = styled(Flex)`
 SideNavItem.displayName = 'SideNavItem';
 
 SideNavItem.defaultProps = {
-  pl: '10',
-  pr: '5',
   bg: 'primary.main',
+  theme: defaultTheme,
   color: 'text.primary',
 };
 
