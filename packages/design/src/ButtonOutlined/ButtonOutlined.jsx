@@ -32,7 +32,8 @@ const size = props => {
     case 'small':
       return {
         fontSize: '10px',
-        padding: '8px 8px',
+        height: '24px',
+        padding: '0 8px',
       };
     case 'large':
       return {
@@ -113,6 +114,7 @@ const StyledButton = styled.button`
   font-family: inherit;
   font-weight: bold;
   outline: none;
+  opacity: .56;
   position: relative;
   text-align: center;
   text-decoration: none;
@@ -120,8 +122,12 @@ const StyledButton = styled.button`
   transition: all .3s;
   -webkit-font-smoothing: antialiased;
 
+  &:hover {
+    opacity: 1;
+  }
+
   &:active {
-    opacity: .56;
+    opacity: .24;
   }
 
   > span {
