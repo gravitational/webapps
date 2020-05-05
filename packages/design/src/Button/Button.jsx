@@ -55,7 +55,7 @@ const size = props => {
 const themedStyles = props => {
   const { colors } = props.theme;
   const style = {
-    color: colors.secondary.contrastText,
+    color: colors.text.primary,
     
     '&:disabled': {
       background: colors.action.disabledBackground,
@@ -83,6 +83,21 @@ const kinds = props => {
 
         '&:hover, &:focus': {
           background: theme.colors.primary.lighter,
+        },
+      };
+    case 'border':
+      return {
+        background: theme.colors.primary.lighter,
+        border: '1px solid ' + theme.colors.primary.main,
+        opacity: '.87',
+
+        '&:hover, &:focus': {
+          background: theme.colors.primary.lighter,
+          opacity: 1,
+        },
+
+        '&:active': {
+          opacity: .24,
         },
       };
     case 'warning':
@@ -176,4 +191,5 @@ Button.displayName = 'Button';
 export default Button;
 export const ButtonPrimary = props => <Button kind="primary" {...props} />;
 export const ButtonSecondary = props => <Button kind="secondary" {...props} />;
+export const ButtonBorder = props => <Button kind="border" {...props} />;
 export const ButtonWarning = props => <Button kind="warning" {...props} />;

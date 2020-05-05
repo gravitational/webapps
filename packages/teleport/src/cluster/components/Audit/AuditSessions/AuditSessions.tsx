@@ -99,13 +99,16 @@ export default function SessionList(props: SessionListProps) {
 
   return (
     <>
+      <Flex mb={4} alignItems="center" justifyContent="flex-start">
+        <InputSearch height="30px" mr="2" onChange={onSearchChange} />
+      </Flex>
+
       <CustomStyledPanel
         alignItems="center"
         borderTopRightRadius="3"
         borderTopLeftRadius="3"
         justifyContent="space-between"
       >
-        <InputSearch height="30px" mr="2" onChange={onSearchChange} />
         <Flex alignItems="center" justifyContent="flex-end">
           {pagedState.hasPages && <Pager {...pagedState} />}
         </Flex>
@@ -178,10 +181,10 @@ function SidCell(props) {
           p="1"
           mr="3"
           bg="bgTerminal"
-          fontSize="4"
+          fontSize="2"
           style={{
             borderRadius: '50%',
-            border: 'solid 2px green',
+            border: 'solid 2px #512FC9',
           }}
         />
         {row.sid}

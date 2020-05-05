@@ -20,13 +20,13 @@ import defaultTheme from './../theme';
 
 const fromTheme = ({ theme = defaultTheme }) => {
   return {
-    background: theme.colors.primary.main,
+    background: theme.colors.primary.light,
     color: theme.colors.text.secondary,
     fontSize: theme.fontSizes[1],
     fontWeight: theme.bold,
     
     '&:active': {
-      background: theme.colors.primary.light,
+      background: theme.colors.primary.lighter,
       color: theme.colors.primary.contrastText,
     },
     '&.active': {
@@ -35,7 +35,7 @@ const fromTheme = ({ theme = defaultTheme }) => {
       color: theme.colors.primary.contrastText,
     },
     '&:hover': {
-      background: theme.colors.primary.light,
+      background: theme.colors.primary.lighter,
     },
   };
 };
@@ -52,7 +52,6 @@ const SideNavItem = styled.button`
   padding: 0 28px;
   text-decoration: none;
   text-align: left;
-  transition: all .3s;
   ${fromTheme}
   ${borderColor}
 `;

@@ -19,6 +19,7 @@ import Button, {
   ButtonPrimary,
   ButtonSecondary,
   ButtonWarning,
+  ButtonBorder,
 } from './Button';
 
 export default {
@@ -30,6 +31,7 @@ export const Basics = () => (
     <div>
       <ButtonPrimary mr={3}>Primary</ButtonPrimary>
       <ButtonSecondary mr={3}>Secondary</ButtonSecondary>
+      <ButtonBorder mr={3}>Border</ButtonBorder>
       <ButtonWarning>Warning</ButtonWarning>
     </div>
     <div>
