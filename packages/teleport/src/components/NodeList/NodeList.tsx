@@ -71,13 +71,16 @@ function NodeList(props: NodeListProps) {
 
   return (
     <div style={{ width: '100%' }}>
+      <Flex mb={4} alignItems="center" justifyContent="flex-start">
+        <InputSearch height="30px" mr="3" onChange={onSearchChange} />
+      </Flex>
+
       <StyledPanel
         alignItems="center"
         borderTopRightRadius="3"
         borderTopLeftRadius="3"
         justifyContent="space-between"
       >
-        <InputSearch height="30px" mr="3" onChange={onSearchChange} />
         {pagging.hasPages && (
           <Flex alignItems="center" justifyContent="flex-end">
             <Pager {...pagging} />
@@ -193,7 +196,7 @@ function renderTunnel() {
 
 const StyledPanel = styled(Flex)`
   box-sizing: content-box;
-  padding: 16px;
+  padding: 8px 24px;
   height: 24px;
   background: ${props => props.theme.colors.primary.light};
   ${borderRadius}
