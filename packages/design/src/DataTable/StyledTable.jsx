@@ -62,6 +62,11 @@ export const StyledTable = styled.table`
     }
   }
 
+  & > tbody > tr > td {
+    color: rgba(255, 255, 255, 0.87);
+    line-height: 16px; 
+  }
+
   ${space}
   ${borderRadius}
 `;
