@@ -90,12 +90,16 @@ export default function EventList(props: EventListProps) {
   const { detailsToShow, colSortDirs } = state;
   return (
     <React.Fragment>
+      <Flex mb={4} alignItems="center" justifyContent="flex-start">
+        <InputSearch height="30px" mr="3" onChange={onSearchChange} />
+      </Flex>
+
+
       <CustomStyledPanel
         borderTopRightRadius="3"
         borderTopLeftRadius="3"
         justifyContent="space-between"
       >
-        <InputSearch height="30px" mr="3" onChange={onSearchChange} />
         {pagging.hasPages && (
           <Flex alignItems="center" justifyContent="flex-end">
             <Pager {...pagging} />

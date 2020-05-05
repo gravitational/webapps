@@ -60,7 +60,7 @@ const Alert = styled.div`
   box-shadow: 0 1px 4px rgba(0, 0, 0, .24);
   font-weight: ${({ theme }) => theme.fontWeights.regular};
   font-size: 14px;
-  margin: 0 0 16px 0;
+  margin: 0 0 24px 0;
   min-height: 40px;
   padding: 8px 16px;
   overflow: auto;

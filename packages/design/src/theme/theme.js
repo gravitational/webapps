@@ -49,6 +49,8 @@ const colors = {
     primary: 'rgba(255,255,255,0.87)',
     // Secondary text.
     secondary: 'rgba(255, 255, 255, 0.56)',
+    // Placeholder text for forms.
+    placeholder: 'rgba(255, 255, 255, 0.24)',
     // Disabled text have even lower visual prominence.
     disabled: 'rgba(0, 0, 0, 0.24)',
     // Text hints.
