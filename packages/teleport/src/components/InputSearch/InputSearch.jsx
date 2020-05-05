@@ -91,7 +91,7 @@ const Input = styled.input`
   outline: none;
   border: none;
   border-radius: 200px;
-  height: 40px;
+  height: 32px;
   transition: all .2s;
   ${fromTheme}
   ${space}

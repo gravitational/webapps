@@ -30,8 +30,8 @@ const typography = {
   },
   h2: {
     fontWeight: light,
-    fontSize: '26px',
-    lineHeight: '40px',
+    fontSize: '28px',
+    lineHeight: '32px',
   },
   h3: {
     fontWeight: 300,
