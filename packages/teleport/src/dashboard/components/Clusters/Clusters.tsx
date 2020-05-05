@@ -40,7 +40,6 @@ export default function Clusters() {
           <FeatureHeaderTitle mr="5">Clusters</FeatureHeaderTitle>
           <InputSearch
             ml="auto"
-            height="30px"
             bg="primary.light"
             onChange={setSearchValue}
           />

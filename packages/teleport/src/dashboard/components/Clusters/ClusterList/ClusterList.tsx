@@ -188,7 +188,7 @@ export function NameCell(props) {
   const { clusterId } = data[rowIndex];
   return (
     <Cell>
-      <Text typography="h6">{clusterId}</Text>
+      <strong>{clusterId}</strong>
     </Cell>
   );
 }
@@ -205,13 +205,7 @@ function ActionCell(props) {
   const { url } = data[rowIndex];
   return (
     <Cell align="right">
-      <ButtonSecondary
-        as={NavLink}
-        to={url}
-        size="small"
-        width="90px"
-        children="view"
-      />
+
     </Cell>
   );
 }
@@ -228,9 +222,19 @@ type ClusterListProps = {
 };
 
 const ClusterTable = styled(Table)`
-  tr:hover {
+  td {
+    height: 16px;
+  }
+
+  tbody tr {
+    border-bottom: 1px solid  ${props => props.theme.colors.primary.main}; 
+  }
+
+  tbody tr:hover {
     cursor: pointer;
-    background-color: rgba(0, 0, 0, 0.075);
+    background-color: ${props => props.theme.colors.primary.lighter};
+    border-bottom: 1px solid  ${props => props.theme.colors.primary.lighter}; 
+    box-shadow: inset 0 0 5px ${props => props.theme.colors.accent},  0 4px 16px rgba(0, 0, 0, .24);
   }
 `;
 
