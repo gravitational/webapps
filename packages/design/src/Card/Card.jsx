@@ -20,7 +20,7 @@ import theme from './../theme';
 
 const Card = styled(Box)`
   box-shadow: 0 8px 32px rgba(0, 0, 0, 0.24);
-  border-radius: 4px;
+  border-radius: 8px;
 `;
 
 Card.defaultProps = {
