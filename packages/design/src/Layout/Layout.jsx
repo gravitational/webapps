@@ -21,12 +21,16 @@ import { Flex, Text } from 'design';
  * Header
  */
 const FeatureHeader = styled(Flex)`
-  flex-shrink: 0;
+  border-bottom: 1px solid ${(props) => props.theme.colors.primary.main}; 
+  height: 56px; 
+  margin: 0 0 24px 0;
 `;
 
+
 FeatureHeader.defaultProps = {
-  my: 4,
-};
+  alignItems: 'center',
+  mb: 4
+}
 
 /**
  * Header Title
@@ -38,7 +42,7 @@ const FeatureHeaderTitle = styled(Text)`
 FeatureHeaderTitle.defaultProps = {
   ...Text.defaultProps,
   as: 'h1',
-  typography: 'h1',
+  typography: 'h3',
 };
 
 /**

@@ -28,7 +28,7 @@ const FeatureHeader = styled(Flex)`
 `;
 
 FeatureHeader.defaultProps = {
-  mt: 4,
+  alignItems: 'center',
   mb: 4,
 };
 
