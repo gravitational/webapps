@@ -32,19 +32,21 @@ const size = props => {
     case 'small':
       return {
         fontSize: '10px',
-        height: '24px',
-        padding: '0 8px',
+        minHeight: '24px',
+        padding: '0px 16px',
       };
     case 'large':
       return {
-        fontSize: '14px',
-        padding: '20px 40px',
+        minHeight: '40px',
+        fontSize: '12px',
+        padding: '0px 40px',
       };
     default:
       // medium
       return {
-        fontSize: `12px`,
-        padding: '12px 32px',
+        minHeight: '32px',
+        fontSize: `11px`,
+        padding: '0px 24px',
       };
   }
 };
@@ -103,6 +105,7 @@ const block = props =>
     : null;
 
 const StyledButton = styled.button`
+  line-height: 1.5;
   border-radius: 4px;
   display: inline-flex;
   justify-content: center;
