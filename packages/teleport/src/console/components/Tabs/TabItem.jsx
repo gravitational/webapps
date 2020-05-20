@@ -32,7 +32,7 @@ export default function TabItem({
   return (
     <StyledTabItem alignItems="center" active={active} style={style}>
       <StyledTabButton onClick={onClick}>
-        <JoinedUsers mr="2" users={users} />
+        <JoinedUsers mr="1"  users={users} active={active} />
         <Text mx="auto" title={name}>
           {name}
         </Text>
@@ -69,7 +69,7 @@ function fromProps({ theme, active }) {
 
 const StyledTabItem = styled(Flex)`
   max-width: 200px;
-  height: 100%;
+  height: 32px;
   ${fromProps}
 `;
 
@@ -87,6 +87,7 @@ const StyledTabButton = styled.button`
   background-color: transparent;
   white-space: nowrap;
   overflow: hidden;
+  padding: 0 16px; 
   text-overflow: ellipsis;
   border: none;
 `;
@@ -100,9 +101,11 @@ const StyledCloseButton = styled.button`
   width: 16px;
   outline: none;
   padding: 0;
-  margin: 0;
+  margin: 0 8px 0 0;
+  transition: all .3s;
+
   &:hover {
-    background: ${props => props.theme.colors.error};
+    background: ${props => props.theme.colors.danger};
   }
   ${space}
 `;
