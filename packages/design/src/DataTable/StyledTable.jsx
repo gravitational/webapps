@@ -58,6 +58,7 @@ export const StyledTable = styled.table`
 
     ${Icon} {
       font-weight: bold;
+      font-size: 8px; 
       margin-left: 8px;
     }
   }

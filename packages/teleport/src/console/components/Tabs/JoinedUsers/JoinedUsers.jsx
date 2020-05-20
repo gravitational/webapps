@@ -19,7 +19,6 @@ import styled from 'styled-components';
 import Popover from 'design/Popover';
 import theme from 'design/theme';
 import { debounce } from 'lodash';
-import { Text, Card } from 'design';
 
 export default function JoinedUsers({active, users, open = false, ml, mr }) {
   const ref = React.useRef(null);
@@ -61,7 +60,7 @@ export default function JoinedUsers({active, users, open = false, ml, mr }) {
       ml={ml}
       mr={mr}
       ref={ref}
-      OnClick={handleClose}
+      onMouseLeave={handleClose}
       onMouseEnter={onMouseEnter}
 
     >

@@ -90,7 +90,7 @@ export default function DataRange(props) {
         onClose={onClosePicker}
         open={isPickerOpen}
       >
-        <CustomRange from={from} to={to} onChange={onSetRange} />
+        <CustomRange from={from} to={to} onChange={onSetRange} onClosePicker={onClosePicker} />
       </Dialog>
     </>
   );
