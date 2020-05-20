@@ -20,6 +20,7 @@ import { typography } from 'design/system';
 import TabItem from './TabItem';
 import * as Icons from 'design/Icon';
 import { Box, ButtonIcon } from 'design';
+import {colors} from '../colors'; 
 
 export default function Tabs({
   items,
@@ -58,7 +59,6 @@ export default function Tabs({
   return (
     <StyledTabs
       as="nav"
-      bg="primary.dark"
       typography="h5"
       color="text.secondary"
       bold
@@ -81,7 +81,8 @@ export default function Tabs({
 }
 
 const StyledTabs = styled(Box)`
-  min-height: 36px;
+  background: ${colors.terminalDark};
+  height: 32px;
   border-radius: 4px;
   display: flex;
   flex-wrap: no-wrap;

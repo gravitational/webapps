@@ -17,15 +17,16 @@ limitations under the License.
 import React from 'react';
 import styled from 'styled-components';
 import Popover from 'design/Popover';
+import theme from 'design/theme';
 import { debounce } from 'lodash';
 import { Text, Card } from 'design';
 
-export default function JoinedUsers({ users, open = false, ml, mr }) {
+export default function JoinedUsers({active, users, open = false, ml, mr }) {
   const ref = React.useRef(null);
   const [isOpen, setIsOpen] = React.useState(open);
 
   const handleOpen = React.useMemo(() => {
-    return debounce(() => setIsOpen(true), 600);
+    return debounce(() => setIsOpen(true), 300);
   }, []);
 
   function onMouseEnter() {
@@ -42,19 +43,27 @@ export default function JoinedUsers({ users, open = false, ml, mr }) {
     return null;
   }
 
-  const $users = users.map((u, index) => (
-    <Text typography="h5" py="2" key={`${index}${u.user}`}>
-      {u.user}
-    </Text>
-  ));
+  const $users = users.map((u, index) => {
+    const initial = u.user.trim().charAt(0).toUpperCase(); 
+
+    return (
+      <li key={`${index}${u.user}`}>
+        <StyledAvatar>{initial}</StyledAvatar>
+        {u.user}
+      </li>
+    )
+    
+    });
 
   return (
     <StyledUsers
+      active={active}
       ml={ml}
       mr={mr}
       ref={ref}
-      onMouseLeave={handleClose}
+      OnClick={handleClose}
       onMouseEnter={onMouseEnter}
+
     >
       {users.length}
       <Popover
@@ -70,7 +79,7 @@ export default function JoinedUsers({ users, open = false, ml, mr }) {
           horizontal: 'center',
         }}
       >
-        <Card
+        <StyledDropdown
           bg="white"
           color="black"
           px={4}
@@ -79,7 +88,7 @@ export default function JoinedUsers({ users, open = false, ml, mr }) {
           onMouseLeave={handleClose}
         >
           {$users}
-        </Card>
+        </StyledDropdown>
       </Popover>
     </StyledUsers>
   );
@@ -87,9 +96,10 @@ export default function JoinedUsers({ users, open = false, ml, mr }) {
 
 const StyledUsers = styled.div`
   display: flex;
-  width: 14px;
-  height: 14px;
-  font-size: 10px;
+  width: 16px;
+  height: 16px;
+  font-size: 11px;
+  font-weight: bold; 
   overflow: hidden;
   position: relative;
   align-items: center;
@@ -97,5 +107,41 @@ const StyledUsers = styled.div`
   user-select: none;
   border-radius: 50%;
   justify-content: center;
-  background-color: #2196f3;
+  background-color: ${props => props.active ? theme.colors.accent : theme.colors.grey[900] };
 `;
+
+const StyledAvatar = styled.div`
+  align-items: center;
+  background: ${props => props.theme.colors.accent};
+  color: ${props => props.theme.colors.light};
+  border-radius: 50%;
+  display: flex;
+  font-size: 14px;
+  font-weight: bold;
+  justify-content: center;
+  height: 32px; 
+  margin-right: 16px; 
+  width: 32px; 
+`
+
+const StyledDropdown = styled.ul`
+  background: #FFF; 
+  border-radius: 8px; 
+  list-style-type: none;
+  margin: 0; 
+  padding: 0;
+
+  li {
+    border-bottom: 1px solid ${theme.colors.grey[50]};
+    color: ${theme.colors.grey[600]};
+    font-size: 12px; 
+    display: flex; 
+    line-height: 24px; 
+    margin: 0; 
+    padding: 16px !important; 
+
+    &:last-child {
+      border: none;
+    }
+  }
+`; 
