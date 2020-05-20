@@ -17,21 +17,38 @@ limitations under the License.
 import React from 'react';
 import styled from 'styled-components';
 import { Cell } from 'design/DataTable';
-import Icon, * as Icons from 'design/Icon/Icon';
+import { Session } from 'teleport/services/ssh';
+import * as Icons from 'design/Icon/Icon';
+import theme from 'design/theme';
+import { NavLink } from 'react-router-dom';
+import cfg from 'teleport/config';
 
-export default function TypeCell() {
+export default function TypeCell(props: any) {
+  const { rowIndex, data } = props;
+  const { sid } = data[rowIndex] as Session;
+  const url = cfg.getSshSessionRoute({ sid });
+
   return (
     <Cell>
       <StyledEventType>
-        <StyledIcon p="1" bg="bgTerminal" as={Icons.Cli} fontSize="4" />
+        <Icons.Cli
+          as={NavLink}
+          to={url}
+          p="1"
+          mr="3"
+          bg="bgTerminal"
+          fontSize="2"
+          style={{
+            borderRadius: '50%',
+            border: `solid 2px ${theme.colors.success}`,
+            textDecoration: 'none',
+          }}
+        />
+        Session in progress...
       </StyledEventType>
     </Cell>
   );
 }
-
-const StyledIcon = styled(Icon)`
-  border-radius: 50%;
-`;
 
 const StyledEventType = styled.div`
   width: 0;
