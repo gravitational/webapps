@@ -19,6 +19,7 @@ import styled from 'styled-components';
 import { Cell } from 'design/DataTable';
 import Icon, * as Icons from 'design/Icon/Icon';
 import { CodeEnum } from 'teleport/services/audit/types';
+import theme from 'design/theme';
 
 const EventIconMap = {
   [CodeEnum.ALERT_CREATED]: Icons.NotificationsActive,
@@ -143,15 +144,25 @@ export default function TypeCell(props) {
   return (
     <Cell style={{ fontSize: '14px' }}>
       <StyledEventType>
-        <StyledIcon p="1" mr="3" bg={bgColor} as={IconType} fontSize="4" />
-        {codeDesc}
+        <StyledIcon p="1" mr="3" style={{borderColor: theme.colors[bgColor]}} as={IconType} fontSize="4" />
+        {codeDesc} {theme.colors[bgColor]}
       </StyledEventType>
     </Cell>
   );
 }
 
 const StyledIcon = styled(Icon)`
+  font-size: 16px; 
+  border-style: solid;
+  border-width: 1px;
   border-radius: 50%;
+  padding: 0; 
+  display: flex; 
+  align-items: center; 
+  justify-content: center;
+  width: 24px; 
+  height: 24px; 
+  box-sizing: border-box; 
 `;
 
 const StyledEventType = styled.div`
