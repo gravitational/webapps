@@ -54,15 +54,6 @@ const OTP = ({
       onChange={e => setToken(e.target.value)}
       placeholder="123 456"
     />
-    <ButtonLink
-      kind="secondary"
-      target="_blank"
-      size="small"
-      href="https://support.google.com/accounts/answer/1066447?co=GENIE.Platform%3DiOS&hl=en&oco=0"
-      rel="noreferrer"
-    >
-      Download Google Authenticator
-    </ButtonLink>
   </Flex>
 )
 
@@ -88,16 +79,19 @@ export default function LoginForm(props) {
     authProviders,
     isLocalAuthEnabled = true,
   } = props;
+  const u2fEnabled = isU2f(auth2faType);
+  const otpEnabled = isOtp(auth2faType);
+  const ssoEnabled = authProviders && authProviders.length > 0;
 
   const [pass, setPass] = React.useState('');
   const [user, setUser] = React.useState('');
   const [token] = React.useState('');
+  const [showBasic, toggleBasic] = React.useState(!ssoEnabled);
 
-  const u2fEnabled = isU2f(auth2faType);
-  const otpEnabled = isOtp(auth2faType);
-  const ssoEnabled = authProviders && authProviders.length > 0;
+
   const { isFailed, isProcessing, message } = attempt;
   const loginBackground = ssoEnabled ? "primary.main" : "primary.light"; 
+  let basicLogin = <Flex justifyContent="center"><ButtonLink onClick={() => toggleBasic(!showBasic)}>Sign in with your Username and Password</ButtonLink></Flex>;
 
   function onLoginClick(e, validator) {
     e.preventDefault();
@@ -112,6 +106,41 @@ export default function LoginForm(props) {
     }
   }
 
+  if(showBasic) {
+    basicLogin = (
+      <>
+        <FieldInput
+          rule={requiredField('Username is required')}
+          label="Username"
+          autoFocus
+          value={user}
+          onChange={e => setUser(e.target.value)}
+          placeholder="User name"
+        />
+        <FieldInput
+          rule={requiredField('Password is required')}
+          label="Password"
+          value={pass}
+          onChange={e => setPass(e.target.value)}
+          type="password"
+          placeholder="Password"
+        />
+        {otpEnabled && <OTP requiredToken={requiredToken} token={token} />}
+        <ButtonPrimary
+          width="100%"
+          mt="3"
+          type="submit"
+          size="large"
+          onClick={e => onLoginClick(e, validator)}
+          disabled={isProcessing}
+        >
+          LOGIN
+        </ButtonPrimary>
+      </>
+    )
+  }
+  
+
   return (
     <Validation>
       {({ validator }) => (
@@ -123,34 +152,7 @@ export default function LoginForm(props) {
           {isLocalAuthEnabled && (
             <Box p="5" style={{position: 'relative'}} bg={loginBackground} borderBottomLeftRadius="3" borderBottomRightRadius="3">
               {ssoEnabled &&  <StyledOr>Or</StyledOr>}
-              <FieldInput
-                rule={requiredField('Username is required')}
-                label="Username"
-                autoFocus
-                value={user}
-                onChange={e => setUser(e.target.value)}
-                placeholder="User name"
-              />
-              <FieldInput
-                rule={requiredField('Password is required')}
-                label="Password"
-                value={pass}
-                onChange={e => setPass(e.target.value)}
-                type="password"
-                placeholder="Password"
-              />
-              {otpEnabled && <OTP requiredToken={requiredToken} token={token} />}
-              <ButtonPrimary
-                width="100%"
-                mt="3"
-                type="submit"
-                size="large"
-                onClick={e => onLoginClick(e, validator)}
-                disabled={isProcessing}
-              >
-                LOGIN
-              </ButtonPrimary>
-
+              {basicLogin}
               {isProcessing && u2fEnabled && (
                 <Text mt={2} typography="paragraph2" width="100%" textAlign="center">
                   Insert your U2F key and press the button on the key
