@@ -24,6 +24,7 @@ import {
 } from 'teleport/components/Layout';
 import { useTeleport } from 'teleport/teleportContextProvider';
 import cfg from 'teleport/config';
+import styled from 'styled-components';
 
 /**
  * Support component lists links to teleport's documentation
@@ -43,7 +44,7 @@ const Support = () => {
       <Card px={5} pt={1} pb={6}>
         <Flex justifyContent="space-between" flexWrap="wrap">
           <Box>
-            <Header title="Support" icon={<Icons.Stars />} />
+            <Header title="Support" icon={<Icons.LocalPlay />} />
             {cfg.isEnterprise && (
               <SupportLink
                 title="Create a Support Ticket"
@@ -64,7 +65,7 @@ const Support = () => {
             />
           </Box>
           <Box>
-            <Header title="Resources" icon={<Icons.Stars />} />
+            <Header title="Resources" icon={<Icons.ListCheck />} />
             <SupportLink title="Quickstart Guide" url={docs.quickstart} />
             <SupportLink title="tsh User Guide" url={docs.userManual} />
             <SupportLink title="Admin Guide" url={docs.adminGuide} />
@@ -79,7 +80,7 @@ const Support = () => {
             <SupportLink title="FAQ" url={docs.faq} />
           </Box>
           <Box>
-            <Header title="Troubleshooting" icon={<Icons.Stars />} />
+            <Header title="Troubleshooting" icon={<Icons.Graph />} />
             <SupportLink
               title="Monitoring Teleport"
               url={docs.troubleshooting}
@@ -94,7 +95,7 @@ const Support = () => {
             />
           </Box>
           <Box>
-            <Header title="Updates" icon={<Icons.Stars />} />
+            <Header title="Updates" icon={<Icons.NotificationsActive />} />
             <SupportLink
               title="Product Changelog"
               url="https://github.com/gravitational/teleport/blob/master/CHANGELOG.md"
@@ -114,7 +115,7 @@ const Support = () => {
         borderRadius={3}
         p={5}
       >
-        <Text as="h5" typography="h5" mb={4} fontWeight="bold" caps>
+        <Text as="h5" typography="p" mb={3} fontWeight="bold" caps>
           Cluster Information
         </Text>
         <ClusterData title="Cluster Name" data={cluster.clusterId} />
@@ -158,24 +159,51 @@ const getDocURLs = (version = '') => {
 };
 
 const SupportLink = ({ title = '', url = '' }) => (
-  <Text mb={3}>
-    <Link
-      href={url}
-      target="_blank"
-      mb={2}
-      style={{ textDecoration: 'none', color: 'inherit' }}
-    >
-      {title}
-    </Link>
-  </Text>
+  <StyledSupportLink href={url}>{title}</StyledSupportLink>
 );
 
+const StyledSupportLink = styled.a`
+  display: block; 
+  color: ${props => props.theme.colors.light};
+  border-radius: 4px; 
+  text-decoration: none;
+  line-height: 24px; 
+  margin-bottom: 8px; 
+  font-size: 12px; 
+  padding: 0 8px;
+  transition: all .3s;
+
+  &:hover {
+    background: ${props => props.theme.colors.primary.lighter};
+  }
+`
+
 const ClusterData = ({ title = '', data = null }) => (
-  <Flex mb={3}>
-    <Box width={130}>{title}: </Box>
-    {data}
-  </Flex>
+  <StyleClusterData>
+    <dt>{title}:</dt>
+    <dd>{data}</dd>
+  </StyleClusterData>
 );
+
+const StyleClusterData = styled.dl`
+  margin: 0;
+  padding: 0; 
+  font-size: 12px; 
+
+  dt, dd{
+    font-size: 12px; 
+    display: inline-block;
+    margin-bottom: 8px; 
+    line-height: 24px; 
+  }
+
+  dt {
+    font-weight: bold; 
+  }
+  dd {
+    margin-left: 16px; 
+  }
+`
 
 const Header = ({ title = '', icon = null }) => (
   <Flex
@@ -187,10 +215,10 @@ const Header = ({ title = '', icon = null }) => (
     mt={4}
     pb={2}
   >
-    <Text pr={2} fontSize={30}>
+    <Text pr={2} fontSize={18}>
       {icon}
     </Text>
-    <Text as="h5" typography="h5" fontWeight="bold" caps>
+    <Text as="h5" typography="p"  caps>
       {title}
     </Text>
   </Flex>
