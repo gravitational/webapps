@@ -18,14 +18,15 @@ import styled from 'styled-components';
 import theme from './../theme';
 import Icon from './../Icon';
 
-const MenuItemIcon = styled(Icon)``;
+const MenuItemIcon = styled(Icon)`
+  transition: all .3s;
+`;
 
 MenuItemIcon.displayName = 'MenuItemIcon';
 MenuItemIcon.defaultProps = {
   fontSize: 4,
   theme: theme,
-  mr: 3,
-  color: 'link',
+  mr: 2,
 };
 
 export default MenuItemIcon;
