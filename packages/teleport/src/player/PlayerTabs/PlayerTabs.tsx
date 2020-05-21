@@ -42,6 +42,7 @@ const StyledTabItem = styled(Box)`
   color: inherit;
   align-items: center;
   display: flex;
+  font-size: 11px; 
   justify-content: center;
   flex: 1;
 

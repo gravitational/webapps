@@ -138,7 +138,7 @@ function getColor(severity, code) {
 export default function TypeCell(props) {
   const { rowIndex, data } = props;
   const { codeDesc, code, severity } = data[rowIndex];
-  const IconType = EventIconMap[code] || Icons.Stars;
+  const IconType = EventIconMap[code] || Icons.List;
   const bgColor = getColor(severity, code);
 
   return (
