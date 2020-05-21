@@ -57,14 +57,17 @@ const kinds = ({ theme, kind, shadow }) => {
 };
 
 const LabelState = styled.span`
+  box-sizing: border-box;
   border-radius: 100px;
-  font-weight: bold;
-  outline: none;
-  text-transform: uppercase;
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  white-space: nowrap;
+  font-size: 10px;
+  font-weight: 500;
+  min-height: 16px;
+  padding: 0 8px;
+  text-transform: uppercase;
+  line-height: 16px;
   ${fontSize}
   ${space}
   ${kinds}
