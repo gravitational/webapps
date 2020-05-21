@@ -12,6 +12,7 @@ limitations under the License.
 */
 
 import React from 'react';
+import styled from 'styled-components';
 import copyToClipboard from 'design/utils/copyToClipboard';
 import selectElementContent from 'design/utils/selectElementContent';
 import Dialog, {
@@ -53,26 +54,39 @@ const ClusterInfoDialog: React.FC<ClusterInfoDialogProps> = ({
         <DialogContent>
           <LabelInput>Public URL</LabelInput>
           <BoxUrl url={publicURL} />
-          <TextRow labelText="Cluster Name" infoText={clusterId} />
-          <TextRow labelText="Auth Service Version" infoText={authVersion} />
-          <TextRow labelText="Proxy Service Version" infoText={proxyVersion} />
+          <StyledInfoRows>
+            <dt>Cluster Name:</dt><dd>{clusterId}</dd>
+            <dt>Auth Service Version:</dt><dd>{authVersion}</dd>
+            <dt>Proxy Service Version:</dt><dd>{proxyVersion}</dd>
+          </StyledInfoRows>
         </DialogContent>
         <DialogFooter>
-          <ButtonSecondary onClick={onClose}>Close</ButtonSecondary>
+          <ButtonPrimary onClick={onClose}>Done</ButtonPrimary>
         </DialogFooter>
       </Box>
     </Dialog>
   );
 };
 
-const TextRow = ({ labelText = '', infoText = '' }) => {
-  return (
-    <>
-      <LabelInput>{labelText}</LabelInput>
-      <Text mb={5}>{infoText}</Text>
-    </>
-  );
-};
+
+const StyledInfoRows = styled.dl`
+  margin: 0;
+  padding: 0; 
+  font-size: 12px; 
+
+  dt, dd{
+    font-size: 12px; 
+    display: block;
+    margin-bottom: 8px; 
+    line-height: 24px; 
+  }
+
+  dt {
+    font-weight: bold; 
+    float: left;
+    margin-right: 16px; 
+  }
+`
 
 const BoxUrl = ({ url = '' }) => {
   const ref = React.useRef();
@@ -100,5 +114,7 @@ const BoxUrl = ({ url = '' }) => {
     </Flex>
   );
 };
+
+
 
 export default ClusterInfoDialog;
