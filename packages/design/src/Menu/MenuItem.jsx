@@ -21,9 +21,6 @@ import defaultTheme from './../theme';
 
 const defVals = {
   theme: defaultTheme,
-  fontSize: 2,
-  px: 3,
-  color: 'link',
   bg: 'light',
 };
 
@@ -37,28 +34,41 @@ const fromTheme = props => {
     ...space(values),
     ...color(values),
     fontWeight: values.theme.regular,
+    color: values.theme.colors.grey[600],
+
     '&:hover, &:focus': {
+      color: values.theme.colors.link,
       background: values.theme.colors.grey[50],
     },
   };
 };
 
 const MenuItem = styled.div`
-  min-height: 48px;
+  min-height: 40px;
   box-sizing: border-box;
   cursor: pointer;
+  font-size: 12px; 
   display: flex;
   justify-content: flex-start;
   align-items: center;
-  min-width: 120px;
+  min-width: 140px;
   overflow: hidden;
   text-decoration: none;
   white-space: nowrap;
-  transition: background 0.3s;
+  padding: 0 16px; 
+  transition: all 0.3s;
+
+  .icon {
+    color: ${defaultTheme.colors.grey[600]};
+  }
 
   &:hover,
   &:focus {
     text-decoration: none;
+
+    .icon {
+      color: ${defaultTheme.colors.link};
+    }
   }
 
   ${fromTheme}
