@@ -48,7 +48,7 @@ const kinds = ({ theme, kind, shadow }) => {
 
   if (shadow) {
     styles.boxShadow = `
-    0 0 8px ${fade(styles.background, 0.24)}, 
+    0 0 8px ${fade(styles.background, 0.24)},
     0 4px 16px ${fade(styles.background, 0.56)}
     `;
   }
@@ -62,17 +62,16 @@ const LabelState = styled.span`
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  font-size: 10px;
-  font-weight: 500;
   min-height: 16px;
   padding: 0 8px;
+  font-size: 10px;
+  font-weight: 500;
   text-transform: uppercase;
-  line-height: 16px;
-  ${fontSize}
   ${space}
   ${kinds}
   ${width}
   ${color}
+  ${fontSize}
 `;
 LabelState.defaultProps = {
   fontSize: 0,

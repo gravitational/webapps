@@ -30,10 +30,8 @@ export default function TablePaged(props) {
     data: pagedState.data,
   };
 
-  const showTopPager =
-    pagedState.hasPages && (!pagerPosition || pagerPosition === 'top');
-  const showBottomPager =
-    pagedState.hasPages && (!pagerPosition || pagerPosition === 'bottom');
+  const showTopPager = !pagerPosition || pagerPosition === 'top';
+  const showBottomPager = !pagerPosition || pagerPosition === 'bottom';
 
   if (showBottomPager) {
     tableProps.borderBottomRightRadius = '0';

@@ -33,6 +33,7 @@ SideNavItemIcon.defaultProps = {
   fontSize: 4,
   theme: theme,
   mr: 3,
+  ml: -6,
 };
 
 export default SideNavItemIcon;

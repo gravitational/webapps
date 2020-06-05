@@ -35,7 +35,7 @@ const typography = {
   },
   h3: {
     fontWeight: 300,
-    fontSize: '21px',
+    fontSize: '22px',
     lineHeight: '32px',
   },
   h4: {

@@ -45,7 +45,7 @@ const size = props => {
       // medium
       return {
         minHeight: '32px',
-        fontSize: `11px`,
+        fontSize: `12px`,
         padding: '0px 24px',
       };
   }
@@ -156,6 +156,3 @@ ButtonOutlined.defaultProps = {
 ButtonOutlined.displayName = 'ButtonOutlined';
 
 export default ButtonOutlined;
-export const OutlinedPrimary = props => (
-  <ButtonOutlined kind="primary" {...props} />
-);

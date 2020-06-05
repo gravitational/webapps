@@ -18,9 +18,11 @@ import React from 'react';
 import styled from 'styled-components';
 import Popover from 'design/Popover';
 import theme from 'design/theme';
+import { Box } from 'design';
 import { debounce } from 'lodash';
 
-export default function JoinedUsers({active, users, open = false, ml, mr }) {
+export default function JoinedUsers(props) {
+  const { active, users, open = false, ml, mr } = props;
   const ref = React.useRef(null);
   const [isOpen, setIsOpen] = React.useState(open);
 
@@ -43,16 +45,18 @@ export default function JoinedUsers({active, users, open = false, ml, mr }) {
   }
 
   const $users = users.map((u, index) => {
-    const initial = u.user.trim().charAt(0).toUpperCase(); 
-
+    const name = u.user || '';
+    const initial = name
+      .trim()
+      .charAt(0)
+      .toUpperCase();
     return (
-      <li key={`${index}${u.user}`}>
+      <UserItem key={`${index}${u.user}`}>
         <StyledAvatar>{initial}</StyledAvatar>
         {u.user}
-      </li>
-    )
-    
-    });
+      </UserItem>
+    );
+  });
 
   return (
     <StyledUsers
@@ -62,7 +66,6 @@ export default function JoinedUsers({active, users, open = false, ml, mr }) {
       ref={ref}
       onMouseLeave={handleClose}
       onMouseEnter={onMouseEnter}
-
     >
       {users.length}
       <Popover
@@ -78,16 +81,14 @@ export default function JoinedUsers({active, users, open = false, ml, mr }) {
           horizontal: 'center',
         }}
       >
-        <StyledDropdown
-          bg="white"
-          color="black"
-          px={4}
-          py={2}
+        <Box
           minWidth="200px"
+          bg="white"
+          borderRadius="8px"
           onMouseLeave={handleClose}
         >
           {$users}
-        </StyledDropdown>
+        </Box>
       </Popover>
     </StyledUsers>
   );
@@ -98,49 +99,38 @@ const StyledUsers = styled.div`
   width: 16px;
   height: 16px;
   font-size: 11px;
-  font-weight: bold; 
+  font-weight: bold;
   overflow: hidden;
-  position: relative;
   align-items: center;
   flex-shrink: 0;
-  user-select: none;
   border-radius: 50%;
   justify-content: center;
-  background-color: ${props => props.active ? theme.colors.accent : theme.colors.grey[900] };
+  background-color: ${props =>
+    props.active ? theme.colors.accent : theme.colors.grey[900]};
 `;
 
 const StyledAvatar = styled.div`
-  align-items: center;
   background: ${props => props.theme.colors.accent};
   color: ${props => props.theme.colors.light};
   border-radius: 50%;
   display: flex;
-  font-size: 14px;
-  font-weight: bold;
   justify-content: center;
-  height: 32px; 
-  margin-right: 16px; 
-  width: 32px; 
-`
+  align-items: center;
+  font-size: 12px;
+  font-weight: bold;
+  height: 24px;
+  margin-right: 16px;
+  width: 24px;
+`;
 
-const StyledDropdown = styled.ul`
-  background: #FFF; 
-  border-radius: 8px; 
-  list-style-type: none;
-  margin: 0; 
-  padding: 0;
-
-  li {
-    border-bottom: 1px solid ${theme.colors.grey[50]};
-    color: ${theme.colors.grey[600]};
-    font-size: 12px; 
-    display: flex; 
-    line-height: 24px; 
-    margin: 0; 
-    padding: 16px !important; 
-
-    &:last-child {
-      border: none;
-    }
+const UserItem = styled.div`
+  border-bottom: 1px solid ${theme.colors.grey[50]};
+  color: ${theme.colors.grey[600]};
+  font-size: 12px;
+  align-items: center;
+  display: flex;
+  padding: 8px;
+  &:last-child {
+    border: none;
   }
-`; 
+`;

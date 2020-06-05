@@ -18,7 +18,6 @@ import React from 'react';
 import styled from 'styled-components';
 import { NavLink } from 'shared/components/Router';
 import { typography, color } from 'design/system';
-import { Box } from 'design';
 
 const Tabs = ({ children }) => {
   return (
@@ -32,16 +31,15 @@ export const TabItem = ({ to = '', title = '', exact = true }) => (
   </StyledTabItem>
 );
 
-const StyledTabItem = styled.button`
+const StyledTabItem = styled.div`
   align-items: center;
-  border-bottom: 3px solid transparent; 
+  border-bottom: 3px solid transparent;
   font-size: 12px;
   font-weight: normal;
   display: flex;
-  height: 50px; 
+  height: 50px;
   margin: 0 0 0 24px;
-  outline: none;
-  padding: 3px 8px 0 8px; 
+  padding: 3px 8px 0 8px;
   text-decoration: none;
   color: inherit;
   cursor: pointer;

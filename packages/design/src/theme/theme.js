@@ -23,7 +23,7 @@ const space = [0, 4, 8, 16, 24, 32, 40, 48, 56, 64, 72, 80];
 const contrastThreshold = 3;
 
 const colors = {
-  accent: '#512FC9',
+  accent: '#651FFF',
 
   dark: '#000',
 
@@ -69,7 +69,6 @@ const colors = {
     light: red['A200'],
     dark: red['A700'],
     main: red['A400'],
-
   },
 
   action: {

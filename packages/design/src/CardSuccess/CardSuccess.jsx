@@ -27,7 +27,7 @@ export default function CardSuccess({ title, children }) {
           {title}
         </Text>
       )}
-      {children && <Text typography="p">{children}</Text>}
+      {children}
     </Card>
   );
 }
@@ -35,8 +35,8 @@ export default function CardSuccess({ title, children }) {
 export function CardSuccessLogin() {
   return (
     <CardSuccess title="Login Successful">
-      You have successfully signed into your account. <br/> You can close this window
-      and continue using the product.
+      You have successfully signed into your account. <br /> You can close this
+      window and continue using the product.
     </CardSuccess>
   );
 }

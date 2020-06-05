@@ -19,14 +19,17 @@ import styled from 'styled-components';
 import { fontSize, color, space } from 'styled-system';
 import defaultTheme from './../theme';
 
-const defVals = {
+const defaultValues = {
   theme: defaultTheme,
   bg: 'light',
+  color: 'link',
+  fontSize: 1,
+  px: 3,
 };
 
 const fromTheme = props => {
   const values = {
-    ...defVals,
+    ...defaultValues,
     ...props,
   };
   return {
@@ -47,7 +50,6 @@ const MenuItem = styled.div`
   min-height: 40px;
   box-sizing: border-box;
   cursor: pointer;
-  font-size: 12px; 
   display: flex;
   justify-content: flex-start;
   align-items: center;
@@ -55,20 +57,10 @@ const MenuItem = styled.div`
   overflow: hidden;
   text-decoration: none;
   white-space: nowrap;
-  padding: 0 16px; 
-  transition: all 0.3s;
-
-  .icon {
-    color: ${defaultTheme.colors.grey[600]};
-  }
 
   &:hover,
   &:focus {
     text-decoration: none;
-
-    .icon {
-      color: ${defaultTheme.colors.link};
-    }
   }
 
   ${fromTheme}

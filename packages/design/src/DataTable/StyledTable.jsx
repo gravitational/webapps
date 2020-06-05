@@ -24,7 +24,7 @@ export const StyledTable = styled.table`
   border-collapse: collapse;
   border-spacing: 0;
   border-radius: 4px;
-  font-size: 11px;
+  font-size: 12px;
   width: 100%;
 
   & > thead > tr > th,
@@ -40,7 +40,7 @@ export const StyledTable = styled.table`
       padding-left: 24px;
     }
     &:last-child {
-      padding-left: 24px;
+      padding-right: 24px;
     }
   }
 
@@ -51,21 +51,21 @@ export const StyledTable = styled.table`
     font-size: 10px;
     font-weight: 400;
     padding-bottom: 0;
-    padding-top: 0; 
+    padding-top: 0;
     text-align: left;
     text-transform: uppercase;
     white-space: nowrap;
 
     ${Icon} {
       font-weight: bold;
-      font-size: 8px; 
+      font-size: 8px;
       margin-left: 8px;
     }
   }
 
   & > tbody > tr > td {
     color: rgba(255, 255, 255, 0.87);
-    line-height: 16px; 
+    line-height: 16px;
   }
 
   ${space}

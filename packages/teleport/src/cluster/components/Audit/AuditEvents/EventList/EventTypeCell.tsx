@@ -19,7 +19,6 @@ import styled from 'styled-components';
 import { Cell } from 'design/DataTable';
 import Icon, * as Icons from 'design/Icon/Icon';
 import { CodeEnum } from 'teleport/services/audit/types';
-import theme from 'design/theme';
 
 const EventIconMap = {
   [CodeEnum.ALERT_CREATED]: Icons.NotificationsActive,
@@ -82,88 +81,20 @@ const EventIconMap = {
   [CodeEnum.SESSION_UPLOAD]: Icons.Cli,
 };
 
-function getColor(severity, code) {
-  // first pick the color based on event code
-  switch (code) {
-    case CodeEnum.SESSION_START:
-    case CodeEnum.SESSION_JOIN:
-    case CodeEnum.TERMINAL_RESIZE:
-    case CodeEnum.SESSION_UPLOAD:
-    case CodeEnum.EXEC:
-      return 'bgTerminal';
-    case CodeEnum.REMOTE_SUPPORT_DISABLED:
-    case CodeEnum.SESSION_END:
-    case CodeEnum.SESSION_LEAVE:
-      return 'grey.600';
-    case CodeEnum.ALERT_CREATED:
-    case CodeEnum.GITHUB_CONNECTOR_CREATED:
-    case CodeEnum.LOGFORWARDER_CREATED:
-    case CodeEnum.SMTPCONFIG_CREATED:
-    case CodeEnum.TLSKEYPAIR_CREATED:
-    case CodeEnum.TOKEN_CREATED:
-    case CodeEnum.USER_CREATED:
-    case CodeEnum.ROLE_CREATED:
-    case CodeEnum.USER_INVITE_CREATED:
-      return 'success';
-    case CodeEnum.AUTH_ATTEMPT_FAILURE:
-    case CodeEnum.EXEC_FAILURE:
-    case CodeEnum.OPERATION_INSTALL_FAILURE:
-    case CodeEnum.OPERATION_ENV_FAILURE:
-    case CodeEnum.SCP_DOWNLOAD_FAILURE:
-    case CodeEnum.OPERATION_SHRINK_FAILURE:
-    case CodeEnum.USER_LOCAL_LOGINFAILURE:
-    case CodeEnum.USER_SSO_LOGINFAILURE:
-    case CodeEnum.OPERATION_UPDATE_FAILURE:
-    case CodeEnum.OPERATION_UNINSTALL_FAILURE:
-    case CodeEnum.PORTFORWARD_FAILURE:
-    case CodeEnum.SCP_UPLOAD_FAILURE:
-    case CodeEnum.SUBSYSTEM_FAILURE:
-      return 'danger';
-    case CodeEnum.ALERT_DELETED:
-    case CodeEnum.ROLE_DELETED:
-    case CodeEnum.GITHUB_CONNECTOR_DELETED:
-    case CodeEnum.OIDC_CONNECTOR_DELETED:
-    case CodeEnum.LOGFORWARDER_DELETED:
-    case CodeEnum.SAML_CONNECTOR_DELETED:
-    case CodeEnum.SMTPCONFIG_DELETED:
-    case CodeEnum.TLSKEYPAIR_DELETED:
-    case CodeEnum.TOKEN_DELETED:
-    case CodeEnum.USER_DELETED:
-      return 'warning';
-  }
-
-  return 'info';
-}
-
 export default function TypeCell(props) {
   const { rowIndex, data } = props;
-  const { codeDesc, code, severity } = data[rowIndex];
+  const { codeDesc, code } = data[rowIndex];
   const IconType = EventIconMap[code] || Icons.List;
-  const bgColor = getColor(severity, code);
 
   return (
-    <Cell style={{ fontSize: '14px' }}>
+    <Cell>
       <StyledEventType>
-        <StyledIcon p="1" mr="3" style={{borderColor: theme.colors[bgColor]}} as={IconType} fontSize="4" />
-        {codeDesc} {theme.colors[bgColor]}
+        <Icon p="1" mr="3" as={IconType} fontSize="3" />
+        {codeDesc}
       </StyledEventType>
     </Cell>
   );
 }
-
-const StyledIcon = styled(Icon)`
-  font-size: 16px; 
-  border-style: solid;
-  border-width: 1px;
-  border-radius: 50%;
-  padding: 0; 
-  display: flex; 
-  align-items: center; 
-  justify-content: center;
-  width: 24px; 
-  height: 24px; 
-  box-sizing: border-box; 
-`;
 
 const StyledEventType = styled.div`
   display: flex;

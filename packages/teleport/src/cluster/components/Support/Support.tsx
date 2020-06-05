@@ -16,7 +16,7 @@
 
 import React from 'react';
 import * as Icons from 'design/Icon';
-import { Card, Box, Text, Flex, Link } from 'design';
+import { Card, Box, Text, Flex } from 'design';
 import {
   FeatureBox,
   FeatureHeader,
@@ -110,12 +110,13 @@ const Support = () => {
       <Box
         border="1px solid"
         borderColor="primary.light"
-        mt={8}
+        mt={4}
         mb={10}
         borderRadius={3}
-        p={5}
+        px={5}
+        py={4}
       >
-        <Text as="h5" typography="p" mb={3} fontWeight="bold" caps>
+        <Text as="h5" mb={4} fontWeight="bold" caps>
           Cluster Information
         </Text>
         <ClusterData title="Cluster Name" data={cluster.clusterId} />
@@ -163,47 +164,27 @@ const SupportLink = ({ title = '', url = '' }) => (
 );
 
 const StyledSupportLink = styled.a`
-  display: block; 
+  display: block;
   color: ${props => props.theme.colors.light};
-  border-radius: 4px; 
+  border-radius: 4px;
   text-decoration: none;
-  line-height: 24px; 
-  margin-bottom: 8px; 
-  font-size: 12px; 
-  padding: 0 8px;
-  transition: all .3s;
-
-  &:hover {
+  margin-bottom: 8px;
+  padding: 4px 8px;
+  transition: all 0.3s;
+  ${props => props.theme.typography.body2}
+  &:hover, &:focus {
     background: ${props => props.theme.colors.primary.lighter};
   }
-`
+`;
 
 const ClusterData = ({ title = '', data = null }) => (
-  <StyleClusterData>
-    <dt>{title}:</dt>
-    <dd>{data}</dd>
-  </StyleClusterData>
+  <Flex mb={3}>
+    <Text typography="body2" bold mr={3}>
+      {title}:
+    </Text>
+    <Text typography="body2">{data}</Text>
+  </Flex>
 );
-
-const StyleClusterData = styled.dl`
-  margin: 0;
-  padding: 0; 
-  font-size: 12px; 
-
-  dt, dd{
-    font-size: 12px; 
-    display: inline-block;
-    margin-bottom: 8px; 
-    line-height: 24px; 
-  }
-
-  dt {
-    font-weight: bold; 
-  }
-  dd {
-    margin-left: 16px; 
-  }
-`
 
 const Header = ({ title = '', icon = null }) => (
   <Flex
@@ -218,7 +199,7 @@ const Header = ({ title = '', icon = null }) => (
     <Text pr={2} fontSize={18}>
       {icon}
     </Text>
-    <Text as="h5" typography="p"  caps>
+    <Text as="h5" caps>
       {title}
     </Text>
   </Flex>

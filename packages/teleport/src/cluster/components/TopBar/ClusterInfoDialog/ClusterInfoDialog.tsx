@@ -12,23 +12,15 @@ limitations under the License.
 */
 
 import React from 'react';
-import styled from 'styled-components';
 import copyToClipboard from 'design/utils/copyToClipboard';
 import selectElementContent from 'design/utils/selectElementContent';
+import { Text, Box, Flex, LabelInput, ButtonPrimary } from 'design';
 import Dialog, {
   DialogFooter,
   DialogTitle,
   DialogContent,
   DialogHeader,
 } from 'design/DialogConfirmation';
-import {
-  Text,
-  Box,
-  Flex,
-  LabelInput,
-  ButtonSecondary,
-  ButtonPrimary,
-} from 'design';
 
 type ClusterInfoDialogProps = {
   onClose: () => void;
@@ -53,12 +45,10 @@ const ClusterInfoDialog: React.FC<ClusterInfoDialogProps> = ({
         </DialogHeader>
         <DialogContent>
           <LabelInput>Public URL</LabelInput>
-          <BoxUrl url={publicURL} />
-          <StyledInfoRows>
-            <dt>Cluster Name:</dt><dd>{clusterId}</dd>
-            <dt>Auth Service Version:</dt><dd>{authVersion}</dd>
-            <dt>Proxy Service Version:</dt><dd>{proxyVersion}</dd>
-          </StyledInfoRows>
+          <PublicURL url={publicURL} />
+          <Attribute title="Cluster Name" value={clusterId} />
+          <Attribute title="Auth Service Version" value={authVersion} />
+          <Attribute title="Proxy Service Version" value={proxyVersion} />
         </DialogContent>
         <DialogFooter>
           <ButtonPrimary onClick={onClose}>Done</ButtonPrimary>
@@ -68,27 +58,16 @@ const ClusterInfoDialog: React.FC<ClusterInfoDialogProps> = ({
   );
 };
 
+const Attribute = ({ title = '', value = null }) => (
+  <Flex mb={3}>
+    <Text typography="body2" bold mr={3}>
+      {title}:
+    </Text>
+    <Text typography="body2">{value}</Text>
+  </Flex>
+);
 
-const StyledInfoRows = styled.dl`
-  margin: 0;
-  padding: 0; 
-  font-size: 12px; 
-
-  dt, dd{
-    font-size: 12px; 
-    display: block;
-    margin-bottom: 8px; 
-    line-height: 24px; 
-  }
-
-  dt {
-    font-weight: bold; 
-    float: left;
-    margin-right: 16px; 
-  }
-`
-
-const BoxUrl = ({ url = '' }) => {
+const PublicURL = ({ url = '' }) => {
   const ref = React.useRef();
   const [copyCmd, setCopyCmd] = React.useState(() => 'Copy');
 
@@ -114,7 +93,5 @@ const BoxUrl = ({ url = '' }) => {
     </Flex>
   );
 };
-
-
 
 export default ClusterInfoDialog;

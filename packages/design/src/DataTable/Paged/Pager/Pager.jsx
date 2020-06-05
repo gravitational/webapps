@@ -62,7 +62,7 @@ export const StyledButtons = styled.div`
     border-radius: 200px;
     cursor: pointer;
     padding: 0;
-    margin: 0 0 0 4px;
+    margin: 0 0 0 8px;
     outline: none;
     transition: all 0.3s;
     text-align: center;
@@ -75,7 +75,7 @@ export const StyledButtons = styled.div`
     }
 
     ${Icon} {
-      opacity: 0.40;
+      opacity: 0.4;
       font-size: 20px;
       transition: all 0.3s;
     }

@@ -30,8 +30,8 @@ function error({ hasError, theme }) {
 }
 
 const Input = styled.input`
-  border:none;
   appearance: none;
+  border:none;
   border-radius: 4px;
   box-shadow: inset 0 2px 4px rgba(0, 0, 0, .24);
   box-sizing: border-box;
@@ -47,7 +47,7 @@ const Input = styled.input`
   }
 
   ::placeholder {
-    opacity: 0.24;
+    opacity: 0.4;
   }
 
   ${color} ${space} ${width} ${height} ${error};

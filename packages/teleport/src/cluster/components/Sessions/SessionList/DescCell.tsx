@@ -15,18 +15,20 @@ limitations under the License.
 */
 
 import React from 'react';
-import styled from 'styled-components';
+import styled, { useTheme } from 'styled-components';
 import { Cell } from 'design/DataTable';
 import { Session } from 'teleport/services/ssh';
 import * as Icons from 'design/Icon/Icon';
-import theme from 'design/theme';
 import { NavLink } from 'react-router-dom';
 import cfg from 'teleport/config';
 
 export default function TypeCell(props: any) {
   const { rowIndex, data } = props;
-  const { sid } = data[rowIndex] as Session;
+  const { sid, serverId, login, hostname } = data[rowIndex] as Session;
+  const nodeDesc = hostname || serverId;
   const url = cfg.getSshSessionRoute({ sid });
+  const theme = useTheme();
+  const text = `Session is in progress [${login}@${nodeDesc}]`;
 
   return (
     <Cell>
@@ -44,12 +46,14 @@ export default function TypeCell(props: any) {
             textDecoration: 'none',
           }}
         />
-        Session in progress...
+        {text}
       </StyledEventType>
     </Cell>
   );
 }
 
 const StyledEventType = styled.div`
-  width: 0;
+  display: flex;
+  align-items: center;
+  min-width: 130px;
 `;

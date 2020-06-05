@@ -15,12 +15,12 @@ limitations under the License.
 */
 
 import React from 'react';
-import { Flex, Box, ButtonPrimary } from 'design';
+import { Flex, ButtonPrimary } from 'design';
 import * as Icons from 'design/Icon';
 import { useConsoleContext } from 'teleport/console/consoleContextProvider';
 import * as stores from 'teleport/console/stores';
 import Document from './../Document';
-import {colors} from '../colors'; 
+import { colors } from '../colors';
 
 export default function DocumentBlank(props: PropTypes) {
   const { visible, doc } = props;
@@ -32,12 +32,15 @@ export default function DocumentBlank(props: PropTypes) {
 
   return (
     <Document visible={visible}>
-      <Box mx="auto">
-        <Flex flexDirection="column">
-          <Icons.Cli fontSize="256px" mt="10" mb="6" color={colors.terminalDark} />
-          <ButtonPrimary onClick={onClick} children="Start a New Session" block />
-        </Flex>
-      </Box>
+      <Flex flexDirection="column" alignItems="center" flex="1">
+        <Icons.Cli
+          fontSize="256px"
+          mt="10"
+          mb="6"
+          color={colors.terminalDark}
+        />
+        <ButtonPrimary onClick={onClick} children="Start a New Session" />
+      </Flex>
     </Document>
   );
 }

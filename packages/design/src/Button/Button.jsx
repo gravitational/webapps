@@ -46,7 +46,7 @@ const size = props => {
       // medium
       return {
         minHeight: '32px',
-        fontSize: `11px`,
+        fontSize: `12px`,
         padding: '0px 24px',
       };
   }
@@ -56,7 +56,6 @@ const themedStyles = props => {
   const { colors } = props.theme;
   const style = {
     color: colors.text.primary,
-    
     '&:disabled': {
       background: colors.action.disabledBackground,
       color: colors.action.disabled,
@@ -80,7 +79,6 @@ const kinds = props => {
     case 'secondary':
       return {
         background: theme.colors.primary.light,
-
         '&:hover, &:focus': {
           background: theme.colors.primary.lighter,
         },
@@ -90,14 +88,12 @@ const kinds = props => {
         background: theme.colors.primary.lighter,
         border: '1px solid ' + theme.colors.primary.main,
         opacity: '.87',
-
         '&:hover, &:focus': {
           background: theme.colors.primary.lighter,
           opacity: 1,
         },
-
         '&:active': {
-          opacity: .24,
+          opacity: 0.24,
         },
       };
     case 'warning':
@@ -182,8 +178,11 @@ Button.propTypes = {
 
 Button.defaultProps = {
   size: 'medium',
-  theme: defaultTheme,
   kind: 'primary',
+};
+
+StyledButton.defaultProps = {
+  theme: defaultTheme,
 };
 
 Button.displayName = 'Button';

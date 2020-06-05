@@ -17,17 +17,15 @@ limitations under the License.
 import React from 'react';
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
-import { Image, Text } from 'design';
+import { Text } from 'design';
 import TopNavItem from '../TopNavItem';
 import Menu from '../../Menu/Menu';
-import defaultAvatar from './avatar.png';
 
 class TopNavUserMenu extends React.Component {
   static displayName = 'TopNavMenu';
 
   static defaultProps = {
     menuListCss: () => {},
-    avatar: defaultAvatar,
     open: false,
   };
 
@@ -50,13 +48,12 @@ class TopNavUserMenu extends React.Component {
       onShow,
       onClose,
       open,
-      avatar,
       anchorOrigin,
       transformOrigin,
       children,
       menuListCss,
     } = this.props;
-    const initial = user && user.length ? user.trim().charAt(0) : ''; 
+    const initial = user && user.length ? user.trim().charAt(0) : '';
     const anchorEl = open ? this.btnRef : null;
     return (
       <>
@@ -94,9 +91,9 @@ const StyledAvatar = styled.div`
   font-size: 14px;
   font-weight: bold;
   justify-content: center;
-  height: 32px; 
-  margin-left: 16px; 
-  width: 32px; 
-`
+  height: 32px;
+  margin-left: 16px;
+  width: 32px;
+`;
 
 export default TopNavUserMenu;
