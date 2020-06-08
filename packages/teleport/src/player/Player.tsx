@@ -69,4 +69,8 @@ const StyledPlayer = styled.div`
     outline: none !important;
     background-color: #fff;
   }
+
+  .terminal .xterm-viewport {
+    overflow-y: hidden !important;
+  }
 `;

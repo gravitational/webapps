@@ -80,7 +80,7 @@ export default function EventList(props: EventListProps) {
   }, [state, events, search]);
 
   // paginate
-  const tableProps = { pageSize: 20, data };
+  const tableProps = { pageSize: 50, data };
   const { detailsToShow, colSortDirs } = state;
   return (
     <React.Fragment>
@@ -103,17 +103,6 @@ export default function EventList(props: EventListProps) {
           columnKey="message"
           header={<Table.Cell>Description</Table.Cell>}
           cell={<DescCell style={{ wordBreak: 'break-all' }} />}
-        />
-        <Table.Column
-          columnKey="user"
-          header={
-            <Table.SortHeaderCell
-              sortDir={colSortDirs.user}
-              onSortChange={onSortChange}
-              title="User"
-            />
-          }
-          cell={<Table.TextCell style={{ minWidth: '48px' }} />}
         />
         <Table.Column
           columnKey="time"
