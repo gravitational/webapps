@@ -117,4 +117,8 @@ const StyledConsole = styled.div`
   top: 0;
   display: flex;
   flex-direction: column;
+
+  .terminal .xterm-viewport {
+    overflow-y: auto;
+  }
 `;
