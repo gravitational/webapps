@@ -28,7 +28,7 @@ export default function Xterm({ tty }: { tty: Tty }) {
     });
 
     term.open();
-    term.setViewportWrapper(refContainer);
+    term.extendGetBufferCoords(refContainer);
 
     function cleanup() {
       term.destroy();
@@ -49,12 +49,53 @@ class TerminalPlayer extends Terminal {
     this.term.viewport.touchstart = function() {};
   }
 
-  // Stores reference to the element that wraps around xterm,
-  // which will be needed by xterm's _getMouseBufferCoords,
-  // to calculate the offset (difference of rows) between
-  // the terminal viewport from the scrolled wrappers position.
-  setViewportWrapper(ref) {
-    this.term.viewportWrapper = ref.current;
+  /**
+   * extendGetBufferCoords extends the original xterm's SelectionManager.prototype._getMouseBufferCoords
+   * so that we can calculates the offset (differences of rows/cols) that results from the difference in
+   * viewport scrolled position between child and parent viewports.
+   *
+   * @param ref The parent viewport that wraps around the actual terminal viewport (child).
+   */
+  extendGetBufferCoords(ref) {
+    const parentEl = ref.current;
+    const term = this.term;
+
+    // Save reference to original code to get the coords from child viewport.
+    const originalGetMouseBufferCoords = term.selectionManager._getMouseBufferCoords.bind(
+      term.selectionManager
+    );
+
+    // Extends the original code to calculate the offset with the parent viewport.
+    term.selectionManager._getMouseBufferCoords = function(e) {
+      const coords = originalGetMouseBufferCoords(e);
+      const lineHeight = term.charMeasure.height;
+      const lineWidth = term.charMeasure.width;
+      const viewportHeight = lineHeight * term.rows;
+      const viewportWidth = lineWidth * term.cols;
+
+      // Calculates differences of rows.
+      let offsetY = 0;
+      if (parentEl.scrollTop !== 0) {
+        const scrollDiff = parentEl.scrollHeight - parentEl.scrollTop;
+        if (scrollDiff > 0) {
+          offsetY = Math.round((viewportHeight - scrollDiff) / lineHeight) + 1;
+        }
+      }
+
+      // Calculates differences of columns.
+      let offsetX = 0;
+      if (parentEl.scrollLeft !== 0) {
+        const scrollDiff = parentEl.scrollWidth - parentEl.scrollLeft;
+        if (scrollDiff > 0) {
+          offsetX = Math.round((viewportWidth - scrollDiff) / lineWidth) + 1;
+        }
+      }
+
+      coords[0] += offsetX;
+      coords[1] += offsetY;
+
+      return coords;
+    };
   }
 
   resize(cols, rows) {
