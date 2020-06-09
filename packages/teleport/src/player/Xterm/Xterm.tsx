@@ -28,6 +28,7 @@ export default function Xterm({ tty }: { tty: Tty }) {
     });
 
     term.open();
+    term.setViewportWrapper(refContainer);
 
     function cleanup() {
       term.destroy();
@@ -41,7 +42,20 @@ export default function Xterm({ tty }: { tty: Tty }) {
 
 class TerminalPlayer extends Terminal {
   // do not attempt to connect
-  connect() {}
+  connect() {
+    // Disables terminal viewport scrolling so users can rely on players controls.
+    this.term.viewport.onWheel = function() {};
+    this.term.viewport.touchmove = function() {};
+    this.term.viewport.touchstart = function() {};
+  }
+
+  // Stores reference to the element that wraps around xterm,
+  // which will be needed by xterm's _getMouseBufferCoords,
+  // to calculate the offset (difference of rows) between
+  // the terminal viewport from the scrolled wrappers position.
+  setViewportWrapper(ref) {
+    this.term.viewportWrapper = ref.current;
+  }
 
   resize(cols, rows) {
     // ensure that cursor is visible as xterm hides it on blur event
