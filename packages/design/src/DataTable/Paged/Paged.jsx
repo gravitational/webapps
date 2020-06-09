@@ -31,7 +31,7 @@ export default function TablePaged(props) {
   };
 
   const showTopPager = !pagerPosition || pagerPosition === 'top';
-  const showBottomPager = !pagerPosition || pagerPosition === 'bottom';
+  const showBottomPager = pagerPosition === 'bottom';
 
   if (showBottomPager) {
     tableProps.borderBottomRightRadius = '0';

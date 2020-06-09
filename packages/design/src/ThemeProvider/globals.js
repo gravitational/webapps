@@ -31,6 +31,9 @@ const GlobalStyle = createGlobalStyle`
     padding: 0;
   }
 
+  input {
+    font-family: ${props => props.theme.font};
+  }
 
   // custom scrollbars
   ::-webkit-scrollbar {

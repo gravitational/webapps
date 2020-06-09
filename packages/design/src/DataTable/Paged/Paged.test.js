@@ -35,7 +35,7 @@ test('pagerPosition set to top', () => {
   expect(container.firstChild.children[0].nodeName).toEqual('NAV');
 });
 
-test('pagerPosition prop default (show both top and bottom)', () => {
+test('pagerPosition prop default (show only top)', () => {
   let { container } = render(<TablePaged pageSize={pageSize} data={data} />);
-  expect(container.querySelectorAll('nav')).toHaveLength(2);
+  expect(container.querySelectorAll('nav')).toHaveLength(1);
 });

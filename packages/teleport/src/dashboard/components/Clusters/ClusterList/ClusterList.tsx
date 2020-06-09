@@ -139,13 +139,6 @@ export default function ClustersList(props: ClusterListProps) {
         />
         <Column header={<Cell />} cell={<ActionCell />} />
       </ClusterTable>
-      <StyledPanel
-        borderBottomRightRadius="3"
-        borderBottomLeftRadius="3"
-        justifyContent="space-between"
-      >
-        <Pager {...paged} />
-      </StyledPanel>
     </>
   );
 }
