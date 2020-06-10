@@ -30,6 +30,11 @@ export default function Xterm({ tty }: { tty: Tty }) {
     term.open();
     term.extendGetBufferCoords(refContainer);
 
+    term.tty.on('terminal.data', () => {
+      const el = term.term.element.querySelector('.terminal-cursor');
+      el && el.scrollIntoView(false);
+    });
+
     function cleanup() {
       term.destroy();
     }
