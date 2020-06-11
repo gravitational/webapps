@@ -16,6 +16,7 @@ limitations under the License.
 import React, { useEffect, useRef } from 'react';
 import Terminal from 'teleport/lib/term/terminal';
 import Tty from 'teleport/lib/term/tty';
+import { TermEventEnum } from 'teleport/lib/term/enums';
 import StyledXterm from 'teleport/console/components/StyledXterm';
 
 export default function Xterm({ tty }: { tty: Tty }) {
@@ -30,7 +31,7 @@ export default function Xterm({ tty }: { tty: Tty }) {
     term.open();
     term.extendGetBufferCoords(refContainer);
 
-    term.tty.on('terminal.data', () => {
+    term.tty.on(TermEventEnum.DATA, () => {
       const el = term.term.element.querySelector('.terminal-cursor');
       el && el.scrollIntoView(false);
     });
