@@ -29,6 +29,7 @@ export default function Xterm({ tty }: { tty: Tty }) {
     });
 
     term.open();
+    term.term.focus();
     term.extendGetBufferCoords(refContainer);
 
     term.tty.on(TermEventEnum.DATA, () => {
