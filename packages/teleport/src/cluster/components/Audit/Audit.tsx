@@ -35,9 +35,6 @@ export default function Audit() {
   const rangeOptions = useMemo(() => getRangeOptions(), []);
   const [range, handleOnRange] = useState(rangeOptions[0]);
 
-  const eventsRoute = cfg.getAuditEventsRoute();
-  const sessionsRoute = cfg.getAuditSessionsRoute();
-
   const { overflow, attempt, maxLimit, events } = useEvents(range);
   const { isSuccess, isFailed, message, isProcessing } = attempt;
 
@@ -46,8 +43,8 @@ export default function Audit() {
       <FeatureHeader alignItems="center">
         <FeatureHeaderTitle mr="8">Audit Log</FeatureHeaderTitle>
         <Tabs>
-          <TabItem to={sessionsRoute} title="Sessions" />
-          <TabItem to={eventsRoute} title="Events" />
+          <TabItem to={cfg.getAuditSessionsRoute()} title="Sessions" />
+          <TabItem to={cfg.getAuditEventsRoute()} title="Events" />
         </Tabs>
         <RangePicker
           ml="auto"

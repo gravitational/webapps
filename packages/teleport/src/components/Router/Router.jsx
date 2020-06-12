@@ -38,10 +38,10 @@ const Switch = props => (
 );
 
 const Route = props => {
-  const { title = '', computedMatch, ...rest } = props;
-  let pageTitle = title;
+  const { title = '', ...rest } = props;
+  const { clusterId } = useParams();
 
-  const clusterId = computedMatch.params.clusterId;
+  let pageTitle = title;
   if (clusterId) {
     pageTitle = `${clusterId} • ${title}`;
   }

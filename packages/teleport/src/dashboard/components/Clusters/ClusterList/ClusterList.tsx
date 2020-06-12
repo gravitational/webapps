@@ -213,11 +213,11 @@ function ActionCell(props) {
   return (
     <Cell align="right">
       <MenuButton>
-        <MenuItem as={NavLink} to={terminalURL} target="_blank">
-          Terminal...
+        <MenuItem as="a" href={terminalURL} target="_blank">
+          New Session
         </MenuItem>
         <MenuItem as={NavLink} to={nodeListURL}>
-          View...
+          View Cluster
         </MenuItem>
       </MenuButton>
     </Cell>

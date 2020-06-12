@@ -43,10 +43,6 @@ const history = {
     }
   },
 
-  openNewTab(route) {
-    window.open(route, '_blank');
-  },
-
   goBack(number) {
     this.original().goBack(number);
   },
