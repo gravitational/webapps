@@ -27,6 +27,7 @@ import { colors } from 'teleport/console/components/colors';
 
 export default function Player() {
   const { sid, clusterId } = useParams();
+  document.title = `${clusterId} • Play ${sid}`;
 
   React.useMemo(() => {
     cfg.setClusterId(clusterId);

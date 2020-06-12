@@ -38,9 +38,17 @@ const Switch = props => (
 );
 
 const Route = props => {
-  const { title = '', ...rest } = props;
+  const { title = '', computedMatch, ...rest } = props;
+  let pageTitle = title;
+
+  const clusterId = computedMatch.params.clusterId;
+  if (clusterId) {
+    pageTitle = `${clusterId} • ${title}`;
+  }
+
   React.useEffect(() => {
-    document.title = title;
+    if (!title) return;
+    document.title = pageTitle;
   }, [title]);
 
   return <RouterDOM.Route {...rest} />;
