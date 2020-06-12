@@ -15,7 +15,7 @@ limitations under the License.
 */
 
 import React, { useEffect, useState, useMemo } from 'react';
-import { Redirect, Switch, Route } from 'shared/components/Router';
+import { Redirect, Switch, Route } from 'teleport/components/Router';
 import {
   FeatureBox,
   FeatureHeader,
