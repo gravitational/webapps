@@ -35,7 +35,6 @@ export default function Audit() {
   const rangeOptions = useMemo(() => getRangeOptions(), []);
   const [range, handleOnRange] = useState(rangeOptions[0]);
 
-  const auditRoute = cfg.getAuditRoute();
   const eventsRoute = cfg.getAuditEventsRoute();
   const sessionsRoute = cfg.getAuditSessionsRoute();
 
@@ -71,13 +70,17 @@ export default function Audit() {
       )}
       {isSuccess && (
         <Switch>
-          <Route title="Sessions" path={sessionsRoute}>
+          <Route title="Sessions" path={cfg.routes.clusterAuditSessions}>
             <AuditSessions pageSize={20} events={events} />
           </Route>
-          <Route title="Events" path={eventsRoute}>
+          <Route title="Events" path={cfg.routes.clusterAuditEvents}>
             <AuditEvents events={events} />
           </Route>
-          <Redirect exact from={auditRoute} to={sessionsRoute} />
+          <Redirect
+            exact
+            from={cfg.routes.clusterAudit}
+            to={cfg.routes.clusterAuditSessions}
+          />
         </Switch>
       )}
     </FeatureBox>
