@@ -43,7 +43,7 @@ export default function useClusterNodes(teleCtx: TeleportContext) {
       login,
     });
 
-    history.push(url);
+    history.openNewTab(url);
   };
 
   return {
