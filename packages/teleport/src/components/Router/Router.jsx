@@ -41,14 +41,12 @@ const Route = props => {
   const { title = '', ...rest } = props;
   const { clusterId } = useParams();
 
-  let pageTitle = title;
-  if (clusterId) {
-    pageTitle = `${clusterId} • ${title}`;
-  }
-
   React.useEffect(() => {
-    if (!title) return;
-    document.title = pageTitle;
+    if (title && clusterId) {
+      document.title = `${clusterId} • ${title}`;
+    } else if (title) {
+      document.title = `${title}`;
+    }
   }, [title]);
 
   return <RouterDOM.Route {...rest} />;
