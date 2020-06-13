@@ -29,7 +29,6 @@ FeatureHeader.defaultProps = {
 const FeatureHeaderTitle = props => <Text typography="h2" as="h2" {...props} />;
 
 const FeatureBox = styled(Flex)`
-  overflow: auto;
   width: 100%;
   height: 100%;
   ::after {
@@ -41,6 +40,7 @@ const FeatureBox = styled(Flex)`
 FeatureBox.defaultProps = {
   px: 6,
   flexDirection: 'column',
+  minWidth: '800px',
 };
 
 const AppVerticalSplit = styled.div`

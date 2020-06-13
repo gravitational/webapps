@@ -72,6 +72,7 @@ const FeatureBox = styled(Flex)`
 FeatureBox.defaultProps = {
   theme: defaultTheme,
   px: 6,
+  minWidth: '800px',
 };
 
 /**

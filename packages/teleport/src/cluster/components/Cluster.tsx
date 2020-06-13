@@ -18,7 +18,7 @@ import React from 'react';
 import styled from 'styled-components';
 import { Redirect, Switch, Route } from 'teleport/components/Router';
 import { useAttempt } from 'shared/hooks';
-import { Indicator } from 'design';
+import { Indicator, Flex } from 'design';
 import { Failed } from 'design/CardError';
 import { useTeleport } from 'teleport/teleportContextProvider';
 import cfg from 'teleport/config';
@@ -71,14 +71,16 @@ export default function Cluster() {
       <TopBar onClickClusterInfo={handleViewClusterInfo} />
       <VerticalSplit>
         <SideNav />
-        <Switch>
-          <Redirect
-            exact
-            from={cfg.routes.cluster}
-            to={cfg.routes.clusterNodes}
-          />
-          {$features}
-        </Switch>
+        <Flex width="100%" style={{ overflowX: 'auto' }}>
+          <Switch>
+            <Redirect
+              exact
+              from={cfg.routes.cluster}
+              to={cfg.routes.clusterNodes}
+            />
+            {$features}
+          </Switch>
+        </Flex>
       </VerticalSplit>
       {viewClusterInfo && (
         <ClusterInfoDialog

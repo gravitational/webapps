@@ -38,8 +38,13 @@ const ClusterInfoDialog: React.FC<ClusterInfoDialogProps> = ({
   proxyVersion,
 }) => {
   return (
-    <Dialog disableEscapeKeyDown={false} onClose={onClose} open={true}>
-      <Box width="600px">
+    <Dialog
+      disableEscapeKeyDown={false}
+      onClose={onClose}
+      open={true}
+      dialogCss={dialogCss}
+    >
+      <Box minWidth="400px">
         <DialogHeader>
           <DialogTitle>Cluster Information</DialogTitle>
         </DialogHeader>
@@ -58,9 +63,14 @@ const ClusterInfoDialog: React.FC<ClusterInfoDialogProps> = ({
   );
 };
 
+const dialogCss = () => `
+  max-width: 600px;
+  width: calc(100% - 20%);
+`;
+
 const Attribute = ({ title = '', value = null }) => (
   <Flex mb={3}>
-    <Text typography="body2" bold mr={3}>
+    <Text typography="body2" bold style={{ width: '150px' }}>
       {title}:
     </Text>
     <Text typography="body2">{value}</Text>
