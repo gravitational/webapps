@@ -161,6 +161,7 @@ exports[`overflow 1`] = `
 
 .c0 {
   box-sizing: border-box;
+  min-width: 800px;
   padding-left: 40px;
   padding-right: 40px;
   display: flex;
@@ -270,6 +271,11 @@ exports[`overflow 1`] = `
 .c15 > tbody > tr > td {
   color: rgba(255,255,255,0.87);
   line-height: 16px;
+}
+
+.c13 {
+  box-sizing: border-box;
+  display: flex;
 }
 
 .c13 button {

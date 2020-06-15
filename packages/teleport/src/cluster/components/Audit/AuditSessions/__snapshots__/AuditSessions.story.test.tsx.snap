@@ -151,6 +151,11 @@ exports[`rendering of Audit Sessions 1`] = `
   line-height: 16px;
 }
 
+.c4 {
+  box-sizing: border-box;
+  display: flex;
+}
+
 .c4 button {
   background: none;
   border: none;
@@ -257,7 +262,7 @@ exports[`rendering of Audit Sessions 1`] = `
         </strong>
       </div>
       <div
-        class="c4"
+        class="sc-AxirZ c4"
       >
         <button
           disabled=""

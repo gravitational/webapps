@@ -3,7 +3,7 @@
 exports[`rendering of static texts 1`] = `
 .c4 {
   box-sizing: border-box;
-  width: 600px;
+  min-width: 400px;
 }
 
 .c11 {
@@ -129,7 +129,6 @@ exports[`rendering of static texts 1`] = `
   font-size: 12px;
   line-height: 16px;
   margin: 0px;
-  margin-right: 16px;
 }
 
 .c14 {
@@ -202,6 +201,8 @@ exports[`rendering of static texts 1`] = `
   position: relative;
   overflow-y: auto;
   max-height: calc(100% - 96px);
+  max-width: 600px;
+  width: calc(100% - 20%);
 }
 
 .c5 {
@@ -242,7 +243,6 @@ exports[`rendering of static texts 1`] = `
     >
       <div
         class="c4"
-        width="600px"
       >
         <div
           class="c5"
@@ -284,6 +284,7 @@ exports[`rendering of static texts 1`] = `
           >
             <div
               class="c13"
+              style="width: 150px;"
             >
               Cluster Name
               :
@@ -299,6 +300,7 @@ exports[`rendering of static texts 1`] = `
           >
             <div
               class="c13"
+              style="width: 150px;"
             >
               Auth Service Version
               :
@@ -314,6 +316,7 @@ exports[`rendering of static texts 1`] = `
           >
             <div
               class="c13"
+              style="width: 150px;"
             >
               Proxy Service Version
               :

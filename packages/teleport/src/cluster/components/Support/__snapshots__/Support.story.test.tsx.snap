@@ -66,7 +66,6 @@ exports[`support Enterprise 1`] = `
   font-size: 12px;
   line-height: 16px;
   margin: 0px;
-  margin-right: 16px;
 }
 
 .c15 {
@@ -129,6 +128,7 @@ exports[`support Enterprise 1`] = `
 
 .c0 {
   box-sizing: border-box;
+  min-width: 800px;
   padding-left: 40px;
   padding-right: 40px;
   display: flex;
@@ -371,6 +371,7 @@ exports[`support Enterprise 1`] = `
     >
       <div
         class="c14"
+        style="width: 130px;"
       >
         Cluster Name
         :
@@ -386,6 +387,7 @@ exports[`support Enterprise 1`] = `
     >
       <div
         class="c14"
+        style="width: 130px;"
       >
         Teleport Version
         :
@@ -401,6 +403,7 @@ exports[`support Enterprise 1`] = `
     >
       <div
         class="c14"
+        style="width: 130px;"
       >
         Public Address
         :
@@ -416,6 +419,7 @@ exports[`support Enterprise 1`] = `
     >
       <div
         class="c14"
+        style="width: 130px;"
       >
         Connected Nodes
         :
@@ -496,7 +500,6 @@ exports[`support OSS 1`] = `
   font-size: 12px;
   line-height: 16px;
   margin: 0px;
-  margin-right: 16px;
 }
 
 .c15 {
@@ -559,6 +562,7 @@ exports[`support OSS 1`] = `
 
 .c0 {
   box-sizing: border-box;
+  min-width: 800px;
   padding-left: 40px;
   padding-right: 40px;
   display: flex;
@@ -795,6 +799,7 @@ exports[`support OSS 1`] = `
     >
       <div
         class="c14"
+        style="width: 130px;"
       >
         Cluster Name
         :
@@ -810,6 +815,7 @@ exports[`support OSS 1`] = `
     >
       <div
         class="c14"
+        style="width: 130px;"
       >
         Teleport Version
         :
@@ -825,6 +831,7 @@ exports[`support OSS 1`] = `
     >
       <div
         class="c14"
+        style="width: 130px;"
       >
         Public Address
         :
@@ -840,6 +847,7 @@ exports[`support OSS 1`] = `
     >
       <div
         class="c14"
+        style="width: 130px;"
       >
         Connected Nodes
         :
