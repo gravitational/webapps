@@ -671,7 +671,7 @@ exports[`render DocumentNodes 1`] = `
                   <a>
                     Hostname
                     <span
-                      class="c15 c19 icon icon-chevron-up "
+                      class="c15 c19 icon icon-chevron-down "
                       color="light"
                     />
                   </a>

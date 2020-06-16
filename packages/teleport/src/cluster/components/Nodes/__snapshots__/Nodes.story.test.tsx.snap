@@ -491,7 +491,7 @@ exports[`loaded 1`] = `
               <a>
                 Hostname
                 <span
-                  class="c9 c13 icon icon-chevron-up "
+                  class="c9 c13 icon icon-chevron-down "
                   color="light"
                 />
               </a>
