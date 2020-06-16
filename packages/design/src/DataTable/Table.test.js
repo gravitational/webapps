@@ -149,7 +149,7 @@ describe('design/Table SortIndicator', () => {
     const header1 = anchorTags[0];
     const header2 = anchorTags[1];
 
-    // TableSample initially sorts with "Hostname" DESC
+    // TableSample initially sorts with "Hostname" ASC
     fireEvent.click(screen.getByText(tableSampleHeaders[0]));
     expect(
       header1.querySelector('span').classList.contains('icon-chevron-up')
@@ -157,15 +157,15 @@ describe('design/Table SortIndicator', () => {
 
     // b/c TableSample is initially sorted by "Hostname"
     // "Address" header starts with sort vertical (neither ASC or DESC)
-    // on sort vertical, DESC is default
+    // on sort vertical, ASC is default
     fireEvent.click(screen.getByText(tableSampleHeaders[1]));
     expect(
-      header2.querySelector('span').classList.contains('icon-chevron-down')
+      header2.querySelector('span').classList.contains('icon-chevron-up')
     ).toBe(true);
 
     fireEvent.click(screen.getByText(tableSampleHeaders[1]));
     expect(
-      header2.querySelector('span').classList.contains('icon-chevron-up')
+      header2.querySelector('span').classList.contains('icon-chevron-down')
     ).toBe(true);
   });
 });
@@ -176,7 +176,7 @@ describe('design/Table SortHeaderCell', () => {
 
     const tableTitle = 'some title';
     const colKey = 'col key';
-    const retVal = [colKey, SortTypes.DESC];
+    const retVal = [colKey, SortTypes.ASC];
 
     render(
       <Table data={[]}>

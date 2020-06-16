@@ -67,7 +67,7 @@ function useOnExitConfirmation(ctx: ConsoleContext) {
    * confirmCloseSession prompts user to confirm to close.
    */
   function confirmCloseSession(doc) {
-    if (!doc || !doc.sid) return;
+    if (!doc || !doc.sid) return false;
 
     const numUsers = ctx.storeParties.state[doc.sid];
     if (numUsers.length > 1) {
