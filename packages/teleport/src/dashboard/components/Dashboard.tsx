@@ -16,7 +16,7 @@ limitations under the License.
 
 import React from 'react';
 import styled from 'styled-components';
-import { Indicator, Flex } from 'design';
+import { Indicator } from 'design';
 import { Failed } from 'design/CardError';
 import { useAttempt } from 'shared/hooks';
 import { Switch, Route } from 'teleport/components/Router';
@@ -65,9 +65,7 @@ export default function Dashboard() {
   return (
     <StyledLayout>
       <TopBar />
-      <Flex width="100%" flex="1 0 auto" style={{ overflowX: 'auto' }}>
-        <Switch>{$features}</Switch>
-      </Flex>
+      <Switch>{$features}</Switch>
     </StyledLayout>
   );
 }

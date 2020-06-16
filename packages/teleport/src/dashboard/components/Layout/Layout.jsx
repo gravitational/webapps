@@ -40,7 +40,6 @@ const FeatureBox = styled(Flex)`
 FeatureBox.defaultProps = {
   px: 6,
   flexDirection: 'column',
-  minWidth: '800px',
 };
 
 const AppVerticalSplit = styled.div`

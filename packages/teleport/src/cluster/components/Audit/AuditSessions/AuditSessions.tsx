@@ -106,7 +106,7 @@ export default function SessionList(props: SessionListProps) {
         <Table.Column
           columnKey="users"
           header={<Table.Cell>User(s)</Table.Cell>}
-          cell={<Table.TextCell />}
+          cell={<Table.TextCell style={{ wordBreak: 'break-word' }} />}
         />
         <Table.Column
           columnKey="hostname"

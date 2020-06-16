@@ -44,28 +44,27 @@ const ClusterInfoDialog: React.FC<ClusterInfoDialogProps> = ({
       open={true}
       dialogCss={dialogCss}
     >
-      <Box minWidth="400px">
-        <DialogHeader>
-          <DialogTitle>Cluster Information</DialogTitle>
-        </DialogHeader>
-        <DialogContent>
-          <LabelInput>Public URL</LabelInput>
-          <PublicURL url={publicURL} />
-          <Attribute title="Cluster Name" value={clusterId} />
-          <Attribute title="Auth Service Version" value={authVersion} />
-          <Attribute title="Proxy Service Version" value={proxyVersion} />
-        </DialogContent>
-        <DialogFooter>
-          <ButtonPrimary onClick={onClose}>Done</ButtonPrimary>
-        </DialogFooter>
-      </Box>
+      <DialogHeader>
+        <DialogTitle>Cluster Information</DialogTitle>
+      </DialogHeader>
+      <DialogContent>
+        <LabelInput>Public URL</LabelInput>
+        <PublicURL url={publicURL} />
+        <Attribute title="Cluster Name" value={clusterId} />
+        <Attribute title="Auth Service Version" value={authVersion} />
+        <Attribute title="Proxy Service Version" value={proxyVersion} />
+      </DialogContent>
+      <DialogFooter>
+        <ButtonPrimary onClick={onClose}>Done</ButtonPrimary>
+      </DialogFooter>
     </Dialog>
   );
 };
 
 const dialogCss = () => `
   max-width: 600px;
-  width: calc(100% - 20%);
+  minWidth: 400px;
+  width: 100%;
 `;
 
 const Attribute = ({ title = '', value = null }) => (
