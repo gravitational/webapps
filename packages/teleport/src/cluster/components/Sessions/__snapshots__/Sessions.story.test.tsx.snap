@@ -115,7 +115,6 @@ exports[`loaded 1`] = `
 
 .c0 {
   box-sizing: border-box;
-  min-width: 800px;
   padding-left: 40px;
   padding-right: 40px;
   display: flex;

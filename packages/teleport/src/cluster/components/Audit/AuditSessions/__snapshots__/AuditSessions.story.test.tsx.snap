@@ -330,7 +330,9 @@ exports[`rendering of Audit Sessions 1`] = `
               240355-6491-11e9-80a1-427cfde50f5a
             </div>
           </td>
-          <td>
+          <td
+            style="word-break: break-word;"
+          >
             one, two
           </td>
           <td>
@@ -369,7 +371,9 @@ exports[`rendering of Audit Sessions 1`] = `
               377875-6491-11e9-80a1-427cfde50f5a
             </div>
           </td>
-          <td>
+          <td
+            style="word-break: break-word;"
+          >
             one, two
           </td>
           <td>
@@ -408,7 +412,9 @@ exports[`rendering of Audit Sessions 1`] = `
               426485-6491-11e9-80a1-427cfde50f5a
             </div>
           </td>
-          <td>
+          <td
+            style="word-break: break-word;"
+          >
             one, two
           </td>
           <td>
