@@ -169,7 +169,7 @@ class SortHeaderCell extends React.Component {
     const { sortDir, columnKey } = this.props;
 
     // default
-    let newDir = SortTypes.DESC;
+    let newDir = SortTypes.ASC;
     if (sortDir) {
       newDir = sortDir === SortTypes.DESC ? SortTypes.ASC : SortTypes.DESC;
     }
