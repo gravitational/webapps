@@ -25,7 +25,7 @@ import {
 import { useTeleport } from 'teleport/teleportContextProvider';
 import NodeList from 'teleport/components/NodeList';
 import useClusterNodes from './useClusterNodes';
-import QuickLaunch from 'teleport/console/components/DocumentNodes/QuickLaunch';
+import QuickLaunch from 'teleport/components/QuickLaunch';
 import styled from 'styled-components';
 
 export default function ClusterNodes() {
