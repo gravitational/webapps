@@ -15,7 +15,7 @@ limitations under the License.
 */
 
 import { createMemoryHistory } from 'history';
-import history, { getUrlParameter } from 'teleport/services/history';
+import history from 'teleport/services/history';
 
 history.init(new createMemoryHistory());
 
@@ -91,49 +91,4 @@ describe('services/history', () => {
       expect(history._pageRefresh).toHaveBeenCalledWith(expected);
     });
   });
-});
-
-test('getUrlParameter escapes character as expected', () => {
-  // test empty URL
-  let retVal = getUrlParameter('none');
-  expect(retVal).toBe('');
-
-  // actual response from github auth
-  let testStr =
-    'callback' +
-    '?error=redirect_uri_mismatch' +
-    '&error_description=The+redirect_uri+MUST+match+the+registered+callback+URL+for+this+application.' +
-    '&error_uri=https%3A%2F%2Fdeveloper.github.com%2Fapps%2Fmanaging-oauth-apps%2Ftroubleshooting-authorization-request-errors%2F%23redirect-uri-mismatch' +
-    '&state=01c002c10fc3d0b1becb8225f26cb07b';
-
-  // test from URL
-  window.history.replaceState({}, '', testStr);
-
-  // test no escape symbols
-  retVal = getUrlParameter('error');
-  expect(retVal).toBe('redirect_uri_mismatch');
-  retVal = getUrlParameter('state');
-  expect(retVal).toBe('01c002c10fc3d0b1becb8225f26cb07b');
-
-  // test "+" symbol gets read as white space
-  retVal = getUrlParameter('error_description');
-  expect(retVal).toBe(
-    'The redirect_uri MUST match the registered callback URL for this application.'
-  );
-
-  // test varity of escape symbols
-  retVal = getUrlParameter('error_uri');
-  expect(retVal).toBe(
-    'https://developer.github.com/apps/managing-oauth-apps/troubleshooting-authorization-request-errors/#redirect-uri-mismatch'
-  );
-
-  // test non-existing param
-  retVal = getUrlParameter('none');
-  expect(retVal).toBe('');
-  retVal = getUrlParameter('');
-  expect(retVal).toBe('');
-
-  // test with given path
-  retVal = getUrlParameter('details', '?details=hello+big+world');
-  expect(retVal).toBe('hello big world');
 });
