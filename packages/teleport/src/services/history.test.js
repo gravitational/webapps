@@ -15,7 +15,7 @@ limitations under the License.
 */
 
 import { createMemoryHistory } from 'history';
-import history from 'teleport/services/history';
+import history, { getUrlParameter } from 'teleport/services/history';
 
 history.init(new createMemoryHistory());
 
@@ -90,4 +90,15 @@ describe('services/history', () => {
       expect(history._pageRefresh).toBeCalledWith(expected);
     });
   });
+});
+
+test('getUrlParameter replaces all + symbols with empty space', () => {
+  // test from URL
+  window.history.replaceState({}, '', '/login_failed?details=hello+big+world');
+  let retVal = getUrlParameter('details');
+  expect(retVal).toBe('hello big world');
+
+  // test with given path
+  retVal = getUrlParameter('details', '?details=hello+big+world');
+  expect(retVal).toBe('hello big world');
 });
