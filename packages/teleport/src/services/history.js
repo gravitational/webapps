@@ -118,7 +118,7 @@ const match = url => route => {
 export default history;
 
 export function getUrlParameter(name, path) {
-  const params = new URLSearchParams(path || window.location.search);
+  const params = new URLSearchParams(path);
   const value = params.get(name);
   return value || '';
 }
