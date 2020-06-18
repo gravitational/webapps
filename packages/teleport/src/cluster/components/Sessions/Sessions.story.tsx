@@ -60,7 +60,7 @@ const sessions = [
     clusterId: '',
     hostname: 'localhost',
     sid: 'sid0',
-    addr: '1.1.1.1:1111',
+    addr: '1.1.1.1',
     parties: [
       {
         user: 'hehwawe@aw.sg',

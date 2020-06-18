@@ -352,9 +352,8 @@ exports[`loaded 1`] = `
             </td>
             <td>
               localhost
-               [
-              1.1.1.1:1111
-              ]
+               
+              [1.1.1.1]
             </td>
             <td>
               12 min
