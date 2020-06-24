@@ -34,7 +34,7 @@ export default function FieldInputSsh({ onPress, ...boxProps }) {
       setHasError(false);
     }
   }
-
+ 
   const labelText = hasError ? 'Invalid' : 'Quick Launch';
 
   return (
