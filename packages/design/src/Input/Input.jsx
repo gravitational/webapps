@@ -51,8 +51,9 @@ const Input = styled.input`
   }
 
   &:active, &:focus {
-    background: ${props => props.theme.colors.highlight};
-    box-shadow: inset 0 2px 4px rgba(0, 0, 0, .56);
+    border: 2px solid ${props => props.theme.colors.info}; 
+    box-shadow: inset 0 3px 4px rgba(0, 0, 0, .24);
+    padding: 0 14px;
   }
 
   ${color} ${space} ${width} ${height} ${error};
