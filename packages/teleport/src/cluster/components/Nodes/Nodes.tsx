@@ -75,11 +75,13 @@ type NodesProp = ReturnType<typeof useClusterNodes>;
 
 const StyledQuickLaunch = styled(QuickLaunch)`
   display: flex;
+  text-align: right;
   align-items: center;
   margin-left: auto;
   margin-right: 0;
 
   label {
-    margin: 0 5px 0 0;
+    margin: 0 8px 0 0;
+    opacity: .87;
   }
 `;

@@ -63,9 +63,11 @@ const check = value => {
 const StyledInput = styled(Input)(
   ({ theme }) => `
   background: ${theme.colors.primary.light};
-  border: 1px solid rgba(255, 255, 255, 0.56);
-  &:hover {
-    background: ${theme.colors.primary.lighter};
+  border: 1px solid ${theme.colors.primary.dark};
+  
+  &:hover, &:focus {
+    color: ${theme.colors.text.onLight};
+    background: ${theme.colors.light};
   }
 
   font-size: ${theme.fontSizes[2]}px;

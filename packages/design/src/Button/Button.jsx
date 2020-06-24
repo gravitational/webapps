@@ -143,6 +143,7 @@ const StyledButton = styled.button`
   text-transform: uppercase;
   transition: all 0.3s;
   -webkit-font-smoothing: antialiased;
+  
   &:active {
     opacity: 0.56;
   }

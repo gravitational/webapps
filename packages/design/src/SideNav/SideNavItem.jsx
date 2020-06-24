@@ -30,19 +30,23 @@ const fromTheme = ({ theme = defaultTheme }) => {
       background: theme.colors.primary.lighter,
       color: theme.colors.primary.contrastText,
     },
-    '&:hover': {
+    '&:hover, &:focus': {
       background: theme.colors.primary.lighter,
+      color: theme.colors.primary.contrastText,
     },
   };
 };
 
-const SideNavItem = styled(Flex)`
+const SideNavItem = styled.button`
   min-height: 56px;
   align-items: center;
   justify-content: flex-start;
+  display: flex;
+  border: none;
   border-left: 4px solid transparent;
   cursor: pointer;
   outline: none;
+  padding: 0 24px 0 64px; 
   text-decoration: none;
   width: 100%;
   ${fromTheme}
@@ -52,8 +56,6 @@ const SideNavItem = styled(Flex)`
 SideNavItem.displayName = 'SideNavItem';
 
 SideNavItem.defaultProps = {
-  pl: 10,
-  pr: 5,
   bg: 'primary.main',
   color: 'text.primary',
   theme: defaultTheme,
