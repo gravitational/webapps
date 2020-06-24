@@ -96,16 +96,50 @@ export default function TypeCell(props) {
   const { rowIndex, data } = props;
   const { codeDesc, code } = data[rowIndex];
   const IconType = EventIconMap[code] || Icons.List;
+  let eventIcon =  <Icon p="1" mr="3" as={IconType} fontSize="3" /> ; 
+
+  // use styled icon for session playback 
+  if(code === CodeEnum.SESSION_END) {
+    eventIcon = <StyledIcon p="1" mr="3" as={IconType} fontSize="3" />;
+  }
+
+  console.log(code); 
+  console.log(CodeEnum.SESSION_END); 
 
   return (
     <Cell>
       <StyledEventType>
-        <Icon p="1" mr="3" as={IconType} fontSize="3" />
-        {codeDesc}
+        {eventIcon}{codeDesc}
       </StyledEventType>
     </Cell>
   );
 }
+
+
+const StyledIcon = styled(Icon)`
+  background: ${props => props.theme.colors.dark};
+  border: 2px solid ${props => props.theme.colors.accent};
+  color: ${props => props.theme.colors.text.primary};
+  cursor: pointer;
+  display: flex; 
+  align-items: center; 
+  justify-content: center; 
+  width: 20px; 
+  height: 20px; 
+  padding: 0; 
+  border-radius: 100px; 
+  transition: all .3s; 
+
+  &:hover, &:focus {
+    box-shadow: 0 4px 16px rgba(0, 0, 0, .24); 
+    color: ${props => props.theme.colors.light};
+  }
+
+  &:active {
+    box-shadow: none; 
+    opacity: .56; 
+  }
+`;
 
 const StyledEventType = styled.div`
   display: flex;
