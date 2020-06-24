@@ -73,7 +73,8 @@ class Table extends React.Component {
         <tr>
           <td align="center" colSpan={children ? children.length : 0}>
             <Text typography="paragraph" m="4" color="text.primary">
-              NO DATA AVAILABLE
+              <Icons.Database mr="2" />
+              No Data Available
             </Text>
           </td>
         </tr>

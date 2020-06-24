@@ -22,6 +22,9 @@ import history from 'teleport/services/history';
 import { Cluster } from 'teleport/services/clusters';
 import { sortBy } from 'lodash';
 import { MenuButton, MenuItem } from 'shared/components/MenuAction';
+import { Lan, Cli } from 'design/Icon';
+import { MenuItemIcon } from 'design/Menu';
+
 import {
   SortHeaderCell,
   TextCell,
@@ -213,11 +216,13 @@ function ActionCell(props) {
   return (
     <Cell align="right">
       <MenuButton>
-        <MenuItem as="a" href={terminalURL} target="_blank">
-          New Session
-        </MenuItem>
         <MenuItem as={NavLink} to={nodeListURL}>
+          <MenuItemIcon as={Lan} />
           View Cluster
+        </MenuItem>
+        <MenuItem as="a" href={terminalURL} target="_blank">
+          <MenuItemIcon as={Cli} />
+          New Session
         </MenuItem>
       </MenuButton>
     </Cell>

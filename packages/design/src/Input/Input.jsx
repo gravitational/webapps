@@ -50,6 +50,11 @@ const Input = styled.input`
     opacity: 0.4;
   }
 
+  &:active, &:focus {
+    background: ${props => props.theme.colors.highlight};
+    box-shadow: inset 0 2px 4px rgba(0, 0, 0, .56);
+  }
+
   ${color} ${space} ${width} ${height} ${error};
 `;
 

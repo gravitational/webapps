@@ -16,7 +16,8 @@
 
 import React from 'react';
 import { Flex } from 'design';
-import { MenuIcon, MenuButton, MenuItem } from '.';
+import { Edit, Trash } from 'design/Icon';
+import { MenuIcon, MenuButton, MenuItem, MenuItemIcon } from '.';
 
 export default {
   title: 'Shared/MenuAction',
@@ -31,12 +32,12 @@ export const Menu = () => (
     alignItems="center"
   >
     <MenuIcon>
-      <MenuItem>Edit...</MenuItem>
-      <MenuItem>Delete...</MenuItem>
+      <MenuItem><MenuItemIcon as={Edit} />Edit...</MenuItem>
+      <MenuItem><MenuItemIcon as={Trash} />Delete...</MenuItem>
     </MenuIcon>
     <MenuButton>
-      <MenuItem>Edit...</MenuItem>
-      <MenuItem>Delete...</MenuItem>
+      <MenuItem><MenuItemIcon as={Edit} />Edit...</MenuItem>
+      <MenuItem><MenuItemIcon as={Trash} />Delete...</MenuItem>
     </MenuButton>
   </Flex>
 );

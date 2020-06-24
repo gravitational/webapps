@@ -54,7 +54,8 @@ const Label = styled.div`
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  min-height: 16px;
+  height: 16px;
+  line-height: 16px; 
   font-size: 10px;
   font-weight: 500;
   padding: 0 8px;
