@@ -138,21 +138,12 @@ const StyledSelect = styled(Box)(
     padding: 0 8px;
   }
 
-  .react-select__control--is-focused {
-    background-color: white;
-    border-color: transparent;
-    border-radius: 4px;
-    border-style: solid;
-    border-width: 1px;
-    box-shadow: none;
-    border-color: ${theme.colors.text.primary};
-    
-    .react-select__dropdown-indicator{
-      color: ${theme.colors.text.secondary};
-    }
+  .react-select__option--is-selected {
+    background-color: inherit;
+    color: inherit;
   }
 
-  .react-select__option--is-selected {
+  .react-select__option--is-focused {
     background-color: #cfd8dc;
     color: inherit;
   }
@@ -187,14 +178,13 @@ const StyledSelect = styled(Box)(
     border-color: rgba(255, 255, 255, 0.24);
     background-color: ${theme.colors.primary.light};
     color: ${theme.colors.text.secondary};
-    
+
     &:focus, &:active {
-      border-color: ${theme.colors.text.primary};
       background-color: ${theme.colors.primary.lighter};
     }
 
     &:hover {
-      border-color: ${theme.colors.text.primary};
+      border-color: rgba(255, 255, 255, 0.24);
       background-color: ${theme.colors.primary.lighter};
       .react-select__dropdown-indicator{
         color: ${theme.colors.text.primary};
@@ -202,9 +192,18 @@ const StyledSelect = styled(Box)(
     }
   }
 
-  .react-select__option--is-selected {
-    background-color: #cfd8dc;
-    color: inherit;
+  .react-select__control--is-focused {
+    background-color: ${theme.colors.primary.lighter};
+    border-color: transparent;
+    border-radius: 4px;
+    border-style: solid;
+    border-width: 1px;
+    box-shadow: none;
+    border-color: rgba(255, 255, 255, 0.24);
+
+    .react-select__dropdown-indicator{
+      color: ${theme.colors.text.secondary};
+    }
   }
 
   .react-select__menu {

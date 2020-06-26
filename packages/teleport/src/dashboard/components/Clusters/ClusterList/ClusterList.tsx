@@ -200,7 +200,7 @@ function RootLabelCell(props) {
   const { rowIndex, data } = props;
   const { clusterId } = data[rowIndex];
   const isRoot = cfg.proxyCluster === clusterId;
-  return <Cell>{isRoot && <Labels.Primary>Root</Labels.Primary>}</Cell>;
+  return <Cell>{isRoot && <Labels.Primary>ROOT</Labels.Primary>}</Cell>;
 }
 
 function ActionCell(props) {
@@ -217,12 +217,12 @@ function ActionCell(props) {
     <Cell align="right">
       <MenuButton>
         <MenuItem as={NavLink} to={nodeListURL}>
-          <MenuItemIcon as={Lan} />
+          <MenuItemIcon fontSize="2" as={Lan} />
           View Cluster
         </MenuItem>
         <MenuItem as="a" href={terminalURL} target="_blank">
-          <MenuItemIcon as={Cli} />
-          New Session
+          <MenuItemIcon fontSize="2" as={Cli} />
+          Open Terminal
         </MenuItem>
       </MenuButton>
     </Cell>

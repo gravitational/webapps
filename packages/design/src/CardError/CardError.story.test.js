@@ -15,28 +15,10 @@
  */
 
 import React from 'react';
-import { Flex } from 'design';
-import { MenuIcon, MenuButton, MenuItem } from '.';
+import { Cards } from './CardError.story';
+import { render } from 'design/utils/testing';
 
-export default {
-  title: 'Shared/MenuAction',
-};
-
-export const Menu = () => (
-  <Flex
-    mx="auto"
-    width="200px"
-    height="100px"
-    justifyContent="space-around"
-    alignItems="center"
-  >
-    <MenuIcon>
-      <MenuItem>Edit...</MenuItem>
-      <MenuItem>Delete...</MenuItem>
-    </MenuIcon>
-    <MenuButton>
-      <MenuItem>Edit...</MenuItem>
-      <MenuItem>Delete...</MenuItem>
-    </MenuButton>
-  </Flex>
-);
+test('rendering of Error Cards', () => {
+  const { container } = render(<Cards />);
+  expect(container.firstChild).toMatchSnapshot();
+});

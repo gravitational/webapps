@@ -62,8 +62,8 @@ const LabelState = styled.span`
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  height: 16px;
-  line-height: 16px; 
+  min-height: 16px;
+  line-height: 1.4;
   padding: 0 8px;
   font-size: 10px;
   font-weight: 500;

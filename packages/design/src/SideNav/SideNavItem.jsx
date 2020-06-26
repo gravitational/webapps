@@ -37,16 +37,13 @@ const fromTheme = ({ theme = defaultTheme }) => {
   };
 };
 
-const SideNavItem = styled.button`
+const SideNavItem = styled(Flex)`
   min-height: 56px;
   align-items: center;
   justify-content: flex-start;
-  display: flex;
-  border: none;
   border-left: 4px solid transparent;
   cursor: pointer;
   outline: none;
-  padding: 0 24px 0 64px; 
   text-decoration: none;
   width: 100%;
   ${fromTheme}
@@ -56,6 +53,8 @@ const SideNavItem = styled.button`
 SideNavItem.displayName = 'SideNavItem';
 
 SideNavItem.defaultProps = {
+  pl: 9,
+  pr: 5,
   bg: 'primary.main',
   color: 'text.primary',
   theme: defaultTheme,
