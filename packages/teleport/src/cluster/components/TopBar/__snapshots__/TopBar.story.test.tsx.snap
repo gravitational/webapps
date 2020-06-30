@@ -137,7 +137,6 @@ exports[`rendering of ClusterTopBar 1`] = `
   padding: 0 16px;
   position: relative;
   text-decoration: none;
-  text-transform: uppercase;
   width: 208px;
 }
 
@@ -176,7 +175,6 @@ exports[`rendering of ClusterTopBar 1`] = `
   padding: 0 16px;
   position: relative;
   text-decoration: none;
-  text-transform: uppercase;
   margin-left: auto;
   max-width: 250px;
 }
