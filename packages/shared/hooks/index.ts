@@ -16,13 +16,14 @@ limitations under the License.
 
 import { useState, useRef, useEffect } from 'react';
 import withState from './withState';
-import useAttempt from './useAttempt';
+import useAttempt, { AttemptState } from './useAttempt';
 import useFavicon from './useFavicon';
 import useDocTitle from './useDocTitle';
 
 export {
   useRef,
   useAttempt,
+  AttemptState,
   useState,
   withState,
   useEffect,

@@ -79,7 +79,7 @@ function makeActions(setState) {
   };
 }
 
-type AttemptState = typeof defaultState;
+export type AttemptState = typeof defaultState;
 type AttemptActions = {
   do: (fn: Callback) => Promise<any>;
   stop: (message?: string) => void;
