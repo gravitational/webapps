@@ -15,25 +15,30 @@ limitations under the License.
 */
 
 import React from 'react';
+import Select, { SelectProps } from './../Select';
 import { Box, LabelInput } from 'design';
-import { useRule } from './../Validation';
-import Select from './../Select';
+import { useRule } from 'shared/components/Validation';
+import {
+  RuleCurry,
+  CurryUnary,
+  defaultRule,
+} from 'shared/components/Validation/rules';
 
 export default function FieldSelect({
-  rule,
   label,
   value,
   options,
   onChange,
-  maxMenuHeight,
   placeholder,
+  maxMenuHeight,
+  clearable,
+  isMulti,
+  rule = defaultRule,
   isSearchable = false,
-  isMulti = false,
-  isSimpleValue,
-  clearable = false,
+  isSimpleValue = false,
   ...styles
-}) {
-  const { valid, message } = useRule(rule(value));
+}: Props) {
+  const { valid, message } = useRule(rule(value) as CurryUnary);
   const hasError = Boolean(!valid);
   const labelText = hasError ? message : label;
   return (
@@ -54,3 +59,9 @@ export default function FieldSelect({
     </Box>
   );
 }
+
+type Props = SelectProps & {
+  autoFocus?: boolean;
+  label?: string;
+  rule?: RuleCurry;
+};
