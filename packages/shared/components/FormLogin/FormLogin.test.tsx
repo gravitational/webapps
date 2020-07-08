@@ -18,7 +18,6 @@ import React from 'react';
 import FormLogin from './FormLogin';
 import { render, fireEvent } from 'design/utils/testing';
 import { Auth2faTypeEnum } from '../../services/enums';
-import { TypeEnum as Type } from '../ButtonSso/';
 
 test('login with auth2faType: disabled', () => {
   const onLogin = jest.fn();
@@ -30,7 +29,12 @@ test('login with auth2faType: disabled', () => {
       title="titleText"
       auth2faType={Auth2faTypeEnum.DISABLED}
       authProviders={[]}
-      attempt={{ isFailed: false, isProcessing: false, message: '' }}
+      attempt={{
+        isFailed: false,
+        isProcessing: false,
+        message: '',
+        isSuccess: undefined,
+      }}
       onLogin={onLogin}
       onLoginWithSso={onLoginWithSso}
       onLoginWithU2f={onLoginWithU2f}
@@ -60,7 +64,12 @@ test('login with auth2faType: OTP', () => {
     <FormLogin
       auth2faType={Auth2faTypeEnum.OTP}
       authProviders={[]}
-      attempt={{ isFailed: false, isProcessing: false, message: '' }}
+      attempt={{
+        isFailed: false,
+        isProcessing: false,
+        message: '',
+        isSuccess: undefined,
+      }}
       onLogin={onLogin}
       onLoginWithSso={onLoginWithSso}
       onLoginWithU2f={onLoginWithU2f}
@@ -94,7 +103,12 @@ test('login with auth2faType: U2F', () => {
       title="titleText"
       auth2faType={Auth2faTypeEnum.UTF}
       authProviders={[]}
-      attempt={{ isFailed: false, isProcessing: true, message: '' }}
+      attempt={{
+        isFailed: false,
+        isProcessing: true,
+        message: '',
+        isSuccess: undefined,
+      }}
       onLogin={onLogin}
       onLoginWithSso={onLoginWithSso}
       onLoginWithU2f={onLoginWithU2f}
@@ -118,10 +132,16 @@ test('input validation error handling', () => {
     <FormLogin
       title="titleText"
       auth2faType={Auth2faTypeEnum.OTP}
-      attempt={{ isFailed: false, isProcessing: false, message: '' }}
+      attempt={{
+        isFailed: false,
+        isProcessing: false,
+        message: '',
+        isSuccess: undefined,
+      }}
       onLogin={onLogin}
       onLoginWithSso={onLoginWithSso}
       onLoginWithU2f={onLoginWithU2f}
+      authProviders={[]}
     />
   );
 
@@ -141,7 +161,12 @@ test('error handling', () => {
     <FormLogin
       auth2faType={Auth2faTypeEnum.DISABLED}
       authProviders={[]}
-      attempt={{ isFailed: true, isProcessing: false, message: 'errMsg' }}
+      attempt={{
+        isFailed: true,
+        isProcessing: false,
+        message: 'errMsg',
+        isSuccess: undefined,
+      }}
       onLogin={jest.fn()}
       onLoginWithSso={jest.fn()}
       onLoginWithU2f={jest.fn()}
@@ -158,11 +183,17 @@ test('login with SSO providers', () => {
 
   const { getByText } = render(
     <FormLogin
+      auth2faType={Auth2faTypeEnum.DISABLED}
       authProviders={[
-        { name: 'github', type: '', url: '' },
-        { name: 'google', type: '', url: '' },
+        { name: 'github', type: 'github', url: '' },
+        { name: 'google', type: 'saml', url: '' },
       ]}
-      attempt={{ isFailed: false, isProcessing: false, message: '' }}
+      attempt={{
+        isFailed: false,
+        isProcessing: false,
+        message: '',
+        isSuccess: undefined,
+      }}
       onLogin={onLogin}
       onLoginWithSso={onLoginWithSso}
       onLoginWithU2f={onLoginWithU2f}

@@ -16,10 +16,11 @@ limitations under the License.
 
 import React from 'react';
 import { Box } from 'design';
-import { guessProviderType } from './../ButtonSso/utils';
-import ButtonSso from './../ButtonSso';
+import ButtonSso from '../ButtonSso';
+import { guessProviderType } from 'shared/components/ButtonSso/utils';
+import { SSOLogin, SSOList } from './types';
 
-const SsoBtnList = ({ providers, prefixText, isDisabled, onClick }) => {
+const SSOBtnList = ({ providers, prefixText, isDisabled, onClick }: Props) => {
   const $btns = providers.map((item, index) => {
     let { name, type, displayName } = item;
     const title = displayName || `${prefixText} ${name}`;
@@ -50,4 +51,11 @@ const SsoBtnList = ({ providers, prefixText, isDisabled, onClick }) => {
   );
 };
 
-export default SsoBtnList;
+type Props = {
+  prefixText: string;
+  isDisabled: boolean;
+  onClick: SSOLogin;
+  providers: SSOList;
+};
+
+export default SSOBtnList;

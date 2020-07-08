@@ -21,6 +21,9 @@ import { AuthProviderTypeEnum } from './../../services/enums';
 const defaultProps = {
   attempt: {
     isFailed: false,
+    isSuccess: undefined,
+    isProcessing: undefined,
+    message: undefined,
   },
   cb() {},
 };
@@ -53,7 +56,6 @@ export const ServerError = () => {
     <FormLogin
       title="Welcome!"
       authProviders={[]}
-      auth2faType="off"
       onLoginWithSso={defaultProps.cb}
       onLoginWithU2f={defaultProps.cb}
       onLogin={defaultProps.cb}
@@ -99,7 +101,6 @@ export const SSOProviders = () => {
     <FormLogin
       title="Welcome!"
       authProviders={ssoProvider}
-      auth2faType="off"
       onLoginWithSso={defaultProps.cb}
       onLoginWithU2f={defaultProps.cb}
       onLogin={defaultProps.cb}
