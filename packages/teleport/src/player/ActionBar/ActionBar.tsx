@@ -18,6 +18,7 @@ import React from 'react';
 import { NavLink } from 'react-router-dom';
 import { Flex, ButtonPrimary } from 'design';
 import { MenuIcon, MenuItem, MenuItemIcon } from 'shared/components/MenuAction';
+import { MenuProps } from 'shared/components/MenuAction/types';
 import * as Icons from 'design/Icon';
 import cfg from 'teleport/config';
 
@@ -54,7 +55,7 @@ const menuListCss = () => `
   width: 250px;
 `;
 
-const menuProps = {
+const menuProps: MenuProps = {
   menuListCss: menuListCss,
   anchorOrigin: {
     vertical: 'center',

@@ -19,6 +19,7 @@ import { NavLink } from 'react-router-dom';
 import { MenuIcon, MenuItem, MenuItemIcon } from 'shared/components/MenuAction';
 import * as Icons from 'design/Icon';
 import { Flex, ButtonPrimary } from 'design';
+import { MenuProps } from 'shared/components/MenuAction/types';
 import cfg from 'teleport/config';
 
 export default function ActionBar(props: Props) {
@@ -50,7 +51,7 @@ const menuListCss = () => `
   width: 250px;
 `;
 
-const menuProps = {
+const menuProps: MenuProps = {
   menuListCss: menuListCss,
   anchorOrigin: {
     vertical: 'center',
