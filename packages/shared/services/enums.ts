@@ -15,29 +15,34 @@ limitations under the License.
 */
 
 export const AuthProviderTypeEnum = {
-  OIDC: 'oidc',
-  SAML: 'saml',
-  GITHUB: 'github',
+  OIDC: 'oidc' as 'oidc',
+  SAML: 'saml' as 'saml',
+  GITHUB: 'github' as 'github',
 };
 
 export const RestRespCodeEnum = {
-  FORBIDDEN: 403,
+  FORBIDDEN: 403 as 403,
 };
 
 export const Auth2faTypeEnum = {
-  UTF: 'u2f',
-  OTP: 'otp',
-  DISABLED: 'off',
+  UTF: 'u2f' as 'u2f',
+  OTP: 'otp' as 'otp',
+  DISABLED: 'off' as 'off',
 };
 
 export const AuthTypeEnum = {
-  LOCAL: 'local',
-  SSO: 'sso',
+  LOCAL: 'local' as 'local',
+  SSO: 'sso' as 'sso',
 };
 
-export function isU2f(auth2faType) {
+export function isU2f(auth2faType: Auth2faTypeEnum) {
   return auth2faType === Auth2faTypeEnum.UTF;
 }
-export function isOtp(auth2fType) {
+export function isOtp(auth2fType: Auth2faTypeEnum) {
   return auth2fType === Auth2faTypeEnum.OTP;
 }
+
+export type AuthProviderTypeEnum = typeof AuthProviderTypeEnum[keyof typeof AuthProviderTypeEnum];
+export type RestRespCodeEnum = typeof RestRespCodeEnum[keyof typeof RestRespCodeEnum];
+export type Auth2faTypeEnum = typeof Auth2faTypeEnum[keyof typeof Auth2faTypeEnum];
+export type AuthTypeEnum = typeof AuthTypeEnum[keyof typeof AuthTypeEnum];
