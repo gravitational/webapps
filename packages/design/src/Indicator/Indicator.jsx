@@ -16,6 +16,7 @@ limitations under the License.
 
 import React from 'react';
 import styled from 'styled-components';
+import { alignItems } from 'design/system';
 import { Spinner as SpinnerIcon } from './../Icon';
 import PropTypes from 'prop-types';
 
@@ -73,10 +74,12 @@ const StyledSpinner = styled(SpinnerIcon)`
   `}
 
   animation: anim-rotate 1s infinite linear;
-  color: #FFF;
+  color: #fff;
   display: inline-block;
   margin: 16px;
   opacity: 0.24;
+
+  ${alignItems}
 
   @keyframes anim-rotate {
     0% {
