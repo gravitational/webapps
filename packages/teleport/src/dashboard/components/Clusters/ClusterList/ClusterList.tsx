@@ -173,9 +173,9 @@ export function NodeCountCell(props) {
   return (
     <Cell>
       {nodeCount && (
-        <StyledLink target="_blank" as="a" href={terminalURL}>
-          {nodeCount}
-        </StyledLink>
+        <StyledConsoleLink title="Launch New Session" target="_blank" as="a" href={terminalURL}>
+          <Cli /> {nodeCount}
+        </StyledConsoleLink>
       )}
     </Cell>
   );
@@ -184,7 +184,7 @@ export function NodeCountCell(props) {
 export function NameCell(props) {
   const { rowIndex, data } = props;
   const { clusterId, url } = data[rowIndex];
-  return <Cell>{url && <StyledLink to={url}>{clusterId}</StyledLink>}</Cell>;
+  return <Cell>{url && <StyledLink title="Manage Cluster" to={url}>{clusterId}</StyledLink>}</Cell>;
 }
 
 function RootLabelCell(props) {
@@ -256,6 +256,36 @@ const StyledLink = styled(Text)(
   }
 `
 );
+
+const StyledConsoleLink = styled(Text)(
+  props => `
+  border: 1px solid ${props.theme.colors.dark}; 
+  display: inline-flex; 
+  align-items: center;
+  border-radius: 2px; 
+  padding: 0 8px 0 2px; 
+  height: 16px; 
+  font-size: 10px;
+  text-decoration: none;
+  background: ${props.theme.colors.bgTerminal}; 
+  color: ${props.theme.colors.light};
+  font-weight: ${props.theme.fontWeights.regular};
+  transition: all .3s;
+
+  &:hover {
+    box-shadow: 0 4px 16px rgba(0, 0, 0, .24);
+    border: 1px solid ${props.theme.colors.accent}; 
+  }
+  span {
+    margin-right: 4px;
+    opacity: .32;
+  }
+`
+);
+
+StyledConsoleLink.defaultProps = {
+  as: NavLink,
+};
 
 StyledLink.defaultProps = {
   color: 'text.primary',
