@@ -15,23 +15,22 @@ limitations under the License.
 */
 
 import React from 'react';
-import PropTypes from 'prop-types';
 import { Card, ButtonPrimary } from 'design';
 import * as Alerts from 'design/Alert';
-import useAttempt from './../../hooks/useAttempt';
-import FieldInput from './../FieldInput';
-import Validation from '../Validation';
+import useAttempt, { AttemptState } from 'shared/hooks/useAttempt';
+import FieldInput from '../FieldInput';
+import Validation, { Validator } from '../Validation';
 import {
   requiredToken,
   requiredPassword,
   requiredField,
   requiredConfirmedPassword,
-} from './../Validation/rules';
-import { isOtp, isU2f } from './../../services/enums';
+} from '../Validation/rules';
+import { isOtp, isU2f, Auth2faTypeEnum } from 'shared/services/enums';
 
-function FormPassword(props) {
-  const { onChangePassWithU2f, onChangePass, auth2faType } = props;
-  const [attempt, attemptActions] = useAttempt();
+function FormPassword(props: Props) {
+  const { onChangePassWithU2f, onChangePass, auth2faType = 'off' } = props;
+  const [attempt, attemptActions] = useAttempt({});
   const [token, setToken] = React.useState('');
   const [oldPass, setOldPass] = React.useState('');
   const [newPass, setNewPass] = React.useState('');
@@ -56,7 +55,10 @@ function FormPassword(props) {
     setToken('');
   }
 
-  function onSubmit(e, validator) {
+  function onSubmit(
+    e: React.MouseEvent<HTMLButtonElement>,
+    validator: Validator
+  ) {
     e.preventDefault();
     if (!validator.validate()) {
       return;
@@ -79,7 +81,7 @@ function FormPassword(props) {
     <Validation>
       {({ validator }) => (
         <Card as="form" bg="primary.light" width="456px" p="6">
-          <Status u2f={u2fEnabled} attempt={attempt} />
+          <Status isU2F={u2fEnabled} attempt={attempt} />
           <FieldInput
             rule={requiredField('Current Password is required')}
             label="Current Password"
@@ -130,20 +132,7 @@ function FormPassword(props) {
   );
 }
 
-FormPassword.propTypes = {
-  onChangePass: PropTypes.func.isRequired,
-  onChangePassWithU2f: PropTypes.func.isRequired,
-
-  /**
-   * auth2faType defines login type.
-   * eg: u2f, otp, off (disabled).
-   *
-   * enums are defined in shared/services/enums.js
-   */
-  auth2faType: PropTypes.string,
-};
-
-function Status({ attempt, u2f }) {
+function Status({ attempt, isU2F }: { attempt: AttemptState; isU2F: boolean }) {
   const { isProcessing, isFailed, message, isSuccess } = attempt;
 
   if (isFailed) {
@@ -154,7 +143,7 @@ function Status({ attempt, u2f }) {
     return <Alerts.Success>Your password has been changed!</Alerts.Success>;
   }
 
-  const waitForU2fKeyResponse = isProcessing && u2f;
+  const waitForU2fKeyResponse = isProcessing && isU2F;
   if (waitForU2fKeyResponse) {
     return (
       <Alerts.Info>
@@ -165,5 +154,20 @@ function Status({ attempt, u2f }) {
 
   return null;
 }
+
+// TS: convert Promise<any> to specific shape
+// when teleport/services/auth.js and api.js is converted
+type ChangePassword = (
+  oldPass: string,
+  newPass: string,
+  token: string
+) => Promise<any>;
+type ChangePasswordU2F = (oldPass: string, newPass: string) => Promise<any>;
+
+type Props = {
+  auth2faType?: Auth2faTypeEnum;
+  onChangePass: ChangePassword;
+  onChangePassWithU2f: ChangePasswordU2F;
+};
 
 export default FormPassword;

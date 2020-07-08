@@ -26,7 +26,6 @@ storiesOf('Shared/FormPassword', module)
   .add('FormPassword', () => {
     return (
       <FormPassword
-        auth2faType
         onChangePass={onChangePass}
         onChangePassWithU2f={onChangePassWithU2f}
       />
