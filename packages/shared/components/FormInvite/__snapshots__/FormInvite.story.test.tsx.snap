@@ -291,6 +291,7 @@ exports[`shared/components/Invite.story story.Otp 1`] = `
             class="c7"
             color="text.onLight"
             placeholder="123 456"
+            type="text"
             value=""
           />
         </div>
@@ -653,6 +654,7 @@ exports[`shared/components/Invite.story story.OtpError 1`] = `
             class="c8"
             color="text.onLight"
             placeholder="123 456"
+            type="text"
             value=""
           />
         </div>

@@ -16,6 +16,8 @@ limitations under the License.
 
 import React from 'react';
 import FormInvite from './FormInvite';
+import { Auth2faTypeEnum } from 'shared/services/enums';
+import { AttemptState } from 'shared/hooks';
 
 export default {
   title: 'Shared/FormInvite',
@@ -25,7 +27,7 @@ export default {
 export function Off() {
   const props = {
     ...defaultProps,
-    auth2faType: 'off',
+    auth2faType: 'off' as Auth2faTypeEnum,
   };
 
   return <FormInvite {...props} />;
@@ -41,6 +43,8 @@ export function OtpError() {
     attempt: {
       isFailed: true,
       message: 'Server error with a long teeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeext',
+      isProcessing: undefined,
+      isSuccess: undefined,
     },
   };
 
@@ -52,8 +56,11 @@ export function U2f() {
     ...defaultProps,
     attempt: {
       isProcessing: true,
+      isFailed: undefined,
+      message: undefined,
+      isSuccess: undefined,
     },
-    auth2faType: 'u2f',
+    auth2faType: 'u2f' as Auth2faTypeEnum,
   };
 
   return <FormInvite {...props} />;
@@ -69,8 +76,10 @@ export function U2fError() {
     attempt: {
       isFailed: true,
       message: 'Message whic has [U2F] word',
+      isProcessing: undefined,
+      isSuccess: undefined,
     },
-    auth2faType: 'u2f',
+    auth2faType: 'u2f' as Auth2faTypeEnum,
   };
 
   return <FormInvite {...props} />;
@@ -127,10 +136,10 @@ const userToken = {
 };
 
 const defaultProps = {
-  auth2faType: 'otp',
+  auth2faType: 'otp' as Auth2faTypeEnum,
   authType: '',
   onSubmitWithU2f() {},
   onSubmit() {},
-  attempt: {},
+  attempt: {} as AttemptState,
   ...userToken,
 };
