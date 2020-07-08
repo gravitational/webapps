@@ -19,14 +19,14 @@ import { Text, Card, ButtonPrimary, Flex, Box } from 'design';
 import * as Alerts from 'design/Alert';
 import FieldInput from '../FieldInput';
 import Validation, { Validator } from '../Validation';
-import { isOtp, isU2f, Auth2faTypeEnum } from 'shared/services/enums';
+import { Auth2faType } from 'shared/services';
 import TwoFAData from './TwoFaInfo';
 import {
   requiredToken,
   requiredPassword,
   requiredConfirmedPassword,
 } from '../Validation/rules';
-import { AttemptState } from 'shared/hooks';
+import { useAttempt } from 'shared/hooks';
 
 const U2F_ERROR_CODES_URL =
   'https://developers.yubico.com/U2F/Libraries/Client_error_codes.html';
@@ -46,8 +46,8 @@ export default function FormInvite(props: Props) {
   const [passwordConfirmed, setPasswordConfirmed] = React.useState('');
   const [token, setToken] = React.useState('');
 
-  const otpEnabled = isOtp(auth2faType);
-  const u2fEnabled = isU2f(auth2faType);
+  const otpEnabled = auth2faType === 'otp';
+  const u2fEnabled = auth2faType === 'u2f';
   const secondFactorEnabled = otpEnabled || u2fEnabled;
   const { isProcessing, isFailed, message } = attempt;
   const boxWidth = (secondFactorEnabled ? 720 : 464) + 'px';
@@ -156,10 +156,10 @@ type Props = {
   submitBtnText?: string;
   user: string;
   qr: string;
-  auth2faType: Auth2faTypeEnum;
-  attempt: AttemptState;
-  onSubmitWithU2f: (password: string) => void;
-  onSubmit: (password: string, optToken: string) => void;
+  auth2faType: Auth2faType;
+  attempt: ReturnType<typeof useAttempt>[0];
+  onSubmitWithU2f(password: string): void;
+  onSubmit(password: string, optToken: string): void;
 };
 
 function ErrorMessage({ message = '' }) {

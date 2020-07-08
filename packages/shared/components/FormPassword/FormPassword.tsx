@@ -17,7 +17,7 @@ limitations under the License.
 import React from 'react';
 import { Card, ButtonPrimary } from 'design';
 import * as Alerts from 'design/Alert';
-import useAttempt, { AttemptState } from 'shared/hooks/useAttempt';
+import useAttempt from 'shared/hooks/useAttempt';
 import FieldInput from '../FieldInput';
 import Validation, { Validator } from '../Validation';
 import {
@@ -26,7 +26,7 @@ import {
   requiredField,
   requiredConfirmedPassword,
 } from '../Validation/rules';
-import { isOtp, isU2f, Auth2faTypeEnum } from 'shared/services/enums';
+import { Auth2faType } from 'shared/services';
 
 function FormPassword(props: Props) {
   const { onChangePassWithU2f, onChangePass, auth2faType = 'off' } = props;
@@ -36,8 +36,8 @@ function FormPassword(props: Props) {
   const [newPass, setNewPass] = React.useState('');
   const [newPassConfirmed, setNewPassConfirmed] = React.useState('');
 
-  const otpEnabled = isOtp(auth2faType);
-  const u2fEnabled = isU2f(auth2faType);
+  const otpEnabled = auth2faType === 'otp';
+  const u2fEnabled = auth2faType === 'u2f';
   const { isProcessing } = attempt;
 
   function submit() {
@@ -132,18 +132,16 @@ function FormPassword(props: Props) {
   );
 }
 
-function Status({ attempt, isU2F }: { attempt: AttemptState; isU2F: boolean }) {
-  const { isProcessing, isFailed, message, isSuccess } = attempt;
-
-  if (isFailed) {
-    return <Alerts.Danger>{message}</Alerts.Danger>;
+function Status({ attempt, isU2F }: StatusProps) {
+  if (attempt.isFailed) {
+    return <Alerts.Danger>{attempt.message}</Alerts.Danger>;
   }
 
-  if (isSuccess) {
+  if (attempt.isSuccess) {
     return <Alerts.Success>Your password has been changed!</Alerts.Success>;
   }
 
-  const waitForU2fKeyResponse = isProcessing && isU2F;
+  const waitForU2fKeyResponse = attempt.isProcessing && isU2F;
   if (waitForU2fKeyResponse) {
     return (
       <Alerts.Info>
@@ -155,19 +153,15 @@ function Status({ attempt, isU2F }: { attempt: AttemptState; isU2F: boolean }) {
   return null;
 }
 
-// TS: convert Promise<any> to specific shape
-// when teleport/services/auth.js and api.js is converted
-type ChangePassword = (
-  oldPass: string,
-  newPass: string,
-  token: string
-) => Promise<any>;
-type ChangePasswordU2F = (oldPass: string, newPass: string) => Promise<any>;
+type StatusProps = {
+  attempt: ReturnType<typeof useAttempt>[0];
+  isU2F: boolean;
+};
 
 type Props = {
-  auth2faType?: Auth2faTypeEnum;
-  onChangePass: ChangePassword;
-  onChangePassWithU2f: ChangePasswordU2F;
+  auth2faType?: Auth2faType;
+  onChangePass(oldPass: string, newPass: string, token: string): Promise<any>;
+  onChangePassWithU2f(oldPass: string, newPass: string): Promise<any>;
 };
 
 export default FormPassword;

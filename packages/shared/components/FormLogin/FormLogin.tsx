@@ -18,13 +18,12 @@ import React from 'react';
 import styled from 'styled-components';
 import { Card, Text, Flex, ButtonLink, ButtonPrimary } from 'design';
 import * as Alerts from 'design/Alert';
-import { isU2f, isOtp, Auth2faTypeEnum } from 'shared/services/enums';
+import { AuthProvider, Auth2faType } from 'shared/services';
 import SSOButtonList from './SsoButtons';
-import { SSOLogin, SSOList } from './types';
 import Validation, { Validator } from '../Validation';
 import FieldInput from '../FieldInput';
 import { requiredToken, requiredField } from '../Validation/rules';
-import { AttemptState } from 'shared/hooks';
+import { useAttempt } from 'shared/hooks';
 
 export default function LoginForm(props: Props) {
   const {
@@ -37,8 +36,9 @@ export default function LoginForm(props: Props) {
     auth2faType = 'off',
     isLocalAuthEnabled = true,
   } = props;
-  const u2fEnabled = isU2f(auth2faType);
-  const otpEnabled = isOtp(auth2faType);
+
+  const u2fEnabled = auth2faType === 'u2f';
+  const otpEnabled = auth2faType === 'otp';
   const ssoEnabled = authProviders && authProviders.length > 0;
 
   const [pass, setPass] = React.useState('');
@@ -214,10 +214,10 @@ const StyledOr = styled.div`
 type Props = {
   title?: string;
   isLocalAuthEnabled?: boolean;
-  authProviders?: SSOList;
-  auth2faType?: Auth2faTypeEnum;
-  attempt: AttemptState;
-  onLoginWithSso: SSOLogin;
-  onLoginWithU2f: (username: string, password: string) => void;
-  onLogin: (username: string, password: string, token: string) => void;
+  authProviders?: AuthProvider[];
+  auth2faType?: Auth2faType;
+  attempt: ReturnType<typeof useAttempt>[0];
+  onLoginWithSso(provider: AuthProvider): void;
+  onLoginWithU2f(username: string, password: string): void;
+  onLogin(username: string, password: string, token: string): void;
 };

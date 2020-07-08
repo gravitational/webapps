@@ -16,9 +16,8 @@ limitations under the License.
 
 import React from 'react';
 import { Box } from 'design';
-import ButtonSso from '../ButtonSso';
-import { guessProviderType } from 'shared/components/ButtonSso/utils';
-import { SSOLogin, SSOList } from './types';
+import ButtonSso, { guessProviderType } from 'shared/components/ButtonSso';
+import { AuthProvider } from 'shared/services';
 
 const SSOBtnList = ({ providers, prefixText, isDisabled, onClick }: Props) => {
   const $btns = providers.map((item, index) => {
@@ -54,8 +53,8 @@ const SSOBtnList = ({ providers, prefixText, isDisabled, onClick }: Props) => {
 type Props = {
   prefixText: string;
   isDisabled: boolean;
-  onClick: SSOLogin;
-  providers: SSOList;
+  onClick(provider: AuthProvider): void;
+  providers: AuthProvider[];
 };
 
 export default SSOBtnList;
