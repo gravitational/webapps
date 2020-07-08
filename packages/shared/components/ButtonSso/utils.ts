@@ -15,16 +15,17 @@ limitations under the License.
 */
 
 import * as Icons from 'design/Icon';
-import { AuthProviderTypeEnum } from '../../services/enums';
+import { AuthProviderTypeEnum } from 'shared/services/enums';
+import { FC } from 'react';
 
 export const TypeEnum = {
-  MICROSOFT: 'microsoft',
-  GITHUB: 'github',
-  BITBUCKET: 'bitbucket',
-  GOOGLE: 'google',
+  MICROSOFT: 'microsoft' as 'microsoft',
+  GITHUB: 'github' as 'github',
+  BITBUCKET: 'bitbucket' as 'bitbucket',
+  GOOGLE: 'google' as 'google',
 };
 
-export function pickSsoIcon(type) {
+export function pickSsoIcon(type: string): IconType {
   switch (type) {
     case TypeEnum.MICROSOFT:
       return { color: '#2672ec', Icon: Icons.Windows, type };
@@ -40,8 +41,11 @@ export function pickSsoIcon(type) {
   }
 }
 
-export function guessProviderType(name, ssoType) {
-  name = name.toLowerCase();
+export function guessProviderType(
+  name: string,
+  ssoType: AuthProviderTypeEnum
+): ProviderType {
+  // name = name.toLowerCase();
 
   if (name.indexOf(TypeEnum.MICROSOFT) !== -1) {
     return TypeEnum.MICROSOFT;
@@ -68,3 +72,12 @@ export function guessProviderType(name, ssoType) {
 
   return '--unknown';
 }
+
+export type TypeEnum = typeof TypeEnum[keyof typeof TypeEnum];
+export type ProviderType = TypeEnum | 'openid' | '--unknown';
+
+export type IconType = {
+  color: string;
+  Icon: FC;
+  type?: TypeEnum;
+};

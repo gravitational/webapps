@@ -19,11 +19,10 @@ import styled from 'styled-components';
 import Button from 'design/Button';
 import { fade } from 'design/theme/utils/colorManipulator';
 import Icon from 'design/Icon';
-import { TypeEnum, pickSsoIcon } from './utils';
-import PropTypes from 'prop-types';
+import { ProviderType, pickSsoIcon, TypeEnum } from './utils';
 
-const ButtonSso = props => {
-  const { ssoType, title, ...rest } = props;
+const ButtonSso = (props: Props) => {
+  const { ssoType = 'unknown', title, ...rest } = props;
   const { color, Icon } = pickSsoIcon(ssoType);
   return (
     <StyledButton color={color} block {...rest}>
@@ -37,15 +36,11 @@ const ButtonSso = props => {
   );
 };
 
-ButtonSso.propTypes = {
-  /**
-   * ssoType specifies single sign on service type defined in TypeEnum
-   */
-  ssoType: PropTypes.string,
-};
-
-ButtonSso.defaultProps = {
-  ssoType: 'unknown',
+type Props = {
+  ssoType: ProviderType | string;
+  title: string;
+  // TS: temporary handles ...styles
+  [key: string]: any;
 };
 
 const StyledButton = styled(Button)`
