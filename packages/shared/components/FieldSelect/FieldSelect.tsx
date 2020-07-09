@@ -18,11 +18,6 @@ import React from 'react';
 import Select, { SelectProps } from './../Select';
 import { Box, LabelInput } from 'design';
 import { useRule } from 'shared/components/Validation';
-import {
-  RuleCurry,
-  CurryUnary,
-  defaultRule,
-} from 'shared/components/Validation/rules';
 
 export default function FieldSelect({
   label,
@@ -38,7 +33,7 @@ export default function FieldSelect({
   isSimpleValue = false,
   ...styles
 }: Props) {
-  const { valid, message } = useRule(rule(value) as CurryUnary);
+  const { valid, message } = useRule(rule(value));
   const hasError = Boolean(!valid);
   const labelText = hasError ? message : label;
   return (
@@ -60,8 +55,10 @@ export default function FieldSelect({
   );
 }
 
+const defaultRule = () => () => ({ valid: true });
+
 type Props = SelectProps & {
   autoFocus?: boolean;
   label?: string;
-  rule?: RuleCurry;
+  rule?: Function;
 };
