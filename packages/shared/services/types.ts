@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-export type AuthProviderType = 'oidc' | 'saml' | 'github' | '';
+export type AuthProviderType = 'oidc' | 'saml' | 'github';
 
 export type Auth2faType = 'u2f' | 'otp' | 'off';
 
