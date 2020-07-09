@@ -15,18 +15,7 @@ limitations under the License.
 */
 
 import Select, { SelectAsync } from './Select';
-import {
-  SelectOption,
-  SelectOptionsList,
-  SelectProps,
-  SelectAsyncProps,
-} from './types';
 
+export * from './types';
 export default Select;
-export {
-  SelectAsync,
-  SelectOption,
-  SelectOptionsList,
-  SelectProps,
-  SelectAsyncProps,
-};
+export { SelectAsync };

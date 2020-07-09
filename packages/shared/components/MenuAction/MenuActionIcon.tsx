@@ -14,23 +14,22 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React, { PropsWithChildren } from 'react';
+import React from 'react';
 import Menu from 'design/Menu';
 import { ButtonIcon } from 'design';
 import { Ellipsis } from 'design/Icon';
-import { GeneralProps, CSSProps } from './types';
+import { MenuProps, AnchorProps } from './types';
 
-export default class MenuActionIcon extends React.Component<
-  PropsWithChildren<Props>,
-  { open?: boolean }
-> {
+export default class MenuActionIcon extends React.Component<Props> {
   anchorEl = null;
+
+  state = {
+    open: false,
+  };
 
   constructor(props: Props) {
     super(props);
-    this.state = {
-      open: props.defaultOpen || false,
-    };
+    this.state.open = props.defaultOpen || false;
   }
 
   onOpen = (e: React.MouseEvent<HTMLButtonElement>) => {
@@ -77,8 +76,8 @@ export default class MenuActionIcon extends React.Component<
   }
 
   renderItems(children: React.ReactNode) {
-    const filtered = React.Children.toArray(children);
-    const cloned = filtered.map((child: React.ReactElement) => {
+    const filtered = React.Children.toArray(children) as React.ReactElement[];
+    const cloned = filtered.map(child => {
       return React.cloneElement(child, {
         onClick: this.makeOnClick(child.props.onClick),
       });
@@ -100,6 +99,8 @@ const menuListCss = () => `
   min-width: 100px;
 `;
 
-type Props = GeneralProps & {
-  buttonIconProps?: CSSProps;
+type Props = MenuProps & {
+  defaultOpen?: boolean;
+  buttonIconProps?: AnchorProps;
+  menuProps?: MenuProps;
 };

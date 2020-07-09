@@ -15,7 +15,7 @@ limitations under the License.
 */
 
 import React from 'react';
-import Select, { SelectProps } from './../Select';
+import Select, { Props as SelectProps } from './../Select';
 import { Box, LabelInput } from 'design';
 import { useRule } from 'shared/components/Validation';
 

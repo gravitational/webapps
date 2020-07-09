@@ -30,14 +30,9 @@ export type MenuProps = {
   menuListCss?: (props?: any) => string;
 };
 
-export type CSSProps = {
+export type AnchorProps = {
   // inline-styling
   style?: { [key: string]: string };
   // TS: temp handling of styled-system
   [key: string]: any;
-};
-
-export type GeneralProps = {
-  defaultOpen?: boolean;
-  menuProps?: MenuProps;
 };
