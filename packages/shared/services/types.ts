@@ -14,23 +14,13 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React from 'react';
-import ButtonSso from './ButtonSso';
+export type AuthProviderType = 'oidc' | 'saml' | 'github' | '';
 
-export default {
-  title: 'Shared',
-};
+export type Auth2faType = 'u2f' | 'otp' | 'off';
 
-export const Button = () => (
-  <div style={{ width: '300px' }}>
-    <ButtonSso mt={3} title="Valdez" ssoType="microsoft" />
-    <ButtonSso mt={3} title="Norman" ssoType="github" />
-    <ButtonSso mt={3} title="Barnes" ssoType="google" />
-    <ButtonSso mt={3} title="Norton" ssoType="bitbucket" />
-    <ButtonSso mt={3} title="Russell" ssoType="unknown" />
-  </div>
-);
-
-Button.story = {
-  name: 'ButtonSso',
+export type AuthProvider = {
+  displayName?: string;
+  name: string;
+  type: AuthProviderType;
+  url: string;
 };

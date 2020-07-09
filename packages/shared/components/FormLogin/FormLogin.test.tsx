@@ -17,7 +17,6 @@
 import React from 'react';
 import FormLogin from './FormLogin';
 import { render, fireEvent } from 'design/utils/testing';
-import { Auth2faTypeEnum } from '../../services/enums';
 
 test('login with auth2faType: disabled', () => {
   const onLogin = jest.fn();
@@ -27,7 +26,7 @@ test('login with auth2faType: disabled', () => {
   const { getByText, getByPlaceholderText } = render(
     <FormLogin
       title="titleText"
-      auth2faType={Auth2faTypeEnum.DISABLED}
+      auth2faType="off"
       authProviders={[]}
       attempt={{
         isFailed: false,
@@ -62,7 +61,7 @@ test('login with auth2faType: OTP', () => {
 
   const { getByText, getByPlaceholderText } = render(
     <FormLogin
-      auth2faType={Auth2faTypeEnum.OTP}
+      auth2faType="otp"
       authProviders={[]}
       attempt={{
         isFailed: false,
@@ -101,7 +100,7 @@ test('login with auth2faType: U2F', () => {
   const { getByText } = render(
     <FormLogin
       title="titleText"
-      auth2faType={Auth2faTypeEnum.UTF}
+      auth2faType="u2f"
       authProviders={[]}
       attempt={{
         isFailed: false,
@@ -131,7 +130,7 @@ test('input validation error handling', () => {
   const { getByText } = render(
     <FormLogin
       title="titleText"
-      auth2faType={Auth2faTypeEnum.OTP}
+      auth2faType="otp"
       attempt={{
         isFailed: false,
         isProcessing: false,
@@ -159,7 +158,7 @@ test('input validation error handling', () => {
 test('error handling', () => {
   const { getByText } = render(
     <FormLogin
-      auth2faType={Auth2faTypeEnum.DISABLED}
+      auth2faType="off"
       authProviders={[]}
       attempt={{
         isFailed: true,
@@ -183,7 +182,7 @@ test('login with SSO providers', () => {
 
   const { getByText } = render(
     <FormLogin
-      auth2faType={Auth2faTypeEnum.DISABLED}
+      auth2faType="off"
       authProviders={[
         { name: 'github', type: 'github', url: '' },
         { name: 'google', type: 'saml', url: '' },

@@ -14,6 +14,6 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import ButtonSso, { TypeEnum, pickSsoIcon } from './ButtonSso';
+import ButtonSso, { guessProviderType } from './ButtonSso';
 export default ButtonSso;
-export { pickSsoIcon, TypeEnum };
+export { guessProviderType };

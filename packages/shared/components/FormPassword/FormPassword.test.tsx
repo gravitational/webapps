@@ -17,7 +17,6 @@
 import React from 'react';
 import FormPassword from './FormPassword';
 import { render, fireEvent, wait } from 'design/utils/testing';
-import { Auth2faTypeEnum } from '../../services/enums';
 
 jest.mock('../../libs/logger', () => {
   const mockLogger = {
@@ -44,7 +43,7 @@ test('input validation error states', async () => {
 
   const { getByText } = render(
     <FormPassword
-      auth2faType={Auth2faTypeEnum.OTP}
+      auth2faType={'otp'}
       onChangePass={onChangePass}
       onChangePassWithU2f={onChangePassWithU2f}
     />
@@ -67,7 +66,7 @@ test('prop auth2faType: disabled', async () => {
 
   const { getByText, getByPlaceholderText } = render(
     <FormPassword
-      auth2faType={Auth2faTypeEnum.DISABLED}
+      auth2faType="off"
       onChangePass={onChangePass}
       onChangePassWithU2f={onChangePassWithU2f}
     />
@@ -98,7 +97,7 @@ test('prop auth2faType: OTP form', async () => {
 
   const { getByText, getByPlaceholderText } = render(
     <FormPassword
-      auth2faType={Auth2faTypeEnum.OTP}
+      auth2faType="otp"
       onChangePass={onChangePass}
       onChangePassWithU2f={onChangePassWithU2f}
     />
@@ -135,7 +134,7 @@ test('prop auth2faType: U2f form with mocked error', async () => {
 
   const { getByText, getByPlaceholderText } = render(
     <FormPassword
-      auth2faType={Auth2faTypeEnum.UTF}
+      auth2faType={'u2f'}
       onChangePass={onChangePass}
       onChangePassWithU2f={onChangePassWithU2f}
     />
