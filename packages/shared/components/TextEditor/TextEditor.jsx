@@ -16,7 +16,6 @@ limitations under the License.
 
 import React from 'react';
 import ace from 'ace-builds/src-min-noconflict/ace';
-import { Ace } from 'ace-builds/ace';
 import 'ace-builds/src-noconflict/mode-json';
 import 'ace-builds/src-noconflict/mode-yaml';
 import 'ace-builds/src-noconflict/theme-monokai';
@@ -25,16 +24,9 @@ import StyledTextEditor from './StyledTextEditor';
 
 const { UndoManager } = ace.require('ace/undomanager');
 
-class TextEditor extends React.Component<Props> {
-  ace_viewer: HTMLDivElement = null;
-  sessions: Ace.EditSession[] = null;
-  editor: Ace.Editor = null;
-  isDirty = false;
-
+class TextEditor extends React.Component {
   onChange = () => {
-    // isAtBookmark() seems to be equivalent to isClean() which is not exposed.
-    // https://github.com/ajaxorg/ace-builds/blob/master/src/ace.js#L14812
-    const isClean = this.editor.session.getUndoManager().isAtBookmark();
+    const isClean = this.editor.session.getUndoManager().isClean();
     if (this.props.onDirty) {
       this.props.onDirty(!isClean);
     }
@@ -49,7 +41,7 @@ class TextEditor extends React.Component<Props> {
     return this.sessions.map(s => s.getValue());
   }
 
-  componentDidUpdate(prevProps: Props) {
+  componentDidUpdate(prevProps) {
     if (prevProps.activeIndex !== this.props.activeIndex) {
       this.setActiveSession(this.props.activeIndex);
     }
@@ -57,7 +49,7 @@ class TextEditor extends React.Component<Props> {
     this.editor.resize();
   }
 
-  createSession({ content, type = 'json', tabSize = 2 }: AceData) {
+  createSession({ content, type, tabSize = 2 }) {
     const mode = getMode(type);
     let session = new ace.EditSession(content);
     let undoManager = new UndoManager();
@@ -69,7 +61,7 @@ class TextEditor extends React.Component<Props> {
     return session;
   }
 
-  setActiveSession(index: number) {
+  setActiveSession(index) {
     let activeSession = this.sessions[index];
     if (!activeSession) {
       activeSession = this.createSession({ content: '' });
@@ -79,7 +71,7 @@ class TextEditor extends React.Component<Props> {
     this.editor.focus();
   }
 
-  initSessions(data: AceData[]) {
+  initSessions(data = []) {
     this.isDirty = false;
     this.sessions = data.map(item => this.createSession(item));
     this.setActiveSession(0);
@@ -105,7 +97,7 @@ class TextEditor extends React.Component<Props> {
   componentWillUnmount() {
     this.editor.destroy();
     this.editor = null;
-    this.sessions = null;
+    this.session = null;
   }
 
   render() {
@@ -119,27 +111,10 @@ class TextEditor extends React.Component<Props> {
 
 export default TextEditor;
 
-function getMode(docType = ''): AceMode {
+function getMode(docType) {
   if (docType === 'json') {
     return 'ace/mode/json';
   }
 
   return 'ace/mode/yaml';
 }
-
-type Props = {
-  onDirty?: Function;
-  onChange?: (content: string) => void;
-  activeIndex?: number;
-  theme?: string;
-  readOnly: boolean;
-  data: AceData[];
-};
-
-type AceData = {
-  type?: 'json' | 'yaml';
-  tabSize?: number;
-  content: string;
-};
-
-type AceMode = 'ace/mode/json' | 'ace/mode/yaml';
