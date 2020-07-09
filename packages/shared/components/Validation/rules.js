@@ -14,16 +14,14 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-const requiredField: CurryTernary = (message: string) => (
-  value: string
-) => () => {
+const requiredField = message => value => () => {
   return {
     valid: !!value,
     message: !value ? message : '',
   };
 };
 
-const requiredToken: CurryBinary = (value: string) => () => {
+const requiredToken = value => () => {
   if (!value || value.length === 0) {
     return {
       valid: false,
@@ -36,7 +34,7 @@ const requiredToken: CurryBinary = (value: string) => () => {
   };
 };
 
-const requiredPassword: CurryBinary = (value: string) => () => {
+const requiredPassword = value => () => {
   if (!value || value.length < 6) {
     return {
       valid: false,
@@ -49,9 +47,7 @@ const requiredPassword: CurryBinary = (value: string) => () => {
   };
 };
 
-const requiredConfirmedPassword: CurryTernary = (password: string) => (
-  confirmedPassword: string
-) => () => {
+const requiredConfirmedPassword = password => confirmedPassword => () => {
   if (!confirmedPassword) {
     return {
       valid: false,
@@ -71,20 +67,7 @@ const requiredConfirmedPassword: CurryTernary = (password: string) => (
   };
 };
 
-const defaultRule: CurryBinary = () => () => ({ valid: true });
-
-export type RuleReturnType = {
-  valid: boolean;
-  message?: string;
-};
-
-export type CurryUnary = () => RuleReturnType;
-export type CurryBinary = (a?: any) => () => RuleReturnType;
-export type CurryTernary = (a?: any) => (b?: any) => () => RuleReturnType;
-export type RuleCurry = CurryBinary | CurryTernary;
-
 export {
-  defaultRule,
   requiredToken,
   requiredPassword,
   requiredConfirmedPassword,

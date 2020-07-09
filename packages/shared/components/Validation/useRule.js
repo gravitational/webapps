@@ -17,15 +17,13 @@
 import React from 'react';
 import Logger from '../../libs/logger';
 import { useValidation } from './Validation';
-import { CurryUnary, RuleReturnType } from 'shared/components/Validation/rules';
 
 const logger = Logger.create('validation');
 
 /**
  * useRule subscribes to validation requests upon which executes validate() callback
  */
-export default function useRule(cb: CurryUnary) {
-  // TODO remove check when all files using useRule is converted to TS
+export default function useRule(cb) {
   if (typeof cb !== 'function') {
     logger.warn(`useRule(fn), fn() must be a function`);
     return;
@@ -38,7 +36,7 @@ export default function useRule(cb: CurryUnary) {
   React.useEffect(() => {
     function onValidate() {
       if (validator.validating) {
-        const result = cb() as RuleReturnType;
+        const result = cb();
         validator.addResult(result);
         rerender({});
       }

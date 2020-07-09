@@ -60,8 +60,18 @@ test('methods of Validator: addResult, reset', () => {
   validator.addResult(result);
   expect(Logger.create().error).toHaveBeenCalledTimes(1);
 
+  // test addResult for boolean
+  validator.addResult(true);
+  expect(validator.valid).toBe(false);
+
+  // test addResult with incorrect object
+  let resultObj = {};
+  validator.addResult(resultObj);
+  expect(validator.valid).toBe(false);
+
   // test addResult with correct object with "valid" prop from prior test set to false
-  validator.addResult({ valid: true });
+  resultObj = { valid: true };
+  validator.addResult(resultObj);
   expect(validator.valid).toBe(false);
 
   // test reset
@@ -70,7 +80,7 @@ test('methods of Validator: addResult, reset', () => {
   expect(validator.validating).toBe(false);
 
   // test addResult with correct object with "valid" prop reset to true
-  validator.addResult({ valid: true });
+  validator.addResult(resultObj);
   expect(validator.valid).toBe(true);
 });
 

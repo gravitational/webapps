@@ -15,8 +15,7 @@ limitations under the License.
 */
 
 import React from 'react';
-import Logger from 'shared/libs/logger';
-import { RuleReturnType } from 'shared/components/Validation/rules';
+import Logger from '../../libs/logger';
 import { isObject } from 'lodash';
 
 const logger = Logger.create('validation');
@@ -24,8 +23,6 @@ const logger = Logger.create('validation');
 // Validator handles input validation
 export default class Validator {
   valid = true;
-  validating = false;
-  private _subs: Function[];
 
   constructor() {
     // store subscribers
@@ -33,23 +30,21 @@ export default class Validator {
   }
 
   // adds a callback to the list of subscribers
-  subscribe(cb: Function) {
+  subscribe(cb) {
     this._subs.push(cb);
   }
 
   // removes a callback from the list of subscribers
-  unsubscribe(cb: Function) {
+  unsubscribe(cb) {
     const index = this._subs.indexOf(cb);
     if (index > -1) {
       this._subs.splice(index, 1);
     }
   }
 
-  addResult(result: RuleReturnType) {
+  addResult(result) {
     // result can be a boolean value or an object
     let isValid = false;
-
-    // TODO: remove check when all files using Validation is converted to TS
     if (isObject(result)) {
       isValid = result.valid;
     } else {
@@ -79,9 +74,9 @@ export default class Validator {
   }
 }
 
-const ValidationContext = React.createContext<Partial<Validator>>({});
+const ValidationContext = React.createContext({});
 
-export function Validation(props: { children: React.ReactNode }) {
+export function Validation(props) {
   const [validator] = React.useState(() => new Validator());
   // handle render functions
   const children =
