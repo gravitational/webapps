@@ -14,23 +14,22 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React, { PropsWithChildren } from 'react';
+import React from 'react';
 import Menu from 'design/Menu';
 import { ButtonBorder } from 'design';
 import { CarrotDown } from 'design/Icon';
-import { GeneralProps, CSSProps } from './types';
+import { MenuProps, AnchorProps } from './types';
 
-export default class MenuActionButton extends React.Component<
-  PropsWithChildren<Props>,
-  { open?: boolean }
-> {
+export default class MenuActionIcon extends React.Component<Props> {
   anchorEl = null;
+
+  state = {
+    open: false,
+  };
 
   constructor(props: Props) {
     super(props);
-    this.state = {
-      open: props.defaultOpen || false,
-    };
+    this.state.open = props.defaultOpen || false;
   }
 
   onOpen = (e: React.MouseEvent<HTMLButtonElement>) => {
@@ -103,6 +102,8 @@ const menuListCss = () => `
   min-width: 100px;
 `;
 
-type Props = GeneralProps & {
-  buttonProps?: CSSProps;
+type Props = MenuProps & {
+  defaultOpen?: boolean;
+  buttonProps?: AnchorProps;
+  menuProps?: MenuProps;
 };

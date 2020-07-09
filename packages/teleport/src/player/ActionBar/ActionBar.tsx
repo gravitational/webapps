@@ -18,14 +18,10 @@ import React from 'react';
 import { NavLink } from 'react-router-dom';
 import { Flex, ButtonPrimary } from 'design';
 import { MenuIcon, MenuItem, MenuItemIcon } from 'shared/components/MenuAction';
-import { MenuProps } from 'shared/components/MenuAction/types';
 import * as Icons from 'design/Icon';
 import cfg from 'teleport/config';
 
-export default function ActionBar({
-  clusterId = '',
-  onLogout,
-}: ActionBarProps) {
+export default function ActionBar({ clusterId = '', onLogout }: Props) {
   return (
     <Flex alignItems="center">
       <MenuIcon
@@ -46,16 +42,16 @@ export default function ActionBar({
   );
 }
 
-type ActionBarProps = {
+type Props = {
   clusterId?: string;
-  onLogout: () => void;
+  onLogout(): void;
 };
 
 const menuListCss = () => `
   width: 250px;
 `;
 
-const menuProps: MenuProps = {
+const menuProps = {
   menuListCss: menuListCss,
   anchorOrigin: {
     vertical: 'center',
@@ -65,4 +61,4 @@ const menuProps: MenuProps = {
     vertical: 'top',
     horizontal: 'center',
   },
-};
+} as const;

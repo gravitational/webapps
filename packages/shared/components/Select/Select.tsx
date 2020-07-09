@@ -18,9 +18,9 @@ import React from 'react';
 import ReactSelect from 'react-select';
 import ReactSelectAsync from 'react-select/async';
 import styled from 'styled-components';
-import { SelectProps, SelectAsyncProps } from './types';
+import { Props, AsyncProps } from './types';
 
-export default function Select(props: SelectProps) {
+export default function Select(props: Props) {
   const { hasError = false, ...restOfProps } = props;
   return (
     <StyledSelect hasError={hasError}>
@@ -38,7 +38,7 @@ export default function Select(props: SelectProps) {
   );
 }
 
-export function SelectAsync(props: SelectAsyncProps) {
+export function SelectAsync(props: AsyncProps) {
   const { hasError = false, ...restOfProps } = props;
   return (
     <StyledSelect hasError={hasError}>
