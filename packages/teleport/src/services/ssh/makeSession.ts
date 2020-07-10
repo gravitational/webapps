@@ -17,9 +17,10 @@ limitations under the License.
 import moment from 'moment';
 import { map } from 'lodash';
 import { Session, Participant } from './types';
+import cfg from 'teleport/config';
 
 export default function makeSession(json): Session {
-  const clusterId = json.cluster_name;
+  const clusterId = json.cluster_name || getClusterIDFromURL();
   const created = new Date(json.created);
   const duration = moment(new Date()).diff(created);
   const durationText = moment.duration(duration).humanize();
@@ -52,5 +53,14 @@ export function makeParticipant(json): Participant {
     remoteAddr: remoteAddr.replace(PORT_REGEX, ''),
   };
 }
+
+/**
+ * getClusterIDFromURL solves empty clusterID result with Teleport
+ * Node's using versions < 4.3 (clusterId is not set for older versions).
+ */
+const getClusterIDFromURL = () => {
+  const index = cfg.routes.clusterSessions.split('/').indexOf(':clusterId');
+  return window.location.pathname.split('/')[index];
+};
 
 const PORT_REGEX = /:\d+$/;
