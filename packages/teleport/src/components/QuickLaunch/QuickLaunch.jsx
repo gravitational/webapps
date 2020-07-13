@@ -18,7 +18,14 @@ import React from 'react';
 import styled from 'styled-components';
 import { Box, Input, LabelInput } from 'design';
 
-export default function FieldInputSsh({ onPress, ...boxProps }) {
+export default function FieldInputSsh({
+  onPress,
+  autoFocus = true,
+  width = '200px',
+  labelProps = {},
+  inputProps = {},
+  ...boxProps
+}) {
   const [hasError, setHasError] = React.useState(false);
 
   function onKeyPress(e) {
@@ -39,15 +46,18 @@ export default function FieldInputSsh({ onPress, ...boxProps }) {
 
   return (
     <Box {...boxProps}>
-      <LabelInput hasError={hasError}>{labelText}</LabelInput>
+      <LabelInput {...labelProps} hasError={hasError}>
+        {labelText}
+      </LabelInput>
       <StyledInput
-        autoFocus
         height="34px"
-        width="240px"
         bg="primary.light"
         color="text.primary"
         placeholder="login@host"
+        autoFocus={autoFocus}
+        width={width}
         onKeyPress={onKeyPress}
+        {...inputProps}
       />
     </Box>
   );
