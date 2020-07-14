@@ -91,10 +91,12 @@ function handleTtyConnect(
   session: Session,
   docId: number
 ) {
-  const { hostname, login, sid, clusterId } = session;
+  const { hostname, login, sid, serverId, clusterId } = session;
   const url = cfg.getSshSessionRoute({ sid, clusterId });
   ctx.updateSshDocument(docId, {
-    title: `${login}@${hostname}`,
+    // DELETE IN 5.0.0
+    // serverId is necessary for Teleport nodes <4.3
+    title: `${login}@${hostname || serverId}`,
     status: 'connected',
     url,
     ...session,
