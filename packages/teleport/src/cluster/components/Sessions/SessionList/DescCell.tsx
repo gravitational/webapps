@@ -19,7 +19,6 @@ import styled, { useTheme } from 'styled-components';
 import { Cell } from 'design/DataTable';
 import { Session } from 'teleport/services/ssh';
 import * as Icons from 'design/Icon/Icon';
-import { NavLink } from 'react-router-dom';
 import cfg from 'teleport/config';
 
 export default function TypeCell(props: any) {
@@ -37,8 +36,9 @@ export default function TypeCell(props: any) {
     <Cell>
       <StyledEventType>
         <Icons.Cli
-          as={NavLink}
-          to={url}
+          as="a"
+          href={url}
+          target="_blank"
           p="1"
           mr="3"
           bg="bgTerminal"
