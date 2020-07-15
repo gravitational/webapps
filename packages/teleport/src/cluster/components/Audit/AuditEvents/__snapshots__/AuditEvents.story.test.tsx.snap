@@ -1493,7 +1493,7 @@ exports[`rendering of Events 1`] = `
           <td
             style="word-break: break-word;"
           >
-            User [admin@example.com] has ended an non-interactive session [9febab45-6491-11e9-80a1-427cfde50f5a] on node [node-hostname] 
+            User [admin@example.com] has ended a non-interactive session [9febab45-6491-11e9-80a1-427cfde50f5a] on node [node-hostname] 
           </td>
           <td
             style="min-width: 120px;"
@@ -1528,7 +1528,7 @@ exports[`rendering of Events 1`] = `
           <td
             style="word-break: break-word;"
           >
-            User [admin@example.com] has ended an non-interactive session [9febab45-6491-11e9-80a1-427cfde50f5a] on node [undefined] 
+            User [admin@example.com] has ended a non-interactive session [9febab45-6491-11e9-80a1-427cfde50f5a] on node [undefined] 
           </td>
           <td
             style="min-width: 120px;"
