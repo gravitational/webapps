@@ -63,14 +63,11 @@ export default function FieldInputSsh({
   );
 }
 
-// SSH_STR_REGEX is a modified regex from teleport's lib/sshutils/scp/scp.go.
-// Captures two named groups: username and host.
-const SSH_STR_REGEX = /(?:(?<username>[-.\w@]+)@)(?<host>[-.\w]+)$/;
+// Checks for spaces between chars, and
+// captures two named groups: username and host.
+const SSH_STR_REGEX = /^(?:(?<username>[^\s]+)@)(?<host>[^\s]+)$/;
 const check = value => {
-  const hasWhiteSpace = /\s/.test(value);
-  if (!hasWhiteSpace) {
-    return SSH_STR_REGEX.exec(value);
-  }
+  return SSH_STR_REGEX.exec(value.trim());
 };
 
 const StyledInput = styled(Input)(
