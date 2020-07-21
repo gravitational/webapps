@@ -37,11 +37,20 @@ export default function useSshSession(doc: DocumentSsh) {
     function initTty(session: Session) {
       const tty = ctx.createTty(session);
 
-      // Latest stores the latest terminal payload to
-      // check for "Failed to launch" substring. This is to prevent
-      // terminal tabs from closing and hiding terminal errors from users.
-      // Currently, the backend sends a close event for exec command errors and
-      // successful exit commands.
+      /**
+       * Currently Teleport does not handle all errors that can occur during SSH session creation.
+       * It can mistakenly create a session (recording) and write SSH initialization errors
+       * directly into the stream as if these errors happened within an actual SSH session. It then
+       * proceeds with emitting the rest of audit events as if SSH session successfully started and
+       * ended even though it never did.
+       *
+       * Since we are closing the tab automatically on "end" event, there is no way a user can see
+       * an actual error why SSH session failed to start.
+       *
+       * In here we are trying to detect this scenario by looking at the last received payload before
+       * closing the terminal tab. If it's empty or it has special "keywords" in it then do not close the
+       * tab automatically on "close" event and let a user see the error.
+       */
       let latest = '';
       tty.on(TermEventEnum.DATA, data => {
         latest = data;
