@@ -37,8 +37,23 @@ export default function useSshSession(doc: DocumentSsh) {
     function initTty(session: Session) {
       const tty = ctx.createTty(session);
 
+      // Latest stores the latest terminal payload to
+      // check for "Failed to launch" substring. This is to prevent
+      // terminal tabs from closing and hiding terminal errors from users.
+      // Currently, the backend sends a close event for exec command errors and
+      // successful exit commands.
+      let latest = '';
+      tty.on(TermEventEnum.DATA, data => {
+        latest = data;
+      });
+
       // subscribe to tty events to handle connect/disconnects events
-      tty.on(TermEventEnum.CLOSE, () => ctx.closeTab(doc));
+      tty.on(TermEventEnum.CLOSE, () => {
+        if (latest && latest.indexOf('Failed to launch') === -1) {
+          ctx.closeTab(doc);
+        }
+      });
+
       tty.on(TermEventEnum.CONN_CLOSE, () =>
         ctx.updateSshDocument(doc.id, { status: 'disconnected' })
       );
