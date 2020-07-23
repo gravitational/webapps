@@ -38,6 +38,9 @@ export default function useSshSession(doc: DocumentSsh) {
       const tty = ctx.createTty(session);
 
       /**
+       * DELETE: Remove once remote process exit errors are handled in the backend:
+       * https://github.com/gravitational/teleport/issues/4025
+       *
        * Currently Teleport does not handle all errors that can occur during SSH session creation.
        * It can mistakenly create a session (recording) and write SSH initialization errors
        * directly into the stream as if these errors happened within an actual SSH session. It then
