@@ -53,7 +53,7 @@ class Indicator extends React.Component {
       return null;
     }
 
-    return <StyledSpinner {...this.props} />;
+    return <StyledSpinner data-testid="loader" {...this.props} />;
   }
 }
 
@@ -73,7 +73,7 @@ const StyledSpinner = styled(SpinnerIcon)`
   `}
 
   animation: anim-rotate 1s infinite linear;
-  color: #FFF;
+  color: #fff;
   display: inline-block;
   margin: 16px;
   opacity: 0.24;
