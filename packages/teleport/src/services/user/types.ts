@@ -39,4 +39,22 @@ export interface Acl {
   roles: Access;
   sessions: Access;
   events: Access;
+  users: Access;
+}
+
+export interface NewUser {
+  name: string;
+  roles: string[];
+}
+
+export interface StoredUser {
+  name: string;
+  roles: string[];
+  created: Date;
+}
+
+export interface InviteToken {
+  url: string;
+  expires: string;
+  username: string;
 }

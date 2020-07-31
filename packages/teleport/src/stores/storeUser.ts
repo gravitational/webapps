@@ -44,6 +44,10 @@ export default class StoreUser extends Store<User> {
     return this.state.acl.trustedClusters;
   }
 
+  getUserAccess() {
+    return this.state.acl.users;
+  }
+
   fetchUser() {
     return service.fetchUser().then(user => {
       this.setState(user);

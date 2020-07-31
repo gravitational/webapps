@@ -70,4 +70,8 @@ export default class Context implements teleport.Context {
   isTrustedClustersEnabled() {
     return this.storeUser.getTrustedClusterAccess().list;
   }
+
+  isUsersViewEnabled() {
+    return this.storeUser.getUserAccess().list === true;
+  }
 }
