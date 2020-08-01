@@ -20,10 +20,10 @@ import { InviteToken } from './types';
 
 export default function makeInviteToken(json): InviteToken {
   const [expireDate, createdDate, username, url] = at(json, [
-    'metadata.expires',
-    'spec.created',
-    'spec.user',
-    'spec.url',
+    'expires',
+    'created',
+    'name',
+    'url',
   ]);
 
   // Create expire time in format h:m:s

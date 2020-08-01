@@ -18,11 +18,7 @@ import { at } from 'lodash';
 import { StoredUser } from './types';
 
 export default function makeInviteToken(json): StoredUser {
-  const [name, roles, created] = at(json, [
-    'metadata.name',
-    'spec.roles',
-    'spec.created_by.time',
-  ]);
+  const [name, roles, created] = at(json, ['name', 'roles', 'created']);
 
   return {
     name,
