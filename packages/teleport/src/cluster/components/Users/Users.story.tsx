@@ -102,4 +102,4 @@ ctx.storeUser.state = {
   },
 };
 
-userServices.createUserInvite = () => new Promise(() => null);
+userServices.createUser = () => new Promise(() => null);

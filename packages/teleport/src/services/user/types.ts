@@ -17,7 +17,7 @@ import { Cluster } from '../../services/clusters';
 
 export type AuthType = 'local' | 'sso';
 
-export interface User {
+export interface UserContext {
   authType: AuthType;
   acl: Acl;
   username: string;
@@ -42,18 +42,13 @@ export interface Acl {
   users: Access;
 }
 
-export interface NewUser {
+export interface User {
   name: string;
   roles: string[];
+  created?: Date;
 }
 
-export interface StoredUser {
-  name: string;
-  roles: string[];
-  created: Date;
-}
-
-export interface InviteToken {
+export interface ResetToken {
   url: string;
   expires: string;
   username: string;

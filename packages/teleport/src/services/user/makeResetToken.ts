@@ -15,14 +15,21 @@
  */
 
 import { at } from 'lodash';
-import { StoredUser } from './types';
+import { ResetToken } from './types';
+import config from 'teleport/config';
 
-export default function makeInviteToken(json): StoredUser {
-  const [name, roles, created] = at(json, ['name', 'roles', 'created']);
+export default function makeResetToken(json): ResetToken {
+  const [expires, username, token] = at(json, ['expires', 'name', 'token']);
+
+  // Construct URL for new user to setup password.
+  // Backend constructed URL may not always return a valid URL
+  // when teleport runs behind loadbalancers.
+  const path = config.routes.userInvite.replace(':tokenId', token);
+  const url = `${config.baseUrl}${path}`;
 
   return {
-    name,
-    roles,
-    created: new Date(created),
+    username,
+    expires,
+    url,
   };
 }

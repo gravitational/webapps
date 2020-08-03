@@ -17,7 +17,7 @@
 import { useState } from 'react';
 import { useAttempt } from 'shared/hooks';
 import { Option } from 'shared/components/Select';
-import { InviteToken, StoredUser } from 'teleport/services/user';
+import { ResetToken, User } from 'teleport/services/user';
 
 /**
  * useUserDialog contains state for UserDialog component.
@@ -25,7 +25,7 @@ import { InviteToken, StoredUser } from 'teleport/services/user';
 export default function useUserDialog(user = defaultUser) {
   const [attempt, attemptActions] = useAttempt({});
   const [username, setUsername] = useState(user.name);
-  const [token, setToken] = useState<InviteToken>(null);
+  const [token, setToken] = useState<ResetToken>(null);
   const [selectedRoles, setSelectedRoles] = useState<Option[]>(
     user.roles.map(r => ({
       value: r,
@@ -45,7 +45,7 @@ export default function useUserDialog(user = defaultUser) {
   };
 }
 
-const defaultUser: StoredUser = {
+const defaultUser: User = {
   name: '',
   roles: [],
   created: undefined,

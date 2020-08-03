@@ -16,22 +16,22 @@ limitations under the License.
 
 import api from 'teleport/services/api';
 import cfg from 'teleport/config';
+import makeUserContext from './makeUserContext';
+import makeResetToken from './makeResetToken';
 import makeUser from './makeUser';
-import makeInviteToken from './makeInviteToken';
-import makeStoredUser from './makeStoredUser';
-import { NewUser } from './types';
+import { User } from './types';
 
 const service = {
-  fetchUser(clusterId?: string) {
-    return api.get(cfg.getUserUrl(clusterId)).then(makeUser);
+  fetchUserContext(clusterId?: string) {
+    return api.get(cfg.getUserUrl(clusterId)).then(makeUserContext);
   },
 
-  createUserInvite(clusterId: string, newUser: NewUser) {
+  createUser(clusterId: string, newUser: User) {
     return api
       .post(cfg.getCreateUserInviteUrl(clusterId), newUser)
       .then(response => {
-        const user = makeStoredUser(response.user);
-        const token = makeInviteToken(response.token);
+        const user = makeUser(response.user);
+        const token = makeResetToken(response.token);
 
         return { user, token };
       });

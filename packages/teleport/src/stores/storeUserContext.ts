@@ -15,10 +15,10 @@ limitations under the License.
 */
 
 import { Store } from 'shared/libs/stores';
-import service, { User } from 'teleport/services/user';
+import service, { UserContext } from 'teleport/services/user';
 
-export default class StoreUser extends Store<User> {
-  state: User = null;
+export default class StoreUserContext extends Store<UserContext> {
+  state: UserContext = null;
 
   isSso() {
     return this.state.authType === 'sso';
@@ -48,8 +48,8 @@ export default class StoreUser extends Store<User> {
     return this.state.acl.users;
   }
 
-  fetchUser() {
-    return service.fetchUser().then(user => {
+  fetchUserContext() {
+    return service.fetchUserContext().then(user => {
       this.setState(user);
     });
   }

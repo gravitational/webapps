@@ -31,7 +31,7 @@ import isMatch from 'design/utils/match';
 import { MenuButton, MenuItem } from 'shared/components/MenuAction';
 import { displayDateTime } from 'shared/services/loc';
 import InputSearch from 'teleport/components/InputSearch';
-import { StoredUser } from 'teleport/services/user';
+import { User } from 'teleport/services/user';
 
 /**
  * UserList renders the table portions and display columns
@@ -161,7 +161,7 @@ const RolesCell = props => {
 };
 
 type Props = {
-  users: StoredUser[];
+  users: User[];
   pageSize: number;
-  onView: (user: StoredUser) => void;
+  onView: (user: User) => void;
 };

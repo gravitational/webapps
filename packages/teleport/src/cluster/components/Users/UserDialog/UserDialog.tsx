@@ -29,11 +29,11 @@ import FieldInput from 'shared/components/FieldInput';
 import FieldSelect from 'shared/components/FieldSelect';
 import { Option } from 'shared/components/Select';
 import { requiredField } from 'shared/components/Validation/rules';
-import { InviteToken } from 'teleport/services/user';
+import { ResetToken } from 'teleport/services/user';
 import useUserDialog from './useUserDialog';
 import { DialogState } from '../useUsers';
 
-export default function StateWrapper(props: Omit<Props, 'state'>) {
+export default function Container(props: Omit<Props, 'state'>) {
   const state = useUserDialog(props.dialog.user);
 
   return <UserDialog {...props} state={state} />;
@@ -103,7 +103,7 @@ export function UserDialog({
             {attempt.isFailed && (
               <Alert kind="danger" children={attempt.message} />
             )}
-            {attempt.isSuccess && <TokenContent token={token} />}
+            {attempt.isSuccess && <InviteLinkInfo token={token} />}
             {!attempt.isSuccess && (
               <>
                 <FieldInput
@@ -159,7 +159,7 @@ export function UserDialog({
   );
 }
 
-const TokenContent = ({ token }: TokenContentProps) => {
+const InviteLinkInfo = ({ token }: { token: ResetToken }) => {
   const ref = React.useRef();
   const [copyCmd, setCopyCmd] = React.useState(() => 'Copy');
 
@@ -193,11 +193,9 @@ const TokenContent = ({ token }: TokenContentProps) => {
   );
 };
 
-type TokenContentProps = { token: InviteToken };
-
 type Props = {
   roles: string[];
-  onClose: () => void;
+  onClose(): void;
   onCreateInvite(username: string, roles: string[]): Promise<any>;
   state: ReturnType<typeof useUserDialog>;
   dialog: DialogState;

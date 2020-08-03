@@ -25,7 +25,7 @@ import UserList from './UserList';
 import UserDialog from './UserDialog/UserDialog';
 import useUsers from './useUsers';
 
-export default function StateWrapper() {
+export default function Container() {
   const state = useUsers();
 
   return <Users state={state} />;

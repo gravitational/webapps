@@ -18,7 +18,7 @@ import { useState, useEffect } from 'react';
 import { useTeleport } from 'teleport/teleportContextProvider';
 import resourceService, { Resource } from 'e-teleport/services/resources';
 import { useAttempt } from 'shared/hooks';
-import userServices, { StoredUser } from 'teleport/services/user';
+import userServices, { User } from 'teleport/services/user';
 
 /**
  * useUsers contains state for Users view component.
@@ -29,7 +29,7 @@ export default function useUsers() {
 
   const [attempt, attemptActions] = useAttempt({ isProcessing: true });
 
-  const [users, setUsers] = useState<StoredUser[]>([]);
+  const [users, setUsers] = useState<User[]>([]);
   const [roles, setRoles] = useState<string[]>([]);
   const [dialog, setDialog] = useState<DialogState>({
     state: 'create',
@@ -42,7 +42,7 @@ export default function useUsers() {
 
   function createUserInvite(name: string, roles: string[]) {
     return userServices
-      .createUserInvite(clusterId, { name, roles })
+      .createUser(clusterId, { name, roles })
       .then(response => {
         setUsers(users => [...users, response.user]);
         return response.token;
@@ -74,6 +74,6 @@ export default function useUsers() {
 
 export type DialogState = {
   state: 'create' | 'view';
-  user: StoredUser;
+  user: User;
   show: boolean;
 };

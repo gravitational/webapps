@@ -33,7 +33,7 @@ class FeatureSupport extends FeatureBase {
   }
 
   onload(context: Ctx) {
-    if (!context.isUsersViewEnabled()) {
+    if (!context.isUsersEnabled()) {
       this.setDisabled();
       return;
     }

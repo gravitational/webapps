@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import { StoreNav, StoreUser, StoreClusters } from './stores';
+import { StoreNav, StoreUserContext, StoreClusters } from './stores';
 import { Activator } from 'shared/libs/featureBase';
 import cfg from 'teleport/config';
 import * as teleport from './types';
@@ -26,7 +26,7 @@ import sshService from './services/ssh';
 export default class Context implements teleport.Context {
   // stores
   storeNav = new StoreNav();
-  storeUser = new StoreUser();
+  storeUser = new StoreUserContext();
   storeClusters = new StoreClusters();
 
   // features
@@ -45,7 +45,7 @@ export default class Context implements teleport.Context {
   }
 
   init() {
-    return this.storeUser.fetchUser().then(() => {
+    return this.storeUser.fetchUserContext().then(() => {
       const activator = new Activator<Context>(this.features);
       activator.onload(this);
     });
@@ -71,7 +71,7 @@ export default class Context implements teleport.Context {
     return this.storeUser.getTrustedClusterAccess().list;
   }
 
-  isUsersViewEnabled() {
+  isUsersEnabled() {
     return this.storeUser.getUserAccess().list === true;
   }
 }
