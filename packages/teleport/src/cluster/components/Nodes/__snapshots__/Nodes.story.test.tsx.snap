@@ -272,6 +272,10 @@ exports[`loaded 1`] = `
   opacity: 0.4;
 }
 
+.c6:read-only {
+  cursor: not-allowed;
+}
+
 .c6:hover,
 .c6:focus,
 .c6:active {

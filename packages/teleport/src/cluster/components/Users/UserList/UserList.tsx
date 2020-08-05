@@ -31,13 +31,13 @@ import isMatch from 'design/utils/match';
 import { MenuButton, MenuItem } from 'shared/components/MenuAction';
 import { displayDateTime } from 'shared/services/loc';
 import InputSearch from 'teleport/components/InputSearch';
-import { User } from 'teleport/services/user';
+import { User, Access } from 'teleport/services/user';
 
 /**
  * UserList renders the table portions and display columns
  * with user information.
  */
-const UserList = ({ users, pageSize, onView }: Props) => {
+const UserList = ({ users, pageSize, onEdit, access }: Props) => {
   const [searchValue, setSearchValue] = useState('');
 
   // Sort by recently created users.
@@ -123,7 +123,10 @@ const UserList = ({ users, pageSize, onView }: Props) => {
             />
           }
         />
-        <Column header={<Cell />} cell={<ActionCell onView={onView} />} />
+        <Column
+          header={<Cell />}
+          cell={<ActionCell onEdit={onEdit} access={access} />}
+        />
       </PagedTable>
     </div>
   );
@@ -131,11 +134,13 @@ const UserList = ({ users, pageSize, onView }: Props) => {
 export default UserList;
 
 const ActionCell = props => {
-  const { rowIndex, data, onView } = props;
+  const { rowIndex, data, onEdit, access } = props;
   return (
     <Cell align="right">
       <MenuButton>
-        <MenuItem onClick={() => onView(data[rowIndex])}>View</MenuItem>
+        {access.edit && (
+          <MenuItem onClick={() => onEdit(data[rowIndex])}>Edit</MenuItem>
+        )}
       </MenuButton>
     </Cell>
   );
@@ -163,5 +168,7 @@ const RolesCell = props => {
 type Props = {
   users: User[];
   pageSize: number;
-  onView: (user: User) => void;
+  onEdit: (user: User) => void;
+  // access determines what kind of actions the user in context can perform on users.
+  access: Access;
 };

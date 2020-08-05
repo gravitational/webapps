@@ -26,3 +26,7 @@ export default function makeUser(json): User {
     created: new Date(created),
   };
 }
+
+export function makeUsers(json): User[] {
+  return json.users.map(user => makeUser(user));
+}

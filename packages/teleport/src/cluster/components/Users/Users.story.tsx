@@ -45,11 +45,13 @@ export const Success = () => {
         name: 'testrole',
       },
     ]);
+  userServices.fetchUsers = () => Promise.resolve([]);
   return render(ctx);
 };
 
 export const Processing = () => {
   resourceService.fetchRoles = () => new Promise(() => null);
+  userServices.fetchUsers = () => new Promise(() => null);
   return render(ctx);
 };
 
@@ -80,10 +82,16 @@ ctx.storeUser.state = {
       remove: true,
       edit: true,
     },
+    roles: {
+      list: true,
+      read: true,
+      create: true,
+      remove: true,
+      edit: true,
+    },
     logins: null,
     authConnectors: null,
     trustedClusters: null,
-    roles: null,
     sessions: null,
     events: null,
   },

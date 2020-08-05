@@ -29,12 +29,11 @@ import FieldInput from 'shared/components/FieldInput';
 import FieldSelect from 'shared/components/FieldSelect';
 import { Option } from 'shared/components/Select';
 import { requiredField } from 'shared/components/Validation/rules';
-import { ResetToken } from 'teleport/services/user';
+import { ResetToken, User } from 'teleport/services/user';
 import useUserDialog from './useUserDialog';
-import { DialogState } from '../useUsers';
 
 export default function Container(props: Omit<Props, 'state'>) {
-  const state = useUserDialog(props.dialog.user);
+  const state = useUserDialog(props.user);
 
   return <UserDialog {...props} state={state} />;
 }
@@ -47,21 +46,21 @@ export default function Container(props: Omit<Props, 'state'>) {
 export function UserDialog({
   roles,
   onClose,
-  onCreateInvite,
+  updateUserList,
+  user,
   state,
-  dialog,
 }: Props) {
   const {
     attempt,
-    attemptActions,
-    username,
-    setUsername,
+    name,
+    token,
+    upsertUser,
+    setName,
     selectedRoles,
     setSelectedRoles,
-    token,
-    setToken,
   } = state;
 
+  const isNew = user == undefined;
   const selectOptions: Option[] = roles.map(r => ({
     value: r,
     label: r,
@@ -72,12 +71,14 @@ export function UserDialog({
       return;
     }
 
-    const roles = selectedRoles.map(r => r.value);
-    attemptActions.do(() =>
-      onCreateInvite(username, roles).then(token => {
-        setToken(token);
-      })
-    );
+    upsertUser();
+  }
+
+  function handleOnClose() {
+    if (token) {
+      updateUserList();
+    }
+    onClose();
   }
 
   return (
@@ -93,9 +94,7 @@ export function UserDialog({
             {attempt.isSuccess && <DialogTitle>Share Invite Link</DialogTitle>}
             {!attempt.isSuccess && (
               <DialogTitle>
-                {dialog.state === 'create'
-                  ? 'Create User Invite Link'
-                  : 'Viewing'}
+                {isNew ? 'Create User Invite Link' : 'Edit User'}
               </DialogTitle>
             )}
           </DialogHeader>
@@ -110,9 +109,9 @@ export function UserDialog({
                   label="User Name"
                   rule={requiredField('User name is required')}
                   autoFocus
-                  value={username}
-                  onChange={e => setUsername(e.target.value)}
-                  readonly={dialog.state === 'view' ? true : false}
+                  value={name}
+                  onChange={e => setName(e.target.value)}
+                  readonly={isNew ? false : true}
                 />
                 <FieldSelect
                   label="Assign Role/s"
@@ -126,16 +125,15 @@ export function UserDialog({
                   value={selectedRoles}
                   onChange={values => setSelectedRoles(values as Option[])}
                   options={selectOptions}
-                  isDisabled={dialog.state === 'view' ? true : false}
                 />
               </>
             )}
           </DialogContent>
           <DialogFooter>
-            {(attempt.isSuccess || dialog.state === 'view') && (
-              <ButtonSecondary onClick={onClose}>Close</ButtonSecondary>
+            {(attempt.isSuccess || !isNew) && (
+              <ButtonSecondary onClick={handleOnClose}>Close</ButtonSecondary>
             )}
-            {!attempt.isSuccess && dialog.state === 'create' && (
+            {!attempt.isSuccess && isNew && (
               <>
                 <ButtonPrimary
                   mr="3"
@@ -159,6 +157,9 @@ export function UserDialog({
   );
 }
 
+/**
+ * InviteLinkInfo is rendered after new users are created.
+ */
 const InviteLinkInfo = ({ token }: { token: ResetToken }) => {
   const ref = React.useRef();
   const [copyCmd, setCopyCmd] = React.useState(() => 'Copy');
@@ -196,7 +197,7 @@ const InviteLinkInfo = ({ token }: { token: ResetToken }) => {
 type Props = {
   roles: string[];
   onClose(): void;
-  onCreateInvite(username: string, roles: string[]): Promise<any>;
+  updateUserList(): Promise<any>;
+  user: User;
   state: ReturnType<typeof useUserDialog>;
-  dialog: DialogState;
 };

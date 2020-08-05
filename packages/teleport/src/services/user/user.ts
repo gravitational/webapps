@@ -18,23 +18,31 @@ import api from 'teleport/services/api';
 import cfg from 'teleport/config';
 import makeUserContext from './makeUserContext';
 import makeResetToken from './makeResetToken';
-import makeUser from './makeUser';
+import makeUser, { makeUsers } from './makeUser';
 import { User } from './types';
 
 const service = {
   fetchUserContext(clusterId?: string) {
-    return api.get(cfg.getUserUrl(clusterId)).then(makeUserContext);
+    return api.get(cfg.getUserContextUrl(clusterId)).then(makeUserContext);
   },
 
-  createUser(clusterId: string, newUser: User) {
-    return api
-      .post(cfg.getCreateUserInviteUrl(clusterId), newUser)
-      .then(response => {
-        const user = makeUser(response.user);
-        const token = makeResetToken(response.token);
+  fetchUsers(clusterId?: string) {
+    return api.get(cfg.getUsersUrl(clusterId)).then(makeUsers);
+  },
 
-        return { user, token };
-      });
+  upsertUser(user: User, isNew = false, clusterId?: string) {
+    if (isNew) {
+      return service.createUser(user, clusterId);
+    }
+  },
+
+  createUser(user: User, clusterId?: string) {
+    return api.post(cfg.getUsersUrl(clusterId), user).then(response => {
+      const user = makeUser(response.user);
+      const token = makeResetToken(response.token);
+
+      return { user, token };
+    });
   },
 };
 

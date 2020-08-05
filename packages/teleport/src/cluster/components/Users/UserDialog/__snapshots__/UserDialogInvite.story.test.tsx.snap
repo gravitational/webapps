@@ -136,6 +136,10 @@ exports[`failed state 1`] = `
   opacity: 0.4;
 }
 
+.c10:read-only {
+  cursor: not-allowed;
+}
+
 .c9 {
   color: #FFFFFF;
   display: block;
@@ -601,6 +605,10 @@ exports[`initial state 1`] = `
   opacity: 0.4;
 }
 
+.c9:read-only {
+  cursor: not-allowed;
+}
+
 .c8 {
   color: #FFFFFF;
   display: block;
@@ -996,6 +1004,10 @@ exports[`processing state 1`] = `
 
 .c9::placeholder {
   opacity: 0.4;
+}
+
+.c9:read-only {
+  cursor: not-allowed;
 }
 
 .c8 {

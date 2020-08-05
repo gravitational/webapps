@@ -15,7 +15,6 @@
  */
 
 import { useState, useEffect } from 'react';
-import { useTeleport } from 'teleport/teleportContextProvider';
 import resourceService, { Resource } from 'e-teleport/services/resources';
 import { useAttempt } from 'shared/hooks';
 import userServices, { User } from 'teleport/services/user';
@@ -24,56 +23,56 @@ import userServices, { User } from 'teleport/services/user';
  * useUsers contains state for Users view component.
  */
 export default function useUsers() {
-  const userCtx = useTeleport().storeUser;
-  const clusterId = userCtx.state.cluster.clusterId;
-
   const [attempt, attemptActions] = useAttempt({ isProcessing: true });
-
   const [users, setUsers] = useState<User[]>([]);
   const [roles, setRoles] = useState<string[]>([]);
-  const [dialog, setDialog] = useState<DialogState>({
-    state: 'create',
-    user: undefined,
-    show: false,
+  const [action, setAction] = useState<Action>({
+    type: 'none',
   });
 
-  // access determines what kind of actions this user can perform on users.
-  const access = userCtx.getUserAccess();
-
-  function createUserInvite(name: string, roles: string[]) {
-    return userServices
-      .createUser(clusterId, { name, roles })
-      .then(response => {
-        setUsers(users => [...users, response.user]);
-        return response.token;
-      });
+  function startCreate() {
+    setAction({ type: 'create' });
   }
 
-  function extractSetRoles(resources: Resource[]) {
-    const roleNames = resources
-      .filter(resource => resource.kind === 'role')
-      .map(role => role.name);
+  function startEdit(user: User) {
+    setAction({ type: 'edit', user });
+  }
 
-    setRoles(roleNames);
+  function fetchUsers() {
+    return attemptActions.do(() =>
+      userServices.fetchUsers().then(users => setUsers(users))
+    );
+  }
+
+  function onClose() {
+    setAction({ type: 'none' });
   }
 
   useEffect(() => {
-    attemptActions.do(() => resourceService.fetchRoles().then(extractSetRoles));
+    attemptActions.do(() =>
+      Promise.all([
+        resourceService.fetchRoles(),
+        userServices.fetchUsers(),
+      ]).then(values => {
+        setRoles(values[0].map(role => role.name));
+        setUsers(values[1]);
+      })
+    );
   }, []);
 
   return {
-    access,
     attempt,
     users,
     roles,
-    createUserInvite,
-    dialog,
-    setDialog,
+    action,
+    fetchUsers,
+    startCreate,
+    startEdit,
+    onClose,
   };
 }
 
-export type DialogState = {
-  state: 'create' | 'view';
-  user: User;
-  show: boolean;
+type Action = {
+  type: 'create' | 'edit' | 'none';
+  user?: User;
 };

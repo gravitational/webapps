@@ -24,6 +24,7 @@ import { Indicator, Box, ButtonPrimary, Alert } from 'design';
 import UserList from './UserList';
 import UserDialog from './UserDialog/UserDialog';
 import useUsers from './useUsers';
+import { useTeleport } from 'teleport/teleportContextProvider';
 
 export default function Container() {
   const state = useUsers();
@@ -39,38 +40,29 @@ export default function Container() {
  */
 export function Users({ state }: Props) {
   const {
-    access,
     attempt,
-    createUserInvite,
     users,
     roles,
-    dialog,
-    setDialog,
+    action,
+    startCreate,
+    startEdit,
+    onClose,
+    fetchUsers,
   } = state;
 
-  function onView(user) {
-    setDialog({
-      state: 'view',
-      show: true,
-      user,
-    });
-  }
+  const ctx = useTeleport().storeUser;
 
   return (
     <FeatureBox>
       <FeatureHeader>
         <FeatureHeaderTitle>Users</FeatureHeaderTitle>
-        {attempt.isSuccess && access.create && (
-          <ButtonPrimary
-            ml="auto"
-            width="240px"
-            onClick={() =>
-              setDialog({ state: 'create', user: undefined, show: true })
-            }
-          >
-            Add User
-          </ButtonPrimary>
-        )}
+        {attempt.isSuccess &&
+          ctx.getUserAccess().create &&
+          ctx.getRoleAccess().read && (
+            <ButtonPrimary ml="auto" width="240px" onClick={startCreate}>
+              Add User
+            </ButtonPrimary>
+          )}
       </FeatureHeader>
       {attempt.isProcessing && (
         <Box textAlign="center" m={10}>
@@ -79,14 +71,19 @@ export function Users({ state }: Props) {
       )}
       {attempt.isFailed && <Alert kind="danger" children={attempt.message} />}
       {attempt.isSuccess && (
-        <UserList users={users} pageSize={5} onView={onView} />
+        <UserList
+          users={users}
+          pageSize={20}
+          onEdit={startEdit}
+          access={ctx.getUserAccess()}
+        />
       )}
-      {dialog.show && (
+      {(action.type === 'create' || action.type === 'edit') && (
         <UserDialog
           roles={roles}
-          dialog={dialog}
-          onClose={() => setDialog({ ...dialog, show: false })}
-          onCreateInvite={createUserInvite}
+          onClose={onClose}
+          updateUserList={fetchUsers}
+          user={action.user}
         />
       )}
     </FeatureBox>

@@ -30,7 +30,7 @@ export const Initial = () => {
 export const Processing = () => {
   const state = useUserDialog();
   state.attempt.isProcessing = true;
-  state.username = 'Lester';
+  state.name = 'Lester';
   state.selectedRoles = selectedRoles;
   return <UserDialog {...props} state={state} />;
 };
@@ -39,7 +39,7 @@ export const Failed = () => {
   const state = useUserDialog();
   state.attempt.isFailed = true;
   state.attempt.message = 'Some error message';
-  state.username = 'Lester';
+  state.name = 'Lester';
   state.selectedRoles = selectedRoles;
   return <UserDialog {...props} state={state} />;
 };
@@ -67,8 +67,8 @@ const props = {
     'Pilhibokadfasdfadsfasdf',
   ],
   onClose: () => null,
-  onCreateInvite: () => null,
-  dialog: { state: 'create', user: undefined, show: false } as const,
+  updateUserList: () => Promise.resolve(),
+  user: undefined,
 };
 
 const selectedRoles = [

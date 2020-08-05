@@ -22,7 +22,20 @@ export default {
 };
 
 export const UserList = () => {
-  return <UsersList users={users} pageSize={5} onView={() => null} />;
+  return (
+    <UsersList
+      users={users}
+      pageSize={5}
+      onEdit={() => null}
+      access={{
+        list: true,
+        read: true,
+        edit: true,
+        create: true,
+        remove: true,
+      }}
+    />
+  );
 };
 
 const users = [

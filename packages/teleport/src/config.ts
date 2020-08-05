@@ -71,11 +71,11 @@ const cfg = {
   api: {
     clustersPath: '/v1/webapi/sites',
     clusterEventsPath: `/v1/webapi/sites/:clusterId/events/search?from=:start?&to=:end?&limit=:limit?`,
-    createUserInvite: '/v1/webapi/sites/:clusterId/users',
     scp:
       '/v1/webapi/sites/:clusterId/nodes/:serverId/:login/scp?location=:location&filename=:filename',
     renewTokenPath: '/v1/webapi/sessions/renew',
     sessionPath: '/v1/webapi/sessions',
+    usersPath: '/v1/webapi/sites/:clusterId/users',
     userContextPath: '/v1/webapi/sites/:clusterId/context',
     userStatusPath: '/v1/webapi/user/status',
     passwordTokenPath: '/v1/webapi/users/password/token/:tokenId?',
@@ -203,13 +203,14 @@ const cfg = {
     return generatePath(cfg.routes.sessionAuditCmds, { clusterId, sid });
   },
 
-  getUserUrl(clusterId?: string) {
+  getUserContextUrl(clusterId?: string) {
     clusterId = clusterId || cfg.clusterName;
     return generatePath(cfg.api.userContextPath, { clusterId });
   },
 
-  getCreateUserInviteUrl(clusterId: string) {
-    return generatePath(cfg.api.createUserInvite, { clusterId });
+  getUsersUrl(clusterId?: string) {
+    clusterId = clusterId || cfg.clusterName;
+    return generatePath(cfg.api.usersPath, { clusterId });
   },
 
   getTerminalSessionUrl({ clusterId, sid }: UrlParams) {

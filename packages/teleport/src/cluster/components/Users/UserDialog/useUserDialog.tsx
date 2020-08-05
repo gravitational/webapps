@@ -17,14 +17,14 @@
 import { useState } from 'react';
 import { useAttempt } from 'shared/hooks';
 import { Option } from 'shared/components/Select';
-import { ResetToken, User } from 'teleport/services/user';
+import userServices, { ResetToken, User } from 'teleport/services/user';
 
 /**
  * useUserDialog contains state for UserDialog component.
  */
 export default function useUserDialog(user = defaultUser) {
   const [attempt, attemptActions] = useAttempt({});
-  const [username, setUsername] = useState(user.name);
+  const [name, setName] = useState(user.name);
   const [token, setToken] = useState<ResetToken>(null);
   const [selectedRoles, setSelectedRoles] = useState<Option[]>(
     user.roles.map(r => ({
@@ -33,15 +33,26 @@ export default function useUserDialog(user = defaultUser) {
     }))
   );
 
+  function upsertUser() {
+    const isNew = !user.created;
+    const roles = selectedRoles.map(r => r.value);
+    return attemptActions.do(() =>
+      userServices.upsertUser({ name, roles }, isNew).then(response => {
+        if (isNew) {
+          setToken(response.token);
+        }
+      })
+    );
+  }
+
   return {
     attempt,
-    attemptActions,
-    username,
-    setUsername,
+    name,
+    setName,
     selectedRoles,
     setSelectedRoles,
     token,
-    setToken,
+    upsertUser,
   };
 }
 
