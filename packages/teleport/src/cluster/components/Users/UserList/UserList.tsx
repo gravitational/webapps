@@ -16,7 +16,6 @@
 
 import React, { useState } from 'react';
 import { sortBy } from 'lodash';
-
 import { Flex, Label } from 'design';
 import {
   Cell,
@@ -31,13 +30,14 @@ import isMatch from 'design/utils/match';
 import { MenuButton, MenuItem } from 'shared/components/MenuAction';
 import { displayDateTime } from 'shared/services/loc';
 import InputSearch from 'teleport/components/InputSearch';
-import { User, Access } from 'teleport/services/user';
+import { User } from 'teleport/services/user';
+import { useTeleport } from 'teleport/teleportContextProvider';
 
 /**
  * UserList renders the table portions and display columns
  * with user information.
  */
-const UserList = ({ users, pageSize, onEdit, access }: Props) => {
+const UserList = ({ users, pageSize, onEdit }: Props) => {
   const [searchValue, setSearchValue] = useState('');
 
   // Sort by recently created users.
@@ -123,10 +123,7 @@ const UserList = ({ users, pageSize, onEdit, access }: Props) => {
             />
           }
         />
-        <Column
-          header={<Cell />}
-          cell={<ActionCell onEdit={onEdit} access={access} />}
-        />
+        <Column header={<Cell />} cell={<ActionCell onEdit={onEdit} />} />
       </PagedTable>
     </div>
   );
@@ -134,11 +131,12 @@ const UserList = ({ users, pageSize, onEdit, access }: Props) => {
 export default UserList;
 
 const ActionCell = props => {
-  const { rowIndex, data, onEdit, access } = props;
+  const ctx = useTeleport().storeUser;
+  const { rowIndex, data, onEdit } = props;
   return (
     <Cell align="right">
       <MenuButton>
-        {access.edit && (
+        {ctx.getUserAccess().edit && ctx.getRoleAccess().read && (
           <MenuItem onClick={() => onEdit(data[rowIndex])}>Edit</MenuItem>
         )}
       </MenuButton>
@@ -169,6 +167,4 @@ type Props = {
   users: User[];
   pageSize: number;
   onEdit: (user: User) => void;
-  // access determines what kind of actions the user in context can perform on users.
-  access: Access;
 };

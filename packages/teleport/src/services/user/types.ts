@@ -49,7 +49,7 @@ export interface User {
 }
 
 export interface ResetToken {
-  url: string;
+  value: string;
   expires: string;
   username: string;
 }

@@ -17,6 +17,7 @@
 import React from 'react';
 import { UserDialog } from './UserDialog';
 import useUserDialog from './useUserDialog';
+import userServices from 'teleport/services/user';
 
 export default {
   title: 'Teleport/Users/CreateInviteDialog',
@@ -24,7 +25,7 @@ export default {
 
 export const Initial = () => {
   const state = useUserDialog();
-  return <UserDialog {...props} state={state} />;
+  return <UserDialog {...props} state={state} refresh={() => null} />;
 };
 
 export const Processing = () => {
@@ -32,7 +33,7 @@ export const Processing = () => {
   state.attempt.isProcessing = true;
   state.name = 'Lester';
   state.selectedRoles = selectedRoles;
-  return <UserDialog {...props} state={state} />;
+  return <UserDialog {...props} state={state} refresh={() => null} />;
 };
 
 export const Failed = () => {
@@ -41,18 +42,18 @@ export const Failed = () => {
   state.attempt.message = 'Some error message';
   state.name = 'Lester';
   state.selectedRoles = selectedRoles;
-  return <UserDialog {...props} state={state} />;
+  return <UserDialog {...props} state={state} refresh={() => null} />;
 };
 
 export const Success = () => {
   const state = useUserDialog();
   state.attempt.isSuccess = true;
   state.token = {
-    url: 'https://localhost:3080/web/invite/0c536179038b386728dfee6602ca297f',
+    value: '0c536179038b386728dfee6602ca297f',
     expires: '24h30m0s',
     username: 'Lester',
   };
-  return <UserDialog {...props} state={state} />;
+  return <UserDialog {...props} state={state} refresh={() => null} />;
 };
 
 const props = {

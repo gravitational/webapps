@@ -203,6 +203,10 @@ const cfg = {
     return generatePath(cfg.routes.sessionAuditCmds, { clusterId, sid });
   },
 
+  getUserInviteRoute(tokenId = '') {
+    return generatePath(cfg.routes.userInvite, { tokenId });
+  },
+
   getUserContextUrl(clusterId?: string) {
     clusterId = clusterId || cfg.clusterName;
     return generatePath(cfg.api.userContextPath, { clusterId });

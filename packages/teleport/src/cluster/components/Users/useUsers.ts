@@ -15,14 +15,15 @@
  */
 
 import { useState, useEffect } from 'react';
-import resourceService, { Resource } from 'e-teleport/services/resources';
 import { useAttempt } from 'shared/hooks';
-import userServices, { User } from 'teleport/services/user';
+import { User } from 'teleport/services/user';
+import { useTeleport } from 'teleport/teleportContextProvider';
 
 /**
  * useUsers contains state for Users view component.
  */
 export default function useUsers() {
+  const ctx = useTeleport();
   const [attempt, attemptActions] = useAttempt({ isProcessing: true });
   const [users, setUsers] = useState<User[]>([]);
   const [roles, setRoles] = useState<string[]>([]);
@@ -38,9 +39,22 @@ export default function useUsers() {
     setAction({ type: 'edit', user });
   }
 
-  function fetchUsers() {
-    return attemptActions.do(() =>
-      userServices.fetchUsers().then(users => setUsers(users))
+  function fetchRoles() {
+    if (ctx.isRolesEnabled()) {
+      return ctx.resourceService
+        .fetchRoles()
+        .then(resources => resources.map(role => role.name));
+    }
+
+    return Promise.resolve([]);
+  }
+
+  function refresh() {
+    attemptActions.do(() =>
+      Promise.all([fetchRoles(), ctx.userService.fetchUsers()]).then(values => {
+        setRoles(values[0]);
+        setUsers(values[1]);
+      })
     );
   }
 
@@ -49,15 +63,7 @@ export default function useUsers() {
   }
 
   useEffect(() => {
-    attemptActions.do(() =>
-      Promise.all([
-        resourceService.fetchRoles(),
-        userServices.fetchUsers(),
-      ]).then(values => {
-        setRoles(values[0].map(role => role.name));
-        setUsers(values[1]);
-      })
-    );
+    refresh();
   }, []);
 
   return {
@@ -65,7 +71,7 @@ export default function useUsers() {
     users,
     roles,
     action,
-    fetchUsers,
+    refresh,
     startCreate,
     startEdit,
     onClose,

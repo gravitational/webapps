@@ -22,6 +22,8 @@ import auditService from './services/audit';
 import nodeService from './services/nodes';
 import clusterService from './services/clusters';
 import sshService from './services/ssh';
+import userService from 'teleport/services/user';
+import resourceService from 'e-teleport/services/resources';
 
 export default class Context implements teleport.Context {
   // stores
@@ -37,6 +39,8 @@ export default class Context implements teleport.Context {
   nodeService = nodeService;
   clusterService = clusterService;
   sshService = sshService;
+  resourceService = resourceService;
+  userService = userService;
 
   constructor(params?: { clusterId?: string; features?: teleport.Feature[] }) {
     const { clusterId, features = [] } = params || {};

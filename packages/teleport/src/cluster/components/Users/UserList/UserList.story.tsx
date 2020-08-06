@@ -16,6 +16,9 @@
 
 import React from 'react';
 import UsersList from './UserList';
+import StoryContextProvider, {
+  dummyCtx,
+} from 'design/utils/StoryTeleportContextProvider';
 
 export default {
   title: 'Teleport/Users',
@@ -23,18 +26,9 @@ export default {
 
 export const UserList = () => {
   return (
-    <UsersList
-      users={users}
-      pageSize={5}
-      onEdit={() => null}
-      access={{
-        list: true,
-        read: true,
-        edit: true,
-        create: true,
-        remove: true,
-      }}
-    />
+    <StoryContextProvider ctx={dummyCtx}>
+      <UsersList users={users} pageSize={5} onEdit={() => null} />
+    </StoryContextProvider>
   );
 };
 

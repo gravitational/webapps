@@ -16,20 +16,13 @@
 
 import { at } from 'lodash';
 import { ResetToken } from './types';
-import config from 'teleport/config';
 
 export default function makeResetToken(json): ResetToken {
-  const [expires, username, token] = at(json, ['expires', 'name', 'token']);
-
-  // Construct URL for new user to setup password.
-  // Backend constructed URL may not always return a valid URL
-  // when teleport runs behind loadbalancers.
-  const path = config.routes.userInvite.replace(':tokenId', token);
-  const url = `${config.baseUrl}${path}`;
+  const [expires, username, value] = at(json, ['expires', 'name', 'value']);
 
   return {
     username,
     expires,
-    url,
+    value,
   };
 }

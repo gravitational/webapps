@@ -1592,7 +1592,7 @@ exports[`success state 1`] = `
             class="c9"
             style="word-break: break-all;"
           >
-            https://localhost:3080/web/invite/0c536179038b386728dfee6602ca297f
+            http://localhost/web/invite/0c536179038b386728dfee6602ca297f
           </div>
           <button
             class="c10"

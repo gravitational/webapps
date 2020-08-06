@@ -15,13 +15,12 @@
  */
 
 import React from 'react';
-import { Router } from 'react-router';
-import { createMemoryHistory } from 'history';
 import Users from './Users';
-import TeleportContextProvider from 'teleport/teleportContextProvider';
-import TeleportContext from 'teleport/teleportContext';
 import resourceService from 'e-teleport/services/resources';
 import userServices from 'teleport/services/user';
+import StoryContextProvider, {
+  dummyCtx,
+} from 'design/utils/StoryTeleportContextProvider';
 
 export default {
   title: 'Teleport/Users/UsersView',
@@ -46,68 +45,31 @@ export const Success = () => {
       },
     ]);
   userServices.fetchUsers = () => Promise.resolve([]);
-  return render(ctx);
+  return (
+    <StoryContextProvider ctx={dummyCtx}>
+      <Users />
+    </StoryContextProvider>
+  );
 };
 
 export const Processing = () => {
   resourceService.fetchRoles = () => new Promise(() => null);
   userServices.fetchUsers = () => new Promise(() => null);
-  return render(ctx);
+  return (
+    <StoryContextProvider ctx={dummyCtx}>
+      <Users />
+    </StoryContextProvider>
+  );
 };
 
 export const Failed = () => {
   resourceService.fetchRoles = () =>
     Promise.reject(new Error('some error message'));
-  return render(ctx);
-};
-
-function render(ctx) {
-  const history = createMemoryHistory();
   return (
-    <TeleportContextProvider value={ctx}>
-      <Router history={history}>
-        <Users />
-      </Router>
-    </TeleportContextProvider>
+    <StoryContextProvider ctx={dummyCtx}>
+      <Users />
+    </StoryContextProvider>
   );
-}
-
-const ctx = new TeleportContext();
-ctx.storeUser.state = {
-  acl: {
-    users: {
-      list: true,
-      read: true,
-      create: false,
-      remove: true,
-      edit: true,
-    },
-    roles: {
-      list: true,
-      read: true,
-      create: true,
-      remove: true,
-      edit: true,
-    },
-    logins: null,
-    authConnectors: null,
-    trustedClusters: null,
-    sessions: null,
-    events: null,
-  },
-  authType: null,
-  username: null,
-  cluster: {
-    clusterId: '',
-    lastConnected: null,
-    connectedText: '',
-    status: '',
-    url: '',
-    nodeCount: 0,
-    publicURL: '',
-    authVersion: '',
-    proxyVersion: '',
-  },
 };
 
 userServices.createUser = () => new Promise(() => null);

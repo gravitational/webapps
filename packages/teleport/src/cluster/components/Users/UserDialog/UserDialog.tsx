@@ -15,6 +15,7 @@
  */
 
 import React from 'react';
+import useUserDialog from './useUserDialog';
 import copyToClipboard from 'design/utils/copyToClipboard';
 import selectElementContent from 'design/utils/selectElementContent';
 import { ButtonPrimary, ButtonSecondary, Alert, Text, Flex } from 'design';
@@ -30,7 +31,7 @@ import FieldSelect from 'shared/components/FieldSelect';
 import { Option } from 'shared/components/Select';
 import { requiredField } from 'shared/components/Validation/rules';
 import { ResetToken, User } from 'teleport/services/user';
-import useUserDialog from './useUserDialog';
+import cfg from 'teleport/config';
 
 export default function Container(props: Omit<Props, 'state'>) {
   const state = useUserDialog(props.user);
@@ -43,13 +44,7 @@ export default function Container(props: Omit<Props, 'state'>) {
  *  - Create inserts new users and generates invite link
  *  - Edit for updating existing users
  */
-export function UserDialog({
-  roles,
-  onClose,
-  updateUserList,
-  user,
-  state,
-}: Props) {
+export function UserDialog({ roles, onClose, refresh, user, state }: Props) {
   const {
     attempt,
     name,
@@ -76,7 +71,7 @@ export function UserDialog({
 
   function handleOnClose() {
     if (token) {
-      updateUserList();
+      refresh();
     }
     onClose();
   }
@@ -163,9 +158,10 @@ export function UserDialog({
 const InviteLinkInfo = ({ token }: { token: ResetToken }) => {
   const ref = React.useRef();
   const [copyCmd, setCopyCmd] = React.useState(() => 'Copy');
+  const tokenUrl = `${cfg.baseUrl}${cfg.getUserInviteRoute(token.value)}`;
 
   function onCopyClick() {
-    copyToClipboard(token.url).then(() => setCopyCmd('Copied'));
+    copyToClipboard(tokenUrl).then(() => setCopyCmd('Copied'));
     selectElementContent(ref.current);
   }
 
@@ -184,7 +180,7 @@ const InviteLinkInfo = ({ token }: { token: ResetToken }) => {
         justifyContent="space-between"
       >
         <Text ref={ref} style={{ wordBreak: 'break-all' }} mr="3">
-          {token.url}
+          {tokenUrl}
         </Text>
         <ButtonPrimary onClick={onCopyClick} size="small">
           {copyCmd}
@@ -197,7 +193,7 @@ const InviteLinkInfo = ({ token }: { token: ResetToken }) => {
 type Props = {
   roles: string[];
   onClose(): void;
-  updateUserList(): Promise<any>;
+  refresh(): void;
   user: User;
   state: ReturnType<typeof useUserDialog>;
 };
