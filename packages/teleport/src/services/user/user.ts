@@ -34,6 +34,8 @@ const service = {
     if (isNew) {
       return service.createUser(user, clusterId);
     }
+
+    return Promise.reject(new Error('update user unimplemented'));
   },
 
   createUser(user: User, clusterId?: string) {

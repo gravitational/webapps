@@ -31,12 +31,23 @@ export default function useUsers() {
     type: 'none',
   });
 
-  function startCreate() {
+  function onStartCreate() {
     setAction({ type: 'create' });
   }
 
-  function startEdit(user: User) {
+  function onStartEdit(user: User) {
     setAction({ type: 'edit', user });
+  }
+
+  function onClose() {
+    setAction({ type: 'none' });
+  }
+
+  function onSave(user: User, isNew = false) {
+    return ctx.userService.upsertUser(user, isNew).then(response => {
+      setUsers(users => [...users, response.user]);
+      return response.token;
+    });
   }
 
   function fetchRoles() {
@@ -49,21 +60,13 @@ export default function useUsers() {
     return Promise.resolve([]);
   }
 
-  function refresh() {
+  useEffect(() => {
     attemptActions.do(() =>
       Promise.all([fetchRoles(), ctx.userService.fetchUsers()]).then(values => {
         setRoles(values[0]);
         setUsers(values[1]);
       })
     );
-  }
-
-  function onClose() {
-    setAction({ type: 'none' });
-  }
-
-  useEffect(() => {
-    refresh();
   }, []);
 
   return {
@@ -71,10 +74,10 @@ export default function useUsers() {
     users,
     roles,
     action,
-    refresh,
-    startCreate,
-    startEdit,
+    onStartCreate,
+    onStartEdit,
     onClose,
+    onSave,
   };
 }
 

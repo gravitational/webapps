@@ -16,60 +16,108 @@
 
 import React from 'react';
 import Users from './Users';
-import resourceService from 'e-teleport/services/resources';
-import userServices from 'teleport/services/user';
-import StoryContextProvider, {
-  dummyCtx,
-} from 'design/utils/StoryTeleportContextProvider';
+import TeleportContextProvider from 'teleport/teleportContextProvider';
+import TeleportContext from 'teleport/teleportContext';
+import makeAcl from 'teleport/services/user/makeAcl';
 
 export default {
   title: 'Teleport/Users/UsersView',
 };
 
 export const Success = () => {
-  resourceService.fetchRoles = () =>
-    Promise.resolve([
-      {
-        content: '',
-        displayName: '',
-        id: '',
-        kind: 'role',
-        name: 'admin',
-      },
-      {
-        content: '',
-        displayName: '',
-        id: '',
-        kind: 'role',
-        name: 'testrole',
-      },
-    ]);
-  userServices.fetchUsers = () => Promise.resolve([]);
-  return (
-    <StoryContextProvider ctx={dummyCtx}>
-      <Users />
-    </StoryContextProvider>
-  );
+  const ctx = new TeleportContext();
+  const acl = makeAcl(sample.acl);
+
+  ctx.storeUser.setState({ acl });
+  ctx.resourceService.fetchRoles = () => Promise.resolve(sample.roles);
+  ctx.userService.fetchUsers = () => Promise.resolve(sample.users);
+
+  return render(ctx, <Users />);
 };
 
 export const Processing = () => {
-  resourceService.fetchRoles = () => new Promise(() => null);
-  userServices.fetchUsers = () => new Promise(() => null);
-  return (
-    <StoryContextProvider ctx={dummyCtx}>
-      <Users />
-    </StoryContextProvider>
-  );
+  const ctx = new TeleportContext();
+  const acl = makeAcl(sample.acl);
+
+  ctx.storeUser.setState({ acl });
+  ctx.resourceService.fetchRoles = () => new Promise(() => null);
+  ctx.userService.fetchUsers = () => new Promise(() => null);
+  return render(ctx, <Users />);
 };
 
 export const Failed = () => {
-  resourceService.fetchRoles = () =>
+  const ctx = new TeleportContext();
+  const acl = makeAcl(sample.acl);
+
+  ctx.storeUser.setState({ acl });
+  ctx.resourceService.fetchRoles = () =>
     Promise.reject(new Error('some error message'));
-  return (
-    <StoryContextProvider ctx={dummyCtx}>
-      <Users />
-    </StoryContextProvider>
-  );
+  return render(ctx, <Users />);
 };
 
-userServices.createUser = () => new Promise(() => null);
+function render(ctx: TeleportContext, children: JSX.Element) {
+  return (
+    <TeleportContextProvider value={ctx}>{children}</TeleportContextProvider>
+  );
+}
+
+const sample = {
+  acl: {
+    users: {
+      list: true,
+      create: true,
+    },
+    roles: {
+      list: true,
+      read: true,
+    },
+  },
+  roles: [
+    {
+      content: '',
+      displayName: '',
+      id: '',
+      kind: 'role',
+      name: 'admin',
+    } as const,
+    {
+      content: '',
+      displayName: '',
+      id: '',
+      kind: 'role',
+      name: 'testrole',
+    } as const,
+  ],
+  users: [
+    {
+      name: 'cikar@egaposci.me',
+      roles: ['admin'],
+      created: new Date('02/15/2020'),
+    },
+    {
+      name: 'hi@nen.pa',
+      roles: ['ruhh', 'admin'],
+      created: new Date('10/15/2020'),
+    },
+    {
+      name: 'ziat@uthatebo.sl',
+      roles: ['kaco', 'ziuzzow', 'admin'],
+      created: new Date('01/15/2020'),
+    },
+    {
+      name: 'pamkad@ukgir.ki',
+      roles: ['vuit', 'vedkonm', 'valvapel'],
+      created: new Date('08/15/2020'),
+    },
+    {
+      name: 'jap@kosusfaw.mp',
+      roles: ['ubip', 'duzjadj', 'dupiwuzocafe', 'abc', 'anavebikilonim'],
+      created: new Date('01/15/2020'),
+    },
+    {
+      name: 'azesotil@jevig.org',
+      roles: ['tugu'],
+      created: new Date('09/15/2020'),
+    },
+  ],
+};

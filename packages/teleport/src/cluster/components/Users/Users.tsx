@@ -44,10 +44,10 @@ export function Users({ state }: Props) {
     users,
     roles,
     action,
-    startCreate,
-    startEdit,
+    onStartCreate,
+    onStartEdit,
     onClose,
-    refresh,
+    onSave,
   } = state;
 
   const ctx = useTeleport().storeUser;
@@ -59,7 +59,7 @@ export function Users({ state }: Props) {
         {attempt.isSuccess &&
           ctx.getUserAccess().create &&
           ctx.getRoleAccess().read && (
-            <ButtonPrimary ml="auto" width="240px" onClick={startCreate}>
+            <ButtonPrimary ml="auto" width="240px" onClick={onStartCreate}>
               Add User
             </ButtonPrimary>
           )}
@@ -71,13 +71,13 @@ export function Users({ state }: Props) {
       )}
       {attempt.isFailed && <Alert kind="danger" children={attempt.message} />}
       {attempt.isSuccess && (
-        <UserList users={users} pageSize={20} onEdit={startEdit} />
+        <UserList users={users} pageSize={20} onEdit={onStartEdit} />
       )}
       {(action.type === 'create' || action.type === 'edit') && (
         <UserDialog
           roles={roles}
           onClose={onClose}
-          refresh={refresh}
+          onSave={onSave}
           user={action.user}
         />
       )}

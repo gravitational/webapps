@@ -17,62 +17,87 @@
 import React from 'react';
 import { UserDialog } from './UserDialog';
 import useUserDialog from './useUserDialog';
-import userServices from 'teleport/services/user';
+import TeleportContextProvider from 'teleport/teleportContextProvider';
+import TeleportContext from 'teleport/teleportContext';
 
 export default {
   title: 'Teleport/Users/CreateInviteDialog',
 };
 
 export const Initial = () => {
-  const state = useUserDialog();
-  return <UserDialog {...props} state={state} refresh={() => null} />;
+  const ctx = new TeleportContext();
+  const save = () => new Promise(() => null);
+  const state = useUserDialog(save);
+
+  return render(ctx, <UserDialog {...sample.props} state={state} />);
 };
 
 export const Processing = () => {
-  const state = useUserDialog();
+  const ctx = new TeleportContext();
+  const save = () => new Promise(() => null);
+
+  const state = useUserDialog(save);
   state.attempt.isProcessing = true;
   state.name = 'Lester';
-  state.selectedRoles = selectedRoles;
-  return <UserDialog {...props} state={state} refresh={() => null} />;
+  state.selectedRoles = sample.selectedRoles;
+
+  return render(ctx, <UserDialog {...sample.props} state={state} />);
 };
 
 export const Failed = () => {
-  const state = useUserDialog();
+  const ctx = new TeleportContext();
+  const save = () => new Promise(() => null);
+
+  const state = useUserDialog(save);
   state.attempt.isFailed = true;
   state.attempt.message = 'Some error message';
   state.name = 'Lester';
-  state.selectedRoles = selectedRoles;
-  return <UserDialog {...props} state={state} refresh={() => null} />;
+  state.selectedRoles = sample.selectedRoles;
+
+  return render(ctx, <UserDialog {...sample.props} state={state} />);
 };
 
 export const Success = () => {
-  const state = useUserDialog();
+  const ctx = new TeleportContext();
+  const save = () => new Promise(() => null);
+
+  const state = useUserDialog(save);
   state.attempt.isSuccess = true;
   state.token = {
     value: '0c536179038b386728dfee6602ca297f',
     expires: '24h30m0s',
     username: 'Lester',
   };
-  return <UserDialog {...props} state={state} refresh={() => null} />;
+  return render(ctx, <UserDialog {...sample.props} state={state} />);
 };
 
-const props = {
-  roles: [
-    'Relupba',
-    'B',
-    'Vamheoze',
-    'Bawmipnan',
-    'Nevumja',
-    'Pihvujve',
-    'Hiw',
-    'Pilhibokadfasdfadsfasdf',
+const sample = {
+  props: {
+    roles: [
+      'Relupba',
+      'B',
+      'Vamheoze',
+      'Bawmipnan',
+      'Nevumja',
+      'Pihvujve',
+      'Hiw',
+      'Pilhibokadfasdfadsfasdf',
+    ],
+    onClose: () => null,
+    user: undefined,
+  },
+  selectedRoles: [
+    { value: 'admin', label: 'admin' },
+    { value: 'testrole', label: 'testrole' },
   ],
-  onClose: () => null,
-  updateUserList: () => Promise.resolve(),
-  user: undefined,
+  user: {
+    name: 'lester',
+    roles: undefined,
+  },
 };
 
-const selectedRoles = [
-  { value: 'admin', label: 'admin' },
-  { value: 'testrole', label: 'testrole' },
-];
+function render(ctx: TeleportContext, children: JSX.Element) {
+  return (
+    <TeleportContextProvider value={ctx}>{children}</TeleportContextProvider>
+  );
+}

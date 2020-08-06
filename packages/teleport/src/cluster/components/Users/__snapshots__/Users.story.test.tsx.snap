@@ -135,6 +135,55 @@ exports[`success state 1`] = `
   color: rgba(255,255,255,0.3);
 }
 
+.c14 {
+  line-height: 1.5;
+  margin: 0;
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  box-sizing: border-box;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-family: inherit;
+  font-weight: 600;
+  outline: none;
+  position: relative;
+  text-align: center;
+  text-decoration: none;
+  text-transform: uppercase;
+  transition: all 0.3s;
+  -webkit-font-smoothing: antialiased;
+  background: #2C3A73;
+  border: 1px solid #1C254D;
+  opacity: .87;
+  color: rgba(255,255,255,0.87);
+  font-size: 10px;
+  min-height: 24px;
+  padding: 0px 16px;
+  height: 24px;
+}
+
+.c14:active {
+  opacity: 0.56;
+}
+
+.c14:hover,
+.c14:focus {
+  background: #2C3A73;
+  border: 1px solid rgba(255,255,255,0.1);
+  opacity: 1;
+}
+
+.c14:active {
+  opacity: 0.24;
+}
+
+.c14:disabled {
+  background: rgba(255,255,255,0.12);
+  color: rgba(255,255,255,0.3);
+}
+
 .c10 {
   display: inline-block;
   transition: color .3s;
@@ -148,11 +197,30 @@ exports[`success state 1`] = `
   color: #FFFFFF;
 }
 
-.c14 {
+.c15 {
   display: inline-block;
   transition: color .3s;
-  margin-right: 8px;
-  color: #FFFFFF;
+  margin-left: 8px;
+  margin-right: -8px;
+  color: rgba(255,255,255,0.56);
+  font-size: 14px;
+}
+
+.c13 {
+  box-sizing: border-box;
+  border-radius: 100px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 16px;
+  line-height: 1.4;
+  font-size: 10px;
+  font-weight: 500;
+  padding: 0 8px;
+  background-color: #111B48;
+  color: rgba(255,255,255,0.87);
+  margin-bottom: 4px;
+  margin-right: 4px;
 }
 
 .c7 {
@@ -163,16 +231,6 @@ exports[`success state 1`] = `
   line-height: 16px;
   margin: 0px;
   color: #FFFFFF;
-}
-
-.c13 {
-  overflow: hidden;
-  text-overflow: ellipsis;
-  font-weight: 300;
-  font-size: 16px;
-  line-height: 32px;
-  margin: 24px;
-  color: rgba(255,255,255,0.87);
 }
 
 .c4 {
@@ -412,16 +470,16 @@ exports[`success state 1`] = `
           >
             SHOWING 
             <strong>
-              0
+              1
             </strong>
              - 
             <strong>
-              0
+              6
             </strong>
              
             of 
             <strong>
-              0
+              6
             </strong>
           </div>
           <div
@@ -486,20 +544,249 @@ exports[`success state 1`] = `
           </thead>
           <tbody>
             <tr>
-              <td
-                colspan="4"
-              >
+              <td>
+                hi@nen.pa
+              </td>
+              <td>
                 <div
                   class="c13"
-                  color="text.primary"
-                  style="display: flex; align-items: center; justify-content: center;"
+                  kind="secondary"
                 >
-                  <span
-                    class="c9 c14 icon icon-database "
-                    color="light"
-                  />
-                  No Data Available
+                  admin
                 </div>
+                <div
+                  class="c13"
+                  kind="secondary"
+                >
+                  ruhh
+                </div>
+              </td>
+              <td>
+                2020-10-15 07:00:00
+              </td>
+              <td
+                align="right"
+              >
+                <button
+                  class="c14"
+                  height="24px"
+                  kind="border"
+                >
+                  OPTIONS
+                  <span
+                    class="c9 c15 icon icon-caret-down "
+                    color="text.secondary"
+                    font-size="2"
+                  />
+                </button>
+              </td>
+            </tr>
+            <tr>
+              <td>
+                azesotil@jevig.org
+              </td>
+              <td>
+                <div
+                  class="c13"
+                  kind="secondary"
+                >
+                  tugu
+                </div>
+              </td>
+              <td>
+                2020-09-15 07:00:00
+              </td>
+              <td
+                align="right"
+              >
+                <button
+                  class="c14"
+                  height="24px"
+                  kind="border"
+                >
+                  OPTIONS
+                  <span
+                    class="c9 c15 icon icon-caret-down "
+                    color="text.secondary"
+                    font-size="2"
+                  />
+                </button>
+              </td>
+            </tr>
+            <tr>
+              <td>
+                pamkad@ukgir.ki
+              </td>
+              <td>
+                <div
+                  class="c13"
+                  kind="secondary"
+                >
+                  valvapel
+                </div>
+                <div
+                  class="c13"
+                  kind="secondary"
+                >
+                  vedkonm
+                </div>
+                <div
+                  class="c13"
+                  kind="secondary"
+                >
+                  vuit
+                </div>
+              </td>
+              <td>
+                2020-08-15 07:00:00
+              </td>
+              <td
+                align="right"
+              >
+                <button
+                  class="c14"
+                  height="24px"
+                  kind="border"
+                >
+                  OPTIONS
+                  <span
+                    class="c9 c15 icon icon-caret-down "
+                    color="text.secondary"
+                    font-size="2"
+                  />
+                </button>
+              </td>
+            </tr>
+            <tr>
+              <td>
+                cikar@egaposci.me
+              </td>
+              <td>
+                <div
+                  class="c13"
+                  kind="secondary"
+                >
+                  admin
+                </div>
+              </td>
+              <td>
+                2020-02-15 08:00:00
+              </td>
+              <td
+                align="right"
+              >
+                <button
+                  class="c14"
+                  height="24px"
+                  kind="border"
+                >
+                  OPTIONS
+                  <span
+                    class="c9 c15 icon icon-caret-down "
+                    color="text.secondary"
+                    font-size="2"
+                  />
+                </button>
+              </td>
+            </tr>
+            <tr>
+              <td>
+                jap@kosusfaw.mp
+              </td>
+              <td>
+                <div
+                  class="c13"
+                  kind="secondary"
+                >
+                  abc
+                </div>
+                <div
+                  class="c13"
+                  kind="secondary"
+                >
+                  anavebikilonim
+                </div>
+                <div
+                  class="c13"
+                  kind="secondary"
+                >
+                  dupiwuzocafe
+                </div>
+                <div
+                  class="c13"
+                  kind="secondary"
+                >
+                  duzjadj
+                </div>
+                <div
+                  class="c13"
+                  kind="secondary"
+                >
+                  ubip
+                </div>
+              </td>
+              <td>
+                2020-01-15 08:00:00
+              </td>
+              <td
+                align="right"
+              >
+                <button
+                  class="c14"
+                  height="24px"
+                  kind="border"
+                >
+                  OPTIONS
+                  <span
+                    class="c9 c15 icon icon-caret-down "
+                    color="text.secondary"
+                    font-size="2"
+                  />
+                </button>
+              </td>
+            </tr>
+            <tr>
+              <td>
+                ziat@uthatebo.sl
+              </td>
+              <td>
+                <div
+                  class="c13"
+                  kind="secondary"
+                >
+                  admin
+                </div>
+                <div
+                  class="c13"
+                  kind="secondary"
+                >
+                  kaco
+                </div>
+                <div
+                  class="c13"
+                  kind="secondary"
+                >
+                  ziuzzow
+                </div>
+              </td>
+              <td>
+                2020-01-15 08:00:00
+              </td>
+              <td
+                align="right"
+              >
+                <button
+                  class="c14"
+                  height="24px"
+                  kind="border"
+                >
+                  OPTIONS
+                  <span
+                    class="c9 c15 icon icon-caret-down "
+                    color="text.secondary"
+                    font-size="2"
+                  />
+                </button>
               </td>
             </tr>
           </tbody>

@@ -17,12 +17,13 @@
 import { useState } from 'react';
 import { useAttempt } from 'shared/hooks';
 import { Option } from 'shared/components/Select';
-import userServices, { ResetToken, User } from 'teleport/services/user';
+import { ResetToken, User } from 'teleport/services/user';
 
 /**
  * useUserDialog contains state for UserDialog component.
  */
-export default function useUserDialog(user = defaultUser) {
+export default function useUserDialog(save: Save, user = defaultUser) {
+  const isNew = !user.created;
   const [attempt, attemptActions] = useAttempt({});
   const [name, setName] = useState(user.name);
   const [token, setToken] = useState<ResetToken>(null);
@@ -33,13 +34,13 @@ export default function useUserDialog(user = defaultUser) {
     }))
   );
 
-  function upsertUser() {
-    const isNew = !user.created;
+  function onSave() {
     const roles = selectedRoles.map(r => r.value);
+
     return attemptActions.do(() =>
-      userServices.upsertUser({ name, roles }, isNew).then(response => {
+      save({ name, roles }, isNew).then(token => {
         if (isNew) {
-          setToken(response.token);
+          setToken(token);
         }
       })
     );
@@ -52,7 +53,8 @@ export default function useUserDialog(user = defaultUser) {
     selectedRoles,
     setSelectedRoles,
     token,
-    upsertUser,
+    onSave,
+    isNew,
   };
 }
 
@@ -61,3 +63,5 @@ const defaultUser: User = {
   roles: [],
   created: undefined,
 };
+
+type Save = (user: User, isNew: boolean) => Promise<any>;
