@@ -43,7 +43,7 @@ export function Users({ state }: Props) {
     attempt,
     users,
     roles,
-    action,
+    operation,
     onStartCreate,
     onStartEdit,
     onClose,
@@ -51,18 +51,18 @@ export function Users({ state }: Props) {
   } = state;
 
   const ctx = useTeleport().storeUser;
+  const canCreate =
+    attempt.isSuccess && ctx.getUserAccess().create && ctx.getRoleAccess().read;
 
   return (
     <FeatureBox>
       <FeatureHeader>
         <FeatureHeaderTitle>Users</FeatureHeaderTitle>
-        {attempt.isSuccess &&
-          ctx.getUserAccess().create &&
-          ctx.getRoleAccess().read && (
-            <ButtonPrimary ml="auto" width="240px" onClick={onStartCreate}>
-              Add User
-            </ButtonPrimary>
-          )}
+        {canCreate && (
+          <ButtonPrimary ml="auto" width="240px" onClick={onStartCreate}>
+            Add User
+          </ButtonPrimary>
+        )}
       </FeatureHeader>
       {attempt.isProcessing && (
         <Box textAlign="center" m={10}>
@@ -73,12 +73,12 @@ export function Users({ state }: Props) {
       {attempt.isSuccess && (
         <UserList users={users} pageSize={20} onEdit={onStartEdit} />
       )}
-      {(action.type === 'create' || action.type === 'edit') && (
+      {(operation.type === 'create' || operation.type === 'edit') && (
         <UserDialog
           roles={roles}
           onClose={onClose}
           onSave={onSave}
-          user={action.user}
+          user={operation.user}
         />
       )}
     </FeatureBox>

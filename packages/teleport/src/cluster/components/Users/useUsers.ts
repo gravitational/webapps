@@ -27,20 +27,20 @@ export default function useUsers() {
   const [attempt, attemptActions] = useAttempt({ isProcessing: true });
   const [users, setUsers] = useState<User[]>([]);
   const [roles, setRoles] = useState<string[]>([]);
-  const [action, setAction] = useState<Action>({
+  const [operation, setOperation] = useState<Operation>({
     type: 'none',
   });
 
   function onStartCreate() {
-    setAction({ type: 'create' });
+    setOperation({ type: 'create' });
   }
 
   function onStartEdit(user: User) {
-    setAction({ type: 'edit', user });
+    setOperation({ type: 'edit', user });
   }
 
   function onClose() {
-    setAction({ type: 'none' });
+    setOperation({ type: 'none' });
   }
 
   function onSave(user: User, isNew = false) {
@@ -73,7 +73,7 @@ export default function useUsers() {
     attempt,
     users,
     roles,
-    action,
+    operation,
     onStartCreate,
     onStartEdit,
     onClose,
@@ -81,7 +81,7 @@ export default function useUsers() {
   };
 }
 
-type Action = {
+type Operation = {
   type: 'create' | 'edit' | 'none';
   user?: User;
 };

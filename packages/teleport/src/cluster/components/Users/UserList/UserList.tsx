@@ -85,7 +85,7 @@ const UserList = ({ users, pageSize, onEdit }: Props) => {
   const tableProps = { pageSize, data };
 
   return (
-    <div>
+    <>
       <Flex mb={4}>
         <InputSearch height="30px" mr="3" onChange={onSearchChange} />
       </Flex>
@@ -125,7 +125,7 @@ const UserList = ({ users, pageSize, onEdit }: Props) => {
         />
         <Column header={<Cell />} cell={<ActionCell onEdit={onEdit} />} />
       </PagedTable>
-    </div>
+    </>
   );
 };
 export default UserList;

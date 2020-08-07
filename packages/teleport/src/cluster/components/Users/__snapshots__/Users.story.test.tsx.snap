@@ -1,93 +1,5 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`processing state 1`] = `
-.c3 {
-  box-sizing: border-box;
-  margin: 72px;
-  text-align: center;
-}
-
-.c4 {
-  display: inline-block;
-  transition: color .3s;
-  color: #FFFFFF;
-}
-
-.c5 {
-  font-size: 32px;
-  height: 32px;
-  width: 32px;
-  animation: anim-rotate 1s infinite linear;
-  color: #fff;
-  display: inline-block;
-  margin: 16px;
-  opacity: 0.24;
-}
-
-.c1 {
-  box-sizing: border-box;
-  margin-bottom: 24px;
-  display: flex;
-  align-items: center;
-  flex-shrink: 0;
-  border-bottom: 1px solid #1C254D;
-  height: 56px;
-  margin-left: -40px;
-  margin-right: -40px;
-  padding-left: 40px;
-  padding-right: 40px;
-}
-
-.c2 {
-  overflow: hidden;
-  text-overflow: ellipsis;
-  font-weight: 300;
-  font-size: 22px;
-  line-height: 32px;
-  margin: 0px;
-  flex-shrink: 0;
-}
-
-.c0 {
-  box-sizing: border-box;
-  padding-left: 40px;
-  padding-right: 40px;
-  display: flex;
-  overflow: auto;
-  width: 100%;
-  height: 100%;
-  flex-direction: column;
-}
-
-.c0::after {
-  content: ' ';
-  padding-bottom: 24px;
-}
-
-<div
-  class="sc-fzqBZW c0"
->
-  <div
-    class="sc-fzqBZW c1"
-  >
-    <div
-      class="sc-fznZeY c2"
-    >
-      Users
-    </div>
-  </div>
-  <div
-    class="c3"
-  >
-    <span
-      class="c4 icon icon-spinner8 c5"
-      color="light"
-      data-testid="loader"
-    />
-  </div>
-</div>
-`;
-
 exports[`success state 1`] = `
 .c3 {
   line-height: 1.5;
@@ -448,350 +360,348 @@ exports[`success state 1`] = `
         Add User
       </button>
     </div>
+    <div
+      class="c4"
+    >
+      <input
+        class="c5"
+        color="text.primary"
+        height="30px"
+        placeholder="SEARCH..."
+        value=""
+      />
+    </div>
     <div>
-      <div
-        class="c4"
+      <nav
+        class="c6"
       >
-        <input
-          class="c5"
-          color="text.primary"
-          height="30px"
-          placeholder="SEARCH..."
-          value=""
-        />
-      </div>
-      <div>
-        <nav
-          class="c6"
+        <div
+          class="c7"
+          color="primary.contrastText"
         >
-          <div
-            class="c7"
-            color="primary.contrastText"
-          >
-            SHOWING 
-            <strong>
-              1
-            </strong>
-             - 
-            <strong>
-              6
-            </strong>
-             
-            of 
-            <strong>
-              6
-            </strong>
-          </div>
-          <div
-            class="c8"
-          >
-            <button
-              disabled=""
-              title="Previous Page"
-            >
-              <span
-                class="c9 c10 icon icon-arrow-left-circle "
-                color="light"
-                font-size="3"
-              />
-            </button>
-            <button
-              disabled=""
-              title="Next Page"
-            >
-              <span
-                class="c9 c10 icon icon-arrow-right-circle "
-                color="light"
-                font-size="3"
-              />
-            </button>
-          </div>
-        </nav>
-        <table
-          class="c11"
+          SHOWING 
+          <strong>
+            1
+          </strong>
+           - 
+          <strong>
+            6
+          </strong>
+           
+          of 
+          <strong>
+            6
+          </strong>
+        </div>
+        <div
+          class="c8"
         >
-          <thead>
-            <tr>
-              <th>
-                <a>
-                  Username
-                  <span
-                    class="c9 c12 icon icon-chevrons-expand-vertical "
-                    color="light"
-                  />
-                </a>
-              </th>
-              <th>
-                <a>
-                  Roles
-                  <span
-                    class="c9 c12 icon icon-chevrons-expand-vertical "
-                    color="light"
-                  />
-                </a>
-              </th>
-              <th>
-                <a>
-                  Created
-                  <span
-                    class="c9 c12 icon icon-chevron-up "
-                    color="light"
-                  />
-                </a>
-              </th>
-              <th />
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td>
-                hi@nen.pa
-              </td>
-              <td>
-                <div
-                  class="c13"
-                  kind="secondary"
-                >
-                  admin
-                </div>
-                <div
-                  class="c13"
-                  kind="secondary"
-                >
-                  ruhh
-                </div>
-              </td>
-              <td>
-                2020-10-15 07:00:00
-              </td>
-              <td
-                align="right"
+          <button
+            disabled=""
+            title="Previous Page"
+          >
+            <span
+              class="c9 c10 icon icon-arrow-left-circle "
+              color="light"
+              font-size="3"
+            />
+          </button>
+          <button
+            disabled=""
+            title="Next Page"
+          >
+            <span
+              class="c9 c10 icon icon-arrow-right-circle "
+              color="light"
+              font-size="3"
+            />
+          </button>
+        </div>
+      </nav>
+      <table
+        class="c11"
+      >
+        <thead>
+          <tr>
+            <th>
+              <a>
+                Username
+                <span
+                  class="c9 c12 icon icon-chevrons-expand-vertical "
+                  color="light"
+                />
+              </a>
+            </th>
+            <th>
+              <a>
+                Roles
+                <span
+                  class="c9 c12 icon icon-chevrons-expand-vertical "
+                  color="light"
+                />
+              </a>
+            </th>
+            <th>
+              <a>
+                Created
+                <span
+                  class="c9 c12 icon icon-chevron-up "
+                  color="light"
+                />
+              </a>
+            </th>
+            <th />
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>
+              hi@nen.pa
+            </td>
+            <td>
+              <div
+                class="c13"
+                kind="secondary"
               >
-                <button
-                  class="c14"
-                  height="24px"
-                  kind="border"
-                >
-                  OPTIONS
-                  <span
-                    class="c9 c15 icon icon-caret-down "
-                    color="text.secondary"
-                    font-size="2"
-                  />
-                </button>
-              </td>
-            </tr>
-            <tr>
-              <td>
-                azesotil@jevig.org
-              </td>
-              <td>
-                <div
-                  class="c13"
-                  kind="secondary"
-                >
-                  tugu
-                </div>
-              </td>
-              <td>
-                2020-09-15 07:00:00
-              </td>
-              <td
-                align="right"
+                admin
+              </div>
+              <div
+                class="c13"
+                kind="secondary"
               >
-                <button
-                  class="c14"
-                  height="24px"
-                  kind="border"
-                >
-                  OPTIONS
-                  <span
-                    class="c9 c15 icon icon-caret-down "
-                    color="text.secondary"
-                    font-size="2"
-                  />
-                </button>
-              </td>
-            </tr>
-            <tr>
-              <td>
-                pamkad@ukgir.ki
-              </td>
-              <td>
-                <div
-                  class="c13"
-                  kind="secondary"
-                >
-                  valvapel
-                </div>
-                <div
-                  class="c13"
-                  kind="secondary"
-                >
-                  vedkonm
-                </div>
-                <div
-                  class="c13"
-                  kind="secondary"
-                >
-                  vuit
-                </div>
-              </td>
-              <td>
-                2020-08-15 07:00:00
-              </td>
-              <td
-                align="right"
+                ruhh
+              </div>
+            </td>
+            <td>
+              2020-10-15 07:00:00
+            </td>
+            <td
+              align="right"
+            >
+              <button
+                class="c14"
+                height="24px"
+                kind="border"
               >
-                <button
-                  class="c14"
-                  height="24px"
-                  kind="border"
-                >
-                  OPTIONS
-                  <span
-                    class="c9 c15 icon icon-caret-down "
-                    color="text.secondary"
-                    font-size="2"
-                  />
-                </button>
-              </td>
-            </tr>
-            <tr>
-              <td>
-                cikar@egaposci.me
-              </td>
-              <td>
-                <div
-                  class="c13"
-                  kind="secondary"
-                >
-                  admin
-                </div>
-              </td>
-              <td>
-                2020-02-15 08:00:00
-              </td>
-              <td
-                align="right"
+                OPTIONS
+                <span
+                  class="c9 c15 icon icon-caret-down "
+                  color="text.secondary"
+                  font-size="2"
+                />
+              </button>
+            </td>
+          </tr>
+          <tr>
+            <td>
+              azesotil@jevig.org
+            </td>
+            <td>
+              <div
+                class="c13"
+                kind="secondary"
               >
-                <button
-                  class="c14"
-                  height="24px"
-                  kind="border"
-                >
-                  OPTIONS
-                  <span
-                    class="c9 c15 icon icon-caret-down "
-                    color="text.secondary"
-                    font-size="2"
-                  />
-                </button>
-              </td>
-            </tr>
-            <tr>
-              <td>
-                jap@kosusfaw.mp
-              </td>
-              <td>
-                <div
-                  class="c13"
-                  kind="secondary"
-                >
-                  abc
-                </div>
-                <div
-                  class="c13"
-                  kind="secondary"
-                >
-                  anavebikilonim
-                </div>
-                <div
-                  class="c13"
-                  kind="secondary"
-                >
-                  dupiwuzocafe
-                </div>
-                <div
-                  class="c13"
-                  kind="secondary"
-                >
-                  duzjadj
-                </div>
-                <div
-                  class="c13"
-                  kind="secondary"
-                >
-                  ubip
-                </div>
-              </td>
-              <td>
-                2020-01-15 08:00:00
-              </td>
-              <td
-                align="right"
+                tugu
+              </div>
+            </td>
+            <td>
+              2020-09-15 07:00:00
+            </td>
+            <td
+              align="right"
+            >
+              <button
+                class="c14"
+                height="24px"
+                kind="border"
               >
-                <button
-                  class="c14"
-                  height="24px"
-                  kind="border"
-                >
-                  OPTIONS
-                  <span
-                    class="c9 c15 icon icon-caret-down "
-                    color="text.secondary"
-                    font-size="2"
-                  />
-                </button>
-              </td>
-            </tr>
-            <tr>
-              <td>
-                ziat@uthatebo.sl
-              </td>
-              <td>
-                <div
-                  class="c13"
-                  kind="secondary"
-                >
-                  admin
-                </div>
-                <div
-                  class="c13"
-                  kind="secondary"
-                >
-                  kaco
-                </div>
-                <div
-                  class="c13"
-                  kind="secondary"
-                >
-                  ziuzzow
-                </div>
-              </td>
-              <td>
-                2020-01-15 08:00:00
-              </td>
-              <td
-                align="right"
+                OPTIONS
+                <span
+                  class="c9 c15 icon icon-caret-down "
+                  color="text.secondary"
+                  font-size="2"
+                />
+              </button>
+            </td>
+          </tr>
+          <tr>
+            <td>
+              pamkad@ukgir.ki
+            </td>
+            <td>
+              <div
+                class="c13"
+                kind="secondary"
               >
-                <button
-                  class="c14"
-                  height="24px"
-                  kind="border"
-                >
-                  OPTIONS
-                  <span
-                    class="c9 c15 icon icon-caret-down "
-                    color="text.secondary"
-                    font-size="2"
-                  />
-                </button>
-              </td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
+                valvapel
+              </div>
+              <div
+                class="c13"
+                kind="secondary"
+              >
+                vedkonm
+              </div>
+              <div
+                class="c13"
+                kind="secondary"
+              >
+                vuit
+              </div>
+            </td>
+            <td>
+              2020-08-15 07:00:00
+            </td>
+            <td
+              align="right"
+            >
+              <button
+                class="c14"
+                height="24px"
+                kind="border"
+              >
+                OPTIONS
+                <span
+                  class="c9 c15 icon icon-caret-down "
+                  color="text.secondary"
+                  font-size="2"
+                />
+              </button>
+            </td>
+          </tr>
+          <tr>
+            <td>
+              cikar@egaposci.me
+            </td>
+            <td>
+              <div
+                class="c13"
+                kind="secondary"
+              >
+                admin
+              </div>
+            </td>
+            <td>
+              2020-02-15 08:00:00
+            </td>
+            <td
+              align="right"
+            >
+              <button
+                class="c14"
+                height="24px"
+                kind="border"
+              >
+                OPTIONS
+                <span
+                  class="c9 c15 icon icon-caret-down "
+                  color="text.secondary"
+                  font-size="2"
+                />
+              </button>
+            </td>
+          </tr>
+          <tr>
+            <td>
+              jap@kosusfaw.mp
+            </td>
+            <td>
+              <div
+                class="c13"
+                kind="secondary"
+              >
+                abc
+              </div>
+              <div
+                class="c13"
+                kind="secondary"
+              >
+                anavebikilonim
+              </div>
+              <div
+                class="c13"
+                kind="secondary"
+              >
+                dupiwuzocafe
+              </div>
+              <div
+                class="c13"
+                kind="secondary"
+              >
+                duzjadj
+              </div>
+              <div
+                class="c13"
+                kind="secondary"
+              >
+                ubip
+              </div>
+            </td>
+            <td>
+              2020-01-15 08:00:00
+            </td>
+            <td
+              align="right"
+            >
+              <button
+                class="c14"
+                height="24px"
+                kind="border"
+              >
+                OPTIONS
+                <span
+                  class="c9 c15 icon icon-caret-down "
+                  color="text.secondary"
+                  font-size="2"
+                />
+              </button>
+            </td>
+          </tr>
+          <tr>
+            <td>
+              ziat@uthatebo.sl
+            </td>
+            <td>
+              <div
+                class="c13"
+                kind="secondary"
+              >
+                admin
+              </div>
+              <div
+                class="c13"
+                kind="secondary"
+              >
+                kaco
+              </div>
+              <div
+                class="c13"
+                kind="secondary"
+              >
+                ziuzzow
+              </div>
+            </td>
+            <td>
+              2020-01-15 08:00:00
+            </td>
+            <td
+              align="right"
+            >
+              <button
+                class="c14"
+                height="24px"
+                kind="border"
+              >
+                OPTIONS
+                <span
+                  class="c9 c15 icon icon-caret-down "
+                  color="text.secondary"
+                  font-size="2"
+                />
+              </button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
     </div>
   </div>
 </div>
