@@ -53,3 +53,8 @@ export interface ResetToken {
   expires: string;
   username: string;
 }
+
+export interface ResetPasswordRequest {
+  name: string;
+  type: 'invite' | 'password';
+}

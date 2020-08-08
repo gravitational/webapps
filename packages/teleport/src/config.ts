@@ -74,6 +74,7 @@ const cfg = {
     scp:
       '/v1/webapi/sites/:clusterId/nodes/:serverId/:login/scp?location=:location&filename=:filename',
     renewTokenPath: '/v1/webapi/sessions/renew',
+    resetPasswordTokenPath: '/v1/webapi/sites/:clusterId/users/password/token',
     sessionPath: '/v1/webapi/sessions',
     usersPath: '/v1/webapi/sites/:clusterId/users',
     userContextPath: '/v1/webapi/sites/:clusterId/context',
@@ -212,9 +213,14 @@ const cfg = {
     return generatePath(cfg.api.userContextPath, { clusterId });
   },
 
-  getUsersUrl(clusterId?: string) {
-    clusterId = clusterId || cfg.clusterName;
+  getUsersUrl() {
+    const clusterId = cfg.proxyCluster;
     return generatePath(cfg.api.usersPath, { clusterId });
+  },
+
+  getResetPasswordTokenUrl() {
+    const clusterId = cfg.proxyCluster;
+    return generatePath(cfg.api.resetPasswordTokenPath, { clusterId });
   },
 
   getTerminalSessionUrl({ clusterId, sid }: UrlParams) {
