@@ -43,9 +43,23 @@ export default function useUsers() {
     setOperation({ type: 'none' });
   }
 
-  function onSave(user: User, isNew = false) {
-    return ctx.userService.upsertUser(user, isNew).then(response => {
-      setUsers(users => [...users, response.user]);
+  function updateUser(updatedUser: User) {
+    const updatedUsers = users.map(user => {
+      if (user.name === updatedUser.name) {
+        return updatedUser;
+      }
+      return user;
+    });
+    setUsers(updatedUsers);
+  }
+
+  function onSave(user: User) {
+    return ctx.userService.saveUser(user).then(response => {
+      if (user.isNew) {
+        setUsers(users => [...users, response.user]);
+      } else {
+        updateUser(response.user);
+      }
       return response.token;
     });
   }

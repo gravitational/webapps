@@ -19,7 +19,7 @@ import cfg from 'teleport/config';
 import makeUserContext from './makeUserContext';
 import makeResetToken from './makeResetToken';
 import makeUser, { makeUsers } from './makeUser';
-import { User, ResetPasswordRequest } from './types';
+import { User, ResetToken, ResetPasswordType } from './types';
 
 const service = {
   fetchUserContext(clusterId?: string) {
@@ -30,26 +30,27 @@ const service = {
     return api.get(cfg.getUsersUrl()).then(makeUsers);
   },
 
-  upsertUser(newUser: User, isNew = false) {
-    if (isNew) {
-      return service.createUser(newUser).then(user => {
-        return service
-          .createResetPasswordToken({ name: newUser.name, type: 'invite' })
-          .then(token => {
-            return { user, token };
-          });
+  saveUser(userToSave: User) {
+    return api
+      .put(cfg.getUsersUrl(), userToSave)
+      .then(makeUser)
+      .then(user => {
+        if (userToSave.isNew) {
+          return service
+            .createResetPasswordToken(user.name, 'invite')
+            .then(token => {
+              return { user, token };
+            });
+        } else {
+          return { user, token: undefined as ResetToken };
+        }
       });
-    }
-
-    return Promise.reject(new Error('update user unimplemented'));
   },
 
-  createUser(user: User) {
-    return api.post(cfg.getUsersUrl(), user).then(makeUser);
-  },
-
-  createResetPasswordToken(req: ResetPasswordRequest) {
-    return api.post(cfg.getResetPasswordTokenUrl(), req).then(makeResetToken);
+  createResetPasswordToken(name: string, type: ResetPasswordType) {
+    return api
+      .post(cfg.getResetPasswordTokenUrl(), { name, type })
+      .then(makeResetToken);
   },
 };
 

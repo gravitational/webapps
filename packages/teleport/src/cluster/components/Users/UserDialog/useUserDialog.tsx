@@ -38,10 +38,8 @@ export default function useUserDialog(save: Save, user = defaultUser) {
     const roles = selectedRoles.map(r => r.value);
 
     return attemptActions.do(() =>
-      save({ name, roles }, isNew).then(token => {
-        if (isNew) {
-          setToken(token);
-        }
+      save({ name, roles, isNew }).then(token => {
+        setToken(token);
       })
     );
   }
@@ -64,4 +62,4 @@ const defaultUser: User = {
   created: undefined,
 };
 
-type Save = (user: User, isNew: boolean) => Promise<any>;
+type Save = (user: User) => Promise<any>;

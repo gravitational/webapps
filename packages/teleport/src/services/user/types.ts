@@ -46,6 +46,7 @@ export interface User {
   name: string;
   roles: string[];
   created?: Date;
+  isNew?: boolean;
 }
 
 export interface ResetToken {
@@ -54,7 +55,4 @@ export interface ResetToken {
   username: string;
 }
 
-export interface ResetPasswordRequest {
-  name: string;
-  type: 'invite' | 'password';
-}
+export type ResetPasswordType = 'invite' | 'password';

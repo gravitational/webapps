@@ -72,7 +72,11 @@ export function UserDialog({
       return;
     }
 
-    onSave();
+    onSave().then(() => {
+      if (!isNew) {
+        onClose();
+      }
+    });
   }
 
   return (
@@ -134,7 +138,7 @@ export function UserDialog({
 type Props = {
   roles: string[];
   onClose(): void;
-  onSave(user: User, isNew: boolean): Promise<any>;
+  onSave(user: User): Promise<any>;
   user: User;
   state: ReturnType<typeof useUserDialog>;
 };
