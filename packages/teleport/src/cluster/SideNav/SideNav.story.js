@@ -22,7 +22,7 @@ import { Box } from 'design';
 import { ClusterSideNav } from './SideNav';
 
 export default {
-  title: 'Teleport/SideNav',
+  title: 'TeleportCluster/SideNav',
 };
 
 export const SideNav = () => {

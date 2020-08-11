@@ -21,7 +21,7 @@ import TeleportContextProvider from 'teleport/teleportContextProvider';
 import cfg from 'teleport/config';
 
 export default {
-  title: 'Teleport/Support',
+  title: 'TeleportDashboard/Support',
 };
 
 export const SupportOSS = () => {

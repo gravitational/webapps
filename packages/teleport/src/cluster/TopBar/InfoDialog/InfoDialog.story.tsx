@@ -13,7 +13,23 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+import React from 'react';
+import InfoDialog from './InfoDialog';
 
-import Support from './Support';
+export default {
+  title: 'TeleportCluster',
+};
 
-export default Support;
+export const Dialog = () => (
+  <InfoDialog
+    onClose={null}
+    clusterId="applePie"
+    publicURL="some.kind.of.host:8080"
+    proxyVersion="4.2.2"
+    authVersion="5.0.0"
+  />
+);
+
+Dialog.story = {
+  name: 'InfoDialog',
+};

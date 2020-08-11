@@ -22,7 +22,7 @@ import { Sessions } from './Sessions';
 type PropTypes = Parameters<typeof Sessions>[0];
 
 export default {
-  title: 'Teleport/Sessions',
+  title: 'TeleportCluster/Sessions',
 };
 
 export function Loaded() {

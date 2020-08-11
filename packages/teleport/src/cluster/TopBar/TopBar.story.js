@@ -22,7 +22,7 @@ import TeleportContext from 'teleport/teleportContext';
 import TopBar from './TopBar';
 
 export default {
-  title: 'Teleport/TopBar',
+  title: 'TeleportCluster/TopBar',
 };
 
 export const ClusterTopBar = () => {

@@ -15,12 +15,12 @@
  */
 
 import React from 'react';
-import ClusterInfoDialog from './ClusterInfoDialog';
-import { ClusterInfoDialog as SbClusterInfoDialog } from './ClusterInfoDialog.story';
+import InfoDialog from './InfoDialog';
+import { Dialog } from './InfoDialog.story';
 import { render, fireEvent, wait } from 'design/utils/testing';
 
 test('rendering of static texts', () => {
-  const { getByTestId } = render(<SbClusterInfoDialog />);
+  const { getByTestId } = render(<Dialog />);
   expect(getByTestId('Modal')).toMatchSnapshot();
 });
 
@@ -31,7 +31,7 @@ test('button clicks', async () => {
 
   const onClose = jest.fn();
   const { getByText, queryByText } = render(
-    <ClusterInfoDialog
+    <InfoDialog
       clusterId=""
       publicURL=""
       proxyVersion=""

@@ -20,7 +20,7 @@ import TeleportContextProvider from 'teleport/teleportContextProvider';
 import AuthConnectors from './AuthConnectors';
 
 export default {
-  title: 'Teleport/AuthConnectors',
+  title: 'TeleportDashboard/AuthConnectors',
 };
 
 export function Loaded() {

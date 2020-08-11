@@ -15,7 +15,7 @@ limitations under the License.
 */
 
 import TopBar from './TopBar';
-import ClusterInfoDialog from './ClusterInfoDialog';
+import InfoDialog from './InfoDialog';
 
 export default TopBar;
-export { ClusterInfoDialog };
+export { InfoDialog };

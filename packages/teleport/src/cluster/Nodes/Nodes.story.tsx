@@ -20,7 +20,7 @@ import { Nodes } from './Nodes';
 type PropTypes = Parameters<typeof Nodes>[0];
 
 export default {
-  title: 'Teleport/ClusterNodes',
+  title: 'TeleportCluster/Nodes',
 };
 
 export function Loaded() {

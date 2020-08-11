@@ -27,7 +27,7 @@ export default {
   excludeStories: ['createContext'],
 };
 
-export function AllClusters({ value }: { value: TeleportContext }) {
+export function DashboardClusters({ value }: { value: TeleportContext }) {
   const ctx = value || createContext();
   return (
     <TeleportContextProvider value={ctx}>
@@ -37,6 +37,10 @@ export function AllClusters({ value }: { value: TeleportContext }) {
     </TeleportContextProvider>
   );
 }
+
+DashboardClusters.story = {
+  name: 'Clusters',
+};
 
 export function createContext() {
   const ctx = new TeleportContext();

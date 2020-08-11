@@ -30,7 +30,7 @@ type Props = {
   proxyVersion: string;
 };
 
-const ClusterInfoDialog = ({
+const InfoDialog = ({
   onClose,
   clusterId,
   publicURL,
@@ -103,4 +103,4 @@ const PublicURL = ({ url = '' }) => {
   );
 };
 
-export default ClusterInfoDialog;
+export default InfoDialog;

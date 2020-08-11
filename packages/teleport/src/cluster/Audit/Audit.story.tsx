@@ -22,7 +22,7 @@ import TeleportContext from 'teleport/teleportContext';
 import Audit from './Audit';
 
 export default {
-  title: 'Teleport/Audit',
+  title: 'TeleportCluster/Audit',
 };
 
 export const AuditLog = () => {

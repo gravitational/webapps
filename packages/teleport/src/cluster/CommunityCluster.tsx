@@ -29,7 +29,7 @@ import TeleportContextProvider, {
 } from 'teleport/teleportContextProvider';
 import cfg from 'teleport/config';
 import SideNav from './SideNav';
-import TopBar, { ClusterInfoDialog } from './TopBar';
+import TopBar, { InfoDialog } from './TopBar';
 
 export default function CommunityCluster() {
   const { clusterId } = useParams();
@@ -105,7 +105,7 @@ export function Cluster() {
         </Switch>
       </VerticalSplit>
       {viewClusterInfo && (
-        <ClusterInfoDialog
+        <InfoDialog
           onClose={handleViewClusterInfo}
           {...teleportCtx.storeUser.state.cluster}
         />

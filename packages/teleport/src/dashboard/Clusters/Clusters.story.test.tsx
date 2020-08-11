@@ -15,12 +15,12 @@ limitations under the License.
 */
 
 import React from 'react';
-import { AllClusters, createContext } from './Clusters.story';
+import { DashboardClusters, createContext } from './Clusters.story';
 import { render, waitForElement } from 'design/utils/testing';
 
 test('render dashboard clusters', async () => {
   const ctx = createContext();
-  const { container } = render(<AllClusters value={ctx} />);
+  const { container } = render(<DashboardClusters value={ctx} />);
   await waitForElement(() => document.querySelector('table'));
   expect(container.firstChild).toMatchSnapshot();
 });

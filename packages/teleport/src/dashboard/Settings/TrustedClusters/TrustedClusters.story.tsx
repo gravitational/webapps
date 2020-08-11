@@ -20,7 +20,7 @@ import TeleportContextProvider from 'teleport/teleportContextProvider';
 import TrustedClusters from './TrustedClusters';
 
 export default {
-  title: 'Teleport/TrustedClusters',
+  title: 'TeleportDashboard/TrustedClusters',
 };
 
 export const Loaded = () => {

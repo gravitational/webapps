@@ -20,7 +20,7 @@ import DeleteRole from './DeleteRole';
 export const DeleteRoleDialog = () => <DeleteRole {...props} />;
 
 DeleteRoleDialog.story = {
-  name: 'Teleport/Roles/DeleteRoleDialog',
+  name: 'TeleportDashboard/Roles/DeleteRoleDialog',
 };
 
 const props = {
