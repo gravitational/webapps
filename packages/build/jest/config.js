@@ -29,7 +29,6 @@ module.exports = {
     '^gravity/(.*)$': '<rootDir>/packages/gravity/src/$1',
     '^teleport/(.*)$': '<rootDir>/packages/teleport/src/$1',
     '^e-teleport/(.*)$': '<rootDir>/packages/webapps.e/teleport/src/$1',
-    '^e-shared/(.*)$': '<rootDir>/packages/webapps.e/shared/src/$1',
     '^e-gravity/(.*)$': '<rootDir>/packages/webapps.e/gravity/src/$1',
   },
 };

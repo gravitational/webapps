@@ -15,8 +15,8 @@ limitations under the License.
 */
 
 import * as Icons from 'design/Icon';
-import Sessions from 'teleport/cluster/components/Sessions';
 import { withFeature, FeatureBase } from 'teleport/components/withFeature';
+import Sessions from 'teleport/cluster/Sessions';
 import Ctx from 'teleport/teleportContext';
 import cfg from 'teleport/config';
 

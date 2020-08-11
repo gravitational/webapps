@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import { StoreNav, StoreUser, StoreClusters } from './stores';
+import { StoreNav, StoreUser } from './stores';
 import { Activator } from 'shared/libs/featureBase';
 import cfg from 'teleport/config';
 import * as teleport from './types';
@@ -22,12 +22,12 @@ import auditService from './services/audit';
 import nodeService from './services/nodes';
 import clusterService from './services/clusters';
 import sshService from './services/ssh';
+import resourceService from './services/resources';
 
 export default class Context implements teleport.Context {
   // stores
   storeNav = new StoreNav();
   storeUser = new StoreUser();
-  storeClusters = new StoreClusters();
 
   // features
   features: teleport.Feature[] = [];
@@ -37,6 +37,7 @@ export default class Context implements teleport.Context {
   nodeService = nodeService;
   clusterService = clusterService;
   sshService = sshService;
+  resourceService = resourceService;
 
   constructor(params?: { clusterId?: string; features?: teleport.Feature[] }) {
     const { clusterId, features = [] } = params || {};
