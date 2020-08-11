@@ -41,8 +41,3 @@ export function useStoreUser() {
   const context = React.useContext(TeleportReactContext);
   return useStore(context.storeUser);
 }
-
-export function useStoreClusters() {
-  const context = React.useContext(TeleportReactContext);
-  return useStore(context.storeClusters);
-}

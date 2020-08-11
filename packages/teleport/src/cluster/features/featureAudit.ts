@@ -15,7 +15,7 @@ limitations under the License.
 */
 
 import * as Icons from 'design/Icon';
-import Audit from 'teleport/cluster/components/Audit';
+import Audit from 'teleport/cluster/Audit';
 import { withFeature, FeatureBase } from 'teleport/components/withFeature';
 import Ctx from 'teleport/teleportContext';
 import cfg from 'teleport/config';

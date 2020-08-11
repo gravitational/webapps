@@ -16,6 +16,7 @@ limitations under the License.
 
 import { generatePath } from 'react-router';
 import { merge } from 'lodash';
+import { Resource } from 'teleport/services/resources';
 
 const cfg = {
   isEnterprise: false,
@@ -41,12 +42,17 @@ const cfg = {
 
   routes: {
     app: '/web',
-    account: '/web/account',
+    people: '/web/people',
+    support: '/web/support',
+    settings: '/web/settings',
+    account: '/web/settings/account',
+    authConnectors: '/web/settings/auth',
+    roles: '/web/people/roles',
+    trustedClusters: '/web/settings/trusted',
     cluster: '/web/cluster/:clusterId',
     clusterAccount: '/web/cluster/:clusterId/account',
     clusterAudit: '/web/cluster/:clusterId/audit',
     clusterNodes: '/web/cluster/:clusterId/nodes',
-    clusterSupport: '/web/cluster/:clusterId/support',
     clusterSessions: '/web/cluster/:clusterId/sessions',
     console: '/web/cluster/:clusterId/console',
     consoleNodes: '/web/cluster/:clusterId/console/nodes',
@@ -91,6 +97,9 @@ const cfg = {
     ttyWsAddr:
       'wss://:fqdm/v1/webapi/sites/:clusterId/connect?access_token=:token&params=:params',
     terminalSessionPath: '/v1/webapi/sites/:clusterId/sessions/:sid?',
+
+    resourcePath: '/v1/enterprise/sites/:clusterId/resources/:kind?',
+    removeResourcePath: '/v1/enterprise/sites/:clusterId/resources/:kind/:id',
   },
 
   getClusterEventsUrl(params: UrlClusterEventsParams) {
@@ -136,9 +145,9 @@ const cfg = {
     return generatePath(cfg.routes.clusterNodes, { clusterId });
   },
 
-  getSupportRoute() {
+  getPeopleRoute() {
     const clusterId = cfg.clusterName;
-    return generatePath(cfg.routes.clusterSupport, { clusterId });
+    return generatePath(cfg.routes.people, { clusterId });
   },
 
   getSessionsRoute() {
@@ -219,6 +228,16 @@ const cfg = {
     return generatePath(cfg.api.scp, {
       ...params,
     });
+  },
+
+  getResourcesUrl(kind?: Resource['kind']) {
+    const clusterId = cfg.clusterName;
+    return generatePath(cfg.api.resourcePath, { clusterId, kind });
+  },
+
+  getRemoveResourceUrl(kind: Resource['kind'], id: string) {
+    const clusterId = cfg.clusterName;
+    return generatePath(cfg.api.removeResourcePath, { clusterId, kind, id });
   },
 
   setClusterId(clusterId: string) {
