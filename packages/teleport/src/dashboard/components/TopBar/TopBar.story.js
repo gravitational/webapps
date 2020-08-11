@@ -24,6 +24,21 @@ storiesOf('TeleportDashboard', module).add('TopBar', () => {
 const defaultProps = {
   version: '1.1.1',
   username: 'john@example.com',
+  items: [
+    {
+      to: '/web/page1',
+      title: 'CLUSTERS',
+    },
+    {
+      to: '/web/page2',
+      title: 'SETTINGS',
+    },
+    {
+      to: '/web/page3',
+      title: 'HELP & SUPPORT',
+    },
+  ],
+
   topMenuItems: [
     {
       Icon: Icons.User,

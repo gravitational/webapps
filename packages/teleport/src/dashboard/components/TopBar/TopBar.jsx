@@ -1,7 +1,7 @@
 import React from 'react';
 import { NavLink, Link } from 'react-router-dom';
 import TopNavUserMenu from 'design/TopNav/TopNavUserMenu';
-import { MenuItemIcon, MenuItem } from 'design/Menu';
+import { MenuItem } from 'design/Menu';
 import teleportLogoSvg from 'design/assets/images/teleport-logo.svg';
 import { withState } from 'shared/hooks';
 import session from 'teleport/services/session';
@@ -39,13 +39,22 @@ export class DashboardTopNav extends React.Component {
   };
 
   render() {
-    const { username, topMenuItems, pl } = this.props;
+    const { username, items = [], pl } = this.props;
     const { open } = this.state;
-    const $userMenuItems = topMenuItems.map((item, index) => (
-      <MenuItem {...this.menuItemProps} key={index} to={item.to}>
-        <MenuItemIcon as={item.Icon} mr="2" />
+
+    const $items = items.map((item, index) => (
+      <TopNavItem
+        px="5"
+        as={NavLink}
+        exact={item.exact}
+        key={index}
+        to={item.to}
+        style={{
+          textTransform: 'uppercase',
+        }}
+      >
         {item.title}
-      </MenuItem>
+      </TopNavItem>
     ));
 
     return (
@@ -54,7 +63,7 @@ export class DashboardTopNav extends React.Component {
         pl={pl}
         style={{ zIndex: '1', boxShadow: '0 8px 24px rgba(0,0,0,.24)' }}
       >
-        <TopNavItem pr="5" as={Link} to={cfg.routes.app}>
+        <TopNavItem pr="9" as={Link} to={cfg.routes.app}>
           <Image
             src={teleportLogoSvg}
             mx="3"
@@ -62,6 +71,7 @@ export class DashboardTopNav extends React.Component {
             maxWidth="160px"
           />
         </TopNavItem>
+        {$items}
         <Flex ml="auto" height="100%">
           <TopNavUserMenu
             menuListCss={menuListCss}
@@ -70,7 +80,6 @@ export class DashboardTopNav extends React.Component {
             onClose={this.onCloseMenu}
             user={username}
           >
-            {$userMenuItems}
             <MenuItem>
               <ButtonPrimary my={3} block onClick={this.onLogout}>
                 Sign Out
@@ -88,10 +97,10 @@ const menuListCss = () => `
 `;
 
 function mapState() {
-  const topMenuItems = useStoreNav().getTopMenuItems();
+  const items = useStoreNav().getTopItems();
   const { username } = useStoreUser().state;
   return {
-    topMenuItems,
+    items,
     username,
     onLogout: () => session.logout(),
   };

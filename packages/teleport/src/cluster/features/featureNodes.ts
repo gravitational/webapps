@@ -15,7 +15,7 @@ limitations under the License.
 */
 
 import * as Icons from 'design/Icon';
-import Nodes from 'teleport/cluster/components/Nodes';
+import Nodes from 'teleport/cluster/Nodes';
 import { withFeature, FeatureBase } from 'teleport/components/withFeature';
 import Ctx from 'teleport/teleportContext';
 import cfg from 'teleport/config';
