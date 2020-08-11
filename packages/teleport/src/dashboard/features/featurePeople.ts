@@ -25,7 +25,7 @@ class FeaturePeople extends FeatureBase {
   getRoute() {
     return {
       title: 'People',
-      path: cfg.routes.team,
+      path: cfg.routes.people,
       exact: false,
       component: this.Component,
     };
@@ -41,7 +41,7 @@ class FeaturePeople extends FeatureBase {
       title: 'People',
       exact: false,
       Icon: null,
-      to: cfg.routes.team,
+      to: cfg.routes.people,
     });
   }
 }

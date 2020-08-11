@@ -42,12 +42,12 @@ const cfg = {
 
   routes: {
     app: '/web',
-    team: '/web/team',
+    people: '/web/people',
     support: '/web/support',
     settings: '/web/settings',
     account: '/web/settings/account',
     authConnectors: '/web/settings/auth',
-    roles: '/web/team/roles',
+    roles: '/web/people/roles',
     trustedClusters: '/web/settings/trusted',
     cluster: '/web/cluster/:clusterId',
     clusterAccount: '/web/cluster/:clusterId/account',
@@ -145,9 +145,9 @@ const cfg = {
     return generatePath(cfg.routes.clusterNodes, { clusterId });
   },
 
-  getTeamRoute() {
+  getPeopleRoute() {
     const clusterId = cfg.clusterName;
-    return generatePath(cfg.routes.team, { clusterId });
+    return generatePath(cfg.routes.people, { clusterId });
   },
 
   getSessionsRoute() {

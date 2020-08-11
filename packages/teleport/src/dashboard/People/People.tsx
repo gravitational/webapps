@@ -67,7 +67,7 @@ export function People({ features = [] as Feature[] }) {
       <SideNav>{$navItems}</SideNav>
       <Switch>
         {$features}
-        {index && <Redirect exact from={cfg.routes.team} to={index} />}
+        {index && <Redirect exact from={cfg.routes.people} to={index} />}
       </Switch>
     </VerticalSplit>
   );
