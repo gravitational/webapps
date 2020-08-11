@@ -14,13 +14,14 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import Clusters from 'teleport/dashboard/components/Clusters';
-import { withFeature, FeatureBase } from 'teleport/components/withFeature';
+import * as Icons from 'design/Icon';
+import { FeatureBase } from 'teleport/components/withFeature';
+import Clusters from 'teleport/dashboard/Clusters';
 import Ctx from 'teleport/teleportContext';
 import cfg from 'teleport/config';
 
 class FeatureClusters extends FeatureBase {
-  Component = withFeature(this)(Clusters);
+  Component = Clusters;
 
   getRoute() {
     return {
@@ -32,12 +33,12 @@ class FeatureClusters extends FeatureBase {
   }
 
   onload(context: Ctx) {
-    this.setProcessing();
-    return context.clusterService
-      .fetchClusters()
-      .then(clusters => context.storeClusters.setState(clusters))
-      .then(this.setReady.bind(this))
-      .catch(this.setFailed.bind(this));
+    context.storeNav.addTopItem({
+      title: 'Clusters',
+      Icon: Icons.Question,
+      exact: true,
+      to: cfg.routes.app,
+    });
   }
 }
 

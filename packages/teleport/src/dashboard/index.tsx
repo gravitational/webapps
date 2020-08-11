@@ -14,22 +14,8 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React from 'react';
-import FeatureAccount from 'teleport/features/featureAccount';
-import FeatureClusters from 'teleport/dashboard/features/featureClusters';
-import Dashboard from 'teleport/dashboard/components';
-import TeleportContextProvider from 'teleport/teleportContextProvider';
-import TeleportContext from 'teleport/teleportContext';
+import { hot } from 'react-hot-loader/root';
 
-export default function Index() {
-  const [ctx] = React.useState(() => {
-    const features = [new FeatureAccount(), new FeatureClusters()];
-    return new TeleportContext({ features });
-  });
-
-  return (
-    <TeleportContextProvider value={ctx}>
-      <Dashboard />
-    </TeleportContextProvider>
-  );
-}
+import CommunityDashboard, { Dashboard } from './Dashboard';
+export default hot(CommunityDashboard);
+export { Dashboard };
