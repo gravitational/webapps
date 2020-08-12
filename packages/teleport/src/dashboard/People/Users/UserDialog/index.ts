@@ -13,20 +13,6 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+import UserDialog from './UserDialog';
 
-import { at } from 'lodash';
-import { User } from './types';
-
-export default function makeUser(json): User {
-  const [name, roles, created] = at(json, ['name', 'roles', 'created']);
-
-  return {
-    name,
-    roles,
-    created: new Date(created),
-  };
-}
-
-export function makeUsers(json): User[] {
-  return json.map(user => makeUser(user));
-}
+export default UserDialog;

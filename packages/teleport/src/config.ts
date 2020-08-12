@@ -54,6 +54,7 @@ const cfg = {
     clusterAudit: '/web/cluster/:clusterId/audit',
     clusterNodes: '/web/cluster/:clusterId/nodes',
     clusterSessions: '/web/cluster/:clusterId/sessions',
+    clusterUsers: '/web/people/users',
     console: '/web/cluster/:clusterId/console',
     consoleNodes: '/web/cluster/:clusterId/console/nodes',
     consoleConnect: '/web/cluster/:clusterId/console/node/:serverId/:login',
@@ -79,6 +80,7 @@ const cfg = {
     scp:
       '/v1/webapi/sites/:clusterId/nodes/:serverId/:login/scp?location=:location&filename=:filename',
     renewTokenPath: '/v1/webapi/sessions/renew',
+    resetPasswordTokenPath: '/v1/webapi/sites/:clusterId/users/password/token',
     sessionPath: '/v1/webapi/sessions',
     userContextPath: '/v1/webapi/sites/:clusterId/context',
     userStatusPath: '/v1/webapi/user/status',
@@ -98,6 +100,7 @@ const cfg = {
       'wss://:fqdm/v1/webapi/sites/:clusterId/connect?access_token=:token&params=:params',
     terminalSessionPath: '/v1/webapi/sites/:clusterId/sessions/:sid?',
 
+    usersPath: '/v1/enterprise/users',
     resourcePath: '/v1/enterprise/sites/:clusterId/resources/:kind?',
     removeResourcePath: '/v1/enterprise/sites/:clusterId/resources/:kind/:id',
   },
@@ -148,6 +151,11 @@ const cfg = {
   getPeopleRoute() {
     const clusterId = cfg.clusterName;
     return generatePath(cfg.routes.people, { clusterId });
+  },
+
+  getUsersRoute() {
+    const clusterId = cfg.clusterName;
+    return generatePath(cfg.routes.clusterUsers, { clusterId });
   },
 
   getSessionsRoute() {
@@ -205,9 +213,22 @@ const cfg = {
     return generatePath(cfg.routes.sessionAuditCmds, { clusterId, sid });
   },
 
-  getUserUrl(clusterId?: string) {
+  getUserContextUrl(clusterId?: string) {
     clusterId = clusterId || cfg.clusterName;
     return generatePath(cfg.api.userContextPath, { clusterId });
+  },
+
+  getResetPasswordTokenUrl() {
+    const clusterId = cfg.proxyCluster;
+    return generatePath(cfg.api.resetPasswordTokenPath, { clusterId });
+  },
+
+  getUserInviteRoute(tokenId = '') {
+    return generatePath(cfg.routes.userInvite, { tokenId });
+  },
+
+  getUsersUrl() {
+    return cfg.api.usersPath;
   },
 
   getTerminalSessionUrl({ clusterId, sid }: UrlParams) {

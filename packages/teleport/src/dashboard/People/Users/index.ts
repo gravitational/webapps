@@ -14,19 +14,6 @@
  * limitations under the License.
  */
 
-import { at } from 'lodash';
-import { User } from './types';
+import Users from './Users';
 
-export default function makeUser(json): User {
-  const [name, roles, created] = at(json, ['name', 'roles', 'created']);
-
-  return {
-    name,
-    roles,
-    created: new Date(created),
-  };
-}
-
-export function makeUsers(json): User[] {
-  return json.map(user => makeUser(user));
-}
+export default Users;

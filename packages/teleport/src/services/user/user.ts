@@ -1,5 +1,5 @@
 /*
-Copyright 2019 Gravitational, Inc.
+Copyright 2019-2020 Gravitational, Inc.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -16,11 +16,41 @@ limitations under the License.
 
 import api from 'teleport/services/api';
 import cfg from 'teleport/config';
-import makeUser from './makeUser';
+import makeUserContext from './makeUserContext';
+import makeResetToken from './makeResetToken';
+import makeUser, { makeUsers } from './makeUser';
+import { User, ResetToken, ResetPasswordType } from './types';
 
 const service = {
-  fetchUser(clusterId?: string) {
-    return api.get(cfg.getUserUrl(clusterId)).then(makeUser);
+  fetchUserContext(clusterId?: string) {
+    return api.get(cfg.getUserContextUrl(clusterId)).then(makeUserContext);
+  },
+
+  fetchUsers() {
+    return api.get(cfg.getUsersUrl()).then(makeUsers);
+  },
+
+  saveUser(userToSave: User) {
+    return api
+      .put(cfg.getUsersUrl(), userToSave)
+      .then(makeUser)
+      .then(user => {
+        if (userToSave.isNew) {
+          return service
+            .createResetPasswordToken(user.name, 'invite')
+            .then(token => {
+              return { user, token };
+            });
+        } else {
+          return { user, token: undefined as ResetToken };
+        }
+      });
+  },
+
+  createResetPasswordToken(name: string, type: ResetPasswordType) {
+    return api
+      .post(cfg.getResetPasswordTokenUrl(), { name, type })
+      .then(makeResetToken);
   },
 };
 
