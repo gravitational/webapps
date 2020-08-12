@@ -16,7 +16,7 @@ limitations under the License.
 
 import * as Icons from 'design/Icon';
 import cfg from 'teleport/config';
-import Users from 'teleport/cluster/Users';
+import Users from 'teleport/dashboard/People/Users';
 
 export default class FeatureUsers {
   route = {

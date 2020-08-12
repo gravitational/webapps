@@ -52,6 +52,10 @@ const service = {
       .post(cfg.getResetPasswordTokenUrl(), { name, type })
       .then(makeResetToken);
   },
+
+  deleteUser(name: string) {
+    return api.delete(cfg.getUsersDeleteUrl(name));
+  },
 };
 
 export default service;

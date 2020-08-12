@@ -37,7 +37,13 @@ import { useTeleport } from 'teleport/teleportContextProvider';
  * UserList renders the table portions and display columns
  * with user information.
  */
-const UserList = ({ users, pageSize, onEdit }: Props) => {
+const UserList = ({
+  users,
+  pageSize,
+  onEdit,
+  onDelete,
+  onResetPassword,
+}: Props) => {
   const [searchValue, setSearchValue] = useState('');
 
   // Sort by recently created users.
@@ -123,7 +129,16 @@ const UserList = ({ users, pageSize, onEdit }: Props) => {
             />
           }
         />
-        <Column header={<Cell />} cell={<ActionCell onEdit={onEdit} />} />
+        <Column
+          header={<Cell />}
+          cell={
+            <ActionCell
+              onEdit={onEdit}
+              onDelete={onDelete}
+              onResetPassword={onResetPassword}
+            />
+          }
+        />
       </PagedTable>
     </>
   );
@@ -132,12 +147,20 @@ export default UserList;
 
 const ActionCell = props => {
   const ctx = useTeleport().storeUser;
-  const { rowIndex, data, onEdit } = props;
+  const { rowIndex, data, onEdit, onResetPassword, onDelete } = props;
   return (
     <Cell align="right">
       <MenuButton>
         {ctx.getUserAccess().edit && ctx.getRoleAccess().read && (
           <MenuItem onClick={() => onEdit(data[rowIndex])}>Edit</MenuItem>
+        )}
+        {ctx.getUserAccess() && (
+          <MenuItem onClick={() => onResetPassword(data[rowIndex])}>
+            Reset Password
+          </MenuItem>
+        )}
+        {ctx.getUserAccess().edit && (
+          <MenuItem onClick={() => onDelete(data[rowIndex])}>Delete</MenuItem>
         )}
       </MenuButton>
     </Cell>
@@ -166,5 +189,7 @@ const RolesCell = props => {
 type Props = {
   users: User[];
   pageSize: number;
-  onEdit: (user: User) => void;
+  onEdit(user: User): void;
+  onDelete(user: User): void;
+  onResetPassword(user: User): void;
 };

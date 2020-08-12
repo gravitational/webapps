@@ -39,8 +39,27 @@ export default function useUsers() {
     setOperation({ type: 'edit', user });
   }
 
+  function onStartDelete(user: User) {
+    setOperation({ type: 'delete', user });
+  }
+
+  function onStartResetPassword(user: User) {
+    setOperation({ type: 'reset', user });
+  }
+
   function onClose() {
     setOperation({ type: 'none' });
+  }
+
+  function onResetPassword(name: string) {
+    return ctx.userService.createResetPasswordToken(name, 'password');
+  }
+
+  function onDelete(name: string) {
+    return ctx.userService.deleteUser(name).then(() => {
+      const updatedUsers = users.filter(user => user.name !== name);
+      setUsers(updatedUsers);
+    });
   }
 
   function updateUser(updatedUser: User) {
@@ -89,13 +108,17 @@ export default function useUsers() {
     roles,
     operation,
     onStartCreate,
+    onStartDelete,
     onStartEdit,
+    onStartResetPassword,
     onClose,
+    onDelete,
     onSave,
+    onResetPassword,
   };
 }
 
 type Operation = {
-  type: 'create' | 'edit' | 'none';
+  type: 'create' | 'edit' | 'delete' | 'reset' | 'none';
   user?: User;
 };

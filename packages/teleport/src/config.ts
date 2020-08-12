@@ -101,6 +101,7 @@ const cfg = {
     terminalSessionPath: '/v1/webapi/sites/:clusterId/sessions/:sid?',
 
     usersPath: '/v1/enterprise/users',
+    usersDelete: '/v1/enterprise/users/:username',
     resourcePath: '/v1/enterprise/sites/:clusterId/resources/:kind?',
     removeResourcePath: '/v1/enterprise/sites/:clusterId/resources/:kind/:id',
   },
@@ -229,6 +230,10 @@ const cfg = {
 
   getUsersUrl() {
     return cfg.api.usersPath;
+  },
+
+  getUsersDeleteUrl(username = '') {
+    return generatePath(cfg.api.usersDelete, { username });
   },
 
   getTerminalSessionUrl({ clusterId, sid }: UrlParams) {

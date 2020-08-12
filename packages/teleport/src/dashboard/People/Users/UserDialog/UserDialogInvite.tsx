@@ -30,7 +30,11 @@ import cfg from 'teleport/config';
 /**
  * UserDialogInvite is rendered after new users are created.
  */
-export default function UserDialogInvite({ token, onClose }: Props) {
+export default function UserDialogInvite({
+  token,
+  onClose,
+  reset = false,
+}: Props) {
   const [copyCmd, setCopyCmd] = React.useState(() => 'Copy');
   const ref = React.useRef();
   const tokenUrl = `${cfg.baseUrl}${cfg.getUserInviteRoute(token.value)}`;
@@ -48,14 +52,21 @@ export default function UserDialogInvite({ token, onClose }: Props) {
       open={true}
     >
       <DialogHeader>
-        <DialogTitle>Share Invite Link</DialogTitle>
+        <DialogTitle>Share Link</DialogTitle>
       </DialogHeader>
       <DialogContent>
-        <Text mb={4} mt={1}>
-          User '{token.username}' has been created but requires a password.
-          Share this URL with the user to complete user setup, link is valid for{' '}
-          {token.expires}:
-        </Text>
+        {reset ? (
+          <Text mb={4} mt={1}>
+            User '{token.username}' has been reset. Share this URL with the user
+            to complete password reset, link is valid for {token.expires}:
+          </Text>
+        ) : (
+          <Text mb={4} mt={1}>
+            User '{token.username}' has been created but requires a password.
+            Share this URL with the user to complete user setup, link is valid
+            for {token.expires}:
+          </Text>
+        )}
         <Flex
           bg="bgTerminal"
           p="2"
@@ -81,4 +92,5 @@ export default function UserDialogInvite({ token, onClose }: Props) {
 type Props = {
   token: ResetToken;
   onClose(): void;
+  reset?: boolean;
 };

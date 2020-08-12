@@ -23,6 +23,8 @@ import {
 import { Indicator, Box, ButtonPrimary, Alert } from 'design';
 import UserList from './UserList';
 import UserDialog from './UserDialog/UserDialog';
+import UserDialogDelete from './UserDialog/UserDialogDelete';
+import UserDialogResetPassword from './UserDialog/UserDialogResetPassword';
 import useUsers from './useUsers';
 import { useTeleport } from 'teleport/teleportContextProvider';
 
@@ -45,9 +47,13 @@ export function Users({ state }: Props) {
     roles,
     operation,
     onStartCreate,
+    onStartDelete,
     onStartEdit,
+    onStartResetPassword,
     onClose,
     onSave,
+    onDelete,
+    onResetPassword,
   } = state;
 
   const ctx = useTeleport().storeUser;
@@ -71,7 +77,13 @@ export function Users({ state }: Props) {
       )}
       {attempt.isFailed && <Alert kind="danger" children={attempt.message} />}
       {attempt.isSuccess && (
-        <UserList users={users} pageSize={20} onEdit={onStartEdit} />
+        <UserList
+          users={users}
+          pageSize={20}
+          onEdit={onStartEdit}
+          onDelete={onStartDelete}
+          onResetPassword={onStartResetPassword}
+        />
       )}
       {(operation.type === 'create' || operation.type === 'edit') && (
         <UserDialog
@@ -79,6 +91,20 @@ export function Users({ state }: Props) {
           onClose={onClose}
           onSave={onSave}
           user={operation.user}
+        />
+      )}
+      {operation.type === 'delete' && (
+        <UserDialogDelete
+          onClose={onClose}
+          onDelete={onDelete}
+          username={operation.user.name}
+        />
+      )}
+      {operation.type === 'reset' && (
+        <UserDialogResetPassword
+          onClose={onClose}
+          onResetPassword={onResetPassword}
+          username={operation.user.name}
         />
       )}
     </FeatureBox>

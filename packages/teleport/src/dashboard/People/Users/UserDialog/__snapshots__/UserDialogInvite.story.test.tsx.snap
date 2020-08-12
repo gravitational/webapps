@@ -1569,7 +1569,7 @@ exports[`success state 1`] = `
           class="c5"
           color="text.primary"
         >
-          Share Invite Link
+          Share Link
         </div>
       </div>
       <div
@@ -1580,8 +1580,7 @@ exports[`success state 1`] = `
         >
           User '
           Lester
-          ' has been created but requires a password. Share this URL with the user to complete user setup, link is valid for
-           
+          ' has been created but requires a password. Share this URL with the user to complete user setup, link is valid for 
           24h30m0s
           :
         </div>
