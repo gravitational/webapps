@@ -14,12 +14,5 @@
  * limitations under the License.
  */
 
-import React from 'react';
-import { Loaded } from './Users.story';
-import { render } from 'design/utils/testing';
-
-test('success state', async () => {
-  const { container, findByText } = render(<Loaded />);
-  await findByText(/add user/i);
-  expect(container).toMatchSnapshot();
-});
+import UserDelete from './UserDelete';
+export default UserDelete;

@@ -18,21 +18,22 @@ import { useState, useEffect } from 'react';
 import { useAttempt } from 'shared/hooks';
 import { User } from 'teleport/services/user';
 import { useTeleport } from 'teleport/teleportContextProvider';
+import makeUser from 'teleport/services/user/makeUser';
 
-/**
- * useUsers contains state for Users view component.
- */
 export default function useUsers() {
   const ctx = useTeleport();
   const [attempt, attemptActions] = useAttempt({ isProcessing: true });
-  const [users, setUsers] = useState<User[]>([]);
-  const [roles, setRoles] = useState<string[]>([]);
-  const [operation, setOperation] = useState<Operation>({
+  const [users, setUsers] = useState([] as User[]);
+  const [roles, setRoles] = useState([] as string[]);
+  const [operation, setOperation] = useState({
     type: 'none',
-  });
+  } as Operation);
 
   function onStartCreate() {
-    setOperation({ type: 'create' });
+    setOperation({
+      type: 'create',
+      user: makeUser({ isNew: true, roles: [] }),
+    });
   }
 
   function onStartEdit(user: User) {
@@ -43,7 +44,7 @@ export default function useUsers() {
     setOperation({ type: 'delete', user });
   }
 
-  function onStartResetPassword(user: User) {
+  function onStartReset(user: User) {
     setOperation({ type: 'reset', user });
   }
 
@@ -51,7 +52,7 @@ export default function useUsers() {
     setOperation({ type: 'none' });
   }
 
-  function onResetPassword(name: string) {
+  function onReset(name: string) {
     return ctx.userService.createResetPasswordToken(name, 'password');
   }
 
@@ -62,38 +63,30 @@ export default function useUsers() {
     });
   }
 
-  function updateUser(updatedUser: User) {
-    const updatedUsers = users.map(user => {
-      if (user.name === updatedUser.name) {
-        return updatedUser;
-      }
-      return user;
-    });
-    setUsers(updatedUsers);
-  }
-
-  function onSave(user: User) {
-    return ctx.userService.saveUser(user).then(response => {
-      if (user.isNew) {
-        setUsers(users => [...users, response.user]);
-      } else {
-        updateUser(response.user);
-      }
-      return response.token;
+  function onUpdate(u: User) {
+    return ctx.userService.saveUser(u).then(result => {
+      setUsers([result, ...users.filter(i => i.name !== u.name)]);
     });
   }
 
-  function fetchRoles() {
-    if (ctx.isRolesEnabled()) {
-      return ctx.resourceService
-        .fetchRoles()
-        .then(resources => resources.map(role => role.name));
-    }
-
-    return Promise.resolve([]);
+  function onCreate(u: User) {
+    return ctx.userService
+      .saveUser(u)
+      .then(result => setUsers([result, ...users]))
+      .then(() => ctx.userService.createResetPasswordToken(u.name, 'invite'));
   }
 
   useEffect(() => {
+    function fetchRoles() {
+      if (ctx.isRolesEnabled()) {
+        return ctx.resourceService
+          .fetchRoles()
+          .then(resources => resources.map(role => role.name));
+      }
+
+      return Promise.resolve([]);
+    }
+
     attemptActions.do(() =>
       Promise.all([fetchRoles(), ctx.userService.fetchUsers()]).then(values => {
         setRoles(values[0]);
@@ -110,11 +103,12 @@ export default function useUsers() {
     onStartCreate,
     onStartDelete,
     onStartEdit,
-    onStartResetPassword,
+    onStartReset,
     onClose,
     onDelete,
-    onSave,
-    onResetPassword,
+    onCreate,
+    onUpdate,
+    onReset,
   };
 }
 

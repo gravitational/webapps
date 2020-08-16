@@ -15,51 +15,61 @@
  */
 
 import { useState } from 'react';
-import { useAttempt } from 'shared/hooks';
+import { useAttemptNext } from 'shared/hooks';
 import { Option } from 'shared/components/Select';
 import { ResetToken, User } from 'teleport/services/user';
 
-/**
- * useUserDialog contains state for UserDialog component.
- */
-export default function useUserDialog(save: Save, user = defaultUser) {
-  const isNew = !user.created;
-  const [attempt, attemptActions] = useAttempt({});
-  const [name, setName] = useState(user.name);
+export default function useUserDialog(props: Props) {
+  const { attempt, run } = useAttemptNext('');
+  const [name, setName] = useState(props.user.name);
   const [token, setToken] = useState<ResetToken>(null);
   const [selectedRoles, setSelectedRoles] = useState<Option[]>(
-    user.roles.map(r => ({
+    props.user.roles.map(r => ({
       value: r,
       label: r,
     }))
   );
 
-  function onSave() {
-    const roles = selectedRoles.map(r => r.value);
+  function onChangeName(name = '') {
+    setName(name);
+  }
 
-    return attemptActions.do(() =>
-      save({ name, roles, isNew }).then(token => {
-        setToken(token);
-      })
-    );
+  function onChangeRoles(roles = [] as Option[]) {
+    setSelectedRoles(roles);
+  }
+
+  function onSave() {
+    const u = {
+      name: props.user.name,
+      isNew: props.user.isNew,
+      roles: selectedRoles.map(r => r.value),
+    };
+
+    const promise = u.isNew
+      ? props.onCreate(u).then(setToken)
+      : props.onUpdate(u).then(props.onClose);
+
+    run(() => promise);
   }
 
   return {
+    onClose: props.onClose,
+    onSave,
+    onChangeName,
+    onChangeRoles,
+    roles: props.roles,
+    isNew: props.user.isNew,
     attempt,
     name,
-    setName,
     selectedRoles,
-    setSelectedRoles,
     token,
-    onSave,
-    isNew,
   };
 }
 
-const defaultUser: User = {
-  name: '',
-  roles: [],
-  created: undefined,
+export type Props = {
+  user: User;
+  roles: string[];
+  onClose(): void;
+  onCreate(user: User): Promise<any>;
+  onUpdate(user: User): Promise<any>;
 };
-
-type Save = (user: User) => Promise<any>;

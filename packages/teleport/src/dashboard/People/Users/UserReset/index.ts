@@ -14,12 +14,6 @@
  * limitations under the License.
  */
 
-import React from 'react';
-import { Loaded } from './Users.story';
-import { render } from 'design/utils/testing';
+import UserReset from './UserReset';
 
-test('success state', async () => {
-  const { container, findByText } = render(<Loaded />);
-  await findByText(/add user/i);
-  expect(container).toMatchSnapshot();
-});
+export default UserReset;

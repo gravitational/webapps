@@ -27,39 +27,30 @@ import FieldInput from 'shared/components/FieldInput';
 import FieldSelect from 'shared/components/FieldSelect';
 import { Option } from 'shared/components/Select';
 import { requiredField } from 'shared/components/Validation/rules';
-import { User } from 'teleport/services/user';
-import useUserDialog from './useUserDialog';
-import UserDialogInvite from './UserDialogInvite';
+import UserTokenLink from './../UserTokenLink';
+import useDialog, { Props } from './useDialog';
 
-export default function Container(props: Omit<Props, 'state'>) {
-  const state = useUserDialog(props.onSave, props.user);
-
-  return <UserDialog {...props} state={state} />;
+export default function Container(props: Props) {
+  const dialog = useDialog(props);
+  return <UserAddEdit {...dialog} />;
 }
 
-/**
- * UserDialog is a popup that is used for two actions, create and edit.
- *  - Create inserts new users and generates invite link
- *  - Edit for updating existing users
- */
-export function UserDialog({
-  roles,
-  onClose,
-  state,
-}: Omit<Props, 'user' | 'onSave'>) {
+export function UserAddEdit(props: ReturnType<typeof useDialog>) {
   const {
+    onChangeName,
+    onChangeRoles,
+    onClose,
+    roles,
     attempt,
     name,
-    setName,
     selectedRoles,
-    setSelectedRoles,
     onSave,
     isNew,
     token,
-  } = state;
+  } = props;
 
-  if (attempt.isSuccess && isNew) {
-    return <UserDialogInvite onClose={onClose} token={token} />;
+  if (attempt.status === 'success' && isNew) {
+    return <UserTokenLink onClose={onClose} token={token} />;
   }
 
   const selectOptions: Option[] = roles.map(r => ({
@@ -67,16 +58,12 @@ export function UserDialog({
     label: r,
   }));
 
-  function handleOnSave(validator) {
+  function save(validator) {
     if (!validator.validate()) {
       return;
     }
 
-    onSave().then(() => {
-      if (!isNew) {
-        onClose();
-      }
-    });
+    onSave();
   }
 
   return (
@@ -92,15 +79,15 @@ export function UserDialog({
             <DialogTitle>{isNew ? 'Create User' : 'Edit User'}</DialogTitle>
           </DialogHeader>
           <DialogContent>
-            {attempt.isFailed && (
-              <Alert kind="danger" children={attempt.message} />
+            {attempt.status === 'failed' && (
+              <Alert kind="danger" children={attempt.statusText} />
             )}
             <FieldInput
               label="User Name"
               rule={requiredField('User name is required')}
               autoFocus
               value={name}
-              onChange={e => setName(e.target.value)}
+              onChange={e => onChangeName(e.target.value)}
               readonly={isNew ? false : true}
             />
             <FieldSelect
@@ -113,19 +100,22 @@ export function UserDialog({
               isSimpleValue
               clearable={false}
               value={selectedRoles}
-              onChange={values => setSelectedRoles(values as Option[])}
+              onChange={values => onChangeRoles(values as Option[])}
               options={selectOptions}
             />
           </DialogContent>
           <DialogFooter>
             <ButtonPrimary
               mr="3"
-              disabled={attempt.isProcessing}
-              onClick={() => handleOnSave(validator)}
+              disabled={attempt.status === 'processing'}
+              onClick={() => save(validator)}
             >
               Save
             </ButtonPrimary>
-            <ButtonSecondary disabled={attempt.isProcessing} onClick={onClose}>
+            <ButtonSecondary
+              disabled={attempt.status === 'processing'}
+              onClick={onClose}
+            >
               Cancel
             </ButtonSecondary>
           </DialogFooter>
@@ -134,11 +124,3 @@ export function UserDialog({
     </Validation>
   );
 }
-
-type Props = {
-  roles: string[];
-  onClose(): void;
-  onSave(user: User): Promise<any>;
-  user: User;
-  state: ReturnType<typeof useUserDialog>;
-};

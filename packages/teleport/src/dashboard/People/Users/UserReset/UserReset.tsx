@@ -15,7 +15,7 @@
  */
 
 import React from 'react';
-import { ButtonWarning, ButtonSecondary, Text, Alert } from 'design';
+import { ButtonPrimary, ButtonSecondary, Text, Alert } from 'design';
 import Dialog, {
   DialogHeader,
   DialogTitle,
@@ -23,25 +23,23 @@ import Dialog, {
   DialogFooter,
 } from 'design/Dialog';
 import { useAttemptNext } from 'shared/hooks';
+import UserTokenLink from './../UserTokenLink';
+import { ResetToken } from 'teleport/services/user';
 
-export default function Container(props: Omit<Props, 'attempt' | 'run'>) {
-  const { attempt, run } = useAttemptNext();
-
-  return <UserDialogDelete {...props} attempt={attempt} run={run} />;
+export default function Container(props: Props) {
+  const dialog = useDialog(props);
+  return <UserReset {...dialog} />;
 }
 
-/**
- * UserDialogDelete require user in context to confirm before deleting a user.
- */
-export function UserDialogDelete({
+export function UserReset({
   username,
-  onDelete,
+  onReset,
   onClose,
   attempt,
-  run,
-}: Props) {
-  function handleOnDelete() {
-    run(() => onDelete(username)).then(() => onClose());
+  token,
+}: ReturnType<typeof useDialog>) {
+  if (attempt.status === 'success') {
+    return <UserTokenLink onClose={onClose} token={token} asInvite={false} />;
   }
 
   return (
@@ -52,35 +50,53 @@ export function UserDialogDelete({
       open={true}
     >
       <DialogHeader>
-        <DialogTitle>Delete User?</DialogTitle>
+        <DialogTitle>Reset User Password?</DialogTitle>
       </DialogHeader>
       <DialogContent>
         {attempt.status === 'failed' && (
           <Alert kind="danger" children={attempt.statusText} />
         )}
         <Text mb={4} mt={1}>
-          You are about to delete user '{username}'. This will revoke the user's
-          access to the current cluster. This action cannot be undone.
+          You are about to reset password for user
+          <Text bold as="span">
+            {` ${username} `}
+          </Text>
+          . This will require the user to set up a new password.
         </Text>
       </DialogContent>
       <DialogFooter>
-        <ButtonWarning
+        <ButtonPrimary
           mr="3"
           disabled={attempt.status === 'processing'}
-          onClick={handleOnDelete}
+          onClick={onReset}
         >
-          I understand, delete user
-        </ButtonWarning>
+          Generate reset url
+        </ButtonPrimary>
         <ButtonSecondary onClick={onClose}>Cancel</ButtonSecondary>
       </DialogFooter>
     </Dialog>
   );
 }
 
+function useDialog(props: Props) {
+  const { attempt, run } = useAttemptNext();
+  const [token, setToken] = React.useState<ResetToken>(null);
+
+  function onReset(username = '') {
+    run(() => props.onReset(username).then(setToken));
+  }
+
+  return {
+    username: props.username,
+    onClose: props.onClose,
+    token,
+    onReset,
+    attempt,
+  };
+}
+
 type Props = {
   username: string;
   onClose(): void;
-  onDelete(username: string): Promise<any>;
-  attempt: ReturnType<typeof useAttemptNext>['attempt'];
-  run: ReturnType<typeof useAttemptNext>['run'];
+  onReset(username: string): Promise<any>;
 };

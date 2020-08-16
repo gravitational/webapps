@@ -19,7 +19,7 @@ import cfg from 'teleport/config';
 import makeUserContext from './makeUserContext';
 import makeResetToken from './makeResetToken';
 import makeUser, { makeUsers } from './makeUser';
-import { User, ResetToken, ResetPasswordType } from './types';
+import { User, ResetPasswordType } from './types';
 
 const service = {
   fetchUserContext(clusterId?: string) {
@@ -30,21 +30,8 @@ const service = {
     return api.get(cfg.getUsersUrl()).then(makeUsers);
   },
 
-  saveUser(userToSave: User) {
-    return api
-      .put(cfg.getUsersUrl(), userToSave)
-      .then(makeUser)
-      .then(user => {
-        if (userToSave.isNew) {
-          return service
-            .createResetPasswordToken(user.name, 'invite')
-            .then(token => {
-              return { user, token };
-            });
-        } else {
-          return { user, token: undefined as ResetToken };
-        }
-      });
+  saveUser(user: User) {
+    return api.put(cfg.getUsersUrl(), user).then(makeUser);
   },
 
   createResetPasswordToken(name: string, type: ResetPasswordType) {

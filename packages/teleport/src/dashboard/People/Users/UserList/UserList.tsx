@@ -37,13 +37,7 @@ import { useTeleport } from 'teleport/teleportContextProvider';
  * UserList renders the table portions and display columns
  * with user information.
  */
-const UserList = ({
-  users,
-  pageSize,
-  onEdit,
-  onDelete,
-  onResetPassword,
-}: Props) => {
+const UserList = ({ users, pageSize, onEdit, onDelete, onReset }: Props) => {
   const [searchValue, setSearchValue] = useState('');
 
   // Sort by recently created users.
@@ -135,7 +129,7 @@ const UserList = ({
             <ActionCell
               onEdit={onEdit}
               onDelete={onDelete}
-              onResetPassword={onResetPassword}
+              onResetPassword={onReset}
             />
           }
         />
@@ -191,5 +185,5 @@ type Props = {
   pageSize: number;
   onEdit(user: User): void;
   onDelete(user: User): void;
-  onResetPassword(user: User): void;
+  onReset(user: User): void;
 };

@@ -13,13 +13,6 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+import UserAddEdit from './UserAddEdit';
 
-import React from 'react';
-import { Loaded } from './Users.story';
-import { render } from 'design/utils/testing';
-
-test('success state', async () => {
-  const { container, findByText } = render(<Loaded />);
-  await findByText(/add user/i);
-  expect(container).toMatchSnapshot();
-});
+export default UserAddEdit;

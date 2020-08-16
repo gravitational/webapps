@@ -27,13 +27,10 @@ import Dialog, {
 import { ResetToken } from 'teleport/services/user';
 import cfg from 'teleport/config';
 
-/**
- * UserDialogInvite is rendered after new users are created.
- */
-export default function UserDialogInvite({
+export default function UserTokenLink({
   token,
   onClose,
-  reset = false,
+  asInvite = false,
 }: Props) {
   const [copyCmd, setCopyCmd] = React.useState(() => 'Copy');
   const ref = React.useRef();
@@ -55,16 +52,19 @@ export default function UserDialogInvite({
         <DialogTitle>Share Link</DialogTitle>
       </DialogHeader>
       <DialogContent>
-        {reset ? (
+        {asInvite ? (
           <Text mb={4} mt={1}>
             User '{token.username}' has been reset. Share this URL with the user
-            to complete password reset, link is valid for {token.expires}:
+            to set up a new password, link is valid for {token.expires}:
           </Text>
         ) : (
           <Text mb={4} mt={1}>
-            User '{token.username}' has been created but requires a password.
-            Share this URL with the user to complete user setup, link is valid
-            for {token.expires}:
+            User
+            <Text bold as="span">
+              {` ${token.username} `}
+            </Text>
+            has been created but requires a password. Share this URL with the
+            user to set up a password, link is valid for {token.expires}:
           </Text>
         )}
         <Flex
@@ -92,5 +92,5 @@ export default function UserDialogInvite({
 type Props = {
   token: ResetToken;
   onClose(): void;
-  reset?: boolean;
+  asInvite?: boolean;
 };

@@ -13,13 +13,32 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
 import React from 'react';
-import { Loaded } from './Users.story';
-import { render } from 'design/utils/testing';
+import { UserDelete } from './UserDelete';
 
-test('success state', async () => {
-  const { container, findByText } = render(<Loaded />);
-  await findByText(/add user/i);
-  expect(container).toMatchSnapshot();
-});
+export default {
+  title: 'TeleportDashboard/Users/UserDelete',
+};
+
+export const Processing = () => {
+  return <UserDelete {...props} attempt={{ status: 'processing' }} />;
+};
+
+export const Confirm = () => {
+  return <UserDelete {...props} attempt={{ status: '' }} />;
+};
+
+export const Failed = () => {
+  return (
+    <UserDelete
+      {...props}
+      attempt={{ status: 'failed', statusText: 'server error' }}
+    />
+  );
+};
+
+const props = {
+  username: 'somename',
+  onDelete: () => null,
+  onClose: () => null,
+};

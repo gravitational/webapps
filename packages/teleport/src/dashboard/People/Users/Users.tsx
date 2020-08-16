@@ -22,16 +22,15 @@ import {
 } from 'teleport/components/Layout';
 import { Indicator, Box, ButtonPrimary, Alert } from 'design';
 import UserList from './UserList';
-import UserDialog from './UserDialog/UserDialog';
-import UserDialogDelete from './UserDialog/UserDialogDelete';
-import UserDialogResetPassword from './UserDialog/UserDialogResetPassword';
+import UserAddEdit from './UserAddEdit';
+import UserDelete from './UserDelete';
+import UserReset from './UserReset';
 import useUsers from './useUsers';
 import { useTeleport } from 'teleport/teleportContextProvider';
 
 export default function Container() {
   const state = useUsers();
-
-  return <Users state={state} />;
+  return <Users {...state} />;
 }
 
 /**
@@ -40,7 +39,7 @@ export default function Container() {
  * - Provide user related actions: edit/view, delete, reset
  *   based on permissions.
  */
-export function Users({ state }: Props) {
+export function Users(props: ReturnType<typeof useUsers>) {
   const {
     attempt,
     users,
@@ -49,12 +48,13 @@ export function Users({ state }: Props) {
     onStartCreate,
     onStartDelete,
     onStartEdit,
-    onStartResetPassword,
+    onStartReset,
     onClose,
-    onSave,
+    onCreate,
+    onUpdate,
     onDelete,
-    onResetPassword,
-  } = state;
+    onReset,
+  } = props;
 
   const ctx = useTeleport().storeUser;
   const canCreate =
@@ -82,35 +82,32 @@ export function Users({ state }: Props) {
           pageSize={20}
           onEdit={onStartEdit}
           onDelete={onStartDelete}
-          onResetPassword={onStartResetPassword}
+          onReset={onStartReset}
         />
       )}
       {(operation.type === 'create' || operation.type === 'edit') && (
-        <UserDialog
+        <UserAddEdit
           roles={roles}
           onClose={onClose}
-          onSave={onSave}
+          onCreate={onCreate}
+          onUpdate={onUpdate}
           user={operation.user}
         />
       )}
       {operation.type === 'delete' && (
-        <UserDialogDelete
+        <UserDelete
           onClose={onClose}
           onDelete={onDelete}
           username={operation.user.name}
         />
       )}
       {operation.type === 'reset' && (
-        <UserDialogResetPassword
+        <UserReset
           onClose={onClose}
-          onResetPassword={onResetPassword}
+          onReset={onReset}
           username={operation.user.name}
         />
       )}
     </FeatureBox>
   );
 }
-
-type Props = {
-  state: ReturnType<typeof useUsers>;
-};

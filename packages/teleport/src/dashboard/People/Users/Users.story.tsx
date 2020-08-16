@@ -21,17 +21,16 @@ import TeleportContext from 'teleport/teleportContext';
 import makeAcl from 'teleport/services/user/makeAcl';
 
 export default {
-  title: 'Teleport/Users/UsersView',
+  title: 'TeleportDashboard/Users',
 };
 
-export const Success = () => {
+export const Loaded = () => {
   const ctx = new TeleportContext();
   const acl = makeAcl(sample.acl);
 
   ctx.storeUser.setState({ acl });
   ctx.resourceService.fetchRoles = () => Promise.resolve(sample.roles);
   ctx.userService.fetchUsers = () => Promise.resolve(sample.users);
-
   return render(ctx, <Users />);
 };
 
@@ -92,32 +91,32 @@ const sample = {
     {
       name: 'cikar@egaposci.me',
       roles: ['admin'],
-      created: new Date('02/15/2020'),
+      created: new Date('2020-12-20T17:28:20.93Z'),
     },
     {
       name: 'hi@nen.pa',
       roles: ['ruhh', 'admin'],
-      created: new Date('10/15/2020'),
+      created: new Date('2020-12-18T17:28:20.93Z'),
     },
     {
       name: 'ziat@uthatebo.sl',
       roles: ['kaco', 'ziuzzow', 'admin'],
-      created: new Date('01/15/2020'),
+      created: new Date('2020-12-11T17:28:20.93Z'),
     },
     {
       name: 'pamkad@ukgir.ki',
       roles: ['vuit', 'vedkonm', 'valvapel'],
-      created: new Date('08/15/2020'),
+      created: new Date('2020-12-14T17:28:20.93Z'),
     },
     {
       name: 'jap@kosusfaw.mp',
       roles: ['ubip', 'duzjadj', 'dupiwuzocafe', 'abc', 'anavebikilonim'],
-      created: new Date('01/15/2020'),
+      created: new Date('2020-12-17T17:28:20.93Z'),
     },
     {
       name: 'azesotil@jevig.org',
       roles: ['tugu'],
-      created: new Date('09/15/2020'),
+      created: new Date('2020-12-10T17:28:20.93Z'),
     },
   ],
 };

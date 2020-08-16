@@ -15,11 +15,26 @@
  */
 
 import React from 'react';
-import { Loaded } from './Users.story';
-import { render } from 'design/utils/testing';
+import Dialog from './UserTokenLink';
 
-test('success state', async () => {
-  const { container, findByText } = render(<Loaded />);
-  await findByText(/add user/i);
-  expect(container).toMatchSnapshot();
-});
+export default {
+  title: 'TeleportDashboard/Users/UserTokenLink',
+};
+
+export const Invite = () => {
+  return <Dialog {...props} asInvite={true} />;
+};
+
+export const Reset = () => {
+  return <Dialog {...props} />;
+};
+
+const props = {
+  token: {
+    value: '0c536179038b386728dfee6602ca297f',
+    expires: '24h30m0s',
+    username: 'Lester',
+  },
+
+  onClose() {},
+};

@@ -15,11 +15,20 @@
  */
 
 import React from 'react';
-import { Loaded } from './Users.story';
+import * as stories from './UserDelete.story';
 import { render } from 'design/utils/testing';
 
-test('success state', async () => {
-  const { container, findByText } = render(<Loaded />);
-  await findByText(/add user/i);
-  expect(container).toMatchSnapshot();
+test('processing state', () => {
+  const { getByTestId } = render(<stories.Processing />);
+  expect(getByTestId('Modal')).toMatchSnapshot();
+});
+
+test('failed state', () => {
+  const { getByTestId } = render(<stories.Failed />);
+  expect(getByTestId('Modal')).toMatchSnapshot();
+});
+
+test('confirm state', () => {
+  const { getByTestId } = render(<stories.Confirm />);
+  expect(getByTestId('Modal')).toMatchSnapshot();
 });

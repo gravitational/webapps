@@ -22,6 +22,255 @@ exports[`failed state 1`] = `
   color: #FFFFFF;
 }
 
+.c11 {
+  line-height: 1.5;
+  margin: 0;
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  box-sizing: border-box;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-family: inherit;
+  font-weight: 600;
+  outline: none;
+  position: relative;
+  text-align: center;
+  text-decoration: none;
+  text-transform: uppercase;
+  transition: all 0.3s;
+  -webkit-font-smoothing: antialiased;
+  background: #512FC9;
+  color: rgba(255,255,255,0.87);
+  min-height: 32px;
+  font-size: 12px;
+  padding: 0px 24px;
+  margin-right: 16px;
+}
+
+.c11:active {
+  opacity: 0.56;
+}
+
+.c11:hover,
+.c11:focus {
+  background: #651FFF;
+}
+
+.c11:active {
+  background: #354AA4;
+}
+
+.c11:disabled {
+  background: rgba(255,255,255,0.12);
+  color: rgba(255,255,255,0.3);
+}
+
+.c12 {
+  line-height: 1.5;
+  margin: 0;
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  box-sizing: border-box;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-family: inherit;
+  font-weight: 600;
+  outline: none;
+  position: relative;
+  text-align: center;
+  text-decoration: none;
+  text-transform: uppercase;
+  transition: all 0.3s;
+  -webkit-font-smoothing: antialiased;
+  background: #222C59;
+  color: rgba(255,255,255,0.87);
+  min-height: 32px;
+  font-size: 12px;
+  padding: 0px 24px;
+}
+
+.c12:active {
+  opacity: 0.56;
+}
+
+.c12:hover,
+.c12:focus {
+  background: #2C3A73;
+}
+
+.c12:disabled {
+  background: rgba(255,255,255,0.12);
+  color: rgba(255,255,255,0.3);
+}
+
+.c5 {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  font-weight: 300;
+  font-size: 22px;
+  line-height: 32px;
+  text-transform: uppercase;
+  margin: 0px;
+  color: rgba(255,255,255,0.87);
+}
+
+.c8 {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  margin: 0px;
+  margin-bottom: 24px;
+  margin-top: 4px;
+}
+
+.c9 {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  font-weight: 600;
+  margin: 0px;
+}
+
+.c1 {
+  z-index: -1;
+  position: fixed;
+  right: 0;
+  bottom: 0;
+  top: 0;
+  left: 0;
+  background-color: rgba(0,0,0,0.5);
+  opacity: 1;
+  touch-action: none;
+}
+
+.c0 {
+  position: fixed;
+  z-index: 1200;
+  right: 0;
+  bottom: 0;
+  top: 0;
+  left: 0;
+}
+
+.c2 {
+  height: 100%;
+  outline: none;
+  color: black;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 1;
+  will-change: opacity;
+  transition: opacity 225ms cubic-bezier(0.4,0,0.2,1) 0ms;
+}
+
+.c3 {
+  padding: 32px;
+  padding-top: 24px;
+  background: #1C254D;
+  color: rgba(255,255,255,0.87);
+  border-radius: 8px;
+  box-shadow: 0 8px 32px rgba(0,0,0,0.24);
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  overflow-y: auto;
+  max-height: calc(100% - 96px);
+  max-width: 500px;
+  width: 100%;
+}
+
+.c4 {
+  box-sizing: border-box;
+  margin-bottom: 16px;
+  min-height: 32px;
+  display: flex;
+  align-items: center;
+}
+
+.c6 {
+  box-sizing: border-box;
+  margin-bottom: 32px;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.c10 {
+  box-sizing: border-box;
+}
+
+<div
+  class="c0"
+  data-testid="Modal"
+>
+  <div
+    aria-hidden="true"
+    class="c1"
+    data-testid="backdrop"
+  />
+  <div
+    class="c2"
+  >
+    <div
+      class="c3"
+      data-testid="dialogbox"
+    >
+      <div
+        class="sc-AxirZ sc-fzqBZW c4"
+      >
+        <div
+          class="c5"
+          color="text.primary"
+        >
+          Reset User Password?
+        </div>
+      </div>
+      <div
+        class="sc-AxirZ sc-fzqBZW c6"
+      >
+        <div
+          class="c7"
+          kind="danger"
+        >
+          some server error
+        </div>
+        <div
+          class="c8"
+        >
+          You are about to reset password for user
+          <span
+            class="c9"
+          >
+             smith 
+          </span>
+          . This will require the user to set up a new password.
+        </div>
+      </div>
+      <div
+        class="sc-AxirZ c10"
+      >
+        <button
+          class="c11"
+          kind="primary"
+        >
+          Generate reset url
+        </button>
+        <button
+          class="c12"
+          kind="secondary"
+        >
+          Cancel
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+`;
+
+exports[`processing state 1`] = `
 .c10 {
   line-height: 1.5;
   margin: 0;
@@ -41,7 +290,7 @@ exports[`failed state 1`] = `
   text-transform: uppercase;
   transition: all 0.3s;
   -webkit-font-smoothing: antialiased;
-  background: #d50000;
+  background: #512FC9;
   color: rgba(255,255,255,0.87);
   min-height: 32px;
   font-size: 12px;
@@ -55,7 +304,11 @@ exports[`failed state 1`] = `
 
 .c10:hover,
 .c10:focus {
-  background: #ff1744;
+  background: #651FFF;
+}
+
+.c10:active {
+  background: #354AA4;
 }
 
 .c10:disabled {
@@ -114,12 +367,19 @@ exports[`failed state 1`] = `
   color: rgba(255,255,255,0.87);
 }
 
-.c8 {
+.c7 {
   overflow: hidden;
   text-overflow: ellipsis;
   margin: 0px;
   margin-bottom: 24px;
   margin-top: 4px;
+}
+
+.c8 {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  font-weight: 600;
+  margin: 0px;
 }
 
 .c1 {
@@ -214,7 +474,7 @@ exports[`failed state 1`] = `
           class="c5"
           color="text.primary"
         >
-          Delete User?
+          Reset User Password?
         </div>
       </div>
       <div
@@ -222,16 +482,14 @@ exports[`failed state 1`] = `
       >
         <div
           class="c7"
-          kind="danger"
         >
-          some error message
-        </div>
-        <div
-          class="c8"
-        >
-          You are about to delete user '
-          somename
-          '. This will revoke the user's access to the current cluster. This action cannot be undone.
+          You are about to reset password for user
+          <span
+            class="c8"
+          >
+             smith 
+          </span>
+          . This will require the user to set up a new password.
         </div>
       </div>
       <div
@@ -239,9 +497,10 @@ exports[`failed state 1`] = `
       >
         <button
           class="c10"
-          kind="warning"
+          disabled=""
+          kind="primary"
         >
-          I understand, delete user
+          Generate reset url
         </button>
         <button
           class="c11"
@@ -255,8 +514,8 @@ exports[`failed state 1`] = `
 </div>
 `;
 
-exports[`initial state 1`] = `
-.c9 {
+exports[`success state 1`] = `
+.c11 {
   line-height: 1.5;
   margin: 0;
   display: inline-flex;
@@ -275,29 +534,32 @@ exports[`initial state 1`] = `
   text-transform: uppercase;
   transition: all 0.3s;
   -webkit-font-smoothing: antialiased;
-  background: #d50000;
+  background: #512FC9;
   color: rgba(255,255,255,0.87);
-  min-height: 32px;
-  font-size: 12px;
-  padding: 0px 24px;
-  margin-right: 16px;
+  font-size: 10px;
+  min-height: 24px;
+  padding: 0px 16px;
 }
 
-.c9:active {
+.c11:active {
   opacity: 0.56;
 }
 
-.c9:hover,
-.c9:focus {
-  background: #ff1744;
+.c11:hover,
+.c11:focus {
+  background: #651FFF;
 }
 
-.c9:disabled {
+.c11:active {
+  background: #354AA4;
+}
+
+.c11:disabled {
   background: rgba(255,255,255,0.12);
   color: rgba(255,255,255,0.3);
 }
 
-.c10 {
+.c13 {
   line-height: 1.5;
   margin: 0;
   display: inline-flex;
@@ -323,16 +585,16 @@ exports[`initial state 1`] = `
   padding: 0px 24px;
 }
 
-.c10:active {
+.c13:active {
   opacity: 0.56;
 }
 
-.c10:hover,
-.c10:focus {
+.c13:hover,
+.c13:focus {
   background: #2C3A73;
 }
 
-.c10:disabled {
+.c13:disabled {
   background: rgba(255,255,255,0.12);
   color: rgba(255,255,255,0.3);
 }
@@ -354,6 +616,30 @@ exports[`initial state 1`] = `
   margin: 0px;
   margin-bottom: 24px;
   margin-top: 4px;
+}
+
+.c8 {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  font-weight: 600;
+  margin: 0px;
+}
+
+.c10 {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  margin: 0px;
+  margin-right: 16px;
+}
+
+.c9 {
+  box-sizing: border-box;
+  margin-bottom: 8px;
+  padding: 8px;
+  background-color: #010B1C;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
 }
 
 .c1 {
@@ -421,7 +707,7 @@ exports[`initial state 1`] = `
   flex-direction: column;
 }
 
-.c8 {
+.c12 {
   box-sizing: border-box;
 }
 
@@ -442,269 +728,56 @@ exports[`initial state 1`] = `
       data-testid="dialogbox"
     >
       <div
-        class="sc-AxirZ sc-fzqBZW c4"
+        class="sc-AxirZ c4"
       >
         <div
           class="c5"
           color="text.primary"
         >
-          Delete User?
+          Share Link
         </div>
       </div>
       <div
-        class="sc-AxirZ sc-fzqBZW c6"
+        class="sc-AxirZ c6"
       >
         <div
           class="c7"
         >
-          You are about to delete user '
-          somename
-          '. This will revoke the user's access to the current cluster. This action cannot be undone.
+          User
+          <span
+            class="c8"
+          >
+             Lester 
+          </span>
+          has been created but requires a password. Share this URL with the user to set up a password, link is valid for 
+          24h30m0s
+          :
+        </div>
+        <div
+          class="sc-AxirZ c9"
+        >
+          <div
+            class="c10"
+            style="word-break: break-all;"
+          >
+            http://localhost/web/invite/0c536179038b386728dfee6602ca297f
+          </div>
+          <button
+            class="c11"
+            kind="primary"
+          >
+            Copy
+          </button>
         </div>
       </div>
       <div
-        class="sc-AxirZ c8"
+        class="sc-AxirZ c12"
       >
         <button
-          class="c9"
-          kind="warning"
-        >
-          I understand, delete user
-        </button>
-        <button
-          class="c10"
+          class="c13"
           kind="secondary"
         >
-          Cancel
-        </button>
-      </div>
-    </div>
-  </div>
-</div>
-`;
-
-exports[`processing state 1`] = `
-.c9 {
-  line-height: 1.5;
-  margin: 0;
-  display: inline-flex;
-  justify-content: center;
-  align-items: center;
-  box-sizing: border-box;
-  border: none;
-  border-radius: 4px;
-  cursor: pointer;
-  font-family: inherit;
-  font-weight: 600;
-  outline: none;
-  position: relative;
-  text-align: center;
-  text-decoration: none;
-  text-transform: uppercase;
-  transition: all 0.3s;
-  -webkit-font-smoothing: antialiased;
-  background: #d50000;
-  color: rgba(255,255,255,0.87);
-  min-height: 32px;
-  font-size: 12px;
-  padding: 0px 24px;
-  margin-right: 16px;
-}
-
-.c9:active {
-  opacity: 0.56;
-}
-
-.c9:hover,
-.c9:focus {
-  background: #ff1744;
-}
-
-.c9:disabled {
-  background: rgba(255,255,255,0.12);
-  color: rgba(255,255,255,0.3);
-}
-
-.c10 {
-  line-height: 1.5;
-  margin: 0;
-  display: inline-flex;
-  justify-content: center;
-  align-items: center;
-  box-sizing: border-box;
-  border: none;
-  border-radius: 4px;
-  cursor: pointer;
-  font-family: inherit;
-  font-weight: 600;
-  outline: none;
-  position: relative;
-  text-align: center;
-  text-decoration: none;
-  text-transform: uppercase;
-  transition: all 0.3s;
-  -webkit-font-smoothing: antialiased;
-  background: #222C59;
-  color: rgba(255,255,255,0.87);
-  min-height: 32px;
-  font-size: 12px;
-  padding: 0px 24px;
-}
-
-.c10:active {
-  opacity: 0.56;
-}
-
-.c10:hover,
-.c10:focus {
-  background: #2C3A73;
-}
-
-.c10:disabled {
-  background: rgba(255,255,255,0.12);
-  color: rgba(255,255,255,0.3);
-}
-
-.c5 {
-  overflow: hidden;
-  text-overflow: ellipsis;
-  font-weight: 300;
-  font-size: 22px;
-  line-height: 32px;
-  text-transform: uppercase;
-  margin: 0px;
-  color: rgba(255,255,255,0.87);
-}
-
-.c7 {
-  overflow: hidden;
-  text-overflow: ellipsis;
-  margin: 0px;
-  margin-bottom: 24px;
-  margin-top: 4px;
-}
-
-.c1 {
-  z-index: -1;
-  position: fixed;
-  right: 0;
-  bottom: 0;
-  top: 0;
-  left: 0;
-  background-color: rgba(0,0,0,0.5);
-  opacity: 1;
-  touch-action: none;
-}
-
-.c0 {
-  position: fixed;
-  z-index: 1200;
-  right: 0;
-  bottom: 0;
-  top: 0;
-  left: 0;
-}
-
-.c2 {
-  height: 100%;
-  outline: none;
-  color: black;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  opacity: 1;
-  will-change: opacity;
-  transition: opacity 225ms cubic-bezier(0.4,0,0.2,1) 0ms;
-}
-
-.c3 {
-  padding: 32px;
-  padding-top: 24px;
-  background: #1C254D;
-  color: rgba(255,255,255,0.87);
-  border-radius: 8px;
-  box-shadow: 0 8px 32px rgba(0,0,0,0.24);
-  display: flex;
-  flex-direction: column;
-  position: relative;
-  overflow-y: auto;
-  max-height: calc(100% - 96px);
-  max-width: 500px;
-  width: 100%;
-}
-
-.c4 {
-  box-sizing: border-box;
-  margin-bottom: 16px;
-  min-height: 32px;
-  display: flex;
-  align-items: center;
-}
-
-.c6 {
-  box-sizing: border-box;
-  margin-bottom: 32px;
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-}
-
-.c8 {
-  box-sizing: border-box;
-}
-
-<div
-  class="c0"
-  data-testid="Modal"
->
-  <div
-    aria-hidden="true"
-    class="c1"
-    data-testid="backdrop"
-  />
-  <div
-    class="c2"
-  >
-    <div
-      class="c3"
-      data-testid="dialogbox"
-    >
-      <div
-        class="sc-AxirZ sc-fzqBZW c4"
-      >
-        <div
-          class="c5"
-          color="text.primary"
-        >
-          Delete User?
-        </div>
-      </div>
-      <div
-        class="sc-AxirZ sc-fzqBZW c6"
-      >
-        <div
-          class="c7"
-        >
-          You are about to delete user '
-          somename
-          '. This will revoke the user's access to the current cluster. This action cannot be undone.
-        </div>
-      </div>
-      <div
-        class="sc-AxirZ c8"
-      >
-        <button
-          class="c9"
-          disabled=""
-          kind="warning"
-        >
-          I understand, delete user
-        </button>
-        <button
-          class="c10"
-          kind="secondary"
-        >
-          Cancel
+          Close
         </button>
       </div>
     </div>
