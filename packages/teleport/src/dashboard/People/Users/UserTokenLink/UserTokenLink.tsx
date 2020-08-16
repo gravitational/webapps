@@ -54,8 +54,12 @@ export default function UserTokenLink({
       <DialogContent>
         {asInvite ? (
           <Text mb={4} mt={1}>
-            User '{token.username}' has been reset. Share this URL with the user
-            to set up a new password, link is valid for {token.expires}:
+            User
+            <Text bold as="span">
+              {` ${token.username} `}
+            </Text>
+            has been reset. Share this URL with the user to set up a new
+            password, link is valid for {token.expires}.
           </Text>
         ) : (
           <Text mb={4} mt={1}>
@@ -64,7 +68,7 @@ export default function UserTokenLink({
               {` ${token.username} `}
             </Text>
             has been created but requires a password. Share this URL with the
-            user to set up a password, link is valid for {token.expires}:
+            user to set up a password, link is valid for {token.expires}.
           </Text>
         )}
         <Flex

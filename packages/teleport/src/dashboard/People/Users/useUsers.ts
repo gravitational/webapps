@@ -18,7 +18,6 @@ import { useState, useEffect } from 'react';
 import { useAttempt } from 'shared/hooks';
 import { User } from 'teleport/services/user';
 import { useTeleport } from 'teleport/teleportContextProvider';
-import makeUser from 'teleport/services/user/makeUser';
 
 export default function useUsers() {
   const ctx = useTeleport();
@@ -30,9 +29,10 @@ export default function useUsers() {
   } as Operation);
 
   function onStartCreate() {
+    const user = { isNew: true, name: '', roles: [], created: new Date() };
     setOperation({
       type: 'create',
-      user: makeUser({ isNew: true, roles: [] }),
+      user,
     });
   }
 

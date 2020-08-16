@@ -22,6 +22,19 @@ export default {
 };
 
 export const Create = () => {
+  const p = {
+    ...props,
+    isNew: true,
+    name: '',
+    roles: [],
+    selectedRoles: [],
+    attempt: { status: '' as const },
+  };
+
+  return <UserAddEdit {...p} />;
+};
+
+export const Edit = () => {
   return <UserAddEdit {...props} attempt={{ status: '' }} />;
 };
 

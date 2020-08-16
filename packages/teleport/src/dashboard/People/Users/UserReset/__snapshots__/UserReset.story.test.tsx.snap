@@ -751,7 +751,7 @@ exports[`success state 1`] = `
           </span>
           has been created but requires a password. Share this URL with the user to set up a password, link is valid for 
           24h30m0s
-          :
+          .
         </div>
         <div
           class="sc-AxirZ c9"

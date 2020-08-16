@@ -237,7 +237,7 @@ exports[`reset link dialog 1`] = `
           </span>
           has been created but requires a password. Share this URL with the user to set up a password, link is valid for 
           24h30m0s
-          :
+          .
         </div>
         <div
           class="sc-AxirZ c9"
@@ -272,7 +272,7 @@ exports[`reset link dialog 1`] = `
 `;
 
 exports[`reset link dialog as invite 1`] = `
-.c10 {
+.c11 {
   line-height: 1.5;
   margin: 0;
   display: inline-flex;
@@ -298,25 +298,25 @@ exports[`reset link dialog as invite 1`] = `
   padding: 0px 16px;
 }
 
-.c10:active {
+.c11:active {
   opacity: 0.56;
 }
 
-.c10:hover,
-.c10:focus {
+.c11:hover,
+.c11:focus {
   background: #651FFF;
 }
 
-.c10:active {
+.c11:active {
   background: #354AA4;
 }
 
-.c10:disabled {
+.c11:disabled {
   background: rgba(255,255,255,0.12);
   color: rgba(255,255,255,0.3);
 }
 
-.c12 {
+.c13 {
   line-height: 1.5;
   margin: 0;
   display: inline-flex;
@@ -342,16 +342,16 @@ exports[`reset link dialog as invite 1`] = `
   padding: 0px 24px;
 }
 
-.c12:active {
+.c13:active {
   opacity: 0.56;
 }
 
-.c12:hover,
-.c12:focus {
+.c13:hover,
+.c13:focus {
   background: #2C3A73;
 }
 
-.c12:disabled {
+.c13:disabled {
   background: rgba(255,255,255,0.12);
   color: rgba(255,255,255,0.3);
 }
@@ -375,14 +375,21 @@ exports[`reset link dialog as invite 1`] = `
   margin-top: 4px;
 }
 
-.c9 {
+.c8 {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  font-weight: 600;
+  margin: 0px;
+}
+
+.c10 {
   overflow: hidden;
   text-overflow: ellipsis;
   margin: 0px;
   margin-right: 16px;
 }
 
-.c8 {
+.c9 {
   box-sizing: border-box;
   margin-bottom: 8px;
   padding: 8px;
@@ -457,7 +464,7 @@ exports[`reset link dialog as invite 1`] = `
   flex-direction: column;
 }
 
-.c11 {
+.c12 {
   box-sizing: border-box;
 }
 
@@ -493,23 +500,27 @@ exports[`reset link dialog as invite 1`] = `
         <div
           class="c7"
         >
-          User '
-          Lester
-          ' has been reset. Share this URL with the user to set up a new password, link is valid for 
+          User
+          <span
+            class="c8"
+          >
+             Lester 
+          </span>
+          has been reset. Share this URL with the user to set up a new password, link is valid for 
           24h30m0s
-          :
+          .
         </div>
         <div
-          class="sc-AxirZ c8"
+          class="sc-AxirZ c9"
         >
           <div
-            class="c9"
+            class="c10"
             style="word-break: break-all;"
           >
             http://localhost/web/invite/0c536179038b386728dfee6602ca297f
           </div>
           <button
-            class="c10"
+            class="c11"
             kind="primary"
           >
             Copy
@@ -517,10 +528,10 @@ exports[`reset link dialog as invite 1`] = `
         </div>
       </div>
       <div
-        class="sc-AxirZ c11"
+        class="sc-AxirZ c12"
       >
         <button
-          class="c12"
+          class="c13"
           kind="secondary"
         >
           Close
