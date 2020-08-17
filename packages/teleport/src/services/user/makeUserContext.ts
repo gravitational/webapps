@@ -1,5 +1,5 @@
 /*
-Copyright 2020 Gravitational, Inc.
+Copyright 2019 Gravitational, Inc.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -14,20 +14,26 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import * as Icons from 'design/Icon';
-import cfg from 'teleport/config';
-import Users from 'teleport/dashboard/People/Users';
+import { at } from 'lodash';
+import makeAcl from './makeAcl';
+import { UserContext } from './types';
+import { makeCluster } from '../clusters';
 
-export default class FeatureUsers {
-  route = {
-    title: 'Users',
-    path: cfg.routes.clusterUsers,
-    component: Users,
-  };
+export default function makeUserContext(json): UserContext {
+  const [username, authType, aclJSON, clusterJSON] = at(json, [
+    'userName',
+    'authType',
+    'userAcl',
+    'cluster',
+  ]);
 
-  navItem = {
-    title: 'Users',
-    Icon: Icons.Users,
-    to: cfg.getUsersRoute(),
+  const cluster = makeCluster(clusterJSON);
+  const acl = makeAcl(aclJSON);
+
+  return {
+    username,
+    authType,
+    acl,
+    cluster,
   };
 }

@@ -25,6 +25,7 @@ export default function makeAcl(json): Acl {
   const roles = makeAccess(json.roles);
   const sessions = makeAccess(json.sessions);
   const events = makeAccess(json.events);
+  const users = makeAccess(json.users);
 
   return {
     logins,
@@ -33,6 +34,7 @@ export default function makeAcl(json): Acl {
     roles,
     sessions,
     events,
+    users,
   };
 }
 

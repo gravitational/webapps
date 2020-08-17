@@ -98,7 +98,6 @@ const cfg = {
       'wss://:fqdm/v1/webapi/sites/:clusterId/connect?access_token=:token&params=:params',
     terminalSessionPath: '/v1/webapi/sites/:clusterId/sessions/:sid?',
 
-    requestAccessPath: '/v1/enterprise/accessrequest/:requestId?',
     resourcePath: '/v1/enterprise/sites/:clusterId/resources/:kind?',
     removeResourcePath: '/v1/enterprise/sites/:clusterId/resources/:kind/:id',
   },
@@ -229,14 +228,6 @@ const cfg = {
     return generatePath(cfg.api.scp, {
       ...params,
     });
-  },
-
-  getRequestAccessUrl(requestId?: string) {
-    return generatePath(cfg.api.requestAccessPath, { requestId });
-  },
-
-  getRenewTokenUrl(requestId?: string) {
-    return generatePath(cfg.api.renewTokenPath, { requestId });
   },
 
   getResourcesUrl(kind?: Resource['kind']) {

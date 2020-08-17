@@ -146,7 +146,7 @@ export default class ConsoleContext {
 
   fetchNodes(clusterId: string) {
     return Promise.all([
-      serviceUser.fetchUser(clusterId),
+      serviceUser.fetchUserContext(clusterId),
       serviceNodes.fetchNodes(clusterId),
     ]).then(values => {
       const [user, nodes] = values;

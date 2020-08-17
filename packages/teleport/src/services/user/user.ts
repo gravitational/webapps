@@ -1,5 +1,6 @@
 /*
-Copyright 2019 Gravitational, Inc.
+Copyright 2019-2020 Gravitational, Inc.
+
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
 You may obtain a copy of the License at
@@ -13,40 +14,36 @@ limitations under the License.
 
 import api from 'teleport/services/api';
 import cfg from 'teleport/config';
-import session from 'teleport/services/session';
-import makeUser from './makeUser';
-import makeAccessRequest from './makeAccessRequest';
-import { User } from './types';
-
-let cached: User = null;
+import makeUserContext from './makeUserContext';
+import makeResetToken from './makeResetToken';
+import makeUser, { makeUsers } from './makeUser';
+import { User, ResetPasswordType } from './types';
 
 const service = {
-  createAccessRequest(reason?: string) {
+  fetchUserContext(clusterId?: string) {
+    return api.get(cfg.getUserContextUrl(clusterId)).then(makeUserContext);
+  },
+
+  fetchUsers() {
+    return api.get(cfg.getUsersUrl()).then(makeUsers);
+  },
+
+  createUser(user: User) {
+    return api.post(cfg.getUsersUrl(), user).then(makeUser);
+  },
+
+  updateUser(user: User) {
+    return api.put(cfg.getUsersUrl(), user).then(makeUser);
+  },
+
+  createResetPasswordToken(name: string, type: ResetPasswordType) {
     return api
-      .post(cfg.getRequestAccessUrl(), { reason })
-      .then(makeAccessRequest);
+      .post(cfg.api.resetPasswordTokenPath, { name, type })
+      .then(makeResetToken);
   },
 
-  applyPermission(requestId?: string) {
-    return session.renewSession(requestId);
-  },
-
-  fetchAccessRequest(requestId?: string) {
-    return api.get(cfg.getRequestAccessUrl(requestId)).then(makeAccessRequest);
-  },
-
-  fetchUser(clusterId?: string, fromCache = true) {
-    if (fromCache && cached) {
-      return Promise.resolve(cached);
-    }
-
-    return api
-      .get(cfg.getUserUrl(clusterId))
-      .then(makeUser)
-      .then(userContext => {
-        cached = userContext;
-        return cached;
-      });
+  deleteUser(name: string) {
+    return api.delete(cfg.getUsersDeleteUrl(name));
   },
 };
 

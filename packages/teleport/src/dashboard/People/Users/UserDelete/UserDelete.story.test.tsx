@@ -14,17 +14,21 @@
  * limitations under the License.
  */
 
-import { at } from 'lodash';
-import { User } from './types';
+import React from 'react';
+import * as stories from './UserDelete.story';
+import { render } from 'design/utils/testing';
 
-export default function makeUser(json): User {
-  const [name, roles] = at(json, ['name', 'roles']);
-  return {
-    name,
-    roles,
-  };
-}
+test('processing state', () => {
+  const { getByTestId } = render(<stories.Processing />);
+  expect(getByTestId('Modal')).toMatchSnapshot();
+});
 
-export function makeUsers(json): User[] {
-  return json.map(user => makeUser(user));
-}
+test('failed state', () => {
+  const { getByTestId } = render(<stories.Failed />);
+  expect(getByTestId('Modal')).toMatchSnapshot();
+});
+
+test('confirm state', () => {
+  const { getByTestId } = render(<stories.Confirm />);
+  expect(getByTestId('Modal')).toMatchSnapshot();
+});

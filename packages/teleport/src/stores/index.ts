@@ -1,3 +1,3 @@
 import StoreNav from './storeNav';
-import StoreUser from './storeUser';
-export { StoreNav, StoreUser };
+import StoreUserContext from './storeUserContext';
+export { StoreNav, StoreUserContext };
