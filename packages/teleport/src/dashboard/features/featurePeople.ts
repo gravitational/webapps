@@ -18,6 +18,7 @@ import People from 'teleport/dashboard/People';
 import { FeatureBase } from 'teleport/components/withFeature';
 import Ctx from 'teleport/teleportContext';
 import cfg from 'teleport/config';
+import getFeatures from 'teleport/dashboard/People/features/getFeatures';
 
 class FeaturePeople extends FeatureBase {
   Component = People;
@@ -31,13 +32,13 @@ class FeaturePeople extends FeatureBase {
     };
   }
 
-  onload(context: Ctx) {
-    if (!context.isRolesEnabled()) {
+  onload(ctx: Ctx) {
+    if (getFeatures(ctx).length === 0) {
       this.setDisabled();
       return;
     }
 
-    context.storeNav.addTopItem({
+    ctx.storeNav.addTopItem({
       title: 'People',
       exact: false,
       Icon: null,
