@@ -16,11 +16,16 @@ limitations under the License.
 
 import TeleportContext from 'teleport/teleportContext';
 import FeatureRoles from './featureRoles';
+import FeatureUsers from './featureUsers';
 
 export default function getFeatures(ctx: TeleportContext) {
   const features: Feature[] = [];
   if (ctx.isRolesEnabled()) {
     features.push(new FeatureRoles());
+  }
+
+  if (ctx.isUsersEnabled()) {
+    features.push(new FeatureUsers());
   }
 
   return features;

@@ -13,18 +13,32 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+import React from 'react';
+import { UserDelete } from './UserDelete';
 
-import { at } from 'lodash';
-import { User } from './types';
+export default {
+  title: 'TeleportDashboard/Users/UserDelete',
+};
 
-export default function makeUser(json): User {
-  const [name, roles] = at(json, ['name', 'roles']);
-  return {
-    name,
-    roles,
-  };
-}
+export const Processing = () => {
+  return <UserDelete {...props} attempt={{ status: 'processing' }} />;
+};
 
-export function makeUsers(json): User[] {
-  return json.map(user => makeUser(user));
-}
+export const Confirm = () => {
+  return <UserDelete {...props} attempt={{ status: '' }} />;
+};
+
+export const Failed = () => {
+  return (
+    <UserDelete
+      {...props}
+      attempt={{ status: 'failed', statusText: 'server error' }}
+    />
+  );
+};
+
+const props = {
+  username: 'somename',
+  onDelete: () => null,
+  onClose: () => null,
+};

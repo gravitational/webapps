@@ -13,18 +13,6 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+import UserAddEdit from './UserAddEdit';
 
-import { at } from 'lodash';
-import { User } from './types';
-
-export default function makeUser(json): User {
-  const [name, roles] = at(json, ['name', 'roles']);
-  return {
-    name,
-    roles,
-  };
-}
-
-export function makeUsers(json): User[] {
-  return json.map(user => makeUser(user));
-}
+export default UserAddEdit;

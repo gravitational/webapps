@@ -15,16 +15,13 @@
  */
 
 import { at } from 'lodash';
-import { User } from './types';
+import { ResetToken } from './types';
 
-export default function makeUser(json): User {
-  const [name, roles] = at(json, ['name', 'roles']);
+export default function makeResetToken(json): ResetToken {
+  const [expires, username, value] = at(json, ['expiry', 'user', 'tokenId']);
   return {
-    name,
-    roles,
+    username,
+    expires: new Date(expires),
+    value,
   };
-}
-
-export function makeUsers(json): User[] {
-  return json.map(user => makeUser(user));
 }

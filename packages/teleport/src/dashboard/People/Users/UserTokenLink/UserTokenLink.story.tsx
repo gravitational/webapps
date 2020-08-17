@@ -14,17 +14,27 @@
  * limitations under the License.
  */
 
-import { at } from 'lodash';
-import { User } from './types';
+import React from 'react';
+import Dialog from './UserTokenLink';
 
-export default function makeUser(json): User {
-  const [name, roles] = at(json, ['name', 'roles']);
-  return {
-    name,
-    roles,
-  };
-}
+export default {
+  title: 'TeleportDashboard/Users/UserTokenLink',
+};
 
-export function makeUsers(json): User[] {
-  return json.map(user => makeUser(user));
-}
+export const Invite = () => {
+  return <Dialog {...props} asInvite={true} />;
+};
+
+export const Reset = () => {
+  return <Dialog {...props} />;
+};
+
+const props = {
+  token: {
+    value: '0c536179038b386728dfee6602ca297f',
+    expires: new Date('2050-12-20T17:28:20.93Z'),
+    username: 'Lester',
+  },
+
+  onClose() {},
+};
