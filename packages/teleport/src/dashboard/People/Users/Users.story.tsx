@@ -65,6 +65,8 @@ const sample = {
     users: {
       list: true,
       create: true,
+      remove: true,
+      edit: true,
     },
     roles: {
       list: true,
