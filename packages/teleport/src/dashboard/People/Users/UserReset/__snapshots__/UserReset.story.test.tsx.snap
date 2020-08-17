@@ -246,7 +246,7 @@ exports[`failed state 1`] = `
           >
              smith 
           </span>
-          . This will require the user to set up a new password.
+          . This will generate a temporary URL which can be used to set up a new password.
         </div>
       </div>
       <div
@@ -489,7 +489,7 @@ exports[`processing state 1`] = `
           >
              smith 
           </span>
-          . This will require the user to set up a new password.
+          . This will generate a temporary URL which can be used to set up a new password.
         </div>
       </div>
       <div
@@ -749,8 +749,8 @@ exports[`success state 1`] = `
           >
              Lester 
           </span>
-          has been created but requires a password. Share this URL with the user to set up a password, link is valid for 
-          24h30m0s
+          has been reset. Share this URL with the user to set up a new password, link is valid for 
+          30 years
           .
         </div>
         <div
@@ -760,7 +760,7 @@ exports[`success state 1`] = `
             class="c10"
             style="word-break: break-all;"
           >
-            http://localhost/web/invite/0c536179038b386728dfee6602ca297f
+            http://localhost/web/reset/0c536179038b386728dfee6602ca297f
           </div>
           <button
             class="c11"

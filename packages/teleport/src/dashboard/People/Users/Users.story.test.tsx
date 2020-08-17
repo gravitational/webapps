@@ -20,6 +20,6 @@ import { render } from 'design/utils/testing';
 
 test('success state', async () => {
   const { container, findByText } = render(<Loaded />);
-  await findByText(/add user/i);
+  await findByText(/create new user/i);
   expect(container).toMatchSnapshot();
 });

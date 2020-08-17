@@ -40,12 +40,11 @@ export default function useUserDialog(props: Props) {
 
   function onSave() {
     const u = {
-      name: props.user.name,
-      isNew: props.user.isNew,
+      name,
       roles: selectedRoles.map(r => r.value),
     };
 
-    const promise = u.isNew
+    const promise = props.isNew
       ? props.onCreate(u).then(setToken)
       : props.onUpdate(u).then(props.onClose);
 
@@ -58,7 +57,7 @@ export default function useUserDialog(props: Props) {
     onChangeName,
     onChangeRoles,
     roles: props.roles,
-    isNew: props.user.isNew,
+    isNew: props.isNew,
     attempt,
     name,
     selectedRoles,
@@ -67,6 +66,7 @@ export default function useUserDialog(props: Props) {
 }
 
 export type Props = {
+  isNew: boolean;
   user: User;
   roles: string[];
   onClose(): void;

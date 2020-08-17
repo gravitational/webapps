@@ -18,12 +18,10 @@ import { at } from 'lodash';
 import { User } from './types';
 
 export default function makeUser(json): User {
-  const [name, roles, created] = at(json, ['name', 'roles', 'created']);
-
+  const [name, roles] = at(json, ['name', 'roles']);
   return {
     name,
     roles,
-    created: new Date(created),
   };
 }
 

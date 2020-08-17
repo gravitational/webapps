@@ -73,8 +73,10 @@ export function UserDelete({
 
 function useDialog(props: Props) {
   const { attempt, run } = useAttemptNext();
-  function onDelete(username: string) {
-    return run(() => props.onDelete(username)).then(() => props.onClose());
+  function onDelete() {
+    return run(() => props.onDelete(props.username)).then(() =>
+      props.onClose()
+    );
   }
 
   return {

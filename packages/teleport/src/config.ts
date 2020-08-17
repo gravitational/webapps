@@ -80,7 +80,7 @@ const cfg = {
     scp:
       '/v1/webapi/sites/:clusterId/nodes/:serverId/:login/scp?location=:location&filename=:filename',
     renewTokenPath: '/v1/webapi/sessions/renew',
-    resetPasswordTokenPath: '/v1/webapi/sites/:clusterId/users/password/token',
+    resetPasswordTokenPath: '/v1/webapi/users/password/token',
     sessionPath: '/v1/webapi/sessions',
     userContextPath: '/v1/webapi/sites/:clusterId/context',
     userStatusPath: '/v1/webapi/user/status',
@@ -219,13 +219,9 @@ const cfg = {
     return generatePath(cfg.api.userContextPath, { clusterId });
   },
 
-  getResetPasswordTokenUrl() {
-    const clusterId = cfg.proxyCluster;
-    return generatePath(cfg.api.resetPasswordTokenPath, { clusterId });
-  },
-
-  getUserInviteRoute(tokenId = '') {
-    return generatePath(cfg.routes.userInvite, { tokenId });
+  getUserResetTokenRoute(tokenId = '', invite = true) {
+    const route = invite ? cfg.routes.userInvite : cfg.routes.userReset;
+    return cfg.baseUrl + generatePath(route, { tokenId });
   },
 
   getUsersUrl() {

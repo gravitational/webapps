@@ -57,8 +57,9 @@ export function Users(props: ReturnType<typeof useUsers>) {
   } = props;
 
   const ctx = useTeleport().storeUser;
-  const canCreate =
-    attempt.isSuccess && ctx.getUserAccess().create && ctx.getRoleAccess().read;
+  const canCreate = attempt.isSuccess && ctx.getUserAccess().create;
+  const canDelete = ctx.getUserAccess().remove;
+  const canUpdate = ctx.getUserAccess().edit;
 
   return (
     <FeatureBox>
@@ -66,7 +67,7 @@ export function Users(props: ReturnType<typeof useUsers>) {
         <FeatureHeaderTitle>Users</FeatureHeaderTitle>
         {canCreate && (
           <ButtonPrimary ml="auto" width="240px" onClick={onStartCreate}>
-            Add User
+            Create New User
           </ButtonPrimary>
         )}
       </FeatureHeader>
@@ -83,10 +84,13 @@ export function Users(props: ReturnType<typeof useUsers>) {
           onEdit={onStartEdit}
           onDelete={onStartDelete}
           onReset={onStartReset}
+          canDelete={canDelete}
+          canUpdate={canUpdate}
         />
       )}
       {(operation.type === 'create' || operation.type === 'edit') && (
         <UserAddEdit
+          isNew={operation.type === 'create'}
           roles={roles}
           onClose={onClose}
           onCreate={onCreate}

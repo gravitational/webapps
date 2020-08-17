@@ -26,26 +26,22 @@ import {
 } from 'design/DataTable';
 import PagedTable from 'design/DataTable/Paged';
 import isMatch from 'design/utils/match';
-
 import { MenuButton, MenuItem } from 'shared/components/MenuAction';
-import { displayDateTime } from 'shared/services/loc';
 import InputSearch from 'teleport/components/InputSearch';
 import { User } from 'teleport/services/user';
-import { useTeleport } from 'teleport/teleportContextProvider';
 
-/**
- * UserList renders the table portions and display columns
- * with user information.
- */
-const UserList = ({ users, pageSize, onEdit, onDelete, onReset }: Props) => {
+export default function UserList({
+  users,
+  pageSize,
+  onEdit,
+  onDelete,
+  onReset,
+  canDelete,
+  canUpdate,
+}: Props) {
   const [searchValue, setSearchValue] = useState('');
-
-  // Sort by recently created users.
-  // We use ascend here first, which will then reverse it on first run.
-  // Ideally we should change the root direction (Table) but that may
-  // cause regression bugs.
   const [sort, setSort] = useState<Record<string, string>>({
-    key: 'created',
+    key: 'name',
     dir: SortTypes.ASC,
   });
 
@@ -58,10 +54,9 @@ const UserList = ({ users, pageSize, onEdit, onDelete, onReset }: Props) => {
   }
 
   function sortAndFilter(searchValue: string) {
-    // Filter by search value.
-    const searchableProps = ['name', 'roles', 'created'];
+    const searchableProps = ['name', 'roles'];
     const filtered = users.filter(user =>
-      isMatch(user, searchValue, { searchableProps, cb: filterCB })
+      isMatch(user, searchValue, { searchableProps, cb: null })
     );
 
     // Apply sorting to filtered list.
@@ -71,14 +66,6 @@ const UserList = ({ users, pageSize, onEdit, onDelete, onReset }: Props) => {
     }
 
     return sorted;
-  }
-
-  function filterCB(target: any[], searchValue: string, prop: string) {
-    // Allow searching by date how users sees it on table.
-    if (prop === 'created') {
-      const date = displayDateTime(target);
-      return date.indexOf(searchValue) !== -1;
-    }
   }
 
   const data = sortAndFilter(searchValue);
@@ -113,20 +100,11 @@ const UserList = ({ users, pageSize, onEdit, onDelete, onReset }: Props) => {
           }
         />
         <Column
-          columnKey="created"
-          cell={<CreatedCell />}
-          header={
-            <SortHeaderCell
-              sortDir={sort.key === 'created' ? sort.dir : null}
-              onSortChange={onSortChange}
-              title="Created"
-            />
-          }
-        />
-        <Column
           header={<Cell />}
           cell={
             <ActionCell
+              canUpdate={canUpdate}
+              canDelete={canDelete}
               onEdit={onEdit}
               onDelete={onDelete}
               onResetPassword={onReset}
@@ -136,36 +114,38 @@ const UserList = ({ users, pageSize, onEdit, onDelete, onReset }: Props) => {
       </PagedTable>
     </>
   );
-};
-export default UserList;
+}
 
 const ActionCell = props => {
-  const ctx = useTeleport().storeUser;
-  const { rowIndex, data, onEdit, onResetPassword, onDelete } = props;
+  const {
+    rowIndex,
+    data,
+    onEdit,
+    onResetPassword,
+    canDelete,
+    canUpdate,
+    onDelete,
+  } = props;
+
   return (
     <Cell align="right">
       <MenuButton>
-        {ctx.getUserAccess().edit && ctx.getRoleAccess().read && (
-          <MenuItem onClick={() => onEdit(data[rowIndex])}>Edit</MenuItem>
+        {canUpdate && (
+          <MenuItem onClick={() => onEdit(data[rowIndex])}>Edit...</MenuItem>
         )}
-        {ctx.getUserAccess() && (
+        {canUpdate && (
           <MenuItem onClick={() => onResetPassword(data[rowIndex])}>
-            Reset Password
+            Reset Password...
           </MenuItem>
         )}
-        {ctx.getUserAccess().edit && (
-          <MenuItem onClick={() => onDelete(data[rowIndex])}>Delete</MenuItem>
+        {canDelete && (
+          <MenuItem onClick={() => onDelete(data[rowIndex])}>
+            Delete...
+          </MenuItem>
         )}
       </MenuButton>
     </Cell>
   );
-};
-
-const CreatedCell = props => {
-  const { rowIndex, data } = props;
-  const { created } = data[rowIndex];
-
-  return <Cell>{displayDateTime(created)}</Cell>;
 };
 
 const RolesCell = props => {
@@ -183,6 +163,8 @@ const RolesCell = props => {
 type Props = {
   users: User[];
   pageSize: number;
+  canDelete: boolean;
+  canUpdate: boolean;
   onEdit(user: User): void;
   onDelete(user: User): void;
   onReset(user: User): void;

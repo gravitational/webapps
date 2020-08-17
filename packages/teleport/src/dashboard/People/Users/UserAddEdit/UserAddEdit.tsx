@@ -50,7 +50,7 @@ export function UserAddEdit(props: ReturnType<typeof useDialog>) {
   } = props;
 
   if (attempt.status === 'success' && isNew) {
-    return <UserTokenLink onClose={onClose} token={token} />;
+    return <UserTokenLink onClose={onClose} token={token} asInvite={true} />;
   }
 
   const selectOptions: Option[] = roles.map(r => ({

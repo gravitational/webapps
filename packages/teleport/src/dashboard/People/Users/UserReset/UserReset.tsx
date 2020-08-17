@@ -61,7 +61,8 @@ export function UserReset({
           <Text bold as="span">
             {` ${username} `}
           </Text>
-          . This will require the user to set up a new password.
+          . This will generate a temporary URL which can be used to set up a new
+          password.
         </Text>
       </DialogContent>
       <DialogFooter>
@@ -82,8 +83,8 @@ function useDialog(props: Props) {
   const { attempt, run } = useAttemptNext();
   const [token, setToken] = React.useState<ResetToken>(null);
 
-  function onReset(username = '') {
-    run(() => props.onReset(username).then(setToken));
+  function onReset() {
+    run(() => props.onReset(props.username).then(setToken));
   }
 
   return {

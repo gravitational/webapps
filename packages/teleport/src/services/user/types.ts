@@ -46,14 +46,12 @@ export interface Acl {
 export interface User {
   name: string;
   roles: string[];
-  created?: Date;
-  isNew?: boolean;
 }
 
 export interface ResetToken {
   value: string;
-  expires: string;
   username: string;
+  expires: Date;
 }
 
 export type ResetPasswordType = 'invite' | 'password';

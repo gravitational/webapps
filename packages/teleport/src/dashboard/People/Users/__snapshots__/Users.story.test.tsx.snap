@@ -357,7 +357,7 @@ exports[`success state 1`] = `
         kind="primary"
         width="240px"
       >
-        Add User
+        Create New User
       </button>
     </div>
     <div
@@ -427,7 +427,7 @@ exports[`success state 1`] = `
               <a>
                 Username
                 <span
-                  class="c9 c12 icon icon-chevrons-expand-vertical "
+                  class="c9 c12 icon icon-chevron-up "
                   color="light"
                 />
               </a>
@@ -441,22 +441,13 @@ exports[`success state 1`] = `
                 />
               </a>
             </th>
-            <th>
-              <a>
-                Created
-                <span
-                  class="c9 c12 icon icon-chevron-up "
-                  color="light"
-                />
-              </a>
-            </th>
             <th />
           </tr>
         </thead>
         <tbody>
           <tr>
             <td>
-              cikar@egaposci.me
+              ziat@uthatebo.sl
             </td>
             <td>
               <div
@@ -465,9 +456,18 @@ exports[`success state 1`] = `
               >
                 admin
               </div>
-            </td>
-            <td>
-              2020-12-20 17:28:20
+              <div
+                class="c13"
+                kind="secondary"
+              >
+                kaco
+              </div>
+              <div
+                class="c13"
+                kind="secondary"
+              >
+                ziuzzow
+              </div>
             </td>
             <td
               align="right"
@@ -488,24 +488,27 @@ exports[`success state 1`] = `
           </tr>
           <tr>
             <td>
-              hi@nen.pa
+              pamkad@ukgir.ki
             </td>
             <td>
               <div
                 class="c13"
                 kind="secondary"
               >
-                admin
+                valvapel
               </div>
               <div
                 class="c13"
                 kind="secondary"
               >
-                ruhh
+                vedkonm
               </div>
-            </td>
-            <td>
-              2020-12-18 17:28:20
+              <div
+                class="c13"
+                kind="secondary"
+              >
+                vuit
+              </div>
             </td>
             <td
               align="right"
@@ -560,9 +563,6 @@ exports[`success state 1`] = `
                 ubip
               </div>
             </td>
-            <td>
-              2020-12-17 17:28:20
-            </td>
             <td
               align="right"
             >
@@ -582,51 +582,7 @@ exports[`success state 1`] = `
           </tr>
           <tr>
             <td>
-              pamkad@ukgir.ki
-            </td>
-            <td>
-              <div
-                class="c13"
-                kind="secondary"
-              >
-                valvapel
-              </div>
-              <div
-                class="c13"
-                kind="secondary"
-              >
-                vedkonm
-              </div>
-              <div
-                class="c13"
-                kind="secondary"
-              >
-                vuit
-              </div>
-            </td>
-            <td>
-              2020-12-14 17:28:20
-            </td>
-            <td
-              align="right"
-            >
-              <button
-                class="c14"
-                height="24px"
-                kind="border"
-              >
-                OPTIONS
-                <span
-                  class="c9 c15 icon icon-caret-down "
-                  color="text.secondary"
-                  font-size="2"
-                />
-              </button>
-            </td>
-          </tr>
-          <tr>
-            <td>
-              ziat@uthatebo.sl
+              hi@nen.pa
             </td>
             <td>
               <div
@@ -639,17 +595,37 @@ exports[`success state 1`] = `
                 class="c13"
                 kind="secondary"
               >
-                kaco
+                ruhh
               </div>
+            </td>
+            <td
+              align="right"
+            >
+              <button
+                class="c14"
+                height="24px"
+                kind="border"
+              >
+                OPTIONS
+                <span
+                  class="c9 c15 icon icon-caret-down "
+                  color="text.secondary"
+                  font-size="2"
+                />
+              </button>
+            </td>
+          </tr>
+          <tr>
+            <td>
+              cikar@egaposci.me
+            </td>
+            <td>
               <div
                 class="c13"
                 kind="secondary"
               >
-                ziuzzow
+                admin
               </div>
-            </td>
-            <td>
-              2020-12-11 17:28:20
             </td>
             <td
               align="right"
@@ -679,9 +655,6 @@ exports[`success state 1`] = `
               >
                 tugu
               </div>
-            </td>
-            <td>
-              2020-12-10 17:28:20
             </td>
             <td
               align="right"

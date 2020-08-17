@@ -18,11 +18,10 @@ import { at } from 'lodash';
 import { ResetToken } from './types';
 
 export default function makeResetToken(json): ResetToken {
-  const [expires, username, value] = at(json, ['expires', 'user', 'tokenId']);
-
+  const [expires, username, value] = at(json, ['expiry', 'user', 'tokenId']);
   return {
     username,
-    expires,
+    expires: new Date(expires),
     value,
   };
 }

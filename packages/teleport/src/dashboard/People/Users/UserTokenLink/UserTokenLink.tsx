@@ -15,6 +15,7 @@
  */
 
 import React from 'react';
+import moment from 'moment';
 import copyToClipboard from 'design/utils/copyToClipboard';
 import selectElementContent from 'design/utils/selectElementContent';
 import { ButtonPrimary, ButtonSecondary, Text, Flex } from 'design';
@@ -34,7 +35,10 @@ export default function UserTokenLink({
 }: Props) {
   const [copyCmd, setCopyCmd] = React.useState(() => 'Copy');
   const ref = React.useRef();
-  const tokenUrl = `${cfg.baseUrl}${cfg.getUserInviteRoute(token.value)}`;
+  const tokenUrl = cfg.getUserResetTokenRoute(token.value, asInvite);
+
+  const duration = moment(new Date()).diff(token.expires);
+  const expiresText = moment.duration(duration).humanize();
 
   function onCopyClick() {
     copyToClipboard(tokenUrl).then(() => setCopyCmd('Copied'));
@@ -58,8 +62,8 @@ export default function UserTokenLink({
             <Text bold as="span">
               {` ${token.username} `}
             </Text>
-            has been reset. Share this URL with the user to set up a new
-            password, link is valid for {token.expires}.
+            has been created but requires a password. Share this URL with the
+            user to set up a password, link is valid for {expiresText}.
           </Text>
         ) : (
           <Text mb={4} mt={1}>
@@ -67,8 +71,8 @@ export default function UserTokenLink({
             <Text bold as="span">
               {` ${token.username} `}
             </Text>
-            has been created but requires a password. Share this URL with the
-            user to set up a password, link is valid for {token.expires}.
+            has been reset. Share this URL with the user to set up a new
+            password, link is valid for {expiresText}.
           </Text>
         )}
         <Flex

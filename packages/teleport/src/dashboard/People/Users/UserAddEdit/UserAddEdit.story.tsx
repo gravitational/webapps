@@ -65,7 +65,7 @@ const props = {
   onSave() {},
   token: {
     value: '0c536179038b386728dfee6602ca297f',
-    expires: '24h30m0s',
+    expires: new Date('2050-12-20T17:28:20.93Z'),
     username: 'Lester',
   },
 };

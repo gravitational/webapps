@@ -30,13 +30,17 @@ const service = {
     return api.get(cfg.getUsersUrl()).then(makeUsers);
   },
 
-  saveUser(user: User) {
+  createUser(user: User) {
+    return api.post(cfg.getUsersUrl(), user).then(makeUser);
+  },
+
+  updateUser(user: User) {
     return api.put(cfg.getUsersUrl(), user).then(makeUser);
   },
 
   createResetPasswordToken(name: string, type: ResetPasswordType) {
     return api
-      .post(cfg.getResetPasswordTokenUrl(), { name, type })
+      .post(cfg.api.resetPasswordTokenPath, { name, type })
       .then(makeResetToken);
   },
 

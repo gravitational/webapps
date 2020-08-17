@@ -63,7 +63,7 @@ export class DashboardTopNav extends React.Component {
         pl={pl}
         style={{ zIndex: '1', boxShadow: '0 8px 24px rgba(0,0,0,.24)' }}
       >
-        <TopNavItem pr="9" as={Link} to={cfg.routes.app}>
+        <TopNavItem pr="10" as={Link} to={cfg.routes.app}>
           <Image
             src={teleportLogoSvg}
             mx="3"

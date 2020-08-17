@@ -29,7 +29,7 @@ export default function useUsers() {
   } as Operation);
 
   function onStartCreate() {
-    const user = { isNew: true, name: '', roles: [], created: new Date() };
+    const user = { name: '', roles: [], created: new Date() };
     setOperation({
       type: 'create',
       user,
@@ -64,14 +64,14 @@ export default function useUsers() {
   }
 
   function onUpdate(u: User) {
-    return ctx.userService.saveUser(u).then(result => {
+    return ctx.userService.updateUser(u).then(result => {
       setUsers([result, ...users.filter(i => i.name !== u.name)]);
     });
   }
 
   function onCreate(u: User) {
     return ctx.userService
-      .saveUser(u)
+      .createUser(u)
       .then(result => setUsers([result, ...users]))
       .then(() => ctx.userService.createResetPasswordToken(u.name, 'invite'));
   }

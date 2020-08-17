@@ -235,8 +235,8 @@ exports[`reset link dialog 1`] = `
           >
              Lester 
           </span>
-          has been created but requires a password. Share this URL with the user to set up a password, link is valid for 
-          24h30m0s
+          has been reset. Share this URL with the user to set up a new password, link is valid for 
+          30 years
           .
         </div>
         <div
@@ -246,7 +246,7 @@ exports[`reset link dialog 1`] = `
             class="c10"
             style="word-break: break-all;"
           >
-            http://localhost/web/invite/0c536179038b386728dfee6602ca297f
+            http://localhost/web/reset/0c536179038b386728dfee6602ca297f
           </div>
           <button
             class="c11"
@@ -506,8 +506,8 @@ exports[`reset link dialog as invite 1`] = `
           >
              Lester 
           </span>
-          has been reset. Share this URL with the user to set up a new password, link is valid for 
-          24h30m0s
+          has been created but requires a password. Share this URL with the user to set up a password, link is valid for 
+          30 years
           .
         </div>
         <div
