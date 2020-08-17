@@ -39,9 +39,6 @@ export default function useAttemptNext(status = '' as Attempt['status']) {
         })
         .catch(err => {
           handleError(err);
-        })
-        .then(() => {
-          return attempt;
         });
     } catch (err) {
       handleError(err);

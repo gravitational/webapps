@@ -127,6 +127,10 @@ const ActionCell = props => {
     onDelete,
   } = props;
 
+  if (!canDelete && !canUpdate) {
+    return <Cell align="right" />;
+  }
+
   return (
     <Cell align="right">
       <MenuButton>

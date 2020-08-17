@@ -15,6 +15,7 @@ limitations under the License.
 */
 
 import Settings from 'teleport/dashboard/Settings';
+import getCommunityFeatures from 'teleport/dashboard/Settings/features/getFeatures';
 import { FeatureBase } from 'teleport/components/withFeature';
 import Ctx from 'teleport/teleportContext';
 import cfg from 'teleport/config';
@@ -31,8 +32,17 @@ class FeatureSettings extends FeatureBase {
     };
   }
 
-  onload(context: Ctx) {
-    context.storeNav.addTopItem({
+  getFeatures(ctx: Ctx) {
+    return getCommunityFeatures(ctx);
+  }
+
+  onload(ctx: Ctx) {
+    if (this.getFeatures(ctx).length === 0) {
+      this.setDisabled();
+      return;
+    }
+
+    ctx.storeNav.addTopItem({
       title: 'Settings',
       Icon: null,
       exact: false,
