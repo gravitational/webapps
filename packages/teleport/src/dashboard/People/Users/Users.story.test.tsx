@@ -14,17 +14,12 @@
  * limitations under the License.
  */
 
-import { at } from 'lodash';
-import { User } from './types';
+import React from 'react';
+import { Loaded } from './Users.story';
+import { render } from 'design/utils/testing';
 
-export default function makeUser(json): User {
-  const [name, roles] = at(json, ['name', 'roles']);
-  return {
-    name,
-    roles,
-  };
-}
-
-export function makeUsers(json): User[] {
-  return json.map(user => makeUser(user));
-}
+test('success state', async () => {
+  const { container, findByText } = render(<Loaded />);
+  await findByText(/create new user/i);
+  expect(container).toMatchSnapshot();
+});

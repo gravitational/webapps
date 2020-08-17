@@ -19,9 +19,10 @@ export type Props = {
   clearable?: boolean;
   isSimpleValue?: boolean;
   isSearchable?: boolean;
+  isDisabled?: boolean;
   maxMenuHeight?: number;
-  onChange(e: Option): void;
-  value: null | Option;
+  onChange(e: Option | Option[]): void;
+  value: null | Option | Option[];
   isMulti?: boolean;
   autoFocus?: boolean;
   label?: string;

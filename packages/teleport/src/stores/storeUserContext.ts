@@ -1,12 +1,9 @@
 /*
 Copyright 2019 Gravitational, Inc.
-
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
 You may obtain a copy of the License at
-
     http://www.apache.org/licenses/LICENSE-2.0
-
 Unless required by applicable law or agreed to in writing, software
 distributed under the License is distributed on an "AS IS" BASIS,
 WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -15,10 +12,10 @@ limitations under the License.
 */
 
 import { Store } from 'shared/libs/stores';
-import service, { User } from 'teleport/services/user';
+import service, { UserContext } from 'teleport/services/user';
 
-export default class StoreUser extends Store<User> {
-  state: User = null;
+export default class StoreUserContext extends Store<UserContext> {
+  state: UserContext = null;
 
   isSso() {
     return this.state.authType === 'sso';
@@ -44,8 +41,12 @@ export default class StoreUser extends Store<User> {
     return this.state.acl.trustedClusters;
   }
 
-  fetchUser() {
-    return service.fetchUser().then(user => {
+  getUserAccess() {
+    return this.state.acl.users;
+  }
+
+  fetchUserContext() {
+    return service.fetchUserContext().then(user => {
       this.setState(user);
     });
   }

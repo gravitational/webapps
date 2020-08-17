@@ -334,6 +334,10 @@ exports[`render DocumentNodes 1`] = `
   opacity: 0.4;
 }
 
+.c9:read-only {
+  cursor: not-allowed;
+}
+
 .c9:hover,
 .c9:focus,
 .c9:active {

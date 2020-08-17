@@ -1,5 +1,5 @@
 /*
-Copyright 2019 Gravitational, Inc.
+Copyright 2019-2020 Gravitational, Inc.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -13,11 +13,12 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 */
+
 import { Cluster } from '../../services/clusters';
 
 export type AuthType = 'local' | 'sso';
 
-export interface User {
+export interface UserContext {
   authType: AuthType;
   acl: Acl;
   username: string;
@@ -39,4 +40,18 @@ export interface Acl {
   roles: Access;
   sessions: Access;
   events: Access;
+  users: Access;
 }
+
+export interface User {
+  name: string;
+  roles: string[];
+}
+
+export interface ResetToken {
+  value: string;
+  username: string;
+  expires: Date;
+}
+
+export type ResetPasswordType = 'invite' | 'password';
