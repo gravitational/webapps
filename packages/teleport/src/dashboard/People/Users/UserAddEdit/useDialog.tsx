@@ -20,7 +20,7 @@ import { Option } from 'shared/components/Select';
 import { ResetToken, User } from 'teleport/services/user';
 
 export default function useUserDialog(props: Props) {
-  const { attempt, run } = useAttemptNext('');
+  const { attempt, setAttempt } = useAttemptNext('');
   const [name, setName] = useState(props.user.name);
   const [token, setToken] = useState<ResetToken>(null);
   const [selectedRoles, setSelectedRoles] = useState<Option[]>(
@@ -44,11 +44,26 @@ export default function useUserDialog(props: Props) {
       roles: selectedRoles.map(r => r.value),
     };
 
-    const promise = props.isNew
-      ? props.onCreate(u).then(setToken)
-      : props.onUpdate(u).then(props.onClose);
+    const handleError = (err: Error) =>
+      setAttempt({ status: 'failed', statusText: err.message });
 
-    run(() => promise);
+    setAttempt({ status: 'processing' });
+    if (props.isNew) {
+      props
+        .onCreate(u)
+        .then(token => {
+          setToken(token);
+          setAttempt({ status: 'success' });
+        })
+        .catch(handleError);
+    } else {
+      props
+        .onUpdate(u)
+        .then(() => {
+          props.onClose();
+        })
+        .catch(handleError);
+    }
   }
 
   return {
