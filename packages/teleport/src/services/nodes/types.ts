@@ -27,3 +27,13 @@ export interface Node {
   addr: string;
   tunnel: boolean;
 }
+
+/**
+ * SshNode contains fields that are used to connect to a node.
+ */
+export interface SshNode {
+  login: string;
+  serverId: string;
+  hostname?: string;
+  clusterId?: string;
+}

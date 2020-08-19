@@ -25,6 +25,7 @@ import ClusterSelector from './ClusterSelector';
 import useNodes from './useNodes';
 import ThemeProvider from './ThemeProvider';
 import * as stores from 'teleport/console/stores/types';
+import { SshNode } from 'teleport/services/nodes';
 
 type Props = {
   visible: boolean;
@@ -42,21 +43,17 @@ export default function DocumentNodes(props: Props) {
   } = useNodes(doc);
   const { isProcessing, isSuccess, isFailed, message } = attempt;
 
-  function onLoginMenuSelect(
-    e: React.MouseEvent,
-    login: string,
-    serverId: string
-  ) {
+  function onLoginMenuSelect(e: React.MouseEvent, node: SshNode) {
     // allow to open a new browser tab (not the console one) when requested
     const newBrowserTabRequested = e.ctrlKey || e.metaKey;
     if (!newBrowserTabRequested) {
       e.preventDefault();
-      createSshSession(login, serverId);
+      createSshSession(node);
     }
   }
 
-  function onQuickLaunchEnter(login: string, serverId: string) {
-    createSshSession(login, serverId);
+  function onQuickLaunchEnter(node: SshNode) {
+    createSshSession(node);
   }
 
   function onLoginMenuOpen(serverId: string) {

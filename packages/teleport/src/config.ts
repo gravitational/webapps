@@ -50,7 +50,8 @@ const cfg = {
     clusterSessions: '/web/cluster/:clusterId/sessions',
     console: '/web/cluster/:clusterId/console',
     consoleNodes: '/web/cluster/:clusterId/console/nodes',
-    consoleConnect: '/web/cluster/:clusterId/console/node/:serverId/:login',
+    consoleConnect:
+      '/web/cluster/:clusterId/console/node/:serverId/:login/:hostname?',
     consoleSession: '/web/cluster/:clusterId/console/session/:sid',
     player: '/web/cluster/:clusterId/session/:sid',
     sessionAuditPlayer: '/web/cluster/:clusterId/session/:sid/player',
@@ -84,9 +85,7 @@ const cfg = {
     u2fChangePassChallengePath: '/v1/webapi/u2f/password/changerequest',
     u2fSessionPath: '/v1/webapi/u2f/sessions',
     nodesPath: '/v1/webapi/sites/:clusterId/nodes',
-    siteSessionPath: '/v1/webapi/sites/:siteId/sessions',
     sessionEventsPath: '/v1/webapi/sites/:siteId/sessions/:sid/events',
-    siteEventSessionFilterPath: `/v1/webapi/sites/:siteId/sessions`,
     siteEventsFilterPath: `/v1/webapi/sites/:siteId/events?event=session.start&event=session.end&from=:start&to=:end`,
     ttyWsAddr:
       'wss://:fqdm/v1/webapi/sites/:clusterId/connect?access_token=:token&params=:params',
@@ -153,16 +152,17 @@ const cfg = {
     });
   },
 
-  getSshConnectRoute({ clusterId, login, serverId }: UrlParams) {
+  getSshConnectRoute({ clusterId, login, serverId, hostname }: UrlSshParams) {
     clusterId = clusterId || cfg.clusterName;
     return generatePath(cfg.routes.consoleConnect, {
       clusterId,
       serverId,
       login,
+      hostname,
     });
   },
 
-  getSshSessionRoute({ clusterId, sid }: UrlParams) {
+  getSshSessionRoute({ clusterId, sid }: UrlSshParams) {
     clusterId = clusterId || cfg.clusterName;
     return generatePath(cfg.routes.consoleSession, { clusterId, sid });
   },
@@ -181,17 +181,17 @@ const cfg = {
     return generatePath(cfg.routes.console, { clusterId });
   },
 
-  getPlayerRoute({ clusterId, sid }: UrlParams) {
+  getPlayerRoute({ clusterId, sid }: UrlSshParams) {
     clusterId = clusterId || cfg.clusterName;
     return generatePath(cfg.routes.player, { clusterId, sid });
   },
 
-  getSessionAuditPlayerRoute({ clusterId, sid }: UrlParams) {
+  getSessionAuditPlayerRoute({ clusterId, sid }: UrlSshParams) {
     clusterId = clusterId || cfg.clusterName;
     return generatePath(cfg.routes.sessionAuditPlayer, { clusterId, sid });
   },
 
-  getSessionAuditCmdsRoute({ clusterId, sid }: UrlParams) {
+  getSessionAuditCmdsRoute({ clusterId, sid }: UrlSshParams) {
     clusterId = clusterId || cfg.clusterName;
     return generatePath(cfg.routes.sessionAuditCmds, { clusterId, sid });
   },
@@ -201,7 +201,7 @@ const cfg = {
     return generatePath(cfg.api.userContextPath, { clusterId });
   },
 
-  getTerminalSessionUrl({ clusterId, sid }: UrlParams) {
+  getTerminalSessionUrl({ clusterId, sid }: UrlSshParams) {
     clusterId = clusterId || cfg.clusterName;
     return generatePath(cfg.api.terminalSessionPath, { clusterId, sid });
   },
@@ -230,13 +230,6 @@ const cfg = {
   },
 };
 
-export interface UrlParams {
-  sid?: string;
-  clusterId?: string;
-  login?: string;
-  serverId?: string;
-}
-
 export interface UrlScpParams {
   clusterId: string;
   serverId: string;
@@ -250,6 +243,7 @@ export interface UrlSshParams {
   serverId?: string;
   sid?: string;
   clusterId?: string;
+  hostname?: string;
 }
 
 export interface UrlClusterEventsParams {

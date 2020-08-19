@@ -28,7 +28,7 @@ import {
 } from 'design/DataTable';
 import Table from 'design/DataTable/Paged';
 import MenuSshLogin, { LoginItem } from 'shared/components/MenuSshLogin';
-import { Node } from 'teleport/services/nodes';
+import { Node, SshNode } from 'teleport/services/nodes';
 import InputSearch from 'teleport/components/InputSearch';
 
 function NodeList(props: Props) {
@@ -123,13 +123,9 @@ function searchAndFilterCb(
   }
 }
 
-const LoginCell: React.FC<Required<{
-  onSelect?: (e: React.SyntheticEvent, login: string, serverId: string) => void;
-  onOpen: (serverId: string) => LoginItem[];
-  [key: string]: any;
-}>> = props => {
+const LoginCell = (props: LoginCellProps) => {
   const { rowIndex, data, onOpen, onSelect } = props;
-  const { id } = data[rowIndex] as Node;
+  const { id, hostname } = data[rowIndex] as Node;
   const serverId = id;
   function handleOnOpen() {
     return onOpen(serverId);
@@ -140,7 +136,7 @@ const LoginCell: React.FC<Required<{
       return [];
     }
 
-    return onSelect(e, login, serverId);
+    return onSelect(e, { login, serverId, hostname });
   }
 
   return (
@@ -197,12 +193,14 @@ const StyledTable = styled(Table)`
 type Props = {
   nodes: Node[];
   onLoginMenuOpen: (serverId: string) => { login: string; url: string }[];
-  onLoginSelect: (
-    e: React.SyntheticEvent,
-    login: string,
-    serverId: string
-  ) => void;
+  onLoginSelect: (e: React.SyntheticEvent, node: SshNode) => void;
   pageSize?: number;
+};
+
+type LoginCellProps = {
+  onSelect?: (e: React.SyntheticEvent, node: SshNode) => void;
+  onOpen: (serverId: string) => LoginItem[];
+  [key: string]: any;
 };
 
 export default NodeList;

@@ -18,7 +18,7 @@ import { useEffect, useState } from 'react';
 import { useAttempt } from 'shared/hooks';
 import * as stores from './../../stores';
 import { useConsoleContext } from 'teleport/console/consoleContextProvider';
-import { Node } from 'teleport/services/nodes';
+import { Node, SshNode } from 'teleport/services/nodes';
 
 export default function useNodes({ clusterId, id }: stores.DocumentNodes) {
   const consoleCtx = useConsoleContext();
@@ -39,11 +39,12 @@ export default function useNodes({ clusterId, id }: stores.DocumentNodes) {
     });
   }, [clusterId]);
 
-  function createSshSession(login: string, serverId: string) {
+  function createSshSession({ login, serverId, hostname }: SshNode) {
     const url = consoleCtx.getSshDocumentUrl({
       serverId,
       login,
       clusterId,
+      hostname,
     });
     consoleCtx.gotoTab({ url });
     consoleCtx.removeDocument(id);

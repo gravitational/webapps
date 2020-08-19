@@ -19,12 +19,16 @@ import api from 'teleport/services/api';
 import cfg from 'teleport/config';
 import makeSession, { makeParticipant } from './makeSession';
 import { ParticipantList } from './types';
+import { SshNode } from 'teleport/services/nodes';
 
 const service = {
-  create({ serverId, clusterId, login }: CreateParams) {
+  create({ serverId, clusterId, login, hostname }: SshNode) {
     const request = {
       session: {
         login,
+        server_hostname: hostname,
+        server_id: serverId,
+        cluster_name: clusterId,
       },
     };
 
@@ -34,9 +38,7 @@ const service = {
         const session = makeSession(response.session);
         return {
           ...session,
-          hostname: serverId,
-          serverId,
-          clusterId,
+          hostname: hostname ? hostname : serverId,
         };
       });
   },
@@ -75,14 +77,7 @@ const service = {
     });
   },
 };
-
 export default service;
-
-type CreateParams = {
-  serverId: string;
-  clusterId: string;
-  login: string;
-};
 
 type FetchSessionParams = {
   sid: string;

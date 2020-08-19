@@ -34,8 +34,8 @@ export default function FieldInputSsh({
       const match = check(value);
       setHasError(!match);
       if (match) {
-        const { username, host } = match.groups;
-        onPress(username, host);
+        const { login, serverId } = match.groups;
+        onPress({ login, serverId });
       }
     } else {
       setHasError(false);
@@ -65,7 +65,7 @@ export default function FieldInputSsh({
 
 // Checks for spaces between chars, and
 // captures two named groups: username and host.
-const SSH_STR_REGEX = /^(?:(?<username>[^\s]+)@)(?<host>[^\s]+)$/;
+const SSH_STR_REGEX = /^(?:(?<login>[^\s]+)@)(?<serverId>[^\s]+)$/;
 const check = value => {
   return SSH_STR_REGEX.exec(value.trim());
 };

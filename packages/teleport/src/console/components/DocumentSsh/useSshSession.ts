@@ -25,7 +25,7 @@ import { useConsoleContext } from 'teleport/console/consoleContextProvider';
 import { DocumentSsh } from 'teleport/console/stores';
 
 export default function useSshSession(doc: DocumentSsh) {
-  const { clusterId, sid, serverId, login } = doc;
+  const { clusterId, sid, serverId, login, hostname } = doc;
   const ctx = useConsoleContext();
   const ttyRef = React.useRef<Tty>(null);
   const [session, setSession] = React.useState<Session>(null);
@@ -94,7 +94,7 @@ export default function useSshSession(doc: DocumentSsh) {
     } else {
       // create new ssh session
       ctx
-        .createSshSession(clusterId, serverId, login)
+        .createSshSession({ clusterId, serverId, login, hostname })
         .then(initTty)
         .catch(err => {
           setStatus('error');

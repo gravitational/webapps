@@ -32,9 +32,10 @@ export interface DocumentBlank extends DocumentBase {
 export interface DocumentSsh extends DocumentBase {
   status: 'connected' | 'disconnected';
   kind: 'terminal';
-  sid?: string;
   serverId: string;
   login: string;
+  sid?: string;
+  hostname?: string;
 }
 
 export interface DocumentNodes extends DocumentBase {

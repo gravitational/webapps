@@ -26,6 +26,7 @@ import QuickLaunch from 'teleport/components/QuickLaunch';
 import { useTeleport } from 'teleport/teleportContextProvider';
 import NodeList from 'teleport/components/NodeList';
 import useClusterNodes from './useClusterNodes';
+import { SshNode } from 'teleport/services/nodes';
 
 export default function ClusterNodes() {
   const teleCtx = useTeleport();
@@ -43,13 +44,13 @@ export function Nodes({
     return <Cards.Failed alignSelf="baseline" message={attempt.message} />;
   }
 
-  function onLoginSelect(e: React.MouseEvent, login: string, serverId: string) {
+  function onLoginSelect(e: React.MouseEvent, node: SshNode) {
     e.preventDefault();
-    startSshSession(login, serverId);
+    startSshSession(node);
   }
 
-  function onQuickLaunchEnter(login: string, serverId: string) {
-    startSshSession(login, serverId);
+  function onQuickLaunchEnter(node: SshNode) {
+    startSshSession(node);
   }
 
   return (

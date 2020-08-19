@@ -23,7 +23,7 @@ import { getAccessToken } from 'teleport/services/api';
 import Tty from 'teleport/lib/term/tty';
 import TtyAddressResolver from 'teleport/lib/term/ttyAddressResolver';
 import serviceSsh, { Session, ParticipantList } from 'teleport/services/ssh';
-import serviceNodes from 'teleport/services/nodes';
+import serviceNodes, { SshNode } from 'teleport/services/nodes';
 import serviceClusters from 'teleport/services/clusters';
 import serviceUser from 'teleport/services/user';
 
@@ -76,13 +76,14 @@ export default class ConsoleContext {
     });
   }
 
-  addSshDocument({ login, serverId, sid, clusterId }: UrlSshParams) {
+  addSshDocument({ login, serverId, sid, clusterId, hostname }: UrlSshParams) {
     const title = login && serverId ? `${login}@${serverId}` : sid;
     const url = this.getSshDocumentUrl({
       clusterId,
       login,
       serverId,
       sid,
+      hostname,
     });
 
     return this.storeDocs.add({
@@ -95,6 +96,7 @@ export default class ConsoleContext {
       sid,
       url,
       created: new Date(),
+      hostname,
     });
   }
 
@@ -165,12 +167,8 @@ export default class ConsoleContext {
     return serviceSsh.fetchSession({ clusterId, sid });
   }
 
-  createSshSession(clusterId: string, serverId: string, login: string) {
-    return serviceSsh.create({
-      serverId,
-      clusterId,
-      login,
-    });
+  createSshSession(node: SshNode) {
+    return serviceSsh.create(node);
   }
 
   logout() {
