@@ -27,7 +27,7 @@ export default function ActionBar({
 }) {
   const isScpDisabled = isDownloadOpen || isUploadOpen || !isConnected;
   return (
-    <Flex flex="0 0" alignItems="center" height="32px">
+    <Flex alignItems="center">
       <ButtonIcon
         disabled={isScpDisabled}
         size={0}
