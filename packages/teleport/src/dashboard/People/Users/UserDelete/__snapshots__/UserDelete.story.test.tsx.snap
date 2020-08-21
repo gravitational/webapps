@@ -209,7 +209,7 @@ exports[`confirm state 1`] = `
         <div
           class="c7"
         >
-          You are about to delete a user
+          You are about to delete user
           <span
             class="c8"
           >
@@ -225,7 +225,7 @@ exports[`confirm state 1`] = `
           class="c10"
           kind="warning"
         >
-          I understand, delete a user
+          I understand, delete user
         </button>
         <button
           class="c11"
@@ -475,7 +475,7 @@ exports[`failed state 1`] = `
         <div
           class="c8"
         >
-          You are about to delete a user
+          You are about to delete user
           <span
             class="c9"
           >
@@ -491,7 +491,7 @@ exports[`failed state 1`] = `
           class="c11"
           kind="warning"
         >
-          I understand, delete a user
+          I understand, delete user
         </button>
         <button
           class="c12"
@@ -714,7 +714,7 @@ exports[`processing state 1`] = `
         <div
           class="c7"
         >
-          You are about to delete a user
+          You are about to delete user
           <span
             class="c8"
           >
@@ -731,7 +731,7 @@ exports[`processing state 1`] = `
           disabled=""
           kind="warning"
         >
-          I understand, delete a user
+          I understand, delete user
         </button>
         <button
           class="c11"
