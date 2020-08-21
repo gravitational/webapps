@@ -50,7 +50,7 @@ export function UserDelete({
           <Alert kind="danger" children={attempt.statusText} />
         )}
         <Text mb={4} mt={1}>
-          You are about to delete a user
+          You are about to delete user
           <Text bold as="span">
             {` ${username}`}
           </Text>
@@ -63,7 +63,7 @@ export function UserDelete({
           disabled={attempt.status === 'processing'}
           onClick={onDelete}
         >
-          I understand, delete a user
+          I understand, delete user
         </ButtonWarning>
         <ButtonSecondary onClick={onClose}>Cancel</ButtonSecondary>
       </DialogFooter>
@@ -72,11 +72,18 @@ export function UserDelete({
 }
 
 function useDialog(props: Props) {
-  const { attempt, run } = useAttemptNext();
+  const { attempt, setAttempt } = useAttemptNext();
   function onDelete() {
-    return run(() => props.onDelete(props.username)).then(() =>
-      props.onClose()
-    );
+    setAttempt({ status: 'processing' });
+    props
+      .onDelete(props.username)
+      .then(() => {
+        setAttempt({ status: 'success' });
+        props.onClose();
+      })
+      .catch((err: Error) => {
+        setAttempt({ status: 'failed', statusText: err.message });
+      });
   }
 
   return {
