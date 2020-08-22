@@ -47,6 +47,7 @@ export interface Acl {
 export interface User {
   name: string;
   roles: string[];
+  idp: string;
 }
 
 export interface ResetToken {
