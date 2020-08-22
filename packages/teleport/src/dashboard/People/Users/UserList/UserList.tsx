@@ -100,6 +100,17 @@ export default function UserList({
           }
         />
         <Column
+          columnKey="idp"
+          cell={<TextCell style={{ textTransform: 'capitalize' }} />}
+          header={
+            <SortHeaderCell
+              sortDir={sort.key === 'idp' ? sort.dir : null}
+              onSortChange={onSortChange}
+              title="Identity Provider"
+            />
+          }
+        />
+        <Column
           header={<Cell />}
           cell={
             <ActionCell
@@ -127,25 +138,23 @@ const ActionCell = props => {
     onDelete,
   } = props;
 
-  if (!canDelete && !canUpdate) {
+  const user = data[rowIndex];
+
+  if ((!canDelete && !canUpdate) || user.idp !== 'teleport local user') {
     return <Cell align="right" />;
   }
 
   return (
     <Cell align="right">
       <MenuButton>
+        {canUpdate && <MenuItem onClick={() => onEdit(user)}>Edit...</MenuItem>}
         {canUpdate && (
-          <MenuItem onClick={() => onEdit(data[rowIndex])}>Edit...</MenuItem>
-        )}
-        {canUpdate && (
-          <MenuItem onClick={() => onResetPassword(data[rowIndex])}>
+          <MenuItem onClick={() => onResetPassword(user)}>
             Reset Password...
           </MenuItem>
         )}
         {canDelete && (
-          <MenuItem onClick={() => onDelete(data[rowIndex])}>
-            Delete...
-          </MenuItem>
+          <MenuItem onClick={() => onDelete(user)}>Delete...</MenuItem>
         )}
       </MenuButton>
     </Cell>
