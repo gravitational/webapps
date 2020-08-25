@@ -445,6 +445,15 @@ exports[`success state 1`] = `
                 />
               </a>
             </th>
+            <th>
+              <a>
+                Type
+                <span
+                  class="c9 c12 icon icon-chevrons-expand-vertical "
+                  color="light"
+                />
+              </a>
+            </th>
             <th />
           </tr>
         </thead>
@@ -474,8 +483,9 @@ exports[`success state 1`] = `
               </div>
             </td>
             <td
-              align="right"
+              style="text-transform: capitalize;"
             >
+<<<<<<< HEAD:packages/teleport/src/Users/__snapshots__/Users.story.test.tsx.snap
               <button
                 class="c15"
                 height="24px"
@@ -488,7 +498,13 @@ exports[`success state 1`] = `
                   font-size="2"
                 />
               </button>
+=======
+              github
+>>>>>>> c0eb38e... Rename column, User fields, update test:packages/teleport/src/dashboard/People/Users/__snapshots__/Users.story.test.tsx.snap
             </td>
+            <td
+              align="right"
+            />
           </tr>
           <tr>
             <td>
@@ -515,8 +531,9 @@ exports[`success state 1`] = `
               </div>
             </td>
             <td
-              align="right"
+              style="text-transform: capitalize;"
             >
+<<<<<<< HEAD:packages/teleport/src/Users/__snapshots__/Users.story.test.tsx.snap
               <button
                 class="c15"
                 height="24px"
@@ -529,7 +546,13 @@ exports[`success state 1`] = `
                   font-size="2"
                 />
               </button>
+=======
+              saml
+>>>>>>> c0eb38e... Rename column, User fields, update test:packages/teleport/src/dashboard/People/Users/__snapshots__/Users.story.test.tsx.snap
             </td>
+            <td
+              align="right"
+            />
           </tr>
           <tr>
             <td>
@@ -568,8 +591,9 @@ exports[`success state 1`] = `
               </div>
             </td>
             <td
-              align="right"
+              style="text-transform: capitalize;"
             >
+<<<<<<< HEAD:packages/teleport/src/Users/__snapshots__/Users.story.test.tsx.snap
               <button
                 class="c15"
                 height="24px"
@@ -582,7 +606,13 @@ exports[`success state 1`] = `
                   font-size="2"
                 />
               </button>
+=======
+              oidc
+>>>>>>> c0eb38e... Rename column, User fields, update test:packages/teleport/src/dashboard/People/Users/__snapshots__/Users.story.test.tsx.snap
             </td>
+            <td
+              align="right"
+            />
           </tr>
           <tr>
             <td>
@@ -601,6 +631,11 @@ exports[`success state 1`] = `
               >
                 ruhh
               </div>
+            </td>
+            <td
+              style="text-transform: capitalize;"
+            >
+              teleport local user
             </td>
             <td
               align="right"
@@ -632,6 +667,11 @@ exports[`success state 1`] = `
               </div>
             </td>
             <td
+              style="text-transform: capitalize;"
+            >
+              teleport local user
+            </td>
+            <td
               align="right"
             >
               <button
@@ -659,6 +699,11 @@ exports[`success state 1`] = `
               >
                 tugu
               </div>
+            </td>
+            <td
+              style="text-transform: capitalize;"
+            >
+              teleport local user
             </td>
             <td
               align="right"

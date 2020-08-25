@@ -101,13 +101,13 @@ export default function UserList({
           }
         />
         <Column
-          columnKey="idp"
+          columnKey="authType"
           cell={<TextCell style={{ textTransform: 'capitalize' }} />}
           header={
             <SortHeaderCell
-              sortDir={sort.key === 'idp' ? sort.dir : null}
+              sortDir={sort.key === 'authType' ? sort.dir : null}
               onSortChange={onSortChange}
-              title="Identity Provider"
+              title="Type"
             />
           }
         />
@@ -139,9 +139,9 @@ const ActionCell = props => {
     onDelete,
   } = props;
 
-  const user = data[rowIndex];
+  const user: User = data[rowIndex];
 
-  if ((!canDelete && !canUpdate) || user.idp !== 'teleport local user') {
+  if ((!canDelete && !canUpdate) || !user.isLocal) {
     return <Cell align="right" />;
   }
 
