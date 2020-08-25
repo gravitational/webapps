@@ -18,11 +18,12 @@ import { at } from 'lodash';
 import { User } from './types';
 
 export default function makeUser(json): User {
-  const [name, roles, idp] = at(json, ['name', 'roles', 'idp']);
+  const [name, roles, authType] = at(json, ['name', 'roles', 'authType']);
   return {
     name,
     roles,
-    idp,
+    authType: authType === 'local' ? 'teleport local user' : authType,
+    isLocal: authType === 'local',
   };
 }
 

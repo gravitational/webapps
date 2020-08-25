@@ -441,6 +441,15 @@ exports[`success state 1`] = `
                 />
               </a>
             </th>
+            <th>
+              <a>
+                Type
+                <span
+                  class="c9 c12 icon icon-chevrons-expand-vertical "
+                  color="light"
+                />
+              </a>
+            </th>
             <th />
           </tr>
         </thead>
@@ -470,21 +479,13 @@ exports[`success state 1`] = `
               </div>
             </td>
             <td
-              align="right"
+              style="text-transform: capitalize;"
             >
-              <button
-                class="c14"
-                height="24px"
-                kind="border"
-              >
-                OPTIONS
-                <span
-                  class="c9 c15 icon icon-caret-down "
-                  color="text.secondary"
-                  font-size="2"
-                />
-              </button>
+              github
             </td>
+            <td
+              align="right"
+            />
           </tr>
           <tr>
             <td>
@@ -511,21 +512,13 @@ exports[`success state 1`] = `
               </div>
             </td>
             <td
-              align="right"
+              style="text-transform: capitalize;"
             >
-              <button
-                class="c14"
-                height="24px"
-                kind="border"
-              >
-                OPTIONS
-                <span
-                  class="c9 c15 icon icon-caret-down "
-                  color="text.secondary"
-                  font-size="2"
-                />
-              </button>
+              saml
             </td>
+            <td
+              align="right"
+            />
           </tr>
           <tr>
             <td>
@@ -564,21 +557,13 @@ exports[`success state 1`] = `
               </div>
             </td>
             <td
-              align="right"
+              style="text-transform: capitalize;"
             >
-              <button
-                class="c14"
-                height="24px"
-                kind="border"
-              >
-                OPTIONS
-                <span
-                  class="c9 c15 icon icon-caret-down "
-                  color="text.secondary"
-                  font-size="2"
-                />
-              </button>
+              oidc
             </td>
+            <td
+              align="right"
+            />
           </tr>
           <tr>
             <td>
@@ -597,6 +582,11 @@ exports[`success state 1`] = `
               >
                 ruhh
               </div>
+            </td>
+            <td
+              style="text-transform: capitalize;"
+            >
+              teleport local user
             </td>
             <td
               align="right"
@@ -628,6 +618,11 @@ exports[`success state 1`] = `
               </div>
             </td>
             <td
+              style="text-transform: capitalize;"
+            >
+              teleport local user
+            </td>
+            <td
               align="right"
             >
               <button
@@ -655,6 +650,11 @@ exports[`success state 1`] = `
               >
                 tugu
               </div>
+            </td>
+            <td
+              style="text-transform: capitalize;"
+            >
+              teleport local user
             </td>
             <td
               align="right"
