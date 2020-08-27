@@ -24,6 +24,7 @@ import clusterService from './services/clusters';
 import sshService from './services/ssh';
 import resourceService from './services/resources';
 import userService from './services/user';
+import appService from './services/apps';
 
 export default class Context implements teleport.Context {
   // stores
@@ -40,6 +41,7 @@ export default class Context implements teleport.Context {
   sshService = sshService;
   resourceService = resourceService;
   userService = userService;
+  appService = appService;
 
   constructor(params?: { clusterId?: string; features?: teleport.Feature[] }) {
     const { clusterId, features = [] } = params || {};
@@ -75,6 +77,10 @@ export default class Context implements teleport.Context {
   }
 
   isUsersEnabled() {
-    return this.storeUser.getUserAccess().list === true;
+    return this.storeUser.getUserAccess().list;
+  }
+
+  isApplicationsEnabled() {
+    return this.storeUser.getAppAccess().list;
   }
 }
