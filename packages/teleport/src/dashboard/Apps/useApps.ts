@@ -1,0 +1,56 @@
+/**
+ * Copyright 2020 Gravitational, Inc.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+import { useState, useEffect } from 'react';
+import { useAttemptNext } from 'shared/hooks';
+import { App } from 'teleport/services/apps';
+import { useTeleport } from 'teleport/teleportContextProvider';
+
+export default function useApps() {
+  const ctx = useTeleport();
+
+  const { attempt, run } = useAttemptNext('processing');
+
+  const [apps, setApps] = useState([] as App[]);
+  const [app, setApp] = useState(null as App);
+  const [isViewing, setIsViewing] = useState(false);
+
+  function fetchApps() {
+    return ctx.appService.fetchApps().then(setApps);
+  }
+
+  function onView(app) {
+    setApp(app);
+    setIsViewing(true);
+  }
+
+  function onClose() {
+    setIsViewing(false);
+  }
+
+  useEffect(() => {
+    run(() => fetchApps());
+  }, []);
+
+  return {
+    attempt,
+    apps,
+    app,
+    isViewing,
+    onView,
+    onClose,
+  };
+}
