@@ -42,6 +42,7 @@ const cfg = {
 
   routes: {
     app: '/web',
+    applications: '/web/aap',
     people: '/web/people',
     support: '/web/support',
     settings: '/web/settings',
@@ -75,6 +76,8 @@ const cfg = {
   },
 
   api: {
+    // TODO backend: define this endpoint
+    applicationsPath: '/v1/webapi/apps',
     clustersPath: '/v1/webapi/sites',
     clusterEventsPath: `/v1/webapi/sites/:clusterId/events/search?from=:start?&to=:end?&limit=:limit?`,
     scp:
