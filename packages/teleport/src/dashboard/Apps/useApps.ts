@@ -25,20 +25,9 @@ export default function useApps() {
   const { attempt, run } = useAttemptNext('processing');
 
   const [apps, setApps] = useState([] as App[]);
-  const [app, setApp] = useState(null as App);
-  const [isViewing, setIsViewing] = useState(false);
 
   function fetchApps() {
     return ctx.appService.fetchApps().then(setApps);
-  }
-
-  function onView(app) {
-    setApp(app);
-    setIsViewing(true);
-  }
-
-  function onClose() {
-    setIsViewing(false);
   }
 
   useEffect(() => {
@@ -48,9 +37,5 @@ export default function useApps() {
   return {
     attempt,
     apps,
-    app,
-    isViewing,
-    onView,
-    onClose,
   };
 }
