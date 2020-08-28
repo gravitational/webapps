@@ -15,11 +15,10 @@
  */
 
 import React from 'react';
-import DefaultApps, { Apps } from './Apps';
+import DefaultApps from './Apps';
 import TeleportContextProvider from 'teleport/teleportContextProvider';
 import TeleportContext from 'teleport/teleportContext';
 import makeAcl from 'teleport/services/user/makeAcl';
-import { useAttemptNext } from 'shared/hooks';
 
 export default {
   title: 'TeleportDashboard/Apps',
@@ -62,25 +61,6 @@ export const Failed = () => {
   return render(ctx, <DefaultApps />);
 };
 
-export const Viewing = () => {
-  const ctx = new TeleportContext();
-  const acl = makeAcl(sample.acl);
-  const { attempt } = useAttemptNext('success');
-  ctx.storeUser.setState({ acl });
-
-  return render(
-    ctx,
-    <Apps
-      attempt={attempt}
-      apps={sample.apps}
-      app={sample.apps[2]}
-      isViewing={true}
-      onView={() => null}
-      onClose={() => null}
-    />
-  );
-};
-
 function render(ctx: TeleportContext, children: JSX.Element) {
   return (
     <TeleportContextProvider value={ctx}>{children}</TeleportContextProvider>
@@ -94,6 +74,7 @@ const sample = {
       create: true,
       remove: true,
       edit: true,
+      read: true,
     },
   },
   apps: [
