@@ -24,7 +24,7 @@ class FeatureApps extends FeatureBase {
 
   getRoute() {
     return {
-      title: 'Apps',
+      title: 'Applications',
       path: cfg.routes.applications,
       exact: true,
       component: this.Component,
@@ -38,7 +38,7 @@ class FeatureApps extends FeatureBase {
     }
 
     context.storeNav.addTopItem({
-      title: 'Apps',
+      title: 'Applications',
       Icon: null,
       exact: true,
       to: cfg.routes.applications,

@@ -15,78 +15,59 @@
  */
 
 import React from 'react';
-import { Text, Flex, ButtonPrimary } from 'design';
-import * as Icons from 'design/Icon';
-import { MenuIcon, MenuItem } from 'shared/components/MenuAction';
+import styled from 'styled-components';
+import { Text, Flex } from 'design';
+import Image from 'design/Image';
 import { App } from 'teleport/services/apps';
 
-export default function AppListCards({ apps, onView, canView = false }: Props) {
-  apps = apps || [];
-  const $apps = apps.map(app => {
-    return (
-      <AppListCard app={app} onView={onView} key={app.id} canView={canView} />
-    );
-  });
+const newTabSvg = require('./new-tab.svg');
 
+export default function AppListCards({ apps = [] }: Props) {
+  const $apps = apps.map(app => <AppListCard app={app} key={app.id} />);
   return <Flex flexWrap="wrap">{$apps}</Flex>;
 }
 
-function AppListCard({ app, onView, canView }) {
+function AppListCard({ app }) {
   function handleOnLaunch() {
     // TODO
     window.open('', '_blank');
   }
 
   return (
-    <Flex
-      style={{
-        position: 'relative',
-        boxShadow: '0 8px 32px rgba(0, 0, 0, 0.24)',
-      }}
+    <Card
+      onClick={handleOnLaunch}
       width="240px"
-      height="240px"
       borderRadius="3"
       flexDirection="column"
       bg="primary.light"
-      p="5"
+      px="4"
+      py="5"
       mr="5"
     >
-      {canView && (
-        <MenuIcon buttonIconProps={menuActionProps}>
-          <MenuItem onClick={() => onView(app)}>View Details</MenuItem>
-        </MenuIcon>
-      )}
-      <Flex
-        mb="3"
-        alignItems="center"
-        justifyContent="center"
-        flexDirection="column"
-      >
-        <Icons.Cloud my="3" fontSize="48px" color="text.primary" />
-        <Text typography="body2" bold caps mb="1">
+      <Flex alignItems="center" justifyContent="center" flexDirection="column">
+        <Image src={newTabSvg} height={'70px'} mb={3} />
+        <Text bold mb="2" style={{ textTransform: 'capitalize' }}>
           {app.name}
         </Text>
         <Text typography="body2" color="text.primary">
-          {app.clusterId}
+          Cluster: {app.clusterId}
         </Text>
       </Flex>
-      <ButtonPrimary mt="auto" size="medium" block onClick={handleOnLaunch}>
-        Launch
-      </ButtonPrimary>
-    </Flex>
+    </Card>
   );
 }
 
-const menuActionProps = {
-  style: {
-    right: '10px',
-    position: 'absolute',
-    top: '10px',
-  },
-};
+const Card = styled(Flex)`
+  position: relative;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.24);
+  cursor: pointer;
+  transition: box-shadow 0.1s;
+
+  :hover {
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5);
+  }
+`;
 
 type Props = {
   apps: App[];
-  onView(id: string): void;
-  canView?: boolean;
 };

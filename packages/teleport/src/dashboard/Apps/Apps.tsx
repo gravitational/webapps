@@ -21,16 +21,20 @@ import {
   FeatureHeaderTitle,
 } from 'teleport/components/Layout';
 import { Danger } from 'design/Alert';
-import { Indicator, Text, Box, Flex, ButtonPrimary } from 'design';
+import {
+  Indicator,
+  Text,
+  Box,
+  Flex,
+  ButtonPrimary,
+  ButtonSecondary,
+} from 'design';
 import Card from 'design/Card';
 import Image from 'design/Image';
-import { useTeleport } from 'teleport/teleportContextProvider';
-import AppViewDetails from './AppViewDetails';
 import AppListCards from './AppListCards';
 import useApps from './useApps';
 
-// TODO replace sample image
-const samplePNG = require('design/assets/images/trusted-cluster.png');
+const aapPng = require('./application.png');
 
 export default function Container() {
   const state = useApps();
@@ -42,23 +46,23 @@ export default function Container() {
  * - Displays list of running apps
  * - Allows user to view details of an app
  */
-export function Apps({
-  attempt,
-  apps,
-  app,
-  isViewing,
-  onView,
-  onClose,
-}: Props) {
-  const ctx = useTeleport();
-  const canView = ctx.storeUser.getAppAccess().read;
+export function Apps({ attempt, apps }: Props) {
   const isEmpty = attempt.status === 'success' && apps.length === 0;
   const hasApps = attempt.status === 'success' && !isEmpty;
+
+  function onClickDoc() {
+    window.open('https://gravitational.com/teleport/docs/', '_blank');
+  }
 
   return (
     <FeatureBox>
       <FeatureHeader alignItems="center">
-        <FeatureHeaderTitle>Apps</FeatureHeaderTitle>
+        <FeatureHeaderTitle>Applications</FeatureHeaderTitle>
+        {hasApps && (
+          <ButtonSecondary onClick={onClickDoc} ml="auto" width="240px">
+            View Documentation
+          </ButtonSecondary>
+        )}
       </FeatureHeader>
       {attempt.status === 'processing' && (
         <Box textAlign="center" m={10}>
@@ -66,46 +70,31 @@ export function Apps({
         </Box>
       )}
       {attempt.status === 'failed' && <Danger>{attempt.statusText} </Danger>}
-      {isEmpty && <Empty />}
-      {hasApps && (
-        <AppListCards apps={apps} onView={onView} canView={canView} />
-      )}
-      {isViewing && <AppViewDetails app={app} onClose={onClose} />}
+      {isEmpty && <Empty onClick={onClickDoc} />}
+      {hasApps && <AppListCards apps={apps} />}
     </FeatureBox>
   );
 }
 
-// TODO replace placeholder texts/links with actual
-const Empty = () => {
+const Empty = ({ onClick }) => {
   return (
-    <Card
-      maxWidth="700px"
-      my={4}
-      mx="auto"
-      py={4}
-      as={Flex}
-      alignItems="center"
-    >
+    <Card maxWidth="700px" my={4} mx="auto" p={5} as={Flex} alignItems="center">
       <Box width={4 / 10}>
-        <Image src={samplePNG.default} width={'100%'} />
+        <Image src={aapPng.default} width={'100%'} />
       </Box>
-      <Box width={6 / 10}>
-        <Box pr={4} mb={6}>
-          <Text typography="h6" mb={3}>
-            Add Your First Application
+      <Box width={6 / 10} ml={5}>
+        <Box mb={6}>
+          <Text typography="h6" mb={3} caps>
+            Secure Your First Application
           </Text>
           <Text typography="subtitle1" mb={3}>
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-            eiusmod tempor incididunt ut labore et dolore magna aliqua.
+            Teleport Application Access provides secure access to internal
+            applications without the need for a VPN, but with the full control
+            and audibility of Teleport.
           </Text>
         </Box>
-        <ButtonPrimary
-          onClick={() =>
-            window.open('https://gravitational.com/teleport/docs/', '_blank')
-          }
-          width="240px"
-        >
-          Add Application
+        <ButtonPrimary onClick={onClick} width="240px">
+          View Quickstart Guide
         </ButtonPrimary>
       </Box>
     </Card>
