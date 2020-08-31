@@ -20,22 +20,19 @@ import { Text, Flex } from 'design';
 import Image from 'design/Image';
 import { App } from 'teleport/services/apps';
 
-const newTabSvg = require('./new-tab.svg');
+const iconSvg = require('./app-icon.svg');
 
-export default function AppListCards({ apps = [] }: Props) {
-  const $apps = apps.map(app => <AppListCard app={app} key={app.id} />);
+export default function AppList({ apps = [] }: Props) {
+  const $apps = apps.map(app => <AppListItem app={app} key={app.id} />);
   return <Flex flexWrap="wrap">{$apps}</Flex>;
 }
 
-function AppListCard({ app }) {
-  function handleOnLaunch() {
-    // TODO
-    window.open('', '_blank');
-  }
-
+function AppListItem({ app }) {
   return (
-    <Card
-      onClick={handleOnLaunch}
+    <Item
+      as="a"
+      href={app.addr}
+      target="_blank"
       width="240px"
       borderRadius="3"
       flexDirection="column"
@@ -44,20 +41,23 @@ function AppListCard({ app }) {
       py="5"
       mr="5"
     >
-      <Flex alignItems="center" justifyContent="center" flexDirection="column">
-        <Image src={newTabSvg} height={'70px'} mb={3} />
+      <Flex
+        alignItems="center"
+        justifyContent="center"
+        flexDirection="column"
+        color="text.primary"
+      >
+        <Image src={iconSvg} height={'70px'} mb={3} />
         <Text bold mb="2" style={{ textTransform: 'capitalize' }}>
           {app.name}
         </Text>
-        <Text typography="body2" color="text.primary">
-          Cluster: {app.clusterId}
-        </Text>
+        <Text typography="body2">Cluster: {app.clusterId}</Text>
       </Flex>
-    </Card>
+    </Item>
   );
 }
 
-const Card = styled(Flex)`
+const Item = styled(Flex)`
   position: relative;
   box-shadow: 0 8px 32px rgba(0, 0, 0, 0.24);
   cursor: pointer;

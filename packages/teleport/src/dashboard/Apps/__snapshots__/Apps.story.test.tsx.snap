@@ -165,7 +165,7 @@ exports[`empty state 1`] = `
       <div
         class="c2"
       >
-        Apps
+        Applications
       </div>
     </div>
     <div
@@ -198,20 +198,22 @@ exports[`empty state 1`] = `
             Teleport Application Access provides secure access to internal applications without the need for a VPN, but with the full control and audibility of Teleport.
           </div>
         </div>
-        <button
+        <a
           class="c11"
+          href="https://gravitational.com/teleport/docs/"
           kind="primary"
+          target="_blank"
           width="240px"
         >
           View Quickstart Guide
-        </button>
+        </a>
       </div>
     </div>
   </div>
 </div>
 `;
 
-exports[`success state 1`] = `
+exports[`loaded state 1`] = `
 .c3 {
   line-height: 1.5;
   margin: 0;
@@ -276,7 +278,6 @@ exports[`success state 1`] = `
   font-size: 12px;
   line-height: 16px;
   margin: 0px;
-  color: rgba(255,255,255,0.87);
 }
 
 .c4 {
@@ -287,6 +288,7 @@ exports[`success state 1`] = `
 
 .c6 {
   box-sizing: border-box;
+  color: rgba(255,255,255,0.87);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -365,25 +367,30 @@ exports[`success state 1`] = `
       <div
         class="c2"
       >
-        Apps
+        Applications
       </div>
-      <button
+      <a
         class="c3"
+        href="https://gravitational.com/teleport/docs/"
         kind="secondary"
+        target="_blank"
         width="240px"
       >
-        View Quickstart Guide
-      </button>
+        View Documentation
+      </a>
     </div>
     <div
       class="c4"
     >
-      <div
+      <a
         class="c5"
+        href=""
+        target="_blank"
         width="240px"
       >
         <div
           class="c6"
+          color="text.primary"
         >
           <img
             class="c7"
@@ -398,19 +405,21 @@ exports[`success state 1`] = `
           </div>
           <div
             class="c9"
-            color="text.primary"
           >
             Cluster: 
             root-cluster-name
           </div>
         </div>
-      </div>
-      <div
+      </a>
+      <a
         class="c5"
+        href=""
+        target="_blank"
         width="240px"
       >
         <div
           class="c6"
+          color="text.primary"
         >
           <img
             class="c7"
@@ -425,19 +434,21 @@ exports[`success state 1`] = `
           </div>
           <div
             class="c9"
-            color="text.primary"
           >
             Cluster: 
             leaf-cluster-name
           </div>
         </div>
-      </div>
-      <div
+      </a>
+      <a
         class="c5"
+        href=""
+        target="_blank"
         width="240px"
       >
         <div
           class="c6"
+          color="text.primary"
         >
           <img
             class="c7"
@@ -452,13 +463,12 @@ exports[`success state 1`] = `
           </div>
           <div
             class="c9"
-            color="text.primary"
           >
             Cluster: 
             leaf2-cluster-longNameFormat-reallyLong
           </div>
         </div>
-      </div>
+      </a>
     </div>
   </div>
 </div>

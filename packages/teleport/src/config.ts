@@ -42,7 +42,7 @@ const cfg = {
 
   routes: {
     app: '/web',
-    applications: '/web/aap',
+    applications: '/web/iap',
     people: '/web/people',
     support: '/web/support',
     settings: '/web/settings',
