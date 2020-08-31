@@ -31,35 +31,33 @@ import {
 } from 'design';
 import Card from 'design/Card';
 import Image from 'design/Image';
-import AppListCards from './AppListCards';
+import AppList from './AppList';
 import useApps from './useApps';
 
-const aapPng = require('./application.png');
+const appPng = require('./empty.png');
+const docURl = 'https://gravitational.com/teleport/docs/';
 
 export default function Container() {
   const state = useApps();
   return <Apps {...state} />;
 }
 
-/**
- * Apps is a view component that based on permissions:
- * - Displays list of running apps
- * - Allows user to view details of an app
- */
 export function Apps({ attempt, apps }: Props) {
   const isEmpty = attempt.status === 'success' && apps.length === 0;
   const hasApps = attempt.status === 'success' && !isEmpty;
-
-  function onClickDoc() {
-    window.open('https://gravitational.com/teleport/docs/', '_blank');
-  }
 
   return (
     <FeatureBox>
       <FeatureHeader alignItems="center">
         <FeatureHeaderTitle>Applications</FeatureHeaderTitle>
         {hasApps && (
-          <ButtonSecondary onClick={onClickDoc} ml="auto" width="240px">
+          <ButtonSecondary
+            as="a"
+            href={docURl}
+            target="_blank"
+            ml="auto"
+            width="240px"
+          >
             View Documentation
           </ButtonSecondary>
         )}
@@ -70,17 +68,17 @@ export function Apps({ attempt, apps }: Props) {
         </Box>
       )}
       {attempt.status === 'failed' && <Danger>{attempt.statusText} </Danger>}
-      {isEmpty && <Empty onClick={onClickDoc} />}
-      {hasApps && <AppListCards apps={apps} />}
+      {isEmpty && <Empty />}
+      {hasApps && <AppList apps={apps} />}
     </FeatureBox>
   );
 }
 
-const Empty = ({ onClick }) => {
+const Empty = () => {
   return (
     <Card maxWidth="700px" my={4} mx="auto" p={5} as={Flex} alignItems="center">
       <Box width={4 / 10}>
-        <Image src={aapPng.default} width={'100%'} />
+        <Image src={appPng.default} width={'100%'} />
       </Box>
       <Box width={6 / 10} ml={5}>
         <Box mb={6}>
@@ -93,7 +91,7 @@ const Empty = ({ onClick }) => {
             and audibility of Teleport.
           </Text>
         </Box>
-        <ButtonPrimary onClick={onClick} width="240px">
+        <ButtonPrimary as="a" href={docURl} target="_blank" width="240px">
           View Quickstart Guide
         </ButtonPrimary>
       </Box>

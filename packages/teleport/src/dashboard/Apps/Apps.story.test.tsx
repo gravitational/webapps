@@ -2,9 +2,9 @@ import React from 'react';
 import { Loaded, Empty } from './Apps.story';
 import { render } from 'design/utils/testing';
 
-test('success state', async () => {
+test('loaded state', async () => {
   const { container, findAllByText } = render(<Loaded />);
-  await findAllByText(/view quickstart/i);
+  await findAllByText(/view documentation/i);
   expect(container).toMatchSnapshot();
 });
 

@@ -13,6 +13,6 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-import AppListCards from './AppListCards';
+import AppList from './AppList';
 
-export default AppListCards;
+export default AppList;

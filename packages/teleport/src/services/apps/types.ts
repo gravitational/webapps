@@ -23,8 +23,5 @@ export interface App {
   id: string;
   name: string;
   clusterId: string;
-  hostname: string;
-  labels: Label[];
-  publicAddr: string;
-  internalAddr: string;
+  addr: string;
 }
