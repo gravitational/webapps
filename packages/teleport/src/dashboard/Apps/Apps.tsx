@@ -33,9 +33,9 @@ import Card from 'design/Card';
 import Image from 'design/Image';
 import AppList from './AppList';
 import useApps from './useApps';
+import { emptyPng } from './assets';
 
-const appPng = require('./empty.png');
-const docURl = 'https://gravitational.com/teleport/docs/';
+const docUrl = 'https://gravitational.com/teleport/docs/';
 
 export default function Container() {
   const state = useApps();
@@ -53,7 +53,7 @@ export function Apps({ attempt, apps }: Props) {
         {hasApps && (
           <ButtonSecondary
             as="a"
-            href={docURl}
+            href={docUrl}
             target="_blank"
             ml="auto"
             width="240px"
@@ -78,7 +78,7 @@ const Empty = () => {
   return (
     <Card maxWidth="700px" my={4} mx="auto" p={5} as={Flex} alignItems="center">
       <Box width={4 / 10}>
-        <Image src={appPng.default} width={'100%'} />
+        <Image src={emptyPng} width={'100%'} />
       </Box>
       <Box width={6 / 10} ml={5}>
         <Box mb={6}>
@@ -91,7 +91,7 @@ const Empty = () => {
             and audibility of Teleport.
           </Text>
         </Box>
-        <ButtonPrimary as="a" href={docURl} target="_blank" width="240px">
+        <ButtonPrimary as="a" href={docUrl} target="_blank" width="240px">
           View Quickstart Guide
         </ButtonPrimary>
       </Box>
