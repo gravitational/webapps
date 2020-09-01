@@ -28,6 +28,8 @@ export default function makeAcl(json): Acl {
   const users = makeAccess(json.users);
   const apps = makeAccess(json.access);
 
+  apps.list = true;
+
   return {
     logins,
     authConnectors,

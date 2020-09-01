@@ -27,7 +27,7 @@ export default class AccountFeature {
   };
 
   navItem = {
-    title: 'Account Settings',
+    title: 'My Account',
     Icon: Icons.User,
     to: cfg.routes.account,
   };

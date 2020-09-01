@@ -14,17 +14,40 @@
  * limitations under the License.
  */
 
-import { map } from 'lodash';
-import api from 'teleport/services/api';
-import cfg from 'teleport/config';
-import makeApps from './makeApps';
+//import { map } from 'lodash';
+//import api from 'teleport/services/api';
+//import cfg from 'teleport/config';
+//import makeApps from './makeApps';
 
 const service = {
   fetchApps() {
-    return api
+    return Promise.resolve(
+      apps
+    ); /*api
       .get(cfg.api.applicationsPath)
-      .then(json => map(json.items, makeApps));
+      .then(json => map(json.items, makeApps));*/
   },
 };
 
 export default service;
+
+const apps = [
+  {
+    id: '1',
+    name: 'jenkins',
+    clusterId: 'root-cluster-name',
+    addr: '',
+  },
+  {
+    id: '2',
+    name: 'github',
+    clusterId: 'leaf-cluster-name',
+    addr: '',
+  },
+  {
+    id: '3',
+    name: 'slack',
+    clusterId: 'leaf2-cluster-longNameFormat-reallyLong',
+    addr: '',
+  },
+];

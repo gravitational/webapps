@@ -21,7 +21,6 @@ import TeleportContextProvider, {
 } from 'teleport/teleportContextProvider';
 import TeleportContext from 'teleport/teleportContext';
 import FeatureClusters from 'teleport/dashboard/features/featureClusters';
-import FeatureSupport from './features/featureSupport';
 import FeatureSettings from './features/featureSettings';
 import { Indicator } from 'design';
 import { Failed } from 'design/CardError';
@@ -32,11 +31,7 @@ import TopBar from './components/TopBar';
 
 export default function CommunityDashboard() {
   const [ctx] = React.useState(() => {
-    const features = [
-      new FeatureClusters(),
-      new FeatureSettings(),
-      new FeatureSupport(),
-    ];
+    const features = [new FeatureClusters(), new FeatureSettings()];
     return new TeleportContext({ features });
   });
 

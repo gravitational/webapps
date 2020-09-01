@@ -18,11 +18,13 @@ import React, { useState } from 'react';
 import { Flex, Indicator } from 'design';
 import { Danger } from 'design/Alert';
 import InputSearch from 'teleport/components/InputSearch';
+
 import {
   FeatureBox,
   FeatureHeader,
   FeatureHeaderTitle,
-} from 'teleport/dashboard/components/Layout';
+} from 'teleport/components/Layout';
+
 import ClusterList from './ClusterList';
 import { useTeleport } from 'teleport/teleportContextProvider';
 import useAttempt from 'shared/hooks/useAttemptNext';

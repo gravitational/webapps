@@ -25,7 +25,7 @@ class FeatureSettings extends FeatureBase {
 
   getRoute() {
     return {
-      title: 'Settings',
+      title: 'Manage',
       path: cfg.routes.settings,
       exact: false,
       component: this.Component,
@@ -43,7 +43,7 @@ class FeatureSettings extends FeatureBase {
     }
 
     ctx.storeNav.addTopItem({
-      title: 'Settings',
+      title: 'Manage',
       Icon: null,
       exact: false,
       to: cfg.routes.settings,

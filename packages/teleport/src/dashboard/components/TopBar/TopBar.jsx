@@ -1,9 +1,10 @@
 import React from 'react';
 import { NavLink, Link } from 'react-router-dom';
 import TopNavUserMenu from 'design/TopNav/TopNavUserMenu';
-import { MenuItem } from 'design/Menu';
+import { MenuItem, MenuItemIcon } from 'design/Menu';
 import teleportLogoSvg from 'design/assets/images/teleport-logo.svg';
 import { withState } from 'shared/hooks';
+import * as Icons from 'design/Icon';
 import session from 'teleport/services/session';
 import { useStoreUser, useStoreNav } from 'teleport/teleportContextProvider';
 import { Image, Flex, ButtonPrimary, TopNav, TopNavItem } from 'design';
@@ -80,6 +81,10 @@ export class DashboardTopNav extends React.Component {
             onClose={this.onCloseMenu}
             user={username}
           >
+            <MenuItem as={NavLink} to={cfg.routes.support}>
+              <MenuItemIcon as={Icons.Question} mr="2" />
+              {`Help and Support`}
+            </MenuItem>
             <MenuItem>
               <ButtonPrimary my={3} block onClick={this.onLogout}>
                 Sign Out

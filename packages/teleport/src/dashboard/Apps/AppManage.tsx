@@ -20,38 +20,21 @@ import {
   FeatureHeader,
   FeatureHeaderTitle,
 } from 'teleport/components/Layout';
-import { Danger } from 'design/Alert';
-import { Indicator, Text, Box, Flex, ButtonPrimary } from 'design';
+
+import { Text, Box, Flex, ButtonPrimary } from 'design';
 import Card from 'design/Card';
 import Image from 'design/Image';
-import AppList from './AppList';
-import useApps from './useApps';
 import { emptyPng } from './assets';
 
 const docUrl = 'https://gravitational.com/teleport/docs/';
 
-export default function Container() {
-  const state = useApps();
-  return <Apps {...state} />;
-}
-
-export function Apps({ attempt, apps }: Props) {
-  const isEmpty = attempt.status === 'success' && apps.length === 0;
-  const hasApps = attempt.status === 'success' && !isEmpty;
-
+export default function Apps() {
   return (
     <FeatureBox>
       <FeatureHeader alignItems="center">
         <FeatureHeaderTitle>Applications</FeatureHeaderTitle>
       </FeatureHeader>
-      {attempt.status === 'processing' && (
-        <Box textAlign="center" m={10}>
-          <Indicator />
-        </Box>
-      )}
-      {attempt.status === 'failed' && <Danger>{attempt.statusText} </Danger>}
-      {isEmpty && <Empty />}
-      {hasApps && <AppList apps={apps} />}
+      <Empty />
     </FeatureBox>
   );
 }
@@ -80,5 +63,3 @@ const Empty = () => {
     </Card>
   );
 };
-
-type Props = ReturnType<typeof useApps>;

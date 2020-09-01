@@ -14,14 +14,14 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import TeleportContext from 'teleport/teleportContext';
-import FeatureAccount from './featureAccount';
+//import TeleportContext from 'teleport/teleportContext';
+//import FeatureAccount from './featureAccount';
+import FeatureAip from './featureAip';
 
-export default function getFeatures(ctx: TeleportContext) {
+export default function getFeatures() {
   const features: Feature[] = [];
-  if (ctx.isAccountEnabled()) {
-    features.push(new FeatureAccount());
-  }
+
+  features.push(new FeatureAip());
 
   return features;
 }
