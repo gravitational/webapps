@@ -33,6 +33,27 @@ class FeatureNodes extends FeatureBase {
   }
 
   onload(context: Ctx) {
+    context.storeNav.addTopItem({
+      title: 'Clusters',
+      Icon: Icons.Question,
+      exact: true,
+      to: cfg.routes.app,
+    });
+
+    context.storeNav.addTopItem({
+      title: 'Applications',
+      Icon: null,
+      exact: true,
+      to: cfg.routes.applications,
+    });
+
+    context.storeNav.addTopItem({
+      title: 'Manage',
+      Icon: null,
+      exact: false,
+      to: cfg.routes.settings,
+    });
+
     context.storeNav.addSideItem({
       title: 'Nodes',
       Icon: Icons.Layers,

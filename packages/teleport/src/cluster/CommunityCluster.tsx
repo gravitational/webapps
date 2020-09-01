@@ -29,7 +29,7 @@ import TeleportContextProvider, {
 } from 'teleport/teleportContextProvider';
 import cfg from 'teleport/config';
 import SideNav from './SideNav';
-import TopBar, { InfoDialog } from './TopBar';
+import TopBar from 'teleport/dashboard/components/TopBar';
 
 export default function CommunityCluster() {
   const { clusterId } = useParams();
@@ -53,7 +53,6 @@ export function Cluster() {
   const teleportCtx = useTeleport();
   const [attempt, attemptActions] = useAttempt({ isProcessing: true });
   const { isFailed, isSuccess, message } = attempt;
-  const [viewClusterInfo, setViewClusterInfo] = React.useState(() => false);
 
   React.useEffect(() => {
     attemptActions.do(() => {
@@ -73,8 +72,6 @@ export function Cluster() {
     );
   }
 
-  const handleViewClusterInfo = () => setViewClusterInfo(!viewClusterInfo);
-
   // render allowed features
   const allowed = teleportCtx.features.filter(f => !f.isDisabled());
   const $features = allowed.map((item, index) => {
@@ -92,7 +89,7 @@ export function Cluster() {
 
   return (
     <HorizontalSplit>
-      <TopBar onClickClusterInfo={handleViewClusterInfo} />
+      <TopBar />
       <VerticalSplit>
         <SideNav />
         <Switch>
@@ -104,12 +101,6 @@ export function Cluster() {
           {$features}
         </Switch>
       </VerticalSplit>
-      {viewClusterInfo && (
-        <InfoDialog
-          onClose={handleViewClusterInfo}
-          {...teleportCtx.storeUser.state.cluster}
-        />
-      )}
     </HorizontalSplit>
   );
 }

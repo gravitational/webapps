@@ -26,7 +26,7 @@ export default class FeatureTrustedClusters {
   };
 
   navItem = {
-    title: 'Trusted Clusters',
+    title: 'Shared access',
     Icon: Icons.LanAlt,
     to: cfg.routes.trustedClusters,
   };
