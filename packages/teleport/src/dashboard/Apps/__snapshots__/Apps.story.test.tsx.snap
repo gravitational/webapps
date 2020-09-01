@@ -177,6 +177,7 @@ exports[`empty state 1`] = `
       >
         <img
           class="c6"
+          src="file_stub"
           width="100%"
         />
       </div>

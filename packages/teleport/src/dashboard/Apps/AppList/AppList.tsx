@@ -19,7 +19,6 @@ import styled from 'styled-components';
 import { Text, Flex } from 'design';
 import Image from 'design/Image';
 import { App } from 'teleport/services/apps';
-
 const iconSvg = require('./app-icon.svg');
 
 export default function AppList({ apps = [] }: Props) {
@@ -29,7 +28,7 @@ export default function AppList({ apps = [] }: Props) {
 
 function AppListItem({ app }) {
   return (
-    <Item
+    <StyledAppListItem
       as="a"
       href={app.addr}
       target="_blank"
@@ -53,11 +52,11 @@ function AppListItem({ app }) {
         </Text>
         <Text typography="body2">Cluster: {app.clusterId}</Text>
       </Flex>
-    </Item>
+    </StyledAppListItem>
   );
 }
 
-const Item = styled(Flex)`
+const StyledAppListItem = styled(Flex)`
   position: relative;
   box-shadow: 0 8px 32px rgba(0, 0, 0, 0.24);
   cursor: pointer;
