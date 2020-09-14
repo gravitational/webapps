@@ -397,38 +397,6 @@ exports[`support Enterprise 1`] = `
         5.0.0
       </div>
     </div>
-    <div
-      class="c13"
-    >
-      <div
-        class="c14"
-        style="width: 130px;"
-      >
-        Public Address
-        :
-      </div>
-      <div
-        class="c15"
-      >
-        test/public/url
-      </div>
-    </div>
-    <div
-      class="c13"
-    >
-      <div
-        class="c14"
-        style="width: 130px;"
-      >
-        Connected Nodes
-        :
-      </div>
-      <div
-        class="c15"
-      >
-        50
-      </div>
-    </div>
   </div>
 </div>
 `;
@@ -822,38 +790,6 @@ exports[`support OSS 1`] = `
         class="c15"
       >
         5.0.0
-      </div>
-    </div>
-    <div
-      class="c13"
-    >
-      <div
-        class="c14"
-        style="width: 130px;"
-      >
-        Public Address
-        :
-      </div>
-      <div
-        class="c15"
-      >
-        test/public/url
-      </div>
-    </div>
-    <div
-      class="c13"
-    >
-      <div
-        class="c14"
-        style="width: 130px;"
-      >
-        Connected Nodes
-        :
-      </div>
-      <div
-        class="c15"
-      >
-        50
       </div>
     </div>
   </div>

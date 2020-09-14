@@ -121,8 +121,6 @@ const Support = () => {
         </Text>
         <ClusterData title="Cluster Name" data={cluster.clusterId} />
         <ClusterData title="Teleport Version" data={cluster.authVersion} />
-        <ClusterData title="Public Address" data={cluster.publicURL} />
-        <ClusterData title="Connected Nodes" data={cluster.nodeCount} />
       </Box>
     </FeatureBox>
   );

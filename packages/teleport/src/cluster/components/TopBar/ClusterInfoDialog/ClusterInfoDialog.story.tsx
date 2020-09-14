@@ -21,13 +21,7 @@ export default {
 };
 
 export const ClusterInfoDialog = () => (
-  <ClusterDialog
-    onClose={null}
-    clusterId="applePie"
-    publicURL="some.kind.of.host:8080"
-    proxyVersion="4.2.2"
-    authVersion="5.0.0"
-  />
+  <ClusterDialog onClose={null} clusterId="applePie" authVersion="5.0.0" />
 );
 
 ClusterInfoDialog.story = {

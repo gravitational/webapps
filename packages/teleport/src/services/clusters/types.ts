@@ -20,8 +20,5 @@ export interface Cluster {
   connectedText: string;
   status: string;
   url: string;
-  nodeCount: number;
-  publicURL: string;
   authVersion: string;
-  proxyVersion: string;
 }

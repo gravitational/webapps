@@ -1,51 +1,7 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`rendering of static texts 1`] = `
-.c10 {
-  line-height: 1.5;
-  margin: 0;
-  display: inline-flex;
-  justify-content: center;
-  align-items: center;
-  box-sizing: border-box;
-  border: none;
-  border-radius: 4px;
-  cursor: pointer;
-  font-family: inherit;
-  font-weight: 600;
-  outline: none;
-  position: relative;
-  text-align: center;
-  text-decoration: none;
-  text-transform: uppercase;
-  transition: all 0.3s;
-  -webkit-font-smoothing: antialiased;
-  background: #512FC9;
-  color: rgba(255,255,255,0.87);
-  font-size: 10px;
-  min-height: 24px;
-  padding: 0px 16px;
-}
-
-.c10:active {
-  opacity: 0.56;
-}
-
-.c10:hover,
-.c10:focus {
-  background: #651FFF;
-}
-
-.c10:active {
-  background: #354AA4;
-}
-
-.c10:disabled {
-  background: rgba(255,255,255,0.12);
-  color: rgba(255,255,255,0.3);
-}
-
-.c15 {
+.c11 {
   line-height: 1.5;
   margin: 0;
   display: inline-flex;
@@ -71,32 +27,22 @@ exports[`rendering of static texts 1`] = `
   padding: 0px 24px;
 }
 
-.c15:active {
+.c11:active {
   opacity: 0.56;
 }
 
-.c15:hover,
-.c15:focus {
+.c11:hover,
+.c11:focus {
   background: #651FFF;
 }
 
-.c15:active {
+.c11:active {
   background: #354AA4;
 }
 
-.c15:disabled {
+.c11:disabled {
   background: rgba(255,255,255,0.12);
   color: rgba(255,255,255,0.3);
-}
-
-.c7 {
-  color: #FFFFFF;
-  display: block;
-  font-size: 11px;
-  font-weight: 500;
-  text-transform: uppercase;
-  width: 100%;
-  margin-bottom: 4px;
 }
 
 .c5 {
@@ -110,14 +56,7 @@ exports[`rendering of static texts 1`] = `
   color: rgba(255,255,255,0.87);
 }
 
-.c9 {
-  overflow: hidden;
-  text-overflow: ellipsis;
-  margin: 0px;
-  margin-right: 16px;
-}
-
-.c12 {
+.c8 {
   overflow: hidden;
   text-overflow: ellipsis;
   font-weight: 600;
@@ -126,7 +65,7 @@ exports[`rendering of static texts 1`] = `
   margin: 0px;
 }
 
-.c13 {
+.c9 {
   overflow: hidden;
   text-overflow: ellipsis;
   font-weight: 400;
@@ -135,17 +74,7 @@ exports[`rendering of static texts 1`] = `
   margin: 0px;
 }
 
-.c8 {
-  box-sizing: border-box;
-  margin-bottom: 32px;
-  padding: 8px;
-  background-color: #222C59;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-}
-
-.c11 {
+.c7 {
   box-sizing: border-box;
   margin-bottom: 16px;
   display: flex;
@@ -212,12 +141,13 @@ exports[`rendering of static texts 1`] = `
 .c6 {
   box-sizing: border-box;
   margin-bottom: 32px;
+  margin-top: 16px;
   flex: 1;
   display: flex;
   flex-direction: column;
 }
 
-.c14 {
+.c10 {
   box-sizing: border-box;
 }
 
@@ -250,82 +180,44 @@ exports[`rendering of static texts 1`] = `
       <div
         class="sc-AxirZ c6"
       >
-        <label
-          class="c7"
-          font-size="0"
-        >
-          Public URL
-        </label>
         <div
-          class="sc-AxirZ c8"
+          class="sc-AxirZ c7"
         >
           <div
-            class="c9"
-            style="word-break: break-all;"
-          >
-            some.kind.of.host:8080
-          </div>
-          <button
-            class="c10"
-            kind="primary"
-          >
-            Copy
-          </button>
-        </div>
-        <div
-          class="sc-AxirZ c11"
-        >
-          <div
-            class="c12"
+            class="c8"
             style="width: 150px;"
           >
             Cluster Name
             :
           </div>
           <div
-            class="c13"
+            class="c9"
           >
             applePie
           </div>
         </div>
         <div
-          class="sc-AxirZ c11"
+          class="sc-AxirZ c7"
         >
           <div
-            class="c12"
+            class="c8"
             style="width: 150px;"
           >
             Auth Service Version
             :
           </div>
           <div
-            class="c13"
+            class="c9"
           >
             5.0.0
           </div>
         </div>
-        <div
-          class="sc-AxirZ c11"
-        >
-          <div
-            class="c12"
-            style="width: 150px;"
-          >
-            Proxy Service Version
-            :
-          </div>
-          <div
-            class="c13"
-          >
-            4.2.2
-          </div>
-        </div>
       </div>
       <div
-        class="sc-AxirZ c14"
+        class="sc-AxirZ c10"
       >
         <button
-          class="c15"
+          class="c11"
           kind="primary"
         >
           Done

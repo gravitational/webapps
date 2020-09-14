@@ -12,9 +12,7 @@ limitations under the License.
 */
 
 import React from 'react';
-import copyToClipboard from 'design/utils/copyToClipboard';
-import selectElementContent from 'design/utils/selectElementContent';
-import { Text, Flex, LabelInput, ButtonPrimary } from 'design';
+import { Text, Flex, ButtonPrimary } from 'design';
 import Dialog, {
   DialogFooter,
   DialogTitle,
@@ -25,18 +23,10 @@ import Dialog, {
 type Props = {
   onClose: () => void;
   clusterId: string;
-  publicURL: string;
   authVersion: string;
-  proxyVersion: string;
 };
 
-const ClusterInfoDialog = ({
-  onClose,
-  clusterId,
-  publicURL,
-  authVersion,
-  proxyVersion,
-}: Props) => {
+const ClusterInfoDialog = ({ onClose, clusterId, authVersion }: Props) => {
   return (
     <Dialog
       open={true}
@@ -47,12 +37,9 @@ const ClusterInfoDialog = ({
       <DialogHeader>
         <DialogTitle>Cluster Information</DialogTitle>
       </DialogHeader>
-      <DialogContent>
-        <LabelInput>Public URL</LabelInput>
-        <PublicURL url={publicURL} />
+      <DialogContent mt={3}>
         <Attribute title="Cluster Name" value={clusterId} />
         <Attribute title="Auth Service Version" value={authVersion} />
-        <Attribute title="Proxy Service Version" value={proxyVersion} />
       </DialogContent>
       <DialogFooter>
         <ButtonPrimary onClick={onClose}>Done</ButtonPrimary>
@@ -75,32 +62,5 @@ const Attribute = ({ title = '', value = null }) => (
     <Text typography="body2">{value}</Text>
   </Flex>
 );
-
-const PublicURL = ({ url = '' }) => {
-  const ref = React.useRef();
-  const [copyCmd, setCopyCmd] = React.useState(() => 'Copy');
-
-  function onCopyClick() {
-    copyToClipboard(url).then(() => setCopyCmd('Copied'));
-    selectElementContent(ref.current);
-  }
-
-  return (
-    <Flex
-      bg="primary.light"
-      p="2"
-      mb="5"
-      alignItems="center"
-      justifyContent="space-between"
-    >
-      <Text ref={ref} style={{ wordBreak: 'break-all' }} mr="3">
-        {url}
-      </Text>
-      <ButtonPrimary onClick={onCopyClick} size="small">
-        {copyCmd}
-      </ButtonPrimary>
-    </Flex>
-  );
-};
 
 export default ClusterInfoDialog;
