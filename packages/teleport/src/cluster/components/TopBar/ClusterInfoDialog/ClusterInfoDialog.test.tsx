@@ -15,10 +15,34 @@
  */
 
 import React from 'react';
-import { ClusterInfoDialog } from './ClusterInfoDialog.story';
-import { render } from 'design/utils/testing';
+import ClusterInfoDialog from './ClusterInfoDialog';
+import { ClusterInfoDialog as SbClusterInfoDialog } from './ClusterInfoDialog.story';
+import { render, fireEvent, wait } from 'design/utils/testing';
 
 test('rendering of static texts', () => {
-  const { getByTestId } = render(<ClusterInfoDialog />);
+  const { getByTestId } = render(<SbClusterInfoDialog />);
   expect(getByTestId('Modal')).toMatchSnapshot();
+});
+
+test('button clicks', async () => {
+  Object.defineProperty(document, 'execCommand', {
+    value: jest.fn(() => true),
+  });
+
+  const onClose = jest.fn();
+  const { getByText, queryByText } = render(
+    <ClusterInfoDialog
+      clusterId=""
+      publicURL=""
+      proxyVersion=""
+      authVersion=""
+      onClose={onClose}
+    />
+  );
+
+  await wait(() => fireEvent.click(getByText(/copy/i)));
+  expect(queryByText(/copied/i)).not.toBeNull();
+
+  fireEvent.click(getByText(/done/i));
+  expect(onClose).toHaveBeenCalledTimes(1);
 });
