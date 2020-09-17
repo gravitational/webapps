@@ -28,12 +28,10 @@ import { Flex, Indicator, Box } from 'design';
 import InputSearch from 'teleport/components/InputSearch';
 import TeleportContext from 'teleport/teleportContext';
 import { useTeleport } from 'teleport/teleportContextProvider';
-import useClusterId from 'teleport/Main/useClusterId';
 
 export default function Container() {
-  const clusterId = useClusterId();
   const teleCtx = useTeleport();
-  const state = useEvents(clusterId, teleCtx);
+  const state = useEvents(teleCtx);
   return <Audit {...state} />;
 }
 
@@ -86,7 +84,8 @@ export function Audit(props: ReturnType<typeof useEvents>) {
   );
 }
 
-function useEvents(clusterId: string, ctx: TeleportContext) {
+function useEvents(ctx: TeleportContext) {
+  const clusterId = ctx.storeClusterId.getId();
   const rangeOptions = useMemo(() => getRangeOptions(), []);
   const [searchValue, setSearchValue] = React.useState('');
   const [range, setRange] = useState(rangeOptions[0]);

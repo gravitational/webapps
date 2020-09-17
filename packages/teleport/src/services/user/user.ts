@@ -23,9 +23,7 @@ import { User, ResetPasswordType } from './types';
 
 const service = {
   fetchUserContext() {
-    return api
-      .get(cfg.getUserContextUrl(cfg.proxyCluster))
-      .then(makeUserContext);
+    return api.get(cfg.getUserContextUrl()).then(makeUserContext);
   },
 
   fetchUsers() {

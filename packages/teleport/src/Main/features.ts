@@ -74,7 +74,7 @@ export class FeatureHelpAndSupport {
 export class FeatureAudit {
   route = {
     title: 'Audit Log',
-    path: cfg.routes.clusterAudit,
+    path: cfg.routes.audit,
     component: Audit,
   };
 
@@ -122,7 +122,7 @@ export class FeatureAccount {
 export class FeatureNodes {
   route = {
     title: 'Nodes',
-    path: cfg.routes.clusterNodes,
+    path: cfg.routes.nodes,
     exact: true,
     component: Nodes,
   };
@@ -144,7 +144,7 @@ export class FeatureNodes {
 export class FeatureSessions {
   route = {
     title: 'Sessions',
-    path: cfg.routes.clusterSessions,
+    path: cfg.routes.sessions,
     exact: true,
     component: Sessions,
   };
@@ -228,8 +228,8 @@ export class FeatureApps {
       title: 'Applications',
       Icon: Icons.NewTab,
       exact: true,
-      getLink() {
-        return cfg.routes.applications;
+      getLink(clusterId) {
+        return cfg.getAppsRoute(clusterId);
       },
     });
 

@@ -19,13 +19,15 @@ import styled from 'styled-components';
 import { NavLink } from 'react-router-dom';
 import { Image, SideNav, SideNavItem } from 'design';
 import SideNavItemIcon from 'design/SideNav/SideNavItemIcon';
-import { useStoreNav } from 'teleport/teleportContextProvider';
+import {
+  useStoreNav,
+  useStoreClusterId,
+} from 'teleport/teleportContextProvider';
 import logoSvg from './logo';
 import cfg from 'teleport/config';
-import useClusterId from './../useClusterId';
 
 export default function Nav() {
-  const clusterId = useClusterId();
+  const clusterId = useStoreClusterId().getId();
   const items = useStoreNav().getSideItems();
   const $items = items.map((item, index) => (
     <SideNavItem

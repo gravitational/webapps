@@ -14,27 +14,14 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import { useEffect, useState } from 'react';
-import { useAttempt } from 'shared/hooks';
-import { Session } from 'teleport/services/ssh';
+import { useRouteMatch } from 'react-router';
+import cfg from 'teleport/config';
 import TeleportContext from 'teleport/teleportContext';
 
-export default function useSessions(ctx: TeleportContext) {
-  const clusterId = ctx.storeClusterId.getId();
-  const [sessions, setSessions] = useState<Session[]>([]);
-  const [attempt, attemptActions] = useAttempt({ isProcessing: true });
-
-  function onRefresh() {
-    return ctx.sshService.fetchSessions(clusterId).then(setSessions);
+export default function useClusterNav(ctx: TeleportContext) {
+  const match = useRouteMatch<{ clusterId: string }>(cfg.routes.cluster);
+  const clusterId = match?.params?.clusterId;
+  if (clusterId) {
+    ctx.storeClusterId.setState({ clusterId });
   }
-
-  useEffect(() => {
-    attemptActions.do(() => onRefresh());
-  }, [clusterId]);
-
-  return {
-    attempt,
-    sessions,
-    onRefresh,
-  };
 }

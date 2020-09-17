@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import { StoreNav, StoreUserContext } from './stores';
+import { StoreNav, StoreClusterId, StoreUserContext } from './stores';
 import * as teleport from './types';
 import auditService from './services/audit';
 import nodeService from './services/nodes';
@@ -28,6 +28,7 @@ export default class Context implements teleport.Context {
   // stores
   storeNav = new StoreNav();
   storeUser = new StoreUserContext();
+  storeClusterId = new StoreClusterId();
 
   // features
   features: teleport.Feature[] = [];
@@ -43,8 +44,9 @@ export default class Context implements teleport.Context {
 
   constructor() {}
 
-  init() {
+  init(clusterId: string) {
     return userService.fetchUserContext().then(user => {
+      this.storeClusterId.setState({ clusterId });
       this.storeUser.setState(user);
     });
   }

@@ -24,19 +24,17 @@ import {
   FeatureHeaderTitle,
 } from 'teleport/components/Layout';
 import { useTeleport } from 'teleport/teleportContextProvider';
-import useClusterId from 'teleport/Main/useClusterId';
 import SessionList from './SessionList';
-import useClusterSessions from './useSessions';
+import useSessions from './useSessions';
 const POLLING_INTERVAL = 3000; // every 3 sec
 
 export default function Container() {
-  const clusterId = useClusterId();
   const ctx = useTeleport();
-  const state = useClusterSessions(clusterId, ctx);
+  const state = useSessions(ctx);
   return <Sessions {...state} />;
 }
 
-export function Sessions(props: ReturnType<typeof useClusterSessions>) {
+export function Sessions(props: ReturnType<typeof useSessions>) {
   const { attempt, onRefresh, sessions } = props;
   if (attempt.isFailed) {
     return <Cards.Failed alignSelf="baseline" message={attempt.message} />;

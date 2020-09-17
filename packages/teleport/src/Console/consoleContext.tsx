@@ -38,9 +38,6 @@ export default class ConsoleContext {
   storeParties = new StoreParties();
 
   constructor() {
-    // set default clusterId (proxy)
-    cfg.setClusterId(cfg.proxyCluster);
-
     // always initialize the console with 1 document
     this.storeDocs.add({
       kind: 'blank',

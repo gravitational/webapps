@@ -41,3 +41,8 @@ export function useStoreUser() {
   const context = React.useContext(TeleportReactContext);
   return useStore(context.storeUser);
 }
+
+export function useStoreClusterId() {
+  const context = React.useContext(TeleportReactContext);
+  return useStore(context.storeClusterId);
+}

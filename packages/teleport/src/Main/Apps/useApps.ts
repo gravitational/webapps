@@ -21,18 +21,17 @@ import { useTeleport } from 'teleport/teleportContextProvider';
 
 export default function useApps() {
   const ctx = useTeleport();
-
+  const clusterId = ctx.storeClusterId.getId();
   const { attempt, run } = useAttemptNext('processing');
-
   const [apps, setApps] = useState([] as App[]);
 
   function fetchApps() {
-    return ctx.appService.fetchApps().then(setApps);
+    return ctx.appService.fetchApps(clusterId).then(setApps);
   }
 
   useEffect(() => {
     run(() => fetchApps());
-  }, []);
+  }, [clusterId]);
 
   return {
     attempt,

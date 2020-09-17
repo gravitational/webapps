@@ -16,25 +16,21 @@ limitations under the License.
 
 import { useState, useEffect, useCallback } from 'react';
 import { useAttempt } from 'shared/hooks';
-import { useStore } from 'shared/libs/stores';
 import TeleportContext from 'teleport/teleportContext';
 import cfg from 'teleport/config';
 import { Node } from 'teleport/services/nodes';
 
-export default function useClusterNodes(
-  clusterId: string,
-  teleCtx: TeleportContext
-) {
-  const storeUser = useStore(teleCtx.storeUser);
+export default function useNodes(teleCtx: TeleportContext) {
   const [nodes, setNodes] = useState<Node[]>([]);
   const [attempt, attemptActions] = useAttempt({ isProcessing: true });
-  const logins = storeUser.getLogins();
+  const logins = teleCtx.storeUser.getLogins();
+  const clusterId = teleCtx.storeClusterId.getId();
 
   useEffect(() => {
     attemptActions.do(() =>
       teleCtx.nodeService.fetchNodes(clusterId).then(setNodes)
     );
-  }, []);
+  }, [clusterId]);
 
   const getNodeLoginOptions = useCallback(
     (serverId: string) => makeOptions(clusterId, serverId, logins),
@@ -54,6 +50,7 @@ export default function useClusterNodes(
 
   const startSshSession = (login: string, serverId: string) => {
     const url = cfg.getSshConnectRoute({
+      clusterId,
       serverId,
       login,
     });

@@ -31,8 +31,6 @@ const cfg = {
 
   canJoinSessions: true,
 
-  clusterName: 'localhost',
-
   proxyCluster: 'localhost',
 
   loc: {
@@ -42,20 +40,17 @@ const cfg = {
 
   routes: {
     app: '/web',
-    applications: '/web/iap',
-    people: '/web/people',
+    applications: '/web/cluster/:clusterId/apps',
     support: '/web/support',
     settings: '/web/settings',
     account: '/web/account',
-    authConnectors: '/web/settings/auth',
     roles: '/web/roles',
-    cluster: '/web/cluster/:clusterId',
+    cluster: '/web/cluster/:clusterId/',
     clusters: '/web/clusters',
     trustedClusters: '/web/clusters/trusted',
-    clusterAccount: '/web/cluster/:clusterId/account',
-    clusterAudit: '/web/cluster/:clusterId/audit',
-    clusterNodes: '/web/cluster/:clusterId/nodes',
-    clusterSessions: '/web/cluster/:clusterId/sessions',
+    audit: '/web/cluster/:clusterId/audit',
+    nodes: '/web/cluster/:clusterId/nodes',
+    sessions: '/web/cluster/:clusterId/sessions',
     users: '/web/users',
     console: '/web/cluster/:clusterId/console',
     consoleNodes: '/web/cluster/:clusterId/console/nodes',
@@ -78,7 +73,7 @@ const cfg = {
 
   api: {
     // TODO backend: define this endpoint
-    applicationsPath: '/v1/webapi/apps',
+    applicationsPath: '/v1/webapi/sites/:clusterId/apps',
     clustersPath: '/v1/webapi/sites',
     clusterEventsPath: `/v1/webapi/sites/:clusterId/events/search?from=:start?&to=:end?&limit=:limit?`,
     scp:
@@ -133,35 +128,25 @@ const cfg = {
     return cfg.baseUrl + generatePath(providerUrl, { redirect, providerName });
   },
 
-  getDefaultRoute() {
-    const clusterId = cfg.proxyCluster;
-    return generatePath(cfg.routes.cluster, { clusterId });
-  },
-
   getAuditRoute(clusterId: string) {
-    return generatePath(cfg.routes.clusterAudit, { clusterId });
-  },
-
-  getDashboardRoute() {
-    return cfg.routes.app;
+    return generatePath(cfg.routes.audit, { clusterId });
   },
 
   getNodesRoute(clusterId: string) {
-    return generatePath(cfg.routes.clusterNodes, { clusterId });
-  },
-
-  getPeopleRoute() {
-    const clusterId = cfg.clusterName;
-    return generatePath(cfg.routes.people, { clusterId });
+    return generatePath(cfg.routes.nodes, { clusterId });
   },
 
   getUsersRoute() {
-    const clusterId = cfg.clusterName;
+    const clusterId = cfg.proxyCluster;
     return generatePath(cfg.routes.users, { clusterId });
   },
 
+  getAppsRoute(clusterId: string) {
+    return generatePath(cfg.routes.applications, { clusterId });
+  },
+
   getSessionsRoute(clusterId: string) {
-    return generatePath(cfg.routes.clusterSessions, { clusterId });
+    return generatePath(cfg.routes.sessions, { clusterId });
   },
 
   getConsoleNodesRoute(clusterId: string) {
@@ -187,12 +172,10 @@ const cfg = {
   },
 
   getClusterRoute(clusterId: string) {
-    clusterId = clusterId || cfg.clusterName;
     return generatePath(cfg.routes.cluster, { clusterId });
   },
 
   getConsoleRoute(clusterId: string) {
-    clusterId = clusterId || cfg.clusterName;
     return generatePath(cfg.routes.console, { clusterId });
   },
 
@@ -201,17 +184,15 @@ const cfg = {
   },
 
   getSessionAuditPlayerRoute({ clusterId, sid }: UrlParams) {
-    clusterId = clusterId || cfg.clusterName;
     return generatePath(cfg.routes.sessionAuditPlayer, { clusterId, sid });
   },
 
   getSessionAuditCmdsRoute({ clusterId, sid }: UrlParams) {
-    clusterId = clusterId || cfg.clusterName;
     return generatePath(cfg.routes.sessionAuditCmds, { clusterId, sid });
   },
 
-  getUserContextUrl(clusterId?: string) {
-    clusterId = clusterId || cfg.clusterName;
+  getUserContextUrl() {
+    const clusterId = cfg.proxyCluster;
     return generatePath(cfg.api.userContextPath, { clusterId });
   },
 
@@ -236,6 +217,10 @@ const cfg = {
     return generatePath(cfg.api.nodesPath, { clusterId });
   },
 
+  getApplicationsUrl(clusterId: string) {
+    return generatePath(cfg.api.applicationsPath, { clusterId });
+  },
+
   getU2fCreateUserChallengeUrl(tokenId: string) {
     return generatePath(cfg.api.u2fCreateUserChallengePath, { tokenId });
   },
@@ -254,10 +239,6 @@ const cfg = {
   getRemoveResourceUrl(kind: Resource['kind'], id: string) {
     const clusterId = cfg.proxyCluster;
     return generatePath(cfg.api.removeResourcePath, { clusterId, kind, id });
-  },
-
-  setClusterId(clusterId: string) {
-    cfg.clusterName = clusterId || cfg.proxyCluster;
   },
 
   init(newConfig = {}) {

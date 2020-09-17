@@ -42,7 +42,7 @@ export default function Container() {
   return <Apps {...state} />;
 }
 
-export function Apps({ attempt, apps }: Props) {
+export function Apps({ attempt, apps }: ReturnType<typeof useApps>) {
   const isEmpty = attempt.status === 'success' && apps.length === 0;
   const hasApps = attempt.status === 'success' && !isEmpty;
 
@@ -98,5 +98,3 @@ const Empty = () => {
     </Card>
   );
 };
-
-type Props = ReturnType<typeof useApps>;

@@ -14,21 +14,29 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React from 'react';
+import React, { useState } from 'react';
 import useAttempt from 'shared/hooks/useAttemptNext';
 import TeleportContext from 'teleport/teleportContext';
 import { Feature } from 'teleport/types';
+import { useRouteMatch } from 'react-router';
+import cfg from 'teleport/config';
+import useClusterNav from './useClusterNav';
 
 export default function useMainState(features: Feature[]) {
+  const match = useRouteMatch<{ clusterId: string }>(cfg.routes.cluster);
   const { attempt, run } = useAttempt('processing');
   const [ctx] = React.useState(() => {
     return new TeleportContext();
   });
 
-  React.useState(() => {
+  useClusterNav(ctx);
+  useState(() => {
     run(() => {
       // initialize teleport context with features
-      return ctx.init().then(() => features.forEach(f => f.register(ctx)));
+      const clusterId = match?.params?.clusterId || cfg.proxyCluster;
+      return ctx
+        .init(clusterId)
+        .then(() => features.forEach(f => f.register(ctx)));
     });
   });
 

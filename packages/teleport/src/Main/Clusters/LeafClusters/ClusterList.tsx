@@ -15,7 +15,6 @@ limitations under the License.
 */
 
 import React from 'react';
-import { NavLink } from 'react-router-dom';
 import { sortBy } from 'lodash';
 import styled from 'styled-components';
 import isMatch from 'design/utils/match';
@@ -194,8 +193,8 @@ export function NodeCountCell(props) {
 
 export function NameCell(props) {
   const { rowIndex, data } = props;
-  const { clusterId, url } = data[rowIndex];
-  return <Cell>{url && <StyledLink to={url}>{clusterId}</StyledLink>}</Cell>;
+  const { clusterId } = data[rowIndex];
+  return <Cell>{clusterId}</Cell>;
 }
 
 function RootLabelCell(props) {
@@ -224,18 +223,6 @@ const StyledTable = styled(Table)`
   }
 `;
 
-const StyledLink = styled(Text)(
-  props => `
-  text-decoration: underline;
-  font-weight: ${props.theme.fontWeights.bold};
-  &:focus {
-    background: #2c3a73;
-    padding: 2px 4px;
-    margin: 0 -4px;
-  }
-`
-);
-
 const StyledConsoleLink = styled(Text)(
   props => `
   border: 1px solid ${props.theme.colors.dark};
@@ -262,9 +249,3 @@ const StyledConsoleLink = styled(Text)(
   }
 `
 );
-
-StyledLink.defaultProps = {
-  color: 'text.primary',
-  typography: 'body2',
-  as: NavLink,
-};

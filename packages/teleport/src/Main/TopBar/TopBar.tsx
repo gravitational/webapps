@@ -21,25 +21,24 @@ import { MenuItemIcon, MenuItem } from 'design/Menu';
 import session from 'teleport/services/session';
 import { useTeleport } from 'teleport/teleportContextProvider';
 import { Flex, ButtonPrimary, TopNav } from 'design';
-import useClusterId from 'teleport/Main/useClusterId';
 import TeleportContext from 'teleport/teleportContext';
 import ClusterSelector from './ClusterSelector';
 import { useTheme } from 'styled-components';
+import history from 'teleport/services/history';
+import cfg from 'teleport/config';
 
-export default function Container(props: Props) {
-  const clusterId = useClusterId();
+export default function Container() {
   const ctx = useTeleport();
-  const state = useTopBar(clusterId, ctx);
-  return <TopBar {...state} {...props} />;
+  const state = useTopBar(ctx);
+  return <TopBar {...state} />;
 }
 
-export function TopBar(props: ReturnType<typeof useTopBar> & Props) {
+export function TopBar(props: ReturnType<typeof useTopBar>) {
   const {
     username,
     loadClusters,
     popupItems,
-    pl,
-    setClusterId,
+    changeCluster,
     clusterId,
   } = props;
 
@@ -77,7 +76,7 @@ export function TopBar(props: ReturnType<typeof useTopBar> & Props) {
     <TopNav
       height="56px"
       bg="inherit"
-      pl={pl}
+      pl="5"
       style={{
         overflowY: 'initial',
         flexShrink: '0',
@@ -89,7 +88,7 @@ export function TopBar(props: ReturnType<typeof useTopBar> & Props) {
         width="400px"
         maxMenuHeight={200}
         mr="20px"
-        onChange={setClusterId}
+        onChange={changeCluster}
         onLoad={loadClusters}
       />
       <Flex ml="auto" height="100%">
@@ -116,8 +115,8 @@ const menuListCss = () => `
   width: 250px;
 `;
 
-function useTopBar(initialClusterId: string, ctx: TeleportContext) {
-  const [clusterId, setClusterId] = React.useState(initialClusterId);
+function useTopBar(ctx: TeleportContext) {
+  const clusterId = ctx.storeClusterId.getId();
   const popupItems = ctx.storeNav.getTopMenuItems();
   const { username } = ctx.storeUser.state;
 
@@ -129,16 +128,20 @@ function useTopBar(initialClusterId: string, ctx: TeleportContext) {
     session.logout();
   }
 
+  function changeCluster(value: string) {
+    const loc = history.getLocation() as Location;
+    const newPrefix = cfg.getClusterRoute(value);
+    const oldPrefix = cfg.getClusterRoute(clusterId);
+    const newPath = loc.pathname.replace(oldPrefix, newPrefix);
+    history.push(newPath);
+  }
+
   return {
     popupItems,
     username,
     clusterId,
-    setClusterId,
+    changeCluster,
     loadClusters,
     logout,
   };
 }
-
-type Props = {
-  pl?: string;
-};

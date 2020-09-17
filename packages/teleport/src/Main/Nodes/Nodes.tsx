@@ -25,13 +25,11 @@ import {
 import QuickLaunch from 'teleport/components/QuickLaunch';
 import { useTeleport } from 'teleport/teleportContextProvider';
 import NodeList from 'teleport/components/NodeList';
-import useClusterNodes from './useClusterNodes';
-import { useParams } from 'react-router';
+import useNodes from './useNodes';
 
 export default function Container() {
-  const { clusterId = '' } = useParams();
   const teleCtx = useTeleport();
-  const state = useClusterNodes(clusterId, teleCtx);
+  const state = useNodes(teleCtx);
   return <Nodes {...state} />;
 }
 
@@ -40,7 +38,7 @@ export function Nodes({
   getNodeLoginOptions,
   startSshSession,
   attempt,
-}: ReturnType<typeof useClusterNodes>) {
+}: ReturnType<typeof useNodes>) {
   if (attempt.isFailed) {
     return <Cards.Failed alignSelf="baseline" message={attempt.message} />;
   }

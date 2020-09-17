@@ -31,11 +31,6 @@ import BpfLogs from './BpfLogs';
 
 export default function SessionAudit() {
   const { sid, clusterId } = useParams();
-
-  React.useState(() => {
-    cfg.setClusterId(clusterId);
-  }, []);
-
   const indexRoute = cfg.getPlayerRoute({ clusterId, sid });
   const playerRoute = cfg.getSessionAuditPlayerRoute({ clusterId, sid });
   const cmdsRoute = cfg.getSessionAuditCmdsRoute({ clusterId, sid });
