@@ -20,12 +20,11 @@ import { Router, Route, Switch } from 'teleport/components/Router';
 import Invite, { ResetPassword } from 'teleport/components/Invite';
 import CatchError from 'teleport/components/CatchError';
 import Login, { LoginSuccess, LoginFailed } from 'teleport/components/Login';
-import Console from 'teleport/console';
+import Console from 'teleport/Console';
 import Authenticated from 'teleport/components/Authenticated';
-import Dashboard from 'teleport/dashboard';
-import Player from 'teleport/player';
+import Player from 'teleport/Player';
 import cfg from 'teleport/config';
-import CommunityCluster from './cluster';
+import Main from './Main';
 import { useFavicon } from 'shared/hooks';
 const teleportIco = require('./favicon.ico').default;
 
@@ -77,8 +76,7 @@ function renderAuthenticated(children) {
     <Switch>
       <Route path={cfg.routes.console} component={Console} />
       <Route path={cfg.routes.player} component={Player} />
-      <Route path={cfg.routes.cluster} component={CommunityCluster} />
-      <Route path={cfg.routes.app} component={Dashboard} />
+      <Route path={cfg.routes.app} component={Main} />
     </Switch>
   );
 }

@@ -46,16 +46,17 @@ const cfg = {
     people: '/web/people',
     support: '/web/support',
     settings: '/web/settings',
-    account: '/web/settings/account',
+    account: '/web/account',
     authConnectors: '/web/settings/auth',
-    roles: '/web/people/roles',
-    trustedClusters: '/web/settings/trusted',
+    roles: '/web/roles',
     cluster: '/web/cluster/:clusterId',
+    clusters: '/web/clusters',
+    trustedClusters: '/web/clusters/trusted',
     clusterAccount: '/web/cluster/:clusterId/account',
     clusterAudit: '/web/cluster/:clusterId/audit',
     clusterNodes: '/web/cluster/:clusterId/nodes',
     clusterSessions: '/web/cluster/:clusterId/sessions',
-    clusterUsers: '/web/people/users',
+    users: '/web/users',
     console: '/web/cluster/:clusterId/console',
     consoleNodes: '/web/cluster/:clusterId/console/nodes',
     consoleConnect: '/web/cluster/:clusterId/console/node/:serverId/:login',
@@ -109,8 +110,7 @@ const cfg = {
     removeResourcePath: '/v1/enterprise/sites/:clusterId/resources/:kind/:id',
   },
 
-  getClusterEventsUrl(params: UrlClusterEventsParams) {
-    const clusterId = cfg.clusterName;
+  getClusterEventsUrl(clusterId: string, params: UrlClusterEventsParams) {
     return generatePath(cfg.api.clusterEventsPath, {
       clusterId,
       ...params,
@@ -138,8 +138,7 @@ const cfg = {
     return generatePath(cfg.routes.cluster, { clusterId });
   },
 
-  getAuditRoute() {
-    const clusterId = cfg.clusterName;
+  getAuditRoute(clusterId: string) {
     return generatePath(cfg.routes.clusterAudit, { clusterId });
   },
 
@@ -147,8 +146,7 @@ const cfg = {
     return cfg.routes.app;
   },
 
-  getNodesRoute() {
-    const clusterId = cfg.clusterName;
+  getNodesRoute(clusterId: string) {
     return generatePath(cfg.routes.clusterNodes, { clusterId });
   },
 
@@ -159,23 +157,20 @@ const cfg = {
 
   getUsersRoute() {
     const clusterId = cfg.clusterName;
-    return generatePath(cfg.routes.clusterUsers, { clusterId });
+    return generatePath(cfg.routes.users, { clusterId });
   },
 
-  getSessionsRoute() {
-    const clusterId = cfg.clusterName;
+  getSessionsRoute(clusterId: string) {
     return generatePath(cfg.routes.clusterSessions, { clusterId });
   },
 
   getConsoleNodesRoute(clusterId: string) {
-    clusterId = clusterId || cfg.clusterName;
     return generatePath(cfg.routes.consoleNodes, {
       clusterId,
     });
   },
 
   getSshConnectRoute({ clusterId, login, serverId }: UrlParams) {
-    clusterId = clusterId || cfg.clusterName;
     return generatePath(cfg.routes.consoleConnect, {
       clusterId,
       serverId,
@@ -184,7 +179,6 @@ const cfg = {
   },
 
   getSshSessionRoute({ clusterId, sid }: UrlParams) {
-    clusterId = clusterId || cfg.clusterName;
     return generatePath(cfg.routes.consoleSession, { clusterId, sid });
   },
 
@@ -203,7 +197,6 @@ const cfg = {
   },
 
   getPlayerRoute({ clusterId, sid }: UrlParams) {
-    clusterId = clusterId || cfg.clusterName;
     return generatePath(cfg.routes.player, { clusterId, sid });
   },
 
@@ -236,12 +229,10 @@ const cfg = {
   },
 
   getTerminalSessionUrl({ clusterId, sid }: UrlParams) {
-    clusterId = clusterId || cfg.clusterName;
     return generatePath(cfg.api.terminalSessionPath, { clusterId, sid });
   },
 
   getClusterNodesUrl(clusterId: string) {
-    clusterId = clusterId || cfg.clusterName;
     return generatePath(cfg.api.nodesPath, { clusterId });
   },
 
@@ -256,12 +247,12 @@ const cfg = {
   },
 
   getResourcesUrl(kind?: Resource['kind']) {
-    const clusterId = cfg.clusterName;
+    const clusterId = cfg.proxyCluster;
     return generatePath(cfg.api.resourcePath, { clusterId, kind });
   },
 
   getRemoveResourceUrl(kind: Resource['kind'], id: string) {
-    const clusterId = cfg.clusterName;
+    const clusterId = cfg.proxyCluster;
     return generatePath(cfg.api.removeResourcePath, { clusterId, kind, id });
   },
 
@@ -275,8 +266,8 @@ const cfg = {
 };
 
 export interface UrlParams {
+  clusterId: string;
   sid?: string;
-  clusterId?: string;
   login?: string;
   serverId?: string;
 }
@@ -293,7 +284,7 @@ export interface UrlSshParams {
   login?: string;
   serverId?: string;
   sid?: string;
-  clusterId?: string;
+  clusterId: string;
 }
 
 export interface UrlClusterEventsParams {

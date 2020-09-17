@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import FeatureBase from 'shared/libs/featureBase';
+import React from 'react';
 
 export interface Context {
   isAccountEnabled(): boolean;
@@ -24,15 +24,13 @@ export interface Context {
   isTrustedClustersEnabled(): boolean;
 }
 
-export interface Feature extends FeatureBase {
-  Component: (props: any) => JSX.Element;
-  getRoute(): FeatureRouteParams;
-  onload(context: Context): void;
-}
+export interface Feature {
+  route: {
+    title: string;
+    path: string;
+    exact?: boolean;
+    component: React.FunctionComponent;
+  };
 
-type FeatureRouteParams = {
-  title: string;
-  path: string;
-  exact?: boolean;
-  component(props: any): JSX.Element;
-};
+  register(ctx: Context): void;
+}

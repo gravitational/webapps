@@ -12,7 +12,7 @@ limitations under the License.
 */
 
 import { Store } from 'shared/libs/stores';
-import service, { UserContext } from 'teleport/services/user';
+import { UserContext } from 'teleport/services/user';
 
 export default class StoreUserContext extends Store<UserContext> {
   state: UserContext = null;
@@ -47,11 +47,5 @@ export default class StoreUserContext extends Store<UserContext> {
 
   getAppAccess() {
     return this.state.acl.apps;
-  }
-
-  fetchUserContext() {
-    return service.fetchUserContext().then(user => {
-      this.setState(user);
-    });
   }
 }

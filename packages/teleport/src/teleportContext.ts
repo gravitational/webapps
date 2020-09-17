@@ -15,8 +15,6 @@ limitations under the License.
 */
 
 import { StoreNav, StoreUserContext } from './stores';
-import { Activator } from 'shared/libs/featureBase';
-import cfg from 'teleport/config';
 import * as teleport from './types';
 import auditService from './services/audit';
 import nodeService from './services/nodes';
@@ -43,16 +41,11 @@ export default class Context implements teleport.Context {
   userService = userService;
   appService = appService;
 
-  constructor(params?: { clusterId?: string; features?: teleport.Feature[] }) {
-    const { clusterId, features = [] } = params || {};
-    this.features = features;
-    cfg.setClusterId(clusterId);
-  }
+  constructor() {}
 
   init() {
-    return this.storeUser.fetchUserContext().then(() => {
-      const activator = new Activator<Context>(this.features);
-      activator.onload(this);
+    return userService.fetchUserContext().then(user => {
+      this.storeUser.setState(user);
     });
   }
 

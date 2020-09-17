@@ -19,8 +19,8 @@ import { Store } from 'shared/libs/stores';
 type NavItem = {
   title: string;
   Icon: any;
-  to: string;
   exact?: boolean;
+  getLink(clusterId: string): string;
 };
 
 const defaultState = {

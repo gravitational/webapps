@@ -168,6 +168,7 @@ export const Memory = makeFontIcon('Memory', 'icon-memory');
 export const MoreHoriz = makeFontIcon('MoreHoriz', 'icon-more_horiz');
 export const MoreVert = makeFontIcon('MoreVert', 'icon-more_vert');
 export const Mute = makeFontIcon('Mute', 'icon-mute');
+export const NewTab = makeFontIcon('NewTab', 'icon-new-tab');
 export const NoteAdded = makeFontIcon('NoteAdded', 'icon-note_add');
 export const NotificationsActive = makeFontIcon(
   'NotificationsActive',

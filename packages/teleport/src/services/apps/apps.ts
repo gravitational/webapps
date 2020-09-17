@@ -21,10 +21,32 @@ import makeApps from './makeApps';
 
 const service = {
   fetchApps() {
-    return api
-      .get(cfg.api.applicationsPath)
-      .then(json => map(json.items, makeApps));
+    return Promise.resolve(sample);
+    //return api
+    //  .get(cfg.api.applicationsPath)
+    //  .then(json => map(json.items, makeApps));
   },
 };
 
 export default service;
+
+const sample = [
+  {
+    id: '1',
+    name: 'jenkins',
+    clusterId: 'root-cluster-name',
+    addr: '',
+  },
+  {
+    id: '2',
+    name: 'github',
+    clusterId: 'leaf-cluster-name',
+    addr: '',
+  },
+  {
+    id: '3',
+    name: 'slack',
+    clusterId: 'leaf2-cluster-longNameFormat-reallyLong',
+    addr: '',
+  },
+];
