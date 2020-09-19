@@ -14,28 +14,28 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React, { useState } from 'react';
+import { useEffect, useState } from 'react';
+import Ctx from 'teleport/teleportContext';
 import useAttempt from 'shared/hooks/useAttemptNext';
-import TeleportContext from 'teleport/teleportContext';
-import { Feature } from 'teleport/types';
-import useStickyClusterId from 'teleport/useStickyClusterId';
 
-export default function useMain(features: Feature[]) {
-  const { attempt, run } = useAttempt('processing');
-  const [ctx] = React.useState(() => {
-    return new TeleportContext();
-  });
+export default function useClusters(ctx: Ctx) {
+  const [searchValue, setSearchValue] = useState('');
+  const [clusters, setClusters] = useState([]);
+  const { attempt, run } = useAttempt();
 
-  useStickyClusterId(ctx);
-  useState(() => {
-    run(() => {
-      return ctx.init().then(() => features.forEach(f => f.register(ctx)));
-    });
-  });
+  function init() {
+    run(() => ctx.clusterService.fetchClusters().then(setClusters));
+  }
+
+  useEffect(() => {
+    init();
+  }, []);
 
   return {
-    ctx,
-    status: attempt.status,
-    statusText: attempt.statusText,
+    init,
+    initAttempt: attempt,
+    clusters,
+    searchValue,
+    setSearchValue,
   };
 }

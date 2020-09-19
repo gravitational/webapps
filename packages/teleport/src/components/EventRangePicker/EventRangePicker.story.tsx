@@ -1,5 +1,5 @@
 /*
-Copyright 2020 Gravitational, Inc.
+Copyright 2019 Gravitational, Inc.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -15,24 +15,31 @@ limitations under the License.
 */
 
 import React from 'react';
+import Component from './EventRangePicker';
 
-export interface Context {
-  isAccountEnabled(): boolean;
-  isAuditEnabled(): boolean;
-  isAuthConnectorEnabled(): boolean;
-  isRolesEnabled(): boolean;
-  isTrustedClustersEnabled(): boolean;
-}
+export default {
+  title: 'TeleportCluster/Audit/RangePicker',
+};
 
-export interface Feature {
-  route: FeatureRoute;
-  getTopNavTitle(): string;
-  register(ctx: Context): void;
-}
+export const Picker = () => <Component {...props} />;
 
-type FeatureRoute = {
-  title: string;
-  path: string;
-  exact?: boolean;
-  component: React.FunctionComponent;
+const options = [
+  {
+    name: '7 days',
+    from: new Date(),
+    to: new Date(),
+  },
+  {
+    name: 'Custom Range...',
+    isCustom: true,
+    from: new Date(),
+    to: new Date(),
+  },
+];
+
+const props = {
+  disabled: false,
+  value: options[0],
+  options,
+  onChange: () => {},
 };

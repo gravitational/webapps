@@ -21,6 +21,7 @@ import * as Alerts from 'design/Alert';
 import NodeList from 'teleport/components/NodeList';
 import Document from 'teleport/Console/components/Document';
 import QuickLaunch from 'teleport/components/QuickLaunch';
+import InputSearch from 'teleport/components/InputSearch';
 import ClusterSelector from './ClusterSelector';
 import useNodes from './useNodes';
 import ThemeProvider from './ThemeProvider';
@@ -36,6 +37,8 @@ export default function DocumentNodes(props: Props) {
   const {
     nodes,
     attempt,
+    searchValue,
+    setSearchValue,
     createSshSession,
     changeCluster,
     getNodeSshLogins,
@@ -79,7 +82,27 @@ export default function DocumentNodes(props: Props) {
               mr="20px"
               onChange={onChangeCluster}
             />
-            <QuickLaunch width="240px" onPress={onQuickLaunchEnter} />
+          </Flex>
+          <Flex mb="4" justifyContent="space-between" alignItems="center">
+            <InputSearch height="30px" mr="3" onChange={setSearchValue} />
+            <QuickLaunch
+              width="240px"
+              as={Flex}
+              autoFocus={false}
+              alignItems="center"
+              inputProps={{
+                style: {
+                  height: '30px',
+                  fontSize: '12px',
+                },
+              }}
+              labelProps={{
+                mr: 2,
+                mb: 0,
+                style: { whiteSpace: 'nowrap', width: 'auto' },
+              }}
+              onPress={onQuickLaunchEnter}
+            />
           </Flex>
           {isProcessing && (
             <Box textAlign="center" m={10}>
@@ -89,6 +112,7 @@ export default function DocumentNodes(props: Props) {
           {isFailed && <Alerts.Danger>{message}</Alerts.Danger>}
           {isSuccess && (
             <NodeList
+              searchValue={searchValue}
               onLoginMenuOpen={onLoginMenuOpen}
               onLoginSelect={onLoginMenuSelect}
               nodes={nodes}

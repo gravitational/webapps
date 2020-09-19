@@ -47,10 +47,11 @@ const cfg = {
     roles: '/web/roles',
     cluster: '/web/cluster/:clusterId/',
     clusters: '/web/clusters',
-    trustedClusters: '/web/clusters/trusted',
+    trustedClusters: '/web/trust',
     audit: '/web/cluster/:clusterId/audit',
     nodes: '/web/cluster/:clusterId/nodes',
     sessions: '/web/cluster/:clusterId/sessions',
+    recordings: '/web/cluster/:clusterId/recordings',
     users: '/web/users',
     console: '/web/cluster/:clusterId/console',
     consoleNodes: '/web/cluster/:clusterId/console/nodes',
@@ -147,6 +148,10 @@ const cfg = {
 
   getSessionsRoute(clusterId: string) {
     return generatePath(cfg.routes.sessions, { clusterId });
+  },
+
+  getRecordingsRoute(clusterId: string) {
+    return generatePath(cfg.routes.recordings, { clusterId });
   },
 
   getConsoleNodesRoute(clusterId: string) {

@@ -14,7 +14,8 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import { StoreNav, StoreClusterId, StoreUserContext } from './stores';
+import React from 'react';
+import { StoreNav, StoreUserContext } from './stores';
 import * as teleport from './types';
 import auditService from './services/audit';
 import nodeService from './services/nodes';
@@ -24,11 +25,10 @@ import resourceService from './services/resources';
 import userService from './services/user';
 import appService from './services/apps';
 
-export default class Context implements teleport.Context {
+class Context implements teleport.Context {
   // stores
   storeNav = new StoreNav();
   storeUser = new StoreUserContext();
-  storeClusterId = new StoreClusterId();
 
   // features
   features: teleport.Feature[] = [];
@@ -42,11 +42,13 @@ export default class Context implements teleport.Context {
   userService = userService;
   appService = appService;
 
-  constructor() {}
+  stickyCluster = {
+    id: '',
+    isClusterUrl: false,
+  };
 
-  init(clusterId: string) {
+  init() {
     return userService.fetchUserContext().then(user => {
-      this.storeClusterId.setState({ clusterId });
       this.storeUser.setState(user);
     });
   }
@@ -79,3 +81,9 @@ export default class Context implements teleport.Context {
     return this.storeUser.getAppAccess().list;
   }
 }
+
+const ReactContext = React.createContext<Context>(null);
+const ReactContextProvider = ReactContext.Provider;
+
+export default Context;
+export { Context, ReactContextProvider, ReactContext };

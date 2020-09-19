@@ -25,6 +25,7 @@ export default function Select(props: Props) {
   return (
     <StyledSelect hasError={hasError}>
       <ReactSelect
+        menuPlacement="auto"
         className="react-select-container"
         classNamePrefix="react-select"
         clearable={false}

@@ -15,22 +15,20 @@ limitations under the License.
 */
 
 import * as RouterDOM from 'react-router-dom';
-import React, { useMemo } from 'react';
+import React from 'react';
 import styled from 'styled-components';
 import { Indicator } from 'design';
 import { Failed } from 'design/CardError';
 import { Redirect, Switch, Route } from 'teleport/components/Router';
 import CatchError from 'teleport/components/CatchError';
-import TeleportContextProvider from 'teleport/teleportContextProvider';
+import { ReactContextProvider } from 'teleport/teleportContext';
 import cfg from 'teleport/config';
-import SideNav from './SideNav';
-import TopBar from './TopBar';
-import getFeatures from './features';
+import SideNav from 'teleport/SideNav';
+import TopBar from 'teleport/TopBar';
+import getFeatures from 'teleport/features';
 import useMain from './useMain';
-//import useClusterNav from './useClusterId';
 
 export default function Container() {
-  //useClusterNav();
   const [features] = React.useState(() => getFeatures());
   const state = useMain(features);
   return <Main {...state} />;
@@ -69,18 +67,18 @@ export function Main(props: ReturnType<typeof useMain>) {
     cfg.routes.support;
 
   return (
-    <TeleportContextProvider value={ctx}>
+    <ReactContextProvider value={ctx}>
       <RouterDOM.Switch>
         <Redirect exact={true} from={cfg.routes.app} to={indexRoute} />
       </RouterDOM.Switch>
       <VerticalSplit>
         <SideNav />
         <HorizontalSplit>
-          <TopBar pl="6" />
+          <TopBar />
           <Switch>{$features}</Switch>
         </HorizontalSplit>
       </VerticalSplit>
-    </TeleportContextProvider>
+    </ReactContextProvider>
   );
 }
 

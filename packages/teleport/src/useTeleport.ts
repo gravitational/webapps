@@ -15,24 +15,13 @@ limitations under the License.
 */
 
 import React from 'react';
+import { ReactContext } from './teleportContext';
 
-export interface Context {
-  isAccountEnabled(): boolean;
-  isAuditEnabled(): boolean;
-  isAuthConnectorEnabled(): boolean;
-  isRolesEnabled(): boolean;
-  isTrustedClustersEnabled(): boolean;
+export default function useTeleport() {
+  const value = React.useContext(ReactContext);
+  if (!value) {
+    throw new Error('TeleportReactContext is missing a value');
+  }
+
+  return (window['teleContext'] = value);
 }
-
-export interface Feature {
-  route: FeatureRoute;
-  getTopNavTitle(): string;
-  register(ctx: Context): void;
-}
-
-type FeatureRoute = {
-  title: string;
-  path: string;
-  exact?: boolean;
-  component: React.FunctionComponent;
-};

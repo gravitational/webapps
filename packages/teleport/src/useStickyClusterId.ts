@@ -14,28 +14,25 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React, { useState } from 'react';
-import useAttempt from 'shared/hooks/useAttemptNext';
+import { useRouteMatch } from 'react-router';
+import { useState } from 'react';
+import cfg from 'teleport/config';
 import TeleportContext from 'teleport/teleportContext';
-import { Feature } from 'teleport/types';
-import useStickyClusterId from 'teleport/useStickyClusterId';
 
-export default function useMain(features: Feature[]) {
-  const { attempt, run } = useAttempt('processing');
-  const [ctx] = React.useState(() => {
-    return new TeleportContext();
-  });
-
-  useStickyClusterId(ctx);
+export default function useStickyClusterId(ctx: TeleportContext) {
+  // assign initial values where the default cluster is a proxy
   useState(() => {
-    run(() => {
-      return ctx.init().then(() => features.forEach(f => f.register(ctx)));
-    });
+    ctx.stickyCluster.id = cfg.proxyCluster;
+    ctx.stickyCluster.isClusterUrl = false;
   });
 
-  return {
-    ctx,
-    status: attempt.status,
-    statusText: attempt.statusText,
-  };
+  const match = useRouteMatch<{ clusterId: string }>(cfg.routes.cluster);
+  const clusterId = match?.params?.clusterId;
+  if (clusterId) {
+    ctx.stickyCluster.id = clusterId;
+  }
+
+  ctx.stickyCluster.isClusterUrl = !!clusterId;
+
+  return ctx.stickyCluster;
 }
