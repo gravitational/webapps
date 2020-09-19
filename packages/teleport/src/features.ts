@@ -139,11 +139,11 @@ export class FeatureAccount {
 
 export class FeatureNodes {
   getTopNavTitle() {
-    return 'Nodes';
+    return '';
   }
 
   route = {
-    title: 'Nodes',
+    title: 'Servers',
     path: cfg.routes.nodes,
     exact: true,
     component: Nodes,
@@ -151,7 +151,7 @@ export class FeatureNodes {
 
   register(ctx: Ctx) {
     ctx.storeNav.addSideItem({
-      title: 'Nodes',
+      title: 'Servers',
       Icon: Icons.Layers,
       exact: true,
       getLink(clusterId: string) {

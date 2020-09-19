@@ -18,10 +18,11 @@ import { useState, useEffect } from 'react';
 import { useAttemptNext } from 'shared/hooks';
 import { App } from 'teleport/services/apps';
 import useTeleport from 'teleport/useTeleport';
+import useStickyClusterId from 'teleport/useStickyClusterId';
 
 export default function useApps() {
   const ctx = useTeleport();
-  const clusterId = ctx.stickyCluster.id;
+  const { clusterId } = useStickyClusterId();
   const { attempt, run } = useAttemptNext('processing');
   const [apps, setApps] = useState([] as App[]);
 

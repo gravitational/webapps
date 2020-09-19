@@ -26,11 +26,15 @@ import QuickLaunch from 'teleport/components/QuickLaunch';
 import InputSearch from 'teleport/components/InputSearch';
 import NodeList from 'teleport/components/NodeList';
 import useTeleport from 'teleport/useTeleport';
+import useStickyClusterId from 'teleport/useStickyClusterId';
 import useNodes from './useNodes';
+import Empty from './Empty';
+import AddButton from './AddButton';
 
 export default function Container() {
   const teleCtx = useTeleport();
-  const state = useNodes(teleCtx);
+  const { clusterId } = useStickyClusterId();
+  const state = useNodes(teleCtx, clusterId);
   return <Nodes {...state} />;
 }
 
@@ -44,6 +48,10 @@ export function Nodes(props: ReturnType<typeof useNodes>) {
     attempt,
   } = props;
 
+  const isAdmin = false;
+  const isEmpty = attempt.isSuccess && nodes.length === 0;
+  const hasNodes = attempt.isSuccess && nodes.length > 0;
+
   function onLoginSelect(e: React.MouseEvent, login: string, serverId: string) {
     e.preventDefault();
     startSshSession(login, serverId);
@@ -53,15 +61,21 @@ export function Nodes(props: ReturnType<typeof useNodes>) {
     startSshSession(login, serverId);
   }
 
+  if (isEmpty) {
+    return (
+      <FeatureNodes isAdmin={isAdmin}>
+        <Empty isAdmin={false} onCreate={() => null} />
+      </FeatureNodes>
+    );
+  }
+
   return (
-    <FeatureBox>
-      <FeatureHeader alignItems="center" justifyContent="space-between">
-        <FeatureHeaderTitle mr="5">Nodes</FeatureHeaderTitle>
-      </FeatureHeader>
+    <FeatureNodes isAdmin={isAdmin}>
       <Flex mb={4} alignItems="center" justifyContent="space-between">
         <InputSearch height="30px" mr="3" onChange={setSearchValue} />
         <QuickLaunch
           as={Flex}
+          width="240px"
           autoFocus={false}
           alignItems="center"
           inputProps={{
@@ -84,7 +98,7 @@ export function Nodes(props: ReturnType<typeof useNodes>) {
           <Indicator />
         </Box>
       )}
-      {attempt.isSuccess && (
+      {hasNodes && (
         <NodeList
           nodes={nodes}
           searchValue={searchValue}
@@ -92,6 +106,18 @@ export function Nodes(props: ReturnType<typeof useNodes>) {
           onLoginSelect={onLoginSelect}
         />
       )}
-    </FeatureBox>
+    </FeatureNodes>
   );
 }
+
+const FeatureNodes: React.FC<{ isAdmin: boolean }> = props => {
+  return (
+    <FeatureBox>
+      <FeatureHeader alignItems="center" justifyContent="space-between">
+        <FeatureHeaderTitle>Servers</FeatureHeaderTitle>
+        <AddButton isAdmin={props.isAdmin} />
+      </FeatureHeader>
+      {props.children}
+    </FeatureBox>
+  );
+};

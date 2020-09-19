@@ -246,8 +246,8 @@ const cfg = {
     return generatePath(cfg.api.removeResourcePath, { clusterId, kind, id });
   },
 
-  init(newConfig = {}) {
-    merge(this, newConfig);
+  init(backendConfig = {}) {
+    merge(this, backendConfig);
   },
 };
 

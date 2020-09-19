@@ -17,15 +17,16 @@ limitations under the License.
 import React from 'react';
 import { Danger } from 'design/Alert';
 import { Indicator, Text, Box, Flex, ButtonPrimary } from 'design';
-import ResourceEditor from 'teleport/components/ResourceEditor';
-import useResources from 'teleport/components/useResources';
-import TrustedList from './TrustedList';
-import DeleteTrustedClusterDialog from './DeleteTrustedClusterDialog';
-import templates from './templates';
-import useTrustedClusters from './useTrustedClusters';
 import Card from 'design/Card';
 import Image from 'design/Image';
-const idCardPNG = require('design/assets/images/trusted-cluster.png');
+import ResourceEditor from 'teleport/components/ResourceEditor';
+import TrustedList from './TrustedList';
+import DeleteTrust from './DeleteTrust';
+import templates from './templates';
+import useResources from 'teleport/components/useResources';
+import useTrustedClusters from './useTrustedClusters';
+
+import { emptyPng } from './assets';
 
 export default function TrustedClusters() {
   const tclusters = useTrustedClusters();
@@ -103,7 +104,7 @@ export default function TrustedClusters() {
         />
       )}
       {resources.status === 'removing' && (
-        <DeleteTrustedClusterDialog
+        <DeleteTrust
           name={resources.item.name}
           onClose={resources.disregard}
           onDelete={remove}
@@ -140,11 +141,6 @@ const Info = props => (
 );
 
 const Empty = (props: EmptyProps) => {
-  const imgProps = {
-    src: idCardPNG.default,
-    style: { width: '100%' },
-  };
-
   return (
     <Card
       maxWidth="700px"
@@ -154,10 +150,10 @@ const Empty = (props: EmptyProps) => {
       as={Flex}
       alignItems="center"
     >
-      <Box width={4 / 10}>
-        <Image {...imgProps} />
+      <Box mx="4">
+        <Image width="180px" src={emptyPng} />
       </Box>
-      <Box width={6 / 10}>
+      <Box>
         <Info pr={4} mb={6} />
         <ButtonPrimary
           disabled={props.disabled}

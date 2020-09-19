@@ -14,28 +14,29 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React, { useEffect, useState, useMemo } from 'react';
+import React from 'react';
 import {
   FeatureBox,
   FeatureHeader,
   FeatureHeaderTitle,
 } from 'teleport/components/Layout';
 import EventList from './EventList';
-import RangePicker, { getRangeOptions } from './RangePicker';
-import { useAttempt } from 'shared/hooks';
+import RangePicker from 'teleport/components/EventRangePicker';
 import { Danger } from 'design/Alert';
 import { Flex, Indicator, Box } from 'design';
 import InputSearch from 'teleport/components/InputSearch';
-import TeleportContext from 'teleport/teleportContext';
 import useTeleport from 'teleport/useTeleport';
+import useStickyClusterId from 'teleport/useStickyClusterId';
+import useAuditEvents from 'teleport/useAuditEvents';
 
 export default function Container() {
   const teleCtx = useTeleport();
-  const state = useEvents(teleCtx);
+  const { clusterId } = useStickyClusterId();
+  const state = useAuditEvents(teleCtx, clusterId);
   return <Audit {...state} />;
 }
 
-export function Audit(props: ReturnType<typeof useEvents>) {
+export function Audit(props: ReturnType<typeof useAuditEvents>) {
   const {
     overflow,
     attempt,
@@ -83,43 +84,3 @@ export function Audit(props: ReturnType<typeof useEvents>) {
     </FeatureBox>
   );
 }
-
-function useEvents(ctx: TeleportContext) {
-  const clusterId = ctx.stickyCluster.id;
-  const rangeOptions = useMemo(() => getRangeOptions(), []);
-  const [searchValue, setSearchValue] = React.useState('');
-  const [range, setRange] = useState(rangeOptions[0]);
-  const [attempt, attemptActions] = useAttempt({ isProcessing: true });
-  const [results, setResults] = useState({
-    events: [],
-    overflow: false,
-  });
-
-  function onFetch({ from, to }: Range) {
-    attemptActions.do(() => {
-      return ctx.auditService
-        .fetchEvents(clusterId, { start: from, end: to })
-        .then(setResults);
-    });
-  }
-
-  useEffect(() => {
-    onFetch(range);
-  }, [clusterId, range]);
-
-  return {
-    ...results,
-    attempt,
-    clusterId,
-    attemptActions,
-    onFetch,
-    maxLimit: ctx.auditService.maxLimit,
-    range,
-    rangeOptions,
-    setRange,
-    searchValue,
-    setSearchValue,
-  };
-}
-
-type Range = { from: Date; to: Date };

@@ -19,8 +19,7 @@ import { useAttempt } from 'shared/hooks';
 import { Session } from 'teleport/services/ssh';
 import Ctx from 'teleport/teleportContext';
 
-export default function useSessions(ctx: Ctx) {
-  const clusterId = ctx.stickyCluster.id;
+export default function useSessions(ctx: Ctx, clusterId: string) {
   const [sessions, setSessions] = useState<Session[]>([]);
   const [attempt, attemptActions] = useAttempt({ isProcessing: true });
 

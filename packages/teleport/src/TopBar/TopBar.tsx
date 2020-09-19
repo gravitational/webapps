@@ -15,22 +15,20 @@ limitations under the License.
 */
 
 import React from 'react';
-import { matchPath } from 'react-router';
 import { NavLink } from 'react-router-dom';
 import TopNavUserMenu from 'design/TopNav/TopNavUserMenu';
 import { MenuItemIcon, MenuItem } from 'design/Menu';
-import session from 'teleport/services/session';
-import useTeleport from 'teleport/useTeleport';
 import { Text, Flex, ButtonPrimary, TopNav } from 'design';
-import TeleportContext from 'teleport/teleportContext';
 import ClusterSelector from './ClusterSelector';
 import { useTheme } from 'styled-components';
-import history from 'teleport/services/history';
-import cfg from 'teleport/config';
+import useTeleport from 'teleport/useTeleport';
+import useStickyClusterId from 'teleport/useStickyClusterId';
+import useTopBar from './useTopBar';
 
 export default function Container() {
   const ctx = useTeleport();
-  const state = useTopBar(ctx);
+  const stickCluster = useStickyClusterId();
+  const state = useTopBar(ctx, stickCluster);
   return <TopBar {...state} />;
 }
 
@@ -41,7 +39,7 @@ export function TopBar(props: ReturnType<typeof useTopBar>) {
     popupItems,
     changeCluster,
     clusterId,
-    isSelectorHidden,
+    hasClusterUrl,
   } = props;
 
   const theme = useTheme();
@@ -73,10 +71,10 @@ export function TopBar(props: ReturnType<typeof useTopBar>) {
     props.logout();
   }
 
-  // instead of re-creating an expensive react-select component
+  // instead of re-creating an expensive react-select component,
   // hide/show it instead
   const styles = {
-    display: isSelectorHidden ? 'none' : 'block',
+    display: !hasClusterUrl ? 'none' : 'block',
   };
 
   return (
@@ -90,8 +88,7 @@ export function TopBar(props: ReturnType<typeof useTopBar>) {
         borderBottom: `1px solid ${theme.colors.primary.main}`,
       }}
     >
-      {isSelectorHidden && <Text typography="h2">{props.title}</Text>}
-
+      {!hasClusterUrl && <Text typography="h2">{props.title}</Text>}
       <ClusterSelector
         value={clusterId}
         width="400px"
@@ -124,45 +121,3 @@ export function TopBar(props: ReturnType<typeof useTopBar>) {
 const menuListCss = () => `
   width: 250px;
 `;
-
-function useTopBar(ctx: TeleportContext) {
-  const loc = history.getLocation() as Location;
-  const stickyCluster = ctx.stickyCluster;
-  const popupItems = ctx.storeNav.getTopMenuItems();
-  const { username } = ctx.storeUser.state;
-  // find active feature
-  const feature = ctx.features.find(f =>
-    matchPath(loc.pathname, {
-      path: f.route.path,
-      exact: false,
-    })
-  );
-
-  const title = feature?.getTopNavTitle() || '';
-
-  function loadClusters() {
-    return ctx.clusterService.fetchClusters();
-  }
-
-  function logout() {
-    session.logout();
-  }
-
-  function changeCluster(value: string) {
-    const newPrefix = cfg.getClusterRoute(value);
-    const oldPrefix = cfg.getClusterRoute(stickyCluster.id);
-    const newPath = loc.pathname.replace(oldPrefix, newPrefix);
-    history.push(newPath);
-  }
-
-  return {
-    clusterId: stickyCluster.id,
-    isSelectorHidden: !stickyCluster.isClusterUrl,
-    popupItems,
-    username,
-    changeCluster,
-    loadClusters,
-    logout,
-    title,
-  };
-}

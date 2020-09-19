@@ -15,24 +15,28 @@ limitations under the License.
 */
 
 import { useRouteMatch } from 'react-router';
-import { useState } from 'react';
+import { useRef } from 'react';
 import cfg from 'teleport/config';
-import TeleportContext from 'teleport/teleportContext';
 
-export default function useStickyClusterId(ctx: TeleportContext) {
+export default function useStickyClusterId(): StickyCluster {
   // assign initial values where the default cluster is a proxy
-  useState(() => {
-    ctx.stickyCluster.id = cfg.proxyCluster;
-    ctx.stickyCluster.isClusterUrl = false;
+  const stickyCluster = useRef({
+    clusterId: cfg.proxyCluster,
+    hasClusterUrl: false,
   });
 
   const match = useRouteMatch<{ clusterId: string }>(cfg.routes.cluster);
   const clusterId = match?.params?.clusterId;
   if (clusterId) {
-    ctx.stickyCluster.id = clusterId;
+    stickyCluster.current.clusterId = clusterId;
   }
 
-  ctx.stickyCluster.isClusterUrl = !!clusterId;
+  stickyCluster.current.hasClusterUrl = !!clusterId;
 
-  return ctx.stickyCluster;
+  return stickyCluster.current;
 }
+
+export type StickyCluster = {
+  clusterId: string;
+  hasClusterUrl: boolean;
+};

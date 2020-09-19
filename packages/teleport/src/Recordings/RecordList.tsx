@@ -20,7 +20,6 @@ import { sortBy } from 'lodash';
 import isMatch from 'design/utils/match';
 import { ButtonBorder } from 'design';
 import { displayDateTime } from 'shared/services/loc';
-import * as Icons from 'design/Icon';
 import * as Table from 'design/DataTable';
 import PagedTable from 'design/DataTable/Paged';
 import { Event, SessionEnd } from 'teleport/services/audit/types';
@@ -54,7 +53,6 @@ export default function RecordList(props: Props) {
 
     const columnKey = Object.getOwnPropertyNames(colSortDirs)[0];
     const sortDir = colSortDirs[columnKey];
-    console.log('Fsdfsdfd', columnKey);
     const sorted = sortBy(filtered, columnKey);
     if (sortDir === Table.SortTypes.ASC) {
       return sorted.reverse();
@@ -156,23 +154,7 @@ function DurationCell(props) {
 function SidCell(props) {
   const { rowIndex, data } = props;
   const row = data[rowIndex] as Row;
-  return (
-    <Table.Cell>
-      <div style={{ display: 'flex', alignItems: 'center' }}>
-        <Icons.Cli
-          p="1"
-          mr="3"
-          bg="bgTerminal"
-          fontSize="2"
-          style={{
-            borderRadius: '50%',
-            border: 'solid 2px #512FC9',
-          }}
-        />
-        {row.sid}
-      </div>
-    </Table.Cell>
-  );
+  return <Table.Cell>{row.sid}</Table.Cell>;
 }
 
 const PlayCell = props => {
@@ -181,7 +163,7 @@ const PlayCell = props => {
   const url = cfg.getSessionAuditPlayerRoute(row);
   return (
     <Table.Cell align="right">
-      <ButtonBorder as="a" href={url} target="_blank" size="small">
+      <ButtonBorder as="a" href={url} width="80px" target="_blank" size="small">
         Play
       </ButtonBorder>
     </Table.Cell>

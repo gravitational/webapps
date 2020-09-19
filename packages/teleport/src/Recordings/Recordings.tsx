@@ -27,10 +27,12 @@ import { Flex, Indicator, Box } from 'design';
 import InputSearch from 'teleport/components/InputSearch';
 import useTeleport from 'teleport/useTeleport';
 import useAuditEvents from 'teleport/useAuditEvents';
+import useStickyClusterId from 'teleport/useStickyClusterId';
 
 export default function Container() {
   const teleCtx = useTeleport();
-  const state = useAuditEvents(teleCtx);
+  const { clusterId } = useStickyClusterId();
+  const state = useAuditEvents(teleCtx, clusterId);
   return <Recordings {...state} />;
 }
 

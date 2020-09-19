@@ -26,11 +26,13 @@ import {
 import useTeleport from 'teleport/useTeleport';
 import SessionList from './SessionList';
 import useSessions from './useSessions';
+import useStickerClusterId from 'teleport/useStickyClusterId';
 const POLLING_INTERVAL = 3000; // every 3 sec
 
 export default function Container() {
   const ctx = useTeleport();
-  const state = useSessions(ctx);
+  const { clusterId } = useStickerClusterId();
+  const state = useSessions(ctx, clusterId);
   return <Sessions {...state} />;
 }
 

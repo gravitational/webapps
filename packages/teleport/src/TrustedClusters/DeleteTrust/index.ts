@@ -14,25 +14,5 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React from 'react';
-import DeleteTrustedCluster from './DeleteTrustedClusterDialog';
-
-export default {
-  title: 'TeleportDashboard/TrustedClusters/Dialogs',
-};
-
-export const DeleteTrustedClusterDialog = () => (
-  <DeleteTrustedCluster {...props} />
-);
-
-DeleteTrustedClusterDialog.story = {
-  name: 'DeleteDialog',
-};
-
-const props = {
-  name: 'sample-trusted-cluster',
-  onDelete: () => {
-    return Promise.reject(new Error('server error'));
-  },
-  onClose: () => null,
-};
+import DeleteTrust from './DeleteTrust';
+export default DeleteTrust;

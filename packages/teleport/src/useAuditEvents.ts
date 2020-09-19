@@ -17,10 +17,9 @@ limitations under the License.
 import moment from 'moment';
 import React, { useEffect, useState, useMemo } from 'react';
 import { useAttempt } from 'shared/hooks';
-import TeleportContext from 'teleport/teleportContext';
+import Ctx from 'teleport/teleportContext';
 
-export default function useEvents(ctx: TeleportContext) {
-  const clusterId = ctx.stickyCluster.id;
+export default function useEvents(ctx: Ctx, clusterId: string) {
   const rangeOptions = useMemo(() => getRangeOptions(), []);
   const [searchValue, setSearchValue] = React.useState('');
   const [range, setRange] = useState(rangeOptions[0]);

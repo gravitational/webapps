@@ -16,16 +16,17 @@ limitations under the License.
 
 import React from 'react';
 import styled from 'styled-components';
-import { NavLink } from 'react-router-dom';
-import { Image, SideNav, SideNavItem } from 'design';
+import { NavLink, Link } from 'react-router-dom';
+import { Flex, Image, SideNav, SideNavItem } from 'design';
 import SideNavItemIcon from 'design/SideNav/SideNavItemIcon';
 import useTeleport from 'teleport/useTeleport';
+import useStickyClusterId from 'teleport/useStickyClusterId';
 import logoSvg from './logo';
 import cfg from 'teleport/config';
 
 export default function Nav() {
   const ctx = useTeleport();
-  const clusterId = ctx.stickyCluster.id;
+  const { clusterId } = useStickyClusterId();
   const items = ctx.storeNav.getSideItems();
   const $items = items.map((item, index) => (
     <SideNavItem
@@ -41,9 +42,9 @@ export default function Nav() {
 
   return (
     <SideNav>
-      <StyledLogoItem pl="4" width="208px" as="a" href={cfg.routes.app}>
+      <LogoItem pl="4" width="208px" as={Link} to={cfg.routes.app}>
         <Image src={logoSvg} mx="3" maxHeight="24px" maxWidth="160px" />
-      </StyledLogoItem>
+      </LogoItem>
       <div
         style={{ display: 'flex', flexDirection: 'column', overflow: 'auto' }}
       >
@@ -53,10 +54,17 @@ export default function Nav() {
   );
 }
 
-const StyledLogoItem = styled(SideNavItem)`
-  &:focus,
-  &:active {
-    border-left-color: transparent;
-    background: inherit;
+const LogoItem = styled(Flex)(
+  props => `
+  min-height: 56px;
+  align-items: center;
+  cursor: pointer;
+  outline: none;
+  text-decoration: none;
+  width: 100%;
+  &:hover {
+    background ${props.theme.colors.primary.lighter};
+    color ${props.theme.colors.primary.contrastText};
   }
-`;
+`
+);

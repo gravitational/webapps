@@ -21,11 +21,11 @@ import { App } from 'teleport/services/apps';
 import { NewTab } from 'design/Icon';
 
 export default function AppList({ apps = [] }: Props) {
-  const $apps = apps.map(app => <AppListItem app={app} key={app.id} />);
+  const $apps = apps.map(app => <Item app={app} key={app.id} />);
   return <Flex flexWrap="wrap">{$apps}</Flex>;
 }
 
-function AppListItem({ app }) {
+function Item({ app }) {
   return (
     <StyledAppListItem
       as="a"

@@ -18,7 +18,6 @@ import React, { useState } from 'react';
 import useAttempt from 'shared/hooks/useAttemptNext';
 import TeleportContext from 'teleport/teleportContext';
 import { Feature } from 'teleport/types';
-import useStickyClusterId from 'teleport/useStickyClusterId';
 
 export default function useMain(features: Feature[]) {
   const { attempt, run } = useAttempt('processing');
@@ -26,7 +25,6 @@ export default function useMain(features: Feature[]) {
     return new TeleportContext();
   });
 
-  useStickyClusterId(ctx);
   useState(() => {
     run(() => {
       return ctx.init().then(() => features.forEach(f => f.register(ctx)));

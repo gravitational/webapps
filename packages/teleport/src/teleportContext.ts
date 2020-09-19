@@ -42,11 +42,6 @@ class Context implements teleport.Context {
   userService = userService;
   appService = appService;
 
-  stickyCluster = {
-    id: '',
-    isClusterUrl: false,
-  };
-
   init() {
     return userService.fetchUserContext().then(user => {
       this.storeUser.setState(user);

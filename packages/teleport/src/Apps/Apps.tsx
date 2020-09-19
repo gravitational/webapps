@@ -21,21 +21,11 @@ import {
   FeatureHeaderTitle,
 } from 'teleport/components/Layout';
 import { Danger } from 'design/Alert';
-import {
-  Indicator,
-  Text,
-  Box,
-  Flex,
-  ButtonPrimary,
-  ButtonSecondary,
-} from 'design';
-import Card from 'design/Card';
-import Image from 'design/Image';
+import { Indicator, Box } from 'design';
 import AppList from './AppList';
+import AddButton from './AddButton';
+import Empty from './Empty';
 import useApps from './useApps';
-import { emptyPng } from './assets';
-
-const docUrl = 'https://gravitational.com/teleport/docs/';
 
 export default function Container() {
   const state = useApps();
@@ -44,23 +34,14 @@ export default function Container() {
 
 export function Apps({ attempt, apps }: ReturnType<typeof useApps>) {
   const isEmpty = attempt.status === 'success' && apps.length === 0;
-  const hasApps = attempt.status === 'success' && !isEmpty;
+  const hasApps = attempt.status === 'success' && apps.length > 0;
+  const isAdmin = false;
 
   return (
     <FeatureBox>
-      <FeatureHeader alignItems="center">
+      <FeatureHeader alignItems="center" justifyContent="space-between">
         <FeatureHeaderTitle>Applications</FeatureHeaderTitle>
-        {hasApps && (
-          <ButtonSecondary
-            as="a"
-            href={docUrl}
-            target="_blank"
-            ml="auto"
-            width="240px"
-          >
-            View Documentation
-          </ButtonSecondary>
-        )}
+        <AddButton isAdmin={isAdmin} />
       </FeatureHeader>
       {attempt.status === 'processing' && (
         <Box textAlign="center" m={10}>
@@ -68,33 +49,8 @@ export function Apps({ attempt, apps }: ReturnType<typeof useApps>) {
         </Box>
       )}
       {attempt.status === 'failed' && <Danger>{attempt.statusText} </Danger>}
-      {isEmpty && <Empty />}
       {hasApps && <AppList apps={apps} />}
+      {isEmpty && <Empty isAdmin={isAdmin} onCreate={() => null} />}
     </FeatureBox>
   );
 }
-
-const Empty = () => {
-  return (
-    <Card maxWidth="700px" my={4} mx="auto" p={5} as={Flex} alignItems="center">
-      <Box width={4 / 10}>
-        <Image src={emptyPng} width={'100%'} />
-      </Box>
-      <Box width={6 / 10} ml={5}>
-        <Box mb={6}>
-          <Text typography="h6" mb={3} caps>
-            Secure Your First Application
-          </Text>
-          <Text typography="subtitle1" mb={3}>
-            Teleport Application Access provides secure access to internal
-            applications without the need for a VPN, but with the full control
-            and audibility of Teleport.
-          </Text>
-        </Box>
-        <ButtonPrimary as="a" href={docUrl} target="_blank" width="240px">
-          View Quickstart Guide
-        </ButtonPrimary>
-      </Box>
-    </Card>
-  );
-};
