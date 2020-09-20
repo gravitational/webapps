@@ -28,6 +28,7 @@ import Trust from './TrustedClusters';
 import Users from './Users';
 import Roles from './Roles';
 import Recordings from './Recordings';
+import AuthConnectors from './AuthConnectors';
 
 export class FeatureClusters {
   getTopNavTitle() {
@@ -48,6 +49,36 @@ export class FeatureClusters {
       exact: false,
       getLink() {
         return cfg.routes.clusters;
+      },
+    });
+
+    ctx.features.push(this);
+  }
+}
+
+export class FeatureAuthConnectors {
+  getTopNavTitle() {
+    return 'Team';
+  }
+
+  route = {
+    title: 'Auth. Connectors',
+    path: cfg.routes.sso,
+    exact: false,
+    component: AuthConnectors,
+  };
+
+  register(ctx: Ctx) {
+    if (!ctx.isAuthConnectorEnabled()) {
+      return;
+    }
+
+    ctx.storeNav.addSideItem({
+      title: 'Auth. Connectors',
+      Icon: Icons.Lock,
+      exact: false,
+      getLink() {
+        return cfg.routes.sso;
       },
     });
 

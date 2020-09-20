@@ -17,44 +17,64 @@
 import React from 'react';
 import styled from 'styled-components';
 import { Text, Flex } from 'design';
+import { MenuIcon, MenuItem } from 'shared/components/MenuAction';
 import { App } from 'teleport/services/apps';
 import { NewTab } from 'design/Icon';
 
 export default function AppList({ apps = [] }: Props) {
-  const $apps = apps.map(app => <Item app={app} key={app.id} />);
+  const $apps = apps.map(app => <Item mb={4} mr={5} app={app} key={app.id} />);
   return <Flex flexWrap="wrap">{$apps}</Flex>;
 }
 
-function Item({ app }) {
+function Item({ app, ...rest }) {
   return (
     <StyledAppListItem
-      as="a"
-      href={app.addr}
-      target="_blank"
       width="240px"
+      height="240px"
       borderRadius="3"
       flexDirection="column"
+      alignItems="center"
+      justifyContent="center"
       bg="primary.light"
-      px="4"
-      py="5"
-      mr="5"
-      mb="5"
+      {...rest}
     >
+      <Flex width="100%" justifyContent="center">
+        <MenuIcon buttonIconProps={menuActionProps}>
+          <MenuItem onClick={() => null}>Open...</MenuItem>
+        </MenuIcon>
+      </Flex>
       <Flex
+        flex="1"
+        px="5"
         alignItems="center"
         justifyContent="center"
         flexDirection="column"
+        as="a"
+        target="_blank"
         color="text.primary"
+        href={app.addr}
+        width="200px"
+        style={{
+          textDecoration: 'none',
+        }}
       >
         <NewTab fontSize="62px" mb="3" />
-        <Text bold mb="2" style={{ textTransform: 'capitalize' }}>
+        <Text style={textStyle} bold mb="2">
           {app.name}
         </Text>
-        <Text typography="body2">Cluster: {app.clusterId}</Text>
+        <Text style={textStyle} typography="body2">
+          {app.clusterId}
+        </Text>
       </Flex>
     </StyledAppListItem>
   );
 }
+
+const textStyle = {
+  textAlign: 'center',
+  width: '100%',
+  textTransform: 'capitalize',
+};
 
 const StyledAppListItem = styled(Flex)`
   position: relative;
@@ -69,4 +89,12 @@ const StyledAppListItem = styled(Flex)`
 
 type Props = {
   apps: App[];
+};
+
+const menuActionProps = {
+  style: {
+    right: '10px',
+    position: 'absolute',
+    top: '10px',
+  },
 };
