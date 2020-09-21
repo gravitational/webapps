@@ -45,15 +45,15 @@ function Item({ app, ...rest }) {
       </Flex>
       <Flex
         flex="1"
-        px="5"
         alignItems="center"
         justifyContent="center"
         flexDirection="column"
         as="a"
+        tabIndex={-1}
         target="_blank"
         color="text.primary"
         href={app.addr}
-        width="200px"
+        width="220px"
         style={{
           textDecoration: 'none',
         }}

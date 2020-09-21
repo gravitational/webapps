@@ -17,28 +17,35 @@ limitations under the License.
 import React from 'react';
 import styled from 'styled-components';
 import { NavLink, Link } from 'react-router-dom';
-import { Flex, Image, SideNav, SideNavItem } from 'design';
-import SideNavItemIcon from 'design/SideNav/SideNavItemIcon';
-import useTeleport from 'teleport/useTeleport';
-import useStickyClusterId from 'teleport/useStickyClusterId';
+import { Flex, Image, SideNav } from 'design';
+import SideNavItemIcon from './SideNavItemIcon';
+import SideNavItem from './SideNavItem';
+import SideNavItemGroup from './SideNavItemGroup';
 import logoSvg from './logo';
 import cfg from 'teleport/config';
+import useSideNav from './useSideNav';
 
 export default function Nav() {
-  const ctx = useTeleport();
-  const { clusterId } = useStickyClusterId();
-  const items = ctx.storeNav.getSideItems();
-  const $items = items.map((item, index) => (
-    <SideNavItem
-      key={index}
-      as={NavLink}
-      exact={item.exact}
-      to={item.getLink(clusterId)}
-    >
-      <SideNavItemIcon as={item.Icon} />
-      {item.title}
-    </SideNavItem>
-  ));
+  const { items, path } = useSideNav();
+  const $items = items.map((item, index) => {
+    const isChild = item.items.length > 0;
+    if (isChild) {
+      return <SideNavItemGroup path={path} item={item} key={index} />;
+    }
+
+    return (
+      <SideNavItem
+        key={index}
+        $nested={false}
+        as={NavLink}
+        exact={item.exact}
+        to={item.route}
+      >
+        <SideNavItemIcon $nested={false} as={item.Icon} />
+        {item.title}
+      </SideNavItem>
+    );
+  });
 
   return (
     <SideNav>

@@ -16,6 +16,8 @@ limitations under the License.
 
 import React from 'react';
 
+export type NavGroup = 'team' | 'activity' | 'clusters';
+
 export interface Context {
   isAccountEnabled(): boolean;
   isAuditEnabled(): boolean;

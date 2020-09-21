@@ -44,7 +44,8 @@ export class FeatureClusters {
 
   register(ctx: Ctx) {
     ctx.storeNav.addSideItem({
-      title: 'Clusters',
+      title: 'All Clusters',
+      group: 'clusters',
       Icon: Icons.CardViewSmall,
       exact: false,
       getLink() {
@@ -74,6 +75,7 @@ export class FeatureAuthConnectors {
     }
 
     ctx.storeNav.addSideItem({
+      group: 'team',
       title: 'Auth. Connectors',
       Icon: Icons.Lock,
       exact: false,
@@ -129,6 +131,7 @@ export class FeatureAudit {
     }
 
     ctx.storeNav.addSideItem({
+      group: 'activity',
       title: 'Audit Log',
       Icon: Icons.ListBullet,
       getLink(clusterId: string) {
@@ -212,6 +215,7 @@ export class FeatureRecordings {
     }
 
     ctx.storeNav.addSideItem({
+      group: 'activity',
       title: 'Session Recordings',
       Icon: Icons.CirclePlay,
       exact: true,
@@ -238,6 +242,7 @@ export class FeatureSessions {
 
   register(ctx: Ctx) {
     ctx.storeNav.addSideItem({
+      group: 'activity',
       title: 'Active Sessions',
       Icon: Icons.Cli,
       exact: true,
@@ -269,6 +274,7 @@ export class FeatureRoles {
 
     ctx.storeNav.addSideItem({
       title: 'Roles',
+      group: 'team',
       Icon: Icons.ClipboardUser,
       exact: true,
       getLink() {
@@ -295,6 +301,7 @@ export class FeatureUsers {
   register(ctx: Ctx) {
     ctx.storeNav.addSideItem({
       title: 'Users',
+      group: 'team',
       Icon: Icons.Users,
       exact: true,
       getLink() {
@@ -338,7 +345,7 @@ export class FeatureApps {
 
 export class FeatureTrust {
   getTopNavTitle() {
-    return 'Trusted';
+    return 'Trust';
   }
 
   route = {
@@ -353,6 +360,7 @@ export class FeatureTrust {
     }
 
     ctx.storeNav.addSideItem({
+      group: 'clusters',
       title: 'Trust',
       Icon: Icons.LanAlt,
       getLink() {

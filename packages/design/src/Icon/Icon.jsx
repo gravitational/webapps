@@ -53,6 +53,7 @@ export const ArrowsVertical = makeFontIcon(
   'icon-chevrons-expand-vertical'
 );
 export const ArrowUp = makeFontIcon('ArrowUp', 'icon-chevron-up');
+export const AlarmRing = makeFontIcon('AlarmRing', 'icon-alarm-ringing');
 export const BitBucket = makeFontIcon('Bitbucket', 'icon-bitbucket');
 export const Bubble = makeFontIcon('Bubble', 'icon-bubble');
 export const Camera = makeFontIcon('Camera', 'icon-camera');
