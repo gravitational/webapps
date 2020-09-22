@@ -20,7 +20,7 @@ module.exports = {
   moduleNameMapper: {
     // mock all imports to asset files
     '\\.(css|scss|stylesheet)$': path.join(__dirname, 'mockStyles.js'),
-    '\\.(png|svg)$': path.join(__dirname, 'mockFiles.js'),
+    '\\.(png|svg|yaml)$': path.join(__dirname, 'mockFiles.js'),
     // Below aliases allow easier migration of gravitational code to this monorepo.
     // They also give shorter names to gravitational packages.
     jQuery: 'jquery',

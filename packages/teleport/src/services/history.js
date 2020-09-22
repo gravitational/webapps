@@ -88,7 +88,7 @@ const history = {
   },
 
   getLocation() {
-    this.original().location;
+    return this.original().location;
   },
 
   _canPush(route) {

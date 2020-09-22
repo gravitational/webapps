@@ -31,8 +31,6 @@ const cfg = {
 
   canJoinSessions: true,
 
-  clusterName: 'localhost',
-
   proxyCluster: 'localhost',
 
   loc: {
@@ -42,20 +40,20 @@ const cfg = {
 
   routes: {
     app: '/web',
-    applications: '/web/iap',
-    people: '/web/people',
+    applications: '/web/cluster/:clusterId/apps',
     support: '/web/support',
     settings: '/web/settings',
-    account: '/web/settings/account',
-    authConnectors: '/web/settings/auth',
-    roles: '/web/people/roles',
-    trustedClusters: '/web/settings/trusted',
-    cluster: '/web/cluster/:clusterId',
-    clusterAccount: '/web/cluster/:clusterId/account',
-    clusterAudit: '/web/cluster/:clusterId/audit',
-    clusterNodes: '/web/cluster/:clusterId/nodes',
-    clusterSessions: '/web/cluster/:clusterId/sessions',
-    clusterUsers: '/web/people/users',
+    account: '/web/account',
+    roles: '/web/roles',
+    sso: '/web/sso',
+    cluster: '/web/cluster/:clusterId/',
+    clusters: '/web/clusters',
+    trustedClusters: '/web/trust',
+    audit: '/web/cluster/:clusterId/audit',
+    nodes: '/web/cluster/:clusterId/nodes',
+    sessions: '/web/cluster/:clusterId/sessions',
+    recordings: '/web/cluster/:clusterId/recordings',
+    users: '/web/users',
     console: '/web/cluster/:clusterId/console',
     consoleNodes: '/web/cluster/:clusterId/console/nodes',
     consoleConnect: '/web/cluster/:clusterId/console/node/:serverId/:login',
@@ -77,7 +75,7 @@ const cfg = {
 
   api: {
     // TODO backend: define this endpoint
-    applicationsPath: '/v1/webapi/apps',
+    applicationsPath: '/v1/webapi/sites/:clusterId/apps',
     clustersPath: '/v1/webapi/sites',
     clusterEventsPath: `/v1/webapi/sites/:clusterId/events/search?from=:start?&to=:end?&limit=:limit?`,
     scp:
@@ -109,8 +107,7 @@ const cfg = {
     removeResourcePath: '/v1/enterprise/sites/:clusterId/resources/:kind/:id',
   },
 
-  getClusterEventsUrl(params: UrlClusterEventsParams) {
-    const clusterId = cfg.clusterName;
+  getClusterEventsUrl(clusterId: string, params: UrlClusterEventsParams) {
     return generatePath(cfg.api.clusterEventsPath, {
       clusterId,
       ...params,
@@ -133,49 +130,38 @@ const cfg = {
     return cfg.baseUrl + generatePath(providerUrl, { redirect, providerName });
   },
 
-  getDefaultRoute() {
-    const clusterId = cfg.proxyCluster;
-    return generatePath(cfg.routes.cluster, { clusterId });
+  getAuditRoute(clusterId: string) {
+    return generatePath(cfg.routes.audit, { clusterId });
   },
 
-  getAuditRoute() {
-    const clusterId = cfg.clusterName;
-    return generatePath(cfg.routes.clusterAudit, { clusterId });
-  },
-
-  getDashboardRoute() {
-    return cfg.routes.app;
-  },
-
-  getNodesRoute() {
-    const clusterId = cfg.clusterName;
-    return generatePath(cfg.routes.clusterNodes, { clusterId });
-  },
-
-  getPeopleRoute() {
-    const clusterId = cfg.clusterName;
-    return generatePath(cfg.routes.people, { clusterId });
+  getNodesRoute(clusterId: string) {
+    return generatePath(cfg.routes.nodes, { clusterId });
   },
 
   getUsersRoute() {
-    const clusterId = cfg.clusterName;
-    return generatePath(cfg.routes.clusterUsers, { clusterId });
+    const clusterId = cfg.proxyCluster;
+    return generatePath(cfg.routes.users, { clusterId });
   },
 
-  getSessionsRoute() {
-    const clusterId = cfg.clusterName;
-    return generatePath(cfg.routes.clusterSessions, { clusterId });
+  getAppsRoute(clusterId: string) {
+    return generatePath(cfg.routes.applications, { clusterId });
+  },
+
+  getSessionsRoute(clusterId: string) {
+    return generatePath(cfg.routes.sessions, { clusterId });
+  },
+
+  getRecordingsRoute(clusterId: string) {
+    return generatePath(cfg.routes.recordings, { clusterId });
   },
 
   getConsoleNodesRoute(clusterId: string) {
-    clusterId = clusterId || cfg.clusterName;
     return generatePath(cfg.routes.consoleNodes, {
       clusterId,
     });
   },
 
   getSshConnectRoute({ clusterId, login, serverId }: UrlParams) {
-    clusterId = clusterId || cfg.clusterName;
     return generatePath(cfg.routes.consoleConnect, {
       clusterId,
       serverId,
@@ -184,7 +170,6 @@ const cfg = {
   },
 
   getSshSessionRoute({ clusterId, sid }: UrlParams) {
-    clusterId = clusterId || cfg.clusterName;
     return generatePath(cfg.routes.consoleSession, { clusterId, sid });
   },
 
@@ -193,32 +178,27 @@ const cfg = {
   },
 
   getClusterRoute(clusterId: string) {
-    clusterId = clusterId || cfg.clusterName;
     return generatePath(cfg.routes.cluster, { clusterId });
   },
 
   getConsoleRoute(clusterId: string) {
-    clusterId = clusterId || cfg.clusterName;
     return generatePath(cfg.routes.console, { clusterId });
   },
 
   getPlayerRoute({ clusterId, sid }: UrlParams) {
-    clusterId = clusterId || cfg.clusterName;
     return generatePath(cfg.routes.player, { clusterId, sid });
   },
 
   getSessionAuditPlayerRoute({ clusterId, sid }: UrlParams) {
-    clusterId = clusterId || cfg.clusterName;
     return generatePath(cfg.routes.sessionAuditPlayer, { clusterId, sid });
   },
 
   getSessionAuditCmdsRoute({ clusterId, sid }: UrlParams) {
-    clusterId = clusterId || cfg.clusterName;
     return generatePath(cfg.routes.sessionAuditCmds, { clusterId, sid });
   },
 
-  getUserContextUrl(clusterId?: string) {
-    clusterId = clusterId || cfg.clusterName;
+  getUserContextUrl() {
+    const clusterId = cfg.proxyCluster;
     return generatePath(cfg.api.userContextPath, { clusterId });
   },
 
@@ -236,13 +216,15 @@ const cfg = {
   },
 
   getTerminalSessionUrl({ clusterId, sid }: UrlParams) {
-    clusterId = clusterId || cfg.clusterName;
     return generatePath(cfg.api.terminalSessionPath, { clusterId, sid });
   },
 
   getClusterNodesUrl(clusterId: string) {
-    clusterId = clusterId || cfg.clusterName;
     return generatePath(cfg.api.nodesPath, { clusterId });
+  },
+
+  getApplicationsUrl(clusterId: string) {
+    return generatePath(cfg.api.applicationsPath, { clusterId });
   },
 
   getU2fCreateUserChallengeUrl(tokenId: string) {
@@ -256,27 +238,23 @@ const cfg = {
   },
 
   getResourcesUrl(kind?: Resource['kind']) {
-    const clusterId = cfg.clusterName;
+    const clusterId = cfg.proxyCluster;
     return generatePath(cfg.api.resourcePath, { clusterId, kind });
   },
 
   getRemoveResourceUrl(kind: Resource['kind'], id: string) {
-    const clusterId = cfg.clusterName;
+    const clusterId = cfg.proxyCluster;
     return generatePath(cfg.api.removeResourcePath, { clusterId, kind, id });
   },
 
-  setClusterId(clusterId: string) {
-    cfg.clusterName = clusterId || cfg.proxyCluster;
-  },
-
-  init(newConfig = {}) {
-    merge(this, newConfig);
+  init(backendConfig = {}) {
+    merge(this, backendConfig);
   },
 };
 
 export interface UrlParams {
+  clusterId: string;
   sid?: string;
-  clusterId?: string;
   login?: string;
   serverId?: string;
 }
@@ -293,7 +271,7 @@ export interface UrlSshParams {
   login?: string;
   serverId?: string;
   sid?: string;
-  clusterId?: string;
+  clusterId: string;
 }
 
 export interface UrlClusterEventsParams {

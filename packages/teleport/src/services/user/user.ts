@@ -22,8 +22,8 @@ import makeUser, { makeUsers } from './makeUser';
 import { User, ResetPasswordType } from './types';
 
 const service = {
-  fetchUserContext(clusterId?: string) {
-    return api.get(cfg.getUserContextUrl(clusterId)).then(makeUserContext);
+  fetchUserContext() {
+    return api.get(cfg.getUserContextUrl()).then(makeUserContext);
   },
 
   fetchUsers() {

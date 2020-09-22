@@ -42,7 +42,7 @@ export default function FieldInputSsh({
     }
   }
 
-  const labelText = hasError ? 'Invalid' : 'Quick Launch';
+  const labelText = 'SSH:';
 
   return (
     <Box {...boxProps}>
@@ -58,6 +58,7 @@ export default function FieldInputSsh({
         width={width}
         onKeyPress={onKeyPress}
         {...inputProps}
+        hasError={hasError}
       />
     </Box>
   );
@@ -72,23 +73,16 @@ const check = value => {
 
 const StyledInput = styled(Input)(
   ({ theme }) => `
-  background: ${theme.colors.primary.light};
-  border: 1px solid ${theme.colors.primary.dark};
-  border-radius: 4px;
-  border-color: rgba(255, 255, 255, 0.24);
-
-  &:hover, &:focus, &:active {
-    color: ${theme.colors.text.primary};
-    background: ${theme.colors.primary.lighter};
-    box-shadow: inset 0 2px 4px rgba(0, 0, 0, .24);
+  transition: all .2s;
+  box-shadow: none;
+  ::placeholder {
+    opacity: 1;
+    color: ${theme.colors.text.placeholder};
+    font-size: ${theme.fontSizes[1]}px;
   }
 
-  font-size: ${theme.fontSizes[2]}px;
-  font-family: ${theme.font};
-
-  &::placeholder {
-    color: ${theme.colors.text.placeholder};
-    font-size: ${theme.fontSizes[2]}px;
+  &:hover {
+    background: ${theme.colors.primary.lighter};
   }
 `
 );

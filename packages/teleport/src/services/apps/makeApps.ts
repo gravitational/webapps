@@ -18,22 +18,12 @@ import { at } from 'lodash';
 import { App } from './types';
 
 export default function makeApps(json): App {
-  const [
-    id,
-    name,
-    clusterId,
-    hostname,
-    labels,
-    publicAddr,
-    internalAddr,
-  ] = at(json, [
+  const [id, name, clusterId, hostname, publicAddr] = at(json, [
     'id',
     'name',
     'clusterId',
     'hostname',
-    'labels',
     'publicAddr',
-    'internalAddr',
   ]);
 
   return {
@@ -41,8 +31,6 @@ export default function makeApps(json): App {
     name,
     clusterId,
     hostname,
-    labels,
     publicAddr,
-    internalAddr,
   };
 }
