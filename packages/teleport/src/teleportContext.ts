@@ -14,9 +14,8 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
+import React from 'react';
 import { StoreNav, StoreUserContext } from './stores';
-import { Activator } from 'shared/libs/featureBase';
-import cfg from 'teleport/config';
 import * as teleport from './types';
 import auditService from './services/audit';
 import nodeService from './services/nodes';
@@ -26,7 +25,7 @@ import resourceService from './services/resources';
 import userService from './services/user';
 import appService from './services/apps';
 
-export default class Context implements teleport.Context {
+class Context implements teleport.Context {
   // stores
   storeNav = new StoreNav();
   storeUser = new StoreUserContext();
@@ -43,16 +42,9 @@ export default class Context implements teleport.Context {
   userService = userService;
   appService = appService;
 
-  constructor(params?: { clusterId?: string; features?: teleport.Feature[] }) {
-    const { clusterId, features = [] } = params || {};
-    this.features = features;
-    cfg.setClusterId(clusterId);
-  }
-
   init() {
-    return this.storeUser.fetchUserContext().then(() => {
-      const activator = new Activator<Context>(this.features);
-      activator.onload(this);
+    return userService.fetchUserContext().then(user => {
+      this.storeUser.setState(user);
     });
   }
 
@@ -88,3 +80,9 @@ export default class Context implements teleport.Context {
     return this.storeUser.getAppAccess().list;
   }
 }
+
+const ReactContext = React.createContext<Context>(null);
+const ReactContextProvider = ReactContext.Provider;
+
+export default Context;
+export { Context, ReactContextProvider, ReactContext };

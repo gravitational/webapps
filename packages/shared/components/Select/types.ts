@@ -29,6 +29,9 @@ export type Props = {
   placeholder?: string;
   options: Option[];
   width?: string | number;
+  menuPlacement?: string;
+  components?: any;
+  menuPosition?: 'fixed' | 'absolute';
 };
 
 export type AsyncProps = Omit<Props, 'options'> & {
