@@ -20,7 +20,7 @@ import * as Teleport from 'teleport/teleportContext';
 import makeAcl from 'teleport/services/user/makeAcl';
 
 export default {
-  title: 'TeleportDashboard/Users',
+  title: 'Teleport/Users',
 };
 
 export const Loaded = () => {

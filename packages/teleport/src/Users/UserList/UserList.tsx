@@ -15,6 +15,7 @@
  */
 
 import React, { useState } from 'react';
+import styled from 'styled-components';
 import { sortBy } from 'lodash';
 import { Flex, Label } from 'design';
 import {
@@ -76,7 +77,7 @@ export default function UserList({
       <Flex mb={4}>
         <InputSearch height="30px" mr="3" onChange={onSearchChange} />
       </Flex>
-      <PagedTable {...tableProps}>
+      <StyledTable {...tableProps}>
         <Column
           columnKey="name"
           cell={<TextCell />}
@@ -111,7 +112,7 @@ export default function UserList({
             />
           }
         />
-      </PagedTable>
+      </StyledTable>
     </>
   );
 }
@@ -173,3 +174,9 @@ type Props = {
   onDelete(user: User): void;
   onReset(user: User): void;
 };
+
+const StyledTable = styled(PagedTable)`
+  & > tbody > tr > td {
+    vertical-align: baseline;
+  }
+`;

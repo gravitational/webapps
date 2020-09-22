@@ -14,7 +14,11 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import { FeatureBox } from 'teleport/components/Layout';
+import {
+  FeatureBox,
+  FeatureHeader,
+  FeatureHeaderTitle,
+} from 'teleport/components/Layout';
 import React from 'react';
 import { Flex, Indicator } from 'design';
 import { Danger } from 'design/Alert';
@@ -25,13 +29,22 @@ import useClusters from './useClusters';
 export default function Container() {
   const ctx = useTeleport();
   const state = useClusters(ctx);
-  return <LeafClusters {...state} />;
+  return <Clusters {...state} />;
 }
 
-export function LeafClusters(props: ReturnType<typeof useClusters>) {
-  const { clusters, searchValue, setSearchValue, initAttempt } = props;
+export function Clusters(props: ReturnType<typeof useClusters>) {
+  const {
+    clusters,
+    enabledFeatures,
+    searchValue,
+    setSearchValue,
+    initAttempt,
+  } = props;
   return (
-    <FeatureBox pt="4">
+    <FeatureBox>
+      <FeatureHeader alignItems="center">
+        <FeatureHeaderTitle>All Clusters</FeatureHeaderTitle>
+      </FeatureHeader>
       {initAttempt.status === 'processing' && (
         <Flex justifyContent="center">
           <Indicator />
@@ -45,6 +58,12 @@ export function LeafClusters(props: ReturnType<typeof useClusters>) {
           clusters={clusters}
           search={searchValue}
           onSearchChange={setSearchValue}
+          menuFlags={{
+            showNodes: enabledFeatures.nodes,
+            showAudit: enabledFeatures.audit,
+            showRecordings: enabledFeatures.recordings,
+            showApps: enabledFeatures.apps,
+          }}
         />
       )}
     </FeatureBox>

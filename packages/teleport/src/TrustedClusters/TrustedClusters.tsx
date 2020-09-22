@@ -14,6 +14,11 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
+import {
+  FeatureBox,
+  FeatureHeader,
+  FeatureHeaderTitle,
+} from 'teleport/components/Layout';
 import React from 'react';
 import { Danger } from 'design/Alert';
 import { Indicator, Text, Box, Flex, ButtonPrimary } from 'design';
@@ -25,7 +30,6 @@ import DeleteTrust from './DeleteTrust';
 import templates from './templates';
 import useResources from 'teleport/components/useResources';
 import useTrustedClusters from './useTrustedClusters';
-
 import { emptyPng } from './assets';
 
 export default function TrustedClusters() {
@@ -56,18 +60,20 @@ export default function TrustedClusters() {
   }
 
   return (
-    <Flex>
-      {!isEmpty && (
-        <ButtonPrimary
-          disabled={!tclusters.canCreate}
-          ml="auto"
-          width="240px"
-          onClick={() => resources.create('trusted_cluster')}
-        >
-          Connect to Root Cluster
-        </ButtonPrimary>
-      )}
-
+    <FeatureBox>
+      <FeatureHeader alignItems="center">
+        <FeatureHeaderTitle>Trusted Clusters</FeatureHeaderTitle>
+        {!isEmpty && (
+          <ButtonPrimary
+            disabled={!tclusters.canCreate}
+            ml="auto"
+            width="240px"
+            onClick={() => resources.create('trusted_cluster')}
+          >
+            Connect to Root Cluster
+          </ButtonPrimary>
+        )}
+      </FeatureHeader>
       {tclusters.isFailed && <Danger>{tclusters.message} </Danger>}
       {isEmpty && (
         <Empty
@@ -92,7 +98,6 @@ export default function TrustedClusters() {
           />
         </Flex>
       )}
-
       {(resources.status === 'creating' || resources.status === 'editing') && (
         <ResourceEditor
           onSave={save}
@@ -110,7 +115,7 @@ export default function TrustedClusters() {
           onDelete={remove}
         />
       )}
-    </Flex>
+    </FeatureBox>
   );
 }
 
@@ -144,7 +149,7 @@ const Empty = (props: EmptyProps) => {
   return (
     <Card
       maxWidth="700px"
-      my={10}
+      mt={4}
       mx="auto"
       py={4}
       as={Flex}

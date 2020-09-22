@@ -73,8 +73,9 @@ export default function RecordList(props: Props) {
   return (
     <PagedTable {...tableProps}>
       <Table.Column
-        header={<Table.Cell>Session ID</Table.Cell>}
-        cell={<SidCell />}
+        columnKey="hostname"
+        header={<Table.Cell>Node</Table.Cell>}
+        cell={<Table.TextCell />}
       />
       <Table.Column
         columnKey="users"
@@ -82,9 +83,15 @@ export default function RecordList(props: Props) {
         cell={<Table.TextCell style={{ wordBreak: 'break-word' }} />}
       />
       <Table.Column
-        columnKey="hostname"
-        header={<Table.Cell>Node</Table.Cell>}
-        cell={<Table.TextCell />}
+        columnKey="duration"
+        header={
+          <Table.SortHeaderCell
+            sortDir={colSortDirs.duration}
+            onSortChange={onSortChange}
+            title="Duration"
+          />
+        }
+        cell={<DurationCell />}
       />
       <Table.Column
         columnKey="created"
@@ -98,15 +105,8 @@ export default function RecordList(props: Props) {
         cell={<CreatedCell />}
       />
       <Table.Column
-        columnKey="duration"
-        header={
-          <Table.SortHeaderCell
-            sortDir={colSortDirs.duration}
-            onSortChange={onSortChange}
-            title="Duration"
-          />
-        }
-        cell={<DurationCell />}
+        header={<Table.Cell>Session ID</Table.Cell>}
+        cell={<SidCell />}
       />
       <Table.Column header={<Table.Cell />} cell={<PlayCell />} />
     </PagedTable>
@@ -163,7 +163,14 @@ const PlayCell = props => {
   const url = cfg.getSessionAuditPlayerRoute(row);
   return (
     <Table.Cell align="right">
-      <ButtonBorder as="a" href={url} width="80px" target="_blank" size="small">
+      <ButtonBorder
+        kind="primary"
+        as="a"
+        href={url}
+        width="80px"
+        target="_blank"
+        size="small"
+      >
         Play
       </ButtonBorder>
     </Table.Cell>

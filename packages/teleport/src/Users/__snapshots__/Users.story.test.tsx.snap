@@ -47,7 +47,7 @@ exports[`success state 1`] = `
   color: rgba(255,255,255,0.3);
 }
 
-.c14 {
+.c15 {
   line-height: 1.5;
   margin: 0;
   display: inline-flex;
@@ -76,22 +76,22 @@ exports[`success state 1`] = `
   height: 24px;
 }
 
-.c14:active {
+.c15:active {
   opacity: 0.56;
 }
 
-.c14:hover,
-.c14:focus {
+.c15:hover,
+.c15:focus {
   background: #2C3A73;
   border: 1px solid rgba(255,255,255,0.1);
   opacity: 1;
 }
 
-.c14:active {
+.c15:active {
   opacity: 0.24;
 }
 
-.c14:disabled {
+.c15:disabled {
   background: rgba(255,255,255,0.12);
   color: rgba(255,255,255,0.3);
 }
@@ -103,13 +103,13 @@ exports[`success state 1`] = `
   font-size: 16px;
 }
 
-.c12 {
+.c13 {
   display: inline-block;
   transition: color .3s;
   color: #FFFFFF;
 }
 
-.c15 {
+.c16 {
   display: inline-block;
   transition: color .3s;
   margin-left: 8px;
@@ -118,7 +118,7 @@ exports[`success state 1`] = `
   font-size: 14px;
 }
 
-.c13 {
+.c14 {
   box-sizing: border-box;
   border-radius: 100px;
   display: inline-flex;
@@ -340,6 +340,10 @@ exports[`success state 1`] = `
   font-size: 12px;
 }
 
+.c12 > tbody > tr > td {
+  vertical-align: baseline;
+}
+
 <div>
   <div
     class="c0"
@@ -419,7 +423,7 @@ exports[`success state 1`] = `
         </div>
       </nav>
       <table
-        class="c11"
+        class="c11 c12"
       >
         <thead>
           <tr>
@@ -427,7 +431,7 @@ exports[`success state 1`] = `
               <a>
                 Username
                 <span
-                  class="c9 c12 icon icon-chevron-up "
+                  class="c9 c13 icon icon-chevron-up "
                   color="light"
                 />
               </a>
@@ -436,7 +440,7 @@ exports[`success state 1`] = `
               <a>
                 Roles
                 <span
-                  class="c9 c12 icon icon-chevrons-expand-vertical "
+                  class="c9 c13 icon icon-chevrons-expand-vertical "
                   color="light"
                 />
               </a>
@@ -451,19 +455,19 @@ exports[`success state 1`] = `
             </td>
             <td>
               <div
-                class="c13"
+                class="c14"
                 kind="secondary"
               >
                 admin
               </div>
               <div
-                class="c13"
+                class="c14"
                 kind="secondary"
               >
                 kaco
               </div>
               <div
-                class="c13"
+                class="c14"
                 kind="secondary"
               >
                 ziuzzow
@@ -473,13 +477,13 @@ exports[`success state 1`] = `
               align="right"
             >
               <button
-                class="c14"
+                class="c15"
                 height="24px"
                 kind="border"
               >
                 OPTIONS
                 <span
-                  class="c9 c15 icon icon-caret-down "
+                  class="c9 c16 icon icon-caret-down "
                   color="text.secondary"
                   font-size="2"
                 />
@@ -492,19 +496,19 @@ exports[`success state 1`] = `
             </td>
             <td>
               <div
-                class="c13"
+                class="c14"
                 kind="secondary"
               >
                 valvapel
               </div>
               <div
-                class="c13"
+                class="c14"
                 kind="secondary"
               >
                 vedkonm
               </div>
               <div
-                class="c13"
+                class="c14"
                 kind="secondary"
               >
                 vuit
@@ -514,13 +518,13 @@ exports[`success state 1`] = `
               align="right"
             >
               <button
-                class="c14"
+                class="c15"
                 height="24px"
                 kind="border"
               >
                 OPTIONS
                 <span
-                  class="c9 c15 icon icon-caret-down "
+                  class="c9 c16 icon icon-caret-down "
                   color="text.secondary"
                   font-size="2"
                 />
@@ -533,31 +537,31 @@ exports[`success state 1`] = `
             </td>
             <td>
               <div
-                class="c13"
+                class="c14"
                 kind="secondary"
               >
                 abc
               </div>
               <div
-                class="c13"
+                class="c14"
                 kind="secondary"
               >
                 anavebikilonim
               </div>
               <div
-                class="c13"
+                class="c14"
                 kind="secondary"
               >
                 dupiwuzocafe
               </div>
               <div
-                class="c13"
+                class="c14"
                 kind="secondary"
               >
                 duzjadj
               </div>
               <div
-                class="c13"
+                class="c14"
                 kind="secondary"
               >
                 ubip
@@ -567,13 +571,13 @@ exports[`success state 1`] = `
               align="right"
             >
               <button
-                class="c14"
+                class="c15"
                 height="24px"
                 kind="border"
               >
                 OPTIONS
                 <span
-                  class="c9 c15 icon icon-caret-down "
+                  class="c9 c16 icon icon-caret-down "
                   color="text.secondary"
                   font-size="2"
                 />
@@ -586,13 +590,13 @@ exports[`success state 1`] = `
             </td>
             <td>
               <div
-                class="c13"
+                class="c14"
                 kind="secondary"
               >
                 admin
               </div>
               <div
-                class="c13"
+                class="c14"
                 kind="secondary"
               >
                 ruhh
@@ -602,13 +606,13 @@ exports[`success state 1`] = `
               align="right"
             >
               <button
-                class="c14"
+                class="c15"
                 height="24px"
                 kind="border"
               >
                 OPTIONS
                 <span
-                  class="c9 c15 icon icon-caret-down "
+                  class="c9 c16 icon icon-caret-down "
                   color="text.secondary"
                   font-size="2"
                 />
@@ -621,7 +625,7 @@ exports[`success state 1`] = `
             </td>
             <td>
               <div
-                class="c13"
+                class="c14"
                 kind="secondary"
               >
                 admin
@@ -631,13 +635,13 @@ exports[`success state 1`] = `
               align="right"
             >
               <button
-                class="c14"
+                class="c15"
                 height="24px"
                 kind="border"
               >
                 OPTIONS
                 <span
-                  class="c9 c15 icon icon-caret-down "
+                  class="c9 c16 icon icon-caret-down "
                   color="text.secondary"
                   font-size="2"
                 />
@@ -650,7 +654,7 @@ exports[`success state 1`] = `
             </td>
             <td>
               <div
-                class="c13"
+                class="c14"
                 kind="secondary"
               >
                 tugu
@@ -660,13 +664,13 @@ exports[`success state 1`] = `
               align="right"
             >
               <button
-                class="c14"
+                class="c15"
                 height="24px"
                 kind="border"
               >
                 OPTIONS
                 <span
-                  class="c9 c15 icon icon-caret-down "
+                  class="c9 c16 icon icon-caret-down "
                   color="text.secondary"
                   font-size="2"
                 />

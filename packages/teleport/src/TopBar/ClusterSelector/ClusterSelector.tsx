@@ -16,8 +16,20 @@ limitations under the License.
 
 import styled from 'styled-components';
 import React from 'react';
-import { Box } from 'design';
+import { Box, Flex, Text } from 'design';
 import { SelectAsync } from 'shared/components/Select';
+import { components } from 'react-select';
+
+const ValueContainer = ({ children, ...props }) => (
+  <components.ValueContainer {...props}>
+    <Flex alignItems="center" color="text.primary">
+      <Text typography="h6" fontWeight="regular" mr="2">
+        CLUSTER:
+      </Text>
+      {children}
+    </Flex>
+  </components.ValueContainer>
+);
 
 export default function ClusterSelector({
   value,
@@ -73,6 +85,7 @@ export default function ClusterSelector({
     <Box {...styles}>
       <StyledSelect>
         <SelectAsync
+          components={{ ValueContainer }}
           noOptionsMessage={getNoOptionsMessage}
           value={selectedOption}
           onChange={onChangeOption}
@@ -80,7 +93,8 @@ export default function ClusterSelector({
           defaultMenuIsOpen={defaultMenuIsOpen}
           hasError={false}
           width={400}
-          maxMenuHeight={300}
+          maxMenuHeight={600}
+          menuPosition="fixed"
           isSearchable
           isSimpleValue={false}
           clearable={false}
@@ -146,10 +160,12 @@ const StyledSelect = styled(Box)(
   }
 
   .react-select__single-value{
-    padding: 0 4px !important;
-    margin: 0 !important;
     color: white;
     font-size: 14px;
+    transform: none;
+    position: absolute;
+    left: 78px;
+    top: 4px;
   }
 
   .react-select__dropdown-indicator{
@@ -206,6 +222,10 @@ const StyledSelect = styled(Box)(
   .react-select__menu {
     border-top-left-radius: 0;
     border-top-right-radius: 0;
+  }
+
+  .react-select__loading-indicator{
+    display: none;
   }
 `
 );

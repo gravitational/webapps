@@ -22,12 +22,14 @@ import SideNavItemIcon from './SideNavItemIcon';
 import SideNavItem from './SideNavItem';
 import * as Icons from 'design/Icon';
 import { Item } from './useSideNav';
+import { lighten } from 'design/theme/utils/colorManipulator';
 
 const SideNavItemGroup: React.FC<{ path: string; item: Item }> = props => {
   const { item, path } = props;
   const [expanded, setExpanded] = React.useState(() =>
     isChildActive(path, item)
   );
+
   const ArrowIcon = expanded ? Icons.ArrowDown : Icons.ArrowRight;
   const style = {
     display: expanded ? 'block' : 'none',
@@ -87,6 +89,7 @@ const fromTheme = ({ theme }) => {
     minHeight: '56px',
     '&:hover': {
       color: theme.colors.text.primary,
+      backgroundColor: lighten(theme.colors.primary.light, 0.03),
     },
   };
 };

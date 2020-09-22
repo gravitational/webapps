@@ -95,6 +95,7 @@ export function UserAddEdit(props: ReturnType<typeof useDialog>) {
               readonly={isNew ? false : true}
             />
             <FieldSelect
+              menuPosition="fixed"
               label="User Roles"
               rule={requiredField('At least one role is required')}
               placeholder="Click to select a role"

@@ -15,12 +15,13 @@ limitations under the License.
 */
 
 import React from 'react';
-import TeleportContext from 'teleport/teleportContext';
-import TeleportContextProvider from 'teleport/teleportContextProvider';
+import TeleportContext, {
+  ReactContextProvider,
+} from 'teleport/teleportContext';
 import AuthConnectors from './AuthConnectors';
 
 export default {
-  title: 'TeleportDashboard/AuthConnectors',
+  title: 'Teleport/AuthConnectors',
 };
 
 export function Loaded() {
@@ -71,8 +72,8 @@ const connectors = [
 
 function render(ctx: TeleportContext) {
   return (
-    <TeleportContextProvider value={ctx}>
+    <ReactContextProvider value={ctx}>
       <AuthConnectors />
-    </TeleportContextProvider>
+    </ReactContextProvider>
   );
 }

@@ -23,5 +23,6 @@ export interface App {
   id: string;
   name: string;
   clusterId: string;
-  addr: string;
+  hostname?: string;
+  publicAddr?: string;
 }

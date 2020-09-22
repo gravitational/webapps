@@ -1,8 +1,8 @@
 import React from 'react';
-import { SideNav } from './SideNav.story';
+import { Story } from './SideNav.story';
 import { render } from 'design/utils/testing';
 
 test('rendering of SideNav', () => {
-  const { container } = render(<SideNav />);
+  const { container } = render(<Story />);
   expect(container.firstChild).toMatchSnapshot();
 });

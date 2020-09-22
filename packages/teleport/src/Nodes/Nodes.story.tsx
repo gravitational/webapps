@@ -20,7 +20,7 @@ import { Nodes } from './Nodes';
 type PropTypes = Parameters<typeof Nodes>[0];
 
 export default {
-  title: 'TeleportCluster/Nodes',
+  title: 'Teleport/Nodes',
 };
 
 export function Loaded() {
@@ -36,22 +36,22 @@ export function Failed() {
 }
 
 function render(attemptOptions: Partial<PropTypes['attempt']>) {
-  const attempt = {
-    isProcessing: false,
-    isSuccess: false,
-    isFailed: false,
-    message: '',
-    ...attemptOptions,
+  const props = {
+    searchValue: '',
+    setSearchValue: () => null,
+    attempt: {
+      message: '',
+      isFailed: false,
+      isSuccess: false,
+      isProcessing: false,
+      ...attemptOptions,
+    },
+    nodes,
+    getNodeLoginOptions: () => [{ login: 'root', url: 'fd' }],
+    startSshSession: () => null,
   };
 
-  return (
-    <Nodes
-      attempt={attempt}
-      startSshSession={() => null}
-      getNodeLoginOptions={() => [{ login: 'root', url: 'fd' }]}
-      nodes={nodes}
-    />
-  );
+  return <Nodes {...props} />;
 }
 
 const nodes = [

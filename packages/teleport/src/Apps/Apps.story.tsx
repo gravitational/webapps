@@ -16,13 +16,15 @@
 
 import React from 'react';
 import DefaultApps from './Apps';
+import { createMemoryHistory } from 'history';
+import { Router } from 'react-router';
 import makeAcl from 'teleport/services/user/makeAcl';
 import TeleportContext, {
   ReactContextProvider,
 } from 'teleport/teleportContext';
 
 export default {
-  title: 'TeleportDashboard/Apps',
+  title: 'Teleport/Apps',
 };
 
 export const Loaded = () => {
@@ -31,7 +33,7 @@ export const Loaded = () => {
 
   ctx.storeUser.setState({ acl });
   ctx.appService.fetchApps = () => Promise.resolve(sample.apps);
-  return render(ctx, <DefaultApps />);
+  return render(ctx);
 };
 
 export const Empty = () => {
@@ -40,7 +42,7 @@ export const Empty = () => {
 
   ctx.storeUser.setState({ acl });
   ctx.appService.fetchApps = () => Promise.resolve([]);
-  return render(ctx, <DefaultApps />);
+  return render(ctx);
 };
 
 export const Processing = () => {
@@ -49,7 +51,7 @@ export const Processing = () => {
 
   ctx.storeUser.setState({ acl });
   ctx.appService.fetchApps = () => new Promise(() => null);
-  return render(ctx, <DefaultApps />);
+  return render(ctx);
 };
 
 export const Failed = () => {
@@ -59,11 +61,22 @@ export const Failed = () => {
   ctx.storeUser.setState({ acl });
   ctx.appService.fetchApps = () =>
     Promise.reject(new Error('some error message'));
-  return render(ctx, <DefaultApps />);
+  return render(ctx);
 };
 
-function render(ctx: TeleportContext, children: JSX.Element) {
-  return <ReactContextProvider value={ctx}>{children}</ReactContextProvider>;
+function render(ctx) {
+  const history = createMemoryHistory({
+    initialEntries: ['/web/cluster/localhost/audit/events'],
+    initialIndex: 0,
+  });
+
+  return (
+    <ReactContextProvider value={ctx}>
+      <Router history={history}>
+        <DefaultApps />
+      </Router>
+    </ReactContextProvider>
+  );
 }
 
 const sample = {

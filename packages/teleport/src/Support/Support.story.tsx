@@ -20,7 +20,7 @@ import * as Teleport from 'teleport/teleportContext';
 import cfg from 'teleport/config';
 
 export default {
-  title: 'TeleportDashboard/Support',
+  title: 'Teleport/Support',
 };
 
 export const SupportOSS = () => {

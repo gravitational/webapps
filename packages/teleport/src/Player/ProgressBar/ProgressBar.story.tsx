@@ -18,7 +18,7 @@ import React from 'react';
 import ProgressBar from './ProgressBar';
 
 export default {
-  title: 'TeleportPlayer/ProgressBar',
+  title: 'Teleport/Player/ProgressBar',
 };
 
 export const Playing = () => {

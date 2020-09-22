@@ -19,13 +19,14 @@ import { Router } from 'react-router';
 import { createMemoryHistory } from 'history';
 import * as Icons from 'design/Icon';
 import { Box } from 'design';
-import { ClusterSideNav } from './SideNav';
+import { SideNav } from './SideNav';
+import { Item } from './useSideNav';
 
 export default {
-  title: 'TeleportCluster/SideNav',
+  title: 'Teleport/SideNav',
 };
 
-export const SideNav = () => {
+export const Story = () => {
   const props = {
     ...defaultProps,
   };
@@ -38,50 +39,100 @@ export const SideNav = () => {
       style={{ position: 'absolute', overflow: 'hidden' }}
     >
       <Router history={inMemoryHistory}>
-        <ClusterSideNav {...props} />
+        <SideNav {...props} />
       </Router>
     </Box>
   );
 };
 
-const clusterOptions = [
-  { value: 'Kawupic', label: 'Kawupic' },
-  { value: 'Ajiromil', label: 'Ajiromil' },
-  { value: 'Wedolarav', label: 'Wedolarav' },
-  { value: 'Urijorun', label: 'Urijorun' },
-  { value: 'Irosutno', label: 'Irosutno' },
-  { value: 'Wecdivrof', label: 'Wecdivrof' },
-  { value: 'Nesbokti', label: 'Nesbokti' },
-  { value: 'Nezfifku', label: 'Nezfifku' },
-  { value: 'Cebfabca', label: 'Cebfabca' },
-  { value: 'Cidbudud', label: 'Cidbudud' },
-  { value: 'Jeakalu', label: 'Jeakalu' },
-  { value: 'Luwcohba', label: 'Luwcohba' },
-];
-
 const defaultProps = {
-  clusterOptions,
-  clusterName: 'Wecdivrof',
+  path: '/web/cluster/one/nodes',
   items: [
     {
-      title: 'Apartment',
-      Icon: Icons.Apartment,
+      items: [],
+      route: '/web/cluster/one/nodes',
+      Icon: Icons.User,
       exact: true,
-      to: '/web/site/apartment',
+      title: 'Servers',
     },
     {
-      title: 'Apple',
-      Icon: Icons.Apple,
+      items: [],
+      route: '/web/cluster/one/apps',
+      Icon: Icons.User,
       exact: true,
-      to: '/web/site/apple',
+      title: 'Applications',
     },
     {
-      title: 'Camera',
-      Icon: Icons.Camera,
-      exact: true,
-      to: '/web/site/camera',
+      title: 'Activity',
+      items: [
+        {
+          items: [],
+          route: '/web/cluster/one/sessions',
+          Icon: Icons.User,
+          exact: true,
+          title: 'Active Sessions',
+        },
+        {
+          items: [],
+          route: '/web/cluster/one/recordings',
+          Icon: Icons.User,
+          exact: true,
+          title: 'Session Recordings',
+        },
+        {
+          items: [],
+          route: '/web/cluster/one/audit',
+          Icon: Icons.User,
+          title: 'Audit Log',
+        },
+      ],
+      route: '',
     },
-  ],
-  version: '6.0.0',
-  homeUrl: '/localhost',
+    {
+      title: 'Team',
+      items: [
+        {
+          items: [],
+          route: '/web/users',
+          Icon: Icons.User,
+          exact: true,
+          title: 'Users',
+        },
+        {
+          items: [],
+          route: '/web/roles',
+          Icon: Icons.User,
+          exact: true,
+          title: 'Roles',
+        },
+        {
+          items: [],
+          route: '/web/sso',
+          Icon: Icons.User,
+          exact: false,
+          title: 'Auth. Connectors',
+        },
+      ],
+      route: '',
+    },
+    {
+      title: 'Clusters',
+      items: [
+        {
+          items: [],
+          route: '/web/clusters',
+          Icon: Icons.User,
+          exact: false,
+          title: 'All Clusters',
+        },
+        {
+          items: [],
+          route: '/web/trust',
+          Icon: Icons.User,
+          title: 'Trust',
+        },
+      ],
+      route: '',
+    },
+  ] as Item[],
 };

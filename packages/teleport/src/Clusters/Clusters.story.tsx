@@ -22,11 +22,11 @@ import * as fixtures from './fixtures';
 import * as Teleport from 'teleport/teleportContext';
 
 export default {
-  title: 'TeleportDashboard',
+  title: 'Teleport/Clusters',
   excludeStories: ['createContext'],
 };
 
-export function DashboardClusters({ value }: { value: Teleport.Context }) {
+export function Story({ value }: { value: Teleport.Context }) {
   const ctx = value || createContext();
   return (
     <Teleport.ReactContextProvider value={ctx}>
@@ -37,7 +37,7 @@ export function DashboardClusters({ value }: { value: Teleport.Context }) {
   );
 }
 
-DashboardClusters.story = {
+Story.story = {
   name: 'Clusters',
 };
 

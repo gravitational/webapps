@@ -18,30 +18,43 @@ import React from 'react';
 import { Router } from 'react-router';
 import { createMemoryHistory } from 'history';
 import * as Icons from 'design/Icon';
-import { DashboardTopNav } from './TopBar';
+import { TopBar } from './TopBar';
 
 export default {
   title: 'Teleport/TopBar',
 };
 
-export function TopBar() {
+export function Story() {
   const props = {
     ...defaultProps,
   };
   return (
     <Router history={createMemoryHistory()}>
-      <DashboardTopNav height="40px" {...props} />
+      <TopBar {...props} />
     </Router>
   );
 }
 
 const defaultProps = {
-  username: 'john@example.com',
-  topMenuItems: [
+  clusterId: 'one',
+  hasClusterUrl: true,
+  popupItems: [
     {
-      Icon: Icons.User,
-      to: '/web/page1',
-      title: 'Page1',
+      title: 'Help & Support',
+      exact: true,
+      Icon: Icons.ArrowDown,
+      getLink: () => null,
+    },
+    {
+      title: 'Account Settings',
+      exact: true,
+      Icon: Icons.ArrowDown,
+      getLink: () => null,
     },
   ],
+  username: 'mama',
+  title: 'Applications',
+  changeCluster: () => null,
+  loadClusters: () => null,
+  logout: () => null,
 };

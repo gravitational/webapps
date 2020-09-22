@@ -1,23 +1,23 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`empty state 1`] = `
-.c5 {
+.c6 {
   box-sizing: border-box;
-  width: 40%;
-}
-
-.c7 {
-  box-sizing: border-box;
-  margin-left: 32px;
-  width: 60%;
+  margin-left: 24px;
+  margin-right: 24px;
 }
 
 .c8 {
   box-sizing: border-box;
-  margin-bottom: 40px;
 }
 
-.c11 {
+.c9 {
+  box-sizing: border-box;
+  margin-bottom: 40px;
+  padding-right: 24px;
+}
+
+.c3 {
   line-height: 1.5;
   margin: 0;
   display: inline-flex;
@@ -44,55 +44,101 @@ exports[`empty state 1`] = `
   width: 240px;
 }
 
-.c11:active {
+.c3:active {
   opacity: 0.56;
 }
 
-.c11:hover,
-.c11:focus {
+.c3:hover,
+.c3:focus {
   background: #651FFF;
 }
 
-.c11:active {
+.c3:active {
   background: #354AA4;
 }
 
-.c11:disabled {
+.c3:disabled {
   background: rgba(255,255,255,0.12);
   color: rgba(255,255,255,0.3);
 }
 
-.c4 {
+.c12 {
+  line-height: 1.5;
+  margin: 0;
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  box-sizing: border-box;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-family: inherit;
+  font-weight: 600;
+  outline: none;
+  position: relative;
+  text-align: center;
+  text-decoration: none;
+  text-transform: uppercase;
+  transition: all 0.3s;
+  -webkit-font-smoothing: antialiased;
+  background: #512FC9;
+  color: rgba(255,255,255,0.87);
+  min-height: 32px;
+  font-size: 12px;
+  padding: 0px 24px;
+  margin-bottom: 8px;
+  margin-left: auto;
+  margin-right: auto;
+  width: 240px;
+}
+
+.c12:active {
+  opacity: 0.56;
+}
+
+.c12:hover,
+.c12:focus {
+  background: #651FFF;
+}
+
+.c12:active {
+  background: #354AA4;
+}
+
+.c12:disabled {
+  background: rgba(255,255,255,0.12);
+  color: rgba(255,255,255,0.3);
+}
+
+.c5 {
   box-sizing: border-box;
   max-width: 700px;
   margin-left: auto;
   margin-right: auto;
-  margin-top: 24px;
-  margin-bottom: 24px;
-  padding: 32px;
+  padding-top: 24px;
+  padding-bottom: 24px;
   background-color: #222C59;
   box-shadow: 0 4px 16px rgba(0,0,0,0.24);
   border-radius: 8px;
 }
 
-.c6 {
+.c7 {
   display: block;
   outline: none;
-  width: 100%;
+  width: 180px;
 }
 
-.c9 {
+.c10 {
   overflow: hidden;
   text-overflow: ellipsis;
   font-weight: 600;
   font-size: 14px;
   line-height: 24px;
-  text-transform: uppercase;
   margin: 0px;
   margin-bottom: 16px;
 }
 
-.c10 {
+.c11 {
   overflow: hidden;
   text-overflow: ellipsis;
   font-weight: 400;
@@ -102,14 +148,13 @@ exports[`empty state 1`] = `
   margin-bottom: 16px;
 }
 
-.c3 {
+.c4 {
   box-sizing: border-box;
   max-width: 700px;
   margin-left: auto;
   margin-right: auto;
-  margin-top: 24px;
-  margin-bottom: 24px;
-  padding: 32px;
+  padding-top: 24px;
+  padding-bottom: 24px;
   background-color: #222C59;
   display: flex;
   align-items: center;
@@ -120,6 +165,7 @@ exports[`empty state 1`] = `
   margin-bottom: 24px;
   display: flex;
   align-items: center;
+  justify-content: space-between;
   flex-shrink: 0;
   border-bottom: 1px solid #1C254D;
   height: 56px;
@@ -167,46 +213,53 @@ exports[`empty state 1`] = `
       >
         Applications
       </div>
+      <a
+        class="c3"
+        href="https://gravitational.com/teleport/docs/"
+        kind="primary"
+        target="_blank"
+        width="240px"
+      >
+        View documentation
+      </a>
     </div>
     <div
-      class="c3 sc-AxirZ c4"
+      class="c4 sc-AxirZ c5"
     >
       <div
-        class="c5"
-        width="0.4"
+        class="c6"
       >
         <img
-          class="c6"
+          class="c7"
           src="file_stub"
-          width="100%"
+          width="180px"
         />
       </div>
       <div
-        class="c7"
-        width="0.6"
+        class="c8"
       >
         <div
-          class="c8"
+          class="c9"
         >
-          <div
-            class="c9"
-          >
-            Secure Your First Application
-          </div>
           <div
             class="c10"
           >
-            Teleport Application Access provides secure access to internal applications without the need for a VPN, but with the full control and audibility of Teleport.
+            SECURE YOUR FIRST APPLICATION
+          </div>
+          <div
+            class="c11"
+          >
+            Teleport Application Access provides secure access to internal applications without the need for a VPN but with the audibility and control of Teleport.
           </div>
         </div>
         <a
-          class="c11"
+          class="c12"
           href="https://gravitational.com/teleport/docs/"
           kind="primary"
           target="_blank"
           width="240px"
         >
-          View Quickstart Guide
+          View documentation
         </a>
       </div>
     </div>
@@ -234,12 +287,11 @@ exports[`loaded state 1`] = `
   text-transform: uppercase;
   transition: all 0.3s;
   -webkit-font-smoothing: antialiased;
-  background: #222C59;
+  background: #512FC9;
   color: rgba(255,255,255,0.87);
   min-height: 32px;
   font-size: 12px;
   padding: 0px 24px;
-  margin-left: auto;
   width: 240px;
 }
 
@@ -249,7 +301,11 @@ exports[`loaded state 1`] = `
 
 .c3:hover,
 .c3:focus {
-  background: #2C3A73;
+  background: #651FFF;
+}
+
+.c3:active {
+  background: #354AA4;
 }
 
 .c3:disabled {
@@ -257,14 +313,58 @@ exports[`loaded state 1`] = `
   color: rgba(255,255,255,0.3);
 }
 
-.c7 {
-  display: block;
-  outline: none;
-  margin-bottom: 16px;
-  height: 70px;
+.c9 {
+  display: inline-block;
+  transition: color .3s;
+  color: #FFFFFF;
 }
 
-.c8 {
+.c11 {
+  display: inline-block;
+  transition: color .3s;
+  margin-bottom: 16px;
+  color: #FFFFFF;
+  font-size: 62px;
+}
+
+.c7 {
+  align-items: center;
+  border: none;
+  cursor: pointer;
+  display: flex;
+  outline: none;
+  border-radius: 50%;
+  overflow: visible;
+  justify-content: center;
+  text-align: center;
+  flex: 0 0 auto;
+  background: transparent;
+  color: inherit;
+  transition: all .3s;
+  -webkit-font-smoothing: antialiased;
+  font-size: 16px;
+  height: 32px;
+  width: 32px;
+}
+
+.c7 .c8 {
+  color: inherit;
+}
+
+.c7:disabled {
+  color: rgba(255,255,255,0.3);
+}
+
+.c7:disabled {
+  color: rgba(255,255,255,0.3);
+}
+
+.c7:hover,
+.c7:focus {
+  background: rgba(255,255,255,0.1);
+}
+
+.c12 {
   overflow: hidden;
   text-overflow: ellipsis;
   font-weight: 600;
@@ -272,7 +372,7 @@ exports[`loaded state 1`] = `
   margin-bottom: 8px;
 }
 
-.c9 {
+.c13 {
   overflow: hidden;
   text-overflow: ellipsis;
   font-weight: 400;
@@ -289,7 +389,16 @@ exports[`loaded state 1`] = `
 
 .c6 {
   box-sizing: border-box;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
+
+.c10 {
+  box-sizing: border-box;
+  width: 220px;
   color: rgba(255,255,255,0.87);
+  flex: 1;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -301,6 +410,7 @@ exports[`loaded state 1`] = `
   margin-bottom: 24px;
   display: flex;
   align-items: center;
+  justify-content: space-between;
   flex-shrink: 0;
   border-bottom: 1px solid #1C254D;
   height: 56px;
@@ -338,20 +448,21 @@ exports[`loaded state 1`] = `
 
 .c5 {
   box-sizing: border-box;
+  margin-bottom: 24px;
   margin-right: 32px;
-  padding-left: 24px;
-  padding-right: 24px;
-  padding-top: 32px;
-  padding-bottom: 32px;
+  height: 240px;
   width: 240px;
   background-color: #222C59;
   border-radius: 8px;
   display: flex;
+  align-items: center;
+  justify-content: center;
   flex-direction: column;
   position: relative;
   box-shadow: 0 8px 32px rgba(0,0,0,0.24);
   cursor: pointer;
   transition: box-shadow 0.1s;
+  text-decoration: none;
 }
 
 .c5:hover {
@@ -373,103 +484,160 @@ exports[`loaded state 1`] = `
       <a
         class="c3"
         href="https://gravitational.com/teleport/docs/"
-        kind="secondary"
+        kind="primary"
         target="_blank"
         width="240px"
       >
-        View Documentation
+        View documentation
       </a>
     </div>
     <div
       class="c4"
     >
-      <a
+      <div
         class="c5"
-        href=""
-        target="_blank"
+        height="240px"
         width="240px"
       >
         <div
           class="c6"
-          color="text.primary"
+          width="100%"
         >
-          <img
+          <button
             class="c7"
-            height="70px"
-            src="file_stub"
+            data-testid="button"
+            style="right: 10px; position: absolute; top: 10px;"
+          >
+            <span
+              class="c8 c9 icon icon-ellipsis "
+              color="light"
+            />
+          </button>
+        </div>
+        <a
+          class="c10"
+          color="text.primary"
+          href=""
+          style="text-decoration: none;"
+          tabindex="-1"
+          target="_blank"
+          width="220px"
+        >
+          <span
+            class="c8 c11 icon icon-new-tab "
+            color="light"
+            font-size="62px"
           />
           <div
-            class="c8"
-            style="text-transform: capitalize;"
+            class="c12"
+            style="text-align: center; width: 100%; text-transform: capitalize;"
           >
             jenkins
           </div>
           <div
-            class="c9"
+            class="c13"
+            style="text-align: center; width: 100%; text-transform: capitalize;"
           >
-            Cluster: 
             root-cluster-name
           </div>
-        </div>
-      </a>
-      <a
+        </a>
+      </div>
+      <div
         class="c5"
-        href=""
-        target="_blank"
+        height="240px"
         width="240px"
       >
         <div
           class="c6"
-          color="text.primary"
+          width="100%"
         >
-          <img
+          <button
             class="c7"
-            height="70px"
-            src="file_stub"
+            data-testid="button"
+            style="right: 10px; position: absolute; top: 10px;"
+          >
+            <span
+              class="c8 c9 icon icon-ellipsis "
+              color="light"
+            />
+          </button>
+        </div>
+        <a
+          class="c10"
+          color="text.primary"
+          href=""
+          style="text-decoration: none;"
+          tabindex="-1"
+          target="_blank"
+          width="220px"
+        >
+          <span
+            class="c8 c11 icon icon-new-tab "
+            color="light"
+            font-size="62px"
           />
           <div
-            class="c8"
-            style="text-transform: capitalize;"
+            class="c12"
+            style="text-align: center; width: 100%; text-transform: capitalize;"
           >
             github
           </div>
           <div
-            class="c9"
+            class="c13"
+            style="text-align: center; width: 100%; text-transform: capitalize;"
           >
-            Cluster: 
             leaf-cluster-name
           </div>
-        </div>
-      </a>
-      <a
+        </a>
+      </div>
+      <div
         class="c5"
-        href=""
-        target="_blank"
+        height="240px"
         width="240px"
       >
         <div
           class="c6"
-          color="text.primary"
+          width="100%"
         >
-          <img
+          <button
             class="c7"
-            height="70px"
-            src="file_stub"
+            data-testid="button"
+            style="right: 10px; position: absolute; top: 10px;"
+          >
+            <span
+              class="c8 c9 icon icon-ellipsis "
+              color="light"
+            />
+          </button>
+        </div>
+        <a
+          class="c10"
+          color="text.primary"
+          href=""
+          style="text-decoration: none;"
+          tabindex="-1"
+          target="_blank"
+          width="220px"
+        >
+          <span
+            class="c8 c11 icon icon-new-tab "
+            color="light"
+            font-size="62px"
           />
           <div
-            class="c8"
-            style="text-transform: capitalize;"
+            class="c12"
+            style="text-align: center; width: 100%; text-transform: capitalize;"
           >
             slack
           </div>
           <div
-            class="c9"
+            class="c13"
+            style="text-align: center; width: 100%; text-transform: capitalize;"
           >
-            Cluster: 
             leaf2-cluster-longNameFormat-reallyLong
           </div>
-        </div>
-      </a>
+        </a>
+      </div>
     </div>
   </div>
 </div>

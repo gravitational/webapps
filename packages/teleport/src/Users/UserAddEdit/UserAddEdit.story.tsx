@@ -18,7 +18,7 @@ import React from 'react';
 import { UserAddEdit } from './UserAddEdit';
 
 export default {
-  title: 'TeleportDashboard/Users/UserAddEdit',
+  title: 'Teleport/Users/UserAddEdit',
 };
 
 export const Create = () => {

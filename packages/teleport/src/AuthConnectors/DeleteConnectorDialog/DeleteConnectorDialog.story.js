@@ -18,10 +18,10 @@ import React from 'react';
 import DeleteDialog from './DeleteConnectorDialog';
 
 export default {
-  title: 'TeleportDashboard/AuthConnectors',
+  title: 'Teleport/AuthConnectors/Delete',
 };
 
-export const DeleteConnectorDialog = () => <DeleteDialog {...props} />;
+export const Dialog = () => <DeleteDialog {...props} />;
 
 const props = {
   name: 'sample-connector-role',
@@ -29,8 +29,4 @@ const props = {
     return Promise.reject(new Error('server error'));
   },
   onClose: () => null,
-};
-
-DeleteConnectorDialog.story = {
-  name: 'DeleteConnectorDialog',
 };

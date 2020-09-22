@@ -15,14 +15,14 @@ limitations under the License.
 */
 
 import React from 'react';
-import AuditEvents from './AuditEvents';
+import EventList from './EventList';
 import { makeEvent } from 'teleport/services/audit';
 
 export default {
-  title: 'TeleportCluster/Audit',
+  title: 'Teleport/Audit/List',
 };
 
-export const Events = () => <AuditEvents {...defaultProps} />;
+export const Events = () => <EventList {...defaultProps} />;
 
 const events = [
   {
@@ -404,12 +404,7 @@ const events = [
 ];
 
 const defaultProps = {
-  attempt: {},
-  attemptActions: {
-    do: () => null,
-  },
-  onFetchLatest: () => Promise.resolve(),
-  onFetch: () => Promise.resolve(),
-  searchValue: '',
-  events: events.map(e => makeEvent(e)),
+  clusterId: 'mama',
+  search: '',
+  events: events.map(makeEvent),
 };

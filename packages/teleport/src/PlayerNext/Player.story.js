@@ -20,7 +20,7 @@ import PlayerComponent from './Player';
 import { createMemoryHistory } from 'history';
 
 export default {
-  title: 'TeleportPlayerEnhanced',
+  title: 'Teleport/PlayerNext',
 };
 
 export const Player = () => {

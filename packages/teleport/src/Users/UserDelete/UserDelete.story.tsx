@@ -17,7 +17,7 @@ import React from 'react';
 import { UserDelete } from './UserDelete';
 
 export default {
-  title: 'TeleportDashboard/Users/UserDelete',
+  title: 'Teleport/Users/UserDelete',
 };
 
 export const Processing = () => {

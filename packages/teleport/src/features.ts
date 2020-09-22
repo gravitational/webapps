@@ -345,7 +345,7 @@ export class FeatureApps {
 
 export class FeatureTrust {
   getTopNavTitle() {
-    return 'Trust';
+    return 'Clusters';
   }
 
   route = {
@@ -361,7 +361,7 @@ export class FeatureTrust {
 
     ctx.storeNav.addSideItem({
       group: 'clusters',
-      title: 'Trust',
+      title: 'Trusted',
       Icon: Icons.LanAlt,
       getLink() {
         return cfg.routes.trustedClusters;
@@ -375,6 +375,7 @@ export class FeatureTrust {
 export default function getFeatures() {
   return [
     new FeatureNodes(),
+    new FeatureApps(),
     new FeatureAudit(),
     new FeatureRecordings(),
     new FeatureSessions(),

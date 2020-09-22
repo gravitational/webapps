@@ -18,7 +18,7 @@ import React from 'react';
 import Dialog from './UserTokenLink';
 
 export default {
-  title: 'TeleportDashboard/Users/UserTokenLink',
+  title: 'Teleport/Users/UserTokenLink',
 };
 
 export const Invite = () => {

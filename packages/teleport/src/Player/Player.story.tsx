@@ -21,7 +21,7 @@ import PlayerComponent from './Player';
 import { createMemoryHistory } from 'history';
 
 export default {
-  title: 'TeleportPlayer',
+  title: 'Teleport/Player',
 };
 
 export const Player = () => {

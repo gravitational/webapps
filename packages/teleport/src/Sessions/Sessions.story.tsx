@@ -15,14 +15,10 @@ limitations under the License.
 */
 
 import React from 'react';
-import { Router } from 'react-router';
-import { createMemoryHistory } from 'history';
 import { Sessions } from './Sessions';
 
-type PropTypes = Parameters<typeof Sessions>[0];
-
 export default {
-  title: 'TeleportCluster/Sessions',
+  title: 'Teleport/ActiveSessions',
 };
 
 export function Loaded() {
@@ -37,14 +33,10 @@ export function Loaded() {
     },
   };
 
-  return (
-    <Router history={createMemoryHistory()}>
-      <Sessions {...props} />
-    </Router>
-  );
+  return <Sessions {...props} />;
 }
 
-const onRefresh: PropTypes['onRefresh'] = () => {
+const onRefresh = () => {
   return Promise.resolve();
 };
 
@@ -57,7 +49,7 @@ const sessions = [
     created: new Date('2019-04-22T00:00:51.543Z'),
     durationText: '12 min',
     serverId: '10_128_0_6.demo.gravitational.io',
-    clusterId: '',
+    clusterId: 'one',
     hostname: 'localhost',
     sid: 'sid0',
     addr: '1.1.1.1',

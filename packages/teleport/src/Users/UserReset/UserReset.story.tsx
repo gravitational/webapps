@@ -17,7 +17,7 @@ import React from 'react';
 import { UserReset } from './UserReset';
 
 export default {
-  title: 'TeleportDashboard/Users/UserReset',
+  title: 'Teleport/Users/UserReset',
 };
 
 export const Processing = () => {

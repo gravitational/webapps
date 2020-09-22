@@ -19,7 +19,7 @@ import * as Teleport from 'teleport/teleportContext';
 import Roles from './Roles';
 
 export default {
-  title: 'TeleportDashboard/Roles',
+  title: 'Teleport/Roles',
 };
 
 export function Loaded() {

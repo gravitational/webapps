@@ -17,6 +17,7 @@ limitations under the License.
 import { useEffect, useState } from 'react';
 import Ctx from 'teleport/teleportContext';
 import useAttempt from 'shared/hooks/useAttemptNext';
+import * as Features from 'teleport/features';
 
 export default function useClusters(ctx: Ctx) {
   const [searchValue, setSearchValue] = useState('');
@@ -26,6 +27,8 @@ export default function useClusters(ctx: Ctx) {
   function init() {
     run(() => ctx.clusterService.fetchClusters().then(setClusters));
   }
+
+  const [enabledFeatures] = useState(() => buildACL(ctx));
 
   useEffect(() => {
     init();
@@ -37,5 +40,22 @@ export default function useClusters(ctx: Ctx) {
     clusters,
     searchValue,
     setSearchValue,
+    enabledFeatures,
+  };
+}
+
+function buildACL(ctx: Ctx) {
+  const apps = ctx.features.some(f => f instanceof Features.FeatureApps);
+  const nodes = ctx.features.some(f => f instanceof Features.FeatureNodes);
+  const audit = ctx.features.some(f => f instanceof Features.FeatureAudit);
+  const recordings = ctx.features.some(
+    f => f instanceof Features.FeatureRecordings
+  );
+
+  return {
+    nodes,
+    audit,
+    recordings,
+    apps,
   };
 }

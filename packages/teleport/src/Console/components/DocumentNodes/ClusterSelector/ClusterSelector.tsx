@@ -83,7 +83,7 @@ export default function ClusterSelector({
           defaultMenuIsOpen={defaultMenuIsOpen}
           hasError={false}
           width={400}
-          maxMenuHeight={300}
+          maxMenuHeight={400}
           isSearchable
           isSimpleValue={false}
           clearable={false}

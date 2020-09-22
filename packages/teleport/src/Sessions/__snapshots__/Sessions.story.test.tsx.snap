@@ -347,7 +347,7 @@ exports[`loaded 1`] = `
                   class="c7 c11 icon icon-terminal "
                   color="light"
                   font-size="2"
-                  href="/web/cluster/localhost/console/session/sid0"
+                  href="/web/cluster/one/console/session/sid0"
                   style="border-radius: 50%; border: 2px solid #00bfa5; text-decoration: none;"
                   target="_blank"
                 />

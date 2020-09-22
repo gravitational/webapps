@@ -17,7 +17,7 @@ limitations under the License.
 import React from 'react';
 import styled from 'styled-components';
 import { NavLink, Link } from 'react-router-dom';
-import { Flex, Image, SideNav } from 'design';
+import { Flex, Image } from 'design';
 import SideNavItemIcon from './SideNavItemIcon';
 import SideNavItem from './SideNavItem';
 import SideNavItemGroup from './SideNavItemGroup';
@@ -25,8 +25,13 @@ import logoSvg from './logo';
 import cfg from 'teleport/config';
 import useSideNav from './useSideNav';
 
-export default function Nav() {
-  const { items, path } = useSideNav();
+export default function Container() {
+  const state = useSideNav();
+  return <SideNav {...state} />;
+}
+
+export function SideNav(props: ReturnType<typeof useSideNav>) {
+  const { items, path } = props;
   const $items = items.map((item, index) => {
     const isChild = item.items.length > 0;
     if (isChild) {
@@ -34,21 +39,15 @@ export default function Nav() {
     }
 
     return (
-      <SideNavItem
-        key={index}
-        $nested={false}
-        as={NavLink}
-        exact={item.exact}
-        to={item.route}
-      >
-        <SideNavItemIcon $nested={false} as={item.Icon} />
+      <SideNavItem key={index} as={NavLink} exact={item.exact} to={item.route}>
+        <SideNavItemIcon as={item.Icon} />
         {item.title}
       </SideNavItem>
     );
   });
 
   return (
-    <SideNav>
+    <Nav>
       <LogoItem pl="4" width="208px" as={Link} to={cfg.routes.app}>
         <Image src={logoSvg} mx="3" maxHeight="24px" maxWidth="160px" />
       </LogoItem>
@@ -57,7 +56,7 @@ export default function Nav() {
       >
         {$items}
       </div>
-    </SideNav>
+    </Nav>
   );
 }
 
@@ -75,3 +74,14 @@ const LogoItem = styled(Flex)(
   }
 `
 );
+
+const Nav = styled.nav`
+  background: ${props => props.theme.colors.primary.light};
+  border-right: 1px solid ${props => props.theme.colors.primary.dark};
+  min-width: 240px;
+  width: 240px;
+  overflow: auto;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+`;

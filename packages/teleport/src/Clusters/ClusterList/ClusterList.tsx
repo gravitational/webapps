@@ -16,14 +16,14 @@ limitations under the License.
 
 import React from 'react';
 import { sortBy } from 'lodash';
+import { NavLink } from 'react-router-dom';
 import styled from 'styled-components';
 import isMatch from 'design/utils/match';
-import { Text, Flex } from 'design';
-import { Cli } from 'design/Icon';
+import { Flex } from 'design';
 import { Cluster } from 'teleport/services/clusters';
+import { MenuButton, MenuItem } from 'shared/components/MenuAction';
 import {
   SortHeaderCell,
-  TextCell,
   Cell,
   Table,
   Column,
@@ -36,7 +36,9 @@ import cfg from 'teleport/config';
 
 export default function ClustersList(props: Props) {
   const { clusters, search = '', pageSize = 50, onSearchChange } = props;
-  const [sorting, setSorting] = React.useState<Sorting>({});
+  const [sorting, setSorting] = React.useState<Sorting>({
+    clusterId: 'DESC',
+  });
 
   function onSortChange(columnKey: SortCol, sortDir: string) {
     setSorting({ [columnKey]: sortDir });
@@ -88,37 +90,8 @@ export default function ClustersList(props: Props) {
           cell={<NameCell />}
         />
         <Column
-          columnKey="authVersion"
-          header={
-            <SortHeaderCell
-              sortDir={sorting.authVersion}
-              onSortChange={onSortChange}
-              title="Version"
-            />
-          }
-          cell={<TextCell />}
-        />
-        <Column
-          columnKey="nodeCount"
-          header={
-            <SortHeaderCell
-              sortDir={sorting.nodeCount}
-              onSortChange={onSortChange}
-              title="Nodes"
-            />
-          }
-          cell={<NodeCountCell />}
-        />
-        <Column
-          columnKey="publicURL"
-          header={
-            <SortHeaderCell
-              sortDir={sorting.publicURL}
-              onSortChange={onSortChange}
-              title="Public URL"
-            />
-          }
-          cell={<TextCell />}
+          header={<Cell />}
+          cell={<ActionCell flags={props.menuFlags} />}
         />
       </StyledTable>
     </>
@@ -128,7 +101,7 @@ export default function ClustersList(props: Props) {
 function filter(clusters: Cluster[], searchValue = '') {
   return clusters.filter(obj =>
     isMatch(obj, searchValue, {
-      searchableProps: ['clusterId', 'authVersion'],
+      searchableProps: ['clusterId'],
       cb: filterCb,
     })
   );
@@ -165,32 +138,6 @@ function rootFirst(clusters: Cluster[]) {
   return clusters;
 }
 
-export function NodeCountCell(props) {
-  const { rowIndex, data } = props;
-  const { nodeCount, clusterId } = data[rowIndex];
-  if (!clusterId) {
-    return <Cell />;
-  }
-
-  const terminalURL = cfg.getConsoleNodesRoute(clusterId);
-
-  // show empty button when 0 nodes
-  const btnText = nodeCount > 0 ? nodeCount : '';
-
-  return (
-    <Cell>
-      <StyledConsoleLink
-        title="Open Cluster Terminal"
-        target="_blank"
-        as="a"
-        href={terminalURL}
-      >
-        <Cli /> {btnText}
-      </StyledConsoleLink>
-    </Cell>
-  );
-}
-
 export function NameCell(props) {
   const { rowIndex, data } = props;
   const { clusterId } = data[rowIndex];
@@ -204,6 +151,44 @@ function RootLabelCell(props) {
   return <Cell>{isRoot && <Labels.Primary>ROOT</Labels.Primary>}</Cell>;
 }
 
+function ActionCell(props: { flags: MenuFlags }) {
+  const { rowIndex, data } = props as any;
+  const { clusterId } = data[rowIndex];
+  const $items = [] as React.ReactNode[];
+
+  // do not render anything for empty row
+  if (!clusterId) {
+    return <Cell />;
+  }
+
+  if (props.flags.showNodes) {
+    $items.push(renderMenuItem('Nodes', cfg.getNodesRoute(clusterId)));
+  }
+  if (props.flags.showApps) {
+    $items.push(renderMenuItem('Apps', cfg.getAppsRoute(clusterId)));
+  }
+  if (props.flags.showAudit) {
+    $items.push(renderMenuItem('Audit Events', cfg.getAuditRoute(clusterId)));
+  }
+  if (props.flags.showRecordings) {
+    $items.push(
+      renderMenuItem('Session Recordings', cfg.getRecordingsRoute(clusterId))
+    );
+  }
+
+  return (
+    <Cell align="right">{$items && <MenuButton children={$items} />}</Cell>
+  );
+}
+
+function renderMenuItem(name: string, url: string) {
+  return (
+    <MenuItem as={NavLink} to={url} key={name}>
+      {name}
+    </MenuItem>
+  );
+}
+
 type SortCol = keyof Cluster;
 
 type Sorting = {
@@ -215,6 +200,14 @@ type Props = {
   onSearchChange: (value: string) => void;
   search: string;
   pageSize?: 500;
+  menuFlags: MenuFlags;
+};
+
+type MenuFlags = {
+  showNodes: boolean;
+  showAudit: boolean;
+  showRecordings: boolean;
+  showApps: boolean;
 };
 
 const StyledTable = styled(Table)`
@@ -222,30 +215,3 @@ const StyledTable = styled(Table)`
     height: 22px;
   }
 `;
-
-const StyledConsoleLink = styled(Text)(
-  props => `
-  border: 1px solid ${props.theme.colors.dark};
-  display: inline-flex;
-  align-items: center;
-  border-radius: 2px;
-  padding: 0 8px 0 2px;
-  height: 16px;
-  font-size: 10px;
-  text-decoration: none;
-  background: ${props.theme.colors.bgTerminal};
-  color: ${props.theme.colors.light};
-  font-weight: ${props.theme.fontWeights.regular};
-  transition: all .3s;
-  min-width: 24px;
-
-  &:hover, &:focus {
-    box-shadow: 0 4px 16px rgba(0, 0, 0, .24);
-    border: 1px solid ${props.theme.colors.accent};
-  }
-  span {
-    margin-right: 4px;
-    opacity: .32;
-  }
-`
-);

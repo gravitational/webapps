@@ -26,8 +26,8 @@ import TtyPlayer, {
   StatusEnum as TtyStatusEnum,
 } from 'teleport/lib/term/ttyPlayer';
 import EventProvider from 'teleport/lib/term/ttyPlayerEventProvider';
-import { ProgressBarTty } from './../player/ProgressBar';
-import Xterm from './../player/Xterm';
+import { ProgressBarTty } from 'teleport/Player/ProgressBar';
+import Xterm from 'teleport/Player/Xterm';
 import BpfPlayer from './BpfPlayer';
 import SwitchMode, { ModeEnum } from './SwitchMode';
 

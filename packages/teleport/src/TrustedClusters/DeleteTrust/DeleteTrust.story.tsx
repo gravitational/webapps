@@ -18,7 +18,7 @@ import React from 'react';
 import DeleteTrustedCluster from './DeleteTrust';
 
 export default {
-  title: 'TeleportDashboard/TrustedClusters/Dialogs',
+  title: 'Teleport/TrustedClusters/Delete',
 };
 
 export const DeleteTrustedClusterDialog = () => (

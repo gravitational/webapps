@@ -1,5 +1,5 @@
 import React from 'react';
-import { Events } from './AuditEvents.story';
+import { Events } from './EventList.story';
 import { render } from 'design/utils/testing';
 
 test('rendering of Events', () => {

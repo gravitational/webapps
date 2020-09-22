@@ -18,7 +18,7 @@ import React from 'react';
 import Component from './RangePicker';
 
 export default {
-  title: 'TeleportCluster/Audit/RangePicker',
+  title: 'Teleport/Audit/RangePicker',
 };
 
 export const Picker = () => <Component {...props} />;

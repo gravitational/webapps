@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import { useState } from 'react';
+import { useMemo } from 'react';
 import { useHistory } from 'react-router';
 import useTeleport from 'teleport/useTeleport';
 import useStickyClusterId from 'teleport/useStickyClusterId';
@@ -25,8 +25,9 @@ export default function useSideNav() {
   const h = useHistory();
   const ctx = useTeleport();
   const { clusterId } = useStickyClusterId();
-  const [items] = useState(() =>
-    makeItems(clusterId, ctx.storeNav.getSideItems())
+  const items = useMemo(
+    () => makeItems(clusterId, ctx.storeNav.getSideItems()),
+    [clusterId]
   );
 
   return {

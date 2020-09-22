@@ -21,7 +21,7 @@ import TtyPlayer from 'teleport/lib/term/ttyPlayer';
 import TtyPlayerEventProvider from 'teleport/lib/term/ttyPlayerEventProvider';
 
 export default {
-  title: 'TeleportPlayerEnhanced/SshPlayer',
+  title: 'Teleport/PlayerNext/SshPlayer',
 };
 
 export const Vim = () => {
