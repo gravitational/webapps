@@ -1,6 +1,51 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`rendering of Session Recordings 1`] = `
+.c14 {
+  line-height: 1.5;
+  margin: 0;
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  box-sizing: border-box;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-family: inherit;
+  font-weight: 600;
+  outline: none;
+  position: relative;
+  text-align: center;
+  text-decoration: none;
+  text-transform: uppercase;
+  transition: all 0.3s;
+  -webkit-font-smoothing: antialiased;
+  background: #512FC9;
+  color: rgba(255,255,255,0.87);
+  font-size: 10px;
+  min-height: 24px;
+  padding: 0px 16px;
+  width: 80px;
+}
+
+.c14:active {
+  opacity: 0.56;
+}
+
+.c14:hover,
+.c14:focus {
+  background: #651FFF;
+}
+
+.c14:active {
+  background: #354AA4;
+}
+
+.c14:disabled {
+  background: rgba(255,255,255,0.12);
+  color: rgba(255,255,255,0.3);
+}
+
 .c5 {
   display: inline-block;
   transition: color .3s;
@@ -20,13 +65,6 @@ exports[`rendering of Session Recordings 1`] = `
 .c13 {
   display: inline-block;
   transition: color .3s;
-  color: #FFFFFF;
-}
-
-.c15 {
-  display: inline-block;
-  transition: color .3s;
-  margin-right: 8px;
   color: #FFFFFF;
 }
 
@@ -100,16 +138,6 @@ exports[`rendering of Session Recordings 1`] = `
   line-height: 16px;
   margin: 0px;
   color: #FFFFFF;
-}
-
-.c14 {
-  overflow: hidden;
-  text-overflow: ellipsis;
-  font-weight: 300;
-  font-size: 16px;
-  line-height: 32px;
-  margin: 24px;
-  color: rgba(255,255,255,0.87);
 }
 
 .c6 {
@@ -357,16 +385,16 @@ exports[`rendering of Session Recordings 1`] = `
       >
         SHOWING 
         <strong>
-          0
+          1
         </strong>
          - 
         <strong>
-          0
+          3
         </strong>
          
         of 
         <strong>
-          0
+          3
         </strong>
       </div>
       <div
@@ -431,20 +459,93 @@ exports[`rendering of Session Recordings 1`] = `
       </thead>
       <tbody>
         <tr>
+          <td>
+            pear-node
+          </td>
           <td
-            colspan="6"
+            style="word-break: break-word;"
           >
-            <div
+            one, two
+          </td>
+          <td />
+          <td>
+            2019-05-22 00:00:51
+          </td>
+          <td>
+            1682c475-04fd-5c4f-8881-7d4d44a3bfb1
+          </td>
+          <td
+            align="right"
+          >
+            <a
               class="c14"
-              color="text.primary"
-              style="display: flex; align-items: center; justify-content: center;"
+              href="/web/cluster/localhost/session/1682c475-04fd-5c4f-8881-7d4d44a3bfb1/player"
+              kind="primary"
+              target="_blank"
+              width="80px"
             >
-              <span
-                class="c4 c15 icon icon-database "
-                color="light"
-              />
-              No Data Available
-            </div>
+              Play
+            </a>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            peach-node
+          </td>
+          <td
+            style="word-break: break-word;"
+          >
+            one, two
+          </td>
+          <td />
+          <td>
+            2019-04-22 00:00:51
+          </td>
+          <td>
+            377875-6491-11e9-80a1-427cfde50f5a
+          </td>
+          <td
+            align="right"
+          >
+            <a
+              class="c14"
+              href="/web/cluster/localhost/session/377875-6491-11e9-80a1-427cfde50f5a/player"
+              kind="primary"
+              target="_blank"
+              width="80px"
+            >
+              Play
+            </a>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            apple-node
+          </td>
+          <td
+            style="word-break: break-word;"
+          >
+            one, two
+          </td>
+          <td />
+          <td>
+            2019-04-22 00:00:51
+          </td>
+          <td>
+            426485-6491-11e9-80a1-427cfde50f5a
+          </td>
+          <td
+            align="right"
+          >
+            <a
+              class="c14"
+              href="/web/cluster/localhost/session/426485-6491-11e9-80a1-427cfde50f5a/player"
+              kind="primary"
+              target="_blank"
+              width="80px"
+            >
+              Play
+            </a>
           </td>
         </tr>
       </tbody>
@@ -454,6 +555,51 @@ exports[`rendering of Session Recordings 1`] = `
 `;
 
 exports[`rendering of Session Recordings 2`] = `
+.c14 {
+  line-height: 1.5;
+  margin: 0;
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  box-sizing: border-box;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-family: inherit;
+  font-weight: 600;
+  outline: none;
+  position: relative;
+  text-align: center;
+  text-decoration: none;
+  text-transform: uppercase;
+  transition: all 0.3s;
+  -webkit-font-smoothing: antialiased;
+  background: #512FC9;
+  color: rgba(255,255,255,0.87);
+  font-size: 10px;
+  min-height: 24px;
+  padding: 0px 16px;
+  width: 80px;
+}
+
+.c14:active {
+  opacity: 0.56;
+}
+
+.c14:hover,
+.c14:focus {
+  background: #651FFF;
+}
+
+.c14:active {
+  background: #354AA4;
+}
+
+.c14:disabled {
+  background: rgba(255,255,255,0.12);
+  color: rgba(255,255,255,0.3);
+}
+
 .c5 {
   display: inline-block;
   transition: color .3s;
@@ -473,13 +619,6 @@ exports[`rendering of Session Recordings 2`] = `
 .c13 {
   display: inline-block;
   transition: color .3s;
-  color: #FFFFFF;
-}
-
-.c15 {
-  display: inline-block;
-  transition: color .3s;
-  margin-right: 8px;
   color: #FFFFFF;
 }
 
@@ -553,16 +692,6 @@ exports[`rendering of Session Recordings 2`] = `
   line-height: 16px;
   margin: 0px;
   color: #FFFFFF;
-}
-
-.c14 {
-  overflow: hidden;
-  text-overflow: ellipsis;
-  font-weight: 300;
-  font-size: 16px;
-  line-height: 32px;
-  margin: 24px;
-  color: rgba(255,255,255,0.87);
 }
 
 .c6 {
@@ -811,16 +940,16 @@ exports[`rendering of Session Recordings 2`] = `
         >
           SHOWING 
           <strong>
-            0
+            1
           </strong>
            - 
           <strong>
-            0
+            3
           </strong>
            
           of 
           <strong>
-            0
+            3
           </strong>
         </div>
         <div
@@ -885,20 +1014,93 @@ exports[`rendering of Session Recordings 2`] = `
         </thead>
         <tbody>
           <tr>
+            <td>
+              pear-node
+            </td>
             <td
-              colspan="6"
+              style="word-break: break-word;"
             >
-              <div
+              one, two
+            </td>
+            <td />
+            <td>
+              2019-05-22 00:00:51
+            </td>
+            <td>
+              1682c475-04fd-5c4f-8881-7d4d44a3bfb1
+            </td>
+            <td
+              align="right"
+            >
+              <a
                 class="c14"
-                color="text.primary"
-                style="display: flex; align-items: center; justify-content: center;"
+                href="/web/cluster/localhost/session/1682c475-04fd-5c4f-8881-7d4d44a3bfb1/player"
+                kind="primary"
+                target="_blank"
+                width="80px"
               >
-                <span
-                  class="c4 c15 icon icon-database "
-                  color="light"
-                />
-                No Data Available
-              </div>
+                Play
+              </a>
+            </td>
+          </tr>
+          <tr>
+            <td>
+              peach-node
+            </td>
+            <td
+              style="word-break: break-word;"
+            >
+              one, two
+            </td>
+            <td />
+            <td>
+              2019-04-22 00:00:51
+            </td>
+            <td>
+              377875-6491-11e9-80a1-427cfde50f5a
+            </td>
+            <td
+              align="right"
+            >
+              <a
+                class="c14"
+                href="/web/cluster/localhost/session/377875-6491-11e9-80a1-427cfde50f5a/player"
+                kind="primary"
+                target="_blank"
+                width="80px"
+              >
+                Play
+              </a>
+            </td>
+          </tr>
+          <tr>
+            <td>
+              apple-node
+            </td>
+            <td
+              style="word-break: break-word;"
+            >
+              one, two
+            </td>
+            <td />
+            <td>
+              2019-04-22 00:00:51
+            </td>
+            <td>
+              426485-6491-11e9-80a1-427cfde50f5a
+            </td>
+            <td
+              align="right"
+            >
+              <a
+                class="c14"
+                href="/web/cluster/localhost/session/426485-6491-11e9-80a1-427cfde50f5a/player"
+                kind="primary"
+                target="_blank"
+                width="80px"
+              >
+                Play
+              </a>
             </td>
           </tr>
         </tbody>
