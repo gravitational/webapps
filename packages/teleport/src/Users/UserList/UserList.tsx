@@ -62,7 +62,7 @@ export default function UserList({
 
     // Apply sorting to filtered list.
     const sorted = sortBy(filtered, sort.key);
-    if (sort.dir === SortTypes.ASC) {
+    if (sort.dir === SortTypes.DESC) {
       return sorted.reverse();
     }
 
