@@ -53,9 +53,14 @@ export default function AuthConnectors() {
 
   if (isProcessing) {
     return (
-      <Flex justifyContent="center" alignItems="center" flex="1">
-        <Indicator />
-      </Flex>
+      <FeatureBox>
+        <FeatureHeader>
+          <FeatureHeaderTitle>Auth Connectors</FeatureHeaderTitle>
+        </FeatureHeader>
+        <Box textAlign="center" m={10}>
+          <Indicator />
+        </Box>
+      </FeatureBox>
     );
   }
 

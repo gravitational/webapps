@@ -53,9 +53,14 @@ export default function TrustedClusters() {
 
   if (tclusters.isProcessing) {
     return (
-      <Flex justifyContent="center" alignItems="center" flex="1">
-        <Indicator />
-      </Flex>
+      <FeatureBox>
+        <FeatureHeader alignItems="center">
+          <FeatureHeaderTitle>Trusted Clusters</FeatureHeaderTitle>
+        </FeatureHeader>
+        <Box textAlign="center" m={10}>
+          <Indicator />
+        </Box>
+      </FeatureBox>
     );
   }
 
