@@ -298,10 +298,10 @@ exports[`render clusters 1`] = `
 }
 
 <div
-  class="sc-AxirZ c0"
+  class="c0"
 >
   <div
-    class="sc-AxirZ c1"
+    class="c1"
   >
     <div
       class="c2"
@@ -310,7 +310,7 @@ exports[`render clusters 1`] = `
     </div>
   </div>
   <div
-    class="sc-AxirZ c3"
+    class="c3"
   >
     <input
       class="c4"
@@ -342,7 +342,7 @@ exports[`render clusters 1`] = `
       </strong>
     </div>
     <div
-      class="sc-AxirZ c7"
+      class="c7"
     >
       <button
         disabled=""

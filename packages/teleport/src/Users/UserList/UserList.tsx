@@ -62,7 +62,7 @@ export default function UserList({
 
     // Apply sorting to filtered list.
     const sorted = sortBy(filtered, sort.key);
-    if (sort.dir === SortTypes.ASC) {
+    if (sort.dir === SortTypes.DESC) {
       return sorted.reverse();
     }
 
@@ -101,6 +101,17 @@ export default function UserList({
           }
         />
         <Column
+          columnKey="authType"
+          cell={<TextCell style={{ textTransform: 'capitalize' }} />}
+          header={
+            <SortHeaderCell
+              sortDir={sort.key === 'authType' ? sort.dir : null}
+              onSortChange={onSortChange}
+              title="Type"
+            />
+          }
+        />
+        <Column
           header={<Cell />}
           cell={
             <ActionCell
@@ -128,25 +139,23 @@ const ActionCell = props => {
     onDelete,
   } = props;
 
-  if (!canDelete && !canUpdate) {
+  const user: User = data[rowIndex];
+
+  if ((!canDelete && !canUpdate) || !user.isLocal) {
     return <Cell align="right" />;
   }
 
   return (
     <Cell align="right">
       <MenuButton>
+        {canUpdate && <MenuItem onClick={() => onEdit(user)}>Edit...</MenuItem>}
         {canUpdate && (
-          <MenuItem onClick={() => onEdit(data[rowIndex])}>Edit...</MenuItem>
-        )}
-        {canUpdate && (
-          <MenuItem onClick={() => onResetPassword(data[rowIndex])}>
+          <MenuItem onClick={() => onResetPassword(user)}>
             Reset Password...
           </MenuItem>
         )}
         {canDelete && (
-          <MenuItem onClick={() => onDelete(data[rowIndex])}>
-            Delete...
-          </MenuItem>
+          <MenuItem onClick={() => onDelete(user)}>Delete...</MenuItem>
         )}
       </MenuButton>
     </Cell>
