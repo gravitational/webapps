@@ -445,33 +445,35 @@ exports[`success state 1`] = `
                 />
               </a>
             </th>
+            <th>
+              <a>
+                Type
+                <span
+                  class="c9 c13 icon icon-chevrons-expand-vertical "
+                  color="light"
+                />
+              </a>
+            </th>
             <th />
           </tr>
         </thead>
         <tbody>
           <tr>
             <td>
-              ziat@uthatebo.sl
+              azesotil@jevig.org
             </td>
             <td>
               <div
                 class="c14"
                 kind="secondary"
               >
-                admin
+                tugu
               </div>
-              <div
-                class="c14"
-                kind="secondary"
-              >
-                kaco
-              </div>
-              <div
-                class="c14"
-                kind="secondary"
-              >
-                ziuzzow
-              </div>
+            </td>
+            <td
+              style="text-transform: capitalize;"
+            >
+              teleport local user
             </td>
             <td
               align="right"
@@ -492,27 +494,60 @@ exports[`success state 1`] = `
           </tr>
           <tr>
             <td>
-              pamkad@ukgir.ki
+              cikar@egaposci.me
             </td>
             <td>
               <div
                 class="c14"
                 kind="secondary"
               >
-                valvapel
+                admin
+              </div>
+            </td>
+            <td
+              style="text-transform: capitalize;"
+            >
+              teleport local user
+            </td>
+            <td
+              align="right"
+            >
+              <button
+                class="c15"
+                height="24px"
+                kind="border"
+              >
+                OPTIONS
+                <span
+                  class="c9 c16 icon icon-caret-down "
+                  color="text.secondary"
+                  font-size="2"
+                />
+              </button>
+            </td>
+          </tr>
+          <tr>
+            <td>
+              hi@nen.pa
+            </td>
+            <td>
+              <div
+                class="c14"
+                kind="secondary"
+              >
+                admin
               </div>
               <div
                 class="c14"
                 kind="secondary"
               >
-                vedkonm
+                ruhh
               </div>
-              <div
-                class="c14"
-                kind="secondary"
-              >
-                vuit
-              </div>
+            </td>
+            <td
+              style="text-transform: capitalize;"
+            >
+              teleport local user
             </td>
             <td
               align="right"
@@ -568,25 +603,50 @@ exports[`success state 1`] = `
               </div>
             </td>
             <td
-              align="right"
+              style="text-transform: capitalize;"
             >
-              <button
-                class="c15"
-                height="24px"
-                kind="border"
-              >
-                OPTIONS
-                <span
-                  class="c9 c16 icon icon-caret-down "
-                  color="text.secondary"
-                  font-size="2"
-                />
-              </button>
+              oidc
             </td>
+            <td
+              align="right"
+            />
           </tr>
           <tr>
             <td>
-              hi@nen.pa
+              pamkad@ukgir.ki
+            </td>
+            <td>
+              <div
+                class="c14"
+                kind="secondary"
+              >
+                valvapel
+              </div>
+              <div
+                class="c14"
+                kind="secondary"
+              >
+                vedkonm
+              </div>
+              <div
+                class="c14"
+                kind="secondary"
+              >
+                vuit
+              </div>
+            </td>
+            <td
+              style="text-transform: capitalize;"
+            >
+              saml
+            </td>
+            <td
+              align="right"
+            />
+          </tr>
+          <tr>
+            <td>
+              ziat@uthatebo.sl
             </td>
             <td>
               <div
@@ -599,83 +659,23 @@ exports[`success state 1`] = `
                 class="c14"
                 kind="secondary"
               >
-                ruhh
+                kaco
               </div>
-            </td>
-            <td
-              align="right"
-            >
-              <button
-                class="c15"
-                height="24px"
-                kind="border"
-              >
-                OPTIONS
-                <span
-                  class="c9 c16 icon icon-caret-down "
-                  color="text.secondary"
-                  font-size="2"
-                />
-              </button>
-            </td>
-          </tr>
-          <tr>
-            <td>
-              cikar@egaposci.me
-            </td>
-            <td>
               <div
                 class="c14"
                 kind="secondary"
               >
-                admin
+                ziuzzow
               </div>
             </td>
             <td
-              align="right"
+              style="text-transform: capitalize;"
             >
-              <button
-                class="c15"
-                height="24px"
-                kind="border"
-              >
-                OPTIONS
-                <span
-                  class="c9 c16 icon icon-caret-down "
-                  color="text.secondary"
-                  font-size="2"
-                />
-              </button>
-            </td>
-          </tr>
-          <tr>
-            <td>
-              azesotil@jevig.org
-            </td>
-            <td>
-              <div
-                class="c14"
-                kind="secondary"
-              >
-                tugu
-              </div>
+              github
             </td>
             <td
               align="right"
-            >
-              <button
-                class="c15"
-                height="24px"
-                kind="border"
-              >
-                OPTIONS
-                <span
-                  class="c9 c16 icon icon-caret-down "
-                  color="text.secondary"
-                  font-size="2"
-                />
-              </button>
-            </td>
+            />
           </tr>
         </tbody>
       </table>

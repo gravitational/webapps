@@ -20,7 +20,7 @@ import {
   FeatureHeaderTitle,
 } from 'teleport/components/Layout';
 import React from 'react';
-import { Flex, Indicator } from 'design';
+import { Box, Indicator } from 'design';
 import { Danger } from 'design/Alert';
 import useTeleport from 'teleport/useTeleport';
 import ClusterList from './ClusterList';
@@ -46,9 +46,9 @@ export function Clusters(props: ReturnType<typeof useClusters>) {
         <FeatureHeaderTitle>All Clusters</FeatureHeaderTitle>
       </FeatureHeader>
       {initAttempt.status === 'processing' && (
-        <Flex justifyContent="center">
+        <Box textAlign="center" m={10}>
           <Indicator />
-        </Flex>
+        </Box>
       )}
       {initAttempt.status === 'failed' && (
         <Danger>{initAttempt.statusText} </Danger>

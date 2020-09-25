@@ -59,7 +59,7 @@ export default function RecordList(props: Props) {
     }
 
     return sorted;
-  }, [colSortDirs, events]);
+  }, [colSortDirs, events, searchValue]);
 
   function onSortChange(columnKey: SortCols, sortDir: string) {
     setSort({ [columnKey]: sortDir });

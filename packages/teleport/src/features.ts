@@ -299,6 +299,10 @@ export class FeatureUsers {
   };
 
   register(ctx: Ctx) {
+    if (!ctx.isUsersEnabled()) {
+      return;
+    }
+
     ctx.storeNav.addSideItem({
       title: 'Users',
       group: 'team',

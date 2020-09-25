@@ -51,14 +51,6 @@ export default function AuthConnectors() {
     return connectors.save(content, isNew);
   }
 
-  if (isProcessing) {
-    return (
-      <Flex justifyContent="center" alignItems="center" flex="1">
-        <Indicator />
-      </Flex>
-    );
-  }
-
   return (
     <FeatureBox>
       <FeatureHeader>
@@ -68,6 +60,11 @@ export default function AuthConnectors() {
         </Box>
       </FeatureHeader>
       {isFailed && <Danger>{message} </Danger>}
+      {isProcessing && (
+        <Box textAlign="center" m={10}>
+          <Indicator />
+        </Box>
+      )}
       {isSuccess && (
         <Flex alignItems="start">
           {isEmpty && (

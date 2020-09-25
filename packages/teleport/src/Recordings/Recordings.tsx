@@ -83,6 +83,7 @@ export function Recordings(props: ReturnType<typeof useAuditEvents>) {
           searchValue={searchValue}
           events={events}
           clusterId={clusterId}
+          pageSize={50}
         />
       )}
     </FeatureBox>
