@@ -39,7 +39,7 @@ export default function Container() {
 export function Roles(props: ReturnType<typeof useRoles>) {
   const { items, canCreate, remove, save, attempt } = props;
   const resources = useResources(items, templates);
-  const { message, isProcessing, isFailed } = attempt;
+  const { message, isProcessing, isFailed, isSuccess } = attempt;
   const title =
     resources.status === 'creating' ? 'Create a new role' : 'Edit role';
 
@@ -52,24 +52,11 @@ export function Roles(props: ReturnType<typeof useRoles>) {
     return save(content, isNew);
   }
 
-  if (isProcessing) {
-    return (
-      <FeatureBox>
-        <FeatureHeader alignItems="center">
-          <FeatureHeaderTitle>Roles</FeatureHeaderTitle>
-        </FeatureHeader>
-        <Box textAlign="center" m={10}>
-          <Indicator />
-        </Box>
-      </FeatureBox>
-    );
-  }
-
   return (
     <FeatureBox>
       <FeatureHeader alignItems="center">
         <FeatureHeaderTitle>Roles</FeatureHeaderTitle>
-        {canCreate && (
+        {isSuccess && canCreate && (
           <ButtonPrimary
             ml="auto"
             width="240px"
@@ -80,42 +67,49 @@ export function Roles(props: ReturnType<typeof useRoles>) {
         )}
       </FeatureHeader>
       {isFailed && <Danger>{message} </Danger>}
-      <Flex>
-        <Box width="100%" mr="6" mb="4">
-          <RoleList
-            items={items}
-            onEdit={resources.edit}
-            onDelete={resources.remove}
-          />
+      {isProcessing && (
+        <Box textAlign="center" m={10}>
+          <Indicator />
         </Box>
-        <Box
-          ml="auto"
-          width="240px"
-          color="text.primary"
-          style={{ flexShrink: 0 }}
-        >
-          <Text typography="h6" mb={3} caps>
-            Role based access control
-          </Text>
-          <Text typography="subtitle1" mb={3}>
-            Kubernetes and SSH authentication in one place. A Teleport role can
-            be assigned based on user identity when used with single sign-on
-            (SSO).
-          </Text>
-          <Text>
-            Learn more in{' '}
-            <Text
-              as="a"
-              color="light"
-              target="_blank"
-              href="https://gravitational.com/teleport/docs/enterprise/ssh_rbac/"
-            >
-              cluster management (RBAC)
-            </Text>{' '}
-            section of online documentation.
-          </Text>
-        </Box>
-      </Flex>
+      )}
+      {isSuccess && (
+        <Flex>
+          <Box width="100%" mr="6" mb="4">
+            <RoleList
+              items={items}
+              onEdit={resources.edit}
+              onDelete={resources.remove}
+            />
+          </Box>
+          <Box
+            ml="auto"
+            width="240px"
+            color="text.primary"
+            style={{ flexShrink: 0 }}
+          >
+            <Text typography="h6" mb={3} caps>
+              Role based access control
+            </Text>
+            <Text typography="subtitle1" mb={3}>
+              Kubernetes and SSH authentication in one place. A Teleport role
+              can be assigned based on user identity when used with single
+              sign-on (SSO).
+            </Text>
+            <Text>
+              Learn more in{' '}
+              <Text
+                as="a"
+                color="light"
+                target="_blank"
+                href="https://gravitational.com/teleport/docs/enterprise/ssh_rbac/"
+              >
+                cluster management (RBAC)
+              </Text>{' '}
+              section of online documentation.
+            </Text>
+          </Box>
+        </Flex>
+      )}
       {(resources.status === 'creating' || resources.status === 'editing') && (
         <ResourceEditor
           docsURL="https://gravitational.com/teleport/docs/enterprise/ssh_rbac/"

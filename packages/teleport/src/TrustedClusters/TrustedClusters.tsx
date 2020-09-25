@@ -34,7 +34,8 @@ import { emptyPng } from './assets';
 
 export default function TrustedClusters() {
   const tclusters = useTrustedClusters();
-  const isEmpty = tclusters.items.length === 0;
+  const isEmpty = tclusters.isSuccess && tclusters.items.length === 0;
+  const hasClusters = tclusters.isSuccess && tclusters.items.length > 0;
   const resources = useResources(tclusters.items, templates);
 
   const title =
@@ -51,24 +52,11 @@ export default function TrustedClusters() {
     return tclusters.save(content, isNew);
   }
 
-  if (tclusters.isProcessing) {
-    return (
-      <FeatureBox>
-        <FeatureHeader alignItems="center">
-          <FeatureHeaderTitle>Trusted Clusters</FeatureHeaderTitle>
-        </FeatureHeader>
-        <Box textAlign="center" m={10}>
-          <Indicator />
-        </Box>
-      </FeatureBox>
-    );
-  }
-
   return (
     <FeatureBox>
       <FeatureHeader alignItems="center">
         <FeatureHeaderTitle>Trusted Clusters</FeatureHeaderTitle>
-        {!isEmpty && (
+        {hasClusters && (
           <ButtonPrimary
             disabled={!tclusters.canCreate}
             ml="auto"
@@ -80,13 +68,18 @@ export default function TrustedClusters() {
         )}
       </FeatureHeader>
       {tclusters.isFailed && <Danger>{tclusters.message} </Danger>}
+      {tclusters.isProcessing && (
+        <Box textAlign="center" m={10}>
+          <Indicator />
+        </Box>
+      )}
       {isEmpty && (
         <Empty
           disabled={!tclusters.canCreate}
           onCreate={() => resources.create('trusted_cluster')}
         />
       )}
-      {!isEmpty && (
+      {hasClusters && (
         <Flex alignItems="start">
           <TrustedList
             mt="4"

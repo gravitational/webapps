@@ -51,19 +51,6 @@ export default function AuthConnectors() {
     return connectors.save(content, isNew);
   }
 
-  if (isProcessing) {
-    return (
-      <FeatureBox>
-        <FeatureHeader>
-          <FeatureHeaderTitle>Auth Connectors</FeatureHeaderTitle>
-        </FeatureHeader>
-        <Box textAlign="center" m={10}>
-          <Indicator />
-        </Box>
-      </FeatureBox>
-    );
-  }
-
   return (
     <FeatureBox>
       <FeatureHeader>
@@ -73,6 +60,11 @@ export default function AuthConnectors() {
         </Box>
       </FeatureHeader>
       {isFailed && <Danger>{message} </Danger>}
+      {isProcessing && (
+        <Box textAlign="center" m={10}>
+          <Indicator />
+        </Box>
+      )}
       {isSuccess && (
         <Flex alignItems="start">
           {isEmpty && (
