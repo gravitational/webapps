@@ -14,18 +14,18 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import { matchPath } from 'react-router';
+import { matchPath, useHistory } from 'react-router';
 import session from 'teleport/services/session';
 import Ctx from 'teleport/teleportContext';
-import history from 'teleport/services/history';
 import cfg from 'teleport/config';
 import { StickyCluster } from 'teleport/useStickyClusterId';
 
 export default function useTopBar(ctx: Ctx, stickyCluster: StickyCluster) {
-  const loc = history.getLocation() as Location;
+  const history = useHistory();
   const { clusterId, hasClusterUrl } = stickyCluster;
   const popupItems = ctx.storeNav.getTopMenuItems();
   const { username } = ctx.storeUser.state;
+  const loc = history.location;
 
   // find active feature
   const feature = ctx.features.find(f =>

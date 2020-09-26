@@ -16,6 +16,7 @@ limitations under the License.
 
 import React from 'react';
 import { Nodes } from './Nodes';
+import { nodes } from './fixtures';
 
 type PropTypes = Parameters<typeof Nodes>[0];
 
@@ -53,83 +54,3 @@ function render(attemptOptions: Partial<PropTypes['attempt']>) {
 
   return <Nodes {...props} />;
 }
-
-const nodes = [
-  {
-    tunnel: false,
-    id: '104',
-    clusterId: 'one',
-    hostname: 'fujedu',
-    addr: '172.10.1.20:3022',
-    tags: [
-      { name: 'cluster', value: 'one' },
-      { name: 'kernel', value: '4.15.0-51-generic' },
-    ],
-  },
-  {
-    tunnel: false,
-    id: '170',
-    clusterId: 'one',
-    hostname: 'facuzguv',
-    addr: '172.10.1.1:3022',
-    tags: [
-      { name: 'cluster', value: 'one' },
-      { name: 'kernel', value: '4.15.0-51-generic' },
-    ],
-  },
-  {
-    tunnel: false,
-    id: '192',
-    clusterId: 'one',
-    hostname: 'duzsevkig',
-    addr: '172.10.1.1:3022',
-    tags: [
-      { name: 'cluster', value: 'one' },
-      { name: 'kernel', value: '4.15.0-51-generic' },
-    ],
-  },
-  {
-    tunnel: false,
-    id: '64',
-    clusterId: 'one',
-    hostname: 'kuhinur',
-    addr: '172.10.1.1:3022',
-    tags: [
-      { name: 'cluster', value: 'one' },
-      { name: 'kernel', value: '4.15.0-51-generic' },
-    ],
-  },
-  {
-    tunnel: false,
-    id: '81',
-    clusterId: 'one',
-    hostname: 'zebpecda',
-    addr: '172.10.1.1:3022',
-    tags: [
-      { name: 'cluster', value: 'one' },
-      { name: 'kernel', value: '4.15.0-51-generic' },
-    ],
-  },
-  {
-    tunnel: true,
-    id: '81',
-    clusterId: 'one',
-    hostname: 'zebpecda',
-    addr: '172.10.1.1:3022',
-    tags: [
-      { name: 'cluster', value: 'one' },
-      { name: 'kernel', value: '4.15.0-51-generic' },
-    ],
-  },
-  {
-    tunnel: true,
-    id: '81',
-    clusterId: 'one',
-    hostname: 'zebpecda',
-    addr: '172.10.1.1:3022',
-    tags: [
-      { name: 'cluster', value: 'one' },
-      { name: 'kernel', value: '4.15.0-51-generic' },
-    ],
-  },
-];
