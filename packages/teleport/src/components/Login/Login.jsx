@@ -107,7 +107,7 @@ function getEntryRoute() {
   if (entryUrl) {
     entryUrl = history.ensureKnownRoute(entryUrl);
   } else {
-    entryUrl = cfg.routes.app;
+    entryUrl = cfg.routes.root;
   }
 
   return history.ensureBaseUrl(entryUrl);

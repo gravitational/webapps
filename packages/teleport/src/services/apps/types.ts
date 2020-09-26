@@ -22,7 +22,10 @@ export interface Label {
 export interface App {
   id: string;
   name: string;
+  uri: string;
+  publicAddr: string;
+  labels: Label[];
   clusterId: string;
-  hostname?: string;
-  publicAddr?: string;
+  activationUrl: string;
+  fqdn: string;
 }

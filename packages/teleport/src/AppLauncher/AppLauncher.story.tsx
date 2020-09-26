@@ -14,30 +14,17 @@
  * limitations under the License.
  */
 
-import { at } from 'lodash';
-import { App } from './types';
-import cfg from 'teleport/config';
+import React from 'react';
+import { AppLauncher } from './AppLauncher';
 
-export default function makeApps(json): App {
-  const [name, uri, publicAddr, labels, clusterId, fqdn] = at(json, [
-    'name',
-    'uri',
-    'publicAddr',
-    'labels',
-    'clusterId',
-    'fqdn',
-  ]);
+export default {
+  title: 'Teleport/AppLauncher',
+};
 
-  const id = `${clusterId}-${name}-${publicAddr}`;
+export const Processing = () => {
+  return <AppLauncher status="processing" statusText="" />;
+};
 
-  return {
-    id,
-    name,
-    uri,
-    publicAddr,
-    labels,
-    clusterId,
-    fqdn,
-    activationUrl: cfg.getAppLauncherRoute(fqdn),
-  };
-}
+export const Failed = () => {
+  return <AppLauncher status="failed" statusText="" />;
+};

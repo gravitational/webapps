@@ -70,7 +70,7 @@ const history = {
   },
 
   ensureKnownRoute(url) {
-    url = this._canPush(url) ? url : cfg.routes.app;
+    url = this._canPush(url) ? url : cfg.routes.root;
     return url;
   },
 

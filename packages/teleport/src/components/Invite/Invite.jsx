@@ -89,7 +89,7 @@ function mapState() {
   }, []);
 
   function redirect() {
-    history.push(cfg.routes.app, true);
+    history.push(cfg.routes.root, true);
   }
 
   function handleSubmitError(err) {

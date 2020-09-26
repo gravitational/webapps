@@ -39,8 +39,9 @@ const cfg = {
   },
 
   routes: {
-    app: '/web',
-    applications: '/web/cluster/:clusterId/apps',
+    root: '/web',
+    apps: '/web/cluster/:clusterId/apps',
+    appLauncher: '/web/launcher/:fqdn',
     support: '/web/support',
     settings: '/web/settings',
     account: '/web/account',
@@ -74,6 +75,7 @@ const cfg = {
   },
 
   api: {
+    aapSession: '/v1/webapi/sessions/app',
     // TODO backend: define this endpoint
     applicationsPath: '/v1/webapi/sites/:clusterId/apps',
     clustersPath: '/v1/webapi/sites',
@@ -144,7 +146,7 @@ const cfg = {
   },
 
   getAppsRoute(clusterId: string) {
-    return generatePath(cfg.routes.applications, { clusterId });
+    return generatePath(cfg.routes.apps, { clusterId });
   },
 
   getSessionsRoute(clusterId: string) {
@@ -183,6 +185,10 @@ const cfg = {
 
   getConsoleRoute(clusterId: string) {
     return generatePath(cfg.routes.console, { clusterId });
+  },
+
+  getAppLauncherRoute(fqdn: string) {
+    return generatePath(cfg.routes.appLauncher, { fqdn });
   },
 
   getPlayerRoute({ clusterId, sid }: UrlParams) {

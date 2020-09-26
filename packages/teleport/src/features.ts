@@ -324,15 +324,15 @@ export class FeatureApps {
 
   route = {
     title: 'Applications',
-    path: cfg.routes.applications,
+    path: cfg.routes.apps,
     exact: true,
     component: Applications,
   };
 
   register(ctx: Ctx) {
-    //if (!ctx.isApplicationsEnabled()) {
-    //  return;
-    //}
+    if (!ctx.isApplicationsEnabled()) {
+      return;
+    }
 
     ctx.storeNav.addSideItem({
       title: 'Applications',
@@ -380,9 +380,9 @@ export default function getFeatures() {
   return [
     new FeatureNodes(),
     new FeatureApps(),
-    new FeatureAudit(),
-    new FeatureRecordings(),
     new FeatureSessions(),
+    new FeatureRecordings(),
+    new FeatureAudit(),
     new FeatureAccount(),
     new FeatureHelpAndSupport(),
     new FeatureClusters(),
