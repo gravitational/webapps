@@ -14,17 +14,9 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React from 'react';
-import EventList from './EventList';
 import { makeEvent } from 'teleport/services/audit';
 
-export default {
-  title: 'Teleport/Audit/List',
-};
-
-export const Events = () => <EventList {...defaultProps} />;
-
-const events = [
+export const events = [
   {
     code: 'T1004I',
     uid: 'b121fc4c-e419-56a2-a760-19cd746c0650',
@@ -401,10 +393,4 @@ const events = [
     uid: '183ca6de-c24b-4f67-854f-163c01245fa1',
     user: 'admin@example.com',
   },
-];
-
-const defaultProps = {
-  clusterId: 'mama',
-  search: '',
-  events: events.map(makeEvent),
-};
+].map(makeEvent);

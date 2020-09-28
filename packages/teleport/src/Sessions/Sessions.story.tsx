@@ -1,5 +1,5 @@
 /*
-Copyright 2019 Gravitational, Inc.
+Copyright 2020 Gravitational, Inc.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -16,6 +16,7 @@ limitations under the License.
 
 import React from 'react';
 import { Sessions } from './Sessions';
+import { sessions } from './fixtures';
 
 export default {
   title: 'Teleport/ActiveSessions',
@@ -39,29 +40,3 @@ export function Loaded() {
 const onRefresh = () => {
   return Promise.resolve();
 };
-
-const sessions = [
-  {
-    id: 'BZ',
-    namespace: 'AG',
-    login: 'root',
-    active: 'AZ',
-    created: new Date('2019-04-22T00:00:51.543Z'),
-    durationText: '12 min',
-    serverId: '10_128_0_6.demo.gravitational.io',
-    clusterId: 'one',
-    hostname: 'localhost',
-    sid: 'sid0',
-    addr: '1.1.1.1',
-    parties: [
-      {
-        user: 'hehwawe@aw.sg',
-        remoteAddr: '129.232.123.132',
-      },
-      {
-        user: 'ma@pewu.tz',
-        remoteAddr: '129.232.123.132',
-      },
-    ],
-  },
-];
