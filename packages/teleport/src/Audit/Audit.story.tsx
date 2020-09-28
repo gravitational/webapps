@@ -21,17 +21,18 @@ import TeleportContext, {
   ReactContextProvider,
 } from 'teleport/teleportContext';
 import Audit from './Audit';
+import { events } from './fixtures';
 
 export default {
   title: 'Teleport/Audit',
 };
 
-export const AuditLog = () => {
+export const Loaded = () => {
   const ctx = new TeleportContext();
   ctx.auditService.fetchEvents = () =>
     Promise.resolve({
       overflow: false,
-      events: [],
+      events,
     });
 
   return render(ctx);

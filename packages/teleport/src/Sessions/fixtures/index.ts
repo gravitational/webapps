@@ -1,5 +1,5 @@
 /*
-Copyright 2019 Gravitational, Inc.
+Copyright 2020 Gravitational, Inc.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -14,32 +14,28 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React from 'react';
-import Component from './RangePicker';
-
-export default {
-  title: 'Teleport/Audit/RangePicker',
-};
-
-export const Picker = () => <Component {...props} />;
-
-const options = [
+export const sessions = [
   {
-    name: '7 days',
-    from: new Date(),
-    to: new Date(),
-  },
-  {
-    name: 'Custom Range...',
-    isCustom: true,
-    from: new Date(),
-    to: new Date(),
+    id: 'BZ',
+    namespace: 'AG',
+    login: 'root',
+    active: 'AZ',
+    created: new Date('2019-04-22T00:00:51.543Z'),
+    durationText: '12 min',
+    serverId: '10_128_0_6.demo.gravitational.io',
+    clusterId: 'one',
+    hostname: 'localhost',
+    sid: 'sid0',
+    addr: '1.1.1.1',
+    parties: [
+      {
+        user: 'hehwawe@aw.sg',
+        remoteAddr: '129.232.123.132',
+      },
+      {
+        user: 'ma@pewu.tz',
+        remoteAddr: '129.232.123.132',
+      },
+    ],
   },
 ];
-
-const props = {
-  disabled: false,
-  value: options[0],
-  options,
-  onChange: () => {},
-};
