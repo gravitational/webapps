@@ -19,33 +19,19 @@ import api from 'teleport/services/api';
 import cfg from 'teleport/config';
 import makeApps from './makeApps';
 
-const apps = [
-  {
-    id: '1',
-    name: 'jenkins',
-    clusterId: 'root-cluster-name',
-    addr: '',
-  },
-  {
-    id: '2',
-    name: 'github',
-    clusterId: 'leaf-cluster-name',
-    addr: '',
-  },
-  {
-    id: '3',
-    name: 'slack',
-    clusterId: 'leaf2-cluster-longNameFormat-reallyLong',
-    addr: '',
-  },
-];
-
 const service = {
   fetchApps(clusterId: string) {
-    return Promise.resolve(apps);
-    //return api
-    //  .get(cfg.getApplicationsUrl(clusterId))
-    //  .then(json => map(json.items, makeApps));
+    return api
+      .get(cfg.getApplicationsUrl(clusterId))
+      .then(json => map(json.items, makeApps));
+  },
+
+  createAppSession(fqdn: string) {
+    return api
+      .post(cfg.api.aapSession, {
+        fqdn,
+      })
+      .then(json => json.value as string);
   },
 };
 

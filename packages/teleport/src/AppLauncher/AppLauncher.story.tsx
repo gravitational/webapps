@@ -14,18 +14,17 @@
  * limitations under the License.
  */
 
-export interface Label {
-  name: string;
-  value: string;
-}
+import React from 'react';
+import { AppLauncher } from './AppLauncher';
 
-export interface App {
-  id: string;
-  name: string;
-  uri: string;
-  publicAddr: string;
-  labels: Label[];
-  clusterId: string;
-  launchUrl: string;
-  fqdn: string;
-}
+export default {
+  title: 'Teleport/AppLauncher',
+};
+
+export const Processing = () => {
+  return <AppLauncher status="processing" statusText="" />;
+};
+
+export const Failed = () => {
+  return <AppLauncher status="failed" statusText="" />;
+};

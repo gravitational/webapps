@@ -48,7 +48,7 @@ export function SideNav(props: ReturnType<typeof useSideNav>) {
 
   return (
     <Nav>
-      <LogoItem pl="4" width="208px" as={Link} to={cfg.routes.app}>
+      <LogoItem pl="4" width="208px" as={Link} to={cfg.routes.root}>
         <Image src={logoSvg} mx="3" maxHeight="24px" maxWidth="160px" />
       </LogoItem>
       <div

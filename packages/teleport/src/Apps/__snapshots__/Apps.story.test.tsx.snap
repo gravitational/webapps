@@ -517,7 +517,7 @@ exports[`loaded state 1`] = `
         <a
           class="c10"
           color="text.primary"
-          href=""
+          href="/web/launch/one"
           style="text-decoration: none;"
           tabindex="-1"
           target="_blank"
@@ -538,7 +538,7 @@ exports[`loaded state 1`] = `
             class="c13"
             style="text-align: center; width: 100%; text-transform: capitalize;"
           >
-            root-cluster-name
+            one
           </div>
         </a>
       </div>
@@ -565,7 +565,7 @@ exports[`loaded state 1`] = `
         <a
           class="c10"
           color="text.primary"
-          href=""
+          href="/web/launch/two"
           style="text-decoration: none;"
           tabindex="-1"
           target="_blank"
@@ -580,61 +580,13 @@ exports[`loaded state 1`] = `
             class="c12"
             style="text-align: center; width: 100%; text-transform: capitalize;"
           >
-            github
+            jenkins
           </div>
           <div
             class="c13"
             style="text-align: center; width: 100%; text-transform: capitalize;"
           >
-            leaf-cluster-name
-          </div>
-        </a>
-      </div>
-      <div
-        class="c5"
-        height="240px"
-        width="240px"
-      >
-        <div
-          class="c6"
-          width="100%"
-        >
-          <button
-            class="c7"
-            data-testid="button"
-            style="right: 10px; position: absolute; top: 10px;"
-          >
-            <span
-              class="c8 c9 icon icon-ellipsis "
-              color="light"
-            />
-          </button>
-        </div>
-        <a
-          class="c10"
-          color="text.primary"
-          href=""
-          style="text-decoration: none;"
-          tabindex="-1"
-          target="_blank"
-          width="220px"
-        >
-          <span
-            class="c8 c11 icon icon-new-tab "
-            color="light"
-            font-size="62px"
-          />
-          <div
-            class="c12"
-            style="text-align: center; width: 100%; text-transform: capitalize;"
-          >
-            slack
-          </div>
-          <div
-            class="c13"
-            style="text-align: center; width: 100%; text-transform: capitalize;"
-          >
-            leaf2-cluster-longNameFormat-reallyLong
+            two
           </div>
         </a>
       </div>

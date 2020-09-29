@@ -25,7 +25,9 @@ import Authenticated from 'teleport/components/Authenticated';
 import Player from 'teleport/Player';
 import cfg from 'teleport/config';
 import Main from './Main';
+import AppLauncher from './AppLauncher';
 import { useFavicon } from 'shared/hooks';
+
 const teleportIco = require('./favicon.ico').default;
 
 const Teleport = ({ history, children }) => {
@@ -56,8 +58,16 @@ const Teleport = ({ history, children }) => {
               path={cfg.routes.userReset}
               component={ResetPassword}
             />
-            <Route path={cfg.routes.app}>
-              <Authenticated>{renderAuthenticated(children)}</Authenticated>
+            <Route path={cfg.routes.root}>
+              <Authenticated>
+                <Switch>
+                  <Route
+                    path={cfg.routes.appLauncher}
+                    component={AppLauncher}
+                  />
+                  <Route>{renderAuthenticated(children)}</Route>
+                </Switch>
+              </Authenticated>
             </Route>
           </Switch>
         </Router>
@@ -68,6 +78,7 @@ const Teleport = ({ history, children }) => {
 
 // TODO: make it lazy loadable
 function renderAuthenticated(children) {
+  // this is how enterprise version renders it's own routes
   if (children) {
     return children;
   }
@@ -76,7 +87,7 @@ function renderAuthenticated(children) {
     <Switch>
       <Route path={cfg.routes.console} component={Console} />
       <Route path={cfg.routes.player} component={Player} />
-      <Route path={cfg.routes.app} component={Main} />
+      <Route path={cfg.routes.root} component={Main} />
     </Switch>
   );
 }
