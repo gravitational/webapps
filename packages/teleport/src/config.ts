@@ -29,8 +29,6 @@ const cfg = {
     second_factor: 'off',
   },
 
-  canJoinSessions: true,
-
   proxyCluster: 'localhost',
 
   loc: {
