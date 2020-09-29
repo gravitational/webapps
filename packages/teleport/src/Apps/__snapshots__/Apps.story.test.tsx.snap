@@ -517,7 +517,7 @@ exports[`loaded state 1`] = `
         <a
           class="c10"
           color="text.primary"
-          href="/web/launcher/one"
+          href="/web/launch/one"
           style="text-decoration: none;"
           tabindex="-1"
           target="_blank"
@@ -565,7 +565,7 @@ exports[`loaded state 1`] = `
         <a
           class="c10"
           color="text.primary"
-          href="/web/launcher/two"
+          href="/web/launch/two"
           style="text-decoration: none;"
           tabindex="-1"
           target="_blank"

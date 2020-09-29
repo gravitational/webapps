@@ -97,7 +97,7 @@ const sample = {
       publicAddr: 'jenkins.one',
       clusterId: 'one',
       fqdn: 'jenkins.one',
-      launchUrl: '/web/launcher/one',
+      launchUrl: '/web/launch/one',
       labels: [],
     },
     {
@@ -107,7 +107,7 @@ const sample = {
       publicAddr: 'jenkins.two',
       clusterId: 'two',
       fqdn: 'jenkins.two',
-      launchUrl: '/web/launcher/two',
+      launchUrl: '/web/launch/two',
       labels: [],
     },
   ],
