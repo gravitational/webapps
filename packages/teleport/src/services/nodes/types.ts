@@ -27,3 +27,8 @@ export interface Node {
   addr: string;
   tunnel: boolean;
 }
+
+export interface NodeJoinToken {
+  tokenId: string;
+  expires: string;
+}

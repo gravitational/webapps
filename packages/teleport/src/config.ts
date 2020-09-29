@@ -101,6 +101,8 @@ const cfg = {
       'wss://:fqdm/v1/webapi/sites/:clusterId/connect?access_token=:token&params=:params',
     terminalSessionPath: '/v1/webapi/sites/:clusterId/sessions/:sid?',
 
+    nodeJoinToken: 'v1/enterprise/nodes/token',
+    nodeJoinScript: '/v1/enterprise/nodes/token/:token/install.sh',
     usersPath: '/v1/enterprise/users',
     usersDelete: '/v1/enterprise/users/:username',
     resourcePath: '/v1/enterprise/sites/:clusterId/resources/:kind?',
@@ -136,6 +138,14 @@ const cfg = {
 
   getNodesRoute(clusterId: string) {
     return generatePath(cfg.routes.nodes, { clusterId });
+  },
+
+  getNodeJoinTokenUrl() {
+    return cfg.api.nodeJoinToken;
+  },
+
+  getNodeJoinScriptUrl(token: string) {
+    return generatePath(cfg.api.nodeJoinScript, { token });
   },
 
   getUsersRoute() {
