@@ -41,7 +41,7 @@ const cfg = {
   routes: {
     root: '/web',
     apps: '/web/cluster/:clusterId/apps',
-    appLauncher: '/web/launcher/:fqdn',
+    appLauncher: '/web/launch/:fqdn',
     support: '/web/support',
     settings: '/web/settings',
     account: '/web/account',

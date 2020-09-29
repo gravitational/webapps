@@ -26,6 +26,6 @@ export interface App {
   publicAddr: string;
   labels: Label[];
   clusterId: string;
-  activationUrl: string;
+  launchUrl: string;
   fqdn: string;
 }

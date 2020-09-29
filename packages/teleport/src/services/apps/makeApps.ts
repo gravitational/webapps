@@ -38,6 +38,6 @@ export default function makeApps(json): App {
     labels,
     clusterId,
     fqdn,
-    activationUrl: cfg.getAppLauncherRoute(fqdn),
+    launchUrl: cfg.getAppLauncherRoute(fqdn),
   };
 }

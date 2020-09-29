@@ -41,7 +41,7 @@ function Item(props: ItemProps) {
     >
       <Flex width="100%" justifyContent="center">
         <MenuIcon buttonIconProps={menuActionProps}>
-          <MenuItem as="a" href={app.activationUrl} target="_blank">
+          <MenuItem as="a" href={app.launchUrl} target="_blank">
             Open
           </MenuItem>
         </MenuIcon>
@@ -55,7 +55,7 @@ function Item(props: ItemProps) {
         tabIndex={-1}
         target="_blank"
         color="text.primary"
-        href={app.activationUrl}
+        href={app.launchUrl}
         width="220px"
         style={{
           textDecoration: 'none',
