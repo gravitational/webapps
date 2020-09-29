@@ -69,7 +69,7 @@ export function Main(props: ReturnType<typeof useMain>) {
   return (
     <ReactContextProvider value={ctx}>
       <RouterDOM.Switch>
-        <Redirect exact={true} from={cfg.routes.app} to={indexRoute} />
+        <Redirect exact={true} from={cfg.routes.root} to={indexRoute} />
       </RouterDOM.Switch>
       <VerticalSplit>
         <SideNav />

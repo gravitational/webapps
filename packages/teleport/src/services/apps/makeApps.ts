@@ -16,21 +16,28 @@
 
 import { at } from 'lodash';
 import { App } from './types';
+import cfg from 'teleport/config';
 
 export default function makeApps(json): App {
-  const [id, name, clusterId, hostname, publicAddr] = at(json, [
-    'id',
+  const [name, uri, publicAddr, labels, clusterId, fqdn] = at(json, [
     'name',
-    'clusterId',
-    'hostname',
+    'uri',
     'publicAddr',
+    'labels',
+    'clusterId',
+    'fqdn',
   ]);
+
+  const id = `${clusterId}-${name}-${publicAddr}`;
 
   return {
     id,
     name,
-    clusterId,
-    hostname,
+    uri,
     publicAddr,
+    labels,
+    clusterId,
+    fqdn,
+    launchUrl: cfg.getAppLauncherRoute(fqdn),
   };
 }

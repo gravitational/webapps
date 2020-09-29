@@ -26,7 +26,8 @@ export default function AppList({ apps = [] }: Props) {
   return <Flex flexWrap="wrap">{$apps}</Flex>;
 }
 
-function Item({ app, ...rest }) {
+function Item(props: ItemProps) {
+  const { app, ...rest } = props;
   return (
     <StyledAppListItem
       width="240px"
@@ -40,7 +41,9 @@ function Item({ app, ...rest }) {
     >
       <Flex width="100%" justifyContent="center">
         <MenuIcon buttonIconProps={menuActionProps}>
-          <MenuItem onClick={() => null}>Open...</MenuItem>
+          <MenuItem as="a" href={app.launchUrl} target="_blank">
+            Open
+          </MenuItem>
         </MenuIcon>
       </Flex>
       <Flex
@@ -52,7 +55,7 @@ function Item({ app, ...rest }) {
         tabIndex={-1}
         target="_blank"
         color="text.primary"
-        href={app.addr}
+        href={app.launchUrl}
         width="220px"
         style={{
           textDecoration: 'none',
@@ -89,6 +92,11 @@ const StyledAppListItem = styled(Flex)`
 
 type Props = {
   apps: App[];
+};
+
+type ItemProps = {
+  app: App;
+  [name: string]: any;
 };
 
 const menuActionProps = {

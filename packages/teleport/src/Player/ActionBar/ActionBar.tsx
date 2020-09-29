@@ -28,7 +28,7 @@ export default function ActionBar({ onLogout }: Props) {
         buttonIconProps={{ mr: 2, ml: 2, size: 0, style: { fontSize: '16px' } }}
         menuProps={menuProps}
       >
-        <MenuItem as={NavLink} to={cfg.routes.app}>
+        <MenuItem as={NavLink} to={cfg.routes.root}>
           <MenuItemIcon as={Icons.Home} mr="2" />
           Home
         </MenuItem>
