@@ -48,7 +48,9 @@ export default function NodeAddByAuto(props: Props) {
     return ctx.nodeService.getNodeJoinToken().then(resp => {
       setToken(resp);
       setScript(
-        `curl -k ${cfg.baseUrl}${cfg.getNodeJoinScriptUrl(resp.tokenId)} | sh`
+        `curl -k ${cfg.baseUrl}${cfg.getNodeJoinScriptUrl(
+          resp.tokenId
+        )} | sudo bash`
       );
     });
   }

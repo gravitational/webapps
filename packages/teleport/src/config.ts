@@ -101,12 +101,13 @@ const cfg = {
       'wss://:fqdm/v1/webapi/sites/:clusterId/connect?access_token=:token&params=:params',
     terminalSessionPath: '/v1/webapi/sites/:clusterId/sessions/:sid?',
 
-    nodeJoinToken: 'v1/enterprise/nodes/token',
-    nodeJoinScript: '/v1/enterprise/nodes/token/:token/install.sh',
     usersPath: '/v1/enterprise/users',
     usersDelete: '/v1/enterprise/users/:username',
     resourcePath: '/v1/enterprise/sites/:clusterId/resources/:kind?',
     removeResourcePath: '/v1/enterprise/sites/:clusterId/resources/:kind/:id',
+    nodeJoinToken: '/v1/enterprise/nodes/token',
+
+    nodeJoinScript: '/scripts/:token/install-node.sh',
   },
 
   getClusterEventsUrl(clusterId: string, params: UrlClusterEventsParams) {
