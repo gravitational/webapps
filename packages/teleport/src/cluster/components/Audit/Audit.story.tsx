@@ -27,7 +27,11 @@ export default {
 
 export const AuditLog = () => {
   const ctx = new TeleportContext();
-  ctx.auditService.fetchEvents = () => Promise.resolve(null);
+  ctx.auditService.fetchEvents = () =>
+    Promise.resolve({
+      overflow: false,
+      events: [],
+    });
 
   return render(ctx);
 };
