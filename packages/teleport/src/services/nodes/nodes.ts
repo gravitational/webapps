@@ -28,7 +28,7 @@ const service = {
   },
 
   getNodeJoinToken() {
-    return api.get(cfg.getNodeJoinTokenUrl).then(makeNodeJoinToken);
+    return api.post(cfg.getNodeJoinTokenUrl()).then(makeNodeJoinToken);
   },
 };
 

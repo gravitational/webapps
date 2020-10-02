@@ -18,7 +18,7 @@ import React from 'react';
 import { ButtonPrimary } from 'design';
 
 export default function AddButton(props: Props) {
-  const Btn = props.isAdmin ? AddServer : ViewDocs;
+  const Btn = props.canCreate ? AddServer : ViewDocs;
   return <Btn width="240px" onClick={props.onClick} {...props} />;
 }
 
@@ -37,7 +37,7 @@ const ViewDocs = props => (
 );
 
 type Props = {
-  isAdmin: boolean;
+  canCreate: boolean;
   onClick?: () => void;
   mb?: string;
   mx?: string;

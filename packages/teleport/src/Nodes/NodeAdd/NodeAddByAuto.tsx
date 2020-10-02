@@ -32,7 +32,7 @@
 
 import React, { useEffect, useState } from 'react';
 import useTeleport from 'teleport/useTeleport';
-import TextSelectCopy from 'shared/components/TextSelectCopy';
+import TextSelectCopy from 'teleport/components/TextSelectCopy';
 import cfg from 'teleport/config';
 import { useAttemptNext } from 'shared/hooks';
 import { Alert, Text, Indicator, Box, Flex, ButtonLink } from 'design';
@@ -48,9 +48,7 @@ export default function NodeAddByAuto(props: Props) {
     return ctx.nodeService.getNodeJoinToken().then(resp => {
       setToken(resp);
       setScript(
-        `curl -k ${cfg.baseUrl}${cfg.getNodeJoinScriptUrl(
-          resp.tokenId
-        )} | sudo bash`
+        `sudo bash -c "$(curl -fsSL ${cfg.getNodeJoinScriptUrl(resp.id)})"`
       );
     });
   }

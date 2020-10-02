@@ -43,6 +43,7 @@ export interface Acl {
   users: Access;
   apps: Access;
   tokens: Access;
+  nodes: Access;
 }
 
 export interface User {

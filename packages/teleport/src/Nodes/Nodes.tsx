@@ -30,6 +30,9 @@ import useStickyClusterId from 'teleport/useStickyClusterId';
 import useNodes from './useNodes';
 import Empty from './Empty';
 import AddButton from './AddButton';
+import NodeAddEnterprise from 'teleport/Nodes/NodeAdd/NodeAddOptions';
+import NodeAddOSS from 'teleport/Nodes/NodeAdd/NodeAddByCustom';
+import cfg from 'teleport/config';
 
 export default function Container() {
   const teleCtx = useTeleport();
@@ -48,9 +51,12 @@ export function Nodes(props: ReturnType<typeof useNodes>) {
     attempt,
   } = props;
 
-  const isAdmin = false;
+  const ctx = useTeleport().storeUser;
+
+  const canCreate = attempt.isSuccess && ctx.getNodeAccess().create;
   const isEmpty = attempt.isSuccess && nodes.length === 0;
   const hasNodes = attempt.isSuccess && nodes.length > 0;
+  const [showDialog, setShowDialog] = React.useState(false);
 
   function onLoginSelect(e: React.MouseEvent, login: string, serverId: string) {
     e.preventDefault();
@@ -63,14 +69,25 @@ export function Nodes(props: ReturnType<typeof useNodes>) {
 
   if (isEmpty) {
     return (
-      <FeatureNodes isAdmin={isAdmin}>
-        <Empty isAdmin={false} onCreate={() => null} />
+      <FeatureNodes canCreate={canCreate}>
+        <Empty canCreate={canCreate} onCreate={() => null} />
       </FeatureNodes>
     );
   }
 
+  let NodeAddDialog;
+  if (cfg.isEnterprise) {
+    NodeAddDialog = <NodeAddEnterprise onClose={() => setShowDialog(false)} />;
+  } else {
+    NodeAddDialog = <NodeAddOSS onClose={() => setShowDialog(false)} />;
+  }
+
   return (
-    <FeatureNodes isAdmin={isAdmin}>
+    <FeatureNodes
+      canCreate={canCreate}
+      onClick={() => setShowDialog(true)}
+      showBtn={attempt.isSuccess}
+    >
       <Flex mb={4} alignItems="center" justifyContent="space-between">
         <InputSearch height="30px" mr="3" onChange={setSearchValue} />
         <QuickLaunch
@@ -93,18 +110,27 @@ export function Nodes(props: ReturnType<typeof useNodes>) {
           onLoginSelect={onLoginSelect}
         />
       )}
+      {showDialog && NodeAddDialog}
     </FeatureNodes>
   );
 }
 
-const FeatureNodes: React.FC<{ isAdmin: boolean }> = props => {
+const FeatureNodes: React.FC<Props> = props => {
   return (
     <FeatureBox>
       <FeatureHeader alignItems="center" justifyContent="space-between">
         <FeatureHeaderTitle>Servers</FeatureHeaderTitle>
-        <AddButton isAdmin={props.isAdmin} />
+        {props.showBtn && (
+          <AddButton canCreate={props.canCreate} onClick={props.onClick} />
+        )}
       </FeatureHeader>
       {props.children}
     </FeatureBox>
   );
+};
+
+type Props = {
+  canCreate: boolean;
+  showBtn?: boolean;
+  onClick?(): void;
 };

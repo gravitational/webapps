@@ -31,7 +31,7 @@
  */
 
 import React from 'react';
-import TextSelectCopy from 'shared/components/TextSelectCopy';
+import TextSelectCopy from 'teleport/components/TextSelectCopy';
 import { Text } from 'design';
 
 export default function NodeAddByCustom(props: Props) {

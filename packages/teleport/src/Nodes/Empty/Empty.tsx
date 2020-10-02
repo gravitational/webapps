@@ -39,7 +39,7 @@ export default function Empty(props: Props) {
           </Text>
         </Box>
         <AddButton
-          isAdmin={props.isAdmin}
+          canCreate={props.canCreate}
           onClick={props.onCreate}
           mb="2"
           mx="auto"
@@ -52,6 +52,6 @@ export default function Empty(props: Props) {
 }
 
 type Props = {
-  isAdmin: boolean;
+  canCreate: boolean;
   onCreate(): void;
 };

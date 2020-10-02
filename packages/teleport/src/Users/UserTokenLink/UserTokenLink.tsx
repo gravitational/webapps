@@ -16,7 +16,7 @@
 
 import React from 'react';
 import moment from 'moment';
-import TextSelectCopy from 'shared/components/TextSelectCopy';
+import TextSelectCopy from 'teleport/components/TextSelectCopy';
 import { ButtonSecondary, Text } from 'design';
 import Dialog, {
   DialogHeader,

@@ -146,7 +146,7 @@ const cfg = {
   },
 
   getNodeJoinScriptUrl(token: string) {
-    return generatePath(cfg.api.nodeJoinScript, { token });
+    return cfg.baseUrl + generatePath(cfg.api.nodeJoinScript, { token });
   },
 
   getUsersRoute() {

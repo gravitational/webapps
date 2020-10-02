@@ -29,6 +29,6 @@ export interface Node {
 }
 
 export interface NodeJoinToken {
-  tokenId: string;
+  id: string;
   expires: string;
 }
