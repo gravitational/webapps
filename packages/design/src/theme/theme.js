@@ -32,6 +32,7 @@ const colors = {
   primary: {
     main: '#1C254D',
     light: '#222C59',
+    lightGradient: 'linear-gradient(140deg, #2C3A73, #222C59)',
     lighter: '#2C3A73',
     dark: '#111B48',
     contrastText: '#FFFFFF',

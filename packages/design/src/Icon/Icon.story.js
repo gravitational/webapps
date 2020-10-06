@@ -169,6 +169,7 @@ export const ListOfIcons = () => (
     <IconBox IconCmpt={Icon.VolumeUp} text="VolumeUp" />
     <IconBox IconCmpt={Icon.VpnKey} text="VpnKey" />
     <IconBox IconCmpt={Icon.Warning} text="Warning" />
+    <IconBox IconCmpt={Icon.Wand} text="Wand" />
     <IconBox IconCmpt={Icon.Wifi} text="Wifi" />
     <IconBox IconCmpt={Icon.Windows} text="Windows" />
     <IconBox IconCmpt={Icon.Youtube} text="Youtube" />

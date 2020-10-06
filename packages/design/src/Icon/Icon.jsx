@@ -237,6 +237,7 @@ export const VideoGame = makeFontIcon('VideoGame', 'icon-videogame_asset');
 export const Visa = makeFontIcon('Visa', 'icon-cc-visa');
 export const VolumeUp = makeFontIcon('VolumeUp', 'icon-volume-high');
 export const VpnKey = makeFontIcon('VpnKey', 'icon-vpn_key');
+export const Wand = makeFontIcon('Wand', 'icon-magic-wand');
 export const Warning = makeFontIcon('Warning', 'icon-warning');
 export const Wifi = makeFontIcon('Wifi', 'icon-wifi');
 export const Windows = makeFontIcon('Windows', 'icon-windows');

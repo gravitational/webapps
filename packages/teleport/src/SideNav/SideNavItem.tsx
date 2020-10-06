@@ -28,10 +28,16 @@ const fromTheme = ({ $nested = false, theme = defaultTheme }) => {
     background: theme.colors.primary.light,
     color: theme.colors.text.secondary,
     minHeight: '56px',
+
     '&:active, &.active': {
-      borderLeftColor: theme.colors.accent,
+      borderLeftColor: $nested ? 'none':theme.colors.accent,
       background: theme.colors.primary.lighter,
       color: theme.colors.primary.contrastText,
+      fontWeight: theme.bold,
+
+      '.marker': {
+        background:  theme.colors.secondary.light
+      }
     },
 
     '&:hover, &:focus': {
@@ -41,9 +47,12 @@ const fromTheme = ({ $nested = false, theme = defaultTheme }) => {
   };
 
   if ($nested) {
+    css.position = "relative";
+    css.fontSize =  '11px';
+    css.background =  'none';
     css.fontWeight = theme.regular;
-    css.paddingLeft = theme.space[10] + 'px';
-    css.minHeight = '48px';
+    css.paddingLeft = theme.space[11] + 'px';
+    css.minHeight = '40px';
   }
 
   return css;

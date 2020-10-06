@@ -32,21 +32,23 @@ const SideNavItemGroup: React.FC<{ path: string; item: Item }> = props => {
 
   const ArrowIcon = expanded ? Icons.ArrowDown : Icons.ArrowRight;
   const style = {
-    display: expanded ? 'block' : 'none',
+    display: expanded ? 'block' : 'none'
   };
+  console.log(item.items);
 
-  const $children = item.items.map((i, index) => (
-    <SideNavItem
+  const $children = item.items.map((i, index) => {
+    return (<SideNavItem
       key={index}
       $nested={true}
       as={NavLink}
       exact={i.exact}
       to={i.route}
     >
+      <StyledMarker className="marker"></StyledMarker>
       <SideNavItemIcon as={i.Icon} fontSize="2" mr={2} />
-      {i.title}
-    </SideNavItem>
-  ));
+      {i.title} {i.exact}
+    </SideNavItem>);
+  });
 
   return (
     <>
@@ -60,7 +62,7 @@ const SideNavItemGroup: React.FC<{ path: string; item: Item }> = props => {
           style={{ fontSize: '14px' }}
         />
       </StyledGroup>
-      <div style={style}>{$children}</div>
+      <StyledSecondaryContainer style={style}>{$children}</StyledSecondaryContainer>
     </>
   );
 };
@@ -93,6 +95,21 @@ const fromTheme = ({ theme }) => {
     },
   };
 };
+
+
+const StyledSecondaryContainer = styled.div`
+  background: ${(props) => props.theme.colors.primary.lightGradient}; 
+  box-shadow: inset 0 1px 2px rgba(0, 0, 0, .24), inset 0 -1px 3px rgba(0, 0, 0, .12);
+`
+
+const StyledMarker = styled.div`
+  height: 8px; 
+  width: 8px; 
+  position: absolute;
+  top: 16px; 
+  left: 16px; 
+  z-index: 1; 
+`;
 
 const StyledGroup = styled.div`
   ${fromTheme}
