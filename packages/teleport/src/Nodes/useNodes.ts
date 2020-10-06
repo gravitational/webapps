@@ -18,18 +18,18 @@ import { useState, useEffect, useCallback } from 'react';
 import { useAttempt } from 'shared/hooks';
 import TeleportContext from 'teleport/teleportContext';
 import cfg from 'teleport/config';
-import { Node } from 'teleport/services/nodes';
+import { Node, NodeJoinToken } from 'teleport/services/nodes';
 
 export default function useNodes(ctx: TeleportContext, clusterId: string) {
   const [nodes, setNodes] = useState<Node[]>([]);
   const [searchValue, setSearchValue] = useState('');
   const [attempt, attemptActions] = useAttempt({ isProcessing: true });
+  const [token, setToken] = useState<NodeJoinToken>(null);
+  const [showDialog, setShowDialog] = useState(false);
   const logins = ctx.storeUser.getLogins();
 
   useEffect(() => {
-    attemptActions.do(() =>
-      ctx.nodeService.fetchNodes(clusterId).then(setNodes)
-    );
+    fetchNodes();
   }, [clusterId]);
 
   const getNodeLoginOptions = useCallback(
@@ -58,6 +58,26 @@ export default function useNodes(ctx: TeleportContext, clusterId: string) {
     openNewTab(url);
   };
 
+  const getJoinToken = () => {
+    return ctx.nodeService.getNodeJoinToken().then(setToken);
+  };
+
+  const fetchNodes = () => {
+    attemptActions.do(() =>
+      ctx.nodeService.fetchNodes(clusterId).then(setNodes)
+    );
+  };
+
+  const onClose = () => {
+    setShowDialog(false);
+    setToken(null);
+    fetchNodes();
+  };
+
+  const onShow = () => {
+    setShowDialog(true);
+  };
+
   return {
     searchValue,
     setSearchValue,
@@ -65,6 +85,11 @@ export default function useNodes(ctx: TeleportContext, clusterId: string) {
     nodes,
     getNodeLoginOptions,
     startSshSession,
+    token,
+    getJoinToken,
+    showDialog,
+    onClose,
+    onShow,
   };
 }
 

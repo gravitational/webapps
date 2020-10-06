@@ -26,19 +26,24 @@ export default {
 export const Loaded = () => {
   const ctx = new Teleport.Context();
   const acl = makeAcl(sample.acl);
-
   ctx.storeUser.setState({ acl });
-  ctx.nodeService.getNodeJoinToken = () => Promise.resolve(sample.token);
-  return render(ctx, <Dialog onClose={sample.onClose} />);
+
+  return render(ctx, <Dialog {...sample.props} />);
 };
 
 export const Processing = () => {
   const ctx = new Teleport.Context();
   const acl = makeAcl(sample.acl);
-
   ctx.storeUser.setState({ acl });
-  ctx.nodeService.getNodeJoinToken = () => new Promise(() => null);
-  return render(ctx, <Dialog onClose={sample.onClose} />);
+
+  return render(
+    ctx,
+    <Dialog
+      {...sample.props}
+      token={null}
+      getJoinToken={() => new Promise(() => null)}
+    />
+  );
 };
 
 export const Failed = () => {
@@ -48,17 +53,24 @@ export const Failed = () => {
   ctx.storeUser.setState({ acl });
   ctx.nodeService.getNodeJoinToken = () =>
     Promise.reject(new Error('some error message'));
-  return render(ctx, <Dialog onClose={sample.onClose} />);
+  return render(
+    ctx,
+    <Dialog
+      {...sample.props}
+      token={null}
+      getJoinToken={() => Promise.reject(new Error('some error message'))}
+    />
+  );
 };
 
-// Just render default (custom script)
+// Just render default (manually)
 export const NoTokenPermission = () => {
   const ctx = new Teleport.Context();
   const acl = makeAcl(sample.acl);
   acl.tokens.create = false;
-
   ctx.storeUser.setState({ acl });
-  return render(ctx, <Dialog onClose={sample.onClose} />);
+
+  return render(ctx, <Dialog {...sample.props} />);
 };
 
 function render(ctx: Teleport.Context, children: JSX.Element) {
@@ -70,11 +82,18 @@ function render(ctx: Teleport.Context, children: JSX.Element) {
 }
 
 const sample = {
-  token: {
-    tokenId: 'onokdisauhimefamacul',
-    expires: '4h0m0s',
+  props: {
+    token: {
+      id: 'onokdisauhimefamacul',
+      expires: '4h0m0s',
+    },
+    onClose() {
+      return null;
+    },
+    getJoinToken() {
+      return Promise.resolve(null);
+    },
   },
-  onClose() {},
   acl: {
     tokens: {
       create: true,

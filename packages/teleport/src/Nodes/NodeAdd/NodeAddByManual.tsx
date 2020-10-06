@@ -34,7 +34,7 @@ import React from 'react';
 import TextSelectCopy from 'teleport/components/TextSelectCopy';
 import { Text } from 'design';
 
-export default function NodeAddByCustom(props: Props) {
+export default function NodeAddByManaul(props: Props) {
   return (
     <>
       <Text {...props}>
@@ -42,7 +42,10 @@ export default function NodeAddByCustom(props: Props) {
         Step 2 - Install tctl <br />
         Step 3 - Run the following command and configure options to your needs.
       </Text>
-      <TextSelectCopy text="placeholder for custom script...." />
+      <TextSelectCopy
+        text="placeholder for custom script...."
+        isTerminal={true}
+      />
     </>
   );
 }

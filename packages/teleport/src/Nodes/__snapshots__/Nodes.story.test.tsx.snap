@@ -211,15 +211,13 @@ exports[`failed 1`] = `
     >
       Servers
     </div>
-    <a
+    <button
       class="c3"
-      href="https://gravitational.com/teleport/docs/admin-guide/#adding-nodes-to-the-cluster"
       kind="primary"
-      target="_blank"
       width="240px"
     >
-      View documentation
-    </a>
+      Add Server
+    </button>
   </div>
   <div
     class="sc-AxirZ c4"
@@ -667,15 +665,13 @@ exports[`loaded 1`] = `
     >
       Servers
     </div>
-    <a
+    <button
       class="c3"
-      href="https://gravitational.com/teleport/docs/admin-guide/#adding-nodes-to-the-cluster"
       kind="primary"
-      target="_blank"
       width="240px"
     >
-      View documentation
-    </a>
+      Add Server
+    </button>
   </div>
   <div
     class="sc-AxirZ c4"

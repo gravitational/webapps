@@ -15,7 +15,7 @@ limitations under the License.
 */
 
 import React from 'react';
-import { Indicator, Box, Flex } from 'design';
+import { Indicator, Box, Flex, ButtonPrimary } from 'design';
 import { Danger } from 'design/Alert';
 import {
   FeatureBox,
@@ -29,9 +29,8 @@ import useTeleport from 'teleport/useTeleport';
 import useStickyClusterId from 'teleport/useStickyClusterId';
 import useNodes from './useNodes';
 import Empty from './Empty';
-import AddButton from './AddButton';
 import NodeAddEnterprise from 'teleport/Nodes/NodeAdd/NodeAddOptions';
-import NodeAddOSS from 'teleport/Nodes/NodeAdd/NodeAddByCustom';
+import NodeAddOSS from 'teleport/Nodes/NodeAdd/NodeAddDefault';
 import cfg from 'teleport/config';
 
 export default function Container() {
@@ -49,14 +48,15 @@ export function Nodes(props: ReturnType<typeof useNodes>) {
     getNodeLoginOptions,
     startSshSession,
     attempt,
+    token,
+    getJoinToken,
+    showDialog,
+    onClose,
+    onShow,
   } = props;
 
-  const ctx = useTeleport().storeUser;
-
-  const canCreate = attempt.isSuccess && ctx.getNodeAccess().create;
   const isEmpty = attempt.isSuccess && nodes.length === 0;
   const hasNodes = attempt.isSuccess && nodes.length > 0;
-  const [showDialog, setShowDialog] = React.useState(false);
 
   function onLoginSelect(e: React.MouseEvent, login: string, serverId: string) {
     e.preventDefault();
@@ -67,35 +67,40 @@ export function Nodes(props: ReturnType<typeof useNodes>) {
     startSshSession(login, serverId);
   }
 
-  if (isEmpty) {
-    return (
-      <FeatureNodes canCreate={canCreate}>
-        <Empty canCreate={canCreate} onCreate={() => null} />
-      </FeatureNodes>
-    );
-  }
-
   let NodeAddDialog;
   if (cfg.isEnterprise) {
-    NodeAddDialog = <NodeAddEnterprise onClose={() => setShowDialog(false)} />;
+    NodeAddDialog = (
+      <NodeAddEnterprise
+        onClose={onClose}
+        token={token}
+        getJoinToken={getJoinToken}
+      />
+    );
   } else {
-    NodeAddDialog = <NodeAddOSS onClose={() => setShowDialog(false)} />;
+    NodeAddDialog = <NodeAddOSS onClose={onClose} />;
   }
 
   return (
-    <FeatureNodes
-      canCreate={canCreate}
-      onClick={() => setShowDialog(true)}
-      showBtn={attempt.isSuccess}
-    >
-      <Flex mb={4} alignItems="center" justifyContent="space-between">
-        <InputSearch height="30px" mr="3" onChange={setSearchValue} />
-        <QuickLaunch
-          width="240px"
-          onPress={onQuickLaunchEnter}
-          inputProps={{ bg: 'bgTerminal' }}
-        />
-      </Flex>
+    <FeatureBox>
+      <FeatureHeader alignItems="center" justifyContent="space-between">
+        <FeatureHeaderTitle>Servers</FeatureHeaderTitle>
+        {!isEmpty && (
+          <ButtonPrimary width="240px" onClick={onShow}>
+            Add Server
+          </ButtonPrimary>
+        )}
+      </FeatureHeader>
+      {!isEmpty && (
+        <Flex mb={4} alignItems="center" justifyContent="space-between">
+          <InputSearch height="30px" mr="3" onChange={setSearchValue} />
+          <QuickLaunch
+            width="240px"
+            onPress={onQuickLaunchEnter}
+            inputProps={{ bg: 'bgTerminal' }}
+          />
+        </Flex>
+      )}
+      {isEmpty && <Empty onClick={onShow} />}
       {attempt.isFailed && <Danger>{attempt.message} </Danger>}
       {attempt.isProcessing && (
         <Box textAlign="center" m={10}>
@@ -111,26 +116,6 @@ export function Nodes(props: ReturnType<typeof useNodes>) {
         />
       )}
       {showDialog && NodeAddDialog}
-    </FeatureNodes>
-  );
-}
-
-const FeatureNodes: React.FC<Props> = props => {
-  return (
-    <FeatureBox>
-      <FeatureHeader alignItems="center" justifyContent="space-between">
-        <FeatureHeaderTitle>Servers</FeatureHeaderTitle>
-        {props.showBtn && (
-          <AddButton canCreate={props.canCreate} onClick={props.onClick} />
-        )}
-      </FeatureHeader>
-      {props.children}
     </FeatureBox>
   );
-};
-
-type Props = {
-  canCreate: boolean;
-  showBtn?: boolean;
-  onClick?(): void;
-};
+}

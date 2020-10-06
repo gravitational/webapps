@@ -17,7 +17,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import useTeleport from 'teleport/useTeleport';
-import NodeAddByCustom from './NodeAddByCustom';
+import NodeAddByManual from './NodeAddByManual';
 import NodeAddByAuto from './NodeAddByAuto';
 import { ButtonSecondary, Text, Flex } from 'design';
 import * as Icons from 'design/Icon';
@@ -27,8 +27,13 @@ import Dialog, {
   DialogTitle,
 } from 'design/Dialog';
 import NodeAddDefault from './NodeAddDefault';
+import { NodeJoinToken } from 'teleport/services/nodes';
 
-export default function NodeAddOptions({ onClose }) {
+export default function NodeAddOptions({
+  onClose,
+  token,
+  getJoinToken,
+}: Props) {
   const canCreateToken = useTeleport().storeUser.getTokenAccess().create;
 
   if (!canCreateToken) {
@@ -37,16 +42,13 @@ export default function NodeAddOptions({ onClose }) {
 
   const tabs: TabProps[] = [
     {
-      title: 'Automatic Install',
-      // TODO get icon
+      title: 'Automatic',
+      // TODO use magic stick icon after icon library is updated.
       Icon: Icons.Cog,
-      Component: NodeAddByAuto,
     },
     {
-      title: 'Custom Install',
-      // TODO get icon
+      title: 'Manual',
       Icon: Icons.Cog,
-      Component: NodeAddByCustom,
     },
   ];
 
@@ -57,7 +59,7 @@ export default function NodeAddOptions({ onClose }) {
       dialogCss={() => ({
         maxWidth: '600px',
         width: '100%',
-        minHeight: '300px',
+        minHeight: '330px',
       })}
       disableEscapeKeyDown={false}
       onClose={close}
@@ -85,7 +87,11 @@ export default function NodeAddOptions({ onClose }) {
         </Flex>
       </DialogTitle>
       <DialogContent>
-        <activeTab.Component mb={4} />
+        {activeTab.title === 'Automatic' ? (
+          <NodeAddByAuto token={token} getJoinToken={getJoinToken} mb={4} />
+        ) : (
+          <NodeAddByManual mb={4} />
+        )}
       </DialogContent>
       <DialogFooter>
         <ButtonSecondary onClick={onClose}>Close</ButtonSecondary>
@@ -97,7 +103,12 @@ export default function NodeAddOptions({ onClose }) {
 type TabProps = {
   title: string;
   Icon: any;
-  Component: any;
+};
+
+type Props = {
+  onClose(): void;
+  getJoinToken(): Promise<void>;
+  token: NodeJoinToken;
 };
 
 const Tab = styled(Flex)`

@@ -20,11 +20,11 @@ import { render } from 'design/utils/testing';
 
 test('success state', async () => {
   const { getByTestId, findByText } = render(<Loaded />);
-  await findByText(/automatic install/i);
+  await findByText(/automatic/i);
   expect(getByTestId('Modal')).toMatchSnapshot();
 });
 
-test('no token permission renders only custom install', async () => {
+test('no token permission renders only manual install', async () => {
   const { getByTestId } = render(<NoTokenPermission />);
   expect(getByTestId('Modal')).toMatchSnapshot();
 });
