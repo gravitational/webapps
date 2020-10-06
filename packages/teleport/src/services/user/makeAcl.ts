@@ -28,7 +28,6 @@ export default function makeAcl(json): Acl {
   const users = makeAccess(json.users);
   const apps = makeAccess(json.access);
   const tokens = makeAccess(json.tokens);
-  const nodes = makeAccess(json.nodes);
 
   return {
     logins,
@@ -40,7 +39,6 @@ export default function makeAcl(json): Acl {
     users,
     apps,
     tokens,
-    nodes,
   };
 }
 
