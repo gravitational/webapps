@@ -20,8 +20,8 @@ import { color } from 'design/system';
 
 const fromTheme = ({ $nested = false, theme = defaultTheme }) => {
   const css = {
-    fontSize: '12px',
-    fontWeight: theme.bold,
+    fontSize: '14px',
+    fontWeight: theme.regular,
     fontFamily: theme.font,
     paddingLeft: theme.space[9] + 'px',
     paddingRight: theme.space[5] + 'px',

@@ -51,64 +51,39 @@ const defaultProps = {
     {
       items: [],
       route: '/web/cluster/one/nodes',
-      Icon: Icons.User,
+      Icon: Icons.Server,
       exact: true,
       title: 'Servers',
     },
     {
       items: [],
       route: '/web/cluster/one/apps',
-      Icon: Icons.User,
+      Icon: Icons.NewTab,
       exact: true,
       title: 'Applications',
     },
     {
-      title: 'Activity',
-      items: [
-        {
-          items: [],
-          route: '/web/cluster/one/sessions',
-          Icon: Icons.User,
-          exact: true,
-          title: 'Active Sessions',
-        },
-        {
-          items: [],
-          route: '/web/cluster/one/recordings',
-          Icon: Icons.User,
-          exact: true,
-          title: 'Session Recordings',
-        },
-        {
-          items: [],
-          route: '/web/cluster/one/audit',
-          Icon: Icons.User,
-          title: 'Audit Log',
-        },
-      ],
-      route: '',
-    },
-    {
       title: 'Team',
+      Icon: Icons.Users,
       items: [
         {
           items: [],
           route: '/web/users',
-          Icon: Icons.User,
+          Icon: Icons.Users,
           exact: true,
           title: 'Users',
         },
         {
           items: [],
           route: '/web/roles',
-          Icon: Icons.User,
+          Icon: Icons.Profile,
           exact: true,
           title: 'Roles',
         },
         {
           items: [],
           route: '/web/sso',
-          Icon: Icons.User,
+          Icon: Icons.Lock,
           exact: false,
           title: 'Auth. Connectors',
         },
@@ -116,19 +91,48 @@ const defaultProps = {
       route: '',
     },
     {
+      title: 'Activity',
+      Icon: Icons.AlarmRing,
+      items: [
+        {
+          items: [],
+          route: '/web/cluster/one/sessions',
+          Icon: Icons.Terminal,
+          exact: true,
+          title: 'Active Sessions',
+        },
+        {
+          items: [],
+          route: '/web/cluster/one/recordings',
+          Icon: Icons.CirclePlay,
+          exact: true,
+          title: 'Session Recordings',
+        },
+        {
+          items: [],
+          route: '/web/cluster/one/audit',
+          Icon: Icons.ListThin,
+          title: 'Audit Log',
+        },
+      ],
+      route: '',
+    },
+    {
       title: 'Clusters',
+      Icon: Icons.Clusters,
+
       items: [
         {
           items: [],
           route: '/web/clusters',
-          Icon: Icons.User,
+          Icon: Icons.EqualizerVertical,
           exact: false,
-          title: 'All Clusters',
+          title: 'Manage Clusters',
         },
         {
           items: [],
           route: '/web/trust',
-          Icon: Icons.User,
+          Icon: Icons.Cluster,
           title: 'Trust',
         },
       ],
