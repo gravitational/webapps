@@ -89,10 +89,7 @@ export default function ClustersList(props: Props) {
           }
           cell={<NameCell />}
         />
-        <Column
-          header={<Cell />}
-          cell={<ActionCell flags={props.menuFlags} />}
-        />
+        <Column header={<Cell />} cell={<ActionCell />} />
       </StyledTable>
     </>
   );
