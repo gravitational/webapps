@@ -46,20 +46,22 @@ export default function FieldInputSsh({
 
   return (
     <Box {...boxProps}>
-      <LabelInput {...labelProps} hasError={hasError}>
-        {labelText}
-      </LabelInput>
-      <StyledInput
-        height="34px"
-        bg="primary.light"
-        color="text.primary"
-        placeholder="login@host"
-        autoFocus={autoFocus}
-        width={width}
-        onKeyPress={onKeyPress}
-        {...inputProps}
-        hasError={hasError}
-      />
+      <StyledSSH>
+        <StyledLabel {...labelProps} hasError={hasError}>
+          {labelText}
+        </StyledLabel>
+        <StyledInput
+          height="34px"
+          bg="primary.light"
+          color="text.primary"
+          placeholder="login@host"
+          autoFocus={autoFocus}
+          width={width}
+          onKeyPress={onKeyPress}
+          {...inputProps}
+          hasError={hasError}
+        />
+      </StyledSSH>
     </Box>
   );
 }
@@ -71,10 +73,26 @@ const check = value => {
   return SSH_STR_REGEX.exec(value.trim());
 };
 
+const StyledSSH = styled.div`
+  position: relative;
+  display: flex; 
+  align-items: center; 
+`
+
+const StyledLabel = styled(LabelInput)`
+  position: absolute; 
+  opacity: .56;
+  left: 8px; 
+`;
+
 const StyledInput = styled(Input)(
   ({ theme }) => `
+  background: ${theme.colors.bgTerminal};
   transition: all .2s;
   box-shadow: none;
+  padding-left: 40px; 
+  width: 200px;
+
   ::placeholder {
     opacity: 1;
     color: ${theme.colors.text.placeholder};
