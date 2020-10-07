@@ -29,9 +29,7 @@ import useTeleport from 'teleport/useTeleport';
 import useStickyClusterId from 'teleport/useStickyClusterId';
 import useNodes from './useNodes';
 import Empty from './Empty';
-import NodeAddEnterprise from 'teleport/Nodes/NodeAdd/NodeAddOptions';
-import NodeAddOSS from 'teleport/Nodes/NodeAdd/NodeAddDefault';
-import cfg from 'teleport/config';
+import NodeAdd from './NodeAdd/NodeAdd';
 
 export default function Container() {
   const teleCtx = useTeleport();
@@ -48,11 +46,9 @@ export function Nodes(props: ReturnType<typeof useNodes>) {
     getNodeLoginOptions,
     startSshSession,
     attempt,
-    token,
-    getJoinToken,
     showDialog,
-    onClose,
-    onShow,
+    onCloseDialog,
+    onShowDialog,
   } = props;
 
   const isEmpty = attempt.isSuccess && nodes.length === 0;
@@ -67,25 +63,12 @@ export function Nodes(props: ReturnType<typeof useNodes>) {
     startSshSession(login, serverId);
   }
 
-  let NodeAddDialog;
-  if (cfg.isEnterprise) {
-    NodeAddDialog = (
-      <NodeAddEnterprise
-        onClose={onClose}
-        token={token}
-        getJoinToken={getJoinToken}
-      />
-    );
-  } else {
-    NodeAddDialog = <NodeAddOSS onClose={onClose} />;
-  }
-
   return (
     <FeatureBox>
       <FeatureHeader alignItems="center" justifyContent="space-between">
         <FeatureHeaderTitle>Servers</FeatureHeaderTitle>
         {!isEmpty && (
-          <ButtonPrimary width="240px" onClick={onShow}>
+          <ButtonPrimary width="240px" onClick={onShowDialog}>
             Add Server
           </ButtonPrimary>
         )}
@@ -100,7 +83,7 @@ export function Nodes(props: ReturnType<typeof useNodes>) {
           />
         </Flex>
       )}
-      {isEmpty && <Empty onClick={onShow} />}
+      {isEmpty && <Empty onClick={onShowDialog} />}
       {attempt.isFailed && <Danger>{attempt.message} </Danger>}
       {attempt.isProcessing && (
         <Box textAlign="center" m={10}>
@@ -115,7 +98,7 @@ export function Nodes(props: ReturnType<typeof useNodes>) {
           onLoginSelect={onLoginSelect}
         />
       )}
-      {showDialog && NodeAddDialog}
+      {showDialog && <NodeAdd onCloseDialog={onCloseDialog} />}
     </FeatureBox>
   );
 }

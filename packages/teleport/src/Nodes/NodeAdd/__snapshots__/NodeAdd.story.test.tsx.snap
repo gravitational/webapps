@@ -176,6 +176,16 @@ exports[`no token permission renders only manual install 1`] = `
   margin-right: 16px;
 }
 
+.c12 {
+  box-sizing: border-box;
+  margin-bottom: 8px;
+  padding: 8px;
+  background-color: #010B1C;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
 .c1 {
   z-index: -1;
   position: fixed;
@@ -195,17 +205,6 @@ exports[`no token permission renders only manual install 1`] = `
   bottom: 0;
   top: 0;
   left: 0;
-}
-
-.c12 {
-  box-sizing: border-box;
-  margin-bottom: 8px;
-  padding: 8px;
-  background-color: #010B1C;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  font-family: "Droid Sans Mono","monospace",monospace,"Droid Sans Fallback";
 }
 
 .c2 {
@@ -273,7 +272,7 @@ exports[`no token permission renders only manual install 1`] = `
       data-testid="dialogbox"
     >
       <div
-        class="sc-fzqBZW c4"
+        class="c4"
       >
         <div
           class="c5"
@@ -283,7 +282,7 @@ exports[`no token permission renders only manual install 1`] = `
         </div>
       </div>
       <div
-        class="sc-fzqBZW c6"
+        class="c6"
       >
         <div
           class="c7"
@@ -295,7 +294,7 @@ exports[`no token permission renders only manual install 1`] = `
           </div>
           <a
             class="c9 c10"
-            href="https://get.gravitational.com/teleport-v5.0.0-dev-darwin-amd64-bin.tar.gz"
+            href="https://get.gravitational.com/teleport-ent-v5.0.0-dev-darwin-amd64-bin.tar.gz"
             kind="primary"
             target="_blank"
           >
@@ -305,7 +304,7 @@ exports[`no token permission renders only manual install 1`] = `
           |
           <a
             class="c9 c10"
-            href="https://get.gravitational.com/teleport-v5.0.0-dev-linux-amd64-bin.tar.gz"
+            href="https://get.gravitational.com/teleport-ent-v5.0.0-dev-linux-amd64-bin.tar.gz"
             kind="primary"
             target="_blank"
           >
@@ -315,7 +314,7 @@ exports[`no token permission renders only manual install 1`] = `
           |
           <a
             class="c9 c10"
-            href="https://get.gravitational.com/teleport-v5.0.0-dev-linux-386-bin.tar.gz"
+            href="https://get.gravitational.com/teleport-ent-v5.0.0-dev-linux-386-bin.tar.gz"
             kind="primary"
             target="_blank"
           >
@@ -331,7 +330,8 @@ exports[`no token permission renders only manual install 1`] = `
             Step 2: Generate a new node invite token
           </div>
           <div
-            class="sc-fzqBZW c12"
+            class="c12"
+            style="font-family: \\"Droid Sans Mono\\", \\"monospace\\", monospace, \\"Droid Sans Fallback\\";"
           >
             <div
               class="c13"
@@ -568,6 +568,16 @@ exports[`success state 1`] = `
   display: flex;
 }
 
+.c14 {
+  box-sizing: border-box;
+  margin-bottom: 8px;
+  padding: 8px;
+  background-color: #010B1C;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
 .c17 {
   box-sizing: border-box;
   display: flex;
@@ -594,17 +604,6 @@ exports[`success state 1`] = `
   bottom: 0;
   top: 0;
   left: 0;
-}
-
-.c14 {
-  box-sizing: border-box;
-  margin-bottom: 8px;
-  padding: 8px;
-  background-color: #010B1C;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  font-family: "Droid Sans Mono","monospace",monospace,"Droid Sans Fallback";
 }
 
 .c2 {
@@ -749,6 +748,7 @@ exports[`success state 1`] = `
         </div>
         <div
           class="c14"
+          style="font-family: \\"Droid Sans Mono\\", \\"monospace\\", monospace, \\"Droid Sans Fallback\\";"
         >
           <div
             class="c15"

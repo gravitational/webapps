@@ -15,12 +15,11 @@
  */
 
 import React from 'react';
-import styled from 'styled-components';
 import copyToClipboard from 'design/utils/copyToClipboard';
 import selectElementContent from 'design/utils/selectElementContent';
 import { ButtonPrimary, Text, Flex } from 'design';
 
-export default function TextSelectCopy({ text, isTerminal = false }: Props) {
+export default function TextSelectCopy({ text, ...styles }: Props) {
   const ref = React.useRef();
   const [copyCmd, setCopyCmd] = React.useState(() => 'Copy');
 
@@ -30,13 +29,12 @@ export default function TextSelectCopy({ text, isTerminal = false }: Props) {
   }
 
   return (
-    <StyledFlex
+    <Flex
       bg="bgTerminal"
       p="2"
-      mb={2}
       alignItems="center"
       justifyContent="space-between"
-      isTerminal={isTerminal}
+      {...styles}
     >
       <Text ref={ref} style={{ wordBreak: 'break-all' }} mr="3">
         {text}
@@ -44,19 +42,12 @@ export default function TextSelectCopy({ text, isTerminal = false }: Props) {
       <ButtonPrimary onClick={onCopyClick} size="small">
         {copyCmd}
       </ButtonPrimary>
-    </StyledFlex>
+    </Flex>
   );
 }
 
-const StyledFlex = styled(Flex)`
-  ${({ isTerminal, theme }) =>
-    isTerminal &&
-    `
-    font-family: ${theme.fonts.mono};
-  `}
-`;
-
 type Props = {
   text: string;
-  isTerminal?: boolean;
+  // handles styles
+  [key: string]: any;
 };

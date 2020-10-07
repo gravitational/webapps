@@ -57,11 +57,9 @@ function render(
     nodes: nodeList,
     getNodeLoginOptions: () => [{ login: 'root', url: 'fd' }],
     startSshSession: () => null,
-    token: null,
-    getJoinToken: () => null,
     showDialog: false,
-    onClose: () => null,
-    onShow: () => null,
+    onCloseDialog: () => null,
+    onShowDialog: () => null,
   };
 
   return <Nodes {...props} />;

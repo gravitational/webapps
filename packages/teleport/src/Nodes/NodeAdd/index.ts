@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-import NodeAddDefault from './NodeAddDefault';
-import NodeAddOptions from './NodeAddOptions';
+import NodeAddOSS from './NodeAddOSS';
+import NodeAddEnterprise from './NodeAddEnterprise';
 
-export { NodeAddDefault, NodeAddOptions };
+export { NodeAddOSS, NodeAddEnterprise };

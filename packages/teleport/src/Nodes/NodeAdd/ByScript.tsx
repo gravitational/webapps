@@ -14,32 +14,18 @@
  * limitations under the License.
  */
 
-/**
- * Copyright 2020 Gravitational, Inc.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *     http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
 import React, { useEffect } from 'react';
+import { useTheme } from 'styled-components';
 import TextSelectCopy from 'teleport/components/TextSelectCopy';
 import cfg from 'teleport/config';
-import { useAttemptNext } from 'shared/hooks';
+import useAttempt from 'shared/hooks/useAttemptNext';
 import { Alert, Text, Indicator, Box, Flex, ButtonLink } from 'design';
 import { NodeJoinToken } from 'teleport/services/nodes';
 
-export default function NodeAddByAuto(props: Props) {
+export default function ByScript(props: Props) {
+  const monoFont = useTheme().fonts.mono;
   const { token, getJoinToken, ...style } = props;
-  const { attempt, setAttempt, run } = useAttemptNext('processing');
+  const { attempt, setAttempt, run } = useAttempt('processing');
 
   const expires = token ? token.expires : '';
   const script = token
@@ -74,7 +60,7 @@ export default function NodeAddByAuto(props: Props) {
       <Text typography="subtitle1" bold caps mb={1}>
         Auto-Installing Script
       </Text>
-      <TextSelectCopy text={script} isTerminal={true} />
+      <TextSelectCopy text={script} style={{ fontFamily: monoFont }} mb={2} />
       <Flex alignItems="center" justifyContent="space-between">
         <ButtonLink onClick={getJoinToken}>Regenerate Script</ButtonLink>
         <Text>Script Expires in {expires}</Text>

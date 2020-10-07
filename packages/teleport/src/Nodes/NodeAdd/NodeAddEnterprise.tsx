@@ -16,9 +16,8 @@
 
 import React from 'react';
 import styled from 'styled-components';
-import useTeleport from 'teleport/useTeleport';
-import NodeAddByManual from './NodeAddByManual';
-import NodeAddByAuto from './NodeAddByAuto';
+import NodeAddByManual from './ByManual';
+import NodeAddByScript from './ByScript';
 import { ButtonSecondary, Text, Flex } from 'design';
 import * as Icons from 'design/Icon';
 import Dialog, {
@@ -26,20 +25,17 @@ import Dialog, {
   DialogFooter,
   DialogTitle,
 } from 'design/Dialog';
-import NodeAddDefault from './NodeAddDefault';
+import NodeAddDefault from './NodeAddOSS';
 import { NodeJoinToken } from 'teleport/services/nodes';
 
-export default function NodeAddOptions({
+export default function NodeAddEnterprise({
   onClose,
   token,
   getJoinToken,
+  canCreateToken,
+  version,
+  isEnterprise,
 }: Props) {
-  const canCreateToken = useTeleport().storeUser.getTokenAccess().create;
-
-  if (!canCreateToken) {
-    return <NodeAddDefault onClose={onClose} />;
-  }
-
   const tabs: TabProps[] = [
     {
       title: 'Automatic',
@@ -53,6 +49,16 @@ export default function NodeAddOptions({
   ];
 
   const [activeTab, setActiveTab] = React.useState(tabs[0]);
+
+  if (!canCreateToken) {
+    return (
+      <NodeAddDefault
+        onClose={onClose}
+        version={version}
+        isEnterprise={isEnterprise}
+      />
+    );
+  }
 
   return (
     <Dialog
@@ -88,9 +94,13 @@ export default function NodeAddOptions({
       </DialogTitle>
       <DialogContent>
         {activeTab.title === 'Automatic' ? (
-          <NodeAddByAuto token={token} getJoinToken={getJoinToken} mb={4} />
+          <NodeAddByScript token={token} getJoinToken={getJoinToken} mb={4} />
         ) : (
-          <NodeAddByManual mb={4} />
+          <NodeAddByManual
+            mb={4}
+            version={version}
+            isEnterprise={isEnterprise}
+          />
         )}
       </DialogContent>
       <DialogFooter>
@@ -109,6 +119,9 @@ type Props = {
   onClose(): void;
   getJoinToken(): Promise<void>;
   token: NodeJoinToken;
+  canCreateToken: boolean;
+  version: string;
+  isEnterprise: boolean;
 };
 
 const Tab = styled(Flex)`

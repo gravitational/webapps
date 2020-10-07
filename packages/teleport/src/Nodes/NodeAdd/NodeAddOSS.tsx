@@ -15,7 +15,7 @@
  */
 
 import React from 'react';
-import NodeAddByManual from './NodeAddByManual';
+import NodeAddByManual from './ByManual';
 import { ButtonSecondary } from 'design';
 import Dialog, {
   DialogContent,
@@ -24,7 +24,7 @@ import Dialog, {
   DialogTitle,
 } from 'design/Dialog';
 
-export default function NodeAddDefault({ onClose }: Props) {
+export default function NodeAddOSS({ onClose, version, isEnterprise }: Props) {
   return (
     <Dialog
       dialogCss={() => ({ maxWidth: '500px', width: '100%' })}
@@ -36,7 +36,7 @@ export default function NodeAddDefault({ onClose }: Props) {
         <DialogTitle>Add a Server</DialogTitle>
       </DialogHeader>
       <DialogContent>
-        <NodeAddByManual mb={4} />
+        <NodeAddByManual mb={4} version={version} isEnterprise={isEnterprise} />
       </DialogContent>
       <DialogFooter>
         <ButtonSecondary onClick={onClose}>Close</ButtonSecondary>
@@ -47,4 +47,6 @@ export default function NodeAddDefault({ onClose }: Props) {
 
 type Props = {
   onClose(): void;
+  version: string;
+  isEnterprise: boolean;
 };

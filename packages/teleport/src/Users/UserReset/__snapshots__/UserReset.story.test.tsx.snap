@@ -632,6 +632,15 @@ exports[`success state 1`] = `
   margin-right: 16px;
 }
 
+.c9 {
+  box-sizing: border-box;
+  padding: 8px;
+  background-color: #010B1C;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
 .c1 {
   z-index: -1;
   position: fixed;
@@ -701,16 +710,6 @@ exports[`success state 1`] = `
   box-sizing: border-box;
 }
 
-.c9 {
-  box-sizing: border-box;
-  margin-bottom: 8px;
-  padding: 8px;
-  background-color: #010B1C;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-}
-
 <div
   class="c0"
   data-testid="Modal"
@@ -728,7 +727,7 @@ exports[`success state 1`] = `
       data-testid="dialogbox"
     >
       <div
-        class="sc-AxirZ sc-fzqBZW c4"
+        class="sc-AxirZ c4"
       >
         <div
           class="c5"
@@ -738,7 +737,7 @@ exports[`success state 1`] = `
         </div>
       </div>
       <div
-        class="sc-AxirZ sc-fzqBZW c6"
+        class="sc-AxirZ c6"
       >
         <div
           class="c7"
@@ -754,7 +753,7 @@ exports[`success state 1`] = `
           .
         </div>
         <div
-          class="sc-AxirZ sc-fzqBZW c9"
+          class="sc-AxirZ c9"
         >
           <div
             class="c10"
