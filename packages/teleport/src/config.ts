@@ -39,7 +39,7 @@ const cfg = {
   routes: {
     root: '/web',
     apps: '/web/cluster/:clusterId/apps',
-    appLauncher: '/web/launch/:fqdn',
+    appLauncher: '/web/launch/:fqdn/:clusterId?/:publicAddr?',
     support: '/web/support',
     settings: '/web/settings',
     account: '/web/account',
@@ -182,8 +182,8 @@ const cfg = {
     return generatePath(cfg.routes.console, { clusterId });
   },
 
-  getAppLauncherRoute(fqdn: string) {
-    return generatePath(cfg.routes.appLauncher, { fqdn });
+  getAppLauncherRoute(params: UrlLauncherParams) {
+    return generatePath(cfg.routes.appLauncher, { ...params });
   },
 
   getPlayerRoute({ clusterId, sid }: UrlParams) {
@@ -266,6 +266,12 @@ export interface UrlClusterEventsParams {
   start: string;
   end: string;
   limit?: number;
+}
+
+export interface UrlLauncherParams {
+  fqdn: string;
+  clusterId?: string;
+  publicAddr?: string;
 }
 
 export default cfg;

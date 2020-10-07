@@ -19,6 +19,8 @@ import DefaultApps from './Apps';
 import { createMemoryHistory } from 'history';
 import { Router } from 'react-router';
 import makeAcl from 'teleport/services/user/makeAcl';
+import makeApp from 'teleport/services/apps/makeApps';
+
 import TeleportContext, {
   ReactContextProvider,
 } from 'teleport/teleportContext';
@@ -32,7 +34,7 @@ export const Loaded = () => {
   const acl = makeAcl(sample.acl);
 
   ctx.storeUser.setState({ acl });
-  ctx.appService.fetchApps = () => Promise.resolve(sample.apps);
+  ctx.appService.fetchApps = () => Promise.resolve(sample.apps.map(makeApp));
   return render(ctx);
 };
 
@@ -91,24 +93,20 @@ const sample = {
   },
   apps: [
     {
-      id: '61',
       name: 'jenkins',
-      uri: '/internal/',
-      publicAddr: 'jenkins.one',
+      uri: '',
+      publicAddr: 'jenkins',
+      labels: [],
       clusterId: 'one',
       fqdn: 'jenkins.one',
-      launchUrl: '/web/launch/one',
-      labels: [],
     },
     {
-      id: '191',
       name: 'jenkins',
-      uri: '/internal/',
-      publicAddr: 'jenkins.two',
+      uri: '',
+      publicAddr: 'jenkins',
+      labels: [],
       clusterId: 'two',
       fqdn: 'jenkins.two',
-      launchUrl: '/web/launch/two',
-      labels: [],
     },
   ],
 };
