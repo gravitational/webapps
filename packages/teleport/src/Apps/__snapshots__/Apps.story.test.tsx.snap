@@ -517,7 +517,7 @@ exports[`loaded state 1`] = `
         <a
           class="c10"
           color="text.primary"
-          href="/web/launch/one"
+          href="/web/launch/jenkins.one/one/jenkins"
           style="text-decoration: none;"
           tabindex="-1"
           target="_blank"
@@ -565,7 +565,7 @@ exports[`loaded state 1`] = `
         <a
           class="c10"
           color="text.primary"
-          href="/web/launch/two"
+          href="/web/launch/jenkins.two/two/jenkins"
           style="text-decoration: none;"
           tabindex="-1"
           target="_blank"
