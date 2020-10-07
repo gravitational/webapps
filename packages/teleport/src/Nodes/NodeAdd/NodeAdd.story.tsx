@@ -18,23 +18,20 @@ import React from 'react';
 import Dialog from './NodeAddOptions';
 import * as Teleport from 'teleport/teleportContext';
 import makeAcl from 'teleport/services/user/makeAcl';
+import makeCluster from 'teleport/services/clusters/makeCluster';
 
 export default {
   title: 'Teleport/Nodes/Add',
 };
 
 export const Loaded = () => {
-  const ctx = new Teleport.Context();
-  const acl = makeAcl(sample.acl);
-  ctx.storeUser.setState({ acl });
+  const ctx = getTeleportContext();
 
   return render(ctx, <Dialog {...sample.props} />);
 };
 
 export const Processing = () => {
-  const ctx = new Teleport.Context();
-  const acl = makeAcl(sample.acl);
-  ctx.storeUser.setState({ acl });
+  const ctx = getTeleportContext();
 
   return render(
     ctx,
@@ -47,12 +44,11 @@ export const Processing = () => {
 };
 
 export const Failed = () => {
-  const ctx = new Teleport.Context();
-  const acl = makeAcl(sample.acl);
+  const ctx = getTeleportContext();
 
-  ctx.storeUser.setState({ acl });
   ctx.nodeService.getNodeJoinToken = () =>
     Promise.reject(new Error('some error message'));
+
   return render(
     ctx,
     <Dialog
@@ -65,10 +61,7 @@ export const Failed = () => {
 
 // Just render default (manually)
 export const NoTokenPermission = () => {
-  const ctx = new Teleport.Context();
-  const acl = makeAcl(sample.acl);
-  acl.tokens.create = false;
-  ctx.storeUser.setState({ acl });
+  const ctx = getTeleportContext(false);
 
   return render(ctx, <Dialog {...sample.props} />);
 };
@@ -79,6 +72,17 @@ function render(ctx: Teleport.Context, children: JSX.Element) {
       {children}
     </Teleport.ReactContextProvider>
   );
+}
+
+function getTeleportContext(tokenCreate = true) {
+  const cluster = makeCluster(sample.cluster);
+  const acl = makeAcl(sample.acl);
+  acl.tokens.create = tokenCreate;
+
+  const ctx = new Teleport.Context();
+  ctx.storeUser.setState({ acl, cluster });
+
+  return ctx;
 }
 
 const sample = {
@@ -98,5 +102,14 @@ const sample = {
     tokens: {
       create: true,
     },
+  },
+  cluster: {
+    name: 'test',
+    lastConnected: new Date(),
+    status: 'online',
+    nodeCount: 1,
+    publicURL: 'localhost:8080',
+    authVersion: '5.0.0-dev',
+    proxyVersion: '5.0.0-dev',
   },
 };

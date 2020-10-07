@@ -1,7 +1,60 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`no token permission renders only manual install 1`] = `
+.c7 {
+  box-sizing: border-box;
+  margin-bottom: 24px;
+}
+
+.c11 {
+  box-sizing: border-box;
+}
+
 .c10 {
+  line-height: 1.5;
+  margin: 0;
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  box-sizing: border-box;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-family: inherit;
+  font-weight: 600;
+  outline: none;
+  position: relative;
+  text-align: center;
+  text-decoration: none;
+  text-transform: uppercase;
+  transition: all 0.3s;
+  -webkit-font-smoothing: antialiased;
+  background: #512FC9;
+  color: rgba(255,255,255,0.87);
+  min-height: 32px;
+  font-size: 12px;
+  padding: 0px 24px;
+}
+
+.c10:active {
+  opacity: 0.56;
+}
+
+.c10:hover,
+.c10:focus {
+  background: #651FFF;
+}
+
+.c10:active {
+  background: #354AA4;
+}
+
+.c10:disabled {
+  background: rgba(255,255,255,0.12);
+  color: rgba(255,255,255,0.3);
+}
+
+.c14 {
   line-height: 1.5;
   margin: 0;
   display: inline-flex;
@@ -27,25 +80,25 @@ exports[`no token permission renders only manual install 1`] = `
   padding: 0px 16px;
 }
 
-.c10:active {
+.c14:active {
   opacity: 0.56;
 }
 
-.c10:hover,
-.c10:focus {
+.c14:hover,
+.c14:focus {
   background: #651FFF;
 }
 
-.c10:active {
+.c14:active {
   background: #354AA4;
 }
 
-.c10:disabled {
+.c14:disabled {
   background: rgba(255,255,255,0.12);
   color: rgba(255,255,255,0.3);
 }
 
-.c12 {
+.c16 {
   line-height: 1.5;
   margin: 0;
   display: inline-flex;
@@ -71,18 +124,32 @@ exports[`no token permission renders only manual install 1`] = `
   padding: 0px 24px;
 }
 
-.c12:active {
+.c16:active {
   opacity: 0.56;
 }
 
-.c12:hover,
-.c12:focus {
+.c16:hover,
+.c16:focus {
   background: #2C3A73;
 }
 
-.c12:disabled {
+.c16:disabled {
   background: rgba(255,255,255,0.12);
   color: rgba(255,255,255,0.3);
+}
+
+.c9 {
+  color: #03a9f4;
+  font-weight: normal;
+  background: none;
+  text-decoration: underline;
+  text-transform: none;
+  padding: 0 8px;
+}
+
+.c9:hover,
+.c9:focus {
+  background: #222C59;
 }
 
 .c5 {
@@ -96,14 +163,13 @@ exports[`no token permission renders only manual install 1`] = `
   color: rgba(255,255,255,0.87);
 }
 
-.c7 {
+.c8 {
   overflow: hidden;
   text-overflow: ellipsis;
   margin: 0px;
-  margin-bottom: 24px;
 }
 
-.c9 {
+.c13 {
   overflow: hidden;
   text-overflow: ellipsis;
   margin: 0px;
@@ -131,7 +197,7 @@ exports[`no token permission renders only manual install 1`] = `
   left: 0;
 }
 
-.c8 {
+.c12 {
   box-sizing: border-box;
   margin-bottom: 8px;
   padding: 8px;
@@ -186,7 +252,7 @@ exports[`no token permission renders only manual install 1`] = `
   flex-direction: column;
 }
 
-.c11 {
+.c15 {
   box-sizing: border-box;
 }
 
@@ -207,7 +273,7 @@ exports[`no token permission renders only manual install 1`] = `
       data-testid="dialogbox"
     >
       <div
-        class="sc-AxirZ sc-fzqBZW c4"
+        class="sc-fzqBZW c4"
       >
         <div
           class="c5"
@@ -217,39 +283,76 @@ exports[`no token permission renders only manual install 1`] = `
         </div>
       </div>
       <div
-        class="sc-AxirZ sc-fzqBZW c6"
+        class="sc-fzqBZW c6"
       >
         <div
           class="c7"
         >
-          Step 1 - Download the .pem file 
-          <br />
-          Step 2 - Install tctl 
-          <br />
-          Step 3 - Run the following command and configure options to your needs.
+          <div
+            class="c8"
+          >
+            Step 1: Download and Install tctl
+          </div>
+          <a
+            class="c9 c10"
+            href="https://get.gravitational.com/teleport-v5.0.0-dev-darwin-amd64-bin.tar.gz"
+            kind="primary"
+            target="_blank"
+          >
+            Mac
+          </a>
+           
+          |
+          <a
+            class="c9 c10"
+            href="https://get.gravitational.com/teleport-v5.0.0-dev-linux-amd64-bin.tar.gz"
+            kind="primary"
+            target="_blank"
+          >
+            Linux 64-bit
+          </a>
+           
+          |
+          <a
+            class="c9 c10"
+            href="https://get.gravitational.com/teleport-v5.0.0-dev-linux-386-bin.tar.gz"
+            kind="primary"
+            target="_blank"
+          >
+            Linux 32-bit
+          </a>
         </div>
         <div
-          class="sc-AxirZ sc-fzqBZW c8"
+          class="c11"
         >
           <div
-            class="c9"
-            style="word-break: break-all;"
+            class="c8"
           >
-            placeholder for custom script....
+            Step 2: Generate a new node invite token
           </div>
-          <button
-            class="c10"
-            kind="primary"
+          <div
+            class="sc-fzqBZW c12"
           >
-            Copy
-          </button>
+            <div
+              class="c13"
+              style="word-break: break-all;"
+            >
+              tctl nodes add
+            </div>
+            <button
+              class="c14"
+              kind="primary"
+            >
+              Copy
+            </button>
+          </div>
         </div>
       </div>
       <div
-        class="sc-AxirZ c11"
+        class="c15"
       >
         <button
-          class="c12"
+          class="c16"
           kind="secondary"
         >
           Close
