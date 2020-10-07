@@ -330,10 +330,6 @@ export class FeatureApps {
   };
 
   register(ctx: Ctx) {
-    if (!ctx.isApplicationsEnabled()) {
-      return;
-    }
-
     ctx.storeNav.addSideItem({
       title: 'Applications',
       Icon: Icons.NewTab,

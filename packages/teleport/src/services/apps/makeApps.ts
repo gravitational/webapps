@@ -18,7 +18,7 @@ import { at } from 'lodash';
 import { App } from './types';
 import cfg from 'teleport/config';
 
-export default function makeApps(json): App {
+export default function makeApp(json): App {
   const [name, uri, publicAddr, labels, clusterId, fqdn] = at(json, [
     'name',
     'uri',
@@ -29,6 +29,7 @@ export default function makeApps(json): App {
   ]);
 
   const id = `${clusterId}-${name}-${publicAddr}`;
+  const launchUrl = cfg.getAppLauncherRoute({ fqdn, clusterId, publicAddr });
 
   return {
     id,
@@ -38,6 +39,6 @@ export default function makeApps(json): App {
     labels,
     clusterId,
     fqdn,
-    launchUrl: cfg.getAppLauncherRoute(fqdn),
+    launchUrl,
   };
 }

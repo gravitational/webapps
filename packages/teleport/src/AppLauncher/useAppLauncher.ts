@@ -18,18 +18,21 @@ import React from 'react';
 import { useParams } from 'react-router';
 import service from 'teleport/services/apps';
 import useAttempt from 'shared/hooks/useAttemptNext';
+import { UrlLauncherParams } from 'teleport/config';
 
 export default function useAppLauncher() {
-  const params = useParams<{ fqdn: string }>();
+  const params = useParams<UrlLauncherParams>();
   const { attempt, setAttempt } = useAttempt('processing');
 
   React.useEffect(() => {
     service
-      .createAppSession(params.fqdn)
-      .then(cookieValue => {
-        // make a page redirect to the requested app domain
+      .createAppSession(params)
+      .then(result => {
+        // make a redirect to the requested app auth endpoint
+        const location = window.location;
+        const port = location.port ? ':' + location.port : '';
         window.location.replace(
-          `https://${params.fqdn}/x-teleport-auth#value=${cookieValue}`
+          `https://${result.fqdn}${port}/x-teleport-auth#value=${result.value}`
         );
       })
       .catch((err: Error) => {
