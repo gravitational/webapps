@@ -634,9 +634,9 @@ exports[`success state 1`] = `
 
 .c9 {
   box-sizing: border-box;
-  margin-bottom: 8px;
   padding: 8px;
   background-color: #010B1C;
+  border-radius: 4px;
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -758,7 +758,7 @@ exports[`success state 1`] = `
         >
           <div
             class="c10"
-            style="word-break: break-all;"
+            style="word-break: break-all; font-size: 12px;"
           >
             http://localhost/web/reset/0c536179038b386728dfee6602ca297f
           </div>

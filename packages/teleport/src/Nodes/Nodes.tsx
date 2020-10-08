@@ -15,7 +15,7 @@ limitations under the License.
 */
 
 import React from 'react';
-import { Indicator, Box, Flex } from 'design';
+import { Indicator, Box, Flex, ButtonPrimary } from 'design';
 import { Danger } from 'design/Alert';
 import {
   FeatureBox,
@@ -29,7 +29,7 @@ import useTeleport from 'teleport/useTeleport';
 import useStickyClusterId from 'teleport/useStickyClusterId';
 import useNodes from './useNodes';
 import Empty from './Empty';
-import AddButton from './AddButton';
+import NodeAdd from './NodeAdd/NodeAdd';
 
 export default function Container() {
   const teleCtx = useTeleport();
@@ -46,9 +46,11 @@ export function Nodes(props: ReturnType<typeof useNodes>) {
     getNodeLoginOptions,
     startSshSession,
     attempt,
+    showDialog,
+    onCloseDialog,
+    onShowDialog,
   } = props;
 
-  const isAdmin = false;
   const isEmpty = attempt.isSuccess && nodes.length === 0;
   const hasNodes = attempt.isSuccess && nodes.length > 0;
 
@@ -61,24 +63,27 @@ export function Nodes(props: ReturnType<typeof useNodes>) {
     startSshSession(login, serverId);
   }
 
-  if (isEmpty) {
-    return (
-      <FeatureNodes isAdmin={isAdmin}>
-        <Empty isAdmin={false} onCreate={() => null} />
-      </FeatureNodes>
-    );
-  }
-
   return (
-    <FeatureNodes isAdmin={isAdmin}>
-      <Flex mb={4} alignItems="center" justifyContent="space-between">
-        <InputSearch height="30px" mr="3" onChange={setSearchValue} />
-        <QuickLaunch
-          width="240px"
-          onPress={onQuickLaunchEnter}
-          inputProps={{ bg: 'bgTerminal' }}
-        />
-      </Flex>
+    <FeatureBox>
+      <FeatureHeader alignItems="center" justifyContent="space-between">
+        <FeatureHeaderTitle>Servers</FeatureHeaderTitle>
+        {!isEmpty && (
+          <ButtonPrimary width="240px" onClick={onShowDialog}>
+            Add Server
+          </ButtonPrimary>
+        )}
+      </FeatureHeader>
+      {!isEmpty && (
+        <Flex mb={4} alignItems="center" justifyContent="space-between">
+          <InputSearch height="30px" mr="3" onChange={setSearchValue} />
+          <QuickLaunch
+            width="240px"
+            onPress={onQuickLaunchEnter}
+            inputProps={{ bg: 'bgTerminal' }}
+          />
+        </Flex>
+      )}
+      {isEmpty && <Empty onClick={onShowDialog} />}
       {attempt.isFailed && <Danger>{attempt.message} </Danger>}
       {attempt.isProcessing && (
         <Box textAlign="center" m={10}>
@@ -93,18 +98,7 @@ export function Nodes(props: ReturnType<typeof useNodes>) {
           onLoginSelect={onLoginSelect}
         />
       )}
-    </FeatureNodes>
-  );
-}
-
-const FeatureNodes: React.FC<{ isAdmin: boolean }> = props => {
-  return (
-    <FeatureBox>
-      <FeatureHeader alignItems="center" justifyContent="space-between">
-        <FeatureHeaderTitle>Servers</FeatureHeaderTitle>
-        <AddButton isAdmin={props.isAdmin} />
-      </FeatureHeader>
-      {props.children}
+      {showDialog && <NodeAdd onClose={onCloseDialog} />}
     </FeatureBox>
   );
-};
+}

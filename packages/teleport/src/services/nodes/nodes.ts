@@ -18,12 +18,17 @@ import { map } from 'lodash';
 import api from 'teleport/services/api';
 import cfg from 'teleport/config';
 import makeNode from './makeNode';
+import makeNodeJoinToken from './makeNodeJoinToken';
 
 const service = {
   fetchNodes(clusterId?: string) {
     return api
       .get(cfg.getClusterNodesUrl(clusterId))
       .then(json => map(json.items, makeNode));
+  },
+
+  createNodeJoinToken() {
+    return api.post(cfg.getNodeJoinTokenUrl()).then(makeNodeJoinToken);
   },
 };
 

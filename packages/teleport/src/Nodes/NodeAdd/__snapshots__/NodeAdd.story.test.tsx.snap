@@ -1,51 +1,12 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`reset link dialog 1`] = `
-.c11 {
-  line-height: 1.5;
-  margin: 0;
-  display: inline-flex;
-  justify-content: center;
-  align-items: center;
+exports[`no token permission renders only manual install 1`] = `
+.c7 {
   box-sizing: border-box;
-  border: none;
-  border-radius: 4px;
-  cursor: pointer;
-  font-family: inherit;
-  font-weight: 600;
-  outline: none;
-  position: relative;
-  text-align: center;
-  text-decoration: none;
-  text-transform: uppercase;
-  transition: all 0.3s;
-  -webkit-font-smoothing: antialiased;
-  background: #512FC9;
-  color: rgba(255,255,255,0.87);
-  font-size: 10px;
-  min-height: 24px;
-  padding: 0px 16px;
+  margin-bottom: 24px;
 }
 
-.c11:active {
-  opacity: 0.56;
-}
-
-.c11:hover,
-.c11:focus {
-  background: #651FFF;
-}
-
-.c11:active {
-  background: #354AA4;
-}
-
-.c11:disabled {
-  background: rgba(255,255,255,0.12);
-  color: rgba(255,255,255,0.3);
-}
-
-.c13 {
+.c11 {
   line-height: 1.5;
   margin: 0;
   display: inline-flex;
@@ -71,18 +32,31 @@ exports[`reset link dialog 1`] = `
   padding: 0px 24px;
 }
 
-.c13:active {
+.c11:active {
   opacity: 0.56;
 }
 
-.c13:hover,
-.c13:focus {
+.c11:hover,
+.c11:focus {
   background: #2C3A73;
 }
 
-.c13:disabled {
+.c11:disabled {
   background: rgba(255,255,255,0.12);
   color: rgba(255,255,255,0.3);
+}
+
+.c9 {
+  color: #03a9f4;
+  font-weight: normal;
+  background: none;
+  text-decoration: underline;
+  text-transform: none;
+}
+
+.c9:hover,
+.c9:focus {
+  background: #222C59;
 }
 
 .c5 {
@@ -96,36 +70,11 @@ exports[`reset link dialog 1`] = `
   color: rgba(255,255,255,0.87);
 }
 
-.c7 {
+.c8 {
   overflow: hidden;
   text-overflow: ellipsis;
   margin: 0px;
   margin-bottom: 24px;
-  margin-top: 4px;
-}
-
-.c8 {
-  overflow: hidden;
-  text-overflow: ellipsis;
-  font-weight: 600;
-  margin: 0px;
-}
-
-.c10 {
-  overflow: hidden;
-  text-overflow: ellipsis;
-  margin: 0px;
-  margin-right: 16px;
-}
-
-.c9 {
-  box-sizing: border-box;
-  padding: 8px;
-  background-color: #010B1C;
-  border-radius: 4px;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
 }
 
 .c1 {
@@ -193,7 +142,7 @@ exports[`reset link dialog 1`] = `
   flex-direction: column;
 }
 
-.c12 {
+.c10 {
   box-sizing: border-box;
 }
 
@@ -214,53 +163,72 @@ exports[`reset link dialog 1`] = `
       data-testid="dialogbox"
     >
       <div
-        class="sc-AxirZ c4"
+        class="sc-fzqBZW c4"
       >
         <div
           class="c5"
           color="text.primary"
         >
-          Share Link
+          Add a Server
         </div>
       </div>
       <div
-        class="sc-AxirZ c6"
+        class="sc-fzqBZW c6"
       >
         <div
           class="c7"
         >
-          User
-          <span
+          <div
             class="c8"
           >
-             Lester 
-          </span>
-          has been reset. Share this URL with the user to set up a new password, link is valid for 
-          30 years
-          .
-        </div>
-        <div
-          class="sc-AxirZ c9"
-        >
-          <div
-            class="c10"
-            style="word-break: break-all; font-size: 12px;"
-          >
-            http://localhost/web/reset/0c536179038b386728dfee6602ca297f
+            Step 1 - Download Teleport on the joining server:
+             
+            <a
+              class="c9"
+              href="https://get.gravitational.com/teleport-ent-v5.0.0-dev-darwin-amd64-bin.tar.gz"
+              target="_blank"
+            >
+              Mac
+            </a>
+            ,  
+            <a
+              class="c9"
+              href="https://get.gravitational.com/teleport-ent-v5.0.0-dev-linux-amd64-bin.tar.gz"
+              target="_blank"
+            >
+              Linux 64-bit
+            </a>
+            ,  
+            <a
+              class="c9"
+              href="https://get.gravitational.com/teleport-ent-v5.0.0-dev-linux-386-bin.tar.gz"
+              target="_blank"
+            >
+              Linux 32-bit
+            </a>
           </div>
-          <button
-            class="c11"
-            kind="primary"
+          <div
+            class="c8"
           >
-            Copy
-          </button>
+            Step 2 - Please follow these
+             
+            <a
+              class="c9"
+              href="https://gravitational.com/teleport/docs/admin-guide/#adding-nodes-to-the-cluster"
+              target="_blank"
+            >
+              instruction
+            </a>
+             
+            on how to add a server to your cluster.
+          </div>
         </div>
       </div>
       <div
-        class="sc-AxirZ c12"
+        class="c10"
       >
         <button
-          class="c13"
+          class="c11"
           kind="secondary"
         >
           Close
@@ -271,8 +239,8 @@ exports[`reset link dialog 1`] = `
 </div>
 `;
 
-exports[`reset link dialog as invite 1`] = `
-.c11 {
+exports[`success state 1`] = `
+.c16 {
   line-height: 1.5;
   margin: 0;
   display: inline-flex;
@@ -298,25 +266,69 @@ exports[`reset link dialog as invite 1`] = `
   padding: 0px 16px;
 }
 
-.c11:active {
+.c16:active {
   opacity: 0.56;
 }
 
-.c11:hover,
-.c11:focus {
+.c16:hover,
+.c16:focus {
   background: #651FFF;
 }
 
-.c11:active {
+.c16:active {
   background: #354AA4;
 }
 
-.c11:disabled {
+.c16:disabled {
   background: rgba(255,255,255,0.12);
   color: rgba(255,255,255,0.3);
 }
 
-.c13 {
+.c19 {
+  line-height: 1.5;
+  margin: 0;
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  box-sizing: border-box;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-family: inherit;
+  font-weight: 600;
+  outline: none;
+  position: relative;
+  text-align: center;
+  text-decoration: none;
+  text-transform: uppercase;
+  transition: all 0.3s;
+  -webkit-font-smoothing: antialiased;
+  background: #512FC9;
+  color: rgba(255,255,255,0.87);
+  min-height: 32px;
+  font-size: 12px;
+  padding: 0px 24px;
+}
+
+.c19:active {
+  opacity: 0.56;
+}
+
+.c19:hover,
+.c19:focus {
+  background: #651FFF;
+}
+
+.c19:active {
+  background: #354AA4;
+}
+
+.c19:disabled {
+  background: rgba(255,255,255,0.12);
+  color: rgba(255,255,255,0.3);
+}
+
+.c21 {
   line-height: 1.5;
   margin: 0;
   display: inline-flex;
@@ -342,21 +354,41 @@ exports[`reset link dialog as invite 1`] = `
   padding: 0px 24px;
 }
 
-.c13:active {
+.c21:active {
   opacity: 0.56;
 }
 
-.c13:hover,
-.c13:focus {
+.c21:hover,
+.c21:focus {
   background: #2C3A73;
 }
 
-.c13:disabled {
+.c21:disabled {
   background: rgba(255,255,255,0.12);
   color: rgba(255,255,255,0.3);
 }
 
-.c5 {
+.c9 {
+  display: inline-block;
+  transition: color .3s;
+  color: #FFFFFF;
+}
+
+.c18 {
+  color: #03a9f4;
+  font-weight: normal;
+  background: none;
+  text-decoration: underline;
+  text-transform: none;
+  padding: 0 8px;
+}
+
+.c18:hover,
+.c18:focus {
+  background: #222C59;
+}
+
+.c4 {
   overflow: hidden;
   text-overflow: ellipsis;
   font-weight: 300;
@@ -364,36 +396,63 @@ exports[`reset link dialog as invite 1`] = `
   line-height: 32px;
   text-transform: uppercase;
   margin: 0px;
+  margin-bottom: 32px;
   color: rgba(255,255,255,0.87);
 }
 
-.c7 {
+.c6 {
   overflow: hidden;
   text-overflow: ellipsis;
   margin: 0px;
-  margin-bottom: 24px;
-  margin-top: 4px;
 }
 
-.c8 {
+.c12 {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  margin: 0px;
+  margin-bottom: 16px;
+}
+
+.c13 {
   overflow: hidden;
   text-overflow: ellipsis;
   font-weight: 600;
   margin: 0px;
 }
 
-.c10 {
+.c15 {
   overflow: hidden;
   text-overflow: ellipsis;
   margin: 0px;
   margin-right: 16px;
 }
 
-.c9 {
+.c5 {
   box-sizing: border-box;
+  flex: 0 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.c7 {
+  box-sizing: border-box;
+  display: flex;
+}
+
+.c14 {
+  box-sizing: border-box;
+  margin-bottom: 8px;
   padding: 8px;
   background-color: #010B1C;
   border-radius: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.c17 {
+  box-sizing: border-box;
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -444,19 +503,12 @@ exports[`reset link dialog as invite 1`] = `
   position: relative;
   overflow-y: auto;
   max-height: calc(100% - 96px);
-  max-width: 500px;
+  max-width: 600px;
   width: 100%;
+  min-height: 330px;
 }
 
-.c4 {
-  box-sizing: border-box;
-  margin-bottom: 16px;
-  min-height: 32px;
-  display: flex;
-  align-items: center;
-}
-
-.c6 {
+.c11 {
   box-sizing: border-box;
   margin-bottom: 32px;
   flex: 1;
@@ -464,8 +516,42 @@ exports[`reset link dialog as invite 1`] = `
   flex-direction: column;
 }
 
-.c12 {
+.c20 {
   box-sizing: border-box;
+}
+
+.c8 {
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  font-size: 15px;
+  font-weight: bold;
+  padding: 4px 8px;
+  cursor: pointer;
+  margin-left: 15px;
+  border-bottom: 4px solid transparent;
+  border-bottom: 4px solid #651FFF;
+  opacity: 1;
+}
+
+.c8 span {
+  margin-right: 8px;
+}
+
+.c10 {
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  font-size: 15px;
+  font-weight: bold;
+  padding: 4px 8px;
+  cursor: pointer;
+  margin-left: 15px;
+  border-bottom: 4px solid transparent;
+}
+
+.c10 span {
+  margin-right: 8px;
 }
 
 <div
@@ -485,53 +571,91 @@ exports[`reset link dialog as invite 1`] = `
       data-testid="dialogbox"
     >
       <div
-        class="sc-AxirZ c4"
+        class="c4"
+        color="text.primary"
       >
         <div
-          class="c5"
-          color="text.primary"
+          class="sc-AxirZ c5"
         >
-          Share Link
+          <div
+            class="c6"
+          >
+            Add a Server
+          </div>
+          <div
+            class="sc-AxirZ c7"
+          >
+            <div
+              class="sc-AxirZ c8"
+            >
+              <span
+                class="c9 icon icon-magic-wand "
+                color="light"
+              />
+              Automatically
+            </div>
+            <div
+              class="sc-AxirZ c10"
+            >
+              <span
+                class="c9 icon icon-cog "
+                color="light"
+              />
+              Manually
+            </div>
+          </div>
         </div>
       </div>
       <div
-        class="sc-AxirZ c6"
+        class="sc-AxirZ c11"
       >
         <div
-          class="c7"
+          class="c12"
         >
-          User
+          Use the auto installer script to add a server to your cluster.
+          <br />
+          Script will be valid for
+           
           <span
-            class="c8"
+            class="c13"
           >
-             Lester 
+            4h0m0s
+            .
           </span>
-          has been created but requires a password. Share this URL with the user to set up a password, link is valid for 
-          30 years
-          .
         </div>
         <div
-          class="sc-AxirZ c9"
+          class="sc-AxirZ c14"
+          style="font-family: \\"Droid Sans Mono\\", \\"monospace\\", monospace, \\"Droid Sans Fallback\\";"
         >
           <div
-            class="c10"
+            class="c15"
             style="word-break: break-all; font-size: 12px;"
           >
-            http://localhost/web/invite/0c536179038b386728dfee6602ca297f
+            some bash script
           </div>
           <button
-            class="c11"
+            class="c16"
             kind="primary"
           >
             Copy
           </button>
         </div>
+        <div
+          class="sc-AxirZ c17"
+        >
+          <a
+            class="c18 c19"
+            kind="primary"
+          >
+            Regenerate Script
+          </a>
+        </div>
       </div>
       <div
-        class="sc-AxirZ c12"
+        class="sc-AxirZ c20"
       >
         <button
-          class="c13"
+          class="c21"
           kind="secondary"
         >
           Close

@@ -24,12 +24,11 @@ export default function useNodes(ctx: TeleportContext, clusterId: string) {
   const [nodes, setNodes] = useState<Node[]>([]);
   const [searchValue, setSearchValue] = useState('');
   const [attempt, attemptActions] = useAttempt({ isProcessing: true });
+  const [showDialog, setShowDialog] = useState(false);
   const logins = ctx.storeUser.getLogins();
 
   useEffect(() => {
-    attemptActions.do(() =>
-      ctx.nodeService.fetchNodes(clusterId).then(setNodes)
-    );
+    fetchNodes();
   }, [clusterId]);
 
   const getNodeLoginOptions = useCallback(
@@ -58,6 +57,21 @@ export default function useNodes(ctx: TeleportContext, clusterId: string) {
     openNewTab(url);
   };
 
+  const fetchNodes = () => {
+    attemptActions.do(() =>
+      ctx.nodeService.fetchNodes(clusterId).then(setNodes)
+    );
+  };
+
+  const onCloseDialog = () => {
+    setShowDialog(false);
+    fetchNodes();
+  };
+
+  const onShowDialog = () => {
+    setShowDialog(true);
+  };
+
   return {
     searchValue,
     setSearchValue,
@@ -65,6 +79,9 @@ export default function useNodes(ctx: TeleportContext, clusterId: string) {
     nodes,
     getNodeLoginOptions,
     startSshSession,
+    showDialog,
+    onCloseDialog,
+    onShowDialog,
   };
 }
 

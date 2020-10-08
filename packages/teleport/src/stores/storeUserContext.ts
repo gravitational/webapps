@@ -48,4 +48,8 @@ export default class StoreUserContext extends Store<UserContext> {
   getAppAccess() {
     return this.state.acl.apps;
   }
+
+  getTokenAccess() {
+    return this.state.acl.tokens;
+  }
 }
