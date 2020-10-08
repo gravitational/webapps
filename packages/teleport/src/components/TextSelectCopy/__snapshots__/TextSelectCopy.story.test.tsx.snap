@@ -56,6 +56,7 @@ exports[`success state 1`] = `
   box-sizing: border-box;
   padding: 8px;
   background-color: #010B1C;
+  border-radius: 4px;
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -67,7 +68,7 @@ exports[`success state 1`] = `
   >
     <div
       class="c1"
-      style="word-break: break-all;"
+      style="word-break: break-all; font-size: 12px;"
     >
       some text to be copied
     </div>

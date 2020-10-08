@@ -15,41 +15,39 @@
  */
 
 import React from 'react';
-import { useTheme } from 'styled-components';
-import { Text, ButtonLink, Box } from 'design';
-import TextSelectCopy from 'teleport/components/TextSelectCopy';
+import { Text, Box, Link } from 'design';
 
 export default function ByManual({ version, isEnterprise, ...styles }: Props) {
-  const monoFont = useTheme().fonts.mono;
   const linux64Link = getDownloadLink('linux64', version, isEnterprise);
   const linux32Link = getDownloadLink('linux32', version, isEnterprise);
   const macLink = getDownloadLink('mac', version, isEnterprise);
+  const instructionLink =
+    'https://gravitational.com/teleport/docs/admin-guide/#adding-nodes-to-the-cluster';
 
   return (
-    <>
-      <Box {...styles}>
-        <Text>Step 1: Download and Install tctl</Text>
-        <ButtonLink href={macLink} target="_blank">
+    <Box {...styles}>
+      <Text mb={4}>
+        Step 1 - Download Teleport on the joining server:{' '}
+        <Link href={macLink} target="_blank" p={3}>
           Mac
-        </ButtonLink>{' '}
-        |
-        <ButtonLink href={linux64Link} target="_blank">
+        </Link>
+        {',  '}
+        <Link href={linux64Link} target="_blank">
           Linux 64-bit
-        </ButtonLink>{' '}
-        |
-        <ButtonLink href={linux32Link} target="_blank">
+        </Link>
+        {',  '}
+        <Link href={linux32Link} target="_blank">
           Linux 32-bit
-        </ButtonLink>
-      </Box>
-      <Box>
-        <Text>Step 2: Generate a new node invite token</Text>
-        <TextSelectCopy
-          text="tctl nodes add"
-          style={{ fontFamily: monoFont }}
-          mb={2}
-        />
-      </Box>
-    </>
+        </Link>
+      </Text>
+      <Text mb={4}>
+        Step 2 - Please follow these{' '}
+        <Link href={instructionLink} target="_blank">
+          instruction
+        </Link>{' '}
+        on how to add a server to your cluster.
+      </Text>
+    </Box>
   );
 }
 

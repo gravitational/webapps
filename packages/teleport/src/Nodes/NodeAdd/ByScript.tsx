@@ -18,7 +18,7 @@ import React from 'react';
 import { NodeAdd } from './NodeAdd';
 import { useTheme } from 'styled-components';
 import TextSelectCopy from 'teleport/components/TextSelectCopy';
-import { Alert, Text, Indicator, Box, Flex, ButtonLink } from 'design';
+import { Alert, Text, Indicator, Box, ButtonLink } from 'design';
 
 export default function ByScript(props: Props) {
   const monoFont = useTheme().fonts.mono;
@@ -26,7 +26,7 @@ export default function ByScript(props: Props) {
 
   if (attempt.status === 'processing') {
     return (
-      <Box textAlign="center" mt={8}>
+      <Box textAlign="center">
         <Indicator />
       </Box>
     );
@@ -40,15 +40,16 @@ export default function ByScript(props: Props) {
     <>
       <Text {...style}>
         Use the auto installer script to add a server to your cluster.
-      </Text>
-      <Text typography="subtitle1" bold caps mb={1}>
-        Auto-Installing Script
+        <br />
+        Script will be valid for{' '}
+        <Text bold as={'span'}>
+          {expires}.
+        </Text>
       </Text>
       <TextSelectCopy text={script} style={{ fontFamily: monoFont }} mb={2} />
-      <Flex alignItems="center" justifyContent="space-between">
+      <Box>
         <ButtonLink onClick={getJoinToken}>Regenerate Script</ButtonLink>
-        <Text>Script Expires in {expires}</Text>
-      </Flex>
+      </Box>
     </>
   );
 }

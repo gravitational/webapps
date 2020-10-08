@@ -40,11 +40,11 @@ export default function NodeAddEnterprise({
 }: Parameters<typeof NodeAdd>[0]) {
   const tabs: TabProps[] = [
     {
-      title: 'Automatic',
+      title: 'Automatically',
       Icon: Icons.Wand,
     },
     {
-      title: 'Manual',
+      title: 'Manually',
       Icon: Icons.Cog,
     },
   ];
@@ -72,7 +72,7 @@ export default function NodeAddEnterprise({
       onClose={close}
       open={true}
     >
-      <DialogTitle mb={4}>
+      <DialogTitle mb={5}>
         <Flex
           alignItems="center"
           justifyContent="space-between"
@@ -94,13 +94,13 @@ export default function NodeAddEnterprise({
         </Flex>
       </DialogTitle>
       <DialogContent>
-        {activeTab.title === 'Automatic' ? (
+        {activeTab.title === 'Automatically' ? (
           <NodeAddByScript
             script={script}
             expires={expires}
             getJoinToken={createJoinToken}
             attempt={attempt}
-            mb={4}
+            mb={3}
           />
         ) : (
           <NodeAddByManual
@@ -126,7 +126,7 @@ const Tab = styled(Flex)`
   align-items: center;
   font-size: 15px;
   font-weight: bold;
-  padding: 5px 8px;
+  padding: 4px 8px;
   cursor: pointer;
   margin-left: 15px;
   border-bottom: 4px solid transparent;

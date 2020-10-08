@@ -34,9 +34,14 @@ export default function TextSelectCopy({ text, ...styles }: Props) {
       p="2"
       alignItems="center"
       justifyContent="space-between"
+      borderRadius={2}
       {...styles}
     >
-      <Text ref={ref} style={{ wordBreak: 'break-all' }} mr="3">
+      <Text
+        ref={ref}
+        style={{ wordBreak: 'break-all', fontSize: '12px' }}
+        mr="3"
+      >
         {text}
       </Text>
       <ButtonPrimary onClick={onCopyClick} size="small">

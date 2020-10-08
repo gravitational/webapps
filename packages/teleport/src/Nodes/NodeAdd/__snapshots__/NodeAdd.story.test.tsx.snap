@@ -7,98 +7,6 @@ exports[`no token permission renders only manual install 1`] = `
 }
 
 .c11 {
-  box-sizing: border-box;
-}
-
-.c10 {
-  line-height: 1.5;
-  margin: 0;
-  display: inline-flex;
-  justify-content: center;
-  align-items: center;
-  box-sizing: border-box;
-  border: none;
-  border-radius: 4px;
-  cursor: pointer;
-  font-family: inherit;
-  font-weight: 600;
-  outline: none;
-  position: relative;
-  text-align: center;
-  text-decoration: none;
-  text-transform: uppercase;
-  transition: all 0.3s;
-  -webkit-font-smoothing: antialiased;
-  background: #512FC9;
-  color: rgba(255,255,255,0.87);
-  min-height: 32px;
-  font-size: 12px;
-  padding: 0px 24px;
-}
-
-.c10:active {
-  opacity: 0.56;
-}
-
-.c10:hover,
-.c10:focus {
-  background: #651FFF;
-}
-
-.c10:active {
-  background: #354AA4;
-}
-
-.c10:disabled {
-  background: rgba(255,255,255,0.12);
-  color: rgba(255,255,255,0.3);
-}
-
-.c14 {
-  line-height: 1.5;
-  margin: 0;
-  display: inline-flex;
-  justify-content: center;
-  align-items: center;
-  box-sizing: border-box;
-  border: none;
-  border-radius: 4px;
-  cursor: pointer;
-  font-family: inherit;
-  font-weight: 600;
-  outline: none;
-  position: relative;
-  text-align: center;
-  text-decoration: none;
-  text-transform: uppercase;
-  transition: all 0.3s;
-  -webkit-font-smoothing: antialiased;
-  background: #512FC9;
-  color: rgba(255,255,255,0.87);
-  font-size: 10px;
-  min-height: 24px;
-  padding: 0px 16px;
-}
-
-.c14:active {
-  opacity: 0.56;
-}
-
-.c14:hover,
-.c14:focus {
-  background: #651FFF;
-}
-
-.c14:active {
-  background: #354AA4;
-}
-
-.c14:disabled {
-  background: rgba(255,255,255,0.12);
-  color: rgba(255,255,255,0.3);
-}
-
-.c16 {
   line-height: 1.5;
   margin: 0;
   display: inline-flex;
@@ -124,16 +32,16 @@ exports[`no token permission renders only manual install 1`] = `
   padding: 0px 24px;
 }
 
-.c16:active {
+.c11:active {
   opacity: 0.56;
 }
 
-.c16:hover,
-.c16:focus {
+.c11:hover,
+.c11:focus {
   background: #2C3A73;
 }
 
-.c16:disabled {
+.c11:disabled {
   background: rgba(255,255,255,0.12);
   color: rgba(255,255,255,0.3);
 }
@@ -144,7 +52,6 @@ exports[`no token permission renders only manual install 1`] = `
   background: none;
   text-decoration: underline;
   text-transform: none;
-  padding: 0 8px;
 }
 
 .c9:hover,
@@ -167,23 +74,7 @@ exports[`no token permission renders only manual install 1`] = `
   overflow: hidden;
   text-overflow: ellipsis;
   margin: 0px;
-}
-
-.c13 {
-  overflow: hidden;
-  text-overflow: ellipsis;
-  margin: 0px;
-  margin-right: 16px;
-}
-
-.c12 {
-  box-sizing: border-box;
-  margin-bottom: 8px;
-  padding: 8px;
-  background-color: #010B1C;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
+  margin-bottom: 24px;
 }
 
 .c1 {
@@ -251,7 +142,7 @@ exports[`no token permission renders only manual install 1`] = `
   flex-direction: column;
 }
 
-.c15 {
+.c10 {
   box-sizing: border-box;
 }
 
@@ -272,7 +163,7 @@ exports[`no token permission renders only manual install 1`] = `
       data-testid="dialogbox"
     >
       <div
-        class="c4"
+        class="sc-fzqBZW c4"
       >
         <div
           class="c5"
@@ -282,7 +173,7 @@ exports[`no token permission renders only manual install 1`] = `
         </div>
       </div>
       <div
-        class="c6"
+        class="sc-fzqBZW c6"
       >
         <div
           class="c7"
@@ -290,69 +181,54 @@ exports[`no token permission renders only manual install 1`] = `
           <div
             class="c8"
           >
-            Step 1: Download and Install tctl
+            Step 1 - Download Teleport on the joining server:
+             
+            <a
+              class="c9"
+              href="https://get.gravitational.com/teleport-ent-v5.0.0-dev-darwin-amd64-bin.tar.gz"
+              target="_blank"
+            >
+              Mac
+            </a>
+            ,  
+            <a
+              class="c9"
+              href="https://get.gravitational.com/teleport-ent-v5.0.0-dev-linux-amd64-bin.tar.gz"
+              target="_blank"
+            >
+              Linux 64-bit
+            </a>
+            ,  
+            <a
+              class="c9"
+              href="https://get.gravitational.com/teleport-ent-v5.0.0-dev-linux-386-bin.tar.gz"
+              target="_blank"
+            >
+              Linux 32-bit
+            </a>
           </div>
-          <a
-            class="c9 c10"
-            href="https://get.gravitational.com/teleport-ent-v5.0.0-dev-darwin-amd64-bin.tar.gz"
-            kind="primary"
-            target="_blank"
-          >
-            Mac
-          </a>
-           
-          |
-          <a
-            class="c9 c10"
-            href="https://get.gravitational.com/teleport-ent-v5.0.0-dev-linux-amd64-bin.tar.gz"
-            kind="primary"
-            target="_blank"
-          >
-            Linux 64-bit
-          </a>
-           
-          |
-          <a
-            class="c9 c10"
-            href="https://get.gravitational.com/teleport-ent-v5.0.0-dev-linux-386-bin.tar.gz"
-            kind="primary"
-            target="_blank"
-          >
-            Linux 32-bit
-          </a>
-        </div>
-        <div
-          class="c11"
-        >
           <div
             class="c8"
           >
-            Step 2: Generate a new node invite token
-          </div>
-          <div
-            class="c12"
-            style="font-family: \\"Droid Sans Mono\\", \\"monospace\\", monospace, \\"Droid Sans Fallback\\";"
-          >
-            <div
-              class="c13"
-              style="word-break: break-all;"
+            Step 2 - Please follow these
+             
+            <a
+              class="c9"
+              href="https://gravitational.com/teleport/docs/admin-guide/#adding-nodes-to-the-cluster"
+              target="_blank"
             >
-              tctl nodes add
-            </div>
-            <button
-              class="c14"
-              kind="primary"
-            >
-              Copy
-            </button>
+              instruction
+            </a>
+             
+            on how to add a server to your cluster.
           </div>
         </div>
       </div>
       <div
-        class="c15"
+        class="c10"
       >
         <button
-          class="c16"
+          class="c11"
           kind="secondary"
         >
           Close
@@ -520,7 +396,7 @@ exports[`success state 1`] = `
   line-height: 32px;
   text-transform: uppercase;
   margin: 0px;
-  margin-bottom: 24px;
+  margin-bottom: 32px;
   color: rgba(255,255,255,0.87);
 }
 
@@ -534,18 +410,14 @@ exports[`success state 1`] = `
   overflow: hidden;
   text-overflow: ellipsis;
   margin: 0px;
-  margin-bottom: 24px;
+  margin-bottom: 16px;
 }
 
 .c13 {
   overflow: hidden;
   text-overflow: ellipsis;
   font-weight: 600;
-  font-size: 14px;
-  line-height: 24px;
-  text-transform: uppercase;
   margin: 0px;
-  margin-bottom: 4px;
 }
 
 .c15 {
@@ -573,6 +445,7 @@ exports[`success state 1`] = `
   margin-bottom: 8px;
   padding: 8px;
   background-color: #010B1C;
+  border-radius: 4px;
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -653,7 +526,7 @@ exports[`success state 1`] = `
   align-items: center;
   font-size: 15px;
   font-weight: bold;
-  padding: 5px 8px;
+  padding: 4px 8px;
   cursor: pointer;
   margin-left: 15px;
   border-bottom: 4px solid transparent;
@@ -671,7 +544,7 @@ exports[`success state 1`] = `
   align-items: center;
   font-size: 15px;
   font-weight: bold;
-  padding: 5px 8px;
+  padding: 4px 8px;
   cursor: pointer;
   margin-left: 15px;
   border-bottom: 4px solid transparent;
@@ -719,7 +592,7 @@ exports[`success state 1`] = `
                 class="c9 icon icon-magic-wand "
                 color="light"
               />
-              Automatic
+              Automatically
             </div>
             <div
               class="sc-AxirZ c10"
@@ -728,7 +601,7 @@ exports[`success state 1`] = `
                 class="c9 icon icon-cog "
                 color="light"
               />
-              Manual
+              Manually
             </div>
           </div>
         </div>
@@ -740,11 +613,15 @@ exports[`success state 1`] = `
           class="c12"
         >
           Use the auto installer script to add a server to your cluster.
-        </div>
-        <div
-          class="c13"
-        >
-          Auto-Installing Script
+          <br />
+          Script will be valid for
+           
+          <span
+            class="c13"
+          >
+            4h0m0s
+            .
+          </span>
         </div>
         <div
           class="sc-AxirZ c14"
@@ -752,7 +629,7 @@ exports[`success state 1`] = `
         >
           <div
             class="c15"
-            style="word-break: break-all;"
+            style="word-break: break-all; font-size: 12px;"
           >
             some bash script
           </div>
@@ -772,12 +649,6 @@ exports[`success state 1`] = `
           >
             Regenerate Script
           </a>
-          <div
-            class="c6"
-          >
-            Script Expires in 
-            4h0m0s
-          </div>
         </div>
       </div>
       <div
