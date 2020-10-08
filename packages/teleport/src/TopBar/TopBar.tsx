@@ -91,7 +91,7 @@ export function TopBar(props: ReturnType<typeof useTopBar>) {
       {!hasClusterUrl && <Text typography="h2">{props.title}</Text>}
       <ClusterSelector
         value={clusterId}
-        width="400px"
+        width="296px"
         maxMenuHeight={200}
         mr="20px"
         onChange={changeCluster}

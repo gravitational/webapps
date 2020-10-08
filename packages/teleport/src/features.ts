@@ -44,9 +44,9 @@ export class FeatureClusters {
 
   register(ctx: Ctx) {
     ctx.storeNav.addSideItem({
-      title: 'All Clusters',
+      title: 'Manage Clusters',
       group: 'clusters',
-      Icon: Icons.CardViewSmall,
+      Icon: Icons.EqualizerVertical,
       exact: false,
       getLink() {
         return cfg.routes.clusters;
@@ -133,7 +133,7 @@ export class FeatureAudit {
     ctx.storeNav.addSideItem({
       group: 'activity',
       title: 'Audit Log',
-      Icon: Icons.ListBullet,
+      Icon: Icons.ListThin,
       getLink(clusterId: string) {
         return cfg.getAuditRoute(clusterId);
       },
@@ -186,7 +186,7 @@ export class FeatureNodes {
   register(ctx: Ctx) {
     ctx.storeNav.addSideItem({
       title: 'Servers',
-      Icon: Icons.Layers,
+      Icon: Icons.Server,
       exact: true,
       getLink(clusterId: string) {
         return cfg.getNodesRoute(clusterId);
@@ -244,7 +244,7 @@ export class FeatureSessions {
     ctx.storeNav.addSideItem({
       group: 'activity',
       title: 'Active Sessions',
-      Icon: Icons.Cli,
+      Icon: Icons.Terminal,
       exact: true,
       getLink(clusterId: string) {
         return cfg.getSessionsRoute(clusterId);
@@ -349,7 +349,7 @@ export class FeatureTrust {
   }
 
   route = {
-    title: 'Trusted Clusters',
+    title: 'Trust',
     path: cfg.routes.trustedClusters,
     component: Trust,
   };
@@ -361,8 +361,8 @@ export class FeatureTrust {
 
     ctx.storeNav.addSideItem({
       group: 'clusters',
-      title: 'Trusted',
-      Icon: Icons.LanAlt,
+      title: 'Trust',
+      Icon: Icons.Cluster,
       getLink() {
         return cfg.routes.trustedClusters;
       },

@@ -20,18 +20,25 @@ import { color } from 'design/system';
 
 const fromTheme = ({ $nested = false, theme = defaultTheme }) => {
   const css = {
-    fontSize: '12px',
-    fontWeight: theme.bold,
+    position: 'relative',
+    fontSize: '14px',
+    fontWeight: theme.regular,
     fontFamily: theme.font,
     paddingLeft: theme.space[9] + 'px',
     paddingRight: theme.space[5] + 'px',
     background: theme.colors.primary.light,
     color: theme.colors.text.secondary,
     minHeight: '56px',
+
     '&:active, &.active': {
-      borderLeftColor: theme.colors.accent,
+      borderLeftColor: $nested ? 'none' : theme.colors.accent,
       background: theme.colors.primary.lighter,
       color: theme.colors.primary.contrastText,
+      fontWeight: theme.bold,
+
+      '.marker': {
+        background: theme.colors.secondary.light,
+      },
     },
 
     '&:hover, &:focus': {
@@ -41,9 +48,11 @@ const fromTheme = ({ $nested = false, theme = defaultTheme }) => {
   };
 
   if ($nested) {
+    css.fontSize = '11px';
+    css.background = 'none';
     css.fontWeight = theme.regular;
-    css.paddingLeft = theme.space[10] + 'px';
-    css.minHeight = '48px';
+    css.paddingLeft = theme.space[11] + 'px';
+    css.minHeight = '40px';
   }
 
   return css;

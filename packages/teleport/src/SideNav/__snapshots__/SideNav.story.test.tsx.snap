@@ -7,7 +7,7 @@ exports[`rendering of SideNav 1`] = `
   margin-left: -40px;
   margin-right: 16px;
   color: inherit;
-  font-size: 18px;
+  font-size: 24px;
 }
 
 .c8 {
@@ -18,7 +18,7 @@ exports[`rendering of SideNav 1`] = `
   color: inherit;
 }
 
-.c10 {
+.c12 {
   display: inline-block;
   transition: color .3s;
   margin-left: -40px;
@@ -30,6 +30,8 @@ exports[`rendering of SideNav 1`] = `
 .c0 {
   box-sizing: border-box;
   margin-top: -16px;
+  margin-left: -16px;
+  margin-right: -16px;
   height: 100%;
 }
 
@@ -48,10 +50,10 @@ exports[`rendering of SideNav 1`] = `
   margin-left: -40px;
   margin-right: 16px;
   color: inherit;
-  font-size: 18px;
+  font-size: 24px;
 }
 
-.c11 {
+.c13 {
   display: inline-block;
   transition: color .3s;
   margin-left: -40px;
@@ -72,8 +74,9 @@ exports[`rendering of SideNav 1`] = `
   text-decoration: none;
   width: 100%;
   line-height: 24px;
-  font-size: 12px;
-  font-weight: 600;
+  position: relative;
+  font-size: 14px;
+  font-weight: 400;
   font-family: Ubuntu2,-apple-system,BlinkMacSystemFont,"Segoe UI",Helvetica,Arial,sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol";
   padding-left: 64px;
   padding-right: 32px;
@@ -87,6 +90,12 @@ exports[`rendering of SideNav 1`] = `
   border-left-color: #651FFF;
   background: #2C3A73;
   color: #FFFFFF;
+  font-weight: 600;
+}
+
+.c4:active .marker,
+.c4.active .marker {
+  background: #651FFF;
 }
 
 .c4:hover,
@@ -95,7 +104,7 @@ exports[`rendering of SideNav 1`] = `
   color: #FFFFFF;
 }
 
-.c9 {
+.c10 {
   box-sizing: border-box;
   display: flex;
   align-items: center;
@@ -107,54 +116,84 @@ exports[`rendering of SideNav 1`] = `
   text-decoration: none;
   width: 100%;
   line-height: 24px;
-  font-size: 12px;
+  position: relative;
+  font-size: 11px;
   font-weight: 400;
   font-family: Ubuntu2,-apple-system,BlinkMacSystemFont,"Segoe UI",Helvetica,Arial,sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol";
-  padding-left: 72px;
+  padding-left: 80px;
   padding-right: 32px;
-  background: #222C59;
+  background: none;
   color: rgba(255,255,255,0.56);
-  min-height: 48px;
+  min-height: 40px;
 }
 
-.c9:active,
-.c9.active {
-  border-left-color: #651FFF;
+.c10:active,
+.c10.active {
+  border-left-color: none;
+  background: #2C3A73;
+  color: #FFFFFF;
+  font-weight: 600;
+}
+
+.c10:active .marker,
+.c10.active .marker {
+  background: #651FFF;
+}
+
+.c10:hover,
+.c10:focus {
   background: #2C3A73;
   color: #FFFFFF;
 }
 
-.c9:hover,
-.c9:focus {
-  background: #2C3A73;
-  color: #FFFFFF;
+.c9 {
+  background: linear-gradient(140deg,#2C3A73,#222C59);
+}
+
+.c11 {
+  height: 8px;
+  width: 8px;
+  position: absolute;
+  top: 16px;
+  left: 16px;
 }
 
 .c7 {
-  font-size: 12px;
-  font-weight: 600;
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  border: none;
+  border-left: 4px solid transparent;
+  cursor: pointer;
+  outline: none;
+  text-decoration: none;
+  width: 100%;
+  line-height: 24px;
+  font-size: 14px;
+  font-weight: 400;
   font-family: Ubuntu2,-apple-system,BlinkMacSystemFont,"Segoe UI",Helvetica,Arial,sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol";
   padding-left: 64px;
   padding-right: 32px;
   background: #222C59;
   color: rgba(255,255,255,0.56);
   min-height: 56px;
-  box-sizing: border-box;
-  display: flex;
-  align-items: center;
-  justify-content: flex-start;
-  border: none;
-  border-left: 4px solid transparent;
-  cursor: pointer;
-  outline: none;
-  text-decoration: none;
-  width: 100%;
-  line-height: 24px;
 }
 
-.c7:hover {
-  color: rgba(255,255,255,0.87);
-  background-color: rgb(40,50,93);
+.c7.active {
+  border-left-color: #651FFF;
+  background: #2C3A73;
+  color: #FFFFFF;
+}
+
+.c7.active .marker {
+  background: #651FFF;
+}
+
+.c7:hover,
+.c7:focus {
+  background: #2C3A73;
+  color: #FFFFFF;
 }
 
 .c2 {
@@ -214,9 +253,9 @@ exports[`rendering of SideNav 1`] = `
         href="/web/cluster/one/nodes"
       >
         <span
-          class="c5 icon icon-user sc-AxjAm c6"
+          class="c5 icon icon-server sc-AxjAm c6"
           color="inherit"
-          font-size="4"
+          font-size="24px"
         />
         Servers
       </a>
@@ -225,110 +264,69 @@ exports[`rendering of SideNav 1`] = `
         href="/web/cluster/one/apps"
       >
         <span
-          class="c5 icon icon-user sc-AxjAm c6"
+          class="c5 icon icon-new-tab sc-AxjAm c6"
           color="inherit"
-          font-size="4"
+          font-size="24px"
         />
         Applications
       </a>
       <button
-        class="c7"
+        class="c7 active"
       >
         <span
-          class="c6"
+          class="c5 icon icon-users2 sc-AxjAm c6"
           color="inherit"
-          font-size="4"
-        />
-        Activity
-        <span
-          class="c8 icon icon-chevron-right "
-          color="inherit"
-          style="font-size: 14px;"
-        />
-      </button>
-      <div
-        style="display: none;"
-      >
-        <a
-          class="c9"
-          href="/web/cluster/one/sessions"
-        >
-          <span
-            class="c10 icon icon-user sc-AxjAm c11"
-            color="inherit"
-            font-size="2"
-          />
-          Active Sessions
-        </a>
-        <a
-          class="c9"
-          href="/web/cluster/one/recordings"
-        >
-          <span
-            class="c10 icon icon-user sc-AxjAm c11"
-            color="inherit"
-            font-size="2"
-          />
-          Session Recordings
-        </a>
-        <a
-          class="c9"
-          href="/web/cluster/one/audit"
-        >
-          <span
-            class="c10 icon icon-user sc-AxjAm c11"
-            color="inherit"
-            font-size="2"
-          />
-          Audit Log
-        </a>
-      </div>
-      <button
-        class="c7"
-      >
-        <span
-          class="c6"
-          color="inherit"
-          font-size="4"
+          font-size="24px"
         />
         Team
         <span
-          class="c8 icon icon-chevron-right "
+          class="c8 icon icon-chevron-down "
           color="inherit"
           style="font-size: 14px;"
         />
       </button>
       <div
-        style="display: none;"
+        class="c9"
+        style="display: block;"
       >
         <a
-          class="c9"
+          class="c10"
           href="/web/users"
         >
+          <div
+            class="c11 marker"
+          />
           <span
-            class="c10 icon icon-user sc-AxjAm c11"
+            class="c12 icon icon-users2 sc-AxjAm c13"
             color="inherit"
             font-size="2"
           />
           Users
         </a>
         <a
-          class="c9"
+          aria-current="page"
+          class="c10 active"
           href="/web/roles"
         >
+          <div
+            class="c11 marker"
+          />
           <span
-            class="c10 icon icon-user sc-AxjAm c11"
+            class="c12 icon icon-profile sc-AxjAm c13"
             color="inherit"
             font-size="2"
           />
           Roles
         </a>
         <a
-          class="c9"
+          class="c10"
           href="/web/sso"
         >
+          <div
+            class="c11 marker"
+          />
           <span
-            class="c10 icon icon-user sc-AxjAm c11"
+            class="c12 icon icon-lock sc-AxjAm c13"
             color="inherit"
             font-size="2"
           />
@@ -339,9 +337,71 @@ exports[`rendering of SideNav 1`] = `
         class="c7"
       >
         <span
-          class="c6"
+          class="c5 icon icon-alarm-ringing sc-AxjAm c6"
           color="inherit"
-          font-size="4"
+          font-size="24px"
+        />
+        Activity
+        <span
+          class="c8 icon icon-chevron-right "
+          color="inherit"
+          style="font-size: 14px;"
+        />
+      </button>
+      <div
+        class="c9"
+        style="display: none;"
+      >
+        <a
+          class="c10"
+          href="/web/cluster/one/sessions"
+        >
+          <div
+            class="c11 marker"
+          />
+          <span
+            class="c12 icon icon-cli sc-AxjAm c13"
+            color="inherit"
+            font-size="2"
+          />
+          Active Sessions
+        </a>
+        <a
+          class="c10"
+          href="/web/cluster/one/recordings"
+        >
+          <div
+            class="c11 marker"
+          />
+          <span
+            class="c12 icon icon-play-circle sc-AxjAm c13"
+            color="inherit"
+            font-size="2"
+          />
+          Session Recordings
+        </a>
+        <a
+          class="c10"
+          href="/web/cluster/one/audit"
+        >
+          <div
+            class="c11 marker"
+          />
+          <span
+            class="c12 icon icon-list1 sc-AxjAm c13"
+            color="inherit"
+            font-size="2"
+          />
+          Audit Log
+        </a>
+      </div>
+      <button
+        class="c7"
+      >
+        <span
+          class="c5 icon icon-icons2 sc-AxjAm c6"
+          color="inherit"
+          font-size="24px"
         />
         Clusters
         <span
@@ -351,25 +411,32 @@ exports[`rendering of SideNav 1`] = `
         />
       </button>
       <div
+        class="c9"
         style="display: none;"
       >
         <a
-          class="c9"
+          class="c10"
           href="/web/clusters"
         >
+          <div
+            class="c11 marker"
+          />
           <span
-            class="c10 icon icon-user sc-AxjAm c11"
+            class="c12 icon icon-equalizer1 sc-AxjAm c13"
             color="inherit"
             font-size="2"
           />
-          All Clusters
+          Manage Clusters
         </a>
         <a
-          class="c9"
+          class="c10"
           href="/web/trust"
         >
+          <div
+            class="c11 marker"
+          />
           <span
-            class="c10 icon icon-user sc-AxjAm c11"
+            class="c12 icon icon-site-map sc-AxjAm c13"
             color="inherit"
             font-size="2"
           />

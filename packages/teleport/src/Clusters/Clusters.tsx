@@ -43,7 +43,7 @@ export function Clusters(props: ReturnType<typeof useClusters>) {
   return (
     <FeatureBox>
       <FeatureHeader alignItems="center">
-        <FeatureHeaderTitle>All Clusters</FeatureHeaderTitle>
+        <FeatureHeaderTitle>Manage Clusters</FeatureHeaderTitle>
       </FeatureHeader>
       {initAttempt.status === 'processing' && (
         <Box textAlign="center" m={10}>

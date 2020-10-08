@@ -77,7 +77,7 @@ function getGroups() {
       route: '',
     },
     clusters: {
-      Icon: Icons.CardViewSmall,
+      Icon: Icons.Clusters,
       title: 'Clusters',
       items: [] as Item[],
       route: '',

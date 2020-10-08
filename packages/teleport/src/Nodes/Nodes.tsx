@@ -74,22 +74,9 @@ export function Nodes(props: ReturnType<typeof useNodes>) {
       <Flex mb={4} alignItems="center" justifyContent="space-between">
         <InputSearch height="30px" mr="3" onChange={setSearchValue} />
         <QuickLaunch
-          as={Flex}
           width="240px"
-          autoFocus={false}
-          alignItems="center"
-          inputProps={{
-            style: {
-              height: '30px',
-              fontSize: '12px',
-            },
-          }}
-          labelProps={{
-            mr: 2,
-            mb: 0,
-            style: { whiteSpace: 'nowrap', width: 'auto' },
-          }}
           onPress={onQuickLaunchEnter}
+          inputProps={{ bg: 'bgTerminal' }}
         />
       </Flex>
       {attempt.isFailed && <Danger>{attempt.message} </Danger>}

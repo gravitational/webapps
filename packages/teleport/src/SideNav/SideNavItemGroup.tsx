@@ -22,10 +22,11 @@ import SideNavItemIcon from './SideNavItemIcon';
 import SideNavItem from './SideNavItem';
 import * as Icons from 'design/Icon';
 import { Item } from './useSideNav';
-import { lighten } from 'design/theme/utils/colorManipulator';
 
 const SideNavItemGroup: React.FC<{ path: string; item: Item }> = props => {
   const { item, path } = props;
+  const hasSelectedChild = isChildActive(path, item);
+  // auto expend on initial render if a child is selected
   const [expanded, setExpanded] = React.useState(() =>
     isChildActive(path, item)
   );
@@ -35,22 +36,31 @@ const SideNavItemGroup: React.FC<{ path: string; item: Item }> = props => {
     display: expanded ? 'block' : 'none',
   };
 
-  const $children = item.items.map((i, index) => (
-    <SideNavItem
-      key={index}
-      $nested={true}
-      as={NavLink}
-      exact={i.exact}
-      to={i.route}
-    >
-      <SideNavItemIcon as={i.Icon} fontSize="2" mr={2} />
-      {i.title}
-    </SideNavItem>
-  ));
+  const $children = item.items.map((i, index) => {
+    return (
+      <SideNavItem
+        key={index}
+        $nested={true}
+        as={NavLink}
+        exact={i.exact}
+        to={i.route}
+      >
+        <StyledMarker className="marker"></StyledMarker>
+        <SideNavItemIcon as={i.Icon} fontSize="2" mr={2} />
+        {i.title}
+      </SideNavItem>
+    );
+  });
+
+  const className = hasSelectedChild ? 'active' : '';
 
   return (
     <>
-      <StyledGroup as="button" onClick={() => setExpanded(!expanded)}>
+      <StyledGroup
+        className={className}
+        as="button"
+        onClick={() => setExpanded(!expanded)}
+      >
         <SideNavItemIcon as={item.Icon} />
         {item.title}
         <ArrowIcon
@@ -60,7 +70,9 @@ const SideNavItemGroup: React.FC<{ path: string; item: Item }> = props => {
           style={{ fontSize: '14px' }}
         />
       </StyledGroup>
-      <div style={style}>{$children}</div>
+      <StyledChildrenContainer style={style}>
+        {$children}
+      </StyledChildrenContainer>
     </>
   );
 };
@@ -79,23 +91,46 @@ function isChildActive(url: string, item: Item) {
 
 const fromTheme = ({ theme }) => {
   return {
-    fontSize: '12px',
-    fontWeight: theme.bold,
+    fontSize: '14px',
+    fontWeight: theme.regular,
     fontFamily: theme.font,
     paddingLeft: theme.space[9] + 'px',
     paddingRight: theme.space[5] + 'px',
     background: theme.colors.primary.light,
     color: theme.colors.text.secondary,
-    minHeight: '56px',
-    '&:hover': {
-      color: theme.colors.text.primary,
-      backgroundColor: lighten(theme.colors.primary.light, 0.03),
+
+    '&.active': {
+      borderLeftColor: theme.colors.accent,
+      background: theme.colors.primary.lighter,
+      color: theme.colors.primary.contrastText,
+      '.marker': {
+        background: theme.colors.secondary.light,
+      },
     },
+
+    '&:hover, &:focus': {
+      background: theme.colors.primary.lighter,
+      color: theme.colors.primary.contrastText,
+    },
+
+    minHeight: '56px',
   };
 };
 
+const StyledChildrenContainer = styled.div`
+  background: ${props =>
+    `linear-gradient(140deg, ${props.theme.colors.primary.lighter}, ${props.theme.colors.primary.light});`};
+`;
+
+const StyledMarker = styled.div`
+  height: 8px;
+  width: 8px;
+  position: absolute;
+  top: 16px;
+  left: 16px;
+`;
+
 const StyledGroup = styled.div`
-  ${fromTheme}
   box-sizing: border-box;
   display: flex;
   align-items: center;
@@ -107,4 +142,5 @@ const StyledGroup = styled.div`
   text-decoration: none;
   width: 100%;
   line-height: 24px;
+  ${fromTheme}
 `;
