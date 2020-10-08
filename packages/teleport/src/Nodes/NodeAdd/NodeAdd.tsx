@@ -32,7 +32,7 @@ export function NodeAdd(props: ReturnType<typeof useNodeAdd>) {
     version,
     isEnterprise,
     onClose,
-    getJoinToken,
+    createJoinToken,
     script,
     expires,
     attempt,
@@ -47,7 +47,7 @@ export function NodeAdd(props: ReturnType<typeof useNodeAdd>) {
         onClose={onClose}
         script={script}
         expires={expires}
-        getJoinToken={getJoinToken}
+        createJoinToken={createJoinToken}
         attempt={attempt}
       />
     );

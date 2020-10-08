@@ -43,7 +43,7 @@ const sample = {
     onClose() {
       return null;
     },
-    getJoinToken() {
+    createJoinToken() {
       return Promise.resolve(null);
     },
     version: '5.0.0-dev',

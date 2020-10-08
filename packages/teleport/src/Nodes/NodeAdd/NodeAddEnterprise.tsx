@@ -32,7 +32,7 @@ export default function NodeAddEnterprise({
   onClose,
   script,
   expires,
-  getJoinToken,
+  createJoinToken,
   canCreateToken,
   version,
   isEnterprise,
@@ -41,8 +41,7 @@ export default function NodeAddEnterprise({
   const tabs: TabProps[] = [
     {
       title: 'Automatic',
-      // TODO use magic stick icon after icon library is updated.
-      Icon: Icons.Cog,
+      Icon: Icons.Wand,
     },
     {
       title: 'Manual',
@@ -99,7 +98,7 @@ export default function NodeAddEnterprise({
           <NodeAddByScript
             script={script}
             expires={expires}
-            getJoinToken={getJoinToken}
+            getJoinToken={createJoinToken}
             attempt={attempt}
             mb={4}
           />

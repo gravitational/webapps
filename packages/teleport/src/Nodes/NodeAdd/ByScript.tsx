@@ -58,7 +58,7 @@ type PropTypes = Parameters<typeof NodeAdd>[0];
 type Props = {
   script: string;
   expires: string;
-  getJoinToken: PropTypes['getJoinToken'];
+  getJoinToken: PropTypes['createJoinToken'];
   attempt: PropTypes['attempt'];
   // handles styles
   [key: string]: any;

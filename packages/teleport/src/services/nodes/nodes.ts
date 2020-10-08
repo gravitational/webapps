@@ -27,7 +27,7 @@ const service = {
       .then(json => map(json.items, makeNode));
   },
 
-  getNodeJoinToken() {
+  createNodeJoinToken() {
     return api.post(cfg.getNodeJoinTokenUrl()).then(makeNodeJoinToken);
   },
 };
