@@ -95,9 +95,11 @@ const StyledInput = styled.input`
   display: block;
   outline: none;
   width: 100%;
+  transition: all .3s;
 
   box-shadow: none;
   padding-left: 40px;
+  padding-right: 1px;
   font-size: 12px;
 
   ::-ms-clear {
