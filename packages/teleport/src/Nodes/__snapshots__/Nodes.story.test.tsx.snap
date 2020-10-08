@@ -1,7 +1,7 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`failed 1`] = `
-.c10 {
+.c9 {
   display: flex;
   align-items: center;
   justify-content: center;
@@ -18,12 +18,8 @@ exports[`failed 1`] = `
   color: #FFFFFF;
 }
 
-.c10 a {
+.c9 a {
   color: #FFFFFF;
-}
-
-.c7 {
-  box-sizing: border-box;
 }
 
 .c3 {
@@ -71,17 +67,6 @@ exports[`failed 1`] = `
   color: rgba(255,255,255,0.3);
 }
 
-.c8 {
-  color: #FFFFFF;
-  display: block;
-  font-size: 11px;
-  font-weight: 500;
-  text-transform: uppercase;
-  width: 100%;
-  margin-bottom: 0px;
-  margin-right: 8px;
-}
-
 .c4 {
   box-sizing: border-box;
   margin-bottom: 24px;
@@ -92,6 +77,7 @@ exports[`failed 1`] = `
 
 .c6 {
   box-sizing: border-box;
+  width: 240px;
   display: flex;
   align-items: center;
 }
@@ -137,45 +123,47 @@ exports[`failed 1`] = `
   padding-bottom: 24px;
 }
 
-.c9 {
+.c7 {
+  position: absolute;
+  opacity: 0.56;
+  left: 8px;
+  display: block;
+  font-size: 11px;
+  font-weight: 500;
+  width: auto;
+}
+
+.c8 {
   appearance: none;
   border: none;
   border-radius: 4px;
-  box-shadow: inset 0 2px 4px rgba(0,0,0,.24);
   box-sizing: border-box;
   display: block;
-  height: 40px;
-  font-size: 16px;
-  padding: 0 16px;
   outline: none;
   width: 100%;
-  color: rgba(255,255,255,0.87);
-  background-color: #222C59;
-  width: 240px;
-  height: 34px;
-  transition: all .2s;
   box-shadow: none;
+  padding-left: 40px;
+  font-size: 12px;
+  color: rgba(255,255,255,0.87);
+  background-color: #010B1C;
+  height: 30px;
 }
 
-.c9::-ms-clear {
+.c8::-ms-clear {
   display: none;
 }
 
-.c9::placeholder {
-  opacity: 0.4;
-}
-
-.c9:read-only {
+.c8:read-only {
   cursor: not-allowed;
 }
 
-.c9::placeholder {
+.c8::placeholder {
   opacity: 1;
   color: rgba(255,255,255,0.24);
   font-size: 12px;
 }
 
-.c9:hover {
+.c8:hover {
   background: #2C3A73;
 }
 
@@ -213,10 +201,10 @@ exports[`failed 1`] = `
 }
 
 <div
-  class="c0"
+  class="sc-AxirZ c0"
 >
   <div
-    class="c1"
+    class="sc-AxirZ c1"
   >
     <div
       class="sc-fznZeY c2"
@@ -234,7 +222,7 @@ exports[`failed 1`] = `
     </a>
   </div>
   <div
-    class="c4"
+    class="sc-AxirZ c4"
   >
     <input
       class="c5"
@@ -244,27 +232,25 @@ exports[`failed 1`] = `
       value=""
     />
     <div
-      class="c6 sc-AxirZ c7"
+      class="sc-AxirZ c6"
+      style="position: relative;"
+      width="240px"
     >
-      <label
-        class="c8"
-        font-size="0"
-        style="white-space: nowrap; width: auto;"
+      <div
+        class="c7"
       >
         SSH:
-      </label>
+      </div>
       <input
-        class="sc-fzozJi c9"
+        class="c8"
         color="text.primary"
-        height="34px"
+        height="30px"
         placeholder="login@host"
-        style="height: 30px; font-size: 12px;"
-        width="240px"
       />
     </div>
   </div>
   <div
-    class="c10"
+    class="c9"
     kind="danger"
   >
     server error
@@ -274,10 +260,6 @@ exports[`failed 1`] = `
 `;
 
 exports[`loaded 1`] = `
-.c7 {
-  box-sizing: border-box;
-}
-
 .c3 {
   line-height: 1.5;
   margin: 0;
@@ -323,7 +305,7 @@ exports[`loaded 1`] = `
   color: rgba(255,255,255,0.3);
 }
 
-.c19 {
+.c18 {
   line-height: 1.5;
   margin: 0;
   display: inline-flex;
@@ -352,40 +334,40 @@ exports[`loaded 1`] = `
   height: 24px;
 }
 
-.c19:active {
+.c18:active {
   opacity: 0.56;
 }
 
-.c19:hover,
-.c19:focus {
+.c18:hover,
+.c18:focus {
   background: #2C3A73;
   border: 1px solid rgba(255,255,255,0.1);
   opacity: 1;
 }
 
-.c19:active {
+.c18:active {
   opacity: 0.24;
 }
 
-.c19:disabled {
+.c18:disabled {
   background: rgba(255,255,255,0.12);
   color: rgba(255,255,255,0.3);
 }
 
-.c14 {
+.c13 {
   display: inline-block;
   transition: color .3s;
   color: #FFFFFF;
   font-size: 16px;
 }
 
-.c17 {
+.c16 {
   display: inline-block;
   transition: color .3s;
   color: #FFFFFF;
 }
 
-.c20 {
+.c19 {
   display: inline-block;
   transition: color .3s;
   margin-left: 8px;
@@ -394,7 +376,7 @@ exports[`loaded 1`] = `
   font-size: 14px;
 }
 
-.c18 {
+.c17 {
   box-sizing: border-box;
   border-radius: 100px;
   display: inline-flex;
@@ -411,18 +393,7 @@ exports[`loaded 1`] = `
   margin-right: 4px;
 }
 
-.c8 {
-  color: #FFFFFF;
-  display: block;
-  font-size: 11px;
-  font-weight: 500;
-  text-transform: uppercase;
-  width: 100%;
-  margin-bottom: 0px;
-  margin-right: 8px;
-}
-
-.c11 {
+.c10 {
   overflow: hidden;
   text-overflow: ellipsis;
   font-weight: 400;
@@ -442,6 +413,7 @@ exports[`loaded 1`] = `
 
 .c6 {
   box-sizing: border-box;
+  width: 240px;
   display: flex;
   align-items: center;
 }
@@ -487,45 +459,47 @@ exports[`loaded 1`] = `
   padding-bottom: 24px;
 }
 
-.c9 {
+.c7 {
+  position: absolute;
+  opacity: 0.56;
+  left: 8px;
+  display: block;
+  font-size: 11px;
+  font-weight: 500;
+  width: auto;
+}
+
+.c8 {
   appearance: none;
   border: none;
   border-radius: 4px;
-  box-shadow: inset 0 2px 4px rgba(0,0,0,.24);
   box-sizing: border-box;
   display: block;
-  height: 40px;
-  font-size: 16px;
-  padding: 0 16px;
   outline: none;
   width: 100%;
-  color: rgba(255,255,255,0.87);
-  background-color: #222C59;
-  width: 240px;
-  height: 34px;
-  transition: all .2s;
   box-shadow: none;
+  padding-left: 40px;
+  font-size: 12px;
+  color: rgba(255,255,255,0.87);
+  background-color: #010B1C;
+  height: 30px;
 }
 
-.c9::-ms-clear {
+.c8::-ms-clear {
   display: none;
 }
 
-.c9::placeholder {
-  opacity: 0.4;
-}
-
-.c9:read-only {
+.c8:read-only {
   cursor: not-allowed;
 }
 
-.c9::placeholder {
+.c8::placeholder {
   opacity: 1;
   color: rgba(255,255,255,0.24);
   font-size: 12px;
 }
 
-.c9:hover {
+.c8:hover {
   background: #2C3A73;
 }
 
@@ -562,7 +536,7 @@ exports[`loaded 1`] = `
   font-size: 12px;
 }
 
-.c15 {
+.c14 {
   background: #222C59;
   box-shadow: 0 4px 16px rgba(0,0,0,0.24);
   border-collapse: collapse;
@@ -572,35 +546,35 @@ exports[`loaded 1`] = `
   width: 100%;
 }
 
-.c15 > thead > tr > th,
-.c15 > tbody > tr > th,
-.c15 > tfoot > tr > th,
-.c15 > thead > tr > td,
-.c15 > tbody > tr > td,
-.c15 > tfoot > tr > td {
+.c14 > thead > tr > th,
+.c14 > tbody > tr > th,
+.c14 > tfoot > tr > th,
+.c14 > thead > tr > td,
+.c14 > tbody > tr > td,
+.c14 > tfoot > tr > td {
   padding: 8px 8px;
   vertical-align: middle;
 }
 
-.c15 > thead > tr > th:first-child,
-.c15 > tbody > tr > th:first-child,
-.c15 > tfoot > tr > th:first-child,
-.c15 > thead > tr > td:first-child,
-.c15 > tbody > tr > td:first-child,
-.c15 > tfoot > tr > td:first-child {
+.c14 > thead > tr > th:first-child,
+.c14 > tbody > tr > th:first-child,
+.c14 > tfoot > tr > th:first-child,
+.c14 > thead > tr > td:first-child,
+.c14 > tbody > tr > td:first-child,
+.c14 > tfoot > tr > td:first-child {
   padding-left: 24px;
 }
 
-.c15 > thead > tr > th:last-child,
-.c15 > tbody > tr > th:last-child,
-.c15 > tfoot > tr > th:last-child,
-.c15 > thead > tr > td:last-child,
-.c15 > tbody > tr > td:last-child,
-.c15 > tfoot > tr > td:last-child {
+.c14 > thead > tr > th:last-child,
+.c14 > tbody > tr > th:last-child,
+.c14 > tfoot > tr > th:last-child,
+.c14 > thead > tr > td:last-child,
+.c14 > tbody > tr > td:last-child,
+.c14 > tfoot > tr > td:last-child {
   padding-right: 24px;
 }
 
-.c15 > thead > tr > th {
+.c14 > thead > tr > th {
   background: #111B48;
   color: #FFFFFF;
   cursor: pointer;
@@ -614,31 +588,31 @@ exports[`loaded 1`] = `
   white-space: nowrap;
 }
 
-.c15 > thead > tr > th .c13 {
+.c14 > thead > tr > th .c12 {
   font-weight: bold;
   font-size: 8px;
   margin-left: 8px;
 }
 
-.c15 > tbody > tr > td {
+.c14 > tbody > tr > td {
   color: rgba(255,255,255,0.87);
   line-height: 16px;
 }
 
-.c15 tbody tr {
+.c14 tbody tr {
   border-bottom: 1px solid #1C254D;
 }
 
-.c15 tbody tr:hover {
+.c14 tbody tr:hover {
   background-color: rgb(37,49,98);
 }
 
-.c12 {
+.c11 {
   box-sizing: border-box;
   display: flex;
 }
 
-.c12 button {
+.c11 button {
   background: none;
   border: none;
   border-radius: 200px;
@@ -650,23 +624,23 @@ exports[`loaded 1`] = `
   text-align: center;
 }
 
-.c12 button:hover,
-.c12 button:focus {
+.c11 button:hover,
+.c11 button:focus {
   background: #1C254D;
 }
 
-.c12 button:hover .c13,
-.c12 button:focus .c13 {
+.c11 button:hover .c12,
+.c11 button:focus .c12 {
   opacity: 1;
 }
 
-.c12 button .c13 {
+.c11 button .c12 {
   opacity: 0.4;
   font-size: 20px;
   transition: all 0.3s;
 }
 
-.c10 {
+.c9 {
   padding: 8px 24px;
   display: flex;
   height: 24px;
@@ -678,15 +652,15 @@ exports[`loaded 1`] = `
   border-top-right-radius: 8px;
 }
 
-.c16 > tbody > tr > td {
+.c15 > tbody > tr > td {
   vertical-align: baseline;
 }
 
 <div
-  class="c0"
+  class="sc-AxirZ c0"
 >
   <div
-    class="c1"
+    class="sc-AxirZ c1"
   >
     <div
       class="c2"
@@ -704,7 +678,7 @@ exports[`loaded 1`] = `
     </a>
   </div>
   <div
-    class="c4"
+    class="sc-AxirZ c4"
   >
     <input
       class="c5"
@@ -714,32 +688,30 @@ exports[`loaded 1`] = `
       value=""
     />
     <div
-      class="c6 sc-AxirZ c7"
+      class="sc-AxirZ c6"
+      style="position: relative;"
+      width="240px"
     >
-      <label
-        class="c8"
-        font-size="0"
-        style="white-space: nowrap; width: auto;"
+      <div
+        class="c7"
       >
         SSH:
-      </label>
+      </div>
       <input
-        class="sc-fzozJi c9"
+        class="c8"
         color="text.primary"
-        height="34px"
+        height="30px"
         placeholder="login@host"
-        style="height: 30px; font-size: 12px;"
-        width="240px"
       />
     </div>
   </div>
   <div>
     <div>
       <nav
-        class="c10"
+        class="c9"
       >
         <div
-          class="c11"
+          class="c10"
           color="primary.contrastText"
         >
           SHOWING 
@@ -757,14 +729,14 @@ exports[`loaded 1`] = `
           </strong>
         </div>
         <div
-          class="c12"
+          class="sc-AxirZ c11"
         >
           <button
             disabled=""
             title="Previous Page"
           >
             <span
-              class="c13 c14 icon icon-arrow-left-circle "
+              class="c12 c13 icon icon-arrow-left-circle "
               color="light"
               font-size="3"
             />
@@ -774,7 +746,7 @@ exports[`loaded 1`] = `
             title="Next Page"
           >
             <span
-              class="c13 c14 icon icon-arrow-right-circle "
+              class="c12 c13 icon icon-arrow-right-circle "
               color="light"
               font-size="3"
             />
@@ -782,7 +754,7 @@ exports[`loaded 1`] = `
         </div>
       </nav>
       <table
-        class="c15 c16"
+        class="c14 c15"
       >
         <thead>
           <tr>
@@ -790,7 +762,7 @@ exports[`loaded 1`] = `
               <a>
                 Hostname
                 <span
-                  class="c13 c17 icon icon-chevron-down "
+                  class="c12 c16 icon icon-chevron-down "
                   color="light"
                 />
               </a>
@@ -799,7 +771,7 @@ exports[`loaded 1`] = `
               <a>
                 Address
                 <span
-                  class="c13 c17 icon icon-chevrons-expand-vertical "
+                  class="c12 c16 icon icon-chevrons-expand-vertical "
                   color="light"
                 />
               </a>
@@ -820,13 +792,13 @@ exports[`loaded 1`] = `
             </td>
             <td>
               <div
-                class="c18"
+                class="c17"
                 kind="secondary"
               >
                 cluster: one
               </div>
               <div
-                class="c18"
+                class="c17"
                 kind="secondary"
               >
                 kernel: 4.15.0-51-generic
@@ -836,13 +808,13 @@ exports[`loaded 1`] = `
               align="right"
             >
               <button
-                class="c19"
+                class="c18"
                 height="24px"
                 kind="border"
               >
                 CONNECT
                 <span
-                  class="c13 c20 icon icon-caret-down "
+                  class="c12 c19 icon icon-caret-down "
                   color="text.secondary"
                   font-size="2"
                 />
@@ -858,13 +830,13 @@ exports[`loaded 1`] = `
             </td>
             <td>
               <div
-                class="c18"
+                class="c17"
                 kind="secondary"
               >
                 cluster: one
               </div>
               <div
-                class="c18"
+                class="c17"
                 kind="secondary"
               >
                 kernel: 4.15.0-51-generic
@@ -874,13 +846,13 @@ exports[`loaded 1`] = `
               align="right"
             >
               <button
-                class="c19"
+                class="c18"
                 height="24px"
                 kind="border"
               >
                 CONNECT
                 <span
-                  class="c13 c20 icon icon-caret-down "
+                  class="c12 c19 icon icon-caret-down "
                   color="text.secondary"
                   font-size="2"
                 />
@@ -896,13 +868,13 @@ exports[`loaded 1`] = `
             </td>
             <td>
               <div
-                class="c18"
+                class="c17"
                 kind="secondary"
               >
                 cluster: one
               </div>
               <div
-                class="c18"
+                class="c17"
                 kind="secondary"
               >
                 kernel: 4.15.0-51-generic
@@ -912,13 +884,13 @@ exports[`loaded 1`] = `
               align="right"
             >
               <button
-                class="c19"
+                class="c18"
                 height="24px"
                 kind="border"
               >
                 CONNECT
                 <span
-                  class="c13 c20 icon icon-caret-down "
+                  class="c12 c19 icon icon-caret-down "
                   color="text.secondary"
                   font-size="2"
                 />
@@ -934,13 +906,13 @@ exports[`loaded 1`] = `
             </td>
             <td>
               <div
-                class="c18"
+                class="c17"
                 kind="secondary"
               >
                 cluster: one
               </div>
               <div
-                class="c18"
+                class="c17"
                 kind="secondary"
               >
                 kernel: 4.15.0-51-generic
@@ -950,13 +922,13 @@ exports[`loaded 1`] = `
               align="right"
             >
               <button
-                class="c19"
+                class="c18"
                 height="24px"
                 kind="border"
               >
                 CONNECT
                 <span
-                  class="c13 c20 icon icon-caret-down "
+                  class="c12 c19 icon icon-caret-down "
                   color="text.secondary"
                   font-size="2"
                 />
@@ -972,13 +944,13 @@ exports[`loaded 1`] = `
             </td>
             <td>
               <div
-                class="c18"
+                class="c17"
                 kind="secondary"
               >
                 cluster: one
               </div>
               <div
-                class="c18"
+                class="c17"
                 kind="secondary"
               >
                 kernel: 4.15.0-51-generic
@@ -988,13 +960,13 @@ exports[`loaded 1`] = `
               align="right"
             >
               <button
-                class="c19"
+                class="c18"
                 height="24px"
                 kind="border"
               >
                 CONNECT
                 <span
-                  class="c13 c20 icon icon-caret-down "
+                  class="c12 c19 icon icon-caret-down "
                   color="text.secondary"
                   font-size="2"
                 />
@@ -1015,13 +987,13 @@ exports[`loaded 1`] = `
             </td>
             <td>
               <div
-                class="c18"
+                class="c17"
                 kind="secondary"
               >
                 cluster: one
               </div>
               <div
-                class="c18"
+                class="c17"
                 kind="secondary"
               >
                 kernel: 4.15.0-51-generic
@@ -1031,13 +1003,13 @@ exports[`loaded 1`] = `
               align="right"
             >
               <button
-                class="c19"
+                class="c18"
                 height="24px"
                 kind="border"
               >
                 CONNECT
                 <span
-                  class="c13 c20 icon icon-caret-down "
+                  class="c12 c19 icon icon-caret-down "
                   color="text.secondary"
                   font-size="2"
                 />
@@ -1058,13 +1030,13 @@ exports[`loaded 1`] = `
             </td>
             <td>
               <div
-                class="c18"
+                class="c17"
                 kind="secondary"
               >
                 cluster: one
               </div>
               <div
-                class="c18"
+                class="c17"
                 kind="secondary"
               >
                 kernel: 4.15.0-51-generic
@@ -1074,13 +1046,13 @@ exports[`loaded 1`] = `
               align="right"
             >
               <button
-                class="c19"
+                class="c18"
                 height="24px"
                 kind="border"
               >
                 CONNECT
                 <span
-                  class="c13 c20 icon icon-caret-down "
+                  class="c12 c19 icon icon-caret-down "
                   color="text.secondary"
                   font-size="2"
                 />

@@ -20,7 +20,11 @@ import { createMemoryHistory } from 'history';
 import * as Icons from 'design/Icon';
 import { TopBar } from './TopBar';
 
-export default function Story() {
+export default {
+  title: 'Teleport/TopBar',
+};
+
+export function Story() {
   const props = {
     ...defaultProps,
   };
@@ -55,6 +59,6 @@ const defaultProps = {
   logout: () => null,
 };
 
-Story.title = {
-  title: 'Teleport/TopBar',
+Story.story = {
+  name: 'TopBar',
 };

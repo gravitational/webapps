@@ -49,8 +49,8 @@ function renderlusterSelector(props) {
       <ClusterSelector
         mx="auto"
         open={true}
-        value={'clusterId'}
-        width="400px"
+        value={'clusterIdfsdfsdfsdfsdfsdfsdfsdfsdfsdfsdfsdfsdff'}
+        width="296px"
         maxMenuHeight={200}
         onChange={() => null}
         {...props}
