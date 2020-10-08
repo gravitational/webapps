@@ -21,22 +21,9 @@ import TextSelectCopy from 'teleport/components/TextSelectCopy';
 
 export default function ByManual({ version, isEnterprise, ...styles }: Props) {
   const monoFont = useTheme().fonts.mono;
-  const linux64Link = getDownloadLink('linux64');
-  const linux32Link = getDownloadLink('linux32');
-  const macLink = getDownloadLink('mac');
-
-  function getDownloadLink(type: 'mac' | 'linux32' | 'linux64') {
-    const prefix = isEnterprise ? 'teleport-ent' : 'teleport';
-
-    let infix = 'linux-amd64';
-    if (type === 'mac') {
-      infix = 'darwin-amd64';
-    } else if (type === 'linux32') {
-      infix = 'linux-386';
-    }
-
-    return `https://get.gravitational.com/${prefix}-v${version}-${infix}-bin.tar.gz`;
-  }
+  const linux64Link = getDownloadLink('linux64', version, isEnterprise);
+  const linux32Link = getDownloadLink('linux32', version, isEnterprise);
+  const macLink = getDownloadLink('mac', version, isEnterprise);
 
   return (
     <>
@@ -66,9 +53,24 @@ export default function ByManual({ version, isEnterprise, ...styles }: Props) {
   );
 }
 
+function getDownloadLink(type: Arch, version: string, isEnterprise: boolean) {
+  const prefix = isEnterprise ? 'teleport-ent' : 'teleport';
+
+  let infix = 'linux-amd64';
+  if (type === 'mac') {
+    infix = 'darwin-amd64';
+  } else if (type === 'linux32') {
+    infix = 'linux-386';
+  }
+
+  return `https://get.gravitational.com/${prefix}-v${version}-${infix}-bin.tar.gz`;
+}
+
 type Props = {
   version: string;
   isEnterprise: boolean;
   // handles styles
   [key: string]: any;
 };
+
+type Arch = 'mac' | 'linux32' | 'linux64';
