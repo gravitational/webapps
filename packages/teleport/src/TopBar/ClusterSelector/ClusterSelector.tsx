@@ -92,7 +92,6 @@ export default function ClusterSelector({
           loadOptions={onLoadOptions}
           defaultMenuIsOpen={defaultMenuIsOpen}
           hasError={false}
-          width={400}
           maxMenuHeight={600}
           menuPosition="fixed"
           isSearchable
@@ -166,6 +165,8 @@ const StyledSelect = styled(Box)(
     position: absolute;
     left: 78px;
     top: 4px;
+    width: 170px;
+    text-overflow: ellipsis;
   }
 
   .react-select__dropdown-indicator{

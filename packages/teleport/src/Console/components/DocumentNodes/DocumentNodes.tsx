@@ -77,7 +77,7 @@ export default function DocumentNodes(props: Props) {
           <Flex justifyContent="space-between" mb="4">
             <ClusterSelector
               value={doc.clusterId}
-              width="400px"
+              width="336px"
               maxMenuHeight={200}
               mr="20px"
               onChange={onChangeCluster}
@@ -85,24 +85,7 @@ export default function DocumentNodes(props: Props) {
           </Flex>
           <Flex mb="4" justifyContent="space-between" alignItems="center">
             <InputSearch height="30px" mr="3" onChange={setSearchValue} />
-            <QuickLaunch
-              width="240px"
-              as={Flex}
-              autoFocus={false}
-              alignItems="center"
-              inputProps={{
-                style: {
-                  height: '30px',
-                  fontSize: '12px',
-                },
-              }}
-              labelProps={{
-                mr: 2,
-                mb: 0,
-                style: { whiteSpace: 'nowrap', width: 'auto' },
-              }}
-              onPress={onQuickLaunchEnter}
-            />
+            <QuickLaunch width="240px" onPress={onQuickLaunchEnter} />
           </Flex>
           {isProcessing && (
             <Box textAlign="center" m={10}>
