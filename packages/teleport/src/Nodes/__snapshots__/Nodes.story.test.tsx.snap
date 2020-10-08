@@ -141,8 +141,10 @@ exports[`failed 1`] = `
   display: block;
   outline: none;
   width: 100%;
+  transition: all .3s;
   box-shadow: none;
   padding-left: 40px;
+  padding-right: 1px;
   font-size: 12px;
   color: rgba(255,255,255,0.87);
   background-color: #010B1C;
@@ -477,8 +479,10 @@ exports[`loaded 1`] = `
   display: block;
   outline: none;
   width: 100%;
+  transition: all .3s;
   box-shadow: none;
   padding-left: 40px;
+  padding-right: 1px;
   font-size: 12px;
   color: rgba(255,255,255,0.87);
   background-color: #010B1C;
