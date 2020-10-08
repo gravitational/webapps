@@ -15,10 +15,9 @@ limitations under the License.
 */
 
 import React from 'react';
-import { Text, Box, Flex } from 'design';
+import { Text, Box, Flex, ButtonPrimary } from 'design';
 import Card from 'design/Card';
 import Image from 'design/Image';
-import AddButton from './../AddButton';
 import { emptyPng } from './assets';
 
 export default function Empty(props: Props) {
@@ -38,20 +37,14 @@ export default function Empty(props: Props) {
             behavior.
           </Text>
         </Box>
-        <AddButton
-          isAdmin={props.isAdmin}
-          onClick={props.onCreate}
-          mb="2"
-          mx="auto"
-          width="240px"
-          kind="primary"
-        />
+        <ButtonPrimary width="240px" mb="2" mx="auto" onClick={props.onClick}>
+          Add Server
+        </ButtonPrimary>
       </Box>
     </Card>
   );
 }
 
 type Props = {
-  isAdmin: boolean;
-  onCreate(): void;
+  onClick(): void;
 };

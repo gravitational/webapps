@@ -16,9 +16,8 @@
 
 import React from 'react';
 import moment from 'moment';
-import copyToClipboard from 'design/utils/copyToClipboard';
-import selectElementContent from 'design/utils/selectElementContent';
-import { ButtonPrimary, ButtonSecondary, Text, Flex } from 'design';
+import TextSelectCopy from 'teleport/components/TextSelectCopy';
+import { ButtonSecondary, Text } from 'design';
 import Dialog, {
   DialogHeader,
   DialogTitle,
@@ -33,17 +32,10 @@ export default function UserTokenLink({
   onClose,
   asInvite = false,
 }: Props) {
-  const [copyCmd, setCopyCmd] = React.useState(() => 'Copy');
-  const ref = React.useRef();
   const tokenUrl = cfg.getUserResetTokenRoute(token.value, asInvite);
 
   const duration = moment(new Date()).diff(token.expires);
   const expiresText = moment.duration(duration).humanize();
-
-  function onCopyClick() {
-    copyToClipboard(tokenUrl).then(() => setCopyCmd('Copied'));
-    selectElementContent(ref.current);
-  }
 
   return (
     <Dialog
@@ -75,20 +67,7 @@ export default function UserTokenLink({
             password, link is valid for {expiresText}.
           </Text>
         )}
-        <Flex
-          bg="bgTerminal"
-          p="2"
-          mb={2}
-          alignItems="center"
-          justifyContent="space-between"
-        >
-          <Text ref={ref} style={{ wordBreak: 'break-all' }} mr="3">
-            {tokenUrl}
-          </Text>
-          <ButtonPrimary onClick={onCopyClick} size="small">
-            {copyCmd}
-          </ButtonPrimary>
-        </Flex>
+        <TextSelectCopy text={tokenUrl} />
       </DialogContent>
       <DialogFooter>
         <ButtonSecondary onClick={onClose}>Close</ButtonSecondary>

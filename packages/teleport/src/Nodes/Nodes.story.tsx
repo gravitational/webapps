@@ -36,7 +36,14 @@ export function Failed() {
   return render({ isFailed: true, message: 'server error' });
 }
 
-function render(attemptOptions: Partial<PropTypes['attempt']>) {
+export function Empty() {
+  return render({ isSuccess: true }, []);
+}
+
+function render(
+  attemptOptions: Partial<PropTypes['attempt']>,
+  nodeList = nodes
+) {
   const props = {
     searchValue: '',
     setSearchValue: () => null,
@@ -47,9 +54,12 @@ function render(attemptOptions: Partial<PropTypes['attempt']>) {
       isProcessing: false,
       ...attemptOptions,
     },
-    nodes,
+    nodes: nodeList,
     getNodeLoginOptions: () => [{ login: 'root', url: 'fd' }],
     startSshSession: () => null,
+    showDialog: false,
+    onCloseDialog: () => null,
+    onShowDialog: () => null,
   };
 
   return <Nodes {...props} />;

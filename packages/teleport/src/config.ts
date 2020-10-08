@@ -102,6 +102,9 @@ const cfg = {
 
     resourcePath: '/v1/enterprise/sites/:clusterId/resources/:kind?',
     removeResourcePath: '/v1/enterprise/sites/:clusterId/resources/:kind/:id',
+    nodeJoinToken: '/v1/enterprise/nodes/token',
+
+    nodeJoinScript: '/scripts/:token/install-node.sh',
   },
 
   getClusterEventsUrl(clusterId: string, params: UrlClusterEventsParams) {
@@ -133,6 +136,14 @@ const cfg = {
 
   getNodesRoute(clusterId: string) {
     return generatePath(cfg.routes.nodes, { clusterId });
+  },
+
+  getNodeJoinTokenUrl() {
+    return cfg.api.nodeJoinToken;
+  },
+
+  getNodeJoinScriptUrl(token: string) {
+    return cfg.baseUrl + generatePath(cfg.api.nodeJoinScript, { token });
   },
 
   getUsersRoute() {
