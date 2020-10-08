@@ -18,6 +18,7 @@ import React from 'react';
 import styled from 'styled-components';
 import NodeAddByManual from './ByManual';
 import NodeAddByScript from './ByScript';
+import { NodeAdd } from './NodeAdd';
 import { ButtonSecondary, Text, Flex } from 'design';
 import * as Icons from 'design/Icon';
 import Dialog, {
@@ -26,16 +27,17 @@ import Dialog, {
   DialogTitle,
 } from 'design/Dialog';
 import NodeAddDefault from './NodeAddOSS';
-import { NodeJoinToken } from 'teleport/services/nodes';
 
 export default function NodeAddEnterprise({
   onClose,
-  token,
+  script,
+  expires,
   getJoinToken,
   canCreateToken,
   version,
   isEnterprise,
-}: Props) {
+  attempt,
+}: Parameters<typeof NodeAdd>[0]) {
   const tabs: TabProps[] = [
     {
       title: 'Automatic',
@@ -94,7 +96,13 @@ export default function NodeAddEnterprise({
       </DialogTitle>
       <DialogContent>
         {activeTab.title === 'Automatic' ? (
-          <NodeAddByScript token={token} getJoinToken={getJoinToken} mb={4} />
+          <NodeAddByScript
+            script={script}
+            expires={expires}
+            getJoinToken={getJoinToken}
+            attempt={attempt}
+            mb={4}
+          />
         ) : (
           <NodeAddByManual
             mb={4}
@@ -113,15 +121,6 @@ export default function NodeAddEnterprise({
 type TabProps = {
   title: string;
   Icon: any;
-};
-
-type Props = {
-  onClose(): void;
-  getJoinToken(): Promise<void>;
-  token: NodeJoinToken;
-  canCreateToken: boolean;
-  version: string;
-  isEnterprise: boolean;
 };
 
 const Tab = styled(Flex)`

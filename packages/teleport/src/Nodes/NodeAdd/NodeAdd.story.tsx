@@ -24,18 +24,13 @@ export default {
 export const Loaded = () => <NodeAdd {...sample.props} />;
 
 export const Processing = () => (
-  <NodeAdd
-    {...sample.props}
-    token={null}
-    getJoinToken={() => new Promise(() => null)}
-  />
+  <NodeAdd {...sample.props} attempt={{ status: 'processing' }} />
 );
 
 export const Failed = () => (
   <NodeAdd
     {...sample.props}
-    token={null}
-    getJoinToken={() => Promise.reject(new Error('some error message'))}
+    attempt={{ status: 'failed', statusText: 'some error message' }}
   />
 );
 
@@ -45,10 +40,6 @@ export const NoTokenPermission = () => (
 
 const sample = {
   props: {
-    token: {
-      id: 'onokdisauhimefamacul',
-      expires: '4h0m0s',
-    },
     onClose() {
       return null;
     },
@@ -58,5 +49,11 @@ const sample = {
     version: '5.0.0-dev',
     isEnterprise: true,
     canCreateToken: true,
+    script: 'some bash script',
+    expires: '4h0m0s',
+    attempt: {
+      status: 'success',
+      statusText: '',
+    } as any,
   },
 };

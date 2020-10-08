@@ -98,7 +98,7 @@ export function Nodes(props: ReturnType<typeof useNodes>) {
           onLoginSelect={onLoginSelect}
         />
       )}
-      {showDialog && <NodeAdd onCloseDialog={onCloseDialog} />}
+      {showDialog && <NodeAdd onClose={onCloseDialog} />}
     </FeatureBox>
   );
 }

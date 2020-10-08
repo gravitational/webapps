@@ -364,46 +364,6 @@ exports[`no token permission renders only manual install 1`] = `
 `;
 
 exports[`success state 1`] = `
-.c21 {
-  line-height: 1.5;
-  margin: 0;
-  display: inline-flex;
-  justify-content: center;
-  align-items: center;
-  box-sizing: border-box;
-  border: none;
-  border-radius: 4px;
-  cursor: pointer;
-  font-family: inherit;
-  font-weight: 600;
-  outline: none;
-  position: relative;
-  text-align: center;
-  text-decoration: none;
-  text-transform: uppercase;
-  transition: all 0.3s;
-  -webkit-font-smoothing: antialiased;
-  background: #222C59;
-  color: rgba(255,255,255,0.87);
-  min-height: 32px;
-  font-size: 12px;
-  padding: 0px 24px;
-}
-
-.c21:active {
-  opacity: 0.56;
-}
-
-.c21:hover,
-.c21:focus {
-  background: #2C3A73;
-}
-
-.c21:disabled {
-  background: rgba(255,255,255,0.12);
-  color: rgba(255,255,255,0.3);
-}
-
 .c16 {
   line-height: 1.5;
   margin: 0;
@@ -488,6 +448,46 @@ exports[`success state 1`] = `
 }
 
 .c19:disabled {
+  background: rgba(255,255,255,0.12);
+  color: rgba(255,255,255,0.3);
+}
+
+.c21 {
+  line-height: 1.5;
+  margin: 0;
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  box-sizing: border-box;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-family: inherit;
+  font-weight: 600;
+  outline: none;
+  position: relative;
+  text-align: center;
+  text-decoration: none;
+  text-transform: uppercase;
+  transition: all 0.3s;
+  -webkit-font-smoothing: antialiased;
+  background: #222C59;
+  color: rgba(255,255,255,0.87);
+  min-height: 32px;
+  font-size: 12px;
+  padding: 0px 24px;
+}
+
+.c21:active {
+  opacity: 0.56;
+}
+
+.c21:hover,
+.c21:focus {
+  background: #2C3A73;
+}
+
+.c21:disabled {
   background: rgba(255,255,255,0.12);
   color: rgba(255,255,255,0.3);
 }
@@ -702,7 +702,7 @@ exports[`success state 1`] = `
         color="text.primary"
       >
         <div
-          class="c5"
+          class="sc-AxirZ c5"
         >
           <div
             class="c6"
@@ -710,10 +710,10 @@ exports[`success state 1`] = `
             Add a Server
           </div>
           <div
-            class="c7"
+            class="sc-AxirZ c7"
           >
             <div
-              class="c8"
+              class="sc-AxirZ c8"
             >
               <span
                 class="c9 icon icon-cog "
@@ -722,7 +722,7 @@ exports[`success state 1`] = `
               Automatic
             </div>
             <div
-              class="c10"
+              class="sc-AxirZ c10"
             >
               <span
                 class="c9 icon icon-cog "
@@ -734,7 +734,7 @@ exports[`success state 1`] = `
         </div>
       </div>
       <div
-        class="c11"
+        class="sc-AxirZ c11"
       >
         <div
           class="c12"
@@ -747,14 +747,14 @@ exports[`success state 1`] = `
           Auto-Installing Script
         </div>
         <div
-          class="c14"
+          class="sc-AxirZ c14"
           style="font-family: \\"Droid Sans Mono\\", \\"monospace\\", monospace, \\"Droid Sans Fallback\\";"
         >
           <div
             class="c15"
             style="word-break: break-all;"
           >
-            sudo bash -c "$(curl -sSL http://localhost/scripts/onokdisauhimefamacul/install-node.sh)"
+            some bash script
           </div>
           <button
             class="c16"
@@ -764,7 +764,7 @@ exports[`success state 1`] = `
           </button>
         </div>
         <div
-          class="c17"
+          class="sc-AxirZ c17"
         >
           <a
             class="c18 c19"
@@ -781,7 +781,7 @@ exports[`success state 1`] = `
         </div>
       </div>
       <div
-        class="c20"
+        class="sc-AxirZ c20"
       >
         <button
           class="c21"

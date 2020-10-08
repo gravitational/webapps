@@ -14,31 +14,15 @@
  * limitations under the License.
  */
 
-import React, { useEffect } from 'react';
+import React from 'react';
+import { NodeAdd } from './NodeAdd';
 import { useTheme } from 'styled-components';
 import TextSelectCopy from 'teleport/components/TextSelectCopy';
-import cfg from 'teleport/config';
-import useAttempt from 'shared/hooks/useAttemptNext';
 import { Alert, Text, Indicator, Box, Flex, ButtonLink } from 'design';
-import { NodeJoinToken } from 'teleport/services/nodes';
 
 export default function ByScript(props: Props) {
   const monoFont = useTheme().fonts.mono;
-  const { token, getJoinToken, ...style } = props;
-  const { attempt, setAttempt, run } = useAttempt('processing');
-
-  const expires = token ? token.expires : '';
-  const script = token
-    ? `sudo bash -c "$(curl -sSL ${cfg.getNodeJoinScriptUrl(token.id)})"`
-    : '';
-
-  useEffect(() => {
-    if (!token) {
-      run(() => props.getJoinToken());
-    } else {
-      setAttempt({ status: 'success' });
-    }
-  }, []);
+  const { script, expires, getJoinToken, attempt, ...style } = props;
 
   if (attempt.status === 'processing') {
     return (
@@ -69,9 +53,13 @@ export default function ByScript(props: Props) {
   );
 }
 
+type PropTypes = Parameters<typeof NodeAdd>[0];
+
 type Props = {
-  token: NodeJoinToken;
-  getJoinToken(): Promise<void>;
+  script: string;
+  expires: string;
+  getJoinToken: PropTypes['getJoinToken'];
+  attempt: PropTypes['attempt'];
   // handles styles
   [key: string]: any;
 };

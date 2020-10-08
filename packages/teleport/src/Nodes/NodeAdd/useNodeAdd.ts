@@ -14,26 +14,31 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import { useState } from 'react';
-import useTeleport from 'teleport/useTeleport';
+import { useState, useEffect } from 'react';
+import TeleportContext from 'teleport/teleportContext';
 import cfg from 'teleport/config';
-import { NodeJoinToken } from 'teleport/services/nodes';
+import useAttempt from 'shared/hooks/useAttemptNext';
 
-export default function useNodeAdd(onCloseDialog: () => void) {
-  const ctx = useTeleport();
+export default function useNodeAdd(ctx: TeleportContext, onClose: () => void) {
+  const { attempt, run } = useAttempt('processing');
   const canCreateToken = ctx.storeUser.getTokenAccess().create;
   const version = ctx.storeUser.state.cluster.authVersion;
   const isEnterprise = cfg.isEnterprise;
 
-  const [token, setToken] = useState<NodeJoinToken>(null);
+  const [script, setScript] = useState('');
+  const [expires, setExpires] = useState('');
+
+  useEffect(() => {
+    run(() => getJoinToken());
+  }, []);
 
   function getJoinToken() {
-    return ctx.nodeService.getNodeJoinToken().then(setToken);
-  }
-
-  function onClose() {
-    setToken(null);
-    onCloseDialog();
+    return ctx.nodeService.getNodeJoinToken().then(token => {
+      setExpires(token.expires);
+      setScript(
+        `sudo bash -c "$(curl -sSL ${cfg.getNodeJoinScriptUrl(token.id)})"`
+      );
+    });
   }
 
   return {
@@ -42,6 +47,8 @@ export default function useNodeAdd(onCloseDialog: () => void) {
     isEnterprise,
     onClose,
     getJoinToken,
-    token,
+    script,
+    expires,
+    attempt,
   };
 }

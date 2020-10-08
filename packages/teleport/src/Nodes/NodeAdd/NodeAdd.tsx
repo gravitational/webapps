@@ -16,11 +16,13 @@
 
 import React from 'react';
 import useNodeAdd from './useNodeAdd';
+import useTeleport from 'teleport/useTeleport';
 import NodeAddEnterprise from 'teleport/Nodes/NodeAdd/NodeAddEnterprise';
 import NodeAddOSS from 'teleport/Nodes/NodeAdd/NodeAddOSS';
 
-export default function Container({ onCloseDialog }: Props) {
-  const state = useNodeAdd(onCloseDialog);
+export default function Container({ onClose }: Props) {
+  const ctx = useTeleport();
+  const state = useNodeAdd(ctx, onClose);
   return <NodeAdd {...state} />;
 }
 
@@ -31,7 +33,9 @@ export function NodeAdd(props: ReturnType<typeof useNodeAdd>) {
     isEnterprise,
     onClose,
     getJoinToken,
-    token,
+    script,
+    expires,
+    attempt,
   } = props;
 
   if (isEnterprise) {
@@ -41,8 +45,10 @@ export function NodeAdd(props: ReturnType<typeof useNodeAdd>) {
         version={version}
         isEnterprise={isEnterprise}
         onClose={onClose}
-        token={token}
+        script={script}
+        expires={expires}
         getJoinToken={getJoinToken}
+        attempt={attempt}
       />
     );
   }
@@ -57,5 +63,5 @@ export function NodeAdd(props: ReturnType<typeof useNodeAdd>) {
 }
 
 type Props = {
-  onCloseDialog(): void;
+  onClose(): void;
 };
