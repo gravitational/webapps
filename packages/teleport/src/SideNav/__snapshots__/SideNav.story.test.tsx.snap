@@ -271,7 +271,7 @@ exports[`rendering of SideNav 1`] = `
         Applications
       </a>
       <button
-        class="c7 active"
+        class="c7 actives"
       >
         <span
           class="c5 icon icon-users2 sc-AxjAm c6"

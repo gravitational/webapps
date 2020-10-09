@@ -6,7 +6,7 @@ exports[`no token permission renders only manual install 1`] = `
   margin-bottom: 24px;
 }
 
-.c11 {
+.c12 {
   line-height: 1.5;
   margin: 0;
   display: inline-flex;
@@ -32,21 +32,21 @@ exports[`no token permission renders only manual install 1`] = `
   padding: 0px 24px;
 }
 
-.c11:active {
+.c12:active {
   opacity: 0.56;
 }
 
-.c11:hover,
-.c11:focus {
+.c12:hover,
+.c12:focus {
   background: #2C3A73;
 }
 
-.c11:disabled {
+.c12:disabled {
   background: rgba(255,255,255,0.12);
   color: rgba(255,255,255,0.3);
 }
 
-.c9 {
+.c10 {
   color: #03a9f4;
   font-weight: normal;
   background: none;
@@ -54,8 +54,8 @@ exports[`no token permission renders only manual install 1`] = `
   text-transform: none;
 }
 
-.c9:hover,
-.c9:focus {
+.c10:hover,
+.c10:focus {
   background: #222C59;
 }
 
@@ -75,6 +75,13 @@ exports[`no token permission renders only manual install 1`] = `
   text-overflow: ellipsis;
   margin: 0px;
   margin-bottom: 24px;
+}
+
+.c9 {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  font-weight: 600;
+  margin: 0px;
 }
 
 .c1 {
@@ -142,7 +149,7 @@ exports[`no token permission renders only manual install 1`] = `
   flex-direction: column;
 }
 
-.c10 {
+.c11 {
   box-sizing: border-box;
 }
 
@@ -181,10 +188,16 @@ exports[`no token permission renders only manual install 1`] = `
           <div
             class="c8"
           >
-            Step 1 - Download Teleport on the joining server:
+            <span
+              class="c9"
+            >
+              Step 1
+            </span>
+             
+            - Download Teleport on the joining server:
              
             <a
-              class="c9"
+              class="c10"
               href="https://get.gravitational.com/teleport-ent-v5.0.0-dev-darwin-amd64-bin.tar.gz"
               target="_blank"
             >
@@ -192,7 +205,7 @@ exports[`no token permission renders only manual install 1`] = `
             </a>
             ,  
             <a
-              class="c9"
+              class="c10"
               href="https://get.gravitational.com/teleport-ent-v5.0.0-dev-linux-amd64-bin.tar.gz"
               target="_blank"
             >
@@ -200,7 +213,7 @@ exports[`no token permission renders only manual install 1`] = `
             </a>
             ,  
             <a
-              class="c9"
+              class="c10"
               href="https://get.gravitational.com/teleport-ent-v5.0.0-dev-linux-386-bin.tar.gz"
               target="_blank"
             >
@@ -210,25 +223,31 @@ exports[`no token permission renders only manual install 1`] = `
           <div
             class="c8"
           >
-            Step 2 - Please follow these
+            <span
+              class="c9"
+            >
+              Step 2
+            </span>
+             
+            - Follow the
              
             <a
-              class="c9"
+              class="c10"
               href="https://gravitational.com/teleport/docs/admin-guide/#adding-nodes-to-the-cluster"
               target="_blank"
             >
-              instruction
+              instructions
             </a>
              
-            on how to add a server to your cluster.
+            on how to add a server to your cluster by generating a join token.
           </div>
         </div>
       </div>
       <div
-        class="c10"
+        class="c11"
       >
         <button
-          class="c11"
+          class="c12"
           kind="secondary"
         >
           Close
@@ -240,6 +259,10 @@ exports[`no token permission renders only manual install 1`] = `
 `;
 
 exports[`success state 1`] = `
+.c17 {
+  box-sizing: border-box;
+}
+
 .c16 {
   line-height: 1.5;
   margin: 0;
@@ -451,13 +474,6 @@ exports[`success state 1`] = `
   justify-content: space-between;
 }
 
-.c17 {
-  box-sizing: border-box;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-}
-
 .c1 {
   z-index: -1;
   position: fixed;
@@ -575,7 +591,7 @@ exports[`success state 1`] = `
         color="text.primary"
       >
         <div
-          class="sc-AxirZ c5"
+          class="c5"
         >
           <div
             class="c6"
@@ -583,10 +599,10 @@ exports[`success state 1`] = `
             Add a Server
           </div>
           <div
-            class="sc-AxirZ c7"
+            class="c7"
           >
             <div
-              class="sc-AxirZ c8"
+              class="c8"
             >
               <span
                 class="c9 icon icon-magic-wand "
@@ -595,7 +611,7 @@ exports[`success state 1`] = `
               Automatically
             </div>
             <div
-              class="sc-AxirZ c10"
+              class="c10"
             >
               <span
                 class="c9 icon icon-cog "
@@ -607,7 +623,7 @@ exports[`success state 1`] = `
         </div>
       </div>
       <div
-        class="sc-AxirZ c11"
+        class="c11"
       >
         <div
           class="c12"
@@ -624,7 +640,7 @@ exports[`success state 1`] = `
           </span>
         </div>
         <div
-          class="sc-AxirZ c14"
+          class="c14"
           style="font-family: \\"Droid Sans Mono\\", \\"monospace\\", monospace, \\"Droid Sans Fallback\\";"
         >
           <div
@@ -641,7 +657,7 @@ exports[`success state 1`] = `
           </button>
         </div>
         <div
-          class="sc-AxirZ c17"
+          class="c17"
         >
           <a
             class="c18 c19"
@@ -652,7 +668,7 @@ exports[`success state 1`] = `
         </div>
       </div>
       <div
-        class="sc-AxirZ c20"
+        class="c20"
       >
         <button
           class="c21"

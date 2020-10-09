@@ -52,7 +52,7 @@ const SideNavItemGroup: React.FC<{ path: string; item: Item }> = props => {
     );
   });
 
-  const className = hasSelectedChild ? 'active' : '';
+  const className = hasSelectedChild ? 'actives' : '';
 
   return (
     <>
