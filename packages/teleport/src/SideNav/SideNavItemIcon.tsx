@@ -23,7 +23,7 @@ SideNavItemIcon.displayName = 'SideNavItemIcon';
 SideNavItemIcon.defaultProps = {
   mr: 3,
   ml: -6,
-  fontSize: '24px',
+  fontSize: '16px',
   color: 'inherit',
 };
 
