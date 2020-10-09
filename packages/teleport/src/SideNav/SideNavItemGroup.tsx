@@ -108,8 +108,11 @@ const fromTheme = ({ theme }) => {
       },
     },
 
-    '&:hover, &:focus': {
+    '&:hover': {
       background: theme.colors.primary.lighter,
+    },
+
+    '&:hover, &:focus': {
       color: theme.colors.primary.contrastText,
     },
 
@@ -127,7 +130,7 @@ const StyledMarker = styled.div`
   width: 8px;
   position: absolute;
   top: 16px;
-  left: 16px;
+  left: 26px;
 `;
 
 const StyledGroup = styled.div`

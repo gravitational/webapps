@@ -41,8 +41,10 @@ const fromTheme = ({ $nested = false, theme = defaultTheme }) => {
       },
     },
 
-    '&:hover, &:focus': {
+    '&:hover': {
       background: theme.colors.primary.lighter,
+    },
+    '&:focus, &:hover': {
       color: theme.colors.primary.contrastText,
     },
   };
