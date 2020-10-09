@@ -394,6 +394,7 @@ exports[`success state 1`] = `
 .c9 {
   display: inline-block;
   transition: color .3s;
+  margin-right: 8px;
   color: #FFFFFF;
 }
 
@@ -537,37 +538,35 @@ exports[`success state 1`] = `
 }
 
 .c8 {
-  box-sizing: border-box;
-  display: flex;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 24px;
+  margin: 0px;
+  margin-left: 24px;
   align-items: center;
-  font-size: 15px;
-  font-weight: bold;
+  display: flex;
   padding: 4px 8px;
   cursor: pointer;
-  margin-left: 15px;
   border-bottom: 4px solid transparent;
+  font-weight: 500;
   border-bottom: 4px solid #651FFF;
-  opacity: 1;
-}
-
-.c8 span {
-  margin-right: 8px;
 }
 
 .c10 {
-  box-sizing: border-box;
-  display: flex;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 24px;
+  margin: 0px;
+  margin-left: 24px;
   align-items: center;
-  font-size: 15px;
-  font-weight: bold;
+  display: flex;
   padding: 4px 8px;
   cursor: pointer;
-  margin-left: 15px;
   border-bottom: 4px solid transparent;
-}
-
-.c10 span {
-  margin-right: 8px;
 }
 
 <div
