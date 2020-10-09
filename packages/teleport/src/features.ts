@@ -330,6 +330,11 @@ export class FeatureApps {
   };
 
   register(ctx: Ctx) {
+    // TODO uncomment after application access is defined in backend
+    // if (!ctx.isApplicationsEnabled()) {
+    //   return;
+    // }
+
     ctx.storeNav.addSideItem({
       title: 'Applications',
       Icon: Icons.NewTab,
