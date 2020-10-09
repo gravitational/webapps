@@ -91,7 +91,7 @@ function isChildActive(url: string, item: Item) {
 
 const fromTheme = ({ theme }) => {
   return {
-    fontSize: '14px',
+    fontSize: '12px',
     fontWeight: theme.regular,
     fontFamily: theme.font,
     paddingLeft: theme.space[9] + 'px',
@@ -119,7 +119,7 @@ const fromTheme = ({ theme }) => {
 
 const StyledChildrenContainer = styled.div`
   background: ${props =>
-    `linear-gradient(140deg, ${props.theme.colors.primary.lighter}, ${props.theme.colors.primary.light});`};
+    `linefar-gradient(140deg, ${props.theme.colors.primary.lighter}, ${props.theme.colors.primary.light});`};
 `;
 
 const StyledMarker = styled.div`

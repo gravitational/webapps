@@ -7,7 +7,7 @@ exports[`rendering of SideNav 1`] = `
   margin-left: -40px;
   margin-right: 16px;
   color: inherit;
-  font-size: 24px;
+  font-size: 16px;
 }
 
 .c8 {
@@ -50,7 +50,7 @@ exports[`rendering of SideNav 1`] = `
   margin-left: -40px;
   margin-right: 16px;
   color: inherit;
-  font-size: 24px;
+  font-size: 16px;
 }
 
 .c13 {
@@ -75,7 +75,7 @@ exports[`rendering of SideNav 1`] = `
   width: 100%;
   line-height: 24px;
   position: relative;
-  font-size: 14px;
+  font-size: 12px;
   font-weight: 400;
   font-family: Ubuntu2,-apple-system,BlinkMacSystemFont,"Segoe UI",Helvetica,Arial,sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol";
   padding-left: 64px;
@@ -120,7 +120,7 @@ exports[`rendering of SideNav 1`] = `
   font-size: 11px;
   font-weight: 400;
   font-family: Ubuntu2,-apple-system,BlinkMacSystemFont,"Segoe UI",Helvetica,Arial,sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol";
-  padding-left: 80px;
+  padding-left: 96px;
   padding-right: 32px;
   background: none;
   color: rgba(255,255,255,0.56);
@@ -147,7 +147,7 @@ exports[`rendering of SideNav 1`] = `
 }
 
 .c9 {
-  background: linear-gradient(140deg,#2C3A73,#222C59);
+  background: linefar-gradient(140deg,#2C3A73,#222C59);
 }
 
 .c11 {
@@ -171,7 +171,7 @@ exports[`rendering of SideNav 1`] = `
   text-decoration: none;
   width: 100%;
   line-height: 24px;
-  font-size: 14px;
+  font-size: 12px;
   font-weight: 400;
   font-family: Ubuntu2,-apple-system,BlinkMacSystemFont,"Segoe UI",Helvetica,Arial,sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol";
   padding-left: 64px;
@@ -256,7 +256,7 @@ exports[`rendering of SideNav 1`] = `
         <span
           class="c5 icon icon-server sc-AxjAm c6"
           color="inherit"
-          font-size="24px"
+          font-size="16px"
         />
         Servers
       </a>
@@ -267,7 +267,7 @@ exports[`rendering of SideNav 1`] = `
         <span
           class="c5 icon icon-new-tab sc-AxjAm c6"
           color="inherit"
-          font-size="24px"
+          font-size="16px"
         />
         Applications
       </a>
@@ -277,7 +277,7 @@ exports[`rendering of SideNav 1`] = `
         <span
           class="c5 icon icon-users2 sc-AxjAm c6"
           color="inherit"
-          font-size="24px"
+          font-size="16px"
         />
         Team
         <span
@@ -340,7 +340,7 @@ exports[`rendering of SideNav 1`] = `
         <span
           class="c5 icon icon-alarm-ringing sc-AxjAm c6"
           color="inherit"
-          font-size="24px"
+          font-size="16px"
         />
         Activity
         <span
@@ -402,7 +402,7 @@ exports[`rendering of SideNav 1`] = `
         <span
           class="c5 icon icon-icons2 sc-AxjAm c6"
           color="inherit"
-          font-size="24px"
+          font-size="16px"
         />
         Clusters
         <span
