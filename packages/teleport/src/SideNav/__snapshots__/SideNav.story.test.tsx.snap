@@ -98,9 +98,12 @@ exports[`rendering of SideNav 1`] = `
   background: #651FFF;
 }
 
-.c4:hover,
-.c4:focus {
+.c4:hover {
   background: #2C3A73;
+}
+
+.c4:focus,
+.c4:hover {
   color: #FFFFFF;
 }
 
@@ -140,9 +143,12 @@ exports[`rendering of SideNav 1`] = `
   background: #651FFF;
 }
 
-.c10:hover,
-.c10:focus {
+.c10:hover {
   background: #2C3A73;
+}
+
+.c10:focus,
+.c10:hover {
   color: #FFFFFF;
 }
 
@@ -155,7 +161,7 @@ exports[`rendering of SideNav 1`] = `
   width: 8px;
   position: absolute;
   top: 16px;
-  left: 16px;
+  left: 26px;
 }
 
 .c7 {
@@ -191,9 +197,12 @@ exports[`rendering of SideNav 1`] = `
   background: #651FFF;
 }
 
+.c7:hover {
+  background: #2C3A73;
+}
+
 .c7:hover,
 .c7:focus {
-  background: #2C3A73;
   color: #FFFFFF;
 }
 
