@@ -165,7 +165,7 @@ const StyledSelect = styled(Box)(
     position: absolute;
     left: 78px;
     top: 4px;
-    width: 170px;
+    width: 270px;
     text-overflow: ellipsis;
   }
 

@@ -131,6 +131,7 @@ const StyledMarker = styled.div`
 `;
 
 const StyledGroup = styled.div`
+  margin: 0;
   box-sizing: border-box;
   display: flex;
   align-items: center;

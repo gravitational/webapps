@@ -50,7 +50,7 @@ function renderlusterSelector(props) {
         mx="auto"
         open={true}
         value={'clusterIdfsdfsdfsdfsdfsdfsdfsdfsdfsdfsdfsdfsdff'}
-        width="296px"
+        width="384px"
         maxMenuHeight={200}
         onChange={() => null}
         {...props}
