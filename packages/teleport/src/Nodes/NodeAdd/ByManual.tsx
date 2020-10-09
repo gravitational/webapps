@@ -27,7 +27,10 @@ export default function ByManual({ version, isEnterprise, ...styles }: Props) {
   return (
     <Box {...styles}>
       <Text mb={4}>
-        Step 1 - Download Teleport on the joining server:{' '}
+        <Text bold as="span">
+          Step 1
+        </Text>{' '}
+        - Download Teleport on the joining server:{' '}
         <Link href={macLink} target="_blank" p={3}>
           Mac
         </Link>
@@ -41,11 +44,14 @@ export default function ByManual({ version, isEnterprise, ...styles }: Props) {
         </Link>
       </Text>
       <Text mb={4}>
-        Step 2 - Please follow these{' '}
+        <Text bold as="span">
+          Step 2
+        </Text>{' '}
+        - Follow the{' '}
         <Link href={instructionLink} target="_blank">
-          instruction
+          instructions
         </Link>{' '}
-        on how to add a server to your cluster.
+        on how to add a server to your cluster by generating a join token.
       </Text>
     </Box>
   );
