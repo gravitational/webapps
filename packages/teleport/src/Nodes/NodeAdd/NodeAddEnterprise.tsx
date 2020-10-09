@@ -38,19 +38,7 @@ export default function NodeAddEnterprise({
   isEnterprise,
   attempt,
 }: Parameters<typeof NodeAdd>[0]) {
-  const tabs: TabProps[] = [
-    {
-      title: 'Automatically',
-      Icon: Icons.Wand,
-    },
-    {
-      title: 'Manually',
-      Icon: Icons.Cog,
-    },
-  ];
-
-  const [activeTab, setActiveTab] = React.useState(tabs[0]);
-
+  const [activeTab, setActiveTab] = React.useState(TABS[0]);
   if (!canCreateToken) {
     return (
       <NodeAddDefault
@@ -69,7 +57,7 @@ export default function NodeAddEnterprise({
         minHeight: '330px',
       })}
       disableEscapeKeyDown={false}
-      onClose={close}
+      onClose={onClose}
       open={true}
     >
       <DialogTitle mb={5}>
@@ -80,15 +68,17 @@ export default function NodeAddEnterprise({
         >
           <Text>Add a Server</Text>
           <Flex>
-            {tabs.map(tab => (
-              <Tab
+            {TABS.map(tab => (
+              <StyledTab
+                ml="4"
+                typography="h5"
                 key={tab.title}
                 active={activeTab.title === tab.title}
                 onClick={() => setActiveTab(tab)}
               >
-                <tab.Icon />
+                <tab.Icon mr="2" />
                 {tab.title}
-              </Tab>
+              </StyledTab>
             ))}
           </Flex>
         </Flex>
@@ -117,28 +107,29 @@ export default function NodeAddEnterprise({
   );
 }
 
-type TabProps = {
-  title: string;
-  Icon: any;
-};
+const TABS = [
+  {
+    title: 'Automatically',
+    Icon: Icons.Wand,
+  },
+  {
+    title: 'Manually',
+    Icon: Icons.Cog,
+  },
+];
 
-const Tab = styled(Flex)`
+const StyledTab = styled(Text)`
   align-items: center;
-  font-size: 15px;
-  font-weight: bold;
+  display: flex;
   padding: 4px 8px;
   cursor: pointer;
-  margin-left: 15px;
   border-bottom: 4px solid transparent;
 
   ${({ active, theme }) =>
     active &&
     `
+    font-weight: 500;
     border-bottom: 4px solid ${theme.colors.accent};
-    opacity: 1;
-  `}
 
-  span {
-    margin-right: 8px;
-  }
+  `}
 `;
