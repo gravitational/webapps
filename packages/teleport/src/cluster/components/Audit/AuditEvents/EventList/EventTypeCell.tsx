@@ -28,6 +28,7 @@ const EventIconMap = {
   [CodeEnum.EXEC]: Icons.Cli,
   [CodeEnum.TRUSTED_CLUSTER_TOKEN_CREATED]: Icons.Info,
   [CodeEnum.TRUSTED_CLUSTER_CREATED]: Icons.Info,
+  [CodeEnum.TRUSTED_CLUSTER_DELETED]: Icons.Info,
   [CodeEnum.GITHUB_CONNECTOR_CREATED]: Icons.Info,
   [CodeEnum.GITHUB_CONNECTOR_DELETED]: Icons.Info,
   [CodeEnum.OIDC_CONNECTOR_CREATED]: Icons.Info,

@@ -60,6 +60,7 @@ export const CodeEnum = {
   ACCESS_REQUEST_UPDATED: 'T5001I',
   TRUSTED_CLUSTER_TOKEN_CREATED: 'T7002I',
   TRUSTED_CLUSTER_CREATED: 'T7000I',
+  TRUSTED_CLUSTER_DELETED: 'T7001I',
 
   // Gravity
   G_ALERT_CREATED: 'G1007I',
@@ -530,6 +531,12 @@ export type RawEvents = {
   >;
   [CodeEnum.TRUSTED_CLUSTER_CREATED]: RawEvent<
     typeof CodeEnum.TRUSTED_CLUSTER_CREATED,
+    {
+      name: string;
+    }
+  >;
+  [CodeEnum.TRUSTED_CLUSTER_DELETED]: RawEvent<
+    typeof CodeEnum.TRUSTED_CLUSTER_DELETED,
     {
       name: string;
     }

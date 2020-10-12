@@ -412,6 +412,16 @@ const events = [
     user: 'df0274cf-9576-47fb-8e7a-e884b7a00986.ip-172-31-30-254',
   },
   {
+    code: 'T7001I',
+    ei: 0,
+    event: 'trusted_cluster.delete',
+    expires: '0001-01-01T00:00:00Z',
+    name: 'root-cluster-name',
+    time: '2020-10-12T16:40:02.56Z',
+    uid: 'dc6077a2-7eb5-48b4-95ec-605720f4f5e2',
+    user: 'df0274cf-9576-47fb-8e7a-e884b7a00986.ip-172-31-30-254',
+  },
+  {
     'addr.local': '127.0.0.1:3022',
     'addr.remote': '50.34.48.113:54602',
     code: 'T1006W',

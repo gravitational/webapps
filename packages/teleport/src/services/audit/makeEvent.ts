@@ -412,7 +412,7 @@ export const formatters: Formatters = {
   [CodeEnum.SESSION_REJECT]: {
     desc: 'Session Rejected',
     format: ({ user, login, server_id, reason }) =>
-      `User [${user}] was denied session for [${login}@${server_id}] because [${reason}]`,
+      `User [${user}] was denied access to [${login}@${server_id}] because [${reason}]`,
   },
   [CodeEnum.SESSION_LEAVE]: {
     desc: 'User Disconnected',
@@ -533,7 +533,12 @@ export const formatters: Formatters = {
   [CodeEnum.TRUSTED_CLUSTER_CREATED]: {
     desc: 'Trusted Cluster Created',
     format: ({ user, name }) =>
-      `User [${user}] has created a trusted cluster relationship with [${name}]`,
+      `User [${user}] has created a trusted relationship with cluster [${name}]`,
+  },
+  [CodeEnum.TRUSTED_CLUSTER_DELETED]: {
+    desc: 'Trusted Cluster Deleted',
+    format: ({ user, name }) =>
+      `User [${user}] has deleted a trusted relationship with cluster [${name}]`,
   },
 };
 
