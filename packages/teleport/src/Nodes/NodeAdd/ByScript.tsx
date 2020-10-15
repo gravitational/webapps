@@ -15,6 +15,7 @@
  */
 
 import React from 'react';
+import moment from 'moment';
 import { NodeAdd } from './NodeAdd';
 import { useTheme } from 'styled-components';
 import TextSelectCopy from 'teleport/components/TextSelectCopy';
@@ -22,7 +23,10 @@ import { Alert, Text, Indicator, Box, ButtonLink } from 'design';
 
 export default function ByScript(props: Props) {
   const monoFont = useTheme().fonts.mono;
-  const { script, expires, getJoinToken, attempt, ...style } = props;
+  const { script, expiry, getJoinToken, attempt, ...style } = props;
+
+  const duration = moment(new Date()).diff(expiry);
+  const expiresText = moment.duration(duration).humanize();
 
   if (attempt.status === 'processing') {
     return (
@@ -43,7 +47,7 @@ export default function ByScript(props: Props) {
         <br />
         Script will be valid for{' '}
         <Text bold as={'span'}>
-          {expires}.
+          {expiresText}.
         </Text>
       </Text>
       <TextSelectCopy text={script} style={{ fontFamily: monoFont }} mb={2} />
@@ -58,7 +62,7 @@ type PropTypes = Parameters<typeof NodeAdd>[0];
 
 type Props = {
   script: string;
-  expires: string;
+  expiry: PropTypes['expiry'];
   getJoinToken: PropTypes['createJoinToken'];
   attempt: PropTypes['attempt'];
   // handles styles
