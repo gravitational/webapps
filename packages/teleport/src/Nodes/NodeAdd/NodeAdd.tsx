@@ -34,7 +34,7 @@ export function NodeAdd(props: ReturnType<typeof useNodeAdd>) {
     onClose,
     createJoinToken,
     script,
-    expires,
+    expiry,
     attempt,
   } = props;
 
@@ -46,7 +46,7 @@ export function NodeAdd(props: ReturnType<typeof useNodeAdd>) {
         isEnterprise={isEnterprise}
         onClose={onClose}
         script={script}
-        expires={expires}
+        expiry={expiry}
         createJoinToken={createJoinToken}
         attempt={attempt}
       />

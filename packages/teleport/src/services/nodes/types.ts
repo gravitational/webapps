@@ -30,5 +30,5 @@ export interface Node {
 
 export interface NodeJoinToken {
   id: string;
-  expires: string;
+  expiry: Date;
 }

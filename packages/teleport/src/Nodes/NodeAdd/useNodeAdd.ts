@@ -26,7 +26,7 @@ export default function useNodeAdd(ctx: TeleportContext, onClose: () => void) {
   const isEnterprise = cfg.isEnterprise;
 
   const [script, setScript] = useState('');
-  const [expires, setExpires] = useState('');
+  const [expiry, setExpiry] = useState<Date>(null);
 
   useEffect(() => {
     if (isEnterprise && canCreateToken) {
@@ -36,7 +36,7 @@ export default function useNodeAdd(ctx: TeleportContext, onClose: () => void) {
 
   function createJoinToken() {
     return ctx.nodeService.createNodeJoinToken().then(token => {
-      setExpires(token.expires);
+      setExpiry(token.expiry);
       setScript(
         `sudo bash -c "$(curl -sSL ${cfg.getNodeJoinScriptUrl(token.id)})"`
       );
@@ -50,7 +50,7 @@ export default function useNodeAdd(ctx: TeleportContext, onClose: () => void) {
     onClose,
     createJoinToken,
     script,
-    expires,
+    expiry,
     attempt,
   };
 }
