@@ -31,7 +31,7 @@ import NodeAddDefault from './NodeAddOSS';
 export default function NodeAddEnterprise({
   onClose,
   script,
-  expires,
+  expiry,
   createJoinToken,
   canCreateToken,
   version,
@@ -87,7 +87,7 @@ export default function NodeAddEnterprise({
         {activeTab.title === 'Automatically' ? (
           <NodeAddByScript
             script={script}
-            expires={expires}
+            expiry={expiry}
             getJoinToken={createJoinToken}
             attempt={attempt}
             mb={3}

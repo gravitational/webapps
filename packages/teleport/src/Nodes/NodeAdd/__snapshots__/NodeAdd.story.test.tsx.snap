@@ -627,14 +627,14 @@ exports[`success state 1`] = `
         <div
           class="c12"
         >
-          Use the auto installer script to add a server to your cluster.
+          Use below script to add a server to your cluster.
           <br />
-          Script will be valid for
+          The script will be valid for
            
           <span
             class="c13"
           >
-            4h0m0s
+            980 years
             .
           </span>
         </div>

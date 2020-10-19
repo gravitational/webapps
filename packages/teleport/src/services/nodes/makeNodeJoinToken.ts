@@ -18,10 +18,10 @@ import { at } from 'lodash';
 import { NodeJoinToken } from './types';
 
 export default function makeToken(json): NodeJoinToken {
-  const [id, expires] = at(json, ['id', 'expires']);
+  const [id, expiry] = at(json, ['id', 'expiry']);
 
   return {
     id,
-    expires,
+    expiry: new Date(expiry),
   };
 }
