@@ -43,9 +43,9 @@ export default function ByScript(props: Props) {
   return (
     <>
       <Text {...style}>
-        Use the auto installer script to add a server to your cluster.
+        Use below script to add a server to your cluster.
         <br />
-        Script will be valid for{' '}
+        The script will be valid for{' '}
         <Text bold as={'span'}>
           {expiresText}.
         </Text>
