@@ -13,7 +13,7 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 */
-import { Cluster } from '../../services/clusters';
+import { Cluster } from 'teleport/services/clusters';
 
 export type AuthType = 'local' | 'sso';
 
@@ -32,6 +32,11 @@ export interface Access {
   remove: boolean;
 }
 
+export interface AccessAccount {
+  requireReason: boolean;
+  requireApproval: boolean;
+}
+
 export interface Acl {
   logins: string[];
   authConnectors: Access;
@@ -39,4 +44,5 @@ export interface Acl {
   roles: Access;
   sessions: Access;
   events: Access;
+  account: AccessAccount;
 }
