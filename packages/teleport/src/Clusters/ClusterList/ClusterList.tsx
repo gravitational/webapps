@@ -54,13 +54,6 @@ export default function ClustersList(props: Props) {
   const sorted = sort(filtered);
   const paged = usePages({ pageSize, data: sorted });
 
-  // add empty rows for decorative purposes
-  if (filtered.length === clusters.length) {
-    for (let i = paged.data.length; i < 5; i++) {
-      paged.data.push({});
-    }
-  }
-
   return (
     <>
       <Flex mb={4} alignItems="center" justifyContent="flex-start">
@@ -155,11 +148,6 @@ function ActionCell(props: { flags: MenuFlags }) {
   const { rowIndex, data } = props as any;
   const { clusterId } = data[rowIndex];
   const $items = [] as React.ReactNode[];
-
-  // do not render anything for empty row
-  if (!clusterId) {
-    return <Cell />;
-  }
 
   if (props.flags.showNodes) {
     $items.push(renderMenuItem('Nodes', cfg.getNodesRoute(clusterId)));

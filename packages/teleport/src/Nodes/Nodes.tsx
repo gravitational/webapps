@@ -28,7 +28,6 @@ import NodeList from 'teleport/components/NodeList';
 import useTeleport from 'teleport/useTeleport';
 import useStickyClusterId from 'teleport/useStickyClusterId';
 import useNodes from './useNodes';
-import Empty from './Empty';
 import NodeAdd from './NodeAdd/NodeAdd';
 
 export default function Container() {
@@ -51,9 +50,6 @@ export function Nodes(props: ReturnType<typeof useNodes>) {
     onShowDialog,
   } = props;
 
-  const isEmpty = attempt.isSuccess && nodes.length === 0;
-  const hasNodes = attempt.isSuccess && nodes.length > 0;
-
   function onLoginSelect(e: React.MouseEvent, login: string, serverId: string) {
     e.preventDefault();
     startSshSession(login, serverId);
@@ -67,37 +63,32 @@ export function Nodes(props: ReturnType<typeof useNodes>) {
     <FeatureBox>
       <FeatureHeader alignItems="center" justifyContent="space-between">
         <FeatureHeaderTitle>Servers</FeatureHeaderTitle>
-        {!isEmpty && (
           <ButtonPrimary width="240px" onClick={onShowDialog}>
             Add Server
           </ButtonPrimary>
-        )}
       </FeatureHeader>
-      {!isEmpty && (
         <Flex mb={4} alignItems="center" justifyContent="space-between">
           <InputSearch height="30px" mr="3" onChange={setSearchValue} />
           <QuickLaunch
-            width="240px"
+            width="280px"
             onPress={onQuickLaunchEnter}
-            inputProps={{ bg: 'bgTerminal' }}
+            ifnputProps={{ bg: 'bgTerminal' }}
           />
         </Flex>
-      )}
-      {isEmpty && <Empty onClick={onShowDialog} />}
       {attempt.isFailed && <Danger>{attempt.message} </Danger>}
       {attempt.isProcessing && (
         <Box textAlign="center" m={10}>
           <Indicator />
         </Box>
       )}
-      {hasNodes && (
+     {attempt.isSuccess && (
         <NodeList
           nodes={nodes}
           searchValue={searchValue}
           onLoginMenuOpen={getNodeLoginOptions}
           onLoginSelect={onLoginSelect}
         />
-      )}
+     )}
       {showDialog && <NodeAdd onClose={onCloseDialog} />}
     </FeatureBox>
   );

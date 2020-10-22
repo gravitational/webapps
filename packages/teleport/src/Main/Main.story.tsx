@@ -25,6 +25,7 @@ import { clusters } from 'teleport/Clusters/fixtures';
 import { nodes } from 'teleport/Nodes/fixtures';
 import { events } from 'teleport/Audit/fixtures';
 import { sessions } from 'teleport/Sessions/fixtures';
+import { apps } from 'teleport/Apps/fixtures';
 import { userContext } from './fixtures';
 
 export default {
@@ -63,6 +64,7 @@ function useMainStory() {
     ctx.clusterService.fetchClusters = () => Promise.resolve(clusters);
     ctx.nodeService.fetchNodes = () => Promise.resolve(nodes);
     ctx.sshService.fetchSessions = () => Promise.resolve(sessions);
+    ctx.appService.fetchApps = () => Promise.resolve(apps);
 
     ctx.storeUser.setState(userContext);
     getFeatures().forEach(f => f.register(ctx));
