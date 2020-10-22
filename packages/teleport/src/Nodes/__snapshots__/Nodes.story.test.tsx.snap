@@ -75,13 +75,6 @@ exports[`failed 1`] = `
   justify-content: space-between;
 }
 
-.c6 {
-  box-sizing: border-box;
-  width: 240px;
-  display: flex;
-  align-items: center;
-}
-
 .c1 {
   box-sizing: border-box;
   margin-bottom: 24px;
@@ -123,14 +116,25 @@ exports[`failed 1`] = `
   padding-bottom: 24px;
 }
 
+.c6 {
+  box-sizing: border-box;
+  width: 280px;
+  display: flex;
+  align-items: center;
+  height: 30px;
+  border: 1px solid;
+  border-radius: 4px;
+  border-color: rgba(255,255,255,0.24);
+  background-color: #111b48;
+}
+
 .c7 {
-  position: absolute;
-  opacity: 0.56;
-  left: 8px;
-  display: block;
+  opacity: 0.75;
   font-size: 11px;
   font-weight: 500;
-  width: auto;
+  padding: 0 8px;
+  border-bottom-left-radius: 4px;
+  border-top-left-radius: 4px;
 }
 
 .c8 {
@@ -138,17 +142,17 @@ exports[`failed 1`] = `
   border: none;
   border-radius: 4px;
   box-sizing: border-box;
+  border-bottom-left-radius: unset;
+  border-top-left-radius: unset;
   display: block;
   outline: none;
   width: 100%;
-  transition: all .3s;
+  height: 100%;
   box-shadow: none;
-  padding-left: 40px;
-  padding-right: 1px;
+  padding-left: 8px;
   font-size: 12px;
   color: rgba(255,255,255,0.87);
-  background-color: #010B1C;
-  height: 30px;
+  background-color: #222C59;
 }
 
 .c8::-ms-clear {
@@ -165,7 +169,8 @@ exports[`failed 1`] = `
   font-size: 12px;
 }
 
-.c8:hover {
+.c8:hover,
+.c8:focus {
   background: #2C3A73;
 }
 
@@ -233,8 +238,7 @@ exports[`failed 1`] = `
     />
     <div
       class="sc-AxirZ c6"
-      style="position: relative;"
-      width="240px"
+      width="280px"
     >
       <div
         class="c7"
@@ -244,7 +248,6 @@ exports[`failed 1`] = `
       <input
         class="c8"
         color="text.primary"
-        height="30px"
         placeholder="login@host"
       />
     </div>
@@ -411,13 +414,6 @@ exports[`loaded 1`] = `
   justify-content: space-between;
 }
 
-.c6 {
-  box-sizing: border-box;
-  width: 240px;
-  display: flex;
-  align-items: center;
-}
-
 .c1 {
   box-sizing: border-box;
   margin-bottom: 24px;
@@ -459,14 +455,25 @@ exports[`loaded 1`] = `
   padding-bottom: 24px;
 }
 
+.c6 {
+  box-sizing: border-box;
+  width: 280px;
+  display: flex;
+  align-items: center;
+  height: 30px;
+  border: 1px solid;
+  border-radius: 4px;
+  border-color: rgba(255,255,255,0.24);
+  background-color: #111b48;
+}
+
 .c7 {
-  position: absolute;
-  opacity: 0.56;
-  left: 8px;
-  display: block;
+  opacity: 0.75;
   font-size: 11px;
   font-weight: 500;
-  width: auto;
+  padding: 0 8px;
+  border-bottom-left-radius: 4px;
+  border-top-left-radius: 4px;
 }
 
 .c8 {
@@ -474,17 +481,17 @@ exports[`loaded 1`] = `
   border: none;
   border-radius: 4px;
   box-sizing: border-box;
+  border-bottom-left-radius: unset;
+  border-top-left-radius: unset;
   display: block;
   outline: none;
   width: 100%;
-  transition: all .3s;
+  height: 100%;
   box-shadow: none;
-  padding-left: 40px;
-  padding-right: 1px;
+  padding-left: 8px;
   font-size: 12px;
   color: rgba(255,255,255,0.87);
-  background-color: #010B1C;
-  height: 30px;
+  background-color: #222C59;
 }
 
 .c8::-ms-clear {
@@ -501,7 +508,8 @@ exports[`loaded 1`] = `
   font-size: 12px;
 }
 
-.c8:hover {
+.c8:hover,
+.c8:focus {
   background: #2C3A73;
 }
 
@@ -689,8 +697,7 @@ exports[`loaded 1`] = `
     />
     <div
       class="sc-AxirZ c6"
-      style="position: relative;"
-      width="240px"
+      width="280px"
     >
       <div
         class="c7"
@@ -700,7 +707,6 @@ exports[`loaded 1`] = `
       <input
         class="c8"
         color="text.primary"
-        height="30px"
         placeholder="login@host"
       />
     </div>

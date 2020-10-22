@@ -57,6 +57,7 @@ function Item(props: ItemProps) {
         color="text.primary"
         href={app.launchUrl}
         width="220px"
+        px="2"
         style={{
           textDecoration: 'none',
         }}
@@ -64,9 +65,6 @@ function Item(props: ItemProps) {
         <NewTab fontSize="62px" mb="3" />
         <Text style={textStyle} bold mb="2">
           {app.name}
-        </Text>
-        <Text style={textStyle} typography="body2">
-          {app.clusterId}
         </Text>
       </Flex>
     </StyledAppListItem>
@@ -76,17 +74,17 @@ function Item(props: ItemProps) {
 const textStyle = {
   textAlign: 'center',
   width: '100%',
-  textTransform: 'capitalize',
 };
 
 const StyledAppListItem = styled(Flex)`
   position: relative;
-  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.24);
+  box-shadow: 0 4px 32px rgba(0, 0, 0, 0.24);
   cursor: pointer;
-  transition: box-shadow 0.1s;
-  text-decoration: none;
-  :hover {
-    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5);
+  transition: box-shadow 0.2s;
+  border: 2px solid transparent;
+  &:hover {
+    border: 2px solid ${props => props.theme.colors.secondary.main};
+    background: ${props => props.theme.colors.primary.lighter};
   }
 `;
 

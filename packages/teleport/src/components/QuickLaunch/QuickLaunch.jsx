@@ -49,19 +49,17 @@ export default function FieldInputSsh({
   }
 
   return (
-    <Flex {...boxProps} alignItems="center" style={{ position: 'relative' }}>
+    <StyledBox {...boxProps} hasError={hasError}>
       <StyledLabel>SSH:</StyledLabel>
       <StyledInput
-        height="30px"
         bg="primary.light"
         color="text.primary"
         placeholder="login@host"
         autoFocus={autoFocus}
         onKeyPress={onKeyPress}
         {...inputProps}
-        hasError={hasError}
       />
-    </Flex>
+    </StyledBox>
   );
 }
 
@@ -72,19 +70,29 @@ function error({ hasError, theme }) {
 
   return {
     border: `1px solid ${theme.colors.error.main}`,
-    paddingLeft: '39px',
-    paddingRight: '1px',
+    paddifngLeft: '7px',
+    paddifngRight: '1px',
   };
 }
 
+const StyledBox = styled(Flex)`
+  align-items: center;
+  height: 30px;
+  border: 1px solid;
+  border-radius: 4px;
+  border-color: rgba(255, 255, 255, 0.24);
+  background-color: #111b48;
+  ${error}
+`;
+
 const StyledLabel = styled.div`
-  position: absolute;
-  opacity: 0.56;
-  left: 8px;
-  display: block;
+  opacity: 0.75;
   font-size: 11px;
   font-weight: 500;
-  width: auto;
+  padding: 0 8px;
+  border-bottom-left-radius: 4px;
+  border-top-left-radius: 4px;
+  background: ${props => props.theme.colors.primary.darker};
 `;
 
 const StyledInput = styled.input`
@@ -92,14 +100,14 @@ const StyledInput = styled.input`
   border:none;
   border-radius: 4px;
   box-sizing: border-box;
+  border-bottom-left-radius: unset;
+  border-top-left-radius: unset;
   display: block;
   outline: none;
   width: 100%;
-  transition: all .3s;
-
+  height: 100%;
   box-shadow: none;
-  padding-left: 40px;
-  padding-right: 1px;
+  padding-left: 8px;
   font-size: 12px;
 
   ::-ms-clear {
@@ -116,9 +124,9 @@ const StyledInput = styled.input`
     font-size: ${props => props.theme.fontSizes[1]}px;
   }
 
-  &:hover {
+  &:hover, &:focus {
     background: ${props => props.theme.colors.primary.lighter};
   }
 
-  ${color} ${space} ${width} ${height} ${error};
+  ${color} ${space} ${width} ${height} ;
 `;

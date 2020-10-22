@@ -20,6 +20,14 @@ export const userContext = makeUserContext({
   authType: 'sso',
   userName: 'Sam',
   userAcl: {
+    tokens: {
+      list: true,
+      read: true,
+    },
+    appServers: {
+      list: true,
+      read: true,
+    },
     sessions: {
       list: true,
       read: true,

@@ -42,8 +42,8 @@ export interface Acl {
   sessions: Access;
   events: Access;
   users: Access;
-  apps: Access;
   tokens: Access;
+  appServers: Access;
 }
 
 export interface User {

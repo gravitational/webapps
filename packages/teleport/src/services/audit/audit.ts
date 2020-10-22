@@ -46,7 +46,7 @@ const service = {
     return api
       .get(url)
       .then(json => {
-        const events: any[] = json.events ? json.events : [];
+        const events: any[] = json.events || [];
         return events.map(makeEvent);
       })
       .then(events => {

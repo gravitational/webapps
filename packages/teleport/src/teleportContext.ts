@@ -77,7 +77,7 @@ class Context implements teleport.Context {
   }
 
   isApplicationsEnabled() {
-    return this.storeUser.getAppAccess().list;
+    return this.storeUser.getAppServerAccess().list;
   }
 }
 
