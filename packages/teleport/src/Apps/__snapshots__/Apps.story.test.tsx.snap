@@ -372,15 +372,6 @@ exports[`loaded state 1`] = `
   margin-bottom: 8px;
 }
 
-.c13 {
-  overflow: hidden;
-  text-overflow: ellipsis;
-  font-weight: 400;
-  font-size: 12px;
-  line-height: 16px;
-  margin: 0px;
-}
-
 .c4 {
   box-sizing: border-box;
   display: flex;
@@ -396,6 +387,8 @@ exports[`loaded state 1`] = `
 
 .c10 {
   box-sizing: border-box;
+  padding-left: 8px;
+  padding-right: 8px;
   width: 220px;
   color: rgba(255,255,255,0.87);
   flex: 1;
@@ -459,14 +452,15 @@ exports[`loaded state 1`] = `
   justify-content: center;
   flex-direction: column;
   position: relative;
-  box-shadow: 0 8px 32px rgba(0,0,0,0.24);
+  box-shadow: 0 4px 32px rgba(0,0,0,0.24);
   cursor: pointer;
-  transition: box-shadow 0.1s;
-  text-decoration: none;
+  transition: box-shadow 0.2s;
+  border: 2px solid transparent;
 }
 
 .c5:hover {
-  box-shadow: 0 8px 32px rgba(0,0,0,0.5);
+  border: 2px solid #512FC9;
+  background: #2C3A73;
 }
 
 <div>
@@ -530,15 +524,9 @@ exports[`loaded state 1`] = `
           />
           <div
             class="c12"
-            style="text-align: center; width: 100%; text-transform: capitalize;"
+            style="text-align: center; width: 100%;"
           >
             jenkins
-          </div>
-          <div
-            class="c13"
-            style="text-align: center; width: 100%; text-transform: capitalize;"
-          >
-            one
           </div>
         </a>
       </div>
@@ -578,15 +566,9 @@ exports[`loaded state 1`] = `
           />
           <div
             class="c12"
-            style="text-align: center; width: 100%; text-transform: capitalize;"
+            style="text-align: center; width: 100%;"
           >
             jenkins
-          </div>
-          <div
-            class="c13"
-            style="text-align: center; width: 100%; text-transform: capitalize;"
-          >
-            two
           </div>
         </a>
       </div>

@@ -76,9 +76,6 @@ const ConnectorBox = styled(Box)(
   border-radius: 4px;
   width: 160px;
   border: 2px solid ${props.theme.colors.primary.main};
-  &:hover {
-    border: 2px solid ${props.theme.colors.secondary.main};
-  }
 
   &:focus {
     opacity: .24;
@@ -86,6 +83,7 @@ const ConnectorBox = styled(Box)(
   }
 
   &:hover {
+    border: 2px solid ${props.theme.colors.secondary.main};
     background: ${props.theme.colors.primary.lighter};
     box-shadow: 0 4px 14px rgba(0, 0, 0, 0.56);
   }
