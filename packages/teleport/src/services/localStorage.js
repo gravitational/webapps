@@ -16,11 +16,12 @@ limitations under the License.
 
 export const KeysEnum = {
   TOKEN: 'grv_teleport_token',
-  TOKEN_RENEW: 'grv_teleport_token_renew'
-}
+  TOKEN_RENEW: 'grv_teleport_token_renew',
+  ACCESS_REQUEST: 'grv_teleport_access_request',
+};
 
 export class BearerToken {
-  constructor(json){
+  constructor(json) {
     this.accessToken = json.token;
     this.expiresIn = json.expires_in;
     this.created = new Date().getTime();
@@ -28,12 +29,13 @@ export class BearerToken {
 }
 
 const storage = {
-
   clear() {
-    window.localStorage.clear()
+    storage.setAccessRequest(null);
+    storage.setBearerToken(null);
+    window.localStorage.clear();
   },
 
-  subscribe(fn){
+  subscribe(fn) {
     window.addEventListener('storage', fn);
   },
 
@@ -45,7 +47,7 @@ const storage = {
     window.localStorage.setItem(KeysEnum.TOKEN, JSON.stringify(token));
   },
 
-  getBearerToken(){
+  getBearerToken() {
     const item = window.localStorage.getItem(KeysEnum.TOKEN);
     if (item) {
       return JSON.parse(item);
@@ -54,15 +56,28 @@ const storage = {
     return null;
   },
 
-  getAccessToken(){
+  getAccessToken() {
     const bearerToken = this.getBearerToken();
     return bearerToken ? bearerToken.accessToken : null;
   },
 
-  broadcast(messageType, messageBody){
+  setAccessRequest(request) {
+    window.localStorage.setItem(
+      KeysEnum.ACCESS_REQUEST,
+      JSON.stringify(request)
+    );
+  },
+
+  getAccessRequest() {
+    const item = window.localStorage.getItem(KeysEnum.ACCESS_REQUEST);
+
+    return item ? JSON.parse(item) : null;
+  },
+
+  broadcast(messageType, messageBody) {
     window.localStorage.setItem(messageType, messageBody);
     window.localStorage.removeItem(messageType);
-  }
-}
+  },
+};
 
 export default storage;

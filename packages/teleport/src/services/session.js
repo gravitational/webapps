@@ -37,7 +37,6 @@ const session = {
   clear() {
     this._stopTokenChecker();
     localStorage.unsubscribe(receiveMessage);
-    localStorage.setBearerToken(null);
     localStorage.clear();
   },
 
@@ -112,7 +111,7 @@ const session = {
   _renewToken() {
     this._setAndBroadcastIsRenewing(true);
     return api
-      .post(cfg.api.renewTokenPath)
+      .post(cfg.getRenewTokenUrl())
       .then(this._receiveBearerToken.bind(this))
       .finally(() => {
         this._setAndBroadcastIsRenewing(false);
