@@ -18,7 +18,6 @@ import React from 'react';
 import { TablePaged, Column, Cell, TextCell } from 'design/DataTable';
 import { Box } from 'design';
 import { Session } from 'teleport/services/ssh';
-import CardEmpty from 'teleport/components/CardEmpty';
 import DescCell from './DescCell';
 import UserCell from './UserCell';
 import ActionCell from './ActionCell';
@@ -30,9 +29,6 @@ export default function SessionList(props: Props) {
     data: sessions,
     pageSize,
   };
-
-  if (sessions.length === 0)
-    return <CardEmpty title="No Active Sessions Found" />;
 
   return (
     <Box {...rest}>
