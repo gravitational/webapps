@@ -27,6 +27,7 @@ import Player from 'teleport/player';
 import cfg from 'teleport/config';
 import CommunityCluster from './cluster';
 import { useFavicon } from 'shared/hooks';
+import AccessRequest from 'teleport/components/AccessRequest';
 const teleportIco = require('./favicon.ico').default;
 
 const Teleport = ({ history, children }) => {
@@ -70,7 +71,7 @@ const Teleport = ({ history, children }) => {
 // TODO: make it lazy loadable
 function renderAuthenticated(children) {
   if (children) {
-    return children;
+    return <AccessRequest>{children}</AccessRequest>;
   }
 
   return (
