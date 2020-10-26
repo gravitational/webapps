@@ -43,6 +43,5 @@ const sample = {
     isSuccess: false,
     message: '',
   },
-  logout: () => null,
-  startAccessChecker: () => Promise.resolve(null),
+  retryAction: () => Promise.resolve(null),
 };

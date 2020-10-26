@@ -16,23 +16,16 @@
 
 import React from 'react';
 import styled from 'styled-components';
-import session from 'teleport/services/session';
-import useAccessRequest from './useAccessRequest';
+import useAccessRequest, { Props } from './useAccessRequest';
 import AccessRequestReason from './AccessRequestReason';
 import AccessRequestPending from './AccessRequestPending';
+import AccessDenied from './AccessRequestDenied/AccessRequestDenied';
 import { Failed } from 'design/CardError';
-import { ButtonSecondary, Text, Alert, Indicator } from 'design';
-import Dialog, {
-  DialogHeader,
-  DialogTitle,
-  DialogContent,
-  DialogFooter,
-} from 'design/Dialog';
+import { Indicator } from 'design';
 import { AppVerticalSplit } from 'teleport/components/Layout';
 
 export default function Container({ children }: Props) {
-  const logout = session.logout;
-  const state = useAccessRequest(children, logout);
+  const state = useAccessRequest({ children });
 
   return <AccessRequest {...state} />;
 }
@@ -40,7 +33,6 @@ export default function Container({ children }: Props) {
 export function AccessRequest(props: ReturnType<typeof useAccessRequest>) {
   const {
     children,
-    logout,
     attempt,
     requestId,
     request,
@@ -49,95 +41,64 @@ export function AccessRequest(props: ReturnType<typeof useAccessRequest>) {
     createRequest,
     renewSession,
     removeUrlRequestParam,
+    checkerInterval,
   } = props;
 
-  function render() {
-    if (attempt.isProcessing) {
-      return (
-        <StyledIndicator>
-          <Indicator />
-        </StyledIndicator>
-      );
-    }
-
-    if (attempt.isFailed) {
-      return <Failed message={attempt.message} />;
-    }
-
-    if (request) {
-      switch (request.state) {
-        case 'PENDING':
-          return <AccessRequestPending getRequest={getRequest} />;
-        case 'DENIED':
-          return <AccessDenied reason={request.reason} logout={logout} />;
-        case 'APPROVED':
-          if (request.renewedSession) {
-            removeUrlRequestParam();
-            return <>{children}</>;
-          }
-
-          return (
-            <AccessRequestPending
-              getRequest={getRequest}
-              renewSession={renewSession}
-            />
-          );
-      }
-    }
-
-    // Case when user reloads page after creating request.
-    if (requestId) {
-      return <AccessRequestPending getRequest={getRequest} />;
-    }
-
-    if (access.requireReason && access.requireApproval) {
-      return <AccessRequestReason onCreateRequest={createRequest} />;
-    }
-
-    if (access.requireApproval) {
-      createRequest();
-      return <AccessRequestPending getRequest={getRequest} />;
-    }
-
-    return <>{children}</>;
+  if (attempt.isProcessing) {
+    return (
+      <StyledIndicator>
+        <Indicator />
+      </StyledIndicator>
+    );
   }
 
-  return render();
-}
+  if (attempt.isFailed) {
+    return <Failed message={attempt.message} />;
+  }
 
-function AccessDenied({ reason, logout }: AccessDeniedProps) {
-  return (
-    <Dialog
-      dialogCss={() => ({ maxWidth: '500px', width: '100%' })}
-      open={true}
-    >
-      <DialogHeader>
-        <DialogTitle>Request Account Access Denied</DialogTitle>
-      </DialogHeader>
-      <DialogContent>
-        <Alert kind="danger" children={`Denied: ${reason}`} />
-        <Text mb={3}>
-          Your request has been denied, please contact your administrator for
-          more information.
-        </Text>
-      </DialogContent>
-      <DialogFooter>
-        <ButtonSecondary onClick={logout}>Logout</ButtonSecondary>
-      </DialogFooter>
-    </Dialog>
-  );
+  if (request) {
+    switch (request.state) {
+      case 'PENDING':
+        return (
+          <AccessRequestPending
+            getRequest={getRequest}
+            checkerInterval={checkerInterval}
+          />
+        );
+      case 'DENIED':
+        return <AccessDenied reason={request.reason} />;
+      case 'APPROVED':
+        if (request.renewedSession) {
+          removeUrlRequestParam();
+          return <>{children}</>;
+        }
+
+        return <AccessRequestPending renewSession={renewSession} />;
+    }
+  }
+
+  // Case when user reloads page after creating request.
+  if (requestId) {
+    return (
+      <AccessRequestPending
+        getRequest={getRequest}
+        checkerInterval={checkerInterval}
+      />
+    );
+  }
+
+  if (access.requireReason && access.requireApproval) {
+    return <AccessRequestReason onCreateRequest={createRequest} />;
+  }
+
+  if (access.requireApproval) {
+    return <AccessRequestPending createRequest={createRequest} />;
+  }
+
+  return <>{children}</>;
 }
 
 const StyledIndicator = styled(AppVerticalSplit)`
   align-items: center;
   justify-content: center;
 `;
-
-type Props = {
-  children: React.ReactNode;
-};
-
-type AccessDeniedProps = {
-  logout(): void;
-  reason: string;
-};

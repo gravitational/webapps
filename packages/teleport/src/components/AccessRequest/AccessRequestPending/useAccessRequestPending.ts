@@ -15,25 +15,40 @@
  */
 
 import React from 'react';
+import Logger from 'shared/libs/logger';
 import useAttempt from 'shared/hooks/useAttempt';
 
-export default function useAccessRequestReason(
-  getRequest: () => Promise<any>,
-  renewSession: () => Promise<any>,
-  logout: () => void
-) {
+export default function useAccessRequestReason({
+  getRequest,
+  renewSession,
+  createRequest,
+  checkerInterval = 5000,
+}: Props) {
+  const logger = Logger.create('AccessRequestPending');
   const [attempt, attemptActions] = useAttempt({ isProcessing: true });
-
   let checkerId = null;
+  let retryAction = null;
+
+  if (getRequest) {
+    retryAction = getRequest;
+  } else if (renewSession) {
+    retryAction = renewSession;
+  } else if (createRequest) {
+    retryAction = createRequest;
+  } else {
+    logger.error('retryAction is empty');
+  }
 
   React.useEffect(() => {
     if (renewSession) {
       renewSession().catch(attemptActions.error);
-    } else {
+    } else if (createRequest) {
+      createRequest().catch(attemptActions.error);
+    } else if (getRequest) {
       startAccessChecker();
       return () => stopAccessChecker();
     }
-  }, [renewSession]);
+  }, [renewSession, createRequest]);
 
   function startAccessChecker() {
     attemptActions.start();
@@ -49,7 +64,7 @@ export default function useAccessRequestReason(
           stopAccessChecker();
           attemptActions.error(err);
         });
-    }, 5000);
+    }, checkerInterval);
   }
 
   function stopAccessChecker() {
@@ -59,7 +74,13 @@ export default function useAccessRequestReason(
 
   return {
     attempt,
-    startAccessChecker,
-    logout,
+    retryAction,
   };
 }
+
+export type Props = {
+  getRequest?(): Promise<any>;
+  renewSession?(): Promise<any>;
+  createRequest?(): Promise<any>;
+  checkerInterval?: number;
+};

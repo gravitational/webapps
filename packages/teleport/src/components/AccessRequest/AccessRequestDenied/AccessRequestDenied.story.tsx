@@ -15,25 +15,20 @@
  */
 
 import React from 'react';
-import useAttempt from 'shared/hooks/useAttempt';
+import AccessRequestDenied from './AccessRequestDenied';
 
-export default function useAccessRequestReason({ onCreateRequest }: Props) {
-  const [attempt, attemptActions] = useAttempt({ isProcessing: true });
-  const [reason, setReason] = React.useState('');
+export default {
+  title: 'Teleport/AccessRequest/Denied',
+};
 
-  function createRequest() {
-    attemptActions.start();
-    onCreateRequest(reason).catch(attemptActions.error);
-  }
+export const WithReason = () => {
+  return <AccessRequestDenied {...sample} />;
+};
 
-  return {
-    attempt,
-    reason,
-    setReason,
-    createRequest,
-  };
-}
+export const WihtoutReason = () => {
+  return <AccessRequestDenied {...sample} reason={''} />;
+};
 
-export type Props = {
-  onCreateRequest(reason?: string): Promise<any>;
+const sample = {
+  reason: 'some reason for denying request',
 };

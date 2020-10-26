@@ -20,11 +20,10 @@ import session from 'teleport/services/session';
 import { Text, Alert, ButtonLink, Flex, Box } from 'design';
 import { ShieldCheck } from 'design/Icon';
 import Dialog, { DialogContent, DialogFooter } from 'design/Dialog';
-import useAccessRequestPending from './useAccessRequestPending';
+import useAccessRequestPending, { Props } from './useAccessRequestPending';
 
-export default function Container({ getRequest, renewSession }: Props) {
-  const logout = session.logout;
-  const state = useAccessRequestPending(getRequest, renewSession, logout);
+export default function Container(props: Props) {
+  const state = useAccessRequestPending({ ...props });
 
   return <AccessRequestPending {...state} />;
 }
@@ -32,7 +31,7 @@ export default function Container({ getRequest, renewSession }: Props) {
 export function AccessRequestPending(
   props: ReturnType<typeof useAccessRequestPending>
 ) {
-  const { startAccessChecker, logout, attempt } = props;
+  const { attempt, retryAction } = props;
 
   return (
     <Dialog
@@ -52,10 +51,8 @@ export function AccessRequestPending(
           <Box width="100%" mt={3}>
             <Alert kind="danger" mb={3} children={`${attempt.message}`} />
             <Text>
-              An error has occured.
-              <ButtonLink onClick={startAccessChecker}>
-                Please Try Again
-              </ButtonLink>
+              An error has occured.{' '}
+              <ButtonLink onClick={retryAction}>Please Try Again</ButtonLink>
             </Text>
           </Box>
         )}
@@ -72,16 +69,11 @@ export function AccessRequestPending(
         )}
       </DialogContent>
       <DialogFooter>
-        <ButtonLink onClick={logout}>Logout of Account</ButtonLink>
+        <ButtonLink onClick={session.logout}>Logout of Account</ButtonLink>
       </DialogFooter>
     </Dialog>
   );
 }
-
-type Props = {
-  getRequest(): Promise<any>;
-  renewSession?(): Promise<any>;
-};
 
 const StyledProgressBar = styled(Flex)`
   align-items: center;

@@ -24,10 +24,10 @@ import accessRequestService, {
 } from 'teleport/services/accessRequest';
 import { getUrlParameter } from 'teleport/services/history';
 
-export default function useAccessRequestReason(
-  children: React.ReactNode,
-  logout: () => void
-) {
+export default function useAccessRequestReason({
+  children,
+  checkerInterval = 5000,
+}: Props) {
   const clusterId = cfg.proxyCluster;
   const [attempt, attemptActions] = useAttempt({ isProcessing: true });
   const [access, setAccess] = React.useState<AccessAccount>(null);
@@ -80,7 +80,6 @@ export default function useAccessRequestReason(
 
   return {
     children,
-    logout,
     attempt,
     requestId,
     request,
@@ -89,5 +88,11 @@ export default function useAccessRequestReason(
     createRequest,
     renewSession,
     removeUrlRequestParam,
+    checkerInterval,
   };
 }
+
+export type Props = {
+  children: React.ReactNode;
+  checkerInterval?: number;
+};

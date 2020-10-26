@@ -41,15 +41,6 @@ export const Failed = () => {
   return <Component {...sample} attempt={attempt} />;
 };
 
-export const Denied = () => {
-  const request = {
-    id: '',
-    state: 'DENIED' as any,
-    reason: 'some reason for denying request',
-  };
-  return <Component {...sample} request={request} />;
-};
-
 const sample = {
   attempt: {
     isProcessing: false,
@@ -66,7 +57,7 @@ const sample = {
   getRequest: null,
   requestId: null,
   children: null,
-  logout: null,
   renewSession: null,
   removeUrlRequestParam: null,
+  checkerInterval: 0,
 };

@@ -14,26 +14,6 @@
  * limitations under the License.
  */
 
-import React from 'react';
-import useAttempt from 'shared/hooks/useAttempt';
+import AccessRequestDenied from './AccessRequestDenied';
 
-export default function useAccessRequestReason({ onCreateRequest }: Props) {
-  const [attempt, attemptActions] = useAttempt({ isProcessing: true });
-  const [reason, setReason] = React.useState('');
-
-  function createRequest() {
-    attemptActions.start();
-    onCreateRequest(reason).catch(attemptActions.error);
-  }
-
-  return {
-    attempt,
-    reason,
-    setReason,
-    createRequest,
-  };
-}
-
-export type Props = {
-  onCreateRequest(reason?: string): Promise<any>;
-};
+export default AccessRequestDenied;

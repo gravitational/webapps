@@ -56,5 +56,4 @@ const sample = {
   reason: 'some reason',
   setReason: () => null,
   createRequest: () => Promise.resolve(null),
-  logout: () => null,
 };

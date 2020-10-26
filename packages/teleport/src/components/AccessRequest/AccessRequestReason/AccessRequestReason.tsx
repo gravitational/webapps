@@ -39,11 +39,10 @@ import Dialog, {
   DialogContent,
   DialogFooter,
 } from 'design/Dialog';
-import useAccessRequestReason from './useAccessRequestReason';
+import useAccessRequestReason, { Props } from './useAccessRequestReason';
 
 export default function Container({ onCreateRequest }: Props) {
-  const logout = session.logout;
-  const state = useAccessRequestReason(onCreateRequest, logout);
+  const state = useAccessRequestReason({ onCreateRequest });
 
   return <AccessRequestReason {...state} />;
 }
@@ -51,7 +50,7 @@ export default function Container({ onCreateRequest }: Props) {
 export function AccessRequestReason(
   props: ReturnType<typeof useAccessRequestReason>
 ) {
-  const { attempt, reason, setReason, createRequest, logout } = props;
+  const { attempt, reason, setReason, createRequest } = props;
 
   return (
     <Dialog
@@ -85,12 +84,10 @@ export function AccessRequestReason(
         >
           Send Request
         </ButtonPrimary>
-        <ButtonSecondary onClick={logout}>Cancel & Logout</ButtonSecondary>
+        <ButtonSecondary onClick={session.logout}>
+          Cancel & Logout
+        </ButtonSecondary>
       </DialogFooter>
     </Dialog>
   );
 }
-
-type Props = {
-  onCreateRequest(): Promise<any>;
-};
