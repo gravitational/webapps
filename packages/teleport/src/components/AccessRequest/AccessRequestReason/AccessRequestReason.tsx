@@ -84,7 +84,7 @@ export function AccessRequestReason(
         >
           Send Request
         </ButtonPrimary>
-        <ButtonSecondary onClick={session.logout}>
+        <ButtonSecondary onClick={() => session.logout()}>
           Cancel & Logout
         </ButtonSecondary>
       </DialogFooter>

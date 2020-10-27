@@ -69,7 +69,9 @@ export function AccessRequestPending(
         )}
       </DialogContent>
       <DialogFooter>
-        <ButtonLink onClick={session.logout}>Logout of Account</ButtonLink>
+        <ButtonLink onClick={() => session.logout()}>
+          Logout of Account
+        </ButtonLink>
       </DialogFooter>
     </Dialog>
   );

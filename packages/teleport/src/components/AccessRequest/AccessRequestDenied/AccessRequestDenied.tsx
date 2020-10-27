@@ -41,7 +41,9 @@ export default function AccessRequestDenied({ reason }: Props) {
         </Text>
       </DialogContent>
       <DialogFooter>
-        <ButtonSecondary onClick={session.logout}>Logout</ButtonSecondary>
+        <ButtonSecondary onClick={() => session.logout()}>
+          Logout
+        </ButtonSecondary>
       </DialogFooter>
     </Dialog>
   );
