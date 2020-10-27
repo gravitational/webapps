@@ -36,6 +36,10 @@ export default class StoreUser extends Store<User> {
     return this.state.acl.sessions;
   }
 
+  getNodeAccess() {
+    return this.state.acl.nodes;
+  }
+
   getRoleAccess() {
     return this.state.acl.roles;
   }
