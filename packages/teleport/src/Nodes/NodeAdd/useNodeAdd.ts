@@ -38,7 +38,7 @@ export default function useNodeAdd(ctx: TeleportContext, onClose: () => void) {
     return ctx.nodeService.createNodeJoinToken().then(token => {
       setExpiry(token.expiry);
       setScript(
-        `sudo bash -c "$(curl -sSL ${cfg.getNodeJoinScriptUrl(token.id)})"`
+        `sudo bash -c "$(curl -fsSL ${cfg.getNodeJoinScriptUrl(token.id)})"`
       );
     });
   }
