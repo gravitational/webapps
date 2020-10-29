@@ -18,11 +18,11 @@ import React from 'react';
 import { AccessRequest } from './AccessRequest';
 import { render, screen, wait } from 'design/utils/testing';
 
-test('request state', () => {
+test('request state', async () => {
   const request = { state: 'PENDING' } as any;
   const { rerender } = render(<AccessRequest {...sample} request={request} />);
   expect(screen.getByText(/please wait/i)).toBeInTheDocument();
-  wait(() => expect(sample.getRequest).toHaveBeenCalled());
+  await wait(() => expect(sample.getRequest).toHaveBeenCalled());
   sample.getRequest.mockClear();
 
   request.state = 'DENIED';
