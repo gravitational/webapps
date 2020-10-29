@@ -33,11 +33,6 @@ class FeatureNodes extends FeatureBase {
   }
 
   onload(context: Ctx) {
-    if (!context.isNodeEnabled()) {
-      this.setDisabled();
-      return;
-    }
-
     context.storeNav.addSideItem({
       title: 'Nodes',
       Icon: Icons.Layers,

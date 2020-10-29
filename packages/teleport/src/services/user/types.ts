@@ -44,6 +44,5 @@ export interface Acl {
   roles: Access;
   sessions: Access;
   events: Access;
-  nodes: Access;
   request: DynamicAccess;
 }
