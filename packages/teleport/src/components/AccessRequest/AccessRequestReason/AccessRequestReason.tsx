@@ -65,15 +65,20 @@ export function AccessRequestReason(
       </DialogHeader>
       <DialogContent>
         {attempt.isFailed && <Alert kind="danger" children={attempt.message} />}
-        <Text mb={3}>{requestPrompt}</Text>
-        <Text>Authorization Request Message</Text>
+        <Text mb={4}>{requestPrompt}</Text>
+        <Text typography="subtitle2" caps mb={1}>
+          Authorization Request Message
+        </Text>
         <Box
           height="100px"
           as="textarea"
+          p={2}
+          borderRadius={1}
           placeholder="Describe your request..."
           value={reason}
           onChange={e => setReason(e.target.value)}
           autoFocus
+          style={{ outline: 'none' }}
         />
       </DialogContent>
       <DialogFooter>
