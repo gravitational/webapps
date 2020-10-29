@@ -46,6 +46,15 @@ export const Failed = () => {
   return <AccessRequestReason {...sample} attempt={attempt} />;
 };
 
+export const LoadedWithPrompt = () => {
+  return (
+    <AccessRequestReason
+      {...sample}
+      prompt={'Some custom prompt set by administrator'}
+    />
+  );
+};
+
 const sample = {
   attempt: {
     isProcessing: false,
@@ -53,6 +62,7 @@ const sample = {
     isSuccess: false,
     message: '',
   },
+  prompt: '',
   reason: 'some reason',
   setReason: () => null,
   createRequest: () => Promise.resolve(null),

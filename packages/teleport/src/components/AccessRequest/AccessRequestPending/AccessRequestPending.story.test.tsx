@@ -15,20 +15,15 @@
  */
 
 import React from 'react';
-import AccessRequestDenied from './AccessRequestDenied';
+import { Loaded, Failed } from './AccessRequestPending.story';
+import { render, screen } from 'design/utils/testing';
 
-export default {
-  title: 'Teleport/AccessRequest/Denied',
-};
+test('loaded', () => {
+  render(<Loaded />);
+  expect(screen.getByTestId('Modal')).toMatchSnapshot();
+});
 
-export const WithReason = () => {
-  return <AccessRequestDenied {...sample} />;
-};
-
-export const WithoutReason = () => {
-  return <AccessRequestDenied {...sample} reason={''} />;
-};
-
-const sample = {
-  reason: 'some reason for denying request',
-};
+test('loaded failed', () => {
+  render(<Failed />);
+  expect(screen.getByTestId('Modal')).toMatchSnapshot();
+});

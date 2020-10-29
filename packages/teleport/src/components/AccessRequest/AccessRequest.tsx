@@ -65,8 +65,6 @@ export function AccessRequest(props: ReturnType<typeof useAccessRequest>) {
             checkerInterval={checkerInterval}
           />
         );
-      case 'DENIED':
-        return <AccessDenied reason={request.reason} />;
       case 'APPROVED':
         if (request.renewedSession) {
           removeUrlRequestParam();
@@ -74,6 +72,10 @@ export function AccessRequest(props: ReturnType<typeof useAccessRequest>) {
         }
 
         return <AccessRequestPending renewSession={renewSession} />;
+      // For cases DENIED and NONE.
+      // TODO, ask forrest what kind of error NONE is.
+      default:
+        return <AccessDenied reason={request.reason} />;
     }
   }
 
@@ -87,11 +89,16 @@ export function AccessRequest(props: ReturnType<typeof useAccessRequest>) {
     );
   }
 
-  if (access.requireReason && access.requireApproval) {
-    return <AccessRequestReason onCreateRequest={createRequest} />;
+  if (access.requestStrategy === 'reason') {
+    return (
+      <AccessRequestReason
+        onCreateRequest={createRequest}
+        prompt={access.requestPrompt}
+      />
+    );
   }
 
-  if (access.requireApproval) {
+  if (access.requestStrategy === 'always') {
     return <AccessRequestPending createRequest={createRequest} />;
   }
 

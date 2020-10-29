@@ -17,8 +17,11 @@
 import React from 'react';
 import useAttempt from 'shared/hooks/useAttempt';
 
-export default function useAccessRequestReason({ onCreateRequest }: Props) {
-  const [attempt, attemptActions] = useAttempt({ isProcessing: true });
+export default function useAccessRequestReason({
+  onCreateRequest,
+  prompt,
+}: Props) {
+  const [attempt, attemptActions] = useAttempt({});
   const [reason, setReason] = React.useState('');
 
   function createRequest() {
@@ -31,9 +34,11 @@ export default function useAccessRequestReason({ onCreateRequest }: Props) {
     reason,
     setReason,
     createRequest,
+    prompt,
   };
 }
 
 export type Props = {
   onCreateRequest(reason?: string): Promise<any>;
+  prompt?: string;
 };

@@ -18,11 +18,12 @@ import React from 'react';
 import { AccessRequest } from './AccessRequest';
 import { render, screen, wait } from 'design/utils/testing';
 
-test('request state', async () => {
+test('request state', () => {
   const request = { state: 'PENDING' } as any;
   const { rerender } = render(<AccessRequest {...sample} request={request} />);
   expect(screen.getByText(/please wait/i)).toBeInTheDocument();
-  await wait(() => expect(sample.getRequest).toHaveBeenCalled());
+  wait(() => expect(sample.getRequest).toHaveBeenCalled());
+  sample.getRequest.mockClear();
 
   request.state = 'DENIED';
   rerender(<AccessRequest {...sample} request={request} />);
@@ -32,34 +33,34 @@ test('request state', async () => {
   request.state = 'APPROVED';
   rerender(<AccessRequest {...sample} request={request} />);
   expect(screen.getByText(/please wait/i)).toBeInTheDocument();
+  expect(sample.removeUrlRequestParam).not.toHaveBeenCalled();
   expect(sample.renewSession).toHaveBeenCalledTimes(1);
-  sample.renewSession.mockReset();
+  sample.renewSession.mockClear();
 
   // Approved and renewedSession.
   request.state = 'APPROVED';
   request.renewedSession = true;
   rerender(<AccessRequest {...sample} request={request} />);
+  expect(screen.getByText(/hello world/i)).toBeInTheDocument();
   expect(sample.renewSession).not.toHaveBeenCalled();
   expect(sample.removeUrlRequestParam).toHaveBeenCalledTimes(1);
-  expect(screen.getByText(/hello world/i)).toBeInTheDocument();
+  sample.removeUrlRequestParam.mockClear();
 });
 
 test('access state', () => {
-  const access = {
-    requireReason: true,
-    requireApproval: true,
-  };
+  const access = { requestStrategy: 'reason' as any, requestPrompt: '' };
   const { rerender } = render(<AccessRequest {...sample} access={access} />);
   expect(screen.getByText(/send request/i)).toBeInTheDocument();
 
   // Require approval, but not the reason.
-  access.requireReason = false;
+  access.requestStrategy = 'always';
   rerender(<AccessRequest {...sample} access={access} />);
   expect(screen.getByText(/being authorized/i)).toBeInTheDocument();
   expect(sample.createRequest).toHaveBeenCalledTimes(1);
+  sample.createRequest.mockClear();
 
-  // Default, no access request needed.
-  access.requireApproval = false;
+  // Default optional.
+  access.requestStrategy = 'optional';
   rerender(<AccessRequest {...sample} access={access} />);
   expect(screen.getByText(/hello world/i)).toBeInTheDocument();
 });
@@ -67,7 +68,10 @@ test('access state', () => {
 test('when only requestID is available, render pending', () => {
   render(<AccessRequest {...sample} requestId={'1234'} />);
   expect(screen.getByText(/being authorized/i)).toBeInTheDocument();
+  expect(sample.createRequest).not.toHaveBeenCalled();
+  expect(sample.renewSession).not.toHaveBeenCalled();
   wait(() => expect(sample.getRequest).toHaveBeenCalled());
+  sample.getRequest.mockClear();
 });
 
 const sample = {

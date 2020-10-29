@@ -41,8 +41,8 @@ import Dialog, {
 } from 'design/Dialog';
 import useAccessRequestReason, { Props } from './useAccessRequestReason';
 
-export default function Container({ onCreateRequest }: Props) {
-  const state = useAccessRequestReason({ onCreateRequest });
+export default function Container({ onCreateRequest, prompt }: Props) {
+  const state = useAccessRequestReason({ onCreateRequest, prompt });
 
   return <AccessRequestReason {...state} />;
 }
@@ -50,7 +50,10 @@ export default function Container({ onCreateRequest }: Props) {
 export function AccessRequestReason(
   props: ReturnType<typeof useAccessRequestReason>
 ) {
-  const { attempt, reason, setReason, createRequest } = props;
+  const { attempt, reason, setReason, createRequest, prompt } = props;
+  const requestPrompt = prompt
+    ? prompt
+    : 'To access your Teleport account, please send an authorization request using the form below.';
 
   return (
     <Dialog
@@ -62,10 +65,7 @@ export function AccessRequestReason(
       </DialogHeader>
       <DialogContent>
         {attempt.isFailed && <Alert kind="danger" children={attempt.message} />}
-        <Text mb={3}>
-          To access your Teleport account, please send an authorization request
-          using the form below.
-        </Text>
+        <Text mb={3}>{requestPrompt}</Text>
         <Text>Authorization Request Message</Text>
         <Box
           height="100px"
@@ -79,7 +79,7 @@ export function AccessRequestReason(
       <DialogFooter>
         <ButtonPrimary
           mr="3"
-          disabled={attempt.isProcessing || reason === ''}
+          disabled={attempt.isProcessing || reason.length === 0}
           onClick={createRequest}
         >
           Send Request

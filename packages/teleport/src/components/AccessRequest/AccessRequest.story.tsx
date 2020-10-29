@@ -49,8 +49,8 @@ const sample = {
     message: '',
   },
   access: {
-    requireReason: true,
-    requireApproval: true,
+    requestStrategy: 'optional' as any,
+    requestPrompt: '',
   },
   request: null,
   createRequest: null,

@@ -18,7 +18,7 @@ import React from 'react';
 import cfg from 'teleport/config';
 import storage from 'teleport/services/localStorage';
 import useAttempt from 'shared/hooks/useAttempt';
-import userService, { AccessAccount } from 'teleport/services/user';
+import userService, { DynamicAccess } from 'teleport/services/user';
 import accessRequestService, {
   AccessRequest,
 } from 'teleport/services/accessRequest';
@@ -30,7 +30,7 @@ export default function useAccessRequestReason({
 }: Props) {
   const clusterId = cfg.proxyCluster;
   const [attempt, attemptActions] = useAttempt({ isProcessing: true });
-  const [access, setAccess] = React.useState<AccessAccount>(null);
+  const [access, setAccess] = React.useState<DynamicAccess>(null);
   const [request, setRequest] = React.useState<AccessRequest>(
     storage.getAccessRequest()
   );
@@ -44,7 +44,7 @@ export default function useAccessRequestReason({
 
     attemptActions.do(() =>
       userService.fetchUser(clusterId).then(res => {
-        setAccess(res.acl.account);
+        setAccess(res.acl.request);
       })
     );
   }, []);
