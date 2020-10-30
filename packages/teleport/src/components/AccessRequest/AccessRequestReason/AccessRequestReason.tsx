@@ -84,7 +84,7 @@ export function AccessRequestReason(
       <DialogFooter>
         <ButtonPrimary
           mr="3"
-          disabled={attempt.isProcessing || reason.length === 0}
+          disabled={attempt.isProcessing || reason.trim().length === 0}
           onClick={createRequest}
         >
           Send Request

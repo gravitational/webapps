@@ -26,7 +26,7 @@ export default function useAccessRequestReason({
 
   function createRequest() {
     attemptActions.start();
-    onCreateRequest(reason).catch(attemptActions.error);
+    onCreateRequest(reason.trim()).catch(attemptActions.error);
   }
 
   return {
