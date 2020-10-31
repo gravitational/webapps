@@ -512,13 +512,13 @@ exports[`loaded 1`] = `
                 color="light"
                 font-size="3"
               />
-              App Session Chunk
+              App Session Data
             </div>
           </td>
           <td
             style="word-break: break-word;"
           >
-            New session chunk created [6593cf87-9839-4f18-abf8-c54873aaeb4e]
+            New app session data created [6593cf87-9839-4f18-abf8-c54873aaeb4e]
           </td>
           <td
             style="min-width: 120px;"

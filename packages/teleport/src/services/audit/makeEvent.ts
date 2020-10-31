@@ -427,8 +427,8 @@ export const formatters: Formatters = {
       `User [${user}] has started an app session [${sid}]`,
   },
   [CodeEnum.APP_SESSION_CHUNK]: {
-    desc: 'App Session Chunk',
-    format: ({ sid }) => `New session chunk created [${sid}]`,
+    desc: 'App Session Data',
+    format: ({ sid }) => `New app session data created [${sid}]`,
   },
   [CodeEnum.G_SMTPCONFIG_CREATED]: {
     desc: 'SMTP Config Created',
