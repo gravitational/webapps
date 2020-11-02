@@ -17,7 +17,7 @@
 import api from 'teleport/services/api';
 import cfg from 'teleport/config';
 import makeAccessRequest from 'teleport/services/accessRequest/makeAccessRequest';
-import localStorage, { BearerToken } from 'teleport/services/localStorage';
+import session from 'teleport/services/session';
 
 const service = {
   createAccessRequest(reason?: string) {
@@ -30,11 +30,8 @@ const service = {
     return api.get(cfg.getRequestAccessUrl(requestId)).then(makeAccessRequest);
   },
 
-  renewSession(requestId?: string) {
-    return api.post(cfg.getRenewTokenUrl(requestId)).then(json => {
-      const token = new BearerToken(json);
-      localStorage.setBearerToken(token);
-    });
+  applyPermission(requestId?: string) {
+    return session.renewSession(requestId);
   },
 };
 

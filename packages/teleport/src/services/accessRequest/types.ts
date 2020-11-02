@@ -14,9 +14,8 @@
  * limitations under the License.
  */
 
-export interface AccessRequest {
+export interface AccessRequestResult {
   id: string;
   state: 'NONE' | 'PENDING' | 'APPROVED' | 'DENIED';
   reason: string;
-  renewedSession?: boolean;
 }

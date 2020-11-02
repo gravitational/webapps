@@ -15,7 +15,7 @@ limitations under the License.
 */
 
 import makeLogins from './makeLogins';
-import { Access, DynamicAccess, Acl } from './types';
+import { Access, AccessStrategy, Acl } from './types';
 
 export default function makeAcl(json): Acl {
   json = json || {};
@@ -25,7 +25,7 @@ export default function makeAcl(json): Acl {
   const roles = makeAccess(json.roles);
   const sessions = makeAccess(json.sessions);
   const events = makeAccess(json.events);
-  const request = makeRequest(json.request);
+  const accessStrategy = makeAccessStrategy(json.accessStrategy);
 
   return {
     logins,
@@ -34,7 +34,7 @@ export default function makeAcl(json): Acl {
     roles,
     sessions,
     events,
-    request,
+    accessStrategy,
   };
 }
 
@@ -57,11 +57,11 @@ function makeAccess(json): Access {
   };
 }
 
-function makeRequest(json): DynamicAccess {
-  const { requestStrategy, requestPrompt } = json;
+function makeAccessStrategy(json): AccessStrategy {
+  const { type = 'optional', prompt } = json;
 
   return {
-    requestStrategy,
-    requestPrompt,
+    type,
+    prompt,
   };
 }

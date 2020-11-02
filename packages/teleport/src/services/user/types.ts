@@ -32,9 +32,9 @@ export interface Access {
   remove: boolean;
 }
 
-export interface DynamicAccess {
-  requestStrategy: 'optional' | 'always' | 'reason';
-  requestPrompt: string;
+export interface AccessStrategy {
+  type: 'optional' | 'always' | 'reason';
+  prompt: string;
 }
 
 export interface Acl {
@@ -44,5 +44,5 @@ export interface Acl {
   roles: Access;
   sessions: Access;
   events: Access;
-  request: DynamicAccess;
+  accessStrategy: AccessStrategy;
 }

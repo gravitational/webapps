@@ -14,15 +14,5 @@
  * limitations under the License.
  */
 
-import { at } from 'lodash';
-import { AccessRequestResult } from './types';
-
-export default function makeAccessRequest(json): AccessRequestResult {
-  const [id, state, reason] = at(json, ['id', 'state', 'reason']);
-
-  return {
-    id,
-    state,
-    reason,
-  };
-}
+import session from './session';
+export default session;
