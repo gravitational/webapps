@@ -15,10 +15,11 @@
  */
 
 import React from 'react';
-import { AccessRequest as Component } from './AccessRequest';
+import { AccessStrategy } from './AccessStrategy';
+import { RequestPending } from './RequestPending';
 
 export default {
-  title: 'Teleport/AccessRequest',
+  title: 'Teleport/AccessStrategy',
 };
 
 export const Processing = () => {
@@ -28,7 +29,7 @@ export const Processing = () => {
     isSuccess: false,
     message: '',
   };
-  return <Component {...sample} attempt={attempt} />;
+  return <AccessStrategy {...sample} attempt={attempt} />;
 };
 
 export const Failed = () => {
@@ -36,9 +37,13 @@ export const Failed = () => {
     isProcessing: false,
     isFailed: true,
     isSuccess: false,
-    message: 'some error when retrieving user context',
+    message: 'some error',
   };
-  return <Component {...sample} attempt={attempt} />;
+  return <AccessStrategy {...sample} attempt={attempt} />;
+};
+
+export const Pending = () => {
+  return <RequestPending />;
 };
 
 const sample = {
@@ -48,16 +53,14 @@ const sample = {
     isSuccess: false,
     message: '',
   },
-  access: {
-    requestStrategy: 'optional' as any,
-    requestPrompt: '',
+  strategy: {
+    type: 'optional' as any,
+    prompt: '',
   },
-  request: null,
+  accessRequest: null,
   createRequest: null,
   getRequest: null,
   requestId: null,
   children: null,
-  renewSession: null,
-  removeUrlRequestParam: null,
   checkerInterval: 0,
 };

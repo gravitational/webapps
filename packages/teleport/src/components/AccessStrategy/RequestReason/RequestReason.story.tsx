@@ -15,14 +15,24 @@
  */
 
 import React from 'react';
-import { AccessRequestPending } from './AccessRequestPending';
+import { RequestReason } from './RequestReason';
 
 export default {
-  title: 'Teleport/AccessRequest/Pending',
+  title: 'Teleport/AccessStrategy/Reason',
 };
 
 export const Loaded = () => {
-  return <AccessRequestPending {...sample} />;
+  return <RequestReason {...sample} />;
+};
+
+export const Processing = () => {
+  const attempt = {
+    isProcessing: true,
+    isFailed: false,
+    isSuccess: false,
+    message: '',
+  };
+  return <RequestReason {...sample} attempt={attempt} />;
 };
 
 export const Failed = () => {
@@ -33,15 +43,27 @@ export const Failed = () => {
     message: 'some error message',
   };
 
-  return <AccessRequestPending {...sample} attempt={attempt} />;
+  return <RequestReason {...sample} attempt={attempt} />;
+};
+
+export const LoadedWithPrompt = () => {
+  return (
+    <RequestReason
+      {...sample}
+      prompt={'Some custom prompt set by administrator'}
+    />
+  );
 };
 
 const sample = {
   attempt: {
-    isProcessing: true,
+    isProcessing: false,
     isFailed: false,
     isSuccess: false,
     message: '',
   },
-  retryAction: () => Promise.resolve(null),
+  prompt: '',
+  reason: 'some reason',
+  setReason: () => null,
+  createRequest: () => Promise.resolve(null),
 };

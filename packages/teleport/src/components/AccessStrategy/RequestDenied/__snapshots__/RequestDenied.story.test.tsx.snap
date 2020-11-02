@@ -182,7 +182,7 @@ exports[`loaded with denied reason 1`] = `
           class="c7"
           kind="danger"
         >
-          Denied: some reason for denying request
+          some reason for denying request
         </div>
         <div
           class="c8"

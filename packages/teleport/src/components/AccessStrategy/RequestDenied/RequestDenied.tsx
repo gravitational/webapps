@@ -24,7 +24,7 @@ import Dialog, {
   DialogFooter,
 } from 'design/Dialog';
 
-export default function AccessRequestDenied({ reason }: Props) {
+export default function RequestDenied({ reason }: Props) {
   return (
     <Dialog
       dialogCss={() => ({ maxWidth: '500px', width: '100%' })}
@@ -34,7 +34,7 @@ export default function AccessRequestDenied({ reason }: Props) {
         <DialogTitle>Access Request Denied</DialogTitle>
       </DialogHeader>
       <DialogContent>
-        {reason && <Alert kind="danger" children={`Denied: ${reason}`} />}
+        {reason && <Alert kind="danger" children={reason} />}
         <Text mb={3}>
           Your request has been denied, please contact your administrator for
           more information.

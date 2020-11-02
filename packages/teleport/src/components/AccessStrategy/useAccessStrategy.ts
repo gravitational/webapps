@@ -18,81 +18,86 @@ import React from 'react';
 import cfg from 'teleport/config';
 import storage from 'teleport/services/localStorage';
 import useAttempt from 'shared/hooks/useAttempt';
-import userService, { DynamicAccess } from 'teleport/services/user';
+import userService, { AccessStrategy } from 'teleport/services/user';
 import accessRequestService, {
-  AccessRequest,
+  AccessRequestResult,
 } from 'teleport/services/accessRequest';
 import { getUrlParameter } from 'teleport/services/history';
 
-export default function useAccessRequestReason({
-  children,
-  checkerInterval = 5000,
-}: Props) {
+export default function useAccessStrategy() {
   const clusterId = cfg.proxyCluster;
   const [attempt, attemptActions] = useAttempt({ isProcessing: true });
-  const [access, setAccess] = React.useState<DynamicAccess>(null);
-  const [request, setRequest] = React.useState<AccessRequest>(
+  const [strategy, setStrategy] = React.useState<AccessStrategy>(null);
+  const [accessRequest, setAccessRequest] = React.useState<AccessRequestResult>(
     storage.getAccessRequest()
   );
   const requestId = getUrlParameter('requestId', window.location.search);
 
   React.useEffect(() => {
-    if (request) {
+    if (accessRequest) {
       attemptActions.clear();
       return;
     }
 
     attemptActions.do(() =>
       userService.fetchUser(clusterId).then(res => {
-        setAccess(res.acl.request);
+        setStrategy(res.acl.accessStrategy);
       })
     );
   }, []);
 
   function getRequest() {
-    return accessRequestService.getAccessRequest(requestId).then(res => {
-      setRequest(res);
-      if (res.state === 'APPROVED') {
-        return 'done';
-      }
-    });
+    return accessRequestService
+      .getAccessRequest(requestId)
+      .then(applyPermission)
+      .catch(setError);
   }
 
   function createRequest(reason?: string) {
-    return accessRequestService.createAccessRequest(reason).then(req => {
-      const url = `${window.location.pathname}?requestId=${req.id}`;
-      window.history.replaceState(null, '', url);
-      setRequest(req);
-    });
-  }
-
-  function renewSession() {
-    return accessRequestService.renewSession(requestId).then(() => {
-      request.renewedSession = true;
-      storage.setAccessRequest(request);
-      setRequest(storage.getAccessRequest());
-    });
+    return accessRequestService
+      .createAccessRequest(reason)
+      .then(req => {
+        const url = `${window.location.pathname}?requestId=${req.id}`;
+        window.history.replaceState(null, '', url);
+        setAccessRequest(req);
+      })
+      .catch(setError);
   }
 
   function removeUrlRequestParam() {
+    if (!requestId) {
+      return;
+    }
+
     window.history.replaceState(null, '', window.location.pathname);
   }
 
+  function applyPermission(request: AccessRequestResult) {
+    if (request.state === 'APPROVED') {
+      return accessRequestService.applyPermission(requestId).then(() => {
+        storage.setAccessRequest(request);
+        removeUrlRequestParam();
+        setAccessRequest(request);
+      });
+    }
+    setAccessRequest(request);
+  }
+
+  // If user were to refresh page on error, the requestId
+  // has to be removed.
+  function setError(err: Error) {
+    removeUrlRequestParam();
+    attemptActions.error(err);
+  }
+
   return {
-    children,
     attempt,
     requestId,
-    request,
-    access,
+    accessRequest,
+    strategy,
     getRequest,
     createRequest,
-    renewSession,
-    removeUrlRequestParam,
-    checkerInterval,
   };
 }
 
-export type Props = {
-  children: React.ReactNode;
-  checkerInterval?: number;
-};
+export type State = ReturnType<typeof useAccessStrategy>;

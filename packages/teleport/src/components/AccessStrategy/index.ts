@@ -14,21 +14,6 @@
  * limitations under the License.
  */
 
-import React from 'react';
-import AccessRequestDenied from './AccessRequestDenied';
+import AccessStrategy from './AccessStrategy';
 
-export default {
-  title: 'Teleport/AccessRequest/Denied',
-};
-
-export const WithReason = () => {
-  return <AccessRequestDenied {...sample} />;
-};
-
-export const WithoutReason = () => {
-  return <AccessRequestDenied {...sample} reason={''} />;
-};
-
-const sample = {
-  reason: 'some reason for denying request',
-};
+export default AccessStrategy;

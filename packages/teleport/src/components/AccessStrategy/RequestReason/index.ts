@@ -14,21 +14,6 @@
  * limitations under the License.
  */
 
-import React from 'react';
-import { Loaded, LoadedWithPrompt, Failed } from './AccessRequestReason.story';
-import { render, screen } from 'design/utils/testing';
+import RequestReason from './RequestReason';
 
-test('loaded without custom prompt', () => {
-  render(<Loaded />);
-  expect(screen.getByTestId('Modal')).toMatchSnapshot();
-});
-
-test('loaded with custom prompt', () => {
-  render(<LoadedWithPrompt />);
-  expect(screen.getByTestId('Modal')).toMatchSnapshot();
-});
-
-test('failed', () => {
-  render(<Failed />);
-  expect(screen.getByTestId('Modal')).toMatchSnapshot();
-});
+export default RequestReason;

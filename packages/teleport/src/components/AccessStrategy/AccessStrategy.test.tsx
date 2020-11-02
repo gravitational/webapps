@@ -15,61 +15,52 @@
  */
 
 import React from 'react';
-import { AccessRequest } from './AccessRequest';
+import { AccessStrategy } from './AccessStrategy';
 import { render, screen, wait } from 'design/utils/testing';
 
-test('request state', async () => {
+test('access request state', async () => {
   const request = { state: 'PENDING' } as any;
-  const { rerender } = render(<AccessRequest {...sample} request={request} />);
+  const { rerender } = render(
+    <AccessStrategy {...sample} accessRequest={request} />
+  );
   expect(screen.getByText(/please wait/i)).toBeInTheDocument();
   await wait(() => expect(sample.getRequest).toHaveBeenCalled());
   sample.getRequest.mockClear();
 
   request.state = 'DENIED';
-  rerender(<AccessRequest {...sample} request={request} />);
+  rerender(<AccessStrategy {...sample} accessRequest={request} />);
   expect(screen.getByText(/request denied/i)).toBeInTheDocument();
 
-  // Approved but not renewedSession.
-  request.state = 'APPROVED';
-  rerender(<AccessRequest {...sample} request={request} />);
-  expect(screen.getByText(/please wait/i)).toBeInTheDocument();
-  expect(sample.removeUrlRequestParam).not.toHaveBeenCalled();
-  expect(sample.renewSession).toHaveBeenCalledTimes(1);
-  sample.renewSession.mockClear();
-
-  // Approved and renewedSession.
   request.state = 'APPROVED';
   request.renewedSession = true;
-  rerender(<AccessRequest {...sample} request={request} />);
+  rerender(<AccessStrategy {...sample} accessRequest={request} />);
   expect(screen.getByText(/hello world/i)).toBeInTheDocument();
-  expect(sample.renewSession).not.toHaveBeenCalled();
-  expect(sample.removeUrlRequestParam).toHaveBeenCalledTimes(1);
-  sample.removeUrlRequestParam.mockClear();
 });
 
-test('access state', () => {
-  const access = { requestStrategy: 'reason' as any, requestPrompt: '' };
-  const { rerender } = render(<AccessRequest {...sample} access={access} />);
-  expect(screen.getByText(/send request/i)).toBeInTheDocument();
+test('access strategy state', () => {
+  // Require reason.
+  const strategy = { type: 'reason' as any, prompt: 'some custom prompt' };
+  const { rerender } = render(
+    <AccessStrategy {...sample} strategy={strategy} />
+  );
+  expect(screen.getByText(/some custom prompt/i)).toBeInTheDocument();
 
   // Require approval, but not the reason.
-  access.requestStrategy = 'always';
-  rerender(<AccessRequest {...sample} access={access} />);
+  strategy.type = 'always';
+  rerender(<AccessStrategy {...sample} strategy={strategy} />);
   expect(screen.getByText(/being authorized/i)).toBeInTheDocument();
   expect(sample.createRequest).toHaveBeenCalledTimes(1);
   sample.createRequest.mockClear();
 
   // Default optional.
-  access.requestStrategy = 'optional';
-  rerender(<AccessRequest {...sample} access={access} />);
+  strategy.type = 'optional';
+  rerender(<AccessStrategy {...sample} strategy={strategy} />);
   expect(screen.getByText(/hello world/i)).toBeInTheDocument();
 });
 
 test('when only requestID is available, render pending', () => {
-  render(<AccessRequest {...sample} requestId={'1234'} />);
+  render(<AccessStrategy {...sample} requestId={'1234'} />);
   expect(screen.getByText(/being authorized/i)).toBeInTheDocument();
-  expect(sample.createRequest).not.toHaveBeenCalled();
-  expect(sample.renewSession).not.toHaveBeenCalled();
   wait(() => expect(sample.getRequest).toHaveBeenCalled());
   sample.getRequest.mockClear();
 });
@@ -81,13 +72,11 @@ const sample = {
     isSuccess: false,
     message: '',
   },
-  access: null,
-  request: null,
+  strategy: null,
+  accessRequest: null,
   requestId: null,
   children: <div>hello world</div>,
   createRequest: jest.fn().mockResolvedValue({}),
   getRequest: jest.fn().mockResolvedValue({}),
-  renewSession: jest.fn().mockResolvedValue({}),
-  removeUrlRequestParam: jest.fn(),
   checkerInterval: 0,
 };

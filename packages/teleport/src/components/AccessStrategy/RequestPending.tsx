@@ -17,22 +17,15 @@
 import React from 'react';
 import styled from 'styled-components';
 import session from 'teleport/services/session';
-import { Text, Alert, ButtonLink, Flex, Box } from 'design';
+import { Text, ButtonLink, Flex } from 'design';
 import { ShieldCheck } from 'design/Icon';
 import Dialog, { DialogContent, DialogFooter } from 'design/Dialog';
-import useAccessRequestPending, { Props } from './useAccessRequestPending';
 
-export default function Container(props: Props) {
-  const state = useAccessRequestPending({ ...props });
-
-  return <AccessRequestPending {...state} />;
+export default function Container(props) {
+  return <RequestPending {...props} />;
 }
 
-export function AccessRequestPending(
-  props: ReturnType<typeof useAccessRequestPending>
-) {
-  const { attempt, retryAction } = props;
-
+export function RequestPending() {
   return (
     <Dialog
       dialogCss={() => ({
@@ -47,26 +40,13 @@ export function AccessRequestPending(
         <Text mb={1} bold caps>
           Your account is being authorized
         </Text>
-        {attempt.isFailed && (
-          <Box width="100%" mt={3}>
-            <Alert kind="danger" mb={3} children={`${attempt.message}`} />
-            <Text>
-              An error has occured.{' '}
-              <ButtonLink onClick={retryAction}>Please Try Again</ButtonLink>
-            </Text>
-          </Box>
-        )}
-        {attempt.isProcessing && (
-          <>
-            <Text mb={4}>
-              Please wait while an administrator authorizes your account.
-            </Text>
-            <StyledProgressBar height="16px" value={100} mb={4}>
-              <Bar />
-            </StyledProgressBar>
-            <Text>One moment...</Text>
-          </>
-        )}
+        <Text mb={4}>
+          Please wait while an administrator authorizes your account.
+        </Text>
+        <StyledProgressBar height="16px" value={100} mb={4}>
+          <Bar />
+        </StyledProgressBar>
+        <Text>One moment...</Text>
       </DialogContent>
       <DialogFooter>
         <ButtonLink onClick={() => session.logout()}>

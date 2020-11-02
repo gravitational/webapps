@@ -14,6 +14,6 @@
  * limitations under the License.
  */
 
-import AccessRequestReason from './AccessRequestReason';
+import RequestDenied from './RequestDenied';
 
-export default AccessRequestReason;
+export default RequestDenied;

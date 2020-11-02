@@ -39,17 +39,15 @@ import Dialog, {
   DialogContent,
   DialogFooter,
 } from 'design/Dialog';
-import useAccessRequestReason, { Props } from './useAccessRequestReason';
+import useRequestReason, { Props } from './useRequestReason';
 
 export default function Container({ onCreateRequest, prompt }: Props) {
-  const state = useAccessRequestReason({ onCreateRequest, prompt });
+  const state = useRequestReason({ onCreateRequest, prompt });
 
-  return <AccessRequestReason {...state} />;
+  return <RequestReason {...state} />;
 }
 
-export function AccessRequestReason(
-  props: ReturnType<typeof useAccessRequestReason>
-) {
+export function RequestReason(props: ReturnType<typeof useRequestReason>) {
   const { attempt, reason, setReason, createRequest, prompt } = props;
   const requestPrompt = prompt
     ? prompt

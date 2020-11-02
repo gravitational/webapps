@@ -15,15 +15,20 @@
  */
 
 import React from 'react';
-import { WithReason, WithoutReason } from './AccessRequestDenied.story';
+import { Loaded, LoadedWithPrompt, Failed } from './RequestReason.story';
 import { render, screen } from 'design/utils/testing';
 
-test('loaded with denied reason', () => {
-  render(<WithReason />);
+test('loaded without custom prompt', () => {
+  render(<Loaded />);
   expect(screen.getByTestId('Modal')).toMatchSnapshot();
 });
 
-test('loaded without denied reason', () => {
-  render(<WithoutReason />);
+test('loaded with custom prompt', () => {
+  render(<LoadedWithPrompt />);
+  expect(screen.getByTestId('Modal')).toMatchSnapshot();
+});
+
+test('failed', () => {
+  render(<Failed />);
   expect(screen.getByTestId('Modal')).toMatchSnapshot();
 });
