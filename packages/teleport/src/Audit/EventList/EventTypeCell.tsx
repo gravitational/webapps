@@ -40,6 +40,8 @@ const EventIconMap = {
   [CodeEnum.SCP_DOWNLOAD_FAILURE]: Icons.Upload,
   [CodeEnum.SCP_DOWNLOAD]: Icons.Download,
   [CodeEnum.SCP_UPLOAD]: Icons.Upload,
+  [CodeEnum.APP_SESSION_CHUNK]: Icons.Info,
+  [CodeEnum.APP_SESSION_START]: Icons.Info,
   [CodeEnum.SESSION_END]: Icons.Cli,
   [CodeEnum.SESSION_JOIN]: Icons.Cli,
   [CodeEnum.SESSION_LEAVE]: Icons.Cli,
