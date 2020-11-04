@@ -23,9 +23,10 @@ import SshPlayer from './SshPlayer';
 import ActionBar from './ActionBar';
 import session from 'teleport/services/session';
 import { colors } from 'teleport/Console/components/colors';
+import { UrlPlayerParams } from 'teleport/config';
 
 export default function Player() {
-  const { sid, clusterId } = useParams();
+  const { sid, clusterId } = useParams<UrlPlayerParams>();
   document.title = `${clusterId} • Play ${sid}`;
 
   function onLogout() {

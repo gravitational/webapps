@@ -14,8 +14,8 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import service from './nodes';
-import makeNodeJoinToken from './makeNodeJoinToken';
-export * from './types';
-export default service;
-export { makeNodeJoinToken };
+import Context from './teleportContext';
+import ContextProvider from './teleportContextProvider';
+import useTeleport from './useTeleport';
+
+export { Context, ContextProvider, useTeleport };

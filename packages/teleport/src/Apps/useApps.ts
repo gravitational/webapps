@@ -35,7 +35,10 @@ export default function useApps() {
   }, [clusterId]);
 
   return {
+    clusterId,
     attempt,
     apps,
   };
 }
+
+export type State = ReturnType<typeof useApps>;

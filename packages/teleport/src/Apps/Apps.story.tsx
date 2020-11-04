@@ -20,17 +20,14 @@ import { createMemoryHistory } from 'history';
 import { Router } from 'react-router';
 import makeAcl from 'teleport/services/user/makeAcl';
 import { apps } from './fixtures';
-
-import TeleportContext, {
-  ReactContextProvider,
-} from 'teleport/teleportContext';
+import { ContextProvider, Context } from 'teleport';
 
 export default {
   title: 'Teleport/Apps',
 };
 
 export const Loaded = () => {
-  const ctx = new TeleportContext();
+  const ctx = new Context();
   const acl = makeAcl(sample.acl);
 
   ctx.storeUser.setState({ acl });
@@ -39,7 +36,7 @@ export const Loaded = () => {
 };
 
 export const Empty = () => {
-  const ctx = new TeleportContext();
+  const ctx = new Context();
   const acl = makeAcl(sample.acl);
 
   ctx.storeUser.setState({ acl });
@@ -48,7 +45,7 @@ export const Empty = () => {
 };
 
 export const Processing = () => {
-  const ctx = new TeleportContext();
+  const ctx = new Context();
   const acl = makeAcl(sample.acl);
 
   ctx.storeUser.setState({ acl });
@@ -57,7 +54,7 @@ export const Processing = () => {
 };
 
 export const Failed = () => {
-  const ctx = new TeleportContext();
+  const ctx = new Context();
   const acl = makeAcl(sample.acl);
 
   ctx.storeUser.setState({ acl });
@@ -73,11 +70,11 @@ function render(ctx) {
   });
 
   return (
-    <ReactContextProvider value={ctx}>
+    <ContextProvider ctx={ctx}>
       <Router history={history}>
         <DefaultApps />
       </Router>
-    </ReactContextProvider>
+    </ContextProvider>
   );
 }
 

@@ -15,18 +15,18 @@
  */
 
 import React from 'react';
-import useNodeAdd from './useNodeAdd';
+import useNodeAdd, { State } from './useNodeAdd';
 import useTeleport from 'teleport/useTeleport';
 import NodeAddEnterprise from 'teleport/Nodes/NodeAdd/NodeAddEnterprise';
 import NodeAddOSS from 'teleport/Nodes/NodeAdd/NodeAddOSS';
 
-export default function Container({ onClose }: Props) {
+export default function Container(props: Props) {
   const ctx = useTeleport();
-  const state = useNodeAdd(ctx, onClose);
-  return <NodeAdd {...state} />;
+  const state = useNodeAdd(ctx);
+  return <NodeAdd {...state} {...props} />;
 }
 
-export function NodeAdd(props: ReturnType<typeof useNodeAdd>) {
+export function NodeAdd(props: Props & State) {
   const {
     canCreateToken,
     version,

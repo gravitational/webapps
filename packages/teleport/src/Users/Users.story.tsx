@@ -16,7 +16,7 @@
 
 import React from 'react';
 import Users from './Users';
-import * as Teleport from 'teleport/teleportContext';
+import * as teleport from 'teleport';
 import makeAcl from 'teleport/services/user/makeAcl';
 
 export default {
@@ -24,7 +24,7 @@ export default {
 };
 
 export const Loaded = () => {
-  const ctx = new Teleport.Context();
+  const ctx = new teleport.Context();
   const acl = makeAcl(sample.acl);
 
   ctx.storeUser.setState({ acl });
@@ -34,7 +34,7 @@ export const Loaded = () => {
 };
 
 export const Processing = () => {
-  const ctx = new Teleport.Context();
+  const ctx = new teleport.Context();
   const acl = makeAcl(sample.acl);
 
   ctx.storeUser.setState({ acl });
@@ -44,7 +44,7 @@ export const Processing = () => {
 };
 
 export const Failed = () => {
-  const ctx = new Teleport.Context();
+  const ctx = new teleport.Context();
   const acl = makeAcl(sample.acl);
 
   ctx.storeUser.setState({ acl });
@@ -53,11 +53,9 @@ export const Failed = () => {
   return render(ctx, <Users />);
 };
 
-function render(ctx: Teleport.Context, children: JSX.Element) {
+function render(ctx: teleport.Context, children: JSX.Element) {
   return (
-    <Teleport.ReactContextProvider value={ctx}>
-      {children}
-    </Teleport.ReactContextProvider>
+    <teleport.ContextProvider ctx={ctx}>{children}</teleport.ContextProvider>
   );
 }
 

@@ -15,9 +15,7 @@ limitations under the License.
 */
 
 import React from 'react';
-import TeleportContext, {
-  ReactContextProvider,
-} from 'teleport/teleportContext';
+import { Context, ContextProvider } from 'teleport';
 import AuthConnectors from './AuthConnectors';
 
 export default {
@@ -25,19 +23,19 @@ export default {
 };
 
 export function Loaded() {
-  const ctx = new TeleportContext();
+  const ctx = new Context();
   ctx.resourceService.fetchAuthConnectors = () => Promise.resolve(connectors);
   return render(ctx);
 }
 
 export function Empty() {
-  const ctx = new TeleportContext();
+  const ctx = new Context();
   ctx.resourceService.fetchAuthConnectors = () => Promise.resolve([]);
   return render(ctx);
 }
 
 export function Failed() {
-  const ctx = new TeleportContext();
+  const ctx = new Context();
   ctx.resourceService.fetchAuthConnectors = () =>
     Promise.reject(new Error('failed to load'));
   return render(ctx);
@@ -70,10 +68,10 @@ const connectors = [
   },
 ];
 
-function render(ctx: TeleportContext) {
+function render(ctx: Context) {
   return (
-    <ReactContextProvider value={ctx}>
+    <ContextProvider ctx={ctx}>
       <AuthConnectors />
-    </ReactContextProvider>
+    </ContextProvider>
   );
 }

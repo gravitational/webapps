@@ -17,9 +17,7 @@ limitations under the License.
 import React from 'react';
 import { Router } from 'react-router';
 import { createMemoryHistory } from 'history';
-import TeleportContext, {
-  ReactContextProvider,
-} from 'teleport/teleportContext';
+import { ContextProvider, Context } from 'teleport';
 import Audit from './Audit';
 import { events } from './fixtures';
 
@@ -28,7 +26,7 @@ export default {
 };
 
 export const Loaded = () => {
-  const ctx = new TeleportContext();
+  const ctx = new Context();
   ctx.auditService.fetchEvents = () =>
     Promise.resolve({
       overflow: false,
@@ -39,7 +37,7 @@ export const Loaded = () => {
 };
 
 export const Overflow = () => {
-  const ctx = new TeleportContext();
+  const ctx = new Context();
   ctx.auditService.fetchEvents = () =>
     Promise.resolve({
       overflow: true,
@@ -50,13 +48,13 @@ export const Overflow = () => {
 };
 
 export const Processing = () => {
-  const ctx = new TeleportContext();
+  const ctx = new Context();
   ctx.auditService.fetchEvents = () => new Promise(() => null);
   return render(ctx);
 };
 
 export const Failed = () => {
-  const ctx = new TeleportContext();
+  const ctx = new Context();
   ctx.auditService.fetchEvents = () =>
     Promise.reject(new Error('server error'));
   return render(ctx);
@@ -69,10 +67,10 @@ function render(ctx) {
   });
 
   return (
-    <ReactContextProvider value={ctx}>
+    <ContextProvider ctx={ctx}>
       <Router history={history}>
         <Audit />
       </Router>
-    </ReactContextProvider>
+    </ContextProvider>
   );
 }

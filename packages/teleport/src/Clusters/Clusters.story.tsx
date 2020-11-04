@@ -19,21 +19,21 @@ import { Router } from 'react-router';
 import { createMemoryHistory } from 'history';
 import Clusters from './Clusters';
 import * as fixtures from './fixtures';
-import * as Teleport from 'teleport/teleportContext';
+import * as teleport from 'teleport';
 
 export default {
   title: 'Teleport/Clusters',
   excludeStories: ['createContext'],
 };
 
-export function Story({ value }: { value: Teleport.Context }) {
+export function Story({ value }: { value: teleport.Context }) {
   const ctx = value || createContext();
   return (
-    <Teleport.ReactContextProvider value={ctx}>
+    <teleport.ContextProvider ctx={ctx}>
       <Router history={createMemoryHistory()}>
         <Clusters />
       </Router>
-    </Teleport.ReactContextProvider>
+    </teleport.ContextProvider>
   );
 }
 
@@ -42,7 +42,7 @@ Story.story = {
 };
 
 export function createContext() {
-  const ctx = new Teleport.Context();
+  const ctx = new teleport.Context();
   ctx.clusterService.fetchClusters = () => Promise.resolve(fixtures.clusters);
   return ctx;
 }

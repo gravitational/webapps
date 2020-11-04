@@ -23,6 +23,7 @@ export const userContext = makeUserContext({
     tokens: {
       list: true,
       read: true,
+      create: true,
     },
     appServers: {
       list: true,
