@@ -15,7 +15,7 @@ limitations under the License.
 */
 
 import React from 'react';
-import * as Teleport from 'teleport/teleportContext';
+import * as teleport from 'teleport';
 import TrustedClusters from './TrustedClusters';
 
 export default {
@@ -23,7 +23,7 @@ export default {
 };
 
 export const Loaded = () => {
-  const ctx = new Teleport.Context();
+  const ctx = new teleport.Context();
   ctx.resourceService.fetchTrustedClusters = () =>
     Promise.resolve(trustedClusters);
   ctx.storeUser.getTrustedClusterAccess = () => acl;
@@ -32,7 +32,7 @@ export const Loaded = () => {
 };
 
 export const Failed = () => {
-  const ctx = new Teleport.Context();
+  const ctx = new teleport.Context();
   ctx.resourceService.fetchTrustedClusters = () =>
     Promise.reject(new Error('Failed to load...'));
   ctx.storeUser.getTrustedClusterAccess = () => acl;
@@ -40,14 +40,14 @@ export const Failed = () => {
 };
 
 export const Empty = () => {
-  const ctx = new Teleport.Context();
+  const ctx = new teleport.Context();
   ctx.resourceService.fetchTrustedClusters = () => Promise.resolve([]);
   ctx.storeUser.getTrustedClusterAccess = () => acl;
   return render(ctx);
 };
 
 export const CannotCreate = () => {
-  const ctx = new Teleport.Context();
+  const ctx = new teleport.Context();
   ctx.resourceService.fetchTrustedClusters = () => Promise.resolve([]);
   ctx.storeUser.getTrustedClusterAccess = () => ({ ...acl, create: false });
   return render(ctx);
@@ -61,11 +61,11 @@ const acl = {
   remove: true,
 };
 
-function render(ctx: Teleport.Context) {
+function render(ctx: teleport.Context) {
   return (
-    <Teleport.ReactContextProvider value={ctx}>
+    <teleport.ContextProvider ctx={ctx}>
       <TrustedClusters />
-    </Teleport.ReactContextProvider>
+    </teleport.ContextProvider>
   );
 }
 

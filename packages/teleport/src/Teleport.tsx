@@ -20,13 +20,14 @@ import { Router, Route, Switch } from 'teleport/components/Router';
 import Invite, { ResetPassword } from 'teleport/components/Invite';
 import CatchError from 'teleport/components/CatchError';
 import Login, { LoginSuccess, LoginFailed } from 'teleport/components/Login';
-import Console from 'teleport/Console';
 import Authenticated from 'teleport/components/Authenticated';
-import Player from 'teleport/Player';
 import cfg from 'teleport/config';
 import Main from './Main';
 import AppLauncher from './AppLauncher';
+import Console from 'teleport/Console';
+import Player from 'teleport/Player';
 import { useFavicon } from 'shared/hooks';
+import TeleportContextProvider from './teleportContextProvider';
 
 const teleportIco = require('./favicon.ico').default;
 
@@ -60,13 +61,15 @@ const Teleport = ({ history, children }) => {
             />
             <Route path={cfg.routes.root}>
               <Authenticated>
-                <Switch>
-                  <Route
-                    path={cfg.routes.appLauncher}
-                    component={AppLauncher}
-                  />
-                  <Route>{renderAuthenticated(children)}</Route>
-                </Switch>
+                <TeleportContextProvider>
+                  <Switch>
+                    <Route
+                      path={cfg.routes.appLauncher}
+                      component={AppLauncher}
+                    />
+                    <Route>{renderAuthenticated(children)}</Route>
+                  </Switch>
+                </TeleportContextProvider>
               </Authenticated>
             </Route>
           </Switch>

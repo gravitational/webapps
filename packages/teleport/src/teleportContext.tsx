@@ -14,9 +14,9 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React from 'react';
 import { StoreNav, StoreUserContext } from './stores';
-import * as teleport from './types';
+import cfg from 'teleport/config';
+import * as types from './types';
 import auditService from './services/audit';
 import nodeService from './services/nodes';
 import clusterService from './services/clusters';
@@ -25,13 +25,13 @@ import resourceService from './services/resources';
 import userService from './services/user';
 import appService from './services/apps';
 
-class Context implements teleport.Context {
+class TeleportContext implements types.Context {
   // stores
   storeNav = new StoreNav();
   storeUser = new StoreUserContext();
 
   // features
-  features: teleport.Feature[] = [];
+  features: types.Feature[] = [];
 
   // services
   auditService = auditService;
@@ -41,6 +41,8 @@ class Context implements teleport.Context {
   resourceService = resourceService;
   userService = userService;
   appService = appService;
+
+  isEnterprise = cfg.isEnterprise;
 
   init() {
     return userService.fetchUserContext().then(user => {
@@ -77,8 +79,4 @@ class Context implements teleport.Context {
   }
 }
 
-const ReactContext = React.createContext<Context>(null);
-const ReactContextProvider = ReactContext.Provider;
-
-export default Context;
-export { Context, ReactContextProvider, ReactContext };
+export default TeleportContext;

@@ -15,13 +15,14 @@ limitations under the License.
 */
 
 import React from 'react';
-import { ReactContext } from './teleportContext';
+import { ReactContext } from './teleportContextProvider';
 
 export default function useTeleport() {
-  const value = React.useContext(ReactContext);
-  if (!value) {
-    throw new Error('TeleportReactContext is missing a value');
+  const teleportContext = React.useContext(ReactContext);
+  if (!teleportContext) {
+    throw new Error('Unable to retrieve Teleport Context');
   }
 
-  return (window['teleContext'] = value);
+  // for debugging and diagnostic purposes
+  return (window['teleContext'] = teleportContext);
 }

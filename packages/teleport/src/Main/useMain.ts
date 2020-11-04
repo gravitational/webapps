@@ -14,22 +14,18 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React, { useState } from 'react';
+import { useState } from 'react';
 import useAttempt from 'shared/hooks/useAttemptNext';
-import TeleportContext from 'teleport/teleportContext';
+import useTeleport from 'teleport/useTeleport';
 import { Feature } from 'teleport/types';
 
 export default function useMain(features: Feature[]) {
+  const ctx = useTeleport();
   const { attempt, run } = useAttempt('processing');
-  const [ctx] = React.useState(() => {
-    return new TeleportContext();
-  });
 
-  useState(() => {
-    run(() => {
-      return ctx.init().then(() => features.forEach(f => f.register(ctx)));
-    });
-  });
+  useState(() =>
+    run(() => ctx.init().then(() => features.forEach(f => f.register(ctx))))
+  );
 
   return {
     ctx,
@@ -37,3 +33,5 @@ export default function useMain(features: Feature[]) {
     statusText: attempt.statusText,
   };
 }
+
+export type State = ReturnType<typeof useMain>;

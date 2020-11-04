@@ -200,16 +200,16 @@ const cfg = {
     return generatePath(cfg.routes.appLauncher, { ...params });
   },
 
-  getPlayerRoute({ clusterId, sid }: UrlParams) {
-    return generatePath(cfg.routes.player, { clusterId, sid });
+  getPlayerRoute(params: UrlPlayerParams) {
+    return generatePath(cfg.routes.player, { ...params });
   },
 
-  getSessionAuditPlayerRoute({ clusterId, sid }: UrlParams) {
-    return generatePath(cfg.routes.sessionAuditPlayer, { clusterId, sid });
+  getSessionAuditPlayerRoute(params: UrlPlayerParams) {
+    return generatePath(cfg.routes.sessionAuditPlayer, { ...params });
   },
 
-  getSessionAuditCmdsRoute({ clusterId, sid }: UrlParams) {
-    return generatePath(cfg.routes.sessionAuditCmds, { clusterId, sid });
+  getSessionAuditCmdsRoute(params: UrlPlayerParams) {
+    return generatePath(cfg.routes.sessionAuditCmds, { ...params });
   },
 
   getUserContextUrl() {
@@ -299,6 +299,11 @@ export interface UrlLauncherParams {
   fqdn: string;
   clusterId?: string;
   publicAddr?: string;
+}
+
+export interface UrlPlayerParams {
+  clusterId: string;
+  sid: string;
 }
 
 export default cfg;

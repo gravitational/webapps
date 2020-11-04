@@ -93,3 +93,8 @@ export const nodes = [
     ],
   },
 ];
+
+export const joinToken = {
+  id: '12',
+  expiry: new Date(),
+};

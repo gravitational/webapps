@@ -25,14 +25,14 @@ import { Indicator, Box } from 'design';
 import AppList from './AppList';
 import AddButton from './AddButton';
 import Empty from './Empty';
-import useApps from './useApps';
+import useApps, { State } from './useApps';
 
 export default function Container() {
   const state = useApps();
   return <Apps {...state} />;
 }
 
-export function Apps({ attempt, apps }: ReturnType<typeof useApps>) {
+export function Apps({ attempt, apps, clusterId }: State) {
   const isEmpty = attempt.status === 'success' && apps.length === 0;
   const hasApps = attempt.status === 'success' && apps.length > 0;
   const isAdmin = false;
@@ -50,7 +50,9 @@ export function Apps({ attempt, apps }: ReturnType<typeof useApps>) {
       )}
       {attempt.status === 'failed' && <Danger>{attempt.statusText} </Danger>}
       {hasApps && <AppList apps={apps} />}
-      {isEmpty && <Empty isAdmin={isAdmin} onCreate={() => null} />}
+      {isEmpty && (
+        <Empty clusterId={clusterId} isAdmin={isAdmin} onCreate={() => null} />
+      )}
     </FeatureBox>
   );
 }

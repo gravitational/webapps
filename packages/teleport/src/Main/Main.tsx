@@ -21,12 +21,11 @@ import { Indicator } from 'design';
 import { Failed } from 'design/CardError';
 import { Redirect, Switch, Route } from 'teleport/components/Router';
 import CatchError from 'teleport/components/CatchError';
-import { ReactContextProvider } from 'teleport/teleportContext';
 import cfg from 'teleport/config';
 import SideNav from 'teleport/SideNav';
 import TopBar from 'teleport/TopBar';
 import getFeatures from 'teleport/features';
-import useMain from './useMain';
+import useMain, { State } from './useMain';
 
 export default function Container() {
   const [features] = React.useState(() => getFeatures());
@@ -34,7 +33,7 @@ export default function Container() {
   return <Main {...state} />;
 }
 
-export function Main(props: ReturnType<typeof useMain>) {
+export function Main(props: State) {
   const { status, statusText, ctx } = props;
 
   if (status === 'failed') {
@@ -62,12 +61,13 @@ export function Main(props: ReturnType<typeof useMain>) {
     );
   });
 
+  // default feature to show when hitting the index route
   const indexRoute =
     ctx.storeNav.getSideItems()[0]?.getLink(cfg.proxyCluster) ||
     cfg.routes.support;
 
   return (
-    <ReactContextProvider value={ctx}>
+    <>
       <RouterDOM.Switch>
         <Redirect exact={true} from={cfg.routes.root} to={indexRoute} />
       </RouterDOM.Switch>
@@ -78,7 +78,7 @@ export function Main(props: ReturnType<typeof useMain>) {
           <Switch>{$features}</Switch>
         </HorizontalSplit>
       </VerticalSplit>
-    </ReactContextProvider>
+    </>
   );
 }
 

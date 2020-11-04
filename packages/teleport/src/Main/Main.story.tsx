@@ -18,11 +18,11 @@ import React from 'react';
 import { createMemoryHistory } from 'history';
 import { Router } from 'react-router';
 import { Flex } from 'design';
-import * as Teleport from 'teleport/teleportContext';
+import { ContextProvider, Context } from 'teleport';
 import getFeatures from 'teleport/features';
 import { Main } from './Main';
 import { clusters } from 'teleport/Clusters/fixtures';
-import { nodes } from 'teleport/Nodes/fixtures';
+import { nodes, joinToken } from 'teleport/Nodes/fixtures';
 import { events } from 'teleport/Audit/fixtures';
 import { sessions } from 'teleport/Sessions/fixtures';
 import { apps } from 'teleport/Apps/fixtures';
@@ -36,11 +36,11 @@ export function Story() {
   const state = useMainStory();
   return (
     <Flex my={-3} mx={-4}>
-      <Teleport.ReactContextProvider value={state.ctx}>
+      <ContextProvider ctx={state.ctx}>
         <Router history={state.history}>
           <Main {...state} />
         </Router>
-      </Teleport.ReactContextProvider>
+      </ContextProvider>
     </Flex>
   );
 }
@@ -57,15 +57,16 @@ function useMainStory() {
   });
 
   const [ctx] = React.useState(() => {
-    const ctx = new Teleport.Context();
+    const ctx = new Context();
     // mock services
+    ctx.isEnterprise = true;
     ctx.auditService.fetchEvents = () =>
       Promise.resolve({ overflow: false, events });
     ctx.clusterService.fetchClusters = () => Promise.resolve(clusters);
     ctx.nodeService.fetchNodes = () => Promise.resolve(nodes);
+    ctx.nodeService.createNodeJoinToken = () => Promise.resolve(joinToken);
     ctx.sshService.fetchSessions = () => Promise.resolve(sessions);
     ctx.appService.fetchApps = () => Promise.resolve(apps);
-
     ctx.storeUser.setState(userContext);
     getFeatures().forEach(f => f.register(ctx));
     return ctx;

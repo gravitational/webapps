@@ -63,32 +63,32 @@ export function Nodes(props: ReturnType<typeof useNodes>) {
     <FeatureBox>
       <FeatureHeader alignItems="center" justifyContent="space-between">
         <FeatureHeaderTitle>Servers</FeatureHeaderTitle>
-          <ButtonPrimary width="240px" onClick={onShowDialog}>
-            Add Server
-          </ButtonPrimary>
+        <ButtonPrimary width="240px" onClick={onShowDialog}>
+          Add Server
+        </ButtonPrimary>
       </FeatureHeader>
-        <Flex mb={4} alignItems="center" justifyContent="space-between">
-          <InputSearch height="30px" mr="3" onChange={setSearchValue} />
-          <QuickLaunch
-            width="280px"
-            onPress={onQuickLaunchEnter}
-            ifnputProps={{ bg: 'bgTerminal' }}
-          />
-        </Flex>
+      <Flex mb={4} alignItems="center" justifyContent="space-between">
+        <InputSearch height="30px" mr="3" onChange={setSearchValue} />
+        <QuickLaunch
+          width="280px"
+          onPress={onQuickLaunchEnter}
+          ifnputProps={{ bg: 'bgTerminal' }}
+        />
+      </Flex>
       {attempt.isFailed && <Danger>{attempt.message} </Danger>}
       {attempt.isProcessing && (
         <Box textAlign="center" m={10}>
           <Indicator />
         </Box>
       )}
-     {attempt.isSuccess && (
+      {attempt.isSuccess && (
         <NodeList
           nodes={nodes}
           searchValue={searchValue}
           onLoginMenuOpen={getNodeLoginOptions}
           onLoginSelect={onLoginSelect}
         />
-     )}
+      )}
       {showDialog && <NodeAdd onClose={onCloseDialog} />}
     </FeatureBox>
   );

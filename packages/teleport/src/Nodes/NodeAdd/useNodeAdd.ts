@@ -16,14 +16,14 @@ limitations under the License.
 
 import { useState, useEffect } from 'react';
 import TeleportContext from 'teleport/teleportContext';
-import cfg from 'teleport/config';
 import useAttempt from 'shared/hooks/useAttemptNext';
+import cfg from 'teleport/config';
 
-export default function useNodeAdd(ctx: TeleportContext, onClose: () => void) {
+export default function useNodeAdd(ctx: TeleportContext) {
   const { attempt, run } = useAttempt('processing');
   const canCreateToken = ctx.storeUser.getTokenAccess().create;
   const version = ctx.storeUser.state.cluster.authVersion;
-  const isEnterprise = cfg.isEnterprise;
+  const isEnterprise = ctx.isEnterprise;
 
   const [script, setScript] = useState('');
   const [expiry, setExpiry] = useState<Date>(null);
@@ -47,10 +47,11 @@ export default function useNodeAdd(ctx: TeleportContext, onClose: () => void) {
     canCreateToken,
     version,
     isEnterprise,
-    onClose,
     createJoinToken,
     script,
     expiry,
     attempt,
   };
 }
+
+export type State = ReturnType<typeof useNodeAdd>;

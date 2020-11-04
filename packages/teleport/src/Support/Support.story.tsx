@@ -16,7 +16,7 @@
 
 import React from 'react';
 import Support from './Support';
-import * as Teleport from 'teleport/teleportContext';
+import * as teleport from 'teleport';
 import cfg from 'teleport/config';
 
 export default {
@@ -25,25 +25,25 @@ export default {
 
 export const SupportOSS = () => {
   cfg.isEnterprise = false;
-  const ctx = new Teleport.Context();
+  const ctx = new teleport.Context();
   ctx.storeUser.state = state;
 
   return (
-    <Teleport.ReactContextProvider value={ctx}>
+    <teleport.ContextProvider ctx={ctx}>
       <Support />
-    </Teleport.ReactContextProvider>
+    </teleport.ContextProvider>
   );
 };
 
 export const SupportEnterprise = () => {
   cfg.isEnterprise = true;
-  const ctx = new Teleport.Context();
+  const ctx = new teleport.Context();
   ctx.storeUser.state = state;
 
   return (
-    <Teleport.ReactContextProvider value={ctx}>
+    <teleport.ContextProvider ctx={ctx}>
       <Support />
-    </Teleport.ReactContextProvider>
+    </teleport.ContextProvider>
   );
 };
 

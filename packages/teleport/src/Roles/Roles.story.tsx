@@ -15,7 +15,7 @@ limitations under the License.
 */
 
 import React from 'react';
-import * as Teleport from 'teleport/teleportContext';
+import * as teleport from 'teleport';
 import Roles from './Roles';
 
 export default {
@@ -23,21 +23,21 @@ export default {
 };
 
 export function Loaded() {
-  const ctx = new Teleport.Context();
+  const ctx = new teleport.Context();
   ctx.resourceService.fetchRoles = () => Promise.resolve(roles);
   ctx.storeUser.getRoleAccess = () => acl;
   return render(ctx);
 }
 
 export function Empty() {
-  const ctx = new Teleport.Context();
+  const ctx = new teleport.Context();
   ctx.resourceService.fetchRoles = () => Promise.resolve([]);
   ctx.storeUser.getRoleAccess = () => acl;
   return render(ctx);
 }
 
 export function Failed() {
-  const ctx = new Teleport.Context();
+  const ctx = new teleport.Context();
   ctx.storeUser.getRoleAccess = () => acl;
   ctx.resourceService.fetchRoles = () =>
     Promise.reject(new Error('failed to load'));
@@ -45,14 +45,14 @@ export function Failed() {
 }
 
 export function Loading() {
-  const ctx = new Teleport.Context();
+  const ctx = new teleport.Context();
   ctx.storeUser.getRoleAccess = () => acl;
   ctx.resourceService.fetchRoles = () => new Promise(() => null);
   return render(ctx);
 }
 
 export function CannotCreate() {
-  const ctx = new Teleport.Context();
+  const ctx = new teleport.Context();
   ctx.storeUser.getRoleAccess = () => ({ ...acl, create: false });
   ctx.resourceService.fetchRoles = () => Promise.resolve([]);
   return render(ctx);
@@ -85,10 +85,10 @@ const roles = [
   },
 ];
 
-function render(ctx: Teleport.Context) {
+function render(ctx: teleport.Context) {
   return (
-    <Teleport.ReactContextProvider value={ctx}>
+    <teleport.ContextProvider ctx={ctx}>
       <Roles />
-    </Teleport.ReactContextProvider>
+    </teleport.ContextProvider>
   );
 }
