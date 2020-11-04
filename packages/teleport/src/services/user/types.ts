@@ -17,11 +17,17 @@ import { Cluster } from 'teleport/services/clusters';
 
 export type AuthType = 'local' | 'sso';
 
+export interface AccessStrategy {
+  type: 'optional' | 'always' | 'reason';
+  prompt: string;
+}
+
 export interface User {
   authType: AuthType;
   acl: Acl;
   username: string;
   cluster: Cluster;
+  accessStrategy: AccessStrategy;
 }
 
 export interface Access {
@@ -32,11 +38,6 @@ export interface Access {
   remove: boolean;
 }
 
-export interface AccessStrategy {
-  type: 'optional' | 'always' | 'reason';
-  prompt: string;
-}
-
 export interface Acl {
   logins: string[];
   authConnectors: Access;
@@ -44,5 +45,11 @@ export interface Acl {
   roles: Access;
   sessions: Access;
   events: Access;
-  accessStrategy: AccessStrategy;
+}
+
+export interface AccessRequest {
+  id: string;
+  state: 'NONE' | 'PENDING' | 'APPROVED' | 'DENIED';
+  reason: string;
+  appliedPermission?: boolean;
 }

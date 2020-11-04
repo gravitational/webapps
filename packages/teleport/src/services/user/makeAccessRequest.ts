@@ -15,9 +15,9 @@
  */
 
 import { at } from 'lodash';
-import { AccessRequestResult } from './types';
+import { AccessRequest } from './types';
 
-export default function makeAccessRequest(json): AccessRequestResult {
+export default function makeAccessRequest(json): AccessRequest {
   const [id, state, reason] = at(json, ['id', 'state', 'reason']);
 
   return {

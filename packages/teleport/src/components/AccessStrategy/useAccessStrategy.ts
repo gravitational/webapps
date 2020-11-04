@@ -16,86 +16,72 @@
 
 import React from 'react';
 import cfg from 'teleport/config';
-import storage from 'teleport/services/localStorage';
+import sessionStorage from 'teleport/services/localStorage';
 import useAttempt from 'shared/hooks/useAttempt';
-import userService, { AccessStrategy } from 'teleport/services/user';
-import accessRequestService, {
-  AccessRequestResult,
-} from 'teleport/services/accessRequest';
-import { getUrlParameter } from 'teleport/services/history';
+import userService, {
+  AccessStrategy,
+  AccessRequest,
+} from 'teleport/services/user';
 
 export default function useAccessStrategy() {
-  const clusterId = cfg.proxyCluster;
+  const clusterId = cfg.proxyCluster; // root cluster
   const [attempt, attemptActions] = useAttempt({ isProcessing: true });
   const [strategy, setStrategy] = React.useState<AccessStrategy>(null);
-  const [accessRequest, setAccessRequest] = React.useState<AccessRequestResult>(
-    storage.getAccessRequest()
+  const [accessRequest, setAccessRequest] = React.useState<AccessRequest>(
+    sessionStorage.getAccessRequestResult()
   );
-  const requestId = getUrlParameter('requestId', window.location.search);
 
   React.useEffect(() => {
-    if (accessRequest) {
-      attemptActions.clear();
-      return;
-    }
-
     attemptActions.do(() =>
       userService.fetchUser(clusterId).then(res => {
-        setStrategy(res.acl.accessStrategy);
+        setStrategy(res.accessStrategy);
+        // Edge case where user refreshes during updating state.
+        if (accessRequest) {
+          return updateState(accessRequest);
+        }
       })
     );
   }, []);
 
-  function getRequest() {
-    return accessRequestService
-      .getAccessRequest(requestId)
-      .then(applyPermission)
-      .catch(setError);
+  function refresh() {
+    return userService
+      .fetchAccessRequest(accessRequest.id)
+      .then(updateState)
+      .catch(attemptActions.error);
   }
 
   function createRequest(reason?: string) {
-    return accessRequestService
+    return userService
       .createAccessRequest(reason)
-      .then(req => {
-        const url = `${window.location.pathname}?requestId=${req.id}`;
-        window.history.replaceState(null, '', url);
-        setAccessRequest(req);
-      })
-      .catch(setError);
+      .then(updateState)
+      .catch(err => {
+        // Let the child caller of createRequest handle the error.
+        if (reason) {
+          throw err;
+        }
+        attemptActions.error(err);
+      });
   }
 
-  function removeUrlRequestParam() {
-    if (!requestId) {
-      return;
-    }
+  function updateState(result: AccessRequest) {
+    sessionStorage.setAccessRequestResult(result);
 
-    window.history.replaceState(null, '', window.location.pathname);
-  }
-
-  function applyPermission(request: AccessRequestResult) {
-    if (request.state === 'APPROVED') {
-      return accessRequestService.applyPermission(requestId).then(() => {
-        storage.setAccessRequest(request);
-        removeUrlRequestParam();
-        setAccessRequest(request);
+    if (result.state === 'APPROVED' && !result.appliedPermission) {
+      return userService.applyPermission(result.id).then(() => {
+        result.appliedPermission = true;
+        sessionStorage.setAccessRequestResult(result);
+        window.location.reload();
       });
     }
-    setAccessRequest(request);
-  }
 
-  // If user were to refresh page on error, the requestId
-  // has to be removed.
-  function setError(err: Error) {
-    removeUrlRequestParam();
-    attemptActions.error(err);
+    setAccessRequest(result);
   }
 
   return {
     attempt,
-    requestId,
     accessRequest,
     strategy,
-    getRequest,
+    refresh,
     createRequest,
   };
 }

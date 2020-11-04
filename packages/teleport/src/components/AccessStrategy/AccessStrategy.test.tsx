@@ -24,8 +24,8 @@ test('access request state', async () => {
     <AccessStrategy {...sample} accessRequest={request} />
   );
   expect(screen.getByText(/please wait/i)).toBeInTheDocument();
-  await wait(() => expect(sample.getRequest).toHaveBeenCalled());
-  sample.getRequest.mockClear();
+  await wait(() => expect(sample.refresh).toHaveBeenCalled());
+  sample.refresh.mockClear();
 
   request.state = 'DENIED';
   rerender(<AccessStrategy {...sample} accessRequest={request} />);
@@ -48,7 +48,7 @@ test('access strategy state', () => {
   // Require approval, but not the reason.
   strategy.type = 'always';
   rerender(<AccessStrategy {...sample} strategy={strategy} />);
-  expect(screen.getByText(/being authorized/i)).toBeInTheDocument();
+  expect(screen.queryByText(/send request/i)).toBeNull();
   expect(sample.createRequest).toHaveBeenCalledTimes(1);
   sample.createRequest.mockClear();
 
@@ -56,13 +56,6 @@ test('access strategy state', () => {
   strategy.type = 'optional';
   rerender(<AccessStrategy {...sample} strategy={strategy} />);
   expect(screen.getByText(/hello world/i)).toBeInTheDocument();
-});
-
-test('when only requestID is available, render pending', () => {
-  render(<AccessStrategy {...sample} requestId={'1234'} />);
-  expect(screen.getByText(/being authorized/i)).toBeInTheDocument();
-  wait(() => expect(sample.getRequest).toHaveBeenCalled());
-  sample.getRequest.mockClear();
 });
 
 const sample = {
@@ -74,9 +67,8 @@ const sample = {
   },
   strategy: null,
   accessRequest: null,
-  requestId: null,
   children: <div>hello world</div>,
   createRequest: jest.fn().mockResolvedValue({}),
-  getRequest: jest.fn().mockResolvedValue({}),
+  refresh: jest.fn().mockResolvedValue({}),
   checkerInterval: 0,
 };

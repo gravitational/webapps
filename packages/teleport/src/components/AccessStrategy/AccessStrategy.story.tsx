@@ -59,8 +59,7 @@ const sample = {
   },
   accessRequest: null,
   createRequest: null,
-  getRequest: null,
-  requestId: null,
+  refresh: null,
   children: null,
   checkerInterval: 0,
 };

@@ -27,7 +27,6 @@ import useAccessStrategy, { State } from './useAccessStrategy';
 
 export default function Container(props: Props) {
   const state = useAccessStrategy();
-
   return <AccessStrategy {...props} {...state} />;
 }
 
@@ -35,11 +34,10 @@ export function AccessStrategy(props: State & Props) {
   const {
     children,
     attempt,
-    requestId,
-    accessRequest,
     strategy,
-    getRequest,
+    accessRequest,
     createRequest,
+    refresh,
     checkerInterval = 5000,
   } = props;
 
@@ -55,52 +53,49 @@ export function AccessStrategy(props: State & Props) {
     return <RequestError err={attempt.message} />;
   }
 
-  if (accessRequest) {
-    if (accessRequest.state === 'PENDING') {
-      return (
-        <>
-          <AjaxPoller time={checkerInterval} onFetch={getRequest} />
-          <RequestPending />
-        </>
-      );
-    }
-
-    if (accessRequest.state === 'APPROVED') {
-      return <>{children}</>;
-    }
-
-    return <RequestDenied reason={accessRequest.reason} />;
+  // render access request
+  if (accessRequest && accessRequest.state === 'APPROVED') {
+    return <>{children}</>;
   }
 
-  // Case when user refreshes page.
-  if (requestId) {
+  if (accessRequest && accessRequest.state === 'PENDING') {
     return (
       <>
-        <AjaxPoller time={checkerInterval} onFetch={getRequest} />
+        <AjaxPoller time={checkerInterval} onFetch={refresh} />
         <RequestPending />
       </>
     );
   }
 
-  if (strategy) {
-    if (strategy.type === 'reason') {
-      return (
-        <RequestReason
-          onCreateRequest={createRequest}
-          prompt={strategy.prompt}
-        />
-      );
-    }
+  if (accessRequest && accessRequest.state === 'DENIED') {
+    return <RequestDenied reason={accessRequest.reason} />;
+  }
 
-    if (strategy.type === 'always') {
-      createRequest();
-      return <RequestPending />;
-    }
-
+  // render strategy
+  if (strategy.type == 'optional') {
     return <>{children}</>;
   }
 
-  return <RequestDenied reason="" />;
+  if (strategy.type === 'reason') {
+    return (
+      <RequestReason onCreateRequest={createRequest} prompt={strategy.prompt} />
+    );
+  }
+
+  // strategy == always, create a request result
+  return <RequestCreator onCreate={createRequest} />;
+}
+
+function RequestCreator({ onCreate }: { onCreate(): void }) {
+  React.useEffect(() => {
+    onCreate();
+  }, []);
+
+  return (
+    <StyledIndicator>
+      <Indicator />
+    </StyledIndicator>
+  );
 }
 
 const StyledIndicator = styled(AppVerticalSplit)`

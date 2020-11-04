@@ -30,9 +30,10 @@ export class BearerToken {
 
 const storage = {
   clear() {
-    storage.setAccessRequest(null);
+    storage.setAccessRequestResult(null);
     storage.setBearerToken(null);
     window.localStorage.clear();
+    window.sessionStorage.clear();
   },
 
   subscribe(fn) {
@@ -61,16 +62,15 @@ const storage = {
     return bearerToken ? bearerToken.accessToken : null;
   },
 
-  setAccessRequest(request) {
-    window.localStorage.setItem(
+  setAccessRequestResult(request) {
+    window.sessionStorage.setItem(
       KeysEnum.ACCESS_REQUEST,
       JSON.stringify(request)
     );
   },
 
-  getAccessRequest() {
-    const item = window.localStorage.getItem(KeysEnum.ACCESS_REQUEST);
-
+  getAccessRequestResult() {
+    const item = window.sessionStorage.getItem(KeysEnum.ACCESS_REQUEST);
     return item ? JSON.parse(item) : null;
   },
 
