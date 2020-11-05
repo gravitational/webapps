@@ -31,7 +31,7 @@ export default function RequestError({ err }: Props) {
       open={true}
     >
       <DialogHeader>
-        <DialogTitle>An Error has Occured</DialogTitle>
+        <DialogTitle>An Error has Occurred</DialogTitle>
       </DialogHeader>
       <DialogContent>
         <Alert kind="danger" children={err} />

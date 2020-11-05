@@ -49,7 +49,6 @@ export interface Acl {
 
 export interface AccessRequest {
   id: string;
-  state: 'NONE' | 'PENDING' | 'APPROVED' | 'DENIED';
+  state: 'NONE' | 'PENDING' | 'APPROVED' | 'DENIED' | 'APPLIED' | '';
   reason: string;
-  appliedPermission?: boolean;
 }

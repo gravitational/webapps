@@ -21,23 +21,27 @@ import useAttempt from 'shared/hooks/useAttempt';
 import userService, {
   AccessStrategy,
   AccessRequest,
+  makeAccessRequest,
 } from 'teleport/services/user';
 
 export default function useAccessStrategy() {
   const clusterId = cfg.proxyCluster; // root cluster
   const [attempt, attemptActions] = useAttempt({ isProcessing: true });
   const [strategy, setStrategy] = React.useState<AccessStrategy>(null);
+
   const [accessRequest, setAccessRequest] = React.useState<AccessRequest>(
-    sessionStorage.getAccessRequestResult()
+    makeAccessRequest(sessionStorage.getAccessRequestResult())
   );
 
   React.useEffect(() => {
     attemptActions.do(() =>
       userService.fetchUser(clusterId).then(res => {
         setStrategy(res.accessStrategy);
-        // Edge case where user refreshes during updating state.
-        if (accessRequest) {
-          return updateState(accessRequest);
+        if (
+          accessRequest.state === '' &&
+          res.accessStrategy.type === 'always'
+        ) {
+          return createRequest();
         }
       })
     );
@@ -51,24 +55,15 @@ export default function useAccessStrategy() {
   }
 
   function createRequest(reason?: string) {
-    return userService
-      .createAccessRequest(reason)
-      .then(updateState)
-      .catch(err => {
-        // Let the child caller of createRequest handle the error.
-        if (reason) {
-          throw err;
-        }
-        attemptActions.error(err);
-      });
+    return userService.createAccessRequest(reason).then(updateState);
   }
 
   function updateState(result: AccessRequest) {
     sessionStorage.setAccessRequestResult(result);
 
-    if (result.state === 'APPROVED' && !result.appliedPermission) {
+    if (result.state === 'APPROVED') {
       return userService.applyPermission(result.id).then(() => {
-        result.appliedPermission = true;
+        result.state = 'APPLIED';
         sessionStorage.setAccessRequestResult(result);
         window.location.reload();
       });

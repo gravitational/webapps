@@ -15,60 +15,303 @@
  */
 
 import React from 'react';
-import { AccessStrategy } from './AccessStrategy';
-import { render, screen, wait } from 'design/utils/testing';
+import AccessStrategy from './AccessStrategy';
+import userService, {
+  makeUser,
+  makeAccessRequest,
+} from 'teleport/services/user';
+import { render, screen, wait, fireEvent } from 'design/utils/testing';
+import sessionStorage from 'teleport/services/localStorage';
 
-test('access request state', async () => {
-  const request = { state: 'PENDING' } as any;
-  const { rerender } = render(
-    <AccessStrategy {...sample} accessRequest={request} />
-  );
-  expect(screen.getByText(/please wait/i)).toBeInTheDocument();
-  await wait(() => expect(sample.refresh).toHaveBeenCalled());
-  sample.refresh.mockClear();
+beforeEach(() => {
+  jest.resetAllMocks();
+  sessionStorage.clear();
 
-  request.state = 'DENIED';
-  rerender(<AccessStrategy {...sample} accessRequest={request} />);
-  expect(screen.getByText(/request denied/i)).toBeInTheDocument();
-
-  request.state = 'APPROVED';
-  request.renewedSession = true;
-  rerender(<AccessStrategy {...sample} accessRequest={request} />);
-  expect(screen.getByText(/hello world/i)).toBeInTheDocument();
+  jest.spyOn(console, 'error').mockImplementation();
 });
 
-test('access strategy state', () => {
-  // Require reason.
-  const strategy = { type: 'reason' as any, prompt: 'some custom prompt' };
-  const { rerender } = render(
-    <AccessStrategy {...sample} strategy={strategy} />
+test('stategy "optional" renders children', async () => {
+  const userContext = makeUser(sample.userContext);
+
+  jest.spyOn(userService, 'fetchUser').mockResolvedValue(userContext);
+
+  render(<AccessStrategy children={sample.children} />);
+  await wait(() =>
+    expect(screen.getByText(/hello world/i)).toBeInTheDocument()
   );
-  expect(screen.getByText(/some custom prompt/i)).toBeInTheDocument();
+});
 
-  // Require approval, but not the reason.
-  strategy.type = 'always';
-  rerender(<AccessStrategy {...sample} strategy={strategy} />);
-  expect(screen.queryByText(/send request/i)).toBeNull();
-  expect(sample.createRequest).toHaveBeenCalledTimes(1);
-  sample.createRequest.mockClear();
+test('strategy "reason" renders reason dialogue with custom prompt', async () => {
+  const userContext = makeUser(sample.userContext);
+  userContext.accessStrategy.type = 'reason';
+  userContext.accessStrategy.prompt = 'custom prompt';
 
-  // Default optional.
-  strategy.type = 'optional';
-  rerender(<AccessStrategy {...sample} strategy={strategy} />);
-  expect(screen.getByText(/hello world/i)).toBeInTheDocument();
+  jest.spyOn(userService, 'fetchUser').mockResolvedValue(userContext);
+
+  render(<AccessStrategy children={sample.children} />);
+  await wait(() =>
+    expect(screen.getByText(/custom prompt/i)).toBeInTheDocument()
+  );
+});
+
+test('strategy "reason" renders pending dialogue, on click request', async () => {
+  const userContext = makeUser(sample.userContext);
+  userContext.accessStrategy.type = 'reason';
+
+  const request = makeAccessRequest({
+    id: '',
+    state: 'PENDING',
+    reason: '',
+  });
+  jest.spyOn(userService, 'fetchUser').mockResolvedValue(userContext);
+  jest.spyOn(userService, 'createAccessRequest').mockResolvedValue(request);
+  jest.spyOn(userService, 'fetchAccessRequest').mockResolvedValue(request);
+
+  render(<AccessStrategy children={sample.children} />);
+  await wait(() =>
+    expect(screen.getByText(/send request/i)).toBeInTheDocument()
+  );
+
+  fireEvent.change(screen.getByPlaceholderText(/describe/i), {
+    target: { value: 'reason' },
+  });
+
+  await wait(() => fireEvent.click(screen.getByText(/send request/i)));
+  expect(screen.getByText(/being authorized/i)).toBeInTheDocument();
+  expect(userService.createAccessRequest).toHaveBeenCalledTimes(1);
+  expect(userService.fetchAccessRequest).toHaveBeenCalled();
+});
+
+test('strategy "reason", on create request error, renders alert error banner', async () => {
+  const userContext = makeUser(sample.userContext);
+  userContext.accessStrategy.type = 'reason';
+
+  const err = new Error('some error');
+  jest.spyOn(userService, 'createAccessRequest').mockRejectedValue(err);
+  jest.spyOn(userService, 'fetchUser').mockResolvedValue(userContext);
+
+  render(<AccessStrategy children={sample.children} />);
+  await wait(() =>
+    expect(screen.getByText(/send request/i)).toBeInTheDocument()
+  );
+
+  fireEvent.change(screen.getByPlaceholderText(/describe/i), {
+    target: { value: 'reason' },
+  });
+
+  await wait(() => fireEvent.click(screen.getByText(/send request/i)));
+  expect(screen.getByText(/send request/i)).toBeInTheDocument();
+  expect(screen.getByText(/some error/i)).toBeInTheDocument();
+});
+
+test('strategy "always" renders pending dialogue, with request state empty', async () => {
+  const userContext = makeUser(sample.userContext);
+  userContext.accessStrategy.type = 'always';
+
+  const request = makeAccessRequest({
+    id: '',
+    state: 'PENDING',
+    reason: '',
+  });
+  jest.spyOn(userService, 'createAccessRequest').mockResolvedValue(request);
+  jest.spyOn(userService, 'fetchAccessRequest').mockResolvedValue(request);
+  jest.spyOn(userService, 'fetchUser').mockResolvedValue(userContext);
+
+  expect(sessionStorage.getAccessRequestResult()).toBeNull();
+
+  render(<AccessStrategy children={sample.children} checkerInterval={0} />);
+  await wait(() => {
+    expect(screen.getByText(/being authorized/i)).toBeInTheDocument();
+  });
+
+  // When access request state is initially empty,
+  // hook should auto create request before fetching request.
+  expect(userService.createAccessRequest).toHaveBeenCalledTimes(1);
+  expect(userService.fetchAccessRequest).toHaveBeenCalled();
+  expect(sessionStorage.getAccessRequestResult()).toStrictEqual(request);
+});
+
+test('strategy "always" renders pending dialogue, with request state PENDING', async () => {
+  const userContext = makeUser(sample.userContext);
+  userContext.accessStrategy.type = 'always';
+
+  const request = makeAccessRequest({
+    id: '',
+    state: 'PENDING',
+    reason: '',
+  });
+  sessionStorage.setAccessRequestResult(request);
+  expect(sessionStorage.getAccessRequestResult()).toStrictEqual(request);
+
+  jest.spyOn(userService, 'createAccessRequest').mockResolvedValue(request);
+  jest.spyOn(userService, 'fetchAccessRequest').mockResolvedValue(request);
+  jest.spyOn(userService, 'fetchUser').mockResolvedValue(userContext);
+
+  await wait(() =>
+    render(<AccessStrategy children={sample.children} checkerInterval={0} />)
+  );
+  expect(screen.getByText(/being authorized/i)).toBeInTheDocument();
+
+  expect(userService.createAccessRequest).not.toHaveBeenCalledTimes(1);
+  expect(userService.fetchAccessRequest).toHaveBeenCalled();
+});
+
+test('strategy "always", renders pending then children, with request state APPROVED', async () => {
+  const userContext = makeUser(sample.userContext);
+  userContext.accessStrategy.type = 'always';
+
+  const request = makeAccessRequest({
+    id: '',
+    state: 'APPROVED',
+    reason: '',
+  });
+  sessionStorage.setAccessRequestResult(request);
+  expect(sessionStorage.getAccessRequestResult()).toStrictEqual(request);
+
+  jest.spyOn(userService, 'fetchAccessRequest').mockResolvedValue(request);
+  jest.spyOn(userService, 'applyPermission').mockResolvedValue({});
+  jest.spyOn(userService, 'fetchUser').mockResolvedValue(userContext);
+  Object.defineProperty(window, 'location', {
+    writable: true,
+    value: { reload: jest.fn() },
+  });
+
+  render(<AccessStrategy children={sample.children} checkerInterval={0} />);
+  await wait(() =>
+    expect(screen.getByText(/hello world/i)).toBeInTheDocument()
+  );
+  expect(userService.applyPermission).toHaveBeenCalledTimes(1);
+  expect(window.location.reload).toHaveBeenCalledTimes(1);
+  expect(sessionStorage.getAccessRequestResult().state).toEqual('APPLIED');
+
+  // Fetching access request happens with pending,
+  // so this prooves pending dialogue was briefly rendered.
+  expect(userService.fetchAccessRequest).toHaveBeenCalled();
+});
+
+test('strategy "always", renders denied dialogue, with request state DENIED', async () => {
+  const userContext = makeUser(sample.userContext);
+  userContext.accessStrategy.type = 'always';
+
+  let request = makeAccessRequest({
+    id: '',
+    state: 'DENIED',
+    reason: '',
+  });
+  sessionStorage.setAccessRequestResult(request);
+  expect(sessionStorage.getAccessRequestResult()).toStrictEqual(request);
+
+  jest.spyOn(userService, 'fetchUser').mockResolvedValue(userContext);
+
+  render(<AccessStrategy children={sample.children} />);
+
+  await wait(() =>
+    expect(screen.getByText(/request denied/i)).toBeInTheDocument()
+  );
+});
+
+test('strategy "always", renders children, with request state APPLIED', async () => {
+  const userContext = makeUser(sample.userContext);
+  userContext.accessStrategy.type = 'always';
+
+  let request = makeAccessRequest({
+    id: '',
+    state: 'APPLIED',
+    reason: '',
+  });
+  sessionStorage.setAccessRequestResult(request);
+  expect(sessionStorage.getAccessRequestResult()).toStrictEqual(request);
+
+  jest.spyOn(userService, 'fetchUser').mockResolvedValue(userContext);
+
+  render(<AccessStrategy children={sample.children} />);
+
+  await wait(() =>
+    expect(screen.getByText(/hello world/i)).toBeInTheDocument()
+  );
+});
+
+test('strategy "always", on fetch request error, renders error dialogue', async () => {
+  const userContext = makeUser(sample.userContext);
+  userContext.accessStrategy.type = 'always';
+
+  let request = makeAccessRequest({
+    id: '',
+    state: 'APPROVED',
+    reason: '',
+  });
+  sessionStorage.setAccessRequestResult(request);
+  expect(sessionStorage.getAccessRequestResult()).toStrictEqual(request);
+
+  const err = new Error('some error');
+  jest.spyOn(userService, 'fetchAccessRequest').mockRejectedValue(err);
+  jest.spyOn(userService, 'fetchUser').mockResolvedValue(userContext);
+
+  render(<AccessStrategy children={sample.children} checkerInterval={0} />);
+
+  await wait(() =>
+    expect(screen.getByText(/error has occurred/i)).toBeInTheDocument()
+  );
 });
 
 const sample = {
-  attempt: {
-    isProcessing: false,
-    isFailed: false,
-    isSuccess: false,
-    message: '',
-  },
-  strategy: null,
-  accessRequest: null,
-  children: <div>hello world</div>,
-  createRequest: jest.fn().mockResolvedValue({}),
-  refresh: jest.fn().mockResolvedValue({}),
   checkerInterval: 0,
+  userContext: {
+    accessStrategy: {
+      type: 'optional',
+      prompt: '',
+    },
+    username: 'alice',
+    authType: 'local',
+    acl: {
+      logins: ['root'],
+      authConnectors: {
+        list: true,
+        read: true,
+        edit: true,
+        create: true,
+        remove: true,
+      },
+      trustedClusters: {
+        list: true,
+        read: true,
+        edit: true,
+        create: true,
+        remove: true,
+      },
+      roles: {
+        list: true,
+        read: true,
+        edit: true,
+        create: true,
+        remove: true,
+      },
+      sessions: {
+        list: true,
+        read: true,
+        edit: false,
+        create: false,
+        remove: false,
+      },
+      events: {
+        list: true,
+        read: true,
+        edit: false,
+        create: false,
+        remove: false,
+      },
+    },
+    cluster: {
+      clusterId: 'im-a-cluster-name',
+      lastConnected: '2020-11-04T19:07:50.693Z',
+      connectedText: '2020-11-04 11:07:50',
+      status: 'online',
+      url: '/web/cluster/im-a-cluster-name',
+      authVersion: '5.0.0-dev',
+      nodeCount: 1,
+      publicURL: 'localhost:3080',
+      proxyVersion: '5.0.0-dev',
+    },
+  },
+  children: <div>hello world</div>,
 };

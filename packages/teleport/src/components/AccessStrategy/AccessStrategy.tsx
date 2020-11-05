@@ -54,11 +54,11 @@ export function AccessStrategy(props: State & Props) {
   }
 
   // render access request
-  if (accessRequest && accessRequest.state === 'APPROVED') {
+  if (accessRequest.state === 'APPLIED') {
     return <>{children}</>;
   }
 
-  if (accessRequest && accessRequest.state === 'PENDING') {
+  if (accessRequest.state === 'PENDING' || accessRequest.state === 'APPROVED') {
     return (
       <>
         <AjaxPoller time={checkerInterval} onFetch={refresh} />
@@ -67,7 +67,7 @@ export function AccessStrategy(props: State & Props) {
     );
   }
 
-  if (accessRequest && accessRequest.state === 'DENIED') {
+  if (accessRequest.state === 'DENIED') {
     return <RequestDenied reason={accessRequest.reason} />;
   }
 
@@ -82,20 +82,7 @@ export function AccessStrategy(props: State & Props) {
     );
   }
 
-  // strategy == always, create a request result
-  return <RequestCreator onCreate={createRequest} />;
-}
-
-function RequestCreator({ onCreate }: { onCreate(): void }) {
-  React.useEffect(() => {
-    onCreate();
-  }, []);
-
-  return (
-    <StyledIndicator>
-      <Indicator />
-    </StyledIndicator>
-  );
+  return null;
 }
 
 const StyledIndicator = styled(AppVerticalSplit)`

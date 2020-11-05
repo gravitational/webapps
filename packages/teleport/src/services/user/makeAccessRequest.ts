@@ -17,7 +17,13 @@
 import { at } from 'lodash';
 import { AccessRequest } from './types';
 
-export default function makeAccessRequest(json): AccessRequest {
+export default function makeAccessRequest(json?: AccessRequest): AccessRequest {
+  json = json || {
+    id: '',
+    state: '',
+    reason: '',
+  };
+
   const [id, state, reason] = at(json, ['id', 'state', 'reason']);
 
   return {
