@@ -30,6 +30,7 @@ export const Loaded = () => {
   const ctx = new Context();
   const acl = makeAcl(sample.acl);
 
+  ctx.isEnterprise = true;
   ctx.storeUser.setState({ acl });
   ctx.appService.fetchApps = () => Promise.resolve(apps);
   return render(ctx);
@@ -39,6 +40,7 @@ export const Empty = () => {
   const ctx = new Context();
   const acl = makeAcl(sample.acl);
 
+  ctx.isEnterprise = true;
   ctx.storeUser.setState({ acl });
   ctx.appService.fetchApps = () => Promise.resolve([]);
   return render(ctx);
@@ -48,6 +50,7 @@ export const Processing = () => {
   const ctx = new Context();
   const acl = makeAcl(sample.acl);
 
+  ctx.isEnterprise = true;
   ctx.storeUser.setState({ acl });
   ctx.appService.fetchApps = () => new Promise(() => null);
   return render(ctx);
@@ -57,6 +60,7 @@ export const Failed = () => {
   const ctx = new Context();
   const acl = makeAcl(sample.acl);
 
+  ctx.isEnterprise = true;
   ctx.storeUser.setState({ acl });
   ctx.appService.fetchApps = () =>
     Promise.reject(new Error('some error message'));
@@ -80,6 +84,9 @@ function render(ctx) {
 
 const sample = {
   acl: {
+    tokens: {
+      create: true,
+    },
     apps: {
       list: true,
       create: true,

@@ -15,46 +15,57 @@
  */
 
 import React from 'react';
-import { NodeAdd } from './NodeAdd';
+import { AppAdd } from './AppAdd';
 
 export default {
-  title: 'Teleport/Nodes/Add',
+  title: 'Teleport/Apps/Add',
 };
 
-export const Loaded = () => <NodeAdd {...sample.props} />;
+export const Created = () => (
+  <AppAdd {...sample.props} attempt={{ status: 'success' }} />
+);
+
+export const Loaded = () => {
+  return <AppAdd {...sample.props} />;
+};
 
 export const Processing = () => (
-  <NodeAdd {...sample.props} attempt={{ status: 'processing' }} />
+  <AppAdd {...sample.props} attempt={{ status: 'processing' }} />
 );
 
 export const Failed = () => (
-  <NodeAdd
+  <AppAdd
     {...sample.props}
     attempt={{ status: 'failed', statusText: 'some error message' }}
   />
 );
 
 export const Manually = () => (
-  <NodeAdd {...sample.props} automatic={false} canCreateToken={false} />
+  <AppAdd
+    {...sample.props}
+    automatic={false}
+    attempt={{ status: 'failed', statusText: 'some error message' }}
+  />
 );
 
 const sample = {
   props: {
+    automatic: true,
+    setAutomatic: () => null,
+    createToken: () => Promise.resolve(),
     onClose() {
       return null;
     },
     createJoinToken() {
       return Promise.resolve(null);
     },
-    automatic: true,
-    setAutomatic: () => null,
     version: '5.0.0-dev',
-    isEnterprise: true,
+    cmd: `sudo bash -c "$(curl -fsSL 'http://localhost/scripts/86/install-app.sh?name=test&uri=http://myapp/')"`,
     canCreateToken: true,
-    script: 'some bash script',
-    expiry: new Date('3000-10-14'),
+    expires: 'in 1 hour',
+    reset: () => null,
     attempt: {
-      status: 'success',
+      status: '',
       statusText: '',
     } as any,
   },

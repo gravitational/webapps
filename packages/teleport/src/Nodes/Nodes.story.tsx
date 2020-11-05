@@ -45,6 +45,8 @@ function render(
   nodeList = nodes
 ) {
   const props = {
+    isEnterprise: true,
+    canCreate: true,
     searchValue: '',
     setSearchValue: () => null,
     attempt: {
@@ -57,9 +59,9 @@ function render(
     nodes: nodeList,
     getNodeLoginOptions: () => [{ login: 'root', url: 'fd' }],
     startSshSession: () => null,
-    showDialog: false,
-    onCloseDialog: () => null,
-    onShowDialog: () => null,
+    isNodeAddVisible: false,
+    hideNodeAdd: () => null,
+    showNodeAdd: () => null,
   };
 
   return <Nodes {...props} />;

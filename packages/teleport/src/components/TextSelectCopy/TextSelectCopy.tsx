@@ -18,8 +18,10 @@ import React from 'react';
 import copyToClipboard from 'design/utils/copyToClipboard';
 import selectElementContent from 'design/utils/selectElementContent';
 import { ButtonPrimary, Text, Flex } from 'design';
+import { useTheme } from 'styled-components';
 
-export default function TextSelectCopy({ text, ...styles }: Props) {
+export default function TextSelectCopy({ text, fontFamily, ...styles }: Props) {
+  const monoFont = fontFamily || useTheme().fonts.mono;
   const ref = React.useRef();
   const [copyCmd, setCopyCmd] = React.useState(() => 'Copy');
 
@@ -39,12 +41,19 @@ export default function TextSelectCopy({ text, ...styles }: Props) {
     >
       <Text
         ref={ref}
-        style={{ wordBreak: 'break-all', fontSize: '12px' }}
+        style={{
+          wordBreak: 'break-all',
+          fontSize: '12px',
+          fontFamily: monoFont,
+        }}
         mr="3"
       >
         {text}
       </Text>
-      <ButtonPrimary onClick={onCopyClick} size="small">
+      <ButtonPrimary
+        onClick={onCopyClick}
+        style={{ padding: '4px 8px', minHeight: '10px', fontSize: '10px' }}
+      >
         {copyCmd}
       </ButtonPrimary>
     </Flex>

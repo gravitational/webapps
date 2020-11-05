@@ -48,7 +48,7 @@ export default function useAttemptNext(status = '' as Attempt['status']) {
   return { attempt, setAttempt, run };
 }
 
-type Attempt = {
+export type Attempt = {
   status: 'processing' | 'failed' | 'success' | '';
   statusText?: string;
 };

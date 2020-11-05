@@ -141,9 +141,6 @@ exports[`empty state 1`] = `
 .c11 {
   overflow: hidden;
   text-overflow: ellipsis;
-  font-weight: 400;
-  font-size: 14px;
-  line-height: 24px;
   margin: 0px;
   margin-bottom: 16px;
 }
@@ -213,15 +210,13 @@ exports[`empty state 1`] = `
       >
         Applications
       </div>
-      <a
+      <button
         class="c3"
-        href="https://gravitational.com/teleport/docs/"
         kind="primary"
-        target="_blank"
         width="240px"
       >
-        View documentation
-      </a>
+        Add Application
+      </button>
     </div>
     <div
       class="c4 sc-AxirZ c5"
@@ -252,15 +247,13 @@ exports[`empty state 1`] = `
             Teleport Application Access provides secure access to internal applications without the need for a VPN but with the audibility and control of Teleport.
           </div>
         </div>
-        <a
+        <button
           class="c12"
-          href="https://gravitational.com/teleport/docs/"
           kind="primary"
-          target="_blank"
           width="240px"
         >
-          View documentation
-        </a>
+          Add Application
+        </button>
       </div>
     </div>
   </div>
@@ -475,15 +468,13 @@ exports[`loaded state 1`] = `
       >
         Applications
       </div>
-      <a
+      <button
         class="c3"
-        href="https://gravitational.com/teleport/docs/"
         kind="primary"
-        target="_blank"
         width="240px"
       >
-        View documentation
-      </a>
+        Add Application
+      </button>
     </div>
     <div
       class="c4"

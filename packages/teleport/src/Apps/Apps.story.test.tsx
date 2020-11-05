@@ -4,12 +4,13 @@ import { render } from 'design/utils/testing';
 
 test('loaded state', async () => {
   const { container, findAllByText } = render(<Loaded />);
-  await findAllByText(/view documentation/i);
+  await findAllByText(/Applications/i);
   expect(container).toMatchSnapshot();
 });
 
 test('empty state', async () => {
   const { container, findByText } = render(<Empty />);
-  await findByText(/first application/i);
+  await findByText(/secure your first application/i);
+
   expect(container).toMatchSnapshot();
 });

@@ -15,11 +15,15 @@
  */
 
 import React from 'react';
-import { Loaded } from './NodeAdd.story';
+import * as stories from './AppAdd.story';
 import { render } from 'design/utils/testing';
 
-test('success state', async () => {
-  const { getByTestId, findByText } = render(<Loaded />);
-  await findByText(/automatic/i);
+test('loaded', async () => {
+  const { getByTestId } = render(<stories.Loaded />);
+  expect(getByTestId('Modal')).toMatchSnapshot();
+});
+
+test('created', async () => {
+  const { getByTestId } = render(<stories.Created />);
   expect(getByTestId('Modal')).toMatchSnapshot();
 });

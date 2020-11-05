@@ -102,9 +102,9 @@ const cfg = {
 
     resourcePath: '/v1/enterprise/sites/:clusterId/resources/:kind?',
     removeResourcePath: '/v1/enterprise/sites/:clusterId/resources/:kind/:id',
-    nodeJoinToken: '/v1/enterprise/nodes/token',
-
-    nodeJoinScript: '/scripts/:token/install-node.sh',
+    nodeTokenPath: '/v1/enterprise/nodes/token',
+    nodeScriptPath: '/scripts/:token/install-node.sh',
+    appNodeScriptPath: '/scripts/:token/install-app.sh?name=:name&uri=:uri',
   },
 
   getClusterEventsUrl(clusterId: string, params: UrlClusterEventsParams) {
@@ -139,11 +139,18 @@ const cfg = {
   },
 
   getNodeJoinTokenUrl() {
-    return cfg.api.nodeJoinToken;
+    return cfg.api.nodeTokenPath;
   },
 
-  getNodeJoinScriptUrl(token: string) {
-    return cfg.baseUrl + generatePath(cfg.api.nodeJoinScript, { token });
+  getNodeScriptUrl(token: string) {
+    return cfg.baseUrl + generatePath(cfg.api.nodeScriptPath, { token });
+  },
+
+  getAppNodeScriptUrl(token: string, name: string, uri: string) {
+    return (
+      cfg.baseUrl +
+      generatePath(cfg.api.appNodeScriptPath, { token, name, uri })
+    );
   },
 
   getUsersRoute() {

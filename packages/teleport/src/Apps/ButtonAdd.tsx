@@ -19,31 +19,36 @@ import { ButtonPrimary } from 'design';
 
 const docUrl = 'https://gravitational.com/teleport/docs/';
 
-export default function AddButton(props: Props) {
-  if (props.isAdmin) {
+export default function ButtonAdd(props: Props) {
+  if (!props.isEnterprise) {
     return (
-      <ButtonPrimary width="240px" {...props}>
-        Add Server
+      <ButtonPrimary
+        {...props}
+        width="240px"
+        onClick={() => null}
+        as="a"
+        target="_blank"
+        href={docUrl}
+      >
+        View documentation
       </ButtonPrimary>
     );
   }
 
-  return (
-    <ButtonPrimary
-      {...props}
-      width="240px"
-      onClick={() => null}
-      as="a"
-      target="_blank"
-      href={docUrl}
-    >
-      View documentation
-    </ButtonPrimary>
-  );
+  if (props.canCreate) {
+    return (
+      <ButtonPrimary width="240px" {...props}>
+        Add Application
+      </ButtonPrimary>
+    );
+  }
+
+  return null;
 }
 
 type Props = {
-  isAdmin: boolean;
+  isEnterprise: boolean;
+  canCreate: boolean;
   onClick?: () => void;
   mb?: string;
   mx?: string;
