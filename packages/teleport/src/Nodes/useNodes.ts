@@ -21,11 +21,13 @@ import cfg from 'teleport/config';
 import { Node } from 'teleport/services/nodes';
 
 export default function useNodes(ctx: TeleportContext, clusterId: string) {
+  const canCreate = ctx.storeUser.getTokenAccess().create;
   const [nodes, setNodes] = useState<Node[]>([]);
   const [searchValue, setSearchValue] = useState('');
   const [attempt, attemptActions] = useAttempt({ isProcessing: true });
-  const [showDialog, setShowDialog] = useState(false);
+  const [isNodeAddVisible, setIsNodeAddVisible] = useState(false);
   const logins = ctx.storeUser.getLogins();
+  const isEnterprise = ctx.isEnterprise;
 
   useEffect(() => {
     fetchNodes();
@@ -63,25 +65,27 @@ export default function useNodes(ctx: TeleportContext, clusterId: string) {
     );
   };
 
-  const onCloseDialog = () => {
-    setShowDialog(false);
+  const hideNodeAdd = () => {
+    setIsNodeAddVisible(false);
     fetchNodes();
   };
 
-  const onShowDialog = () => {
-    setShowDialog(true);
+  const showNodeAdd = () => {
+    setIsNodeAddVisible(true);
   };
 
   return {
+    canCreate,
     searchValue,
     setSearchValue,
     attempt,
     nodes,
     getNodeLoginOptions,
     startSshSession,
-    showDialog,
-    onCloseDialog,
-    onShowDialog,
+    isNodeAddVisible,
+    isEnterprise,
+    hideNodeAdd,
+    showNodeAdd,
   };
 }
 
@@ -103,3 +107,5 @@ function makeOptions(
     };
   });
 }
+
+export type State = ReturnType<typeof useNodes>;

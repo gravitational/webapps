@@ -18,10 +18,10 @@ import React from 'react';
 import { Text, Box, Flex } from 'design';
 import Card from 'design/Card';
 import Image from 'design/Image';
-import AddButton from './../AddButton';
+import ButtonAdd from './../ButtonAdd';
 import { emptyPng } from './assets';
 
-export function Empty(props: Props) {
+export default function Empty(props: Props) {
   return (
     <Card maxWidth="700px" mx="auto" py={4} as={Flex} alignItems="center">
       <Box mx="4">
@@ -32,14 +32,15 @@ export function Empty(props: Props) {
           <Text typography="h6" mb={3}>
             SECURE YOUR FIRST APPLICATION
           </Text>
-          <Text typography="subtitle1" mb={3}>
+          <Text mb={3}>
             Teleport Application Access provides secure access to internal
             applications without the need for a VPN but with the audibility and
             control of Teleport.
           </Text>
         </Box>
-        <AddButton
-          isAdmin={props.isAdmin}
+        <ButtonAdd
+          isEnterprise={props.isEnterprise}
+          canCreate={props.canCreate}
           onClick={props.onCreate}
           mb="2"
           mx="auto"
@@ -51,34 +52,8 @@ export function Empty(props: Props) {
   );
 }
 
-export default function Empty2(props: Props) {
-  return (
-    <Box
-      p="8"
-      m="0 auto"
-      width="100%"
-      maxWidth="600px"
-      textAlign="center"
-      color="text.primary"
-      bg="primary.light"
-      borderRadius="12px"
-    >
-      <Text typography="h2" mb="3">
-        No Applications Found
-      </Text>
-      <Text>
-        There are no applications found in "
-        <Text as="span" bold>
-          {props.clusterId}
-        </Text>
-        " cluster
-      </Text>
-    </Box>
-  );
-}
-
 type Props = {
-  clusterId: string;
-  isAdmin: boolean;
+  isEnterprise: boolean;
+  canCreate: boolean;
   onCreate(): void;
 };

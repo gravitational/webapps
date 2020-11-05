@@ -1,313 +1,11 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`no token permission renders only manual install 1`] = `
-.c7 {
-  box-sizing: border-box;
-  margin-bottom: 24px;
-}
-
-.c12 {
-  line-height: 1.5;
-  margin: 0;
-  display: inline-flex;
-  justify-content: center;
-  align-items: center;
-  box-sizing: border-box;
-  border: none;
-  border-radius: 4px;
-  cursor: pointer;
-  font-family: inherit;
-  font-weight: 600;
-  outline: none;
-  position: relative;
-  text-align: center;
-  text-decoration: none;
-  text-transform: uppercase;
-  transition: all 0.3s;
-  -webkit-font-smoothing: antialiased;
-  background: #222C59;
-  color: rgba(255,255,255,0.87);
-  min-height: 32px;
-  font-size: 12px;
-  padding: 0px 24px;
-}
-
-.c12:active {
-  opacity: 0.56;
-}
-
-.c12:hover,
-.c12:focus {
-  background: #2C3A73;
-}
-
-.c12:disabled {
-  background: rgba(255,255,255,0.12);
-  color: rgba(255,255,255,0.3);
-}
-
-.c10 {
-  color: #03a9f4;
-  font-weight: normal;
-  background: none;
-  text-decoration: underline;
-  text-transform: none;
-}
-
-.c10:hover,
-.c10:focus {
-  background: #222C59;
-}
-
-.c5 {
-  overflow: hidden;
-  text-overflow: ellipsis;
-  font-weight: 300;
-  font-size: 22px;
-  line-height: 32px;
-  text-transform: uppercase;
-  margin: 0px;
-  color: rgba(255,255,255,0.87);
-}
-
-.c8 {
-  overflow: hidden;
-  text-overflow: ellipsis;
-  margin: 0px;
-  margin-bottom: 24px;
-}
-
-.c9 {
-  overflow: hidden;
-  text-overflow: ellipsis;
-  font-weight: 600;
-  margin: 0px;
-}
-
-.c1 {
-  z-index: -1;
-  position: fixed;
-  right: 0;
-  bottom: 0;
-  top: 0;
-  left: 0;
-  background-color: rgba(0,0,0,0.5);
-  opacity: 1;
-  touch-action: none;
-}
-
-.c0 {
-  position: fixed;
-  z-index: 1200;
-  right: 0;
-  bottom: 0;
-  top: 0;
-  left: 0;
-}
-
-.c2 {
-  height: 100%;
-  outline: none;
-  color: black;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  opacity: 1;
-  will-change: opacity;
-  transition: opacity 225ms cubic-bezier(0.4,0,0.2,1) 0ms;
-}
-
-.c3 {
-  padding: 32px;
-  padding-top: 24px;
-  background: #1C254D;
-  color: rgba(255,255,255,0.87);
-  border-radius: 8px;
-  box-shadow: 0 8px 32px rgba(0,0,0,0.24);
-  display: flex;
-  flex-direction: column;
-  position: relative;
-  overflow-y: auto;
-  max-height: calc(100% - 96px);
-  max-width: 500px;
-  width: 100%;
-}
-
-.c4 {
-  box-sizing: border-box;
-  margin-bottom: 16px;
-  min-height: 32px;
-  display: flex;
-  align-items: center;
-}
-
-.c6 {
-  box-sizing: border-box;
-  margin-bottom: 32px;
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-}
-
-.c11 {
-  box-sizing: border-box;
-}
-
-<div
-  class="c0"
-  data-testid="Modal"
->
-  <div
-    aria-hidden="true"
-    class="c1"
-    data-testid="backdrop"
-  />
-  <div
-    class="c2"
-  >
-    <div
-      class="c3"
-      data-testid="dialogbox"
-    >
-      <div
-        class="sc-fzqBZW c4"
-      >
-        <div
-          class="c5"
-          color="text.primary"
-        >
-          Add a Server
-        </div>
-      </div>
-      <div
-        class="sc-fzqBZW c6"
-      >
-        <div
-          class="c7"
-        >
-          <div
-            class="c8"
-          >
-            <span
-              class="c9"
-            >
-              Step 1
-            </span>
-             
-            - Download Teleport on the joining server:
-             
-            <a
-              class="c10"
-              href="https://get.gravitational.com/teleport-ent-v5.0.0-dev-darwin-amd64-bin.tar.gz"
-              target="_blank"
-            >
-              Mac
-            </a>
-            ,  
-            <a
-              class="c10"
-              href="https://get.gravitational.com/teleport-ent-v5.0.0-dev-linux-amd64-bin.tar.gz"
-              target="_blank"
-            >
-              Linux 64-bit
-            </a>
-            ,  
-            <a
-              class="c10"
-              href="https://get.gravitational.com/teleport-ent-v5.0.0-dev-linux-386-bin.tar.gz"
-              target="_blank"
-            >
-              Linux 32-bit
-            </a>
-          </div>
-          <div
-            class="c8"
-          >
-            <span
-              class="c9"
-            >
-              Step 2
-            </span>
-             
-            - Follow the
-             
-            <a
-              class="c10"
-              href="https://gravitational.com/teleport/docs/admin-guide/#adding-nodes-to-the-cluster"
-              target="_blank"
-            >
-              instructions
-            </a>
-             
-            on how to add a server to your cluster by generating a join token.
-          </div>
-        </div>
-      </div>
-      <div
-        class="c11"
-      >
-        <button
-          class="c12"
-          kind="secondary"
-        >
-          Close
-        </button>
-      </div>
-    </div>
-  </div>
-</div>
-`;
-
 exports[`success state 1`] = `
-.c17 {
+.c15 {
   box-sizing: border-box;
 }
 
-.c16 {
-  line-height: 1.5;
-  margin: 0;
-  display: inline-flex;
-  justify-content: center;
-  align-items: center;
-  box-sizing: border-box;
-  border: none;
-  border-radius: 4px;
-  cursor: pointer;
-  font-family: inherit;
-  font-weight: 600;
-  outline: none;
-  position: relative;
-  text-align: center;
-  text-decoration: none;
-  text-transform: uppercase;
-  transition: all 0.3s;
-  -webkit-font-smoothing: antialiased;
-  background: #512FC9;
-  color: rgba(255,255,255,0.87);
-  font-size: 10px;
-  min-height: 24px;
-  padding: 0px 16px;
-}
-
-.c16:active {
-  opacity: 0.56;
-}
-
-.c16:hover,
-.c16:focus {
-  background: #651FFF;
-}
-
-.c16:active {
-  background: #354AA4;
-}
-
-.c16:disabled {
-  background: rgba(255,255,255,0.12);
-  color: rgba(255,255,255,0.3);
-}
-
-.c19 {
+.c14 {
   line-height: 1.5;
   margin: 0;
   display: inline-flex;
@@ -333,25 +31,25 @@ exports[`success state 1`] = `
   padding: 0px 24px;
 }
 
-.c19:active {
+.c14:active {
   opacity: 0.56;
 }
 
-.c19:hover,
-.c19:focus {
+.c14:hover,
+.c14:focus {
   background: #651FFF;
 }
 
-.c19:active {
+.c14:active {
   background: #354AA4;
 }
 
-.c19:disabled {
+.c14:disabled {
   background: rgba(255,255,255,0.12);
   color: rgba(255,255,255,0.3);
 }
 
-.c21 {
+.c18 {
   line-height: 1.5;
   margin: 0;
   display: inline-flex;
@@ -377,28 +75,28 @@ exports[`success state 1`] = `
   padding: 0px 24px;
 }
 
-.c21:active {
+.c18:active {
   opacity: 0.56;
 }
 
-.c21:hover,
-.c21:focus {
+.c18:hover,
+.c18:focus {
   background: #2C3A73;
 }
 
-.c21:disabled {
+.c18:disabled {
   background: rgba(255,255,255,0.12);
   color: rgba(255,255,255,0.3);
 }
 
-.c9 {
+.c7 {
   display: inline-block;
   transition: color .3s;
   margin-right: 8px;
   color: #FFFFFF;
 }
 
-.c18 {
+.c16 {
   color: #03a9f4;
   font-weight: normal;
   background: none;
@@ -407,12 +105,12 @@ exports[`success state 1`] = `
   padding: 0 8px;
 }
 
-.c18:hover,
-.c18:focus {
+.c16:hover,
+.c16:focus {
   background: #222C59;
 }
 
-.c4 {
+.c5 {
   overflow: hidden;
   text-overflow: ellipsis;
   font-weight: 300;
@@ -420,51 +118,40 @@ exports[`success state 1`] = `
   line-height: 32px;
   text-transform: uppercase;
   margin: 0px;
-  margin-bottom: 32px;
+  margin-right: auto;
   color: rgba(255,255,255,0.87);
 }
 
-.c6 {
-  overflow: hidden;
-  text-overflow: ellipsis;
-  margin: 0px;
-}
-
-.c12 {
+.c10 {
   overflow: hidden;
   text-overflow: ellipsis;
   margin: 0px;
   margin-bottom: 16px;
 }
 
-.c13 {
+.c11 {
   overflow: hidden;
   text-overflow: ellipsis;
   font-weight: 600;
   margin: 0px;
 }
 
-.c15 {
+.c13 {
   overflow: hidden;
   text-overflow: ellipsis;
   margin: 0px;
   margin-right: 16px;
 }
 
-.c5 {
+.c4 {
   box-sizing: border-box;
-  flex: 0 0 auto;
+  margin-bottom: 24px;
   display: flex;
   align-items: center;
   justify-content: space-between;
 }
 
-.c7 {
-  box-sizing: border-box;
-  display: flex;
-}
-
-.c14 {
+.c12 {
   box-sizing: border-box;
   margin-bottom: 8px;
   padding: 8px;
@@ -496,6 +183,38 @@ exports[`success state 1`] = `
   left: 0;
 }
 
+.c6 {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 24px;
+  margin: 0px;
+  margin-left: 24px;
+  align-items: center;
+  display: flex;
+  padding: 4px 8px;
+  cursor: pointer;
+  border-bottom: 4px solid transparent;
+  font-weight: 500;
+  border-bottom: 4px solid #651FFF;
+}
+
+.c8 {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 24px;
+  margin: 0px;
+  margin-left: 24px;
+  align-items: center;
+  display: flex;
+  padding: 4px 8px;
+  cursor: pointer;
+  border-bottom: 4px solid transparent;
+}
+
 .c2 {
   height: 100%;
   outline: none;
@@ -525,7 +244,7 @@ exports[`success state 1`] = `
   min-height: 330px;
 }
 
-.c11 {
+.c9 {
   box-sizing: border-box;
   margin-bottom: 32px;
   flex: 1;
@@ -533,40 +252,8 @@ exports[`success state 1`] = `
   flex-direction: column;
 }
 
-.c20 {
+.c17 {
   box-sizing: border-box;
-}
-
-.c8 {
-  overflow: hidden;
-  text-overflow: ellipsis;
-  font-weight: 400;
-  font-size: 16px;
-  line-height: 24px;
-  margin: 0px;
-  margin-left: 24px;
-  align-items: center;
-  display: flex;
-  padding: 4px 8px;
-  cursor: pointer;
-  border-bottom: 4px solid transparent;
-  font-weight: 500;
-  border-bottom: 4px solid #651FFF;
-}
-
-.c10 {
-  overflow: hidden;
-  text-overflow: ellipsis;
-  font-weight: 400;
-  font-size: 16px;
-  line-height: 24px;
-  margin: 0px;
-  margin-left: 24px;
-  align-items: center;
-  display: flex;
-  padding: 4px 8px;
-  cursor: pointer;
-  border-bottom: 4px solid transparent;
 }
 
 <div
@@ -587,79 +274,71 @@ exports[`success state 1`] = `
     >
       <div
         class="c4"
-        color="text.primary"
       >
         <div
           class="c5"
+          color="text.primary"
         >
-          <div
-            class="c6"
-          >
-            Add a Server
-          </div>
-          <div
-            class="c7"
-          >
-            <div
-              class="c8"
-            >
-              <span
-                class="c9 icon icon-magic-wand "
-                color="light"
-              />
-              Automatically
-            </div>
-            <div
-              class="c10"
-            >
-              <span
-                class="c9 icon icon-cog "
-                color="light"
-              />
-              Manually
-            </div>
-          </div>
+          Add Server
+        </div>
+        <div
+          class="c6"
+        >
+          <span
+            class="c7 icon icon-magic-wand sc-AxhCb c7"
+            color="light"
+          />
+          Automatically
+        </div>
+        <div
+          class="c8"
+        >
+          <span
+            class="c7 icon icon-cog sc-AxhCb c7"
+            color="light"
+          />
+          Manually
         </div>
       </div>
       <div
-        class="c11"
+        class="c9"
       >
         <div
-          class="c12"
+          class="c10"
         >
           Use below script to add a server to your cluster.
           <br />
           The script will be valid for
            
           <span
-            class="c13"
+            class="c11"
           >
             980 years
             .
           </span>
         </div>
         <div
-          class="c14"
-          style="font-family: \\"Droid Sans Mono\\", \\"monospace\\", monospace, \\"Droid Sans Fallback\\";"
+          class="c12"
         >
           <div
-            class="c15"
-            style="word-break: break-all; font-size: 12px;"
+            class="c13"
+            style="word-break: break-all; font-size: 12px; font-family: \\"Droid Sans Mono\\", \\"monospace\\", monospace, \\"Droid Sans Fallback\\";"
           >
             some bash script
           </div>
           <button
-            class="c16"
+            class="c14"
             kind="primary"
+            style="padding: 4px 8px; min-height: 10px; font-size: 10px;"
           >
             Copy
           </button>
         </div>
         <div
-          class="c17"
+          class="c15"
         >
           <a
-            class="c18 c19"
+            class="c16 c14"
             kind="primary"
           >
             Regenerate Script
@@ -667,10 +346,10 @@ exports[`success state 1`] = `
         </div>
       </div>
       <div
-        class="c20"
+        class="c17"
       >
         <button
-          class="c21"
+          class="c18"
           kind="secondary"
         >
           Close

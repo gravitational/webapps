@@ -14,12 +14,6 @@
  * limitations under the License.
  */
 
-import React from 'react';
-import { Loaded } from './NodeAdd.story';
-import { render } from 'design/utils/testing';
+import AppAdd from './AppAdd';
 
-test('success state', async () => {
-  const { getByTestId, findByText } = render(<Loaded />);
-  await findByText(/automatic/i);
-  expect(getByTestId('Modal')).toMatchSnapshot();
-});
+export default AppAdd;

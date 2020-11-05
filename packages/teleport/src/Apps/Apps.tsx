@@ -23,8 +23,9 @@ import {
 import { Danger } from 'design/Alert';
 import { Indicator, Box } from 'design';
 import AppList from './AppList';
-import AddButton from './AddButton';
 import Empty from './Empty';
+import AppAdd from './AppAdd';
+import ButtonAdd from './ButtonAdd';
 import useApps, { State } from './useApps';
 
 export default function Container() {
@@ -32,16 +33,29 @@ export default function Container() {
   return <Apps {...state} />;
 }
 
-export function Apps({ attempt, apps, clusterId }: State) {
+export function Apps(props: State) {
+  const {
+    isEnterprise,
+    isAddAppVisible,
+    showAppAdd,
+    hideAppAdd,
+    canCreate,
+    attempt,
+    apps,
+  } = props;
+
   const isEmpty = attempt.status === 'success' && apps.length === 0;
   const hasApps = attempt.status === 'success' && apps.length > 0;
-  const isAdmin = false;
 
   return (
     <FeatureBox>
       <FeatureHeader alignItems="center" justifyContent="space-between">
         <FeatureHeaderTitle>Applications</FeatureHeaderTitle>
-        <AddButton isAdmin={isAdmin} />
+        <ButtonAdd
+          isEnterprise={isEnterprise}
+          canCreate={canCreate}
+          onClick={showAppAdd}
+        />
       </FeatureHeader>
       {attempt.status === 'processing' && (
         <Box textAlign="center" m={10}>
@@ -51,8 +65,13 @@ export function Apps({ attempt, apps, clusterId }: State) {
       {attempt.status === 'failed' && <Danger>{attempt.statusText} </Danger>}
       {hasApps && <AppList apps={apps} />}
       {isEmpty && (
-        <Empty clusterId={clusterId} isAdmin={isAdmin} onCreate={() => null} />
+        <Empty
+          isEnterprise={isEnterprise}
+          canCreate={canCreate}
+          onCreate={showAppAdd}
+        />
       )}
+      {isAddAppVisible && <AppAdd onClose={hideAppAdd} />}
     </FeatureBox>
   );
 }

@@ -16,15 +16,12 @@
 
 import React from 'react';
 import moment from 'moment';
-import { NodeAdd } from './NodeAdd';
-import { useTheme } from 'styled-components';
+import { State } from './../useNodeAdd';
 import TextSelectCopy from 'teleport/components/TextSelectCopy';
 import { Alert, Text, Indicator, Box, ButtonLink } from 'design';
 
 export default function ByScript(props: Props) {
-  const monoFont = useTheme().fonts.mono;
-  const { script, expiry, getJoinToken, attempt, ...style } = props;
-
+  const { script, expiry, createJoinToken, attempt, ...style } = props;
   const duration = moment(new Date()).diff(expiry);
   const expiresText = moment.duration(duration).humanize();
 
@@ -50,21 +47,18 @@ export default function ByScript(props: Props) {
           {expiresText}.
         </Text>
       </Text>
-      <TextSelectCopy text={script} style={{ fontFamily: monoFont }} mb={2} />
+      <TextSelectCopy text={script} mb={2} />
       <Box>
-        <ButtonLink onClick={getJoinToken}>Regenerate Script</ButtonLink>
+        <ButtonLink onClick={createJoinToken}>Regenerate Script</ButtonLink>
       </Box>
     </>
   );
 }
 
-type PropTypes = Parameters<typeof NodeAdd>[0];
-
 type Props = {
-  script: string;
-  expiry: PropTypes['expiry'];
-  getJoinToken: PropTypes['createJoinToken'];
-  attempt: PropTypes['attempt'];
-  // handles styles
-  [key: string]: any;
+  script: State['script'];
+  expiry: State['expiry'];
+  createJoinToken: State['createJoinToken'];
+  attempt: State['attempt'];
+  mb: string | number;
 };

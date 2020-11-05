@@ -14,42 +14,42 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import TeleportContext from 'teleport/teleportContext';
 import useAttempt from 'shared/hooks/useAttemptNext';
-import cfg from 'teleport/config';
 
-export default function useNodeAdd(ctx: TeleportContext) {
-  const { attempt, run } = useAttempt('processing');
+export default function useAppAdd(ctx: TeleportContext) {
+  const { attempt, run, setAttempt } = useAttempt('');
   const canCreateToken = ctx.storeUser.getTokenAccess().create;
   const version = ctx.storeUser.state.cluster.authVersion;
   const [automatic, setAutomatic] = useState(true);
-  const [script, setScript] = useState('');
-  const [expiry, setExpiry] = useState<Date>(null);
+  const [cmd, setCmd] = useState('');
+  const [expires, setExpires] = useState('');
 
-  useEffect(() => {
-    run(() => createJoinToken());
-  }, []);
+  function createToken(appName = '', appUri = '') {
+    return run(() =>
+      ctx.nodeService.createAppBashCommand(appName, appUri).then(result => {
+        setCmd(result.text);
+        setExpires(result.expires);
+      })
+    );
+  }
 
-  function createJoinToken() {
-    return ctx.nodeService.createNodeJoinToken().then(token => {
-      setExpiry(token.expiry);
-      setScript(
-        `sudo bash -c "$(curl -fsSL ${cfg.getNodeScriptUrl(token.id)})"`
-      );
-    });
+  function reset() {
+    setAttempt({ status: '' });
   }
 
   return {
     canCreateToken,
-    createJoinToken,
+    version,
+    createToken,
+    cmd,
+    expires,
+    reset,
+    attempt,
     automatic,
     setAutomatic,
-    script,
-    expiry,
-    attempt,
-    version,
   };
 }
 
-export type State = ReturnType<typeof useNodeAdd>;
+export type State = ReturnType<typeof useAppAdd>;

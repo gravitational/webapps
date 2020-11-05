@@ -22,9 +22,12 @@ import useStickyClusterId from 'teleport/useStickyClusterId';
 
 export default function useApps() {
   const ctx = useTeleport();
+  const canCreate = ctx.storeUser.getTokenAccess().create;
+  const [isAddAppVisible, setAppAddVisible] = useState(false);
   const { clusterId } = useStickyClusterId();
   const { attempt, run } = useAttempt('processing');
   const [apps, setApps] = useState([] as App[]);
+  const isEnterprise = ctx.isEnterprise;
 
   function fetchApps() {
     return ctx.appService.fetchApps(clusterId).then(setApps);
@@ -34,7 +37,21 @@ export default function useApps() {
     run(() => fetchApps());
   }, [clusterId]);
 
+  const hideAppAdd = () => {
+    setAppAddVisible(false);
+    fetchApps();
+  };
+
+  const showAppAdd = () => {
+    setAppAddVisible(true);
+  };
+
   return {
+    isEnterprise,
+    isAddAppVisible,
+    hideAppAdd,
+    showAppAdd,
+    canCreate,
     clusterId,
     attempt,
     apps,

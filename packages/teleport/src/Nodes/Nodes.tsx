@@ -15,7 +15,7 @@ limitations under the License.
 */
 
 import React from 'react';
-import { Indicator, Box, Flex, ButtonPrimary } from 'design';
+import { Indicator, Box, Flex } from 'design';
 import { Danger } from 'design/Alert';
 import {
   FeatureBox,
@@ -27,8 +27,9 @@ import InputSearch from 'teleport/components/InputSearch';
 import NodeList from 'teleport/components/NodeList';
 import useTeleport from 'teleport/useTeleport';
 import useStickyClusterId from 'teleport/useStickyClusterId';
-import useNodes from './useNodes';
-import NodeAdd from './NodeAdd/NodeAdd';
+import useNodes, { State } from './useNodes';
+import NodeAdd from './NodeAdd';
+import ButtonAdd from './ButtonAdd';
 
 export default function Container() {
   const teleCtx = useTeleport();
@@ -37,7 +38,7 @@ export default function Container() {
   return <Nodes {...state} />;
 }
 
-export function Nodes(props: ReturnType<typeof useNodes>) {
+export function Nodes(props: State) {
   const {
     nodes,
     searchValue,
@@ -45,9 +46,11 @@ export function Nodes(props: ReturnType<typeof useNodes>) {
     getNodeLoginOptions,
     startSshSession,
     attempt,
-    showDialog,
-    onCloseDialog,
-    onShowDialog,
+    showNodeAdd,
+    canCreate,
+    hideNodeAdd,
+    isNodeAddVisible,
+    isEnterprise,
   } = props;
 
   function onLoginSelect(e: React.MouseEvent, login: string, serverId: string) {
@@ -63,17 +66,15 @@ export function Nodes(props: ReturnType<typeof useNodes>) {
     <FeatureBox>
       <FeatureHeader alignItems="center" justifyContent="space-between">
         <FeatureHeaderTitle>Servers</FeatureHeaderTitle>
-        <ButtonPrimary width="240px" onClick={onShowDialog}>
-          Add Server
-        </ButtonPrimary>
+        <ButtonAdd
+          isEnterprise={isEnterprise}
+          canCreate={canCreate}
+          onClick={showNodeAdd}
+        />
       </FeatureHeader>
       <Flex mb={4} alignItems="center" justifyContent="space-between">
         <InputSearch height="30px" mr="3" onChange={setSearchValue} />
-        <QuickLaunch
-          width="280px"
-          onPress={onQuickLaunchEnter}
-          ifnputProps={{ bg: 'bgTerminal' }}
-        />
+        <QuickLaunch width="280px" onPress={onQuickLaunchEnter} />
       </Flex>
       {attempt.isFailed && <Danger>{attempt.message} </Danger>}
       {attempt.isProcessing && (
@@ -89,7 +90,7 @@ export function Nodes(props: ReturnType<typeof useNodes>) {
           onLoginSelect={onLoginSelect}
         />
       )}
-      {showDialog && <NodeAdd onClose={onCloseDialog} />}
+      {isNodeAddVisible && <NodeAdd onClose={hideNodeAdd} />}
     </FeatureBox>
   );
 }
