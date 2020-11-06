@@ -62,7 +62,7 @@ const sample = {
     version: '5.0.0-dev',
     cmd: `sudo bash -c "$(curl -fsSL 'http://localhost/scripts/86/install-app.sh?name=test&uri=http://myapp/')"`,
     canCreateToken: true,
-    expires: 'in 1 hour',
+    expires: '1 hour',
     reset: () => null,
     attempt: {
       status: '',

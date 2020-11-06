@@ -58,7 +58,7 @@ export function Nodes(props: State) {
     startSshSession(login, serverId);
   }
 
-  function onShhEnter(login: string, serverId: string) {
+  function onSshEnter(login: string, serverId: string) {
     startSshSession(login, serverId);
   }
 
@@ -74,7 +74,7 @@ export function Nodes(props: State) {
       </FeatureHeader>
       <Flex mb={4} alignItems="center" justifyContent="space-between">
         <InputSearch height="30px" mr="3" onChange={setSearchValue} />
-        <QuickLaunch width="280px" onPress={onShhEnter} />
+        <QuickLaunch width="280px" onPress={onSshEnter} />
       </Flex>
       {attempt.isFailed && <Danger>{attempt.message} </Danger>}
       {attempt.isProcessing && (

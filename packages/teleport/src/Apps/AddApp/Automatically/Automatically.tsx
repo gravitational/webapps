@@ -63,7 +63,7 @@ export default function Automatically(props: Props) {
               />
               <FieldInput
                 rule={requiredAppUri}
-                label="APP URL"
+                label="INTERNAL APPLICATION URL"
                 width="100%"
                 value={uri}
                 placeholder="https://localhost:4000"
@@ -73,9 +73,9 @@ export default function Automatically(props: Props) {
             </Flex>
             {!cmd && (
               <Text mb="3">
-                Provide a name and URI of your application to generate an
-                automatic script which you can run on the server that has access
-                to your application
+                Provide a name and URL of your application to generate a script
+                that will automatically install and configure the App service on
+                the server that can access your application URL.
               </Text>
             )}
             {attempt.status === 'failed' && (
@@ -84,7 +84,8 @@ export default function Automatically(props: Props) {
             {cmd && (
               <>
                 <Text mb="3">
-                  Use below script to add an application to your cluster. <br />
+                  Use the script below to add an application to your cluster.{' '}
+                  <br />
                   The script will be valid for
                   <Text bold as="span">
                     {` ${expires}`}.
@@ -110,7 +111,7 @@ export default function Automatically(props: Props) {
                 disabled={attempt.status === 'processing'}
                 onClick={() => handleCreate(validator)}
               >
-                Re-generate
+                Regenerate
               </ButtonPrimary>
             )}
             <ButtonSecondary
@@ -136,7 +137,7 @@ const requiredAppUri = value => () => {
 
   try {
     new URL(value);
-  } catch (err) {
+  } catch {
     return {
       valid: false,
       message: 'URL is invalid',
@@ -166,7 +167,7 @@ const requiredAppName = value => () => {
     if (tmp.hostname.split('.').length > 1) {
       throw new Error();
     }
-  } catch (err) {
+  } catch {
     return {
       valid: false,
       message: 'Invalid',

@@ -25,8 +25,9 @@ export default function makeAppBashCmd(
 ): BashCommand {
   const duration = moment(new Date()).diff(token.expiry);
   const expires = moment.duration(duration).humanize();
-
   const url = new URL(appUri);
+
+  // lets encode everything after the first slash in the pathname
   const pathname = url.pathname.replace(/^\//g, '');
   let encoded = `${url.origin}/${encodeURIComponent(pathname + url.search)}`;
 

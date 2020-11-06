@@ -29,22 +29,22 @@ export default function useApps() {
   const [apps, setApps] = useState([] as App[]);
   const isEnterprise = ctx.isEnterprise;
 
-  function fetchApps() {
-    return ctx.appService.fetchApps(clusterId).then(setApps);
+  function refresh() {
+    return run(() => ctx.appService.fetchApps(clusterId).then(setApps));
   }
-
-  useEffect(() => {
-    run(() => fetchApps());
-  }, [clusterId]);
 
   const hideAddApp = () => {
     setAppAddVisible(false);
-    fetchApps();
+    refresh();
   };
 
   const showAddApp = () => {
     setAppAddVisible(true);
   };
+
+  useEffect(() => {
+    run(() => refresh());
+  }, [clusterId]);
 
   return {
     isEnterprise,
@@ -52,7 +52,6 @@ export default function useApps() {
     hideAddApp,
     showAddApp,
     canCreate,
-    clusterId,
     attempt,
     apps,
   };

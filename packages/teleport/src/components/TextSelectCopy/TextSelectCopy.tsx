@@ -21,7 +21,7 @@ import { ButtonPrimary, Text, Flex } from 'design';
 import { useTheme } from 'styled-components';
 
 export default function TextSelectCopy({ text, fontFamily, ...styles }: Props) {
-  const monoFont = fontFamily || useTheme().fonts.mono;
+  const font = fontFamily || useTheme().fonts.mono;
   const ref = React.useRef();
   const [copyCmd, setCopyCmd] = React.useState(() => 'Copy');
 
@@ -44,7 +44,7 @@ export default function TextSelectCopy({ text, fontFamily, ...styles }: Props) {
         style={{
           wordBreak: 'break-all',
           fontSize: '12px',
-          fontFamily: monoFont,
+          fontFamily: font,
         }}
         mr="3"
       >
