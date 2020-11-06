@@ -51,9 +51,10 @@ State & Props) {
       onClose={onClose}
       open={true}
     >
-      <Flex alignItems="center" justifyContent="space-between" mb="4">
-        <DialogTitle mr="auto">Add Application</DialogTitle>
-        {/* <TabIcon
+      <Flex flex="1" flexDirection="column">
+        <Flex alignItems="center" justifyContent="space-between" mb="4">
+          <DialogTitle mr="auto">Add Application</DialogTitle>
+          {/* <TabIcon
           Icon={Icons.Wand}
           title="Automatically"
           active={automatic}
@@ -65,17 +66,18 @@ State & Props) {
           active={!automatic}
           onClick={() => setAutomatic(false)}
         /> */}
+        </Flex>
+        {automatic && (
+          <Automatically
+            cmd={cmd}
+            expires={expires}
+            onClose={onClose}
+            onCreate={createToken}
+            attempt={attempt}
+          />
+        )}
+        {!automatic && <Manually onClose={onClose} version={version} />}
       </Flex>
-      {automatic && (
-        <Automatically
-          cmd={cmd}
-          expires={expires}
-          onClose={onClose}
-          onCreate={createToken}
-          attempt={attempt}
-        />
-      )}
-      {!automatic && <Manually onClose={onClose} version={version} />}
     </Dialog>
   );
 }

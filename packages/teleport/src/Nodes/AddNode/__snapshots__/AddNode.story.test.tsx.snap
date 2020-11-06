@@ -1,11 +1,11 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`success state 1`] = `
-.c15 {
+.c16 {
   box-sizing: border-box;
 }
 
-.c14 {
+.c15 {
   line-height: 1.5;
   margin: 0;
   display: inline-flex;
@@ -31,25 +31,25 @@ exports[`success state 1`] = `
   padding: 0px 24px;
 }
 
-.c14:active {
+.c15:active {
   opacity: 0.56;
 }
 
-.c14:hover,
-.c14:focus {
+.c15:hover,
+.c15:focus {
   background: #651FFF;
 }
 
-.c14:active {
+.c15:active {
   background: #354AA4;
 }
 
-.c14:disabled {
+.c15:disabled {
   background: rgba(255,255,255,0.12);
   color: rgba(255,255,255,0.3);
 }
 
-.c18 {
+.c19 {
   line-height: 1.5;
   margin: 0;
   display: inline-flex;
@@ -75,28 +75,28 @@ exports[`success state 1`] = `
   padding: 0px 24px;
 }
 
-.c18:active {
+.c19:active {
   opacity: 0.56;
 }
 
-.c18:hover,
-.c18:focus {
+.c19:hover,
+.c19:focus {
   background: #2C3A73;
 }
 
-.c18:disabled {
+.c19:disabled {
   background: rgba(255,255,255,0.12);
   color: rgba(255,255,255,0.3);
 }
 
-.c7 {
+.c8 {
   display: inline-block;
   transition: color .3s;
   margin-right: 8px;
   color: #FFFFFF;
 }
 
-.c16 {
+.c17 {
   color: #03a9f4;
   font-weight: normal;
   background: none;
@@ -105,12 +105,12 @@ exports[`success state 1`] = `
   padding: 0 8px;
 }
 
-.c16:hover,
-.c16:focus {
+.c17:hover,
+.c17:focus {
   background: #222C59;
 }
 
-.c5 {
+.c6 {
   overflow: hidden;
   text-overflow: ellipsis;
   font-weight: 300;
@@ -122,21 +122,21 @@ exports[`success state 1`] = `
   color: rgba(255,255,255,0.87);
 }
 
-.c10 {
+.c11 {
   overflow: hidden;
   text-overflow: ellipsis;
   margin: 0px;
   margin-bottom: 16px;
 }
 
-.c11 {
+.c12 {
   overflow: hidden;
   text-overflow: ellipsis;
   font-weight: 600;
   margin: 0px;
 }
 
-.c13 {
+.c14 {
   overflow: hidden;
   text-overflow: ellipsis;
   margin: 0px;
@@ -145,13 +145,20 @@ exports[`success state 1`] = `
 
 .c4 {
   box-sizing: border-box;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.c5 {
+  box-sizing: border-box;
   margin-bottom: 24px;
   display: flex;
   align-items: center;
   justify-content: space-between;
 }
 
-.c12 {
+.c13 {
   box-sizing: border-box;
   margin-bottom: 8px;
   padding: 8px;
@@ -183,7 +190,7 @@ exports[`success state 1`] = `
   left: 0;
 }
 
-.c6 {
+.c7 {
   overflow: hidden;
   text-overflow: ellipsis;
   font-weight: 400;
@@ -200,7 +207,7 @@ exports[`success state 1`] = `
   border-bottom: 4px solid #651FFF;
 }
 
-.c8 {
+.c9 {
   overflow: hidden;
   text-overflow: ellipsis;
   font-weight: 400;
@@ -241,10 +248,10 @@ exports[`success state 1`] = `
   max-height: calc(100% - 96px);
   max-width: 600px;
   width: 100%;
-  min-height: 330px;
+  min-height: 328px;
 }
 
-.c9 {
+.c10 {
   box-sizing: border-box;
   margin-bottom: 32px;
   min-height: 100px;
@@ -253,7 +260,7 @@ exports[`success state 1`] = `
   flex-direction: column;
 }
 
-.c17 {
+.c18 {
   box-sizing: border-box;
 }
 
@@ -278,83 +285,87 @@ exports[`success state 1`] = `
       >
         <div
           class="c5"
-          color="text.primary"
         >
-          Add Server
+          <div
+            class="c6"
+            color="text.primary"
+          >
+            Add Server
+          </div>
+          <div
+            class="c7"
+          >
+            <span
+              class="c8 icon icon-magic-wand sc-AxhCb c8"
+              color="light"
+            />
+            Automatically
+          </div>
+          <div
+            class="c9"
+          >
+            <span
+              class="c8 icon icon-cog sc-AxhCb c8"
+              color="light"
+            />
+            Manually
+          </div>
         </div>
-        <div
-          class="c6"
-        >
-          <span
-            class="c7 icon icon-magic-wand sc-AxhCb c7"
-            color="light"
-          />
-          Automatically
-        </div>
-        <div
-          class="c8"
-        >
-          <span
-            class="c7 icon icon-cog sc-AxhCb c7"
-            color="light"
-          />
-          Manually
-        </div>
-      </div>
-      <div
-        class="c9"
-      >
         <div
           class="c10"
         >
-          Use below script to add a server to your cluster.
-          <br />
-          The script will be valid for
-           
-          <span
+          <div
             class="c11"
           >
-            980 years
-            .
-          </span>
-        </div>
-        <div
-          class="c12"
-        >
+            Use below script to add a server to your cluster.
+            <br />
+            The script will be valid for
+             
+            <span
+              class="c12"
+            >
+              980 years
+              .
+            </span>
+          </div>
           <div
             class="c13"
-            style="word-break: break-all; font-size: 12px; font-family: \\"Droid Sans Mono\\", \\"monospace\\", monospace, \\"Droid Sans Fallback\\";"
           >
-            some bash script
+            <div
+              class="c14"
+              style="word-break: break-all; font-size: 12px; font-family: \\"Droid Sans Mono\\", \\"monospace\\", monospace, \\"Droid Sans Fallback\\";"
+            >
+              some bash script
+            </div>
+            <button
+              class="c15"
+              kind="primary"
+              style="padding: 4px 8px; min-height: 10px; font-size: 10px;"
+            >
+              Copy
+            </button>
           </div>
-          <button
-            class="c14"
-            kind="primary"
-            style="padding: 4px 8px; min-height: 10px; font-size: 10px;"
+          <div
+            class="c16"
           >
-            Copy
-          </button>
+            <a
+              class="c17 c15"
+              kind="primary"
+            >
+              Regenerate Script
+            </a>
+          </div>
         </div>
         <div
-          class="c15"
-        >
-          <a
-            class="c16 c14"
-            kind="primary"
-          >
-            Regenerate Script
-          </a>
-        </div>
-      </div>
-      <div
-        class="c17"
-      >
-        <button
           class="c18"
-          kind="secondary"
         >
-          Close
-        </button>
+          <button
+            class="c19"
+            kind="secondary"
+          >
+            Close
+          </button>
+        </div>
       </div>
     </div>
   </div>
