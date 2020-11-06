@@ -362,7 +362,7 @@ exports[`created 1`] = `
               class="c9"
               font-size="0"
             >
-              APP URL
+              INTERNAL APPLICATION URL
             </label>
             <input
               autocomplete="off"
@@ -377,13 +377,14 @@ exports[`created 1`] = `
         <div
           class="c12"
         >
-          Use below script to add an application to your cluster. 
+          Use the script below to add an application to your cluster.
+           
           <br />
           The script will be valid for
           <span
             class="c13"
           >
-             in 1 hour
+             1 hour
             .
           </span>
         </div>
@@ -412,7 +413,7 @@ exports[`created 1`] = `
           class="c18"
           kind="primary"
         >
-          Re-generate
+          Regenerate
         </button>
         <button
           class="c19"
@@ -719,7 +720,7 @@ exports[`loaded 1`] = `
               class="c9"
               font-size="0"
             >
-              APP URL
+              INTERNAL APPLICATION URL
             </label>
             <input
               autocomplete="off"
@@ -734,7 +735,7 @@ exports[`loaded 1`] = `
         <div
           class="c12"
         >
-          Provide a name and URI of your application to generate an automatic script which you can run on the server that has access to your application
+          Provide a name and URL of your application to generate a script that will automatically install and configure the App service on the server that can access your application URL.
         </div>
         
       </div>

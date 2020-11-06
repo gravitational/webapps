@@ -1,5 +1,5 @@
 /*
-Copyright 2019 Gravitational, Inc.
+Copyright 2020 Gravitational, Inc.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -19,7 +19,7 @@ import TeleportContext from 'teleport/teleportContext';
 import useAttempt from 'shared/hooks/useAttemptNext';
 
 export default function useAddApp(ctx: TeleportContext) {
-  const { attempt, run, setAttempt } = useAttempt('');
+  const { attempt, run } = useAttempt('');
   const canCreateToken = ctx.storeUser.getTokenAccess().create;
   const version = ctx.storeUser.state.cluster.authVersion;
   const [automatic, setAutomatic] = useState(true);
@@ -35,17 +35,12 @@ export default function useAddApp(ctx: TeleportContext) {
     );
   }
 
-  function reset() {
-    setAttempt({ status: '' });
-  }
-
   return {
     canCreateToken,
     version,
     createToken,
     cmd,
     expires,
-    reset,
     attempt,
     automatic,
     setAutomatic,

@@ -30,7 +30,7 @@ export default function Manually({ version, onClose }: Props) {
             <Text bold as="span">
               Step 1
             </Text>{' '}
-            - Download teleport package on your computer.
+            - Download teleport package on your computer
             <Box>
               <Link href={links.getMacOS(version)} target="_blank" mr="2">
                 MacOS
@@ -47,7 +47,7 @@ export default function Manually({ version, onClose }: Props) {
             <Text bold as="span">
               Step 2
             </Text>
-            {' - Login to Teleport.'}
+            {' - Login to Teleport'}
             <TextSelectCopy
               mt="2"
               text={`$ tsh login --proxy=${cfg.proxyCluster} --auth=local`}
@@ -57,7 +57,7 @@ export default function Manually({ version, onClose }: Props) {
             <Text bold as="span">
               Step 3
             </Text>
-            {' - Generate a join token.'}
+            {' - Generate a join token'}
             <TextSelectCopy mt="2" text="$ tctl tokens add --type=app" />
           </Box>
           <Box>
