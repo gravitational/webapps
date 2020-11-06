@@ -49,43 +49,44 @@ export function AddNode({
       dialogCss={() => ({
         maxWidth: '600px',
         width: '100%',
-        minHeight: '330px',
+        minHeight: '328px',
       })}
       disableEscapeKeyDown={false}
       onClose={onClose}
       open={true}
     >
-      <Flex alignItems="center" justifyContent="space-between" mb="4">
-        <DialogTitle mr="auto">Add Server</DialogTitle>
-        <TabIcon
-          Icon={Icons.Wand}
-          title="Automatically"
-          active={automatic}
-          onClick={() => setAutomatic(true)}
-        />
-        <TabIcon
-          Icon={Icons.Cog}
-          title="Manually"
-          active={!automatic}
-          onClick={() => setAutomatic(false)}
-        />
-      </Flex>
-      <DialogContent minHeight="100px">
-        {automatic && (
-          <Automatically
-            script={script}
-            expiry={expiry}
-            createJoinToken={createJoinToken}
-            attempt={attempt}
-            mb={3}
+      <Flex flex="1" flexDirection="column">
+        <Flex alignItems="center" justifyContent="space-between" mb="4">
+          <DialogTitle mr="auto">Add Server</DialogTitle>
+          <TabIcon
+            Icon={Icons.Wand}
+            title="Automatically"
+            active={automatic}
+            onClick={() => setAutomatic(true)}
           />
-        )}
-
-        {!automatic && <Manually version={version} />}
-      </DialogContent>
-      <DialogFooter>
-        <ButtonSecondary onClick={onClose}>Close</ButtonSecondary>
-      </DialogFooter>
+          <TabIcon
+            Icon={Icons.Cog}
+            title="Manually"
+            active={!automatic}
+            onClick={() => setAutomatic(false)}
+          />
+        </Flex>
+        <DialogContent minHeight="100px">
+          {automatic && (
+            <Automatically
+              script={script}
+              expiry={expiry}
+              createJoinToken={createJoinToken}
+              attempt={attempt}
+              mb={3}
+            />
+          )}
+          {!automatic && <Manually version={version} />}
+        </DialogContent>
+        <DialogFooter>
+          <ButtonSecondary onClick={onClose}>Close</ButtonSecondary>
+        </DialogFooter>
+      </Flex>
     </Dialog>
   );
 }

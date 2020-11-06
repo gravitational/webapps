@@ -1,20 +1,20 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`created 1`] = `
-.c8 {
+.c9 {
   box-sizing: border-box;
   margin-bottom: 24px;
   margin-right: 16px;
   width: 320px;
 }
 
-.c11 {
+.c12 {
   box-sizing: border-box;
   margin-bottom: 24px;
   width: 100%;
 }
 
-.c16 {
+.c17 {
   line-height: 1.5;
   margin: 0;
   display: inline-flex;
@@ -40,25 +40,25 @@ exports[`created 1`] = `
   padding: 0px 24px;
 }
 
-.c16:active {
+.c17:active {
   opacity: 0.56;
 }
 
-.c16:hover,
-.c16:focus {
+.c17:hover,
+.c17:focus {
   background: #651FFF;
 }
 
-.c16:active {
+.c17:active {
   background: #354AA4;
 }
 
-.c16:disabled {
+.c17:disabled {
   background: rgba(255,255,255,0.12);
   color: rgba(255,255,255,0.3);
 }
 
-.c18 {
+.c19 {
   line-height: 1.5;
   margin: 0;
   display: inline-flex;
@@ -85,25 +85,25 @@ exports[`created 1`] = `
   margin-right: 16px;
 }
 
-.c18:active {
+.c19:active {
   opacity: 0.56;
 }
 
-.c18:hover,
-.c18:focus {
+.c19:hover,
+.c19:focus {
   background: #651FFF;
 }
 
-.c18:active {
+.c19:active {
   background: #354AA4;
 }
 
-.c18:disabled {
+.c19:disabled {
   background: rgba(255,255,255,0.12);
   color: rgba(255,255,255,0.3);
 }
 
-.c19 {
+.c20 {
   line-height: 1.5;
   margin: 0;
   display: inline-flex;
@@ -129,21 +129,21 @@ exports[`created 1`] = `
   padding: 0px 24px;
 }
 
-.c19:active {
+.c20:active {
   opacity: 0.56;
 }
 
-.c19:hover,
-.c19:focus {
+.c20:hover,
+.c20:focus {
   background: #2C3A73;
 }
 
-.c19:disabled {
+.c20:disabled {
   background: rgba(255,255,255,0.12);
   color: rgba(255,255,255,0.3);
 }
 
-.c10 {
+.c11 {
   appearance: none;
   border: none;
   border-radius: 4px;
@@ -159,19 +159,19 @@ exports[`created 1`] = `
   background-color: #FFFFFF;
 }
 
-.c10::-ms-clear {
+.c11::-ms-clear {
   display: none;
 }
 
-.c10::placeholder {
+.c11::placeholder {
   opacity: 0.4;
 }
 
-.c10:read-only {
+.c11:read-only {
   cursor: not-allowed;
 }
 
-.c9 {
+.c10 {
   color: #FFFFFF;
   display: block;
   font-size: 11px;
@@ -181,7 +181,7 @@ exports[`created 1`] = `
   margin-bottom: 4px;
 }
 
-.c5 {
+.c6 {
   overflow: hidden;
   text-overflow: ellipsis;
   font-weight: 300;
@@ -193,21 +193,21 @@ exports[`created 1`] = `
   color: rgba(255,255,255,0.87);
 }
 
-.c12 {
+.c13 {
   overflow: hidden;
   text-overflow: ellipsis;
   margin: 0px;
   margin-bottom: 16px;
 }
 
-.c13 {
+.c14 {
   overflow: hidden;
   text-overflow: ellipsis;
   font-weight: 600;
   margin: 0px;
 }
 
-.c15 {
+.c16 {
   overflow: hidden;
   text-overflow: ellipsis;
   margin: 0px;
@@ -216,20 +216,27 @@ exports[`created 1`] = `
 
 .c4 {
   box-sizing: border-box;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.c5 {
+  box-sizing: border-box;
   margin-bottom: 24px;
   display: flex;
   align-items: center;
   justify-content: space-between;
 }
 
-.c7 {
+.c8 {
   box-sizing: border-box;
   display: flex;
   align-items: center;
   flex-direction: row;
 }
 
-.c14 {
+.c15 {
   box-sizing: border-box;
   margin-bottom: 8px;
   padding: 8px;
@@ -290,7 +297,7 @@ exports[`created 1`] = `
   min-height: 330px;
 }
 
-.c6 {
+.c7 {
   box-sizing: border-box;
   margin-bottom: 32px;
   min-height: 254px;
@@ -299,7 +306,7 @@ exports[`created 1`] = `
   flex-direction: column;
 }
 
-.c17 {
+.c18 {
   box-sizing: border-box;
 }
 
@@ -324,103 +331,107 @@ exports[`created 1`] = `
       >
         <div
           class="c5"
-          color="text.primary"
         >
-          Add Application
+          <div
+            class="c6"
+            color="text.primary"
+          >
+            Add Application
+          </div>
         </div>
-      </div>
-      <div
-        class="c6"
-      >
         <div
           class="c7"
         >
           <div
             class="c8"
-            width="320px"
           >
-            <label
+            <div
               class="c9"
-              font-size="0"
+              width="320px"
             >
-              App Name
-            </label>
-            <input
-              autocomplete="off"
-              class="c10"
-              color="text.onLight"
-              placeholder="jenkins"
-              type="text"
-              value=""
-            />
+              <label
+                class="c10"
+                font-size="0"
+              >
+                App Name
+              </label>
+              <input
+                autocomplete="off"
+                class="c11"
+                color="text.onLight"
+                placeholder="jenkins"
+                type="text"
+                value=""
+              />
+            </div>
+            <div
+              class="c12"
+              width="100%"
+            >
+              <label
+                class="c10"
+                font-size="0"
+              >
+                INTERNAL APPLICATION URL
+              </label>
+              <input
+                autocomplete="off"
+                class="c11"
+                color="text.onLight"
+                placeholder="https://localhost:4000"
+                type="text"
+                value=""
+              />
+            </div>
           </div>
           <div
-            class="c11"
-            width="100%"
-          >
-            <label
-              class="c9"
-              font-size="0"
-            >
-              INTERNAL APPLICATION URL
-            </label>
-            <input
-              autocomplete="off"
-              class="c10"
-              color="text.onLight"
-              placeholder="https://localhost:4000"
-              type="text"
-              value=""
-            />
-          </div>
-        </div>
-        <div
-          class="c12"
-        >
-          Use the script below to add an application to your cluster.
-           
-          <br />
-          The script will be valid for
-          <span
             class="c13"
           >
-             1 hour
-            .
-          </span>
-        </div>
-        <div
-          class="c14"
-        >
+            Use the script below to add an application to your cluster.
+             
+            <br />
+            The script will be valid for
+            <span
+              class="c14"
+            >
+               1 hour
+              .
+            </span>
+          </div>
           <div
             class="c15"
-            style="word-break: break-all; font-size: 12px; font-family: \\"Droid Sans Mono\\", \\"monospace\\", monospace, \\"Droid Sans Fallback\\";"
           >
-            sudo bash -c "$(curl -fsSL 'http://localhost/scripts/86/install-app.sh?name=test&uri=http://myapp/')"
+            <div
+              class="c16"
+              style="word-break: break-all; font-size: 12px; font-family: \\"Droid Sans Mono\\", \\"monospace\\", monospace, \\"Droid Sans Fallback\\";"
+            >
+              sudo bash -c "$(curl -fsSL 'http://localhost/scripts/86/install-app.sh?name=test&uri=http://myapp/')"
+            </div>
+            <button
+              class="c17"
+              kind="primary"
+              style="padding: 4px 8px; min-height: 10px; font-size: 10px;"
+            >
+              Copy
+            </button>
           </div>
+        </div>
+        <div
+          class="c18"
+        >
           <button
-            class="c16"
+            class="c19"
             kind="primary"
-            style="padding: 4px 8px; min-height: 10px; font-size: 10px;"
           >
-            Copy
+            Regenerate
+          </button>
+          <button
+            class="c20"
+            kind="secondary"
+          >
+            Close
           </button>
         </div>
-      </div>
-      <div
-        class="c17"
-      >
-        <button
-          class="c18"
-          kind="primary"
-        >
-          Regenerate
-        </button>
-        <button
-          class="c19"
-          kind="secondary"
-        >
-          Close
-        </button>
       </div>
     </div>
   </div>
@@ -428,20 +439,20 @@ exports[`created 1`] = `
 `;
 
 exports[`loaded 1`] = `
-.c8 {
+.c9 {
   box-sizing: border-box;
   margin-bottom: 24px;
   margin-right: 16px;
   width: 320px;
 }
 
-.c11 {
+.c12 {
   box-sizing: border-box;
   margin-bottom: 24px;
   width: 100%;
 }
 
-.c14 {
+.c15 {
   line-height: 1.5;
   margin: 0;
   display: inline-flex;
@@ -468,25 +479,25 @@ exports[`loaded 1`] = `
   margin-right: 16px;
 }
 
-.c14:active {
+.c15:active {
   opacity: 0.56;
 }
 
-.c14:hover,
-.c14:focus {
+.c15:hover,
+.c15:focus {
   background: #651FFF;
 }
 
-.c14:active {
+.c15:active {
   background: #354AA4;
 }
 
-.c14:disabled {
+.c15:disabled {
   background: rgba(255,255,255,0.12);
   color: rgba(255,255,255,0.3);
 }
 
-.c15 {
+.c16 {
   line-height: 1.5;
   margin: 0;
   display: inline-flex;
@@ -512,21 +523,21 @@ exports[`loaded 1`] = `
   padding: 0px 24px;
 }
 
-.c15:active {
+.c16:active {
   opacity: 0.56;
 }
 
-.c15:hover,
-.c15:focus {
+.c16:hover,
+.c16:focus {
   background: #2C3A73;
 }
 
-.c15:disabled {
+.c16:disabled {
   background: rgba(255,255,255,0.12);
   color: rgba(255,255,255,0.3);
 }
 
-.c10 {
+.c11 {
   appearance: none;
   border: none;
   border-radius: 4px;
@@ -542,19 +553,19 @@ exports[`loaded 1`] = `
   background-color: #FFFFFF;
 }
 
-.c10::-ms-clear {
+.c11::-ms-clear {
   display: none;
 }
 
-.c10::placeholder {
+.c11::placeholder {
   opacity: 0.4;
 }
 
-.c10:read-only {
+.c11:read-only {
   cursor: not-allowed;
 }
 
-.c9 {
+.c10 {
   color: #FFFFFF;
   display: block;
   font-size: 11px;
@@ -564,7 +575,7 @@ exports[`loaded 1`] = `
   margin-bottom: 4px;
 }
 
-.c5 {
+.c6 {
   overflow: hidden;
   text-overflow: ellipsis;
   font-weight: 300;
@@ -576,7 +587,7 @@ exports[`loaded 1`] = `
   color: rgba(255,255,255,0.87);
 }
 
-.c12 {
+.c13 {
   overflow: hidden;
   text-overflow: ellipsis;
   margin: 0px;
@@ -585,13 +596,20 @@ exports[`loaded 1`] = `
 
 .c4 {
   box-sizing: border-box;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.c5 {
+  box-sizing: border-box;
   margin-bottom: 24px;
   display: flex;
   align-items: center;
   justify-content: space-between;
 }
 
-.c7 {
+.c8 {
   box-sizing: border-box;
   display: flex;
   align-items: center;
@@ -648,7 +666,7 @@ exports[`loaded 1`] = `
   min-height: 330px;
 }
 
-.c6 {
+.c7 {
   box-sizing: border-box;
   margin-bottom: 32px;
   min-height: 254px;
@@ -657,7 +675,7 @@ exports[`loaded 1`] = `
   flex-direction: column;
 }
 
-.c13 {
+.c14 {
   box-sizing: border-box;
 }
 
@@ -682,79 +700,83 @@ exports[`loaded 1`] = `
       >
         <div
           class="c5"
-          color="text.primary"
         >
-          Add Application
+          <div
+            class="c6"
+            color="text.primary"
+          >
+            Add Application
+          </div>
         </div>
-      </div>
-      <div
-        class="c6"
-      >
         <div
           class="c7"
         >
           <div
             class="c8"
-            width="320px"
           >
-            <label
+            <div
               class="c9"
-              font-size="0"
+              width="320px"
             >
-              App Name
-            </label>
-            <input
-              autocomplete="off"
-              class="c10"
-              color="text.onLight"
-              placeholder="jenkins"
-              type="text"
-              value=""
-            />
+              <label
+                class="c10"
+                font-size="0"
+              >
+                App Name
+              </label>
+              <input
+                autocomplete="off"
+                class="c11"
+                color="text.onLight"
+                placeholder="jenkins"
+                type="text"
+                value=""
+              />
+            </div>
+            <div
+              class="c12"
+              width="100%"
+            >
+              <label
+                class="c10"
+                font-size="0"
+              >
+                INTERNAL APPLICATION URL
+              </label>
+              <input
+                autocomplete="off"
+                class="c11"
+                color="text.onLight"
+                placeholder="https://localhost:4000"
+                type="text"
+                value=""
+              />
+            </div>
           </div>
           <div
-            class="c11"
-            width="100%"
+            class="c13"
           >
-            <label
-              class="c9"
-              font-size="0"
-            >
-              INTERNAL APPLICATION URL
-            </label>
-            <input
-              autocomplete="off"
-              class="c10"
-              color="text.onLight"
-              placeholder="https://localhost:4000"
-              type="text"
-              value=""
-            />
+            Provide a name and URL of your application to generate a script that will automatically install and configure the App service on the server that can access your application URL.
           </div>
+          
         </div>
         <div
-          class="c12"
-        >
-          Provide a name and URL of your application to generate a script that will automatically install and configure the App service on the server that can access your application URL.
-        </div>
-        
-      </div>
-      <div
-        class="c13"
-      >
-        <button
           class="c14"
-          kind="primary"
         >
-          Generate Script
-        </button>
-        
-        <button
-          class="c15"
-          kind="secondary"
-        >
-          Close
-        </button>
+          <button
+            class="c15"
+            kind="primary"
+          >
+            Generate Script
+          </button>
+          
+          <button
+            class="c16"
+            kind="secondary"
+          >
+            Close
+          </button>
+        </div>
       </div>
     </div>
   </div>
