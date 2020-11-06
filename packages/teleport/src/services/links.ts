@@ -39,11 +39,4 @@ function getLink(type: Arch, version: string, isEnterprise: boolean) {
   return `https://get.gravitational.com/${prefix}-v${version}-${infix}-bin.tar.gz`;
 }
 
-type Props = {
-  onClose(): void;
-  version: string;
-  // handles styles
-  [key: string]: any;
-};
-
 type Arch = 'mac' | 'linux32' | 'linux64';

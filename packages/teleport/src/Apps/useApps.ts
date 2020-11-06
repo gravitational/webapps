@@ -43,7 +43,7 @@ export default function useApps() {
   };
 
   useEffect(() => {
-    run(() => refresh());
+    refresh();
   }, [clusterId]);
 
   return {

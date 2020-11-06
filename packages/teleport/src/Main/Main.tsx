@@ -88,6 +88,7 @@ const VerticalSplit = styled.div`
   display: flex;
   flex: 1;
   position: absolute;
+  min-width: 900px;
 `;
 
 const HorizontalSplit = styled.div`

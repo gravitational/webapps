@@ -20,7 +20,7 @@ import { State } from './../useAddNode';
 import TextSelectCopy from 'teleport/components/TextSelectCopy';
 import { Alert, Text, Indicator, Box, ButtonLink } from 'design';
 
-export default function ByScript(props: Props) {
+export default function Automatically(props: Props) {
   const { script, expiry, createJoinToken, attempt, ...style } = props;
   const duration = moment(new Date()).diff(expiry);
   const expiresText = moment.duration(duration).humanize();

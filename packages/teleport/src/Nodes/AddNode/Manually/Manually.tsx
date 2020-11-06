@@ -76,5 +76,3 @@ type Props = {
   // handles styles
   [key: string]: any;
 };
-
-type Arch = 'mac' | 'linux32' | 'linux64';
