@@ -152,6 +152,7 @@ const Empty = (props: EmptyProps) => {
       py={4}
       as={Flex}
       alignItems="center"
+      flex="0 0 auto"
     >
       <Box mx="4">
         <Image width="180px" src={emptyPng} />
