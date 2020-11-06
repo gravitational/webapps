@@ -362,7 +362,7 @@ exports[`created 1`] = `
               class="c9"
               font-size="0"
             >
-              APP URI
+              APP URL
             </label>
             <input
               autocomplete="off"
@@ -719,7 +719,7 @@ exports[`loaded 1`] = `
               class="c9"
               font-size="0"
             >
-              APP URI
+              APP URL
             </label>
             <input
               autocomplete="off"
