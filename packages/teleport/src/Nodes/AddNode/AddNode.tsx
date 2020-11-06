@@ -15,31 +15,35 @@
  */
 
 import React from 'react';
-import { Flex } from 'design';
-//import * as Icons from 'design/Icon';
-import Dialog, { DialogTitle } from 'design/Dialog';
+import { ButtonSecondary, Flex } from 'design';
+import { TabIcon } from 'teleport/components/Tabs';
 import useTeleport from 'teleport/useTeleport';
-//import { TabIcon } from 'teleport/components/Tabs';
+import * as Icons from 'design/Icon';
+import Dialog, {
+  DialogContent,
+  DialogFooter,
+  DialogTitle,
+} from 'design/Dialog';
 import Manually from './Manually';
 import Automatically from './Automatically';
-import useAppAdd, { State } from './useAppAdd';
+import useAddNode, { State } from './useAddNode';
 
 export default function Container(props: Props) {
   const ctx = useTeleport();
-  const state = useAppAdd(ctx);
-  return <AppAdd {...state} {...props} />;
+  const state = useAddNode(ctx);
+  return <AddNode {...state} {...props} />;
 }
 
-export function AppAdd({
-  cmd,
-  expires,
+export function AddNode({
   onClose,
-  createToken,
+  script,
+  expiry,
+  createJoinToken,
+  automatic,
+  setAutomatic,
   version,
   attempt,
-  automatic,
-}: //setAutomatic,
-State & Props) {
+}: Props & State) {
   return (
     <Dialog
       dialogCss={() => ({
@@ -52,8 +56,8 @@ State & Props) {
       open={true}
     >
       <Flex alignItems="center" justifyContent="space-between" mb="4">
-        <DialogTitle mr="auto">Add Application</DialogTitle>
-        {/* <TabIcon
+        <DialogTitle mr="auto">Add Server</DialogTitle>
+        <TabIcon
           Icon={Icons.Wand}
           title="Automatically"
           active={automatic}
@@ -64,19 +68,24 @@ State & Props) {
           title="Manually"
           active={!automatic}
           onClick={() => setAutomatic(false)}
-        /> */}
-      </Flex>
-      {automatic && (
-        <Automatically
-          cmd={cmd}
-          expires={expires}
-          onClose={onClose}
-          onCreate={createToken}
-          attempt={attempt}
-          mb={3}
         />
-      )}
-      {!automatic && <Manually onClose={onClose} version={version} />}
+      </Flex>
+      <DialogContent minHeight="100px">
+        {automatic && (
+          <Automatically
+            script={script}
+            expiry={expiry}
+            createJoinToken={createJoinToken}
+            attempt={attempt}
+            mb={3}
+          />
+        )}
+
+        {!automatic && <Manually version={version} />}
+      </DialogContent>
+      <DialogFooter>
+        <ButtonSecondary onClick={onClose}>Close</ButtonSecondary>
+      </DialogFooter>
     </Dialog>
   );
 }

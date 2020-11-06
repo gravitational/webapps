@@ -16,18 +16,18 @@ limitations under the License.
 
 import moment from 'moment';
 import cfg from 'teleport/config';
-import { NodeJoinToken } from './types';
+import { NodeToken, BashCommand } from './types';
 
 export default function makeAppBashCmd(
-  token: NodeJoinToken,
+  token: NodeToken,
   appName,
   appUri = ''
-) {
+): BashCommand {
   const duration = moment(new Date()).diff(token.expiry);
   const expires = moment.duration(duration).humanize();
 
   const url = new URL(appUri);
-  const pathname = url.pathname.replace(/^\/*/g, '');
+  const pathname = url.pathname.replace(/^\//g, '');
   let encoded = `${url.origin}/${encodeURIComponent(pathname + url.search)}`;
 
   // encode ' character so it does not break the curl parameters

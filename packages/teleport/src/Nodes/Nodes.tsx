@@ -28,7 +28,7 @@ import NodeList from 'teleport/components/NodeList';
 import useTeleport from 'teleport/useTeleport';
 import useStickyClusterId from 'teleport/useStickyClusterId';
 import useNodes, { State } from './useNodes';
-import NodeAdd from './NodeAdd';
+import AddNode from './AddNode';
 import ButtonAdd from './ButtonAdd';
 
 export default function Container() {
@@ -46,10 +46,10 @@ export function Nodes(props: State) {
     getNodeLoginOptions,
     startSshSession,
     attempt,
-    showNodeAdd,
+    showAddNode,
     canCreate,
-    hideNodeAdd,
-    isNodeAddVisible,
+    hideAddNode,
+    isAddNodeVisible,
     isEnterprise,
   } = props;
 
@@ -58,7 +58,7 @@ export function Nodes(props: State) {
     startSshSession(login, serverId);
   }
 
-  function onQuickLaunchEnter(login: string, serverId: string) {
+  function onShhEnter(login: string, serverId: string) {
     startSshSession(login, serverId);
   }
 
@@ -69,12 +69,12 @@ export function Nodes(props: State) {
         <ButtonAdd
           isEnterprise={isEnterprise}
           canCreate={canCreate}
-          onClick={showNodeAdd}
+          onClick={showAddNode}
         />
       </FeatureHeader>
       <Flex mb={4} alignItems="center" justifyContent="space-between">
         <InputSearch height="30px" mr="3" onChange={setSearchValue} />
-        <QuickLaunch width="280px" onPress={onQuickLaunchEnter} />
+        <QuickLaunch width="280px" onPress={onShhEnter} />
       </Flex>
       {attempt.isFailed && <Danger>{attempt.message} </Danger>}
       {attempt.isProcessing && (
@@ -90,7 +90,7 @@ export function Nodes(props: State) {
           onLoginSelect={onLoginSelect}
         />
       )}
-      {isNodeAddVisible && <NodeAdd onClose={hideNodeAdd} />}
+      {isAddNodeVisible && <AddNode onClose={hideAddNode} />}
     </FeatureBox>
   );
 }

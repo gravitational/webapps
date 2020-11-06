@@ -14,5 +14,6 @@
  * limitations under the License.
  */
 
-import NodeAdd from './NodeAdd';
-export default NodeAdd;
+import AddApp from './AddApp';
+
+export default AddApp;

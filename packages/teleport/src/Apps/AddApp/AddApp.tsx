@@ -15,35 +15,31 @@
  */
 
 import React from 'react';
-import { ButtonSecondary, Flex } from 'design';
-import { TabIcon } from 'teleport/components/Tabs';
+import { Flex } from 'design';
+//import * as Icons from 'design/Icon';
+import Dialog, { DialogTitle } from 'design/Dialog';
 import useTeleport from 'teleport/useTeleport';
-import * as Icons from 'design/Icon';
-import Dialog, {
-  DialogContent,
-  DialogFooter,
-  DialogTitle,
-} from 'design/Dialog';
+//import { TabIcon } from 'teleport/components/Tabs';
 import Manually from './Manually';
 import Automatically from './Automatically';
-import useNodeAdd, { State } from './useNodeAdd';
+import useAddApp, { State } from './useAddApp';
 
 export default function Container(props: Props) {
   const ctx = useTeleport();
-  const state = useNodeAdd(ctx);
-  return <NodeAdd {...state} {...props} />;
+  const state = useAddApp(ctx);
+  return <AddApp {...state} {...props} />;
 }
 
-export function NodeAdd({
+export function AddApp({
+  cmd,
+  expires,
   onClose,
-  script,
-  expiry,
-  createJoinToken,
-  automatic,
-  setAutomatic,
+  createToken,
   version,
   attempt,
-}: Props & State) {
+  automatic,
+}: //setAutomatic,
+State & Props) {
   return (
     <Dialog
       dialogCss={() => ({
@@ -56,8 +52,8 @@ export function NodeAdd({
       open={true}
     >
       <Flex alignItems="center" justifyContent="space-between" mb="4">
-        <DialogTitle mr="auto">Add Server</DialogTitle>
-        <TabIcon
+        <DialogTitle mr="auto">Add Application</DialogTitle>
+        {/* <TabIcon
           Icon={Icons.Wand}
           title="Automatically"
           active={automatic}
@@ -68,24 +64,18 @@ export function NodeAdd({
           title="Manually"
           active={!automatic}
           onClick={() => setAutomatic(false)}
-        />
+        /> */}
       </Flex>
-      <DialogContent>
-        {automatic && (
-          <Automatically
-            script={script}
-            expiry={expiry}
-            createJoinToken={createJoinToken}
-            attempt={attempt}
-            mb={3}
-          />
-        )}
-
-        {!automatic && <Manually version={version} />}
-      </DialogContent>
-      <DialogFooter>
-        <ButtonSecondary onClick={onClose}>Close</ButtonSecondary>
-      </DialogFooter>
+      {automatic && (
+        <Automatically
+          cmd={cmd}
+          expires={expires}
+          onClose={onClose}
+          onCreate={createToken}
+          attempt={attempt}
+        />
+      )}
+      {!automatic && <Manually onClose={onClose} version={version} />}
     </Dialog>
   );
 }

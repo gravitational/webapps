@@ -15,9 +15,9 @@ limitations under the License.
 */
 
 import { at } from 'lodash';
-import { NodeJoinToken } from './types';
+import { NodeToken } from './types';
 
-export default function makeToken(json): NodeJoinToken {
+export default function makeToken(json): NodeToken {
   const [id, expiry] = at(json, ['id', 'expiry']);
 
   return {

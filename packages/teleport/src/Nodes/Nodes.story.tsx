@@ -59,9 +59,9 @@ function render(
     nodes: nodeList,
     getNodeLoginOptions: () => [{ login: 'root', url: 'fd' }],
     startSshSession: () => null,
-    isNodeAddVisible: false,
-    hideNodeAdd: () => null,
-    showNodeAdd: () => null,
+    isAddNodeVisible: false,
+    hideAddNode: () => null,
+    showAddNode: () => null,
   };
 
   return <Nodes {...props} />;

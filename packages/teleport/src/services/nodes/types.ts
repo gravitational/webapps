@@ -28,7 +28,12 @@ export interface Node {
   tunnel: boolean;
 }
 
-export interface NodeJoinToken {
+export interface NodeToken {
   id: string;
   expiry: Date;
+}
+
+export interface BashCommand {
+  text: string;
+  expires: string;
 }

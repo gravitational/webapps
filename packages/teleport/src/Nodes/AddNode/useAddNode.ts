@@ -14,42 +14,39 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import TeleportContext from 'teleport/teleportContext';
 import useAttempt from 'shared/hooks/useAttemptNext';
 
-export default function useAppAdd(ctx: TeleportContext) {
-  const { attempt, run, setAttempt } = useAttempt('');
+export default function useAddNode(ctx: TeleportContext) {
+  const { attempt, run } = useAttempt('processing');
   const canCreateToken = ctx.storeUser.getTokenAccess().create;
   const version = ctx.storeUser.state.cluster.authVersion;
   const [automatic, setAutomatic] = useState(true);
-  const [cmd, setCmd] = useState('');
-  const [expires, setExpires] = useState('');
+  const [script, setScript] = useState('');
+  const [expiry, setExpiry] = useState<Date>(null);
 
-  function createToken(appName = '', appUri = '') {
-    return run(() =>
-      ctx.nodeService.createAppBashCommand(appName, appUri).then(result => {
-        setCmd(result.text);
-        setExpires(result.expires);
-      })
-    );
-  }
+  useEffect(() => {
+    run(() => createJoinToken());
+  }, []);
 
-  function reset() {
-    setAttempt({ status: '' });
+  function createJoinToken() {
+    return ctx.nodeService.createNodeBashCommand().then(cmd => {
+      setExpiry(cmd.expiry);
+      setScript(cmd.text);
+    });
   }
 
   return {
     canCreateToken,
-    version,
-    createToken,
-    cmd,
-    expires,
-    reset,
-    attempt,
+    createJoinToken,
     automatic,
     setAutomatic,
+    script,
+    expiry,
+    attempt,
+    version,
   };
 }
 
-export type State = ReturnType<typeof useAppAdd>;
+export type State = ReturnType<typeof useAddNode>;
