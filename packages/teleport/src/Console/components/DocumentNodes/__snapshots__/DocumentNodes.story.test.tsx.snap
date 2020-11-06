@@ -216,6 +216,14 @@ exports[`render DocumentNodes 1`] = `
   background-color: rgb(7,40,70);
 }
 
+.c18 tbody tr:hover:last-child td:first-child {
+  border-bottom-left-radius: 8px;
+}
+
+.c18 tbody tr:hover:last-child td:last-child {
+  border-bottom-right-radius: 8px;
+}
+
 .c15 {
   box-sizing: border-box;
   display: flex;
