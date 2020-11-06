@@ -63,7 +63,7 @@ export default function Automatically(props: Props) {
               />
               <FieldInput
                 rule={requiredAppUri}
-                label="APP URI"
+                label="APP URL"
                 width="100%"
                 value={uri}
                 placeholder="https://localhost:4000"
@@ -139,7 +139,7 @@ const requiredAppUri = value => () => {
   } catch (err) {
     return {
       valid: false,
-      message: 'URI is invalid',
+      message: 'URL is invalid',
     };
   }
 
