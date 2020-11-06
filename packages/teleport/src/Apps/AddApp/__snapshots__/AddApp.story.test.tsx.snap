@@ -384,6 +384,7 @@ exports[`created 1`] = `
             class="c13"
           >
              in 1 hour
+            .
           </span>
         </div>
         <div
@@ -439,51 +440,7 @@ exports[`loaded 1`] = `
   width: 100%;
 }
 
-.c16 {
-  line-height: 1.5;
-  margin: 0;
-  display: inline-flex;
-  justify-content: center;
-  align-items: center;
-  box-sizing: border-box;
-  border: none;
-  border-radius: 4px;
-  cursor: pointer;
-  font-family: inherit;
-  font-weight: 600;
-  outline: none;
-  position: relative;
-  text-align: center;
-  text-decoration: none;
-  text-transform: uppercase;
-  transition: all 0.3s;
-  -webkit-font-smoothing: antialiased;
-  background: #512FC9;
-  color: rgba(255,255,255,0.87);
-  min-height: 32px;
-  font-size: 12px;
-  padding: 0px 24px;
-}
-
-.c16:active {
-  opacity: 0.56;
-}
-
-.c16:hover,
-.c16:focus {
-  background: #651FFF;
-}
-
-.c16:active {
-  background: #354AA4;
-}
-
-.c16:disabled {
-  background: rgba(255,255,255,0.12);
-  color: rgba(255,255,255,0.3);
-}
-
-.c18 {
+.c14 {
   line-height: 1.5;
   margin: 0;
   display: inline-flex;
@@ -510,25 +467,25 @@ exports[`loaded 1`] = `
   margin-right: 16px;
 }
 
-.c18:active {
+.c14:active {
   opacity: 0.56;
 }
 
-.c18:hover,
-.c18:focus {
+.c14:hover,
+.c14:focus {
   background: #651FFF;
 }
 
-.c18:active {
+.c14:active {
   background: #354AA4;
 }
 
-.c18:disabled {
+.c14:disabled {
   background: rgba(255,255,255,0.12);
   color: rgba(255,255,255,0.3);
 }
 
-.c19 {
+.c15 {
   line-height: 1.5;
   margin: 0;
   display: inline-flex;
@@ -554,16 +511,16 @@ exports[`loaded 1`] = `
   padding: 0px 24px;
 }
 
-.c19:active {
+.c15:active {
   opacity: 0.56;
 }
 
-.c19:hover,
-.c19:focus {
+.c15:hover,
+.c15:focus {
   background: #2C3A73;
 }
 
-.c19:disabled {
+.c15:disabled {
   background: rgba(255,255,255,0.12);
   color: rgba(255,255,255,0.3);
 }
@@ -625,20 +582,6 @@ exports[`loaded 1`] = `
   margin-bottom: 16px;
 }
 
-.c13 {
-  overflow: hidden;
-  text-overflow: ellipsis;
-  font-weight: 600;
-  margin: 0px;
-}
-
-.c15 {
-  overflow: hidden;
-  text-overflow: ellipsis;
-  margin: 0px;
-  margin-right: 16px;
-}
-
 .c4 {
   box-sizing: border-box;
   margin-bottom: 24px;
@@ -652,17 +595,6 @@ exports[`loaded 1`] = `
   display: flex;
   align-items: center;
   flex-direction: row;
-}
-
-.c14 {
-  box-sizing: border-box;
-  margin-bottom: 8px;
-  padding: 8px;
-  background-color: #010B1C;
-  border-radius: 4px;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
 }
 
 .c1 {
@@ -724,7 +656,7 @@ exports[`loaded 1`] = `
   flex-direction: column;
 }
 
-.c17 {
+.c13 {
   box-sizing: border-box;
 }
 
@@ -802,44 +734,22 @@ exports[`loaded 1`] = `
         <div
           class="c12"
         >
-          Use below script to add an application to your cluster. 
-          <br />
-          The script will be valid for
-          <span
-            class="c13"
-          >
-             in 1 hour
-          </span>
+          Provide a name and URI of your application to generate an automatic script which you can run on the server that has access to your application
         </div>
-        <div
-          class="c14"
-        >
-          <div
-            class="c15"
-            style="word-break: break-all; font-size: 12px; font-family: \\"Droid Sans Mono\\", \\"monospace\\", monospace, \\"Droid Sans Fallback\\";"
-          >
-            sudo bash -c "$(curl -fsSL 'http://localhost/scripts/86/install-app.sh?name=test&uri=http://myapp/')"
-          </div>
-          <button
-            class="c16"
-            kind="primary"
-            style="padding: 4px 8px; min-height: 10px; font-size: 10px;"
-          >
-            Copy
-          </button>
-        </div>
+        
       </div>
       <div
-        class="c17"
+        class="c13"
       >
         <button
-          class="c18"
+          class="c14"
           kind="primary"
         >
-          Re-generate
+          Generate Script
         </button>
+        
         <button
-          class="c19"
+          class="c15"
           kind="secondary"
         >
           Close

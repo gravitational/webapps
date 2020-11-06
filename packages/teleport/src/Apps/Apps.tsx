@@ -24,7 +24,7 @@ import { Danger } from 'design/Alert';
 import { Indicator, Box } from 'design';
 import AppList from './AppList';
 import Empty from './Empty';
-import AppAdd from './AppAdd';
+import AddApp from './AddApp';
 import ButtonAdd from './ButtonAdd';
 import useApps, { State } from './useApps';
 
@@ -37,8 +37,8 @@ export function Apps(props: State) {
   const {
     isEnterprise,
     isAddAppVisible,
-    showAppAdd,
-    hideAppAdd,
+    showAddApp,
+    hideAddApp,
     canCreate,
     attempt,
     apps,
@@ -54,7 +54,7 @@ export function Apps(props: State) {
         <ButtonAdd
           isEnterprise={isEnterprise}
           canCreate={canCreate}
-          onClick={showAppAdd}
+          onClick={showAddApp}
         />
       </FeatureHeader>
       {attempt.status === 'processing' && (
@@ -68,10 +68,10 @@ export function Apps(props: State) {
         <Empty
           isEnterprise={isEnterprise}
           canCreate={canCreate}
-          onCreate={showAppAdd}
+          onCreate={showAddApp}
         />
       )}
-      {isAddAppVisible && <AppAdd onClose={hideAppAdd} />}
+      {isAddAppVisible && <AddApp onClose={hideAddApp} />}
     </FeatureBox>
   );
 }

@@ -16,7 +16,7 @@
 
 import React from 'react';
 import moment from 'moment';
-import { State } from './../useNodeAdd';
+import { State } from './../useAddNode';
 import TextSelectCopy from 'teleport/components/TextSelectCopy';
 import { Alert, Text, Indicator, Box, ButtonLink } from 'design';
 

@@ -80,7 +80,7 @@ const StyledAppListItem = styled(Flex)`
   position: relative;
   box-shadow: 0 4px 32px rgba(0, 0, 0, 0.24);
   cursor: pointer;
-  transition: box-shadow 0.2s;
+  transition: 0.3s;
   border: 2px solid transparent;
   &:hover {
     border: 2px solid ${props => props.theme.colors.secondary.main};

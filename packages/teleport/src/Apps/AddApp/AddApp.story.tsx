@@ -15,33 +15,33 @@
  */
 
 import React from 'react';
-import { AppAdd } from './AppAdd';
+import { AddApp } from './AddApp';
 
 export default {
   title: 'Teleport/Apps/Add',
 };
 
 export const Created = () => (
-  <AppAdd {...sample.props} attempt={{ status: 'success' }} />
+  <AddApp {...sample.props} attempt={{ status: 'success' }} />
 );
 
 export const Loaded = () => {
-  return <AppAdd {...sample.props} />;
+  return <AddApp {...sample.props} cmd="" />;
 };
 
 export const Processing = () => (
-  <AppAdd {...sample.props} attempt={{ status: 'processing' }} />
+  <AddApp {...sample.props} attempt={{ status: 'processing' }} />
 );
 
 export const Failed = () => (
-  <AppAdd
+  <AddApp
     {...sample.props}
     attempt={{ status: 'failed', statusText: 'some error message' }}
   />
 );
 
 export const Manually = () => (
-  <AppAdd
+  <AddApp
     {...sample.props}
     automatic={false}
     attempt={{ status: 'failed', statusText: 'some error message' }}

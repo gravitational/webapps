@@ -25,7 +25,7 @@ export default function useNodes(ctx: TeleportContext, clusterId: string) {
   const [nodes, setNodes] = useState<Node[]>([]);
   const [searchValue, setSearchValue] = useState('');
   const [attempt, attemptActions] = useAttempt({ isProcessing: true });
-  const [isNodeAddVisible, setIsNodeAddVisible] = useState(false);
+  const [isAddNodeVisible, setIsAddNodeVisible] = useState(false);
   const logins = ctx.storeUser.getLogins();
   const isEnterprise = ctx.isEnterprise;
 
@@ -65,13 +65,13 @@ export default function useNodes(ctx: TeleportContext, clusterId: string) {
     );
   };
 
-  const hideNodeAdd = () => {
-    setIsNodeAddVisible(false);
+  const hideAddNode = () => {
+    setIsAddNodeVisible(false);
     fetchNodes();
   };
 
-  const showNodeAdd = () => {
-    setIsNodeAddVisible(true);
+  const showAddNode = () => {
+    setIsAddNodeVisible(true);
   };
 
   return {
@@ -82,10 +82,10 @@ export default function useNodes(ctx: TeleportContext, clusterId: string) {
     nodes,
     getNodeLoginOptions,
     startSshSession,
-    isNodeAddVisible,
+    isAddNodeVisible,
     isEnterprise,
-    hideNodeAdd,
-    showNodeAdd,
+    hideAddNode,
+    showAddNode,
   };
 }
 

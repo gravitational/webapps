@@ -18,8 +18,9 @@ import { map } from 'lodash';
 import api from 'teleport/services/api';
 import cfg from 'teleport/config';
 import makeNode from './makeNode';
-import makeNodeJoinToken from './makeNodeJoinToken';
+import makeNodeToken from './makeNodeToken';
 import makeAppBashCmd from './makeAppBashCmd';
+import makeNodeBashCmd from './makeNodeBashCmd';
 
 const service = {
   fetchNodes(clusterId?: string) {
@@ -29,13 +30,17 @@ const service = {
   },
 
   createNodeJoinToken() {
-    return api.post(cfg.getNodeJoinTokenUrl()).then(makeNodeJoinToken);
+    return api.post(cfg.getNodeJoinTokenUrl()).then(makeNodeToken);
+  },
+
+  createNodeBashCommand() {
+    return this.createNodeJoinToken().then(makeNodeBashCmd);
   },
 
   createAppBashCommand(appName: string, appUri: string) {
     return api
       .post(cfg.getNodeJoinTokenUrl())
-      .then(makeNodeJoinToken)
+      .then(makeNodeToken)
       .then(token => makeAppBashCmd(token, appName, appUri));
   },
 };

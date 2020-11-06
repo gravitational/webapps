@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-import React from 'react';
+import React, { KeyboardEvent } from 'react';
 import TextSelectCopy from 'teleport/components/TextSelectCopy';
 import { Text, Flex, Alert, ButtonSecondary, ButtonPrimary } from 'design';
 import Validation, { Validator } from 'shared/components/Validation';
@@ -22,7 +22,7 @@ import FieldInput from 'shared/components/FieldInput';
 import { DialogContent, DialogFooter } from 'design/Dialog';
 import { Attempt } from 'shared/hooks/useAttemptNext';
 
-export default function ByScript(props: Props) {
+export default function Automatically(props: Props) {
   const { cmd, onClose, attempt, expires } = props;
   const [name, setName] = React.useState('');
   const [uri, setUri] = React.useState('');
@@ -33,6 +33,15 @@ export default function ByScript(props: Props) {
     }
 
     props.onCreate(name, uri);
+  }
+
+  function handleEnterPress(
+    e: KeyboardEvent<HTMLInputElement>,
+    validator: Validator
+  ) {
+    if (e.key === 'Enter') {
+      handleCreate(validator);
+    }
   }
 
   return (
@@ -46,18 +55,20 @@ export default function ByScript(props: Props) {
                 label="App Name"
                 autoFocus
                 value={name}
-                onChange={e => setName(e.target.value)}
                 placeholder="jenkins"
                 width="320px"
                 mr="3"
+                onKeyPress={e => handleEnterPress(e, validator)}
+                onChange={e => setName(e.target.value)}
               />
               <FieldInput
                 rule={requiredAppUri}
                 label="APP URI"
                 width="100%"
                 value={uri}
-                onChange={e => setUri(e.target.value)}
                 placeholder="https://localhost:4000"
+                onKeyPress={e => handleEnterPress(e, validator)}
+                onChange={e => setUri(e.target.value)}
               />
             </Flex>
             {!cmd && (
@@ -76,7 +87,7 @@ export default function ByScript(props: Props) {
                   Use below script to add an application to your cluster. <br />
                   The script will be valid for
                   <Text bold as="span">
-                    {` ${expires}`}
+                    {` ${expires}`}.
                   </Text>
                 </Text>
                 <TextSelectCopy text={cmd} mb={2} />
@@ -86,15 +97,19 @@ export default function ByScript(props: Props) {
           <DialogFooter>
             {!cmd && (
               <ButtonPrimary
-                disabled={attempt.status === 'processing'}
                 mr="3"
+                disabled={attempt.status === 'processing'}
                 onClick={() => handleCreate(validator)}
               >
                 Generate Script
               </ButtonPrimary>
             )}
             {cmd && (
-              <ButtonPrimary mr="3" onClick={() => handleCreate(validator)}>
+              <ButtonPrimary
+                mr="3"
+                disabled={attempt.status === 'processing'}
+                onClick={() => handleCreate(validator)}
+              >
                 Re-generate
               </ButtonPrimary>
             )}
@@ -169,6 +184,4 @@ type Props = {
   cmd: string;
   expires: string;
   attempt: Attempt;
-  // handles styles
-  [key: string]: any;
 };

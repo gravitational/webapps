@@ -37,20 +37,20 @@ export default function useApps() {
     run(() => fetchApps());
   }, [clusterId]);
 
-  const hideAppAdd = () => {
+  const hideAddApp = () => {
     setAppAddVisible(false);
     fetchApps();
   };
 
-  const showAppAdd = () => {
+  const showAddApp = () => {
     setAppAddVisible(true);
   };
 
   return {
     isEnterprise,
     isAddAppVisible,
-    hideAppAdd,
-    showAppAdd,
+    hideAddApp,
+    showAddApp,
     canCreate,
     clusterId,
     attempt,

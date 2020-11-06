@@ -15,27 +15,27 @@
  */
 
 import React from 'react';
-import { NodeAdd } from './NodeAdd';
+import { AddNode } from './AddNode';
 
 export default {
   title: 'Teleport/Nodes/Add',
 };
 
-export const Loaded = () => <NodeAdd {...sample.props} />;
+export const Loaded = () => <AddNode {...sample.props} />;
 
 export const Processing = () => (
-  <NodeAdd {...sample.props} attempt={{ status: 'processing' }} />
+  <AddNode {...sample.props} attempt={{ status: 'processing' }} />
 );
 
 export const Failed = () => (
-  <NodeAdd
+  <AddNode
     {...sample.props}
     attempt={{ status: 'failed', statusText: 'some error message' }}
   />
 );
 
 export const Manually = () => (
-  <NodeAdd {...sample.props} automatic={false} canCreateToken={false} />
+  <AddNode {...sample.props} automatic={false} canCreateToken={false} />
 );
 
 const sample = {

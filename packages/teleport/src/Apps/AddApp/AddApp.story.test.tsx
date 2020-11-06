@@ -14,6 +14,16 @@
  * limitations under the License.
  */
 
-import AppAdd from './AppAdd';
+import React from 'react';
+import * as stories from './AddApp.story';
+import { render } from 'design/utils/testing';
 
-export default AppAdd;
+test('loaded', async () => {
+  const { getByTestId } = render(<stories.Loaded />);
+  expect(getByTestId('Modal')).toMatchSnapshot();
+});
+
+test('created', async () => {
+  const { getByTestId } = render(<stories.Created />);
+  expect(getByTestId('Modal')).toMatchSnapshot();
+});
