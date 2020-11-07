@@ -27,14 +27,16 @@ export default function useAddNode(ctx: TeleportContext) {
   const [expiry, setExpiry] = useState<Date>(null);
 
   useEffect(() => {
-    run(() => createJoinToken());
+    createJoinToken();
   }, []);
 
   function createJoinToken() {
-    return ctx.nodeService.createNodeBashCommand().then(cmd => {
-      setExpiry(cmd.expiry);
-      setScript(cmd.text);
-    });
+    return run(() =>
+      ctx.nodeService.createNodeBashCommand().then(cmd => {
+        setExpiry(cmd.expiry);
+        setScript(cmd.text);
+      })
+    );
   }
 
   return {
