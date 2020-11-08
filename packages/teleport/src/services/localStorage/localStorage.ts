@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import { KeysEnum } from './types';
+import { BearerToken, KeysEnum } from './types';
 
 const storage = {
   clear() {
@@ -32,11 +32,11 @@ const storage = {
     window.removeEventListener('storage', fn);
   },
 
-  setBearerToken(token) {
+  setBearerToken(token: BearerToken) {
     window.localStorage.setItem(KeysEnum.TOKEN, JSON.stringify(token));
   },
 
-  getBearerToken() {
+  getBearerToken(): BearerToken {
     const item = window.localStorage.getItem(KeysEnum.TOKEN);
     if (item) {
       return JSON.parse(item);
