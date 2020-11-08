@@ -20,7 +20,7 @@ import { Flex } from 'design';
 import { createMemoryHistory } from 'history';
 import { Router, Route } from 'react-router';
 import Console from './Console';
-import { colors } from './components/colors';
+import { colors } from './colors';
 import ConsoleContext from './consoleContext';
 import ConsoleContextProvider from './consoleContextProvider';
 

@@ -16,16 +16,16 @@ limitations under the License.
 
 import React from 'react';
 import styled from 'styled-components';
+import { Flex } from 'design';
 import {
   Redirect,
   Route,
   useParams,
   useRouteMatch,
 } from 'teleport/components/Router';
-import { Flex } from 'design';
+import { colors } from 'teleport/Console/colors';
 import cfg from 'teleport/config';
 import Tabs, { TabItem } from './PlayerTabs';
-import { colors } from 'teleport/Console/components/colors';
 import SshPlayer from './SshPlayer';
 import BpfLogs from './BpfLogs';
 

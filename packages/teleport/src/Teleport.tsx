@@ -15,19 +15,19 @@ limitations under the License.
 */
 import { hot } from 'react-hot-loader/root';
 import React from 'react';
+import { useFavicon } from 'shared/hooks';
 import ThemeProvider from 'design/ThemeProvider';
 import { Router, Route, Switch } from 'teleport/components/Router';
-import Invite, { ResetPassword } from 'teleport/components/Invite';
 import CatchError from 'teleport/components/CatchError';
-import Login, { LoginSuccess, LoginFailed } from 'teleport/components/Login';
 import Authenticated from 'teleport/components/Authenticated';
-import cfg from 'teleport/config';
 import Main from './Main';
+import Invite, { ResetPassword } from './Invite';
+import Login, { LoginSuccess, LoginFailed } from './Login';
 import AppLauncher from './AppLauncher';
-import Console from 'teleport/Console';
-import Player from 'teleport/Player';
-import { useFavicon } from 'shared/hooks';
+import Console from './Console';
+import Player from './Player';
 import TeleportContextProvider from './teleportContextProvider';
+import cfg from './config';
 
 const teleportIco = require('./favicon.ico').default;
 

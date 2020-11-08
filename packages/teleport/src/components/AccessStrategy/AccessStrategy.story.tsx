@@ -16,7 +16,7 @@
 
 import React from 'react';
 import { AccessStrategy } from './AccessStrategy';
-import { RequestPending } from './RequestPending';
+import RequestPending from './RequestPending';
 
 export default {
   title: 'Teleport/AccessStrategy',
