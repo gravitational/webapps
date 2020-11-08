@@ -15,9 +15,9 @@
  */
 
 import React from 'react';
-import cfg from 'teleport/config';
 import sessionStorage from 'teleport/services/localStorage';
 import useAttempt from 'shared/hooks/useAttempt';
+import historyService from 'teleport/services/history';
 import userService, {
   AccessStrategy,
   AccessRequest,
@@ -25,17 +25,15 @@ import userService, {
 } from 'teleport/services/user';
 
 export default function useAccessStrategy() {
-  const clusterId = cfg.proxyCluster; // root cluster
   const [attempt, attemptActions] = useAttempt({ isProcessing: true });
   const [strategy, setStrategy] = React.useState<AccessStrategy>(null);
-
   const [accessRequest, setAccessRequest] = React.useState<AccessRequest>(
     makeAccessRequest(sessionStorage.getAccessRequestResult())
   );
 
   React.useEffect(() => {
     attemptActions.do(() =>
-      userService.fetchUser(clusterId).then(res => {
+      userService.fetchUserContext().then(res => {
         setStrategy(res.accessStrategy);
         if (
           accessRequest.state === '' &&
@@ -60,12 +58,11 @@ export default function useAccessStrategy() {
 
   function updateState(result: AccessRequest) {
     sessionStorage.setAccessRequestResult(result);
-
     if (result.state === 'APPROVED') {
       return userService.applyPermission(result.id).then(() => {
         result.state = 'APPLIED';
         sessionStorage.setAccessRequestResult(result);
-        window.location.reload();
+        historyService.reload();
       });
     }
 

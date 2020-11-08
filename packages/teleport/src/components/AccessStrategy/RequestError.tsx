@@ -39,7 +39,7 @@ export default function RequestError({ err }: Props) {
       </DialogContent>
       <DialogFooter>
         <ButtonSecondary onClick={() => session.logout()}>
-          Cancel & Logout
+          {`Cancel & Logout`}
         </ButtonSecondary>
       </DialogFooter>
     </Dialog>

@@ -15,7 +15,6 @@
  */
 
 import React from 'react';
-import styled from 'styled-components';
 import { Indicator } from 'design';
 import { AppVerticalSplit } from 'teleport/components/Layout';
 import AjaxPoller from 'teleport/components/AjaxPoller';
@@ -25,12 +24,14 @@ import RequestDenied from './RequestDenied';
 import RequestError from './RequestError';
 import useAccessStrategy, { State } from './useAccessStrategy';
 
-export default function Container(props: Props) {
+const Container: React.FC<Props> = props => {
   const state = useAccessStrategy();
   return <AccessStrategy {...props} {...state} />;
-}
+};
 
-export function AccessStrategy(props: State & Props) {
+export default Container;
+
+export const AccessStrategy: React.FC<State & Props> = props => {
   const {
     children,
     attempt,
@@ -43,9 +44,11 @@ export function AccessStrategy(props: State & Props) {
 
   if (attempt.isProcessing) {
     return (
-      <StyledIndicator>
+      <AppVerticalSplit
+        style={{ alignItems: 'center', justifyContent: 'center' }}
+      >
         <Indicator />
-      </StyledIndicator>
+      </AppVerticalSplit>
     );
   }
 
@@ -83,14 +86,8 @@ export function AccessStrategy(props: State & Props) {
   }
 
   return null;
-}
-
-const StyledIndicator = styled(AppVerticalSplit)`
-  align-items: center;
-  justify-content: center;
-`;
+};
 
 type Props = {
-  children: React.ReactNode;
   checkerInterval?: number;
 };

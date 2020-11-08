@@ -29,10 +29,6 @@ export default class StoreUserContext extends Store<UserContext> {
     return this.state.acl.authConnectors;
   }
 
-  getSessionAccess() {
-    return this.state.acl.sessions;
-  }
-
   getRoleAccess() {
     return this.state.acl.roles;
   }

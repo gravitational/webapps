@@ -20,26 +20,24 @@ import { NodeToken, BashCommand } from './types';
 
 export default function makeAppBashCmd(
   token: NodeToken,
-  appName,
+  appName = '',
   appUri = ''
 ): BashCommand {
   const duration = moment(new Date()).diff(token.expiry);
   const expires = moment.duration(duration).humanize();
-  const url = new URL(appUri);
 
-  // lets encode everything after the first slash in the pathname
-  const pathname = url.pathname.replace(/^\//g, '');
-  let encoded = `${url.origin}/${encodeURIComponent(pathname + url.search)}`;
+  // encode uri so it can be passed around as URL query parameter
+  const encoded = encodeURIComponent(appUri)
+    // encode single quotes so they do not break the curl parameters
+    .replace(/'/g, '%27');
 
-  // encode ' character so it does not break the curl parameters
-  encoded = encoded.replace(/'/g, '&#39;');
+  const bashUrl =
+    cfg.baseUrl +
+    cfg.api.appNodeScriptPath
+      .replace(':token', token.id)
+      .replace(':name', appName)
+      .replace(':uri', encoded);
 
-  let bashUrl = cfg.api.appNodeScriptPath
-    .replace(':token', token.id)
-    .replace(':name', appName)
-    .replace(':uri', encoded);
-
-  bashUrl = `${cfg.baseUrl}${bashUrl}`;
   const text = `sudo bash -c "$(curl -fsSL '${bashUrl}')"`;
 
   return {

@@ -59,4 +59,15 @@ export interface ResetToken {
   expires: Date;
 }
 
+export interface AccessRequest {
+  id: string;
+  state: 'NONE' | 'PENDING' | 'APPROVED' | 'DENIED' | 'APPLIED' | '';
+  reason: string;
+}
+
+export interface AccessStrategy {
+  type: 'optional' | 'always' | 'reason';
+  prompt: string;
+}
+
 export type ResetPasswordType = 'invite' | 'password';

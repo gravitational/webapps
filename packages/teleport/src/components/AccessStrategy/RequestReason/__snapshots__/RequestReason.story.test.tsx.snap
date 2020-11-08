@@ -235,7 +235,7 @@ exports[`failed 1`] = `
           class="c5"
           color="text.primary"
         >
-          Request Account Access
+          Request Access
         </div>
       </div>
       <div
@@ -501,7 +501,7 @@ exports[`loaded with custom prompt 1`] = `
           class="c5"
           color="text.primary"
         >
-          Request Account Access
+          Request Access
         </div>
       </div>
       <div
@@ -761,7 +761,7 @@ exports[`loaded without custom prompt 1`] = `
           class="c5"
           color="text.primary"
         >
-          Request Account Access
+          Request Access
         </div>
       </div>
       <div

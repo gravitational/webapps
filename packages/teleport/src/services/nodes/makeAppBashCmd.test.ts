@@ -16,18 +16,13 @@ limitations under the License.
 
 import makeAppBashCmd from './makeAppBashCmd';
 
-describe('makeAppBashCmd', () => {
+test('encoding', () => {
   const token = { id: '86', expiry: new Date('2019-05-13T20:18:09Z') };
+  const appName = 'jenkins';
+  const appUri = `http://myapp/test?b='d'&a="1"&c=|`;
 
-  test.each`
-    appName   | appUri                          | expected
-    ${'test'} | ${'http://myapp'}               | ${`sudo bash -c "$(curl -fsSL 'http://localhost/scripts/86/install-app.sh?name=test&uri=http://myapp/')"`}
-    ${'test'} | ${'http://myapp/test?a=3&b=4'}  | ${`sudo bash -c "$(curl -fsSL 'http://localhost/scripts/86/install-app.sh?name=test&uri=http://myapp/test%3Fa%3D3%26b%3D4')"`}
-    ${'test'} | ${'http://myapp/test?a= 3&b=4'} | ${`sudo bash -c "$(curl -fsSL 'http://localhost/scripts/86/install-app.sh?name=test&uri=http://myapp/test%3Fa%3D%25203%26b%3D4')"`}
-    ${'test'} | ${'http://myapp/test?a=| <> |'} | ${`sudo bash -c "$(curl -fsSL 'http://localhost/scripts/86/install-app.sh?name=test&uri=http://myapp/test%3Fa%3D%7C%2520%253C%253E%2520%7C')"`}
-    ${'test'} | ${'http://myapp/test?a="dev"'}  | ${`sudo bash -c "$(curl -fsSL 'http://localhost/scripts/86/install-app.sh?name=test&uri=http://myapp/test%3Fa%3D%2522dev%2522')"`}
-  `('test name and uri encoding', ({ appName, appUri, expected }) => {
-    const cmd = makeAppBashCmd(token, appName, appUri);
-    expect(cmd.text).toBe(expected);
-  });
+  const cmd = makeAppBashCmd(token, appName, appUri);
+  expect(cmd.text).toBe(
+    `sudo bash -c "$(curl -fsSL 'http://localhost/scripts/86/install-app.sh?name=jenkins&uri=http%3A%2F%2Fmyapp%2Ftest%3Fb%3D%27d%27%26a%3D%221%22%26c%3D%7C')"`
+  );
 });

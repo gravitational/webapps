@@ -21,8 +21,8 @@ import { Text, ButtonLink, Flex } from 'design';
 import { ShieldCheck } from 'design/Icon';
 import Dialog, { DialogContent, DialogFooter } from 'design/Dialog';
 
-export default function Container(props) {
-  return <RequestPending {...props} />;
+export default function Container() {
+  return <RequestPending />;
 }
 
 export function RequestPending() {
@@ -38,10 +38,10 @@ export function RequestPending() {
       <DialogContent alignItems="center">
         <ShieldCheck fontSize={40} mb={3} />
         <Text mb={1} bold caps>
-          Your account is being authorized
+          Your access is being authorized
         </Text>
         <Text mb={4}>
-          Please wait while an administrator authorizes your account.
+          Please wait while an administrator authorizes your access.
         </Text>
         <StyledProgressBar height="16px" value={100} mb={4}>
           <Bar />

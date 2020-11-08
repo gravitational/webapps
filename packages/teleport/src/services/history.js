@@ -43,6 +43,10 @@ const history = {
     }
   },
 
+  reload() {
+    window.location.reload();
+  },
+
   goBack(number) {
     this.original().goBack(number);
   },

@@ -80,7 +80,8 @@ const cfg = {
     clusterEventsPath: `/v1/webapi/sites/:clusterId/events/search?from=:start?&to=:end?&limit=:limit?`,
     scp:
       '/v1/webapi/sites/:clusterId/nodes/:serverId/:login/scp?location=:location&filename=:filename',
-    renewTokenPath: '/v1/webapi/sessions/renew/:requestId?',
+    renewTokenPath: '/v1/webapi/sessions/renew',
+    resetPasswordTokenPath: '/v1/webapi/users/password/token',
     sessionPath: '/v1/webapi/sessions',
     userContextPath: '/v1/webapi/sites/:clusterId/context',
     userStatusPath: '/v1/webapi/user/status',
@@ -100,11 +101,14 @@ const cfg = {
       'wss://:fqdm/v1/webapi/sites/:clusterId/connect?access_token=:token&params=:params',
     terminalSessionPath: '/v1/webapi/sites/:clusterId/sessions/:sid?',
 
+    usersPath: '/v1/enterprise/users',
+    usersDelete: '/v1/enterprise/users/:username',
     resourcePath: '/v1/enterprise/sites/:clusterId/resources/:kind?',
     removeResourcePath: '/v1/enterprise/sites/:clusterId/resources/:kind/:id',
     nodeTokenPath: '/v1/enterprise/nodes/token',
     nodeScriptPath: '/scripts/:token/install-node.sh',
     appNodeScriptPath: '/scripts/:token/install-app.sh?name=:name&uri=:uri',
+    requestAccessPath: '/v1/enterprise/accessrequest/:requestId?',
   },
 
   getClusterEventsUrl(clusterId: string, params: UrlClusterEventsParams) {
@@ -221,6 +225,19 @@ const cfg = {
     return generatePath(cfg.api.userContextPath, { clusterId });
   },
 
+  getUserResetTokenRoute(tokenId = '', invite = true) {
+    const route = invite ? cfg.routes.userInvite : cfg.routes.userReset;
+    return cfg.baseUrl + generatePath(route, { tokenId });
+  },
+
+  getUsersUrl() {
+    return cfg.api.usersPath;
+  },
+
+  getUsersDeleteUrl(username = '') {
+    return generatePath(cfg.api.usersDelete, { username });
+  },
+
   getTerminalSessionUrl({ clusterId, sid }: UrlParams) {
     return generatePath(cfg.api.terminalSessionPath, { clusterId, sid });
   },
@@ -241,6 +258,14 @@ const cfg = {
     return generatePath(cfg.api.scp, {
       ...params,
     });
+  },
+
+  getRenewTokenUrl(requestId?: string) {
+    return generatePath(cfg.api.renewTokenPath, { requestId });
+  },
+
+  getRequestAccessUrl(requestId?: string) {
+    return generatePath(cfg.api.requestAccessPath, { requestId });
   },
 
   getResourcesUrl(kind?: Resource['kind']) {

@@ -14,26 +14,29 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import { at } from 'lodash';
 import makeAcl from './makeAcl';
 import { UserContext } from './types';
 import { makeCluster } from '../clusters';
 
-export default function makeUserContext(json): UserContext {
-  const [username, authType, aclJSON, clusterJSON] = at(json, [
-    'userName',
-    'authType',
-    'userAcl',
-    'cluster',
-  ]);
+export default function makeUserContext(json: any): UserContext {
+  json = json || {};
+  const username = json.userName;
+  const authType = json.authType;
 
-  const cluster = makeCluster(clusterJSON);
-  const acl = makeAcl(aclJSON);
+  const cluster = makeCluster(json.cluster);
+  const acl = makeAcl(json.userAcl);
+  const accessStrategy = json.accessStrategy || defaultStrategy;
 
   return {
     username,
     authType,
     acl,
     cluster,
+    accessStrategy,
   };
 }
+
+const defaultStrategy = {
+  type: 'optional',
+  prompt: '',
+};
