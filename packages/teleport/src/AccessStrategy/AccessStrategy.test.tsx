@@ -29,10 +29,6 @@ beforeEach(() => {
   jest.spyOn(console, 'error').mockImplementation();
 });
 
-// TODO: refactor this test by creating useAccessStrategy.test.ts
-// Below is an example where you would prefer to use 'describe' instead of
-// 'test'
-
 test('strategy "optional"', async () => {
   const userContext = makeUserContext(sampleContext('optional'));
 
@@ -42,7 +38,7 @@ test('strategy "optional"', async () => {
   await wait(() => expect(screen.getByText(/hello/i)).toBeInTheDocument());
 });
 
-test.skip('strategy "reason" dialog', async () => {
+test('strategy "reason" dialog', async () => {
   const userContext = makeUserContext(sampleContext());
   userContext.accessStrategy.type = 'reason';
   userContext.accessStrategy.prompt = 'custom prompt';
@@ -55,7 +51,7 @@ test.skip('strategy "reason" dialog', async () => {
   );
 });
 
-test.skip('strategy "reason" submit action', async () => {
+test('strategy "reason" submit action', async () => {
   const request = makeAccessRequest({ ...sampleRequest, state: 'PENDING' });
   const userContext = makeUserContext(sampleContext('reason'));
 
@@ -78,7 +74,7 @@ test.skip('strategy "reason" submit action', async () => {
   expect(userService.fetchAccessRequest).toHaveBeenCalled();
 });
 
-test.skip('strategy "reason" submit action error', async () => {
+test('strategy "reason" submit action error', async () => {
   const userContext = makeUserContext(sampleContext('reason'));
   const err = new Error('some error');
   jest.spyOn(localStorage, 'getAccessRequestResult').mockReturnValue(null);
@@ -99,7 +95,7 @@ test.skip('strategy "reason" submit action error', async () => {
   expect(screen.getByText(/some error/i)).toBeInTheDocument();
 });
 
-test.skip('strategy "always" renders pending dialog, with request state empty', async () => {
+test('strategy "always" renders pending dialog, with request state empty', async () => {
   const request = makeAccessRequest({ ...sampleRequest, state: 'PENDING' });
   const userContext = makeUserContext(sampleContext('always'));
 
@@ -120,7 +116,7 @@ test.skip('strategy "always" renders pending dialog, with request state empty', 
   expect(localStorage.setAccessRequestResult).toHaveBeenCalledWith(request);
 });
 
-test.skip('strategy "always" renders pending dialog, with request state PENDING', async () => {
+test('strategy "always" renders pending dialog, with request state PENDING', async () => {
   const request = makeAccessRequest({ ...sampleRequest, state: 'PENDING' });
   const userContext = makeUserContext(sampleContext('always'));
 
@@ -138,7 +134,7 @@ test.skip('strategy "always" renders pending dialog, with request state PENDING'
   expect(userService.fetchAccessRequest).toHaveBeenCalled();
 });
 
-test.skip('strategy "always" with request APPROVED', async () => {
+test('strategy "always" with request APPROVED', async () => {
   const request = makeAccessRequest({ ...sampleRequest, state: 'APPROVED' });
   const userContext = makeUserContext(sampleContext('always'));
 
@@ -165,7 +161,7 @@ test.skip('strategy "always" with request APPROVED', async () => {
   });
 });
 
-test.skip('strategy "always" with request DENIED', async () => {
+test('strategy "always" with request DENIED', async () => {
   const request = makeAccessRequest({ ...sampleRequest, state: 'DENIED' });
   const userContext = makeUserContext(sampleContext('always'));
 
@@ -178,7 +174,7 @@ test.skip('strategy "always" with request DENIED', async () => {
   );
 });
 
-test.skip('strategy "always" with request APPLIED', async () => {
+test('strategy "always" with request APPLIED', async () => {
   const request = makeAccessRequest({ ...sampleRequest, state: 'APPLIED' });
   const userContext = makeUserContext(sampleContext('always'));
 
@@ -189,7 +185,7 @@ test.skip('strategy "always" with request APPLIED', async () => {
   await wait(() => expect(screen.getByText(/hello/i)).toBeInTheDocument());
 });
 
-test.skip('strategy "always" fetch request errors', async () => {
+test('strategy "always" fetch request errors', async () => {
   const request = makeAccessRequest({ ...sampleRequest, state: 'APPROVED' });
   const userContext = makeUserContext(sampleContext('always'));
 
