@@ -134,4 +134,14 @@ const StyledPlayer = styled.div`
   flex-direction: column;
   flex: 1;
   justify-content: space-between;
+
+  // always render cursor as focused
+  .terminal:not(.focus) .terminal-cursor {
+    outline: none !important;
+    background-color: #fff;
+  }
+
+  .terminal .xterm-viewport {
+    overflow-y: hidden !important;
+  }
 `;

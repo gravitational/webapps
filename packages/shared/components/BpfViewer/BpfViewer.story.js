@@ -16,36 +16,52 @@ limitations under the License.
 
 import React from 'react';
 import styled from 'styled-components';
-import { storiesOf } from '@storybook/react';
 import BpfViewer, { formatEvents } from './BpfViewer';
-import bpfVim from './fixtures/vim';
-import bpfTroubleshoot from './fixtures/troubleshoot';
-import bpfNpm from './fixtures/npm';
 
-storiesOf('Shared/BpfViewer', module)
-  .add('vim', () => {
-    return (
-      <Box>
-        <Viewer events={bpfVim.filter(e => e.event === 'session.exec')} />
-      </Box>
-    );
-  })
-  .add('troubleshoot', () => {
-    return (
-      <Box>
-        <Viewer
-          events={bpfTroubleshoot.filter(e => e.event !== 'session.exec')}
-        />
-      </Box>
-    );
-  })
-  .add('npm', () => {
-    return (
-      <Box>
-        <Viewer events={bpfNpm.filter(e => e.event === 'session.exec')} />
-      </Box>
-    );
+export default {
+  title: 'Shared/BpfViewer',
+};
+
+export const Vim = () => {
+  const events = useMockedEvents(
+    import('./fixtures/vim').then(vim => vim.default)
+  );
+
+  if (events.length === 0) {
+    return null;
+  }
+
+  return (
+    <Box>
+      <Viewer events={events} />
+    </Box>
+  );
+};
+
+export const Npm = () => {
+  const events = useMockedEvents(
+    import('./fixtures/npm').then(vim => vim.default)
+  );
+
+  if (events.length === 0) {
+    return null;
+  }
+
+  return (
+    <Box>
+      <Viewer events={events} />
+    </Box>
+  );
+};
+
+function useMockedEvents(loader) {
+  const [events, setEvents] = React.useState([]);
+  loader.then(data => {
+    setEvents(data);
   });
+
+  return events.filter(e => e.event === 'session.exec');
+}
 
 function Viewer({ events, mode = 'tree' }) {
   const ref = React.useRef();

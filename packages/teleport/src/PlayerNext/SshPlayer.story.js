@@ -32,14 +32,6 @@ export const Vim = () => {
   return renderMocked(mocked);
 };
 
-export const Troubleshot = () => {
-  const mocked = useMockedEvents(
-    import('./fixtures/troubleshot').then(vim => vim.default)
-  );
-
-  return renderMocked(mocked);
-};
-
 export const Npm = () => {
   const mocked = useMockedEvents(
     import('./fixtures/npm').then(vim => vim.default)
@@ -75,12 +67,7 @@ function useMockedEvents(loader) {
 function renderMocked(mocked) {
   return (
     <Box>
-      {mocked && (
-        <Player
-          tty={mocked.tty}
-          bpfEvents={mocked.auditEvents.filter(e => e.event === 'session.exec')}
-        />
-      )}
+      {mocked && <Player tty={mocked.tty} bpfEvents={mocked.auditEvents} />}
     </Box>
   );
 }
