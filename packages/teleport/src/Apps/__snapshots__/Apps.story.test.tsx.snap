@@ -244,7 +244,7 @@ exports[`empty state 1`] = `
           <div
             class="c11"
           >
-            Teleport Application Access provides secure access to internal applications without the need for a VPN but with the audibility and control of Teleport.
+            Teleport Application Access provides secure access to internal applications without the need for a VPN and with the auditability and control of Teleport.
           </div>
         </div>
         <button

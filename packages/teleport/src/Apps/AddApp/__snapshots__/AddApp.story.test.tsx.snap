@@ -756,7 +756,7 @@ exports[`loaded 1`] = `
           <div
             class="c13"
           >
-            Provide a name and URL of your application to generate a script that will automatically install and configure the App service on the server that can access your application.
+            Provide the name and URL of your application to generate a script that will automatically install and configure the App service on the server that can access your application.
           </div>
           
         </div>
