@@ -30,7 +30,7 @@ export default function Manually({ version, onClose }: Props) {
             <Text bold as="span">
               Step 1
             </Text>{' '}
-            - Download teleport package on your computer
+            - Download Teleport package to your computer
             <Box>
               <Link href={links.getMacOS(version)} target="_blank" mr="2">
                 MacOS

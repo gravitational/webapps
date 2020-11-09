@@ -34,8 +34,8 @@ export default function Empty(props: Props) {
           </Text>
           <Text mb={3}>
             Teleport Application Access provides secure access to internal
-            applications without the need for a VPN but with the audibility and
-            control of Teleport.
+            applications without the need for a VPN and with the auditability
+            and control of Teleport.
           </Text>
         </Box>
         <ButtonAdd
