@@ -31,6 +31,12 @@ const SideNavItemGroup: React.FC<{ path: string; item: Item }> = props => {
     isChildActive(path, item)
   );
 
+  // Prevents user from collapsing a parent when its children is still selected.
+  // Also ensures parent expands, when a child is selected before parent.
+  if (hasSelectedChild && !expanded) {
+    setExpanded(true);
+  }
+
   const ArrowIcon = expanded ? Icons.ArrowDown : Icons.ArrowRight;
   const style = {
     display: expanded ? 'block' : 'none',
