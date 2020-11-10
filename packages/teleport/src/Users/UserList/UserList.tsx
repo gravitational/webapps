@@ -55,7 +55,7 @@ export default function UserList({
   }
 
   function sortAndFilter(searchValue: string) {
-    const searchableProps = ['name', 'roles'];
+    const searchableProps = ['name', 'roles', 'authType'];
     const filtered = users.filter(user =>
       isMatch(user, searchValue, { searchableProps, cb: null })
     );
