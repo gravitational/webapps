@@ -21,11 +21,6 @@ import useTeleport from 'teleport/useTeleport';
 
 export default function useUsers() {
   const ctx = useTeleport();
-  const access = ctx.storeUser.getUserAccess();
-  const canCreate = access.create;
-  const canDelete = access.remove;
-  const canEdit = access.edit;
-
   const [attempt, attemptActions] = useAttempt({ isProcessing: true });
   const [users, setUsers] = useState([] as User[]);
   const [roles, setRoles] = useState([] as string[]);
@@ -101,9 +96,6 @@ export default function useUsers() {
   }, []);
 
   return {
-    canCreate,
-    canEdit,
-    canDelete,
     attempt,
     users,
     roles,
@@ -124,3 +116,5 @@ type Operation = {
   type: 'create' | 'edit' | 'delete' | 'reset' | 'none';
   user?: User;
 };
+
+export type State = ReturnType<typeof useUsers>;

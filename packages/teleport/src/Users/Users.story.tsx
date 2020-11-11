@@ -45,24 +45,6 @@ export const Failed = () => {
   return <Users {...sample} attempt={attempt} />;
 };
 
-export const NoCreate = () => {
-  return <Users {...sample} canCreate={false} />;
-};
-
-export const NoEdit = () => {
-  return <Users {...sample} canEdit={false} />;
-};
-
-export const NoRemove = () => {
-  return <Users {...sample} canDelete={false} />;
-};
-
-export const ReadOnly = () => {
-  return (
-    <Users {...sample} canEdit={false} canCreate={false} canDelete={false} />
-  );
-};
-
 const users = [
   {
     name: 'cikar@egaposci.me',
@@ -126,7 +108,4 @@ const sample = {
   onDelete: () => null,
   onUpdate: () => null,
   onReset: () => null,
-  canCreate: true,
-  canDelete: true,
-  canEdit: true,
 };

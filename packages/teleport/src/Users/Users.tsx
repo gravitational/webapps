@@ -25,18 +25,15 @@ import UserList from './UserList';
 import UserAddEdit from './UserAddEdit';
 import UserDelete from './UserDelete';
 import UserReset from './UserReset';
-import useUsers from './useUsers';
+import useUsers, { State } from './useUsers';
 
 export default function Container() {
   const state = useUsers();
   return <Users {...state} />;
 }
 
-export function Users(props: ReturnType<typeof useUsers>) {
+export function Users(props: State) {
   const {
-    canCreate,
-    canEdit,
-    canDelete,
     attempt,
     users,
     roles,
@@ -56,7 +53,7 @@ export function Users(props: ReturnType<typeof useUsers>) {
     <FeatureBox>
       <FeatureHeader>
         <FeatureHeaderTitle>Users</FeatureHeaderTitle>
-        {attempt.isSuccess && canCreate && (
+        {attempt.isSuccess && (
           <ButtonPrimary ml="auto" width="240px" onClick={onStartCreate}>
             Create New User
           </ButtonPrimary>
@@ -75,8 +72,6 @@ export function Users(props: ReturnType<typeof useUsers>) {
           onEdit={onStartEdit}
           onDelete={onStartDelete}
           onReset={onStartReset}
-          canDelete={canDelete}
-          canUpdate={canEdit}
         />
       )}
       {(operation.type === 'create' || operation.type === 'edit') && (
