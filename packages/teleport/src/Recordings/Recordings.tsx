@@ -48,7 +48,6 @@ export function Recordings(props: ReturnType<typeof useAuditEvents>) {
     searchValue,
     clusterId,
     setSearchValue,
-    canRead,
   } = props;
 
   const { isSuccess, isFailed, message, isProcessing } = attempt;
@@ -85,7 +84,6 @@ export function Recordings(props: ReturnType<typeof useAuditEvents>) {
           events={events}
           clusterId={clusterId}
           pageSize={50}
-          canRead={canRead}
         />
       )}
     </FeatureBox>

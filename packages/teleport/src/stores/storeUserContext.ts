@@ -52,8 +52,4 @@ export default class StoreUserContext extends Store<UserContext> {
   getTokenAccess() {
     return this.state.acl.tokens;
   }
-
-  getSessionAccess() {
-    return this.state.acl.sessions;
-  }
 }

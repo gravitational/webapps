@@ -31,7 +31,7 @@ type SortState = {
 };
 
 export default function RecordList(props: Props) {
-  const { clusterId, searchValue, pageSize, events, canRead } = props;
+  const { clusterId, searchValue, pageSize, events } = props;
   const [colSortDirs, setSort] = React.useState<SortState>(() => {
     return {
       created: Table.SortTypes.ASC,
@@ -108,10 +108,7 @@ export default function RecordList(props: Props) {
         header={<Table.Cell>Session ID</Table.Cell>}
         cell={<SidCell />}
       />
-      <Table.Column
-        header={<Table.Cell />}
-        cell={<PlayCell canRead={canRead} />}
-      />
+      <Table.Column header={<Table.Cell />} cell={<PlayCell />} />
     </PagedTable>
   );
 }
@@ -161,14 +158,9 @@ function SidCell(props) {
 }
 
 const PlayCell = props => {
-  const { rowIndex, data, canRead } = props;
+  const { rowIndex, data } = props;
   const row = data[rowIndex] as Row;
   const url = cfg.getSessionAuditPlayerRoute(row);
-
-  if (!canRead) {
-    return <Table.Cell align="right" />;
-  }
-
   return (
     <Table.Cell align="right">
       <ButtonBorder
@@ -190,7 +182,6 @@ type Props = {
   events: Event[];
   pageSize?: number;
   clusterId: string;
-  canRead: boolean;
 };
 
 const searchableProps = [
