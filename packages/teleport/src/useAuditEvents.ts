@@ -20,6 +20,7 @@ import { useAttempt } from 'shared/hooks';
 import Ctx from 'teleport/teleportContext';
 
 export default function useEvents(ctx: Ctx, clusterId: string) {
+  const canRead = ctx.storeUser.getSessionAccess().read;
   const rangeOptions = useMemo(() => getRangeOptions(), []);
   const [searchValue, setSearchValue] = React.useState('');
   const [range, setRange] = useState(rangeOptions[0]);
@@ -53,6 +54,7 @@ export default function useEvents(ctx: Ctx, clusterId: string) {
     setRange,
     searchValue,
     setSearchValue,
+    canRead,
   };
 }
 

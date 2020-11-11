@@ -20,6 +20,7 @@ import { Cell } from 'design/DataTable';
 import Icon, * as Icons from 'design/Icon/Icon';
 import { CodeEnum } from 'teleport/services/audit/types';
 import { Event } from 'teleport/services/audit';
+import useTeleport from 'teleport/useTeleport';
 import cfg from 'teleport/config';
 
 const EventIconMap = {
@@ -115,17 +116,22 @@ export default function TypeCell(props) {
 
   // use button for interactive ssh sessions
   if (event.code === CodeEnum.SESSION_END && event.raw.interactive) {
+    const canRead = useTeleport().storeUser.getSessionAccess().read;
     return (
       <Cell>
         <StyledEventType>
-          <a
-            title="Open Session Player"
-            href={cfg.getPlayerRoute({ clusterId, sid: event.raw.sid })}
-            target="_blank"
-            style={{ textDecoration: 'none' }}
-          >
-            <StyledCliIcon {...iconProps} />
-          </a>
+          {canRead ? (
+            <a
+              title="Open Session Player"
+              href={cfg.getPlayerRoute({ clusterId, sid: event.raw.sid })}
+              target="_blank"
+              style={{ textDecoration: 'none' }}
+            >
+              <StyledCliIcon {...iconProps} />
+            </a>
+          ) : (
+            <Icons.Cli {...iconProps} />
+          )}
           {event.codeDesc}
         </StyledEventType>
       </Cell>
