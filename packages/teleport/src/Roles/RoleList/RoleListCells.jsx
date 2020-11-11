@@ -23,17 +23,31 @@ export const RoleNameCell = ({ rowIndex, data }) => {
   return <Cell>{displayName}</Cell>;
 };
 
-export const ActionCell = ({ rowIndex, onEdit, onDelete, data }) => {
+export const ActionCell = ({
+  rowIndex,
+  onEdit,
+  onDelete,
+  data,
+  canDelete,
+  canEdit,
+}) => {
   const { id, owner } = data[rowIndex];
   const onDeleteClick = () => onDelete(id);
   const onEditClick = () => onEdit(id);
+
+  if (!canDelete && !canEdit) {
+    return <Cell align="right" />;
+  }
+
   return (
     <Cell align="right">
       <MenuButton>
-        <MenuItem onClick={onEditClick}>Edit...</MenuItem>
-        <MenuItem disabled={owner} onClick={onDeleteClick}>
-          Delete...
-        </MenuItem>
+        {canEdit && <MenuItem onClick={onEditClick}>Edit...</MenuItem>}
+        {canDelete && (
+          <MenuItem disabled={owner} onClick={onDeleteClick}>
+            Delete...
+          </MenuItem>
+        )}
       </MenuButton>
     </Cell>
   );

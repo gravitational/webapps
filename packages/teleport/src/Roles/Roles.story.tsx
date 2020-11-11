@@ -15,56 +15,57 @@ limitations under the License.
 */
 
 import React from 'react';
-import * as teleport from 'teleport';
-import Roles from './Roles';
+import { Roles } from './Roles';
 
 export default {
   title: 'Teleport/Roles',
 };
 
+export function Processing() {
+  const attempt = {
+    isProcessing: true,
+    isFailed: false,
+    isSuccess: false,
+    message: '',
+  };
+  return <Roles {...sample} attempt={attempt} />;
+}
+
 export function Loaded() {
-  const ctx = new teleport.Context();
-  ctx.resourceService.fetchRoles = () => Promise.resolve(roles);
-  ctx.storeUser.getRoleAccess = () => acl;
-  return render(ctx);
+  return <Roles {...sample} />;
 }
 
 export function Empty() {
-  const ctx = new teleport.Context();
-  ctx.resourceService.fetchRoles = () => Promise.resolve([]);
-  ctx.storeUser.getRoleAccess = () => acl;
-  return render(ctx);
+  return <Roles {...sample} items={[]} />;
 }
 
 export function Failed() {
-  const ctx = new teleport.Context();
-  ctx.storeUser.getRoleAccess = () => acl;
-  ctx.resourceService.fetchRoles = () =>
-    Promise.reject(new Error('failed to load'));
-  return render(ctx);
+  const attempt = {
+    isProcessing: false,
+    isFailed: true,
+    isSuccess: false,
+    message: 'some error message',
+  };
+  return <Roles {...sample} attempt={attempt} />;
 }
 
-export function Loading() {
-  const ctx = new teleport.Context();
-  ctx.storeUser.getRoleAccess = () => acl;
-  ctx.resourceService.fetchRoles = () => new Promise(() => null);
-  return render(ctx);
+export function NoCreate() {
+  return <Roles {...sample} canCreate={false} />;
 }
 
-export function CannotCreate() {
-  const ctx = new teleport.Context();
-  ctx.storeUser.getRoleAccess = () => ({ ...acl, create: false });
-  ctx.resourceService.fetchRoles = () => Promise.resolve([]);
-  return render(ctx);
+export function NoEdit() {
+  return <Roles {...sample} canEdit={false} />;
 }
 
-const acl = {
-  list: true,
-  read: true,
-  edit: true,
-  create: true,
-  remove: true,
-};
+export function NoRemove() {
+  return <Roles {...sample} canDelete={false} />;
+}
+
+export function OnlyRead() {
+  return (
+    <Roles {...sample} canDelete={false} canCreate={false} canEdit={false} />
+  );
+}
 
 const roles = [
   {
@@ -85,10 +86,17 @@ const roles = [
   },
 ];
 
-function render(ctx: teleport.Context) {
-  return (
-    <teleport.ContextProvider ctx={ctx}>
-      <Roles />
-    </teleport.ContextProvider>
-  );
-}
+const sample = {
+  attempt: {
+    isProcessing: false,
+    isFailed: false,
+    isSuccess: true,
+    message: '',
+  },
+  items: roles,
+  canCreate: true,
+  canDelete: true,
+  canEdit: true,
+  remove: () => null,
+  save: () => null,
+};

@@ -37,7 +37,7 @@ export default function Container() {
 }
 
 export function Roles(props: ReturnType<typeof useRoles>) {
-  const { items, canCreate, remove, save, attempt } = props;
+  const { items, canCreate, canDelete, canEdit, remove, save, attempt } = props;
   const resources = useResources(items, templates);
   const { message, isProcessing, isFailed, isSuccess } = attempt;
   const title =
@@ -79,6 +79,8 @@ export function Roles(props: ReturnType<typeof useRoles>) {
               items={items}
               onEdit={resources.edit}
               onDelete={resources.remove}
+              canEdit={canEdit}
+              canDelete={canDelete}
             />
           </Box>
           <Box

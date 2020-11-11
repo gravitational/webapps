@@ -19,14 +19,28 @@ import { Cell, Column } from 'design/DataTable';
 import Table from 'design/DataTable/Paged';
 import { RoleNameCell, ActionCell } from './RoleListCells';
 
-export default function RoleList({ items, onEdit, onDelete }) {
+export default function RoleList({
+  items,
+  onEdit,
+  onDelete,
+  canEdit,
+  canDelete,
+}) {
   items = items || [];
+
   return (
     <Table pageSize={20} data={items}>
       <Column header={<Cell>Name</Cell>} cell={<RoleNameCell />} />
       <Column
         header={<Cell />}
-        cell={<ActionCell onEdit={onEdit} onDelete={onDelete} />}
+        cell={
+          <ActionCell
+            onEdit={onEdit}
+            onDelete={onDelete}
+            canEdit={canEdit}
+            canDelete={canDelete}
+          />
+        }
       />
     </Table>
   );
