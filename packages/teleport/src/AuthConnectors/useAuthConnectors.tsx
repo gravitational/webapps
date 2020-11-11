@@ -22,10 +22,6 @@ export default function useAuthConnectors() {
   const ctx = useTeleport();
   const [items, setItems] = useState<Resource[]>([]);
   const [attempt, attemptActions] = useAttempt({ isProcessing: true });
-  const access = useTeleport().storeUser.getConnectorAccess();
-  const canCreate = access.create;
-  const canEdit = access.edit;
-  const canDelete = access.remove;
 
   function fetchData() {
     return ctx.resourceService.fetchAuthConnectors().then(response => {
@@ -47,14 +43,9 @@ export default function useAuthConnectors() {
   }, []);
 
   return {
-    canCreate,
-    canEdit,
-    canDelete,
     items,
     attempt,
     save,
     remove,
   };
 }
-
-export type State = ReturnType<typeof useAuthConnectors>;

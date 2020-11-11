@@ -15,65 +15,30 @@ limitations under the License.
 */
 
 import React from 'react';
-import { AuthConnectors } from './AuthConnectors';
+import { Context, ContextProvider } from 'teleport';
+import AuthConnectors from './AuthConnectors';
 
 export default {
   title: 'Teleport/AuthConnectors',
 };
 
-export function Processing() {
-  const attempt = {
-    isProcessing: true,
-    isFailed: false,
-    isSuccess: false,
-    message: '',
-  };
-  return <AuthConnectors {...sample} attempt={attempt} />;
-}
-
 export function Loaded() {
-  return <AuthConnectors {...sample} />;
+  const ctx = new Context();
+  ctx.resourceService.fetchAuthConnectors = () => Promise.resolve(connectors);
+  return render(ctx);
 }
 
 export function Empty() {
-  return <AuthConnectors {...sample} items={[]} />;
-}
-
-export function EmptyNoCreate() {
-  return <AuthConnectors {...sample} items={[]} canCreate={false} />;
+  const ctx = new Context();
+  ctx.resourceService.fetchAuthConnectors = () => Promise.resolve([]);
+  return render(ctx);
 }
 
 export function Failed() {
-  const attempt = {
-    isProcessing: false,
-    isFailed: true,
-    isSuccess: false,
-    message: 'some error message',
-  };
-  return <AuthConnectors {...sample} attempt={attempt} />;
-}
-
-export function NoCreate() {
-  return <AuthConnectors {...sample} canCreate={false} />;
-}
-
-export function NoEdit() {
-  return <AuthConnectors {...sample} canEdit={false} />;
-}
-
-export function NoRemove() {
-  return <AuthConnectors {...sample} canDelete={false} />;
-}
-
-export function OnlyRead() {
-  return (
-    <AuthConnectors
-      {...sample}
-      canDelete={false}
-      canEdit={false}
-      canCreate={false}
-    />
-  );
+  const ctx = new Context();
+  ctx.resourceService.fetchAuthConnectors = () =>
+    Promise.reject(new Error('failed to load'));
+  return render(ctx);
 }
 
 const connectors = [
@@ -103,17 +68,10 @@ const connectors = [
   },
 ];
 
-const sample = {
-  attempt: {
-    isProcessing: false,
-    isFailed: false,
-    isSuccess: true,
-    message: '',
-  },
-  items: connectors,
-  remove: () => null,
-  save: () => null,
-  canDelete: true,
-  canEdit: true,
-  canCreate: true,
-};
+function render(ctx: Context) {
+  return (
+    <ContextProvider ctx={ctx}>
+      <AuthConnectors />
+    </ContextProvider>
+  );
+}

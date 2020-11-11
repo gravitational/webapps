@@ -28,43 +28,36 @@ import EmptyList from './EmptyList';
 import ConnectorList from './ConnectorList';
 import DeleteConnectorDialog from './DeleteConnectorDialog';
 import AddMenu from './AddMenu';
-import useAuthConnectors, { State } from './useAuthConnectors';
+import useAuthConnectors from './useAuthConnectors';
 import templates from './templates';
 
-export default function Container() {
-  const state = useAuthConnectors();
-  return <AuthConnectors {...state} />;
-}
-
-export function AuthConnectors(props: State) {
-  const { attempt, items, remove, save, canCreate, canDelete, canEdit } = props;
-  const { message, isProcessing, isFailed, isSuccess } = attempt;
-  const isEmpty = items.length === 0;
-  const resources = useResources(items, templates);
+export default function AuthConnectors() {
+  const connectors = useAuthConnectors();
+  const { message, isProcessing, isFailed, isSuccess } = connectors.attempt;
+  const isEmpty = connectors.items.length === 0;
+  const resources = useResources(connectors.items, templates);
 
   const title =
     resources.status === 'creating'
       ? 'Creating a new auth connector'
       : 'Editing auth connector';
 
-  function handleOnRemove() {
-    return remove(resources.item);
+  function remove() {
+    return connectors.remove(resources.item);
   }
 
-  function handleOnSave(content: string) {
+  function save(content: string) {
     const isNew = resources.status === 'creating';
-    return save(content, isNew);
+    return connectors.save(content, isNew);
   }
 
   return (
     <FeatureBox>
       <FeatureHeader>
         <FeatureHeaderTitle>Auth Connectors</FeatureHeaderTitle>
-        {isSuccess && canCreate && (
-          <Box ml="auto" alignSelf="center" width="240px">
-            <AddMenu onClick={resources.create} />
-          </Box>
-        )}
+        <Box ml="auto" alignSelf="center" width="240px">
+          <AddMenu onClick={resources.create} />
+        </Box>
       </FeatureHeader>
       {isFailed && <Danger>{message} </Danger>}
       {isProcessing && (
@@ -76,17 +69,15 @@ export function AuthConnectors(props: State) {
         <Flex alignItems="start">
           {isEmpty && (
             <Flex mt="4" width="100%" justifyContent="center">
-              {canCreate && <EmptyList onCreate={resources.create} />}
+              <EmptyList onCreate={resources.create} />
             </Flex>
           )}
           {!isEmpty && (
             <ConnectorList
               flex="1"
-              items={items}
+              items={connectors.items}
               onEdit={resources.edit}
               onDelete={resources.remove}
-              canEdit={canEdit}
-              canDelete={canDelete}
             />
           )}
           <Box
@@ -122,7 +113,7 @@ export function AuthConnectors(props: State) {
       {(resources.status === 'creating' || resources.status === 'editing') && (
         <ResourceEditor
           title={title}
-          onSave={handleOnSave}
+          onSave={save}
           text={resources.item.content}
           name={resources.item.name}
           isNew={resources.status === 'creating'}
@@ -133,7 +124,7 @@ export function AuthConnectors(props: State) {
         <DeleteConnectorDialog
           name={resources.item.name}
           onClose={resources.disregard}
-          onDelete={handleOnRemove}
+          onDelete={remove}
         />
       )}
     </FeatureBox>
