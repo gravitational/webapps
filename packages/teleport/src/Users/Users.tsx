@@ -21,7 +21,6 @@ import {
   FeatureHeader,
   FeatureHeaderTitle,
 } from 'teleport/components/Layout';
-import useTeleport from 'teleport/useTeleport';
 import UserList from './UserList';
 import UserAddEdit from './UserAddEdit';
 import UserDelete from './UserDelete';
@@ -35,6 +34,9 @@ export default function Container() {
 
 export function Users(props: ReturnType<typeof useUsers>) {
   const {
+    canCreate,
+    canEdit,
+    canDelete,
     attempt,
     users,
     roles,
@@ -50,16 +52,11 @@ export function Users(props: ReturnType<typeof useUsers>) {
     onReset,
   } = props;
 
-  const ctx = useTeleport().storeUser;
-  const canCreate = attempt.isSuccess && ctx.getUserAccess().create;
-  const canDelete = ctx.getUserAccess().remove;
-  const canUpdate = ctx.getUserAccess().edit;
-
   return (
     <FeatureBox>
       <FeatureHeader>
         <FeatureHeaderTitle>Users</FeatureHeaderTitle>
-        {canCreate && (
+        {attempt.isSuccess && canCreate && (
           <ButtonPrimary ml="auto" width="240px" onClick={onStartCreate}>
             Create New User
           </ButtonPrimary>
@@ -79,7 +76,7 @@ export function Users(props: ReturnType<typeof useUsers>) {
           onDelete={onStartDelete}
           onReset={onStartReset}
           canDelete={canDelete}
-          canUpdate={canUpdate}
+          canUpdate={canEdit}
         />
       )}
       {(operation.type === 'create' || operation.type === 'edit') && (
