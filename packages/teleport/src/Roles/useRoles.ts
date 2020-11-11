@@ -23,8 +23,6 @@ export default function useRoles(ctx: TeleportContext) {
   const [items, setItems] = useState<Resource[]>([]);
   const [attempt, attemptActions] = useAttempt({ isProcessing: true });
   const canCreate = ctx.storeUser.getRoleAccess().create;
-  const canDelete = ctx.storeUser.getRoleAccess().remove;
-  const canEdit = ctx.storeUser.getRoleAccess().edit;
 
   function fetchData() {
     return ctx.resourceService.fetchRoles().then(received => {
@@ -58,8 +56,6 @@ export default function useRoles(ctx: TeleportContext) {
 
   return {
     canCreate,
-    canEdit,
-    canDelete,
     items,
     attempt,
     save,

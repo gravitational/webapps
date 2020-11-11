@@ -15,57 +15,56 @@ limitations under the License.
 */
 
 import React from 'react';
-import { Roles } from './Roles';
+import * as teleport from 'teleport';
+import Roles from './Roles';
 
 export default {
   title: 'Teleport/Roles',
 };
 
-export function Processing() {
-  const attempt = {
-    isProcessing: true,
-    isFailed: false,
-    isSuccess: false,
-    message: '',
-  };
-  return <Roles {...sample} attempt={attempt} />;
-}
-
 export function Loaded() {
-  return <Roles {...sample} />;
+  const ctx = new teleport.Context();
+  ctx.resourceService.fetchRoles = () => Promise.resolve(roles);
+  ctx.storeUser.getRoleAccess = () => acl;
+  return render(ctx);
 }
 
 export function Empty() {
-  return <Roles {...sample} items={[]} />;
+  const ctx = new teleport.Context();
+  ctx.resourceService.fetchRoles = () => Promise.resolve([]);
+  ctx.storeUser.getRoleAccess = () => acl;
+  return render(ctx);
 }
 
 export function Failed() {
-  const attempt = {
-    isProcessing: false,
-    isFailed: true,
-    isSuccess: false,
-    message: 'some error message',
-  };
-  return <Roles {...sample} attempt={attempt} />;
+  const ctx = new teleport.Context();
+  ctx.storeUser.getRoleAccess = () => acl;
+  ctx.resourceService.fetchRoles = () =>
+    Promise.reject(new Error('failed to load'));
+  return render(ctx);
 }
 
-export function NoCreate() {
-  return <Roles {...sample} canCreate={false} />;
+export function Loading() {
+  const ctx = new teleport.Context();
+  ctx.storeUser.getRoleAccess = () => acl;
+  ctx.resourceService.fetchRoles = () => new Promise(() => null);
+  return render(ctx);
 }
 
-export function NoEdit() {
-  return <Roles {...sample} canEdit={false} />;
+export function CannotCreate() {
+  const ctx = new teleport.Context();
+  ctx.storeUser.getRoleAccess = () => ({ ...acl, create: false });
+  ctx.resourceService.fetchRoles = () => Promise.resolve([]);
+  return render(ctx);
 }
 
-export function NoRemove() {
-  return <Roles {...sample} canDelete={false} />;
-}
-
-export function OnlyRead() {
-  return (
-    <Roles {...sample} canDelete={false} canCreate={false} canEdit={false} />
-  );
-}
+const acl = {
+  list: true,
+  read: true,
+  edit: true,
+  create: true,
+  remove: true,
+};
 
 const roles = [
   {
@@ -86,17 +85,10 @@ const roles = [
   },
 ];
 
-const sample = {
-  attempt: {
-    isProcessing: false,
-    isFailed: false,
-    isSuccess: true,
-    message: '',
-  },
-  items: roles,
-  canCreate: true,
-  canDelete: true,
-  canEdit: true,
-  remove: () => null,
-  save: () => null,
-};
+function render(ctx: teleport.Context) {
+  return (
+    <teleport.ContextProvider ctx={ctx}>
+      <Roles />
+    </teleport.ContextProvider>
+  );
+}
