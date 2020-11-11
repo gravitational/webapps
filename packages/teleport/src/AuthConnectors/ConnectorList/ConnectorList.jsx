@@ -18,8 +18,16 @@ import React from 'react';
 import { Flex } from 'design';
 import ConnectorListItem from './ConnectorListItem';
 
-export default function ConnectorList({ items, onEdit, onDelete, ...styles }) {
+export default function ConnectorList({
+  items,
+  onEdit,
+  onDelete,
+  canEdit,
+  canDelete,
+  ...styles
+}) {
   items = items || [];
+
   const $items = items.map(item => {
     const { id, name, kind } = item;
     return (
@@ -32,6 +40,8 @@ export default function ConnectorList({ items, onEdit, onDelete, ...styles }) {
         onDelete={onDelete}
         name={name}
         kind={kind}
+        canDelete={canDelete}
+        canEdit={canEdit}
       />
     );
   });

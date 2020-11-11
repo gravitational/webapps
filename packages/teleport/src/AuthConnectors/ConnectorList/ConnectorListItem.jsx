@@ -25,6 +25,8 @@ export default function ConnectorListItem({
   id,
   onEdit,
   onDelete,
+  canEdit,
+  canDelete,
   ...rest
 }) {
   const onClickEdit = () => onEdit(id);
@@ -60,11 +62,13 @@ export default function ConnectorListItem({
       pb="5"
       {...rest}
     >
-      <Flex width="100%" justifyContent="center">
-        <MenuIcon buttonIconProps={menuActionProps}>
-          <MenuItem onClick={onClickDelete}>Delete...</MenuItem>
-        </MenuIcon>
-      </Flex>
+      {canDelete && (
+        <Flex width="100%" justifyContent="center">
+          <MenuIcon buttonIconProps={menuActionProps}>
+            <MenuItem onClick={onClickDelete}>Delete...</MenuItem>
+          </MenuIcon>
+        </Flex>
+      )}
       <Flex
         flex="1"
         mb="3"
@@ -82,9 +86,11 @@ export default function ConnectorListItem({
           {desc}
         </Text>
       </Flex>
-      <ButtonPrimary mt="auto" size="medium" block onClick={onClickEdit}>
-        EDIT CONNECTOR
-      </ButtonPrimary>
+      {canEdit && (
+        <ButtonPrimary mt="auto" size="medium" block onClick={onClickEdit}>
+          EDIT CONNECTOR
+        </ButtonPrimary>
+      )}
     </Flex>
   );
 }
