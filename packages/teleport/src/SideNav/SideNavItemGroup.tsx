@@ -26,16 +26,17 @@ import { Item } from './useSideNav';
 const SideNavItemGroup: React.FC<{ path: string; item: Item }> = props => {
   const { item, path } = props;
   const hasSelectedChild = isChildActive(path, item);
-  // auto expend on initial render if a child is selected
+  // Auto expand on initial render if a child is selected.
   const [expanded, setExpanded] = React.useState(() =>
     isChildActive(path, item)
   );
 
-  // Prevents user from collapsing a parent when its children is still selected.
-  // Also ensures parent expands, when a child is selected before parent.
-  if (hasSelectedChild && !expanded) {
-    setExpanded(true);
-  }
+  React.useEffect(() => {
+    // Ensures parent is expanded, if a child is selected.
+    if (hasSelectedChild && !expanded) {
+      setExpanded(true);
+    }
+  }, [hasSelectedChild]);
 
   const ArrowIcon = expanded ? Icons.ArrowDown : Icons.ArrowRight;
   const style = {
