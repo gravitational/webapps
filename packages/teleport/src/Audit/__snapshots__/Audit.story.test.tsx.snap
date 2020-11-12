@@ -1963,7 +1963,7 @@ exports[`overflow 1`] = `
 }
 
 .c13 tbody tr:hover {
-  background-color: transparent;
+  background-color: rgb(37,49,98);
 }
 
 .c13 tbody tr:hover:last-child td:first-child {
@@ -2173,7 +2173,7 @@ exports[`overflow 1`] = `
           <th />
         </tr>
       </thead>
-      <tbody>
+      <tfoot>
         <tr>
           <td
             colspan="4"
@@ -2191,7 +2191,7 @@ exports[`overflow 1`] = `
             </div>
           </td>
         </tr>
-      </tbody>
+      </tfoot>
     </table>
   </div>
 </div>

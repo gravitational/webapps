@@ -20,7 +20,7 @@ import { ButtonPrimary } from 'design';
 const docUrl = 'https://gravitational.com/teleport/docs/';
 
 export default function ButtonAdd(props: Props) {
-  if (!props.isEnterprise || !props.canCreate) {
+  if (!props.isEnterprise) {
     return (
       <ButtonPrimary
         {...props}
