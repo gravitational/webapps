@@ -30,7 +30,6 @@ export default function FieldInputSsh({
   onPress,
   autoFocus = false,
   inputProps = {},
-  labelColor = undefined,
   ...boxProps
 }) {
   const [hasError, setHasError] = React.useState(false);
@@ -51,7 +50,7 @@ export default function FieldInputSsh({
 
   return (
     <StyledBox {...boxProps} hasError={hasError}>
-      <StyledLabel labelColor={labelColor}>SSH:</StyledLabel>
+      <StyledLabel>SSH:</StyledLabel>
       <StyledInput
         bg="primary.light"
         color="text.primary"
@@ -82,7 +81,6 @@ const StyledBox = styled(Flex)`
   border: 1px solid;
   border-radius: 4px;
   border-color: rgba(255, 255, 255, 0.24);
-  background-color: #111b48;
   ${error}
 `;
 
@@ -93,8 +91,6 @@ const StyledLabel = styled.div`
   padding: 0 8px;
   border-bottom-left-radius: 4px;
   border-top-left-radius: 4px;
-  background: ${props =>
-    props.labelColor ? props.labelColor : props.theme.colors.primary.darker};
 `;
 
 const StyledInput = styled.input`

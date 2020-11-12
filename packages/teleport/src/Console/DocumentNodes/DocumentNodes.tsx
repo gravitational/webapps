@@ -15,7 +15,7 @@ limitations under the License.
 */
 
 import React from 'react';
-import styled, { useTheme } from 'styled-components';
+import styled from 'styled-components';
 import { Indicator, Flex, Box } from 'design';
 import * as Alerts from 'design/Alert';
 import NodeList from 'teleport/components/NodeList';
@@ -85,11 +85,7 @@ export default function DocumentNodes(props: Props) {
           </Flex>
           <Flex mb="4" justifyContent="space-between" alignItems="center">
             <InputSearch height="30px" mr="3" onChange={setSearchValue} />
-            <QuickLaunch
-              width="240px"
-              onPress={onQuickLaunchEnter}
-              labelColor={useTheme().colors.bgTerminal}
-            />
+            <QuickLaunch width="240px" onPress={onQuickLaunchEnter} />
           </Flex>
           {isProcessing && (
             <Box textAlign="center" m={10}>
