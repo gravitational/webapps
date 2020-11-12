@@ -2243,7 +2243,7 @@ exports[`overflow 1`] = `
           <th />
         </tr>
       </thead>
-      <tbody>
+      <tfoot>
         <tr>
           <td
             colspan="4"
@@ -2261,7 +2261,7 @@ exports[`overflow 1`] = `
             </div>
           </td>
         </tr>
-      </tbody>
+      </tfoot>
     </table>
   </div>
 </div>
