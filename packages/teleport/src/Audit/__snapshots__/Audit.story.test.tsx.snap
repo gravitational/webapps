@@ -1963,7 +1963,7 @@ exports[`overflow 1`] = `
 }
 
 .c13 tbody tr:hover {
-  background-color: rgb(37,49,98);
+  background-color: transparent;
 }
 
 .c13 tbody tr:hover:last-child td:first-child {

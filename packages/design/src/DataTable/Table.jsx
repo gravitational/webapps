@@ -118,7 +118,7 @@ class Table extends React.Component {
     });
 
     return (
-      <StyledTable {...rest}>
+      <StyledTable {...rest} isEmpty={data.length === 0}>
         {this.renderHeader(columns)}
         {this.renderBody(columns)}
       </StyledTable>

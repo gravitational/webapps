@@ -76,7 +76,10 @@ export const StyledTable = styled.table(
   }
 
   tbody tr:hover {
-    background-color: ${darken(props.theme.colors.primary.lighter, 0.14)};
+    background-color: ${(() =>
+      props.isEmpty
+        ? 'transparent'
+        : darken(props.theme.colors.primary.lighter, 0.14))()};
 
     :last-child {
       td:first-child {
