@@ -76,13 +76,12 @@ export const formatters: Formatters = {
   [CodeEnum.EXEC]: {
     desc: 'Command Execution',
     format: event => {
-      const user = event.user || '';
-
-      if (event.proto == 'kube') {
-        if (!event.kubernetes_cluster) {
+      const { proto, kubernetes_cluster, user = '' } = event;
+      if (proto === 'kube') {
+        if (!kubernetes_cluster) {
           return `User [${user}] executed a kubernetes command`;
         }
-        return `User [${user}] executed a command on kubernetes cluster [${event.kubernetes_cluster}]`;
+        return `User [${user}] executed a command on kubernetes cluster [${kubernetes_cluster}]`;
       }
 
       return `User [${user}] executed a command on node ${event['addr.local']}`;
