@@ -154,8 +154,18 @@ export const formatters: Formatters = {
   },
   [CodeEnum.EXEC]: {
     desc: 'Command Execution',
-    format: ({ user, ...rest }) =>
-      `User [${user}] executed a command on node ${rest['addr.local']}`,
+    format: event => {
+      const user = event.user || '';
+
+      if (event.proto == 'kube') {
+        if (!event.kubernetes_cluster) {
+          return `User [${user}] executed a kubernetes command`;
+        }
+        return `User [${user}] executed a command on kubernetes cluster [${event.kubernetes_cluster}]`;
+      }
+
+      return `User [${user}] executed a command on node ${event['addr.local']}`;
+    },
   },
   [CodeEnum.EXEC_FAILURE]: {
     desc: 'Command Execution Failed',
@@ -396,6 +406,13 @@ export const formatters: Formatters = {
       const node =
         event.server_hostname || event.server_addr || event.server_id;
 
+      if (event.proto == 'kube') {
+        if (!event.kubernetes_cluster) {
+          return `User [${user}] has ended a kubernetes session [${event.sid}]`;
+        }
+        return `User [${user}] has ended a session [${event.sid}] on kubernetes cluster [${event.kubernetes_cluster}]`;
+      }
+
       if (!event.interactive) {
         return `User [${user}] has ended a non-interactive session [${event.sid}] on node [${node}] `;
       }
@@ -548,6 +565,11 @@ export const formatters: Formatters = {
     desc: 'Trusted Cluster Deleted',
     format: ({ user, name }) =>
       `User [${user}] has deleted a trusted relationship with cluster [${name}]`,
+  },
+  [CodeEnum.KUBE_REQUEST]: {
+    desc: 'Kubernetes Request',
+    format: ({ user, kubernetes_cluster }) =>
+      `User [${user}] made a request to Kubernetes cluster [${kubernetes_cluster}]`,
   },
 };
 

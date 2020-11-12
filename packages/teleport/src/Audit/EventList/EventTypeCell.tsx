@@ -66,6 +66,7 @@ const EventIconMap = {
   [CodeEnum.USER_LOCAL_LOGINFAILURE]: Icons.Info,
   [CodeEnum.USER_SSO_LOGIN]: Icons.Info,
   [CodeEnum.USER_SSO_LOGINFAILURE]: Icons.Info,
+  [CodeEnum.KUBE_REQUEST]: Icons.Cli,
   [CodeEnum.G_ALERT_CREATED]: Icons.NotificationsActive,
   [CodeEnum.G_ALERT_DELETED]: Icons.NotificationsActive,
   [CodeEnum.G_APPLICATION_INSTALL]: Icons.AppInstalled,

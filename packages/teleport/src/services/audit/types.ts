@@ -40,6 +40,7 @@ export const CodeEnum = {
   APP_SESSION_CHUNK: 'T2008I',
   SUBSYSTEM_FAILURE: 'T3001E',
   SUBSYSTEM: 'T3001I',
+  KUBE_REQUEST: 'T3009I',
   TERMINAL_RESIZE: 'T2002I',
   USER_LOCAL_LOGIN: 'T1000I',
   USER_LOCAL_LOGINFAILURE: 'T1000W',
@@ -184,7 +185,13 @@ export type RawEvents = {
     { reason: string }
   >;
   [CodeEnum.G_ENDPOINTS_UPDATED]: RawEvent<typeof CodeEnum.G_ENDPOINTS_UPDATED>;
-  [CodeEnum.EXEC]: RawEvent<typeof CodeEnum.EXEC>;
+  [CodeEnum.EXEC]: RawEvent<
+    typeof CodeEnum.EXEC,
+    {
+      proto: string;
+      kubernetes_cluster: string;
+    }
+  >;
   [CodeEnum.EXEC_FAILURE]: RawEvent<
     typeof CodeEnum.EXEC_FAILURE,
     { exitError: string }
@@ -406,6 +413,8 @@ export type RawEvents = {
       participants?: string[];
       server_hostname: string;
       interactive: boolean;
+      proto: string;
+      kubernetes_cluster: string;
     }
   >;
   [CodeEnum.SESSION_LEAVE]: RawEvent<
@@ -549,6 +558,12 @@ export type RawEvents = {
     typeof CodeEnum.TRUSTED_CLUSTER_DELETED,
     {
       name: string;
+    }
+  >;
+  [CodeEnum.KUBE_REQUEST]: RawEvent<
+    typeof CodeEnum.KUBE_REQUEST,
+    {
+      kubernetes_cluster: string;
     }
   >;
 };
