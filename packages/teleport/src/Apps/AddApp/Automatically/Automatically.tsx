@@ -73,9 +73,7 @@ export default function Automatically(props: Props) {
             </Flex>
             {!cmd && (
               <Text mb="3">
-                Provide the name and URL of your application to generate a
-                script that will automatically install and configure the App
-                service on the server that can access your application.
+                Provide the name and URL of your application to generate our auto-installer script.
               </Text>
             )}
             {attempt.status === 'failed' && (

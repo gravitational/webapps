@@ -17,7 +17,7 @@ limitations under the License.
 import React from 'react';
 import { ButtonPrimary } from 'design';
 
-const docUrl = 'https://gravitational.com/teleport/docs/';
+const docUrl = 'https://gravitational.com/teleport/docs/application-access/';
 
 export default function ButtonAdd(props: Props) {
   if (!props.isEnterprise) {

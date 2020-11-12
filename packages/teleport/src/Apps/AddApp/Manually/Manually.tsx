@@ -57,17 +57,17 @@ export default function Manually({ version, onClose }: Props) {
             <Text bold as="span">
               Step 3
             </Text>
-            {' - Generate a join token'}
-            <TextSelectCopy mt="2" text="tctl tokens add --type=app" />
+            {' - Generate an application join token'}
+            <TextSelectCopy mt="2" text="tctl tokens add --type=app --ttl=1h" />
           </Box>
           <Box>
             <Text bold as="span">
               Step 4
             </Text>
-            {` - Install Teleport on target server, and start it with the following parameters`}
+            {` - Install Teleport on target server, start Teleport with the following parameters`}
             <TextSelectCopy
               mt="2"
-              text={`teleport start --roles=node --token=<generated-node-join-token> --auth-server=${cfg.proxyCluster} `}
+              text={`teleport start --roles=app --token=<generated-app-join-token> --auth-server=${cfg.proxyCluster} `}
             />
           </Box>
         </Box>
