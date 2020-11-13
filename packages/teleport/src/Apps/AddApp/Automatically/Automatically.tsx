@@ -73,7 +73,7 @@ export default function Automatically(props: Props) {
             </Flex>
             {!cmd && (
               <Text mb="3">
-                Provide the name and URL of your application to generate our auto-installer script.
+                Teleport can automatically setup application access. Provide the name and URL of your application to generate our auto-installer script. This script will install the Teleport node service and provide secure access to your application.
               </Text>
             )}
             {attempt.status === 'failed' && (
