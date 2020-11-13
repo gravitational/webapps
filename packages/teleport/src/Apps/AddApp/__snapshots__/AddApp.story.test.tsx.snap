@@ -693,7 +693,7 @@ exports[`loaded 1`] = `
   overflow: hidden;
   text-overflow: ellipsis;
   margin: 0px;
-  margin-top: 8px;
+  margin-top: 16px;
 }
 
 .c4 {

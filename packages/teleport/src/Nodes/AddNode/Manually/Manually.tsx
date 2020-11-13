@@ -64,7 +64,7 @@ export default function Manually({ version, ...styles }: Props) {
         {` - Start the Teleport agent with the following parameters`}
         <TextSelectCopy
           mt="2"
-          text={`teleport start --roles=node --token=[generated-node-join-token] --auth-server=${host} `}
+          text={`teleport start --roles=node --token=[generated-join-token] --auth-server=${host} `}
         />
       </Box>
     </Box>

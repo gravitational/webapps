@@ -28,9 +28,9 @@ import Validation, { Validator } from 'shared/components/Validation';
 import FieldInput from 'shared/components/FieldInput';
 import { DialogContent, DialogFooter } from 'design/Dialog';
 import { Attempt } from 'shared/hooks/useAttemptNext';
-
 export default function Automatically(props: Props) {
   const { cmd, onClose, attempt, expires } = props;
+
   const [name, setName] = React.useState('');
   const [uri, setUri] = React.useState('');
 
@@ -83,7 +83,7 @@ export default function Automatically(props: Props) {
                 Teleport can automatically set up application access. Provide
                 the name and URL of your application to generate our
                 auto-installer script.
-                <Text mt="2">
+                <Text mt="3">
                   This script will install the Teleport agent to provide secure
                   access to your application.
                 </Text>
