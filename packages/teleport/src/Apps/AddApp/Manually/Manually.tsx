@@ -30,7 +30,7 @@ export default function Manually({ version, onClose }: Props) {
             <Text bold as="span">
               Step 1
             </Text>{' '}
-            - Download Teleport package to your computer
+            - Download Teleport package to your computer. Teleport Enterprise 5.0 or greater is required.
             <Box>
               <Link href={links.getMacOS(version)} target="_blank" mr="2">
                 MacOS
