@@ -15,15 +15,12 @@
  */
 
 import React from 'react';
-import moment from 'moment';
 import { State } from './../useAddNode';
 import TextSelectCopy from 'teleport/components/TextSelectCopy';
 import { Alert, Text, Indicator, Box, ButtonLink } from 'design';
 
 export default function Automatically(props: Props) {
   const { script, expiry, createJoinToken, attempt, ...style } = props;
-  const duration = moment(new Date()).diff(expiry);
-  const expiresText = moment.duration(duration).humanize();
 
   if (attempt.status === 'processing') {
     return (
@@ -40,11 +37,14 @@ export default function Automatically(props: Props) {
   return (
     <>
       <Text {...style}>
-        Use below script to add a server to your cluster.
-        <br />
-        The script will be valid for{' '}
+        Use below script to add a server to your cluster. The script will be
+        valid for{' '}
         <Text bold as={'span'}>
-          {expiresText}.
+          {expiry}.
+        </Text>
+        <Text mt="2">
+          This script will install the Teleport agent to provide secure access
+          to your server.
         </Text>
       </Text>
       <TextSelectCopy text={script} mb={2} />

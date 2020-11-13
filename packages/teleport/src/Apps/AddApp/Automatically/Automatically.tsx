@@ -16,7 +16,14 @@
 
 import React, { KeyboardEvent } from 'react';
 import TextSelectCopy from 'teleport/components/TextSelectCopy';
-import { Text, Flex, Alert, ButtonSecondary, ButtonPrimary } from 'design';
+import {
+  Link,
+  Text,
+  Flex,
+  Alert,
+  ButtonSecondary,
+  ButtonPrimary,
+} from 'design';
 import Validation, { Validator } from 'shared/components/Validation';
 import FieldInput from 'shared/components/FieldInput';
 import { DialogContent, DialogFooter } from 'design/Dialog';
@@ -73,9 +80,13 @@ export default function Automatically(props: Props) {
             </Flex>
             {!cmd && (
               <Text mb="3">
-                Provide the name and URL of your application to generate a
-                script that will automatically install and configure the App
-                service on the server that can access your application.
+                Teleport can automatically set up application access. Provide
+                the name and URL of your application to generate our
+                auto-installer script.
+                <Text mt="2">
+                  This script will install the Teleport agent to provide secure
+                  access to your application.
+                </Text>
               </Text>
             )}
             {attempt.status === 'failed' && (
@@ -85,11 +96,11 @@ export default function Automatically(props: Props) {
               <>
                 <Text mb="3">
                   Use the script below to add an application to your cluster.{' '}
-                  <br />
                   The script will be valid for
                   <Text bold as="span">
                     {` ${expires}`}.
                   </Text>
+                  {renderUrl(name)}
                 </Text>
                 <TextSelectCopy text={cmd} mb={2} />
               </>
@@ -124,6 +135,18 @@ export default function Automatically(props: Props) {
         </>
       )}
     </Validation>
+  );
+}
+
+function renderUrl(name = '') {
+  const url = `https://${name}.${window.location.host}`;
+  return (
+    <Text>
+      This app will be available on {`  `}
+      <Link target="_blank" href={url}>
+        {`${url}`}
+      </Link>
+    </Text>
   );
 }
 
