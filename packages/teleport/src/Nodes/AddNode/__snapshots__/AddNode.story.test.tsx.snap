@@ -132,15 +132,15 @@ exports[`success state 1`] = `
 .c12 {
   overflow: hidden;
   text-overflow: ellipsis;
-  font-weight: 600;
   margin: 0px;
+  margin-top: 16px;
 }
 
 .c13 {
   overflow: hidden;
   text-overflow: ellipsis;
+  font-weight: 600;
   margin: 0px;
-  margin-top: 8px;
 }
 
 .c15 {
@@ -324,18 +324,18 @@ exports[`success state 1`] = `
           <div
             class="c11"
           >
-            Use below script to add a server to your cluster. The script will be valid for
-             
-            <span
+            Use below script to add a server to your cluster. This script will install the Teleport agent to provide secure access to your server.
+            <div
               class="c12"
             >
-              4 hours
-              .
-            </span>
-            <div
-              class="c13"
-            >
-              This script will install the Teleport agent to provide secure access to your server.
+              The script will be valid for
+               
+              <span
+                class="c13"
+              >
+                4 hours
+                .
+              </span>
             </div>
           </div>
           <div

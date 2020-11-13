@@ -37,14 +37,13 @@ export default function Automatically(props: Props) {
   return (
     <>
       <Text {...style}>
-        Use below script to add a server to your cluster. The script will be
-        valid for{' '}
-        <Text bold as={'span'}>
-          {expiry}.
-        </Text>
-        <Text mt="2">
-          This script will install the Teleport agent to provide secure access
-          to your server.
+        Use below script to add a server to your cluster. This script will
+        install the Teleport agent to provide secure access to your server.
+        <Text mt="3">
+          The script will be valid for{' '}
+          <Text bold as={'span'}>
+            {expiry}.
+          </Text>
         </Text>
       </Text>
       <TextSelectCopy text={script} mb={2} />

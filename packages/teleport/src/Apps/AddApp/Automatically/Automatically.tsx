@@ -83,7 +83,7 @@ export default function Automatically(props: Props) {
                 Teleport can automatically set up application access. Provide
                 the name and URL of your application to generate our
                 auto-installer script.
-                <Text mt="3">
+                <Text mt="1">
                   This script will install the Teleport agent to provide secure
                   access to your application.
                 </Text>

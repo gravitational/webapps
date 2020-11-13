@@ -72,7 +72,7 @@ export default function Manually({ version, onClose }: Props) {
           </Box>
           <Box>
             <Text bold as="span"></Text>
-            {`* Note, for a self-hosted Teleport version, you may need to update DNS and obtain a TLS certificate for this application.
+            {`* Note: For a self-hosted Teleport version, you may need to update DNS and obtain a TLS certificate for this application.
             Learn more about application access `}
             <Link
               href={
