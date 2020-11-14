@@ -24,14 +24,13 @@ export default function useNodes(ctx: TeleportContext, clusterId: string) {
   const canCreate = ctx.storeUser.getTokenAccess().create;
   const [nodes, setNodes] = useState<Node[]>([]);
   const [searchValue, setSearchValue] = useState('');
-  const { attempt, setAttempt } = useAttempt('processing');
+  const { attempt, run, setAttempt } = useAttempt('processing');
   const [isAddNodeVisible, setIsAddNodeVisible] = useState(false);
   const logins = ctx.storeUser.getLogins();
   const isEnterprise = ctx.isEnterprise;
 
   useEffect(() => {
-    setAttempt({ status: 'processing' });
-    fetchNodes().then(() => setAttempt({ status: 'success' }));
+    run(() => ctx.nodeService.fetchNodes(clusterId).then(setNodes));
   }, [clusterId]);
 
   const getNodeLoginOptions = useCallback(
