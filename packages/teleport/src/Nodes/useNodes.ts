@@ -63,7 +63,9 @@ export default function useNodes(ctx: TeleportContext, clusterId: string) {
     return ctx.nodeService
       .fetchNodes(clusterId)
       .then(setNodes)
-      .catch(err => setAttempt({ status: 'failed', statusText: err }));
+      .catch((err: Error) =>
+        setAttempt({ status: 'failed', statusText: err.message })
+      );
   };
 
   const hideAddNode = () => {

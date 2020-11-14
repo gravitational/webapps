@@ -33,7 +33,9 @@ export default function useApps() {
     return ctx.appService
       .fetchApps(clusterId)
       .then(setApps)
-      .catch(err => setAttempt({ status: 'failed', statusText: err }));
+      .catch((err: Error) =>
+        setAttempt({ status: 'failed', statusText: err.message })
+      );
   }
 
   const hideAddApp = () => {
