@@ -40,7 +40,7 @@ export default function ButtonAdd(props: Props) {
 
   if (canCreate) {
     const title = isLeafCluster
-      ? 'Adding a server to the leaf cluster is not supported'
+      ? 'Adding a server to a leaf cluster is not supported'
       : 'Add a server to the root cluster';
 
     return (

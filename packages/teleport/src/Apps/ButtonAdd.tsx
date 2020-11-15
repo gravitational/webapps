@@ -39,7 +39,7 @@ export default function ButtonAdd(props: Props) {
 
   if (props.canCreate) {
     const title = isLeafCluster
-      ? 'Adding an application to the leaf cluster is not supported'
+      ? 'Adding an application to a leaf cluster is not supported'
       : 'Add an application to the root cluster';
 
     return (
