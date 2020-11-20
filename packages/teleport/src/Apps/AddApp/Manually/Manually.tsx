@@ -53,7 +53,7 @@ export default function Manually({ user, version, onClose }: Props) {
             {' - Login to Teleport'}
             <TextSelectCopy
               mt="2"
-              text={`tsh login --proxy=${host} --auth=${cfg.auth.authType} --user=${user}`}
+              text={`tsh login --proxy=${host} --auth=${cfg.getAuthType()} --user=${user}`}
             />
           </Box>
           <Box mb={4}>

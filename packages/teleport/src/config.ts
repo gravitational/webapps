@@ -130,6 +130,10 @@ const cfg = {
     return cfg.auth.localAuthEnabled;
   },
 
+  getAuthType() {
+    return cfg.auth.authType;
+  },
+
   getSsoUrl(providerUrl, providerName, redirect) {
     return cfg.baseUrl + generatePath(providerUrl, { redirect, providerName });
   },
