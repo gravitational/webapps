@@ -54,6 +54,10 @@ class TeleportContext implements types.Context {
     return this.storeUser.isSso() === false;
   }
 
+  isAccessRequestEnabled() {
+    return this.storeUser.getRequestAccess().list;
+  }
+
   isAuditEnabled() {
     return this.storeUser.getEventAccess().list;
   }

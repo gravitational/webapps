@@ -205,7 +205,11 @@ test('strategy "always" fetch request errors', async () => {
 const sampleRequest = {
   id: '',
   state: '',
-  reason: '',
+  resolveReason: '',
+  user: '',
+  created: '',
+  roles: [],
+  requestReason: '',
 };
 
 const sampleContext = (type = '') => ({

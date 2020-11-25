@@ -15,13 +15,31 @@
  */
 
 import { AccessRequest } from './types';
+import { displayDateTime } from 'shared/services/loc';
 
 export default function makeAccessRequest(json?: AccessRequest): AccessRequest {
-  return (
-    json || {
-      id: '',
-      state: '',
-      reason: '',
-    }
-  );
+  json = json || {
+    id: '',
+    state: '',
+    user: '',
+    roles: [],
+    created: '',
+    resolveReason: '',
+    requestReason: '',
+  };
+
+  // Teleport 4.4/5.0 proxy sends back "json.reason" as the resolve reason and
+  // will be phased out for "json.resolveReason" three versions from 5.0.0.
+  const resolveReason =
+    json['reason'] != null ? json['reason'] : json.resolveReason;
+
+  return {
+    id: json.id,
+    state: json.state,
+    user: json.user,
+    roles: json.roles,
+    created: json.created ? displayDateTime(json.created) : '',
+    requestReason: json.requestReason,
+    resolveReason,
+  };
 }

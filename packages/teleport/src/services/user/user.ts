@@ -20,7 +20,12 @@ import session from 'teleport/services/session';
 import makeUserContext from './makeUserContext';
 import makeResetToken from './makeResetToken';
 import makeUser, { makeUsers } from './makeUser';
-import { User, UserContext, ResetPasswordType } from './types';
+import {
+  User,
+  UserContext,
+  ResetPasswordType,
+  UpdateAccessRequest,
+} from './types';
 import makeAccessRequest from './makeAccessRequest';
 
 const cache = {
@@ -30,6 +35,16 @@ const cache = {
 const service = {
   fetchAccessRequest(requestId?: string) {
     return api.get(cfg.getRequestAccessUrl(requestId)).then(makeAccessRequest);
+  },
+
+  fetchAccessRequests() {
+    return api
+      .get(cfg.getRequestAccessUrl())
+      .then(requests => requests.map(req => makeAccessRequest(req)));
+  },
+
+  updateAccessRequest(request: UpdateAccessRequest) {
+    return api.put(cfg.getRequestAccessUrl(), request).then(makeAccessRequest);
   },
 
   fetchUserContext(fromCache = true) {

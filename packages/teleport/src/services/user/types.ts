@@ -44,6 +44,7 @@ export interface Acl {
   users: Access;
   tokens: Access;
   appServers: Access;
+  accessRequest: Access;
 }
 
 export interface User {
@@ -59,10 +60,23 @@ export interface ResetToken {
   expires: Date;
 }
 
+type RequestState = 'NONE' | 'PENDING' | 'APPROVED' | 'DENIED' | 'APPLIED' | '';
+
 export interface AccessRequest {
   id: string;
-  state: 'NONE' | 'PENDING' | 'APPROVED' | 'DENIED' | 'APPLIED' | '';
-  reason: string;
+  state: RequestState;
+  user: string;
+  created: string;
+  roles: string[];
+  requestReason: string;
+  resolveReason?: string;
+}
+
+export interface UpdateAccessRequest {
+  id: string;
+  state: RequestState;
+  roles?: string[];
+  reason?: string;
 }
 
 export interface AccessStrategy {

@@ -71,7 +71,7 @@ export const AccessStrategy: React.FC<State & Props> = props => {
   }
 
   if (accessRequest.state === 'DENIED') {
-    return <RequestDenied reason={accessRequest.reason} />;
+    return <RequestDenied reason={accessRequest.resolveReason} />;
   }
 
   // render strategy
