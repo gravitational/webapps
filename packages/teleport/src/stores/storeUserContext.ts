@@ -52,4 +52,8 @@ export default class StoreUserContext extends Store<UserContext> {
   getTokenAccess() {
     return this.state.acl.tokens;
   }
+
+  getWorkflowAccess() {
+    return this.state.acl.accessRequests;
+  }
 }
