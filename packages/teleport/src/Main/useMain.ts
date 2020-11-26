@@ -18,12 +18,8 @@ import { useState } from 'react';
 import useAttempt from 'shared/hooks/useAttemptNext';
 import { Feature } from 'teleport/types';
 import teleportContext from 'teleport/teleportContext';
-import teleportEContext from 'e-teleport/teleportEContext';
 
-export default function useMain(
-  features: Feature[],
-  ctx: teleportContext | teleportEContext
-) {
+export default function useMain(features: Feature[], ctx: teleportContext) {
   const { attempt, run } = useAttempt('processing');
 
   useState(() =>
