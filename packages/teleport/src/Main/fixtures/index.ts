@@ -59,6 +59,13 @@ export const userContext = makeUserContext({
       create: false,
       remove: false,
     },
+    accessRequests: {
+      list: true,
+      read: true,
+      edit: true,
+      create: true,
+      remove: true,
+    },
     sshLogins: ['dev', 'root'],
   },
   cluster: {

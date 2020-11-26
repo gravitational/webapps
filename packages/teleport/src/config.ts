@@ -46,6 +46,7 @@ const cfg = {
     account: '/web/account',
     roles: '/web/roles',
     sso: '/web/sso',
+    workflow: '/web/workflow',
     cluster: '/web/cluster/:clusterId/',
     clusters: '/web/clusters',
     trustedClusters: '/web/trust',
