@@ -50,7 +50,7 @@ class TeleportContext implements types.Context {
     });
   }
 
-  getFeatureAccess() {
+  getFeatureFlags() {
     const userContext = this.storeUser;
     return {
       account: userContext.isSso() === false,
