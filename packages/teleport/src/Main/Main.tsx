@@ -26,10 +26,12 @@ import SideNav from 'teleport/SideNav';
 import TopBar from 'teleport/TopBar';
 import getFeatures from 'teleport/features';
 import useMain, { State } from './useMain';
+import useTeleport from 'teleport/useTeleport';
 
 export default function Container() {
   const [features] = React.useState(() => getFeatures());
-  const state = useMain(features);
+  const ctx = useTeleport();
+  const state = useMain(features, ctx);
   return <Main {...state} />;
 }
 
