@@ -31,7 +31,7 @@ import cfg from './config';
 
 const teleportIco = require('./favicon.ico').default;
 
-const Teleport = ({ history, children }) => {
+const Teleport = ({ ctx, history, children }) => {
   useFavicon(teleportIco);
   return (
     <CatchError>
@@ -61,7 +61,7 @@ const Teleport = ({ history, children }) => {
             />
             <Route path={cfg.routes.root}>
               <Authenticated>
-                <TeleportContextProvider>
+                <TeleportContextProvider ctx={ctx}>
                   <Switch>
                     <Route
                       path={cfg.routes.appLauncher}
