@@ -16,10 +16,11 @@ limitations under the License.
 
 import { useState } from 'react';
 import useAttempt from 'shared/hooks/useAttemptNext';
+import useTeleport from 'teleport/useTeleport';
 import { Feature } from 'teleport/types';
-import teleportContext from 'teleport/teleportContext';
 
-export default function useMain(features: Feature[], ctx: teleportContext) {
+export default function useMain(features: Feature[]) {
+  const ctx = useTeleport();
   const { attempt, run } = useAttempt('processing');
 
   useState(() =>
