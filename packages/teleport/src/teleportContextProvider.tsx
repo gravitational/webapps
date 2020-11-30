@@ -22,7 +22,7 @@ import TeleportContext from './teleportContext';
 const ReactContext = React.createContext<TeleportContext>(null);
 
 const TeleportContextProvider: React.FC<Props> = props => {
-  const [ctx] = React.useState(() => props.ctx || new TeleportContext());
+  const [ctx] = React.useState(() => props.ctx);
   return <ReactContext.Provider value={ctx} children={props.children} />;
 };
 
@@ -31,5 +31,5 @@ export default TeleportContextProvider;
 export { ReactContext };
 
 type Props = {
-  ctx?: TeleportContext;
+  ctx: TeleportContext;
 };

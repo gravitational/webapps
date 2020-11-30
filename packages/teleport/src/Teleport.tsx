@@ -13,6 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 */
+
+// eslint-disable-next-line import/named
+import { History } from 'history';
 import { hot } from 'react-hot-loader/root';
 import React from 'react';
 import { useFavicon } from 'shared/hooks';
@@ -27,11 +30,12 @@ import AppLauncher from './AppLauncher';
 import Console from './Console';
 import Player from './Player';
 import TeleportContextProvider from './teleportContextProvider';
+import TeleportContext from './teleportContext';
 import cfg from './config';
 
 const teleportIco = require('./favicon.ico').default;
 
-const Teleport = ({ ctx, history, children }) => {
+const Teleport: React.FC<State> = ({ ctx, history, children }) => {
   useFavicon(teleportIco);
   return (
     <CatchError>
@@ -96,3 +100,8 @@ function renderAuthenticated(children) {
 }
 
 export default hot(Teleport);
+
+export type State = {
+  ctx: TeleportContext;
+  history: History;
+};
