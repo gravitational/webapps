@@ -35,7 +35,7 @@ import cfg from './config';
 
 const teleportIco = require('./favicon.ico').default;
 
-const Teleport: React.FC<State> = ({ ctx, history, children }) => {
+const Teleport: React.FC<Props> = ({ ctx, history, children }) => {
   useFavicon(teleportIco);
   return (
     <CatchError>
@@ -101,7 +101,7 @@ function renderAuthenticated(children) {
 
 export default hot(Teleport);
 
-export type State = {
+export type Props = {
   ctx: TeleportContext;
   history: History;
 };
