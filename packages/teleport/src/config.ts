@@ -46,7 +46,9 @@ const cfg = {
     account: '/web/account',
     roles: '/web/roles',
     sso: '/web/sso',
-    workflow: '/web/workflow',
+    requests: '/web/requests',
+    request: '/web/requests/:requestId',
+    requestNew: '/web/requests/new',
     cluster: '/web/cluster/:clusterId/',
     clusters: '/web/clusters',
     trustedClusters: '/web/trust',
@@ -109,7 +111,8 @@ const cfg = {
     nodeTokenPath: '/v1/enterprise/nodes/token',
     nodeScriptPath: '/scripts/:token/install-node.sh',
     appNodeScriptPath: '/scripts/:token/install-app.sh?name=:name&uri=:uri',
-    requestAccessPath: '/v1/enterprise/accessrequest/:requestId?',
+    accessRequestPath: '/v1/enterprise/accessrequest/:requestId?',
+    accessRequestsPath: '/v1/enterprise/accessrequest?id=:requestId?',
   },
 
   getClusterEventsUrl(clusterId: string, params: UrlClusterEventsParams) {
@@ -169,6 +172,10 @@ const cfg = {
 
   getAppsRoute(clusterId: string) {
     return generatePath(cfg.routes.apps, { clusterId });
+  },
+
+  getRequestRoute(requestId: string) {
+    return generatePath(cfg.routes.request, { requestId });
   },
 
   getSessionsRoute(clusterId: string) {
@@ -269,8 +276,12 @@ const cfg = {
     return generatePath(cfg.api.renewTokenPath, { requestId });
   },
 
-  getRequestAccessUrl(requestId?: string) {
-    return generatePath(cfg.api.requestAccessPath, { requestId });
+  getAccessRequestUrl(requestId?: string) {
+    return generatePath(cfg.api.accessRequestPath, { requestId });
+  },
+
+  getAccessRequestsUrl(requestId?: string) {
+    return generatePath(cfg.api.accessRequestsPath, { requestId });
   },
 
   getResourcesUrl(kind?: Resource['kind']) {

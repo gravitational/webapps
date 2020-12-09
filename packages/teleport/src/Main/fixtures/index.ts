@@ -19,6 +19,7 @@ import makeUserContext from 'teleport/services/user/makeUserContext';
 export const userContext = makeUserContext({
   authType: 'sso',
   userName: 'Sam',
+  rolesRequestable: ['dev-a', 'dev-b', 'dev-c', 'dev-d'],
   userAcl: {
     tokens: {
       list: true,
