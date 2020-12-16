@@ -18,7 +18,6 @@ import { BearerToken, KeysEnum } from './types';
 
 const storage = {
   clear() {
-    storage.setAccessRequestResult(null);
     storage.setBearerToken(null);
     window.localStorage.clear();
     window.sessionStorage.clear();
@@ -48,18 +47,6 @@ const storage = {
   getAccessToken() {
     const bearerToken = this.getBearerToken();
     return bearerToken ? bearerToken.accessToken : null;
-  },
-
-  setAccessRequestResult(request) {
-    window.sessionStorage.setItem(
-      KeysEnum.ACCESS_REQUEST,
-      JSON.stringify(request)
-    );
-  },
-
-  getAccessRequestResult() {
-    const item = window.sessionStorage.getItem(KeysEnum.ACCESS_REQUEST);
-    return item ? JSON.parse(item) : null;
   },
 
   broadcast(messageType, messageBody) {
