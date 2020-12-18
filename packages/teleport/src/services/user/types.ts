@@ -29,7 +29,7 @@ export interface UserContext {
   username: string;
   cluster: Cluster;
   accessStrategy: AccessStrategy;
-  rolesRequestable: string[];
+  requestableRoles: string[];
 }
 
 export interface Access {

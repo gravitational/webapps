@@ -25,8 +25,8 @@ export default class StoreUserContext extends Store<UserContext> {
     return this.state.username;
   }
 
-  getRolesRequestable() {
-    return this.state.rolesRequestable;
+  getRequestableRoles() {
+    return this.state.requestableRoles;
   }
 
   getEventAccess() {

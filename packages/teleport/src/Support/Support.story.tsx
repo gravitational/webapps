@@ -65,5 +65,5 @@ const state = {
   username: null,
   accessStrategy: null,
   cluster,
-  rolesRequestable: [],
+  requestableRoles: [],
 };
