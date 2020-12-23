@@ -18,9 +18,7 @@ import { BearerToken, KeysEnum } from './types';
 
 const storage = {
   clear() {
-    storage.setBearerToken(null);
     window.localStorage.clear();
-    window.sessionStorage.clear();
   },
 
   subscribe(fn) {

@@ -27,7 +27,7 @@ export default function useStore<T extends Store<any>>(store: T): T {
     function syncState() {
       // do not re-render if state has not changed since last call
       if (memoizedState !== store.state) {
-        rerender({});
+        rerender({} as any);
       }
     }
 
