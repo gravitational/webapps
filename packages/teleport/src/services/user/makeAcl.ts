@@ -44,7 +44,7 @@ export default function makeAcl(json): Acl {
   };
 }
 
-const defaultAccess = {
+export const defaultAccess = {
   list: false,
   read: false,
   edit: false,

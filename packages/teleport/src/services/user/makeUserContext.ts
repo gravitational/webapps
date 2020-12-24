@@ -26,7 +26,7 @@ export default function makeUserContext(json: any): UserContext {
   const cluster = makeCluster(json.cluster);
   const acl = makeAcl(json.userAcl);
   const accessStrategy = json.accessStrategy || defaultStrategy;
-  const requestableRoles = json.requestableRoles;
+  const requestableRoles = json.requestableRoles || [];
 
   return {
     username,
@@ -38,7 +38,7 @@ export default function makeUserContext(json: any): UserContext {
   };
 }
 
-const defaultStrategy = {
+export const defaultStrategy = {
   type: 'optional',
   prompt: '',
 };
