@@ -20,13 +20,41 @@ import { defaultAccess } from 'teleport/services/user/makeAcl';
 import { defaultStrategy } from 'teleport/services/user/makeUserContext';
 
 test('fetch user context, null response gives proper default values', async () => {
-  jest.spyOn(api, 'get').mockResolvedValue(null);
+  const mockContext = {
+    authType: 'local',
+    userName: 'foo',
+    cluster: {
+      name: 'aws',
+      lastConnected: '2020-09-26T17:30:23.512876876Z',
+      status: 'online',
+      nodeCount: 1,
+      publicURL: 'localhost',
+      authVersion: '4.4.0-dev',
+      proxyVersion: '4.4.0-dev',
+    },
+    userAcl: {
+      authConnectors: {
+        list: true,
+        read: true,
+        edit: true,
+        create: true,
+        remove: true,
+      },
+    },
+  };
+
+  jest.spyOn(api, 'get').mockResolvedValue(mockContext);
 
   let response = await user.fetchUserContext(false);
 
+  expect(response.authType).toEqual('local');
+  expect(response.username).toEqual('foo');
+  expect(response.cluster).toMatchObject({
+    clusterId: mockContext.cluster.name,
+  });
   expect(response.acl).toStrictEqual({
     logins: [],
-    authConnectors: defaultAccess,
+    authConnectors: mockContext.userAcl.authConnectors,
     trustedClusters: defaultAccess,
     roles: defaultAccess,
     sessions: defaultAccess,
@@ -39,7 +67,6 @@ test('fetch user context, null response gives proper default values', async () =
 
   expect(response.accessStrategy).toStrictEqual(defaultStrategy);
   expect(response.requestableRoles).toStrictEqual([]);
-  expect(response.cluster).toEqual(expect.anything());
 });
 
 test('fetch users, null response gives empty array', async () => {

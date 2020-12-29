@@ -44,7 +44,7 @@ export default function makeCluster(json): Cluster {
     lastConnected: new Date(lastConnected),
     connectedText,
     status,
-    url: clusterId ? cfg.getClusterRoute(clusterId) : '',
+    url: cfg.getClusterRoute(clusterId),
     authVersion,
     nodeCount,
     publicURL,
