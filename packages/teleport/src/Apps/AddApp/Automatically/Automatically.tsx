@@ -67,7 +67,7 @@ export default function Automatically(props: Props) {
                 width="320px"
                 mr="3"
                 onKeyPress={e => handleEnterPress(e, validator)}
-                onChange={e => setName(e.target.value)}
+                onChange={e => setName(e.target.value.toLowerCase())}
               />
               <FieldInput
                 rule={requiredAppUri}
@@ -152,7 +152,7 @@ function renderUrl(name = '') {
 }
 
 const requiredAppUri = value => () => {
-  if (!value || value.length === 0) {
+  if (!value) {
     return {
       valid: false,
       message: 'Required',
@@ -200,7 +200,7 @@ const requiredAppName = value => () => {
   if (!match) {
     return {
       valid: false,
-      message: 'Invalid name',
+      message: 'Invalid DNS sub-domain name',
     };
   }
 
