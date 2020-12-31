@@ -19,6 +19,7 @@ import { useParams } from 'react-router';
 import { useAttempt, withState } from 'shared/hooks';
 import cfg from 'teleport/config';
 import auth from 'teleport/services/auth';
+import session from 'teleport/services/session';
 import history from 'teleport/services/history';
 import Logger from 'shared/libs/logger';
 import InviteForm, { Expired } from 'shared/components/FormInvite';
@@ -82,9 +83,11 @@ function mapState() {
 
   React.useEffect(() => {
     fetchAttemptActions.do(() => {
-      return auth
-        .fetchPasswordToken(tokenId)
-        .then(resetToken => setPswToken(resetToken));
+      return auth.fetchPasswordToken(tokenId).then(resetToken => {
+        // Remove any previous session/request access information from local storage.
+        session.clear();
+        setPswToken(resetToken);
+      });
     });
   }, []);
 
