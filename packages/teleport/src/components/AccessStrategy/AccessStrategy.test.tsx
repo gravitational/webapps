@@ -21,13 +21,15 @@ import userService, {
   makeAccessRequest,
 } from 'teleport/services/user';
 import { render, screen, wait, fireEvent } from 'design/utils/testing';
-import sessionStorage from 'teleport/services/localStorage';
+import localStorage from 'teleport/services/localStorage';
 
 beforeEach(() => {
   jest.resetAllMocks();
-  sessionStorage.clear();
-
   jest.spyOn(console, 'error').mockImplementation();
+});
+
+afterEach(() => {
+  localStorage.clear();
 });
 
 test('stategy "optional" renders children', async () => {
@@ -117,7 +119,7 @@ test('strategy "always" renders pending dialogue, with request state empty', asy
   jest.spyOn(userService, 'fetchAccessRequest').mockResolvedValue(request);
   jest.spyOn(userService, 'fetchUser').mockResolvedValue(userContext);
 
-  expect(sessionStorage.getAccessRequestResult()).toBeNull();
+  expect(localStorage.getAccessRequestResult()).toBeNull();
 
   render(<AccessStrategy children={sample.children} checkerInterval={0} />);
   await wait(() => {
@@ -128,7 +130,7 @@ test('strategy "always" renders pending dialogue, with request state empty', asy
   // hook should auto create request before fetching request.
   expect(userService.createAccessRequest).toHaveBeenCalledTimes(1);
   expect(userService.fetchAccessRequest).toHaveBeenCalled();
-  expect(sessionStorage.getAccessRequestResult()).toStrictEqual(request);
+  expect(localStorage.getAccessRequestResult()).toStrictEqual(request);
 });
 
 test('strategy "always" renders pending dialogue, with request state PENDING', async () => {
@@ -140,8 +142,8 @@ test('strategy "always" renders pending dialogue, with request state PENDING', a
     state: 'PENDING',
     reason: '',
   });
-  sessionStorage.setAccessRequestResult(request);
-  expect(sessionStorage.getAccessRequestResult()).toStrictEqual(request);
+  localStorage.setAccessRequestResult(request);
+  expect(localStorage.getAccessRequestResult()).toStrictEqual(request);
 
   jest.spyOn(userService, 'createAccessRequest').mockResolvedValue(request);
   jest.spyOn(userService, 'fetchAccessRequest').mockResolvedValue(request);
@@ -165,8 +167,8 @@ test('strategy "always", renders pending then children, with request state APPRO
     state: 'APPROVED',
     reason: '',
   });
-  sessionStorage.setAccessRequestResult(request);
-  expect(sessionStorage.getAccessRequestResult()).toStrictEqual(request);
+  localStorage.setAccessRequestResult(request);
+  expect(localStorage.getAccessRequestResult()).toStrictEqual(request);
 
   jest.spyOn(userService, 'fetchAccessRequest').mockResolvedValue(request);
   jest.spyOn(userService, 'applyPermission').mockResolvedValue({});
@@ -182,7 +184,7 @@ test('strategy "always", renders pending then children, with request state APPRO
   );
   expect(userService.applyPermission).toHaveBeenCalledTimes(1);
   expect(window.location.reload).toHaveBeenCalledTimes(1);
-  expect(sessionStorage.getAccessRequestResult().state).toEqual('APPLIED');
+  expect(localStorage.getAccessRequestResult().state).toEqual('APPLIED');
 
   // Fetching access request happens with pending,
   // so this prooves pending dialogue was briefly rendered.
@@ -198,8 +200,8 @@ test('strategy "always", renders denied dialogue, with request state DENIED', as
     state: 'DENIED',
     reason: '',
   });
-  sessionStorage.setAccessRequestResult(request);
-  expect(sessionStorage.getAccessRequestResult()).toStrictEqual(request);
+  localStorage.setAccessRequestResult(request);
+  expect(localStorage.getAccessRequestResult()).toStrictEqual(request);
 
   jest.spyOn(userService, 'fetchUser').mockResolvedValue(userContext);
 
@@ -219,8 +221,8 @@ test('strategy "always", renders children, with request state APPLIED', async ()
     state: 'APPLIED',
     reason: '',
   });
-  sessionStorage.setAccessRequestResult(request);
-  expect(sessionStorage.getAccessRequestResult()).toStrictEqual(request);
+  localStorage.setAccessRequestResult(request);
+  expect(localStorage.getAccessRequestResult()).toStrictEqual(request);
 
   jest.spyOn(userService, 'fetchUser').mockResolvedValue(userContext);
 
@@ -240,8 +242,8 @@ test('strategy "always", on fetch request error, renders error dialogue', async 
     state: 'APPROVED',
     reason: '',
   });
-  sessionStorage.setAccessRequestResult(request);
-  expect(sessionStorage.getAccessRequestResult()).toStrictEqual(request);
+  localStorage.setAccessRequestResult(request);
+  expect(localStorage.getAccessRequestResult()).toStrictEqual(request);
 
   const err = new Error('some error');
   jest.spyOn(userService, 'fetchAccessRequest').mockRejectedValue(err);
