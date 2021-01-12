@@ -16,7 +16,7 @@
 
 import React from 'react';
 import cfg from 'teleport/config';
-import sessionStorage from 'teleport/services/localStorage';
+import localStorage from 'teleport/services/localStorage';
 import useAttempt from 'shared/hooks/useAttempt';
 import userService, {
   AccessStrategy,
@@ -30,7 +30,7 @@ export default function useAccessStrategy() {
   const [strategy, setStrategy] = React.useState<AccessStrategy>(null);
 
   const [accessRequest, setAccessRequest] = React.useState<AccessRequest>(
-    makeAccessRequest(sessionStorage.getAccessRequestResult())
+    makeAccessRequest(localStorage.getAccessRequestResult())
   );
 
   React.useEffect(() => {
@@ -59,12 +59,12 @@ export default function useAccessStrategy() {
   }
 
   function updateState(result: AccessRequest) {
-    sessionStorage.setAccessRequestResult(result);
+    localStorage.setAccessRequestResult(result);
 
     if (result.state === 'APPROVED') {
       return userService.applyPermission(result.id).then(() => {
         result.state = 'APPLIED';
-        sessionStorage.setAccessRequestResult(result);
+        localStorage.setAccessRequestResult(result);
         window.location.reload();
       });
     }

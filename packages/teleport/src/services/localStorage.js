@@ -33,7 +33,6 @@ const storage = {
     storage.setAccessRequestResult(null);
     storage.setBearerToken(null);
     window.localStorage.clear();
-    window.sessionStorage.clear();
   },
 
   subscribe(fn) {
@@ -63,14 +62,14 @@ const storage = {
   },
 
   setAccessRequestResult(request) {
-    window.sessionStorage.setItem(
+    window.localStorage.setItem(
       KeysEnum.ACCESS_REQUEST,
       JSON.stringify(request)
     );
   },
 
   getAccessRequestResult() {
-    const item = window.sessionStorage.getItem(KeysEnum.ACCESS_REQUEST);
+    const item = window.localStorage.getItem(KeysEnum.ACCESS_REQUEST);
     return item ? JSON.parse(item) : null;
   },
 
