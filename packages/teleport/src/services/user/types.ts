@@ -30,6 +30,11 @@ export interface UserContext {
   cluster: Cluster;
   accessStrategy: AccessStrategy;
   requestableRoles: string[];
+
+  // TODO lisa: backend required. this doesn't enforce anything other than suggesting,
+  // anyone with priveldge can stil approve requests
+  suggestedReviewers: string[];
+  approvalThreshold: number;
 }
 
 export interface Access {

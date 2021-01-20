@@ -27,6 +27,8 @@ export default function makeUserContext(json: any): UserContext {
   const acl = makeAcl(json.userAcl);
   const accessStrategy = json.accessStrategy || defaultStrategy;
   const requestableRoles = json.requestableRoles || [];
+  const suggestedReviewers = json.suggestedReviewers || [];
+  const approvalThreshold = json.approvalThreshold || 1;
 
   return {
     username,
@@ -35,6 +37,8 @@ export default function makeUserContext(json: any): UserContext {
     cluster,
     accessStrategy,
     requestableRoles,
+    suggestedReviewers,
+    approvalThreshold,
   };
 }
 

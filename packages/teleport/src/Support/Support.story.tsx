@@ -66,4 +66,6 @@ const state = {
   accessStrategy: null,
   cluster,
   requestableRoles: [],
+  suggestedReviewers: [],
+  approvalThreshold: 0,
 };

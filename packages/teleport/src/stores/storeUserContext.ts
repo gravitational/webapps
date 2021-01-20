@@ -29,6 +29,14 @@ export default class StoreUserContext extends Store<UserContext> {
     return this.state.requestableRoles;
   }
 
+  getSuggestedReviewers() {
+    return this.state.suggestedReviewers;
+  }
+
+  getApprovalThreshold() {
+    return this.state.approvalThreshold;
+  }
+
   getEventAccess() {
     return this.state.acl.events;
   }

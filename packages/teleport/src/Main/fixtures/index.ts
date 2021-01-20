@@ -20,6 +20,8 @@ export const userContext = makeUserContext({
   authType: 'sso',
   userName: 'Sam',
   requestableRoles: ['dev-a', 'dev-b', 'dev-c', 'dev-d'],
+  approvalThreshold: 2,
+  suggestedReviewers: ['alice', 'bob'],
   userAcl: {
     tokens: {
       list: true,
