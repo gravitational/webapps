@@ -37,6 +37,17 @@ describe('services/auth', () => {
   const password = 'sample_pass';
   const email = 'user@example.com';
 
+  test('undefined u2f object returns error', async () => {
+    const error = new Error('Your browser does not support FIDO U2F protocol.');
+    global.u2f = undefined;
+
+    await expect(auth.loginWithU2f(email, password)).rejects.toEqual(error);
+
+    await expect(auth.resetPasswordWithU2f('any', password)).rejects.toEqual(
+      error
+    );
+  });
+
   test('login()', async () => {
     jest.spyOn(api, 'post').mockImplementation(() => Promise.resolve());
 
