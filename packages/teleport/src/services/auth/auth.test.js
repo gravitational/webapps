@@ -38,14 +38,17 @@ describe('services/auth', () => {
   const email = 'user@example.com';
 
   test('undefined u2f object returns error', async () => {
-    const error = new Error('your browser does not support FIDO U2F protocol');
     global.u2f = undefined;
 
-    await expect(auth.loginWithU2f(email, password)).rejects.toEqual(error);
+    expect.assertions(2);
 
-    await expect(auth.resetPasswordWithU2f('any', password)).rejects.toEqual(
-      error
-    );
+    await auth.loginWithU2f(email, password).catch(err => {
+      expect(err.message).toContain('does not support U2F');
+    });
+
+    await auth.resetPasswordWithU2f('any', password).catch(err => {
+      expect(err.message).toContain('does not support U2F');
+    });
   });
 
   test('login()', async () => {

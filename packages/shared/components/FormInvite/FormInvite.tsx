@@ -164,7 +164,7 @@ type Props = {
 
 function ErrorMessage({ message = '' }) {
   // quick fix: check if error text has U2F substring
-  const browserSupported = !message.includes('not support FIDO U2F');
+  const browserSupported = !message.includes('does not support U2F');
   const showU2fErrorLink = browserSupported && message.includes('U2F');
 
   return (
