@@ -38,7 +38,7 @@ describe('services/auth', () => {
   const email = 'user@example.com';
 
   test('undefined u2f object returns error', async () => {
-    const error = new Error('Your browser does not support FIDO U2F protocol.');
+    const error = new Error('your browser does not support FIDO U2F protocol');
     global.u2f = undefined;
 
     await expect(auth.loginWithU2f(email, password)).rejects.toEqual(error);

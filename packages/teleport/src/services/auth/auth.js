@@ -26,7 +26,7 @@ const auth = {
       return null;
     }
 
-    return new Error('Your browser does not support FIDO U2F protocol.');
+    return new Error('your browser does not support FIDO U2F protocol');
   },
 
   login(userId, password, token) {
