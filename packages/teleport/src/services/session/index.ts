@@ -14,5 +14,8 @@
  * limitations under the License.
  */
 
-import session from './session';
+import session, { forceRefresh } from './session';
+
+export * from './types';
+export { forceRefresh };
 export default session;

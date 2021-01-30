@@ -71,7 +71,7 @@ export function Main(props: State) {
       <RouterDOM.Switch>
         <Redirect exact={true} from={cfg.routes.root} to={indexRoute} />
       </RouterDOM.Switch>
-      <VerticalSplit>
+      <VerticalSplit className="teleport-main">
         <SideNav />
         <HorizontalSplit>
           <TopBar />

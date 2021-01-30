@@ -18,15 +18,17 @@ import Logger from 'shared/libs/logger';
 import cfg from 'teleport/config';
 import history from 'teleport/services/history';
 import api from 'teleport/services/api';
-import localStorage, {
-  KeysEnum,
-  BearerToken,
-} from 'teleport/services/localStorage';
+import localStorage, { KeysEnum } from 'teleport/services/localStorage';
+import { RenewSessionRequest, Session, BearerToken } from './types';
 
 const TOKEN_CHECKER_INTERVAL = 15 * 1000; //  every 15 sec
 const logger = Logger.create('services/session');
 
 let sesstionCheckerTimerId = null;
+
+// forceRefresh is a global flag used to prevent beforeunload
+// event listeners from stopping a page reload.
+export let forceRefresh = false;
 
 const session = {
   logout() {
@@ -65,8 +67,15 @@ const session = {
     }
   },
 
-  renewSession(requestId: string) {
-    return this._renewToken(requestId);
+  renewSession(req: RenewSessionRequest): Promise<Session> {
+    return this._renewToken(req).then((token: BearerToken) => token.session);
+  },
+
+  // applyPermission triggers reload to opened tabs (besides the current tab),
+  // when new roles are assumed or when user switches back to default roles.
+  // The reload will refetch and reapply new permissions.
+  applyPermission() {
+    localStorage.broadcast(KeysEnum.RELOAD_TABS, 'reload');
   },
 
   isValid() {
@@ -74,11 +83,13 @@ const session = {
   },
 
   _getBearerToken() {
-    let token = null;
+    let token: BearerToken;
     try {
-      token = this._extractBearerTokenFromHtml();
+      token = this._extractBearerTokenAndSessionFromHtml();
       if (token) {
         localStorage.setBearerToken(token);
+        // Preserve the first session's roles and expiry.
+        localStorage.setDefaultSession(token.session);
       } else {
         token = localStorage.getBearerToken();
       }
@@ -89,7 +100,7 @@ const session = {
     return token;
   },
 
-  _extractBearerTokenFromHtml() {
+  _extractBearerTokenAndSessionFromHtml() {
     const el = document.querySelector<HTMLMetaElement>(
       '[name=grv_bearer_token]'
     );
@@ -117,10 +128,10 @@ const session = {
     return this._timeLeft() < TOKEN_CHECKER_INTERVAL * 1.5;
   },
 
-  _renewToken(requestId?: string) {
+  _renewToken(req?: RenewSessionRequest): Promise<BearerToken> {
     this._setAndBroadcastIsRenewing(true);
     return api
-      .post(cfg.getRenewTokenUrl(requestId))
+      .post(cfg.getRenewTokenUrl(), req)
       .then(this._receiveBearerToken.bind(this))
       .finally(() => {
         this._setAndBroadcastIsRenewing(false);
@@ -130,6 +141,8 @@ const session = {
   _receiveBearerToken(json) {
     const token = new BearerToken(json);
     localStorage.setBearerToken(token);
+
+    return token;
   },
 
   _setAndBroadcastIsRenewing(value) {
@@ -210,6 +223,11 @@ const session = {
 
 function receiveMessage(event) {
   const { key, newValue } = event;
+
+  if (key === KeysEnum.RELOAD_TABS && newValue) {
+    forceRefresh = true;
+    history.reload();
+  }
 
   // check if logout was triggered from other tabs
   if (localStorage.getBearerToken() === null) {

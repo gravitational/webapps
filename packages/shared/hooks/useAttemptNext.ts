@@ -54,3 +54,5 @@ export type Attempt = {
 };
 
 type Callback = (fn?: any) => Promise<any>;
+
+export type State = ReturnType<typeof useAttemptNext>;

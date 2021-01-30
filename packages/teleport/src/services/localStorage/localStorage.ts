@@ -14,7 +14,8 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import { BearerToken, KeysEnum } from './types';
+import { KeysEnum } from './types';
+import { BearerToken, Session } from 'teleport/services/session';
 
 const storage = {
   clear() {
@@ -50,6 +51,26 @@ const storage = {
   broadcast(messageType, messageBody) {
     window.localStorage.setItem(messageType, messageBody);
     window.localStorage.removeItem(messageType);
+  },
+
+  // setDefaultSession preserves the data from first session created after user logs in.
+  // This enables users who assumed additional roles from access requests,
+  // to switch back to their default roles and resume remaining ttl.
+  setDefaultSession(session: Session) {
+    if (this.getDefaultSession()) {
+      return;
+    }
+
+    window.localStorage.setItem(
+      KeysEnum.DEFAULT_SESSION,
+      JSON.stringify(session)
+    );
+  },
+
+  getDefaultSession(): Session {
+    const item = window.localStorage.getItem(KeysEnum.DEFAULT_SESSION);
+
+    return JSON.parse(item);
   },
 };
 
