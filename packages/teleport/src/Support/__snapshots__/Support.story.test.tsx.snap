@@ -360,7 +360,7 @@ exports[`support Enterprise 1`] = `
       <div
         class="c13"
       >
-        test cluster name
+        aws
       </div>
     </div>
     <div
@@ -376,7 +376,7 @@ exports[`support Enterprise 1`] = `
       <div
         class="c13"
       >
-        5.0.0
+        4.4.0-dev
       </div>
     </div>
     <div
@@ -392,7 +392,7 @@ exports[`support Enterprise 1`] = `
       <div
         class="c13"
       >
-        test/public/url
+        localhost
       </div>
     </div>
     <div
@@ -408,7 +408,7 @@ exports[`support Enterprise 1`] = `
       <div
         class="c13"
       >
-        50
+        1
       </div>
     </div>
   </div>
@@ -768,7 +768,7 @@ exports[`support OSS 1`] = `
       <div
         class="c13"
       >
-        test cluster name
+        aws
       </div>
     </div>
     <div
@@ -784,7 +784,7 @@ exports[`support OSS 1`] = `
       <div
         class="c13"
       >
-        5.0.0
+        4.4.0-dev
       </div>
     </div>
     <div
@@ -800,7 +800,7 @@ exports[`support OSS 1`] = `
       <div
         class="c13"
       >
-        test/public/url
+        localhost
       </div>
     </div>
     <div
@@ -816,7 +816,7 @@ exports[`support OSS 1`] = `
       <div
         class="c13"
       >
-        50
+        1
       </div>
     </div>
   </div>
