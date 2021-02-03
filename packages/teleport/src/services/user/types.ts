@@ -23,18 +23,18 @@ export interface AccessStrategy {
   prompt: string;
 }
 
+export interface AccessCapabilities {
+  requestableRoles: string[];
+  suggestedReviewers: string[];
+}
+
 export interface UserContext {
   authType: AuthType;
   acl: Acl;
   username: string;
   cluster: Cluster;
   accessStrategy: AccessStrategy;
-  requestableRoles: string[];
-
-  // TODO lisa: backend required. this doesn't enforce anything other than suggesting,
-  // anyone with priveldge can stil approve requests
-  suggestedReviewers: string[];
-  approvalThreshold: number;
+  accessCapabilities: AccessCapabilities;
 }
 
 export interface Access {

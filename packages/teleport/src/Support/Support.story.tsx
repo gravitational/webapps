@@ -18,6 +18,7 @@ import React from 'react';
 import Support from './Support';
 import * as teleport from 'teleport';
 import cfg from 'teleport/config';
+import { userContext } from 'teleport/Main/fixtures';
 
 export default {
   title: 'Teleport/Support',
@@ -26,7 +27,7 @@ export default {
 export const SupportOSS = () => {
   cfg.isEnterprise = false;
   const ctx = new teleport.Context();
-  ctx.storeUser.state = state;
+  ctx.storeUser.state = userContext;
 
   return (
     <teleport.ContextProvider ctx={ctx}>
@@ -38,34 +39,11 @@ export const SupportOSS = () => {
 export const SupportEnterprise = () => {
   cfg.isEnterprise = true;
   const ctx = new teleport.Context();
-  ctx.storeUser.state = state;
+  ctx.storeUser.state = userContext;
 
   return (
     <teleport.ContextProvider ctx={ctx}>
       <Support />
     </teleport.ContextProvider>
   );
-};
-
-const cluster = {
-  clusterId: 'test cluster name',
-  lastConnected: null,
-  connectedText: null,
-  status: null,
-  url: 'test/url',
-  nodeCount: 50,
-  publicURL: 'test/public/url',
-  authVersion: '5.0.0',
-  proxyVersion: '6.0.0',
-};
-
-const state = {
-  authType: null,
-  acl: null,
-  username: null,
-  accessStrategy: null,
-  cluster,
-  requestableRoles: [],
-  suggestedReviewers: [],
-  approvalThreshold: 0,
 };

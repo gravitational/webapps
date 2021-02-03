@@ -67,7 +67,8 @@ test('fetch user context, null response gives proper default values', async () =
   });
 
   expect(response.accessStrategy).toStrictEqual(defaultStrategy);
-  expect(response.requestableRoles).toStrictEqual([]);
+  expect(response.accessCapabilities.requestableRoles).toStrictEqual([]);
+  expect(response.accessCapabilities.suggestedReviewers).toStrictEqual([]);
 });
 
 test('fetch users, null response gives empty array', async () => {
