@@ -1,13 +1,17 @@
 import { Resource } from './types';
-import { at } from 'lodash';
 
-export default function makeResource(json: object): Resource {
-  const [id, kind, name, content] = at(json, ['id', 'kind', 'name', 'content']);
+export function makeResource(json: any): Resource {
+  json = json || {};
+
   return {
-    id,
-    kind,
-    name,
-    displayName: name,
-    content,
+    id: json.id,
+    kind: json.kind,
+    name: json.name,
+    content: json.content,
   };
+}
+
+export function makeResourceList(json: any) {
+  json = json || [];
+  return json.map(resource => makeResource(resource));
 }

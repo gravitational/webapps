@@ -2,7 +2,7 @@ export type Resource = {
   id: string;
   kind: ResourceKind;
   name: string;
-  displayName: string;
+  // content is config in yaml format.
   content: string;
 };
 
