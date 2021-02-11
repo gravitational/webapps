@@ -1,5 +1,5 @@
 /*
-Copyright 2020 Gravitational, Inc.
+Copyright 2020-2021 Gravitational, Inc.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -14,19 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React from 'react';
-import DeleteDialog from './DeleteConnectorDialog';
+export const github = require('!raw-loader!./github.yaml');
 
-export default {
-  title: 'Teleport/AuthConnectors/Delete',
-};
-
-export const Dialog = () => <DeleteDialog {...props} />;
-
-const props = {
-  name: 'sample-connector-role',
-  onDelete: () => {
-    return Promise.reject(new Error('server error'));
-  },
-  onClose: () => null,
-};
+const templates = { github };
+export default templates;

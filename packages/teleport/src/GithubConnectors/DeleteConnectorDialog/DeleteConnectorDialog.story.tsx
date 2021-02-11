@@ -14,5 +14,19 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import AuthConnectors from './AuthConnectors';
-export default AuthConnectors;
+import React from 'react';
+import DeleteDialog from './DeleteConnectorDialog';
+
+export default {
+  title: 'Teleport/GithubConnectors/Delete',
+};
+
+export const Loaded = () => <DeleteDialog {...props} />;
+
+const props = {
+  name: 'sample-connector-role',
+  onDelete: () => {
+    return Promise.reject(new Error('server error'));
+  },
+  onClose: () => null,
+};
