@@ -40,7 +40,7 @@ export default function EmptyList({ onCreate }: Props) {
             (SSO).
           </Text>
           <Text typography="subtitle1">
-            Please{' '}
+            Open Source Teleport supports only github connectors. Please{' '}
             <Text
               as="a"
               color="light"

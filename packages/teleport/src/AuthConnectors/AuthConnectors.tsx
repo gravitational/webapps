@@ -85,7 +85,7 @@ export function AuthConnectors(props: State) {
                 style={{ flexShrink: 0 }}
               >
                 <Text typography="h6" mb={3} caps>
-                  Github Connectors
+                  Authentication Connectors
                 </Text>
                 <Text typography="subtitle1" mb={3}>
                   Authentication connectors allow Teleport to authenticate users
