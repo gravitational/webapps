@@ -1,5 +1,5 @@
 /*
-Copyright 2019 Gravitational, Inc.
+Copyright 2019-2021 Gravitational, Inc.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -28,7 +28,7 @@ import Trust from './TrustedClusters';
 import Users from './Users';
 import Roles from './Roles';
 import Recordings from './Recordings';
-import AuthConnectors from './AuthConnectors';
+import GithubConnectors from './GithubConnectors';
 
 export class FeatureClusters {
   getTopNavTitle() {
@@ -57,16 +57,16 @@ export class FeatureClusters {
   }
 }
 
-export class FeatureAuthConnectors {
+export class FeatureGithubConnectors {
   getTopNavTitle() {
     return 'Team';
   }
 
   route = {
-    title: 'Auth Connectors',
+    title: 'Github Connectors',
     path: cfg.routes.sso,
     exact: false,
-    component: AuthConnectors,
+    component: GithubConnectors,
   };
 
   register(ctx: Ctx) {
@@ -76,8 +76,8 @@ export class FeatureAuthConnectors {
 
     ctx.storeNav.addSideItem({
       group: 'team',
-      title: 'Auth Connectors',
-      Icon: Icons.Lock,
+      title: 'Github Connectors',
+      Icon: Icons.Github,
       exact: false,
       getLink() {
         return cfg.routes.sso;
@@ -383,8 +383,12 @@ export default function getFeatures() {
     new FeatureSessions(),
     new FeatureRecordings(),
     new FeatureAudit(),
+    new FeatureUsers(),
+    new FeatureRoles(),
+    new FeatureGithubConnectors(),
     new FeatureAccount(),
     new FeatureHelpAndSupport(),
     new FeatureClusters(),
+    new FeatureTrust(),
   ];
 }

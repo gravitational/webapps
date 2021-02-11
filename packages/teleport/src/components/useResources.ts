@@ -1,5 +1,5 @@
 /*
-Copyright 2019-2020 Gravitational, Inc.
+Copyright 2019-2021 Gravitational, Inc.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -32,7 +32,6 @@ export default function useResources(
         name: '',
         content,
         id: '',
-        displayName: '',
       },
     });
   };
@@ -62,6 +61,8 @@ export default function useResources(
 
   return { ...state, create, edit, disregard, remove };
 }
+
+export type State = ReturnType<typeof useResources>;
 
 type EditingStatus = 'creating' | 'editing' | 'removing' | 'empty';
 
