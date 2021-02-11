@@ -12,29 +12,29 @@ limitations under the License.
 */
 
 import React from 'react';
-import { GithubConnectors } from './GithubConnectors';
+import { AuthConnectors } from './AuthConnectors';
 
 export default {
-  title: 'Teleport/GithubConnectors',
+  title: 'Teleport/AuthConnectors',
 };
 
 export function Processing() {
   return (
-    <GithubConnectors {...sample} attempt={{ status: 'processing' as any }} />
+    <AuthConnectors {...sample} attempt={{ status: 'processing' as any }} />
   );
 }
 
 export function Loaded() {
-  return <GithubConnectors {...sample} />;
+  return <AuthConnectors {...sample} />;
 }
 
 export function Empty() {
-  return <GithubConnectors {...sample} items={[]} />;
+  return <AuthConnectors {...sample} items={[]} />;
 }
 
 export function Failed() {
   return (
-    <GithubConnectors
+    <AuthConnectors
       {...sample}
       attempt={{ status: 'failed', statusText: 'some error message' }}
     />

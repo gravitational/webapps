@@ -18,7 +18,7 @@ import React from 'react';
 import DeleteDialog from './DeleteConnectorDialog';
 
 export default {
-  title: 'Teleport/GithubConnectors/Delete',
+  title: 'Teleport/AuthConnectors/Delete',
 };
 
 export const Loaded = () => <DeleteDialog {...props} />;

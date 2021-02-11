@@ -19,7 +19,7 @@ import useAttempt from 'shared/hooks/useAttemptNext';
 import { Resource } from 'teleport/services/resources';
 import useTeleport from 'teleport/useTeleport';
 
-export default function useGithubConnector() {
+export default function useAuthConnectors() {
   const ctx = useTeleport();
   const [items, setItems] = useState<Resource[]>([]);
   const { attempt, run } = useAttempt('processing');
@@ -53,4 +53,4 @@ export default function useGithubConnector() {
   };
 }
 
-export type State = ReturnType<typeof useGithubConnector>;
+export type State = ReturnType<typeof useAuthConnectors>;

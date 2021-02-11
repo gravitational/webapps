@@ -23,15 +23,15 @@ import useResources from 'teleport/components/useResources';
 import EmptyList from './EmptyList';
 import ConnectorList from './ConnectorList';
 import DeleteConnectorDialog from './DeleteConnectorDialog';
-import useGithubConnector, { State } from './useGithubConnectors';
+import useAuthConnectors, { State } from './useAuthConnectors';
 import templates from './templates';
 
 export default function Container() {
-  const state = useGithubConnector();
-  return <GithubConnectors {...state} />;
+  const state = useAuthConnectors();
+  return <AuthConnectors {...state} />;
 }
 
-export function GithubConnectors(props: State) {
+export function AuthConnectors(props: State) {
   const { attempt, items, remove, save } = props;
   const isEmpty = items.length === 0;
   const resources = useResources(items, templates);
@@ -49,7 +49,7 @@ export function GithubConnectors(props: State) {
   return (
     <FeatureBox>
       <FeatureHeader>
-        <FeatureHeaderTitle>Github Connectors</FeatureHeaderTitle>
+        <FeatureHeaderTitle>Auth Connectors</FeatureHeaderTitle>
         <ButtonPrimary
           ml="auto"
           width="240px"
