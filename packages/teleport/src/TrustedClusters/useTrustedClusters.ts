@@ -31,14 +31,18 @@ export default function useTrustedClusters() {
   }
 
   function save(yaml: string, isNew: boolean) {
+    if (isNew) {
+      return teleContext.resourceService
+        .createTrustedCluster(yaml)
+        .then(fetchData);
+    }
     return teleContext.resourceService
-      .upsertTrustedCluster(yaml, isNew)
+      .updateTrustedCluster(yaml)
       .then(fetchData);
   }
 
-  function remove(trustedCluster: Resource) {
-    const { kind, name } = trustedCluster;
-    return teleContext.resourceService.delete(kind, name).then(() => {
+  function remove(name: string) {
+    return teleContext.resourceService.deleteTrustedCluster(name).then(() => {
       setItems(items.filter(r => r.name !== name));
     });
   }
