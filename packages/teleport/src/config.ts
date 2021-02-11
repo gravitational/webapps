@@ -104,9 +104,9 @@ const cfg = {
     usersPath: '/v1/webapi/users',
     usersDelete: '/v1/webapi/users/:username',
 
-    rolesPath: '/v1/webapi/resources/roles/:name?',
-    githubConnectorsPath: '/v1/webapi/resources/github/:name?',
-    trustedClustersPath: '/v1/webapi/resources/trustedcluster/:name?',
+    rolesPath: '/v1/webapi/roles/:name?',
+    githubConnectorsPath: '/v1/webapi/github/:name?',
+    trustedClustersPath: '/v1/webapi/trustedcluster/:name?',
 
     nodeTokenPath: '/v1/enterprise/nodes/token',
     nodeScriptPath: '/scripts/:token/install-node.sh',

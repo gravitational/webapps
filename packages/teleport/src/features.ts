@@ -28,7 +28,7 @@ import Trust from './TrustedClusters';
 import Users from './Users';
 import Roles from './Roles';
 import Recordings from './Recordings';
-import GithubConnectors from './GithubConnectors';
+import AuthConnectors from './AuthConnectors';
 
 export class FeatureClusters {
   getTopNavTitle() {
@@ -57,16 +57,16 @@ export class FeatureClusters {
   }
 }
 
-export class FeatureGithubConnectors {
+export class FeatureAuthConnectors {
   getTopNavTitle() {
     return 'Team';
   }
 
   route = {
-    title: 'Github Connectors',
+    title: 'Auth Connectors',
     path: cfg.routes.sso,
     exact: false,
-    component: GithubConnectors,
+    component: AuthConnectors,
   };
 
   register(ctx: Ctx) {
@@ -76,8 +76,8 @@ export class FeatureGithubConnectors {
 
     ctx.storeNav.addSideItem({
       group: 'team',
-      title: 'Github Connectors',
-      Icon: Icons.Github,
+      title: 'Auth Connectors',
+      Icon: Icons.Lock,
       exact: false,
       getLink() {
         return cfg.routes.sso;
@@ -385,7 +385,7 @@ export default function getFeatures() {
     new FeatureAudit(),
     new FeatureUsers(),
     new FeatureRoles(),
-    new FeatureGithubConnectors(),
+    new FeatureAuthConnectors(),
     new FeatureAccount(),
     new FeatureHelpAndSupport(),
     new FeatureClusters(),
