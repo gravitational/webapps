@@ -94,6 +94,7 @@ const requestOptions = {
   },
   mode: 'same-origin',
   cache: 'no-store',
+  referrerPolicy: 'no-referrer',
 };
 
 export function getAuthHeaders() {
