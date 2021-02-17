@@ -1,5 +1,5 @@
 /*
-Copyright 2019 Gravitational, Inc.
+Copyright 2019-2021 Gravitational, Inc.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -16,12 +16,16 @@ limitations under the License.
 
 import React from 'react';
 import { LoginFailed as CardFailed } from 'design/CardError';
-import { getUrlParameter } from 'teleport/services/history';
 import LogoHero from 'teleport/components/LogoHero';
 import cfg from 'teleport/config';
 
-export default function LoginFailed() {
-  const message = getUrlParameter('details', window.location.search);
+export default function LoginFailed({ isCallback }: { isCallback?: boolean }) {
+  let message = "unable to login, please check Teleport's log for details";
+
+  if (isCallback) {
+    message = 'unable to process callback';
+  }
+
   return (
     <>
       <LogoHero />

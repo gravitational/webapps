@@ -47,6 +47,11 @@ const Teleport: React.FC<Props> = ({ ctx, history, children }) => {
               path={cfg.routes.loginFailed}
               component={LoginFailed}
             />
+            <Route
+              title="Login Failed"
+              path={cfg.routes.loginFailedCallback}
+              render={() => <LoginFailed isCallback={true} />}
+            />
             <Route title="Login" path={cfg.routes.login} component={Login} />
             <Route
               title="Success"
