@@ -16,6 +16,7 @@ limitations under the License.
 
 import { generatePath } from 'react-router';
 import { merge } from 'lodash';
+import { AuthProvider, Auth2faType } from 'shared/services';
 import { Resource } from 'teleport/services/resources';
 
 const cfg = {
@@ -118,11 +119,13 @@ const cfg = {
   },
 
   getAuthProviders() {
-    return cfg.auth && cfg.auth.providers ? cfg.auth.providers : [];
+    return cfg.auth && cfg.auth.providers
+      ? (cfg.auth.providers as AuthProvider[])
+      : [];
   },
 
   getAuth2faType() {
-    return cfg.auth ? cfg.auth.second_factor : null;
+    return cfg.auth ? (cfg.auth.second_factor as Auth2faType) : null;
   },
 
   getLocalAuthFlag() {

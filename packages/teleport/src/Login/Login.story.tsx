@@ -1,5 +1,5 @@
 /*
-Copyright 2019 Gravitational, Inc.
+Copyright 2019-2021 Gravitational, Inc.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -15,24 +15,31 @@ limitations under the License.
 */
 
 import React from 'react';
-import { storiesOf } from '@storybook/react';
 import LoginSuccess from './LoginSuccess';
 import LoginFailed from './LoginFailed';
 import { Login } from './Login';
 
-storiesOf('Teleport/Login', module)
-  .add('Login', () => {
-    const props = {
-      authType: '',
-      attempt: {},
-      auth2faType: 'off',
-    };
+export default {
+  title: 'Teleport/Login',
+};
 
-    return <Login {...props} />;
-  })
-  .add('LoginSuccess', () => {
-    return <LoginSuccess />;
-  })
-  .add('LoginFailed', () => {
-    return <LoginFailed />;
-  });
+export const Form = () => <Login {...sample} />;
+export const Success = () => <LoginSuccess />;
+export const FailedDefault = () => <LoginFailed />;
+export const FailedCallback = () => <LoginFailed isCallback={true} />;
+
+const sample = {
+  attempt: {
+    isProcessing: false,
+    status: 'success' as any,
+    isFailed: false,
+    isSuccess: true,
+    message: '',
+  },
+  onLogin: () => null,
+  onLoginWithU2f: () => null,
+  onLoginWithSso: () => null,
+  authProviders: [],
+  auth2faType: 'off' as any,
+  isLocalAuthEnabled: true,
+};
