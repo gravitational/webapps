@@ -1,5 +1,5 @@
 /*
-Copyright 2015 Gravitational, Inc.
+Copyright 2015-2021 Gravitational, Inc.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -63,9 +63,10 @@ const cfg = {
     sessionAuditPlayer: '/web/cluster/:clusterId/session/:sid/player',
     sessionAuditCmds: '/web/cluster/:clusterId/session/:sid/commands',
     login: '/web/login',
-    loginFailed: '/web/msg/error/login_failed',
-    loginFailedCallback: '/web/msg/error/login_failed_callback',
     loginSuccess: '/web/msg/info/login_success',
+    loginErrorLegacy: '/web/msg/error/login_failed',
+    loginError: '/web/msg/error/login',
+    loginErrorCallback: '/web/msg/error/login/callback',
     userInvite: '/web/invite/:tokenId',
     userReset: '/web/reset/:tokenId',
     // whitelist sso handlers

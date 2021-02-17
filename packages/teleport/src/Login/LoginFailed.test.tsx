@@ -24,6 +24,6 @@ test('default error message', () => {
 });
 
 test('callback error message', () => {
-  const { container } = render(<LoginFailed isCallback={true} />);
+  const { container } = render(<LoginFailed isCallbackErr={true} />);
   expect(container).toMatchSnapshot();
 });

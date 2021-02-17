@@ -19,10 +19,10 @@ import { LoginFailed as CardFailed } from 'design/CardError';
 import LogoHero from 'teleport/components/LogoHero';
 import cfg from 'teleport/config';
 
-export default function LoginFailed({ isCallback }: { isCallback?: boolean }) {
+export default function LoginFailed({ isCallbackErr }: Props) {
   let message = "unable to login, please check Teleport's log for details";
 
-  if (isCallback) {
+  if (isCallbackErr) {
     message = 'unable to process callback';
   }
 
@@ -33,3 +33,7 @@ export default function LoginFailed({ isCallback }: { isCallback?: boolean }) {
     </>
   );
 }
+
+type Props = {
+  isCallbackErr?: boolean;
+};

@@ -1,5 +1,5 @@
 /*
-Copyright 2019 Gravitational, Inc.
+Copyright 2019-2021 Gravitational, Inc.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -44,14 +44,16 @@ const Teleport: React.FC<Props> = ({ ctx, history, children }) => {
           <Switch>
             <Route
               title="Login Failed"
-              path={cfg.routes.loginFailed}
-              component={LoginFailed}
+              path={cfg.routes.loginError}
+              render={({ location }) => (
+                <LoginFailed
+                  isCallbackErr={
+                    location.pathname === cfg.routes.loginErrorCallback
+                  }
+                />
+              )}
             />
-            <Route
-              title="Login Failed"
-              path={cfg.routes.loginFailedCallback}
-              render={() => <LoginFailed isCallback={true} />}
-            />
+            <Route path={cfg.routes.loginErrorLegacy} component={LoginFailed} />
             <Route title="Login" path={cfg.routes.login} component={Login} />
             <Route
               title="Success"
