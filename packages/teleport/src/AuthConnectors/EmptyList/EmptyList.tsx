@@ -29,32 +29,29 @@ export default function EmptyList({ onCreate }: Props) {
         mr={5}
       />
       <Box>
-        <Box>
-          <Text typography="h6" mb={3} caps>
-            Create Your First Github Connector
-          </Text>
-          <Text typography="subtitle1" mb={3}>
-            Authentication connectors allow Teleport to authenticate users via
-            an external identity source such as Okta, Active Directory, Github,
-            etc. This authentication method is frequently called single sign-on
-            (SSO).
-          </Text>
-          <Text typography="subtitle1">
-            Open Source Teleport supports only github connectors. Please{' '}
-            <Text
-              as="a"
-              color="light"
-              href="https://goteleport.com/teleport/docs/admin-guide/#github-oauth-20"
-              target="_blank"
-            >
-              view our documentation
-            </Text>{' '}
-            on how to configure a Github connector.
-          </Text>
-          <ButtonPrimary onClick={onCreate} mt={4} width="240px">
-            New Github Connector
-          </ButtonPrimary>
-        </Box>
+        <Text typography="h6" mb={3} caps>
+          Create Your First Github Connector
+        </Text>
+        <Text typography="subtitle1" mb={3}>
+          Authentication connectors allow Teleport to authenticate users via an
+          external identity source such as Okta, Active Directory, Github, etc.
+          This authentication method is frequently called single sign-on (SSO).
+        </Text>
+        <Text typography="subtitle1">
+          Open Source Teleport supports only github connectors. Please{' '}
+          <Text
+            as="a"
+            color="light"
+            href="https://goteleport.com/teleport/docs/admin-guide/#github-oauth-20"
+            target="_blank"
+          >
+            view our documentation
+          </Text>{' '}
+          on how to configure a Github connector.
+        </Text>
+        <ButtonPrimary onClick={onCreate} mt={4} width="240px">
+          New Github Connector
+        </ButtonPrimary>
       </Box>
     </Card>
   );
