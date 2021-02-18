@@ -93,7 +93,7 @@ exports[`callback error message 1`] = `
       class="c3"
       kind="danger"
     >
-      unable to process callback
+      custom message
     </div>
      
     <div

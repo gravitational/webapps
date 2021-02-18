@@ -16,7 +16,7 @@ limitations under the License.
 
 import React from 'react';
 import LoginSuccess from './LoginSuccess';
-import LoginFailed from './LoginFailed';
+import { LoginFailed } from './LoginFailed';
 import { Login } from './Login';
 
 export default {
@@ -26,7 +26,7 @@ export default {
 export const Form = () => <Login {...sample} />;
 export const Success = () => <LoginSuccess />;
 export const FailedDefault = () => <LoginFailed />;
-export const FailedCallback = () => <LoginFailed isCallback={true} />;
+export const FailedCustom = () => <LoginFailed message="custom message" />;
 
 const sample = {
   attempt: {

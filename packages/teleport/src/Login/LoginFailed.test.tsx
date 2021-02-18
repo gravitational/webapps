@@ -16,14 +16,14 @@
 
 import React from 'react';
 import { render } from 'design/utils/testing';
-import LoginFailed from './LoginFailed';
+import { FailedDefault, FailedCustom } from './Login.story';
 
 test('default error message', () => {
-  const { container } = render(<LoginFailed />);
+  const { container } = render(<FailedDefault />);
   expect(container).toMatchSnapshot();
 });
 
 test('callback error message', () => {
-  const { container } = render(<LoginFailed isCallbackErr={true} />);
+  const { container } = render(<FailedCustom />);
   expect(container).toMatchSnapshot();
 });

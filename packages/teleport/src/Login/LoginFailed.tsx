@@ -16,24 +16,27 @@ limitations under the License.
 
 import React from 'react';
 import { LoginFailed as CardFailed } from 'design/CardError';
+import { Route, Switch } from 'teleport/components/Router';
 import LogoHero from 'teleport/components/LogoHero';
 import cfg from 'teleport/config';
 
-export default function LoginFailed({ isCallbackErr }: Props) {
-  let message = "unable to login, please check Teleport's log for details";
-
-  if (isCallbackErr) {
-    message = 'unable to process callback';
-  }
-
+export default function Container() {
   return (
-    <>
-      <LogoHero />
-      <CardFailed loginUrl={cfg.routes.login} message={message} />
-    </>
+    <Switch>
+      <Route path={cfg.routes.loginErrorCallback}>
+        <LoginFailed message="unable to process callback" />
+      </Route>
+      <Route component={LoginFailed} />
+    </Switch>
   );
 }
 
-type Props = {
-  isCallbackErr?: boolean;
-};
+export function LoginFailed({ message }: { message?: string }) {
+  const defaultMsg = "unable to login, please check Teleport's log for details";
+  return (
+    <>
+      <LogoHero />
+      <CardFailed loginUrl={cfg.routes.login} message={message || defaultMsg} />
+    </>
+  );
+}
