@@ -26,8 +26,8 @@ const cfg = {
 
   auth: {
     localAuthEnabled: true,
-    providers: [],
-    second_factor: 'off',
+    providers: [] as AuthProvider[],
+    second_factor: 'off' as Auth2faType,
     authType: 'local',
   },
 
@@ -120,13 +120,11 @@ const cfg = {
   },
 
   getAuthProviders() {
-    return cfg.auth && cfg.auth.providers
-      ? (cfg.auth.providers as AuthProvider[])
-      : [];
+    return cfg.auth && cfg.auth.providers ? cfg.auth.providers : [];
   },
 
   getAuth2faType() {
-    return cfg.auth ? (cfg.auth.second_factor as Auth2faType) : null;
+    return cfg.auth ? cfg.auth.second_factor : null;
   },
 
   getLocalAuthFlag() {
