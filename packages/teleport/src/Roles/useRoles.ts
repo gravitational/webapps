@@ -17,10 +17,10 @@ limitations under the License.
 import { useEffect, useState } from 'react';
 import useAttempt from 'shared/hooks/useAttemptNext';
 import TeleportContext from 'teleport/teleportContext';
-import { Resource } from 'teleport/services/resources';
+import { Resource, KindRole } from 'teleport/services/resources';
 
 export default function useRoles(ctx: TeleportContext) {
-  const [items, setItems] = useState<Resource[]>([]);
+  const [items, setItems] = useState<Resource<KindRole>[]>([]);
   const { attempt, run } = useAttempt('processing');
 
   function fetchData() {

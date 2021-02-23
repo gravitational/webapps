@@ -1,6 +1,6 @@
 import { Resource } from './types';
 
-export function makeResource(json: any): Resource {
+export function makeResource<T>(json: any): Resource<T> {
   json = json || {};
 
   return {
@@ -11,7 +11,7 @@ export function makeResource(json: any): Resource {
   };
 }
 
-export function makeResourceList(json: any) {
+export function makeResourceList<T>(json: any): Resource<T>[] {
   json = json || [];
   return json.map(resource => makeResource(resource));
 }

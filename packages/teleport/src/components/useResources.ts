@@ -15,15 +15,18 @@ limitations under the License.
 */
 
 import { useState } from 'shared/hooks';
-import { Resource, ResourceKind } from 'teleport/services/resources';
+import { Resource } from 'teleport/services/resources';
 
-export default function useResources(
-  resources: Resource[],
-  templates: Templates
+export default function useResources<T extends string>(
+  resources: Resource<T>[],
+  templates: Templates<T>
 ) {
-  const [state, setState] = useState(defaultState);
+  const [state, setState] = useState({
+    status: 'reading' as EditingStatus,
+    item: null as Resource<T>,
+  });
 
-  const create = (kind: ResourceKind) => {
+  const create = (kind: T) => {
     const content = templates[kind] || '';
     setState({
       status: 'creating',
@@ -66,9 +69,4 @@ export type State = ReturnType<typeof useResources>;
 
 type EditingStatus = 'creating' | 'editing' | 'removing' | 'empty';
 
-type Templates = Partial<Record<ResourceKind, string>>;
-
-const defaultState = {
-  status: 'reading' as EditingStatus,
-  item: null as Resource,
-};
+type Templates<T extends string> = Partial<Record<T, string>>;
