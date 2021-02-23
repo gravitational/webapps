@@ -1,4 +1,4 @@
-export type Resource<T> = {
+export type Resource<T extends Kind> = {
   id: string;
   kind: T;
   name: string;
@@ -6,6 +6,7 @@ export type Resource<T> = {
   content: string;
 };
 
-export type KindGithubConnector = 'github';
 export type KindRole = 'role';
 export type KindTrustedCluster = 'trusted_cluster';
+export type KindAuthConnectors = 'github' | 'saml' | 'oidc';
+export type Kind = KindRole | KindTrustedCluster | KindAuthConnectors;

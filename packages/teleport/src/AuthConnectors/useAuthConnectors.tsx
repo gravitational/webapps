@@ -16,12 +16,12 @@ limitations under the License.
 
 import { useEffect, useState } from 'react';
 import useAttempt from 'shared/hooks/useAttemptNext';
-import { Resource, KindGithubConnector } from 'teleport/services/resources';
+import { Resource } from 'teleport/services/resources';
 import useTeleport from 'teleport/useTeleport';
 
 export default function useAuthConnectors() {
   const ctx = useTeleport();
-  const [items, setItems] = useState<Resource<KindGithubConnector>[]>([]);
+  const [items, setItems] = useState<Resource<'github'>[]>([]);
   const { attempt, run } = useAttempt('processing');
 
   function fetchData() {

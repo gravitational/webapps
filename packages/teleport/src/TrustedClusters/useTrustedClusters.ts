@@ -15,12 +15,12 @@ limitations under the License.
 */
 
 import { useEffect, useState, useAttempt } from 'shared/hooks';
-import { Resource, KindTrustedCluster } from 'teleport/services/resources';
+import { Resource } from 'teleport/services/resources';
 import useTeleport from 'teleport/useTeleport';
 
 export default function useTrustedClusters() {
   const teleContext = useTeleport();
-  const [items, setItems] = useState<Resource<KindTrustedCluster>[]>([]);
+  const [items, setItems] = useState<Resource<'trusted_cluster'>[]>([]);
   const [attempt, attemptActions] = useAttempt({ isProcessing: true });
   const canCreate = teleContext.storeUser.getTrustedClusterAccess().create;
 
