@@ -15,9 +15,9 @@ limitations under the License.
 */
 
 import { useState } from 'shared/hooks';
-import { Resource } from 'teleport/services/resources';
+import { Resource, Kind } from 'teleport/services/resources';
 
-export default function useResources<T extends string>(
+export default function useResources<T extends Kind>(
   resources: Resource<T>[],
   templates: Templates<T>
 ) {
