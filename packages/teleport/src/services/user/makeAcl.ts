@@ -29,7 +29,7 @@ export default function makeAcl(json): Acl {
   const appServers = json.appServers || defaultAccess;
   const tokens = json.tokens || defaultAccess;
   const accessRequests = json.accessRequests || defaultAccess;
-  const billing = json.billingInformation || defaultAccess;
+  const billing = json.billing || defaultAccess;
 
   return {
     logins,
