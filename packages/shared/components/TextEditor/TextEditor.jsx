@@ -37,10 +37,6 @@ class TextEditor extends React.Component {
     }
   };
 
-  getData() {
-    return this.sessions.map(s => s.getValue());
-  }
-
   componentDidUpdate(prevProps) {
     if (prevProps.activeIndex !== this.props.activeIndex) {
       this.setActiveSession(this.props.activeIndex);
@@ -50,14 +46,23 @@ class TextEditor extends React.Component {
   }
 
   createSession({ content, type, tabSize = 2 }) {
-    const mode = getMode(type);
-    let session = new ace.EditSession(content);
-    let undoManager = new UndoManager();
+    const session = new ace.EditSession(content);
+    const undoManager = new UndoManager();
     undoManager.markClean();
     session.setUndoManager(undoManager);
     session.setUseWrapMode(false);
-    session.setMode(mode);
     session.setOptions({ tabSize, useSoftTabs: true });
+    session.setMode(getMode(type));
+    return session;
+  }
+
+  createSessionReadOnly({ content, type }) {
+    const session = new ace.EditSession(content);
+
+    // Workers are syntax validators which isn't needed in read only mode.
+    session.setOptions({ useWorker: false });
+    session.setUseWrapMode(false);
+    session.setMode(getMode(type));
     return session;
   }
 
@@ -72,8 +77,12 @@ class TextEditor extends React.Component {
   }
 
   initSessions(data = []) {
-    this.isDirty = false;
     this.sessions = data.map(item => this.createSession(item));
+    this.setActiveSession(0);
+  }
+
+  initSessionsReadOnly(data = []) {
+    this.sessions = data.map(item => this.createSessionReadOnly(item));
     this.setActiveSession(0);
   }
 
@@ -90,8 +99,13 @@ class TextEditor extends React.Component {
     this.editor.on('input', this.onChange);
     this.editor.setReadOnly(readOnly);
     this.editor.setTheme(theme);
+
+    if (readOnly) {
+      this.initSessionsReadOnly(data);
+      return;
+    }
+
     this.initSessions(data);
-    this.editor.focus();
   }
 
   componentWillUnmount() {
