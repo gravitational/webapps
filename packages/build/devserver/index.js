@@ -36,15 +36,6 @@ if (!urlObj.host) {
 const PROXY_TARGET = urlObj.host;
 const ROOT = '/web';
 const PORT = '8080';
-const WEBPACK_CLIENT_ENTRY =
-  'webpack-dev-server/client?https://0.0.0.0:' + PORT;
-const WEBPACK_SRV_ENTRY = 'webpack/hot/dev-server';
-
-// setup webpack config with hot-reloading
-for (var prop in webpackConfig.entry) {
-  webpackConfig.entry[prop].unshift('react-hot-loader/patch');
-  webpackConfig.entry[prop].unshift(WEBPACK_CLIENT_ENTRY, WEBPACK_SRV_ENTRY);
-}
 
 // init webpack compiler
 const compiler = initCompiler({ webpackConfig });
@@ -69,7 +60,7 @@ const server = new WebpackDevServer(compiler.webpackCompiler, {
   proxy: {
     // gravity and teleport APIs
     '/web/grafana/*': getTargetOptions(),
-    '/web/config.*': getTargetOptions(),
+    '/config.*': getTargetOptions(),
     '/pack/v1/*': getTargetOptions(),
     '/portalapi/*': getTargetOptions(),
     '/portal*': getTargetOptions(),
@@ -83,6 +74,7 @@ const server = new WebpackDevServer(compiler.webpackCompiler, {
   publicPath: ROOT + '/app',
   hot: true,
   disableHostCheck: true,
+  serveIndex: false,
   https: true,
   inline: true,
   headers: { 'X-Custom-Header': 'yes' },
@@ -126,6 +118,5 @@ function serveIndexHtml() {
   };
 }
 
-server.app.get(ROOT + '/*', serveIndexHtml());
-server.app.get(ROOT, serveIndexHtml());
+server.app.get('/*', serveIndexHtml());
 server.listen(PORT, '0.0.0.0', function() {});
