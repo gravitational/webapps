@@ -60,7 +60,7 @@ const server = new WebpackDevServer(compiler.webpackCompiler, {
   proxy: {
     // gravity and teleport APIs
     '/web/grafana/*': getTargetOptions(),
-    '/config.*': getTargetOptions(),
+    '/web/config.*': getTargetOptions(),
     '/pack/v1/*': getTargetOptions(),
     '/portalapi/*': getTargetOptions(),
     '/portal*': getTargetOptions(),
