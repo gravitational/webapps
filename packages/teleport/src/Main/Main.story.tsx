@@ -47,8 +47,6 @@ export default {
   title: 'Teleport/Main',
 };
 
-//OSS.storyName = 'Teleport/Main';
-
 function useMainStory() {
   const [history] = React.useState(() => {
     return createMemoryHistory({
