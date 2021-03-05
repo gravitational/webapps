@@ -22,6 +22,7 @@ import { AuthProvider, Auth2faType } from 'shared/services';
 import SSOButtonList from './SsoButtons';
 import Validation, { Validator } from '../Validation';
 import FieldInput from '../FieldInput';
+import FieldSelect from '../FieldSelect';
 import { requiredToken, requiredField } from '../Validation/rules';
 import { useAttempt } from 'shared/hooks';
 
@@ -37,17 +38,23 @@ export default function LoginForm(props: Props) {
     isLocalAuthEnabled = true,
   } = props;
 
-  const u2fEnabled = auth2faType === 'u2f';
-  const otpEnabled = auth2faType === 'otp';
+  const u2fEnabled = auth2faType === 'u2f' || auth2faType === 'on' || auth2faType === 'optional';
+  const otpEnabled = auth2faType === 'otp' || auth2faType === 'on' || auth2faType === 'optional';
   const ssoEnabled = authProviders && authProviders.length > 0;
 
   const [pass, setPass] = React.useState('');
   const [user, setUser] = React.useState('');
   const [token, setToken] = React.useState('');
+  const mfaOptions = [{value: 'u2f', label: 'U2F'}, {value: 'otp', label: 'TOTP'}];
+  const [mfaType, setMFAType] = React.useState(mfaOptions[0]);
   const [isExpanded, toggleExpander] = React.useState(
     !(isLocalAuthEnabled && ssoEnabled)
   );
   const { isFailed, isProcessing, message } = attempt;
+
+  function u2fLogin() {
+    return (u2fEnabled && (!otpEnabled || mfaType.value === 'u2f'));
+  }
 
   function onLoginClick(
     e: React.MouseEvent<HTMLButtonElement>,
@@ -58,7 +65,7 @@ export default function LoginForm(props: Props) {
       return;
     }
 
-    if (u2fEnabled) {
+    if (u2fLogin()) {
       onLoginWithU2f(user, pass);
     } else {
       onLogin(user, pass, token);
@@ -125,7 +132,47 @@ export default function LoginForm(props: Props) {
                 type="password"
                 placeholder="Password"
               />
-              {otpEnabled && (
+              {otpEnabled && u2fEnabled && (
+                <Flex flexDirection="row">
+                  <Flex flexDirection="column">
+                    <FieldSelect
+                      label="Second factor"
+                      value={mfaType}
+                      options={mfaOptions}
+                      onChange={e => setMFAType(e)}
+                      mr={3}
+                      isDisabled={isProcessing}
+                    />
+                  </Flex>
+                  <Flex
+                    alignItems="center"
+                    justifyContent="center"
+                    flexDirection="column"
+                  >
+                    {mfaType.value === "otp" && (
+                      <FieldInput
+                        label="Two factor token"
+                        rule={requiredToken}
+                        autoComplete="off"
+                        width="50%"
+                        value={token}
+                        onChange={e => setToken(e.target.value)}
+                        placeholder="123 456"
+                      />
+                    )}
+                    {mfaType.value === "u2f" && isProcessing && (
+                      <Text
+                        width="50%"
+                        typography="paragraph2"
+                        textAlign="center"
+                      >
+                        Insert your U2F key and press the button on the key
+                      </Text>
+                    )}
+                  </Flex>
+                </Flex>
+              )}
+              {otpEnabled && !u2fEnabled && (
                 <Flex flexDirection="row">
                   <FieldInput
                     label="Two factor token"
@@ -149,7 +196,7 @@ export default function LoginForm(props: Props) {
               >
                 LOGIN
               </ButtonPrimary>
-              {isProcessing && u2fEnabled && (
+              {isProcessing && u2fEnabled && !otpEnabled && (
                 <Text
                   mt={2}
                   typography="paragraph2"
