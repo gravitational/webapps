@@ -28,6 +28,11 @@ export const formatters: Formatters = {
     format: ({ id, state }) =>
       `Access request [${id}] has been updated to ${state}`,
   },
+  [CodeEnum.ACCESS_REQUEST_REVIEWED]: {
+    desc: 'Access Request Reviewed',
+    format: ({ id, reviewer }) =>
+      `Access request [${id}] has been reviewed by ${reviewer}`,
+  },
   [CodeEnum.SESSION_COMMAND]: {
     desc: 'Session Command',
     format: ({ program, sid }) =>
