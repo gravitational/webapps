@@ -16,15 +16,16 @@ limitations under the License.
 
 import React from 'react';
 import styled from 'styled-components';
-import { Card, Text, Flex, ButtonLink, ButtonPrimary } from 'design';
+import { Card, Text, Flex, ButtonLink, ButtonPrimary, Box } from 'design';
 import * as Alerts from 'design/Alert';
 import { AuthProvider, Auth2faType } from 'shared/services';
-import SSOButtonList from './SsoButtons';
+import { Option } from 'shared/components/Select';
+import { useAttempt } from 'shared/hooks';
 import Validation, { Validator } from '../Validation';
 import FieldInput from '../FieldInput';
 import FieldSelect from '../FieldSelect';
 import { requiredToken, requiredField } from '../Validation/rules';
-import { useAttempt } from 'shared/hooks';
+import SSOButtonList from './SsoButtons';
 
 export default function LoginForm(props: Props) {
   const {
@@ -36,25 +37,32 @@ export default function LoginForm(props: Props) {
     authProviders,
     auth2faType = 'off',
     isLocalAuthEnabled = true,
+    clearAttempt,
   } = props;
 
-  const u2fEnabled = auth2faType === 'u2f' || auth2faType === 'on' || auth2faType === 'optional';
-  const otpEnabled = auth2faType === 'otp' || auth2faType === 'on' || auth2faType === 'optional';
+  const mfaEnabled = auth2faType === 'on' || auth2faType === 'optional';
+  const u2fEnabled = auth2faType === 'u2f';
+  const otpEnabled = auth2faType === 'otp';
   const ssoEnabled = authProviders && authProviders.length > 0;
 
   const [pass, setPass] = React.useState('');
   const [user, setUser] = React.useState('');
   const [token, setToken] = React.useState('');
-  const mfaOptions = [{value: 'u2f', label: 'U2F'}, {value: 'otp', label: 'TOTP'}];
-  const [mfaType, setMFAType] = React.useState(mfaOptions[0]);
+  const [mfaOptions] = React.useState(() => {
+    let mfaOptions = [
+      { value: 'u2f', label: 'U2F' },
+      { value: 'otp', label: 'TOTP' },
+    ];
+    if (auth2faType === 'optional') {
+      mfaOptions = [{ value: 'none', label: 'NONE' }, ...mfaOptions];
+    }
+    return mfaOptions;
+  });
+  const [mfaType, setMfaType] = React.useState(mfaOptions[0]);
   const [isExpanded, toggleExpander] = React.useState(
     !(isLocalAuthEnabled && ssoEnabled)
   );
   const { isFailed, isProcessing, message } = attempt;
-
-  function u2fLogin() {
-    return (u2fEnabled && (!otpEnabled || mfaType.value === 'u2f'));
-  }
 
   function onLoginClick(
     e: React.MouseEvent<HTMLButtonElement>,
@@ -65,11 +73,18 @@ export default function LoginForm(props: Props) {
       return;
     }
 
-    if (u2fLogin()) {
+    if (u2fEnabled || (mfaEnabled && mfaType.value === 'u2f')) {
       onLoginWithU2f(user, pass);
     } else {
       onLogin(user, pass, token);
     }
+  }
+
+  function onSetMfaOption(option: Option, validator: Validator) {
+    setToken('');
+    clearAttempt();
+    validator.reset();
+    setMfaType(option);
   }
 
   if (!ssoEnabled && !isLocalAuthEnabled) {
@@ -132,47 +147,40 @@ export default function LoginForm(props: Props) {
                 type="password"
                 placeholder="Password"
               />
-              {otpEnabled && u2fEnabled && (
-                <Flex flexDirection="row">
-                  <Flex flexDirection="column">
-                    <FieldSelect
+              {mfaEnabled && (
+                <Flex alignItems="flex-end" mb={4}>
+                  <Box width="50%" data-testid="mfa-select">
+                    <MfaSelect
                       label="Second factor"
                       value={mfaType}
                       options={mfaOptions}
-                      onChange={e => setMFAType(e)}
+                      onChange={opt => onSetMfaOption(opt, validator)}
                       mr={3}
+                      mb={0}
                       isDisabled={isProcessing}
                     />
-                  </Flex>
-                  <Flex
-                    alignItems="center"
-                    justifyContent="center"
-                    flexDirection="column"
-                  >
-                    {mfaType.value === "otp" && (
+                  </Box>
+                  <Box width="50%">
+                    {mfaType.value === 'otp' && (
                       <FieldInput
                         label="Two factor token"
                         rule={requiredToken}
                         autoComplete="off"
-                        width="50%"
                         value={token}
                         onChange={e => setToken(e.target.value)}
                         placeholder="123 456"
+                        mb={0}
                       />
                     )}
-                    {mfaType.value === "u2f" && isProcessing && (
-                      <Text
-                        width="50%"
-                        typography="paragraph2"
-                        textAlign="center"
-                      >
+                    {mfaType.value === 'u2f' && isProcessing && (
+                      <Text typography="body2" mb={1}>
                         Insert your U2F key and press the button on the key
                       </Text>
                     )}
-                  </Flex>
+                  </Box>
                 </Flex>
               )}
-              {otpEnabled && !u2fEnabled && (
+              {otpEnabled && (
                 <Flex flexDirection="row">
                   <FieldInput
                     label="Two factor token"
@@ -196,7 +204,7 @@ export default function LoginForm(props: Props) {
               >
                 LOGIN
               </ButtonPrimary>
-              {isProcessing && u2fEnabled && !otpEnabled && (
+              {isProcessing && u2fEnabled && (
                 <Text
                   mt={2}
                   typography="paragraph2"
@@ -258,12 +266,34 @@ const StyledOr = styled.div`
   z-index: 1;
 `;
 
+const MfaSelect = styled(FieldSelect)`
+  .react-select__control {
+    border-radius: 4px;
+    border-color: rgba(255, 255, 255, 0.24);
+    background-color: #28325e;
+
+    &:hover {
+      border-color: rgba(255, 255, 255, 0.24);
+      background-color: #39436d;
+      .react-select__dropdown-indicator {
+        color: #fff;
+      }
+    }
+  }
+
+  .react-select__single-value,
+  .react-select__dropdown-indicator {
+    color: #fff;
+  }
+`;
+
 type Props = {
   title?: string;
   isLocalAuthEnabled?: boolean;
   authProviders?: AuthProvider[];
   auth2faType?: Auth2faType;
   attempt: ReturnType<typeof useAttempt>[0];
+  clearAttempt?: () => void;
   onLoginWithSso(provider: AuthProvider): void;
   onLoginWithU2f(username: string, password: string): void;
   onLogin(username: string, password: string, token: string): void;
