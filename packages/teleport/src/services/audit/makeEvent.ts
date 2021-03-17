@@ -306,6 +306,22 @@ export const formatters: Formatters = {
     format: ({ user, mfa_device_name, mfa_device_type }) =>
       `User [${user}] deleted ${mfa_device_type} device [${mfa_device_name}]`,
   },
+  [CodeEnum.BILLING_CARD_CREATE]: {
+    desc: 'Billing Credit Card Created',
+    format: ({ user }) => `A billing credit card has been created by ${user}`,
+  },
+  [CodeEnum.BILLING_CARD_DELETE]: {
+    desc: 'Billing Credit Card Deleted',
+    format: ({ user }) => `A billing credit card has been deleted by ${user}`,
+  },
+  [CodeEnum.BILLING_CARD_UPDATE]: {
+    desc: 'Billing Credit Card Updated',
+    format: ({ user }) => `A billing credit card has been updated by ${user}`,
+  },
+  [CodeEnum.BILLING_ACCOUNT_UPDATE]: {
+    desc: 'Billing Account Updated',
+    format: ({ user }) => `Billing account has been updated by ${user}`,
+  },
 };
 
 const unknownFormatter = {

@@ -73,6 +73,10 @@ const EventIconMap = {
   [CodeEnum.DATABASE_SESSION_QUERY]: Icons.Database,
   [CodeEnum.MFA_DEVICE_ADD]: Icons.Info,
   [CodeEnum.MFA_DEVICE_DELETE]: Icons.Info,
+  [CodeEnum.BILLING_CARD_CREATE]: Icons.Info,
+  [CodeEnum.BILLING_CARD_DELETE]: Icons.Info,
+  [CodeEnum.BILLING_CARD_UPDATE]: Icons.Info,
+  [CodeEnum.BILLING_ACCOUNT_UPDATE]: Icons.Info,
 };
 
 export default function TypeCell(props) {
