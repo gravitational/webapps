@@ -360,7 +360,7 @@ exports[`support Enterprise 1`] = `
       <div
         class="c13"
       >
-        aws
+        test
       </div>
     </div>
     <div
@@ -392,23 +392,7 @@ exports[`support Enterprise 1`] = `
       <div
         class="c13"
       >
-        localhost
-      </div>
-    </div>
-    <div
-      class="c11"
-    >
-      <div
-        class="c12"
-        style="width: 130px;"
-      >
-        Connected Nodes
-        :
-      </div>
-      <div
-        class="c13"
-      >
-        1
+        localhost:3080
       </div>
     </div>
   </div>
@@ -768,7 +752,7 @@ exports[`support OSS 1`] = `
       <div
         class="c13"
       >
-        aws
+        test
       </div>
     </div>
     <div
@@ -800,23 +784,7 @@ exports[`support OSS 1`] = `
       <div
         class="c13"
       >
-        localhost
-      </div>
-    </div>
-    <div
-      class="c11"
-    >
-      <div
-        class="c12"
-        style="width: 130px;"
-      >
-        Connected Nodes
-        :
-      </div>
-      <div
-        class="c13"
-      >
-        1
+        localhost:3080
       </div>
     </div>
   </div>

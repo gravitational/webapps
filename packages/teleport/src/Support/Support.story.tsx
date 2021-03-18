@@ -15,35 +15,21 @@
  */
 
 import React from 'react';
-import Support from './Support';
-import * as teleport from 'teleport';
-import cfg from 'teleport/config';
-import { userContext } from 'teleport/Main/fixtures';
+import { Support } from './Support';
 
 export default {
   title: 'Teleport/Support',
 };
 
-export const SupportOSS = () => {
-  cfg.isEnterprise = false;
-  const ctx = new teleport.Context();
-  ctx.storeUser.state = userContext;
+export const SupportOSS = () => <Support {...props} />;
 
-  return (
-    <teleport.ContextProvider ctx={ctx}>
-      <Support />
-    </teleport.ContextProvider>
-  );
-};
+export const SupportEnterprise = () => (
+  <Support {...props} isEnterprise={true} />
+);
 
-export const SupportEnterprise = () => {
-  cfg.isEnterprise = true;
-  const ctx = new teleport.Context();
-  ctx.storeUser.state = userContext;
-
-  return (
-    <teleport.ContextProvider ctx={ctx}>
-      <Support />
-    </teleport.ContextProvider>
-  );
+const props = {
+  clusterId: 'test',
+  authVersion: '4.4.0-dev',
+  publicURL: 'localhost:3080',
+  isEnterprise: false,
 };
