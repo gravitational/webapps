@@ -14,11 +14,13 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
+type StatusEnum = 'online' | 'offline';
+
 export interface Cluster {
   clusterId: string;
   lastConnected: Date;
   connectedText: string;
-  status: string;
+  status: StatusEnum;
   url: string;
   nodeCount: number;
   publicURL: string;

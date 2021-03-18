@@ -51,8 +51,3 @@ export default function makeCluster(json): Cluster {
     proxyVersion,
   };
 }
-
-export const StatusEnum = {
-  OFFLINE: 'offline',
-  ONLINE: 'online',
-};

@@ -20,10 +20,12 @@ import { NavLink } from 'react-router-dom';
 import styled from 'styled-components';
 import isMatch from 'design/utils/match';
 import { Flex } from 'design';
+import { Cli } from 'design/Icon';
 import { Cluster } from 'teleport/services/clusters';
 import { MenuButton, MenuItem } from 'shared/components/MenuAction';
 import {
   SortHeaderCell,
+  TextCell,
   Cell,
   Table,
   Column,
@@ -81,6 +83,61 @@ export default function ClustersList(props: Props) {
             />
           }
           cell={<NameCell />}
+        />
+        <Column
+          columnKey="status"
+          header={
+            <SortHeaderCell
+              sortDir={sorting.status}
+              onSortChange={onSortChange}
+              title="Status"
+            />
+          }
+          cell={<TextCell />}
+        />
+        <Column
+          columnKey="authVersion"
+          header={
+            <SortHeaderCell
+              sortDir={sorting.authVersion}
+              onSortChange={onSortChange}
+              title="Version"
+            />
+          }
+          cell={<TextCell />}
+        />
+        <Column
+          columnKey="nodeCount"
+          header={
+            <SortHeaderCell
+              sortDir={sorting.nodeCount}
+              onSortChange={onSortChange}
+              title="Nodes"
+            />
+          }
+          cell={<NodeCountCell />}
+        />
+        <Column
+          columnKey="publicURL"
+          header={
+            <SortHeaderCell
+              sortDir={sorting.publicURL}
+              onSortChange={onSortChange}
+              title="Public URL"
+            />
+          }
+          cell={<TextCell />}
+        />
+        <Column
+          columnKey="connectedText"
+          header={
+            <SortHeaderCell
+              sortDir={sorting.connectedText}
+              onSortChange={onSortChange}
+              title="Last Connected"
+            />
+          }
+          cell={<TextCell />}
         />
         <Column
           header={<Cell />}
@@ -169,6 +226,28 @@ function ActionCell(props: { flags: MenuFlags }) {
   );
 }
 
+export function NodeCountCell(props) {
+  const { rowIndex, data } = props;
+  const { nodeCount, clusterId } = data[rowIndex];
+  const terminalURL = cfg.getConsoleNodesRoute(clusterId);
+
+  // show empty button when 0 nodes
+  const btnText = nodeCount > 0 ? nodeCount : '';
+
+  return (
+    <Cell>
+      <StyledConsoleLink
+        title="Open Cluster Terminal"
+        target="_blank"
+        as="a"
+        href={terminalURL}
+      >
+        <Cli /> {btnText}
+      </StyledConsoleLink>
+    </Cell>
+  );
+}
+
 function renderMenuItem(name: string, url: string) {
   return (
     <MenuItem as={NavLink} to={url} key={name}>
@@ -176,6 +255,32 @@ function renderMenuItem(name: string, url: string) {
     </MenuItem>
   );
 }
+
+const StyledConsoleLink = styled(Text)(
+  props => `
+  border: 1px solid ${props.theme.colors.dark};
+  display: inline-flex;
+  align-items: center;
+  border-radius: 2px;
+  padding: 0 8px 0 2px;
+  height: 16px;
+  font-size: 10px;
+  text-decoration: none;
+  background: ${props.theme.colors.bgTerminal};
+  color: ${props.theme.colors.light};
+  font-weight: ${props.theme.fontWeights.regular};
+  transition: all .3s;
+  min-width: 24px;
+  &:hover, &:focus {
+    box-shadow: 0 4px 16px rgba(0, 0, 0, .24);
+    border: 1px solid ${props.theme.colors.accent};
+  }
+  span {
+    margin-right: 4px;
+    opacity: .32;
+  }
+`
+);
 
 type SortCol = keyof Cluster;
 
