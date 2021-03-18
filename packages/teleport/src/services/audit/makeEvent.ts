@@ -308,19 +308,19 @@ export const formatters: Formatters = {
   },
   [CodeEnum.BILLING_CARD_CREATE]: {
     desc: 'Billing Credit Card Created',
-    format: ({ user }) => `A billing credit card has been created by ${user}`,
+    format: ({ user }) => `User [${user}] has created a credit card`,
   },
   [CodeEnum.BILLING_CARD_DELETE]: {
     desc: 'Billing Credit Card Deleted',
-    format: ({ user }) => `A billing credit card has been deleted by ${user}`,
+    format: ({ user }) => `User [${user}] has deleted a credit card`,
   },
   [CodeEnum.BILLING_CARD_UPDATE]: {
     desc: 'Billing Credit Card Updated',
-    format: ({ user }) => `A billing credit card has been updated by ${user}`,
+    format: ({ user }) => `User [${user}] has updated a credit card`,
   },
   [CodeEnum.BILLING_ACCOUNT_UPDATE]: {
     desc: 'Billing Account Updated',
-    format: ({ user }) => `Billing account has been updated by ${user}`,
+    format: ({ user }) => `User [${user}] has updated the billing account`,
   },
 };
 
