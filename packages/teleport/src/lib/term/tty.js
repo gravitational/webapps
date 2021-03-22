@@ -126,6 +126,9 @@ class Tty extends EventEmitter {
       const uintArray = new Uint8Array(ev.data);
       const msg = this._proto.decode(uintArray);
       switch (msg.type) {
+        case MessageTypeEnum.U2F_CHALLENGE:
+          this._processU2FChallenge(msg.payload);
+          break;
         case MessageTypeEnum.AUDIT:
           this._processAuditPayload(msg.payload);
           break;
@@ -155,6 +158,26 @@ class Tty extends EventEmitter {
       h = Number(h);
       this.emit(TermEventEnum.RESIZE, { w, h });
     }
+  }
+
+  _processU2FChallenge(payload) {
+    const data = JSON.parse(payload);
+    window.u2f.sign(data.appId, data.challenge, data.u2f_challenges, this._processU2FResponse.bind(this));
+  }
+
+  _processU2FResponse(res) {
+    if (res.errorCode) {
+      let errorMsg = `error code ${res.errorCode}`;
+      // lookup error message...
+      for (var msg in window.u2f.ErrorCodes) {
+        if (window.u2f.ErrorCodes[msg] == res.errorCode) {
+          errorMsg = msg;
+        }
+      }
+      logger.info(`Please check your U2F settings, make sure it is plugged in and you are using the supported browser.\nU2F error: ${errorMsg}`);
+      return;
+    }
+    this.send(JSON.stringify(res));
   }
 }
 
