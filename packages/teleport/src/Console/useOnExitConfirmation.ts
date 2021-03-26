@@ -64,17 +64,6 @@ function useOnExitConfirmation(ctx: ConsoleContext) {
   }, []);
 
   /**
-   * confirmCloseSession prompts user to confirm to close.
-   */
-  function confirmCloseSession(participants: number) {
-    if (participants > 1) {
-      return window.confirm('Are you sure you want to leave this session?');
-    }
-
-    return window.confirm('Are you sure you want to terminate this session?');
-  }
-
-  /**
    * hasLastingSshConnection calculates the milliseconds between given date
    * from when fn was called.
    *
@@ -104,9 +93,15 @@ function useOnExitConfirmation(ctx: ConsoleContext) {
     if (hasLastingSshConnection(doc)) {
       const sid = (doc as stores.DocumentSsh).sid;
       const participants = ctx.storeParties.state[sid];
-      if (participants) {
-        return confirmCloseSession(participants.length);
+      if (!participants) {
+        return true;
       }
+
+      if (participants.length > 1) {
+        return window.confirm('Are you sure you want to leave this session?');
+      }
+
+      return window.confirm('Are you sure you want to terminate this session?');
     }
 
     return true;

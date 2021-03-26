@@ -54,9 +54,10 @@ function FormPassword(props: Props) {
   const [mfaType, setMfaType] = React.useState(mfaOptions[0]);
 
   const { isProcessing } = attempt;
+  const isU2fSelected = u2fEnabled || (mfaEnabled && mfaType.value === 'u2f');
 
   function submit() {
-    if (u2fEnabled || (mfaEnabled && mfaType.value === 'u2f')) {
+    if (isU2fSelected) {
       return onChangePassWithU2f(oldPass, newPass);
     }
 
@@ -103,10 +104,7 @@ function FormPassword(props: Props) {
     <Validation>
       {({ validator }) => (
         <Card as="form" bg="primary.light" width="456px" p="6">
-          <Status
-            isU2F={u2fEnabled || (mfaEnabled && mfaType.value === 'u2f')}
-            attempt={attempt}
-          />
+          <Status isU2F={isU2fSelected} attempt={attempt} />
           <FieldInput
             rule={requiredField('Current Password is required')}
             label="Current Password"
