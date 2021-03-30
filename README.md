@@ -56,18 +56,18 @@ To avoid having to install a dedicated Teleport or Gravity cluster,
 you can use a local development server which can proxy network requests
 to an existing cluster.
 
-For example, if `https://example.com:3080/web` is the URL of your cluster UI then:
+For example, if `https://example.com:3080/web` is the URL of your cluster then:
 
 To start your local Teleport development server
 
 ```
-$ yarn start-teleport-oss --target=https://example.com:3080/web
+$ yarn start-teleport --target=https://example.com:3080/web
 ```
 
 To start your local Gravity development server
 
 ```
-$ yarn start-gravity-oss --target=https://example.com:3080/web
+$ yarn start-gravity --target=https://example.com:3080/web
 ```
 
 This service will serve your local javascript files and proxy network

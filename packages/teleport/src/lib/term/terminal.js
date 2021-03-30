@@ -68,6 +68,10 @@ class TtyTerminal {
     this.tty.on(TermEventEnum.RESET, this.reset.bind(this));
     this.tty.on(TermEventEnum.CONN_CLOSE, this._processClose.bind(this));
     this.tty.on(TermEventEnum.DATA, this._processData.bind(this));
+    this.tty.on(
+      TermEventEnum.U2F_CHALLENGE,
+      this._processU2FChallenge.bind(this)
+    );
 
     // subscribe tty resize event (used by session player)
     this.tty.on(TermEventEnum.RESIZE, ({ h, w }) => this.resize(w, h));
@@ -176,6 +180,48 @@ class TtyTerminal {
 
     $terminal.removeChild($fakeRow);
     return { cols, rows };
+  }
+
+  _processU2FChallenge(payload) {
+    if (!window.u2f) {
+      const termMsg =
+        'This browser does not support U2F required for hardware tokens, please try Chrome or Firefox instead.';
+      this.term.write(`\x1b[31m${termMsg}\x1b[m\r\n`);
+      return;
+    }
+
+    const data = JSON.parse(payload);
+    window.u2f.sign(
+      data.appId,
+      data.challenge,
+      data.u2f_challenges,
+      this._processU2FResponse.bind(this)
+    );
+
+    const actionMsg =
+      'Authentication is required. Tap any *registered* security key.';
+    this.term.write(`\x1b[37m${actionMsg}\x1b[m\r\n`);
+  }
+
+  _processU2FResponse(res) {
+    if (res.errorCode) {
+      var errorMsg;
+      if (res.errorMessage) {
+        errorMsg = res.errorMessage;
+      } else {
+        errorMsg = `error code ${res.errorCode}`;
+        // lookup error message for code.
+        for (var msg in window.u2f.ErrorCodes) {
+          if (window.u2f.ErrorCodes[msg] == res.errorCode) {
+            errorMsg = msg;
+          }
+        }
+      }
+      const termMsg = `Please check your U2F settings, make sure it is plugged in and you are using the supported browser.\r\nU2F error: ${errorMsg}`;
+      this.term.write(`\x1b[31m${termMsg}\x1b[m\r\n`);
+      return;
+    }
+    this.tty.send(JSON.stringify(res));
   }
 }
 

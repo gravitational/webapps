@@ -62,6 +62,7 @@ const EventIconMap = {
   [CodeEnum.USER_PASSWORD_CHANGED]: Icons.Info,
   [CodeEnum.ACCESS_REQUEST_CREATED]: Icons.Info,
   [CodeEnum.ACCESS_REQUEST_UPDATED]: Icons.Info,
+  [CodeEnum.ACCESS_REQUEST_REVIEWED]: Icons.Info,
   [CodeEnum.USER_LOCAL_LOGIN]: Icons.Info,
   [CodeEnum.USER_LOCAL_LOGINFAILURE]: Icons.Info,
   [CodeEnum.USER_SSO_LOGIN]: Icons.Info,
@@ -71,6 +72,12 @@ const EventIconMap = {
   [CodeEnum.DATABASE_SESSION_STARTED_FAILURE]: Icons.Database,
   [CodeEnum.DATABASE_SESSION_ENDED]: Icons.Database,
   [CodeEnum.DATABASE_SESSION_QUERY]: Icons.Database,
+  [CodeEnum.MFA_DEVICE_ADD]: Icons.Info,
+  [CodeEnum.MFA_DEVICE_DELETE]: Icons.Info,
+  [CodeEnum.BILLING_CARD_CREATE]: Icons.CreditCardAlt2,
+  [CodeEnum.BILLING_CARD_DELETE]: Icons.CreditCardAlt2,
+  [CodeEnum.BILLING_CARD_UPDATE]: Icons.CreditCardAlt2,
+  [CodeEnum.BILLING_ACCOUNT_UPDATE]: Icons.CreditCardAlt2,
 };
 
 export default function TypeCell(props) {

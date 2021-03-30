@@ -28,6 +28,11 @@ export const formatters: Formatters = {
     format: ({ id, state }) =>
       `Access request [${id}] has been updated to ${state}`,
   },
+  [CodeEnum.ACCESS_REQUEST_REVIEWED]: {
+    desc: 'Access Request Reviewed',
+    format: ({ id, reviewer }) =>
+      `User [${reviewer}] reviewed access request [${id}]`,
+  },
   [CodeEnum.SESSION_COMMAND]: {
     desc: 'Session Command',
     format: ({ program, sid }) =>
@@ -295,6 +300,32 @@ export const formatters: Formatters = {
         db_query,
         80
       )}] in database [${db_name}] on [${db_service}]`,
+  },
+  [CodeEnum.MFA_DEVICE_ADD]: {
+    desc: 'MFA Device Added',
+    format: ({ user, mfa_device_name, mfa_device_type }) =>
+      `User [${user}] added ${mfa_device_type} device [${mfa_device_name}]`,
+  },
+  [CodeEnum.MFA_DEVICE_DELETE]: {
+    desc: 'MFA Device Deleted',
+    format: ({ user, mfa_device_name, mfa_device_type }) =>
+      `User [${user}] deleted ${mfa_device_type} device [${mfa_device_name}]`,
+  },
+  [CodeEnum.BILLING_CARD_CREATE]: {
+    desc: 'Credit Card Added',
+    format: ({ user }) => `User [${user}] has added a credit card`,
+  },
+  [CodeEnum.BILLING_CARD_DELETE]: {
+    desc: 'Credit Card Deleted',
+    format: ({ user }) => `User [${user}] has deleted a credit card`,
+  },
+  [CodeEnum.BILLING_CARD_UPDATE]: {
+    desc: 'Credit Card Updated',
+    format: ({ user }) => `User [${user}] has updated a credit card`,
+  },
+  [CodeEnum.BILLING_ACCOUNT_UPDATE]: {
+    desc: 'Billing Information Updated',
+    format: ({ user }) => `User [${user}] has updated the billing information`,
   },
 };
 

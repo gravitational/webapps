@@ -184,7 +184,7 @@ exports[`loaded 1`] = `
   line-height: 32px;
   margin: 0px;
   margin-right: 56px;
-  flex-shrink: 0;
+  white-space: nowrap;
 }
 
 .c0 {
@@ -446,12 +446,12 @@ exports[`loaded 1`] = `
         </strong>
          - 
         <strong>
-          36
+          42
         </strong>
          
         of 
         <strong>
-          36
+          42
         </strong>
       </div>
       <div
@@ -509,6 +509,216 @@ exports[`loaded 1`] = `
         </tr>
       </thead>
       <tbody>
+        <tr>
+          <td>
+            <div
+              class="c14"
+            >
+              <span
+                class="c4 c15 icon icon-credit-card c4 c15"
+                color="light"
+                font-size="3"
+              />
+              Billing Information Updated
+            </div>
+          </td>
+          <td
+            style="word-break: break-word;"
+          >
+            User [root] has updated the billing information
+          </td>
+          <td
+            style="min-width: 120px;"
+          >
+            2021-03-18 16:29:15
+          </td>
+          <td
+            align="right"
+          >
+            <button
+              class="c16"
+              kind="border"
+              width="87px"
+            >
+              Details
+            </button>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <div
+              class="c14"
+            >
+              <span
+                class="c4 c15 icon icon-credit-card c4 c15"
+                color="light"
+                font-size="3"
+              />
+              Credit Card Added
+            </div>
+          </td>
+          <td
+            style="word-break: break-word;"
+          >
+            User [root] has added a credit card
+          </td>
+          <td
+            style="min-width: 120px;"
+          >
+            2021-03-18 16:29:05
+          </td>
+          <td
+            align="right"
+          >
+            <button
+              class="c16"
+              kind="border"
+              width="87px"
+            >
+              Details
+            </button>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <div
+              class="c14"
+            >
+              <span
+                class="c4 c15 icon icon-credit-card c4 c15"
+                color="light"
+                font-size="3"
+              />
+              Credit Card Deleted
+            </div>
+          </td>
+          <td
+            style="word-break: break-word;"
+          >
+            User [root] has deleted a credit card
+          </td>
+          <td
+            style="min-width: 120px;"
+          >
+            2021-03-18 16:28:51
+          </td>
+          <td
+            align="right"
+          >
+            <button
+              class="c16"
+              kind="border"
+              width="87px"
+            >
+              Details
+            </button>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <div
+              class="c14"
+            >
+              <span
+                class="c4 c15 icon icon-credit-card c4 c15"
+                color="light"
+                font-size="3"
+              />
+              Credit Card Updated
+            </div>
+          </td>
+          <td
+            style="word-break: break-word;"
+          >
+            User [root] has updated a credit card
+          </td>
+          <td
+            style="min-width: 120px;"
+          >
+            2021-03-18 16:28:49
+          </td>
+          <td
+            align="right"
+          >
+            <button
+              class="c16"
+              kind="border"
+              width="87px"
+            >
+              Details
+            </button>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <div
+              class="c14"
+            >
+              <span
+                class="c4 c15 icon icon-info_outline c4 c15"
+                color="light"
+                font-size="3"
+              />
+              MFA Device Deleted
+            </div>
+          </td>
+          <td
+            style="word-break: break-word;"
+          >
+            User [awly] deleted U2F device [usb-c]
+          </td>
+          <td
+            style="min-width: 120px;"
+          >
+            2021-03-03 22:58:44
+          </td>
+          <td
+            align="right"
+          >
+            <button
+              class="c16"
+              kind="border"
+              width="87px"
+            >
+              Details
+            </button>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <div
+              class="c14"
+            >
+              <span
+                class="c4 c15 icon icon-info_outline c4 c15"
+                color="light"
+                font-size="3"
+              />
+              MFA Device Added
+            </div>
+          </td>
+          <td
+            style="word-break: break-word;"
+          >
+            User [awly] added U2F device [usb-c]
+          </td>
+          <td
+            style="min-width: 120px;"
+          >
+            2021-03-03 22:58:34
+          </td>
+          <td
+            align="right"
+          >
+            <button
+              class="c16"
+              kind="border"
+              width="87px"
+            >
+              Details
+            </button>
+          </td>
+        </tr>
         <tr>
           <td>
             <div
@@ -1946,7 +2156,7 @@ exports[`overflow 1`] = `
   line-height: 32px;
   margin: 0px;
   margin-right: 56px;
-  flex-shrink: 0;
+  white-space: nowrap;
 }
 
 .c0 {

@@ -61,6 +61,7 @@ export const CodeEnum = {
   SAML_CONNECTOR_DELETED: 'T8201I',
   ACCESS_REQUEST_CREATED: 'T5000I',
   ACCESS_REQUEST_UPDATED: 'T5001I',
+  ACCESS_REQUEST_REVIEWED: 'T5002I',
   TRUSTED_CLUSTER_TOKEN_CREATED: 'T7002I',
   TRUSTED_CLUSTER_CREATED: 'T7000I',
   TRUSTED_CLUSTER_DELETED: 'T7001I',
@@ -68,6 +69,12 @@ export const CodeEnum = {
   DATABASE_SESSION_STARTED_FAILURE: 'TDB00W',
   DATABASE_SESSION_ENDED: 'TDB01I',
   DATABASE_SESSION_QUERY: 'TDB02I',
+  MFA_DEVICE_ADD: 'T1006I',
+  MFA_DEVICE_DELETE: 'T1007I',
+  BILLING_CARD_CREATE: 'TBL00I',
+  BILLING_CARD_DELETE: 'TBL01I',
+  BILLING_CARD_UPDATE: 'TBL02I',
+  BILLING_ACCOUNT_UPDATE: 'TBL03I',
 } as const;
 
 /**
@@ -79,6 +86,9 @@ export type RawEvents = {
   >;
   [CodeEnum.ACCESS_REQUEST_UPDATED]: RawEventAccess<
     typeof CodeEnum.ACCESS_REQUEST_UPDATED
+  >;
+  [CodeEnum.ACCESS_REQUEST_REVIEWED]: RawEventAccess<
+    typeof CodeEnum.ACCESS_REQUEST_REVIEWED
   >;
   [CodeEnum.AUTH_ATTEMPT_FAILURE]: RawEventAuthFailure<
     typeof CodeEnum.AUTH_ATTEMPT_FAILURE
@@ -97,6 +107,12 @@ export type RawEvents = {
   [CodeEnum.EXEC_FAILURE]: RawEvent<
     typeof CodeEnum.EXEC_FAILURE,
     { exitError: string }
+  >;
+  [CodeEnum.BILLING_CARD_CREATE]: RawEvent<typeof CodeEnum.BILLING_CARD_CREATE>;
+  [CodeEnum.BILLING_CARD_DELETE]: RawEvent<typeof CodeEnum.BILLING_CARD_DELETE>;
+  [CodeEnum.BILLING_CARD_UPDATE]: RawEvent<typeof CodeEnum.BILLING_CARD_UPDATE>;
+  [CodeEnum.BILLING_ACCOUNT_UPDATE]: RawEvent<
+    typeof CodeEnum.BILLING_ACCOUNT_UPDATE
   >;
   [CodeEnum.GITHUB_CONNECTOR_CREATED]: RawEventConnector<
     typeof CodeEnum.GITHUB_CONNECTOR_CREATED
@@ -316,6 +332,22 @@ export type RawEvents = {
       db_query: string;
     }
   >;
+  [CodeEnum.MFA_DEVICE_ADD]: RawEvent<
+    typeof CodeEnum.MFA_DEVICE_ADD,
+    {
+      mfa_device_name: string;
+      mfa_device_uuid: string;
+      mfa_device_type: string;
+    }
+  >;
+  [CodeEnum.MFA_DEVICE_DELETE]: RawEvent<
+    typeof CodeEnum.MFA_DEVICE_DELETE,
+    {
+      mfa_device_name: string;
+      mfa_device_uuid: string;
+      mfa_device_type: string;
+    }
+  >;
 };
 
 /**
@@ -415,6 +447,7 @@ type RawEventAccess<T extends Code> = RawEvent<
     user: string;
     roles: string[];
     state: string;
+    reviewer: string;
   }
 >;
 
