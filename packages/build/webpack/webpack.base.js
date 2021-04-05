@@ -27,7 +27,9 @@ module.exports = function createConfig() {
       splitChunks: {
         cacheGroups: {
           vendors: {
-            chunks: 'all',
+            // "initial" type only includes statically imported modules in this named "vendor" chunk.
+            // Dynamic imports will be in seperate chunks with their own vendor dependencies included.
+            chunks: 'initial',
             name: 'vendor',
             test: /([\\/]node_modules[\\/])/,
             priority: -10,

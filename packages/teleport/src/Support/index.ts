@@ -16,6 +16,8 @@
 
 import React from 'react';
 
-const Support = React.lazy(() => import('./Support'));
+const Support = React.lazy(() =>
+  import(/* webpackChunkName: "support" */ './Support')
+);
 
 export default Support;
