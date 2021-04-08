@@ -22,7 +22,7 @@ const isTest = process.env.NODE_ENV === 'test';
 
 const logger = Logger.create('services/loc');
 
-export function unixDisplayDate(seconds: number) {
+export function displayUnixDate(seconds: number) {
   // Multiply by 1000 b/c date constructor expects milliseconds.
   const date = new Date(seconds * 1000);
 
