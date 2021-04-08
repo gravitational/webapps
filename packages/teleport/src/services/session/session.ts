@@ -18,10 +18,8 @@ import Logger from 'shared/libs/logger';
 import cfg from 'teleport/config';
 import history from 'teleport/services/history';
 import api from 'teleport/services/api';
-import localStorage, {
-  KeysEnum,
-  BearerToken,
-} from 'teleport/services/localStorage';
+import localStorage, { KeysEnum } from 'teleport/services/localStorage';
+import { makeSession, makeBearerToken } from './makeSession';
 import { RenewSessionRequest } from './types';
 
 // Time to determine when to renew session which is
@@ -73,7 +71,9 @@ const session = {
     }
   },
 
-  renewSession(req: RenewSessionRequest) {
+  // renewSession renews session and returns the
+  // absolute time the new session expires.
+  renewSession(req: RenewSessionRequest): Promise<Date> {
     return this._renewToken(req);
   },
 
@@ -117,7 +117,7 @@ const session = {
     el.parentNode.removeChild(el);
     const decoded = window.atob(el.content);
     const json = JSON.parse(decoded);
-    return new BearerToken(json);
+    return makeBearerToken(json);
   },
 
   _shouldRenewToken() {
@@ -136,15 +136,15 @@ const session = {
     this._setAndBroadcastIsRenewing(true);
     return api
       .post(cfg.getRenewTokenUrl(), req)
-      .then(this._receiveBearerToken.bind(this))
+      .then(res => {
+        const session = makeSession(res);
+        localStorage.setBearerToken(session.token);
+
+        return session.expires;
+      })
       .finally(() => {
         this._setAndBroadcastIsRenewing(false);
       });
-  },
-
-  _receiveBearerToken(json) {
-    const token = new BearerToken(json);
-    localStorage.setBearerToken(token);
   },
 
   _setAndBroadcastIsRenewing(value) {
