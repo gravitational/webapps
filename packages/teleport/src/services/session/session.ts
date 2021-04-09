@@ -30,10 +30,6 @@ const logger = Logger.create('services/session');
 
 let sesstionCheckerTimerId = null;
 
-// forceReload is a global flag used to prevent beforeunload
-// event listeners from stopping a page reload (ie: terminal).
-export let forceReload = false;
-
 const session = {
   logout() {
     api.delete(cfg.api.sessionPath).finally(() => {
@@ -75,14 +71,6 @@ const session = {
   // absolute time the new session expires.
   renewSession(req: RenewSessionRequest): Promise<Date> {
     return this._renewToken(req);
-  },
-
-  // reload triggers reloads on all opened tabs to apply new permissions.
-  // Triggers when user switches back to their default roles,
-  // or when assuming roles.
-  reload() {
-    localStorage.broadcast(KeysEnum.RELOAD_TABS, 'reload');
-    history.reload();
   },
 
   isValid() {
@@ -225,12 +213,6 @@ const session = {
 
 function receiveMessage(event) {
   const { key, newValue } = event;
-
-  // check if page reload was triggered from another tab.
-  if (key === KeysEnum.RELOAD_TABS && newValue) {
-    forceReload = true;
-    history.reload();
-  }
 
   // check if logout was triggered from other tabs
   if (localStorage.getBearerToken() === null) {

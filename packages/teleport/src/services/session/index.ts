@@ -14,8 +14,7 @@
  * limitations under the License.
  */
 
-import session, { forceReload } from './session';
+import session from './session';
 
-export { forceReload };
 export * from './types';
 export default session;
