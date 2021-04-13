@@ -26,7 +26,7 @@ const service = {
       .then(json => map(json.items, makeApp));
   },
 
-  createAppSession(params: CreateAppSessionParams) {
+  createAppSession(params: AppParams) {
     const { fqdn, clusterId = '', publicAddr = '' } = params;
     return api
       .post(cfg.api.aapSession, {
@@ -39,11 +39,19 @@ const service = {
         value: json.value as string,
       }));
   },
+
+  getAppFqdn(params: AppParams) {
+    return api
+      .get(cfg.getAapFqdnUrl(params))
+      .then(json => ({
+        fqdn: json.fqdn as string,
+      }));
+  },
 };
 
 export default service;
 
-type CreateAppSessionParams = {
+type AppParams = {
   fqdn: string;
   clusterId?: string;
   publicAddr?: string;

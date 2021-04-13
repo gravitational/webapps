@@ -25,29 +25,46 @@ export default function useAppLauncher() {
   const params = useParams<UrlLauncherParams>();
   const { attempt, setAttempt } = useAttempt('processing');
 
+  const location = window.location;
+  const port = location.port ? ':' + location.port : '';
+  const state = getUrlParameter('state', location.search);
+
   React.useEffect(() => {
-    service
-      .createAppSession(params)
-      .then(result => {
-        // make a redirect to the requested app auth endpoint
-        const location = window.location;
-        const port = location.port ? ':' + location.port : '';
-        const state = getUrlParameter('state', location.search);
-        const authUrl = `https://${result.fqdn}${port}/x-teleport-auth`;
-        if (state === '') {
-          const clusterId = params.clusterId ? params.clusterId : '';
-          const publicAddr = params.publicAddr ? params.publicAddr : '';
-          window.location.replace(`${authUrl}?cluster=${clusterId}&addr=${publicAddr}`);
-        } else {
-          window.location.replace(`${authUrl}?state=${state}#value=${result.value}`);
-        }
-      })
-      .catch((err: Error) => {
-        setAttempt({
-          status: 'failed',
-          statusText: err.message,
+    if (state === '') {
+      service
+        .getAppFqdn(params)
+        .then(result => {
+          const url = new URL(`https://${result.fqdn}${port}/x-teleport-auth`);
+          if (params.clusterId) {
+            url.searchParams.set("cluster", params.clusterId);
+          }
+          if (params.publicAddr) {
+            url.searchParams.set("addr", params.publicAddr);
+          }
+          location.replace(url);
+        })
+        .catch((err: Error) => {
+          setAttempt({
+            status: 'failed',
+            statusText: err.message,
+          });
         });
-      });
+    } else {
+      service
+        .createAppSession(params)
+        .then(result => {
+          const url = new URL(`https://${result.fqdn}${port}/x-teleport-auth`);
+          url.searchParams.set("state", state);
+          url.hash = `#value=${result.value}`;
+          location.replace(url);
+        })
+        .catch((err: Error) => {
+          setAttempt({
+            status: 'failed',
+            statusText: err.message,
+          });
+        });
+    }
   }, []);
 
   return {
