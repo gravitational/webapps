@@ -73,18 +73,18 @@ export function Main(props: State) {
       <RouterDOM.Switch>
         <Redirect exact={true} from={cfg.routes.root} to={indexRoute} />
       </RouterDOM.Switch>
-      <VerticalSplit className="teleport-main">
+      <StyledMain>
         <SideNav />
         <HorizontalSplit>
           <TopBar />
           <Switch>{$features}</Switch>
         </HorizontalSplit>
-      </VerticalSplit>
+      </StyledMain>
     </>
   );
 }
 
-const VerticalSplit = styled.div`
+export const StyledMain = styled.div`
   width: 100%;
   height: 100%;
   display: flex;
