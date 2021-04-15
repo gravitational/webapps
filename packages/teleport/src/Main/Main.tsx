@@ -90,7 +90,7 @@ export const StyledMain = styled.div`
   display: flex;
   flex: 1;
   position: absolute;
-  min-width: 900px;
+  min-width: 1000px;
 `;
 
 const HorizontalSplit = styled.div`
@@ -98,6 +98,9 @@ const HorizontalSplit = styled.div`
   flex-direction: column;
   width: 100%;
   height: 100%;
+
+  // Allows shrinking beyond content size on flexed childrens.
+  min-width: 0;
 `;
 
 const StyledIndicator = styled(HorizontalSplit)`
