@@ -45,7 +45,7 @@ function NodeList(props: Props) {
   function sortAndFilter(search) {
     const filtered = nodes.filter(obj =>
       isMatch(obj, search, {
-        searchableProps: ['hostname', 'addr', 'tags', 'tunnel'],
+        searchableProps: ['hostname', 'addr', 'tagTexts', 'tunnel'],
         cb: searchAndFilterCb,
       })
     );
@@ -105,18 +105,15 @@ function searchAndFilterCb(
   searchValue: string,
   propName: string
 ) {
+
   if (propName === 'tunnel') {
     return 'TUNNEL'.indexOf(searchValue) !== -1;
   }
 
-  if (propName === 'tags') {
+  if (propName === 'tagTexts') {
     return targetValue.some(item => {
-      const { name, value } = item;
-      return (
-        name.toLocaleUpperCase().indexOf(searchValue) !== -1 ||
-        value.toLocaleUpperCase().indexOf(searchValue) !== -1
-      );
-    });
+      return item.toLocaleUpperCase().indexOf(searchValue) !== -1;
+    })
   }
 }
 
@@ -160,10 +157,10 @@ const LoginCell: React.FC<Required<{
 
 export function LabelCell(props) {
   const { rowIndex, data } = props;
-  const { tags } = data[rowIndex];
-  const $labels = tags.map(({ name, value }) => (
-    <Label mb="1" mr="1" key={name} kind="secondary">
-      {`${name}: ${value}`}
+  const { tagTexts } = data[rowIndex];
+  const $labels = tagTexts.map(label => (
+    <Label mb="1" mr="1" key={label} kind="secondary">
+      {`${label}`}
     </Label>
   ));
 

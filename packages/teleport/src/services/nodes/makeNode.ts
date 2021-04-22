@@ -18,11 +18,11 @@ import { at } from 'lodash';
 import { Node } from './types';
 
 export default function makeNode(json): Node {
-  const [id, clusterId, hostname, tags = [], addr, tunnel = false] = at(json, [
+  const [id, clusterId, hostname, tagTexts = json.tags.map(tag => `${tag.name}: ${tag.value}`), addr, tunnel = false] = at(json, [
     'id',
     'siteId',
     'hostname',
-    'tags',
+    'tagTexts',
     'addr',
     'tunnel',
   ]);
@@ -31,7 +31,7 @@ export default function makeNode(json): Node {
     id,
     clusterId,
     hostname,
-    tags,
+    tagTexts,
     addr,
     tunnel,
   };
