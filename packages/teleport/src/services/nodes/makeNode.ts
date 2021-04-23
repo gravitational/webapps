@@ -14,18 +14,13 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import { at } from 'lodash';
 import { Node } from './types';
 
 export default function makeNode(json): Node {
-  const [id, clusterId, hostname, tagTexts = json.tags.map(tag => `${tag.name}: ${tag.value}`), addr, tunnel = false] = at(json, [
-    'id',
-    'siteId',
-    'hostname',
-    'tagTexts',
-    'addr',
-    'tunnel',
-  ]);
+  const {id, clusterId, hostname, addr, tunnel} = json;
+
+  const tags = json.tags || [];
+  const tagTexts = json.tagTexts || tags.map(tag => `${tag.name}: ${tag.value}`)
 
   return {
     id,
@@ -34,5 +29,5 @@ export default function makeNode(json): Node {
     tagTexts,
     addr,
     tunnel,
-  };
+  }
 }
