@@ -20,11 +20,11 @@ import {
   FeatureHeader,
   FeatureHeaderTitle,
 } from 'teleport/components/Layout';
-import { Indicator, Box, Flex } from 'design';
+import { Flex } from 'design';
 import InputSearch from 'teleport/components/InputSearch';
 import DatabaseList from 'teleport/components/DatabaseList';
 
-export function Databases(props) {
+export default function Databases(props) {
   const { databases } = props;
 
   const [searchValue, setSearchValue] = useState('');

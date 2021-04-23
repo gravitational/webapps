@@ -15,23 +15,10 @@ limitations under the License.
 */
 
 import React from 'react';
-import Databases from './Databases';
-import { databases } from './fixtures';
+import { render } from 'design/utils/testing';
+import { Loaded } from './Databases.story';
 
-export function Loaded() {
-  return render();
-}
-
-export default {
-  title: 'Teleport/Databases',
-  component: Databases,
-};
-
-function render() {
-  const props = {
-    databases,
-    searchValue: '',
-    setSearchValue: () => null,
-  };
-  return <Databases {...props} />;
-}
+test('loaded', () => {
+  const { container } = render(<Loaded />);
+  expect(container.firstChild).toMatchSnapshot();
+});

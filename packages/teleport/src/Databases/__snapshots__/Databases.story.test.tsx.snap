@@ -1,0 +1,478 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`loaded 1`] = `
+.c9 {
+  display: inline-block;
+  transition: color .3s;
+  color: #FFFFFF;
+  font-size: 16px;
+}
+
+.c12 {
+  display: inline-block;
+  transition: color .3s;
+  color: #FFFFFF;
+}
+
+.c13 {
+  box-sizing: border-box;
+  border-radius: 100px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 16px;
+  line-height: 1.4;
+  font-size: 10px;
+  font-weight: 500;
+  padding: 0 8px;
+  background-color: #111B48;
+  color: rgba(255,255,255,0.87);
+  margin-bottom: 4px;
+  margin-right: 4px;
+}
+
+.c6 {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  font-weight: 400;
+  font-size: 12px;
+  line-height: 16px;
+  margin: 0px;
+  color: #FFFFFF;
+}
+
+.c3 {
+  box-sizing: border-box;
+  margin-bottom: 24px;
+  flex: 0 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.c1 {
+  box-sizing: border-box;
+  margin-bottom: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-shrink: 0;
+  border-bottom: 1px solid #1C254D;
+  height: 56px;
+  margin-left: -40px;
+  margin-right: -40px;
+  padding-left: 40px;
+  padding-right: 40px;
+}
+
+.c2 {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  font-weight: 300;
+  font-size: 22px;
+  line-height: 32px;
+  margin: 0px;
+  white-space: nowrap;
+}
+
+.c0 {
+  box-sizing: border-box;
+  padding-left: 40px;
+  padding-right: 40px;
+  display: flex;
+  overflow: auto;
+  width: 100%;
+  height: 100%;
+  flex-direction: column;
+}
+
+.c0::after {
+  content: ' ';
+  padding-bottom: 24px;
+}
+
+.c4 {
+  box-sizing: border-box;
+  font-size: 12px;
+  min-width: 200px;
+  outline: none;
+  border: none;
+  border-radius: 200px;
+  height: 32px;
+  transition: all .2s;
+  background: #222C59;
+  margin-right: 16px;
+  padding-left: 16px;
+  padding-right: 16px;
+  color: rgba(255,255,255,0.87);
+}
+
+.c4:hover {
+  background: #2C3A73;
+}
+
+.c4:focus,
+.c4:active {
+  background: #2C3A73;
+  box-shadow: inset 0 2px 4px rgba(0,0,0,.24);
+  color: rgba(255,255,255,0.87);
+}
+
+.c4::placeholder {
+  color: rgba(255,255,255,0.24);
+  font-size: 12px;
+}
+
+.c10 {
+  background: #222C59;
+  box-shadow: 0 4px 16px rgba(0,0,0,0.24);
+  border-collapse: collapse;
+  border-spacing: 0;
+  border-radius: 8px;
+  font-size: 12px;
+  width: 100%;
+}
+
+.c10 > thead > tr > th,
+.c10 > tbody > tr > th,
+.c10 > tfoot > tr > th,
+.c10 > thead > tr > td,
+.c10 > tbody > tr > td,
+.c10 > tfoot > tr > td {
+  padding: 8px 8px;
+  vertical-align: middle;
+}
+
+.c10 > thead > tr > th:first-child,
+.c10 > tbody > tr > th:first-child,
+.c10 > tfoot > tr > th:first-child,
+.c10 > thead > tr > td:first-child,
+.c10 > tbody > tr > td:first-child,
+.c10 > tfoot > tr > td:first-child {
+  padding-left: 24px;
+}
+
+.c10 > thead > tr > th:last-child,
+.c10 > tbody > tr > th:last-child,
+.c10 > tfoot > tr > th:last-child,
+.c10 > thead > tr > td:last-child,
+.c10 > tbody > tr > td:last-child,
+.c10 > tfoot > tr > td:last-child {
+  padding-right: 24px;
+}
+
+.c10 > thead > tr > th {
+  background: #111B48;
+  color: #FFFFFF;
+  cursor: pointer;
+  font-size: 10px;
+  font-weight: 400;
+  padding-bottom: 0;
+  padding-top: 0;
+  text-align: left;
+  opacity: 0.75;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+.c10 > thead > tr > th .c8 {
+  font-weight: bold;
+  font-size: 8px;
+  margin-left: 8px;
+}
+
+.c10 > tbody > tr > td {
+  color: rgba(255,255,255,0.87);
+  line-height: 16px;
+}
+
+.c10 tbody tr {
+  border-bottom: 1px solid #1C254D;
+}
+
+.c10 tbody tr:hover {
+  background-color: rgb(37,49,98);
+}
+
+.c10 tbody > tr:last-child td:first-child {
+  border-bottom-left-radius: 8px;
+}
+
+.c10 tbody > tr:last-child td:last-child {
+  border-bottom-right-radius: 8px;
+}
+
+.c7 {
+  box-sizing: border-box;
+  display: flex;
+}
+
+.c7 button {
+  background: none;
+  border: none;
+  border-radius: 200px;
+  cursor: pointer;
+  padding: 0;
+  margin: 0 0 0 8px;
+  outline: none;
+  transition: all 0.3s;
+  text-align: center;
+}
+
+.c7 button:hover,
+.c7 button:focus {
+  background: #1C254D;
+}
+
+.c7 button:hover .c8,
+.c7 button:focus .c8 {
+  opacity: 1;
+}
+
+.c7 button .c8 {
+  opacity: 0.4;
+  font-size: 20px;
+  transition: all 0.3s;
+}
+
+.c5 {
+  padding: 8px 24px;
+  display: flex;
+  height: 24px;
+  flex-shrink: 0;
+  align-items: center;
+  justify-content: space-between;
+  background: #222C59;
+  border-top-left-radius: 8px;
+  border-top-right-radius: 8px;
+}
+
+.c11 > tbody > tr > td {
+  vertical-align: baseline;
+}
+
+<div
+  class="sc-AxirZ c0"
+>
+  <div
+    class="sc-AxirZ c1"
+  >
+    <div
+      class="c2"
+    >
+      Databases
+    </div>
+  </div>
+  <div
+    class="sc-AxirZ c3"
+  >
+    <input
+      class="c4"
+      color="text.primary"
+      placeholder="SEARCH..."
+      value=""
+    />
+  </div>
+  <div>
+    <div>
+      <nav
+        class="c5"
+      >
+        <div
+          class="c6"
+          color="primary.contrastText"
+        >
+          SHOWING 
+          <strong>
+            1
+          </strong>
+           - 
+          <strong>
+            3
+          </strong>
+           
+          of 
+          <strong>
+            3
+          </strong>
+        </div>
+        <div
+          class="sc-AxirZ c7"
+        >
+          <button
+            disabled=""
+            title="Previous Page"
+          >
+            <span
+              class="c8 c9 icon icon-arrow-left-circle "
+              color="light"
+              font-size="3"
+            />
+          </button>
+          <button
+            disabled=""
+            title="Next Page"
+          >
+            <span
+              class="c8 c9 icon icon-arrow-right-circle "
+              color="light"
+              font-size="3"
+            />
+          </button>
+        </div>
+      </nav>
+      <table
+        class="c10 c11"
+      >
+        <thead>
+          <tr>
+            <th>
+              <a>
+                Name
+                <span
+                  class="c8 c12 icon icon-chevron-down "
+                  color="light"
+                />
+              </a>
+            </th>
+            <th>
+              <a>
+                Description
+                <span
+                  class="c8 c12 icon icon-chevrons-expand-vertical "
+                  color="light"
+                />
+              </a>
+            </th>
+            <th>
+              <a>
+                Protocol
+                <span
+                  class="c8 c12 icon icon-chevrons-expand-vertical "
+                  color="light"
+                />
+              </a>
+            </th>
+            <th>
+              <a>
+                Type
+                <span
+                  class="c8 c12 icon icon-chevrons-expand-vertical "
+                  color="light"
+                />
+              </a>
+            </th>
+            <th>
+              <a>
+                URI
+                <span
+                  class="c8 c12 icon icon-chevrons-expand-vertical "
+                  color="light"
+                />
+              </a>
+            </th>
+            <th>
+              Labels
+            </th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>
+              aurora
+            </td>
+            <td>
+              PostgreSQL 11.6: AWS Aurora 
+            </td>
+            <td>
+              postgres
+            </td>
+            <td>
+              rds
+            </td>
+            <td>
+              postgres-aurora-instance-1.c1xpjrob56xs.us-west-1.rds.amazonaws.com:5432
+            </td>
+            <td>
+              <div
+                class="c13"
+                kind="secondary"
+              >
+                cluster: root
+              </div>
+              <div
+                class="c13"
+                kind="secondary"
+              >
+                env: aws
+              </div>
+            </td>
+          </tr>
+          <tr>
+            <td>
+              mysql-aurora-56
+            </td>
+            <td>
+              MySQL 5.6: AWS Aurora Longname For SQL
+            </td>
+            <td>
+              mysql
+            </td>
+            <td>
+              self-hosted
+            </td>
+            <td>
+              mysql-aurora-56.cluster-c1xpjrob56xsadckjUkjk.us-west-1.rds.amazonaws.com:3306
+            </td>
+            <td>
+              <div
+                class="c13"
+                kind="secondary"
+              >
+                cluster: root
+              </div>
+              <div
+                class="c13"
+                kind="secondary"
+              >
+                env: aws
+              </div>
+            </td>
+          </tr>
+          <tr>
+            <td>
+              postgres-gcp
+            </td>
+            <td>
+              MPostgreSQL 9.6: Google Cloud SQL
+            </td>
+            <td>
+              postgres
+            </td>
+            <td>
+              gcp
+            </td>
+            <td>
+              35.193.70.43:5432 
+            </td>
+            <td>
+              <div
+                class="c13"
+                kind="secondary"
+              >
+                cluster: env
+              </div>
+              <div
+                class="c13"
+                kind="secondary"
+              >
+                value: gcp
+              </div>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+`;

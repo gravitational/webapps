@@ -14,24 +14,5 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React from 'react';
 import Databases from './Databases';
-import { databases } from './fixtures';
-
-export function Loaded() {
-  return render();
-}
-
-export default {
-  title: 'Teleport/Databases',
-  component: Databases,
-};
-
-function render() {
-  const props = {
-    databases,
-    searchValue: '',
-    setSearchValue: () => null,
-  };
-  return <Databases {...props} />;
-}
+export default Databases;
