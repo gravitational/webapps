@@ -32,6 +32,8 @@ import { Database } from 'teleport/services/database';
 function DatabaseList(props: Props) {
   const { databases = [], searchValue = '', pageSize = 100 } = props;
 
+  console.log(databases);
+
   const [sortDir, setSortDir] = React.useState<Record<string, string>>({
     name: SortTypes.DESC,
   });
