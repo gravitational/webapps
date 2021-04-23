@@ -19,13 +19,11 @@ import { Node } from './types';
 export default function makeNode(json): Node {
   const { id, clusterId, hostname, addr, tunnel, tags = [] } = json;
 
-  const tagTexts = tags.map(tag => `${tag.name}: ${tag.value}`);
-
   return {
     id,
     clusterId,
     hostname,
-    tagTexts,
+    tags: tags.map(tag => `${tag.name}: ${tag.value}`),
     addr,
     tunnel,
   };
