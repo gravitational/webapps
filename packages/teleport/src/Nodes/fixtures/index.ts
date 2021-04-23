@@ -21,10 +21,7 @@ export const nodes = [
     clusterId: 'one',
     hostname: 'fujedu',
     addr: '172.10.1.20:3022',
-    tags: [
-      { name: 'cluster', value: 'one' },
-      { name: 'kernel', value: '4.15.0-51-generic' },
-    ],
+    tagTexts: ["cluster: one", "kernel: 4.15.0-51-generic"]
   },
   {
     tunnel: false,
@@ -32,10 +29,7 @@ export const nodes = [
     clusterId: 'one',
     hostname: 'facuzguv',
     addr: '172.10.1.1:3022',
-    tags: [
-      { name: 'cluster', value: 'one' },
-      { name: 'kernel', value: '4.15.0-51-generic' },
-    ],
+    tagTexts: ["cluster: one", "kernel: 4.15.0-51-generic"]
   },
   {
     tunnel: false,
@@ -43,10 +37,7 @@ export const nodes = [
     clusterId: 'one',
     hostname: 'duzsevkig',
     addr: '172.10.1.1:3022',
-    tags: [
-      { name: 'cluster', value: 'one' },
-      { name: 'kernel', value: '4.15.0-51-generic' },
-    ],
+    tagTexts: ["cluster: one", "kernel: 4.15.0-51-generic"]
   },
   {
     tunnel: false,
@@ -54,10 +45,7 @@ export const nodes = [
     clusterId: 'one',
     hostname: 'kuhinur',
     addr: '172.10.1.1:3022',
-    tags: [
-      { name: 'cluster', value: 'one' },
-      { name: 'kernel', value: '4.15.0-51-generic' },
-    ],
+    tagTexts: ["cluster: one", "kernel: 4.15.0-51-generic"]
   },
   {
     tunnel: false,
@@ -65,10 +53,7 @@ export const nodes = [
     clusterId: 'one',
     hostname: 'zebpecda',
     addr: '172.10.1.1:3022',
-    tags: [
-      { name: 'cluster', value: 'one' },
-      { name: 'kernel', value: '4.15.0-51-generic' },
-    ],
+    tagTexts: ["cluster: one", "kernel: 4.15.0-51-generic"]
   },
   {
     tunnel: true,
@@ -76,10 +61,7 @@ export const nodes = [
     clusterId: 'one',
     hostname: 'zebpecda',
     addr: '172.10.1.1:3022',
-    tags: [
-      { name: 'cluster', value: 'one' },
-      { name: 'kernel', value: '4.15.0-51-generic' },
-    ],
+    tagTexts: ["cluster: one", "kernel: 4.15.0-51-generic"]
   },
   {
     tunnel: true,
@@ -87,10 +69,7 @@ export const nodes = [
     clusterId: 'one',
     hostname: 'zebpecda',
     addr: '172.10.1.1:3022',
-    tags: [
-      { name: 'cluster', value: 'one' },
-      { name: 'kernel', value: '4.15.0-51-generic' },
-    ],
+    tagTexts: ["cluster: one", "kernel: 4.15.0-51-generic"]
   },
 ];
 
