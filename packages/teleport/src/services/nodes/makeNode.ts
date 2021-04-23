@@ -17,9 +17,9 @@ limitations under the License.
 import { Node } from './types';
 
 export default function makeNode(json): Node {
-  const {id, clusterId, hostname, addr, tunnel, tags = [] } = json;
+  const { id, clusterId, hostname, addr, tunnel, tags = [] } = json;
 
-  const tagTexts = tags.map(tag => `${tag.name}: ${tag.value}`)
+  const tagTexts = tags.map(tag => `${tag.name}: ${tag.value}`);
 
   return {
     id,
@@ -28,5 +28,5 @@ export default function makeNode(json): Node {
     tagTexts,
     addr,
     tunnel,
-  }
+  };
 }

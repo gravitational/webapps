@@ -105,7 +105,6 @@ function searchAndFilterCb(
   searchValue: string,
   propName: string
 ) {
-
   if (propName === 'tunnel') {
     return 'TUNNEL'.indexOf(searchValue) !== -1;
   }
@@ -113,7 +112,7 @@ function searchAndFilterCb(
   if (propName === 'tagTexts') {
     return targetValue.some(item => {
       return item.toLocaleUpperCase().indexOf(searchValue) !== -1;
-    })
+    });
   }
 }
 
