@@ -17,6 +17,7 @@ limitations under the License.
 import React from 'react';
 import Text from '../Text';
 import { StyledTable, StyledEmptyIndicator } from './StyledTable';
+import { Label } from 'design';
 import * as Icons from './../Icon/Icon';
 
 /**
@@ -170,6 +171,18 @@ const TextCell = props => {
   return <Cell {...rest}>{data[rowIndex][columnKey]}</Cell>;
 };
 
+const LabelCell = props => {
+  const { rowIndex, data } = props;
+  const { tags } = data[rowIndex];
+  const $labels = tags.map(label => (
+    <Label mb="1" mr="1" key={label} kind="secondary">
+      {`${label}`}
+    </Label>
+  ));
+
+  return <Cell>{$labels}</Cell>;
+};
+
 class SortHeaderCell extends React.Component {
   onSortChange = e => {
     e.preventDefault();
@@ -225,6 +238,7 @@ export {
   Table,
   Cell,
   TextCell,
+  LabelCell,
   SortHeaderCell,
   SortIndicator,
   SortTypes,

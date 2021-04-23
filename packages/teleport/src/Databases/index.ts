@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import { Database } from 'teleport/services/database/types';
+import { Database } from 'teleport/services/database';
 
 export const databases: Database[] = [
   {

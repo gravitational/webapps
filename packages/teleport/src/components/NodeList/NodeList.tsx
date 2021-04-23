@@ -18,13 +18,13 @@ import React from 'react';
 import styled from 'styled-components';
 import { sortBy } from 'lodash';
 import isMatch from 'design/utils/match';
-import { Label } from 'design';
 import {
   Column,
   SortHeaderCell,
   Cell,
   TextCell,
   SortTypes,
+  LabelCell,
 } from 'design/DataTable';
 import Table from 'design/DataTable/Paged';
 import MenuSshLogin, { LoginItem } from 'shared/components/MenuSshLogin';
@@ -153,18 +153,6 @@ const LoginCell: React.FC<Required<{
     </Cell>
   );
 };
-
-export function LabelCell(props) {
-  const { rowIndex, data } = props;
-  const { tags } = data[rowIndex];
-  const $labels = tags.map(label => (
-    <Label mb="1" mr="1" key={label} kind="secondary">
-      {`${label}`}
-    </Label>
-  ));
-
-  return <Cell>{$labels}</Cell>;
-}
 
 function AddressCell(props) {
   const { rowIndex, data, ...rest } = props;
