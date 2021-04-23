@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React from 'react';
+import React, { useState } from 'react';
 import {
   FeatureBox,
   FeatureHeader,
@@ -25,7 +25,9 @@ import InputSearch from 'teleport/components/InputSearch';
 import DatabaseList from 'teleport/components/DatabaseList';
 
 export function Databases(props) {
-  const { databases, searchValue, setSearchValue } = props;
+  const { databases } = props;
+
+  const [searchValue, setSearchValue] = useState('');
 
   return (
     <FeatureBox>
@@ -38,7 +40,12 @@ export function Databases(props) {
         flex="0 0 auto"
         justifyContent="space-between"
       >
-        <InputSearch mr="3" onChange={setSearchValue} />
+        <InputSearch
+          mr="3"
+          onChange={e => {
+            setSearchValue(e);
+          }}
+        />
       </Flex>
       <DatabaseList databases={databases} searchValue={searchValue} />
     </FeatureBox>

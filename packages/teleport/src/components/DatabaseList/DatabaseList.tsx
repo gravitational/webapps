@@ -32,8 +32,6 @@ import { Database } from 'teleport/services/database';
 function DatabaseList(props: Props) {
   const { databases = [], searchValue = '', pageSize = 100 } = props;
 
-  console.log(databases);
-
   const [sortDir, setSortDir] = React.useState<Record<string, string>>({
     name: SortTypes.DESC,
   });
@@ -136,8 +134,10 @@ function searchAndFilterCb(
   searchValue: string,
   propName: string
 ) {
-  if (propName === 'tunnel') {
-    return 'TUNNEL'.indexOf(searchValue) !== -1;
+  if (propName === 'tags') {
+    return targetValue.some(item => {
+      return item.toLocaleUpperCase().indexOf(searchValue) !== -1;
+    });
   }
 }
 
