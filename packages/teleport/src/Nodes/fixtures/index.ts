@@ -14,7 +14,9 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-export const nodes = [
+import { Node } from 'teleport/services/nodes';
+
+export const nodes: Node[] = [
   {
     tunnel: false,
     id: '104',

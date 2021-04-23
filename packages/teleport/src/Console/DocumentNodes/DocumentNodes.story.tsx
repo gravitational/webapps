@@ -18,6 +18,7 @@ import React from 'react';
 import DocumentNodes from './DocumentNodes';
 import ConsoleCtx from './../consoleContext';
 import { TestLayout } from './../Console.story';
+import {Node} from "teleport/services/nodes/types"
 
 export default {
   title: 'Teleport/Console/DocumentNodes',
@@ -90,7 +91,7 @@ const clusters = [
   },
 ];
 
-const nodes = [
+const nodes: Node[] = [
   {
     tunnel: false,
     id: '104',
