@@ -24,7 +24,7 @@ import {
   Cell,
   TextCell,
   SortTypes,
-  LabelCell,
+  renderLabelCell,
 } from 'design/DataTable';
 import Table from 'design/DataTable/Paged';
 import MenuSshLogin, { LoginItem } from 'shared/components/MenuSshLogin';
@@ -167,6 +167,12 @@ function renderTunnel() {
       title="This node is connected to cluster through reverse tunnel"
     >{`⟵ tunnel`}</span>
   );
+}
+
+function LabelCell(props) {
+  const { rowIndex, data } = props;
+  const { tags = [] } = data[rowIndex];
+  return renderLabelCell(tags);
 }
 
 const StyledTable = styled(Table)`

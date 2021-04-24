@@ -20,7 +20,7 @@ import {
   Column,
   SortHeaderCell,
   Cell,
-  LabelCell,
+  renderLabelCell,
   TextCell,
   SortTypes,
 } from 'design/DataTable';
@@ -121,6 +121,12 @@ function DatabaseList(props: Props) {
       </StyledTable>
     </div>
   );
+}
+
+function LabelCell(props) {
+  const { rowIndex, data } = props;
+  const { tags = [] } = data[rowIndex];
+  return renderLabelCell(tags);
 }
 
 const StyledTable = styled(Table)`

@@ -18,7 +18,7 @@ import React from 'react';
 import Text from '../Text';
 import { StyledTable, StyledEmptyIndicator } from './StyledTable';
 import { Label } from 'design';
-import * as Icons from './../Icon/Icon';
+import * as Icons from '../Icon/Icon';
 
 /**
  * Sort indicator used by SortHeaderCell
@@ -171,10 +171,8 @@ const TextCell = props => {
   return <Cell {...rest}>{data[rowIndex][columnKey]}</Cell>;
 };
 
-const LabelCell = props => {
-  const { rowIndex, data } = props;
-  const { tags } = data[rowIndex];
-  const $labels = tags.map(label => (
+const renderLabelCell = labels => {
+  const $labels = labels.map(label => (
     <Label mb="1" mr="1" key={label} kind="secondary">
       {`${label}`}
     </Label>
@@ -238,7 +236,7 @@ export {
   Table,
   Cell,
   TextCell,
-  LabelCell,
+  renderLabelCell,
   SortHeaderCell,
   SortIndicator,
   SortTypes,
