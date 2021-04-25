@@ -14,13 +14,19 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-export interface Kube {
-    name: string;
-    labels: Label[];
-    labelTexts: string[];
+import React from 'react';
+import { Kube } from 'teleport/services/kube';
+
+type Props = {
+    kubes: Kube[];
+};
+
+function KubeList(props: Props) {
+  const { kubes } = props;
+
+  return (
+      <div><h1>Kube List</h1></div>
+  );
 }
 
-interface Label {
-    name: string;
-    value: string;
-}
+export default KubeList;

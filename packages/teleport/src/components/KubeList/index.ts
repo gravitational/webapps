@@ -14,13 +14,5 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-export interface Kube {
-    name: string;
-    labels: Label[];
-    labelTexts: string[];
-}
-
-interface Label {
-    name: string;
-    value: string;
-}
+import KubeList from './KubeList';
+export default KubeList;
