@@ -20,17 +20,20 @@ import {
   FeatureHeader,
   FeatureHeaderTitle,
 } from 'teleport/components/Layout';
-import { Flex } from 'design';
+import { Flex, Box, Indicator } from 'design';
+import { Danger } from 'design/Alert';
 import InputSearch from 'teleport/components/InputSearch';
 import KubeList from 'teleport/components/KubeList';
 import { Kube as KubeProps } from 'teleport/services/kube';
+import { Attempt } from 'shared/hooks/useAttemptNext';
 
 type Props = {
   kubes: KubeProps[];
+  attempt: Attempt;
 }
 
 export default function Kube(props: Props) {
-  const { kubes } = props;
+  const { kubes, attempt } = props;
   const [searchValue, setSearchValue] = React.useState('');
 
   return (
@@ -45,13 +48,19 @@ export default function Kube(props: Props) {
         justifyContent="space-between"
       >
         <InputSearch
-         mr="3"
-         onChange={(e: React.SetStateAction<string>) => {
-          setSearchValue(e);
-        }}
-          />
+          mr="3"
+          onChange={e => {
+            setSearchValue(e);
+          }}
+        />
       </Flex>
-      <KubeList kubes={kubes} searchValue={searchValue} />
+      {attempt.status === 'failed' && <Danger>{attempt.statusText} </Danger>}
+      {attempt.status === 'processing' && (
+        <Box textAlign="center" m={10}>
+          <Indicator />
+        </Box>
+      )}
+      {attempt.status === 'success' && <KubeList kubes={kubes} searchValue={searchValue} />}
     </FeatureBox>
   );
 }
