@@ -15,18 +15,57 @@ limitations under the License.
 */
 
 import React from 'react';
+import styled from 'styled-components';
+import {
+  Column,
+  SortHeaderCell,
+  Cell,
+  TextCell,
+} from 'design/DataTable';
+import { Label } from 'design'
+import Table from 'design/DataTable/Paged';
 import { Kube } from 'teleport/services/kube';
 
 type Props = {
     kubes: Kube[];
+    pageSize?: number;
 };
 
 function KubeList(props: Props) {
-  const { kubes } = props;
+  const { kubes = [], pageSize = 100 } = props;
 
   return (
-      <div><h1>Kube List</h1></div>
+    <StyledTable pageSize={pageSize} data={kubes}>
+    <Column
+      columnKey="name"
+      header={
+        <SortHeaderCell
+          title="Name"
+        />
+      }
+      cell={<TextCell />}
+    />
+    <Column header={<Cell>Labels</Cell>} cell={<LabelCell />} />
+  </StyledTable>
   );
 }
+
+export function LabelCell(props) {
+    const { rowIndex, data } = props;
+    const { labels } = data[rowIndex];
+    const $labels = labels.map(({ name, value }) => (
+      <Label mb="1" mr="1" key={name} kind="secondary">
+        {`${name}: ${value}`}
+      </Label>
+    ));
+
+    return <Cell>{$labels}</Cell>;
+  }
+
+const StyledTable = styled(Table)`
+  & > tbody > tr > td {
+    vertical-align: baseline;
+  }
+`;
 
 export default KubeList;
