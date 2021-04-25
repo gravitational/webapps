@@ -31,6 +31,7 @@ type Props = {
 
 export default function Kube(props: Props) {
   const { kubes } = props;
+  const [searchValue, setSearchValue] = React.useState('');
 
   return (
     <FeatureBox>
@@ -43,9 +44,14 @@ export default function Kube(props: Props) {
         flex="0 0 auto"
         justifyContent="space-between"
       >
-        <InputSearch mr="3" />
+        <InputSearch
+         mr="3"
+         onChange={(e: React.SetStateAction<string>) => {
+          setSearchValue(e);
+        }}
+          />
       </Flex>
-      <KubeList kubes={kubes} />
+      <KubeList kubes={kubes} searchValue={searchValue} />
     </FeatureBox>
   );
 }

@@ -21,32 +21,59 @@ import {
   SortHeaderCell,
   Cell,
   TextCell,
+  SortTypes,
 } from 'design/DataTable';
 import { Label } from 'design'
 import Table from 'design/DataTable/Paged';
+import isMatch from 'design/utils/match';
+import { sortBy } from 'lodash';
 import { Kube } from 'teleport/services/kube';
 
-type Props = {
-    kubes: Kube[];
-    pageSize?: number;
-};
-
 function KubeList(props: Props) {
-  const { kubes = [], pageSize = 100 } = props;
+  const { kubes = [], searchValue = '', pageSize = 100 } = props;
+
+  const [sortDir, setSortDir] = React.useState<Record<string, string>>({
+    name: SortTypes.DESC,
+  });
+
+  function sortAndFilter(search) {
+    const filtered = kubes.filter(obj =>
+      isMatch(obj, search, {
+        searchableProps: ['name'],
+        cb: searchAndFilterCb,
+      })
+    );
+
+    const columnKey = Object.getOwnPropertyNames(sortDir)[0];
+    const sorted = sortBy(filtered, columnKey);
+    if (sortDir[columnKey] === SortTypes.ASC) {
+      return sorted.reverse();
+    }
+
+    return sorted;
+  }
+
+  function onSortChange(columnKey: string, sortDir: string) {
+    setSortDir({ [columnKey]: sortDir });
+  }
+
+  const data = sortAndFilter(searchValue);
 
   return (
-    <StyledTable pageSize={pageSize} data={kubes}>
-    <Column
-      columnKey="name"
-      header={
-        <SortHeaderCell
-          title="Name"
+      <StyledTable pageSize={pageSize} data={data}>
+        <Column
+          columnKey="name"
+          header={
+            <SortHeaderCell
+              sortDir={sortDir.name}
+              onSortChange={onSortChange}
+              title="Name"
+            />
+          }
+          cell={<TextCell />}
         />
-      }
-      cell={<TextCell />}
-    />
-    <Column header={<Cell>Labels</Cell>} cell={<LabelCell />} />
-  </StyledTable>
+        <Column header={<Cell>Labels</Cell>} cell={<LabelCell />} />
+      </StyledTable>
   );
 }
 
@@ -67,5 +94,23 @@ const StyledTable = styled(Table)`
     vertical-align: baseline;
   }
 `;
+
+function searchAndFilterCb(
+  targetValue: any[],
+  searchValue: string,
+  propName: string
+) {
+  if (propName === 'tags') {
+    return targetValue.some(item => {
+      return item.toLocaleUpperCase().indexOf(searchValue) !== -1;
+    });
+  }
+}
+
+type Props = {
+  kubes: Kube[];
+  pageSize?: number;
+  searchValue: string;
+};
 
 export default KubeList;
