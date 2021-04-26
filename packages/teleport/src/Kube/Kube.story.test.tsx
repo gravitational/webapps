@@ -24,6 +24,6 @@ test('loaded', () => {
 });
 
 test('failed', () => {
-    const { container } = render(<Failed />);
-    expect(container.firstChild).toMatchSnapshot();
+  const { container } = render(<Failed />);
+  expect(container.firstChild).toMatchSnapshot();
 });

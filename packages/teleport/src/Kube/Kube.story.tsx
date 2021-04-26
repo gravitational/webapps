@@ -20,16 +20,21 @@ import { kubes } from './fixtures';
 
 export default {
   title: 'Teleport/Kube',
-}
+};
 
 export function Loaded() {
-  return <Kube kubes={kubes} attempt={{status: 'success'}} />
+  return <Kube kubes={kubes} attempt={{ status: 'success' }} />;
 }
 
 export function Loading() {
-  return <Kube kubes={kubes} attempt={{status: 'processing'}}/>
+  return <Kube kubes={kubes} attempt={{ status: 'processing' }} />;
 }
 
 export function Failed() {
-  return <Kube kubes={kubes} attempt={{status: 'failed', statusText: 'server error'}}/>
+  return (
+    <Kube
+      kubes={kubes}
+      attempt={{ status: 'failed', statusText: 'server error' }}
+    />
+  );
 }
