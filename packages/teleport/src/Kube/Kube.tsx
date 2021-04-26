@@ -15,16 +15,16 @@ limitations under the License.
 */
 
 import React from 'react';
+import { Box, Indicator } from 'design';
+import { Danger } from 'design/Alert';
+import { Attempt } from 'shared/hooks/useAttemptNext';
+import KubeList from 'teleport/components/KubeList';
+import { Kube as KubeProps } from 'teleport/services/kube';
 import {
   FeatureBox,
   FeatureHeader,
   FeatureHeaderTitle,
 } from 'teleport/components/Layout';
-import { Box, Indicator } from 'design';
-import { Danger } from 'design/Alert';
-import KubeList from 'teleport/components/KubeList';
-import { Kube as KubeProps } from 'teleport/services/kube';
-import { Attempt } from 'shared/hooks/useAttemptNext';
 
 type Props = {
   kubes: KubeProps[];

@@ -16,6 +16,7 @@ limitations under the License.
 
 import React from 'react';
 import styled from 'styled-components';
+import { sortBy } from 'lodash';
 import {
   Column,
   SortHeaderCell,
@@ -26,7 +27,6 @@ import {
 import { Label, Flex } from 'design';
 import Table from 'design/DataTable/Paged';
 import isMatch from 'design/utils/match';
-import { sortBy } from 'lodash';
 import { Kube } from 'teleport/services/kube';
 import InputSearch from 'teleport/components/InputSearch';
 
