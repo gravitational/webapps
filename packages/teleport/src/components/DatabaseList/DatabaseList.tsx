@@ -43,7 +43,7 @@ function DatabaseList(props: Props) {
   function sortAndFilter(search) {
     const filtered = databases.filter(obj =>
       isMatch(obj, search, {
-        searchableProps: ['name', 'desc', 'protocol', 'type', 'uri', 'labels'],
+        searchableProps: ['name', 'desc', 'protocol', 'type', 'uri', 'tags'],
         cb: searchAndFilterCb,
       })
     );
@@ -142,8 +142,8 @@ function DatabaseList(props: Props) {
 
 function LabelCell(props) {
   const { rowIndex, data } = props;
-  const { labels = [] } = data[rowIndex];
-  return renderLabelCell(labels);
+  const { tags = [] } = data[rowIndex];
+  return renderLabelCell(tags);
 }
 
 const StyledTable = styled(Table)`
@@ -157,7 +157,7 @@ function searchAndFilterCb(
   searchValue: string,
   propName: string
 ) {
-  if (propName === 'labels') {
+  if (propName === 'tags') {
     return targetValue.some(item => {
       return item.toLocaleUpperCase().indexOf(searchValue) !== -1;
     });

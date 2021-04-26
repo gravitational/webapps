@@ -20,5 +20,5 @@ export interface Database {
   protocol: string;
   type: string;
   uri: string;
-  labels: string[];
+  tags: string[];
 }

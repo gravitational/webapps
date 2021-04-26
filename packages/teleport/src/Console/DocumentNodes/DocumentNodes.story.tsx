@@ -98,7 +98,7 @@ const nodes: Node[] = [
     clusterId: 'cluseter-1',
     hostname: 'fujedu',
     addr: '172.10.1.20:3022',
-    labels: ['cluster: one', 'kernel: 4.15.0-51-generic'],
+    tags: ['cluster: one', 'kernel: 4.15.0-51-generic'],
   },
   {
     tunnel: false,
@@ -106,7 +106,7 @@ const nodes: Node[] = [
     clusterId: 'cluseter-1',
     hostname: 'facuzguv',
     addr: '172.10.1.42:3022',
-    labels: ['cluster: one', 'kernel: 4.15.0-51-generic'],
+    tags: ['cluster: one', 'kernel: 4.15.0-51-generic'],
   },
   {
     tunnel: true,
@@ -114,7 +114,7 @@ const nodes: Node[] = [
     clusterId: 'cluseter-1',
     hostname: 'duzsevkig',
     addr: '172.10.1.156:3022',
-    labels: ['cluster: one', 'kernel: 4.15.0-51-generic'],
+    tags: ['cluster: one', 'kernel: 4.15.0-51-generic'],
   },
   {
     tunnel: true,
@@ -122,7 +122,7 @@ const nodes: Node[] = [
     clusterId: 'cluseter-1',
     hostname: 'kuhinur',
     addr: '172.10.1.145:3022',
-    labels: ['cluster: one', 'kernel: 4.15.0-51-generic'],
+    tags: ['cluster: one', 'kernel: 4.15.0-51-generic'],
   },
   {
     tunnel: false,
@@ -130,7 +130,7 @@ const nodes: Node[] = [
     clusterId: 'cluseter-1',
     hostname: 'zebpecda',
     addr: '172.10.1.24:3022',
-    labels: [
+    tags: [
       'cluster: one',
       'kernel: 4.15.0-51-generic',
       'lortavma: one',
