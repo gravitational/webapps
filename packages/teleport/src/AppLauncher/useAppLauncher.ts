@@ -41,7 +41,7 @@ export default function useAppLauncher() {
           if (params.publicAddr) {
             url.searchParams.set("addr", params.publicAddr);
           }
-          location.replace(url);
+          location.replace(url.toString());
         })
         .catch((err: Error) => {
           setAttempt({
@@ -56,7 +56,7 @@ export default function useAppLauncher() {
           const url = new URL(`https://${result.fqdn}${port}/x-teleport-auth`);
           url.searchParams.set("state", state);
           url.hash = `#value=${result.value}`;
-          location.replace(url);
+          location.replace(url.toString());
         })
         .catch((err: Error) => {
           setAttempt({

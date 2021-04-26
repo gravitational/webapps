@@ -114,8 +114,8 @@ const cfg = {
     appNodeScriptPath: '/scripts/:token/install-app.sh?name=:name&uri=:uri',
   },
 
-  getAapFqdnUrl(params: AppParams) {
-    return generatePath(cfg.api.aapFqdnPath, params);
+  getAapFqdnUrl(params: UrlAppParams) {
+    return generatePath(cfg.api.aapFqdnPath, { ...params });
   },
 
   getClusterEventsUrl(clusterId: string, params: UrlClusterEventsParams) {
@@ -297,6 +297,12 @@ export interface UrlParams {
   sid?: string;
   login?: string;
   serverId?: string;
+}
+
+export interface UrlAppParams {
+  fqdn: string;
+  clusterId?: string;
+  publicAddr?: string;
 }
 
 export interface UrlScpParams {
