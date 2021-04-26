@@ -39,7 +39,7 @@ export default function Databases(props: Props) {
           <Indicator />
         </Box>
       )}
-      {attempt.status === 'failed' && <Danger>{attempt.statusText} </Danger>}
+      {attempt.status === 'failed' && <Danger>{attempt.statusText}</Danger>}
       {attempt.status === 'success' && <DatabaseList databases={databases} />}
     </FeatureBox>
   );
