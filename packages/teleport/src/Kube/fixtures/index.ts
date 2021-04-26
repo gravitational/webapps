@@ -14,28 +14,19 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import { Kube } from 'teleport/services/kube'
+import { Kube } from 'teleport/services/kube';
 
 export const kubes: Kube[] = [
-    {
-      name: 'tele.logicoma.dev-prod',
-      labels: [
-        { name: 'kernal', value: '4.15.0-51-generic' },
-        { name: 'env', value: 'prod' },
-      ],
-      labelTexts: [ 'kernal: 4.15.0-51-generic', 'env: prod' ],
-    },
-    {
-      name: 'tele.logicoma.dev-staging',
-      labels: [{ name: 'env', value: 'staging' }],
-      labelTexts: [ 'env: staging' ],
-    },
-    {
-      name: 'cookie',
-      labels: [
-        { name: 'cluster-name', value: 'some-cluster-name' },
-        { name: 'env', value: 'idk' },
-      ],
-      labelTexts: [ 'cluster-name: some-cluster-name', 'env: idk' ],
-    }
+  {
+    name: 'tele.logicoma.dev-prod',
+    tags: ['kernal: 4.15.0-51-generic', 'env: prod'],
+  },
+  {
+    name: 'tele.logicoma.dev-staging',
+    tags: ['env: staging'],
+  },
+  {
+    name: 'cookie',
+    tags: ['cluster-name: some-cluster-name', 'env: idk'],
+  },
 ];

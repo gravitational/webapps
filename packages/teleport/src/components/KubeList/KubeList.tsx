@@ -41,7 +41,7 @@ function KubeList(props: Props) {
   function sortAndFilter(search) {
     const filtered = kubes.filter(obj =>
       isMatch(obj, search, {
-        searchableProps: ['name'],
+        searchableProps: ['name', 'tags'],
         cb: searchAndFilterCb,
       })
     );
@@ -86,10 +86,10 @@ function KubeList(props: Props) {
 
 export function LabelCell(props) {
   const { rowIndex, data } = props;
-  const { labels } = data[rowIndex];
-  const $labels = labels.map(({ name, value }) => (
-    <Label mb="1" mr="1" key={name} kind="secondary">
-      {`${name}: ${value}`}
+  const { tags } = data[rowIndex];
+  const $labels = tags.map(tag => (
+    <Label mb="1" mr="1" key={tag} kind="secondary">
+      {tag}
     </Label>
   ));
 

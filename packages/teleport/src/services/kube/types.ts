@@ -15,12 +15,6 @@ limitations under the License.
 */
 
 export interface Kube {
-    name: string;
-    labels: Label[];
-    labelTexts: string[];
-}
-
-interface Label {
-    name: string;
-    value: string;
+  name: string;
+  tags: string[];
 }
