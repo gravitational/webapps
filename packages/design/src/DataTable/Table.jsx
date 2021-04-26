@@ -15,9 +15,9 @@ limitations under the License.
 */
 
 import React from 'react';
-import Text from '../Text';
-import { StyledTable, StyledEmptyIndicator } from './StyledTable';
 import { Label } from 'design';
+import { StyledTable, StyledEmptyIndicator } from './StyledTable';
+import Text from '../Text';
 import * as Icons from '../Icon/Icon';
 
 /**

@@ -18,20 +18,8 @@ import React from 'react';
 import Databases from './Databases';
 import { databases } from './fixtures';
 
-export function Loaded() {
-  return render();
-}
+export const Loaded = () => <Databases databases={databases} />;
 
 export default {
   title: 'Teleport/Databases',
-  component: Databases,
 };
-
-function render() {
-  const props = {
-    databases,
-    searchValue: '',
-    setSearchValue: () => null,
-  };
-  return <Databases {...props} />;
-}

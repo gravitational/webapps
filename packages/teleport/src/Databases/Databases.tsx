@@ -14,40 +14,28 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React, { useState } from 'react';
+import React from 'react';
 import {
   FeatureBox,
   FeatureHeader,
   FeatureHeaderTitle,
 } from 'teleport/components/Layout';
-import { Flex } from 'design';
-import InputSearch from 'teleport/components/InputSearch';
 import DatabaseList from 'teleport/components/DatabaseList';
+import { Database } from 'teleport/services/database';
 
-export default function Databases(props) {
+export default function Databases(props: Props) {
   const { databases } = props;
-
-  const [searchValue, setSearchValue] = useState('');
 
   return (
     <FeatureBox>
       <FeatureHeader alignItems="center" justifyContent="space-between">
         <FeatureHeaderTitle>Databases</FeatureHeaderTitle>
       </FeatureHeader>
-      <Flex
-        mb={4}
-        alignItems="center"
-        flex="0 0 auto"
-        justifyContent="space-between"
-      >
-        <InputSearch
-          mr="3"
-          onChange={e => {
-            setSearchValue(e);
-          }}
-        />
-      </Flex>
-      <DatabaseList databases={databases} searchValue={searchValue} />
+      <DatabaseList databases={databases} />
     </FeatureBox>
   );
 }
+
+type Props = {
+  databases: Database[];
+};

@@ -16,6 +16,8 @@ limitations under the License.
 
 import React from 'react';
 import styled from 'styled-components';
+import { sortBy } from 'lodash';
+import { Flex } from 'design';
 import {
   Column,
   SortHeaderCell,
@@ -26,15 +28,17 @@ import {
 } from 'design/DataTable';
 import Table from 'design/DataTable/Paged';
 import isMatch from 'design/utils/match';
-import { sortBy } from 'lodash';
+import InputSearch from 'teleport/components/InputSearch';
 import { Database } from 'teleport/services/database';
 
 function DatabaseList(props: Props) {
-  const { databases = [], searchValue = '', pageSize = 100 } = props;
+  const { databases = [], pageSize = 20 } = props;
 
   const [sortDir, setSortDir] = React.useState<Record<string, string>>({
     name: SortTypes.DESC,
   });
+
+  const [searchValue, setSearchValue] = React.useState<string>('');
 
   function sortAndFilter(search) {
     const filtered = databases.filter(obj =>
@@ -60,7 +64,20 @@ function DatabaseList(props: Props) {
   const data = sortAndFilter(searchValue);
 
   return (
-    <div>
+    <>
+      <Flex
+        mb={4}
+        alignItems="center"
+        flex="0 0 auto"
+        justifyContent="space-between"
+      >
+        <InputSearch
+          mr="3"
+          onChange={e => {
+            setSearchValue(e);
+          }}
+        />
+      </Flex>
       <StyledTable pageSize={pageSize} data={data}>
         <Column
           columnKey="name"
@@ -119,7 +136,7 @@ function DatabaseList(props: Props) {
         />
         <Column header={<Cell>Labels</Cell>} cell={<LabelCell />} />
       </StyledTable>
-    </div>
+    </>
   );
 }
 
@@ -150,7 +167,6 @@ function searchAndFilterCb(
 type Props = {
   databases: Database[];
   pageSize?: number;
-  searchValue: string;
 };
 
 export default DatabaseList;
