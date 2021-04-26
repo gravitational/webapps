@@ -45,7 +45,7 @@ function NodeList(props: Props) {
   function sortAndFilter(search) {
     const filtered = nodes.filter(obj =>
       isMatch(obj, search, {
-        searchableProps: ['hostname', 'addr', 'tags', 'tunnel'],
+        searchableProps: ['hostname', 'addr', 'labels', 'tunnel'],
         cb: searchAndFilterCb,
       })
     );
@@ -109,7 +109,7 @@ function searchAndFilterCb(
     return 'TUNNEL'.indexOf(searchValue) !== -1;
   }
 
-  if (propName === 'tags') {
+  if (propName === 'labels') {
     return targetValue.some(item => {
       return item.toLocaleUpperCase().indexOf(searchValue) !== -1;
     });
@@ -171,8 +171,8 @@ function renderTunnel() {
 
 function LabelCell(props) {
   const { rowIndex, data } = props;
-  const { tags = [] } = data[rowIndex];
-  return renderLabelCell(tags);
+  const { labels = [] } = data[rowIndex];
+  return renderLabelCell(labels);
 }
 
 const StyledTable = styled(Table)`

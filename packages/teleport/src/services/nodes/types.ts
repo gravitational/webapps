@@ -18,7 +18,7 @@ export interface Node {
   id: string;
   clusterId: string;
   hostname: string;
-  tags: string[];
+  labels: string[];
   addr: string;
   tunnel: boolean;
 }
