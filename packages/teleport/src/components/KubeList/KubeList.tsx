@@ -84,7 +84,7 @@ function KubeList(props: Props) {
   );
 }
 
-export function LabelCell(props) {
+function LabelCell(props) {
   const { rowIndex, data } = props;
   const { tags } = data[rowIndex];
   const $labels = tags.map(tag => (
