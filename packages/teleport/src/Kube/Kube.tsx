@@ -20,9 +20,8 @@ import {
   FeatureHeader,
   FeatureHeaderTitle,
 } from 'teleport/components/Layout';
-import { Flex, Box, Indicator } from 'design';
+import { Box, Indicator } from 'design';
 import { Danger } from 'design/Alert';
-import InputSearch from 'teleport/components/InputSearch';
 import KubeList from 'teleport/components/KubeList';
 import { Kube as KubeProps } from 'teleport/services/kube';
 import { Attempt } from 'shared/hooks/useAttemptNext';
@@ -30,37 +29,23 @@ import { Attempt } from 'shared/hooks/useAttemptNext';
 type Props = {
   kubes: KubeProps[];
   attempt: Attempt;
-}
+};
 
 export default function Kube(props: Props) {
   const { kubes, attempt } = props;
-  const [searchValue, setSearchValue] = React.useState('');
 
   return (
     <FeatureBox>
       <FeatureHeader alignItems="center" justifyContent="space-between">
         <FeatureHeaderTitle>Kubernetes</FeatureHeaderTitle>
       </FeatureHeader>
-      <Flex
-        mb={4}
-        alignItems="center"
-        flex="0 0 auto"
-        justifyContent="space-between"
-      >
-        <InputSearch
-          mr="3"
-          onChange={e => {
-            setSearchValue(e);
-          }}
-        />
-      </Flex>
       {attempt.status === 'failed' && <Danger>{attempt.statusText} </Danger>}
       {attempt.status === 'processing' && (
         <Box textAlign="center" m={10}>
           <Indicator />
         </Box>
       )}
-      {attempt.status === 'success' && <KubeList kubes={kubes} searchValue={searchValue} />}
+      {attempt.status === 'success' && <KubeList kubes={kubes} />}
     </FeatureBox>
   );
 }

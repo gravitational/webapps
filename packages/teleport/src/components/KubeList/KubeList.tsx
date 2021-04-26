@@ -23,18 +23,20 @@ import {
   TextCell,
   SortTypes,
 } from 'design/DataTable';
-import { Label } from 'design'
+import { Label, Flex } from 'design';
 import Table from 'design/DataTable/Paged';
 import isMatch from 'design/utils/match';
 import { sortBy } from 'lodash';
 import { Kube } from 'teleport/services/kube';
+import InputSearch from 'teleport/components/InputSearch';
 
 function KubeList(props: Props) {
-  const { kubes = [], searchValue = '', pageSize = 100 } = props;
+  const { kubes = [], pageSize = 20 } = props;
 
   const [sortDir, setSortDir] = React.useState<Record<string, string>>({
     name: SortTypes.DESC,
   });
+  const [searchValue, setSearchValue] = React.useState('');
 
   function sortAndFilter(search) {
     const filtered = kubes.filter(obj =>
@@ -60,6 +62,10 @@ function KubeList(props: Props) {
   const data = sortAndFilter(searchValue);
 
   return (
+    <>
+      <Flex flex="0 0 auto" mb={4}>
+        <InputSearch mr="3" onChange={e => setSearchValue(e)} />
+      </Flex>
       <StyledTable pageSize={pageSize} data={data}>
         <Column
           columnKey="name"
@@ -74,20 +80,21 @@ function KubeList(props: Props) {
         />
         <Column header={<Cell>Labels</Cell>} cell={<LabelCell />} />
       </StyledTable>
+    </>
   );
 }
 
 export function LabelCell(props) {
-    const { rowIndex, data } = props;
-    const { labels } = data[rowIndex];
-    const $labels = labels.map(({ name, value }) => (
-      <Label mb="1" mr="1" key={name} kind="secondary">
-        {`${name}: ${value}`}
-      </Label>
-    ));
+  const { rowIndex, data } = props;
+  const { labels } = data[rowIndex];
+  const $labels = labels.map(({ name, value }) => (
+    <Label mb="1" mr="1" key={name} kind="secondary">
+      {`${name}: ${value}`}
+    </Label>
+  ));
 
-    return <Cell>{$labels}</Cell>;
-  }
+  return <Cell>{$labels}</Cell>;
+}
 
 const StyledTable = styled(Table)`
   & > tbody > tr > td {
@@ -110,7 +117,6 @@ function searchAndFilterCb(
 type Props = {
   kubes: Kube[];
   pageSize?: number;
-  searchValue: string;
 };
 
 export default KubeList;
