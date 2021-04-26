@@ -18,7 +18,20 @@ import React from 'react';
 import Databases from './Databases';
 import { databases } from './fixtures';
 
-export const Loaded = () => <Databases databases={databases} />;
+export const Loaded = () => (
+  <Databases databases={databases} attempt={{ status: 'success' }} />
+);
+
+export const Loading = () => (
+  <Databases databases={databases} attempt={{ status: 'processing' }} />
+);
+
+export const Failed = () => (
+  <Databases
+    databases={databases}
+    attempt={{ status: 'failed', statusText: 'Server Error' }}
+  />
+);
 
 export default {
   title: 'Teleport/Databases',
