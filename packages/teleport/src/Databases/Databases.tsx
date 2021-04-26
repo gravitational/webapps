@@ -15,6 +15,8 @@ limitations under the License.
 */
 
 import React from 'react';
+import { Indicator, Box } from 'design';
+import { Danger } from 'design/Alert';
 import {
   FeatureBox,
   FeatureHeader,
@@ -22,20 +24,28 @@ import {
 } from 'teleport/components/Layout';
 import DatabaseList from 'teleport/components/DatabaseList';
 import { Database } from 'teleport/services/database';
+import { Attempt } from 'shared/hooks/useAttemptNext';
 
 export default function Databases(props: Props) {
-  const { databases } = props;
+  const { databases, attempt } = props;
 
   return (
     <FeatureBox>
       <FeatureHeader alignItems="center" justifyContent="space-between">
         <FeatureHeaderTitle>Databases</FeatureHeaderTitle>
       </FeatureHeader>
-      <DatabaseList databases={databases} />
+      {attempt.status === 'processing' && (
+        <Box textAlign="center" m={10}>
+          <Indicator />
+        </Box>
+      )}
+      {attempt.status === 'failed' && <Danger>{attempt.statusText} </Danger>}
+      {attempt.status === 'success' && <DatabaseList databases={databases} />}
     </FeatureBox>
   );
 }
 
 type Props = {
   databases: Database[];
+  attempt: Attempt;
 };

@@ -1,5 +1,90 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[`failed 1`] = `
+.c3 {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 2px;
+  box-sizing: border-box;
+  box-shadow: 0 1px 4px rgba(0,0,0,.24);
+  margin: 0 0 24px 0;
+  min-height: 40px;
+  padding: 8px 16px;
+  overflow: auto;
+  word-break: break-all;
+  line-height: 1.5;
+  background: #f50057;
+  color: #FFFFFF;
+}
+
+.c3 a {
+  color: #FFFFFF;
+}
+
+.c1 {
+  box-sizing: border-box;
+  margin-bottom: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-shrink: 0;
+  border-bottom: 1px solid #1C254D;
+  height: 56px;
+  margin-left: -40px;
+  margin-right: -40px;
+  padding-left: 40px;
+  padding-right: 40px;
+}
+
+.c2 {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  font-weight: 300;
+  font-size: 22px;
+  line-height: 32px;
+  margin: 0px;
+  white-space: nowrap;
+}
+
+.c0 {
+  box-sizing: border-box;
+  padding-left: 40px;
+  padding-right: 40px;
+  display: flex;
+  overflow: auto;
+  width: 100%;
+  height: 100%;
+  flex-direction: column;
+}
+
+.c0::after {
+  content: ' ';
+  padding-bottom: 24px;
+}
+
+<div
+  class="sc-AxirZ sc-fzqBZW c0"
+>
+  <div
+    class="sc-AxirZ sc-fzqBZW c1"
+  >
+    <div
+      class="sc-fznZeY c2"
+    >
+      Databases
+    </div>
+  </div>
+  <div
+    class="c3"
+    kind="danger"
+  >
+    Server Error
+     
+  </div>
+</div>
+`;
+
 exports[`loaded 1`] = `
 .c9 {
   display: inline-block;

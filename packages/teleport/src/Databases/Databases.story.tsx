@@ -18,8 +18,28 @@ import React from 'react';
 import Databases from './Databases';
 import { databases } from './fixtures';
 
-export const Loaded = () => <Databases databases={databases} />;
+type PropTypes = Parameters<typeof Databases>[0];
+
+export const Loaded = () => render({ status: 'success' });
+
+export const Loading = () => render({ status: 'processing' });
+
+export const Failed = () =>
+  render({ status: 'failed', statusText: 'Server Error' });
 
 export default {
   title: 'Teleport/Databases',
 };
+
+function render(attemptOptions: Partial<PropTypes['attempt']>) {
+  const props = {
+    databases,
+    attempt: {
+      status: '' as any,
+      statusText: '',
+      ...attemptOptions,
+    },
+  };
+
+  return <Databases {...props} />;
+}
