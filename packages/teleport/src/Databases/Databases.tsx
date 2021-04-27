@@ -25,8 +25,14 @@ import {
 import DatabaseList from './DatabaseList';
 import { Database } from 'teleport/services/database';
 import { Attempt } from 'shared/hooks/useAttemptNext';
+import useDatabases from './useDatabases';
 
-export default function Databases(props: Props) {
+export default function Container() {
+  const data = useDatabases();
+  return <Databases {...data} />;
+}
+
+export function Databases(props: Props) {
   const { databases, attempt } = props;
 
   return (

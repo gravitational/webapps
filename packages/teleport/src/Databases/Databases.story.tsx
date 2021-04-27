@@ -15,7 +15,7 @@ limitations under the License.
 */
 
 import React from 'react';
-import Databases from './Databases';
+import { Databases } from './Databases';
 import { databases } from './fixtures';
 
 export const Loaded = () => (
