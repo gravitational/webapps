@@ -1,7 +1,7 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`failed 1`] = `
-.c5 {
+.c3 {
   display: flex;
   align-items: center;
   justify-content: center;
@@ -18,17 +18,8 @@ exports[`failed 1`] = `
   color: #FFFFFF;
 }
 
-.c5 a {
+.c3 a {
   color: #FFFFFF;
-}
-
-.c3 {
-  box-sizing: border-box;
-  margin-bottom: 24px;
-  flex: 0 0 auto;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
 }
 
 .c1 {
@@ -72,43 +63,11 @@ exports[`failed 1`] = `
   padding-bottom: 24px;
 }
 
-.c4 {
-  box-sizing: border-box;
-  font-size: 12px;
-  min-width: 200px;
-  outline: none;
-  border: none;
-  border-radius: 200px;
-  height: 32px;
-  transition: all .2s;
-  background: #222C59;
-  margin-right: 16px;
-  padding-left: 16px;
-  padding-right: 16px;
-  color: rgba(255,255,255,0.87);
-}
-
-.c4:hover {
-  background: #2C3A73;
-}
-
-.c4:focus,
-.c4:active {
-  background: #2C3A73;
-  box-shadow: inset 0 2px 4px rgba(0,0,0,.24);
-  color: rgba(255,255,255,0.87);
-}
-
-.c4::placeholder {
-  color: rgba(255,255,255,0.24);
-  font-size: 12px;
-}
-
 <div
-  class="sc-AxirZ c0"
+  class="sc-AxirZ sc-fzqBZW c0"
 >
   <div
-    class="sc-AxirZ c1"
+    class="sc-AxirZ sc-fzqBZW c1"
   >
     <div
       class="sc-fznZeY c2"
@@ -117,21 +76,10 @@ exports[`failed 1`] = `
     </div>
   </div>
   <div
-    class="sc-AxirZ c3"
-  >
-    <input
-      class="c4"
-      color="text.primary"
-      placeholder="SEARCH..."
-      value=""
-    />
-  </div>
-  <div
-    class="c5"
+    class="c3"
     kind="danger"
   >
     server error
-     
   </div>
 </div>
 `;
@@ -182,81 +130,6 @@ exports[`loaded 1`] = `
   margin-bottom: 24px;
   flex: 0 0 auto;
   display: flex;
-  align-items: center;
-  justify-content: space-between;
-}
-
-.c1 {
-  box-sizing: border-box;
-  margin-bottom: 24px;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  flex-shrink: 0;
-  border-bottom: 1px solid #1C254D;
-  height: 56px;
-  margin-left: -40px;
-  margin-right: -40px;
-  padding-left: 40px;
-  padding-right: 40px;
-}
-
-.c2 {
-  overflow: hidden;
-  text-overflow: ellipsis;
-  font-weight: 300;
-  font-size: 22px;
-  line-height: 32px;
-  margin: 0px;
-  white-space: nowrap;
-}
-
-.c0 {
-  box-sizing: border-box;
-  padding-left: 40px;
-  padding-right: 40px;
-  display: flex;
-  overflow: auto;
-  width: 100%;
-  height: 100%;
-  flex-direction: column;
-}
-
-.c0::after {
-  content: ' ';
-  padding-bottom: 24px;
-}
-
-.c4 {
-  box-sizing: border-box;
-  font-size: 12px;
-  min-width: 200px;
-  outline: none;
-  border: none;
-  border-radius: 200px;
-  height: 32px;
-  transition: all .2s;
-  background: #222C59;
-  margin-right: 16px;
-  padding-left: 16px;
-  padding-right: 16px;
-  color: rgba(255,255,255,0.87);
-}
-
-.c4:hover {
-  background: #2C3A73;
-}
-
-.c4:focus,
-.c4:active {
-  background: #2C3A73;
-  box-shadow: inset 0 2px 4px rgba(0,0,0,.24);
-  color: rgba(255,255,255,0.87);
-}
-
-.c4::placeholder {
-  color: rgba(255,255,255,0.24);
-  font-size: 12px;
 }
 
 .c10 {
@@ -383,8 +256,81 @@ exports[`loaded 1`] = `
   border-top-right-radius: 8px;
 }
 
+.c4 {
+  box-sizing: border-box;
+  font-size: 12px;
+  min-width: 200px;
+  outline: none;
+  border: none;
+  border-radius: 200px;
+  height: 32px;
+  transition: all .2s;
+  background: #222C59;
+  margin-right: 16px;
+  padding-left: 16px;
+  padding-right: 16px;
+  color: rgba(255,255,255,0.87);
+}
+
+.c4:hover {
+  background: #2C3A73;
+}
+
+.c4:focus,
+.c4:active {
+  background: #2C3A73;
+  box-shadow: inset 0 2px 4px rgba(0,0,0,.24);
+  color: rgba(255,255,255,0.87);
+}
+
+.c4::placeholder {
+  color: rgba(255,255,255,0.24);
+  font-size: 12px;
+}
+
 .c11 > tbody > tr > td {
   vertical-align: baseline;
+}
+
+.c1 {
+  box-sizing: border-box;
+  margin-bottom: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-shrink: 0;
+  border-bottom: 1px solid #1C254D;
+  height: 56px;
+  margin-left: -40px;
+  margin-right: -40px;
+  padding-left: 40px;
+  padding-right: 40px;
+}
+
+.c2 {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  font-weight: 300;
+  font-size: 22px;
+  line-height: 32px;
+  margin: 0px;
+  white-space: nowrap;
+}
+
+.c0 {
+  box-sizing: border-box;
+  padding-left: 40px;
+  padding-right: 40px;
+  display: flex;
+  overflow: auto;
+  width: 100%;
+  height: 100%;
+  flex-direction: column;
+}
+
+.c0::after {
+  content: ' ';
+  padding-bottom: 24px;
 }
 
 <div

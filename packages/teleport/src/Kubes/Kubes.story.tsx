@@ -14,5 +14,27 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import Kube from './Kube';
-export default Kube;
+import React from 'react';
+import Kubes from './Kubes';
+import { kubes } from './fixtures';
+
+export default {
+  title: 'Teleport/Kubes',
+};
+
+export function Loaded() {
+  return <Kubes kubes={kubes} attempt={{ status: 'success' }} />;
+}
+
+export function Loading() {
+  return <Kubes kubes={kubes} attempt={{ status: 'processing' }} />;
+}
+
+export function Failed() {
+  return (
+    <Kubes
+      kubes={kubes}
+      attempt={{ status: 'failed', statusText: 'server error' }}
+    />
+  );
+}

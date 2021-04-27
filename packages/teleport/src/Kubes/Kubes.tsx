@@ -19,19 +19,14 @@ import { Box, Indicator } from 'design';
 import { Danger } from 'design/Alert';
 import { Attempt } from 'shared/hooks/useAttemptNext';
 import KubeList from 'teleport/components/KubeList';
-import { Kube as KubeProps } from 'teleport/services/kube';
+import { Kube } from 'teleport/services/kube';
 import {
   FeatureBox,
   FeatureHeader,
   FeatureHeaderTitle,
 } from 'teleport/components/Layout';
 
-type Props = {
-  kubes: KubeProps[];
-  attempt: Attempt;
-};
-
-export default function Kube(props: Props) {
+export default function Kubes(props: Props) {
   const { kubes, attempt } = props;
 
   return (
@@ -39,7 +34,7 @@ export default function Kube(props: Props) {
       <FeatureHeader alignItems="center" justifyContent="space-between">
         <FeatureHeaderTitle>Kubernetes</FeatureHeaderTitle>
       </FeatureHeader>
-      {attempt.status === 'failed' && <Danger>{attempt.statusText} </Danger>}
+      {attempt.status === 'failed' && <Danger>{attempt.statusText}</Danger>}
       {attempt.status === 'processing' && (
         <Box textAlign="center" m={10}>
           <Indicator />
@@ -49,3 +44,8 @@ export default function Kube(props: Props) {
     </FeatureBox>
   );
 }
+
+type Props = {
+  kubes: Kube[];
+  attempt: Attempt;
+};

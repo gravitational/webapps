@@ -16,7 +16,7 @@ limitations under the License.
 
 import React from 'react';
 import { render } from 'design/utils/testing';
-import { Loaded, Failed } from './Kube.story';
+import { Loaded, Failed } from './Kubes.story';
 
 test('loaded', () => {
   const { container } = render(<Loaded />);
