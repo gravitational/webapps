@@ -24,6 +24,7 @@ import sshService from './services/ssh';
 import ResourceService from './services/resources';
 import userService from './services/user';
 import appService from './services/apps';
+import kubernetesService from './services/kube';
 
 class TeleportContext implements types.Context {
   // stores
@@ -41,6 +42,7 @@ class TeleportContext implements types.Context {
   resourceService = new ResourceService();
   userService = userService;
   appService = appService;
+  kubernetesService = kubernetesService;
 
   isEnterprise = cfg.isEnterprise;
 
