@@ -80,7 +80,6 @@ exports[`failed 1`] = `
     kind="danger"
   >
     Server Error
-     
   </div>
 </div>
 `;
@@ -469,10 +468,10 @@ exports[`loaded 1`] = `
             PostgreSQL 11.6: AWS Aurora 
           </td>
           <td>
-            postgres
+            PostgreSQL
           </td>
           <td>
-            rds
+            RDS
           </td>
           <td>
             postgres-aurora-instance-1.c1xpjrob56xs.us-west-1.rds.amazonaws.com:5432
@@ -500,10 +499,10 @@ exports[`loaded 1`] = `
             MySQL 5.6: AWS Aurora Longname For SQL
           </td>
           <td>
-            mysql
+            MySQL
           </td>
           <td>
-            self-hosted
+            Self-hosted
           </td>
           <td>
             mysql-aurora-56.cluster-c1xpjrob56xsadckjUkjk.us-west-1.rds.amazonaws.com:3306
@@ -531,10 +530,10 @@ exports[`loaded 1`] = `
             MPostgreSQL 9.6: Google Cloud SQL
           </td>
           <td>
-            postgres
+            PostgreSQL
           </td>
           <td>
-            gcp
+            GCP
           </td>
           <td>
             35.193.70.43:5432 

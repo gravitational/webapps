@@ -174,7 +174,7 @@ const TextCell = props => {
 const renderLabelCell = labels => {
   const $labels = labels.map(label => (
     <Label mb="1" mr="1" key={label} kind="secondary">
-      {`${label}`}
+      {label}
     </Label>
   ));
 
