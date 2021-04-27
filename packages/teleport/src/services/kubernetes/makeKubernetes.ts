@@ -1,5 +1,5 @@
 /*
-Copyright 2021 Gravitational, Inc.
+Copyright 2015 Gravitational, Inc.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -14,17 +14,13 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import { map } from 'lodash';
-import api from 'teleport/services/api';
-import cfg from 'teleport/config';
-import makeKubernetes from './makeKubernetes';
+import { Kube } from '../kube';
 
-const service = {
-  fetchKubernetes(clusterId: string) {
-    return api
-      .get(cfg.getClusterKubernetesUrl(clusterId))
-      .then(json => map(json.items, makeKubernetes));
-  },
-};
+export default function makeKubernetes(json): Kube {
+  const { name, tags = [] } = json;
 
-export default service;
+  return {
+    name,
+    tags: tags.map(tag => `${tag.name}: ${tag.value}`),
+  };
+}
