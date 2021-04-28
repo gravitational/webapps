@@ -24,7 +24,7 @@ import sshService from './services/ssh';
 import ResourceService from './services/resources';
 import userService from './services/user';
 import appService from './services/apps';
-import DatabaseService from './services/database';
+import DatabaseService from './services/databases';
 
 class TeleportContext implements types.Context {
   // stores
