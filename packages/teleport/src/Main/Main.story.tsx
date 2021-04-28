@@ -26,6 +26,7 @@ import { nodes } from 'teleport/Nodes/fixtures';
 import { events } from 'teleport/Audit/fixtures';
 import { sessions } from 'teleport/Sessions/fixtures';
 import { apps } from 'teleport/Apps/fixtures';
+import { databases } from 'teleport/Databases/fixtures';
 import { userContext } from './fixtures';
 
 export function OSS() {
@@ -64,6 +65,7 @@ function useMainStory() {
     ctx.nodeService.fetchNodes = () => Promise.resolve(nodes);
     ctx.sshService.fetchSessions = () => Promise.resolve(sessions);
     ctx.appService.fetchApps = () => Promise.resolve(apps);
+    ctx.databaseService.fetchDatabases = () => Promise.resolve(databases);
     ctx.storeUser.setState(userContext);
     getFeatures().forEach(f => f.register(ctx));
     return ctx;
