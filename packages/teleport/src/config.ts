@@ -288,7 +288,7 @@ const cfg = {
     return generatePath(cfg.api.rolesPath, { name });
   },
 
-  getClusterKubernetesUrl(clusterId: string) {
+  getKubernetesUrl(clusterId: string) {
     return generatePath(cfg.api.kubernetesPath, { clusterId });
   },
 
