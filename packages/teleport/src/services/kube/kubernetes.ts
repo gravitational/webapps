@@ -19,12 +19,12 @@ import api from 'teleport/services/api';
 import cfg from 'teleport/config';
 import makeKubernetes from './makeKubernetes';
 
-const service = {
-  fetchKubernetes(clusterId: string) {
+class KubernetesService {
+  fetchKubernetes(clusterId) {
     return api
       .get(cfg.getClusterKubernetesUrl(clusterId))
       .then(json => map(json.items, makeKubernetes));
-  },
-};
+  }
+}
 
-export default service;
+export default KubernetesService;

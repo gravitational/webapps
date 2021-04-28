@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import { Kube } from '.';
+import { Kube } from './types';
 
 export default function makeKubernetes(json): Kube {
   const { name, tags = [] } = json;
