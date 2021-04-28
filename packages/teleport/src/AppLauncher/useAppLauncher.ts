@@ -30,7 +30,7 @@ export default function useAppLauncher() {
   const state = getUrlParameter('state', location.search);
 
   React.useEffect(() => {
-    if (state === '') {
+    if (!state) {
       service
         .getAppFqdn(params)
         .then(result => {
