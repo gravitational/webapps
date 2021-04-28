@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import KubernetesService from './kube';
+import KubeService from './kube';
 
 export * from './types';
-export default KubernetesService;
+export default KubeService;

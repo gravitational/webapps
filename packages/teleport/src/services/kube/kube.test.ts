@@ -14,14 +14,14 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import KubernetesService from './kube';
+import KubeService from './kube';
 import api from 'teleport/services/api';
 
 test('correct processed fetch response', async () => {
   jest.spyOn(api, 'get').mockResolvedValue(mockApiResponse);
 
-  const kubernetesService = new KubernetesService();
-  const response = await kubernetesService.fetchKubernetes('clusterId');
+  const kubeService = new KubeService();
+  const response = await kubeService.fetchKubernetes('clusterId');
 
   expect(response).toEqual([
     {

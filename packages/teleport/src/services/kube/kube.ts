@@ -22,7 +22,7 @@ import makeKube from './makeKube';
 class KubeService {
   fetchKubernetes(clusterId) {
     return api
-      .get(cfg.getClusterKubernetesUrl(clusterId))
+      .get(cfg.getKubernetesUrl(clusterId))
       .then(json => map(json, makeKube));
   }
 }
