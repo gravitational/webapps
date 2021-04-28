@@ -18,6 +18,5 @@ export interface Database {
   name: string;
   desc: string;
   type: string;
-  uri: string;
   tags: string[];
 }

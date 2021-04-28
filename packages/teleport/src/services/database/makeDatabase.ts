@@ -17,12 +17,11 @@ limitations under the License.
 import { Database } from './types';
 
 export default function makeDatabase(json): Database {
-  const { name, desc, protocol, type, uri, labels = [] } = json;
+  const { name, desc, protocol, type, labels = [] } = json;
 
   return {
     name,
     desc,
-    uri,
     type: `${formatType(type)} ${formatProtocol(protocol)}`,
     tags: labels.map(label => `${label.name}: ${label.value}`),
   };
