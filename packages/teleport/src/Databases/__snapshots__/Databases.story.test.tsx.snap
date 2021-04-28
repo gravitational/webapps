@@ -487,7 +487,7 @@ exports[`loaded 1`] = `
             MySQL 5.6: AWS Aurora Longname For SQL
           </td>
           <td>
-            MySQL
+            Self-hosted/MySQL
           </td>
           <td>
             mysql-aurora-56.cluster-c1xpjrob56xsadckjUkjk.us-west-1.rds.amazonaws.com:3306
