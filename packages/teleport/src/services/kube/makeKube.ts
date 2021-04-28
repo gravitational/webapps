@@ -17,7 +17,8 @@ limitations under the License.
 import { Kube } from './types';
 
 export default function makeKube(json): Kube {
-  const { name, labels = [] } = json;
+  const { name } = json;
+  const labels = json.labels ? json.labels : [];
 
   return {
     name,

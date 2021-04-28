@@ -17,18 +17,43 @@ limitations under the License.
 import KubeService from './kube';
 import api from 'teleport/services/api';
 
-test('correct processed fetch response', async () => {
-  jest.spyOn(api, 'get').mockResolvedValue(mockApiResponse);
+describe('correct processed fetch response', () => {
+  test('fetch response labels is stringified', async () => {
+    jest.spyOn(api, 'get').mockResolvedValue(mockApiResponse);
 
-  const kubeService = new KubeService();
-  const response = await kubeService.fetchKubernetes('clusterId');
+    const kubeService = new KubeService();
+    const response = await kubeService.fetchKubernetes('clusterId');
 
-  expect(response).toEqual([
-    {
-      name: 'tele.logicoma.dev-prod',
-      tags: ['kernal: 4.15.0-51-generic', 'env: prod'],
-    },
-  ]);
+    expect(response).toEqual([
+      {
+        name: 'tele.logicoma.dev-prod',
+        tags: ['kernal: 4.15.0-51-generic', 'env: prod'],
+      },
+    ]);
+  });
+
+  test('undefined or null response replaced with empty array', async () => {
+    jest.spyOn(api, 'get').mockResolvedValue(undefined || null);
+
+    const kubeService = new KubeService();
+    const response = await kubeService.fetchKubernetes('clusterId');
+
+    expect(response).toEqual([]);
+  });
+
+  test('undefined or null labels replaced with empty array', async () => {
+    jest.spyOn(api, 'get').mockResolvedValue(mockUndefinedRes);
+
+    const kubeService = new KubeService();
+    const response = await kubeService.fetchKubernetes('clusterId');
+
+    expect(response).toEqual([
+      {
+        name: 'tele.logicoma.dev-prod',
+        tags: [],
+      },
+    ]);
+  });
 });
 
 const mockApiResponse = [
@@ -38,5 +63,12 @@ const mockApiResponse = [
       { name: 'kernal', value: '4.15.0-51-generic' },
       { name: 'env', value: 'prod' },
     ],
+  },
+];
+
+const mockUndefinedRes = [
+  {
+    name: 'tele.logicoma.dev-prod',
+    labels: undefined || null,
   },
 ];
