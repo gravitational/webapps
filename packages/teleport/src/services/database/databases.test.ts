@@ -33,6 +33,31 @@ test('correct formatting of database fetch response', async () => {
   ]);
 });
 
+describe('correct formatting of all type and protocol combos', () => {
+  test.each`
+    type                 | protocol                 | combined
+    ${'self-hosted'}     | ${'mysql'}               | ${'Self-hosted MySQL'}
+    ${'rds'}             | ${'mysql'}               | ${'RDS MySQL'}
+    ${'gcp'}             | ${'mysql'}               | ${'Cloud SQL MySQL'}
+    ${'redshift'}        | ${'mysql'}               | ${'Redshift MySQL'}
+    ${'self-hosted'}     | ${'postgres'}            | ${'Self-hosted PostgreSQL'}
+    ${'rds'}             | ${'postgres'}            | ${'RDS PostgreSQL'}
+    ${'gcp'}             | ${'postgres'}            | ${'Cloud SQL PostgreSQL'}
+    ${'redshift'}        | ${'postgres'}            | ${'Redshift PostgreSQL'}
+    ${'some other type'} | ${'some other protocol'} | ${'some other type some other protocol'}
+  `(
+    'should combine type and protocol correctly',
+    async ({ type, protocol, combined }) => {
+      jest.spyOn(api, 'get').mockResolvedValue({ items: [{ type, protocol }] });
+
+      const database = new DatabaseService();
+      const response = await database.fetchDatabases('im-a-cluster');
+
+      expect(response[0].type).toBe(combined);
+    }
+  );
+});
+
 const mockResponse = {
   items: [
     {
