@@ -429,15 +429,6 @@ exports[`loaded 1`] = `
           </th>
           <th>
             <a>
-              Protocol
-              <span
-                class="c8 c12 icon icon-chevrons-expand-vertical "
-                color="light"
-              />
-            </a>
-          </th>
-          <th>
-            <a>
               Type
               <span
                 class="c8 c12 icon icon-chevrons-expand-vertical "
@@ -468,10 +459,7 @@ exports[`loaded 1`] = `
             PostgreSQL 11.6: AWS Aurora 
           </td>
           <td>
-            PostgreSQL
-          </td>
-          <td>
-            RDS
+            RDS/PostgreSQL
           </td>
           <td>
             postgres-aurora-instance-1.c1xpjrob56xs.us-west-1.rds.amazonaws.com:5432
@@ -502,9 +490,6 @@ exports[`loaded 1`] = `
             MySQL
           </td>
           <td>
-            Self-hosted
-          </td>
-          <td>
             mysql-aurora-56.cluster-c1xpjrob56xsadckjUkjk.us-west-1.rds.amazonaws.com:3306
           </td>
           <td>
@@ -530,10 +515,7 @@ exports[`loaded 1`] = `
             MPostgreSQL 9.6: Google Cloud SQL
           </td>
           <td>
-            PostgreSQL
-          </td>
-          <td>
-            GCP
+            GCP/PostgreSQL
           </td>
           <td>
             35.193.70.43:5432 

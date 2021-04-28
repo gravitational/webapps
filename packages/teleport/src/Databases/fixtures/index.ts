@@ -20,8 +20,7 @@ export const databases: Database[] = [
   {
     name: 'aurora',
     desc: 'PostgreSQL 11.6: AWS Aurora ',
-    protocol: 'PostgreSQL',
-    type: 'RDS',
+    type: 'RDS/PostgreSQL',
     uri:
       'postgres-aurora-instance-1.c1xpjrob56xs.us-west-1.rds.amazonaws.com:5432',
     tags: ['cluster: root', 'env: aws'],
@@ -29,16 +28,14 @@ export const databases: Database[] = [
   {
     name: 'postgres-gcp',
     desc: 'MPostgreSQL 9.6: Google Cloud SQL',
-    protocol: 'PostgreSQL',
-    type: 'GCP',
+    type: 'GCP/PostgreSQL',
     uri: '35.193.70.43:5432 ',
     tags: ['cluster: env', 'value: gcp'],
   },
   {
     name: 'mysql-aurora-56',
     desc: 'MySQL 5.6: AWS Aurora Longname For SQL',
-    protocol: 'MySQL',
-    type: 'Self-hosted',
+    type: 'MySQL',
     uri:
       'mysql-aurora-56.cluster-c1xpjrob56xsadckjUkjk.us-west-1.rds.amazonaws.com:3306',
     tags: ['cluster: root', 'env: aws'],

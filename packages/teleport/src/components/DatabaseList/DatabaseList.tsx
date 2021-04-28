@@ -43,7 +43,7 @@ function DatabaseList(props: Props) {
   function sortAndFilter(search) {
     const filtered = databases.filter(obj =>
       isMatch(obj, search, {
-        searchableProps: ['name', 'desc', 'protocol', 'type', 'uri', 'tags'],
+        searchableProps: ['name', 'desc', 'type', 'uri', 'tags'],
         cb: searchAndFilterCb,
       })
     );
@@ -97,17 +97,6 @@ function DatabaseList(props: Props) {
               sortDir={sortDir.desc}
               onSortChange={onSortChange}
               title="Description"
-            />
-          }
-          cell={<TextCell />}
-        />
-        <Column
-          columnKey="protocol"
-          header={
-            <SortHeaderCell
-              sortDir={sortDir.protocol}
-              onSortChange={onSortChange}
-              title="Protocol"
             />
           }
           cell={<TextCell />}

@@ -23,8 +23,7 @@ export default function makeDatabase(json): Database {
     name,
     desc,
     uri,
-    protocol: formatProtocol(protocol),
-    type: formatType(type),
+    type: `${formatType(type)}${formatProtocol(protocol)}`,
     tags: labels.map(label => `${label.name}: ${label.value}`),
   };
 }
@@ -32,13 +31,13 @@ export default function makeDatabase(json): Database {
 const formatType = (input: string) => {
   switch (input) {
     case 'self-hosted':
-      return 'Self-hosted';
+      return '';
     case 'rds':
-      return 'RDS';
+      return 'RDS/';
     case 'gcp':
-      return 'GCP';
+      return 'GCP/';
     case 'redshift':
-      return 'Redshift';
+      return 'Redshift/';
     default:
       return 'input';
   }
