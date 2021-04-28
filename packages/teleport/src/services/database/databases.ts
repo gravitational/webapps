@@ -19,12 +19,12 @@ import api from 'teleport/services/api';
 import cfg from 'teleport/config';
 import makeDatabase from './makeDatabase';
 
-const service = {
+class DatabaseService {
   fetchDatabases(clusterId?: string) {
     return api
       .get(cfg.getDatabasesRoute(clusterId))
       .then(json => map(json.items, makeDatabase));
-  },
-};
+  }
+}
 
-export default service;
+export default DatabaseService;

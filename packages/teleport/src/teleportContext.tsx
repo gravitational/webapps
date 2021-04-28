@@ -24,7 +24,7 @@ import sshService from './services/ssh';
 import ResourceService from './services/resources';
 import userService from './services/user';
 import appService from './services/apps';
-import databaseService from './services/database';
+import DatabaseService from './services/database';
 
 class TeleportContext implements types.Context {
   // stores
@@ -42,8 +42,7 @@ class TeleportContext implements types.Context {
   resourceService = new ResourceService();
   userService = userService;
   appService = appService;
-  databaseService = databaseService;
-
+  databaseService = new DatabaseService();
   isEnterprise = cfg.isEnterprise;
 
   init() {
