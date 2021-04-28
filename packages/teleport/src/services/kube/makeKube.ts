@@ -1,5 +1,5 @@
 /*
-Copyright 2015 Gravitational, Inc.
+Copyright 2021 Gravitational, Inc.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -17,10 +17,10 @@ limitations under the License.
 import { Kube } from './types';
 
 export default function makeKube(json): Kube {
-  const { name, tags = [] } = json;
+  const { name, labels = [] } = json;
 
   return {
     name,
-    tags: tags.map(tag => `${tag.name}: ${tag.value}`),
+    tags: labels.map(label => `${label.name}: ${label.value}`),
   };
 }

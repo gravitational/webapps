@@ -34,7 +34,7 @@ test('correct processed fetch response', async () => {
 const mockApiResponse = [
   {
     name: 'tele.logicoma.dev-prod',
-    tags: [
+    labels: [
       { name: 'kernal', value: '4.15.0-51-generic' },
       { name: 'env', value: 'prod' },
     ],
