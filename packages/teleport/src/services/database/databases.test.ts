@@ -33,6 +33,15 @@ test('correct formatting of database fetch response', async () => {
   ]);
 });
 
+test('null response from database fetch', async () => {
+  jest.spyOn(api, 'get').mockResolvedValue(null);
+
+  const database = new DatabaseService();
+  const response = await database.fetchDatabases('im-a-cluster');
+
+  expect(response).toEqual([]);
+});
+
 describe('correct formatting of all type and protocol combos', () => {
   test.each`
     type                 | protocol                 | combined
