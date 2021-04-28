@@ -35,7 +35,7 @@ export const databases: Database[] = [
   {
     name: 'mysql-aurora-56',
     desc: 'MySQL 5.6: AWS Aurora Longname For SQL',
-    type: 'MySQL',
+    type: 'Self-hosted/MySQL',
     uri:
       'mysql-aurora-56.cluster-c1xpjrob56xsadckjUkjk.us-west-1.rds.amazonaws.com:3306',
     tags: ['cluster: root', 'env: aws'],
