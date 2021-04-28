@@ -23,7 +23,7 @@ class KubernetesService {
   fetchKubernetes(clusterId) {
     return api
       .get(cfg.getClusterKubernetesUrl(clusterId))
-      .then(json => map(json.items, makeKubernetes));
+      .then(json => map(json, makeKubernetes));
   }
 }
 
