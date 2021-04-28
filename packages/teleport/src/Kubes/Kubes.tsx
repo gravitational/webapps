@@ -18,7 +18,7 @@ import React from 'react';
 import { Box, Indicator } from 'design';
 import { Danger } from 'design/Alert';
 import { Attempt } from 'shared/hooks/useAttemptNext';
-import KubeList from 'teleport/components/KubeList';
+import KubeList from 'teleport/Kubes/KubeList';
 import { Kube } from 'teleport/services/kube';
 import {
   FeatureBox,
