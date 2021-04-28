@@ -14,4 +14,17 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-export * from './types';
+import { map } from 'lodash';
+import api from 'teleport/services/api';
+import cfg from 'teleport/config';
+import makeDatabase from './makeDatabase';
+
+class DatabaseService {
+  fetchDatabases(clusterId?: string) {
+    return api
+      .get(cfg.getDatabasesRoute(clusterId))
+      .then(json => map(json, makeDatabase));
+  }
+}
+
+export default DatabaseService;

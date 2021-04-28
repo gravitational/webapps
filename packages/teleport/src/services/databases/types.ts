@@ -17,8 +17,6 @@ limitations under the License.
 export interface Database {
   name: string;
   desc: string;
-  protocol: string;
   type: string;
-  uri: string;
   tags: string[];
 }
