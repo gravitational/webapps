@@ -437,15 +437,6 @@ exports[`loaded 1`] = `
             </a>
           </th>
           <th>
-            <a>
-              URI
-              <span
-                class="c8 c12 icon icon-chevrons-expand-vertical "
-                color="light"
-              />
-            </a>
-          </th>
-          <th>
             Labels
           </th>
         </tr>
@@ -459,10 +450,7 @@ exports[`loaded 1`] = `
             PostgreSQL 11.6: AWS Aurora 
           </td>
           <td>
-            RDS/PostgreSQL
-          </td>
-          <td>
-            postgres-aurora-instance-1.c1xpjrob56xs.us-west-1.rds.amazonaws.com:5432
+            RDS PostgreSQL
           </td>
           <td>
             <div
@@ -487,10 +475,7 @@ exports[`loaded 1`] = `
             MySQL 5.6: AWS Aurora Longname For SQL
           </td>
           <td>
-            Self-hosted/MySQL
-          </td>
-          <td>
-            mysql-aurora-56.cluster-c1xpjrob56xsadckjUkjk.us-west-1.rds.amazonaws.com:3306
+            Self-hosted MySQL
           </td>
           <td>
             <div
@@ -515,10 +500,7 @@ exports[`loaded 1`] = `
             MPostgreSQL 9.6: Google Cloud SQL
           </td>
           <td>
-            GCP/PostgreSQL
-          </td>
-          <td>
-            35.193.70.43:5432 
+            Cloud SQL PostgreSQL
           </td>
           <td>
             <div

@@ -23,7 +23,7 @@ export default function makeDatabase(json): Database {
     name,
     desc,
     uri,
-    type: `${formatType(type)}/${formatProtocol(protocol)}`,
+    type: `${formatType(type)} ${formatProtocol(protocol)}`,
     tags: labels.map(label => `${label.name}: ${label.value}`),
   };
 }
@@ -35,7 +35,7 @@ const formatType = (input: string) => {
     case 'rds':
       return 'RDS';
     case 'gcp':
-      return 'GCP';
+      return 'Cloud SQL';
     case 'redshift':
       return 'Redshift';
     default:
