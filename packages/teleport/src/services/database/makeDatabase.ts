@@ -23,18 +23,14 @@ export default function makeDatabase(json): Database {
     name,
     desc,
     uri,
-    protocol: formatProtocolAndType(protocol),
-    type: formatProtocolAndType(type),
+    protocol: formatProtocol(protocol),
+    type: formatType(type),
     tags: labels.map(label => `${label.name}: ${label.value}`),
   };
 }
 
-const formatProtocolAndType = (input: string) => {
+const formatType = (input: string) => {
   switch (input) {
-    case 'postgres':
-      return 'PostgreSQL';
-    case 'mysql':
-      return 'MySQL';
     case 'self-hosted':
       return 'Self-hosted';
     case 'rds':
@@ -43,5 +39,18 @@ const formatProtocolAndType = (input: string) => {
       return 'GCP';
     case 'redshift':
       return 'Redshift';
+    default:
+      return 'input';
+  }
+};
+
+const formatProtocol = (input: string) => {
+  switch (input) {
+    case 'postgres':
+      return 'PostgreSQL';
+    case 'mysql':
+      return 'MySQL';
+    default:
+      return input;
   }
 };
