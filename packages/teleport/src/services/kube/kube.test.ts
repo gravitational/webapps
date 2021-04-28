@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import KubernetesService from './kubernetes';
+import KubernetesService from './kube';
 import api from 'teleport/services/api';
 
 test('correct processed fetch response', async () => {

@@ -17,14 +17,14 @@ limitations under the License.
 import { map } from 'lodash';
 import api from 'teleport/services/api';
 import cfg from 'teleport/config';
-import makeKubernetes from './makeKubernetes';
+import makeKube from './makeKube';
 
-class KubernetesService {
+class KubeService {
   fetchKubernetes(clusterId) {
     return api
       .get(cfg.getClusterKubernetesUrl(clusterId))
-      .then(json => map(json, makeKubernetes));
+      .then(json => map(json, makeKube));
   }
 }
 
-export default KubernetesService;
+export default KubeService;

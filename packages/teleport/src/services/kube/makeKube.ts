@@ -16,7 +16,7 @@ limitations under the License.
 
 import { Kube } from './types';
 
-export default function makeKubernetes(json): Kube {
+export default function makeKube(json): Kube {
   const { name, tags = [] } = json;
 
   return {
