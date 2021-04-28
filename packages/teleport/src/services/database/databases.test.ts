@@ -46,9 +46,9 @@ describe('correct formatting of all type and protocol combos', () => {
     ${'redshift'}        | ${'postgres'}            | ${'Redshift PostgreSQL'}
     ${'some other type'} | ${'some other protocol'} | ${'some other type some other protocol'}
   `(
-    'should combine type and protocol correctly',
+    'should combine type: $type and protocol: $protocol correctly',
     async ({ type, protocol, combined }) => {
-      jest.spyOn(api, 'get').mockResolvedValue({ items: [{ type, protocol }] });
+      jest.spyOn(api, 'get').mockResolvedValue([{ type, protocol }]);
 
       const database = new DatabaseService();
       const response = await database.fetchDatabases('im-a-cluster');
@@ -58,19 +58,17 @@ describe('correct formatting of all type and protocol combos', () => {
   );
 });
 
-const mockResponse = {
-  items: [
-    {
-      name: 'aurora',
-      desc: 'PostgreSQL 11.6: AWS Aurora',
-      protocol: 'postgres',
-      type: 'rds',
-      uri:
-        'postgres-aurora-instance-1.c1xpjrob56xs.us-west-1.rds.amazonaws.com:5432',
-      labels: [
-        { name: 'cluster', value: 'root' },
-        { name: 'env', value: 'aws' },
-      ],
-    },
-  ],
-};
+const mockResponse = [
+  {
+    name: 'aurora',
+    desc: 'PostgreSQL 11.6: AWS Aurora',
+    protocol: 'postgres',
+    type: 'rds',
+    uri:
+      'postgres-aurora-instance-1.c1xpjrob56xs.us-west-1.rds.amazonaws.com:5432',
+    labels: [
+      { name: 'cluster', value: 'root' },
+      { name: 'env', value: 'aws' },
+    ],
+  },
+];

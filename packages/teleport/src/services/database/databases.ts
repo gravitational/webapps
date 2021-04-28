@@ -23,7 +23,7 @@ class DatabaseService {
   fetchDatabases(clusterId?: string) {
     return api
       .get(cfg.getDatabasesRoute(clusterId))
-      .then(json => map(json.items, makeDatabase));
+      .then(json => map(json, makeDatabase));
   }
 }
 
