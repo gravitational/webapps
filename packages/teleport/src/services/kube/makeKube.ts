@@ -18,7 +18,7 @@ import { Kube } from './types';
 
 export default function makeKube(json): Kube {
   const { name } = json;
-  const labels = json.labels ? json.labels : [];
+  const labels = json.labels || [];
 
   return {
     name,
