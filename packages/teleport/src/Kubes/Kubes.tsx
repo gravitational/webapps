@@ -25,8 +25,14 @@ import {
   FeatureHeader,
   FeatureHeaderTitle,
 } from 'teleport/components/Layout';
+import useKubes from './useKubes';
 
-export default function Kubes(props: Props) {
+export default function Container() {
+  const state = useKubes();
+  return <Kubes {...state} />;
+}
+
+export function Kubes(props: Props) {
   const { kubes, attempt } = props;
 
   return (
