@@ -14,7 +14,17 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import KubeService from './kube';
+import { map } from 'lodash';
+import api from 'teleport/services/api';
+import cfg from 'teleport/config';
+import makeKube from './makeKube';
 
-export * from './types';
+class KubeService {
+  fetchKubernetes(clusterId) {
+    return api
+      .get(cfg.getKubernetesUrl(clusterId))
+      .then(json => map(json, makeKube));
+  }
+}
+
 export default KubeService;

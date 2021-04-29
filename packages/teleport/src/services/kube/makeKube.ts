@@ -14,7 +14,14 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import KubeService from './kube';
+import { Kube } from './types';
 
-export * from './types';
-export default KubeService;
+export default function makeKube(json): Kube {
+  const { name } = json;
+  const labels = json.labels || [];
+
+  return {
+    name,
+    tags: labels.map(label => `${label.name}: ${label.value}`),
+  };
+}
