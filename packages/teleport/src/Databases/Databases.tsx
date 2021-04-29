@@ -23,7 +23,7 @@ import {
   FeatureHeaderTitle,
 } from 'teleport/components/Layout';
 import DatabaseList from './DatabaseList';
-import { Database } from 'teleport/services/database';
+import { Database } from 'teleport/services/databases';
 import { Attempt } from 'shared/hooks/useAttemptNext';
 import useDatabases from './useDatabases';
 

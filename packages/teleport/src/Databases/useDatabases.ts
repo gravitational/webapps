@@ -18,7 +18,7 @@ import { useState, useEffect } from 'react';
 import useTeleport from 'teleport/useTeleport';
 import useAttemptNext from 'shared/hooks/useAttemptNext';
 import useStickyClusterId from 'teleport/useStickyClusterId';
-import { Database } from 'teleport/services/database';
+import { Database } from 'teleport/services/databases';
 
 export default function useDatabases() {
   const ctx = useTeleport();
