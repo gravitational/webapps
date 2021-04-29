@@ -67,6 +67,24 @@ describe('correct formatting of all type and protocol combos', () => {
   );
 });
 
+test('null labels field in database fetch response', async () => {
+  jest.spyOn(api, 'get').mockResolvedValue([{ labels: null }]);
+
+  const database = new DatabaseService();
+  const response = await database.fetchDatabases('im-a-cluster');
+
+  expect(response[0].tags).toEqual([]);
+});
+
+test('undefined labels field in database fetch response', async () => {
+  jest.spyOn(api, 'get').mockResolvedValue([{ labels: undefined }]);
+
+  const database = new DatabaseService();
+  const response = await database.fetchDatabases('im-a-cluster');
+
+  expect(response[0].tags).toEqual([]);
+});
+
 const mockResponse = [
   {
     name: 'aurora',

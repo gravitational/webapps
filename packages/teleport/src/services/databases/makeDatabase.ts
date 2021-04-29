@@ -17,7 +17,9 @@ limitations under the License.
 import { Database } from './types';
 
 export default function makeDatabase(json): Database {
-  const { name, desc, protocol, type, labels = [] } = json;
+  const { name, desc, protocol, type } = json;
+
+  const labels = json.labels || [];
 
   return {
     name,
