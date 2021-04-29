@@ -17,15 +17,13 @@ limitations under the License.
 import React from 'react';
 import { Indicator, Box } from 'design';
 import { Danger } from 'design/Alert';
+import useTeleport from 'teleport/useTeleport';
 import {
   FeatureBox,
   FeatureHeader,
   FeatureHeaderTitle,
 } from 'teleport/components/Layout';
-import useTeleport from 'teleport/useTeleport';
-import { Attempt } from 'shared/hooks/useAttemptNext';
 import DatabaseList from './DatabaseList';
-import { Database } from 'teleport/services/databases';
 import useDatabases from './useDatabases';
 
 export default function Container() {
