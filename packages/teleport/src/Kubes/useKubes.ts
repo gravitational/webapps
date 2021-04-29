@@ -31,3 +31,5 @@ export default function useKubes(ctx: TeleportContext) {
 
   return { kubes, attempt };
 }
+
+export type State = ReturnType<typeof useKubes>;

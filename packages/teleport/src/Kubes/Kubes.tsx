@@ -24,7 +24,7 @@ import {
   FeatureHeaderTitle,
 } from 'teleport/components/Layout';
 import useTeleport from 'teleport/useTeleport';
-import useKubes from './useKubes';
+import useKubes, { State } from './useKubes';
 
 export default function Container() {
   const ctx = useTeleport();
@@ -32,7 +32,7 @@ export default function Container() {
   return <Kubes {...state} />;
 }
 
-export function Kubes(props: Props) {
+export function Kubes(props: State) {
   const { kubes, attempt } = props;
 
   return (
@@ -50,5 +50,3 @@ export function Kubes(props: Props) {
     </FeatureBox>
   );
 }
-
-type Props = ReturnType<typeof useKubes>;
