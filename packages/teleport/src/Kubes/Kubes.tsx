@@ -17,18 +17,18 @@ limitations under the License.
 import React from 'react';
 import { Box, Indicator } from 'design';
 import { Danger } from 'design/Alert';
-import { Attempt } from 'shared/hooks/useAttemptNext';
 import KubeList from 'teleport/Kubes/KubeList';
-import { Kube } from 'teleport/services/kube';
 import {
   FeatureBox,
   FeatureHeader,
   FeatureHeaderTitle,
 } from 'teleport/components/Layout';
+import useTeleport from 'teleport/useTeleport';
 import useKubes from './useKubes';
 
 export default function Container() {
-  const state = useKubes();
+  const ctx = useTeleport();
+  const state = useKubes(ctx);
   return <Kubes {...state} />;
 }
 
@@ -51,7 +51,4 @@ export function Kubes(props: Props) {
   );
 }
 
-type Props = {
-  kubes: Kube[];
-  attempt: Attempt;
-};
+type Props = ReturnType<typeof useKubes>;

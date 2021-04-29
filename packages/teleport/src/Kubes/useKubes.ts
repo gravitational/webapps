@@ -16,12 +16,11 @@ limitations under the License.
 
 import { useState, useEffect } from 'react';
 import useAttempt from 'shared/hooks/useAttemptNext';
-import useTeleport from 'teleport/useTeleport';
 import { Kube } from 'teleport/services/kube';
+import TeleportContext from 'teleport/teleportContext';
 import useStickyClusterId from 'teleport/useStickyClusterId';
 
-export default function useKubes() {
-  const ctx = useTeleport();
+export default function useKubes(ctx: TeleportContext) {
   const { clusterId } = useStickyClusterId();
   const { run, attempt } = useAttempt('processing');
   const [kubes, setKubes] = useState([] as Kube[]);
