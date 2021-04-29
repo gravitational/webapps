@@ -22,13 +22,15 @@ import {
   FeatureHeader,
   FeatureHeaderTitle,
 } from 'teleport/components/Layout';
+import useTeleport from 'teleport/useTeleport';
+import { Attempt } from 'shared/hooks/useAttemptNext';
 import DatabaseList from './DatabaseList';
 import { Database } from 'teleport/services/databases';
-import { Attempt } from 'shared/hooks/useAttemptNext';
 import useDatabases from './useDatabases';
 
 export default function Container() {
-  const data = useDatabases();
+  const ctx = useTeleport();
+  const data = useDatabases(ctx);
   return <Databases {...data} />;
 }
 

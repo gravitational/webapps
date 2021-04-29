@@ -15,14 +15,12 @@ limitations under the License.
 */
 
 import { useState, useEffect } from 'react';
-import useTeleport from 'teleport/useTeleport';
-import useAttemptNext from 'shared/hooks/useAttemptNext';
+import useAttempt from 'shared/hooks/useAttemptNext';
 import useStickyClusterId from 'teleport/useStickyClusterId';
 import { Database } from 'teleport/services/databases';
 
-export default function useDatabases() {
-  const ctx = useTeleport();
-  const { attempt, run } = useAttemptNext('processing');
+export default function useDatabases(ctx) {
+  const { attempt, run } = useAttempt('processing');
   const { clusterId } = useStickyClusterId();
 
   const [databases, setDatabases] = useState<Database[]>([]);
@@ -32,6 +30,7 @@ export default function useDatabases() {
   }, [clusterId]);
 
   return {
+    ctx,
     databases,
     attempt,
   };
