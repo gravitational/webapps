@@ -34,7 +34,7 @@ export default function Container() {
   return <Databases {...data} />;
 }
 
-export function Databases(props: Props) {
+export function Databases(props: ReturnType<typeof useDatabases>) {
   const { databases, attempt } = props;
 
   return (
@@ -52,8 +52,3 @@ export function Databases(props: Props) {
     </FeatureBox>
   );
 }
-
-type Props = {
-  databases: Database[];
-  attempt: Attempt;
-};

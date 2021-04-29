@@ -30,7 +30,6 @@ export default function useDatabases(ctx) {
   }, [clusterId]);
 
   return {
-    ctx,
     databases,
     attempt,
   };
