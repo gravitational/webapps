@@ -17,7 +17,7 @@ limitations under the License.
 import KubeService from './kube';
 import api from 'teleport/services/api';
 
-test('correct processed fetch response', async () => {
+test('correct processed fetch response formatting', async () => {
   jest.spyOn(api, 'get').mockResolvedValue(mockApiResponse);
 
   const kubeService = new KubeService();
@@ -29,6 +29,24 @@ test('correct processed fetch response', async () => {
       tags: ['kernal: 4.15.0-51-generic', 'env: prod'],
     },
   ]);
+});
+
+test('handling of null fetch response', async () => {
+  jest.spyOn(api, 'get').mockResolvedValue(null);
+
+  const kubeService = new KubeService();
+  const response = await kubeService.fetchKubernetes('clusterId');
+
+  expect(response).toEqual([]);
+});
+
+test('handling of null labels', async () => {
+  jest.spyOn(api, 'get').mockResolvedValue([{ name: 'test', labels: null }]);
+
+  const kubeService = new KubeService();
+  const response = await kubeService.fetchKubernetes('clusterId');
+
+  expect(response).toEqual([{ name: 'test', tags: [] }]);
 });
 
 const mockApiResponse = [
