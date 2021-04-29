@@ -22,6 +22,7 @@ import Nodes from './Nodes';
 import Sessions from './Sessions';
 import Account from './Account';
 import Applications from './Apps';
+import Kubes from './Kubes';
 import Support from './Support';
 import Clusters from './Clusters';
 import Trust from './TrustedClusters';
@@ -347,6 +348,32 @@ export class FeatureApps {
   }
 }
 
+export class FeatureKubes {
+  getTopNavTitle() {
+    return 'Kubernetes';
+  }
+
+  route = {
+    title: 'Kubernetes',
+    path: cfg.routes.kubernetes,
+    exact: true,
+    component: Kubes,
+  };
+
+  register(ctx: Ctx) {
+    ctx.storeNav.addSideItem({
+      title: 'Kubernetes',
+      Icon: Icons.Kubernetes,
+      exact: true,
+      getLink(clusterId: string) {
+        return cfg.getKubernetesRoute(clusterId);
+      },
+    });
+
+    ctx.features.push(this);
+  }
+}
+
 export class FeatureTrust {
   getTopNavTitle() {
     return 'Clusters';
@@ -380,6 +407,7 @@ export default function getFeatures() {
   return [
     new FeatureNodes(),
     new FeatureApps(),
+    new FeatureKubes(),
     new FeatureSessions(),
     new FeatureRecordings(),
     new FeatureAudit(),
