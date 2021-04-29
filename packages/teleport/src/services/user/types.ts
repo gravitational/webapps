@@ -57,6 +57,7 @@ export interface Acl {
   appServers: Access;
   accessRequests: Access;
   billing: Access;
+  databases: Access;
 }
 
 export interface User {

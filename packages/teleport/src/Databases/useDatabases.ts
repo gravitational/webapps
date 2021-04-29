@@ -34,3 +34,5 @@ export default function useDatabases(ctx) {
     attempt,
   };
 }
+
+export type Props = ReturnType<typeof useDatabases>;

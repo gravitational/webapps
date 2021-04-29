@@ -24,7 +24,7 @@ import {
   FeatureHeaderTitle,
 } from 'teleport/components/Layout';
 import DatabaseList from './DatabaseList';
-import useDatabases from './useDatabases';
+import useDatabases, { Props } from './useDatabases';
 
 export default function Container() {
   const ctx = useTeleport();
@@ -32,7 +32,7 @@ export default function Container() {
   return <Databases {...data} />;
 }
 
-export function Databases(props: ReturnType<typeof useDatabases>) {
+export function Databases(props: Props) {
   const { databases, attempt } = props;
 
   return (

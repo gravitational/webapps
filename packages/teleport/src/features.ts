@@ -379,7 +379,7 @@ export class FeatureTrust {
 
 export class FeatureDatabases {
   getTopNavTitle() {
-    return 'Databases';
+    return '';
   }
 
   route = {
@@ -390,6 +390,10 @@ export class FeatureDatabases {
   };
 
   register(ctx: Ctx) {
+    if (!ctx.getFeatureFlags().databases) {
+      return;
+    }
+
     ctx.storeNav.addSideItem({
       title: 'Databases',
       Icon: Icons.Database,
