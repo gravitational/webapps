@@ -350,7 +350,7 @@ export class FeatureApps {
 
 export class FeatureKubes {
   getTopNavTitle() {
-    return 'Kubernetes';
+    return '';
   }
 
   route = {
@@ -361,6 +361,10 @@ export class FeatureKubes {
   };
 
   register(ctx: Ctx) {
+    if (!ctx.getFeatureFlags().kubernetes) {
+      return;
+    }
+
     ctx.storeNav.addSideItem({
       title: 'Kubernetes',
       Icon: Icons.Kubernetes,

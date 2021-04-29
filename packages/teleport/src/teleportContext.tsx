@@ -62,6 +62,7 @@ class TeleportContext implements types.Context {
       trustedClusters: userContext.getTrustedClusterAccess().list,
       users: userContext.getUserAccess().list,
       applications: userContext.getAppServerAccess().list,
+      kubernetes: userContext.getKubeServerAccess().list,
       billing: userContext.getBillingAccess().list,
     };
   }
