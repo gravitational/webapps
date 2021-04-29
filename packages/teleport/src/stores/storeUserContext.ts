@@ -78,6 +78,6 @@ export default class StoreUserContext extends Store<UserContext> {
   }
 
   getDatabaseAccess() {
-    return this.state.acl.databases;
+    return this.state.acl.dbServers;
   }
 }

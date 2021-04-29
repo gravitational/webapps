@@ -78,7 +78,7 @@ export const userContext = makeUserContext({
       create: true,
       remove: true,
     },
-    databases: {
+    dbServers: {
       list: true,
       read: true,
       edit: true,
