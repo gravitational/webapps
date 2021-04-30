@@ -15,7 +15,7 @@ limitations under the License.
 */
 
 import React from 'react';
-import { Box, Indicator } from 'design';
+import { Box, Indicator, ButtonPrimary } from 'design';
 import { Danger } from 'design/Alert';
 import KubeList from 'teleport/Kubes/KubeList';
 import {
@@ -32,6 +32,9 @@ export default function Container() {
   return <Kubes {...state} />;
 }
 
+const docUrl =
+  'https://goteleport.com/docs/kubernetes-access/guides/multiple-clusters/';
+
 export function Kubes(props: State) {
   const { kubes, attempt } = props;
 
@@ -39,6 +42,9 @@ export function Kubes(props: State) {
     <FeatureBox>
       <FeatureHeader alignItems="center" justifyContent="space-between">
         <FeatureHeaderTitle>Kubernetes</FeatureHeaderTitle>
+        <ButtonPrimary as="a" target="_blank" href={docUrl}>
+          View documentation
+        </ButtonPrimary>
       </FeatureHeader>
       {attempt.status === 'failed' && <Danger>{attempt.statusText}</Danger>}
       {attempt.status === 'processing' && (
