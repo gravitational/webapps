@@ -15,7 +15,7 @@ limitations under the License.
 */
 
 import React from 'react';
-import Kubes from './Kubes';
+import { Kubes } from './Kubes';
 import { kubes } from './fixtures';
 
 export default {
