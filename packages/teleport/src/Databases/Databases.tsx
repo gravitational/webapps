@@ -17,16 +17,22 @@ limitations under the License.
 import React from 'react';
 import { Indicator, Box } from 'design';
 import { Danger } from 'design/Alert';
+import useTeleport from 'teleport/useTeleport';
 import {
   FeatureBox,
   FeatureHeader,
   FeatureHeaderTitle,
 } from 'teleport/components/Layout';
 import DatabaseList from './DatabaseList';
-import { Database } from 'teleport/services/database';
-import { Attempt } from 'shared/hooks/useAttemptNext';
+import useDatabases, { Props } from './useDatabases';
 
-export default function Databases(props: Props) {
+export default function Container() {
+  const ctx = useTeleport();
+  const data = useDatabases(ctx);
+  return <Databases {...data} />;
+}
+
+export function Databases(props: Props) {
   const { databases, attempt } = props;
 
   return (
@@ -44,8 +50,3 @@ export default function Databases(props: Props) {
     </FeatureBox>
   );
 }
-
-type Props = {
-  databases: Database[];
-  attempt: Attempt;
-};

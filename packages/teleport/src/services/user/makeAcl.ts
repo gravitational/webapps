@@ -30,6 +30,7 @@ export default function makeAcl(json): Acl {
   const tokens = json.tokens || defaultAccess;
   const accessRequests = json.accessRequests || defaultAccess;
   const billing = json.billing || defaultAccess;
+  const dbServers = json.dbServers || defaultAccess;
 
   return {
     logins,
@@ -43,6 +44,7 @@ export default function makeAcl(json): Acl {
     tokens,
     accessRequests,
     billing,
+    dbServers,
   };
 }
 

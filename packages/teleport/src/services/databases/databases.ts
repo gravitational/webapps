@@ -22,7 +22,7 @@ import makeDatabase from './makeDatabase';
 class DatabaseService {
   fetchDatabases(clusterId?: string) {
     return api
-      .get(cfg.getDatabasesRoute(clusterId))
+      .get(cfg.getDatabasesUrl(clusterId))
       .then(json => map(json, makeDatabase));
   }
 }

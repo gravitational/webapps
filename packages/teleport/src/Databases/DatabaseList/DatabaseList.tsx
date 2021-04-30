@@ -29,7 +29,7 @@ import {
 import Table from 'design/DataTable/Paged';
 import isMatch from 'design/utils/match';
 import InputSearch from 'teleport/components/InputSearch';
-import { Database } from 'teleport/services/database';
+import { Database } from 'teleport/services/databases';
 
 function DatabaseList(props: Props) {
   const { databases = [], pageSize = 20 } = props;
