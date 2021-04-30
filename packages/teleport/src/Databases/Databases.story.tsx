@@ -18,21 +18,36 @@ import React from 'react';
 import { Databases } from './Databases';
 import { databases } from './fixtures';
 
+export default {
+  title: 'Teleport/Databases',
+};
+
 export const Loaded = () => (
-  <Databases databases={databases} attempt={{ status: 'success' }} />
+  <Databases
+    databases={databases}
+    attempt={{ status: 'success' }}
+    isEnterprise={false}
+    isLeafCluster={false}
+    canCreate={false}
+  />
 );
 
 export const Loading = () => (
-  <Databases databases={databases} attempt={{ status: 'processing' }} />
+  <Databases
+    databases={databases}
+    attempt={{ status: 'processing' }}
+    isEnterprise={false}
+    isLeafCluster={false}
+    canCreate={false}
+  />
 );
 
 export const Failed = () => (
   <Databases
     databases={databases}
     attempt={{ status: 'failed', statusText: 'Server Error' }}
+    isEnterprise={false}
+    isLeafCluster={false}
+    canCreate={false}
   />
 );
-
-export default {
-  title: 'Teleport/Databases',
-};

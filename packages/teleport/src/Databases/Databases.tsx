@@ -25,6 +25,7 @@ import {
 } from 'teleport/components/Layout';
 import DatabaseList from './DatabaseList';
 import useDatabases, { Props } from './useDatabases';
+import ButtonAdd from './ButtonAdd';
 
 export default function Container() {
   const ctx = useTeleport();
@@ -33,12 +34,17 @@ export default function Container() {
 }
 
 export function Databases(props: Props) {
-  const { databases, attempt } = props;
+  const { databases, attempt, isLeafCluster, isEnterprise, canCreate } = props;
 
   return (
     <FeatureBox>
       <FeatureHeader alignItems="center" justifyContent="space-between">
         <FeatureHeaderTitle>Databases</FeatureHeaderTitle>
+        <ButtonAdd
+          isLeafCluster={isLeafCluster}
+          isEnterprise={isEnterprise}
+          canCreate={canCreate}
+        />
       </FeatureHeader>
       {attempt.status === 'processing' && (
         <Box textAlign="center" m={10}>

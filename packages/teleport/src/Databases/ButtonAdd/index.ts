@@ -14,16 +14,5 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React from 'react';
-import { render } from 'design/utils/testing';
-import { Loaded, Failed } from './Databases.story';
-
-test('open source loaded', () => {
-  const { container } = render(<Loaded />);
-  expect(container.firstChild).toMatchSnapshot();
-});
-
-test('failed', () => {
-  const { container } = render(<Failed />);
-  expect(container.firstChild).toMatchSnapshot();
-});
+import ButtonAdd from './ButtonAdd';
+export default ButtonAdd;

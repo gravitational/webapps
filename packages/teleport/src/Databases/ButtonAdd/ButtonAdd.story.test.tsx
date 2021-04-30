@@ -16,14 +16,25 @@ limitations under the License.
 
 import React from 'react';
 import { render } from 'design/utils/testing';
-import { Loaded, Failed } from './Databases.story';
+import ButtonAdd from './ButtonAdd';
 
-test('open source loaded', () => {
-  const { container } = render(<Loaded />);
+test('can create', () => {
+  const { container } = render(
+    <ButtonAdd isEnterprise={true} isLeafCluster={false} canCreate={true} />
+  );
   expect(container.firstChild).toMatchSnapshot();
 });
 
-test('failed', () => {
-  const { container } = render(<Failed />);
+test('read only', () => {
+  const { container } = render(
+    <ButtonAdd isEnterprise={true} isLeafCluster={false} canCreate={false} />
+  );
+  expect(container.firstChild).toMatchSnapshot();
+});
+
+test('leaf cluster', () => {
+  const { container } = render(
+    <ButtonAdd isEnterprise={true} isLeafCluster={true} canCreate={true} />
+  );
   expect(container.firstChild).toMatchSnapshot();
 });

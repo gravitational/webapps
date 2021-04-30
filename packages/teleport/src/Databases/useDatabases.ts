@@ -18,10 +18,13 @@ import { useState, useEffect } from 'react';
 import useAttempt from 'shared/hooks/useAttemptNext';
 import useStickyClusterId from 'teleport/useStickyClusterId';
 import { Database } from 'teleport/services/databases';
+import Ctx from 'teleport/teleportContext';
 
-export default function useDatabases(ctx) {
+export default function useDatabases(ctx: Ctx) {
   const { attempt, run } = useAttempt('processing');
-  const { clusterId } = useStickyClusterId();
+  const { clusterId, isLeafCluster } = useStickyClusterId();
+  const canCreate = ctx.storeUser.getTokenAccess().create;
+  const isEnterprise = ctx.isEnterprise;
 
   const [databases, setDatabases] = useState<Database[]>([]);
 
@@ -32,6 +35,9 @@ export default function useDatabases(ctx) {
   return {
     databases,
     attempt,
+    canCreate,
+    isLeafCluster,
+    isEnterprise,
   };
 }
 
