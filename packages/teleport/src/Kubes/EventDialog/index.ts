@@ -14,30 +14,5 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React from 'react';
-import { Kubes } from './Kubes';
-import { kubes } from './fixtures';
-
-export default {
-  title: 'Teleport/Kubes',
-};
-
-export function Loaded() {
-  return <Kubes kubes={kubes} attempt={{ status: 'success' }} user={'sam'} />;
-}
-
-export function Loading() {
-  return (
-    <Kubes kubes={kubes} attempt={{ status: 'processing' }} user={'sam'} />
-  );
-}
-
-export function Failed() {
-  return (
-    <Kubes
-      kubes={kubes}
-      attempt={{ status: 'failed', statusText: 'server error' }}
-      user={'sam'}
-    />
-  );
-}
+import EventDialog from './EventDialog';
+export default EventDialog;

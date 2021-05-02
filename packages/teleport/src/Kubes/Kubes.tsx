@@ -36,7 +36,7 @@ const docUrl =
   'https://goteleport.com/docs/kubernetes-access/guides/multiple-clusters/';
 
 export function Kubes(props: State) {
-  const { kubes, attempt } = props;
+  const { kubes, attempt, user } = props;
 
   return (
     <FeatureBox>
@@ -52,7 +52,7 @@ export function Kubes(props: State) {
           <Indicator />
         </Box>
       )}
-      {attempt.status === 'success' && <KubeList kubes={kubes} />}
+      {attempt.status === 'success' && <KubeList kubes={kubes} user={user} />}
     </FeatureBox>
   );
 }

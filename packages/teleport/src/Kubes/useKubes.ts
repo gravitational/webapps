@@ -22,6 +22,7 @@ import useStickyClusterId from 'teleport/useStickyClusterId';
 
 export default function useKubes(ctx: TeleportContext) {
   const { clusterId } = useStickyClusterId();
+  const user = ctx.storeUser.state.username;
   const { run, attempt } = useAttempt('processing');
   const [kubes, setKubes] = useState([] as Kube[]);
 
@@ -29,7 +30,7 @@ export default function useKubes(ctx: TeleportContext) {
     run(() => ctx.kubeService.fetchKubernetes(clusterId).then(setKubes));
   }, [clusterId]);
 
-  return { kubes, attempt };
+  return { kubes, attempt, user };
 }
 
 export type State = ReturnType<typeof useKubes>;

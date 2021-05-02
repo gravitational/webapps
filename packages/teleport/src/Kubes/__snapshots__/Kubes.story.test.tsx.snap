@@ -1,7 +1,7 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`failed 1`] = `
-.c3 {
+.c4 {
   display: flex;
   align-items: center;
   justify-content: center;
@@ -18,8 +18,52 @@ exports[`failed 1`] = `
   color: #FFFFFF;
 }
 
-.c3 a {
+.c4 a {
   color: #FFFFFF;
+}
+
+.c3 {
+  line-height: 1.5;
+  margin: 0;
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  box-sizing: border-box;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-family: inherit;
+  font-weight: 600;
+  outline: none;
+  position: relative;
+  text-align: center;
+  text-decoration: none;
+  text-transform: uppercase;
+  transition: all 0.3s;
+  -webkit-font-smoothing: antialiased;
+  background: #512FC9;
+  color: rgba(255,255,255,0.87);
+  min-height: 32px;
+  font-size: 12px;
+  padding: 0px 24px;
+}
+
+.c3:active {
+  opacity: 0.56;
+}
+
+.c3:hover,
+.c3:focus {
+  background: #651FFF;
+}
+
+.c3:active {
+  background: #354AA4;
+}
+
+.c3:disabled {
+  background: rgba(255,255,255,0.12);
+  color: rgba(255,255,255,0.3);
 }
 
 .c1 {
@@ -74,9 +118,17 @@ exports[`failed 1`] = `
     >
       Kubernetes
     </div>
+    <a
+      class="c3"
+      href="https://goteleport.com/docs/kubernetes-access/guides/multiple-clusters/"
+      kind="primary"
+      target="_blank"
+    >
+      View documentation
+    </a>
   </div>
   <div
-    class="c3"
+    class="c4"
     kind="danger"
   >
     server error
@@ -85,20 +137,113 @@ exports[`failed 1`] = `
 `;
 
 exports[`loaded 1`] = `
-.c9 {
+.c3 {
+  line-height: 1.5;
+  margin: 0;
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  box-sizing: border-box;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-family: inherit;
+  font-weight: 600;
+  outline: none;
+  position: relative;
+  text-align: center;
+  text-decoration: none;
+  text-transform: uppercase;
+  transition: all 0.3s;
+  -webkit-font-smoothing: antialiased;
+  background: #512FC9;
+  color: rgba(255,255,255,0.87);
+  min-height: 32px;
+  font-size: 12px;
+  padding: 0px 24px;
+}
+
+.c3:active {
+  opacity: 0.56;
+}
+
+.c3:hover,
+.c3:focus {
+  background: #651FFF;
+}
+
+.c3:active {
+  background: #354AA4;
+}
+
+.c3:disabled {
+  background: rgba(255,255,255,0.12);
+  color: rgba(255,255,255,0.3);
+}
+
+.c15 {
+  line-height: 1.5;
+  margin: 0;
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  box-sizing: border-box;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-family: inherit;
+  font-weight: 600;
+  outline: none;
+  position: relative;
+  text-align: center;
+  text-decoration: none;
+  text-transform: uppercase;
+  transition: all 0.3s;
+  -webkit-font-smoothing: antialiased;
+  background: #2C3A73;
+  border: 1px solid #1C254D;
+  opacity: .87;
+  color: rgba(255,255,255,0.87);
+  font-size: 10px;
+  min-height: 24px;
+  padding: 0px 16px;
+  width: 87px;
+}
+
+.c15:active {
+  opacity: 0.56;
+}
+
+.c15:hover,
+.c15:focus {
+  background: #2C3A73;
+  border: 1px solid rgba(255,255,255,0.1);
+  opacity: 1;
+}
+
+.c15:active {
+  opacity: 0.24;
+}
+
+.c15:disabled {
+  background: rgba(255,255,255,0.12);
+  color: rgba(255,255,255,0.3);
+}
+
+.c10 {
   display: inline-block;
   transition: color .3s;
   color: #FFFFFF;
   font-size: 16px;
 }
 
-.c12 {
+.c13 {
   display: inline-block;
   transition: color .3s;
   color: #FFFFFF;
 }
 
-.c13 {
+.c14 {
   box-sizing: border-box;
   border-radius: 100px;
   display: inline-flex;
@@ -115,7 +260,7 @@ exports[`loaded 1`] = `
   margin-right: 4px;
 }
 
-.c6 {
+.c7 {
   overflow: hidden;
   text-overflow: ellipsis;
   font-weight: 400;
@@ -125,14 +270,14 @@ exports[`loaded 1`] = `
   color: #FFFFFF;
 }
 
-.c3 {
+.c4 {
   box-sizing: border-box;
   margin-bottom: 24px;
   flex: 0 0 auto;
   display: flex;
 }
 
-.c10 {
+.c11 {
   background: #222C59;
   box-shadow: 0 4px 16px rgba(0,0,0,0.24);
   border-collapse: collapse;
@@ -142,35 +287,35 @@ exports[`loaded 1`] = `
   width: 100%;
 }
 
-.c10 > thead > tr > th,
-.c10 > tbody > tr > th,
-.c10 > tfoot > tr > th,
-.c10 > thead > tr > td,
-.c10 > tbody > tr > td,
-.c10 > tfoot > tr > td {
+.c11 > thead > tr > th,
+.c11 > tbody > tr > th,
+.c11 > tfoot > tr > th,
+.c11 > thead > tr > td,
+.c11 > tbody > tr > td,
+.c11 > tfoot > tr > td {
   padding: 8px 8px;
   vertical-align: middle;
 }
 
-.c10 > thead > tr > th:first-child,
-.c10 > tbody > tr > th:first-child,
-.c10 > tfoot > tr > th:first-child,
-.c10 > thead > tr > td:first-child,
-.c10 > tbody > tr > td:first-child,
-.c10 > tfoot > tr > td:first-child {
+.c11 > thead > tr > th:first-child,
+.c11 > tbody > tr > th:first-child,
+.c11 > tfoot > tr > th:first-child,
+.c11 > thead > tr > td:first-child,
+.c11 > tbody > tr > td:first-child,
+.c11 > tfoot > tr > td:first-child {
   padding-left: 24px;
 }
 
-.c10 > thead > tr > th:last-child,
-.c10 > tbody > tr > th:last-child,
-.c10 > tfoot > tr > th:last-child,
-.c10 > thead > tr > td:last-child,
-.c10 > tbody > tr > td:last-child,
-.c10 > tfoot > tr > td:last-child {
+.c11 > thead > tr > th:last-child,
+.c11 > tbody > tr > th:last-child,
+.c11 > tfoot > tr > th:last-child,
+.c11 > thead > tr > td:last-child,
+.c11 > tbody > tr > td:last-child,
+.c11 > tfoot > tr > td:last-child {
   padding-right: 24px;
 }
 
-.c10 > thead > tr > th {
+.c11 > thead > tr > th {
   background: #111B48;
   color: #FFFFFF;
   cursor: pointer;
@@ -184,39 +329,39 @@ exports[`loaded 1`] = `
   white-space: nowrap;
 }
 
-.c10 > thead > tr > th .c8 {
+.c11 > thead > tr > th .c9 {
   font-weight: bold;
   font-size: 8px;
   margin-left: 8px;
 }
 
-.c10 > tbody > tr > td {
+.c11 > tbody > tr > td {
   color: rgba(255,255,255,0.87);
   line-height: 16px;
 }
 
-.c10 tbody tr {
+.c11 tbody tr {
   border-bottom: 1px solid #1C254D;
 }
 
-.c10 tbody tr:hover {
+.c11 tbody tr:hover {
   background-color: rgb(37,49,98);
 }
 
-.c10 tbody > tr:last-child td:first-child {
+.c11 tbody > tr:last-child td:first-child {
   border-bottom-left-radius: 8px;
 }
 
-.c10 tbody > tr:last-child td:last-child {
+.c11 tbody > tr:last-child td:last-child {
   border-bottom-right-radius: 8px;
 }
 
-.c7 {
+.c8 {
   box-sizing: border-box;
   display: flex;
 }
 
-.c7 button {
+.c8 button {
   background: none;
   border: none;
   border-radius: 200px;
@@ -228,23 +373,23 @@ exports[`loaded 1`] = `
   text-align: center;
 }
 
-.c7 button:hover,
-.c7 button:focus {
+.c8 button:hover,
+.c8 button:focus {
   background: #1C254D;
 }
 
-.c7 button:hover .c8,
-.c7 button:focus .c8 {
+.c8 button:hover .c9,
+.c8 button:focus .c9 {
   opacity: 1;
 }
 
-.c7 button .c8 {
+.c8 button .c9 {
   opacity: 0.4;
   font-size: 20px;
   transition: all 0.3s;
 }
 
-.c5 {
+.c6 {
   padding: 8px 24px;
   display: flex;
   height: 24px;
@@ -256,7 +401,7 @@ exports[`loaded 1`] = `
   border-top-right-radius: 8px;
 }
 
-.c4 {
+.c5 {
   box-sizing: border-box;
   font-size: 12px;
   min-width: 200px;
@@ -272,23 +417,23 @@ exports[`loaded 1`] = `
   color: rgba(255,255,255,0.87);
 }
 
-.c4:hover {
+.c5:hover {
   background: #2C3A73;
 }
 
-.c4:focus,
-.c4:active {
+.c5:focus,
+.c5:active {
   background: #2C3A73;
   box-shadow: inset 0 2px 4px rgba(0,0,0,.24);
   color: rgba(255,255,255,0.87);
 }
 
-.c4::placeholder {
+.c5::placeholder {
   color: rgba(255,255,255,0.24);
   font-size: 12px;
 }
 
-.c11 > tbody > tr > td {
+.c12 > tbody > tr > td {
   vertical-align: baseline;
 }
 
@@ -344,12 +489,20 @@ exports[`loaded 1`] = `
     >
       Kubernetes
     </div>
+    <a
+      class="c3"
+      href="https://goteleport.com/docs/kubernetes-access/guides/multiple-clusters/"
+      kind="primary"
+      target="_blank"
+    >
+      View documentation
+    </a>
   </div>
   <div
-    class="sc-AxirZ c3"
+    class="sc-AxirZ c4"
   >
     <input
-      class="c4"
+      class="c5"
       color="text.primary"
       placeholder="SEARCH..."
       value=""
@@ -357,10 +510,10 @@ exports[`loaded 1`] = `
   </div>
   <div>
     <nav
-      class="c5"
+      class="c6"
     >
       <div
-        class="c6"
+        class="c7"
         color="primary.contrastText"
       >
         SHOWING 
@@ -378,14 +531,14 @@ exports[`loaded 1`] = `
         </strong>
       </div>
       <div
-        class="sc-AxirZ c7"
+        class="sc-AxirZ c8"
       >
         <button
           disabled=""
           title="Previous Page"
         >
           <span
-            class="c8 c9 icon icon-arrow-left-circle "
+            class="c9 c10 icon icon-arrow-left-circle "
             color="light"
             font-size="3"
           />
@@ -395,7 +548,7 @@ exports[`loaded 1`] = `
           title="Next Page"
         >
           <span
-            class="c8 c9 icon icon-arrow-right-circle "
+            class="c9 c10 icon icon-arrow-right-circle "
             color="light"
             font-size="3"
           />
@@ -403,7 +556,7 @@ exports[`loaded 1`] = `
       </div>
     </nav>
     <table
-      class="c10 c11"
+      class="c11 c12"
     >
       <thead>
         <tr>
@@ -411,7 +564,7 @@ exports[`loaded 1`] = `
             <a>
               Name
               <span
-                class="c8 c12 icon icon-chevron-down "
+                class="c9 c13 icon icon-chevron-down "
                 color="light"
               />
             </a>
@@ -419,6 +572,7 @@ exports[`loaded 1`] = `
           <th>
             Labels
           </th>
+          <th />
         </tr>
       </thead>
       <tbody>
@@ -428,17 +582,28 @@ exports[`loaded 1`] = `
           </td>
           <td>
             <div
-              class="c13"
+              class="c14"
               kind="secondary"
             >
               cluster-name: some-cluster-name
             </div>
             <div
-              class="c13"
+              class="c14"
               kind="secondary"
             >
               env: idk
             </div>
+          </td>
+          <td
+            align="right"
+          >
+            <button
+              class="c15"
+              kind="border"
+              width="87px"
+            >
+              Connect
+            </button>
           </td>
         </tr>
         <tr>
@@ -447,17 +612,28 @@ exports[`loaded 1`] = `
           </td>
           <td>
             <div
-              class="c13"
+              class="c14"
               kind="secondary"
             >
               kernal: 4.15.0-51-generic
             </div>
             <div
-              class="c13"
+              class="c14"
               kind="secondary"
             >
               env: prod
             </div>
+          </td>
+          <td
+            align="right"
+          >
+            <button
+              class="c15"
+              kind="border"
+              width="87px"
+            >
+              Connect
+            </button>
           </td>
         </tr>
         <tr>
@@ -466,11 +642,22 @@ exports[`loaded 1`] = `
           </td>
           <td>
             <div
-              class="c13"
+              class="c14"
               kind="secondary"
             >
               env: staging
             </div>
+          </td>
+          <td
+            align="right"
+          >
+            <button
+              class="c15"
+              kind="border"
+              width="87px"
+            >
+              Connect
+            </button>
           </td>
         </tr>
       </tbody>
