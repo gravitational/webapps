@@ -75,8 +75,8 @@ const cfg = {
   },
 
   api: {
-    aapSession: '/v1/webapi/sessions/app',
-    aapFqdnPath: '/v1/webapi/apps/:fqdn/:clusterId?/:publicAddr?',
+    appSession: '/v1/webapi/sessions/app',
+    appFqdnPath: '/v1/webapi/apps/:fqdn/:clusterId?/:publicAddr?',
     applicationsPath: '/v1/webapi/sites/:clusterId/apps',
     clustersPath: '/v1/webapi/sites',
     clusterEventsPath: `/v1/webapi/sites/:clusterId/events/search?from=:start?&to=:end?&limit=:limit?`,
@@ -114,8 +114,8 @@ const cfg = {
     appNodeScriptPath: '/scripts/:token/install-app.sh?name=:name&uri=:uri',
   },
 
-  getAapFqdnUrl(params: UrlAppParams) {
-    return generatePath(cfg.api.aapFqdnPath, { ...params });
+  getAppFqdnUrl(params: UrlAppParams) {
+    return generatePath(cfg.api.appFqdnPath, { ...params });
   },
 
   getClusterEventsUrl(clusterId: string, params: UrlClusterEventsParams) {
