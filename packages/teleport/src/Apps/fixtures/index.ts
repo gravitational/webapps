@@ -18,19 +18,27 @@ import makeApp from 'teleport/services/apps/makeApps';
 
 export const apps = [
   {
-    name: 'jenkins',
+    name: 'jenkinsOne',
     uri: '',
-    publicAddr: 'jenkins',
-    labels: [],
+    publicAddr: 'jenkins-address',
+    labels: ['kernal: 4.15.0-51-generic', 'env: prod'],
     clusterId: 'one',
     fqdn: 'jenkins.one',
   },
   {
-    name: 'jenkins',
+    name: 'jenkinsTwo',
     uri: '',
-    publicAddr: 'jenkins',
-    labels: [],
+    publicAddr: 'second-jenkins-address',
+    labels: ['env: staging', 'cluster-name: some-cluster-name'],
     clusterId: 'two',
     fqdn: 'jenkins.two',
+  },
+  {
+    name: 'jenkinsThree',
+    uri: '',
+    publicAddr: 'third-jenkins-address',
+    labels: ['env: idk', 'cluster-name: cluster-three'],
+    clusterId: 'three',
+    fqdn: 'jenkins.three',
   },
 ].map(makeApp);

@@ -1,106 +1,158 @@
-/**
- * Copyright 2020 Gravitational, Inc.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *     http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
+/*
+Copyright 2021 Gravitational, Inc.
 
-import React from 'react';
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+*/
+
+import React, { useState } from 'react';
 import styled from 'styled-components';
-import { Text, Flex } from 'design';
-import { MenuIcon, MenuItem } from 'shared/components/MenuAction';
+import { sortBy } from 'lodash';
+import {
+  Column,
+  SortHeaderCell,
+  Cell,
+  TextCell,
+  SortTypes,
+} from 'design/DataTable';
+import { Label, Flex, ButtonBorder } from 'design';
+import Table from 'design/DataTable/Paged';
+import isMatch from 'design/utils/match';
 import { App } from 'teleport/services/apps';
-import { NewTab } from 'design/Icon';
+import InputSearch from 'teleport/components/InputSearch';
 
-export default function AppList({ apps = [] }: Props) {
-  const $apps = apps.map(app => <Item mb={4} mr={5} app={app} key={app.id} />);
-  return <Flex flexWrap="wrap">{$apps}</Flex>;
-}
+function AppListt(props: Props) {
+  const { apps = [], pageSize = 20 } = props;
+  // console.log('apps appListt: ', apps);
 
-function Item(props: ItemProps) {
-  const { app, ...rest } = props;
+  const [sortDir, setSortDir] = useState<Record<string, string>>({
+    name: SortTypes.DESC,
+  });
+
+  const [searchValue, setSearchValue] = useState('');
+
+  function sortAndFilter(search) {
+    const filtered = apps.filter(obj =>
+      isMatch(obj, search, {
+        searchableProps: ['name', 'publicAddr', 'labels'],
+        cb: searchAndFilterCb,
+      })
+    );
+
+    const columnKey = Object.getOwnPropertyNames(sortDir)[0];
+    const sorted = sortBy(filtered, columnKey);
+    if (sortDir[columnKey] === SortTypes.ASC) {
+      return sorted.reverse();
+    }
+
+    return sorted;
+  }
+
+  function onSortChange(columnKey: string, sortDir: string) {
+    setSortDir({ [columnKey]: sortDir });
+  }
+
+  const data = sortAndFilter(searchValue);
+
   return (
-    <StyledAppListItem
-      width="240px"
-      height="240px"
-      borderRadius="3"
-      flexDirection="column"
-      alignItems="center"
-      justifyContent="center"
-      bg="primary.light"
-      {...rest}
-    >
-      <Flex width="100%" justifyContent="center">
-        <MenuIcon buttonIconProps={menuActionProps}>
-          <MenuItem as="a" href={app.launchUrl} target="_blank">
-            Open
-          </MenuItem>
-        </MenuIcon>
+    <>
+      <Flex flex="0 0 auto" mb={4}>
+        <InputSearch
+          mr="3"
+          onChange={(e: React.SetStateAction<string>) => setSearchValue(e)}
+        />
       </Flex>
-      <Flex
-        flex="1"
-        alignItems="center"
-        justifyContent="center"
-        flexDirection="column"
-        as="a"
-        tabIndex={-1}
-        target="_blank"
-        color="text.primary"
-        href={app.launchUrl}
-        width="220px"
-        px="2"
-        style={{
-          textDecoration: 'none',
-        }}
-      >
-        <NewTab fontSize="62px" mb="3" />
-        <Text style={textStyle} bold mb="2">
-          {app.name}
-        </Text>
-      </Flex>
-    </StyledAppListItem>
+      <StyledTable pageSize={pageSize} data={data}>
+        <Column
+          columnKey="name"
+          header={
+            <SortHeaderCell
+              sortDir={sortDir.name}
+              onSortChange={onSortChange}
+              title="Name"
+            />
+          }
+          cell={<TextCell />}
+        />
+        <Column
+          columnKey="publicAddr"
+          header={
+            <SortHeaderCell
+              sortDir={sortDir.publicAddr}
+              onSortChange={onSortChange}
+              title="Address"
+            />
+          }
+          cell={<TextCell />}
+        />
+        <Column header={<Cell>Labels</Cell>} cell={<LabelCell />} />
+        <Column header={<Cell />} cell={<ActionCell />} />
+      </StyledTable>
+    </>
   );
 }
 
-const textStyle = {
-  textAlign: 'center',
-  width: '100%',
+export const ActionCell = props => {
+  const { rowIndex, data } = props;
+  const { launchUrl } = data[rowIndex];
+
+  return (
+    <Cell align="right">
+      <ButtonBorder
+        size="small"
+        as="a"
+        href={launchUrl}
+        target="_blank"
+        width="87px"
+      >
+        Open
+      </ButtonBorder>
+    </Cell>
+  );
 };
 
-const StyledAppListItem = styled(Flex)`
-  position: relative;
-  box-shadow: 0 4px 32px rgba(0, 0, 0, 0.24);
-  cursor: pointer;
-  transition: 0.3s;
-  border: 2px solid transparent;
-  &:hover {
-    border: 2px solid ${props => props.theme.colors.secondary.main};
-    background: ${props => props.theme.colors.primary.lighter};
+function LabelCell(props) {
+  const { rowIndex, data } = props;
+  const { labels } = data[rowIndex];
+  const $labels = labels.map(tag => (
+    <Label mb="1" mr="1" key={tag} kind="secondary">
+      {tag}
+    </Label>
+  ));
+
+  return <Cell>{$labels}</Cell>;
+}
+
+const StyledTable = styled(Table)`
+  & > tbody > tr > td {
+    vertical-align: baseline;
   }
 `;
 
+function searchAndFilterCb(
+  targetValue: any[],
+  searchValue: string,
+  propName: string
+) {
+  if (propName === 'tags') {
+    return targetValue.some(item => {
+      return item.toLocaleUpperCase().indexOf(searchValue) !== -1;
+    });
+  }
+}
+
 type Props = {
   apps: App[];
+  pageSize?: number;
 };
 
-type ItemProps = {
-  app: App;
-  [name: string]: any;
-};
-
-const menuActionProps = {
-  style: {
-    right: '10px',
-    position: 'absolute',
-    top: '10px',
-  },
-};
+export default AppListt;
