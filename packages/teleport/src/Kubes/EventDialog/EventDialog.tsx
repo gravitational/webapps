@@ -70,7 +70,7 @@ function EventDialog(props: Props) {
           </Box>
           <Box>
             <Text bold as="span"></Text>
-            {`* Note: To write kubectl configuration to a separate file instead of having your global kubectl configuration modified, run the following command,before running step 2: `}
+            {`* Note: To write kubectl configuration to a separate file instead of having your global kubectl configuration modified, run the following command, before running step 2: `}
             <TextSelectCopy
               mt="2"
               text="export KUBECONFIG=${HOME?}/teleport-kubeconfig.yaml"
