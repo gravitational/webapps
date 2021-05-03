@@ -56,7 +56,7 @@ function EventDialog(props: Props) {
           </Box>
           <Box mb={4}>
             <Text bold as="span">
-              Step 2
+              *Step 2
             </Text>
             {' - Select the kubernetes cluster'}
             <TextSelectCopy mt="2" text={`tsh kube login ${kubeName}`} />
