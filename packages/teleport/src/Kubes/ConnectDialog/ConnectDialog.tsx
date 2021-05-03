@@ -25,7 +25,7 @@ import { Text, Box, ButtonSecondary } from 'design';
 import cfg from 'teleport/config';
 import TextSelectCopy from 'teleport/components/TextSelectCopy';
 
-function EventDialog(props: Props) {
+function ConnectDialog(props: Props) {
   const { onClose, user, kubeName } = props;
   const { hostname, port } = window.document.location;
   const host = `${hostname}:${port || '443'}`;
@@ -96,4 +96,4 @@ const dialogCss = () => `
   width: 100%;
 `;
 
-export default EventDialog;
+export default ConnectDialog;

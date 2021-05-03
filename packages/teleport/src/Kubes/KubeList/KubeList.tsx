@@ -38,7 +38,6 @@ function KubeList(props: Props) {
     name: SortTypes.DESC,
   });
   const [searchValue, setSearchValue] = useState('');
-  const [showConnectDialog, setShowConnectDialog] = useState(false);
   const [kubeName, setKubeName] = useState('');
 
   function sortAndFilter(search) {
@@ -64,16 +63,6 @@ function KubeList(props: Props) {
 
   const data = sortAndFilter(searchValue);
 
-  function openDialogue(kubeName: string) {
-    setShowConnectDialog(true);
-    setKubeName(kubeName);
-  }
-
-  function closeDialogue() {
-    setShowConnectDialog(false);
-    setKubeName('');
-  }
-
   return (
     <>
       <Flex flex="0 0 auto" mb={4}>
@@ -94,12 +83,16 @@ function KubeList(props: Props) {
         <Column header={<Cell>Labels</Cell>} cell={<LabelCell />} />
         <Column
           header={<Cell />}
-          cell={<ActionCell onViewConnect={openDialogue} />}
+          cell={
+            <ActionCell
+              onViewConnect={(kubeName: string) => setKubeName(kubeName)}
+            />
+          }
         />
       </StyledTable>
-      {showConnectDialog && (
+      {kubeName && (
         <ConnectDialog
-          onClose={closeDialogue}
+          onClose={() => setKubeName('')}
           user={user}
           kubeName={kubeName}
         />

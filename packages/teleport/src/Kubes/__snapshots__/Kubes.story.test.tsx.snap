@@ -136,7 +136,7 @@ exports[`failed 1`] = `
 </div>
 `;
 
-exports[`kube event dialogue 1`] = `null`;
+exports[`kube connect dialogue 1`] = `null`;
 
 exports[`loaded 1`] = `
 .c3 {
@@ -665,5 +665,6 @@ exports[`loaded 1`] = `
       </tbody>
     </table>
   </div>
+  
 </div>
 `;
