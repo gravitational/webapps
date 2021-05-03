@@ -29,7 +29,7 @@ import Table from 'design/DataTable/Paged';
 import isMatch from 'design/utils/match';
 import { Kube } from 'teleport/services/kube';
 import InputSearch from 'teleport/components/InputSearch';
-import EventDialog from '../EventDialog';
+import ConnectDialog from '../ConnectDialog';
 
 function KubeList(props: Props) {
   const { kubes = [], pageSize = 20, user } = props;
@@ -98,7 +98,11 @@ function KubeList(props: Props) {
         />
       </StyledTable>
       {showConnectDialog && (
-        <EventDialog onClose={closeDialogue} user={user} kubeName={kubeName} />
+        <ConnectDialog
+          onClose={closeDialogue}
+          user={user}
+          kubeName={kubeName}
+        />
       )}
     </>
   );

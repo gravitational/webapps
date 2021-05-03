@@ -14,5 +14,5 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import EventDialog from './EventDialog';
-export default EventDialog;
+import ConnectDialog from './ConnectDialog';
+export default ConnectDialog;

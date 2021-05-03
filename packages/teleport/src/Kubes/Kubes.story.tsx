@@ -17,7 +17,7 @@ limitations under the License.
 import React from 'react';
 import { Kubes } from './Kubes';
 import { kubes } from './fixtures';
-import EventDialog from './EventDialog';
+import ConnectDialog from './ConnectDialog';
 
 export default {
   title: 'Teleport/Kubes',
@@ -45,10 +45,10 @@ export function Failed() {
 
 export function Connect() {
   return (
-    <EventDialog
+    <ConnectDialog
       onClose={() => null}
       user={'sam'}
       kubeName={'tele.logicoma.dev-prod'}
-    ></EventDialog>
+    />
   );
 }

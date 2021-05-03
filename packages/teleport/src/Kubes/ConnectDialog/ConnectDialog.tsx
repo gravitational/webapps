@@ -43,39 +43,38 @@ function EventDialog(props: Props) {
         </DialogTitle>
       </DialogHeader>
       <DialogContent minHeight="240px" flex="0 0 auto">
+        <Box mb={4}>
+          <Text bold as="span">
+            Step 1
+          </Text>
+          {' - Login to Teleport'}
+          <TextSelectCopy
+            mt="2"
+            text={`tsh login --proxy=${host} --auth=${cfg.getAuthType()} --user=${user}`}
+          />
+        </Box>
+        <Box mb={4}>
+          <Text bold as="span">
+            Step 2
+          </Text>
+          {' - Select the kubernetes cluster'}
+          <TextSelectCopy mt="2" text={`tsh kube login ${kubeName}`} />
+        </Box>
+        <Box mb={4}>
+          <Text bold as="span">
+            Step 3
+          </Text>
+          {' - Connect to the kubernetes cluster'}
+          <TextSelectCopy mt="2" text={`kubectl get pods`} />
+        </Box>
         <Box>
-          <Box mb={4}>
-            <Text bold as="span">
-              Step 1
-            </Text>
-            {' - Login to Teleport'}
-            <TextSelectCopy
-              mt="2"
-              text={`tsh login --proxy=${host} --auth=${cfg.getAuthType()} --user=${user}`}
-            />
-          </Box>
-          <Box mb={4}>
-            <Text bold as="span">
-              Step 2
-            </Text>
-            {' - Select the kubernetes cluster'}
-            <TextSelectCopy mt="2" text={`tsh kube login ${kubeName}`} />
-          </Box>
-          <Box mb={4}>
-            <Text bold as="span">
-              Step 3
-            </Text>
-            {' - Connect to the kubernetes cluster'}
-            <TextSelectCopy mt="2" text={`kubectl get pods`} />
-          </Box>
-          <Box>
-            <Text bold as="span"></Text>
-            {`* Note: To write kubectl configuration to a separate file instead of having your global kubectl configuration modified, run the following command,before running step 2: `}
-            <TextSelectCopy
-              mt="2"
-              text="export KUBECONFIG=${HOME?}/teleport-kubeconfig.yaml"
-            />
-          </Box>
+          * Note: To write kubectl configuration to a separate file instead of
+          having your global kubectl configuration modified, run the following
+          command, before running step 2:
+          <TextSelectCopy
+            mt="2"
+            text="export KUBECONFIG=${HOME?}/teleport-kubeconfig.yaml"
+          />
         </Box>
       </DialogContent>
       <DialogFooter>
