@@ -16,7 +16,7 @@ limitations under the License.
 
 import React from 'react';
 import { render } from 'design/utils/testing';
-import { Loaded, Failed } from './Kubes.story';
+import { Loaded, Failed, Connect } from './Kubes.story';
 
 test('loaded', () => {
   const { container } = render(<Loaded />);
@@ -25,5 +25,10 @@ test('loaded', () => {
 
 test('failed', () => {
   const { container } = render(<Failed />);
+  expect(container.firstChild).toMatchSnapshot();
+});
+
+test('kube event dialogue', () => {
+  const { container } = render(<Connect />);
   expect(container.firstChild).toMatchSnapshot();
 });

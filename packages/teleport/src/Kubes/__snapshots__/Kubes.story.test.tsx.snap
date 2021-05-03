@@ -136,6 +136,8 @@ exports[`failed 1`] = `
 </div>
 `;
 
+exports[`kube event dialogue 1`] = `null`;
+
 exports[`loaded 1`] = `
 .c3 {
   line-height: 1.5;

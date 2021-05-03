@@ -21,8 +21,8 @@ import Dialog, {
   DialogTitle,
   DialogContent,
 } from 'design/Dialog';
-import cfg from 'teleport/config';
 import { Text, Box, ButtonSecondary } from 'design';
+import cfg from 'teleport/config';
 import TextSelectCopy from 'teleport/components/TextSelectCopy';
 
 function EventDialog(props: Props) {
