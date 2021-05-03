@@ -26,6 +26,7 @@ import {
 import DatabaseList from './DatabaseList';
 import useDatabases, { Props } from './useDatabases';
 import ButtonAdd from './ButtonAdd';
+import AddDatabase from './AddDatabase/AddDatabase';
 
 export default function Container() {
   const ctx = useTeleport();
@@ -34,7 +35,16 @@ export default function Container() {
 }
 
 export function Databases(props: Props) {
-  const { databases, attempt, isLeafCluster, isEnterprise, canCreate } = props;
+  const {
+    databases,
+    attempt,
+    isLeafCluster,
+    isEnterprise,
+    canCreate,
+    showAddDatabase,
+    hideAddDatabase,
+    isAddDatabaseVisible,
+  } = props;
 
   return (
     <FeatureBox>
@@ -44,6 +54,7 @@ export function Databases(props: Props) {
           isLeafCluster={isLeafCluster}
           isEnterprise={isEnterprise}
           canCreate={canCreate}
+          onClick={showAddDatabase}
         />
       </FeatureHeader>
       {attempt.status === 'processing' && (
@@ -53,6 +64,7 @@ export function Databases(props: Props) {
       )}
       {attempt.status === 'failed' && <Danger>{attempt.statusText}</Danger>}
       {attempt.status === 'success' && <DatabaseList databases={databases} />}
+      {isAddDatabaseVisible && <AddDatabase onClose={hideAddDatabase} />}
     </FeatureBox>
   );
 }

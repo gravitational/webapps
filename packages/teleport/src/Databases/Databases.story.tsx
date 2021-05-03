@@ -30,6 +30,9 @@ export const Loaded = () => (
     isEnterprise={false}
     isLeafCluster={false}
     canCreate={false}
+    isAddDatabaseVisible={false}
+    hideAddDatabase={() => null}
+    showAddDatabase={() => null}
   />
 );
 
@@ -40,6 +43,9 @@ export const Loading = () => (
     isEnterprise={false}
     isLeafCluster={false}
     canCreate={false}
+    isAddDatabaseVisible={false}
+    hideAddDatabase={() => null}
+    showAddDatabase={() => null}
   />
 );
 
@@ -50,6 +56,9 @@ export const Failed = () => (
     isEnterprise={false}
     isLeafCluster={false}
     canCreate={false}
+    isAddDatabaseVisible={false}
+    hideAddDatabase={() => null}
+    showAddDatabase={() => null}
   />
 );
 

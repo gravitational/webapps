@@ -15,12 +15,12 @@
  */
 
 import React, { useState } from 'react';
-import { Text, Box, ButtonSecondary, Link } from 'design';
 import styled from 'styled-components';
+import { Text, Box, ButtonSecondary, Link } from 'design';
 import { DialogContent, DialogFooter } from 'design/Dialog';
+import Select, { Option } from 'shared/components/Select';
 import cfg from 'teleport/config';
 import TextSelectCopy from 'teleport/components/TextSelectCopy';
-import Select, { Option } from 'shared/components/Select';
 import * as links from 'teleport/services/links';
 
 export default function Manually({ user, version, onClose }) {
