@@ -14,21 +14,16 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React from 'react';
-import { render } from 'design/utils/testing';
-import { Loaded, Failed, Add } from './Databases.story';
+import Ctx from 'teleport/teleportContext';
 
-test('open source loaded', () => {
-  const { container } = render(<Loaded />);
-  expect(container.firstChild).toMatchSnapshot();
-});
+export default function useAddDatabase(ctx: Ctx) {
+  const version = ctx.storeUser.state.cluster.authVersion;
+  const user = ctx.storeUser.state.username;
 
-test('failed', () => {
-  const { container } = render(<Failed />);
-  expect(container.firstChild).toMatchSnapshot();
-});
+  return {
+    version,
+    user,
+  };
+}
 
-test('add database', () => {
-  const { container } = render(<Add />);
-  expect(container.firstChild).toMatchSnapshot();
-});
+export type State = ReturnType<typeof useAddDatabase>;

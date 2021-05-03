@@ -17,6 +17,7 @@ limitations under the License.
 import React from 'react';
 import { Databases } from './Databases';
 import { databases } from './fixtures';
+import { AddDatabase } from './AddDatabase/AddDatabase';
 
 export default {
   title: 'Teleport/Databases',
@@ -50,4 +51,8 @@ export const Failed = () => (
     isLeafCluster={false}
     canCreate={false}
   />
+);
+
+export const Add = () => (
+  <AddDatabase user="yassine" version="6.1.3" onClose={() => null} />
 );
