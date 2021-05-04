@@ -24,21 +24,18 @@ export default {
 };
 
 export function Loaded() {
-  return <Kubes kubes={kubes} attempt={{ status: 'success' }} user={'sam'} />;
+  return <Kubes {...props} attempt={{ status: 'success' }} />;
 }
 
 export function Loading() {
-  return (
-    <Kubes kubes={kubes} attempt={{ status: 'processing' }} user={'sam'} />
-  );
+  return <Kubes {...props} attempt={{ status: 'processing' }} />;
 }
 
 export function Failed() {
   return (
     <Kubes
-      kubes={kubes}
+      {...props}
       attempt={{ status: 'failed', statusText: 'server error' }}
-      user={'sam'}
     />
   );
 }
@@ -52,3 +49,10 @@ export function Connect() {
     />
   );
 }
+
+const props = {
+  kubes: kubes,
+  user: 'sam',
+  isEnterprise: true,
+  isLeafCluster: false,
+};

@@ -36,15 +36,17 @@ const docUrl =
   'https://goteleport.com/docs/kubernetes-access/guides/multiple-clusters/';
 
 export function Kubes(props: State) {
-  const { kubes, attempt, user } = props;
+  const { kubes, attempt, user, isEnterprise, isLeafCluster } = props;
 
   return (
     <FeatureBox>
       <FeatureHeader alignItems="center" justifyContent="space-between">
         <FeatureHeaderTitle>Kubernetes</FeatureHeaderTitle>
-        <ButtonPrimary as="a" target="_blank" href={docUrl}>
-          View documentation
-        </ButtonPrimary>
+        {isEnterprise && isLeafCluster ? null : (
+          <ButtonPrimary as="a" target="_blank" href={docUrl}>
+            View documentation
+          </ButtonPrimary>
+        )}
       </FeatureHeader>
       {attempt.status === 'failed' && <Danger>{attempt.statusText}</Danger>}
       {attempt.status === 'processing' && (
