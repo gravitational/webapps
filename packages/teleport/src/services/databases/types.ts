@@ -17,6 +17,7 @@ limitations under the License.
 export interface Database {
   name: string;
   desc: string;
-  type: string;
+  displayText: string;
+  protocol: 'postgres' | 'mysql';
   tags: string[];
 }

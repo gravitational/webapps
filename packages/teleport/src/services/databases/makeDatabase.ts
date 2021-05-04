@@ -24,33 +24,42 @@ export default function makeDatabase(json): Database {
   return {
     name,
     desc,
-    type: formatTypeAndProtocol(type, protocol).label,
+    displayText: formatDatabaseInfo(type, protocol).text,
+    protocol,
     tags: labels.map(label => `${label.name}: ${label.value}`),
   };
 }
 
-export const formatTypeAndProtocol = (type: DbType, protocol: DbProtocol) => {
-  const output = { type, protocol, label: '' };
+export const formatDatabaseInfo = (type: DbType, protocol: DbProtocol) => {
+  const output = { type, protocol, text: '' };
 
   switch (type) {
     case 'rds':
-      output.label = protocol === 'postgres' ? 'RDS PostgreSQL' : 'RDS MySQL';
+      output.text = `RDS ${formatProtocol(protocol)}`;
       return output;
     case 'redshift':
-      output.label = 'Redshift';
+      output.text = 'Redshift';
       return output;
     case 'self-hosted':
-      output.label =
-        protocol === 'postgres'
-          ? 'Self-hosted PostgreSQL'
-          : 'Self-hosted MySQL';
+      output.text = `Self-hosted ${formatProtocol(protocol)}`;
       return output;
     case 'gcp':
-      output.label = 'Cloud SQL PostgreSQL';
+      output.text = `Cloud SQL ${formatProtocol(protocol)}`;
       return output;
     default:
-      output.label = type + ' ' + protocol;
+      output.text = type + ' ' + formatProtocol(protocol);
       return output;
+  }
+};
+
+const formatProtocol = (input: DbProtocol) => {
+  switch (input) {
+    case 'postgres':
+      return 'PostgreSQL';
+    case 'mysql':
+      return 'MySQL';
+    default:
+      return input;
   }
 };
 

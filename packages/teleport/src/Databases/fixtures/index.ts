@@ -20,19 +20,22 @@ export const databases: Database[] = [
   {
     name: 'aurora',
     desc: 'PostgreSQL 11.6: AWS Aurora ',
-    type: 'RDS PostgreSQL',
+    displayText: 'RDS PostgreSQL',
+    protocol: 'postgres',
     tags: ['cluster: root', 'env: aws'],
   },
   {
     name: 'postgres-gcp',
     desc: 'MPostgreSQL 9.6: Google Cloud SQL',
-    type: 'Cloud SQL PostgreSQL',
+    displayText: 'Cloud SQL PostgreSQL',
+    protocol: 'postgres',
     tags: ['cluster: env', 'value: gcp'],
   },
   {
     name: 'mysql-aurora-56',
     desc: 'MySQL 5.6: AWS Aurora Longname For SQL',
-    type: 'Self-hosted MySQL',
+    displayText: 'Self-hosted MySQL',
+    protocol: 'mysql',
     tags: ['cluster: root', 'env: aws'],
   },
 ];

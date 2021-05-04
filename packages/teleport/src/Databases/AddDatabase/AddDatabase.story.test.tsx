@@ -18,7 +18,7 @@ import React from 'react';
 import { render } from 'design/utils/testing';
 import { Manually } from './AddDatabase.story';
 
-jest.mock('design/Modal/Portal', () => ({ children }) => children);
+jest.mock('design/Modal/Modal', () => ({ children }) => children);
 
 test('render instructions dialog for manually adding database', () => {
   const { container } = render(<Manually />);
