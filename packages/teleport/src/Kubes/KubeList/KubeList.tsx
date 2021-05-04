@@ -38,7 +38,7 @@ function KubeList(props: Props) {
     name: SortTypes.DESC,
   });
   const [searchValue, setSearchValue] = useState('');
-  const [kubeName, setKubeName] = useState('');
+  const [kubeConnectName, setKubeConnectName] = useState('');
 
   function sortAndFilter(search) {
     const filtered = kubes.filter(obj =>
@@ -85,16 +85,16 @@ function KubeList(props: Props) {
           header={<Cell />}
           cell={
             <ActionCell
-              onViewConnect={(kubeName: string) => setKubeName(kubeName)}
+              onViewConnect={(name: string) => setKubeConnectName(name)}
             />
           }
         />
       </StyledTable>
-      {kubeName && (
+      {kubeConnectName && (
         <ConnectDialog
-          onClose={() => setKubeName('')}
+          onClose={() => setKubeConnectName('')}
           user={user}
-          kubeName={kubeName}
+          name={kubeConnectName}
         />
       )}
     </>
@@ -103,13 +103,13 @@ function KubeList(props: Props) {
 
 export const ActionCell = props => {
   const { rowIndex, onViewConnect, data } = props;
-  const { name: kubeName } = data[rowIndex];
+  const { name } = data[rowIndex];
 
   return (
     <Cell align="right">
       <ButtonBorder
         size="small"
-        onClick={() => onViewConnect(kubeName)}
+        onClick={() => onViewConnect(name)}
         width="87px"
       >
         Connect

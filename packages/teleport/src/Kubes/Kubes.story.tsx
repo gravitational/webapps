@@ -45,7 +45,7 @@ export function Connect() {
     <ConnectDialog
       onClose={() => null}
       user={'sam'}
-      kubeName={'tele.logicoma.dev-prod'}
+      name={'tele.logicoma.dev-prod'}
     />
   );
 }
