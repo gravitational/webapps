@@ -19,11 +19,13 @@ import { render } from 'design/utils/testing';
 import { Loaded, Failed } from './Kubes.story';
 
 test('loaded', () => {
-  const { container } = render(<Loaded />);
+  const { container } = render(<Loaded attempt={{ status: 'success' }} />);
   expect(container.firstChild).toMatchSnapshot();
 });
 
 test('failed', () => {
-  const { container } = render(<Failed />);
+  const { container } = render(
+    <Failed attempt={{ status: 'failed', statusText: 'server error' }} />
+  );
   expect(container.firstChild).toMatchSnapshot();
 });
