@@ -310,7 +310,7 @@ exports[`loaded state 1`] = `
   color: rgba(255,255,255,0.3);
 }
 
-.c15 {
+.c16 {
   line-height: 1.5;
   margin: 0;
   display: inline-flex;
@@ -339,22 +339,22 @@ exports[`loaded state 1`] = `
   width: 87px;
 }
 
-.c15:active {
+.c16:active {
   opacity: 0.56;
 }
 
-.c15:hover,
-.c15:focus {
+.c16:hover,
+.c16:focus {
   background: #2C3A73;
   border: 1px solid rgba(255,255,255,0.1);
   opacity: 1;
 }
 
-.c15:active {
+.c16:active {
   opacity: 0.24;
 }
 
-.c15:disabled {
+.c16:disabled {
   background: rgba(255,255,255,0.12);
   color: rgba(255,255,255,0.3);
 }
@@ -372,7 +372,7 @@ exports[`loaded state 1`] = `
   color: #FFFFFF;
 }
 
-.c14 {
+.c15 {
   box-sizing: border-box;
   border-radius: 100px;
   display: inline-flex;
@@ -397,6 +397,13 @@ exports[`loaded state 1`] = `
   line-height: 16px;
   margin: 0px;
   color: #FFFFFF;
+}
+
+.c14 {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  margin: 0px;
+  color: rgba(255,255,255,0.87);
 }
 
 .c4 {
@@ -720,17 +727,24 @@ exports[`loaded state 1`] = `
               jenkinsOne
             </td>
             <td>
-              jenkins-address
+              <a
+                class="c14"
+                color="text.primary"
+                href="https://jenkinsOne.teleport-proxy.com"
+                target="_blank"
+              >
+                https://jenkinsOne.teleport-proxy.com
+              </a>
             </td>
             <td>
               <div
-                class="c14"
+                class="c15"
                 kind="secondary"
               >
                 kernal: 4.15.0-51-generic
               </div>
               <div
-                class="c14"
+                class="c15"
                 kind="secondary"
               >
                 env: prod
@@ -740,7 +754,7 @@ exports[`loaded state 1`] = `
               align="right"
             >
               <a
-                class="c15"
+                class="c16"
                 href="/web/launch/jenkins.one/one/jenkins-address"
                 kind="border"
                 target="_blank"
@@ -755,17 +769,24 @@ exports[`loaded state 1`] = `
               jenkinsThree
             </td>
             <td>
-              third-jenkins-address
+              <a
+                class="c14"
+                color="text.primary"
+                href="https://jenkinsThree.teleport-proxy.com"
+                target="_blank"
+              >
+                https://jenkinsThree.teleport-proxy.com
+              </a>
             </td>
             <td>
               <div
-                class="c14"
+                class="c15"
                 kind="secondary"
               >
                 env: idk
               </div>
               <div
-                class="c14"
+                class="c15"
                 kind="secondary"
               >
                 cluster-name: cluster-three
@@ -775,7 +796,7 @@ exports[`loaded state 1`] = `
               align="right"
             >
               <a
-                class="c15"
+                class="c16"
                 href="/web/launch/jenkins.three/three/third-jenkins-address"
                 kind="border"
                 target="_blank"
@@ -790,17 +811,24 @@ exports[`loaded state 1`] = `
               jenkinsTwo
             </td>
             <td>
-              second-jenkins-address
+              <a
+                class="c14"
+                color="text.primary"
+                href="https://jenkinsTwo.teleport-proxy.com"
+                target="_blank"
+              >
+                https://jenkinsTwo.teleport-proxy.com
+              </a>
             </td>
             <td>
               <div
-                class="c14"
+                class="c15"
                 kind="secondary"
               >
                 env: staging
               </div>
               <div
-                class="c14"
+                class="c15"
                 kind="secondary"
               >
                 cluster-name: some-cluster-name
@@ -810,7 +838,7 @@ exports[`loaded state 1`] = `
               align="right"
             >
               <a
-                class="c15"
+                class="c16"
                 href="/web/launch/jenkins.two/two/second-jenkins-address"
                 kind="border"
                 target="_blank"
