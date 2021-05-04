@@ -83,12 +83,11 @@ export default function Manually({ user, version, onClose }) {
             Step 4
           </Text>
           {` - Select the database type and protocol to use`}
-          <StyledSelect width="500px">
+          <StyledSelect>
             <Select
               value={selectedDbOption}
               onChange={(o: Option<DbOption>) => setSelectedDpOption(o)}
               options={dbOptions}
-              width="230px"
               isSearchable={true}
             />
           </StyledSelect>
@@ -104,7 +103,6 @@ export default function Manually({ user, version, onClose }) {
           />
         </Box>
         <Box>
-          <Text bold as="span"></Text>
           {`* Note: For a self-hosted Teleport version, you may need to update DNS and obtain a TLS certificate for this application.
             Learn more about database access `}
           <Link

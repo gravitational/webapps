@@ -18,7 +18,9 @@ import React from 'react';
 import { render } from 'design/utils/testing';
 import { Manually } from './AddDatabase.story';
 
-test('manually add database', () => {
+jest.mock('design/Modal/Portal', () => ({ children }) => children);
+
+test('render instructions dialog for manually adding database', () => {
   const { container } = render(<Manually />);
   expect(container.firstChild).toMatchSnapshot();
 });

@@ -20,12 +20,11 @@ import { ButtonPrimary } from 'design';
 const docUrl = 'https://goteleport.com/docs/database-access/getting-started/';
 
 export default function ButtonAdd(props: Props) {
-  const { isEnterprise, canCreate, isLeafCluster, ...rest } = props;
+  const { isEnterprise, canCreate, isLeafCluster } = props;
 
   if (!isEnterprise) {
     return (
       <ButtonPrimary
-        {...rest}
         width="240px"
         onClick={() => null}
         as="a"

@@ -15,7 +15,7 @@ limitations under the License.
 */
 
 import React from 'react';
-import { Story, Meta } from '@storybook/react';
+import { Story } from '@storybook/react';
 import { Databases } from './Databases';
 import { State } from './useDatabases';
 import { databases } from './fixtures';
@@ -32,7 +32,7 @@ export default {
     hideAddDatabase: () => null,
     showAddDatabase: () => null,
   },
-} as Meta;
+};
 
 const Template: Story<State> = args => <Databases {...args} />;
 
