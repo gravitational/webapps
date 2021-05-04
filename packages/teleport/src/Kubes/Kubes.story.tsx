@@ -17,7 +17,6 @@ limitations under the License.
 import React from 'react';
 import { Kubes } from './Kubes';
 import { kubes } from './fixtures';
-import ConnectDialog from './ConnectDialog';
 
 export default {
   title: 'Teleport/Kubes',
@@ -36,16 +35,6 @@ export function Failed() {
     <Kubes
       {...props}
       attempt={{ status: 'failed', statusText: 'server error' }}
-    />
-  );
-}
-
-export function Connect() {
-  return (
-    <ConnectDialog
-      onClose={() => null}
-      user={'sam'}
-      name={'tele.logicoma.dev-prod'}
     />
   );
 }

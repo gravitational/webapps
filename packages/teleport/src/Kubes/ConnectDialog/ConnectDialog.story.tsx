@@ -15,15 +15,18 @@ limitations under the License.
 */
 
 import React from 'react';
-import { render } from 'design/utils/testing';
-import { Loaded, Failed } from './Kubes.story';
+import ConnectDialog from './ConnectDialog';
 
-test('loaded', () => {
-  const { container } = render(<Loaded />);
-  expect(container.firstChild).toMatchSnapshot();
-});
+export default {
+  title: 'Teleport/Kubes/ConnectDialog',
+};
 
-test('failed', () => {
-  const { container } = render(<Failed />);
-  expect(container.firstChild).toMatchSnapshot();
-});
+export function Connect() {
+  return (
+    <ConnectDialog
+      onClose={() => null}
+      user={'sam'}
+      name={'tele.logicoma.dev-prod'}
+    />
+  );
+}
