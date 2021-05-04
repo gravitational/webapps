@@ -29,6 +29,6 @@ test('failed', () => {
 });
 
 test('kube connect dialogue', () => {
-  const { container } = render(<Connect />);
-  expect(container.firstChild).toMatchSnapshot();
+  const { baseElement } = render(<Connect />);
+  expect(baseElement).toMatchSnapshot();
 });
