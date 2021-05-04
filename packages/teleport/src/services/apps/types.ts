@@ -28,4 +28,5 @@ export interface App {
   clusterId: string;
   launchUrl: string;
   fqdn: string;
+  address: string;
 }

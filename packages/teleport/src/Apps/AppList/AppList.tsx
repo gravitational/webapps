@@ -24,7 +24,7 @@ import {
   TextCell,
   SortTypes,
 } from 'design/DataTable';
-import { Label, Flex, ButtonBorder } from 'design';
+import { Label, Flex, ButtonBorder, Text } from 'design';
 import Table from 'design/DataTable/Paged';
 import isMatch from 'design/utils/match';
 import { App } from 'teleport/services/apps';
@@ -32,7 +32,6 @@ import InputSearch from 'teleport/components/InputSearch';
 
 function AppListt(props: Props) {
   const { apps = [], pageSize = 20 } = props;
-  // console.log('apps appListt: ', apps);
 
   const [sortDir, setSortDir] = useState<Record<string, string>>({
     name: SortTypes.DESC,
@@ -43,7 +42,7 @@ function AppListt(props: Props) {
   function sortAndFilter(search) {
     const filtered = apps.filter(obj =>
       isMatch(obj, search, {
-        searchableProps: ['name', 'publicAddr', 'labels'],
+        searchableProps: ['name', 'address', 'labels'],
         cb: searchAndFilterCb,
       })
     );
@@ -84,15 +83,15 @@ function AppListt(props: Props) {
           cell={<TextCell />}
         />
         <Column
-          columnKey="publicAddr"
+          columnKey="address"
           header={
             <SortHeaderCell
-              sortDir={sortDir.publicAddr}
+              sortDir={sortDir.address}
               onSortChange={onSortChange}
               title="Address"
             />
           }
-          cell={<TextCell />}
+          cell={<AddressCell />}
         />
         <Column header={<Cell>Labels</Cell>} cell={<LabelCell />} />
         <Column header={<Cell />} cell={<ActionCell />} />
@@ -100,6 +99,19 @@ function AppListt(props: Props) {
     </>
   );
 }
+
+const AddressCell = props => {
+  const { rowIndex, data } = props;
+  const { address } = data[rowIndex];
+
+  return (
+    <Cell>
+      <Text as="a" href={address} target="_blank" color="text.primary">
+        {address}
+      </Text>
+    </Cell>
+  );
+};
 
 export const ActionCell = props => {
   const { rowIndex, data } = props;

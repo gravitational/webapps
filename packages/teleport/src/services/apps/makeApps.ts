@@ -30,6 +30,7 @@ export default function makeApp(json): App {
 
   const id = `${clusterId}-${name}-${publicAddr}`;
   const launchUrl = cfg.getAppLauncherRoute({ fqdn, clusterId, publicAddr });
+  const address = `https://${name}.teleport-proxy.com`;
 
   return {
     id,
@@ -40,5 +41,6 @@ export default function makeApp(json): App {
     clusterId,
     fqdn,
     launchUrl,
+    address,
   };
 }
