@@ -1,7 +1,5 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`add database 1`] = `null`;
-
 exports[`failed 1`] = `
 .c4 {
   display: flex;

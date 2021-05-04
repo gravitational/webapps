@@ -15,53 +15,35 @@ limitations under the License.
 */
 
 import React from 'react';
+import { Story, Meta } from '@storybook/react';
 import { Databases } from './Databases';
+import { State } from './useDatabases';
 import { databases } from './fixtures';
-import { AddDatabase } from './AddDatabase/AddDatabase';
 
 export default {
   title: 'Teleport/Databases',
+  args: {
+    databases,
+    attempt: { status: 'success' },
+    isEnterprise: false,
+    isLeafCluster: false,
+    canCreate: false,
+    isAddDatabaseVisible: false,
+    hideAddDatabase: () => null,
+    showAddDatabase: () => null,
+  },
+} as Meta;
+
+const Template: Story<State> = args => <Databases {...args} />;
+
+export const Loaded = Template.bind({});
+
+export const Loading = Template.bind({});
+Loading.args = {
+  attempt: { status: 'processing' },
 };
 
-export const Loaded = () => (
-  <Databases
-    databases={databases}
-    attempt={{ status: 'success' }}
-    isEnterprise={false}
-    isLeafCluster={false}
-    canCreate={false}
-    isAddDatabaseVisible={false}
-    hideAddDatabase={() => null}
-    showAddDatabase={() => null}
-  />
-);
-
-export const Loading = () => (
-  <Databases
-    databases={databases}
-    attempt={{ status: 'processing' }}
-    isEnterprise={false}
-    isLeafCluster={false}
-    canCreate={false}
-    isAddDatabaseVisible={false}
-    hideAddDatabase={() => null}
-    showAddDatabase={() => null}
-  />
-);
-
-export const Failed = () => (
-  <Databases
-    databases={databases}
-    attempt={{ status: 'failed', statusText: 'Server Error' }}
-    isEnterprise={false}
-    isLeafCluster={false}
-    canCreate={false}
-    isAddDatabaseVisible={false}
-    hideAddDatabase={() => null}
-    showAddDatabase={() => null}
-  />
-);
-
-export const Add = () => (
-  <AddDatabase user="yassine" version="6.1.3" onClose={() => null} />
-);
+export const Failed = Template.bind({});
+Failed.args = {
+  attempt: { status: 'failed', statusText: 'Server Error' },
+};

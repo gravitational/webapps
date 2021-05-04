@@ -22,6 +22,7 @@ import Select, { Option } from 'shared/components/Select';
 import cfg from 'teleport/config';
 import TextSelectCopy from 'teleport/components/TextSelectCopy';
 import * as links from 'teleport/services/links';
+import { formatTypeAndProtocol } from 'teleport/services/databases/makeDatabase';
 
 export default function Manually({ user, version, onClose }) {
   const { hostname, port } = window.document.location;
@@ -43,81 +44,76 @@ export default function Manually({ user, version, onClose }) {
   return (
     <>
       <DialogContent minHeight="240px" flex="0 0 auto">
-        <Box>
-          <Box mb={4}>
-            <Text bold as="span">
-              Step 1
-            </Text>{' '}
-            - Download Teleport package to your computer
-            <Box>
-              <Link href={links.getMacOS(version)} target="_blank" mr="2">
-                MacOS
-              </Link>
-              <Link href={links.getLinux64(version)} target="_blank" mr="2">
-                Linux 64-bit
-              </Link>
-              <Link href={links.getLinux32(version)} target="_blank">
-                Linux 32-bit
-              </Link>
-            </Box>
-          </Box>
-          <Box mb={4}>
-            <Text bold as="span">
-              Step 2
-            </Text>
-            {' - Login to Teleport'}
-            <TextSelectCopy
-              mt="2"
-              text={`tsh login --proxy=${host} --auth=${cfg.getAuthType()} --user=${user}`}
-            />
-          </Box>
-          <Box mb={4}>
-            <Text bold as="span">
-              Step 3
-            </Text>
-            {' - Generate a join token'}
-            <TextSelectCopy mt="2" text="tctl tokens add --type=db" />
-          </Box>
-          <Box mb={4}>
-            <Text bold as="span">
-              Step 4
-            </Text>
-            {` - Select the database type and protocol to use`}
-            <StyledSelect width="500px">
-              <Select
-                value={selectedDbOption}
-                onChange={(o: Option<DbOption>) => setSelectedDpOption(o)}
-                options={dbOptions}
-                width="230px"
-                isSearchable={true}
-              />
-            </StyledSelect>
-          </Box>
-          <Box mb={4}>
-            <Text bold as="span">
-              Step 5
-            </Text>
-            {' - Start the Teleport agent with the following parameters'}
-            <TextSelectCopy
-              mt="2"
-              text={`${generateDbStartCmd(
-                { ...selectedDbOption.value },
-                host
-              )}`}
-            />
-          </Box>
+        <Box mb={4}>
+          <Text bold as="span">
+            Step 1
+          </Text>
+          {' - Download Teleport package to your computer '}
           <Box>
-            <Text bold as="span"></Text>
-            {`* Note: For a self-hosted Teleport version, you may need to update DNS and obtain a TLS certificate for this application.
-            Learn more about database access `}
-            <Link
-              href={'https://goteleport.com/docs/database-access/'}
-              target="_blank"
-              mr="2"
-            >
-              here
+            <Link href={links.getMacOS(version)} target="_blank" mr="2">
+              MacOS
+            </Link>
+            <Link href={links.getLinux64(version)} target="_blank" mr="2">
+              Linux 64-bit
+            </Link>
+            <Link href={links.getLinux32(version)} target="_blank">
+              Linux 32-bit
             </Link>
           </Box>
+        </Box>
+        <Box mb={4}>
+          <Text bold as="span">
+            Step 2
+          </Text>
+          {' - Login to Teleport'}
+          <TextSelectCopy
+            mt="2"
+            text={`tsh login --proxy=${host} --auth=${cfg.getAuthType()} --user=${user}`}
+          />
+        </Box>
+        <Box mb={4}>
+          <Text bold as="span">
+            Step 3
+          </Text>
+          {' - Generate a join token'}
+          <TextSelectCopy mt="2" text="tctl tokens add --type=db" />
+        </Box>
+        <Box mb={4}>
+          <Text bold as="span">
+            Step 4
+          </Text>
+          {` - Select the database type and protocol to use`}
+          <StyledSelect width="500px">
+            <Select
+              value={selectedDbOption}
+              onChange={(o: Option<DbOption>) => setSelectedDpOption(o)}
+              options={dbOptions}
+              width="230px"
+              isSearchable={true}
+            />
+          </StyledSelect>
+        </Box>
+        <Box mb={4}>
+          <Text bold as="span">
+            Step 5
+          </Text>
+          {' - Start the Teleport agent with the following parameters'}
+          <TextSelectCopy
+            mt="2"
+            text={`${generateDbStartCmd({ ...selectedDbOption.value }, host)}`}
+          />
+        </Box>
+        <Box>
+          <Text bold as="span"></Text>
+          {`* Note: For a self-hosted Teleport version, you may need to update DNS and obtain a TLS certificate for this application.
+            Learn more about database access `}
+          <Link
+            href={'https://goteleport.com/docs/database-access/'}
+            target="_blank"
+            mr="2"
+          >
+            here
+          </Link>
         </Box>
       </DialogContent>
       <DialogFooter>
@@ -148,46 +144,12 @@ export const generateDbStartCmd = ({ type, protocol }, host) => {
 };
 
 const options: DbOption[] = [
-  {
-    type: 'self-hosted',
-    protocol: 'postgres',
-    label: 'Self-hosted PostgreSQL',
-  },
-  {
-    type: 'redshift',
-    protocol: 'postgres',
-    label: 'Redshift PostgreSQL',
-  },
-  {
-    type: 'gcp',
-    protocol: 'postgres',
-    label: 'Cloud SQL PostgreSQL',
-  },
-  {
-    type: 'rds',
-    protocol: 'postgres',
-    label: 'RDS PostgreSQL',
-  },
-  {
-    type: 'redshift',
-    protocol: 'mysql',
-    label: 'Redshift MySQL',
-  },
-  {
-    type: 'gcp',
-    protocol: 'mysql',
-    label: 'Cloud SQL MySQL',
-  },
-  {
-    type: 'rds',
-    protocol: 'mysql',
-    label: 'RDS MySQL',
-  },
-  {
-    type: 'self-hosted',
-    protocol: 'mysql',
-    label: 'Self-hosted MySQL',
-  },
+  formatTypeAndProtocol('rds', 'postgres'),
+  formatTypeAndProtocol('rds', 'mysql'),
+  formatTypeAndProtocol('redshift', 'postgres'),
+  formatTypeAndProtocol('gcp', 'postgres'),
+  formatTypeAndProtocol('self-hosted', 'postgres'),
+  formatTypeAndProtocol('self-hosted', 'mysql'),
 ];
 
 type DbOption = {

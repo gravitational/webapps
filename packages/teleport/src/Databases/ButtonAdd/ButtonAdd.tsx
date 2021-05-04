@@ -63,8 +63,4 @@ type Props = {
   isEnterprise: boolean;
   canCreate: boolean;
   onClick?: () => void;
-  mb?: string;
-  mx?: string;
-  width?: string;
-  kind?: string;
 };

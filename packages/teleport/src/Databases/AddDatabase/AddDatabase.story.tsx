@@ -14,15 +14,13 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import { renderStory } from 'design/utils/testing';
-import Meta, { Loaded, Failed } from './Databases.story';
+import React from 'react';
+import { AddDatabase } from './AddDatabase';
 
-test('open source loaded', () => {
-  const { container } = renderStory(Loaded, Meta);
-  expect(container.firstChild).toMatchSnapshot();
-});
+export default {
+  title: 'Teleport/Databases/Add',
+};
 
-test('failed', () => {
-  const { container } = renderStory(Failed, Meta);
-  expect(container.firstChild).toMatchSnapshot();
-});
+export const Manually = () => (
+  <AddDatabase user="yassine" version="6.1.3" onClose={() => null} />
+);

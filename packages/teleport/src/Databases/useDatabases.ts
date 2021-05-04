@@ -63,4 +63,4 @@ export default function useDatabases(ctx: Ctx) {
   };
 }
 
-export type Props = ReturnType<typeof useDatabases>;
+export type State = ReturnType<typeof useDatabases>;
