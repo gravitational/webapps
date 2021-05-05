@@ -67,7 +67,7 @@ function AppListt(props: Props) {
       <Flex flex="0 0 auto" mb={4}>
         <InputSearch
           mr="3"
-          onChange={(e: React.SetStateAction<string>) => setSearchValue(e)}
+          onChange={setSearchValue}
         />
       </Flex>
       <StyledTable pageSize={pageSize} data={data}>
