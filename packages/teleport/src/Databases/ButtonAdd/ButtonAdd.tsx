@@ -20,7 +20,7 @@ import { ButtonPrimary } from 'design';
 const docUrl = 'https://goteleport.com/docs/database-access/getting-started/';
 
 export default function ButtonAdd(props: Props) {
-  const { isEnterprise, canCreate, isLeafCluster } = props;
+  const { isEnterprise, canCreate, isLeafCluster, onClick } = props;
 
   if (!isEnterprise) {
     return (
@@ -47,7 +47,7 @@ export default function ButtonAdd(props: Props) {
         title={title}
         disabled={isLeafCluster}
         width="240px"
-        {...props}
+        onClick={onClick}
       >
         Add Database
       </ButtonPrimary>

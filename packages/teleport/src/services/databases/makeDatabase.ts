@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import { Database } from './types';
+import { Database, DbType, DbProtocol } from './types';
 
 export default function makeDatabase(json): Database {
   const { name, desc, protocol, type } = json;
@@ -24,30 +24,30 @@ export default function makeDatabase(json): Database {
   return {
     name,
     desc,
-    displayText: formatDatabaseInfo(type, protocol).text,
+    title: formatDatabaseInfo(type, protocol).title,
     protocol,
     tags: labels.map(label => `${label.name}: ${label.value}`),
   };
 }
 
 export const formatDatabaseInfo = (type: DbType, protocol: DbProtocol) => {
-  const output = { type, protocol, text: '' };
+  const output = { type, protocol, title: '' };
 
   switch (type) {
     case 'rds':
-      output.text = `RDS ${formatProtocol(protocol)}`;
+      output.title = `RDS ${formatProtocol(protocol)}`;
       return output;
     case 'redshift':
-      output.text = 'Redshift';
+      output.title = 'Redshift';
       return output;
     case 'self-hosted':
-      output.text = `Self-hosted ${formatProtocol(protocol)}`;
+      output.title = `Self-hosted ${formatProtocol(protocol)}`;
       return output;
     case 'gcp':
-      output.text = `Cloud SQL ${formatProtocol(protocol)}`;
+      output.title = `Cloud SQL ${formatProtocol(protocol)}`;
       return output;
     default:
-      output.text = type + ' ' + formatProtocol(protocol);
+      output.title = `${type} ${formatProtocol(protocol)}`;
       return output;
   }
 };
@@ -62,6 +62,3 @@ const formatProtocol = (input: DbProtocol) => {
       return input;
   }
 };
-
-type DbType = 'redshift' | 'rds' | 'gcp' | 'self-hosted';
-type DbProtocol = 'postgres' | 'mysql';

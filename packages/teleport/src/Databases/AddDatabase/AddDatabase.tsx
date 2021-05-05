@@ -17,17 +17,9 @@
 import React from 'react';
 import { Flex } from 'design';
 import Dialog, { DialogTitle } from 'design/Dialog';
-import useTeleport from 'teleport/useTeleport';
 import Manually from './Manually';
-import useAddDatabase, { State } from './useAddDatabase';
 
-export default function Container(props: Props) {
-  const ctx = useTeleport();
-  const state = useAddDatabase(ctx);
-  return <AddDatabase {...state} {...props} />;
-}
-
-export function AddDatabase({ user, version, onClose }: State & Props) {
+export default function AddDatabase({ user, version, onClose }: Props) {
   return (
     <Dialog
       dialogCss={() => ({
@@ -51,4 +43,6 @@ export function AddDatabase({ user, version, onClose }: State & Props) {
 
 type Props = {
   onClose(): void;
+  user: string;
+  version: string;
 };

@@ -43,7 +43,7 @@ function DatabaseList(props: Props) {
   function sortAndFilter(search) {
     const filtered = databases.filter(obj =>
       isMatch(obj, search, {
-        searchableProps: ['name', 'desc', 'displayText', 'tags'],
+        searchableProps: ['name', 'desc', 'title', 'tags'],
         cb: searchAndFilterCb,
       })
     );
@@ -102,10 +102,10 @@ function DatabaseList(props: Props) {
           cell={<TextCell />}
         />
         <Column
-          columnKey="displayText"
+          columnKey="title"
           header={
             <SortHeaderCell
-              sortDir={sortDir.displayText}
+              sortDir={sortDir.title}
               onSortChange={onSortChange}
               title="Type"
             />

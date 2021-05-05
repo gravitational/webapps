@@ -26,7 +26,7 @@ import {
 import DatabaseList from './DatabaseList';
 import useDatabases, { State } from './useDatabases';
 import ButtonAdd from './ButtonAdd';
-import AddDatabase from './AddDatabase/AddDatabase';
+import AddDatabase from './AddDatabase';
 
 export default function Container() {
   const ctx = useTeleport();
@@ -44,6 +44,8 @@ export function Databases(props: State) {
     showAddDatabase,
     hideAddDatabase,
     isAddDatabaseVisible,
+    user,
+    version,
   } = props;
 
   return (
@@ -64,7 +66,9 @@ export function Databases(props: State) {
       )}
       {attempt.status === 'failed' && <Danger>{attempt.statusText}</Danger>}
       {attempt.status === 'success' && <DatabaseList databases={databases} />}
-      {isAddDatabaseVisible && <AddDatabase onClose={hideAddDatabase} />}
+      {isAddDatabaseVisible && (
+        <AddDatabase user={user} version={version} onClose={hideAddDatabase} />
+      )}
     </FeatureBox>
   );
 }

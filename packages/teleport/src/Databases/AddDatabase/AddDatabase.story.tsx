@@ -15,7 +15,7 @@ limitations under the License.
 */
 
 import React from 'react';
-import { AddDatabase } from './AddDatabase';
+import AddDatabase from './AddDatabase';
 
 export default {
   title: 'Teleport/Databases/Add',

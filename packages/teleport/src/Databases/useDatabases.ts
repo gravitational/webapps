@@ -25,6 +25,8 @@ export default function useDatabases(ctx: Ctx) {
   const { clusterId, isLeafCluster } = useStickyClusterId();
   const canCreate = ctx.storeUser.getTokenAccess().create;
   const isEnterprise = ctx.isEnterprise;
+  const version = ctx.storeUser.state.cluster.authVersion;
+  const user = ctx.storeUser.state.username;
 
   const [databases, setDatabases] = useState<Database[]>([]);
   const [isAddDatabaseVisible, setIsAddDatabaseVisible] = useState(false);
@@ -60,6 +62,8 @@ export default function useDatabases(ctx: Ctx) {
     hideAddDatabase,
     showAddDatabase,
     isAddDatabaseVisible,
+    user,
+    version,
   };
 }
 

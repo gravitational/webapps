@@ -27,7 +27,7 @@ test('correct formatting of database fetch response', async () => {
     {
       name: 'aurora',
       desc: 'PostgreSQL 11.6: AWS Aurora',
-      displayText: 'RDS PostgreSQL',
+      title: 'RDS PostgreSQL',
       protocol: 'postgres',
       tags: ['cluster: root', 'env: aws'],
     },
@@ -61,7 +61,7 @@ describe('correct formatting of all type and protocol combos', () => {
       const database = new DatabaseService();
       const response = await database.fetchDatabases('im-a-cluster');
 
-      expect(response[0].displayText).toBe(combined);
+      expect(response[0].title).toBe(combined);
     }
   );
 });

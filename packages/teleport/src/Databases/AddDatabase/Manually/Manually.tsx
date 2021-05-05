@@ -21,22 +21,23 @@ import Select, { Option } from 'shared/components/Select';
 import cfg from 'teleport/config';
 import TextSelectCopy from 'teleport/components/TextSelectCopy';
 import * as links from 'teleport/services/links';
+import { DbType, DbProtocol } from 'teleport/services/databases';
 import { formatDatabaseInfo } from 'teleport/services/databases/makeDatabase';
 
 export default function Manually({ user, version, onClose }) {
   const { hostname, port } = window.document.location;
   const host = `${hostname}:${port || '443'}`;
 
-  const [dbOptions] = useState<Option<DbOption>[]>(() =>
+  const [dbOptions] = useState<Option<Database>[]>(() =>
     options.map(dbOption => {
       return {
         value: dbOption,
-        label: dbOption.text,
+        label: dbOption.title,
       };
     })
   );
 
-  const [selectedDbOption, setSelectedDpOption] = useState<Option<DbOption>>(
+  const [selectedDbOption, setSelectedDpOption] = useState<Option<Database>>(
     dbOptions[0]
   );
 
@@ -85,7 +86,7 @@ export default function Manually({ user, version, onClose }) {
           <Box mt={2}>
             <Select
               value={selectedDbOption}
-              onChange={(o: Option<DbOption>) => setSelectedDpOption(o)}
+              onChange={(o: Option<Database>) => setSelectedDpOption(o)}
               options={dbOptions}
               isSearchable={true}
             />
@@ -98,7 +99,11 @@ export default function Manually({ user, version, onClose }) {
           {' - Start the Teleport agent with the following parameters'}
           <TextSelectCopy
             mt="2"
-            text={`${generateDbStartCmd({ ...selectedDbOption.value }, host)}`}
+            text={`${generateDbStartCmd(
+              selectedDbOption.value.type,
+              selectedDbOption.value.protocol,
+              host
+            )}`}
           />
         </Box>
         <Box>
@@ -120,27 +125,28 @@ export default function Manually({ user, version, onClose }) {
   );
 }
 
-export const generateDbStartCmd = ({ type, protocol }, host) => {
+export const generateDbStartCmd = (
+  type: DbType,
+  protocol: DbProtocol,
+  host: string
+) => {
   const baseCommand = `teleport start --roles=db --token=[generated-join-token] --auth-server=${host} --db-name=[db-name] --db-protocol=${protocol} --db-uri=[uri]`;
+
   switch (type) {
     case 'self-hosted':
       return baseCommand;
     case 'rds':
-      return baseCommand + ' --db-aws-region=[region]';
+      return `${baseCommand} --db-aws-region=[region]`;
     case 'redshift':
-      return (
-        baseCommand +
-        ' --db-aws-region=[region] --db-aws-redshift-cluster-id=[cluster-id]'
-      );
+      return `${baseCommand} --db-aws-region=[region] --db-aws-redshift-cluster-id=[cluster-id]`;
     case 'gcp':
-      return (
-        baseCommand +
-        ' --db-ca-cert=[instance-ca-filepath] --db-gcp-project-id=[project-id] --db-gcp-instance-id=[instance-id]'
-      );
+      return `${baseCommand} --db-ca-cert=[instance-ca-filepath] --db-gcp-project-id=[project-id] --db-gcp-instance-id=[instance-id]`;
+    default:
+      return 'Unknown type and protocol';
   }
 };
 
-const options: DbOption[] = [
+const options: Database[] = [
   formatDatabaseInfo('rds', 'postgres'),
   formatDatabaseInfo('rds', 'mysql'),
   formatDatabaseInfo('redshift', 'postgres'),
@@ -149,8 +155,8 @@ const options: DbOption[] = [
   formatDatabaseInfo('self-hosted', 'mysql'),
 ];
 
-type DbOption = {
-  type: string;
-  protocol: string;
-  text: string;
+type Database = {
+  type: DbType;
+  protocol: DbProtocol;
+  title: string;
 };

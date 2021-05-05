@@ -14,16 +14,5 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import Ctx from 'teleport/teleportContext';
-
-export default function useAddDatabase(ctx: Ctx) {
-  const version = ctx.storeUser.state.cluster.authVersion;
-  const user = ctx.storeUser.state.username;
-
-  return {
-    version,
-    user,
-  };
-}
-
-export type State = ReturnType<typeof useAddDatabase>;
+import AddDatabase from './AddDatabase';
+export default AddDatabase;
