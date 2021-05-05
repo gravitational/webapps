@@ -16,9 +16,9 @@ limitations under the License.
 
 import React from 'react';
 import { render } from 'design/utils/testing';
-import { Connect } from './ConnectDialog.story';
+import { ConnectDialogue } from './ConnectDialog.story';
 
 test('kube connect dialogue', () => {
-  const { baseElement } = render(<Connect />);
+  const { baseElement } = render(<ConnectDialogue />);
   expect(baseElement).toMatchSnapshot();
 });

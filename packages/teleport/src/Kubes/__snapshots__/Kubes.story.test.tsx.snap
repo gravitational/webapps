@@ -184,6 +184,55 @@ exports[`loaded 1`] = `
   color: rgba(255,255,255,0.3);
 }
 
+.c15 {
+  line-height: 1.5;
+  margin: 0;
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  box-sizing: border-box;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-family: inherit;
+  font-weight: 600;
+  outline: none;
+  position: relative;
+  text-align: center;
+  text-decoration: none;
+  text-transform: uppercase;
+  transition: all 0.3s;
+  -webkit-font-smoothing: antialiased;
+  background: #2C3A73;
+  border: 1px solid #1C254D;
+  opacity: .87;
+  color: rgba(255,255,255,0.87);
+  font-size: 10px;
+  min-height: 24px;
+  padding: 0px 16px;
+  width: 87px;
+}
+
+.c15:active {
+  opacity: 0.56;
+}
+
+.c15:hover,
+.c15:focus {
+  background: #2C3A73;
+  border: 1px solid rgba(255,255,255,0.1);
+  opacity: 1;
+}
+
+.c15:active {
+  opacity: 0.24;
+}
+
+.c15:disabled {
+  background: rgba(255,255,255,0.12);
+  color: rgba(255,255,255,0.3);
+}
+
 .c10 {
   display: inline-block;
   transition: color .3s;
@@ -197,11 +246,21 @@ exports[`loaded 1`] = `
   color: #FFFFFF;
 }
 
-.c15 {
-  display: inline-block;
-  transition: color .3s;
-  margin-right: 8px;
-  color: #FFFFFF;
+.c14 {
+  box-sizing: border-box;
+  border-radius: 100px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 16px;
+  line-height: 1.4;
+  font-size: 10px;
+  font-weight: 500;
+  padding: 0 8px;
+  background-color: #111B48;
+  color: rgba(255,255,255,0.87);
+  margin-bottom: 4px;
+  margin-right: 4px;
 }
 
 .c7 {
@@ -212,16 +271,6 @@ exports[`loaded 1`] = `
   line-height: 16px;
   margin: 0px;
   color: #FFFFFF;
-}
-
-.c14 {
-  overflow: hidden;
-  text-overflow: ellipsis;
-  font-weight: 300;
-  font-size: 16px;
-  line-height: 32px;
-  margin: 24px;
-  color: rgba(255,255,255,0.87);
 }
 
 .c4 {
@@ -473,16 +522,16 @@ exports[`loaded 1`] = `
       >
         SHOWING 
         <strong>
-          0
+          1
         </strong>
          - 
         <strong>
-          0
+          3
         </strong>
          
         of 
         <strong>
-          0
+          3
         </strong>
       </div>
       <div
@@ -530,25 +579,92 @@ exports[`loaded 1`] = `
           <th />
         </tr>
       </thead>
-      <tfoot>
+      <tbody>
         <tr>
-          <td
-            colspan="3"
-          >
+          <td>
+            cookie
+          </td>
+          <td>
             <div
               class="c14"
-              color="text.primary"
-              style="display: flex; align-items: center; justify-content: center;"
+              kind="secondary"
             >
-              <span
-                class="c9 c15 icon icon-database "
-                color="light"
-              />
-              No Data Available
+              cluster-name: some-cluster-name
+            </div>
+            <div
+              class="c14"
+              kind="secondary"
+            >
+              env: idk
             </div>
           </td>
+          <td
+            align="right"
+          >
+            <button
+              class="c15"
+              kind="border"
+              width="87px"
+            >
+              Connect
+            </button>
+          </td>
         </tr>
-      </tfoot>
+        <tr>
+          <td>
+            tele.logicoma.dev-prod
+          </td>
+          <td>
+            <div
+              class="c14"
+              kind="secondary"
+            >
+              kernal: 4.15.0-51-generic
+            </div>
+            <div
+              class="c14"
+              kind="secondary"
+            >
+              env: prod
+            </div>
+          </td>
+          <td
+            align="right"
+          >
+            <button
+              class="c15"
+              kind="border"
+              width="87px"
+            >
+              Connect
+            </button>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            tele.logicoma.dev-staging
+          </td>
+          <td>
+            <div
+              class="c14"
+              kind="secondary"
+            >
+              env: staging
+            </div>
+          </td>
+          <td
+            align="right"
+          >
+            <button
+              class="c15"
+              kind="border"
+              width="87px"
+            >
+              Connect
+            </button>
+          </td>
+        </tr>
+      </tbody>
     </table>
   </div>
   

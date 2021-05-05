@@ -17,28 +17,30 @@ limitations under the License.
 import React from 'react';
 import { Kubes } from './Kubes';
 import { kubes } from './fixtures';
-import { State } from './useKubes';
 
 export default {
   title: 'Teleport/Kubes',
-  args: {
-    kubes: kubes,
-    user: 'sam',
-    showButton: true,
-    attempt: { status: 'success' },
-  },
 };
 
-const Template = (args: State) => <Kubes {...args} />;
-
-export const Loaded = Template.bind({});
-export const Loading = Template.bind({});
-export const Failed = Template.bind({});
-
-Loading.args = {
-  attempt: { status: 'processing' },
+export const Loaded = () => {
+  return <Kubes {...props} attempt={{ status: 'success' }} />;
 };
 
-Failed.args = {
-  attempt: { status: 'failed', statusText: 'server error' },
+export const Loading = () => {
+  return <Kubes {...props} attempt={{ status: 'processing' }} />;
+};
+
+export const Failed = () => {
+  return (
+    <Kubes
+      {...props}
+      attempt={{ status: 'failed', statusText: 'server error' }}
+    />
+  );
+};
+
+const props = {
+  kubes: kubes,
+  user: 'sam',
+  showButton: true,
 };

@@ -18,10 +18,10 @@ import React from 'react';
 import ConnectDialog from './ConnectDialog';
 
 export default {
-  title: 'Teleport/Kubes/ConnectDialog',
+  title: 'Teleport/Kubes',
 };
 
-export function Connect() {
+export const ConnectDialogue = () => {
   return (
     <ConnectDialog
       onClose={() => null}
@@ -29,4 +29,4 @@ export function Connect() {
       name={'tele.logicoma.dev-prod'}
     />
   );
-}
+};
