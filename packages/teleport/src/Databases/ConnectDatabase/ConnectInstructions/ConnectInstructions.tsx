@@ -18,6 +18,7 @@ import React from 'react';
 import { Text, Box, ButtonSecondary, Link } from 'design';
 import { DialogContent, DialogFooter } from 'design/Dialog';
 import cfg from 'teleport/config';
+import { DbProtocol } from 'teleport/services/databases';
 import TextSelectCopy from 'teleport/components/TextSelectCopy';
 
 export default function ConnectInstructions({
@@ -80,7 +81,11 @@ export default function ConnectInstructions({
   );
 }
 
-export function generateDbConnectCmd(dbName, clusterId, protocol) {
+export function generateDbConnectCmd(
+  dbName: string,
+  clusterId: string,
+  protocol: DbProtocol
+) {
   if (protocol === 'postgres') {
     return `psql "service=${clusterId}-${dbName} user=[user] dbname=[dbname]"`;
   } else if (protocol === 'mysql') {
