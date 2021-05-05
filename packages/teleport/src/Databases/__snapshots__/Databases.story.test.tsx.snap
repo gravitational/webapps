@@ -185,6 +185,50 @@ exports[`open source loaded 1`] = `
   color: rgba(255,255,255,0.3);
 }
 
+.c15 {
+  line-height: 1.5;
+  margin: 0;
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  box-sizing: border-box;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-family: inherit;
+  font-weight: 600;
+  outline: none;
+  position: relative;
+  text-align: center;
+  text-decoration: none;
+  text-transform: uppercase;
+  transition: all 0.3s;
+  -webkit-font-smoothing: antialiased;
+  background: #512FC9;
+  color: rgba(255,255,255,0.87);
+  font-size: 10px;
+  min-height: 24px;
+  padding: 0px 16px;
+}
+
+.c15:active {
+  opacity: 0.56;
+}
+
+.c15:hover,
+.c15:focus {
+  background: #651FFF;
+}
+
+.c15:active {
+  background: #354AA4;
+}
+
+.c15:disabled {
+  background: rgba(255,255,255,0.12);
+  color: rgba(255,255,255,0.3);
+}
+
 .c10 {
   display: inline-block;
   transition: color .3s;
@@ -549,6 +593,7 @@ exports[`open source loaded 1`] = `
           <th>
             Labels
           </th>
+          <th />
         </tr>
       </thead>
       <tbody>
@@ -576,6 +621,16 @@ exports[`open source loaded 1`] = `
               env: aws
             </div>
           </td>
+          <td
+            align="right"
+          >
+            <button
+              class="c15"
+              kind="primary"
+            >
+              Connect
+            </button>
+          </td>
         </tr>
         <tr>
           <td>
@@ -601,6 +656,16 @@ exports[`open source loaded 1`] = `
               env: aws
             </div>
           </td>
+          <td
+            align="right"
+          >
+            <button
+              class="c15"
+              kind="primary"
+            >
+              Connect
+            </button>
+          </td>
         </tr>
         <tr>
           <td>
@@ -625,6 +690,16 @@ exports[`open source loaded 1`] = `
             >
               value: gcp
             </div>
+          </td>
+          <td
+            align="right"
+          >
+            <button
+              class="c15"
+              kind="primary"
+            >
+              Connect
+            </button>
           </td>
         </tr>
       </tbody>

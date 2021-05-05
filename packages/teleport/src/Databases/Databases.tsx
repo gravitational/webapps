@@ -46,6 +46,7 @@ export function Databases(props: State) {
     isAddDatabaseVisible,
     user,
     version,
+    clusterId,
   } = props;
 
   return (
@@ -65,7 +66,9 @@ export function Databases(props: State) {
         </Box>
       )}
       {attempt.status === 'failed' && <Danger>{attempt.statusText}</Danger>}
-      {attempt.status === 'success' && <DatabaseList databases={databases} />}
+      {attempt.status === 'success' && (
+        <DatabaseList databases={databases} user={user} clusterId={clusterId} />
+      )}
       {isAddDatabaseVisible && (
         <AddDatabase user={user} version={version} onClose={hideAddDatabase} />
       )}

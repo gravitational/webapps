@@ -14,10 +14,10 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
 import { sortBy } from 'lodash';
-import { Flex } from 'design';
+import { Flex, ButtonPrimary } from 'design';
 import {
   Column,
   SortHeaderCell,
@@ -30,15 +30,18 @@ import Table from 'design/DataTable/Paged';
 import isMatch from 'design/utils/match';
 import InputSearch from 'teleport/components/InputSearch';
 import { Database } from 'teleport/services/databases';
+import ConnectDatabase from 'teleport/Databases/ConnectDatabase';
 
 function DatabaseList(props: Props) {
-  const { databases = [], pageSize = 20 } = props;
+  const { databases = [], pageSize = 20, user, clusterId } = props;
 
-  const [sortDir, setSortDir] = React.useState<Record<string, string>>({
+  const [sortDir, setSortDir] = useState<Record<string, string>>({
     name: SortTypes.DESC,
   });
 
-  const [searchValue, setSearchValue] = React.useState<string>('');
+  const [searchValue, setSearchValue] = useState<string>('');
+
+  const [dbConnectInfo, setDbConnectInfo] = useState<DbInfo>(undefined);
 
   function sortAndFilter(search) {
     const filtered = databases.filter(obj =>
@@ -113,7 +116,19 @@ function DatabaseList(props: Props) {
           cell={<TextCell />}
         />
         <Column header={<Cell>Labels</Cell>} cell={<LabelCell />} />
+        <Column
+          header={<Cell />}
+          cell={<ConnectDBButton setDbConnectInfo={setDbConnectInfo} />}
+        />
       </StyledTable>
+      {dbConnectInfo && (
+        <ConnectDatabase
+          user={user}
+          clusterId={clusterId}
+          dbConnectInfo={dbConnectInfo}
+          onClose={() => setDbConnectInfo(undefined)}
+        />
+      )}
     </>
   );
 }
@@ -122,6 +137,24 @@ function LabelCell(props) {
   const { rowIndex, data } = props;
   const { tags = [] } = data[rowIndex];
   return renderLabelCell(tags);
+}
+
+function ConnectDBButton(props) {
+  const { setDbConnectInfo, rowIndex, data } = props;
+  const { name, protocol } = data[rowIndex];
+
+  return (
+    <Cell align="right">
+      <ButtonPrimary
+        size="small"
+        onClick={() => {
+          setDbConnectInfo({ name, protocol });
+        }}
+      >
+        Connect
+      </ButtonPrimary>
+    </Cell>
+  );
 }
 
 const StyledTable = styled(Table)`
@@ -145,6 +178,13 @@ function searchAndFilterCb(
 type Props = {
   databases: Database[];
   pageSize?: number;
+  user: string;
+  clusterId: string;
+};
+
+export type DbInfo = {
+  name: string;
+  protocol: 'mysql' | 'postgres';
 };
 
 export default DatabaseList;
