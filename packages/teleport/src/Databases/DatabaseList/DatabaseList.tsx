@@ -41,7 +41,7 @@ function DatabaseList(props: Props) {
 
   const [searchValue, setSearchValue] = useState<string>('');
 
-  const [dbConnectInfo, setDbConnectInfo] = useState<DbInfo>(undefined);
+  const [dbConnectInfo, setDbConnectInfo] = useState<DbConnectInfo>(undefined);
 
   function sortAndFilter(search) {
     const filtered = databases.filter(obj =>
@@ -182,7 +182,7 @@ type Props = {
   clusterId: string;
 };
 
-export type DbInfo = {
+export type DbConnectInfo = {
   name: string;
   protocol: 'mysql' | 'postgres';
 };

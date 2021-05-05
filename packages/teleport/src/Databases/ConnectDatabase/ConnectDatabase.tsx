@@ -17,7 +17,7 @@ limitations under the License.
 import React from 'react';
 import { Flex } from 'design';
 import Dialog, { DialogTitle } from 'design/Dialog';
-import { DbInfo } from '../DatabaseList/DatabaseList';
+import { DbConnectInfo } from '../DatabaseList/DatabaseList';
 import ConnectInstructions from './ConnectInstructions';
 
 export default function ConnectDatabase({
@@ -53,7 +53,7 @@ export default function ConnectDatabase({
 }
 
 type Props = {
-  dbConnectInfo: DbInfo;
+  dbConnectInfo: DbConnectInfo;
   onClose: () => void;
   user: string;
   clusterId: string;
