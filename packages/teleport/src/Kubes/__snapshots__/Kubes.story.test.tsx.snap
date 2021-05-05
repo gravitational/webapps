@@ -46,6 +46,7 @@ exports[`failed 1`] = `
   min-height: 32px;
   font-size: 12px;
   padding: 0px 24px;
+  width: 240px;
 }
 
 .c3:active {
@@ -123,6 +124,7 @@ exports[`failed 1`] = `
       href="https://goteleport.com/docs/kubernetes-access/guides/multiple-clusters/"
       kind="primary"
       target="_blank"
+      width="240px"
     >
       View documentation
     </a>
@@ -161,6 +163,7 @@ exports[`loaded 1`] = `
   min-height: 32px;
   font-size: 12px;
   padding: 0px 24px;
+  width: 240px;
 }
 
 .c3:active {
@@ -445,6 +448,7 @@ exports[`loaded 1`] = `
       href="https://goteleport.com/docs/kubernetes-access/guides/multiple-clusters/"
       kind="primary"
       target="_blank"
+      width="240px"
     >
       View documentation
     </a>

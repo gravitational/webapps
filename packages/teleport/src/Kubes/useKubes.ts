@@ -24,6 +24,7 @@ export default function useKubes(ctx: TeleportContext) {
   const { clusterId, isLeafCluster } = useStickyClusterId();
   const user = ctx.storeUser.state.username;
   const isEnterprise = ctx.isEnterprise;
+  const canCreate = ctx.storeUser.getTokenAccess().create;
   const { run, attempt } = useAttempt('processing');
   const [kubes, setKubes] = useState([] as Kube[]);
 
@@ -31,7 +32,7 @@ export default function useKubes(ctx: TeleportContext) {
     run(() => ctx.kubeService.fetchKubernetes(clusterId).then(setKubes));
   }, [clusterId]);
 
-  return { kubes, attempt, user, isEnterprise, isLeafCluster };
+  return { kubes, attempt, user, isEnterprise, isLeafCluster, canCreate };
 }
 
 export type State = ReturnType<typeof useKubes>;

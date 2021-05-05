@@ -26,6 +26,7 @@ export default {
     user: 'sam',
     isEnterprise: true,
     isLeafCluster: false,
+    canCreate: true,
     attempt: { status: 'success' },
   },
 };
