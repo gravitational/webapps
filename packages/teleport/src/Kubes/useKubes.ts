@@ -28,11 +28,13 @@ export default function useKubes(ctx: TeleportContext) {
   const { run, attempt } = useAttempt('processing');
   const [kubes, setKubes] = useState([] as Kube[]);
 
+  const showButton = !isEnterprise || (!isLeafCluster && canCreate);
+
   useEffect(() => {
     run(() => ctx.kubeService.fetchKubernetes(clusterId).then(setKubes));
   }, [clusterId]);
 
-  return { kubes, attempt, user, isEnterprise, isLeafCluster, canCreate };
+  return { kubes, attempt, user, showButton };
 }
 
 export type State = ReturnType<typeof useKubes>;

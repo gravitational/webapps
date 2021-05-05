@@ -24,9 +24,7 @@ export default {
   args: {
     kubes: kubes,
     user: 'sam',
-    isEnterprise: true,
-    isLeafCluster: false,
-    canCreate: true,
+    showButton: true,
     attempt: { status: 'success' },
   },
 };
