@@ -14,15 +14,16 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import { renderStory } from 'design/utils/testing';
-import Meta, { Loaded, Failed } from './Databases.story';
+import React from 'react';
+import { render } from 'design/utils/testing';
+import { Loaded, Failed } from './Databases.story';
 
 test('open source loaded', () => {
-  const { container } = renderStory(Loaded, Meta);
+  const { container } = render(<Loaded />);
   expect(container.firstChild).toMatchSnapshot();
 });
 
 test('failed', () => {
-  const { container } = renderStory(Failed, Meta);
+  const { container } = render(<Failed />);
   expect(container.firstChild).toMatchSnapshot();
 });

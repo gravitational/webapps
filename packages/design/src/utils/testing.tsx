@@ -27,7 +27,6 @@ import ThemeProvider from 'design/ThemeProvider';
 import theme from 'design/theme';
 import '@testing-library/jest-dom';
 import 'jest-styled-components';
-import { Meta, Story } from '@storybook/react';
 
 function Providers({ children }: { children: React.ReactElement }) {
   return <ThemeProvider theme={theme}>{children}</ThemeProvider>;
@@ -46,10 +45,6 @@ type RenderOptions = {
   container: HTMLElement;
 };
 
-function renderStory(Component: Story<any>, meta: Meta) {
-  return render(<Component {...meta.args} {...Component.args} />);
-}
-
 export {
   act,
   screen,
@@ -61,5 +56,4 @@ export {
   waitForElement,
   getByTestId,
   Router,
-  renderStory,
 };

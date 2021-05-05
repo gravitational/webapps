@@ -15,35 +15,36 @@ limitations under the License.
 */
 
 import React from 'react';
-import { Story } from '@storybook/react';
 import { Databases } from './Databases';
-import { State } from './useDatabases';
 import { databases } from './fixtures';
 
 export default {
   title: 'Teleport/Databases',
-  args: {
-    databases,
-    attempt: { status: 'success' },
-    isEnterprise: false,
-    isLeafCluster: false,
-    canCreate: false,
-    isAddDatabaseVisible: false,
-    hideAddDatabase: () => null,
-    showAddDatabase: () => null,
-  },
 };
 
-const Template: Story<State> = args => <Databases {...args} />;
+export const Loaded = () => (
+  <Databases {...props} attempt={{ status: 'success' }} />
+);
 
-export const Loaded = Template.bind({});
+export const Loading = () => (
+  <Databases {...props} attempt={{ status: 'processing' }} />
+);
 
-export const Loading = Template.bind({});
-Loading.args = {
-  attempt: { status: 'processing' },
-};
+export const Failed = () => (
+  <Databases
+    {...props}
+    attempt={{ status: 'failed', statusText: 'Server Error' }}
+  />
+);
 
-export const Failed = Template.bind({});
-Failed.args = {
-  attempt: { status: 'failed', statusText: 'Server Error' },
+const props = {
+  databases,
+  isEnterprise: false,
+  isLeafCluster: false,
+  canCreate: false,
+  isAddDatabaseVisible: false,
+  hideAddDatabase: () => null,
+  showAddDatabase: () => null,
+  user: 'yassine',
+  version: '6.1.3',
 };
