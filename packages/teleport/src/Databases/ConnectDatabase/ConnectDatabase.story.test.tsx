@@ -15,12 +15,10 @@ limitations under the License.
 */
 
 import React from 'react';
-import { render } from 'design/utils/testing';
+import { render, screen } from 'design/utils/testing';
 import { Dialog } from './ConnectDatabase.story';
 
-jest.mock('design/Modal/Modal', () => ({ children }) => children);
-
 test('render dialog with instructions to connect to database', () => {
-  const { container } = render(<Dialog />);
-  expect(container.firstChild).toMatchSnapshot();
+  render(<Dialog />);
+  expect(screen.getByTestId('Modal')).toMatchSnapshot();
 });
