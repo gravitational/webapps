@@ -195,8 +195,7 @@ exports[`kube connect dialogue 1`] = `
 .c6 {
   box-sizing: border-box;
   margin-bottom: 32px;
-  min-height: 240px;
-  flex: 0 0 auto;
+  flex: 1;
   display: flex;
   flex-direction: column;
 }

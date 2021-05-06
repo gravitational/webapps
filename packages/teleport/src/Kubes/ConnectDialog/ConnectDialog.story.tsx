@@ -26,7 +26,7 @@ export const ConnectDialogue = () => {
     <ConnectDialog
       onClose={() => null}
       user={'sam'}
-      name={'tele.logicoma.dev-prod'}
+      kubeConnectName={'tele.logicoma.dev-prod'}
     />
   );
 };

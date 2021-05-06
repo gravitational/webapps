@@ -94,7 +94,7 @@ function KubeList(props: Props) {
         <ConnectDialog
           onClose={() => setKubeConnectName('')}
           user={user}
-          name={kubeConnectName}
+          kubeConnectName={kubeConnectName}
         />
       )}
     </>

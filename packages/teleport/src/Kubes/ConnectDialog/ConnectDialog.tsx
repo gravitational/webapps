@@ -26,7 +26,7 @@ import cfg from 'teleport/config';
 import TextSelectCopy from 'teleport/components/TextSelectCopy';
 
 function ConnectDialog(props: Props) {
-  const { onClose, user, name } = props;
+  const { onClose, user, kubeConnectName } = props;
   const { hostname, port } = window.document.location;
   const host = `${hostname}:${port || '443'}`;
 
@@ -38,11 +38,9 @@ function ConnectDialog(props: Props) {
       open={true}
     >
       <DialogHeader>
-        <DialogTitle typography="h3" caps={true}>
-          connect to kubernetes cluster
-        </DialogTitle>
+        <DialogTitle>connect to kubernetes cluster</DialogTitle>
       </DialogHeader>
-      <DialogContent minHeight="240px" flex="0 0 auto">
+      <DialogContent>
         <Box mb={4}>
           <Text bold as="span">
             Step 1
@@ -58,7 +56,7 @@ function ConnectDialog(props: Props) {
             *Step 2
           </Text>
           {' - Select the kubernetes cluster'}
-          <TextSelectCopy mt="2" text={`tsh kube login ${name}`} />
+          <TextSelectCopy mt="2" text={`tsh kube login ${kubeConnectName}`} />
         </Box>
         <Box mb={4}>
           <Text bold as="span">
@@ -87,7 +85,7 @@ function ConnectDialog(props: Props) {
 type Props = {
   onClose: () => void;
   user: string;
-  name: string;
+  kubeConnectName: string;
 };
 
 const dialogCss = () => `
