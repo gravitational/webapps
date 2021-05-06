@@ -62,3 +62,5 @@ const formatProtocol = (input: DbProtocol) => {
       return input;
   }
 };
+
+export type DatabaseInfo = ReturnType<typeof formatDatabaseInfo>;

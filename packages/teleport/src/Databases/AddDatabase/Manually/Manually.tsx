@@ -22,13 +22,16 @@ import cfg from 'teleport/config';
 import TextSelectCopy from 'teleport/components/TextSelectCopy';
 import * as links from 'teleport/services/links';
 import { DbType, DbProtocol } from 'teleport/services/databases';
-import { formatDatabaseInfo } from 'teleport/services/databases/makeDatabase';
+import {
+  formatDatabaseInfo,
+  DatabaseInfo,
+} from 'teleport/services/databases/makeDatabase';
 
 export default function Manually({ user, version, onClose }) {
   const { hostname, port } = window.document.location;
   const host = `${hostname}:${port || '443'}`;
 
-  const [dbOptions] = useState<Option<Database>[]>(() =>
+  const [dbOptions] = useState<Option<DatabaseInfo>[]>(() =>
     options.map(dbOption => {
       return {
         value: dbOption,
@@ -37,13 +40,13 @@ export default function Manually({ user, version, onClose }) {
     })
   );
 
-  const [selectedDbOption, setSelectedDpOption] = useState<Option<Database>>(
-    dbOptions[0]
-  );
+  const [selectedDbOption, setSelectedDbOption] = useState<
+    Option<DatabaseInfo>
+  >(dbOptions[0]);
 
   return (
     <>
-      <DialogContent minHeight="240px" flex="0 0 auto">
+      <DialogContent>
         <Box mb={4}>
           <Text bold as="span">
             Step 1
@@ -86,7 +89,7 @@ export default function Manually({ user, version, onClose }) {
           <Box mt={2}>
             <Select
               value={selectedDbOption}
-              onChange={(o: Option<Database>) => setSelectedDpOption(o)}
+              onChange={(o: Option<DatabaseInfo>) => setSelectedDbOption(o)}
               options={dbOptions}
               isSearchable={true}
             />
@@ -142,11 +145,11 @@ export const generateDbStartCmd = (
     case 'gcp':
       return `${baseCommand} --db-ca-cert=[instance-ca-filepath] --db-gcp-project-id=[project-id] --db-gcp-instance-id=[instance-id]`;
     default:
-      return 'Unknown type and protocol';
+      return 'unknown type and protocol';
   }
 };
 
-const options: Database[] = [
+const options: DatabaseInfo[] = [
   formatDatabaseInfo('rds', 'postgres'),
   formatDatabaseInfo('rds', 'mysql'),
   formatDatabaseInfo('redshift', 'postgres'),
@@ -154,9 +157,3 @@ const options: Database[] = [
   formatDatabaseInfo('self-hosted', 'postgres'),
   formatDatabaseInfo('self-hosted', 'mysql'),
 ];
-
-type Database = {
-  type: DbType;
-  protocol: DbProtocol;
-  title: string;
-};

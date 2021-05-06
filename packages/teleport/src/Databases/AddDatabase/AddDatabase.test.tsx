@@ -15,7 +15,7 @@
  */
 
 import React from 'react';
-import { fireEvent, render } from 'design/utils/testing';
+import { fireEvent, render, screen } from 'design/utils/testing';
 import Manually from './Manually';
 
 describe('correct database add command generated with given input', () => {
@@ -30,12 +30,10 @@ describe('correct database add command generated with given input', () => {
   `(
     'should generate correct command for input: $input',
     ({ input, output }) => {
-      const { container, getByText } = render(
-        <Manually user="yassine" version="5.0.0" onClose={() => null} />
-      );
+      render(<Manually user="yassine" version="5.0.0" onClose={() => null} />);
 
-      const startCmd = getByText(/teleport start/);
-      const dropDownInputEl = container.querySelector('input');
+      const startCmd = screen.getByText(/teleport start/);
+      const dropDownInputEl = document.querySelector('input');
 
       fireEvent.change(dropDownInputEl, { target: { value: input } });
       fireEvent.focus(dropDownInputEl);
