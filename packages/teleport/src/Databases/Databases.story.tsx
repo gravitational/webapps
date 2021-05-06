@@ -39,6 +39,7 @@ export const Failed = () => (
 
 const props = {
   databases,
+  clusterId: 'im-a-cluster',
   isEnterprise: false,
   isLeafCluster: false,
   canCreate: false,
