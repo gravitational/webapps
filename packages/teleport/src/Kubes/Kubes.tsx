@@ -33,7 +33,7 @@ export default function Container() {
 }
 
 const docUrl =
-  'https://goteleport.com/docs/kubernetes-access/guides/multiple-clusters/';
+  'https://goteleport.com/docs/kubernetes-access';
 
 export function Kubes(props: State) {
   const { kubes, attempt, user, showButton } = props;
