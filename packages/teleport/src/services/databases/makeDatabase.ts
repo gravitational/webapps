@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import { Database } from './types';
+import { Database, DbType, DbProtocol } from './types';
 
 export default function makeDatabase(json): Database {
   const { name, desc, protocol, type } = json;
@@ -24,27 +24,35 @@ export default function makeDatabase(json): Database {
   return {
     name,
     desc,
-    type: `${formatType(type)} ${formatProtocol(protocol)}`,
+    title: formatDatabaseInfo(type, protocol).title,
+    protocol,
     tags: labels.map(label => `${label.name}: ${label.value}`),
   };
 }
 
-const formatType = (input: string) => {
-  switch (input) {
-    case 'self-hosted':
-      return 'Self-hosted';
+export const formatDatabaseInfo = (type: DbType, protocol: DbProtocol) => {
+  const output = { type, protocol, title: '' };
+
+  switch (type) {
     case 'rds':
-      return 'RDS';
-    case 'gcp':
-      return 'Cloud SQL';
+      output.title = `RDS ${formatProtocol(protocol)}`;
+      return output;
     case 'redshift':
-      return 'Redshift';
+      output.title = 'Redshift';
+      return output;
+    case 'self-hosted':
+      output.title = `Self-hosted ${formatProtocol(protocol)}`;
+      return output;
+    case 'gcp':
+      output.title = `Cloud SQL ${formatProtocol(protocol)}`;
+      return output;
     default:
-      return input;
+      output.title = `${type} ${formatProtocol(protocol)}`;
+      return output;
   }
 };
 
-const formatProtocol = (input: string) => {
+const formatProtocol = (input: DbProtocol) => {
   switch (input) {
     case 'postgres':
       return 'PostgreSQL';
@@ -54,3 +62,5 @@ const formatProtocol = (input: string) => {
       return input;
   }
 };
+
+export type DatabaseInfo = ReturnType<typeof formatDatabaseInfo>;

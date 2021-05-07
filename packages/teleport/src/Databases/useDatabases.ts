@@ -16,23 +16,55 @@ limitations under the License.
 
 import { useState, useEffect } from 'react';
 import useAttempt from 'shared/hooks/useAttemptNext';
+import Ctx from 'teleport/teleportContext';
 import useStickyClusterId from 'teleport/useStickyClusterId';
 import { Database } from 'teleport/services/databases';
 
-export default function useDatabases(ctx) {
-  const { attempt, run } = useAttempt('processing');
-  const { clusterId } = useStickyClusterId();
+export default function useDatabases(ctx: Ctx) {
+  const { attempt, run, setAttempt } = useAttempt('processing');
+  const { clusterId, isLeafCluster } = useStickyClusterId();
+  const canCreate = ctx.storeUser.getTokenAccess().create;
+  const isEnterprise = ctx.isEnterprise;
+  const version = ctx.storeUser.state.cluster.authVersion;
+  const user = ctx.storeUser.state.username;
 
   const [databases, setDatabases] = useState<Database[]>([]);
+  const [isAddDatabaseVisible, setIsAddDatabaseVisible] = useState(false);
 
   useEffect(() => {
     run(() => ctx.databaseService.fetchDatabases(clusterId).then(setDatabases));
   }, [clusterId]);
 
+  const fetchDatabases = () => {
+    return ctx.databaseService
+      .fetchDatabases(clusterId)
+      .then(setDatabases)
+      .catch((err: Error) =>
+        setAttempt({ status: 'failed', statusText: err.message })
+      );
+  };
+
+  const hideAddDatabase = () => {
+    setIsAddDatabaseVisible(false);
+    fetchDatabases();
+  };
+
+  const showAddDatabase = () => {
+    setIsAddDatabaseVisible(true);
+  };
+
   return {
     databases,
     attempt,
+    canCreate,
+    isLeafCluster,
+    isEnterprise,
+    hideAddDatabase,
+    showAddDatabase,
+    isAddDatabaseVisible,
+    user,
+    version,
   };
 }
 
-export type Props = ReturnType<typeof useDatabases>;
+export type State = ReturnType<typeof useDatabases>;

@@ -17,6 +17,10 @@ limitations under the License.
 export interface Database {
   name: string;
   desc: string;
-  type: string;
+  title: string;
+  protocol: DbProtocol;
   tags: string[];
 }
+
+export type DbType = 'redshift' | 'rds' | 'gcp' | 'self-hosted';
+export type DbProtocol = 'postgres' | 'mysql';

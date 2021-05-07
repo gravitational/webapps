@@ -15,15 +15,12 @@ limitations under the License.
 */
 
 import React from 'react';
-import { render } from 'design/utils/testing';
-import { Loaded, Failed } from './Databases.story';
+import AddDatabase from './AddDatabase';
 
-test('open source loaded', () => {
-  const { container } = render(<Loaded />);
-  expect(container.firstChild).toMatchSnapshot();
-});
+export default {
+  title: 'Teleport/Databases/Add',
+};
 
-test('failed', () => {
-  const { container } = render(<Failed />);
-  expect(container.firstChild).toMatchSnapshot();
-});
+export const Manually = () => (
+  <AddDatabase user="yassine" version="6.1.3" onClose={() => null} />
+);

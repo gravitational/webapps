@@ -27,7 +27,8 @@ test('correct formatting of database fetch response', async () => {
     {
       name: 'aurora',
       desc: 'PostgreSQL 11.6: AWS Aurora',
-      type: 'RDS PostgreSQL',
+      title: 'RDS PostgreSQL',
+      protocol: 'postgres',
       tags: ['cluster: root', 'env: aws'],
     },
   ]);
@@ -47,12 +48,10 @@ describe('correct formatting of all type and protocol combos', () => {
     type                 | protocol                 | combined
     ${'self-hosted'}     | ${'mysql'}               | ${'Self-hosted MySQL'}
     ${'rds'}             | ${'mysql'}               | ${'RDS MySQL'}
-    ${'gcp'}             | ${'mysql'}               | ${'Cloud SQL MySQL'}
-    ${'redshift'}        | ${'mysql'}               | ${'Redshift MySQL'}
     ${'self-hosted'}     | ${'postgres'}            | ${'Self-hosted PostgreSQL'}
     ${'rds'}             | ${'postgres'}            | ${'RDS PostgreSQL'}
     ${'gcp'}             | ${'postgres'}            | ${'Cloud SQL PostgreSQL'}
-    ${'redshift'}        | ${'postgres'}            | ${'Redshift PostgreSQL'}
+    ${'redshift'}        | ${'postgres'}            | ${'Redshift'}
     ${'some other type'} | ${'some other protocol'} | ${'some other type some other protocol'}
   `(
     'should combine type: $type and protocol: $protocol correctly',
@@ -62,7 +61,7 @@ describe('correct formatting of all type and protocol combos', () => {
       const database = new DatabaseService();
       const response = await database.fetchDatabases('im-a-cluster');
 
-      expect(response[0].type).toBe(combined);
+      expect(response[0].title).toBe(combined);
     }
   );
 });

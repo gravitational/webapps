@@ -24,21 +24,40 @@ import {
   FeatureHeaderTitle,
 } from 'teleport/components/Layout';
 import DatabaseList from './DatabaseList';
-import useDatabases, { Props } from './useDatabases';
+import useDatabases, { State } from './useDatabases';
+import ButtonAdd from './ButtonAdd';
+import AddDatabase from './AddDatabase';
 
 export default function Container() {
   const ctx = useTeleport();
-  const data = useDatabases(ctx);
-  return <Databases {...data} />;
+  const state = useDatabases(ctx);
+  return <Databases {...state} />;
 }
 
-export function Databases(props: Props) {
-  const { databases, attempt } = props;
+export function Databases(props: State) {
+  const {
+    databases,
+    attempt,
+    isLeafCluster,
+    isEnterprise,
+    canCreate,
+    showAddDatabase,
+    hideAddDatabase,
+    isAddDatabaseVisible,
+    user,
+    version,
+  } = props;
 
   return (
     <FeatureBox>
       <FeatureHeader alignItems="center" justifyContent="space-between">
         <FeatureHeaderTitle>Databases</FeatureHeaderTitle>
+        <ButtonAdd
+          isLeafCluster={isLeafCluster}
+          isEnterprise={isEnterprise}
+          canCreate={canCreate}
+          onClick={showAddDatabase}
+        />
       </FeatureHeader>
       {attempt.status === 'processing' && (
         <Box textAlign="center" m={10}>
@@ -47,6 +66,9 @@ export function Databases(props: Props) {
       )}
       {attempt.status === 'failed' && <Danger>{attempt.statusText}</Danger>}
       {attempt.status === 'success' && <DatabaseList databases={databases} />}
+      {isAddDatabaseVisible && (
+        <AddDatabase user={user} version={version} onClose={hideAddDatabase} />
+      )}
     </FeatureBox>
   );
 }

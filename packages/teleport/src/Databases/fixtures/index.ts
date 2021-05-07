@@ -14,25 +14,28 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import { Database } from 'teleport/services/database';
+import { Database } from 'teleport/services/databases';
 
 export const databases: Database[] = [
   {
     name: 'aurora',
     desc: 'PostgreSQL 11.6: AWS Aurora ',
-    type: 'RDS PostgreSQL',
+    title: 'RDS PostgreSQL',
+    protocol: 'postgres',
     tags: ['cluster: root', 'env: aws'],
   },
   {
     name: 'postgres-gcp',
     desc: 'MPostgreSQL 9.6: Google Cloud SQL',
-    type: 'Cloud SQL PostgreSQL',
+    title: 'Cloud SQL PostgreSQL',
+    protocol: 'postgres',
     tags: ['cluster: env', 'value: gcp'],
   },
   {
     name: 'mysql-aurora-56',
     desc: 'MySQL 5.6: AWS Aurora Longname For SQL',
-    type: 'Self-hosted MySQL',
+    title: 'Self-hosted MySQL',
+    protocol: 'mysql',
     tags: ['cluster: root', 'env: aws'],
   },
 ];
