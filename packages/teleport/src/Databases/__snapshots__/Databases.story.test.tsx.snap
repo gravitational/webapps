@@ -121,7 +121,7 @@ exports[`failed 1`] = `
     </div>
     <a
       class="c3"
-      href="https://goteleport.com/docs/database-access/getting-started/"
+      href="https://goteleport.com/docs/database-access"
       kind="primary"
       rel="noreferrer"
       target="_blank"
@@ -448,7 +448,7 @@ exports[`open source loaded 1`] = `
     </div>
     <a
       class="c3"
-      href="https://goteleport.com/docs/database-access/getting-started/"
+      href="https://goteleport.com/docs/database-access"
       kind="primary"
       rel="noreferrer"
       target="_blank"

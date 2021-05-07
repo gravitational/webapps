@@ -17,7 +17,7 @@ limitations under the License.
 import React from 'react';
 import { ButtonPrimary } from 'design';
 
-const docUrl = 'https://goteleport.com/docs/database-access/getting-started/';
+const docUrl = 'https://goteleport.com/docs/database-access';
 
 export default function ButtonAdd(props: Props) {
   const { isEnterprise, canCreate, isLeafCluster, onClick } = props;

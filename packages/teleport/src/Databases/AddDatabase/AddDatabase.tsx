@@ -15,7 +15,6 @@
  */
 
 import React from 'react';
-import { Flex } from 'design';
 import Dialog, { DialogTitle } from 'design/Dialog';
 import Manually from './Manually';
 
@@ -31,12 +30,10 @@ export default function AddDatabase({ user, version, onClose }: Props) {
       onClose={onClose}
       open={true}
     >
-      <Flex flex="1" flexDirection="column">
-        <Flex alignItems="center" justifyContent="space-between" mb="4">
-          <DialogTitle mr="auto">Add Database</DialogTitle>
-        </Flex>
-        <Manually version={version} user={user} onClose={onClose} />
-      </Flex>
+      <DialogTitle mb={4} mr="auto">
+        Add Database
+      </DialogTitle>
+      <Manually version={version} user={user} onClose={onClose} />
     </Dialog>
   );
 }

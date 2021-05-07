@@ -16,7 +16,7 @@
 
 import React from 'react';
 import { fireEvent, render, screen } from 'design/utils/testing';
-import Manually from './Manually';
+import { Manually } from './AddDatabase.story';
 
 describe('correct database add command generated with given input', () => {
   test.each`
@@ -30,16 +30,20 @@ describe('correct database add command generated with given input', () => {
   `(
     'should generate correct command for input: $input',
     ({ input, output }) => {
-      render(<Manually user="yassine" version="5.0.0" onClose={() => null} />);
+      render(<Manually />);
 
-      const startCmd = screen.getByText(/teleport start/);
       const dropDownInputEl = document.querySelector('input');
 
       fireEvent.change(dropDownInputEl, { target: { value: input } });
       fireEvent.focus(dropDownInputEl);
       fireEvent.keyDown(dropDownInputEl, { key: 'Enter', keyCode: 13 });
 
-      expect(startCmd.innerHTML).toBe(output);
+      expect(screen.queryByText(output)).not.toBeNull();
     }
   );
+});
+
+test('render instructions dialog for manually adding database', () => {
+  render(<Manually />);
+  expect(screen.getByTestId('Modal')).toMatchSnapshot();
 });
