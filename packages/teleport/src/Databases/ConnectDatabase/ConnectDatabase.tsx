@@ -15,7 +15,6 @@ limitations under the License.
 */
 
 import React from 'react';
-import { Flex } from 'design';
 import Dialog, { DialogTitle } from 'design/Dialog';
 import { DbConnectInfo } from '../DatabaseList/DatabaseList';
 import ConnectInstructions from './ConnectInstructions';
