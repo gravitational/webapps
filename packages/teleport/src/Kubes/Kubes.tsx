@@ -43,7 +43,13 @@ export function Kubes(props: State) {
       <FeatureHeader alignItems="center" justifyContent="space-between">
         <FeatureHeaderTitle>Kubernetes</FeatureHeaderTitle>
         {showButton && (
-          <ButtonPrimary as="a" width="240px" target="_blank" href={docUrl}>
+          <ButtonPrimary
+            as="a"
+            width="240px"
+            target="_blank"
+            href={docUrl}
+            rel="noreferrer"
+          >
             View documentation
           </ButtonPrimary>
         )}

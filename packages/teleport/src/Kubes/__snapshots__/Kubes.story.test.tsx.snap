@@ -121,8 +121,9 @@ exports[`failed 1`] = `
     </div>
     <a
       class="c3"
-      href="https://goteleport.com/docs/kubernetes-access/guides/multiple-clusters/"
+      href="https://goteleport.com/docs/kubernetes-access"
       kind="primary"
+      rel="noreferrer"
       target="_blank"
       width="240px"
     >
@@ -494,8 +495,9 @@ exports[`loaded 1`] = `
     </div>
     <a
       class="c3"
-      href="https://goteleport.com/docs/kubernetes-access/guides/multiple-clusters/"
+      href="https://goteleport.com/docs/kubernetes-access"
       kind="primary"
+      rel="noreferrer"
       target="_blank"
       width="240px"
     >

@@ -15,15 +15,15 @@ limitations under the License.
 */
 
 import React from 'react';
-import ConnectDialog from './ConnectDialog';
+import Component from './ConnectDialog';
 
 export default {
   title: 'Teleport/Kubes',
 };
 
-export const ConnectDialogue = () => {
+export const ConnectDialog = () => {
   return (
-    <ConnectDialog
+    <Component
       onClose={() => null}
       user={'sam'}
       kubeConnectName={'tele.logicoma.dev-prod'}
