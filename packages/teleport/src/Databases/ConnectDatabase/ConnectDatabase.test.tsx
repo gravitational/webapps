@@ -14,6 +14,9 @@
  * limitations under the License.
  */
 
+import React from 'react';
+import { render, screen } from 'design/utils/testing';
+import { Dialog } from './ConnectDatabase.story';
 import { generateDbConnectCmd } from './ConnectInstructions/ConnectInstructions';
 
 describe('correct connect command for given protocol, cluster, name', () => {
@@ -29,4 +32,9 @@ describe('correct connect command for given protocol, cluster, name', () => {
       expect(command).toBe(output);
     }
   );
+});
+
+test('render dialog with instructions to connect to database', () => {
+  render(<Dialog />);
+  expect(screen.getByTestId('Modal')).toMatchSnapshot();
 });

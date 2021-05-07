@@ -37,17 +37,15 @@ export default function ConnectDatabase({
       onClose={onClose}
       open={true}
     >
-      <Flex flex="1" flexDirection="column">
-        <Flex alignItems="center" justifyContent="space-between" mb="4">
-          <DialogTitle mr="auto">Connect To Database</DialogTitle>
-        </Flex>
-        <ConnectInstructions
-          user={user}
-          clusterId={clusterId}
-          dbInfo={dbConnectInfo}
-          onClose={onClose}
-        />
-      </Flex>
+      <DialogTitle mb="4" mr="auto">
+        Connect To Database
+      </DialogTitle>
+      <ConnectInstructions
+        user={user}
+        clusterId={clusterId}
+        dbInfo={dbConnectInfo}
+        onClose={onClose}
+      />
     </Dialog>
   );
 }
