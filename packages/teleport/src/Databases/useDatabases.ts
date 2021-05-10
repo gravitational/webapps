@@ -29,7 +29,7 @@ export default function useDatabases(ctx: Ctx) {
   const version = ctx.storeUser.state.cluster.authVersion;
 
   const [databases, setDatabases] = useState<Database[]>([]);
-  const [isAddDatabaseVisible, setIsAddDatabaseVisible] = useState(false);
+  const [isAddDialogVisible, setIsAddDialogVisible] = useState(false);
 
   useEffect(() => {
     run(() => ctx.databaseService.fetchDatabases(clusterId).then(setDatabases));
@@ -44,13 +44,13 @@ export default function useDatabases(ctx: Ctx) {
       );
   };
 
-  const hideAddDatabase = () => {
-    setIsAddDatabaseVisible(false);
+  const hideAddDialog = () => {
+    setIsAddDialogVisible(false);
     fetchDatabases();
   };
 
-  const showAddDatabase = () => {
-    setIsAddDatabaseVisible(true);
+  const showAddDialog = () => {
+    setIsAddDialogVisible(true);
   };
 
   return {
@@ -59,9 +59,9 @@ export default function useDatabases(ctx: Ctx) {
     canCreate,
     isLeafCluster,
     isEnterprise,
-    hideAddDatabase,
-    showAddDatabase,
-    isAddDatabaseVisible,
+    hideAddDialog,
+    showAddDialog,
+    isAddDialogVisible,
     user,
     version,
     clusterId,

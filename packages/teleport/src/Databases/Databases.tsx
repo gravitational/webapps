@@ -41,9 +41,9 @@ export function Databases(props: State) {
     isLeafCluster,
     isEnterprise,
     canCreate,
-    showAddDatabase,
-    hideAddDatabase,
-    isAddDatabaseVisible,
+    showAddDialog,
+    hideAddDialog,
+    isAddDialogVisible,
     user,
     version,
     clusterId,
@@ -57,7 +57,7 @@ export function Databases(props: State) {
           isLeafCluster={isLeafCluster}
           isEnterprise={isEnterprise}
           canCreate={canCreate}
-          onClick={showAddDatabase}
+          onClick={showAddDialog}
         />
       </FeatureHeader>
       {attempt.status === 'processing' && (
@@ -69,8 +69,8 @@ export function Databases(props: State) {
       {attempt.status === 'success' && (
         <DatabaseList databases={databases} user={user} clusterId={clusterId} />
       )}
-      {isAddDatabaseVisible && (
-        <AddDialog user={user} version={version} onClose={hideAddDatabase} />
+      {isAddDialogVisible && (
+        <AddDialog user={user} version={version} onClose={hideAddDialog} />
       )}
     </FeatureBox>
   );

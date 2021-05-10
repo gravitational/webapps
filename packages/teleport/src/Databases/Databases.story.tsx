@@ -43,9 +43,9 @@ const props = {
   isEnterprise: false,
   isLeafCluster: false,
   canCreate: false,
-  isAddDatabaseVisible: false,
-  hideAddDatabase: () => null,
-  showAddDatabase: () => null,
+  isAddDialogVisible: false,
+  hideAddDialog: () => null,
+  showAddDialog: () => null,
   user: 'yassine',
   version: '6.1.3',
 };
