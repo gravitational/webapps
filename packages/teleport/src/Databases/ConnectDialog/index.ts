@@ -14,5 +14,5 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import ConnectDatabase from './ConnectDatabase';
-export default ConnectDatabase;
+import ConnectDialog from './ConnectDialog';
+export default ConnectDialog;

@@ -16,7 +16,7 @@
 
 import React from 'react';
 import { render, screen } from 'design/utils/testing';
-import ConnectDatabase from './ConnectDatabase';
+import ConnectDialog from './ConnectDialog';
 
 describe('correct connect command for given protocol, cluster, name', () => {
   test.each`
@@ -27,7 +27,7 @@ describe('correct connect command for given protocol, cluster, name', () => {
     'should generate correct connect command for protocol: $protocol, cluster: $cluster, name: $name',
     async ({ protocol, cluster, name, output }) => {
       render(
-        <ConnectDatabase
+        <ConnectDialog
           user="yassine"
           dbConnectInfo={{ name, protocol }}
           clusterId={cluster}
@@ -42,7 +42,7 @@ describe('correct connect command for given protocol, cluster, name', () => {
 
 test('render dialog with instructions to connect to database', () => {
   render(
-    <ConnectDatabase
+    <ConnectDialog
       user="yassine"
       dbConnectInfo={{ name: 'aurora', protocol: 'postgres' }}
       clusterId="im-a-cluster"

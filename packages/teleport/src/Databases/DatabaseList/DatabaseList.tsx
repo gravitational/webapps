@@ -30,7 +30,7 @@ import Table from 'design/DataTable/Paged';
 import isMatch from 'design/utils/match';
 import InputSearch from 'teleport/components/InputSearch';
 import { Database, DbProtocol } from 'teleport/services/databases';
-import ConnectDatabase from 'teleport/Databases/ConnectDatabase';
+import ConnectDialog from 'teleport/Databases/ConnectDialog';
 
 function DatabaseList(props: Props) {
   const { databases = [], pageSize = 20, user, clusterId } = props;
@@ -122,7 +122,7 @@ function DatabaseList(props: Props) {
         />
       </StyledTable>
       {dbConnectInfo && (
-        <ConnectDatabase
+        <ConnectDialog
           user={user}
           clusterId={clusterId}
           dbConnectInfo={dbConnectInfo}

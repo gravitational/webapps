@@ -26,7 +26,7 @@ import TextSelectCopy from 'teleport/components/TextSelectCopy';
 import { DbProtocol } from 'teleport/services/databases';
 import { DbConnectInfo } from '../DatabaseList/DatabaseList';
 
-export default function ConnectDatabase({
+export default function ConnectDialog({
   user,
   clusterId,
   dbConnectInfo,
