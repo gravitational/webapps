@@ -29,7 +29,8 @@ describe('correct connect command for given protocol, cluster, name', () => {
       render(
         <ConnectDialog
           user="yassine"
-          dbConnectInfo={{ name, protocol }}
+          dbName={name}
+          dbProtocol={protocol}
           clusterId={cluster}
           onClose={() => null}
         />
@@ -44,7 +45,8 @@ test('render dialog with instructions to connect to database', () => {
   render(
     <ConnectDialog
       user="yassine"
-      dbConnectInfo={{ name: 'aurora', protocol: 'postgres' }}
+      dbName="aurora"
+      dbProtocol="postgres"
       clusterId="im-a-cluster"
       onClose={() => null}
     />

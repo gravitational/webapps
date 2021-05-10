@@ -15,16 +15,17 @@ limitations under the License.
 */
 
 import React from 'react';
-import ConnectDialog from './ConnectDialog';
+import Component from './ConnectDialog';
 
 export default {
-  title: 'Teleport/Databases/Connect',
+  title: 'Teleport/Databases',
 };
 
-export const Dialog = () => (
-  <ConnectDialog
+export const ConnectDialog = () => (
+  <Component
     user="yassine"
-    dbConnectInfo={{ name: 'aurora', protocol: 'postgres' }}
+    dbName="aurora"
+    dbProtocol="postgres"
     clusterId="im-a-cluster"
     onClose={() => null}
   />

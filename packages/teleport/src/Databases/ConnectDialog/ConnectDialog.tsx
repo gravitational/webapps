@@ -17,6 +17,7 @@ limitations under the License.
 import React from 'react';
 import { Text, Box, ButtonSecondary, Link } from 'design';
 import Dialog, {
+  DialogHeader,
   DialogTitle,
   DialogContent,
   DialogFooter,
@@ -24,15 +25,14 @@ import Dialog, {
 import cfg from 'teleport/config';
 import TextSelectCopy from 'teleport/components/TextSelectCopy';
 import { DbProtocol } from 'teleport/services/databases';
-import { DbConnectInfo } from '../DatabaseList/DatabaseList';
 
 export default function ConnectDialog({
   user,
   clusterId,
-  dbConnectInfo,
+  dbName,
+  dbProtocol,
   onClose,
 }: Props) {
-  const { name, protocol } = dbConnectInfo;
   const { hostname, port } = window.document.location;
   const host = `${hostname}:${port || '443'}`;
 
@@ -47,9 +47,9 @@ export default function ConnectDialog({
       onClose={onClose}
       open={true}
     >
-      <DialogTitle mb={4} mr="auto">
-        Connect To Database
-      </DialogTitle>
+      <DialogHeader mb={4}>
+        <DialogTitle>Connect To Database</DialogTitle>
+      </DialogHeader>
       <DialogContent minHeight="240px" flex="0 0 auto">
         <Box mb={4}>
           <Text bold as="span">
@@ -66,7 +66,7 @@ export default function ConnectDialog({
             Step 2
           </Text>
           {' - Retrieve credentials for the database'}
-          <TextSelectCopy mt="2" text={`tsh db login ${name}`} />
+          <TextSelectCopy mt="2" text={`tsh db login ${dbName}`} />
         </Box>
         <Box mb={4}>
           <Text bold as="span">
@@ -75,7 +75,7 @@ export default function ConnectDialog({
           {' - Connect to the database'}
           <TextSelectCopy
             mt="2"
-            text={`${generateDbConnectCmd(name, clusterId, protocol)}`}
+            text={`${generateDbConnectCmd(dbName, clusterId, dbProtocol)}`}
           />
         </Box>
         <Box>
@@ -101,17 +101,18 @@ export default function ConnectDialog({
 function generateDbConnectCmd(
   dbName: string,
   clusterId: string,
-  protocol: DbProtocol
+  dbProtocol: DbProtocol
 ) {
-  if (protocol === 'postgres') {
+  if (dbProtocol === 'postgres') {
     return `psql "service=${clusterId}-${dbName} user=[user] dbname=[dbname]"`;
-  } else if (protocol === 'mysql') {
+  } else if (dbProtocol === 'mysql') {
     return `mysql --defaults-group-suffix=_${clusterId}-${dbName} --user=[user] --database=[database]`;
   }
 }
 
 type Props = {
-  dbConnectInfo: DbConnectInfo;
+  dbName: string;
+  dbProtocol: DbProtocol;
   onClose: () => void;
   user: string;
   clusterId: string;

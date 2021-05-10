@@ -51,7 +51,7 @@ exports[`render instructions dialog for manually adding database 1`] = `
   min-height: 330px;
 }
 
-.c4 {
+.c5 {
   overflow: hidden;
   text-overflow: ellipsis;
   font-weight: 300;
@@ -59,38 +59,36 @@ exports[`render instructions dialog for manually adding database 1`] = `
   line-height: 32px;
   text-transform: uppercase;
   margin: 0px;
-  margin-bottom: 24px;
-  margin-right: auto;
   color: rgba(255,255,255,0.87);
 }
 
-.c7 {
+.c8 {
   overflow: hidden;
   text-overflow: ellipsis;
   font-weight: 600;
   margin: 0px;
 }
 
-.c6 {
+.c7 {
   box-sizing: border-box;
   margin-bottom: 24px;
 }
 
-.c8 {
+.c9 {
   box-sizing: border-box;
 }
 
-.c13 {
+.c14 {
   box-sizing: border-box;
   margin-right: 4px;
 }
 
-.c15 {
+.c16 {
   box-sizing: border-box;
   margin-top: 8px;
 }
 
-.c11 {
+.c12 {
   box-sizing: border-box;
   margin-top: 8px;
   padding: 8px;
@@ -101,13 +99,21 @@ exports[`render instructions dialog for manually adding database 1`] = `
   justify-content: space-between;
 }
 
-.c12 {
+.c13 {
   box-sizing: border-box;
   margin-right: 8px;
   display: flex;
 }
 
-.c14 {
+.c4 {
+  box-sizing: border-box;
+  margin-bottom: 24px;
+  min-height: 32px;
+  display: flex;
+  align-items: center;
+}
+
+.c15 {
   line-height: 1.5;
   margin: 0;
   display: inline-flex;
@@ -133,25 +139,25 @@ exports[`render instructions dialog for manually adding database 1`] = `
   padding: 0px 24px;
 }
 
-.c14:active {
+.c15:active {
   opacity: 0.56;
 }
 
-.c14:hover,
-.c14:focus {
+.c15:hover,
+.c15:focus {
   background: #651FFF;
 }
 
-.c14:active {
+.c15:active {
   background: #354AA4;
 }
 
-.c14:disabled {
+.c15:disabled {
   background: rgba(255,255,255,0.12);
   color: rgba(255,255,255,0.3);
 }
 
-.c18 {
+.c19 {
   line-height: 1.5;
   margin: 0;
   display: inline-flex;
@@ -177,27 +183,18 @@ exports[`render instructions dialog for manually adding database 1`] = `
   padding: 0px 24px;
 }
 
-.c18:active {
+.c19:active {
   opacity: 0.56;
 }
 
-.c18:hover,
-.c18:focus {
+.c19:hover,
+.c19:focus {
   background: #2C3A73;
 }
 
-.c18:disabled {
+.c19:disabled {
   background: rgba(255,255,255,0.12);
   color: rgba(255,255,255,0.3);
-}
-
-.c9 {
-  color: #03a9f4;
-  font-weight: normal;
-  background: none;
-  text-decoration: underline;
-  text-transform: none;
-  margin-right: 8px;
 }
 
 .c10 {
@@ -206,9 +203,18 @@ exports[`render instructions dialog for manually adding database 1`] = `
   background: none;
   text-decoration: underline;
   text-transform: none;
+  margin-right: 8px;
 }
 
-.c5 {
+.c11 {
+  color: #03a9f4;
+  font-weight: normal;
+  background: none;
+  text-decoration: underline;
+  text-transform: none;
+}
+
+.c6 {
   box-sizing: border-box;
   margin-bottom: 32px;
   flex: 1;
@@ -216,16 +222,16 @@ exports[`render instructions dialog for manually adding database 1`] = `
   flex-direction: column;
 }
 
-.c17 {
+.c18 {
   box-sizing: border-box;
 }
 
-.c16 .react-select__control,
-.c16 .react-select__control--is-focused {
+.c17 .react-select__control,
+.c17 .react-select__control--is-focused {
   min-height: 40px;
 }
 
-.c16 .react-select-container {
+.c17 .react-select-container {
   box-shadow: inset 0 2px 4px rgba(0,0,0,0.24);
   box-sizing: border-box;
   border: none;
@@ -239,20 +245,20 @@ exports[`render instructions dialog for manually adding database 1`] = `
   border-radius: 4px;
 }
 
-.c16 .react-select__menu {
+.c17 .react-select__menu {
   margin-top: 0px;
 }
 
-.c16 .react-select__indicator-separator {
+.c17 .react-select__indicator-separator {
   display: none;
 }
 
-.c16 .react-select__control:hover {
+.c17 .react-select__control:hover {
   border-color: transparent;
   cursor: pointer;
 }
 
-.c16 .react-select__control--is-focused {
+.c17 .react-select__control--is-focused {
   background-color: transparent;
   border-color: transparent;
   border-radius: 4px;
@@ -261,7 +267,7 @@ exports[`render instructions dialog for manually adding database 1`] = `
   box-shadow: none;
 }
 
-.c16 .react-select__option--is-selected {
+.c17 .react-select__option--is-selected {
   background-color: #cfd8dc;
   color: inherit;
 }
@@ -284,27 +290,31 @@ exports[`render instructions dialog for manually adding database 1`] = `
     >
       <div
         class="c4"
-        color="text.primary"
-      >
-        Add Database
-      </div>
-      <div
-        class="c5"
       >
         <div
-          class="c6"
+          class="c5"
+          color="text.primary"
+        >
+          Add Database
+        </div>
+      </div>
+      <div
+        class="c6"
+      >
+        <div
+          class="c7"
         >
           <span
-            class="c7"
+            class="c8"
           >
             Step 1
           </span>
            - Download Teleport package to your computer 
           <div
-            class="c8"
+            class="c9"
           >
             <a
-              class="c9"
+              class="c10"
               href="https://get.gravitational.com/teleport-ent-v6.1.3-darwin-amd64-bin.tar.gz"
               rel="noreferrer"
               target="_blank"
@@ -312,7 +322,7 @@ exports[`render instructions dialog for manually adding database 1`] = `
               MacOS
             </a>
             <a
-              class="c9"
+              class="c10"
               href="https://get.gravitational.com/teleport-ent-v6.1.3-linux-amd64-bin.tar.gz"
               rel="noreferrer"
               target="_blank"
@@ -320,7 +330,7 @@ exports[`render instructions dialog for manually adding database 1`] = `
               Linux 64-bit
             </a>
             <a
-              class="c10"
+              class="c11"
               href="https://get.gravitational.com/teleport-ent-v6.1.3-linux-386-bin.tar.gz"
               rel="noreferrer"
               target="_blank"
@@ -330,23 +340,23 @@ exports[`render instructions dialog for manually adding database 1`] = `
           </div>
         </div>
         <div
-          class="c6"
+          class="c7"
         >
           <span
-            class="c7"
+            class="c8"
           >
             Step 2
           </span>
            - Login to Teleport
           <div
-            class="c11"
+            class="c12"
           >
             <div
-              class="c12"
+              class="c13"
               style="overflow: auto; white-space: pre; word-break: break-all; font-size: 12px; font-family: \\"Droid Sans Mono\\", \\"monospace\\", monospace, \\"Droid Sans Fallback\\";"
             >
               <div
-                class="c13"
+                class="c14"
               >
                 $
               </div>
@@ -355,7 +365,7 @@ exports[`render instructions dialog for manually adding database 1`] = `
               </div>
             </div>
             <button
-              class="c14"
+              class="c15"
               kind="primary"
               style="max-width: 48px; width: 100%; padding: 4px 8px; min-height: 10px; font-size: 10px;"
             >
@@ -364,23 +374,23 @@ exports[`render instructions dialog for manually adding database 1`] = `
           </div>
         </div>
         <div
-          class="c6"
+          class="c7"
         >
           <span
-            class="c7"
+            class="c8"
           >
             Step 3
           </span>
            - Generate a join token
           <div
-            class="c11"
+            class="c12"
           >
             <div
-              class="c12"
+              class="c13"
               style="overflow: auto; white-space: pre; word-break: break-all; font-size: 12px; font-family: \\"Droid Sans Mono\\", \\"monospace\\", monospace, \\"Droid Sans Fallback\\";"
             >
               <div
-                class="c13"
+                class="c14"
               >
                 $
               </div>
@@ -389,7 +399,7 @@ exports[`render instructions dialog for manually adding database 1`] = `
               </div>
             </div>
             <button
-              class="c14"
+              class="c15"
               kind="primary"
               style="max-width: 48px; width: 100%; padding: 4px 8px; min-height: 10px; font-size: 10px;"
             >
@@ -398,19 +408,19 @@ exports[`render instructions dialog for manually adding database 1`] = `
           </div>
         </div>
         <div
-          class="c6"
+          class="c7"
         >
           <span
-            class="c7"
+            class="c8"
           >
             Step 4
           </span>
            - Select the database type and protocol to use
           <div
-            class="c15"
+            class="c16"
           >
             <div
-              class="c16"
+              class="c17"
             >
               <div
                 class="react-select-container css-2b097c-container"
@@ -481,23 +491,23 @@ exports[`render instructions dialog for manually adding database 1`] = `
           </div>
         </div>
         <div
-          class="c6"
+          class="c7"
         >
           <span
-            class="c7"
+            class="c8"
           >
             Step 5
           </span>
            - Start the Teleport agent with the following parameters
           <div
-            class="c11"
+            class="c12"
           >
             <div
-              class="c12"
+              class="c13"
               style="overflow: auto; white-space: pre; word-break: break-all; font-size: 12px; font-family: \\"Droid Sans Mono\\", \\"monospace\\", monospace, \\"Droid Sans Fallback\\";"
             >
               <div
-                class="c13"
+                class="c14"
               >
                 $
               </div>
@@ -506,7 +516,7 @@ exports[`render instructions dialog for manually adding database 1`] = `
               </div>
             </div>
             <button
-              class="c14"
+              class="c15"
               kind="primary"
               style="max-width: 48px; width: 100%; padding: 4px 8px; min-height: 10px; font-size: 10px;"
             >
@@ -515,12 +525,12 @@ exports[`render instructions dialog for manually adding database 1`] = `
           </div>
         </div>
         <div
-          class="c8"
+          class="c9"
         >
           * Note: For a self-hosted Teleport version, you may need to update DNS and obtain a TLS certificate for this application.
             Learn more about database access 
           <a
-            class="c9"
+            class="c10"
             href="https://goteleport.com/docs/database-access/"
             rel="noreferrer"
             target="_blank"
@@ -530,10 +540,10 @@ exports[`render instructions dialog for manually adding database 1`] = `
         </div>
       </div>
       <div
-        class="c17"
+        class="c18"
       >
         <button
-          class="c18"
+          class="c19"
           kind="secondary"
         >
           Close

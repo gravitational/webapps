@@ -15,7 +15,7 @@
  */
 
 import React from 'react';
-import Dialog, { DialogTitle } from 'design/Dialog';
+import Dialog, { DialogHeader, DialogTitle } from 'design/Dialog';
 import Manually from './Manually';
 
 export default function AddDialog({ user, version, onClose }: Props) {
@@ -30,9 +30,9 @@ export default function AddDialog({ user, version, onClose }: Props) {
       onClose={onClose}
       open={true}
     >
-      <DialogTitle mb={4} mr="auto">
-        Add Database
-      </DialogTitle>
+      <DialogHeader mb={4}>
+        <DialogTitle>Add Database</DialogTitle>
+      </DialogHeader>
       <Manually version={version} user={user} onClose={onClose} />
     </Dialog>
   );
