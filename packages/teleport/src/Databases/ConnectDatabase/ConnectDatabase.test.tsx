@@ -16,8 +16,7 @@
 
 import React from 'react';
 import { render, screen } from 'design/utils/testing';
-import { Dialog } from './ConnectDatabase.story';
-import { generateDbConnectCmd } from './ConnectDatabase';
+import ConnectDatabase from './ConnectDatabase';
 
 describe('correct connect command for given protocol, cluster, name', () => {
   test.each`
@@ -27,14 +26,29 @@ describe('correct connect command for given protocol, cluster, name', () => {
   `(
     'should generate correct connect command for protocol: $protocol, cluster: $cluster, name: $name',
     async ({ protocol, cluster, name, output }) => {
-      const command = generateDbConnectCmd(name, cluster, protocol);
+      render(
+        <ConnectDatabase
+          user="yassine"
+          dbConnectInfo={{ name, protocol }}
+          clusterId={cluster}
+          onClose={() => null}
+        />
+      );
 
-      expect(command).toBe(output);
+      expect(screen.queryByText(output)).not.toBeNull();
     }
   );
 });
 
 test('render dialog with instructions to connect to database', () => {
-  render(<Dialog />);
+  render(
+    <ConnectDatabase
+      user="yassine"
+      dbConnectInfo={{ name: 'aurora', protocol: 'postgres' }}
+      clusterId="im-a-cluster"
+      onClose={() => null}
+    />
+  );
+
   expect(screen.getByTestId('Modal')).toMatchSnapshot();
 });

@@ -98,7 +98,7 @@ export default function ConnectDatabase({
   );
 }
 
-export function generateDbConnectCmd(
+function generateDbConnectCmd(
   dbName: string,
   clusterId: string,
   protocol: DbProtocol
