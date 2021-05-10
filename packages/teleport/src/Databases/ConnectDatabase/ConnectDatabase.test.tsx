@@ -17,7 +17,7 @@
 import React from 'react';
 import { render, screen } from 'design/utils/testing';
 import { Dialog } from './ConnectDatabase.story';
-import { generateDbConnectCmd } from './ConnectInstructions/ConnectInstructions';
+import { generateDbConnectCmd } from './ConnectDatabase';
 
 describe('correct connect command for given protocol, cluster, name', () => {
   test.each`

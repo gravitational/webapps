@@ -15,9 +15,16 @@ limitations under the License.
 */
 
 import React from 'react';
-import Dialog, { DialogTitle } from 'design/Dialog';
+import { Text, Box, ButtonSecondary, Link } from 'design';
+import Dialog, {
+  DialogTitle,
+  DialogContent,
+  DialogFooter,
+} from 'design/Dialog';
+import cfg from 'teleport/config';
+import TextSelectCopy from 'teleport/components/TextSelectCopy';
+import { DbProtocol } from 'teleport/services/databases';
 import { DbConnectInfo } from '../DatabaseList/DatabaseList';
-import ConnectInstructions from './ConnectInstructions';
 
 export default function ConnectDatabase({
   user,
@@ -25,6 +32,10 @@ export default function ConnectDatabase({
   dbConnectInfo,
   onClose,
 }: Props) {
+  const { name, protocol } = dbConnectInfo;
+  const { hostname, port } = window.document.location;
+  const host = `${hostname}:${port || '443'}`;
+
   return (
     <Dialog
       dialogCss={() => ({
@@ -36,17 +47,67 @@ export default function ConnectDatabase({
       onClose={onClose}
       open={true}
     >
-      <DialogTitle mb="4" mr="auto">
+      <DialogTitle mb={4} mr="auto">
         Connect To Database
       </DialogTitle>
-      <ConnectInstructions
-        user={user}
-        clusterId={clusterId}
-        dbInfo={dbConnectInfo}
-        onClose={onClose}
-      />
+      <DialogContent minHeight="240px" flex="0 0 auto">
+        <Box mb={4}>
+          <Text bold as="span">
+            Step 1
+          </Text>
+          {' - Login to Teleport'}
+          <TextSelectCopy
+            mt="2"
+            text={`tsh login --proxy=${host} --auth=${cfg.getAuthType()} --user=${user}`}
+          />
+        </Box>
+        <Box mb={4}>
+          <Text bold as="span">
+            Step 2
+          </Text>
+          {' - Retrieve credentials for the database'}
+          <TextSelectCopy mt="2" text={`tsh db login ${name}`} />
+        </Box>
+        <Box mb={4}>
+          <Text bold as="span">
+            Step 3
+          </Text>
+          {' - Connect to the database'}
+          <TextSelectCopy
+            mt="2"
+            text={`${generateDbConnectCmd(name, clusterId, protocol)}`}
+          />
+        </Box>
+        <Box>
+          {`* Note: To connect with a GUI database client, see our `}
+          <Link
+            href={
+              'https://goteleport.com/docs/database-access/guides/gui-clients/'
+            }
+            target="_blank"
+          >
+            documentation
+          </Link>
+          {` for instructions `}
+        </Box>
+      </DialogContent>
+      <DialogFooter>
+        <ButtonSecondary onClick={onClose}>Close</ButtonSecondary>
+      </DialogFooter>
     </Dialog>
   );
+}
+
+export function generateDbConnectCmd(
+  dbName: string,
+  clusterId: string,
+  protocol: DbProtocol
+) {
+  if (protocol === 'postgres') {
+    return `psql "service=${clusterId}-${dbName} user=[user] dbname=[dbname]"`;
+  } else if (protocol === 'mysql') {
+    return `mysql --defaults-group-suffix=_${clusterId}-${dbName} --user=[user] --database=[database]`;
+  }
 }
 
 type Props = {

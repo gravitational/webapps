@@ -30,7 +30,7 @@ export default function AddDatabase({ user, version, onClose }: Props) {
       onClose={onClose}
       open={true}
     >
-      <DialogTitle mb="4" mr="auto">
+      <DialogTitle mb={4} mr="auto">
         Add Database
       </DialogTitle>
       <Manually version={version} user={user} onClose={onClose} />

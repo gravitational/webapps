@@ -29,7 +29,7 @@ import {
 import Table from 'design/DataTable/Paged';
 import isMatch from 'design/utils/match';
 import InputSearch from 'teleport/components/InputSearch';
-import { Database } from 'teleport/services/databases';
+import { Database, DbProtocol } from 'teleport/services/databases';
 import ConnectDatabase from 'teleport/Databases/ConnectDatabase';
 
 function DatabaseList(props: Props) {
@@ -118,7 +118,7 @@ function DatabaseList(props: Props) {
         <Column header={<Cell>Labels</Cell>} cell={<LabelCell />} />
         <Column
           header={<Cell />}
-          cell={<ConnectDBButton setDbConnectInfo={setDbConnectInfo} />}
+          cell={<ConnectButton setDbConnectInfo={setDbConnectInfo} />}
         />
       </StyledTable>
       {dbConnectInfo && (
@@ -139,7 +139,7 @@ function LabelCell(props) {
   return renderLabelCell(tags);
 }
 
-function ConnectDBButton(props) {
+function ConnectButton(props) {
   const { setDbConnectInfo, rowIndex, data } = props;
   const { name, protocol } = data[rowIndex];
 
@@ -184,7 +184,7 @@ type Props = {
 
 export type DbConnectInfo = {
   name: string;
-  protocol: 'mysql' | 'postgres';
+  protocol: DbProtocol;
 };
 
 export default DatabaseList;
