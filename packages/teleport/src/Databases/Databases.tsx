@@ -26,7 +26,7 @@ import {
 import DatabaseList from './DatabaseList';
 import useDatabases, { State } from './useDatabases';
 import ButtonAdd from './ButtonAdd';
-import AddDatabase from './AddDatabase';
+import AddDialog from './AddDialog';
 
 export default function Container() {
   const ctx = useTeleport();
@@ -70,7 +70,7 @@ export function Databases(props: State) {
         <DatabaseList databases={databases} user={user} clusterId={clusterId} />
       )}
       {isAddDatabaseVisible && (
-        <AddDatabase user={user} version={version} onClose={hideAddDatabase} />
+        <AddDialog user={user} version={version} onClose={hideAddDatabase} />
       )}
     </FeatureBox>
   );

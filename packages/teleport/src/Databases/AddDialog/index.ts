@@ -14,13 +14,5 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React from 'react';
-import AddDatabase from './AddDatabase';
-
-export default {
-  title: 'Teleport/Databases/Add',
-};
-
-export const Manually = () => (
-  <AddDatabase user="yassine" version="6.1.3" onClose={() => null} />
-);
+import AddDialog from './AddDialog';
+export default AddDialog;

@@ -16,7 +16,7 @@
 
 import React from 'react';
 import { fireEvent, render, screen } from 'design/utils/testing';
-import { Manually } from './AddDatabase.story';
+import { Manually } from './AddDialog.story';
 
 describe('correct database add command generated with given input', () => {
   test.each`
