@@ -189,7 +189,6 @@ exports[`render dialog with instructions to connect to database 1`] = `
   max-height: calc(100% - 96px);
   max-width: 600px;
   width: 100%;
-  min-height: 330px;
 }
 
 .c4 {

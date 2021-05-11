@@ -24,8 +24,8 @@ describe('correct connect command for given protocol, cluster, name', () => {
     ${'postgres'} | ${'im-a-cluster'} | ${'aurora'} | ${'psql "service=im-a-cluster-aurora user=[user] dbname=[dbname]"'}
     ${'mysql'}    | ${'test-cluster'} | ${'mydb'}   | ${'mysql --defaults-group-suffix=_test-cluster-mydb --user=[user] --database=[database]'}
   `(
-    'should generate correct connect command for protocol: $protocol, cluster: $cluster, name: $name',
-    async ({ protocol, cluster, name, output }) => {
+    'should generate correct connect command for protocol: $protocol',
+    ({ protocol, cluster, name, output }) => {
       render(
         <ConnectDialog
           user="yassine"

@@ -44,7 +44,7 @@ function DatabaseList(props: Props) {
   const [dbConnectInfo, setDbConnectInfo] = useState<{
     name: string;
     protocol: DbProtocol;
-  }>(undefined);
+  }>(null);
 
   function sortAndFilter(search) {
     const filtered = databases.filter(obj =>
@@ -130,7 +130,7 @@ function DatabaseList(props: Props) {
           clusterId={clusterId}
           dbName={dbConnectInfo.name}
           dbProtocol={dbConnectInfo.protocol}
-          onClose={() => setDbConnectInfo(undefined)}
+          onClose={() => setDbConnectInfo(null)}
         />
       )}
     </>

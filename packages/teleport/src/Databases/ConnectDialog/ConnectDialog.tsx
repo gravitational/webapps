@@ -41,7 +41,6 @@ export default function ConnectDialog({
       dialogCss={() => ({
         maxWidth: '600px',
         width: '100%',
-        minHeight: '330px',
       })}
       disableEscapeKeyDown={false}
       onClose={onClose}
@@ -105,9 +104,11 @@ function generateDbConnectCmd(
 ) {
   if (dbProtocol === 'postgres') {
     return `psql "service=${clusterId}-${dbName} user=[user] dbname=[dbname]"`;
-  } else if (dbProtocol === 'mysql') {
+  }
+  if (dbProtocol === 'mysql') {
     return `mysql --defaults-group-suffix=_${clusterId}-${dbName} --user=[user] --database=[database]`;
   }
+  return 'This database has an invalid protocol';
 }
 
 type Props = {

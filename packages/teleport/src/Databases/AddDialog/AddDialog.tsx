@@ -24,7 +24,6 @@ export default function AddDialog({ user, version, onClose }: Props) {
       dialogCss={() => ({
         maxWidth: '600px',
         width: '100%',
-        minHeight: '330px',
       })}
       disableEscapeKeyDown={false}
       onClose={onClose}
