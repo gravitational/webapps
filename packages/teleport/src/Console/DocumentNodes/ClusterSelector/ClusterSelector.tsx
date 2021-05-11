@@ -112,7 +112,7 @@ const StyledSelect = styled(Box)(
     
     &:focus,
     &:active {
-      background-color: ${theme.colors.primary.lighter};
+      background-color: '${theme.colors.primary.lighter}';
     }
 
     &:hover {
@@ -121,6 +121,14 @@ const StyledSelect = styled(Box)(
         color: ${theme.colors.text.primary};
       }
     }
+  }
+
+  .react-select__option--is-selected {
+    background-color: inherit;
+  }
+
+  .react-select__option--is-focused {
+    background-color: ${theme.colors.grey[100]};
   }
 
   .react-select__dropdown-indicator {

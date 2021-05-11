@@ -80,7 +80,7 @@ const StyledSelect = styled.div`
 
   .react-select__option--is-focused,
   .react-select__option--is-focused:active {
-    background-color: ${({ theme }) => theme.colors.grey[50]};
+    background-color: ${({ theme }) => theme.colors.grey[100]};
   }
 
   .react-select-container {
@@ -111,13 +111,6 @@ const StyledSelect = styled.div`
   .react-select__value-container {
     height: 30px;
     padding: 0 8px;
-  }
-
-  .react-select__control {
-    &:hover {
-      border-color: transparent;
-      cursor: pointer;
-    }
   }
 
   .react-select__option--is-selected {
@@ -153,6 +146,7 @@ const StyledSelect = styled.div`
 
     &:hover {
       border-color: rgba(255, 255, 255, 0.24);
+      cursor: pointer;
     }
   }
 
