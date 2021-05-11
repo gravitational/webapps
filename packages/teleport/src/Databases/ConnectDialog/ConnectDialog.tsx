@@ -108,7 +108,7 @@ function generateDbConnectCmd(
   if (dbProtocol === 'mysql') {
     return `mysql --defaults-group-suffix=_${clusterId}-${dbName} --user=[user] --database=[database]`;
   }
-  return 'This database has an invalid protocol';
+  return 'invalid protocol';
 }
 
 type Props = {

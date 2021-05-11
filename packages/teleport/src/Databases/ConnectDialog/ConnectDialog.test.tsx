@@ -18,39 +18,35 @@ import React from 'react';
 import { render, screen } from 'design/utils/testing';
 import ConnectDialog from './ConnectDialog';
 
-describe('correct connect command for given protocol, cluster, name', () => {
-  test.each`
-    protocol      | cluster           | name        | output
-    ${'postgres'} | ${'im-a-cluster'} | ${'aurora'} | ${'psql "service=im-a-cluster-aurora user=[user] dbname=[dbname]"'}
-    ${'mysql'}    | ${'test-cluster'} | ${'mydb'}   | ${'mysql --defaults-group-suffix=_test-cluster-mydb --user=[user] --database=[database]'}
-  `(
-    'should generate correct connect command for protocol: $protocol',
-    ({ protocol, cluster, name, output }) => {
-      render(
-        <ConnectDialog
-          user="yassine"
-          dbName={name}
-          dbProtocol={protocol}
-          clusterId={cluster}
-          onClose={() => null}
-        />
-      );
+describe('correct connect command for given protocol', () => {
+  test('correct command generated for postgres db', () => {
+    render(<ConnectDialog {...props} dbProtocol="postgres" />);
 
-      expect(screen.queryByText(output)).not.toBeNull();
-    }
-  );
+    const expectedOutput =
+      'psql "service=im-a-cluster-aurora user=[user] dbname=[dbname]"';
+
+    expect(screen.queryByText(expectedOutput)).not.toBeNull();
+  });
+
+  test('correct command generated for mysql db', () => {
+    render(<ConnectDialog {...props} dbProtocol="mysql" />);
+
+    const expectedOutput =
+      'mysql --defaults-group-suffix=_im-a-cluster-aurora --user=[user] --database=[database]';
+
+    expect(screen.queryByText(expectedOutput)).not.toBeNull();
+  });
 });
 
 test('render dialog with instructions to connect to database', () => {
-  render(
-    <ConnectDialog
-      user="yassine"
-      dbName="aurora"
-      dbProtocol="postgres"
-      clusterId="im-a-cluster"
-      onClose={() => null}
-    />
-  );
+  render(<ConnectDialog {...props} dbProtocol="postgres" />);
 
   expect(screen.getByTestId('Modal')).toMatchSnapshot();
 });
+
+const props = {
+  user: 'yassine',
+  dbName: 'aurora',
+  clusterId: 'im-a-cluster',
+  onClose: () => null,
+};
