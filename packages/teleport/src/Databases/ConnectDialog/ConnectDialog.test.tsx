@@ -18,24 +18,22 @@ import React from 'react';
 import { render, screen } from 'design/utils/testing';
 import ConnectDialog from './ConnectDialog';
 
-describe('correct connect command for given protocol', () => {
-  test('correct command generated for postgres db', () => {
-    render(<ConnectDialog {...props} dbProtocol="postgres" />);
+test('correct connect command generated for postgres db', () => {
+  render(<ConnectDialog {...props} dbProtocol="postgres" />);
 
-    const expectedOutput =
-      'psql "service=im-a-cluster-aurora user=[user] dbname=[dbname]"';
+  const expectedOutput =
+    'psql "service=im-a-cluster-aurora user=[user] dbname=[dbname]"';
 
-    expect(screen.queryByText(expectedOutput)).not.toBeNull();
-  });
+  expect(screen.queryByText(expectedOutput)).not.toBeNull();
+});
 
-  test('correct command generated for mysql db', () => {
-    render(<ConnectDialog {...props} dbProtocol="mysql" />);
+test('correct connect command generated for mysql db', () => {
+  render(<ConnectDialog {...props} dbProtocol="mysql" />);
 
-    const expectedOutput =
-      'mysql --defaults-group-suffix=_im-a-cluster-aurora --user=[user] --database=[database]';
+  const expectedOutput =
+    'mysql --defaults-group-suffix=_im-a-cluster-aurora --user=[user] --database=[database]';
 
-    expect(screen.queryByText(expectedOutput)).not.toBeNull();
-  });
+  expect(screen.queryByText(expectedOutput)).not.toBeNull();
 });
 
 test('render dialog with instructions to connect to database', () => {
