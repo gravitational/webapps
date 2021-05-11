@@ -60,6 +60,8 @@ export function SelectAsync(props: AsyncProps) {
 const StyledSelect = styled.div`
   .react-select__control,
   .react-select__control--is-focused {
+    border-color: #fff;
+    height: 40px;
     min-height: 40px;
     ${({ hasError, theme }) => {
       if (hasError) {
@@ -72,12 +74,21 @@ const StyledSelect = styled.div`
     }}
   }
 
+  .react-select__option {
+    padding: 4px 12px;
+  }
+
+  .react-select__option--is-focused,
+  .react-select__option--is-focused:active {
+    background-color: ${({ theme }) => theme.colors.grey[50]};
+  }
+
   .react-select-container {
     box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.24);
     box-sizing: border-box;
     border: none;
     display: block;
-    font-size: 16px;
+    font-size: 14px;
     outline: none;
     width: 100%;
     color: rgba(0, 0, 0, 0.87);
@@ -88,13 +99,18 @@ const StyledSelect = styled.div`
 
   .react-select__menu {
     margin-top: 0px;
-  }
-
-  react-select__menu-list {
+    font-size: 14px;
+    border-top-left-radius: 0;
+    border-top-right-radius: 0;
   }
 
   .react-select__indicator-separator {
     display: none;
+  }
+
+  .react-select__value-container {
+    height: 30px;
+    padding: 0 8px;
   }
 
   .react-select__control {
@@ -104,18 +120,52 @@ const StyledSelect = styled.div`
     }
   }
 
+  .react-select__option--is-selected {
+    background-color: #cfd8dc;
+    color: inherit;
+  }
+
+  .react-select__single-value {
+    color: white;
+    font-size: 14px;
+    transform: none;
+    position: absolute;
+    left: 78px;
+    top: 4px;
+    width: 270px;
+    text-overflow: ellipsis;
+  }
+
+  .react-select__dropdown-indicator {
+    padding: 4px 8px;
+  }
+
+  .react-select__input {
+    color: white;
+    height: 20px;
+    font-size: 14px;
+    font-family: ${({ theme }) => theme.font};
+  }
+
+  .react-select__control {
+    border-radius: 4px;
+    color: ${({ theme }) => theme.colors.text.secondary};
+
+    &:hover {
+      border-color: rgba(255, 255, 255, 0.24);
+    }
+  }
+
   .react-select__control--is-focused {
-    background-color: transparent;
-    border-color: transparent;
+    background-color: ${({ theme }) => theme.colors.primary.lighter};
     border-radius: 4px;
     border-style: solid;
     border-width: 1px;
     box-shadow: none;
+    border-color: rgba(255, 255, 255, 0.24);
   }
 
-  .react-select__option--is-selected {
-    //background-color: white;
-    background-color: #cfd8dc;
-    color: inherit;
+  .react-select__loading-indicator {
+    display: none;
   }
 `;

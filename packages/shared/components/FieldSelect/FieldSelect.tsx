@@ -15,6 +15,7 @@ limitations under the License.
 */
 
 import React from 'react';
+import styled from 'styled-components';
 import Select, { Props as SelectProps } from './../Select';
 import { Box, LabelInput } from 'design';
 import { useRule } from 'shared/components/Validation';
@@ -42,21 +43,23 @@ export default function FieldSelect({
   return (
     <Box mb="4" {...styles}>
       {label && <LabelInput hasError={hasError}>{labelText}</LabelInput>}
-      <Select
-        menuPosition={menuPosition}
-        hasError={hasError}
-        isSimpleValue={isSimpleValue}
-        isSearchable={isSearchable}
-        clearable={clearable}
-        value={value}
-        onChange={onChange}
-        options={options}
-        maxMenuHeight={maxMenuHeight}
-        placeholder={placeholder}
-        isMulti={isMulti}
-        autoFocus={autoFocus}
-        isDisabled={isDisabled}
-      />
+      <StyledSelect>
+        <Select
+          menuPosition={menuPosition}
+          hasError={hasError}
+          isSimpleValue={isSimpleValue}
+          isSearchable={isSearchable}
+          clearable={clearable}
+          value={value}
+          onChange={onChange}
+          options={options}
+          maxMenuHeight={maxMenuHeight}
+          placeholder={placeholder}
+          isMulti={isMulti}
+          autoFocus={autoFocus}
+          isDisabled={isDisabled}
+        />
+      </StyledSelect>
     </Box>
   );
 }
@@ -70,3 +73,23 @@ type Props = SelectProps & {
   // styles
   [key: string]: any;
 };
+
+const StyledSelect = styled.div`
+  .react-select__control,
+  .react-select__control--is-focused {
+    color: inherit;
+  }
+
+  .react-select__value-container {
+    height: auto;
+  }
+
+  .react-select__control--is-focused {
+    background-color: transparent;
+    border-color: transparent;
+  }
+
+  .react-select__input {
+    color: inherit;
+  }
+`;

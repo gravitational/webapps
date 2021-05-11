@@ -27,11 +27,6 @@ import useNodes from './useNodes';
 import ThemeProvider from './ThemeProvider';
 import * as stores from 'teleport/Console/stores/types';
 
-type Props = {
-  visible: boolean;
-  doc: stores.DocumentNodes;
-};
-
 export default function DocumentNodes(props: Props) {
   const { doc, visible } = props;
   const {
@@ -106,6 +101,11 @@ export default function DocumentNodes(props: Props) {
     </ThemeProvider>
   );
 }
+
+type Props = {
+  visible: boolean;
+  doc: stores.DocumentNodes;
+};
 
 const Container = styled(Box)`
   flex-direction: column;

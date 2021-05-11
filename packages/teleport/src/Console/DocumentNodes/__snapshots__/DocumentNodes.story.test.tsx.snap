@@ -365,7 +365,18 @@ exports[`render DocumentNodes 1`] = `
 
 .c7 .react-select__control,
 .c7 .react-select__control--is-focused {
+  border-color: #fff;
+  height: 40px;
   min-height: 40px;
+}
+
+.c7 .react-select__option {
+  padding: 4px 12px;
+}
+
+.c7 .react-select__option--is-focused,
+.c7 .react-select__option--is-focused:active {
+  background-color: #eceff1;
 }
 
 .c7 .react-select-container {
@@ -373,7 +384,7 @@ exports[`render DocumentNodes 1`] = `
   box-sizing: border-box;
   border: none;
   display: block;
-  font-size: 16px;
+  font-size: 14px;
   outline: none;
   width: 100%;
   color: rgba(0,0,0,0.87);
@@ -384,10 +395,18 @@ exports[`render DocumentNodes 1`] = `
 
 .c7 .react-select__menu {
   margin-top: 0px;
+  font-size: 14px;
+  border-top-left-radius: 0;
+  border-top-right-radius: 0;
 }
 
 .c7 .react-select__indicator-separator {
   display: none;
+}
+
+.c7 .react-select__value-container {
+  height: 30px;
+  padding: 0 8px;
 }
 
 .c7 .react-select__control:hover {
@@ -395,94 +414,62 @@ exports[`render DocumentNodes 1`] = `
   cursor: pointer;
 }
 
-.c7 .react-select__control--is-focused {
-  background-color: transparent;
-  border-color: transparent;
-  border-radius: 4px;
-  border-style: solid;
-  border-width: 1px;
-  box-shadow: none;
-}
-
 .c7 .react-select__option--is-selected {
   background-color: #cfd8dc;
   color: inherit;
 }
 
-.c6 {
-  box-sizing: border-box;
-}
-
-.c6 .react-select__control,
-.c6 .react-select__control--is-focused {
-  border-color: #FFF;
-  height: 34px;
-  min-height: 34px;
-}
-
-.c6 .react-select__option {
-  padding: 4px 12px;
-}
-
-.c6 .react-select__option--is-focused,
-.c6 .react-select__option--is-focused:active {
-  background-color: #eceff1;
-}
-
-.c6 .react-select__menu {
-  margin-top: 0px;
-  font-size: 14px;
-}
-
-.c6 .react-select__indicator-separator {
-  display: none;
-}
-
-.c6 .react-select__value-container {
-  height: 30px;
-  padding: 0 8px;
-}
-
-.c6 .react-select__option--is-selected {
-  background-color: inherit;
-  color: inherit;
-}
-
-.c6 .react-select__option--is-focused {
-  background-color: #cfd8dc;
-  color: inherit;
-}
-
-.c6 .react-select__single-value {
-  padding: 0 4px !important;
-  margin: 0 !important;
+.c7 .react-select__single-value {
   color: white;
   font-size: 14px;
+  transform: none;
+  position: absolute;
+  left: 78px;
+  top: 4px;
+  width: 270px;
+  text-overflow: ellipsis;
 }
 
-.c6 .react-select__dropdown-indicator {
+.c7 .react-select__dropdown-indicator {
   padding: 4px 8px;
-  color: rgba(255,255,255,0.56);
 }
 
-.c6 input {
-  font-family: Ubuntu2,-apple-system,BlinkMacSystemFont,"Segoe UI",Helvetica,Arial,sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol";
-  font-size: 14px;
-  height: 26px;
-}
-
-.c6 .react-select__input {
+.c7 .react-select__input {
   color: white;
   height: 20px;
   font-size: 14px;
   font-family: Ubuntu2,-apple-system,BlinkMacSystemFont,"Segoe UI",Helvetica,Arial,sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol";
 }
 
-.c6 .react-select__control {
+.c7 .react-select__control {
   border-radius: 4px;
-  border-color: rgba(255,255,255,0.24);
-  background-color: #03203C;
   color: rgba(255,255,255,0.56);
+}
+
+.c7 .react-select__control:hover {
+  border-color: rgba(255,255,255,0.24);
+}
+
+.c7 .react-select__control--is-focused {
+  background-color: #092F52;
+  border-radius: 4px;
+  border-style: solid;
+  border-width: 1px;
+  box-shadow: none;
+  border-color: rgba(255,255,255,0.24);
+}
+
+.c7 .react-select__loading-indicator {
+  display: none;
+}
+
+.c6 {
+  box-sizing: border-box;
+}
+
+.c6 .react-select__control {
+  background-color: #03203C;
+  border-color: rgba(255,255,255,0.24);
 }
 
 .c6 .react-select__control:focus,
@@ -491,7 +478,6 @@ exports[`render DocumentNodes 1`] = `
 }
 
 .c6 .react-select__control:hover {
-  border-color: rgba(255,255,255,0.24);
   background-color: #092F52;
 }
 
@@ -499,23 +485,23 @@ exports[`render DocumentNodes 1`] = `
   color: rgba(255,255,255,0.87);
 }
 
+.c6 .react-select__dropdown-indicator {
+  color: rgba(255,255,255,0.56);
+}
+
+.c6 .react-select__single-value {
+  padding: 0 4px !important;
+  margin: 0 !important;
+  left: auto;
+  top: auto;
+}
+
 .c6 .react-select__control--is-focused {
   background-color: #092F52;
-  border-color: transparent;
-  border-radius: 4px;
-  border-style: solid;
-  border-width: 1px;
-  box-shadow: none;
-  border-color: rgba(255,255,255,0.24);
 }
 
 .c6 .react-select__control--is-focused .react-select__dropdown-indicator {
   color: rgba(255,255,255,0.56);
-}
-
-.c6 .react-select__menu {
-  border-top-left-radius: 0;
-  border-top-right-radius: 0;
 }
 
 .c2 {
@@ -602,7 +588,7 @@ exports[`render DocumentNodes 1`] = `
                           value=""
                         />
                         <div
-                          style="position: absolute; top: 0px; left: 0px; visibility: hidden; height: 0px; overflow: scroll; white-space: pre; font-size: 14px; font-family: Ubuntu2,-apple-system,BlinkMacSystemFont,\\"Segoe UI\\",Helvetica,Arial,sans-serif,\\"Apple Color Emoji\\",\\"Segoe UI Emoji\\",\\"Segoe UI Symbol\\"; letter-spacing: normal; text-transform: none;"
+                          style="position: absolute; top: 0px; left: 0px; visibility: hidden; height: 0px; overflow: scroll; white-space: pre; font-family: Ubuntu2,-apple-system,BlinkMacSystemFont,\\"Segoe UI\\",Helvetica,Arial,sans-serif,\\"Apple Color Emoji\\",\\"Segoe UI Emoji\\",\\"Segoe UI Symbol\\"; letter-spacing: normal; text-transform: none;"
                         />
                       </div>
                     </div>
