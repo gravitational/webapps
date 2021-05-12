@@ -117,6 +117,8 @@ type Option = { value: string; label: string };
 const StyledSelect = styled(Box)(
   ({ theme }) => `
   .react-select__control {
+    height: 34px;
+    min-height: 34px;
     background-color: ${theme.colors.primary.dark};
     border-color: rgba(255, 255, 255, 0.24);
 
