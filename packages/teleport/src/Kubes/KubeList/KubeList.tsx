@@ -29,10 +29,11 @@ import Table from 'design/DataTable/Paged';
 import isMatch from 'design/utils/match';
 import { Kube } from 'teleport/services/kube';
 import InputSearch from 'teleport/components/InputSearch';
+import { AuthType } from 'teleport/services/user';
 import ConnectDialog from '../ConnectDialog';
 
 function KubeList(props: Props) {
-  const { kubes = [], pageSize = 20, user } = props;
+  const { kubes = [], pageSize = 20, username, authType } = props;
 
   const [sortDir, setSortDir] = useState<Record<string, string>>({
     name: SortTypes.DESC,
@@ -93,7 +94,8 @@ function KubeList(props: Props) {
       {kubeConnectName && (
         <ConnectDialog
           onClose={() => setKubeConnectName('')}
-          user={user}
+          username={username}
+          authType={authType}
           kubeConnectName={kubeConnectName}
         />
       )}
@@ -147,7 +149,8 @@ function searchAndFilterCb(
 type Props = {
   kubes: Kube[];
   pageSize?: number;
-  user: string;
+  username: string;
+  authType: AuthType;
 };
 
 export default KubeList;

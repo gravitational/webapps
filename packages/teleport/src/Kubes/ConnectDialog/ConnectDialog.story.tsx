@@ -25,7 +25,8 @@ export const ConnectDialog = () => {
   return (
     <Component
       onClose={() => null}
-      user={'sam'}
+      username={'sam'}
+      authType={'local'}
       kubeConnectName={'tele.logicoma.dev-prod'}
     />
   );

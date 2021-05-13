@@ -15,6 +15,7 @@ limitations under the License.
 */
 
 import React from 'react';
+import { AuthType } from 'teleport/services/user';
 import { Kubes } from './Kubes';
 import { kubes } from './fixtures';
 
@@ -41,6 +42,7 @@ export const Failed = () => {
 
 const props = {
   kubes: kubes,
-  user: 'sam',
+  username: 'sam',
   showButton: true,
+  authType: 'local' as AuthType,
 };

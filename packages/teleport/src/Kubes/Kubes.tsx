@@ -32,11 +32,10 @@ export default function Container() {
   return <Kubes {...state} />;
 }
 
-const docUrl =
-  'https://goteleport.com/docs/kubernetes-access';
+const docUrl = 'https://goteleport.com/docs/kubernetes-access';
 
 export function Kubes(props: State) {
-  const { kubes, attempt, user, showButton } = props;
+  const { kubes, attempt, username, authType, showButton } = props;
 
   return (
     <FeatureBox>
@@ -60,7 +59,9 @@ export function Kubes(props: State) {
           <Indicator />
         </Box>
       )}
-      {attempt.status === 'success' && <KubeList kubes={kubes} user={user} />}
+      {attempt.status === 'success' && (
+        <KubeList kubes={kubes} username={username} authType={authType} />
+      )}
     </FeatureBox>
   );
 }
