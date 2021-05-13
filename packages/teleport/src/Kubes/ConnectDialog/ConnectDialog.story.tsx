@@ -21,12 +21,23 @@ export default {
   title: 'Teleport/Kubes',
 };
 
-export const ConnectDialog = () => {
+export const ConnectDialogLocal = () => {
   return (
     <Component
       onClose={() => null}
       username={'sam'}
       authType={'local'}
+      kubeConnectName={'tele.logicoma.dev-prod'}
+    />
+  );
+};
+
+export const ConnectDialogSSO = () => {
+  return (
+    <Component
+      onClose={() => null}
+      username={'sam'}
+      authType={'sso'}
       kubeConnectName={'tele.logicoma.dev-prod'}
     />
   );

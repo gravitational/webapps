@@ -204,7 +204,9 @@ exports[`loaded 1`] = `
   text-transform: uppercase;
   transition: all 0.3s;
   -webkit-font-smoothing: antialiased;
-  background: #512FC9;
+  background: #2C3A73;
+  border: 1px solid #1C254D;
+  opacity: .87;
   color: rgba(255,255,255,0.87);
   font-size: 10px;
   min-height: 24px;
@@ -217,11 +219,13 @@ exports[`loaded 1`] = `
 
 .c15:hover,
 .c15:focus {
-  background: #651FFF;
+  background: #2C3A73;
+  border: 1px solid rgba(255,255,255,0.1);
+  opacity: 1;
 }
 
 .c15:active {
-  background: #354AA4;
+  opacity: 0.24;
 }
 
 .c15:disabled {
@@ -600,7 +604,7 @@ exports[`loaded 1`] = `
           >
             <button
               class="c15"
-              kind="primary"
+              kind="border"
             >
               Connect
             </button>
@@ -629,7 +633,7 @@ exports[`loaded 1`] = `
           >
             <button
               class="c15"
-              kind="primary"
+              kind="border"
             >
               Connect
             </button>
@@ -652,7 +656,7 @@ exports[`loaded 1`] = `
           >
             <button
               class="c15"
-              kind="primary"
+              kind="border"
             >
               Connect
             </button>

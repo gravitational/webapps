@@ -24,7 +24,7 @@ import {
   TextCell,
   SortTypes,
 } from 'design/DataTable';
-import { Label, Flex, ButtonPrimary } from 'design';
+import { Label, Flex, ButtonBorder } from 'design';
 import Table from 'design/DataTable/Paged';
 import isMatch from 'design/utils/match';
 import { Kube } from 'teleport/services/kube';
@@ -109,9 +109,9 @@ export const ActionCell = props => {
 
   return (
     <Cell align="right">
-      <ButtonPrimary size="small" onClick={() => onViewConnect(name)}>
+      <ButtonBorder size="small" onClick={() => onViewConnect(name)}>
         Connect
-      </ButtonPrimary>
+      </ButtonBorder>
     </Cell>
   );
 };

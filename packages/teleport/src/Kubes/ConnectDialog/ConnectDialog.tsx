@@ -29,16 +29,9 @@ function ConnectDialog(props: Props) {
   const { onClose, username, authType, kubeConnectName } = props;
   const { hostname, port } = window.document.location;
   const host = `${hostname}:${port || '443'}`;
-
-  let text: string;
-
-  if (authType === 'local') {
-    text = `tsh login --proxy=${host} --auth=${authType} --user=${username}`;
-  }
-
-  if (authType === 'sso') {
-    text = `tsh login --proxy=${host}`;
-  }
+  const text = `tsh login --proxy=${host} ${
+    authType === 'local' ? `--auth=${authType} --user=${username}` : ''
+  }`;
 
   return (
     <Dialog
@@ -62,20 +55,20 @@ function ConnectDialog(props: Props) {
           <Text bold as="span">
             *Step 2
           </Text>
-          {' - Select the kubernetes cluster'}
+          {' - Select the Kubernetes cluster'}
           <TextSelectCopy mt="2" text={`tsh kube login ${kubeConnectName}`} />
         </Box>
         <Box mb={4}>
           <Text bold as="span">
             Step 3
           </Text>
-          {' - Connect to the kubernetes cluster'}
+          {' - Connect to the Kubernetes cluster'}
           <TextSelectCopy mt="2" text={`kubectl get pods`} />
         </Box>
         <Box>
           * Note: To write kubectl configuration to a separate file instead of
           having your global kubectl configuration modified, run the following
-          command, before running step 2:
+          command, before running Step 2:
           <TextSelectCopy
             mt="2"
             text="export KUBECONFIG=${HOME?}/teleport-kubeconfig.yaml"
