@@ -57,27 +57,14 @@ export function SelectAsync(props: AsyncProps) {
   );
 }
 
-const StyledSelect = styled.div`
-  .react-select__control,
-  .react-select__control--is-focused {
-    min-height: 40px;
-    ${({ hasError, theme }) => {
-      if (hasError) {
-        return {
-          borderRadius: 'inherit !important',
-          borderWidth: '2px !important',
-          border: `2px solid ${theme.colors.error.main}  !important`,
-        };
-      }
-    }}
-  }
-
+export const StyledSelect = styled.div(
+  ({ theme }) => `
   .react-select-container {
     box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.24);
     box-sizing: border-box;
     border: none;
     display: block;
-    font-size: 16px;
+    font-size: 14px;
     outline: none;
     width: 100%;
     color: rgba(0, 0, 0, 0.87);
@@ -86,36 +73,59 @@ const StyledSelect = styled.div`
     border-radius: 4px;
   }
 
-  .react-select__menu {
-    margin-top: 0px;
-  }
-
-  react-select__menu-list {
-  }
-
-  .react-select__indicator-separator {
-    display: none;
-  }
-
-  .react-select__control {
-    &:hover {
-      border-color: transparent;
-      cursor: pointer;
-    }
-  }
-
+  .react-select__control,
   .react-select__control--is-focused {
+    min-height: 40px;
     background-color: transparent;
     border-color: transparent;
     border-radius: 4px;
     border-style: solid;
     border-width: 1px;
     box-shadow: none;
+    ${({ hasError }) => {
+      if (hasError) {
+        return {
+          borderRadius: 'inherit !important',
+          borderWidth: '2px !important',
+          border: `2px solid ${theme.colors.error.main}  !important`,
+        };
+      }
+    }}
+
+    &:hover {
+      border-color: transparent;
+      cursor: pointer;
+    }
   }
 
-  .react-select__option--is-selected {
-    //background-color: white;
-    background-color: #cfd8dc;
-    color: inherit;
+  .react-select__option {
+    &:hover {
+      cursor: pointer;
+      background-color: ${theme.colors.grey[50]};
+    }
   }
-`;
+
+  .react-select__option--is-focused {
+    background-color: ${theme.colors.grey[50]};
+  }
+
+
+  .react-select__option--is-selected {
+    background-color: ${theme.colors.grey[100]};;
+    color: inherit;
+    
+    &:hover {
+      background-color: ${theme.colors.grey[100]};;
+    }
+  }
+
+
+  .react-select__menu {
+    margin-top: 0px;
+  }
+
+  .react-select__indicator-separator {
+    display: none;
+  }
+`
+);
