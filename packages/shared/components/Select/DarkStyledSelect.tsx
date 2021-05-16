@@ -11,6 +11,7 @@
 // WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 // See the License for the specific language governing permissions and
 // limitations under the License.
+
 import styled from 'styled-components';
 import { StyledSelect } from './Select';
 
@@ -27,7 +28,12 @@ const StyledDarkSelect = styled(StyledSelect)(
     min-height: 34px;
   }
 
-  .react-select__dropdown-indicator{
+  .react-select__value-container {
+    height: 30px;
+    padding: 0 8px;
+  }
+
+  .react-select__dropdown-indicator {
     padding: 4px 8px;
     color: ${theme.colors.text.secondary};
   }
@@ -43,7 +49,7 @@ const StyledDarkSelect = styled(StyledSelect)(
     &:hover {
       border-color: rgba(255, 255, 255, 0.24);
       background-color: ${theme.colors.primary.lighter};
-      .react-select__dropdown-indicator{
+      .react-select__dropdown-indicator {
         color: ${theme.colors.text.primary};
       }
     }
@@ -58,16 +64,30 @@ const StyledDarkSelect = styled(StyledSelect)(
     box-shadow: none;
     border-color: rgba(255, 255, 255, 0.24);
 
-    .react-select__dropdown-indicator{
+    .react-select__dropdown-indicator {
       color: ${theme.colors.text.secondary};
     }
+  }
+
+  .react-select__option {
+    padding: 4px 12px;
+    &:hover {
+      background-color: ${theme.colors.grey[100]};
+    }
+  }
+
+  .react-select__option--is-focused {
+    background-color: ${theme.colors.grey[100]};
+  }  
+
+  .react-select__option--is-focused:active {
+    background-color: ${theme.colors.grey[50]};
   }
 
   .react-select__menu {
     border-top-left-radius: 0;
     border-top-right-radius: 0;
   }
-
 `
 );
 

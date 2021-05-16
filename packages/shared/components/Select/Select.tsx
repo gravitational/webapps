@@ -109,22 +109,24 @@ export const StyledSelect = styled.div(
     background-color: ${theme.colors.grey[50]};
   }
 
-
   .react-select__option--is-selected {
-    background-color: ${theme.colors.grey[100]};;
+    background-color: ${theme.colors.grey[100]};
     color: inherit;
     
     &:hover {
-      background-color: ${theme.colors.grey[100]};;
+      background-color: ${theme.colors.grey[100]};
     }
   }
-
 
   .react-select__menu {
     margin-top: 0px;
   }
 
   .react-select__indicator-separator {
+    display: none;
+  }
+
+  .react-select__loading-indicator {
     display: none;
   }
 `

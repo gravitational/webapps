@@ -115,27 +115,13 @@ function filterOptions(value = '', options: Option[] = []) {
 type Option = { value: string; label: string };
 
 const StyledSelect = styled(DarkStyledSelect)`
-  .react-select__value-container {
-    height: 30px;
-    padding: 0 8px;
-  }
-
   .react-select__single-value {
     color: white;
-    font-size: 14px;
     transform: none;
     position: absolute;
     left: 78px;
     top: 4px;
     width: 270px;
     text-overflow: ellipsis;
-  }
-
-  .react-select__option {
-    padding: 4px 12px;
-  }
-
-  .react-select__ {
-    display: none;
   }
 `;
