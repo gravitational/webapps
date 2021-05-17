@@ -57,8 +57,7 @@ export function SelectAsync(props: AsyncProps) {
   );
 }
 
-export const StyledSelect = styled.div(
-  ({ theme }) => `
+export const StyledSelect = styled.div`
   .react-select-container {
     box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.24);
     box-sizing: border-box;
@@ -82,7 +81,7 @@ export const StyledSelect = styled.div(
     border-style: solid;
     border-width: 1px;
     box-shadow: none;
-    ${({ hasError }) => {
+    ${({ hasError, theme }) => {
       if (hasError) {
         return {
           borderRadius: 'inherit !important',
@@ -101,20 +100,20 @@ export const StyledSelect = styled.div(
   .react-select__option {
     &:hover {
       cursor: pointer;
-      background-color: ${theme.colors.grey[50]};
+      background-color: #eceff1;
     }
   }
 
   .react-select__option--is-focused {
-    background-color: ${theme.colors.grey[50]};
+    background-color: #eceff1;
   }
 
   .react-select__option--is-selected {
-    background-color: ${theme.colors.grey[100]};
+    background-color: #cfd8dc;
     color: inherit;
-    
+
     &:hover {
-      background-color: ${theme.colors.grey[100]};
+      background-color: #cfd8dc;
     }
   }
 
@@ -129,5 +128,4 @@ export const StyledSelect = styled.div(
   .react-select__loading-indicator {
     display: none;
   }
-`
-);
+`;
