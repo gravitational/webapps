@@ -1,7 +1,7 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`failed 1`] = `
-.c4 {
+.c6 {
   display: flex;
   align-items: center;
   justify-content: center;
@@ -18,7 +18,7 @@ exports[`failed 1`] = `
   color: #FFFFFF;
 }
 
-.c4 a {
+.c6 a {
   color: #FFFFFF;
 }
 
@@ -67,6 +67,13 @@ exports[`failed 1`] = `
   color: rgba(255,255,255,0.3);
 }
 
+.c4 {
+  box-sizing: border-box;
+  margin-bottom: 24px;
+  flex: 0 0 auto;
+  display: flex;
+}
+
 .c1 {
   box-sizing: border-box;
   margin-bottom: 24px;
@@ -108,11 +115,43 @@ exports[`failed 1`] = `
   padding-bottom: 24px;
 }
 
+.c5 {
+  box-sizing: border-box;
+  font-size: 12px;
+  min-width: 200px;
+  outline: none;
+  border: none;
+  border-radius: 200px;
+  height: 32px;
+  transition: all .2s;
+  background: #222C59;
+  margin-right: 16px;
+  padding-left: 16px;
+  padding-right: 16px;
+  color: rgba(255,255,255,0.87);
+}
+
+.c5:hover {
+  background: #2C3A73;
+}
+
+.c5:focus,
+.c5:active {
+  background: #2C3A73;
+  box-shadow: inset 0 2px 4px rgba(0,0,0,.24);
+  color: rgba(255,255,255,0.87);
+}
+
+.c5::placeholder {
+  color: rgba(255,255,255,0.24);
+  font-size: 12px;
+}
+
 <div
-  class="sc-AxirZ sc-fzqBZW c0"
+  class="sc-AxirZ c0"
 >
   <div
-    class="sc-AxirZ sc-fzqBZW c1"
+    class="sc-AxirZ c1"
   >
     <div
       class="sc-fznZeY c2"
@@ -131,7 +170,17 @@ exports[`failed 1`] = `
     </a>
   </div>
   <div
-    class="c4"
+    class="sc-AxirZ c4"
+  >
+    <input
+      class="c5"
+      color="text.primary"
+      placeholder="SEARCH..."
+      value=""
+    />
+  </div>
+  <div
+    class="c6"
     kind="danger"
   >
     server error
@@ -404,38 +453,6 @@ exports[`loaded 1`] = `
   border-top-right-radius: 8px;
 }
 
-.c5 {
-  box-sizing: border-box;
-  font-size: 12px;
-  min-width: 200px;
-  outline: none;
-  border: none;
-  border-radius: 200px;
-  height: 32px;
-  transition: all .2s;
-  background: #222C59;
-  margin-right: 16px;
-  padding-left: 16px;
-  padding-right: 16px;
-  color: rgba(255,255,255,0.87);
-}
-
-.c5:hover {
-  background: #2C3A73;
-}
-
-.c5:focus,
-.c5:active {
-  background: #2C3A73;
-  box-shadow: inset 0 2px 4px rgba(0,0,0,.24);
-  color: rgba(255,255,255,0.87);
-}
-
-.c5::placeholder {
-  color: rgba(255,255,255,0.24);
-  font-size: 12px;
-}
-
 .c12 > tbody > tr > td {
   vertical-align: baseline;
 }
@@ -479,6 +496,38 @@ exports[`loaded 1`] = `
 .c0::after {
   content: ' ';
   padding-bottom: 24px;
+}
+
+.c5 {
+  box-sizing: border-box;
+  font-size: 12px;
+  min-width: 200px;
+  outline: none;
+  border: none;
+  border-radius: 200px;
+  height: 32px;
+  transition: all .2s;
+  background: #222C59;
+  margin-right: 16px;
+  padding-left: 16px;
+  padding-right: 16px;
+  color: rgba(255,255,255,0.87);
+}
+
+.c5:hover {
+  background: #2C3A73;
+}
+
+.c5:focus,
+.c5:active {
+  background: #2C3A73;
+  box-shadow: inset 0 2px 4px rgba(0,0,0,.24);
+  color: rgba(255,255,255,0.87);
+}
+
+.c5::placeholder {
+  color: rgba(255,255,255,0.24);
+  font-size: 12px;
 }
 
 <div

@@ -15,7 +15,7 @@ limitations under the License.
 */
 
 import React from 'react';
-import { Box, Indicator, ButtonPrimary } from 'design';
+import { Box, Indicator, ButtonPrimary, Flex } from 'design';
 import { Danger } from 'design/Alert';
 import KubeList from 'teleport/Kubes/KubeList';
 import {
@@ -24,6 +24,7 @@ import {
   FeatureHeaderTitle,
 } from 'teleport/components/Layout';
 import useTeleport from 'teleport/useTeleport';
+import InputSearch from 'teleport/components/InputSearch';
 import useKubes, { State } from './useKubes';
 
 export default function Container() {
@@ -32,10 +33,18 @@ export default function Container() {
   return <Kubes {...state} />;
 }
 
-const docUrl = 'https://goteleport.com/docs/kubernetes-access';
+const DOC_URL = 'https://goteleport.com/docs/kubernetes-access';
 
 export function Kubes(props: State) {
-  const { kubes, attempt, username, authType, showButton } = props;
+  const {
+    kubes,
+    attempt,
+    username,
+    authType,
+    showButton,
+    searchValue,
+    setSearchValue,
+  } = props;
 
   return (
     <FeatureBox>
@@ -46,13 +55,16 @@ export function Kubes(props: State) {
             as="a"
             width="240px"
             target="_blank"
-            href={docUrl}
+            href={DOC_URL}
             rel="noreferrer"
           >
             View documentation
           </ButtonPrimary>
         )}
       </FeatureHeader>
+      <Flex flex="0 0 auto" mb={4}>
+        <InputSearch mr="3" onChange={e => setSearchValue(e)} />
+      </Flex>
       {attempt.status === 'failed' && <Danger>{attempt.statusText}</Danger>}
       {attempt.status === 'processing' && (
         <Box textAlign="center" m={10}>
@@ -60,7 +72,12 @@ export function Kubes(props: State) {
         </Box>
       )}
       {attempt.status === 'success' && (
-        <KubeList kubes={kubes} username={username} authType={authType} />
+        <KubeList
+          kubes={kubes}
+          username={username}
+          authType={authType}
+          searchValue={searchValue}
+        />
       )}
     </FeatureBox>
   );

@@ -45,4 +45,6 @@ const props = {
   username: 'sam',
   showButton: true,
   authType: 'local' as AuthType,
+  searchValue: '',
+  setSearchValue: () => null,
 };

@@ -24,21 +24,19 @@ import {
   TextCell,
   SortTypes,
 } from 'design/DataTable';
-import { Label, Flex, ButtonBorder } from 'design';
+import { Label, ButtonBorder } from 'design';
 import Table from 'design/DataTable/Paged';
 import isMatch from 'design/utils/match';
 import { Kube } from 'teleport/services/kube';
-import InputSearch from 'teleport/components/InputSearch';
 import { AuthType } from 'teleport/services/user';
 import ConnectDialog from '../ConnectDialog';
 
 function KubeList(props: Props) {
-  const { kubes = [], pageSize = 20, username, authType } = props;
+  const { kubes = [], pageSize = 20, username, authType, searchValue } = props;
 
   const [sortDir, setSortDir] = useState<Record<string, string>>({
     name: SortTypes.DESC,
   });
-  const [searchValue, setSearchValue] = useState('');
   const [kubeConnectName, setKubeConnectName] = useState('');
 
   function sortAndFilter(search) {
@@ -66,9 +64,6 @@ function KubeList(props: Props) {
 
   return (
     <>
-      <Flex flex="0 0 auto" mb={4}>
-        <InputSearch mr="3" onChange={e => setSearchValue(e)} />
-      </Flex>
       <StyledTable pageSize={pageSize} data={data}>
         <Column
           columnKey="name"
@@ -151,6 +146,7 @@ type Props = {
   pageSize?: number;
   username: string;
   authType: AuthType;
+  searchValue: string;
 };
 
 export default KubeList;
