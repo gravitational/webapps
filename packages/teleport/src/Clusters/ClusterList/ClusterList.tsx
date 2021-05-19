@@ -155,6 +155,14 @@ function ActionCell(props: { flags: MenuFlags }) {
   if (props.flags.showApps) {
     $items.push(renderMenuItem('Apps', cfg.getAppsRoute(clusterId)));
   }
+  if (props.flags.showKubes) {
+    $items.push(
+      renderMenuItem('Kubernetes', cfg.getKubernetesRoute(clusterId))
+    );
+  }
+  if (props.flags.showDatabases) {
+    $items.push(renderMenuItem('Databases', cfg.getDatabasesRoute(clusterId)));
+  }
   if (props.flags.showAudit) {
     $items.push(renderMenuItem('Audit Events', cfg.getAuditRoute(clusterId)));
   }
@@ -196,6 +204,8 @@ type MenuFlags = {
   showAudit: boolean;
   showRecordings: boolean;
   showApps: boolean;
+  showDatabases: boolean;
+  showKubes: boolean;
 };
 
 const StyledTable = styled(Table)`
