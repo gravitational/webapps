@@ -150,10 +150,10 @@ function ActionCell(props: { flags: MenuFlags }) {
   const $items = [] as React.ReactNode[];
 
   if (props.flags.showNodes) {
-    $items.push(renderMenuItem('Nodes', cfg.getNodesRoute(clusterId)));
+    $items.push(renderMenuItem('Servers', cfg.getNodesRoute(clusterId)));
   }
   if (props.flags.showApps) {
-    $items.push(renderMenuItem('Apps', cfg.getAppsRoute(clusterId)));
+    $items.push(renderMenuItem('Applications', cfg.getAppsRoute(clusterId)));
   }
   if (props.flags.showKubes) {
     $items.push(
@@ -164,7 +164,7 @@ function ActionCell(props: { flags: MenuFlags }) {
     $items.push(renderMenuItem('Databases', cfg.getDatabasesRoute(clusterId)));
   }
   if (props.flags.showAudit) {
-    $items.push(renderMenuItem('Audit Events', cfg.getAuditRoute(clusterId)));
+    $items.push(renderMenuItem('Audit Log', cfg.getAuditRoute(clusterId)));
   }
   if (props.flags.showRecordings) {
     $items.push(
