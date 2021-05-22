@@ -19,6 +19,10 @@ build:
 test:
 	$(MAKE) docker-build NPM_CMD=test
 
+.PHONY: build-term
+build-term:
+	$(MAKE) docker-build NPM_CMD=build-term FROM=dist/term/ TO=dist/term
+
 .PHONY: build-gravity-oss
 build-gravity-oss:
 	$(MAKE) docker-build NPM_CMD=build-gravity-oss FROM=dist/gravity/ TO=dist/gravity
