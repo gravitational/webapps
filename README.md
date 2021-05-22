@@ -34,6 +34,12 @@ To build the Gravity community version
 $ yarn build-gravity-oss
 ```
 
+To build the Terminal web UI
+
+```
+$ yarn build-term
+```
+
 The resulting output will be in the `/packages/{package-name}/dist/` folders respectively.
 
 ### Docker Build
@@ -48,6 +54,12 @@ To build the Gravity comminuty version
 
 ```
 $ make build-gravity-oss
+```
+
+To build the Terminal web UI
+
+```
+$ make packages/term/dist
 ```
 
 ## Development
