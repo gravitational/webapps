@@ -180,7 +180,6 @@ export const ListOfIcons = () => (
     <IconBox IconCmpt={Icon.Wifi} text="Wifi" />
     <IconBox IconCmpt={Icon.Windows} text="Windows" />
     <IconBox IconCmpt={Icon.Youtube} text="Youtube" />
-    <IconBox IconCmpt={Icon.Youtube} text="Youtube" />
   </Flex>
 );
 
