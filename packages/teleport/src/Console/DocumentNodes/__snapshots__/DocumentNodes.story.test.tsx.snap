@@ -567,8 +567,13 @@ exports[`render DocumentNodes 1`] = `
 }
 
 .c6 .react-select__single-value {
+  color: rgba(255,255,255,0.56);
   padding: 0 4px;
   margin: 0;
+}
+
+.c6 .react-select__input {
+  color: rgba(255,255,255,0.87);
 }
 
 .c6 .react-select__option--is-selected {
