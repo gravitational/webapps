@@ -82,7 +82,6 @@ export default function ClusterSelector({
           loadOptions={onLoadOptions}
           defaultMenuIsOpen={defaultMenuIsOpen}
           hasError={false}
-          width={400}
           maxMenuHeight={400}
           isSearchable
           isSimpleValue={false}
@@ -111,9 +110,8 @@ const StyledSelect = styled(DarkStyledSelect)(
   }
 
   .react-select__single-value {
-    padding: 0 4px !important;
-    margin: 0 !important;
-    color: white;
+    padding: 0 4px;
+    margin: 0;
   }
 
   .react-select__option--is-selected {

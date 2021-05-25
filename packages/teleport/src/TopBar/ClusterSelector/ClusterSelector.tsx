@@ -116,7 +116,6 @@ type Option = { value: string; label: string };
 
 const StyledSelect = styled(DarkStyledSelect)`
   .react-select__single-value {
-    color: white;
     transform: none;
     position: absolute;
     left: 78px;

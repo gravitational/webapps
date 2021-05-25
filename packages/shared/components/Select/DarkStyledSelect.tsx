@@ -24,13 +24,15 @@ const StyledDarkSelect = styled(StyledSelect)(
   .react-select__control,
   .react-select__control--is-focused {
     border-color: #FFF;
-    height: 34px;
     min-height: 34px;
   }
 
   .react-select__value-container {
-    height: 30px;
     padding: 0 8px;
+  }
+
+  .react-select__single-value {
+    color: ${theme.colors.text.primary}
   }
 
   .react-select__dropdown-indicator {

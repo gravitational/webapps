@@ -492,13 +492,15 @@ exports[`render DocumentNodes 1`] = `
 .c6 .react-select__control,
 .c6 .react-select__control--is-focused {
   border-color: #FFF;
-  height: 34px;
   min-height: 34px;
 }
 
 .c6 .react-select__value-container {
-  height: 30px;
   padding: 0 8px;
+}
+
+.c6 .react-select__single-value {
+  color: rgba(255,255,255,0.87);
 }
 
 .c6 .react-select__dropdown-indicator {
@@ -565,9 +567,8 @@ exports[`render DocumentNodes 1`] = `
 }
 
 .c6 .react-select__single-value {
-  padding: 0 4px !important;
-  margin: 0 !important;
-  color: white;
+  padding: 0 4px;
+  margin: 0;
 }
 
 .c6 .react-select__option--is-selected {
