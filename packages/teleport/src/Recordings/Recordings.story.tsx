@@ -29,19 +29,19 @@ export const Loaded = () => {
   const ctx = new Context();
   ctx.auditService.fetchEvents = () =>
     Promise.resolve({
-      overflow: false,
       events: events.map(makeEvent),
+      startKey: '',
     });
 
   return render(ctx);
 };
 
-export const Overflow = () => {
+export const LoadedFetchMore = () => {
   const ctx = new Context();
   ctx.auditService.fetchEvents = () =>
     Promise.resolve({
-      overflow: true,
-      events: [],
+      events: events.map(makeEvent),
+      startKey: 'any-text',
     });
 
   return render(ctx);
