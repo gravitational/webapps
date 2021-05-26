@@ -114,8 +114,7 @@ function filterOptions(value = '', options: Option[] = []) {
 
 type Option = { value: string; label: string };
 
-const StyledSelect = styled(DarkStyledSelect)(
-  ({ theme }) => `
+const StyledSelect = styled(DarkStyledSelect)`
   .react-select__single-value {
     transform: none;
     position: absolute;
@@ -124,13 +123,4 @@ const StyledSelect = styled(DarkStyledSelect)(
     width: 270px;
     text-overflow: ellipsis;
   }
-
-  .react-select__single-value {
-    color: ${theme.colors.text.secondary};
-  }
-
-  .react-select__input {
-    color: ${theme.colors.text.primary}
-  }
-`
-);
+`;

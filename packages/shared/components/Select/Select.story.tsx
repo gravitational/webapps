@@ -47,42 +47,62 @@ const props = {
 
 function SelectDefault({ value, onChange, options }) {
   return (
-    <Box mb="4" width="500px">
-      <LabelInput>User Roles</LabelInput>
-      <Select
-        value={value}
-        onChange={onChange}
-        options={options}
-        isMulti={true}
-      />
-    </Box>
-  );
-}
-
-function SelectDark({ value, onChange, options }) {
-  return (
-    <Box mb="4">
-      <LabelInput>User Roles</LabelInput>
-      <StyledSelect width="500px">
+    <Flex flexDirection="column" width="500px">
+      <Box mb="8">
+        <LabelInput>User Roles</LabelInput>
         <Select
           value={value}
           onChange={onChange}
           options={options}
           isMulti={true}
         />
-      </StyledSelect>
-    </Box>
+      </Box>
+      <Box>
+        <LabelInput>User Roles</LabelInput>
+        <Select
+          value={[]}
+          onChange={onChange}
+          options={options}
+          clearable={true}
+          placeholder="Click to select a role"
+        />
+      </Box>
+    </Flex>
   );
 }
 
-const StyledSelect = styled(DarkStyledSelect)(
-  ({ theme }) => `
+function SelectDark({ value, onChange, options }) {
+  return (
+    <Flex flexDirection="column" width="500px">
+      <Box mb="8">
+        <LabelInput>User Roles</LabelInput>
+        <StyledSelect>
+          <Select
+            value={value}
+            onChange={onChange}
+            options={options}
+            isMulti={true}
+          />
+        </StyledSelect>
+      </Box>
+      <Box>
+        <LabelInput>User Roles</LabelInput>
+        <StyledSelect>
+          <Select
+            value={[]}
+            onChange={onChange}
+            options={options}
+            placeholder="Click to select a role"
+          />
+        </StyledSelect>
+      </Box>
+    </Flex>
+  );
+}
+
+const StyledSelect = styled(DarkStyledSelect)`
   .react-select__control,
   .react-select__control--is-focused {
     min-height: 40px;
   }
-  .react-select__input {
-    color: ${theme.colors.text.primary}
-  }
-`
-);
+`;

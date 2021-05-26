@@ -553,6 +553,14 @@ exports[`render DocumentNodes 1`] = `
   color: #ccc !important;
 }
 
+.c6 .react-select__input {
+  color: rgba(255,255,255,0.87);
+}
+
+.c6 .react-select__placeholder {
+  color: rgba(255,255,255,0.56);
+}
+
 .c6 .react-select__option {
   padding: 4px 12px;
 }
@@ -574,18 +582,22 @@ exports[`render DocumentNodes 1`] = `
   border-top-right-radius: 0;
 }
 
+.c6 .react-select__multi-value {
+  background-color: #01172C;
+  border: 1px solid rgba(255,255,255,0.24);
+}
+
+.c6 .react-select__multi-value__label {
+  color: rgba(255,255,255,0.87);
+}
+
 .c6 .react-select-container {
   background: #03203C;
 }
 
 .c6 .react-select__single-value {
-  color: rgba(255,255,255,0.56);
   padding: 0 4px;
   margin: 0;
-}
-
-.c6 .react-select__input {
-  color: rgba(255,255,255,0.87);
 }
 
 .c6 .react-select__option--is-selected {

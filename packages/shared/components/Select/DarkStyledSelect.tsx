@@ -79,6 +79,14 @@ const StyledDarkSelect = styled(StyledSelect)(
     }
   }
 
+  .react-select__input {
+    color: ${theme.colors.text.primary}
+  }
+
+  .react-select__placeholder {
+    color: ${theme.colors.text.secondary}
+  }
+
   .react-select__option {
     padding: 4px 12px;
     &:hover {
@@ -97,6 +105,15 @@ const StyledDarkSelect = styled(StyledSelect)(
   .react-select__menu {
     border-top-left-radius: 0;
     border-top-right-radius: 0;
+  }
+
+  .react-select__multi-value {
+    background-color: ${theme.colors.primary.dark};
+    border: 1px solid ${theme.colors.text.placeholder};
+  }
+
+  .react-select__multi-value__label {
+    color: ${theme.colors.text.primary};
   }
 `
 );

@@ -110,13 +110,8 @@ const StyledSelect = styled(DarkStyledSelect)(
   }
 
   .react-select__single-value {
-    color: ${theme.colors.text.secondary};
     padding: 0 4px;
     margin: 0;
-  }
-
-  .react-select__input {
-    color: ${theme.colors.text.primary}
   }
 
   .react-select__option--is-selected {
