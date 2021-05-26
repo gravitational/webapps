@@ -1,6 +1,19 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`rendering of Session Recordings 1`] = `
+.c11 {
+  display: inline-block;
+  transition: color .3s;
+  color: #FFFFFF;
+  font-size: 16px;
+}
+
+.c13 {
+  display: inline-block;
+  transition: color .3s;
+  color: #FFFFFF;
+}
+
 .c14 {
   line-height: 1.5;
   margin: 0;
@@ -46,91 +59,7 @@ exports[`rendering of Session Recordings 1`] = `
   color: rgba(255,255,255,0.3);
 }
 
-.c5 {
-  display: inline-block;
-  transition: color .3s;
-  margin-left: 8px;
-  margin-right: -8px;
-  color: rgba(255,255,255,0.87);
-  font-size: 14px;
-}
-
-.c11 {
-  display: inline-block;
-  transition: color .3s;
-  color: #FFFFFF;
-  font-size: 16px;
-}
-
-.c13 {
-  display: inline-block;
-  transition: color .3s;
-  color: #FFFFFF;
-}
-
-.c3 {
-  line-height: 1.5;
-  border-radius: 4px;
-  display: inline-flex;
-  justify-content: center;
-  align-items: center;
-  border: 1px solid;
-  box-sizing: border-box;
-  background-color: transparent;
-  cursor: pointer;
-  font-family: inherit;
-  font-weight: bold;
-  outline: none;
-  opacity: .56;
-  position: relative;
-  text-align: center;
-  text-decoration: none;
-  text-transform: uppercase;
-  transition: all .3s;
-  -webkit-font-smoothing: antialiased;
-  border-color: rgba(255,255,255,0.87);
-  color: #FFFFFF;
-  font-size: 10px;
-  min-height: 24px;
-  padding: 0px 16px;
-  margin-left: auto;
-  width: auto;
-  border-color: rgba(255,255,255,0.87);
-  color: rgba(255,255,255,0.87);
-}
-
-.c3:hover {
-  opacity: 1;
-}
-
-.c3:active {
-  opacity: .24;
-}
-
-.c3 > span {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.c3:hover,
-.c3:focus {
-  border-color: #FFFFFF;
-  color: #FFFFFF;
-}
-
-.c3:disabled {
-  background: rgba(255,255,255,0.12);
-  color: rgba(255,255,255,0.3);
-}
-
-.c3:hover,
-.c3:focus {
-  border-color: #FFFFFF;
-  color: #FFFFFF;
-}
-
-.c9 {
+.c8 {
   overflow: hidden;
   text-overflow: ellipsis;
   font-weight: 400;
@@ -140,7 +69,7 @@ exports[`rendering of Session Recordings 1`] = `
   color: #FFFFFF;
 }
 
-.c6 {
+.c5 {
   box-sizing: border-box;
   margin-bottom: 24px;
   flex: 0 0 auto;
@@ -242,7 +171,7 @@ exports[`rendering of Session Recordings 1`] = `
   white-space: nowrap;
 }
 
-.c12 > thead > tr > th .c4 {
+.c12 > thead > tr > th .c10 {
   font-weight: bold;
   font-size: 8px;
   margin-left: 8px;
@@ -269,12 +198,12 @@ exports[`rendering of Session Recordings 1`] = `
   border-bottom-right-radius: 8px;
 }
 
-.c10 {
+.c9 {
   box-sizing: border-box;
   display: flex;
 }
 
-.c10 button {
+.c9 button {
   background: none;
   border: none;
   border-radius: 200px;
@@ -286,23 +215,23 @@ exports[`rendering of Session Recordings 1`] = `
   text-align: center;
 }
 
-.c10 button:hover,
-.c10 button:focus {
+.c9 button:hover,
+.c9 button:focus {
   background: #1C254D;
 }
 
-.c10 button:hover .c4,
-.c10 button:focus .c4 {
+.c9 button:hover .c10,
+.c9 button:focus .c10 {
   opacity: 1;
 }
 
-.c10 button .c4 {
+.c9 button .c10 {
   opacity: 0.4;
   font-size: 20px;
   transition: all 0.3s;
 }
 
-.c8 {
+.c7 {
   padding: 8px 24px;
   display: flex;
   height: 24px;
@@ -314,7 +243,223 @@ exports[`rendering of Session Recordings 1`] = `
   border-top-right-radius: 8px;
 }
 
-.c7 {
+.c4 .react-select-container {
+  box-shadow: inset 0 2px 4px rgba(0,0,0,0.24);
+  box-sizing: border-box;
+  border: none;
+  display: block;
+  font-size: 14px;
+  outline: none;
+  width: 100%;
+  color: rgba(0,0,0,0.87);
+  background-color: #ffffff;
+  margin-bottom: 0px;
+  border-radius: 4px;
+}
+
+.c4 .react-select__control,
+.c4 .react-select__control--is-focused {
+  min-height: 40px;
+  background-color: transparent;
+  border-color: transparent;
+  border-radius: 4px;
+  border-style: solid;
+  border-width: 1px;
+  box-shadow: none;
+}
+
+.c4 .react-select__control:hover,
+.c4 .react-select__control--is-focused:hover {
+  border-color: transparent;
+  cursor: pointer;
+}
+
+.c4 .react-select__option:hover {
+  cursor: pointer;
+  background-color: #eceff1;
+}
+
+.c4 .react-select__option--is-focused {
+  background-color: #eceff1;
+}
+
+.c4 .react-select__option--is-selected {
+  background-color: #cfd8dc;
+  color: inherit;
+}
+
+.c4 .react-select__option--is-selected:hover {
+  background-color: #cfd8dc;
+}
+
+.c4 .react-select__menu {
+  margin-top: 0px;
+}
+
+.c4 .react-select__indicator-separator {
+  display: none;
+}
+
+.c4 .react-select__loading-indicator {
+  display: none;
+}
+
+.c3 {
+  width: 210px;
+  margin-left: auto;
+}
+
+.c3 .react-select-container {
+  box-shadow: inset 0 2px 4px rgba(0,0,0,0.24);
+  box-sizing: border-box;
+  border: none;
+  display: block;
+  font-size: 14px;
+  outline: none;
+  width: 100%;
+  color: rgba(0,0,0,0.87);
+  background-color: #ffffff;
+  margin-bottom: 0px;
+  border-radius: 4px;
+}
+
+.c3 .react-select__control,
+.c3 .react-select__control--is-focused {
+  min-height: 40px;
+  background-color: transparent;
+  border-color: transparent;
+  border-radius: 4px;
+  border-style: solid;
+  border-width: 1px;
+  box-shadow: none;
+}
+
+.c3 .react-select__control:hover,
+.c3 .react-select__control--is-focused:hover {
+  border-color: transparent;
+  cursor: pointer;
+}
+
+.c3 .react-select__option:hover {
+  cursor: pointer;
+  background-color: #eceff1;
+}
+
+.c3 .react-select__option--is-focused {
+  background-color: #eceff1;
+}
+
+.c3 .react-select__option--is-selected {
+  background-color: #cfd8dc;
+  color: inherit;
+}
+
+.c3 .react-select__option--is-selected:hover {
+  background-color: #cfd8dc;
+}
+
+.c3 .react-select__menu {
+  margin-top: 0px;
+}
+
+.c3 .react-select__indicator-separator {
+  display: none;
+}
+
+.c3 .react-select__loading-indicator {
+  display: none;
+}
+
+.c3 .react-select-container {
+  background: transparent;
+}
+
+.c3 .react-select__control,
+.c3 .react-select__control--is-focused {
+  border-color: #FFF;
+  min-height: 34px;
+}
+
+.c3 .react-select__value-container {
+  padding: 0 8px;
+}
+
+.c3 .react-select__single-value {
+  color: rgba(255,255,255,0.87);
+}
+
+.c3 .react-select__indicator,
+.c3 .react-select__dropdown-indicator {
+  padding: 4px 8px;
+  color: #666;
+}
+
+.c3 .react-select__indicator:hover,
+.c3 .react-select__dropdown-indicator:hover {
+  color: #999 !important;
+}
+
+.c3 .react-select__control {
+  border-color: rgba(255,255,255,0.24);
+  color: rgba(255,255,255,0.56);
+}
+
+.c3 .react-select__control:focus,
+.c3 .react-select__control:active {
+  background-color: #2C3A73;
+}
+
+.c3 .react-select__control:hover {
+  border-color: rgba(255,255,255,0.24);
+  background-color: #2C3A73;
+}
+
+.c3 .react-select__control:hover .react-select__dropdown-indicator {
+  color: #666;
+}
+
+.c3 .react-select__control--is-focused {
+  background-color: #2C3A73;
+  border-color: transparent;
+  border-radius: 4px;
+  border-style: solid;
+  border-width: 1px;
+  box-shadow: none;
+  border-color: rgba(255,255,255,0.24);
+}
+
+.c3 .react-select__control--is-focused .react-select__indicator,
+.c3 .react-select__control--is-focused .react-select__dropdown-indicator {
+  color: #999 !important;
+}
+
+.c3 .react-select__control--is-focused .react-select__indicator:hover,
+.c3 .react-select__control--is-focused .react-select__dropdown-indicator:hover {
+  color: #ccc !important;
+}
+
+.c3 .react-select__option {
+  padding: 4px 12px;
+}
+
+.c3 .react-select__option:hover {
+  background-color: #cfd8dc;
+}
+
+.c3 .react-select__option--is-focused {
+  background-color: #cfd8dc;
+}
+
+.c3 .react-select__option--is-focused:active {
+  background-color: #eceff1;
+}
+
+.c3 .react-select__menu {
+  border-top-left-radius: 0;
+  border-top-right-radius: 0;
+}
+
+.c6 {
   box-sizing: border-box;
   font-size: 12px;
   min-width: 200px;
@@ -330,18 +475,18 @@ exports[`rendering of Session Recordings 1`] = `
   color: rgba(255,255,255,0.87);
 }
 
-.c7:hover {
+.c6:hover {
   background: #2C3A73;
 }
 
-.c7:focus,
-.c7:active {
+.c6:focus,
+.c6:active {
   background: #2C3A73;
   box-shadow: inset 0 2px 4px rgba(0,0,0,.24);
   color: rgba(255,255,255,0.87);
 }
 
-.c7::placeholder {
+.c6::placeholder {
   color: rgba(255,255,255,0.24);
   font-size: 12px;
 }
@@ -356,28 +501,72 @@ exports[`rendering of Session Recordings 1`] = `
       <div
         class="c2"
       >
-         Session Recordings
+        Session Recordings
       </div>
-      <button
+      <div
         class="c3"
-        style="min-width: 100px;"
-        width="auto"
+        width="210px"
       >
-        <span>
-          Today
-          <span
-            class="c4 c5 icon icon-caret-down "
-            color="text.primary"
-            font-size="2"
-          />
-        </span>
-      </button>
+        <div
+          class="c4"
+        >
+          <div
+            class="react-select-container css-2b097c-container"
+          >
+            <div
+              class="react-select__control css-yk16xz-control"
+            >
+              <div
+                class="react-select__value-container react-select__value-container--has-value css-g1d714-ValueContainer"
+              >
+                <div
+                  class="react-select__single-value css-1uccc91-singleValue"
+                >
+                  Today
+                </div>
+                <input
+                  aria-autocomplete="list"
+                  class="css-62g3xt-dummyInput"
+                  id="react-select-2-input"
+                  readonly=""
+                  tabindex="0"
+                  value=""
+                />
+              </div>
+              <div
+                class="react-select__indicators css-1hb7zxy-IndicatorsContainer"
+              >
+                <span
+                  class="react-select__indicator-separator css-1okebmr-indicatorSeparator"
+                />
+                <div
+                  aria-hidden="true"
+                  class="react-select__indicator react-select__dropdown-indicator css-tlfecz-indicatorContainer"
+                >
+                  <svg
+                    aria-hidden="true"
+                    class="css-6q0nyr-Svg"
+                    focusable="false"
+                    height="20"
+                    viewBox="0 0 20 20"
+                    width="20"
+                  >
+                    <path
+                      d="M4.516 7.548c0.436-0.446 1.043-0.481 1.576 0l3.908 3.747 3.908-3.747c0.533-0.481 1.141-0.446 1.574 0 0.436 0.445 0.408 1.197 0 1.615-0.406 0.418-4.695 4.502-4.695 4.502-0.217 0.223-0.502 0.335-0.787 0.335s-0.57-0.112-0.789-0.335c0 0-4.287-4.084-4.695-4.502s-0.436-1.17 0-1.615z"
+                    />
+                  </svg>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
     <div
-      class="c6"
+      class="c5"
     >
       <input
-        class="c7"
+        class="c6"
         color="text.primary"
         placeholder="SEARCH..."
         value=""
@@ -385,10 +574,10 @@ exports[`rendering of Session Recordings 1`] = `
     </div>
     <div>
       <nav
-        class="c8"
+        class="c7"
       >
         <div
-          class="c9"
+          class="c8"
           color="primary.contrastText"
         >
           SHOWING 
@@ -399,21 +588,21 @@ exports[`rendering of Session Recordings 1`] = `
           <strong>
             2
           </strong>
+           of
            
-          of 
           <strong>
             2
           </strong>
         </div>
         <div
-          class="c10"
+          class="c9"
         >
           <button
             disabled=""
             title="Previous Page"
           >
             <span
-              class="c4 c11 icon icon-arrow-left-circle "
+              class="c10 c11 icon icon-arrow-left-circle "
               color="light"
               font-size="3"
             />
@@ -423,7 +612,7 @@ exports[`rendering of Session Recordings 1`] = `
             title="Next Page"
           >
             <span
-              class="c4 c11 icon icon-arrow-right-circle "
+              class="c10 c11 icon icon-arrow-right-circle "
               color="light"
               font-size="3"
             />
@@ -445,7 +634,7 @@ exports[`rendering of Session Recordings 1`] = `
               <a>
                 Duration
                 <span
-                  class="c4 c13 icon icon-chevrons-expand-vertical "
+                  class="c10 c13 icon icon-chevrons-expand-vertical "
                   color="light"
                 />
               </a>
@@ -454,7 +643,7 @@ exports[`rendering of Session Recordings 1`] = `
               <a>
                 Created
                 <span
-                  class="c4 c13 icon icon-chevron-up "
+                  class="c10 c13 icon icon-chevron-up "
                   color="light"
                 />
               </a>

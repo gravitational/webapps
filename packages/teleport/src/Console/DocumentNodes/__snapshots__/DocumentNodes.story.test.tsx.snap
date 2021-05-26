@@ -661,7 +661,7 @@ exports[`render DocumentNodes 1`] = `
              Clusters 
           </label>
           <div
-            class="sc-fzoxKX c6"
+            class="sc-fzoKki c6"
           >
             <div
               class="c7"
@@ -778,8 +778,8 @@ exports[`render DocumentNodes 1`] = `
               <strong>
                 5
               </strong>
+               of
                
-              of 
               <strong>
                 5
               </strong>
