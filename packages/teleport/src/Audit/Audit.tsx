@@ -28,6 +28,7 @@ import InputSearch from 'teleport/components/InputSearch';
 import useTeleport from 'teleport/useTeleport';
 import useStickyClusterId from 'teleport/useStickyClusterId';
 import useAuditEvents from 'teleport/useAuditEvents';
+import EventsFilter from './EventsFilter';
 
 export default function Container() {
   const teleCtx = useTeleport();
@@ -38,30 +39,31 @@ export default function Container() {
 
 export function Audit(props: ReturnType<typeof useAuditEvents>) {
   const {
-    overflow,
+    moreEvents,
+    onFilterChange,
     attempt,
-    maxLimit,
     range,
-    rangeOptions,
     setRange,
+    rangeOptions,
     events,
     searchValue,
     clusterId,
     setSearchValue,
   } = props;
 
-  const { isSuccess, isFailed, message, isProcessing } = attempt;
-
   return (
     <FeatureBox>
       <FeatureHeader alignItems="center">
         <FeatureHeaderTitle mr="8">Audit Log</FeatureHeaderTitle>
-        <RangePicker
-          ml="auto"
-          value={range}
-          options={rangeOptions}
-          onChange={setRange}
-        />
+        <Flex ml="auto">
+          <EventsFilter onFilterChange={onFilterChange} />
+          <RangePicker
+            ml="3"
+            range={range}
+            ranges={rangeOptions}
+            onChangeRange={setRange}
+          />
+        </Flex>
       </FeatureHeader>
       <Flex
         mb={4}
@@ -71,20 +73,19 @@ export function Audit(props: ReturnType<typeof useAuditEvents>) {
       >
         <InputSearch mr="3" onChange={setSearchValue} />
       </Flex>
-      {overflow && (
-        <Danger>
-          number of events retrieved for specified date range has exceeded the
-          maximum limit of {maxLimit} events
-        </Danger>
-      )}
-      {isFailed && <Danger> {message} </Danger>}
-      {isProcessing && (
+      {attempt.status === 'failed' && <Danger> {attempt.statusText} </Danger>}
+      {attempt.status === 'processing' && (
         <Box textAlign="center" m={10}>
           <Indicator />
         </Box>
       )}
-      {isSuccess && (
-        <EventList search={searchValue} events={events} clusterId={clusterId} />
+      {attempt.status === 'success' && (
+        <EventList
+          search={searchValue}
+          events={events}
+          clusterId={clusterId}
+          moreEvents={moreEvents}
+        />
       )}
     </FeatureBox>
   );

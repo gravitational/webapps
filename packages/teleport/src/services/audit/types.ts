@@ -14,174 +14,179 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-export const CodeEnum = {
-  // Teleport
-  AUTH_ATTEMPT_FAILURE: 'T3007W',
-  CLIENT_DISCONNECT: 'T3006I',
-  EXEC_FAILURE: 'T3002E',
-  EXEC: 'T3002I',
-  PORTFORWARD_FAILURE: 'T3003E',
-  PORTFORWARD: 'T3003I',
-  SCP_DOWNLOAD_FAILURE: 'T3004E',
-  SCP_DOWNLOAD: 'T3004I',
-  SCP_UPLOAD_FAILURE: 'T3005E',
-  SCP_UPLOAD: 'T3005I',
-  SESSION_END: 'T2004I',
-  SESSION_JOIN: 'T2001I',
-  SESSION_REJECT: 'T1006W',
-  SESSION_LEAVE: 'T2003I',
-  SESSION_START: 'T2000I',
-  SESSION_UPLOAD: 'T2005I',
-  SESSION_DATA: 'T2006I',
-  SESSION_COMMAND: 'T4000I',
-  SESSION_DISK: 'T4001I',
-  SESSION_NETWORK: 'T4002I',
-  APP_SESSION_START: 'T2007I',
-  APP_SESSION_CHUNK: 'T2008I',
-  SUBSYSTEM_FAILURE: 'T3001E',
-  SUBSYSTEM: 'T3001I',
-  KUBE_REQUEST: 'T3009I',
-  TERMINAL_RESIZE: 'T2002I',
-  USER_LOCAL_LOGIN: 'T1000I',
-  USER_LOCAL_LOGINFAILURE: 'T1000W',
-  USER_SSO_LOGIN: 'T1001I',
-  USER_SSO_LOGINFAILURE: 'T1001W',
-  USER_CREATED: 'T1002I',
-  USER_DELETED: 'T1004I',
-  USER_UPDATED: 'T1003I',
-  USER_PASSWORD_CHANGED: 'T1005I',
-  RESET_PASSWORD_TOKEN_CREATED: 'T6000I',
-  ROLE_CREATED: 'T9000I',
-  ROLE_DELETED: 'T9001I',
-  GITHUB_CONNECTOR_CREATED: 'T8000I',
-  GITHUB_CONNECTOR_DELETED: 'T8001I',
-  OIDC_CONNECTOR_CREATED: 'T8100I',
-  OIDC_CONNECTOR_DELETED: 'T8101I',
-  SAML_CONNECTOR_CREATED: 'T8200I',
-  SAML_CONNECTOR_DELETED: 'T8201I',
-  ACCESS_REQUEST_CREATED: 'T5000I',
-  ACCESS_REQUEST_UPDATED: 'T5001I',
-  ACCESS_REQUEST_REVIEWED: 'T5002I',
-  TRUSTED_CLUSTER_TOKEN_CREATED: 'T7002I',
-  TRUSTED_CLUSTER_CREATED: 'T7000I',
-  TRUSTED_CLUSTER_DELETED: 'T7001I',
-  DATABASE_SESSION_STARTED: 'TDB00I',
-  DATABASE_SESSION_STARTED_FAILURE: 'TDB00W',
-  DATABASE_SESSION_ENDED: 'TDB01I',
-  DATABASE_SESSION_QUERY: 'TDB02I',
-  MFA_DEVICE_ADD: 'T1006I',
-  MFA_DEVICE_DELETE: 'T1007I',
-  BILLING_CARD_CREATE: 'TBL00I',
-  BILLING_CARD_DELETE: 'TBL01I',
-  BILLING_CARD_UPDATE: 'TBL02I',
-  BILLING_ACCOUNT_UPDATE: 'TBL03I',
-} as const;
+import events, { EventCode } from './eventTypes';
 
 /**
  * Describes all raw event types
  */
 export type RawEvents = {
-  [CodeEnum.ACCESS_REQUEST_CREATED]: RawEventAccess<
-    typeof CodeEnum.ACCESS_REQUEST_CREATED
+  [events.accessRequestCreate.code]: RawEventAccess<
+    typeof events.accessRequestUpdate.code
   >;
-  [CodeEnum.ACCESS_REQUEST_UPDATED]: RawEventAccess<
-    typeof CodeEnum.ACCESS_REQUEST_UPDATED
+  [events.accessRequestUpdate.code]: RawEventAccess<
+    typeof events.accessRequestUpdate.code
   >;
-  [CodeEnum.ACCESS_REQUEST_REVIEWED]: RawEventAccess<
-    typeof CodeEnum.ACCESS_REQUEST_REVIEWED
+  [events.accessRequestReview.code]: RawEventAccess<
+    typeof events.accessRequestReview.code
   >;
-  [CodeEnum.AUTH_ATTEMPT_FAILURE]: RawEventAuthFailure<
-    typeof CodeEnum.AUTH_ATTEMPT_FAILURE
+  [events.authAttemptFailure.code]: RawEvent<
+    typeof events.authAttemptFailure.code,
+    {
+      error: string;
+    }
   >;
-  [CodeEnum.CLIENT_DISCONNECT]: RawEvent<
-    typeof CodeEnum.CLIENT_DISCONNECT,
+  [events.clientDisconnect.code]: RawEvent<
+    typeof events.clientDisconnect.code,
     { reason: string }
   >;
-  [CodeEnum.EXEC]: RawEvent<
-    typeof CodeEnum.EXEC,
+  [events.clientDisconnect.code]: RawEvent<
+    typeof events.clientDisconnect.code,
+    { reason: string }
+  >;
+  [events.exec.code]: RawEvent<
+    typeof events.exec.code,
     {
       proto: 'kube';
       kubernetes_cluster: string;
     }
   >;
-  [CodeEnum.EXEC_FAILURE]: RawEvent<
-    typeof CodeEnum.EXEC_FAILURE,
+  [events.execFailure.code]: RawEvent<
+    typeof events.execFailure.code,
     { exitError: string }
   >;
-  [CodeEnum.BILLING_CARD_CREATE]: RawEvent<typeof CodeEnum.BILLING_CARD_CREATE>;
-  [CodeEnum.BILLING_CARD_DELETE]: RawEvent<typeof CodeEnum.BILLING_CARD_DELETE>;
-  [CodeEnum.BILLING_CARD_UPDATE]: RawEvent<typeof CodeEnum.BILLING_CARD_UPDATE>;
-  [CodeEnum.BILLING_ACCOUNT_UPDATE]: RawEvent<
-    typeof CodeEnum.BILLING_ACCOUNT_UPDATE
+  [events.billingCardCreate.code]: RawEvent<
+    typeof events.billingCardCreate.code
   >;
-  [CodeEnum.GITHUB_CONNECTOR_CREATED]: RawEventConnector<
-    typeof CodeEnum.GITHUB_CONNECTOR_CREATED
+  [events.billingCardDelete.code]: RawEvent<
+    typeof events.billingCardDelete.code
   >;
-  [CodeEnum.GITHUB_CONNECTOR_DELETED]: RawEventConnector<
-    typeof CodeEnum.GITHUB_CONNECTOR_DELETED
+  [events.billingCardUpdate.code]: RawEvent<
+    typeof events.billingCardUpdate.code
   >;
-  [CodeEnum.OIDC_CONNECTOR_CREATED]: RawEventConnector<
-    typeof CodeEnum.OIDC_CONNECTOR_CREATED
+  [events.billingInformationUpdate.code]: RawEvent<
+    typeof events.billingInformationUpdate.code
   >;
-  [CodeEnum.OIDC_CONNECTOR_DELETED]: RawEventConnector<
-    typeof CodeEnum.OIDC_CONNECTOR_DELETED
+  [events.githubConnectorCreated.code]: RawEventConnector<
+    typeof events.githubConnectorCreated.code
   >;
-  [CodeEnum.PORTFORWARD]: RawEvent<typeof CodeEnum.PORTFORWARD>;
-  [CodeEnum.PORTFORWARD_FAILURE]: RawEvent<
-    typeof CodeEnum.PORTFORWARD_FAILURE,
+  [events.githubConnectorDeleted.code]: RawEventConnector<
+    typeof events.githubConnectorDeleted.code
+  >;
+  [events.oidcConnectorCreated.code]: RawEventConnector<
+    typeof events.oidcConnectorCreated.code
+  >;
+  [events.oidcConnectorDeleted.code]: RawEventConnector<
+    typeof events.oidcConnectorDeleted.code
+  >;
+  [events.portForward.code]: RawEvent<typeof events.portForward.code>;
+  [events.portForwardFailure.code]: RawEvent<
+    typeof events.portForwardFailure.code,
     {
       error: string;
     }
   >;
-  [CodeEnum.SAML_CONNECTOR_CREATED]: RawEventConnector<
-    typeof CodeEnum.SAML_CONNECTOR_CREATED
+  [events.samlConnectorCreated.code]: RawEventConnector<
+    typeof events.samlConnectorCreated.code
   >;
-  [CodeEnum.SAML_CONNECTOR_DELETED]: RawEventConnector<
-    typeof CodeEnum.SAML_CONNECTOR_DELETED
+  [events.samlConnectorDeleted.code]: RawEventConnector<
+    typeof events.samlConnectorDeleted.code
   >;
-  [CodeEnum.SCP_DOWNLOAD]: RawEvent<
-    typeof CodeEnum.SCP_DOWNLOAD,
+  [events.scpDownload.code]: RawEvent<
+    typeof events.scpDownload.code,
     {
       path: string;
       ['addr_local']: string;
     }
   >;
-  [CodeEnum.SCP_DOWNLOAD_FAILURE]: RawEvent<
-    typeof CodeEnum.SCP_DOWNLOAD_FAILURE,
+  [events.scpDownloadFailure.code]: RawEvent<
+    typeof events.scpDownloadFailure.code,
     {
       exitError: string;
     }
   >;
-  [CodeEnum.SCP_UPLOAD]: RawEvent<
-    typeof CodeEnum.SCP_UPLOAD,
+  [events.scpUpload.code]: RawEvent<
+    typeof events.scpUpload.code,
     {
       path: string;
       ['addr.local']: string;
     }
   >;
-  [CodeEnum.SCP_UPLOAD_FAILURE]: RawEvent<
-    typeof CodeEnum.SCP_UPLOAD_FAILURE,
+  [events.scpUploadFailure.code]: RawEvent<
+    typeof events.scpUploadFailure.code,
     {
       exitError: string;
     }
   >;
 
-  [CodeEnum.SESSION_COMMAND]: RawEventCommand<typeof CodeEnum.SESSION_COMMAND>;
+  [events.sessionCommand.code]: RawEvent<
+    typeof events.sessionCommand.code,
+    {
+      login: string;
+      namespace: string;
+      path: string;
+      pid: number;
+      ppid: number;
+      program: string;
+      return_code: number;
+      server_id: string;
+      sid: string;
+    }
+  >;
 
-  [CodeEnum.SESSION_DISK]: RawDiskEvent<typeof CodeEnum.SESSION_DISK>;
+  [events.sessionDisk.code]: RawEvent<
+    typeof events.sessionDisk.code,
+    {
+      login: string;
+      namespace: string;
+      pid: number;
+      cgroup_id: number;
+      program: string;
+      path: string;
+      return_code: number;
+      server_id: string;
+      flags: number;
+      sid: string;
+    }
+  >;
 
-  [CodeEnum.SESSION_NETWORK]: RawEventNetwork<typeof CodeEnum.SESSION_NETWORK>;
+  [events.sessionNetwork.code]: RawEvent<
+    typeof events.sessionNetwork.code,
+    {
+      login: string;
+      namespace: string;
+      pid: number;
+      cgroup_id: number;
+      program: string;
+      server_id: string;
+      flags: number;
+      sid: string;
+      src_addr: string;
+      dst_addr: string;
+      dst_port: string;
+    }
+  >;
 
-  [CodeEnum.SESSION_DATA]: RawEventData<typeof CodeEnum.SESSION_DATA>;
+  [events.sessionData.code]: RawEvent<
+    typeof events.sessionData.code,
+    {
+      login: string;
+      rx: number;
+      server_id: string;
+      sid: string;
+      tx: number;
+      user: string;
+    }
+  >;
 
-  [CodeEnum.SESSION_JOIN]: RawEvent<
-    typeof CodeEnum.SESSION_JOIN,
+  [events.userSessionJoin.code]: RawEvent<
+    typeof events.userSessionJoin.code,
     {
       sid: string;
     }
   >;
-  [CodeEnum.SESSION_END]: RawEvent<
-    typeof CodeEnum.SESSION_END,
+
+  [events.sessionEnd.code]: RawEvent<
+    typeof events.sessionEnd.code,
     {
       sid: string;
       server_id: string;
@@ -198,106 +203,116 @@ export type RawEvents = {
       session_recording: 'off' | 'node' | 'proxy' | 'node-sync' | 'proxy-sync';
     }
   >;
-  [CodeEnum.SESSION_LEAVE]: RawEvent<
-    typeof CodeEnum.SESSION_LEAVE,
+  [events.userSessionLeave.code]: RawEvent<
+    typeof events.userSessionLeave.code,
     {
       sid: string;
     }
   >;
-  [CodeEnum.SESSION_START]: RawEvent<
-    typeof CodeEnum.SESSION_START,
+  [events.sessionStart.code]: RawEvent<
+    typeof events.sessionStart.code,
     {
       sid: string;
     }
   >;
-  [CodeEnum.SESSION_REJECT]: RawEvent<
-    typeof CodeEnum.SESSION_REJECT,
+  [events.sessionRejected.code]: RawEvent<
+    typeof events.sessionRejected.code,
     {
       login: string;
       server_id: string;
       reason: string;
     }
   >;
-  [CodeEnum.SESSION_UPLOAD]: RawEvent<
-    typeof CodeEnum.SESSION_UPLOAD,
+  [events.sessionUpload.code]: RawEvent<
+    typeof events.sessionUpload.code,
     {
       sid: string;
     }
   >;
-  [CodeEnum.APP_SESSION_START]: RawEvent<
-    typeof CodeEnum.APP_SESSION_START,
+  [events.appSessionStart.code]: RawEvent<
+    typeof events.appSessionStart.code,
     { sid: string }
   >;
-  [CodeEnum.APP_SESSION_CHUNK]: RawEvent<
-    typeof CodeEnum.APP_SESSION_CHUNK,
+  [events.appSessionChunk.code]: RawEvent<
+    typeof events.appSessionChunk.code,
     { sid: string }
   >;
-  [CodeEnum.SUBSYSTEM]: RawEvent<
-    typeof CodeEnum.SUBSYSTEM,
+  [events.subsystem.code]: RawEvent<
+    typeof events.subsystem.code,
     {
       name: string;
     }
   >;
-  [CodeEnum.SUBSYSTEM_FAILURE]: RawEvent<
-    typeof CodeEnum.SUBSYSTEM_FAILURE,
+  [events.subsystemFailure.code]: RawEvent<
+    typeof events.subsystemFailure.code,
     {
       name: string;
       exitError: string;
     }
   >;
-  [CodeEnum.TERMINAL_RESIZE]: RawEvent<
-    typeof CodeEnum.TERMINAL_RESIZE,
+  [events.terminalResize.code]: RawEvent<
+    typeof events.terminalResize.code,
     { sid: string }
   >;
-  [CodeEnum.USER_CREATED]: RawEventUser<typeof CodeEnum.USER_CREATED>;
-  [CodeEnum.USER_DELETED]: RawEventUser<typeof CodeEnum.USER_DELETED>;
-  [CodeEnum.USER_UPDATED]: RawEventUser<typeof CodeEnum.USER_UPDATED>;
-  [CodeEnum.USER_PASSWORD_CHANGED]: RawEvent<
-    typeof CodeEnum.USER_PASSWORD_CHANGED,
+  [events.userCreate.code]: RawEventUser<typeof events.userCreate.code>;
+  [events.userDelete.code]: RawEventUser<typeof events.userDelete.code>;
+  [events.userUpdated.code]: RawEventUser<typeof events.userUpdated.code>;
+  [events.userPasswordChange.code]: RawEvent<
+    typeof events.userPasswordChange.code,
     HasName
   >;
-  [CodeEnum.RESET_PASSWORD_TOKEN_CREATED]: RawEventPasswordToken<
-    typeof CodeEnum.RESET_PASSWORD_TOKEN_CREATED
+  [events.resetPasswordTokenCreate.code]: RawEvent<
+    typeof events.resetPasswordTokenCreate.code,
+    {
+      name: string;
+      ttl: string;
+    }
   >;
-  [CodeEnum.USER_LOCAL_LOGIN]: RawEvent<typeof CodeEnum.USER_LOCAL_LOGIN>;
-  [CodeEnum.USER_LOCAL_LOGINFAILURE]: RawEvent<
-    typeof CodeEnum.USER_LOCAL_LOGINFAILURE,
+  [events.userLogin.code]: RawEvent<typeof events.userLogin.code>;
+  [events.userLoginFailure.code]: RawEvent<
+    typeof events.userLoginFailure.code,
     {
       error: string;
     }
   >;
-  [CodeEnum.USER_SSO_LOGIN]: RawEvent<typeof CodeEnum.USER_SSO_LOGIN>;
-  [CodeEnum.USER_SSO_LOGINFAILURE]: RawEvent<
-    typeof CodeEnum.USER_SSO_LOGINFAILURE,
+  [events.userSsoLogin.code]: RawEvent<typeof events.userSsoLogin.code>;
+  [events.userSsoLoginFailure.code]: RawEvent<
+    typeof events.userSsoLoginFailure.code,
     {
       error: string;
     }
   >;
-  [CodeEnum.ROLE_CREATED]: RawEvent<typeof CodeEnum.ROLE_CREATED, HasName>;
-  [CodeEnum.ROLE_DELETED]: RawEvent<typeof CodeEnum.ROLE_DELETED, HasName>;
-  [CodeEnum.TRUSTED_CLUSTER_TOKEN_CREATED]: RawEvent<
-    typeof CodeEnum.TRUSTED_CLUSTER_TOKEN_CREATED
+  [events.userRoleCreated.code]: RawEvent<
+    typeof events.userRoleCreated.code,
+    HasName
   >;
-  [CodeEnum.TRUSTED_CLUSTER_CREATED]: RawEvent<
-    typeof CodeEnum.TRUSTED_CLUSTER_CREATED,
+  [events.userRoleDeleted.code]: RawEvent<
+    typeof events.userRoleDeleted.code,
+    HasName
+  >;
+  [events.trustedClusterTokenCreate.code]: RawEvent<
+    typeof events.trustedClusterTokenCreate.code
+  >;
+  [events.trustedClusterCreate.code]: RawEvent<
+    typeof events.trustedClusterCreate.code,
     {
       name: string;
     }
   >;
-  [CodeEnum.TRUSTED_CLUSTER_DELETED]: RawEvent<
-    typeof CodeEnum.TRUSTED_CLUSTER_DELETED,
+  [events.trustedClusterDelete.code]: RawEvent<
+    typeof events.trustedClusterDelete.code,
     {
       name: string;
     }
   >;
-  [CodeEnum.KUBE_REQUEST]: RawEvent<
-    typeof CodeEnum.KUBE_REQUEST,
+  [events.kubeRequest.code]: RawEvent<
+    typeof events.kubeRequest.code,
     {
       kubernetes_cluster: string;
     }
   >;
-  [CodeEnum.DATABASE_SESSION_STARTED]: RawEvent<
-    typeof CodeEnum.DATABASE_SESSION_STARTED,
+  [events.databaseSessionStart.code]: RawEvent<
+    typeof events.databaseSessionStart.code,
     {
       name: string;
       db_service: string;
@@ -305,44 +320,25 @@ export type RawEvents = {
       db_user: string;
     }
   >;
-  [CodeEnum.DATABASE_SESSION_STARTED_FAILURE]: RawEvent<
-    typeof CodeEnum.DATABASE_SESSION_STARTED_FAILURE,
-    {
-      name: string;
-      db_service: string;
-      db_name: string;
-      db_user: string;
-    }
+  [events.databaseSessionStartFailure.code]: RawEventDatabase<
+    typeof events.databaseSessionStartFailure.code
   >;
-  [CodeEnum.DATABASE_SESSION_ENDED]: RawEvent<
-    typeof CodeEnum.DATABASE_SESSION_ENDED,
-    {
-      name: string;
-      db_service: string;
-      db_name: string;
-      db_user: string;
-    }
+  [events.databaseSessionEnd.code]: RawEventDatabase<
+    typeof events.databaseSessionEnd.code
   >;
-  [CodeEnum.DATABASE_SESSION_QUERY]: RawEvent<
-    typeof CodeEnum.DATABASE_SESSION_QUERY,
-    {
-      name: string;
-      db_service: string;
-      db_name: string;
-      db_user: string;
-      db_query: string;
-    }
+  [events.databaseSessionQuery.code]: RawEventDatabase<
+    typeof events.databaseSessionQuery.code
   >;
-  [CodeEnum.MFA_DEVICE_ADD]: RawEvent<
-    typeof CodeEnum.MFA_DEVICE_ADD,
+  [events.mfaDeviceAdd.code]: RawEvent<
+    typeof events.mfaDeviceAdd.code,
     {
       mfa_device_name: string;
       mfa_device_uuid: string;
       mfa_device_type: string;
     }
   >;
-  [CodeEnum.MFA_DEVICE_DELETE]: RawEvent<
-    typeof CodeEnum.MFA_DEVICE_DELETE,
+  [events.mfaDeviceDelete.code]: RawEvent<
+    typeof events.mfaDeviceDelete.code,
     {
       mfa_device_name: string;
       mfa_device_uuid: string;
@@ -350,11 +346,6 @@ export type RawEvents = {
     }
   >;
 };
-
-/**
- * Event Code
- */
-export type Code = typeof CodeEnum[keyof typeof CodeEnum];
 
 type HasName = {
   name: string;
@@ -370,7 +361,7 @@ type Merge<A, B> = Omit<A, keyof B> & B extends infer O
 /**
  * Describes common properties of the raw events (backend data)
  */
-export type RawEvent<T extends Code, K = {}> = Merge<
+export type RawEvent<T extends EventCode, K = {}> = Merge<
   {
     code: T;
     user: string;
@@ -381,67 +372,7 @@ export type RawEvent<T extends Code, K = {}> = Merge<
   K
 >;
 
-type RawEventData<T extends Code> = RawEvent<
-  T,
-  {
-    login: string;
-    rx: number;
-    server_id: string;
-    sid: string;
-    tx: number;
-    user: string;
-  }
->;
-
-type RawEventCommand<T extends Code> = RawEvent<
-  T,
-  {
-    login: string;
-    namespace: string;
-    path: string;
-    pid: number;
-    ppid: number;
-    program: string;
-    return_code: number;
-    server_id: string;
-    sid: string;
-  }
->;
-
-type RawEventNetwork<T extends Code> = RawEvent<
-  T,
-  {
-    login: string;
-    namespace: string;
-    pid: number;
-    cgroup_id: number;
-    program: string;
-    server_id: string;
-    flags: number;
-    sid: string;
-    src_addr: string;
-    dst_addr: string;
-    dst_port: string;
-  }
->;
-
-type RawDiskEvent<T extends Code> = RawEvent<
-  T,
-  {
-    login: string;
-    namespace: string;
-    pid: number;
-    cgroup_id: number;
-    program: string;
-    path: string;
-    return_code: number;
-    server_id: string;
-    flags: number;
-    sid: string;
-  }
->;
-
-type RawEventAccess<T extends Code> = RawEvent<
+type RawEventAccess<T extends EventCode> = RawEvent<
   T,
   {
     id: string;
@@ -452,22 +383,14 @@ type RawEventAccess<T extends Code> = RawEvent<
   }
 >;
 
-type RawEventPasswordToken<T extends Code> = RawEvent<
-  T,
-  {
-    name: string;
-    ttl: string;
-  }
->;
-
-type RawEventUser<T extends Code> = RawEvent<
+type RawEventUser<T extends EventCode> = RawEvent<
   T,
   {
     name: string;
   }
 >;
 
-type RawEventConnector<T extends Code> = RawEvent<
+type RawEventConnector<T extends EventCode> = RawEvent<
   T,
   {
     name: string;
@@ -475,10 +398,14 @@ type RawEventConnector<T extends Code> = RawEvent<
   }
 >;
 
-type RawEventAuthFailure<T extends Code> = RawEvent<
+type RawEventDatabase<T extends EventCode> = RawEvent<
   T,
   {
-    error: string;
+    name: string;
+    db_service: string;
+    db_name: string;
+    db_user: string;
+    db_query: string;
   }
 >;
 
@@ -486,14 +413,14 @@ type RawEventAuthFailure<T extends Code> = RawEvent<
  * A map of event formatters that provide short and long description
  */
 export type Formatters = {
-  [key in Code]: {
+  [key in EventCode]: {
     desc: string;
     format: (json: RawEvents[key]) => string;
   };
 };
 
 export type Events = {
-  [key in Code]: {
+  [key in EventCode]: {
     id: string;
     time: Date;
     user: string;
@@ -504,6 +431,14 @@ export type Events = {
   };
 };
 
-export type Event = Events[Code];
+export type Event = Events[EventCode];
 
-export type SessionEnd = Events[typeof CodeEnum.SESSION_END];
+export type SessionEnd = Events[typeof events.sessionEnd.code];
+
+export type EventQuery = {
+  from: Date;
+  to: Date;
+  limit?: number;
+  startKey?: string;
+  filterBy?: string;
+};
