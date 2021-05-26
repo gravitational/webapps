@@ -14,50 +14,52 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import moment from 'moment';
 import api from 'teleport/services/api';
 import cfg from 'teleport/config';
 import makeEvent from './makeEvent';
+import { EventQuery, Event } from './types';
 
-export const EVENT_MAX_LIMIT = 9999;
+// TODO change default to 5k
+const EVENT_FETCH_MAX_LIMIT = 10;
 
-const service = {
-  maxLimit: EVENT_MAX_LIMIT,
+class AuditService {
+  maxFetchLimit = EVENT_FETCH_MAX_LIMIT;
 
-  fetchLatest(clusterId: string) {
-    const start = moment(new Date())
-      .startOf('day')
-      .toDate();
-    const end = moment(new Date())
-      .endOf('day')
-      .toDate();
+  fetchEvents(clusterId: string, params: EventQuery): Promise<EventResponse> {
+    const start = params.from.toISOString();
+    const end = params.to.toISOString();
 
-    return service.fetchEvents(clusterId, { start, end });
-  },
-
-  fetchEvents(clusterId: string, params: { end: Date; start: Date }) {
-    const start = params.start.toISOString();
-    const end = params.end.toISOString();
     const url = cfg.getClusterEventsUrl(clusterId, {
       start,
       end,
-      limit: EVENT_MAX_LIMIT + 1,
+      limit: this.maxFetchLimit,
+      include: params.filterBy ? params.filterBy : undefined,
+      startKey: params.startKey ? params.startKey : undefined,
     });
-    return api
-      .get(url)
-      .then(json => {
-        const events: any[] = json.events || [];
-        return events.map(makeEvent);
-      })
-      .then(events => {
-        const overflow = events.length > EVENT_MAX_LIMIT;
-        events = events.splice(0, EVENT_MAX_LIMIT - 1);
-        return {
-          overflow,
-          events,
-        };
-      });
-  },
-};
 
-export default service;
+    return api.get(url).then(json => {
+      const events = json.events || [];
+      let startKey = json.startKey || '';
+
+      // TODO should this be handled in backend?
+      // 1) There is a bug in backend where if I end up querying the EXACT amount of total events,
+      //    fetching always returns the last result with startKey non empty
+
+      // 2) Handles a case where if given limit and a filter,
+      //    if results came back < limit, then there are no more results
+      //    related to the filter within given range.
+      if (events.length < this.maxFetchLimit) {
+        startKey = '';
+      }
+
+      return { events: events.map(makeEvent), startKey };
+    });
+  }
+}
+
+export default AuditService;
+
+type EventResponse = {
+  events: Event[];
+  startKey: string;
+};

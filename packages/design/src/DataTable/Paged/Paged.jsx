@@ -23,7 +23,7 @@ import usePages from './usePages';
 import PropTypes from 'prop-types';
 
 export default function TablePaged(props) {
-  const { pageSize, data, pagerPosition, ...rest } = props;
+  const { pageSize, data, pagerPosition, moreEvents, ...rest } = props;
   const pagedState = usePages({ pageSize, data });
   const tableProps = {
     ...rest,
@@ -42,13 +42,13 @@ export default function TablePaged(props) {
     <div>
       {showTopPager && (
         <StyledPanel borderTopRightRadius="3" borderTopLeftRadius="3">
-          <Pager {...pagedState} />
+          <Pager {...pagedState} moreEvents={moreEvents} />
         </StyledPanel>
       )}
       <Table {...tableProps} />
       {showBottomPager && (
         <StyledPanel borderBottomRightRadius="3" borderBottomLeftRadius="3">
-          <Pager {...pagedState} />
+          <Pager {...pagedState} moreEvents={moreEvents} />
         </StyledPanel>
       )}
     </div>

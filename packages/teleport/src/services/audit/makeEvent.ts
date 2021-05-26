@@ -15,71 +15,72 @@ limitations under the License.
 */
 
 import moment from 'moment';
-import { Event, CodeEnum, RawEvent, Formatters } from './types';
+import { Event, RawEvent, Formatters } from './types';
+import events from './eventTypes';
 
 export const formatters: Formatters = {
-  [CodeEnum.ACCESS_REQUEST_CREATED]: {
-    desc: 'Access Request Created',
+  [events.accessRequestCreate.code]: {
+    desc: events.accessRequestCreate.desc,
     format: ({ id, state }) =>
       `Access request [${id}] has been created and is ${state}`,
   },
-  [CodeEnum.ACCESS_REQUEST_UPDATED]: {
-    desc: 'Access Request Updated',
+  [events.accessRequestUpdate.code]: {
+    desc: events.accessRequestUpdate.desc,
     format: ({ id, state }) =>
       `Access request [${id}] has been updated to ${state}`,
   },
-  [CodeEnum.ACCESS_REQUEST_REVIEWED]: {
-    desc: 'Access Request Reviewed',
+  [events.accessRequestReview.code]: {
+    desc: events.accessRequestReview.desc,
     format: ({ id, reviewer }) =>
       `User [${reviewer}] reviewed access request [${id}]`,
   },
-  [CodeEnum.SESSION_COMMAND]: {
-    desc: 'Session Command',
+  [events.sessionCommand.code]: {
+    desc: events.sessionCommand.desc,
     format: ({ program, sid }) =>
       `Program [${program}] has been executed within a session [${sid}]`,
   },
-  [CodeEnum.SESSION_DISK]: {
-    desc: 'Session File Access',
+  [events.sessionDisk.code]: {
+    desc: events.sessionDisk.desc,
     format: ({ path, sid, program }) =>
       `Program [${program}] accessed a file [${path}] within a session [${sid}]`,
   },
-  [CodeEnum.SESSION_NETWORK]: {
-    desc: 'Session Network Connection',
+  [events.sessionNetwork.code]: {
+    desc: events.sessionNetwork.desc,
     format: ({ sid, program, src_addr, dst_addr, dst_port }) =>
       `Program [${program}] opened a connection [${src_addr} <-> ${dst_addr}:${dst_port}] within a session [${sid}]`,
   },
-  [CodeEnum.SESSION_DATA]: {
-    desc: 'Session Data',
+  [events.sessionData.code]: {
+    desc: events.sessionData.desc,
     format: ({ sid }) =>
       `Usage report has been updated for session [${sid || ''}]`,
   },
 
-  [CodeEnum.USER_PASSWORD_CHANGED]: {
-    desc: 'User Password Updated',
+  [events.userPasswordChange.code]: {
+    desc: events.userPasswordChange.desc,
     format: ({ user }) => `User [${user}] has changed a password`,
   },
 
-  [CodeEnum.USER_UPDATED]: {
-    desc: 'User Updated',
+  [events.userUpdated.code]: {
+    desc: events.userUpdated.desc,
     format: ({ name }) => `User [${name}] has been updated`,
   },
-  [CodeEnum.RESET_PASSWORD_TOKEN_CREATED]: {
-    desc: 'Reset Password Token Created',
+  [events.resetPasswordTokenCreate.code]: {
+    desc: events.resetPasswordTokenCreate.desc,
     format: ({ name, user }) =>
       `User [${user}] created a password reset token for user [${name}]`,
   },
-  [CodeEnum.AUTH_ATTEMPT_FAILURE]: {
-    desc: 'Auth Attempt Failed',
+  [events.authAttemptFailure.code]: {
+    desc: events.authAttemptFailure.desc,
     format: ({ user, error }) => `User [${user}] failed auth attempt: ${error}`,
   },
 
-  [CodeEnum.CLIENT_DISCONNECT]: {
-    desc: 'Client Disconnected',
+  [events.clientDisconnect.code]: {
+    desc: events.clientDisconnect.desc,
     format: ({ user, reason }) =>
       `User [${user}] has been disconnected: ${reason}`,
   },
-  [CodeEnum.EXEC]: {
-    desc: 'Command Execution',
+  [events.exec.code]: {
+    desc: events.exec.desc,
     format: event => {
       const { proto, kubernetes_cluster, user = '' } = event;
       if (proto === 'kube') {
@@ -92,76 +93,76 @@ export const formatters: Formatters = {
       return `User [${user}] executed a command on node ${event['addr.local']}`;
     },
   },
-  [CodeEnum.EXEC_FAILURE]: {
-    desc: 'Command Execution Failed',
+  [events.execFailure.code]: {
+    desc: events.execFailure.desc,
     format: ({ user, exitError, ...rest }) =>
       `User [${user}] command execution on node ${rest['addr.local']} failed [${exitError}]`,
   },
-  [CodeEnum.GITHUB_CONNECTOR_CREATED]: {
-    desc: 'GITHUB Auth Connector Created',
+  [events.githubConnectorCreated.code]: {
+    desc: events.githubConnectorCreated.desc,
     format: ({ user, name }) =>
       `User [${user}] created Github connector [${name}] has been created`,
   },
-  [CodeEnum.GITHUB_CONNECTOR_DELETED]: {
-    desc: 'GITHUB Auth Connector Deleted',
+  [events.githubConnectorDeleted.code]: {
+    desc: events.githubConnectorDeleted.desc,
     format: ({ user, name }) =>
       `User [${user}] deleted Github connector [${name}]`,
   },
-  [CodeEnum.OIDC_CONNECTOR_CREATED]: {
-    desc: 'OIDC Auth Connector Created',
+  [events.oidcConnectorCreated.code]: {
+    desc: events.oidcConnectorCreated.desc,
     format: ({ user, name }) =>
       `User [${user}] created OIDC connector [${name}]`,
   },
-  [CodeEnum.OIDC_CONNECTOR_DELETED]: {
-    desc: 'OIDC Auth Connector Deleted',
+  [events.oidcConnectorDeleted.code]: {
+    desc: events.oidcConnectorDeleted.desc,
     format: ({ user, name }) =>
       `User [${user}] deleted OIDC connector [${name}]`,
   },
-  [CodeEnum.PORTFORWARD]: {
-    desc: 'Port Forwarding Started',
+  [events.portForward.code]: {
+    desc: events.portForward.desc,
     format: ({ user }) => `User [${user}] started port forwarding`,
   },
-  [CodeEnum.PORTFORWARD_FAILURE]: {
-    desc: 'Port Forwarding Failed',
+  [events.portForwardFailure.code]: {
+    desc: events.portForwardFailure.desc,
     format: ({ user, error }) =>
       `User [${user}] port forwarding request failed: ${error}`,
   },
-  [CodeEnum.SAML_CONNECTOR_CREATED]: {
-    desc: 'SAML Connector Created',
+  [events.samlConnectorCreated.code]: {
+    desc: events.samlConnectorCreated.desc,
     format: ({ user, name }) =>
       `User [${user}] created SAML connector [${name}]`,
   },
-  [CodeEnum.SAML_CONNECTOR_DELETED]: {
-    desc: 'SAML Connector Deleted',
+  [events.samlConnectorDeleted.code]: {
+    desc: events.samlConnectorDeleted.desc,
     format: ({ user, name }) =>
       `User [${user}] deleted SAML connector [${name}]`,
   },
-  [CodeEnum.SCP_DOWNLOAD]: {
-    desc: 'SCP Download',
+  [events.scpDownload.code]: {
+    desc: events.scpDownload.desc,
     format: ({ user, path, ...rest }) =>
       `User [${user}] downloaded a file [${path}] from node [${rest['addr.local']}]`,
   },
-  [CodeEnum.SCP_DOWNLOAD_FAILURE]: {
-    desc: 'SCP Download Failed',
+  [events.scpDownloadFailure.code]: {
+    desc: events.scpDownloadFailure.desc,
     format: ({ exitError, ...rest }) =>
       `File download from node [${rest['addr.local']}] failed [${exitError}]`,
   },
-  [CodeEnum.SCP_UPLOAD]: {
-    desc: 'SCP Upload',
+  [events.scpUpload.code]: {
+    desc: events.scpUpload.desc,
     format: ({ user, path, ...rest }) =>
       `User [${user}] uploaded a file [${path}] to node [${rest['addr.local']}]`,
   },
-  [CodeEnum.SCP_UPLOAD_FAILURE]: {
-    desc: 'SCP Upload Failed',
+  [events.scpUploadFailure.code]: {
+    desc: events.scpUploadFailure.desc,
     format: ({ exitError, ...rest }) =>
       `File upload to node [${rest['addr.local']}] failed [${exitError}]`,
   },
-  [CodeEnum.SESSION_JOIN]: {
-    desc: 'User Joined',
+  [events.userSessionJoin.code]: {
+    desc: events.userSessionJoin.desc,
     format: ({ user, sid }) => `User [${user}] has joined the session [${sid}]`,
   },
-  [CodeEnum.SESSION_END]: {
-    desc: 'Session Ended',
+  [events.sessionEnd.code]: {
+    desc: events.sessionEnd.desc,
     format: event => {
       const user = event.user || '';
       const node =
@@ -187,144 +188,144 @@ export const formatters: Formatters = {
       return `User [${user}] has ended interactive session [${event.sid}] on node [${node}] `;
     },
   },
-  [CodeEnum.SESSION_REJECT]: {
-    desc: 'Session Rejected',
+  [events.sessionRejected.code]: {
+    desc: events.sessionRejected.desc,
     format: ({ user, login, server_id, reason }) =>
       `User [${user}] was denied access to [${login}@${server_id}] because [${reason}]`,
   },
-  [CodeEnum.SESSION_LEAVE]: {
-    desc: 'User Disconnected',
+  [events.userSessionLeave.code]: {
+    desc: events.userSessionLeave.desc,
     format: ({ user, sid }) => `User [${user}] has left the session [${sid}]`,
   },
-  [CodeEnum.SESSION_START]: {
-    desc: 'Session Started',
+  [events.sessionStart.code]: {
+    desc: events.sessionStart.desc,
     format: ({ user, sid }) => `User [${user}] has started a session [${sid}]`,
   },
-  [CodeEnum.SESSION_UPLOAD]: {
-    desc: 'Session Uploaded',
+  [events.sessionUpload.code]: {
+    desc: events.sessionUpload.desc,
     format: () => `Recorded session has been uploaded`,
   },
-  [CodeEnum.APP_SESSION_START]: {
-    desc: 'App Session Started',
+  [events.appSessionStart.code]: {
+    desc: events.appSessionStart.desc,
     format: ({ user, sid }) =>
       `User [${user}] has started an app session [${sid}]`,
   },
-  [CodeEnum.APP_SESSION_CHUNK]: {
-    desc: 'App Session Data',
+  [events.appSessionChunk.code]: {
+    desc: events.appSessionChunk.desc,
     format: ({ sid }) => `New app session data created [${sid}]`,
   },
-  [CodeEnum.SUBSYSTEM]: {
-    desc: 'Subsystem Requested',
+  [events.subsystem.code]: {
+    desc: events.subsystem.desc,
     format: ({ user, name }) => `User [${user}] requested subsystem [${name}]`,
   },
-  [CodeEnum.SUBSYSTEM_FAILURE]: {
-    desc: 'Subsystem Request Failed',
+  [events.subsystemFailure.code]: {
+    desc: events.subsystemFailure.desc,
     format: ({ user, name, exitError }) =>
       `User [${user}] subsystem [${name}] request failed [${exitError}]`,
   },
-  [CodeEnum.TERMINAL_RESIZE]: {
-    desc: 'Terminal Resize',
+  [events.terminalResize.code]: {
+    desc: events.terminalResize.desc,
     format: ({ user, sid }) =>
       `User [${user}] resized the session [${sid}] terminal`,
   },
-  [CodeEnum.USER_CREATED]: {
-    desc: 'User Created',
+  [events.userCreate.code]: {
+    desc: events.userCreate.desc,
     format: ({ name }) => `User [${name}] has been created`,
   },
-  [CodeEnum.USER_DELETED]: {
-    desc: 'User Deleted',
+  [events.userDelete.code]: {
+    desc: events.userDelete.desc,
     format: ({ name }) => `User [${name}] has been deleted`,
   },
-  [CodeEnum.USER_LOCAL_LOGIN]: {
-    desc: 'Local Login',
+  [events.userLogin.code]: {
+    desc: events.userLogin.desc,
     format: ({ user }) => `Local user [${user}] successfully logged in`,
   },
-  [CodeEnum.USER_LOCAL_LOGINFAILURE]: {
-    desc: 'Local Login Failed',
+  [events.userLoginFailure.code]: {
+    desc: events.userLoginFailure.desc,
     format: ({ user, error }) => `Local user [${user}] login failed [${error}]`,
   },
-  [CodeEnum.USER_SSO_LOGIN]: {
-    desc: 'SSO Login',
+  [events.userSsoLogin.code]: {
+    desc: events.userSsoLogin.desc,
     format: ({ user }) => `SSO user [${user}] successfully logged in`,
   },
-  [CodeEnum.USER_SSO_LOGINFAILURE]: {
-    desc: 'SSO Login Failed',
+  [events.userSsoLoginFailure.code]: {
+    desc: events.userSsoLoginFailure.desc,
     format: ({ error }) => `SSO user login failed [${error}]`,
   },
-  [CodeEnum.ROLE_CREATED]: {
-    desc: 'User Role Created',
+  [events.userRoleCreated.code]: {
+    desc: events.userRoleCreated.desc,
     format: ({ user, name }) => `User [${user}] created a role [${name}]`,
   },
-  [CodeEnum.ROLE_DELETED]: {
-    desc: 'User Role Deleted',
+  [events.userRoleDeleted.code]: {
+    desc: events.userRoleDeleted.desc,
     format: ({ user, name }) => `User [${user}] deleted a role [${name}]`,
   },
-  [CodeEnum.TRUSTED_CLUSTER_TOKEN_CREATED]: {
-    desc: 'Trusted Cluster Token Created',
+  [events.trustedClusterTokenCreate.code]: {
+    desc: events.trustedClusterTokenCreate.desc,
     format: ({ user }) => `User [${user}] has created a trusted cluster token`,
   },
-  [CodeEnum.TRUSTED_CLUSTER_CREATED]: {
-    desc: 'Trusted Cluster Created',
+  [events.trustedClusterCreate.code]: {
+    desc: events.trustedClusterCreate.desc,
     format: ({ user, name }) =>
       `User [${user}] has created a trusted relationship with cluster [${name}]`,
   },
-  [CodeEnum.TRUSTED_CLUSTER_DELETED]: {
-    desc: 'Trusted Cluster Deleted',
+  [events.trustedClusterDelete.code]: {
+    desc: events.trustedClusterDelete.desc,
     format: ({ user, name }) =>
       `User [${user}] has deleted a trusted relationship with cluster [${name}]`,
   },
-  [CodeEnum.KUBE_REQUEST]: {
-    desc: 'Kubernetes Request',
+  [events.kubeRequest.code]: {
+    desc: events.kubeRequest.desc,
     format: ({ user, kubernetes_cluster }) =>
       `User [${user}] made a request to kubernetes cluster [${kubernetes_cluster}]`,
   },
-  [CodeEnum.DATABASE_SESSION_STARTED]: {
-    desc: 'Database Session Started',
+  [events.databaseSessionStart.code]: {
+    desc: events.databaseSessionStart.desc,
     format: ({ user, db_service, db_name, db_user }) =>
       `User [${user}] has connected to database [${db_name}] as [${db_user}] on [${db_service}]`,
   },
-  [CodeEnum.DATABASE_SESSION_STARTED_FAILURE]: {
-    desc: 'Database Session Denied',
+  [events.databaseSessionStartFailure.code]: {
+    desc: events.databaseSessionStartFailure.desc,
     format: ({ user, db_service, db_name, db_user }) =>
       `User [${user}] was denied access to database [${db_name}] as [${db_user}] on [${db_service}]`,
   },
-  [CodeEnum.DATABASE_SESSION_ENDED]: {
-    desc: 'Database Session Ended',
+  [events.databaseSessionEnd.code]: {
+    desc: events.databaseSessionEnd.desc,
     format: ({ user, db_service, db_name }) =>
       `User [${user}] has disconnected from database [${db_name}] on [${db_service}]`,
   },
-  [CodeEnum.DATABASE_SESSION_QUERY]: {
-    desc: 'Database Query',
+  [events.databaseSessionQuery.code]: {
+    desc: events.databaseSessionQuery.desc,
     format: ({ user, db_service, db_name, db_query }) =>
       `User [${user}] has executed query [${truncateStr(
         db_query,
         80
       )}] in database [${db_name}] on [${db_service}]`,
   },
-  [CodeEnum.MFA_DEVICE_ADD]: {
-    desc: 'MFA Device Added',
+  [events.mfaDeviceAdd.code]: {
+    desc: events.mfaDeviceAdd.desc,
     format: ({ user, mfa_device_name, mfa_device_type }) =>
       `User [${user}] added ${mfa_device_type} device [${mfa_device_name}]`,
   },
-  [CodeEnum.MFA_DEVICE_DELETE]: {
-    desc: 'MFA Device Deleted',
+  [events.mfaDeviceDelete.code]: {
+    desc: events.mfaDeviceDelete.desc,
     format: ({ user, mfa_device_name, mfa_device_type }) =>
       `User [${user}] deleted ${mfa_device_type} device [${mfa_device_name}]`,
   },
-  [CodeEnum.BILLING_CARD_CREATE]: {
-    desc: 'Credit Card Added',
+  [events.billingCardCreate.code]: {
+    desc: events.billingCardCreate.desc,
     format: ({ user }) => `User [${user}] has added a credit card`,
   },
-  [CodeEnum.BILLING_CARD_DELETE]: {
-    desc: 'Credit Card Deleted',
+  [events.billingCardDelete.code]: {
+    desc: events.billingCardDelete.desc,
     format: ({ user }) => `User [${user}] has deleted a credit card`,
   },
-  [CodeEnum.BILLING_CARD_UPDATE]: {
-    desc: 'Credit Card Updated',
+  [events.billingCardUpdate.code]: {
+    desc: events.billingCardUpdate.desc,
     format: ({ user }) => `User [${user}] has updated a credit card`,
   },
-  [CodeEnum.BILLING_ACCOUNT_UPDATE]: {
-    desc: 'Billing Information Updated',
+  [events.billingInformationUpdate.code]: {
+    desc: events.billingInformationUpdate.desc,
     format: ({ user }) => `User [${user}] has updated the billing information`,
   },
 };

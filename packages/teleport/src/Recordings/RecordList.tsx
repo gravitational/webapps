@@ -23,6 +23,7 @@ import { displayDateTime } from 'shared/services/loc';
 import * as Table from 'design/DataTable';
 import PagedTable from 'design/DataTable/Paged';
 import { Event, SessionEnd } from 'teleport/services/audit/types';
+import { MoreEvents } from 'teleport/useAuditEvents';
 import cfg from 'teleport/config';
 
 type SortCols = 'created' | 'duration';
@@ -31,7 +32,7 @@ type SortState = {
 };
 
 export default function RecordList(props: Props) {
-  const { clusterId, searchValue, pageSize, events } = props;
+  const { clusterId, searchValue, pageSize, events, moreEvents } = props;
   const [colSortDirs, setSort] = React.useState<SortState>(() => {
     return {
       created: Table.SortTypes.ASC,
@@ -73,6 +74,7 @@ export default function RecordList(props: Props) {
   const tableProps = {
     pageSize,
     data,
+    moreEvents,
   };
 
   return (
@@ -193,6 +195,7 @@ type Props = {
   events: Event[];
   pageSize?: number;
   clusterId: string;
+  moreEvents: MoreEvents;
 };
 
 const searchableProps = [
