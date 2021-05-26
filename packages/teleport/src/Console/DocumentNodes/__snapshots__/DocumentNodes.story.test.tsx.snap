@@ -503,9 +503,15 @@ exports[`render DocumentNodes 1`] = `
   color: rgba(255,255,255,0.87);
 }
 
+.c6 .react-select__indicator,
 .c6 .react-select__dropdown-indicator {
   padding: 4px 8px;
-  color: rgba(255,255,255,0.56);
+  color: #666;
+}
+
+.c6 .react-select__indicator:hover,
+.c6 .react-select__dropdown-indicator:hover {
+  color: #999 !important;
 }
 
 .c6 .react-select__control {
@@ -524,7 +530,7 @@ exports[`render DocumentNodes 1`] = `
 }
 
 .c6 .react-select__control:hover .react-select__dropdown-indicator {
-  color: rgba(255,255,255,0.87);
+  color: #666;
 }
 
 .c6 .react-select__control--is-focused {
@@ -537,8 +543,14 @@ exports[`render DocumentNodes 1`] = `
   border-color: rgba(255,255,255,0.24);
 }
 
+.c6 .react-select__control--is-focused .react-select__indicator,
 .c6 .react-select__control--is-focused .react-select__dropdown-indicator {
-  color: rgba(255,255,255,0.56);
+  color: #999 !important;
+}
+
+.c6 .react-select__control--is-focused .react-select__indicator:hover,
+.c6 .react-select__control--is-focused .react-select__dropdown-indicator:hover {
+  color: #ccc !important;
 }
 
 .c6 .react-select__option {
