@@ -1,0 +1,32 @@
+<!--
+  File for testing and a demo of how the library should be used
+ -->
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="referrer" content="origin" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Testing</title>
+  </head>
+  <body>
+    <div id="app" style="display: flex; justify-content: center;"></div>
+    <script src="https://localhost:8080/login.js"></script>
+    <!-- Login with Teleport Button -->
+    <script>
+      window.teleport.renderLoginButton(document.getElementById('app1'), {
+        text: 'Login with Teleport',
+        publicAddr: 'https://grafana-root.gravitational.io:3080',
+      });
+    </script>
+
+    <!-- Login with Teleport form -->
+    <script>
+      window.teleport.renderLoginForm(document.getElementById('form1'), {
+        proxyAddr: 'root.gravitational.io:3080',
+        appName: 'grafana',
+      });
+    </script>
+  </body>
+</html>

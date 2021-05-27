@@ -1,0 +1,212 @@
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <title>Grafana</title>
+    <link rel="stylesheet" href="http://localhost:3000/public/build/grafana.dark.d16f5ed5c8b612d69d10.css">
+</head>
+
+<body class="theme-dark app-grafana no-overlay-scrollbar login-page sidemenu-hidden">
+    <style>
+        .css-1woe985 {
+            -webkit-text-size-adjust: 100%;
+            -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+            font-size: 14px;
+            font-family: Roboto, Helvetica Neue, Arial, sans-serif;
+            line-height: 1.5;
+            color: #c7d0d9;
+            box-sizing: inherit;
+            border: 0;
+            vertical-align: middle;
+            width: 100%;
+            max-width: 100px;
+            margin-bottom: 15px;
+        }
+
+        .css-112vxvp {
+            -webkit-text-size-adjust: 100%;
+            -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+            font-size: 14px;
+            font-family: Roboto, Helvetica Neue, Arial, sans-serif;
+            line-height: 1.5;
+            color: #c7d0d9;
+            box-sizing: inherit;
+            background: url("http://localhost:3000/public/img/login_background_dark.svg") center center / cover no-repeat rgb(0, 0, 0);
+            min-height: 100vh;
+            min-width: 100%;
+            margin-left: 0px;
+            display: flex;
+            flex-direction: column;
+            -webkit-box-align: center;
+            align-items: center;
+            -webkit-box-pack: center;
+            justify-content: center;
+        }
+
+        .css-wvubsi {
+            -webkit-text-size-adjust: 100%;
+            -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+            font-size: 14px;
+            font-family: Roboto, Helvetica Neue, Arial, sans-serif;
+            line-height: 1.5;
+            color: #c7d0d9;
+            box-sizing: inherit;
+            max-width: 550px;
+            width: 100%;
+            display: flex;
+            -webkit-box-align: stretch;
+            align-items: stretch;
+            flex-direction: column;
+            position: relative;
+            -webkit-box-pack: center;
+            justify-content: center;
+            z-index: 1;
+            min-height: 320px;
+            border-radius: 3px;
+            padding: 20px 0px;
+            background: 0% 0% / cover rgba(18, 28, 41, 0.65);
+        }
+
+        .css-1yyz87g {
+            -webkit-text-size-adjust: 100%;
+            -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+            font-size: 14px;
+            font-family: Roboto, Helvetica Neue, Arial, sans-serif;
+            line-height: 1.5;
+            color: #c7d0d9;
+            box-sizing: inherit;
+            display: flex;
+            -webkit-box-align: center;
+            align-items: center;
+            -webkit-box-pack: center;
+            justify-content: center;
+            flex-direction: column;
+            padding: 24px;
+        }
+
+        .css-1w4npsm {
+            -webkit-text-size-adjust: 100%;
+            -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+            font-size: 14px;
+            font-family: Roboto, Helvetica Neue, Arial, sans-serif;
+            line-height: 1.5;
+            color: #c7d0d9;
+            box-sizing: inherit;
+            text-align: center;
+        }
+
+        .css-9h8xxw {
+            -webkit-text-size-adjust: 100%;
+            -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+            font-size: 14px;
+            font-family: Roboto, Helvetica Neue, Arial, sans-serif;
+            line-height: 1.5;
+            color: #c7d0d9;
+            box-sizing: inherit;
+            display: flex;
+            overflow-y: hidden;
+            -webkit-box-align: center;
+            align-items: center;
+            -webkit-box-pack: center;
+            justify-content: center;
+        }
+
+        .css-1ykba8d {
+            -webkit-text-size-adjust: 100%;
+            -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+            font-size: 14px;
+            font-family: Roboto, Helvetica Neue, Arial, sans-serif;
+            line-height: 1.5;
+            color: #c7d0d9;
+            box-sizing: inherit;
+            padding: 32px;
+            display: flex;
+            flex-direction: column;
+            -webkit-box-align: center;
+            align-items: center;
+            -webkit-box-pack: center;
+            justify-content: center;
+            -webkit-box-flex: 1;
+            flex-grow: 1;
+            max-width: 415px;
+            width: 100%;
+            transform: translate(0px, 0px);
+            transition: all 0.25s ease 0s;
+            animation: 0.2s ease-out 0s 1 normal none running animation-16t86o;
+        }
+
+        .css-lcb2lo {
+            -webkit-text-size-adjust: 100%;
+            -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+            font-size: 14px;
+            font-family: Roboto, Helvetica Neue, Arial, sans-serif;
+            line-height: 1.5;
+            color: #c7d0d9;
+            box-sizing: inherit;
+            width: 100%;
+            padding-bottom: 16px;
+        }
+
+        .css-y77huw {
+            -webkit-text-size-adjust: 100%;
+            -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+            font-family: Roboto, Helvetica Neue, Arial, sans-serif;
+            text-align: center;
+            box-sizing: inherit;
+            margin-top: 0;
+            margin-bottom: 8px;
+            font-weight: 400;
+            line-height: 1.1;
+            font-size: 14px;
+            color: rgb(159, 167, 179);
+        }
+    </style>
+
+    <div id="reactRoot">
+        <div class="grafana-app">
+            <div class="main-view">
+                <div class="css-112vxvp">
+                    <div class="css-wvubsi">
+                        <div class="css-1yyz87g">
+                            <img class="css-1woe985" src="http://localhost:3000/public/img/grafana_icon.svg"
+                                alt="Grafana">
+                            <div class="css-1w4npsm">
+                                <h1 class="css-1eqpw1q">Welcome to Grafana</h1>
+                                <h3 class="css-y77huw">Democratising data</h3>
+                            </div>
+                        </div>
+                        <div class="css-9h8xxw">
+                            <div class="css-1ykba8d">
+                                <div id="app1" class="css-lcb2lo"></div>
+                                <div id="app2" class="css-lcb2lo"></div>
+                                <div id="form1" class="css-lcb2lo"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Login with Teleport Javascript library -->
+    <script src="/build/login.js"></script>
+
+    <!-- Login with Teleport button -->
+    <script>
+        window.teleport.renderLoginButton(document.getElementById('app1'), {
+            text: 'Login with Teleport',
+            publicAddr: 'https://grafana-root.gravitational.io:3080'
+        });
+    </script>
+
+    <!-- Login with Teleport form -->
+    <script>
+        window.teleport.renderLoginForm(document.getElementById('form1'), {
+            proxyAddr: 'root.gravitational.io:3080',
+            appName: 'grafana'
+        });
+    </script>
+
+</body>
+
+</html>
