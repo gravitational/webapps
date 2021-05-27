@@ -20,12 +20,9 @@ const StyledDarkSelect = styled(StyledSelect)(
   .react-select-container {
     background: transparent;
   }
-  
-  .react-select__control,
-  .react-select__control--is-focused {
-    border-color: #FFF;
-    min-height: 34px;
-    height: 34px;
+
+  .react-select__option--is-focused:active {
+    background-color: ${theme.colors.grey[50]};
   }
   
   .react-select__value-container {
@@ -36,16 +33,10 @@ const StyledDarkSelect = styled(StyledSelect)(
     color: ${theme.colors.text.primary}
   }
 
-  .react-select__indicator,
-  .react-select__dropdown-indicator {
-    padding: 4px 8px;
-    color: #666;
-    &:hover {
-      color: #999 !important;
-    }
-  }
-
+  
   .react-select__control {
+    min-height: 34px;
+    height: 34px;
     border-color: rgba(255, 255, 255, 0.24);
     color: ${theme.colors.text.secondary};
 
@@ -58,6 +49,15 @@ const StyledDarkSelect = styled(StyledSelect)(
       background-color: ${theme.colors.primary.lighter};
       .react-select__dropdown-indicator {
         color: #666;
+      }
+    }
+
+    .react-select__indicator,
+    .react-select__dropdown-indicator {
+      padding: 4px 8px;
+      color: #666;
+      &:hover {
+        color: #999;
       }
     }
   }
@@ -92,10 +92,6 @@ const StyledDarkSelect = styled(StyledSelect)(
     padding: 4px 12px;
   } 
 
-  .react-select__option--is-focused:active {
-    background-color: ${theme.colors.grey[50]};
-  }
-
   .react-select__menu {
     border-top-left-radius: 0;
     border-top-right-radius: 0;
@@ -108,7 +104,7 @@ const StyledDarkSelect = styled(StyledSelect)(
 
   .react-select__multi-value__label {
     color: ${theme.colors.text.primary};
-    padding: 0 0 0 6px;
+    padding: 0 6px;
   }
 `
 );

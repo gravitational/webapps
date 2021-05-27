@@ -24,7 +24,7 @@ export default {
 
 export const Selects = () => {
   return (
-    <Flex justifyContent="space-evenly">
+    <Flex>
       <SelectDefault {...props} />
       <SelectDark {...props} />
     </Flex>
@@ -48,7 +48,7 @@ function SelectDefault({ value, onChange, options }) {
   const [selected, setSelected] = React.useState([]);
 
   return (
-    <Flex flexDirection="column" width="500px">
+    <Flex flexDirection="column" width="330px" mr={5}>
       <Box mb="200px">
         <Select
           value={value}
@@ -64,7 +64,6 @@ function SelectDefault({ value, onChange, options }) {
           options={options}
           clearable={true}
           placeholder="Click to select a role"
-          menuIsOpen={true}
         />
       </Box>
     </Flex>
@@ -75,27 +74,23 @@ function SelectDark({ value, onChange, options }) {
   const [selected, setSelected] = React.useState([]);
 
   return (
-    <Flex flexDirection="column" width="500px">
-      <Box mb="200px">
-        <DarkStyledSelect>
-          <Select
-            value={value}
-            onChange={onChange}
-            options={options}
-            isMulti={true}
-          />
-        </DarkStyledSelect>
-      </Box>
-      <Box>
-        <DarkStyledSelect>
-          <Select
-            value={selected}
-            onChange={(opt: any) => setSelected(opt)}
-            options={options}
-            placeholder="Click to select a role"
-          />
-        </DarkStyledSelect>
-      </Box>
+    <Flex flexDirection="column" width="330px">
+      <DarkStyledSelect mb="206px">
+        <Select
+          value={value}
+          onChange={onChange}
+          options={options}
+          isMulti={true}
+        />
+      </DarkStyledSelect>
+      <DarkStyledSelect>
+        <Select
+          value={selected}
+          onChange={(opt: any) => setSelected(opt)}
+          options={options}
+          placeholder="Click to select a role"
+        />
+      </DarkStyledSelect>
     </Flex>
   );
 }

@@ -491,11 +491,8 @@ exports[`render DocumentNodes 1`] = `
   background: transparent;
 }
 
-.c6 .react-select__control,
-.c6 .react-select__control--is-focused {
-  border-color: #FFF;
-  min-height: 34px;
-  height: 34px;
+.c6 .react-select__option--is-focused:active {
+  background-color: #eceff1;
 }
 
 .c6 .react-select__value-container {
@@ -506,18 +503,9 @@ exports[`render DocumentNodes 1`] = `
   color: rgba(255,255,255,0.87);
 }
 
-.c6 .react-select__indicator,
-.c6 .react-select__dropdown-indicator {
-  padding: 4px 8px;
-  color: #666;
-}
-
-.c6 .react-select__indicator:hover,
-.c6 .react-select__dropdown-indicator:hover {
-  color: #999 !important;
-}
-
 .c6 .react-select__control {
+  min-height: 34px;
+  height: 34px;
   border-color: rgba(255,255,255,0.24);
   color: rgba(255,255,255,0.56);
 }
@@ -534,6 +522,17 @@ exports[`render DocumentNodes 1`] = `
 
 .c6 .react-select__control:hover .react-select__dropdown-indicator {
   color: #666;
+}
+
+.c6 .react-select__control .react-select__indicator,
+.c6 .react-select__control .react-select__dropdown-indicator {
+  padding: 4px 8px;
+  color: #666;
+}
+
+.c6 .react-select__control .react-select__indicator:hover,
+.c6 .react-select__control .react-select__dropdown-indicator:hover {
+  color: #999;
 }
 
 .c6 .react-select__control--menu-is-open {
@@ -568,10 +567,6 @@ exports[`render DocumentNodes 1`] = `
   padding: 4px 12px;
 }
 
-.c6 .react-select__option--is-focused:active {
-  background-color: #eceff1;
-}
-
 .c6 .react-select__menu {
   border-top-left-radius: 0;
   border-top-right-radius: 0;
@@ -584,7 +579,7 @@ exports[`render DocumentNodes 1`] = `
 
 .c6 .react-select__multi-value__label {
   color: rgba(255,255,255,0.87);
-  padding: 0 0 0 6px;
+  padding: 0 6px;
 }
 
 .c6 .react-select-container {
