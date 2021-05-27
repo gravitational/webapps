@@ -61,7 +61,7 @@ const StyledDarkSelect = styled(StyledSelect)(
     }
   }
 
-  .react-select__control--is-focused {
+  .react-select__control--menu-is-open {
     background-color: ${theme.colors.primary.lighter};
     border-color: transparent;
     border-radius: 4px;

@@ -20,10 +20,10 @@ import { Flex, Box, LabelInput } from 'design';
 import Select, { DarkStyledSelect } from '../Select';
 
 export default {
-  title: 'Shared/Select',
+  title: 'Shared',
 };
 
-export const SelectTypes = () => {
+export const Selects = () => {
   return (
     <Flex justifyContent="space-evenly">
       <SelectDefault {...props} />
@@ -100,6 +100,7 @@ function SelectDark({ value, onChange, options }) {
   );
 }
 
+// height increased back to default 40px to fit selected multi-value properly
 const StyledSelect = styled(DarkStyledSelect)`
   .react-select__control,
   .react-select__control--is-focused {

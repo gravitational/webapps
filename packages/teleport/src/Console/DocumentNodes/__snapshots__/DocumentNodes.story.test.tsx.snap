@@ -533,7 +533,7 @@ exports[`render DocumentNodes 1`] = `
   color: #666;
 }
 
-.c6 .react-select__control--is-focused {
+.c6 .react-select__control--menu-is-open {
   background-color: #092F52;
   border-color: transparent;
   border-radius: 4px;
@@ -543,13 +543,13 @@ exports[`render DocumentNodes 1`] = `
   border-color: rgba(255,255,255,0.24);
 }
 
-.c6 .react-select__control--is-focused .react-select__indicator,
-.c6 .react-select__control--is-focused .react-select__dropdown-indicator {
+.c6 .react-select__control--menu-is-open .react-select__indicator,
+.c6 .react-select__control--menu-is-open .react-select__dropdown-indicator {
   color: #999 !important;
 }
 
-.c6 .react-select__control--is-focused .react-select__indicator:hover,
-.c6 .react-select__control--is-focused .react-select__dropdown-indicator:hover {
+.c6 .react-select__control--menu-is-open .react-select__indicator:hover,
+.c6 .react-select__control--menu-is-open .react-select__dropdown-indicator:hover {
   color: #ccc !important;
 }
 
@@ -596,6 +596,7 @@ exports[`render DocumentNodes 1`] = `
 }
 
 .c6 .react-select__single-value {
+  color: white;
   padding: 0 4px;
   margin: 0;
 }

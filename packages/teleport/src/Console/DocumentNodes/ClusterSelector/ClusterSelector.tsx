@@ -110,6 +110,7 @@ const StyledSelect = styled(DarkStyledSelect)(
   }
 
   .react-select__single-value {
+    color: white;
     padding: 0 4px;
     margin: 0;
   }
