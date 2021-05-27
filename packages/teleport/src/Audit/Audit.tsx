@@ -29,6 +29,7 @@ import useTeleport from 'teleport/useTeleport';
 import useStickyClusterId from 'teleport/useStickyClusterId';
 import useAuditEvents from 'teleport/useAuditEvents';
 import EventsFilter from './EventsFilter';
+import EventsFilter2 from './EventsFitler2/EventsFilter2';
 
 export default function Container() {
   const teleCtx = useTeleport();
@@ -53,10 +54,9 @@ export function Audit(props: ReturnType<typeof useAuditEvents>) {
 
   return (
     <FeatureBox>
-      <FeatureHeader alignItems="center">
+      <FeatureHeader alignItems="center" mb={0}>
         <FeatureHeaderTitle mr="8">Audit Log</FeatureHeaderTitle>
         <Flex ml="auto">
-          <EventsFilter onFilterChange={onFilterChange} />
           <RangePicker
             ml="3"
             range={range}
@@ -64,6 +64,11 @@ export function Audit(props: ReturnType<typeof useAuditEvents>) {
             onChangeRange={setRange}
           />
         </Flex>
+      </FeatureHeader>
+      <FeatureHeader
+        style={{ height: 'auto', paddingTop: '24px', paddingBottom: '24px' }}
+      >
+        <EventsFilter2 onFilterChange={onFilterChange} />
       </FeatureHeader>
       <Flex
         mb={4}

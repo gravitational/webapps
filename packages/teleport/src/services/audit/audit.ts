@@ -20,7 +20,7 @@ import makeEvent from './makeEvent';
 import { EventQuery, Event } from './types';
 
 // TODO change default to 5k
-const EVENT_FETCH_MAX_LIMIT = 10;
+const EVENT_FETCH_MAX_LIMIT = 20;
 
 class AuditService {
   maxFetchLimit = EVENT_FETCH_MAX_LIMIT;
@@ -33,7 +33,10 @@ class AuditService {
       start,
       end,
       limit: this.maxFetchLimit,
-      include: params.filterBy ? params.filterBy : undefined,
+      include:
+        params.filters && params.filters.length > 0
+          ? params.filters.join(',')
+          : undefined,
       startKey: params.startKey ? params.startKey : undefined,
     });
 

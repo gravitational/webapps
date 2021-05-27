@@ -440,5 +440,5 @@ export type EventQuery = {
   to: Date;
   limit?: number;
   startKey?: string;
-  filterBy?: string;
+  filters?: string[];
 };

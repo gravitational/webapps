@@ -31,11 +31,13 @@ export default function useAuditEvents(
   const { attempt, setAttempt, run } = useAttempt('processing');
   const [events, setEvents] = useState<Event[]>([]);
   const [startKey, setStartKey] = useState('');
-  const [eventFilter, setEventFilter] = useState(eventType);
+  const [eventFilters, setEventFilters] = useState(
+    eventType ? [eventType] : null
+  );
   const [disableFetchMore, setDisableFetchMore] = useState(false);
 
   useEffect(() => {
-    fetch(eventFilter);
+    fetch(eventFilters);
   }, [clusterId, range]);
 
   // fetchMore gets events from last position from
@@ -44,7 +46,7 @@ export default function useAuditEvents(
   function fetchMore() {
     setDisableFetchMore(true);
     ctx.auditService
-      .fetchEvents(clusterId, { ...range, startKey, filterBy: eventFilter })
+      .fetchEvents(clusterId, { ...range, startKey, filters: eventFilters })
       .then(res => {
         // TODO remove filter, bug in backend where it always includes the last, last result,
         // resulting in duplicates, and limit - 1 result.
@@ -60,10 +62,10 @@ export default function useAuditEvents(
 
   // fetch gets events from beginning, filtered by event type (if any)
   // and replaces existing events list.
-  function fetch(filterBy: string) {
+  function fetch(filters: string[]) {
     run(() =>
       ctx.auditService
-        .fetchEvents(clusterId, { ...range, filterBy })
+        .fetchEvents(clusterId, { ...range, filters })
         .then(res => {
           setEvents(res.events);
           setStartKey(res.startKey);
@@ -71,9 +73,9 @@ export default function useAuditEvents(
     );
   }
 
-  function onFilterChange(filter: string) {
-    setEventFilter(filter);
-    fetch(filter);
+  function onFilterChange(filters: string[]) {
+    setEventFilters(filters);
+    fetch(filters);
   }
 
   let moreEvents: MoreEvents = null;

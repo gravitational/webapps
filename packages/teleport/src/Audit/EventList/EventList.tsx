@@ -33,7 +33,7 @@ export default function EventList(props: Props) {
       searchableProps: ['codeDesc', 'message', 'user', 'time'],
       detailsToShow: null,
       colSortDirs: {
-        time: Table.SortTypes.ASC,
+        time: Table.SortTypes.DESC,
       },
     };
   });
