@@ -15,8 +15,7 @@ limitations under the License.
 */
 
 import React from 'react';
-import styled from 'styled-components';
-import { Flex, Box, LabelInput } from 'design';
+import { Flex, Box } from 'design';
 import Select, { DarkStyledSelect } from '../Select';
 
 export default {
@@ -46,10 +45,11 @@ const props = {
 };
 
 function SelectDefault({ value, onChange, options }) {
+  const [selected, setSelected] = React.useState([]);
+
   return (
     <Flex flexDirection="column" width="500px">
-      <Box mb="8">
-        <LabelInput>User Roles</LabelInput>
+      <Box mb="200px">
         <Select
           value={value}
           onChange={onChange}
@@ -58,13 +58,13 @@ function SelectDefault({ value, onChange, options }) {
         />
       </Box>
       <Box>
-        <LabelInput>User Roles</LabelInput>
         <Select
-          value={[]}
-          onChange={onChange}
+          value={selected}
+          onChange={(opt: any) => setSelected(opt)}
           options={options}
           clearable={true}
           placeholder="Click to select a role"
+          menuIsOpen={true}
         />
       </Box>
     </Flex>
@@ -72,38 +72,30 @@ function SelectDefault({ value, onChange, options }) {
 }
 
 function SelectDark({ value, onChange, options }) {
+  const [selected, setSelected] = React.useState([]);
+
   return (
     <Flex flexDirection="column" width="500px">
-      <Box mb="8">
-        <LabelInput>User Roles</LabelInput>
-        <StyledSelect>
+      <Box mb="200px">
+        <DarkStyledSelect>
           <Select
             value={value}
             onChange={onChange}
             options={options}
             isMulti={true}
           />
-        </StyledSelect>
+        </DarkStyledSelect>
       </Box>
       <Box>
-        <LabelInput>User Roles</LabelInput>
-        <StyledSelect>
+        <DarkStyledSelect>
           <Select
-            value={[]}
-            onChange={onChange}
+            value={selected}
+            onChange={(opt: any) => setSelected(opt)}
             options={options}
             placeholder="Click to select a role"
           />
-        </StyledSelect>
+        </DarkStyledSelect>
       </Box>
     </Flex>
   );
 }
-
-// height increased back to default 40px to fit selected multi-value properly
-const StyledSelect = styled(DarkStyledSelect)`
-  .react-select__control,
-  .react-select__control--is-focused {
-    min-height: 40px;
-  }
-`;

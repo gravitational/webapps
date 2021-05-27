@@ -242,6 +242,7 @@ exports[`render instructions dialog for adding database 1`] = `
 .c17 .react-select__control,
 .c17 .react-select__control--is-focused {
   min-height: 40px;
+  height: 40px;
   background-color: transparent;
   border-color: transparent;
   border-radius: 4px;

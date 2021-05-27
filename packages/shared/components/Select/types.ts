@@ -20,6 +20,7 @@ export type Props = {
   isSimpleValue?: boolean;
   isSearchable?: boolean;
   isDisabled?: boolean;
+  menuIsOpen?: boolean;
   maxMenuHeight?: number;
   onChange(e: Option<any> | Option<any>[]): void;
   value: null | Option<any> | Option<any>[];

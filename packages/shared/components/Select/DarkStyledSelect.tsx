@@ -25,6 +25,7 @@ const StyledDarkSelect = styled(StyledSelect)(
   .react-select__control--is-focused {
     border-color: #FFF;
     min-height: 34px;
+    height: 34px;
   }
   
   .react-select__value-container {
@@ -89,14 +90,7 @@ const StyledDarkSelect = styled(StyledSelect)(
 
   .react-select__option {
     padding: 4px 12px;
-    &:hover {
-      background-color: ${theme.colors.grey[100]};
-    }
-  }
-
-  .react-select__option--is-focused {
-    background-color: ${theme.colors.grey[100]};
-  }  
+  } 
 
   .react-select__option--is-focused:active {
     background-color: ${theme.colors.grey[50]};
@@ -114,6 +108,7 @@ const StyledDarkSelect = styled(StyledSelect)(
 
   .react-select__multi-value__label {
     color: ${theme.colors.text.primary};
+    padding: 0 0 0 6px;
   }
 `
 );
