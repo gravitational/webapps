@@ -14,179 +14,208 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import events, { EventCode } from './eventTypes';
+// eventGroupTypes contains a map of events that were grouped under the same
+// event type but have different event codes. This is used to filter out duplicate
+// event types when listing event filters and provide modified description of event.
+export const eventGroupTypes = {
+  'db.session.start': 'Database Session Start',
+  exec: 'Command Execution',
+  port: 'Port Forwarding',
+  scp: 'SCP',
+  subsystem: 'Subsystem Request',
+  'user.login': 'User Logins',
+};
+
+/**
+ * eventCodes is a map of event codes.
+ *
+ * After defining an event code:
+ *  1: Define fields from JSON response in `RawEvents` object
+ *  2: Define formatter in `makeEvent` file which defines *events types and
+ *     defines short and long event definitions
+ *  * Some events can have same event "type" but have unique "code".
+ *    These duplicated event types needs to be defined in `eventGroupTypes` object
+ *  3: Define icons for events under `EventTypeCell` file
+ *  4: Add an actual JSON event to the fixtures file in `src/Audit` directory to
+ *     be used for display and test in storybook.
+ */
+export const eventCodes = {
+  ACCESS_REQUEST_CREATED: 'T5000I',
+  ACCESS_REQUEST_REVIEWED: 'T5002I',
+  ACCESS_REQUEST_UPDATED: 'T5001I',
+  APP_SESSION_CHUNK: 'T2008I',
+  APP_SESSION_START: 'T2007I',
+  AUTH_ATTEMPT_FAILURE: 'T3007W',
+  BILLING_INFORMATION_UPDATE: 'TBL03I',
+  BILLING_CARD_CREATE: 'TBL00I',
+  BILLING_CARD_DELETE: 'TBL01I',
+  BILLING_CARD_UPDATE: 'TBL02I',
+  CLIENT_DISCONNECT: 'T3006I',
+  DATABASE_SESSION_ENDED: 'TDB01I',
+  DATABASE_SESSION_QUERY: 'TDB02I',
+  DATABASE_SESSION_STARTED_FAILURE: 'TDB00W',
+  DATABASE_SESSION_STARTED: 'TDB00I',
+  EXEC_FAILURE: 'T3002E',
+  EXEC: 'T3002I',
+  GITHUB_CONNECTOR_CREATED: 'T8000I',
+  GITHUB_CONNECTOR_DELETED: 'T8001I',
+  KUBE_REQUEST: 'T3009I',
+  MFA_DEVICE_ADD: 'T1006I',
+  MFA_DEVICE_DELETE: 'T1007I',
+  OIDC_CONNECTOR_CREATED: 'T8100I',
+  OIDC_CONNECTOR_DELETED: 'T8101I',
+  PORTFORWARD_FAILURE: 'T3003E',
+  PORTFORWARD: 'T3003I',
+  RESET_PASSWORD_TOKEN_CREATED: 'T6000I',
+  ROLE_CREATED: 'T9000I',
+  ROLE_DELETED: 'T9001I',
+  SAML_CONNECTOR_CREATED: 'T8200I',
+  SAML_CONNECTOR_DELETED: 'T8201I',
+  SCP_DOWNLOAD_FAILURE: 'T3004E',
+  SCP_DOWNLOAD: 'T3004I',
+  SCP_UPLOAD_FAILURE: 'T3005E',
+  SCP_UPLOAD: 'T3005I',
+  SESSION_COMMAND: 'T4000I',
+  SESSION_DATA: 'T2006I',
+  SESSION_DISK: 'T4001I',
+  SESSION_END: 'T2004I',
+  SESSION_JOIN: 'T2001I',
+  SESSION_LEAVE: 'T2003I',
+  SESSION_NETWORK: 'T4002I',
+  SESSION_REJECT: 'T1006W',
+  SESSION_START: 'T2000I',
+  SESSION_UPLOAD: 'T2005I',
+  SUBSYSTEM_FAILURE: 'T3001E',
+  SUBSYSTEM: 'T3001I',
+  TERMINAL_RESIZE: 'T2002I',
+  TRUSTED_CLUSTER_CREATED: 'T7000I',
+  TRUSTED_CLUSTER_DELETED: 'T7001I',
+  TRUSTED_CLUSTER_TOKEN_CREATED: 'T7002I',
+  USER_CREATED: 'T1002I',
+  USER_DELETED: 'T1004I',
+  USER_LOCAL_LOGIN: 'T1000I',
+  USER_LOCAL_LOGINFAILURE: 'T1000W',
+  USER_PASSWORD_CHANGED: 'T1005I',
+  USER_SSO_LOGIN: 'T1001I',
+  USER_SSO_LOGINFAILURE: 'T1001W',
+  USER_UPDATED: 'T1003I',
+} as const;
 
 /**
  * Describes all raw event types
  */
 export type RawEvents = {
-  [events.accessRequestCreate.code]: RawEventAccess<
-    typeof events.accessRequestUpdate.code
+  [eventCodes.ACCESS_REQUEST_CREATED]: RawEventAccess<
+    typeof eventCodes.ACCESS_REQUEST_CREATED
   >;
-  [events.accessRequestUpdate.code]: RawEventAccess<
-    typeof events.accessRequestUpdate.code
+  [eventCodes.ACCESS_REQUEST_UPDATED]: RawEventAccess<
+    typeof eventCodes.ACCESS_REQUEST_UPDATED
   >;
-  [events.accessRequestReview.code]: RawEventAccess<
-    typeof events.accessRequestReview.code
+  [eventCodes.ACCESS_REQUEST_REVIEWED]: RawEventAccess<
+    typeof eventCodes.ACCESS_REQUEST_REVIEWED
   >;
-  [events.authAttemptFailure.code]: RawEvent<
-    typeof events.authAttemptFailure.code,
-    {
-      error: string;
-    }
+  [eventCodes.AUTH_ATTEMPT_FAILURE]: RawEventAuthFailure<
+    typeof eventCodes.AUTH_ATTEMPT_FAILURE
   >;
-  [events.clientDisconnect.code]: RawEvent<
-    typeof events.clientDisconnect.code,
+  [eventCodes.CLIENT_DISCONNECT]: RawEvent<
+    typeof eventCodes.CLIENT_DISCONNECT,
     { reason: string }
   >;
-  [events.clientDisconnect.code]: RawEvent<
-    typeof events.clientDisconnect.code,
-    { reason: string }
-  >;
-  [events.exec.code]: RawEvent<
-    typeof events.exec.code,
+  [eventCodes.EXEC]: RawEvent<
+    typeof eventCodes.EXEC,
     {
       proto: 'kube';
       kubernetes_cluster: string;
     }
   >;
-  [events.execFailure.code]: RawEvent<
-    typeof events.execFailure.code,
+  [eventCodes.EXEC_FAILURE]: RawEvent<
+    typeof eventCodes.EXEC_FAILURE,
     { exitError: string }
   >;
-  [events.billingCardCreate.code]: RawEvent<
-    typeof events.billingCardCreate.code
+  [eventCodes.BILLING_CARD_CREATE]: RawEvent<
+    typeof eventCodes.BILLING_CARD_CREATE
   >;
-  [events.billingCardDelete.code]: RawEvent<
-    typeof events.billingCardDelete.code
+  [eventCodes.BILLING_CARD_DELETE]: RawEvent<
+    typeof eventCodes.BILLING_CARD_DELETE
   >;
-  [events.billingCardUpdate.code]: RawEvent<
-    typeof events.billingCardUpdate.code
+  [eventCodes.BILLING_CARD_UPDATE]: RawEvent<
+    typeof eventCodes.BILLING_CARD_UPDATE
   >;
-  [events.billingInformationUpdate.code]: RawEvent<
-    typeof events.billingInformationUpdate.code
+  [eventCodes.BILLING_INFORMATION_UPDATE]: RawEvent<
+    typeof eventCodes.BILLING_INFORMATION_UPDATE
   >;
-  [events.githubConnectorCreated.code]: RawEventConnector<
-    typeof events.githubConnectorCreated.code
+  [eventCodes.GITHUB_CONNECTOR_CREATED]: RawEventConnector<
+    typeof eventCodes.GITHUB_CONNECTOR_CREATED
   >;
-  [events.githubConnectorDeleted.code]: RawEventConnector<
-    typeof events.githubConnectorDeleted.code
+  [eventCodes.GITHUB_CONNECTOR_DELETED]: RawEventConnector<
+    typeof eventCodes.GITHUB_CONNECTOR_DELETED
   >;
-  [events.oidcConnectorCreated.code]: RawEventConnector<
-    typeof events.oidcConnectorCreated.code
+  [eventCodes.OIDC_CONNECTOR_CREATED]: RawEventConnector<
+    typeof eventCodes.OIDC_CONNECTOR_CREATED
   >;
-  [events.oidcConnectorDeleted.code]: RawEventConnector<
-    typeof events.oidcConnectorDeleted.code
+  [eventCodes.OIDC_CONNECTOR_DELETED]: RawEventConnector<
+    typeof eventCodes.OIDC_CONNECTOR_DELETED
   >;
-  [events.portForward.code]: RawEvent<typeof events.portForward.code>;
-  [events.portForwardFailure.code]: RawEvent<
-    typeof events.portForwardFailure.code,
+  [eventCodes.PORTFORWARD]: RawEvent<typeof eventCodes.PORTFORWARD>;
+  [eventCodes.PORTFORWARD_FAILURE]: RawEvent<
+    typeof eventCodes.PORTFORWARD_FAILURE,
     {
       error: string;
     }
   >;
-  [events.samlConnectorCreated.code]: RawEventConnector<
-    typeof events.samlConnectorCreated.code
+  [eventCodes.SAML_CONNECTOR_CREATED]: RawEventConnector<
+    typeof eventCodes.SAML_CONNECTOR_CREATED
   >;
-  [events.samlConnectorDeleted.code]: RawEventConnector<
-    typeof events.samlConnectorDeleted.code
+  [eventCodes.SAML_CONNECTOR_DELETED]: RawEventConnector<
+    typeof eventCodes.SAML_CONNECTOR_DELETED
   >;
-  [events.scpDownload.code]: RawEvent<
-    typeof events.scpDownload.code,
+  [eventCodes.SCP_DOWNLOAD]: RawEvent<
+    typeof eventCodes.SCP_DOWNLOAD,
     {
       path: string;
       ['addr_local']: string;
     }
   >;
-  [events.scpDownloadFailure.code]: RawEvent<
-    typeof events.scpDownloadFailure.code,
+  [eventCodes.SCP_DOWNLOAD_FAILURE]: RawEvent<
+    typeof eventCodes.SCP_DOWNLOAD_FAILURE,
     {
       exitError: string;
     }
   >;
-  [events.scpUpload.code]: RawEvent<
-    typeof events.scpUpload.code,
+  [eventCodes.SCP_UPLOAD]: RawEvent<
+    typeof eventCodes.SCP_UPLOAD,
     {
       path: string;
       ['addr.local']: string;
     }
   >;
-  [events.scpUploadFailure.code]: RawEvent<
-    typeof events.scpUploadFailure.code,
+  [eventCodes.SCP_UPLOAD_FAILURE]: RawEvent<
+    typeof eventCodes.SCP_UPLOAD_FAILURE,
     {
       exitError: string;
     }
   >;
 
-  [events.sessionCommand.code]: RawEvent<
-    typeof events.sessionCommand.code,
-    {
-      login: string;
-      namespace: string;
-      path: string;
-      pid: number;
-      ppid: number;
-      program: string;
-      return_code: number;
-      server_id: string;
-      sid: string;
-    }
+  [eventCodes.SESSION_COMMAND]: RawEventCommand<
+    typeof eventCodes.SESSION_COMMAND
   >;
 
-  [events.sessionDisk.code]: RawEvent<
-    typeof events.sessionDisk.code,
-    {
-      login: string;
-      namespace: string;
-      pid: number;
-      cgroup_id: number;
-      program: string;
-      path: string;
-      return_code: number;
-      server_id: string;
-      flags: number;
-      sid: string;
-    }
+  [eventCodes.SESSION_DISK]: RawDiskEvent<typeof eventCodes.SESSION_DISK>;
+
+  [eventCodes.SESSION_NETWORK]: RawEventNetwork<
+    typeof eventCodes.SESSION_NETWORK
   >;
 
-  [events.sessionNetwork.code]: RawEvent<
-    typeof events.sessionNetwork.code,
-    {
-      login: string;
-      namespace: string;
-      pid: number;
-      cgroup_id: number;
-      program: string;
-      server_id: string;
-      flags: number;
-      sid: string;
-      src_addr: string;
-      dst_addr: string;
-      dst_port: string;
-    }
-  >;
+  [eventCodes.SESSION_DATA]: RawEventData<typeof eventCodes.SESSION_DATA>;
 
-  [events.sessionData.code]: RawEvent<
-    typeof events.sessionData.code,
-    {
-      login: string;
-      rx: number;
-      server_id: string;
-      sid: string;
-      tx: number;
-      user: string;
-    }
-  >;
-
-  [events.userSessionJoin.code]: RawEvent<
-    typeof events.userSessionJoin.code,
+  [eventCodes.SESSION_JOIN]: RawEvent<
+    typeof eventCodes.SESSION_JOIN,
     {
       sid: string;
     }
   >;
-
-  [events.sessionEnd.code]: RawEvent<
-    typeof events.sessionEnd.code,
+  [eventCodes.SESSION_END]: RawEvent<
+    typeof eventCodes.SESSION_END,
     {
       sid: string;
       server_id: string;
@@ -203,116 +232,106 @@ export type RawEvents = {
       session_recording: 'off' | 'node' | 'proxy' | 'node-sync' | 'proxy-sync';
     }
   >;
-  [events.userSessionLeave.code]: RawEvent<
-    typeof events.userSessionLeave.code,
+  [eventCodes.SESSION_LEAVE]: RawEvent<
+    typeof eventCodes.SESSION_LEAVE,
     {
       sid: string;
     }
   >;
-  [events.sessionStart.code]: RawEvent<
-    typeof events.sessionStart.code,
+  [eventCodes.SESSION_START]: RawEvent<
+    typeof eventCodes.SESSION_START,
     {
       sid: string;
     }
   >;
-  [events.sessionRejected.code]: RawEvent<
-    typeof events.sessionRejected.code,
+  [eventCodes.SESSION_REJECT]: RawEvent<
+    typeof eventCodes.SESSION_REJECT,
     {
       login: string;
       server_id: string;
       reason: string;
     }
   >;
-  [events.sessionUpload.code]: RawEvent<
-    typeof events.sessionUpload.code,
+  [eventCodes.SESSION_UPLOAD]: RawEvent<
+    typeof eventCodes.SESSION_UPLOAD,
     {
       sid: string;
     }
   >;
-  [events.appSessionStart.code]: RawEvent<
-    typeof events.appSessionStart.code,
+  [eventCodes.APP_SESSION_START]: RawEvent<
+    typeof eventCodes.APP_SESSION_START,
     { sid: string }
   >;
-  [events.appSessionChunk.code]: RawEvent<
-    typeof events.appSessionChunk.code,
+  [eventCodes.APP_SESSION_CHUNK]: RawEvent<
+    typeof eventCodes.APP_SESSION_CHUNK,
     { sid: string }
   >;
-  [events.subsystem.code]: RawEvent<
-    typeof events.subsystem.code,
+  [eventCodes.SUBSYSTEM]: RawEvent<
+    typeof eventCodes.SUBSYSTEM,
     {
       name: string;
     }
   >;
-  [events.subsystemFailure.code]: RawEvent<
-    typeof events.subsystemFailure.code,
+  [eventCodes.SUBSYSTEM_FAILURE]: RawEvent<
+    typeof eventCodes.SUBSYSTEM_FAILURE,
     {
       name: string;
       exitError: string;
     }
   >;
-  [events.terminalResize.code]: RawEvent<
-    typeof events.terminalResize.code,
+  [eventCodes.TERMINAL_RESIZE]: RawEvent<
+    typeof eventCodes.TERMINAL_RESIZE,
     { sid: string }
   >;
-  [events.userCreate.code]: RawEventUser<typeof events.userCreate.code>;
-  [events.userDelete.code]: RawEventUser<typeof events.userDelete.code>;
-  [events.userUpdated.code]: RawEventUser<typeof events.userUpdated.code>;
-  [events.userPasswordChange.code]: RawEvent<
-    typeof events.userPasswordChange.code,
+  [eventCodes.USER_CREATED]: RawEventUser<typeof eventCodes.USER_CREATED>;
+  [eventCodes.USER_DELETED]: RawEventUser<typeof eventCodes.USER_DELETED>;
+  [eventCodes.USER_UPDATED]: RawEventUser<typeof eventCodes.USER_UPDATED>;
+  [eventCodes.USER_PASSWORD_CHANGED]: RawEvent<
+    typeof eventCodes.USER_PASSWORD_CHANGED,
     HasName
   >;
-  [events.resetPasswordTokenCreate.code]: RawEvent<
-    typeof events.resetPasswordTokenCreate.code,
-    {
-      name: string;
-      ttl: string;
-    }
+  [eventCodes.RESET_PASSWORD_TOKEN_CREATED]: RawEventPasswordToken<
+    typeof eventCodes.RESET_PASSWORD_TOKEN_CREATED
   >;
-  [events.userLogin.code]: RawEvent<typeof events.userLogin.code>;
-  [events.userLoginFailure.code]: RawEvent<
-    typeof events.userLoginFailure.code,
+  [eventCodes.USER_LOCAL_LOGIN]: RawEvent<typeof eventCodes.USER_LOCAL_LOGIN>;
+  [eventCodes.USER_LOCAL_LOGINFAILURE]: RawEvent<
+    typeof eventCodes.USER_LOCAL_LOGINFAILURE,
     {
       error: string;
     }
   >;
-  [events.userSsoLogin.code]: RawEvent<typeof events.userSsoLogin.code>;
-  [events.userSsoLoginFailure.code]: RawEvent<
-    typeof events.userSsoLoginFailure.code,
+  [eventCodes.USER_SSO_LOGIN]: RawEvent<typeof eventCodes.USER_SSO_LOGIN>;
+  [eventCodes.USER_SSO_LOGINFAILURE]: RawEvent<
+    typeof eventCodes.USER_SSO_LOGINFAILURE,
     {
       error: string;
     }
   >;
-  [events.userRoleCreated.code]: RawEvent<
-    typeof events.userRoleCreated.code,
-    HasName
+  [eventCodes.ROLE_CREATED]: RawEvent<typeof eventCodes.ROLE_CREATED, HasName>;
+  [eventCodes.ROLE_DELETED]: RawEvent<typeof eventCodes.ROLE_DELETED, HasName>;
+  [eventCodes.TRUSTED_CLUSTER_TOKEN_CREATED]: RawEvent<
+    typeof eventCodes.TRUSTED_CLUSTER_TOKEN_CREATED
   >;
-  [events.userRoleDeleted.code]: RawEvent<
-    typeof events.userRoleDeleted.code,
-    HasName
-  >;
-  [events.trustedClusterTokenCreate.code]: RawEvent<
-    typeof events.trustedClusterTokenCreate.code
-  >;
-  [events.trustedClusterCreate.code]: RawEvent<
-    typeof events.trustedClusterCreate.code,
+  [eventCodes.TRUSTED_CLUSTER_CREATED]: RawEvent<
+    typeof eventCodes.TRUSTED_CLUSTER_CREATED,
     {
       name: string;
     }
   >;
-  [events.trustedClusterDelete.code]: RawEvent<
-    typeof events.trustedClusterDelete.code,
+  [eventCodes.TRUSTED_CLUSTER_DELETED]: RawEvent<
+    typeof eventCodes.TRUSTED_CLUSTER_DELETED,
     {
       name: string;
     }
   >;
-  [events.kubeRequest.code]: RawEvent<
-    typeof events.kubeRequest.code,
+  [eventCodes.KUBE_REQUEST]: RawEvent<
+    typeof eventCodes.KUBE_REQUEST,
     {
       kubernetes_cluster: string;
     }
   >;
-  [events.databaseSessionStart.code]: RawEvent<
-    typeof events.databaseSessionStart.code,
+  [eventCodes.DATABASE_SESSION_STARTED]: RawEvent<
+    typeof eventCodes.DATABASE_SESSION_STARTED,
     {
       name: string;
       db_service: string;
@@ -320,25 +339,44 @@ export type RawEvents = {
       db_user: string;
     }
   >;
-  [events.databaseSessionStartFailure.code]: RawEventDatabase<
-    typeof events.databaseSessionStartFailure.code
+  [eventCodes.DATABASE_SESSION_STARTED_FAILURE]: RawEvent<
+    typeof eventCodes.DATABASE_SESSION_STARTED_FAILURE,
+    {
+      name: string;
+      db_service: string;
+      db_name: string;
+      db_user: string;
+    }
   >;
-  [events.databaseSessionEnd.code]: RawEventDatabase<
-    typeof events.databaseSessionEnd.code
+  [eventCodes.DATABASE_SESSION_ENDED]: RawEvent<
+    typeof eventCodes.DATABASE_SESSION_ENDED,
+    {
+      name: string;
+      db_service: string;
+      db_name: string;
+      db_user: string;
+    }
   >;
-  [events.databaseSessionQuery.code]: RawEventDatabase<
-    typeof events.databaseSessionQuery.code
+  [eventCodes.DATABASE_SESSION_QUERY]: RawEvent<
+    typeof eventCodes.DATABASE_SESSION_QUERY,
+    {
+      name: string;
+      db_service: string;
+      db_name: string;
+      db_user: string;
+      db_query: string;
+    }
   >;
-  [events.mfaDeviceAdd.code]: RawEvent<
-    typeof events.mfaDeviceAdd.code,
+  [eventCodes.MFA_DEVICE_ADD]: RawEvent<
+    typeof eventCodes.MFA_DEVICE_ADD,
     {
       mfa_device_name: string;
       mfa_device_uuid: string;
       mfa_device_type: string;
     }
   >;
-  [events.mfaDeviceDelete.code]: RawEvent<
-    typeof events.mfaDeviceDelete.code,
+  [eventCodes.MFA_DEVICE_DELETE]: RawEvent<
+    typeof eventCodes.MFA_DEVICE_DELETE,
     {
       mfa_device_name: string;
       mfa_device_uuid: string;
@@ -346,6 +384,11 @@ export type RawEvents = {
     }
   >;
 };
+
+/**
+ * Event Code
+ */
+export type EventCode = typeof eventCodes[keyof typeof eventCodes];
 
 type HasName = {
   name: string;
@@ -372,6 +415,66 @@ export type RawEvent<T extends EventCode, K = {}> = Merge<
   K
 >;
 
+type RawEventData<T extends EventCode> = RawEvent<
+  T,
+  {
+    login: string;
+    rx: number;
+    server_id: string;
+    sid: string;
+    tx: number;
+    user: string;
+  }
+>;
+
+type RawEventCommand<T extends EventCode> = RawEvent<
+  T,
+  {
+    login: string;
+    namespace: string;
+    path: string;
+    pid: number;
+    ppid: number;
+    program: string;
+    return_code: number;
+    server_id: string;
+    sid: string;
+  }
+>;
+
+type RawEventNetwork<T extends EventCode> = RawEvent<
+  T,
+  {
+    login: string;
+    namespace: string;
+    pid: number;
+    cgroup_id: number;
+    program: string;
+    server_id: string;
+    flags: number;
+    sid: string;
+    src_addr: string;
+    dst_addr: string;
+    dst_port: string;
+  }
+>;
+
+type RawDiskEvent<T extends EventCode> = RawEvent<
+  T,
+  {
+    login: string;
+    namespace: string;
+    pid: number;
+    cgroup_id: number;
+    program: string;
+    path: string;
+    return_code: number;
+    server_id: string;
+    flags: number;
+    sid: string;
+  }
+>;
+
 type RawEventAccess<T extends EventCode> = RawEvent<
   T,
   {
@@ -380,6 +483,14 @@ type RawEventAccess<T extends EventCode> = RawEvent<
     roles: string[];
     state: string;
     reviewer: string;
+  }
+>;
+
+type RawEventPasswordToken<T extends EventCode> = RawEvent<
+  T,
+  {
+    name: string;
+    ttl: string;
   }
 >;
 
@@ -398,14 +509,10 @@ type RawEventConnector<T extends EventCode> = RawEvent<
   }
 >;
 
-type RawEventDatabase<T extends EventCode> = RawEvent<
+type RawEventAuthFailure<T extends EventCode> = RawEvent<
   T,
   {
-    name: string;
-    db_service: string;
-    db_name: string;
-    db_user: string;
-    db_query: string;
+    error: string;
   }
 >;
 
@@ -414,6 +521,7 @@ type RawEventDatabase<T extends EventCode> = RawEvent<
  */
 export type Formatters = {
   [key in EventCode]: {
+    type: string;
     desc: string;
     format: (json: RawEvents[key]) => string;
   };
@@ -433,7 +541,7 @@ export type Events = {
 
 export type Event = Events[EventCode];
 
-export type SessionEnd = Events[typeof events.sessionEnd.code];
+export type SessionEnd = Events[typeof eventCodes.SESSION_END];
 
 export type EventQuery = {
   from: Date;
@@ -441,4 +549,9 @@ export type EventQuery = {
   limit?: number;
   startKey?: string;
   filterBy?: string;
+};
+
+export type EventResponse = {
+  events: Event[];
+  startKey: string;
 };

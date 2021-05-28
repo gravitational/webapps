@@ -13,6 +13,6 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-import EventsFilter from './EventsFilter';
+import EventFilters from './EventFilters';
 
-export default EventsFilter;
+export default EventFilters;

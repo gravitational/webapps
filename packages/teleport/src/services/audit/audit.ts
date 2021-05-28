@@ -17,10 +17,9 @@ limitations under the License.
 import api from 'teleport/services/api';
 import cfg from 'teleport/config';
 import makeEvent from './makeEvent';
-import { EventQuery, Event } from './types';
+import { EventQuery, EventResponse } from './types';
 
-// TODO change default to 5k
-const EVENT_FETCH_MAX_LIMIT = 10;
+const EVENT_FETCH_MAX_LIMIT = 5000;
 
 class AuditService {
   maxFetchLimit = EVENT_FETCH_MAX_LIMIT;
@@ -41,25 +40,9 @@ class AuditService {
       const events = json.events || [];
       let startKey = json.startKey || '';
 
-      // TODO should this be handled in backend?
-      // 1) There is a bug in backend where if I end up querying the EXACT amount of total events,
-      //    fetching always returns the last result with startKey non empty
-
-      // 2) Handles a case where if given limit and a filter,
-      //    if results came back < limit, then there are no more results
-      //    related to the filter within given range.
-      if (events.length < this.maxFetchLimit) {
-        startKey = '';
-      }
-
       return { events: events.map(makeEvent), startKey };
     });
   }
 }
 
 export default AuditService;
-
-type EventResponse = {
-  events: Event[];
-  startKey: string;
-};

@@ -18,15 +18,76 @@ import React from 'react';
 import styled from 'styled-components';
 import { Cell } from 'design/DataTable';
 import Icon, * as Icons from 'design/Icon/Icon';
-import { Event, eventTypes as events } from 'teleport/services/audit';
+import { eventCodes, Event, EventCode } from 'teleport/services/audit';
 import cfg from 'teleport/config';
+
+const EventIconMap: Record<EventCode, React.FC> = {
+  [eventCodes.AUTH_ATTEMPT_FAILURE]: Icons.Info,
+  [eventCodes.EXEC_FAILURE]: Icons.Cli,
+  [eventCodes.EXEC]: Icons.Cli,
+  [eventCodes.TRUSTED_CLUSTER_TOKEN_CREATED]: Icons.Info,
+  [eventCodes.TRUSTED_CLUSTER_CREATED]: Icons.Info,
+  [eventCodes.TRUSTED_CLUSTER_DELETED]: Icons.Info,
+  [eventCodes.GITHUB_CONNECTOR_CREATED]: Icons.Info,
+  [eventCodes.GITHUB_CONNECTOR_DELETED]: Icons.Info,
+  [eventCodes.OIDC_CONNECTOR_CREATED]: Icons.Info,
+  [eventCodes.OIDC_CONNECTOR_DELETED]: Icons.Info,
+  [eventCodes.SAML_CONNECTOR_CREATED]: Icons.Info,
+  [eventCodes.SAML_CONNECTOR_CREATED]: Icons.Info,
+  [eventCodes.SAML_CONNECTOR_DELETED]: Icons.Info,
+  [eventCodes.ROLE_CREATED]: Icons.Info,
+  [eventCodes.ROLE_DELETED]: Icons.Info,
+  [eventCodes.SCP_DOWNLOAD_FAILURE]: Icons.Download,
+  [eventCodes.SCP_DOWNLOAD]: Icons.Download,
+  [eventCodes.SCP_UPLOAD_FAILURE]: Icons.Upload,
+  [eventCodes.SCP_UPLOAD]: Icons.Upload,
+  [eventCodes.APP_SESSION_CHUNK]: Icons.Info,
+  [eventCodes.APP_SESSION_START]: Icons.Info,
+  [eventCodes.SESSION_END]: Icons.Cli,
+  [eventCodes.SESSION_JOIN]: Icons.Cli,
+  [eventCodes.SESSION_LEAVE]: Icons.Cli,
+  [eventCodes.SESSION_START]: Icons.Cli,
+  [eventCodes.SESSION_UPLOAD]: Icons.Cli,
+  [eventCodes.SESSION_REJECT]: Icons.Cli,
+  [eventCodes.TERMINAL_RESIZE]: Icons.Cli,
+  [eventCodes.SESSION_DATA]: Icons.Cli,
+  [eventCodes.SESSION_NETWORK]: Icons.Cli,
+  [eventCodes.SESSION_DISK]: Icons.Cli,
+  [eventCodes.SESSION_COMMAND]: Icons.Cli,
+  [eventCodes.USER_CREATED]: Icons.Info,
+  [eventCodes.USER_UPDATED]: Icons.Info,
+  [eventCodes.USER_DELETED]: Icons.Info,
+  [eventCodes.RESET_PASSWORD_TOKEN_CREATED]: Icons.Info,
+  [eventCodes.USER_PASSWORD_CHANGED]: Icons.Info,
+  [eventCodes.ACCESS_REQUEST_CREATED]: Icons.Info,
+  [eventCodes.ACCESS_REQUEST_UPDATED]: Icons.Info,
+  [eventCodes.ACCESS_REQUEST_REVIEWED]: Icons.Info,
+  [eventCodes.USER_LOCAL_LOGIN]: Icons.Info,
+  [eventCodes.USER_LOCAL_LOGINFAILURE]: Icons.Info,
+  [eventCodes.USER_SSO_LOGIN]: Icons.Info,
+  [eventCodes.USER_SSO_LOGINFAILURE]: Icons.Info,
+  [eventCodes.KUBE_REQUEST]: Icons.Kubernetes,
+  [eventCodes.DATABASE_SESSION_STARTED]: Icons.Database,
+  [eventCodes.DATABASE_SESSION_STARTED_FAILURE]: Icons.Database,
+  [eventCodes.DATABASE_SESSION_ENDED]: Icons.Database,
+  [eventCodes.DATABASE_SESSION_QUERY]: Icons.Database,
+  [eventCodes.MFA_DEVICE_ADD]: Icons.Info,
+  [eventCodes.MFA_DEVICE_DELETE]: Icons.Info,
+  [eventCodes.BILLING_CARD_CREATE]: Icons.CreditCardAlt2,
+  [eventCodes.BILLING_CARD_DELETE]: Icons.CreditCardAlt2,
+  [eventCodes.BILLING_CARD_UPDATE]: Icons.CreditCardAlt2,
+  [eventCodes.BILLING_INFORMATION_UPDATE]: Icons.CreditCardAlt2,
+  [eventCodes.CLIENT_DISCONNECT]: Icons.Info,
+  [eventCodes.PORTFORWARD]: Icons.Info,
+  [eventCodes.PORTFORWARD_FAILURE]: Icons.Info,
+  [eventCodes.SUBSYSTEM]: Icons.Info,
+  [eventCodes.SUBSYSTEM_FAILURE]: Icons.Info,
+};
 
 export default function TypeCell(props) {
   const { rowIndex, data, clusterId } = props;
-  const [eventIconMap] = React.useState(getEventIcons());
-
   const event: Event = data[rowIndex];
-  const IconType = eventIconMap[event.code] || Icons.List;
+  const IconType = EventIconMap[event.code] || Icons.List;
 
   const iconProps = {
     p: '1',
@@ -36,7 +97,7 @@ export default function TypeCell(props) {
 
   // use button for interactive ssh sessions
   if (
-    event.code === events.sessionEnd.code &&
+    event.code === eventCodes.SESSION_END &&
     event.raw.interactive &&
     event.raw.session_recording !== 'off'
   ) {
@@ -65,15 +126,6 @@ export default function TypeCell(props) {
       </StyledEventType>
     </Cell>
   );
-}
-
-function getEventIcons() {
-  const eventIconMap = {};
-  Object.keys(events).forEach(key => {
-    eventIconMap[events[key].code] = events[key].icon;
-  });
-
-  return eventIconMap;
 }
 
 const StyledCliIcon = styled(Icons.Cli)(

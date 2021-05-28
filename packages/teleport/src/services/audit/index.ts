@@ -15,9 +15,8 @@ limitations under the License.
 */
 
 import service from './audit';
-import makeEvent from './makeEvent';
-import eventTypes, { groupedEventNames } from './eventTypes';
+import makeEvent, { formatters } from './makeEvent';
 
 export default service;
 export * from './types';
-export { makeEvent, eventTypes, groupedEventNames };
+export { makeEvent, formatters };

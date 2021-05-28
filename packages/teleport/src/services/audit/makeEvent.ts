@@ -15,72 +15,84 @@ limitations under the License.
 */
 
 import moment from 'moment';
-import { Event, RawEvent, Formatters } from './types';
-import events from './eventTypes';
+import { Event, RawEvent, Formatters, eventCodes } from './types';
 
 export const formatters: Formatters = {
-  [events.accessRequestCreate.code]: {
-    desc: events.accessRequestCreate.desc,
+  [eventCodes.ACCESS_REQUEST_CREATED]: {
+    type: 'access_request.create',
+    desc: 'Access Request Created',
     format: ({ id, state }) =>
       `Access request [${id}] has been created and is ${state}`,
   },
-  [events.accessRequestUpdate.code]: {
-    desc: events.accessRequestUpdate.desc,
+  [eventCodes.ACCESS_REQUEST_UPDATED]: {
+    type: 'access_request.update',
+    desc: 'Access Request Updated',
     format: ({ id, state }) =>
       `Access request [${id}] has been updated to ${state}`,
   },
-  [events.accessRequestReview.code]: {
-    desc: events.accessRequestReview.desc,
+  [eventCodes.ACCESS_REQUEST_REVIEWED]: {
+    type: 'access_request.review',
+    desc: 'Access Request Reviewed',
     format: ({ id, reviewer }) =>
       `User [${reviewer}] reviewed access request [${id}]`,
   },
-  [events.sessionCommand.code]: {
-    desc: events.sessionCommand.desc,
+  [eventCodes.SESSION_COMMAND]: {
+    type: 'session.command',
+    desc: 'Session Command',
     format: ({ program, sid }) =>
       `Program [${program}] has been executed within a session [${sid}]`,
   },
-  [events.sessionDisk.code]: {
-    desc: events.sessionDisk.desc,
+  [eventCodes.SESSION_DISK]: {
+    type: 'session.disk',
+    desc: 'Session File Access',
     format: ({ path, sid, program }) =>
       `Program [${program}] accessed a file [${path}] within a session [${sid}]`,
   },
-  [events.sessionNetwork.code]: {
-    desc: events.sessionNetwork.desc,
+  [eventCodes.SESSION_NETWORK]: {
+    type: 'session.network',
+    desc: 'Session Network Connection',
     format: ({ sid, program, src_addr, dst_addr, dst_port }) =>
       `Program [${program}] opened a connection [${src_addr} <-> ${dst_addr}:${dst_port}] within a session [${sid}]`,
   },
-  [events.sessionData.code]: {
-    desc: events.sessionData.desc,
+  [eventCodes.SESSION_DATA]: {
+    type: 'session.data',
+    desc: 'Session Data',
     format: ({ sid }) =>
       `Usage report has been updated for session [${sid || ''}]`,
   },
 
-  [events.userPasswordChange.code]: {
-    desc: events.userPasswordChange.desc,
+  [eventCodes.USER_PASSWORD_CHANGED]: {
+    type: 'user.password_change',
+    desc: 'User Password Updated',
     format: ({ user }) => `User [${user}] has changed a password`,
   },
 
-  [events.userUpdated.code]: {
-    desc: events.userUpdated.desc,
+  [eventCodes.USER_UPDATED]: {
+    type: 'user.update',
+    desc: 'User Updated',
     format: ({ name }) => `User [${name}] has been updated`,
   },
-  [events.resetPasswordTokenCreate.code]: {
-    desc: events.resetPasswordTokenCreate.desc,
+  [eventCodes.RESET_PASSWORD_TOKEN_CREATED]: {
+    type: 'reset_password_token.create',
+    desc: 'Reset Password Token Created',
     format: ({ name, user }) =>
       `User [${user}] created a password reset token for user [${name}]`,
   },
-  [events.authAttemptFailure.code]: {
-    desc: events.authAttemptFailure.desc,
+  [eventCodes.AUTH_ATTEMPT_FAILURE]: {
+    type: 'auth',
+    desc: 'Auth Attempt Failed',
     format: ({ user, error }) => `User [${user}] failed auth attempt: ${error}`,
   },
 
-  [events.clientDisconnect.code]: {
-    desc: events.clientDisconnect.desc,
+  [eventCodes.CLIENT_DISCONNECT]: {
+    type: 'client.disconnect',
+    desc: 'Client Disconnected',
     format: ({ user, reason }) =>
       `User [${user}] has been disconnected: ${reason}`,
   },
-  [events.exec.code]: {
-    desc: events.exec.desc,
+  [eventCodes.EXEC]: {
+    type: 'exec',
+    desc: 'Command Execution',
     format: event => {
       const { proto, kubernetes_cluster, user = '' } = event;
       if (proto === 'kube') {
@@ -93,76 +105,91 @@ export const formatters: Formatters = {
       return `User [${user}] executed a command on node ${event['addr.local']}`;
     },
   },
-  [events.execFailure.code]: {
-    desc: events.execFailure.desc,
+  [eventCodes.EXEC_FAILURE]: {
+    type: 'exec',
+    desc: 'Command Execution Failed',
     format: ({ user, exitError, ...rest }) =>
       `User [${user}] command execution on node ${rest['addr.local']} failed [${exitError}]`,
   },
-  [events.githubConnectorCreated.code]: {
-    desc: events.githubConnectorCreated.desc,
+  [eventCodes.GITHUB_CONNECTOR_CREATED]: {
+    type: 'github.created',
+    desc: 'GITHUB Auth Connector Created',
     format: ({ user, name }) =>
       `User [${user}] created Github connector [${name}] has been created`,
   },
-  [events.githubConnectorDeleted.code]: {
-    desc: events.githubConnectorDeleted.desc,
+  [eventCodes.GITHUB_CONNECTOR_DELETED]: {
+    type: 'github.deleted',
+    desc: 'GITHUB Auth Connector Deleted',
     format: ({ user, name }) =>
       `User [${user}] deleted Github connector [${name}]`,
   },
-  [events.oidcConnectorCreated.code]: {
-    desc: events.oidcConnectorCreated.desc,
+  [eventCodes.OIDC_CONNECTOR_CREATED]: {
+    type: 'oidc.created',
+    desc: 'OIDC Auth Connector Created',
     format: ({ user, name }) =>
       `User [${user}] created OIDC connector [${name}]`,
   },
-  [events.oidcConnectorDeleted.code]: {
-    desc: events.oidcConnectorDeleted.desc,
+  [eventCodes.OIDC_CONNECTOR_DELETED]: {
+    type: 'oidc.deleted',
+    desc: 'OIDC Auth Connector Deleted',
     format: ({ user, name }) =>
       `User [${user}] deleted OIDC connector [${name}]`,
   },
-  [events.portForward.code]: {
-    desc: events.portForward.desc,
+  [eventCodes.PORTFORWARD]: {
+    type: 'port',
+    desc: 'Port Forwarding Started',
     format: ({ user }) => `User [${user}] started port forwarding`,
   },
-  [events.portForwardFailure.code]: {
-    desc: events.portForwardFailure.desc,
+  [eventCodes.PORTFORWARD_FAILURE]: {
+    type: 'port',
+    desc: 'Port Forwarding Failed',
     format: ({ user, error }) =>
       `User [${user}] port forwarding request failed: ${error}`,
   },
-  [events.samlConnectorCreated.code]: {
-    desc: events.samlConnectorCreated.desc,
+  [eventCodes.SAML_CONNECTOR_CREATED]: {
+    type: 'saml.created',
+    desc: 'SAML Connector Created',
     format: ({ user, name }) =>
       `User [${user}] created SAML connector [${name}]`,
   },
-  [events.samlConnectorDeleted.code]: {
-    desc: events.samlConnectorDeleted.desc,
+  [eventCodes.SAML_CONNECTOR_DELETED]: {
+    type: 'saml.deleted',
+    desc: 'SAML Connector Deleted',
     format: ({ user, name }) =>
       `User [${user}] deleted SAML connector [${name}]`,
   },
-  [events.scpDownload.code]: {
-    desc: events.scpDownload.desc,
+  [eventCodes.SCP_DOWNLOAD]: {
+    type: 'scp',
+    desc: 'SCP Download',
     format: ({ user, path, ...rest }) =>
       `User [${user}] downloaded a file [${path}] from node [${rest['addr.local']}]`,
   },
-  [events.scpDownloadFailure.code]: {
-    desc: events.scpDownloadFailure.desc,
+  [eventCodes.SCP_DOWNLOAD_FAILURE]: {
+    type: 'scp',
+    desc: 'SCP Download Failed',
     format: ({ exitError, ...rest }) =>
       `File download from node [${rest['addr.local']}] failed [${exitError}]`,
   },
-  [events.scpUpload.code]: {
-    desc: events.scpUpload.desc,
+  [eventCodes.SCP_UPLOAD]: {
+    type: 'scp',
+    desc: 'SCP Upload',
     format: ({ user, path, ...rest }) =>
       `User [${user}] uploaded a file [${path}] to node [${rest['addr.local']}]`,
   },
-  [events.scpUploadFailure.code]: {
-    desc: events.scpUploadFailure.desc,
+  [eventCodes.SCP_UPLOAD_FAILURE]: {
+    type: 'scp',
+    desc: 'SCP Upload Failed',
     format: ({ exitError, ...rest }) =>
       `File upload to node [${rest['addr.local']}] failed [${exitError}]`,
   },
-  [events.userSessionJoin.code]: {
-    desc: events.userSessionJoin.desc,
+  [eventCodes.SESSION_JOIN]: {
+    type: 'session.join',
+    desc: 'User Joined',
     format: ({ user, sid }) => `User [${user}] has joined the session [${sid}]`,
   },
-  [events.sessionEnd.code]: {
-    desc: events.sessionEnd.desc,
+  [eventCodes.SESSION_END]: {
+    type: 'session.end',
+    desc: 'Session Ended',
     format: event => {
       const user = event.user || '';
       const node =
@@ -188,144 +215,175 @@ export const formatters: Formatters = {
       return `User [${user}] has ended interactive session [${event.sid}] on node [${node}] `;
     },
   },
-  [events.sessionRejected.code]: {
-    desc: events.sessionRejected.desc,
+  [eventCodes.SESSION_REJECT]: {
+    type: 'session.rejected',
+    desc: 'Session Rejected',
     format: ({ user, login, server_id, reason }) =>
       `User [${user}] was denied access to [${login}@${server_id}] because [${reason}]`,
   },
-  [events.userSessionLeave.code]: {
-    desc: events.userSessionLeave.desc,
+  [eventCodes.SESSION_LEAVE]: {
+    type: 'session.leave',
+    desc: 'User Disconnected',
     format: ({ user, sid }) => `User [${user}] has left the session [${sid}]`,
   },
-  [events.sessionStart.code]: {
-    desc: events.sessionStart.desc,
+  [eventCodes.SESSION_START]: {
+    type: 'session.start',
+    desc: 'Session Started',
     format: ({ user, sid }) => `User [${user}] has started a session [${sid}]`,
   },
-  [events.sessionUpload.code]: {
-    desc: events.sessionUpload.desc,
+  [eventCodes.SESSION_UPLOAD]: {
+    type: 'session.upload',
+    desc: 'Session Uploaded',
     format: () => `Recorded session has been uploaded`,
   },
-  [events.appSessionStart.code]: {
-    desc: events.appSessionStart.desc,
+  [eventCodes.APP_SESSION_START]: {
+    type: 'app.session.start',
+    desc: 'App Session Started',
     format: ({ user, sid }) =>
       `User [${user}] has started an app session [${sid}]`,
   },
-  [events.appSessionChunk.code]: {
-    desc: events.appSessionChunk.desc,
+  [eventCodes.APP_SESSION_CHUNK]: {
+    type: 'app.session.chunk',
+    desc: 'App Session Data',
     format: ({ sid }) => `New app session data created [${sid}]`,
   },
-  [events.subsystem.code]: {
-    desc: events.subsystem.desc,
+  [eventCodes.SUBSYSTEM]: {
+    type: 'subsystem',
+    desc: 'Subsystem Requested',
     format: ({ user, name }) => `User [${user}] requested subsystem [${name}]`,
   },
-  [events.subsystemFailure.code]: {
-    desc: events.subsystemFailure.desc,
+  [eventCodes.SUBSYSTEM_FAILURE]: {
+    type: 'subsystem',
+    desc: 'Subsystem Request Failed',
     format: ({ user, name, exitError }) =>
       `User [${user}] subsystem [${name}] request failed [${exitError}]`,
   },
-  [events.terminalResize.code]: {
-    desc: events.terminalResize.desc,
+  [eventCodes.TERMINAL_RESIZE]: {
+    type: 'resize',
+    desc: 'Terminal Resize',
     format: ({ user, sid }) =>
       `User [${user}] resized the session [${sid}] terminal`,
   },
-  [events.userCreate.code]: {
-    desc: events.userCreate.desc,
+  [eventCodes.USER_CREATED]: {
+    type: 'user.create',
+    desc: 'User Created',
     format: ({ name }) => `User [${name}] has been created`,
   },
-  [events.userDelete.code]: {
-    desc: events.userDelete.desc,
+  [eventCodes.USER_DELETED]: {
+    type: 'user.delete',
+    desc: 'User Deleted',
     format: ({ name }) => `User [${name}] has been deleted`,
   },
-  [events.userLogin.code]: {
-    desc: events.userLogin.desc,
+  [eventCodes.USER_LOCAL_LOGIN]: {
+    type: 'user.login',
+    desc: 'Local Login',
     format: ({ user }) => `Local user [${user}] successfully logged in`,
   },
-  [events.userLoginFailure.code]: {
-    desc: events.userLoginFailure.desc,
+  [eventCodes.USER_LOCAL_LOGINFAILURE]: {
+    type: 'user.login',
+    desc: 'Local Login Failed',
     format: ({ user, error }) => `Local user [${user}] login failed [${error}]`,
   },
-  [events.userSsoLogin.code]: {
-    desc: events.userSsoLogin.desc,
+  [eventCodes.USER_SSO_LOGIN]: {
+    type: 'user.login',
+    desc: 'SSO Login',
     format: ({ user }) => `SSO user [${user}] successfully logged in`,
   },
-  [events.userSsoLoginFailure.code]: {
-    desc: events.userSsoLoginFailure.desc,
+  [eventCodes.USER_SSO_LOGINFAILURE]: {
+    type: 'user.login',
+    desc: 'SSO Login Failed',
     format: ({ error }) => `SSO user login failed [${error}]`,
   },
-  [events.userRoleCreated.code]: {
-    desc: events.userRoleCreated.desc,
+  [eventCodes.ROLE_CREATED]: {
+    type: 'role.created',
+    desc: 'User Role Created',
     format: ({ user, name }) => `User [${user}] created a role [${name}]`,
   },
-  [events.userRoleDeleted.code]: {
-    desc: events.userRoleDeleted.desc,
+  [eventCodes.ROLE_DELETED]: {
+    type: 'role.deleted',
+    desc: 'User Role Deleted',
     format: ({ user, name }) => `User [${user}] deleted a role [${name}]`,
   },
-  [events.trustedClusterTokenCreate.code]: {
-    desc: events.trustedClusterTokenCreate.desc,
+  [eventCodes.TRUSTED_CLUSTER_TOKEN_CREATED]: {
+    type: 'trusted_cluster_token.create',
+    desc: 'Trusted Cluster Token Created',
     format: ({ user }) => `User [${user}] has created a trusted cluster token`,
   },
-  [events.trustedClusterCreate.code]: {
-    desc: events.trustedClusterCreate.desc,
+  [eventCodes.TRUSTED_CLUSTER_CREATED]: {
+    type: 'trusted_cluster.create',
+    desc: 'Trusted Cluster Created',
     format: ({ user, name }) =>
       `User [${user}] has created a trusted relationship with cluster [${name}]`,
   },
-  [events.trustedClusterDelete.code]: {
-    desc: events.trustedClusterDelete.desc,
+  [eventCodes.TRUSTED_CLUSTER_DELETED]: {
+    type: 'trusted_cluster.delete',
+    desc: 'Trusted Cluster Deleted',
     format: ({ user, name }) =>
       `User [${user}] has deleted a trusted relationship with cluster [${name}]`,
   },
-  [events.kubeRequest.code]: {
-    desc: events.kubeRequest.desc,
+  [eventCodes.KUBE_REQUEST]: {
+    type: 'kube.request',
+    desc: 'Kubernetes Request',
     format: ({ user, kubernetes_cluster }) =>
       `User [${user}] made a request to kubernetes cluster [${kubernetes_cluster}]`,
   },
-  [events.databaseSessionStart.code]: {
-    desc: events.databaseSessionStart.desc,
+  [eventCodes.DATABASE_SESSION_STARTED]: {
+    type: 'db.session.start',
+    desc: 'Database Session Started',
     format: ({ user, db_service, db_name, db_user }) =>
       `User [${user}] has connected to database [${db_name}] as [${db_user}] on [${db_service}]`,
   },
-  [events.databaseSessionStartFailure.code]: {
-    desc: events.databaseSessionStartFailure.desc,
+  [eventCodes.DATABASE_SESSION_STARTED_FAILURE]: {
+    type: 'db.session.start',
+    desc: 'Database Session Denied',
     format: ({ user, db_service, db_name, db_user }) =>
       `User [${user}] was denied access to database [${db_name}] as [${db_user}] on [${db_service}]`,
   },
-  [events.databaseSessionEnd.code]: {
-    desc: events.databaseSessionEnd.desc,
+  [eventCodes.DATABASE_SESSION_ENDED]: {
+    type: 'db.session.end',
+    desc: 'Database Session Ended',
     format: ({ user, db_service, db_name }) =>
       `User [${user}] has disconnected from database [${db_name}] on [${db_service}]`,
   },
-  [events.databaseSessionQuery.code]: {
-    desc: events.databaseSessionQuery.desc,
+  [eventCodes.DATABASE_SESSION_QUERY]: {
+    type: 'db.session.query',
+    desc: 'Database Query',
     format: ({ user, db_service, db_name, db_query }) =>
       `User [${user}] has executed query [${truncateStr(
         db_query,
         80
       )}] in database [${db_name}] on [${db_service}]`,
   },
-  [events.mfaDeviceAdd.code]: {
-    desc: events.mfaDeviceAdd.desc,
+  [eventCodes.MFA_DEVICE_ADD]: {
+    type: 'mfa.add',
+    desc: 'MFA Device Added',
     format: ({ user, mfa_device_name, mfa_device_type }) =>
       `User [${user}] added ${mfa_device_type} device [${mfa_device_name}]`,
   },
-  [events.mfaDeviceDelete.code]: {
-    desc: events.mfaDeviceDelete.desc,
+  [eventCodes.MFA_DEVICE_DELETE]: {
+    type: 'mfa.delete',
+    desc: 'MFA Device Deleted',
     format: ({ user, mfa_device_name, mfa_device_type }) =>
       `User [${user}] deleted ${mfa_device_type} device [${mfa_device_name}]`,
   },
-  [events.billingCardCreate.code]: {
-    desc: events.billingCardCreate.desc,
+  [eventCodes.BILLING_CARD_CREATE]: {
+    type: 'billing.create_card',
+    desc: 'Credit Card Added',
     format: ({ user }) => `User [${user}] has added a credit card`,
   },
-  [events.billingCardDelete.code]: {
-    desc: events.billingCardDelete.desc,
+  [eventCodes.BILLING_CARD_DELETE]: {
+    type: 'billing.delete_card',
+    desc: 'Credit Card Deleted',
     format: ({ user }) => `User [${user}] has deleted a credit card`,
   },
-  [events.billingCardUpdate.code]: {
-    desc: events.billingCardUpdate.desc,
+  [eventCodes.BILLING_CARD_UPDATE]: {
+    type: 'billing.update_card',
+    desc: 'Credit Card Updated',
     format: ({ user }) => `User [${user}] has updated a credit card`,
   },
-  [events.billingInformationUpdate.code]: {
-    desc: events.billingInformationUpdate.desc,
+  [eventCodes.BILLING_INFORMATION_UPDATE]: {
+    type: 'billing.update_info',
+    desc: 'Billing Information Updated',
     format: ({ user }) => `User [${user}] has updated the billing information`,
   },
 };

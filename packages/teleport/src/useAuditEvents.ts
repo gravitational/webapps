@@ -46,10 +46,7 @@ export default function useAuditEvents(
     ctx.auditService
       .fetchEvents(clusterId, { ...range, startKey, filterBy: eventFilter })
       .then(res => {
-        // TODO remove filter, bug in backend where it always includes the last, last result,
-        // resulting in duplicates, and limit - 1 result.
-        setEvents([...events, ...res.events.filter(e => e.id !== startKey)]);
-
+        setEvents([...events, ...res.events]);
         setStartKey(res.startKey);
         setDisableFetchMore(false);
       })

@@ -20,10 +20,14 @@ import 'react-day-picker/lib/style.css';
 import styled from 'styled-components';
 import { Flex, Text } from 'design';
 import Select, { Option, DarkStyledSelect } from 'shared/components/Select';
-import { eventTypes, groupedEventNames } from 'teleport/services/audit';
+import {
+  eventCodes,
+  eventGroupTypes,
+  formatters,
+} from 'teleport/services/audit';
 
-export default function EventsFilter({ onFilterChange }) {
-  const [filterOptions] = useState(getEventFilterOptions());
+export default function EventFilters({ onFilterChange }) {
+  const [filterOptions] = useState(() => getEventFilterOptions());
   const [filterOption, setFilterOption] = useState<Option>();
 
   function handleOnChange(opt: Option) {
@@ -42,24 +46,18 @@ export default function EventsFilter({ onFilterChange }) {
         options={filterOptions}
         onChange={handleOnChange}
         value={filterOption}
-        placeholder="Select a filter to get search results by event type"
+        placeholder="Show All"
+        maxMenuHeight={400}
       />
     </StyledSelect>
   );
 }
 
 const ValueContainer = ({ children, ...props }) => {
-  if (!props.hasValue) {
-    return (
-      <components.ValueContainer {...props}>
-        {children}
-      </components.ValueContainer>
-    );
-  }
   return (
     <components.ValueContainer {...props}>
       <Flex alignItems="center" color="text.primary">
-        <Text typography="h6" fontWeight="regular" width="200px">
+        <Text typography="h6" fontWeight="regular" mr="1">
           Event Type:
         </Text>
         {children}
@@ -69,29 +67,37 @@ const ValueContainer = ({ children, ...props }) => {
 };
 
 function getEventFilterOptions() {
-  const usedNames = {};
+  const usedTypes = {};
+  const filters = [];
 
-  return Object.keys(eventTypes)
-    .sort()
-    .filter(key => {
-      const name = eventTypes[key].name;
-      if (usedNames[name]) {
-        return false;
-      }
+  Object.keys(eventCodes).forEach(key => {
+    const event = formatters[eventCodes[key]];
 
-      usedNames[name] = key;
-      return true;
-    })
-    .map(key => {
-      const value = eventTypes[key].name;
+    if (usedTypes[event.type]) {
+      return;
+    }
 
-      // Use default desc or modified desc for grouped event names.
-      const label = groupedEventNames[value]
-        ? groupedEventNames[value]
-        : eventTypes[key].desc;
+    usedTypes[event.type] = key;
 
-      return { value, label };
-    });
+    // Use default desc or modified desc for grouped event names.
+    const label = eventGroupTypes[event.type]
+      ? eventGroupTypes[event.type]
+      : event.desc;
+
+    filters.push({ value: event.type, label });
+  });
+
+  return filters.sort((a, b) => {
+    if (a.label < b.label) {
+      return -1;
+    }
+
+    if (a.label > b.label) {
+      return 1;
+    }
+
+    return 0;
+  });
 }
 
 const StyledSelect = styled(DarkStyledSelect)`
@@ -101,6 +107,11 @@ const StyledSelect = styled(DarkStyledSelect)`
     left: 86px;
     top: 4px;
     text-overflow: ellipsis;
+  }
+
+  .react-select__placeholder {
+    color: ${props => props.theme.colors.text.primary};
+    margin-left: 80px;
   }
 
   width: 385px;
