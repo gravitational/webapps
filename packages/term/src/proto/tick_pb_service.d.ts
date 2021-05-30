@@ -1,8 +1,8 @@
 // package: proto
 // file: tick.proto
 
-import * as tick_pb from './tick_pb';
-import { grpc } from '@improbable-eng/grpc-web';
+import * as tick_pb from "./tick_pb";
+import {grpc} from "@improbable-eng/grpc-web";
 
 type TickServiceSubscribe = {
   readonly methodName: string;
@@ -28,12 +28,8 @@ export class TickService {
   static readonly Now: TickServiceNow;
 }
 
-export type ServiceError = {
-  message: string;
-  code: number;
-  metadata: grpc.Metadata;
-};
-export type Status = { details: string; code: number; metadata: grpc.Metadata };
+export type ServiceError = { message: string, code: number; metadata: grpc.Metadata }
+export type Status = { details: string, code: number; metadata: grpc.Metadata }
 
 interface UnaryResponse {
   cancel(): void;
@@ -55,41 +51,24 @@ interface BidirectionalStream<ReqT, ResT> {
   write(message: ReqT): BidirectionalStream<ReqT, ResT>;
   end(): void;
   cancel(): void;
-  on(
-    type: 'data',
-    handler: (message: ResT) => void
-  ): BidirectionalStream<ReqT, ResT>;
-  on(
-    type: 'end',
-    handler: (status?: Status) => void
-  ): BidirectionalStream<ReqT, ResT>;
-  on(
-    type: 'status',
-    handler: (status: Status) => void
-  ): BidirectionalStream<ReqT, ResT>;
+  on(type: 'data', handler: (message: ResT) => void): BidirectionalStream<ReqT, ResT>;
+  on(type: 'end', handler: (status?: Status) => void): BidirectionalStream<ReqT, ResT>;
+  on(type: 'status', handler: (status: Status) => void): BidirectionalStream<ReqT, ResT>;
 }
 
 export class TickServiceClient {
   readonly serviceHost: string;
 
   constructor(serviceHost: string, options?: grpc.RpcOptions);
-  subscribe(
-    requestMessage: tick_pb.TickRequest,
-    metadata?: grpc.Metadata
-  ): ResponseStream<tick_pb.Tick>;
+  subscribe(requestMessage: tick_pb.TickRequest, metadata?: grpc.Metadata): ResponseStream<tick_pb.Tick>;
   now(
     requestMessage: tick_pb.TickRequest,
     metadata: grpc.Metadata,
-    callback: (
-      error: ServiceError | null,
-      responseMessage: tick_pb.Tick | null
-    ) => void
+    callback: (error: ServiceError|null, responseMessage: tick_pb.Tick|null) => void
   ): UnaryResponse;
   now(
     requestMessage: tick_pb.TickRequest,
-    callback: (
-      error: ServiceError | null,
-      responseMessage: tick_pb.Tick | null
-    ) => void
+    callback: (error: ServiceError|null, responseMessage: tick_pb.Tick|null) => void
   ): UnaryResponse;
 }
+
