@@ -5,3 +5,5 @@ dist
 **/dist
 packages/term/dist
 !packages/gravity/dist
+.DS_Store
+
