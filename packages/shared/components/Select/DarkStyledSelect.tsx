@@ -106,6 +106,14 @@ const StyledDarkSelect = styled(StyledSelect)(
     color: ${theme.colors.text.primary};
     padding: 0 6px;
   }
+
+  .react-select--is-disabled {
+    .react-select__single-value,
+    .react-select__placeholder,
+    .react-select__indicator {
+      color: ${theme.colors.text.placeholder};
+    }
+  }
 `
 );
 

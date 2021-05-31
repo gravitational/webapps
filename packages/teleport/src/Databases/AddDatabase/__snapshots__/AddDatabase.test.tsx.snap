@@ -287,6 +287,15 @@ exports[`render instructions dialog for adding database 1`] = `
   display: none;
 }
 
+.c17 .react-select--is-disabled .react-select__single-value,
+.c17 .react-select--is-disabled .react-select__placeholder {
+  color: rgba(0,0,0,0.24);
+}
+
+.c17 .react-select--is-disabled .react-select__indicator {
+  color: rgba(0,0,0,0.14);
+}
+
 <div
   class="c0"
   data-testid="Modal"

@@ -57,8 +57,18 @@ function SelectDefault({ value, onChange, options }) {
           isMulti={true}
         />
       </Box>
+      <Box mb="200px">
+        <Select
+          value={selected}
+          onChange={(opt: any) => setSelected(opt)}
+          options={options}
+          clearable={true}
+          placeholder="Click to select a role"
+        />
+      </Box>
       <Box>
         <Select
+          isDisabled={true}
           value={selected}
           onChange={(opt: any) => setSelected(opt)}
           options={options}
@@ -83,8 +93,17 @@ function SelectDark({ value, onChange, options }) {
           isMulti={true}
         />
       </DarkStyledSelect>
+      <DarkStyledSelect mb="206px">
+        <Select
+          value={selected}
+          onChange={(opt: any) => setSelected(opt)}
+          options={options}
+          placeholder="Click to select a role"
+        />
+      </DarkStyledSelect>
       <DarkStyledSelect>
         <Select
+          isDisabled={true}
           value={selected}
           onChange={(opt: any) => setSelected(opt)}
           options={options}

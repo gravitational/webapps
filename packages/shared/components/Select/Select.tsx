@@ -131,6 +131,17 @@ export const StyledSelect = styled.div`
     display: none;
   }
 
+  .react-select--is-disabled {
+    .react-select__single-value,
+    .react-select__placeholder {
+      color: rgba(0, 0, 0, 0.24);
+    }
+
+    .react-select__indicator {
+      color: rgba(0, 0, 0, 0.14);
+    }
+  }
+
   ${width}
   ${space}
 `;
