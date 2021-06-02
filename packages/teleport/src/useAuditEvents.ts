@@ -20,22 +20,17 @@ import useAttempt from 'shared/hooks/useAttemptNext';
 import Ctx from 'teleport/teleportContext';
 import { Event } from 'teleport/services/audit';
 
-export default function useAuditEvents(
-  ctx: Ctx,
-  clusterId: string,
-  eventType?: string
-) {
+export default function useAuditEvents(ctx: Ctx, clusterId: string) {
   const rangeOptions = useMemo(() => getRangeOptions(), []);
   const [searchValue, setSearchValue] = useState('');
   const [range, setRange] = useState<EventRange>(rangeOptions[0]);
   const { attempt, setAttempt, run } = useAttempt('processing');
   const [events, setEvents] = useState<Event[]>([]);
   const [startKey, setStartKey] = useState('');
-  const [eventFilter, setEventFilter] = useState(eventType);
   const [disableFetchMore, setDisableFetchMore] = useState(false);
 
   useEffect(() => {
-    fetch(eventFilter);
+    fetch();
   }, [clusterId, range]);
 
   // fetchMore gets events from last position from
@@ -44,7 +39,7 @@ export default function useAuditEvents(
   function fetchMore() {
     setDisableFetchMore(true);
     ctx.auditService
-      .fetchEvents(clusterId, { ...range, startKey, filterBy: eventFilter })
+      .fetchEvents(clusterId, { ...range, startKey })
       .then(res => {
         setEvents([...events, ...res.events]);
         setStartKey(res.startKey);
@@ -55,22 +50,15 @@ export default function useAuditEvents(
       });
   }
 
-  // fetch gets events from beginning, filtered by event type (if any)
-  // and replaces existing events list.
-  function fetch(filterBy: string) {
+  // fetch gets events from beginning of range and
+  // replaces existing events list.
+  function fetch() {
     run(() =>
-      ctx.auditService
-        .fetchEvents(clusterId, { ...range, filterBy })
-        .then(res => {
-          setEvents(res.events);
-          setStartKey(res.startKey);
-        })
+      ctx.auditService.fetchEvents(clusterId, { ...range }).then(res => {
+        setEvents(res.events);
+        setStartKey(res.startKey);
+      })
     );
-  }
-
-  function onFilterChange(filter: string) {
-    setEventFilter(filter);
-    fetch(filter);
   }
 
   let moreEvents: MoreEvents = null;
@@ -81,7 +69,6 @@ export default function useAuditEvents(
   return {
     events,
     moreEvents,
-    onFilterChange,
     clusterId,
     attempt,
     range,

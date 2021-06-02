@@ -1,29 +1,7 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`loaded 1`] = `
-.c13 {
-  display: inline-block;
-  transition: color .3s;
-  color: #FFFFFF;
-  font-size: 16px;
-}
-
-.c15 {
-  display: inline-block;
-  transition: color .3s;
-  color: #FFFFFF;
-}
-
-.c17 {
-  display: inline-block;
-  transition: color .3s;
-  margin-right: 16px;
-  padding: 4px;
-  color: #FFFFFF;
-  font-size: 16px;
-}
-
-.c18 {
+.c16 {
   line-height: 1.5;
   margin: 0;
   display: inline-flex;
@@ -52,27 +30,49 @@ exports[`loaded 1`] = `
   width: 87px;
 }
 
-.c18:active {
+.c16:active {
   opacity: 0.56;
 }
 
-.c18:hover,
-.c18:focus {
+.c16:hover,
+.c16:focus {
   background: #2C3A73;
   border: 1px solid rgba(255,255,255,0.1);
   opacity: 1;
 }
 
-.c18:active {
+.c16:active {
   opacity: 0.24;
 }
 
-.c18:disabled {
+.c16:disabled {
   background: rgba(255,255,255,0.12);
   color: rgba(255,255,255,0.3);
 }
 
-.c10 {
+.c11 {
+  display: inline-block;
+  transition: color .3s;
+  color: #FFFFFF;
+  font-size: 16px;
+}
+
+.c13 {
+  display: inline-block;
+  transition: color .3s;
+  color: #FFFFFF;
+}
+
+.c15 {
+  display: inline-block;
+  transition: color .3s;
+  margin-right: 16px;
+  padding: 4px;
+  color: #FFFFFF;
+  font-size: 16px;
+}
+
+.c8 {
   overflow: hidden;
   text-overflow: ellipsis;
   font-weight: 400;
@@ -82,13 +82,7 @@ exports[`loaded 1`] = `
   color: #FFFFFF;
 }
 
-.c3 {
-  box-sizing: border-box;
-  margin-left: auto;
-  display: flex;
-}
-
-.c7 {
+.c5 {
   box-sizing: border-box;
   margin-bottom: 24px;
   flex: 0 0 auto;
@@ -138,7 +132,7 @@ exports[`loaded 1`] = `
   padding-bottom: 24px;
 }
 
-.c14 {
+.c12 {
   background: #222C59;
   box-shadow: 0 4px 16px rgba(0,0,0,0.24);
   border-collapse: collapse;
@@ -148,35 +142,35 @@ exports[`loaded 1`] = `
   width: 100%;
 }
 
-.c14 > thead > tr > th,
-.c14 > tbody > tr > th,
-.c14 > tfoot > tr > th,
-.c14 > thead > tr > td,
-.c14 > tbody > tr > td,
-.c14 > tfoot > tr > td {
+.c12 > thead > tr > th,
+.c12 > tbody > tr > th,
+.c12 > tfoot > tr > th,
+.c12 > thead > tr > td,
+.c12 > tbody > tr > td,
+.c12 > tfoot > tr > td {
   padding: 8px 8px;
   vertical-align: middle;
 }
 
-.c14 > thead > tr > th:first-child,
-.c14 > tbody > tr > th:first-child,
-.c14 > tfoot > tr > th:first-child,
-.c14 > thead > tr > td:first-child,
-.c14 > tbody > tr > td:first-child,
-.c14 > tfoot > tr > td:first-child {
+.c12 > thead > tr > th:first-child,
+.c12 > tbody > tr > th:first-child,
+.c12 > tfoot > tr > th:first-child,
+.c12 > thead > tr > td:first-child,
+.c12 > tbody > tr > td:first-child,
+.c12 > tfoot > tr > td:first-child {
   padding-left: 24px;
 }
 
-.c14 > thead > tr > th:last-child,
-.c14 > tbody > tr > th:last-child,
-.c14 > tfoot > tr > th:last-child,
-.c14 > thead > tr > td:last-child,
-.c14 > tbody > tr > td:last-child,
-.c14 > tfoot > tr > td:last-child {
+.c12 > thead > tr > th:last-child,
+.c12 > tbody > tr > th:last-child,
+.c12 > tfoot > tr > th:last-child,
+.c12 > thead > tr > td:last-child,
+.c12 > tbody > tr > td:last-child,
+.c12 > tfoot > tr > td:last-child {
   padding-right: 24px;
 }
 
-.c14 > thead > tr > th {
+.c12 > thead > tr > th {
   background: #111B48;
   color: #FFFFFF;
   cursor: pointer;
@@ -190,39 +184,39 @@ exports[`loaded 1`] = `
   white-space: nowrap;
 }
 
-.c14 > thead > tr > th .c12 {
+.c12 > thead > tr > th .c10 {
   font-weight: bold;
   font-size: 8px;
   margin-left: 8px;
 }
 
-.c14 > tbody > tr > td {
+.c12 > tbody > tr > td {
   color: rgba(255,255,255,0.87);
   line-height: 16px;
 }
 
-.c14 tbody tr {
+.c12 tbody tr {
   border-bottom: 1px solid #1C254D;
 }
 
-.c14 tbody tr:hover {
+.c12 tbody tr:hover {
   background-color: rgb(37,49,98);
 }
 
-.c14 tbody > tr:last-child td:first-child {
+.c12 tbody > tr:last-child td:first-child {
   border-bottom-left-radius: 8px;
 }
 
-.c14 tbody > tr:last-child td:last-child {
+.c12 tbody > tr:last-child td:last-child {
   border-bottom-right-radius: 8px;
 }
 
-.c11 {
+.c9 {
   box-sizing: border-box;
   display: flex;
 }
 
-.c11 button {
+.c9 button {
   background: none;
   border: none;
   border-radius: 200px;
@@ -234,23 +228,23 @@ exports[`loaded 1`] = `
   text-align: center;
 }
 
-.c11 button:hover,
-.c11 button:focus {
+.c9 button:hover,
+.c9 button:focus {
   background: #1C254D;
 }
 
-.c11 button:hover .c12,
-.c11 button:focus .c12 {
+.c9 button:hover .c10,
+.c9 button:focus .c10 {
   opacity: 1;
 }
 
-.c11 button .c12 {
+.c9 button .c10 {
   opacity: 0.4;
   font-size: 20px;
   transition: all 0.3s;
 }
 
-.c9 {
+.c7 {
   padding: 8px 24px;
   display: flex;
   height: 24px;
@@ -262,7 +256,7 @@ exports[`loaded 1`] = `
   border-top-right-radius: 8px;
 }
 
-.c19 {
+.c17 {
   background: #000;
   border: 2px solid #651FFF;
   color: rgba(255,255,255,0.87);
@@ -277,19 +271,19 @@ exports[`loaded 1`] = `
   transition: all 0.3s;
 }
 
-.c19:hover,
-.c19:active,
-.c19:focus {
+.c17:hover,
+.c17:active,
+.c17:focus {
   box-shadow: 0 4px 16px rgba(0,0,0,0.24);
   color: #FFFFFF;
 }
 
-.c19:active {
+.c17:active {
   box-shadow: none;
   opacity: 0.56;
 }
 
-.c16 {
+.c14 {
   display: flex;
   align-items: center;
   min-width: 130px;
@@ -297,258 +291,6 @@ exports[`loaded 1`] = `
   font-weight: 500;
   line-height: 24px;
   white-space: nowrap;
-}
-
-.c5 .react-select-container {
-  box-shadow: inset 0 2px 4px rgba(0,0,0,0.24);
-  box-sizing: border-box;
-  border: none;
-  display: block;
-  font-size: 14px;
-  outline: none;
-  width: 100%;
-  color: rgba(0,0,0,0.87);
-  background-color: #ffffff;
-  margin-bottom: 0px;
-  border-radius: 4px;
-}
-
-.c5 .react-select__control,
-.c5 .react-select__control--is-focused {
-  min-height: 40px;
-  background-color: transparent;
-  border-color: transparent;
-  border-radius: 4px;
-  border-style: solid;
-  border-width: 1px;
-  box-shadow: none;
-}
-
-.c5 .react-select__control:hover,
-.c5 .react-select__control--is-focused:hover {
-  border-color: transparent;
-  cursor: pointer;
-}
-
-.c5 .react-select__option:hover {
-  cursor: pointer;
-  background-color: #eceff1;
-}
-
-.c5 .react-select__option--is-focused {
-  background-color: #eceff1;
-}
-
-.c5 .react-select__option--is-selected {
-  background-color: #cfd8dc;
-  color: inherit;
-}
-
-.c5 .react-select__option--is-selected:hover {
-  background-color: #cfd8dc;
-}
-
-.c5 .react-select__menu {
-  margin-top: 0px;
-}
-
-.c5 .react-select__indicator-separator {
-  display: none;
-}
-
-.c5 .react-select__loading-indicator {
-  display: none;
-}
-
-.c6 {
-  width: 210px;
-  margin-left: 16px;
-}
-
-.c6 .react-select-container {
-  box-shadow: inset 0 2px 4px rgba(0,0,0,0.24);
-  box-sizing: border-box;
-  border: none;
-  display: block;
-  font-size: 14px;
-  outline: none;
-  width: 100%;
-  color: rgba(0,0,0,0.87);
-  background-color: #ffffff;
-  margin-bottom: 0px;
-  border-radius: 4px;
-}
-
-.c6 .react-select__control,
-.c6 .react-select__control--is-focused {
-  min-height: 40px;
-  background-color: transparent;
-  border-color: transparent;
-  border-radius: 4px;
-  border-style: solid;
-  border-width: 1px;
-  box-shadow: none;
-}
-
-.c6 .react-select__control:hover,
-.c6 .react-select__control--is-focused:hover {
-  border-color: transparent;
-  cursor: pointer;
-}
-
-.c6 .react-select__option:hover {
-  cursor: pointer;
-  background-color: #eceff1;
-}
-
-.c6 .react-select__option--is-focused {
-  background-color: #eceff1;
-}
-
-.c6 .react-select__option--is-selected {
-  background-color: #cfd8dc;
-  color: inherit;
-}
-
-.c6 .react-select__option--is-selected:hover {
-  background-color: #cfd8dc;
-}
-
-.c6 .react-select__menu {
-  margin-top: 0px;
-}
-
-.c6 .react-select__indicator-separator {
-  display: none;
-}
-
-.c6 .react-select__loading-indicator {
-  display: none;
-}
-
-.c6 .react-select-container {
-  background: transparent;
-}
-
-.c6 .react-select__control,
-.c6 .react-select__control--is-focused {
-  border-color: #FFF;
-  min-height: 34px;
-}
-
-.c6 .react-select__value-container {
-  padding: 0 8px;
-}
-
-.c6 .react-select__single-value {
-  color: rgba(255,255,255,0.87);
-}
-
-.c6 .react-select__indicator,
-.c6 .react-select__dropdown-indicator {
-  padding: 4px 8px;
-  color: #666;
-}
-
-.c6 .react-select__indicator:hover,
-.c6 .react-select__dropdown-indicator:hover {
-  color: #999 !important;
-}
-
-.c6 .react-select__control {
-  border-color: rgba(255,255,255,0.24);
-  color: rgba(255,255,255,0.56);
-}
-
-.c6 .react-select__control:focus,
-.c6 .react-select__control:active {
-  background-color: #2C3A73;
-}
-
-.c6 .react-select__control:hover {
-  border-color: rgba(255,255,255,0.24);
-  background-color: #2C3A73;
-}
-
-.c6 .react-select__control:hover .react-select__dropdown-indicator {
-  color: #666;
-}
-
-.c6 .react-select__control--is-focused {
-  background-color: #2C3A73;
-  border-color: transparent;
-  border-radius: 4px;
-  border-style: solid;
-  border-width: 1px;
-  box-shadow: none;
-  border-color: rgba(255,255,255,0.24);
-}
-
-.c6 .react-select__control--is-focused .react-select__indicator,
-.c6 .react-select__control--is-focused .react-select__dropdown-indicator {
-  color: #999 !important;
-}
-
-.c6 .react-select__control--is-focused .react-select__indicator:hover,
-.c6 .react-select__control--is-focused .react-select__dropdown-indicator:hover {
-  color: #ccc !important;
-}
-
-.c6 .react-select__option {
-  padding: 4px 12px;
-}
-
-.c6 .react-select__option:hover {
-  background-color: #cfd8dc;
-}
-
-.c6 .react-select__option--is-focused {
-  background-color: #cfd8dc;
-}
-
-.c6 .react-select__option--is-focused:active {
-  background-color: #eceff1;
-}
-
-.c6 .react-select__menu {
-  border-top-left-radius: 0;
-  border-top-right-radius: 0;
-}
-
-.c8 {
-  box-sizing: border-box;
-  font-size: 12px;
-  min-width: 200px;
-  outline: none;
-  border: none;
-  border-radius: 200px;
-  height: 32px;
-  transition: all .2s;
-  background: #222C59;
-  margin-right: 16px;
-  padding-left: 16px;
-  padding-right: 16px;
-  color: rgba(255,255,255,0.87);
-}
-
-.c8:hover {
-  background: #2C3A73;
-}
-
-.c8:focus,
-.c8:active {
-  background: #2C3A73;
-  box-shadow: inset 0 2px 4px rgba(0,0,0,.24);
-  color: rgba(255,255,255,0.87);
-}
-
-.c8::placeholder {
-  color: rgba(255,255,255,0.24);
-  font-size: 12px;
-}
-
-.c4 {
-  width: 385px;
 }
 
 .c4 .react-select-container {
@@ -568,6 +310,7 @@ exports[`loaded 1`] = `
 .c4 .react-select__control,
 .c4 .react-select__control--is-focused {
   min-height: 40px;
+  height: 40px;
   background-color: transparent;
   border-color: transparent;
   border-radius: 4px;
@@ -612,55 +355,140 @@ exports[`loaded 1`] = `
   display: none;
 }
 
-.c4 .react-select-container {
+.c4 .react-select--is-disabled .react-select__single-value,
+.c4 .react-select--is-disabled .react-select__placeholder {
+  color: rgba(0,0,0,0.24);
+}
+
+.c4 .react-select--is-disabled .react-select__indicator {
+  color: rgba(0,0,0,0.14);
+}
+
+.c3 {
+  width: 210px;
+  margin-left: auto;
+}
+
+.c3 .react-select-container {
+  box-shadow: inset 0 2px 4px rgba(0,0,0,0.24);
+  box-sizing: border-box;
+  border: none;
+  display: block;
+  font-size: 14px;
+  outline: none;
+  width: 100%;
+  color: rgba(0,0,0,0.87);
+  background-color: #ffffff;
+  margin-bottom: 0px;
+  border-radius: 4px;
+}
+
+.c3 .react-select__control,
+.c3 .react-select__control--is-focused {
+  min-height: 40px;
+  height: 40px;
+  background-color: transparent;
+  border-color: transparent;
+  border-radius: 4px;
+  border-style: solid;
+  border-width: 1px;
+  box-shadow: none;
+}
+
+.c3 .react-select__control:hover,
+.c3 .react-select__control--is-focused:hover {
+  border-color: transparent;
+  cursor: pointer;
+}
+
+.c3 .react-select__option:hover {
+  cursor: pointer;
+  background-color: #eceff1;
+}
+
+.c3 .react-select__option--is-focused {
+  background-color: #eceff1;
+}
+
+.c3 .react-select__option--is-selected {
+  background-color: #cfd8dc;
+  color: inherit;
+}
+
+.c3 .react-select__option--is-selected:hover {
+  background-color: #cfd8dc;
+}
+
+.c3 .react-select__menu {
+  margin-top: 0px;
+}
+
+.c3 .react-select__indicator-separator {
+  display: none;
+}
+
+.c3 .react-select__loading-indicator {
+  display: none;
+}
+
+.c3 .react-select--is-disabled .react-select__single-value,
+.c3 .react-select--is-disabled .react-select__placeholder {
+  color: rgba(0,0,0,0.24);
+}
+
+.c3 .react-select--is-disabled .react-select__indicator {
+  color: rgba(0,0,0,0.14);
+}
+
+.c3 .react-select-container {
   background: transparent;
 }
 
-.c4 .react-select__control,
-.c4 .react-select__control--is-focused {
-  border-color: #FFF;
-  min-height: 34px;
+.c3 .react-select__option--is-focused:active {
+  background-color: #eceff1;
 }
 
-.c4 .react-select__value-container {
+.c3 .react-select__value-container {
   padding: 0 8px;
 }
 
-.c4 .react-select__single-value {
+.c3 .react-select__single-value {
   color: rgba(255,255,255,0.87);
 }
 
-.c4 .react-select__indicator,
-.c4 .react-select__dropdown-indicator {
-  padding: 4px 8px;
-  color: #666;
-}
-
-.c4 .react-select__indicator:hover,
-.c4 .react-select__dropdown-indicator:hover {
-  color: #999 !important;
-}
-
-.c4 .react-select__control {
+.c3 .react-select__control {
+  min-height: 34px;
+  height: 34px;
   border-color: rgba(255,255,255,0.24);
   color: rgba(255,255,255,0.56);
 }
 
-.c4 .react-select__control:focus,
-.c4 .react-select__control:active {
+.c3 .react-select__control:focus,
+.c3 .react-select__control:active {
   background-color: #2C3A73;
 }
 
-.c4 .react-select__control:hover {
+.c3 .react-select__control:hover {
   border-color: rgba(255,255,255,0.24);
   background-color: #2C3A73;
 }
 
-.c4 .react-select__control:hover .react-select__dropdown-indicator {
+.c3 .react-select__control:hover .react-select__dropdown-indicator {
   color: #666;
 }
 
-.c4 .react-select__control--is-focused {
+.c3 .react-select__control .react-select__indicator,
+.c3 .react-select__control .react-select__dropdown-indicator {
+  padding: 4px 8px;
+  color: #666;
+}
+
+.c3 .react-select__control .react-select__indicator:hover,
+.c3 .react-select__control .react-select__dropdown-indicator:hover {
+  color: #999;
+}
+
+.c3 .react-select__control--menu-is-open {
   background-color: #2C3A73;
   border-color: transparent;
   border-radius: 4px;
@@ -670,43 +498,79 @@ exports[`loaded 1`] = `
   border-color: rgba(255,255,255,0.24);
 }
 
-.c4 .react-select__control--is-focused .react-select__indicator,
-.c4 .react-select__control--is-focused .react-select__dropdown-indicator {
+.c3 .react-select__control--menu-is-open .react-select__indicator,
+.c3 .react-select__control--menu-is-open .react-select__dropdown-indicator {
   color: #999 !important;
 }
 
-.c4 .react-select__control--is-focused .react-select__indicator:hover,
-.c4 .react-select__control--is-focused .react-select__dropdown-indicator:hover {
+.c3 .react-select__control--menu-is-open .react-select__indicator:hover,
+.c3 .react-select__control--menu-is-open .react-select__dropdown-indicator:hover {
   color: #ccc !important;
 }
 
-.c4 .react-select__option {
+.c3 .react-select__input {
+  color: rgba(255,255,255,0.87);
+}
+
+.c3 .react-select__placeholder {
+  color: rgba(255,255,255,0.56);
+}
+
+.c3 .react-select__option {
   padding: 4px 12px;
 }
 
-.c4 .react-select__option:hover {
-  background-color: #cfd8dc;
-}
-
-.c4 .react-select__option--is-focused {
-  background-color: #cfd8dc;
-}
-
-.c4 .react-select__option--is-focused:active {
-  background-color: #eceff1;
-}
-
-.c4 .react-select__menu {
+.c3 .react-select__menu {
   border-top-left-radius: 0;
   border-top-right-radius: 0;
 }
 
-.c4 .react-select__single-value {
-  transform: none;
-  position: absolute;
-  left: 86px;
-  top: 4px;
-  text-overflow: ellipsis;
+.c3 .react-select__multi-value {
+  background-color: #111B48;
+  border: 1px solid rgba(255,255,255,0.24);
+}
+
+.c3 .react-select__multi-value__label {
+  color: rgba(255,255,255,0.87);
+  padding: 0 6px;
+}
+
+.c3 .react-select--is-disabled .react-select__single-value,
+.c3 .react-select--is-disabled .react-select__placeholder,
+.c3 .react-select--is-disabled .react-select__indicator {
+  color: rgba(255,255,255,0.24);
+}
+
+.c6 {
+  box-sizing: border-box;
+  font-size: 12px;
+  min-width: 200px;
+  outline: none;
+  border: none;
+  border-radius: 200px;
+  height: 32px;
+  transition: all .2s;
+  background: #222C59;
+  margin-right: 16px;
+  padding-left: 16px;
+  padding-right: 16px;
+  color: rgba(255,255,255,0.87);
+}
+
+.c6:hover {
+  background: #2C3A73;
+}
+
+.c6:focus,
+.c6:active {
+  background: #2C3A73;
+  box-shadow: inset 0 2px 4px rgba(0,0,0,.24);
+  color: rgba(255,255,255,0.87);
+}
+
+.c6::placeholder {
+  color: rgba(255,255,255,0.24);
+  font-size: 12px;
 }
 
 <div
@@ -722,133 +586,56 @@ exports[`loaded 1`] = `
     </div>
     <div
       class="c3"
+      width="210px"
     >
       <div
         class="c4"
       >
         <div
-          class="c5"
+          class="react-select-container css-2b097c-container"
         >
           <div
-            class="react-select-container css-2b097c-container"
+            class="react-select__control css-yk16xz-control"
           >
             <div
-              class="react-select__control css-yk16xz-control"
+              class="react-select__value-container react-select__value-container--has-value css-g1d714-ValueContainer"
             >
               <div
-                class="react-select__value-container css-g1d714-ValueContainer"
+                class="react-select__single-value css-1uccc91-singleValue"
               >
-                <div
-                  class="react-select__placeholder css-1wa3eu0-placeholder"
-                >
-                  Select a filter to get search results by event type
-                </div>
-                <div
-                  class="css-b8ldur-Input"
-                >
-                  <div
-                    class="react-select__input"
-                    style="display: inline-block;"
-                  >
-                    <input
-                      aria-autocomplete="list"
-                      autocapitalize="none"
-                      autocomplete="off"
-                      autocorrect="off"
-                      id="react-select-2-input"
-                      spellcheck="false"
-                      style="box-sizing: content-box; width: 2px; border: 0px; opacity: 1; outline: 0; padding: 0px;"
-                      tabindex="0"
-                      type="text"
-                      value=""
-                    />
-                    <div
-                      style="position: absolute; top: 0px; left: 0px; visibility: hidden; height: 0px; overflow: scroll; white-space: pre; font-family: Ubuntu2,-apple-system,BlinkMacSystemFont,\\"Segoe UI\\",Helvetica,Arial,sans-serif,\\"Apple Color Emoji\\",\\"Segoe UI Emoji\\",\\"Segoe UI Symbol\\"; letter-spacing: normal; text-transform: none;"
-                    />
-                  </div>
-                </div>
+                Today
               </div>
-              <div
-                class="react-select__indicators css-1hb7zxy-IndicatorsContainer"
-              >
-                <span
-                  class="react-select__indicator-separator css-1okebmr-indicatorSeparator"
-                />
-                <div
-                  aria-hidden="true"
-                  class="react-select__indicator react-select__dropdown-indicator css-tlfecz-indicatorContainer"
-                >
-                  <svg
-                    aria-hidden="true"
-                    class="css-6q0nyr-Svg"
-                    focusable="false"
-                    height="20"
-                    viewBox="0 0 20 20"
-                    width="20"
-                  >
-                    <path
-                      d="M4.516 7.548c0.436-0.446 1.043-0.481 1.576 0l3.908 3.747 3.908-3.747c0.533-0.481 1.141-0.446 1.574 0 0.436 0.445 0.408 1.197 0 1.615-0.406 0.418-4.695 4.502-4.695 4.502-0.217 0.223-0.502 0.335-0.787 0.335s-0.57-0.112-0.789-0.335c0 0-4.287-4.084-4.695-4.502s-0.436-1.17 0-1.615z"
-                    />
-                  </svg>
-                </div>
-              </div>
+              <input
+                aria-autocomplete="list"
+                class="css-62g3xt-dummyInput"
+                id="react-select-2-input"
+                readonly=""
+                tabindex="0"
+                value=""
+              />
             </div>
-          </div>
-        </div>
-      </div>
-      <div
-        class="c6"
-        width="210px"
-      >
-        <div
-          class="c5"
-        >
-          <div
-            class="react-select-container css-2b097c-container"
-          >
             <div
-              class="react-select__control css-yk16xz-control"
+              class="react-select__indicators css-1hb7zxy-IndicatorsContainer"
             >
+              <span
+                class="react-select__indicator-separator css-1okebmr-indicatorSeparator"
+              />
               <div
-                class="react-select__value-container react-select__value-container--has-value css-g1d714-ValueContainer"
+                aria-hidden="true"
+                class="react-select__indicator react-select__dropdown-indicator css-tlfecz-indicatorContainer"
               >
-                <div
-                  class="react-select__single-value css-1uccc91-singleValue"
-                >
-                  Today
-                </div>
-                <input
-                  aria-autocomplete="list"
-                  class="css-62g3xt-dummyInput"
-                  id="react-select-3-input"
-                  readonly=""
-                  tabindex="0"
-                  value=""
-                />
-              </div>
-              <div
-                class="react-select__indicators css-1hb7zxy-IndicatorsContainer"
-              >
-                <span
-                  class="react-select__indicator-separator css-1okebmr-indicatorSeparator"
-                />
-                <div
+                <svg
                   aria-hidden="true"
-                  class="react-select__indicator react-select__dropdown-indicator css-tlfecz-indicatorContainer"
+                  class="css-6q0nyr-Svg"
+                  focusable="false"
+                  height="20"
+                  viewBox="0 0 20 20"
+                  width="20"
                 >
-                  <svg
-                    aria-hidden="true"
-                    class="css-6q0nyr-Svg"
-                    focusable="false"
-                    height="20"
-                    viewBox="0 0 20 20"
-                    width="20"
-                  >
-                    <path
-                      d="M4.516 7.548c0.436-0.446 1.043-0.481 1.576 0l3.908 3.747 3.908-3.747c0.533-0.481 1.141-0.446 1.574 0 0.436 0.445 0.408 1.197 0 1.615-0.406 0.418-4.695 4.502-4.695 4.502-0.217 0.223-0.502 0.335-0.787 0.335s-0.57-0.112-0.789-0.335c0 0-4.287-4.084-4.695-4.502s-0.436-1.17 0-1.615z"
-                    />
-                  </svg>
-                </div>
+                  <path
+                    d="M4.516 7.548c0.436-0.446 1.043-0.481 1.576 0l3.908 3.747 3.908-3.747c0.533-0.481 1.141-0.446 1.574 0 0.436 0.445 0.408 1.197 0 1.615-0.406 0.418-4.695 4.502-4.695 4.502-0.217 0.223-0.502 0.335-0.787 0.335s-0.57-0.112-0.789-0.335c0 0-4.287-4.084-4.695-4.502s-0.436-1.17 0-1.615z"
+                  />
+                </svg>
               </div>
             </div>
           </div>
@@ -857,10 +644,10 @@ exports[`loaded 1`] = `
     </div>
   </div>
   <div
-    class="c7"
+    class="c5"
   >
     <input
-      class="c8"
+      class="c6"
       color="text.primary"
       placeholder="SEARCH..."
       value=""
@@ -868,10 +655,10 @@ exports[`loaded 1`] = `
   </div>
   <div>
     <nav
-      class="c9"
+      class="c7"
     >
       <div
-        class="c10"
+        class="c8"
         color="primary.contrastText"
       >
         SHOWING 
@@ -889,14 +676,14 @@ exports[`loaded 1`] = `
         </strong>
       </div>
       <div
-        class="c11"
+        class="c9"
       >
         <button
           disabled=""
           title="Previous Page"
         >
           <span
-            class="c12 c13 icon icon-arrow-left-circle "
+            class="c10 c11 icon icon-arrow-left-circle "
             color="light"
             font-size="3"
           />
@@ -906,7 +693,7 @@ exports[`loaded 1`] = `
           title="Next Page"
         >
           <span
-            class="c12 c13 icon icon-arrow-right-circle "
+            class="c10 c11 icon icon-arrow-right-circle "
             color="light"
             font-size="3"
           />
@@ -914,7 +701,7 @@ exports[`loaded 1`] = `
       </div>
     </nav>
     <table
-      class="c14"
+      class="c12"
     >
       <thead>
         <tr>
@@ -922,7 +709,7 @@ exports[`loaded 1`] = `
             <a>
               Type
               <span
-                class="c12 c15 icon icon-chevrons-expand-vertical "
+                class="c10 c13 icon icon-chevrons-expand-vertical "
                 color="light"
               />
             </a>
@@ -934,7 +721,7 @@ exports[`loaded 1`] = `
             <a>
               Created
               <span
-                class="c12 c15 icon icon-chevron-up "
+                class="c10 c13 icon icon-chevron-up "
                 color="light"
               />
             </a>
@@ -946,31 +733,31 @@ exports[`loaded 1`] = `
         <tr>
           <td>
             <div
-              class="c16"
+              class="c14"
             >
               <span
-                class="c12 c17 icon icon-terminal c12 c17"
+                class="c10 c15 icon icon-info_outline c10 c15"
                 color="light"
                 font-size="3"
               />
-              Session Ended
+              Local Login
             </div>
           </td>
           <td
             style="word-break: break-word;"
           >
-            User [root] has ended an interactive session lasting a few seconds [5ef7244c-0f7b-4f57-80b0-26a79f960aae] on node [im-a-nodename]
+            Local user [admin@example.com] successfully logged in
           </td>
           <td
             style="min-width: 120px;"
           >
-            2021-05-12 01:26:22
+            2019-04-22 00:49:03
           </td>
           <td
             align="right"
           >
             <button
-              class="c18"
+              class="c16"
               kind="border"
               width="87px"
             >
@@ -981,7 +768,1197 @@ exports[`loaded 1`] = `
         <tr>
           <td>
             <div
+              class="c14"
+            >
+              <span
+                class="c10 c15 icon icon-info_outline c10 c15"
+                color="light"
+                font-size="3"
+              />
+              Auth Attempt Failed
+            </div>
+          </td>
+          <td
+            style="word-break: break-word;"
+          >
+            User [admin@example.com] failed auth attempt: ssh: principal "fsdfdsf" not in the set of valid principals for given certificate: ["root"]
+          </td>
+          <td
+            style="min-width: 120px;"
+          >
+            2019-04-22 02:09:06
+          </td>
+          <td
+            align="right"
+          >
+            <button
               class="c16"
+              kind="border"
+              width="87px"
+            >
+              Details
+            </button>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <div
+              class="c14"
+            >
+              <span
+                class="c10 c15 icon icon-info_outline c10 c15"
+                color="light"
+                font-size="3"
+              />
+              Local Login Failed
+            </div>
+          </td>
+          <td
+            style="word-break: break-word;"
+          >
+            Local user [fsdfsdf] login failed [user(name="fsdfsdf") not found]
+          </td>
+          <td
+            style="min-width: 120px;"
+          >
+            2019-04-22 18:06:32
+          </td>
+          <td
+            align="right"
+          >
+            <button
+              class="c16"
+              kind="border"
+              width="87px"
+            >
+              Details
+            </button>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <div
+              class="c14"
+            >
+              <span
+                class="c10 c15 icon icon-terminal c10 c15"
+                color="light"
+                font-size="3"
+              />
+              Session Network Connection
+            </div>
+          </td>
+          <td
+            style="word-break: break-word;"
+          >
+            Program [bash] opened a connection [10.217.136.161 &lt;-&gt; 190.58.129.4:3000] within a session [44c6cea8-362f-11ea-83aa-125400432324]
+          </td>
+          <td
+            style="min-width: 120px;"
+          >
+            2019-04-22 19:39:26
+          </td>
+          <td
+            align="right"
+          >
+            <button
+              class="c16"
+              kind="border"
+              width="87px"
+            >
+              Details
+            </button>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <div
+              class="c14"
+            >
+              <span
+                class="c10 c15 icon icon-terminal c10 c15"
+                color="light"
+                font-size="3"
+              />
+              Session File Access
+            </div>
+          </td>
+          <td
+            style="word-break: break-word;"
+          >
+            Program [bash] accessed a file [/etc/profile.d/] within a session [44c6cea8-362f-11ea-83aa-125400432324]
+          </td>
+          <td
+            style="min-width: 120px;"
+          >
+            2019-04-22 19:39:26
+          </td>
+          <td
+            align="right"
+          >
+            <button
+              class="c16"
+              kind="border"
+              width="87px"
+            >
+              Details
+            </button>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <div
+              class="c14"
+            >
+              <span
+                class="c10 c15 icon icon-terminal c10 c15"
+                color="light"
+                font-size="3"
+              />
+              Session Started
+            </div>
+          </td>
+          <td
+            style="word-break: break-word;"
+          >
+            User [admin@example.com] has started a session [56408539-6536-11e9-80a1-427cfde50f5a]
+          </td>
+          <td
+            style="min-width: 120px;"
+          >
+            2019-04-22 19:39:26
+          </td>
+          <td
+            align="right"
+          >
+            <button
+              class="c16"
+              kind="border"
+              width="87px"
+            >
+              Details
+            </button>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <div
+              class="c14"
+            >
+              <span
+                class="c10 c15 icon icon-terminal c10 c15"
+                color="light"
+                font-size="3"
+              />
+              Terminal Resize
+            </div>
+          </td>
+          <td
+            style="word-break: break-word;"
+          >
+            User [admin@example.com] resized the session [56408539-6536-11e9-80a1-427cfde50f5a] terminal
+          </td>
+          <td
+            style="min-width: 120px;"
+          >
+            2019-04-22 19:39:52
+          </td>
+          <td
+            align="right"
+          >
+            <button
+              class="c16"
+              kind="border"
+              width="87px"
+            >
+              Details
+            </button>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <div
+              class="c14"
+            >
+              <span
+                class="c10 c15 icon icon-terminal c10 c15"
+                color="light"
+                font-size="3"
+              />
+              User Joined
+            </div>
+          </td>
+          <td
+            style="word-break: break-word;"
+          >
+            User [admin@example.com] has joined the session [56408539-6536-11e9-80a1-427cfde50f5a]
+          </td>
+          <td
+            style="min-width: 120px;"
+          >
+            2019-04-22 19:39:52
+          </td>
+          <td
+            align="right"
+          >
+            <button
+              class="c16"
+              kind="border"
+              width="87px"
+            >
+              Details
+            </button>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <div
+              class="c14"
+            >
+              <span
+                class="c10 c15 icon icon-get_app c10 c15"
+                color="light"
+                font-size="3"
+              />
+              SCP Download
+            </div>
+          </td>
+          <td
+            style="word-break: break-word;"
+          >
+            User [admin@example.com] downloaded a file [~/fsdfsdfsdfsdfs] from node [172.31.28.130:3022]
+          </td>
+          <td
+            style="min-width: 120px;"
+          >
+            2019-04-22 19:41:23
+          </td>
+          <td
+            align="right"
+          >
+            <button
+              class="c16"
+              kind="border"
+              width="87px"
+            >
+              Details
+            </button>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <div
+              class="c14"
+            >
+              <span
+                class="c10 c15 icon icon-get_app c10 c15"
+                color="light"
+                font-size="3"
+              />
+              SCP Download Failed
+            </div>
+          </td>
+          <td
+            style="word-break: break-word;"
+          >
+            File download from node [192.168.0.105:3022] failed [exit status 1]
+          </td>
+          <td
+            style="min-width: 120px;"
+          >
+            2019-04-22 19:41:23
+          </td>
+          <td
+            align="right"
+          >
+            <button
+              class="c16"
+              kind="border"
+              width="87px"
+            >
+              Details
+            </button>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <div
+              class="c14"
+            >
+              <span
+                class="c10 c15 icon icon-file_upload c10 c15"
+                color="light"
+                font-size="3"
+              />
+              SCP Upload
+            </div>
+          </td>
+          <td
+            style="word-break: break-word;"
+          >
+            User [root] uploaded a file [~/] to node [192.168.0.105:3022]
+          </td>
+          <td
+            style="min-width: 120px;"
+          >
+            2019-04-22 19:41:23
+          </td>
+          <td
+            align="right"
+          >
+            <button
+              class="c16"
+              kind="border"
+              width="87px"
+            >
+              Details
+            </button>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <div
+              class="c14"
+            >
+              <span
+                class="c10 c15 icon icon-terminal c10 c15"
+                color="light"
+                font-size="3"
+              />
+              Session Command
+            </div>
+          </td>
+          <td
+            style="word-break: break-word;"
+          >
+            Program [ping] has been executed within a session [44c6cea8-362f-11ea-83aa-125400432324]
+          </td>
+          <td
+            style="min-width: 120px;"
+          >
+            2020-01-13 18:05:53
+          </td>
+          <td
+            align="right"
+          >
+            <button
+              class="c16"
+              kind="border"
+              width="87px"
+            >
+              Details
+            </button>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <div
+              class="c14"
+            >
+              <span
+                class="c10 c15 icon icon-terminal c10 c15"
+                color="light"
+                font-size="3"
+              />
+              Session Data
+            </div>
+          </td>
+          <td
+            style="word-break: break-word;"
+          >
+            Usage report has been updated for session [5fc8bf85-a73e-11ea-afd1-0242ac0a0101]
+          </td>
+          <td
+            style="min-width: 120px;"
+          >
+            2020-06-05 15:14:51
+          </td>
+          <td
+            align="right"
+          >
+            <button
+              class="c16"
+              kind="border"
+              width="87px"
+            >
+              Details
+            </button>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <div
+              class="c14"
+            >
+              <span
+                class="c10 c15 icon icon-terminal c10 c15"
+                color="light"
+                font-size="3"
+              />
+              Session Data
+            </div>
+          </td>
+          <td
+            style="word-break: break-word;"
+          >
+            Usage report has been updated for session [5fc8bf85-a73e-11ea-afd1-0242ac0a0101]
+          </td>
+          <td
+            style="min-width: 120px;"
+          >
+            2020-06-05 15:14:51
+          </td>
+          <td
+            align="right"
+          >
+            <button
+              class="c16"
+              kind="border"
+              width="87px"
+            >
+              Details
+            </button>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <div
+              class="c14"
+            >
+              <span
+                class="c10 c15 icon icon-info_outline c10 c15"
+                color="light"
+                font-size="3"
+              />
+              User Deleted
+            </div>
+          </td>
+          <td
+            style="word-break: break-word;"
+          >
+            User [bob] has been deleted
+          </td>
+          <td
+            style="min-width: 120px;"
+          >
+            2020-06-05 16:24:05
+          </td>
+          <td
+            align="right"
+          >
+            <button
+              class="c16"
+              kind="border"
+              width="87px"
+            >
+              Details
+            </button>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <div
+              class="c14"
+            >
+              <span
+                class="c10 c15 icon icon-info_outline c10 c15"
+                color="light"
+                font-size="3"
+              />
+              User Updated
+            </div>
+          </td>
+          <td
+            style="word-break: break-word;"
+          >
+            User [bob] has been updated
+          </td>
+          <td
+            style="min-width: 120px;"
+          >
+            2020-06-05 16:24:05
+          </td>
+          <td
+            align="right"
+          >
+            <button
+              class="c16"
+              kind="border"
+              width="87px"
+            >
+              Details
+            </button>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <div
+              class="c14"
+            >
+              <span
+                class="c10 c15 icon icon-info_outline c10 c15"
+                color="light"
+                font-size="3"
+              />
+              User Created
+            </div>
+          </td>
+          <td
+            style="word-break: break-word;"
+          >
+            User [hello] has been created
+          </td>
+          <td
+            style="min-width: 120px;"
+          >
+            2020-06-05 16:24:05
+          </td>
+          <td
+            align="right"
+          >
+            <button
+              class="c16"
+              kind="border"
+              width="87px"
+            >
+              Details
+            </button>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <div
+              class="c14"
+            >
+              <span
+                class="c10 c15 icon icon-info_outline c10 c15"
+                color="light"
+                font-size="3"
+              />
+              Reset Password Token Created
+            </div>
+          </td>
+          <td
+            style="word-break: break-word;"
+          >
+            User [b331fb6c-85f9-4cb0-b308-3452420bf81e.one] created a password reset token for user [hello]
+          </td>
+          <td
+            style="min-width: 120px;"
+          >
+            2020-06-05 16:24:22
+          </td>
+          <td
+            align="right"
+          >
+            <button
+              class="c16"
+              kind="border"
+              width="87px"
+            >
+              Details
+            </button>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <div
+              class="c14"
+            >
+              <span
+                class="c10 c15 icon icon-info_outline c10 c15"
+                color="light"
+                font-size="3"
+              />
+              Access Request Created
+            </div>
+          </td>
+          <td
+            style="word-break: break-word;"
+          >
+            Access request [66b827b2-1b0b-512b-965d-6c789388d3c9] has been created and is PENDING
+          </td>
+          <td
+            style="min-width: 120px;"
+          >
+            2020-06-05 19:26:53
+          </td>
+          <td
+            align="right"
+          >
+            <button
+              class="c16"
+              kind="border"
+              width="87px"
+            >
+              Details
+            </button>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <div
+              class="c14"
+            >
+              <span
+                class="c10 c15 icon icon-info_outline c10 c15"
+                color="light"
+                font-size="3"
+              />
+              Access Request Updated
+            </div>
+          </td>
+          <td
+            style="word-break: break-word;"
+          >
+            Access request [66b827b2-1b0b-512b-965d-6c789388d3c9] has been updated to APPROVED
+          </td>
+          <td
+            style="min-width: 120px;"
+          >
+            2020-06-05 19:26:53
+          </td>
+          <td
+            align="right"
+          >
+            <button
+              class="c16"
+              kind="border"
+              width="87px"
+            >
+              Details
+            </button>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <div
+              class="c14"
+            >
+              <span
+                class="c10 c15 icon icon-info_outline c10 c15"
+                color="light"
+                font-size="3"
+              />
+              User Password Updated
+            </div>
+          </td>
+          <td
+            style="word-break: break-word;"
+          >
+            User [Ivan_Jordan] has changed a password
+          </td>
+          <td
+            style="min-width: 120px;"
+          >
+            2020-06-05 19:26:53
+          </td>
+          <td
+            align="right"
+          >
+            <button
+              class="c16"
+              kind="border"
+              width="87px"
+            >
+              Details
+            </button>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <div
+              class="c14"
+            >
+              <span
+                class="c10 c15 icon icon-info_outline c10 c15"
+                color="light"
+                font-size="3"
+              />
+              GITHUB Auth Connector Created
+            </div>
+          </td>
+          <td
+            style="word-break: break-word;"
+          >
+            User [unimplemented] created Github connector [new_github_connector] has been created
+          </td>
+          <td
+            style="min-width: 120px;"
+          >
+            2020-06-05 19:28:00
+          </td>
+          <td
+            align="right"
+          >
+            <button
+              class="c16"
+              kind="border"
+              width="87px"
+            >
+              Details
+            </button>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <div
+              class="c14"
+            >
+              <span
+                class="c10 c15 icon icon-info_outline c10 c15"
+                color="light"
+                font-size="3"
+              />
+              GITHUB Auth Connector Deleted
+            </div>
+          </td>
+          <td
+            style="word-break: break-word;"
+          >
+            User [unimplemented] deleted Github connector [new_github_connector]
+          </td>
+          <td
+            style="min-width: 120px;"
+          >
+            2020-06-05 19:28:28
+          </td>
+          <td
+            align="right"
+          >
+            <button
+              class="c16"
+              kind="border"
+              width="87px"
+            >
+              Details
+            </button>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <div
+              class="c14"
+            >
+              <span
+                class="c10 c15 icon icon-info_outline c10 c15"
+                color="light"
+                font-size="3"
+              />
+              OIDC Auth Connector Created
+            </div>
+          </td>
+          <td
+            style="word-break: break-word;"
+          >
+            User [unimplemented] created OIDC connector [new_oidc_connector]
+          </td>
+          <td
+            style="min-width: 120px;"
+          >
+            2020-06-05 19:29:14
+          </td>
+          <td
+            align="right"
+          >
+            <button
+              class="c16"
+              kind="border"
+              width="87px"
+            >
+              Details
+            </button>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <div
+              class="c14"
+            >
+              <span
+                class="c10 c15 icon icon-info_outline c10 c15"
+                color="light"
+                font-size="3"
+              />
+              App Session Started
+            </div>
+          </td>
+          <td
+            style="word-break: break-word;"
+          >
+            User [kimlisa] has started an app session [6593cf87-9839-4f18-abf8-c54873aaeb4e]
+          </td>
+          <td
+            style="min-width: 120px;"
+          >
+            2020-10-30 17:28:14
+          </td>
+          <td
+            align="right"
+          >
+            <button
+              class="c16"
+              kind="border"
+              width="87px"
+            >
+              Details
+            </button>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <div
+              class="c14"
+            >
+              <span
+                class="c10 c15 icon icon-info_outline c10 c15"
+                color="light"
+                font-size="3"
+              />
+              App Session Data
+            </div>
+          </td>
+          <td
+            style="word-break: break-word;"
+          >
+            New app session data created [6593cf87-9839-4f18-abf8-c54873aaeb4e]
+          </td>
+          <td
+            style="min-width: 120px;"
+          >
+            2020-10-30 17:28:14
+          </td>
+          <td
+            align="right"
+          >
+            <button
+              class="c16"
+              kind="border"
+              width="87px"
+            >
+              Details
+            </button>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <div
+              class="c14"
+            >
+              <span
+                class="c10 c15 icon icon-terminal c10 c15"
+                color="light"
+                font-size="3"
+              />
+              Command Execution
+            </div>
+          </td>
+          <td
+            style="word-break: break-word;"
+          >
+            User [alex] executed a command on kubernetes cluster [clusterOne]
+          </td>
+          <td
+            style="min-width: 120px;"
+          >
+            2020-10-30 17:28:14
+          </td>
+          <td
+            align="right"
+          >
+            <button
+              class="c16"
+              kind="border"
+              width="87px"
+            >
+              Details
+            </button>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <div
+              class="c14"
+            >
+              <span
+                class="c10 c15 icon icon-kubernetes c10 c15"
+                color="light"
+                font-size="3"
+              />
+              Kubernetes Request
+            </div>
+          </td>
+          <td
+            style="word-break: break-word;"
+          >
+            User [alex] made a request to kubernetes cluster [gke_teleport-a]
+          </td>
+          <td
+            style="min-width: 120px;"
+          >
+            2020-11-12 20:35:44
+          </td>
+          <td
+            align="right"
+          >
+            <button
+              class="c16"
+              kind="border"
+              width="87px"
+            >
+              Details
+            </button>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <div
+              class="c14"
+            >
+              <span
+                class="c10 c15 icon icon-info_outline c10 c15"
+                color="light"
+                font-size="3"
+              />
+              MFA Device Added
+            </div>
+          </td>
+          <td
+            style="word-break: break-word;"
+          >
+            User [awly] added U2F device [usb-c]
+          </td>
+          <td
+            style="min-width: 120px;"
+          >
+            2021-03-03 22:58:34
+          </td>
+          <td
+            align="right"
+          >
+            <button
+              class="c16"
+              kind="border"
+              width="87px"
+            >
+              Details
+            </button>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <div
+              class="c14"
+            >
+              <span
+                class="c10 c15 icon icon-info_outline c10 c15"
+                color="light"
+                font-size="3"
+              />
+              MFA Device Deleted
+            </div>
+          </td>
+          <td
+            style="word-break: break-word;"
+          >
+            User [awly] deleted U2F device [usb-c]
+          </td>
+          <td
+            style="min-width: 120px;"
+          >
+            2021-03-03 22:58:44
+          </td>
+          <td
+            align="right"
+          >
+            <button
+              class="c16"
+              kind="border"
+              width="87px"
+            >
+              Details
+            </button>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <div
+              class="c14"
+            >
+              <span
+                class="c10 c15 icon icon-credit-card c10 c15"
+                color="light"
+                font-size="3"
+              />
+              Credit Card Updated
+            </div>
+          </td>
+          <td
+            style="word-break: break-word;"
+          >
+            User [root] has updated a credit card
+          </td>
+          <td
+            style="min-width: 120px;"
+          >
+            2021-03-18 16:28:49
+          </td>
+          <td
+            align="right"
+          >
+            <button
+              class="c16"
+              kind="border"
+              width="87px"
+            >
+              Details
+            </button>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <div
+              class="c14"
+            >
+              <span
+                class="c10 c15 icon icon-credit-card c10 c15"
+                color="light"
+                font-size="3"
+              />
+              Credit Card Deleted
+            </div>
+          </td>
+          <td
+            style="word-break: break-word;"
+          >
+            User [root] has deleted a credit card
+          </td>
+          <td
+            style="min-width: 120px;"
+          >
+            2021-03-18 16:28:51
+          </td>
+          <td
+            align="right"
+          >
+            <button
+              class="c16"
+              kind="border"
+              width="87px"
+            >
+              Details
+            </button>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <div
+              class="c14"
+            >
+              <span
+                class="c10 c15 icon icon-credit-card c10 c15"
+                color="light"
+                font-size="3"
+              />
+              Credit Card Added
+            </div>
+          </td>
+          <td
+            style="word-break: break-word;"
+          >
+            User [root] has added a credit card
+          </td>
+          <td
+            style="min-width: 120px;"
+          >
+            2021-03-18 16:29:05
+          </td>
+          <td
+            align="right"
+          >
+            <button
+              class="c16"
+              kind="border"
+              width="87px"
+            >
+              Details
+            </button>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <div
+              class="c14"
+            >
+              <span
+                class="c10 c15 icon icon-credit-card c10 c15"
+                color="light"
+                font-size="3"
+              />
+              Billing Information Updated
+            </div>
+          </td>
+          <td
+            style="word-break: break-word;"
+          >
+            User [root] has updated the billing information
+          </td>
+          <td
+            style="min-width: 120px;"
+          >
+            2021-03-18 16:29:15
+          </td>
+          <td
+            align="right"
+          >
+            <button
+              class="c16"
+              kind="border"
+              width="87px"
+            >
+              Details
+            </button>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <div
+              class="c14"
+            >
+              <span
+                class="c10 c15 icon icon-terminal c10 c15"
+                color="light"
+                font-size="3"
+              />
+              Session Ended
+            </div>
+          </td>
+          <td
+            style="word-break: break-word;"
+          >
+            User [root] has ended a non-interactive session [9febab45-6491-11e9-80a1-427cfde50f5a] on node [node-hostname] 
+          </td>
+          <td
+            style="min-width: 120px;"
+          >
+            2021-05-12 01:26:22
+          </td>
+          <td
+            align="right"
+          >
+            <button
+              class="c16"
+              kind="border"
+              width="87px"
+            >
+              Details
+            </button>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <div
+              class="c14"
             >
               <a
                 href="/web/cluster/localhost/session/941a4c65-c6cd-11ea-9bef-482ae3513733"
@@ -990,7 +1967,7 @@ exports[`loaded 1`] = `
                 title="Open Session Player"
               >
                 <span
-                  class="c12 c17 icon icon-terminal c19"
+                  class="c10 c15 icon icon-terminal c17"
                   color="light"
                   font-size="3"
                 />
@@ -1012,7 +1989,7 @@ exports[`loaded 1`] = `
             align="right"
           >
             <button
-              class="c18"
+              class="c16"
               kind="border"
               width="87px"
             >
@@ -1023,10 +2000,10 @@ exports[`loaded 1`] = `
         <tr>
           <td>
             <div
-              class="c16"
+              class="c14"
             >
               <span
-                class="c12 c17 icon icon-terminal c12 c17"
+                class="c10 c15 icon icon-terminal c10 c15"
                 color="light"
                 font-size="3"
               />
@@ -1036,7 +2013,7 @@ exports[`loaded 1`] = `
           <td
             style="word-break: break-word;"
           >
-            User [root] has ended a non-interactive session [9febab45-6491-11e9-80a1-427cfde50f5a] on node [node-hostname] 
+            User [root] has ended an interactive session lasting a few seconds [5ef7244c-0f7b-4f57-80b0-26a79f960aae] on node [im-a-nodename]
           </td>
           <td
             style="min-width: 120px;"
@@ -1047,1197 +2024,7 @@ exports[`loaded 1`] = `
             align="right"
           >
             <button
-              class="c18"
-              kind="border"
-              width="87px"
-            >
-              Details
-            </button>
-          </td>
-        </tr>
-        <tr>
-          <td>
-            <div
               class="c16"
-            >
-              <span
-                class="c12 c17 icon icon-credit-card c12 c17"
-                color="light"
-                font-size="3"
-              />
-              Billing Information Updated
-            </div>
-          </td>
-          <td
-            style="word-break: break-word;"
-          >
-            User [root] has updated the billing information
-          </td>
-          <td
-            style="min-width: 120px;"
-          >
-            2021-03-18 16:29:15
-          </td>
-          <td
-            align="right"
-          >
-            <button
-              class="c18"
-              kind="border"
-              width="87px"
-            >
-              Details
-            </button>
-          </td>
-        </tr>
-        <tr>
-          <td>
-            <div
-              class="c16"
-            >
-              <span
-                class="c12 c17 icon icon-credit-card c12 c17"
-                color="light"
-                font-size="3"
-              />
-              Credit Card Added
-            </div>
-          </td>
-          <td
-            style="word-break: break-word;"
-          >
-            User [root] has added a credit card
-          </td>
-          <td
-            style="min-width: 120px;"
-          >
-            2021-03-18 16:29:05
-          </td>
-          <td
-            align="right"
-          >
-            <button
-              class="c18"
-              kind="border"
-              width="87px"
-            >
-              Details
-            </button>
-          </td>
-        </tr>
-        <tr>
-          <td>
-            <div
-              class="c16"
-            >
-              <span
-                class="c12 c17 icon icon-credit-card c12 c17"
-                color="light"
-                font-size="3"
-              />
-              Credit Card Deleted
-            </div>
-          </td>
-          <td
-            style="word-break: break-word;"
-          >
-            User [root] has deleted a credit card
-          </td>
-          <td
-            style="min-width: 120px;"
-          >
-            2021-03-18 16:28:51
-          </td>
-          <td
-            align="right"
-          >
-            <button
-              class="c18"
-              kind="border"
-              width="87px"
-            >
-              Details
-            </button>
-          </td>
-        </tr>
-        <tr>
-          <td>
-            <div
-              class="c16"
-            >
-              <span
-                class="c12 c17 icon icon-credit-card c12 c17"
-                color="light"
-                font-size="3"
-              />
-              Credit Card Updated
-            </div>
-          </td>
-          <td
-            style="word-break: break-word;"
-          >
-            User [root] has updated a credit card
-          </td>
-          <td
-            style="min-width: 120px;"
-          >
-            2021-03-18 16:28:49
-          </td>
-          <td
-            align="right"
-          >
-            <button
-              class="c18"
-              kind="border"
-              width="87px"
-            >
-              Details
-            </button>
-          </td>
-        </tr>
-        <tr>
-          <td>
-            <div
-              class="c16"
-            >
-              <span
-                class="c12 c17 icon icon-info_outline c12 c17"
-                color="light"
-                font-size="3"
-              />
-              MFA Device Deleted
-            </div>
-          </td>
-          <td
-            style="word-break: break-word;"
-          >
-            User [awly] deleted U2F device [usb-c]
-          </td>
-          <td
-            style="min-width: 120px;"
-          >
-            2021-03-03 22:58:44
-          </td>
-          <td
-            align="right"
-          >
-            <button
-              class="c18"
-              kind="border"
-              width="87px"
-            >
-              Details
-            </button>
-          </td>
-        </tr>
-        <tr>
-          <td>
-            <div
-              class="c16"
-            >
-              <span
-                class="c12 c17 icon icon-info_outline c12 c17"
-                color="light"
-                font-size="3"
-              />
-              MFA Device Added
-            </div>
-          </td>
-          <td
-            style="word-break: break-word;"
-          >
-            User [awly] added U2F device [usb-c]
-          </td>
-          <td
-            style="min-width: 120px;"
-          >
-            2021-03-03 22:58:34
-          </td>
-          <td
-            align="right"
-          >
-            <button
-              class="c18"
-              kind="border"
-              width="87px"
-            >
-              Details
-            </button>
-          </td>
-        </tr>
-        <tr>
-          <td>
-            <div
-              class="c16"
-            >
-              <span
-                class="c12 c17 icon icon-kubernetes c12 c17"
-                color="light"
-                font-size="3"
-              />
-              Kubernetes Request
-            </div>
-          </td>
-          <td
-            style="word-break: break-word;"
-          >
-            User [alex] made a request to kubernetes cluster [gke_teleport-a]
-          </td>
-          <td
-            style="min-width: 120px;"
-          >
-            2020-11-12 20:35:44
-          </td>
-          <td
-            align="right"
-          >
-            <button
-              class="c18"
-              kind="border"
-              width="87px"
-            >
-              Details
-            </button>
-          </td>
-        </tr>
-        <tr>
-          <td>
-            <div
-              class="c16"
-            >
-              <span
-                class="c12 c17 icon icon-terminal c12 c17"
-                color="light"
-                font-size="3"
-              />
-              Command Execution
-            </div>
-          </td>
-          <td
-            style="word-break: break-word;"
-          >
-            User [alex] executed a command on kubernetes cluster [clusterOne]
-          </td>
-          <td
-            style="min-width: 120px;"
-          >
-            2020-10-30 17:28:14
-          </td>
-          <td
-            align="right"
-          >
-            <button
-              class="c18"
-              kind="border"
-              width="87px"
-            >
-              Details
-            </button>
-          </td>
-        </tr>
-        <tr>
-          <td>
-            <div
-              class="c16"
-            >
-              <span
-                class="c12 c17 icon icon-info_outline c12 c17"
-                color="light"
-                font-size="3"
-              />
-              App Session Data
-            </div>
-          </td>
-          <td
-            style="word-break: break-word;"
-          >
-            New app session data created [6593cf87-9839-4f18-abf8-c54873aaeb4e]
-          </td>
-          <td
-            style="min-width: 120px;"
-          >
-            2020-10-30 17:28:14
-          </td>
-          <td
-            align="right"
-          >
-            <button
-              class="c18"
-              kind="border"
-              width="87px"
-            >
-              Details
-            </button>
-          </td>
-        </tr>
-        <tr>
-          <td>
-            <div
-              class="c16"
-            >
-              <span
-                class="c12 c17 icon icon-info_outline c12 c17"
-                color="light"
-                font-size="3"
-              />
-              App Session Started
-            </div>
-          </td>
-          <td
-            style="word-break: break-word;"
-          >
-            User [kimlisa] has started an app session [6593cf87-9839-4f18-abf8-c54873aaeb4e]
-          </td>
-          <td
-            style="min-width: 120px;"
-          >
-            2020-10-30 17:28:14
-          </td>
-          <td
-            align="right"
-          >
-            <button
-              class="c18"
-              kind="border"
-              width="87px"
-            >
-              Details
-            </button>
-          </td>
-        </tr>
-        <tr>
-          <td>
-            <div
-              class="c16"
-            >
-              <span
-                class="c12 c17 icon icon-info_outline c12 c17"
-                color="light"
-                font-size="3"
-              />
-              OIDC Auth Connector Created
-            </div>
-          </td>
-          <td
-            style="word-break: break-word;"
-          >
-            User [unimplemented] created OIDC connector [new_oidc_connector]
-          </td>
-          <td
-            style="min-width: 120px;"
-          >
-            2020-06-05 19:29:14
-          </td>
-          <td
-            align="right"
-          >
-            <button
-              class="c18"
-              kind="border"
-              width="87px"
-            >
-              Details
-            </button>
-          </td>
-        </tr>
-        <tr>
-          <td>
-            <div
-              class="c16"
-            >
-              <span
-                class="c12 c17 icon icon-info_outline c12 c17"
-                color="light"
-                font-size="3"
-              />
-              GITHUB Auth Connector Deleted
-            </div>
-          </td>
-          <td
-            style="word-break: break-word;"
-          >
-            User [unimplemented] deleted Github connector [new_github_connector]
-          </td>
-          <td
-            style="min-width: 120px;"
-          >
-            2020-06-05 19:28:28
-          </td>
-          <td
-            align="right"
-          >
-            <button
-              class="c18"
-              kind="border"
-              width="87px"
-            >
-              Details
-            </button>
-          </td>
-        </tr>
-        <tr>
-          <td>
-            <div
-              class="c16"
-            >
-              <span
-                class="c12 c17 icon icon-info_outline c12 c17"
-                color="light"
-                font-size="3"
-              />
-              GITHUB Auth Connector Created
-            </div>
-          </td>
-          <td
-            style="word-break: break-word;"
-          >
-            User [unimplemented] created Github connector [new_github_connector] has been created
-          </td>
-          <td
-            style="min-width: 120px;"
-          >
-            2020-06-05 19:28:00
-          </td>
-          <td
-            align="right"
-          >
-            <button
-              class="c18"
-              kind="border"
-              width="87px"
-            >
-              Details
-            </button>
-          </td>
-        </tr>
-        <tr>
-          <td>
-            <div
-              class="c16"
-            >
-              <span
-                class="c12 c17 icon icon-info_outline c12 c17"
-                color="light"
-                font-size="3"
-              />
-              User Password Updated
-            </div>
-          </td>
-          <td
-            style="word-break: break-word;"
-          >
-            User [Ivan_Jordan] has changed a password
-          </td>
-          <td
-            style="min-width: 120px;"
-          >
-            2020-06-05 19:26:53
-          </td>
-          <td
-            align="right"
-          >
-            <button
-              class="c18"
-              kind="border"
-              width="87px"
-            >
-              Details
-            </button>
-          </td>
-        </tr>
-        <tr>
-          <td>
-            <div
-              class="c16"
-            >
-              <span
-                class="c12 c17 icon icon-info_outline c12 c17"
-                color="light"
-                font-size="3"
-              />
-              Access Request Updated
-            </div>
-          </td>
-          <td
-            style="word-break: break-word;"
-          >
-            Access request [66b827b2-1b0b-512b-965d-6c789388d3c9] has been updated to APPROVED
-          </td>
-          <td
-            style="min-width: 120px;"
-          >
-            2020-06-05 19:26:53
-          </td>
-          <td
-            align="right"
-          >
-            <button
-              class="c18"
-              kind="border"
-              width="87px"
-            >
-              Details
-            </button>
-          </td>
-        </tr>
-        <tr>
-          <td>
-            <div
-              class="c16"
-            >
-              <span
-                class="c12 c17 icon icon-info_outline c12 c17"
-                color="light"
-                font-size="3"
-              />
-              Access Request Created
-            </div>
-          </td>
-          <td
-            style="word-break: break-word;"
-          >
-            Access request [66b827b2-1b0b-512b-965d-6c789388d3c9] has been created and is PENDING
-          </td>
-          <td
-            style="min-width: 120px;"
-          >
-            2020-06-05 19:26:53
-          </td>
-          <td
-            align="right"
-          >
-            <button
-              class="c18"
-              kind="border"
-              width="87px"
-            >
-              Details
-            </button>
-          </td>
-        </tr>
-        <tr>
-          <td>
-            <div
-              class="c16"
-            >
-              <span
-                class="c12 c17 icon icon-info_outline c12 c17"
-                color="light"
-                font-size="3"
-              />
-              Reset Password Token Created
-            </div>
-          </td>
-          <td
-            style="word-break: break-word;"
-          >
-            User [b331fb6c-85f9-4cb0-b308-3452420bf81e.one] created a password reset token for user [hello]
-          </td>
-          <td
-            style="min-width: 120px;"
-          >
-            2020-06-05 16:24:22
-          </td>
-          <td
-            align="right"
-          >
-            <button
-              class="c18"
-              kind="border"
-              width="87px"
-            >
-              Details
-            </button>
-          </td>
-        </tr>
-        <tr>
-          <td>
-            <div
-              class="c16"
-            >
-              <span
-                class="c12 c17 icon icon-info_outline c12 c17"
-                color="light"
-                font-size="3"
-              />
-              User Created
-            </div>
-          </td>
-          <td
-            style="word-break: break-word;"
-          >
-            User [hello] has been created
-          </td>
-          <td
-            style="min-width: 120px;"
-          >
-            2020-06-05 16:24:05
-          </td>
-          <td
-            align="right"
-          >
-            <button
-              class="c18"
-              kind="border"
-              width="87px"
-            >
-              Details
-            </button>
-          </td>
-        </tr>
-        <tr>
-          <td>
-            <div
-              class="c16"
-            >
-              <span
-                class="c12 c17 icon icon-info_outline c12 c17"
-                color="light"
-                font-size="3"
-              />
-              User Updated
-            </div>
-          </td>
-          <td
-            style="word-break: break-word;"
-          >
-            User [bob] has been updated
-          </td>
-          <td
-            style="min-width: 120px;"
-          >
-            2020-06-05 16:24:05
-          </td>
-          <td
-            align="right"
-          >
-            <button
-              class="c18"
-              kind="border"
-              width="87px"
-            >
-              Details
-            </button>
-          </td>
-        </tr>
-        <tr>
-          <td>
-            <div
-              class="c16"
-            >
-              <span
-                class="c12 c17 icon icon-info_outline c12 c17"
-                color="light"
-                font-size="3"
-              />
-              User Deleted
-            </div>
-          </td>
-          <td
-            style="word-break: break-word;"
-          >
-            User [bob] has been deleted
-          </td>
-          <td
-            style="min-width: 120px;"
-          >
-            2020-06-05 16:24:05
-          </td>
-          <td
-            align="right"
-          >
-            <button
-              class="c18"
-              kind="border"
-              width="87px"
-            >
-              Details
-            </button>
-          </td>
-        </tr>
-        <tr>
-          <td>
-            <div
-              class="c16"
-            >
-              <span
-                class="c12 c17 icon icon-terminal c12 c17"
-                color="light"
-                font-size="3"
-              />
-              Session Data
-            </div>
-          </td>
-          <td
-            style="word-break: break-word;"
-          >
-            Usage report has been updated for session [5fc8bf85-a73e-11ea-afd1-0242ac0a0101]
-          </td>
-          <td
-            style="min-width: 120px;"
-          >
-            2020-06-05 15:14:51
-          </td>
-          <td
-            align="right"
-          >
-            <button
-              class="c18"
-              kind="border"
-              width="87px"
-            >
-              Details
-            </button>
-          </td>
-        </tr>
-        <tr>
-          <td>
-            <div
-              class="c16"
-            >
-              <span
-                class="c12 c17 icon icon-terminal c12 c17"
-                color="light"
-                font-size="3"
-              />
-              Session Data
-            </div>
-          </td>
-          <td
-            style="word-break: break-word;"
-          >
-            Usage report has been updated for session [5fc8bf85-a73e-11ea-afd1-0242ac0a0101]
-          </td>
-          <td
-            style="min-width: 120px;"
-          >
-            2020-06-05 15:14:51
-          </td>
-          <td
-            align="right"
-          >
-            <button
-              class="c18"
-              kind="border"
-              width="87px"
-            >
-              Details
-            </button>
-          </td>
-        </tr>
-        <tr>
-          <td>
-            <div
-              class="c16"
-            >
-              <span
-                class="c12 c17 icon icon-terminal c12 c17"
-                color="light"
-                font-size="3"
-              />
-              Session Command
-            </div>
-          </td>
-          <td
-            style="word-break: break-word;"
-          >
-            Program [ping] has been executed within a session [44c6cea8-362f-11ea-83aa-125400432324]
-          </td>
-          <td
-            style="min-width: 120px;"
-          >
-            2020-01-13 18:05:53
-          </td>
-          <td
-            align="right"
-          >
-            <button
-              class="c18"
-              kind="border"
-              width="87px"
-            >
-              Details
-            </button>
-          </td>
-        </tr>
-        <tr>
-          <td>
-            <div
-              class="c16"
-            >
-              <span
-                class="c12 c17 icon icon-file_upload c12 c17"
-                color="light"
-                font-size="3"
-              />
-              SCP Upload
-            </div>
-          </td>
-          <td
-            style="word-break: break-word;"
-          >
-            User [root] uploaded a file [~/] to node [192.168.0.105:3022]
-          </td>
-          <td
-            style="min-width: 120px;"
-          >
-            2019-04-22 19:41:23
-          </td>
-          <td
-            align="right"
-          >
-            <button
-              class="c18"
-              kind="border"
-              width="87px"
-            >
-              Details
-            </button>
-          </td>
-        </tr>
-        <tr>
-          <td>
-            <div
-              class="c16"
-            >
-              <span
-                class="c12 c17 icon icon-get_app c12 c17"
-                color="light"
-                font-size="3"
-              />
-              SCP Download Failed
-            </div>
-          </td>
-          <td
-            style="word-break: break-word;"
-          >
-            File download from node [192.168.0.105:3022] failed [exit status 1]
-          </td>
-          <td
-            style="min-width: 120px;"
-          >
-            2019-04-22 19:41:23
-          </td>
-          <td
-            align="right"
-          >
-            <button
-              class="c18"
-              kind="border"
-              width="87px"
-            >
-              Details
-            </button>
-          </td>
-        </tr>
-        <tr>
-          <td>
-            <div
-              class="c16"
-            >
-              <span
-                class="c12 c17 icon icon-get_app c12 c17"
-                color="light"
-                font-size="3"
-              />
-              SCP Download
-            </div>
-          </td>
-          <td
-            style="word-break: break-word;"
-          >
-            User [admin@example.com] downloaded a file [~/fsdfsdfsdfsdfs] from node [172.31.28.130:3022]
-          </td>
-          <td
-            style="min-width: 120px;"
-          >
-            2019-04-22 19:41:23
-          </td>
-          <td
-            align="right"
-          >
-            <button
-              class="c18"
-              kind="border"
-              width="87px"
-            >
-              Details
-            </button>
-          </td>
-        </tr>
-        <tr>
-          <td>
-            <div
-              class="c16"
-            >
-              <span
-                class="c12 c17 icon icon-terminal c12 c17"
-                color="light"
-                font-size="3"
-              />
-              User Joined
-            </div>
-          </td>
-          <td
-            style="word-break: break-word;"
-          >
-            User [admin@example.com] has joined the session [56408539-6536-11e9-80a1-427cfde50f5a]
-          </td>
-          <td
-            style="min-width: 120px;"
-          >
-            2019-04-22 19:39:52
-          </td>
-          <td
-            align="right"
-          >
-            <button
-              class="c18"
-              kind="border"
-              width="87px"
-            >
-              Details
-            </button>
-          </td>
-        </tr>
-        <tr>
-          <td>
-            <div
-              class="c16"
-            >
-              <span
-                class="c12 c17 icon icon-terminal c12 c17"
-                color="light"
-                font-size="3"
-              />
-              Terminal Resize
-            </div>
-          </td>
-          <td
-            style="word-break: break-word;"
-          >
-            User [admin@example.com] resized the session [56408539-6536-11e9-80a1-427cfde50f5a] terminal
-          </td>
-          <td
-            style="min-width: 120px;"
-          >
-            2019-04-22 19:39:52
-          </td>
-          <td
-            align="right"
-          >
-            <button
-              class="c18"
-              kind="border"
-              width="87px"
-            >
-              Details
-            </button>
-          </td>
-        </tr>
-        <tr>
-          <td>
-            <div
-              class="c16"
-            >
-              <span
-                class="c12 c17 icon icon-terminal c12 c17"
-                color="light"
-                font-size="3"
-              />
-              Session Started
-            </div>
-          </td>
-          <td
-            style="word-break: break-word;"
-          >
-            User [admin@example.com] has started a session [56408539-6536-11e9-80a1-427cfde50f5a]
-          </td>
-          <td
-            style="min-width: 120px;"
-          >
-            2019-04-22 19:39:26
-          </td>
-          <td
-            align="right"
-          >
-            <button
-              class="c18"
-              kind="border"
-              width="87px"
-            >
-              Details
-            </button>
-          </td>
-        </tr>
-        <tr>
-          <td>
-            <div
-              class="c16"
-            >
-              <span
-                class="c12 c17 icon icon-terminal c12 c17"
-                color="light"
-                font-size="3"
-              />
-              Session File Access
-            </div>
-          </td>
-          <td
-            style="word-break: break-word;"
-          >
-            Program [bash] accessed a file [/etc/profile.d/] within a session [44c6cea8-362f-11ea-83aa-125400432324]
-          </td>
-          <td
-            style="min-width: 120px;"
-          >
-            2019-04-22 19:39:26
-          </td>
-          <td
-            align="right"
-          >
-            <button
-              class="c18"
-              kind="border"
-              width="87px"
-            >
-              Details
-            </button>
-          </td>
-        </tr>
-        <tr>
-          <td>
-            <div
-              class="c16"
-            >
-              <span
-                class="c12 c17 icon icon-terminal c12 c17"
-                color="light"
-                font-size="3"
-              />
-              Session Network Connection
-            </div>
-          </td>
-          <td
-            style="word-break: break-word;"
-          >
-            Program [bash] opened a connection [10.217.136.161 &lt;-&gt; 190.58.129.4:3000] within a session [44c6cea8-362f-11ea-83aa-125400432324]
-          </td>
-          <td
-            style="min-width: 120px;"
-          >
-            2019-04-22 19:39:26
-          </td>
-          <td
-            align="right"
-          >
-            <button
-              class="c18"
-              kind="border"
-              width="87px"
-            >
-              Details
-            </button>
-          </td>
-        </tr>
-        <tr>
-          <td>
-            <div
-              class="c16"
-            >
-              <span
-                class="c12 c17 icon icon-info_outline c12 c17"
-                color="light"
-                font-size="3"
-              />
-              Local Login Failed
-            </div>
-          </td>
-          <td
-            style="word-break: break-word;"
-          >
-            Local user [fsdfsdf] login failed [user(name="fsdfsdf") not found]
-          </td>
-          <td
-            style="min-width: 120px;"
-          >
-            2019-04-22 18:06:32
-          </td>
-          <td
-            align="right"
-          >
-            <button
-              class="c18"
-              kind="border"
-              width="87px"
-            >
-              Details
-            </button>
-          </td>
-        </tr>
-        <tr>
-          <td>
-            <div
-              class="c16"
-            >
-              <span
-                class="c12 c17 icon icon-info_outline c12 c17"
-                color="light"
-                font-size="3"
-              />
-              Auth Attempt Failed
-            </div>
-          </td>
-          <td
-            style="word-break: break-word;"
-          >
-            User [admin@example.com] failed auth attempt: ssh: principal "fsdfdsf" not in the set of valid principals for given certificate: ["root"]
-          </td>
-          <td
-            style="min-width: 120px;"
-          >
-            2019-04-22 02:09:06
-          </td>
-          <td
-            align="right"
-          >
-            <button
-              class="c18"
-              kind="border"
-              width="87px"
-            >
-              Details
-            </button>
-          </td>
-        </tr>
-        <tr>
-          <td>
-            <div
-              class="c16"
-            >
-              <span
-                class="c12 c17 icon icon-info_outline c12 c17"
-                color="light"
-                font-size="3"
-              />
-              Local Login
-            </div>
-          </td>
-          <td
-            style="word-break: break-word;"
-          >
-            Local user [admin@example.com] successfully logged in
-          </td>
-          <td
-            style="min-width: 120px;"
-          >
-            2019-04-22 00:49:03
-          </td>
-          <td
-            align="right"
-          >
-            <button
-              class="c18"
               kind="border"
               width="87px"
             >

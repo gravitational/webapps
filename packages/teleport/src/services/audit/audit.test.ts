@@ -26,13 +26,7 @@ test('fetch events', async () => {
 
   expect(api.get).toHaveBeenCalledTimes(1);
   expect(response.events).toEqual([]);
-  expect(response.startKey).toEqual('');
-
-  // Test results < limit returns empty startKey
-  jest.spyOn(api, 'get').mockResolvedValue(normalJson);
-  response = await audit.fetchEvents('clusterId', params);
-
-  expect(response.startKey).toEqual('');
+  expect(response.startKey).toBeUndefined();
 
   // Test normal response.
   audit.maxFetchLimit = 2;
@@ -87,7 +81,6 @@ test('fetch events', async () => {
   jest.spyOn(api, 'get').mockResolvedValue(unknownEvent);
   response = await audit.fetchEvents('clusterId', params);
 
-  expect(response.startKey).toEqual('');
   expect(response.events[0].codeDesc).toEqual('Unknown');
   expect(response.events[0].message).toEqual('Unknown');
 });

@@ -32,15 +32,13 @@ class AuditService {
       start,
       end,
       limit: this.maxFetchLimit,
-      include: params.filterBy ? params.filterBy : undefined,
       startKey: params.startKey ? params.startKey : undefined,
     });
 
     return api.get(url).then(json => {
       const events = json.events || [];
-      let startKey = json.startKey || '';
 
-      return { events: events.map(makeEvent), startKey };
+      return { events: events.map(makeEvent), startKey: json.startKey };
     });
   }
 }

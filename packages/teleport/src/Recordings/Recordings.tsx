@@ -28,16 +28,11 @@ import InputSearch from 'teleport/components/InputSearch';
 import useTeleport from 'teleport/useTeleport';
 import useAuditEvents from 'teleport/useAuditEvents';
 import useStickyClusterId from 'teleport/useStickyClusterId';
-import { eventCodes, formatters } from 'teleport/services/audit';
 
 export default function Container() {
   const teleCtx = useTeleport();
   const { clusterId } = useStickyClusterId();
-  const state = useAuditEvents(
-    teleCtx,
-    clusterId,
-    formatters[eventCodes.SESSION_END].type
-  );
+  const state = useAuditEvents(teleCtx, clusterId);
   return <Recordings {...state} />;
 }
 

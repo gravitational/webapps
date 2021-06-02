@@ -1,19 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`rendering of Session Recordings 1`] = `
-.c11 {
-  display: inline-block;
-  transition: color .3s;
-  color: #FFFFFF;
-  font-size: 16px;
-}
-
-.c13 {
-  display: inline-block;
-  transition: color .3s;
-  color: #FFFFFF;
-}
-
 .c14 {
   line-height: 1.5;
   margin: 0;
@@ -57,6 +44,19 @@ exports[`rendering of Session Recordings 1`] = `
 .c14:disabled {
   background: rgba(255,255,255,0.12);
   color: rgba(255,255,255,0.3);
+}
+
+.c11 {
+  display: inline-block;
+  transition: color .3s;
+  color: #FFFFFF;
+  font-size: 16px;
+}
+
+.c13 {
+  display: inline-block;
+  transition: color .3s;
+  color: #FFFFFF;
 }
 
 .c8 {
@@ -260,6 +260,7 @@ exports[`rendering of Session Recordings 1`] = `
 .c4 .react-select__control,
 .c4 .react-select__control--is-focused {
   min-height: 40px;
+  height: 40px;
   background-color: transparent;
   border-color: transparent;
   border-radius: 4px;
@@ -304,6 +305,15 @@ exports[`rendering of Session Recordings 1`] = `
   display: none;
 }
 
+.c4 .react-select--is-disabled .react-select__single-value,
+.c4 .react-select--is-disabled .react-select__placeholder {
+  color: rgba(0,0,0,0.24);
+}
+
+.c4 .react-select--is-disabled .react-select__indicator {
+  color: rgba(0,0,0,0.14);
+}
+
 .c3 {
   width: 210px;
   margin-left: auto;
@@ -326,6 +336,7 @@ exports[`rendering of Session Recordings 1`] = `
 .c3 .react-select__control,
 .c3 .react-select__control--is-focused {
   min-height: 40px;
+  height: 40px;
   background-color: transparent;
   border-color: transparent;
   border-radius: 4px;
@@ -370,14 +381,21 @@ exports[`rendering of Session Recordings 1`] = `
   display: none;
 }
 
+.c3 .react-select--is-disabled .react-select__single-value,
+.c3 .react-select--is-disabled .react-select__placeholder {
+  color: rgba(0,0,0,0.24);
+}
+
+.c3 .react-select--is-disabled .react-select__indicator {
+  color: rgba(0,0,0,0.14);
+}
+
 .c3 .react-select-container {
   background: transparent;
 }
 
-.c3 .react-select__control,
-.c3 .react-select__control--is-focused {
-  border-color: #FFF;
-  min-height: 34px;
+.c3 .react-select__option--is-focused:active {
+  background-color: #eceff1;
 }
 
 .c3 .react-select__value-container {
@@ -388,18 +406,9 @@ exports[`rendering of Session Recordings 1`] = `
   color: rgba(255,255,255,0.87);
 }
 
-.c3 .react-select__indicator,
-.c3 .react-select__dropdown-indicator {
-  padding: 4px 8px;
-  color: #666;
-}
-
-.c3 .react-select__indicator:hover,
-.c3 .react-select__dropdown-indicator:hover {
-  color: #999 !important;
-}
-
 .c3 .react-select__control {
+  min-height: 34px;
+  height: 34px;
   border-color: rgba(255,255,255,0.24);
   color: rgba(255,255,255,0.56);
 }
@@ -418,7 +427,18 @@ exports[`rendering of Session Recordings 1`] = `
   color: #666;
 }
 
-.c3 .react-select__control--is-focused {
+.c3 .react-select__control .react-select__indicator,
+.c3 .react-select__control .react-select__dropdown-indicator {
+  padding: 4px 8px;
+  color: #666;
+}
+
+.c3 .react-select__control .react-select__indicator:hover,
+.c3 .react-select__control .react-select__dropdown-indicator:hover {
+  color: #999;
+}
+
+.c3 .react-select__control--menu-is-open {
   background-color: #2C3A73;
   border-color: transparent;
   border-radius: 4px;
@@ -428,35 +448,47 @@ exports[`rendering of Session Recordings 1`] = `
   border-color: rgba(255,255,255,0.24);
 }
 
-.c3 .react-select__control--is-focused .react-select__indicator,
-.c3 .react-select__control--is-focused .react-select__dropdown-indicator {
+.c3 .react-select__control--menu-is-open .react-select__indicator,
+.c3 .react-select__control--menu-is-open .react-select__dropdown-indicator {
   color: #999 !important;
 }
 
-.c3 .react-select__control--is-focused .react-select__indicator:hover,
-.c3 .react-select__control--is-focused .react-select__dropdown-indicator:hover {
+.c3 .react-select__control--menu-is-open .react-select__indicator:hover,
+.c3 .react-select__control--menu-is-open .react-select__dropdown-indicator:hover {
   color: #ccc !important;
+}
+
+.c3 .react-select__input {
+  color: rgba(255,255,255,0.87);
+}
+
+.c3 .react-select__placeholder {
+  color: rgba(255,255,255,0.56);
 }
 
 .c3 .react-select__option {
   padding: 4px 12px;
 }
 
-.c3 .react-select__option:hover {
-  background-color: #cfd8dc;
-}
-
-.c3 .react-select__option--is-focused {
-  background-color: #cfd8dc;
-}
-
-.c3 .react-select__option--is-focused:active {
-  background-color: #eceff1;
-}
-
 .c3 .react-select__menu {
   border-top-left-radius: 0;
   border-top-right-radius: 0;
+}
+
+.c3 .react-select__multi-value {
+  background-color: #111B48;
+  border: 1px solid rgba(255,255,255,0.24);
+}
+
+.c3 .react-select__multi-value__label {
+  color: rgba(255,255,255,0.87);
+  padding: 0 6px;
+}
+
+.c3 .react-select--is-disabled .react-select__single-value,
+.c3 .react-select--is-disabled .react-select__placeholder,
+.c3 .react-select--is-disabled .react-select__indicator {
+  color: rgba(255,255,255,0.24);
 }
 
 .c6 {

@@ -123,6 +123,7 @@ const StyledButtonLink = styled.button`
   border: none;
   font-weight: bold;
   line-height: 0;
+  font-size: 12px;
 
   &:hover,
   &:focus {
