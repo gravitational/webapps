@@ -10,7 +10,7 @@ test('loaded state', async () => {
 
 test('empty state', async () => {
   const { container, findByText } = render(<Empty />);
-  await findByText(/secure your first application/i);
+  await findByText(/ADD YOUR FIRST APPLICATION/i);
 
   expect(container).toMatchSnapshot();
 });

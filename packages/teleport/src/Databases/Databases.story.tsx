@@ -25,6 +25,14 @@ export default {
 
 export const Loaded = () => <Databases {...props} />;
 
+export const Empty = () => (
+  <Databases {...props} databases={[]} isEnterprise={true} canCreate={true} />
+);
+
+export const EmptyReadOnly = () => (
+  <Databases {...props} databases={[]} canCreate={false} />
+);
+
 export const Loading = () => (
   <Databases {...props} attempt={{ status: 'processing' }} />
 );
@@ -46,7 +54,7 @@ const props: State = {
   isAddDialogVisible: false,
   hideAddDialog: () => null,
   showAddDialog: () => null,
-  user: 'yassine',
+  user: 'sam',
   version: '6.1.3',
   authType: 'local',
 };

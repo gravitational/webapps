@@ -28,6 +28,14 @@ export function Loaded() {
   return render({ status: 'success' });
 }
 
+export function Empty() {
+  return render({ status: 'success' }, []);
+}
+
+export function EmptyReadOnly() {
+  return render({ status: 'success' }, [], false);
+}
+
 export function Loading() {
   return render({ status: 'processing' });
 }
@@ -36,18 +44,15 @@ export function Failed() {
   return render({ status: 'failed', statusText: 'server error' });
 }
 
-export function Empty() {
-  return render({ status: 'success' }, []);
-}
-
 function render(
   attemptOptions: Partial<PropTypes['attempt']>,
-  nodeList = nodes
+  nodeList = nodes,
+  canCreate?: boolean
 ) {
   const props = {
     isLeafCluster: false,
     isEnterprise: true,
-    canCreate: true,
+    canCreate: canCreate === undefined ? true : canCreate,
     searchValue: '',
     setSearchValue: () => null,
     attempt: {
@@ -61,6 +66,7 @@ function render(
     isAddNodeVisible: false,
     hideAddNode: () => null,
     showAddNode: () => null,
+    clusterId: 'im-a-cluster',
   };
 
   return <Nodes {...props} />;

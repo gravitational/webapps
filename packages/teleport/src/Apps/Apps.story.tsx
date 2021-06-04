@@ -15,12 +15,11 @@
  */
 
 import React from 'react';
-import DefaultApps from './Apps';
-import { createMemoryHistory } from 'history';
-import { Router } from 'react-router';
-import makeAcl from 'teleport/services/user/makeAcl';
-import { apps } from './fixtures';
+import { MemoryRouter } from 'react-router';
 import { ContextProvider, Context } from 'teleport';
+import makeAcl from 'teleport/services/user/makeAcl';
+import DefaultApps from './Apps';
+import { apps } from './fixtures';
 
 export default {
   title: 'Teleport/Apps',
@@ -80,16 +79,11 @@ export const Failed = () => {
 };
 
 function render(ctx) {
-  const history = createMemoryHistory({
-    initialEntries: ['/web/cluster/localhost/audit/events'],
-    initialIndex: 0,
-  });
-
   return (
     <ContextProvider ctx={ctx}>
-      <Router history={history}>
+      <MemoryRouter>
         <DefaultApps />
-      </Router>
+      </MemoryRouter>
     </ContextProvider>
   );
 }

@@ -37,6 +37,7 @@ function KubeList(props: Props) {
   const [sortDir, setSortDir] = useState<Record<string, string>>({
     name: SortTypes.DESC,
   });
+
   const [kubeConnectName, setKubeConnectName] = useState('');
 
   function sortAndFilter(search) {
@@ -147,6 +148,7 @@ type Props = {
   username: string;
   authType: AuthType;
   searchValue: string;
+  setSearchValue: React.Dispatch<React.SetStateAction<string>>;
 };
 
 export default KubeList;

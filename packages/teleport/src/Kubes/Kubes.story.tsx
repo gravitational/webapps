@@ -27,6 +27,25 @@ export const Loaded = () => {
   return <Kubes {...props} attempt={{ status: 'success' }} />;
 };
 
+export const Empty = () => (
+  <Kubes
+    {...props}
+    attempt={{ status: 'success' }}
+    kubes={[]}
+    isEnterprise={true}
+    canCreate={true}
+  />
+);
+
+export const EmptyReadOnly = () => (
+  <Kubes
+    {...props}
+    attempt={{ status: 'success' }}
+    kubes={[]}
+    canCreate={false}
+  />
+);
+
 export const Loading = () => {
   return <Kubes {...props} attempt={{ status: 'processing' }} />;
 };
@@ -47,4 +66,8 @@ const props = {
   authType: 'local' as AuthType,
   searchValue: '',
   setSearchValue: () => null,
+  clusterId: 'im-a-cluster',
+  isEnterprise: false,
+  isLeafCluster: false,
+  canCreate: false,
 };

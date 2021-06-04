@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React from 'react';
+import React, { useState } from 'react';
 import { Box, Indicator, ButtonPrimary, Flex } from 'design';
 import { Danger } from 'design/Alert';
 import KubeList from 'teleport/Kubes/KubeList';
@@ -25,6 +25,7 @@ import {
 } from 'teleport/components/Layout';
 import useTeleport from 'teleport/useTeleport';
 import InputSearch from 'teleport/components/InputSearch';
+import Empty from 'teleport/components/Empty';
 import useKubes, { State } from './useKubes';
 
 export default function Container() {
@@ -42,9 +43,16 @@ export function Kubes(props: State) {
     username,
     authType,
     showButton,
-    searchValue,
-    setSearchValue,
+    isEnterprise,
+    isLeafCluster,
+    clusterId,
+    canCreate,
   } = props;
+
+  const [searchValue, setSearchValue] = useState('');
+
+  const isEmpty = attempt.status === 'success' && kubes.length === 0;
+  const hasKubes = attempt.status === 'success' && kubes.length > 0;
 
   return (
     <FeatureBox>
@@ -62,21 +70,36 @@ export function Kubes(props: State) {
           </ButtonPrimary>
         )}
       </FeatureHeader>
-      <Flex flex="0 0 auto" mb={4}>
-        <InputSearch mr="3" onChange={e => setSearchValue(e)} />
-      </Flex>
       {attempt.status === 'failed' && <Danger>{attempt.statusText}</Danger>}
       {attempt.status === 'processing' && (
         <Box textAlign="center" m={10}>
           <Indicator />
         </Box>
       )}
-      {attempt.status === 'success' && (
-        <KubeList
-          kubes={kubes}
-          username={username}
-          authType={authType}
-          searchValue={searchValue}
+      {hasKubes && (
+        <>
+          <Flex flex="0 0 auto" mb={4}>
+            <InputSearch mr="3" onChange={setSearchValue} />
+          </Flex>
+          <KubeList
+            kubes={kubes}
+            username={username}
+            authType={authType}
+            searchValue={searchValue}
+            setSearchValue={setSearchValue}
+          />
+        </>
+      )}
+      {isEmpty && (
+        <Empty
+          clusterId={clusterId}
+          isLeafCluster={isLeafCluster}
+          isEnterprise={isEnterprise}
+          canCreate={canCreate}
+          onButtonClick={() =>
+            window.open('https://goteleport.com/docs/kubernetes-access')
+          }
+          type="kubernetes"
         />
       )}
     </FeatureBox>

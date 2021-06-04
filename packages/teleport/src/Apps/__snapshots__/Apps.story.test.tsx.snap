@@ -1,20 +1,31 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`empty state 1`] = `
-.c6 {
+.c7 {
   box-sizing: border-box;
-  margin-left: 24px;
-  margin-right: 24px;
-}
-
-.c8 {
-  box-sizing: border-box;
+  margin-left: 16px;
+  margin-right: 16px;
+  height: 200px;
+  width: 296px;
+  background-color: #01172c;
+  border-radius: 8px;
 }
 
 .c9 {
   box-sizing: border-box;
-  margin-bottom: 40px;
-  padding-right: 24px;
+  margin-top: 24px;
+}
+
+.c12 {
+  box-sizing: border-box;
+  margin: auto;
+  margin-top: 24px;
+}
+
+.c13 {
+  box-sizing: border-box;
+  margin-bottom: 24px;
+  width: 500px;
 }
 
 .c3 {
@@ -62,7 +73,7 @@ exports[`empty state 1`] = `
   color: rgba(255,255,255,0.3);
 }
 
-.c12 {
+.c16 {
   line-height: 1.5;
   margin: 0;
   display: inline-flex;
@@ -86,77 +97,102 @@ exports[`empty state 1`] = `
   min-height: 32px;
   font-size: 12px;
   padding: 0px 24px;
-  margin-bottom: 8px;
-  margin-left: auto;
-  margin-right: auto;
-  width: 240px;
+  width: 224px;
+  height: 40px;
 }
 
-.c12:active {
+.c16:active {
   opacity: 0.56;
 }
 
-.c12:hover,
-.c12:focus {
+.c16:hover,
+.c16:focus {
   background: #651FFF;
 }
 
-.c12:active {
+.c16:active {
   background: #354AA4;
 }
 
-.c12:disabled {
+.c16:disabled {
   background: rgba(255,255,255,0.12);
   color: rgba(255,255,255,0.3);
 }
 
 .c5 {
   box-sizing: border-box;
-  max-width: 700px;
+  margin-top: 24px;
   margin-left: auto;
   margin-right: auto;
-  padding-top: 24px;
-  padding-bottom: 24px;
-  background-color: #222C59;
-  flex: 0 0 auto;
+  height: 232px;
+  width: 879px;
+  background-color: #1C254D;
   box-shadow: 0 4px 16px rgba(0,0,0,0.24);
   border-radius: 8px;
 }
 
-.c7 {
+.c8 {
   display: block;
   outline: none;
-  width: 180px;
+  width: 265px;
 }
 
 .c10 {
-  overflow: hidden;
-  text-overflow: ellipsis;
-  font-weight: 600;
-  font-size: 14px;
-  line-height: 24px;
-  margin: 0px;
-  margin-bottom: 16px;
+  display: block;
+  outline: none;
+  margin: auto;
+  margin-bottom: 4px;
+  width: 90px;
 }
 
 .c11 {
   overflow: hidden;
   text-overflow: ellipsis;
   margin: 0px;
-  margin-bottom: 16px;
+  font-weight: 700;
+}
+
+.c14 {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  font-weight: 300;
+  font-size: 22px;
+  line-height: 32px;
+  font-size: 14px;
+  margin: 0px;
+  margin-bottom: 8px;
+  font-weight: 700;
+}
+
+.c15 {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  margin: 0px;
 }
 
 .c4 {
   box-sizing: border-box;
-  max-width: 700px;
+  margin-top: 24px;
   margin-left: auto;
   margin-right: auto;
-  padding-top: 24px;
-  padding-bottom: 24px;
-  background-color: #222C59;
-  flex: 0 0 auto;
+  height: 232px;
+  width: 879px;
+  background-color: #1C254D;
   display: flex;
   align-items: center;
+}
+
+.c6 {
+  box-sizing: border-box;
+  margin-left: 16px;
+  margin-right: 16px;
+  height: 200px;
+  width: 296px;
+  background-color: #01172c;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .c1 {
@@ -223,40 +259,64 @@ exports[`empty state 1`] = `
     </div>
     <div
       class="c4 sc-AxirZ c5"
+      height="232px"
+      width="879px"
     >
       <div
-        class="c6"
+        class="c6 sc-AxirZ c7"
+        height="200px"
+        style="cursor: pointer;"
+        width="296px"
       >
         <img
-          class="c7"
+          class="c8"
           src="file_stub"
-          width="180px"
+          width="265px"
         />
-      </div>
-      <div
-        class="c8"
-      >
         <div
           class="c9"
+          style="position: absolute;"
         >
-          <div
+          <img
             class="c10"
-          >
-            SECURE YOUR FIRST APPLICATION
-          </div>
+            src="file_stub"
+            width="90px"
+          />
           <div
             class="c11"
+            font-weight="700"
           >
-            Teleport Application Access provides secure access to internal applications without the need for a VPN and with the auditability and control of Teleport.
+            WATCH THE QUICKSTART
+          </div>
+        </div>
+      </div>
+      <div
+        class="c12"
+      >
+        <div
+          class="c13"
+          width="500px"
+        >
+          <div
+            class="c14"
+            font-size="14"
+            font-weight="700"
+          >
+            ADD YOUR FIRST APPLICATION
+          </div>
+          <div
+            class="c15"
+          >
+            Teleport Application Access provides secure access to internal applications without the need for a VPN but with the audibility and control of Teleport.
           </div>
         </div>
         <button
-          class="c12"
+          class="c16"
+          height="40px"
           kind="primary"
-          title="Add an application to the root cluster"
-          width="240px"
+          width="224px"
         >
-          Add Application
+          ADD APPLICATION
         </button>
       </div>
     </div>

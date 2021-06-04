@@ -323,6 +323,38 @@ exports[`open source loaded 1`] = `
   padding-bottom: 24px;
 }
 
+.c5 {
+  box-sizing: border-box;
+  font-size: 12px;
+  min-width: 200px;
+  outline: none;
+  border: none;
+  border-radius: 200px;
+  height: 32px;
+  transition: all .2s;
+  background: #222C59;
+  margin-right: 16px;
+  padding-left: 16px;
+  padding-right: 16px;
+  color: rgba(255,255,255,0.87);
+}
+
+.c5:hover {
+  background: #2C3A73;
+}
+
+.c5:focus,
+.c5:active {
+  background: #2C3A73;
+  box-shadow: inset 0 2px 4px rgba(0,0,0,.24);
+  color: rgba(255,255,255,0.87);
+}
+
+.c5::placeholder {
+  color: rgba(255,255,255,0.24);
+  font-size: 12px;
+}
+
 .c11 {
   background: #222C59;
   box-shadow: 0 4px 16px rgba(0,0,0,0.24);
@@ -445,38 +477,6 @@ exports[`open source loaded 1`] = `
   background: #222C59;
   border-top-left-radius: 8px;
   border-top-right-radius: 8px;
-}
-
-.c5 {
-  box-sizing: border-box;
-  font-size: 12px;
-  min-width: 200px;
-  outline: none;
-  border: none;
-  border-radius: 200px;
-  height: 32px;
-  transition: all .2s;
-  background: #222C59;
-  margin-right: 16px;
-  padding-left: 16px;
-  padding-right: 16px;
-  color: rgba(255,255,255,0.87);
-}
-
-.c5:hover {
-  background: #2C3A73;
-}
-
-.c5:focus,
-.c5:active {
-  background: #2C3A73;
-  box-shadow: inset 0 2px 4px rgba(0,0,0,.24);
-  color: rgba(255,255,255,0.87);
-}
-
-.c5::placeholder {
-  color: rgba(255,255,255,0.24);
-  font-size: 12px;
 }
 
 .c12 > tbody > tr > td {
