@@ -16,58 +16,42 @@ limitations under the License.
 
 import React from 'react';
 import { Nodes } from './Nodes';
+import { State } from './useNodes';
 import { nodes } from './fixtures';
-
-type PropTypes = Parameters<typeof Nodes>[0];
 
 export default {
   title: 'Teleport/Nodes',
 };
 
-export function Loaded() {
-  return render({ status: 'success' });
-}
+export const Loaded = () => <Nodes {...props} />;
 
-export function Empty() {
-  return render({ status: 'success' }, []);
-}
+export const Empty = () => <Nodes {...props} nodes={[]} />;
 
-export function EmptyReadOnly() {
-  return render({ status: 'success' }, [], false);
-}
+export const EmptyReadOnly = () => (
+  <Nodes {...props} nodes={[]} canCreate={false} />
+);
 
-export function Loading() {
-  return render({ status: 'processing' });
-}
+export const Loading = () => (
+  <Nodes {...props} attempt={{ status: 'processing' }} />
+);
 
-export function Failed() {
-  return render({ status: 'failed', statusText: 'server error' });
-}
+export const Failed = () => (
+  <Nodes
+    {...props}
+    attempt={{ status: 'failed', statusText: 'some error message' }}
+  />
+);
 
-function render(
-  attemptOptions: Partial<PropTypes['attempt']>,
-  nodeList = nodes,
-  canCreate?: boolean
-) {
-  const props = {
-    isLeafCluster: false,
-    isEnterprise: true,
-    canCreate: canCreate === undefined ? true : canCreate,
-    searchValue: '',
-    setSearchValue: () => null,
-    attempt: {
-      status: '' as any,
-      statusText: '',
-      ...attemptOptions,
-    },
-    nodes: nodeList,
-    getNodeLoginOptions: () => [{ login: 'root', url: 'fd' }],
-    startSshSession: () => null,
-    isAddNodeVisible: false,
-    hideAddNode: () => null,
-    showAddNode: () => null,
-    clusterId: 'im-a-cluster',
-  };
-
-  return <Nodes {...props} />;
-}
+const props: State = {
+  nodes,
+  isLeafCluster: false,
+  isEnterprise: true,
+  canCreate: true,
+  attempt: { status: 'success' },
+  getNodeLoginOptions: () => [{ login: 'root', url: 'fd' }],
+  startSshSession: () => null,
+  isAddNodeVisible: false,
+  hideAddNode: () => null,
+  showAddNode: () => null,
+  clusterId: 'im-a-cluster',
+};

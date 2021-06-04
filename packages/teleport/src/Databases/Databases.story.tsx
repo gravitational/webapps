@@ -15,8 +15,8 @@ limitations under the License.
 */
 
 import React from 'react';
-import { State } from './useDatabases';
 import { Databases } from './Databases';
+import { State } from './useDatabases';
 import { databases } from './fixtures';
 
 export default {

@@ -1,16 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`empty state 1`] = `
-.c7 {
-  box-sizing: border-box;
-  margin-left: 16px;
-  margin-right: 16px;
-  height: 200px;
-  width: 296px;
-  background-color: #01172c;
-  border-radius: 8px;
-}
-
 .c9 {
   box-sizing: border-box;
   margin-top: 24px;
@@ -236,6 +226,17 @@ exports[`empty state 1`] = `
   padding-bottom: 24px;
 }
 
+.c7 {
+  box-sizing: border-box;
+  margin-left: 16px;
+  margin-right: 16px;
+  height: 200px;
+  width: 296px;
+  background-color: #01172c;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
 <div>
   <div
     class="c0"
@@ -265,7 +266,6 @@ exports[`empty state 1`] = `
       <div
         class="c6 sc-AxirZ c7"
         height="200px"
-        style="cursor: pointer;"
         width="296px"
       >
         <img
@@ -522,10 +522,10 @@ exports[`loaded state 1`] = `
 
 <div>
   <div
-    class="c0"
+    class="sc-AxirZ c0"
   >
     <div
-      class="c1"
+      class="sc-AxirZ c1"
     >
       <div
         class="c2"
@@ -542,15 +542,15 @@ exports[`loaded state 1`] = `
       </button>
     </div>
     <div
-      class="c4"
+      class="sc-AxirZ c4"
     >
       <div
-        class="c5"
+        class="sc-AxirZ c5"
         height="240px"
         width="240px"
       >
         <div
-          class="c6"
+          class="sc-AxirZ c6"
           width="100%"
         >
           <button
@@ -565,7 +565,7 @@ exports[`loaded state 1`] = `
           </button>
         </div>
         <a
-          class="c10"
+          class="sc-AxirZ c10"
           color="text.primary"
           href="/web/launch/jenkins.one/one/jenkins"
           style="text-decoration: none;"
@@ -587,12 +587,12 @@ exports[`loaded state 1`] = `
         </a>
       </div>
       <div
-        class="c5"
+        class="sc-AxirZ c5"
         height="240px"
         width="240px"
       >
         <div
-          class="c6"
+          class="sc-AxirZ c6"
           width="100%"
         >
           <button
@@ -607,7 +607,7 @@ exports[`loaded state 1`] = `
           </button>
         </div>
         <a
-          class="c10"
+          class="sc-AxirZ c10"
           color="text.primary"
           href="/web/launch/jenkins.two/two/jenkins"
           style="text-decoration: none;"

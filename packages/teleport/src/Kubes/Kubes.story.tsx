@@ -17,55 +17,40 @@ limitations under the License.
 import React from 'react';
 import { AuthType } from 'teleport/services/user';
 import { Kubes } from './Kubes';
+import { State } from './useKubes';
 import { kubes } from './fixtures';
 
 export default {
   title: 'Teleport/Kubes',
 };
 
-export const Loaded = () => {
-  return <Kubes {...props} attempt={{ status: 'success' }} />;
-};
+export const Loaded = () => <Kubes {...props} />;
 
 export const Empty = () => (
-  <Kubes
-    {...props}
-    attempt={{ status: 'success' }}
-    kubes={[]}
-    isEnterprise={true}
-    canCreate={true}
-  />
+  <Kubes {...props} kubes={[]} isEnterprise={true} canCreate={true} />
 );
 
 export const EmptyReadOnly = () => (
+  <Kubes {...props} kubes={[]} canCreate={false} />
+);
+
+export const Loading = () => (
+  <Kubes {...props} attempt={{ status: 'processing' }} />
+);
+
+export const Failed = () => (
   <Kubes
     {...props}
-    attempt={{ status: 'success' }}
-    kubes={[]}
-    canCreate={false}
+    attempt={{ status: 'failed', statusText: 'server error' }}
   />
 );
 
-export const Loading = () => {
-  return <Kubes {...props} attempt={{ status: 'processing' }} />;
-};
-
-export const Failed = () => {
-  return (
-    <Kubes
-      {...props}
-      attempt={{ status: 'failed', statusText: 'server error' }}
-    />
-  );
-};
-
-const props = {
+const props: State = {
+  attempt: { status: 'success' },
   kubes: kubes,
   username: 'sam',
   showButton: true,
   authType: 'local' as AuthType,
-  searchValue: '',
-  setSearchValue: () => null,
   clusterId: 'im-a-cluster',
   isEnterprise: false,
   isLeafCluster: false,
