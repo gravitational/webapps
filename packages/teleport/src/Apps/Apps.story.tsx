@@ -25,11 +25,9 @@ export default {
 
 export const Loaded = () => <Apps {...props} />;
 
-export const Empty = () => <Apps {...props} apps={[]} />;
+export const Empty = () => <Apps {...props} apps={[]} isEnterprise={true} />;
 
-export const EmptyReadOnly = () => (
-  <Apps {...props} apps={[]} canCreate={false} />
-);
+export const EmptyReadOnly = () => <Apps {...props} apps={[]} />;
 
 export const Loading = () => (
   <Apps {...props} attempt={{ status: 'processing' }} />
@@ -47,7 +45,7 @@ const props: State = {
   attempt: { status: 'success' },
   clusterId: 'im-a-cluster',
   isLeafCluster: false,
-  isEnterprise: true,
+  isEnterprise: false,
   isAddAppVisible: false,
   canCreate: true,
   hideAddApp: () => null,

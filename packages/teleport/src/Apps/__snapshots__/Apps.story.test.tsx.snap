@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`empty state 1`] = `
+exports[`empty state for enterprise, can create 1`] = `
 .c9 {
   box-sizing: border-box;
   margin-top: 24px;
@@ -324,6 +324,148 @@ exports[`empty state 1`] = `
 </div>
 `;
 
+exports[`failed state 1`] = `
+.c4 {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 2px;
+  box-sizing: border-box;
+  box-shadow: 0 1px 4px rgba(0,0,0,.24);
+  margin: 0 0 24px 0;
+  min-height: 40px;
+  padding: 8px 16px;
+  overflow: auto;
+  word-break: break-all;
+  line-height: 1.5;
+  background: #f50057;
+  color: #FFFFFF;
+}
+
+.c4 a {
+  color: #FFFFFF;
+}
+
+.c3 {
+  line-height: 1.5;
+  margin: 0;
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  box-sizing: border-box;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-family: inherit;
+  font-weight: 600;
+  outline: none;
+  position: relative;
+  text-align: center;
+  text-decoration: none;
+  text-transform: uppercase;
+  transition: all 0.3s;
+  -webkit-font-smoothing: antialiased;
+  background: #512FC9;
+  color: rgba(255,255,255,0.87);
+  min-height: 32px;
+  font-size: 12px;
+  padding: 0px 24px;
+  width: 240px;
+}
+
+.c3:active {
+  opacity: 0.56;
+}
+
+.c3:hover,
+.c3:focus {
+  background: #651FFF;
+}
+
+.c3:active {
+  background: #354AA4;
+}
+
+.c3:disabled {
+  background: rgba(255,255,255,0.12);
+  color: rgba(255,255,255,0.3);
+}
+
+.c1 {
+  box-sizing: border-box;
+  margin-bottom: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-shrink: 0;
+  border-bottom: 1px solid #1C254D;
+  height: 56px;
+  margin-left: -40px;
+  margin-right: -40px;
+  padding-left: 40px;
+  padding-right: 40px;
+}
+
+.c2 {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  font-weight: 300;
+  font-size: 22px;
+  line-height: 32px;
+  margin: 0px;
+  white-space: nowrap;
+}
+
+.c0 {
+  box-sizing: border-box;
+  padding-left: 40px;
+  padding-right: 40px;
+  display: flex;
+  overflow: auto;
+  width: 100%;
+  height: 100%;
+  flex-direction: column;
+}
+
+.c0::after {
+  content: ' ';
+  padding-bottom: 24px;
+}
+
+<div>
+  <div
+    class="sc-AxirZ sc-fzqBZW c0"
+  >
+    <div
+      class="sc-AxirZ sc-fzqBZW c1"
+    >
+      <div
+        class="sc-fznZeY c2"
+      >
+        Applications
+      </div>
+      <a
+        class="c3"
+        href="https://goteleport.com/teleport/docs/"
+        kind="primary"
+        rel="noreferrer"
+        target="_blank"
+        width="240px"
+      >
+        View documentation
+      </a>
+    </div>
+    <div
+      class="c4"
+      kind="danger"
+    >
+      some error message
+       
+    </div>
+  </div>
+</div>
+`;
+
 exports[`loaded state 1`] = `
 .c3 {
   line-height: 1.5;
@@ -532,14 +674,16 @@ exports[`loaded state 1`] = `
       >
         Applications
       </div>
-      <button
+      <a
         class="c3"
+        href="https://goteleport.com/teleport/docs/"
         kind="primary"
-        title="Add an application to the root cluster"
+        rel="noreferrer"
+        target="_blank"
         width="240px"
       >
-        Add Application
-      </button>
+        View documentation
+      </a>
     </div>
     <div
       class="sc-AxirZ c4"
@@ -627,6 +771,178 @@ exports[`loaded state 1`] = `
             jenkins
           </div>
         </a>
+      </div>
+    </div>
+  </div>
+</div>
+`;
+
+exports[`readonly empty state 1`] = `
+.c4 {
+  box-sizing: border-box;
+  margin-top: 24px;
+  margin-left: auto;
+  margin-right: auto;
+  padding: 56px;
+  width: 600px;
+  color: rgba(255,255,255,0.87);
+  background-color: #222C59;
+  text-align: center;
+  border-radius: 12px;
+}
+
+.c3 {
+  line-height: 1.5;
+  margin: 0;
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  box-sizing: border-box;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-family: inherit;
+  font-weight: 600;
+  outline: none;
+  position: relative;
+  text-align: center;
+  text-decoration: none;
+  text-transform: uppercase;
+  transition: all 0.3s;
+  -webkit-font-smoothing: antialiased;
+  background: #512FC9;
+  color: rgba(255,255,255,0.87);
+  min-height: 32px;
+  font-size: 12px;
+  padding: 0px 24px;
+  width: 240px;
+}
+
+.c3:active {
+  opacity: 0.56;
+}
+
+.c3:hover,
+.c3:focus {
+  background: #651FFF;
+}
+
+.c3:active {
+  background: #354AA4;
+}
+
+.c3:disabled {
+  background: rgba(255,255,255,0.12);
+  color: rgba(255,255,255,0.3);
+}
+
+.c5 {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  font-weight: 300;
+  font-size: 28px;
+  line-height: 32px;
+  margin: 0px;
+  margin-bottom: 16px;
+}
+
+.c6 {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  margin: 0px;
+}
+
+.c7 {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  font-weight: 600;
+  margin: 0px;
+}
+
+.c1 {
+  box-sizing: border-box;
+  margin-bottom: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-shrink: 0;
+  border-bottom: 1px solid #1C254D;
+  height: 56px;
+  margin-left: -40px;
+  margin-right: -40px;
+  padding-left: 40px;
+  padding-right: 40px;
+}
+
+.c2 {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  font-weight: 300;
+  font-size: 22px;
+  line-height: 32px;
+  margin: 0px;
+  white-space: nowrap;
+}
+
+.c0 {
+  box-sizing: border-box;
+  padding-left: 40px;
+  padding-right: 40px;
+  display: flex;
+  overflow: auto;
+  width: 100%;
+  height: 100%;
+  flex-direction: column;
+}
+
+.c0::after {
+  content: ' ';
+  padding-bottom: 24px;
+}
+
+<div>
+  <div
+    class="sc-fzqBZW c0"
+  >
+    <div
+      class="sc-fzqBZW c1"
+    >
+      <div
+        class="c2"
+      >
+        Applications
+      </div>
+      <a
+        class="c3"
+        href="https://goteleport.com/teleport/docs/"
+        kind="primary"
+        rel="noreferrer"
+        target="_blank"
+        width="240px"
+      >
+        View documentation
+      </a>
+    </div>
+    <div
+      class="c4"
+      color="text.primary"
+      width="600px"
+    >
+      <div
+        class="c5"
+      >
+        No Applications Found
+      </div>
+      <div
+        class="c6"
+      >
+        There are no applications for the "
+        <span
+          class="c7"
+        >
+          im-a-cluster
+        </span>
+        " cluster.
       </div>
     </div>
   </div>

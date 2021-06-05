@@ -26,12 +26,10 @@ export default {
 export const Loaded = () => <Databases {...props} />;
 
 export const Empty = () => (
-  <Databases {...props} databases={[]} isEnterprise={true} canCreate={true} />
+  <Databases {...props} databases={[]} isEnterprise={true} />
 );
 
-export const EmptyReadOnly = () => (
-  <Databases {...props} databases={[]} canCreate={false} />
-);
+export const EmptyReadOnly = () => <Databases {...props} databases={[]} />;
 
 export const Loading = () => (
   <Databases {...props} attempt={{ status: 'processing' }} />
@@ -48,9 +46,9 @@ const props: State = {
   attempt: { status: 'success' },
   databases,
   clusterId: 'im-a-cluster',
-  isEnterprise: false,
   isLeafCluster: false,
-  canCreate: false,
+  isEnterprise: false,
+  canCreate: true,
   isAddDialogVisible: false,
   hideAddDialog: () => null,
   showAddDialog: () => null,

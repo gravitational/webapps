@@ -96,9 +96,7 @@ export function Kubes(props: State) {
           isLeafCluster={isLeafCluster}
           isEnterprise={isEnterprise}
           canCreate={canCreate}
-          onButtonClick={() =>
-            window.open('https://goteleport.com/docs/kubernetes-access')
-          }
+          onButtonClick={() => window.open(DOC_URL)}
           type="kubernetes"
         />
       )}

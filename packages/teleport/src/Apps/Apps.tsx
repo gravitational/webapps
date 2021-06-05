@@ -15,13 +15,14 @@
  */
 
 import React from 'react';
+import { Danger } from 'design/Alert';
+import { Indicator, Box } from 'design';
+import useTeleport from 'teleport/useTeleport';
 import {
   FeatureBox,
   FeatureHeader,
   FeatureHeaderTitle,
 } from 'teleport/components/Layout';
-import { Danger } from 'design/Alert';
-import { Indicator, Box } from 'design';
 import AppList from './AppList';
 import AddApp from './AddApp';
 import ButtonAdd from './ButtonAdd';
@@ -29,7 +30,8 @@ import useApps, { State } from './useApps';
 import Empty from 'teleport/components/Empty';
 
 export default function Container() {
-  const state = useApps();
+  const ctx = useTeleport();
+  const state = useApps(ctx);
   return <Apps {...state} />;
 }
 
