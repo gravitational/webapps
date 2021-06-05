@@ -35,7 +35,7 @@ import ConnectDialog from 'teleport/Databases/ConnectDialog';
 function DatabaseList(props: Props) {
   const {
     databases = [],
-    pageSize = 20,
+    pageSize = 100,
     user,
     clusterId,
     authType,
