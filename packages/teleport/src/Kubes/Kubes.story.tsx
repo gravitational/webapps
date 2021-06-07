@@ -51,4 +51,6 @@ const props: State = {
   isLeafCluster: false,
   isEnterprise: false,
   canCreate: true,
+  searchValue: '',
+  setSearchValue: () => null,
 };

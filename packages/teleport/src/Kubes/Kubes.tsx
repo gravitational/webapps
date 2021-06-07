@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React, { useState } from 'react';
+import React from 'react';
 import { Box, Indicator, ButtonPrimary, Flex } from 'design';
 import { Danger } from 'design/Alert';
 import KubeList from 'teleport/Kubes/KubeList';
@@ -47,9 +47,9 @@ export function Kubes(props: State) {
     isLeafCluster,
     clusterId,
     canCreate,
+    searchValue,
+    setSearchValue,
   } = props;
-
-  const [searchValue, setSearchValue] = useState('');
 
   const isEmpty = attempt.status === 'success' && kubes.length === 0;
   const hasKubes = attempt.status === 'success' && kubes.length > 0;

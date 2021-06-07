@@ -27,6 +27,7 @@ export default function useKubes(ctx: TeleportContext) {
   const canCreate = ctx.storeUser.getTokenAccess().create;
   const { run, attempt } = useAttempt('processing');
   const [kubes, setKubes] = useState([] as Kube[]);
+  const [searchValue, setSearchValue] = useState('');
 
   const showButton = !isEnterprise || (!isLeafCluster && canCreate);
 
@@ -44,6 +45,8 @@ export default function useKubes(ctx: TeleportContext) {
     isLeafCluster,
     clusterId,
     canCreate,
+    searchValue,
+    setSearchValue,
   };
 }
 

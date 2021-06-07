@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-import Empty, { EmptyStateInfo } from './Empty';
+import Empty, { EmptyStateInfo as _EmptyStateInfo } from './Empty';
 
-export { EmptyStateInfo };
 export default Empty;
+export type EmptyStateInfo = _EmptyStateInfo;

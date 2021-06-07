@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React, { useState } from 'react';
+import React from 'react';
 import { Indicator, Box, Flex } from 'design';
 import { Danger } from 'design/Alert';
 import useTeleport from 'teleport/useTeleport';
@@ -50,9 +50,9 @@ export function Databases(props: State) {
     version,
     clusterId,
     authType,
+    searchValue,
+    setSearchValue,
   } = props;
-
-  const [searchValue, setSearchValue] = useState<string>('');
 
   const isEmpty = attempt.status === 'success' && databases.length === 0;
   const hasDatabases = attempt.status === 'success' && databases.length > 0;
