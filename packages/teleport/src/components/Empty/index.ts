@@ -14,6 +14,7 @@
  * limitations under the License.
  */
 
-import Empty from './Empty';
+import Empty, { EmptyStateInfo } from './Empty';
 
+export { EmptyStateInfo };
 export default Empty;

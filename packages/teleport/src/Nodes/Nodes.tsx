@@ -24,7 +24,7 @@ import {
 } from 'teleport/components/Layout';
 import QuickLaunch from 'teleport/components/QuickLaunch';
 import InputSearch from 'teleport/components/InputSearch';
-import Empty from 'teleport/components/Empty';
+import Empty, { EmptyStateInfo } from 'teleport/components/Empty';
 import NodeList from 'teleport/components/NodeList';
 import useTeleport from 'teleport/useTeleport';
 import useStickyClusterId from 'teleport/useStickyClusterId';
@@ -110,11 +110,24 @@ export function Nodes(props: State) {
           isLeafCluster={isLeafCluster}
           isEnterprise={isEnterprise}
           canCreate={canCreate}
-          onButtonClick={showAddNode}
-          type="nodes"
+          onClick={showAddNode}
+          emptyStateInfo={emptyStateInfo}
         />
       )}
       {isAddNodeVisible && <AddNode onClose={hideAddNode} />}
     </FeatureBox>
   );
 }
+
+const emptyStateInfo: EmptyStateInfo = {
+  title: 'ADD YOUR FIRST SERVER',
+  description:
+    'Centralized control and access to Servers with Teleport Server Access. Add labels to nodes and get full visibility into access and behavior.',
+  buttonText: 'ADD SERVER',
+  videoLink: 'https://www.youtube.com/watch?v=tUXYtwP-Kvw',
+  graphic: 'nodesEmptyPng',
+  readOnly: {
+    title: 'No Servers Found',
+    message: 'There are no servers for the "',
+  },
+};

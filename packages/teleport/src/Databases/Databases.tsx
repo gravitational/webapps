@@ -24,7 +24,7 @@ import {
   FeatureHeaderTitle,
 } from 'teleport/components/Layout';
 import InputSearch from 'teleport/components/InputSearch';
-import Empty from 'teleport/components/Empty';
+import Empty, { EmptyStateInfo } from 'teleport/components/Empty';
 import DatabaseList from './DatabaseList';
 import useDatabases, { State } from './useDatabases';
 import ButtonAdd from './ButtonAdd';
@@ -105,8 +105,8 @@ export function Databases(props: State) {
           isLeafCluster={isLeafCluster}
           isEnterprise={isEnterprise}
           canCreate={canCreate}
-          onButtonClick={showAddDialog}
-          type="databases"
+          onClick={showAddDialog}
+          emptyStateInfo={emptyStateInfo}
         />
       )}
       {isAddDialogVisible && (
@@ -120,3 +120,16 @@ export function Databases(props: State) {
     </FeatureBox>
   );
 }
+
+const emptyStateInfo: EmptyStateInfo = {
+  title: 'ADD YOUR FIRST DATABASE',
+  description:
+    'Teleport Application Access provides secure access to internal applications without the need for a VPN but with the audibility and control of Teleport.',
+  videoLink: 'https://www.youtube.com/watch?v=PCYyTecSzCY',
+  buttonText: 'ADD DATABASE',
+  graphic: 'emptyPng',
+  readOnly: {
+    title: 'No Databases Found',
+    message: 'There are no databases for the "',
+  },
+};

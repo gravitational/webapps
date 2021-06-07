@@ -27,10 +27,21 @@ test('empty state for oss', async () => {
 });
 
 const props: Props = {
-  type: 'nodes',
   clusterId: 'im-a-cluster',
   isEnterprise: true,
   canCreate: true,
   isLeafCluster: false,
-  onButtonClick: () => null,
+  onClick: () => null,
+  emptyStateInfo: {
+    title: 'ADD YOUR FIRST SERVER',
+    description:
+      'Centralized control and access to Servers with Teleport Server Access. Add labels to nodes and get full visibility into access and behavior.',
+    buttonText: 'ADD SERVER',
+    videoLink: 'https://www.youtube.com/watch?v=tUXYtwP-Kvw',
+    graphic: 'nodesEmptyPng',
+    readOnly: {
+      title: 'No Servers Found',
+      message: 'There are no servers for the "',
+    },
+  },
 };

@@ -23,11 +23,11 @@ import {
   FeatureHeader,
   FeatureHeaderTitle,
 } from 'teleport/components/Layout';
+import Empty, { EmptyStateInfo } from 'teleport/components/Empty';
 import AppList from './AppList';
 import AddApp from './AddApp';
 import ButtonAdd from './ButtonAdd';
 import useApps, { State } from './useApps';
-import Empty from 'teleport/components/Empty';
 
 export default function Container() {
   const ctx = useTeleport();
@@ -75,11 +75,24 @@ export function Apps(props: State) {
           isEnterprise={isEnterprise}
           clusterId={clusterId}
           canCreate={canCreate}
-          type="applications"
-          onButtonClick={showAddApp}
+          onClick={showAddApp}
+          emptyStateInfo={emptyStateInfo}
         />
       )}
       {isAddAppVisible && <AddApp onClose={hideAddApp} />}
     </FeatureBox>
   );
 }
+
+const emptyStateInfo: EmptyStateInfo = {
+  title: 'ADD YOUR FIRST APPLICATION',
+  description:
+    'Teleport Application Access provides secure access to internal applications without the need for a VPN but with the audibility and control of Teleport.',
+  videoLink: 'https://www.youtube.com/watch?v=HkBQY-uWIbU',
+  buttonText: 'ADD APPLICATION',
+  graphic: 'emptyPng',
+  readOnly: {
+    title: 'No Applications Found',
+    message: 'There are no applications for the "',
+  },
+};

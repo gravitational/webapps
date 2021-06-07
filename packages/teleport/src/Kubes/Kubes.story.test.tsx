@@ -30,12 +30,10 @@ test('failed', () => {
 
 test('empty state', () => {
   const { container } = render(<Empty />);
-
   expect(container).toMatchSnapshot();
 });
 
 test('readonly empty state', () => {
   const { container } = render(<EmptyReadOnly />);
-
   expect(container).toMatchSnapshot();
 });

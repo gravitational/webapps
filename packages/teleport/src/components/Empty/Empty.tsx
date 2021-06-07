@@ -15,25 +15,31 @@ limitations under the License.
 */
 
 import React from 'react';
-import styled from 'styled-components';
+
 import { Text, Box, Flex, ButtonPrimary } from 'design';
 import Card from 'design/Card';
 import Image from 'design/Image';
-import { emptyPng, nodesEmptyPng, playIcon } from './assets';
+/* eslint import/namespace: ['error', { allowComputed: true }] */
+import * as images from './assets';
 
 export default function Empty(props: Props) {
   const {
     isLeafCluster,
     canCreate,
     isEnterprise,
-    onButtonClick,
-    type,
-    ...rest
+    onClick,
+    clusterId,
+    emptyStateInfo,
   } = props;
 
-  const { title, description, buttonText, videoLink, graphic } = emptyStateInfo[
-    type
-  ];
+  const {
+    title,
+    description,
+    buttonText,
+    videoLink,
+    graphic,
+    readOnly,
+  } = emptyStateInfo;
 
   // always show the welcome for enterprise users who have access to create an app
   if (isLeafCluster || !canCreate || !isEnterprise) {
@@ -47,15 +53,14 @@ export default function Empty(props: Props) {
         color="text.primary"
         bg="primary.light"
         borderRadius="12px"
-        {...rest}
       >
         <Text typography="h2" mb="3">
-          {emptyStateInfo[type].readOnly.title}
+          {readOnly.title}
         </Text>
         <Text>
-          {emptyStateInfo[type].readOnly.message}
+          {readOnly.message}
           <Text as="span" bold>
-            {props.clusterId}
+            {clusterId}
           </Text>
           " cluster.
         </Text>
@@ -73,13 +78,23 @@ export default function Empty(props: Props) {
       bg="primary.main"
       alignItems="center"
     >
-      <QuickstartContainer onClick={() => window.open(videoLink)}>
-        <Image width="265px" src={graphic} />
+      <Flex
+        mx="16px"
+        width="296px"
+        height="200px"
+        bg="#01172c"
+        borderRadius={8}
+        alignItems="center"
+        justifyContent="center"
+        style={{ cursor: 'pointer' }}
+        onClick={() => window.open(videoLink)}
+      >
+        <Image width="265px" src={images[graphic]} />
         <Box style={{ position: 'absolute' }} mt={4}>
-          <Image m="auto" mb={1} width="90px" src={playIcon} />
+          <Image m="auto" mb={1} width="90px" src={images.playIcon} />
           <Text fontWeight={700}>WATCH THE QUICKSTART</Text>
         </Box>
-      </QuickstartContainer>
+      </Flex>
       <Box m="auto" mt={4}>
         <Box width="500px" mb={4}>
           <Text typography="h3" mb={2} fontWeight={700} fontSize={14}>
@@ -87,7 +102,7 @@ export default function Empty(props: Props) {
           </Text>
           <Text>{description}</Text>
         </Box>
-        <ButtonPrimary onClick={onButtonClick} width="224px" height="40px">
+        <ButtonPrimary onClick={onClick} width="224px" height="40px">
           {buttonText}
         </ButtonPrimary>
       </Box>
@@ -95,77 +110,23 @@ export default function Empty(props: Props) {
   );
 }
 
-const emptyStateInfo = {
-  nodes: {
-    title: 'ADD YOUR FIRST SERVER',
-    description:
-      'Centralized control and access to Servers with Teleport Server Access. Add labels to nodes and get full visibility into access and behavior.',
-    buttonText: 'ADD SERVER',
-    videoLink: 'https://www.youtube.com/watch?v=tUXYtwP-Kvw',
-    graphic: nodesEmptyPng,
-    readOnly: {
-      title: 'No Servers Found',
-      message: 'There are no servers for the "',
-    },
-  },
-  applications: {
-    title: 'ADD YOUR FIRST APPLICATION',
-    description:
-      'Teleport Application Access provides secure access to internal applications without the need for a VPN but with the audibility and control of Teleport.',
-    videoLink: 'https://www.youtube.com/watch?v=HkBQY-uWIbU',
-    buttonText: 'ADD APPLICATION',
-    graphic: emptyPng,
-    readOnly: {
-      title: 'No Applications Found',
-      message: 'There are no applications for the "',
-    },
-  },
-  kubernetes: {
-    title: 'ADD YOUR FIRST KUBERNETES CLUSTER',
-    description:
-      'Teleport Application Access provides secure access to internal applications without the need for a VPN but with the audibility and control of Teleport.',
-    videoLink: 'https://www.youtube.com/watch?v=2diX_UAmJ1c',
-    buttonText: 'VIEW DOCUMENTATION',
-    graphic: emptyPng,
-    readOnly: {
-      title: 'No Kubernetes Clusters Found',
-      message: 'There are no kubernetes clusters for the "',
-    },
-  },
-  databases: {
-    title: 'ADD YOUR FIRST DATABASE',
-    description:
-      'Teleport Application Access provides secure access to internal applications without the need for a VPN but with the audibility and control of Teleport.',
-    videoLink: 'https://www.youtube.com/watch?v=PCYyTecSzCY',
-    buttonText: 'ADD DATABASE',
-    graphic: emptyPng,
-    readOnly: {
-      title: 'No Databases Found',
-      message: 'There are no databases for the "',
-    },
-  },
-};
-
-const QuickstartContainer = styled(Box)`
-  cursor: pointer;
-`;
-
-QuickstartContainer.defaultProps = {
-  as: Flex,
-  mx: '16px',
-  bg: '#01172c',
-  width: '296px',
-  height: '200px',
-  borderRadius: 8,
-  alignItems: 'center',
-  justifyContent: 'center',
+export type EmptyStateInfo = {
+  title: string;
+  description: string;
+  buttonText: string;
+  videoLink: string;
+  graphic: 'emptyPng' | 'nodesEmptyPng';
+  readOnly: {
+    title: string;
+    message: string;
+  };
 };
 
 export type Props = {
   isLeafCluster: boolean;
   isEnterprise: boolean;
   canCreate: boolean;
-  onButtonClick(): void;
+  onClick(): void;
   clusterId: string;
-  type: 'nodes' | 'applications' | 'kubernetes' | 'databases';
+  emptyStateInfo: EmptyStateInfo;
 };

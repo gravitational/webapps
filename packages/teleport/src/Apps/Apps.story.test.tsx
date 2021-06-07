@@ -27,13 +27,11 @@ test('failed state', async () => {
 
 test('empty state for enterprise, can create', () => {
   const { container } = render(<Empty />);
-
   expect(container).toMatchSnapshot();
 });
 
 test('readonly empty state', () => {
   const { container } = render(<EmptyReadOnly />);
-
   expect(container).toMatchSnapshot();
 });
 

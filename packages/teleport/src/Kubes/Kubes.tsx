@@ -25,7 +25,7 @@ import {
 } from 'teleport/components/Layout';
 import useTeleport from 'teleport/useTeleport';
 import InputSearch from 'teleport/components/InputSearch';
-import Empty from 'teleport/components/Empty';
+import Empty, { EmptyStateInfo } from 'teleport/components/Empty';
 import useKubes, { State } from './useKubes';
 
 export default function Container() {
@@ -96,10 +96,23 @@ export function Kubes(props: State) {
           isLeafCluster={isLeafCluster}
           isEnterprise={isEnterprise}
           canCreate={canCreate}
-          onButtonClick={() => window.open(DOC_URL)}
-          type="kubernetes"
+          onClick={() => window.open(DOC_URL)}
+          emptyStateInfo={emptyStateInfo}
         />
       )}
     </FeatureBox>
   );
 }
+
+const emptyStateInfo: EmptyStateInfo = {
+  title: 'ADD YOUR FIRST KUBERNETES CLUSTER',
+  description:
+    'Teleport Application Access provides secure access to internal applications without the need for a VPN but with the audibility and control of Teleport.',
+  videoLink: 'https://www.youtube.com/watch?v=2diX_UAmJ1c',
+  buttonText: 'VIEW DOCUMENTATION',
+  graphic: 'emptyPng',
+  readOnly: {
+    title: 'No Kubernetes Clusters Found',
+    message: 'There are no kubernetes clusters for the "',
+  },
+};
