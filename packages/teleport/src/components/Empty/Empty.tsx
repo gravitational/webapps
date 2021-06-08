@@ -23,14 +23,7 @@ import * as Icons from 'design/Icon';
 import empty from './assets';
 
 export default function Empty(props: Props) {
-  const {
-    isLeafCluster,
-    canCreate,
-    isEnterprise,
-    onClick,
-    clusterId,
-    emptyStateInfo,
-  } = props;
+  const { canCreate, onClick, clusterId, emptyStateInfo } = props;
 
   const {
     title,
@@ -41,13 +34,13 @@ export default function Empty(props: Props) {
   } = emptyStateInfo;
 
   // always show the welcome for enterprise users who have access to create an app
-  if (isLeafCluster || !canCreate || !isEnterprise) {
+  if (!canCreate) {
     return (
       <Box
         p={8}
         mt={4}
         mx="auto"
-        width="600px"
+        maxWidth="600px"
         textAlign="center"
         color="text.primary"
         bg="primary.light"
@@ -69,38 +62,38 @@ export default function Empty(props: Props) {
 
   return (
     <Card
+      p={4}
       as={Flex}
-      width="879px"
-      height="232px"
+      maxWidth="900px"
+      width="100%"
       mt={4}
       mx="auto"
       bg="primary.main"
-      alignItems="center"
     >
       <Flex
-        mx="16px"
-        width="296px"
-        height="200px"
-        bg="#01172c"
+        as="a"
+        mr={4}
+        maxWidth="296px"
+        maxHeight="176px"
+        bg="primary.dark"
+        p={4}
         borderRadius={8}
         alignItems="center"
         justifyContent="center"
-        style={{ cursor: 'pointer' }}
-        onClick={() => window.open(videoLink)}
+        href={videoLink}
       >
-        <Image width="265px" src={empty} />
+        <Image width="220px" src={empty} />
         <Flex
           style={{ position: 'absolute' }}
           flexDirection="column"
           alignItems="center"
-          mt={4}
         >
-          <Icons.CirclePlay mb={4} fontSize="70px" />
+          <Icons.CirclePlay mb={4} fontSize="60px" />
           <Text fontWeight={700}>WATCH THE QUICKSTART</Text>
         </Flex>
       </Flex>
-      <Box m="auto" mt={4}>
-        <Box width="500px" mb={4}>
+      <Box>
+        <Box mb={4}>
           <Text typography="h3" mb={2} fontWeight={700} fontSize={14}>
             {title}
           </Text>
@@ -126,8 +119,6 @@ export type EmptyStateInfo = {
 };
 
 export type Props = {
-  isLeafCluster: boolean;
-  isEnterprise: boolean;
   canCreate: boolean;
   onClick(): void;
   clusterId: string;

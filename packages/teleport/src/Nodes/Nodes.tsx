@@ -107,9 +107,7 @@ export function Nodes(props: State) {
       {isEmpty && (
         <Empty
           clusterId={clusterId}
-          isLeafCluster={isLeafCluster}
-          isEnterprise={isEnterprise}
-          canCreate={canCreate}
+          canCreate={!isLeafCluster || canCreate}
           onClick={showAddNode}
           emptyStateInfo={emptyStateInfo}
         />

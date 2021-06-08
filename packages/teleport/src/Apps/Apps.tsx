@@ -71,10 +71,8 @@ export function Apps(props: State) {
       {hasApps && <AppList apps={apps} />}
       {isEmpty && (
         <Empty
-          isLeafCluster={isLeafCluster}
-          isEnterprise={isEnterprise}
           clusterId={clusterId}
-          canCreate={canCreate}
+          canCreate={!isLeafCluster || canCreate}
           onClick={showAddApp}
           emptyStateInfo={emptyStateInfo}
         />
