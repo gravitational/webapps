@@ -27,7 +27,7 @@ export default function Pager(props) {
     totalRows = 0,
     onPrev,
     onNext,
-    fetchMore,
+    onFetch,
     fetchStatus = 'disabled',
   } = props;
   const isPrevDisabled = totalRows === 0 || startFrom === 0;
@@ -44,7 +44,7 @@ export default function Pager(props) {
           of <strong>{totalRows}</strong>
         </Text>
         {isFetchDisabled && (
-          <StyledButtonLink onClick={fetchMore} disabled={isFetching}>
+          <StyledButtonLink onClick={onFetch} disabled={isFetching}>
             Fetch More
           </StyledButtonLink>
         )}

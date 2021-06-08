@@ -32,7 +32,7 @@ export default function TablePaged(props) {
     ...rest
   } = props;
   const pagedState = usePages({ pageSize, data });
-  const pagerProps = { ...pagedState, fetchMore, fetchStatus };
+  const pagerProps = { ...pagedState, onFetch: fetchMore, fetchStatus };
   const tableProps = {
     ...rest,
     data: pagedState.data,
