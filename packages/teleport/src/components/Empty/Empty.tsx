@@ -99,7 +99,7 @@ export default function Empty(props: Props) {
           </Text>
           {description}
         </Box>
-        <ButtonPrimary onClick={onClick} width="224px" height="40px">
+        <ButtonPrimary onClick={onClick} width="224px">
           {buttonText}
         </ButtonPrimary>
       </Box>

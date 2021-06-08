@@ -39,7 +39,6 @@ export function Apps(props: State) {
   const {
     clusterId,
     isLeafCluster,
-    isEnterprise,
     isAddAppVisible,
     showAddApp,
     hideAddApp,
@@ -57,7 +56,6 @@ export function Apps(props: State) {
         <FeatureHeaderTitle>Applications</FeatureHeaderTitle>
         <ButtonAdd
           isLeafCluster={isLeafCluster}
-          isEnterprise={isEnterprise}
           canCreate={canCreate}
           onClick={showAddApp}
         />
@@ -72,7 +70,7 @@ export function Apps(props: State) {
       {isEmpty && (
         <Empty
           clusterId={clusterId}
-          canCreate={!isLeafCluster || canCreate}
+          canCreate={canCreate && !isLeafCluster}
           onClick={showAddApp}
           emptyStateInfo={emptyStateInfo}
         />
@@ -86,15 +84,15 @@ const emptyStateInfo: EmptyStateInfo = {
   title: 'ADD YOUR FIRST APPLICATION',
   description: (
     <Text>
-      Quick access to web applications running behind NAT and firewalls with
-      security and compliance. Follow{' '}
+      {`Quick access to web applications running behind NAT and firewalls with
+      security and compliance. Follow `}
       <Link
         target="_blank"
         href="https://goteleport.com/docs/application-access/getting-started/"
       >
         the documentation
-      </Link>{' '}
-      to get started.
+      </Link>
+      {' to get started.'}
     </Text>
   ),
   videoLink: 'https://www.youtube.com/watch?v=HkBQY-uWIbU',

@@ -29,7 +29,6 @@ export default function useNodes(ctx: Ctx, stickyCluster: StickyCluster) {
   const [isAddNodeVisible, setIsAddNodeVisible] = useState(false);
   const canCreate = ctx.storeUser.getTokenAccess().create;
   const logins = ctx.storeUser.getLogins();
-  const isEnterprise = ctx.isEnterprise;
 
   useEffect(() => {
     run(() => ctx.nodeService.fetchNodes(clusterId).then(setNodes));
@@ -86,7 +85,6 @@ export default function useNodes(ctx: Ctx, stickyCluster: StickyCluster) {
     getNodeLoginOptions,
     startSshSession,
     isAddNodeVisible,
-    isEnterprise,
     isLeafCluster,
     clusterId,
     hideAddNode,

@@ -93,8 +93,7 @@ export function Kubes(props: State) {
       {isEmpty && (
         <Empty
           clusterId={clusterId}
-          isEnterprise={isEnterprise}
-          canCreate={!isLeafCluster || canCreate}
+          canCreate={canCreate && !isLeafCluster}
           onClick={() => window.open(DOC_URL)}
           emptyStateInfo={emptyStateInfo}
         />

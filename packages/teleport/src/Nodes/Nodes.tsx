@@ -50,7 +50,6 @@ export function Nodes(props: State) {
     hideAddNode,
     isLeafCluster,
     isAddNodeVisible,
-    isEnterprise,
     clusterId,
     searchValue,
     setSearchValue,
@@ -74,7 +73,6 @@ export function Nodes(props: State) {
         <FeatureHeaderTitle>Servers</FeatureHeaderTitle>
         <ButtonAdd
           isLeafCluster={isLeafCluster}
-          isEnterprise={isEnterprise}
           canCreate={canCreate}
           onClick={showAddNode}
         />
@@ -107,7 +105,7 @@ export function Nodes(props: State) {
       {isEmpty && (
         <Empty
           clusterId={clusterId}
-          canCreate={!isLeafCluster || canCreate}
+          canCreate={canCreate && !isLeafCluster}
           onClick={showAddNode}
           emptyStateInfo={emptyStateInfo}
         />

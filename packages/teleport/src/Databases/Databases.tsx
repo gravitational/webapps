@@ -63,7 +63,6 @@ export function Databases(props: State) {
         <FeatureHeaderTitle>Databases</FeatureHeaderTitle>
         <ButtonAdd
           isLeafCluster={isLeafCluster}
-          isEnterprise={isEnterprise}
           canCreate={canCreate}
           onClick={showAddDialog}
         />
@@ -102,8 +101,7 @@ export function Databases(props: State) {
       {isEmpty && (
         <Empty
           clusterId={clusterId}
-          isEnterprise={isEnterprise}
-          canCreate={!isLeafCluster || canCreate}
+          canCreate={canCreate && !isLeafCluster}
           onClick={showAddDialog}
           emptyStateInfo={emptyStateInfo}
         />
