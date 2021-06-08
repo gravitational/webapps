@@ -19,8 +19,8 @@ import React from 'react';
 import { Text, Box, Flex, ButtonPrimary } from 'design';
 import Card from 'design/Card';
 import Image from 'design/Image';
-/* eslint import/namespace: ['error', { allowComputed: true }] */
-import * as images from './assets';
+import * as Icons from 'design/Icon';
+import empty from './assets';
 
 export default function Empty(props: Props) {
   const {
@@ -37,7 +37,6 @@ export default function Empty(props: Props) {
     description,
     buttonText,
     videoLink,
-    graphic,
     readOnly,
   } = emptyStateInfo;
 
@@ -89,11 +88,16 @@ export default function Empty(props: Props) {
         style={{ cursor: 'pointer' }}
         onClick={() => window.open(videoLink)}
       >
-        <Image width="265px" src={images[graphic]} />
-        <Box style={{ position: 'absolute' }} mt={4}>
-          <Image m="auto" mb={1} width="90px" src={images.playIcon} />
+        <Image width="265px" src={empty} />
+        <Flex
+          style={{ position: 'absolute' }}
+          flexDirection="column"
+          alignItems="center"
+          mt={4}
+        >
+          <Icons.CirclePlay mb={4} fontSize="70px" />
           <Text fontWeight={700}>WATCH THE QUICKSTART</Text>
-        </Box>
+        </Flex>
       </Flex>
       <Box m="auto" mt={4}>
         <Box width="500px" mb={4}>
@@ -115,7 +119,6 @@ export type EmptyStateInfo = {
   description: string;
   buttonText: string;
   videoLink: string;
-  graphic: 'emptyPng' | 'nodesEmptyPng';
   readOnly: {
     title: string;
     message: string;

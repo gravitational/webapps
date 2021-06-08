@@ -1,5 +1,3 @@
-import emptyPng from './images/empty.png';
-import playIcon from './images/play.svg';
-import nodesEmptyPng from './images/nodesEmpty.png';
+import empty from './empty.png';
 
-export { emptyPng, playIcon, nodesEmptyPng };
+export default empty;

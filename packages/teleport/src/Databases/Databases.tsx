@@ -127,7 +127,6 @@ const emptyStateInfo: EmptyStateInfo = {
     'Teleport Application Access provides secure access to internal applications without the need for a VPN but with the audibility and control of Teleport.',
   videoLink: 'https://www.youtube.com/watch?v=PCYyTecSzCY',
   buttonText: 'ADD DATABASE',
-  graphic: 'emptyPng',
   readOnly: {
     title: 'No Databases Found',
     message: 'There are no databases for the "',

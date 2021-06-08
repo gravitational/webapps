@@ -90,7 +90,6 @@ const emptyStateInfo: EmptyStateInfo = {
     'Teleport Application Access provides secure access to internal applications without the need for a VPN but with the audibility and control of Teleport.',
   videoLink: 'https://www.youtube.com/watch?v=HkBQY-uWIbU',
   buttonText: 'ADD APPLICATION',
-  graphic: 'emptyPng',
   readOnly: {
     title: 'No Applications Found',
     message: 'There are no applications for the "',

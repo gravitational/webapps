@@ -1,11 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`empty state 1`] = `
-.c8 {
-  box-sizing: border-box;
-  margin-top: 24px;
-}
-
 .c11 {
   box-sizing: border-box;
   margin: auto;
@@ -109,6 +104,14 @@ exports[`empty state 1`] = `
   color: rgba(255,255,255,0.3);
 }
 
+.c9 {
+  display: inline-block;
+  transition: color .3s;
+  margin-bottom: 24px;
+  color: #FFFFFF;
+  font-size: 70px;
+}
+
 .c5 {
   box-sizing: border-box;
   margin-top: 24px;
@@ -125,14 +128,6 @@ exports[`empty state 1`] = `
   display: block;
   outline: none;
   width: 265px;
-}
-
-.c9 {
-  display: block;
-  outline: none;
-  margin: auto;
-  margin-bottom: 4px;
-  width: 90px;
 }
 
 .c10 {
@@ -183,6 +178,14 @@ exports[`empty state 1`] = `
   display: flex;
   align-items: center;
   justify-content: center;
+}
+
+.c8 {
+  box-sizing: border-box;
+  margin-top: 24px;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
 }
 
 .c1 {
@@ -269,10 +272,10 @@ exports[`empty state 1`] = `
           class="c8"
           style="position: absolute;"
         >
-          <img
-            class="c9"
-            src="file_stub"
-            width="90px"
+          <span
+            class="c9 icon icon-play-circle "
+            color="light"
+            font-size="70px"
           />
           <div
             class="c10"

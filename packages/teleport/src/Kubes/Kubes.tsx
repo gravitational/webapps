@@ -110,7 +110,6 @@ const emptyStateInfo: EmptyStateInfo = {
     'Teleport Application Access provides secure access to internal applications without the need for a VPN but with the audibility and control of Teleport.',
   videoLink: 'https://www.youtube.com/watch?v=2diX_UAmJ1c',
   buttonText: 'VIEW DOCUMENTATION',
-  graphic: 'emptyPng',
   readOnly: {
     title: 'No Kubernetes Clusters Found',
     message: 'There are no kubernetes clusters for the "',
