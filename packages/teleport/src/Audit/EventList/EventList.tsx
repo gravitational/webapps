@@ -27,7 +27,7 @@ import EventDialog from '../EventDialog';
 import { displayDateTime } from 'shared/services/loc';
 
 export default function EventList(props: Props) {
-  const { clusterId, events = [], search = '', moreEvents } = props;
+  const { clusterId, events = [], search = '', fetchMore, fetchStatus } = props;
   const [state, setState] = React.useState<EventListState>(() => {
     return {
       searchableProps: ['codeDesc', 'message', 'user', 'time'],
@@ -84,7 +84,7 @@ export default function EventList(props: Props) {
   }, [state, events, search]);
 
   // paginate
-  const tableProps = { pageSize: 50, data, moreEvents };
+  const tableProps = { pageSize: 50, data, fetchMore, fetchStatus };
   const { detailsToShow, colSortDirs } = state;
   return (
     <React.Fragment>
@@ -140,5 +140,6 @@ type Props = {
   clusterId: State['clusterId'];
   search: State['searchValue'];
   events: State['events'];
-  moreEvents: State['moreEvents'];
+  fetchMore: State['fetchMore'];
+  fetchStatus: State['fetchStatus'];
 };

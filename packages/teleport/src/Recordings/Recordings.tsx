@@ -38,7 +38,6 @@ export default function Container() {
 
 export function Recordings(props: ReturnType<typeof useAuditEvents>) {
   const {
-    moreEvents,
     attempt,
     range,
     rangeOptions,
@@ -80,7 +79,6 @@ export function Recordings(props: ReturnType<typeof useAuditEvents>) {
           events={events}
           clusterId={clusterId}
           pageSize={50}
-          moreEvents={moreEvents}
         />
       )}
     </FeatureBox>

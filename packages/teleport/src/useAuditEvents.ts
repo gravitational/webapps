@@ -27,7 +27,7 @@ export default function useAuditEvents(ctx: Ctx, clusterId: string) {
   const { attempt, setAttempt, run } = useAttempt('processing');
   const [events, setEvents] = useState<Event[]>([]);
   const [startKey, setStartKey] = useState('');
-  const [disableFetchMore, setDisableFetchMore] = useState(false);
+  const [fetchStatus, setFetchStatus] = useState<FetchStatus>('');
 
   useEffect(() => {
     fetch();
@@ -37,13 +37,13 @@ export default function useAuditEvents(ctx: Ctx, clusterId: string) {
   // last fetch, indicated by startKey. The response is
   // appended to existing events list.
   function fetchMore() {
-    setDisableFetchMore(true);
+    setFetchStatus('loading');
     ctx.auditService
       .fetchEvents(clusterId, { ...range, startKey })
       .then(res => {
         setEvents([...events, ...res.events]);
         setStartKey(res.startKey);
-        setDisableFetchMore(false);
+        setFetchStatus(res.startKey ? '' : 'disabled');
       })
       .catch((err: Error) => {
         setAttempt({ status: 'failed', statusText: err.message });
@@ -57,18 +57,15 @@ export default function useAuditEvents(ctx: Ctx, clusterId: string) {
       ctx.auditService.fetchEvents(clusterId, { ...range }).then(res => {
         setEvents(res.events);
         setStartKey(res.startKey);
+        setFetchStatus(res.startKey ? '' : 'disabled');
       })
     );
   }
 
-  let moreEvents: MoreEvents = null;
-  if (startKey) {
-    moreEvents = { fetch: fetchMore, disabled: disableFetchMore };
-  }
-
   return {
     events,
-    moreEvents,
+    fetchMore,
+    fetchStatus,
     clusterId,
     attempt,
     range,
@@ -109,16 +106,13 @@ function getRangeOptions(): EventRange[] {
   ];
 }
 
+type FetchStatus = 'loading' | 'disabled' | '';
+
 export type EventRange = {
   from: Date;
   to: Date;
   isCustom?: boolean;
   name?: string;
-};
-
-export type MoreEvents = {
-  fetch(): void;
-  disabled: boolean;
 };
 
 export type State = ReturnType<typeof useAuditEvents>;

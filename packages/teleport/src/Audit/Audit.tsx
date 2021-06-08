@@ -38,7 +38,6 @@ export default function Container() {
 
 export function Audit(props: ReturnType<typeof useAuditEvents>) {
   const {
-    moreEvents,
     attempt,
     range,
     setRange,
@@ -47,6 +46,8 @@ export function Audit(props: ReturnType<typeof useAuditEvents>) {
     searchValue,
     clusterId,
     setSearchValue,
+    fetchMore,
+    fetchStatus,
   } = props;
 
   return (
@@ -79,7 +80,8 @@ export function Audit(props: ReturnType<typeof useAuditEvents>) {
           search={searchValue}
           events={events}
           clusterId={clusterId}
-          moreEvents={moreEvents}
+          fetchMore={fetchMore}
+          fetchStatus={fetchStatus}
         />
       )}
     </FeatureBox>

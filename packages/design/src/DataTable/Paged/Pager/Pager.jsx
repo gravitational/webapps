@@ -27,39 +27,28 @@ export default function Pager(props) {
     totalRows = 0,
     onPrev,
     onNext,
-    moreEvents,
+    fetchMore,
+    fetchStatus = 'disabled',
   } = props;
   const isPrevDisabled = totalRows === 0 || startFrom === 0;
   const isNextDisabled = totalRows === 0 || endAt === totalRows;
   const initialStartFrom = totalRows > 0 ? startFrom + 1 : 0;
+  const isFetchDisabled = fetchStatus !== 'disabled';
+  const isFetching = fetchStatus === 'loading';
 
-  let $showingTotalEvents = (
-    <Text typography="body2" color="primary.contrastText">
-      SHOWING <strong>{initialStartFrom}</strong> - <strong>{endAt}</strong> of{' '}
-      <strong>{totalRows}</strong>
-    </Text>
-  );
-
-  if (moreEvents) {
-    $showingTotalEvents = (
+  return (
+    <>
       <Flex alignItems="center">
         <Text typography="body2" color="primary.contrastText">
           SHOWING <strong>{initialStartFrom}</strong> - <strong>{endAt}</strong>{' '}
           of <strong>{totalRows}</strong>
         </Text>
-        <StyledButtonLink
-          onClick={moreEvents.fetch}
-          disabled={moreEvents.disabled}
-        >
-          Fetch More
-        </StyledButtonLink>
+        {isFetchDisabled && (
+          <StyledButtonLink onClick={fetchMore} disabled={isFetching}>
+            Fetch More
+          </StyledButtonLink>
+        )}
       </Flex>
-    );
-  }
-
-  return (
-    <>
-      {$showingTotalEvents}
       <StyledButtons>
         <button
           onClick={onPrev}
