@@ -15,7 +15,7 @@ limitations under the License.
 */
 
 import React from 'react';
-import { Indicator, Box, Flex } from 'design';
+import { Indicator, Box, Flex, Text, Link } from 'design';
 import { Danger } from 'design/Alert';
 import useTeleport from 'teleport/useTeleport';
 import {
@@ -123,8 +123,20 @@ export function Databases(props: State) {
 
 const emptyStateInfo: EmptyStateInfo = {
   title: 'ADD YOUR FIRST DATABASE',
-  description:
-    'Teleport Application Access provides secure access to internal applications without the need for a VPN but with the audibility and control of Teleport.',
+  description: (
+    <Text>
+      Consolidate access to databases running behind NAT, prevent data
+      exfiltration, meet compliance requirements, and have complete visibility
+      into access and behavior. Follow{' '}
+      <Link
+        target="_blank"
+        href="https://goteleport.com/docs/database-access/guides/"
+      >
+        the documentation
+      </Link>{' '}
+      to get started.
+    </Text>
+  ),
   videoLink: 'https://www.youtube.com/watch?v=PCYyTecSzCY',
   buttonText: 'ADD DATABASE',
   readOnly: {

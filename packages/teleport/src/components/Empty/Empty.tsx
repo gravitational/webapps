@@ -104,7 +104,7 @@ export default function Empty(props: Props) {
           <Text typography="h3" mb={2} fontWeight={700} fontSize={14}>
             {title}
           </Text>
-          <Text>{description}</Text>
+          {description}
         </Box>
         <ButtonPrimary onClick={onClick} width="224px" height="40px">
           {buttonText}
@@ -116,7 +116,7 @@ export default function Empty(props: Props) {
 
 export type EmptyStateInfo = {
   title: string;
-  description: string;
+  description: JSX.Element;
   buttonText: string;
   videoLink: string;
   readOnly: {

@@ -16,7 +16,7 @@
 
 import React from 'react';
 import { Danger } from 'design/Alert';
-import { Indicator, Box } from 'design';
+import { Indicator, Box, Text, Link } from 'design';
 import useTeleport from 'teleport/useTeleport';
 import {
   FeatureBox,
@@ -86,8 +86,19 @@ export function Apps(props: State) {
 
 const emptyStateInfo: EmptyStateInfo = {
   title: 'ADD YOUR FIRST APPLICATION',
-  description:
-    'Teleport Application Access provides secure access to internal applications without the need for a VPN but with the audibility and control of Teleport.',
+  description: (
+    <Text>
+      Quick access to web applications running behind NAT and firewalls with
+      security and compliance. Follow{' '}
+      <Link
+        target="_blank"
+        href="https://goteleport.com/docs/application-access/getting-started/"
+      >
+        the documentation
+      </Link>{' '}
+      to get started.
+    </Text>
+  ),
   videoLink: 'https://www.youtube.com/watch?v=HkBQY-uWIbU',
   buttonText: 'ADD APPLICATION',
   readOnly: {

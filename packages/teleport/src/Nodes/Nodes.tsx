@@ -15,7 +15,7 @@ limitations under the License.
 */
 
 import React from 'react';
-import { Indicator, Box, Flex } from 'design';
+import { Indicator, Box, Flex, Text } from 'design';
 import { Danger } from 'design/Alert';
 import {
   FeatureBox,
@@ -121,8 +121,11 @@ export function Nodes(props: State) {
 
 const emptyStateInfo: EmptyStateInfo = {
   title: 'ADD YOUR FIRST SERVER',
-  description:
-    'Centralized control and access to Servers with Teleport Server Access. Add labels to nodes and get full visibility into access and behavior.',
+  description: (
+    <Text>
+      Instant SSH access for engineers with native security and compliance.
+    </Text>
+  ),
   buttonText: 'ADD SERVER',
   videoLink: 'https://www.youtube.com/watch?v=tUXYtwP-Kvw',
   readOnly: {

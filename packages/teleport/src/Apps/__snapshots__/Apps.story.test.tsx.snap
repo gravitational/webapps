@@ -58,7 +58,7 @@ exports[`empty state for enterprise, can create 1`] = `
   color: rgba(255,255,255,0.3);
 }
 
-.c15 {
+.c16 {
   line-height: 1.5;
   margin: 0;
   display: inline-flex;
@@ -86,20 +86,20 @@ exports[`empty state for enterprise, can create 1`] = `
   height: 40px;
 }
 
-.c15:active {
+.c16:active {
   opacity: 0.56;
 }
 
-.c15:hover,
-.c15:focus {
+.c16:hover,
+.c16:focus {
   background: #651FFF;
 }
 
-.c15:active {
+.c16:active {
   background: #354AA4;
 }
 
-.c15:disabled {
+.c16:disabled {
   background: rgba(255,255,255,0.12);
   color: rgba(255,255,255,0.3);
 }
@@ -122,6 +122,14 @@ exports[`empty state for enterprise, can create 1`] = `
   background-color: #1C254D;
   box-shadow: 0 4px 16px rgba(0,0,0,0.24);
   border-radius: 8px;
+}
+
+.c15 {
+  color: #03a9f4;
+  font-weight: normal;
+  background: none;
+  text-decoration: underline;
+  text-transform: none;
 }
 
 .c7 {
@@ -300,11 +308,22 @@ exports[`empty state for enterprise, can create 1`] = `
           <div
             class="c14"
           >
-            Teleport Application Access provides secure access to internal applications without the need for a VPN but with the audibility and control of Teleport.
+            Quick access to web applications running behind NAT and firewalls with security and compliance. Follow
+             
+            <a
+              class="c15"
+              href="https://goteleport.com/docs/application-access/getting-started/"
+              rel="noreferrer"
+              target="_blank"
+            >
+              the documentation
+            </a>
+             
+            to get started.
           </div>
         </div>
         <button
-          class="c15"
+          class="c16"
           height="40px"
           kind="primary"
           width="224px"
