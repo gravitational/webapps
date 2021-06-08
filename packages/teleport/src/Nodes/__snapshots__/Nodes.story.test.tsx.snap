@@ -1,16 +1,13 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`empty state 1`] = `
-.c11 {
-  box-sizing: border-box;
-  margin: auto;
-  margin-top: 24px;
-}
-
 .c12 {
   box-sizing: border-box;
+}
+
+.c13 {
+  box-sizing: border-box;
   margin-bottom: 24px;
-  width: 500px;
 }
 
 .c3 {
@@ -58,7 +55,7 @@ exports[`empty state 1`] = `
   color: rgba(255,255,255,0.3);
 }
 
-.c15 {
+.c16 {
   line-height: 1.5;
   margin: 0;
   display: inline-flex;
@@ -83,61 +80,73 @@ exports[`empty state 1`] = `
   font-size: 12px;
   padding: 0px 24px;
   width: 224px;
-  height: 40px;
 }
 
-.c15:active {
+.c16:active {
   opacity: 0.56;
 }
 
-.c15:hover,
-.c15:focus {
+.c16:hover,
+.c16:focus {
   background: #651FFF;
 }
 
-.c15:active {
+.c16:active {
   background: #354AA4;
 }
 
-.c15:disabled {
+.c16:disabled {
   background: rgba(255,255,255,0.12);
   color: rgba(255,255,255,0.3);
 }
 
-.c9 {
+.c10 {
   display: inline-block;
   transition: color .3s;
-  margin-bottom: 24px;
+  margin-bottom: 16px;
   color: #FFFFFF;
-  font-size: 70px;
+  font-size: 64px;
 }
 
 .c5 {
   box-sizing: border-box;
+  max-width: 900px;
   margin-top: 24px;
   margin-left: auto;
   margin-right: auto;
-  height: 232px;
-  width: 879px;
+  padding: 24px;
+  width: 100%;
   background-color: #1C254D;
   box-shadow: 0 4px 16px rgba(0,0,0,0.24);
   border-radius: 8px;
 }
 
-.c7 {
-  display: block;
-  outline: none;
-  width: 265px;
+.c6 {
+  color: #03a9f4;
+  font-weight: normal;
+  background: none;
+  text-decoration: underline;
+  text-transform: none;
+  margin-right: 24px;
+  padding: 24px;
+  background-color: #111B48;
 }
 
-.c10 {
+.c8 {
+  display: block;
+  outline: none;
+  width: 220px;
+}
+
+.c11 {
   overflow: hidden;
   text-overflow: ellipsis;
   margin: 0px;
+  color: rgba(255,255,255,0.87);
   font-weight: 700;
 }
 
-.c13 {
+.c14 {
   overflow: hidden;
   text-overflow: ellipsis;
   font-weight: 300;
@@ -149,7 +158,7 @@ exports[`empty state 1`] = `
   font-weight: 700;
 }
 
-.c14 {
+.c15 {
   overflow: hidden;
   text-overflow: ellipsis;
   margin: 0px;
@@ -157,32 +166,32 @@ exports[`empty state 1`] = `
 
 .c4 {
   box-sizing: border-box;
+  max-width: 900px;
   margin-top: 24px;
   margin-left: auto;
   margin-right: auto;
-  height: 232px;
-  width: 879px;
+  padding: 24px;
+  width: 100%;
   background-color: #1C254D;
   display: flex;
-  align-items: center;
 }
 
-.c6 {
+.c7 {
   box-sizing: border-box;
-  margin-left: 16px;
-  margin-right: 16px;
-  height: 200px;
-  width: 296px;
-  background-color: #01172c;
+  max-width: 296px;
+  margin-right: 24px;
+  padding: 24px;
+  max-height: 176px;
+  background-color: #111B48;
   border-radius: 8px;
   display: flex;
   align-items: center;
   justify-content: center;
 }
 
-.c8 {
+.c9 {
   box-sizing: border-box;
-  margin-top: 24px;
+  margin-top: 16px;
   display: flex;
   align-items: center;
   flex-direction: column;
@@ -244,7 +253,7 @@ exports[`empty state 1`] = `
       <button
         class="c3"
         kind="primary"
-        title="Add a server to the root cluster"
+        title=""
         width="240px"
       >
         Add Server
@@ -252,60 +261,58 @@ exports[`empty state 1`] = `
     </div>
     <div
       class="c4 sc-AxirZ c5"
-      height="232px"
-      width="879px"
+      width="100%"
     >
-      <div
-        class="c6"
-        height="200px"
-        style="cursor: pointer;"
-        width="296px"
+      <a
+        class="c6 c7"
+        href="https://www.youtube.com/watch?v=tUXYtwP-Kvw"
+        rel="noreferrer"
+        target="_blank"
       >
         <img
-          class="c7"
+          class="c8"
           src="file_stub"
-          width="265px"
+          width="220px"
         />
         <div
-          class="c8"
+          class="c9"
           style="position: absolute;"
         >
           <span
-            class="c9 icon icon-play-circle "
+            class="c10 icon icon-play-circle "
             color="light"
-            font-size="70px"
+            font-size="64px"
           />
           <div
-            class="c10"
+            class="c11"
+            color="text.primary"
             font-weight="700"
           >
             WATCH THE QUICKSTART
           </div>
         </div>
-      </div>
+      </a>
       <div
-        class="c11"
+        class="c12"
       >
         <div
-          class="c12"
-          width="500px"
+          class="c13"
         >
           <div
-            class="c13"
+            class="c14"
             font-size="14"
             font-weight="700"
           >
             ADD YOUR FIRST SERVER
           </div>
           <div
-            class="c14"
+            class="c15"
           >
             Instant SSH access for engineers with native security and compliance.
           </div>
         </div>
         <button
-          class="c15"
-          height="40px"
+          class="c16"
           kind="primary"
           width="224px"
         >
@@ -436,16 +443,14 @@ exports[`failed 1`] = `
     >
       Servers
     </div>
-    <a
+    <button
       class="c3"
-      href="https://goteleport.com/teleport/docs/admin-guide/#adding-nodes-to-the-cluster"
       kind="primary"
-      rel="noreferrer"
-      target="_blank"
+      title=""
       width="240px"
     >
-      View documentation
-    </a>
+      Add Server
+    </button>
   </div>
   <div
     class="c4"
@@ -879,16 +884,14 @@ exports[`loaded 1`] = `
     >
       Servers
     </div>
-    <a
+    <button
       class="c3"
-      href="https://goteleport.com/teleport/docs/admin-guide/#adding-nodes-to-the-cluster"
       kind="primary"
-      rel="noreferrer"
-      target="_blank"
+      title=""
       width="240px"
     >
-      View documentation
-    </a>
+      Add Server
+    </button>
   </div>
   <div
     class="sc-AxirZ c4"
@@ -1279,11 +1282,11 @@ exports[`loaded 1`] = `
 exports[`readonly empty state 1`] = `
 .c4 {
   box-sizing: border-box;
+  max-width: 600px;
   margin-top: 24px;
   margin-left: auto;
   margin-right: auto;
   padding: 56px;
-  width: 600px;
   color: rgba(255,255,255,0.87);
   background-color: #222C59;
   text-align: center;
@@ -1411,21 +1414,19 @@ exports[`readonly empty state 1`] = `
       >
         Servers
       </div>
-      <a
+      <button
         class="c3"
-        href="https://goteleport.com/teleport/docs/admin-guide/#adding-nodes-to-the-cluster"
+        disabled=""
         kind="primary"
-        rel="noreferrer"
-        target="_blank"
+        title="You do not have access to add a server"
         width="240px"
       >
-        View documentation
-      </a>
+        Add Server
+      </button>
     </div>
     <div
       class="c4"
       color="text.primary"
-      width="600px"
     >
       <div
         class="c5"

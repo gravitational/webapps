@@ -42,8 +42,6 @@ export function Kubes(props: State) {
     attempt,
     username,
     authType,
-    showButton,
-    isEnterprise,
     isLeafCluster,
     clusterId,
     canCreate,
@@ -58,17 +56,15 @@ export function Kubes(props: State) {
     <FeatureBox>
       <FeatureHeader alignItems="center" justifyContent="space-between">
         <FeatureHeaderTitle>Kubernetes</FeatureHeaderTitle>
-        {showButton && (
-          <ButtonPrimary
-            as="a"
-            width="240px"
-            target="_blank"
-            href={DOC_URL}
-            rel="noreferrer"
-          >
-            View documentation
-          </ButtonPrimary>
-        )}
+        <ButtonPrimary
+          as="a"
+          width="240px"
+          target="_blank"
+          href={DOC_URL}
+          rel="noreferrer"
+        >
+          View documentation
+        </ButtonPrimary>
       </FeatureHeader>
       {attempt.status === 'failed' && <Danger>{attempt.statusText}</Danger>}
       {attempt.status === 'processing' && (

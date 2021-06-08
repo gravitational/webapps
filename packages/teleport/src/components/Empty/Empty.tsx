@@ -16,7 +16,7 @@ limitations under the License.
 
 import React from 'react';
 
-import { Text, Box, Flex, ButtonPrimary } from 'design';
+import { Text, Box, Flex, ButtonPrimary, Link } from 'design';
 import Card from 'design/Card';
 import Image from 'design/Image';
 import * as Icons from 'design/Icon';
@@ -71,7 +71,7 @@ export default function Empty(props: Props) {
       bg="primary.main"
     >
       <Flex
-        as="a"
+        as={Link}
         mr={4}
         maxWidth="296px"
         maxHeight="176px"
@@ -80,6 +80,7 @@ export default function Empty(props: Props) {
         borderRadius={8}
         alignItems="center"
         justifyContent="center"
+        target="_blank"
         href={videoLink}
       >
         <Image width="220px" src={empty} />
@@ -87,9 +88,12 @@ export default function Empty(props: Props) {
           style={{ position: 'absolute' }}
           flexDirection="column"
           alignItems="center"
+          mt={3}
         >
-          <Icons.CirclePlay mb={4} fontSize="60px" />
-          <Text fontWeight={700}>WATCH THE QUICKSTART</Text>
+          <Icons.CirclePlay mb={3} fontSize="64px" />
+          <Text color="text.primary" fontWeight={700}>
+            WATCH THE QUICKSTART
+          </Text>
         </Flex>
       </Flex>
       <Box>

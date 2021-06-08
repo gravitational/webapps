@@ -25,9 +25,11 @@ export default {
 
 export const Loaded = () => <Nodes {...props} />;
 
-export const Empty = () => <Nodes {...props} nodes={[]} isEnterprise={true} />;
+export const Empty = () => <Nodes {...props} nodes={[]} />;
 
-export const EmptyReadOnly = () => <Nodes {...props} nodes={[]} />;
+export const EmptyReadOnly = () => (
+  <Nodes {...props} nodes={[]} canCreate={false} />
+);
 
 export const Loading = () => (
   <Nodes {...props} attempt={{ status: 'processing' }} />
@@ -43,7 +45,6 @@ export const Failed = () => (
 const props: State = {
   nodes,
   isLeafCluster: false,
-  isEnterprise: false,
   canCreate: true,
   attempt: { status: 'success' },
   getNodeLoginOptions: () => [{ login: 'root', url: 'fd' }],

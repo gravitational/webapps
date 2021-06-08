@@ -1,16 +1,13 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`empty state 1`] = `
-.c11 {
-  box-sizing: border-box;
-  margin: auto;
-  margin-top: 24px;
-}
-
 .c12 {
   box-sizing: border-box;
+}
+
+.c13 {
+  box-sizing: border-box;
   margin-bottom: 24px;
-  width: 500px;
 }
 
 .c3 {
@@ -58,7 +55,7 @@ exports[`empty state 1`] = `
   color: rgba(255,255,255,0.3);
 }
 
-.c16 {
+.c17 {
   line-height: 1.5;
   margin: 0;
   display: inline-flex;
@@ -83,48 +80,59 @@ exports[`empty state 1`] = `
   font-size: 12px;
   padding: 0px 24px;
   width: 224px;
-  height: 40px;
 }
 
-.c16:active {
+.c17:active {
   opacity: 0.56;
 }
 
-.c16:hover,
-.c16:focus {
+.c17:hover,
+.c17:focus {
   background: #651FFF;
 }
 
-.c16:active {
+.c17:active {
   background: #354AA4;
 }
 
-.c16:disabled {
+.c17:disabled {
   background: rgba(255,255,255,0.12);
   color: rgba(255,255,255,0.3);
 }
 
-.c9 {
+.c10 {
   display: inline-block;
   transition: color .3s;
-  margin-bottom: 24px;
+  margin-bottom: 16px;
   color: #FFFFFF;
-  font-size: 70px;
+  font-size: 64px;
 }
 
 .c5 {
   box-sizing: border-box;
+  max-width: 900px;
   margin-top: 24px;
   margin-left: auto;
   margin-right: auto;
-  height: 232px;
-  width: 879px;
+  padding: 24px;
+  width: 100%;
   background-color: #1C254D;
   box-shadow: 0 4px 16px rgba(0,0,0,0.24);
   border-radius: 8px;
 }
 
-.c15 {
+.c6 {
+  color: #03a9f4;
+  font-weight: normal;
+  background: none;
+  text-decoration: underline;
+  text-transform: none;
+  margin-right: 24px;
+  padding: 24px;
+  background-color: #111B48;
+}
+
+.c16 {
   color: #03a9f4;
   font-weight: normal;
   background: none;
@@ -132,20 +140,21 @@ exports[`empty state 1`] = `
   text-transform: none;
 }
 
-.c7 {
+.c8 {
   display: block;
   outline: none;
-  width: 265px;
+  width: 220px;
 }
 
-.c10 {
+.c11 {
   overflow: hidden;
   text-overflow: ellipsis;
   margin: 0px;
+  color: rgba(255,255,255,0.87);
   font-weight: 700;
 }
 
-.c13 {
+.c14 {
   overflow: hidden;
   text-overflow: ellipsis;
   font-weight: 300;
@@ -157,7 +166,7 @@ exports[`empty state 1`] = `
   font-weight: 700;
 }
 
-.c14 {
+.c15 {
   overflow: hidden;
   text-overflow: ellipsis;
   margin: 0px;
@@ -165,32 +174,32 @@ exports[`empty state 1`] = `
 
 .c4 {
   box-sizing: border-box;
+  max-width: 900px;
   margin-top: 24px;
   margin-left: auto;
   margin-right: auto;
-  height: 232px;
-  width: 879px;
+  padding: 24px;
+  width: 100%;
   background-color: #1C254D;
   display: flex;
-  align-items: center;
 }
 
-.c6 {
+.c7 {
   box-sizing: border-box;
-  margin-left: 16px;
-  margin-right: 16px;
-  height: 200px;
-  width: 296px;
-  background-color: #01172c;
+  max-width: 296px;
+  margin-right: 24px;
+  padding: 24px;
+  max-height: 176px;
+  background-color: #111B48;
   border-radius: 8px;
   display: flex;
   align-items: center;
   justify-content: center;
 }
 
-.c8 {
+.c9 {
   box-sizing: border-box;
-  margin-top: 24px;
+  margin-top: 16px;
   display: flex;
   align-items: center;
   flex-direction: column;
@@ -262,58 +271,57 @@ exports[`empty state 1`] = `
     </div>
     <div
       class="c4 sc-AxirZ c5"
-      height="232px"
-      width="879px"
+      width="100%"
     >
-      <div
-        class="c6"
-        height="200px"
-        style="cursor: pointer;"
-        width="296px"
+      <a
+        class="c6 c7"
+        href="https://www.youtube.com/watch?v=2diX_UAmJ1c"
+        rel="noreferrer"
+        target="_blank"
       >
         <img
-          class="c7"
+          class="c8"
           src="file_stub"
-          width="265px"
+          width="220px"
         />
         <div
-          class="c8"
+          class="c9"
           style="position: absolute;"
         >
           <span
-            class="c9 icon icon-play-circle "
+            class="c10 icon icon-play-circle "
             color="light"
-            font-size="70px"
+            font-size="64px"
           />
           <div
-            class="c10"
+            class="c11"
+            color="text.primary"
             font-weight="700"
           >
             WATCH THE QUICKSTART
           </div>
         </div>
-      </div>
+      </a>
       <div
-        class="c11"
+        class="c12"
       >
         <div
-          class="c12"
-          width="500px"
+          class="c13"
         >
           <div
-            class="c13"
+            class="c14"
             font-size="14"
             font-weight="700"
           >
             ADD YOUR FIRST KUBERNETES CLUSTER
           </div>
           <div
-            class="c14"
+            class="c15"
           >
             Fast, secure access to Kubernetes clusters. Follow
              
             <a
-              class="c15"
+              class="c16"
               href="https://goteleport.com/docs/kubernetes-access/guides"
               rel="noreferrer"
               target="_blank"
@@ -325,8 +333,7 @@ exports[`empty state 1`] = `
           </div>
         </div>
         <button
-          class="c16"
-          height="40px"
+          class="c17"
           kind="primary"
           width="224px"
         >
@@ -1010,11 +1017,11 @@ exports[`loaded 1`] = `
 exports[`readonly empty state 1`] = `
 .c4 {
   box-sizing: border-box;
+  max-width: 600px;
   margin-top: 24px;
   margin-left: auto;
   margin-right: auto;
   padding: 56px;
-  width: 600px;
   color: rgba(255,255,255,0.87);
   background-color: #222C59;
   text-align: center;
@@ -1156,7 +1163,6 @@ exports[`readonly empty state 1`] = `
     <div
       class="c4"
       color="text.primary"
-      width="600px"
     >
       <div
         class="c5"

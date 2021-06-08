@@ -41,7 +41,6 @@ export function Databases(props: State) {
     databases,
     attempt,
     isLeafCluster,
-    isEnterprise,
     canCreate,
     showAddDialog,
     hideAddDialog,

@@ -25,9 +25,11 @@ export default {
 
 export const Loaded = () => <Apps {...props} />;
 
-export const Empty = () => <Apps {...props} apps={[]} isEnterprise={true} />;
+export const Empty = () => <Apps {...props} apps={[]} />;
 
-export const EmptyReadOnly = () => <Apps {...props} apps={[]} />;
+export const EmptyReadOnly = () => (
+  <Apps {...props} apps={[]} canCreate={false} />
+);
 
 export const Loading = () => (
   <Apps {...props} attempt={{ status: 'processing' }} />

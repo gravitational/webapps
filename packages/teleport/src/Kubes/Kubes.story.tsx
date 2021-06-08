@@ -26,9 +26,11 @@ export default {
 
 export const Loaded = () => <Kubes {...props} />;
 
-export const Empty = () => <Kubes {...props} kubes={[]} isEnterprise={true} />;
+export const Empty = () => <Kubes {...props} kubes={[]} />;
 
-export const EmptyReadOnly = () => <Kubes {...props} kubes={[]} />;
+export const EmptyReadOnly = () => (
+  <Kubes {...props} kubes={[]} canCreate={false} />
+);
 
 export const Loading = () => (
   <Kubes {...props} attempt={{ status: 'processing' }} />
@@ -45,11 +47,9 @@ const props: State = {
   attempt: { status: 'success' },
   kubes: kubes,
   username: 'sam',
-  showButton: true,
   authType: 'local' as AuthType,
   clusterId: 'im-a-cluster',
   isLeafCluster: false,
-  isEnterprise: false,
   canCreate: true,
   searchValue: '',
   setSearchValue: () => null,

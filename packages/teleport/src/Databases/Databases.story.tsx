@@ -25,11 +25,11 @@ export default {
 
 export const Loaded = () => <Databases {...props} />;
 
-export const Empty = () => (
-  <Databases {...props} databases={[]} isEnterprise={true} />
-);
+export const Empty = () => <Databases {...props} databases={[]} />;
 
-export const EmptyReadOnly = () => <Databases {...props} databases={[]} />;
+export const EmptyReadOnly = () => (
+  <Databases {...props} databases={[]} canCreate={false} />
+);
 
 export const Loading = () => (
   <Databases {...props} attempt={{ status: 'processing' }} />
