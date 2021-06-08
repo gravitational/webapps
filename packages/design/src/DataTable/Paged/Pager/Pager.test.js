@@ -62,7 +62,8 @@ test('fetch more button render', () => {
       totalRows={10}
       onPrev={() => null}
       onNext={() => null}
-      moreEvents={{ fetch: () => null, disabled: false }}
+      onFetch={() => null}
+      fetchStatus=""
     />
   );
 
@@ -76,7 +77,8 @@ test('fetch more button render', () => {
       totalRows={10}
       onPrev={() => null}
       onNext={() => null}
-      moreEvents={{ fetch: () => null, disabled: true }}
+      onFetch={() => null}
+      fetchStatus="loading"
     />
   );
 
