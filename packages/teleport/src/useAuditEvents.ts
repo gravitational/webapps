@@ -20,7 +20,11 @@ import useAttempt from 'shared/hooks/useAttemptNext';
 import Ctx from 'teleport/teleportContext';
 import { Event } from 'teleport/services/audit';
 
-export default function useAuditEvents(ctx: Ctx, clusterId: string) {
+export default function useAuditEvents(
+  ctx: Ctx,
+  clusterId: string,
+  limit?: number
+) {
   const rangeOptions = useMemo(() => getRangeOptions(), []);
   const [searchValue, setSearchValue] = useState('');
   const [range, setRange] = useState<EventRange>(rangeOptions[0]);
@@ -54,7 +58,7 @@ export default function useAuditEvents(ctx: Ctx, clusterId: string) {
   // replaces existing events list.
   function fetch() {
     run(() =>
-      ctx.auditService.fetchEvents(clusterId, { ...range }).then(res => {
+      ctx.auditService.fetchEvents(clusterId, { ...range, limit }).then(res => {
         setEvents(res.events);
         setStartKey(res.startKey);
         setFetchStatus(res.startKey ? '' : 'disabled');
@@ -63,6 +67,7 @@ export default function useAuditEvents(ctx: Ctx, clusterId: string) {
   }
 
   return {
+    startKey,
     events,
     fetchMore,
     fetchStatus,

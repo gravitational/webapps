@@ -19,10 +19,8 @@ import cfg from 'teleport/config';
 import makeEvent from './makeEvent';
 import { EventQuery, EventResponse } from './types';
 
-const EVENT_FETCH_MAX_LIMIT = 5000;
-
 class AuditService {
-  maxFetchLimit = EVENT_FETCH_MAX_LIMIT;
+  maxFetchLimit = 5000;
 
   fetchEvents(clusterId: string, params: EventQuery): Promise<EventResponse> {
     const start = params.from.toISOString();
@@ -31,7 +29,7 @@ class AuditService {
     const url = cfg.getClusterEventsUrl(clusterId, {
       start,
       end,
-      limit: this.maxFetchLimit,
+      limit: params.limit ? params.limit : this.maxFetchLimit,
       startKey: params.startKey ? params.startKey : undefined,
     });
 

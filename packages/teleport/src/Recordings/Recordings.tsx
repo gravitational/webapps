@@ -29,15 +29,18 @@ import useTeleport from 'teleport/useTeleport';
 import useAuditEvents from 'teleport/useAuditEvents';
 import useStickyClusterId from 'teleport/useStickyClusterId';
 
+const MAX_EVENT_FETCH = 9999;
+
 export default function Container() {
   const teleCtx = useTeleport();
   const { clusterId } = useStickyClusterId();
-  const state = useAuditEvents(teleCtx, clusterId);
+  const state = useAuditEvents(teleCtx, clusterId, MAX_EVENT_FETCH);
   return <Recordings {...state} />;
 }
 
 export function Recordings(props: ReturnType<typeof useAuditEvents>) {
   const {
+    startKey,
     attempt,
     range,
     rangeOptions,
@@ -67,6 +70,12 @@ export function Recordings(props: ReturnType<typeof useAuditEvents>) {
       >
         <InputSearch mr="3" onChange={setSearchValue} />
       </Flex>
+      {startKey && (
+        <Danger>
+          number of events retrieved for specified date range has exceeded the
+          maximum limit of {MAX_EVENT_FETCH} events
+        </Danger>
+      )}
       {attempt.status === 'failed' && <Danger> {attempt.statusText} </Danger>}
       {attempt.status === 'processing' && (
         <Box textAlign="center" m={10}>
