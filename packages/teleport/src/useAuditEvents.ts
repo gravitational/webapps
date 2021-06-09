@@ -29,9 +29,11 @@ export default function useAuditEvents(
   const [searchValue, setSearchValue] = useState('');
   const [range, setRange] = useState<EventRange>(rangeOptions[0]);
   const { attempt, setAttempt, run } = useAttempt('processing');
-  const [events, setEvents] = useState<Event[]>([]);
-  const [startKey, setStartKey] = useState('');
-  const [fetchStatus, setFetchStatus] = useState<FetchStatus>('');
+  const [results, setResults] = useState<EventResult>({
+    events: [],
+    fetchStartKey: '',
+    fetchStatus: '',
+  });
 
   useEffect(() => {
     fetch();
@@ -41,14 +43,19 @@ export default function useAuditEvents(
   // last fetch, indicated by startKey. The response is
   // appended to existing events list.
   function fetchMore() {
-    setFetchStatus('loading');
+    setResults({
+      ...results,
+      fetchStatus: 'loading',
+    });
     ctx.auditService
-      .fetchEvents(clusterId, { ...range, startKey })
-      .then(res => {
-        setEvents([...events, ...res.events]);
-        setStartKey(res.startKey);
-        setFetchStatus(res.startKey ? '' : 'disabled');
-      })
+      .fetchEvents(clusterId, { ...range, startKey: results.fetchStartKey })
+      .then(res =>
+        setResults({
+          events: [...results.events, ...res.events],
+          fetchStartKey: res.startKey,
+          fetchStatus: res.startKey ? '' : 'disabled',
+        })
+      )
       .catch((err: Error) => {
         setAttempt({ status: 'failed', statusText: err.message });
       });
@@ -58,19 +65,19 @@ export default function useAuditEvents(
   // replaces existing events list.
   function fetch() {
     run(() =>
-      ctx.auditService.fetchEvents(clusterId, { ...range, limit }).then(res => {
-        setEvents(res.events);
-        setStartKey(res.startKey);
-        setFetchStatus(res.startKey ? '' : 'disabled');
-      })
+      ctx.auditService.fetchEvents(clusterId, { ...range, limit }).then(res =>
+        setResults({
+          events: res.events,
+          fetchStartKey: res.startKey,
+          fetchStatus: res.startKey ? '' : 'disabled',
+        })
+      )
     );
   }
 
   return {
-    startKey,
-    events,
+    ...results,
     fetchMore,
-    fetchStatus,
     clusterId,
     attempt,
     range,
@@ -111,7 +118,11 @@ function getRangeOptions(): EventRange[] {
   ];
 }
 
-type FetchStatus = 'loading' | 'disabled' | '';
+type EventResult = {
+  events: Event[];
+  fetchStatus: 'loading' | 'disabled' | '';
+  fetchStartKey: string;
+};
 
 export type EventRange = {
   from: Date;

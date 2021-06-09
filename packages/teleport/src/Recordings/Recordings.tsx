@@ -40,7 +40,7 @@ export default function Container() {
 
 export function Recordings(props: ReturnType<typeof useAuditEvents>) {
   const {
-    startKey,
+    fetchStartKey,
     attempt,
     range,
     rangeOptions,
@@ -70,7 +70,7 @@ export function Recordings(props: ReturnType<typeof useAuditEvents>) {
       >
         <InputSearch mr="3" onChange={setSearchValue} />
       </Flex>
-      {startKey && (
+      {fetchStartKey && (
         <Danger>
           number of events retrieved for specified date range has exceeded the
           maximum limit of {MAX_EVENT_FETCH} events
