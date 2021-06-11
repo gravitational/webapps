@@ -38,6 +38,7 @@ export function Invite(props: State & Props) {
     passwordToken,
     showRecoveryTokens,
     recoveryTokens,
+    redirect,
   } = props;
 
   if (fetchAttempt.status === 'failed') {
@@ -74,7 +75,11 @@ export function Invite(props: State & Props) {
           onSubmit={onSubmit}
         />
       ) : (
-        <RecoveryTokens recoveryTokens={recoveryTokens} />
+        <RecoveryTokens
+          recoveryTokens={recoveryTokens}
+          redirect={redirect}
+          passwordResetMode={passwordResetMode}
+        />
       )}
     </>
   );
