@@ -51,7 +51,7 @@ export default function RecoveryTokens({
       >
         <Flex
           flex={4}
-          bg="primary.lighter"
+          bg="primary.light"
           minWidth="704px"
           flexDirection="column"
           p={6}
@@ -139,7 +139,7 @@ export default function RecoveryTokens({
         </Flex>
         <Flex
           flex={2}
-          bg="primary.light"
+          bg="primary.main"
           minWidth="400px"
           flexDirection="column"
           p={6}
