@@ -724,7 +724,101 @@ exports[`teleport/components/Invite should render new recovery tokens screen 1`]
   box-sizing: border-box;
 }
 
+.c13 {
+  box-sizing: border-box;
+  margin-top: 8px;
+}
+
+.c16 {
+  line-height: 1.5;
+  margin: 0;
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  box-sizing: border-box;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-family: inherit;
+  font-weight: 600;
+  outline: none;
+  position: relative;
+  text-align: center;
+  text-decoration: none;
+  text-transform: uppercase;
+  transition: all 0.3s;
+  -webkit-font-smoothing: antialiased;
+  background: #512FC9;
+  color: rgba(255,255,255,0.87);
+  min-height: 32px;
+  font-size: 12px;
+  padding: 0px 24px;
+}
+
+.c16:active {
+  opacity: 0.56;
+}
+
+.c16:hover,
+.c16:focus {
+  background: #651FFF;
+}
+
+.c16:active {
+  background: #354AA4;
+}
+
+.c16:disabled {
+  background: rgba(255,255,255,0.12);
+  color: rgba(255,255,255,0.3);
+}
+
 .c17 {
+  line-height: 1.5;
+  margin: 0;
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  box-sizing: border-box;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-family: inherit;
+  font-weight: 600;
+  outline: none;
+  position: relative;
+  text-align: center;
+  text-decoration: none;
+  text-transform: uppercase;
+  transition: all 0.3s;
+  -webkit-font-smoothing: antialiased;
+  background: #512FC9;
+  color: rgba(255,255,255,0.87);
+  min-height: 32px;
+  font-size: 12px;
+  padding: 0px 24px;
+  margin-top: 8px;
+}
+
+.c17:active {
+  opacity: 0.56;
+}
+
+.c17:hover,
+.c17:focus {
+  background: #651FFF;
+}
+
+.c17:active {
+  background: #354AA4;
+}
+
+.c17:disabled {
+  background: rgba(255,255,255,0.12);
+  color: rgba(255,255,255,0.3);
+}
+
+.c18 {
   line-height: 1.5;
   margin: 0;
   display: inline-flex;
@@ -751,37 +845,22 @@ exports[`teleport/components/Invite should render new recovery tokens screen 1`]
   width: 100%;
 }
 
-.c17:active {
+.c18:active {
   opacity: 0.56;
 }
 
-.c17:hover,
-.c17:focus {
+.c18:hover,
+.c18:focus {
   background: #651FFF;
 }
 
-.c17:active {
+.c18:active {
   background: #354AA4;
 }
 
-.c17:disabled {
+.c18:disabled {
   background: rgba(255,255,255,0.12);
   color: rgba(255,255,255,0.3);
-}
-
-.c15 {
-  display: inline-block;
-  transition: color .3s;
-  color: #FFFFFF;
-  font-size: 22px;
-}
-
-.c16 {
-  display: inline-block;
-  transition: color .3s;
-  margin-top: 16px;
-  color: #FFFFFF;
-  font-size: 22px;
 }
 
 .c3 {
@@ -796,25 +875,6 @@ exports[`teleport/components/Invite should render new recovery tokens screen 1`]
   overflow: hidden;
   box-shadow: 0 4px 16px rgba(0,0,0,0.24);
   border-radius: 8px;
-}
-
-.c23 {
-  color: #03a9f4;
-  font-weight: normal;
-  background: none;
-  text-decoration: underline;
-  text-transform: none;
-  margin-right: 16px;
-  color: rgba(255,255,255,0.56);
-}
-
-.c24 {
-  color: #03a9f4;
-  font-weight: normal;
-  background: none;
-  text-decoration: underline;
-  text-transform: none;
-  color: rgba(255,255,255,0.56);
 }
 
 .c0 {
@@ -868,14 +928,14 @@ exports[`teleport/components/Invite should render new recovery tokens screen 1`]
   color: rgba(255,255,255,0.56);
 }
 
-.c13 {
+.c14 {
   overflow: hidden;
   text-overflow: ellipsis;
   font-size: 18px;
   margin: 0px;
 }
 
-.c19 {
+.c20 {
   overflow: hidden;
   text-overflow: ellipsis;
   font-weight: 300;
@@ -886,19 +946,11 @@ exports[`teleport/components/Invite should render new recovery tokens screen 1`]
   font-weight: 700;
 }
 
-.c20 {
+.c21 {
   overflow: hidden;
   text-overflow: ellipsis;
   font-size: 16px;
   margin: 0px;
-}
-
-.c22 {
-  overflow: hidden;
-  text-overflow: ellipsis;
-  margin: 0px;
-  margin-right: 32px;
-  color: rgba(255,255,255,0.56);
 }
 
 .c2 {
@@ -928,8 +980,10 @@ exports[`teleport/components/Invite should render new recovery tokens screen 1`]
 .c12 {
   box-sizing: border-box;
   margin-bottom: 40px;
-  padding: 24px;
+  padding-bottom: 24px;
   padding-left: 16px;
+  padding-right: 8px;
+  padding-top: 8px;
   background-color: #111B48;
   border: 2px solid;
   border-radius: 8px;
@@ -938,13 +992,13 @@ exports[`teleport/components/Invite should render new recovery tokens screen 1`]
   justify-content: space-between;
 }
 
-.c14 {
+.c15 {
   box-sizing: border-box;
   display: flex;
   flex-direction: column;
 }
 
-.c18 {
+.c19 {
   box-sizing: border-box;
   min-width: 400px;
   padding: 40px;
@@ -952,14 +1006,6 @@ exports[`teleport/components/Invite should render new recovery tokens screen 1`]
   flex: 2;
   display: flex;
   flex-direction: column;
-}
-
-.c21 {
-  box-sizing: border-box;
-  margin-bottom: 32px;
-  margin-top: 56px;
-  display: flex;
-  justify-content: center;
 }
 
 .c1 {
@@ -1029,10 +1075,10 @@ exports[`teleport/components/Invite should render new recovery tokens screen 1`]
             class="c12"
           >
             <div
-              class="c10"
+              class="c13"
             >
               <div
-                class="c13"
+                class="c14"
                 font-size="4"
                 style="font-family: mono; white-space: pre-wrap;"
               >
@@ -1044,29 +1090,31 @@ tele-mold-unfitted-outcome-bountiful-mom-tasty-payback-passing
               </div>
             </div>
             <div
-              class="c14 no-print"
+              class="c15 no-print"
             >
-              <span
-                class="c15 icon icon-clipboard-text "
-                color="light"
-                font-size="6"
-                style="cursor: pointer;"
-              />
-              <span
-                class="c16 icon icon-archive2 "
-                color="light"
-                font-size="6"
-                style="cursor: pointer;"
-              />
+              <button
+                class="c16"
+                kind="primary"
+                style="max-width: 48px; width: 100%; padding: 4px 8px; min-height: 10px; font-size: 10px;"
+              >
+                COPY
+              </button>
+              <button
+                class="c17"
+                kind="primary"
+                style="max-width: 48px; width: 100%; padding: 4px 8px; min-height: 10px; font-size: 10px;"
+              >
+                PRINT
+              </button>
             </div>
           </div>
           <button
-            class="c17 no-print"
+            class="c18 no-print"
             kind="primary"
             width="100%"
           >
             <div
-              class="c13"
+              class="c14"
               font-size="4"
             >
               I HAVE SAVED MY RECOVERY TOKENS - CONTINUE
@@ -1075,19 +1123,19 @@ tele-mold-unfitted-outcome-bountiful-mom-tasty-payback-passing
         </div>
       </div>
       <div
-        class="c18 no-print"
+        class="c19 no-print"
       >
         <div
           class="c5"
         >
           <div
-            class="c19"
+            class="c20"
             font-weight="700"
           >
             Why do I need these tokens?
           </div>
           <div
-            class="c20"
+            class="c21"
             font-size="3"
           >
             Lorem ipsum dolor, sit amet consectetur adipisicing elit. Libero error quae aspernatur pariatur tenetur facilis iste sit provident iure officiis!
@@ -1097,13 +1145,13 @@ tele-mold-unfitted-outcome-bountiful-mom-tasty-payback-passing
           class="c5"
         >
           <div
-            class="c19"
+            class="c20"
             font-weight="700"
           >
             How long do the tokens last for?
           </div>
           <div
-            class="c20"
+            class="c21"
             font-size="3"
           >
             Lorem ipsum dolor sit amet consectetur, adipisicing elit. Saepe id labore debitis excepturi illum ab maiores possimus dolorum, natus quas?
@@ -1113,49 +1161,19 @@ tele-mold-unfitted-outcome-bountiful-mom-tasty-payback-passing
           class="c10"
         >
           <div
-            class="c19"
+            class="c20"
             font-weight="700"
           >
             What about my old tokens?
           </div>
           <div
-            class="c20"
+            class="c21"
             font-size="3"
           >
             Your old tokens are no longer valid, please replace them with the new ones.
           </div>
         </div>
       </div>
-    </div>
-    <div
-      class="c21"
-    >
-      <div
-        class="c22"
-        color="text.secondary"
-      >
-        © Gravitational, Inc. All Rights Reserved
-      </div>
-      <a
-        class="c23 no-print"
-        color="text.secondary"
-        href="https://goteleport.com/tos/"
-        rel="noreferrer"
-        style="text-decoration: none;"
-        target="_blank"
-      >
-        Terms Of Service
-      </a>
-      <a
-        class="c24 no-print"
-        color="text.secondary"
-        href="https://goteleport.com/privacy/"
-        rel="noreferrer"
-        style="text-decoration: none;"
-        target="_blank"
-      >
-        Privacy Policy
-      </a>
     </div>
   </div>
 </div>
@@ -1171,7 +1189,101 @@ exports[`teleport/components/Invite should render recovery tokens screen 1`] = `
   box-sizing: border-box;
 }
 
+.c13 {
+  box-sizing: border-box;
+  margin-top: 8px;
+}
+
+.c16 {
+  line-height: 1.5;
+  margin: 0;
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  box-sizing: border-box;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-family: inherit;
+  font-weight: 600;
+  outline: none;
+  position: relative;
+  text-align: center;
+  text-decoration: none;
+  text-transform: uppercase;
+  transition: all 0.3s;
+  -webkit-font-smoothing: antialiased;
+  background: #512FC9;
+  color: rgba(255,255,255,0.87);
+  min-height: 32px;
+  font-size: 12px;
+  padding: 0px 24px;
+}
+
+.c16:active {
+  opacity: 0.56;
+}
+
+.c16:hover,
+.c16:focus {
+  background: #651FFF;
+}
+
+.c16:active {
+  background: #354AA4;
+}
+
+.c16:disabled {
+  background: rgba(255,255,255,0.12);
+  color: rgba(255,255,255,0.3);
+}
+
 .c17 {
+  line-height: 1.5;
+  margin: 0;
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  box-sizing: border-box;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-family: inherit;
+  font-weight: 600;
+  outline: none;
+  position: relative;
+  text-align: center;
+  text-decoration: none;
+  text-transform: uppercase;
+  transition: all 0.3s;
+  -webkit-font-smoothing: antialiased;
+  background: #512FC9;
+  color: rgba(255,255,255,0.87);
+  min-height: 32px;
+  font-size: 12px;
+  padding: 0px 24px;
+  margin-top: 8px;
+}
+
+.c17:active {
+  opacity: 0.56;
+}
+
+.c17:hover,
+.c17:focus {
+  background: #651FFF;
+}
+
+.c17:active {
+  background: #354AA4;
+}
+
+.c17:disabled {
+  background: rgba(255,255,255,0.12);
+  color: rgba(255,255,255,0.3);
+}
+
+.c18 {
   line-height: 1.5;
   margin: 0;
   display: inline-flex;
@@ -1198,37 +1310,22 @@ exports[`teleport/components/Invite should render recovery tokens screen 1`] = `
   width: 100%;
 }
 
-.c17:active {
+.c18:active {
   opacity: 0.56;
 }
 
-.c17:hover,
-.c17:focus {
+.c18:hover,
+.c18:focus {
   background: #651FFF;
 }
 
-.c17:active {
+.c18:active {
   background: #354AA4;
 }
 
-.c17:disabled {
+.c18:disabled {
   background: rgba(255,255,255,0.12);
   color: rgba(255,255,255,0.3);
-}
-
-.c15 {
-  display: inline-block;
-  transition: color .3s;
-  color: #FFFFFF;
-  font-size: 22px;
-}
-
-.c16 {
-  display: inline-block;
-  transition: color .3s;
-  margin-top: 16px;
-  color: #FFFFFF;
-  font-size: 22px;
 }
 
 .c3 {
@@ -1243,25 +1340,6 @@ exports[`teleport/components/Invite should render recovery tokens screen 1`] = `
   overflow: hidden;
   box-shadow: 0 4px 16px rgba(0,0,0,0.24);
   border-radius: 8px;
-}
-
-.c23 {
-  color: #03a9f4;
-  font-weight: normal;
-  background: none;
-  text-decoration: underline;
-  text-transform: none;
-  margin-right: 16px;
-  color: rgba(255,255,255,0.56);
-}
-
-.c24 {
-  color: #03a9f4;
-  font-weight: normal;
-  background: none;
-  text-decoration: underline;
-  text-transform: none;
-  color: rgba(255,255,255,0.56);
 }
 
 .c0 {
@@ -1315,14 +1393,14 @@ exports[`teleport/components/Invite should render recovery tokens screen 1`] = `
   color: rgba(255,255,255,0.56);
 }
 
-.c13 {
+.c14 {
   overflow: hidden;
   text-overflow: ellipsis;
   font-size: 18px;
   margin: 0px;
 }
 
-.c19 {
+.c20 {
   overflow: hidden;
   text-overflow: ellipsis;
   font-weight: 300;
@@ -1333,19 +1411,11 @@ exports[`teleport/components/Invite should render recovery tokens screen 1`] = `
   font-weight: 700;
 }
 
-.c20 {
+.c21 {
   overflow: hidden;
   text-overflow: ellipsis;
   font-size: 16px;
   margin: 0px;
-}
-
-.c22 {
-  overflow: hidden;
-  text-overflow: ellipsis;
-  margin: 0px;
-  margin-right: 32px;
-  color: rgba(255,255,255,0.56);
 }
 
 .c2 {
@@ -1375,8 +1445,10 @@ exports[`teleport/components/Invite should render recovery tokens screen 1`] = `
 .c12 {
   box-sizing: border-box;
   margin-bottom: 40px;
-  padding: 24px;
+  padding-bottom: 24px;
   padding-left: 16px;
+  padding-right: 8px;
+  padding-top: 8px;
   background-color: #111B48;
   border: 2px solid;
   border-radius: 8px;
@@ -1385,13 +1457,13 @@ exports[`teleport/components/Invite should render recovery tokens screen 1`] = `
   justify-content: space-between;
 }
 
-.c14 {
+.c15 {
   box-sizing: border-box;
   display: flex;
   flex-direction: column;
 }
 
-.c18 {
+.c19 {
   box-sizing: border-box;
   min-width: 400px;
   padding: 40px;
@@ -1399,14 +1471,6 @@ exports[`teleport/components/Invite should render recovery tokens screen 1`] = `
   flex: 2;
   display: flex;
   flex-direction: column;
-}
-
-.c21 {
-  box-sizing: border-box;
-  margin-bottom: 32px;
-  margin-top: 56px;
-  display: flex;
-  justify-content: center;
 }
 
 .c1 {
@@ -1476,10 +1540,10 @@ exports[`teleport/components/Invite should render recovery tokens screen 1`] = `
             class="c12"
           >
             <div
-              class="c10"
+              class="c13"
             >
               <div
-                class="c13"
+                class="c14"
                 font-size="4"
                 style="font-family: mono; white-space: pre-wrap;"
               >
@@ -1491,29 +1555,31 @@ tele-mold-unfitted-outcome-bountiful-mom-tasty-payback-passing
               </div>
             </div>
             <div
-              class="c14 no-print"
+              class="c15 no-print"
             >
-              <span
-                class="c15 icon icon-clipboard-text "
-                color="light"
-                font-size="6"
-                style="cursor: pointer;"
-              />
-              <span
-                class="c16 icon icon-archive2 "
-                color="light"
-                font-size="6"
-                style="cursor: pointer;"
-              />
+              <button
+                class="c16"
+                kind="primary"
+                style="max-width: 48px; width: 100%; padding: 4px 8px; min-height: 10px; font-size: 10px;"
+              >
+                COPY
+              </button>
+              <button
+                class="c17"
+                kind="primary"
+                style="max-width: 48px; width: 100%; padding: 4px 8px; min-height: 10px; font-size: 10px;"
+              >
+                PRINT
+              </button>
             </div>
           </div>
           <button
-            class="c17 no-print"
+            class="c18 no-print"
             kind="primary"
             width="100%"
           >
             <div
-              class="c13"
+              class="c14"
               font-size="4"
             >
               I HAVE SAVED MY RECOVERY TOKENS - CONTINUE
@@ -1522,19 +1588,19 @@ tele-mold-unfitted-outcome-bountiful-mom-tasty-payback-passing
         </div>
       </div>
       <div
-        class="c18 no-print"
+        class="c19 no-print"
       >
         <div
           class="c5"
         >
           <div
-            class="c19"
+            class="c20"
             font-weight="700"
           >
             Why do I need these tokens?
           </div>
           <div
-            class="c20"
+            class="c21"
             font-size="3"
           >
             Lorem ipsum dolor, sit amet consectetur adipisicing elit. Libero error quae aspernatur pariatur tenetur facilis iste sit provident iure officiis!
@@ -1544,49 +1610,19 @@ tele-mold-unfitted-outcome-bountiful-mom-tasty-payback-passing
           class="c5"
         >
           <div
-            class="c19"
+            class="c20"
             font-weight="700"
           >
             How long do the tokens last for?
           </div>
           <div
-            class="c20"
+            class="c21"
             font-size="3"
           >
             Lorem ipsum dolor sit amet consectetur, adipisicing elit. Saepe id labore debitis excepturi illum ab maiores possimus dolorum, natus quas?
           </div>
         </div>
       </div>
-    </div>
-    <div
-      class="c21"
-    >
-      <div
-        class="c22"
-        color="text.secondary"
-      >
-        © Gravitational, Inc. All Rights Reserved
-      </div>
-      <a
-        class="c23 no-print"
-        color="text.secondary"
-        href="https://goteleport.com/tos/"
-        rel="noreferrer"
-        style="text-decoration: none;"
-        target="_blank"
-      >
-        Terms Of Service
-      </a>
-      <a
-        class="c24 no-print"
-        color="text.secondary"
-        href="https://goteleport.com/privacy/"
-        rel="noreferrer"
-        style="text-decoration: none;"
-        target="_blank"
-      >
-        Privacy Policy
-      </a>
     </div>
   </div>
 </div>
