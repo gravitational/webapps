@@ -16,8 +16,7 @@ limitations under the License.
 
 import React, { useState, useRef } from 'react';
 import styled from 'styled-components';
-import { Flex, Card, Text, Box, ButtonPrimary, Link } from 'design';
-import * as Icons from 'design/Icon';
+import { Flex, Card, Text, Box, ButtonPrimary } from 'design';
 import copyToClipboard from 'design/utils/copyToClipboard';
 import selectElementContent from 'design/utils/selectElementContent';
 
@@ -79,7 +78,9 @@ export default function RecoveryTokens({
             </Text>
             <Flex
               bg="primary.dark"
-              p={4}
+              pt={2}
+              pr={2}
+              pb={4}
               pl={3}
               mb={6}
               borderRadius={8}
@@ -87,7 +88,7 @@ export default function RecoveryTokens({
               borderColor="secondary.light"
               justifyContent="space-between"
             >
-              <Box>
+              <Box mt={2}>
                 <Text
                   style={{ fontFamily: 'mono', whiteSpace: 'pre-wrap' }}
                   fontSize={4}
@@ -97,21 +98,31 @@ export default function RecoveryTokens({
                 </Text>
               </Box>
               <Flex flexDirection="column" className="no-print">
-                {!copied ? (
-                  <Icons.Clipboard
-                    fontSize={6}
-                    style={{ cursor: 'pointer' }}
-                    onClick={onCopyClick}
-                  />
-                ) : (
-                  <Icons.CircleCheck fontSize={6} />
-                )}
-                <Icons.Archive
-                  style={{ cursor: 'pointer' }}
-                  mt={3}
-                  fontSize={6}
+                <ButtonPrimary
+                  onClick={onCopyClick}
+                  style={{
+                    maxWidth: '48px',
+                    width: '100%',
+                    padding: '4px 8px',
+                    minHeight: '10px',
+                    fontSize: '10px',
+                  }}
+                >
+                  {copied ? 'COPIED' : 'COPY'}
+                </ButtonPrimary>
+                <ButtonPrimary
                   onClick={window.print}
-                />
+                  mt={2}
+                  style={{
+                    maxWidth: '48px',
+                    width: '100%',
+                    padding: '4px 8px',
+                    minHeight: '10px',
+                    fontSize: '10px',
+                  }}
+                >
+                  PRINT
+                </ButtonPrimary>
               </Flex>
             </Flex>
             <ButtonPrimary
@@ -167,34 +178,6 @@ export default function RecoveryTokens({
           )}
         </Flex>
       </Card>
-      <Flex mt={8} mb={5} justifyContent="center">
-        <Text mr={5} color="text.secondary">
-          © Gravitational, Inc. All Rights Reserved
-        </Text>
-        <Link
-          mr={3}
-          color="text.secondary"
-          style={{
-            textDecoration: 'none',
-          }}
-          href="https://goteleport.com/tos/"
-          target="_blank"
-          className="no-print"
-        >
-          Terms Of Service
-        </Link>
-        <Link
-          color="text.secondary"
-          style={{
-            textDecoration: 'none',
-          }}
-          href="https://goteleport.com/privacy/"
-          target="_blank"
-          className="no-print"
-        >
-          Privacy Policy
-        </Link>
-      </Flex>
     </PrintWrapper>
   );
 }
