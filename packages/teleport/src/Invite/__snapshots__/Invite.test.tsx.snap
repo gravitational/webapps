@@ -971,7 +971,7 @@ exports[`teleport/components/Invite should render new recovery tokens screen 1`]
   box-sizing: border-box;
   min-width: 704px;
   padding: 40px;
-  background-color: #2C3A73;
+  background-color: #222C59;
   flex: 4;
   display: flex;
   flex-direction: column;
@@ -1002,7 +1002,7 @@ exports[`teleport/components/Invite should render new recovery tokens screen 1`]
   box-sizing: border-box;
   min-width: 400px;
   padding: 40px;
-  background-color: #222C59;
+  background-color: #1C254D;
   flex: 2;
   display: flex;
   flex-direction: column;
@@ -1436,7 +1436,7 @@ exports[`teleport/components/Invite should render recovery tokens screen 1`] = `
   box-sizing: border-box;
   min-width: 704px;
   padding: 40px;
-  background-color: #2C3A73;
+  background-color: #222C59;
   flex: 4;
   display: flex;
   flex-direction: column;
@@ -1467,7 +1467,7 @@ exports[`teleport/components/Invite should render recovery tokens screen 1`] = `
   box-sizing: border-box;
   min-width: 400px;
   padding: 40px;
-  background-color: #222C59;
+  background-color: #1C254D;
   flex: 2;
   display: flex;
   flex-direction: column;
