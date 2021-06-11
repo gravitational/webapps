@@ -17,6 +17,7 @@ limitations under the License.
 import { useState, useEffect } from 'react';
 import useAttempt from 'shared/hooks/useAttemptNext';
 import cfg from 'teleport/config';
+import history from 'teleport/services/history';
 import auth from 'teleport/services/auth';
 
 export default function useInvite(tokenId: string) {
@@ -38,9 +39,12 @@ export default function useInvite(tokenId: string) {
   function onSubmit(password: string, otpToken: string) {
     submitAttempt.run(() =>
       auth.resetPassword(tokenId, password, otpToken).then(res => {
-        console.log(res);
-        setRecoveryTokens(res);
-        setShowRecoveryTokens(true);
+        if (auth2faType === 'off' || !res.length) {
+          redirect();
+        } else {
+          setRecoveryTokens(res);
+          setShowRecoveryTokens(true);
+        }
       })
     );
   }
@@ -48,11 +52,18 @@ export default function useInvite(tokenId: string) {
   function onSubmitWithU2f(password: string) {
     submitAttempt.run(() =>
       auth.resetPasswordWithU2f(tokenId, password).then(res => {
-        console.log(res);
-        setRecoveryTokens(res);
-        setShowRecoveryTokens(true);
+        if (!res.length) {
+          redirect();
+        } else {
+          setRecoveryTokens(res);
+          setShowRecoveryTokens(true);
+        }
       })
     );
+  }
+
+  function redirect() {
+    history.push(cfg.routes.root, true);
   }
 
   return {
@@ -64,7 +75,7 @@ export default function useInvite(tokenId: string) {
     passwordToken,
     recoveryTokens,
     showRecoveryTokens,
-    setShowRecoveryTokens,
+    redirect,
   };
 }
 

@@ -42,8 +42,12 @@ export const AuthTfaOptional = () => (
   <Component {...props} auth2faType="optional" />
 );
 
-export const RecoveryTokensScreen = () => (
+export const RecoveryTokens = () => (
   <Component {...props} showRecoveryTokens={true} />
+);
+
+export const NewRecoveryTokens = () => (
+  <Component {...props} showRecoveryTokens={true} passwordResetMode={true} />
 );
 
 const props: State & Props = {
@@ -58,8 +62,8 @@ const props: State & Props = {
     'tele-mold-unfitted-outcome-bountiful-mom-tasty-payback-passing',
   ],
   showRecoveryTokens: false,
-  setShowRecoveryTokens: () => null,
   passwordResetMode: false,
+  redirect: () => null,
   passwordToken: {
     user: 'john@example.com',
     tokenId: 'test123',
