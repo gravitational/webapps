@@ -23,7 +23,7 @@ import { Event } from 'teleport/services/audit';
 export default function useAuditEvents(
   ctx: Ctx,
   clusterId: string,
-  limit?: number
+  eventType?: string
 ) {
   const rangeOptions = useMemo(() => getRangeOptions(), []);
   const [searchValue, setSearchValue] = useState('');
@@ -48,7 +48,11 @@ export default function useAuditEvents(
       fetchStatus: 'loading',
     });
     ctx.auditService
-      .fetchEvents(clusterId, { ...range, startKey: results.fetchStartKey })
+      .fetchEvents(clusterId, {
+        ...range,
+        startKey: results.fetchStartKey,
+        filterBy: eventType,
+      })
       .then(res =>
         setResults({
           events: [...results.events, ...res.events],
@@ -65,13 +69,15 @@ export default function useAuditEvents(
   // replaces existing events list.
   function fetch() {
     run(() =>
-      ctx.auditService.fetchEvents(clusterId, { ...range, limit }).then(res =>
-        setResults({
-          events: res.events,
-          fetchStartKey: res.startKey,
-          fetchStatus: res.startKey ? '' : 'disabled',
-        })
-      )
+      ctx.auditService
+        .fetchEvents(clusterId, { ...range, filterBy: eventType })
+        .then(res =>
+          setResults({
+            events: res.events,
+            fetchStartKey: res.startKey,
+            fetchStatus: res.startKey ? '' : 'disabled',
+          })
+        )
     );
   }
 
