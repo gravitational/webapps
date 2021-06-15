@@ -51,6 +51,8 @@ export function Recordings(props: ReturnType<typeof useAuditEvents>) {
     searchValue,
     clusterId,
     setSearchValue,
+    fetchMore,
+    fetchStatus,
   } = props;
 
   return (
@@ -84,6 +86,8 @@ export function Recordings(props: ReturnType<typeof useAuditEvents>) {
           events={events}
           clusterId={clusterId}
           pageSize={50}
+          fetchMore={fetchMore}
+          fetchStatus={fetchStatus}
         />
       )}
     </FeatureBox>
