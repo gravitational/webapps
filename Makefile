@@ -39,6 +39,10 @@ build-teleport-e:
 build-teleport:
 	$(MAKE) docker-build NPM_CMD=build-teleport FROM=dist/ TO=dist/;
 
+.PHONY: build-telelogin
+build-telelogin:
+	$(MAKE) docker-build NPM_CMD=build-telelogin FROM=dist/telelogin TO=dist/telelogin;
+
 # builds package dists files in docker (TODO: move it to scripts/docker-build.sh)
 .PHONY: docker-build
 docker-build:

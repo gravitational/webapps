@@ -1,0 +1,31 @@
+{
+  "name": "@gravitational/telelogin",
+  "version": "1.0.0",
+  "main": "login.js",
+  "license": "Apache-2.0",
+  "repository": {
+    "type": "git",
+    "directory": "packages/telelogin"
+  },
+  "dependencies": {
+    "@types/react": "17.0.2",
+    "@types/react-dom": "17.0.2"
+  },
+  "devDependencies": {
+    "@gravitational/build": "^1.0.0",
+    "@babel/core": "7.14.2",
+    "@babel/preset-react": "7.13.13",
+    "babel-loader": "8.0.6",
+    "css-loader": "3.5.1",
+    "style-loader": "0.23.1",
+    "webpack": "5.37.0",
+    "webpack-cli": "4.7.0",
+    "webpack-dev-server": "3.11.2"
+  },
+  "scripts": {
+    "start": "g-start",
+    "build": "g-build --config webpack.prod.config.js --progress --bail",
+    "test": "npx jest",
+    "tdd": "jest . --watch"
+  }
+}

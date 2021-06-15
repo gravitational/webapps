@@ -1,0 +1,46 @@
+.login-button {
+  -webkit-text-size-adjust: 100%;
+  -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+  box-sizing: inherit;
+  font: inherit;
+  overflow: visible;
+  text-transform: none;
+  -webkit-appearance: button;
+  touch-action: manipulation;
+  margin: 0;
+  display: inline-flex;
+  -webkit-box-align: center;
+  align-items: center;
+  font-weight: 500;
+  font-family: Roboto, "Helvetica Neue", Arial, sans-serif;
+  font-size: 14px;
+  padding: 0px 16px;
+  height: 32px;
+  line-height: 30px;
+  vertical-align: middle;
+  cursor: pointer;
+  border: 1px solid #512FC9;
+  border-radius: 2px;
+  background: linear-gradient(#651FFF 0%, #512FC9 100%);
+  color: rgb(255, 255, 255);
+  -webkit-box-pack: center;
+  justify-content: center;
+  width: 100%;
+}
+
+.login-image {
+  height: 90%;
+  width: 90%;
+  object-fit: contain;
+  vertical-align: middle;
+}
+
+.login-div-image {
+  margin-right: auto;
+  width: 25px;
+}
+
+.login-div-text {
+  flex: 1;
+  margin-left: -25px;
+}
