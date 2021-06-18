@@ -16,13 +16,14 @@
 
 import React from 'react';
 import { Danger } from 'design/Alert';
-import { Indicator, Box, Text, Link } from 'design';
+import { Indicator, Box, Text, Link, Flex } from 'design';
 import useTeleport from 'teleport/useTeleport';
 import {
   FeatureBox,
   FeatureHeader,
   FeatureHeaderTitle,
 } from 'teleport/components/Layout';
+import InputSearch from 'teleport/components/InputSearch';
 import Empty, { EmptyStateInfo } from 'teleport/components/Empty';
 import AppList from './AppList';
 import AddApp from './AddApp';
@@ -45,6 +46,8 @@ export function Apps(props: State) {
     canCreate,
     attempt,
     apps,
+    searchValue,
+    setSearchValue,
   } = props;
 
   const isEmpty = attempt.status === 'success' && apps.length === 0;
@@ -66,7 +69,25 @@ export function Apps(props: State) {
         </Box>
       )}
       {attempt.status === 'failed' && <Danger>{attempt.statusText} </Danger>}
-      {hasApps && <AppList apps={apps} />}
+      {hasApps && (
+        <>
+          <Flex
+            mb={4}
+            alignItems="center"
+            flex="0 0 auto"
+            justifyContent="space-between"
+          >
+            <InputSearch
+              mr="3"
+              value={searchValue}
+              onChange={e => {
+                setSearchValue(e);
+              }}
+            />
+          </Flex>
+          <AppList searchValue={searchValue} apps={apps} />
+        </>
+      )}
       {isEmpty && (
         <Empty
           clusterId={clusterId}

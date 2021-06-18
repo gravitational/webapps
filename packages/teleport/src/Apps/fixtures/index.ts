@@ -18,19 +18,36 @@ import makeApp from 'teleport/services/apps/makeApps';
 
 export const apps = [
   {
-    name: 'jenkins',
-    uri: '',
-    publicAddr: 'jenkins',
-    labels: [],
+    name: 'Jenkins',
+    uri: 'https://jenkins.teleport-proxy.com',
+    publicAddr: 'jenkins.teleport-proxy.com',
+    labels: [
+      { name: 'env', value: 'idk' },
+      { name: 'cluster', value: 'one' },
+    ],
     clusterId: 'one',
     fqdn: 'jenkins.one',
   },
   {
-    name: 'jenkins',
-    uri: '',
-    publicAddr: 'jenkins',
-    labels: [],
-    clusterId: 'two',
-    fqdn: 'jenkins.two',
+    name: 'Mattermost1',
+    uri: 'https://mattermost1.teleport-proxy.com',
+    publicAddr: 'mattermost.teleport-proxy.com',
+    labels: [
+      { name: 'env', value: 'idk' },
+      { name: 'cluster', value: 'one' },
+    ],
+    clusterId: 'one',
+    fqdn: 'mattermost.one',
+  },
+  {
+    name: 'Grafana',
+    uri: 'https://grafana.teleport-proxy.com',
+    publicAddr: 'grafana.teleport-proxy.com',
+    labels: [
+      { name: 'env', value: 'idk' },
+      { name: 'cluster', value: 'one' },
+    ],
+    clusterId: 'one',
+    fqdn: 'grafana.one',
   },
 ].map(makeApp);

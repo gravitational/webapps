@@ -36,7 +36,7 @@ export default function makeApp(json): App {
     name,
     uri,
     publicAddr,
-    labels,
+    tags: labels.map(label => `${label.name}: ${label.value}`),
     clusterId,
     fqdn,
     launchUrl,

@@ -14,17 +14,12 @@
  * limitations under the License.
  */
 
-export interface Label {
-  name: string;
-  value: string;
-}
-
 export interface App {
   id: string;
   name: string;
   uri: string;
   publicAddr: string;
-  labels: Label[];
+  tags: string[];
   clusterId: string;
   launchUrl: string;
   fqdn: string;
