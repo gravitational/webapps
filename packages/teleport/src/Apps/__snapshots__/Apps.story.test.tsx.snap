@@ -999,6 +999,7 @@ exports[`loaded state 1`] = `
                 <div
                   class="c16"
                   font-size="2"
+                  style="user-select: none;"
                 >
                   G
                 </div>
@@ -1008,6 +1009,7 @@ exports[`loaded state 1`] = `
               Grafana
             </td>
             <td>
+              https://
               grafana.teleport-proxy.com
             </td>
             <td>
@@ -1051,6 +1053,7 @@ exports[`loaded state 1`] = `
                 <div
                   class="c16"
                   font-size="2"
+                  style="user-select: none;"
                 >
                   J
                 </div>
@@ -1060,6 +1063,7 @@ exports[`loaded state 1`] = `
               Jenkins
             </td>
             <td>
+              https://
               jenkins.teleport-proxy.com
             </td>
             <td>
@@ -1103,6 +1107,7 @@ exports[`loaded state 1`] = `
                 <div
                   class="c16"
                   font-size="2"
+                  style="user-select: none;"
                 >
                   M
                 </div>
@@ -1112,6 +1117,7 @@ exports[`loaded state 1`] = `
               Mattermost1
             </td>
             <td>
+              https://
               mattermost.teleport-proxy.com
             </td>
             <td>

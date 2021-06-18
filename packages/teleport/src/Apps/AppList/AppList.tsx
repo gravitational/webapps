@@ -61,35 +61,33 @@ function AppList(props: Props) {
   const data = sortAndFilter(searchValue);
 
   return (
-    <>
-      <StyledTable pageSize={pageSize} data={data}>
-        <Column header={<Cell />} cell={<AppIconCell />} />
-        <Column
-          columnKey="name"
-          header={
-            <SortHeaderCell
-              sortDir={sortDir.name}
-              onSortChange={onSortChange}
-              title="Name"
-            />
-          }
-          cell={<TextCell />}
-        />
-        <Column
-          columnKey="publicAddr"
-          header={
-            <SortHeaderCell
-              sortDir={sortDir.publicAddr}
-              onSortChange={onSortChange}
-              title="Address"
-            />
-          }
-          cell={<TextCell />}
-        />
-        <Column header={<Cell>Labels</Cell>} cell={<LabelCell />} />
-        <Column header={<Cell />} cell={<OpenButton />} />
-      </StyledTable>
-    </>
+    <StyledTable pageSize={pageSize} data={data}>
+      <Column header={<Cell />} cell={<AppIconCell />} />
+      <Column
+        columnKey="name"
+        header={
+          <SortHeaderCell
+            sortDir={sortDir.name}
+            onSortChange={onSortChange}
+            title="Name"
+          />
+        }
+        cell={<TextCell />}
+      />
+      <Column
+        columnKey="publicAddr"
+        header={
+          <SortHeaderCell
+            sortDir={sortDir.publicAddr}
+            onSortChange={onSortChange}
+            title="Address"
+          />
+        }
+        cell={<AddressCell />}
+      />
+      <Column header={<Cell>Labels</Cell>} cell={<LabelCell />} />
+      <Column header={<Cell />} cell={<OpenButton />} />
+    </StyledTable>
   );
 }
 
@@ -97,6 +95,12 @@ function LabelCell(props) {
   const { rowIndex, data } = props;
   const { tags = [] } = data[rowIndex];
   return renderLabelCell(tags);
+}
+
+function AddressCell(props) {
+  const { rowIndex, data } = props;
+  const { publicAddr } = data[rowIndex];
+  return <Cell>https://{publicAddr}</Cell>;
 }
 
 function OpenButton(props) {
@@ -149,8 +153,8 @@ function AppIconCell(props) {
         justifyContent="center"
         alignItems="center"
       >
-        <Text fontSize={2} bold>
-          {name[0].toUpperCase()}
+        <Text fontSize={2} bold style={{ userSelect: 'none' }}>
+          {name[0]?.toUpperCase()}
         </Text>
       </Flex>
     </Cell>

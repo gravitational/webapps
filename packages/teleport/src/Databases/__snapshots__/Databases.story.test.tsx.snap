@@ -1025,7 +1025,7 @@ exports[`open source loaded 1`] = `
             postgres-gcp
           </td>
           <td>
-            MPostgreSQL 9.6: Google Cloud SQL
+            PostgreSQL 9.6: Google Cloud SQL
           </td>
           <td>
             Cloud SQL PostgreSQL

@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-import React, { useState } from 'react';
+import React from 'react';
 import { Apps } from './Apps';
 import { State } from './useApps';
 import { apps } from './fixtures';
@@ -23,16 +23,9 @@ export default {
   title: 'Teleport/Apps',
 };
 
-export const Loaded = () => {
-  const [searchValue, setSearchValue] = useState('');
-  return (
-    <Apps
-      {...props}
-      searchValue={searchValue}
-      setSearchValue={setSearchValue}
-    />
-  );
-};
+export const Loaded = ({ searchValue = '' }) => (
+  <Apps {...props} searchValue={searchValue} />
+);
 
 export const Empty = () => <Apps {...props} apps={[]} />;
 
