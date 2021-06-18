@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React from 'react';
+import React, { useState } from 'react';
 import { Nodes } from './Nodes';
 import { State } from './useNodes';
 import { nodes } from './fixtures';
@@ -23,7 +23,16 @@ export default {
   title: 'Teleport/Nodes',
 };
 
-export const Loaded = () => <Nodes {...props} />;
+export const Loaded = () => {
+  const [searchValue, setSearchValue] = useState('');
+  return (
+    <Nodes
+      {...props}
+      searchValue={searchValue}
+      setSearchValue={setSearchValue}
+    />
+  );
+};
 
 export const Empty = () => <Nodes {...props} nodes={[]} />;
 

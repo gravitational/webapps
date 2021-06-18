@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React from 'react';
+import React, { useState } from 'react';
 import { AuthType } from 'teleport/services/user';
 import { Kubes } from './Kubes';
 import { State } from './useKubes';
@@ -24,7 +24,16 @@ export default {
   title: 'Teleport/Kubes',
 };
 
-export const Loaded = () => <Kubes {...props} />;
+export const Loaded = () => {
+  const [searchValue, setSearchValue] = useState('');
+  return (
+    <Kubes
+      {...props}
+      searchValue={searchValue}
+      setSearchValue={setSearchValue}
+    />
+  );
+};
 
 export const Empty = () => <Kubes {...props} kubes={[]} />;
 

@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React from 'react';
+import React, { useState } from 'react';
 import { Databases } from './Databases';
 import { State } from './useDatabases';
 import { databases } from './fixtures';
@@ -23,7 +23,16 @@ export default {
   title: 'Teleport/Databases',
 };
 
-export const Loaded = () => <Databases {...props} />;
+export const Loaded = () => {
+  const [searchValue, setSearchValue] = useState('');
+  return (
+    <Databases
+      {...props}
+      searchValue={searchValue}
+      setSearchValue={setSearchValue}
+    />
+  );
+};
 
 export const Empty = () => <Databases {...props} databases={[]} />;
 
