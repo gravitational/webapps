@@ -18,7 +18,7 @@ import { StoreNav, StoreUserContext } from './stores';
 import cfg from 'teleport/config';
 import * as types from './types';
 import AuditService from './services/audit';
-import nodeService from './services/nodes';
+import NodeService from './services/nodes';
 import clusterService from './services/clusters';
 import sshService from './services/ssh';
 import ResourceService from './services/resources';
@@ -37,7 +37,7 @@ class TeleportContext implements types.Context {
 
   // services
   auditService = new AuditService();
-  nodeService = nodeService;
+  nodeService = new NodeService();
   clusterService = clusterService;
   sshService = sshService;
   resourceService = new ResourceService();

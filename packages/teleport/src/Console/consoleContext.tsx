@@ -23,7 +23,7 @@ import { getAccessToken } from 'teleport/services/api';
 import Tty from 'teleport/lib/term/tty';
 import TtyAddressResolver from 'teleport/lib/term/ttyAddressResolver';
 import serviceSsh, { Session, ParticipantList } from 'teleport/services/ssh';
-import serviceNodes from 'teleport/services/nodes';
+import ServiceNodes from 'teleport/services/nodes';
 import serviceClusters from 'teleport/services/clusters';
 import serviceUser from 'teleport/services/user';
 
@@ -142,6 +142,7 @@ export default class ConsoleContext {
   }
 
   fetchNodes(clusterId: string) {
+    const serviceNodes = new ServiceNodes();
     return Promise.all([
       serviceUser.fetchUserContext(),
       serviceNodes.fetchNodes(clusterId),

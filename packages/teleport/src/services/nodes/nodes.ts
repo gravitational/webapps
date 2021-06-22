@@ -22,23 +22,23 @@ import makeNodeToken from './makeNodeToken';
 import makeAppBashCmd from './makeAppBashCmd';
 import makeNodeBashCmd from './makeNodeBashCmd';
 
-const service = {
+class NodeService {
   fetchNodes(clusterId?: string) {
     return api
       .get(cfg.getClusterNodesUrl(clusterId))
       .then(json => map(json.items, makeNode));
-  },
+  }
 
   createNodeBashCommand() {
     return api.post(cfg.getNodeJoinTokenUrl()).then(makeNodeBashCmd);
-  },
+  }
 
   createAppBashCommand(appName: string, appUri: string) {
     return api
       .post(cfg.getNodeJoinTokenUrl())
       .then(makeNodeToken)
       .then(token => makeAppBashCmd(token, appName, appUri));
-  },
-};
+  }
+}
 
-export default service;
+export default NodeService;
