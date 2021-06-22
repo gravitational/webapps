@@ -275,6 +275,7 @@ exports[`empty state for enterprise, can create 1`] = `
         class="c6 c7"
         href="https://www.youtube.com/watch?v=PCYyTecSzCY"
         rel="noreferrer"
+        style="position: relative;"
         target="_blank"
       >
         <img
