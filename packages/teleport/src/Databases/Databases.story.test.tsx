@@ -15,20 +15,12 @@ limitations under the License.
 */
 
 import React from 'react';
-import { render, screen } from 'design/utils/testing';
+import { render } from 'design/utils/testing';
 import { Loaded, Failed, Empty, EmptyReadOnly } from './Databases.story';
 
 test('open source loaded', () => {
   const { container } = render(<Loaded />);
   expect(container.firstChild).toMatchSnapshot();
-});
-
-test('search filter works', () => {
-  render(<Loaded searchValue="postgres-gcp" />);
-
-  expect(screen.queryByText(/value: gcp/i)).toBeInTheDocument();
-
-  expect(screen.queryByText(/aurora/i)).toBeNull();
 });
 
 test('failed', () => {

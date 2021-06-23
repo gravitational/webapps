@@ -23,7 +23,7 @@ export default {
 
 export const ConnectDialog = () => (
   <Component
-    user="yassine"
+    username="yassine"
     dbName="aurora"
     dbProtocol="postgres"
     clusterId="im-a-cluster"

@@ -23,7 +23,7 @@ export default {
 
 export const AddDialog = () => (
   <Component
-    user="yassine"
+    username="yassine"
     version="6.1.3"
     onClose={() => null}
     authType="local"
