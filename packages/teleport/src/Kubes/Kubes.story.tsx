@@ -24,9 +24,7 @@ export default {
   title: 'Teleport/Kubes',
 };
 
-export const Loaded = ({ searchValue = '' }) => (
-  <Kubes {...props} searchValue={searchValue} />
-);
+export const Loaded = () => <Kubes {...props} />;
 
 export const Empty = () => <Kubes {...props} kubes={[]} />;
 

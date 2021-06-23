@@ -23,9 +23,7 @@ export default {
   title: 'Teleport/Nodes',
 };
 
-export const Loaded = ({ searchValue = '' }) => (
-  <Nodes {...props} searchValue={searchValue} />
-);
+export const Loaded = () => <Nodes {...props} />;
 
 export const Empty = () => <Nodes {...props} nodes={[]} />;
 

@@ -19,8 +19,12 @@ import { apps } from '../fixtures';
 import AppList from './AppList';
 
 test('search filter works', () => {
-  render(<AppList apps={apps} searchValue="grafana" />);
+  const searchValue = 'grafana';
+  const expectedToBeVisible = /grafana.teleport-proxy.com/i;
+  const notExpectedToBeVisible = /jenkins/i;
 
-  expect(screen.queryByText(/grafana.teleport-proxy.com/i)).toBeInTheDocument();
-  expect(screen.queryByText(/jenkins/i)).toBeNull();
+  render(<AppList apps={apps} searchValue={searchValue} />);
+
+  expect(screen.queryByText(expectedToBeVisible)).toBeInTheDocument();
+  expect(screen.queryByText(notExpectedToBeVisible)).toBeNull();
 });

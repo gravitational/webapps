@@ -20,15 +20,19 @@ import { nodes } from './fixtures';
 import NodeList from 'teleport/components/NodeList';
 
 test('search filter works', () => {
+  const searchValue = 'fujedu';
+  const expectedToBeVisible = /172.10.1.20:3022/i;
+  const notExpectedToBeVisible = /172.10.1.1:3022/i;
+
   render(
     <NodeList
       onLoginMenuOpen={() => null}
       onLoginSelect={() => null}
       nodes={nodes}
-      searchValue="fujedu"
+      searchValue={searchValue}
     />
   );
 
-  expect(screen.queryByText(/172.10.1.20:3022/i)).toBeInTheDocument();
-  expect(screen.queryByText(/172.10.1.1:3022/i)).toBeNull();
+  expect(screen.queryByText(expectedToBeVisible)).toBeInTheDocument();
+  expect(screen.queryByText(notExpectedToBeVisible)).toBeNull();
 });

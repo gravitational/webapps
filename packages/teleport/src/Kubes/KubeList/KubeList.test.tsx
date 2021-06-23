@@ -19,15 +19,19 @@ import { kubes } from '../fixtures';
 import KubeList from './KubeList';
 
 test('search filter works', () => {
+  const searchValue = 'tele.logicoma.dev-prod';
+  const expectedToBeVisible = /env: prod/i;
+  const notExpectedToBeVisible = /env: staging/i;
+
   render(
     <KubeList
       username="joe"
       authType="local"
       kubes={kubes}
-      searchValue="tele.logicoma.dev-prod"
+      searchValue={searchValue}
     />
   );
 
-  expect(screen.queryByText(/env: prod/i)).toBeInTheDocument();
-  expect(screen.queryByText(/env: staging/i)).toBeNull();
+  expect(screen.queryByText(expectedToBeVisible)).toBeInTheDocument();
+  expect(screen.queryByText(notExpectedToBeVisible)).toBeNull();
 });

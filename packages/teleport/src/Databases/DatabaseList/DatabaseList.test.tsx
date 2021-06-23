@@ -19,16 +19,20 @@ import { databases } from '../fixtures';
 import DatabaseList from './DatabaseList';
 
 test('search filter works', () => {
+  const searchValue = 'postgres-gcp';
+  const expectedToBeVisible = /value: gcp/i;
+  const notExpectedToBeVisible = /aurora/i;
+
   render(
     <DatabaseList
       username="joe"
       clusterId="test"
       authType="local"
       databases={databases}
-      searchValue="postgres-gcp"
+      searchValue={searchValue}
     />
   );
 
-  expect(screen.queryByText(/value: gcp/i)).toBeInTheDocument();
-  expect(screen.queryByText(/aurora/i)).toBeNull();
+  expect(screen.queryByText(expectedToBeVisible)).toBeInTheDocument();
+  expect(screen.queryByText(notExpectedToBeVisible)).toBeNull();
 });
