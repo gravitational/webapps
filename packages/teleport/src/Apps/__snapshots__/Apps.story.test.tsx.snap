@@ -644,7 +644,7 @@ exports[`loaded state 1`] = `
   box-sizing: border-box;
   height: 24px;
   width: 24px;
-  background-color: #f4511e;
+  background-color: #e64a19;
   border-radius: 100%;
   display: flex;
   align-items: center;
@@ -655,7 +655,7 @@ exports[`loaded state 1`] = `
   box-sizing: border-box;
   height: 24px;
   width: 24px;
-  background-color: #00acc1;
+  background-color: #0097a7;
   border-radius: 100%;
   display: flex;
   align-items: center;
@@ -666,7 +666,7 @@ exports[`loaded state 1`] = `
   box-sizing: border-box;
   height: 24px;
   width: 24px;
-  background-color: #00897b;
+  background-color: #00796b;
   border-radius: 100%;
   display: flex;
   align-items: center;

@@ -23,9 +23,7 @@ export default {
   title: 'Teleport/Apps',
 };
 
-export const Loaded = ({ searchValue = '' }) => (
-  <Apps {...props} searchValue={searchValue} />
-);
+export const Loaded = () => <Apps {...props} />;
 
 export const Empty = () => <Apps {...props} apps={[]} />;
 

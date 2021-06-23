@@ -77,13 +77,7 @@ export function Apps(props: State) {
             flex="0 0 auto"
             justifyContent="space-between"
           >
-            <InputSearch
-              mr="3"
-              value={searchValue}
-              onChange={e => {
-                setSearchValue(e);
-              }}
-            />
+            <InputSearch mr={3} value={searchValue} onChange={setSearchValue} />
           </Flex>
           <AppList searchValue={searchValue} apps={apps} />
         </>

@@ -19,6 +19,18 @@ import styled from 'styled-components';
 import { sortBy } from 'lodash';
 import { ButtonBorder, Flex, Text } from 'design';
 import {
+  pink,
+  teal,
+  cyan,
+  blue,
+  green,
+  orange,
+  brown,
+  red,
+  deepOrange,
+  blueGrey,
+} from 'design/theme/palette';
+import {
   Column,
   SortHeaderCell,
   Cell,
@@ -168,16 +180,16 @@ function getIconColor(appName: string) {
   }
 
   const colors = [
-    '#d81b60',
-    '#00897b',
-    '#00acc1',
-    '#1e88e5',
-    '#43a047',
-    '#ffb300',
-    '#6d4c41',
-    '#e53935',
-    '#f4511e',
-    '#546e7a',
+    pink[700],
+    teal[700],
+    cyan[700],
+    blue[700],
+    green[700],
+    orange[700],
+    brown[700],
+    red[700],
+    deepOrange[700],
+    blueGrey[700],
   ];
 
   return colors[stringValue % 10];

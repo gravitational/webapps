@@ -1,6 +1,6 @@
 import React from 'react';
 import renderHook, { act } from 'design/utils/renderHook';
-import { render, screen } from 'design/utils/testing';
+import { render } from 'design/utils/testing';
 import { Context } from 'teleport';
 import makeAcl from 'teleport/services/user/makeAcl';
 import { apps } from './fixtures';
@@ -16,14 +16,6 @@ test('loaded state', async () => {
   await findAllByText(/Applications/i);
 
   expect(container).toMatchSnapshot();
-});
-
-test('search filter works', () => {
-  render(<Loaded searchValue="grafana" />);
-
-  expect(screen.queryByText(/grafana.teleport-proxy.com/i)).toBeInTheDocument();
-
-  expect(screen.queryByText(/jenkins/i)).toBeNull();
 });
 
 test('failed state', async () => {

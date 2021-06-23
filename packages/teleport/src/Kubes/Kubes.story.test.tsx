@@ -15,20 +15,12 @@ limitations under the License.
 */
 
 import React from 'react';
-import { render, screen } from 'design/utils/testing';
+import { render } from 'design/utils/testing';
 import { Loaded, Failed, Empty, EmptyReadOnly } from './Kubes.story';
 
 test('loaded', () => {
   const { container } = render(<Loaded />);
   expect(container.firstChild).toMatchSnapshot();
-});
-
-test('search filter works', () => {
-  render(<Loaded searchValue="tele.logicoma.dev-prod" />);
-
-  expect(screen.queryByText(/env: prod/i)).toBeInTheDocument();
-
-  expect(screen.queryByText(/env: staging/i)).toBeNull();
 });
 
 test('failed', () => {
