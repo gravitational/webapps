@@ -22,8 +22,6 @@ import auth from 'teleport/services/auth';
 
 export default function useInvite(tokenId: string) {
   const [passwordToken, setPswToken] = useState<ResetToken>(undefined);
-  const [showRecoveryTokens, setShowRecoveryTokens] = useState(false);
-  const [recoveryTokens, setRecoveryTokens] = useState([]);
   const fetchAttempt = useAttempt('');
   const submitAttempt = useAttempt('');
   const auth2faType = cfg.getAuth2faType();
@@ -38,27 +36,13 @@ export default function useInvite(tokenId: string) {
 
   function onSubmit(password: string, otpToken: string) {
     submitAttempt.run(() =>
-      auth.resetPassword(tokenId, password, otpToken).then(res => {
-        if (auth2faType === 'off' || !res.length) {
-          redirect();
-        } else {
-          setRecoveryTokens(res);
-          setShowRecoveryTokens(true);
-        }
-      })
+      auth.resetPassword(tokenId, password, otpToken).then(redirect)
     );
   }
 
   function onSubmitWithU2f(password: string) {
     submitAttempt.run(() =>
-      auth.resetPasswordWithU2f(tokenId, password).then(res => {
-        if (!res.length) {
-          redirect();
-        } else {
-          setRecoveryTokens(res);
-          setShowRecoveryTokens(true);
-        }
-      })
+      auth.resetPasswordWithU2f(tokenId, password).then(redirect)
     );
   }
 
@@ -73,9 +57,6 @@ export default function useInvite(tokenId: string) {
     onSubmit,
     onSubmitWithU2f,
     passwordToken,
-    recoveryTokens,
-    showRecoveryTokens,
-    redirect,
   };
 }
 

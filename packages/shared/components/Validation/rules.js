@@ -74,9 +74,34 @@ const requiredConfirmedPassword = password => confirmedPassword => () => {
   };
 };
 
+const requiredEmail = value => () => {
+  if (!value || value.length === 0) {
+    return {
+      valid: false,
+      message: 'Email is required',
+    };
+  }
+
+  if (
+    value.split('@').length !== 2 ||
+    !value.split('@')[0] ||
+    !value.split('@')[1]
+  ) {
+    return {
+      valid: false,
+      message: 'Please enter a valid email',
+    };
+  }
+
+  return {
+    valid: true,
+  };
+};
+
 export {
   requiredToken,
   requiredPassword,
   requiredConfirmedPassword,
   requiredField,
+  requiredEmail,
 };

@@ -21,12 +21,7 @@ import { Logger } from 'shared/libs/logger';
 import cfg from 'teleport/config';
 import auth from 'teleport/services/auth';
 import Invite from './Invite';
-import {
-  AuthTfaOn,
-  AuthTfaOptional,
-  RecoveryTokens,
-  NewRecoveryTokens,
-} from './Invite.story';
+import { AuthTfaOn, AuthTfaOptional } from './Invite.story';
 
 describe('teleport/components/Invite', () => {
   beforeEach(() => {
@@ -140,16 +135,6 @@ describe('teleport/components/Invite', () => {
 
   it('should render form with token requirement when auth2fatype is optional', async () => {
     const { container } = render(<AuthTfaOptional />);
-    expect(container).toMatchSnapshot();
-  });
-
-  it('should render recovery tokens screen', async () => {
-    const { container } = render(<RecoveryTokens />);
-    expect(container).toMatchSnapshot();
-  });
-
-  it('should render new recovery tokens screen', async () => {
-    const { container } = render(<NewRecoveryTokens />);
     expect(container).toMatchSnapshot();
   });
 });

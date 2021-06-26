@@ -18,7 +18,6 @@ import React from 'react';
 import { useParams } from 'react-router';
 import InviteForm, { Expired } from 'shared/components/FormInvite';
 import LogoHero from 'teleport/components/LogoHero';
-import RecoveryTokens from './RecoveryTokens';
 import useInvite, { State } from './useInvite';
 
 export default function Container({ passwordResetMode = false }) {
@@ -36,9 +35,6 @@ export function Invite(props: State & Props) {
     onSubmit,
     onSubmitWithU2f,
     passwordToken,
-    showRecoveryTokens,
-    recoveryTokens,
-    redirect,
   } = props;
 
   if (fetchAttempt.status === 'failed') {
@@ -63,24 +59,16 @@ export function Invite(props: State & Props) {
   return (
     <>
       <LogoHero />
-      {!showRecoveryTokens ? (
-        <InviteForm
-          submitBtnText={submitBtnText}
-          title={title}
-          user={user}
-          qr={qrCode}
-          auth2faType={auth2faType}
-          attempt={submitAttempt}
-          onSubmitWithU2f={onSubmitWithU2f}
-          onSubmit={onSubmit}
-        />
-      ) : (
-        <RecoveryTokens
-          recoveryTokens={recoveryTokens}
-          redirect={redirect}
-          passwordResetMode={passwordResetMode}
-        />
-      )}
+      <InviteForm
+        submitBtnText={submitBtnText}
+        title={title}
+        user={user}
+        qr={qrCode}
+        auth2faType={auth2faType}
+        attempt={submitAttempt}
+        onSubmitWithU2f={onSubmitWithU2f}
+        onSubmit={onSubmit}
+      />
     </>
   );
 }

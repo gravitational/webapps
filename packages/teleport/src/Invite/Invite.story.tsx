@@ -42,28 +42,13 @@ export const AuthTfaOptional = () => (
   <Component {...props} auth2faType="optional" />
 );
 
-export const RecoveryTokens = () => (
-  <Component {...props} showRecoveryTokens={true} />
-);
-
-export const NewRecoveryTokens = () => (
-  <Component {...props} showRecoveryTokens={true} passwordResetMode={true} />
-);
-
 const props: State & Props = {
   auth2faType: 'off',
   submitAttempt: { status: '' },
   fetchAttempt: { status: 'success' },
   onSubmitWithU2f: () => null,
   onSubmit: () => null,
-  recoveryTokens: [
-    'tele-pawing-impose-grunge-charger-gradation-hunk-balmy-overuse',
-    'tele-voter-agreeing-challenge-mockup-illicitly-spiffy-anyplace-guileless',
-    'tele-mold-unfitted-outcome-bountiful-mom-tasty-payback-passing',
-  ],
-  showRecoveryTokens: false,
   passwordResetMode: false,
-  redirect: () => null,
   passwordToken: {
     user: 'john@example.com',
     tokenId: 'test123',

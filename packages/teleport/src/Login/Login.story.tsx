@@ -43,4 +43,5 @@ const sample = {
   auth2faType: 'off' as any,
   isLocalAuthEnabled: true,
   clearAttempt: () => null,
+  isCloud: false,
 };
