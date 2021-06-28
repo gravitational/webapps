@@ -23,7 +23,7 @@ import ClusterService from './services/clusters';
 import SshService from './services/ssh';
 import ResourceService from './services/resources';
 import UserService from './services/user';
-import appService from './services/apps';
+import AppService from './services/apps';
 import KubeService from './services/kube';
 import DatabaseService from './services/databases';
 
@@ -42,7 +42,7 @@ class TeleportContext implements types.Context {
   sshService = new SshService();
   resourceService = new ResourceService();
   userService = new UserService();
-  appService = appService;
+  appService = new AppService();
   kubeService = new KubeService();
 
   databaseService = new DatabaseService();
