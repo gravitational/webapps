@@ -19,10 +19,10 @@ import cfg from 'teleport/config';
 import * as types from './types';
 import AuditService from './services/audit';
 import NodeService from './services/nodes';
-import clusterService from './services/clusters';
-import sshService from './services/ssh';
+import ClusterService from './services/clusters';
+import SshService from './services/ssh';
 import ResourceService from './services/resources';
-import userService from './services/user';
+import UserService from './services/user';
 import appService from './services/apps';
 import KubeService from './services/kube';
 import DatabaseService from './services/databases';
@@ -38,10 +38,10 @@ class TeleportContext implements types.Context {
   // services
   auditService = new AuditService();
   nodeService = new NodeService();
-  clusterService = clusterService;
-  sshService = sshService;
+  clusterService = new ClusterService();
+  sshService = new SshService();
   resourceService = new ResourceService();
-  userService = userService;
+  userService = new UserService();
   appService = appService;
   kubeService = new KubeService();
 
@@ -49,7 +49,7 @@ class TeleportContext implements types.Context {
   isEnterprise = cfg.isEnterprise;
 
   init() {
-    return userService.fetchUserContext().then(user => {
+    return this.userService.fetchUserContext().then(user => {
       this.storeUser.setState(user);
     });
   }

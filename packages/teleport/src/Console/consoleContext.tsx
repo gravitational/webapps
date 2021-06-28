@@ -22,10 +22,10 @@ import cfg, { UrlSshParams } from 'teleport/config';
 import { getAccessToken } from 'teleport/services/api';
 import Tty from 'teleport/lib/term/tty';
 import TtyAddressResolver from 'teleport/lib/term/ttyAddressResolver';
-import serviceSsh, { Session, ParticipantList } from 'teleport/services/ssh';
+import ServiceSsh, { Session, ParticipantList } from 'teleport/services/ssh';
 import ServiceNodes from 'teleport/services/nodes';
-import serviceClusters from 'teleport/services/clusters';
-import serviceUser from 'teleport/services/user';
+import ServiceClusters from 'teleport/services/clusters';
+import ServiceUser from 'teleport/services/user';
 
 const logger = Logger.create('teleport/console');
 
@@ -122,7 +122,7 @@ export default class ConsoleContext {
     const requests = unique.map(clusterId =>
       // Fetch parties for a given cluster and in case of an error
       // return an empty object.
-      serviceSsh.fetchParticipants({ clusterId }).catch(err => {
+      new ServiceSsh().fetchParticipants({ clusterId }).catch(err => {
         logger.error('failed to refresh participants', err);
         const emptyResults: ParticipantList = {};
         return emptyResults;
@@ -144,7 +144,7 @@ export default class ConsoleContext {
   fetchNodes(clusterId: string) {
     const serviceNodes = new ServiceNodes();
     return Promise.all([
-      serviceUser.fetchUserContext(),
+      new ServiceUser().fetchUserContext(),
       serviceNodes.fetchNodes(clusterId),
     ]).then(values => {
       const [user, nodes] = values;
@@ -156,15 +156,15 @@ export default class ConsoleContext {
   }
 
   fetchClusters() {
-    return serviceClusters.fetchClusters();
+    return new ServiceClusters().fetchClusters();
   }
 
   fetchSshSession(clusterId: string, sid: string) {
-    return serviceSsh.fetchSession({ clusterId, sid });
+    return new ServiceSsh().fetchSession({ clusterId, sid });
   }
 
   createSshSession(clusterId: string, serverId: string, login: string) {
-    return serviceSsh.create({
+    return new ServiceSsh().create({
       serverId,
       clusterId,
       login,
