@@ -17,7 +17,7 @@ limitations under the License.
 import React, { useState } from 'react';
 import styled from 'styled-components';
 import { sortBy } from 'lodash';
-import { ButtonBorder, Flex, Text } from 'design';
+import { Flex, Text } from 'design';
 import {
   pink,
   teal,
@@ -72,8 +72,28 @@ function AppList(props: Props) {
 
   const data = sortAndFilter(searchValue);
 
+  function onAppClick(e: React.MouseEvent) {
+    if (e.ctrlKey || e.shiftKey || e.altKey) {
+      return;
+    }
+
+    const closest = (e.target as any).closest('th, tbody, tr');
+
+    if (!closest || closest.tagName !== 'TR') {
+      return;
+    }
+
+    const rows = closest.parentElement.childNodes;
+
+    rows.forEach((row, idx) => {
+      if (row === closest) {
+        window.open(data[idx].launchUrl, '_blank');
+      }
+    });
+  }
+
   return (
-    <StyledTable pageSize={pageSize} data={data}>
+    <StyledTable pageSize={pageSize} data={data} onClick={onAppClick}>
       <Column header={<Cell />} cell={<AppIconCell />} />
       <Column
         columnKey="name"
@@ -98,7 +118,6 @@ function AppList(props: Props) {
         cell={<AddressCell />}
       />
       <Column header={<Cell>Labels</Cell>} cell={<LabelCell />} />
-      <Column header={<Cell />} cell={<OpenButton />} />
     </StyledTable>
   );
 }
@@ -115,28 +134,12 @@ function AddressCell(props) {
   return <Cell>https://{publicAddr}</Cell>;
 }
 
-function OpenButton(props) {
-  const { rowIndex, data } = props;
-  const { launchUrl } = data[rowIndex];
-
-  return (
-    <Cell align="right">
-      <ButtonBorder
-        size="small"
-        as="a"
-        target="_blank"
-        href={launchUrl}
-        rel="noreferrer"
-      >
-        OPEN
-      </ButtonBorder>
-    </Cell>
-  );
-}
-
 const StyledTable = styled(Table)`
-  & > tbody > tr > td {
-    vertical-align: baseline;
+  & > tbody > tr {
+    cursor: pointer;
+    td {
+      vertical-align: baseline;
+    }
   }
 `;
 

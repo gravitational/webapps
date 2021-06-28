@@ -529,54 +529,6 @@ exports[`loaded state 1`] = `
   color: rgba(255,255,255,0.3);
 }
 
-.c18 {
-  line-height: 1.5;
-  margin: 0;
-  display: inline-flex;
-  justify-content: center;
-  align-items: center;
-  box-sizing: border-box;
-  border: none;
-  border-radius: 4px;
-  cursor: pointer;
-  font-family: inherit;
-  font-weight: 600;
-  outline: none;
-  position: relative;
-  text-align: center;
-  text-decoration: none;
-  text-transform: uppercase;
-  transition: all 0.3s;
-  -webkit-font-smoothing: antialiased;
-  background: #2C3A73;
-  border: 1px solid #1C254D;
-  opacity: .87;
-  color: rgba(255,255,255,0.87);
-  font-size: 10px;
-  min-height: 24px;
-  padding: 0px 16px;
-}
-
-.c18:active {
-  opacity: 0.56;
-}
-
-.c18:hover,
-.c18:focus {
-  background: #2C3A73;
-  border: 1px solid rgba(255,255,255,0.1);
-  opacity: 1;
-}
-
-.c18:active {
-  opacity: 0.24;
-}
-
-.c18:disabled {
-  background: rgba(255,255,255,0.12);
-  color: rgba(255,255,255,0.3);
-}
-
 .c11 {
   display: inline-block;
   transition: color .3s;
@@ -651,7 +603,7 @@ exports[`loaded state 1`] = `
   justify-content: center;
 }
 
-.c19 {
+.c18 {
   box-sizing: border-box;
   height: 24px;
   width: 24px;
@@ -662,7 +614,7 @@ exports[`loaded state 1`] = `
   justify-content: center;
 }
 
-.c20 {
+.c19 {
   box-sizing: border-box;
   height: 24px;
   width: 24px;
@@ -870,7 +822,11 @@ exports[`loaded state 1`] = `
   border-top-right-radius: 8px;
 }
 
-.c13 > tbody > tr > td {
+.c13 > tbody > tr {
+  cursor: pointer;
+}
+
+.c13 > tbody > tr td {
   vertical-align: baseline;
 }
 
@@ -983,7 +939,6 @@ exports[`loaded state 1`] = `
             <th>
               Labels
             </th>
-            <th />
           </tr>
         </thead>
         <tbody>
@@ -1027,19 +982,6 @@ exports[`loaded state 1`] = `
                 cluster: one
               </div>
             </td>
-            <td
-              align="right"
-            >
-              <a
-                class="c18"
-                href="/web/launch/grafana.one/one/grafana.teleport-proxy.com"
-                kind="border"
-                rel="noreferrer"
-                target="_blank"
-              >
-                OPEN
-              </a>
-            </td>
           </tr>
           <tr>
             <td
@@ -1047,7 +989,7 @@ exports[`loaded state 1`] = `
               style="width: 32px;"
             >
               <div
-                class="sc-AxirZ c19"
+                class="sc-AxirZ c18"
                 height="24px"
                 width="24px"
               >
@@ -1081,19 +1023,6 @@ exports[`loaded state 1`] = `
                 cluster: one
               </div>
             </td>
-            <td
-              align="right"
-            >
-              <a
-                class="c18"
-                href="/web/launch/jenkins.one/one/jenkins.teleport-proxy.com"
-                kind="border"
-                rel="noreferrer"
-                target="_blank"
-              >
-                OPEN
-              </a>
-            </td>
           </tr>
           <tr>
             <td
@@ -1101,7 +1030,7 @@ exports[`loaded state 1`] = `
               style="width: 32px;"
             >
               <div
-                class="sc-AxirZ c20"
+                class="sc-AxirZ c19"
                 height="24px"
                 width="24px"
               >
@@ -1134,19 +1063,6 @@ exports[`loaded state 1`] = `
               >
                 cluster: one
               </div>
-            </td>
-            <td
-              align="right"
-            >
-              <a
-                class="c18"
-                href="/web/launch/mattermost.one/one/mattermost.teleport-proxy.com"
-                kind="border"
-                rel="noreferrer"
-                target="_blank"
-              >
-                OPEN
-              </a>
             </td>
           </tr>
         </tbody>
