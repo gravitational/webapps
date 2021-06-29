@@ -1,5 +1,5 @@
 /**
- * Copyright 2020 Gravitational, Inc.
+ * Copyright 2021 Gravitational, Inc.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -13,14 +13,18 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+import React from 'react';
+import { render, screen } from 'design/utils/testing';
+import { apps } from '../fixtures';
+import AppList from './AppList';
 
-export interface App {
-  id: string;
-  name: string;
-  uri: string;
-  publicAddr: string;
-  tags: string[];
-  clusterId: string;
-  launchUrl: string;
-  fqdn: string;
-}
+test('search filter works', () => {
+  const searchValue = 'grafana';
+  const expectedToBeVisible = /grafana.teleport-proxy.com/i;
+  const notExpectedToBeVisible = /jenkins/i;
+
+  render(<AppList apps={apps} searchValue={searchValue} />);
+
+  expect(screen.queryByText(expectedToBeVisible)).toBeInTheDocument();
+  expect(screen.queryByText(notExpectedToBeVisible)).toBeNull();
+});
