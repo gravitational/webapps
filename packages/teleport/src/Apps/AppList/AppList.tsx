@@ -70,8 +70,6 @@ function AppList(props: Props) {
     setSortDir({ [columnKey]: sortDir });
   }
 
-  const data = sortAndFilter(searchValue);
-
   function onAppClick(e: React.MouseEvent) {
     if (e.ctrlKey || e.shiftKey || e.altKey) {
       return;
@@ -91,6 +89,8 @@ function AppList(props: Props) {
       }
     });
   }
+
+  const data = sortAndFilter(searchValue);
 
   return (
     <StyledTable pageSize={pageSize} data={data} onClick={onAppClick}>

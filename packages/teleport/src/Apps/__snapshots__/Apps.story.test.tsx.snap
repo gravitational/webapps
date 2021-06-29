@@ -484,6 +484,10 @@ exports[`failed state 1`] = `
 `;
 
 exports[`loaded state 1`] = `
+.c4 {
+  box-sizing: border-box;
+}
+
 .c3 {
   line-height: 1.5;
   margin: 0;
@@ -577,15 +581,6 @@ exports[`loaded state 1`] = `
   margin: 0px;
 }
 
-.c4 {
-  box-sizing: border-box;
-  margin-bottom: 24px;
-  flex: 0 0 auto;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-}
-
 .c7 {
   box-sizing: border-box;
   display: flex;
@@ -676,7 +671,7 @@ exports[`loaded state 1`] = `
   height: 32px;
   transition: all .2s;
   background: #222C59;
-  margin-right: 16px;
+  margin-bottom: 24px;
   padding-left: 16px;
   padding-right: 16px;
   color: rgba(255,255,255,0.87);
@@ -832,10 +827,10 @@ exports[`loaded state 1`] = `
 
 <div>
   <div
-    class="sc-AxirZ c0"
+    class="c0"
   >
     <div
-      class="sc-AxirZ c1"
+      class="c1"
     >
       <div
         class="c2"
@@ -852,7 +847,7 @@ exports[`loaded state 1`] = `
       </button>
     </div>
     <div
-      class="sc-AxirZ c4"
+      class="c4"
     >
       <input
         class="c5"
@@ -860,213 +855,213 @@ exports[`loaded state 1`] = `
         placeholder="SEARCH..."
         value=""
       />
-    </div>
-    <div>
-      <nav
-        class="c6"
-      >
-        <div
-          class="sc-AxirZ c7"
+      <div>
+        <nav
+          class="c6"
         >
           <div
-            class="c8"
-            color="primary.contrastText"
+            class="c7"
           >
-            SHOWING 
-            <strong>
-              1
-            </strong>
-             - 
-            <strong>
-              3
-            </strong>
-             
-            of 
-            <strong>
-              3
-            </strong>
+            <div
+              class="c8"
+              color="primary.contrastText"
+            >
+              SHOWING 
+              <strong>
+                1
+              </strong>
+               - 
+              <strong>
+                3
+              </strong>
+               
+              of 
+              <strong>
+                3
+              </strong>
+            </div>
           </div>
-        </div>
-        <div
-          class="sc-AxirZ c9"
+          <div
+            class="c9"
+          >
+            <button
+              disabled=""
+              title="Previous Page"
+            >
+              <span
+                class="c10 c11 icon icon-arrow-left-circle "
+                color="light"
+                font-size="3"
+              />
+            </button>
+            <button
+              disabled=""
+              title="Next Page"
+            >
+              <span
+                class="c10 c11 icon icon-arrow-right-circle "
+                color="light"
+                font-size="3"
+              />
+            </button>
+          </div>
+        </nav>
+        <table
+          class="c12 c13"
         >
-          <button
-            disabled=""
-            title="Previous Page"
-          >
-            <span
-              class="c10 c11 icon icon-arrow-left-circle "
-              color="light"
-              font-size="3"
-            />
-          </button>
-          <button
-            disabled=""
-            title="Next Page"
-          >
-            <span
-              class="c10 c11 icon icon-arrow-right-circle "
-              color="light"
-              font-size="3"
-            />
-          </button>
-        </div>
-      </nav>
-      <table
-        class="c12 c13"
-      >
-        <thead>
-          <tr>
-            <th />
-            <th>
-              <a>
-                Name
-                <span
-                  class="c10 c14 icon icon-chevron-down "
-                  color="light"
-                />
-              </a>
-            </th>
-            <th>
-              <a>
-                Address
-                <span
-                  class="c10 c14 icon icon-chevrons-expand-vertical "
-                  color="light"
-                />
-              </a>
-            </th>
-            <th>
-              Labels
-            </th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td
-              align="left"
-              style="width: 32px;"
-            >
-              <div
-                class="sc-AxirZ c15"
-                height="24px"
-                width="24px"
+          <thead>
+            <tr>
+              <th />
+              <th>
+                <a>
+                  Name
+                  <span
+                    class="c10 c14 icon icon-chevron-down "
+                    color="light"
+                  />
+                </a>
+              </th>
+              <th>
+                <a>
+                  Address
+                  <span
+                    class="c10 c14 icon icon-chevrons-expand-vertical "
+                    color="light"
+                  />
+                </a>
+              </th>
+              <th>
+                Labels
+              </th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td
+                align="left"
+                style="width: 32px;"
               >
                 <div
-                  class="c16"
-                  font-size="2"
-                  style="user-select: none;"
+                  class="c15"
+                  height="24px"
+                  width="24px"
                 >
-                  G
+                  <div
+                    class="c16"
+                    font-size="2"
+                    style="user-select: none;"
+                  >
+                    G
+                  </div>
                 </div>
-              </div>
-            </td>
-            <td>
-              Grafana
-            </td>
-            <td>
-              https://
-              grafana.teleport-proxy.com
-            </td>
-            <td>
-              <div
-                class="c17"
-                kind="secondary"
-              >
-                env: idk
-              </div>
-              <div
-                class="c17"
-                kind="secondary"
-              >
-                cluster: one
-              </div>
-            </td>
-          </tr>
-          <tr>
-            <td
-              align="left"
-              style="width: 32px;"
-            >
-              <div
-                class="sc-AxirZ c18"
-                height="24px"
-                width="24px"
+              </td>
+              <td>
+                Grafana
+              </td>
+              <td>
+                https://
+                grafana.teleport-proxy.com
+              </td>
+              <td>
+                <div
+                  class="c17"
+                  kind="secondary"
+                >
+                  env: idk
+                </div>
+                <div
+                  class="c17"
+                  kind="secondary"
+                >
+                  cluster: one
+                </div>
+              </td>
+            </tr>
+            <tr>
+              <td
+                align="left"
+                style="width: 32px;"
               >
                 <div
-                  class="c16"
-                  font-size="2"
-                  style="user-select: none;"
+                  class="c18"
+                  height="24px"
+                  width="24px"
                 >
-                  J
+                  <div
+                    class="c16"
+                    font-size="2"
+                    style="user-select: none;"
+                  >
+                    J
+                  </div>
                 </div>
-              </div>
-            </td>
-            <td>
-              Jenkins
-            </td>
-            <td>
-              https://
-              jenkins.teleport-proxy.com
-            </td>
-            <td>
-              <div
-                class="c17"
-                kind="secondary"
-              >
-                env: idk
-              </div>
-              <div
-                class="c17"
-                kind="secondary"
-              >
-                cluster: one
-              </div>
-            </td>
-          </tr>
-          <tr>
-            <td
-              align="left"
-              style="width: 32px;"
-            >
-              <div
-                class="sc-AxirZ c19"
-                height="24px"
-                width="24px"
+              </td>
+              <td>
+                Jenkins
+              </td>
+              <td>
+                https://
+                jenkins.teleport-proxy.com
+              </td>
+              <td>
+                <div
+                  class="c17"
+                  kind="secondary"
+                >
+                  env: idk
+                </div>
+                <div
+                  class="c17"
+                  kind="secondary"
+                >
+                  cluster: one
+                </div>
+              </td>
+            </tr>
+            <tr>
+              <td
+                align="left"
+                style="width: 32px;"
               >
                 <div
-                  class="c16"
-                  font-size="2"
-                  style="user-select: none;"
+                  class="c19"
+                  height="24px"
+                  width="24px"
                 >
-                  M
+                  <div
+                    class="c16"
+                    font-size="2"
+                    style="user-select: none;"
+                  >
+                    M
+                  </div>
                 </div>
-              </div>
-            </td>
-            <td>
-              Mattermost1
-            </td>
-            <td>
-              https://
-              mattermost.teleport-proxy.com
-            </td>
-            <td>
-              <div
-                class="c17"
-                kind="secondary"
-              >
-                env: idk
-              </div>
-              <div
-                class="c17"
-                kind="secondary"
-              >
-                cluster: one
-              </div>
-            </td>
-          </tr>
-        </tbody>
-      </table>
+              </td>
+              <td>
+                Mattermost1
+              </td>
+              <td>
+                https://
+                mattermost.teleport-proxy.com
+              </td>
+              <td>
+                <div
+                  class="c17"
+                  kind="secondary"
+                >
+                  env: idk
+                </div>
+                <div
+                  class="c17"
+                  kind="secondary"
+                >
+                  cluster: one
+                </div>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
     </div>
   </div>
 </div>

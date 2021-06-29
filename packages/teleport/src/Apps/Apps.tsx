@@ -16,7 +16,7 @@
 
 import React from 'react';
 import { Danger } from 'design/Alert';
-import { Indicator, Box, Text, Link, Flex } from 'design';
+import { Indicator, Box, Text, Link } from 'design';
 import useTeleport from 'teleport/useTeleport';
 import {
   FeatureBox,
@@ -70,17 +70,10 @@ export function Apps(props: State) {
       )}
       {attempt.status === 'failed' && <Danger>{attempt.statusText} </Danger>}
       {hasApps && (
-        <>
-          <Flex
-            mb={4}
-            alignItems="center"
-            flex="0 0 auto"
-            justifyContent="space-between"
-          >
-            <InputSearch mr={3} value={searchValue} onChange={setSearchValue} />
-          </Flex>
+        <Box>
+          <InputSearch mb={4} value={searchValue} onChange={setSearchValue} />
           <AppList searchValue={searchValue} apps={apps} />
-        </>
+        </Box>
       )}
       {isEmpty && (
         <Empty
