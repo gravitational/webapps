@@ -14,7 +14,7 @@ test('correct launch url is generated for a selected role', () => {
     '/web/launch/awsconsole-1.com/one/awsconsole-1.teleport-proxy.com/arn:aws:iam::joe123:role%2FEC2ReadOnly';
 
   const roleSelectEl = document.querySelector('input');
-  const launchBtn = screen.queryByText('Launch App');
+  const launchBtn = screen.queryByText('Launch');
 
   fireEvent.change(roleSelectEl, { target: { value: roleToSelect } });
   fireEvent.focus(roleSelectEl);

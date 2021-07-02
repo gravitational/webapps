@@ -15,7 +15,7 @@ limitations under the License.
 */
 
 import React, { useState } from 'react';
-import { Text, Box, ButtonPrimary, ButtonSecondary } from 'design';
+import { Text, ButtonPrimary, ButtonSecondary } from 'design';
 import Dialog, {
   DialogHeader,
   DialogTitle,
@@ -36,7 +36,7 @@ export default function AwsConnectDialog({ app, onClose }: Props) {
     })
   );
 
-  const [selectedRole, setSelectedRole] = useState<Option>(roleOptions[0]);
+  const [selectedRole, setSelectedRole] = useState<Option>(undefined);
 
   function onLaunchClick() {
     const { fqdn, clusterId, publicAddr } = app;
@@ -66,23 +66,25 @@ export default function AwsConnectDialog({ app, onClose }: Props) {
         <DialogTitle>Launch {app.name}</DialogTitle>
       </DialogHeader>
       <DialogContent maxHeight="120px">
-        Please select the IAM Role to assume when launching {app.name}
-        <Box width="75%" mt={3}>
-          <Text fontWeight={500} mb={1}>
-            IAM Role:
-          </Text>
-          <Select
-            value={selectedRole}
-            onChange={(o: Option) => setSelectedRole(o)}
-            options={roleOptions}
-            maxMenuHeight={200}
-            isSearchable
-          />
-        </Box>
+        <Text fontWeight={500} mb={1}>
+          Select IAM Role
+        </Text>
+        <Select
+          value={selectedRole}
+          placeholder="Select Role"
+          onChange={(o: Option) => setSelectedRole(o)}
+          options={roleOptions}
+          maxMenuHeight={200}
+          isSearchable
+        />
       </DialogContent>
       <DialogFooter>
-        <ButtonPrimary onClick={onLaunchClick} mr={3}>
-          Launch App
+        <ButtonPrimary
+          onClick={onLaunchClick}
+          mr={3}
+          disabled={typeof selectedRole === 'undefined'}
+        >
+          Launch
         </ButtonPrimary>
         <ButtonSecondary onClick={onClose}>Close</ButtonSecondary>
       </DialogFooter>

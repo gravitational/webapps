@@ -17,7 +17,7 @@ limitations under the License.
 import React, { useState } from 'react';
 import styled from 'styled-components';
 import { sortBy } from 'lodash';
-import { Flex, Text } from 'design';
+import { Flex, Text, ButtonBorder } from 'design';
 import {
   pink,
   teal,
@@ -127,6 +127,7 @@ function AppList(props: Props) {
           cell={<AddressCell />}
         />
         <Column header={<Cell>Labels</Cell>} cell={<LabelCell />} />
+        <Column header={<Cell />} cell={<OpenButton />} />
       </StyledTable>
       {selectedAwsApp && (
         <AwsConnectDialog
@@ -142,6 +143,14 @@ function LabelCell(props) {
   const { rowIndex, data } = props;
   const { tags = [] } = data[rowIndex];
   return renderLabelCell(tags);
+}
+
+function OpenButton() {
+  return (
+    <Cell align="right">
+      <ButtonBorder size="small">LAUNCH</ButtonBorder>
+    </Cell>
+  );
 }
 
 function AddressCell(props) {
