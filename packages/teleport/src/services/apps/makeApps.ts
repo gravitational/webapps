@@ -24,6 +24,7 @@ export default function makeApp(json: any): App {
   const id = `${clusterId}-${name}-${publicAddr}`;
   const launchUrl = cfg.getAppLauncherRoute({ fqdn, clusterId, publicAddr });
   const labels = json.labels || [];
+  const awsRoles = json.awsRoles || [];
 
   return {
     id,
@@ -34,5 +35,6 @@ export default function makeApp(json: any): App {
     clusterId,
     fqdn,
     launchUrl,
+    awsRoles,
   };
 }

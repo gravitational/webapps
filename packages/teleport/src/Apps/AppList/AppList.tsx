@@ -41,6 +41,7 @@ import {
 import Table from 'design/DataTable/Paged';
 import isMatch from 'design/utils/match';
 import { App } from 'teleport/services/apps';
+import AwsConnectDialog from '../AwsConnectDialog';
 
 function AppList(props: Props) {
   const { apps = [], pageSize = 100, searchValue } = props;
@@ -48,6 +49,8 @@ function AppList(props: Props) {
   const [sortDir, setSortDir] = useState<Record<string, string>>({
     name: SortTypes.DESC,
   });
+
+  const [selectedAwsApp, setSelectedAwsApp] = useState<App>(undefined);
 
   function sortAndFilter(search) {
     const filtered = apps.filter(obj =>
@@ -85,7 +88,12 @@ function AppList(props: Props) {
 
     rows.forEach((row, idx) => {
       if (row === closest) {
-        window.open(data[idx].launchUrl, '_blank');
+        const app = data[idx];
+        if (app.awsRoles.length) {
+          setSelectedAwsApp(app);
+        } else {
+          window.open(app.launchUrl, '_blank');
+        }
       }
     });
   }
@@ -93,32 +101,40 @@ function AppList(props: Props) {
   const data = sortAndFilter(searchValue);
 
   return (
-    <StyledTable pageSize={pageSize} data={data} onClick={onAppClick}>
-      <Column header={<Cell />} cell={<AppIconCell />} />
-      <Column
-        columnKey="name"
-        header={
-          <SortHeaderCell
-            sortDir={sortDir.name}
-            onSortChange={onSortChange}
-            title="Name"
-          />
-        }
-        cell={<TextCell />}
-      />
-      <Column
-        columnKey="publicAddr"
-        header={
-          <SortHeaderCell
-            sortDir={sortDir.publicAddr}
-            onSortChange={onSortChange}
-            title="Address"
-          />
-        }
-        cell={<AddressCell />}
-      />
-      <Column header={<Cell>Labels</Cell>} cell={<LabelCell />} />
-    </StyledTable>
+    <>
+      <StyledTable pageSize={pageSize} data={data} onClick={onAppClick}>
+        <Column header={<Cell />} cell={<AppIconCell />} />
+        <Column
+          columnKey="name"
+          header={
+            <SortHeaderCell
+              sortDir={sortDir.name}
+              onSortChange={onSortChange}
+              title="Name"
+            />
+          }
+          cell={<TextCell />}
+        />
+        <Column
+          columnKey="publicAddr"
+          header={
+            <SortHeaderCell
+              sortDir={sortDir.publicAddr}
+              onSortChange={onSortChange}
+              title="Address"
+            />
+          }
+          cell={<AddressCell />}
+        />
+        <Column header={<Cell>Labels</Cell>} cell={<LabelCell />} />
+      </StyledTable>
+      {selectedAwsApp && (
+        <AwsConnectDialog
+          app={selectedAwsApp}
+          onClose={() => setSelectedAwsApp(undefined)}
+        />
+      )}
+    </>
   );
 }
 

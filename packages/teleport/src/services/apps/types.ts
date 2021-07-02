@@ -23,4 +23,10 @@ export interface App {
   clusterId: string;
   launchUrl: string;
   fqdn: string;
+  awsRoles: AwsRole[];
 }
+
+type AwsRole = {
+  arn: string;
+  display: string;
+};

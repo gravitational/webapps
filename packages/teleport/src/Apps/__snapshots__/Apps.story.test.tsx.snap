@@ -620,6 +620,17 @@ exports[`loaded state 1`] = `
   justify-content: center;
 }
 
+.c20 {
+  box-sizing: border-box;
+  height: 24px;
+  width: 24px;
+  background-color: #f57c00;
+  border-radius: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
 .c1 {
   box-sizing: border-box;
   margin-bottom: 24px;
@@ -872,12 +883,12 @@ exports[`loaded state 1`] = `
               </strong>
                - 
               <strong>
-                3
+                4
               </strong>
                
               of 
               <strong>
-                3
+                4
               </strong>
             </div>
           </div>
@@ -1056,6 +1067,41 @@ exports[`loaded state 1`] = `
                   kind="secondary"
                 >
                   cluster: one
+                </div>
+              </td>
+            </tr>
+            <tr>
+              <td
+                align="left"
+                style="width: 32px;"
+              >
+                <div
+                  class="c20"
+                  height="24px"
+                  width="24px"
+                >
+                  <div
+                    class="c16"
+                    font-size="2"
+                    style="user-select: none;"
+                  >
+                    A
+                  </div>
+                </div>
+              </td>
+              <td>
+                aws-console-1
+              </td>
+              <td>
+                https://
+                awsconsole-1.teleport-proxy.com
+              </td>
+              <td>
+                <div
+                  class="c17"
+                  kind="secondary"
+                >
+                  aws_account_id: joe123
                 </div>
               </td>
             </tr>

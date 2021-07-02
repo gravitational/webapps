@@ -58,6 +58,9 @@ function resolveRedirectUrl(params: UrlLauncherParams) {
       if (params.publicAddr) {
         url.searchParams.set('addr', params.publicAddr);
       }
+      if (params.arn) {
+        url.searchParams.set('arn', params.arn);
+      }
 
       return url.toString();
     });

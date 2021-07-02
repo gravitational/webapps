@@ -50,4 +50,22 @@ export const apps = [
     clusterId: 'one',
     fqdn: 'grafana.one',
   },
+  {
+    name: 'aws-console-1',
+    uri: 'https://console.aws.amazon.com/ec2/v2/home',
+    publicAddr: 'awsconsole-1.teleport-proxy.com',
+    labels: [{ name: 'aws_account_id', value: 'joe123' }],
+    awsRoles: [
+      {
+        arn: 'arn:aws:iam::joe123:role/EC2FullAccess',
+        display: 'EC2FullAccess',
+      },
+      {
+        arn: 'arn:aws:iam::joe123:role/EC2ReadOnly',
+        display: 'EC2ReadOnly',
+      },
+    ],
+    clusterId: 'one',
+    fqdn: 'awsconsole-1.com',
+  },
 ].map(makeApp);
