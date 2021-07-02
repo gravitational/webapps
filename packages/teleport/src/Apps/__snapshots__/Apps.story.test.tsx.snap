@@ -581,6 +581,14 @@ exports[`loaded state 1`] = `
   margin: 0px;
 }
 
+.c21 {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  font-weight: 600;
+  font-size: 9px;
+  margin: 0px;
+}
+
 .c7 {
   box-sizing: border-box;
   display: flex;
@@ -1081,11 +1089,11 @@ exports[`loaded state 1`] = `
                   width="24px"
                 >
                   <div
-                    class="c16"
-                    font-size="2"
+                    class="c21"
+                    font-size="9px"
                     style="user-select: none;"
                   >
-                    A
+                    AWS
                   </div>
                 </div>
               </td>

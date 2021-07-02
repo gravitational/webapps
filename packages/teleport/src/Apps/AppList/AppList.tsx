@@ -173,7 +173,7 @@ function searchAndFilterCb(
 
 function AppIconCell(props) {
   const { rowIndex, data } = props;
-  const { name } = data[rowIndex];
+  const { name, awsRoles } = data[rowIndex];
   return (
     <Cell align="left" style={{ width: '32px' }}>
       <Flex
@@ -184,9 +184,15 @@ function AppIconCell(props) {
         justifyContent="center"
         alignItems="center"
       >
-        <Text fontSize={2} bold style={{ userSelect: 'none' }}>
-          {name[0]?.toUpperCase()}
-        </Text>
+        {awsRoles.length ? (
+          <Text fontSize="9px" bold style={{ userSelect: 'none' }}>
+            AWS
+          </Text>
+        ) : (
+          <Text fontSize={2} bold style={{ userSelect: 'none' }}>
+            {name[0]?.toUpperCase()}
+          </Text>
+        )}
       </Flex>
     </Cell>
   );
