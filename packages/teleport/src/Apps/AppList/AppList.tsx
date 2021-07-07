@@ -41,7 +41,7 @@ import {
 import Table from 'design/DataTable/Paged';
 import isMatch from 'design/utils/match';
 import { App } from 'teleport/services/apps';
-import AwsConnectDialog from '../AwsConnectDialog';
+import AwsLaunchButton from './AwsLaunchButton';
 
 function AppList(props: Props) {
   const { apps = [], pageSize = 100, searchValue } = props;
@@ -49,8 +49,6 @@ function AppList(props: Props) {
   const [sortDir, setSortDir] = useState<Record<string, string>>({
     name: SortTypes.DESC,
   });
-
-  const [selectedAwsApp, setSelectedAwsApp] = useState<App>(undefined);
 
   function sortAndFilter(search) {
     const filtered = apps.filter(obj =>
@@ -73,36 +71,11 @@ function AppList(props: Props) {
     setSortDir({ [columnKey]: sortDir });
   }
 
-  function onAppClick(e: React.MouseEvent) {
-    if (e.ctrlKey || e.shiftKey || e.altKey) {
-      return;
-    }
-
-    const closest = (e.target as any).closest('th, tbody, tr');
-
-    if (!closest || closest.tagName !== 'TR') {
-      return;
-    }
-
-    const rows = closest.parentElement.childNodes;
-
-    rows.forEach((row, idx) => {
-      if (row === closest) {
-        const app = data[idx];
-        if (app.awsRoles.length) {
-          setSelectedAwsApp(app);
-        } else {
-          window.open(app.launchUrl, '_blank');
-        }
-      }
-    });
-  }
-
   const data = sortAndFilter(searchValue);
 
   return (
     <>
-      <StyledTable pageSize={pageSize} data={data} onClick={onAppClick}>
+      <StyledTable pageSize={pageSize} data={data}>
         <Column header={<Cell />} cell={<AppIconCell />} />
         <Column
           columnKey="name"
@@ -127,14 +100,8 @@ function AppList(props: Props) {
           cell={<AddressCell />}
         />
         <Column header={<Cell>Labels</Cell>} cell={<LabelCell />} />
-        <Column header={<Cell />} cell={<OpenButton />} />
+        <Column header={<Cell />} cell={<LaunchButtonCell />} />
       </StyledTable>
-      {selectedAwsApp && (
-        <AwsConnectDialog
-          app={selectedAwsApp}
-          onClose={() => setSelectedAwsApp(undefined)}
-        />
-      )}
     </>
   );
 }
@@ -145,14 +112,6 @@ function LabelCell(props) {
   return renderLabelCell(tags);
 }
 
-function OpenButton() {
-  return (
-    <Cell align="right">
-      <ButtonBorder size="small">LAUNCH</ButtonBorder>
-    </Cell>
-  );
-}
-
 function AddressCell(props) {
   const { rowIndex, data } = props;
   const { publicAddr } = data[rowIndex];
@@ -160,11 +119,8 @@ function AddressCell(props) {
 }
 
 const StyledTable = styled(Table)`
-  & > tbody > tr {
-    cursor: pointer;
-    td {
-      vertical-align: baseline;
-    }
+  & > tbody > tr > td {
+    vertical-align: baseline;
   }
 `;
 
@@ -204,6 +160,37 @@ function AppIconCell(props) {
         )}
       </Flex>
     </Cell>
+  );
+}
+
+function LaunchButtonCell(props) {
+  const { rowIndex, data } = props;
+  const { launchUrl, awsRoles, fqdn, clusterId, publicAddr } = data[rowIndex];
+
+  if (!awsRoles.length) {
+    return (
+      <Cell align="right">
+        <ButtonBorder
+          as="a"
+          width="88px"
+          size="small"
+          target="_blank"
+          href={launchUrl}
+          rel="noreferrer"
+        >
+          LAUNCH
+        </ButtonBorder>
+      </Cell>
+    );
+  }
+
+  return (
+    <AwsLaunchButton
+      awsRoles={awsRoles}
+      fqdn={fqdn}
+      clusterId={clusterId}
+      publicAddr={publicAddr}
+    />
   );
 }
 

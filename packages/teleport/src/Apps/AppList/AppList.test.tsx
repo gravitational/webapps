@@ -13,8 +13,10 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
 import React from 'react';
-import { render, screen } from 'design/utils/testing';
+import { render, screen, fireEvent } from 'design/utils/testing';
+import cfg from 'teleport/config';
 import { apps } from '../fixtures';
 import AppList from './AppList';
 
@@ -27,4 +29,34 @@ test('search filter works', () => {
 
   expect(screen.queryByText(expectedToBeVisible)).toBeInTheDocument();
   expect(screen.queryByText(notExpectedToBeVisible)).toBeNull();
+});
+
+test('correct launch url is generated for a selected role', () => {
+  jest.spyOn(cfg, 'getAppLauncherRoute');
+
+  render(<AppList apps={apps} searchValue="aws" />);
+
+  const launchBtn = screen.queryByText(/launch/i);
+
+  fireEvent.click(launchBtn);
+
+  expect(cfg.getAppLauncherRoute).toHaveBeenCalledWith({
+    fqdn: 'awsconsole-1.com',
+    clusterId: 'one',
+    publicAddr: 'awsconsole-1.teleport-proxy.com',
+    arn: 'arn:aws:iam::joe123:role/EC2FullAccess',
+  });
+
+  expect(cfg.getAppLauncherRoute).toHaveBeenCalledWith({
+    fqdn: 'awsconsole-1.com',
+    clusterId: 'one',
+    publicAddr: 'awsconsole-1.teleport-proxy.com',
+    arn: 'arn:aws:iam::joe123:role/EC2ReadOnly',
+  });
+
+  const launchUrl = screen.queryByText('EC2ReadOnly').getAttribute('href');
+
+  expect(launchUrl).toEqual(
+    '/web/launch/awsconsole-1.com/one/awsconsole-1.teleport-proxy.com/arn:aws:iam::joe123:role%2FEC2ReadOnly'
+  );
 });

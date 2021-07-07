@@ -559,6 +559,7 @@ exports[`loaded state 1`] = `
   font-size: 10px;
   min-height: 24px;
   padding: 0px 16px;
+  width: 88px;
 }
 
 .c18:active {
@@ -592,6 +593,14 @@ exports[`loaded state 1`] = `
   display: inline-block;
   transition: color .3s;
   color: #FFFFFF;
+}
+
+.c23 {
+  display: inline-block;
+  transition: color .3s;
+  margin-left: 4px;
+  color: rgba(255,255,255,0.56);
+  font-size: 14px;
 }
 
 .c17 {
@@ -884,11 +893,7 @@ exports[`loaded state 1`] = `
   border-top-right-radius: 8px;
 }
 
-.c13 > tbody > tr {
-  cursor: pointer;
-}
-
-.c13 > tbody > tr td {
+.c13 > tbody > tr > td {
   vertical-align: baseline;
 }
 
@@ -1047,12 +1052,16 @@ exports[`loaded state 1`] = `
               <td
                 align="right"
               >
-                <button
+                <a
                   class="c18"
+                  href="/web/launch/grafana.one/one/grafana.teleport-proxy.com"
                   kind="border"
+                  rel="noreferrer"
+                  target="_blank"
+                  width="88px"
                 >
                   LAUNCH
-                </button>
+                </a>
               </td>
             </tr>
             <tr>
@@ -1098,12 +1107,16 @@ exports[`loaded state 1`] = `
               <td
                 align="right"
               >
-                <button
+                <a
                   class="c18"
+                  href="/web/launch/jenkins.one/one/jenkins.teleport-proxy.com"
                   kind="border"
+                  rel="noreferrer"
+                  target="_blank"
+                  width="88px"
                 >
                   LAUNCH
-                </button>
+                </a>
               </td>
             </tr>
             <tr>
@@ -1149,12 +1162,16 @@ exports[`loaded state 1`] = `
               <td
                 align="right"
               >
-                <button
+                <a
                   class="c18"
+                  href="/web/launch/mattermost.one/one/mattermost.teleport-proxy.com"
                   kind="border"
+                  rel="noreferrer"
+                  target="_blank"
+                  width="88px"
                 >
                   LAUNCH
-                </button>
+                </a>
               </td>
             </tr>
             <tr>
@@ -1197,8 +1214,14 @@ exports[`loaded state 1`] = `
                 <button
                   class="c18"
                   kind="border"
+                  width="88px"
                 >
                   LAUNCH
+                  <span
+                    class="c10 c23 icon icon-caret-down "
+                    color="text.secondary"
+                    font-size="2"
+                  />
                 </button>
               </td>
             </tr>

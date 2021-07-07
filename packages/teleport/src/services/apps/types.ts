@@ -26,7 +26,7 @@ export interface App {
   awsRoles: AwsRole[];
 }
 
-type AwsRole = {
+export type AwsRole = {
   arn: string;
   display: string;
 };
