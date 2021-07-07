@@ -54,7 +54,10 @@ test('correct launch url is generated for a selected role', () => {
     arn: 'arn:aws:iam::joe123:role/EC2ReadOnly',
   });
 
-  const launchUrl = screen.queryByText('EC2ReadOnly').getAttribute('href');
+  const launchUrl = screen
+    .queryByText('EC2ReadOnly')
+    .closest('a')
+    .getAttribute('href');
 
   expect(launchUrl).toEqual(
     '/web/launch/awsconsole-1.com/one/awsconsole-1.teleport-proxy.com/arn:aws:iam::joe123:role%2FEC2ReadOnly'

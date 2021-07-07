@@ -7,7 +7,9 @@ import { CarrotDown } from 'design/Icon';
 import cfg from 'teleport/config';
 import { AwsRole } from 'teleport/services/apps';
 
-class AwsLaunchButton extends React.Component<AwsLaunchButtonProps> {
+export default class AwsLaunchButton extends React.Component<
+  AwsLaunchButtonProps
+> {
   anchorEl = React.createRef();
 
   state = {
@@ -89,16 +91,17 @@ function RoleItemList({
         as="a"
         href={launchUrl}
         target="_blank"
+        title={display}
       >
-        {display}
+        <Text style={{ maxWidth: '25ch' }}>{display}</Text>
       </StyledMenuItem>
     );
   });
 
   return (
     <>
-      <Text color="text.onLight" px={2} mx={2} mt={2}>
-        IAM Roles:{' '}
+      <Text color="text.onLight" px={2} m={2} mb={1}>
+        Select IAM Role
       </Text>
       {awsRoleItems}
     </>
@@ -112,14 +115,13 @@ type AwsLaunchButtonProps = {
   publicAddr: string;
 };
 
-export default AwsLaunchButton;
-
 const StyledMenuItem = styled(MenuItem)(
   ({ theme }) => `
   color: ${theme.colors.grey[400]};
   font-size: 12px;
   border-bottom: 1px solid ${theme.colors.subtle};
   min-height: 32px;
+  margin-right: 0px;
   &:hover {
     color: ${theme.colors.link};
   }
