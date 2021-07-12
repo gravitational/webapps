@@ -45,9 +45,6 @@ export default function FormInvite(props: Props) {
     submitBtnText = 'Submit',
   } = props;
 
-  // Temporary hack: if cluster supports all 2FA types, require the user to
-  // sign up with OTP. We should ideally let the user choose a different 2FA
-  // method when there's engineering capacity to build this.
   const mfaEnabled = auth2faType === 'on' || auth2faType === 'optional';
   const u2fEnabled = auth2faType === 'u2f';
   const otpEnabled = auth2faType === 'otp';
