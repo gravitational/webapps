@@ -320,6 +320,7 @@ export interface UrlAppParams {
   fqdn: string;
   clusterId?: string;
   publicAddr?: string;
+  arn?: string;
 }
 
 export interface UrlScpParams {
