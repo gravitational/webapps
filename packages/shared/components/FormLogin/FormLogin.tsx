@@ -62,7 +62,7 @@ export default function LoginForm(props: Props) {
       mfaOptions = [{ value: 'u2f', label: 'U2F' }, ...mfaOptions];
     }
 
-    if (auth2faType === 'optional') {
+    if (auth2faType === 'optional' || auth2faType === 'off') {
       mfaOptions = [{ value: 'none', label: 'NONE' }, ...mfaOptions];
     }
 
@@ -84,7 +84,7 @@ export default function LoginForm(props: Props) {
       return;
     }
 
-    if (u2fEnabled || (mfaEnabled && mfaType.value === 'u2f')) {
+    if (mfaType.value === 'u2f') {
       onLoginWithU2f(user, pass);
     } else {
       onLogin(user, pass, token);
