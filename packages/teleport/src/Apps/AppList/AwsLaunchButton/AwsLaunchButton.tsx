@@ -103,7 +103,13 @@ function RoleItemList({
       <Text color="text.onLight" px={2} m={2} mb={1}>
         Select IAM Role
       </Text>
-      {awsRoleItems}
+      {awsRoleItems.length ? (
+        awsRoleItems
+      ) : (
+        <Text px={2} m={2} color="text.disabled">
+          No roles found.
+        </Text>
+      )}
     </>
   );
 }

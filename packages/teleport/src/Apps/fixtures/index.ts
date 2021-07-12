@@ -21,6 +21,7 @@ export const apps = [
     name: 'Jenkins',
     uri: 'https://jenkins.teleport-proxy.com',
     publicAddr: 'jenkins.teleport-proxy.com',
+    isAWSConsole: false,
     labels: [
       { name: 'env', value: 'idk' },
       { name: 'cluster', value: 'one' },
@@ -32,6 +33,7 @@ export const apps = [
     name: 'Mattermost1',
     uri: 'https://mattermost1.teleport-proxy.com',
     publicAddr: 'mattermost.teleport-proxy.com',
+    isAWSConsole: false,
     labels: [
       { name: 'env', value: 'idk' },
       { name: 'cluster', value: 'one' },
@@ -43,6 +45,7 @@ export const apps = [
     name: 'Grafana',
     uri: 'https://grafana.teleport-proxy.com',
     publicAddr: 'grafana.teleport-proxy.com',
+    isAWSConsole: false,
     labels: [
       { name: 'env', value: 'idk' },
       { name: 'cluster', value: 'one' },
@@ -55,6 +58,7 @@ export const apps = [
     uri: 'https://console.aws.amazon.com/ec2/v2/home',
     publicAddr: 'awsconsole-1.teleport-proxy.com',
     labels: [{ name: 'aws_account_id', value: 'joe123' }],
+    isAWSConsole: true,
     awsRoles: [
       {
         arn: 'arn:aws:iam::joe123:role/EC2FullAccess',

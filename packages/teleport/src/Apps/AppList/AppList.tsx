@@ -138,7 +138,7 @@ function searchAndFilterCb(
 
 function AppIconCell(props) {
   const { rowIndex, data } = props;
-  const { name, awsRoles } = data[rowIndex];
+  const { name, isAWSConsole } = data[rowIndex];
   return (
     <Cell align="left" style={{ width: '32px' }}>
       <Flex
@@ -149,7 +149,7 @@ function AppIconCell(props) {
         justifyContent="center"
         alignItems="center"
       >
-        {awsRoles.length ? (
+        {isAWSConsole ? (
           <Text fontSize="9px" bold style={{ userSelect: 'none' }}>
             AWS
           </Text>
@@ -165,9 +165,16 @@ function AppIconCell(props) {
 
 function LaunchButtonCell(props) {
   const { rowIndex, data } = props;
-  const { launchUrl, awsRoles, fqdn, clusterId, publicAddr } = data[rowIndex];
+  const {
+    launchUrl,
+    isAWSConsole,
+    awsRoles,
+    fqdn,
+    clusterId,
+    publicAddr,
+  } = data[rowIndex];
 
-  if (!awsRoles.length) {
+  if (!isAWSConsole) {
     return (
       <Cell align="right">
         <ButtonBorder
