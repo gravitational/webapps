@@ -35,15 +35,19 @@ export default function useInvite(tokenId: string) {
   }, []);
 
   function onSubmit(password: string, otpToken: string) {
-    submitAttempt.run(() =>
-      auth.resetPassword(tokenId, password, otpToken).then(redirect)
-    );
+    submitAttempt.setAttempt({ status: 'processing' });
+    auth
+      .resetPassword(tokenId, password, otpToken)
+      .then(redirect)
+      .catch(submitAttempt.handleError);
   }
 
   function onSubmitWithU2f(password: string) {
-    submitAttempt.run(() =>
-      auth.resetPasswordWithU2f(tokenId, password).then(redirect)
-    );
+    submitAttempt.setAttempt({ status: 'processing' });
+    auth
+      .resetPasswordWithU2f(tokenId, password)
+      .then(redirect)
+      .catch(submitAttempt.handleError);
   }
 
   function redirect() {

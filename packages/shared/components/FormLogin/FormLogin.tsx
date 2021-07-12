@@ -11,7 +11,7 @@ Unless required by applicable law or agreed to in writing, software
 distributed under the License is distributed on an "AS IS" BASIS,
 WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
-limitations under the License.
+limitat ions under the License.
 */
 
 import React from 'react';
@@ -38,7 +38,7 @@ export default function LoginForm(props: Props) {
     authProviders,
     auth2faType = 'off',
     isLocalAuthEnabled = true,
-    recoveryEnabled = false,
+    isRecoveryEnabled = false,
     getRecoveryStartRoute,
     clearAttempt,
   } = props;
@@ -52,10 +52,15 @@ export default function LoginForm(props: Props) {
   const [user, setUser] = React.useState('');
   const [token, setToken] = React.useState('');
   const [mfaOptions] = React.useState(() => {
-    let mfaOptions = [
-      ...(mfaEnabled || u2fEnabled ? [{ value: 'u2f', label: 'U2F' }] : []),
-      ...(mfaEnabled || otpEnabled ? [{ value: 'otp', label: 'TOTP' }] : []),
-    ];
+    let mfaOptions = [];
+
+    if (mfaEnabled || otpEnabled) {
+      mfaOptions = [{ value: 'otp', label: 'TOTP' }];
+    }
+
+    if (mfaEnabled || u2fEnabled) {
+      mfaOptions = [{ value: 'u2f', label: 'U2F' }, ...mfaOptions];
+    }
 
     if (auth2faType === 'optional') {
       mfaOptions = [{ value: 'none', label: 'NONE' }, ...mfaOptions];
@@ -145,28 +150,31 @@ export default function LoginForm(props: Props) {
                 onChange={e => setUser(e.target.value)}
                 placeholder="Username"
               />
-              <FieldInput
-                rule={requiredField('Password is required')}
-                label="Password"
-                value={pass}
-                onChange={e => setPass(e.target.value)}
-                type="password"
-                placeholder="Password"
-                mb={recoveryEnabled ? 0 : 4}
-              />
-              {recoveryEnabled && (
-                <ForgotLink
-                  style={{
-                    textAlign: 'right',
-                  }}
-                  to={getRecoveryStartRoute('password')}
-                >
-                  Forgot Password?
-                </ForgotLink>
-              )}
+              <Flex flexDirection="column" alignItems="flex-end" mb={3}>
+                <FieldInput
+                  rule={requiredField('Password is required')}
+                  label="Password"
+                  value={pass}
+                  onChange={e => setPass(e.target.value)}
+                  type="password"
+                  placeholder="Password"
+                  mb={0}
+                  width="100%"
+                />
+                {isRecoveryEnabled && (
+                  <ForgotLink
+                    style={{
+                      textAlign: 'right',
+                    }}
+                    to={getRecoveryStartRoute('password')}
+                  >
+                    Forgot Password?
+                  </ForgotLink>
+                )}
+              </Flex>
               {auth2faType !== 'off' && (
-                <>
-                  <Flex alignItems="flex-end" mb={recoveryEnabled ? 0 : 4}>
+                <Flex flexDirection="column" mb={3}>
+                  <Flex alignItems="flex-end">
                     <Box width="50%" data-testid="mfa-select">
                       <FieldSelect
                         label="Second factor"
@@ -199,17 +207,17 @@ export default function LoginForm(props: Props) {
                       )}
                     </Box>
                   </Flex>
-                  {recoveryEnabled && mfaType.value === 'u2f' && (
+                  {isRecoveryEnabled && mfaType.value === 'u2f' && (
                     <ForgotLink to={getRecoveryStartRoute('u2f')}>
                       Lost U2F Key?
                     </ForgotLink>
                   )}
-                  {recoveryEnabled && mfaType.value === 'otp' && (
+                  {isRecoveryEnabled && mfaType.value === 'otp' && (
                     <ForgotLink to={getRecoveryStartRoute('totp')}>
                       Lost Two-Factor Token?
                     </ForgotLink>
                   )}
-                </>
+                </Flex>
               )}
               <ButtonPrimary
                 width="100%"
@@ -275,6 +283,8 @@ const StyledOr = styled.div`
 
 const ForgotLink = styled(Link)`
   color: ${props => props.theme.colors.primary.contrastText};
+  width: fit-content;
+  font-size: 12px;
   margin-top: 0px;
 `;
 
@@ -284,7 +294,7 @@ type Props = {
   authProviders?: AuthProvider[];
   auth2faType?: Auth2faType;
   attempt: ReturnType<typeof useAttempt>[0];
-  recoveryEnabled?: boolean;
+  isRecoveryEnabled?: boolean;
   getRecoveryStartRoute?: (recoveryType: string) => string;
   clearAttempt?: () => void;
   onLoginWithSso(provider: AuthProvider): void;

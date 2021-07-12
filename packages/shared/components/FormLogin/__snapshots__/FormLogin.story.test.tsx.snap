@@ -8,21 +8,27 @@ exports[`auth2faType: otp rendering 1`] = `
 
 .c7 {
   box-sizing: border-box;
+  margin-bottom: 0px;
+  width: 100%;
+}
+
+.c10 {
+  box-sizing: border-box;
   width: 50%;
 }
 
-.c8 {
+.c11 {
   box-sizing: border-box;
   margin-bottom: 0px;
   margin-right: 16px;
 }
 
-.c10 {
+.c13 {
   box-sizing: border-box;
   margin-bottom: 0px;
 }
 
-.c11 {
+.c14 {
   line-height: 1.5;
   margin: 0;
   display: inline-flex;
@@ -50,20 +56,20 @@ exports[`auth2faType: otp rendering 1`] = `
   width: 100%;
 }
 
-.c11:active {
+.c14:active {
   opacity: 0.56;
 }
 
-.c11:hover,
-.c11:focus {
+.c14:hover,
+.c14:focus {
   background: #651FFF;
 }
 
-.c11:active {
+.c14:active {
   background: #354AA4;
 }
 
-.c11:disabled {
+.c14:disabled {
   background: rgba(255,255,255,0.12);
   color: rgba(255,255,255,0.3);
 }
@@ -143,12 +149,26 @@ exports[`auth2faType: otp rendering 1`] = `
 
 .c6 {
   box-sizing: border-box;
-  margin-bottom: 24px;
+  margin-bottom: 16px;
+  display: flex;
+  align-items: flex-end;
+  flex-direction: column;
+}
+
+.c8 {
+  box-sizing: border-box;
+  margin-bottom: 16px;
+  display: flex;
+  flex-direction: column;
+}
+
+.c9 {
+  box-sizing: border-box;
   display: flex;
   align-items: flex-end;
 }
 
-.c9 .react-select-container {
+.c12 .react-select-container {
   box-shadow: inset 0 2px 4px rgba(0,0,0,0.24);
   box-sizing: border-box;
   border: none;
@@ -162,8 +182,8 @@ exports[`auth2faType: otp rendering 1`] = `
   border-radius: 4px;
 }
 
-.c9 .react-select__control,
-.c9 .react-select__control--is-focused {
+.c12 .react-select__control,
+.c12 .react-select__control--is-focused {
   min-height: 40px;
   height: 40px;
   background-color: transparent;
@@ -174,48 +194,48 @@ exports[`auth2faType: otp rendering 1`] = `
   box-shadow: none;
 }
 
-.c9 .react-select__control:hover,
-.c9 .react-select__control--is-focused:hover {
+.c12 .react-select__control:hover,
+.c12 .react-select__control--is-focused:hover {
   border-color: transparent;
   cursor: pointer;
 }
 
-.c9 .react-select__option:hover {
+.c12 .react-select__option:hover {
   cursor: pointer;
   background-color: #eceff1;
 }
 
-.c9 .react-select__option--is-focused {
+.c12 .react-select__option--is-focused {
   background-color: #eceff1;
 }
 
-.c9 .react-select__option--is-selected {
+.c12 .react-select__option--is-selected {
   background-color: #cfd8dc;
   color: inherit;
 }
 
-.c9 .react-select__option--is-selected:hover {
+.c12 .react-select__option--is-selected:hover {
   background-color: #cfd8dc;
 }
 
-.c9 .react-select__menu {
+.c12 .react-select__menu {
   margin-top: 0px;
 }
 
-.c9 .react-select__indicator-separator {
+.c12 .react-select__indicator-separator {
   display: none;
 }
 
-.c9 .react-select__loading-indicator {
+.c12 .react-select__loading-indicator {
   display: none;
 }
 
-.c9 .react-select--is-disabled .react-select__single-value,
-.c9 .react-select--is-disabled .react-select__placeholder {
+.c12 .react-select--is-disabled .react-select__single-value,
+.c12 .react-select--is-disabled .react-select__placeholder {
   color: rgba(0,0,0,0.24);
 }
 
-.c9 .react-select--is-disabled .react-select__indicator {
+.c12 .react-select--is-disabled .react-select__indicator {
   color: rgba(0,0,0,0.14);
 }
 
@@ -251,121 +271,130 @@ exports[`auth2faType: otp rendering 1`] = `
       />
     </div>
     <div
-      class="c3"
-    >
-      <label
-        class="c4"
-        font-size="0"
-      >
-        Password
-      </label>
-      <input
-        autocomplete="off"
-        class="c5"
-        color="text.onLight"
-        placeholder="Password"
-        type="password"
-        value=""
-      />
-    </div>
-    <div
       class="c6"
     >
       <div
         class="c7"
-        data-testid="mfa-select"
-        width="50%"
+        width="100%"
+      >
+        <label
+          class="c4"
+          font-size="0"
+        >
+          Password
+        </label>
+        <input
+          autocomplete="off"
+          class="c5"
+          color="text.onLight"
+          placeholder="Password"
+          type="password"
+          value=""
+        />
+      </div>
+    </div>
+    <div
+      class="c8"
+    >
+      <div
+        class="c9"
       >
         <div
-          class="c8"
+          class="c10"
+          data-testid="mfa-select"
+          width="50%"
         >
-          <label
-            class="c4"
-            font-size="0"
-          >
-            Second factor
-          </label>
           <div
-            class="c9"
+            class="c11"
           >
+            <label
+              class="c4"
+              font-size="0"
+            >
+              Second factor
+            </label>
             <div
-              class="react-select-container css-2b097c-container"
+              class="c12"
             >
               <div
-                class="react-select__control css-yk16xz-control"
+                class="react-select-container css-2b097c-container"
               >
                 <div
-                  class="react-select__value-container react-select__value-container--has-value css-g1d714-ValueContainer"
+                  class="react-select__control css-yk16xz-control"
                 >
                   <div
-                    class="react-select__single-value css-1uccc91-singleValue"
+                    class="react-select__value-container react-select__value-container--has-value css-g1d714-ValueContainer"
                   >
-                    TOTP
-                  </div>
-                  <input
-                    aria-autocomplete="list"
-                    class="css-62g3xt-dummyInput"
-                    id="react-select-2-input"
-                    readonly=""
-                    tabindex="0"
-                    value=""
-                  />
-                </div>
-                <div
-                  class="react-select__indicators css-1hb7zxy-IndicatorsContainer"
-                >
-                  <span
-                    class="react-select__indicator-separator css-1okebmr-indicatorSeparator"
-                  />
-                  <div
-                    aria-hidden="true"
-                    class="react-select__indicator react-select__dropdown-indicator css-tlfecz-indicatorContainer"
-                  >
-                    <svg
-                      aria-hidden="true"
-                      class="css-6q0nyr-Svg"
-                      focusable="false"
-                      height="20"
-                      viewBox="0 0 20 20"
-                      width="20"
+                    <div
+                      class="react-select__single-value css-1uccc91-singleValue"
                     >
-                      <path
-                        d="M4.516 7.548c0.436-0.446 1.043-0.481 1.576 0l3.908 3.747 3.908-3.747c0.533-0.481 1.141-0.446 1.574 0 0.436 0.445 0.408 1.197 0 1.615-0.406 0.418-4.695 4.502-4.695 4.502-0.217 0.223-0.502 0.335-0.787 0.335s-0.57-0.112-0.789-0.335c0 0-4.287-4.084-4.695-4.502s-0.436-1.17 0-1.615z"
-                      />
-                    </svg>
+                      TOTP
+                    </div>
+                    <input
+                      aria-autocomplete="list"
+                      class="css-62g3xt-dummyInput"
+                      id="react-select-2-input"
+                      readonly=""
+                      tabindex="0"
+                      value=""
+                    />
+                  </div>
+                  <div
+                    class="react-select__indicators css-1hb7zxy-IndicatorsContainer"
+                  >
+                    <span
+                      class="react-select__indicator-separator css-1okebmr-indicatorSeparator"
+                    />
+                    <div
+                      aria-hidden="true"
+                      class="react-select__indicator react-select__dropdown-indicator css-tlfecz-indicatorContainer"
+                    >
+                      <svg
+                        aria-hidden="true"
+                        class="css-6q0nyr-Svg"
+                        focusable="false"
+                        height="20"
+                        viewBox="0 0 20 20"
+                        width="20"
+                      >
+                        <path
+                          d="M4.516 7.548c0.436-0.446 1.043-0.481 1.576 0l3.908 3.747 3.908-3.747c0.533-0.481 1.141-0.446 1.574 0 0.436 0.445 0.408 1.197 0 1.615-0.406 0.418-4.695 4.502-4.695 4.502-0.217 0.223-0.502 0.335-0.787 0.335s-0.57-0.112-0.789-0.335c0 0-4.287-4.084-4.695-4.502s-0.436-1.17 0-1.615z"
+                        />
+                      </svg>
+                    </div>
                   </div>
                 </div>
               </div>
             </div>
           </div>
         </div>
-      </div>
-      <div
-        class="c7"
-        width="50%"
-      >
         <div
           class="c10"
+          width="50%"
         >
-          <label
-            class="c4"
-            font-size="0"
+          <div
+            class="c13"
           >
-            two-factor token
-          </label>
-          <input
-            autocomplete="off"
-            class="c5"
-            color="text.onLight"
-            placeholder="123 456"
-            type="text"
-            value=""
-          />
+            <label
+              class="c4"
+              font-size="0"
+            >
+              two-factor token
+            </label>
+            <input
+              autocomplete="off"
+              class="c5"
+              color="text.onLight"
+              placeholder="123 456"
+              type="text"
+              value=""
+            />
+          </div>
         </div>
       </div>
     </div>
     <button
-      class="c11"
+      class="c14"
       kind="primary"
       type="submit"
       width="100%"
@@ -384,16 +413,22 @@ exports[`auth2faType: u2f rendering 1`] = `
 
 .c7 {
   box-sizing: border-box;
+  margin-bottom: 0px;
+  width: 100%;
+}
+
+.c10 {
+  box-sizing: border-box;
   width: 50%;
 }
 
-.c8 {
+.c11 {
   box-sizing: border-box;
   margin-bottom: 0px;
   margin-right: 16px;
 }
 
-.c11 {
+.c14 {
   line-height: 1.5;
   margin: 0;
   display: inline-flex;
@@ -421,20 +456,20 @@ exports[`auth2faType: u2f rendering 1`] = `
   width: 100%;
 }
 
-.c11:active {
+.c14:active {
   opacity: 0.56;
 }
 
-.c11:hover,
-.c11:focus {
+.c14:hover,
+.c14:focus {
   background: #651FFF;
 }
 
-.c11:active {
+.c14:active {
   background: #354AA4;
 }
 
-.c11:disabled {
+.c14:disabled {
   background: rgba(255,255,255,0.12);
   color: rgba(255,255,255,0.3);
 }
@@ -501,7 +536,7 @@ exports[`auth2faType: u2f rendering 1`] = `
   text-align: center;
 }
 
-.c10 {
+.c13 {
   overflow: hidden;
   text-overflow: ellipsis;
   font-weight: 400;
@@ -524,12 +559,26 @@ exports[`auth2faType: u2f rendering 1`] = `
 
 .c6 {
   box-sizing: border-box;
-  margin-bottom: 24px;
+  margin-bottom: 16px;
+  display: flex;
+  align-items: flex-end;
+  flex-direction: column;
+}
+
+.c8 {
+  box-sizing: border-box;
+  margin-bottom: 16px;
+  display: flex;
+  flex-direction: column;
+}
+
+.c9 {
+  box-sizing: border-box;
   display: flex;
   align-items: flex-end;
 }
 
-.c9 .react-select-container {
+.c12 .react-select-container {
   box-shadow: inset 0 2px 4px rgba(0,0,0,0.24);
   box-sizing: border-box;
   border: none;
@@ -543,8 +592,8 @@ exports[`auth2faType: u2f rendering 1`] = `
   border-radius: 4px;
 }
 
-.c9 .react-select__control,
-.c9 .react-select__control--is-focused {
+.c12 .react-select__control,
+.c12 .react-select__control--is-focused {
   min-height: 40px;
   height: 40px;
   background-color: transparent;
@@ -555,48 +604,48 @@ exports[`auth2faType: u2f rendering 1`] = `
   box-shadow: none;
 }
 
-.c9 .react-select__control:hover,
-.c9 .react-select__control--is-focused:hover {
+.c12 .react-select__control:hover,
+.c12 .react-select__control--is-focused:hover {
   border-color: transparent;
   cursor: pointer;
 }
 
-.c9 .react-select__option:hover {
+.c12 .react-select__option:hover {
   cursor: pointer;
   background-color: #eceff1;
 }
 
-.c9 .react-select__option--is-focused {
+.c12 .react-select__option--is-focused {
   background-color: #eceff1;
 }
 
-.c9 .react-select__option--is-selected {
+.c12 .react-select__option--is-selected {
   background-color: #cfd8dc;
   color: inherit;
 }
 
-.c9 .react-select__option--is-selected:hover {
+.c12 .react-select__option--is-selected:hover {
   background-color: #cfd8dc;
 }
 
-.c9 .react-select__menu {
+.c12 .react-select__menu {
   margin-top: 0px;
 }
 
-.c9 .react-select__indicator-separator {
+.c12 .react-select__indicator-separator {
   display: none;
 }
 
-.c9 .react-select__loading-indicator {
+.c12 .react-select__loading-indicator {
   display: none;
 }
 
-.c9 .react-select--is-disabled .react-select__single-value,
-.c9 .react-select--is-disabled .react-select__placeholder {
+.c12 .react-select--is-disabled .react-select__single-value,
+.c12 .react-select--is-disabled .react-select__placeholder {
   color: rgba(0,0,0,0.24);
 }
 
-.c9 .react-select--is-disabled .react-select__indicator {
+.c12 .react-select--is-disabled .react-select__indicator {
   color: rgba(0,0,0,0.14);
 }
 
@@ -632,109 +681,118 @@ exports[`auth2faType: u2f rendering 1`] = `
       />
     </div>
     <div
-      class="c3"
-    >
-      <label
-        class="c4"
-        font-size="0"
-      >
-        Password
-      </label>
-      <input
-        autocomplete="off"
-        class="c5"
-        color="text.onLight"
-        placeholder="Password"
-        type="password"
-        value=""
-      />
-    </div>
-    <div
       class="c6"
     >
       <div
         class="c7"
-        data-testid="mfa-select"
-        width="50%"
+        width="100%"
+      >
+        <label
+          class="c4"
+          font-size="0"
+        >
+          Password
+        </label>
+        <input
+          autocomplete="off"
+          class="c5"
+          color="text.onLight"
+          placeholder="Password"
+          type="password"
+          value=""
+        />
+      </div>
+    </div>
+    <div
+      class="c8"
+    >
+      <div
+        class="c9"
       >
         <div
-          class="c8"
+          class="c10"
+          data-testid="mfa-select"
+          width="50%"
         >
-          <label
-            class="c4"
-            font-size="0"
-          >
-            Second factor
-          </label>
           <div
-            class="c9"
+            class="c11"
           >
+            <label
+              class="c4"
+              font-size="0"
+            >
+              Second factor
+            </label>
             <div
-              class="react-select-container react-select--is-disabled css-14jk2my-container"
+              class="c12"
             >
               <div
-                class="react-select__control react-select__control--is-disabled css-1fhf3k1-control"
+                class="react-select-container react-select--is-disabled css-14jk2my-container"
               >
                 <div
-                  class="react-select__value-container react-select__value-container--has-value css-g1d714-ValueContainer"
+                  class="react-select__control react-select__control--is-disabled css-1fhf3k1-control"
                 >
                   <div
-                    class="react-select__single-value react-select__single-value--is-disabled css-107lb6w-singleValue"
+                    class="react-select__value-container react-select__value-container--has-value css-g1d714-ValueContainer"
                   >
-                    U2F
-                  </div>
-                  <input
-                    aria-autocomplete="list"
-                    class="css-62g3xt-dummyInput"
-                    disabled=""
-                    id="react-select-3-input"
-                    readonly=""
-                    tabindex="0"
-                    value=""
-                  />
-                </div>
-                <div
-                  class="react-select__indicators css-1hb7zxy-IndicatorsContainer"
-                >
-                  <span
-                    class="react-select__indicator-separator css-109onse-indicatorSeparator"
-                  />
-                  <div
-                    aria-hidden="true"
-                    class="react-select__indicator react-select__dropdown-indicator css-tlfecz-indicatorContainer"
-                  >
-                    <svg
-                      aria-hidden="true"
-                      class="css-6q0nyr-Svg"
-                      focusable="false"
-                      height="20"
-                      viewBox="0 0 20 20"
-                      width="20"
+                    <div
+                      class="react-select__single-value react-select__single-value--is-disabled css-107lb6w-singleValue"
                     >
-                      <path
-                        d="M4.516 7.548c0.436-0.446 1.043-0.481 1.576 0l3.908 3.747 3.908-3.747c0.533-0.481 1.141-0.446 1.574 0 0.436 0.445 0.408 1.197 0 1.615-0.406 0.418-4.695 4.502-4.695 4.502-0.217 0.223-0.502 0.335-0.787 0.335s-0.57-0.112-0.789-0.335c0 0-4.287-4.084-4.695-4.502s-0.436-1.17 0-1.615z"
-                      />
-                    </svg>
+                      U2F
+                    </div>
+                    <input
+                      aria-autocomplete="list"
+                      class="css-62g3xt-dummyInput"
+                      disabled=""
+                      id="react-select-3-input"
+                      readonly=""
+                      tabindex="0"
+                      value=""
+                    />
+                  </div>
+                  <div
+                    class="react-select__indicators css-1hb7zxy-IndicatorsContainer"
+                  >
+                    <span
+                      class="react-select__indicator-separator css-109onse-indicatorSeparator"
+                    />
+                    <div
+                      aria-hidden="true"
+                      class="react-select__indicator react-select__dropdown-indicator css-tlfecz-indicatorContainer"
+                    >
+                      <svg
+                        aria-hidden="true"
+                        class="css-6q0nyr-Svg"
+                        focusable="false"
+                        height="20"
+                        viewBox="0 0 20 20"
+                        width="20"
+                      >
+                        <path
+                          d="M4.516 7.548c0.436-0.446 1.043-0.481 1.576 0l3.908 3.747 3.908-3.747c0.533-0.481 1.141-0.446 1.574 0 0.436 0.445 0.408 1.197 0 1.615-0.406 0.418-4.695 4.502-4.695 4.502-0.217 0.223-0.502 0.335-0.787 0.335s-0.57-0.112-0.789-0.335c0 0-4.287-4.084-4.695-4.502s-0.436-1.17 0-1.615z"
+                        />
+                      </svg>
+                    </div>
                   </div>
                 </div>
               </div>
             </div>
           </div>
         </div>
-      </div>
-      <div
-        class="c7"
-        width="50%"
-      >
         <div
           class="c10"
+          width="50%"
         >
-          Insert your U2F key and press the button on the key.
+          <div
+            class="c13"
+          >
+            Insert your U2F key and press the button on the key.
+          </div>
         </div>
       </div>
     </div>
     <button
-      class="c11"
+      class="c14"
       disabled=""
       kind="primary"
       type="submit"
@@ -1049,7 +1107,13 @@ exports[`server error rendering 1`] = `
   margin-bottom: 24px;
 }
 
-.c7 {
+.c8 {
+  box-sizing: border-box;
+  margin-bottom: 0px;
+  width: 100%;
+}
+
+.c9 {
   line-height: 1.5;
   margin: 0;
   display: inline-flex;
@@ -1077,20 +1141,20 @@ exports[`server error rendering 1`] = `
   width: 100%;
 }
 
-.c7:active {
+.c9:active {
   opacity: 0.56;
 }
 
-.c7:hover,
-.c7:focus {
+.c9:hover,
+.c9:focus {
   background: #651FFF;
 }
 
-.c7:active {
+.c9:active {
   background: #354AA4;
 }
 
-.c7:disabled {
+.c9:disabled {
   background: rgba(255,255,255,0.12);
   color: rgba(255,255,255,0.3);
 }
@@ -1168,6 +1232,14 @@ exports[`server error rendering 1`] = `
   flex-direction: column;
 }
 
+.c7 {
+  box-sizing: border-box;
+  margin-bottom: 16px;
+  display: flex;
+  align-items: flex-end;
+  flex-direction: column;
+}
+
 <div
   class="c0"
   width="464px"
@@ -1206,25 +1278,30 @@ exports[`server error rendering 1`] = `
       />
     </div>
     <div
-      class="c4"
+      class="c7"
     >
-      <label
-        class="c5"
-        font-size="0"
+      <div
+        class="c8"
+        width="100%"
       >
-        Password
-      </label>
-      <input
-        autocomplete="off"
-        class="c6"
-        color="text.onLight"
-        placeholder="Password"
-        type="password"
-        value=""
-      />
+        <label
+          class="c5"
+          font-size="0"
+        >
+          Password
+        </label>
+        <input
+          autocomplete="off"
+          class="c6"
+          color="text.onLight"
+          placeholder="Password"
+          type="password"
+          value=""
+        />
+      </div>
     </div>
     <button
-      class="c7"
+      class="c9"
       kind="primary"
       type="submit"
       width="100%"
