@@ -185,7 +185,11 @@ export default function FormInvite(props: Props) {
                 borderTopRightRadius={3}
                 borderBottomRightRadius={3}
               >
-                <TwoFAData auth2faType={mfaType.value} qr={qr} />
+                <TwoFAData
+                  auth2faType={mfaType.value}
+                  qr={qr}
+                  submitBtnText={submitBtnText}
+                />
               </Box>
             )}
           </Flex>

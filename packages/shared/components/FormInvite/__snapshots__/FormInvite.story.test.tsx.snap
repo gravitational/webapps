@@ -1484,7 +1484,7 @@ exports[`shared/components/Invite.story story.U2f 1`] = `
             Press the button on the U2F key after you press the
              
             <b>
-              CREATE ACCOUNT
+              SUBMIT
             </b>
              button.
           </div>

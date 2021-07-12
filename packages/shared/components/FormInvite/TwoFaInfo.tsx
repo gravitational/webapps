@@ -20,7 +20,7 @@ import { Auth2faType } from 'shared/services';
 
 const U2F_HELP_URL = 'https://support.google.com/accounts/answer/6103523?hl=en';
 
-export default function TwoFAData({ auth2faType, qr }: Props) {
+export default function TwoFAData({ auth2faType, qr, submitBtnText }: Props) {
   const imgSrc = `data:image/png;base64,${qr}`;
 
   if (auth2faType === 'otp') {
@@ -54,7 +54,7 @@ export default function TwoFAData({ auth2faType, qr }: Props) {
         <Box color="text.primary">
           <Text typography="paragraph2" mb={3}>
             Press the button on the U2F key after you press the{' '}
-            <b>CREATE ACCOUNT</b> button.
+            <b>{submitBtnText.toUpperCase()}</b> button.
           </Text>
           <Text typography="paragraph2" mb={3}>
             <Link color="light" target="_blank" href={U2F_HELP_URL}>
@@ -73,4 +73,5 @@ export default function TwoFAData({ auth2faType, qr }: Props) {
 type Props = {
   qr: string;
   auth2faType: Auth2faType;
+  submitBtnText: string;
 };
