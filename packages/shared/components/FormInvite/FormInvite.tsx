@@ -19,6 +19,8 @@ import { Attempt } from 'shared/hooks/useAttemptNext';
 import { Text, Card, ButtonPrimary, Flex, Box, Link } from 'design';
 import * as Alerts from 'design/Alert';
 import { Auth2faType } from 'shared/services';
+import { Option } from 'shared/components/Select';
+import FieldSelect from '../FieldSelect';
 import FieldInput from '../FieldInput';
 import Validation, { Validator } from '../Validation';
 import TwoFAData from './TwoFaInfo';
@@ -42,18 +44,41 @@ export default function FormInvite(props: Props) {
     title = '',
     submitBtnText = 'Submit',
   } = props;
-  const [password, setPassword] = React.useState('');
-  const [passwordConfirmed, setPasswordConfirmed] = React.useState('');
-  const [token, setToken] = React.useState('');
 
   // Temporary hack: if cluster supports all 2FA types, require the user to
   // sign up with OTP. We should ideally let the user choose a different 2FA
   // method when there's engineering capacity to build this.
-  const otpEnabled =
-    auth2faType === 'otp' || auth2faType === 'on' || auth2faType === 'optional';
+  const mfaEnabled = auth2faType === 'on' || auth2faType === 'optional';
   const u2fEnabled = auth2faType === 'u2f';
-  const secondFactorEnabled = otpEnabled || u2fEnabled;
-  const boxWidth = (secondFactorEnabled ? 720 : 464) + 'px';
+  const otpEnabled = auth2faType === 'otp';
+  const secondFactorEnabled = otpEnabled || u2fEnabled || mfaEnabled;
+
+  const [password, setPassword] = React.useState('');
+  const [passwordConfirmed, setPasswordConfirmed] = React.useState('');
+  const [token, setToken] = React.useState('');
+
+  const [mfaOptions] = React.useState(() => {
+    let mfaOptions = [];
+
+    if (mfaEnabled || otpEnabled) {
+      mfaOptions = [{ value: 'otp', label: 'TOTP' }];
+    }
+
+    if (mfaEnabled || u2fEnabled) {
+      mfaOptions = [{ value: 'u2f', label: 'U2F' }, ...mfaOptions];
+    }
+
+    if (auth2faType === 'optional' || auth2faType === 'off') {
+      mfaOptions = [{ value: 'none', label: 'NONE' }, ...mfaOptions];
+    }
+
+    return mfaOptions;
+  });
+
+  const [mfaType, setMfaType] = React.useState(mfaOptions[0]);
+
+  const boxWidth =
+    (secondFactorEnabled && mfaType.value !== 'none' ? 720 : 464) + 'px';
 
   function onBtnClick(
     e: React.MouseEvent<HTMLButtonElement>,
@@ -64,11 +89,17 @@ export default function FormInvite(props: Props) {
       return;
     }
 
-    if (u2fEnabled) {
+    if (mfaType.value === 'u2f') {
       onSubmitWithU2f(password);
     } else {
       onSubmit(password, token);
     }
+  }
+
+  function onSetMfaOption(option: Option, validator: Validator) {
+    setToken('');
+    validator.reset();
+    setMfaType(option);
   }
 
   return (
@@ -105,17 +136,38 @@ export default function FormInvite(props: Props) {
                 type="password"
                 placeholder="Confirm Password"
               />
-              {otpEnabled && (
-                <Flex flexDirection="row">
-                  <FieldInput
-                    label="two-factor token"
-                    rule={requiredToken}
-                    autoComplete="off"
-                    width="50%"
-                    value={token}
-                    onChange={e => setToken(e.target.value)}
-                    placeholder="123 456"
-                  />
+              {secondFactorEnabled && (
+                <Flex alignItems="flex-end" mb={3}>
+                  <Box width="50%" data-testid="mfa-select">
+                    <FieldSelect
+                      label="Second factor"
+                      value={mfaType}
+                      options={mfaOptions}
+                      onChange={opt => onSetMfaOption(opt as Option, validator)}
+                      mr={3}
+                      mb={0}
+                      isDisabled={attempt.status === 'processing'}
+                    />
+                  </Box>
+                  <Box width="50%">
+                    {mfaType.value === 'otp' && (
+                      <FieldInput
+                        label="two-factor token"
+                        rule={requiredToken}
+                        autoComplete="off"
+                        value={token}
+                        onChange={e => setToken(e.target.value)}
+                        placeholder="123 456"
+                        mb={0}
+                      />
+                    )}
+                    {mfaType.value === 'u2f' &&
+                      attempt.status === 'processing' && (
+                        <Text typography="body2" mb={1}>
+                          Insert your U2F key and press the button on the key.
+                        </Text>
+                      )}
+                  </Box>
                 </Flex>
               )}
               <ButtonPrimary
@@ -127,26 +179,16 @@ export default function FormInvite(props: Props) {
               >
                 {submitBtnText}
               </ButtonPrimary>
-              {attempt.status === 'processing' && u2fEnabled && (
-                <Text
-                  mt="3"
-                  typography="paragraph2"
-                  width="100%"
-                  textAlign="center"
-                >
-                  Insert your U2F key and press the button on the key.
-                </Text>
-              )}
             </Box>
-            {secondFactorEnabled && (
+            {secondFactorEnabled && mfaType.value !== 'none' && (
               <Box
                 flex="1"
                 bg="primary.main"
-                p="6"
-                borderTopRightRadius="3"
-                borderBottomRightRadius="3"
+                p={6}
+                borderTopRightRadius={3}
+                borderBottomRightRadius={3}
               >
-                <TwoFAData auth2faType={auth2faType} qr={qr} />
+                <TwoFAData auth2faType={mfaType.value} qr={qr} />
               </Box>
             )}
           </Flex>
