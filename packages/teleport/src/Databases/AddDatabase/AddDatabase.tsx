@@ -133,13 +133,12 @@ export default function AddDatabase({
           />
         </Box>
         <Box>
-          {`* Note: For a self-hosted Teleport version, you may need to update DNS and obtain a TLS certificate for this application.
-            Learn more about database access `}
+          {`* Note: Learn more about database access in our `}
           <Link
             href={'https://goteleport.com/docs/database-access/'}
             target="_blank"
           >
-            here
+            documentation
           </Link>
           .
         </Box>
@@ -177,8 +176,10 @@ const options: DatabaseInfo[] = [
   formatDatabaseInfo('rds', 'mysql'),
   formatDatabaseInfo('redshift', 'postgres'),
   formatDatabaseInfo('gcp', 'postgres'),
+  formatDatabaseInfo('gcp', 'mysql'),
   formatDatabaseInfo('self-hosted', 'postgres'),
   formatDatabaseInfo('self-hosted', 'mysql'),
+  formatDatabaseInfo('self-hosted', 'mongodb'),
 ];
 
 export type Props = {
