@@ -18,12 +18,12 @@ import moment from 'moment';
 import { useEffect, useState, useMemo } from 'react';
 import useAttempt from 'shared/hooks/useAttemptNext';
 import Ctx from 'teleport/teleportContext';
-import { Event } from 'teleport/services/audit';
+import { Event, EventCode, formatters } from 'teleport/services/audit';
 
 export default function useAuditEvents(
   ctx: Ctx,
   clusterId: string,
-  eventType?: string
+  eventCode?: EventCode
 ) {
   const rangeOptions = useMemo(() => getRangeOptions(), []);
   const [searchValue, setSearchValue] = useState('');
@@ -51,7 +51,7 @@ export default function useAuditEvents(
       .fetchEvents(clusterId, {
         ...range,
         startKey: results.fetchStartKey,
-        filterBy: eventType,
+        filterBy: formatters[eventCode].type,
       })
       .then(res =>
         setResults({
@@ -70,7 +70,10 @@ export default function useAuditEvents(
   function fetch() {
     run(() =>
       ctx.auditService
-        .fetchEvents(clusterId, { ...range, filterBy: eventType })
+        .fetchEvents(clusterId, {
+          ...range,
+          filterBy: formatters[eventCode].type,
+        })
         .then(res =>
           setResults({
             events: res.events,
