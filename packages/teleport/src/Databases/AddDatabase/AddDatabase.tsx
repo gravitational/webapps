@@ -115,6 +115,7 @@ export default function AddDatabase({
               onChange={(o: Option<DatabaseInfo>) => setSelectedDbOption(o)}
               options={dbOptions}
               isSearchable={true}
+              maxMenuHeight={220}
             />
           </Box>
         </Box>
