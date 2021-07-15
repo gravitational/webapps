@@ -47,7 +47,7 @@ function resolveRedirectUrl(params: UrlLauncherParams) {
   const location = window.location;
   const port = location.port ? ':' + location.port : '';
   const state = getUrlParameter('state', location.search);
-  const arn = getUrlParameter('arn', location.search);
+  const arn = getUrlParameter('awsrole', location.search);
 
   // no state value: let the target app know of a new auth exchange
   if (!state) {
@@ -60,7 +60,7 @@ function resolveRedirectUrl(params: UrlLauncherParams) {
         url.searchParams.set('addr', params.publicAddr);
       }
       if (params.arn) {
-        url.searchParams.set('arn', params.arn);
+        url.searchParams.set('awsrole', params.arn);
       }
 
       return url.toString();

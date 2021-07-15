@@ -19,7 +19,15 @@ import cfg from 'teleport/config';
 
 export default function makeApp(json: any): App {
   json = json || {};
-  const { name, uri, publicAddr, clusterId, fqdn, isAWSConsole = false } = json;
+  const {
+    name,
+    description,
+    uri,
+    publicAddr,
+    clusterId,
+    fqdn,
+    isAWSConsole = false,
+  } = json;
 
   const id = `${clusterId}-${name}-${publicAddr}`;
   const launchUrl = cfg.getAppLauncherRoute({ fqdn, clusterId, publicAddr });
@@ -29,6 +37,7 @@ export default function makeApp(json: any): App {
   return {
     id,
     name,
+    description,
     uri,
     publicAddr,
     tags: labels.map(label => `${label.name}: ${label.value}`),

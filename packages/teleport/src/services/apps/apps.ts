@@ -42,11 +42,9 @@ const service = {
   },
 
   getAppFqdn(params: UrlAppParams) {
-    return api
-      .get(cfg.getAppFqdnUrl(params))
-      .then(json => ({
-        fqdn: json.fqdn as string,
-      }));
+    return api.get(cfg.getAppFqdnUrl(params)).then(json => ({
+      fqdn: json.fqdn as string,
+    }));
   },
 };
 

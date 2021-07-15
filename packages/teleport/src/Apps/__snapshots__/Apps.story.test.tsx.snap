@@ -595,6 +595,13 @@ exports[`loaded state 1`] = `
   color: #FFFFFF;
 }
 
+.c22 {
+  display: inline-block;
+  transition: color .3s;
+  color: #FFFFFF;
+  font-size: 22px;
+}
+
 .c23 {
   display: inline-block;
   transition: color .3s;
@@ -634,15 +641,7 @@ exports[`loaded state 1`] = `
   overflow: hidden;
   text-overflow: ellipsis;
   font-weight: 600;
-  font-size: 14px;
-  margin: 0px;
-}
-
-.c22 {
-  overflow: hidden;
-  text-overflow: ellipsis;
-  font-weight: 600;
-  font-size: 9px;
+  font-size: 16px;
   margin: 0px;
 }
 
@@ -654,8 +653,8 @@ exports[`loaded state 1`] = `
 
 .c15 {
   box-sizing: border-box;
-  height: 24px;
-  width: 24px;
+  height: 32px;
+  width: 32px;
   background-color: #e64a19;
   border-radius: 100%;
   display: flex;
@@ -665,8 +664,8 @@ exports[`loaded state 1`] = `
 
 .c19 {
   box-sizing: border-box;
-  height: 24px;
-  width: 24px;
+  height: 32px;
+  width: 32px;
   background-color: #0097a7;
   border-radius: 100%;
   display: flex;
@@ -676,8 +675,8 @@ exports[`loaded state 1`] = `
 
 .c20 {
   box-sizing: border-box;
-  height: 24px;
-  width: 24px;
+  height: 32px;
+  width: 32px;
   background-color: #00796b;
   border-radius: 100%;
   display: flex;
@@ -687,8 +686,8 @@ exports[`loaded state 1`] = `
 
 .c21 {
   box-sizing: border-box;
-  height: 24px;
-  width: 24px;
+  height: 32px;
+  width: 32px;
   background-color: #f57c00;
   border-radius: 100%;
   display: flex;
@@ -894,7 +893,7 @@ exports[`loaded state 1`] = `
 }
 
 .c13 > tbody > tr > td {
-  vertical-align: baseline;
+  vertical-align: middle;
 }
 
 <div>
@@ -995,6 +994,15 @@ exports[`loaded state 1`] = `
               </th>
               <th>
                 <a>
+                  Description
+                  <span
+                    class="c10 c14 icon icon-chevrons-expand-vertical "
+                    color="light"
+                  />
+                </a>
+              </th>
+              <th>
+                <a>
                   Address
                   <span
                     class="c10 c14 icon icon-chevrons-expand-vertical "
@@ -1012,16 +1020,16 @@ exports[`loaded state 1`] = `
             <tr>
               <td
                 align="left"
-                style="width: 32px;"
+                style="width: 40px;"
               >
                 <div
                   class="c15"
-                  height="24px"
-                  width="24px"
+                  height="32px"
+                  width="32px"
                 >
                   <div
                     class="c16"
-                    font-size="2"
+                    font-size="3"
                     style="user-select: none;"
                   >
                     G
@@ -1030,6 +1038,9 @@ exports[`loaded state 1`] = `
               </td>
               <td>
                 Grafana
+              </td>
+              <td>
+                This is a Grafana app
               </td>
               <td>
                 https://
@@ -1067,16 +1078,16 @@ exports[`loaded state 1`] = `
             <tr>
               <td
                 align="left"
-                style="width: 32px;"
+                style="width: 40px;"
               >
                 <div
                   class="c19"
-                  height="24px"
-                  width="24px"
+                  height="32px"
+                  width="32px"
                 >
                   <div
                     class="c16"
-                    font-size="2"
+                    font-size="3"
                     style="user-select: none;"
                   >
                     J
@@ -1085,6 +1096,9 @@ exports[`loaded state 1`] = `
               </td>
               <td>
                 Jenkins
+              </td>
+              <td>
+                This is a Jenkins app
               </td>
               <td>
                 https://
@@ -1122,16 +1136,16 @@ exports[`loaded state 1`] = `
             <tr>
               <td
                 align="left"
-                style="width: 32px;"
+                style="width: 40px;"
               >
                 <div
                   class="c20"
-                  height="24px"
-                  width="24px"
+                  height="32px"
+                  width="32px"
                 >
                   <div
                     class="c16"
-                    font-size="2"
+                    font-size="3"
                     style="user-select: none;"
                   >
                     M
@@ -1140,6 +1154,9 @@ exports[`loaded state 1`] = `
               </td>
               <td>
                 Mattermost1
+              </td>
+              <td>
+                This is a Mattermost app
               </td>
               <td>
                 https://
@@ -1177,24 +1194,25 @@ exports[`loaded state 1`] = `
             <tr>
               <td
                 align="left"
-                style="width: 32px;"
+                style="width: 40px;"
               >
                 <div
                   class="c21"
-                  height="24px"
-                  width="24px"
+                  height="32px"
+                  width="32px"
                 >
-                  <div
-                    class="c22"
-                    font-size="9px"
-                    style="user-select: none;"
-                  >
-                    AWS
-                  </div>
+                  <span
+                    class="c10 c22 icon icon-amazonaws "
+                    color="light"
+                    font-size="6"
+                  />
                 </div>
               </td>
               <td>
                 aws-console-1
+              </td>
+              <td>
+                This is an AWS Console app
               </td>
               <td>
                 https://

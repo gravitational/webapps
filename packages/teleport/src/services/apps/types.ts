@@ -17,6 +17,7 @@
 export interface App {
   id: string;
   name: string;
+  description: string;
   uri: string;
   publicAddr: string;
   tags: string[];

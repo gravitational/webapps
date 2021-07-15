@@ -38,6 +38,7 @@ import {
   TextCell,
   SortTypes,
 } from 'design/DataTable';
+import { AmazonAws } from 'design/Icon';
 import Table from 'design/DataTable/Paged';
 import isMatch from 'design/utils/match';
 import { App } from 'teleport/services/apps';
@@ -53,7 +54,7 @@ function AppList(props: Props) {
   function sortAndFilter(search) {
     const filtered = apps.filter(obj =>
       isMatch(obj, search, {
-        searchableProps: ['name', 'publicAddr', 'tags'],
+        searchableProps: ['name', 'publicAddr', 'description', 'tags'],
         cb: searchAndFilterCb,
       })
     );
@@ -89,6 +90,17 @@ function AppList(props: Props) {
           cell={<TextCell />}
         />
         <Column
+          columnKey="description"
+          header={
+            <SortHeaderCell
+              sortDir={sortDir.description}
+              onSortChange={onSortChange}
+              title="Description"
+            />
+          }
+          cell={<TextCell />}
+        />
+        <Column
           columnKey="publicAddr"
           header={
             <SortHeaderCell
@@ -118,12 +130,6 @@ function AddressCell(props) {
   return <Cell>https://{publicAddr}</Cell>;
 }
 
-const StyledTable = styled(Table)`
-  & > tbody > tr > td {
-    vertical-align: baseline;
-  }
-`;
-
 function searchAndFilterCb(
   targetValue: any[],
   searchValue: string,
@@ -140,21 +146,19 @@ function AppIconCell(props) {
   const { rowIndex, data } = props;
   const { name, isAWSConsole } = data[rowIndex];
   return (
-    <Cell align="left" style={{ width: '32px' }}>
+    <Cell align="left" style={{ width: '40px' }}>
       <Flex
-        height="24px"
-        width="24px"
+        height="32px"
+        width="32px"
         bg={getIconColor(name)}
         borderRadius="100%"
         justifyContent="center"
         alignItems="center"
       >
         {isAWSConsole ? (
-          <Text fontSize="9px" bold style={{ userSelect: 'none' }}>
-            AWS
-          </Text>
+          <AmazonAws fontSize={6} />
         ) : (
-          <Text fontSize={2} bold style={{ userSelect: 'none' }}>
+          <Text fontSize={3} bold style={{ userSelect: 'none' }}>
             {name[0]?.toUpperCase()}
           </Text>
         )}
@@ -228,5 +232,11 @@ type Props = {
   pageSize?: number;
   searchValue: string;
 };
+
+const StyledTable = styled(Table)`
+  & > tbody > tr > td {
+    vertical-align: middle;
+  }
+`;
 
 export default AppList;

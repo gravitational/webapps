@@ -21,6 +21,7 @@ export const apps = [
     name: 'Jenkins',
     uri: 'https://jenkins.teleport-proxy.com',
     publicAddr: 'jenkins.teleport-proxy.com',
+    description: 'This is a Jenkins app',
     isAWSConsole: false,
     labels: [
       { name: 'env', value: 'idk' },
@@ -33,6 +34,7 @@ export const apps = [
     name: 'Mattermost1',
     uri: 'https://mattermost1.teleport-proxy.com',
     publicAddr: 'mattermost.teleport-proxy.com',
+    description: 'This is a Mattermost app',
     isAWSConsole: false,
     labels: [
       { name: 'env', value: 'idk' },
@@ -45,6 +47,7 @@ export const apps = [
     name: 'Grafana',
     uri: 'https://grafana.teleport-proxy.com',
     publicAddr: 'grafana.teleport-proxy.com',
+    description: 'This is a Grafana app',
     isAWSConsole: false,
     labels: [
       { name: 'env', value: 'idk' },
@@ -58,6 +61,7 @@ export const apps = [
     uri: 'https://console.aws.amazon.com/ec2/v2/home',
     publicAddr: 'awsconsole-1.teleport-proxy.com',
     labels: [{ name: 'aws_account_id', value: 'joe123' }],
+    description: 'This is an AWS Console app',
     isAWSConsole: true,
     awsRoles: [
       {
