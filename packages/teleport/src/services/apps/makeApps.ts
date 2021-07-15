@@ -26,7 +26,7 @@ export default function makeApp(json: any): App {
     publicAddr,
     clusterId,
     fqdn,
-    isAWSConsole = false,
+    awsConsole = false,
   } = json;
 
   const id = `${clusterId}-${name}-${publicAddr}`;
@@ -45,6 +45,6 @@ export default function makeApp(json: any): App {
     fqdn,
     launchUrl,
     awsRoles,
-    isAWSConsole,
+    awsConsole,
   };
 }

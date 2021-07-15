@@ -75,46 +75,44 @@ function AppList(props: Props) {
   const data = sortAndFilter(searchValue);
 
   return (
-    <>
-      <StyledTable pageSize={pageSize} data={data}>
-        <Column header={<Cell />} cell={<AppIconCell />} />
-        <Column
-          columnKey="name"
-          header={
-            <SortHeaderCell
-              sortDir={sortDir.name}
-              onSortChange={onSortChange}
-              title="Name"
-            />
-          }
-          cell={<TextCell />}
-        />
-        <Column
-          columnKey="description"
-          header={
-            <SortHeaderCell
-              sortDir={sortDir.description}
-              onSortChange={onSortChange}
-              title="Description"
-            />
-          }
-          cell={<TextCell />}
-        />
-        <Column
-          columnKey="publicAddr"
-          header={
-            <SortHeaderCell
-              sortDir={sortDir.publicAddr}
-              onSortChange={onSortChange}
-              title="Address"
-            />
-          }
-          cell={<AddressCell />}
-        />
-        <Column header={<Cell>Labels</Cell>} cell={<LabelCell />} />
-        <Column header={<Cell />} cell={<LaunchButtonCell />} />
-      </StyledTable>
-    </>
+    <StyledTable pageSize={pageSize} data={data}>
+      <Column header={<Cell />} cell={<AppIconCell />} />
+      <Column
+        columnKey="name"
+        header={
+          <SortHeaderCell
+            sortDir={sortDir.name}
+            onSortChange={onSortChange}
+            title="Name"
+          />
+        }
+        cell={<TextCell />}
+      />
+      <Column
+        columnKey="description"
+        header={
+          <SortHeaderCell
+            sortDir={sortDir.description}
+            onSortChange={onSortChange}
+            title="Description"
+          />
+        }
+        cell={<TextCell />}
+      />
+      <Column
+        columnKey="publicAddr"
+        header={
+          <SortHeaderCell
+            sortDir={sortDir.publicAddr}
+            onSortChange={onSortChange}
+            title="Address"
+          />
+        }
+        cell={<AddressCell />}
+      />
+      <Column header={<Cell>Labels</Cell>} cell={<LabelCell />} />
+      <Column header={<Cell />} cell={<LaunchButtonCell />} />
+    </StyledTable>
   );
 }
 
@@ -144,7 +142,7 @@ function searchAndFilterCb(
 
 function AppIconCell(props) {
   const { rowIndex, data } = props;
-  const { name, isAWSConsole } = data[rowIndex];
+  const { name, awsConsole } = data[rowIndex];
   return (
     <Cell align="left" style={{ width: '40px' }}>
       <Flex
@@ -155,11 +153,15 @@ function AppIconCell(props) {
         justifyContent="center"
         alignItems="center"
       >
-        {isAWSConsole ? (
+        {awsConsole ? (
           <AmazonAws fontSize={6} />
         ) : (
-          <Text fontSize={3} bold style={{ userSelect: 'none' }}>
-            {name[0]?.toUpperCase()}
+          <Text
+            fontSize={3}
+            bold
+            style={{ textTransform: 'uppercase', userSelect: 'none' }}
+          >
+            {name[0]}
           </Text>
         )}
       </Flex>
@@ -169,16 +171,11 @@ function AppIconCell(props) {
 
 function LaunchButtonCell(props) {
   const { rowIndex, data } = props;
-  const {
-    launchUrl,
-    isAWSConsole,
-    awsRoles,
-    fqdn,
-    clusterId,
-    publicAddr,
-  } = data[rowIndex];
+  const { launchUrl, awsConsole, awsRoles, fqdn, clusterId, publicAddr } = data[
+    rowIndex
+  ];
 
-  if (!isAWSConsole) {
+  if (!awsConsole) {
     return (
       <Cell align="right">
         <ButtonBorder

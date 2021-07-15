@@ -25,7 +25,7 @@ export interface App {
   launchUrl: string;
   fqdn: string;
   awsRoles: AwsRole[];
-  isAWSConsole: boolean;
+  awsConsole: boolean;
 }
 
 export type AwsRole = {
