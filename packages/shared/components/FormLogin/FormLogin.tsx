@@ -11,7 +11,7 @@ Unless required by applicable law or agreed to in writing, software
 distributed under the License is distributed on an "AS IS" BASIS,
 WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
-limitat ions under the License.
+limitations under the License.
 */
 
 import React, { useState } from 'react';
@@ -149,7 +149,7 @@ export default function LoginForm(props: Props) {
                 onChange={e => setUser(e.target.value)}
                 placeholder="Username"
               />
-              <Flex flexDirection="column" alignItems="flex-end" mb={3}>
+              <Flex flexDirection="column" mb={3}>
                 <FieldInput
                   rule={requiredField('Password is required')}
                   label="Password"
@@ -165,6 +165,7 @@ export default function LoginForm(props: Props) {
                     style={{
                       padding: '0px',
                       minHeight: 'auto',
+                      alignSelf: 'flex-end',
                     }}
                     onClick={() => onRecover('password')}
                   >

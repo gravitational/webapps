@@ -12,23 +12,23 @@ exports[`auth2faType: otp rendering 1`] = `
   width: 100%;
 }
 
-.c10 {
+.c9 {
   box-sizing: border-box;
   width: 50%;
 }
 
-.c11 {
+.c10 {
   box-sizing: border-box;
   margin-bottom: 0px;
   margin-right: 16px;
 }
 
-.c13 {
+.c12 {
   box-sizing: border-box;
   margin-bottom: 0px;
 }
 
-.c14 {
+.c13 {
   line-height: 1.5;
   margin: 0;
   display: inline-flex;
@@ -56,20 +56,20 @@ exports[`auth2faType: otp rendering 1`] = `
   width: 100%;
 }
 
-.c14:active {
+.c13:active {
   opacity: 0.56;
 }
 
-.c14:hover,
-.c14:focus {
+.c13:hover,
+.c13:focus {
   background: #651FFF;
 }
 
-.c14:active {
+.c13:active {
   background: #354AA4;
 }
 
-.c14:disabled {
+.c13:disabled {
   background: rgba(255,255,255,0.12);
   color: rgba(255,255,255,0.3);
 }
@@ -151,24 +151,16 @@ exports[`auth2faType: otp rendering 1`] = `
   box-sizing: border-box;
   margin-bottom: 16px;
   display: flex;
-  align-items: flex-end;
   flex-direction: column;
 }
 
 .c8 {
   box-sizing: border-box;
-  margin-bottom: 16px;
-  display: flex;
-  flex-direction: column;
-}
-
-.c9 {
-  box-sizing: border-box;
   display: flex;
   align-items: flex-end;
 }
 
-.c12 .react-select-container {
+.c11 .react-select-container {
   box-shadow: inset 0 2px 4px rgba(0,0,0,0.24);
   box-sizing: border-box;
   border: none;
@@ -182,8 +174,8 @@ exports[`auth2faType: otp rendering 1`] = `
   border-radius: 4px;
 }
 
-.c12 .react-select__control,
-.c12 .react-select__control--is-focused {
+.c11 .react-select__control,
+.c11 .react-select__control--is-focused {
   min-height: 40px;
   height: 40px;
   background-color: transparent;
@@ -194,48 +186,48 @@ exports[`auth2faType: otp rendering 1`] = `
   box-shadow: none;
 }
 
-.c12 .react-select__control:hover,
-.c12 .react-select__control--is-focused:hover {
+.c11 .react-select__control:hover,
+.c11 .react-select__control--is-focused:hover {
   border-color: transparent;
   cursor: pointer;
 }
 
-.c12 .react-select__option:hover {
+.c11 .react-select__option:hover {
   cursor: pointer;
   background-color: #eceff1;
 }
 
-.c12 .react-select__option--is-focused {
+.c11 .react-select__option--is-focused {
   background-color: #eceff1;
 }
 
-.c12 .react-select__option--is-selected {
+.c11 .react-select__option--is-selected {
   background-color: #cfd8dc;
   color: inherit;
 }
 
-.c12 .react-select__option--is-selected:hover {
+.c11 .react-select__option--is-selected:hover {
   background-color: #cfd8dc;
 }
 
-.c12 .react-select__menu {
+.c11 .react-select__menu {
   margin-top: 0px;
 }
 
-.c12 .react-select__indicator-separator {
+.c11 .react-select__indicator-separator {
   display: none;
 }
 
-.c12 .react-select__loading-indicator {
+.c11 .react-select__loading-indicator {
   display: none;
 }
 
-.c12 .react-select--is-disabled .react-select__single-value,
-.c12 .react-select--is-disabled .react-select__placeholder {
+.c11 .react-select--is-disabled .react-select__single-value,
+.c11 .react-select--is-disabled .react-select__placeholder {
   color: rgba(0,0,0,0.24);
 }
 
-.c12 .react-select--is-disabled .react-select__indicator {
+.c11 .react-select--is-disabled .react-select__indicator {
   color: rgba(0,0,0,0.14);
 }
 
@@ -294,18 +286,18 @@ exports[`auth2faType: otp rendering 1`] = `
       </div>
     </div>
     <div
-      class="c8"
+      class="c6"
     >
       <div
-        class="c9"
+        class="c8"
       >
         <div
-          class="c10"
+          class="c9"
           data-testid="mfa-select"
           width="50%"
         >
           <div
-            class="c11"
+            class="c10"
           >
             <label
               class="c4"
@@ -314,7 +306,7 @@ exports[`auth2faType: otp rendering 1`] = `
               Second factor
             </label>
             <div
-              class="c12"
+              class="c11"
             >
               <div
                 class="react-select-container css-2b097c-container"
@@ -369,11 +361,11 @@ exports[`auth2faType: otp rendering 1`] = `
           </div>
         </div>
         <div
-          class="c10"
+          class="c9"
           width="50%"
         >
           <div
-            class="c13"
+            class="c12"
           >
             <label
               class="c4"
@@ -394,7 +386,7 @@ exports[`auth2faType: otp rendering 1`] = `
       </div>
     </div>
     <button
-      class="c14"
+      class="c13"
       kind="primary"
       type="submit"
       width="100%"
@@ -417,18 +409,18 @@ exports[`auth2faType: u2f rendering 1`] = `
   width: 100%;
 }
 
-.c10 {
+.c9 {
   box-sizing: border-box;
   width: 50%;
 }
 
-.c11 {
+.c10 {
   box-sizing: border-box;
   margin-bottom: 0px;
   margin-right: 16px;
 }
 
-.c14 {
+.c13 {
   line-height: 1.5;
   margin: 0;
   display: inline-flex;
@@ -456,20 +448,20 @@ exports[`auth2faType: u2f rendering 1`] = `
   width: 100%;
 }
 
-.c14:active {
+.c13:active {
   opacity: 0.56;
 }
 
-.c14:hover,
-.c14:focus {
+.c13:hover,
+.c13:focus {
   background: #651FFF;
 }
 
-.c14:active {
+.c13:active {
   background: #354AA4;
 }
 
-.c14:disabled {
+.c13:disabled {
   background: rgba(255,255,255,0.12);
   color: rgba(255,255,255,0.3);
 }
@@ -536,7 +528,7 @@ exports[`auth2faType: u2f rendering 1`] = `
   text-align: center;
 }
 
-.c13 {
+.c12 {
   overflow: hidden;
   text-overflow: ellipsis;
   font-weight: 400;
@@ -561,24 +553,16 @@ exports[`auth2faType: u2f rendering 1`] = `
   box-sizing: border-box;
   margin-bottom: 16px;
   display: flex;
-  align-items: flex-end;
   flex-direction: column;
 }
 
 .c8 {
   box-sizing: border-box;
-  margin-bottom: 16px;
-  display: flex;
-  flex-direction: column;
-}
-
-.c9 {
-  box-sizing: border-box;
   display: flex;
   align-items: flex-end;
 }
 
-.c12 .react-select-container {
+.c11 .react-select-container {
   box-shadow: inset 0 2px 4px rgba(0,0,0,0.24);
   box-sizing: border-box;
   border: none;
@@ -592,8 +576,8 @@ exports[`auth2faType: u2f rendering 1`] = `
   border-radius: 4px;
 }
 
-.c12 .react-select__control,
-.c12 .react-select__control--is-focused {
+.c11 .react-select__control,
+.c11 .react-select__control--is-focused {
   min-height: 40px;
   height: 40px;
   background-color: transparent;
@@ -604,48 +588,48 @@ exports[`auth2faType: u2f rendering 1`] = `
   box-shadow: none;
 }
 
-.c12 .react-select__control:hover,
-.c12 .react-select__control--is-focused:hover {
+.c11 .react-select__control:hover,
+.c11 .react-select__control--is-focused:hover {
   border-color: transparent;
   cursor: pointer;
 }
 
-.c12 .react-select__option:hover {
+.c11 .react-select__option:hover {
   cursor: pointer;
   background-color: #eceff1;
 }
 
-.c12 .react-select__option--is-focused {
+.c11 .react-select__option--is-focused {
   background-color: #eceff1;
 }
 
-.c12 .react-select__option--is-selected {
+.c11 .react-select__option--is-selected {
   background-color: #cfd8dc;
   color: inherit;
 }
 
-.c12 .react-select__option--is-selected:hover {
+.c11 .react-select__option--is-selected:hover {
   background-color: #cfd8dc;
 }
 
-.c12 .react-select__menu {
+.c11 .react-select__menu {
   margin-top: 0px;
 }
 
-.c12 .react-select__indicator-separator {
+.c11 .react-select__indicator-separator {
   display: none;
 }
 
-.c12 .react-select__loading-indicator {
+.c11 .react-select__loading-indicator {
   display: none;
 }
 
-.c12 .react-select--is-disabled .react-select__single-value,
-.c12 .react-select--is-disabled .react-select__placeholder {
+.c11 .react-select--is-disabled .react-select__single-value,
+.c11 .react-select--is-disabled .react-select__placeholder {
   color: rgba(0,0,0,0.24);
 }
 
-.c12 .react-select--is-disabled .react-select__indicator {
+.c11 .react-select--is-disabled .react-select__indicator {
   color: rgba(0,0,0,0.14);
 }
 
@@ -704,18 +688,18 @@ exports[`auth2faType: u2f rendering 1`] = `
       </div>
     </div>
     <div
-      class="c8"
+      class="c6"
     >
       <div
-        class="c9"
+        class="c8"
       >
         <div
-          class="c10"
+          class="c9"
           data-testid="mfa-select"
           width="50%"
         >
           <div
-            class="c11"
+            class="c10"
           >
             <label
               class="c4"
@@ -724,7 +708,7 @@ exports[`auth2faType: u2f rendering 1`] = `
               Second factor
             </label>
             <div
-              class="c12"
+              class="c11"
             >
               <div
                 class="react-select-container react-select--is-disabled css-14jk2my-container"
@@ -780,11 +764,11 @@ exports[`auth2faType: u2f rendering 1`] = `
           </div>
         </div>
         <div
-          class="c10"
+          class="c9"
           width="50%"
         >
           <div
-            class="c13"
+            class="c12"
           >
             Insert your U2F key and press the button on the key.
           </div>
@@ -792,7 +776,7 @@ exports[`auth2faType: u2f rendering 1`] = `
       </div>
     </div>
     <button
-      class="c14"
+      class="c13"
       disabled=""
       kind="primary"
       type="submit"
@@ -1236,7 +1220,6 @@ exports[`server error rendering 1`] = `
   box-sizing: border-box;
   margin-bottom: 16px;
   display: flex;
-  align-items: flex-end;
   flex-direction: column;
 }
 
