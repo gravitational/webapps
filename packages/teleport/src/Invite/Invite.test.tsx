@@ -1,5 +1,5 @@
 /*
-Copyright 2020 Gravitational, Inc.
+Copyright 2021 Gravitational, Inc.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -18,8 +18,8 @@ import React from 'react';
 import { MemoryRouter, Route } from 'react-router';
 import { screen, fireEvent, act, render } from 'design/utils/testing';
 import { Logger } from 'shared/libs/logger';
-import auth from 'teleport/services/auth';
 import cfg from 'teleport/config';
+import auth from 'teleport/services/auth';
 import Invite from './Invite';
 import { AuthTfaOn, AuthTfaOptional } from './Invite.story';
 
@@ -28,6 +28,8 @@ describe('teleport/components/Invite', () => {
     jest.spyOn(Logger.prototype, 'log').mockImplementation();
     jest.spyOn(auth, 'fetchPasswordToken').mockImplementation(async () => ({
       user: 'sam',
+      tokenId: 'test123',
+      qrCode: 'test12345',
     }));
   });
 

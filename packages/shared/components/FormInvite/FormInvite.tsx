@@ -15,18 +15,18 @@ limitations under the License.
 */
 
 import React from 'react';
+import { Attempt } from 'shared/hooks/useAttemptNext';
 import { Text, Card, ButtonPrimary, Flex, Box, Link } from 'design';
 import * as Alerts from 'design/Alert';
+import { Auth2faType } from 'shared/services';
 import FieldInput from '../FieldInput';
 import Validation, { Validator } from '../Validation';
-import { Auth2faType } from 'shared/services';
 import TwoFAData from './TwoFaInfo';
 import {
   requiredToken,
   requiredPassword,
   requiredConfirmedPassword,
 } from '../Validation/rules';
-import { useAttempt } from 'shared/hooks';
 
 const U2F_ERROR_CODES_URL =
   'https://developers.yubico.com/U2F/Libraries/Client_error_codes.html';
@@ -53,7 +53,6 @@ export default function FormInvite(props: Props) {
     auth2faType === 'otp' || auth2faType === 'on' || auth2faType === 'optional';
   const u2fEnabled = auth2faType === 'u2f';
   const secondFactorEnabled = otpEnabled || u2fEnabled;
-  const { isProcessing, isFailed, message } = attempt;
   const boxWidth = (secondFactorEnabled ? 720 : 464) + 'px';
 
   function onBtnClick(
@@ -81,7 +80,9 @@ export default function FormInvite(props: Props) {
               <Text typography="h2" mb={3} textAlign="center" color="light">
                 {title}
               </Text>
-              {isFailed && <ErrorMessage message={message} />}
+              {attempt.status === 'failed' && (
+                <ErrorMessage message={attempt.statusText} />
+              )}
               <Text typography="h4" breakAll mb={3}>
                 {user}
               </Text>
@@ -120,13 +121,13 @@ export default function FormInvite(props: Props) {
               <ButtonPrimary
                 width="100%"
                 mt={3}
-                disabled={isProcessing}
+                disabled={attempt.status === 'processing'}
                 size="large"
                 onClick={e => onBtnClick(e, validator)}
               >
                 {submitBtnText}
               </ButtonPrimary>
-              {isProcessing && u2fEnabled && (
+              {attempt.status === 'processing' && u2fEnabled && (
                 <Text
                   mt="3"
                   typography="paragraph2"
@@ -155,13 +156,13 @@ export default function FormInvite(props: Props) {
   );
 }
 
-type Props = {
+export type Props = {
   title?: string;
   submitBtnText?: string;
   user: string;
   qr: string;
   auth2faType: Auth2faType;
-  attempt: ReturnType<typeof useAttempt>[0];
+  attempt: Attempt;
   onSubmitWithU2f(password: string): void;
   onSubmit(password: string, optToken: string): void;
 };
