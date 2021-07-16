@@ -25,7 +25,7 @@ const cache = {
   userContext: null as UserContext,
 };
 
-const service = {
+class UserService {
   fetchUserContext(fromCache = true) {
     if (fromCache && cache['userContext']) {
       return Promise.resolve(cache['userContext']);
@@ -38,29 +38,29 @@ const service = {
         cache['userContext'] = userContext;
         return cache['userContext'];
       });
-  },
+  }
 
   fetchUsers() {
     return api.get(cfg.getUsersUrl()).then(makeUsers);
-  },
+  }
 
   updateUser(user: User) {
     return api.put(cfg.getUsersUrl(), user).then(makeUser);
-  },
+  }
 
   createUser(user: User) {
     return api.post(cfg.getUsersUrl(), user).then(makeUser);
-  },
+  }
 
   createResetPasswordToken(name: string, type: ResetPasswordType) {
     return api
       .post(cfg.api.resetPasswordTokenPath, { name, type })
       .then(makeResetToken);
-  },
+  }
 
   deleteUser(name: string) {
     return api.delete(cfg.getUsersDeleteUrl(name));
-  },
-};
+  }
+}
 
-export default service;
+export default UserService;

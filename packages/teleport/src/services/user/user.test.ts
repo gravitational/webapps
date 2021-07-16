@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-import user from './user';
+import User from './user';
 import api from 'teleport/services/api';
 
 test('undefined values in context response gives proper default values', async () => {
@@ -43,7 +43,7 @@ test('undefined values in context response gives proper default values', async (
 
   jest.spyOn(api, 'get').mockResolvedValue(mockContext);
 
-  const response = await user.fetchUserContext(false);
+  const response = await new User().fetchUserContext(false);
   expect(response).toEqual({
     username: 'foo',
     authType: 'local',
@@ -156,6 +156,6 @@ test('undefined values in context response gives proper default values', async (
 test('fetch users, null response gives empty array', async () => {
   jest.spyOn(api, 'get').mockResolvedValue(null);
 
-  const response = await user.fetchUsers();
+  const response = await new User().fetchUsers();
   expect(response).toStrictEqual([]);
 });

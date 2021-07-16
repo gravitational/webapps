@@ -16,7 +16,7 @@ limitations under the License.
 
 import React from 'react';
 import { useParams } from 'react-router';
-import service from 'teleport/services/apps';
+import AppService from 'teleport/services/apps';
 import useAttempt from 'shared/hooks/useAttemptNext';
 import { UrlLauncherParams } from 'teleport/config';
 import { getUrlParameter } from 'teleport/services/history';
@@ -50,7 +50,7 @@ function resolveRedirectUrl(params: UrlLauncherParams) {
 
   // no state value: let the target app know of a new auth exchange
   if (!state) {
-    return service.getAppFqdn(params).then(result => {
+    return new AppService().getAppFqdn(params).then(result => {
       const url = new URL(`https://${result.fqdn}${port}/x-teleport-auth`);
       if (params.clusterId) {
         url.searchParams.set('cluster', params.clusterId);
@@ -64,7 +64,7 @@ function resolveRedirectUrl(params: UrlLauncherParams) {
   }
 
   // state value received: create new session for the target app
-  return service.createAppSession(params).then(result => {
+  return new AppService().createAppSession(params).then(result => {
     const url = new URL(`https://${result.fqdn}${port}/x-teleport-auth`);
     url.searchParams.set('state', state);
     url.hash = `#value=${result.value}`;

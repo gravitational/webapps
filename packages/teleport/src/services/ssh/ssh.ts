@@ -20,7 +20,7 @@ import cfg from 'teleport/config';
 import makeSession, { makeParticipant } from './makeSession';
 import { ParticipantList } from './types';
 
-const service = {
+class SshService {
   create({ serverId, clusterId, login }: CreateParams) {
     const request = {
       session: {
@@ -44,13 +44,13 @@ const service = {
           hostname,
         };
       });
-  },
+  }
 
   fetchSession({ clusterId, sid }: FetchSessionParams) {
     return api
       .get(cfg.getTerminalSessionUrl({ sid, clusterId }))
       .then(makeSession);
-  },
+  }
 
   fetchSessions(clusterId) {
     return api.get(cfg.getTerminalSessionUrl({ clusterId })).then(response => {
@@ -60,7 +60,7 @@ const service = {
 
       return [];
     });
-  },
+  }
 
   fetchParticipants({ clusterId }: { clusterId: string }) {
     // Because given session might not be available right away,
@@ -78,10 +78,10 @@ const service = {
 
       return parties;
     });
-  },
-};
+  }
+}
 
-export default service;
+export default SshService;
 
 type CreateParams = {
   serverId: string;

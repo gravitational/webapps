@@ -19,12 +19,12 @@ import api from 'teleport/services/api';
 import cfg, { UrlAppParams } from 'teleport/config';
 import makeApp from './makeApps';
 
-const service = {
+class AppService {
   fetchApps(clusterId: string) {
     return api
       .get(cfg.getApplicationsUrl(clusterId))
       .then(json => map(json.items, makeApp));
-  },
+  }
 
   createAppSession(params: UrlAppParams) {
     const { fqdn, clusterId = '', publicAddr = '' } = params;
@@ -38,15 +38,13 @@ const service = {
         fqdn: json.fqdn as string,
         value: json.value as string,
       }));
-  },
+  }
 
   getAppFqdn(params: UrlAppParams) {
-    return api
-      .get(cfg.getAppFqdnUrl(params))
-      .then(json => ({
-        fqdn: json.fqdn as string,
-      }));
-  },
-};
+    return api.get(cfg.getAppFqdnUrl(params)).then(json => ({
+      fqdn: json.fqdn as string,
+    }));
+  }
+}
 
-export default service;
+export default AppService;

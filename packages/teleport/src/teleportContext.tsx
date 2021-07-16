@@ -18,12 +18,12 @@ import { StoreNav, StoreUserContext } from './stores';
 import cfg from 'teleport/config';
 import * as types from './types';
 import AuditService from './services/audit';
-import nodeService from './services/nodes';
-import clusterService from './services/clusters';
-import sshService from './services/ssh';
+import NodeService from './services/nodes';
+import ClusterService from './services/clusters';
+import SshService from './services/ssh';
 import ResourceService from './services/resources';
-import userService from './services/user';
-import appService from './services/apps';
+import UserService from './services/user';
+import AppService from './services/apps';
 import KubeService from './services/kube';
 import DatabaseService from './services/databases';
 
@@ -37,19 +37,19 @@ class TeleportContext implements types.Context {
 
   // services
   auditService = new AuditService();
-  nodeService = nodeService;
-  clusterService = clusterService;
-  sshService = sshService;
+  nodeService = new NodeService();
+  clusterService = new ClusterService();
+  sshService = new SshService();
   resourceService = new ResourceService();
-  userService = userService;
-  appService = appService;
+  userService = new UserService();
+  appService = new AppService();
   kubeService = new KubeService();
 
   databaseService = new DatabaseService();
   isEnterprise = cfg.isEnterprise;
 
   init() {
-    return userService.fetchUserContext().then(user => {
+    return this.userService.fetchUserContext().then(user => {
       this.storeUser.setState(user);
     });
   }

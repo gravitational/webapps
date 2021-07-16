@@ -19,13 +19,13 @@ import api from 'teleport/services/api';
 import cfg from 'teleport/config';
 import makeCluster from './makeCluster';
 
-const service = {
+class ClusterService {
   fetchClusters() {
     return api
       .get(cfg.api.clustersPath)
       .then(json => map(json, makeCluster))
       .then(clusters => sortBy(clusters, 'clusterId'));
-  },
-};
+  }
+}
 
-export default service;
+export default ClusterService;
