@@ -138,7 +138,7 @@ exports[`teleport/components/Invite should render form with token requirement wh
   margin-bottom: 4px;
 }
 
-.c19 {
+.c20 {
   color: #03a9f4;
   font-weight: normal;
   background: none;
@@ -199,6 +199,13 @@ exports[`teleport/components/Invite should render form with token requirement wh
   line-height: 24px;
   margin: 0px;
   margin-bottom: 16px;
+}
+
+.c19 {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  font-weight: 600;
+  margin: 0px;
 }
 
 .c2 {
@@ -452,16 +459,20 @@ exports[`teleport/components/Invite should render form with token requirement wh
             >
               Press the button on the U2F key after you press the
                
-              <b>
-                CREATE ACCOUNT
-              </b>
-               button.
+              <span
+                class="c19"
+                style="text-transform: uppercase;"
+              >
+                Create Account
+              </span>
+               
+              button.
             </div>
             <div
               class="c18"
             >
               <a
-                class="c19"
+                class="c20"
                 color="light"
                 href="https://support.google.com/accounts/answer/6103523?hl=en"
                 rel="noreferrer"

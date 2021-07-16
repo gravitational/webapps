@@ -54,7 +54,10 @@ export default function TwoFAData({ auth2faType, qr, submitBtnText }: Props) {
         <Box color="text.primary">
           <Text typography="paragraph2" mb={3}>
             Press the button on the U2F key after you press the{' '}
-            <b>{submitBtnText.toUpperCase()}</b> button.
+            <Text as="span" style={{ textTransform: 'uppercase' }} bold>
+              {submitBtnText}
+            </Text>{' '}
+            button.
           </Text>
           <Text typography="paragraph2" mb={3}>
             <Link color="light" target="_blank" href={U2F_HELP_URL}>

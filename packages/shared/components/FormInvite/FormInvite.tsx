@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React from 'react';
+import React, { useState } from 'react';
 import { Attempt } from 'shared/hooks/useAttemptNext';
 import { Text, Card, ButtonPrimary, Flex, Box, Link } from 'design';
 import * as Alerts from 'design/Alert';
@@ -50,32 +50,32 @@ export default function FormInvite(props: Props) {
   const otpEnabled = auth2faType === 'otp';
   const secondFactorEnabled = otpEnabled || u2fEnabled || mfaEnabled;
 
-  const [password, setPassword] = React.useState('');
-  const [passwordConfirmed, setPasswordConfirmed] = React.useState('');
-  const [token, setToken] = React.useState('');
+  const [password, setPassword] = useState('');
+  const [passwordConfirmed, setPasswordConfirmed] = useState('');
+  const [token, setToken] = useState('');
 
-  const [mfaOptions] = React.useState(() => {
-    let mfaOptions = [];
+  const [mfaOptions] = useState<MFAOption[]>(() => {
+    const mfaOptions: MFAOption[] = [];
 
-    if (mfaEnabled || otpEnabled) {
-      mfaOptions = [{ value: 'otp', label: 'TOTP' }];
+    if (auth2faType === 'optional' || auth2faType === 'off') {
+      mfaOptions.push({ value: 'optional', label: 'NONE' });
     }
 
     if (mfaEnabled || u2fEnabled) {
-      mfaOptions = [{ value: 'u2f', label: 'U2F' }, ...mfaOptions];
+      mfaOptions.push({ value: 'u2f', label: 'U2F' });
     }
 
-    if (auth2faType === 'optional' || auth2faType === 'off') {
-      mfaOptions = [{ value: 'none', label: 'NONE' }, ...mfaOptions];
+    if (mfaEnabled || otpEnabled) {
+      mfaOptions.push({ value: 'otp', label: 'TOTP' });
     }
 
     return mfaOptions;
   });
 
-  const [mfaType, setMfaType] = React.useState(mfaOptions[0]);
+  const [mfaType, setMfaType] = useState(mfaOptions[0]);
 
   const boxWidth =
-    (secondFactorEnabled && mfaType.value !== 'none' ? 720 : 464) + 'px';
+    (secondFactorEnabled && mfaType.value !== 'optional' ? 720 : 464) + 'px';
 
   function onBtnClick(
     e: React.MouseEvent<HTMLButtonElement>,
@@ -93,7 +93,7 @@ export default function FormInvite(props: Props) {
     }
   }
 
-  function onSetMfaOption(option: Option, validator: Validator) {
+  function onSetMfaOption(option: MFAOption, validator: Validator) {
     setToken('');
     validator.reset();
     setMfaType(option);
@@ -140,7 +140,9 @@ export default function FormInvite(props: Props) {
                       label="Second factor"
                       value={mfaType}
                       options={mfaOptions}
-                      onChange={opt => onSetMfaOption(opt as Option, validator)}
+                      onChange={opt =>
+                        onSetMfaOption(opt as MFAOption, validator)
+                      }
                       mr={3}
                       mb={0}
                       isDisabled={attempt.status === 'processing'}
@@ -177,7 +179,7 @@ export default function FormInvite(props: Props) {
                 {submitBtnText}
               </ButtonPrimary>
             </Box>
-            {secondFactorEnabled && mfaType.value !== 'none' && (
+            {secondFactorEnabled && mfaType.value !== 'optional' && (
               <Box
                 flex="1"
                 bg="primary.main"
@@ -232,3 +234,5 @@ function ErrorMessage({ message = '' }) {
     </Alerts.Danger>
   );
 }
+
+type MFAOption = Option<Auth2faType>;

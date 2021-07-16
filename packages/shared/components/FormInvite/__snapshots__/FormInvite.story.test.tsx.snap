@@ -1169,7 +1169,7 @@ exports[`shared/components/Invite.story story.U2f 1`] = `
   margin-bottom: 4px;
 }
 
-.c19 {
+.c20 {
   color: #03a9f4;
   font-weight: normal;
   background: none;
@@ -1229,6 +1229,13 @@ exports[`shared/components/Invite.story story.U2f 1`] = `
   line-height: 24px;
   margin: 0px;
   margin-bottom: 16px;
+}
+
+.c19 {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  font-weight: 600;
+  margin: 0px;
 }
 
 .c1 {
@@ -1483,16 +1490,20 @@ exports[`shared/components/Invite.story story.U2f 1`] = `
           >
             Press the button on the U2F key after you press the
              
-            <b>
-              SUBMIT
-            </b>
-             button.
+            <span
+              class="c19"
+              style="text-transform: uppercase;"
+            >
+              Submit
+            </span>
+             
+            button.
           </div>
           <div
             class="c18"
           >
             <a
-              class="c19"
+              class="c20"
               color="light"
               href="https://support.google.com/accounts/answer/6103523?hl=en"
               rel="noreferrer"
