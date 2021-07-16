@@ -20,24 +20,17 @@ import { Auth2faType } from 'shared/services';
 
 const U2F_HELP_URL = 'https://support.google.com/accounts/answer/6103523?hl=en';
 
-export default function TwoFAData({ auth2faType, qr }: Props) {
+export default function TwoFAData({ auth2faType, qr, submitBtnText }: Props) {
   const imgSrc = `data:image/png;base64,${qr}`;
 
-  // Temporary hack: if cluster supports all 2FA types, require the user to
-  // sign up with OTP. We should ideally let the user choose a different 2FA
-  // method when there's engineering capacity to build this.
-  if (
-    auth2faType === 'otp' ||
-    auth2faType === 'on' ||
-    auth2faType === 'optional'
-  ) {
+  if (auth2faType === 'otp') {
     return (
-      <div>
+      <Box width="168px">
         <Text typography="paragraph2" mb={3}>
           Scan the bar code with Google Authenticator to generate a two-factor
           token.
         </Text>
-        <img width="152" src={imgSrc} style={{ border: '8px solid' }} />
+        <img width="152px" src={imgSrc} style={{ border: '8px solid' }} />
         <ButtonLink
           width="100%"
           kind="secondary"
@@ -48,20 +41,23 @@ export default function TwoFAData({ auth2faType, qr }: Props) {
         >
           Download Google Authenticator
         </ButtonLink>
-      </div>
+      </Box>
     );
   }
 
   if (auth2faType === 'u2f') {
     return (
-      <div>
+      <Box width="168px">
         <Text typography="h5" mb="2">
           Insert your U2F key
         </Text>
         <Box color="text.primary">
           <Text typography="paragraph2" mb={3}>
             Press the button on the U2F key after you press the{' '}
-            <b>CREATE ACCOUNT</b> button.
+            <Text as="span" style={{ textTransform: 'uppercase' }} bold>
+              {submitBtnText}
+            </Text>{' '}
+            button.
           </Text>
           <Text typography="paragraph2" mb={3}>
             <Link color="light" target="_blank" href={U2F_HELP_URL}>
@@ -70,7 +66,7 @@ export default function TwoFAData({ auth2faType, qr }: Props) {
             about U2F 2-Step Verification.
           </Text>
         </Box>
-      </div>
+      </Box>
     );
   }
 
@@ -80,4 +76,5 @@ export default function TwoFAData({ auth2faType, qr }: Props) {
 type Props = {
   qr: string;
   auth2faType: Auth2faType;
+  submitBtnText: string;
 };
