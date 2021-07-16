@@ -14,8 +14,7 @@ See the License for the specific language governing permissions and
 limitat ions under the License.
 */
 
-import React from 'react';
-import { Link } from 'react-router-dom';
+import React, { useState } from 'react';
 import styled from 'styled-components';
 import { Card, Text, Flex, ButtonLink, ButtonPrimary, Box } from 'design';
 import * as Alerts from 'design/Alert';
@@ -39,7 +38,7 @@ export default function LoginForm(props: Props) {
     auth2faType = 'off',
     isLocalAuthEnabled = true,
     isRecoveryEnabled = false,
-    getRecoveryStartRoute,
+    onRecover,
     clearAttempt,
   } = props;
 
@@ -48,29 +47,29 @@ export default function LoginForm(props: Props) {
   const otpEnabled = auth2faType === 'otp';
   const ssoEnabled = authProviders && authProviders.length > 0;
 
-  const [pass, setPass] = React.useState('');
-  const [user, setUser] = React.useState('');
-  const [token, setToken] = React.useState('');
-  const [mfaOptions] = React.useState(() => {
-    let mfaOptions = [];
+  const [pass, setPass] = useState('');
+  const [user, setUser] = useState('');
+  const [token, setToken] = useState('');
+  const [mfaOptions] = useState<MFAOption[]>(() => {
+    const mfaOptions: MFAOption[] = [];
 
-    if (mfaEnabled || otpEnabled) {
-      mfaOptions = [{ value: 'otp', label: 'TOTP' }];
+    if (auth2faType === 'optional' || auth2faType === 'off') {
+      mfaOptions.push({ value: 'optional', label: 'NONE' });
     }
 
     if (mfaEnabled || u2fEnabled) {
-      mfaOptions = [{ value: 'u2f', label: 'U2F' }, ...mfaOptions];
+      mfaOptions.push({ value: 'u2f', label: 'U2F' });
     }
 
-    if (auth2faType === 'optional' || auth2faType === 'off') {
-      mfaOptions = [{ value: 'none', label: 'NONE' }, ...mfaOptions];
+    if (mfaEnabled || otpEnabled) {
+      mfaOptions.push({ value: 'otp', label: 'TOTP' });
     }
 
     return mfaOptions;
   });
 
-  const [mfaType, setMfaType] = React.useState(mfaOptions[0]);
-  const [isExpanded, toggleExpander] = React.useState(
+  const [mfaType, setMfaType] = useState<MFAOption>(mfaOptions[0]);
+  const [isExpanded, toggleExpander] = useState(
     !(isLocalAuthEnabled && ssoEnabled)
   );
   const { isFailed, isProcessing, message } = attempt;
@@ -91,7 +90,7 @@ export default function LoginForm(props: Props) {
     }
   }
 
-  function onSetMfaOption(option: Option, validator: Validator) {
+  function onSetMfaOption(option: MFAOption, validator: Validator) {
     setToken('');
     clearAttempt();
     validator.reset();
@@ -162,14 +161,15 @@ export default function LoginForm(props: Props) {
                   width="100%"
                 />
                 {isRecoveryEnabled && (
-                  <ForgotLink
+                  <ButtonLink
                     style={{
-                      textAlign: 'right',
+                      padding: '0px',
+                      minHeight: 'auto',
                     }}
-                    to={getRecoveryStartRoute('password')}
+                    onClick={() => onRecover('password')}
                   >
                     Forgot Password?
-                  </ForgotLink>
+                  </ButtonLink>
                 )}
               </Flex>
               {auth2faType !== 'off' && (
@@ -181,7 +181,7 @@ export default function LoginForm(props: Props) {
                         value={mfaType}
                         options={mfaOptions}
                         onChange={opt =>
-                          onSetMfaOption(opt as Option, validator)
+                          onSetMfaOption(opt as MFAOption, validator)
                         }
                         mr={3}
                         mb={0}
@@ -208,14 +208,28 @@ export default function LoginForm(props: Props) {
                     </Box>
                   </Flex>
                   {isRecoveryEnabled && mfaType.value === 'u2f' && (
-                    <ForgotLink to={getRecoveryStartRoute('u2f')}>
+                    <ButtonLink
+                      style={{
+                        padding: '0px',
+                        minHeight: 'auto',
+                        alignSelf: 'flex-start',
+                      }}
+                      onClick={() => onRecover('u2f')}
+                    >
                       Lost U2F Key?
-                    </ForgotLink>
+                    </ButtonLink>
                   )}
                   {isRecoveryEnabled && mfaType.value === 'otp' && (
-                    <ForgotLink to={getRecoveryStartRoute('totp')}>
+                    <ButtonLink
+                      style={{
+                        padding: '0px',
+                        minHeight: 'auto',
+                        alignSelf: 'flex-start',
+                      }}
+                      onClick={() => onRecover('totp')}
+                    >
                       Lost Two-Factor Token?
-                    </ForgotLink>
+                    </ButtonLink>
                   )}
                 </Flex>
               )}
@@ -281,13 +295,6 @@ const StyledOr = styled.div`
   z-index: 1;
 `;
 
-const ForgotLink = styled(Link)`
-  color: ${props => props.theme.colors.primary.contrastText};
-  width: fit-content;
-  font-size: 12px;
-  margin-top: 0px;
-`;
-
 type Props = {
   title?: string;
   isLocalAuthEnabled?: boolean;
@@ -295,9 +302,11 @@ type Props = {
   auth2faType?: Auth2faType;
   attempt: ReturnType<typeof useAttempt>[0];
   isRecoveryEnabled?: boolean;
-  getRecoveryStartRoute?: (recoveryType: string) => string;
+  onRecover?: (type: 'totp' | 'u2f' | 'password') => void;
   clearAttempt?: () => void;
   onLoginWithSso(provider: AuthProvider): void;
   onLoginWithU2f(username: string, password: string): void;
   onLogin(username: string, password: string, token: string): void;
 };
+
+type MFAOption = Option<Auth2faType>;
