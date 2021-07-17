@@ -595,14 +595,14 @@ exports[`loaded state 1`] = `
   color: #FFFFFF;
 }
 
-.c22 {
+.c16 {
   display: inline-block;
   transition: color .3s;
   color: #FFFFFF;
   font-size: 22px;
 }
 
-.c23 {
+.c19 {
   display: inline-block;
   transition: color .3s;
   margin-left: 4px;
@@ -637,9 +637,10 @@ exports[`loaded state 1`] = `
   color: #FFFFFF;
 }
 
-.c16 {
+.c21 {
   overflow: hidden;
   text-overflow: ellipsis;
+  text-transform: uppercase;
   font-weight: 600;
   font-size: 16px;
   margin: 0px;
@@ -655,18 +656,7 @@ exports[`loaded state 1`] = `
   box-sizing: border-box;
   height: 32px;
   width: 32px;
-  background-color: #e64a19;
-  border-radius: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.c19 {
-  box-sizing: border-box;
-  height: 32px;
-  width: 32px;
-  background-color: #0097a7;
+  background-color: #f57c00;
   border-radius: 100%;
   display: flex;
   align-items: center;
@@ -684,11 +674,22 @@ exports[`loaded state 1`] = `
   justify-content: center;
 }
 
-.c21 {
+.c22 {
   box-sizing: border-box;
   height: 32px;
   width: 32px;
-  background-color: #f57c00;
+  background-color: #0097a7;
+  border-radius: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.c23 {
+  box-sizing: border-box;
+  height: 32px;
+  width: 32px;
+  background-color: #e64a19;
   border-radius: 100%;
   display: flex;
   align-items: center;
@@ -987,7 +988,7 @@ exports[`loaded state 1`] = `
                 <a>
                   Name
                   <span
-                    class="c10 c14 icon icon-chevron-down "
+                    class="c10 c14 icon icon-chevron-up "
                     color="light"
                   />
                 </a>
@@ -1019,124 +1020,58 @@ exports[`loaded state 1`] = `
           <tbody>
             <tr>
               <td
-                align="left"
-                style="width: 40px;"
+                style="user-select: none;"
               >
                 <div
                   class="c15"
                   height="32px"
                   width="32px"
                 >
-                  <div
-                    class="c16"
-                    font-size="3"
-                    style="text-transform: uppercase; user-select: none;"
-                  >
-                    G
-                  </div>
+                  <span
+                    class="c10 c16 icon icon-amazonaws "
+                    color="light"
+                    font-size="6"
+                  />
                 </div>
               </td>
               <td>
-                Grafana
+                aws-console-1
               </td>
               <td>
-                This is a Grafana app
+                This is an AWS Console app
               </td>
               <td>
                 https://
-                grafana.teleport-proxy.com
+                awsconsole-1.teleport-proxy.com
               </td>
               <td>
                 <div
                   class="c17"
                   kind="secondary"
                 >
-                  env: idk
-                </div>
-                <div
-                  class="c17"
-                  kind="secondary"
-                >
-                  cluster: one
+                  aws_account_id: joe123
                 </div>
               </td>
               <td
                 align="right"
               >
-                <a
+                <button
                   class="c18"
-                  href="/web/launch/grafana.one/one/grafana.teleport-proxy.com"
                   kind="border"
-                  rel="noreferrer"
-                  target="_blank"
                   width="88px"
                 >
                   LAUNCH
-                </a>
+                  <span
+                    class="c10 c19 icon icon-caret-down "
+                    color="text.secondary"
+                    font-size="2"
+                  />
+                </button>
               </td>
             </tr>
             <tr>
               <td
-                align="left"
-                style="width: 40px;"
-              >
-                <div
-                  class="c19"
-                  height="32px"
-                  width="32px"
-                >
-                  <div
-                    class="c16"
-                    font-size="3"
-                    style="text-transform: uppercase; user-select: none;"
-                  >
-                    J
-                  </div>
-                </div>
-              </td>
-              <td>
-                Jenkins
-              </td>
-              <td>
-                This is a Jenkins app
-              </td>
-              <td>
-                https://
-                jenkins.teleport-proxy.com
-              </td>
-              <td>
-                <div
-                  class="c17"
-                  kind="secondary"
-                >
-                  env: idk
-                </div>
-                <div
-                  class="c17"
-                  kind="secondary"
-                >
-                  cluster: one
-                </div>
-              </td>
-              <td
-                align="right"
-              >
-                <a
-                  class="c18"
-                  href="/web/launch/jenkins.one/one/jenkins.teleport-proxy.com"
-                  kind="border"
-                  rel="noreferrer"
-                  target="_blank"
-                  width="88px"
-                >
-                  LAUNCH
-                </a>
-              </td>
-            </tr>
-            <tr>
-              <td
-                align="left"
-                style="width: 40px;"
+                style="user-select: none;"
               >
                 <div
                   class="c20"
@@ -1144,9 +1079,8 @@ exports[`loaded state 1`] = `
                   width="32px"
                 >
                   <div
-                    class="c16"
+                    class="c21"
                     font-size="3"
-                    style="text-transform: uppercase; user-select: none;"
                   >
                     M
                   </div>
@@ -1193,54 +1127,114 @@ exports[`loaded state 1`] = `
             </tr>
             <tr>
               <td
-                align="left"
-                style="width: 40px;"
+                style="user-select: none;"
               >
                 <div
-                  class="c21"
+                  class="c22"
                   height="32px"
                   width="32px"
                 >
-                  <span
-                    class="c10 c22 icon icon-amazonaws "
-                    color="light"
-                    font-size="6"
-                  />
+                  <div
+                    class="c21"
+                    font-size="3"
+                  >
+                    J
+                  </div>
                 </div>
               </td>
               <td>
-                aws-console-1
+                Jenkins
               </td>
               <td>
-                This is an AWS Console app
+                This is a Jenkins app
               </td>
               <td>
                 https://
-                awsconsole-1.teleport-proxy.com
+                jenkins.teleport-proxy.com
               </td>
               <td>
                 <div
                   class="c17"
                   kind="secondary"
                 >
-                  aws_account_id: joe123
+                  env: idk
+                </div>
+                <div
+                  class="c17"
+                  kind="secondary"
+                >
+                  cluster: one
                 </div>
               </td>
               <td
                 align="right"
               >
-                <button
+                <a
                   class="c18"
+                  href="/web/launch/jenkins.one/one/jenkins.teleport-proxy.com"
                   kind="border"
+                  rel="noreferrer"
+                  target="_blank"
                   width="88px"
                 >
                   LAUNCH
-                  <span
-                    class="c10 c23 icon icon-caret-down "
-                    color="text.secondary"
-                    font-size="2"
-                  />
-                </button>
+                </a>
+              </td>
+            </tr>
+            <tr>
+              <td
+                style="user-select: none;"
+              >
+                <div
+                  class="c23"
+                  height="32px"
+                  width="32px"
+                >
+                  <div
+                    class="c21"
+                    font-size="3"
+                  >
+                    G
+                  </div>
+                </div>
+              </td>
+              <td>
+                Grafana
+              </td>
+              <td>
+                This is a Grafana app
+              </td>
+              <td>
+                https://
+                grafana.teleport-proxy.com
+              </td>
+              <td>
+                <div
+                  class="c17"
+                  kind="secondary"
+                >
+                  env: idk
+                </div>
+                <div
+                  class="c17"
+                  kind="secondary"
+                >
+                  cluster: one
+                </div>
+              </td>
+              <td
+                align="right"
+              >
+                <a
+                  class="c18"
+                  href="/web/launch/grafana.one/one/grafana.teleport-proxy.com"
+                  kind="border"
+                  rel="noreferrer"
+                  target="_blank"
+                  width="88px"
+                >
+                  LAUNCH
+                </a>
               </td>
             </tr>
           </tbody>

@@ -15,14 +15,14 @@ limitations under the License.
 */
 
 import React from 'react';
-import Component from './ConnectDialog';
+import ConnectDialog from './ConnectDialog';
 
 export default {
-  title: 'Teleport/Databases',
+  title: 'Teleport/Databases/Connect',
 };
 
-export const ConnectDialog = () => (
-  <Component
+export const Connect = () => (
+  <ConnectDialog
     username="yassine"
     dbName="aurora"
     dbProtocol="postgres"

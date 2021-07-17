@@ -1,15 +1,12 @@
 import React from 'react';
 import styled from 'styled-components';
 import { ButtonBorder, Text } from 'design';
-import { Cell } from 'design/DataTable';
 import Menu, { MenuItem } from 'design/Menu';
 import { CarrotDown } from 'design/Icon';
 import cfg from 'teleport/config';
 import { AwsRole } from 'teleport/services/apps';
 
-export default class AwsLaunchButton extends React.Component<
-  AwsLaunchButtonProps
-> {
+export default class AwsLaunchButton extends React.Component<Props> {
   anchorEl = React.createRef();
 
   state = {
@@ -29,7 +26,7 @@ export default class AwsLaunchButton extends React.Component<
     const { open } = this.state;
     const { awsRoles, fqdn, clusterId, publicAddr } = this.props;
     return (
-      <Cell align="right">
+      <>
         <ButtonBorder
           width="88px"
           size="small"
@@ -41,8 +38,8 @@ export default class AwsLaunchButton extends React.Component<
         </ButtonBorder>
         <Menu
           menuListCss={() => ({
-            maxHeight: '240px',
-            overflowY: 'scroll',
+            overflow: 'auto',
+            minWidth: '180px',
           })}
           transformOrigin={{
             vertical: 'top',
@@ -64,17 +61,12 @@ export default class AwsLaunchButton extends React.Component<
             publicAddr={publicAddr}
           />
         </Menu>
-      </Cell>
+      </>
     );
   }
 }
 
-function RoleItemList({
-  awsRoles,
-  fqdn,
-  clusterId,
-  publicAddr,
-}: AwsLaunchButtonProps) {
+function RoleItemList({ awsRoles, fqdn, clusterId, publicAddr }: Props) {
   const awsRoleItems = awsRoles.map((item, key) => {
     const { display, arn } = item;
     const launchUrl = cfg.getAppLauncherRoute({
@@ -85,10 +77,10 @@ function RoleItemList({
     });
     return (
       <StyledMenuItem
+        as="a"
         key={key}
         px={2}
         mx={2}
-        as="a"
         href={launchUrl}
         target="_blank"
         title={display}
@@ -100,21 +92,21 @@ function RoleItemList({
 
   return (
     <>
-      <Text color="text.onLight" px={2} m={2} mb={1}>
+      <Text px="2" fontSize="11px" mb="2" color="grey.400" bg="subtle">
         Select IAM Role
       </Text>
       {awsRoleItems.length ? (
         awsRoleItems
       ) : (
         <Text px={2} m={2} color="text.disabled">
-          No roles found.
+          No roles found
         </Text>
       )}
     </>
   );
 }
 
-type AwsLaunchButtonProps = {
+type Props = {
   awsRoles: AwsRole[];
   fqdn: string;
   clusterId: string;
@@ -127,7 +119,6 @@ const StyledMenuItem = styled(MenuItem)(
   font-size: 12px;
   border-bottom: 1px solid ${theme.colors.subtle};
   min-height: 32px;
-  margin-right: 0px;
   &:hover {
     color: ${theme.colors.link};
   }
