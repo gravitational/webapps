@@ -18,10 +18,10 @@ import React from 'react';
 import Component from './ConnectDialog';
 
 export default {
-  title: 'Teleport/Kubes',
+  title: 'Teleport/Kubes/Connect',
 };
 
-export const ConnectDialogLocal = () => {
+export const Local = () => {
   return (
     <Component
       onClose={() => null}
@@ -32,7 +32,7 @@ export const ConnectDialogLocal = () => {
   );
 };
 
-export const ConnectDialogSSO = () => {
+export const SSO = () => {
   return (
     <Component
       onClose={() => null}

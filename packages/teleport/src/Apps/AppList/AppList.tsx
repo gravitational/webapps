@@ -17,7 +17,7 @@ limitations under the License.
 import React, { useState } from 'react';
 import styled from 'styled-components';
 import { sortBy } from 'lodash';
-import { Flex, Text } from 'design';
+import { Flex, Text, ButtonBorder } from 'design';
 import {
   pink,
   teal,
@@ -38,21 +38,22 @@ import {
   TextCell,
   SortTypes,
 } from 'design/DataTable';
+import { AmazonAws } from 'design/Icon';
 import Table from 'design/DataTable/Paged';
 import isMatch from 'design/utils/match';
 import { App } from 'teleport/services/apps';
+import AwsLaunchButton from './AwsLaunchButton';
 
-function AppList(props: Props) {
+export default function AppList(props: Props) {
   const { apps = [], pageSize = 100, searchValue } = props;
-
   const [sortDir, setSortDir] = useState<Record<string, string>>({
-    name: SortTypes.DESC,
+    name: SortTypes.ASC,
   });
 
   function sortAndFilter(search) {
     const filtered = apps.filter(obj =>
       isMatch(obj, search, {
-        searchableProps: ['name', 'publicAddr', 'tags'],
+        searchableProps: ['name', 'publicAddr', 'description', 'tags'],
         cb: searchAndFilterCb,
       })
     );
@@ -70,30 +71,10 @@ function AppList(props: Props) {
     setSortDir({ [columnKey]: sortDir });
   }
 
-  function onAppClick(e: React.MouseEvent) {
-    if (e.ctrlKey || e.shiftKey || e.altKey) {
-      return;
-    }
-
-    const closest = (e.target as any).closest('th, tbody, tr');
-
-    if (!closest || closest.tagName !== 'TR') {
-      return;
-    }
-
-    const rows = closest.parentElement.childNodes;
-
-    rows.forEach((row, idx) => {
-      if (row === closest) {
-        window.open(data[idx].launchUrl, '_blank');
-      }
-    });
-  }
-
   const data = sortAndFilter(searchValue);
 
   return (
-    <StyledTable pageSize={pageSize} data={data} onClick={onAppClick}>
+    <StyledTable pageSize={pageSize} data={data}>
       <Column header={<Cell />} cell={<AppIconCell />} />
       <Column
         columnKey="name"
@@ -102,6 +83,17 @@ function AppList(props: Props) {
             sortDir={sortDir.name}
             onSortChange={onSortChange}
             title="Name"
+          />
+        }
+        cell={<TextCell />}
+      />
+      <Column
+        columnKey="description"
+        header={
+          <SortHeaderCell
+            sortDir={sortDir.description}
+            onSortChange={onSortChange}
+            title="Description"
           />
         }
         cell={<TextCell />}
@@ -118,6 +110,7 @@ function AppList(props: Props) {
         cell={<AddressCell />}
       />
       <Column header={<Cell>Labels</Cell>} cell={<LabelCell />} />
+      <Column header={<Cell />} cell={<LaunchButtonCell />} />
     </StyledTable>
   );
 }
@@ -134,46 +127,58 @@ function AddressCell(props) {
   return <Cell>https://{publicAddr}</Cell>;
 }
 
-const StyledTable = styled(Table)`
-  & > tbody > tr {
-    cursor: pointer;
-    td {
-      vertical-align: baseline;
-    }
-  }
-`;
-
-function searchAndFilterCb(
-  targetValue: any[],
-  searchValue: string,
-  propName: string
-) {
-  if (propName === 'tags') {
-    return targetValue.some(item => {
-      return item.toLocaleUpperCase().indexOf(searchValue) !== -1;
-    });
-  }
-}
-
 function AppIconCell(props) {
   const { rowIndex, data } = props;
-  const { name } = data[rowIndex];
+  const { name, awsConsole } = data[rowIndex];
   return (
-    <Cell align="left" style={{ width: '32px' }}>
+    <Cell style={{ userSelect: 'none' }}>
       <Flex
-        height="24px"
-        width="24px"
+        height="32px"
+        width="32px"
         bg={getIconColor(name)}
         borderRadius="100%"
         justifyContent="center"
         alignItems="center"
       >
-        <Text fontSize={2} bold style={{ userSelect: 'none' }}>
-          {name[0]?.toUpperCase()}
-        </Text>
+        {awsConsole ? (
+          <AmazonAws fontSize={6} />
+        ) : (
+          <Text fontSize={3} bold caps>
+            {name[0]}
+          </Text>
+        )}
       </Flex>
     </Cell>
   );
+}
+
+function LaunchButtonCell(props) {
+  const { rowIndex, data } = props;
+  const { launchUrl, awsConsole, awsRoles, fqdn, clusterId, publicAddr } = data[
+    rowIndex
+  ];
+
+  const $btn = awsConsole ? (
+    <AwsLaunchButton
+      awsRoles={awsRoles}
+      fqdn={fqdn}
+      clusterId={clusterId}
+      publicAddr={publicAddr}
+    />
+  ) : (
+    <ButtonBorder
+      as="a"
+      width="88px"
+      size="small"
+      target="_blank"
+      href={launchUrl}
+      rel="noreferrer"
+    >
+      LAUNCH
+    </ButtonBorder>
+  );
+
+  return <Cell align="right">{$btn}</Cell>;
 }
 
 function getIconColor(appName: string) {
@@ -198,10 +203,26 @@ function getIconColor(appName: string) {
   return colors[stringValue % 10];
 }
 
+function searchAndFilterCb(
+  targetValue: any[],
+  searchValue: string,
+  propName: string
+) {
+  if (propName === 'tags') {
+    return targetValue.some(item => {
+      return item.toLocaleUpperCase().indexOf(searchValue) !== -1;
+    });
+  }
+}
+
 type Props = {
   apps: App[];
   pageSize?: number;
   searchValue: string;
 };
 
-export default AppList;
+const StyledTable = styled(Table)`
+  & > tbody > tr > td {
+    vertical-align: middle;
+  }
+`;

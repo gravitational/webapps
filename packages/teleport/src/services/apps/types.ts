@@ -17,10 +17,18 @@
 export interface App {
   id: string;
   name: string;
+  description: string;
   uri: string;
   publicAddr: string;
   tags: string[];
   clusterId: string;
   launchUrl: string;
   fqdn: string;
+  awsRoles: AwsRole[];
+  awsConsole: boolean;
 }
+
+export type AwsRole = {
+  arn: string;
+  display: string;
+};
