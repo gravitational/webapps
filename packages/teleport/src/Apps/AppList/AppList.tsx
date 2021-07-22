@@ -47,7 +47,7 @@ import AwsLaunchButton from './AwsLaunchButton';
 export default function AppList(props: Props) {
   const { apps = [], pageSize = 100, searchValue } = props;
   const [sortDir, setSortDir] = useState<Record<string, string>>({
-    name: SortTypes.ASC,
+    name: SortTypes.DESC,
   });
 
   function sortAndFilter(search) {
