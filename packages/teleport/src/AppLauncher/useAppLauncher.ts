@@ -69,7 +69,7 @@ function resolveRedirectUrl(params: UrlLauncherParams) {
 
   // state value received: create new session for the target app
   if (arn) {
-    params.arn = arn;
+    params.arn = decodeURIComponent(arn);
   }
   return service.createAppSession(params).then(result => {
     const url = new URL(`https://${result.fqdn}${port}/x-teleport-auth`);
