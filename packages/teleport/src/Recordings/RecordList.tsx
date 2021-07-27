@@ -110,6 +110,10 @@ export default function RecordList(props: Props) {
         cell={<CreatedCell />}
       />
       <Table.Column
+        header={<Table.Cell>Session ID</Table.Cell>}
+        cell={<SidCell />}
+      />
+      <Table.Column
         columnKey="type"
         header={
           <Table.SortHeaderCell
@@ -119,10 +123,6 @@ export default function RecordList(props: Props) {
           />
         }
         cell={<Table.TextCell />}
-      />
-      <Table.Column
-        header={<Table.Cell>Session ID</Table.Cell>}
-        cell={<SidCell />}
       />
       <Table.Column header={<Table.Cell />} cell={<PlayCell />} />
     </PagedTable>

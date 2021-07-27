@@ -691,6 +691,9 @@ exports[`rendering of Session Recordings 1`] = `
               </a>
             </th>
             <th>
+              Session ID
+            </th>
+            <th>
               <a>
                 Type
                 <span
@@ -698,9 +701,6 @@ exports[`rendering of Session Recordings 1`] = `
                   color="light"
                 />
               </a>
-            </th>
-            <th>
-              Session ID
             </th>
             <th />
           </tr>
@@ -722,10 +722,10 @@ exports[`rendering of Session Recordings 1`] = `
               2021-07-27 23:20:05
             </td>
             <td>
-              recording disabled
+              d183ca84-dd94-434a-afee5c2c5f38
             </td>
             <td>
-              d183ca84-dd94-434a-afee5c2c5f38
+              recording disabled
             </td>
           </tr>
           <tr>
@@ -744,10 +744,10 @@ exports[`rendering of Session Recordings 1`] = `
               2021-05-21 22:54:27
             </td>
             <td>
-              noninteractive
+              9d92ad96-a45c-4add-463cc7bc48b1
             </td>
             <td>
-              9d92ad96-a45c-4add-463cc7bc48b1
+              noninteractive
             </td>
           </tr>
           <tr>
@@ -766,10 +766,10 @@ exports[`rendering of Session Recordings 1`] = `
               2019-04-22 00:00:51
             </td>
             <td>
-              interactive
+              377875-6491-11e9-80a1-427cfde50f5a
             </td>
             <td>
-              377875-6491-11e9-80a1-427cfde50f5a
+              interactive
             </td>
             <td
               align="right"
@@ -801,10 +801,10 @@ exports[`rendering of Session Recordings 1`] = `
               2019-04-22 00:00:51
             </td>
             <td>
-              interactive
+              426485-6491-11e9-80a1-427cfde50f5a
             </td>
             <td>
-              426485-6491-11e9-80a1-427cfde50f5a
+              interactive
             </td>
             <td
               align="right"
