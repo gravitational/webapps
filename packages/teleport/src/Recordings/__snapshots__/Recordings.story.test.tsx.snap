@@ -627,12 +627,12 @@ exports[`rendering of Session Recordings 1`] = `
             </strong>
              - 
             <strong>
-              2
+              4
             </strong>
              
             of 
             <strong>
-              2
+              4
             </strong>
           </div>
         </div>
@@ -691,12 +691,65 @@ exports[`rendering of Session Recordings 1`] = `
               </a>
             </th>
             <th>
+              <a>
+                Type
+                <span
+                  class="c11 c14 icon icon-chevrons-expand-vertical "
+                  color="light"
+                />
+              </a>
+            </th>
+            <th>
               Session ID
             </th>
             <th />
           </tr>
         </thead>
         <tbody>
+          <tr>
+            <td>
+              im-a-nodename
+            </td>
+            <td
+              style="word-break: break-word;"
+            >
+              test
+            </td>
+            <td>
+              10 minutes
+            </td>
+            <td>
+              2021-07-27 23:20:05
+            </td>
+            <td>
+              recording disabled
+            </td>
+            <td>
+              d183ca84-dd94-434a-afee5c2c5f38
+            </td>
+          </tr>
+          <tr>
+            <td>
+              ip-172-31-30-254
+            </td>
+            <td
+              style="word-break: break-word;"
+            >
+              foo
+            </td>
+            <td>
+              a few seconds
+            </td>
+            <td>
+              2021-05-21 22:54:27
+            </td>
+            <td>
+              noninteractive
+            </td>
+            <td>
+              9d92ad96-a45c-4add-463cc7bc48b1
+            </td>
+          </tr>
           <tr>
             <td>
               peach-node
@@ -706,9 +759,14 @@ exports[`rendering of Session Recordings 1`] = `
             >
               one, two
             </td>
-            <td />
+            <td>
+              a few seconds
+            </td>
             <td>
               2019-04-22 00:00:51
+            </td>
+            <td>
+              interactive
             </td>
             <td>
               377875-6491-11e9-80a1-427cfde50f5a
@@ -736,9 +794,14 @@ exports[`rendering of Session Recordings 1`] = `
             >
               one, two
             </td>
-            <td />
+            <td>
+              19 minutes
+            </td>
             <td>
               2019-04-22 00:00:51
+            </td>
+            <td>
+              interactive
             </td>
             <td>
               426485-6491-11e9-80a1-427cfde50f5a

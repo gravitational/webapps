@@ -26,7 +26,7 @@ import { SessionEnd } from 'teleport/services/audit/types';
 import cfg from 'teleport/config';
 import { State } from 'teleport/useAuditEvents';
 
-type SortCols = 'created' | 'duration';
+type SortCols = 'created' | 'duration' | 'type';
 type SortState = {
   [key in SortCols]?: string;
 };
@@ -49,12 +49,7 @@ export default function RecordList(props: Props) {
   // sort and filter
   const data = React.useMemo(() => {
     const rows = events
-      .filter(
-        e =>
-          e.code === 'T2004I' &&
-          e.raw.interactive &&
-          e.raw.session_recording !== 'off'
-      )
+      .filter(e => e.code === 'T2004I')
       .map(makeRows(clusterId));
 
     const filtered = rows.filter(obj =>
@@ -115,6 +110,17 @@ export default function RecordList(props: Props) {
         cell={<CreatedCell />}
       />
       <Table.Column
+        columnKey="type"
+        header={
+          <Table.SortHeaderCell
+            sortDir={colSortDirs.type}
+            onSortChange={onSortChange}
+            title="Type"
+          />
+        }
+        cell={<Table.TextCell />}
+      />
+      <Table.Column
         header={<Table.Cell>Session ID</Table.Cell>}
         cell={<SidCell />}
       />
@@ -141,6 +147,11 @@ const makeRows = (clusterId: string) => (event: SessionEnd) => {
     hostname = `${raw.kubernetes_cluster}/${raw.kubernetes_pod_namespace}/${raw.kubernetes_pod_name}`;
   }
 
+  let type = raw.interactive ? 'interactive' : 'noninteractive';
+  if (raw.session_recording === 'off') {
+    type = 'recording disabled';
+  }
+
   return {
     clusterId,
     duration,
@@ -150,6 +161,8 @@ const makeRows = (clusterId: string) => (event: SessionEnd) => {
     createdText: displayDateTime(time),
     users: users.join(', '),
     hostname: hostname,
+    playerDisabled: !raw.interactive || raw.session_recording === 'off',
+    type,
   };
 };
 
@@ -176,6 +189,11 @@ function SidCell(props) {
 const PlayCell = props => {
   const { rowIndex, data } = props;
   const row = data[rowIndex] as Row;
+
+  if (row.playerDisabled) {
+    return null;
+  }
+
   const url = cfg.getSessionAuditPlayerRoute(row);
   return (
     <Table.Cell align="right">
@@ -208,4 +226,5 @@ const searchableProps = [
   'users',
   'durationText',
   'hostname',
+  'type',
 ];
