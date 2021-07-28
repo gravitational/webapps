@@ -26,7 +26,7 @@ import { SessionEnd } from 'teleport/services/audit/types';
 import cfg from 'teleport/config';
 import { State } from 'teleport/useAuditEvents';
 
-type SortCols = 'created' | 'duration' | 'type';
+type SortCols = 'created' | 'duration';
 type SortState = {
   [key in SortCols]?: string;
 };
@@ -113,17 +113,6 @@ export default function RecordList(props: Props) {
         header={<Table.Cell>Session ID</Table.Cell>}
         cell={<SidCell />}
       />
-      <Table.Column
-        columnKey="type"
-        header={
-          <Table.SortHeaderCell
-            sortDir={colSortDirs.type}
-            onSortChange={onSortChange}
-            title="Type"
-          />
-        }
-        cell={<Table.TextCell />}
-      />
       <Table.Column header={<Table.Cell />} cell={<PlayCell />} />
     </PagedTable>
   );
@@ -147,9 +136,10 @@ const makeRows = (clusterId: string) => (event: SessionEnd) => {
     hostname = `${raw.kubernetes_cluster}/${raw.kubernetes_pod_namespace}/${raw.kubernetes_pod_name}`;
   }
 
-  let type = raw.interactive ? 'interactive' : 'noninteractive';
+  // Description set to play for interactive so users can search by "play".
+  let description = raw.interactive ? 'play' : 'noninteractive';
   if (raw.session_recording === 'off') {
-    type = 'recording disabled';
+    description = 'recording disabled';
   }
 
   return {
@@ -161,8 +151,7 @@ const makeRows = (clusterId: string) => (event: SessionEnd) => {
     createdText: displayDateTime(time),
     users: users.join(', '),
     hostname: hostname,
-    playerDisabled: !raw.interactive || raw.session_recording === 'off',
-    type,
+    description,
   };
 };
 
@@ -190,8 +179,12 @@ const PlayCell = props => {
   const { rowIndex, data } = props;
   const row = data[rowIndex] as Row;
 
-  if (row.playerDisabled) {
-    return null;
+  if (row.description !== 'play') {
+    return (
+      <Table.Cell align="right" style={{ color: '#9F9F9F' }}>
+        {row.description}
+      </Table.Cell>
+    );
   }
 
   const url = cfg.getSessionAuditPlayerRoute(row);
@@ -226,5 +219,5 @@ const searchableProps = [
   'users',
   'durationText',
   'hostname',
-  'type',
+  'description',
 ];

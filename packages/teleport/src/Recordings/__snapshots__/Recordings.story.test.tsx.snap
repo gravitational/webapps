@@ -693,15 +693,6 @@ exports[`rendering of Session Recordings 1`] = `
             <th>
               Session ID
             </th>
-            <th>
-              <a>
-                Type
-                <span
-                  class="c11 c14 icon icon-chevrons-expand-vertical "
-                  color="light"
-                />
-              </a>
-            </th>
             <th />
           </tr>
         </thead>
@@ -724,7 +715,10 @@ exports[`rendering of Session Recordings 1`] = `
             <td>
               d183ca84-dd94-434a-afee5c2c5f38
             </td>
-            <td>
+            <td
+              align="right"
+              style="color: rgb(159, 159, 159);"
+            >
               recording disabled
             </td>
           </tr>
@@ -746,7 +740,10 @@ exports[`rendering of Session Recordings 1`] = `
             <td>
               9d92ad96-a45c-4add-463cc7bc48b1
             </td>
-            <td>
+            <td
+              align="right"
+              style="color: rgb(159, 159, 159);"
+            >
               noninteractive
             </td>
           </tr>
@@ -767,9 +764,6 @@ exports[`rendering of Session Recordings 1`] = `
             </td>
             <td>
               377875-6491-11e9-80a1-427cfde50f5a
-            </td>
-            <td>
-              interactive
             </td>
             <td
               align="right"
@@ -802,9 +796,6 @@ exports[`rendering of Session Recordings 1`] = `
             </td>
             <td>
               426485-6491-11e9-80a1-427cfde50f5a
-            </td>
-            <td>
-              interactive
             </td>
             <td
               align="right"
