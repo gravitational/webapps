@@ -744,7 +744,7 @@ exports[`rendering of Session Recordings 1`] = `
               align="right"
               style="color: rgb(159, 159, 159);"
             >
-              noninteractive
+              non-interactive
             </td>
           </tr>
           <tr>
