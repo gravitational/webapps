@@ -137,7 +137,7 @@ const makeRows = (clusterId: string) => (event: SessionEnd) => {
   }
 
   // Description set to play for interactive so users can search by "play".
-  let description = raw.interactive ? 'play' : 'noninteractive';
+  let description = raw.interactive ? 'play' : 'non-interactive';
   if (raw.session_recording === 'off') {
     description = 'recording disabled';
   }
