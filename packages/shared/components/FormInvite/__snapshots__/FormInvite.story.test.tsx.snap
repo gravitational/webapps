@@ -233,7 +233,7 @@ exports[`shared/components/Invite.story story.Otp 1`] = `
 
 .c8 {
   box-sizing: border-box;
-  margin-bottom: 16px;
+  margin-bottom: 24px;
   display: flex;
   align-items: flex-end;
 }
@@ -755,7 +755,7 @@ exports[`shared/components/Invite.story story.OtpError 1`] = `
 
 .c9 {
   box-sizing: border-box;
-  margin-bottom: 16px;
+  margin-bottom: 24px;
   display: flex;
   align-items: flex-end;
 }
@@ -1245,7 +1245,7 @@ exports[`shared/components/Invite.story story.U2f 1`] = `
 
 .c8 {
   box-sizing: border-box;
-  margin-bottom: 16px;
+  margin-bottom: 24px;
   display: flex;
   align-items: flex-end;
 }

@@ -134,7 +134,7 @@ export default function FormInvite(props: Props) {
                 placeholder="Confirm Password"
               />
               {secondFactorEnabled && (
-                <Flex alignItems="flex-end" mb={3}>
+                <Flex alignItems="flex-end" mb={4}>
                   <Box width="50%" data-testid="mfa-select">
                     <FieldSelect
                       label="Second factor"

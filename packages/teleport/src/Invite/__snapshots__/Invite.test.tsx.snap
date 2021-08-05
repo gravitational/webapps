@@ -215,7 +215,7 @@ exports[`teleport/components/Invite should render form with token requirement wh
 
 .c9 {
   box-sizing: border-box;
-  margin-bottom: 16px;
+  margin-bottom: 24px;
   display: flex;
   align-items: flex-end;
 }
@@ -651,7 +651,7 @@ exports[`teleport/components/Invite should render form with token requirement wh
 
 .c9 {
   box-sizing: border-box;
-  margin-bottom: 16px;
+  margin-bottom: 24px;
   display: flex;
   align-items: flex-end;
 }
