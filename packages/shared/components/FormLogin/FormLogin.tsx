@@ -53,7 +53,7 @@ export default function LoginForm(props: Props) {
   const [mfaOptions] = useState<MFAOption[]>(() => {
     const mfaOptions: MFAOption[] = [];
 
-    if (auth2faType === 'optional' || auth2faType === 'off') {
+    if (auth2faType === 'optional') {
       mfaOptions.push({ value: 'optional', label: 'NONE' });
     }
 
@@ -83,7 +83,7 @@ export default function LoginForm(props: Props) {
       return;
     }
 
-    if (mfaType.value === 'u2f') {
+    if (mfaType?.value === 'u2f') {
       onLoginWithU2f(user, pass);
     } else {
       onLogin(user, pass, token);
@@ -149,7 +149,7 @@ export default function LoginForm(props: Props) {
                 onChange={e => setUser(e.target.value)}
                 placeholder="Username"
               />
-              <Flex flexDirection="column" mb={3}>
+              <Flex flexDirection="column" mb={isRecoveryEnabled ? 2 : 4}>
                 <FieldInput
                   rule={requiredField('Password is required')}
                   label="Password"
@@ -161,20 +161,18 @@ export default function LoginForm(props: Props) {
                   width="100%"
                 />
                 {isRecoveryEnabled && (
-                  <ButtonLink
-                    style={{
-                      padding: '0px',
-                      minHeight: 'auto',
-                      alignSelf: 'flex-end',
-                    }}
-                    onClick={() => onRecover('password')}
-                  >
-                    Forgot Password?
-                  </ButtonLink>
+                  <Box textAlign="right">
+                    <ButtonLink
+                      style={{ padding: '0px', minHeight: 0 }}
+                      onClick={() => onRecover('password')}
+                    >
+                      Forgot Password?
+                    </ButtonLink>
+                  </Box>
                 )}
               </Flex>
               {auth2faType !== 'off' && (
-                <Flex flexDirection="column" mb={3}>
+                <Box mb={isRecoveryEnabled ? 3 : 4}>
                   <Flex alignItems="flex-end">
                     <Box width="50%" data-testid="mfa-select">
                       <FieldSelect
@@ -209,30 +207,29 @@ export default function LoginForm(props: Props) {
                     </Box>
                   </Flex>
                   {isRecoveryEnabled && mfaType.value === 'u2f' && (
-                    <ButtonLink
-                      style={{
-                        padding: '0px',
-                        minHeight: 'auto',
-                        alignSelf: 'flex-start',
-                      }}
-                      onClick={() => onRecover('u2f')}
-                    >
-                      Lost U2F Key?
-                    </ButtonLink>
+                    <Box>
+                      <ButtonLink
+                        style={{ padding: '0px', minHeight: 0 }}
+                        onClick={() => onRecover('u2f')}
+                      >
+                        Lost U2F Key?
+                      </ButtonLink>
+                    </Box>
                   )}
                   {isRecoveryEnabled && mfaType.value === 'otp' && (
-                    <ButtonLink
-                      style={{
-                        padding: '0px',
-                        minHeight: 'auto',
-                        alignSelf: 'flex-start',
-                      }}
-                      onClick={() => onRecover('totp')}
-                    >
-                      Lost Two-Factor Token?
-                    </ButtonLink>
+                    <Box>
+                      <ButtonLink
+                        style={{
+                          padding: '0px',
+                          minHeight: 0,
+                        }}
+                        onClick={() => onRecover('totp')}
+                      >
+                        Lost Two-Factor Token?
+                      </ButtonLink>
+                    </Box>
                   )}
-                </Flex>
+                </Box>
               )}
               <ButtonPrimary
                 width="100%"

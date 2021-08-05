@@ -149,7 +149,7 @@ exports[`auth2faType: otp rendering 1`] = `
 
 .c6 {
   box-sizing: border-box;
-  margin-bottom: 16px;
+  margin-bottom: 24px;
   display: flex;
   flex-direction: column;
 }
@@ -286,7 +286,7 @@ exports[`auth2faType: otp rendering 1`] = `
       </div>
     </div>
     <div
-      class="c6"
+      class="c3"
     >
       <div
         class="c8"
@@ -551,7 +551,7 @@ exports[`auth2faType: u2f rendering 1`] = `
 
 .c6 {
   box-sizing: border-box;
-  margin-bottom: 16px;
+  margin-bottom: 24px;
   display: flex;
   flex-direction: column;
 }
@@ -688,7 +688,7 @@ exports[`auth2faType: u2f rendering 1`] = `
       </div>
     </div>
     <div
-      class="c6"
+      class="c3"
     >
       <div
         class="c8"
@@ -1218,7 +1218,7 @@ exports[`server error rendering 1`] = `
 
 .c7 {
   box-sizing: border-box;
-  margin-bottom: 16px;
+  margin-bottom: 24px;
   display: flex;
   flex-direction: column;
 }
