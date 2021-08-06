@@ -67,6 +67,10 @@ export const eventCodes = {
   OIDC_CONNECTOR_DELETED: 'T8101I',
   PORTFORWARD_FAILURE: 'T3003E',
   PORTFORWARD: 'T3003I',
+  RECOVERY_TOKEN_CREATED: 'T6001I',
+  RECOVERY_CODE_GENERATED: 'T1008I',
+  RECOVERY_CODE_USED: 'T1009I',
+  RECOVERY_CODE_USED_FAILURE: 'T1009W',
   RESET_PASSWORD_TOKEN_CREATED: 'T6000I',
   ROLE_CREATED: 'T9000I',
   ROLE_DELETED: 'T9001I',
@@ -393,6 +397,18 @@ export type RawEvents = {
       mfa_device_uuid: string;
       mfa_device_type: string;
     }
+  >;
+  [eventCodes.RECOVERY_TOKEN_CREATED]: RawEventPasswordToken<
+    typeof eventCodes.RECOVERY_TOKEN_CREATED
+  >;
+  [eventCodes.RECOVERY_CODE_GENERATED]: RawEvent<
+    typeof eventCodes.RECOVERY_CODE_GENERATED
+  >;
+  [eventCodes.RECOVERY_CODE_USED]: RawEvent<
+    typeof eventCodes.RECOVERY_CODE_USED
+  >;
+  [eventCodes.RECOVERY_CODE_USED_FAILURE]: RawEvent<
+    typeof eventCodes.RECOVERY_CODE_USED_FAILURE
   >;
 };
 
