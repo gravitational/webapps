@@ -83,7 +83,7 @@ const EventIconMap: Record<EventCode, React.FC> = {
   [eventCodes.PORTFORWARD_FAILURE]: Icons.Info,
   [eventCodes.SUBSYSTEM]: Icons.Info,
   [eventCodes.SUBSYSTEM_FAILURE]: Icons.Info,
-  [eventCodes.RECOVERY_TOKEN_CREATED]: Icons.VpnKey,
+  [eventCodes.RECOVERY_TOKEN_CREATED]: Icons.Info,
   [eventCodes.RECOVERY_CODE_GENERATED]: Icons.Keypair,
   [eventCodes.RECOVERY_CODE_USED]: Icons.VpnKey,
   [eventCodes.RECOVERY_CODE_USED_FAILURE]: Icons.VpnKey,

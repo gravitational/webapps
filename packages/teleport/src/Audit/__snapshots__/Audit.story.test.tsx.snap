@@ -781,7 +781,7 @@ exports[`loaded 1`] = `
               class="c15"
             >
               <span
-                class="c11 c16 icon icon-vpn_key c11 c16"
+                class="c11 c16 icon icon-info_outline c11 c16"
                 color="light"
                 font-size="3"
               />
