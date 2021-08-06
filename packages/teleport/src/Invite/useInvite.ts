@@ -21,7 +21,7 @@ import history from 'teleport/services/history';
 import auth from 'teleport/services/auth';
 
 export default function useInvite(tokenId: string) {
-  const [passwordToken, setPswToken] = useState<ResetToken>(undefined);
+  const [passwordToken, setPswToken] = useState<ResetToken>();
   const fetchAttempt = useAttempt('');
   const submitAttempt = useAttempt('');
   const auth2faType = cfg.getAuth2faType();

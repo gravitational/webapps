@@ -149,7 +149,7 @@ export default function LoginForm(props: Props) {
                 onChange={e => setUser(e.target.value)}
                 placeholder="Username"
               />
-              <Flex flexDirection="column" mb={isRecoveryEnabled ? 2 : 4}>
+              <Box mb={isRecoveryEnabled ? 2 : 4}>
                 <FieldInput
                   rule={requiredField('Password is required')}
                   label="Password"
@@ -170,7 +170,7 @@ export default function LoginForm(props: Props) {
                     </ButtonLink>
                   </Box>
                 )}
-              </Flex>
+              </Box>
               {auth2faType !== 'off' && (
                 <Box mb={isRecoveryEnabled ? 3 : 4}>
                   <Flex alignItems="flex-end">

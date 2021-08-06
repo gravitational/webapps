@@ -120,6 +120,6 @@ export default hot(Teleport);
 export type Props = {
   ctx: TeleportContext;
   history: History;
-  renderPublicRoutes?(children?: JSX.Element[]): any;
+  renderPublicRoutes?(children?: JSX.Element[]): JSX.Element[];
   renderPrivateRoutes?(CustomMain?: JSX.Element): JSX.Element;
 };
