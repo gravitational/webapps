@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
 import { Card, Text, Flex, ButtonLink, ButtonPrimary, Box } from 'design';
 import * as Alerts from 'design/Alert';
@@ -37,6 +37,8 @@ export default function LoginForm(props: Props) {
     authProviders,
     auth2faType = 'off',
     isLocalAuthEnabled = true,
+    isRecoveryEnabled = false,
+    onRecover,
     clearAttempt,
   } = props;
 
@@ -45,21 +47,29 @@ export default function LoginForm(props: Props) {
   const otpEnabled = auth2faType === 'otp';
   const ssoEnabled = authProviders && authProviders.length > 0;
 
-  const [pass, setPass] = React.useState('');
-  const [user, setUser] = React.useState('');
-  const [token, setToken] = React.useState('');
-  const [mfaOptions] = React.useState(() => {
-    let mfaOptions = [
-      { value: 'u2f', label: 'U2F' },
-      { value: 'otp', label: 'TOTP' },
-    ];
+  const [pass, setPass] = useState('');
+  const [user, setUser] = useState('');
+  const [token, setToken] = useState('');
+  const [mfaOptions] = useState<MFAOption[]>(() => {
+    const mfaOptions: MFAOption[] = [];
+
     if (auth2faType === 'optional') {
-      mfaOptions = [{ value: 'none', label: 'NONE' }, ...mfaOptions];
+      mfaOptions.push({ value: 'optional', label: 'NONE' });
     }
+
+    if (mfaEnabled || u2fEnabled) {
+      mfaOptions.push({ value: 'u2f', label: 'U2F' });
+    }
+
+    if (mfaEnabled || otpEnabled) {
+      mfaOptions.push({ value: 'otp', label: 'TOTP' });
+    }
+
     return mfaOptions;
   });
-  const [mfaType, setMfaType] = React.useState(mfaOptions[0]);
-  const [isExpanded, toggleExpander] = React.useState(
+
+  const [mfaType, setMfaType] = useState<MFAOption>(mfaOptions[0]);
+  const [isExpanded, toggleExpander] = useState(
     !(isLocalAuthEnabled && ssoEnabled)
   );
   const { isFailed, isProcessing, message } = attempt;
@@ -73,14 +83,14 @@ export default function LoginForm(props: Props) {
       return;
     }
 
-    if (u2fEnabled || (mfaEnabled && mfaType.value === 'u2f')) {
+    if (mfaType?.value === 'u2f') {
       onLoginWithU2f(user, pass);
     } else {
       onLogin(user, pass, token);
     }
   }
 
-  function onSetMfaOption(option: Option, validator: Validator) {
+  function onSetMfaOption(option: MFAOption, validator: Validator) {
     setToken('');
     clearAttempt();
     validator.reset();
@@ -139,64 +149,91 @@ export default function LoginForm(props: Props) {
                 onChange={e => setUser(e.target.value)}
                 placeholder="Username"
               />
-              <FieldInput
-                rule={requiredField('Password is required')}
-                label="Password"
-                value={pass}
-                onChange={e => setPass(e.target.value)}
-                type="password"
-                placeholder="Password"
-              />
-              {mfaEnabled && (
-                <Flex alignItems="flex-end" mb={4}>
-                  <Box width="50%" data-testid="mfa-select">
-                    <FieldSelect
-                      label="Second factor"
-                      value={mfaType}
-                      options={mfaOptions}
-                      onChange={opt => onSetMfaOption(opt as Option, validator)}
-                      mr={3}
-                      mb={0}
-                      isDisabled={isProcessing}
-                    />
+              <Box mb={isRecoveryEnabled ? 2 : 4}>
+                <FieldInput
+                  rule={requiredField('Password is required')}
+                  label="Password"
+                  value={pass}
+                  onChange={e => setPass(e.target.value)}
+                  type="password"
+                  placeholder="Password"
+                  mb={0}
+                  width="100%"
+                />
+                {isRecoveryEnabled && (
+                  <Box textAlign="right">
+                    <ButtonLink
+                      style={{ padding: '0px', minHeight: 0 }}
+                      onClick={() => onRecover('password')}
+                    >
+                      Forgot Password?
+                    </ButtonLink>
                   </Box>
-                  <Box width="50%">
-                    {mfaType.value === 'otp' && (
-                      <FieldInput
-                        label="two-factor token"
-                        rule={requiredToken}
-                        autoComplete="off"
-                        value={token}
-                        onChange={e => setToken(e.target.value)}
-                        placeholder="123 456"
+                )}
+              </Box>
+              {auth2faType !== 'off' && (
+                <Box mb={isRecoveryEnabled ? 3 : 4}>
+                  <Flex alignItems="flex-end">
+                    <Box width="50%" data-testid="mfa-select">
+                      <FieldSelect
+                        label="Second factor"
+                        value={mfaType}
+                        options={mfaOptions}
+                        onChange={opt =>
+                          onSetMfaOption(opt as MFAOption, validator)
+                        }
+                        mr={3}
                         mb={0}
+                        isDisabled={isProcessing}
                       />
-                    )}
-                    {mfaType.value === 'u2f' && isProcessing && (
-                      <Text typography="body2" mb={1}>
-                        Insert your U2F key and press the button on the key.
-                      </Text>
-                    )}
-                  </Box>
-                </Flex>
-              )}
-              {otpEnabled && (
-                <Flex flexDirection="row">
-                  <FieldInput
-                    label="two-factor token"
-                    rule={requiredToken}
-                    autoComplete="off"
-                    width="50%"
-                    mr={3}
-                    value={token}
-                    onChange={e => setToken(e.target.value)}
-                    placeholder="123 456"
-                  />
-                </Flex>
+                    </Box>
+                    <Box width="50%">
+                      {mfaType.value === 'otp' && (
+                        <FieldInput
+                          label="two-factor token"
+                          rule={requiredToken}
+                          autoComplete="off"
+                          value={token}
+                          onChange={e => setToken(e.target.value)}
+                          placeholder="123 456"
+                          mb={0}
+                        />
+                      )}
+                      {mfaType.value === 'u2f' && isProcessing && (
+                        <Text typography="body2" mb={1}>
+                          Insert your U2F key and press the button on the key.
+                        </Text>
+                      )}
+                    </Box>
+                  </Flex>
+                  {isRecoveryEnabled && mfaType.value === 'u2f' && (
+                    <Box>
+                      <ButtonLink
+                        style={{ padding: '0px', minHeight: 0 }}
+                        onClick={() => onRecover('u2f')}
+                      >
+                        Lost U2F Key?
+                      </ButtonLink>
+                    </Box>
+                  )}
+                  {isRecoveryEnabled && mfaType.value === 'otp' && (
+                    <Box>
+                      <ButtonLink
+                        style={{
+                          padding: '0px',
+                          minHeight: 0,
+                        }}
+                        onClick={() => onRecover('totp')}
+                      >
+                        Lost Two-Factor Token?
+                      </ButtonLink>
+                    </Box>
+                  )}
+                </Box>
               )}
               <ButtonPrimary
                 width="100%"
-                mt="3"
+                mt={3}
                 type="submit"
                 size="large"
                 onClick={e => onLoginClick(e, validator)}
@@ -204,16 +241,6 @@ export default function LoginForm(props: Props) {
               >
                 LOGIN
               </ButtonPrimary>
-              {isProcessing && u2fEnabled && (
-                <Text
-                  mt={2}
-                  typography="paragraph2"
-                  width="100%"
-                  textAlign="center"
-                >
-                  Insert your U2F key and press the button on the key.
-                </Text>
-              )}
             </FlexBordered>
           )}
         </CardLogin>
@@ -272,8 +299,12 @@ type Props = {
   authProviders?: AuthProvider[];
   auth2faType?: Auth2faType;
   attempt: ReturnType<typeof useAttempt>[0];
+  isRecoveryEnabled?: boolean;
+  onRecover?: (type: 'totp' | 'u2f' | 'password') => void;
   clearAttempt?: () => void;
   onLoginWithSso(provider: AuthProvider): void;
   onLoginWithU2f(username: string, password: string): void;
   onLogin(username: string, password: string, token: string): void;
 };
+
+type MFAOption = Option<Auth2faType>;
