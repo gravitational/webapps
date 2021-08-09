@@ -31,6 +31,7 @@ import Console from './Console';
 import Player from './Player';
 import TeleportContextProvider from './teleportContextProvider';
 import TeleportContext from './teleportContext';
+import IdleTimeoutWatcher from './IdleTimeoutWatcher';
 import cfg from './config';
 
 const teleportIco = require('./favicon.ico').default;
@@ -70,6 +71,7 @@ const Teleport: React.FC<Props> = ({ ctx, history, children }) => {
             />
             <Route path={cfg.routes.root}>
               <Authenticated>
+                <IdleTimeoutWatcher />
                 <TeleportContextProvider ctx={ctx}>
                   <Switch>
                     <Route
