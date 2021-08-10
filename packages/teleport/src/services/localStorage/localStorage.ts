@@ -48,6 +48,30 @@ const storage = {
     return bearerToken ? bearerToken.accessToken : null;
   },
 
+  setSessionIdleTimeout(duration: number) {
+    window.localStorage.setItem(KeysEnum.SESSION_IDLE_TIMEOUT, `${duration}`);
+  },
+
+  getSessionIdleTimeout() {
+    const time = Number(
+      window.localStorage.getItem(KeysEnum.SESSION_IDLE_TIMEOUT)
+    );
+
+    return time ? time : 0;
+  },
+
+  setSessionIdleExpiry(expiry: number) {
+    window.localStorage.setItem(KeysEnum.SESSION_IDLE_EXPIRY, `${expiry}`);
+  },
+
+  getSessionIdleExpiry() {
+    const time = Number(
+      window.localStorage.getItem(KeysEnum.SESSION_IDLE_EXPIRY)
+    );
+
+    return time ? time : 0;
+  },
+
   broadcast(messageType, messageBody) {
     window.localStorage.setItem(messageType, messageBody);
     window.localStorage.removeItem(messageType);

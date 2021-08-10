@@ -17,5 +17,6 @@ limitations under the License.
 export const KeysEnum = {
   TOKEN: 'grv_teleport_token',
   TOKEN_RENEW: 'grv_teleport_token_renew',
-  RELOAD_TABS: 'grv_reload_tabs',
+  SESSION_IDLE_TIMEOUT: 'grv_teleport_session_idle_timeout',
+  SESSION_IDLE_EXPIRY: 'grv_teleport_session_idle_expiry',
 };

@@ -27,5 +27,6 @@ export function makeBearerToken(json: any): BearerToken {
     accessToken: json.token,
     expiresIn: json.expires_in,
     created: new Date().getTime(),
+    idleTimeout: json.webIdleTimeout || 0,
   };
 }

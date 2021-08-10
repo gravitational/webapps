@@ -83,6 +83,7 @@ const session = {
       token = this._extractBearerTokenFromHtml();
       if (token) {
         localStorage.setBearerToken(token);
+        localStorage.setSessionIdleTimeout(token.idleTimeout);
       } else {
         token = localStorage.getBearerToken();
       }
@@ -208,6 +209,18 @@ const session = {
   _stopTokenChecker() {
     clearInterval(sesstionCheckerTimerId);
     sesstionCheckerTimerId = null;
+  },
+
+  getIdleExpiry() {
+    return localStorage.getSessionIdleExpiry();
+  },
+
+  setIdleExpiry(expiry: number) {
+    localStorage.setSessionIdleExpiry(expiry);
+  },
+
+  getIdleTimeout() {
+    return localStorage.getSessionIdleTimeout();
   },
 };
 

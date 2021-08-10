@@ -23,8 +23,6 @@ const cfg = {
 
   baseUrl: window.location.origin,
 
-  webIdleTimeout: 0,
-
   auth: {
     localAuthEnabled: true,
     providers: [] as AuthProvider[],
