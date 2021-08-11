@@ -54,10 +54,15 @@ export default function useInvite(tokenId: string) {
     history.push(cfg.routes.root, true);
   }
 
+  function clearSubmitAttempt() {
+    submitAttempt.setAttempt({ status: '' });
+  }
+
   return {
     auth2faType,
     fetchAttempt: fetchAttempt.attempt,
     submitAttempt: submitAttempt.attempt,
+    clearSubmitAttempt,
     onSubmit,
     onSubmitWithU2f,
     passwordToken,

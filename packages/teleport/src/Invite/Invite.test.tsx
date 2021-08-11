@@ -51,7 +51,7 @@ describe('teleport/components/Invite', () => {
     // fill out input boxes and trigger submit
     fireEvent.change(pwdField, { target: { value: 'pwd_value' } });
     fireEvent.change(pwdConfirmField, { target: { value: 'pwd_value' } });
-    fireEvent.click(screen.getByText('Create Account'));
+    fireEvent.click(screen.getByRole('button'));
 
     expect(auth.resetPassword).toHaveBeenCalledWith('5182', 'pwd_value', '');
   });
@@ -72,7 +72,7 @@ describe('teleport/components/Invite', () => {
     fireEvent.change(pwdField, { target: { value: 'pwd_value' } });
     fireEvent.change(pwdConfirmField, { target: { value: 'pwd_value' } });
     fireEvent.change(otpField, { target: { value: '2222' } });
-    fireEvent.click(screen.getByText('Create Account'));
+    fireEvent.click(screen.getByRole('button'));
 
     expect(auth.resetPassword).toHaveBeenCalledWith(
       '5182',
@@ -97,7 +97,7 @@ describe('teleport/components/Invite', () => {
     const pwdConfirmField = screen.getByPlaceholderText('Confirm Password');
     fireEvent.change(pwdField, { target: { value: 'pwd_value' } });
     fireEvent.change(pwdConfirmField, { target: { value: 'pwd_value' } });
-    fireEvent.click(screen.getByText('Create Account'));
+    fireEvent.click(screen.getByRole('button'));
 
     expect(auth.resetPassword).not.toHaveBeenCalled();
     expect(auth.resetPasswordWithU2f).toHaveBeenCalledWith('5182', 'pwd_value');
@@ -121,7 +121,7 @@ describe('teleport/components/Invite', () => {
     fireEvent.change(pwdConfirmField, { target: { value: 'pwd_value' } });
 
     await act(async () => {
-      fireEvent.click(screen.getByText('Create Account'));
+      fireEvent.click(screen.getByRole('button'));
       reject(new Error('server_error'));
     });
 
