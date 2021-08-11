@@ -60,6 +60,7 @@ const props: Props = {
   attempt: {
     status: '',
   },
+  setAttempt: () => null,
   user: 'test@gravitational.com',
   qr:
     'iVBORw0KGgoAAAANSUhEUgAAAcgAAAHIEAAAAAC/Wvl1AAAJV0lEQVR4nOzdsW4jORZA0fbC///LXowV' +

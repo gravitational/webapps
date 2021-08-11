@@ -45,6 +45,7 @@ export const AuthTfaOptional = () => (
 const props: State & Props = {
   auth2faType: 'off',
   submitAttempt: { status: '' },
+  setSubmitAttempt: () => null,
   fetchAttempt: { status: 'success' },
   onSubmitWithU2f: () => null,
   onSubmit: () => null,

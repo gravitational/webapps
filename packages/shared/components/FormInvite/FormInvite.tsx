@@ -39,6 +39,7 @@ export default function FormInvite(props: Props) {
     onSubmitWithU2f,
     onSubmit,
     attempt,
+    setAttempt,
     user,
     qr,
     title = '',
@@ -95,6 +96,7 @@ export default function FormInvite(props: Props) {
 
   function onSetMfaOption(option: MFAOption, validator: Validator) {
     setToken('');
+    setAttempt({ status: '' });
     validator.reset();
     setMfaType(option);
   }
@@ -208,6 +210,7 @@ export type Props = {
   qr: string;
   auth2faType: Auth2faType;
   attempt: Attempt;
+  setAttempt: React.Dispatch<React.SetStateAction<Attempt>>;
   onSubmitWithU2f(password: string): void;
   onSubmit(password: string, optToken: string): void;
 };

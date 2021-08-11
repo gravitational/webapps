@@ -58,6 +58,7 @@ export default function useInvite(tokenId: string) {
     auth2faType,
     fetchAttempt: fetchAttempt.attempt,
     submitAttempt: submitAttempt.attempt,
+    setSubmitAttempt: submitAttempt.setAttempt,
     onSubmit,
     onSubmitWithU2f,
     passwordToken,

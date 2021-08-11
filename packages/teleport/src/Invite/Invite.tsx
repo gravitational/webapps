@@ -32,6 +32,7 @@ export function Invite(props: State & Props) {
     auth2faType,
     fetchAttempt,
     submitAttempt,
+    setSubmitAttempt,
     onSubmit,
     onSubmitWithU2f,
     passwordToken,
@@ -66,6 +67,7 @@ export function Invite(props: State & Props) {
         qr={qrCode}
         auth2faType={auth2faType}
         attempt={submitAttempt}
+        setAttempt={setSubmitAttempt}
         onSubmitWithU2f={onSubmitWithU2f}
         onSubmit={onSubmit}
       />
