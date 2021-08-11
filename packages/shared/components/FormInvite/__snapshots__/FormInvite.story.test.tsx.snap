@@ -14,11 +14,21 @@ exports[`shared/components/Invite.story story.Otp 1`] = `
 
 .c9 {
   box-sizing: border-box;
-  margin-bottom: 24px;
   width: 50%;
 }
 
-.c11 {
+.c10 {
+  box-sizing: border-box;
+  margin-bottom: 0px;
+  margin-right: 16px;
+}
+
+.c12 {
+  box-sizing: border-box;
+  margin-bottom: 0px;
+}
+
+.c14 {
   box-sizing: border-box;
   padding: 40px;
   background-color: #1C254D;
@@ -27,7 +37,12 @@ exports[`shared/components/Invite.story story.Otp 1`] = `
   border-bottom-right-radius: 8px;
 }
 
-.c10 {
+.c15 {
+  box-sizing: border-box;
+  width: 168px;
+}
+
+.c13 {
   line-height: 1.5;
   margin: 0;
   display: inline-flex;
@@ -55,25 +70,25 @@ exports[`shared/components/Invite.story story.Otp 1`] = `
   width: 100%;
 }
 
-.c10:active {
+.c13:active {
   opacity: 0.56;
 }
 
-.c10:hover,
-.c10:focus {
+.c13:hover,
+.c13:focus {
   background: #651FFF;
 }
 
-.c10:active {
+.c13:active {
   background: #354AA4;
 }
 
-.c10:disabled {
+.c13:disabled {
   background: rgba(255,255,255,0.12);
   color: rgba(255,255,255,0.3);
 }
 
-.c14 {
+.c18 {
   line-height: 1.5;
   margin: 0;
   display: inline-flex;
@@ -100,21 +115,21 @@ exports[`shared/components/Invite.story story.Otp 1`] = `
   width: 100%;
 }
 
-.c14:active {
+.c18:active {
   opacity: 0.56;
 }
 
-.c14:hover,
-.c14:focus {
+.c18:hover,
+.c18:focus {
   background: #2C3A73;
 }
 
-.c14:disabled {
+.c18:disabled {
   background: rgba(255,255,255,0.12);
   color: rgba(255,255,255,0.3);
 }
 
-.c13 {
+.c17 {
   color: #03a9f4;
   font-weight: normal;
   background: none;
@@ -123,8 +138,8 @@ exports[`shared/components/Invite.story story.Otp 1`] = `
   padding: 0 8px;
 }
 
-.c13:hover,
-.c13:focus {
+.c17:hover,
+.c17:focus {
   background: #222C59;
 }
 
@@ -201,7 +216,7 @@ exports[`shared/components/Invite.story story.Otp 1`] = `
   margin-bottom: 16px;
 }
 
-.c12 {
+.c16 {
   overflow: hidden;
   text-overflow: ellipsis;
   font-weight: 300;
@@ -218,8 +233,80 @@ exports[`shared/components/Invite.story story.Otp 1`] = `
 
 .c8 {
   box-sizing: border-box;
+  margin-bottom: 24px;
   display: flex;
-  flex-direction: row;
+  align-items: flex-end;
+}
+
+.c11 .react-select-container {
+  box-shadow: inset 0 2px 4px rgba(0,0,0,0.24);
+  box-sizing: border-box;
+  border: none;
+  display: block;
+  font-size: 14px;
+  outline: none;
+  width: 100%;
+  color: rgba(0,0,0,0.87);
+  background-color: #ffffff;
+  margin-bottom: 0px;
+  border-radius: 4px;
+}
+
+.c11 .react-select__control,
+.c11 .react-select__control--is-focused {
+  min-height: 40px;
+  height: 40px;
+  background-color: transparent;
+  border-color: transparent;
+  border-radius: 4px;
+  border-style: solid;
+  border-width: 1px;
+  box-shadow: none;
+}
+
+.c11 .react-select__control:hover,
+.c11 .react-select__control--is-focused:hover {
+  border-color: transparent;
+  cursor: pointer;
+}
+
+.c11 .react-select__option:hover {
+  cursor: pointer;
+  background-color: #eceff1;
+}
+
+.c11 .react-select__option--is-focused {
+  background-color: #eceff1;
+}
+
+.c11 .react-select__option--is-selected {
+  background-color: #cfd8dc;
+  color: inherit;
+}
+
+.c11 .react-select__option--is-selected:hover {
+  background-color: #cfd8dc;
+}
+
+.c11 .react-select__menu {
+  margin-top: 0px;
+}
+
+.c11 .react-select__indicator-separator {
+  display: none;
+}
+
+.c11 .react-select__loading-indicator {
+  display: none;
+}
+
+.c11 .react-select--is-disabled .react-select__single-value,
+.c11 .react-select--is-disabled .react-select__placeholder {
+  color: rgba(0,0,0,0.24);
+}
+
+.c11 .react-select--is-disabled .react-select__indicator {
+  color: rgba(0,0,0,0.14);
 }
 
 <form
@@ -282,26 +369,99 @@ exports[`shared/components/Invite.story story.Otp 1`] = `
       >
         <div
           class="c9"
+          data-testid="mfa-select"
           width="50%"
         >
-          <label
-            class="c6"
-            font-size="0"
+          <div
+            class="c10"
           >
-            two-factor token
-          </label>
-          <input
-            autocomplete="off"
-            class="c7"
-            color="text.onLight"
-            placeholder="123 456"
-            type="text"
-            value=""
-          />
+            <label
+              class="c6"
+              font-size="0"
+            >
+              Second factor
+            </label>
+            <div
+              class="c11"
+            >
+              <div
+                class="react-select-container css-2b097c-container"
+              >
+                <div
+                  class="react-select__control css-yk16xz-control"
+                >
+                  <div
+                    class="react-select__value-container react-select__value-container--has-value css-g1d714-ValueContainer"
+                  >
+                    <div
+                      class="react-select__single-value css-1uccc91-singleValue"
+                    >
+                      TOTP
+                    </div>
+                    <input
+                      aria-autocomplete="list"
+                      class="css-62g3xt-dummyInput"
+                      id="react-select-2-input"
+                      readonly=""
+                      tabindex="0"
+                      value=""
+                    />
+                  </div>
+                  <div
+                    class="react-select__indicators css-1hb7zxy-IndicatorsContainer"
+                  >
+                    <span
+                      class="react-select__indicator-separator css-1okebmr-indicatorSeparator"
+                    />
+                    <div
+                      aria-hidden="true"
+                      class="react-select__indicator react-select__dropdown-indicator css-tlfecz-indicatorContainer"
+                    >
+                      <svg
+                        aria-hidden="true"
+                        class="css-6q0nyr-Svg"
+                        focusable="false"
+                        height="20"
+                        viewBox="0 0 20 20"
+                        width="20"
+                      >
+                        <path
+                          d="M4.516 7.548c0.436-0.446 1.043-0.481 1.576 0l3.908 3.747 3.908-3.747c0.533-0.481 1.141-0.446 1.574 0 0.436 0.445 0.408 1.197 0 1.615-0.406 0.418-4.695 4.502-4.695 4.502-0.217 0.223-0.502 0.335-0.787 0.335s-0.57-0.112-0.789-0.335c0 0-4.287-4.084-4.695-4.502s-0.436-1.17 0-1.615z"
+                        />
+                      </svg>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div
+          class="c9"
+          width="50%"
+        >
+          <div
+            class="c12"
+          >
+            <label
+              class="c6"
+              font-size="0"
+            >
+              two-factor token
+            </label>
+            <input
+              autocomplete="off"
+              class="c7"
+              color="text.onLight"
+              placeholder="123 456"
+              type="text"
+              value=""
+            />
+          </div>
         </div>
       </div>
       <button
-        class="c10"
+        class="c13"
         kind="primary"
         width="100%"
       >
@@ -309,21 +469,24 @@ exports[`shared/components/Invite.story story.Otp 1`] = `
       </button>
     </div>
     <div
-      class="c11"
+      class="c14"
     >
-      <div>
+      <div
+        class="c15"
+        width="168px"
+      >
         <div
-          class="c12"
+          class="c16"
         >
           Scan the bar code with Google Authenticator to generate a two-factor token.
         </div>
         <img
           src="data:image/png;base64,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"
           style="border: 8px solid;"
-          width="152"
+          width="152px"
         />
         <a
-          class="c13 c14"
+          class="c17 c18"
           href="https://support.google.com/accounts/answer/1066447?co=GENIE.Platform%3DiOS&hl=en&oco=0"
           kind="secondary"
           rel="noreferrer"
@@ -373,11 +536,21 @@ exports[`shared/components/Invite.story story.OtpError 1`] = `
 
 .c10 {
   box-sizing: border-box;
-  margin-bottom: 24px;
   width: 50%;
 }
 
-.c12 {
+.c11 {
+  box-sizing: border-box;
+  margin-bottom: 0px;
+  margin-right: 16px;
+}
+
+.c13 {
+  box-sizing: border-box;
+  margin-bottom: 0px;
+}
+
+.c15 {
   box-sizing: border-box;
   padding: 40px;
   background-color: #1C254D;
@@ -386,7 +559,12 @@ exports[`shared/components/Invite.story story.OtpError 1`] = `
   border-bottom-right-radius: 8px;
 }
 
-.c11 {
+.c16 {
+  box-sizing: border-box;
+  width: 168px;
+}
+
+.c14 {
   line-height: 1.5;
   margin: 0;
   display: inline-flex;
@@ -414,25 +592,25 @@ exports[`shared/components/Invite.story story.OtpError 1`] = `
   width: 100%;
 }
 
-.c11:active {
+.c14:active {
   opacity: 0.56;
 }
 
-.c11:hover,
-.c11:focus {
+.c14:hover,
+.c14:focus {
   background: #651FFF;
 }
 
-.c11:active {
+.c14:active {
   background: #354AA4;
 }
 
-.c11:disabled {
+.c14:disabled {
   background: rgba(255,255,255,0.12);
   color: rgba(255,255,255,0.3);
 }
 
-.c15 {
+.c19 {
   line-height: 1.5;
   margin: 0;
   display: inline-flex;
@@ -459,21 +637,21 @@ exports[`shared/components/Invite.story story.OtpError 1`] = `
   width: 100%;
 }
 
-.c15:active {
+.c19:active {
   opacity: 0.56;
 }
 
-.c15:hover,
-.c15:focus {
+.c19:hover,
+.c19:focus {
   background: #2C3A73;
 }
 
-.c15:disabled {
+.c19:disabled {
   background: rgba(255,255,255,0.12);
   color: rgba(255,255,255,0.3);
 }
 
-.c14 {
+.c18 {
   color: #03a9f4;
   font-weight: normal;
   background: none;
@@ -482,8 +660,8 @@ exports[`shared/components/Invite.story story.OtpError 1`] = `
   padding: 0 8px;
 }
 
-.c14:hover,
-.c14:focus {
+.c18:hover,
+.c18:focus {
   background: #222C59;
 }
 
@@ -560,7 +738,7 @@ exports[`shared/components/Invite.story story.OtpError 1`] = `
   margin-bottom: 16px;
 }
 
-.c13 {
+.c17 {
   overflow: hidden;
   text-overflow: ellipsis;
   font-weight: 300;
@@ -577,8 +755,80 @@ exports[`shared/components/Invite.story story.OtpError 1`] = `
 
 .c9 {
   box-sizing: border-box;
+  margin-bottom: 24px;
   display: flex;
-  flex-direction: row;
+  align-items: flex-end;
+}
+
+.c12 .react-select-container {
+  box-shadow: inset 0 2px 4px rgba(0,0,0,0.24);
+  box-sizing: border-box;
+  border: none;
+  display: block;
+  font-size: 14px;
+  outline: none;
+  width: 100%;
+  color: rgba(0,0,0,0.87);
+  background-color: #ffffff;
+  margin-bottom: 0px;
+  border-radius: 4px;
+}
+
+.c12 .react-select__control,
+.c12 .react-select__control--is-focused {
+  min-height: 40px;
+  height: 40px;
+  background-color: transparent;
+  border-color: transparent;
+  border-radius: 4px;
+  border-style: solid;
+  border-width: 1px;
+  box-shadow: none;
+}
+
+.c12 .react-select__control:hover,
+.c12 .react-select__control--is-focused:hover {
+  border-color: transparent;
+  cursor: pointer;
+}
+
+.c12 .react-select__option:hover {
+  cursor: pointer;
+  background-color: #eceff1;
+}
+
+.c12 .react-select__option--is-focused {
+  background-color: #eceff1;
+}
+
+.c12 .react-select__option--is-selected {
+  background-color: #cfd8dc;
+  color: inherit;
+}
+
+.c12 .react-select__option--is-selected:hover {
+  background-color: #cfd8dc;
+}
+
+.c12 .react-select__menu {
+  margin-top: 0px;
+}
+
+.c12 .react-select__indicator-separator {
+  display: none;
+}
+
+.c12 .react-select__loading-indicator {
+  display: none;
+}
+
+.c12 .react-select--is-disabled .react-select__single-value,
+.c12 .react-select--is-disabled .react-select__placeholder {
+  color: rgba(0,0,0,0.24);
+}
+
+.c12 .react-select--is-disabled .react-select__indicator {
+  color: rgba(0,0,0,0.14);
 }
 
 <form
@@ -649,26 +899,99 @@ exports[`shared/components/Invite.story story.OtpError 1`] = `
       >
         <div
           class="c10"
+          data-testid="mfa-select"
           width="50%"
         >
-          <label
-            class="c7"
-            font-size="0"
+          <div
+            class="c11"
           >
-            two-factor token
-          </label>
-          <input
-            autocomplete="off"
-            class="c8"
-            color="text.onLight"
-            placeholder="123 456"
-            type="text"
-            value=""
-          />
+            <label
+              class="c7"
+              font-size="0"
+            >
+              Second factor
+            </label>
+            <div
+              class="c12"
+            >
+              <div
+                class="react-select-container css-2b097c-container"
+              >
+                <div
+                  class="react-select__control css-yk16xz-control"
+                >
+                  <div
+                    class="react-select__value-container react-select__value-container--has-value css-g1d714-ValueContainer"
+                  >
+                    <div
+                      class="react-select__single-value css-1uccc91-singleValue"
+                    >
+                      TOTP
+                    </div>
+                    <input
+                      aria-autocomplete="list"
+                      class="css-62g3xt-dummyInput"
+                      id="react-select-4-input"
+                      readonly=""
+                      tabindex="0"
+                      value=""
+                    />
+                  </div>
+                  <div
+                    class="react-select__indicators css-1hb7zxy-IndicatorsContainer"
+                  >
+                    <span
+                      class="react-select__indicator-separator css-1okebmr-indicatorSeparator"
+                    />
+                    <div
+                      aria-hidden="true"
+                      class="react-select__indicator react-select__dropdown-indicator css-tlfecz-indicatorContainer"
+                    >
+                      <svg
+                        aria-hidden="true"
+                        class="css-6q0nyr-Svg"
+                        focusable="false"
+                        height="20"
+                        viewBox="0 0 20 20"
+                        width="20"
+                      >
+                        <path
+                          d="M4.516 7.548c0.436-0.446 1.043-0.481 1.576 0l3.908 3.747 3.908-3.747c0.533-0.481 1.141-0.446 1.574 0 0.436 0.445 0.408 1.197 0 1.615-0.406 0.418-4.695 4.502-4.695 4.502-0.217 0.223-0.502 0.335-0.787 0.335s-0.57-0.112-0.789-0.335c0 0-4.287-4.084-4.695-4.502s-0.436-1.17 0-1.615z"
+                        />
+                      </svg>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div
+          class="c10"
+          width="50%"
+        >
+          <div
+            class="c13"
+          >
+            <label
+              class="c7"
+              font-size="0"
+            >
+              two-factor token
+            </label>
+            <input
+              autocomplete="off"
+              class="c8"
+              color="text.onLight"
+              placeholder="123 456"
+              type="text"
+              value=""
+            />
+          </div>
         </div>
       </div>
       <button
-        class="c11"
+        class="c14"
         kind="primary"
         width="100%"
       >
@@ -676,21 +999,24 @@ exports[`shared/components/Invite.story story.OtpError 1`] = `
       </button>
     </div>
     <div
-      class="c12"
+      class="c15"
     >
-      <div>
+      <div
+        class="c16"
+        width="168px"
+      >
         <div
-          class="c13"
+          class="c17"
         >
           Scan the bar code with Google Authenticator to generate a two-factor token.
         </div>
         <img
           src="data:image/png;base64,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"
           style="border: 8px solid;"
-          width="152"
+          width="152px"
         />
         <a
-          class="c14 c15"
+          class="c18 c19"
           href="https://support.google.com/accounts/answer/1066447?co=GENIE.Platform%3DiOS&hl=en&oco=0"
           kind="secondary"
           rel="noreferrer"
@@ -717,7 +1043,18 @@ exports[`shared/components/Invite.story story.U2f 1`] = `
   margin-bottom: 24px;
 }
 
+.c9 {
+  box-sizing: border-box;
+  width: 50%;
+}
+
 .c10 {
+  box-sizing: border-box;
+  margin-bottom: 0px;
+  margin-right: 16px;
+}
+
+.c14 {
   box-sizing: border-box;
   padding: 40px;
   background-color: #1C254D;
@@ -726,12 +1063,17 @@ exports[`shared/components/Invite.story story.U2f 1`] = `
   border-bottom-right-radius: 8px;
 }
 
-.c12 {
+.c15 {
+  box-sizing: border-box;
+  width: 168px;
+}
+
+.c17 {
   box-sizing: border-box;
   color: rgba(255,255,255,0.87);
 }
 
-.c8 {
+.c13 {
   line-height: 1.5;
   margin: 0;
   display: inline-flex;
@@ -759,20 +1101,20 @@ exports[`shared/components/Invite.story story.U2f 1`] = `
   width: 100%;
 }
 
-.c8:active {
+.c13:active {
   opacity: 0.56;
 }
 
-.c8:hover,
-.c8:focus {
+.c13:hover,
+.c13:focus {
   background: #651FFF;
 }
 
-.c8:active {
+.c13:active {
   background: #354AA4;
 }
 
-.c8:disabled {
+.c13:disabled {
   background: rgba(255,255,255,0.12);
   color: rgba(255,255,255,0.3);
 }
@@ -827,7 +1169,7 @@ exports[`shared/components/Invite.story story.U2f 1`] = `
   margin-bottom: 4px;
 }
 
-.c14 {
+.c20 {
   color: #03a9f4;
   font-weight: normal;
   background: none;
@@ -859,18 +1201,17 @@ exports[`shared/components/Invite.story story.U2f 1`] = `
   margin-bottom: 16px;
 }
 
-.c9 {
+.c12 {
   overflow: hidden;
   text-overflow: ellipsis;
-  font-weight: 300;
+  font-weight: 400;
   font-size: 12px;
-  line-height: 24px;
+  line-height: 16px;
   margin: 0px;
-  margin-top: 16px;
-  text-align: center;
+  margin-bottom: 4px;
 }
 
-.c11 {
+.c16 {
   overflow: hidden;
   text-overflow: ellipsis;
   font-weight: 400;
@@ -880,7 +1221,7 @@ exports[`shared/components/Invite.story story.U2f 1`] = `
   margin-bottom: 8px;
 }
 
-.c13 {
+.c18 {
   overflow: hidden;
   text-overflow: ellipsis;
   font-weight: 300;
@@ -890,9 +1231,94 @@ exports[`shared/components/Invite.story story.U2f 1`] = `
   margin-bottom: 16px;
 }
 
+.c19 {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  font-weight: 600;
+  margin: 0px;
+}
+
 .c1 {
   box-sizing: border-box;
   display: flex;
+}
+
+.c8 {
+  box-sizing: border-box;
+  margin-bottom: 24px;
+  display: flex;
+  align-items: flex-end;
+}
+
+.c11 .react-select-container {
+  box-shadow: inset 0 2px 4px rgba(0,0,0,0.24);
+  box-sizing: border-box;
+  border: none;
+  display: block;
+  font-size: 14px;
+  outline: none;
+  width: 100%;
+  color: rgba(0,0,0,0.87);
+  background-color: #ffffff;
+  margin-bottom: 0px;
+  border-radius: 4px;
+}
+
+.c11 .react-select__control,
+.c11 .react-select__control--is-focused {
+  min-height: 40px;
+  height: 40px;
+  background-color: transparent;
+  border-color: transparent;
+  border-radius: 4px;
+  border-style: solid;
+  border-width: 1px;
+  box-shadow: none;
+}
+
+.c11 .react-select__control:hover,
+.c11 .react-select__control--is-focused:hover {
+  border-color: transparent;
+  cursor: pointer;
+}
+
+.c11 .react-select__option:hover {
+  cursor: pointer;
+  background-color: #eceff1;
+}
+
+.c11 .react-select__option--is-focused {
+  background-color: #eceff1;
+}
+
+.c11 .react-select__option--is-selected {
+  background-color: #cfd8dc;
+  color: inherit;
+}
+
+.c11 .react-select__option--is-selected:hover {
+  background-color: #cfd8dc;
+}
+
+.c11 .react-select__menu {
+  margin-top: 0px;
+}
+
+.c11 .react-select__indicator-separator {
+  display: none;
+}
+
+.c11 .react-select__loading-indicator {
+  display: none;
+}
+
+.c11 .react-select--is-disabled .react-select__single-value,
+.c11 .react-select--is-disabled .react-select__placeholder {
+  color: rgba(0,0,0,0.24);
+}
+
+.c11 .react-select--is-disabled .react-select__indicator {
+  color: rgba(0,0,0,0.14);
 }
 
 <form
@@ -950,49 +1376,134 @@ exports[`shared/components/Invite.story story.U2f 1`] = `
           value=""
         />
       </div>
-      <button
+      <div
         class="c8"
+      >
+        <div
+          class="c9"
+          data-testid="mfa-select"
+          width="50%"
+        >
+          <div
+            class="c10"
+          >
+            <label
+              class="c6"
+              font-size="0"
+            >
+              Second factor
+            </label>
+            <div
+              class="c11"
+            >
+              <div
+                class="react-select-container react-select--is-disabled css-14jk2my-container"
+              >
+                <div
+                  class="react-select__control react-select__control--is-disabled css-1fhf3k1-control"
+                >
+                  <div
+                    class="react-select__value-container react-select__value-container--has-value css-g1d714-ValueContainer"
+                  >
+                    <div
+                      class="react-select__single-value react-select__single-value--is-disabled css-107lb6w-singleValue"
+                    >
+                      U2F
+                    </div>
+                    <input
+                      aria-autocomplete="list"
+                      class="css-62g3xt-dummyInput"
+                      disabled=""
+                      id="react-select-3-input"
+                      readonly=""
+                      tabindex="0"
+                      value=""
+                    />
+                  </div>
+                  <div
+                    class="react-select__indicators css-1hb7zxy-IndicatorsContainer"
+                  >
+                    <span
+                      class="react-select__indicator-separator css-109onse-indicatorSeparator"
+                    />
+                    <div
+                      aria-hidden="true"
+                      class="react-select__indicator react-select__dropdown-indicator css-tlfecz-indicatorContainer"
+                    >
+                      <svg
+                        aria-hidden="true"
+                        class="css-6q0nyr-Svg"
+                        focusable="false"
+                        height="20"
+                        viewBox="0 0 20 20"
+                        width="20"
+                      >
+                        <path
+                          d="M4.516 7.548c0.436-0.446 1.043-0.481 1.576 0l3.908 3.747 3.908-3.747c0.533-0.481 1.141-0.446 1.574 0 0.436 0.445 0.408 1.197 0 1.615-0.406 0.418-4.695 4.502-4.695 4.502-0.217 0.223-0.502 0.335-0.787 0.335s-0.57-0.112-0.789-0.335c0 0-4.287-4.084-4.695-4.502s-0.436-1.17 0-1.615z"
+                        />
+                      </svg>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div
+          class="c9"
+          width="50%"
+        >
+          <div
+            class="c12"
+          >
+            Insert your U2F key and press the button on the key.
+          </div>
+        </div>
+      </div>
+      <button
+        class="c13"
         disabled=""
         kind="primary"
         width="100%"
       >
         Submit
       </button>
-      <div
-        class="c9"
-        width="100%"
-      >
-        Insert your U2F key and press the button on the key.
-      </div>
     </div>
     <div
-      class="c10"
+      class="c14"
     >
-      <div>
+      <div
+        class="c15"
+        width="168px"
+      >
         <div
-          class="c11"
+          class="c16"
         >
           Insert your U2F key
         </div>
         <div
-          class="c12"
+          class="c17"
           color="text.primary"
         >
           <div
-            class="c13"
+            class="c18"
           >
             Press the button on the U2F key after you press the
              
-            <b>
-              CREATE ACCOUNT
-            </b>
-             button.
+            <span
+              class="c19"
+              style="text-transform: uppercase;"
+            >
+              Submit
+            </span>
+             
+            button.
           </div>
           <div
-            class="c13"
+            class="c18"
           >
             <a
-              class="c14"
+              class="c20"
               color="light"
               href="https://support.google.com/accounts/answer/6103523?hl=en"
               rel="noreferrer"
