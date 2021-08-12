@@ -35,7 +35,13 @@ const Authenticated: React.FC = ({ children }) => {
     }
 
     session.ensureSession();
-    return startActivityChecker();
+
+    const inactivityTtl = session.getInactivityTimeout();
+    if (inactivityTtl === 0) {
+      return;
+    }
+
+    return startActivityChecker(inactivityTtl);
   }, []);
 
   if (!session.isValid()) {
@@ -47,31 +53,27 @@ const Authenticated: React.FC = ({ children }) => {
 
 export default Authenticated;
 
-function startActivityChecker() {
-  const inactivityTtl = session.getInactivityTimeout();
-
-  // See if there is idle expiry already set in local storage.
+function startActivityChecker(inactivityTtl = 0) {
+  // See if there is inactive date already set in local storage.
   // This is to check for idle timeout reached while app was closed
-  // ie. browser still openend but all app tabs closed
+  // ie. browser still openend but all app tabs closed.
   const lastActive = localStorage.getLastActive();
-  if (lastActive > 0 && lastActive <= inactivityTtl) {
+  if (lastActive > 0 && Date.now() - lastActive >= inactivityTtl) {
     logger.warn('inactive session');
     session.logout();
-    return;
-  }
-
-  if (inactivityTtl === 0) {
     return;
   }
 
   localStorage.setLastActive(Date.now());
 
   const intervalId = setInterval(() => {
+    // adjustedInactivityTtl slightly improves accuracy of inactivity time.
     // This will at most cause user to log out ACTIVITY_CHECKER_INTERVAL_MS early.
-    // NOTE: Because of browser js throttling on inactive tabs, expiry timeout may be extended.
-    // up to over a minute.
+    // NOTE: Because of browser js throttling on inactive tabs, expiry timeout may
+    // still be extended up to over a minute.
+    const adjustedInactivityTtl = inactivityTtl - ACTIVITY_CHECKER_INTERVAL_MS;
     const lastActive = localStorage.getLastActive();
-    if (Date.now() - lastActive <= inactivityTtl) {
+    if (Date.now() - lastActive > adjustedInactivityTtl) {
       logger.warn('inactive session');
       session.logout();
     }
@@ -87,7 +89,7 @@ function startActivityChecker() {
   // Fired when a pointer (cursor, pen/stylus, touch) changes coordinates.
   // This also handles mouse scrolling. It's unlikely a user will keep their
   // mouse still when scrolling.
-  window.addEventListener('pointermove,', throttled);
+  window.addEventListener('pointermove', throttled);
 
   // Fired when a pointer (cursor, pen/stylus, touch) becomes active button
   // states (ie: mouse clicks or pen/finger has physical contact with touch enabled screen).
