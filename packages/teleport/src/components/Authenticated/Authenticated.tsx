@@ -19,15 +19,13 @@ import { throttle } from 'lodash';
 import Logger from 'shared/libs/logger';
 import session from 'teleport/services/session';
 import history from 'teleport/services/history';
+import localStorage from 'teleport/services/localStorage';
 
 const logger = Logger.create('/components/Authenticated');
-
-const IDLE_EXPIRY_CHECKER_INTERVAL_MS = 30 * 1000;
-const EVENT_DELAY_MS = 15 * 1000;
+const ACTIVITY_CHECKER_INTERVAL_MS = 30 * 1000;
+const ACTIVITY_EVENT_DELAY_MS = 15 * 1000;
 
 const Authenticated: React.FC = ({ children }) => {
-  const [isProcessing, setIsProcessing] = React.useState(true);
-
   React.useEffect(() => {
     if (!session.isValid()) {
       logger.warn('invalid session');
@@ -35,58 +33,12 @@ const Authenticated: React.FC = ({ children }) => {
       history.goToLogin(true);
       return;
     }
+
     session.ensureSession();
-
-    // See if there is idle expiry already set in local storage.
-    // This is to check for idle timeout reached while app was closed
-    // ie. browser still openend but all app tabs closed
-    const idleExpiry = session.getIdleExpiry();
-    if (idleExpiry > 0 && idleExpiry <= Date.now()) {
-      logger.warn('inactive session');
-      session.logout();
-      return;
-    }
-
-    // Duration of zero means web idle timeout is not configured,
-    // so we skip starting a idle watcher.
-    const maxIdleTime = session.getIdleTimeout();
-    if (maxIdleTime <= 0) {
-      setIsProcessing(false);
-      return;
-    }
-
-    // Set up a idle watcher.
-    const renewIdleExpiry = () => {
-      session.setIdleExpiry(Date.now() + maxIdleTime);
-    };
-
-    const eventHandler = throttle(renewIdleExpiry, EVENT_DELAY_MS);
-
-    setListenersForUserInteraction(eventHandler);
-    renewIdleExpiry();
-
-    const intervalId = setInterval(() => {
-      // This will at most cause user to log out IDLE_EXPIRY_CHECKER_INTERVAL_MS early.
-      // NOTE: Because of browser js throttling on inactive tabs, expiry timeout may be extended.
-      // up to over a minute.
-      const expiry = session.getIdleExpiry();
-      if (expiry - Date.now() <= IDLE_EXPIRY_CHECKER_INTERVAL_MS) {
-        logger.warn('inactive session');
-        session.logout();
-      }
-    }, IDLE_EXPIRY_CHECKER_INTERVAL_MS);
-
-    setIsProcessing(false);
-
-    return () => {
-      clearInterval(intervalId);
-      window.removeEventListener('keydown', eventHandler);
-      window.removeEventListener('pointermove', eventHandler);
-      window.removeEventListener('pointerdown', eventHandler);
-    };
+    return startActivityChecker();
   }, []);
 
-  if (isProcessing) {
+  if (!session.isValid()) {
     return null;
   }
 
@@ -95,18 +47,59 @@ const Authenticated: React.FC = ({ children }) => {
 
 export default Authenticated;
 
-// setListenersForUserInteraction adds event listeners that are common for determining
-// user interacting with the UI.
-function setListenersForUserInteraction(eventHandler: any) {
+function startActivityChecker() {
+  const inactivityTtl = session.getInactivityTimeout();
+
+  // See if there is idle expiry already set in local storage.
+  // This is to check for idle timeout reached while app was closed
+  // ie. browser still openend but all app tabs closed
+  const lastActive = localStorage.getLastActive();
+  if (lastActive > 0 && lastActive <= inactivityTtl) {
+    logger.warn('inactive session');
+    session.logout();
+    return;
+  }
+
+  if (inactivityTtl === 0) {
+    return;
+  }
+
+  localStorage.setLastActive(Date.now());
+
+  const intervalId = setInterval(() => {
+    // This will at most cause user to log out ACTIVITY_CHECKER_INTERVAL_MS early.
+    // NOTE: Because of browser js throttling on inactive tabs, expiry timeout may be extended.
+    // up to over a minute.
+    const lastActive = localStorage.getLastActive();
+    if (Date.now() - lastActive <= inactivityTtl) {
+      logger.warn('inactive session');
+      session.logout();
+    }
+  }, ACTIVITY_CHECKER_INTERVAL_MS);
+
+  const throttled = throttle(() => {
+    localStorage.setLastActive(Date.now());
+  }, ACTIVITY_EVENT_DELAY_MS);
+
   // Fired from any keyboard key press.
-  window.addEventListener('keydown', eventHandler);
+  window.addEventListener('keydown', throttled);
 
   // Fired when a pointer (cursor, pen/stylus, touch) changes coordinates.
   // This also handles mouse scrolling. It's unlikely a user will keep their
   // mouse still when scrolling.
-  window.addEventListener('pointermove', eventHandler);
+  window.addEventListener('pointermove,', throttled);
 
   // Fired when a pointer (cursor, pen/stylus, touch) becomes active button
   // states (ie: mouse clicks or pen/finger has physical contact with touch enabled screen).
-  window.addEventListener('pointerdown', eventHandler);
+  window.addEventListener('pointerdown', throttled);
+
+  function stop() {
+    throttled.cancel();
+    clearInterval(intervalId);
+    window.removeEventListener('keydown', throttled);
+    window.removeEventListener('pointermove', throttled);
+    window.removeEventListener('pointerdown', throttled);
+  }
+
+  return stop;
 }
