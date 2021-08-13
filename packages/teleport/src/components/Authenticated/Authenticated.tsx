@@ -25,6 +25,18 @@ const logger = Logger.create('/components/Authenticated');
 const ACTIVITY_CHECKER_INTERVAL_MS = 30 * 1000;
 const ACTIVITY_EVENT_DELAY_MS = 15 * 1000;
 
+const events = [
+  // Fired from any keyboard key press.
+  'keydown',
+  // Fired when a pointer (cursor, pen/stylus, touch) changes coordinates.
+  // This also handles mouse scrolling. It's unlikely a user will keep their
+  // mouse still when scrolling.
+  'pointermove',
+  // Fired when a pointer (cursor, pen/stylus, touch) becomes active button
+  // states (ie: mouse clicks or pen/finger has physical contact with touch enabled screen).
+  'pointerdown',
+];
+
 const Authenticated: React.FC = ({ children }) => {
   React.useEffect(() => {
     if (!session.isValid()) {
@@ -63,45 +75,38 @@ function startActivityChecker(ttl = 0) {
   // See if there is inactive date already set in local storage.
   // This is to check for idle timeout reached while app was closed
   // ie. browser still openend but all app tabs closed.
-  checkInactivityTimeout(adjustedTtl);
+  if (isInactive(adjustedTtl)) {
+    logger.warn('inactive session');
+    session.logout();
+    return;
+  }
 
+  // Initialize or renew the storage before starting interval.
   localStorage.setLastActive(Date.now());
 
   const intervalId = setInterval(() => {
-    checkInactivityTimeout(adjustedTtl);
+    if (isInactive(adjustedTtl)) {
+      logger.warn('inactive session');
+      session.logout();
+    }
   }, ACTIVITY_CHECKER_INTERVAL_MS);
 
   const throttled = throttle(() => {
     localStorage.setLastActive(Date.now());
   }, ACTIVITY_EVENT_DELAY_MS);
 
-  // Fired from any keyboard key press.
-  window.addEventListener('keydown', throttled);
-
-  // Fired when a pointer (cursor, pen/stylus, touch) changes coordinates.
-  // This also handles mouse scrolling. It's unlikely a user will keep their
-  // mouse still when scrolling.
-  window.addEventListener('pointermove', throttled);
-
-  // Fired when a pointer (cursor, pen/stylus, touch) becomes active button
-  // states (ie: mouse clicks or pen/finger has physical contact with touch enabled screen).
-  window.addEventListener('pointerdown', throttled);
+  events.forEach(event => window.addEventListener(event, throttled));
 
   function stop() {
     throttled.cancel();
     clearInterval(intervalId);
-    window.removeEventListener('keydown', throttled);
-    window.removeEventListener('pointermove', throttled);
-    window.removeEventListener('pointerdown', throttled);
+    events.forEach(event => window.removeEventListener(event, throttled));
   }
 
   return stop;
 }
 
-function checkInactivityTimeout(ttl = 0) {
+function isInactive(ttl = 0) {
   const lastActive = localStorage.getLastActive();
-  if (Date.now() - lastActive > ttl) {
-    logger.warn('inactive session');
-    session.logout();
-  }
+  return lastActive > 0 && Date.now() - lastActive > ttl;
 }
