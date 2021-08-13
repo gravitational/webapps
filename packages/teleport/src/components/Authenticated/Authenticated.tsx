@@ -53,22 +53,22 @@ const Authenticated: React.FC = ({ children }) => {
 
 export default Authenticated;
 
-function startActivityChecker(inactivityTtl = 0) {
-  // adjustedInactivityTtl slightly improves accuracy of inactivity time.
+function startActivityChecker(ttl = 0) {
+  // adjustedTtl slightly improves accuracy of inactivity time.
   // This will at most cause user to log out ACTIVITY_CHECKER_INTERVAL_MS early.
   // NOTE: Because of browser js throttling on inactive tabs, expiry timeout may
   // still be extended up to over a minute.
-  const adjustedInactivityTtl = inactivityTtl - ACTIVITY_CHECKER_INTERVAL_MS;
+  const adjustedTtl = ttl - ACTIVITY_CHECKER_INTERVAL_MS;
 
   // See if there is inactive date already set in local storage.
   // This is to check for idle timeout reached while app was closed
   // ie. browser still openend but all app tabs closed.
-  checkInactivityTimeout(adjustedInactivityTtl);
+  checkInactivityTimeout(adjustedTtl);
 
   localStorage.setLastActive(Date.now());
 
   const intervalId = setInterval(() => {
-    checkInactivityTimeout(adjustedInactivityTtl);
+    checkInactivityTimeout(adjustedTtl);
   }, ACTIVITY_CHECKER_INTERVAL_MS);
 
   const throttled = throttle(() => {
@@ -98,9 +98,9 @@ function startActivityChecker(inactivityTtl = 0) {
   return stop;
 }
 
-function checkInactivityTimeout(inactivityTtl = 0) {
+function checkInactivityTimeout(ttl = 0) {
   const lastActive = localStorage.getLastActive();
-  if (Date.now() - lastActive > inactivityTtl) {
+  if (Date.now() - lastActive > ttl) {
     logger.warn('inactive session');
     session.logout();
   }
