@@ -40,7 +40,10 @@ export default function MfaDeviceList({
   const data = sort(devices);
 
   return (
-    <StyledTable data={data}>
+    <StyledTable
+      data={data}
+      style={{ overflow: 'hidden', borderRadius: '8px' }}
+    >
       <Column columnKey="type" cell={<TextCell />} header={<Cell>Type</Cell>} />
       <Column
         columnKey="name"
