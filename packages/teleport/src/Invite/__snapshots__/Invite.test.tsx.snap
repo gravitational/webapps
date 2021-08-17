@@ -37,11 +37,6 @@ exports[`teleport/components/Invite should render form with token requirement wh
   width: 168px;
 }
 
-.c17 {
-  box-sizing: border-box;
-  color: rgba(255,255,255,0.87);
-}
-
 .c13 {
   line-height: 1.5;
   margin: 0;
@@ -138,15 +133,6 @@ exports[`teleport/components/Invite should render form with token requirement wh
   margin-bottom: 4px;
 }
 
-.c20 {
-  color: #03a9f4;
-  font-weight: normal;
-  background: none;
-  text-decoration: underline;
-  text-transform: none;
-  color: #FFFFFF;
-}
-
 .c0 {
   display: block;
   outline: none;
@@ -191,7 +177,7 @@ exports[`teleport/components/Invite should render form with token requirement wh
   margin-bottom: 8px;
 }
 
-.c18 {
+.c17 {
   overflow: hidden;
   text-overflow: ellipsis;
   font-weight: 300;
@@ -201,7 +187,7 @@ exports[`teleport/components/Invite should render form with token requirement wh
   margin-bottom: 16px;
 }
 
-.c19 {
+.c18 {
   overflow: hidden;
   text-overflow: ellipsis;
   font-weight: 600;
@@ -368,7 +354,7 @@ exports[`teleport/components/Invite should render form with token requirement wh
                 class="c7"
                 font-size="0"
               >
-                Second factor
+                Two-factor type
               </label>
               <div
                 class="c12"
@@ -385,7 +371,7 @@ exports[`teleport/components/Invite should render form with token requirement wh
                       <div
                         class="react-select__single-value css-1uccc91-singleValue"
                       >
-                        U2F
+                        Hardware Key
                       </div>
                       <input
                         aria-autocomplete="list"
@@ -448,41 +434,21 @@ exports[`teleport/components/Invite should render form with token requirement wh
           <div
             class="c16"
           >
-            Insert your U2F key
+            Insert your hardware key
           </div>
           <div
             class="c17"
-            color="text.primary"
           >
-            <div
+            Press the button on the hardware key after you press the
+             
+            <span
               class="c18"
+              style="text-transform: uppercase;"
             >
-              Press the button on the U2F key after you press the
-               
-              <span
-                class="c19"
-                style="text-transform: uppercase;"
-              >
-                Create Account
-              </span>
-               
-              button.
-            </div>
-            <div
-              class="c18"
-            >
-              <a
-                class="c20"
-                color="light"
-                href="https://support.google.com/accounts/answer/6103523?hl=en"
-                rel="noreferrer"
-                target="_blank"
-              >
-                Learn more
-              </a>
-               
-              about U2F 2-Step Verification.
-            </div>
+              Create Account
+            </span>
+             
+            button.
           </div>
         </div>
       </div>
@@ -804,7 +770,7 @@ exports[`teleport/components/Invite should render form with token requirement wh
                 class="c7"
                 font-size="0"
               >
-                Second factor
+                Two-factor type
               </label>
               <div
                 class="c12"

@@ -114,6 +114,10 @@ const cfg = {
     nodeTokenPath: '/v1/enterprise/nodes/token',
     nodeScriptPath: '/scripts/:token/install-node.sh',
     appNodeScriptPath: '/scripts/:token/install-app.sh?name=:name&uri=:uri',
+
+    mfaSignRequestWithTokenPath: '/v1/webapi/u2f/signrequest/token',
+    mfaFetchDevicesPath: '/v1/webapi/mfadevice/:token',
+    mfaDeleteDevicePath: '/v1/webapi/mfadevice',
   },
 
   getAppFqdnUrl(params: UrlAppParams) {
@@ -303,6 +307,10 @@ const cfg = {
 
   getKubernetesUrl(clusterId: string) {
     return generatePath(cfg.api.kubernetesPath, { clusterId });
+  },
+
+  getMfaDeviceListUrl(token: string) {
+    return generatePath(cfg.api.mfaFetchDevicesPath, { token });
   },
 
   init(backendConfig = {}) {

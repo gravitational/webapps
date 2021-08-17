@@ -88,61 +88,6 @@ exports[`shared/components/Invite.story story.Otp 1`] = `
   color: rgba(255,255,255,0.3);
 }
 
-.c18 {
-  line-height: 1.5;
-  margin: 0;
-  display: inline-flex;
-  justify-content: center;
-  align-items: center;
-  box-sizing: border-box;
-  border: none;
-  border-radius: 4px;
-  cursor: pointer;
-  font-family: inherit;
-  font-weight: 600;
-  outline: none;
-  position: relative;
-  text-align: center;
-  text-decoration: none;
-  text-transform: uppercase;
-  transition: all 0.3s;
-  -webkit-font-smoothing: antialiased;
-  background: #222C59;
-  color: rgba(255,255,255,0.87);
-  font-size: 10px;
-  min-height: 24px;
-  padding: 0px 16px;
-  width: 100%;
-}
-
-.c18:active {
-  opacity: 0.56;
-}
-
-.c18:hover,
-.c18:focus {
-  background: #2C3A73;
-}
-
-.c18:disabled {
-  background: rgba(255,255,255,0.12);
-  color: rgba(255,255,255,0.3);
-}
-
-.c17 {
-  color: #03a9f4;
-  font-weight: normal;
-  background: none;
-  text-decoration: underline;
-  text-transform: none;
-  padding: 0 8px;
-}
-
-.c17:hover,
-.c17:focus {
-  background: #222C59;
-}
-
 .c0 {
   box-sizing: border-box;
   margin-left: auto;
@@ -193,6 +138,14 @@ exports[`shared/components/Invite.story story.Otp 1`] = `
   margin-bottom: 4px;
 }
 
+.c18 {
+  color: #03a9f4;
+  font-weight: normal;
+  background: none;
+  text-decoration: underline;
+  text-transform: none;
+}
+
 .c3 {
   overflow: hidden;
   text-overflow: ellipsis;
@@ -224,6 +177,16 @@ exports[`shared/components/Invite.story story.Otp 1`] = `
   line-height: 24px;
   margin: 0px;
   margin-bottom: 16px;
+}
+
+.c17 {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  font-weight: 300;
+  font-size: 12px;
+  line-height: 24px;
+  margin: 0px;
+  color: rgba(255,255,255,0.56);
 }
 
 .c1 {
@@ -379,7 +342,7 @@ exports[`shared/components/Invite.story story.Otp 1`] = `
               class="c6"
               font-size="0"
             >
-              Second factor
+              Two-factor type
             </label>
             <div
               class="c11"
@@ -396,7 +359,7 @@ exports[`shared/components/Invite.story story.Otp 1`] = `
                     <div
                       class="react-select__single-value css-1uccc91-singleValue"
                     >
-                      TOTP
+                      Authenticator App
                     </div>
                     <input
                       aria-autocomplete="list"
@@ -447,7 +410,7 @@ exports[`shared/components/Invite.story story.Otp 1`] = `
               class="c6"
               font-size="0"
             >
-              two-factor token
+              Authenticator code
             </label>
             <input
               autocomplete="off"
@@ -478,23 +441,29 @@ exports[`shared/components/Invite.story story.Otp 1`] = `
         <div
           class="c16"
         >
-          Scan the bar code with Google Authenticator to generate a two-factor token.
+          Scan the QR Code with any authenticator app and enter the generated code.
         </div>
         <img
           src="data:image/png;base64,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"
           style="border: 8px solid;"
           width="152px"
         />
-        <a
-          class="c17 c18"
-          href="https://support.google.com/accounts/answer/1066447?co=GENIE.Platform%3DiOS&hl=en&oco=0"
-          kind="secondary"
-          rel="noreferrer"
-          target="_blank"
-          width="100%"
+        <div
+          class="c17"
+          color="text.secondary"
         >
-          Download Google Authenticator
-        </a>
+          We recommend
+           
+          <a
+            class="c18"
+            href="https://authy.com/download/"
+            rel="noreferrer"
+            target="_blank"
+          >
+            Authy
+          </a>
+          .
+        </div>
       </div>
     </div>
   </div>
@@ -610,61 +579,6 @@ exports[`shared/components/Invite.story story.OtpError 1`] = `
   color: rgba(255,255,255,0.3);
 }
 
-.c19 {
-  line-height: 1.5;
-  margin: 0;
-  display: inline-flex;
-  justify-content: center;
-  align-items: center;
-  box-sizing: border-box;
-  border: none;
-  border-radius: 4px;
-  cursor: pointer;
-  font-family: inherit;
-  font-weight: 600;
-  outline: none;
-  position: relative;
-  text-align: center;
-  text-decoration: none;
-  text-transform: uppercase;
-  transition: all 0.3s;
-  -webkit-font-smoothing: antialiased;
-  background: #222C59;
-  color: rgba(255,255,255,0.87);
-  font-size: 10px;
-  min-height: 24px;
-  padding: 0px 16px;
-  width: 100%;
-}
-
-.c19:active {
-  opacity: 0.56;
-}
-
-.c19:hover,
-.c19:focus {
-  background: #2C3A73;
-}
-
-.c19:disabled {
-  background: rgba(255,255,255,0.12);
-  color: rgba(255,255,255,0.3);
-}
-
-.c18 {
-  color: #03a9f4;
-  font-weight: normal;
-  background: none;
-  text-decoration: underline;
-  text-transform: none;
-  padding: 0 8px;
-}
-
-.c18:hover,
-.c18:focus {
-  background: #222C59;
-}
-
 .c0 {
   box-sizing: border-box;
   margin-left: auto;
@@ -715,6 +629,14 @@ exports[`shared/components/Invite.story story.OtpError 1`] = `
   margin-bottom: 4px;
 }
 
+.c19 {
+  color: #03a9f4;
+  font-weight: normal;
+  background: none;
+  text-decoration: underline;
+  text-transform: none;
+}
+
 .c3 {
   overflow: hidden;
   text-overflow: ellipsis;
@@ -746,6 +668,16 @@ exports[`shared/components/Invite.story story.OtpError 1`] = `
   line-height: 24px;
   margin: 0px;
   margin-bottom: 16px;
+}
+
+.c18 {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  font-weight: 300;
+  font-size: 12px;
+  line-height: 24px;
+  margin: 0px;
+  color: rgba(255,255,255,0.56);
 }
 
 .c1 {
@@ -909,7 +841,7 @@ exports[`shared/components/Invite.story story.OtpError 1`] = `
               class="c7"
               font-size="0"
             >
-              Second factor
+              Two-factor type
             </label>
             <div
               class="c12"
@@ -926,7 +858,7 @@ exports[`shared/components/Invite.story story.OtpError 1`] = `
                     <div
                       class="react-select__single-value css-1uccc91-singleValue"
                     >
-                      TOTP
+                      Authenticator App
                     </div>
                     <input
                       aria-autocomplete="list"
@@ -977,7 +909,7 @@ exports[`shared/components/Invite.story story.OtpError 1`] = `
               class="c7"
               font-size="0"
             >
-              two-factor token
+              Authenticator code
             </label>
             <input
               autocomplete="off"
@@ -1008,23 +940,29 @@ exports[`shared/components/Invite.story story.OtpError 1`] = `
         <div
           class="c17"
         >
-          Scan the bar code with Google Authenticator to generate a two-factor token.
+          Scan the QR Code with any authenticator app and enter the generated code.
         </div>
         <img
           src="data:image/png;base64,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"
           style="border: 8px solid;"
           width="152px"
         />
-        <a
-          class="c18 c19"
-          href="https://support.google.com/accounts/answer/1066447?co=GENIE.Platform%3DiOS&hl=en&oco=0"
-          kind="secondary"
-          rel="noreferrer"
-          target="_blank"
-          width="100%"
+        <div
+          class="c18"
+          color="text.secondary"
         >
-          Download Google Authenticator
-        </a>
+          We recommend
+           
+          <a
+            class="c19"
+            href="https://authy.com/download/"
+            rel="noreferrer"
+            target="_blank"
+          >
+            Authy
+          </a>
+          .
+        </div>
       </div>
     </div>
   </div>
@@ -1066,11 +1004,6 @@ exports[`shared/components/Invite.story story.U2f 1`] = `
 .c15 {
   box-sizing: border-box;
   width: 168px;
-}
-
-.c17 {
-  box-sizing: border-box;
-  color: rgba(255,255,255,0.87);
 }
 
 .c13 {
@@ -1169,15 +1102,6 @@ exports[`shared/components/Invite.story story.U2f 1`] = `
   margin-bottom: 4px;
 }
 
-.c20 {
-  color: #03a9f4;
-  font-weight: normal;
-  background: none;
-  text-decoration: underline;
-  text-transform: none;
-  color: #FFFFFF;
-}
-
 .c3 {
   overflow: hidden;
   text-overflow: ellipsis;
@@ -1221,7 +1145,7 @@ exports[`shared/components/Invite.story story.U2f 1`] = `
   margin-bottom: 8px;
 }
 
-.c18 {
+.c17 {
   overflow: hidden;
   text-overflow: ellipsis;
   font-weight: 300;
@@ -1231,7 +1155,7 @@ exports[`shared/components/Invite.story story.U2f 1`] = `
   margin-bottom: 16px;
 }
 
-.c19 {
+.c18 {
   overflow: hidden;
   text-overflow: ellipsis;
   font-weight: 600;
@@ -1391,7 +1315,7 @@ exports[`shared/components/Invite.story story.U2f 1`] = `
               class="c6"
               font-size="0"
             >
-              Second factor
+              Two-factor type
             </label>
             <div
               class="c11"
@@ -1408,7 +1332,7 @@ exports[`shared/components/Invite.story story.U2f 1`] = `
                     <div
                       class="react-select__single-value react-select__single-value--is-disabled css-107lb6w-singleValue"
                     >
-                      U2F
+                      Hardware Key
                     </div>
                     <input
                       aria-autocomplete="list"
@@ -1456,7 +1380,7 @@ exports[`shared/components/Invite.story story.U2f 1`] = `
           <div
             class="c12"
           >
-            Insert your U2F key and press the button on the key.
+            Insert your hardware key and press the button on the key.
           </div>
         </div>
       </div>
@@ -1479,41 +1403,21 @@ exports[`shared/components/Invite.story story.U2f 1`] = `
         <div
           class="c16"
         >
-          Insert your U2F key
+          Insert your hardware key
         </div>
         <div
           class="c17"
-          color="text.primary"
         >
-          <div
+          Press the button on the hardware key after you press the
+           
+          <span
             class="c18"
+            style="text-transform: uppercase;"
           >
-            Press the button on the U2F key after you press the
-             
-            <span
-              class="c19"
-              style="text-transform: uppercase;"
-            >
-              Submit
-            </span>
-             
-            button.
-          </div>
-          <div
-            class="c18"
-          >
-            <a
-              class="c20"
-              color="light"
-              href="https://support.google.com/accounts/answer/6103523?hl=en"
-              rel="noreferrer"
-              target="_blank"
-            >
-              Learn more
-            </a>
-             
-            about U2F 2-Step Verification.
-          </div>
+            Submit
+          </span>
+           
+          button.
         </div>
       </div>
     </div>

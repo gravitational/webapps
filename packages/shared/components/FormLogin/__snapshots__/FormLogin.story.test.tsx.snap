@@ -296,7 +296,7 @@ exports[`auth2faType: otp rendering 1`] = `
               class="c4"
               font-size="0"
             >
-              Second factor
+              Two-factor type
             </label>
             <div
               class="c10"
@@ -313,7 +313,7 @@ exports[`auth2faType: otp rendering 1`] = `
                     <div
                       class="react-select__single-value css-1uccc91-singleValue"
                     >
-                      TOTP
+                      Authenticator App
                     </div>
                     <input
                       aria-autocomplete="list"
@@ -364,7 +364,7 @@ exports[`auth2faType: otp rendering 1`] = `
               class="c4"
               font-size="0"
             >
-              two-factor token
+              Authenticator code
             </label>
             <input
               autocomplete="off"
@@ -691,7 +691,7 @@ exports[`auth2faType: u2f rendering 1`] = `
               class="c4"
               font-size="0"
             >
-              Second factor
+              Two-factor type
             </label>
             <div
               class="c10"
@@ -708,7 +708,7 @@ exports[`auth2faType: u2f rendering 1`] = `
                     <div
                       class="react-select__single-value react-select__single-value--is-disabled css-107lb6w-singleValue"
                     >
-                      U2F
+                      Hardware Key
                     </div>
                     <input
                       aria-autocomplete="list"
@@ -756,7 +756,7 @@ exports[`auth2faType: u2f rendering 1`] = `
           <div
             class="c11"
           >
-            Insert your U2F key and press the button on the key.
+            Insert your hardware key and press the button on the key.
           </div>
         </div>
       </div>

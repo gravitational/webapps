@@ -58,11 +58,11 @@ export default function LoginForm(props: Props) {
     }
 
     if (mfaEnabled || u2fEnabled) {
-      mfaOptions.push({ value: 'u2f', label: 'U2F' });
+      mfaOptions.push({ value: 'u2f', label: 'Hardware Key' });
     }
 
     if (mfaEnabled || otpEnabled) {
-      mfaOptions.push({ value: 'otp', label: 'TOTP' });
+      mfaOptions.push({ value: 'otp', label: 'Authenticator App' });
     }
 
     return mfaOptions;
@@ -164,7 +164,7 @@ export default function LoginForm(props: Props) {
                   <Box textAlign="right">
                     <ButtonLink
                       style={{ padding: '0px', minHeight: 0 }}
-                      onClick={() => onRecover('password')}
+                      onClick={() => onRecover(true)}
                     >
                       Forgot Password?
                     </ButtonLink>
@@ -176,7 +176,7 @@ export default function LoginForm(props: Props) {
                   <Flex alignItems="flex-end">
                     <Box width="50%" data-testid="mfa-select">
                       <FieldSelect
-                        label="Second factor"
+                        label="Two-factor type"
                         value={mfaType}
                         options={mfaOptions}
                         onChange={opt =>
@@ -190,7 +190,7 @@ export default function LoginForm(props: Props) {
                     <Box width="50%">
                       {mfaType.value === 'otp' && (
                         <FieldInput
-                          label="two-factor token"
+                          label="Authenticator code"
                           rule={requiredToken}
                           autoComplete="off"
                           value={token}
@@ -201,31 +201,19 @@ export default function LoginForm(props: Props) {
                       )}
                       {mfaType.value === 'u2f' && isProcessing && (
                         <Text typography="body2" mb={1}>
-                          Insert your U2F key and press the button on the key.
+                          Insert your hardware key and press the button on the
+                          key.
                         </Text>
                       )}
                     </Box>
                   </Flex>
-                  {isRecoveryEnabled && mfaType.value === 'u2f' && (
+                  {isRecoveryEnabled && (
                     <Box>
                       <ButtonLink
                         style={{ padding: '0px', minHeight: 0 }}
-                        onClick={() => onRecover('u2f')}
+                        onClick={() => onRecover(false)}
                       >
-                        Lost U2F Key?
-                      </ButtonLink>
-                    </Box>
-                  )}
-                  {isRecoveryEnabled && mfaType.value === 'otp' && (
-                    <Box>
-                      <ButtonLink
-                        style={{
-                          padding: '0px',
-                          minHeight: 0,
-                        }}
-                        onClick={() => onRecover('totp')}
-                      >
-                        Lost Two-Factor Token?
+                        Lost Two-Factor Device?
                       </ButtonLink>
                     </Box>
                   )}
@@ -300,7 +288,7 @@ type Props = {
   auth2faType?: Auth2faType;
   attempt: ReturnType<typeof useAttempt>[0];
   isRecoveryEnabled?: boolean;
-  onRecover?: (type: 'totp' | 'u2f' | 'password') => void;
+  onRecover?: (isRecoverPassword: boolean) => void;
   clearAttempt?: () => void;
   onLoginWithSso(provider: AuthProvider): void;
   onLoginWithU2f(username: string, password: string): void;

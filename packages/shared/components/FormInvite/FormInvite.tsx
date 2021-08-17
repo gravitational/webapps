@@ -63,11 +63,11 @@ export default function FormInvite(props: Props) {
     }
 
     if (mfaEnabled || u2fEnabled) {
-      mfaOptions.push({ value: 'u2f', label: 'U2F' });
+      mfaOptions.push({ value: 'u2f', label: 'Hardware Key' });
     }
 
     if (mfaEnabled || otpEnabled) {
-      mfaOptions.push({ value: 'otp', label: 'TOTP' });
+      mfaOptions.push({ value: 'otp', label: 'Authenticator App' });
     }
 
     return mfaOptions;
@@ -139,7 +139,7 @@ export default function FormInvite(props: Props) {
                 <Flex alignItems="flex-end" mb={4}>
                   <Box width="50%" data-testid="mfa-select">
                     <FieldSelect
-                      label="Second factor"
+                      label="Two-factor type"
                       value={mfaType}
                       options={mfaOptions}
                       onChange={opt =>
@@ -153,7 +153,7 @@ export default function FormInvite(props: Props) {
                   <Box width="50%">
                     {mfaType.value === 'otp' && (
                       <FieldInput
-                        label="two-factor token"
+                        label="Authenticator code"
                         rule={requiredToken}
                         autoComplete="off"
                         value={token}
@@ -165,7 +165,8 @@ export default function FormInvite(props: Props) {
                     {mfaType.value === 'u2f' &&
                       attempt.status === 'processing' && (
                         <Text typography="body2" mb={1}>
-                          Insert your U2F key and press the button on the key.
+                          Insert your hardware key and press the button on the
+                          key.
                         </Text>
                       )}
                   </Box>
