@@ -54,7 +54,7 @@ export default function LoginForm(props: Props) {
     const mfaOptions: MFAOption[] = [];
 
     if (auth2faType === 'optional') {
-      mfaOptions.push({ value: 'optional', label: 'NONE' });
+      mfaOptions.push({ value: 'optional', label: 'None' });
     }
 
     if (mfaEnabled || u2fEnabled) {

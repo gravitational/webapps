@@ -787,7 +787,7 @@ exports[`teleport/components/Invite should render form with token requirement wh
                       <div
                         class="react-select__single-value css-1uccc91-singleValue"
                       >
-                        NONE
+                        None
                       </div>
                       <input
                         aria-autocomplete="list"

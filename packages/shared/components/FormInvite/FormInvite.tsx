@@ -59,7 +59,7 @@ export default function FormInvite(props: Props) {
     const mfaOptions: MFAOption[] = [];
 
     if (auth2faType === 'optional' || auth2faType === 'off') {
-      mfaOptions.push({ value: 'optional', label: 'NONE' });
+      mfaOptions.push({ value: 'optional', label: 'None' });
     }
 
     if (mfaEnabled || u2fEnabled) {
