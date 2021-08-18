@@ -190,6 +190,7 @@ exports[`teleport/components/Invite should render form with token requirement wh
 .c18 {
   overflow: hidden;
   text-overflow: ellipsis;
+  text-transform: uppercase;
   font-weight: 600;
   margin: 0px;
 }
@@ -443,7 +444,6 @@ exports[`teleport/components/Invite should render form with token requirement wh
              
             <span
               class="c18"
-              style="text-transform: uppercase;"
             >
               Create Account
             </span>

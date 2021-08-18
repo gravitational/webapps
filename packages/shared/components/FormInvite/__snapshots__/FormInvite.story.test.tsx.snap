@@ -1158,6 +1158,7 @@ exports[`shared/components/Invite.story story.U2f 1`] = `
 .c18 {
   overflow: hidden;
   text-overflow: ellipsis;
+  text-transform: uppercase;
   font-weight: 600;
   margin: 0px;
 }
@@ -1412,7 +1413,6 @@ exports[`shared/components/Invite.story story.U2f 1`] = `
            
           <span
             class="c18"
-            style="text-transform: uppercase;"
           >
             Submit
           </span>

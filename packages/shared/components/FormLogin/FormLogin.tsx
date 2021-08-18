@@ -164,7 +164,7 @@ export default function LoginForm(props: Props) {
                   <Box textAlign="right">
                     <ButtonLink
                       style={{ padding: '0px', minHeight: 0 }}
-                      onClick={() => onRecover(true)}
+                      onClick={() => onRecover('password')}
                     >
                       Forgot Password?
                     </ButtonLink>
@@ -211,7 +211,7 @@ export default function LoginForm(props: Props) {
                     <Box>
                       <ButtonLink
                         style={{ padding: '0px', minHeight: 0 }}
-                        onClick={() => onRecover(false)}
+                        onClick={() => onRecover('2fa')}
                       >
                         Lost Two-Factor Device?
                       </ButtonLink>
@@ -288,7 +288,7 @@ type Props = {
   auth2faType?: Auth2faType;
   attempt: ReturnType<typeof useAttempt>[0];
   isRecoveryEnabled?: boolean;
-  onRecover?: (isRecoverPassword: boolean) => void;
+  onRecover?: (type: 'password' | '2fa') => void;
   clearAttempt?: () => void;
   onLoginWithSso(provider: AuthProvider): void;
   onLoginWithU2f(username: string, password: string): void;

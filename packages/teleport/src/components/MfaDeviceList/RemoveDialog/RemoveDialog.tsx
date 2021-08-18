@@ -5,12 +5,12 @@ import Dialog, { DialogContent, DialogFooter } from 'design/DialogConfirmation';
 import useAttempt from 'shared/hooks/useAttemptNext';
 
 export default function RemoveDialog(props: Props) {
-  const { name, onCancel, onDelete } = props;
+  const { name, onCancel, onRemove } = props;
   const { attempt, handleError, setAttempt } = useAttempt('');
 
   function onConfirm() {
     setAttempt({ status: 'processing' });
-    onDelete().catch(handleError);
+    onRemove().catch(handleError);
   }
 
   return (
@@ -49,6 +49,6 @@ export default function RemoveDialog(props: Props) {
 
 type Props = {
   onCancel: () => void;
-  onDelete: () => Promise<any>;
+  onRemove: () => Promise<any>;
   name: string;
 };

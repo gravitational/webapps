@@ -48,7 +48,7 @@ export default function TwoFAData({ auth2faType, qr, submitBtnText }: Props) {
         </Text>
         <Text typography="paragraph2" mb={3}>
           Press the button on the hardware key after you press the{' '}
-          <Text as="span" style={{ textTransform: 'uppercase' }} bold>
+          <Text as="span" caps bold>
             {submitBtnText}
           </Text>{' '}
           button.

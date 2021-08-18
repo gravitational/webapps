@@ -1,25 +1,24 @@
-import moment from 'moment';
-import { displayDate } from 'shared/services/loc';
 import { MfaDevice } from './types';
 
 export default function makeMfaDevice(json): MfaDevice {
   const { id, name, lastUsed, addedAt } = json;
 
-  let type: MfaDevice['type'];
+  let typeText: MfaDevice['typeText'];
   if (json.type === 'TOTP') {
-    type = 'Authenticator App';
+    typeText = 'Authenticator App';
   }
   if (json.type === 'U2F') {
-    type = 'Hardware Key';
+    typeText = 'Hardware Key';
   }
+
+  const registeredDate = new Date(addedAt);
+  const lastUsedDate = new Date(lastUsed);
 
   return {
     id,
     name,
-    type,
-    registeredDate: moment(addedAt).unix(),
-    lastUsedDate: moment(lastUsed).unix(),
-    registeredDateText: displayDate(addedAt),
-    lastUsedDateText: displayDate(lastUsed),
+    typeText,
+    registeredDate,
+    lastUsedDate,
   };
 }

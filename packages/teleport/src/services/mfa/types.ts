@@ -1,14 +1,12 @@
 export type MfaDevice = {
   id: string;
-  type: 'Hardware Key' | 'Authenticator App';
   name: string;
-  registeredDate: number;
-  lastUsedDate: number;
-  registeredDateText: string;
-  lastUsedDateText: string;
+  typeText: 'Hardware Key' | 'Authenticator App';
+  registeredDate: Date;
+  lastUsedDate: Date;
 };
 
-export type DeleteMfaDeviceRequest = {
+export type RemoveDeviceRequest = {
   tokenId: string;
   deviceId: string;
   deviceName: string;

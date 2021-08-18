@@ -10,6 +10,7 @@ import {
   SortTypes,
   Table,
 } from 'design/DataTable';
+import { displayDate } from 'shared/services/loc';
 import { MfaDevice } from 'teleport/services/mfa/types';
 
 export default function MfaDeviceList({
@@ -44,7 +45,11 @@ export default function MfaDeviceList({
       data={data}
       style={isRecoveryFlow ? { overflow: 'hidden', borderRadius: '8px' } : {}}
     >
-      <Column columnKey="type" cell={<TextCell />} header={<Cell>Type</Cell>} />
+      <Column
+        columnKey="typeText"
+        cell={<TextCell />}
+        header={<Cell>Type</Cell>}
+      />
       <Column
         columnKey="name"
         cell={<NameCell />}
@@ -75,7 +80,7 @@ export default function MfaDeviceList({
       <Column
         header={<Cell />}
         cell={
-          <DeleteDeviceBtn
+          <DeleteCell
             onDelete={onDelete}
             mostRecentDevice={mostRecentDevice}
             isRecoveryFlow={isRecoveryFlow}
@@ -91,8 +96,13 @@ const NameCell = props => {
   const { name } = data[rowIndex];
 
   return (
-    <Cell>
-      <Text style={{ maxWidth: '12ch' }} title={name}>
+    <Cell title={name}>
+      <Text
+        style={{
+          maxWidth: '96px',
+          whiteSpace: 'nowrap',
+        }}
+      >
         {name}
       </Text>
     </Cell>
@@ -101,12 +111,12 @@ const NameCell = props => {
 
 const DateCell = props => {
   const { data, rowIndex, columnKey } = props;
-  const dateText = data[rowIndex][`${columnKey}Text`];
+  const dateText = displayDate(data[rowIndex][columnKey]);
 
   return <Cell>{dateText}</Cell>;
 };
 
-const DeleteDeviceBtn = props => {
+const DeleteCell = props => {
   const { data, rowIndex, onDelete, mostRecentDevice, isRecoveryFlow } = props;
   const { id, name } = data[rowIndex];
 
