@@ -116,8 +116,8 @@ const cfg = {
     appNodeScriptPath: '/scripts/:token/install-app.sh?name=:name&uri=:uri',
 
     mfaSignRequestWithTokenPath: '/v1/webapi/u2f/signrequest/token',
-    mfaFetchDevicesPath: '/v1/webapi/mfadevice/:token',
-    mfaDeleteDevicePath: '/v1/webapi/mfadevice',
+    mfaDeviceListPath: '/v1/webapi/mfa/:token',
+    mfaDevicePath: '/v1/webapi/mfa',
   },
 
   getAppFqdnUrl(params: UrlAppParams) {
@@ -310,7 +310,7 @@ const cfg = {
   },
 
   getMfaDeviceListUrl(token: string) {
-    return generatePath(cfg.api.mfaFetchDevicesPath, { token });
+    return generatePath(cfg.api.mfaDeviceListPath, { token });
   },
 
   init(backendConfig = {}) {

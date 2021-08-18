@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useMemo } from 'react';
 import styled from 'styled-components';
 import { sortBy } from 'lodash';
 import { ButtonBorder, Text } from 'design';
@@ -21,10 +21,12 @@ export default function MfaDeviceList({
     registeredDate: SortTypes.ASC,
   });
 
-  function sort(data, sortDirParam = sortDir) {
-    const columnKey = Object.getOwnPropertyNames(sortDirParam)[0];
+  const mostRecentDevice = useMemo(() => sort(devices)[0], []);
+
+  function sort(data) {
+    const columnKey = Object.getOwnPropertyNames(sortDir)[0];
     const sorted = sortBy(data, columnKey);
-    if (sortDirParam[columnKey] === SortTypes.ASC) {
+    if (sortDir[columnKey] === SortTypes.ASC) {
       return sorted.reverse();
     }
 
@@ -35,14 +37,12 @@ export default function MfaDeviceList({
     setSortDir({ [columnKey]: sortDir });
   }
 
-  const mostRecentDevice = sort(devices, { registeredDate: SortTypes.ASC })[0];
-
   const data = sort(devices);
 
   return (
     <StyledTable
       data={data}
-      style={{ overflow: 'hidden', borderRadius: '8px' }}
+      style={isRecoveryFlow ? { overflow: 'hidden', borderRadius: '8px' } : {}}
     >
       <Column columnKey="type" cell={<TextCell />} header={<Cell>Type</Cell>} />
       <Column
@@ -92,7 +92,9 @@ const NameCell = props => {
 
   return (
     <Cell>
-      <Text style={{ maxWidth: '12ch' }}>{name}</Text>
+      <Text style={{ maxWidth: '12ch' }} title={name}>
+        {name}
+      </Text>
     </Cell>
   );
 };
@@ -124,13 +126,15 @@ const DeleteDeviceBtn = props => {
 type Props = {
   devices: MfaDevice[];
   onDelete({ id, name }: { id: string; name: string }): void;
-  isRecoveryFlow: boolean; // Whether this list is being shown in the recovery flow as opposed to in the account dashboard
+  // Whether this list is being shown in the recovery flow as opposed to in the account dashboard
+  isRecoveryFlow: boolean;
 };
 
 const StyledTable = styled(Table)`
   & > tbody > tr {
     td {
       vertical-align: middle;
+      height: 32px;
     }
   }
 `;

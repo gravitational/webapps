@@ -12,7 +12,7 @@ class MfaService {
   }
 
   deleteMfaDevice(data: DeleteMfaDeviceRequest) {
-    return api.delete(cfg.api.mfaDeleteDevicePath, { ...data });
+    return api.delete(cfg.api.mfaDevicePath, { ...data });
   }
 }
 
