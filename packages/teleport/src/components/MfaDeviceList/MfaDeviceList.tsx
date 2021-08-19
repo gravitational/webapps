@@ -46,7 +46,7 @@ export default function MfaDeviceList({
       style={isRecoveryFlow ? { overflow: 'hidden', borderRadius: '8px' } : {}}
     >
       <Column
-        columnKey="typeText"
+        columnKey="description"
         cell={<TextCell />}
         header={<Cell>Type</Cell>}
       />

@@ -1,7 +1,7 @@
 export type MfaDevice = {
   id: string;
   name: string;
-  typeText: 'Hardware Key' | 'Authenticator App';
+  description: string;
   registeredDate: Date;
   lastUsedDate: Date;
 };

@@ -10,8 +10,8 @@ class MfaService {
       .then(devices => devices.map(makeMfaDevice));
   }
 
-  removeDevice(data: RemoveDeviceRequest) {
-    return api.delete(cfg.api.mfaDevicePath, { ...data });
+  removeDevice(req: RemoveDeviceRequest) {
+    return api.delete(cfg.api.mfaDevicePath, req);
   }
 }
 
