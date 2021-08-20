@@ -23,7 +23,8 @@ export type MfaOption = {
 
 export function getMfaOptions(
   mfa: Auth2faType,
-  preferredMfa: PreferredMfaType
+  preferredMfa: PreferredMfaType,
+  requireMfa = false
 ) {
   const mfaOptions: MfaOption[] = [];
 
@@ -34,6 +35,10 @@ export function getMfaOptions(
   const mfaEnabled = mfa === 'on' || mfa === 'optional';
   const preferMfaWebauthn = mfaEnabled && preferredMfa === 'webauthn';
   const preferMfaU2f = mfaEnabled && preferredMfa === 'u2f';
+
+  if (!requireMfa && mfa === 'optional') {
+    mfaOptions.push({ value: 'optional', label: 'None' });
+  }
 
   if (mfa === 'webauthn' || preferMfaWebauthn) {
     mfaOptions.push({ value: 'webauthn', label: 'Hardware Key' });
