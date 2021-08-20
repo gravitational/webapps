@@ -1,4 +1,4 @@
-import React, { useState, useMemo } from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
 import { sortBy } from 'lodash';
 import { ButtonBorder, Text } from 'design';
@@ -16,13 +16,12 @@ import { MfaDevice } from 'teleport/services/mfa/types';
 export default function MfaDeviceList({
   devices = [],
   onDelete,
-  isRecoveryFlow,
+  mostRecentDevice,
+  ...styles
 }: Props) {
   const [sortDir, setSortDir] = useState<Record<string, string>>({
     registeredDate: SortTypes.ASC,
   });
-
-  const mostRecentDevice = useMemo(() => sort(devices)[0], []);
 
   function sort(data) {
     const columnKey = Object.getOwnPropertyNames(sortDir)[0];
@@ -41,10 +40,7 @@ export default function MfaDeviceList({
   const data = sort(devices);
 
   return (
-    <StyledTable
-      data={data}
-      style={isRecoveryFlow ? { overflow: 'hidden', borderRadius: '8px' } : {}}
-    >
+    <StyledTable data={data} {...styles}>
       <Column
         columnKey="description"
         cell={<TextCell />}
@@ -80,11 +76,7 @@ export default function MfaDeviceList({
       <Column
         header={<Cell />}
         cell={
-          <DeleteCell
-            onDelete={onDelete}
-            mostRecentDevice={mostRecentDevice}
-            isRecoveryFlow={isRecoveryFlow}
-          />
+          <DeleteCell onDelete={onDelete} mostRecentDevice={mostRecentDevice} />
         }
       />
     </StyledTable>
@@ -117,10 +109,10 @@ const DateCell = props => {
 };
 
 const DeleteCell = props => {
-  const { data, rowIndex, onDelete, mostRecentDevice, isRecoveryFlow } = props;
+  const { data, rowIndex, onDelete, mostRecentDevice } = props;
   const { id, name } = data[rowIndex];
 
-  if (id === mostRecentDevice.id && isRecoveryFlow) {
+  if (id === mostRecentDevice?.id) {
     return null;
   }
 
@@ -136,8 +128,8 @@ const DeleteCell = props => {
 type Props = {
   devices: MfaDevice[];
   onDelete({ id, name }: { id: string; name: string }): void;
-  // Whether this list is being shown in the recovery flow as opposed to in the account dashboard
-  isRecoveryFlow: boolean;
+  mostRecentDevice?: MfaDevice;
+  [key: string]: any;
 };
 
 const StyledTable = styled(Table)`
