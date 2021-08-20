@@ -14,12 +14,12 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React, { useState } from 'react';
+import React, { useState, useMemo } from 'react';
 import { Attempt } from 'shared/hooks/useAttemptNext';
 import { Text, Card, ButtonPrimary, Flex, Box, Link } from 'design';
 import * as Alerts from 'design/Alert';
 import { Auth2faType } from 'shared/services';
-import { Option } from 'shared/components/Select';
+import { getMfaOptions, MfaOption } from 'teleport/services/mfa/utils';
 import FieldSelect from '../FieldSelect';
 import FieldInput from '../FieldInput';
 import Validation, { Validator } from '../Validation';
@@ -55,23 +55,7 @@ export default function FormInvite(props: Props) {
   const [passwordConfirmed, setPasswordConfirmed] = useState('');
   const [token, setToken] = useState('');
 
-  const [mfaOptions] = useState<MFAOption[]>(() => {
-    const mfaOptions: MFAOption[] = [];
-
-    if (auth2faType === 'optional' || auth2faType === 'off') {
-      mfaOptions.push({ value: 'optional', label: 'None' });
-    }
-
-    if (mfaEnabled || u2fEnabled) {
-      mfaOptions.push({ value: 'u2f', label: 'Hardware Key' });
-    }
-
-    if (mfaEnabled || otpEnabled) {
-      mfaOptions.push({ value: 'otp', label: 'Authenticator App' });
-    }
-
-    return mfaOptions;
-  });
+  const mfaOptions = useMemo<MfaOption[]>(() => getMfaOptions(auth2faType), []);
 
   const [mfaType, setMfaType] = useState(mfaOptions[0]);
 
@@ -94,7 +78,7 @@ export default function FormInvite(props: Props) {
     }
   }
 
-  function onSetMfaOption(option: MFAOption, validator: Validator) {
+  function onSetMfaOption(option: MfaOption, validator: Validator) {
     setToken('');
     clearSubmitAttempt();
     validator.reset();
@@ -143,7 +127,7 @@ export default function FormInvite(props: Props) {
                       value={mfaType}
                       options={mfaOptions}
                       onChange={opt =>
-                        onSetMfaOption(opt as MFAOption, validator)
+                        onSetMfaOption(opt as MfaOption, validator)
                       }
                       mr={3}
                       mb={0}
@@ -238,5 +222,3 @@ function ErrorMessage({ message = '' }) {
     </Alerts.Danger>
   );
 }
-
-type MFAOption = Option<Auth2faType>;

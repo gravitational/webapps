@@ -14,13 +14,13 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React, { useState } from 'react';
+import React, { useState, useMemo } from 'react';
 import styled from 'styled-components';
 import { Card, Text, Flex, ButtonLink, ButtonPrimary, Box } from 'design';
 import * as Alerts from 'design/Alert';
 import { AuthProvider, Auth2faType } from 'shared/services';
-import { Option } from 'shared/components/Select';
 import { useAttempt } from 'shared/hooks';
+import { getMfaOptions, MfaOption } from 'teleport/services/mfa/utils';
 import Validation, { Validator } from '../Validation';
 import FieldInput from '../FieldInput';
 import FieldSelect from '../FieldSelect';
@@ -42,33 +42,15 @@ export default function LoginForm(props: Props) {
     clearAttempt,
   } = props;
 
-  const mfaEnabled = auth2faType === 'on' || auth2faType === 'optional';
-  const u2fEnabled = auth2faType === 'u2f';
-  const otpEnabled = auth2faType === 'otp';
   const ssoEnabled = authProviders && authProviders.length > 0;
 
   const [pass, setPass] = useState('');
   const [user, setUser] = useState('');
   const [token, setToken] = useState('');
-  const [mfaOptions] = useState<MFAOption[]>(() => {
-    const mfaOptions: MFAOption[] = [];
 
-    if (auth2faType === 'optional') {
-      mfaOptions.push({ value: 'optional', label: 'None' });
-    }
+  const mfaOptions = useMemo<MfaOption[]>(() => getMfaOptions(auth2faType), []);
 
-    if (mfaEnabled || u2fEnabled) {
-      mfaOptions.push({ value: 'u2f', label: 'Hardware Key' });
-    }
-
-    if (mfaEnabled || otpEnabled) {
-      mfaOptions.push({ value: 'otp', label: 'Authenticator App' });
-    }
-
-    return mfaOptions;
-  });
-
-  const [mfaType, setMfaType] = useState<MFAOption>(mfaOptions[0]);
+  const [mfaType, setMfaType] = useState<MfaOption>(mfaOptions[0]);
   const [isExpanded, toggleExpander] = useState(
     !(isLocalAuthEnabled && ssoEnabled)
   );
@@ -90,7 +72,7 @@ export default function LoginForm(props: Props) {
     }
   }
 
-  function onSetMfaOption(option: MFAOption, validator: Validator) {
+  function onSetMfaOption(option: MfaOption, validator: Validator) {
     setToken('');
     clearAttempt();
     validator.reset();
@@ -180,7 +162,7 @@ export default function LoginForm(props: Props) {
                         value={mfaType}
                         options={mfaOptions}
                         onChange={opt =>
-                          onSetMfaOption(opt as MFAOption, validator)
+                          onSetMfaOption(opt as MfaOption, validator)
                         }
                         mr={3}
                         mb={0}
@@ -294,5 +276,3 @@ type Props = {
   onLoginWithU2f(username: string, password: string): void;
   onLogin(username: string, password: string, token: string): void;
 };
-
-type MFAOption = Option<Auth2faType>;

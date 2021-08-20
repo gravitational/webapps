@@ -15,7 +15,7 @@ import { MfaDevice } from 'teleport/services/mfa/types';
 
 export default function MfaDeviceList({
   devices = [],
-  onDelete,
+  remove,
   mostRecentDevice,
   ...styles
 }: Props) {
@@ -76,7 +76,7 @@ export default function MfaDeviceList({
       <Column
         header={<Cell />}
         cell={
-          <DeleteCell onDelete={onDelete} mostRecentDevice={mostRecentDevice} />
+          <RemoveCell remove={remove} mostRecentDevice={mostRecentDevice} />
         }
       />
     </StyledTable>
@@ -108,8 +108,8 @@ const DateCell = props => {
   return <Cell>{dateText}</Cell>;
 };
 
-const DeleteCell = props => {
-  const { data, rowIndex, onDelete, mostRecentDevice } = props;
+const RemoveCell = props => {
+  const { data, rowIndex, remove, mostRecentDevice } = props;
   const { id, name } = data[rowIndex];
 
   if (id === mostRecentDevice?.id) {
@@ -118,7 +118,7 @@ const DeleteCell = props => {
 
   return (
     <Cell align="right">
-      <ButtonBorder size="small" onClick={() => onDelete({ id, name })}>
+      <ButtonBorder size="small" onClick={() => remove({ id, name })}>
         Remove
       </ButtonBorder>
     </Cell>
@@ -127,7 +127,7 @@ const DeleteCell = props => {
 
 type Props = {
   devices: MfaDevice[];
-  onDelete({ id, name }: { id: string; name: string }): void;
+  remove({ id, name }: { id: string; name: string }): void;
   mostRecentDevice?: MfaDevice;
   [key: string]: any;
 };
