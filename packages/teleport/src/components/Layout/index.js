@@ -20,6 +20,7 @@ import {
   FeatureBox,
   FeatureHeader,
   FeatureHeaderTitle,
+  TabItem,
 } from './Layout';
 
 export {
@@ -28,4 +29,5 @@ export {
   FeatureHeaderTitle,
   AppHorizontalSplit,
   AppVerticalSplit,
-}
+  TabItem,
+};

@@ -14,9 +14,9 @@
  * limitations under the License.
  */
 
-import { MfaDevice } from './types';
+import { MfaDevice, MfaRegisterChallenge } from './types';
 
-export default function makeMfaDevice(json): MfaDevice {
+export function makeMfaDevice(json): MfaDevice {
   const { id, name, lastUsed, addedAt } = json;
 
   let description = '';
@@ -34,5 +34,12 @@ export default function makeMfaDevice(json): MfaDevice {
     description,
     registeredDate: new Date(addedAt),
     lastUsedDate: new Date(lastUsed),
+  };
+}
+
+export function makeMfaRegisterChallenge(json): MfaRegisterChallenge {
+  return {
+    u2f: json.u2f,
+    qrCode: json.totp?.qrCode,
   };
 }
