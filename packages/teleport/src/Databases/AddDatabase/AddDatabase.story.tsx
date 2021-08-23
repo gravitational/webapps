@@ -27,5 +27,8 @@ export const Add = () => (
     version="6.1.3"
     onClose={() => null}
     authType="local"
+    canCreate={false}
+    joinToken={{ id: '', expiry: new Date() }}
+    attempt={{ status: '' }}
   />
 );
