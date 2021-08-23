@@ -64,9 +64,27 @@ test('render instructions dialog for adding database', () => {
   expect(screen.getByTestId('Modal')).toMatchSnapshot();
 });
 
+test('render instructions with token when provided', () => {
+  render(<AddDialog {...propsWithToken} />);
+  expect(screen.getByTestId('Modal')).toMatchSnapshot();
+});
+
 const props: Props = {
   username: 'yassine',
   version: '6.1.3',
   onClose: () => null,
   authType: 'local',
+  canCreate: false,
+  joinToken: { id: '', expiry: new Date() },
+  attempt: { status: '' },
+};
+
+const propsWithToken: Props = {
+  username: 'yassine',
+  version: '6.1.3',
+  onClose: () => null,
+  authType: 'local',
+  canCreate: true,
+  joinToken: { id: 'mynewtoken', expiry: new Date() },
+  attempt: { status: 'success' },
 };

@@ -110,6 +110,8 @@ const cfg = {
     githubConnectorsPath: '/v1/webapi/github/:name?',
     trustedClustersPath: '/v1/webapi/trustedcluster/:name?',
 
+    generateJoinTokenPath: '/v1/webapi/token',
+
     nodeTokenPath: '/v1/enterprise/nodes/token',
     nodeScriptPath: '/scripts/:token/install-node.sh',
     appNodeScriptPath: '/scripts/:token/install-app.sh?name=:name&uri=:uri',
@@ -294,6 +296,10 @@ const cfg = {
 
   getTrustedClustersUrl(name?: string) {
     return generatePath(cfg.api.trustedClustersPath, { name });
+  },
+
+  getGenerateJoinTokenUrl() {
+    return cfg.api.generateJoinTokenPath;
   },
 
   getRolesUrl(name?: string) {

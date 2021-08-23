@@ -40,6 +40,7 @@ export function Databases(props: State) {
   const {
     databases,
     attempt,
+    joinAttempt,
     isLeafCluster,
     canCreate,
     showAddDialog,
@@ -51,6 +52,7 @@ export function Databases(props: State) {
     authType,
     searchValue,
     setSearchValue,
+    joinToken,
   } = props;
 
   const isEmpty = attempt.status === 'success' && databases.length === 0;
@@ -60,11 +62,7 @@ export function Databases(props: State) {
     <FeatureBox>
       <FeatureHeader alignItems="center" justifyContent="space-between">
         <FeatureHeaderTitle>Databases</FeatureHeaderTitle>
-        <ButtonAdd
-          isLeafCluster={isLeafCluster}
-          canCreate={canCreate}
-          onClick={showAddDialog}
-        />
+        <ButtonAdd isLeafCluster={isLeafCluster} onClick={showAddDialog} />
       </FeatureHeader>
       {attempt.status === 'processing' && (
         <Box textAlign="center" m={10}>
@@ -104,6 +102,9 @@ export function Databases(props: State) {
           username={username}
           version={version}
           authType={authType}
+          joinToken={joinToken}
+          canCreate={canCreate}
+          attempt={joinAttempt}
           onClose={hideAddDialog}
         />
       )}

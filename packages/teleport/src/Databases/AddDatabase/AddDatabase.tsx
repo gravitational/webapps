@@ -22,10 +22,13 @@ import Dialog, {
   DialogFooter,
 } from 'design/Dialog';
 import { Text, Box, ButtonSecondary, Link } from 'design';
+import { Danger } from 'design/Alert';
 import Select, { Option } from 'shared/components/Select';
+import { Attempt } from 'shared/hooks/useAttemptNext';
 import * as links from 'teleport/services/links';
 import { AuthType } from 'teleport/services/user';
 import { DbType, DbProtocol } from 'teleport/services/databases';
+import { NodeToken } from 'teleport/services/nodes';
 import {
   formatDatabaseInfo,
   DatabaseInfo,
@@ -36,6 +39,9 @@ export default function AddDatabase({
   username,
   version,
   authType,
+  joinToken,
+  canCreate,
+  attempt,
   onClose,
 }: Props) {
   const { hostname, port } = window.document.location;
@@ -59,6 +65,9 @@ export default function AddDatabase({
       ? `tsh login --proxy=${host}`
       : `tsh login --proxy=${host} --auth=local --user=${username}`;
 
+  const { id: token } = joinToken;
+  const stepSkip = canCreate ? 0 : 2;
+
   return (
     <Dialog
       dialogCss={() => ({
@@ -73,6 +82,7 @@ export default function AddDatabase({
         <DialogTitle>Add Database</DialogTitle>
       </DialogHeader>
       <DialogContent>
+        {attempt.status === 'failed' && <Danger>{attempt.statusText}</Danger>}
         <Box mb={4}>
           <Text bold as="span">
             Step 1
@@ -90,23 +100,27 @@ export default function AddDatabase({
             </Link>
           </Box>
         </Box>
+        {!canCreate && (
+          <Box mb={4}>
+            <Text bold as="span">
+              Step 2
+            </Text>
+            {' - Login to Teleport'}
+            <TextSelectCopy mt="2" text={connectCmd} />
+          </Box>
+        )}
+        {!canCreate && (
+          <Box mb={4}>
+            <Text bold as="span">
+              Step 3
+            </Text>
+            {' - Generate a join token'}
+            <TextSelectCopy mt="2" text="tctl tokens add --type=db" />
+          </Box>
+        )}
         <Box mb={4}>
           <Text bold as="span">
-            Step 2
-          </Text>
-          {' - Login to Teleport'}
-          <TextSelectCopy mt="2" text={connectCmd} />
-        </Box>
-        <Box mb={4}>
-          <Text bold as="span">
-            Step 3
-          </Text>
-          {' - Generate a join token'}
-          <TextSelectCopy mt="2" text="tctl tokens add --type=db" />
-        </Box>
-        <Box mb={4}>
-          <Text bold as="span">
-            Step 4
+            {`Step ${2 + stepSkip}`}
           </Text>
           {` - Select the database type and protocol to use`}
           <Box mt={2}>
@@ -121,7 +135,7 @@ export default function AddDatabase({
         </Box>
         <Box mb={4}>
           <Text bold as="span">
-            Step 5
+            {`Step ${3 + stepSkip}`}
           </Text>
           {' - Start the Teleport agent with the following parameters'}
           <TextSelectCopy
@@ -129,7 +143,8 @@ export default function AddDatabase({
             text={`${generateDbStartCmd(
               selectedDbOption.value.type,
               selectedDbOption.value.protocol,
-              host
+              host,
+              token
             )}`}
           />
         </Box>
@@ -154,9 +169,11 @@ export default function AddDatabase({
 const generateDbStartCmd = (
   type: DbType,
   protocol: DbProtocol,
-  host: string
+  host: string,
+  joinToken: string
 ) => {
-  const baseCommand = `teleport db start --token=[generated-join-token] --auth-server=${host} --name=[db-name] --protocol=${protocol} --uri=[uri]`;
+  const baseCommand = `teleport db start --token=${joinToken ||
+    '[generated-join-token]'} --auth-server=${host} --name=[db-name] --protocol=${protocol} --uri=[uri]`;
 
   switch (type) {
     case 'self-hosted':
@@ -188,4 +205,7 @@ export type Props = {
   username: string;
   version: string;
   authType: AuthType;
+  joinToken: NodeToken;
+  canCreate: boolean;
+  attempt: Attempt;
 };

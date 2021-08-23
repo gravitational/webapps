@@ -32,3 +32,17 @@ export interface BashCommand {
   text: string;
   expires: string;
 }
+
+export type TokenRole =
+  | 'Auth'
+  | 'Node'
+  | 'Proxy'
+  | 'Admin'
+  | 'ProvisionToken'
+  | 'Trusted_cluster'
+  | 'Signup'
+  | 'Nop'
+  | 'RemoteProxy'
+  | 'Kube'
+  | 'App'
+  | 'Db';

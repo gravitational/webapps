@@ -18,13 +18,10 @@ import React from 'react';
 import { ButtonPrimary } from 'design';
 
 export default function ButtonAdd(props: Props) {
-  const { canCreate, isLeafCluster, onClick } = props;
-  const disabled = isLeafCluster || !canCreate;
+  const { isLeafCluster, onClick } = props;
+  const disabled = isLeafCluster;
 
   let title = '';
-  if (!canCreate) {
-    title = 'You do not have access to add a database';
-  }
 
   if (isLeafCluster) {
     title = 'Adding a database to a leaf cluster is not supported';
@@ -44,6 +41,5 @@ export default function ButtonAdd(props: Props) {
 
 type Props = {
   isLeafCluster: boolean;
-  canCreate: boolean;
   onClick?: () => void;
 };

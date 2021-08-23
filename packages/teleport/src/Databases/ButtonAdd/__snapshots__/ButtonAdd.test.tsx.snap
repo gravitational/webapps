@@ -161,9 +161,8 @@ exports[`read only 1`] = `
 
 <button
   class="c0"
-  disabled=""
   kind="primary"
-  title="You do not have access to add a database"
+  title=""
   width="240px"
 >
   Add Database
