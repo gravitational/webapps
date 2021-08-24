@@ -28,13 +28,19 @@ import Table from 'design/DataTable/Paged';
 import isMatch from 'design/utils/match';
 import { AuthType } from 'teleport/services/user';
 import { Desktop } from 'teleport/services/desktops';
+import MenuSshLogin, { LoginItem } from 'shared/components/MenuSshLogin';
+import cfg from 'teleport/config';
+import { getHostName, getAccessToken } from 'teleport/services/api';
 
 function DesktopList(props: Props) {
-  const { desktops = [], pageSize = 100, searchValue } = props;
+  const { desktops = [], pageSize = 100, searchValue, clusterId } = props;
 
   const [sortDir, setSortDir] = useState<Record<string, string>>({
     name: SortTypes.DESC,
   });
+
+  // TODO(isaiah) socket stuff will be moved
+  const socket = React.useRef<WebSocket>();
 
   function sortAndFilter(search) {
     const filtered = desktops.filter(obj =>
@@ -58,6 +64,35 @@ function DesktopList(props: Props) {
   }
 
   const data = sortAndFilter(searchValue);
+
+  // This function is inside the component for now in order to access the socket ref.
+  function onLoginSelect(
+    e: React.MouseEvent,
+    login: string,
+    desktopUUID: string
+  ) {
+    const username = login; // TODO: not yet implemented on the backend
+    const desktopWsURL = cfg.api.desktopsWsAddr
+      .replace(':fqdm', getHostName())
+      .replace(':desktopUUID', desktopUUID)
+      .replace(':token', getAccessToken())
+      .replace(':clusterId', clusterId);
+
+    console.log(desktopWsURL);
+
+    socket.current = new WebSocket(desktopWsURL);
+    socket.current.onopen = () => {
+      console.log('websocket opened');
+    };
+    socket.current.onmessage = ev => {
+      console.log('websocket message recieved: ' + ev.data);
+    };
+    socket.current.onclose = () => {
+      console.log('websocket closed');
+    };
+
+    e.preventDefault();
+  }
 
   return (
     <StyledTable pageSize={pageSize} data={data}>
@@ -83,6 +118,10 @@ function DesktopList(props: Props) {
         }
         cell={<OSCell />}
       />
+      <Column
+        header={<Cell />}
+        cell={<LoginCell onOpen={onOpen} onSelect={onLoginSelect} />}
+      />
     </StyledTable>
   );
 }
@@ -100,7 +139,53 @@ const StyledTable = styled(Table)`
   }
 `;
 
-// TODO
+// TODO: may be able to be abstracted out from here/NodeList.tsx
+const LoginCell: React.FC<Required<{
+  onSelect?: (e: React.SyntheticEvent, login: string, serverId: string) => void;
+  onOpen: (serverUuid: string) => LoginItem[];
+  [key: string]: any;
+}>> = props => {
+  const { rowIndex, data, onOpen, onSelect } = props;
+  const { name } = data[rowIndex] as Desktop;
+  const serverUuid = name;
+  function handleOnOpen() {
+    return onOpen(serverUuid);
+  }
+
+  function handleOnSelect(e: React.SyntheticEvent, login: string) {
+    if (!onSelect) {
+      return [];
+    }
+
+    return onSelect(e, login, serverUuid);
+  }
+
+  return (
+    <Cell align="right">
+      <MenuSshLogin
+        onOpen={handleOnOpen}
+        onSelect={handleOnSelect}
+        transformOrigin={{
+          vertical: 'top',
+          horizontal: 'right',
+        }}
+        anchorOrigin={{
+          vertical: 'center',
+          horizontal: 'right',
+        }}
+      />
+    </Cell>
+  );
+};
+
+// TODO may need to come from state, for now user can just type
+// anything in and hit enter
+function onOpen(serverUuid: string): LoginItem[] {
+  return [];
+}
+
+// TODO(isaiah): not sure how this works, copied from databases.
+// Probably is correct once we add labels (tags).
 function searchAndFilterCb(
   targetValue: any[],
   searchValue: string,

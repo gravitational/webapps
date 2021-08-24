@@ -99,6 +99,8 @@ const cfg = {
     nodesPath: '/v1/webapi/sites/:clusterId/nodes',
     databasesPath: `/v1/webapi/sites/:clusterId/databases`,
     desktopsPath: `/v1/webapi/sites/:clusterId/desktops`,
+    desktopsWsAddr:
+      'wss://:fqdm/v1/webapi/sites/:clusterId/desktop/:desktopUUID/connect?access_token=:token',
     siteSessionPath: '/v1/webapi/sites/:siteId/sessions',
     ttyWsAddr:
       'wss://:fqdm/v1/webapi/sites/:clusterId/connect?access_token=:token&params=:params',
