@@ -20,6 +20,9 @@ import ReactSelectAsync from 'react-select/async';
 import styled from 'styled-components';
 import { width, space } from 'design/system';
 import { Props, AsyncProps } from './types';
+import Flex from 'design/Flex';
+import Box from 'design/Box';
+import Button from 'design/Button';
 
 export default function Select(props: Props) {
   const { hasError = false, ...restOfProps } = props;
@@ -55,6 +58,25 @@ export function SelectAsync(props: AsyncProps) {
         {...restOfProps}
       />
     </StyledSelect>
+  );
+}
+
+export function TiledSelect(props: Props) {
+  const { options, value, onChange } = props;
+  return (
+    <Flex flexWrap="wrap">
+      {options.map(o => (
+        <Box key={o.label} p={1}>
+          <Button
+            kind={o.value === value.value ? 'primary' : 'secondary'}
+            setRef={_ => {}}
+            onClick={_ => onChange(o)}
+          >
+            {o.label}
+          </Button>
+        </Box>
+      ))}
+    </Flex>
   );
 }
 

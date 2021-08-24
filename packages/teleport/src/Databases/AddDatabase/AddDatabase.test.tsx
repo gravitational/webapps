@@ -20,26 +20,20 @@ import AddDialog, { Props } from './AddDatabase';
 
 describe('correct database add command generated with given input', () => {
   test.each`
-    input                     | output
-    ${'self-hosted mysql'}    | ${'teleport db start --token=[generated-join-token] --auth-server=localhost:443 --name=[db-name] --protocol=mysql --uri=[uri]'}
-    ${'rds mysql'}            | ${'teleport db start --token=[generated-join-token] --auth-server=localhost:443 --name=[db-name] --protocol=mysql --uri=[uri] --aws-region=[region]'}
-    ${'cloud sql mysql'}      | ${'teleport db start --token=[generated-join-token] --auth-server=localhost:443 --name=[db-name] --protocol=mysql --uri=[uri] --ca-cert=[instance-ca-filepath] --gcp-project-id=[project-id] --gcp-instance-id=[instance-id]'}
-    ${'self-hosted postgres'} | ${'teleport db start --token=[generated-join-token] --auth-server=localhost:443 --name=[db-name] --protocol=postgres --uri=[uri]'}
-    ${'rds postgres'}         | ${'teleport db start --token=[generated-join-token] --auth-server=localhost:443 --name=[db-name] --protocol=postgres --uri=[uri] --aws-region=[region]'}
-    ${'cloud sql postgres'}   | ${'teleport db start --token=[generated-join-token] --auth-server=localhost:443 --name=[db-name] --protocol=postgres --uri=[uri] --ca-cert=[instance-ca-filepath] --gcp-project-id=[project-id] --gcp-instance-id=[instance-id]'}
-    ${'redshift'}             | ${'teleport db start --token=[generated-join-token] --auth-server=localhost:443 --name=[db-name] --protocol=postgres --uri=[uri] --aws-region=[region] --aws-redshift-cluster-id=[cluster-id]'}
-    ${'self-hosted mongodb'}  | ${'teleport db start --token=[generated-join-token] --auth-server=localhost:443 --name=[db-name] --protocol=mongodb --uri=[uri]'}
+    input                       | output
+    ${'Self-hosted MySQL'}      | ${'teleport db start --token=[generated-join-token] --auth-server=localhost:443 --name=[db-name] --protocol=mysql --uri=[uri]'}
+    ${'RDS MySQL'}              | ${'teleport db start --token=[generated-join-token] --auth-server=localhost:443 --name=[db-name] --protocol=mysql --uri=[uri] --aws-region=[region]'}
+    ${'Cloud SQL MySQL'}        | ${'teleport db start --token=[generated-join-token] --auth-server=localhost:443 --name=[db-name] --protocol=mysql --uri=[uri] --ca-cert=[instance-ca-filepath] --gcp-project-id=[project-id] --gcp-instance-id=[instance-id]'}
+    ${'Self-hosted PostgreSQL'} | ${'teleport db start --token=[generated-join-token] --auth-server=localhost:443 --name=[db-name] --protocol=postgres --uri=[uri]'}
+    ${'RDS PostgreSQL'}         | ${'teleport db start --token=[generated-join-token] --auth-server=localhost:443 --name=[db-name] --protocol=postgres --uri=[uri] --aws-region=[region]'}
+    ${'Cloud SQL PostgreSQL'}   | ${'teleport db start --token=[generated-join-token] --auth-server=localhost:443 --name=[db-name] --protocol=postgres --uri=[uri] --ca-cert=[instance-ca-filepath] --gcp-project-id=[project-id] --gcp-instance-id=[instance-id]'}
+    ${'Redshift'}               | ${'teleport db start --token=[generated-join-token] --auth-server=localhost:443 --name=[db-name] --protocol=postgres --uri=[uri] --aws-region=[region] --aws-redshift-cluster-id=[cluster-id]'}
+    ${'Self-hosted MongoDB'}    | ${'teleport db start --token=[generated-join-token] --auth-server=localhost:443 --name=[db-name] --protocol=mongodb --uri=[uri]'}
   `(
     'should generate correct command for input: $input',
     ({ input, output }) => {
       render(<AddDialog {...props} />);
-
-      const dropDownInputEl = document.querySelector('input');
-
-      fireEvent.change(dropDownInputEl, { target: { value: input } });
-      fireEvent.focus(dropDownInputEl);
-      fireEvent.keyDown(dropDownInputEl, { key: 'Enter', keyCode: 13 });
-
+      screen.queryByText(input).click();
       expect(screen.queryByText(output)).not.toBeNull();
     }
   );

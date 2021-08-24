@@ -16,7 +16,7 @@ limitations under the License.
 
 import React from 'react';
 import { Flex, Box } from 'design';
-import Select, { DarkStyledSelect } from '../Select';
+import Select, { DarkStyledSelect, TiledSelect } from '../Select';
 
 export default {
   title: 'Shared/Select',
@@ -27,6 +27,7 @@ export const Selects = () => {
     <Flex>
       <SelectDefault {...props} />
       <SelectDark {...props} />
+      <SelectTiles {...props} />
     </Flex>
   );
 };
@@ -108,6 +109,20 @@ function SelectDark({ value, onChange, options }) {
           placeholder="Click to select a role"
         />
       </DarkStyledSelect>
+    </Flex>
+  );
+}
+
+function SelectTiles({ value, onChange, options }) {
+  return (
+    <Flex flexDirection="column" width="330px">
+      <Box>
+        <TiledSelect
+          value={value}
+          onChange={onChange}
+          options={options}
+        ></TiledSelect>
+      </Box>
     </Flex>
   );
 }
