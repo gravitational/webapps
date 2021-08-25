@@ -66,11 +66,13 @@ export function TiledSelect(props: Props) {
   return (
     <Flex flexWrap="wrap">
       {options.map(o => (
-        <Box key={o.label} p={1}>
+        <Box key={o.label} p={1} width={1 / 3}>
           <Button
             kind={o.value === value.value ? 'primary' : 'secondary'}
-            setRef={_ => {}}
+            setRef={_ => null}
             onClick={_ => onChange(o)}
+            block={true}
+            size="large"
           >
             {o.label}
           </Button>

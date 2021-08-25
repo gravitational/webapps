@@ -90,6 +90,7 @@ exports[`render instructions dialog for adding database 1`] = `
 .c18 {
   box-sizing: border-box;
   padding: 4px;
+  width: 33.33333333333333%;
 }
 
 .c12 {
@@ -186,11 +187,12 @@ exports[`render instructions dialog for adding database 1`] = `
   text-transform: uppercase;
   transition: all 0.3s;
   -webkit-font-smoothing: antialiased;
-  background: #222C59;
+  background: #512FC9;
   color: rgba(255,255,255,0.87);
-  min-height: 32px;
+  min-height: 40px;
   font-size: 12px;
-  padding: 0px 24px;
+  padding: 0px 40px;
+  width: 100%;
 }
 
 .c19:active {
@@ -199,10 +201,95 @@ exports[`render instructions dialog for adding database 1`] = `
 
 .c19:hover,
 .c19:focus {
-  background: #2C3A73;
+  background: #651FFF;
+}
+
+.c19:active {
+  background: #354AA4;
 }
 
 .c19:disabled {
+  background: rgba(255,255,255,0.12);
+  color: rgba(255,255,255,0.3);
+}
+
+.c20 {
+  line-height: 1.5;
+  margin: 0;
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  box-sizing: border-box;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-family: inherit;
+  font-weight: 600;
+  outline: none;
+  position: relative;
+  text-align: center;
+  text-decoration: none;
+  text-transform: uppercase;
+  transition: all 0.3s;
+  -webkit-font-smoothing: antialiased;
+  background: #222C59;
+  color: rgba(255,255,255,0.87);
+  min-height: 40px;
+  font-size: 12px;
+  padding: 0px 40px;
+  width: 100%;
+}
+
+.c20:active {
+  opacity: 0.56;
+}
+
+.c20:hover,
+.c20:focus {
+  background: #2C3A73;
+}
+
+.c20:disabled {
+  background: rgba(255,255,255,0.12);
+  color: rgba(255,255,255,0.3);
+}
+
+.c22 {
+  line-height: 1.5;
+  margin: 0;
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  box-sizing: border-box;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-family: inherit;
+  font-weight: 600;
+  outline: none;
+  position: relative;
+  text-align: center;
+  text-decoration: none;
+  text-transform: uppercase;
+  transition: all 0.3s;
+  -webkit-font-smoothing: antialiased;
+  background: #222C59;
+  color: rgba(255,255,255,0.87);
+  min-height: 32px;
+  font-size: 12px;
+  padding: 0px 24px;
+}
+
+.c22:active {
+  opacity: 0.56;
+}
+
+.c22:hover,
+.c22:focus {
+  background: #2C3A73;
+}
+
+.c22:disabled {
   background: rgba(255,255,255,0.12);
   color: rgba(255,255,255,0.3);
 }
@@ -232,7 +319,7 @@ exports[`render instructions dialog for adding database 1`] = `
   flex-direction: column;
 }
 
-.c20 {
+.c21 {
   box-sizing: border-box;
 }
 
@@ -388,9 +475,10 @@ exports[`render instructions dialog for adding database 1`] = `
             >
               <div
                 class="c18"
+                width="0.3333333333333333"
               >
                 <button
-                  class="c15"
+                  class="c19"
                   kind="primary"
                 >
                   RDS PostgreSQL
@@ -398,9 +486,10 @@ exports[`render instructions dialog for adding database 1`] = `
               </div>
               <div
                 class="c18"
+                width="0.3333333333333333"
               >
                 <button
-                  class="c19"
+                  class="c20"
                   kind="secondary"
                 >
                   RDS MySQL
@@ -408,9 +497,10 @@ exports[`render instructions dialog for adding database 1`] = `
               </div>
               <div
                 class="c18"
+                width="0.3333333333333333"
               >
                 <button
-                  class="c19"
+                  class="c20"
                   kind="secondary"
                 >
                   Redshift
@@ -418,9 +508,10 @@ exports[`render instructions dialog for adding database 1`] = `
               </div>
               <div
                 class="c18"
+                width="0.3333333333333333"
               >
                 <button
-                  class="c19"
+                  class="c20"
                   kind="secondary"
                 >
                   Cloud SQL PostgreSQL
@@ -428,9 +519,10 @@ exports[`render instructions dialog for adding database 1`] = `
               </div>
               <div
                 class="c18"
+                width="0.3333333333333333"
               >
                 <button
-                  class="c19"
+                  class="c20"
                   kind="secondary"
                 >
                   Cloud SQL MySQL
@@ -438,9 +530,10 @@ exports[`render instructions dialog for adding database 1`] = `
               </div>
               <div
                 class="c18"
+                width="0.3333333333333333"
               >
                 <button
-                  class="c19"
+                  class="c20"
                   kind="secondary"
                 >
                   Self-hosted PostgreSQL
@@ -448,9 +541,10 @@ exports[`render instructions dialog for adding database 1`] = `
               </div>
               <div
                 class="c18"
+                width="0.3333333333333333"
               >
                 <button
-                  class="c19"
+                  class="c20"
                   kind="secondary"
                 >
                   Self-hosted MySQL
@@ -458,9 +552,10 @@ exports[`render instructions dialog for adding database 1`] = `
               </div>
               <div
                 class="c18"
+                width="0.3333333333333333"
               >
                 <button
-                  class="c19"
+                  class="c20"
                   kind="secondary"
                 >
                   Self-hosted MongoDB
@@ -519,10 +614,10 @@ exports[`render instructions dialog for adding database 1`] = `
         </div>
       </div>
       <div
-        class="c20"
+        class="c21"
       >
         <button
-          class="c19"
+          class="c22"
           kind="secondary"
         >
           Close
@@ -618,6 +713,7 @@ exports[`render instructions with token when provided 1`] = `
 .c14 {
   box-sizing: border-box;
   padding: 4px;
+  width: 33.33333333333333%;
 }
 
 .c19 {
@@ -677,9 +773,10 @@ exports[`render instructions with token when provided 1`] = `
   -webkit-font-smoothing: antialiased;
   background: #512FC9;
   color: rgba(255,255,255,0.87);
-  min-height: 32px;
+  min-height: 40px;
   font-size: 12px;
-  padding: 0px 24px;
+  padding: 0px 40px;
+  width: 100%;
 }
 
 .c15:active {
@@ -721,9 +818,10 @@ exports[`render instructions with token when provided 1`] = `
   -webkit-font-smoothing: antialiased;
   background: #222C59;
   color: rgba(255,255,255,0.87);
-  min-height: 32px;
+  min-height: 40px;
   font-size: 12px;
-  padding: 0px 24px;
+  padding: 0px 40px;
+  width: 100%;
 }
 
 .c16:active {
@@ -736,6 +834,90 @@ exports[`render instructions with token when provided 1`] = `
 }
 
 .c16:disabled {
+  background: rgba(255,255,255,0.12);
+  color: rgba(255,255,255,0.3);
+}
+
+.c20 {
+  line-height: 1.5;
+  margin: 0;
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  box-sizing: border-box;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-family: inherit;
+  font-weight: 600;
+  outline: none;
+  position: relative;
+  text-align: center;
+  text-decoration: none;
+  text-transform: uppercase;
+  transition: all 0.3s;
+  -webkit-font-smoothing: antialiased;
+  background: #512FC9;
+  color: rgba(255,255,255,0.87);
+  min-height: 32px;
+  font-size: 12px;
+  padding: 0px 24px;
+}
+
+.c20:active {
+  opacity: 0.56;
+}
+
+.c20:hover,
+.c20:focus {
+  background: #651FFF;
+}
+
+.c20:active {
+  background: #354AA4;
+}
+
+.c20:disabled {
+  background: rgba(255,255,255,0.12);
+  color: rgba(255,255,255,0.3);
+}
+
+.c22 {
+  line-height: 1.5;
+  margin: 0;
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  box-sizing: border-box;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-family: inherit;
+  font-weight: 600;
+  outline: none;
+  position: relative;
+  text-align: center;
+  text-decoration: none;
+  text-transform: uppercase;
+  transition: all 0.3s;
+  -webkit-font-smoothing: antialiased;
+  background: #222C59;
+  color: rgba(255,255,255,0.87);
+  min-height: 32px;
+  font-size: 12px;
+  padding: 0px 24px;
+}
+
+.c22:active {
+  opacity: 0.56;
+}
+
+.c22:hover,
+.c22:focus {
+  background: #2C3A73;
+}
+
+.c22:disabled {
   background: rgba(255,255,255,0.12);
   color: rgba(255,255,255,0.3);
 }
@@ -765,7 +947,7 @@ exports[`render instructions with token when provided 1`] = `
   flex-direction: column;
 }
 
-.c20 {
+.c21 {
   box-sizing: border-box;
 }
 
@@ -853,6 +1035,7 @@ exports[`render instructions with token when provided 1`] = `
             >
               <div
                 class="c14"
+                width="0.3333333333333333"
               >
                 <button
                   class="c15"
@@ -863,6 +1046,7 @@ exports[`render instructions with token when provided 1`] = `
               </div>
               <div
                 class="c14"
+                width="0.3333333333333333"
               >
                 <button
                   class="c16"
@@ -873,6 +1057,7 @@ exports[`render instructions with token when provided 1`] = `
               </div>
               <div
                 class="c14"
+                width="0.3333333333333333"
               >
                 <button
                   class="c16"
@@ -883,6 +1068,7 @@ exports[`render instructions with token when provided 1`] = `
               </div>
               <div
                 class="c14"
+                width="0.3333333333333333"
               >
                 <button
                   class="c16"
@@ -893,6 +1079,7 @@ exports[`render instructions with token when provided 1`] = `
               </div>
               <div
                 class="c14"
+                width="0.3333333333333333"
               >
                 <button
                   class="c16"
@@ -903,6 +1090,7 @@ exports[`render instructions with token when provided 1`] = `
               </div>
               <div
                 class="c14"
+                width="0.3333333333333333"
               >
                 <button
                   class="c16"
@@ -913,6 +1101,7 @@ exports[`render instructions with token when provided 1`] = `
               </div>
               <div
                 class="c14"
+                width="0.3333333333333333"
               >
                 <button
                   class="c16"
@@ -923,6 +1112,7 @@ exports[`render instructions with token when provided 1`] = `
               </div>
               <div
                 class="c14"
+                width="0.3333333333333333"
               >
                 <button
                   class="c16"
@@ -960,7 +1150,7 @@ exports[`render instructions with token when provided 1`] = `
               </div>
             </div>
             <button
-              class="c15"
+              class="c20"
               kind="primary"
               style="max-width: 48px; width: 100%; padding: 4px 8px; min-height: 10px; font-size: 10px;"
             >
@@ -984,10 +1174,10 @@ exports[`render instructions with token when provided 1`] = `
         </div>
       </div>
       <div
-        class="c20"
+        class="c21"
       >
         <button
-          class="c16"
+          class="c22"
           kind="secondary"
         >
           Close
