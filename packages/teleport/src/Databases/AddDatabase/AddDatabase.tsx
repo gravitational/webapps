@@ -87,7 +87,9 @@ export default function AddDatabase({
           <Text bold as="span">
             Step 1
           </Text>
-          {' - Download Teleport package to your computer '}
+          {
+            ' - Download Teleport to the node which will run Database Access agent '
+          }
           <Box>
             <Link href={links.getMacOS(version)} target="_blank" mr="2">
               MacOS

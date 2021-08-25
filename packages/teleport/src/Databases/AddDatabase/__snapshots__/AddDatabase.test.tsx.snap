@@ -273,7 +273,7 @@ exports[`render instructions dialog for adding database 1`] = `
           >
             Step 1
           </span>
-           - Download Teleport package to your computer 
+           - Download Teleport to the node which will run Database Access agent 
           <div
             class="c9"
           >
@@ -806,7 +806,7 @@ exports[`render instructions with token when provided 1`] = `
           >
             Step 1
           </span>
-           - Download Teleport package to your computer 
+           - Download Teleport to the node which will run Database Access agent 
           <div
             class="c9"
           >
