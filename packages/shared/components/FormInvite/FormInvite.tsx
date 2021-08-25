@@ -120,40 +120,38 @@ export default function FormInvite(props: Props) {
                 placeholder="Confirm Password"
               />
               {secondFactorEnabled && (
-                <Flex alignItems="flex-end" mb={4}>
-                  <Box width="50%" data-testid="mfa-select">
-                    <FieldSelect
-                      label="Two-factor type"
-                      value={mfaType}
-                      options={mfaOptions}
-                      onChange={opt =>
-                        onSetMfaOption(opt as MfaOption, validator)
-                      }
-                      mr={3}
-                      mb={0}
-                      isDisabled={attempt.status === 'processing'}
+                <Flex alignItems="center">
+                  <FieldSelect
+                    maxWidth="50%"
+                    width="100%"
+                    data-testid="mfa-select"
+                    label="Two-factor type"
+                    value={mfaType}
+                    options={mfaOptions}
+                    onChange={opt =>
+                      onSetMfaOption(opt as MfaOption, validator)
+                    }
+                    mr={3}
+                    isDisabled={attempt.status === 'processing'}
+                  />
+                  {mfaType.value === 'otp' && (
+                    <FieldInput
+                      width="50%"
+                      label="Authenticator code"
+                      rule={requiredToken}
+                      autoComplete="off"
+                      value={token}
+                      onChange={e => setToken(e.target.value)}
+                      placeholder="123 456"
                     />
-                  </Box>
-                  <Box width="50%">
-                    {mfaType.value === 'otp' && (
-                      <FieldInput
-                        label="Authenticator code"
-                        rule={requiredToken}
-                        autoComplete="off"
-                        value={token}
-                        onChange={e => setToken(e.target.value)}
-                        placeholder="123 456"
-                        mb={0}
-                      />
+                  )}
+                  {mfaType.value === 'u2f' &&
+                    attempt.status === 'processing' && (
+                      <Text typography="body2">
+                        Insert your hardware key and press the button on the
+                        key.
+                      </Text>
                     )}
-                    {mfaType.value === 'u2f' &&
-                      attempt.status === 'processing' && (
-                        <Text typography="body2" mb={1}>
-                          Insert your hardware key and press the button on the
-                          key.
-                        </Text>
-                      )}
-                  </Box>
                 </Flex>
               )}
               <ButtonPrimary

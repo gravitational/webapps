@@ -51,7 +51,9 @@ export const U2fError = () => (
   />
 );
 
-U2fError.storyName = 'U2fError';
+U2fError.storyName = 'U2f Error';
+
+export const Optional = () => <FormInvite {...props} auth2faType="optional" />;
 
 const props: Props = {
   auth2faType: 'otp',

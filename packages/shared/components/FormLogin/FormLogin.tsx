@@ -91,7 +91,7 @@ export default function LoginForm(props: Props) {
       {({ validator }) => (
         <CardLogin title={title}>
           {isFailed && (
-            <Alerts.Danger mx={5} mb={0} mt={5}>
+            <Alerts.Danger m={5} mb={0}>
               {message}
             </Alerts.Danger>
           )}
@@ -105,7 +105,6 @@ export default function LoginForm(props: Props) {
           )}
           {ssoEnabled && isLocalAuthEnabled && (
             <Flex
-              height="1px"
               alignItems="center"
               justifyContent="center"
               style={{ position: 'relative' }}
@@ -146,7 +145,7 @@ export default function LoginForm(props: Props) {
                   <Box textAlign="right">
                     <ButtonLink
                       style={{ padding: '0px', minHeight: 0 }}
-                      onClick={() => onRecover('password')}
+                      onClick={() => onRecover(true)}
                     >
                       Forgot Password?
                     </ButtonLink>
@@ -156,48 +155,46 @@ export default function LoginForm(props: Props) {
               {auth2faType !== 'off' && (
                 <Box mb={isRecoveryEnabled ? 3 : 4}>
                   <Flex alignItems="flex-end">
-                    <Box width="50%" data-testid="mfa-select">
-                      <FieldSelect
-                        label="Two-factor type"
-                        value={mfaType}
-                        options={mfaOptions}
-                        onChange={opt =>
-                          onSetMfaOption(opt as MfaOption, validator)
-                        }
-                        mr={3}
+                    <FieldSelect
+                      maxWidth="50%"
+                      width="100%"
+                      data-testid="mfa-select"
+                      label="Two-factor type"
+                      value={mfaType}
+                      options={mfaOptions}
+                      onChange={opt =>
+                        onSetMfaOption(opt as MfaOption, validator)
+                      }
+                      mr={3}
+                      mb={0}
+                      isDisabled={isProcessing}
+                    />
+                    {mfaType.value === 'otp' && (
+                      <FieldInput
+                        width="50%"
+                        label="Authenticator code"
+                        rule={requiredToken}
+                        autoComplete="off"
+                        value={token}
+                        onChange={e => setToken(e.target.value)}
+                        placeholder="123 456"
                         mb={0}
-                        isDisabled={isProcessing}
                       />
-                    </Box>
-                    <Box width="50%">
-                      {mfaType.value === 'otp' && (
-                        <FieldInput
-                          label="Authenticator code"
-                          rule={requiredToken}
-                          autoComplete="off"
-                          value={token}
-                          onChange={e => setToken(e.target.value)}
-                          placeholder="123 456"
-                          mb={0}
-                        />
-                      )}
-                      {mfaType.value === 'u2f' && isProcessing && (
-                        <Text typography="body2" mb={1}>
-                          Insert your hardware key and press the button on the
-                          key.
-                        </Text>
-                      )}
-                    </Box>
+                    )}
+                    {mfaType.value === 'u2f' && isProcessing && (
+                      <Text typography="body2" mb={1}>
+                        Insert your hardware key and press the button on the
+                        key.
+                      </Text>
+                    )}
                   </Flex>
                   {isRecoveryEnabled && (
-                    <Box>
-                      <ButtonLink
-                        style={{ padding: '0px', minHeight: 0 }}
-                        onClick={() => onRecover('2fa')}
-                      >
-                        Lost Two-Factor Device?
-                      </ButtonLink>
-                    </Box>
+                    <ButtonLink
+                      style={{ padding: '0px', minHeight: 0 }}
+                      onClick={() => onRecover(false)}
+                    >
+                      Lost Two-Factor Device?
+                    </ButtonLink>
                   )}
                 </Box>
               )}
@@ -270,7 +267,7 @@ type Props = {
   auth2faType?: Auth2faType;
   attempt: ReturnType<typeof useAttempt>[0];
   isRecoveryEnabled?: boolean;
-  onRecover?: (type: 'password' | '2fa') => void;
+  onRecover?: (isRecoverPassword: boolean) => void;
   clearAttempt?: () => void;
   onLoginWithSso(provider: AuthProvider): void;
   onLoginWithU2f(username: string, password: string): void;
