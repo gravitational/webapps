@@ -34,6 +34,8 @@ export type Props = {
   menuPosition?: 'fixed' | 'absolute';
 };
 
+export type TileSelectProps = Props & { cols?: number };
+
 export type AsyncProps = Omit<Props, 'options'> & {
   defaultOptions?: true | Option;
   cacheOptions?: boolean;

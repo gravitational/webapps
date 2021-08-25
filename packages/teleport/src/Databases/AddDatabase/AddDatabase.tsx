@@ -130,6 +130,7 @@ export default function AddDatabase({
               value={selectedDbOption}
               onChange={(o: Option<DatabaseInfo>) => setSelectedDbOption(o)}
               options={dbOptions}
+              cols={3}
             />
           </Box>
         </Box>

@@ -116,11 +116,28 @@ function SelectDark({ value, onChange, options }) {
 function SelectTiles({ value, onChange, options }) {
   return (
     <Flex flexDirection="column" width="330px">
-      <Box>
+      <Box height="236px">
         <TiledSelect
           value={value}
           onChange={onChange}
           options={options}
+          cols={1}
+        ></TiledSelect>
+      </Box>
+      <Box height="236px">
+        <TiledSelect
+          value={value}
+          onChange={onChange}
+          options={options}
+          cols={2}
+        ></TiledSelect>
+      </Box>
+      <Box height="236px">
+        <TiledSelect
+          value={value}
+          onChange={onChange}
+          options={options}
+          cols={3}
         ></TiledSelect>
       </Box>
     </Flex>
