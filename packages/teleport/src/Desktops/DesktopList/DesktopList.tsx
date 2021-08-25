@@ -83,8 +83,16 @@ function DesktopList(props: Props) {
     socket.current = new WebSocket(desktopWsURL);
     socket.current.onopen = () => {
       console.log('websocket opened');
+      // eslint-disable-next-line no-constant-condition
+      // while (true) {
+      //   sendScreenSize();
+      // }
+      sendUsernameAdministrator();
+      sendScreenSize();
+      // socket.current.close();
     };
     socket.current.onmessage = ev => {
+      // console.log('websocket message received!!!!');
       console.log('websocket message recieved: ' + ev.data);
     };
     socket.current.onclose = () => {
@@ -92,6 +100,46 @@ function DesktopList(props: Props) {
     };
 
     e.preventDefault();
+  }
+
+  function sendScreenSize() {
+    if (socket.current === undefined) {
+      return;
+    }
+    const w = 1600;
+    const h = 1200;
+    const buffer = new ArrayBuffer(9);
+    const view = new DataView(buffer);
+    view.setUint8(0, 1);
+    view.setUint32(1, w);
+    view.setUint32(5, h);
+    console.log('canvas size: ', w, h);
+    socket.current.send(buffer);
+  }
+
+  function sendUsernameAdministrator() {
+    if (socket.current === undefined) {
+      return;
+    }
+
+    // Encode username to utf8
+    let encoder = new TextEncoder();
+    const usernameUtf8array = encoder.encode('Administrator');
+
+    const bufLen = 1 + 4 + usernameUtf8array.length;
+    const buffer = new ArrayBuffer(bufLen);
+    const view = new DataView(buffer);
+    let offset = 0;
+
+    // set data
+    view.setUint8(offset++, 7);
+    view.setUint32(offset, usernameUtf8array.length);
+    offset += 4; // 4 bytes to offset 32-bit uint
+    usernameUtf8array.forEach(byte => {
+      view.setUint8(offset++, byte);
+    });
+
+    socket.current.send(buffer);
   }
 
   return (
