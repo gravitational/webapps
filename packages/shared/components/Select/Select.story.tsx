@@ -114,29 +114,34 @@ function SelectDark({ value, onChange, options }) {
 }
 
 function SelectTiles({ value, onChange, options }) {
+  const [selected, setSelected] = React.useState([]);
+  const [multiSelected, setMultiSelected] = React.useState([]);
+
   return (
     <Flex flexDirection="column" width="330px">
       <Box height="236px">
         <TiledSelect
-          value={value}
-          onChange={onChange}
+          value={multiSelected}
+          onChange={(opt: any) => setMultiSelected(opt)}
           options={options}
+          isMulti={true}
           cols={1}
         ></TiledSelect>
       </Box>
       <Box height="236px">
         <TiledSelect
-          value={value}
-          onChange={onChange}
+          value={selected}
+          onChange={(opt: any) => setSelected(opt)}
           options={options}
           cols={2}
         ></TiledSelect>
       </Box>
       <Box height="236px">
         <TiledSelect
-          value={value}
-          onChange={onChange}
+          value={selected}
+          onChange={(opt: any) => setSelected(opt)}
           options={options}
+          isDisabled={true}
           cols={3}
         ></TiledSelect>
       </Box>
