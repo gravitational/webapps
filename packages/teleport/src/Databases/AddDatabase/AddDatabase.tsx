@@ -22,8 +22,7 @@ import Dialog, {
   DialogFooter,
 } from 'design/Dialog';
 import { Text, Box, ButtonSecondary, Link } from 'design';
-import { Danger } from 'design/Alert';
-import Select, { Option, TiledSelect } from 'shared/components/Select';
+import { Option, TiledSelect } from 'shared/components/Select';
 import { Attempt } from 'shared/hooks/useAttemptNext';
 import * as links from 'teleport/services/links';
 import { AuthType } from 'teleport/services/user';
@@ -82,7 +81,6 @@ export default function AddDatabase({
         <DialogTitle>Add Database</DialogTitle>
       </DialogHeader>
       <DialogContent>
-        {attempt.status === 'failed' && <Danger>{attempt.statusText}</Danger>}
         <Box mb={4}>
           <Text bold as="span">
             Step 1
