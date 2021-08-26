@@ -55,6 +55,7 @@ const cfg = {
     recordings: '/web/cluster/:clusterId/recordings',
     databases: '/web/cluster/:clusterId/databases',
     desktops: '/web/cluster/:clusterId/desktops',
+    desktop: '/web/cluster/:clusterId/desktops/:desktopUUID/:username',
     users: '/web/users',
     console: '/web/cluster/:clusterId/console',
     consoleNodes: '/web/cluster/:clusterId/console/nodes',
@@ -99,6 +100,8 @@ const cfg = {
     nodesPath: '/v1/webapi/sites/:clusterId/nodes',
     databasesPath: `/v1/webapi/sites/:clusterId/databases`,
     desktopsPath: `/v1/webapi/sites/:clusterId/desktops`,
+    desktopWsAddr:
+      'wss://:fqdm/v1/webapi/sites/:clusterId/desktop/:desktopUUID/connect?access_token=:token',
     siteSessionPath: '/v1/webapi/sites/:siteId/sessions',
     ttyWsAddr:
       'wss://:fqdm/v1/webapi/sites/:clusterId/connect?access_token=:token&params=:params',
@@ -207,6 +210,14 @@ const cfg = {
       clusterId,
       serverId,
       login,
+    });
+  },
+
+  getDesktopRoute({ clusterId, username, desktopUUID }) {
+    return generatePath(cfg.routes.desktop, {
+      clusterId,
+      desktopUUID,
+      username,
     });
   },
 
