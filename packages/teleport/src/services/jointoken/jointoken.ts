@@ -1,5 +1,5 @@
 /*
-Copyright 2015 Gravitational, Inc.
+Copyright 2021 Gravitational, Inc.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -14,21 +14,17 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-export interface Node {
-  id: string;
-  clusterId: string;
-  hostname: string;
-  tags: string[];
-  addr: string;
-  tunnel: boolean;
-}
+import api from 'teleport/services/api';
+import cfg from 'teleport/config';
+import makeJoinToken from './makeJoinToken';
+import { TokenRole } from './types';
 
-export interface NodeToken {
-  id: string;
-  expiry: Date;
-}
+const service = {
+  generateJoinToken(roles: TokenRole[]) {
+    return api
+      .post(cfg.getGenerateJoinTokenUrl(), { roles, ttl: '1h' })
+      .then(makeJoinToken);
+  },
+};
 
-export interface BashCommand {
-  text: string;
-  expires: string;
-}
+export default service;

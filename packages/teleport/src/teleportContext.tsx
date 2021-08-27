@@ -19,6 +19,7 @@ import cfg from 'teleport/config';
 import * as types from './types';
 import AuditService from './services/audit';
 import nodeService from './services/nodes';
+import joinTokenService from './services/jointoken';
 import clusterService from './services/clusters';
 import sshService from './services/ssh';
 import ResourceService from './services/resources';
@@ -38,6 +39,7 @@ class TeleportContext implements types.Context {
   // services
   auditService = new AuditService();
   nodeService = nodeService;
+  joinTokenService = joinTokenService;
   clusterService = clusterService;
   sshService = sshService;
   resourceService = new ResourceService();

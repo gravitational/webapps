@@ -21,7 +21,6 @@ import makeNode from './makeNode';
 import makeNodeToken from './makeNodeToken';
 import makeAppBashCmd from './makeAppBashCmd';
 import makeNodeBashCmd from './makeNodeBashCmd';
-import { TokenRole } from './types';
 
 const service = {
   fetchNodes(clusterId?: string) {
@@ -39,12 +38,6 @@ const service = {
       .post(cfg.getNodeJoinTokenUrl())
       .then(makeNodeToken)
       .then(token => makeAppBashCmd(token, appName, appUri));
-  },
-
-  generateJoinToken(roles: TokenRole[]) {
-    return api
-      .post(cfg.getGenerateJoinTokenUrl(), { roles, ttl: '1h' })
-      .then(makeNodeToken);
   },
 };
 

@@ -42,7 +42,7 @@ export default function useDatabases(ctx: Ctx) {
 
   useEffect(() => {
     if (isAddDialogVisible && canCreate) {
-      ctx.nodeService.generateJoinToken(['Db']).then(setJoinToken);
+      ctx.joinTokenService.generateJoinToken(['Db']).then(setJoinToken);
     } else {
       setJoinToken(defaultJoinToken);
     }
