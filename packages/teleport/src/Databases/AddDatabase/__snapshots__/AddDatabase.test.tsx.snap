@@ -87,12 +87,6 @@ exports[`render instructions dialog for adding database 1`] = `
   margin-top: 8px;
 }
 
-.c18 {
-  box-sizing: border-box;
-  padding: 4px;
-  width: 33.33333333333333%;
-}
-
 .c12 {
   box-sizing: border-box;
   margin-top: 8px;
@@ -108,12 +102,6 @@ exports[`render instructions dialog for adding database 1`] = `
   box-sizing: border-box;
   margin-right: 8px;
   display: flex;
-}
-
-.c17 {
-  box-sizing: border-box;
-  display: flex;
-  flex-wrap: wrap;
 }
 
 .c4 {
@@ -168,93 +156,7 @@ exports[`render instructions dialog for adding database 1`] = `
   color: rgba(255,255,255,0.3);
 }
 
-.c19 {
-  line-height: 1.5;
-  margin: 0;
-  display: inline-flex;
-  justify-content: center;
-  align-items: center;
-  box-sizing: border-box;
-  border: none;
-  border-radius: 4px;
-  cursor: pointer;
-  font-family: inherit;
-  font-weight: 600;
-  outline: none;
-  position: relative;
-  text-align: center;
-  text-decoration: none;
-  text-transform: uppercase;
-  transition: all 0.3s;
-  -webkit-font-smoothing: antialiased;
-  background: #512FC9;
-  color: rgba(255,255,255,0.87);
-  min-height: 40px;
-  font-size: 12px;
-  padding: 0px 40px;
-  width: 100%;
-}
-
-.c19:active {
-  opacity: 0.56;
-}
-
-.c19:hover,
-.c19:focus {
-  background: #651FFF;
-}
-
-.c19:active {
-  background: #354AA4;
-}
-
-.c19:disabled {
-  background: rgba(255,255,255,0.12);
-  color: rgba(255,255,255,0.3);
-}
-
 .c20 {
-  line-height: 1.5;
-  margin: 0;
-  display: inline-flex;
-  justify-content: center;
-  align-items: center;
-  box-sizing: border-box;
-  border: none;
-  border-radius: 4px;
-  cursor: pointer;
-  font-family: inherit;
-  font-weight: 600;
-  outline: none;
-  position: relative;
-  text-align: center;
-  text-decoration: none;
-  text-transform: uppercase;
-  transition: all 0.3s;
-  -webkit-font-smoothing: antialiased;
-  background: #222C59;
-  color: rgba(255,255,255,0.87);
-  min-height: 40px;
-  font-size: 12px;
-  padding: 0px 40px;
-  width: 100%;
-}
-
-.c20:active {
-  opacity: 0.56;
-}
-
-.c20:hover,
-.c20:focus {
-  background: #2C3A73;
-}
-
-.c20:disabled {
-  background: rgba(255,255,255,0.12);
-  color: rgba(255,255,255,0.3);
-}
-
-.c22 {
   line-height: 1.5;
   margin: 0;
   display: inline-flex;
@@ -280,16 +182,16 @@ exports[`render instructions dialog for adding database 1`] = `
   padding: 0px 24px;
 }
 
-.c22:active {
+.c20:active {
   opacity: 0.56;
 }
 
-.c22:hover,
-.c22:focus {
+.c20:hover,
+.c20:focus {
   background: #2C3A73;
 }
 
-.c22:disabled {
+.c20:disabled {
   background: rgba(255,255,255,0.12);
   color: rgba(255,255,255,0.3);
 }
@@ -319,8 +221,251 @@ exports[`render instructions dialog for adding database 1`] = `
   flex-direction: column;
 }
 
-.c21 {
+.c19 {
   box-sizing: border-box;
+}
+
+.c18 .react-select-container {
+  box-shadow: inset 0 2px 4px rgba(0,0,0,0.24);
+  box-sizing: border-box;
+  border: none;
+  display: block;
+  font-size: 14px;
+  outline: none;
+  width: 100%;
+  color: rgba(0,0,0,0.87);
+  background-color: #ffffff;
+  margin-bottom: 0px;
+  border-radius: 4px;
+}
+
+.c18 .react-select__control,
+.c18 .react-select__control--is-focused {
+  min-height: 40px;
+  height: 40px;
+  background-color: transparent;
+  border-color: transparent;
+  border-radius: 4px;
+  border-style: solid;
+  border-width: 1px;
+  box-shadow: none;
+}
+
+.c18 .react-select__control:hover,
+.c18 .react-select__control--is-focused:hover {
+  border-color: transparent;
+  cursor: pointer;
+}
+
+.c18 .react-select__option:hover {
+  cursor: pointer;
+  background-color: #eceff1;
+}
+
+.c18 .react-select__option--is-focused {
+  background-color: #eceff1;
+}
+
+.c18 .react-select__option--is-selected {
+  background-color: #cfd8dc;
+  color: inherit;
+}
+
+.c18 .react-select__option--is-selected:hover {
+  background-color: #cfd8dc;
+}
+
+.c18 .react-select__menu {
+  margin-top: 0px;
+}
+
+.c18 .react-select__indicator-separator {
+  display: none;
+}
+
+.c18 .react-select__loading-indicator {
+  display: none;
+}
+
+.c18 .react-select--is-disabled .react-select__single-value,
+.c18 .react-select--is-disabled .react-select__placeholder {
+  color: rgba(0,0,0,0.24);
+}
+
+.c18 .react-select--is-disabled .react-select__indicator {
+  color: rgba(0,0,0,0.14);
+}
+
+.c17 .react-select-container {
+  box-shadow: inset 0 2px 4px rgba(0,0,0,0.24);
+  box-sizing: border-box;
+  border: none;
+  display: block;
+  font-size: 14px;
+  outline: none;
+  width: 100%;
+  color: rgba(0,0,0,0.87);
+  background-color: #ffffff;
+  margin-bottom: 0px;
+  border-radius: 4px;
+}
+
+.c17 .react-select__control,
+.c17 .react-select__control--is-focused {
+  min-height: 40px;
+  height: 40px;
+  background-color: transparent;
+  border-color: transparent;
+  border-radius: 4px;
+  border-style: solid;
+  border-width: 1px;
+  box-shadow: none;
+}
+
+.c17 .react-select__control:hover,
+.c17 .react-select__control--is-focused:hover {
+  border-color: transparent;
+  cursor: pointer;
+}
+
+.c17 .react-select__option:hover {
+  cursor: pointer;
+  background-color: #eceff1;
+}
+
+.c17 .react-select__option--is-focused {
+  background-color: #eceff1;
+}
+
+.c17 .react-select__option--is-selected {
+  background-color: #cfd8dc;
+  color: inherit;
+}
+
+.c17 .react-select__option--is-selected:hover {
+  background-color: #cfd8dc;
+}
+
+.c17 .react-select__menu {
+  margin-top: 0px;
+}
+
+.c17 .react-select__indicator-separator {
+  display: none;
+}
+
+.c17 .react-select__loading-indicator {
+  display: none;
+}
+
+.c17 .react-select--is-disabled .react-select__single-value,
+.c17 .react-select--is-disabled .react-select__placeholder {
+  color: rgba(0,0,0,0.24);
+}
+
+.c17 .react-select--is-disabled .react-select__indicator {
+  color: rgba(0,0,0,0.14);
+}
+
+.c17 .react-select-container {
+  background: transparent;
+}
+
+.c17 .react-select__option--is-focused:active {
+  background-color: #eceff1;
+}
+
+.c17 .react-select__value-container {
+  padding: 0 8px;
+}
+
+.c17 .react-select__single-value {
+  color: rgba(255,255,255,0.87);
+}
+
+.c17 .react-select__control {
+  min-height: 34px;
+  height: 34px;
+  border-color: rgba(255,255,255,0.24);
+  color: rgba(255,255,255,0.56);
+}
+
+.c17 .react-select__control:focus,
+.c17 .react-select__control:active {
+  background-color: #2C3A73;
+}
+
+.c17 .react-select__control:hover {
+  border-color: rgba(255,255,255,0.24);
+  background-color: #2C3A73;
+}
+
+.c17 .react-select__control:hover .react-select__dropdown-indicator {
+  color: #666;
+}
+
+.c17 .react-select__control .react-select__indicator,
+.c17 .react-select__control .react-select__dropdown-indicator {
+  padding: 4px 8px;
+  color: #666;
+}
+
+.c17 .react-select__control .react-select__indicator:hover,
+.c17 .react-select__control .react-select__dropdown-indicator:hover {
+  color: #999;
+}
+
+.c17 .react-select__control--menu-is-open {
+  background-color: #2C3A73;
+  border-color: transparent;
+  border-radius: 4px;
+  border-style: solid;
+  border-width: 1px;
+  box-shadow: none;
+  border-color: rgba(255,255,255,0.24);
+}
+
+.c17 .react-select__control--menu-is-open .react-select__indicator,
+.c17 .react-select__control--menu-is-open .react-select__dropdown-indicator {
+  color: #999 !important;
+}
+
+.c17 .react-select__control--menu-is-open .react-select__indicator:hover,
+.c17 .react-select__control--menu-is-open .react-select__dropdown-indicator:hover {
+  color: #ccc !important;
+}
+
+.c17 .react-select__input {
+  color: rgba(255,255,255,0.87);
+}
+
+.c17 .react-select__placeholder {
+  color: rgba(255,255,255,0.56);
+}
+
+.c17 .react-select__option {
+  padding: 4px 12px;
+}
+
+.c17 .react-select__menu {
+  border-top-left-radius: 0;
+  border-top-right-radius: 0;
+}
+
+.c17 .react-select__multi-value {
+  background-color: #111B48;
+  border: 1px solid rgba(255,255,255,0.24);
+}
+
+.c17 .react-select__multi-value__label {
+  color: rgba(255,255,255,0.87);
+  padding: 0 6px;
+}
+
+.c17 .react-select--is-disabled .react-select__single-value,
+.c17 .react-select--is-disabled .react-select__placeholder,
+.c17 .react-select--is-disabled .react-select__indicator {
+  color: rgba(255,255,255,0.24);
 }
 
 <div
@@ -475,91 +620,72 @@ exports[`render instructions dialog for adding database 1`] = `
             >
               <div
                 class="c18"
-                width="0.3333333333333333"
               >
-                <button
-                  class="c19"
-                  kind="primary"
+                <div
+                  class="react-select-container css-2b097c-container"
                 >
-                  RDS PostgreSQL
-                </button>
-              </div>
-              <div
-                class="c18"
-                width="0.3333333333333333"
-              >
-                <button
-                  class="c20"
-                  kind="secondary"
-                >
-                  RDS MySQL
-                </button>
-              </div>
-              <div
-                class="c18"
-                width="0.3333333333333333"
-              >
-                <button
-                  class="c20"
-                  kind="secondary"
-                >
-                  Redshift
-                </button>
-              </div>
-              <div
-                class="c18"
-                width="0.3333333333333333"
-              >
-                <button
-                  class="c20"
-                  kind="secondary"
-                >
-                  Cloud SQL PostgreSQL
-                </button>
-              </div>
-              <div
-                class="c18"
-                width="0.3333333333333333"
-              >
-                <button
-                  class="c20"
-                  kind="secondary"
-                >
-                  Cloud SQL MySQL
-                </button>
-              </div>
-              <div
-                class="c18"
-                width="0.3333333333333333"
-              >
-                <button
-                  class="c20"
-                  kind="secondary"
-                >
-                  Self-hosted PostgreSQL
-                </button>
-              </div>
-              <div
-                class="c18"
-                width="0.3333333333333333"
-              >
-                <button
-                  class="c20"
-                  kind="secondary"
-                >
-                  Self-hosted MySQL
-                </button>
-              </div>
-              <div
-                class="c18"
-                width="0.3333333333333333"
-              >
-                <button
-                  class="c20"
-                  kind="secondary"
-                >
-                  Self-hosted MongoDB
-                </button>
+                  <div
+                    class="react-select__control css-yk16xz-control"
+                  >
+                    <div
+                      class="react-select__value-container react-select__value-container--has-value css-g1d714-ValueContainer"
+                    >
+                      <div
+                        class="react-select__single-value css-1uccc91-singleValue"
+                      >
+                        RDS PostgreSQL
+                      </div>
+                      <div
+                        class="css-b8ldur-Input"
+                      >
+                        <div
+                          class="react-select__input"
+                          style="display: inline-block;"
+                        >
+                          <input
+                            aria-autocomplete="list"
+                            autocapitalize="none"
+                            autocomplete="off"
+                            autocorrect="off"
+                            id="react-select-12-input"
+                            spellcheck="false"
+                            style="box-sizing: content-box; width: 2px; border: 0px; opacity: 1; outline: 0; padding: 0px;"
+                            tabindex="0"
+                            type="text"
+                            value=""
+                          />
+                          <div
+                            style="position: absolute; top: 0px; left: 0px; visibility: hidden; height: 0px; overflow: scroll; white-space: pre; font-family: Ubuntu2,-apple-system,BlinkMacSystemFont,\\"Segoe UI\\",Helvetica,Arial,sans-serif,\\"Apple Color Emoji\\",\\"Segoe UI Emoji\\",\\"Segoe UI Symbol\\"; letter-spacing: normal; text-transform: none;"
+                          />
+                        </div>
+                      </div>
+                    </div>
+                    <div
+                      class="react-select__indicators css-1hb7zxy-IndicatorsContainer"
+                    >
+                      <span
+                        class="react-select__indicator-separator css-1okebmr-indicatorSeparator"
+                      />
+                      <div
+                        aria-hidden="true"
+                        class="react-select__indicator react-select__dropdown-indicator css-tlfecz-indicatorContainer"
+                      >
+                        <svg
+                          aria-hidden="true"
+                          class="css-6q0nyr-Svg"
+                          focusable="false"
+                          height="20"
+                          viewBox="0 0 20 20"
+                          width="20"
+                        >
+                          <path
+                            d="M4.516 7.548c0.436-0.446 1.043-0.481 1.576 0l3.908 3.747 3.908-3.747c0.533-0.481 1.141-0.446 1.574 0 0.436 0.445 0.408 1.197 0 1.615-0.406 0.418-4.695 4.502-4.695 4.502-0.217 0.223-0.502 0.335-0.787 0.335s-0.57-0.112-0.789-0.335c0 0-4.287-4.084-4.695-4.502s-0.436-1.17 0-1.615z"
+                          />
+                        </svg>
+                      </div>
+                    </div>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
@@ -614,10 +740,10 @@ exports[`render instructions dialog for adding database 1`] = `
         </div>
       </div>
       <div
-        class="c21"
+        class="c19"
       >
         <button
-          class="c22"
+          class="c20"
           kind="secondary"
         >
           Close
@@ -710,24 +836,12 @@ exports[`render instructions with token when provided 1`] = `
   margin-top: 8px;
 }
 
-.c14 {
-  box-sizing: border-box;
-  padding: 4px;
-  width: 33.33333333333333%;
-}
-
-.c19 {
+.c17 {
   box-sizing: border-box;
   margin-right: 4px;
 }
 
-.c13 {
-  box-sizing: border-box;
-  display: flex;
-  flex-wrap: wrap;
-}
-
-.c17 {
+.c15 {
   box-sizing: border-box;
   margin-top: 8px;
   padding: 8px;
@@ -738,7 +852,7 @@ exports[`render instructions with token when provided 1`] = `
   justify-content: space-between;
 }
 
-.c18 {
+.c16 {
   box-sizing: border-box;
   margin-right: 8px;
   display: flex;
@@ -752,7 +866,7 @@ exports[`render instructions with token when provided 1`] = `
   align-items: center;
 }
 
-.c15 {
+.c18 {
   line-height: 1.5;
   margin: 0;
   display: inline-flex;
@@ -773,67 +887,25 @@ exports[`render instructions with token when provided 1`] = `
   -webkit-font-smoothing: antialiased;
   background: #512FC9;
   color: rgba(255,255,255,0.87);
-  min-height: 40px;
+  min-height: 32px;
   font-size: 12px;
-  padding: 0px 40px;
-  width: 100%;
+  padding: 0px 24px;
 }
 
-.c15:active {
+.c18:active {
   opacity: 0.56;
 }
 
-.c15:hover,
-.c15:focus {
+.c18:hover,
+.c18:focus {
   background: #651FFF;
 }
 
-.c15:active {
+.c18:active {
   background: #354AA4;
 }
 
-.c15:disabled {
-  background: rgba(255,255,255,0.12);
-  color: rgba(255,255,255,0.3);
-}
-
-.c16 {
-  line-height: 1.5;
-  margin: 0;
-  display: inline-flex;
-  justify-content: center;
-  align-items: center;
-  box-sizing: border-box;
-  border: none;
-  border-radius: 4px;
-  cursor: pointer;
-  font-family: inherit;
-  font-weight: 600;
-  outline: none;
-  position: relative;
-  text-align: center;
-  text-decoration: none;
-  text-transform: uppercase;
-  transition: all 0.3s;
-  -webkit-font-smoothing: antialiased;
-  background: #222C59;
-  color: rgba(255,255,255,0.87);
-  min-height: 40px;
-  font-size: 12px;
-  padding: 0px 40px;
-  width: 100%;
-}
-
-.c16:active {
-  opacity: 0.56;
-}
-
-.c16:hover,
-.c16:focus {
-  background: #2C3A73;
-}
-
-.c16:disabled {
+.c18:disabled {
   background: rgba(255,255,255,0.12);
   color: rgba(255,255,255,0.3);
 }
@@ -857,7 +929,7 @@ exports[`render instructions with token when provided 1`] = `
   text-transform: uppercase;
   transition: all 0.3s;
   -webkit-font-smoothing: antialiased;
-  background: #512FC9;
+  background: #222C59;
   color: rgba(255,255,255,0.87);
   min-height: 32px;
   font-size: 12px;
@@ -870,54 +942,10 @@ exports[`render instructions with token when provided 1`] = `
 
 .c20:hover,
 .c20:focus {
-  background: #651FFF;
-}
-
-.c20:active {
-  background: #354AA4;
-}
-
-.c20:disabled {
-  background: rgba(255,255,255,0.12);
-  color: rgba(255,255,255,0.3);
-}
-
-.c22 {
-  line-height: 1.5;
-  margin: 0;
-  display: inline-flex;
-  justify-content: center;
-  align-items: center;
-  box-sizing: border-box;
-  border: none;
-  border-radius: 4px;
-  cursor: pointer;
-  font-family: inherit;
-  font-weight: 600;
-  outline: none;
-  position: relative;
-  text-align: center;
-  text-decoration: none;
-  text-transform: uppercase;
-  transition: all 0.3s;
-  -webkit-font-smoothing: antialiased;
-  background: #222C59;
-  color: rgba(255,255,255,0.87);
-  min-height: 32px;
-  font-size: 12px;
-  padding: 0px 24px;
-}
-
-.c22:active {
-  opacity: 0.56;
-}
-
-.c22:hover,
-.c22:focus {
   background: #2C3A73;
 }
 
-.c22:disabled {
+.c20:disabled {
   background: rgba(255,255,255,0.12);
   color: rgba(255,255,255,0.3);
 }
@@ -947,8 +975,251 @@ exports[`render instructions with token when provided 1`] = `
   flex-direction: column;
 }
 
-.c21 {
+.c19 {
   box-sizing: border-box;
+}
+
+.c14 .react-select-container {
+  box-shadow: inset 0 2px 4px rgba(0,0,0,0.24);
+  box-sizing: border-box;
+  border: none;
+  display: block;
+  font-size: 14px;
+  outline: none;
+  width: 100%;
+  color: rgba(0,0,0,0.87);
+  background-color: #ffffff;
+  margin-bottom: 0px;
+  border-radius: 4px;
+}
+
+.c14 .react-select__control,
+.c14 .react-select__control--is-focused {
+  min-height: 40px;
+  height: 40px;
+  background-color: transparent;
+  border-color: transparent;
+  border-radius: 4px;
+  border-style: solid;
+  border-width: 1px;
+  box-shadow: none;
+}
+
+.c14 .react-select__control:hover,
+.c14 .react-select__control--is-focused:hover {
+  border-color: transparent;
+  cursor: pointer;
+}
+
+.c14 .react-select__option:hover {
+  cursor: pointer;
+  background-color: #eceff1;
+}
+
+.c14 .react-select__option--is-focused {
+  background-color: #eceff1;
+}
+
+.c14 .react-select__option--is-selected {
+  background-color: #cfd8dc;
+  color: inherit;
+}
+
+.c14 .react-select__option--is-selected:hover {
+  background-color: #cfd8dc;
+}
+
+.c14 .react-select__menu {
+  margin-top: 0px;
+}
+
+.c14 .react-select__indicator-separator {
+  display: none;
+}
+
+.c14 .react-select__loading-indicator {
+  display: none;
+}
+
+.c14 .react-select--is-disabled .react-select__single-value,
+.c14 .react-select--is-disabled .react-select__placeholder {
+  color: rgba(0,0,0,0.24);
+}
+
+.c14 .react-select--is-disabled .react-select__indicator {
+  color: rgba(0,0,0,0.14);
+}
+
+.c13 .react-select-container {
+  box-shadow: inset 0 2px 4px rgba(0,0,0,0.24);
+  box-sizing: border-box;
+  border: none;
+  display: block;
+  font-size: 14px;
+  outline: none;
+  width: 100%;
+  color: rgba(0,0,0,0.87);
+  background-color: #ffffff;
+  margin-bottom: 0px;
+  border-radius: 4px;
+}
+
+.c13 .react-select__control,
+.c13 .react-select__control--is-focused {
+  min-height: 40px;
+  height: 40px;
+  background-color: transparent;
+  border-color: transparent;
+  border-radius: 4px;
+  border-style: solid;
+  border-width: 1px;
+  box-shadow: none;
+}
+
+.c13 .react-select__control:hover,
+.c13 .react-select__control--is-focused:hover {
+  border-color: transparent;
+  cursor: pointer;
+}
+
+.c13 .react-select__option:hover {
+  cursor: pointer;
+  background-color: #eceff1;
+}
+
+.c13 .react-select__option--is-focused {
+  background-color: #eceff1;
+}
+
+.c13 .react-select__option--is-selected {
+  background-color: #cfd8dc;
+  color: inherit;
+}
+
+.c13 .react-select__option--is-selected:hover {
+  background-color: #cfd8dc;
+}
+
+.c13 .react-select__menu {
+  margin-top: 0px;
+}
+
+.c13 .react-select__indicator-separator {
+  display: none;
+}
+
+.c13 .react-select__loading-indicator {
+  display: none;
+}
+
+.c13 .react-select--is-disabled .react-select__single-value,
+.c13 .react-select--is-disabled .react-select__placeholder {
+  color: rgba(0,0,0,0.24);
+}
+
+.c13 .react-select--is-disabled .react-select__indicator {
+  color: rgba(0,0,0,0.14);
+}
+
+.c13 .react-select-container {
+  background: transparent;
+}
+
+.c13 .react-select__option--is-focused:active {
+  background-color: #eceff1;
+}
+
+.c13 .react-select__value-container {
+  padding: 0 8px;
+}
+
+.c13 .react-select__single-value {
+  color: rgba(255,255,255,0.87);
+}
+
+.c13 .react-select__control {
+  min-height: 34px;
+  height: 34px;
+  border-color: rgba(255,255,255,0.24);
+  color: rgba(255,255,255,0.56);
+}
+
+.c13 .react-select__control:focus,
+.c13 .react-select__control:active {
+  background-color: #2C3A73;
+}
+
+.c13 .react-select__control:hover {
+  border-color: rgba(255,255,255,0.24);
+  background-color: #2C3A73;
+}
+
+.c13 .react-select__control:hover .react-select__dropdown-indicator {
+  color: #666;
+}
+
+.c13 .react-select__control .react-select__indicator,
+.c13 .react-select__control .react-select__dropdown-indicator {
+  padding: 4px 8px;
+  color: #666;
+}
+
+.c13 .react-select__control .react-select__indicator:hover,
+.c13 .react-select__control .react-select__dropdown-indicator:hover {
+  color: #999;
+}
+
+.c13 .react-select__control--menu-is-open {
+  background-color: #2C3A73;
+  border-color: transparent;
+  border-radius: 4px;
+  border-style: solid;
+  border-width: 1px;
+  box-shadow: none;
+  border-color: rgba(255,255,255,0.24);
+}
+
+.c13 .react-select__control--menu-is-open .react-select__indicator,
+.c13 .react-select__control--menu-is-open .react-select__dropdown-indicator {
+  color: #999 !important;
+}
+
+.c13 .react-select__control--menu-is-open .react-select__indicator:hover,
+.c13 .react-select__control--menu-is-open .react-select__dropdown-indicator:hover {
+  color: #ccc !important;
+}
+
+.c13 .react-select__input {
+  color: rgba(255,255,255,0.87);
+}
+
+.c13 .react-select__placeholder {
+  color: rgba(255,255,255,0.56);
+}
+
+.c13 .react-select__option {
+  padding: 4px 12px;
+}
+
+.c13 .react-select__menu {
+  border-top-left-radius: 0;
+  border-top-right-radius: 0;
+}
+
+.c13 .react-select__multi-value {
+  background-color: #111B48;
+  border: 1px solid rgba(255,255,255,0.24);
+}
+
+.c13 .react-select__multi-value__label {
+  color: rgba(255,255,255,0.87);
+  padding: 0 6px;
+}
+
+.c13 .react-select--is-disabled .react-select__single-value,
+.c13 .react-select--is-disabled .react-select__placeholder,
+.c13 .react-select--is-disabled .react-select__indicator {
+  color: rgba(255,255,255,0.24);
 }
 
 <div
@@ -1035,91 +1306,72 @@ exports[`render instructions with token when provided 1`] = `
             >
               <div
                 class="c14"
-                width="0.3333333333333333"
               >
-                <button
-                  class="c15"
-                  kind="primary"
+                <div
+                  class="react-select-container css-2b097c-container"
                 >
-                  RDS PostgreSQL
-                </button>
-              </div>
-              <div
-                class="c14"
-                width="0.3333333333333333"
-              >
-                <button
-                  class="c16"
-                  kind="secondary"
-                >
-                  RDS MySQL
-                </button>
-              </div>
-              <div
-                class="c14"
-                width="0.3333333333333333"
-              >
-                <button
-                  class="c16"
-                  kind="secondary"
-                >
-                  Redshift
-                </button>
-              </div>
-              <div
-                class="c14"
-                width="0.3333333333333333"
-              >
-                <button
-                  class="c16"
-                  kind="secondary"
-                >
-                  Cloud SQL PostgreSQL
-                </button>
-              </div>
-              <div
-                class="c14"
-                width="0.3333333333333333"
-              >
-                <button
-                  class="c16"
-                  kind="secondary"
-                >
-                  Cloud SQL MySQL
-                </button>
-              </div>
-              <div
-                class="c14"
-                width="0.3333333333333333"
-              >
-                <button
-                  class="c16"
-                  kind="secondary"
-                >
-                  Self-hosted PostgreSQL
-                </button>
-              </div>
-              <div
-                class="c14"
-                width="0.3333333333333333"
-              >
-                <button
-                  class="c16"
-                  kind="secondary"
-                >
-                  Self-hosted MySQL
-                </button>
-              </div>
-              <div
-                class="c14"
-                width="0.3333333333333333"
-              >
-                <button
-                  class="c16"
-                  kind="secondary"
-                >
-                  Self-hosted MongoDB
-                </button>
+                  <div
+                    class="react-select__control css-yk16xz-control"
+                  >
+                    <div
+                      class="react-select__value-container react-select__value-container--has-value css-g1d714-ValueContainer"
+                    >
+                      <div
+                        class="react-select__single-value css-1uccc91-singleValue"
+                      >
+                        RDS PostgreSQL
+                      </div>
+                      <div
+                        class="css-b8ldur-Input"
+                      >
+                        <div
+                          class="react-select__input"
+                          style="display: inline-block;"
+                        >
+                          <input
+                            aria-autocomplete="list"
+                            autocapitalize="none"
+                            autocomplete="off"
+                            autocorrect="off"
+                            id="react-select-13-input"
+                            spellcheck="false"
+                            style="box-sizing: content-box; width: 2px; border: 0px; opacity: 1; outline: 0; padding: 0px;"
+                            tabindex="0"
+                            type="text"
+                            value=""
+                          />
+                          <div
+                            style="position: absolute; top: 0px; left: 0px; visibility: hidden; height: 0px; overflow: scroll; white-space: pre; font-family: Ubuntu2,-apple-system,BlinkMacSystemFont,\\"Segoe UI\\",Helvetica,Arial,sans-serif,\\"Apple Color Emoji\\",\\"Segoe UI Emoji\\",\\"Segoe UI Symbol\\"; letter-spacing: normal; text-transform: none;"
+                          />
+                        </div>
+                      </div>
+                    </div>
+                    <div
+                      class="react-select__indicators css-1hb7zxy-IndicatorsContainer"
+                    >
+                      <span
+                        class="react-select__indicator-separator css-1okebmr-indicatorSeparator"
+                      />
+                      <div
+                        aria-hidden="true"
+                        class="react-select__indicator react-select__dropdown-indicator css-tlfecz-indicatorContainer"
+                      >
+                        <svg
+                          aria-hidden="true"
+                          class="css-6q0nyr-Svg"
+                          focusable="false"
+                          height="20"
+                          viewBox="0 0 20 20"
+                          width="20"
+                        >
+                          <path
+                            d="M4.516 7.548c0.436-0.446 1.043-0.481 1.576 0l3.908 3.747 3.908-3.747c0.533-0.481 1.141-0.446 1.574 0 0.436 0.445 0.408 1.197 0 1.615-0.406 0.418-4.695 4.502-4.695 4.502-0.217 0.223-0.502 0.335-0.787 0.335s-0.57-0.112-0.789-0.335c0 0-4.287-4.084-4.695-4.502s-0.436-1.17 0-1.615z"
+                          />
+                        </svg>
+                      </div>
+                    </div>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
@@ -1134,14 +1386,14 @@ exports[`render instructions with token when provided 1`] = `
           </span>
            - Start the Teleport agent with the following parameters
           <div
-            class="c17"
+            class="c15"
           >
             <div
-              class="c18"
+              class="c16"
               style="overflow: auto; white-space: pre; word-break: break-all; font-size: 12px; font-family: \\"Droid Sans Mono\\", \\"monospace\\", monospace, \\"Droid Sans Fallback\\";"
             >
               <div
-                class="c19"
+                class="c17"
               >
                 $
               </div>
@@ -1150,7 +1402,7 @@ exports[`render instructions with token when provided 1`] = `
               </div>
             </div>
             <button
-              class="c20"
+              class="c18"
               kind="primary"
               style="max-width: 48px; width: 100%; padding: 4px 8px; min-height: 10px; font-size: 10px;"
             >
@@ -1174,10 +1426,10 @@ exports[`render instructions with token when provided 1`] = `
         </div>
       </div>
       <div
-        class="c21"
+        class="c19"
       >
         <button
-          class="c22"
+          class="c20"
           kind="secondary"
         >
           Close

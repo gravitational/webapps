@@ -16,7 +16,7 @@ limitations under the License.
 
 import React from 'react';
 import { Flex, Box } from 'design';
-import Select, { DarkStyledSelect, TiledSelect } from '../Select';
+import Select, { DarkStyledSelect } from '../Select';
 
 export default {
   title: 'Shared/Select',
@@ -27,7 +27,6 @@ export const Selects = () => {
     <Flex>
       <SelectDefault {...props} />
       <SelectDark {...props} />
-      <SelectTiles {...props} />
     </Flex>
   );
 };
@@ -109,42 +108,6 @@ function SelectDark({ value, onChange, options }) {
           placeholder="Click to select a role"
         />
       </DarkStyledSelect>
-    </Flex>
-  );
-}
-
-function SelectTiles({ value, onChange, options }) {
-  const [selected, setSelected] = React.useState([]);
-  const [multiSelected, setMultiSelected] = React.useState([]);
-
-  return (
-    <Flex flexDirection="column" width="330px">
-      <Box height="236px">
-        <TiledSelect
-          value={multiSelected}
-          onChange={(opt: any) => setMultiSelected(opt)}
-          options={options}
-          isMulti={true}
-          cols={1}
-        ></TiledSelect>
-      </Box>
-      <Box height="236px">
-        <TiledSelect
-          value={selected}
-          onChange={(opt: any) => setSelected(opt)}
-          options={options}
-          cols={2}
-        ></TiledSelect>
-      </Box>
-      <Box height="236px">
-        <TiledSelect
-          value={selected}
-          onChange={(opt: any) => setSelected(opt)}
-          options={options}
-          isDisabled={true}
-          cols={3}
-        ></TiledSelect>
-      </Box>
     </Flex>
   );
 }

@@ -22,7 +22,7 @@ import Dialog, {
   DialogFooter,
 } from 'design/Dialog';
 import { Text, Box, ButtonSecondary, Link } from 'design';
-import { Option, TiledSelect } from 'shared/components/Select';
+import Select, { DarkStyledSelect, Option } from 'shared/components/Select';
 import * as links from 'teleport/services/links';
 import { AuthType } from 'teleport/services/user';
 import { DbType, DbProtocol } from 'teleport/services/databases';
@@ -123,12 +123,15 @@ export default function AddDatabase({
           </Text>
           {` - Select the database type and protocol to use`}
           <Box mt={2}>
-            <TiledSelect
-              value={selectedDbOption}
-              onChange={(o: Option<DatabaseInfo>) => setSelectedDbOption(o)}
-              options={dbOptions}
-              cols={3}
-            />
+            <DarkStyledSelect>
+              <Select
+                value={selectedDbOption}
+                onChange={(o: Option<DatabaseInfo>) => setSelectedDbOption(o)}
+                options={dbOptions}
+                isSearchable={true}
+                maxMenuHeight={220}
+              />
+            </DarkStyledSelect>
           </Box>
         </Box>
         <Box mb={4}>

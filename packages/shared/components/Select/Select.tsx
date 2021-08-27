@@ -19,16 +19,7 @@ import ReactSelect from 'react-select';
 import ReactSelectAsync from 'react-select/async';
 import styled from 'styled-components';
 import { width, space } from 'design/system';
-import {
-  Props,
-  TileSelectProps,
-  AsyncProps,
-  Option,
-  optionsEqual,
-} from './types';
-import Flex from 'design/Flex';
-import Box from 'design/Box';
-import Button from 'design/Button';
+import { Props, AsyncProps } from './types';
 
 export default function Select(props: Props) {
   const { hasError = false, ...restOfProps } = props;
@@ -64,49 +55,6 @@ export function SelectAsync(props: AsyncProps) {
         {...restOfProps}
       />
     </StyledSelect>
-  );
-}
-
-export function TiledSelect(props: TileSelectProps) {
-  const { options, value, onChange, isDisabled, isMulti, cols = 1 } = props;
-
-  const isSelected = (o: Option<any>) => {
-    if (Array.isArray(value)) {
-      return value.some(v => optionsEqual(v, o));
-    } else {
-      return optionsEqual(value, o);
-    }
-  };
-
-  const onClick = (o: Option<any>) => {
-    if (isMulti) {
-      const newValues = isSelected(o)
-        ? (value as Option<any>[]).filter(v => !optionsEqual(v, o))
-        : (value as Option<any>[]).concat([o]);
-
-      onChange(newValues);
-    } else {
-      onChange(o);
-    }
-  };
-
-  return (
-    <Flex flexWrap="wrap">
-      {options.map(o => (
-        <Box key={o.label} p={1} width={1 / cols}>
-          <Button
-            kind={isSelected(o) ? 'primary' : 'secondary'}
-            setRef={_ => null}
-            onClick={_ => onClick(o)}
-            block={true}
-            size="large"
-            disabled={isDisabled}
-          >
-            {o.label}
-          </Button>
-        </Box>
-      ))}
-    </Flex>
   );
 }
 

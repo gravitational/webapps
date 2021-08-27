@@ -34,8 +34,6 @@ export type Props = {
   menuPosition?: 'fixed' | 'absolute';
 };
 
-export type TileSelectProps = Props & { cols?: number };
-
 export type AsyncProps = Omit<Props, 'options'> & {
   defaultOptions?: true | Option;
   cacheOptions?: boolean;
@@ -48,7 +46,3 @@ export type Option<T = string> = {
   value: T;
   label: string;
 };
-
-export function optionsEqual<T>(o1: Option<T>, o2: Option<T>) {
-  return o1.value === o2.value;
-}
