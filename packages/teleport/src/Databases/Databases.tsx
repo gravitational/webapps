@@ -40,7 +40,6 @@ export function Databases(props: State) {
   const {
     databases,
     attempt,
-    joinAttempt,
     isLeafCluster,
     canCreate,
     showAddDialog,
@@ -104,7 +103,6 @@ export function Databases(props: State) {
           authType={authType}
           joinToken={joinToken}
           canCreate={canCreate}
-          attempt={joinAttempt}
           onClose={hideAddDialog}
         />
       )}

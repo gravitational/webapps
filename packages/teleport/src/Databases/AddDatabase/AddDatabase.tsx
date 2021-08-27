@@ -40,7 +40,6 @@ export default function AddDatabase({
   authType,
   joinToken,
   canCreate,
-  attempt,
   onClose,
 }: Props) {
   const { hostname, port } = window.document.location;
@@ -65,7 +64,8 @@ export default function AddDatabase({
       : `tsh login --proxy=${host} --auth=local --user=${username}`;
 
   const { id: token } = joinToken;
-  const stepSkip = canCreate ? 0 : 2;
+  const useGeneratedToken = canCreate && token !== '';
+  const stepSkip = useGeneratedToken ? 0 : 2;
 
   return (
     <Dialog
@@ -100,7 +100,7 @@ export default function AddDatabase({
             </Link>
           </Box>
         </Box>
-        {!canCreate && (
+        {!useGeneratedToken && (
           <Box mb={4}>
             <Text bold as="span">
               Step 2
@@ -109,7 +109,7 @@ export default function AddDatabase({
             <TextSelectCopy mt="2" text={connectCmd} />
           </Box>
         )}
-        {!canCreate && (
+        {!useGeneratedToken && (
           <Box mb={4}>
             <Text bold as="span">
               Step 3
@@ -206,5 +206,4 @@ export type Props = {
   authType: AuthType;
   joinToken: NodeToken;
   canCreate: boolean;
-  attempt: Attempt;
 };

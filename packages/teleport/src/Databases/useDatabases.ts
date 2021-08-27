@@ -23,7 +23,6 @@ import { NodeToken } from 'teleport/services/nodes';
 
 export default function useDatabases(ctx: Ctx) {
   const { attempt, run, setAttempt } = useAttempt('processing');
-  const { attempt: joinAttempt, run: runJoin } = useAttempt('');
   const { clusterId, isLeafCluster } = useStickyClusterId();
   const username = ctx.storeUser.state.username;
   const canCreate = ctx.storeUser.getTokenAccess().create;
@@ -43,9 +42,7 @@ export default function useDatabases(ctx: Ctx) {
 
   useEffect(() => {
     if (isAddDialogVisible && canCreate) {
-      runJoin(() =>
-        ctx.nodeService.generateJoinToken(['Db']).then(setJoinToken)
-      );
+      ctx.nodeService.generateJoinToken(['Db']).then(setJoinToken);
     } else {
       setJoinToken(defaultJoinToken);
     }
@@ -72,7 +69,6 @@ export default function useDatabases(ctx: Ctx) {
   return {
     databases,
     attempt,
-    joinAttempt,
     canCreate,
     isLeafCluster,
     isEnterprise,
