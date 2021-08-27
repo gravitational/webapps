@@ -15,7 +15,7 @@ limitations under the License.
 */
 
 import React from 'react';
-import Component from './AddDatabase';
+import { AddDatabase as Component } from './AddDatabase';
 
 export default {
   title: 'Teleport/Databases/Add',
@@ -28,7 +28,7 @@ export const Add = () => (
     onClose={() => null}
     authType="local"
     canCreate={false}
-    joinToken={{ id: '', expiry: new Date() }}
-    attempt={{ status: '' }}
+    joinToken={{ id: 'testtoken', expiry: new Date() }}
+    attempt={{ status: 'success' }}
   />
 );

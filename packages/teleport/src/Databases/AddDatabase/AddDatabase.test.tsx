@@ -16,19 +16,20 @@
 
 import React from 'react';
 import { fireEvent, render, screen } from 'design/utils/testing';
-import AddDialog, { Props } from './AddDatabase';
+import { AddDatabase as AddDialog, Props } from './AddDatabase';
+import { Attempt } from 'shared/hooks/useAttemptNext';
 
 describe('correct database add command generated with given input', () => {
   test.each`
     input                     | output
-    ${'self-hosted mysql'}    | ${'teleport db start --token=[generated-join-token] --auth-server=localhost:443 --name=[db-name] --protocol=mysql --uri=[uri]'}
-    ${'rds mysql'}            | ${'teleport db start --token=[generated-join-token] --auth-server=localhost:443 --name=[db-name] --protocol=mysql --uri=[uri] --aws-region=[region]'}
-    ${'cloud sql mysql'}      | ${'teleport db start --token=[generated-join-token] --auth-server=localhost:443 --name=[db-name] --protocol=mysql --uri=[uri] --ca-cert=[instance-ca-filepath] --gcp-project-id=[project-id] --gcp-instance-id=[instance-id]'}
-    ${'self-hosted postgres'} | ${'teleport db start --token=[generated-join-token] --auth-server=localhost:443 --name=[db-name] --protocol=postgres --uri=[uri]'}
-    ${'rds postgres'}         | ${'teleport db start --token=[generated-join-token] --auth-server=localhost:443 --name=[db-name] --protocol=postgres --uri=[uri] --aws-region=[region]'}
-    ${'cloud sql postgres'}   | ${'teleport db start --token=[generated-join-token] --auth-server=localhost:443 --name=[db-name] --protocol=postgres --uri=[uri] --ca-cert=[instance-ca-filepath] --gcp-project-id=[project-id] --gcp-instance-id=[instance-id]'}
-    ${'redshift'}             | ${'teleport db start --token=[generated-join-token] --auth-server=localhost:443 --name=[db-name] --protocol=postgres --uri=[uri] --aws-region=[region] --aws-redshift-cluster-id=[cluster-id]'}
-    ${'self-hosted mongodb'}  | ${'teleport db start --token=[generated-join-token] --auth-server=localhost:443 --name=[db-name] --protocol=mongodb --uri=[uri]'}
+    ${'self-hosted mysql'}    | ${'teleport db start --token=mynewtoken --auth-server=localhost:443 --name=[db-name] --protocol=mysql --uri=[uri]'}
+    ${'rds mysql'}            | ${'teleport db start --token=mynewtoken --auth-server=localhost:443 --name=[db-name] --protocol=mysql --uri=[uri] --aws-region=[region]'}
+    ${'cloud sql mysql'}      | ${'teleport db start --token=mynewtoken --auth-server=localhost:443 --name=[db-name] --protocol=mysql --uri=[uri] --ca-cert=[instance-ca-filepath] --gcp-project-id=[project-id] --gcp-instance-id=[instance-id]'}
+    ${'self-hosted postgres'} | ${'teleport db start --token=mynewtoken --auth-server=localhost:443 --name=[db-name] --protocol=postgres --uri=[uri]'}
+    ${'rds postgres'}         | ${'teleport db start --token=mynewtoken --auth-server=localhost:443 --name=[db-name] --protocol=postgres --uri=[uri] --aws-region=[region]'}
+    ${'cloud sql postgres'}   | ${'teleport db start --token=mynewtoken --auth-server=localhost:443 --name=[db-name] --protocol=postgres --uri=[uri] --ca-cert=[instance-ca-filepath] --gcp-project-id=[project-id] --gcp-instance-id=[instance-id]'}
+    ${'redshift'}             | ${'teleport db start --token=mynewtoken --auth-server=localhost:443 --name=[db-name] --protocol=postgres --uri=[uri] --aws-region=[region] --aws-redshift-cluster-id=[cluster-id]'}
+    ${'self-hosted mongodb'}  | ${'teleport db start --token=mynewtoken --auth-server=localhost:443 --name=[db-name] --protocol=mongodb --uri=[uri]'}
   `(
     'should generate correct command for input: $input',
     ({ input, output }) => {
@@ -64,8 +65,17 @@ test('render instructions dialog for adding database', () => {
   expect(screen.getByTestId('Modal')).toMatchSnapshot();
 });
 
-test('render instructions with token when provided', () => {
-  render(<AddDialog {...propsWithToken} />);
+test('render token loading message', () => {
+  const attempt: Attempt = { status: 'processing' };
+  const newProps = { ...props, attempt };
+  render(<AddDialog {...newProps} />);
+  expect(screen.getByTestId('Modal')).toMatchSnapshot();
+});
+
+test('render token gen failed message', () => {
+  const attempt: Attempt = { status: 'failed' };
+  const newProps = { ...props, attempt };
+  render(<AddDialog {...newProps} />);
   expect(screen.getByTestId('Modal')).toMatchSnapshot();
 });
 
@@ -75,14 +85,6 @@ const props: Props = {
   onClose: () => null,
   authType: 'local',
   canCreate: false,
-  joinToken: { id: '', expiry: new Date() },
-};
-
-const propsWithToken: Props = {
-  username: 'yassine',
-  version: '6.1.3',
-  onClose: () => null,
-  authType: 'local',
-  canCreate: true,
   joinToken: { id: 'mynewtoken', expiry: new Date() },
+  attempt: { status: 'success' },
 };

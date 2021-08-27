@@ -22,24 +22,52 @@ import Dialog, {
   DialogFooter,
 } from 'design/Dialog';
 import { Text, Box, ButtonSecondary, Link } from 'design';
+import { Danger } from 'design/Alert';
+import { Attempt } from 'shared/hooks/useAttemptNext';
 import Select, { DarkStyledSelect, Option } from 'shared/components/Select';
 import * as links from 'teleport/services/links';
 import { AuthType } from 'teleport/services/user';
 import { DbType, DbProtocol } from 'teleport/services/databases';
-import { NodeToken } from 'teleport/services/nodes';
+import { JoinToken } from 'teleport/services/jointoken';
+import useTeleport from 'teleport/useTeleport';
+import useDatabases from '../useDatabases';
+import useAddDatabase from './useAddDatabase';
 import {
   formatDatabaseInfo,
   DatabaseInfo,
 } from 'teleport/services/databases/makeDatabase';
 import TextSelectCopy from 'teleport/components/TextSelectCopy';
 
-export default function AddDatabase({
+export default function Container() {
+  const ctx = useTeleport();
+  const {
+    username,
+    version,
+    authType,
+    canCreate,
+    hideAddDialog,
+  } = useDatabases(ctx);
+  const { joinToken, attempt } = useAddDatabase(ctx);
+  const props = {
+    username,
+    version,
+    authType,
+    canCreate,
+    onClose: hideAddDialog,
+    joinToken,
+    attempt,
+  };
+  return <AddDatabase {...props} />;
+}
+
+export function AddDatabase({
   username,
   version,
   authType,
-  joinToken,
   canCreate,
   onClose,
+  joinToken,
+  attempt,
 }: Props) {
   const { hostname, port } = window.document.location;
   const host = `${hostname}:${port || '443'}`;
@@ -139,15 +167,21 @@ export default function AddDatabase({
             {`Step ${3 + stepSkip}`}
           </Text>
           {' - Start the Teleport agent with the following parameters'}
-          <TextSelectCopy
-            mt="2"
-            text={`${generateDbStartCmd(
-              selectedDbOption.value.type,
-              selectedDbOption.value.protocol,
-              host,
-              token
-            )}`}
-          />
+          {attempt.status === 'processing' && <Text>Loading command...</Text>}
+          {attempt.status === 'success' && (
+            <TextSelectCopy
+              mt="2"
+              text={`${generateDbStartCmd(
+                selectedDbOption.value.type,
+                selectedDbOption.value.protocol,
+                host,
+                token
+              )}`}
+            />
+          )}
+          {attempt.status === 'failed' && (
+            <Danger>Error - Failed to generate join token</Danger>
+          )}
         </Box>
         <Box>
           {`* Note: Learn more about database access in our `}
@@ -206,6 +240,7 @@ export type Props = {
   username: string;
   version: string;
   authType: AuthType;
-  joinToken: NodeToken;
   canCreate: boolean;
+  joinToken: JoinToken;
+  attempt: Attempt;
 };

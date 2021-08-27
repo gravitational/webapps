@@ -51,7 +51,6 @@ export function Databases(props: State) {
     authType,
     searchValue,
     setSearchValue,
-    joinToken,
   } = props;
 
   const isEmpty = attempt.status === 'success' && databases.length === 0;
@@ -100,16 +99,7 @@ export function Databases(props: State) {
           emptyStateInfo={emptyStateInfo}
         />
       )}
-      {isAddDialogVisible && (
-        <AddDialog
-          username={username}
-          version={version}
-          authType={authType}
-          joinToken={joinToken}
-          canCreate={canCreate}
-          onClose={hideAddDialog}
-        />
-      )}
+      {isAddDialogVisible && <AddDialog />}
     </FeatureBox>
   );
 }

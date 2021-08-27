@@ -19,7 +19,6 @@ import useAttempt from 'shared/hooks/useAttemptNext';
 import Ctx from 'teleport/teleportContext';
 import useStickyClusterId from 'teleport/useStickyClusterId';
 import { Database } from 'teleport/services/databases';
-import { NodeToken } from 'teleport/services/nodes';
 
 export default function useDatabases(ctx: Ctx) {
   const { attempt, run, setAttempt } = useAttempt('processing');
@@ -33,20 +32,10 @@ export default function useDatabases(ctx: Ctx) {
   const [databases, setDatabases] = useState<Database[]>([]);
   const [isAddDialogVisible, setIsAddDialogVisible] = useState(false);
   const [searchValue, setSearchValue] = useState<string>('');
-  const defaultJoinToken = { id: '', expiry: new Date() };
-  const [joinToken, setJoinToken] = useState<NodeToken>(defaultJoinToken);
 
   useEffect(() => {
     run(() => ctx.databaseService.fetchDatabases(clusterId).then(setDatabases));
   }, [clusterId]);
-
-  useEffect(() => {
-    if (isAddDialogVisible && canCreate) {
-      ctx.joinTokenService.generateJoinToken(['Db']).then(setJoinToken);
-    } else {
-      setJoinToken(defaultJoinToken);
-    }
-  }, [isAddDialogVisible]);
 
   const fetchDatabases = () => {
     return ctx.databaseService
@@ -81,7 +70,6 @@ export default function useDatabases(ctx: Ctx) {
     authType,
     searchValue,
     setSearchValue,
-    joinToken,
   };
 }
 
