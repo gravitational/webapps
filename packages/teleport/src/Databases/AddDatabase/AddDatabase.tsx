@@ -23,7 +23,6 @@ import Dialog, {
 } from 'design/Dialog';
 import { Text, Box, ButtonSecondary, Link } from 'design';
 import { Option, TiledSelect } from 'shared/components/Select';
-import { Attempt } from 'shared/hooks/useAttemptNext';
 import * as links from 'teleport/services/links';
 import { AuthType } from 'teleport/services/user';
 import { DbType, DbProtocol } from 'teleport/services/databases';

@@ -1199,8 +1199,9 @@ exports[`readonly empty state 1`] = `
       </div>
       <button
         class="c3"
+        disabled=""
         kind="primary"
-        title=""
+        title="You do not have access to add a database"
         width="240px"
       >
         Add Database
