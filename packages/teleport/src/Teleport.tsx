@@ -28,6 +28,7 @@ import Invite, { ResetPassword } from './Invite';
 import Login, { LoginSuccess, LoginFailed } from './Login';
 import AppLauncher from './AppLauncher';
 import Console from './Console';
+import DesktopSession from './DesktopSession';
 import Player from './Player';
 import TeleportContextProvider from './teleportContextProvider';
 import TeleportContext from './teleportContext';
@@ -97,7 +98,7 @@ function renderAuthenticated(children) {
 
   return (
     <Switch>
-      <Route path={cfg.routes.desktop} component={Console} />
+      <Route path={cfg.routes.desktop} component={DesktopSession} />
       <Route path={cfg.routes.console} component={Console} />
       <Route path={cfg.routes.player} component={Player} />
       <Route path={cfg.routes.root} component={Main} />
