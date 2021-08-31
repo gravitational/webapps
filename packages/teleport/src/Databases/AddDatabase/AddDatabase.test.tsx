@@ -85,6 +85,6 @@ const props: Props = {
   onClose: () => null,
   authType: 'local',
   canCreate: false,
-  joinToken: { id: 'mynewtoken', expiry: new Date() },
+  token: 'mynewtoken',
   attempt: { status: 'success' },
 };
