@@ -38,12 +38,9 @@ export default function useAddDatabase(ctx: Ctx) {
   }, []);
 
   return {
-    username,
     token,
     attempt,
-    isEnterprise,
     version,
-    authType,
   };
 }
 

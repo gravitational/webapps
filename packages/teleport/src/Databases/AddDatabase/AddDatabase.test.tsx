@@ -67,11 +67,8 @@ test('render token gen failed message', () => {
 });
 
 const props: State & Props = {
-  username: 'yassine',
   version: '6.1.3',
   onClose: () => null,
-  authType: 'local',
   token: 'mynewtoken',
   attempt: { status: 'success' },
-  isEnterprise: false,
 };

@@ -41,9 +41,7 @@ export default function Container(props: Props) {
 }
 
 export function AddDatabase({
-  username,
   version,
-  authType,
   onClose,
   token,
   attempt,
@@ -60,10 +58,6 @@ export function AddDatabase({
   );
 
   const [selectedDbOption, setSelectedDbOption] = useState(dbOptions[0]);
-  const connectCmd =
-    authType === 'sso'
-      ? `tsh login --proxy=${host}`
-      : `tsh login --proxy=${host} --auth=local --user=${username}`;
 
   return (
     <Dialog
