@@ -17,6 +17,7 @@
 import React from 'react';
 import { fireEvent, render, screen } from 'design/utils/testing';
 import { AddDatabase as AddDialog, Props } from './AddDatabase';
+import { State } from './useAddDatabase';
 import { Attempt } from 'shared/hooks/useAttemptNext';
 
 describe('correct database add command generated with given input', () => {
@@ -46,20 +47,6 @@ describe('correct database add command generated with given input', () => {
   );
 });
 
-test('correct tsh login command generated with local authType', () => {
-  render(<AddDialog {...props} />);
-  const output = 'tsh login --proxy=localhost:443 --auth=local --user=yassine';
-
-  expect(screen.queryByText(output)).not.toBeNull();
-});
-
-test('correct tsh login command generated with sso authType', () => {
-  render(<AddDialog {...props} authType="sso" />);
-  const output = 'tsh login --proxy=localhost:443';
-
-  expect(screen.queryByText(output)).not.toBeNull();
-});
-
 test('render instructions dialog for adding database', () => {
   render(<AddDialog {...props} />);
   expect(screen.getByTestId('Modal')).toMatchSnapshot();
@@ -79,12 +66,12 @@ test('render token gen failed message', () => {
   expect(screen.getByTestId('Modal')).toMatchSnapshot();
 });
 
-const props: Props = {
+const props: State & Props = {
   username: 'yassine',
   version: '6.1.3',
   onClose: () => null,
   authType: 'local',
-  canCreate: false,
   token: 'mynewtoken',
   attempt: { status: 'success' },
+  isEnterprise: false,
 };

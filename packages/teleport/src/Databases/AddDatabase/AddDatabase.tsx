@@ -44,7 +44,6 @@ export function AddDatabase({
   username,
   version,
   authType,
-  isEnterprise,
   onClose,
   token,
   attempt,
@@ -99,27 +98,9 @@ export function AddDatabase({
             </Link>
           </Box>
         </Box>
-        {!isEnterprise && (
-          <>
-            <Box mb={4}>
-              <Text bold as="span">
-                Step 2
-              </Text>
-              {' - Login to Teleport'}
-              <TextSelectCopy mt="2" text={connectCmd} />
-            </Box>
-            <Box mb={4}>
-              <Text bold as="span">
-                Step 3
-              </Text>
-              {' - Generate a join token'}
-              <TextSelectCopy mt="2" text="tctl tokens add --type=db" />
-            </Box>
-          </>
-        )}
         <Box mb={4}>
           <Text bold as="span">
-            {`Step ${isEnterprise ? 2 : 4}`}
+            Step 2
           </Text>
           {` - Select the database type and protocol to use`}
           <Box mt={2}>
@@ -136,7 +117,7 @@ export function AddDatabase({
         </Box>
         <Box mb={4}>
           <Text bold as="span">
-            {`Step ${isEnterprise ? 3 : 5}`}
+            Step 3
           </Text>
           {' - Start the Teleport agent with the following parameters'}
           {attempt.status === 'processing' && <Text>Loading command...</Text>}
@@ -207,6 +188,6 @@ const options: DatabaseInfo[] = [
   formatDatabaseInfo('self-hosted', 'mongodb'),
 ];
 
-type Props = {
+export type Props = {
   onClose(): void;
 };

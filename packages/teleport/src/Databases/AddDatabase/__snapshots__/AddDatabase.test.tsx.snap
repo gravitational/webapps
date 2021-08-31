@@ -77,17 +77,17 @@ exports[`render instructions dialog for adding database 1`] = `
   box-sizing: border-box;
 }
 
-.c14 {
-  box-sizing: border-box;
-  margin-right: 4px;
-}
-
-.c16 {
+.c12 {
   box-sizing: border-box;
   margin-top: 8px;
 }
 
-.c12 {
+.c17 {
+  box-sizing: border-box;
+  margin-right: 4px;
+}
+
+.c15 {
   box-sizing: border-box;
   margin-top: 8px;
   padding: 8px;
@@ -98,7 +98,7 @@ exports[`render instructions dialog for adding database 1`] = `
   justify-content: space-between;
 }
 
-.c13 {
+.c16 {
   box-sizing: border-box;
   margin-right: 8px;
   display: flex;
@@ -112,7 +112,7 @@ exports[`render instructions dialog for adding database 1`] = `
   align-items: center;
 }
 
-.c15 {
+.c18 {
   line-height: 1.5;
   margin: 0;
   display: inline-flex;
@@ -138,20 +138,20 @@ exports[`render instructions dialog for adding database 1`] = `
   padding: 0px 24px;
 }
 
-.c15:active {
+.c18:active {
   opacity: 0.56;
 }
 
-.c15:hover,
-.c15:focus {
+.c18:hover,
+.c18:focus {
   background: #651FFF;
 }
 
-.c15:active {
+.c18:active {
   background: #354AA4;
 }
 
-.c15:disabled {
+.c18:disabled {
   background: rgba(255,255,255,0.12);
   color: rgba(255,255,255,0.3);
 }
@@ -225,7 +225,7 @@ exports[`render instructions dialog for adding database 1`] = `
   box-sizing: border-box;
 }
 
-.c18 .react-select-container {
+.c14 .react-select-container {
   box-shadow: inset 0 2px 4px rgba(0,0,0,0.24);
   box-sizing: border-box;
   border: none;
@@ -239,8 +239,8 @@ exports[`render instructions dialog for adding database 1`] = `
   border-radius: 4px;
 }
 
-.c18 .react-select__control,
-.c18 .react-select__control--is-focused {
+.c14 .react-select__control,
+.c14 .react-select__control--is-focused {
   min-height: 40px;
   height: 40px;
   background-color: transparent;
@@ -251,52 +251,52 @@ exports[`render instructions dialog for adding database 1`] = `
   box-shadow: none;
 }
 
-.c18 .react-select__control:hover,
-.c18 .react-select__control--is-focused:hover {
+.c14 .react-select__control:hover,
+.c14 .react-select__control--is-focused:hover {
   border-color: transparent;
   cursor: pointer;
 }
 
-.c18 .react-select__option:hover {
+.c14 .react-select__option:hover {
   cursor: pointer;
   background-color: #eceff1;
 }
 
-.c18 .react-select__option--is-focused {
+.c14 .react-select__option--is-focused {
   background-color: #eceff1;
 }
 
-.c18 .react-select__option--is-selected {
+.c14 .react-select__option--is-selected {
   background-color: #cfd8dc;
   color: inherit;
 }
 
-.c18 .react-select__option--is-selected:hover {
+.c14 .react-select__option--is-selected:hover {
   background-color: #cfd8dc;
 }
 
-.c18 .react-select__menu {
+.c14 .react-select__menu {
   margin-top: 0px;
 }
 
-.c18 .react-select__indicator-separator {
+.c14 .react-select__indicator-separator {
   display: none;
 }
 
-.c18 .react-select__loading-indicator {
+.c14 .react-select__loading-indicator {
   display: none;
 }
 
-.c18 .react-select--is-disabled .react-select__single-value,
-.c18 .react-select--is-disabled .react-select__placeholder {
+.c14 .react-select--is-disabled .react-select__single-value,
+.c14 .react-select--is-disabled .react-select__placeholder {
   color: rgba(0,0,0,0.24);
 }
 
-.c18 .react-select--is-disabled .react-select__indicator {
+.c14 .react-select--is-disabled .react-select__indicator {
   color: rgba(0,0,0,0.14);
 }
 
-.c17 .react-select-container {
+.c13 .react-select-container {
   box-shadow: inset 0 2px 4px rgba(0,0,0,0.24);
   box-sizing: border-box;
   border: none;
@@ -310,8 +310,8 @@ exports[`render instructions dialog for adding database 1`] = `
   border-radius: 4px;
 }
 
-.c17 .react-select__control,
-.c17 .react-select__control--is-focused {
+.c13 .react-select__control,
+.c13 .react-select__control--is-focused {
   min-height: 40px;
   height: 40px;
   background-color: transparent;
@@ -322,100 +322,100 @@ exports[`render instructions dialog for adding database 1`] = `
   box-shadow: none;
 }
 
-.c17 .react-select__control:hover,
-.c17 .react-select__control--is-focused:hover {
+.c13 .react-select__control:hover,
+.c13 .react-select__control--is-focused:hover {
   border-color: transparent;
   cursor: pointer;
 }
 
-.c17 .react-select__option:hover {
+.c13 .react-select__option:hover {
   cursor: pointer;
   background-color: #eceff1;
 }
 
-.c17 .react-select__option--is-focused {
+.c13 .react-select__option--is-focused {
   background-color: #eceff1;
 }
 
-.c17 .react-select__option--is-selected {
+.c13 .react-select__option--is-selected {
   background-color: #cfd8dc;
   color: inherit;
 }
 
-.c17 .react-select__option--is-selected:hover {
+.c13 .react-select__option--is-selected:hover {
   background-color: #cfd8dc;
 }
 
-.c17 .react-select__menu {
+.c13 .react-select__menu {
   margin-top: 0px;
 }
 
-.c17 .react-select__indicator-separator {
+.c13 .react-select__indicator-separator {
   display: none;
 }
 
-.c17 .react-select__loading-indicator {
+.c13 .react-select__loading-indicator {
   display: none;
 }
 
-.c17 .react-select--is-disabled .react-select__single-value,
-.c17 .react-select--is-disabled .react-select__placeholder {
+.c13 .react-select--is-disabled .react-select__single-value,
+.c13 .react-select--is-disabled .react-select__placeholder {
   color: rgba(0,0,0,0.24);
 }
 
-.c17 .react-select--is-disabled .react-select__indicator {
+.c13 .react-select--is-disabled .react-select__indicator {
   color: rgba(0,0,0,0.14);
 }
 
-.c17 .react-select-container {
+.c13 .react-select-container {
   background: transparent;
 }
 
-.c17 .react-select__option--is-focused:active {
+.c13 .react-select__option--is-focused:active {
   background-color: #eceff1;
 }
 
-.c17 .react-select__value-container {
+.c13 .react-select__value-container {
   padding: 0 8px;
 }
 
-.c17 .react-select__single-value {
+.c13 .react-select__single-value {
   color: rgba(255,255,255,0.87);
 }
 
-.c17 .react-select__control {
+.c13 .react-select__control {
   min-height: 34px;
   height: 34px;
   border-color: rgba(255,255,255,0.24);
   color: rgba(255,255,255,0.56);
 }
 
-.c17 .react-select__control:focus,
-.c17 .react-select__control:active {
+.c13 .react-select__control:focus,
+.c13 .react-select__control:active {
   background-color: #2C3A73;
 }
 
-.c17 .react-select__control:hover {
+.c13 .react-select__control:hover {
   border-color: rgba(255,255,255,0.24);
   background-color: #2C3A73;
 }
 
-.c17 .react-select__control:hover .react-select__dropdown-indicator {
+.c13 .react-select__control:hover .react-select__dropdown-indicator {
   color: #666;
 }
 
-.c17 .react-select__control .react-select__indicator,
-.c17 .react-select__control .react-select__dropdown-indicator {
+.c13 .react-select__control .react-select__indicator,
+.c13 .react-select__control .react-select__dropdown-indicator {
   padding: 4px 8px;
   color: #666;
 }
 
-.c17 .react-select__control .react-select__indicator:hover,
-.c17 .react-select__control .react-select__dropdown-indicator:hover {
+.c13 .react-select__control .react-select__indicator:hover,
+.c13 .react-select__control .react-select__dropdown-indicator:hover {
   color: #999;
 }
 
-.c17 .react-select__control--menu-is-open {
+.c13 .react-select__control--menu-is-open {
   background-color: #2C3A73;
   border-color: transparent;
   border-radius: 4px;
@@ -425,46 +425,46 @@ exports[`render instructions dialog for adding database 1`] = `
   border-color: rgba(255,255,255,0.24);
 }
 
-.c17 .react-select__control--menu-is-open .react-select__indicator,
-.c17 .react-select__control--menu-is-open .react-select__dropdown-indicator {
+.c13 .react-select__control--menu-is-open .react-select__indicator,
+.c13 .react-select__control--menu-is-open .react-select__dropdown-indicator {
   color: #999 !important;
 }
 
-.c17 .react-select__control--menu-is-open .react-select__indicator:hover,
-.c17 .react-select__control--menu-is-open .react-select__dropdown-indicator:hover {
+.c13 .react-select__control--menu-is-open .react-select__indicator:hover,
+.c13 .react-select__control--menu-is-open .react-select__dropdown-indicator:hover {
   color: #ccc !important;
 }
 
-.c17 .react-select__input {
+.c13 .react-select__input {
   color: rgba(255,255,255,0.87);
 }
 
-.c17 .react-select__placeholder {
+.c13 .react-select__placeholder {
   color: rgba(255,255,255,0.56);
 }
 
-.c17 .react-select__option {
+.c13 .react-select__option {
   padding: 4px 12px;
 }
 
-.c17 .react-select__menu {
+.c13 .react-select__menu {
   border-top-left-radius: 0;
   border-top-right-radius: 0;
 }
 
-.c17 .react-select__multi-value {
+.c13 .react-select__multi-value {
   background-color: #111B48;
   border: 1px solid rgba(255,255,255,0.24);
 }
 
-.c17 .react-select__multi-value__label {
+.c13 .react-select__multi-value__label {
   color: rgba(255,255,255,0.87);
   padding: 0 6px;
 }
 
-.c17 .react-select--is-disabled .react-select__single-value,
-.c17 .react-select--is-disabled .react-select__placeholder,
-.c17 .react-select--is-disabled .react-select__indicator {
+.c13 .react-select--is-disabled .react-select__single-value,
+.c13 .react-select--is-disabled .react-select__placeholder,
+.c13 .react-select--is-disabled .react-select__indicator {
   color: rgba(255,255,255,0.24);
 }
 
@@ -543,83 +543,15 @@ exports[`render instructions dialog for adding database 1`] = `
           >
             Step 2
           </span>
-           - Login to Teleport
-          <div
-            class="c12"
-          >
-            <div
-              class="c13"
-              style="overflow: auto; white-space: pre; word-break: break-all; font-size: 12px; font-family: \\"Droid Sans Mono\\", \\"monospace\\", monospace, \\"Droid Sans Fallback\\";"
-            >
-              <div
-                class="c14"
-              >
-                $
-              </div>
-              <div>
-                tsh login --proxy=localhost:443 --auth=local --user=yassine
-              </div>
-            </div>
-            <button
-              class="c15"
-              kind="primary"
-              style="max-width: 48px; width: 100%; padding: 4px 8px; min-height: 10px; font-size: 10px;"
-            >
-              Copy
-            </button>
-          </div>
-        </div>
-        <div
-          class="c7"
-        >
-          <span
-            class="c8"
-          >
-            Step 3
-          </span>
-           - Generate a join token
-          <div
-            class="c12"
-          >
-            <div
-              class="c13"
-              style="overflow: auto; white-space: pre; word-break: break-all; font-size: 12px; font-family: \\"Droid Sans Mono\\", \\"monospace\\", monospace, \\"Droid Sans Fallback\\";"
-            >
-              <div
-                class="c14"
-              >
-                $
-              </div>
-              <div>
-                tctl tokens add --type=db
-              </div>
-            </div>
-            <button
-              class="c15"
-              kind="primary"
-              style="max-width: 48px; width: 100%; padding: 4px 8px; min-height: 10px; font-size: 10px;"
-            >
-              Copy
-            </button>
-          </div>
-        </div>
-        <div
-          class="c7"
-        >
-          <span
-            class="c8"
-          >
-            Step 4
-          </span>
            - Select the database type and protocol to use
           <div
-            class="c16"
+            class="c12"
           >
             <div
-              class="c17"
+              class="c13"
             >
               <div
-                class="c18"
+                class="c14"
               >
                 <div
                   class="react-select-container css-2b097c-container"
@@ -647,7 +579,7 @@ exports[`render instructions dialog for adding database 1`] = `
                             autocapitalize="none"
                             autocomplete="off"
                             autocorrect="off"
-                            id="react-select-12-input"
+                            id="react-select-10-input"
                             spellcheck="false"
                             style="box-sizing: content-box; width: 2px; border: 0px; opacity: 1; outline: 0; padding: 0px;"
                             tabindex="0"
@@ -696,18 +628,18 @@ exports[`render instructions dialog for adding database 1`] = `
           <span
             class="c8"
           >
-            Step 5
+            Step 3
           </span>
            - Start the Teleport agent with the following parameters
           <div
-            class="c12"
+            class="c15"
           >
             <div
-              class="c13"
+              class="c16"
               style="overflow: auto; white-space: pre; word-break: break-all; font-size: 12px; font-family: \\"Droid Sans Mono\\", \\"monospace\\", monospace, \\"Droid Sans Fallback\\";"
             >
               <div
-                class="c14"
+                class="c17"
               >
                 $
               </div>
@@ -716,7 +648,7 @@ exports[`render instructions dialog for adding database 1`] = `
               </div>
             </div>
             <button
-              class="c15"
+              class="c18"
               kind="primary"
               style="max-width: 48px; width: 100%; padding: 4px 8px; min-height: 10px; font-size: 10px;"
             >
@@ -831,31 +763,9 @@ exports[`render token gen failed message 1`] = `
   box-sizing: border-box;
 }
 
-.c14 {
-  box-sizing: border-box;
-  margin-right: 4px;
-}
-
-.c16 {
-  box-sizing: border-box;
-  margin-top: 8px;
-}
-
 .c12 {
   box-sizing: border-box;
   margin-top: 8px;
-  padding: 8px;
-  background-color: #010B1C;
-  border-radius: 4px;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-}
-
-.c13 {
-  box-sizing: border-box;
-  margin-right: 8px;
-  display: flex;
 }
 
 .c4 {
@@ -866,7 +776,7 @@ exports[`render token gen failed message 1`] = `
   align-items: center;
 }
 
-.c19 {
+.c15 {
   display: flex;
   align-items: center;
   justify-content: center;
@@ -883,55 +793,11 @@ exports[`render token gen failed message 1`] = `
   color: #FFFFFF;
 }
 
-.c19 a {
+.c15 a {
   color: #FFFFFF;
 }
 
-.c15 {
-  line-height: 1.5;
-  margin: 0;
-  display: inline-flex;
-  justify-content: center;
-  align-items: center;
-  box-sizing: border-box;
-  border: none;
-  border-radius: 4px;
-  cursor: pointer;
-  font-family: inherit;
-  font-weight: 600;
-  outline: none;
-  position: relative;
-  text-align: center;
-  text-decoration: none;
-  text-transform: uppercase;
-  transition: all 0.3s;
-  -webkit-font-smoothing: antialiased;
-  background: #512FC9;
-  color: rgba(255,255,255,0.87);
-  min-height: 32px;
-  font-size: 12px;
-  padding: 0px 24px;
-}
-
-.c15:active {
-  opacity: 0.56;
-}
-
-.c15:hover,
-.c15:focus {
-  background: #651FFF;
-}
-
-.c15:active {
-  background: #354AA4;
-}
-
-.c15:disabled {
-  background: rgba(255,255,255,0.12);
-  color: rgba(255,255,255,0.3);
-}
-
-.c21 {
+.c17 {
   line-height: 1.5;
   margin: 0;
   display: inline-flex;
@@ -957,16 +823,16 @@ exports[`render token gen failed message 1`] = `
   padding: 0px 24px;
 }
 
-.c21:active {
+.c17:active {
   opacity: 0.56;
 }
 
-.c21:hover,
-.c21:focus {
+.c17:hover,
+.c17:focus {
   background: #2C3A73;
 }
 
-.c21:disabled {
+.c17:disabled {
   background: rgba(255,255,255,0.12);
   color: rgba(255,255,255,0.3);
 }
@@ -996,11 +862,11 @@ exports[`render token gen failed message 1`] = `
   flex-direction: column;
 }
 
-.c20 {
+.c16 {
   box-sizing: border-box;
 }
 
-.c18 .react-select-container {
+.c14 .react-select-container {
   box-shadow: inset 0 2px 4px rgba(0,0,0,0.24);
   box-sizing: border-box;
   border: none;
@@ -1014,8 +880,8 @@ exports[`render token gen failed message 1`] = `
   border-radius: 4px;
 }
 
-.c18 .react-select__control,
-.c18 .react-select__control--is-focused {
+.c14 .react-select__control,
+.c14 .react-select__control--is-focused {
   min-height: 40px;
   height: 40px;
   background-color: transparent;
@@ -1026,52 +892,52 @@ exports[`render token gen failed message 1`] = `
   box-shadow: none;
 }
 
-.c18 .react-select__control:hover,
-.c18 .react-select__control--is-focused:hover {
+.c14 .react-select__control:hover,
+.c14 .react-select__control--is-focused:hover {
   border-color: transparent;
   cursor: pointer;
 }
 
-.c18 .react-select__option:hover {
+.c14 .react-select__option:hover {
   cursor: pointer;
   background-color: #eceff1;
 }
 
-.c18 .react-select__option--is-focused {
+.c14 .react-select__option--is-focused {
   background-color: #eceff1;
 }
 
-.c18 .react-select__option--is-selected {
+.c14 .react-select__option--is-selected {
   background-color: #cfd8dc;
   color: inherit;
 }
 
-.c18 .react-select__option--is-selected:hover {
+.c14 .react-select__option--is-selected:hover {
   background-color: #cfd8dc;
 }
 
-.c18 .react-select__menu {
+.c14 .react-select__menu {
   margin-top: 0px;
 }
 
-.c18 .react-select__indicator-separator {
+.c14 .react-select__indicator-separator {
   display: none;
 }
 
-.c18 .react-select__loading-indicator {
+.c14 .react-select__loading-indicator {
   display: none;
 }
 
-.c18 .react-select--is-disabled .react-select__single-value,
-.c18 .react-select--is-disabled .react-select__placeholder {
+.c14 .react-select--is-disabled .react-select__single-value,
+.c14 .react-select--is-disabled .react-select__placeholder {
   color: rgba(0,0,0,0.24);
 }
 
-.c18 .react-select--is-disabled .react-select__indicator {
+.c14 .react-select--is-disabled .react-select__indicator {
   color: rgba(0,0,0,0.14);
 }
 
-.c17 .react-select-container {
+.c13 .react-select-container {
   box-shadow: inset 0 2px 4px rgba(0,0,0,0.24);
   box-sizing: border-box;
   border: none;
@@ -1085,8 +951,8 @@ exports[`render token gen failed message 1`] = `
   border-radius: 4px;
 }
 
-.c17 .react-select__control,
-.c17 .react-select__control--is-focused {
+.c13 .react-select__control,
+.c13 .react-select__control--is-focused {
   min-height: 40px;
   height: 40px;
   background-color: transparent;
@@ -1097,100 +963,100 @@ exports[`render token gen failed message 1`] = `
   box-shadow: none;
 }
 
-.c17 .react-select__control:hover,
-.c17 .react-select__control--is-focused:hover {
+.c13 .react-select__control:hover,
+.c13 .react-select__control--is-focused:hover {
   border-color: transparent;
   cursor: pointer;
 }
 
-.c17 .react-select__option:hover {
+.c13 .react-select__option:hover {
   cursor: pointer;
   background-color: #eceff1;
 }
 
-.c17 .react-select__option--is-focused {
+.c13 .react-select__option--is-focused {
   background-color: #eceff1;
 }
 
-.c17 .react-select__option--is-selected {
+.c13 .react-select__option--is-selected {
   background-color: #cfd8dc;
   color: inherit;
 }
 
-.c17 .react-select__option--is-selected:hover {
+.c13 .react-select__option--is-selected:hover {
   background-color: #cfd8dc;
 }
 
-.c17 .react-select__menu {
+.c13 .react-select__menu {
   margin-top: 0px;
 }
 
-.c17 .react-select__indicator-separator {
+.c13 .react-select__indicator-separator {
   display: none;
 }
 
-.c17 .react-select__loading-indicator {
+.c13 .react-select__loading-indicator {
   display: none;
 }
 
-.c17 .react-select--is-disabled .react-select__single-value,
-.c17 .react-select--is-disabled .react-select__placeholder {
+.c13 .react-select--is-disabled .react-select__single-value,
+.c13 .react-select--is-disabled .react-select__placeholder {
   color: rgba(0,0,0,0.24);
 }
 
-.c17 .react-select--is-disabled .react-select__indicator {
+.c13 .react-select--is-disabled .react-select__indicator {
   color: rgba(0,0,0,0.14);
 }
 
-.c17 .react-select-container {
+.c13 .react-select-container {
   background: transparent;
 }
 
-.c17 .react-select__option--is-focused:active {
+.c13 .react-select__option--is-focused:active {
   background-color: #eceff1;
 }
 
-.c17 .react-select__value-container {
+.c13 .react-select__value-container {
   padding: 0 8px;
 }
 
-.c17 .react-select__single-value {
+.c13 .react-select__single-value {
   color: rgba(255,255,255,0.87);
 }
 
-.c17 .react-select__control {
+.c13 .react-select__control {
   min-height: 34px;
   height: 34px;
   border-color: rgba(255,255,255,0.24);
   color: rgba(255,255,255,0.56);
 }
 
-.c17 .react-select__control:focus,
-.c17 .react-select__control:active {
+.c13 .react-select__control:focus,
+.c13 .react-select__control:active {
   background-color: #2C3A73;
 }
 
-.c17 .react-select__control:hover {
+.c13 .react-select__control:hover {
   border-color: rgba(255,255,255,0.24);
   background-color: #2C3A73;
 }
 
-.c17 .react-select__control:hover .react-select__dropdown-indicator {
+.c13 .react-select__control:hover .react-select__dropdown-indicator {
   color: #666;
 }
 
-.c17 .react-select__control .react-select__indicator,
-.c17 .react-select__control .react-select__dropdown-indicator {
+.c13 .react-select__control .react-select__indicator,
+.c13 .react-select__control .react-select__dropdown-indicator {
   padding: 4px 8px;
   color: #666;
 }
 
-.c17 .react-select__control .react-select__indicator:hover,
-.c17 .react-select__control .react-select__dropdown-indicator:hover {
+.c13 .react-select__control .react-select__indicator:hover,
+.c13 .react-select__control .react-select__dropdown-indicator:hover {
   color: #999;
 }
 
-.c17 .react-select__control--menu-is-open {
+.c13 .react-select__control--menu-is-open {
   background-color: #2C3A73;
   border-color: transparent;
   border-radius: 4px;
@@ -1200,46 +1066,46 @@ exports[`render token gen failed message 1`] = `
   border-color: rgba(255,255,255,0.24);
 }
 
-.c17 .react-select__control--menu-is-open .react-select__indicator,
-.c17 .react-select__control--menu-is-open .react-select__dropdown-indicator {
+.c13 .react-select__control--menu-is-open .react-select__indicator,
+.c13 .react-select__control--menu-is-open .react-select__dropdown-indicator {
   color: #999 !important;
 }
 
-.c17 .react-select__control--menu-is-open .react-select__indicator:hover,
-.c17 .react-select__control--menu-is-open .react-select__dropdown-indicator:hover {
+.c13 .react-select__control--menu-is-open .react-select__indicator:hover,
+.c13 .react-select__control--menu-is-open .react-select__dropdown-indicator:hover {
   color: #ccc !important;
 }
 
-.c17 .react-select__input {
+.c13 .react-select__input {
   color: rgba(255,255,255,0.87);
 }
 
-.c17 .react-select__placeholder {
+.c13 .react-select__placeholder {
   color: rgba(255,255,255,0.56);
 }
 
-.c17 .react-select__option {
+.c13 .react-select__option {
   padding: 4px 12px;
 }
 
-.c17 .react-select__menu {
+.c13 .react-select__menu {
   border-top-left-radius: 0;
   border-top-right-radius: 0;
 }
 
-.c17 .react-select__multi-value {
+.c13 .react-select__multi-value {
   background-color: #111B48;
   border: 1px solid rgba(255,255,255,0.24);
 }
 
-.c17 .react-select__multi-value__label {
+.c13 .react-select__multi-value__label {
   color: rgba(255,255,255,0.87);
   padding: 0 6px;
 }
 
-.c17 .react-select--is-disabled .react-select__single-value,
-.c17 .react-select--is-disabled .react-select__placeholder,
-.c17 .react-select--is-disabled .react-select__indicator {
+.c13 .react-select--is-disabled .react-select__single-value,
+.c13 .react-select--is-disabled .react-select__placeholder,
+.c13 .react-select--is-disabled .react-select__indicator {
   color: rgba(255,255,255,0.24);
 }
 
@@ -1260,7 +1126,7 @@ exports[`render token gen failed message 1`] = `
       data-testid="dialogbox"
     >
       <div
-        class="c4"
+        class="sc-AxheI c4"
       >
         <div
           class="c5"
@@ -1270,7 +1136,7 @@ exports[`render token gen failed message 1`] = `
         </div>
       </div>
       <div
-        class="c6"
+        class="sc-AxheI c6"
       >
         <div
           class="c7"
@@ -1318,83 +1184,15 @@ exports[`render token gen failed message 1`] = `
           >
             Step 2
           </span>
-           - Login to Teleport
-          <div
-            class="c12"
-          >
-            <div
-              class="c13"
-              style="overflow: auto; white-space: pre; word-break: break-all; font-size: 12px; font-family: \\"Droid Sans Mono\\", \\"monospace\\", monospace, \\"Droid Sans Fallback\\";"
-            >
-              <div
-                class="c14"
-              >
-                $
-              </div>
-              <div>
-                tsh login --proxy=localhost:443 --auth=local --user=yassine
-              </div>
-            </div>
-            <button
-              class="c15"
-              kind="primary"
-              style="max-width: 48px; width: 100%; padding: 4px 8px; min-height: 10px; font-size: 10px;"
-            >
-              Copy
-            </button>
-          </div>
-        </div>
-        <div
-          class="c7"
-        >
-          <span
-            class="c8"
-          >
-            Step 3
-          </span>
-           - Generate a join token
-          <div
-            class="c12"
-          >
-            <div
-              class="c13"
-              style="overflow: auto; white-space: pre; word-break: break-all; font-size: 12px; font-family: \\"Droid Sans Mono\\", \\"monospace\\", monospace, \\"Droid Sans Fallback\\";"
-            >
-              <div
-                class="c14"
-              >
-                $
-              </div>
-              <div>
-                tctl tokens add --type=db
-              </div>
-            </div>
-            <button
-              class="c15"
-              kind="primary"
-              style="max-width: 48px; width: 100%; padding: 4px 8px; min-height: 10px; font-size: 10px;"
-            >
-              Copy
-            </button>
-          </div>
-        </div>
-        <div
-          class="c7"
-        >
-          <span
-            class="c8"
-          >
-            Step 4
-          </span>
            - Select the database type and protocol to use
           <div
-            class="c16"
+            class="c12"
           >
             <div
-              class="c17"
+              class="c13"
             >
               <div
-                class="c18"
+                class="c14"
               >
                 <div
                   class="react-select-container css-2b097c-container"
@@ -1422,7 +1220,7 @@ exports[`render token gen failed message 1`] = `
                             autocapitalize="none"
                             autocomplete="off"
                             autocorrect="off"
-                            id="react-select-14-input"
+                            id="react-select-12-input"
                             spellcheck="false"
                             style="box-sizing: content-box; width: 2px; border: 0px; opacity: 1; outline: 0; padding: 0px;"
                             tabindex="0"
@@ -1471,11 +1269,11 @@ exports[`render token gen failed message 1`] = `
           <span
             class="c8"
           >
-            Step 5
+            Step 3
           </span>
            - Start the Teleport agent with the following parameters
           <div
-            class="c19"
+            class="c15"
             kind="danger"
           >
             Error - Failed to generate join token
@@ -1497,10 +1295,10 @@ exports[`render token gen failed message 1`] = `
         </div>
       </div>
       <div
-        class="c20"
+        class="c16"
       >
         <button
-          class="c21"
+          class="c17"
           kind="secondary"
         >
           Close
@@ -1579,7 +1377,7 @@ exports[`render token loading message 1`] = `
   margin: 0px;
 }
 
-.c19 {
+.c15 {
   overflow: hidden;
   text-overflow: ellipsis;
   margin: 0px;
@@ -1594,31 +1392,9 @@ exports[`render token loading message 1`] = `
   box-sizing: border-box;
 }
 
-.c14 {
-  box-sizing: border-box;
-  margin-right: 4px;
-}
-
-.c16 {
-  box-sizing: border-box;
-  margin-top: 8px;
-}
-
 .c12 {
   box-sizing: border-box;
   margin-top: 8px;
-  padding: 8px;
-  background-color: #010B1C;
-  border-radius: 4px;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-}
-
-.c13 {
-  box-sizing: border-box;
-  margin-right: 8px;
-  display: flex;
 }
 
 .c4 {
@@ -1629,51 +1405,7 @@ exports[`render token loading message 1`] = `
   align-items: center;
 }
 
-.c15 {
-  line-height: 1.5;
-  margin: 0;
-  display: inline-flex;
-  justify-content: center;
-  align-items: center;
-  box-sizing: border-box;
-  border: none;
-  border-radius: 4px;
-  cursor: pointer;
-  font-family: inherit;
-  font-weight: 600;
-  outline: none;
-  position: relative;
-  text-align: center;
-  text-decoration: none;
-  text-transform: uppercase;
-  transition: all 0.3s;
-  -webkit-font-smoothing: antialiased;
-  background: #512FC9;
-  color: rgba(255,255,255,0.87);
-  min-height: 32px;
-  font-size: 12px;
-  padding: 0px 24px;
-}
-
-.c15:active {
-  opacity: 0.56;
-}
-
-.c15:hover,
-.c15:focus {
-  background: #651FFF;
-}
-
-.c15:active {
-  background: #354AA4;
-}
-
-.c15:disabled {
-  background: rgba(255,255,255,0.12);
-  color: rgba(255,255,255,0.3);
-}
-
-.c21 {
+.c17 {
   line-height: 1.5;
   margin: 0;
   display: inline-flex;
@@ -1699,16 +1431,16 @@ exports[`render token loading message 1`] = `
   padding: 0px 24px;
 }
 
-.c21:active {
+.c17:active {
   opacity: 0.56;
 }
 
-.c21:hover,
-.c21:focus {
+.c17:hover,
+.c17:focus {
   background: #2C3A73;
 }
 
-.c21:disabled {
+.c17:disabled {
   background: rgba(255,255,255,0.12);
   color: rgba(255,255,255,0.3);
 }
@@ -1738,11 +1470,11 @@ exports[`render token loading message 1`] = `
   flex-direction: column;
 }
 
-.c20 {
+.c16 {
   box-sizing: border-box;
 }
 
-.c18 .react-select-container {
+.c14 .react-select-container {
   box-shadow: inset 0 2px 4px rgba(0,0,0,0.24);
   box-sizing: border-box;
   border: none;
@@ -1756,8 +1488,8 @@ exports[`render token loading message 1`] = `
   border-radius: 4px;
 }
 
-.c18 .react-select__control,
-.c18 .react-select__control--is-focused {
+.c14 .react-select__control,
+.c14 .react-select__control--is-focused {
   min-height: 40px;
   height: 40px;
   background-color: transparent;
@@ -1768,52 +1500,52 @@ exports[`render token loading message 1`] = `
   box-shadow: none;
 }
 
-.c18 .react-select__control:hover,
-.c18 .react-select__control--is-focused:hover {
+.c14 .react-select__control:hover,
+.c14 .react-select__control--is-focused:hover {
   border-color: transparent;
   cursor: pointer;
 }
 
-.c18 .react-select__option:hover {
+.c14 .react-select__option:hover {
   cursor: pointer;
   background-color: #eceff1;
 }
 
-.c18 .react-select__option--is-focused {
+.c14 .react-select__option--is-focused {
   background-color: #eceff1;
 }
 
-.c18 .react-select__option--is-selected {
+.c14 .react-select__option--is-selected {
   background-color: #cfd8dc;
   color: inherit;
 }
 
-.c18 .react-select__option--is-selected:hover {
+.c14 .react-select__option--is-selected:hover {
   background-color: #cfd8dc;
 }
 
-.c18 .react-select__menu {
+.c14 .react-select__menu {
   margin-top: 0px;
 }
 
-.c18 .react-select__indicator-separator {
+.c14 .react-select__indicator-separator {
   display: none;
 }
 
-.c18 .react-select__loading-indicator {
+.c14 .react-select__loading-indicator {
   display: none;
 }
 
-.c18 .react-select--is-disabled .react-select__single-value,
-.c18 .react-select--is-disabled .react-select__placeholder {
+.c14 .react-select--is-disabled .react-select__single-value,
+.c14 .react-select--is-disabled .react-select__placeholder {
   color: rgba(0,0,0,0.24);
 }
 
-.c18 .react-select--is-disabled .react-select__indicator {
+.c14 .react-select--is-disabled .react-select__indicator {
   color: rgba(0,0,0,0.14);
 }
 
-.c17 .react-select-container {
+.c13 .react-select-container {
   box-shadow: inset 0 2px 4px rgba(0,0,0,0.24);
   box-sizing: border-box;
   border: none;
@@ -1827,8 +1559,8 @@ exports[`render token loading message 1`] = `
   border-radius: 4px;
 }
 
-.c17 .react-select__control,
-.c17 .react-select__control--is-focused {
+.c13 .react-select__control,
+.c13 .react-select__control--is-focused {
   min-height: 40px;
   height: 40px;
   background-color: transparent;
@@ -1839,100 +1571,100 @@ exports[`render token loading message 1`] = `
   box-shadow: none;
 }
 
-.c17 .react-select__control:hover,
-.c17 .react-select__control--is-focused:hover {
+.c13 .react-select__control:hover,
+.c13 .react-select__control--is-focused:hover {
   border-color: transparent;
   cursor: pointer;
 }
 
-.c17 .react-select__option:hover {
+.c13 .react-select__option:hover {
   cursor: pointer;
   background-color: #eceff1;
 }
 
-.c17 .react-select__option--is-focused {
+.c13 .react-select__option--is-focused {
   background-color: #eceff1;
 }
 
-.c17 .react-select__option--is-selected {
+.c13 .react-select__option--is-selected {
   background-color: #cfd8dc;
   color: inherit;
 }
 
-.c17 .react-select__option--is-selected:hover {
+.c13 .react-select__option--is-selected:hover {
   background-color: #cfd8dc;
 }
 
-.c17 .react-select__menu {
+.c13 .react-select__menu {
   margin-top: 0px;
 }
 
-.c17 .react-select__indicator-separator {
+.c13 .react-select__indicator-separator {
   display: none;
 }
 
-.c17 .react-select__loading-indicator {
+.c13 .react-select__loading-indicator {
   display: none;
 }
 
-.c17 .react-select--is-disabled .react-select__single-value,
-.c17 .react-select--is-disabled .react-select__placeholder {
+.c13 .react-select--is-disabled .react-select__single-value,
+.c13 .react-select--is-disabled .react-select__placeholder {
   color: rgba(0,0,0,0.24);
 }
 
-.c17 .react-select--is-disabled .react-select__indicator {
+.c13 .react-select--is-disabled .react-select__indicator {
   color: rgba(0,0,0,0.14);
 }
 
-.c17 .react-select-container {
+.c13 .react-select-container {
   background: transparent;
 }
 
-.c17 .react-select__option--is-focused:active {
+.c13 .react-select__option--is-focused:active {
   background-color: #eceff1;
 }
 
-.c17 .react-select__value-container {
+.c13 .react-select__value-container {
   padding: 0 8px;
 }
 
-.c17 .react-select__single-value {
+.c13 .react-select__single-value {
   color: rgba(255,255,255,0.87);
 }
 
-.c17 .react-select__control {
+.c13 .react-select__control {
   min-height: 34px;
   height: 34px;
   border-color: rgba(255,255,255,0.24);
   color: rgba(255,255,255,0.56);
 }
 
-.c17 .react-select__control:focus,
-.c17 .react-select__control:active {
+.c13 .react-select__control:focus,
+.c13 .react-select__control:active {
   background-color: #2C3A73;
 }
 
-.c17 .react-select__control:hover {
+.c13 .react-select__control:hover {
   border-color: rgba(255,255,255,0.24);
   background-color: #2C3A73;
 }
 
-.c17 .react-select__control:hover .react-select__dropdown-indicator {
+.c13 .react-select__control:hover .react-select__dropdown-indicator {
   color: #666;
 }
 
-.c17 .react-select__control .react-select__indicator,
-.c17 .react-select__control .react-select__dropdown-indicator {
+.c13 .react-select__control .react-select__indicator,
+.c13 .react-select__control .react-select__dropdown-indicator {
   padding: 4px 8px;
   color: #666;
 }
 
-.c17 .react-select__control .react-select__indicator:hover,
-.c17 .react-select__control .react-select__dropdown-indicator:hover {
+.c13 .react-select__control .react-select__indicator:hover,
+.c13 .react-select__control .react-select__dropdown-indicator:hover {
   color: #999;
 }
 
-.c17 .react-select__control--menu-is-open {
+.c13 .react-select__control--menu-is-open {
   background-color: #2C3A73;
   border-color: transparent;
   border-radius: 4px;
@@ -1942,46 +1674,46 @@ exports[`render token loading message 1`] = `
   border-color: rgba(255,255,255,0.24);
 }
 
-.c17 .react-select__control--menu-is-open .react-select__indicator,
-.c17 .react-select__control--menu-is-open .react-select__dropdown-indicator {
+.c13 .react-select__control--menu-is-open .react-select__indicator,
+.c13 .react-select__control--menu-is-open .react-select__dropdown-indicator {
   color: #999 !important;
 }
 
-.c17 .react-select__control--menu-is-open .react-select__indicator:hover,
-.c17 .react-select__control--menu-is-open .react-select__dropdown-indicator:hover {
+.c13 .react-select__control--menu-is-open .react-select__indicator:hover,
+.c13 .react-select__control--menu-is-open .react-select__dropdown-indicator:hover {
   color: #ccc !important;
 }
 
-.c17 .react-select__input {
+.c13 .react-select__input {
   color: rgba(255,255,255,0.87);
 }
 
-.c17 .react-select__placeholder {
+.c13 .react-select__placeholder {
   color: rgba(255,255,255,0.56);
 }
 
-.c17 .react-select__option {
+.c13 .react-select__option {
   padding: 4px 12px;
 }
 
-.c17 .react-select__menu {
+.c13 .react-select__menu {
   border-top-left-radius: 0;
   border-top-right-radius: 0;
 }
 
-.c17 .react-select__multi-value {
+.c13 .react-select__multi-value {
   background-color: #111B48;
   border: 1px solid rgba(255,255,255,0.24);
 }
 
-.c17 .react-select__multi-value__label {
+.c13 .react-select__multi-value__label {
   color: rgba(255,255,255,0.87);
   padding: 0 6px;
 }
 
-.c17 .react-select--is-disabled .react-select__single-value,
-.c17 .react-select--is-disabled .react-select__placeholder,
-.c17 .react-select--is-disabled .react-select__indicator {
+.c13 .react-select--is-disabled .react-select__single-value,
+.c13 .react-select--is-disabled .react-select__placeholder,
+.c13 .react-select--is-disabled .react-select__indicator {
   color: rgba(255,255,255,0.24);
 }
 
@@ -2002,7 +1734,7 @@ exports[`render token loading message 1`] = `
       data-testid="dialogbox"
     >
       <div
-        class="c4"
+        class="sc-AxheI c4"
       >
         <div
           class="c5"
@@ -2012,7 +1744,7 @@ exports[`render token loading message 1`] = `
         </div>
       </div>
       <div
-        class="c6"
+        class="sc-AxheI c6"
       >
         <div
           class="c7"
@@ -2060,83 +1792,15 @@ exports[`render token loading message 1`] = `
           >
             Step 2
           </span>
-           - Login to Teleport
-          <div
-            class="c12"
-          >
-            <div
-              class="c13"
-              style="overflow: auto; white-space: pre; word-break: break-all; font-size: 12px; font-family: \\"Droid Sans Mono\\", \\"monospace\\", monospace, \\"Droid Sans Fallback\\";"
-            >
-              <div
-                class="c14"
-              >
-                $
-              </div>
-              <div>
-                tsh login --proxy=localhost:443 --auth=local --user=yassine
-              </div>
-            </div>
-            <button
-              class="c15"
-              kind="primary"
-              style="max-width: 48px; width: 100%; padding: 4px 8px; min-height: 10px; font-size: 10px;"
-            >
-              Copy
-            </button>
-          </div>
-        </div>
-        <div
-          class="c7"
-        >
-          <span
-            class="c8"
-          >
-            Step 3
-          </span>
-           - Generate a join token
-          <div
-            class="c12"
-          >
-            <div
-              class="c13"
-              style="overflow: auto; white-space: pre; word-break: break-all; font-size: 12px; font-family: \\"Droid Sans Mono\\", \\"monospace\\", monospace, \\"Droid Sans Fallback\\";"
-            >
-              <div
-                class="c14"
-              >
-                $
-              </div>
-              <div>
-                tctl tokens add --type=db
-              </div>
-            </div>
-            <button
-              class="c15"
-              kind="primary"
-              style="max-width: 48px; width: 100%; padding: 4px 8px; min-height: 10px; font-size: 10px;"
-            >
-              Copy
-            </button>
-          </div>
-        </div>
-        <div
-          class="c7"
-        >
-          <span
-            class="c8"
-          >
-            Step 4
-          </span>
            - Select the database type and protocol to use
           <div
-            class="c16"
+            class="c12"
           >
             <div
-              class="c17"
+              class="c13"
             >
               <div
-                class="c18"
+                class="c14"
               >
                 <div
                   class="react-select-container css-2b097c-container"
@@ -2164,7 +1828,7 @@ exports[`render token loading message 1`] = `
                             autocapitalize="none"
                             autocomplete="off"
                             autocorrect="off"
-                            id="react-select-13-input"
+                            id="react-select-11-input"
                             spellcheck="false"
                             style="box-sizing: content-box; width: 2px; border: 0px; opacity: 1; outline: 0; padding: 0px;"
                             tabindex="0"
@@ -2213,11 +1877,11 @@ exports[`render token loading message 1`] = `
           <span
             class="c8"
           >
-            Step 5
+            Step 3
           </span>
            - Start the Teleport agent with the following parameters
           <div
-            class="c19"
+            class="c15"
           >
             Loading command...
           </div>
@@ -2238,10 +1902,10 @@ exports[`render token loading message 1`] = `
         </div>
       </div>
       <div
-        class="c20"
+        class="c16"
       >
         <button
-          class="c21"
+          class="c17"
           kind="secondary"
         >
           Close
