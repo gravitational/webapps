@@ -23,56 +23,35 @@ import Dialog, {
 } from 'design/Dialog';
 import { Text, Box, ButtonSecondary, Link } from 'design';
 import { Danger } from 'design/Alert';
-import { Attempt } from 'shared/hooks/useAttemptNext';
 import Select, { DarkStyledSelect, Option } from 'shared/components/Select';
 import * as links from 'teleport/services/links';
-import { AuthType } from 'teleport/services/user';
 import { DbType, DbProtocol } from 'teleport/services/databases';
-import { JoinToken } from 'teleport/services/jointoken';
 import useTeleport from 'teleport/useTeleport';
-import useDatabases from '../useDatabases';
-import useAddDatabase from './useAddDatabase';
+import useAddDatabase, { State } from './useAddDatabase';
 import {
   formatDatabaseInfo,
   DatabaseInfo,
 } from 'teleport/services/databases/makeDatabase';
 import TextSelectCopy from 'teleport/components/TextSelectCopy';
 
-export default function Container() {
+export default function Container(props: Props) {
   const ctx = useTeleport();
-  const {
-    username,
-    version,
-    authType,
-    canCreate,
-    hideAddDialog,
-  } = useDatabases(ctx);
-  const { joinToken, attempt } = useAddDatabase(ctx);
-  const props = {
-    username,
-    version,
-    authType,
-    canCreate,
-    onClose: hideAddDialog,
-    joinToken,
-    attempt,
-  };
-  return <AddDatabase {...props} />;
+  const state = useAddDatabase(ctx);
+  return <AddDatabase {...state} {...props} />;
 }
 
 export function AddDatabase({
   username,
   version,
   authType,
-  canCreate,
+  isEnterprise,
   onClose,
-  joinToken,
+  token,
   attempt,
-}: Props) {
+}: State & Props) {
   const { hostname, port } = window.document.location;
   const host = `${hostname}:${port || '443'}`;
-
-  const [dbOptions] = useState<Option<DatabaseInfo>[]>(() =>
+  const [dbOptions] = useState(() =>
     options.map(dbOption => {
       return {
         value: dbOption,
@@ -81,18 +60,11 @@ export function AddDatabase({
     })
   );
 
-  const [selectedDbOption, setSelectedDbOption] = useState<
-    Option<DatabaseInfo>
-  >(dbOptions[0]);
-
+  const [selectedDbOption, setSelectedDbOption] = useState(dbOptions[0]);
   const connectCmd =
     authType === 'sso'
       ? `tsh login --proxy=${host}`
       : `tsh login --proxy=${host} --auth=local --user=${username}`;
-
-  const { id: token } = joinToken;
-  const useGeneratedToken = canCreate && token !== '';
-  const stepSkip = useGeneratedToken ? 0 : 2;
 
   return (
     <Dialog
@@ -127,27 +99,27 @@ export function AddDatabase({
             </Link>
           </Box>
         </Box>
-        {!useGeneratedToken && (
-          <Box mb={4}>
-            <Text bold as="span">
-              Step 2
-            </Text>
-            {' - Login to Teleport'}
-            <TextSelectCopy mt="2" text={connectCmd} />
-          </Box>
-        )}
-        {!useGeneratedToken && (
-          <Box mb={4}>
-            <Text bold as="span">
-              Step 3
-            </Text>
-            {' - Generate a join token'}
-            <TextSelectCopy mt="2" text="tctl tokens add --type=db" />
-          </Box>
+        {!isEnterprise && (
+          <>
+            <Box mb={4}>
+              <Text bold as="span">
+                Step 2
+              </Text>
+              {' - Login to Teleport'}
+              <TextSelectCopy mt="2" text={connectCmd} />
+            </Box>
+            <Box mb={4}>
+              <Text bold as="span">
+                Step 3
+              </Text>
+              {' - Generate a join token'}
+              <TextSelectCopy mt="2" text="tctl tokens add --type=db" />
+            </Box>
+          </>
         )}
         <Box mb={4}>
           <Text bold as="span">
-            {`Step ${2 + stepSkip}`}
+            {`Step ${isEnterprise ? 2 : 4}`}
           </Text>
           {` - Select the database type and protocol to use`}
           <Box mt={2}>
@@ -164,7 +136,7 @@ export function AddDatabase({
         </Box>
         <Box mb={4}>
           <Text bold as="span">
-            {`Step ${3 + stepSkip}`}
+            {`Step ${isEnterprise ? 3 : 5}`}
           </Text>
           {' - Start the Teleport agent with the following parameters'}
           {attempt.status === 'processing' && <Text>Loading command...</Text>}
@@ -205,9 +177,9 @@ const generateDbStartCmd = (
   type: DbType,
   protocol: DbProtocol,
   host: string,
-  joinToken: string
+  token: string
 ) => {
-  const baseCommand = `teleport db start --token=${joinToken ||
+  const baseCommand = `teleport db start --token=${token ||
     '[generated-join-token]'} --auth-server=${host} --name=[db-name] --protocol=${protocol} --uri=[uri]`;
 
   switch (type) {
@@ -235,12 +207,6 @@ const options: DatabaseInfo[] = [
   formatDatabaseInfo('self-hosted', 'mongodb'),
 ];
 
-export type Props = {
+type Props = {
   onClose(): void;
-  username: string;
-  version: string;
-  authType: AuthType;
-  canCreate: boolean;
-  joinToken: JoinToken;
-  attempt: Attempt;
 };

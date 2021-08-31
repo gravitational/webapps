@@ -43,6 +43,7 @@ export function Databases(props: State) {
     isLeafCluster,
     canCreate,
     showAddDialog,
+    hideAddDialog,
     isAddDialogVisible,
     username,
     clusterId,
@@ -97,7 +98,7 @@ export function Databases(props: State) {
           emptyStateInfo={emptyStateInfo}
         />
       )}
-      {isAddDialogVisible && <AddDialog />}
+      {isAddDialogVisible && <AddDialog onClose={hideAddDialog} />}
     </FeatureBox>
   );
 }

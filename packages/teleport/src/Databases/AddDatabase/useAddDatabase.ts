@@ -17,26 +17,34 @@ limitations under the License.
 import { useState, useEffect } from 'react';
 import useAttempt from 'shared/hooks/useAttemptNext';
 import Ctx from 'teleport/teleportContext';
-import { JoinToken } from 'teleport/services/jointoken';
 
 export default function useAddDatabase(ctx: Ctx) {
-  const defaultJoinToken = { id: '', expiry: new Date() };
-  const [joinToken, setJoinToken] = useState<JoinToken>(defaultJoinToken);
-  const { attempt, run, setAttempt } = useAttempt('processing');
-  const canCreate = ctx.storeUser.getTokenAccess().create;
+  const [token, setToken] = useState('');
+  const { attempt, run } = useAttempt('processing');
+  const isEnterprise = ctx.isEnterprise;
+  const { authType, username, cluster } = ctx.storeUser.state;
+  const version = cluster.authVersion;
 
   useEffect(() => {
-    if (canCreate) {
-      run(() =>
-        ctx.joinTokenService.generateJoinToken(['Db']).then(setJoinToken)
-      );
-    } else {
-      setAttempt({ status: 'failed' });
-    }
-  }, [canCreate]);
+    run(() => {
+      if (isEnterprise) {
+        return Promise.resolve();
+      }
+
+      return ctx.joinTokenService
+        .generateJoinToken(['Db'])
+        .then(token => setToken(token.id));
+    });
+  }, []);
 
   return {
-    joinToken,
+    username,
+    token,
     attempt,
+    isEnterprise,
+    version,
+    authType,
   };
 }
+
+export type State = ReturnType<typeof useAddDatabase>;
