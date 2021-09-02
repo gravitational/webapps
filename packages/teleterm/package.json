@@ -1,0 +1,93 @@
+{
+  "name": "@gravitational/teleterm",
+  "version": "1.0.0",
+  "description": "",
+  "main": "src/main.js",
+  "author": "",
+  "license": "Apache-2.0",
+  "scripts": {
+    "start": "webpack-dev-server --config webpack.renderer.dev.config.js --progress",
+    "start-electron": "yarn build-main-dev && electron build/app/dist/main/main.js",
+    "build": "yarn build-main && yarn build-renderer",
+    "build-main": "g-build --config webpack.main.config.js --progress --bail --mode=production",
+    "build-main-dev": "g-build --config webpack.main.config.js --progress --mode=development",
+    "build-renderer": "g-build --config webpack.renderer.prod.config.js --progress --bail",
+    "package": "electron-builder build --publish never"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/gravitational/webapps/webapps.git",
+    "directory": "packages/teleterm"
+  },
+  "homepage": "https://goteleport.com",
+  "dependencies": {
+    "cross-env": "5.0.5",
+    "@gravitational/shared": "1.0.0",
+    "@gravitational/design": "1.0.0"
+  },
+  "devDependencies": {
+    "@gravitational/build": "^1.0.0",
+    "electron": "13.2.3",
+    "electron-builder": "^22.11.1",
+    "file-loader": "6.0.0",
+    "url-loader": "4.0.0",
+    "webpack-dev-server": "3.10.3"
+  },
+  "build": {
+    "electronVersion": "13.2.3",
+    "productName": "Teleport Terminal",
+    "appId": "gravitational.teleport.terminal",
+    "asar": true,
+    "asarUnpack": "**\\*.{node,dll}",
+    "files": [
+      "node_modules",
+      "dist",
+      "package.json"
+    ],
+    "mac": {
+      "type": "distribution",
+      "hardenedRuntime": true,
+      "entitlements": "assets/entitlements.mac.plist",
+      "entitlementsInherit": "assets/entitlements.mac.plist",
+      "gatekeeperAssess": false
+    },
+    "dmg": {
+      "contents": [
+        {
+          "x": 130,
+          "y": 220
+        },
+        {
+          "x": 410,
+          "y": 220,
+          "type": "link",
+          "path": "/Applications"
+        }
+      ]
+    },
+    "win": {
+      "target": [
+        "nsis"
+      ]
+    },
+    "linux": {
+      "target": [
+        "deb"
+      ],
+      "category": "Development"
+    },
+    "directories": {
+      "app": "build/app",
+      "buildResources": "assets",
+      "output": "build/release"
+    },
+    "extraResources": [
+      "./assets/**"
+    ],
+    "publish": {
+      "provider": "github",
+      "owner": "Teleport",
+      "repo": "webapps"
+    }
+  }
+}
