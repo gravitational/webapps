@@ -23,12 +23,9 @@ export default {
 
 export const Add = () => (
   <Component
-    username="yassine"
     version="6.1.3"
     onClose={() => null}
-    authType="local"
-    canCreate={false}
-    joinToken={{ id: 'testtoken', expiry: new Date() }}
+    token="testtoken"
     attempt={{ status: 'success' }}
   />
 );
