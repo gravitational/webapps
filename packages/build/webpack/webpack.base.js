@@ -14,12 +14,9 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-const fs = require('fs');
 const path = require('path');
 const HtmlWebPackPlugin = require('html-webpack-plugin');
-
-const appDirectory = fs.realpathSync(process.cwd());
-const resolveApp = relativePath => path.resolve(appDirectory, relativePath);
+const resolvePath = require('./resolvepath');
 
 module.exports = function createConfig() {
   return {
@@ -56,7 +53,7 @@ module.exports = function createConfig() {
       // used by loaders to generate various URLs within CSS, JS based off publicPath
       publicPath: '/web/app/',
 
-      path: resolveApp('dist/app'),
+      path: resolvePath('dist/app'),
 
       /*
        * format of the output file names. [name] stands for 'entry' keys

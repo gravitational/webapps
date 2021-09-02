@@ -1,0 +1,16 @@
+{
+  "name": "teleport-terminal",
+  "productName": "Teleport Terminal",
+  "version": "1.0.0",
+  "description": "Teleport Terminal",
+  "main": "./dist/main/main.js",
+  "author": {
+    "name": "Teleport",
+    "email": "support@goteleport.com",
+    "url": "https://goteleport.com"
+  },
+  "scripts": {
+  },
+  "license": "MIT",
+  "dependencies": {}
+}
