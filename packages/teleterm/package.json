@@ -24,7 +24,8 @@
   "dependencies": {
     "cross-env": "5.0.5",
     "@gravitational/shared": "1.0.0",
-    "@gravitational/design": "1.0.0"
+    "@gravitational/design": "1.0.0",
+    "electron-debug": "^3.2.0"
   },
   "devDependencies": {
     "@gravitational/build": "^1.0.0",

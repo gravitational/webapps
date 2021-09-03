@@ -13,7 +13,6 @@ var cfg = {
   output: {
     path: resolvepath('build/app/dist/main'),
     filename: '[name].js',
-    chunkFilename: '[name].js',
   },
 
   resolve: {
@@ -28,7 +27,6 @@ var cfg = {
   target: 'electron-main',
 
   optimization: {
-    ...baseCfg.optimization,
     minimize: false,
   },
 
@@ -52,8 +50,6 @@ var cfg = {
 };
 
 module.exports = (env, argv) => {
-  console.log('AAAAAAAAAAAAAAAAAa', argv);
-
   if (argv.mode === 'development') {
     process.env.BABEL_ENV = 'development';
     process.env.NODE_ENV = 'development';
