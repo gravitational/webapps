@@ -19,6 +19,7 @@
     "url": "https://github.com/gravitational/webapps/webapps.git",
     "directory": "packages/teleterm"
   },
+  "private": true,
   "homepage": "https://goteleport.com",
   "dependencies": {
     "cross-env": "5.0.5",
@@ -28,10 +29,8 @@
   "devDependencies": {
     "@gravitational/build": "^1.0.0",
     "electron": "13.2.3",
-    "electron-builder": "^22.11.1",
     "file-loader": "6.0.0",
-    "url-loader": "4.0.0",
-    "webpack-dev-server": "3.10.3"
+    "url-loader": "4.0.0"
   },
   "build": {
     "electronVersion": "13.2.3",
