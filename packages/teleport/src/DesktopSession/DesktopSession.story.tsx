@@ -24,7 +24,10 @@ export default {
 
 export const PerformanceTest = () => {
   const client = new TdpClient('wss://address', 'Administrator');
+
   client.connect = () => {
+    // emit open to simulate the opening of a websocket, alerts DesktopSession to resize its canvas to screen size
+    client.emit('open');
     // Allows us test out the rendering pipeline with different simulated delays between
     // onmessage calls.
     var optionallyDelayedOnmessage = (i: number, delay?: number) => {
@@ -37,7 +40,6 @@ export const PerformanceTest = () => {
 
       if (i < blobArray.length - 1) {
         client.processMessage(blobArray[i++]);
-        //create a pause of 2 seconds.
         setTimeout(function() {
           optionallyDelayedOnmessage(i, delay);
         }, delay);
@@ -51,6 +53,10 @@ export const PerformanceTest = () => {
     const delayMs = 1;
     optionallyDelayedOnmessage(0, delayMs);
   };
+
+  client.sendUsername = () => {};
+  client.resize = (w: number, h: number) => {};
+
   return (
     <DesktopSession
       tdpClient={client}
