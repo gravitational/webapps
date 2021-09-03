@@ -21,7 +21,7 @@ function createWindow() {
   if (process.env.NODE_ENV === 'development') {
     win.loadURL('https://localhost:8080');
   } else {
-    win.loadFile('./../app/dist/renderer/index.html');
+    win.loadFile('./../renderer/index.html');
   }
 }
 

@@ -25,8 +25,6 @@ var cfg = {
 
   devtool: false,
 
-  mode: 'development',
-
   target: 'electron-main',
 
   optimization: {
@@ -54,6 +52,8 @@ var cfg = {
 };
 
 module.exports = (env, argv) => {
+  console.log('AAAAAAAAAAAAAAAAAa', argv);
+
   if (argv.mode === 'development') {
     process.env.BABEL_ENV = 'development';
     process.env.NODE_ENV = 'development';
