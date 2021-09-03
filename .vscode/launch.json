@@ -16,6 +16,18 @@
       "internalConsoleOptions": "neverOpen",
       "port": 9229,
       "skipFiles": ["<node_internals>/**"]
+    },
+    {
+      "name": "Debug Main Process",
+      "type": "node",
+      "request": "launch",
+      "cwd": "${workspaceFolder}",
+      "runtimeExecutable": "${workspaceFolder}/packages/teleterm/node_modules/.bin/electron",
+      "windows": {
+        "runtimeExecutable": "${workspaceFolder}/node_modules/.bin/electron.cmd"
+      },
+      "args" : ["."],
+      "outputCapture": "std"
     }
   ]
 }
