@@ -18,16 +18,12 @@
       "skipFiles": ["<node_internals>/**"]
     },
     {
-      "name": "Debug Main Process",
+      "name": "Electron: Main",
       "type": "node",
       "request": "launch",
-      "cwd": "${workspaceFolder}",
-      "runtimeExecutable": "${workspaceFolder}/packages/teleterm/node_modules/.bin/electron",
-      "windows": {
-        "runtimeExecutable": "${workspaceFolder}/node_modules/.bin/electron.cmd"
-      },
-      "args" : ["."],
-      "outputCapture": "std"
+      "protocol": "inspector",
+      "runtimeExecutable": "yarn",
+      "runtimeArgs": ["start-electron --inspect=5858 --remote-debugging-port=9223"]
     }
   ]
 }

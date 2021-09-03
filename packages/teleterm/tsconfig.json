@@ -1,9 +1,0 @@
-{
-  "extends": "../../tsconfig.json",
-  "paths": {
-    "sales/*": ["src/*"]
-  },
-  "exclude": ["src/api/*_pb.js"]
-}
-
-

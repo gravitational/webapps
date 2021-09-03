@@ -1,7 +1,5 @@
-const { contextBridge, ipcRenderer } = require('electron');
-const fs = require('fs');
-
-console.log('PRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRREFD');
+import { contextBridge, ipcRenderer } from 'electron';
+import fs from 'fs';
 
 contextBridge.exposeInMainWorld('electron', {
   ipcRenderer: {
