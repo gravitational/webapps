@@ -6,8 +6,11 @@ const resolvepath = require('@gravitational/build/webpack/resolvepath');
 function extend(cfg) {
   cfg.output.publicPath = '';
   cfg.output.path = resolvepath('build/app/dist/renderer');
+  cfg.output.libraryTarget = 'umd';
+  cfg.output.globalObject = 'this';
   cfg.resolve.alias['teleterm'] = path.join(__dirname, './src');
   cfg.plugins = [new CleanWebpackPlugin(), createHtmlPlugin()];
+
   return cfg;
 }
 
