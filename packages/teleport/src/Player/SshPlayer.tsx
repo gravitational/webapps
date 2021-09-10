@@ -26,8 +26,8 @@ import EventProvider from 'teleport/lib/term/ttyPlayerEventProvider';
 import { ProgressBarTty } from './ProgressBar';
 import Xterm from './Xterm';
 
-export default function Player({ sid, clusterId }) {
-  const { tty } = useSshPlayer(clusterId, sid);
+export default function Player({ sid, clusterId, time }) {
+  const { tty } = useSshPlayer(clusterId, sid, time);
   const { statusText, status } = tty;
   const eventCount = tty.getEventCount();
   const isError = status === TtyStatusEnum.ERROR;
@@ -83,7 +83,7 @@ const StyledPlayer = styled.div`
   justify-content: space-between;
 `;
 
-function useSshPlayer(clusterId: string, sid: string) {
+function useSshPlayer(clusterId: string, sid: string, time?: string) {
   const tty = React.useMemo(() => {
     const url = cfg.getTerminalSessionUrl({ clusterId, sid });
     return new TtyPlayer(new EventProvider({ url }));
@@ -105,7 +105,15 @@ function useSshPlayer(clusterId: string, sid: string) {
 
     tty.on('change', onChange);
     tty.connect().then(() => {
-      tty.play();
+      tty.play()
+      if(time) {
+        const parsedTime = parseInt(time, 10);
+
+        if(!isNaN(parsedTime) && parsedTime > 0) {
+          tty.stop();
+          tty.move(parsedTime);
+        }
+      }
     });
 
     return cleanup;

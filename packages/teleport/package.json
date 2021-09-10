@@ -19,7 +19,8 @@
   "dependencies": {
     "@gravitational/shared": "1.0.0",
     "@gravitational/design": "1.0.0",
-    "xterm": "https://github.com/gravitational/xterm.js#v2.8.1"
+    "xterm": "https://github.com/gravitational/xterm.js#v2.8.1",
+    "react-copy-to-clipboard": "^5.0.4"
   },
   "devDependencies": {
     "@gravitational/build": "^1.0.0",

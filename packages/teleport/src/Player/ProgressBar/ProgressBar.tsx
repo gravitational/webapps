@@ -19,6 +19,21 @@ import styled from 'styled-components';
 import * as Icons from 'design/Icon';
 import { colors } from 'teleport/Console/colors';
 import Slider from './Slider';
+import {CopyToClipboard} from 'react-copy-to-clipboard';
+import cfg, { UrlPlayerParams } from 'teleport/config';
+import { useParams } from 'teleport/components/Router';
+
+function CopyTime(props: {time: number}) {
+  const url = useParams<UrlPlayerParams>();
+
+  const path = window.location.protocol + '//' + window.location.host + cfg.getPlayerRoute({...url, time: props.time.toString()})
+
+  return (
+    <CopyToClipboard text={path}>
+      <ActionButton>Copy</ActionButton>
+    </CopyToClipboard>
+  );
+}
 
 export default function ProgressBar(props: ProgressBarProps) {
   const Icon = props.isPlaying ? Icons.CirclePause : Icons.CirclePlay;
@@ -39,6 +54,7 @@ export default function ProgressBar(props: ProgressBarProps) {
           className="grv-slider"
         />
       </SliderContainer>
+      <CopyTime time={props.current} />
     </StyledProgessBar>
   );
 }

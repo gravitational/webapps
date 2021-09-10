@@ -26,7 +26,7 @@ import { colors } from 'teleport/Console/colors';
 import { UrlPlayerParams } from 'teleport/config';
 
 export default function Player() {
-  const { sid, clusterId } = useParams<UrlPlayerParams>();
+  const { sid, clusterId, time } = useParams<UrlPlayerParams>();
   document.title = `${clusterId} • Play ${sid}`;
 
   function onLogout() {
@@ -49,7 +49,7 @@ export default function Player() {
           position: 'relative',
         }}
       >
-        <SshPlayer sid={sid} clusterId={clusterId} />
+        <SshPlayer sid={sid} clusterId={clusterId} time={time} />
       </Flex>
     </StyledPlayer>
   );
