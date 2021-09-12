@@ -19,9 +19,18 @@ import { throttle } from 'lodash';
 import TtyPlayer from 'teleport/lib/term/ttyPlayer';
 import ProgressBar from './ProgressBar';
 
-export default function ProgressBarTty(props: { tty: TtyPlayer }) {
+type LinkConstructor = (urlOption: string) => string;
+export default function ProgressBarTty(props: {
+  tty: TtyPlayer;
+  linkConstructor: LinkConstructor;
+}) {
   const state = useTtyProgress(props.tty);
-  return <ProgressBar {...state} />;
+  return (
+    <ProgressBar
+      {...state}
+      url={props.linkConstructor(state.current.toString())}
+    />
+  );
 }
 
 export function useTtyProgress(tty: TtyPlayer) {

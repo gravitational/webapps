@@ -19,26 +19,66 @@ import styled from 'styled-components';
 import * as Icons from 'design/Icon';
 import { colors } from 'teleport/Console/colors';
 import Slider from './Slider';
-import {CopyToClipboard} from 'react-copy-to-clipboard';
-import cfg, { UrlPlayerParams } from 'teleport/config';
-import { useParams } from 'teleport/components/Router';
+import { useState } from 'shared/hooks';
+import Dialog, {
+  DialogContent,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+} from 'design/Dialog';
+import TextSelectCopy from 'teleport/components/TextSelectCopy';
+import { Text, ButtonSecondary } from 'design';
 
-function CopyTime(props: {time: number}) {
-  const url = useParams<UrlPlayerParams>();
-
-  const path = window.location.protocol + '//' + window.location.host + cfg.getPlayerRoute({...url, time: props.time.toString()})
-
+function ShareRecordingAtTime(props: {
+  url: string;
+  time: string;
+  onOpen: () => void;
+  onClose: () => void;
+  css?: () => {};
+}) {
+  const [open, setOpen] = useState(false);
+  const onDialogOpen = () => {
+    setOpen(true);
+    props.onOpen();
+  };
+  const onDialogClose = () => {
+    setOpen(false);
+    props.onClose();
+  };
   return (
-    <CopyToClipboard text={path}>
-      <ActionButton>Copy</ActionButton>
-    </CopyToClipboard>
+    <StyledShareRecording>
+      <ActionButton onClick={onDialogOpen} css={props.css}>
+        <Icons.Link />
+      </ActionButton>
+      <Dialog
+        dialogCss={() => ({ maxWidth: '500px', width: '100%' })}
+        disableEscapeKeyDown={false}
+        onClose={onDialogClose}
+        open={open}
+      >
+        <DialogHeader>
+          <DialogTitle>Share Recording - {props.time}</DialogTitle>
+        </DialogHeader>
+        <DialogContent>
+          <Text mb={2} mt={1}>
+            Share this URL with the person you want to share this session
+            recording at current playback time. This person must have access to
+            this recording to be able to view this session.
+          </Text>
+          <TextSelectCopy text={props.url} bash={false} />
+        </DialogContent>
+        <DialogFooter>
+          <ButtonSecondary onClick={onDialogClose}>Close</ButtonSecondary>
+        </DialogFooter>
+      </Dialog>
+    </StyledShareRecording>
   );
 }
 
 export default function ProgressBar(props: ProgressBarProps) {
   const Icon = props.isPlaying ? Icons.CirclePause : Icons.CirclePlay;
   return (
-    <StyledProgessBar>
+    <StyledProgressBar>
       <ActionButton onClick={props.toggle}>
         <Icon />
       </ActionButton>
@@ -54,8 +94,14 @@ export default function ProgressBar(props: ProgressBarProps) {
           className="grv-slider"
         />
       </SliderContainer>
-      <CopyTime time={props.current} />
-    </StyledProgessBar>
+      <ShareRecordingAtTime
+        time={props.time}
+        url={props.url}
+        onOpen={() => props.isPlaying && props.toggle()}
+        onClose={() => !props.isPlaying && props.toggle()}
+        css={() => ({ paddingLeft: '20px' })}
+      />
+    </StyledProgressBar>
   );
 }
 
@@ -67,6 +113,7 @@ export type ProgressBarProps = {
   current: number;
   move: (value: any) => void;
   toggle: () => void;
+  url: string;
 };
 
 const SliderContainer = styled.div`
@@ -85,6 +132,10 @@ const TimeText = styled.div(
   opacity: 0.56;
 `
 );
+
+const StyledShareRecording = styled.div`
+  padding-left: 20px;
+`;
 
 const ActionButton = styled.button`
   background: ${colors.dark};
@@ -114,7 +165,7 @@ const ActionButton = styled.button`
   }
 `;
 
-const StyledProgessBar = styled.div`
+const StyledProgressBar = styled.div`
   background-color: ${colors.dark};
   display: flex;
   color: ${colors.light};

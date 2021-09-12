@@ -51,5 +51,10 @@ export const Playing = () => {
     toggle,
   };
 
-  return <ProgressBar {...props} />;
+  return (
+    <ProgressBar
+      {...props}
+      url={'https://example.com/player/' + state.current}
+    />
+  );
 };
