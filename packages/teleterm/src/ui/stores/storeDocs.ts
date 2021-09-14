@@ -28,6 +28,16 @@ export default class StoreDocs extends Store<State> {
     active: '-1',
   };
 
+  constructor() {
+    super();
+
+    this.add({
+      id: '-1',
+      kind: 'blank',
+      created: new Date(),
+    });
+  }
+
   makeActive(active: string) {
     this.setState({
       active,

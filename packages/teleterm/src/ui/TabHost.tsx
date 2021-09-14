@@ -17,6 +17,7 @@ limitations under the License.
 import React from 'react';
 import styled from 'styled-components';
 import { Flex } from 'design';
+import { useStore } from 'shared/libs/stores';
 import { useAppContext, useStoreDocs } from './appContextProvider';
 import * as types from './types';
 import Tabs from './Tabs';
@@ -28,7 +29,7 @@ export default function TabHost(props: Props) {
   const documents = storeDocs.getDocuments();
   const activeDoc = documents.find(d => d.id === storeDocs.state.active);
 
-  useStoreDocs(appCtx);
+  useStore(storeDocs);
 
   function onTabClick(doc: types.Document) {
     appCtx.gotoTab(doc);

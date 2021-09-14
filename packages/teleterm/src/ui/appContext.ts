@@ -14,17 +14,12 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import { StoreDocs } from './stores';
-import session from 'teleport/services/session';
-import cfg, { UrlSshParams } from 'teleport/config';
-import { getAccessToken } from 'teleport/services/api';
-import Tty from 'teleport/lib/term/tty';
-import TtyAddressResolver from 'teleport/lib/term/ttyAddressResolver';
-import serviceSsh, { Session } from 'teleport/services/ssh';
+import { StoreApp, StoreDocs, StoreNav } from './stores';
 import serviceNodes from 'teleport/services/nodes';
 import serviceClusters from 'teleport/services/clusters';
 import serviceUser from 'teleport/services/user';
 import { Document } from './types';
+import ServicePlatform from './../services/platform';
 
 // const logger = Logger.create('teleport/console');
 
@@ -34,14 +29,15 @@ import { Document } from './types';
  */
 export default class AppContext {
   storeDocs = new StoreDocs();
+  storeNav = new StoreNav();
+  storeApp = new StoreApp();
+  servicePlatform = new ServicePlatform();
 
-  constructor() {
-    // always initialize the console with 1 document
-    this.storeDocs.add({
-      id: '-1',
-      kind: 'blank',
-      created: new Date(),
-    });
+  constructor() {}
+
+  async init() {
+    const clusters = await this.servicePlatform.listClusters();
+    this.storeApp.initCluster(clusters);
   }
 
   removeDocument(id: string) {
@@ -53,16 +49,6 @@ export default class AppContext {
 
   getDocuments() {
     return this.storeDocs.state.items;
-  }
-
-  getNodeDocumentUrl(clusterId: string) {
-    return cfg.getConsoleNodesRoute(clusterId);
-  }
-
-  getSshDocumentUrl(sshParams: UrlSshParams) {
-    return sshParams.sid
-      ? cfg.getSshSessionRoute(sshParams)
-      : cfg.getSshConnectRoute(sshParams);
   }
 
   fetchNodes(clusterId: string) {
@@ -82,42 +68,7 @@ export default class AppContext {
     return serviceClusters.fetchClusters();
   }
 
-  fetchSshSession(clusterId: string, sid: string) {
-    return serviceSsh.fetchSession({ clusterId, sid });
-  }
-
-  createSshSession(clusterId: string, serverId: string, login: string) {
-    return serviceSsh.create({
-      serverId,
-      clusterId,
-      login,
-    });
-  }
-
-  logout() {
-    session.logout();
-  }
-
-  createTty(session: Session): Tty {
-    const { login, sid, serverId, clusterId } = session;
-    const ttyUrl = cfg.api.ttyWsAddr
-      .replace(':fqdm', getHostName())
-      .replace(':token', getAccessToken())
-      .replace(':clusterId', clusterId);
-
-    const addressResolver = new TtyAddressResolver({
-      ttyUrl,
-      ttyParams: {
-        login,
-        sid,
-        server_id: serverId,
-      },
-    });
-
-    return new Tty(addressResolver);
-  }
-
-  gotoTab({ id }: { id: string }, replace = true) {
+  gotoTab({ id }: { id: string }) {
     this.storeDocs.makeActive(id);
   }
 
@@ -125,8 +76,4 @@ export default class AppContext {
     const next = this.removeDocument(doc.id);
     this.gotoTab(next);
   }
-}
-
-function getHostName() {
-  return location.hostname + (location.port ? ':' + location.port : '');
 }

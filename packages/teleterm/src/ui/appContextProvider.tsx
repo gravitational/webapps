@@ -37,3 +37,8 @@ export function useAppContext() {
 export function useStoreDocs(ctx: AppContext) {
   return useStore(ctx.storeDocs);
 }
+
+export function useAppStore() {
+  const ctx = React.useContext(AppReactContext);
+  return useStore(ctx.storeApp);
+}

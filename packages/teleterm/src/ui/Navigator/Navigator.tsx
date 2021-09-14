@@ -16,40 +16,23 @@ limitations under the License.
 
 import React from 'react';
 import styled from 'styled-components';
-import { NavLink } from 'react-router-dom';
-import NavItemIcon from './NavItemIcon';
-import NavItem from './NavItem';
-import useNavigator from './useNavigator';
-import * as Icons from 'design/Icon';
-import { ButtonIcon, Flex } from 'design';
+import useNavigator, { State } from './useNavigator';
+import ExpanderClusters from './ExpanderClusters';
+
+import ExpanderGateways from './ExpanderGateways';
 
 export default function Container() {
   const state = useNavigator();
   return <Navigator {...state} />;
 }
 
-export function Navigator(props: ReturnType<typeof useNavigator>) {
-  const { items } = props;
+export function Navigator(props: State) {
+  const { clusterItems, gatewayItems } = props;
 
   return (
     <Nav>
-      <NavItem>
-        <NavItemIcon as={Icons.Cli} />
-        Terminal
-      </NavItem>
-      <NavItem>
-        <NavItemIcon as={Icons.Cli} />
-        Gateways
-      </NavItem>
-      <NavItem>
-        <NavItemIcon as={Icons.Cli} />
-        <Flex flex="1" justifyContent="space-between" alignItems="center">
-          Clusters
-          <ButtonIcon>
-            <Icons.Add />
-          </ButtonIcon>
-        </Flex>
-      </NavItem>
+      <ExpanderGateways items={gatewayItems} />
+      <ExpanderClusters items={clusterItems} />
     </Nav>
   );
 }
