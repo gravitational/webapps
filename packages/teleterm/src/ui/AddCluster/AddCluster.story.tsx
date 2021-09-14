@@ -1,5 +1,5 @@
 /*
-Copyright 2019 Gravitational, Inc.
+Copyright 2021 Gravitational, Inc.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -14,17 +14,18 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import styled from 'styled-components';
-import Icon from 'design/Icon';
+import React from 'react';
+import Component from './AddCluster';
 
-const SideNavItemIcon = styled(Icon)``;
-
-SideNavItemIcon.displayName = 'SideNavItemIcon';
-SideNavItemIcon.defaultProps = {
-  mr: 2,
-  ml: -2,
-  fontSize: '12px',
-  color: 'inherit',
+export default {
+  title: 'Terminal/AddCluster',
 };
 
-export default SideNavItemIcon;
+export const Add = () => (
+  <Component
+    username="yassine"
+    version="6.1.3"
+    onClose={() => null}
+    authType="local"
+  />
+);

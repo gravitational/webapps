@@ -14,8 +14,39 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import StoreDocs from './storeDocs';
-import StoreNav from './storeNav';
-import StoreApp from './storeApp';
+import { Store } from 'shared/libs/stores';
 
-export { StoreApp, StoreDocs, StoreNav };
+type State = {
+  clusters: Cluster[];
+  navItems: NavItem[];
+};
+
+export default class StoreClusters extends Store<State> {
+  state = {
+    clusters: [],
+    navItems: [],
+  };
+
+  initCluster(clusters: Cluster[]) {
+    this.setState({ clusters });
+  }
+
+  getClusters() {
+    return this.state.clusters;
+  }
+}
+
+export type NavItem = {
+  items: NavItem[];
+  title: string;
+  id: string;
+  kind: 'cluster';
+};
+
+export type Cluster = {
+  uri: string;
+  name: string;
+  servers: [];
+  dbs: [];
+  kubes: [];
+};

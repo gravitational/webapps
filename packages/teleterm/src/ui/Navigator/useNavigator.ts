@@ -14,49 +14,72 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import { useMemo } from 'react';
+import React, { FC } from 'react';
+import { useAppStore } from './../appContextProvider';
 import * as Icons from 'design/Icon';
+import * as types from './../../services/types';
 
 export default function useNavigator() {
-  const items = useMemo(() => makeItems(), []);
+  const store = useAppStore();
+  const gatewayItems = initGatewayItems();
+  const clusterItems = React.useMemo<Item[]>(() => {
+    return initClusters(store.state.clusters);
+  }, [store.state.clusters]);
 
   return {
-    items,
+    clusterItems,
+    gatewayItems,
   };
 }
 
-function makeItems() {
-  const items = [
-    {
-      items: [] as Item[],
-      route: '',
-      exact: false,
-      title: 'terminal',
-      Icon: Icons.Cli,
-    },
-    {
-      items: [] as Item[],
-      route: '',
-      exact: false,
-      title: 'gateways',
-      Icon: Icons.Cli,
-    },
-    {
-      items: [] as Item[],
-      route: '',
-      exact: false,
-      title: 'clusters',
-      Icon: Icons.Cli,
-    },
-  ];
+export type State = ReturnType<typeof useNavigator>;
 
-  return items;
+export type Item = {
+  items: Item[];
+  title: string;
+  id: string;
+  Icon: FC;
+  kind: 'cluster' | 'apps' | 'servers' | 'clusterGroup' | 'gateway';
+  group: boolean;
+};
+
+function initClusters(clusters: types.Cluster[]): Item[] {
+  return clusters.map<Item>(cluster => ({
+    title: cluster.name,
+    Icon: Icons.Clusters,
+    id: cluster.uri,
+    kind: 'cluster',
+    items: [
+      {
+        title: 'Servers',
+        Icon: Icons.Server,
+        id: cluster.uri,
+        kind: 'servers',
+        items: [],
+        group: false,
+      },
+      {
+        title: 'Applications',
+        Icon: Icons.Server,
+        id: cluster.uri,
+        kind: 'apps',
+        items: [],
+        group: false,
+      },
+    ],
+    group: true,
+  }));
 }
 
-export interface Item {
-  items: Item[];
-  route: string;
-  exact?: boolean;
-  title: string;
-  Icon: any;
+function initGatewayItems(): Item[] {
+  return [
+    {
+      title: 'platform.teleport.sh/dbs/mongo-prod',
+      Icon: Icons.Clusters,
+      id: '/gateways/',
+      kind: 'gateway',
+      items: [],
+      group: false,
+    },
+  ];
 }
