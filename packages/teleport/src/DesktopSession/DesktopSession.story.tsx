@@ -18,6 +18,7 @@ import React from 'react';
 import { DesktopSession } from './DesktopSession';
 import { State } from './useDesktopSession';
 import TdpClient from 'teleport/lib/tdp/client';
+import { MouseButton, ButtonState } from 'teleport/lib/tdp/codec';
 
 export default {
   title: 'Teleport/DesktopSession',
@@ -45,17 +46,20 @@ export const Error = () => (
   />
 );
 
-const client = new TdpClient('wss://socketAddr.gov', 'username');
-client.connect = () =>
+const tdpClient = new TdpClient('wss://socketAddr.gov', 'username');
+tdpClient.connect = () =>
   new Promise<void>(resolve => {
     resolve();
   });
-client.sendUsername = () => {};
-client.resize = (w: number, h: number) => {};
-client.disconnect = () => {};
+tdpClient.sendUsername = () => {};
+tdpClient.resize = (w: number, h: number) => {};
+tdpClient.disconnect = () => {};
+tdpClient.sendMouseMove = (x: number, y: number) => {};
+tdpClient.sendMouseButton = (button: MouseButton, state: ButtonState) => {};
+tdpClient.sendKeyboardInput = (code: string, state: ButtonState) => {};
 
 const props: State = {
-  tdpClient: client,
+  tdpClient,
   userHost: 'user@host.com',
   attempt: { status: 'processing' },
   clipboard: false,

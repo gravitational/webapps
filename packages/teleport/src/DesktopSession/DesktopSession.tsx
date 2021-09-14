@@ -20,6 +20,7 @@ import useDesktopSession, { State } from './useDesktopSession';
 import TopBar from './TopBar';
 import { Indicator, Box, Alert, Text } from 'design';
 import useTeleport from 'teleport/useTeleport';
+import { ButtonState } from 'teleport/lib/tdp/codec';
 
 export default function Container() {
   const ctx = useTeleport();
@@ -46,13 +47,52 @@ export function DesktopSession(props: State) {
   }, [tdpClient]);
 
   React.useEffect(() => {
-    // When attempt is set to 'success' after both the websocket connection and api call have succeeded,
-    // the canvas component gets rendered at which point we can send its width and height to the tdpClient
-    // as part of the TDP initial handshake.
+    // React's vdom apparently doesn't support
+    // standard html document.activeElement semantics
+    // so tracking here manually instead.
+    var canvasInFocus = false;
+
     if (attempt.status === 'success') {
-      syncCanvasSizeToClientSize(canvasRef.current);
+      const canvas = canvasRef.current;
+      // When attempt is set to 'success' after both the websocket connection and api call have succeeded,
+      // the canvas component gets rendered at which point we can send its width and height to the tdpClient
+      // as part of the TDP initial handshake.
+      syncCanvasSizeToClientSize(canvas);
       tdpClient.sendUsername();
       tdpClient.resize(canvasRef.current.width, canvasRef.current.height);
+
+      // Prevent native context menu to not obscure remote context menu.
+      canvas.oncontextmenu = () => false;
+      canvas.onmousemove = e => {
+        const rect = canvas.getBoundingClientRect();
+        const x = e.clientX - rect.left;
+        const y = e.clientY - rect.top;
+        tdpClient.sendMouseMove(x, y);
+      };
+      canvas.onmousedown = e => {
+        if (e.button === 0 || e.button === 1 || e.button === 2) {
+          tdpClient.sendMouseButton(e.button, ButtonState.DOWN);
+        }
+      };
+      canvas.onmouseup = e => {
+        if (e.button === 0 || e.button === 1 || e.button === 2) {
+          tdpClient.sendMouseButton(e.button, ButtonState.UP);
+        }
+      };
+
+      // Focus canvas on mouse enter
+      canvas.onmouseenter = () => (canvasInFocus = true);
+      canvas.onmouseleave = () => (canvasInFocus = false);
+      document.onkeydown = e => {
+        if (canvasInFocus) {
+          tdpClient.sendKeyboardInput(e.code, ButtonState.DOWN);
+        }
+      };
+      document.onkeyup = e => {
+        if (canvasInFocus) {
+          tdpClient.sendKeyboardInput(e.code, ButtonState.UP);
+        }
+      };
     }
   }, [attempt]);
 
