@@ -14,6 +14,8 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
+import types from '../services/types';
+
 interface DocumentBase {
   id: string;
   title?: string;
@@ -39,3 +41,10 @@ export interface DocumentNodes extends DocumentBase {
 }
 
 export type Document = DocumentNodes | DocumentSsh | DocumentBlank;
+
+export type NavGroup = 'team' | 'activity' | 'clusters';
+export interface NavItemCluster extends types.Cluster {
+  title: string;
+  Icon: any;
+  group?: NavGroup;
+}

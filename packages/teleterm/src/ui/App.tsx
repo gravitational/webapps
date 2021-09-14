@@ -16,6 +16,10 @@ const App: React.FC<Props> = ({ history }) => {
     return new AppContext();
   });
 
+  React.useEffect(() => {
+    ctx.init();
+  }, [ctx]);
+
   return (
     <StyledApp>
       <CatchError>

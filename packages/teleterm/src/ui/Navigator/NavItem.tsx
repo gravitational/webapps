@@ -14,65 +14,71 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
+import React from 'react';
 import styled from 'styled-components';
-import defaultTheme from 'design/theme';
-import { color } from 'design/system';
+import { color, space } from 'design/system';
+import { Item } from './useNavigator';
+import Icon from 'design/Icon';
 
-const fromTheme = ({ $nested = false, theme = defaultTheme }) => {
-  const css = {
+type Props = {
+  item?: Item;
+  [key: string]: any;
+};
+
+const NavItem: React.FC<Props> = props => {
+  const { item, ...styles } = props;
+  return (
+    <StyledNavItem {...styles}>
+      {!props.children && (
+        <>
+          <NavItemIcon as={item.Icon} fontSize="2" mr={2} />
+          {item.title}
+        </>
+      )}
+      {props.children}
+    </StyledNavItem>
+  );
+};
+
+const StyledNavItem = styled.div(props => {
+  const { theme } = props;
+  return {
+    boxSizing: 'border-box',
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'flex-start',
+    cursor: 'pointer',
+    width: '100%',
     position: 'relative',
-    fontSize: '12px',
+    fontSize: '14px',
     fontWeight: theme.regular,
     fontFamily: theme.font,
-    paddingLeft: theme.space[3] + 'px',
-    paddingRight: theme.space[2] + 'px',
-    background: theme.colors.primary.light,
-    color: theme.colors.text.secondary,
-    minHeight: '42px',
-    borderBottomColor: theme.colors.primary.dark,
+    color: theme.colors.text.primary,
+    height: '36px',
 
     '&:active, &.active': {
-      borderLeftColor: $nested ? 'none' : theme.colors.accent,
-      background: theme.colors.primary.lighter,
       color: theme.colors.primary.contrastText,
-      fontWeight: theme.bold,
-
-      '.marker': {
-        background: theme.colors.secondary.light,
-      },
     },
 
-    '&:hover': {},
+    '&:hover': {
+      background: theme.colors.primary.light,
+    },
+
     '&:focus, &:hover': {
       color: theme.colors.primary.contrastText,
     },
+
+    ...color(props),
+    ...space(props),
   };
+});
 
-  if ($nested) {
-    css.fontSize = '11px';
-    css.background = 'none';
-    css.fontWeight = theme.regular;
-    css.paddingLeft = '96px';
-    css.minHeight = '40px';
-  }
-
-  return css;
+const NavItemIcon = styled(Icon)``;
+NavItemIcon.defaultProps = {
+  mr: 2,
+  ml: -2,
+  fontSize: '12px',
+  color: 'inherit',
 };
 
-const SideNavItem = styled.div`
-  box-sizing: border-box;
-  display: flex;
-  align-items: center;
-  justify-content: flex-start;
-  border: none;
-  border-bottom: 1px solid transparent;
-  cursor: pointer;
-  outline: none;
-  text-decoration: none;
-  width: 100%;
-  line-height: 24px;
-  ${fromTheme}
-  ${color}
-`;
-
-export default SideNavItem;
+export default NavItem;

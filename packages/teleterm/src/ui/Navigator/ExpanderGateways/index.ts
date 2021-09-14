@@ -14,8 +14,6 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import StoreDocs from './storeDocs';
-import StoreNav from './storeNav';
-import StoreApp from './storeApp';
+import ExpanderGateways from './ExpanderGateways';
 
-export { StoreApp, StoreDocs, StoreNav };
+export default ExpanderGateways;
