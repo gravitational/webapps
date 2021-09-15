@@ -5,9 +5,3 @@ export type MfaDevice = {
   registeredDate: Date;
   lastUsedDate: Date;
 };
-
-export type RemoveDeviceRequest = {
-  tokenId: string;
-  deviceId: string;
-  deviceName: string;
-};

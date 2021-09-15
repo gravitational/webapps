@@ -1,7 +1,7 @@
 import cfg from 'teleport/config';
 import api from 'teleport/services/api';
 import makeMfaDevice from './makeMfaDevice';
-import { MfaDevice, RemoveDeviceRequest } from './types';
+import { MfaDevice } from './types';
 
 class MfaService {
   fetchDevicesWithToken(tokenId: string): Promise<MfaDevice[]> {
@@ -10,8 +10,8 @@ class MfaService {
       .then(devices => devices.map(makeMfaDevice));
   }
 
-  removeDevice(req: RemoveDeviceRequest) {
-    return api.delete(cfg.api.mfaDevicePath, req);
+  removeDevice(tokenId: string, deviceName: string) {
+    return api.delete(cfg.getMfaDeviceUrl(tokenId, deviceName));
   }
 }
 
