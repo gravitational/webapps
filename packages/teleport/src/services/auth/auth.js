@@ -17,9 +17,9 @@ limitations under the License.
 // This puts it in window.u2f
 import 'u2f-api-polyfill';
 import api from 'teleport/services/api';
+import session from 'teleport/services/session';
 import cfg from 'teleport/config';
 import makePasswordToken from './makePasswordToken';
-import session from 'teleport/services/session';
 
 const auth = {
   u2fBrowserSupported() {
