@@ -52,6 +52,54 @@ export function DesktopSession(props: State) {
     // so tracking here manually instead.
     var canvasInFocus = false;
 
+    const onresize = () => {
+      const canvas = canvasRef.current;
+      syncCanvasSizeToClientSize(canvas);
+      tdpClient.resize(canvas.width, canvas.height);
+    };
+
+    const onkeydown = (e: KeyboardEvent) => {
+      if (canvasInFocus) {
+        tdpClient.sendKeyboardInput(e.code, ButtonState.DOWN);
+      }
+    };
+
+    const onkeyup = (e: KeyboardEvent) => {
+      if (canvasInFocus) {
+        tdpClient.sendKeyboardInput(e.code, ButtonState.UP);
+      }
+    };
+
+    const oncontextmenu = () => false;
+
+    const onmousemove = (e: MouseEvent) => {
+      const canvas = canvasRef.current;
+      const rect = canvas.getBoundingClientRect();
+      const x = e.clientX - rect.left;
+      const y = e.clientY - rect.top;
+      tdpClient.sendMouseMove(x, y);
+    };
+
+    const onmousedown = (e: MouseEvent) => {
+      if (e.button === 0 || e.button === 1 || e.button === 2) {
+        tdpClient.sendMouseButton(e.button, ButtonState.DOWN);
+      }
+    };
+
+    const onmouseup = (e: MouseEvent) => {
+      if (e.button === 0 || e.button === 1 || e.button === 2) {
+        tdpClient.sendMouseButton(e.button, ButtonState.UP);
+      }
+    };
+
+    const onmouseenter = () => {
+      canvasInFocus = true;
+    };
+
+    const onmouseleave = () => {
+      canvasInFocus = false;
+    };
+
     if (attempt.status === 'success') {
       const canvas = canvasRef.current;
       // When attempt is set to 'success' after both the websocket connection and api call have succeeded,
@@ -59,41 +107,38 @@ export function DesktopSession(props: State) {
       // as part of the TDP initial handshake.
       syncCanvasSizeToClientSize(canvas);
       tdpClient.sendUsername();
-      tdpClient.resize(canvasRef.current.width, canvasRef.current.height);
+      tdpClient.resize(canvas.width, canvas.height);
 
       // Prevent native context menu to not obscure remote context menu.
-      canvas.oncontextmenu = () => false;
-      canvas.onmousemove = e => {
-        const rect = canvas.getBoundingClientRect();
-        const x = e.clientX - rect.left;
-        const y = e.clientY - rect.top;
-        tdpClient.sendMouseMove(x, y);
-      };
-      canvas.onmousedown = e => {
-        if (e.button === 0 || e.button === 1 || e.button === 2) {
-          tdpClient.sendMouseButton(e.button, ButtonState.DOWN);
-        }
-      };
-      canvas.onmouseup = e => {
-        if (e.button === 0 || e.button === 1 || e.button === 2) {
-          tdpClient.sendMouseButton(e.button, ButtonState.UP);
-        }
-      };
+      canvas.oncontextmenu = oncontextmenu;
 
-      // Focus canvas on mouse enter
-      canvas.onmouseenter = () => (canvasInFocus = true);
-      canvas.onmouseleave = () => (canvasInFocus = false);
-      document.onkeydown = e => {
-        if (canvasInFocus) {
-          tdpClient.sendKeyboardInput(e.code, ButtonState.DOWN);
-        }
-      };
-      document.onkeyup = e => {
-        if (canvasInFocus) {
-          tdpClient.sendKeyboardInput(e.code, ButtonState.UP);
-        }
-      };
+      canvas.onmousemove = onmousemove;
+      canvas.onmousedown = onmousedown;
+      canvas.onmouseup = onmouseup;
+
+      // Focus canvas on mouse enter. Send key input when canvas is in focus.
+      canvas.onmouseenter = onmouseenter;
+      canvas.onmouseleave = onmouseleave;
+      document.onkeydown = onkeydown;
+      document.onkeyup = onkeyup;
+
+      // Begin listening for resize events and send the client the new size when detected.
+      window.onresize = onresize;
     }
+
+    return () => {
+      // Clean up event listeners
+      const canvas = canvasRef.current;
+      canvas.removeEventListener('contextmenu', oncontextmenu);
+      canvas.removeEventListener('mousemove', onmousemove);
+      canvas.removeEventListener('mousedown', onmousedown);
+      canvas.removeEventListener('mouseup', onmouseup);
+      canvas.removeEventListener('mouseenter', onmouseenter);
+      canvas.removeEventListener('mouseleave', onmouseleave);
+      document.removeEventListener('keydown', onkeydown);
+      document.removeEventListener('keyup', onkeyup);
+      window.removeEventListener('resize', onresize);
+    };
   }, [attempt]);
 
   // Canvas has two size attributes: the dimension of the pixels in the canvas (canvas.width)
@@ -146,7 +191,7 @@ export function DesktopSession(props: State) {
 
       {attempt.status === 'success' && (
         <>
-          <canvas ref={canvasRef} />
+          <canvas style={{ height: '100%', width: '100%' }} ref={canvasRef} />
         </>
       )}
     </StyledDesktopSession>
