@@ -19,6 +19,7 @@ import 'u2f-api-polyfill';
 import api from 'teleport/services/api';
 import cfg from 'teleport/config';
 import makePasswordToken from './makePasswordToken';
+import session from 'teleport/services/session';
 
 const auth = {
   u2fBrowserSupported() {
@@ -38,6 +39,7 @@ const auth = {
       second_factor_token: token,
     };
 
+    session.clear();
     return api.post(cfg.api.sessionPath, data, false);
   },
 
@@ -52,6 +54,7 @@ const auth = {
       pass: password,
     };
 
+    session.clear();
     return api.post(cfg.api.u2fSessionChallengePath, data, false).then(data => {
       const promise = new Promise((resolve, reject) => {
         var devices = [data];
