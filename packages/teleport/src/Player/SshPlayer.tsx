@@ -104,6 +104,17 @@ const StyledPlayer = styled.div`
   justify-content: space-between;
 `;
 
+function moveToStartFrom(tty, startFrom?: string) {
+  if (startFrom) {
+    const parsedTime = parseInt(startFrom, 10);
+
+    if (!isNaN(parsedTime) && parsedTime > 0) {
+      tty.stop();
+      tty.move(parsedTime);
+    }
+  }
+}
+
 function useSshPlayer(clusterId: string, sid: string, startFrom?: string) {
   const tty = React.useMemo(() => {
     const url = cfg.getTerminalSessionUrl({ clusterId, sid });
@@ -125,16 +136,10 @@ function useSshPlayer(clusterId: string, sid: string, startFrom?: string) {
     }
 
     tty.on('change', onChange);
+
     tty.connect().then(() => {
       tty.play();
-      if (startFrom) {
-        const parsedTime = parseInt(startFrom, 10);
-
-        if (!isNaN(parsedTime) && parsedTime > 0) {
-          tty.stop();
-          tty.move(parsedTime);
-        }
-      }
+      moveToStartFrom(tty, startFrom);
     });
 
     return cleanup;
