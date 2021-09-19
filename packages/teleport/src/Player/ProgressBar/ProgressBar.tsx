@@ -19,73 +19,8 @@ import styled from 'styled-components';
 import * as Icons from 'design/Icon';
 import { colors } from 'teleport/Console/colors';
 import Slider from './Slider';
-import { useState } from 'shared/hooks';
-import Dialog, {
-  DialogContent,
-  DialogFooter,
-  DialogHeader,
-  DialogTitle,
-} from 'design/Dialog';
-import TextSelectCopy from 'teleport/components/TextSelectCopy';
-import { Text, ButtonSecondary } from 'design';
-
-function ShareRecordingAtTime(props: {
-  url: string;
-  time: string;
-  isPlaying: boolean;
-  toggle: () => void;
-}) {
-  const [wasPlaying, setWasPlaying] = useState(false);
-  const [open, setOpen] = useState(false);
-  const onDialogOpen = () => {
-    setWasPlaying(props.isPlaying);
-    if (props.isPlaying) {
-      props.toggle();
-    }
-
-    setOpen(true);
-  };
-  const onDialogClose = () => {
-    setOpen(false);
-    if (wasPlaying) {
-      props.toggle();
-    }
-  };
-  return (
-    <StyledShareRecording>
-      <ActionButton onClick={onDialogOpen}>
-        <Icons.Link />
-      </ActionButton>
-      <Dialog
-        dialogCss={() => ({ maxWidth: '500px', width: '100%' })}
-        disableEscapeKeyDown={false}
-        onClose={onDialogClose}
-        open={open}
-      >
-        <DialogHeader>
-          <DialogTitle>Share Recording - {props.time}</DialogTitle>
-        </DialogHeader>
-        <DialogContent>
-          <Text mb={2} mt={1}>
-            Share this URL with the person you want to share this session
-            recording at current playback time. This person must have access to
-            this recording to be able to view this session.
-          </Text>
-          <TextSelectCopy text={props.url} bash={false} />
-        </DialogContent>
-        <DialogFooter>
-          <ButtonSecondary onClick={onDialogClose}>Close</ButtonSecondary>
-          <ButtonSecondary
-            style={{ marginLeft: '10px' }}
-            onClick={() => window.open(props.url)}
-          >
-            Open in new Tab
-          </ButtonSecondary>
-        </DialogFooter>
-      </Dialog>
-    </StyledShareRecording>
-  );
-}
+import { ShareRecordingAtTime } from 'teleport/Player/ProgressBar/ShareRecordingAtTime';
+import { ActionButton } from 'teleport/Player/ProgressBar/ActionButton';
 
 export default function ProgressBar(props: ProgressBarProps) {
   const Icon = props.isPlaying ? Icons.CirclePause : Icons.CirclePlay;
@@ -146,38 +81,6 @@ const TimeText = styled.div(
 `
 );
 
-const StyledShareRecording = styled.div`
-  padding-left: 20px;
-`;
-
-const ActionButton = styled.button`
-  background: ${colors.dark};
-  border: none;
-  color: ${colors.light};
-  cursor: pointer;
-  font-size: 24px;
-  height: 24px;
-  outline: none;
-  opacity: 0.87;
-  padding: 0;
-  text-align: center;
-  transition: all 0.3s;
-  width: 24px;
-
-  &:hover {
-    opacity: 1;
-
-    .icon {
-      color: ${colors.progressBarColor};
-    }
-  }
-
-  .icon {
-    height: 24px;
-    width: 24px;
-  }
-`;
-
 const StyledProgressBar = styled.div`
   background-color: ${colors.dark};
   display: flex;
@@ -213,5 +116,9 @@ const StyledProgressBar = styled.div`
 
   .grv-slider .bar-1 {
     background-color: ${colors.text};
+  }
+
+  .ShareRecordingAtTime {
+    margin-left: 20px;
   }
 `;
