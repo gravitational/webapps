@@ -28,7 +28,11 @@ export default function ProgressBarTty(props: {
   return (
     <ProgressBar
       {...state}
-      url={props.linkConstructor(state.current.toString())}
+      url={
+        props.linkConstructor
+          ? props.linkConstructor(state.current.toString())
+          : undefined
+      }
     />
   );
 }

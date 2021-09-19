@@ -32,17 +32,24 @@ import { Text, ButtonSecondary } from 'design';
 function ShareRecordingAtTime(props: {
   url: string;
   time: string;
-  onOpen: () => void;
-  onClose: () => void;
+  isPlaying: boolean;
+  toggle: () => void;
 }) {
+  const [wasPlaying, setWasPlaying] = useState(false);
   const [open, setOpen] = useState(false);
   const onDialogOpen = () => {
+    setWasPlaying(props.isPlaying);
+    if (props.isPlaying) {
+      props.toggle();
+    }
+
     setOpen(true);
-    props.onOpen();
   };
   const onDialogClose = () => {
     setOpen(false);
-    props.onClose();
+    if (wasPlaying) {
+      props.toggle();
+    }
   };
   return (
     <StyledShareRecording>
@@ -68,6 +75,12 @@ function ShareRecordingAtTime(props: {
         </DialogContent>
         <DialogFooter>
           <ButtonSecondary onClick={onDialogClose}>Close</ButtonSecondary>
+          <ButtonSecondary
+            style={{ marginLeft: '10px' }}
+            onClick={() => window.open(props.url)}
+          >
+            Open in new Tab
+          </ButtonSecondary>
         </DialogFooter>
       </Dialog>
     </StyledShareRecording>
@@ -93,12 +106,14 @@ export default function ProgressBar(props: ProgressBarProps) {
           className="grv-slider"
         />
       </SliderContainer>
-      <ShareRecordingAtTime
-        time={props.time}
-        url={props.url}
-        onOpen={() => props.isPlaying && props.toggle()}
-        onClose={() => !props.isPlaying && props.toggle()}
-      />
+      {props.url && (
+        <ShareRecordingAtTime
+          time={props.time}
+          url={props.url}
+          isPlaying={props.isPlaying}
+          toggle={props.toggle}
+        />
+      )}
     </StyledProgressBar>
   );
 }
@@ -111,7 +126,7 @@ export type ProgressBarProps = {
   current: number;
   move: (value: any) => void;
   toggle: () => void;
-  url: string;
+  url?: string;
 };
 
 const SliderContainer = styled.div`
