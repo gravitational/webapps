@@ -32,7 +32,7 @@ export function ShareRecordingAtTime(props: ShareRecordingAtTimeParams) {
   };
   const onDialogClose = () => {
     setOpen(false);
-    if (wasPlaying) {
+    if (wasPlaying && !props.isPlaying) {
       props.toggle();
     }
   };
