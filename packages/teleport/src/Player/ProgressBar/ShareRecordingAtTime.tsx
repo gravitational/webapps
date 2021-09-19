@@ -14,7 +14,7 @@ import styled from 'styled-components';
 
 type ShareRecordingAtTimeParams = {
   url: string;
-  time: string;
+  displayTime: string;
   isPlaying: boolean;
   toggle: () => void;
 };
@@ -48,7 +48,7 @@ export function ShareRecordingAtTime(props: ShareRecordingAtTimeParams) {
         open={open}
       >
         <DialogHeader>
-          <DialogTitle>Share Recording - {props.time}</DialogTitle>
+          <DialogTitle>Share Recording - {props.displayTime}</DialogTitle>
         </DialogHeader>
         <DialogContent>
           <Text mb={2} mt={1}>

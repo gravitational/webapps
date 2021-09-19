@@ -43,7 +43,7 @@ export default function ProgressBar(props: ProgressBarProps) {
       </SliderContainer>
       {props.url && (
         <ShareRecordingAtTime
-          time={props.time}
+          displayTime={props.time}
           url={props.url}
           isPlaying={props.isPlaying}
           toggle={props.toggle}
