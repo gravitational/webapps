@@ -12,12 +12,14 @@ import { ActionButton } from 'teleport/Player/ProgressBar/ActionButton';
 import { ButtonSecondary, Text } from 'design';
 import styled from 'styled-components';
 
-export function ShareRecordingAtTime(props: {
+type ShareRecordingAtTimeParams = {
   url: string;
   time: string;
   isPlaying: boolean;
   toggle: () => void;
-}) {
+};
+
+export function ShareRecordingAtTime(props: ShareRecordingAtTimeParams) {
   const [wasPlaying, setWasPlaying] = useState(false);
   const [open, setOpen] = useState(false);
   const onDialogOpen = () => {
