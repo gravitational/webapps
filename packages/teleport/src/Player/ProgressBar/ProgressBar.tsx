@@ -34,7 +34,6 @@ function ShareRecordingAtTime(props: {
   time: string;
   onOpen: () => void;
   onClose: () => void;
-  css?: () => {};
 }) {
   const [open, setOpen] = useState(false);
   const onDialogOpen = () => {
@@ -47,7 +46,7 @@ function ShareRecordingAtTime(props: {
   };
   return (
     <StyledShareRecording>
-      <ActionButton onClick={onDialogOpen} css={props.css}>
+      <ActionButton onClick={onDialogOpen}>
         <Icons.Link />
       </ActionButton>
       <Dialog
@@ -99,7 +98,6 @@ export default function ProgressBar(props: ProgressBarProps) {
         url={props.url}
         onOpen={() => props.isPlaying && props.toggle()}
         onClose={() => !props.isPlaying && props.toggle()}
-        css={() => ({ paddingLeft: '20px' })}
       />
     </StyledProgressBar>
   );

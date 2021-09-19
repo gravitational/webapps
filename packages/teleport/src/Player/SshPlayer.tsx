@@ -17,7 +17,7 @@ limitations under the License.
 import React from 'react';
 import styled from 'styled-components';
 import { Danger } from 'design/Alert';
-import { Indicator, Flex, Text, Box } from 'design';
+import { Box, Flex, Indicator, Text } from 'design';
 import cfg from 'teleport/config';
 import TtyPlayer, {
   StatusEnum as TtyStatusEnum,
@@ -25,9 +25,28 @@ import TtyPlayer, {
 import EventProvider from 'teleport/lib/term/ttyPlayerEventProvider';
 import { ProgressBarTty } from './ProgressBar';
 import Xterm from './Xterm';
+import { useLocation } from 'teleport/components/Router';
 
-export default function Player({ sid, clusterId, time, linkConstructor }) {
-  const { tty } = useSshPlayer(clusterId, sid, time);
+function useQuery() {
+  return new URLSearchParams(useLocation().search);
+}
+
+export function linkConstructor(currentTime: string) {
+  const urlSearchParams = new URLSearchParams(window.location.search);
+
+  urlSearchParams.set('from', currentTime);
+
+  return (
+    window.location.origin +
+    window.location.pathname +
+    '?' +
+    urlSearchParams.toString()
+  );
+}
+
+export default function Player({ sid, clusterId }) {
+  const from = useQuery().get('from');
+  const { tty } = useSshPlayer(clusterId, sid, from);
   const { statusText, status } = tty;
   const eventCount = tty.getEventCount();
   const isError = status === TtyStatusEnum.ERROR;

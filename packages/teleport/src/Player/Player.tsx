@@ -23,22 +23,16 @@ import SshPlayer from './SshPlayer';
 import ActionBar from './ActionBar';
 import session from 'teleport/services/session';
 import { colors } from 'teleport/Console/colors';
-import cfg, { UrlPlayerParams } from 'teleport/config';
+import { UrlPlayerParams } from 'teleport/config';
 
 export default function Player() {
-  const { sid, clusterId, time } = useParams<UrlPlayerParams>();
+  const { sid, clusterId } = useParams<UrlPlayerParams>();
 
   document.title = `${clusterId} • Play ${sid}`;
 
   function onLogout() {
     session.logout();
   }
-
-  const linkConstructor = (currentTime: string) =>
-    window.location.protocol +
-    '//' +
-    window.location.host +
-    cfg.getPlayerRoute({ sid, clusterId, time: currentTime });
 
   return (
     <StyledPlayer>
@@ -56,12 +50,7 @@ export default function Player() {
           position: 'relative',
         }}
       >
-        <SshPlayer
-          sid={sid}
-          clusterId={clusterId}
-          time={time}
-          linkConstructor={linkConstructor}
-        />
+        <SshPlayer sid={sid} clusterId={clusterId} />
       </Flex>
     </StyledPlayer>
   );

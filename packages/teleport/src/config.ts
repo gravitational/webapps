@@ -59,7 +59,7 @@ const cfg = {
     consoleNodes: '/web/cluster/:clusterId/console/nodes',
     consoleConnect: '/web/cluster/:clusterId/console/node/:serverId/:login',
     consoleSession: '/web/cluster/:clusterId/console/session/:sid',
-    player: '/web/cluster/:clusterId/session/:sid/player/:time?',
+    player: '/web/cluster/:clusterId/session/:sid',
     sessionAuditPlayer: '/web/cluster/:clusterId/session/:sid/player',
     sessionAuditCmds: '/web/cluster/:clusterId/session/:sid/commands',
     login: '/web/login',
@@ -356,7 +356,6 @@ export interface UrlLauncherParams {
 export interface UrlPlayerParams {
   clusterId: string;
   sid: string;
-  time?: string;
 }
 
 export default cfg;
