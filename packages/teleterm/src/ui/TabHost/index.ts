@@ -14,5 +14,5 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import DocumentBlank from './DocumentBlank';
-export default DocumentBlank;
+import TabHost from './TabHost';
+export default TabHost;

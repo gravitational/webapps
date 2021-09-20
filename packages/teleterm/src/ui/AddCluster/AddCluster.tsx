@@ -21,30 +21,102 @@ import Dialog, {
   DialogContent,
   DialogFooter,
 } from 'design/Dialog';
-import { Text, Box, ButtonSecondary, Link } from 'design';
+import { Box, Text, Flex, ButtonPrimary, ButtonSecondary, Link } from 'design';
+import FieldInput from 'shared/components/FieldInput';
+import Validation, { Validator } from 'shared/components/Validation';
+import { requiredField } from 'shared/components/Validation/rules';
+import * as Icons from 'design/Icon';
+import CmdText from 'gravity/components/CmdText';
 
-export default function AddCluster({ onClose }: Props) {
+export default function AddCluster({ onClose, onNext }: Props) {
+  const [addr, setAddr] = useState('');
+  const handleOK = () => {
+    //apt.addCluster(add)
+    // const [ cluster, status, statusText ] = await ctx.addCluster(add)
+    // ctx.storeApp.addCluster(cluster)
+  };
+
   return (
-    <Dialog
-      dialogCss={() => ({
-        maxWidth: '600px',
-        width: '100%',
-      })}
-      disableEscapeKeyDown={false}
-      onClose={onClose}
-      open={true}
-    >
-      <DialogHeader mb={4}>
-        <DialogTitle>Add Cluster</DialogTitle>
-      </DialogHeader>
-      <DialogContent></DialogContent>
-      <DialogFooter>
-        <ButtonSecondary onClick={onClose}>Close</ButtonSecondary>
-      </DialogFooter>
-    </Dialog>
+    <Validation>
+      {({ validator }) => (
+        <Dialog
+          dialogCss={() => ({
+            maxWidth: '800px',
+            width: '100%',
+            padding: '0',
+          })}
+          disableEscapeKeyDown={false}
+          onClose={close}
+          open={true}
+        >
+          <Flex flex="1" minHeight="400px">
+            <Flex
+              flex="1"
+              m={5}
+              flexDirection="column"
+              justifyContent="space-between"
+            >
+              <Flex flexDirection="column">
+                <Text mb={1} typography="h2">
+                  First, add your cluster address
+                </Text>
+                <Text mb={5} color="text.secondary" typography="h5">
+                  For example, https://teleport.example.com
+                </Text>
+                <FieldInput
+                  maxWidth="380px"
+                  rule={requiredField('Cluster address is required')}
+                  value={addr}
+                  autoFocus
+                  onChange={e => setAddr(e.target.value)}
+                  placeholder="https://cluster"
+                />
+              </Flex>
+              <Box mt="5">
+                <ButtonPrimary
+                  mr="3"
+                  onClick={() => validator.validate() && onNext(addr)}
+                >
+                  Next
+                </ButtonPrimary>
+                <ButtonSecondary onClick={onClose}>CANCEL</ButtonSecondary>
+              </Box>
+            </Flex>
+            <Flex width="300px" flexDirection="column" bg="primary.light">
+              <Icons.Add
+                style={{ textAlign: 'center' }}
+                fontSize="150px"
+                color="primary.lighter"
+              />
+            </Flex>
+          </Flex>
+        </Dialog>
+      )}
+    </Validation>
   );
 }
 
 export type Props = {
   onClose(): void;
 };
+
+/*
+
+      <FieldInput
+              rule={requiredField('Cluster address is required')}
+              label="Cluster URL"
+              value={addr}
+              onChange={e => setAddr(e.target.value)}
+              placeholder="https://cluster"
+            />
+
+            <Flex
+              width="250px"
+              bg="primary.light"
+              alignItems="center"
+              justifyContent="center"
+            >
+              No Existing Log Forwarders
+            </Flex>
+
+*/

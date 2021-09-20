@@ -20,8 +20,6 @@ import { space } from 'design/system';
 import * as Icons from 'design/Icon';
 import { Flex } from 'design';
 
-type Props = {};
-
 type AccordingContextState = {
   expanded: boolean;
   setExpanded(boolean): void;
@@ -33,19 +31,16 @@ type ExpanderHeaderProps = {
 
 const AccordingContext = React.createContext<AccordingContextState>(null);
 
-const Expander: React.FC<Props> = props => {
+const Expander: React.FC = props => {
   const [expanded, setExpanded] = React.useState(true);
   const [header, ...children] = React.Children.toArray(props.children);
   return (
     <AccordingContext.Provider value={{ expanded, setExpanded }}>
       {header}
       {children}
-      <StyledBorder />
     </AccordingContext.Provider>
   );
 };
-
-export default Expander;
 
 export const ExpanderHeader: React.FC<ExpanderHeaderProps> = props => {
   const { children, ...styles } = props;
@@ -69,12 +64,14 @@ export const ExpanderContent = styled(Flex)(({ theme }) => {
   };
 });
 
-const StyledBorder = styled.div(({ theme }) => {
+export const StyledBorder = styled.div(({ theme }) => {
   return {
     background: theme.colors.primary.lighter,
     height: '1px',
   };
 });
+
+export default Expander;
 
 const StyledHeader = styled(Flex)(props => {
   const theme = props.theme;

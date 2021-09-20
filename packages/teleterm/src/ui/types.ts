@@ -14,14 +14,25 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import types from '../services/types';
+export type DocumentKind =
+  | 'gateways'
+  | 'terminal'
+  | 'servers'
+  | 'blank'
+  | 'home'
+  | 'apps'
+  | 'clusters'
+  | 'dbs';
 
 interface DocumentBase {
-  id: string;
-  title?: string;
-  clusterId?: string;
-  kind: 'terminal' | 'nodes' | 'blank';
+  uri: string;
+  title: string;
+  kind: DocumentKind;
   created: Date;
+}
+
+export interface DocumentHome extends DocumentBase {
+  kind: 'home';
 }
 
 export interface DocumentBlank extends DocumentBase {
@@ -33,18 +44,28 @@ export interface DocumentSsh extends DocumentBase {
   kind: 'terminal';
   sid?: string;
   serverId: string;
+  clusterId?: string;
   login: string;
 }
-
-export interface DocumentNodes extends DocumentBase {
-  kind: 'nodes';
+export interface DocumentServers extends DocumentBase {
+  kind: 'servers';
+  clusterId: string;
 }
 
-export type Document = DocumentNodes | DocumentSsh | DocumentBlank;
+export interface DocumentDatabases extends DocumentBase {
+  kind: 'dbs';
+  clusterId: string;
+}
 
-export type NavGroup = 'team' | 'activity' | 'clusters';
-export interface NavItemCluster extends types.Cluster {
-  title: string;
-  Icon: any;
-  group?: NavGroup;
+export type Document =
+  | DocumentServers
+  | DocumentSsh
+  | DocumentHome
+  | DocumentBlank
+  | DocumentDatabases;
+
+export interface UriParams {
+  clusterId?: string;
+  serverId?: string;
+  tabId?: string;
 }

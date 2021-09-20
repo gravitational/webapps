@@ -1,5 +1,5 @@
 /*
-Copyright 2019-2020 Gravitational, Inc.
+Copyright 2019 Gravitational, Inc.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -14,11 +14,26 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React from 'react';
-import { render } from 'design/utils/testing';
-import { Blank } from './DocumentBlank.story';
-
-test('render DocumentBlank', () => {
-  const { container } = render(<Blank />);
-  expect(container.firstChild).toMatchSnapshot();
-});
+/**
+ * Colors are un-themeable color variables used by console
+ */
+export const colors = {
+  dark: '#000',
+  light: '#fff',
+  subtle: '#CFD8DC',
+  inverse: '#B0BEC5',
+  link: '#039BE5',
+  error: '#FF1744',
+  terminal: '#28FE14',
+  terminalDark: '#01172C',
+  bgTerminal: '#010B1C',
+  primary: {
+    light: '#03203C',
+    lighter: '#092F52',
+    dark: '#01172C',
+    main: '#010B1C',
+  },
+  text: '#263238',
+  success: '#00BFA5',
+  progressBarColor: '#00BFA5',
+};

@@ -14,66 +14,104 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import { StoreApp, StoreDocs, StoreNav } from './stores';
-import serviceNodes from 'teleport/services/nodes';
-import serviceClusters from 'teleport/services/clusters';
-import serviceUser from 'teleport/services/user';
-import { Document } from './types';
+import { matchPath, generatePath } from 'react-router';
+import { StoreApp } from './stores';
 import ServicePlatform from './../services/platform';
+import getConfig, { Config } from './getConfig';
+import { UriParams } from './types';
 
-// const logger = Logger.create('teleport/console');
-
-/**
- * Console Context is used by components to access shared state and also to communicate
- * with other services.
- */
 export default class AppContext {
-  storeDocs = new StoreDocs();
-  storeNav = new StoreNav();
   storeApp = new StoreApp();
   servicePlatform = new ServicePlatform();
+  cfg = getConfig();
 
-  constructor() {}
-
-  async init() {
-    const clusters = await this.servicePlatform.listClusters();
-    this.storeApp.initCluster(clusters);
+  constructor(cfg?: Config) {
+    this.cfg = cfg || this.cfg;
   }
 
-  removeDocument(id: string) {
-    const nextId = this.storeDocs.getNext(id);
-    const items = this.storeDocs.filter(id);
-    this.storeDocs.setState({ items });
-    return this.storeDocs.find(nextId);
+  async init() {
+    const [clusters, error] = await this.servicePlatform.listClusters();
+    this.storeApp.setClusters(clusters);
+  }
+
+  openDocument(uri: string) {
+    const homeMatch = matchPath<UriParams>(uri, this.cfg.routes.home);
+    const srvMatch = matchPath<UriParams>(uri, this.cfg.routes.clusterServers);
+    const dbsMatch = matchPath<UriParams>(uri, this.cfg.routes.clusterDbs);
+
+    if (this.storeApp.findDocument(uri)) {
+      // do nothing
+    } else if (homeMatch) {
+      this.storeApp.addDocument({
+        uri,
+        title: 'Home',
+        kind: 'home',
+        created: new Date(),
+      });
+    } else if (srvMatch) {
+      this.storeApp.addDocument({
+        uri,
+        clusterId: srvMatch.params.clusterId,
+        title: 'Servers',
+        kind: 'servers',
+        created: new Date(),
+      });
+    } else if (dbsMatch) {
+      this.storeApp.addDocument({
+        uri,
+        clusterId: dbsMatch.params.clusterId,
+        title: 'Databases',
+        kind: 'dbs',
+        created: new Date(),
+      });
+    } else {
+      this.storeApp.addDocument({
+        uri,
+        title: 'not-found',
+        kind: 'blank',
+        created: new Date(),
+      });
+    }
+
+    this.storeApp.setLocation(uri);
   }
 
   getDocuments() {
-    return this.storeDocs.state.items;
+    return this.storeApp.state.docs;
   }
 
-  fetchNodes(clusterId: string) {
-    return Promise.all([
-      serviceUser.fetchUserContext(),
-      serviceNodes.fetchNodes(clusterId),
-    ]).then(values => {
-      const [user, nodes] = values;
-      return {
-        logins: user.acl.logins,
-        nodes,
-      };
-    });
+  getDocument(url: string) {
+    return this.storeApp.findDocument(url);
   }
 
-  fetchClusters() {
-    return serviceClusters.fetchClusters();
+  getActiveDocument() {
+    return this.storeApp.findDocument(this.storeApp.getLocation());
   }
 
-  gotoTab({ id }: { id: string }) {
-    this.storeDocs.makeActive(id);
+  getLocation() {
+    return this.storeApp.getLocation();
   }
 
-  closeTab(doc: Document) {
-    const next = this.removeDocument(doc.id);
-    this.gotoTab(next);
+  closeDocument({ uri }: { uri: string }) {
+    const nextUri = this.storeApp.getNextDocumentUri(uri);
+    const docs = this.storeApp.state.docs.filter(i => i.uri !== uri);
+    this.storeApp.setState({ docs, location: nextUri });
+  }
+
+  match(uri: string) {
+    const location = this.getLocation();
+    return !!matchPath<UriParams>(location, uri);
+  }
+
+  getUriServer(params: UriParams) {
+    return generatePath(this.cfg.routes.clusterServers, { ...params });
+  }
+
+  getUriDb(params: UriParams) {
+    return generatePath(this.cfg.routes.clusterDbs, { ...params });
+  }
+
+  getUriApps(params: UriParams) {
+    return generatePath(this.cfg.routes.clusterApps, { ...params });
   }
 }

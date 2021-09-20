@@ -1,22 +1,24 @@
 import { History } from 'history';
-import React from 'react';
+import React, { useEffect } from 'react';
 import styled from 'styled-components';
 import { Box } from 'design';
 import SplitPane from 'shared/components/SplitPane';
-import ThemeProvider from 'design/ThemeProvider';
+import ThemeProvider from './ThemeProvider';
 import CatchError from './components/CatchError';
 import AppContextProvider from './appContextProvider';
 import Navigator from './Navigator';
 import AppContext from './appContext';
 import { Router } from 'teleport/components/Router';
 import TabHost from './TabHost';
+import DialogHost from './DialogHost';
+
+type Props = {
+  history: History;
+};
 
 const App: React.FC<Props> = ({ history }) => {
-  const [ctx] = React.useState(() => {
-    return new AppContext();
-  });
-
-  React.useEffect(() => {
+  const ctx = React.useMemo(() => new AppContext(), []);
+  useEffect(() => {
     ctx.init();
   }, [ctx]);
 
@@ -34,6 +36,7 @@ const App: React.FC<Props> = ({ history }) => {
                   <TabHost />
                 </Box>
               </SplitPane>
+              <DialogHost />
             </ThemeProvider>
           </AppContextProvider>
         </Router>
@@ -52,7 +55,3 @@ const StyledApp = styled.div`
   position: absolute;
   display: flex;
 `;
-
-export type Props = {
-  history: History;
-};

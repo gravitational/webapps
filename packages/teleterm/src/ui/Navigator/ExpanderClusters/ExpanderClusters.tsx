@@ -21,17 +21,24 @@ import Expander, { ExpanderHeader, ExpanderContent } from './../Expander';
 import { Item } from './../useNavigator';
 import NavItem from './../NavItem';
 
-const ClusterExpanders: React.FC<Props> = props => {
-  const $clusters = props.items.map(i => <ClusterItem key={i.id} item={i} />);
+const ClusterGroup: React.FC<Props> = props => {
+  const $clusters = props.items.map(i => (
+    <ClusterExpander key={i.uri} item={i} />
+  ));
 
   return (
     <Expander>
       <ExpanderHeader>
         <Flex justifyContent="space-between" flex="1" width="100%">
           <Text typography="h4">Clusters</Text>
-          <ButtonIcon color="text.placeholder">
-            <Icons.Add />
-          </ButtonIcon>
+          <Flex>
+            <ButtonIcon p={3} color="text.placeholder">
+              <Icons.Restore />
+            </ButtonIcon>
+            <ButtonIcon color="text.placeholder">
+              <Icons.Add />
+            </ButtonIcon>
+          </Flex>
         </Flex>
       </ExpanderHeader>
       <ExpanderContent>{$clusters}</ExpanderContent>
@@ -39,10 +46,10 @@ const ClusterExpanders: React.FC<Props> = props => {
   );
 };
 
-const ClusterItem: React.FC<ClusterItemProps> = props => {
+const ClusterExpander: React.FC<ClusterItemProps> = props => {
   const { title } = props.item;
   const $navItems = props.item.items.map(i => (
-    <NavItem pl={9} key={i.id} item={i} />
+    <NavItem pl={9} key={i.uri} item={i} />
   ));
 
   return (
@@ -73,4 +80,4 @@ type ClusterItemProps = {
   item: Item;
 };
 
-export default ClusterExpanders;
+export default ClusterGroup;
