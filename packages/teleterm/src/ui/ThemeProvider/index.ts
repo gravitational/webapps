@@ -14,6 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import StoreApp from './storeApp';
+import ThemeProvider, { ThemeProviderTabs } from './ThemeProvider';
 
-export { StoreApp };
+export default ThemeProvider;
+export { ThemeProviderTabs };

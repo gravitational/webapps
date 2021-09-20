@@ -1,5 +1,4 @@
 /*
-
 Copyright 2019 Gravitational, Inc.
 
 Licensed under the Apache License, Version 2.0 (the "License");
@@ -15,26 +14,5 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React from 'react';
-import DocumentBlank from './DocumentBlank';
-import { TestLayout } from './../Console.story';
-
-export default {
-  title: 'Teleport/Console/DocumentBlank',
-};
-
-export const Blank = () => (
-  <TestLayout>
-    <DocumentBlank
-      visible={true}
-      doc={
-        {
-          created: new Date(),
-          kind: 'blank',
-          url: '',
-          clusterId: 'one',
-        } as const
-      }
-    />
-  </TestLayout>
-);
+import DocumentHome from './DocumentHome';
+export default DocumentHome;

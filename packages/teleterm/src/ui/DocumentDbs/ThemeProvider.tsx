@@ -14,6 +14,24 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import StoreApp from './storeApp';
+import React from 'react';
+import theme from 'design/theme';
+import ThemeProvider from 'design/ThemeProvider';
+import { colors } from '../ThemeProvider/colors';
 
-export { StoreApp };
+const customTheme = {
+  ...theme,
+  colors: {
+    ...theme.colors,
+    primary: {
+      ...theme.colors.primary,
+      ...colors.primary,
+    },
+  },
+};
+
+const ServerThemeProvider = props => (
+  <ThemeProvider theme={customTheme} children={props.children} />
+);
+
+export default ServerThemeProvider;
