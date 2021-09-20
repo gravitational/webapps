@@ -18,31 +18,31 @@ import React from 'react';
 import styled from 'styled-components';
 import { Flex } from 'design';
 import { useStore } from 'shared/libs/stores';
-import { useAppContext, useStoreDocs } from './appContextProvider';
-import * as types from './types';
-import Tabs from './Tabs';
-import DocumentBlank from './DocumentBlank';
+import { useAppContext } from 'teleterm/ui/appContextProvider';
+import * as types from 'teleterm/ui/types';
+import Tabs from 'teleterm/ui/Tabs';
+import DocumentHome from 'teleterm/ui/DocumentHome';
+import DocumentServers from 'teleterm/ui/DocumentServers';
+import DocumentDbs from 'teleterm/ui/DocumentDbs';
 
 export default function TabHost(props: Props) {
   const appCtx = useAppContext();
-  const storeDocs = appCtx.storeDocs;
-  const documents = storeDocs.getDocuments();
-  const activeDoc = documents.find(d => d.id === storeDocs.state.active);
+  const store = useStore(appCtx.storeApp);
+  const documents = store.getDocuments();
+  const docActive = appCtx.getActiveDocument();
 
-  useStore(storeDocs);
-
-  function onTabClick(doc: types.Document) {
-    appCtx.gotoTab(doc);
+  function handleTabClick(doc: types.Document) {
+    appCtx.openDocument(doc.uri);
   }
 
-  function onTabClose(doc: types.Document) {
-    appCtx.closeTab(doc);
+  function handleTabClose(doc: types.Document) {
+    appCtx.closeDocument(doc);
   }
 
-  function onTabNew() {}
+  function handleTabNew() {}
 
   const $docs = documents.map(doc => (
-    <MemoizedDocument doc={doc} visible={doc === activeDoc} key={doc.id} />
+    <MemoizedDocument doc={doc} visible={doc === docActive} key={doc.uri} />
   ));
 
   return (
@@ -51,11 +51,11 @@ export default function TabHost(props: Props) {
         <Tabs
           flex="1"
           items={documents}
-          onClose={onTabClose}
-          onSelect={onTabClick}
-          activeTab={activeDoc.id}
+          onClose={handleTabClose}
+          onSelect={handleTabClick}
+          activeTab={docActive.uri}
           disableNew={false}
-          onNew={onTabNew}
+          onNew={handleTabNew}
         />
       </Flex>
       {$docs}
@@ -74,8 +74,12 @@ function MemoizedDocument(props: { doc: types.Document; visible: boolean }) {
   const { doc, visible } = props;
   return React.useMemo(() => {
     switch (doc.kind) {
-      case 'blank':
-        return <DocumentBlank doc={doc} visible={visible} />;
+      case 'home':
+        return <DocumentHome doc={doc} visible={visible} />;
+      case 'servers':
+        return <DocumentServers doc={doc} visible={visible} />;
+      case 'dbs':
+        return <DocumentDbs doc={doc} visible={visible} />;
       default:
         return null;
     }

@@ -16,10 +16,13 @@ limitations under the License.
 
 import React from 'react';
 import styled from 'styled-components';
+import { Flex, Text } from 'design';
+import * as Icons from 'design/Icon';
 import useNavigator, { State } from './useNavigator';
 import ExpanderClusters from './ExpanderClusters';
-
 import ExpanderGateways from './ExpanderGateways';
+import NavItem from './NavItem';
+import { StyledBorder } from './Expander';
 
 export default function Container() {
   const state = useNavigator();
@@ -27,20 +30,30 @@ export default function Container() {
 }
 
 export function Navigator(props: State) {
-  const { clusterItems, gatewayItems } = props;
-
+  const { clusterItems, gatewayItems, homeItem } = props;
   return (
-    <Nav>
+    <Nav bg="primary.dark">
+      <Text
+        typography="body1"
+        py={2}
+        ml={4}
+        fontSize={4}
+        color="text.placeholder"
+      >
+        Teleport Terminal
+      </Text>
+      <NavItem pl={2} item={homeItem} onClick={props.processItemClick}>
+        <Icons.Home mr={2} />
+        <Text typography="h4">{homeItem.title}</Text>
+      </NavItem>
       <ExpanderGateways items={gatewayItems} />
       <ExpanderClusters items={clusterItems} />
     </Nav>
   );
 }
 
-const Nav = styled.nav`
-  background: ${props => props.theme.colors.primary.light};
+const Nav = styled(Flex)`
   overflow: auto;
   height: 100%;
-  display: flex;
   flex-direction: column;
 `;

@@ -15,53 +15,59 @@ limitations under the License.
 */
 
 import React, { FC } from 'react';
-import { useAppStore } from './../appContextProvider';
+import { useAppStore, useAppContext } from './../appContextProvider';
+import AppContext from './../appContext';
 import * as Icons from 'design/Icon';
-import * as types from './../../services/types';
+import * as types from '../types';
 
 export default function useNavigator() {
+  const ctx = useAppContext();
   const store = useAppStore();
-  const gatewayItems = initGatewayItems();
+  const homeItem = initHomeItem(ctx);
+  const gatewayItems = initGatewayItems(ctx);
   const clusterItems = React.useMemo<Item[]>(() => {
-    return initClusters(store.state.clusters);
+    return initClusterItems(ctx);
   }, [store.state.clusters]);
 
+  function processItemClick(item: Item) {
+    ctx.openDocument(item.uri);
+  }
+
   return {
+    homeItem,
     clusterItems,
     gatewayItems,
+    processItemClick,
   };
 }
 
-export type State = ReturnType<typeof useNavigator>;
-
-export type Item = {
-  items: Item[];
-  title: string;
-  id: string;
-  Icon: FC;
-  kind: 'cluster' | 'apps' | 'servers' | 'clusterGroup' | 'gateway';
-  group: boolean;
-};
-
-function initClusters(clusters: types.Cluster[]): Item[] {
-  return clusters.map<Item>(cluster => ({
+function initClusterItems(ctx: AppContext): Item[] {
+  return ctx.storeApp.state.clusters.map<Item>(cluster => ({
     title: cluster.name,
     Icon: Icons.Clusters,
-    id: cluster.uri,
-    kind: 'cluster',
+    uri: cluster.uri,
+    kind: 'clusters',
     items: [
       {
         title: 'Servers',
         Icon: Icons.Server,
-        id: cluster.uri,
+        uri: ctx.getUriServer({ clusterId: cluster.name }),
         kind: 'servers',
         items: [],
         group: false,
       },
       {
+        title: 'Databases',
+        Icon: Icons.Database,
+        uri: ctx.getUriDb({ clusterId: cluster.name }),
+        kind: 'dbs',
+        items: [],
+        group: false,
+      },
+      {
         title: 'Applications',
-        Icon: Icons.Server,
-        id: cluster.uri,
+        Icon: Icons.NewTab,
+        uri: ctx.getUriApps({ clusterId: cluster.name }),
         kind: 'apps',
         items: [],
         group: false,
@@ -71,15 +77,37 @@ function initClusters(clusters: types.Cluster[]): Item[] {
   }));
 }
 
-function initGatewayItems(): Item[] {
+function initGatewayItems(ctx: AppContext): Item[] {
   return [
     {
       title: 'platform.teleport.sh/dbs/mongo-prod',
       Icon: Icons.Clusters,
-      id: '/gateways/',
-      kind: 'gateway',
+      uri: ctx.cfg.routes.gateways,
+      kind: 'gateways',
       items: [],
       group: false,
     },
   ];
 }
+
+function initHomeItem(ctx: AppContext): Item {
+  return {
+    title: 'Home',
+    Icon: Icons.Clusters,
+    uri: ctx.cfg.routes.home,
+    kind: 'home',
+    items: [],
+    group: false,
+  };
+}
+
+export type State = ReturnType<typeof useNavigator>;
+
+export type Item = {
+  items: Item[];
+  title: string;
+  uri: string;
+  Icon: FC;
+  kind: types.DocumentKind;
+  group: boolean;
+};

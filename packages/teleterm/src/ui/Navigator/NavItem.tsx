@@ -19,19 +19,35 @@ import styled from 'styled-components';
 import { color, space } from 'design/system';
 import { Item } from './useNavigator';
 import Icon from 'design/Icon';
+import { useAppContext } from './../appContextProvider';
 
 type Props = {
   item?: Item;
+  onClick?: (item: Item) => void;
   [key: string]: any;
 };
 
 const NavItem: React.FC<Props> = props => {
-  const { item, ...styles } = props;
+  const ctx = useAppContext();
+  const { item, onClick, ...styles } = props;
+  const active = ctx.match(item.uri);
+
+  const clickRef = React.useRef(onClick);
+  clickRef.current = onClick;
+
+  const handleClick = React.useCallback(() => {
+    if (clickRef.current) {
+      clickRef.current && clickRef.current(item);
+    } else {
+      ctx.openDocument(item.uri);
+    }
+  }, [item]);
+
   return (
-    <StyledNavItem {...styles}>
+    <StyledNavItem $active={active} {...styles} onClick={handleClick}>
       {!props.children && (
         <>
-          <NavItemIcon as={item.Icon} fontSize="2" mr={2} />
+          <Icon mr={2} ml={-2} as={item.Icon} fontSize="12px" color="inherit" />
           {item.title}
         </>
       )}
@@ -41,8 +57,16 @@ const NavItem: React.FC<Props> = props => {
 };
 
 const StyledNavItem = styled.div(props => {
-  const { theme } = props;
+  const { theme, $active } = props;
+  const activeColors = $active
+    ? {
+        color: theme.colors.primary.contrastText,
+        background: theme.colors.primary.light,
+      }
+    : {};
+
   return {
+    whiteSpace: 'nowrap',
     boxSizing: 'border-box',
     display: 'flex',
     alignItems: 'center',
@@ -56,10 +80,6 @@ const StyledNavItem = styled.div(props => {
     color: theme.colors.text.primary,
     height: '36px',
 
-    '&:active, &.active': {
-      color: theme.colors.primary.contrastText,
-    },
-
     '&:hover': {
       background: theme.colors.primary.light,
     },
@@ -68,17 +88,10 @@ const StyledNavItem = styled.div(props => {
       color: theme.colors.primary.contrastText,
     },
 
+    ...activeColors,
     ...color(props),
     ...space(props),
   };
 });
-
-const NavItemIcon = styled(Icon)``;
-NavItemIcon.defaultProps = {
-  mr: 2,
-  ml: -2,
-  fontSize: '12px',
-  color: 'inherit',
-};
 
 export default NavItem;

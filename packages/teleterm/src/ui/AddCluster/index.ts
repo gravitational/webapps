@@ -14,5 +14,5 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import AddDatabase from './AddDatabase';
-export default AddDatabase;
+import AddCluster from './AddCluster';
+export default AddCluster;

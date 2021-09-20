@@ -15,38 +15,115 @@ limitations under the License.
 */
 
 import { Store } from 'shared/libs/stores';
+import { Cluster } from './../../services/types';
+import { Document } from './../types';
 
 type State = {
   clusters: Cluster[];
-  navItems: NavItem[];
+  docs: Document[];
+  activeModal: 'addCluster' | '';
+  location: string;
 };
 
-export default class StoreClusters extends Store<State> {
-  state = {
+export default class StoreApp extends Store<State> {
+  state: State = {
     clusters: [],
-    navItems: [],
+    activeModal: '',
+    location: '/home',
+    docs: [
+      {
+        uri: '/',
+        kind: 'blank',
+        title: 'Welcome',
+        created: new Date(),
+      },
+      {
+        uri: '/home',
+        kind: 'home',
+        title: 'Home',
+        created: new Date(),
+      },
+    ],
   };
 
-  initCluster(clusters: Cluster[]) {
+  setClusters(clusters: Cluster[]) {
     this.setState({ clusters });
+  }
+
+  async setLocation(location: string) {
+    this.setState({ location });
+  }
+
+  async addDocument(doc: Document) {
+    const item: Document = {
+      uri: Math.floor(Math.random() * 100000) + '',
+      ...doc,
+    };
+
+    this.setState({
+      docs: [...this.state.docs, item],
+    });
+
+    return item;
+  }
+
+  updateDocument(uri: string, partialDoc: Partial<Document>) {
+    const docs = this.state.docs.map(doc => {
+      if (doc.uri === uri) {
+        return {
+          ...doc,
+          ...partialDoc,
+        };
+      }
+
+      return doc;
+    }) as Document[];
+
+    this.setState({ docs });
+  }
+
+  filterDocuments(uri: string) {
+    return this.state.docs.filter(i => i.uri !== uri);
+  }
+
+  getNextDocumentUri(uri: string) {
+    const { docs } = this.state;
+    for (let i = 0; i < this.state.docs.length; i++) {
+      if (docs[i].uri === uri) {
+        if (docs.length > i + 1) {
+          return docs[i + 1].uri;
+        }
+
+        if (docs.length === i + 1 && i !== 0) {
+          return docs[i - 1].uri;
+        }
+      }
+    }
+
+    return '/';
+  }
+
+  findDocument(uri: string) {
+    return this.state.docs.find(i => i.uri === uri);
+  }
+
+  findByUri(uri: string) {
+    return this.state.docs.find(i => i.uri === encodeURI(uri));
+  }
+
+  getDocuments(): Document[] {
+    return this.state.docs;
   }
 
   getClusters() {
     return this.state.clusters;
   }
+
+  getLocation() {
+    return this.state.location;
+  }
+
+  closeModal() {
+    this.setState({ activeModal: '' });
+  }
 }
-
-export type NavItem = {
-  items: NavItem[];
-  title: string;
-  id: string;
-  kind: 'cluster';
-};
-
-export type Cluster = {
-  uri: string;
-  name: string;
-  servers: [];
-  dbs: [];
-  kubes: [];
-};

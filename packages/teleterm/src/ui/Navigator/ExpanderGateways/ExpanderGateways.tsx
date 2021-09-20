@@ -23,7 +23,7 @@ import NavItem from './../NavItem';
 import StatusIndicator from './StatusIndicator';
 
 const ExpanderGateways: React.FC<Props> = props => {
-  const $items = props.items.map(i => <GateWayItem key={i.id} item={i} />);
+  const $items = props.items.map(i => <GateWayItem key={i.uri} item={i} />);
 
   return (
     <Expander>
@@ -42,7 +42,7 @@ const ExpanderGateways: React.FC<Props> = props => {
 
 const GateWayItem: React.FC<GatewayItemProps> = props => {
   return (
-    <NavItem pl={5}>
+    <NavItem pl={5} item={props.item}>
       <StatusIndicator ml={-1} mr={3} status="connected" />
       <Flex
         alignItems="center"

@@ -14,6 +14,5 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import StoreApp from './storeApp';
-
-export { StoreApp };
+import DocumentDbs from './DocumentDbs';
+export default DocumentDbs;

@@ -41,7 +41,7 @@ export function Tabs(props: Props) {
   const $items = items
     .filter(i => i.kind !== 'blank')
     .map(i => {
-      const active = i.id === activeTab;
+      const active = i.uri === activeTab;
       let users: { user: string }[] = [];
       if (i.kind === 'terminal') {
         users = parties[i.sid] || [];
@@ -50,7 +50,7 @@ export function Tabs(props: Props) {
       return (
         <TabItem
           name={i.title}
-          key={i.id}
+          key={i.uri}
           users={users}
           active={active}
           onClick={() => onSelect(i)}
