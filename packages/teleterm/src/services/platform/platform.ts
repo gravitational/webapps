@@ -100,7 +100,7 @@ export default class Service {
       {
         uri: 'platform.teleport.sh/',
         name: 'platform.teleport.sh',
-        connected: false,
+        connected: true,
         auth: {
           providers: [],
           secondFactor: 'off',
@@ -109,7 +109,17 @@ export default class Service {
     ]);
   }
 
-  async addCluster() {}
+  async addCluster(addr: string) {
+    return {
+      uri: addr,
+      name: addr,
+      connected: false,
+      auth: {
+        providers: [],
+        secondFactor: 'off',
+      },
+    } as types.Cluster;
+  }
 }
 
 function apiCall<T>(cb: () => Promise<T>): Promise<[T, Error]> {

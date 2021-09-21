@@ -34,7 +34,7 @@ export default function DocumentHome(props: PropTypes) {
   return (
     <Document visible={visible}>
       <Flex flexDirection="column" alignItems="center" flex="1" width="100%">
-        <Box width="100%" maxWidth="60%" mt={4}>
+        <Box width="100%" maxWidth="60%" mt={10}>
           <DarkStyledSelect mb={8}>
             <Select
               value={selected}
@@ -71,12 +71,3 @@ type PropTypes = {
   visible: boolean;
   doc: types.DocumentHome;
 };
-
-/*
-primary: {
-  light: '#03203C',
-  lighter: '#092F52',
-  dark: '#01172C',
-  main: '#010B1C',
-},
-*/

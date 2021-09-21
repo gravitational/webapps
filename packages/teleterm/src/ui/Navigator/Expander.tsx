@@ -16,7 +16,7 @@ limitations under the License.
 
 import React from 'react';
 import styled from 'styled-components';
-import { space } from 'design/system';
+import { space, color } from 'design/system';
 import * as Icons from 'design/Icon';
 import { Flex } from 'design';
 
@@ -54,12 +54,12 @@ export const ExpanderHeader: React.FC<ExpanderHeaderProps> = props => {
   );
 };
 
-export const ExpanderContent = styled(Flex)(({ theme }) => {
+export const ExpanderContent = styled(Flex)(props => {
   const ctx = React.useContext(AccordingContext);
   return {
     display: ctx.expanded ? 'block' : 'none',
-    color: theme.colors.text.secondary,
-    background: theme.colors.primary.dark,
+    color: props.theme.colors.text.secondary,
+    background: props.theme.colors.primary.dark,
     flexDirection: 'column',
   };
 });
@@ -73,7 +73,7 @@ export const StyledBorder = styled.div(({ theme }) => {
 
 export default Expander;
 
-const StyledHeader = styled(Flex)(props => {
+export const StyledHeader = styled(Flex)(props => {
   const theme = props.theme;
   return {
     width: '100%',
@@ -109,5 +109,6 @@ const StyledHeader = styled(Flex)(props => {
 
     height: '36px',
     ...space(props),
+    ...color(props),
   };
 });

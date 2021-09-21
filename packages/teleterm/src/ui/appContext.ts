@@ -15,13 +15,15 @@ limitations under the License.
 */
 
 import { matchPath, generatePath } from 'react-router';
-import { StoreApp } from './stores';
+import { StoreApp, StoreCmd } from './stores';
 import ServicePlatform from './../services/platform';
+import * as serviceTypes from './../services/types';
 import getConfig, { Config } from './getConfig';
 import { UriParams } from './types';
 
 export default class AppContext {
   storeApp = new StoreApp();
+  storeCmd = new StoreCmd();
   servicePlatform = new ServicePlatform();
   cfg = getConfig();
 
@@ -32,6 +34,10 @@ export default class AppContext {
   async init() {
     const [clusters, error] = await this.servicePlatform.listClusters();
     this.storeApp.setClusters(clusters);
+  }
+
+  openDialog() {
+    //  this.storeApp.
   }
 
   openDocument(uri: string) {
@@ -113,5 +119,9 @@ export default class AppContext {
 
   getUriApps(params: UriParams) {
     return generatePath(this.cfg.routes.clusterApps, { ...params });
+  }
+
+  addCluster(cluster: serviceTypes.Cluster) {
+    this.storeApp.addCluster(cluster);
   }
 }

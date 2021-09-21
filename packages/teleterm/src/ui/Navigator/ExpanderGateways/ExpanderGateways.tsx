@@ -21,9 +21,17 @@ import Expander, { ExpanderHeader, ExpanderContent } from './../Expander';
 import { Item } from './../useNavigator';
 import NavItem from './../NavItem';
 import StatusIndicator from './StatusIndicator';
+import useExpanderGateways, { State } from './useExpanderGateways';
 
-const ExpanderGateways: React.FC<Props> = props => {
-  const $items = props.items.map(i => <GateWayItem key={i.uri} item={i} />);
+export default function Container() {
+  const state = useExpanderGateways();
+  return <ExpanderGateways {...state} />;
+}
+
+export const ExpanderGateways: React.FC<State> = props => {
+  const $items = props.gatewayItems.map(i => (
+    <GateWayItem key={i.uri} item={i} />
+  ));
 
   return (
     <Expander>
@@ -59,12 +67,6 @@ const GateWayItem: React.FC<GatewayItemProps> = props => {
   );
 };
 
-type Props = {
-  items: Item[];
-};
-
 type GatewayItemProps = {
   item: Item;
 };
-
-export default ExpanderGateways;
