@@ -15,20 +15,19 @@ limitations under the License.
 */
 
 import { Store } from 'shared/libs/stores';
+import clusters from 'teleport/services/clusters';
 import { Cluster } from './../../services/types';
 import { Document } from './../types';
 
 type State = {
   clusters: Cluster[];
   docs: Document[];
-  activeModal: 'addCluster' | '';
   location: string;
 };
 
 export default class StoreApp extends Store<State> {
   state: State = {
     clusters: [],
-    activeModal: '',
     location: '/home',
     docs: [
       {
@@ -50,11 +49,11 @@ export default class StoreApp extends Store<State> {
     this.setState({ clusters });
   }
 
-  async setLocation(location: string) {
+  setLocation(location: string) {
     this.setState({ location });
   }
 
-  async addDocument(doc: Document) {
+  addDocument(doc: Document) {
     const item: Document = {
       uri: Math.floor(Math.random() * 100000) + '',
       ...doc,
@@ -103,6 +102,12 @@ export default class StoreApp extends Store<State> {
     return '/';
   }
 
+  addCluster(cluster: Cluster) {
+    this.setState({
+      clusters: [...this.state.clusters, cluster],
+    });
+  }
+
   findDocument(uri: string) {
     return this.state.docs.find(i => i.uri === uri);
   }
@@ -121,9 +126,5 @@ export default class StoreApp extends Store<State> {
 
   getLocation() {
     return this.state.location;
-  }
-
-  closeModal() {
-    this.setState({ activeModal: '' });
   }
 }

@@ -15,26 +15,29 @@
  */
 
 import React, { useState } from 'react';
-import Dialog, {
-  DialogHeader,
-  DialogTitle,
-  DialogContent,
-  DialogFooter,
-} from 'design/Dialog';
-import { Box, Text, Flex, ButtonPrimary, ButtonSecondary, Link } from 'design';
+import Dialog from 'design/Dialog';
+import { Box, Text, Flex, ButtonPrimary, ButtonSecondary } from 'design';
 import FieldInput from 'shared/components/FieldInput';
-import Validation, { Validator } from 'shared/components/Validation';
+import * as Alerts from 'design/Alert';
+import { useAppContext } from 'teleterm/ui/appContextProvider';
+import Validation from 'shared/components/Validation';
 import { requiredField } from 'shared/components/Validation/rules';
 import * as Icons from 'design/Icon';
-import CmdText from 'gravity/components/CmdText';
+import useAsync from 'teleterm/ui/useAsync';
 
-export default function AddCluster({ onClose, onNext }: Props) {
+export default function AddCluster({ onClose }: Props) {
   const [addr, setAddr] = useState('');
-  const handleOK = () => {
-    //apt.addCluster(add)
-    // const [ cluster, status, statusText ] = await ctx.addCluster(add)
-    // ctx.storeApp.addCluster(cluster)
-  };
+  const ctx = useAppContext();
+  const [{ data, status, statusText }, execute] = useAsync(async () => {
+    return ctx.servicePlatform.addCluster(addr);
+  });
+
+  React.useEffect(() => {
+    if (status === 'success') {
+      ctx.addCluster(data);
+      onClose();
+    }
+  }, [status]);
 
   return (
     <Validation>
@@ -63,6 +66,9 @@ export default function AddCluster({ onClose, onNext }: Props) {
                 <Text mb={5} color="text.secondary" typography="h5">
                   For example, https://teleport.example.com
                 </Text>
+                {status === 'error' && (
+                  <Alerts.Danger mx={5} mb={0} mt={5} children={statusText} />
+                )}
                 <FieldInput
                   maxWidth="380px"
                   rule={requiredField('Cluster address is required')}
@@ -74,20 +80,24 @@ export default function AddCluster({ onClose, onNext }: Props) {
               </Flex>
               <Box mt="5">
                 <ButtonPrimary
+                  disabled={status === 'processing'}
                   mr="3"
-                  onClick={() => validator.validate() && onNext(addr)}
+                  onClick={() => validator.validate() && execute()}
                 >
                   Next
                 </ButtonPrimary>
-                <ButtonSecondary onClick={onClose}>CANCEL</ButtonSecondary>
+                <ButtonSecondary
+                  disabled={status === 'processing'}
+                  onClick={onClose}
+                >
+                  CANCEL
+                </ButtonSecondary>
               </Box>
             </Flex>
             <Flex width="300px" flexDirection="column" bg="primary.light">
-              <Icons.Add
-                style={{ textAlign: 'center' }}
-                fontSize="150px"
-                color="primary.lighter"
-              />
+              <Text p={5} typography="h3" color="text.secondary">
+                Some text and graphics
+              </Text>
             </Flex>
           </Flex>
         </Dialog>
@@ -99,24 +109,3 @@ export default function AddCluster({ onClose, onNext }: Props) {
 export type Props = {
   onClose(): void;
 };
-
-/*
-
-      <FieldInput
-              rule={requiredField('Cluster address is required')}
-              label="Cluster URL"
-              value={addr}
-              onChange={e => setAddr(e.target.value)}
-              placeholder="https://cluster"
-            />
-
-            <Flex
-              width="250px"
-              bg="primary.light"
-              alignItems="center"
-              justifyContent="center"
-            >
-              No Existing Log Forwarders
-            </Flex>
-
-*/

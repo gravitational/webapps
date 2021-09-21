@@ -30,7 +30,7 @@ export default function Container() {
 }
 
 export function Navigator(props: State) {
-  const { clusterItems, gatewayItems, homeItem } = props;
+  const { homeItem } = props;
   return (
     <Nav bg="primary.dark">
       <Text
@@ -46,8 +46,8 @@ export function Navigator(props: State) {
         <Icons.Home mr={2} />
         <Text typography="h4">{homeItem.title}</Text>
       </NavItem>
-      <ExpanderGateways items={gatewayItems} />
-      <ExpanderClusters items={clusterItems} />
+      <ExpanderGateways />
+      <ExpanderClusters />
     </Nav>
   );
 }
@@ -56,4 +56,5 @@ const Nav = styled(Flex)`
   overflow: auto;
   height: 100%;
   flex-direction: column;
+  user-select: none;
 `;

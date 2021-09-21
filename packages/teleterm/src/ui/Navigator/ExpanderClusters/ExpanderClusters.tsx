@@ -15,16 +15,40 @@ limitations under the License.
 */
 
 import React from 'react';
-import { Flex, Text, ButtonIcon } from 'design';
+import { Flex, Text, ButtonIcon, ButtonBorder } from 'design';
 import * as Icons from 'design/Icon';
-import Expander, { ExpanderHeader, ExpanderContent } from './../Expander';
-import { Item } from './../useNavigator';
-import NavItem from './../NavItem';
+import Expander, {
+  ExpanderHeader,
+  ExpanderContent,
+  StyledHeader,
+} from './../Expander';
+import NavItem, { StyledNavItem } from 'teleterm/ui/Navigator/NavItem';
+import { useAppContext } from 'teleterm/ui/appContextProvider';
+import useExpanderClusters, {
+  State,
+  ClusterNavItem,
+} from './useExpanderClusters';
 
-const ClusterGroup: React.FC<Props> = props => {
-  const $clusters = props.items.map(i => (
-    <ClusterExpander key={i.uri} item={i} />
-  ));
+import { StyledBorder } from 'teleterm/ui/Navigator/Expander';
+
+export default function Container() {
+  const state = useExpanderClusters();
+  return <ExpanderClusters {...state} />;
+}
+
+export const ExpanderClusters: React.FC<State> = props => {
+  const ctx = useAppContext();
+  const $onlineClusters = props.clusterItems
+    .filter(i => i.connected)
+    .map(i => <ClusterItem key={i.uri} item={i} />);
+  const $offlineClusters = props.clusterItems
+    .filter(i => !i.connected)
+    .map(i => <ClusterOfflineItem key={i.uri} item={i} />);
+
+  const handleAdd = (e: React.SyntheticEvent) => {
+    e.stopPropagation();
+    ctx.storeCmd.setCommand({ kind: 'dialog.addCluster.open' });
+  };
 
   return (
     <Expander>
@@ -35,18 +59,21 @@ const ClusterGroup: React.FC<Props> = props => {
             <ButtonIcon p={3} color="text.placeholder">
               <Icons.Restore />
             </ButtonIcon>
-            <ButtonIcon color="text.placeholder">
+            <ButtonIcon color="text.placeholder" onClick={handleAdd}>
               <Icons.Add />
             </ButtonIcon>
           </Flex>
         </Flex>
       </ExpanderHeader>
-      <ExpanderContent>{$clusters}</ExpanderContent>
+      <ExpanderContent>
+        {$onlineClusters}
+        {$offlineClusters}
+      </ExpanderContent>
     </Expander>
   );
 };
 
-const ClusterExpander: React.FC<ClusterItemProps> = props => {
+const ClusterItem: React.FC<{ item: ClusterNavItem }> = props => {
   const { title } = props.item;
   const $navItems = props.item.items.map(i => (
     <NavItem pl={9} key={i.uri} item={i} />
@@ -72,12 +99,44 @@ const ClusterExpander: React.FC<ClusterItemProps> = props => {
   );
 };
 
-type Props = {
-  items: Item[];
+const ClusterOfflineItem: React.FC<{ item: ClusterNavItem }> = props => {
+  const { title } = props.item;
+
+  return (
+    <Expander>
+      <ExpanderHeader pl={5} color="grey.500">
+        <Flex
+          alignItems="center"
+          justifyContent="space-between"
+          flex="1"
+          width="100%"
+        >
+          <Text typography="h5">{title}</Text>
+          <ButtonIcon color="text.placeholder">
+            <Icons.Trash />
+          </ButtonIcon>
+        </Flex>
+      </ExpanderHeader>
+      <ExpanderContent>
+        <StyledNavItem pl={8}>
+          <Text color="text.secondary">
+            <ButtonBorder size="small">connect</ButtonBorder>
+          </Text>
+        </StyledNavItem>
+      </ExpanderContent>
+    </Expander>
+  );
 };
 
-type ClusterItemProps = {
-  item: Item;
-};
+/*
+{!props.item.connected && (
+        <ExpanderContent>
+          <StyledNavItem pl={8}>
+            <Text color="text.secondary">
+              <ButtonBorder size="small">connect</ButtonBorder>
+            </Text>
+          </StyledNavItem>
+        </ExpanderContent>
+      )}
 
-export default ClusterGroup;
+*/
