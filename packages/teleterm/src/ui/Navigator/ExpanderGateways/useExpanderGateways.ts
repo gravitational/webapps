@@ -14,35 +14,30 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import { useAppContext, useAppStore } from './../appContextProvider';
-import AppContext from './../appContext';
 import * as Icons from 'design/Icon';
-import * as types from '../types';
+import { useAppContext } from 'teleterm/ui/appContextProvider';
+import AppContext from 'teleterm/ui/appContext';
+import * as types from 'teleterm/ui/types';
 
-export default function useNavigator() {
+export default function useExpanderGateways() {
   const ctx = useAppContext();
-  useAppStore();
-  const homeItem = initHomeItem(ctx);
-
-  function processItemClick(item: types.NavItem) {
-    ctx.openDocument(item.uri);
-  }
-
+  const gatewayItems = initGatewayItems(ctx);
   return {
-    homeItem,
-    processItemClick,
+    gatewayItems,
   };
 }
 
-function initHomeItem(ctx: AppContext): types.NavItem {
-  return {
-    title: 'Home',
-    Icon: Icons.Clusters,
-    uri: ctx.cfg.routes.home,
-    kind: 'home',
-    items: [],
-    group: false,
-  };
+function initGatewayItems(ctx: AppContext): types.NavItem[] {
+  return [
+    {
+      title: 'platform.teleport.sh/dbs/mongo-prod',
+      Icon: Icons.Clusters,
+      uri: ctx.cfg.routes.gateways,
+      kind: 'gateways',
+      items: [],
+      group: false,
+    },
+  ];
 }
 
-export type State = ReturnType<typeof useNavigator>;
+export type State = ReturnType<typeof useExpanderGateways>;

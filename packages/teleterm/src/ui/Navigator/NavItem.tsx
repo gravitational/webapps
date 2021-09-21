@@ -17,13 +17,13 @@ limitations under the License.
 import React from 'react';
 import styled from 'styled-components';
 import { color, space } from 'design/system';
-import { Item } from './useNavigator';
+import * as types from 'teleterm/ui/types';
 import Icon from 'design/Icon';
 import { useAppContext } from './../appContextProvider';
 
 type Props = {
-  item?: Item;
-  onClick?: (item: Item) => void;
+  item?: types.NavItem;
+  onClick?: (item: types.NavItem) => void;
   [key: string]: any;
 };
 
@@ -56,7 +56,7 @@ const NavItem: React.FC<Props> = props => {
   );
 };
 
-const StyledNavItem = styled.div(props => {
+export const StyledNavItem = styled.div(props => {
   const { theme, $active } = props;
   const activeColors = $active
     ? {

@@ -27,10 +27,10 @@ import * as types from '../types';
 
 type Props = {
   visible: boolean;
-  doc: types.DocumentServers;
+  doc: types.DocumentDatabases;
 };
 
-export default function DocumentNodes(props: Props) {
+export default function DocumentDbs(props: Props) {
   const { doc, visible } = props;
   const { results, setSearchValue, searchValue } = useDatabases(doc);
 

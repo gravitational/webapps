@@ -19,7 +19,7 @@ import { useAppContext } from 'teleterm/ui/appContextProvider';
 import * as types from 'teleterm/ui/types';
 import useAsync from 'teleterm/ui/useAsync';
 
-export default function useNodes({ clusterId }: types.DocumentServers) {
+export default function useNodes({ clusterId }: types.DocumentDatabases) {
   const ctx = useAppContext();
   const [searchValue, setSearchValue] = useState('');
   const [results, execute] = useAsync(() => {

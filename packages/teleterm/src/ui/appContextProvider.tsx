@@ -38,3 +38,8 @@ export function useAppStore() {
   const ctx = React.useContext(AppReactContext);
   return useStore(ctx.storeApp);
 }
+
+export function useCmdStore() {
+  const ctx = React.useContext(AppReactContext);
+  return useStore(ctx.storeCmd);
+}

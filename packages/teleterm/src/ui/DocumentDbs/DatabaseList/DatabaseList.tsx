@@ -157,7 +157,6 @@ function searchAndFilterCb(
 type Props = {
   databases: Database[];
   pageSize?: number;
-  clusterId: string;
   searchValue: string;
 };
 
