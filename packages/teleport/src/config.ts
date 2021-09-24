@@ -114,6 +114,11 @@ const cfg = {
     nodeTokenPath: '/v1/enterprise/nodes/token',
     nodeScriptPath: '/scripts/:token/install-node.sh',
     appNodeScriptPath: '/scripts/:token/install-app.sh?name=:name&uri=:uri',
+
+    mfaAuthnChallengeWithTokenPath:
+      '/v1/webapi/mfa/token/:tokenId/authenticatechallenge',
+    mfaDeviceListPath: '/v1/webapi/mfa/token/:tokenId/devices',
+    mfaDevicePath: '/v1/webapi/mfa/token/:tokenId/devices/:deviceName',
   },
 
   getAppFqdnUrl(params: UrlAppParams) {
@@ -303,6 +308,20 @@ const cfg = {
 
   getKubernetesUrl(clusterId: string) {
     return generatePath(cfg.api.kubernetesPath, { clusterId });
+  },
+
+  getAuthnChallengeWithTokenUrl(tokenId: string) {
+    return generatePath(cfg.api.mfaAuthnChallengeWithTokenPath, {
+      tokenId,
+    });
+  },
+
+  getMfaDeviceListUrl(tokenId: string) {
+    return generatePath(cfg.api.mfaDeviceListPath, { tokenId });
+  },
+
+  getMfaDeviceUrl(tokenId: string, deviceName: string) {
+    return generatePath(cfg.api.mfaDevicePath, { tokenId, deviceName });
   },
 
   init(backendConfig = {}) {

@@ -14,12 +14,12 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React, { useState } from 'react';
+import React, { useState, useMemo } from 'react';
 import { Attempt } from 'shared/hooks/useAttemptNext';
 import { Text, Card, ButtonPrimary, Flex, Box, Link } from 'design';
 import * as Alerts from 'design/Alert';
 import { Auth2faType } from 'shared/services';
-import { Option } from 'shared/components/Select';
+import { getMfaOptions, MfaOption } from 'teleport/services/mfa/utils';
 import FieldSelect from '../FieldSelect';
 import FieldInput from '../FieldInput';
 import Validation, { Validator } from '../Validation';
@@ -55,23 +55,7 @@ export default function FormInvite(props: Props) {
   const [passwordConfirmed, setPasswordConfirmed] = useState('');
   const [token, setToken] = useState('');
 
-  const [mfaOptions] = useState<MFAOption[]>(() => {
-    const mfaOptions: MFAOption[] = [];
-
-    if (auth2faType === 'optional' || auth2faType === 'off') {
-      mfaOptions.push({ value: 'optional', label: 'NONE' });
-    }
-
-    if (mfaEnabled || u2fEnabled) {
-      mfaOptions.push({ value: 'u2f', label: 'U2F' });
-    }
-
-    if (mfaEnabled || otpEnabled) {
-      mfaOptions.push({ value: 'otp', label: 'TOTP' });
-    }
-
-    return mfaOptions;
-  });
+  const mfaOptions = useMemo<MfaOption[]>(() => getMfaOptions(auth2faType), []);
 
   const [mfaType, setMfaType] = useState(mfaOptions[0]);
 
@@ -94,7 +78,7 @@ export default function FormInvite(props: Props) {
     }
   }
 
-  function onSetMfaOption(option: MFAOption, validator: Validator) {
+  function onSetMfaOption(option: MfaOption, validator: Validator) {
     setToken('');
     clearSubmitAttempt();
     validator.reset();
@@ -136,39 +120,38 @@ export default function FormInvite(props: Props) {
                 placeholder="Confirm Password"
               />
               {secondFactorEnabled && (
-                <Flex alignItems="flex-end" mb={4}>
-                  <Box width="50%" data-testid="mfa-select">
-                    <FieldSelect
-                      label="Second factor"
-                      value={mfaType}
-                      options={mfaOptions}
-                      onChange={opt =>
-                        onSetMfaOption(opt as MFAOption, validator)
-                      }
-                      mr={3}
-                      mb={0}
-                      isDisabled={attempt.status === 'processing'}
+                <Flex alignItems="center">
+                  <FieldSelect
+                    maxWidth="50%"
+                    width="100%"
+                    data-testid="mfa-select"
+                    label="Two-factor type"
+                    value={mfaType}
+                    options={mfaOptions}
+                    onChange={opt =>
+                      onSetMfaOption(opt as MfaOption, validator)
+                    }
+                    mr={3}
+                    isDisabled={attempt.status === 'processing'}
+                  />
+                  {mfaType.value === 'otp' && (
+                    <FieldInput
+                      width="50%"
+                      label="Authenticator code"
+                      rule={requiredToken}
+                      autoComplete="off"
+                      value={token}
+                      onChange={e => setToken(e.target.value)}
+                      placeholder="123 456"
                     />
-                  </Box>
-                  <Box width="50%">
-                    {mfaType.value === 'otp' && (
-                      <FieldInput
-                        label="two-factor token"
-                        rule={requiredToken}
-                        autoComplete="off"
-                        value={token}
-                        onChange={e => setToken(e.target.value)}
-                        placeholder="123 456"
-                        mb={0}
-                      />
+                  )}
+                  {mfaType.value === 'u2f' &&
+                    attempt.status === 'processing' && (
+                      <Text typography="body2">
+                        Insert your hardware key and press the button on the
+                        key.
+                      </Text>
                     )}
-                    {mfaType.value === 'u2f' &&
-                      attempt.status === 'processing' && (
-                        <Text typography="body2" mb={1}>
-                          Insert your U2F key and press the button on the key.
-                        </Text>
-                      )}
-                  </Box>
                 </Flex>
               )}
               <ButtonPrimary
@@ -237,5 +220,3 @@ function ErrorMessage({ message = '' }) {
     </Alerts.Danger>
   );
 }
-
-type MFAOption = Option<Auth2faType>;

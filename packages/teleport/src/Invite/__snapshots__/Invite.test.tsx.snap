@@ -14,16 +14,13 @@ exports[`teleport/components/Invite should render form with token requirement wh
 
 .c10 {
   box-sizing: border-box;
-  width: 50%;
-}
-
-.c11 {
-  box-sizing: border-box;
-  margin-bottom: 0px;
+  max-width: 50%;
+  margin-bottom: 24px;
   margin-right: 16px;
+  width: 100%;
 }
 
-.c14 {
+.c13 {
   box-sizing: border-box;
   padding: 40px;
   background-color: #1C254D;
@@ -32,17 +29,12 @@ exports[`teleport/components/Invite should render form with token requirement wh
   border-bottom-right-radius: 8px;
 }
 
-.c15 {
+.c14 {
   box-sizing: border-box;
   width: 168px;
 }
 
-.c17 {
-  box-sizing: border-box;
-  color: rgba(255,255,255,0.87);
-}
-
-.c13 {
+.c12 {
   line-height: 1.5;
   margin: 0;
   display: inline-flex;
@@ -70,20 +62,20 @@ exports[`teleport/components/Invite should render form with token requirement wh
   width: 100%;
 }
 
-.c13:active {
+.c12:active {
   opacity: 0.56;
 }
 
-.c13:hover,
-.c13:focus {
+.c12:hover,
+.c12:focus {
   background: #651FFF;
 }
 
-.c13:active {
+.c12:active {
   background: #354AA4;
 }
 
-.c13:disabled {
+.c12:disabled {
   background: rgba(255,255,255,0.12);
   color: rgba(255,255,255,0.3);
 }
@@ -138,15 +130,6 @@ exports[`teleport/components/Invite should render form with token requirement wh
   margin-bottom: 4px;
 }
 
-.c20 {
-  color: #03a9f4;
-  font-weight: normal;
-  background: none;
-  text-decoration: underline;
-  text-transform: none;
-  color: #FFFFFF;
-}
-
 .c0 {
   display: block;
   outline: none;
@@ -181,7 +164,7 @@ exports[`teleport/components/Invite should render form with token requirement wh
   margin-bottom: 16px;
 }
 
-.c16 {
+.c15 {
   overflow: hidden;
   text-overflow: ellipsis;
   font-weight: 400;
@@ -191,7 +174,7 @@ exports[`teleport/components/Invite should render form with token requirement wh
   margin-bottom: 8px;
 }
 
-.c18 {
+.c16 {
   overflow: hidden;
   text-overflow: ellipsis;
   font-weight: 300;
@@ -201,9 +184,10 @@ exports[`teleport/components/Invite should render form with token requirement wh
   margin-bottom: 16px;
 }
 
-.c19 {
+.c17 {
   overflow: hidden;
   text-overflow: ellipsis;
+  text-transform: uppercase;
   font-weight: 600;
   margin: 0px;
 }
@@ -215,12 +199,11 @@ exports[`teleport/components/Invite should render form with token requirement wh
 
 .c9 {
   box-sizing: border-box;
-  margin-bottom: 24px;
   display: flex;
-  align-items: flex-end;
+  align-items: center;
 }
 
-.c12 .react-select-container {
+.c11 .react-select-container {
   box-shadow: inset 0 2px 4px rgba(0,0,0,0.24);
   box-sizing: border-box;
   border: none;
@@ -234,8 +217,8 @@ exports[`teleport/components/Invite should render form with token requirement wh
   border-radius: 4px;
 }
 
-.c12 .react-select__control,
-.c12 .react-select__control--is-focused {
+.c11 .react-select__control,
+.c11 .react-select__control--is-focused {
   min-height: 40px;
   height: 40px;
   background-color: transparent;
@@ -246,48 +229,48 @@ exports[`teleport/components/Invite should render form with token requirement wh
   box-shadow: none;
 }
 
-.c12 .react-select__control:hover,
-.c12 .react-select__control--is-focused:hover {
+.c11 .react-select__control:hover,
+.c11 .react-select__control--is-focused:hover {
   border-color: transparent;
   cursor: pointer;
 }
 
-.c12 .react-select__option:hover {
+.c11 .react-select__option:hover {
   cursor: pointer;
   background-color: #eceff1;
 }
 
-.c12 .react-select__option--is-focused {
+.c11 .react-select__option--is-focused {
   background-color: #eceff1;
 }
 
-.c12 .react-select__option--is-selected {
+.c11 .react-select__option--is-selected {
   background-color: #cfd8dc;
   color: inherit;
 }
 
-.c12 .react-select__option--is-selected:hover {
+.c11 .react-select__option--is-selected:hover {
   background-color: #cfd8dc;
 }
 
-.c12 .react-select__menu {
+.c11 .react-select__menu {
   margin-top: 0px;
 }
 
-.c12 .react-select__indicator-separator {
+.c11 .react-select__indicator-separator {
   display: none;
 }
 
-.c12 .react-select__loading-indicator {
+.c11 .react-select__loading-indicator {
   display: none;
 }
 
-.c12 .react-select--is-disabled .react-select__single-value,
-.c12 .react-select--is-disabled .react-select__placeholder {
+.c11 .react-select--is-disabled .react-select__single-value,
+.c11 .react-select--is-disabled .react-select__placeholder {
   color: rgba(0,0,0,0.24);
 }
 
-.c12 .react-select--is-disabled .react-select__indicator {
+.c11 .react-select--is-disabled .react-select__indicator {
   color: rgba(0,0,0,0.14);
 }
 
@@ -359,79 +342,71 @@ exports[`teleport/components/Invite should render form with token requirement wh
           <div
             class="c10"
             data-testid="mfa-select"
-            width="50%"
+            width="100%"
           >
+            <label
+              class="c7"
+              font-size="0"
+            >
+              Two-factor type
+            </label>
             <div
               class="c11"
             >
-              <label
-                class="c7"
-                font-size="0"
-              >
-                Second factor
-              </label>
               <div
-                class="c12"
+                class="react-select-container css-2b097c-container"
               >
                 <div
-                  class="react-select-container css-2b097c-container"
+                  class="react-select__control css-yk16xz-control"
                 >
                   <div
-                    class="react-select__control css-yk16xz-control"
+                    class="react-select__value-container react-select__value-container--has-value css-g1d714-ValueContainer"
                   >
                     <div
-                      class="react-select__value-container react-select__value-container--has-value css-g1d714-ValueContainer"
+                      class="react-select__single-value css-1uccc91-singleValue"
                     >
-                      <div
-                        class="react-select__single-value css-1uccc91-singleValue"
-                      >
-                        U2F
-                      </div>
-                      <input
-                        aria-autocomplete="list"
-                        class="css-62g3xt-dummyInput"
-                        id="react-select-4-input"
-                        readonly=""
-                        tabindex="0"
-                        value=""
-                      />
+                      Hardware Key
                     </div>
+                    <input
+                      aria-autocomplete="list"
+                      class="css-62g3xt-dummyInput"
+                      id="react-select-4-input"
+                      readonly=""
+                      tabindex="0"
+                      value=""
+                    />
+                  </div>
+                  <div
+                    class="react-select__indicators css-1hb7zxy-IndicatorsContainer"
+                  >
+                    <span
+                      class="react-select__indicator-separator css-1okebmr-indicatorSeparator"
+                    />
                     <div
-                      class="react-select__indicators css-1hb7zxy-IndicatorsContainer"
+                      aria-hidden="true"
+                      class="react-select__indicator react-select__dropdown-indicator css-tlfecz-indicatorContainer"
                     >
-                      <span
-                        class="react-select__indicator-separator css-1okebmr-indicatorSeparator"
-                      />
-                      <div
+                      <svg
                         aria-hidden="true"
-                        class="react-select__indicator react-select__dropdown-indicator css-tlfecz-indicatorContainer"
+                        class="css-6q0nyr-Svg"
+                        focusable="false"
+                        height="20"
+                        viewBox="0 0 20 20"
+                        width="20"
                       >
-                        <svg
-                          aria-hidden="true"
-                          class="css-6q0nyr-Svg"
-                          focusable="false"
-                          height="20"
-                          viewBox="0 0 20 20"
-                          width="20"
-                        >
-                          <path
-                            d="M4.516 7.548c0.436-0.446 1.043-0.481 1.576 0l3.908 3.747 3.908-3.747c0.533-0.481 1.141-0.446 1.574 0 0.436 0.445 0.408 1.197 0 1.615-0.406 0.418-4.695 4.502-4.695 4.502-0.217 0.223-0.502 0.335-0.787 0.335s-0.57-0.112-0.789-0.335c0 0-4.287-4.084-4.695-4.502s-0.436-1.17 0-1.615z"
-                          />
-                        </svg>
-                      </div>
+                        <path
+                          d="M4.516 7.548c0.436-0.446 1.043-0.481 1.576 0l3.908 3.747 3.908-3.747c0.533-0.481 1.141-0.446 1.574 0 0.436 0.445 0.408 1.197 0 1.615-0.406 0.418-4.695 4.502-4.695 4.502-0.217 0.223-0.502 0.335-0.787 0.335s-0.57-0.112-0.789-0.335c0 0-4.287-4.084-4.695-4.502s-0.436-1.17 0-1.615z"
+                        />
+                      </svg>
                     </div>
                   </div>
                 </div>
               </div>
             </div>
           </div>
-          <div
-            class="c10"
-            width="50%"
-          />
         </div>
         <button
-          class="c13"
+          class="c12"
           kind="primary"
           width="100%"
         >
@@ -439,50 +414,29 @@ exports[`teleport/components/Invite should render form with token requirement wh
         </button>
       </div>
       <div
-        class="c14"
+        class="c13"
       >
         <div
-          class="c15"
+          class="c14"
           width="168px"
         >
           <div
-            class="c16"
+            class="c15"
           >
-            Insert your U2F key
+            Insert your hardware key
           </div>
           <div
-            class="c17"
-            color="text.primary"
+            class="c16"
           >
-            <div
-              class="c18"
+            Press the button on the hardware key after you press the
+             
+            <span
+              class="c17"
             >
-              Press the button on the U2F key after you press the
-               
-              <span
-                class="c19"
-                style="text-transform: uppercase;"
-              >
-                Create Account
-              </span>
-               
-              button.
-            </div>
-            <div
-              class="c18"
-            >
-              <a
-                class="c20"
-                color="light"
-                href="https://support.google.com/accounts/answer/6103523?hl=en"
-                rel="noreferrer"
-                target="_blank"
-              >
-                Learn more
-              </a>
-               
-              about U2F 2-Step Verification.
-            </div>
+              Create Account
+            </span>
+             
+            button.
           </div>
         </div>
       </div>
@@ -505,16 +459,13 @@ exports[`teleport/components/Invite should render form with token requirement wh
 
 .c10 {
   box-sizing: border-box;
-  width: 50%;
-}
-
-.c11 {
-  box-sizing: border-box;
-  margin-bottom: 0px;
+  max-width: 50%;
+  margin-bottom: 24px;
   margin-right: 16px;
+  width: 100%;
 }
 
-.c13 {
+.c12 {
   line-height: 1.5;
   margin: 0;
   display: inline-flex;
@@ -542,20 +493,20 @@ exports[`teleport/components/Invite should render form with token requirement wh
   width: 100%;
 }
 
-.c13:active {
+.c12:active {
   opacity: 0.56;
 }
 
-.c13:hover,
-.c13:focus {
+.c12:hover,
+.c12:focus {
   background: #651FFF;
 }
 
-.c13:active {
+.c12:active {
   background: #354AA4;
 }
 
-.c13:disabled {
+.c12:disabled {
   background: rgba(255,255,255,0.12);
   color: rgba(255,255,255,0.3);
 }
@@ -651,12 +602,11 @@ exports[`teleport/components/Invite should render form with token requirement wh
 
 .c9 {
   box-sizing: border-box;
-  margin-bottom: 24px;
   display: flex;
-  align-items: flex-end;
+  align-items: center;
 }
 
-.c12 .react-select-container {
+.c11 .react-select-container {
   box-shadow: inset 0 2px 4px rgba(0,0,0,0.24);
   box-sizing: border-box;
   border: none;
@@ -670,8 +620,8 @@ exports[`teleport/components/Invite should render form with token requirement wh
   border-radius: 4px;
 }
 
-.c12 .react-select__control,
-.c12 .react-select__control--is-focused {
+.c11 .react-select__control,
+.c11 .react-select__control--is-focused {
   min-height: 40px;
   height: 40px;
   background-color: transparent;
@@ -682,48 +632,48 @@ exports[`teleport/components/Invite should render form with token requirement wh
   box-shadow: none;
 }
 
-.c12 .react-select__control:hover,
-.c12 .react-select__control--is-focused:hover {
+.c11 .react-select__control:hover,
+.c11 .react-select__control--is-focused:hover {
   border-color: transparent;
   cursor: pointer;
 }
 
-.c12 .react-select__option:hover {
+.c11 .react-select__option:hover {
   cursor: pointer;
   background-color: #eceff1;
 }
 
-.c12 .react-select__option--is-focused {
+.c11 .react-select__option--is-focused {
   background-color: #eceff1;
 }
 
-.c12 .react-select__option--is-selected {
+.c11 .react-select__option--is-selected {
   background-color: #cfd8dc;
   color: inherit;
 }
 
-.c12 .react-select__option--is-selected:hover {
+.c11 .react-select__option--is-selected:hover {
   background-color: #cfd8dc;
 }
 
-.c12 .react-select__menu {
+.c11 .react-select__menu {
   margin-top: 0px;
 }
 
-.c12 .react-select__indicator-separator {
+.c11 .react-select__indicator-separator {
   display: none;
 }
 
-.c12 .react-select__loading-indicator {
+.c11 .react-select__loading-indicator {
   display: none;
 }
 
-.c12 .react-select--is-disabled .react-select__single-value,
-.c12 .react-select--is-disabled .react-select__placeholder {
+.c11 .react-select--is-disabled .react-select__single-value,
+.c11 .react-select--is-disabled .react-select__placeholder {
   color: rgba(0,0,0,0.24);
 }
 
-.c12 .react-select--is-disabled .react-select__indicator {
+.c11 .react-select--is-disabled .react-select__indicator {
   color: rgba(0,0,0,0.14);
 }
 
@@ -795,79 +745,71 @@ exports[`teleport/components/Invite should render form with token requirement wh
           <div
             class="c10"
             data-testid="mfa-select"
-            width="50%"
+            width="100%"
           >
+            <label
+              class="c7"
+              font-size="0"
+            >
+              Two-factor type
+            </label>
             <div
               class="c11"
             >
-              <label
-                class="c7"
-                font-size="0"
-              >
-                Second factor
-              </label>
               <div
-                class="c12"
+                class="react-select-container css-2b097c-container"
               >
                 <div
-                  class="react-select-container css-2b097c-container"
+                  class="react-select__control css-yk16xz-control"
                 >
                   <div
-                    class="react-select__control css-yk16xz-control"
+                    class="react-select__value-container react-select__value-container--has-value css-g1d714-ValueContainer"
                   >
                     <div
-                      class="react-select__value-container react-select__value-container--has-value css-g1d714-ValueContainer"
+                      class="react-select__single-value css-1uccc91-singleValue"
                     >
-                      <div
-                        class="react-select__single-value css-1uccc91-singleValue"
-                      >
-                        NONE
-                      </div>
-                      <input
-                        aria-autocomplete="list"
-                        class="css-62g3xt-dummyInput"
-                        id="react-select-5-input"
-                        readonly=""
-                        tabindex="0"
-                        value=""
-                      />
+                      None
                     </div>
+                    <input
+                      aria-autocomplete="list"
+                      class="css-62g3xt-dummyInput"
+                      id="react-select-5-input"
+                      readonly=""
+                      tabindex="0"
+                      value=""
+                    />
+                  </div>
+                  <div
+                    class="react-select__indicators css-1hb7zxy-IndicatorsContainer"
+                  >
+                    <span
+                      class="react-select__indicator-separator css-1okebmr-indicatorSeparator"
+                    />
                     <div
-                      class="react-select__indicators css-1hb7zxy-IndicatorsContainer"
+                      aria-hidden="true"
+                      class="react-select__indicator react-select__dropdown-indicator css-tlfecz-indicatorContainer"
                     >
-                      <span
-                        class="react-select__indicator-separator css-1okebmr-indicatorSeparator"
-                      />
-                      <div
+                      <svg
                         aria-hidden="true"
-                        class="react-select__indicator react-select__dropdown-indicator css-tlfecz-indicatorContainer"
+                        class="css-6q0nyr-Svg"
+                        focusable="false"
+                        height="20"
+                        viewBox="0 0 20 20"
+                        width="20"
                       >
-                        <svg
-                          aria-hidden="true"
-                          class="css-6q0nyr-Svg"
-                          focusable="false"
-                          height="20"
-                          viewBox="0 0 20 20"
-                          width="20"
-                        >
-                          <path
-                            d="M4.516 7.548c0.436-0.446 1.043-0.481 1.576 0l3.908 3.747 3.908-3.747c0.533-0.481 1.141-0.446 1.574 0 0.436 0.445 0.408 1.197 0 1.615-0.406 0.418-4.695 4.502-4.695 4.502-0.217 0.223-0.502 0.335-0.787 0.335s-0.57-0.112-0.789-0.335c0 0-4.287-4.084-4.695-4.502s-0.436-1.17 0-1.615z"
-                          />
-                        </svg>
-                      </div>
+                        <path
+                          d="M4.516 7.548c0.436-0.446 1.043-0.481 1.576 0l3.908 3.747 3.908-3.747c0.533-0.481 1.141-0.446 1.574 0 0.436 0.445 0.408 1.197 0 1.615-0.406 0.418-4.695 4.502-4.695 4.502-0.217 0.223-0.502 0.335-0.787 0.335s-0.57-0.112-0.789-0.335c0 0-4.287-4.084-4.695-4.502s-0.436-1.17 0-1.615z"
+                        />
+                      </svg>
                     </div>
                   </div>
                 </div>
               </div>
             </div>
           </div>
-          <div
-            class="c10"
-            width="50%"
-          />
         </div>
         <button
-          class="c13"
+          class="c12"
           kind="primary"
           width="100%"
         >
