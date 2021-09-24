@@ -89,15 +89,19 @@ export default class Client extends EventEmitter {
     }
   }
 
+  times = [];
+
   // Assuming we have a message of type PNG_FRAME, extract its
   // bounds and png bitmap and emit a render event.
   processFrame(buffer: ArrayBuffer) {
-    const { left, top } = this.codec.decodeRegion(buffer);
-    console.log(`left: ${left} top: ${top}`);
+    var startTime = performance.now();
+    const { left, top, right, bottom } = this.codec.decodeRegion(buffer);
     this.codec
-      .decodePng(buffer)
+      .decodePng(buffer, right - left, bottom - top)
       .then(bitmap => {
         this.emit('render', { bitmap, left, top });
+        var endTime = performance.now();
+        this.times.push(endTime - startTime);
       })
       .catch(err => {
         this.handleError(err);
@@ -131,6 +135,7 @@ export default class Client extends EventEmitter {
   disconnect() {
     this.userDisconnected = true;
     this.socket?.close();
+    console.log(this.times);
   }
 
   // Ensures full cleanup of this object.

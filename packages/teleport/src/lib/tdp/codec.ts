@@ -301,7 +301,12 @@ export default class Codec {
   }
 
   // decodePng decodes the image bitmap from the png data part of a PNG_FRAME tdp message.
-  decodePng(buffer: ArrayBuffer): Promise<ImageBitmap> {
+  decodePng(
+    buffer: ArrayBuffer,
+    width: number,
+    height: number
+  ): Promise<ImageBitmap> {
+    // new ImageData(new Uint8ClampedArray(buffer), width, height)
     return createImageBitmap(new Blob([buffer.slice(17)]));
   }
 }
