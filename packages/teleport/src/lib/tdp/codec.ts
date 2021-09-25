@@ -296,19 +296,25 @@ export default class Codec {
       left: dv.getUint32(1),
       top: dv.getUint32(5),
       right: dv.getUint32(9),
-      bottom: dv.getUint32(15),
+      bottom: dv.getUint32(13),
     };
   }
 
+  // https://jsbench.me/vjk9nczxst/1
+  // https://gist.github.com/jonleighton/958841
+  toBase64V1(buffer: ArrayBuffer) {
+    const binary = String.fromCharCode.apply(null, new Uint8Array(buffer, 17));
+    return btoa(binary);
+  }
+
+  toBase64ImageV1(buffer: ArrayBuffer): HTMLImageElement {
+    const image = new Image();
+    image.src = `data:image/png;base64,${this.toBase64V1(buffer)}`;
+    return image;
+  }
+
   // decodePng decodes the image bitmap from the png data part of a PNG_FRAME tdp message.
-  decodePng(
-    buffer: ArrayBuffer,
-    width: number,
-    height: number
-  ): Promise<ImageBitmap> {
-    // return createImageBitmap(new Blob([buffer.slice(17)]));
-    return createImageBitmap(
-      new ImageData(new Uint8ClampedArray(buffer.slice(17)), width, height)
-    );
+  decodePng(buffer: ArrayBuffer): HTMLImageElement {
+    return this.toBase64ImageV1(buffer);
   }
 }
