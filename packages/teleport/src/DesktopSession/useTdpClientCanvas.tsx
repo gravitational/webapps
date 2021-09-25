@@ -67,7 +67,7 @@ export default function useTdpClientCanvas() {
 
   const onRender = (canvas: HTMLCanvasElement, data: RenderData) => {
     const ctx = canvas.getContext('2d');
-    ctx.drawImage(data.bitmap, data.left, data.top);
+    ctx.drawImage(data.image, data.left, data.top);
   };
 
   const onDisconnect = () => {
