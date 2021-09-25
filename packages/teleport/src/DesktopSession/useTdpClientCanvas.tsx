@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import { useState, useMemo } from 'react';
+import { useRef, useMemo } from 'react';
 import TdpClient, { RenderData } from 'teleport/lib/tdp/client';
 import { useParams } from 'react-router';
 import { TopBarHeight } from './TopBar';
@@ -29,6 +29,7 @@ export default function useTdpClientCanvas() {
   const { attempt: connection, setAttempt: setConnection } = useAttempt(
     'processing'
   );
+  const timesRef = useRef<number[]>([]);
 
   // Build a client based on url parameters.
   const tdpClient = useMemo(() => {
@@ -67,13 +68,20 @@ export default function useTdpClientCanvas() {
 
   const onRender = (canvas: HTMLCanvasElement, data: RenderData) => {
     const ctx = canvas.getContext('2d');
-    ctx.drawImage(data.bitmap, data.left, data.top);
+    if (data.image.complete) {
+      ctx.drawImage(data.image, data.left, data.top);
+      const endTime = performance.now();
+      timesRef.current.push(endTime - data.startTime);
+    } else {
+      data.image.onload = () => onRender(canvas, data);
+    }
   };
 
   const onDisconnect = () => {
     setConnection({
       status: '',
     });
+    console.log(timesRef.current);
   };
 
   const onError = (err: Error) => {
