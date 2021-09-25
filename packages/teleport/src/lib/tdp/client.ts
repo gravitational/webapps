@@ -95,17 +95,13 @@ export default class Client extends EventEmitter {
   // bounds and png bitmap and emit a render event.
   processFrame(buffer: ArrayBuffer) {
     var startTime = performance.now();
-    const { left, top, right, bottom } = this.codec.decodeRegion(buffer);
-    this.codec
-      .decodePng(buffer, right - left, bottom - top)
-      .then(bitmap => {
-        this.emit('render', { bitmap, left, top });
-        var endTime = performance.now();
-        this.times.push(endTime - startTime);
-      })
-      .catch(err => {
-        this.handleError(err);
-      });
+    const { left, top } = this.codec.decodeRegion(buffer);
+    const image = this.codec.decodePng(buffer);
+    setTimeout(() => {
+      this.emit('render', { image, left, top });
+      var endTime = performance.now();
+      this.times.push(endTime - startTime);
+    });
   }
 
   sendUsername(username: string) {
@@ -153,7 +149,7 @@ export default class Client extends EventEmitter {
 }
 
 export type RenderData = {
-  bitmap: ImageBitmap;
+  image: HTMLImageElement;
   left: number;
   top: number;
 };
