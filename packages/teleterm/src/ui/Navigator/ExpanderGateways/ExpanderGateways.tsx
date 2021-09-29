@@ -18,7 +18,7 @@ import React from 'react';
 import { Flex, Text, ButtonIcon } from 'design';
 import * as Icons from 'design/Icon';
 import Expander, { ExpanderHeader, ExpanderContent } from './../Expander';
-import { Item } from './../useNavigator';
+import * as types from 'teleterm/ui/types';
 import NavItem from './../NavItem';
 import StatusIndicator from './StatusIndicator';
 import useExpanderGateways, { State } from './useExpanderGateways';
@@ -68,5 +68,5 @@ const GateWayItem: React.FC<GatewayItemProps> = props => {
 };
 
 type GatewayItemProps = {
-  item: Item;
+  item: types.NavItem;
 };

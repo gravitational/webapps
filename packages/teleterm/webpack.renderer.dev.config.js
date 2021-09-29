@@ -17,11 +17,15 @@ cfg.devServer = {
   inline: true,
   before() {
     console.log('Starting Main Process...');
-    spawn('yarn', ['start-electron'], {
-      shell: true,
-      env: process.env,
-      stdio: 'inherit',
-    })
+    spawn(
+      'yarn',
+      ['start-electron', '--inspect-brk=5858  --remote-debugging-port=9223'],
+      {
+        shell: true,
+        env: process.env,
+        stdio: 'inherit',
+      }
+    )
       .on('close', code => process.exit(code))
       .on('error', spawnError => console.error(spawnError));
   },
