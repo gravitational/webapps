@@ -17,19 +17,13 @@ limitations under the License.
 import React from 'react';
 import { Flex, Text, ButtonIcon, ButtonBorder } from 'design';
 import * as Icons from 'design/Icon';
-import Expander, {
-  ExpanderHeader,
-  ExpanderContent,
-  StyledHeader,
-} from './../Expander';
+import Expander, { ExpanderHeader, ExpanderContent } from './../Expander';
 import NavItem, { StyledNavItem } from 'teleterm/ui/Navigator/NavItem';
 import { useAppContext } from 'teleterm/ui/appContextProvider';
 import useExpanderClusters, {
   State,
   ClusterNavItem,
 } from './useExpanderClusters';
-
-import { StyledBorder } from 'teleterm/ui/Navigator/Expander';
 
 export default function Container() {
   const state = useExpanderClusters();
