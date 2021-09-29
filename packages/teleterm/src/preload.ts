@@ -1,6 +1,8 @@
 import { contextBridge, ipcRenderer } from 'electron';
 import fs from 'fs';
-var net = require('net');
+import { TerminalServiceClient } from './services/tshd/js/teleport/terminal/v1/terminal_service_grpc_pb';
+import { ListClustersRequest } from './services/tshd/js/teleport/terminal/v1/terminal_service_pb';
+import grpc from '@grpc/grpc-js';
 
 contextBridge.exposeInMainWorld('electron', {
   ipcRenderer: {
@@ -27,17 +29,15 @@ contextBridge.exposeInMainWorld('electron', {
     },
 
     create() {
-      // This server listens on a Unix socket at /var/run/mysocket
-      var unixServer = net.createServer(function(client) {
-        // Do something with the client connection
-      });
-      unixServer.listen('./mysocket');
+      /*eslint no-debugger: off*/
+      const client = new TerminalServiceClient(
+        '/home/alexey/go/src/github.com/gravitational/teleport/build/terminal.sock',
+        grpc.credentials.createInsecure()
+      );
 
-      // This server listens on TCP/IP port 1234
-      var tcpServer = net.createServer(function(client) {
-        // Do something with the client connection
+      client.listClusters(new ListClustersRequest(), (err, data) => {
+        console.log(data);
       });
-      tcpServer.listen(1234);
     },
   },
 });
