@@ -144,7 +144,9 @@ export const ConnectionError = () => (
 );
 export const Performance = () => {
   const client = fakeClient();
-  var startTime, endTime, i;
+  var startTime,
+    endTime,
+    j = 0;
 
   return (
     <DesktopSession
@@ -174,13 +176,15 @@ export const Performance = () => {
         offscreenCanvas: HTMLCanvasElement | OffscreenCanvas
       ) => {
         ctx.drawImage(offscreenCanvas, 0, 0);
-        if (i === 0) {
-          startTime = performance.now();
-        } else if (i === arrayBuf2260x1130.length - 1) {
-          endTime = performance.now();
-          console.log(`Total time (ms): ${endTime - startTime}`);
-        }
-        i++;
+        console.log('onRender');
+        // if (j === 0) {
+        //   console.log('j === 0');
+        //   startTime = performance.now();
+        // } else if (j === arrayBuf2260x1130.length - 1) {
+        //   endTime = performance.now();
+        //   console.log(`Total time (ms): ${endTime - startTime}`);
+        // }
+        // console.log(j++);
       }}
     />
   );

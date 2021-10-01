@@ -49,6 +49,7 @@ export default function TdpClientCanvas(props: Props) {
     const renderBuffer = () => {
       onRender(ctx, offscreenCanvas);
       ctx.drawImage(offscreenCanvas, 0, 0);
+      console.log('image rendered');
       requestAnimationFrame(renderBuffer);
     };
 
