@@ -65,11 +65,16 @@ export default function useTdpClientCanvas() {
     setConnection({ status: 'success' });
   };
 
+  // Optional parameter i is used for performance testing only.
   const onRender = (
-    ctx: CanvasRenderingContext2D,
-    offscreenCanvas: HTMLCanvasElement | OffscreenCanvas
-  ) => {
-    ctx.drawImage(offscreenCanvas, 0, 0);
+    offscreenCtx: CanvasRenderingContext2D | OffscreenCanvasRenderingContext2D,
+    data: RenderData
+  ): number => {
+    console.log('onRender');
+    offscreenCtx.drawImage(data.image, data.left, data.top);
+
+    // Used for performance testing only, -1 can typically be ignored.
+    return -1;
   };
 
   const onDisconnect = () => {

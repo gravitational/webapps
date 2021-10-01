@@ -17,7 +17,7 @@ limitations under the License.
 import React from 'react';
 import { DesktopSession } from './DesktopSession';
 import { State } from './useDesktopSession';
-import TdpClient from 'teleport/lib/tdp/client';
+import TdpClient, { RenderData } from 'teleport/lib/tdp/client';
 import useAttempt from 'shared/hooks/useAttemptNext';
 import arrayBuf2260x1130 from './fixtures';
 
@@ -59,9 +59,9 @@ const props: State = {
   },
   onConnect: () => {},
   onRender: (
-    ctx: CanvasRenderingContext2D,
-    offscreenCanvas: HTMLCanvasElement | OffscreenCanvas
-  ) => {},
+    offscreenCtx: CanvasRenderingContext2D | OffscreenCanvasRenderingContext2D,
+    data: RenderData
+  ): number => -1,
   onDisconnect: () => {},
   onError: (err: Error) => {},
   onKeyDown: (cli: TdpClient, e: KeyboardEvent) => {},
@@ -144,9 +144,7 @@ export const ConnectionError = () => (
 );
 export const Performance = () => {
   const client = fakeClient();
-  var startTime,
-    endTime,
-    j = 0;
+  var i = 0;
 
   return (
     <DesktopSession
@@ -167,24 +165,19 @@ export const Performance = () => {
         cli.emit('connect');
       }}
       onConnect={() => {
+        // console.log(`arrayBuf2260x1130.length = ${arrayBuf2260x1130.length}`);
         for (let i = 0; i < arrayBuf2260x1130.length; i++) {
           client.processMessage(arrayBuf2260x1130[i]);
         }
       }}
       onRender={(
-        ctx: CanvasRenderingContext2D,
-        offscreenCanvas: HTMLCanvasElement | OffscreenCanvas
+        offscreenCtx:
+          | CanvasRenderingContext2D
+          | OffscreenCanvasRenderingContext2D,
+        data: RenderData
       ) => {
-        ctx.drawImage(offscreenCanvas, 0, 0);
-        console.log('onRender');
-        // if (j === 0) {
-        //   console.log('j === 0');
-        //   startTime = performance.now();
-        // } else if (j === arrayBuf2260x1130.length - 1) {
-        //   endTime = performance.now();
-        //   console.log(`Total time (ms): ${endTime - startTime}`);
-        // }
-        // console.log(j++);
+        offscreenCtx.drawImage(data.image, data.left, data.top);
+        return i++;
       }}
     />
   );

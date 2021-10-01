@@ -46,11 +46,20 @@ export default function TdpClientCanvas(props: Props) {
       : document.createElement('canvas');
     const offscreenCtx = offscreenCanvas.getContext('2d');
 
+    // Used for performance testing purposes only.
+    var startTime, endTime, i: number;
+
     const renderBuffer = () => {
-      onRender(ctx, offscreenCanvas);
       ctx.drawImage(offscreenCanvas, 0, 0);
-      console.log('image rendered');
       requestAnimationFrame(renderBuffer);
+      // For performance testing. Should be 1 minus the length
+      // of whatever arraybuffer is being used in the Performance
+      // component of the DesktopSession storybook.
+      if (i === 3355 - 1) {
+        endTime = performance.now();
+        console.log(`Total time (ms): ${endTime - startTime}`);
+        i++; // So it stops printing total time.
+      }
     };
 
     // React's vdom apparently doesn't support
@@ -115,7 +124,10 @@ export default function TdpClientCanvas(props: Props) {
     });
 
     tdpClient.on('render', (data: RenderData) => {
-      offscreenCtx.drawImage(data.image, data.left, data.top);
+      i = onRender(offscreenCtx, data);
+      if (i === 0) {
+        startTime = performance.now();
+      }
     });
 
     tdpClient.on('disconnect', () => {
