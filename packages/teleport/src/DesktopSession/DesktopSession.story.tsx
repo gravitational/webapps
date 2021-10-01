@@ -16,9 +16,8 @@ limitations under the License.
 
 import React from 'react';
 import { DesktopSession } from './DesktopSession';
-import useTdpClientCanvas from './useTdpClientCanvas';
 import { State } from './useDesktopSession';
-import TdpClient, { RenderData } from 'teleport/lib/tdp/client';
+import TdpClient from 'teleport/lib/tdp/client';
 import useAttempt from 'shared/hooks/useAttemptNext';
 import arrayBuf2260x1130 from './fixtures';
 
@@ -59,7 +58,10 @@ const props: State = {
     fillGray(canvas);
   },
   onConnect: () => {},
-  onRender: (ctx: CanvasRenderingContext2D, data: RenderData) => {},
+  onRender: (
+    ctx: CanvasRenderingContext2D,
+    offscreenCanvas: HTMLCanvasElement | OffscreenCanvas
+  ) => {},
   onDisconnect: () => {},
   onError: (err: Error) => {},
   onKeyDown: (cli: TdpClient, e: KeyboardEvent) => {},
@@ -142,6 +144,7 @@ export const ConnectionError = () => (
 );
 export const Performance = () => {
   const client = fakeClient();
+  var startTime, endTime, i;
 
   return (
     <DesktopSession
@@ -166,9 +169,19 @@ export const Performance = () => {
           client.processMessage(arrayBuf2260x1130[i]);
         }
       }}
-      onRender={(ctx: CanvasRenderingContext2D, data: RenderData) =>
-        ctx.drawImage(data.image, data.left, data.top)
-      }
+      onRender={(
+        ctx: CanvasRenderingContext2D,
+        offscreenCanvas: HTMLCanvasElement | OffscreenCanvas
+      ) => {
+        ctx.drawImage(offscreenCanvas, 0, 0);
+        if (i === 0) {
+          startTime = performance.now();
+        } else if (i === arrayBuf2260x1130.length - 1) {
+          endTime = performance.now();
+          console.log(`Total time (ms): ${endTime - startTime}`);
+        }
+        i++;
+      }}
     />
   );
 };

@@ -65,8 +65,11 @@ export default function useTdpClientCanvas() {
     setConnection({ status: 'success' });
   };
 
-  const onRender = (ctx: CanvasRenderingContext2D, data: RenderData) => {
-    ctx.drawImage(data.image, data.left, data.top);
+  const onRender = (
+    ctx: CanvasRenderingContext2D,
+    offscreenCanvas: HTMLCanvasElement | OffscreenCanvas
+  ) => {
+    ctx.drawImage(offscreenCanvas, 0, 0);
   };
 
   const onDisconnect = () => {

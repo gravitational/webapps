@@ -37,8 +37,20 @@ export default function TdpClientCanvas(props: Props) {
   const canvasRef = useRef<HTMLCanvasElement>(null);
 
   useEffect(() => {
-    const canvas = canvasRef.current;
+    const canvas: HTMLCanvasElement = canvasRef.current;
     const ctx = canvas.getContext('2d');
+    const offscreenCanvas:
+      | OffscreenCanvas
+      | HTMLCanvasElement = window.OffscreenCanvas
+      ? new OffscreenCanvas(canvas.width, canvas.height)
+      : document.createElement('canvas');
+    const offscreenCtx = offscreenCanvas.getContext('2d');
+
+    const renderBuffer = () => {
+      onRender(ctx, offscreenCanvas);
+      ctx.drawImage(offscreenCanvas, 0, 0);
+      requestAnimationFrame(renderBuffer);
+    };
 
     // React's vdom apparently doesn't support
     // standard html document.activeElement semantics
@@ -92,6 +104,9 @@ export default function TdpClientCanvas(props: Props) {
     // Initialize tdpClient event listeners.
     tdpClient.on('init', () => {
       onInit(tdpClient, canvas);
+      offscreenCanvas.width = canvas.width;
+      offscreenCanvas.height = canvas.height;
+      requestAnimationFrame(renderBuffer);
     });
 
     tdpClient.on('connect', () => {
@@ -99,7 +114,7 @@ export default function TdpClientCanvas(props: Props) {
     });
 
     tdpClient.on('render', (data: RenderData) => {
-      onRender(ctx, data);
+      offscreenCtx.drawImage(data.image, data.left, data.top);
     });
 
     tdpClient.on('disconnect', () => {
