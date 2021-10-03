@@ -19,7 +19,7 @@ import styled from 'styled-components';
 import * as Icons from 'design/Icon';
 import { colors } from 'teleport/Console/colors';
 import Slider from './Slider';
-import { ShareRecordingAtTime } from 'teleport/Player/ProgressBar/ShareRecordingAtTime';
+import { ShareRecordingAtTime } from 'teleport/Player/ProgressBar/ShareRecordingAtTime/ShareRecordingAtTime';
 import { ActionButton } from 'teleport/Player/ProgressBar/ActionButton';
 
 export default function ProgressBar(props: ProgressBarProps) {

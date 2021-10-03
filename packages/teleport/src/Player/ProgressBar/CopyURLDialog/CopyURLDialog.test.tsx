@@ -15,7 +15,7 @@
  */
 
 import React from 'react';
-import { fireEvent, render } from 'design/utils/testing';
+import { act, fireEvent, render } from 'design/utils/testing';
 import { CopyURLDialog } from 'teleport/Player/ProgressBar/CopyURLDialog/CopyURLDialog';
 import { defaultProps } from 'teleport/Player/ProgressBar/CopyURLDialog/CopyURLDialog.story';
 
@@ -35,10 +35,6 @@ describe('open CopyURLDialog', () => {
     rendered = render(<CopyURLDialog {...defaultProps} onClose={cb} />);
   });
 
-  afterEach(() => {
-    window.open = open;
-  });
-
   test('component callbacks on close', () => {
     fireEvent.click(rendered.getByText(/close/i));
 
@@ -53,9 +49,17 @@ describe('open CopyURLDialog', () => {
   });
 
   test('open in new tab', () => {
-    const mock = withMockWindowOpen(() => {
-      fireEvent.click(rendered.getByText(/open/i));
-    });
+    const mock = withMockWindowOpen(() =>
+      fireEvent.click(rendered.getByText(/open/i))
+    );
+
+    expect(mock).toHaveBeenCalledWith(defaultProps.url);
+  });
+
+  test('copy to clipboard', async () => {
+    const mock = await withMockClipboard(() =>
+      fireEvent.click(rendered.getByText(/copy/i))
+    );
 
     expect(mock).toHaveBeenCalledWith(defaultProps.url);
   });
@@ -65,21 +69,39 @@ function expectText(rendered: any, text: string) {
   expect(rendered.queryAllByText(text).length).toBeGreaterThanOrEqual(1);
 }
 
+async function withMockClipboard(operaton: () => void) {
+  const exec = document.execCommand;
+  document.execCommand = () => false; // fall to testable implementation
+
+  const promise = Promise.resolve();
+  const mock = jest.fn(() => promise);
+
+  const clipboard = navigator.clipboard;
+
+  // unfortunately not mockable by jest.spyOn, I'm forced to cheat type check
+  const nav: any = navigator;
+  nav.clipboard = {
+    writeText: mock,
+  };
+
+  operaton();
+
+  // reset globals
+  document.execCommand = exec;
+
+  nav.clipboard = clipboard;
+
+  await act(() => promise);
+  return mock;
+}
+
 function withMockWindowOpen(operation: () => void) {
   const mockedOpen = jest.fn();
-  const originalWindow = { ...window };
-
-  // get on window is protected therefore ts warns about "no overload matches" yet this is the only way to spyOn
-  // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
-  // @ts-ignore
-  const windowSpy = jest.spyOn(global, 'window', 'get');
-  windowSpy.mockImplementation(() => ({
-    ...originalWindow, // In case you need other window properties to be in place
-    open: mockedOpen,
-  }));
+  const open = window.open;
+  window.open = mockedOpen;
 
   operation();
 
-  windowSpy.mockRestore();
+  window.open = open;
   return mockedOpen;
 }
