@@ -28,17 +28,17 @@ test('closed component', () => {
 });
 
 describe('open CopyURLDialog', () => {
-  let cb;
+  let onClose;
   let rendered;
   beforeEach(() => {
-    cb = jest.fn();
-    rendered = render(<CopyURLDialog {...defaultProps} onClose={cb} />);
+    onClose = jest.fn();
+    rendered = render(<CopyURLDialog {...defaultProps} onClose={onClose} />);
   });
 
   test('component callbacks on close', () => {
     fireEvent.click(rendered.getByText(/close/i));
 
-    expect(cb).toHaveBeenCalled();
+    expect(onClose).toHaveBeenCalled();
   });
 
   // eslint-disable-next-line jest/expect-expect
@@ -78,9 +78,8 @@ async function withMockClipboard(operaton: () => void) {
 
   const clipboard = navigator.clipboard;
 
-  // unfortunately not mockable by jest.spyOn, I'm forced to cheat type check
-  const nav: any = navigator;
-  nav.clipboard = {
+  // protected and not mockable by jest.spyOn, I'm forced to cheat type check
+  (navigator as any).clipboard = {
     writeText: mock,
   };
 
@@ -88,8 +87,7 @@ async function withMockClipboard(operaton: () => void) {
 
   // reset globals
   document.execCommand = exec;
-
-  nav.clipboard = clipboard;
+  (navigator as any).clipboard = clipboard;
 
   await act(() => promise);
   return mock;
