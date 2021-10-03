@@ -69,6 +69,10 @@ export const eventCodes = {
   OIDC_CONNECTOR_DELETED: 'T8101I',
   PORTFORWARD_FAILURE: 'T3003E',
   PORTFORWARD: 'T3003I',
+  RECOVERY_TOKEN_CREATED: 'T6001I',
+  RECOVERY_CODE_GENERATED: 'T1008I',
+  RECOVERY_CODE_USED: 'T1009I',
+  RECOVERY_CODE_USED_FAILURE: 'T1009W',
   RESET_PASSWORD_TOKEN_CREATED: 'T6000I',
   ROLE_CREATED: 'T9000I',
   ROLE_DELETED: 'T9001I',
@@ -85,6 +89,7 @@ export const eventCodes = {
   SESSION_JOIN: 'T2001I',
   SESSION_LEAVE: 'T2003I',
   SESSION_NETWORK: 'T4002I',
+  SESSION_PROCESS_EXIT: 'T4003I',
   SESSION_REJECT: 'T1006W',
   SESSION_START: 'T2000I',
   SESSION_UPLOAD: 'T2005I',
@@ -207,6 +212,10 @@ export type RawEvents = {
 
   [eventCodes.SESSION_NETWORK]: RawEventNetwork<
     typeof eventCodes.SESSION_NETWORK
+  >;
+
+  [eventCodes.SESSION_PROCESS_EXIT]: RawEventProcessExit<
+    typeof eventCodes.SESSION_PROCESS_EXIT
   >;
 
   [eventCodes.SESSION_DATA]: RawEventData<typeof eventCodes.SESSION_DATA>;
@@ -404,6 +413,18 @@ export type RawEvents = {
     typeof eventCodes.LOCK_DELETED,
     { name: string }
   >;
+  [eventCodes.RECOVERY_TOKEN_CREATED]: RawEventPasswordToken<
+    typeof eventCodes.RECOVERY_TOKEN_CREATED
+  >;
+  [eventCodes.RECOVERY_CODE_GENERATED]: RawEvent<
+    typeof eventCodes.RECOVERY_CODE_GENERATED
+  >;
+  [eventCodes.RECOVERY_CODE_USED]: RawEvent<
+    typeof eventCodes.RECOVERY_CODE_USED
+  >;
+  [eventCodes.RECOVERY_CODE_USED_FAILURE]: RawEvent<
+    typeof eventCodes.RECOVERY_CODE_USED_FAILURE
+  >;
 };
 
 /**
@@ -477,6 +498,19 @@ type RawEventNetwork<T extends EventCode> = RawEvent<
     src_addr: string;
     dst_addr: string;
     dst_port: string;
+  }
+>;
+
+type RawEventProcessExit<T extends EventCode> = RawEvent<
+  T,
+  {
+    login: string;
+    namespace: string;
+    pid: number;
+    program: string;
+    exit_status: number;
+    server_id: string;
+    sid: string;
   }
 >;
 

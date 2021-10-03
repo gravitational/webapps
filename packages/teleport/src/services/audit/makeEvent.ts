@@ -54,6 +54,12 @@ export const formatters: Formatters = {
     format: ({ sid, program, src_addr, dst_addr, dst_port }) =>
       `Program [${program}] opened a connection [${src_addr} <-> ${dst_addr}:${dst_port}] within a session [${sid}]`,
   },
+  [eventCodes.SESSION_PROCESS_EXIT]: {
+    type: 'session.process_exit',
+    desc: 'Session Process Exit',
+    format: ({ program, exit_status, sid }) =>
+      `Program [${program}] has exited with status ${exit_status}, within a session [${sid}]`,
+  },
   [eventCodes.SESSION_DATA]: {
     type: 'session.data',
     desc: 'Session Data',
@@ -404,6 +410,28 @@ export const formatters: Formatters = {
     type: 'lock.deleted',
     desc: 'Lock Deleted',
     format: ({ user, name }) => `Lock [${name}] was deleted by user [${user}]`,
+  },
+  [eventCodes.RECOVERY_TOKEN_CREATED]: {
+    type: 'recovery_token.create',
+    desc: 'Recovery Token Created',
+    format: ({ name }) => `Recovery token was created for user [${name}]`,
+  },
+  [eventCodes.RECOVERY_CODE_GENERATED]: {
+    type: 'recovery_code.generated',
+    desc: 'Recovery Codes Generated',
+    format: ({ user }) =>
+      `New recovery codes were generated for user [${user}]`,
+  },
+  [eventCodes.RECOVERY_CODE_USED]: {
+    type: 'recovery_code.used',
+    desc: 'Recovery Code Used',
+    format: ({ user }) => `User [${user}] successfully used a recovery code`,
+  },
+  [eventCodes.RECOVERY_CODE_USED_FAILURE]: {
+    type: 'recovery_code.used',
+    desc: 'Recovery Code Use Failed',
+    format: ({ user }) =>
+      `User [${user}] failed an attempt to use a recovery code`,
   },
 };
 

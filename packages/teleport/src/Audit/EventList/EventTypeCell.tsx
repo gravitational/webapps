@@ -54,6 +54,7 @@ const EventIconMap: Record<EventCode, React.FC> = {
   [eventCodes.SESSION_NETWORK]: Icons.Cli,
   [eventCodes.SESSION_DISK]: Icons.Cli,
   [eventCodes.SESSION_COMMAND]: Icons.Cli,
+  [eventCodes.SESSION_PROCESS_EXIT]: Icons.Cli,
   [eventCodes.USER_CREATED]: Icons.Info,
   [eventCodes.USER_UPDATED]: Icons.Info,
   [eventCodes.USER_DELETED]: Icons.Info,
@@ -85,6 +86,10 @@ const EventIconMap: Record<EventCode, React.FC> = {
   [eventCodes.SUBSYSTEM_FAILURE]: Icons.Info,
   [eventCodes.LOCK_CREATED]: Icons.Lock,
   [eventCodes.LOCK_DELETED]: Icons.Unlock,
+  [eventCodes.RECOVERY_TOKEN_CREATED]: Icons.Info,
+  [eventCodes.RECOVERY_CODE_GENERATED]: Icons.Keypair,
+  [eventCodes.RECOVERY_CODE_USED]: Icons.VpnKey,
+  [eventCodes.RECOVERY_CODE_USED_FAILURE]: Icons.VpnKey,
 };
 
 export default function TypeCell(props) {
