@@ -1,16 +1,9 @@
 import { useState } from 'shared/hooks';
 import * as Icons from 'design/Icon';
-import Dialog, {
-  DialogContent,
-  DialogFooter,
-  DialogHeader,
-  DialogTitle,
-} from 'design/Dialog';
-import TextSelectCopy from 'teleport/components/TextSelectCopy';
 import React from 'react';
 import { ActionButton } from 'teleport/Player/ProgressBar/ActionButton';
-import { ButtonSecondary, Text } from 'design';
 import styled from 'styled-components';
+import { CopyURLDialog } from 'teleport/Player/ProgressBar/CopyURLDialog/CopyURLDialog';
 
 type ShareRecordingAtTimeParams = {
   url: string;
@@ -38,36 +31,23 @@ export function ShareRecordingAtTime(props: ShareRecordingAtTimeParams) {
   };
   return (
     <StyledShareRecording className="ShareRecordingAtTime">
-      <ActionButton onClick={onDialogOpen}>
+      <ActionButton
+        onClick={onDialogOpen}
+        className="open-share-recording-dialog"
+      >
         <Icons.Link />
       </ActionButton>
-      <Dialog
-        dialogCss={() => ({ maxWidth: '500px', width: '100%' })}
-        disableEscapeKeyDown={false}
+      <CopyURLDialog
+        url={props.url}
         onClose={onDialogClose}
         open={open}
-      >
-        <DialogHeader>
-          <DialogTitle>Share Recording - {props.displayTime}</DialogTitle>
-        </DialogHeader>
-        <DialogContent>
-          <Text mb={2} mt={1}>
+        dialogTitle={<>Share Recording - {props.displayTime}</>}
+        contentText="
             Share this URL with the person you want to share this session
             recording at current playback time. This person must have access to
             this recording to be able to view this session.
-          </Text>
-          <TextSelectCopy text={props.url} bash={false} />
-        </DialogContent>
-        <DialogFooter>
-          <ButtonSecondary onClick={onDialogClose}>Close</ButtonSecondary>
-          <ButtonSecondary
-            style={{ marginLeft: '10px' }}
-            onClick={() => window.open(props.url)}
-          >
-            Open in new Tab
-          </ButtonSecondary>
-        </DialogFooter>
-      </Dialog>
+          "
+      />
     </StyledShareRecording>
   );
 }
