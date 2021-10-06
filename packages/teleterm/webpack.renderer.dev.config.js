@@ -19,7 +19,9 @@ cfg.devServer = {
     console.log('Starting Main Process...');
     spawn(
       'yarn',
-      ['start-electron', '--inspect-brk=5858  --remote-debugging-port=9223'],
+      //['start-electron', '--inspect-brk=5858  --remote-debugging-port=9223'],
+      ['start-electron'],
+
       {
         shell: true,
         env: process.env,
