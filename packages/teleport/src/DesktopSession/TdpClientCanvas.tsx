@@ -52,11 +52,13 @@ export default function TdpClientCanvas(props: Props) {
     const renderBuffer = () => {
       ctx.drawImage(offscreenCanvas, 0, 0);
       requestAnimationFrame(renderBuffer);
+
       // For performance testing. Should be 1 minus the length
       // of whatever arraybuffer is being used in the Performance
       // component of the DesktopSession storybook.
       if (i === 3355 - 1) {
         endTime = performance.now();
+        // eslint-disable-next-line no-console
         console.log(`Total time (ms): ${endTime - startTime}`);
         i++; // So it stops printing total time.
       }

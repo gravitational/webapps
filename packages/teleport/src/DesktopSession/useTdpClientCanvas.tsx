@@ -70,7 +70,6 @@ export default function useTdpClientCanvas() {
     offscreenCtx: CanvasRenderingContext2D | OffscreenCanvasRenderingContext2D,
     data: RenderData
   ): number => {
-    console.log('onRender');
     offscreenCtx.drawImage(data.image, data.left, data.top);
 
     // Used for performance testing only, -1 can typically be ignored.
