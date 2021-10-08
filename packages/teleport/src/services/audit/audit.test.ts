@@ -75,6 +75,75 @@ test('fetch events', async () => {
         user: 'root',
       },
     },
+    {
+      codeDesc: 'Database Created',
+      message: 'User [05ff66c9-a948-42f4-af0e-a1b6ba62561e.root] created database [postgres-local]',
+      id: '9d37514f-aef5-426f-9fda-31fd35d070f5',
+      code: 'TDB03I',
+      user: '05ff66c9-a948-42f4-af0e-a1b6ba62561e.root',
+      time: new Date('2021-10-08T15:42:15.39Z'),
+      raw: {
+        cluster_name: 'root',
+        code: 'TDB03I',
+        db_labels: {
+          'env': 'local',
+          'teleport.dev/origin': 'dynamic'
+        },
+        db_protocol: 'postgres',
+        db_uri: 'localhost:5432',
+        ei: 0,
+        event: 'db.create',
+        expires: '0001-01-01T00:00:00Z',
+        name: 'postgres-local',
+        time: '2021-10-08T15:42:15.39Z',
+        uid: '9d37514f-aef5-426f-9fda-31fd35d070f5',
+        user: '05ff66c9-a948-42f4-af0e-a1b6ba62561e.root'
+      },
+    },
+    {
+      codeDesc: 'Database Updated',
+      message: 'User [05ff66c9-a948-42f4-af0e-a1b6ba62561e.root] updated database [postgres-local]',
+      id: 'fe631a5a-6418-49d6-99e7-5280654663ec',
+      code: 'TDB04I',
+      user: '05ff66c9-a948-42f4-af0e-a1b6ba62561e.root',
+      time: new Date('2021-10-08T15:42:24.581Z'),
+      raw: {
+        cluster_name: 'root',
+        code: 'TDB04I',
+        db_labels: {
+          'env': 'local',
+          'teleport.dev/origin': 'dynamic'
+        },
+        db_protocol: 'postgres',
+        db_uri: 'localhost:5432',
+        ei: 0,
+        event: 'db.update',
+        expires: '0001-01-01T00:00:00Z',
+        name: 'postgres-local',
+        time: '2021-10-08T15:42:24.581Z',
+        uid: 'fe631a5a-6418-49d6-99e7-5280654663ec',
+        user: '05ff66c9-a948-42f4-af0e-a1b6ba62561e.root'
+      },
+    },
+    {
+      codeDesc: 'Database Deleted',
+      message: 'User [05ff66c9-a948-42f4-af0e-a1b6ba62561e.root] deleted database [postgres-local]',
+      id: '74f5e6b9-50c4-4195-bb26-d615641255bc',
+      code: 'TDB05I',
+      user: '05ff66c9-a948-42f4-af0e-a1b6ba62561e.root',
+      time: new Date('2021-10-08T15:42:36.005Z'),
+      raw: {
+        cluster_name: 'root',
+        code: 'TDB05I',
+        ei: 0,
+        event: 'db.delete',
+        expires: '0001-01-01T00:00:00Z',
+        name: 'postgres-local',
+        time: '2021-10-08T15:42:36.005Z',
+        uid: '74f5e6b9-50c4-4195-bb26-d615641255bc',
+        user: '05ff66c9-a948-42f4-af0e-a1b6ba62561e.root'
+      },
+    },
   ]);
 
   // Test unknown event code returns unknown format
@@ -114,6 +183,51 @@ const normalJson = {
       time: '2021-05-25T14:37:27.848Z',
       user: 'root',
     },
+    {
+      cluster_name: 'root',
+      code: 'TDB03I',
+      db_labels: {
+        'env': 'local',
+        'teleport.dev/origin': 'dynamic'
+      },
+      db_protocol: 'postgres',
+      db_uri: 'localhost:5432',
+      ei: 0,
+      event: 'db.create',
+      expires: '0001-01-01T00:00:00Z',
+      name: 'postgres-local',
+      time: '2021-10-08T15:42:15.39Z',
+      uid: '9d37514f-aef5-426f-9fda-31fd35d070f5',
+      user: '05ff66c9-a948-42f4-af0e-a1b6ba62561e.root'
+    },
+    {
+      cluster_name: 'root',
+      code: 'TDB04I',
+      db_labels: {
+        'env': 'local',
+        'teleport.dev/origin': 'dynamic'
+      },
+      db_protocol: 'postgres',
+      db_uri: 'localhost:5432',
+      ei: 0,
+      event: 'db.update',
+      expires: '0001-01-01T00:00:00Z',
+      name: 'postgres-local',
+      time: '2021-10-08T15:42:24.581Z',
+      uid: 'fe631a5a-6418-49d6-99e7-5280654663ec',
+      user: '05ff66c9-a948-42f4-af0e-a1b6ba62561e.root'
+    },
+    {
+      cluster_name: 'root',
+      code: 'TDB05I',
+      ei: 0,
+      event: 'db.delete',
+      expires: '0001-01-01T00:00:00Z',
+      name: 'postgres-local',
+      time: '2021-10-08T15:42:36.005Z',
+      uid: '74f5e6b9-50c4-4195-bb26-d615641255bc',
+      user: '05ff66c9-a948-42f4-af0e-a1b6ba62561e.root'
+    }
   ],
   startKey: '0691-4797-ab2b-8c7b8',
 };
