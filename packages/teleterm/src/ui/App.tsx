@@ -1,5 +1,3 @@
-// eslint-disable-next-line import/named
-import { History } from 'history';
 import React, { useEffect } from 'react';
 import styled from 'styled-components';
 import { Box } from 'design';
@@ -9,15 +7,10 @@ import CatchError from './components/CatchError';
 import AppContextProvider from './appContextProvider';
 import Navigator from './Navigator';
 import AppContext from './appContext';
-import { Router } from 'teleport/components/Router';
 import TabHost from './TabHost';
 import DialogHost from './DialogHost';
 
-type Props = {
-  history: History;
-};
-
-const App: React.FC<Props> = ({ history }) => {
+const App: React.FC = () => {
   const ctx = React.useMemo(() => new AppContext(), []);
   useEffect(() => {
     ctx.init();
@@ -26,21 +19,19 @@ const App: React.FC<Props> = ({ history }) => {
   return (
     <StyledApp>
       <CatchError>
-        <Router history={history}>
-          <AppContextProvider value={ctx}>
-            <ThemeProvider>
-              <SplitPane defaultSize="20%" flex="1" split="vertical">
-                <Box flex="1" bg="primary.light">
-                  <Navigator />
-                </Box>
-                <Box flex="1" style={{ position: 'relative' }}>
-                  <TabHost />
-                </Box>
-              </SplitPane>
-              <DialogHost />
-            </ThemeProvider>
-          </AppContextProvider>
-        </Router>
+        <AppContextProvider value={ctx}>
+          <ThemeProvider>
+            <SplitPane defaultSize="20%" flex="1" split="vertical">
+              <Box flex="1" bg="primary.light">
+                <Navigator />
+              </Box>
+              <Box flex="1" style={{ position: 'relative' }}>
+                <TabHost />
+              </Box>
+            </SplitPane>
+            <DialogHost />
+          </ThemeProvider>
+        </AppContextProvider>
       </CatchError>
     </StyledApp>
   );

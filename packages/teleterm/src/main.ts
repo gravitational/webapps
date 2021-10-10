@@ -1,7 +1,7 @@
 const path = require('path');
 const { app, BrowserWindow, ipcMain } = require('electron');
-import { TerminalServiceClient } from './services/tshd/js/teleport/terminal/v1/terminal_service_grpc_pb';
-import { ListClustersRequest } from './services/tshd/js/teleport/terminal/v1/terminal_service_pb';
+import { TerminalServiceClient } from 'teleterm/services/tshd/v1/service_grpc_pb';
+import { ListClustersRequest } from 'teleterm/services/tshd/v1/service_pb';
 const grpc = require('@grpc/grpc-js');
 
 app.commandLine.appendSwitch('ignore-certificate-errors', 'true');
