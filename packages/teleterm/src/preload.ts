@@ -1,7 +1,7 @@
 import { contextBridge, ipcRenderer } from 'electron';
 import fs from 'fs';
-import { TerminalServiceClient } from './services/tshd/js/teleport/terminal/v1/terminal_service_grpc_pb';
-import { ListClustersRequest } from './services/tshd/js/teleport/terminal/v1/terminal_service_pb';
+import { TerminalServiceClient } from 'teleterm/services/tshd/v1/service_grpc_pb';
+import { ListClustersRequest } from 'teleterm/services/tshd/v1/service_pb';
 import grpc from '@grpc/grpc-js';
 
 contextBridge.exposeInMainWorld('electron', {
