@@ -21,7 +21,7 @@ import cfg from 'teleport/config';
 import makePasswordToken from './makePasswordToken';
 import {
   makeMfaAuthenticateChallenge,
-  makeMfaRegisterChallenge,
+  makeMfaRegistrationChallenge,
 } from './makeMfa';
 import { DeviceType } from './types';
 
@@ -36,15 +36,15 @@ const auth = {
     );
   },
 
-  createRegisterChallengeWithToken(tokenId: string, deviceType: DeviceType) {
+  createMfaRegistrationChallenge(tokenId: string, deviceType: DeviceType) {
     return api
       .post(cfg.getMfaCreateRegisterChallengeUrl(tokenId), {
         deviceType,
       })
-      .then(makeMfaRegisterChallenge);
+      .then(makeMfaRegistrationChallenge);
   },
 
-  createAuthenticateChallengeWithToken(tokenId: string) {
+  createMfaAuthnChallengeWithToken(tokenId: string) {
     return api
       .post(cfg.getAuthnChallengeWithTokenUrl(tokenId))
       .then(makeMfaAuthenticateChallenge);
@@ -99,7 +99,7 @@ const auth = {
           };
 
           api
-            .post(cfg.api.mfaLoginFinishSession, response)
+            .post(cfg.api.mfaLoginFinish, response)
             .then(data => {
               resolve(data);
             })
@@ -188,7 +188,7 @@ const auth = {
   },
 
   _getU2FRegisterRes(tokenId: string) {
-    return auth.createRegisterChallengeWithToken(tokenId, 'u2f').then(data => {
+    return auth.createMfaRegistrationChallenge(tokenId, 'u2f').then(data => {
       const challenge = data.u2fRegisterRequest;
       return new Promise((resolve, reject) => {
         window['u2f'].register(challenge.appId, [challenge], [], function(res) {

@@ -23,7 +23,7 @@ export type UserCredentials = {
   password: string;
 };
 
-export type CreateAuthenticateChallengeRequest = {
+export type AuthnChallengeRequest = {
   tokenId?: string;
   userCred: UserCredentials;
 };
@@ -46,7 +46,7 @@ export type MfaAuthenticateChallenge = {
   webauthnPublicKey: PublicKeyCredentialRequestOptions;
 };
 
-export type MfaRegisterChallenge = {
+export type MfaRegistrationChallenge = {
   qrCode: Base64urlString;
   u2fRegisterRequest: U2fRegisterRequest;
   webauthnPublicKey: PublicKeyCredentialCreationOptions;

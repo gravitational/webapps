@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import { MfaAuthenticateChallenge, MfaRegisterChallenge } from './types';
+import { MfaAuthenticateChallenge, MfaRegistrationChallenge } from './types';
 import { base64urlToBuffer } from 'shared/utils/base64url';
 
 // makeMfaRegisterChallenge formats fetched register challenge JSON.
@@ -23,7 +23,7 @@ import { base64urlToBuffer } from 'shared/utils/base64url';
 // - challenge
 // - user.id
 // - excludeCredentials[i].id
-export function makeMfaRegisterChallenge(json): MfaRegisterChallenge {
+export function makeMfaRegistrationChallenge(json): MfaRegistrationChallenge {
   const webauthnPublicKey = json.webauthn?.publicKey;
   if (webauthnPublicKey) {
     const challenge = webauthnPublicKey.challenge || '';

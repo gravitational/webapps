@@ -113,7 +113,7 @@ const cfg = {
     appNodeScriptPath: '/scripts/:token/install-app.sh?name=:name&uri=:uri',
 
     mfaLoginBegin: '/v1/webapi/mfa/login/begin', // creates authnenticate challenge with user and password
-    mfaLoginFinishSession: '/v1/webapi/mfa/login/finishsession', // creates a web session
+    mfaLoginFinish: '/v1/webapi/mfa/login/finishsession', // creates a web session
     mfaChangePasswordBegin: '/v1/webapi/mfa/authenticatechallenge/password',
     mfaCreateRegisterChallengePath:
       '/v1/webapi/mfa/token/:tokenId/registerchallenge',
