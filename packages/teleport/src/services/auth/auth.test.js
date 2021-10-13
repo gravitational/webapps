@@ -33,6 +33,9 @@ describe('services/auth', () => {
   });
 
   // sample data
+  const dummyU2fRegChallenge = Promise.resolve({
+    u2f: { appId: 'xxx' },
+  });
   const dummyU2fRegResponse = Promise.resolve({ appId: 'xxx' });
   const password = 'sample_pass';
   const email = 'user@example.com';
@@ -55,15 +58,11 @@ describe('services/auth', () => {
     jest.spyOn(api, 'post').mockImplementation(() => Promise.resolve());
 
     await auth.login(email, password);
-    expect(api.post).toHaveBeenCalledWith(
-      cfg.api.sessionPath,
-      {
-        user: email,
-        pass: password,
-        second_factor_token: undefined,
-      },
-      false
-    );
+    expect(api.post).toHaveBeenCalledWith(cfg.api.sessionPath, {
+      user: email,
+      pass: password,
+      second_factor_token: undefined,
+    });
   });
 
   test('login() OTP', async () => {
@@ -75,7 +74,7 @@ describe('services/auth', () => {
     };
 
     await auth.login(email, password, 'xxx');
-    expect(api.post).toHaveBeenCalledWith(cfg.api.sessionPath, data, false);
+    expect(api.post).toHaveBeenCalledWith(cfg.api.sessionPath, data);
   });
 
   test('loginWithU2f()', async () => {
@@ -113,15 +112,11 @@ describe('services/auth', () => {
     };
 
     await auth.resetPassword('tokenId', password, '2fa_token');
-    expect(api.put).toHaveBeenCalledWith(
-      cfg.getPasswordTokenUrl(),
-      submitData,
-      false
-    );
+    expect(api.put).toHaveBeenCalledWith(cfg.getPasswordTokenUrl(), submitData);
   });
 
   test('resetPasswordU2F()', async () => {
-    jest.spyOn(api, 'post').mockImplementation(() => dummyU2fRegResponse);
+    jest.spyOn(api, 'post').mockImplementation(() => dummyU2fRegChallenge);
     jest.spyOn(api, 'get').mockImplementation(() => Promise.resolve({}));
     jest.spyOn(window.u2f, 'register').mockImplementation((a, b, c, d) => {
       d(dummyU2fRegResponse);
@@ -137,18 +132,15 @@ describe('services/auth', () => {
     };
 
     await auth.resetPasswordWithU2f('tokenId', password);
-    expect(api.get).toHaveBeenCalledWith(
-      cfg.getU2fCreateUserChallengeUrl('tokenId')
+    expect(api.post).toHaveBeenCalledWith(
+      cfg.getMfaCreateRegisterChallengeUrl('tokenId'),
+      { deviceType: 'u2f' }
     );
-    expect(api.put).toHaveBeenCalledWith(
-      cfg.getPasswordTokenUrl(),
-      submitted,
-      false
-    );
+    expect(api.put).toHaveBeenCalledWith(cfg.getPasswordTokenUrl(), submitted);
   });
 
   test('resetPasswordU2F() error', async () => {
-    jest.spyOn(api, 'post').mockImplementation(() => dummyU2fRegResponse);
+    jest.spyOn(api, 'put').mockImplementation(() => dummyU2fRegResponse);
     jest.spyOn(api, 'get').mockImplementation(() => dummyU2fRegResponse);
     jest.spyOn(window.u2f, 'register').mockImplementation((a, b, c, d) => {
       d({ errorCode: '404' });
@@ -157,7 +149,7 @@ describe('services/auth', () => {
     try {
       await auth.resetPasswordWithU2f('tokenId', password);
     } catch (err) {
-      expect(api.post).toHaveBeenCalledTimes(0);
+      expect(api.put).toHaveBeenCalledTimes(0);
     }
 
     expect.assertions(1);
