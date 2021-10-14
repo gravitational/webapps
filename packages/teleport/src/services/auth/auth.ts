@@ -38,7 +38,7 @@ const auth = {
 
   createMfaRegistrationChallenge(tokenId: string, deviceType: DeviceType) {
     return api
-      .post(cfg.getMfaCreateRegisterChallengeUrl(tokenId), {
+      .post(cfg.getMfaCreateRegistrationChallengeUrl(tokenId), {
         deviceType,
       })
       .then(makeMfaRegistrationChallenge);

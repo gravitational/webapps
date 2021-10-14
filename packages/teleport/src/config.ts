@@ -115,7 +115,7 @@ const cfg = {
     mfaLoginBegin: '/v1/webapi/mfa/login/begin', // creates authnenticate challenge with user and password
     mfaLoginFinish: '/v1/webapi/mfa/login/finishsession', // creates a web session
     mfaChangePasswordBegin: '/v1/webapi/mfa/authenticatechallenge/password',
-    mfaCreateRegisterChallengePath:
+    mfaCreateRegistrationChallengePath:
       '/v1/webapi/mfa/token/:tokenId/registerchallenge',
     mfaAuthnChallengeWithTokenPath:
       '/v1/webapi/mfa/token/:tokenId/authenticatechallenge',
@@ -326,8 +326,10 @@ const cfg = {
     return generatePath(cfg.api.mfaDevicePath, { tokenId, deviceName });
   },
 
-  getMfaCreateRegisterChallengeUrl(tokenId: string) {
-    return generatePath(cfg.api.mfaCreateRegisterChallengePath, { tokenId });
+  getMfaCreateRegistrationChallengeUrl(tokenId: string) {
+    return generatePath(cfg.api.mfaCreateRegistrationChallengePath, {
+      tokenId,
+    });
   },
 
   init(backendConfig = {}) {

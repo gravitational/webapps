@@ -17,7 +17,7 @@ limitations under the License.
 import { MfaAuthenticateChallenge, MfaRegistrationChallenge } from './types';
 import { base64urlToBuffer } from 'shared/utils/base64url';
 
-// makeMfaRegisterChallenge formats fetched register challenge JSON.
+// makeMfaRegistrationChallenge formats fetched register challenge JSON.
 // Webauthn challange contains Base64URL(byte) fields that needs to
 // be converted to ArrayBuffer expected by navigator.credentials.create:
 // - challenge
@@ -47,7 +47,7 @@ export function makeMfaRegistrationChallenge(json): MfaRegistrationChallenge {
   };
 }
 
-// makeMfaRegisterChallenge formats fetched authenticate challenge JSON.
+// makeMfaAuthenticateChallenge formats fetched authenticate challenge JSON.
 // Webauthn challange contains Base64URL(byte) fields that needs to
 // be converted to ArrayBuffer expected by navigator.credentials.get:
 // - challenge

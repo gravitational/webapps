@@ -130,8 +130,10 @@ describe('services/auth', () => {
     };
 
     await auth.resetPasswordWithU2f('tokenId', password);
-    expect(api.post).toHaveBeenCalledWith(
-      cfg.getMfaCreateRegisterChallengeUrl('tokenId'),
+    expect(
+      api.post
+    ).toHaveBeenCalledWith(
+      cfg.getMfaCreateRegistrationChallengeUrl('tokenId'),
       { deviceType: 'u2f' }
     );
     expect(api.put).toHaveBeenCalledWith(cfg.getPasswordTokenUrl(), submitted);
