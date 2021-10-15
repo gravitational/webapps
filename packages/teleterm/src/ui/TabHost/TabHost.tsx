@@ -17,7 +17,6 @@ limitations under the License.
 import React from 'react';
 import styled from 'styled-components';
 import { Flex } from 'design';
-import { useStore } from 'shared/libs/stores';
 import { useAppContext } from 'teleterm/ui/appContextProvider';
 import * as types from 'teleterm/ui/types';
 import Tabs from 'teleterm/ui/Tabs';
@@ -26,17 +25,18 @@ import DocumentServers from 'teleterm/ui/DocumentServers';
 import DocumentDbs from 'teleterm/ui/DocumentDbs';
 
 export default function TabHost(props: Props) {
-  const appCtx = useAppContext();
-  const store = useStore(appCtx.storeApp);
-  const documents = store.getDocuments();
-  const docActive = appCtx.getActiveDocument();
+  const { serviceDocs } = useAppContext();
+  const documents = serviceDocs.getDocuments();
+  const docActive = serviceDocs.getActive();
+
+  serviceDocs.useSubscription();
 
   function handleTabClick(doc: types.Document) {
-    appCtx.openDocument(doc.uri);
+    serviceDocs.open(doc.uri);
   }
 
   function handleTabClose(doc: types.Document) {
-    appCtx.closeDocument(doc);
+    serviceDocs.close(doc);
   }
 
   function handleTabNew() {}

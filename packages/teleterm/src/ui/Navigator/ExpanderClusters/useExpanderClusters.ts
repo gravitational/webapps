@@ -16,20 +16,20 @@ limitations under the License.
 
 import React from 'react';
 import * as Icons from 'design/Icon';
-import { useAppStore, useAppContext } from 'teleterm/ui/appContextProvider';
+import { useAppContext } from 'teleterm/ui/appContextProvider';
 import AppContext from 'teleterm/ui/appContext';
 import * as types from 'teleterm/ui/types';
 
 export default function useExpanderClusters() {
   const ctx = useAppContext();
-  const store = useAppStore();
+  const { clusters } = ctx.serviceClusters.useSubscription();
 
   const clusterItems = React.useMemo<ClusterNavItem[]>(() => {
     return initClusterItems(ctx);
-  }, [store.state.clusters]);
+  }, [clusters]);
 
   function addCluster() {
-    ctx.storeCmd.setCommand({ kind: 'dialog.addCluster.open' });
+    ctx.serviceCommands.setCommand({ kind: 'dialog.addCluster.open' });
   }
 
   return {
@@ -39,40 +39,42 @@ export default function useExpanderClusters() {
 }
 
 function initClusterItems(ctx: AppContext): ClusterNavItem[] {
-  return ctx.storeApp.state.clusters.map<ClusterNavItem>(cluster => ({
-    title: cluster.name,
-    Icon: Icons.Clusters,
-    uri: cluster.uri,
-    kind: 'clusters',
-    connected: cluster.connected,
-    items: [
-      {
-        title: 'Servers',
-        Icon: Icons.Server,
-        uri: ctx.getUriServer({ clusterId: cluster.name }),
-        kind: 'servers',
-        items: [],
-        group: false,
-      },
-      {
-        title: 'Databases',
-        Icon: Icons.Database,
-        uri: ctx.getUriDb({ clusterId: cluster.name }),
-        kind: 'dbs',
-        items: [],
-        group: false,
-      },
-      {
-        title: 'Applications',
-        Icon: Icons.NewTab,
-        uri: ctx.getUriApps({ clusterId: cluster.name }),
-        kind: 'apps',
-        items: [],
-        group: false,
-      },
-    ],
-    group: true,
-  }));
+  return [...ctx.serviceClusters.state.clusters.values()].map<ClusterNavItem>(
+    cluster => ({
+      title: cluster.name,
+      Icon: Icons.Clusters,
+      uri: cluster.uri,
+      kind: 'clusters',
+      connected: cluster.connected,
+      items: [
+        {
+          title: 'Servers',
+          Icon: Icons.Server,
+          uri: ctx.serviceDocs.getUriServer({ clusterId: cluster.name }),
+          kind: 'servers',
+          items: [],
+          group: false,
+        },
+        {
+          title: 'Databases',
+          Icon: Icons.Database,
+          uri: ctx.serviceDocs.getUriDb({ clusterId: cluster.name }),
+          kind: 'dbs',
+          items: [],
+          group: false,
+        },
+        {
+          title: 'Applications',
+          Icon: Icons.NewTab,
+          uri: ctx.serviceDocs.getUriApps({ clusterId: cluster.name }),
+          kind: 'apps',
+          items: [],
+          group: false,
+        },
+      ],
+      group: true,
+    })
+  );
 }
 
 export type State = ReturnType<typeof useExpanderClusters>;

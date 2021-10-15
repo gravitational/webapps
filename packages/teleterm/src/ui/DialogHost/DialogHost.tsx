@@ -15,15 +15,19 @@
  */
 
 import React from 'react';
-import { useCmdStore } from './../appContextProvider';
+import { useAppContext } from './../appContextProvider';
 import AddCluster from './../AddCluster';
 
 export default function DialogHost() {
-  const store = useCmdStore();
-  if (store.state.kind === 'dialog.addCluster.open') {
+  const { serviceCommands } = useAppContext();
+  const store = serviceCommands.useSubscription();
+
+  if (store.kind === 'dialog.addCluster.open') {
     return (
       <AddCluster
-        onClose={() => store.setCommand({ kind: 'dialog.addCluster.close' })}
+        onClose={() =>
+          serviceCommands.setCommand({ kind: 'dialog.addCluster.close' })
+        }
       />
     );
   }

@@ -15,7 +15,6 @@ limitations under the License.
 */
 
 import React from 'react';
-import { useStore } from 'shared/libs/stores';
 import AppContext from './appContext';
 
 export const AppReactContext = React.createContext<AppContext>(null);
@@ -32,14 +31,4 @@ export function useAppContext() {
   const ctx = React.useContext(AppReactContext);
   window['teleterm'] = ctx;
   return ctx;
-}
-
-export function useAppStore() {
-  const ctx = React.useContext(AppReactContext);
-  return useStore(ctx.storeApp);
-}
-
-export function useCmdStore() {
-  const ctx = React.useContext(AppReactContext);
-  return useStore(ctx.storeCmd);
 }
