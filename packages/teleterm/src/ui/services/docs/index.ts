@@ -14,31 +14,5 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import { Store } from 'shared/libs/stores';
-
-export interface CommandNoop {
-  kind: 'noop';
-}
-
-export interface CommandDialogAddClusterOpen {
-  kind: 'dialog.addCluster.open';
-}
-
-export interface CommandDialogAddClusterClose {
-  kind: 'dialog.addCluster.close';
-}
-
-export type Command =
-  | CommandNoop
-  | CommandDialogAddClusterOpen
-  | CommandDialogAddClusterClose;
-
-export default class StoreCmd extends Store<Command> {
-  state: Command = {
-    kind: 'dialog.addCluster.open',
-  };
-
-  setCommand(cmd: Command) {
-    this.setState(cmd);
-  }
-}
+import DocsService from './docs';
+export default DocsService;

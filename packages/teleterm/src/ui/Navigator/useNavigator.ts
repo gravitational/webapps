@@ -14,18 +14,19 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import { useAppContext, useAppStore } from './../appContextProvider';
-import AppContext from './../appContext';
+import { useAppContext } from './../appContextProvider';
 import * as Icons from 'design/Icon';
 import * as types from '../types';
 
 export default function useNavigator() {
   const ctx = useAppContext();
-  useAppStore();
-  const homeItem = initHomeItem(ctx);
+  const homeItem = initHomeItem(ctx.cfg.routes.home);
+
+  ctx.serviceDocs.useSubscription();
+  ctx.serviceClusters.useSubscription();
 
   function processItemClick(item: types.NavItem) {
-    ctx.openDocument(item.uri);
+    ctx.serviceDocs.open(item.uri);
   }
 
   return {
@@ -34,11 +35,11 @@ export default function useNavigator() {
   };
 }
 
-function initHomeItem(ctx: AppContext): types.NavItem {
+function initHomeItem(uri: string): types.NavItem {
   return {
+    uri,
     title: 'Home',
     Icon: Icons.Clusters,
-    uri: ctx.cfg.routes.home,
     kind: 'home',
     items: [],
     group: false,

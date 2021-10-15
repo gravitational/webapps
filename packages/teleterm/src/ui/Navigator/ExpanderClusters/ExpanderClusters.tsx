@@ -31,7 +31,7 @@ export default function Container() {
 }
 
 export const ExpanderClusters: React.FC<State> = props => {
-  const ctx = useAppContext();
+  const { serviceCommands } = useAppContext();
   const $onlineClusters = props.clusterItems
     .filter(i => i.connected)
     .map(i => <ClusterItem key={i.uri} item={i} />);
@@ -41,7 +41,7 @@ export const ExpanderClusters: React.FC<State> = props => {
 
   const handleAdd = (e: React.SyntheticEvent) => {
     e.stopPropagation();
-    ctx.storeCmd.setCommand({ kind: 'dialog.addCluster.open' });
+    serviceCommands.setCommand({ kind: 'dialog.addCluster.open' });
   };
 
   return (

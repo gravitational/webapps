@@ -10,11 +10,8 @@ import AppContext from './appContext';
 import TabHost from './TabHost';
 import DialogHost from './DialogHost';
 
-const App: React.FC = () => {
-  const ctx = React.useMemo(() => new AppContext(), []);
-  useEffect(() => {
-    ctx.init();
-  }, [ctx]);
+const App: React.FC<{ ctx: AppContext }> = ({ ctx }) => {
+  useEffect(() => {}, [ctx]);
 
   return (
     <StyledApp>

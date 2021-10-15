@@ -14,7 +14,6 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import StoreApp from './storeApp';
-import StoreCmd from './storeCmd';
+import CommandService from './commands';
 
-export { StoreApp, StoreCmd };
+export default CommandService;

@@ -1,6 +1,5 @@
-import * as types from './types';
-import { Store } from 'shared/libs/stores';
-import Client from './tshClient';
+import * as types from 'teleterm/services/tshd/types';
+import { Store, useStore } from 'shared/libs/stores';
 
 type State = {
   clusters: Map<string, types.Cluster>;
@@ -10,7 +9,7 @@ type State = {
 };
 
 export default class TshService extends Store<State> {
-  client: Client;
+  client: types.ApiClient;
 
   state = {
     clusters: new Map(),
@@ -19,7 +18,7 @@ export default class TshService extends Store<State> {
     dbs: new Map(),
   };
 
-  constructor(client: Client) {
+  constructor(client: types.ApiClient) {
     super();
     this.client = client;
   }
@@ -97,5 +96,9 @@ export default class TshService extends Store<State> {
     this.setState({
       servers: new Map(servers),
     });
+  }
+
+  useSubscription() {
+    return useStore(this).state;
   }
 }

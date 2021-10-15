@@ -7,3 +7,18 @@ export type Server = apiServer.Server.AsObject;
 export type Gateway = apigateway.Gateway.AsObject;
 export type Database = apiDb.Database.AsObject;
 export type Cluster = apiCluster.Cluster.AsObject;
+
+export type ApiClient = {
+  listGateways: () => Promise<Gateway[]>;
+  listClusters: () => Promise<Cluster[]>;
+  listDatabases: (clusterUri: string) => Promise<Database[]>;
+  listServers: (clusterUri: string) => Promise<Server[]>;
+  createCluster: (clusterUri: string) => Promise<Cluster>;
+  getCluster: (clusterUri: string) => Promise<Cluster>;
+  ssoLogin: (clusterUri: string, pType: string, pName: string) => Promise<void>;
+  localLogin: (
+    clusterUri: string,
+    user: string,
+    password: string
+  ) => Promise<void>;
+};
