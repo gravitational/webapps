@@ -53,8 +53,6 @@ export default function DocumentNodes(props: Props) {
     return [];
   }
 
-  function onChangeCluster(newClusterId: string) {}
-
   return (
     <ThemeProviderTabs>
       <Document visible={visible}>

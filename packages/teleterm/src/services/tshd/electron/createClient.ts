@@ -1,6 +1,12 @@
-import { ITerminalServiceClient } from './v1/service_grpc_pb';
-import * as api from './v1/service_pb';
-import * as types from './types';
+import { TerminalServiceClient } from '../v1/service_grpc_pb';
+import * as grpc from '@grpc/grpc-js';
+import * as api from './../v1/service_pb';
+import * as types from './../types';
+
+export function createGrpcClient(addr?: string) {
+  addr = addr || 'unix:///tmp/tshd/socket';
+  return new TerminalServiceClient(addr, grpc.credentials.createInsecure());
+}
 
 /**
  * TODO(alex-kovoy):
@@ -8,17 +14,13 @@ import * as types from './types';
  *  2. add logging
  */
 
-export default class Client {
-  tsh: ITerminalServiceClient;
+export default function createClient(addr: string) {
+  const tsh = createGrpcClient(addr);
 
-  constructor(tsh: ITerminalServiceClient) {
-    this.tsh = tsh;
-  }
-
-  async listGateways() {
+  const listGateways = async () => {
     const req = new api.ListGatewaysRequest();
     return new Promise<types.Gateway[]>((resolve, reject) => {
-      this.tsh.listGateways(req, (err, response) => {
+      tsh.listGateways(req, (err, response) => {
         if (err) {
           reject(err);
         } else {
@@ -26,12 +28,12 @@ export default class Client {
         }
       });
     });
-  }
+  };
 
-  async listClusters() {
+  const listClusters = async () => {
     const req = new api.ListClustersRequest();
     return new Promise<types.Cluster[]>((resolve, reject) => {
-      this.tsh.listClusters(req, (err, response) => {
+      tsh.listClusters(req, (err, response) => {
         if (err) {
           reject(err);
         } else {
@@ -39,13 +41,13 @@ export default class Client {
         }
       });
     });
-  }
+  };
 
-  async listDatabases(clusterUri: string) {
+  const listDatabases = async (clusterUri: string) => {
     const req = new api.ListDatabasesRequest();
     req.setClusterUri(clusterUri);
     return new Promise<types.Database[]>((resolve, reject) => {
-      this.tsh.listDatabases(req, (err, response) => {
+      tsh.listDatabases(req, (err, response) => {
         if (err) {
           reject(err);
         } else {
@@ -53,13 +55,13 @@ export default class Client {
         }
       });
     });
-  }
+  };
 
-  async listServers(clusterUri: string) {
+  const listServers = async (clusterUri: string) => {
     const req = new api.ListServersRequest();
     req.setClusterUri(clusterUri);
     return new Promise<types.Server[]>((resolve, reject) => {
-      this.tsh.listServers(req, (err, response) => {
+      tsh.listServers(req, (err, response) => {
         if (err) {
           reject(err);
         } else {
@@ -67,13 +69,13 @@ export default class Client {
         }
       });
     });
-  }
+  };
 
-  async createCluster(addr: string) {
+  const createCluster = async (addr: string) => {
     const req = new api.CreateClusterRequest();
     req.setName(addr);
     return new Promise<types.Cluster>((resolve, reject) => {
-      this.tsh.createCluster(req, (err, response) => {
+      tsh.createCluster(req, (err, response) => {
         if (err) {
           reject(err);
         } else {
@@ -81,13 +83,13 @@ export default class Client {
         }
       });
     });
-  }
+  };
 
-  async getCluster(uri: string) {
+  const getCluster = async (uri: string) => {
     const req = new api.GetClusterRequest();
     req.setClusterUri(uri);
     return new Promise<types.Cluster>((resolve, reject) => {
-      this.tsh.getCluster(req, (err, response) => {
+      tsh.getCluster(req, (err, response) => {
         if (err) {
           reject(err);
         } else {
@@ -95,15 +97,20 @@ export default class Client {
         }
       });
     });
-  }
+  };
 
-  async localLogin(clusterUri = '', user = '', password = '', otp = '') {
+  const localLogin = async (
+    clusterUri = '',
+    user = '',
+    password = '',
+    otp = ''
+  ) => {
     const req = new api.CreateAuthChallengeRequest();
     req.setClusterUri(clusterUri);
     req.setUser(user);
     req.setPassword(password);
     return new Promise<void>((resolve, reject) => {
-      this.tsh.createAuthChallenge(req, err => {
+      tsh.createAuthChallenge(req, err => {
         if (err) {
           reject(err);
           return;
@@ -113,7 +120,7 @@ export default class Client {
         solvedReq.setClusterUri(clusterUri);
         solvedReq.setPassword(password);
         solvedReq.setUser(user);
-        this.tsh.solveAuthChallenge(solvedReq, err => {
+        tsh.solveAuthChallenge(solvedReq, err => {
           if (err) {
             reject(err);
           } else {
@@ -122,15 +129,15 @@ export default class Client {
         });
       });
     });
-  }
+  };
 
-  async ssoLogin(clusterUri = '', pType = '', pName = '') {
+  const ssoLogin = async (clusterUri = '', pType = '', pName = '') => {
     const req = new api.CreateAuthSSOChallengeRequest();
     req.setClusterUri(clusterUri);
     req.setProviderName(pName);
     req.setProviderType(pType);
     return new Promise<void>((resolve, reject) => {
-      this.tsh.createAuthSSOChallenge(req, err => {
+      tsh.createAuthSSOChallenge(req, err => {
         if (err) {
           reject(err);
         } else {
@@ -138,5 +145,16 @@ export default class Client {
         }
       });
     });
-  }
+  };
+
+  return {
+    listGateways,
+    listClusters,
+    listDatabases,
+    listServers,
+    createCluster,
+    getCluster,
+    localLogin,
+    ssoLogin,
+  };
 }

@@ -1,8 +1,5 @@
 const path = require('path');
 const { app, BrowserWindow, ipcMain } = require('electron');
-import { TerminalServiceClient } from 'teleterm/services/tshd/v1/service_grpc_pb';
-import { ListClustersRequest } from 'teleterm/services/tshd/v1/service_pb';
-const grpc = require('@grpc/grpc-js');
 
 app.commandLine.appendSwitch('ignore-certificate-errors', 'true');
 
@@ -34,6 +31,8 @@ function createWindow() {
     title: 'Teleport Terminal',
     icon: getAssetPath('icon.png'),
     webPreferences: {
+      contextIsolation: true,
+      nodeIntegration: false,
       preload: path.join(__dirname, 'preload.js'),
     },
   });
@@ -44,20 +43,8 @@ function createWindow() {
     win.loadFile('./../renderer/index.html');
   }
 }
+
 //
 app.whenReady().then(() => {
   createWindow();
-});
-
-const client = new TerminalServiceClient(
-  //'unix://terminal.sock',
-  'unix:///home/alexey/go/src/github.com/gravitational/teleport/terminal.sock',
-  grpc.credentials.createInsecure()
-);
-
-client.listClusters(new ListClustersRequest(), (err, data) => {
-  /*eslint no-debugger: off*/
-  debugger;
-  console.log('BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB', err);
-  console.log('AAAAAAAAAAAAA', data);
 });

@@ -15,8 +15,6 @@ limitations under the License.
 */
 
 import { useEffect, useState } from 'react';
-import { useAttempt } from 'shared/hooks';
-import { Node } from 'teleport/services/nodes';
 import { useAppContext } from './../appContextProvider';
 import * as types from './../types';
 import useAsync from './../useAsync';
@@ -25,7 +23,7 @@ export default function useNodes({ clusterId }: types.DocumentServers) {
   const ctx = useAppContext();
   const [searchValue, setSearchValue] = useState('');
   const [results, execute] = useAsync(() => {
-    return ctx.servicePlatform.listServers(clusterId);
+    return ctx.serviceClusters.fetchServers(clusterId);
   });
 
   useEffect(() => {

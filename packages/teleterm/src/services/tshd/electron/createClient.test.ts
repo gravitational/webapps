@@ -18,28 +18,29 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import Tsh from './tsh';
-import TshClient from './tshClient';
+import createClient from './createClient';
 import { TerminalServiceClient } from './v1/service_grpc_pb';
 import * as grpc from '@grpc/grpc-js';
 
-const client = new TerminalServiceClient(
+const grpcClient = new TerminalServiceClient(
   'unix:///tmp/tshd/socket',
   grpc.credentials.createInsecure()
 );
 
 test('fetchClusters', async () => {
-  const tshClient = new TshClient(client);
+  const tshClient = createClient(grpcClient);
   const tsh = new Tsh(tshClient);
   //
 
-  // await tsh.addCluster('localhost:4080');
+  //  await tsh.addCluster('localhost:4080');
 
   //await tsh.fetchClusters();
   //await tsh.fetchServers('/clusters/localhost');
   //await tsh.fetchDatabases('/clusters/localhost');
-  await tsh.login('/clusters/localhost', 'papa', '123123');
+  //  await tsh.login('/clusters/localhost', 'papa', '123123');
   await tsh.fetchServers('/clusters/localhost');
+
+  //await tsh.fetchClusters();
 
   console.log(tsh.state);
 });
