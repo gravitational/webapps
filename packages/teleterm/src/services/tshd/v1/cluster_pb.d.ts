@@ -42,43 +42,6 @@ export namespace Cluster {
     }
 }
 
-export class ResourceAccess extends jspb.Message { 
-    getList(): boolean;
-    setList(value: boolean): ResourceAccess;
-
-    getRead(): boolean;
-    setRead(value: boolean): ResourceAccess;
-
-    getEdit(): boolean;
-    setEdit(value: boolean): ResourceAccess;
-
-    getCreate(): boolean;
-    setCreate(value: boolean): ResourceAccess;
-
-    getDelete(): boolean;
-    setDelete(value: boolean): ResourceAccess;
-
-
-    serializeBinary(): Uint8Array;
-    toObject(includeInstance?: boolean): ResourceAccess.AsObject;
-    static toObject(includeInstance: boolean, msg: ResourceAccess): ResourceAccess.AsObject;
-    static extensions: {[key: number]: jspb.ExtensionFieldInfo<jspb.Message>};
-    static extensionsBinary: {[key: number]: jspb.ExtensionFieldBinaryInfo<jspb.Message>};
-    static serializeBinaryToWriter(message: ResourceAccess, writer: jspb.BinaryWriter): void;
-    static deserializeBinary(bytes: Uint8Array): ResourceAccess;
-    static deserializeBinaryFromReader(message: ResourceAccess, reader: jspb.BinaryReader): ResourceAccess;
-}
-
-export namespace ResourceAccess {
-    export type AsObject = {
-        list: boolean,
-        read: boolean,
-        edit: boolean,
-        create: boolean,
-        pb_delete: boolean,
-    }
-}
-
 export class ClusterACL extends jspb.Message { 
 
     hasSessions(): boolean;
@@ -186,94 +149,39 @@ export namespace ClusterACL {
     }
 }
 
-export class ClusterAuthSettings extends jspb.Message { 
-    getType(): string;
-    setType(value: string): ClusterAuthSettings;
+export class ResourceAccess extends jspb.Message { 
+    getList(): boolean;
+    setList(value: boolean): ResourceAccess;
 
-    getSecondFactor(): string;
-    setSecondFactor(value: string): ClusterAuthSettings;
+    getRead(): boolean;
+    setRead(value: boolean): ResourceAccess;
 
+    getEdit(): boolean;
+    setEdit(value: boolean): ResourceAccess;
 
-    hasU2f(): boolean;
-    clearU2f(): void;
-    getU2f(): AuthSettingsU2F | undefined;
-    setU2f(value?: AuthSettingsU2F): ClusterAuthSettings;
+    getCreate(): boolean;
+    setCreate(value: boolean): ResourceAccess;
 
-    clearAuthProvidersList(): void;
-    getAuthProvidersList(): Array<AuthProvider>;
-    setAuthProvidersList(value: Array<AuthProvider>): ClusterAuthSettings;
-    addAuthProviders(value?: AuthProvider, index?: number): AuthProvider;
-
-    getHasMessageOfTheDay(): boolean;
-    setHasMessageOfTheDay(value: boolean): ClusterAuthSettings;
+    getDelete(): boolean;
+    setDelete(value: boolean): ResourceAccess;
 
 
     serializeBinary(): Uint8Array;
-    toObject(includeInstance?: boolean): ClusterAuthSettings.AsObject;
-    static toObject(includeInstance: boolean, msg: ClusterAuthSettings): ClusterAuthSettings.AsObject;
+    toObject(includeInstance?: boolean): ResourceAccess.AsObject;
+    static toObject(includeInstance: boolean, msg: ResourceAccess): ResourceAccess.AsObject;
     static extensions: {[key: number]: jspb.ExtensionFieldInfo<jspb.Message>};
     static extensionsBinary: {[key: number]: jspb.ExtensionFieldBinaryInfo<jspb.Message>};
-    static serializeBinaryToWriter(message: ClusterAuthSettings, writer: jspb.BinaryWriter): void;
-    static deserializeBinary(bytes: Uint8Array): ClusterAuthSettings;
-    static deserializeBinaryFromReader(message: ClusterAuthSettings, reader: jspb.BinaryReader): ClusterAuthSettings;
+    static serializeBinaryToWriter(message: ResourceAccess, writer: jspb.BinaryWriter): void;
+    static deserializeBinary(bytes: Uint8Array): ResourceAccess;
+    static deserializeBinaryFromReader(message: ResourceAccess, reader: jspb.BinaryReader): ResourceAccess;
 }
 
-export namespace ClusterAuthSettings {
+export namespace ResourceAccess {
     export type AsObject = {
-        type: string,
-        secondFactor: string,
-        u2f?: AuthSettingsU2F.AsObject,
-        authProvidersList: Array<AuthProvider.AsObject>,
-        hasMessageOfTheDay: boolean,
-    }
-}
-
-export class AuthProvider extends jspb.Message { 
-    getType(): string;
-    setType(value: string): AuthProvider;
-
-    getName(): string;
-    setName(value: string): AuthProvider;
-
-    getDisplay(): string;
-    setDisplay(value: string): AuthProvider;
-
-
-    serializeBinary(): Uint8Array;
-    toObject(includeInstance?: boolean): AuthProvider.AsObject;
-    static toObject(includeInstance: boolean, msg: AuthProvider): AuthProvider.AsObject;
-    static extensions: {[key: number]: jspb.ExtensionFieldInfo<jspb.Message>};
-    static extensionsBinary: {[key: number]: jspb.ExtensionFieldBinaryInfo<jspb.Message>};
-    static serializeBinaryToWriter(message: AuthProvider, writer: jspb.BinaryWriter): void;
-    static deserializeBinary(bytes: Uint8Array): AuthProvider;
-    static deserializeBinaryFromReader(message: AuthProvider, reader: jspb.BinaryReader): AuthProvider;
-}
-
-export namespace AuthProvider {
-    export type AsObject = {
-        type: string,
-        name: string,
-        display: string,
-    }
-}
-
-export class AuthSettingsU2F extends jspb.Message { 
-    getAppId(): string;
-    setAppId(value: string): AuthSettingsU2F;
-
-
-    serializeBinary(): Uint8Array;
-    toObject(includeInstance?: boolean): AuthSettingsU2F.AsObject;
-    static toObject(includeInstance: boolean, msg: AuthSettingsU2F): AuthSettingsU2F.AsObject;
-    static extensions: {[key: number]: jspb.ExtensionFieldInfo<jspb.Message>};
-    static extensionsBinary: {[key: number]: jspb.ExtensionFieldBinaryInfo<jspb.Message>};
-    static serializeBinaryToWriter(message: AuthSettingsU2F, writer: jspb.BinaryWriter): void;
-    static deserializeBinary(bytes: Uint8Array): AuthSettingsU2F;
-    static deserializeBinaryFromReader(message: AuthSettingsU2F, reader: jspb.BinaryReader): AuthSettingsU2F;
-}
-
-export namespace AuthSettingsU2F {
-    export type AsObject = {
-        appId: string,
+        list: boolean,
+        read: boolean,
+        edit: boolean,
+        create: boolean,
+        pb_delete: boolean,
     }
 }

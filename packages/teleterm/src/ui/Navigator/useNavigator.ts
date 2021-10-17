@@ -23,7 +23,7 @@ export default function useNavigator() {
   const homeItem = initHomeItem(ctx.cfg.routes.home);
 
   ctx.serviceDocs.useSubscription();
-  ctx.serviceClusters.useSubscription();
+  ctx.serviceClusters.useState();
 
   function processItemClick(item: types.NavItem) {
     ctx.serviceDocs.open(item.uri);
@@ -32,7 +32,6 @@ export default function useNavigator() {
   return {
     homeItem,
     processItemClick,
-  };
 }
 
 function initHomeItem(uri: string): types.NavItem {

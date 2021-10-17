@@ -12,11 +12,12 @@ import * as v1_auth_challenge_pb from "../v1/auth_challenge_pb";
 import * as v1_database_pb from "../v1/database_pb";
 import * as v1_gateway_pb from "../v1/gateway_pb";
 import * as v1_server_pb from "../v1/server_pb";
+import * as v1_auth_settings_pb from "../v1/auth_settings_pb";
 
 interface ITerminalServiceService extends grpc.ServiceDefinition<grpc.UntypedServiceImplementation> {
     createCluster: ITerminalServiceService_ICreateCluster;
     listClusters: ITerminalServiceService_IListClusters;
-    getClusterAuthSettings: ITerminalServiceService_IGetClusterAuthSettings;
+    getAuthSettings: ITerminalServiceService_IGetAuthSettings;
     listDatabases: ITerminalServiceService_IListDatabases;
     createGateway: ITerminalServiceService_ICreateGateway;
     listGateways: ITerminalServiceService_IListGateways;
@@ -46,14 +47,14 @@ interface ITerminalServiceService_IListClusters extends grpc.MethodDefinition<v1
     responseSerialize: grpc.serialize<v1_service_pb.ListClustersResponse>;
     responseDeserialize: grpc.deserialize<v1_service_pb.ListClustersResponse>;
 }
-interface ITerminalServiceService_IGetClusterAuthSettings extends grpc.MethodDefinition<v1_service_pb.GetClusterAuthSettingsRequest, v1_cluster_pb.ClusterAuthSettings> {
-    path: "/teleport.terminal.v1.TerminalService/GetClusterAuthSettings";
+interface ITerminalServiceService_IGetAuthSettings extends grpc.MethodDefinition<v1_service_pb.GetAuthSettingsRequest, v1_auth_settings_pb.AuthSettings> {
+    path: "/teleport.terminal.v1.TerminalService/GetAuthSettings";
     requestStream: false;
     responseStream: false;
-    requestSerialize: grpc.serialize<v1_service_pb.GetClusterAuthSettingsRequest>;
-    requestDeserialize: grpc.deserialize<v1_service_pb.GetClusterAuthSettingsRequest>;
-    responseSerialize: grpc.serialize<v1_cluster_pb.ClusterAuthSettings>;
-    responseDeserialize: grpc.deserialize<v1_cluster_pb.ClusterAuthSettings>;
+    requestSerialize: grpc.serialize<v1_service_pb.GetAuthSettingsRequest>;
+    requestDeserialize: grpc.deserialize<v1_service_pb.GetAuthSettingsRequest>;
+    responseSerialize: grpc.serialize<v1_auth_settings_pb.AuthSettings>;
+    responseDeserialize: grpc.deserialize<v1_auth_settings_pb.AuthSettings>;
 }
 interface ITerminalServiceService_IListDatabases extends grpc.MethodDefinition<v1_service_pb.ListDatabasesRequest, v1_service_pb.ListDatabasesResponse> {
     path: "/teleport.terminal.v1.TerminalService/ListDatabases";
@@ -142,7 +143,7 @@ export const TerminalServiceService: ITerminalServiceService;
 export interface ITerminalServiceServer {
     createCluster: grpc.handleUnaryCall<v1_service_pb.CreateClusterRequest, v1_cluster_pb.Cluster>;
     listClusters: grpc.handleUnaryCall<v1_service_pb.ListClustersRequest, v1_service_pb.ListClustersResponse>;
-    getClusterAuthSettings: grpc.handleUnaryCall<v1_service_pb.GetClusterAuthSettingsRequest, v1_cluster_pb.ClusterAuthSettings>;
+    getAuthSettings: grpc.handleUnaryCall<v1_service_pb.GetAuthSettingsRequest, v1_auth_settings_pb.AuthSettings>;
     listDatabases: grpc.handleUnaryCall<v1_service_pb.ListDatabasesRequest, v1_service_pb.ListDatabasesResponse>;
     createGateway: grpc.handleUnaryCall<v1_service_pb.CreateGatewayRequest, v1_gateway_pb.Gateway>;
     listGateways: grpc.handleUnaryCall<v1_service_pb.ListGatewaysRequest, v1_service_pb.ListGatewaysResponse>;
@@ -161,9 +162,9 @@ export interface ITerminalServiceClient {
     listClusters(request: v1_service_pb.ListClustersRequest, callback: (error: grpc.ServiceError | null, response: v1_service_pb.ListClustersResponse) => void): grpc.ClientUnaryCall;
     listClusters(request: v1_service_pb.ListClustersRequest, metadata: grpc.Metadata, callback: (error: grpc.ServiceError | null, response: v1_service_pb.ListClustersResponse) => void): grpc.ClientUnaryCall;
     listClusters(request: v1_service_pb.ListClustersRequest, metadata: grpc.Metadata, options: Partial<grpc.CallOptions>, callback: (error: grpc.ServiceError | null, response: v1_service_pb.ListClustersResponse) => void): grpc.ClientUnaryCall;
-    getClusterAuthSettings(request: v1_service_pb.GetClusterAuthSettingsRequest, callback: (error: grpc.ServiceError | null, response: v1_cluster_pb.ClusterAuthSettings) => void): grpc.ClientUnaryCall;
-    getClusterAuthSettings(request: v1_service_pb.GetClusterAuthSettingsRequest, metadata: grpc.Metadata, callback: (error: grpc.ServiceError | null, response: v1_cluster_pb.ClusterAuthSettings) => void): grpc.ClientUnaryCall;
-    getClusterAuthSettings(request: v1_service_pb.GetClusterAuthSettingsRequest, metadata: grpc.Metadata, options: Partial<grpc.CallOptions>, callback: (error: grpc.ServiceError | null, response: v1_cluster_pb.ClusterAuthSettings) => void): grpc.ClientUnaryCall;
+    getAuthSettings(request: v1_service_pb.GetAuthSettingsRequest, callback: (error: grpc.ServiceError | null, response: v1_auth_settings_pb.AuthSettings) => void): grpc.ClientUnaryCall;
+    getAuthSettings(request: v1_service_pb.GetAuthSettingsRequest, metadata: grpc.Metadata, callback: (error: grpc.ServiceError | null, response: v1_auth_settings_pb.AuthSettings) => void): grpc.ClientUnaryCall;
+    getAuthSettings(request: v1_service_pb.GetAuthSettingsRequest, metadata: grpc.Metadata, options: Partial<grpc.CallOptions>, callback: (error: grpc.ServiceError | null, response: v1_auth_settings_pb.AuthSettings) => void): grpc.ClientUnaryCall;
     listDatabases(request: v1_service_pb.ListDatabasesRequest, callback: (error: grpc.ServiceError | null, response: v1_service_pb.ListDatabasesResponse) => void): grpc.ClientUnaryCall;
     listDatabases(request: v1_service_pb.ListDatabasesRequest, metadata: grpc.Metadata, callback: (error: grpc.ServiceError | null, response: v1_service_pb.ListDatabasesResponse) => void): grpc.ClientUnaryCall;
     listDatabases(request: v1_service_pb.ListDatabasesRequest, metadata: grpc.Metadata, options: Partial<grpc.CallOptions>, callback: (error: grpc.ServiceError | null, response: v1_service_pb.ListDatabasesResponse) => void): grpc.ClientUnaryCall;
@@ -201,9 +202,9 @@ export class TerminalServiceClient extends grpc.Client implements ITerminalServi
     public listClusters(request: v1_service_pb.ListClustersRequest, callback: (error: grpc.ServiceError | null, response: v1_service_pb.ListClustersResponse) => void): grpc.ClientUnaryCall;
     public listClusters(request: v1_service_pb.ListClustersRequest, metadata: grpc.Metadata, callback: (error: grpc.ServiceError | null, response: v1_service_pb.ListClustersResponse) => void): grpc.ClientUnaryCall;
     public listClusters(request: v1_service_pb.ListClustersRequest, metadata: grpc.Metadata, options: Partial<grpc.CallOptions>, callback: (error: grpc.ServiceError | null, response: v1_service_pb.ListClustersResponse) => void): grpc.ClientUnaryCall;
-    public getClusterAuthSettings(request: v1_service_pb.GetClusterAuthSettingsRequest, callback: (error: grpc.ServiceError | null, response: v1_cluster_pb.ClusterAuthSettings) => void): grpc.ClientUnaryCall;
-    public getClusterAuthSettings(request: v1_service_pb.GetClusterAuthSettingsRequest, metadata: grpc.Metadata, callback: (error: grpc.ServiceError | null, response: v1_cluster_pb.ClusterAuthSettings) => void): grpc.ClientUnaryCall;
-    public getClusterAuthSettings(request: v1_service_pb.GetClusterAuthSettingsRequest, metadata: grpc.Metadata, options: Partial<grpc.CallOptions>, callback: (error: grpc.ServiceError | null, response: v1_cluster_pb.ClusterAuthSettings) => void): grpc.ClientUnaryCall;
+    public getAuthSettings(request: v1_service_pb.GetAuthSettingsRequest, callback: (error: grpc.ServiceError | null, response: v1_auth_settings_pb.AuthSettings) => void): grpc.ClientUnaryCall;
+    public getAuthSettings(request: v1_service_pb.GetAuthSettingsRequest, metadata: grpc.Metadata, callback: (error: grpc.ServiceError | null, response: v1_auth_settings_pb.AuthSettings) => void): grpc.ClientUnaryCall;
+    public getAuthSettings(request: v1_service_pb.GetAuthSettingsRequest, metadata: grpc.Metadata, options: Partial<grpc.CallOptions>, callback: (error: grpc.ServiceError | null, response: v1_auth_settings_pb.AuthSettings) => void): grpc.ClientUnaryCall;
     public listDatabases(request: v1_service_pb.ListDatabasesRequest, callback: (error: grpc.ServiceError | null, response: v1_service_pb.ListDatabasesResponse) => void): grpc.ClientUnaryCall;
     public listDatabases(request: v1_service_pb.ListDatabasesRequest, metadata: grpc.Metadata, callback: (error: grpc.ServiceError | null, response: v1_service_pb.ListDatabasesResponse) => void): grpc.ClientUnaryCall;
     public listDatabases(request: v1_service_pb.ListDatabasesRequest, metadata: grpc.Metadata, options: Partial<grpc.CallOptions>, callback: (error: grpc.ServiceError | null, response: v1_service_pb.ListDatabasesResponse) => void): grpc.ClientUnaryCall;

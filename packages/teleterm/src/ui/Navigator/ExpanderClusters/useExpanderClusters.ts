@@ -22,14 +22,14 @@ import * as types from 'teleterm/ui/types';
 
 export default function useExpanderClusters() {
   const ctx = useAppContext();
-  const { clusters } = ctx.serviceClusters.useSubscription();
+  const { clusters } = ctx.serviceClusters.useState();
 
   const clusterItems = React.useMemo<ClusterNavItem[]>(() => {
     return initClusterItems(ctx);
   }, [clusters]);
 
   function addCluster() {
-    ctx.serviceCommands.setCommand({ kind: 'dialog.addCluster.open' });
+    ctx.serviceCommands.sendCommand({ kind: 'dialog.cluster-add-new.open' });
   }
 
   return {

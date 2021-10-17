@@ -22,36 +22,77 @@ type State<T> = {
   statusText: string;
 };
 
-type Params<T> = () => Promise<T>;
+type IsValidArg<T> = T extends object
+  ? keyof T extends never
+    ? false
+    : true
+  : true;
 
-export default function useAsync<T>(cb: Params<T>) {
-  const [response, setResponse] = React.useState<State<T>>(() => ({
+type Promisified<R, T extends Function> = T extends (
+  ...args: any[]
+) => Promise<any>
+  ? T
+  : T extends (
+      a: infer A,
+      b: infer B,
+      c: infer C,
+      d: infer D,
+      e: infer E,
+      f: infer F,
+      g: infer G,
+      h: infer H,
+      i: infer I,
+      j: infer J
+    ) => Promise<R>
+  ? IsValidArg<J> extends true
+    ? (a: A, b: B, c: C, d: D, e: E, f: F, g: G, h: H, i: I, j: J) => Promise<R>
+    : IsValidArg<I> extends true
+    ? (a: A, b: B, c: C, d: D, e: E, f: F, g: G, h: H, i: I) => Promise<R>
+    : IsValidArg<H> extends true
+    ? (a: A, b: B, c: C, d: D, e: E, f: F, g: G, h: H) => Promise<R>
+    : IsValidArg<G> extends true
+    ? (a: A, b: B, c: C, d: D, e: E, f: F, g: G) => Promise<R>
+    : IsValidArg<F> extends true
+    ? (a: A, b: B, c: C, d: D, e: E, f: F) => Promise<R>
+    : IsValidArg<E> extends true
+    ? (a: A, b: B, c: C, d: D, e: E) => Promise<R>
+    : IsValidArg<D> extends true
+    ? (a: A, b: B, c: C, d: D) => Promise<R>
+    : IsValidArg<C> extends true
+    ? (a: A, b: B, c: C) => Promise<R>
+    : IsValidArg<B> extends true
+    ? (a: A, b: B) => Promise<R>
+    : IsValidArg<A> extends true
+    ? (a: A) => Promise<R>
+    : () => Promise<R>
+  : never;
+
+export default function useAsync<R, T extends Function>(
+  cb?: Promisified<R, T>
+) {
+  const [state, setState] = React.useState<State<R>>(() => ({
     data: null,
     status: '',
     statusText: '',
   }));
 
-  const cbRef = React.useRef<Params<T>>();
-
-  cbRef.current = cb;
-
-  const execute = async () => {
+  const execute = async (...p: Parameters<Promisified<R, T>>) => {
     try {
-      setResponse({
-        ...response,
+      setState({
+        ...state,
         status: 'processing',
       });
 
-      const data = await cbRef.current();
+      const data = await cb.call(null, ...p);
 
-      setResponse({
-        ...response,
+      setState({
+        ...state,
         status: 'success',
         data,
       });
     } catch (err) {
-      setResponse({
-        ...response,
+      setState({
+        ...state,
         status: 'error',
         statusText: err.message,
         data: null,
@@ -59,5 +100,5 @@ export default function useAsync<T>(cb: Params<T>) {
     }
   };
 
-  return [response, execute] as const;
+  return [state, execute, setState] as const;
 }
