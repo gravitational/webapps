@@ -17,16 +17,28 @@
 import React from 'react';
 import { useAppContext } from './../appContextProvider';
 import AddCluster from './../AddCluster';
+import ClusterLogin from 'teleterm/ui/ClusterLogin';
 
 export default function DialogHost() {
   const { serviceCommands } = useAppContext();
-  const store = serviceCommands.useSubscription();
+  const cmd = serviceCommands.useState();
 
-  if (store.kind === 'dialog.addCluster.open') {
+  if (cmd.kind === 'dialog.cluster-add-new.open') {
     return (
       <AddCluster
         onClose={() =>
-          serviceCommands.setCommand({ kind: 'dialog.addCluster.close' })
+          serviceCommands.sendCommand({ kind: 'dialog.cluster-add-new.close' })
+        }
+      />
+    );
+  }
+
+  if (cmd.kind === 'dialog.cluster-login.open') {
+    return (
+      <ClusterLogin
+        clusterUri={cmd.clusterUri}
+        onClose={() =>
+          serviceCommands.sendCommand({ kind: 'dialog.cluster-login.close' })
         }
       />
     );

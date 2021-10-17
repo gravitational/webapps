@@ -9,6 +9,18 @@ var v1_auth_challenge_pb = require('../v1/auth_challenge_pb.js');
 var v1_database_pb = require('../v1/database_pb.js');
 var v1_gateway_pb = require('../v1/gateway_pb.js');
 var v1_server_pb = require('../v1/server_pb.js');
+var v1_auth_settings_pb = require('../v1/auth_settings_pb.js');
+
+function serialize_teleport_terminal_v1_AuthSettings(arg) {
+  if (!(arg instanceof v1_auth_settings_pb.AuthSettings)) {
+    throw new Error('Expected argument of type teleport.terminal.v1.AuthSettings');
+  }
+  return Buffer.from(arg.serializeBinary());
+}
+
+function deserialize_teleport_terminal_v1_AuthSettings(buffer_arg) {
+  return v1_auth_settings_pb.AuthSettings.deserializeBinary(new Uint8Array(buffer_arg));
+}
 
 function serialize_teleport_terminal_v1_Cluster(arg) {
   if (!(arg instanceof v1_cluster_pb.Cluster)) {
@@ -19,17 +31,6 @@ function serialize_teleport_terminal_v1_Cluster(arg) {
 
 function deserialize_teleport_terminal_v1_Cluster(buffer_arg) {
   return v1_cluster_pb.Cluster.deserializeBinary(new Uint8Array(buffer_arg));
-}
-
-function serialize_teleport_terminal_v1_ClusterAuthSettings(arg) {
-  if (!(arg instanceof v1_cluster_pb.ClusterAuthSettings)) {
-    throw new Error('Expected argument of type teleport.terminal.v1.ClusterAuthSettings');
-  }
-  return Buffer.from(arg.serializeBinary());
-}
-
-function deserialize_teleport_terminal_v1_ClusterAuthSettings(buffer_arg) {
-  return v1_cluster_pb.ClusterAuthSettings.deserializeBinary(new Uint8Array(buffer_arg));
 }
 
 function serialize_teleport_terminal_v1_CreateAuthChallengeRequest(arg) {
@@ -120,15 +121,15 @@ function deserialize_teleport_terminal_v1_Gateway(buffer_arg) {
   return v1_gateway_pb.Gateway.deserializeBinary(new Uint8Array(buffer_arg));
 }
 
-function serialize_teleport_terminal_v1_GetClusterAuthSettingsRequest(arg) {
-  if (!(arg instanceof v1_service_pb.GetClusterAuthSettingsRequest)) {
-    throw new Error('Expected argument of type teleport.terminal.v1.GetClusterAuthSettingsRequest');
+function serialize_teleport_terminal_v1_GetAuthSettingsRequest(arg) {
+  if (!(arg instanceof v1_service_pb.GetAuthSettingsRequest)) {
+    throw new Error('Expected argument of type teleport.terminal.v1.GetAuthSettingsRequest');
   }
   return Buffer.from(arg.serializeBinary());
 }
 
-function deserialize_teleport_terminal_v1_GetClusterAuthSettingsRequest(buffer_arg) {
-  return v1_service_pb.GetClusterAuthSettingsRequest.deserializeBinary(new Uint8Array(buffer_arg));
+function deserialize_teleport_terminal_v1_GetAuthSettingsRequest(buffer_arg) {
+  return v1_service_pb.GetAuthSettingsRequest.deserializeBinary(new Uint8Array(buffer_arg));
 }
 
 function serialize_teleport_terminal_v1_GetClusterRequest(arg) {
@@ -281,17 +282,17 @@ listClusters: {
     responseSerialize: serialize_teleport_terminal_v1_ListClustersResponse,
     responseDeserialize: deserialize_teleport_terminal_v1_ListClustersResponse,
   },
-  // GetClusterAuthSettings
-getClusterAuthSettings: {
-    path: '/teleport.terminal.v1.TerminalService/GetClusterAuthSettings',
+  // GetAuthSettings
+getAuthSettings: {
+    path: '/teleport.terminal.v1.TerminalService/GetAuthSettings',
     requestStream: false,
     responseStream: false,
-    requestType: v1_service_pb.GetClusterAuthSettingsRequest,
-    responseType: v1_cluster_pb.ClusterAuthSettings,
-    requestSerialize: serialize_teleport_terminal_v1_GetClusterAuthSettingsRequest,
-    requestDeserialize: deserialize_teleport_terminal_v1_GetClusterAuthSettingsRequest,
-    responseSerialize: serialize_teleport_terminal_v1_ClusterAuthSettings,
-    responseDeserialize: deserialize_teleport_terminal_v1_ClusterAuthSettings,
+    requestType: v1_service_pb.GetAuthSettingsRequest,
+    responseType: v1_auth_settings_pb.AuthSettings,
+    requestSerialize: serialize_teleport_terminal_v1_GetAuthSettingsRequest,
+    requestDeserialize: deserialize_teleport_terminal_v1_GetAuthSettingsRequest,
+    responseSerialize: serialize_teleport_terminal_v1_AuthSettings,
+    responseDeserialize: deserialize_teleport_terminal_v1_AuthSettings,
   },
   // ListDatabases
 listDatabases: {

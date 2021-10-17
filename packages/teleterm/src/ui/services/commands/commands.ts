@@ -21,28 +21,38 @@ export interface CommandNoop {
 }
 
 export interface CommandDialogAddClusterOpen {
-  kind: 'dialog.addCluster.open';
+  kind: 'dialog.cluster-add-new.open';
 }
 
 export interface CommandDialogAddClusterClose {
-  kind: 'dialog.addCluster.close';
+  kind: 'dialog.cluster-add-new.close';
+}
+
+export interface CommandDialogClusterLoginOpen {
+  kind: 'dialog.cluster-login.open';
+  clusterUri: string;
+}
+export interface CommandDialogClusterLoginClose {
+  kind: 'dialog.cluster-login.close';
 }
 
 export type Command =
   | CommandNoop
   | CommandDialogAddClusterOpen
-  | CommandDialogAddClusterClose;
+  | CommandDialogAddClusterClose
+  | CommandDialogClusterLoginOpen
+  | CommandDialogClusterLoginClose;
 
 export default class CommandService extends Store<Command> {
   state: Command = {
-    kind: 'dialog.addCluster.open',
+    kind: 'dialog.cluster-add-new.open',
   };
 
-  setCommand(cmd: Command) {
+  sendCommand(cmd: Command) {
     this.setState(cmd);
   }
 
-  useSubscription() {
+  useState() {
     return useStore(this).state;
   }
 }

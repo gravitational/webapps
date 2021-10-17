@@ -32,17 +32,32 @@ export default function Container() {
 
 export const ExpanderClusters: React.FC<State> = props => {
   const { serviceCommands } = useAppContext();
-  const $onlineClusters = props.clusterItems
-    .filter(i => i.connected)
-    .map(i => <ClusterItem key={i.uri} item={i} />);
-  const $offlineClusters = props.clusterItems
-    .filter(i => !i.connected)
-    .map(i => <ClusterOfflineItem key={i.uri} item={i} />);
+
+  const handleConnect = (clusterUri: string) => {
+    serviceCommands.sendCommand({
+      kind: 'dialog.cluster-login.open',
+      clusterUri,
+    });
+  };
 
   const handleAdd = (e: React.SyntheticEvent) => {
     e.stopPropagation();
-    serviceCommands.setCommand({ kind: 'dialog.addCluster.open' });
+    serviceCommands.sendCommand({ kind: 'dialog.cluster-add-new.open' });
   };
+
+  const $onlineClusters = props.clusterItems
+    .filter(i => i.connected)
+    .map(i => <ClusterItem key={i.uri} item={i} />);
+
+  const $offlineClusters = props.clusterItems
+    .filter(i => !i.connected)
+    .map(i => (
+      <ClusterOfflineItem
+        key={i.uri}
+        item={i}
+        onClick={() => handleConnect(i.uri)}
+      />
+    ));
 
   return (
     <Expander>
@@ -93,9 +108,11 @@ const ClusterItem: React.FC<{ item: ClusterNavItem }> = props => {
   );
 };
 
-const ClusterOfflineItem: React.FC<{ item: ClusterNavItem }> = props => {
-  const { title } = props.item;
-
+const ClusterOfflineItem: React.FC<{
+  item: ClusterNavItem;
+  onClick(): void;
+}> = props => {
+  const { item, onClick } = props;
   return (
     <Expander>
       <ExpanderHeader pl={5} color="grey.500">
@@ -105,7 +122,7 @@ const ClusterOfflineItem: React.FC<{ item: ClusterNavItem }> = props => {
           flex="1"
           width="100%"
         >
-          <Text typography="h5">{title}</Text>
+          <Text typography="h5">{item.title}</Text>
           <ButtonIcon color="text.placeholder">
             <Icons.Trash />
           </ButtonIcon>
@@ -114,7 +131,9 @@ const ClusterOfflineItem: React.FC<{ item: ClusterNavItem }> = props => {
       <ExpanderContent>
         <StyledNavItem pl={8}>
           <Text color="text.secondary">
-            <ButtonBorder size="small">connect</ButtonBorder>
+            <ButtonBorder size="small" onClick={onClick}>
+              connect
+            </ButtonBorder>
           </Text>
         </StyledNavItem>
       </ExpanderContent>
