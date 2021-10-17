@@ -98,7 +98,11 @@ export default class TshService extends Store<State> {
     });
   }
 
-  useSubscription() {
+  async getAuthSettings(clusterUri: string) {
+    return await this.client.getAuthSettings(clusterUri);
+  }
+
+  useState() {
     return useStore(this).state;
   }
 }

@@ -147,6 +147,20 @@ export default function createClient(addr: string) {
     });
   };
 
+  const getAuthSettings = async (clusterUri = '') => {
+    const req = new api.GetAuthSettingsRequest();
+    req.setClusterUri(clusterUri);
+    return new Promise<types.AuthSettings>((resolve, reject) => {
+      tsh.getAuthSettings(req, (err, response) => {
+        if (err) {
+          reject(err);
+        } else {
+          resolve(response.toObject());
+        }
+      });
+    });
+  };
+
   return {
     listGateways,
     listClusters,
@@ -154,6 +168,7 @@ export default function createClient(addr: string) {
     listServers,
     createCluster,
     getCluster,
+    getAuthSettings,
     localLogin,
     ssoLogin,
   };

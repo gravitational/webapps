@@ -11,6 +11,7 @@ import * as v1_auth_challenge_pb from "../v1/auth_challenge_pb";
 import * as v1_database_pb from "../v1/database_pb";
 import * as v1_gateway_pb from "../v1/gateway_pb";
 import * as v1_server_pb from "../v1/server_pb";
+import * as v1_auth_settings_pb from "../v1/auth_settings_pb";
 
 export class GetClusterRequest extends jspb.Message { 
     getClusterUri(): string;
@@ -320,24 +321,24 @@ export namespace ListServersResponse {
     }
 }
 
-export class GetClusterAuthSettingsRequest extends jspb.Message { 
-    getName(): string;
-    setName(value: string): GetClusterAuthSettingsRequest;
+export class GetAuthSettingsRequest extends jspb.Message { 
+    getClusterUri(): string;
+    setClusterUri(value: string): GetAuthSettingsRequest;
 
 
     serializeBinary(): Uint8Array;
-    toObject(includeInstance?: boolean): GetClusterAuthSettingsRequest.AsObject;
-    static toObject(includeInstance: boolean, msg: GetClusterAuthSettingsRequest): GetClusterAuthSettingsRequest.AsObject;
+    toObject(includeInstance?: boolean): GetAuthSettingsRequest.AsObject;
+    static toObject(includeInstance: boolean, msg: GetAuthSettingsRequest): GetAuthSettingsRequest.AsObject;
     static extensions: {[key: number]: jspb.ExtensionFieldInfo<jspb.Message>};
     static extensionsBinary: {[key: number]: jspb.ExtensionFieldBinaryInfo<jspb.Message>};
-    static serializeBinaryToWriter(message: GetClusterAuthSettingsRequest, writer: jspb.BinaryWriter): void;
-    static deserializeBinary(bytes: Uint8Array): GetClusterAuthSettingsRequest;
-    static deserializeBinaryFromReader(message: GetClusterAuthSettingsRequest, reader: jspb.BinaryReader): GetClusterAuthSettingsRequest;
+    static serializeBinaryToWriter(message: GetAuthSettingsRequest, writer: jspb.BinaryWriter): void;
+    static deserializeBinary(bytes: Uint8Array): GetAuthSettingsRequest;
+    static deserializeBinaryFromReader(message: GetAuthSettingsRequest, reader: jspb.BinaryReader): GetAuthSettingsRequest;
 }
 
-export namespace GetClusterAuthSettingsRequest {
+export namespace GetAuthSettingsRequest {
     export type AsObject = {
-        name: string,
+        clusterUri: string,
     }
 }
 

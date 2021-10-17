@@ -16,25 +16,23 @@
 
 import React, { useState } from 'react';
 import Dialog from 'design/Dialog';
+import * as Alerts from 'design/Alert';
 import { Box, Text, Flex, ButtonPrimary, ButtonSecondary } from 'design';
 import FieldInput from 'shared/components/FieldInput';
-import * as Alerts from 'design/Alert';
-import { useAppContext } from 'teleterm/ui/appContextProvider';
 import Validation from 'shared/components/Validation';
 import { requiredField } from 'shared/components/Validation/rules';
-import * as Icons from 'design/Icon';
+import { useAppContext } from 'teleterm/ui/appContextProvider';
 import useAsync from 'teleterm/ui/useAsync';
 
 export default function AddCluster({ onClose }: Props) {
   const [addr, setAddr] = useState('');
   const ctx = useAppContext();
-  const [{ data, status, statusText }, execute] = useAsync(async () => {
-    return ctx.servicePlatform.addCluster(addr);
+  const [{ status, statusText }, execute] = useAsync(async () => {
+    return ctx.serviceClusters.addCluster(addr);
   });
 
   React.useEffect(() => {
     if (status === 'success') {
-      ctx.addCluster(data);
       onClose();
     }
   }, [status]);
