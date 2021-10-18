@@ -128,6 +128,9 @@ class Tty extends EventEmitter {
         case MessageTypeEnum.U2F_CHALLENGE:
           this.emit(TermEventEnum.U2F_CHALLENGE, msg.payload);
           break;
+        case MessageTypeEnum.WEBAUTHN_CHALLENGE:
+          this.emit(TermEventEnum.WEBAUTHN_CHALLENGE, msg.payload);
+          break;
         case MessageTypeEnum.AUDIT:
           this._processAuditPayload(msg.payload);
           break;

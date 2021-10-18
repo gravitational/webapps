@@ -27,6 +27,7 @@ export const MessageTypeEnum = {
   SESSION_END: 'c',
   RESIZE: 'w',
   U2F_CHALLENGE: 'u',
+  WEBAUTHN_CHALLENGE: 'n',
 };
 
 export const messageFields = {
