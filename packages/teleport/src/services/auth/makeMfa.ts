@@ -73,13 +73,13 @@ export function makeMfaAuthenticateChallenge(json): MfaAuthenticateChallenge {
   };
 }
 
-// makeNavCredentialsCreateResponse takes response from navigator.credentials.create
+// makeWebauthnCreationResponse takes response from navigator.credentials.create
 // and creates a credential object expected by the server with ArrayBuffer
 // fields converted to Base64URL:
 // - rawId
 // - response.attestationObject
 // - response.clientDataJSON
-export function makeNavCredentialsCreateResponse(res) {
+export function makeWebauthnCreationResponse(res) {
   // Response can be null if no Credential object can be created.
   if (!res) {
     throw new Error('error creating credential, please try again');
@@ -100,7 +100,7 @@ export function makeNavCredentialsCreateResponse(res) {
   };
 }
 
-// makeNavCredentialsGetResponse takes response from navigator.credentials.get
+// makeWebauthnAssertionResponse takes response from navigator.credentials.get
 // and creates a credential object expected by the server with ArrayBuffer
 // fields converted to Base64URL:
 // - rawId
@@ -108,7 +108,7 @@ export function makeNavCredentialsCreateResponse(res) {
 // - response.clientDataJSON
 // - response.signature
 // - response.userHandle
-export function makeNavCredentialsGetResponse(res) {
+export function makeWebauthnAssertionResponse(res) {
   // Response can be null if Credential cannot be unambiguously obtained.
   if (!res) {
     throw new Error('error obtaining credential, please try again');

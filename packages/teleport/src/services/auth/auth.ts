@@ -22,8 +22,8 @@ import makePasswordToken from './makePasswordToken';
 import {
   makeMfaAuthenticateChallenge,
   makeMfaRegistrationChallenge,
-  makeNavCredentialsGetResponse,
-  makeNavCredentialsCreateResponse,
+  makeWebauthnAssertionResponse,
+  makeWebauthnCreationResponse,
 } from './makeMfa';
 import { DeviceType } from './types';
 
@@ -38,13 +38,15 @@ const auth = {
     );
   },
 
-  webauthnBrowserSupported() {
-    if ('credentials' in navigator) {
-      return null;
+  checkWebauthnSupport() {
+    if (window.PublicKeyCredential) {
+      return Promise.resolve();
     }
 
-    return new Error(
-      'this browser does not support Webauthn required for hardware tokens, please try Chrome, Firefox or Safari with the latest update'
+    return Promise.reject(
+      new Error(
+        'this browser does not support Webauthn required for hardware tokens, please try the latest version of Chrome, Firefox or Safari'
+      )
     );
   },
 
@@ -126,13 +128,9 @@ const auth = {
   },
 
   loginWithWebauthn(user: string, pass: string) {
-    const err = auth.webauthnBrowserSupported();
-    if (err) {
-      return Promise.reject(err);
-    }
-
     return auth
-      .mfaLoginBegin(user, pass)
+      .checkWebauthnSupport()
+      .then(() => auth.mfaLoginBegin(user, pass))
       .then(res =>
         navigator.credentials.get({
           publicKey: res.webauthnPublicKey,
@@ -141,7 +139,7 @@ const auth = {
       .then(res => {
         const request = {
           user,
-          webauthnAssertionResponse: makeNavCredentialsGetResponse(res),
+          webauthnAssertionResponse: makeWebauthnAssertionResponse(res),
         };
 
         return api.post(cfg.api.mfaLoginFinish, request);
@@ -154,13 +152,9 @@ const auth = {
   },
 
   resetPasswordWithWebauthn(tokenId: string, password: string) {
-    const err = auth.webauthnBrowserSupported();
-    if (err) {
-      return Promise.reject(err);
-    }
-
     return auth
-      .createMfaRegistrationChallenge(tokenId, 'webauthn')
+      .checkWebauthnSupport()
+      .then(() => auth.createMfaRegistrationChallenge(tokenId, 'webauthn'))
       .then(res =>
         navigator.credentials.create({
           publicKey: res.webauthnPublicKey,
@@ -170,7 +164,7 @@ const auth = {
         const request = {
           token: tokenId,
           password: base64EncodeUnicode(password),
-          webauthnCreationResponse: makeNavCredentialsCreateResponse(res),
+          webauthnCreationResponse: makeWebauthnCreationResponse(res),
         };
 
         return api.put(cfg.getPasswordTokenUrl(), request);
@@ -236,13 +230,9 @@ const auth = {
   },
 
   changePasswordWithWebauthn(oldPass: string, newPass: string) {
-    const err = auth.webauthnBrowserSupported();
-    if (err) {
-      return Promise.reject(err);
-    }
-
-    return api
-      .post(cfg.api.mfaChangePasswordBegin, { pass: oldPass })
+    return auth
+      .checkWebauthnSupport()
+      .then(() => api.post(cfg.api.mfaChangePasswordBegin, { pass: oldPass }))
       .then(res =>
         navigator.credentials.get({
           publicKey: makeMfaAuthenticateChallenge(res).webauthnPublicKey,
@@ -252,7 +242,7 @@ const auth = {
         const request = {
           old_password: base64EncodeUnicode(oldPass),
           new_password: base64EncodeUnicode(newPass),
-          webauthnAssertionResponse: makeNavCredentialsGetResponse(res),
+          webauthnAssertionResponse: makeWebauthnAssertionResponse(res),
         };
 
         return api.put(cfg.api.changeUserPasswordPath, request);
