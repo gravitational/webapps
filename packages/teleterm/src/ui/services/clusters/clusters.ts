@@ -11,7 +11,7 @@ type State = {
 export default class TshService extends Store<State> {
   client: types.ApiClient;
 
-  state = {
+  state: State = {
     clusters: new Map(),
     gateways: new Map(),
     servers: new Map(),
@@ -100,6 +100,10 @@ export default class TshService extends Store<State> {
 
   async getAuthSettings(clusterUri: string) {
     return await this.client.getAuthSettings(clusterUri);
+  }
+
+  findCluster(clusterUri: string) {
+    return this.state.clusters.get(clusterUri);
   }
 
   useState() {

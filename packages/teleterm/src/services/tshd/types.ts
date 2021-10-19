@@ -10,6 +10,7 @@ export type Database = apiDb.Database.AsObject;
 export type Cluster = apiCluster.Cluster.AsObject;
 export type AuthSettings = apiAuthSettings.AuthSettings.AsObject;
 export type AuthProvider = apiAuthSettings.AuthProvider.AsObject;
+export type AuthProviderType = 'oidc' | 'saml' | 'github';
 
 export type ApiClient = {
   listGateways: () => Promise<Gateway[]>;

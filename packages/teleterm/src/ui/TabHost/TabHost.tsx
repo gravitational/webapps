@@ -29,7 +29,7 @@ export default function TabHost(props: Props) {
   const documents = serviceDocs.getDocuments();
   const docActive = serviceDocs.getActive();
 
-  serviceDocs.useSubscription();
+  serviceDocs.useState();
 
   function handleTabClick(doc: types.Document) {
     serviceDocs.open(doc.uri);
