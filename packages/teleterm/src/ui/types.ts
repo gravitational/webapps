@@ -51,12 +51,12 @@ export interface DocumentSsh extends DocumentBase {
 }
 export interface DocumentServers extends DocumentBase {
   kind: 'servers';
-  clusterId: string;
+  clusterUri: string;
 }
 
 export interface DocumentDatabases extends DocumentBase {
   kind: 'dbs';
-  clusterId: string;
+  clusterUri: string;
 }
 
 export type Document =

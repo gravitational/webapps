@@ -17,13 +17,13 @@ limitations under the License.
 import React from 'react';
 import { Box } from 'design';
 import ButtonSso, { guessProviderType } from 'shared/components/ButtonSso';
-import { AuthProvider } from 'shared/services';
+import * as types from 'teleterm/services/tshd/types';
 
 const SSOBtnList = ({ providers, prefixText, isDisabled, onClick }: Props) => {
   const $btns = providers.map((item, index) => {
-    let { name, type, displayName } = item;
-    const title = displayName || `${prefixText} ${name}`;
-    const ssoType = guessProviderType(title, type);
+    let { name, type, display } = item;
+    const title = display || `${prefixText} ${name}`;
+    const ssoType = guessProviderType(title, type as types.AuthProviderType);
     return (
       <ButtonSso
         key={index}
@@ -53,8 +53,8 @@ const SSOBtnList = ({ providers, prefixText, isDisabled, onClick }: Props) => {
 type Props = {
   prefixText: string;
   isDisabled: boolean;
-  onClick(provider: AuthProvider): void;
-  providers: AuthProvider[];
+  onClick(provider: types.AuthProvider): void;
+  providers: types.AuthProvider[];
 };
 
 export default SSOBtnList;

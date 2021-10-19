@@ -14,25 +14,20 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { useAppContext } from './../appContextProvider';
 import * as types from './../types';
-import useAsync from './../useAsync';
 
-export default function useNodes({ clusterId }: types.DocumentServers) {
+export default function useNodes({ clusterUri }: types.DocumentServers) {
   const ctx = useAppContext();
   const [searchValue, setSearchValue] = useState('');
-  const [results, execute] = useAsync(() => {
-    return ctx.serviceClusters.fetchServers(clusterId);
-  });
-
-  useEffect(() => {
-    execute();
-  }, []);
+  const servers = [...ctx.serviceClusters.state.servers.values()].filter(s =>
+    s.uri.startsWith(clusterUri)
+  );
 
   return {
     searchValue,
     setSearchValue,
-    results,
+    servers,
   };
 }

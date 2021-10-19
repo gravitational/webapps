@@ -14,20 +14,5 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import { useState } from 'react';
-import { useAppContext } from 'teleterm/ui/appContextProvider';
-import * as types from 'teleterm/ui/types';
-
-export default function useDatabases({ clusterUri }: types.DocumentDatabases) {
-  const ctx = useAppContext();
-  const [searchValue, setSearchValue] = useState('');
-  const dbs = [...ctx.serviceClusters.state.dbs.values()].filter(d =>
-    d.uri.startsWith(clusterUri)
-  );
-
-  return {
-    searchValue,
-    setSearchValue,
-    dbs,
-  };
-}
+import ServerList from './ServerList';
+export default ServerList;

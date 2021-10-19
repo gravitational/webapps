@@ -16,8 +16,7 @@ limitations under the License.
 
 import React from 'react';
 import styled from 'styled-components';
-import { Indicator, Text, Flex, Box } from 'design';
-import * as Alerts from 'design/Alert';
+import { Text, Flex, Box } from 'design';
 import InputSearch from 'teleport/components/InputSearch';
 import Document from './../Document';
 import DatabaseList from './DatabaseList';
@@ -32,7 +31,7 @@ type Props = {
 
 export default function DocumentDbs(props: Props) {
   const { doc, visible } = props;
-  const { results, setSearchValue, searchValue } = useDatabases(doc);
+  const { dbs, setSearchValue, searchValue } = useDatabases(doc);
 
   return (
     <ThemeProviderTabs>
@@ -46,17 +45,7 @@ export default function DocumentDbs(props: Props) {
           <Flex mb="4" justifyContent="space-between" alignItems="center">
             <InputSearch height="30px" mr="3" onChange={setSearchValue} />
           </Flex>
-          {results.status === 'processing' && (
-            <Box textAlign="center" m={10}>
-              <Indicator />
-            </Box>
-          )}
-          {results.status === 'error' && (
-            <Alerts.Danger>{results.statusText}</Alerts.Danger>
-          )}
-          {results.status === 'success' && (
-            <DatabaseList searchValue={searchValue} databases={results.data} />
-          )}
+          <DatabaseList searchValue={searchValue} databases={dbs} />
         </Container>
       </Document>
     </ThemeProviderTabs>

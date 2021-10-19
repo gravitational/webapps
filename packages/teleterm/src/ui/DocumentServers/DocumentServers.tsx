@@ -16,13 +16,12 @@ limitations under the License.
 
 import React from 'react';
 import styled from 'styled-components';
-import { Indicator, Text, Flex, Box } from 'design';
-import * as Alerts from 'design/Alert';
-import NodeList from 'teleport/components/NodeList';
+import { Text, Flex, Box } from 'design';
 import QuickLaunch from 'teleport/components/QuickLaunch';
 import InputSearch from 'teleport/components/InputSearch';
 import Document from './../Document';
 import useServers from './useServers';
+import ServerList from './ServerList';
 import { ThemeProviderTabs } from './../ThemeProvider';
 import * as types from '../types';
 
@@ -33,7 +32,7 @@ type Props = {
 
 export default function DocumentNodes(props: Props) {
   const { doc, visible } = props;
-  const { results, setSearchValue, searchValue } = useServers(doc);
+  const { servers, setSearchValue, searchValue } = useServers(doc);
 
   function onLoginMenuSelect(
     e: React.MouseEvent,
@@ -66,22 +65,12 @@ export default function DocumentNodes(props: Props) {
             <InputSearch height="30px" mr="3" onChange={setSearchValue} />
             <QuickLaunch width="240px" onPress={onQuickLaunchEnter} />
           </Flex>
-          {results.status === 'processing' && (
-            <Box textAlign="center" m={10}>
-              <Indicator />
-            </Box>
-          )}
-          {results.status === 'error' && (
-            <Alerts.Danger>{results.statusText}</Alerts.Danger>
-          )}
-          {results.status === 'success' && (
-            <NodeList
-              searchValue={searchValue}
-              onLoginMenuOpen={onLoginMenuOpen}
-              onLoginSelect={onLoginMenuSelect}
-              nodes={results.data}
-            />
-          )}
+          <ServerList
+            searchValue={searchValue}
+            onLoginMenuOpen={onLoginMenuOpen}
+            onLoginSelect={onLoginMenuSelect}
+            servers={servers}
+          />
         </Container>
       </Document>
     </ThemeProviderTabs>

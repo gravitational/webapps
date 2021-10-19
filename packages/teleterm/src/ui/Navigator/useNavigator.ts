@@ -22,7 +22,7 @@ export default function useNavigator() {
   const ctx = useAppContext();
   const homeItem = initHomeItem(ctx.cfg.routes.home);
 
-  ctx.serviceDocs.useSubscription();
+  ctx.serviceDocs.useState();
   ctx.serviceClusters.useState();
 
   function processItemClick(item: types.NavItem) {
@@ -32,6 +32,7 @@ export default function useNavigator() {
   return {
     homeItem,
     processItemClick,
+  };
 }
 
 function initHomeItem(uri: string): types.NavItem {

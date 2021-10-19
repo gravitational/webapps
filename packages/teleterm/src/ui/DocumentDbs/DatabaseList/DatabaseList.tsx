@@ -29,7 +29,7 @@ import {
 import Table from 'design/DataTable/Paged';
 import isMatch from 'design/utils/match';
 import ConnectDialog from 'teleport/Databases/ConnectDialog';
-import { Database, DbProtocol, Auth2faType } from '../../../services/types';
+import * as types from 'teleterm/services/tshd/types';
 
 function DatabaseList(props: Props) {
   const { databases = [], pageSize = 100, searchValue } = props;
@@ -37,11 +37,6 @@ function DatabaseList(props: Props) {
   const [sortDir, setSortDir] = useState<Record<string, string>>({
     name: SortTypes.DESC,
   });
-
-  const [dbConnectInfo, setDbConnectInfo] = useState<{
-    name: string;
-    protocol: DbProtocol;
-  }>(null);
 
   function sortAndFilter(search) {
     const filtered = databases.filter(obj =>
@@ -105,7 +100,7 @@ function DatabaseList(props: Props) {
         <Column header={<Cell>Labels</Cell>} cell={<LabelCell />} />
         <Column
           header={<Cell />}
-          cell={<ConnectButton setDbConnectInfo={setDbConnectInfo} />}
+          cell={<ConnectButton setDbConnectInfo={() => null} />}
         />
       </StyledTable>
     </>
@@ -155,7 +150,7 @@ function searchAndFilterCb(
 }
 
 type Props = {
-  databases: Database[];
+  databases: types.Database[];
   pageSize?: number;
   searchValue: string;
 };
