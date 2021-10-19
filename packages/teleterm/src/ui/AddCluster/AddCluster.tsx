@@ -27,7 +27,7 @@ import useAsync from 'teleterm/ui/useAsync';
 export default function AddCluster({ onClose }: Props) {
   const [addr, setAddr] = useState('');
   const ctx = useAppContext();
-  const [{ status, statusText }, execute] = useAsync(async () => {
+  const [{ status, statusText }, run] = useAsync(() => {
     return ctx.serviceClusters.addCluster(addr);
   });
 
@@ -80,7 +80,7 @@ export default function AddCluster({ onClose }: Props) {
                 <ButtonPrimary
                   disabled={status === 'processing'}
                   mr="3"
-                  onClick={() => validator.validate() && execute()}
+                  onClick={() => validator.validate() && run()}
                 >
                   Next
                 </ButtonPrimary>

@@ -15,7 +15,7 @@
  */
 
 import React from 'react';
-import { AuthProvider } from 'shared/services';
+import * as types from 'teleterm/services/tshd/types';
 import { useAppContext } from 'teleterm/ui/appContextProvider';
 import useAsync from 'teleterm/ui/useAsync';
 
@@ -25,36 +25,36 @@ export type Props = {
 };
 
 export default function useClusterLogin(props: Props) {
-  const ctx = useAppContext();
+  const { serviceClusters } = useAppContext();
+  const cluster = serviceClusters.findCluster(props.clusterUri);
 
-  const [settingsResults, fetchSettings] = useAsync(() => {
-    return ctx.serviceClusters.getAuthSettings(props.clusterUri);
+  const [initAttempt, init] = useAsync(() => {
+    return serviceClusters.getAuthSettings(props.clusterUri);
   });
 
-  const [loginResult, login] = useAsync((email: string, password: string) => {
-    return ctx.serviceClusters.login(props.clusterUri, email, password);
+  const [loginAttempt, login] = useAsync((email: string, password: string) => {
+    return serviceClusters.login(props.clusterUri, email, password);
   });
 
   React.useEffect(() => {
-    fetchSettings();
+    init();
   }, []);
 
   React.useEffect(() => {
-    loginResult.status === 'success' && props.onClose();
-  }, [loginResult.status]);
+    loginAttempt.status === 'success' && props.onClose();
+  }, [loginAttempt.status]);
 
-  function loginWithU2f(name: string, password: string) {
-    // empty
+  function loginWithSso(provider: types.AuthProvider) {
+    serviceClusters.loginSso(props.clusterUri, provider.type, provider.name);
   }
 
-  function loginWithSso(provider: AuthProvider) {}
-
   return {
+    title: cluster.name,
     login,
-    loginWithU2f,
     loginWithSso,
-    loginResult,
-    settingsResults,
+    loginAttempt,
+    initAttempt,
+    close: props.onClose,
   };
 }
 

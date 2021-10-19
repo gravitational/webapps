@@ -183,7 +183,7 @@ export default class DocumentService extends Store<State> {
     this.setState({ location });
   }
 
-  useSubscription() {
+  useState() {
     return useStore(this).state;
   }
 }

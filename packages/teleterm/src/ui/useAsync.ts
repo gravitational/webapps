@@ -16,7 +16,49 @@ limitations under the License.
 
 import React from 'react';
 
-type State<T> = {
+export default function useAsync<R, T extends Function>(cb?: AsyncCb<R, T>) {
+  const [state, setState] = React.useState<Attempt<R>>(() => ({
+    data: null,
+    status: '',
+    statusText: '',
+  }));
+
+  const run = async (...p: Parameters<AsyncCb<R, T>>) => {
+    try {
+      setState({
+        ...state,
+        status: 'processing',
+      });
+
+      const data = (await cb.call(null, ...p)) as R;
+
+      setState({
+        ...state,
+        status: 'success',
+        data,
+      });
+
+      return [data, null] as [R, Error];
+    } catch (err) {
+      setState({
+        ...state,
+        status: 'error',
+        statusText: err.message,
+        data: null,
+      });
+
+      return [null, err] as [R, Error];
+    }
+  };
+
+  function setAttempt(attempt: Attempt<R>) {
+    setState(attempt);
+  }
+
+  return [state, run, setAttempt] as const;
+}
+
+export type Attempt<T> = {
   data?: T;
   status: 'processing' | 'success' | 'error' | '';
   statusText: string;
@@ -28,9 +70,7 @@ type IsValidArg<T> = T extends object
     : true
   : true;
 
-type Promisified<R, T extends Function> = T extends (
-  ...args: any[]
-) => Promise<any>
+type AsyncCb<R, T extends Function> = T extends (...args: any[]) => Promise<any>
   ? T
   : T extends (
       a: infer A,
@@ -66,39 +106,3 @@ type Promisified<R, T extends Function> = T extends (
     ? (a: A) => Promise<R>
     : () => Promise<R>
   : never;
-
-export default function useAsync<R, T extends Function>(
-  cb?: Promisified<R, T>
-) {
-  const [state, setState] = React.useState<State<R>>(() => ({
-    data: null,
-    status: '',
-    statusText: '',
-  }));
-
-  const execute = async (...p: Parameters<Promisified<R, T>>) => {
-    try {
-      setState({
-        ...state,
-        status: 'processing',
-      });
-
-      const data = await cb.call(null, ...p);
-
-      setState({
-        ...state,
-        status: 'success',
-        data,
-      });
-    } catch (err) {
-      setState({
-        ...state,
-        status: 'error',
-        statusText: err.message,
-        data: null,
-      });
-    }
-  };
-
-  return [state, execute, setState] as const;
-}
