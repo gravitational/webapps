@@ -14,5 +14,5 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import AddCluster from './AddCluster';
-export default AddCluster;
+import GatewayCreate from './GatewayCreate';
+export default GatewayCreate;

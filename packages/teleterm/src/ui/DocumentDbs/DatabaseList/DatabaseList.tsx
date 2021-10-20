@@ -28,11 +28,10 @@ import {
 } from 'design/DataTable';
 import Table from 'design/DataTable/Paged';
 import isMatch from 'design/utils/match';
-import ConnectDialog from 'teleport/Databases/ConnectDialog';
 import * as types from 'teleterm/services/tshd/types';
 
 function DatabaseList(props: Props) {
-  const { databases = [], pageSize = 100, searchValue } = props;
+  const { onOpenGateway, databases = [], pageSize = 100, searchValue } = props;
 
   const [sortDir, setSortDir] = useState<Record<string, string>>({
     name: SortTypes.DESC,
@@ -100,7 +99,7 @@ function DatabaseList(props: Props) {
         <Column header={<Cell>Labels</Cell>} cell={<LabelCell />} />
         <Column
           header={<Cell />}
-          cell={<ConnectButton setDbConnectInfo={() => null} />}
+          cell={<ConnectButton onClick={onOpenGateway} />}
         />
       </StyledTable>
     </>
@@ -114,15 +113,15 @@ function LabelCell(props) {
 }
 
 function ConnectButton(props) {
-  const { setDbConnectInfo, rowIndex, data } = props;
-  const { name, protocol } = data[rowIndex];
+  const { onClick, rowIndex, data } = props;
+  const { uri } = data[rowIndex] as types.Database;
 
   return (
     <Cell align="right">
       <ButtonBorder
         size="small"
         onClick={() => {
-          setDbConnectInfo({ name, protocol });
+          onClick(uri);
         }}
       >
         Connect
@@ -153,6 +152,7 @@ type Props = {
   databases: types.Database[];
   pageSize?: number;
   searchValue: string;
+  onOpenGateway(uri: string): void;
 };
 
 export default DatabaseList;

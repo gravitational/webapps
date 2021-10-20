@@ -26,6 +26,9 @@ export class Database extends jspb.Message {
     getHostname(): string;
     setHostname(value: string): Database;
 
+    getClusterId(): string;
+    setClusterId(value: string): Database;
+
     getAddr(): string;
     setAddr(value: string): Database;
 
@@ -53,6 +56,7 @@ export namespace Database {
         protocol: string,
         type: string,
         hostname: string,
+        clusterId: string,
         addr: string,
         labelsList: Array<v1_label_pb.Label.AsObject>,
     }

@@ -24,7 +24,8 @@ export type DocumentKind =
   | 'home'
   | 'apps'
   | 'clusters'
-  | 'dbs';
+  | 'dbs'
+  | 'gateway';
 
 interface DocumentBase {
   uri: string;
@@ -59,16 +60,25 @@ export interface DocumentDatabases extends DocumentBase {
   clusterUri: string;
 }
 
+export interface DocumentGateway extends DocumentBase {
+  kind: 'gateway';
+  clusterUri: string;
+  gatewayId?: string;
+}
+
 export type Document =
   | DocumentServers
   | DocumentSsh
   | DocumentHome
   | DocumentBlank
-  | DocumentDatabases;
+  | DocumentDatabases
+  | DocumentGateway;
 
 export interface UriParams {
   clusterId?: string;
   serverId?: string;
+  dbId?: string;
+  gatewayId?: string;
   tabId?: string;
 }
 

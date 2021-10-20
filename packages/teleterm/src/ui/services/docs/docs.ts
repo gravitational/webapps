@@ -14,10 +14,9 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import { matchPath, generatePath } from 'react-router';
 import { Store, useStore } from 'shared/libs/stores';
-import getConfig from 'teleterm/ui/getConfig';
-import { Document, UriParams } from 'teleterm/ui/types';
+import uris from 'teleterm/ui/uris';
+import { Document } from 'teleterm/ui/types';
 
 type State = {
   location: string;
@@ -25,8 +24,6 @@ type State = {
 };
 
 export default class DocumentService extends Store<State> {
-  cfg = getConfig();
-
   state: State = {
     location: '/home',
     docs: [
@@ -46,9 +43,20 @@ export default class DocumentService extends Store<State> {
   };
 
   open(uri: string) {
-    const homeMatch = matchPath<UriParams>(uri, this.cfg.routes.home);
-    const srvMatch = matchPath<UriParams>(uri, this.cfg.routes.clusterServers);
-    const dbsMatch = matchPath<UriParams>(uri, this.cfg.routes.clusterDbs);
+    const clusterMatch = uris.match(uri, uris.routes.cluster);
+    const homeMatch = uris.match(uri, uris.routes.home);
+    const srvMatch = uris.match(uri, uris.routes.clusterServers);
+    const gwMatch = uris.match(uri, uris.routes.clusterGateway);
+    const dbsMatch = uris.match(uri, {
+      path: uris.routes.clusterDbs,
+      exact: true,
+    });
+
+    const clusterUri = clusterMatch
+      ? uris.getUriCluster(clusterMatch.params)
+      : '';
+
+    const created = new Date();
 
     if (this.find(uri)) {
       // do nothing
@@ -57,30 +65,38 @@ export default class DocumentService extends Store<State> {
         uri,
         title: 'Home',
         kind: 'home',
-        created: new Date(),
+        created,
       });
     } else if (srvMatch) {
       this.add({
         uri,
-        clusterId: srvMatch.params.clusterId,
+        clusterUri,
         title: 'Servers',
         kind: 'servers',
-        created: new Date(),
+        created,
       });
     } else if (dbsMatch) {
       this.add({
         uri,
-        clusterId: dbsMatch.params.clusterId,
+        clusterUri,
         title: 'Databases',
         kind: 'dbs',
-        created: new Date(),
+        created,
+      });
+    } else if (gwMatch) {
+      this.add({
+        uri,
+        clusterUri,
+        title: 'New Gateway',
+        kind: 'gateway',
+        created,
       });
     } else {
       this.add({
         uri,
         title: 'not-found',
         kind: 'blank',
-        created: new Date(),
+        created,
       });
     }
 
@@ -109,34 +125,15 @@ export default class DocumentService extends Store<State> {
     this.setState({ docs, location: nextUri });
   }
 
-  match(uri: string) {
+  isActive(uri: string) {
     const location = this.getLocation();
-    return !!matchPath<UriParams>(location, uri);
-  }
-
-  getUriServer(params: UriParams) {
-    return generatePath(this.cfg.routes.clusterServers, { ...params });
-  }
-
-  getUriDb(params: UriParams) {
-    return generatePath(this.cfg.routes.clusterDbs, { ...params });
-  }
-
-  getUriApps(params: UriParams) {
-    return generatePath(this.cfg.routes.clusterApps, { ...params });
+    return !!uris.match(location, uri);
   }
 
   add(doc: Document) {
-    const item: Document = {
-      uri: Math.floor(Math.random() * 100000) + '',
-      ...doc,
-    };
-
     this.setState({
-      docs: [...this.state.docs, item],
+      docs: [...this.state.docs, doc],
     });
-
-    return item;
   }
 
   update(uri: string, partialDoc: Partial<Document>) {
