@@ -18,6 +18,7 @@ export type ApiClient = {
   listDatabases: (clusterUri: string) => Promise<Database[]>;
   listServers: (clusterUri: string) => Promise<Server[]>;
   createCluster: (clusterUri: string) => Promise<Cluster>;
+  createGateway: (targetUri: string, port: string) => Promise<Gateway>;
   getCluster: (clusterUri: string) => Promise<Cluster>;
   getAuthSettings: (clusterUri: string) => Promise<AuthSettings>;
   ssoLogin: (clusterUri: string, pType: string, pName: string) => Promise<void>;

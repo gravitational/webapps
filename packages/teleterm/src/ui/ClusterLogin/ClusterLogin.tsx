@@ -34,9 +34,9 @@ export function ClusterLogin({
   title,
   initAttempt,
   loginAttempt,
-  login,
+  loginWithLocal,
   loginWithSso,
-  close,
+  onClose,
 }: State) {
   return (
     <Dialog
@@ -46,7 +46,7 @@ export function ClusterLogin({
         padding: '20px',
       })}
       disableEscapeKeyDown={false}
-      onClose={close}
+      onClose={onClose}
       open={true}
     >
       <DialogHeader>
@@ -68,14 +68,14 @@ export function ClusterLogin({
             auth2faType="off"
             isLocalAuthEnabled={true}
             onLoginWithSso={loginWithSso}
-            onLogin={login}
+            onLogin={loginWithLocal}
             initAttempt={initAttempt}
             loginAttempt={loginAttempt}
           />
         )}
       </DialogContent>
       <DialogFooter>
-        <ButtonSecondary onClick={close}>Close</ButtonSecondary>
+        <ButtonSecondary onClick={onClose}>Close</ButtonSecondary>
       </DialogFooter>
     </Dialog>
   );

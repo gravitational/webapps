@@ -23,6 +23,7 @@ import Tabs from 'teleterm/ui/Tabs';
 import DocumentHome from 'teleterm/ui/DocumentHome';
 import DocumentServers from 'teleterm/ui/DocumentServers';
 import DocumentDbs from 'teleterm/ui/DocumentDbs';
+import DocumentGateway from 'teleterm/ui/DocumentGateway';
 
 export default function TabHost(props: Props) {
   const { serviceDocs } = useAppContext();
@@ -80,6 +81,9 @@ function MemoizedDocument(props: { doc: types.Document; visible: boolean }) {
         return <DocumentServers doc={doc} visible={visible} />;
       case 'dbs':
         return <DocumentDbs doc={doc} visible={visible} />;
+      case 'gateway':
+        return <DocumentGateway doc={doc} visible={visible} />;
+
       default:
         return null;
     }

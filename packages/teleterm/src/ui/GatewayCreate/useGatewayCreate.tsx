@@ -14,38 +14,35 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import { useState, useEffect } from 'react';
+import { useEffect } from 'react';
 import { useAppContext } from 'teleterm/ui/appContextProvider';
-import * as types from 'teleterm/ui/types';
 import useAsync from 'teleterm/ui/useAsync';
 
-export default function useDatabases({ clusterUri }: types.DocumentDatabases) {
+export default function useGatewayCreate({ targetUri, onClose }: Props) {
   const ctx = useAppContext();
-  const [searchValue, setSearchValue] = useState('');
-  const dbs = ctx.serviceClusters.findDbs(clusterUri);
-
-  const [loadAttempt, load] = useAsync(() => {
-    return ctx.serviceClusters.fetchDatabases(clusterUri);
+  const db = ctx.serviceClusters.findDbs(targetUri);
+  const [createAttempt, create] = useAsync((port: string) => {
+    return ctx.serviceClusters.createGateway(targetUri, port);
   });
 
-  const openGateway = (dbUri = '') => {
-    ctx.serviceCommands.sendCommand({
-      kind: 'dialog.gateway-new.open',
-      targetUri: dbUri,
-    });
-  };
-
-  ctx.serviceClusters.useState();
-
   useEffect(() => {
-    load();
-  }, [clusterUri]);
+    if (createAttempt.status === 'success') {
+      ctx.serviceDocs.open(createAttempt.data.uri);
+      onClose();
+    }
+  }, [createAttempt.status]);
 
   return {
-    openGateway,
-    searchValue,
-    setSearchValue,
-    dbs,
-    loadAttempt,
+    createAttempt,
+    create,
+    db,
+    onClose,
   };
 }
+
+export type Props = {
+  onClose(): void;
+  targetUri: string;
+};
+
+export type State = ReturnType<typeof useGatewayCreate>;

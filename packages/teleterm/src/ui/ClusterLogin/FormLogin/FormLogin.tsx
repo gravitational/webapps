@@ -14,11 +14,11 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React, { useState, useMemo } from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
 import { Text, Flex, ButtonLink, ButtonPrimary, Box } from 'design';
 import * as Alerts from 'design/Alert';
-import { AuthProvider, Auth2faType } from 'shared/services';
+import { Auth2faType } from 'shared/services';
 import Validation from 'shared/components/Validation';
 import FieldInput from 'shared/components/FieldInput';
 import { requiredField } from 'shared/components/Validation/rules';
@@ -75,6 +75,7 @@ export default function LoginForm(props: Props) {
               justifyContent="center"
               style={{ position: 'relative' }}
               flexDirection="column"
+              mb={1}
             >
               <StyledOr>Or</StyledOr>
             </Flex>
@@ -147,11 +148,8 @@ const StyledOr = styled.div`
   font-size: 10px;
   height: 32px;
   width: 32px;
-  top: -16px;
   justify-content: center;
   border-radius: 50%;
-  position: absolute;
-  z-index: 1;
 `;
 
 export type LoginAttempt = Attempt<void>;

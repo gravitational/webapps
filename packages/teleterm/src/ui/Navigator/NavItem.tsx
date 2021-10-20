@@ -30,7 +30,7 @@ type Props = {
 const NavItem: React.FC<Props> = props => {
   const ctx = useAppContext();
   const { item, onClick, ...styles } = props;
-  const active = ctx.serviceDocs.match(item.uri);
+  const active = ctx.serviceDocs.isActive(item.uri);
 
   const clickRef = React.useRef(onClick);
   clickRef.current = onClick;

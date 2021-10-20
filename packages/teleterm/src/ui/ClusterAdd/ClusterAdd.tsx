@@ -47,7 +47,7 @@ export default function AddCluster({ onClose }: Props) {
             padding: '0',
           })}
           disableEscapeKeyDown={false}
-          onClose={close}
+          onClose={onClose}
           open={true}
         >
           <Flex flex="1" minHeight="400px">

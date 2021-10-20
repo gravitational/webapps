@@ -20,7 +20,7 @@ import * as types from '../types';
 
 export default function useNavigator() {
   const ctx = useAppContext();
-  const homeItem = initHomeItem(ctx.cfg.routes.home);
+  const homeItem = initHomeItem(ctx.uris.routes.home);
 
   ctx.serviceDocs.useState();
   ctx.serviceClusters.useState();

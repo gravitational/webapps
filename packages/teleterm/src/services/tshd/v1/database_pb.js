@@ -42,7 +42,7 @@ if (goog.DEBUG && !COMPILED) {
  * @private {!Array<number>}
  * @const
  */
-proto.teleport.terminal.v1.Database.repeatedFields_ = [8];
+proto.teleport.terminal.v1.Database.repeatedFields_ = [9];
 
 
 
@@ -81,7 +81,8 @@ proto.teleport.terminal.v1.Database.toObject = function(includeInstance, msg) {
     protocol: jspb.Message.getFieldWithDefault(msg, 4, ""),
     type: jspb.Message.getFieldWithDefault(msg, 5, ""),
     hostname: jspb.Message.getFieldWithDefault(msg, 6, ""),
-    addr: jspb.Message.getFieldWithDefault(msg, 7, ""),
+    clusterId: jspb.Message.getFieldWithDefault(msg, 7, ""),
+    addr: jspb.Message.getFieldWithDefault(msg, 8, ""),
     labelsList: jspb.Message.toObjectList(msg.getLabelsList(),
     v1_label_pb.Label.toObject, includeInstance)
   };
@@ -146,9 +147,13 @@ proto.teleport.terminal.v1.Database.deserializeBinaryFromReader = function(msg, 
       break;
     case 7:
       var value = /** @type {string} */ (reader.readString());
-      msg.setAddr(value);
+      msg.setClusterId(value);
       break;
     case 8:
+      var value = /** @type {string} */ (reader.readString());
+      msg.setAddr(value);
+      break;
+    case 9:
       var value = new v1_label_pb.Label;
       reader.readMessage(value,v1_label_pb.Label.deserializeBinaryFromReader);
       msg.addLabels(value);
@@ -224,17 +229,24 @@ proto.teleport.terminal.v1.Database.serializeBinaryToWriter = function(message, 
       f
     );
   }
-  f = message.getAddr();
+  f = message.getClusterId();
   if (f.length > 0) {
     writer.writeString(
       7,
       f
     );
   }
+  f = message.getAddr();
+  if (f.length > 0) {
+    writer.writeString(
+      8,
+      f
+    );
+  }
   f = message.getLabelsList();
   if (f.length > 0) {
     writer.writeRepeatedMessage(
-      8,
+      9,
       f,
       v1_label_pb.Label.serializeBinaryToWriter
     );
@@ -351,10 +363,10 @@ proto.teleport.terminal.v1.Database.prototype.setHostname = function(value) {
 
 
 /**
- * optional string addr = 7;
+ * optional string cluster_id = 7;
  * @return {string}
  */
-proto.teleport.terminal.v1.Database.prototype.getAddr = function() {
+proto.teleport.terminal.v1.Database.prototype.getClusterId = function() {
   return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 7, ""));
 };
 
@@ -363,18 +375,36 @@ proto.teleport.terminal.v1.Database.prototype.getAddr = function() {
  * @param {string} value
  * @return {!proto.teleport.terminal.v1.Database} returns this
  */
-proto.teleport.terminal.v1.Database.prototype.setAddr = function(value) {
+proto.teleport.terminal.v1.Database.prototype.setClusterId = function(value) {
   return jspb.Message.setProto3StringField(this, 7, value);
 };
 
 
 /**
- * repeated Label labels = 8;
+ * optional string addr = 8;
+ * @return {string}
+ */
+proto.teleport.terminal.v1.Database.prototype.getAddr = function() {
+  return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 8, ""));
+};
+
+
+/**
+ * @param {string} value
+ * @return {!proto.teleport.terminal.v1.Database} returns this
+ */
+proto.teleport.terminal.v1.Database.prototype.setAddr = function(value) {
+  return jspb.Message.setProto3StringField(this, 8, value);
+};
+
+
+/**
+ * repeated Label labels = 9;
  * @return {!Array<!proto.teleport.terminal.v1.Label>}
  */
 proto.teleport.terminal.v1.Database.prototype.getLabelsList = function() {
   return /** @type{!Array<!proto.teleport.terminal.v1.Label>} */ (
-    jspb.Message.getRepeatedWrapperField(this, v1_label_pb.Label, 8));
+    jspb.Message.getRepeatedWrapperField(this, v1_label_pb.Label, 9));
 };
 
 
@@ -383,7 +413,7 @@ proto.teleport.terminal.v1.Database.prototype.getLabelsList = function() {
  * @return {!proto.teleport.terminal.v1.Database} returns this
 */
 proto.teleport.terminal.v1.Database.prototype.setLabelsList = function(value) {
-  return jspb.Message.setRepeatedWrapperField(this, 8, value);
+  return jspb.Message.setRepeatedWrapperField(this, 9, value);
 };
 
 
@@ -393,7 +423,7 @@ proto.teleport.terminal.v1.Database.prototype.setLabelsList = function(value) {
  * @return {!proto.teleport.terminal.v1.Label}
  */
 proto.teleport.terminal.v1.Database.prototype.addLabels = function(opt_value, opt_index) {
-  return jspb.Message.addToRepeatedWrapperField(this, 8, opt_value, proto.teleport.terminal.v1.Label, opt_index);
+  return jspb.Message.addToRepeatedWrapperField(this, 9, opt_value, proto.teleport.terminal.v1.Label, opt_index);
 };
 
 

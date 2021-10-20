@@ -16,46 +16,64 @@
 
 import React from 'react';
 import * as types from 'teleterm/services/tshd/types';
+import { LoginOptions } from 'teleterm/ui/services/clusters/clusters';
 import { useAppContext } from 'teleterm/ui/appContextProvider';
 import useAsync from 'teleterm/ui/useAsync';
 
-export type Props = {
-  clusterUri: string;
-  onClose(): void;
-};
-
 export default function useClusterLogin(props: Props) {
+  const { onClose, clusterUri } = props;
   const { serviceClusters } = useAppContext();
-  const cluster = serviceClusters.findCluster(props.clusterUri);
+  const cluster = serviceClusters.findCluster(clusterUri);
 
   const [initAttempt, init] = useAsync(() => {
-    return serviceClusters.getAuthSettings(props.clusterUri);
+    return serviceClusters.getAuthSettings(clusterUri);
   });
 
-  const [loginAttempt, login] = useAsync((email: string, password: string) => {
-    return serviceClusters.login(props.clusterUri, email, password);
+  const [loginAttempt, login] = useAsync((opts: LoginOptions) => {
+    return serviceClusters.login(opts);
   });
+
+  const loginWithLocal = (username: '', password: '') => {
+    login({
+      clusterUri,
+      local: {
+        username,
+        password,
+      },
+    });
+  };
+
+  const loginWithSso = (provider: types.AuthProvider) => {
+    login({
+      clusterUri,
+      oss: {
+        providerName: provider.name,
+        providerType: provider.type,
+      },
+    });
+  };
 
   React.useEffect(() => {
     init();
   }, []);
 
   React.useEffect(() => {
-    loginAttempt.status === 'success' && props.onClose();
+    loginAttempt.status === 'success' && onClose();
   }, [loginAttempt.status]);
-
-  function loginWithSso(provider: types.AuthProvider) {
-    serviceClusters.loginSso(props.clusterUri, provider.type, provider.name);
-  }
 
   return {
     title: cluster.name,
-    login,
+    loginWithLocal,
     loginWithSso,
     loginAttempt,
     initAttempt,
-    close: props.onClose,
+    onClose: props.onClose,
   };
 }
 
 export type State = ReturnType<typeof useClusterLogin>;
+
+export type Props = {
+  clusterUri: string;
+  onClose(): void;
+};

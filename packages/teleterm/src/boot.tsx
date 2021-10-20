@@ -10,7 +10,7 @@ import ServiceCommands from './ui/services/commands';
 const electronGlobals = window['electron'] as ElectronGlobals;
 const appContext = new AppContext();
 
-appContext.serviceClusters = new ServiceClusters(electronGlobals.tshApiClient);
+appContext.serviceClusters = new ServiceClusters(electronGlobals.tshClient);
 appContext.serviceCommands = new ServiceCommands();
 appContext.serviceDocs = new ServiceDocs();
 

@@ -19,18 +19,22 @@ limitations under the License.
 */
 
 import createClient from './createClient';
-import { TerminalServiceClient } from './v1/service_grpc_pb';
+import { TerminalServiceClient } from './../v1/service_grpc_pb';
 import * as grpc from '@grpc/grpc-js';
 
-const grpcClient = new TerminalServiceClient(
-  'unix:///tmp/tshd/socket',
-  grpc.credentials.createInsecure()
-);
+//let grpcClient = new TerminalServiceClient(
+//  'unix:///tmp/tshd/socket',
+//  grpc.credentials.createInsecure()
+//);
+
+process.env.GRPC_VERBOSITY = 'DEBUG';
 
 test('fetchClusters', async () => {
-  const tshClient = createClient(grpcClient);
-  const tsh = new Tsh(tshClient);
+  let tshClient = createClient('unix:///tmp/tshd/socket');
+  //const tsh = new Tsh(tshClient);
   //
+
+  await tshClient.listClusters();
 
   //  await tsh.addCluster('localhost:4080');
 
@@ -38,9 +42,9 @@ test('fetchClusters', async () => {
   //await tsh.fetchServers('/clusters/localhost');
   //await tsh.fetchDatabases('/clusters/localhost');
   //  await tsh.login('/clusters/localhost', 'papa', '123123');
-  await tsh.fetchServers('/clusters/localhost');
+  //await tshClient.listClusters fetchServers('/clusters/localhost');
 
   //await tsh.fetchClusters();
 
-  console.log(tsh.state);
+  // console.log(clusters);
 });
