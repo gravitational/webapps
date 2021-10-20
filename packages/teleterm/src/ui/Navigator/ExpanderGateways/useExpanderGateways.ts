@@ -32,7 +32,7 @@ function initGatewayItems(ctx: AppContext): types.NavItem[] {
     {
       title: 'platform.teleport.sh/dbs/mongo-prod',
       Icon: Icons.Clusters,
-      uri: ctx.cfg.routes.gateways,
+      uri: ctx.uris.routes.gateways,
       kind: 'gateways',
       items: [],
       group: false,

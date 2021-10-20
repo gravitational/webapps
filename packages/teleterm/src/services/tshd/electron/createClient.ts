@@ -2,6 +2,7 @@ import { TerminalServiceClient } from '../v1/service_grpc_pb';
 import * as grpc from '@grpc/grpc-js';
 import * as api from './../v1/service_pb';
 import * as types from './../types';
+import middleware, { withLogging } from './middleware';
 
 export function createGrpcClient(addr?: string) {
   addr = addr || 'unix:///tmp/tshd/socket';
@@ -15,8 +16,7 @@ export function createGrpcClient(addr?: string) {
  */
 
 export default function createClient(addr: string) {
-  const tsh = createGrpcClient(addr);
-
+  const tsh = middleware(createGrpcClient(addr), [withLogging]);
   const listGateways = async () => {
     const req = new api.ListGatewaysRequest();
     return new Promise<types.Gateway[]>((resolve, reject) => {
@@ -133,9 +133,10 @@ export default function createClient(addr: string) {
 
   const ssoLogin = async (clusterUri = '', pType = '', pName = '') => {
     const req = new api.CreateAuthSSOChallengeRequest();
-    req.setClusterUri(clusterUri);
-    req.setProviderName(pName);
-    req.setProviderType(pType);
+    req
+      .setClusterUri(clusterUri)
+      .setProviderName(pName)
+      .setProviderType(pType);
     return new Promise<void>((resolve, reject) => {
       tsh.createAuthSSOChallenge(req, err => {
         if (err) {
@@ -150,8 +151,23 @@ export default function createClient(addr: string) {
   const getAuthSettings = async (clusterUri = '') => {
     const req = new api.GetAuthSettingsRequest();
     req.setClusterUri(clusterUri);
+
     return new Promise<types.AuthSettings>((resolve, reject) => {
       tsh.getAuthSettings(req, (err, response) => {
+        if (err) {
+          reject(err);
+        } else {
+          resolve(response.toObject());
+        }
+      });
+    });
+  };
+
+  const createGateway = async (targetUri = '', port = '') => {
+    const req = new api.CreateGatewayRequest();
+    req.setTargetUri(targetUri).setPort(port);
+    return new Promise<types.Gateway>((resolve, reject) => {
+      tsh.createGateway(req, (err, response) => {
         if (err) {
           reject(err);
         } else {
@@ -171,5 +187,6 @@ export default function createClient(addr: string) {
     getAuthSettings,
     localLogin,
     ssoLogin,
+    createGateway,
   };
 }

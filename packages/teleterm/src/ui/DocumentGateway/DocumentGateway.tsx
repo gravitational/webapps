@@ -19,19 +19,18 @@ import styled from 'styled-components';
 import { Text, Flex, Box } from 'design';
 import InputSearch from 'teleport/components/InputSearch';
 import Document from './../Document';
-import DatabaseList from './DatabaseList';
-import useDatabases from './useDatabases';
+import useGateway from './useGateway';
 import { ThemeProviderTabs } from './../ThemeProvider';
 import * as types from '../types';
 
 type Props = {
   visible: boolean;
-  doc: types.DocumentDatabases;
+  doc: types.DocumentGateway;
 };
 
-export default function DocumentDbs(props: Props) {
+export default function DocumentGateway(props: Props) {
   const { doc, visible } = props;
-  const { dbs, openGateway, setSearchValue, searchValue } = useDatabases(doc);
+  const { dbs, setSearchValue, searchValue } = useGateway(doc);
 
   return (
     <ThemeProviderTabs>
@@ -39,17 +38,12 @@ export default function DocumentDbs(props: Props) {
         <Container mx="auto" mt="4" px="5">
           <Flex justifyContent="space-between" mb="4">
             <Text typography="h3" color="text.secondary">
-              Databases
+              Gateway
             </Text>
           </Flex>
           <Flex mb="4" justifyContent="space-between" alignItems="center">
             <InputSearch height="30px" mr="3" onChange={setSearchValue} />
           </Flex>
-          <DatabaseList
-            searchValue={searchValue}
-            databases={dbs}
-            onOpenGateway={openGateway}
-          />
         </Container>
       </Document>
     </ThemeProviderTabs>

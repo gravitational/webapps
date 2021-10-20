@@ -44,7 +44,7 @@ const SSOBtnList = ({ providers, prefixText, isDisabled, onClick }: Props) => {
   }
 
   return (
-    <Box px={6} pt={2} pb={5}>
+    <Box pt={2} mb={3}>
       {$btns}
     </Box>
   );

@@ -31,13 +31,19 @@ export default class TshService extends Store<State> {
     });
   }
 
-  async login(clusterUri: string, user: string, password: string) {
-    await this.client.localLogin(clusterUri, user, password);
-    await this.fetchCluster(clusterUri);
-  }
+  async login({ clusterUri, local, oss }: LoginOptions) {
+    if (local) {
+      await this.client.localLogin(clusterUri, local.username, local.password);
+    } else if (oss) {
+      await this.client.ssoLogin(
+        clusterUri,
+        oss.providerType,
+        oss.providerName
+      );
+    } else {
+      throw Error('unknown login request parameters');
+    }
 
-  async loginSso(clusterUri: string, pType: string, pName: string) {
-    await this.client.ssoLogin(clusterUri, pType, pName);
     await this.fetchCluster(clusterUri);
   }
 
@@ -102,11 +108,47 @@ export default class TshService extends Store<State> {
     return await this.client.getAuthSettings(clusterUri);
   }
 
+  async createGateway(targetUri: string, port: string) {
+    const gateway = await this.client.createGateway(targetUri, port);
+    this.state.gateways.set(gateway.uri, gateway);
+    this.setState({ gateways: new Map(this.state.gateways) });
+    return gateway;
+  }
+
   findCluster(clusterUri: string) {
     return this.state.clusters.get(clusterUri);
+  }
+
+  findDbs(clusterUri: string) {
+    return [...this.state.dbs.values()].filter(db =>
+      db.uri.startsWith(clusterUri)
+    );
+  }
+
+  findDb(dbUri: string) {
+    return this.state.dbs.get(dbUri);
+  }
+
+  findServers(clusterUri: string) {
+    return [...this.state.servers.values()].filter(s =>
+      s.uri.startsWith(clusterUri)
+    );
   }
 
   useState() {
     return useStore(this).state;
   }
 }
+
+export type LoginOptions = {
+  clusterUri: string;
+  oss?: {
+    providerType: string;
+    providerName: string;
+  };
+  local?: {
+    username: string;
+    password: string;
+    token?: string;
+  };
+};

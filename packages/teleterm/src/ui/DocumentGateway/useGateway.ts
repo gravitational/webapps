@@ -15,31 +15,29 @@ limitations under the License.
 */
 
 import { useState, useEffect } from 'react';
-import useAsync from 'teleterm/ui/useAsync';
 import { useAppContext } from 'teleterm/ui/appContextProvider';
 import * as types from 'teleterm/ui/types';
+import useAsync from 'teleterm/ui/useAsync';
 
-export default function useServers({ clusterUri }: types.DocumentServers) {
+export default function useDatabases({ clusterUri }: types.DocumentGateway) {
   const { serviceClusters } = useAppContext();
   const [searchValue, setSearchValue] = useState('');
-  const servers = serviceClusters.findServers(clusterUri);
+  const dbs = serviceClusters.findDbs(clusterUri);
 
   const [loadAttempt, load] = useAsync(() => {
-    return serviceClusters.fetchServers(clusterUri);
+    return serviceClusters.fetchDatabases(clusterUri);
   });
 
   serviceClusters.useState();
 
   useEffect(() => {
-    if (servers.length === 0) {
-      load();
-    }
+    load();
   }, [clusterUri]);
 
   return {
     searchValue,
     setSearchValue,
-    servers,
+    dbs,
     loadAttempt,
   };
 }

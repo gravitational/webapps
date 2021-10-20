@@ -22,7 +22,6 @@ import useNavigator, { State } from './useNavigator';
 import ExpanderClusters from './ExpanderClusters';
 import ExpanderGateways from './ExpanderGateways';
 import NavItem from './NavItem';
-import { StyledBorder } from './Expander';
 
 export default function Container() {
   const state = useNavigator();

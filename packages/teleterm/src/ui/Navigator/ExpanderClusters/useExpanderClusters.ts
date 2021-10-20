@@ -50,7 +50,7 @@ function initClusterItems(ctx: AppContext): ClusterNavItem[] {
         {
           title: 'Servers',
           Icon: Icons.Server,
-          uri: ctx.serviceDocs.getUriServer({ clusterId: cluster.name }),
+          uri: ctx.uris.getUriServer({ clusterId: cluster.name }),
           kind: 'servers',
           items: [],
           group: false,
@@ -58,7 +58,7 @@ function initClusterItems(ctx: AppContext): ClusterNavItem[] {
         {
           title: 'Databases',
           Icon: Icons.Database,
-          uri: ctx.serviceDocs.getUriDb({ clusterId: cluster.name }),
+          uri: ctx.uris.getUriDbs({ clusterId: cluster.name }),
           kind: 'dbs',
           items: [],
           group: false,
@@ -66,7 +66,7 @@ function initClusterItems(ctx: AppContext): ClusterNavItem[] {
         {
           title: 'Applications',
           Icon: Icons.NewTab,
-          uri: ctx.serviceDocs.getUriApps({ clusterId: cluster.name }),
+          uri: ctx.uris.getUriApps({ clusterId: cluster.name }),
           kind: 'apps',
           items: [],
           group: false,

@@ -28,6 +28,13 @@ export interface CommandDialogAddClusterClose {
   kind: 'dialog.cluster-add-new.close';
 }
 
+export interface CommandDialogNewGatewayOpen {
+  kind: 'dialog.gateway-new.open';
+  targetUri: string;
+}
+export interface CommandDialogNewGatewayClose {
+  kind: 'dialog.gateway-new.close';
+}
 export interface CommandDialogClusterLoginOpen {
   kind: 'dialog.cluster-login.open';
   clusterUri: string;
@@ -41,11 +48,13 @@ export type Command =
   | CommandDialogAddClusterOpen
   | CommandDialogAddClusterClose
   | CommandDialogClusterLoginOpen
-  | CommandDialogClusterLoginClose;
+  | CommandDialogClusterLoginClose
+  | CommandDialogNewGatewayOpen
+  | CommandDialogNewGatewayClose;
 
 export default class CommandService extends Store<Command> {
   state: Command = {
-    kind: 'dialog.cluster-add-new.open',
+    kind: 'noop',
   };
 
   sendCommand(cmd: Command) {

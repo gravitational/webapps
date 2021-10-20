@@ -11,8 +11,6 @@ import TabHost from './TabHost';
 import DialogHost from './DialogHost';
 
 const App: React.FC<{ ctx: AppContext }> = ({ ctx }) => {
-  useEffect(() => {}, [ctx]);
-
   return (
     <StyledApp>
       <CatchError>
