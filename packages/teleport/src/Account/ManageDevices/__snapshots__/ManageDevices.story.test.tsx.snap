@@ -296,6 +296,7 @@ exports[`render device dashboard 1`] = `
           <button
             class="c9"
             kind="border"
+            title=""
           >
             Remove
           </button>
@@ -327,6 +328,7 @@ exports[`render device dashboard 1`] = `
           <button
             class="c9"
             kind="border"
+            title=""
           >
             Remove
           </button>
@@ -358,6 +360,7 @@ exports[`render device dashboard 1`] = `
           <button
             class="c9"
             kind="border"
+            title=""
           >
             Remove
           </button>
@@ -389,6 +392,7 @@ exports[`render device dashboard 1`] = `
           <button
             class="c9"
             kind="border"
+            title=""
           >
             Remove
           </button>
@@ -723,6 +727,7 @@ exports[`render failed state for creating restricted privilege token 1`] = `
           <button
             class="c10"
             kind="border"
+            title=""
           >
             Remove
           </button>
@@ -754,6 +759,7 @@ exports[`render failed state for creating restricted privilege token 1`] = `
           <button
             class="c10"
             kind="border"
+            title=""
           >
             Remove
           </button>
@@ -785,6 +791,7 @@ exports[`render failed state for creating restricted privilege token 1`] = `
           <button
             class="c10"
             kind="border"
+            title=""
           >
             Remove
           </button>
@@ -816,6 +823,7 @@ exports[`render failed state for creating restricted privilege token 1`] = `
           <button
             class="c10"
             kind="border"
+            title=""
           >
             Remove
           </button>
