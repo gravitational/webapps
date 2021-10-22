@@ -159,13 +159,13 @@ export function AddDevice({
                   </Text>
                 </>
               )}
-              {mfaOption.value === 'u2f' ||
-                (mfaOption.value === 'webauthn' && (
-                  <>
-                    <Image src={u2fGraphic} height="168px" />
-                    <Text mt={3}>{hardwareInstructions}</Text>
-                  </>
-                ))}
+              {(mfaOption.value === 'u2f' ||
+                mfaOption.value === 'webauthn') && (
+                <>
+                  <Image src={u2fGraphic} height="168px" />
+                  <Text mt={3}>{hardwareInstructions}</Text>
+                </>
+              )}
             </Flex>
             <Flex alignItems="center">
               <FieldSelect

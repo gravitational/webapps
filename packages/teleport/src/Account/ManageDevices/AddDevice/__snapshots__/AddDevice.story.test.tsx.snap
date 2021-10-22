@@ -1,7 +1,7 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`render dialog to add a new mfa device with u2f as preferred type 1`] = `
-.c9 {
+.c11 {
   box-sizing: border-box;
   max-width: 50%;
   margin-bottom: 24px;
@@ -9,13 +9,13 @@ exports[`render dialog to add a new mfa device with u2f as preferred type 1`] = 
   width: 100%;
 }
 
-.c12 {
+.c14 {
   box-sizing: border-box;
   margin-bottom: 4px;
   width: 100%;
 }
 
-.c15 {
+.c17 {
   line-height: 1.5;
   margin: 0;
   display: inline-flex;
@@ -43,25 +43,25 @@ exports[`render dialog to add a new mfa device with u2f as preferred type 1`] = 
   width: 45%;
 }
 
-.c15:active {
+.c17:active {
   opacity: 0.56;
 }
 
-.c15:hover,
-.c15:focus {
+.c17:hover,
+.c17:focus {
   background: #651FFF;
 }
 
-.c15:active {
+.c17:active {
   background: #354AA4;
 }
 
-.c15:disabled {
+.c17:disabled {
   background: rgba(255,255,255,0.12);
   color: rgba(255,255,255,0.3);
 }
 
-.c16 {
+.c18 {
   line-height: 1.5;
   margin: 0;
   display: inline-flex;
@@ -88,21 +88,21 @@ exports[`render dialog to add a new mfa device with u2f as preferred type 1`] = 
   width: 30%;
 }
 
-.c16:active {
+.c18:active {
   opacity: 0.56;
 }
 
-.c16:hover,
-.c16:focus {
+.c18:hover,
+.c18:focus {
   background: #2C3A73;
 }
 
-.c16:disabled {
+.c18:disabled {
   background: rgba(255,255,255,0.12);
   color: rgba(255,255,255,0.3);
 }
 
-.c13 {
+.c15 {
   appearance: none;
   border: none;
   border-radius: 4px;
@@ -118,19 +118,19 @@ exports[`render dialog to add a new mfa device with u2f as preferred type 1`] = 
   background-color: #FFFFFF;
 }
 
-.c13::-ms-clear {
+.c15::-ms-clear {
   display: none;
 }
 
-.c13::placeholder {
+.c15::placeholder {
   opacity: 0.4;
 }
 
-.c13:read-only {
+.c15:read-only {
   cursor: not-allowed;
 }
 
-.c10 {
+.c12 {
   color: #FFFFFF;
   display: block;
   font-size: 11px;
@@ -138,6 +138,12 @@ exports[`render dialog to add a new mfa device with u2f as preferred type 1`] = 
   text-transform: uppercase;
   width: 100%;
   margin-bottom: 4px;
+}
+
+.c8 {
+  display: block;
+  outline: none;
+  height: 168px;
 }
 
 .c5 {
@@ -149,6 +155,13 @@ exports[`render dialog to add a new mfa device with u2f as preferred type 1`] = 
   text-transform: uppercase;
   margin: 0px;
   color: rgba(255,255,255,0.87);
+}
+
+.c9 {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  margin: 0px;
+  margin-top: 16px;
 }
 
 .c7 {
@@ -164,7 +177,7 @@ exports[`render dialog to add a new mfa device with u2f as preferred type 1`] = 
   flex-direction: column;
 }
 
-.c8 {
+.c10 {
   box-sizing: border-box;
   display: flex;
   align-items: center;
@@ -234,11 +247,11 @@ exports[`render dialog to add a new mfa device with u2f as preferred type 1`] = 
   flex-direction: column;
 }
 
-.c14 {
+.c16 {
   box-sizing: border-box;
 }
 
-.c11 .react-select-container {
+.c13 .react-select-container {
   box-shadow: inset 0 2px 4px rgba(0,0,0,0.24);
   box-sizing: border-box;
   border: none;
@@ -252,8 +265,8 @@ exports[`render dialog to add a new mfa device with u2f as preferred type 1`] = 
   border-radius: 4px;
 }
 
-.c11 .react-select__control,
-.c11 .react-select__control--is-focused {
+.c13 .react-select__control,
+.c13 .react-select__control--is-focused {
   min-height: 40px;
   height: 40px;
   background-color: transparent;
@@ -264,48 +277,48 @@ exports[`render dialog to add a new mfa device with u2f as preferred type 1`] = 
   box-shadow: none;
 }
 
-.c11 .react-select__control:hover,
-.c11 .react-select__control--is-focused:hover {
+.c13 .react-select__control:hover,
+.c13 .react-select__control--is-focused:hover {
   border-color: transparent;
   cursor: pointer;
 }
 
-.c11 .react-select__option:hover {
+.c13 .react-select__option:hover {
   cursor: pointer;
   background-color: #eceff1;
 }
 
-.c11 .react-select__option--is-focused {
+.c13 .react-select__option--is-focused {
   background-color: #eceff1;
 }
 
-.c11 .react-select__option--is-selected {
+.c13 .react-select__option--is-selected {
   background-color: #cfd8dc;
   color: inherit;
 }
 
-.c11 .react-select__option--is-selected:hover {
+.c13 .react-select__option--is-selected:hover {
   background-color: #cfd8dc;
 }
 
-.c11 .react-select__menu {
+.c13 .react-select__menu {
   margin-top: 0px;
 }
 
-.c11 .react-select__indicator-separator {
+.c13 .react-select__indicator-separator {
   display: none;
 }
 
-.c11 .react-select__loading-indicator {
+.c13 .react-select__loading-indicator {
   display: none;
 }
 
-.c11 .react-select--is-disabled .react-select__single-value,
-.c11 .react-select--is-disabled .react-select__placeholder {
+.c13 .react-select--is-disabled .react-select__single-value,
+.c13 .react-select--is-disabled .react-select__placeholder {
   color: rgba(0,0,0,0.24);
 }
 
-.c11 .react-select--is-disabled .react-select__indicator {
+.c13 .react-select--is-disabled .react-select__indicator {
   color: rgba(0,0,0,0.14);
 }
 
@@ -342,23 +355,34 @@ exports[`render dialog to add a new mfa device with u2f as preferred type 1`] = 
         <div
           class="c7"
           height="256px"
-        />
-        <div
-          class="c8"
         >
+          <img
+            class="c8"
+            height="168px"
+            src="file_stub"
+          />
           <div
             class="c9"
+          >
+            Enter a name for your hardware key.
+          </div>
+        </div>
+        <div
+          class="c10"
+        >
+          <div
+            class="c11"
             data-testid="mfa-select"
             width="100%"
           >
             <label
-              class="c10"
+              class="c12"
               font-size="0"
             >
               Two-factor type
             </label>
             <div
-              class="c11"
+              class="c13"
             >
               <div
                 class="react-select-container css-2b097c-container"
@@ -413,18 +437,18 @@ exports[`render dialog to add a new mfa device with u2f as preferred type 1`] = 
           </div>
         </div>
         <div
-          class="c12"
+          class="c14"
           width="100%"
         >
           <label
-            class="c10"
+            class="c12"
             font-size="0"
           >
             Device name
           </label>
           <input
             autocomplete="off"
-            class="c13"
+            class="c15"
             color="text.onLight"
             placeholder="Name"
             type="text"
@@ -433,10 +457,10 @@ exports[`render dialog to add a new mfa device with u2f as preferred type 1`] = 
         </div>
       </div>
       <div
-        class="c14"
+        class="c16"
       >
         <button
-          class="c15"
+          class="c17"
           kind="primary"
           type="submit"
           width="45%"
@@ -444,7 +468,7 @@ exports[`render dialog to add a new mfa device with u2f as preferred type 1`] = 
           Add device
         </button>
         <button
-          class="c16"
+          class="c18"
           kind="secondary"
           width="30%"
         >
@@ -457,7 +481,7 @@ exports[`render dialog to add a new mfa device with u2f as preferred type 1`] = 
 `;
 
 exports[`render dialog to add a new mfa device with webauthn as preferred type 1`] = `
-.c9 {
+.c11 {
   box-sizing: border-box;
   max-width: 50%;
   margin-bottom: 24px;
@@ -465,13 +489,13 @@ exports[`render dialog to add a new mfa device with webauthn as preferred type 1
   width: 100%;
 }
 
-.c12 {
+.c14 {
   box-sizing: border-box;
   margin-bottom: 4px;
   width: 100%;
 }
 
-.c15 {
+.c17 {
   line-height: 1.5;
   margin: 0;
   display: inline-flex;
@@ -499,25 +523,25 @@ exports[`render dialog to add a new mfa device with webauthn as preferred type 1
   width: 45%;
 }
 
-.c15:active {
+.c17:active {
   opacity: 0.56;
 }
 
-.c15:hover,
-.c15:focus {
+.c17:hover,
+.c17:focus {
   background: #651FFF;
 }
 
-.c15:active {
+.c17:active {
   background: #354AA4;
 }
 
-.c15:disabled {
+.c17:disabled {
   background: rgba(255,255,255,0.12);
   color: rgba(255,255,255,0.3);
 }
 
-.c16 {
+.c18 {
   line-height: 1.5;
   margin: 0;
   display: inline-flex;
@@ -544,21 +568,21 @@ exports[`render dialog to add a new mfa device with webauthn as preferred type 1
   width: 30%;
 }
 
-.c16:active {
+.c18:active {
   opacity: 0.56;
 }
 
-.c16:hover,
-.c16:focus {
+.c18:hover,
+.c18:focus {
   background: #2C3A73;
 }
 
-.c16:disabled {
+.c18:disabled {
   background: rgba(255,255,255,0.12);
   color: rgba(255,255,255,0.3);
 }
 
-.c13 {
+.c15 {
   appearance: none;
   border: none;
   border-radius: 4px;
@@ -574,19 +598,19 @@ exports[`render dialog to add a new mfa device with webauthn as preferred type 1
   background-color: #FFFFFF;
 }
 
-.c13::-ms-clear {
+.c15::-ms-clear {
   display: none;
 }
 
-.c13::placeholder {
+.c15::placeholder {
   opacity: 0.4;
 }
 
-.c13:read-only {
+.c15:read-only {
   cursor: not-allowed;
 }
 
-.c10 {
+.c12 {
   color: #FFFFFF;
   display: block;
   font-size: 11px;
@@ -594,6 +618,12 @@ exports[`render dialog to add a new mfa device with webauthn as preferred type 1
   text-transform: uppercase;
   width: 100%;
   margin-bottom: 4px;
+}
+
+.c8 {
+  display: block;
+  outline: none;
+  height: 168px;
 }
 
 .c5 {
@@ -605,6 +635,13 @@ exports[`render dialog to add a new mfa device with webauthn as preferred type 1
   text-transform: uppercase;
   margin: 0px;
   color: rgba(255,255,255,0.87);
+}
+
+.c9 {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  margin: 0px;
+  margin-top: 16px;
 }
 
 .c7 {
@@ -620,7 +657,7 @@ exports[`render dialog to add a new mfa device with webauthn as preferred type 1
   flex-direction: column;
 }
 
-.c8 {
+.c10 {
   box-sizing: border-box;
   display: flex;
   align-items: center;
@@ -690,11 +727,11 @@ exports[`render dialog to add a new mfa device with webauthn as preferred type 1
   flex-direction: column;
 }
 
-.c14 {
+.c16 {
   box-sizing: border-box;
 }
 
-.c11 .react-select-container {
+.c13 .react-select-container {
   box-shadow: inset 0 2px 4px rgba(0,0,0,0.24);
   box-sizing: border-box;
   border: none;
@@ -708,8 +745,8 @@ exports[`render dialog to add a new mfa device with webauthn as preferred type 1
   border-radius: 4px;
 }
 
-.c11 .react-select__control,
-.c11 .react-select__control--is-focused {
+.c13 .react-select__control,
+.c13 .react-select__control--is-focused {
   min-height: 40px;
   height: 40px;
   background-color: transparent;
@@ -720,48 +757,48 @@ exports[`render dialog to add a new mfa device with webauthn as preferred type 1
   box-shadow: none;
 }
 
-.c11 .react-select__control:hover,
-.c11 .react-select__control--is-focused:hover {
+.c13 .react-select__control:hover,
+.c13 .react-select__control--is-focused:hover {
   border-color: transparent;
   cursor: pointer;
 }
 
-.c11 .react-select__option:hover {
+.c13 .react-select__option:hover {
   cursor: pointer;
   background-color: #eceff1;
 }
 
-.c11 .react-select__option--is-focused {
+.c13 .react-select__option--is-focused {
   background-color: #eceff1;
 }
 
-.c11 .react-select__option--is-selected {
+.c13 .react-select__option--is-selected {
   background-color: #cfd8dc;
   color: inherit;
 }
 
-.c11 .react-select__option--is-selected:hover {
+.c13 .react-select__option--is-selected:hover {
   background-color: #cfd8dc;
 }
 
-.c11 .react-select__menu {
+.c13 .react-select__menu {
   margin-top: 0px;
 }
 
-.c11 .react-select__indicator-separator {
+.c13 .react-select__indicator-separator {
   display: none;
 }
 
-.c11 .react-select__loading-indicator {
+.c13 .react-select__loading-indicator {
   display: none;
 }
 
-.c11 .react-select--is-disabled .react-select__single-value,
-.c11 .react-select--is-disabled .react-select__placeholder {
+.c13 .react-select--is-disabled .react-select__single-value,
+.c13 .react-select--is-disabled .react-select__placeholder {
   color: rgba(0,0,0,0.24);
 }
 
-.c11 .react-select--is-disabled .react-select__indicator {
+.c13 .react-select--is-disabled .react-select__indicator {
   color: rgba(0,0,0,0.14);
 }
 
@@ -798,23 +835,34 @@ exports[`render dialog to add a new mfa device with webauthn as preferred type 1
         <div
           class="c7"
           height="256px"
-        />
-        <div
-          class="c8"
         >
+          <img
+            class="c8"
+            height="168px"
+            src="file_stub"
+          />
           <div
             class="c9"
+          >
+            Enter a name for your hardware key.
+          </div>
+        </div>
+        <div
+          class="c10"
+        >
+          <div
+            class="c11"
             data-testid="mfa-select"
             width="100%"
           >
             <label
-              class="c10"
+              class="c12"
               font-size="0"
             >
               Two-factor type
             </label>
             <div
-              class="c11"
+              class="c13"
             >
               <div
                 class="react-select-container css-2b097c-container"
@@ -869,18 +917,18 @@ exports[`render dialog to add a new mfa device with webauthn as preferred type 1
           </div>
         </div>
         <div
-          class="c12"
+          class="c14"
           width="100%"
         >
           <label
-            class="c10"
+            class="c12"
             font-size="0"
           >
             Device name
           </label>
           <input
             autocomplete="off"
-            class="c13"
+            class="c15"
             color="text.onLight"
             placeholder="Name"
             type="text"
@@ -889,10 +937,10 @@ exports[`render dialog to add a new mfa device with webauthn as preferred type 1
         </div>
       </div>
       <div
-        class="c14"
+        class="c16"
       >
         <button
-          class="c15"
+          class="c17"
           kind="primary"
           type="submit"
           width="45%"
@@ -900,7 +948,7 @@ exports[`render dialog to add a new mfa device with webauthn as preferred type 1
           Add device
         </button>
         <button
-          class="c16"
+          class="c18"
           kind="secondary"
           width="30%"
         >
