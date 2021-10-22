@@ -11,14 +11,6 @@ export default function useAddDevice(
   const addDeviceAttempt = useAttempt('');
   const fetchQrCodeAttempt = useAttempt('');
 
-  useEffect(() => {
-    fetchQrCodeAttempt.run(() =>
-      ctx.mfaService
-        .createRegisterChallenge(token, 'totp')
-        .then(res => setQrCode(res.qrCode))
-    );
-  }, []);
-
   function addTotpDevice(secondFactorToken: string, deviceName: string) {
     addDeviceAttempt.setAttempt({ status: 'processing' });
     ctx.mfaService
@@ -51,6 +43,14 @@ export default function useAddDevice(
   function clearAttempt() {
     addDeviceAttempt.setAttempt({ status: '' });
   }
+
+  useEffect(() => {
+    fetchQrCodeAttempt.run(() =>
+      ctx.mfaService
+        .createRegisterChallenge(token, 'totp')
+        .then(res => setQrCode(res.qrCode))
+    );
+  }, []);
 
   return {
     addDeviceAttempt: addDeviceAttempt.attempt,
