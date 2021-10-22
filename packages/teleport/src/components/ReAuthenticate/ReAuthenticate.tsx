@@ -1,4 +1,4 @@
-import React, { useState, useMemo } from 'react';
+import React, { useState } from 'react';
 import { Flex, Box, Text, ButtonPrimary, ButtonSecondary } from 'design';
 import Dialog, {
   DialogHeader,
@@ -29,10 +29,7 @@ export function ReAuthenticate({
 }: State) {
   const [otpToken, setOtpToken] = useState('');
 
-  const mfaOptions = useMemo<MfaOption[]>(
-    () => getMfaOptions(auth2faType, 'u2f', true),
-    []
-  );
+  const mfaOptions = getMfaOptions(auth2faType, 'u2f', true);
 
   const [mfaOption, setMfaOption] = useState<MfaOption>(mfaOptions[0]);
 
@@ -70,21 +67,20 @@ export function ReAuthenticate({
           )}
           <DialogContent>
             <Flex mt={2} alignItems="flex-end">
-              <Box width="50%">
-                <FieldSelect
-                  label="Two-factor type"
-                  value={mfaOption}
-                  options={mfaOptions}
-                  onChange={(o: MfaOption) => {
-                    setMfaOption(o);
-                    clearAttempt();
-                  }}
-                  data-testid="mfa-select"
-                  mr={3}
-                  mb={0}
-                  isDisabled={attempt.status === 'processing'}
-                />
-              </Box>
+              <FieldSelect
+                width="50%"
+                label="Two-factor type"
+                value={mfaOption}
+                options={mfaOptions}
+                onChange={(o: MfaOption) => {
+                  setMfaOption(o);
+                  clearAttempt();
+                }}
+                data-testid="mfa-select"
+                mr={3}
+                mb={0}
+                isDisabled={attempt.status === 'processing'}
+              />
               <Box width="50%">
                 {mfaOption.value === 'otp' && (
                   <FieldInput
@@ -108,7 +104,6 @@ export function ReAuthenticate({
           </DialogContent>
           <DialogFooter>
             <ButtonPrimary
-              width="45%"
               onClick={e => validator.validate() && onSubmit(e)}
               disabled={attempt.status === 'processing'}
               mr={3}
@@ -116,9 +111,7 @@ export function ReAuthenticate({
             >
               Continue
             </ButtonPrimary>
-            <ButtonSecondary width="30%" onClick={close}>
-              Cancel
-            </ButtonSecondary>
+            <ButtonSecondary onClick={close}>Cancel</ButtonSecondary>
           </DialogFooter>
         </Dialog>
       )}
