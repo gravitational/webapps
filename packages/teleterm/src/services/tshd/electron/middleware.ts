@@ -7,8 +7,8 @@ export type UnaryInterceptor = (
 
 // This is custom grpc middleware implementation that uses JS Proxy to intercept method calls
 // Curtesy of https://github.com/echo-health/node-grpc-interceptors/blob/master/client-proxy.js
-export default function middleware(
-  client: any,
+export default function middleware<T extends Record<string, any>>(
+  client: T,
   interceptors: UnaryInterceptor[]
 ) {
   return new Proxy(client, {

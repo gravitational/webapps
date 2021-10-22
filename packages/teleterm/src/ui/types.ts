@@ -63,7 +63,6 @@ export interface DocumentDatabases extends DocumentBase {
 export interface DocumentGateway extends DocumentBase {
   kind: 'gateway';
   clusterUri: string;
-  gatewayId?: string;
 }
 
 export type Document =

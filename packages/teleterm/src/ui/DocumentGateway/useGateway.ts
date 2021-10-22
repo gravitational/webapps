@@ -14,30 +14,20 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import { useState, useEffect } from 'react';
 import { useAppContext } from 'teleterm/ui/appContextProvider';
 import * as types from 'teleterm/ui/types';
-import useAsync from 'teleterm/ui/useAsync';
 
-export default function useDatabases({ clusterUri }: types.DocumentGateway) {
-  const { serviceClusters } = useAppContext();
-  const [searchValue, setSearchValue] = useState('');
-  const dbs = serviceClusters.findDbs(clusterUri);
+export default function useGateway(doc: types.DocumentGateway) {
+  const ctx = useAppContext();
+  const gateway = ctx.serviceClusters.findGateway(doc.uri);
 
-  const [loadAttempt, load] = useAsync(() => {
-    return serviceClusters.fetchDatabases(clusterUri);
-  });
-
-  serviceClusters.useState();
-
-  useEffect(() => {
-    load();
-  }, [clusterUri]);
+  const removeGateway = async () => {
+    await ctx.serviceClusters.removeGateway(doc.uri);
+    ctx.serviceDocs.close(doc);
+  };
 
   return {
-    searchValue,
-    setSearchValue,
-    dbs,
-    loadAttempt,
+    gateway,
+    removeGateway,
   };
 }

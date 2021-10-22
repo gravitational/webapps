@@ -16,12 +16,14 @@ limitations under the License.
 
 import React from 'react';
 import styled from 'styled-components';
-import { Text, Flex, Box } from 'design';
+import { Text, Flex, Box, ButtonSecondary } from 'design';
 import InputSearch from 'teleport/components/InputSearch';
 import Document from './../Document';
 import useGateway from './useGateway';
 import { ThemeProviderTabs } from './../ThemeProvider';
 import * as types from '../types';
+import TextSelectCopy from 'teleport/components/TextSelectCopy';
+import { textAlign } from 'design/system';
 
 type Props = {
   visible: boolean;
@@ -30,7 +32,7 @@ type Props = {
 
 export default function DocumentGateway(props: Props) {
   const { doc, visible } = props;
-  const { dbs, setSearchValue, searchValue } = useGateway(doc);
+  const { gateway, removeGateway } = useGateway(doc);
 
   return (
     <ThemeProviderTabs>
@@ -40,10 +42,66 @@ export default function DocumentGateway(props: Props) {
             <Text typography="h3" color="text.secondary">
               Gateway
             </Text>
+            <ButtonSecondary size="small" onClick={removeGateway}>
+              Close Gateway
+            </ButtonSecondary>
           </Flex>
-          <Flex mb="4" justifyContent="space-between" alignItems="center">
-            <InputSearch height="30px" mr="3" onChange={setSearchValue} />
+
+          <Text bold>Database</Text>
+          <Flex
+            bg={'primary.dark'}
+            p="2"
+            alignItems="center"
+            justifyContent="space-between"
+            borderRadius={2}
+            mb={3}
+          >
+            <Text>{gateway.protocol}</Text>
           </Flex>
+
+          <Text bold>Host Name</Text>
+          <Flex
+            bg={'primary.dark'}
+            p="2"
+            alignItems="center"
+            justifyContent="space-between"
+            borderRadius={2}
+            mb={3}
+          >
+            <Text>{gateway.resourceName}</Text>
+          </Flex>
+
+          <Text bold>Local Address</Text>
+          <TextSelectCopy
+            bash={false}
+            bg={'primary.dark'}
+            mb={4}
+            text={`https://${gateway.localAddress}`}
+          />
+          <Text typography="h4" bold mb={3}>
+            Access Keys
+          </Text>
+          <Text bold>CA certificate path</Text>
+          <TextSelectCopy
+            bash={false}
+            bg={'primary.dark'}
+            mb={3}
+            text={gateway.caCertPath}
+          />
+          <Text bold>Database access certificate path</Text>
+          <TextSelectCopy
+            bash={false}
+            bg={'primary.dark'}
+            mb={3}
+            text={gateway.dbCertPath}
+          />
+          <Text bold>Private Key Path</Text>
+          <TextSelectCopy
+            bash={false}
+            bg={'primary.dark'}
+            mb={3}
+            text={gateway.keyPath}
+          />
         </Container>
       </Document>
     </ThemeProviderTabs>
@@ -60,3 +118,14 @@ const Container = styled(Box)`
     padding-bottom: 24px;
   }
 `;
+
+/*
+clusterId: "localhost"
+hostId: "5546a2f0-fc51-416b-a44d-1ef8747c3341"
+localAddress: "127.0.0.1:43293"
+localPort: ""
+protocol: "postgres"
+resourceName: "mydb"
+status: 0
+
+*/

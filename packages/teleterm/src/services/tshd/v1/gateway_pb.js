@@ -74,7 +74,10 @@ proto.teleport.terminal.v1.Gateway.toObject = function(includeInstance, msg) {
     protocol: jspb.Message.getFieldWithDefault(msg, 5, ""),
     hostId: jspb.Message.getFieldWithDefault(msg, 6, ""),
     clusterId: jspb.Message.getFieldWithDefault(msg, 7, ""),
-    status: jspb.Message.getFieldWithDefault(msg, 8, 0)
+    caCertPath: jspb.Message.getFieldWithDefault(msg, 8, ""),
+    dbCertPath: jspb.Message.getFieldWithDefault(msg, 9, ""),
+    keyPath: jspb.Message.getFieldWithDefault(msg, 10, ""),
+    status: jspb.Message.getFieldWithDefault(msg, 11, 0)
   };
 
   if (includeInstance) {
@@ -140,6 +143,18 @@ proto.teleport.terminal.v1.Gateway.deserializeBinaryFromReader = function(msg, r
       msg.setClusterId(value);
       break;
     case 8:
+      var value = /** @type {string} */ (reader.readString());
+      msg.setCaCertPath(value);
+      break;
+    case 9:
+      var value = /** @type {string} */ (reader.readString());
+      msg.setDbCertPath(value);
+      break;
+    case 10:
+      var value = /** @type {string} */ (reader.readString());
+      msg.setKeyPath(value);
+      break;
+    case 11:
       var value = /** @type {!proto.teleport.terminal.v1.Gateway.GatewayStatus} */ (reader.readEnum());
       msg.setStatus(value);
       break;
@@ -221,10 +236,31 @@ proto.teleport.terminal.v1.Gateway.serializeBinaryToWriter = function(message, w
       f
     );
   }
+  f = message.getCaCertPath();
+  if (f.length > 0) {
+    writer.writeString(
+      8,
+      f
+    );
+  }
+  f = message.getDbCertPath();
+  if (f.length > 0) {
+    writer.writeString(
+      9,
+      f
+    );
+  }
+  f = message.getKeyPath();
+  if (f.length > 0) {
+    writer.writeString(
+      10,
+      f
+    );
+  }
   f = message.getStatus();
   if (f !== 0.0) {
     writer.writeEnum(
-      8,
+      11,
       f
     );
   }
@@ -366,11 +402,65 @@ proto.teleport.terminal.v1.Gateway.prototype.setClusterId = function(value) {
 
 
 /**
- * optional GatewayStatus status = 8;
+ * optional string ca_cert_path = 8;
+ * @return {string}
+ */
+proto.teleport.terminal.v1.Gateway.prototype.getCaCertPath = function() {
+  return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 8, ""));
+};
+
+
+/**
+ * @param {string} value
+ * @return {!proto.teleport.terminal.v1.Gateway} returns this
+ */
+proto.teleport.terminal.v1.Gateway.prototype.setCaCertPath = function(value) {
+  return jspb.Message.setProto3StringField(this, 8, value);
+};
+
+
+/**
+ * optional string db_cert_path = 9;
+ * @return {string}
+ */
+proto.teleport.terminal.v1.Gateway.prototype.getDbCertPath = function() {
+  return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 9, ""));
+};
+
+
+/**
+ * @param {string} value
+ * @return {!proto.teleport.terminal.v1.Gateway} returns this
+ */
+proto.teleport.terminal.v1.Gateway.prototype.setDbCertPath = function(value) {
+  return jspb.Message.setProto3StringField(this, 9, value);
+};
+
+
+/**
+ * optional string key_path = 10;
+ * @return {string}
+ */
+proto.teleport.terminal.v1.Gateway.prototype.getKeyPath = function() {
+  return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 10, ""));
+};
+
+
+/**
+ * @param {string} value
+ * @return {!proto.teleport.terminal.v1.Gateway} returns this
+ */
+proto.teleport.terminal.v1.Gateway.prototype.setKeyPath = function(value) {
+  return jspb.Message.setProto3StringField(this, 10, value);
+};
+
+
+/**
+ * optional GatewayStatus status = 11;
  * @return {!proto.teleport.terminal.v1.Gateway.GatewayStatus}
  */
 proto.teleport.terminal.v1.Gateway.prototype.getStatus = function() {
-  return /** @type {!proto.teleport.terminal.v1.Gateway.GatewayStatus} */ (jspb.Message.getFieldWithDefault(this, 8, 0));
+  return /** @type {!proto.teleport.terminal.v1.Gateway.GatewayStatus} */ (jspb.Message.getFieldWithDefault(this, 11, 0));
 };
 
 
@@ -379,7 +469,7 @@ proto.teleport.terminal.v1.Gateway.prototype.getStatus = function() {
  * @return {!proto.teleport.terminal.v1.Gateway} returns this
  */
 proto.teleport.terminal.v1.Gateway.prototype.setStatus = function(value) {
-  return jspb.Message.setProto3EnumField(this, 8, value);
+  return jspb.Message.setProto3EnumField(this, 11, value);
 };
 
 

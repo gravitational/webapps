@@ -16,15 +16,16 @@
 
 import React, { useState } from 'react';
 import * as Alerts from 'design/Alert';
-import { Box, Text, Flex, ButtonPrimary, ButtonSecondary } from 'design';
-import FieldInput from 'shared/components/FieldInput';
-import Validation from 'shared/components/Validation';
-import useGatewayCreate, { State, Props } from './useGatewayCreate';
+import { Text, ButtonPrimary, ButtonSecondary } from 'design';
 import Dialog, {
   DialogHeader,
   DialogContent,
   DialogFooter,
 } from 'design/Dialog';
+import FieldInput from 'shared/components/FieldInput';
+import Validation from 'shared/components/Validation';
+import { requiredField } from 'shared/components/Validation/rules';
+import useGatewayCreate, { State, Props } from './useGatewayCreate';
 
 export default function Container(props: Props) {
   const state = useGatewayCreate(props);
@@ -32,8 +33,8 @@ export default function Container(props: Props) {
 }
 
 export function GatewayCreate(props: State) {
-  const { db, onClose } = props;
-  const [addr, setAddr] = useState('');
+  const { db, onClose, createAttempt, create } = props;
+  const [port, setPort] = useState('');
 
   return (
     <Validation>
@@ -45,35 +46,38 @@ export function GatewayCreate(props: State) {
             padding: '20px',
           })}
           disableEscapeKeyDown={false}
-          onClose={props.onClose}
+          onClose={onClose}
           open={true}
         >
           <DialogHeader>
             <Text typography="h3" color="text.primary">
-              Create Gateway to <b>{title}</b>
+              Create Gateway to <b>{db.name}</b>
             </Text>
           </DialogHeader>
           <DialogContent>
-            {initAttempt.status === 'error' && (
-              <Alerts.Danger>
-                Unable to retrieve cluster auth preferences,{' '}
-                {initAttempt.statusText}
-              </Alerts.Danger>
+            {createAttempt.status === 'error' && (
+              <Alerts.Danger>{createAttempt.statusText}</Alerts.Danger>
             )}
-            {initAttempt.status === 'success' && (
-              <LoginForm
-                title={'Sign into Teleport'}
-                authProviders={initAttempt.data.authProvidersList}
-                auth2faType="off"
-                isLocalAuthEnabled={true}
-                onLoginWithSso={loginWithSso}
-                onLogin={loginWithLocal}
-                initAttempt={initAttempt}
-                loginAttempt={loginAttempt}
-              />
-            )}
+            <FieldInput
+              rule={requiredField('Port is required')}
+              label="Port"
+              width="100%"
+              value={port}
+              placeholder="10211"
+              onKeyPress={e =>
+                e.key === 'Enter' && validator.validate() && create(port)
+              }
+              onChange={e => setPort(e.target.value)}
+            />
           </DialogContent>
           <DialogFooter>
+            <ButtonPrimary
+              mr="3"
+              disabled={createAttempt.status === 'processing'}
+              onClick={() => validator.validate() && create(port)}
+            >
+              Create
+            </ButtonPrimary>
             <ButtonSecondary onClick={onClose}>Close</ButtonSecondary>
           </DialogFooter>
         </Dialog>

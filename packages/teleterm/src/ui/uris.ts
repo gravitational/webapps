@@ -27,7 +27,7 @@ const routes = {
   clusterApps: '/clusters/:clusterId/apps',
   clusterDbs: '/clusters/:clusterId/dbs',
   clusterDb: '/clusters/:clusterId/dbs/:dbId',
-  clusterGateway: '/clusters/:clusterId/dbs/:dbId/gateway/:gatewayId?',
+  clusterGateways: '/clusters/:clusterId/gateways/:gatewayId',
 };
 
 const uris = {
@@ -38,27 +38,23 @@ const uris = {
   },
 
   getUriCluster(params: UriParams) {
-    return generatePath(routes.cluster, { ...params });
+    return generatePath(routes.cluster, params as any);
   },
 
   getUriServer(params: UriParams) {
-    return generatePath(routes.clusterServers, { ...params });
+    return generatePath(routes.clusterServers, params as any);
   },
 
   getUriDbs(params: UriParams) {
-    return generatePath(routes.clusterDbs, { ...params });
+    return generatePath(routes.clusterDbs, params as any);
   },
 
   getUriDb(params: UriParams) {
-    return generatePath(routes.clusterDb, { ...params });
-  },
-
-  getUriGateway(params: UriParams) {
-    return generatePath(routes.clusterGateway, { ...params });
+    return generatePath(routes.clusterDb, params as any);
   },
 
   getUriApps(params: UriParams) {
-    return generatePath(routes.clusterApps, { ...params });
+    return generatePath(routes.clusterApps, params as any);
   },
 };
 
