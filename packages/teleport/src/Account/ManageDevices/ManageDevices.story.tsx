@@ -9,7 +9,7 @@ export default {
 export const Loaded = () => <ManageDevices {...props} />;
 
 export const Loaded2faOff = () => (
-  <ManageDevices {...props} auth2faType="off" />
+  <ManageDevices {...props} mfaDisabled={true} />
 );
 
 Loaded2faOff.storyName = 'Loaded 2FA Off';
@@ -36,7 +36,7 @@ export const Failed = () => (
 export const RemoveDialog = () => (
   <ManageDevices
     {...props}
-    isDialogVisible={true}
+    showRemoveDevice={true}
     token="123"
     deviceToRemove={{ id: '1', name: 'iphone 12' }}
   />
@@ -45,7 +45,7 @@ export const RemoveDialog = () => (
 export const RemoveDialogFailed = () => (
   <ManageDevices
     {...props}
-    isDialogVisible={true}
+    showRemoveDevice={true}
     token="123"
     deviceToRemove={{ id: '1', name: 'iphone 12' }}
     removeDevice={() => Promise.reject(new Error('server error'))}
@@ -81,10 +81,12 @@ const props: State = {
   deviceToRemove: null,
   setDeviceToRemove: () => null,
   removeDevice: () => null,
-  isDialogVisible: false,
+  mfaDisabled: false,
+  showReAuthenticate: false,
+  showAddDevice: false,
+  showRemoveDevice: false,
   showDialog: () => null,
   hideDialog: () => null,
-  auth2faType: 'on',
   devices: [
     {
       id: '1',
