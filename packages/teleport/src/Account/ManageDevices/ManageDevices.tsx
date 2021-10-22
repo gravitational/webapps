@@ -33,6 +33,8 @@ export function ManageDevices({
   const showRemoveDevice = token && deviceToRemove;
   const showAddDevice = token && !deviceToRemove;
 
+  const mfaDisabled = auth2faType === 'off';
+
   return (
     <>
       <Box width="900px">
@@ -64,12 +66,10 @@ export function ManageDevices({
                 onClick={onAddDevice}
                 disabled={
                   createRestrictedTokenAttempt.status === 'processing' ||
-                  auth2faType === 'off'
+                  mfaDisabled
                 }
                 title={
-                  auth2faType === 'off'
-                    ? 'Two-factor authentication is disabled'
-                    : ''
+                  mfaDisabled ? 'Two-factor authentication is disabled' : ''
                 }
               >
                 Add two-factor device
@@ -81,6 +81,7 @@ export function ManageDevices({
                 setDeviceToRemove(device);
                 showDialog();
               }}
+              mfaDisabled={mfaDisabled}
               style={{
                 borderTopRightRadius: '0px',
                 borderTopLeftRadius: '0px',

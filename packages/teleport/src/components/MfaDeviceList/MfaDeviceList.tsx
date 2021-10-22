@@ -11,12 +11,14 @@ import {
   Table,
 } from 'design/DataTable';
 import { displayDate } from 'shared/services/loc';
+import cfg from 'teleport/config';
 import { MfaDevice } from 'teleport/services/mfa/types';
 
 export default function MfaDeviceList({
   devices = [],
   remove,
   mostRecentDevice,
+  mfaDisabled = false,
   ...styles
 }: Props) {
   const [sortDir, setSortDir] = useState<Record<string, string>>({
@@ -76,7 +78,11 @@ export default function MfaDeviceList({
       <Column
         header={<Cell />}
         cell={
-          <RemoveCell remove={remove} mostRecentDevice={mostRecentDevice} />
+          <RemoveCell
+            remove={remove}
+            mostRecentDevice={mostRecentDevice}
+            mfaDisabled={mfaDisabled}
+          />
         }
       />
     </StyledTable>
@@ -109,7 +115,7 @@ const DateCell = props => {
 };
 
 const RemoveCell = props => {
-  const { data, rowIndex, remove, mostRecentDevice } = props;
+  const { data, rowIndex, remove, mostRecentDevice, mfaDisabled } = props;
   const { id, name } = data[rowIndex];
 
   if (id === mostRecentDevice?.id) {
@@ -118,7 +124,12 @@ const RemoveCell = props => {
 
   return (
     <Cell align="right">
-      <ButtonBorder size="small" onClick={() => remove({ id, name })}>
+      <ButtonBorder
+        size="small"
+        onClick={() => remove({ id, name })}
+        disabled={mfaDisabled}
+        title={mfaDisabled ? 'Two-factor authentication is disabled' : ''}
+      >
         Remove
       </ButtonBorder>
     </Cell>
@@ -129,6 +140,7 @@ type Props = {
   devices: MfaDevice[];
   remove({ id, name }: { id: string; name: string }): void;
   mostRecentDevice?: MfaDevice;
+  mfaDisabled?: boolean;
   [key: string]: any;
 };
 
