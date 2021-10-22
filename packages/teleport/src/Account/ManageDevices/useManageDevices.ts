@@ -16,6 +16,12 @@ export default function useManageDevices(ctx: Ctx) {
   // the user has no devices yet and thus can't authenticate using the ReAuthenticate dialog
   const createRestrictedTokenAttempt = useAttempt('');
 
+  const mfaDisabled = cfg.getAuth2faType() === 'off';
+
+  const showReAuthenticate = !token && isDialogVisible;
+  const showRemoveDevice = token && deviceToRemove && isDialogVisible;
+  const showAddDevice = token && !deviceToRemove && isDialogVisible;
+
   useEffect(() => fetchDevices(), []);
 
   function fetchDevices() {
@@ -65,10 +71,12 @@ export default function useManageDevices(ctx: Ctx) {
     setDeviceToRemove,
     removeDevice,
     deviceToRemove,
-    isDialogVisible,
     showDialog,
     hideDialog,
-    auth2faType: cfg.getAuth2faType(),
+    showReAuthenticate,
+    showAddDevice,
+    showRemoveDevice,
+    mfaDisabled,
   };
 }
 

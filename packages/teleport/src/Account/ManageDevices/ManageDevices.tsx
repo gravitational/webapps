@@ -24,17 +24,13 @@ export function ManageDevices({
   setDeviceToRemove,
   removeDevice,
   deviceToRemove,
-  isDialogVisible,
   showDialog,
   hideDialog,
-  auth2faType,
+  showReAuthenticate,
+  showAddDevice,
+  showRemoveDevice,
+  mfaDisabled,
 }: State) {
-  const showReAuthenticate = !token;
-  const showRemoveDevice = token && deviceToRemove;
-  const showAddDevice = token && !deviceToRemove;
-
-  const mfaDisabled = auth2faType === 'off';
-
   return (
     <>
       <Box width="900px">
@@ -90,26 +86,22 @@ export function ManageDevices({
           </>
         )}
       </Box>
-      {isDialogVisible && (
-        <>
-          {showReAuthenticate && (
-            <ReAuthenticate setToken={setToken} close={hideDialog} />
-          )}
-          {showRemoveDevice && (
-            <RemoveDialog
-              name={deviceToRemove.name}
-              onRemove={removeDevice}
-              onCancel={hideDialog}
-            />
-          )}
-          {showAddDevice && (
-            <AddDevice
-              fetchDevices={fetchDevices}
-              token={token}
-              close={hideDialog}
-            />
-          )}
-        </>
+      {showReAuthenticate && (
+        <ReAuthenticate setToken={setToken} close={hideDialog} />
+      )}
+      {showAddDevice && (
+        <AddDevice
+          fetchDevices={fetchDevices}
+          token={token}
+          close={hideDialog}
+        />
+      )}
+      {showRemoveDevice && (
+        <RemoveDialog
+          name={deviceToRemove.name}
+          onRemove={removeDevice}
+          onCancel={hideDialog}
+        />
       )}
     </>
   );
