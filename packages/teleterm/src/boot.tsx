@@ -15,5 +15,6 @@ appContext.serviceCommands = new ServiceCommands();
 appContext.serviceDocs = new ServiceDocs();
 
 appContext.serviceClusters.fetchClusters();
+appContext.serviceClusters.fetchGateways();
 
 ReactDOM.render(<Ui ctx={appContext} />, document.getElementById('app'));
