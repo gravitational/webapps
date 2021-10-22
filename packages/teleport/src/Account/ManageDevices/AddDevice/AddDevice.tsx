@@ -83,10 +83,12 @@ export function AddDevice({
     }
   }
 
-  let u2fInstructions = 'Enter a name for this hardware key.';
+  let hardwareInstructions = 'Enter a name for your hardware key.';
   if (addDeviceAttempt.status === 'processing') {
-    u2fInstructions =
-      'Insert your new hardware key and press the button on the key.';
+    hardwareInstructions =
+      mfaOption.value === 'u2f'
+        ? 'Insert your new hardware key and press the button on the key.'
+        : 'Follow the prompts from your browser.';
   }
 
   return (
@@ -157,18 +159,13 @@ export function AddDevice({
                   </Text>
                 </>
               )}
-              {mfaOption.value === 'u2f' && (
-                <>
-                  <Image src={u2fGraphic} height="168px" />
-                  <Text mt={3}>{u2fInstructions}</Text>
-                </>
-              )}
-              {mfaOption.value === 'webauthn' && (
-                <Text mt={3}>
-                  Enter a name for this device, then click 'Add Device' and
-                  follow your browser's prompts
-                </Text>
-              )}
+              {mfaOption.value === 'u2f' ||
+                (mfaOption.value === 'webauthn' && (
+                  <>
+                    <Image src={u2fGraphic} height="168px" />
+                    <Text mt={3}>{hardwareInstructions}</Text>
+                  </>
+                ))}
             </Flex>
             <Flex alignItems="center">
               <FieldSelect
