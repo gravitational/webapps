@@ -109,87 +109,6 @@ describe('mfa device dashboard testing', () => {
     );
   });
 
-  test('re-authenticating with totp and adding a totp device', async () => {
-    await wait(() => renderManageDevices());
-
-    fireEvent.click(screen.getByText(/add two-factor device/i));
-
-    expect(screen.getByText('Verify your identity')).toBeInTheDocument();
-
-    const reAuthMfaSelectEl = screen
-      .getByTestId('mfa-select')
-      .querySelector('input');
-    fireEvent.keyDown(reAuthMfaSelectEl, { key: 'ArrowDown', keyCode: 40 });
-    fireEvent.click(screen.getAllByText(/authenticator app/i)[1]);
-
-    const reAuthtokenField = screen.getByPlaceholderText('123 456');
-    fireEvent.change(reAuthtokenField, { target: { value: '321321' } });
-
-    await wait(() => {
-      fireEvent.click(screen.getByText('Continue'));
-    });
-
-    expect(AuthService.createPrivilegeTokenWithTotp).toHaveBeenCalledWith(
-      '321321'
-    );
-
-    expect(screen.getByText('Add New Two-Factor Device')).toBeInTheDocument();
-
-    const addDeviceMfaSelectEl = screen
-      .getByTestId('mfa-select')
-      .querySelector('input');
-    fireEvent.keyDown(addDeviceMfaSelectEl, { key: 'ArrowDown', keyCode: 40 });
-    fireEvent.click(screen.getAllByText(/authenticator app/i)[1]);
-
-    const addDeviceTokenField = screen.getByPlaceholderText('123 456');
-    fireEvent.change(addDeviceTokenField, { target: { value: '321321' } });
-
-    const deviceNameField = screen.getByPlaceholderText('Name');
-    fireEvent.change(deviceNameField, { target: { value: 'iphone 12' } });
-
-    await wait(() => {
-      fireEvent.click(screen.getByText('Add device'));
-    });
-
-    expect(ctx.mfaService.addNewTotpDevice).toHaveBeenCalledWith(
-      expect.objectContaining({
-        tokenId: privilegeToken,
-        deviceName: 'iphone 12',
-        secondFactorToken: '321321',
-      })
-    );
-  });
-
-  test('re-authenticating with u2f and adding a u2f device', async () => {
-    await wait(() => renderManageDevices());
-
-    fireEvent.click(screen.getByText(/add two-factor device/i));
-
-    expect(screen.getByText('Verify your identity')).toBeInTheDocument();
-
-    await wait(() => {
-      fireEvent.click(screen.getByText('Continue'));
-    });
-
-    expect(AuthService.createPrivilegeTokenWithU2f).toHaveBeenCalled();
-
-    expect(screen.getByText('Add New Two-Factor Device')).toBeInTheDocument();
-
-    const deviceNameField = screen.getByPlaceholderText('Name');
-    fireEvent.change(deviceNameField, { target: { value: 'yubikey' } });
-
-    await wait(() => {
-      fireEvent.click(screen.getByText('Add device'));
-    });
-
-    expect(ctx.mfaService.addNewU2fDevice).toHaveBeenCalledWith(
-      expect.objectContaining({
-        tokenId: privilegeToken,
-        deviceName: 'yubikey',
-      })
-    );
-  });
-
   test('re-authenticating with u2f and adding a totp device', async () => {
     await wait(() => renderManageDevices());
 
@@ -230,7 +149,7 @@ describe('mfa device dashboard testing', () => {
     );
   });
 
-  test('adding a first device: u2f', async () => {
+  test('adding a first device', async () => {
     jest.spyOn(ctx.mfaService, 'fetchDevices').mockResolvedValue([]);
 
     await wait(() => renderManageDevices());
@@ -254,44 +173,6 @@ describe('mfa device dashboard testing', () => {
       expect.objectContaining({
         tokenId: restrictedPrivilegeToken,
         deviceName: 'yubikey',
-      })
-    );
-  });
-
-  test('adding a first device: totp', async () => {
-    jest.spyOn(ctx.mfaService, 'fetchDevices').mockResolvedValue([]);
-
-    await wait(() => renderManageDevices());
-
-    await wait(() =>
-      fireEvent.click(screen.getByText(/add two-factor device/i))
-    );
-
-    expect(AuthService.createRestrictedPrivilegeToken).toHaveBeenCalled();
-
-    expect(screen.getByText('Add New Two-Factor Device')).toBeInTheDocument();
-
-    const addDeviceMfaSelectEl = screen
-      .getByTestId('mfa-select')
-      .querySelector('input');
-    fireEvent.keyDown(addDeviceMfaSelectEl, { key: 'ArrowDown', keyCode: 40 });
-    fireEvent.click(screen.getByText(/authenticator app/i));
-
-    const addDeviceTokenField = screen.getByPlaceholderText('123 456');
-    fireEvent.change(addDeviceTokenField, { target: { value: '321321' } });
-
-    const deviceNameField = screen.getByPlaceholderText('Name');
-    fireEvent.change(deviceNameField, { target: { value: 'iphone 12' } });
-
-    await wait(() => {
-      fireEvent.click(screen.getByText('Add device'));
-    });
-
-    expect(ctx.mfaService.addNewTotpDevice).toHaveBeenCalledWith(
-      expect.objectContaining({
-        tokenId: restrictedPrivilegeToken,
-        deviceName: 'iphone 12',
-        secondFactorToken: '321321',
       })
     );
   });
