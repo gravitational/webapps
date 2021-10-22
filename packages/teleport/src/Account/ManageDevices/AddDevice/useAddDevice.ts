@@ -40,6 +40,20 @@ export default function useAddDevice(
       .catch(addDeviceAttempt.handleError);
   }
 
+  function addWebauthnDevice(deviceName: string) {
+    addDeviceAttempt.setAttempt({ status: 'processing' });
+    ctx.mfaService
+      .addNewWebauthnDevice({
+        tokenId: token,
+        deviceName,
+      })
+      .then(() => {
+        close();
+        fetchDevices();
+      })
+      .catch(addDeviceAttempt.handleError);
+  }
+
   function clearAttempt() {
     addDeviceAttempt.setAttempt({ status: '' });
   }
@@ -47,7 +61,7 @@ export default function useAddDevice(
   useEffect(() => {
     fetchQrCodeAttempt.run(() =>
       ctx.mfaService
-        .createRegisterChallenge(token, 'totp')
+        .createMfaRegistrationChallenge(token, 'totp')
         .then(res => setQrCode(res.qrCode))
     );
   }, []);
@@ -57,10 +71,12 @@ export default function useAddDevice(
     fetchQrCodeAttempt: fetchQrCodeAttempt.attempt,
     addTotpDevice,
     addU2fDevice,
+    addWebauthnDevice,
     close,
     clearAttempt,
     qrCode,
     auth2faType: cfg.getAuth2faType(),
+    preferredMfaType: cfg.getPreferredMfaType(),
   };
 }
 

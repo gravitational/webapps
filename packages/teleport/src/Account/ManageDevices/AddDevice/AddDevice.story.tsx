@@ -6,7 +6,11 @@ export default {
   title: 'Teleport/Account/Manage Devices/Add Device Dialog',
 };
 
-export const Loaded = () => <AddDevice {...props} />;
+export const LoadedWebAuthn = () => (
+  <AddDevice {...props} preferredMfaType="u2f" />
+);
+
+export const LoadedU2f = () => <AddDevice {...props} preferredMfaType="u2f" />;
 
 export const Failed = () => (
   <AddDevice
@@ -39,9 +43,11 @@ const props: State = {
   fetchQrCodeAttempt: { status: 'success' },
   addTotpDevice: () => null,
   addU2fDevice: () => null,
+  addWebauthnDevice: () => null,
   clearAttempt: () => null,
   close: () => null,
   auth2faType: 'on',
+  preferredMfaType: 'webauthn',
   qrCode:
     'iVBORw0KGgoAAAANSUhEUgAAAcgAAAHIEAAAAAC/Wvl1AAAJV0lEQVR4nOzdsW4jORZA0fbC///LXowV' +
     'TFIWmqAefUtzTrDJeEtltS+YPDx+fn39ASL+99svAPzr85//+fj47df4ycr5ff1bXD9h/2f3vcenTf0L' +

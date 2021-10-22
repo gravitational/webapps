@@ -22,6 +22,14 @@ export default function useReAuthenticate({ setToken, close }: Props) {
       .catch(handleError);
   }
 
+  function submitWithWebauthn() {
+    setAttempt({ status: 'processing' });
+    auth
+      .createPrivilegeTokenWithWebauthn()
+      .then(setToken)
+      .catch(handleError);
+  }
+
   function clearAttempt() {
     setAttempt({ status: '' });
   }
@@ -31,7 +39,9 @@ export default function useReAuthenticate({ setToken, close }: Props) {
     clearAttempt,
     submitWithTotp,
     submitWithU2f,
+    submitWithWebauthn,
     auth2faType: cfg.getAuth2faType(),
+    preferredMfaType: cfg.getPreferredMfaType(),
     close,
   };
 }

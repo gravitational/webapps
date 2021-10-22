@@ -39,16 +39,18 @@ export function AddDevice({
   fetchQrCodeAttempt,
   addTotpDevice,
   addU2fDevice,
+  addWebauthnDevice,
   clearAttempt,
   close,
   qrCode,
   auth2faType,
+  preferredMfaType,
 }: State) {
   const [otpToken, setOtpToken] = useState('');
   const [deviceName, setDeviceName] = useState('');
 
   const mfaOptions = useMemo<MfaOption[]>(
-    () => getMfaOptions(auth2faType, 'u2f', true),
+    () => getMfaOptions(auth2faType, preferredMfaType, true),
     []
   );
 
@@ -70,17 +72,23 @@ export function AddDevice({
       return;
     }
 
+    if (mfaOption.value === 'u2f') {
+      addU2fDevice(deviceName);
+    }
+    if (mfaOption.value === 'webauthn') {
+      addWebauthnDevice(deviceName);
+    }
     if (mfaOption.value === 'otp') {
       addTotpDevice(otpToken, deviceName);
-    } else if (mfaOption.value === 'u2f') {
-      addU2fDevice(deviceName);
     }
   }
 
-  let u2fInstructions = 'Enter a name for this hardware key.';
+  let hardwareInstructions = 'Enter a name for your hardware key.';
   if (addDeviceAttempt.status === 'processing') {
-    u2fInstructions =
-      'Insert your new hardware key and press the button on the key.';
+    hardwareInstructions =
+      mfaOption.value === 'u2f'
+        ? 'Insert your new hardware key and press the button on the key.'
+        : 'Follow the prompts from your browser.';
   }
 
   return (
@@ -151,10 +159,11 @@ export function AddDevice({
                   </Text>
                 </>
               )}
-              {mfaOption.value === 'u2f' && (
+              {(mfaOption.value === 'u2f' ||
+                mfaOption.value === 'webauthn') && (
                 <>
                   <Image src={u2fGraphic} height="168px" />
-                  <Text mt={3}>{u2fInstructions}</Text>
+                  <Text mt={3}>{hardwareInstructions}</Text>
                 </>
               )}
             </Flex>
