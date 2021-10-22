@@ -8,6 +8,12 @@ export default {
 
 export const Loaded = () => <ManageDevices {...props} />;
 
+export const Loaded2faOff = () => (
+  <ManageDevices {...props} auth2faType="off" />
+);
+
+Loaded2faOff.storyName = 'Loaded 2FA Off';
+
 export const Processing = () => (
   <ManageDevices
     {...props}
@@ -24,6 +30,25 @@ export const Failed = () => (
       status: 'failed',
       statusText: 'failed to fetch devices',
     }}
+  />
+);
+
+export const RemoveDialog = () => (
+  <ManageDevices
+    {...props}
+    isDialogVisible={true}
+    token="123"
+    deviceToRemove={{ id: '1', name: 'iphone 12' }}
+  />
+);
+
+export const RemoveDialogFailed = () => (
+  <ManageDevices
+    {...props}
+    isDialogVisible={true}
+    token="123"
+    deviceToRemove={{ id: '1', name: 'iphone 12' }}
+    removeDevice={() => Promise.reject(new Error('server error'))}
   />
 );
 
@@ -59,6 +84,7 @@ const props: State = {
   isDialogVisible: false,
   showDialog: () => null,
   hideDialog: () => null,
+  auth2faType: 'on',
   devices: [
     {
       id: '1',

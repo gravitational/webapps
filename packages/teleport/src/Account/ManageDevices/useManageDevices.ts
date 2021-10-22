@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import useAttempt from 'shared/hooks/useAttemptNext';
 import Ctx from 'teleport/teleportContext';
+import cfg from 'teleport/config';
 import auth from 'teleport/services/auth';
 import { MfaDevice } from 'teleport/services/mfa';
 
@@ -67,6 +68,7 @@ export default function useManageDevices(ctx: Ctx) {
     isDialogVisible,
     showDialog,
     hideDialog,
+    auth2faType: cfg.getAuth2faType(),
   };
 }
 

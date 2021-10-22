@@ -36,10 +36,6 @@ export function getMfaOptions(
   const preferMfaWebauthn = mfaEnabled && preferredMfa === 'webauthn';
   const preferMfaU2f = mfaEnabled && preferredMfa === 'u2f';
 
-  if (!requireMfa && mfa === 'optional') {
-    mfaOptions.push({ value: 'optional', label: 'None' });
-  }
-
   if (mfa === 'webauthn' || preferMfaWebauthn) {
     mfaOptions.push({ value: 'webauthn', label: 'Hardware Key' });
   }
@@ -52,7 +48,7 @@ export function getMfaOptions(
     mfaOptions.push({ value: 'otp', label: 'Authenticator App' });
   }
 
-  if (mfa === 'optional') {
+  if (!requireMfa && mfa === 'optional') {
     mfaOptions.push({ value: 'optional', label: 'None' });
   }
 

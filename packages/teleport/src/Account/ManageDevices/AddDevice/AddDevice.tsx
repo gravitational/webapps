@@ -43,13 +43,12 @@ export function AddDevice({
   close,
   qrCode,
   auth2faType,
-  preferredMfaType,
 }: State) {
   const [otpToken, setOtpToken] = useState('');
   const [deviceName, setDeviceName] = useState('');
 
   const mfaOptions = useMemo<MfaOption[]>(
-    () => getMfaOptions(auth2faType, preferredMfaType, true),
+    () => getMfaOptions(auth2faType, 'u2f', true),
     []
   );
 
