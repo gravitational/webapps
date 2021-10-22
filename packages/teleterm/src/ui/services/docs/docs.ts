@@ -46,7 +46,7 @@ export default class DocumentService extends Store<State> {
     const clusterMatch = uris.match(uri, uris.routes.cluster);
     const homeMatch = uris.match(uri, uris.routes.home);
     const srvMatch = uris.match(uri, uris.routes.clusterServers);
-    const gwMatch = uris.match(uri, uris.routes.clusterGateway);
+    const gwMatch = uris.match(uri, uris.routes.clusterGateways);
     const dbsMatch = uris.match(uri, {
       path: uris.routes.clusterDbs,
       exact: true,
@@ -87,7 +87,7 @@ export default class DocumentService extends Store<State> {
       this.add({
         uri,
         clusterUri,
-        title: 'New Gateway',
+        title: 'Gateway',
         kind: 'gateway',
         created,
       });

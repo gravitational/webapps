@@ -24,7 +24,7 @@ export default function useExpanderClusters() {
   const ctx = useAppContext();
   const { clusters } = ctx.serviceClusters.useState();
 
-  const clusterItems = React.useMemo<ClusterNavItem[]>(() => {
+  const clusterItems = React.useMemo(() => {
     return initClusterItems(ctx);
   }, [clusters]);
 

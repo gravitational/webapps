@@ -115,6 +115,14 @@ export default class TshService extends Store<State> {
     return gateway;
   }
 
+  async removeGateway(gatewayUri: string) {
+    await this.client.removeGateway(gatewayUri);
+    this.state.gateways.delete(gatewayUri);
+    this.setState({
+      gateways: new Map(this.state.gateways),
+    });
+  }
+
   findCluster(clusterUri: string) {
     return this.state.clusters.get(clusterUri);
   }
@@ -125,6 +133,10 @@ export default class TshService extends Store<State> {
     );
   }
 
+  findGateway(gatewayUri: string) {
+    return this.state.gateways.get(gatewayUri);
+  }
+
   findDb(dbUri: string) {
     return this.state.dbs.get(dbUri);
   }
@@ -133,6 +145,10 @@ export default class TshService extends Store<State> {
     return [...this.state.servers.values()].filter(s =>
       s.uri.startsWith(clusterUri)
     );
+  }
+
+  getGateways() {
+    return [...this.state.gateways.values()];
   }
 
   useState() {

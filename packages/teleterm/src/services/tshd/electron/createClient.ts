@@ -44,8 +44,7 @@ export default function createClient(addr: string) {
   };
 
   const listDatabases = async (clusterUri: string) => {
-    const req = new api.ListDatabasesRequest();
-    req.setClusterUri(clusterUri);
+    const req = new api.ListDatabasesRequest().setClusterUri(clusterUri);
     return new Promise<types.Database[]>((resolve, reject) => {
       tsh.listDatabases(req, (err, response) => {
         if (err) {
@@ -58,8 +57,7 @@ export default function createClient(addr: string) {
   };
 
   const listServers = async (clusterUri: string) => {
-    const req = new api.ListServersRequest();
-    req.setClusterUri(clusterUri);
+    const req = new api.ListServersRequest().setClusterUri(clusterUri);
     return new Promise<types.Server[]>((resolve, reject) => {
       tsh.listServers(req, (err, response) => {
         if (err) {
@@ -72,8 +70,7 @@ export default function createClient(addr: string) {
   };
 
   const createCluster = async (addr: string) => {
-    const req = new api.CreateClusterRequest();
-    req.setName(addr);
+    const req = new api.CreateClusterRequest().setName(addr);
     return new Promise<types.Cluster>((resolve, reject) => {
       tsh.createCluster(req, (err, response) => {
         if (err) {
@@ -86,8 +83,7 @@ export default function createClient(addr: string) {
   };
 
   const getCluster = async (uri: string) => {
-    const req = new api.GetClusterRequest();
-    req.setClusterUri(uri);
+    const req = new api.GetClusterRequest().setClusterUri(uri);
     return new Promise<types.Cluster>((resolve, reject) => {
       tsh.getCluster(req, (err, response) => {
         if (err) {
@@ -105,10 +101,10 @@ export default function createClient(addr: string) {
     password = '',
     otp = ''
   ) => {
-    const req = new api.CreateAuthChallengeRequest();
-    req.setClusterUri(clusterUri);
-    req.setUser(user);
-    req.setPassword(password);
+    const req = new api.CreateAuthChallengeRequest()
+      .setClusterUri(clusterUri)
+      .setUser(user)
+      .setPassword(password);
     return new Promise<void>((resolve, reject) => {
       tsh.createAuthChallenge(req, err => {
         if (err) {
@@ -132,8 +128,7 @@ export default function createClient(addr: string) {
   };
 
   const ssoLogin = async (clusterUri = '', pType = '', pName = '') => {
-    const req = new api.CreateAuthSSOChallengeRequest();
-    req
+    const req = new api.CreateAuthSSOChallengeRequest()
       .setClusterUri(clusterUri)
       .setProviderName(pName)
       .setProviderType(pType);
@@ -149,9 +144,7 @@ export default function createClient(addr: string) {
   };
 
   const getAuthSettings = async (clusterUri = '') => {
-    const req = new api.GetAuthSettingsRequest();
-    req.setClusterUri(clusterUri);
-
+    const req = new api.GetAuthSettingsRequest().setClusterUri(clusterUri);
     return new Promise<types.AuthSettings>((resolve, reject) => {
       tsh.getAuthSettings(req, (err, response) => {
         if (err) {
@@ -164,14 +157,28 @@ export default function createClient(addr: string) {
   };
 
   const createGateway = async (targetUri = '', port = '') => {
-    const req = new api.CreateGatewayRequest();
-    req.setTargetUri(targetUri).setPort(port);
+    const req = new api.CreateGatewayRequest()
+      .setTargetUri(targetUri)
+      .setPort(port);
     return new Promise<types.Gateway>((resolve, reject) => {
       tsh.createGateway(req, (err, response) => {
         if (err) {
           reject(err);
         } else {
           resolve(response.toObject());
+        }
+      });
+    });
+  };
+
+  const removeGateway = async (gatewayUri = '') => {
+    const req = new api.DeleteGatewayRequest().setGatewayUri(gatewayUri);
+    return new Promise<void>((resolve, reject) => {
+      tsh.deleteGateway(req, (err, response) => {
+        if (err) {
+          reject(err);
+        } else {
+          resolve();
         }
       });
     });
@@ -188,5 +195,6 @@ export default function createClient(addr: string) {
     localLogin,
     ssoLogin,
     createGateway,
+    removeGateway,
   };
 }

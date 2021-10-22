@@ -22,6 +22,7 @@ export type ApiClient = {
   getCluster: (clusterUri: string) => Promise<Cluster>;
   getAuthSettings: (clusterUri: string) => Promise<AuthSettings>;
   ssoLogin: (clusterUri: string, pType: string, pName: string) => Promise<void>;
+  removeGateway: (gatewayUri: string) => Promise<void>;
   localLogin: (
     clusterUri: string,
     user: string,

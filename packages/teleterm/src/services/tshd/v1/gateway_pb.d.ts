@@ -28,6 +28,15 @@ export class Gateway extends jspb.Message {
     getClusterId(): string;
     setClusterId(value: string): Gateway;
 
+    getCaCertPath(): string;
+    setCaCertPath(value: string): Gateway;
+
+    getDbCertPath(): string;
+    setDbCertPath(value: string): Gateway;
+
+    getKeyPath(): string;
+    setKeyPath(value: string): Gateway;
+
     getStatus(): Gateway.GatewayStatus;
     setStatus(value: Gateway.GatewayStatus): Gateway;
 
@@ -51,6 +60,9 @@ export namespace Gateway {
         protocol: string,
         hostId: string,
         clusterId: string,
+        caCertPath: string,
+        dbCertPath: string,
+        keyPath: string,
         status: Gateway.GatewayStatus,
     }
 

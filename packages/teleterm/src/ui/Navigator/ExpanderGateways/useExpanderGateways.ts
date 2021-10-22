@@ -22,22 +22,25 @@ import * as types from 'teleterm/ui/types';
 export default function useExpanderGateways() {
   const ctx = useAppContext();
   const gatewayItems = initGatewayItems(ctx);
+
+  ctx.serviceClusters.useState();
+
   return {
+    serviceClusters: ctx.serviceClusters,
     gatewayItems,
   };
 }
 
 function initGatewayItems(ctx: AppContext): types.NavItem[] {
-  return [
-    {
-      title: 'platform.teleport.sh/dbs/mongo-prod',
-      Icon: Icons.Clusters,
-      uri: ctx.uris.routes.gateways,
-      kind: 'gateways',
-      items: [],
-      group: false,
-    },
-  ];
+  const gateways = ctx.serviceClusters.getGateways();
+  return gateways.map(g => ({
+    title: g.resourceName,
+    Icon: Icons.Keypair,
+    uri: g.uri,
+    kind: 'gateways',
+    items: [],
+    group: false,
+  }));
 }
 
 export type State = ReturnType<typeof useExpanderGateways>;
