@@ -39,16 +39,18 @@ export function AddDevice({
   fetchQrCodeAttempt,
   addTotpDevice,
   addU2fDevice,
+  addWebauthnDevice,
   clearAttempt,
   close,
   qrCode,
   auth2faType,
+  preferredMfaType,
 }: State) {
   const [otpToken, setOtpToken] = useState('');
   const [deviceName, setDeviceName] = useState('');
 
   const mfaOptions = useMemo<MfaOption[]>(
-    () => getMfaOptions(auth2faType, 'u2f', true),
+    () => getMfaOptions(auth2faType, preferredMfaType, true),
     []
   );
 
@@ -70,10 +72,14 @@ export function AddDevice({
       return;
     }
 
+    if (mfaOption.value === 'u2f') {
+      addU2fDevice(deviceName);
+    }
+    if (mfaOption.value === 'webauthn') {
+      addWebauthnDevice(deviceName);
+    }
     if (mfaOption.value === 'otp') {
       addTotpDevice(otpToken, deviceName);
-    } else if (mfaOption.value === 'u2f') {
-      addU2fDevice(deviceName);
     }
   }
 
@@ -156,6 +162,12 @@ export function AddDevice({
                   <Image src={u2fGraphic} height="168px" />
                   <Text mt={3}>{u2fInstructions}</Text>
                 </>
+              )}
+              {mfaOption.value === 'webauthn' && (
+                <Text mt={3}>
+                  Enter a name for this device, then click 'Add Device' and
+                  follow your browser's prompts
+                </Text>
               )}
             </Flex>
             <Flex alignItems="center">

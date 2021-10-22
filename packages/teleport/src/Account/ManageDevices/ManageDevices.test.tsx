@@ -33,12 +33,18 @@ describe('mfa device dashboard testing', () => {
     ]);
 
     jest
-      .spyOn(ctx.mfaService, 'createRegisterChallenge')
-      .mockResolvedValue({ qrCode: '123456', u2f: null });
+      .spyOn(ctx.mfaService, 'createMfaRegistrationChallenge')
+      .mockResolvedValue({
+        qrCode: '123456',
+        u2fRegisterRequest: null,
+        webauthnPublicKey: null,
+      });
 
     jest.spyOn(ctx.mfaService, 'addNewU2fDevice').mockResolvedValue({});
 
     jest.spyOn(ctx.mfaService, 'addNewTotpDevice').mockResolvedValue({});
+
+    jest.spyOn(ctx.mfaService, 'addNewWebauthnDevice').mockResolvedValue({});
 
     jest.spyOn(ctx.mfaService, 'removeDevice').mockResolvedValue({});
 
@@ -51,12 +57,20 @@ describe('mfa device dashboard testing', () => {
 
     jest.spyOn(cfg, 'getAuth2faType').mockReturnValue('optional');
 
+    jest.spyOn(cfg, 'getPreferredMfaType').mockReturnValue('u2f');
+
+    jest.spyOn(AuthService, 'checkWebauthnSupport').mockResolvedValue();
+
     jest
       .spyOn(AuthService, 'createPrivilegeTokenWithTotp')
       .mockResolvedValue(privilegeToken);
 
     jest
       .spyOn(AuthService, 'createPrivilegeTokenWithU2f')
+      .mockResolvedValue(privilegeToken);
+
+    jest
+      .spyOn(AuthService, 'createPrivilegeTokenWithWebauthn')
       .mockResolvedValue(privilegeToken);
 
     jest
@@ -121,6 +135,47 @@ describe('mfa device dashboard testing', () => {
     });
 
     expect(AuthService.createPrivilegeTokenWithU2f).toHaveBeenCalled();
+
+    expect(screen.getByText('Add New Two-Factor Device')).toBeInTheDocument();
+
+    const addDeviceMfaSelectEl = screen
+      .getByTestId('mfa-select')
+      .querySelector('input');
+    fireEvent.keyDown(addDeviceMfaSelectEl, { key: 'ArrowDown', keyCode: 40 });
+    fireEvent.click(screen.getAllByText(/authenticator app/i)[1]);
+
+    const addDeviceTokenField = screen.getByPlaceholderText('123 456');
+    fireEvent.change(addDeviceTokenField, { target: { value: '321321' } });
+
+    const deviceNameField = screen.getByPlaceholderText('Name');
+    fireEvent.change(deviceNameField, { target: { value: 'iphone 12' } });
+
+    await wait(() => {
+      fireEvent.click(screen.getByText('Add device'));
+    });
+
+    expect(ctx.mfaService.addNewTotpDevice).toHaveBeenCalledWith(
+      expect.objectContaining({
+        tokenId: privilegeToken,
+        deviceName: 'iphone 12',
+        secondFactorToken: '321321',
+      })
+    );
+  });
+
+  test('re-authenticating with webauthn and adding a totp device', async () => {
+    jest.spyOn(cfg, 'getPreferredMfaType').mockReturnValue('webauthn');
+    await wait(() => renderManageDevices());
+
+    fireEvent.click(screen.getByText(/add two-factor device/i));
+
+    expect(screen.getByText('Verify your identity')).toBeInTheDocument();
+
+    await wait(() => {
+      fireEvent.click(screen.getByText('Continue'));
+    });
+
+    expect(AuthService.createPrivilegeTokenWithWebauthn).toHaveBeenCalled();
 
     expect(screen.getByText('Add New Two-Factor Device')).toBeInTheDocument();
 

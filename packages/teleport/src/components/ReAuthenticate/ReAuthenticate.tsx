@@ -24,21 +24,27 @@ export function ReAuthenticate({
   clearAttempt,
   submitWithU2f,
   submitWithTotp,
+  submitWithWebauthn,
   close,
   auth2faType,
+  preferredMfaType,
 }: State) {
   const [otpToken, setOtpToken] = useState('');
 
-  const mfaOptions = getMfaOptions(auth2faType, 'u2f', true);
+  const mfaOptions = getMfaOptions(auth2faType, preferredMfaType, true);
 
   const [mfaOption, setMfaOption] = useState<MfaOption>(mfaOptions[0]);
 
   function onSubmit(e: React.MouseEvent<HTMLButtonElement>) {
     e.preventDefault();
 
-    if (mfaOption.value === 'u2f') {
+    if (mfaOption?.value === 'u2f') {
       submitWithU2f();
-    } else if (mfaOption.value === 'otp') {
+    }
+    if (mfaOption?.value === 'webauthn') {
+      submitWithWebauthn();
+    }
+    if (mfaOption?.value === 'otp') {
       submitWithTotp(otpToken);
     }
   }

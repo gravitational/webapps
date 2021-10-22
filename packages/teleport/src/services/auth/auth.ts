@@ -253,6 +253,26 @@ const auth = {
     return api.post(cfg.api.createPrivilegeTokenPath, { secondFactorToken });
   },
 
+  createPrivilegeTokenWithWebauthn() {
+    return auth
+      .checkWebauthnSupport()
+      .then(() =>
+        api
+          .post(cfg.api.mfaAuthnChallengePath)
+          .then(makeMfaAuthenticateChallenge)
+      )
+      .then(res =>
+        navigator.credentials.get({
+          publicKey: res.webauthnPublicKey,
+        })
+      )
+      .then(res =>
+        api.post(cfg.api.createPrivilegeTokenPath, {
+          webauthnAssertionResponse: makeWebauthnAssertionResponse(res),
+        })
+      );
+  },
+
   createPrivilegeTokenWithU2f() {
     const err = auth.u2fBrowserSupported();
     if (err) {

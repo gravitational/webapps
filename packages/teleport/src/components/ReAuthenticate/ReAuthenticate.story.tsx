@@ -24,6 +24,8 @@ const props: State = {
   clearAttempt: () => null,
   submitWithTotp: () => null,
   submitWithU2f: () => null,
+  submitWithWebauthn: () => null,
+  preferredMfaType: 'webauthn',
   close: () => null,
   auth2faType: 'on',
 };

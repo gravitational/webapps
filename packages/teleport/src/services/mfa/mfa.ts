@@ -1,14 +1,17 @@
 import 'u2f-api-polyfill';
 import cfg from 'teleport/config';
 import api from 'teleport/services/api';
-import auth from 'teleport/services/auth';
-import { makeMfaDevice, makeMfaRegisterChallenge } from './make';
+import auth, {
+  makeMfaRegistrationChallenge,
+  makeWebauthnCreationResponse,
+} from 'teleport/services/auth';
 import {
   MfaDevice,
   AddNewTotpDeviceRequest,
   AddNewU2fDeviceRequest,
   DeviceType,
 } from './types';
+import makeMfaDevice from './makeMfaDevice';
 
 class MfaService {
   fetchDevicesWithToken(tokenId: string): Promise<MfaDevice[]> {
@@ -27,16 +30,35 @@ class MfaService {
       .then(devices => devices.map(makeMfaDevice));
   }
 
-  createRegisterChallenge(tokenId: string, deviceType: DeviceType) {
+  createMfaRegistrationChallenge(tokenId: string, deviceType: DeviceType) {
     return api
       .post(cfg.getMfaCreateRegistrationChallengeUrl(tokenId), {
         deviceType,
       })
-      .then(makeMfaRegisterChallenge);
+      .then(makeMfaRegistrationChallenge);
   }
 
   addNewTotpDevice(req: AddNewTotpDeviceRequest) {
     return api.post(cfg.api.mfaDevicesPath, req);
+  }
+
+  addNewWebauthnDevice(req: AddNewU2fDeviceRequest) {
+    return auth
+      .checkWebauthnSupport()
+      .then(() => auth.createMfaRegistrationChallenge(req.tokenId, 'webauthn'))
+      .then(res =>
+        navigator.credentials.create({
+          publicKey: res.webauthnPublicKey,
+        })
+      )
+      .then(res => {
+        const request = {
+          ...req,
+          webauthnRegisterResponse: makeWebauthnCreationResponse(res),
+        };
+
+        return api.post(cfg.api.mfaDevicesPath, request);
+      });
   }
 
   addNewU2fDevice(req: AddNewU2fDeviceRequest) {
