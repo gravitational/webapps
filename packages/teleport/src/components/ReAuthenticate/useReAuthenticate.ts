@@ -32,7 +32,6 @@ export default function useReAuthenticate({ setToken, close }: Props) {
     submitWithTotp,
     submitWithU2f,
     auth2faType: cfg.getAuth2faType(),
-    preferredMfaType: cfg.getPreferredMfaType(),
     close,
   };
 }

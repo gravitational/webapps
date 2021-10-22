@@ -231,6 +231,7 @@ exports[`render device dashboard 1`] = `
     <button
       class="c3"
       kind="primary"
+      title=""
     >
       Add two-factor device
     </button>
@@ -657,6 +658,7 @@ exports[`render failed state for creating restricted privilege token 1`] = `
     <button
       class="c4"
       kind="primary"
+      title=""
     >
       Add two-factor device
     </button>

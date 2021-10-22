@@ -16,9 +16,13 @@ export default function RemoveDialog(props: Props) {
   return (
     <Dialog disableEscapeKeyDown={false} onClose={onCancel} open={true}>
       <DialogContent width="400px">
-        <Text typography="h2">Remove Device</Text>
-        {attempt.status == 'failed' && <Danger>{attempt.statusText}</Danger>}
-        <Text typography="paragraph" mt="2" mb="6">
+        <Text typography="h2" mb={2}>
+          Remove Device
+        </Text>
+        {attempt.status == 'failed' && (
+          <Danger mb={2}>{attempt.statusText}</Danger>
+        )}
+        <Text typography="paragraph" mb="6">
           Are you sure you want to remove device{' '}
           <Text as="span" bold color="primary.contrastText">
             {name}

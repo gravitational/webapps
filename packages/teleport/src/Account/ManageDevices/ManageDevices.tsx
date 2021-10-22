@@ -27,6 +27,7 @@ export function ManageDevices({
   isDialogVisible,
   showDialog,
   hideDialog,
+  auth2faType,
 }: State) {
   const showReAuthenticate = !token;
   const showRemoveDevice = token && deviceToRemove;
@@ -61,7 +62,15 @@ export function ManageDevices({
               </Text>
               <ButtonPrimary
                 onClick={onAddDevice}
-                disabled={createRestrictedTokenAttempt.status === 'processing'}
+                disabled={
+                  createRestrictedTokenAttempt.status === 'processing' ||
+                  auth2faType === 'off'
+                }
+                title={
+                  auth2faType === 'off'
+                    ? 'Two-factor authentication is disabled'
+                    : ''
+                }
               >
                 Add two-factor device
               </ButtonPrimary>

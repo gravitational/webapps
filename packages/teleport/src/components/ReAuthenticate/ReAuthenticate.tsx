@@ -26,12 +26,11 @@ export function ReAuthenticate({
   submitWithTotp,
   close,
   auth2faType,
-  preferredMfaType,
 }: State) {
   const [otpToken, setOtpToken] = useState('');
 
   const mfaOptions = useMemo<MfaOption[]>(
-    () => getMfaOptions(auth2faType, preferredMfaType, true),
+    () => getMfaOptions(auth2faType, 'u2f', true),
     []
   );
 
@@ -89,7 +88,7 @@ export function ReAuthenticate({
               <Box width="50%">
                 {mfaOption.value === 'otp' && (
                   <FieldInput
-                    label="two-factor token"
+                    label="Authenticator code"
                     rule={requiredToken}
                     autoComplete="off"
                     value={otpToken}
