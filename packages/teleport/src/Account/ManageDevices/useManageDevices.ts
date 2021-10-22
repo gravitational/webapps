@@ -22,8 +22,6 @@ export default function useManageDevices(ctx: Ctx) {
   const showRemoveDevice = token && deviceToRemove && isDialogVisible;
   const showAddDevice = token && !deviceToRemove && isDialogVisible;
 
-  useEffect(() => fetchDevices(), []);
-
   function fetchDevices() {
     fetchDevicesAttempt.run(() =>
       ctx.mfaService.fetchDevices().then(setDevices)
@@ -59,6 +57,8 @@ export default function useManageDevices(ctx: Ctx) {
     setToken(null);
     setDeviceToRemove(null);
   }
+
+  useEffect(() => fetchDevices(), []);
 
   return {
     token,
