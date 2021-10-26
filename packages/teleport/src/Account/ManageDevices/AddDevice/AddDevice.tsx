@@ -98,6 +98,7 @@ export function AddDevice({
           dialogCss={() => ({
             width: '484px',
           })}
+          disableEscapeKeyDown={false}
           onClose={close}
           open={true}
         >

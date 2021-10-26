@@ -114,6 +114,7 @@ export function ReAuthenticate({
               disabled={attempt.status === 'processing'}
               mr={3}
               mt={3}
+              autoFocus
             >
               Continue
             </ButtonPrimary>
