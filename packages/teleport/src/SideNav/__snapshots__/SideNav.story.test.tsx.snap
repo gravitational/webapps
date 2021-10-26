@@ -291,6 +291,28 @@ exports[`rendering of SideNav 1`] = `
         />
         Kubernetes
       </a>
+      <a
+        class="c4"
+        href="/web/cluster/one/databases"
+      >
+        <span
+          class="c5 icon icon-database sc-AxjAm c6"
+          color="inherit"
+          font-size="16px"
+        />
+        Databases
+      </a>
+      <a
+        class="c4"
+        href="/web/cluster/one/desktops"
+      >
+        <span
+          class="c5 icon icon-desktop sc-AxjAm c6"
+          color="inherit"
+          font-size="16px"
+        />
+        Desktops (preview)
+      </a>
       <button
         class="c7 actives"
       >

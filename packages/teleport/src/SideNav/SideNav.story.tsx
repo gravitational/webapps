@@ -74,6 +74,20 @@ const defaultProps = {
       title: 'Kubernetes',
     },
     {
+      items: [],
+      route: '/web/cluster/one/databases',
+      Icon: Icons.Database,
+      exact: true,
+      title: 'Databases',
+    },
+    {
+      items: [],
+      route: '/web/cluster/one/desktops',
+      Icon: Icons.Desktop,
+      exact: true,
+      title: 'Desktops (preview)',
+    },
+    {
       title: 'Team',
       Icon: Icons.Users,
       items: [
