@@ -11,7 +11,6 @@ import {
   Table,
 } from 'design/DataTable';
 import { displayDate } from 'shared/services/loc';
-import cfg from 'teleport/config';
 import { MfaDevice } from 'teleport/services/mfa/types';
 
 export default function MfaDeviceList({

@@ -17,18 +17,19 @@ export function ManageDevices({
   token,
   setToken,
   onAddDevice,
+  onRemoveDevice,
   createRestrictedTokenAttempt,
   devices,
   fetchDevices,
   fetchDevicesAttempt,
-  setDeviceToRemove,
   removeDevice,
   deviceToRemove,
-  showDialog,
-  hideDialog,
-  showReAuthenticate,
-  showAddDevice,
-  showRemoveDevice,
+  isAddDeviceVisible,
+  isReAuthenticateVisible,
+  isRemoveDeviceVisible,
+  hideReAuthenticate,
+  hideAddDevice,
+  hideRemoveDevice,
   mfaDisabled,
 }: State) {
   return (
@@ -73,10 +74,7 @@ export function ManageDevices({
             </Flex>
             <MfaDeviceList
               devices={devices}
-              remove={device => {
-                setDeviceToRemove(device);
-                showDialog();
-              }}
+              remove={onRemoveDevice}
               mfaDisabled={mfaDisabled}
               style={{
                 borderTopRightRadius: '0px',
@@ -86,21 +84,21 @@ export function ManageDevices({
           </>
         )}
       </Box>
-      {showReAuthenticate && (
-        <ReAuthenticate setToken={setToken} close={hideDialog} />
+      {isReAuthenticateVisible && (
+        <ReAuthenticate setToken={setToken} close={hideReAuthenticate} />
       )}
-      {showAddDevice && (
+      {isAddDeviceVisible && (
         <AddDevice
           fetchDevices={fetchDevices}
           token={token}
-          close={hideDialog}
+          close={hideAddDevice}
         />
       )}
-      {showRemoveDevice && (
+      {isRemoveDeviceVisible && (
         <RemoveDialog
           name={deviceToRemove.name}
           onRemove={removeDevice}
-          onCancel={hideDialog}
+          onCancel={hideRemoveDevice}
         />
       )}
     </>

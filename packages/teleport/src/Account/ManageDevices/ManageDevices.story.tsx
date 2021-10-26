@@ -36,7 +36,7 @@ export const Failed = () => (
 export const RemoveDialog = () => (
   <ManageDevices
     {...props}
-    showRemoveDevice={true}
+    isRemoveDeviceVisible={true}
     token="123"
     deviceToRemove={{ id: '1', name: 'iphone 12' }}
   />
@@ -45,7 +45,7 @@ export const RemoveDialog = () => (
 export const RemoveDialogFailed = () => (
   <ManageDevices
     {...props}
-    showRemoveDevice={true}
+    isRemoveDeviceVisible={true}
     token="123"
     deviceToRemove={{ id: '1', name: 'iphone 12' }}
     removeDevice={() => Promise.reject(new Error('server error'))}
@@ -75,18 +75,19 @@ const props: State = {
   token: '',
   setToken: () => null,
   onAddDevice: () => null,
+  hideAddDevice: () => null,
   fetchDevices: () => null,
   fetchDevicesAttempt: { status: 'success' },
   createRestrictedTokenAttempt: { status: '' },
   deviceToRemove: null,
-  setDeviceToRemove: () => null,
+  onRemoveDevice: () => null,
   removeDevice: () => null,
   mfaDisabled: false,
-  showReAuthenticate: false,
-  showAddDevice: false,
-  showRemoveDevice: false,
-  showDialog: () => null,
-  hideDialog: () => null,
+  hideReAuthenticate: () => null,
+  hideRemoveDevice: () => null,
+  isReAuthenticateVisible: false,
+  isAddDeviceVisible: false,
+  isRemoveDeviceVisible: false,
   devices: [
     {
       id: '1',

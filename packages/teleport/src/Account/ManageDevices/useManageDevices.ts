@@ -18,9 +18,9 @@ export default function useManageDevices(ctx: Ctx) {
 
   const mfaDisabled = cfg.getAuth2faType() === 'off';
 
-  const showReAuthenticate = !token && isDialogVisible;
-  const showRemoveDevice = token && deviceToRemove && isDialogVisible;
-  const showAddDevice = token && !deviceToRemove && isDialogVisible;
+  const isReAuthenticateVisible = !token && isDialogVisible;
+  const isRemoveDeviceVisible = token && deviceToRemove && isDialogVisible;
+  const isAddDeviceVisible = token && !deviceToRemove && isDialogVisible;
 
   function fetchDevices() {
     fetchDevicesAttempt.run(() =>
@@ -28,54 +28,65 @@ export default function useManageDevices(ctx: Ctx) {
     );
   }
 
+  function removeDevice() {
+    return ctx.mfaService.removeDevice(token, deviceToRemove.name).then(() => {
+      fetchDevices();
+      hideRemoveDevice();
+    });
+  }
+
   function onAddDevice() {
     if (devices.length === 0) {
       createRestrictedTokenAttempt.run(() =>
         auth.createRestrictedPrivilegeToken().then(token => {
           setToken(token);
-          showDialog();
+          setIsDialogVisible(true);
         })
       );
     } else {
-      showDialog();
+      setIsDialogVisible(true);
     }
   }
 
-  function removeDevice() {
-    return ctx.mfaService.removeDevice(token, deviceToRemove.name).then(() => {
-      fetchDevices();
-      hideDialog();
-    });
+  function hideAddDevice() {
+    setIsDialogVisible(false);
+    setToken(null);
   }
 
-  function showDialog() {
+  function onRemoveDevice(device: DeviceToRemove) {
+    setDeviceToRemove(device);
     setIsDialogVisible(true);
   }
 
-  function hideDialog() {
+  function hideRemoveDevice() {
     setIsDialogVisible(false);
-    setToken(null);
     setDeviceToRemove(null);
+    setToken(null);
+  }
+
+  function hideReAuthenticate() {
+    setIsDialogVisible(false);
   }
 
   useEffect(() => fetchDevices(), []);
 
   return {
+    devices,
     token,
     setToken,
-    devices,
     onAddDevice,
+    onRemoveDevice,
+    deviceToRemove,
     fetchDevices,
+    removeDevice,
     fetchDevicesAttempt: fetchDevicesAttempt.attempt,
     createRestrictedTokenAttempt: createRestrictedTokenAttempt.attempt,
-    setDeviceToRemove,
-    removeDevice,
-    deviceToRemove,
-    showDialog,
-    hideDialog,
-    showReAuthenticate,
-    showAddDevice,
-    showRemoveDevice,
+    isReAuthenticateVisible,
+    isAddDeviceVisible,
+    isRemoveDeviceVisible,
+    hideReAuthenticate,
+    hideAddDevice,
+    hideRemoveDevice,
     mfaDisabled,
   };
 }
