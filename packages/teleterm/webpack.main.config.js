@@ -18,6 +18,7 @@ var cfg = {
   resolve: {
     ...baseCfg.resolve,
     alias: {
+      ...baseCfg.resolve.alias,
       teleterm: path.join(__dirname, './src'),
     },
   },
@@ -35,6 +36,16 @@ var cfg = {
     strictExportPresence: true,
     rules: [baseCfg.rules.jsx({ withHot: false })],
   },
+
+  externals: {
+    'node-pty': 'commonjs2 node-pty',
+  },
+
+  //  externals: {
+  //    'node-pty': {
+  //      commonjs: 'node-pty',
+  //    },
+  //  },
 
   plugins: [new CleanWebpackPlugin()],
 

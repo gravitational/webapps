@@ -1,7 +1,7 @@
-import { TerminalServiceClient } from '../v1/service_grpc_pb';
 import * as grpc from '@grpc/grpc-js';
-import * as api from './../v1/service_pb';
-import * as types from './../types';
+import { TerminalServiceClient } from 'teleterm/services/tshd/v1/service_grpc_pb';
+import * as api from 'teleterm/services/tshd/v1/service_pb';
+import * as types from 'teleterm/services/tshd/types';
 import middleware, { withLogging } from './middleware';
 
 export function createGrpcClient(addr?: string) {
@@ -9,14 +9,9 @@ export function createGrpcClient(addr?: string) {
   return new TerminalServiceClient(addr, grpc.credentials.createInsecure());
 }
 
-/**
- * TODO(alex-kovoy):
- *  1. add better error handling by reading grpc details field
- *  2. add logging
- */
-
 export default function createClient(addr: string) {
   const tsh = middleware(createGrpcClient(addr), [withLogging]);
+
   const listGateways = async () => {
     const req = new api.ListGatewaysRequest();
     return new Promise<types.Gateway[]>((resolve, reject) => {
@@ -95,12 +90,7 @@ export default function createClient(addr: string) {
     });
   };
 
-  const localLogin = async (
-    clusterUri = '',
-    user = '',
-    password = '',
-    otp = ''
-  ) => {
+  const localLogin = async (clusterUri = '', user = '', password = '') => {
     const req = new api.CreateAuthChallengeRequest()
       .setClusterUri(clusterUri)
       .setUser(user)
@@ -174,7 +164,7 @@ export default function createClient(addr: string) {
   const removeGateway = async (gatewayUri = '') => {
     const req = new api.DeleteGatewayRequest().setGatewayUri(gatewayUri);
     return new Promise<void>((resolve, reject) => {
-      tsh.deleteGateway(req, (err, response) => {
+      tsh.deleteGateway(req, err => {
         if (err) {
           reject(err);
         } else {
