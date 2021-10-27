@@ -20,15 +20,23 @@ import { useAppContext } from 'teleterm/ui/appContextProvider';
 import * as types from 'teleterm/ui/types';
 
 export default function useServers({ clusterUri }: types.DocumentServers) {
-  const { serviceClusters } = useAppContext();
+  const ctx = useAppContext();
   const [searchValue, setSearchValue] = useState('');
-  const servers = serviceClusters.findServers(clusterUri);
+  const servers = ctx.serviceClusters.findServers(clusterUri);
 
   const [loadAttempt, load] = useAsync(() => {
-    return serviceClusters.fetchServers(clusterUri);
+    return ctx.serviceClusters.fetchServers(clusterUri);
   });
 
-  serviceClusters.useState();
+  const logins = ['root'];
+
+  const onLogin = (serverUri: '') =>
+    ctx.serviceCommands.sendCommand({
+      kind: 'dialog.ssh-new-session.open',
+      serverUri,
+    });
+
+  ctx.serviceClusters.useState();
 
   useEffect(() => {
     if (servers.length === 0) {
@@ -39,6 +47,7 @@ export default function useServers({ clusterUri }: types.DocumentServers) {
   return {
     searchValue,
     setSearchValue,
+    onLogin,
     servers,
     loadAttempt,
   };

@@ -6,6 +6,7 @@ import AppContext from './ui/appContext';
 import ServiceClusters from './ui/services/clusters';
 import ServiceDocs from './ui/services/docs';
 import ServiceCommands from './ui/services/commands';
+import ServicePty from './ui/services/pty';
 
 const electronGlobals = window['electron'] as ElectronGlobals;
 const appContext = new AppContext();
@@ -13,6 +14,7 @@ const appContext = new AppContext();
 appContext.serviceClusters = new ServiceClusters(electronGlobals.tshClient);
 appContext.serviceCommands = new ServiceCommands();
 appContext.serviceDocs = new ServiceDocs();
+appContext.servicePty = new ServicePty(electronGlobals.ptyManager);
 
 appContext.serviceClusters.fetchClusters();
 appContext.serviceClusters.fetchGateways();

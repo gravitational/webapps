@@ -43,6 +43,15 @@ export interface CommandDialogClusterLoginClose {
   kind: 'dialog.cluster-login.close';
 }
 
+export interface CommandDialogNewSshSessionOpen {
+  kind: 'dialog.ssh-new-session.open';
+  serverUri: string;
+}
+
+export interface CommandDialogNewSshSessionClose {
+  kind: 'dialog.ssh-new-session.close';
+}
+
 export type Command =
   | CommandNoop
   | CommandDialogAddClusterOpen
@@ -50,7 +59,9 @@ export type Command =
   | CommandDialogClusterLoginOpen
   | CommandDialogClusterLoginClose
   | CommandDialogNewGatewayOpen
-  | CommandDialogNewGatewayClose;
+  | CommandDialogNewGatewayClose
+  | CommandDialogNewSshSessionOpen
+  | CommandDialogNewSshSessionClose;
 
 export default class CommandService extends Store<Command> {
   state: Command = {

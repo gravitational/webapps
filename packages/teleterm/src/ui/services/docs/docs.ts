@@ -47,6 +47,7 @@ export default class DocumentService extends Store<State> {
     const homeMatch = uris.match(uri, uris.routes.home);
     const srvMatch = uris.match(uri, uris.routes.clusterServers);
     const gwMatch = uris.match(uri, uris.routes.clusterGateways);
+    const ptyMatch = uris.match(uri, uris.routes.ptys);
     const dbsMatch = uris.match(uri, {
       path: uris.routes.clusterDbs,
       exact: true,
@@ -60,6 +61,13 @@ export default class DocumentService extends Store<State> {
 
     if (this.find(uri)) {
       // do nothing
+    } else if (ptyMatch) {
+      this.add({
+        uri,
+        title: 'dir/path',
+        kind: 'pty_session',
+        created,
+      });
     } else if (homeMatch) {
       this.add({
         uri,

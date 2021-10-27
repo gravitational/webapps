@@ -25,7 +25,8 @@ export type DocumentKind =
   | 'apps'
   | 'clusters'
   | 'dbs'
-  | 'gateway';
+  | 'gateway'
+  | 'pty_session';
 
 interface DocumentBase {
   uri: string;
@@ -50,6 +51,7 @@ export interface DocumentSsh extends DocumentBase {
   clusterId?: string;
   login: string;
 }
+
 export interface DocumentServers extends DocumentBase {
   kind: 'servers';
   clusterUri: string;
@@ -65,13 +67,18 @@ export interface DocumentGateway extends DocumentBase {
   clusterUri: string;
 }
 
+export interface DocumentPtySession extends DocumentBase {
+  kind: 'pty_session';
+}
+
 export type Document =
   | DocumentServers
   | DocumentSsh
   | DocumentHome
   | DocumentBlank
   | DocumentDatabases
-  | DocumentGateway;
+  | DocumentGateway
+  | DocumentPtySession;
 
 export interface UriParams {
   clusterId?: string;
@@ -79,6 +86,7 @@ export interface UriParams {
   dbId?: string;
   gatewayId?: string;
   tabId?: string;
+  sid?: string;
 }
 
 export interface NavItem {

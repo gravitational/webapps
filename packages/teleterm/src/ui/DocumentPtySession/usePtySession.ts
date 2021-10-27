@@ -1,5 +1,5 @@
 /*
-Copyright 2019 Gravitational, Inc.
+Copyright 2020 Gravitational, Inc.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -14,32 +14,23 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-export class Logger {
-  constructor(name = 'default') {
-    this.name = name;
-  }
+import React from 'react';
+import { useAppContext } from 'teleterm/ui/appContextProvider';
+import * as types from 'teleterm/ui/types';
 
-  log(level = 'log', ...args) {
-    console[level](`%c[${this.name}]`, `color: blue;`, ...args);
-  }
+export default function useSshSession(doc: types.DocumentPtySession) {
+  const ctx = useAppContext();
+  const ptyProcess = React.useMemo(() => ctx.servicePty.createPtyProcess(), []);
 
-  trace(...args) {
-    this.log('trace', ...args);
-  }
+  React.useEffect(() => {
+    const cleanup = () => {
+      ptyProcess.dispose();
+    };
 
-  warn(...args) {
-    this.log('warn', ...args);
-  }
+    return cleanup;
+  }, []);
 
-  info(...args) {
-    this.log('info', ...args);
-  }
-
-  error(...args) {
-    this.log('error', ...args);
-  }
+  return {
+    ptyProcess,
+  };
 }
-
-export default {
-  create: (...args) => new Logger(...args),
-};

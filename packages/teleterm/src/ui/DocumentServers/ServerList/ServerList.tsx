@@ -18,6 +18,7 @@ import React from 'react';
 import styled from 'styled-components';
 import { sortBy } from 'lodash';
 import isMatch from 'design/utils/match';
+import { Text, Flex, ButtonLink, ButtonPrimary, Box } from 'design';
 import {
   Column,
   SortHeaderCell,
@@ -31,13 +32,7 @@ import MenuSshLogin, { LoginItem } from 'shared/components/MenuSshLogin';
 import * as types from 'teleterm/services/tshd/types';
 
 function ServerList(props: Props) {
-  const {
-    servers = [],
-    searchValue,
-    onLoginMenuOpen,
-    onLoginSelect,
-    pageSize = 100,
-  } = props;
+  const { servers = [], searchValue, onLogin, pageSize = 100 } = props;
   const [sortDir, setSortDir] = React.useState<Record<string, string>>({
     hostname: SortTypes.DESC,
   });
@@ -91,10 +86,7 @@ function ServerList(props: Props) {
           cell={<AddressCell />}
         />
         <Column header={<Cell>Labels</Cell>} cell={<LabelCell />} />
-        <Column
-          header={<Cell />}
-          cell={<LoginCell onOpen={onLoginMenuOpen} onSelect={onLoginSelect} />}
-        />
+        <Column header={<Cell />} cell={<LoginCell onClick={onLogin} />} />
       </StyledTable>
     </div>
   );
@@ -117,46 +109,22 @@ function searchAndFilterCb(
 }
 
 const LoginCell: React.FC<Required<{
-  onSelect?: (e: React.SyntheticEvent, login: string, serverId: string) => void;
-  onOpen: (serverId: string) => LoginItem[];
+  onClick(serverUri: string): void;
   [key: string]: any;
 }>> = props => {
-  const { rowIndex, data, onOpen, onSelect } = props;
+  const { rowIndex, data, onClick } = props;
   const { uri } = data[rowIndex] as types.Server;
-  const serverId = uri;
-  function handleOnOpen() {
-    return onOpen(serverId);
-  }
-
-  function handleOnSelect(e: React.SyntheticEvent, login: string) {
-    if (!onSelect) {
-      return [];
-    }
-
-    return onSelect(e, login, serverId);
-  }
 
   return (
     <Cell align="right">
-      <MenuSshLogin
-        onOpen={handleOnOpen}
-        onSelect={handleOnSelect}
-        transformOrigin={{
-          vertical: 'top',
-          horizontal: 'right',
-        }}
-        anchorOrigin={{
-          vertical: 'center',
-          horizontal: 'right',
-        }}
-      />
+      <ButtonPrimary onClick={() => onClick(uri)}>Connect</ButtonPrimary>
     </Cell>
   );
 };
 
 function AddressCell(props) {
   const { rowIndex, data, ...rest } = props;
-  const { addr, tunnel } = data[rowIndex] as Node;
+  const { addr, tunnel } = data[rowIndex] as types.Server;
   return <Cell {...rest}>{tunnel ? renderTunnel() : addr}</Cell>;
 }
 
@@ -183,12 +151,7 @@ const StyledTable = styled(Table)`
 
 type Props = {
   servers: types.Server[];
-  onLoginMenuOpen: (serverId: string) => { login: string; url: string }[];
-  onLoginSelect: (
-    e: React.SyntheticEvent,
-    login: string,
-    serverId: string
-  ) => void;
+  onLogin(serverUri: string): void;
   pageSize?: number;
   searchValue: string;
 };

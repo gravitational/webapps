@@ -147,6 +147,10 @@ export default class TshService extends Store<State> {
     );
   }
 
+  findServer(serverUri: string) {
+    return this.state.servers.get(serverUri);
+  }
+
   getGateways() {
     return [...this.state.gateways.values()];
   }
