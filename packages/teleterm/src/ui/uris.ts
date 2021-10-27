@@ -22,6 +22,7 @@ const routes = {
   root: '/',
   home: '/home',
   gateways: '/gateways',
+  ptys: '/ptys/:sid',
   cluster: '/clusters/:clusterId',
   clusterServers: '/clusters/:clusterId/servers',
   clusterApps: '/clusters/:clusterId/apps',
@@ -55,6 +56,10 @@ const uris = {
 
   getUriApps(params: UriParams) {
     return generatePath(routes.clusterApps, params as any);
+  },
+
+  getUriPty(params: UriParams) {
+    return generatePath(routes.ptys, params as any);
   },
 };
 

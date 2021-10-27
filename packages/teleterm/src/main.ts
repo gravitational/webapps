@@ -1,13 +1,10 @@
 const path = require('path');
 const { app, BrowserWindow, ipcMain } = require('electron');
 
-app.commandLine.appendSwitch('ignore-certificate-errors', 'true');
+// node-pty is not yet context aware
+app.allowRendererProcessReuse = false;
 
-ipcMain.on('ipc-example', async (event, arg) => {
-  const msgTemplate = (pingPong: string) => `IPC test: ${pingPong}`;
-  console.log(msgTemplate(arg));
-  event.reply('ipc-example', msgTemplate('pong'));
-});
+app.commandLine.appendSwitch('ignore-certificate-errors', 'true');
 
 const isDevelopment =
   process.env.NODE_ENV === 'development' || process.env.DEBUG_PROD === 'true';

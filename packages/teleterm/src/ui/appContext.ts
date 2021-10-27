@@ -18,11 +18,13 @@ import uris from './uris';
 import ServiceClusters from 'teleterm/ui/services/clusters';
 import ServiceCommands from 'teleterm/ui/services/commands';
 import ServiceDocs from 'teleterm/ui/services/docs';
+import ServicePty from 'teleterm/ui/services/pty';
 
 export default class AppContext {
   serviceClusters: ServiceClusters;
   serviceCommands: ServiceCommands;
   serviceDocs: ServiceDocs;
+  servicePty: ServicePty;
 
   uris = uris;
 
