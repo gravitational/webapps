@@ -41,14 +41,12 @@ export function ReAuthenticate({
   submitWithU2f,
   submitWithTotp,
   submitWithWebauthn,
-  close,
+  onCancel,
   auth2faType,
   preferredMfaType,
 }: State) {
   const [otpToken, setOtpToken] = useState('');
-
   const mfaOptions = getMfaOptions(auth2faType, preferredMfaType, true);
-
   const [mfaOption, setMfaOption] = useState<MfaOption>(mfaOptions[0]);
 
   function onSubmit(e: React.MouseEvent<HTMLButtonElement>) {
@@ -73,7 +71,7 @@ export function ReAuthenticate({
             width: '400px',
           })}
           disableEscapeKeyDown={false}
-          onClose={close}
+          onClose={onCancel}
           open={true}
         >
           <DialogHeader style={{ flexDirection: 'column' }}>
@@ -134,7 +132,7 @@ export function ReAuthenticate({
             >
               Continue
             </ButtonPrimary>
-            <ButtonSecondary onClick={close}>Cancel</ButtonSecondary>
+            <ButtonSecondary onClick={onCancel}>Cancel</ButtonSecondary>
           </DialogFooter>
         </Dialog>
       )}

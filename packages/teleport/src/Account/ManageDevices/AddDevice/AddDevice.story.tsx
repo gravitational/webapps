@@ -22,9 +22,7 @@ export default {
   title: 'Teleport/Account/Manage Devices/Add Device Dialog',
 };
 
-export const LoadedWebAuthn = () => (
-  <AddDevice {...props} preferredMfaType="u2f" />
-);
+export const LoadedWebauthn = () => <AddDevice {...props} />;
 
 export const LoadedU2f = () => <AddDevice {...props} preferredMfaType="u2f" />;
 
@@ -61,7 +59,7 @@ const props: State = {
   addU2fDevice: () => null,
   addWebauthnDevice: () => null,
   clearAttempt: () => null,
-  close: () => null,
+  onCancel: () => null,
   auth2faType: 'on',
   preferredMfaType: 'webauthn',
   qrCode:

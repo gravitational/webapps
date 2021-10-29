@@ -101,13 +101,16 @@ export function ManageDevices({
         )}
       </Box>
       {isReAuthenticateVisible && (
-        <ReAuthenticate setToken={setToken} close={hideReAuthenticate} />
+        <ReAuthenticate
+          onAuthenticated={setToken}
+          onCancel={hideReAuthenticate}
+        />
       )}
       {isAddDeviceVisible && (
         <AddDevice
           fetchDevices={fetchDevices}
           token={token}
-          close={hideAddDevice}
+          onCancel={hideAddDevice}
         />
       )}
       {isRemoveDeviceVisible && (

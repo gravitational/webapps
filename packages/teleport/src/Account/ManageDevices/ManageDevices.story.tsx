@@ -24,11 +24,9 @@ export default {
 
 export const Loaded = () => <ManageDevices {...props} />;
 
-export const Loaded2faOff = () => (
+export const LoadedMfaaOff = () => (
   <ManageDevices {...props} mfaDisabled={true} />
 );
-
-Loaded2faOff.storyName = 'Loaded 2FA Off';
 
 export const Processing = () => (
   <ManageDevices

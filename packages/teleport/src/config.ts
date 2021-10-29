@@ -110,6 +110,7 @@ const cfg = {
 
     usersPath: '/v1/webapi/users',
     usersDelete: '/v1/webapi/users/:username',
+    createPrivilegeTokenPath: '/v1/webapi/users/privilege/token',
 
     rolesPath: '/v1/webapi/roles/:name?',
     githubConnectorsPath: '/v1/webapi/github/:name?',
@@ -125,7 +126,6 @@ const cfg = {
 
     mfaCreateRegistrationChallengePath:
       '/v1/webapi/mfa/token/:tokenId/registerchallenge',
-    createPrivilegeTokenPath: '/v1/webapi/users/privilege/token',
 
     mfaRegisterChallengeWithTokenPath:
       '/v1/webapi/mfa/token/:tokenId/registerchallenge',

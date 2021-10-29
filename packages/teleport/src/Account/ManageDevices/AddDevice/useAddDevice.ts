@@ -17,11 +17,12 @@ limitations under the License.
 import { useState, useEffect } from 'react';
 import useAttempt from 'shared/hooks/useAttemptNext';
 import Ctx from 'teleport/teleportContext';
+import authService from 'teleport/services/auth';
 import cfg from 'teleport/config';
 
 export default function useAddDevice(
   ctx: Ctx,
-  { token, fetchDevices, close }: Props
+  { token, fetchDevices, onCancel }: Props
 ) {
   const [qrCode, setQrCode] = useState('');
   const addDeviceAttempt = useAttempt('');
@@ -36,7 +37,7 @@ export default function useAddDevice(
         deviceName,
       })
       .then(() => {
-        close();
+        onCancel();
         fetchDevices();
       })
       .catch(addDeviceAttempt.handleError);
@@ -50,7 +51,7 @@ export default function useAddDevice(
         deviceName,
       })
       .then(() => {
-        close();
+        onCancel();
         fetchDevices();
       })
       .catch(addDeviceAttempt.handleError);
@@ -64,7 +65,7 @@ export default function useAddDevice(
         deviceName,
       })
       .then(() => {
-        close();
+        onCancel();
         fetchDevices();
       })
       .catch(addDeviceAttempt.handleError);
@@ -76,7 +77,7 @@ export default function useAddDevice(
 
   useEffect(() => {
     fetchQrCodeAttempt.run(() =>
-      ctx.mfaService
+      authService
         .createMfaRegistrationChallenge(token, 'totp')
         .then(res => setQrCode(res.qrCode))
     );
@@ -88,7 +89,7 @@ export default function useAddDevice(
     addTotpDevice,
     addU2fDevice,
     addWebauthnDevice,
-    close,
+    onCancel,
     clearAttempt,
     qrCode,
     auth2faType: cfg.getAuth2faType(),
@@ -101,5 +102,5 @@ export type State = ReturnType<typeof useAddDevice>;
 export type Props = {
   token: string;
   fetchDevices: () => void;
-  close: () => void;
+  onCancel: () => void;
 };

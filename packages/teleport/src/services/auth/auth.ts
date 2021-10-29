@@ -279,13 +279,14 @@ const auth = {
       return Promise.reject(err);
     }
 
-    return new Promise((resolve, reject) => {
-      api.post(cfg.api.mfaAuthnChallengePath).then(data => {
+    return api.post(cfg.api.mfaAuthnChallengePath).then(data => {
+      return new Promise((resolve, reject) => {
         let devices = [data];
 
         if (data.u2f_challenges) {
           devices = data.u2f_challenges;
         }
+
         window['u2f'].sign(data.appId, data.challenge, devices, res => {
           if (res.errorCode) {
             const err = auth._getU2fErr(res.errorCode);

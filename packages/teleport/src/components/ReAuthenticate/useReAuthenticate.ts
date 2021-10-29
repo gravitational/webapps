@@ -19,14 +19,17 @@ import cfg from 'teleport/config';
 import auth from 'teleport/services/auth';
 import useAttempt from 'shared/hooks/useAttemptNext';
 
-export default function useReAuthenticate({ setToken, close }: Props) {
+export default function useReAuthenticate({
+  onAuthenticated,
+  onCancel,
+}: Props) {
   const { attempt, setAttempt, handleError } = useAttempt('');
 
   function submitWithTotp(secondFactorToken: string) {
     setAttempt({ status: 'processing' });
     auth
       .createPrivilegeTokenWithTotp(secondFactorToken)
-      .then(setToken)
+      .then(onAuthenticated)
       .catch(handleError);
   }
 
@@ -34,7 +37,7 @@ export default function useReAuthenticate({ setToken, close }: Props) {
     setAttempt({ status: 'processing' });
     auth
       .createPrivilegeTokenWithU2f()
-      .then(setToken)
+      .then(onAuthenticated)
       .catch(handleError);
   }
 
@@ -42,7 +45,7 @@ export default function useReAuthenticate({ setToken, close }: Props) {
     setAttempt({ status: 'processing' });
     auth
       .createPrivilegeTokenWithWebauthn()
-      .then(setToken)
+      .then(onAuthenticated)
       .catch(handleError);
   }
 
@@ -58,13 +61,13 @@ export default function useReAuthenticate({ setToken, close }: Props) {
     submitWithWebauthn,
     auth2faType: cfg.getAuth2faType(),
     preferredMfaType: cfg.getPreferredMfaType(),
-    close,
+    onCancel,
   };
 }
 
 export type Props = {
-  setToken: React.Dispatch<React.SetStateAction<string>>;
-  close: () => void;
+  onAuthenticated: React.Dispatch<React.SetStateAction<string>>;
+  onCancel: () => void;
 };
 
 export type State = ReturnType<typeof useReAuthenticate>;

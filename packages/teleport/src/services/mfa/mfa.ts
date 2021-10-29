@@ -1,15 +1,11 @@
 import 'u2f-api-polyfill';
 import cfg from 'teleport/config';
 import api from 'teleport/services/api';
-import auth, {
-  makeMfaRegistrationChallenge,
-  makeWebauthnCreationResponse,
-} from 'teleport/services/auth';
+import auth, { makeWebauthnCreationResponse } from 'teleport/services/auth';
 import {
   MfaDevice,
   AddNewTotpDeviceRequest,
-  AddNewU2fDeviceRequest,
-  DeviceType,
+  AddNewHardwareDeviceRequest,
 } from './types';
 import makeMfaDevice from './makeMfaDevice';
 
@@ -30,19 +26,11 @@ class MfaService {
       .then(devices => devices.map(makeMfaDevice));
   }
 
-  createMfaRegistrationChallenge(tokenId: string, deviceType: DeviceType) {
-    return api
-      .post(cfg.getMfaCreateRegistrationChallengeUrl(tokenId), {
-        deviceType,
-      })
-      .then(makeMfaRegistrationChallenge);
-  }
-
   addNewTotpDevice(req: AddNewTotpDeviceRequest) {
     return api.post(cfg.api.mfaDevicesPath, req);
   }
 
-  addNewWebauthnDevice(req: AddNewU2fDeviceRequest) {
+  addNewWebauthnDevice(req: AddNewHardwareDeviceRequest) {
     return auth
       .checkWebauthnSupport()
       .then(() => auth.createMfaRegistrationChallenge(req.tokenId, 'webauthn'))
@@ -61,7 +49,7 @@ class MfaService {
       });
   }
 
-  addNewU2fDevice(req: AddNewU2fDeviceRequest) {
+  addNewU2fDevice(req: AddNewHardwareDeviceRequest) {
     const err = auth.u2fBrowserSupported();
     if (err) {
       return Promise.reject(err);

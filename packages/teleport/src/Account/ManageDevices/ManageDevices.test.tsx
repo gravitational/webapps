@@ -17,7 +17,7 @@ limitations under the License.
 import React from 'react';
 import { render, fireEvent, wait, screen } from 'design/utils/testing';
 import { Context, ContextProvider } from 'teleport';
-import AuthService from 'teleport/services/auth';
+import authService from 'teleport/services/auth';
 import ManageDevices from './ManageDevices';
 import cfg from 'teleport/config';
 
@@ -49,7 +49,7 @@ describe('mfa device dashboard testing', () => {
     ]);
 
     jest
-      .spyOn(ctx.mfaService, 'createMfaRegistrationChallenge')
+      .spyOn(authService, 'createMfaRegistrationChallenge')
       .mockResolvedValue({
         qrCode: '123456',
         u2fRegisterRequest: null,
@@ -75,22 +75,22 @@ describe('mfa device dashboard testing', () => {
 
     jest.spyOn(cfg, 'getPreferredMfaType').mockReturnValue('u2f');
 
-    jest.spyOn(AuthService, 'checkWebauthnSupport').mockResolvedValue();
+    jest.spyOn(authService, 'checkWebauthnSupport').mockResolvedValue();
 
     jest
-      .spyOn(AuthService, 'createPrivilegeTokenWithTotp')
+      .spyOn(authService, 'createPrivilegeTokenWithTotp')
       .mockResolvedValue(privilegeToken);
 
     jest
-      .spyOn(AuthService, 'createPrivilegeTokenWithU2f')
+      .spyOn(authService, 'createPrivilegeTokenWithU2f')
       .mockResolvedValue(privilegeToken);
 
     jest
-      .spyOn(AuthService, 'createPrivilegeTokenWithWebauthn')
+      .spyOn(authService, 'createPrivilegeTokenWithWebauthn')
       .mockResolvedValue(privilegeToken);
 
     jest
-      .spyOn(AuthService, 'createRestrictedPrivilegeToken')
+      .spyOn(authService, 'createRestrictedPrivilegeToken')
       .mockResolvedValue(restrictedPrivilegeToken);
   });
 
@@ -118,7 +118,7 @@ describe('mfa device dashboard testing', () => {
       fireEvent.click(screen.getByText('Continue'));
     });
 
-    expect(AuthService.createPrivilegeTokenWithTotp).toHaveBeenCalledWith(
+    expect(authService.createPrivilegeTokenWithTotp).toHaveBeenCalledWith(
       '321321'
     );
 
@@ -150,7 +150,7 @@ describe('mfa device dashboard testing', () => {
       fireEvent.click(screen.getByText('Continue'));
     });
 
-    expect(AuthService.createPrivilegeTokenWithU2f).toHaveBeenCalled();
+    expect(authService.createPrivilegeTokenWithU2f).toHaveBeenCalled();
 
     expect(screen.getByText('Add New Two-Factor Device')).toBeInTheDocument();
 
@@ -191,7 +191,7 @@ describe('mfa device dashboard testing', () => {
       fireEvent.click(screen.getByText('Continue'));
     });
 
-    expect(AuthService.createPrivilegeTokenWithWebauthn).toHaveBeenCalled();
+    expect(authService.createPrivilegeTokenWithWebauthn).toHaveBeenCalled();
 
     expect(screen.getByText('Add New Two-Factor Device')).toBeInTheDocument();
 
@@ -229,7 +229,7 @@ describe('mfa device dashboard testing', () => {
       fireEvent.click(screen.getByText(/add two-factor device/i))
     );
 
-    expect(AuthService.createRestrictedPrivilegeToken).toHaveBeenCalled();
+    expect(authService.createRestrictedPrivilegeToken).toHaveBeenCalled();
 
     expect(screen.getByText('Add New Two-Factor Device')).toBeInTheDocument();
 
@@ -259,7 +259,7 @@ describe('mfa device dashboard testing', () => {
       fireEvent.click(screen.getByText('Continue'));
     });
 
-    expect(AuthService.createPrivilegeTokenWithU2f).toHaveBeenCalled();
+    expect(authService.createPrivilegeTokenWithU2f).toHaveBeenCalled();
 
     expect(
       screen.getByText(/Are you sure you want to remove device/i)

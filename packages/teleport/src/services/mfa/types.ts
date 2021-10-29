@@ -12,20 +12,7 @@ export type AddNewTotpDeviceRequest = {
   secondFactorToken: string;
 };
 
-export type AddNewU2fDeviceRequest = {
+export type AddNewHardwareDeviceRequest = {
   tokenId: string;
   deviceName: string;
 };
-
-export type U2fRegisterRequest = {
-  version: string;
-  challenge: string;
-  appId: string;
-};
-
-export type MfaRegisterChallenge = {
-  qrCode: string;
-  u2f: U2fRegisterRequest;
-};
-
-export type DeviceType = 'u2f' | 'totp';

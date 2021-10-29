@@ -32,7 +32,7 @@ import Dialog, {
 } from 'design/Dialog';
 import { Danger } from 'design/Alert';
 import FieldInput from 'shared/components/FieldInput';
-import Validation, { Validator } from 'shared/components/Validation';
+import Validation from 'shared/components/Validation';
 import {
   requiredToken,
   requiredField,
@@ -57,7 +57,7 @@ export function AddDevice({
   addU2fDevice,
   addWebauthnDevice,
   clearAttempt,
-  close,
+  onCancel,
   qrCode,
   auth2faType,
   preferredMfaType,
@@ -72,21 +72,14 @@ export function AddDevice({
 
   const [mfaOption, setMfaOption] = useState<MfaOption>(mfaOptions[0]);
 
-  function onSetMfaOption(option: MfaOption, validator: Validator) {
+  function onSetMfaOption(option: MfaOption) {
     setOtpToken('');
-    validator.reset();
     clearAttempt();
     setMfaOption(option);
   }
 
-  function onSubmit(
-    e: React.MouseEvent<HTMLButtonElement>,
-    validator: Validator
-  ) {
+  function onSubmit(e: React.MouseEvent<HTMLButtonElement>) {
     e.preventDefault();
-    if (!validator.validate()) {
-      return;
-    }
 
     if (mfaOption.value === 'u2f') {
       addU2fDevice(deviceName);
@@ -111,11 +104,9 @@ export function AddDevice({
     <Validation>
       {({ validator }) => (
         <Dialog
-          dialogCss={() => ({
-            width: '484px',
-          })}
+          dialogCss={() => ({ width: '484px' })}
           disableEscapeKeyDown={false}
-          onClose={close}
+          onClose={onCancel}
           open={true}
         >
           <DialogHeader style={{ flexDirection: 'column' }}>
@@ -192,7 +183,10 @@ export function AddDevice({
                 data-testid="mfa-select"
                 value={mfaOption}
                 options={mfaOptions}
-                onChange={(o: MfaOption) => onSetMfaOption(o, validator)}
+                onChange={(o: MfaOption) => {
+                  validator.reset();
+                  onSetMfaOption(o);
+                }}
                 mr={3}
                 isDisabled={addDeviceAttempt.status === 'processing'}
               />
@@ -227,13 +221,13 @@ export function AddDevice({
               size="large"
               width="45%"
               type="submit"
-              onClick={e => onSubmit(e, validator)}
+              onClick={e => validator.validate() && onSubmit(e)}
               disabled={addDeviceAttempt.status === 'processing'}
               mr={3}
             >
               Add device
             </ButtonPrimary>
-            <ButtonSecondary size="large" width="30%" onClick={close}>
+            <ButtonSecondary size="large" width="30%" onClick={onCancel}>
               Cancel
             </ButtonSecondary>
           </DialogFooter>
