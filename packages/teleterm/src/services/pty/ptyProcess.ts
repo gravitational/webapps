@@ -22,8 +22,8 @@ import * as nodePTY from 'node-pty';
 class PtyProcess extends EventEmitter {
   _options: types.PtyOptions;
   _buffered = true;
-  _attachSocketBufferTimer;
-  _attachSocketBuffer: string;
+  _attachedBufferTimer;
+  _attachedBuffer: string;
   _process: nodePTY.IPty;
   _logger: Logger;
 
@@ -35,8 +35,10 @@ class PtyProcess extends EventEmitter {
 
   start(cols: number, rows: number) {
     this._process = nodePTY.spawn(
-      '/home/alexey/go/src/github.com/gravitational/teleport/e/build/tsh',
-      ['--proxy=localhost', 'ssh', 'root@p14s'],
+      'bash',
+      [],
+      //'/home/alexey/go/src/github.com/gravitational/teleport/e/build/tsh',
+      //['--proxy=localhost', 'ssh', 'root@p14s'],
       {
         cols,
         rows,
@@ -71,17 +73,17 @@ class PtyProcess extends EventEmitter {
   }
 
   _flushBuffer() {
-    this.emit(TermEventEnum.DATA, this._attachSocketBuffer);
-    this._attachSocketBuffer = null;
-    clearTimeout(this._attachSocketBufferTimer);
-    this._attachSocketBufferTimer = null;
+    this.emit(TermEventEnum.DATA, this._attachedBuffer);
+    this._attachedBuffer = null;
+    clearTimeout(this._attachedBufferTimer);
+    this._attachedBufferTimer = null;
   }
 
   _pushToBuffer(data: string) {
-    if (this._attachSocketBuffer) {
-      this._attachSocketBuffer += data;
+    if (this._attachedBuffer) {
+      this._attachedBuffer += data;
     } else {
-      this._attachSocketBuffer = data;
+      this._attachedBuffer = data;
       setTimeout(this._flushBuffer.bind(this), 10);
     }
   }

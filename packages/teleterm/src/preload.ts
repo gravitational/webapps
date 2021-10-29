@@ -4,6 +4,6 @@ import { ElectronGlobals } from './types';
 import createPtyManager from 'teleterm/services/pty/createPtyManager';
 
 contextBridge.exposeInMainWorld('electron', {
-  tshClient: createApiClient('unix:///tmp/tshd/socket'),
+  tshClient: createApiClient('unix:///tmp/mama/tshd.socket'),
   ptyManager: createPtyManager(),
 } as ElectronGlobals);
