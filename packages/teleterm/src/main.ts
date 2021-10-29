@@ -1,10 +1,6 @@
 const path = require('path');
-const { app, BrowserWindow, ipcMain } = require('electron');
-
-// node-pty is not yet context aware
-app.allowRendererProcessReuse = false;
-
-app.commandLine.appendSwitch('ignore-certificate-errors', 'true');
+const { app, BrowserWindow } = require('electron');
+import startTshd from './services/startTshd';
 
 const isDevelopment =
   process.env.NODE_ENV === 'development' || process.env.DEBUG_PROD === 'true';
@@ -41,7 +37,16 @@ function createWindow() {
   }
 }
 
-//
+const daemon = startTshd();
+
+// node-pty is not yet context aware
+app.allowRendererProcessReuse = false;
+app.commandLine.appendSwitch('ignore-certificate-errors', 'true');
+
+app.on('before-quit', () => {
+  daemon.kill('SIGTERM');
+});
+
 app.whenReady().then(() => {
   createWindow();
 });
