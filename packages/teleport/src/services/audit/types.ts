@@ -309,7 +309,7 @@ export type RawEvents = {
     typeof eventCodes.USER_PASSWORD_CHANGED,
     HasName
   >;
-  [eventCodes.RESET_PASSWORD_TOKEN_CREATED]: RawEventPasswordToken<
+  [eventCodes.RESET_PASSWORD_TOKEN_CREATED]: RawEventUserToken<
     typeof eventCodes.RESET_PASSWORD_TOKEN_CREATED
   >;
   [eventCodes.USER_LOCAL_LOGIN]: RawEvent<typeof eventCodes.USER_LOCAL_LOGIN>;
@@ -438,10 +438,10 @@ export type RawEvents = {
     typeof eventCodes.LOCK_DELETED,
     { name: string }
   >;
-  [eventCodes.PRIVILEGE_TOKEN_CREATED]: RawEventPasswordToken<
+  [eventCodes.PRIVILEGE_TOKEN_CREATED]: RawEventUserToken<
     typeof eventCodes.PRIVILEGE_TOKEN_CREATED
   >;
-  [eventCodes.RECOVERY_TOKEN_CREATED]: RawEventPasswordToken<
+  [eventCodes.RECOVERY_TOKEN_CREATED]: RawEventUserToken<
     typeof eventCodes.RECOVERY_TOKEN_CREATED
   >;
   [eventCodes.RECOVERY_CODE_GENERATED]: RawEvent<
@@ -593,7 +593,7 @@ type RawEventAccess<T extends EventCode> = RawEvent<
   }
 >;
 
-type RawEventPasswordToken<T extends EventCode> = RawEvent<
+type RawEventUserToken<T extends EventCode> = RawEvent<
   T,
   {
     name: string;
