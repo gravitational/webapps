@@ -41,7 +41,7 @@ export function ReAuthenticate({
   submitWithU2f,
   submitWithTotp,
   submitWithWebauthn,
-  onCancel,
+  onClose,
   auth2faType,
   preferredMfaType,
 }: State) {
@@ -71,7 +71,7 @@ export function ReAuthenticate({
             width: '400px',
           })}
           disableEscapeKeyDown={false}
-          onClose={onCancel}
+          onClose={onClose}
           open={true}
         >
           <DialogHeader style={{ flexDirection: 'column' }}>
@@ -132,7 +132,7 @@ export function ReAuthenticate({
             >
               Continue
             </ButtonPrimary>
-            <ButtonSecondary onClick={onCancel}>Cancel</ButtonSecondary>
+            <ButtonSecondary onClick={onClose}>Cancel</ButtonSecondary>
           </DialogFooter>
         </Dialog>
       )}

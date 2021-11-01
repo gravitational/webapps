@@ -19,10 +19,7 @@ import cfg from 'teleport/config';
 import auth from 'teleport/services/auth';
 import useAttempt from 'shared/hooks/useAttemptNext';
 
-export default function useReAuthenticate({
-  onAuthenticated,
-  onCancel,
-}: Props) {
+export default function useReAuthenticate({ onAuthenticated, onClose }: Props) {
   const { attempt, setAttempt, handleError } = useAttempt('');
 
   function submitWithTotp(secondFactorToken: string) {
@@ -61,13 +58,13 @@ export default function useReAuthenticate({
     submitWithWebauthn,
     auth2faType: cfg.getAuth2faType(),
     preferredMfaType: cfg.getPreferredMfaType(),
-    onCancel,
+    onClose,
   };
 }
 
 export type Props = {
   onAuthenticated: React.Dispatch<React.SetStateAction<string>>;
-  onCancel: () => void;
+  onClose: () => void;
 };
 
 export type State = ReturnType<typeof useReAuthenticate>;

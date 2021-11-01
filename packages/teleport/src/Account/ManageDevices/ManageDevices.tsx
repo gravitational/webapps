@@ -65,7 +65,7 @@ export function ManageDevices({
         {fetchDevicesAttempt.status === 'success' && (
           <>
             <Flex
-              px={5}
+              px={4}
               py={4}
               bg="primary.light"
               borderTopRightRadius={3}
@@ -103,21 +103,21 @@ export function ManageDevices({
       {isReAuthenticateVisible && (
         <ReAuthenticate
           onAuthenticated={setToken}
-          onCancel={hideReAuthenticate}
+          onClose={hideReAuthenticate}
         />
       )}
       {isAddDeviceVisible && (
         <AddDevice
           fetchDevices={fetchDevices}
           token={token}
-          onCancel={hideAddDevice}
+          onClose={hideAddDevice}
         />
       )}
       {isRemoveDeviceVisible && (
         <RemoveDialog
           name={deviceToRemove.name}
           onRemove={removeDevice}
-          onCancel={hideRemoveDevice}
+          onClose={hideRemoveDevice}
         />
       )}
     </>

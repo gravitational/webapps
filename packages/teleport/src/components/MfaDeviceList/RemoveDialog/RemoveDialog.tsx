@@ -21,7 +21,7 @@ import Dialog, { DialogContent, DialogFooter } from 'design/DialogConfirmation';
 import useAttempt from 'shared/hooks/useAttemptNext';
 
 export default function RemoveDialog(props: Props) {
-  const { name, onCancel, onRemove } = props;
+  const { name, onClose, onRemove } = props;
   const { attempt, handleError, setAttempt } = useAttempt('');
 
   function onConfirm() {
@@ -30,7 +30,7 @@ export default function RemoveDialog(props: Props) {
   }
 
   return (
-    <Dialog disableEscapeKeyDown={false} onClose={onCancel} open={true}>
+    <Dialog disableEscapeKeyDown={false} onClose={onClose} open={true}>
       <DialogContent width="400px">
         <Text typography="h2" mb={2}>
           Remove Device
@@ -56,7 +56,7 @@ export default function RemoveDialog(props: Props) {
         </ButtonWarning>
         <ButtonSecondary
           disabled={attempt.status === 'processing'}
-          onClick={onCancel}
+          onClick={onClose}
         >
           Cancel
         </ButtonSecondary>
@@ -66,7 +66,7 @@ export default function RemoveDialog(props: Props) {
 }
 
 type Props = {
-  onCancel: () => void;
+  onClose: () => void;
   onRemove: () => Promise<any>;
   name: string;
 };

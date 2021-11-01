@@ -42,6 +42,6 @@ const props: State = {
   submitWithU2f: () => null,
   submitWithWebauthn: () => null,
   preferredMfaType: 'webauthn',
-  onCancel: () => null,
+  onClose: () => null,
   auth2faType: 'on',
 };

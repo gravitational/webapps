@@ -59,7 +59,7 @@ const props: State = {
   addU2fDevice: () => null,
   addWebauthnDevice: () => null,
   clearAttempt: () => null,
-  onCancel: () => null,
+  onClose: () => null,
   auth2faType: 'on',
   preferredMfaType: 'webauthn',
   qrCode:

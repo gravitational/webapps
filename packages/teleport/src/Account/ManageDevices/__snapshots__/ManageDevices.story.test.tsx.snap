@@ -121,8 +121,8 @@ exports[`render device dashboard 1`] = `
 
 .c1 {
   box-sizing: border-box;
-  padding-left: 32px;
-  padding-right: 32px;
+  padding-left: 24px;
+  padding-right: 24px;
   padding-top: 24px;
   padding-bottom: 24px;
   background-color: #222C59;
@@ -546,8 +546,8 @@ exports[`render failed state for creating restricted privilege token 1`] = `
 
 .c2 {
   box-sizing: border-box;
-  padding-left: 32px;
-  padding-right: 32px;
+  padding-left: 24px;
+  padding-right: 24px;
   padding-top: 24px;
   padding-bottom: 24px;
   background-color: #222C59;

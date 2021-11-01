@@ -22,7 +22,7 @@ import cfg from 'teleport/config';
 
 export default function useAddDevice(
   ctx: Ctx,
-  { token, fetchDevices, onCancel }: Props
+  { token, fetchDevices, onClose }: Props
 ) {
   const [qrCode, setQrCode] = useState('');
   const addDeviceAttempt = useAttempt('');
@@ -37,7 +37,7 @@ export default function useAddDevice(
         deviceName,
       })
       .then(() => {
-        onCancel();
+        onClose();
         fetchDevices();
       })
       .catch(addDeviceAttempt.handleError);
@@ -51,7 +51,7 @@ export default function useAddDevice(
         deviceName,
       })
       .then(() => {
-        onCancel();
+        onClose();
         fetchDevices();
       })
       .catch(addDeviceAttempt.handleError);
@@ -65,7 +65,7 @@ export default function useAddDevice(
         deviceName,
       })
       .then(() => {
-        onCancel();
+        onClose();
         fetchDevices();
       })
       .catch(addDeviceAttempt.handleError);
@@ -89,7 +89,7 @@ export default function useAddDevice(
     addTotpDevice,
     addU2fDevice,
     addWebauthnDevice,
-    onCancel,
+    onClose,
     clearAttempt,
     qrCode,
     auth2faType: cfg.getAuth2faType(),
@@ -102,5 +102,5 @@ export type State = ReturnType<typeof useAddDevice>;
 export type Props = {
   token: string;
   fetchDevices: () => void;
-  onCancel: () => void;
+  onClose: () => void;
 };

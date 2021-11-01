@@ -57,7 +57,7 @@ export function AddDevice({
   addU2fDevice,
   addWebauthnDevice,
   clearAttempt,
-  onCancel,
+  onClose,
   qrCode,
   auth2faType,
   preferredMfaType,
@@ -106,7 +106,7 @@ export function AddDevice({
         <Dialog
           dialogCss={() => ({ width: '484px' })}
           disableEscapeKeyDown={false}
-          onClose={onCancel}
+          onClose={onClose}
           open={true}
         >
           <DialogHeader style={{ flexDirection: 'column' }}>
@@ -227,7 +227,7 @@ export function AddDevice({
             >
               Add device
             </ButtonPrimary>
-            <ButtonSecondary size="large" width="30%" onClick={onCancel}>
+            <ButtonSecondary size="large" width="30%" onClick={onClose}>
               Cancel
             </ButtonSecondary>
           </DialogFooter>
