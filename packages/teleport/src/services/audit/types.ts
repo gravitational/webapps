@@ -75,6 +75,7 @@ export const eventCodes = {
   OIDC_CONNECTOR_DELETED: 'T8101I',
   PORTFORWARD_FAILURE: 'T3003E',
   PORTFORWARD: 'T3003I',
+  PRIVILEGE_TOKEN_CREATED: 'T6002I',
   RECOVERY_TOKEN_CREATED: 'T6001I',
   RECOVERY_CODE_GENERATED: 'T1008I',
   RECOVERY_CODE_USED: 'T1009I',
@@ -436,6 +437,9 @@ export type RawEvents = {
   [eventCodes.LOCK_DELETED]: RawEvent<
     typeof eventCodes.LOCK_DELETED,
     { name: string }
+  >;
+  [eventCodes.PRIVILEGE_TOKEN_CREATED]: RawEventPasswordToken<
+    typeof eventCodes.PRIVILEGE_TOKEN_CREATED
   >;
   [eventCodes.RECOVERY_TOKEN_CREATED]: RawEventPasswordToken<
     typeof eventCodes.RECOVERY_TOKEN_CREATED

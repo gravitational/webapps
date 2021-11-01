@@ -143,6 +143,18 @@ export const events = [
   },
   {
     cluster_name: 'im-a-cluster-name',
+    code: 'T6002I',
+    ei: 0,
+    event: 'privilege_token.create',
+    expires: '2021-11-01T22:29:47.989984Z',
+    name: 'user@example.com',
+    time: '2021-11-01T22:24:47.99Z',
+    ttl: '5m0s',
+    uid: '6a9d5ac1-08c5-5c1e-9ebd-086d34155b08',
+    user: 'user@example.com',
+  },
+  {
+    cluster_name: 'im-a-cluster-name',
     code: 'T1008I',
     ei: 0,
     event: 'recovery_code.generated',
