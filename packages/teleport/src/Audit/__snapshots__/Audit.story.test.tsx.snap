@@ -697,7 +697,7 @@ exports[`loaded 1`] = `
            
           of 
           <strong>
-            53
+            54
           </strong>
         </div>
       </div>
@@ -755,6 +755,41 @@ exports[`loaded 1`] = `
         </tr>
       </thead>
       <tbody>
+        <tr>
+          <td>
+            <div
+              class="c15"
+            >
+              <span
+                class="c11 c16 icon icon-vpn_key c11 c16"
+                color="light"
+                font-size="3"
+              />
+              Privilege Token Created
+            </div>
+          </td>
+          <td
+            style="word-break: break-word;"
+          >
+            Privilege token was created for user [user@example.com]
+          </td>
+          <td
+            style="min-width: 120px;"
+          >
+            2021-11-01 22:24:47
+          </td>
+          <td
+            align="right"
+          >
+            <button
+              class="c17"
+              kind="border"
+              width="87px"
+            >
+              Details
+            </button>
+          </td>
+        </tr>
         <tr>
           <td>
             <div
@@ -2477,41 +2512,6 @@ exports[`loaded 1`] = `
             </button>
           </td>
         </tr>
-        <tr>
-          <td>
-            <div
-              class="c15"
-            >
-              <span
-                class="c11 c16 icon icon-terminal c11 c16"
-                color="light"
-                font-size="3"
-              />
-              Session Network Connection
-            </div>
-          </td>
-          <td
-            style="word-break: break-word;"
-          >
-            Program [bash] opened a connection [10.217.136.161 &lt;-&gt; 190.58.129.4:3000] within a session [44c6cea8-362f-11ea-83aa-125400432324]
-          </td>
-          <td
-            style="min-width: 120px;"
-          >
-            2019-04-22 19:39:26
-          </td>
-          <td
-            align="right"
-          >
-            <button
-              class="c17"
-              kind="border"
-              width="87px"
-            >
-              Details
-            </button>
-          </td>
-        </tr>
       </tbody>
     </table>
     <nav
@@ -2535,7 +2535,7 @@ exports[`loaded 1`] = `
            
           of 
           <strong>
-            53
+            54
           </strong>
         </div>
       </div>
