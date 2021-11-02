@@ -5,13 +5,11 @@ import * as types from 'teleterm/services/tshd/types';
 import middleware, { withLogging } from './middleware';
 
 export function createGrpcClient(addr?: string) {
-  addr = addr || 'unix:///tmp/tshd/socket';
   return new TerminalServiceClient(addr, grpc.credentials.createInsecure());
 }
 
 export default function createClient(addr: string) {
   const tsh = middleware(createGrpcClient(addr), [withLogging]);
-
   const listGateways = async () => {
     const req = new api.ListGatewaysRequest();
     return new Promise<types.Gateway[]>((resolve, reject) => {

@@ -49,7 +49,7 @@ export const ExpanderHeader: React.FC<ExpanderHeaderProps> = props => {
   return (
     <StyledHeader {...styles} onClick={() => ctx.setExpanded(!ctx.expanded)}>
       <ArrowIcon mr="2" color="inherit" style={{ fontSize: '12px' }} />
-      <Flex flex="1">{props.children}</Flex>
+      <Flex flex="1">{children}</Flex>
     </StyledHeader>
   );
 };

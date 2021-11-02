@@ -29,9 +29,48 @@ class PtyProcess extends EventEmitter {
 
   constructor(options: types.PtyOptions) {
     super();
-    this._options = options;
+    this._options = options || {};
     this._logger = new Logger();
   }
+
+  //  runCmd() {
+
+  /*
+
+      cmd.getPath();
+      cmd.getCwd();
+      cmd.getEnv();
+      cmd.getArgs();
+
+
+      ptyService.createSshCommand(clusterId, nodeId, login){
+        const cmd = new TshSshCommand()
+
+
+      }
+
+
+
+
+
+          this._process = nodePTY.spawn(
+            'bash',
+            [],
+            //'/home/alexey/go/src/github.com/gravitational/teleport/e/build/tsh',
+            //['--proxy=localhost', 'ssh', 'root@p14s'],
+            {
+              cols,
+              rows,
+              name: 'xterm-color',
+              cwd: process.cwd(),
+              env: {
+                ...process.env,
+                TELEPORT_CLUSTER: 'p14s',
+              },
+            }
+          );
+        }
+    */
 
   start(cols: number, rows: number) {
     this._process = nodePTY.spawn(
@@ -46,7 +85,7 @@ class PtyProcess extends EventEmitter {
         cwd: process.cwd(),
         env: {
           ...process.env,
-          TELEPORT_CLUSTER: 'p14s',
+          ...this._options.env,
         },
       }
     );

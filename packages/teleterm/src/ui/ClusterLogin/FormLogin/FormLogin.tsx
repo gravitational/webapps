@@ -39,7 +39,7 @@ export default function LoginForm(props: Props) {
   const ssoEnabled = authProviders && authProviders.length > 0;
   const [pass, setPass] = useState('');
   const [user, setUser] = useState('');
-  const [token, setToken] = useState('');
+  const [token] = useState('');
   const [isExpanded, toggleExpander] = useState(
     !(isLocalAuthEnabled && ssoEnabled)
   );
@@ -133,7 +133,7 @@ const FlexBordered = props => (
 
 const CardLoginEmpty = ({ title = '' }) => (
   <>
-    <Alerts.Danger my={5}>Login has not been enabled</Alerts.Danger>
+    <Alerts.Danger my={5}>Login has not been enabled for {title}</Alerts.Danger>
     <Text mb={2} typography="paragraph2" width="100%">
       The ability to login has not been enabled. Please contact your system
       administrator for more information.

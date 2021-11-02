@@ -17,13 +17,11 @@ limitations under the License.
 import React from 'react';
 import styled from 'styled-components';
 import { Text, Flex, Box, ButtonSecondary } from 'design';
-import InputSearch from 'teleport/components/InputSearch';
 import Document from './../Document';
 import useGateway from './useGateway';
 import { ThemeProviderTabs } from './../ThemeProvider';
 import * as types from '../types';
 import TextSelectCopy from 'teleport/components/TextSelectCopy';
-import { textAlign } from 'design/system';
 
 type Props = {
   visible: boolean;
@@ -76,7 +74,7 @@ export default function DocumentGateway(props: Props) {
             bash={false}
             bg={'primary.dark'}
             mb={4}
-            text={`https://${gateway.localAddress}`}
+            text={`https://${gateway.localAddress}:${gateway.localPort}`}
           />
           <Text typography="h4" bold mb={3}>
             Access Keys
@@ -101,6 +99,13 @@ export default function DocumentGateway(props: Props) {
             bg={'primary.dark'}
             mb={3}
             text={gateway.keyPath}
+          />
+          <Text bold>Psql</Text>
+          <TextSelectCopy
+            bash={false}
+            bg={'primary.dark'}
+            mb={3}
+            text={`psql "${gateway.nativeClientArgs}"`}
           />
         </Container>
       </Document>

@@ -18,7 +18,7 @@ import React from 'react';
 import styled from 'styled-components';
 import { sortBy } from 'lodash';
 import isMatch from 'design/utils/match';
-import { Text, Flex, ButtonLink, ButtonPrimary, Box } from 'design';
+import { ButtonPrimary } from 'design';
 import {
   Column,
   SortHeaderCell,
@@ -28,7 +28,6 @@ import {
   renderLabelCell,
 } from 'design/DataTable';
 import Table from 'design/DataTable/Paged';
-import MenuSshLogin, { LoginItem } from 'shared/components/MenuSshLogin';
 import * as types from 'teleterm/services/tshd/types';
 
 function ServerList(props: Props) {

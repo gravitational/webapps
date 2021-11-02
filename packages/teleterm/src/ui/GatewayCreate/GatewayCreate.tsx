@@ -24,7 +24,6 @@ import Dialog, {
 } from 'design/Dialog';
 import FieldInput from 'shared/components/FieldInput';
 import Validation from 'shared/components/Validation';
-import { requiredField } from 'shared/components/Validation/rules';
 import useGatewayCreate, { State, Props } from './useGatewayCreate';
 
 export default function Container(props: Props) {
@@ -59,10 +58,10 @@ export function GatewayCreate(props: State) {
               <Alerts.Danger>{createAttempt.statusText}</Alerts.Danger>
             )}
             <FieldInput
-              rule={requiredField('Port is required')}
-              label="Port"
+              label="Port (Optional)"
               width="100%"
               value={port}
+              autoFocus
               placeholder="10211"
               onKeyPress={e =>
                 e.key === 'Enter' && validator.validate() && create(port)

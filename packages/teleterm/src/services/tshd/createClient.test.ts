@@ -19,7 +19,7 @@ limitations under the License.
 */
 
 import createClient from './createClient';
-import { TerminalServiceClient } from './../v1/service_grpc_pb';
+import { TerminalServiceClient } from './v1/service_grpc_pb';
 import * as grpc from '@grpc/grpc-js';
 
 //let grpcClient = new TerminalServiceClient(

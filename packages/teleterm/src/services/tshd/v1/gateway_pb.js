@@ -77,7 +77,9 @@ proto.teleport.terminal.v1.Gateway.toObject = function(includeInstance, msg) {
     caCertPath: jspb.Message.getFieldWithDefault(msg, 8, ""),
     dbCertPath: jspb.Message.getFieldWithDefault(msg, 9, ""),
     keyPath: jspb.Message.getFieldWithDefault(msg, 10, ""),
-    status: jspb.Message.getFieldWithDefault(msg, 11, 0)
+    nativeClientPath: jspb.Message.getFieldWithDefault(msg, 11, ""),
+    nativeClientArgs: jspb.Message.getFieldWithDefault(msg, 12, ""),
+    status: jspb.Message.getFieldWithDefault(msg, 13, 0)
   };
 
   if (includeInstance) {
@@ -155,6 +157,14 @@ proto.teleport.terminal.v1.Gateway.deserializeBinaryFromReader = function(msg, r
       msg.setKeyPath(value);
       break;
     case 11:
+      var value = /** @type {string} */ (reader.readString());
+      msg.setNativeClientPath(value);
+      break;
+    case 12:
+      var value = /** @type {string} */ (reader.readString());
+      msg.setNativeClientArgs(value);
+      break;
+    case 13:
       var value = /** @type {!proto.teleport.terminal.v1.Gateway.GatewayStatus} */ (reader.readEnum());
       msg.setStatus(value);
       break;
@@ -257,10 +267,24 @@ proto.teleport.terminal.v1.Gateway.serializeBinaryToWriter = function(message, w
       f
     );
   }
+  f = message.getNativeClientPath();
+  if (f.length > 0) {
+    writer.writeString(
+      11,
+      f
+    );
+  }
+  f = message.getNativeClientArgs();
+  if (f.length > 0) {
+    writer.writeString(
+      12,
+      f
+    );
+  }
   f = message.getStatus();
   if (f !== 0.0) {
     writer.writeEnum(
-      11,
+      13,
       f
     );
   }
@@ -456,11 +480,47 @@ proto.teleport.terminal.v1.Gateway.prototype.setKeyPath = function(value) {
 
 
 /**
- * optional GatewayStatus status = 11;
+ * optional string native_client_path = 11;
+ * @return {string}
+ */
+proto.teleport.terminal.v1.Gateway.prototype.getNativeClientPath = function() {
+  return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 11, ""));
+};
+
+
+/**
+ * @param {string} value
+ * @return {!proto.teleport.terminal.v1.Gateway} returns this
+ */
+proto.teleport.terminal.v1.Gateway.prototype.setNativeClientPath = function(value) {
+  return jspb.Message.setProto3StringField(this, 11, value);
+};
+
+
+/**
+ * optional string native_client_args = 12;
+ * @return {string}
+ */
+proto.teleport.terminal.v1.Gateway.prototype.getNativeClientArgs = function() {
+  return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 12, ""));
+};
+
+
+/**
+ * @param {string} value
+ * @return {!proto.teleport.terminal.v1.Gateway} returns this
+ */
+proto.teleport.terminal.v1.Gateway.prototype.setNativeClientArgs = function(value) {
+  return jspb.Message.setProto3StringField(this, 12, value);
+};
+
+
+/**
+ * optional GatewayStatus status = 13;
  * @return {!proto.teleport.terminal.v1.Gateway.GatewayStatus}
  */
 proto.teleport.terminal.v1.Gateway.prototype.getStatus = function() {
-  return /** @type {!proto.teleport.terminal.v1.Gateway.GatewayStatus} */ (jspb.Message.getFieldWithDefault(this, 11, 0));
+  return /** @type {!proto.teleport.terminal.v1.Gateway.GatewayStatus} */ (jspb.Message.getFieldWithDefault(this, 13, 0));
 };
 
 
@@ -469,7 +529,7 @@ proto.teleport.terminal.v1.Gateway.prototype.getStatus = function() {
  * @return {!proto.teleport.terminal.v1.Gateway} returns this
  */
 proto.teleport.terminal.v1.Gateway.prototype.setStatus = function(value) {
-  return jspb.Message.setProto3EnumField(this, 11, value);
+  return jspb.Message.setProto3EnumField(this, 13, value);
 };
 
 
