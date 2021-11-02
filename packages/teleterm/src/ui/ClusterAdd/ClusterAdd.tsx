@@ -50,7 +50,7 @@ export default function AddCluster({ onClose }: Props) {
           onClose={onClose}
           open={true}
         >
-          <Flex flex="1" minHeight="400px">
+          <Flex flex="1" minHeight="400px" as="form">
             <Flex
               flex="1"
               m={5}
@@ -80,7 +80,10 @@ export default function AddCluster({ onClose }: Props) {
                 <ButtonPrimary
                   disabled={status === 'processing'}
                   mr="3"
-                  onClick={() => validator.validate() && run()}
+                  onClick={e => {
+                    e.preventDefault();
+                    validator.validate() && run();
+                  }}
                 >
                   Next
                 </ButtonPrimary>

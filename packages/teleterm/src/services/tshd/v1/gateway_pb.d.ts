@@ -37,6 +37,12 @@ export class Gateway extends jspb.Message {
     getKeyPath(): string;
     setKeyPath(value: string): Gateway;
 
+    getNativeClientPath(): string;
+    setNativeClientPath(value: string): Gateway;
+
+    getNativeClientArgs(): string;
+    setNativeClientArgs(value: string): Gateway;
+
     getStatus(): Gateway.GatewayStatus;
     setStatus(value: Gateway.GatewayStatus): Gateway;
 
@@ -63,6 +69,8 @@ export namespace Gateway {
         caCertPath: string,
         dbCertPath: string,
         keyPath: string,
+        nativeClientPath: string,
+        nativeClientArgs: string,
         status: Gateway.GatewayStatus,
     }
 

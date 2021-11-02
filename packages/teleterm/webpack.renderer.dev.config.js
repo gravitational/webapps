@@ -16,20 +16,17 @@ cfg.devServer = {
   https: true,
   inline: true,
   before() {
-    console.log('Starting Main Process...');
-    spawn(
+    const childProcess = spawn(
       'yarn',
-      //['start-electron', '--inspect-brk=5858  --remote-debugging-port=9223'],
-      ['start-electron'],
-
+      ['start-main'], // ['start-electron', '--inspect-brk=5858  --remote-debugging-port=9223'],
       {
+        detached: true, // detaching the process will allow restarting electron without terminating the dev server
         shell: true,
         env: process.env,
         stdio: 'inherit',
       }
-    )
-      .on('close', code => process.exit(code))
-      .on('error', spawnError => console.error(spawnError));
+    ).on('error', spawnError => console.error(spawnError));
+    childProcess.unref();
   },
 };
 

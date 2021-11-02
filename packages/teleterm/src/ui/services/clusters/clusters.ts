@@ -9,7 +9,7 @@ type State = {
 };
 
 export default class TshService extends Store<State> {
-  client: types.ApiClient;
+  client: types.TshdClient;
 
   state: State = {
     clusters: new Map(),
@@ -18,7 +18,7 @@ export default class TshService extends Store<State> {
     dbs: new Map(),
   };
 
-  constructor(client: types.ApiClient) {
+  constructor(client: types.TshdClient) {
     super();
     this.client = client;
   }

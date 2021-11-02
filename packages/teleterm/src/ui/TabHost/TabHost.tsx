@@ -31,6 +31,7 @@ export default function TabHost(props: Props) {
   const documents = serviceDocs.getDocuments();
   const docActive = serviceDocs.getActive();
 
+  // subscribe
   serviceDocs.useState();
 
   function handleTabClick(doc: types.Document) {
@@ -42,7 +43,8 @@ export default function TabHost(props: Props) {
   }
 
   function handleTabNew() {
-    serviceDocs.open('/ptys/333');
+    const ptyDoc = serviceDocs.addNewPtyDocument();
+    serviceDocs.open(ptyDoc.uri);
   }
 
   const $docs = documents.map(doc => (
@@ -67,13 +69,6 @@ export default function TabHost(props: Props) {
   );
 }
 
-type Props = {
-  [key: string]: any;
-};
-
-/**
- * Ensures that document is not getting re-rendered if it's invisible
- */
 function MemoizedDocument(props: { doc: types.Document; visible: boolean }) {
   const { doc, visible } = props;
   return React.useMemo(() => {
@@ -106,3 +101,7 @@ const StyledTabHost = styled.div`
   left: 0;
   right: 0;
 `;
+
+type Props = {
+  [key: string]: any;
+};

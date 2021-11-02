@@ -15,10 +15,9 @@ limitations under the License.
 */
 
 import 'xterm/css/xterm.css';
-
 import { Terminal } from 'xterm';
 import { FitAddon } from 'xterm-addon-fit';
-import { debounce, isInteger } from 'lodash';
+import { debounce } from 'lodash';
 import Logger from 'shared/libs/logger';
 import { PtyProcess } from 'teleterm/services/pty/types';
 
@@ -33,8 +32,6 @@ type Options = {
 
 class TtyTerminal {
   term: Terminal;
-  cols: number;
-  rows: number;
 
   _ptyProcess: PtyProcess;
   _el: HTMLElement;
@@ -43,11 +40,8 @@ class TtyTerminal {
   _debouncedResize: () => void;
 
   constructor(ptyProcess: PtyProcess, options: Options) {
-    const { el, scrollBack = 1000 } = options;
-    this._el = el;
+    this._el = options.el;
     this._ptyProcess = ptyProcess;
-    this.rows = undefined;
-    this.cols = undefined;
     this.term = null;
 
     this._debouncedResize = debounce(
@@ -71,47 +65,29 @@ class TtyTerminal {
       this._ptyProcess.write(data);
     });
 
-    this._ptyProcess.onData(this._processData.bind(this));
-
-    this._ptyProcess.start(this.term.cols, this.term.rows);
-
     this.term.onResize(size => {
       this._ptyProcess.resize(size.cols, size.rows);
     });
+
+    this._ptyProcess.onData(this._processData.bind(this));
+    this._ptyProcess.start(this.term.cols, this.term.rows);
 
     window.addEventListener('resize', this._debouncedResize);
   }
 
   destroy() {
-    window.removeEventListener('resize', this._debouncedResize);
-    this._ptyProcess.dispose();
+    if (this._ptyProcess != null) {
+      this._ptyProcess.dispose();
+    }
+
     if (this.term !== null) {
       this.term.dispose();
     }
 
+    this._fitAddon.dispose();
     this._el.innerHTML = null;
-  }
 
-  resize(cols, rows) {
-    try {
-      // if not defined, use the size of the container
-      if (!isInteger(cols) || !isInteger(rows)) {
-        const dim = this._getDimensions();
-        cols = dim.cols;
-        rows = dim.rows;
-      }
-
-      if (cols === this.cols && rows === this.rows) {
-        return;
-      }
-
-      this.cols = cols;
-      this.rows = rows;
-      this.term.resize(cols, rows);
-    } catch (err) {
-      logger.error('xterm.resize', { w: cols, h: rows }, err);
-      this.term.reset();
-    }
+    window.removeEventListener('resize', this._debouncedResize);
   }
 
   _processData(data) {
@@ -138,25 +114,6 @@ class TtyTerminal {
   _requestResize() {
     this._fitAddon.fit();
     this._ptyProcess.resize(this.term.cols, this.term.rows);
-  }
-
-  _getDimensions() {
-    const $terminal = this._el.querySelector('.terminal');
-
-    const $fakeRow = document.createElement('div');
-    $fakeRow.innerHTML = `<span>&nbsp;</span>`;
-    $terminal.appendChild($fakeRow);
-
-    const fakeColHeight = $fakeRow.getBoundingClientRect().height;
-    const fakeColWidth = $fakeRow.firstElementChild.getBoundingClientRect()
-      .width;
-    const width = this._el.clientWidth;
-    const height = this._el.clientHeight;
-    const cols = Math.floor(width / fakeColWidth);
-    const rows = Math.floor(height / fakeColHeight);
-
-    $terminal.removeChild($fakeRow);
-    return { cols, rows };
   }
 }
 

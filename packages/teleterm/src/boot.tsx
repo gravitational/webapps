@@ -11,10 +11,11 @@ import ServicePty from './ui/services/pty';
 const electronGlobals = window['electron'] as ElectronGlobals;
 const appContext = new AppContext();
 
-appContext.serviceClusters = new ServiceClusters(electronGlobals.tshClient);
+//fdf
+appContext.serviceClusters = new ServiceClusters(electronGlobals.tshdClient);
 appContext.serviceCommands = new ServiceCommands();
 appContext.serviceDocs = new ServiceDocs();
-appContext.servicePty = new ServicePty(electronGlobals.ptyManager);
+appContext.servicePty = new ServicePty(electronGlobals.ptyServiceClient);
 
 appContext.serviceClusters.fetchClusters();
 appContext.serviceClusters.fetchGateways();
