@@ -1,8 +1,36 @@
 const path = require('path');
+const { spawn } = require('child_process');
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const resolvepath = require('@gravitational/build/webpack/resolvepath');
 const createConfig = require('@gravitational/build/webpack/webpack.base');
 const baseCfg = createConfig();
+
+function onFirstBuildDonePlugin(env) {
+  let isInitialBuild = true;
+  return {
+    apply: compiler => {
+      compiler.hooks.done.tap('OnFirstBuildDonePlugin', compilation => {
+        if (!isInitialBuild) {
+          return;
+        }
+        isInitialBuild = false;
+
+        spawn(
+          'yarn',
+          ['start-electron'],
+          //      ['start-electron', '--inspect-brk=5858  --remote-debugging-port=9223'],
+          {
+            shell: true,
+            env,
+            stdio: 'inherit',
+          }
+        )
+          .on('close', code => process.exit(code))
+          .on('error', spawnError => console.error(spawnError));
+      });
+    },
+  };
+}
 
 var cfg = {
   entry: {
@@ -41,12 +69,6 @@ var cfg = {
     'node-pty': 'commonjs2 node-pty',
   },
 
-  //  externals: {
-  //    'node-pty': {
-  //      commonjs: 'node-pty',
-  //    },
-  //  },
-
   plugins: [new CleanWebpackPlugin()],
 
   /**
@@ -65,6 +87,7 @@ module.exports = (env, argv) => {
     process.env.BABEL_ENV = 'development';
     process.env.NODE_ENV = 'development';
     cfg.mode = 'development';
+    cfg.plugins.push(onFirstBuildDonePlugin(env));
   }
 
   if (argv.mode === 'production') {

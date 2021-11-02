@@ -34,21 +34,9 @@ export default function DocumentNodes(props: Props) {
   const { doc, visible } = props;
   const { servers, setSearchValue, searchValue } = useServers(doc);
 
-  function onLoginMenuSelect(
-    e: React.MouseEvent,
-    login: string,
-    serverId: string
-  ) {
-    // allow to open a new browser tab (not the console one) when requested
-    const newBrowserTabRequested = e.ctrlKey || e.metaKey;
-    if (!newBrowserTabRequested) {
-      e.preventDefault();
-    }
-  }
+  function onQuickLaunchEnter() {}
 
-  function onQuickLaunchEnter(login: string, serverId: string) {}
-
-  function onLoginMenuOpen(serverId: string) {
+  function onLoginMenuOpen() {
     return [];
   }
 
@@ -67,8 +55,7 @@ export default function DocumentNodes(props: Props) {
           </Flex>
           <ServerList
             searchValue={searchValue}
-            onLoginMenuOpen={onLoginMenuOpen}
-            onLoginSelect={onLoginMenuSelect}
+            onLogin={onLoginMenuOpen}
             servers={servers}
           />
         </Container>

@@ -7,10 +7,10 @@
   "license": "Apache-2.0",
   "scripts": {
     "start": "webpack-dev-server --config webpack.renderer.dev.config.js --progress",
-    "start-electron": "yarn build-main-dev && electron build/app/dist/main/main.js",
+    "start-main": "g-build --config webpack.main.config.js --progress --mode=development --watch",
+    "start-electron": "electron build/app/dist/main/main.js",
     "build": "yarn build-main && yarn build-renderer",
     "build-main": "g-build --config webpack.main.config.js --progress --bail --mode=production",
-    "build-main-dev": "g-build --config webpack.main.config.js --progress --mode=development",
     "build-renderer": "g-build --config webpack.renderer.prod.config.js --progress --bail",
     "package": "electron-builder build --publish never"
   },

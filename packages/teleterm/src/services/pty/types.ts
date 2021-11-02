@@ -1,4 +1,6 @@
-export type PtyOptions = {};
+export type PtyOptions = {
+  env?: { [key: string]: string };
+};
 
 export type PtyProcess = {
   write(data: string): void;
@@ -8,6 +10,6 @@ export type PtyProcess = {
   start(cols: number, rows: number): void;
 };
 
-export type PtyManager = {
+export type PtyServiceClient = {
   createPtyProcess: (options: PtyOptions) => PtyProcess;
 };

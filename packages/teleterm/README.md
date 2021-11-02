@@ -1,0 +1,139 @@
+## Teleport Terminal
+
+Teleport Terminal is a desktop application that allows easy access to Teleport resources.
+
+### Diagram
+```pro
+                                                  +------------+
+                                                  |            |
+                                          +-------+---------+  |
+                                          |                 |  |
+                                          |    teleport     +--+
+                                          |     clusters    |
+                                          |                 |
+                                          +------+-+--------+
+                                                 ^ ^           External Network
++------------------------------------------------|-|---------------------+
+                                                 | |           Host OS
+           Clients (psql)                        | |
+              |                                  | |
+              v                                  | |
+     +--------+---------------+                  | |
+     |                        |        SNI/ALPN  | | GRPC
+  +--+----------------------+ |         routing  | |
+  |                         | |                  | |
+  |     proxy connections   +-+                  | |
+  |                         |                    | |
+  +-------------------+-----+                    | |
+                      ^                          | |
+                      |                          | |
+  +---------------+   | tls/tcp on localhost     | |
+  |    local      |   |                          | |
+  | user profile  |   |                          v v
+  |   (files)     |   |                   +------+-+-------------------+
+  +-------^-------+   |                   |                            |
+          ^           +-------------------+      Terminal Daemon       |
+          |                               |          (tshd)            |
+          +<------------------------------+                            |
+          |                               +-------------+--------------+
+ +--------+-----------------+                           ^
+ |         Terminal         |                           |
+ |    Electron Main Process |                           |     GRPC
+ +-----------+--------------+                           | (domain socket)
+             ^                                          |
+             |                                          |
+    IPC      |                                          |
+ named pipes |                                          |
+             v  Terminal UI (Electron Renderer Process) |
+ +-----------+------------+---------------------------------------------+
+ | -gateways              | root@node1 × | k8s_c  × | rdp_win2 ×  |     |
+ |   https://localhost:22 +---------------------------------------------+
+ |   https://localhost:21 |                                             |
+ +------------------------+ ./                                          |
+ | -clusters              | ../                                         |
+ |  -cluster1             | assets/                                     |
+ |   +servers             | babel.config.js                             |
+ |     node1              | build/                                      |
+ |     node2              | src/                                        |
+ |   -dbs                 | alexey@p14s:~/go/src/                       |
+ |    mysql+prod          |                                             |
+ |    mysql+test          |                                             |
+ |  +cluster2             |                                             |
+ |  +cluster3             |                                             |
+ +------------------------+---------------------------------------------+
+```
+
+### Development
+
+ Teleport Terminal consists of two main components: the `tsh` service that runs as a deamon and the main app.
+
+
+#### How to build tsh
+
+1. Get Teleport source code and build it locally
+
+```sh
+# get the source code and build:
+$ git clone https://github.com/gravitational/teleport.git
+$ cd teleport
+$ make
+```
+
+The build output could be found in the `/teleport/build` directory
+
+```pro
+build/
+├── tctl
+├── teleport
+└── tsh     <--- will be packaged together with Electron app.
+```
+
+#### How to start local dev server.
+
+1. Clone Gravitational [webapps repository](https://github.com/gravitational/webapps)
+
+2. Start the server
+
+```sh
+$ cd webapps
+
+## TELETERM_TSH_PATH is the environment variable that points to local tsh binary
+$ TELETERM_TSH_PATH=../teleport/build/tsh yarn start-term
+```
+
+This will start Teleport Terminal in development mode. To restart main process press `F6`.
+
+### Tips
+
+
+1. To rebuild and update `tsh` grpc proto files
+
+```sh
+$ cd teleport
+$ make grpc
+```
+
+Resulting files both `nodejs` and `golang` can be found in `/teleport/lib/teleterm/api/protogen/` directory.
+
+```pro
+lib/teleterm/api/protogen/
+├── golang
+│   └── v1
+│       ├── auth_challenge.pb.go
+│       ├── auth_settings.pb.go
+│       ├── ...
+│       └── ...
+└── js
+    └── v1
+        ├── service_grpc_pb.js
+        ├── service_pb.d.ts
+        └── ...
+```
+
+2. Update `nodejs` files by copying them to the `/webapps/packages/teleterm/src/services/tshd/` location
+
+```sh
+$ cd teleport
+$ rm -rf ./../webapps/packages/teleterm/src/services/tshd/v1/ && cp -R lib/teleterm/api/protogen/js/v1/ ./../webapps/packages/teleterm/src/services/tshd/
+```
+

@@ -1,9 +1,14 @@
 import { contextBridge } from 'electron';
-import createApiClient from 'teleterm/services/tshd/electron/createClient';
+import createTshdClient from 'teleterm/services/tshd/createClient';
+import createPtyService from 'teleterm/services/pty/ptyService';
+import createMainProcessClient from 'teleterm/mainProcess/mainProcessClient';
 import { ElectronGlobals } from './types';
-import createPtyManager from 'teleterm/services/pty/createPtyManager';
+
+const mainProcessClient = createMainProcessClient();
+const cfg = mainProcessClient.getConfig();
 
 contextBridge.exposeInMainWorld('electron', {
-  tshClient: createApiClient('unix:///tmp/mama/tshd.socket'),
-  ptyManager: createPtyManager(),
+  mainProcessClient,
+  tshdClient: createTshdClient(cfg.tshd.networkAddr),
+  ptyServiceClient: createPtyService(cfg.tshd.homeDir),
 } as ElectronGlobals);

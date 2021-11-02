@@ -12,7 +12,7 @@ export type AuthSettings = apiAuthSettings.AuthSettings.AsObject;
 export type AuthProvider = apiAuthSettings.AuthProvider.AsObject;
 export type AuthProviderType = 'oidc' | 'saml' | 'github';
 
-export type ApiClient = {
+export type TshdClient = {
   listGateways: () => Promise<Gateway[]>;
   listClusters: () => Promise<Cluster[]>;
   listDatabases: (clusterUri: string) => Promise<Database[]>;

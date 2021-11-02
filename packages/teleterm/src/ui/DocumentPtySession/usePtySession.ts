@@ -16,9 +16,8 @@ limitations under the License.
 
 import React from 'react';
 import { useAppContext } from 'teleterm/ui/appContextProvider';
-import * as types from 'teleterm/ui/types';
 
-export default function useSshSession(doc: types.DocumentPtySession) {
+export default function usePtySession() {
   const ctx = useAppContext();
   const ptyProcess = React.useMemo(() => ctx.servicePty.createPtyProcess(), []);
 

@@ -17,6 +17,7 @@ limitations under the License.
 import { Store, useStore } from 'shared/libs/stores';
 import uris from 'teleterm/ui/uris';
 import { Document } from 'teleterm/ui/types';
+import { unique } from 'teleterm/ui/utils/uid';
 
 type State = {
   location: string;
@@ -42,6 +43,7 @@ export default class DocumentService extends Store<State> {
     ],
   };
 
+  // TODO (alex-kovoy): replace it with a proper route->doc registration mechanism
   open(uri: string) {
     const clusterMatch = uris.match(uri, uris.routes.cluster);
     const homeMatch = uris.match(uri, uris.routes.home);
@@ -190,5 +192,18 @@ export default class DocumentService extends Store<State> {
 
   useState() {
     return useStore(this).state;
+  }
+
+  addNewPtyDocument() {
+    const doc: Document = {
+      uri: uris.getUriPty({ sid: unique() }),
+      title: 'Terminal',
+      kind: 'pty_session',
+      created: new Date(),
+    };
+
+    this.add(doc);
+
+    return doc;
   }
 }

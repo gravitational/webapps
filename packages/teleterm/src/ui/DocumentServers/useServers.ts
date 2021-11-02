@@ -28,8 +28,6 @@ export default function useServers({ clusterUri }: types.DocumentServers) {
     return ctx.serviceClusters.fetchServers(clusterUri);
   });
 
-  const logins = ['root'];
-
   const onLogin = (serverUri: '') =>
     ctx.serviceCommands.sendCommand({
       kind: 'dialog.ssh-new-session.open',
