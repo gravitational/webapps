@@ -16,6 +16,9 @@
 
 import { RecoveryCodes } from './types';
 
+// makeRecoveryCodes makes the response from a successful user reset or invite.
+// Only teleport cloud and users with valid emails as username will receive
+// recovery codes.
 export function makeRecoveryCodes(json): RecoveryCodes {
   json = json || {};
 
