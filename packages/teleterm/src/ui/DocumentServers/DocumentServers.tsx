@@ -32,13 +32,9 @@ type Props = {
 
 export default function DocumentNodes(props: Props) {
   const { doc, visible } = props;
-  const { servers, setSearchValue, searchValue } = useServers(doc);
+  const { servers, setSearchValue, connect, searchValue } = useServers(doc);
 
   function onQuickLaunchEnter() {}
-
-  function onLoginMenuOpen() {
-    return [];
-  }
 
   return (
     <ThemeProviderTabs>
@@ -55,7 +51,7 @@ export default function DocumentNodes(props: Props) {
           </Flex>
           <ServerList
             searchValue={searchValue}
-            onLogin={onLoginMenuOpen}
+            onLogin={connect}
             servers={servers}
           />
         </Container>

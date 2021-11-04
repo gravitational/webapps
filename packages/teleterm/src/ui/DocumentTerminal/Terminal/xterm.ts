@@ -60,7 +60,6 @@ class TtyTerminal {
 
     this._fitAddon.fit();
 
-    // subscribe to xtermjs output
     this.term.onData(data => {
       this._ptyProcess.write(data);
     });

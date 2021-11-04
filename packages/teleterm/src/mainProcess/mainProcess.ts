@@ -59,8 +59,6 @@ export default class MainProcess {
     const { binaryPath, flags, homeDir } = this.cfg.tshd;
     this.tshdProcess = spawn(binaryPath, flags, {
       stdio: 'inherit',
-      //detached: true,
-      //      shell: true,
       env: {
         TELEPORT_HOME: homeDir,
       },

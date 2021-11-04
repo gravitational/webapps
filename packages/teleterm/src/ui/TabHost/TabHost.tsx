@@ -24,7 +24,7 @@ import DocumentHome from 'teleterm/ui/DocumentHome';
 import DocumentServers from 'teleterm/ui/DocumentServers';
 import DocumentDbs from 'teleterm/ui/DocumentDbs';
 import DocumentGateway from 'teleterm/ui/DocumentGateway';
-import DocumentPtySession from 'teleterm/ui/DocumentPtySession';
+import DocumentTerminal from 'teleterm/ui/DocumentTerminal';
 
 export default function TabHost(props: Props) {
   const { serviceDocs } = useAppContext();
@@ -43,8 +43,8 @@ export default function TabHost(props: Props) {
   }
 
   function handleTabNew() {
-    const ptyDoc = serviceDocs.addNewPtyDocument();
-    serviceDocs.open(ptyDoc.uri);
+    const doc = serviceDocs.addNewTerminalShellDocument();
+    serviceDocs.open(doc.uri);
   }
 
   const $docs = documents.map(doc => (
@@ -81,8 +81,9 @@ function MemoizedDocument(props: { doc: types.Document; visible: boolean }) {
         return <DocumentDbs doc={doc} visible={visible} />;
       case 'gateway':
         return <DocumentGateway doc={doc} visible={visible} />;
-      case 'pty_session':
-        return <DocumentPtySession doc={doc} visible={visible} />;
+      case 'terminal_shell':
+      case 'terminal_tsh_session':
+        return <DocumentTerminal doc={doc} visible={visible} />;
 
       default:
         return null;

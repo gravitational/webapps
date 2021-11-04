@@ -32,13 +32,11 @@ export default class DocumentService extends Store<State> {
         uri: '/',
         kind: 'blank',
         title: 'Welcome',
-        created: new Date(),
       },
       {
         uri: '/home',
         kind: 'home',
         title: 'Home',
-        created: new Date(),
       },
     ],
   };
@@ -59,23 +57,19 @@ export default class DocumentService extends Store<State> {
       ? uris.getUriCluster(clusterMatch.params)
       : '';
 
-    const created = new Date();
-
     if (this.find(uri)) {
       // do nothing
     } else if (ptyMatch) {
       this.add({
         uri,
         title: 'dir/path',
-        kind: 'pty_session',
-        created,
+        kind: 'terminal_shell',
       });
     } else if (homeMatch) {
       this.add({
         uri,
         title: 'Home',
         kind: 'home',
-        created,
       });
     } else if (srvMatch) {
       this.add({
@@ -83,7 +77,6 @@ export default class DocumentService extends Store<State> {
         clusterUri,
         title: 'Servers',
         kind: 'servers',
-        created,
       });
     } else if (dbsMatch) {
       this.add({
@@ -91,7 +84,6 @@ export default class DocumentService extends Store<State> {
         clusterUri,
         title: 'Databases',
         kind: 'dbs',
-        created,
       });
     } else if (gwMatch) {
       this.add({
@@ -99,14 +91,12 @@ export default class DocumentService extends Store<State> {
         clusterUri,
         title: 'Gateway',
         kind: 'gateway',
-        created,
       });
     } else {
       this.add({
         uri,
         title: 'not-found',
         kind: 'blank',
-        created,
       });
     }
 
@@ -194,12 +184,11 @@ export default class DocumentService extends Store<State> {
     return useStore(this).state;
   }
 
-  addNewPtyDocument() {
+  addNewTerminalShellDocument() {
     const doc: Document = {
       uri: uris.getUriPty({ sid: unique() }),
       title: 'Terminal',
-      kind: 'pty_session',
-      created: new Date(),
+      kind: 'terminal_shell',
     };
 
     this.add(doc);

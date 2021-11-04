@@ -19,6 +19,7 @@ import { useAppContext } from 'teleterm/ui/appContextProvider';
 import ClusterAdd from 'teleterm/ui/ClusterAdd';
 import ClusterLogin from 'teleterm/ui/ClusterLogin';
 import GatewayCreate from 'teleterm/ui/GatewayCreate';
+import ServerConnect from 'teleterm/ui/ServerConnect';
 
 export default function DialogHost() {
   const { serviceCommands } = useAppContext();
@@ -49,6 +50,17 @@ export default function DialogHost() {
     return (
       <GatewayCreate
         targetUri={cmd.targetUri}
+        onClose={() =>
+          serviceCommands.sendCommand({ kind: 'dialog.cluster-login.close' })
+        }
+      />
+    );
+  }
+
+  if (cmd.kind === 'open-server-connect') {
+    return (
+      <ServerConnect
+        serverUri={cmd.serverUri}
         onClose={() =>
           serviceCommands.sendCommand({ kind: 'dialog.cluster-login.close' })
         }

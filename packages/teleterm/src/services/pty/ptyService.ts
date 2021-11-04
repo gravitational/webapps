@@ -1,12 +1,12 @@
-import * as types from './types';
 import PtyProcess, { TermEventEnum } from './ptyProcess';
+import { PtyOptions, PtyCommand } from './types';
 
 export default function createPtyService(homeDir: string) {
   return {
-    createPtyProcess(options: types.PtyOptions) {
-      options.env = {
-        TELEPORT_HOME: homeDir,
-      };
+    createPtyProcess(cmd: PtyCommand) {
+      let options = buildOptions(cmd);
+
+      options.env['TELEPORT_HOME'] = homeDir;
 
       let _ptyProcess = new PtyProcess(options);
 
@@ -37,4 +37,30 @@ export default function createPtyService(homeDir: string) {
       };
     },
   };
+}
+
+function buildOptions(cmd: PtyCommand): PtyOptions {
+  switch (cmd.kind) {
+    case 'new-shell':
+      return {
+        path: 'bash',
+        args: [],
+        env: {},
+      };
+
+    case 'tsh-login':
+      return {
+        path:
+          '/home/alexey/go/src/github.com/gravitational/teleport/e/build/tsh',
+        args: [
+          `--proxy=${cmd.clusterId}`,
+          'ssh',
+          `${cmd.login}@${cmd.clusterId}`,
+        ],
+        env: {},
+      };
+    default:
+  }
+
+  throw Error(`Unknown pty command type: ${cmd.kind}`);
 }
