@@ -16,79 +16,34 @@ limitations under the License.
 
 import { EventEmitter } from 'events';
 import { Logger } from 'shared/libs/logger';
-import * as types from './types';
+import { PtyOptions } from './types';
 import * as nodePTY from 'node-pty';
 
 class PtyProcess extends EventEmitter {
-  _options: types.PtyOptions;
+  _options: PtyOptions;
   _buffered = true;
   _attachedBufferTimer;
   _attachedBuffer: string;
   _process: nodePTY.IPty;
   _logger: Logger;
 
-  constructor(options: types.PtyOptions) {
+  constructor(options: PtyOptions) {
     super();
-    this._options = options || {};
+    this._options = options;
     this._logger = new Logger();
   }
 
-  //  runCmd() {
-
-  /*
-
-      cmd.getPath();
-      cmd.getCwd();
-      cmd.getEnv();
-      cmd.getArgs();
-
-
-      ptyService.createSshCommand(clusterId, nodeId, login){
-        const cmd = new TshSshCommand()
-
-
-      }
-
-
-
-
-
-          this._process = nodePTY.spawn(
-            'bash',
-            [],
-            //'/home/alexey/go/src/github.com/gravitational/teleport/e/build/tsh',
-            //['--proxy=localhost', 'ssh', 'root@p14s'],
-            {
-              cols,
-              rows,
-              name: 'xterm-color',
-              cwd: process.cwd(),
-              env: {
-                ...process.env,
-                TELEPORT_CLUSTER: 'p14s',
-              },
-            }
-          );
-        }
-    */
-
   start(cols: number, rows: number) {
-    this._process = nodePTY.spawn(
-      'bash',
-      [],
-      //'/home/alexey/go/src/github.com/gravitational/teleport/e/build/tsh',
-      //['--proxy=localhost', 'ssh', 'root@p14s'],
-      {
-        cols,
-        rows,
-        name: 'xterm-color',
-        cwd: process.cwd(),
-        env: {
-          ...process.env,
-          ...this._options.env,
-        },
-      }
-    );
+    this._process = nodePTY.spawn(this._options.path, this._options.args, {
+      cols,
+      rows,
+      name: 'xterm-color',
+      cwd: process.cwd(),
+      env: {
+        ...process.env,
+        ...this._options.env,
+      },
+    });
 
     this._process.onData(data => this._onData(data));
     this._process.onExit(ev => this._onExit(ev));

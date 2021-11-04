@@ -26,13 +26,13 @@ export type DocumentKind =
   | 'clusters'
   | 'dbs'
   | 'gateway'
-  | 'pty_session';
+  | 'terminal_shell'
+  | 'terminal_tsh_session';
 
 interface DocumentBase {
   uri: string;
   title: string;
   kind: DocumentKind;
-  created: Date;
 }
 
 export interface DocumentHome extends DocumentBase {
@@ -43,12 +43,11 @@ export interface DocumentBlank extends DocumentBase {
   kind: 'blank';
 }
 
-export interface DocumentSsh extends DocumentBase {
-  status: 'connected' | 'disconnected';
-  kind: 'terminal';
-  sid?: string;
+export interface DocumentTshSession extends DocumentBase {
+  status: 'connecting' | 'connected' | 'disconnected';
+  kind: 'terminal_tsh_session';
   serverId: string;
-  clusterId?: string;
+  clusterId: string;
   login: string;
 }
 
@@ -68,16 +67,16 @@ export interface DocumentGateway extends DocumentBase {
 }
 
 export interface DocumentPtySession extends DocumentBase {
-  kind: 'pty_session';
+  kind: 'terminal_shell';
 }
 
 export type Document =
   | DocumentServers
-  | DocumentSsh
   | DocumentHome
   | DocumentBlank
   | DocumentDatabases
   | DocumentGateway
+  | DocumentTshSession
   | DocumentPtySession;
 
 export interface UriParams {

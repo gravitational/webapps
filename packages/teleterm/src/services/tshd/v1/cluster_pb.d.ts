@@ -17,10 +17,10 @@ export class Cluster extends jspb.Message {
     setConnected(value: boolean): Cluster;
 
 
-    hasAcl(): boolean;
-    clearAcl(): void;
-    getAcl(): ClusterACL | undefined;
-    setAcl(value?: ClusterACL): Cluster;
+    hasLoggedInUser(): boolean;
+    clearLoggedInUser(): void;
+    getLoggedInUser(): LoggedInUser | undefined;
+    setLoggedInUser(value?: LoggedInUser): Cluster;
 
 
     serializeBinary(): Uint8Array;
@@ -38,100 +38,135 @@ export namespace Cluster {
         uri: string,
         name: string,
         connected: boolean,
-        acl?: ClusterACL.AsObject,
+        loggedInUser?: LoggedInUser.AsObject,
     }
 }
 
-export class ClusterACL extends jspb.Message { 
+export class LoggedInUser extends jspb.Message { 
+    getName(): string;
+    setName(value: string): LoggedInUser;
+
+    clearRolesList(): void;
+    getRolesList(): Array<string>;
+    setRolesList(value: Array<string>): LoggedInUser;
+    addRoles(value: string, index?: number): string;
+
+    clearSshLoginsList(): void;
+    getSshLoginsList(): Array<string>;
+    setSshLoginsList(value: Array<string>): LoggedInUser;
+    addSshLogins(value: string, index?: number): string;
+
+
+    hasAcl(): boolean;
+    clearAcl(): void;
+    getAcl(): ACL | undefined;
+    setAcl(value?: ACL): LoggedInUser;
+
+
+    serializeBinary(): Uint8Array;
+    toObject(includeInstance?: boolean): LoggedInUser.AsObject;
+    static toObject(includeInstance: boolean, msg: LoggedInUser): LoggedInUser.AsObject;
+    static extensions: {[key: number]: jspb.ExtensionFieldInfo<jspb.Message>};
+    static extensionsBinary: {[key: number]: jspb.ExtensionFieldBinaryInfo<jspb.Message>};
+    static serializeBinaryToWriter(message: LoggedInUser, writer: jspb.BinaryWriter): void;
+    static deserializeBinary(bytes: Uint8Array): LoggedInUser;
+    static deserializeBinaryFromReader(message: LoggedInUser, reader: jspb.BinaryReader): LoggedInUser;
+}
+
+export namespace LoggedInUser {
+    export type AsObject = {
+        name: string,
+        rolesList: Array<string>,
+        sshLoginsList: Array<string>,
+        acl?: ACL.AsObject,
+    }
+}
+
+export class ACL extends jspb.Message { 
 
     hasSessions(): boolean;
     clearSessions(): void;
     getSessions(): ResourceAccess | undefined;
-    setSessions(value?: ResourceAccess): ClusterACL;
+    setSessions(value?: ResourceAccess): ACL;
 
 
     hasAuthConnectors(): boolean;
     clearAuthConnectors(): void;
     getAuthConnectors(): ResourceAccess | undefined;
-    setAuthConnectors(value?: ResourceAccess): ClusterACL;
+    setAuthConnectors(value?: ResourceAccess): ACL;
 
 
     hasRoles(): boolean;
     clearRoles(): void;
     getRoles(): ResourceAccess | undefined;
-    setRoles(value?: ResourceAccess): ClusterACL;
+    setRoles(value?: ResourceAccess): ACL;
 
 
     hasUsers(): boolean;
     clearUsers(): void;
     getUsers(): ResourceAccess | undefined;
-    setUsers(value?: ResourceAccess): ClusterACL;
+    setUsers(value?: ResourceAccess): ACL;
 
 
     hasTrustedClusters(): boolean;
     clearTrustedClusters(): void;
     getTrustedClusters(): ResourceAccess | undefined;
-    setTrustedClusters(value?: ResourceAccess): ClusterACL;
+    setTrustedClusters(value?: ResourceAccess): ACL;
 
 
     hasEvents(): boolean;
     clearEvents(): void;
     getEvents(): ResourceAccess | undefined;
-    setEvents(value?: ResourceAccess): ClusterACL;
+    setEvents(value?: ResourceAccess): ACL;
 
 
     hasTokens(): boolean;
     clearTokens(): void;
     getTokens(): ResourceAccess | undefined;
-    setTokens(value?: ResourceAccess): ClusterACL;
+    setTokens(value?: ResourceAccess): ACL;
 
 
     hasServers(): boolean;
     clearServers(): void;
     getServers(): ResourceAccess | undefined;
-    setServers(value?: ResourceAccess): ClusterACL;
+    setServers(value?: ResourceAccess): ACL;
 
 
     hasApps(): boolean;
     clearApps(): void;
     getApps(): ResourceAccess | undefined;
-    setApps(value?: ResourceAccess): ClusterACL;
+    setApps(value?: ResourceAccess): ACL;
 
 
     hasDbs(): boolean;
     clearDbs(): void;
     getDbs(): ResourceAccess | undefined;
-    setDbs(value?: ResourceAccess): ClusterACL;
+    setDbs(value?: ResourceAccess): ACL;
 
 
     hasKubeservers(): boolean;
     clearKubeservers(): void;
     getKubeservers(): ResourceAccess | undefined;
-    setKubeservers(value?: ResourceAccess): ClusterACL;
-
-    clearSshLoginsList(): void;
-    getSshLoginsList(): Array<string>;
-    setSshLoginsList(value: Array<string>): ClusterACL;
-    addSshLogins(value: string, index?: number): string;
+    setKubeservers(value?: ResourceAccess): ACL;
 
 
     hasAccessRequests(): boolean;
     clearAccessRequests(): void;
     getAccessRequests(): ResourceAccess | undefined;
-    setAccessRequests(value?: ResourceAccess): ClusterACL;
+    setAccessRequests(value?: ResourceAccess): ACL;
 
 
     serializeBinary(): Uint8Array;
-    toObject(includeInstance?: boolean): ClusterACL.AsObject;
-    static toObject(includeInstance: boolean, msg: ClusterACL): ClusterACL.AsObject;
+    toObject(includeInstance?: boolean): ACL.AsObject;
+    static toObject(includeInstance: boolean, msg: ACL): ACL.AsObject;
     static extensions: {[key: number]: jspb.ExtensionFieldInfo<jspb.Message>};
     static extensionsBinary: {[key: number]: jspb.ExtensionFieldBinaryInfo<jspb.Message>};
-    static serializeBinaryToWriter(message: ClusterACL, writer: jspb.BinaryWriter): void;
-    static deserializeBinary(bytes: Uint8Array): ClusterACL;
-    static deserializeBinaryFromReader(message: ClusterACL, reader: jspb.BinaryReader): ClusterACL;
+    static serializeBinaryToWriter(message: ACL, writer: jspb.BinaryWriter): void;
+    static deserializeBinary(bytes: Uint8Array): ACL;
+    static deserializeBinaryFromReader(message: ACL, reader: jspb.BinaryReader): ACL;
 }
 
-export namespace ClusterACL {
+export namespace ACL {
     export type AsObject = {
         sessions?: ResourceAccess.AsObject,
         authConnectors?: ResourceAccess.AsObject,
@@ -144,7 +179,6 @@ export namespace ClusterACL {
         apps?: ResourceAccess.AsObject,
         dbs?: ResourceAccess.AsObject,
         kubeservers?: ResourceAccess.AsObject,
-        sshLoginsList: Array<string>,
         accessRequests?: ResourceAccess.AsObject,
     }
 }

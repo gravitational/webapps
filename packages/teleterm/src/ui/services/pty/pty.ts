@@ -7,8 +7,8 @@ export default class PtyService {
     this.ptyProvider = ptyProvider;
   }
 
-  createPtyProcess() {
-    return this.ptyProvider.createPtyProcess({});
+  createPtyProcess(cmd: types.PtyCommand) {
+    return this.ptyProvider.createPtyProcess(cmd);
   }
 }
 

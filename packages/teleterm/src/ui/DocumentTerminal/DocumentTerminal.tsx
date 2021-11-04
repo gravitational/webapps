@@ -16,13 +16,13 @@ limitations under the License.
 
 import React, { useRef, useEffect } from 'react';
 import Document from 'teleterm/ui/Document';
-import * as types from 'teleterm/ui/types';
-import usePtySession from './usePtySession';
+import useDocumentTerminal, { Props } from './useDocTerminal';
 import Terminal from './Terminal';
 
-export default function DocumentSsh({ doc, visible }: PropTypes) {
+export default function DocumentTerminal(props: Props & { visible: boolean }) {
+  const { visible, doc } = props;
   const refTerminal = useRef<Terminal>();
-  const { ptyProcess } = usePtySession(doc);
+  const { ptyProcess } = useDocumentTerminal(doc);
 
   useEffect(() => {
     if (refTerminal && refTerminal.current) {
@@ -36,9 +36,4 @@ export default function DocumentSsh({ doc, visible }: PropTypes) {
       <Terminal ptyProcess={ptyProcess} ref={refTerminal} />
     </Document>
   );
-}
-
-interface PropTypes {
-  doc: types.DocumentPtySession;
-  visible: boolean;
 }
