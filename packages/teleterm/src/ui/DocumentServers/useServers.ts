@@ -28,9 +28,9 @@ export default function useServers({ clusterUri }: types.DocumentServers) {
     return ctx.serviceClusters.fetchServers(clusterUri);
   });
 
-  const onLogin = (serverUri: '') =>
+  const connect = (serverUri: '') =>
     ctx.serviceCommands.sendCommand({
-      kind: 'dialog.ssh-new-session.open',
+      kind: 'open-server-connect',
       serverUri,
     });
 
@@ -45,7 +45,7 @@ export default function useServers({ clusterUri }: types.DocumentServers) {
   return {
     searchValue,
     setSearchValue,
-    onLogin,
+    connect,
     servers,
     loadAttempt,
   };

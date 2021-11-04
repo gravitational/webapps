@@ -1,5 +1,5 @@
 /*
-Copyright 2020 Gravitational, Inc.
+Copyright 2019 Gravitational, Inc.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -14,22 +14,5 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React from 'react';
-import { useAppContext } from 'teleterm/ui/appContextProvider';
-
-export default function usePtySession() {
-  const ctx = useAppContext();
-  const ptyProcess = React.useMemo(() => ctx.servicePty.createPtyProcess(), []);
-
-  React.useEffect(() => {
-    const cleanup = () => {
-      ptyProcess.dispose();
-    };
-
-    return cleanup;
-  }, []);
-
-  return {
-    ptyProcess,
-  };
-}
+import DocumentTerminal from './DocumentTerminal';
+export default DocumentTerminal;

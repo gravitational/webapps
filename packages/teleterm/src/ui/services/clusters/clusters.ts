@@ -127,6 +127,12 @@ export default class TshService extends Store<State> {
     return this.state.clusters.get(clusterUri);
   }
 
+  findClusterByResource(resourceUri: string) {
+    return [...this.state.clusters.values()].find(c =>
+      resourceUri.startsWith(c.uri)
+    );
+  }
+
   findDbs(clusterUri: string) {
     return [...this.state.dbs.values()].filter(db =>
       db.uri.startsWith(clusterUri)
