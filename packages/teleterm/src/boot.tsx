@@ -5,18 +5,18 @@ import { ElectronGlobals } from './types';
 import AppContext from './ui/appContext';
 import ServiceClusters from './ui/services/clusters';
 import ServiceDocs from './ui/services/docs';
-import ServiceCommands from './ui/services/commands';
-import ServicePty from './ui/services/pty';
+import ServiceModals from './ui/services/modals';
+import ServiceTerminals from './ui/services/terminals';
 
 const electronGlobals = window['electron'] as ElectronGlobals;
 const appContext = new AppContext();
 
-//fdf
 appContext.serviceClusters = new ServiceClusters(electronGlobals.tshdClient);
-appContext.serviceCommands = new ServiceCommands();
+appContext.serviceModals = new ServiceModals();
 appContext.serviceDocs = new ServiceDocs();
-appContext.servicePty = new ServicePty(electronGlobals.ptyServiceClient);
-
+appContext.serviceTerminals = new ServiceTerminals(
+  electronGlobals.ptyServiceClient
+);
 appContext.serviceClusters.fetchClusters();
 appContext.serviceClusters.fetchGateways();
 

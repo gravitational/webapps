@@ -5,10 +5,12 @@ import createMainProcessClient from 'teleterm/mainProcess/mainProcessClient';
 import { ElectronGlobals } from './types';
 
 const mainProcessClient = createMainProcessClient();
-const cfg = mainProcessClient.getConfig();
+const runtimeSettings = mainProcessClient.getRuntimeSettings();
+const tshdClient = createTshdClient(runtimeSettings.tshd.networkAddr);
+const ptyServiceClient = createPtyService(runtimeSettings);
 
 contextBridge.exposeInMainWorld('electron', {
   mainProcessClient,
-  tshdClient: createTshdClient(cfg.tshd.networkAddr),
-  ptyServiceClient: createPtyService(cfg.tshd.homeDir),
+  tshdClient,
+  ptyServiceClient,
 } as ElectronGlobals);

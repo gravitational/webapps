@@ -16,15 +16,15 @@ limitations under the License.
 
 import uris from './uris';
 import ServiceClusters from 'teleterm/ui/services/clusters';
-import ServiceCommands from 'teleterm/ui/services/commands';
+import ServiceModals from 'teleterm/ui/services/modals';
 import ServiceDocs from 'teleterm/ui/services/docs';
-import ServicePty from 'teleterm/ui/services/pty';
+import ServiceTerminals from 'teleterm/ui/services/terminals';
 
 export default class AppContext {
   serviceClusters: ServiceClusters;
-  serviceCommands: ServiceCommands;
+  serviceModals: ServiceModals;
   serviceDocs: ServiceDocs;
-  servicePty: ServicePty;
+  serviceTerminals: ServiceTerminals;
 
   uris = uris;
 

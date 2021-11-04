@@ -29,7 +29,7 @@ export default function useExpanderClusters() {
   }, [clusters]);
 
   function addCluster() {
-    ctx.serviceCommands.sendCommand({ kind: 'dialog.cluster-add-new.open' });
+    ctx.serviceModals.openDialog({ kind: 'add-cluster' });
   }
 
   return {

@@ -22,11 +22,14 @@ export default function useDocumentTerminal(doc: Props['doc']) {
   const ctx = useAppContext();
   const ptyProcess = React.useMemo(() => {
     if (doc.kind === 'terminal_tsh_session') {
-      return ctx.servicePty.createPtyProcess({ ...doc, kind: 'tsh-login' });
+      return ctx.serviceTerminals.createPtyProcess({
+        ...doc,
+        kind: 'tsh-login',
+      });
     }
 
     if (doc.kind === 'terminal_shell') {
-      return ctx.servicePty.createPtyProcess({ kind: 'new-shell' });
+      return ctx.serviceTerminals.createPtyProcess({ kind: 'new-shell' });
     }
   }, []);
 

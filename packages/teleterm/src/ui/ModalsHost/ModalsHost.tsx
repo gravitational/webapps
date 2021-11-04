@@ -21,49 +21,37 @@ import ClusterLogin from 'teleterm/ui/ClusterLogin';
 import GatewayCreate from 'teleterm/ui/GatewayCreate';
 import ServerConnect from 'teleterm/ui/ServerConnect';
 
-export default function DialogHost() {
-  const { serviceCommands } = useAppContext();
-  const cmd = serviceCommands.useState();
+export default function ModalsHost() {
+  const { serviceModals } = useAppContext();
+  const dialog = serviceModals.useState();
 
-  if (cmd.kind === 'dialog.cluster-add-new.open') {
-    return (
-      <ClusterAdd
-        onClose={() =>
-          serviceCommands.sendCommand({ kind: 'dialog.cluster-add-new.close' })
-        }
-      />
-    );
+  if (dialog.kind === 'add-cluster') {
+    return <ClusterAdd onClose={() => serviceModals.openDialog(dialog)} />;
   }
 
-  if (cmd.kind === 'dialog.cluster-login.open') {
+  if (dialog.kind === 'cluster-login') {
     return (
       <ClusterLogin
-        clusterUri={cmd.clusterUri}
-        onClose={() =>
-          serviceCommands.sendCommand({ kind: 'dialog.cluster-login.close' })
-        }
+        clusterUri={dialog.clusterUri}
+        onClose={() => serviceModals.closeDialog()}
       />
     );
   }
 
-  if (cmd.kind === 'dialog.gateway-new.open') {
+  if (dialog.kind === 'create-gateway') {
     return (
       <GatewayCreate
-        targetUri={cmd.targetUri}
-        onClose={() =>
-          serviceCommands.sendCommand({ kind: 'dialog.cluster-login.close' })
-        }
+        targetUri={dialog.targetUri}
+        onClose={() => serviceModals.closeDialog()}
       />
     );
   }
 
-  if (cmd.kind === 'open-server-connect') {
+  if (dialog.kind === 'server-connect') {
     return (
       <ServerConnect
-        serverUri={cmd.serverUri}
-        onClose={() =>
-          serviceCommands.sendCommand({ kind: 'dialog.cluster-login.close' })
-        }
+        serverUri={dialog.serverUri}
+        onClose={() => serviceModals.closeDialog()}
       />
     );
   }

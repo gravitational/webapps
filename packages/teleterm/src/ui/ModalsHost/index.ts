@@ -14,5 +14,5 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import DialogHost from './DialogHost';
-export default DialogHost;
+import ModalsHost from './ModalsHost';
+export default ModalsHost;

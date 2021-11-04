@@ -29,8 +29,8 @@ export default function useDatabases({ clusterUri }: types.DocumentDatabases) {
   });
 
   const openGateway = (dbUri = '') => {
-    ctx.serviceCommands.sendCommand({
-      kind: 'dialog.gateway-new.open',
+    ctx.serviceModals.openDialog({
+      kind: 'create-gateway',
       targetUri: dbUri,
     });
   };
