@@ -1,18 +1,18 @@
 import path from 'path';
 import { app, screen, BrowserWindow, ipcMain } from 'electron';
 import { ChildProcess, spawn } from 'child_process';
-import * as types from './types';
-import { getAssetPath, getConfig } from './config';
+import { RuntimeSettings } from 'teleterm/types';
+import { getAssetPath, getRuntimeSettings } from './runtimeSettings';
 
 export default class MainProcess {
-  cfg: types.ProcessConfig;
+  settings: RuntimeSettings;
   tshdProcess: ChildProcess;
 
-  private constructor(opts?: Partial<types.ProcessConfig>) {
-    this.cfg = getConfig(opts);
+  private constructor(opts?: Partial<RuntimeSettings>) {
+    this.settings = getRuntimeSettings(opts);
   }
 
-  static init(opts?: Partial<types.ProcessConfig>) {
+  static init(opts?: Partial<RuntimeSettings>) {
     let instance = null;
     try {
       instance = new MainProcess(opts);
@@ -43,7 +43,7 @@ export default class MainProcess {
       },
     });
 
-    if (this.cfg.isDev) {
+    if (this.settings.isDev) {
       win.loadURL('https://localhost:8080');
     } else {
       win.loadFile('./../renderer/index.html');
@@ -56,7 +56,7 @@ export default class MainProcess {
   }
 
   _initTshd() {
-    const { binaryPath, flags, homeDir } = this.cfg.tshd;
+    const { binaryPath, flags, homeDir } = this.settings.tshd;
     this.tshdProcess = spawn(binaryPath, flags, {
       stdio: 'inherit',
       env: {
@@ -74,8 +74,8 @@ export default class MainProcess {
   }
 
   _initIpc() {
-    ipcMain.on('main-process-get-config', event => {
-      event.returnValue = this.cfg;
+    ipcMain.on('main-process-get-runtime-settings', event => {
+      event.returnValue = this.settings;
     });
   }
 }

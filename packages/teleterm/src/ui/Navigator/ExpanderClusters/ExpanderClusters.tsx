@@ -31,18 +31,18 @@ export default function Container() {
 }
 
 export const ExpanderClusters: React.FC<State> = props => {
-  const { serviceCommands } = useAppContext();
+  const { serviceModals } = useAppContext();
 
   const handleConnect = (clusterUri: string) => {
-    serviceCommands.sendCommand({
-      kind: 'dialog.cluster-login.open',
+    serviceModals.openDialog({
+      kind: 'cluster-login',
       clusterUri,
     });
   };
 
   const handleAdd = (e: React.SyntheticEvent) => {
     e.stopPropagation();
-    serviceCommands.sendCommand({ kind: 'dialog.cluster-add-new.open' });
+    serviceModals.openDialog({ kind: 'add-cluster' });
   };
 
   const $onlineClusters = props.clusterItems

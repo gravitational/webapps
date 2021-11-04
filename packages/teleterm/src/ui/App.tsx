@@ -8,7 +8,7 @@ import AppContextProvider from './appContextProvider';
 import Navigator from './Navigator';
 import AppContext from './appContext';
 import TabHost from './TabHost';
-import DialogHost from './DialogHost';
+import ModalsHost from './ModalsHost';
 
 const App: React.FC<{ ctx: AppContext }> = ({ ctx }) => {
   return (
@@ -24,7 +24,7 @@ const App: React.FC<{ ctx: AppContext }> = ({ ctx }) => {
                 <TabHost />
               </Box>
             </SplitPane>
-            <DialogHost />
+            <ModalsHost />
           </ThemeProvider>
         </AppContextProvider>
       </CatchError>

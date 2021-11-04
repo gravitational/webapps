@@ -1,13 +1,15 @@
 import path from 'path';
 import { app } from 'electron';
 import fs from 'fs';
-import { ProcessConfig } from './types';
+import { RuntimeSettings } from 'teleterm/types';
 
 const RESOURCES_PATH = app.isPackaged
   ? path.join(process.resourcesPath, 'assets')
   : path.join(__dirname, '../../../../assets');
 
-export function getConfig(opts?: Partial<ProcessConfig>): ProcessConfig {
+export function getRuntimeSettings(
+  opts?: Partial<RuntimeSettings>
+): RuntimeSettings {
   const userDataDir = app.getPath('userData');
   const tshNetworkAddr = getTshNetworkAddr();
   const tshd = {
