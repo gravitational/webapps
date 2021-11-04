@@ -1,13 +1,12 @@
 import PtyProcess, { TermEventEnum } from './ptyProcess';
 import { PtyOptions, PtyCommand } from './types';
+import { RuntimeSettings } from 'teleterm/types';
 
-export default function createPtyService(homeDir: string) {
+export default function createPtyService(settings: RuntimeSettings) {
+  const runtimeSettings = settings;
   return {
     createPtyProcess(cmd: PtyCommand) {
-      let options = buildOptions(cmd);
-
-      options.env['TELEPORT_HOME'] = homeDir;
-
+      let options = buildOptions(runtimeSettings, cmd);
       let _ptyProcess = new PtyProcess(options);
 
       return {
@@ -39,25 +38,28 @@ export default function createPtyService(homeDir: string) {
   };
 }
 
-function buildOptions(cmd: PtyCommand): PtyOptions {
+function buildOptions(settings: RuntimeSettings, cmd: PtyCommand): PtyOptions {
+  const env = {
+    TELEPORT_HOME: settings.tshd.homeDir,
+  };
+
   switch (cmd.kind) {
     case 'new-shell':
       return {
         path: 'bash',
         args: [],
-        env: {},
+        env,
       };
 
     case 'tsh-login':
       return {
-        path:
-          '/home/alexey/go/src/github.com/gravitational/teleport/e/build/tsh',
+        path: settings.tshd.binaryPath,
         args: [
           `--proxy=${cmd.clusterId}`,
           'ssh',
           `${cmd.login}@${cmd.clusterId}`,
         ],
-        env: {},
+        env,
       };
     default:
   }

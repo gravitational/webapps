@@ -29,8 +29,8 @@ export default function useServers({ clusterUri }: types.DocumentServers) {
   });
 
   const connect = (serverUri: '') =>
-    ctx.serviceCommands.sendCommand({
-      kind: 'open-server-connect',
+    ctx.serviceModals.openDialog({
+      kind: 'server-connect',
       serverUri,
     });
 

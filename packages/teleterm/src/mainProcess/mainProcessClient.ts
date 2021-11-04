@@ -1,10 +1,10 @@
 const { ipcRenderer } = require('electron');
-import * as types from './types';
+import { RuntimeSettings } from 'teleterm/types';
 
 export default function createMainProcessClient() {
   return {
-    getConfig(): types.ProcessConfig {
-      return ipcRenderer.sendSync('main-process-get-config');
+    getRuntimeSettings(): RuntimeSettings {
+      return ipcRenderer.sendSync('main-process-get-runtime-settings');
     },
   };
 }

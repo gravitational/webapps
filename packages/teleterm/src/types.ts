@@ -1,7 +1,22 @@
-import * as tshdTypes from 'teleterm/services/tshd/types';
-import * as ptyTypes from 'teleterm/services/pty/types';
+import { TshdClient } from 'teleterm/services/tshd/types';
+import { PtyServiceClient } from 'teleterm/services/pty/types';
 
-export interface ElectronGlobals {
-  readonly tshdClient: tshdTypes.TshdClient;
-  readonly ptyServiceClient: ptyTypes.PtyServiceClient;
-}
+export type RuntimeSettings = {
+  isDev: boolean;
+  userDataDir: string;
+  tshd: {
+    networkAddr: string;
+    binaryPath: string;
+    homeDir: string;
+    flags: string[];
+  };
+};
+
+export type MainProcessClient = {
+  getRuntimeSettings(): RuntimeSettings;
+};
+
+export type ElectronGlobals = {
+  readonly tshdClient: TshdClient;
+  readonly ptyServiceClient: PtyServiceClient;
+};
