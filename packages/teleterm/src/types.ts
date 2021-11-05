@@ -14,9 +14,11 @@ export type RuntimeSettings = {
 
 export type MainProcessClient = {
   getRuntimeSettings(): RuntimeSettings;
+  openContextMenu(): void;
 };
 
 export type ElectronGlobals = {
   readonly tshdClient: TshdClient;
+  readonly mainProcessClient: MainProcessClient;
   readonly ptyServiceClient: PtyServiceClient;
 };

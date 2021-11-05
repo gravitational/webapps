@@ -25,6 +25,9 @@ export default class AppContext {
   serviceModals: ServiceModals;
   serviceDocs: ServiceDocs;
   serviceTerminals: ServiceTerminals;
+  ui: {
+    openContextMenu(): void;
+  };
 
   uris = uris;
 

@@ -1,10 +1,13 @@
 const { ipcRenderer } = require('electron');
-import { RuntimeSettings } from 'teleterm/types';
+import {  MainProcessClient } from 'teleterm/types';
 
-export default function createMainProcessClient() {
+export default function createMainProcessClient(): MainProcessClient {
   return {
-    getRuntimeSettings(): RuntimeSettings {
+    getRuntimeSettings() {
       return ipcRenderer.sendSync('main-process-get-runtime-settings');
+    },
+    openContextMenu() {
+      return ipcRenderer.send('main-process-open-context-menu');
     },
   };
 }

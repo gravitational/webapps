@@ -17,6 +17,9 @@ appContext.serviceDocs = new ServiceDocs();
 appContext.serviceTerminals = new ServiceTerminals(
   electronGlobals.ptyServiceClient
 );
+appContext.ui = {
+  openContextMenu: electronGlobals.mainProcessClient.openContextMenu,
+};
 appContext.serviceClusters.fetchClusters();
 appContext.serviceClusters.fetchGateways();
 
