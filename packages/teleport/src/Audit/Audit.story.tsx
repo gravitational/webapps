@@ -19,6 +19,7 @@ import { Router } from 'react-router';
 import { createMemoryHistory } from 'history';
 import { ContextProvider, Context } from 'teleport';
 import Audit from './Audit';
+import EventList from './EventList';
 import { events } from './fixtures';
 
 export default {
@@ -28,10 +29,21 @@ export default {
 export const Loaded = () => {
   const ctx = new Context();
   ctx.auditService.fetchEvents = () =>
-    Promise.resolve({ events, startKey: '' });
+    Promise.resolve({ events: events.slice(0, 20), startKey: '' });
 
   return render(ctx);
 };
+
+export const AllEventsList = () => (
+  <EventList
+    clusterId="im-a-cluster"
+    events={events}
+    search=""
+    fetchMore={() => null}
+    fetchStatus={''}
+    pageSize={100}
+  />
+);
 
 export const LoadedFetchMore = () => {
   const ctx = new Context();
