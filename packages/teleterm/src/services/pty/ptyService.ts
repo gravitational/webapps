@@ -1,9 +1,9 @@
 import PtyProcess, { TermEventEnum } from './ptyProcess';
 import { PtyOptions, PtyCommand } from './types';
 import { RuntimeSettings } from 'teleterm/types';
+import { getDefaultShell } from './shellService';
 
-export default function createPtyService(settings: RuntimeSettings) {
-  const runtimeSettings = settings;
+export default function createPtyService(runtimeSettings: RuntimeSettings) {
   return {
     createPtyProcess(cmd: PtyCommand) {
       let options = buildOptions(runtimeSettings, cmd);
@@ -11,7 +11,7 @@ export default function createPtyService(settings: RuntimeSettings) {
 
       return {
         start(cols: number, rows: number) {
-          _ptyProcess.start(cols, rows);
+          return _ptyProcess.start(cols, rows);
         },
 
         write(data: string) {
@@ -38,7 +38,7 @@ export default function createPtyService(settings: RuntimeSettings) {
   };
 }
 
-function buildOptions(settings: RuntimeSettings, cmd: PtyCommand): PtyOptions {
+async function buildOptions(settings: RuntimeSettings, cmd: PtyCommand): Promise<PtyOptions> {
   const env = {
     TELEPORT_HOME: settings.tshd.homeDir,
   };
@@ -46,7 +46,7 @@ function buildOptions(settings: RuntimeSettings, cmd: PtyCommand): PtyOptions {
   switch (cmd.kind) {
     case 'new-shell':
       return {
-        path: 'bash',
+        path: await getDefaultShell(),
         args: [],
         env,
       };
