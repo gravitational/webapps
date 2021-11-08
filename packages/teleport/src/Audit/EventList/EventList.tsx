@@ -33,7 +33,7 @@ export default function EventList(props: Props) {
     search = '',
     fetchMore,
     fetchStatus,
-    pageSize = 100,
+    pageSize = 50,
   } = props;
   const [state, setState] = React.useState<EventListState>(() => {
     return {

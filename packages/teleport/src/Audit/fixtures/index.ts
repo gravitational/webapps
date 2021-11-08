@@ -16,6 +16,7 @@ limitations under the License.
 
 import { makeEvent } from 'teleport/services/audit';
 
+// 'events' contains sample JSON's of all supported event types
 export const events = [
   {
     code: 'T1004I',
@@ -739,5 +740,58 @@ export const events = [
     windows_desktop_service: 'ba17ae92-5519-476a-954e-c225cf751de1',
     windows_domain: 'desktopaccess.com',
     windows_user: 'Administrator',
+  },
+].map(makeEvent);
+
+export const eventsSample = [
+  {
+    code: 'T1004I',
+    uid: 'b121fc4c-e419-56a2-a760-19cd746c0650',
+    time: '2020-06-05T16:24:05Z',
+    event: 'user.delete',
+    name: 'bob',
+    user: 'benarent',
+  },
+  {
+    code: 'T1003I',
+    event: 'user.update',
+    name: 'bob',
+    time: '2020-06-05T16:24:05Z',
+    uid: '3a8cd55b5-bce9-5a4c-882d-8e0a5ae10008',
+    expires: 111111,
+    roles: ['root'],
+  },
+  {
+    code: 'T4002I',
+    event: 'session.network',
+    namespace: 'default',
+    sid: '44c6cea8-362f-11ea-83aa-125400432324',
+    server_id: '96f2bed2',
+    login: 'root',
+    user: 'benarent',
+    pid: 2653,
+    cgroup_id: 4294968064,
+    program: 'bash',
+    src_addr: '10.217.136.161',
+    dst_addr: '190.58.129.4',
+    dst_port: '3000',
+    version: 4,
+    time: '2019-04-22T19:39:26.676Z',
+  },
+  {
+    code: 'T4001I',
+    event: 'session.disk',
+    namespace: 'default',
+    sid: '44c6cea8-362f-11ea-83aa-125400432324',
+    server_id: '96f2bed2',
+    login: 'root',
+    user: 'benarent',
+    pid: 2653,
+    cgroup_id: 4294968064,
+    program: 'bash',
+    path: '/etc/profile.d/',
+    flags: 2100000,
+    return_code: 0,
+    time: '2019-04-22T19:39:26.676Z',
   },
 ].map(makeEvent);
