@@ -1,7 +1,8 @@
 import PtyProcess, { TermEventEnum } from './ptyProcess';
 import { PtyOptions, PtyCommand } from './types';
 import { RuntimeSettings } from 'teleterm/types';
-import { getDefaultShell } from './shellService';
+import { Logger } from 'shared/libs/logger';
+import os from 'os';
 
 export default function createPtyService(runtimeSettings: RuntimeSettings) {
   return {
@@ -11,7 +12,7 @@ export default function createPtyService(runtimeSettings: RuntimeSettings) {
 
       return {
         start(cols: number, rows: number) {
-          return _ptyProcess.start(cols, rows);
+          _ptyProcess.start(cols, rows);
         },
 
         write(data: string) {
@@ -38,7 +39,7 @@ export default function createPtyService(runtimeSettings: RuntimeSettings) {
   };
 }
 
-async function buildOptions(settings: RuntimeSettings, cmd: PtyCommand): Promise<PtyOptions> {
+function buildOptions(settings: RuntimeSettings, cmd: PtyCommand): PtyOptions {
   const env = {
     TELEPORT_HOME: settings.tshd.homeDir,
   };
@@ -46,7 +47,7 @@ async function buildOptions(settings: RuntimeSettings, cmd: PtyCommand): Promise
   switch (cmd.kind) {
     case 'new-shell':
       return {
-        path: await getDefaultShell(),
+        path: getDefaultShell(),
         args: [],
         env,
       };
@@ -65,4 +66,20 @@ async function buildOptions(settings: RuntimeSettings, cmd: PtyCommand): Promise
   }
 
   throw Error(`Unknown pty command type: ${cmd.kind}`);
+}
+
+function getDefaultShell(): string {
+  const logger = new Logger();
+  const fallbackShell = 'bash';
+  const { shell } = os.userInfo();
+
+  if (!shell) {
+    logger.error(
+      `Failed to read ${process.platform} platform default shell, using fallback: ${fallbackShell}.\n`
+    );
+
+    return fallbackShell;
+  }
+
+  return shell;
 }

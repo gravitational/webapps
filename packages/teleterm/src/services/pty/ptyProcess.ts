@@ -20,29 +20,28 @@ import { PtyOptions } from './types';
 import * as nodePTY from 'node-pty';
 
 class PtyProcess extends EventEmitter {
-  _options: Promise<PtyOptions>;
+  _options: PtyOptions;
   _buffered = true;
   _attachedBufferTimer;
   _attachedBuffer: string;
   _process: nodePTY.IPty;
   _logger: Logger;
 
-  constructor(options: Promise<PtyOptions>) {
+  constructor(options: PtyOptions) {
     super();
     this._options = options;
     this._logger = new Logger();
   }
 
-  async start(cols: number, rows: number) {
-    const options = await this._options;
-    this._process = nodePTY.spawn(options.path, options.args, {
+  start(cols: number, rows: number) {
+    this._process = nodePTY.spawn(this._options.path, this._options.args, {
       cols,
       rows,
       name: 'xterm-color',
       cwd: process.cwd(),
       env: {
         ...process.env,
-        ...options.env,
+        ...this._options.env,
       },
     });
 
