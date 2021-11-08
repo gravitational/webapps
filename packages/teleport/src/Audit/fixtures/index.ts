@@ -16,7 +16,7 @@ limitations under the License.
 
 import { makeEvent } from 'teleport/services/audit';
 
-// 'events' contains sample JSON's of all supported event types
+// events contains sample JSON's of all supported event types
 export const events = [
   {
     code: 'T1004I',
