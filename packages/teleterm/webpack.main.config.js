@@ -87,7 +87,7 @@ module.exports = (env, argv) => {
     process.env.BABEL_ENV = 'development';
     process.env.NODE_ENV = 'development';
     cfg.mode = 'development';
-    cfg.plugins.push(onFirstBuildDonePlugin(env));
+    cfg.plugins.push(onFirstBuildDonePlugin(process.env));
   }
 
   if (argv.mode === 'production') {
