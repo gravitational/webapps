@@ -2,6 +2,8 @@ import path from 'path';
 import { app } from 'electron';
 import fs from 'fs';
 import { RuntimeSettings } from 'teleterm/types';
+import { Logger } from 'shared/libs/logger';
+import os from 'os';
 
 const RESOURCES_PATH = app.isPackaged
   ? path.join(process.resourcesPath, 'assets')
@@ -28,6 +30,7 @@ export function getRuntimeSettings(
   return {
     isDev: false,
     userDataDir,
+    defaultShell: getDefaultShell(),
     tshd,
     ...opts,
   };
@@ -56,4 +59,20 @@ function getTshBinaryPath() {
 
 export function getAssetPath(...paths: string[]): string {
   return path.join(RESOURCES_PATH, ...paths);
+}
+
+function getDefaultShell(): string {
+  const logger = new Logger();
+  const fallbackShell = 'bash';
+  const { shell } = os.userInfo();
+
+  if (!shell) {
+    logger.error(
+      `Failed to read ${process.platform} platform default shell, using fallback: ${fallbackShell}.\n`
+    );
+
+    return fallbackShell;
+  }
+
+  return shell;
 }
