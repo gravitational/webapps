@@ -1,8 +1,6 @@
 import PtyProcess, { TermEventEnum } from './ptyProcess';
 import { PtyOptions, PtyCommand } from './types';
 import { RuntimeSettings } from 'teleterm/types';
-import { Logger } from 'shared/libs/logger';
-import os from 'os';
 
 export default function createPtyService(runtimeSettings: RuntimeSettings) {
   return {
@@ -47,7 +45,7 @@ function buildOptions(settings: RuntimeSettings, cmd: PtyCommand): PtyOptions {
   switch (cmd.kind) {
     case 'new-shell':
       return {
-        path: getDefaultShell(),
+        path: settings.defaultShell,
         args: [],
         env,
       };
@@ -66,20 +64,4 @@ function buildOptions(settings: RuntimeSettings, cmd: PtyCommand): PtyOptions {
   }
 
   throw Error(`Unknown pty command type: ${cmd.kind}`);
-}
-
-function getDefaultShell(): string {
-  const logger = new Logger();
-  const fallbackShell = 'bash';
-  const { shell } = os.userInfo();
-
-  if (!shell) {
-    logger.error(
-      `Failed to read ${process.platform} platform default shell, using fallback: ${fallbackShell}.\n`
-    );
-
-    return fallbackShell;
-  }
-
-  return shell;
 }

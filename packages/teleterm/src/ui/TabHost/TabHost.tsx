@@ -30,7 +30,7 @@ export default function TabHost(props: Props) {
   const { serviceDocs } = useAppContext();
   const documents = serviceDocs.getDocuments();
   const docActive = serviceDocs.getActive();
-  const { ui } = useAppContext();
+  const { mainProcessClient } = useAppContext();
 
   // subscribe
   serviceDocs.useState();
@@ -53,7 +53,7 @@ export default function TabHost(props: Props) {
   ));
 
   const openContextMenu = () => {
-    ui.openContextMenu();
+    mainProcessClient.openContextMenu();
   };
 
   return (

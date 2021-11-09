@@ -19,15 +19,14 @@ import ServiceClusters from 'teleterm/ui/services/clusters';
 import ServiceModals from 'teleterm/ui/services/modals';
 import ServiceDocs from 'teleterm/ui/services/docs';
 import ServiceTerminals from 'teleterm/ui/services/terminals';
+import { MainProcessClient } from 'teleterm/types';
 
 export default class AppContext {
   serviceClusters: ServiceClusters;
   serviceModals: ServiceModals;
   serviceDocs: ServiceDocs;
   serviceTerminals: ServiceTerminals;
-  ui: {
-    openContextMenu(): void;
-  };
+  mainProcessClient: MainProcessClient;
 
   uris = uris;
 

@@ -4,6 +4,7 @@ import { PtyServiceClient } from 'teleterm/services/pty/types';
 export type RuntimeSettings = {
   isDev: boolean;
   userDataDir: string;
+  defaultShell: string;
   tshd: {
     networkAddr: string;
     binaryPath: string;
