@@ -2,8 +2,7 @@ import PtyProcess, { TermEventEnum } from './ptyProcess';
 import { PtyOptions, PtyCommand } from './types';
 import { RuntimeSettings } from 'teleterm/types';
 
-export default function createPtyService(settings: RuntimeSettings) {
-  const runtimeSettings = settings;
+export default function createPtyService(runtimeSettings: RuntimeSettings) {
   return {
     createPtyProcess(cmd: PtyCommand) {
       let options = buildOptions(runtimeSettings, cmd);
@@ -46,7 +45,7 @@ function buildOptions(settings: RuntimeSettings, cmd: PtyCommand): PtyOptions {
   switch (cmd.kind) {
     case 'new-shell':
       return {
-        path: 'bash',
+        path: settings.defaultShell,
         args: [],
         env,
       };
