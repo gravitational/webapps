@@ -1,6 +1,6 @@
 const config = require('@gravitational/build/jest/config');
 
-process.env.TZ = 'PST';
+process.env.TZ = 'UTC';
 
 module.exports = {
   ...config,
