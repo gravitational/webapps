@@ -15,7 +15,7 @@ cfg.devServer = {
   serveIndex: false,
   https: true,
   inline: true,
-  before() {
+  before(args) {
     const childProcess = spawn(
       'yarn',
       ['start-main'], // ['start-electron', '--inspect-brk=5858  --remote-debugging-port=9223'],
