@@ -30,6 +30,7 @@ export default function TabHost(props: Props) {
   const { serviceDocs } = useAppContext();
   const documents = serviceDocs.getDocuments();
   const docActive = serviceDocs.getActive();
+  const { mainProcessClient } = useAppContext();
 
   // subscribe
   serviceDocs.useState();
@@ -51,8 +52,12 @@ export default function TabHost(props: Props) {
     <MemoizedDocument doc={doc} visible={doc === docActive} key={doc.uri} />
   ));
 
+  const openContextMenu = () => {
+    mainProcessClient.openContextMenu();
+  };
+
   return (
-    <StyledTabHost {...props}>
+    <StyledTabHost {...props} onContextMenu={openContextMenu}>
       <Flex bg="bgTerminal" height="32px">
         <Tabs
           flex="1"
