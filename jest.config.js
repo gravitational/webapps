@@ -1,4 +1,7 @@
 const config = require('@gravitational/build/jest/config');
+
+process.env.TZ = 'PST';
+
 module.exports = {
   ...config,
   collectCoverageFrom: [
