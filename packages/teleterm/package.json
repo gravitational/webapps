@@ -94,7 +94,11 @@
       "output": "build/release"
     },
     "extraResources": [
-      "./assets/**"
+      "./assets/**",
+      {
+        "from":"../../../teleport/build/tsh",
+        "to": "."
+      }
     ],
     "publish": {
       "provider": "github",
