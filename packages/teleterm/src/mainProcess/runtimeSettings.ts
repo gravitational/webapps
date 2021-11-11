@@ -6,8 +6,8 @@ import { Logger } from 'shared/libs/logger';
 import os from 'os';
 
 const RESOURCES_PATH = app.isPackaged
-  ? path.join(process.resourcesPath, 'assets')
-  : path.join(__dirname, '../../../../assets');
+  ? process.resourcesPath
+  : path.join(__dirname, '../../../../');
 
 export function getRuntimeSettings(
   opts?: Partial<RuntimeSettings>
@@ -28,7 +28,7 @@ export function getRuntimeSettings(
   };
 
   return {
-    isDev: false,
+    isDev: opts?.isDev || false,
     userDataDir,
     defaultShell: getDefaultShell(),
     tshd,
@@ -49,6 +49,10 @@ function getTshHomeDir() {
 }
 
 function getTshBinaryPath() {
+  if (app.isPackaged) {
+    return path.join(RESOURCES_PATH, 'tsh');
+  }
+
   const tshPath = process.env['TELETERM_TSH_PATH'];
   if (!tshPath) {
     throw Error('tsh path is not defined');
@@ -58,7 +62,7 @@ function getTshBinaryPath() {
 }
 
 export function getAssetPath(...paths: string[]): string {
-  return path.join(RESOURCES_PATH, ...paths);
+  return path.join(RESOURCES_PATH, 'assets', ...paths);
 }
 
 function getDefaultShell(): string {
