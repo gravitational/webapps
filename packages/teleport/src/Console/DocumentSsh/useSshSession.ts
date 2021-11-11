@@ -22,10 +22,6 @@ import Tty from 'teleport/lib/term/tty';
 import ConsoleContext from 'teleport/Console/consoleContext';
 import { useConsoleContext } from 'teleport/Console/consoleContextProvider';
 import { DocumentSsh } from 'teleport/Console/stores';
-import {
-  makeMfaAuthenticateChallenge,
-  makeWebauthnAssertionResponse,
-} from 'teleport/services/auth';
 
 export default function useSshSession(doc: DocumentSsh) {
   const { clusterId, sid, serverId, login } = doc;
@@ -35,35 +31,8 @@ export default function useSshSession(doc: DocumentSsh) {
   const [session, setSession] = React.useState<Session>(null);
   const [statusText, setStatusText] = React.useState('');
   const [status, setStatus] = React.useState<Status>('loading');
-  const [showReauthnDialog, setShowReauthnDialog] = React.useState(false);
-  const [webauthnPublicKey, setWebauthnPublicKey] = React.useState<
-    PublicKeyCredentialRequestOptions
-  >();
 
-  function onReauthn() {
-    if (!window.PublicKeyCredential) {
-      const errMsg =
-        'This browser does not support WebAuthn required for hardware tokens, \
-      please try the latest version of Chrome, Firefox or Safari.';
-
-      setStatusText(errMsg);
-      return;
-    }
-
-    navigator.credentials
-      .get({ publicKey: webauthnPublicKey })
-      .then(res => {
-        const credential = makeWebauthnAssertionResponse(res);
-        tty.send(JSON.stringify(credential));
-        setShowReauthnDialog(false);
-        setStatusText('');
-      })
-      .catch((err: Error) => {
-        setStatusText(err.message);
-      });
-  }
-
-  function onReauthnClose() {
+  function closeDocument() {
     ctx.closeTab(doc);
   }
 
@@ -80,14 +49,6 @@ export default function useSshSession(doc: DocumentSsh) {
       );
 
       tty.on('open', () => handleTtyConnect(ctx, session, doc.id));
-
-      tty.on(TermEventEnum.WEBAUTHN_CHALLENGE, payload => {
-        const json = JSON.parse(payload);
-        const publicKey = makeMfaAuthenticateChallenge(json).webauthnPublicKey;
-
-        setWebauthnPublicKey(publicKey);
-        setShowReauthnDialog(true);
-      });
 
       // assign tty reference so it can be passed down to xterm
       ttyRef.current = tty;
@@ -128,9 +89,7 @@ export default function useSshSession(doc: DocumentSsh) {
     status,
     statusText,
     session,
-    onReauthn,
-    onReauthnClose,
-    showReauthnDialog,
+    closeDocument,
   };
 }
 

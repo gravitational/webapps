@@ -24,16 +24,20 @@ import Dialog, {
 import { Danger } from 'design/Alert';
 import { Text, ButtonPrimary, ButtonSecondary } from 'design';
 
-function ConnectDialog({ onReauthn, onReauthnClose, errMsg }: Props) {
+export default function AuthnDialog({
+  onContinue,
+  onCancel,
+  errorText,
+}: Props) {
   return (
     <Dialog dialogCss={() => ({ width: '400px' })} open={true}>
       <DialogHeader style={{ flexDirection: 'column' }}>
         <DialogTitle textAlign="center">Verify Your Identity</DialogTitle>
       </DialogHeader>
       <DialogContent mb={6}>
-        {errMsg && (
+        {errorText && (
           <Danger mt={2} width="100%">
-            {errMsg}
+            {errorText}
           </Danger>
         )}
         <Text textAlign="center">
@@ -42,19 +46,17 @@ function ConnectDialog({ onReauthn, onReauthnClose, errMsg }: Props) {
         </Text>
       </DialogContent>
       <DialogFooter textAlign="center">
-        <ButtonPrimary onClick={onReauthn} mr={3} width="130px">
-          {errMsg ? 'Retry' : 'Verify'}
+        <ButtonPrimary onClick={onContinue} mr={3} width="130px">
+          {errorText ? 'Retry' : 'Verify'}
         </ButtonPrimary>
-        <ButtonSecondary onClick={onReauthnClose}>Close</ButtonSecondary>
+        <ButtonSecondary onClick={onCancel}>Cancel</ButtonSecondary>
       </DialogFooter>
     </Dialog>
   );
 }
 
 export type Props = {
-  onReauthn: () => void;
-  onReauthnClose: () => void;
-  errMsg: string;
+  onContinue: () => void;
+  onCancel: () => void;
+  errorText: string;
 };
-
-export default ConnectDialog;

@@ -23,21 +23,16 @@ import * as stores from 'teleport/Console/stores';
 import FileTransfer, { useFileTransferDialogs } from './../FileTransfer';
 import Terminal from './Terminal';
 import Document from '../Document';
-import ReAuthnDialog from './ReAuthnDialog';
+import AuthnDialog from './AuthnDialog';
+import useWebauthn from './useWebauthn';
 import useSshSession from './useSshSession';
 import ActionBar from './ActionBar';
 
 export default function DocumentSsh({ doc, visible }: PropTypes) {
   const refTerminal = useRef<Terminal>();
   const scpDialogs = useFileTransferDialogs();
-  const {
-    tty,
-    status,
-    statusText,
-    onReauthn,
-    onReauthnClose,
-    showReauthnDialog,
-  } = useSshSession(doc);
+  const { tty, status, statusText, closeDocument } = useSshSession(doc);
+  const webauthn = useWebauthn(tty);
 
   function onCloseScpDialogs() {
     scpDialogs.close();
@@ -49,7 +44,7 @@ export default function DocumentSsh({ doc, visible }: PropTypes) {
       // when switching tabs or closing tabs, focus on visible terminal
       refTerminal.current.terminal.term.focus();
     }
-  }, [visible, showReauthnDialog]);
+  }, [visible, webauthn.isAuthnDialogVisible]);
 
   return (
     <Document visible={visible} flexDirection="column">
@@ -73,11 +68,11 @@ export default function DocumentSsh({ doc, visible }: PropTypes) {
       {status === 'notfound' && (
         <SidNotFoundError sid={doc.sid} clusterId={doc.clusterId} />
       )}
-      {showReauthnDialog && (
-        <ReAuthnDialog
-          onReauthn={onReauthn}
-          onReauthnClose={onReauthnClose}
-          errMsg={statusText}
+      {webauthn.isAuthnDialogVisible && (
+        <AuthnDialog
+          onContinue={webauthn.authenticate}
+          onCancel={closeDocument}
+          errorText={webauthn.errorText}
         />
       )}
       {status === 'initialized' && <Terminal tty={tty} ref={refTerminal} />}

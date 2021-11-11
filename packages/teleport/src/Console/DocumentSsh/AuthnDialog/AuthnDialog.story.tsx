@@ -14,5 +14,21 @@
  * limitations under the License.
  */
 
-import ReAuthnDialog from './ReAuthnDialog';
-export default ReAuthnDialog;
+import React from 'react';
+import AuthnDialog, { Props } from './AuthnDialog';
+
+export default {
+  title: 'Teleport/Console/AuthnDialog',
+};
+
+export const Loaded = () => <AuthnDialog {...props} />;
+
+export const Error = () => (
+  <AuthnDialog {...props} errorText="some error message" />
+);
+
+const props: Props = {
+  onContinue: () => null,
+  onCancel: () => null,
+  errorText: '',
+};
