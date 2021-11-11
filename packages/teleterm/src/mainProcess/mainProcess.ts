@@ -52,7 +52,7 @@ export default class MainProcess {
     if (this.settings.isDev) {
       win.loadURL('https://localhost:8080');
     } else {
-      win.loadFile('./../renderer/index.html');
+      win.loadFile(path.join(__dirname, '../renderer/index.html'));
     }
   }
 
