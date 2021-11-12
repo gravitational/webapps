@@ -30,6 +30,9 @@ import AddApp from './AddApp';
 import ButtonAdd from './ButtonAdd';
 import useApps, { State } from './useApps';
 
+import LabelFilter from 'teleport/components/SelectFilter';
+import { Option } from 'shared/components/Select';
+
 export default function Container() {
   const ctx = useTeleport();
   const state = useApps(ctx);
@@ -48,10 +51,39 @@ export function Apps(props: State) {
     apps,
     searchValue,
     setSearchValue,
+    filteredApps,
+    setFilteredApps,
+    labels,
   } = props;
 
   const isEmpty = attempt.status === 'success' && apps.length === 0;
   const hasApps = attempt.status === 'success' && apps.length > 0;
+  const [selectedFilters, setSelectedFilters] = React.useState<Option[]>([]);
+
+  function onFilterApply(updatedSelectedFilters) {
+    const filtered = apps.filter(obj =>
+      updatedSelectedFilters.every(filter =>
+        obj.tags.toString().includes(filter.value)
+      )
+    );
+
+    setFilteredApps(filtered);
+    setSelectedFilters(updatedSelectedFilters);
+  }
+
+  function onLabelClick(label: string) {
+    let tags = selectedFilters.map(f => f.value);
+    let copy = selectedFilters;
+    const index = tags.findIndex(filter => filter === label);
+    if (index > -1) {
+      // remove it
+      copy.splice(index, 1);
+    } else {
+      copy = [...copy, { value: label, label }];
+    }
+
+    onFilterApply(copy);
+  }
 
   return (
     <FeatureBox>
@@ -70,10 +102,21 @@ export function Apps(props: State) {
       )}
       {attempt.status === 'failed' && <Danger>{attempt.statusText} </Danger>}
       {hasApps && (
-        <Box>
-          <InputSearch mb={4} value={searchValue} onChange={setSearchValue} />
-          <AppList searchValue={searchValue} apps={apps} />
-        </Box>
+        <>
+          <LabelFilter
+            onFilterApply={onFilterApply}
+            filters={labels}
+            selectedFilters={selectedFilters}
+            setSelectedFilters={setSelectedFilters}
+            mb={3}
+          />
+          <AppList
+            searchValue={searchValue}
+            apps={filteredApps}
+            setSearchValue={setSearchValue}
+            onLabelClick={onLabelClick}
+          />
+        </>
       )}
       {isEmpty && (
         <Empty

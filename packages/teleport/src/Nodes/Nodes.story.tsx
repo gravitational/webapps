@@ -17,7 +17,8 @@ limitations under the License.
 import React from 'react';
 import { Nodes } from './Nodes';
 import { State } from './useNodes';
-import { nodes } from './fixtures';
+import { nodes, nodes2 } from './fixtures';
+import { makeNodes } from 'teleport/services/nodes';
 
 export default {
   title: 'Teleport/Nodes',
@@ -43,7 +44,8 @@ export const Failed = () => (
 );
 
 const props: State = {
-  nodes,
+  nodes: nodes2.nodes,
+  labels: nodes2.tagDict,
   isLeafCluster: false,
   canCreate: true,
   attempt: { status: 'success' },

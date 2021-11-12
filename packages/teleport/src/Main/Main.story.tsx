@@ -22,7 +22,7 @@ import { ContextProvider, Context } from 'teleport';
 import getFeatures from 'teleport/features';
 import { Main } from './Main';
 import { clusters } from 'teleport/Clusters/fixtures';
-import { nodes } from 'teleport/Nodes/fixtures';
+import { nodes, nodes2 } from 'teleport/Nodes/fixtures';
 import { events } from 'teleport/Audit/fixtures';
 import { sessions } from 'teleport/Sessions/fixtures';
 import { apps } from 'teleport/Apps/fixtures';
@@ -64,7 +64,7 @@ function useMainStory() {
     ctx.auditService.fetchEvents = () =>
       Promise.resolve({ events, startKey: '' });
     ctx.clusterService.fetchClusters = () => Promise.resolve(clusters);
-    ctx.nodeService.fetchNodes = () => Promise.resolve(nodes);
+    ctx.nodeService.fetchNodes = () => Promise.resolve(nodes2);
     ctx.sshService.fetchSessions = () => Promise.resolve(sessions);
     ctx.appService.fetchApps = () => Promise.resolve(apps);
     ctx.kubeService.fetchKubernetes = () => Promise.resolve(kubes);

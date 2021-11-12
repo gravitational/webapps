@@ -16,7 +16,8 @@ limitations under the License.
 
 import service from './nodes';
 import makeNodeToken from './makeNodeToken';
-
+import makeNodes from './makeNode';
 export * from './types';
+
 export default service;
-export { makeNodeToken };
+export { makeNodeToken, makeNodes };

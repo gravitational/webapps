@@ -34,11 +34,12 @@ export default function Pager(props) {
   const isNextDisabled = totalRows === 0 || endAt === totalRows;
   const initialStartFrom = totalRows > 0 ? startFrom + 1 : 0;
   const isFetchDisabled = fetchStatus !== 'disabled';
+  // const isFetchDisabled = true;
   const isFetching = fetchStatus === 'loading';
 
   return (
     <>
-      <Flex alignItems="center">
+      <Flex alignItems="center" mr={2}>
         <Text typography="body2" color="primary.contrastText">
           SHOWING <strong>{initialStartFrom}</strong> - <strong>{endAt}</strong>{' '}
           of <strong>{totalRows}</strong>
@@ -107,7 +108,7 @@ const StyledButtonLink = styled.button`
   background: none;
   text-decoration: underline;
   text-transform: none;
-  padding: 8px;
+  padding-left: 8px;
   outline: none;
   border: none;
   font-weight: bold;

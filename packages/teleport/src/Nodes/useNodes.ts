@@ -77,8 +77,8 @@ export default function useNodes(ctx: Ctx, stickyCluster: StickyCluster) {
     clusterId,
     hideAddNode,
     showAddNode,
-    searchValue,
-    setSearchValue,
+    // searchValue,
+    // setSearchValue,
   };
 }
 

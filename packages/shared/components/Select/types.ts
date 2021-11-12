@@ -20,6 +20,9 @@ export type Props = {
   isSimpleValue?: boolean;
   isSearchable?: boolean;
   isDisabled?: boolean;
+  menuIsOpen?: boolean;
+  hideSelectedOptions?: boolean;
+  controlShouldRenderValue?: boolean;
   maxMenuHeight?: number;
   onChange(e: Option<any> | Option<any>[]): void;
   value: null | Option<any> | Option<any>[];
@@ -32,6 +35,8 @@ export type Props = {
   menuPlacement?: string;
   components?: any;
   menuPosition?: 'fixed' | 'absolute';
+  onKeyDown(e: KeyboardEvent): void;
+  customProps: any;
 };
 
 export type AsyncProps = Omit<Props, 'options'> & {

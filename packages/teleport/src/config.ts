@@ -54,7 +54,7 @@ const cfg = {
     clusters: '/web/clusters',
     trustedClusters: '/web/trust',
     audit: '/web/cluster/:clusterId/audit',
-    nodes: '/web/cluster/:clusterId/nodes',
+    nodes: '/web/cluster/:clusterId/nodes(\\?labels=.*)?',
     sessions: '/web/cluster/:clusterId/sessions',
     recordings: '/web/cluster/:clusterId/recordings',
     databases: '/web/cluster/:clusterId/databases',

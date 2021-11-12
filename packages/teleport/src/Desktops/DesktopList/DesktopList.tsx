@@ -35,6 +35,7 @@ function DesktopList(props: Props) {
     desktops = [],
     pageSize = 100,
     searchValue,
+    setSearchValue,
     onLoginMenuOpen,
     onLoginSelect,
   } = props;
@@ -76,7 +77,12 @@ function DesktopList(props: Props) {
   const data = sortAndFilter(searchValue);
 
   return (
-    <StyledTable pageSize={pageSize} data={data}>
+    <StyledTable
+      pageSize={pageSize}
+      data={data}
+      searchValue={searchValue}
+      setSearchValue={setSearchValue}
+    >
       <Column
         columnKey="addr"
         header={
@@ -200,6 +206,7 @@ type Props = {
   searchValue: string;
   onLoginMenuOpen(desktopId: string): { login: string; url: string }[];
   onLoginSelect(username: string, desktopId: string): void;
+  setSearchValue: React.Dispatch<React.SetStateAction<string>>;
 };
 
 export default DesktopList;

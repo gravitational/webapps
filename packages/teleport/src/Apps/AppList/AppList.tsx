@@ -45,7 +45,13 @@ import { App } from 'teleport/services/apps';
 import AwsLaunchButton from './AwsLaunchButton';
 
 export default function AppList(props: Props) {
-  const { apps = [], pageSize = 100, searchValue } = props;
+  const {
+    apps = [],
+    pageSize = 100,
+    searchValue,
+    setSearchValue,
+    onLabelClick,
+  } = props;
   const [sortDir, setSortDir] = useState<Record<string, string>>({
     name: SortTypes.DESC,
   });
@@ -74,7 +80,12 @@ export default function AppList(props: Props) {
   const data = sortAndFilter(searchValue);
 
   return (
-    <StyledTable pageSize={pageSize} data={data}>
+    <StyledTable
+      pageSize={pageSize}
+      data={data}
+      searchValue={searchValue}
+      setSearchValue={setSearchValue}
+    >
       <Column header={<Cell />} cell={<AppIconCell />} />
       <Column
         columnKey="name"
@@ -109,16 +120,19 @@ export default function AppList(props: Props) {
         }
         cell={<AddressCell />}
       />
-      <Column header={<Cell>Labels</Cell>} cell={<LabelCell />} />
+      <Column
+        header={<Cell>Labels</Cell>}
+        cell={<LabelCell onLabelClick={onLabelClick} />}
+      />
       <Column header={<Cell />} cell={<LaunchButtonCell />} />
     </StyledTable>
   );
 }
 
 function LabelCell(props) {
-  const { rowIndex, data } = props;
+  const { rowIndex, data, onLabelClick } = props;
   const { tags = [] } = data[rowIndex];
-  return renderLabelCell(tags);
+  return renderLabelCell(tags, onLabelClick);
 }
 
 function AddressCell(props) {
@@ -219,6 +233,8 @@ type Props = {
   apps: App[];
   pageSize?: number;
   searchValue: string;
+  onLabelClick(label: string): void;
+  setSearchValue: React.Dispatch<React.SetStateAction<string>>;
 };
 
 const StyledTable = styled(Table)`

@@ -22,11 +22,13 @@ import makeNodeToken from './makeNodeToken';
 import makeAppBashCmd from './makeAppBashCmd';
 import makeNodeBashCmd from './makeNodeBashCmd';
 
+import { nodesJSON } from 'teleport/Nodes/fixtures';
+
 const service = {
   fetchNodes(clusterId?: string) {
     return api
       .get(cfg.getClusterNodesUrl(clusterId))
-      .then(json => map(json.items, makeNode));
+      .then(json => map(nodesJSON, makeNode));
   },
 
   createNodeBashCommand() {

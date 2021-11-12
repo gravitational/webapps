@@ -26,13 +26,20 @@ export default function useApps(ctx: Ctx) {
   const { clusterId, isLeafCluster } = useStickyClusterId();
   const { attempt, setAttempt, run } = useAttempt('processing');
   const [apps, setApps] = useState([] as App[]);
+  const [filteredApps, setFilteredApps] = useState(apps);
+  const [labels, setLabels] = useState<any>();
+
   const [searchValue, setSearchValue] = useState('');
   const isEnterprise = ctx.isEnterprise;
 
   function refresh() {
     return ctx.appService
       .fetchApps(clusterId)
-      .then(setApps)
+      .then(res => {
+        setApps(res.apps);
+        setFilteredApps(res.apps);
+        setLabels(res.tagMap);
+      })
       .catch((err: Error) =>
         setAttempt({ status: 'failed', statusText: err.message })
       );
@@ -48,7 +55,13 @@ export default function useApps(ctx: Ctx) {
   };
 
   useEffect(() => {
-    run(() => ctx.appService.fetchApps(clusterId).then(setApps));
+    run(() =>
+      ctx.appService.fetchApps(clusterId).then(res => {
+        setFilteredApps(res.apps);
+        setLabels(res.tagMap);
+        setApps(res.apps);
+      })
+    );
   }, [clusterId]);
 
   return {
@@ -63,6 +76,9 @@ export default function useApps(ctx: Ctx) {
     apps,
     searchValue,
     setSearchValue,
+    filteredApps,
+    setFilteredApps,
+    labels,
   };
 }
 

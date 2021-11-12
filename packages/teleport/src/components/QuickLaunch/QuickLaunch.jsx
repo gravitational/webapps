@@ -77,7 +77,7 @@ function error({ hasError, theme }) {
 
 const StyledBox = styled(Flex)`
   align-items: center;
-  height: 30px;
+  height: 33px;
   border: 1px solid;
   border-radius: 4px;
   border-color: rgba(255, 255, 255, 0.24);

@@ -1,5 +1,5 @@
 /*
-Copyright 2019 Gravitational, Inc.
+Copyright 2019-2021 Gravitational, Inc.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -16,11 +16,13 @@ limitations under the License.
 
 import React from 'react';
 import styled from 'styled-components';
-import { borderRadius } from 'design/system';
+import { Flex } from 'design';
+import { borderRadius, justifyContent } from 'design/system';
 import { Table } from './../Table';
 import Pager from './Pager';
 import usePages from './usePages';
 import PropTypes from 'prop-types';
+import InputSearch from 'teleport/components/InputSearch';
 
 export default function TablePaged(props) {
   const {
@@ -29,6 +31,8 @@ export default function TablePaged(props) {
     pagerPosition,
     fetchMore,
     fetchStatus,
+    searchValue,
+    setSearchValue,
     ...rest
   } = props;
   const pagedState = usePages({ pageSize, data });
@@ -39,7 +43,8 @@ export default function TablePaged(props) {
   };
 
   const showTopPager = !pagerPosition || pagerPosition === 'top';
-  const showBottomPager = pagedState.hasPages || pagerPosition === 'bottom';
+  const showBottomPager =
+    (pagedState.hasPages && data.length >= 50) || pagerPosition === 'bottom';
 
   if (showBottomPager) {
     tableProps.borderBottomRightRadius = '0';
@@ -51,11 +56,20 @@ export default function TablePaged(props) {
 
   return (
     <div style={{ minWidth: 'min-content' }}>
-      {showTopPager && (
-        <StyledPanel borderTopRightRadius="3" borderTopLeftRadius="3">
-          <Pager {...pagerProps} />
-        </StyledPanel>
-      )}
+      <StyledPanel
+        borderTopRightRadius="3"
+        borderTopLeftRadius="3"
+        justifyContent={setSearchValue ? 'space-between' : 'end'}
+      >
+        {setSearchValue && (
+          <InputSearch
+            mr="3"
+            onChange={setSearchValue}
+            searchValue={searchValue}
+          />
+        )}
+        <Flex>{showTopPager && <Pager {...pagerProps} />}</Flex>
+      </StyledPanel>
       <Table {...tableProps} />
       {showBottomPager && (
         <StyledPanel borderBottomRightRadius="3" borderBottomLeftRadius="3">
@@ -72,12 +86,13 @@ TablePaged.propTypes = {
 };
 
 export const StyledPanel = styled.nav`
-  padding: 8px 24px;
+  padding: 12px 16px;
   display: flex;
   height: 24px;
   flex-shrink: 0;
   align-items: center;
-  justify-content: space-between;
+  justify-content: end;
   background: ${props => props.theme.colors.primary.light};
   ${borderRadius}
+  ${justifyContent}
 `;

@@ -16,9 +16,19 @@
 
 import { App } from './types';
 import cfg from 'teleport/config';
+import { appsJSON } from 'teleport/Apps/fixtures';
+import { makeResourceTags } from '../utils';
 
-export default function makeApp(json: any): App {
+export default function makeApps(json) {
   json = json || {};
+  const tagMap = {};
+
+  const apps = appsJSON.map(obj => makeApp(obj, tagMap));
+
+  return { apps, tagMap };
+}
+
+function makeApp(json, tagMap) {
   const {
     name,
     description,
@@ -40,7 +50,7 @@ export default function makeApp(json: any): App {
     description,
     uri,
     publicAddr,
-    tags: labels.map(label => `${label.name}: ${label.value}`),
+    tags: makeResourceTags(labels, tagMap),
     clusterId,
     fqdn,
     launchUrl,
@@ -48,3 +58,35 @@ export default function makeApp(json: any): App {
     awsConsole,
   };
 }
+
+// export default function makeApp(json: any): App {
+//   json = json || {};
+//   const {
+//     name,
+//     description,
+//     uri,
+//     publicAddr,
+//     clusterId,
+//     fqdn,
+//     awsConsole = false,
+//   } = json;
+
+//   const id = `${clusterId}-${name}-${publicAddr}`;
+//   const launchUrl = cfg.getAppLauncherRoute({ fqdn, clusterId, publicAddr });
+//   const labels = json.labels || [];
+//   const awsRoles = json.awsRoles || [];
+
+//   return {
+//     id,
+//     name,
+//     description,
+//     uri,
+//     publicAddr,
+//     tags: labels.map(label => `${label.name}: ${label.value}`),
+//     clusterId,
+//     fqdn,
+//     launchUrl,
+//     awsRoles,
+//     awsConsole,
+//   };
+// }

@@ -67,10 +67,11 @@ class InputSearch extends React.Component {
 
 function fromTheme(props) {
   return {
-    background: props.theme.colors.primary.light,
+    // background: props.theme.colors.primary.main,
+    background: '#0c143d',
 
     '&:hover': {
-      background: props.theme.colors.primary.lighter,
+      background: props.theme.colors.primary.main,
     },
     '&:focus, &:active': {
       background: props.theme.colors.primary.lighter,

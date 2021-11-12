@@ -17,13 +17,11 @@
 import { map } from 'lodash';
 import api from 'teleport/services/api';
 import cfg, { UrlAppParams } from 'teleport/config';
-import makeApp from './makeApps';
+import makeApps from './makeApps';
 
 const service = {
   fetchApps(clusterId: string) {
-    return api
-      .get(cfg.getApplicationsUrl(clusterId))
-      .then(json => map(json.items, makeApp));
+    return api.get(cfg.getApplicationsUrl(clusterId)).then(makeApps);
   },
 
   createAppSession(params: UrlAppParams) {
