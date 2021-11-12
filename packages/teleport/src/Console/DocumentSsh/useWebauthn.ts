@@ -22,34 +22,43 @@ import {
   makeWebauthnAssertionResponse,
 } from 'teleport/services/auth';
 
-export default function useSshSession(tty: Tty) {
-  const [errorText, setErrorText] = useState('');
-  const [isAuthnDialogVisible, setIsAuthnDialogVisible] = useState(false);
-  const [webauthnPublicKey, setWebauthnPublicKey] = useState<
-    PublicKeyCredentialRequestOptions
-  >();
+export default function useWebauthn(tty: Tty) {
+  const [state, setState] = useState({
+    requested: false,
+    errorText: '',
+    publicKey: null as PublicKeyCredentialRequestOptions,
+  });
 
   function authenticate() {
     if (!window.PublicKeyCredential) {
-      const errMsg =
+      const errorText =
         'This browser does not support WebAuthn required for hardware tokens, \
       please try the latest version of Chrome, Firefox or Safari.';
 
-      setErrorText(errMsg);
+      setState({
+        ...state,
+        errorText,
+      });
       return;
     }
 
     navigator.credentials
-      .get({ publicKey: webauthnPublicKey })
+      .get({ publicKey: state.publicKey })
       .then(res => {
         const credential = makeWebauthnAssertionResponse(res);
         tty.send(JSON.stringify(credential));
 
-        setIsAuthnDialogVisible(false);
-        setErrorText('');
+        setState({
+          ...state,
+          requested: false,
+          errorText: '',
+        });
       })
       .catch((err: Error) => {
-        setErrorText(err.message);
+        setState({
+          ...state,
+          errorText: err.message,
+        });
       });
   }
 
@@ -59,15 +68,18 @@ export default function useSshSession(tty: Tty) {
         const json = JSON.parse(challenge);
         const publicKey = makeMfaAuthenticateChallenge(json).webauthnPublicKey;
 
-        setWebauthnPublicKey(publicKey);
-        setIsAuthnDialogVisible(true);
+        setState({
+          ...state,
+          requested: true,
+          publicKey,
+        });
       });
     }
   }, [tty]);
 
   return {
-    errorText,
+    errorText: state.errorText,
+    requested: state.requested,
     authenticate,
-    isAuthnDialogVisible,
   };
 }

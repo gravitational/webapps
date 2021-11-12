@@ -44,7 +44,7 @@ export default function DocumentSsh({ doc, visible }: PropTypes) {
       // when switching tabs or closing tabs, focus on visible terminal
       refTerminal.current.terminal.term.focus();
     }
-  }, [visible, webauthn.isAuthnDialogVisible]);
+  }, [visible, webauthn.requested]);
 
   return (
     <Document visible={visible} flexDirection="column">
@@ -68,7 +68,7 @@ export default function DocumentSsh({ doc, visible }: PropTypes) {
       {status === 'notfound' && (
         <SidNotFoundError sid={doc.sid} clusterId={doc.clusterId} />
       )}
-      {webauthn.isAuthnDialogVisible && (
+      {webauthn.requested && (
         <AuthnDialog
           onContinue={webauthn.authenticate}
           onCancel={closeDocument}
