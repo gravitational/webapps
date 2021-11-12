@@ -2,7 +2,6 @@
   "name": "@gravitational/teleterm",
   "version": "1.0.0",
   "description": "Teleport Terminal",
-  "productName": "Teleport Terminal",
   "main": "build/app/dist/main/main.js",
   "author": {
     "name": "Teleport",
@@ -17,7 +16,7 @@
     "build": "yarn build-main && yarn build-renderer",
     "build-main": "webpack build --config webpack.main.config.js --progress --mode=production",
     "build-renderer": "webpack build --config webpack.renderer.prod.config.js --progress",
-    "package": "electron-builder build --publish never",
+    "package": "electron-builder build --publish never -c.extraMetadata.name=teleterm",
     "postinstall": "electron-builder install-app-deps"
   },
   "repository": {
