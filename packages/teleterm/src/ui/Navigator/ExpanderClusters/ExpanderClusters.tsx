@@ -62,8 +62,13 @@ export const ExpanderClusters: React.FC<State> = props => {
   return (
     <Expander>
       <ExpanderHeader>
-        <Flex justifyContent="space-between" flex="1" width="100%">
-          <Text typography="h4">Clusters</Text>
+        <Flex
+          justifyContent="space-between"
+          alignItems="center"
+          flex="1"
+          width="100%"
+        >
+          <Text typography="body1">Clusters</Text>
           <Flex>
             <ButtonIcon p={3} color="text.placeholder">
               <Icons.Restore />
@@ -97,7 +102,7 @@ const ClusterItem: React.FC<{ item: ClusterNavItem }> = props => {
           flex="1"
           width="100%"
         >
-          <Text typography="h5">{title}</Text>
+          <Text typography="body1">{title}</Text>
           <ButtonIcon color="text.placeholder">
             <Icons.Trash />
           </ButtonIcon>
@@ -122,7 +127,7 @@ const ClusterOfflineItem: React.FC<{
           flex="1"
           width="100%"
         >
-          <Text typography="h5">{item.title}</Text>
+          <Text typography="body1">{item.title}</Text>
           <ButtonIcon color="text.placeholder">
             <Icons.Trash />
           </ButtonIcon>

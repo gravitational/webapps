@@ -75,14 +75,14 @@ export default class DocumentService extends Store<State> {
       this.add({
         uri,
         clusterUri,
-        title: 'Servers',
+        title: `${clusterMatch.params.clusterId}/servers`,
         kind: 'servers',
       });
     } else if (dbsMatch) {
       this.add({
         uri,
         clusterUri,
-        title: 'Databases',
+        title: `${clusterMatch.params.clusterId}/databases`,
         kind: 'dbs',
       });
     } else if (gwMatch) {

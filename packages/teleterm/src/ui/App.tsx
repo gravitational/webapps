@@ -2,20 +2,22 @@ import React from 'react';
 import styled from 'styled-components';
 import { Box } from 'design';
 import SplitPane from 'shared/components/SplitPane';
-import ThemeProvider from './ThemeProvider';
+import { ThemeProviderTabs } from './ThemeProvider';
 import CatchError from './components/CatchError';
 import AppContextProvider from './appContextProvider';
 import Navigator from './Navigator';
 import AppContext from './appContext';
 import TabHost from './TabHost';
 import ModalsHost from './ModalsHost';
+import GlobalSearch from './GlobalSearch';
 
 const App: React.FC<{ ctx: AppContext }> = ({ ctx }) => {
   return (
     <StyledApp>
       <CatchError>
         <AppContextProvider value={ctx}>
-          <ThemeProvider>
+          <ThemeProviderTabs>
+            <GlobalSearch />
             <SplitPane defaultSize="20%" flex="1" split="vertical">
               <Box flex="1" bg="primary.light">
                 <Navigator />
@@ -25,7 +27,7 @@ const App: React.FC<{ ctx: AppContext }> = ({ ctx }) => {
               </Box>
             </SplitPane>
             <ModalsHost />
-          </ThemeProvider>
+          </ThemeProviderTabs>
         </AppContextProvider>
       </CatchError>
     </StyledApp>
@@ -41,4 +43,5 @@ const StyledApp = styled.div`
   bottom: 0;
   position: absolute;
   display: flex;
+  flex-direction: column;
 `;
