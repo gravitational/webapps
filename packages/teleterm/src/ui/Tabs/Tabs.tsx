@@ -42,16 +42,11 @@ export function Tabs(props: Props) {
     .filter(i => i.kind !== 'blank')
     .map(i => {
       const active = i.uri === activeTab;
-      let users: { user: string }[] = [];
-      if (i.kind === 'terminal') {
-        users = parties[i.sid] || [];
-      }
-
       return (
         <TabItem
           name={i.title}
           key={i.uri}
-          users={users}
+          users={[]}
           active={active}
           onClick={() => onSelect(i)}
           onClose={() => onClose(i)}
