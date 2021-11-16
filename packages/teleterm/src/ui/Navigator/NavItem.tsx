@@ -74,7 +74,7 @@ export const StyledNavItem = styled.div(props => {
     cursor: 'pointer',
     width: '100%',
     position: 'relative',
-    fontSize: '14px',
+    fontSize: '12px',
     fontWeight: theme.regular,
     fontFamily: theme.font,
     color: theme.colors.text.primary,

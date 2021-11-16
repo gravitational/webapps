@@ -1,15 +1,18 @@
-import * as types from 'teleterm/services/tshd/types';
+import * as tsh from 'teleterm/services/tshd/types';
 import { Store, useStore } from 'shared/libs/stores';
+import ClusterSearchProvider from './clustersSearchProvider';
 
 type State = {
-  clusters: Map<string, types.Cluster>;
-  gateways: Map<string, types.Gateway>;
-  servers: Map<string, types.Server>;
-  dbs: Map<string, types.Database>;
+  clusters: Map<string, tsh.Cluster>;
+  gateways: Map<string, tsh.Gateway>;
+  servers: Map<string, tsh.Server>;
+  dbs: Map<string, tsh.Database>;
 };
 
-export default class TshService extends Store<State> {
-  client: types.TshdClient;
+export default class Service extends Store<State> {
+  searchProvider: ClusterSearchProvider;
+
+  client: tsh.TshClient;
 
   state: State = {
     clusters: new Map(),
@@ -18,9 +21,10 @@ export default class TshService extends Store<State> {
     dbs: new Map(),
   };
 
-  constructor(client: types.TshdClient) {
+  constructor(client: tsh.TshClient) {
     super();
     this.client = client;
+    this.searchProvider = new ClusterSearchProvider(this);
   }
 
   async addCluster(addr: string) {
@@ -159,6 +163,14 @@ export default class TshService extends Store<State> {
 
   getGateways() {
     return [...this.state.gateways.values()];
+  }
+
+  getServers() {
+    return [...this.state.servers.values()];
+  }
+
+  getDbs() {
+    return [...this.state.dbs.values()];
   }
 
   useState() {

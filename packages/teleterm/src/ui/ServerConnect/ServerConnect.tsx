@@ -39,37 +39,35 @@ export function ServerConnect(props: State) {
 
   return (
     <Validation>
-      {({ validator }) => (
-        <Dialog
-          dialogCss={() => ({
-            maxWidth: '600px',
-            width: '100%',
-            padding: '20px',
-          })}
-          disableEscapeKeyDown={false}
-          onClose={onClose}
-          open={true}
-        >
-          <DialogHeader>
-            <Text typography="h3" color="text.primary">
-              Connect to <b>{server.name}</b>
-            </Text>
-          </DialogHeader>
-          <DialogContent>
-            <DarkStyledSelect width="210px">
-              <Select
-                isSearchable={false}
-                options={loginOptions}
-                onChange={handleOnChange}
-                value={loginOptions[0]}
-              />
-            </DarkStyledSelect>
-          </DialogContent>
-          <DialogFooter>
-            <ButtonSecondary onClick={onClose}>Close</ButtonSecondary>
-          </DialogFooter>
-        </Dialog>
-      )}
+      <Dialog
+        dialogCss={() => ({
+          maxWidth: '600px',
+          width: '100%',
+          padding: '20px',
+        })}
+        disableEscapeKeyDown={false}
+        onClose={onClose}
+        open={true}
+      >
+        <DialogHeader>
+          <Text typography="h3" color="text.primary">
+            Connect to <b>{server.name}</b>
+          </Text>
+        </DialogHeader>
+        <DialogContent>
+          <DarkStyledSelect width="210px">
+            <Select
+              isSearchable={false}
+              options={loginOptions}
+              onChange={handleOnChange}
+              value={loginOptions[0]}
+            />
+          </DarkStyledSelect>
+        </DialogContent>
+        <DialogFooter>
+          <ButtonSecondary onClick={onClose}>Close</ButtonSecondary>
+        </DialogFooter>
+      </Dialog>
     </Validation>
   );
 }

@@ -18,7 +18,7 @@ import React from 'react';
 import styled from 'styled-components';
 import { sortBy } from 'lodash';
 import isMatch from 'design/utils/match';
-import { ButtonPrimary } from 'design';
+import { ButtonBorder } from 'design';
 import {
   Column,
   SortHeaderCell,
@@ -85,7 +85,7 @@ function ServerList(props: Props) {
           cell={<AddressCell />}
         />
         <Column header={<Cell>Labels</Cell>} cell={<LabelCell />} />
-        <Column header={<Cell />} cell={<LoginCell onClick={onLogin} />} />
+        <Column header={<Cell />} cell={<ConnectButton onClick={onLogin} />} />
       </StyledTable>
     </div>
   );
@@ -107,19 +107,23 @@ function searchAndFilterCb(
   }
 }
 
-const LoginCell: React.FC<Required<{
-  onClick(serverUri: string): void;
-  [key: string]: any;
-}>> = props => {
-  const { rowIndex, data, onClick } = props;
-  const { uri } = data[rowIndex] as types.Server;
+function ConnectButton(props) {
+  const { onClick, rowIndex, data } = props;
+  const { uri } = data[rowIndex] as types.Database;
 
   return (
     <Cell align="right">
-      <ButtonPrimary onClick={() => onClick(uri)}>Connect</ButtonPrimary>
+      <ButtonBorder
+        size="small"
+        onClick={() => {
+          onClick(uri);
+        }}
+      >
+        Connect
+      </ButtonBorder>
     </Cell>
   );
-};
+}
 
 function AddressCell(props) {
   const { rowIndex, data, ...rest } = props;

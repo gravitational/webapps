@@ -1,11 +1,5 @@
 import path from 'path';
-import {
-  app,
-  screen,
-  BrowserWindow,
-  ipcMain,
-  Menu,
-} from 'electron';
+import { app, screen, BrowserWindow, ipcMain, Menu } from 'electron';
 import { ChildProcess, spawn } from 'child_process';
 import { RuntimeSettings } from 'teleterm/types';
 import { getAssetPath, getRuntimeSettings } from './runtimeSettings';
@@ -84,20 +78,17 @@ export default class MainProcess {
       event.returnValue = this.settings;
     });
 
-    ipcMain.on(
-      'main-process-open-context-menu',
-      () => {
-        Menu.buildFromTemplate([
-          {
-            label: 'Copy',
-            role: 'copy',
-          },
-          {
-            label: 'Paste',
-            role: 'paste',
-          },
-        ]).popup();
-      }
-    );
+    ipcMain.on('main-process-open-context-menu', () => {
+      Menu.buildFromTemplate([
+        {
+          label: 'Copy',
+          role: 'copy',
+        },
+        {
+          label: 'Paste',
+          role: 'paste',
+        },
+      ]).popup();
+    });
   }
 }

@@ -16,15 +16,19 @@ limitations under the License.
 
 import { FC } from 'react';
 
-export type DocumentKind =
+export * from 'teleterm/services/tshd/types';
+
+export type ResourceKind =
   | 'gateways'
   | 'terminal'
   | 'servers'
+  | 'server'
   | 'blank'
   | 'home'
   | 'apps'
   | 'clusters'
   | 'dbs'
+  | 'db'
   | 'gateway'
   | 'terminal_shell'
   | 'terminal_tsh_session';
@@ -32,7 +36,7 @@ export type DocumentKind =
 interface DocumentBase {
   uri: string;
   title: string;
-  kind: DocumentKind;
+  kind: ResourceKind;
 }
 
 export interface DocumentHome extends DocumentBase {
@@ -93,6 +97,6 @@ export interface NavItem {
   title: string;
   uri: string;
   Icon: FC;
-  kind: DocumentKind;
+  kind: ResourceKind;
   group: boolean;
 }

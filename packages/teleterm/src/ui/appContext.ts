@@ -20,8 +20,10 @@ import ServiceModals from 'teleterm/ui/services/modals';
 import ServiceDocs from 'teleterm/ui/services/docs';
 import ServiceTerminals from 'teleterm/ui/services/terminals';
 import { MainProcessClient } from 'teleterm/types';
+import ServiceGlobalSearch from 'teleterm/ui/services/globalSearch';
 
 export default class AppContext {
+  serviceGlobalSearch: ServiceGlobalSearch;
   serviceClusters: ServiceClusters;
   serviceModals: ServiceModals;
   serviceDocs: ServiceDocs;

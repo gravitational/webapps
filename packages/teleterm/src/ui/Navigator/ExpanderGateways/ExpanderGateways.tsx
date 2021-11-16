@@ -36,8 +36,13 @@ export const ExpanderGateways: React.FC<State> = props => {
   return (
     <Expander>
       <ExpanderHeader>
-        <Flex justifyContent="space-between" flex="1" width="100%">
-          <Text typography="h4">Gateways</Text>
+        <Flex
+          justifyContent="space-between"
+          alignItems="center"
+          flex="1"
+          width="100%"
+        >
+          <Text typography="body1">Gateways</Text>
           <ButtonIcon color="text.placeholder">
             <Icons.Add />
           </ButtonIcon>

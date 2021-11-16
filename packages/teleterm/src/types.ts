@@ -1,4 +1,4 @@
-import { TshdClient } from 'teleterm/services/tshd/types';
+import { TshClient } from 'teleterm/services/tshd/types';
 import { PtyServiceClient } from 'teleterm/services/pty/types';
 
 export type RuntimeSettings = {
@@ -19,7 +19,7 @@ export type MainProcessClient = {
 };
 
 export type ElectronGlobals = {
-  readonly tshdClient: TshdClient;
   readonly mainProcessClient: MainProcessClient;
+  readonly tshdClient: TshClient;
   readonly ptyServiceClient: PtyServiceClient;
 };
