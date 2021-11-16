@@ -30,6 +30,7 @@ cfg.devServer = {
   },
 };
 
+cfg.devtool = 'source-map';
 cfg.output.publicPath = '/';
 cfg.plugins = [new webpack.HotModuleReplacementPlugin(), createHtmlPlugin()];
 
