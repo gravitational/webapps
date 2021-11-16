@@ -16,8 +16,9 @@
 
 import React, { useState, useMemo } from 'react';
 import { useLocation } from 'react-router';
-import SelectFilter from 'teleport/components/SelectFilter';
 import { Option } from 'shared/components/Select';
+import SelectFilter from 'teleport/components/SelectFilter';
+import history from 'teleport/services/history';
 
 export default function FilterableList({
   data = [],
@@ -95,15 +96,11 @@ function filterData(data = [], labels: Option[] = []) {
 
 function updateUrlQuery(filters: Option[], pathname = '') {
   if (filters.length === 0) {
-    window.history.replaceState(null, null, `${pathname}`);
+    history.replace(pathname);
   }
 
   const labels = filters.map(f => f.value).join(',');
-  window.history.replaceState(
-    null,
-    null,
-    `${pathname}?labels=${encodeURIComponent(labels)}`
-  );
+  history.replace(`${pathname}?labels=${encodeURIComponent(labels)}`);
 }
 
 function makeLabelOptions(data = []): Option[] {
