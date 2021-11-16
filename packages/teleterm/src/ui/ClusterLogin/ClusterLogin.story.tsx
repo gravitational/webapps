@@ -16,7 +16,7 @@ limitations under the License.
 
 import React from 'react';
 import { ClusterLogin } from './ClusterLogin';
-import { AuthProvider } from 'shared/services';
+import * as types from 'teleterm/services/tshd/types';
 
 const props = {
   title: 'localhost',
@@ -29,11 +29,11 @@ const props = {
     statusText: '',
   } as const,
 
-  close: () => null,
+  onClose: () => null,
 
-  login: (email: string, password: string) =>
+  loginWithLocal: (email: string, password: string) =>
     Promise.resolve<[void, Error]>([null, null]),
-  loginWithSso: (provider: AuthProvider) => null,
+  loginWithSso: (provider: types.AuthProvider) => null,
 };
 
 export default {
