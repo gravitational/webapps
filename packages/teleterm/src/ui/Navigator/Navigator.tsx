@@ -32,18 +32,14 @@ export function Navigator(props: State) {
   const { homeItem } = props;
   return (
     <Nav bg="primary.dark">
-      <Text
-        typography="body1"
-        py={2}
-        ml={4}
-        fontSize={4}
-        color="text.placeholder"
-      >
+      <StyledBorder />
+      <Text typography="body1" py={1} ml={4}>
         Teleport Terminal
       </Text>
+      <StyledBorder />
       <NavItem pl={2} item={homeItem} onClick={props.processItemClick}>
         <Icons.Home mr={2} />
-        <Text typography="h4">{homeItem.title}</Text>
+        <Text typography="body1">{homeItem.title}</Text>
       </NavItem>
       <ExpanderGateways />
       <ExpanderClusters />
@@ -57,3 +53,10 @@ const Nav = styled(Flex)`
   flex-direction: column;
   user-select: none;
 `;
+
+const StyledBorder = styled.div(({ theme }) => {
+  return {
+    background: theme.colors.primary.lighter,
+    height: '1px',
+  };
+});

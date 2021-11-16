@@ -18,47 +18,40 @@ import React from 'react';
 import styled from 'styled-components';
 import { Text, Flex, Box } from 'design';
 import QuickLaunch from 'teleport/components/QuickLaunch';
-import InputSearch from 'teleport/components/InputSearch';
 import Document from './../Document';
 import useServers from './useServers';
 import ServerList from './ServerList';
-import { ThemeProviderTabs } from './../ThemeProvider';
 import * as types from '../types';
+
+export default function DocumentNodes(props: Props) {
+  const { doc, visible } = props;
+  const { servers, connect, searchValue } = useServers(doc);
+
+  function onQuickLaunchEnter() {}
+
+  return (
+    <Document visible={visible}>
+      <Container mx="auto" mt="4" px="5">
+        <Flex justifyContent="space-between" mb="4">
+          <Text typography="h3" color="text.secondary">
+            Servers
+          </Text>
+          <QuickLaunch width="240px" onPress={onQuickLaunchEnter} />
+        </Flex>
+        <ServerList
+          searchValue={searchValue}
+          onLogin={connect}
+          servers={servers}
+        />
+      </Container>
+    </Document>
+  );
+}
 
 type Props = {
   visible: boolean;
   doc: types.DocumentServers;
 };
-
-export default function DocumentNodes(props: Props) {
-  const { doc, visible } = props;
-  const { servers, setSearchValue, connect, searchValue } = useServers(doc);
-
-  function onQuickLaunchEnter() {}
-
-  return (
-    <ThemeProviderTabs>
-      <Document visible={visible}>
-        <Container mx="auto" mt="4" px="5">
-          <Flex justifyContent="space-between" mb="4">
-            <Text typography="h3" color="text.secondary">
-              Servers
-            </Text>
-          </Flex>
-          <Flex mb="4" justifyContent="space-between" alignItems="center">
-            <InputSearch height="30px" mr="3" onChange={setSearchValue} />
-            <QuickLaunch width="240px" onPress={onQuickLaunchEnter} />
-          </Flex>
-          <ServerList
-            searchValue={searchValue}
-            onLogin={connect}
-            servers={servers}
-          />
-        </Container>
-      </Document>
-    </ThemeProviderTabs>
-  );
-}
 
 const Container = styled(Box)`
   flex-direction: column;

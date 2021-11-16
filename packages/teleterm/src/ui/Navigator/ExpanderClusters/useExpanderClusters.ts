@@ -63,14 +63,6 @@ function initClusterItems(ctx: AppContext): ClusterNavItem[] {
           items: [],
           group: false,
         },
-        {
-          title: 'Applications',
-          Icon: Icons.NewTab,
-          uri: ctx.uris.getUriApps({ clusterId: cluster.name }),
-          kind: 'apps',
-          items: [],
-          group: false,
-        },
       ],
       group: true,
     })

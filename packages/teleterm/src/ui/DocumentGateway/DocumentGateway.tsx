@@ -114,14 +114,7 @@ export default function DocumentGateway(props: Props) {
 }
 
 const Container = styled(Box)`
-  flex-direction: column;
-  display: flex;
-  flex: 1;
   max-width: 1024px;
-  ::after {
-    content: ' ';
-    padding-bottom: 24px;
-  }
 `;
 
 /*
