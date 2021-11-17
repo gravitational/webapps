@@ -15,9 +15,9 @@ limitations under the License.
 */
 
 import { EventEmitter } from 'events';
-import { Logger } from 'shared/libs/logger';
 import { PtyOptions } from './types';
 import * as nodePTY from 'node-pty';
+import { createLogger, Logger } from 'teleterm/services/logger';
 
 class PtyProcess extends EventEmitter {
   _options: PtyOptions;
@@ -30,7 +30,7 @@ class PtyProcess extends EventEmitter {
   constructor(options: PtyOptions) {
     super();
     this._options = options;
-    this._logger = new Logger();
+    this._logger = createLogger('PTY Process');
   }
 
   start(cols: number, rows: number) {

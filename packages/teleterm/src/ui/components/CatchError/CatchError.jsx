@@ -16,9 +16,9 @@ limitations under the License.
 
 import React from 'react';
 import { Failed } from 'design/CardError';
-import Logger from 'shared/libs/logger';
+import { createLogger } from 'teleterm/ui/utils/rendererLogger';
 
-const logger = Logger.create('components/CatchError');
+const logger = createLogger('components/CatchError');
 
 export default class CatchError extends React.Component {
   static getDerivedStateFromError(error) {

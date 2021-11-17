@@ -3,13 +3,29 @@ import { app, screen, BrowserWindow, ipcMain, Menu } from 'electron';
 import { ChildProcess, spawn } from 'child_process';
 import { RuntimeSettings } from 'teleterm/types';
 import { getAssetPath, getRuntimeSettings } from './runtimeSettings';
+import {
+  createLogger,
+  initializeLogging,
+  Logger,
+} from 'teleterm/services/logger';
 
 export default class MainProcess {
   settings: RuntimeSettings;
   tshdProcess: ChildProcess;
+  logger: Logger;
 
   private constructor(opts?: Partial<RuntimeSettings>) {
     this.settings = getRuntimeSettings(opts);
+    initializeLogging({
+      isDev: this.settings.isDev,
+      directoryPath: this.settings.userDataDir,
+    });
+    this.logger = createLogger('Main Process');
+
+    process.on('uncaughtException', error => {
+      createLogger('Uncaught Exception').error(error);
+      throw error;
+    });
   }
 
   static init(opts?: Partial<RuntimeSettings>) {
@@ -65,11 +81,11 @@ export default class MainProcess {
     });
 
     this.tshdProcess.on('error', error => {
-      console.error('tshd failed to start', error);
+      this.logger.error('tshd failed to start', error);
     });
 
     this.tshdProcess.once('exit', code => {
-      console.log('tshd existed with code: ', code);
+      this.logger.info('tshd exited with code:', code);
     });
   }
 
