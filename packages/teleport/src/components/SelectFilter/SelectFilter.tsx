@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-import React, { useState } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import styled from 'styled-components';
 import { components } from 'react-select';
 import { Flex, Text, ButtonBorder, ButtonIcon, Box } from 'design';
@@ -27,7 +27,7 @@ export default function SelectFilter({
   filters,
   mb = 3,
 }: Props) {
-  const selectWrapperRef = React.useRef(null);
+  const selectWrapperRef = useRef(null);
   const [showSelector, setShowSelector] = useState(false);
   const [selectedFilters, setSelectedFilters] = useState<Option[]>(
     appliedFilters
@@ -53,11 +53,11 @@ export default function SelectFilter({
     }
   }
 
-  React.useEffect(() => {
+  useEffect(() => {
     setSelectedFilters(appliedFilters);
   }, [appliedFilters]);
 
-  React.useEffect(() => {
+  useEffect(() => {
     function handleOnClick(e) {
       // Ignore event for clicking near buttons.
       if (e.target.closest('button')) {
@@ -191,7 +191,13 @@ const OptionComponent = props => {
   );
 };
 
-function Label({ name, onClick }) {
+function Label({
+  name,
+  onClick,
+}: {
+  name: string;
+  onClick(name: string): void;
+}) {
   return (
     <StyledLabel onClick={() => onClick(name)}>
       <span title={name}>{name}</span>

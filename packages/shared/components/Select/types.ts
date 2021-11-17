@@ -35,7 +35,7 @@ export type Props = {
   width?: string | number;
   menuPlacement?: string;
   components?: any;
-  customProps?: { [key: string]: any };
+  customProps?: Record<string, any>;
   menuPosition?: 'fixed' | 'absolute';
 };
 
