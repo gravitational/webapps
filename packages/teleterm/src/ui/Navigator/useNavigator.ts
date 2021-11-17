@@ -20,7 +20,7 @@ import * as types from '../types';
 
 export default function useNavigator() {
   const ctx = useAppContext();
-  const homeItem = initHomeItem(ctx.uris.routes.home);
+  const homeItem = createHomeItem(ctx.uris.routes.home);
 
   ctx.serviceDocs.useState();
   ctx.serviceClusters.useState();
@@ -35,7 +35,7 @@ export default function useNavigator() {
   };
 }
 
-function initHomeItem(uri: string): types.NavItem {
+export function createHomeItem(uri: string): types.NavItem {
   return {
     uri,
     title: 'Home',

@@ -16,6 +16,7 @@
 
 import React from 'react';
 import Select, { Option, DarkStyledSelect } from 'shared/components/Select';
+import styled from 'styled-components';
 import { Text, ButtonSecondary } from 'design';
 import Dialog, {
   DialogHeader,
@@ -44,23 +45,30 @@ export function ServerConnect(props: State) {
           maxWidth: '600px',
           width: '100%',
           padding: '20px',
+          height: '260px',
         })}
         disableEscapeKeyDown={false}
         onClose={onClose}
         open={true}
       >
         <DialogHeader>
-          <Text typography="h3" color="text.primary">
-            Connect to <b>{server.name}</b>
+          <Text typography="h4" color="text.primary">
+            Connect to <b>{server.hostname}</b>
           </Text>
         </DialogHeader>
         <DialogContent>
-          <DarkStyledSelect width="210px">
+          <DarkStyledSelect>
             <Select
-              isSearchable={false}
+              placeholder="login as..."
+              minMenuHeight={128}
+              maxMenuHeight={128}
+              menuIsOpen={true}
+              autoFocus={true}
+              isSearchable={true}
+              value={null}
               options={loginOptions}
               onChange={handleOnChange}
-              value={loginOptions[0]}
+              components={{ DropdownIndicator }}
             />
           </DarkStyledSelect>
         </DialogContent>
@@ -71,3 +79,5 @@ export function ServerConnect(props: State) {
     </Validation>
   );
 }
+
+const DropdownIndicator = () => null;

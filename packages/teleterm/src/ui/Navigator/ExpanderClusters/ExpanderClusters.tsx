@@ -145,16 +145,3 @@ const ClusterOfflineItem: React.FC<{
     </Expander>
   );
 };
-
-/*
-{!props.item.connected && (
-        <ExpanderContent>
-          <StyledNavItem pl={8}>
-            <Text color="text.secondary">
-              <ButtonBorder size="small">connect</ButtonBorder>
-            </Text>
-          </StyledNavItem>
-        </ExpanderContent>
-      )}
-
-*/

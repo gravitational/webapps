@@ -47,7 +47,7 @@ const NavItem: React.FC<Props> = props => {
     <StyledNavItem $active={active} {...styles} onClick={handleClick}>
       {!props.children && (
         <>
-          <Icon mr={2} ml={-2} as={item.Icon} fontSize="12px" color="inherit" />
+          <Icon mr={2} ml={-2} as={item.Icon} fontSize="10px" color="inherit" />
           {item.title}
         </>
       )}

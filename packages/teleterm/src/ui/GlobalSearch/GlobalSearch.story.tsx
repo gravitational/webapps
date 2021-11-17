@@ -17,7 +17,7 @@
 import React from 'react';
 import ServiceGlobalSearch from 'teleterm/ui/services/globalSearch';
 import AppContextProvider from 'teleterm/ui/appContextProvider';
-import AppContext from 'teleterm/ui/appContext';
+import { MockAppContext } from 'teleterm/ui/fixtures/mocks';
 import GlobalSearch from './GlobalSearch';
 
 export default {
@@ -25,7 +25,7 @@ export default {
 };
 
 export const Story = () => {
-  const appContext = new AppContext();
+  const appContext = new MockAppContext();
   appContext.serviceGlobalSearch = new ServiceGlobalSearch();
   appContext.serviceGlobalSearch.search = () => [
     {

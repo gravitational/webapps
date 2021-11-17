@@ -14,13 +14,15 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import uris from './uris';
+import uris from 'teleterm/ui/uris';
 import ServiceClusters from 'teleterm/ui/services/clusters';
 import ServiceModals from 'teleterm/ui/services/modals';
 import ServiceDocs from 'teleterm/ui/services/docs';
 import ServiceTerminals from 'teleterm/ui/services/terminals';
-import { MainProcessClient } from 'teleterm/types';
 import ServiceGlobalSearch from 'teleterm/ui/services/globalSearch';
+import * as types from 'teleterm/types';
+
+export type Config = types.ElectronGlobals;
 
 export default class AppContext {
   serviceGlobalSearch: ServiceGlobalSearch;
@@ -28,9 +30,25 @@ export default class AppContext {
   serviceModals: ServiceModals;
   serviceDocs: ServiceDocs;
   serviceTerminals: ServiceTerminals;
-  mainProcessClient: MainProcessClient;
+  mainProcessClient: types.MainProcessClient;
 
   uris = uris;
 
-  constructor() {}
+  constructor(config: Config) {
+    this.mainProcessClient = config.mainProcessClient;
+    this.serviceGlobalSearch = new ServiceGlobalSearch();
+    this.serviceClusters = new ServiceClusters(config.tshdClient);
+    this.serviceGlobalSearch.registerProvider(
+      this.serviceClusters.searchProvider
+    );
+
+    this.serviceModals = new ServiceModals();
+    this.serviceDocs = new ServiceDocs();
+    this.serviceTerminals = new ServiceTerminals(config.ptyServiceClient);
+  }
+
+  async init() {
+    await this.serviceClusters.fetchClusters();
+    await this.serviceClusters.fetchGateways();
+  }
 }

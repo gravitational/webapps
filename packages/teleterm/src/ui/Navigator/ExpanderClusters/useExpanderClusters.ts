@@ -39,34 +39,32 @@ export default function useExpanderClusters() {
 }
 
 function initClusterItems(ctx: AppContext): ClusterNavItem[] {
-  return [...ctx.serviceClusters.state.clusters.values()].map<ClusterNavItem>(
-    cluster => ({
-      title: cluster.name,
-      Icon: Icons.Clusters,
-      uri: cluster.uri,
-      kind: 'clusters',
-      connected: cluster.connected,
-      items: [
-        {
-          title: 'Servers',
-          Icon: Icons.Server,
-          uri: ctx.uris.getUriServer({ clusterId: cluster.name }),
-          kind: 'servers',
-          items: [],
-          group: false,
-        },
-        {
-          title: 'Databases',
-          Icon: Icons.Database,
-          uri: ctx.uris.getUriDbs({ clusterId: cluster.name }),
-          kind: 'dbs',
-          items: [],
-          group: false,
-        },
-      ],
-      group: true,
-    })
-  );
+  return ctx.serviceClusters.getClusters().map<ClusterNavItem>(cluster => ({
+    title: cluster.name,
+    Icon: Icons.Clusters,
+    uri: cluster.uri,
+    kind: 'clusters',
+    connected: cluster.connected,
+    items: [
+      {
+        title: 'Servers',
+        Icon: Icons.Server,
+        uri: ctx.uris.getUriServer({ clusterId: cluster.name }),
+        kind: 'servers',
+        items: [],
+        group: false,
+      },
+      {
+        title: 'Databases',
+        Icon: Icons.Database,
+        uri: ctx.uris.getUriDbs({ clusterId: cluster.name }),
+        kind: 'dbs',
+        items: [],
+        group: false,
+      },
+    ],
+    group: true,
+  }));
 }
 
 export type State = ReturnType<typeof useExpanderClusters>;

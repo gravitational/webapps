@@ -41,7 +41,17 @@ export default function useGlobalSearch() {
         if (searchResults.length > 0) {
           e.target['value'] = '';
           setResults([]);
-          ctx.serviceDocs.open(searchResults[current].data.uri);
+
+          const selectedResult = searchResults[current];
+          // TODO (alex-kovoy): implement a command pattern
+          if (selectedResult.kind === 'server') {
+            ctx.serviceModals.openDialog({
+              kind: 'server-connect',
+              serverUri: selectedResult.data.uri,
+            });
+          } else {
+            ctx.serviceDocs.open(searchResults[current].data.uri);
+          }
         }
         return;
       case KeyEnum.ESC:

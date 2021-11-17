@@ -1,9 +1,9 @@
 import path from 'path';
 import { app } from 'electron';
 import fs from 'fs';
-import { RuntimeSettings } from 'teleterm/types';
 import { Logger } from 'shared/libs/logger';
 import os from 'os';
+import { RuntimeSettings } from './types';
 
 const RESOURCES_PATH = app.isPackaged
   ? process.resourcesPath
