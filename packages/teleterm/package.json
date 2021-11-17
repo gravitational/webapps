@@ -37,15 +37,16 @@
     "@types/google-protobuf": "^3.7.2",
     "clean-webpack-plugin": "4.0.0",
     "cross-env": "5.0.5",
-    "electron-debug": "^3.2.0",
     "electron": "13.2.3",
+    "electron-debug": "^3.2.0",
     "eslint-import-resolver-webpack": "0.13.2",
     "eslint-loader": "3.0.3",
     "file-loader": "6.0.0",
     "ts-protoc-gen": "0.15.0",
     "url-loader": "4.0.0",
-    "xterm-addon-fit": "^0.5.0",
-    "xterm": "4.14.1"
+    "winston": "^3.3.3",
+    "xterm": "4.14.1",
+    "xterm-addon-fit": "^0.5.0"
   },
   "build": {
     "electronVersion": "13.2.3",
@@ -95,7 +96,7 @@
     "extraResources": [
       "./assets/**",
       {
-        "from":"../../../teleport/build/tsh",
+        "from": "../../../teleport/build/tsh",
         "to": "."
       }
     ],
