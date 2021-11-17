@@ -41,7 +41,7 @@ const cfg = {
 
   routes: {
     root: '/web',
-    apps: '/web/cluster/:clusterId/apps',
+    apps: '/web/cluster/:clusterId/apps(\\?labels=.*)?',
     appLauncher: '/web/launch/:fqdn/:clusterId?/:publicAddr?/:arn?',
     support: '/web/support',
     settings: '/web/settings',
@@ -54,11 +54,11 @@ const cfg = {
     clusters: '/web/clusters',
     trustedClusters: '/web/trust',
     audit: '/web/cluster/:clusterId/audit',
-    nodes: '/web/cluster/:clusterId/nodes',
+    nodes: '/web/cluster/:clusterId/nodes(\\?labels=.*)?',
     sessions: '/web/cluster/:clusterId/sessions',
     recordings: '/web/cluster/:clusterId/recordings',
-    databases: '/web/cluster/:clusterId/databases',
-    desktops: '/web/cluster/:clusterId/desktops',
+    databases: '/web/cluster/:clusterId/databases(\\?labels=.*)?',
+    desktops: '/web/cluster/:clusterId/desktops(\\?labels=.*)?',
     desktop: '/web/cluster/:clusterId/desktops/:desktopId/:username',
     users: '/web/users',
     console: '/web/cluster/:clusterId/console',
@@ -75,7 +75,7 @@ const cfg = {
     loginErrorCallback: '/web/msg/error/login/callback',
     userInvite: '/web/invite/:tokenId',
     userReset: '/web/reset/:tokenId',
-    kubernetes: '/web/cluster/:clusterId/kubernetes',
+    kubernetes: '/web/cluster/:clusterId/kubernetes(\\?labels=.*)?',
     // whitelist sso handlers
     oidcHandler: '/v1/webapi/oidc/*',
     samlHandler: '/v1/webapi/saml/*',

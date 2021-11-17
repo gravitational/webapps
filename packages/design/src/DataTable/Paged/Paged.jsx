@@ -16,7 +16,8 @@ limitations under the License.
 
 import React from 'react';
 import styled from 'styled-components';
-import { borderRadius } from 'design/system';
+import { borderRadius, justifyContent } from 'design/system';
+import InputSearch from 'teleport/components/InputSearch';
 import { Table } from './../Table';
 import Pager from './Pager';
 import usePages from './usePages';
@@ -29,6 +30,8 @@ export default function TablePaged(props) {
     pagerPosition,
     fetchMore,
     fetchStatus,
+    searchValue,
+    onChangeSearchValue,
     ...rest
   } = props;
   const pagedState = usePages({ pageSize, data });
@@ -40,6 +43,7 @@ export default function TablePaged(props) {
 
   const showTopPager = !pagerPosition || pagerPosition === 'top';
   const showBottomPager = pagedState.hasPages || pagerPosition === 'bottom';
+  const showSearchBar = !!onChangeSearchValue;
 
   if (showBottomPager) {
     tableProps.borderBottomRightRadius = '0';
@@ -52,7 +56,18 @@ export default function TablePaged(props) {
   return (
     <div style={{ minWidth: 'min-content' }}>
       {showTopPager && (
-        <StyledPanel borderTopRightRadius="3" borderTopLeftRadius="3">
+        <StyledPanel
+          borderTopRightRadius="3"
+          borderTopLeftRadius="3"
+          justifyContent={showSearchBar ? 'space-between' : 'end'}
+        >
+          {showSearchBar && (
+            <InputSearch
+              mr="3"
+              onChange={onChangeSearchValue}
+              searchValue={searchValue}
+            />
+          )}
           <Pager {...pagerProps} />
         </StyledPanel>
       )}
@@ -72,12 +87,13 @@ TablePaged.propTypes = {
 };
 
 export const StyledPanel = styled.nav`
-  padding: 8px 24px;
+  padding: 12px 16px;
   display: flex;
   height: 24px;
   flex-shrink: 0;
   align-items: center;
-  justify-content: space-between;
+  justify-content: end;
   background: ${props => props.theme.colors.primary.light};
   ${borderRadius}
+  ${justifyContent}
 `;

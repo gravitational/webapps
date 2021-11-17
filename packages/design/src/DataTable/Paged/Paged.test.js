@@ -16,7 +16,7 @@
 
 import React from 'react';
 import Table from './Paged';
-import { render } from 'design/utils/testing';
+import { render, screen } from 'design/utils/testing';
 
 test('pagerPosition set to bottom', () => {
   const { container } = render(
@@ -32,9 +32,12 @@ test('pagerPosition set to top', () => {
   expect(container.firstChild.children[0].nodeName).toEqual('NAV');
 });
 
-test('pagerPosition prop default (show only top)', () => {
-  const { container } = render(<Table pageSize={2} data={[]} />);
+test('pagerPosition default set to top and render search bar', () => {
+  const { container } = render(
+    <Table pageSize={2} data={[]} onChangeSearchValue={() => null} />
+  );
   expect(container.querySelectorAll('nav')).toHaveLength(1);
+  screen.getByPlaceholderText(/search/i);
 });
 
 test('pager is shown on top and bottom when page count > 0', () => {

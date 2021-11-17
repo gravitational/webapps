@@ -171,9 +171,16 @@ const TextCell = props => {
   return <Cell {...rest}>{data[rowIndex][columnKey]}</Cell>;
 };
 
-const renderLabelCell = labels => {
+const renderLabelCell = (labels, onLabelClick) => {
   const $labels = labels.map(label => (
-    <Label mb="1" mr="1" key={label} kind="secondary">
+    <Label
+      mb="1"
+      mr="1"
+      key={label}
+      kind="secondary"
+      onClick={onLabelClick ? () => onLabelClick(label) : null}
+      style={onLabelClick ? { cursor: 'pointer' } : null}
+    >
       {label}
     </Label>
   ));
