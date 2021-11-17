@@ -1,17 +1,18 @@
-import * as uitypes from 'teleterm/ui/types';
+import { tsh } from 'teleterm/ui/services/clusters/types';
+import { ResourceKind } from 'teleterm/ui/types';
 
-type Base<T extends uitypes.ResourceKind, R> = {
+type Base<T extends ResourceKind, R> = {
   kind: T;
   data: R;
 };
 
-export type ResultServer = Base<'server', uitypes.Server>;
+export type ResultServer = Base<'server', tsh.Server>;
 
-export type ResultServers = Base<'servers', uitypes.Cluster>;
+export type ResultServers = Base<'servers', tsh.Cluster>;
 
-export type ResultDb = Base<'db', uitypes.Database>;
+export type ResultDb = Base<'db', tsh.Database>;
 
-export type ResultDbs = Base<'dbs', uitypes.Cluster>;
+export type ResultDbs = Base<'dbs', tsh.Cluster>;
 
 export type Result = ResultServer | ResultServers | ResultDb | ResultDbs;
 

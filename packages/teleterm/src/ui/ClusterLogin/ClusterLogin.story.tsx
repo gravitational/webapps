@@ -27,6 +27,12 @@ const props = {
   initAttempt: {
     status: 'success',
     statusText: '',
+    data: {
+      authProvidersList: [] as types.AuthProvider[],
+      type: '',
+      secondFactor: 'off',
+      hasMessageOfTheDay: false,
+    } as const,
   } as const,
 
   onClose: () => null,

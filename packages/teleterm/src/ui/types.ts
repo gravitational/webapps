@@ -16,8 +16,6 @@ limitations under the License.
 
 import { FC } from 'react';
 
-export * from 'teleterm/services/tshd/types';
-
 export type ResourceKind =
   | 'gateways'
   | 'terminal'

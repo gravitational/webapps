@@ -15,31 +15,28 @@
  */
 
 import React from 'react';
-import { Server } from 'teleterm/services/tshd/types';
-import { ServerConnect } from './ServerConnect';
-import { State } from './useServerConnect';
+import AppContextProvider from 'teleterm/ui/appContextProvider';
+import Navigator from './Navigator';
+import { MockAppContext } from 'teleterm/ui/fixtures/mocks';
 
 export default {
-  title: 'Teleterm/ServerConnect',
+  title: 'Teleterm/Navigator',
 };
 
 export const Story = () => {
-  const server: Server = {
-    uri: 'clusters/localhost/servers/hostname3',
-    tunnel: false,
-    name: 'server1',
-    clusterId: 'localhost',
-    hostname: 'hostname3',
-    addr: '123.12.12.12',
-    labelsList: [{ name: 'os', value: 'linux' }],
-  };
+  const appContext = new MockAppContext();
 
-  const props: State = {
-    server,
-    logins: ['a', 'test', 'test2', 'test3', 'test4', 'test5'],
-    connect: (login: string) => null,
-    onClose: () => null,
-  };
+  appContext.serviceClusters.getClusters = () => [
+    {
+      uri: 'clusters/localhost',
+      name: 'localhost',
+      connected: true,
+    },
+  ];
 
-  return <ServerConnect {...props} />;
+  return (
+    <AppContextProvider value={appContext}>
+      <Navigator />
+    </AppContextProvider>
+  );
 };

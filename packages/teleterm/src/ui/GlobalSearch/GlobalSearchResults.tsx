@@ -91,7 +91,7 @@ function DbResult(props: { result: types.ResultDb }) {
     <div>
       <Flex alignItems="center">
         <Box mr={2}>databases/{db.name}</Box>
-        <Box color="text.placeholder">{`/${db.uri}`}</Box>
+        <Box color="text.placeholder">{db.uri}</Box>
         <Text ml="auto" typography="body2" fontSize={0}>
           {db.type}/{db.protocol}
         </Text>

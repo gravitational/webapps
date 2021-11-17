@@ -15,6 +15,7 @@ limitations under the License.
 */
 
 export type Props = {
+  menuIsOpen?: boolean;
   hasError?: boolean;
   isClearable?: boolean;
   isSimpleValue?: boolean;
@@ -34,6 +35,7 @@ export type Props = {
   options: Option<any>[];
   width?: string | number;
   menuPlacement?: string;
+  minMenuHeight?: number;
   components?: any;
   customProps?: Record<string, any>;
   menuPosition?: 'fixed' | 'absolute';

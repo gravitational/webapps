@@ -1,6 +1,6 @@
-import * as tsh from 'teleterm/services/tshd/types';
 import { Store, useStore } from 'shared/libs/stores';
 import ClusterSearchProvider from './clustersSearchProvider';
+import { tsh } from './types';
 
 type State = {
   clusters: Map<string, tsh.Cluster>;
@@ -163,6 +163,10 @@ export default class Service extends Store<State> {
 
   getGateways() {
     return [...this.state.gateways.values()];
+  }
+
+  getClusters() {
+    return [...this.state.clusters.values()];
   }
 
   getServers() {

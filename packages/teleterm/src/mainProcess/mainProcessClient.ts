@@ -1,5 +1,5 @@
 const { ipcRenderer } = require('electron');
-import {  MainProcessClient } from 'teleterm/types';
+import { MainProcessClient } from './types';
 
 export default function createMainProcessClient(): MainProcessClient {
   return {
