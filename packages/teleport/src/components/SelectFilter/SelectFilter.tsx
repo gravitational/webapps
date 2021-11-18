@@ -65,8 +65,11 @@ export default function SelectFilter({
       }
 
       // If event is not from inside the select wrapper, close the selector.
+      // Clicking outside is considered "canceled", so we also reset the
+      // selected filters back to original.
       if (!selectWrapperRef.current?.contains(e.target)) {
         setShowSelector(false);
+        setSelectedFilters(appliedFilters);
       }
     }
 
@@ -79,66 +82,58 @@ export default function SelectFilter({
   ));
 
   return (
-    <Box mb={mb}>
-      <Flex flexWrap="wrap">
-        <Box style={{ position: 'relative' }}>
-          <AddButton
-            pl={2}
-            pr={3}
-            onClick={() => setShowSelector(!showSelector)}
-            mt={0}
-            mr={3}
-            mb={2}
+    <Flex flexWrap="wrap" mb={mb}>
+      <Box style={{ position: 'relative' }}>
+        <AddButton
+          pl={2}
+          pr={3}
+          onClick={() => setShowSelector(!showSelector)}
+          mt={0}
+          mr={3}
+          mb={2}
+        >
+          <Add fontSize={4} mr={1} color="rgba(255,255,255,0.24)" />
+          Add Filters
+        </AddButton>
+        {showSelector && (
+          <Box
+            mt={-2}
+            bg="#fff"
+            borderRadius={2}
+            borderTopLeftRadius={0}
+            style={{ position: 'absolute', zIndex: 1 }}
           >
-            <Add fontSize={4} mr={1} color="rgba(255,255,255,0.24)" />
-            Add Filters
-          </AddButton>
-          {showSelector && (
-            <Box
-              mt={-2}
-              bg="#fff"
-              borderRadius={2}
-              borderTopLeftRadius={0}
-              style={{ position: 'absolute', zIndex: 1 }}
-            >
-              <Flex
-                justifyContent="space-between"
-                alignItems="center"
-                px={3}
-                pb={0}
-              ></Flex>
-              <StyledSelect ref={selectWrapperRef}>
-                <Select
-                  autoFocus
-                  placeholder="Search..."
-                  value={selectedFilters}
-                  options={filters}
-                  isSearchable={true}
-                  isClearable={false}
-                  isMulti={true}
-                  menuIsOpen={true}
-                  hideSelectedOptions={false}
-                  controlShouldRenderValue={false}
-                  onChange={(o: Option[]) => setSelectedFilters(o)}
-                  onKeyDown={handleKeyDown}
-                  components={{
-                    Option: OptionComponent,
-                    Control: ControlComponent,
-                  }}
-                  customProps={{
-                    onFilterApply,
-                    appliedFilters,
-                    selectedFilters,
-                    clearFilters,
-                  }}
-                />
-              </StyledSelect>
-            </Box>
-          )}
-        </Box>
-        {$labels}
-      </Flex>
-    </Box>
+            <StyledSelect ref={selectWrapperRef}>
+              <Select
+                autoFocus
+                placeholder="Search..."
+                value={selectedFilters}
+                options={filters}
+                isSearchable={true}
+                isClearable={false}
+                isMulti={true}
+                menuIsOpen={true}
+                hideSelectedOptions={false}
+                controlShouldRenderValue={false}
+                onChange={(o: Option[]) => setSelectedFilters(o)}
+                onKeyDown={handleKeyDown}
+                components={{
+                  Option: OptionComponent,
+                  Control: ControlComponent,
+                }}
+                customProps={{
+                  onFilterApply,
+                  appliedFilters,
+                  selectedFilters,
+                  clearFilters,
+                }}
+              />
+            </StyledSelect>
+          </Box>
+        )}
+      </Box>
+      {$labels}
+    </Flex>
   );
 }
 
@@ -157,24 +152,22 @@ const ControlComponent = props => {
     <Flex alignItems="center">
       <components.Control {...props} />
       <Box>
-        <SmallButton
-          size="small"
+        <ActionButton
           px={2}
           mr={2}
           onClick={onFilterApply}
           disabled={appliedFilters.length === 0 && selectedFilters.length === 0}
-          width="71px"
+          width="90px"
         >
           Apply{numFilters}
-        </SmallButton>
-        <SmallButton
-          size="small"
+        </ActionButton>
+        <ActionButton
           px={2}
           onClick={clearFilters}
           disabled={selectedFilters.length === 0}
         >
           Clear
-        </SmallButton>
+        </ActionButton>
       </Box>
     </Flex>
   );
@@ -208,7 +201,7 @@ function Label({
   );
 }
 
-const SmallButton = styled(ButtonBorder)`
+const ActionButton = styled(ButtonBorder)`
   lineheight: normal;
   color: #4b4b4b;
   background-color: #fff;
@@ -257,7 +250,9 @@ const StyledSelect = styled.div`
   .react-select__control {
     border-color: #cccccc;
     margin: 14px;
-    width: 530px;
+    width: 500px;
+    height: 33px;
+    min-height: 33px;
 
     &:hover {
       cursor: text;
@@ -274,6 +269,10 @@ const StyledSelect = styled.div`
 
   .react-select-container {
     box-shadow: none;
+  }
+
+  .react-select__value-container {
+    padding: 0 8px;
   }
 `;
 
