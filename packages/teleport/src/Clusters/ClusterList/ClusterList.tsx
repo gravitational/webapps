@@ -56,14 +56,12 @@ export default function ClustersList(props: Props) {
 
   return (
     <>
-      <Flex mb={4} alignItems="center" justifyContent="flex-start">
-        <InputSearch height="30px" mr="3" onChange={onSearchChange} />
-      </Flex>
       <StyledPanel
         borderTopRightRadius="3"
         borderTopLeftRadius="3"
         justifyContent="space-between"
       >
+        <InputSearch height="30px" mr="3" onChange={onSearchChange} />
         <Pager {...paged} />
       </StyledPanel>
       <StyledTable data={paged.data}>
