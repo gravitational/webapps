@@ -40,10 +40,10 @@ export default function FilterableList({
       .map(label => ({ value: label, label }));
   }, [search]);
 
-  const filteredData = useMemo<Option[]>(
-    () => filterData(data, selectedLabels),
-    [data, selectedLabels]
-  );
+  const filteredData = useMemo<Data[]>(() => filterData(data, selectedLabels), [
+    data,
+    selectedLabels,
+  ]);
 
   function onFilterApply(labels: Option[]) {
     updateUrlQuery(labels, pathname);
@@ -79,7 +79,7 @@ export default function FilterableList({
   );
 }
 
-function filterData(data = [], labels: Option[] = []) {
+function filterData(data: Data[] = [], labels: Option[] = []) {
   if (!labels.length) {
     return data;
   }
@@ -98,7 +98,7 @@ function updateUrlQuery(filters: Option[], pathname = '') {
   history.replace(`${pathname}?labels=${encodeURIComponent(labels)}`);
 }
 
-function makeLabelOptions(data = []): Option[] {
+function makeLabelOptions(data: Data[] = []): Option[] {
   // Test a tags field exist.
   if (!data.length || !data[0].tags) {
     return [];
@@ -118,8 +118,14 @@ function makeLabelOptions(data = []): Option[] {
     .map(t => ({ value: t, label: t }));
 }
 
+type Data = {
+  tags: string[];
+  // Other fields could exist, but do not matter.
+  [key: string]: any;
+};
+
 export type Props = {
-  data: { tags: string[] }[];
+  data: Data[];
   TableComponent: React.ElementType;
   // Accepts anything else passed in props which
   // will be passed down to TableComponent.
