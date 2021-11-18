@@ -1167,13 +1167,6 @@ exports[`loaded 1`] = `
               >
                 kernel: 4.15.0-51-generic
               </div>
-              <div
-                class="c24"
-                kind="secondary"
-                style="cursor: pointer;"
-              >
-                country: Italy
-              </div>
             </td>
             <td
               align="right"
@@ -1213,13 +1206,6 @@ exports[`loaded 1`] = `
                 style="cursor: pointer;"
               >
                 kernel: 4.15.0-51-generic
-              </div>
-              <div
-                class="c24"
-                kind="secondary"
-                style="cursor: pointer;"
-              >
-                env: production
               </div>
             </td>
             <td
@@ -1261,20 +1247,6 @@ exports[`loaded 1`] = `
               >
                 kernel: 4.15.0-51-generic
               </div>
-              <div
-                class="c24"
-                kind="secondary"
-                style="cursor: pointer;"
-              >
-                country: Spain
-              </div>
-              <div
-                class="c24"
-                kind="secondary"
-                style="cursor: pointer;"
-              >
-                env: production
-              </div>
             </td>
             <td
               align="right"
@@ -1306,7 +1278,7 @@ exports[`loaded 1`] = `
                 kind="secondary"
                 style="cursor: pointer;"
               >
-                cluster: two
+                cluster: one
               </div>
               <div
                 class="c24"
@@ -1314,13 +1286,6 @@ exports[`loaded 1`] = `
                 style="cursor: pointer;"
               >
                 kernel: 4.15.0-51-generic
-              </div>
-              <div
-                class="c24"
-                kind="secondary"
-                style="cursor: pointer;"
-              >
-                country: South Korea
               </div>
             </td>
             <td
@@ -1353,7 +1318,7 @@ exports[`loaded 1`] = `
                 kind="secondary"
                 style="cursor: pointer;"
               >
-                cluster: three
+                cluster: one
               </div>
               <div
                 class="c24"
@@ -1361,72 +1326,6 @@ exports[`loaded 1`] = `
                 style="cursor: pointer;"
               >
                 kernel: 4.15.0-51-generic
-              </div>
-              <div
-                class="c24"
-                kind="secondary"
-                style="cursor: pointer;"
-              >
-                country: Spain
-              </div>
-              <div
-                class="c24"
-                kind="secondary"
-                style="cursor: pointer;"
-              >
-                env: dev
-              </div>
-            </td>
-            <td
-              align="right"
-            >
-              <button
-                class="c25"
-                height="24px"
-                kind="border"
-              >
-                CONNECT
-                <span
-                  class="c12 c26 icon icon-caret-down "
-                  color="text.secondary"
-                  font-size="2"
-                />
-              </button>
-            </td>
-          </tr>
-          <tr>
-            <td>
-              zebpecda
-            </td>
-            <td>
-              <span
-                style="cursor: default;"
-                title="This node is connected to cluster through reverse tunnel"
-              >
-                ⟵ tunnel
-              </span>
-            </td>
-            <td>
-              <div
-                class="c24"
-                kind="secondary"
-                style="cursor: pointer;"
-              >
-                cluster: three
-              </div>
-              <div
-                class="c24"
-                kind="secondary"
-                style="cursor: pointer;"
-              >
-                kernel: 4.15.0-51-generic
-              </div>
-              <div
-                class="c24"
-                kind="secondary"
-                style="cursor: pointer;"
-              >
-                country: South Korea
               </div>
             </td>
             <td
@@ -1473,12 +1372,50 @@ exports[`loaded 1`] = `
               >
                 kernel: 4.15.0-51-generic
               </div>
+            </td>
+            <td
+              align="right"
+            >
+              <button
+                class="c25"
+                height="24px"
+                kind="border"
+              >
+                CONNECT
+                <span
+                  class="c12 c26 icon icon-caret-down "
+                  color="text.secondary"
+                  font-size="2"
+                />
+              </button>
+            </td>
+          </tr>
+          <tr>
+            <td>
+              zebpecda
+            </td>
+            <td>
+              <span
+                style="cursor: default;"
+                title="This node is connected to cluster through reverse tunnel"
+              >
+                ⟵ tunnel
+              </span>
+            </td>
+            <td>
               <div
                 class="c24"
                 kind="secondary"
                 style="cursor: pointer;"
               >
-                country: Spain
+                cluster: one
+              </div>
+              <div
+                class="c24"
+                kind="secondary"
+                style="cursor: pointer;"
+              >
+                kernel: 4.15.0-51-generic
               </div>
             </td>
             <td
