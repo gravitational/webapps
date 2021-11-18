@@ -15,7 +15,7 @@ limitations under the License.
 */
 
 import React from 'react';
-import { Box, Indicator, ButtonPrimary, Flex, Text, Link } from 'design';
+import { Box, Indicator, ButtonPrimary, Text, Link } from 'design';
 import { Danger } from 'design/Alert';
 import KubeList from 'teleport/Kubes/KubeList';
 import {
@@ -23,9 +23,9 @@ import {
   FeatureHeader,
   FeatureHeaderTitle,
 } from 'teleport/components/Layout';
-import useTeleport from 'teleport/useTeleport';
-import InputSearch from 'teleport/components/InputSearch';
+import FilterableList from 'teleport/components/FilterByLabelList';
 import Empty, { EmptyStateInfo } from 'teleport/components/Empty';
+import useTeleport from 'teleport/useTeleport';
 import useKubes, { State } from './useKubes';
 
 export default function Container() {
@@ -45,8 +45,6 @@ export function Kubes(props: State) {
     isLeafCluster,
     clusterId,
     canCreate,
-    searchValue,
-    setSearchValue,
   } = props;
 
   const isEmpty = attempt.status === 'success' && kubes.length === 0;
@@ -73,17 +71,12 @@ export function Kubes(props: State) {
         </Box>
       )}
       {hasKubes && (
-        <>
-          <Flex flex="0 0 auto" mb={4}>
-            <InputSearch mr="3" onChange={setSearchValue} />
-          </Flex>
-          <KubeList
-            kubes={kubes}
-            username={username}
-            authType={authType}
-            searchValue={searchValue}
-          />
-        </>
+        <FilterableList
+          data={kubes}
+          TableComponent={KubeList}
+          username={username}
+          authType={authType}
+        />
       )}
       {isEmpty && (
         <Empty

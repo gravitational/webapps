@@ -23,8 +23,9 @@ import {
   Cell,
   TextCell,
   SortTypes,
+  renderLabelCell,
 } from 'design/DataTable';
-import { Label, ButtonBorder } from 'design';
+import { ButtonBorder } from 'design';
 import Table from 'design/DataTable/Paged';
 import isMatch from 'design/utils/match';
 import { Kube } from 'teleport/services/kube';
@@ -32,8 +33,9 @@ import { AuthType } from 'teleport/services/user';
 import ConnectDialog from '../ConnectDialog';
 
 function KubeList(props: Props) {
-  const { kubes = [], pageSize = 100, username, authType, searchValue } = props;
+  const { data = [], pageSize = 100, username, authType, onLabelClick } = props;
 
+  const [searchValue, setSearchValue] = useState('');
   const [sortDir, setSortDir] = useState<Record<string, string>>({
     name: SortTypes.DESC,
   });
@@ -41,7 +43,7 @@ function KubeList(props: Props) {
   const [kubeConnectName, setKubeConnectName] = useState('');
 
   function sortAndFilter(search) {
-    const filtered = kubes.filter(obj =>
+    const filtered = data.filter(obj =>
       isMatch(obj, search, {
         searchableProps: ['name', 'tags'],
         cb: searchAndFilterCb,
@@ -61,11 +63,16 @@ function KubeList(props: Props) {
     setSortDir({ [columnKey]: sortDir });
   }
 
-  const data = sortAndFilter(searchValue);
+  const filteredData = sortAndFilter(searchValue);
 
   return (
     <>
-      <StyledTable pageSize={pageSize} data={data}>
+      <StyledTable
+        pageSize={pageSize}
+        data={filteredData}
+        searchValue={searchValue}
+        onChangeSearchValue={v => setSearchValue(v)}
+      >
         <Column
           columnKey="name"
           header={
@@ -77,7 +84,10 @@ function KubeList(props: Props) {
           }
           cell={<TextCell />}
         />
-        <Column header={<Cell>Labels</Cell>} cell={<LabelCell />} />
+        <Column
+          header={<Cell>Labels</Cell>}
+          cell={<LabelCell onLabelClick={onLabelClick} />}
+        />
         <Column
           header={<Cell />}
           cell={
@@ -113,15 +123,9 @@ export const ActionCell = props => {
 };
 
 function LabelCell(props) {
-  const { rowIndex, data } = props;
+  const { rowIndex, data, onLabelClick } = props;
   const { tags } = data[rowIndex];
-  const $labels = tags.map(tag => (
-    <Label mb="1" mr="1" key={tag} kind="secondary">
-      {tag}
-    </Label>
-  ));
-
-  return <Cell>{$labels}</Cell>;
+  return renderLabelCell(tags, onLabelClick);
 }
 
 const StyledTable = styled(Table)`
@@ -143,11 +147,11 @@ function searchAndFilterCb(
 }
 
 type Props = {
-  kubes: Kube[];
+  data: Kube[];
   pageSize?: number;
   username: string;
   authType: AuthType;
-  searchValue: string;
+  onLabelClick(label: string): void;
 };
 
 export default KubeList;

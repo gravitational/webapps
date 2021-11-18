@@ -486,6 +486,10 @@ exports[`failed 1`] = `
 `;
 
 exports[`loaded 1`] = `
+.c5 {
+  box-sizing: border-box;
+}
+
 .c3 {
   line-height: 1.5;
   margin: 0;
@@ -531,7 +535,60 @@ exports[`loaded 1`] = `
   color: rgba(255,255,255,0.3);
 }
 
-.c16 {
+.c6 {
+  line-height: 1.5;
+  margin: 0;
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  box-sizing: border-box;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-family: inherit;
+  font-weight: 600;
+  outline: none;
+  position: relative;
+  text-align: center;
+  text-decoration: none;
+  text-transform: uppercase;
+  transition: all 0.3s;
+  -webkit-font-smoothing: antialiased;
+  background: #2C3A73;
+  border: 1px solid #1C254D;
+  opacity: .87;
+  color: rgba(255,255,255,0.87);
+  min-height: 32px;
+  font-size: 12px;
+  padding: 0px 24px;
+  margin-bottom: 8px;
+  margin-right: 16px;
+  margin-top: 0px;
+  padding-left: 8px;
+  padding-right: 16px;
+}
+
+.c6:active {
+  opacity: 0.56;
+}
+
+.c6:hover,
+.c6:focus {
+  background: #2C3A73;
+  border: 1px solid rgba(255,255,255,0.1);
+  opacity: 1;
+}
+
+.c6:active {
+  opacity: 0.24;
+}
+
+.c6:disabled {
+  background: rgba(255,255,255,0.12);
+  color: rgba(255,255,255,0.3);
+}
+
+.c21 {
   line-height: 1.5;
   margin: 0;
   display: inline-flex;
@@ -559,40 +616,48 @@ exports[`loaded 1`] = `
   padding: 0px 16px;
 }
 
-.c16:active {
+.c21:active {
   opacity: 0.56;
 }
 
-.c16:hover,
-.c16:focus {
+.c21:hover,
+.c21:focus {
   background: #2C3A73;
   border: 1px solid rgba(255,255,255,0.1);
   opacity: 1;
 }
 
-.c16:active {
+.c21:active {
   opacity: 0.24;
 }
 
-.c16:disabled {
+.c21:disabled {
   background: rgba(255,255,255,0.12);
   color: rgba(255,255,255,0.3);
 }
 
-.c11 {
+.c9 {
+  display: inline-block;
+  transition: color .3s;
+  margin-right: 4px;
+  color: rgba(255,255,255,0.24);
+  font-size: 18px;
+}
+
+.c16 {
   display: inline-block;
   transition: color .3s;
   color: #FFFFFF;
   font-size: 16px;
 }
 
-.c14 {
+.c19 {
   display: inline-block;
   transition: color .3s;
   color: #FFFFFF;
 }
 
-.c15 {
+.c20 {
   box-sizing: border-box;
   border-radius: 100px;
   display: inline-flex;
@@ -609,7 +674,7 @@ exports[`loaded 1`] = `
   margin-right: 4px;
 }
 
-.c8 {
+.c14 {
   overflow: hidden;
   text-overflow: ellipsis;
   font-weight: 400;
@@ -621,18 +686,24 @@ exports[`loaded 1`] = `
 
 .c4 {
   box-sizing: border-box;
-  margin-bottom: 24px;
-  flex: 0 0 auto;
+  margin-bottom: 16px;
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.c12 {
+  box-sizing: border-box;
   display: flex;
 }
 
-.c7 {
+.c13 {
   box-sizing: border-box;
+  margin-right: 8px;
   display: flex;
   align-items: center;
 }
 
-.c12 {
+.c17 {
   background: #222C59;
   box-shadow: 0 4px 16px rgba(0,0,0,0.24);
   border-collapse: collapse;
@@ -644,35 +715,35 @@ exports[`loaded 1`] = `
   border-top-right-radius: 0;
 }
 
-.c12 > thead > tr > th,
-.c12 > tbody > tr > th,
-.c12 > tfoot > tr > th,
-.c12 > thead > tr > td,
-.c12 > tbody > tr > td,
-.c12 > tfoot > tr > td {
+.c17 > thead > tr > th,
+.c17 > tbody > tr > th,
+.c17 > tfoot > tr > th,
+.c17 > thead > tr > td,
+.c17 > tbody > tr > td,
+.c17 > tfoot > tr > td {
   padding: 8px 8px;
   vertical-align: middle;
 }
 
-.c12 > thead > tr > th:first-child,
-.c12 > tbody > tr > th:first-child,
-.c12 > tfoot > tr > th:first-child,
-.c12 > thead > tr > td:first-child,
-.c12 > tbody > tr > td:first-child,
-.c12 > tfoot > tr > td:first-child {
+.c17 > thead > tr > th:first-child,
+.c17 > tbody > tr > th:first-child,
+.c17 > tfoot > tr > th:first-child,
+.c17 > thead > tr > td:first-child,
+.c17 > tbody > tr > td:first-child,
+.c17 > tfoot > tr > td:first-child {
   padding-left: 24px;
 }
 
-.c12 > thead > tr > th:last-child,
-.c12 > tbody > tr > th:last-child,
-.c12 > tfoot > tr > th:last-child,
-.c12 > thead > tr > td:last-child,
-.c12 > tbody > tr > td:last-child,
-.c12 > tfoot > tr > td:last-child {
+.c17 > thead > tr > th:last-child,
+.c17 > tbody > tr > th:last-child,
+.c17 > tfoot > tr > th:last-child,
+.c17 > thead > tr > td:last-child,
+.c17 > tbody > tr > td:last-child,
+.c17 > tfoot > tr > td:last-child {
   padding-right: 24px;
 }
 
-.c12 > thead > tr > th {
+.c17 > thead > tr > th {
   background: #111B48;
   color: #FFFFFF;
   cursor: pointer;
@@ -686,39 +757,71 @@ exports[`loaded 1`] = `
   white-space: nowrap;
 }
 
-.c12 > thead > tr > th .c10 {
+.c17 > thead > tr > th .c8 {
   font-weight: bold;
   font-size: 8px;
   margin-left: 8px;
 }
 
-.c12 > tbody > tr > td {
+.c17 > tbody > tr > td {
   color: rgba(255,255,255,0.87);
   line-height: 16px;
 }
 
-.c12 tbody tr {
+.c17 tbody tr {
   border-bottom: 1px solid #1C254D;
 }
 
-.c12 tbody tr:hover {
+.c17 tbody tr:hover {
   background-color: rgb(37,49,98);
 }
 
-.c12 tbody > tr:last-child td:first-child {
+.c17 tbody > tr:last-child td:first-child {
   border-bottom-left-radius: 8px;
 }
 
-.c12 tbody > tr:last-child td:last-child {
+.c17 tbody > tr:last-child td:last-child {
   border-bottom-right-radius: 8px;
 }
 
-.c9 {
+.c11 {
+  box-sizing: border-box;
+  font-size: 12px;
+  min-width: 200px;
+  outline: none;
+  border: none;
+  border-radius: 200px;
+  height: 32px;
+  transition: all .2s;
+  background: #0c143d;
+  margin-right: 16px;
+  padding-left: 16px;
+  padding-right: 16px;
+  color: rgba(255,255,255,0.87);
+}
+
+.c11:hover {
+  background: #111B48;
+}
+
+.c11:focus,
+.c11:active {
+  background: #111B48;
+  box-shadow: inset 0 2px 4px rgba(0,0,0,.24);
+  color: rgba(255,255,255,0.87);
+}
+
+.c11::placeholder {
+  color: rgba(255,255,255,0.24);
+  font-size: 12px;
+}
+
+.c15 {
   box-sizing: border-box;
   display: flex;
 }
 
-.c9 button {
+.c15 button {
   background: none;
   border: none;
   border-radius: 200px;
@@ -730,35 +833,36 @@ exports[`loaded 1`] = `
   text-align: center;
 }
 
-.c9 button:hover,
-.c9 button:focus {
+.c15 button:hover,
+.c15 button:focus {
   background: #1C254D;
 }
 
-.c9 button:hover .c10,
-.c9 button:focus .c10 {
+.c15 button:hover .c8,
+.c15 button:focus .c8 {
   opacity: 1;
 }
 
-.c9 button .c10 {
+.c15 button .c8 {
   opacity: 0.4;
   font-size: 20px;
   transition: all 0.3s;
 }
 
-.c6 {
-  padding: 8px 24px;
+.c10 {
+  padding: 12px 16px;
   display: flex;
   height: 24px;
   flex-shrink: 0;
   align-items: center;
-  justify-content: space-between;
+  justify-content: end;
   background: #222C59;
   border-top-left-radius: 8px;
   border-top-right-radius: 8px;
+  justify-content: space-between;
 }
 
-.c13 > tbody > tr > td {
+.c18 > tbody > tr > td {
   vertical-align: baseline;
 }
 
@@ -803,43 +907,24 @@ exports[`loaded 1`] = `
   padding-bottom: 24px;
 }
 
-.c5 {
-  box-sizing: border-box;
-  font-size: 12px;
-  min-width: 200px;
-  outline: none;
-  border: none;
-  border-radius: 200px;
-  height: 32px;
-  transition: all .2s;
-  background: #222C59;
-  margin-right: 16px;
-  padding-left: 16px;
-  padding-right: 16px;
-  color: rgba(255,255,255,0.87);
+.c7 {
+  line-height: normal;
+  background-color: transparent;
+  font-weight: normal;
+  border: 1px solid rgba(255,255,255,0.24);
+  color: #fff;
 }
 
-.c5:hover {
+.c7:hover,
+.c7:focus {
   background: #2C3A73;
-}
-
-.c5:focus,
-.c5:active {
-  background: #2C3A73;
-  box-shadow: inset 0 2px 4px rgba(0,0,0,.24);
-  color: rgba(255,255,255,0.87);
-}
-
-.c5::placeholder {
-  color: rgba(255,255,255,0.24);
-  font-size: 12px;
 }
 
 <div
-  class="sc-AxirZ c0"
+  class="c0"
 >
   <div
-    class="sc-AxirZ c1"
+    class="c1"
   >
     <div
       class="c2"
@@ -858,70 +943,90 @@ exports[`loaded 1`] = `
     </a>
   </div>
   <div
-    class="sc-AxirZ c4"
+    class="c4"
   >
-    <input
+    <div
       class="c5"
-      color="text.primary"
-      placeholder="SEARCH..."
-      value=""
-    />
+      style="position: relative;"
+    >
+      <button
+        class="c6 c7"
+        kind="border"
+      >
+        <span
+          class="c8 c9 icon icon-add "
+          color="rgba(255,255,255,0.24)"
+          font-size="4"
+        />
+        Add Filters
+      </button>
+    </div>
   </div>
   <div
     style="min-width: min-content;"
   >
     <nav
-      class="c6"
+      class="c10"
     >
+      <input
+        class="c11"
+        color="text.primary"
+        placeholder="SEARCH..."
+        value=""
+      />
       <div
-        class="sc-AxirZ c7"
+        class="c12"
       >
         <div
-          class="c8"
-          color="primary.contrastText"
+          class="c13"
         >
-          SHOWING 
-          <strong>
-            1
-          </strong>
-           - 
-          <strong>
-            3
-          </strong>
-           
-          of 
-          <strong>
-            3
-          </strong>
+          <div
+            class="c14"
+            color="primary.contrastText"
+          >
+            SHOWING 
+            <strong>
+              1
+            </strong>
+             - 
+            <strong>
+              3
+            </strong>
+             
+            of 
+            <strong>
+              3
+            </strong>
+          </div>
         </div>
-      </div>
-      <div
-        class="sc-AxirZ c9"
-      >
-        <button
-          disabled=""
-          title="Previous Page"
+        <div
+          class="c15"
         >
-          <span
-            class="c10 c11 icon icon-arrow-left-circle "
-            color="light"
-            font-size="3"
-          />
-        </button>
-        <button
-          disabled=""
-          title="Next Page"
-        >
-          <span
-            class="c10 c11 icon icon-arrow-right-circle "
-            color="light"
-            font-size="3"
-          />
-        </button>
+          <button
+            disabled=""
+            title="Previous Page"
+          >
+            <span
+              class="c8 c16 icon icon-arrow-left-circle "
+              color="light"
+              font-size="3"
+            />
+          </button>
+          <button
+            disabled=""
+            title="Next Page"
+          >
+            <span
+              class="c8 c16 icon icon-arrow-right-circle "
+              color="light"
+              font-size="3"
+            />
+          </button>
+        </div>
       </div>
     </nav>
     <table
-      class="c12 c13"
+      class="c17 c18"
     >
       <thead>
         <tr>
@@ -929,7 +1034,7 @@ exports[`loaded 1`] = `
             <a>
               Name
               <span
-                class="c10 c14 icon icon-chevron-down "
+                class="c8 c19 icon icon-chevron-down "
                 color="light"
               />
             </a>
@@ -947,14 +1052,16 @@ exports[`loaded 1`] = `
           </td>
           <td>
             <div
-              class="c15"
+              class="c20"
               kind="secondary"
+              style="cursor: pointer;"
             >
               cluster-name: some-cluster-name
             </div>
             <div
-              class="c15"
+              class="c20"
               kind="secondary"
+              style="cursor: pointer;"
             >
               env: idk
             </div>
@@ -963,7 +1070,7 @@ exports[`loaded 1`] = `
             align="right"
           >
             <button
-              class="c16"
+              class="c21"
               kind="border"
             >
               Connect
@@ -976,14 +1083,16 @@ exports[`loaded 1`] = `
           </td>
           <td>
             <div
-              class="c15"
+              class="c20"
               kind="secondary"
+              style="cursor: pointer;"
             >
               kernal: 4.15.0-51-generic
             </div>
             <div
-              class="c15"
+              class="c20"
               kind="secondary"
+              style="cursor: pointer;"
             >
               env: prod
             </div>
@@ -992,7 +1101,7 @@ exports[`loaded 1`] = `
             align="right"
           >
             <button
-              class="c16"
+              class="c21"
               kind="border"
             >
               Connect
@@ -1005,8 +1114,9 @@ exports[`loaded 1`] = `
           </td>
           <td>
             <div
-              class="c15"
+              class="c20"
               kind="secondary"
+              style="cursor: pointer;"
             >
               env: staging
             </div>
@@ -1015,7 +1125,7 @@ exports[`loaded 1`] = `
             align="right"
           >
             <button
-              class="c16"
+              class="c21"
               kind="border"
             >
               Connect
