@@ -323,7 +323,22 @@ const auth = {
       u2f_register_response: u2fResponse,
     };
 
-    return api.put(cfg.getPasswordTokenUrl(), request).then(makeRecoveryCodes);
+    return api
+      .put(cfg.getPasswordTokenUrl(), request)
+      .then(makeRecoveryCodes)
+      .catch(auth._handleResetPasswordErr);
+  },
+
+  _handleResetPasswordErr(err) {
+    if (err.response.status === 403) {
+      return Promise.reject(
+        new Error(
+          'Invalid one time token. Please check if the token has expired and try again.'
+        )
+      );
+    }
+
+    return Promise.reject(err);
   },
 
   _getU2FRegisterRes(tokenId: string) {
