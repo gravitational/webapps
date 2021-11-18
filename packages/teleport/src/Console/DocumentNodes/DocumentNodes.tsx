@@ -20,7 +20,7 @@ import { Indicator, Flex, Box } from 'design';
 import * as Alerts from 'design/Alert';
 import NodeList from 'teleport/components/NodeList';
 import QuickLaunch from 'teleport/components/QuickLaunch';
-import InputSearch from 'teleport/components/InputSearch';
+import FilterableList from 'teleport/components/FilterByLabelList';
 import Document from 'teleport/Console/Document';
 import ClusterSelector from './ClusterSelector';
 import useNodes from './useNodes';
@@ -37,8 +37,6 @@ export default function DocumentNodes(props: Props) {
   const {
     nodes,
     attempt,
-    searchValue,
-    setSearchValue,
     createSshSession,
     changeCluster,
     getNodeSshLogins,
@@ -74,7 +72,7 @@ export default function DocumentNodes(props: Props) {
     <ThemeProvider>
       <Document visible={visible}>
         <Container mx="auto" mt="4" px="5">
-          <Flex justifyContent="space-between" mb="4">
+          <Flex justifyContent="space-between" mb="4" alignItems="end">
             <ClusterSelector
               value={doc.clusterId}
               width="336px"
@@ -82,9 +80,6 @@ export default function DocumentNodes(props: Props) {
               mr="20px"
               onChange={onChangeCluster}
             />
-          </Flex>
-          <Flex mb="4" justifyContent="space-between" alignItems="center">
-            <InputSearch height="30px" mr="3" onChange={setSearchValue} />
             <QuickLaunch width="240px" onPress={onQuickLaunchEnter} />
           </Flex>
           {isProcessing && (
@@ -94,11 +89,11 @@ export default function DocumentNodes(props: Props) {
           )}
           {isFailed && <Alerts.Danger>{message}</Alerts.Danger>}
           {isSuccess && (
-            <NodeList
-              searchValue={searchValue}
+            <FilterableList
+              data={nodes}
+              TableComponent={NodeList}
               onLoginMenuOpen={onLoginMenuOpen}
               onLoginSelect={onLoginMenuSelect}
-              nodes={nodes}
             />
           )}
         </Container>
