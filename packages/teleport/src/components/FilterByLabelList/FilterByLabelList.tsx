@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-import React, { useState, useMemo } from 'react';
+import React, { useMemo } from 'react';
 import { useLocation } from 'react-router';
 import { Option } from 'shared/components/Select';
 import SelectFilter from 'teleport/components/SelectFilter';
@@ -27,7 +27,8 @@ export default function FilterableList({
 }: Props) {
   const { search, pathname } = useLocation();
   const labels = useMemo<Option[]>(() => makeLabelOptions(data), [data]);
-  const [selectedLabels, setSelectedLabels] = useState<Option[]>(() => {
+
+  const selectedLabels = useMemo<Option[]>(() => {
     const searchParams = new URLSearchParams(search);
     const query = searchParams.get('labels');
     if (!query || query === 'null') {
@@ -37,16 +38,14 @@ export default function FilterableList({
     return decodeURIComponent(query)
       .split(',')
       .map(label => ({ value: label, label }));
-  });
-  const [filteredData, setFilteredData] = useState(() =>
-    filterData(data, selectedLabels)
+  }, [search]);
+
+  const filteredData = useMemo<Option[]>(
+    () => filterData(data, selectedLabels),
+    [data, selectedLabels]
   );
 
   function onFilterApply(labels: Option[]) {
-    const filtered = filterData(data, labels);
-
-    setFilteredData(filtered);
-    setSelectedLabels(labels);
     updateUrlQuery(labels, pathname);
   }
 
