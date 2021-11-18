@@ -15,6 +15,7 @@ limitations under the License.
 */
 
 import React from 'react';
+import { MemoryRouter } from 'react-router';
 import { Nodes } from './Nodes';
 import { State } from './useNodes';
 import { nodes } from './fixtures';
@@ -23,7 +24,7 @@ export default {
   title: 'Teleport/Nodes',
 };
 
-export const Loaded = () => <Nodes {...props} />;
+export const Loaded = () => <MemoryRouter children={<Nodes {...props} />} />;
 
 export const Empty = () => <Nodes {...props} nodes={[]} />;
 
@@ -53,6 +54,4 @@ const props: State = {
   hideAddNode: () => null,
   showAddNode: () => null,
   clusterId: 'im-a-cluster',
-  searchValue: '',
-  setSearchValue: () => null,
 };

@@ -23,9 +23,9 @@ import {
   FeatureHeaderTitle,
 } from 'teleport/components/Layout';
 import QuickLaunch from 'teleport/components/QuickLaunch';
-import InputSearch from 'teleport/components/InputSearch';
 import Empty, { EmptyStateInfo } from 'teleport/components/Empty';
 import NodeList from 'teleport/components/NodeList';
+import FilterableList from 'teleport/components/FilterByLabelList';
 import useTeleport from 'teleport/useTeleport';
 import useStickyClusterId from 'teleport/useStickyClusterId';
 import useNodes, { State } from './useNodes';
@@ -51,8 +51,6 @@ export function Nodes(props: State) {
     isLeafCluster,
     isAddNodeVisible,
     clusterId,
-    searchValue,
-    setSearchValue,
   } = props;
 
   function onLoginSelect(e: React.MouseEvent, login: string, serverId: string) {
@@ -71,11 +69,16 @@ export function Nodes(props: State) {
     <FeatureBox>
       <FeatureHeader alignItems="center" justifyContent="space-between">
         <FeatureHeaderTitle>Servers</FeatureHeaderTitle>
-        <ButtonAdd
-          isLeafCluster={isLeafCluster}
-          canCreate={canCreate}
-          onClick={showAddNode}
-        />
+        <Flex alignItems="center">
+          {hasNodes && (
+            <QuickLaunch width="280px" onPress={onSshEnter} mr={3} />
+          )}
+          <ButtonAdd
+            isLeafCluster={isLeafCluster}
+            canCreate={canCreate}
+            onClick={showAddNode}
+          />
+        </Flex>
       </FeatureHeader>
       {attempt.status === 'failed' && <Danger>{attempt.statusText} </Danger>}
       {attempt.status === 'processing' && (
@@ -84,23 +87,12 @@ export function Nodes(props: State) {
         </Box>
       )}
       {hasNodes && (
-        <>
-          <Flex
-            mb={4}
-            alignItems="center"
-            flex="0 0 auto"
-            justifyContent="space-between"
-          >
-            <InputSearch mr="3" onChange={setSearchValue} />
-            <QuickLaunch width="280px" onPress={onSshEnter} />
-          </Flex>
-          <NodeList
-            nodes={nodes}
-            searchValue={searchValue}
-            onLoginMenuOpen={getNodeLoginOptions}
-            onLoginSelect={onLoginSelect}
-          />
-        </>
+        <FilterableList
+          data={nodes}
+          TableComponent={NodeList}
+          onLoginMenuOpen={getNodeLoginOptions}
+          onLoginSelect={onLoginSelect}
+        />
       )}
       {isEmpty && (
         <Empty

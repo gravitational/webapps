@@ -32,18 +32,19 @@ import { Node } from 'teleport/services/nodes';
 
 function NodeList(props: Props) {
   const {
-    nodes = [],
-    searchValue,
+    data = [],
     onLoginMenuOpen,
     onLoginSelect,
     pageSize = 100,
+    onLabelClick,
   } = props;
+  const [searchValue, setSearchValue] = React.useState('');
   const [sortDir, setSortDir] = React.useState<Record<string, string>>({
     hostname: SortTypes.DESC,
   });
 
   function sortAndFilter(search) {
-    const filtered = nodes.filter(obj =>
+    const filtered = data.filter(obj =>
       isMatch(obj, search, {
         searchableProps: ['hostname', 'addr', 'tags', 'tunnel'],
         cb: searchAndFilterCb,
@@ -63,11 +64,16 @@ function NodeList(props: Props) {
     setSortDir({ [columnKey]: sortDir });
   }
 
-  const data = sortAndFilter(searchValue);
+  const filteredData = sortAndFilter(searchValue);
 
   return (
     <div>
-      <StyledTable pageSize={pageSize} data={data}>
+      <StyledTable
+        pageSize={pageSize}
+        data={filteredData}
+        searchValue={searchValue}
+        onChangeSearchValue={v => setSearchValue(v)}
+      >
         <Column
           columnKey="hostname"
           header={
@@ -90,7 +96,10 @@ function NodeList(props: Props) {
           }
           cell={<AddressCell />}
         />
-        <Column header={<Cell>Labels</Cell>} cell={<LabelCell />} />
+        <Column
+          header={<Cell>Labels</Cell>}
+          cell={<LabelCell onLabelClick={onLabelClick} />}
+        />
         <Column
           header={<Cell />}
           cell={<LoginCell onOpen={onLoginMenuOpen} onSelect={onLoginSelect} />}
@@ -170,9 +179,9 @@ function renderTunnel() {
 }
 
 function LabelCell(props) {
-  const { rowIndex, data } = props;
+  const { rowIndex, data, onLabelClick } = props;
   const { tags = [] } = data[rowIndex];
-  return renderLabelCell(tags);
+  return renderLabelCell(tags, onLabelClick);
 }
 
 const StyledTable = styled(Table)`
@@ -182,11 +191,11 @@ const StyledTable = styled(Table)`
 `;
 
 type Props = {
-  nodes: Node[];
+  data: Node[];
   onLoginMenuOpen(serverId: string): { login: string; url: string }[];
   onLoginSelect(e: React.SyntheticEvent, login: string, serverId: string): void;
+  onLabelClick(label: string): void;
   pageSize?: number;
-  searchValue: string;
 };
 
 export default NodeList;
