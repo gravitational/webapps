@@ -22,7 +22,7 @@ Teleport Terminal is a desktop application that allows easy access to Teleport r
      |                        |        SNI/ALPN  | | GRPC
   +--+----------------------+ |         routing  | |
   |                         | |                  | |
-  |     proxy connections   +-+                  | |
+  |     local proxies       +-+                  | |
   |                         |                    | |
   +-------------------+-----+                    | |
                       ^                          | |
@@ -32,13 +32,13 @@ Teleport Terminal is a desktop application that allows easy access to Teleport r
   | user profile  |   |                          v v
   |   (files)     |   |                   +------+-+-------------------+
   +-------^-------+   |                   |                            |
-          ^           +-------------------+      Terminal Daemon       |
-          |                               |          (tshd)            |
+          ^           +-------------------+         tsh daemon         |
+          |                               |          (golang)          |
           +<------------------------------+                            |
           |                               +-------------+--------------+
  +--------+-----------------+                           ^
  |         Terminal         |                           |
- |    Electron Main Process |                           |     GRPC
+ |    Electron Main Process |                           |    GRPC API
  +-----------+--------------+                           | (domain socket)
              ^                                          |
              |                                          |
@@ -65,7 +65,7 @@ Teleport Terminal is a desktop application that allows easy access to Teleport r
 
 ### Development
 
- Teleport Terminal consists of two main components: the `tsh` service that runs as a deamon and the main app.
+ Teleport Terminal consists of two main components: the `tsh` that runs in a deamon mode and the main app.
 
 
 #### How to build tsh
