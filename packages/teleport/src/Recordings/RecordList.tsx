@@ -35,6 +35,7 @@ export default function RecordList(props: Props) {
   const {
     clusterId,
     searchValue,
+    setSearchValue,
     pageSize,
     events,
     fetchMore,
@@ -73,7 +74,14 @@ export default function RecordList(props: Props) {
     setSort({ [columnKey]: sortDir });
   }
 
-  const tableProps = { pageSize, data, fetchMore, fetchStatus };
+  const tableProps = {
+    pageSize,
+    data,
+    fetchMore,
+    fetchStatus,
+    searchValue,
+    onChangeSearchValue: v => setSearchValue(v),
+  };
 
   return (
     <PagedTable {...tableProps}>
@@ -207,6 +215,7 @@ const PlayCell = props => {
 type Props = {
   pageSize?: number;
   searchValue: State['searchValue'];
+  setSearchValue: State['setSearchValue'];
   events: State['events'];
   clusterId: State['clusterId'];
   fetchMore: State['fetchMore'];

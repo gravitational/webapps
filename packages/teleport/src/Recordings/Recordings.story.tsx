@@ -36,12 +36,12 @@ export const Loaded = () => {
   return render(ctx);
 };
 
-export const Overflow = () => {
+export const LoadedFetchMore = () => {
   const ctx = new Context();
   ctx.auditService.fetchEvents = () =>
     Promise.resolve({
-      events: [],
-      startKey: 'cause-overflow',
+      events: events.map(makeEvent),
+      startKey: 'some-key',
     });
 
   return render(ctx);
