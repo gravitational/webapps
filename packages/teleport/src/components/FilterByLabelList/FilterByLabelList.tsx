@@ -26,7 +26,8 @@ export default function FilterableList({
   ...tableProps
 }: Props) {
   const { search, pathname } = useLocation();
-  const labelsFromQuery = useMemo<Option[]>(() => {
+  const labels = useMemo<Option[]>(() => makeLabelOptions(data), [data]);
+  const [selectedLabels, setSelectedLabels] = useState<Option[]>(() => {
     const searchParams = new URLSearchParams(search);
     const query = searchParams.get('labels');
     if (!query || query === 'null') {
@@ -36,14 +37,9 @@ export default function FilterableList({
     return decodeURIComponent(query)
       .split(',')
       .map(label => ({ value: label, label }));
-  }, []);
-
-  const labels = useMemo<Option[]>(() => makeLabelOptions(data), []);
-  const [selectedLabels, setSelectedLabels] = useState<Option[]>(
-    labelsFromQuery
-  );
+  });
   const [filteredData, setFilteredData] = useState(() =>
-    filterData(data, labelsFromQuery)
+    filterData(data, selectedLabels)
   );
 
   function onFilterApply(labels: Option[]) {
@@ -55,7 +51,7 @@ export default function FilterableList({
   }
 
   function onLabelClick(label: string) {
-    let copy = selectedLabels;
+    let copy = [...selectedLabels];
     const index = selectedLabels.findIndex(tag => tag.value === label);
 
     if (index > -1) {
@@ -85,7 +81,7 @@ export default function FilterableList({
 }
 
 function filterData(data = [], labels: Option[] = []) {
-  if (labels.length === 0) {
+  if (!labels.length) {
     return data;
   }
 
@@ -95,7 +91,7 @@ function filterData(data = [], labels: Option[] = []) {
 }
 
 function updateUrlQuery(filters: Option[], pathname = '') {
-  if (filters.length === 0) {
+  if (!filters.length) {
     history.replace(pathname);
   }
 
@@ -105,7 +101,7 @@ function updateUrlQuery(filters: Option[], pathname = '') {
 
 function makeLabelOptions(data = []): Option[] {
   // Test a tags field exist.
-  if (data.length === 0 || !data[0].tags) {
+  if (!data.length || !data[0].tags) {
     return [];
   }
 
@@ -124,7 +120,7 @@ function makeLabelOptions(data = []): Option[] {
 }
 
 export type Props = {
-  data: any[];
+  data: { tags: string[] }[];
   TableComponent: React.ElementType;
   // Accepts anything else passed in props which
   // will be passed down to TableComponent.
