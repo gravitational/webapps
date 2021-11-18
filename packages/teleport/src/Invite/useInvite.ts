@@ -40,7 +40,7 @@ export default function useInvite(tokenId: string) {
       .resetPassword(tokenId, password, otpToken)
       .then(redirect)
       .catch(err => {
-        if (err.response.status === 403) {
+        if (err.response?.status === 403) {
           submitAttempt.handleError(
             new Error(
               'Invalid one time token. Please check if the token has expired and try again.'
