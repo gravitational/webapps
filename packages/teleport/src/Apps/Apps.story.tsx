@@ -15,6 +15,7 @@
  */
 
 import React from 'react';
+import { MemoryRouter } from 'react-router';
 import { Apps } from './Apps';
 import { State } from './useApps';
 import { apps } from './fixtures';
@@ -23,7 +24,7 @@ export default {
   title: 'Teleport/Apps',
 };
 
-export const Loaded = () => <Apps {...props} />;
+export const Loaded = () => <MemoryRouter children={<Apps {...props} />} />;
 
 export const Empty = () => <Apps {...props} apps={[]} />;
 
@@ -50,8 +51,6 @@ const props: State = {
   isEnterprise: false,
   isAddAppVisible: false,
   canCreate: true,
-  searchValue: '',
-  setSearchValue: () => null,
   hideAddApp: () => null,
   showAddApp: () => null,
 };

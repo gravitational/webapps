@@ -18,23 +18,19 @@ import React from 'react';
 import { render, screen, fireEvent } from 'design/utils/testing';
 import cfg from 'teleport/config';
 import { apps } from '../fixtures';
-import AppList from './AppList';
-
-test('search filter works', () => {
-  const searchValue = 'grafana';
-  const expectedToBeVisible = /grafana.teleport-proxy.com/i;
-  const notExpectedToBeVisible = /jenkins/i;
-
-  render(<AppList apps={apps} searchValue={searchValue} />);
-
-  expect(screen.queryByText(expectedToBeVisible)).toBeInTheDocument();
-  expect(screen.queryByText(notExpectedToBeVisible)).toBeNull();
-});
+import { AppList } from './AppList';
 
 test('correct launch url is generated for a selected role', () => {
   jest.spyOn(cfg, 'getAppLauncherRoute');
 
-  render(<AppList apps={apps} searchValue="aws" />);
+  render(
+    <AppList
+      data={apps}
+      searchValue="aws"
+      setSearchValue={() => null}
+      onLabelClick={() => null}
+    />
+  );
 
   const launchBtn = screen.queryByText(/launch/i);
 

@@ -44,14 +44,31 @@ import isMatch from 'design/utils/match';
 import { App } from 'teleport/services/apps';
 import AwsLaunchButton from './AwsLaunchButton';
 
-export default function AppList(props: Props) {
-  const { apps = [], pageSize = 100, searchValue } = props;
+export default function Container(props: Props) {
+  const [searchValue, setSearchValue] = useState('');
+  return (
+    <AppList
+      {...props}
+      searchValue={searchValue}
+      setSearchValue={setSearchValue}
+    />
+  );
+}
+
+export function AppList(props: Props) {
+  const {
+    data = [],
+    pageSize = 100,
+    onLabelClick,
+    searchValue,
+    setSearchValue,
+  } = props;
   const [sortDir, setSortDir] = useState<Record<string, string>>({
     name: SortTypes.DESC,
   });
 
   function sortAndFilter(search) {
-    const filtered = apps.filter(obj =>
+    const filtered = data.filter(obj =>
       isMatch(obj, search, {
         searchableProps: ['name', 'publicAddr', 'description', 'tags'],
         cb: searchAndFilterCb,
@@ -71,10 +88,15 @@ export default function AppList(props: Props) {
     setSortDir({ [columnKey]: sortDir });
   }
 
-  const data = sortAndFilter(searchValue);
+  const filteredData = sortAndFilter(searchValue);
 
   return (
-    <StyledTable pageSize={pageSize} data={data}>
+    <StyledTable
+      pageSize={pageSize}
+      data={filteredData}
+      searchValue={searchValue}
+      onChangeSearchValue={v => setSearchValue(v)}
+    >
       <Column header={<Cell />} cell={<AppIconCell />} />
       <Column
         columnKey="name"
@@ -109,16 +131,19 @@ export default function AppList(props: Props) {
         }
         cell={<AddressCell />}
       />
-      <Column header={<Cell>Labels</Cell>} cell={<LabelCell />} />
+      <Column
+        header={<Cell>Labels</Cell>}
+        cell={<LabelCell onLabelClick={onLabelClick} />}
+      />
       <Column header={<Cell />} cell={<LaunchButtonCell />} />
     </StyledTable>
   );
 }
 
 function LabelCell(props) {
-  const { rowIndex, data } = props;
+  const { rowIndex, data, onLabelClick } = props;
   const { tags = [] } = data[rowIndex];
-  return renderLabelCell(tags);
+  return renderLabelCell(tags, onLabelClick);
 }
 
 function AddressCell(props) {
@@ -216,9 +241,11 @@ function searchAndFilterCb(
 }
 
 type Props = {
-  apps: App[];
+  data: App[];
   pageSize?: number;
+  onLabelClick(label: string): void;
   searchValue: string;
+  setSearchValue: React.Dispatch<React.SetStateAction<string>>;
 };
 
 const StyledTable = styled(Table)`

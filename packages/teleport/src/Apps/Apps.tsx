@@ -23,7 +23,7 @@ import {
   FeatureHeader,
   FeatureHeaderTitle,
 } from 'teleport/components/Layout';
-import InputSearch from 'teleport/components/InputSearch';
+import FilterableList from 'teleport/components/FilterByLabelList';
 import Empty, { EmptyStateInfo } from 'teleport/components/Empty';
 import AppList from './AppList';
 import AddApp from './AddApp';
@@ -46,8 +46,6 @@ export function Apps(props: State) {
     canCreate,
     attempt,
     apps,
-    searchValue,
-    setSearchValue,
   } = props;
 
   const isEmpty = attempt.status === 'success' && apps.length === 0;
@@ -69,12 +67,7 @@ export function Apps(props: State) {
         </Box>
       )}
       {attempt.status === 'failed' && <Danger>{attempt.statusText} </Danger>}
-      {hasApps && (
-        <Box>
-          <InputSearch mb={4} value={searchValue} onChange={setSearchValue} />
-          <AppList searchValue={searchValue} apps={apps} />
-        </Box>
-      )}
+      {hasApps && <FilterableList data={apps} TableComponent={AppList} />}
       {isEmpty && (
         <Empty
           clusterId={clusterId}
