@@ -30,7 +30,8 @@ export default function EventList(props: Props) {
   const {
     clusterId,
     events = [],
-    search = '',
+    searchValue = '',
+    setSearchValue,
     fetchMore,
     fetchStatus,
     pageSize = 50,
@@ -70,7 +71,7 @@ export default function EventList(props: Props) {
   const data = React.useMemo(() => {
     const { colSortDirs, searchableProps } = state;
     const filtered = events.filter(obj =>
-      isMatch(obj, search, {
+      isMatch(obj, searchValue, {
         searchableProps: searchableProps,
         cb: (target, search, prop) => {
           if (prop === 'time') {
@@ -88,10 +89,17 @@ export default function EventList(props: Props) {
     }
 
     return sorted;
-  }, [state, events, search]);
+  }, [state, events, searchValue]);
 
   // paginate
-  const tableProps = { pageSize, data, fetchMore, fetchStatus };
+  const tableProps = {
+    pageSize,
+    data,
+    fetchMore,
+    fetchStatus,
+    searchValue,
+    onChangeSearchValue: v => setSearchValue(v),
+  };
   const { detailsToShow, colSortDirs } = state;
   return (
     <React.Fragment>
@@ -145,7 +153,8 @@ type EventListState = {
 
 type Props = {
   clusterId: State['clusterId'];
-  search: State['searchValue'];
+  searchValue: State['searchValue'];
+  setSearchValue: State['setSearchValue'];
   events: State['events'];
   fetchMore: State['fetchMore'];
   fetchStatus: State['fetchStatus'];

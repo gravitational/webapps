@@ -59,7 +59,8 @@ export const AllEvents = () => (
   <EventList
     clusterId="im-a-cluster"
     events={events}
-    search=""
+    searchValue=""
+    setSearchValue={() => null}
     fetchMore={() => null}
     fetchStatus={''}
     pageSize={100}
