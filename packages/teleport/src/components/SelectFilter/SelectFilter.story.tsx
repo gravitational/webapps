@@ -18,7 +18,7 @@ import React from 'react';
 import SelectFilter, { Props } from './SelectFilter';
 
 export default {
-  title: 'Teleport/SelectFilter',
+  title: 'Teleport/FilterSelect',
 };
 
 export const NoAppliedFilters = () => <SelectFilter {...props} />;

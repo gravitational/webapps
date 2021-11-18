@@ -16,108 +16,65 @@
 
 import React from 'react';
 import { MemoryRouter } from 'react-router';
-import FilterableList, { Props } from './FilterByLabelList';
-import { makeNode } from 'teleport/services/nodes';
-import NodeList from 'teleport/components/NodeList';
+import { Column, Cell, TextCell, renderLabelCell } from 'design/DataTable';
+import Table from 'design/DataTable/Paged';
+import FilterableList from './FilterByLabelList';
 
 export default {
   title: 'Teleport/FilterByLabelList',
 };
 
-export const Nodes = () => (
-  <MemoryRouter initialEntries={[`nodes?labels=env%3A%20prod`]}>
-    <FilterableList {...props} />
+export const Sample0 = () => (
+  <MemoryRouter initialEntries={['']}>
+    <FilterableList data={list} TableComponent={SampleList} />
   </MemoryRouter>
 );
 
-const nodes = [
+export const Sample1 = () => (
+  <MemoryRouter initialEntries={[`nodes?labels=env%3A%20prod`]}>
+    <FilterableList data={list} TableComponent={SampleList} />
+  </MemoryRouter>
+);
+
+export const Sample2 = () => (
+  <MemoryRouter
+    initialEntries={[`nodes?labels=env%3A%20prod,country%3A%20France`]}
+  >
+    <FilterableList data={list} TableComponent={SampleList} />
+  </MemoryRouter>
+);
+
+const SampleList = props => {
+  const tableProps = { data: props.data };
+  return (
+    <Table {...tableProps}>
+      <Column columnKey="name" header={<Cell>Name</Cell>} cell={<TextCell />} />
+      <Column header={<Cell>Labels</Cell>} cell={<LabelCell />} />
+    </Table>
+  );
+};
+
+function LabelCell(props) {
+  const { rowIndex, data } = props;
+  const { tags = [] } = data[rowIndex];
+  return renderLabelCell(tags);
+}
+
+const list = [
   {
-    tunnel: false,
-    id: '61078',
-    clusterId: 'cluster-teleport-cloud-10',
-    hostname: 'ip-69.200.131.10',
-    addr: '69.200.131.10',
-    tags: [
-      { name: 'os', value: ' centOS' },
-      {
-        name: 'autoscaling-group',
-        value:
-          'teleport-cloud-prod-us-west-2-worker-20201211102915999300000000003',
-      },
-      { name: 'zone', value: 'us-west-2a' },
-      { name: 'country', value: 'Italy' },
-      { name: 'owner', value: 'username05' },
-      { name: 'env', value: 'prod' },
-      { name: 'tag-Name', value: 'teleport-cloud-prod-us-west-2a-worker' },
-      { name: 'role', value: 'worker' },
-    ],
+    name: 'Randall Hines',
+    tags: ['country: Italy', 'owner: username05', 'env: prod'],
   },
   {
-    tunnel: true,
-    id: '14824',
-    clusterId: 'cluster-teleport-cloud-90',
-    hostname: 'ip-125.6.17.37',
-    addr: '125.6.17.37',
-    tags: [
-      { name: 'os', value: ' windows' },
-      {
-        name: 'autoscaling-group',
-        value:
-          'teleport-cloud-prod-us-west-2-worker-20201211102915999300000000002',
-      },
-      { name: 'zone', value: 'us-east-2a' },
-      { name: 'country', value: 'South Korea' },
-      { name: 'owner', value: 'username10' },
-      { name: 'env', value: 'dev' },
-      { name: 'tag-Name', value: 'teleport-cloud-dev-us-east-2a-worker' },
-      { name: 'role', value: 'worker' },
-    ],
+    name: 'Fanny Bryant',
+    tags: ['country: South Korea', 'owner: username10', 'env: dev'],
   },
   {
-    tunnel: true,
-    id: '33162',
-    clusterId: 'cluster-teleport-cloud-18',
-    hostname: 'ip-48.15.222.201',
-    addr: '48.15.222.201',
-    tags: [
-      { name: 'os', value: ' windows' },
-      {
-        name: 'autoscaling-group',
-        value:
-          'teleport-cloud-prod-us-west-2-worker-20201211102915999300000000001',
-      },
-      { name: 'zone', value: 'ap-northeast-1' },
-      { name: 'country', value: 'France' },
-      { name: 'owner', value: 'username07' },
-      { name: 'env', value: 'prod' },
-      { name: 'tag-Name', value: 'teleport-cloud-prod-ap-northeast-1-worker' },
-      { name: 'role', value: 'worker' },
-    ],
+    name: 'Max Williams',
+    tags: ['country: France', 'owner: username07', 'env: prod'],
   },
   {
-    tunnel: true,
-    id: '12709',
-    clusterId: 'cluster-teleport-cloud-37',
-    hostname: 'ip-123.25.182.110',
-    addr: '123.25.182.110',
-    tags: [
-      { name: 'os', value: ' ubuntu' },
-      {
-        name: 'autoscaling-group',
-        value:
-          'teleport-cloud-prod-us-west-2-worker-20201211102915999300000000001',
-      },
-      { name: 'zone', value: 'us-east-2a' },
-      { name: 'country', value: 'United States of America' },
-      { name: 'owner', value: 'username03' },
-      { name: 'env', value: 'dev' },
-      { name: 'tag-Name', value: 'teleport-cloud-dev-us-east-2a-worker' },
-      { name: 'role', value: 'worker' },
-    ],
+    name: 'Sophia Lloyd',
+    tags: ['country: USA', 'owner: username03', 'env: dev'],
   },
 ];
-
-const props: Props = {
-  data: nodes.map(makeNode),
-  TableComponent: NodeList,
-};
