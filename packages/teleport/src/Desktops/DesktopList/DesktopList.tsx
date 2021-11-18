@@ -32,19 +32,20 @@ import MenuSshLogin, { LoginItem } from 'shared/components/MenuSshLogin';
 
 function DesktopList(props: Props) {
   const {
-    desktops = [],
+    data = [],
     pageSize = 100,
-    searchValue,
     onLoginMenuOpen,
     onLoginSelect,
+    onLabelClick,
   } = props;
 
+  const [searchValue, setSearchValue] = useState('');
   const [sortDir, setSortDir] = useState<Record<string, string>>({
     name: SortTypes.DESC,
   });
 
   function sortAndFilter(search) {
-    const filtered = desktops.filter(obj =>
+    const filtered = data.filter(obj =>
       isMatch(obj, search, {
         searchableProps: ['name', 'addr'],
         cb: searchAndFilterCb,
@@ -73,10 +74,15 @@ function DesktopList(props: Props) {
     onLoginSelect(username, desktopId);
   }
 
-  const data = sortAndFilter(searchValue);
+  const filteredData = sortAndFilter(searchValue);
 
   return (
-    <StyledTable pageSize={pageSize} data={data}>
+    <StyledTable
+      pageSize={pageSize}
+      data={filteredData}
+      searchValue={searchValue}
+      onChangeSearchValue={v => setSearchValue(v)}
+    >
       <Column
         columnKey="addr"
         header={
@@ -99,7 +105,10 @@ function DesktopList(props: Props) {
         }
         cell={<TextCell />}
       />
-      <Column header={<Cell>Labels</Cell>} cell={<LabelCell />} />
+      <Column
+        header={<Cell>Labels</Cell>}
+        cell={<LabelCell onLabelClick={onLabelClick} />}
+      />
       <Column
         header={<Cell />}
         cell={<LoginCell onOpen={onLoginMenuOpen} onSelect={onDesktopSelect} />}
@@ -169,9 +178,9 @@ const LoginCell: React.FC<Required<{
 };
 
 function LabelCell(props) {
-  const { rowIndex, data } = props;
+  const { rowIndex, data, onLabelClick } = props;
   const { tags = [] } = data[rowIndex];
-  return renderLabelCell(tags);
+  return renderLabelCell(tags, onLabelClick);
 }
 
 const StyledTable = styled(Table)`
@@ -193,13 +202,13 @@ function searchAndFilterCb(
 }
 
 type Props = {
-  desktops: Desktop[];
+  data: Desktop[];
   pageSize?: number;
   username: string;
   clusterId: string;
-  searchValue: string;
   onLoginMenuOpen(desktopId: string): { login: string; url: string }[];
   onLoginSelect(username: string, desktopId: string): void;
+  onLabelClick(label: string): void;
 };
 
 export default DesktopList;

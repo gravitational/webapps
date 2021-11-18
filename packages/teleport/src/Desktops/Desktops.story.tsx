@@ -15,6 +15,7 @@ limitations under the License.
 */
 
 import React from 'react';
+import { MemoryRouter } from 'react-router';
 import { State } from './useDesktops';
 import { Desktops } from './Desktops';
 import { desktops } from './fixtures';
@@ -27,9 +28,11 @@ export const Loading = () => (
   <Desktops {...props} attempt={{ status: 'processing' }} />
 );
 
-export const Loaded = () => <Desktops {...props} />;
+export const Loaded = () => <MemoryRouter children={<Desktops {...props} />} />;
 
-export const Empty = () => <Desktops {...props} desktops={[]} />;
+export const Empty = () => (
+  <MemoryRouter children={<Desktops {...props} desktops={[]} />} />
+);
 
 export const Failed = () => (
   <Desktops
@@ -43,8 +46,6 @@ const props: State = {
   attempt: { status: 'success' },
   username: 'user',
   clusterId: 'im-a-cluster',
-  searchValue: '',
-  setSearchValue: () => {},
   getWindowsLoginOptions: (desktopId: string) => [{ login: '', url: '' }],
   openRemoteDesktopTab: (username: string, desktopId: string) => {},
 };

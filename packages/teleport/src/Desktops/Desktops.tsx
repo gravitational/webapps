@@ -15,7 +15,7 @@ limitations under the License.
 */
 
 import React from 'react';
-import { Indicator, Box, Flex } from 'design';
+import { Indicator, Box } from 'design';
 import { Danger } from 'design/Alert';
 import useTeleport from 'teleport/useTeleport';
 import {
@@ -23,7 +23,7 @@ import {
   FeatureHeader,
   FeatureHeaderTitle,
 } from 'teleport/components/Layout';
-import InputSearch from 'teleport/components/InputSearch';
+import FilterableList from 'teleport/components/FilterByLabelList';
 import DesktopList from './DesktopList';
 import useDesktops, { State } from './useDesktops';
 
@@ -38,8 +38,6 @@ export function Desktops(props: State) {
     attempt,
     username,
     clusterId,
-    searchValue,
-    setSearchValue,
     desktops,
     getWindowsLoginOptions,
     openRemoteDesktopTab,
@@ -57,24 +55,14 @@ export function Desktops(props: State) {
       )}
       {attempt.status === 'failed' && <Danger>{attempt.statusText}</Danger>}
       {attempt.status === 'success' && (
-        <>
-          <Flex
-            mb={4}
-            alignItems="center"
-            flex="0 0 auto"
-            justifyContent="space-between"
-          >
-            <InputSearch mr={3} value={searchValue} onChange={setSearchValue} />
-          </Flex>
-          <DesktopList
-            desktops={desktops}
-            username={username}
-            clusterId={clusterId}
-            searchValue={searchValue}
-            onLoginMenuOpen={getWindowsLoginOptions}
-            onLoginSelect={openRemoteDesktopTab}
-          />
-        </>
+        <FilterableList
+          data={desktops}
+          TableComponent={DesktopList}
+          username={username}
+          clusterId={clusterId}
+          onLoginMenuOpen={getWindowsLoginOptions}
+          onLoginSelect={openRemoteDesktopTab}
+        />
       )}
     </FeatureBox>
   );
