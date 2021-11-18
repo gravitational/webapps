@@ -793,7 +793,7 @@ exports[`loaded 1`] = `
   border-radius: 200px;
   height: 32px;
   transition: all .2s;
-  background: #0c143d;
+  background: #111B48;
   margin-right: 16px;
   padding-left: 16px;
   padding-right: 16px;
@@ -801,12 +801,12 @@ exports[`loaded 1`] = `
 }
 
 .c11:hover {
-  background: #111B48;
+  background: #2C3A73;
 }
 
 .c11:focus,
 .c11:active {
-  background: #111B48;
+  background: #2C3A73;
   box-shadow: inset 0 2px 4px rgba(0,0,0,.24);
   color: rgba(255,255,255,0.87);
 }
@@ -909,7 +909,7 @@ exports[`loaded 1`] = `
 
 .c7 {
   line-height: normal;
-  background-color: transparent;
+  background-color: #111B48;
   font-weight: normal;
   border: 1px solid rgba(255,255,255,0.24);
   color: #fff;

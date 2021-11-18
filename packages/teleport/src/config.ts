@@ -62,7 +62,7 @@ const cfg = {
     desktop: '/web/cluster/:clusterId/desktops/:desktopId/:username',
     users: '/web/users',
     console: '/web/cluster/:clusterId/console',
-    consoleNodes: '/web/cluster/:clusterId/console/nodes',
+    consoleNodes: '/web/cluster/:clusterId/console/nodes(\\?labels=.*)?',
     consoleConnect: '/web/cluster/:clusterId/console/node/:serverId/:login',
     consoleSession: '/web/cluster/:clusterId/console/session/:sid',
     player: '/web/cluster/:clusterId/session/:sid',

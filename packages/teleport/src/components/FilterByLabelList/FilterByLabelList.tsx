@@ -65,11 +65,13 @@ export default function FilterableList({
 
   return (
     <>
-      <SelectFilter
-        applyFilters={onFilterApply}
-        appliedFilters={selectedLabels}
-        filters={labels}
-      />
+      {labels.length > 0 && (
+        <SelectFilter
+          applyFilters={onFilterApply}
+          appliedFilters={selectedLabels}
+          filters={labels}
+        />
+      )}
       <TableComponent
         {...tableProps}
         data={filteredData}
