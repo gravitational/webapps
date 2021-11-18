@@ -39,7 +39,17 @@ export default function useInvite(tokenId: string) {
     auth
       .resetPassword(tokenId, password, otpToken)
       .then(redirect)
-      .catch(submitAttempt.handleError);
+      .catch(err => {
+        if (err.response.status === 403) {
+          submitAttempt.handleError(
+            new Error(
+              'Invalid one time token. Please check if the token has expired and try again.'
+            )
+          );
+          return;
+        }
+        submitAttempt.handleError(err);
+      });
   }
 
   function onSubmitWithU2f(password: string) {
