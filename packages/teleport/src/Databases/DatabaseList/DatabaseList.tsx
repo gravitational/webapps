@@ -34,14 +34,15 @@ import ConnectDialog from 'teleport/Databases/ConnectDialog';
 
 function DatabaseList(props: Props) {
   const {
-    databases = [],
+    data = [],
     pageSize = 100,
     username,
     clusterId,
     authType,
-    searchValue,
+    onLabelClick,
   } = props;
 
+  const [searchValue, setSearchValue] = useState('');
   const [sortDir, setSortDir] = useState<Record<string, string>>({
     name: SortTypes.DESC,
   });
@@ -52,7 +53,7 @@ function DatabaseList(props: Props) {
   }>(null);
 
   function sortAndFilter(search) {
-    const filtered = databases.filter(obj =>
+    const filtered = data.filter(obj =>
       isMatch(obj, search, {
         searchableProps: ['name', 'desc', 'title', 'tags'],
         cb: searchAndFilterCb,
@@ -72,11 +73,16 @@ function DatabaseList(props: Props) {
     setSortDir({ [columnKey]: sortDir });
   }
 
-  const data = sortAndFilter(searchValue);
+  const filteredData = sortAndFilter(searchValue);
 
   return (
     <>
-      <StyledTable pageSize={pageSize} data={data}>
+      <StyledTable
+        pageSize={pageSize}
+        data={filteredData}
+        searchValue={searchValue}
+        onChangeSearchValue={v => setSearchValue(v)}
+      >
         <Column
           columnKey="name"
           header={
@@ -110,7 +116,10 @@ function DatabaseList(props: Props) {
           }
           cell={<TextCell />}
         />
-        <Column header={<Cell>Labels</Cell>} cell={<LabelCell />} />
+        <Column
+          header={<Cell>Labels</Cell>}
+          cell={<LabelCell onLabelClick={onLabelClick} />}
+        />
         <Column
           header={<Cell />}
           cell={<ConnectButton setDbConnectInfo={setDbConnectInfo} />}
@@ -131,9 +140,9 @@ function DatabaseList(props: Props) {
 }
 
 function LabelCell(props) {
-  const { rowIndex, data } = props;
+  const { rowIndex, data, onLabelClick } = props;
   const { tags = [] } = data[rowIndex];
-  return renderLabelCell(tags);
+  return renderLabelCell(tags, onLabelClick);
 }
 
 function ConnectButton(props) {
@@ -173,12 +182,13 @@ function searchAndFilterCb(
 }
 
 type Props = {
-  databases: Database[];
+  data: Database[];
   pageSize?: number;
   username: string;
   clusterId: string;
   authType: AuthType;
   searchValue: string;
+  onLabelClick(label: string): void;
 };
 
 export default DatabaseList;

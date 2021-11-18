@@ -15,6 +15,7 @@ limitations under the License.
 */
 
 import React from 'react';
+import { MemoryRouter } from 'react-router';
 import { Databases } from './Databases';
 import { State } from './useDatabases';
 import { databases } from './fixtures';
@@ -23,7 +24,9 @@ export default {
   title: 'Teleport/Databases',
 };
 
-export const Loaded = () => <Databases {...props} />;
+export const Loaded = () => (
+  <MemoryRouter children={<Databases {...props} />} />
+);
 
 export const Empty = () => <Databases {...props} databases={[]} />;
 
@@ -55,6 +58,4 @@ const props: State = {
   username: 'sam',
   version: '6.1.3',
   authType: 'local',
-  searchValue: '',
-  setSearchValue: () => null,
 };
