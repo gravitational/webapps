@@ -21,6 +21,7 @@ import { Box, Flex } from 'design';
 import { space, width, color, height } from 'styled-system';
 import useGlobalSearch, { State } from './useGlobalSearch';
 import GlobalSearchResults from './GlobalSearchResults';
+import { useKeyboardShortcut } from 'teleterm/ui/services/keyboardShortcuts';
 
 export default function Container() {
   const state = useGlobalSearch();
@@ -31,6 +32,12 @@ export function GlobalSearch(props: State) {
   const { current, searchResults, onKeyDown } = props;
   const ref = React.useRef<HTMLInputElement>();
   const [visible, setVisible] = React.useState(true);
+
+  useKeyboardShortcut({
+    'focus-global-search': () => {
+      ref.current.focus();
+    },
+  });
 
   const handleOnBlur = () => {
     setVisible(false);

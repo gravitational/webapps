@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React from 'react';
+import React, { useCallback } from 'react';
 import styled from 'styled-components';
 import { Flex } from 'design';
 import { useAppContext } from 'teleterm/ui/appContextProvider';
@@ -25,12 +25,36 @@ import DocumentServers from 'teleterm/ui/DocumentServers';
 import DocumentDbs from 'teleterm/ui/DocumentDbs';
 import DocumentGateway from 'teleterm/ui/DocumentGateway';
 import DocumentTerminal from 'teleterm/ui/DocumentTerminal';
+import {
+  KeyboardShortcutEvent,
+  useKeyboardShortcut,
+} from 'teleterm/ui/services/keyboardShortcuts';
 
 export default function TabHost(props: Props) {
   const { serviceDocs } = useAppContext();
   const documents = serviceDocs.getDocuments();
   const docActive = serviceDocs.getActive();
   const { mainProcessClient } = useAppContext();
+
+  useKeyboardShortcut(
+    useCallback(
+      (shortcutEvent: KeyboardShortcutEvent) => {
+        const possibleShortcuts = [1, 2, 3, 4, 5, 6, 7, 8, 9].map(
+          numericKey => `tab-${numericKey}`
+        );
+        if (!possibleShortcuts.includes(shortcutEvent.type)) {
+          return;
+        }
+        const tabNumber = parseInt(
+          shortcutEvent.type.charAt(shortcutEvent.type.length - 1)
+        );
+        if (documents[tabNumber]) {
+          serviceDocs.open(documents[tabNumber].uri);
+        }
+      },
+      [documents]
+    )
+  );
 
   // subscribe
   serviceDocs.useState();

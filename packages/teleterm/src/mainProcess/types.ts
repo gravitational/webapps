@@ -2,6 +2,7 @@ export type RuntimeSettings = {
   isDev: boolean;
   userDataDir: string;
   defaultShell: string;
+  platform: NodeJS.Platform;
   tshd: {
     networkAddr: string;
     binaryPath: string;
