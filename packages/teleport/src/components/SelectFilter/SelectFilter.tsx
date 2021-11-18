@@ -55,9 +55,6 @@ export default function SelectFilter({
 
   useEffect(() => {
     setSelectedFilters(appliedFilters);
-  }, [appliedFilters]);
-
-  useEffect(() => {
     function handleOnClick(e) {
       // Ignore event for clicking near buttons.
       if (e.target.closest('button')) {
@@ -75,7 +72,7 @@ export default function SelectFilter({
 
     window.addEventListener('click', handleOnClick);
     return () => window.removeEventListener('click', handleOnClick);
-  }, []);
+  }, [appliedFilters]);
 
   const $labels = appliedFilters.map((o, key) => (
     <Label key={key} name={o.label} onClick={() => deleteLabel(o.label)} />
