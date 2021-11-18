@@ -94,7 +94,6 @@ class PtyProcess extends EventEmitter {
 
   _onData(data: string) {
     try {
-      console.log(data);
       if (this._buffered) {
         this._pushToBuffer(data);
       } else {

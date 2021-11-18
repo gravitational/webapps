@@ -6,6 +6,11 @@ import {
 } from 'winston';
 import { isObject } from 'lodash';
 
+type Options = {
+  directoryPath: string;
+  isDev?: boolean;
+};
+
 export interface Logger {
   error(...args: unknown[]): void;
 
@@ -16,10 +21,7 @@ export interface Logger {
 
 let loggerInstance: WinstonLogger;
 
-function initializeLogging(options: {
-  directoryPath: string;
-  isDev?: boolean;
-}): void {
+export function initializeLogging(options: Options): void {
   loggerInstance = createWinstonLogger({
     level: 'info',
     format: format.combine(
@@ -58,7 +60,7 @@ function initializeLogging(options: {
   }
 }
 
-function createLogger(context = 'default'): Logger {
+export function createLogger(context = 'default'): Logger {
   if (!loggerInstance) {
     throw new Error('Logger is not initialized, use initializeLogging() first');
   }
@@ -90,5 +92,3 @@ function messageStringifier(message: unknown[]): string {
     })
     .join(' ');
 }
-
-export { initializeLogging, createLogger };
