@@ -1,4 +1,4 @@
-import { Resource, Kind } from './types';
+import { Resource, Kind, Label, LabelTag } from './types';
 
 export function makeResource<T extends Kind>(json: any): Resource<T> {
   json = json || {};
@@ -14,4 +14,8 @@ export function makeResource<T extends Kind>(json: any): Resource<T> {
 export function makeResourceList<T extends Kind>(json: any): Resource<T>[] {
   json = json || [];
   return json.map(resource => makeResource<T>(resource));
+}
+
+export function makeResourceTag(label: Label): LabelTag {
+  return `${label.name}: ${label.value}`;
 }
