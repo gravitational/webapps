@@ -313,16 +313,16 @@ const StyledLabel = styled.div`
 
 export type Props = {
   // filters is a list of all available filters.
-  filters: Option[];
+  filters: Option<any>[];
   // appliedFilters are a list of filters that have been
   // applied to a list of data. Used to render labels list and
   // to update selected items for the select dropdown list on:
   //  - first render (labels from query params if any)
   //  - when labels are clicked from table
-  appliedFilters: Option[];
+  appliedFilters: Option<any>[];
   // applyFilters applies the filters to the list of data and
   // updates appliedFilters.
-  applyFilters(newFilters: Option[]): void;
+  applyFilters(newFilters: Option<any>[]): void;
   // mb is margin-bottom and is applied to the select button.
   mb?: number;
 };
