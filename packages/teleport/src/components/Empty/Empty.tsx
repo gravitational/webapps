@@ -40,7 +40,7 @@ export default function Empty(props: Props) {
         p={8}
         mt={4}
         mx="auto"
-        maxWidth="600px"
+        maxWidth="720px"
         textAlign="center"
         color="text.primary"
         bg="primary.light"
@@ -54,7 +54,7 @@ export default function Empty(props: Props) {
           <Text as="span" bold>
             {clusterId}
           </Text>
-          " cluster.
+          " cluster, or you don't have access to any.
         </Text>
       </Box>
     );

@@ -1069,7 +1069,7 @@ exports[`open source loaded 1`] = `
 exports[`readonly empty state 1`] = `
 .c4 {
   box-sizing: border-box;
-  max-width: 600px;
+  max-width: 720px;
   margin-top: 24px;
   margin-left: auto;
   margin-right: auto;
@@ -1229,7 +1229,7 @@ exports[`readonly empty state 1`] = `
         >
           im-a-cluster
         </span>
-        " cluster.
+        " cluster, or you don't have access to any.
       </div>
     </div>
   </div>
