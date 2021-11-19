@@ -71,7 +71,11 @@ const history = {
   },
 
   getRedirectParam() {
-    return getUrlParameter('redirect_uri', this.original().location.search);
+    return getUrlParameter(
+      'redirect_uri',
+      this.original().location.search,
+      true /* preserve filter query values */
+    );
   },
 
   ensureKnownRoute(url = '') {
@@ -122,8 +126,32 @@ const match = (url: string) => (route: string) => {
 
 export default history;
 
-export function getUrlParameter(name = '', path = '') {
-  const params = new URLSearchParams(path);
-  const value = params.get(name);
-  return value || '';
+// regexFilterQueryParam is a regex to split a path into two groups.
+// First group captures anything before the filter param as the path we will search
+// for the target query param. The second group captures the first filter param and
+// anything else following it we assume is part of the filter.
+const regexFilterQueryParam = /(?<pathToSearch>.+?)(?<pathWithFilter>\?filter=.*)/;
+
+export function getUrlParameter(name = '', path = '', preserveFilter = false) {
+  let pathToSearch = path;
+  let pathWithFilter = '';
+
+  // We preserve the filter b/c it contains un-encoded char seperator's
+  // that we use to determine different filters. Running it through
+  // URLSearchParams will decode encoded values and other unexpected
+  // changes like "+" is converted to space.
+  if (preserveFilter) {
+    const match = regexFilterQueryParam.exec(path);
+    pathToSearch = match?.groups.pathToSearch ?? path;
+    pathWithFilter = match?.groups.pathWithFilter ?? '';
+  }
+
+  const params = new URLSearchParams(pathToSearch);
+  const foundValue = params.get(name);
+
+  if (preserveFilter && foundValue && pathWithFilter) {
+    return `${foundValue}${pathWithFilter}`;
+  }
+
+  return foundValue || '';
 }
