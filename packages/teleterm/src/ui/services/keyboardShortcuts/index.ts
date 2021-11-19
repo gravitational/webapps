@@ -1,3 +1,3 @@
 export * from './keyboardShortcutsService';
-export * from './useKeyboardShortcut';
+export * from './useKeyboardShortcuts';
 export * from './types';

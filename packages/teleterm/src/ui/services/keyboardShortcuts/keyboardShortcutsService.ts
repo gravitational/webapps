@@ -8,16 +8,17 @@ import {
   KeyboardShortcutEventSubscriber,
   KeyboardShortcutType,
 } from './types';
+import { Platform } from 'teleterm/mainProcess/types';
 
 type State = {
   shortcuts: Partial<Record<KeyboardShortcutType, string>>;
 };
 
 export class KeyboardShortcutsService extends Store<State> {
-  private eventsSubscribers: KeyboardShortcutEventSubscriber[] = [];
+  private eventsSubscribers = new Set<KeyboardShortcutEventSubscriber>();
   private keysToShortcuts = new Map<string, KeyboardShortcutType>();
 
-  constructor(private platform: NodeJS.Platform) {
+  constructor(private platform: Platform) {
     super();
 
     this.state = { shortcuts: {} };
@@ -42,14 +43,11 @@ export class KeyboardShortcutsService extends Store<State> {
   }
 
   subscribeToEvents(subscriber: KeyboardShortcutEventSubscriber): void {
-    this.eventsSubscribers.push(subscriber);
+    this.eventsSubscribers.add(subscriber);
   }
 
   unsubscribeFromEvents(subscriber: KeyboardShortcutEventSubscriber): void {
-    const index = this.eventsSubscribers.indexOf(subscriber);
-    if (index > -1) {
-      this.eventsSubscribers.splice(index, 1);
-    }
+    this.eventsSubscribers.delete(subscriber);
   }
 
   private attachKeydownHandler(): void {
@@ -65,7 +63,7 @@ export class KeyboardShortcutsService extends Store<State> {
     };
 
     window.addEventListener('keydown', handleKeydown, {
-      capture: true
+      capture: true,
     });
   }
 
@@ -102,6 +100,7 @@ export class KeyboardShortcutsService extends Store<State> {
    * Inverts shortcuts-keys pairs to allow accessing shortcut by a key
    */
   private recalculateKeysToShortcuts(): void {
+    this.keysToShortcuts.clear();
     Object.entries(this.state.shortcuts).forEach(([shortcutType, key]) => {
       this.keysToShortcuts.set(key, shortcutType as KeyboardShortcutType);
     });

@@ -6,6 +6,10 @@ export type KeyboardShortcutEventSubscriber = (
   event: KeyboardShortcutEvent
 ) => void;
 
+export type KeyboardShortcutHandlers = Partial<
+  Record<KeyboardShortcutType, () => void>
+>;
+
 export type KeyboardShortcutType =
   | 'tab-1'
   | 'tab-2'

@@ -2,7 +2,7 @@ export type RuntimeSettings = {
   isDev: boolean;
   userDataDir: string;
   defaultShell: string;
-  platform: NodeJS.Platform;
+  platform: Platform;
   tshd: {
     networkAddr: string;
     binaryPath: string;
@@ -15,3 +15,5 @@ export type MainProcessClient = {
   getRuntimeSettings(): RuntimeSettings;
   openContextMenu(): void;
 };
+
+export type Platform = 'darwin' | 'linux';

@@ -1,29 +1,20 @@
 import { useEffect } from '@gravitational/shared/hooks';
 import { useAppContext } from 'teleterm/ui/appContextProvider';
 import {
-  KeyboardShortcutEvent,
   KeyboardShortcutEventSubscriber,
-  KeyboardShortcutType,
+  KeyboardShortcutHandlers,
 } from './types';
 
-export function useKeyboardShortcut(
-  handler:
-    | ((shortcutEvent: KeyboardShortcutEvent) => void)
-    | Partial<Record<KeyboardShortcutType, () => void>>
-) {
+export function useKeyboardShortcuts(handlers: KeyboardShortcutHandlers): void {
   const { serviceKeyboardShortcuts } = useAppContext();
 
   useEffect(() => {
     const handleShortcutEvent: KeyboardShortcutEventSubscriber = event => {
-      if (typeof handler === 'function') {
-        handler(event);
-      } else {
-        handler[event.type]?.();
-      }
+      handlers[event.type]?.();
     };
 
     serviceKeyboardShortcuts.subscribeToEvents(handleShortcutEvent);
     return () =>
       serviceKeyboardShortcuts.unsubscribeFromEvents(handleShortcutEvent);
-  }, [handler]);
+  }, [handlers]);
 }
