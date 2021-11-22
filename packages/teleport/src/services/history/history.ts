@@ -64,12 +64,6 @@ const history = {
     this._pageRefresh(url);
   },
 
-  createRedirect(location /* location || string */) {
-    let route = _inst.createHref(location);
-    let knownRoute = this.ensureKnownRoute(route);
-    return this.ensureBaseUrl(knownRoute);
-  },
-
   getRedirectParam() {
     return getUrlParameter(
       'redirect_uri',
@@ -118,10 +112,7 @@ const history = {
 const withBaseUrl = (url: string) => cfg.baseUrl + url;
 
 const match = (url: string) => (route: string) => {
-  return matchPath(url, {
-    path: route,
-    exact: true,
-  });
+  return matchPath(url, { path: route });
 };
 
 export default history;

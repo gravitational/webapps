@@ -41,7 +41,7 @@ const cfg = {
 
   routes: {
     root: '/web',
-    apps: '/web/cluster/:clusterId/apps(\\?filter=.*)?',
+    apps: '/web/cluster/:clusterId/apps',
     appLauncher: '/web/launch/:fqdn/:clusterId?/:publicAddr?/:arn?',
     support: '/web/support',
     settings: '/web/settings',
@@ -54,7 +54,7 @@ const cfg = {
     clusters: '/web/clusters',
     trustedClusters: '/web/trust',
     audit: '/web/cluster/:clusterId/audit',
-    nodes: '/web/cluster/:clusterId/nodes(\\?filter=.*)?',
+    nodes: '/web/cluster/:clusterId/nodes',
     sessions: '/web/cluster/:clusterId/sessions',
     recordings: '/web/cluster/:clusterId/recordings',
     databases: '/web/cluster/:clusterId/databases',
@@ -62,7 +62,7 @@ const cfg = {
     desktop: '/web/cluster/:clusterId/desktops/:desktopName/:username',
     users: '/web/users',
     console: '/web/cluster/:clusterId/console',
-    consoleNodes: '/web/cluster/:clusterId/console/nodes(\\?filter=.*)?',
+    consoleNodes: '/web/cluster/:clusterId/console/nodes',
     consoleConnect: '/web/cluster/:clusterId/console/node/:serverId/:login',
     consoleSession: '/web/cluster/:clusterId/console/session/:sid',
     player: '/web/cluster/:clusterId/session/:sid',

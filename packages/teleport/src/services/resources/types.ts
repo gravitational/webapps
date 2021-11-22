@@ -32,4 +32,11 @@ export type Label = {
   value: string;
 };
 
+// LabelTag is a string with the Label name and value combined.
 export type LabelTag = string;
+
+export type LabelOption = {
+  value: LabelTag;
+  label: LabelTag;
+  obj: Label;
+};
