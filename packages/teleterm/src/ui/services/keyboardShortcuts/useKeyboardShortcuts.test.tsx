@@ -6,26 +6,24 @@ import { KeyboardShortcutsService } from './keyboardShortcutsService';
 import { KeyboardShortcutEventSubscriber } from './types';
 import AppContext from 'teleterm/ui/appContext';
 
-describe('teleterm/ui/services/useKeyboardShortcuts', () => {
-  it('should call handler on its event type', () => {
-    const { handler, getEventEmitter, wrapper } = getTestSetup();
+test('call handler on its event type', () => {
+  const { handler, getEventEmitter, wrapper } = getTestSetup();
 
-    renderHook(() => useKeyboardShortcuts({ 'tab-1': handler }), { wrapper });
-    const emitEvent = getEventEmitter();
-    emitEvent({ type: 'tab-1' });
+  renderHook(() => useKeyboardShortcuts({ 'tab-1': handler }), { wrapper });
+  const emitEvent = getEventEmitter();
+  emitEvent({ type: 'tab-1' });
 
-    expect(handler).toHaveBeenCalled();
-  });
+  expect(handler).toHaveBeenCalled();
+});
 
-  it('should not call handler on other event type', () => {
-    const { handler, getEventEmitter, wrapper } = getTestSetup();
+test('do not call handler on other event type', () => {
+  const { handler, getEventEmitter, wrapper } = getTestSetup();
 
-    renderHook(() => useKeyboardShortcuts({ 'tab-1': handler }), { wrapper });
-    const emitEvent = getEventEmitter();
-    emitEvent({ type: 'tab-2' });
+  renderHook(() => useKeyboardShortcuts({ 'tab-1': handler }), { wrapper });
+  const emitEvent = getEventEmitter();
+  emitEvent({ type: 'tab-2' });
 
-    expect(handler).not.toHaveBeenCalled();
-  });
+  expect(handler).not.toHaveBeenCalled();
 });
 
 function getTestSetup() {
