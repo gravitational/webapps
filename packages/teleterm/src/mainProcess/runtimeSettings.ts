@@ -31,6 +31,7 @@ export function getRuntimeSettings(
     isDev: opts?.isDev || false,
     userDataDir,
     defaultShell: getDefaultShell(),
+    platform: process.platform,
     tshd,
     ...opts,
   };

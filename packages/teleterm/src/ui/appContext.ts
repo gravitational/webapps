@@ -21,6 +21,7 @@ import ServiceDocs from 'teleterm/ui/services/docs';
 import ServiceTerminals from 'teleterm/ui/services/terminals';
 import ServiceGlobalSearch from 'teleterm/ui/services/globalSearch';
 import * as types from 'teleterm/types';
+import { KeyboardShortcutsService } from 'teleterm/ui/services/keyboardShortcuts';
 
 export type Config = types.ElectronGlobals;
 
@@ -31,6 +32,7 @@ export default class AppContext {
   serviceDocs: ServiceDocs;
   serviceTerminals: ServiceTerminals;
   mainProcessClient: types.MainProcessClient;
+  serviceKeyboardShortcuts: KeyboardShortcutsService;
 
   uris = uris;
 
@@ -45,6 +47,9 @@ export default class AppContext {
     this.serviceModals = new ServiceModals();
     this.serviceDocs = new ServiceDocs();
     this.serviceTerminals = new ServiceTerminals(config.ptyServiceClient);
+    this.serviceKeyboardShortcuts = new KeyboardShortcutsService(
+      this.mainProcessClient.getRuntimeSettings().platform
+    );
   }
 
   async init() {
