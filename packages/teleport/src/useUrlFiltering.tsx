@@ -14,11 +14,14 @@
  * limitations under the License.
  */
 
-import { useMemo, useState } from 'react';
-import { useLocation } from 'react-router';
-import { Option as SelectOption } from 'shared/components/Select';
-import { Label, LabelTag, makeResourceTag } from 'teleport/services/resources';
-import history from 'teleport/services/history';
+import { useMemo } from 'react';
+import { useLocation, useHistory } from 'react-router';
+import {
+  Label,
+  LabelTag,
+  LabelOption as Option,
+  makeLabelTag,
+} from 'teleport/services/resources';
 
 // PARAM_FILTER is a url query parameter for filters.
 const PARAM_FILTER = '?filter=';
@@ -26,49 +29,52 @@ const PARAM_FILTER = '?filter=';
 // FILTER_TYPE_LABEL defines a filter type for labels in a url query param.
 const FILTER_TYPE_LABEL = 'label:';
 
-export default function useUrlFiltering(data: Data[]) {
+export default function useUrlFiltering<T extends Filterable>(data: Array<T>) {
+  const history = useHistory();
   const { search, pathname } = useLocation();
-  const tagDict = useMemo<TagDict>(() => makeTagDictionary(data), [data]);
-  const labels = useMemo<Option[]>(() => makeLabelOptions(tagDict), [data]);
-
-  const [selectedLabels, setSelectedLabels] = useState<Option[]>(() =>
-    getLabelOptionsFromUrl(search)
-  );
+  const selectedLabels = useMemo<Option[]>(() => getLabelsFromUrl(search), [
+    search,
+  ]);
 
   const filteredData = useMemo(() => filterData(data, selectedLabels), [
     data,
     selectedLabels,
   ]);
 
-  function onFilterApply(labels: Option[]) {
-    setSelectedLabels(labels);
-    updateUrlQuery(labels, pathname);
+  function apply(labels: Option[]) {
+    history.replace(getEncodedUrl(labels, pathname));
   }
 
-  function onLabelClick(tag: string) {
-    let copy = [...selectedLabels];
-    const index = selectedLabels.findIndex(l => l.label === tag);
+  // toggleLabel removes an existing label from the
+  // selected labels list, else adds new label to list.
+  function toggleLabel(label: Label) {
+    const tag = makeLabelTag(label);
+    let modifiedList = [...selectedLabels];
+    const index = selectedLabels.findIndex(o => o.label === tag);
 
     if (index > -1) {
       // remove the label
-      copy.splice(index, 1);
+      modifiedList.splice(index, 1);
     } else {
-      copy = [...selectedLabels, { label: tag, value: tagDict[tag] }];
+      modifiedList = [
+        ...selectedLabels,
+        { label: tag, value: tag, obj: label },
+      ];
     }
 
-    onFilterApply(copy);
+    apply(modifiedList);
   }
 
   return {
-    labels,
     selectedLabels,
     filteredData,
-    onFilterApply,
-    onLabelClick,
+    apply,
+    toggleLabel,
   };
 }
 
-function getLabelOptionsFromUrl(search: string): Option[] {
+// getLabelsFromUrl parses the query param filter values.
+function getLabelsFromUrl(search: string): Option[] {
   if (!search.startsWith(PARAM_FILTER)) {
     return [];
   }
@@ -89,7 +95,7 @@ function getLabelOptionsFromUrl(search: string): Option[] {
 
     if (filter.startsWith(FILTER_TYPE_LABEL)) {
       const encodedLabel = filter.substring(FILTER_TYPE_LABEL.length);
-      const [encodedName, encodedValue, more] = encodedLabel.split(',');
+      const [encodedName, encodedValue, more] = encodedLabel.split('=');
 
       // Abort if more than two values were split (malformed label).
       if (more) {
@@ -105,9 +111,11 @@ function getLabelOptionsFromUrl(search: string): Option[] {
         continue;
       }
 
+      const tag = makeLabelTag(label);
       options.push({
-        label: makeResourceTag(label),
-        value: label,
+        label: tag,
+        value: tag,
+        obj: label,
       });
 
       continue;
@@ -123,7 +131,7 @@ function getLabelOptionsFromUrl(search: string): Option[] {
 // filterData returns new list of data that contains the selected labels.
 // Return type is relaxed here so it can be passed down to components with
 // stricter types.
-function filterData(data: Data[] = [], labels: Option[] = []): any[] {
+function filterData(data: Filterable[] = [], labels: Option[] = []): any[] {
   if (!labels.length) {
     return data;
   }
@@ -133,74 +141,36 @@ function filterData(data: Data[] = [], labels: Option[] = []): any[] {
   );
 }
 
-// updateUrlQuery formats and encodes the selected labels into a
-// query format we expect in the URL and updates the URL in place.
+// getEncodedUrl formats and encodes the selected labels into a
+// query format we expect in the URL.
 //
 // Unencoded seperators used in URL:
 //  - plus (+): seperates different filters
-//  - comma (,): seperates name value pair of a label
+//  - equal (=): seperates name value pair of a label
 //  - colon (:) with name of filter type (ie label:): identifies the filter as a label type
 //
 // Format of the query:
 // <path>?filter=label:<encodedName1>,<encodedValue1>+label:<encodedName2>,<encodedValue2>
-function updateUrlQuery(labels: Option[], pathname = '') {
+function getEncodedUrl(labels: Option[], pathname = '') {
   if (!labels.length) {
-    history.replace(pathname);
+    return pathname;
   }
 
   const labelFilters = labels
     .map(o => {
-      const { name, value } = o.value;
+      const { name, value } = o.obj;
       const encodedName = encodeURIComponent(name);
       const encodedValue = encodeURIComponent(value);
-      return `${FILTER_TYPE_LABEL}${encodedName},${encodedValue}`;
+      return `${FILTER_TYPE_LABEL}${encodedName}=${encodedValue}`;
     })
     .join('+');
 
-  history.replace(`${pathname}${PARAM_FILTER}${labelFilters}`);
+  return `${pathname}${PARAM_FILTER}${labelFilters}`;
 }
 
-// makeTagDictionary makes a dictionary of unique label tags.
-// Used as a lookup table when making label options and when
-// clicking on the tags from the table.
-function makeTagDictionary(data: Data[] = []): TagDict {
-  // Test a tags and labels field exist.
-  if (!data.length || !data[0].tags || !data[0].labels) {
-    return {};
-  }
-
-  const tagDict = {};
-  data.forEach(({ tags, labels }) => {
-    tags.forEach((tag, i) => {
-      if (!tagDict[tag]) {
-        tagDict[tag] = labels[i];
-      }
-    });
-  });
-
-  return tagDict;
-}
-
-function makeLabelOptions(tagDict: TagDict = {}): Option[] {
-  const tags = Object.keys(tagDict);
-  if (!tags.length) {
-    return [];
-  }
-
-  return tags
-    .sort((a, b) => a.localeCompare(b, undefined, { numeric: true }))
-    .map(tag => ({ label: tag, value: tagDict[tag] }));
-}
-
-type Option = SelectOption<Label>;
-type TagDict = Record<LabelTag, Label>;
-
-export type Data = {
+export type Filterable = {
   labels: Label[];
-  // tags is just the combined string version of a label.
   tags: LabelTag[];
-  // Could contain other fields, but does not matter what.
-  [key: string]: any;
 };
 
 export type State = ReturnType<typeof useUrlFiltering>;
