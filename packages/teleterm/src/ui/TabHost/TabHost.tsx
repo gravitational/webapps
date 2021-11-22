@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React from 'react';
+import React, { useMemo } from 'react';
 import styled from 'styled-components';
 import { Flex } from 'design';
 import { useAppContext } from 'teleterm/ui/appContextProvider';
@@ -25,12 +25,46 @@ import DocumentServers from 'teleterm/ui/DocumentServers';
 import DocumentDbs from 'teleterm/ui/DocumentDbs';
 import DocumentGateway from 'teleterm/ui/DocumentGateway';
 import DocumentTerminal from 'teleterm/ui/DocumentTerminal';
+import {
+  KeyboardShortcutHandlers,
+  useKeyboardShortcuts,
+} from 'teleterm/ui/services/keyboardShortcuts';
+import DocumentService from 'teleterm/ui/services/docs';
 
 export default function TabHost(props: Props) {
   const { serviceDocs } = useAppContext();
   const documents = serviceDocs.getDocuments();
   const docActive = serviceDocs.getActive();
   const { mainProcessClient } = useAppContext();
+
+  function buildTabsShortcuts(
+    serviceDocs: DocumentService
+  ): KeyboardShortcutHandlers {
+    const handle = (index: number) => () => {
+      const docs = serviceDocs.getDocuments();
+      if (docs[index]) {
+        serviceDocs.open(docs[index].uri);
+      }
+    };
+
+    return {
+      'tab-1': handle(1),
+      'tab-2': handle(2),
+      'tab-3': handle(3),
+      'tab-4': handle(4),
+      'tab-5': handle(5),
+      'tab-6': handle(6),
+      'tab-7': handle(7),
+      'tab-8': handle(8),
+      'tab-9': handle(9),
+    };
+  }
+
+  const tabsShortcuts = useMemo(() => buildTabsShortcuts(serviceDocs), [
+    serviceDocs,
+  ]);
+
+  useKeyboardShortcuts(tabsShortcuts);
 
   // subscribe
   serviceDocs.useState();
