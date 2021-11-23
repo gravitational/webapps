@@ -14,19 +14,15 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { useAppContext } from 'teleterm/ui/appContextProvider';
 import * as types from 'teleterm/ui/types';
-import useAsync from 'teleterm/ui/useAsync';
 
 export default function useDatabases({ clusterUri }: types.DocumentDatabases) {
   const ctx = useAppContext();
   const [searchValue, setSearchValue] = useState('');
   const dbs = ctx.serviceClusters.findDbs(clusterUri);
-
-  const [loadAttempt, load] = useAsync(() => {
-    return ctx.serviceClusters.fetchDatabases(clusterUri);
-  });
+  const syncStatus = ctx.serviceClusters.getClusterSyncStatus(clusterUri);
 
   const openGateway = (dbUri = '') => {
     ctx.serviceModals.openDialog({
@@ -35,17 +31,14 @@ export default function useDatabases({ clusterUri }: types.DocumentDatabases) {
     });
   };
 
+  // subscribe
   ctx.serviceClusters.useState();
 
-  useEffect(() => {
-    load();
-  }, [clusterUri]);
-
   return {
+    syncStatus: syncStatus.dbs,
     openGateway,
     searchValue,
     setSearchValue,
     dbs,
-    loadAttempt,
   };
 }

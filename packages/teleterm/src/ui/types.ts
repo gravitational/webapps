@@ -14,8 +14,6 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import { FC } from 'react';
-
 export type ResourceKind =
   | 'gateways'
   | 'terminal'
@@ -88,13 +86,4 @@ export interface UriParams {
   gatewayId?: string;
   tabId?: string;
   sid?: string;
-}
-
-export interface NavItem {
-  items: NavItem[];
-  title: string;
-  uri: string;
-  Icon: FC;
-  kind: ResourceKind;
-  group: boolean;
 }

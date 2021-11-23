@@ -19,9 +19,7 @@ import AppContext from './appContext';
 
 export const AppReactContext = React.createContext<AppContext>(null);
 
-const AppContextProvider: React.FC<{
-  value: AppContext;
-}> = props => {
+const AppContextProvider: React.FC<Props> = props => {
   return <AppReactContext.Provider {...props} />;
 };
 
@@ -32,3 +30,7 @@ export function useAppContext() {
   window['teleterm'] = ctx;
   return ctx;
 }
+
+type Props = {
+  value: AppContext;
+};

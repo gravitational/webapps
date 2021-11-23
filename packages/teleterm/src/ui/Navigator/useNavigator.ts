@@ -16,14 +16,13 @@ limitations under the License.
 
 import { useAppContext } from './../appContextProvider';
 import * as Icons from 'design/Icon';
-import * as types from '../types';
+import * as types from './types';
 
 export default function useNavigator() {
   const ctx = useAppContext();
   const homeItem = createHomeItem(ctx.uris.routes.home);
 
   ctx.serviceDocs.useState();
-  ctx.serviceClusters.useState();
 
   function processItemClick(item: types.NavItem) {
     ctx.serviceDocs.open(item.uri);
@@ -35,7 +34,7 @@ export default function useNavigator() {
   };
 }
 
-export function createHomeItem(uri: string): types.NavItem {
+function createHomeItem(uri: string): types.NavItem {
   return {
     uri,
     title: 'Home',

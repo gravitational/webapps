@@ -17,6 +17,7 @@ limitations under the License.
 import React from 'react';
 import styled from 'styled-components';
 import { Text, Flex, Box } from 'design';
+import { Danger } from 'design/Alert';
 import QuickLaunch from 'teleport/components/QuickLaunch';
 import Document from './../Document';
 import useServers from './useServers';
@@ -25,7 +26,7 @@ import * as types from '../types';
 
 export default function DocumentNodes(props: Props) {
   const { doc, visible } = props;
-  const { servers, connect, searchValue } = useServers(doc);
+  const { servers, syncStatus, connect, searchValue } = useServers(doc);
 
   function onQuickLaunchEnter() {}
 
@@ -38,6 +39,9 @@ export default function DocumentNodes(props: Props) {
           </Text>
           <QuickLaunch width="240px" onPress={onQuickLaunchEnter} />
         </Flex>
+        {syncStatus.status === 'failed' && (
+          <Danger>{syncStatus.statusText}</Danger>
+        )}
         <ServerList
           searchValue={searchValue}
           onLogin={connect}

@@ -20,8 +20,8 @@ import ServiceModals from 'teleterm/ui/services/modals';
 import ServiceDocs from 'teleterm/ui/services/docs';
 import ServiceTerminals from 'teleterm/ui/services/terminals';
 import ServiceGlobalSearch from 'teleterm/ui/services/globalSearch';
-import * as types from 'teleterm/types';
 import { KeyboardShortcutsService } from 'teleterm/ui/services/keyboardShortcuts';
+import * as types from 'teleterm/types';
 
 export type Config = types.ElectronGlobals;
 
@@ -39,7 +39,7 @@ export default class AppContext {
   constructor(config: Config) {
     this.mainProcessClient = config.mainProcessClient;
     this.serviceGlobalSearch = new ServiceGlobalSearch();
-    this.serviceClusters = new ServiceClusters(config.tshdClient);
+    this.serviceClusters = new ServiceClusters(config.tshClient);
     this.serviceGlobalSearch.registerProvider(
       this.serviceClusters.searchProvider
     );
@@ -53,7 +53,6 @@ export default class AppContext {
   }
 
   async init() {
-    await this.serviceClusters.fetchClusters();
-    await this.serviceClusters.fetchGateways();
+    await this.serviceClusters.syncClusters();
   }
 }

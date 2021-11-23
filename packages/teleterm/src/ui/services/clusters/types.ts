@@ -16,14 +16,9 @@ limitations under the License.
 
 import * as tsh from 'teleterm/services/tshd/types';
 
-export type SyncingStatus = {
-  uri: string;
-  status: 'syncing' | 'synced' | 'failed' | 'not_synced';
-  statusText: string;
+export type SyncStatus = {
+  status: 'processing' | 'ready' | 'failed' | '';
+  statusText?: string;
 };
-
-export interface Cluster extends tsh.Cluster {
-  syncing: SyncingStatus;
-}
 
 export { tsh };

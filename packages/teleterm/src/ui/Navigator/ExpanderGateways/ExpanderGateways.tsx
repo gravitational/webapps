@@ -17,9 +17,12 @@ limitations under the License.
 import React from 'react';
 import { Flex, Text, ButtonIcon } from 'design';
 import * as Icons from 'design/Icon';
-import Expander, { ExpanderHeader, ExpanderContent } from './../Expander';
-import * as types from 'teleterm/ui/types';
-import NavItem from './../NavItem';
+import Expander, {
+  ExpanderHeader,
+  ExpanderContent,
+} from 'teleterm/ui/Navigator/Expander';
+import * as types from 'teleterm/ui/Navigator/types';
+import NavItem from 'teleterm/ui/Navigator/NavItem';
 import StatusIndicator from './StatusIndicator';
 import useExpanderGateways, { State } from './useExpanderGateways';
 

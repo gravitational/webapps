@@ -10,9 +10,18 @@ export class MockAppContext extends AppContext {
     const ptyServiceClient = new MockPtyServiceClient();
 
     super({
+      createLogger,
       mainProcessClient,
-      tshdClient,
+      tshClient: tshdClient,
       ptyServiceClient,
     });
   }
+}
+
+function createLogger(context = 'default') {
+  return {
+    error: (...args) => {},
+    warn: (...args) => {},
+    info: (...args) => {},
+  };
 }

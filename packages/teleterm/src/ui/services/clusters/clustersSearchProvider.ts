@@ -29,7 +29,7 @@ export default class ClusterSearchProvider implements GlobalSearchProvider {
           kind: 'servers',
           data: {
             ...c,
-            uri: uri.getUriServer({ clusterId: c.name }),
+            uri: uri.getUriServers({ clusterId: c.name }),
           },
         });
         quickNavs.push({
