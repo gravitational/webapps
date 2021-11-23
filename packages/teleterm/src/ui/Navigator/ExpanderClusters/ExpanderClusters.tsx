@@ -15,10 +15,10 @@ limitations under the License.
 */
 
 import React from 'react';
-import { Flex, Text, ButtonIcon, ButtonBorder } from 'design';
+import { Flex, Text, ButtonIcon } from 'design';
 import * as Icons from 'design/Icon';
 import Expander, { ExpanderHeader, ExpanderContent } from './../Expander';
-import NavItem, { StyledNavItem } from 'teleterm/ui/Navigator/NavItem';
+import NavItem from 'teleterm/ui/Navigator/NavItem';
 import useExpanderClusters, {
   State,
   ClusterNavItem,
@@ -52,7 +52,7 @@ export const ExpanderClusters: React.FC<State> = props => {
       <ClusterOfflineItem
         key={i.uri}
         item={i}
-        onClick={() => openLoginDialog(i.uri)}
+        onSync={() => openLoginDialog(i.uri)}
       />
     ));
 
@@ -102,9 +102,6 @@ const ClusterItem: React.FC<{ item: ClusterNavItem }> = props => {
           <Text typography="body1" style={{ position: 'relative' }}>
             {title}
           </Text>
-          <ButtonIcon color="text.placeholder">
-            <Icons.Trash />
-          </ButtonIcon>
         </Flex>
       </ExpanderHeader>
       <ExpanderContent>
@@ -118,9 +115,9 @@ const ClusterItem: React.FC<{ item: ClusterNavItem }> = props => {
 
 const ClusterOfflineItem: React.FC<{
   item: ClusterNavItem;
-  onClick(): void;
+  onSync(): void;
 }> = props => {
-  const { item, onClick } = props;
+  const { item, onSync } = props;
   return (
     <Expander>
       <ExpanderHeader pl={5} color="grey.500">
@@ -131,20 +128,18 @@ const ClusterOfflineItem: React.FC<{
           width="100%"
         >
           <Text typography="body1">{item.title}</Text>
-          <ButtonIcon color="text.placeholder">
-            <Icons.Trash />
+          <ButtonIcon
+            color="text.placeholder"
+            onClick={(e: React.BaseSyntheticEvent) => {
+              e.stopPropagation();
+              onSync();
+            }}
+          >
+            <Icons.Restore />
           </ButtonIcon>
         </Flex>
       </ExpanderHeader>
-      <ExpanderContent>
-        <StyledNavItem pl={8}>
-          <Text color="text.secondary">
-            <ButtonBorder size="small" onClick={onClick}>
-              connect
-            </ButtonBorder>
-          </Text>
-        </StyledNavItem>
-      </ExpanderContent>
+      <ExpanderContent></ExpanderContent>
     </Expander>
   );
 };

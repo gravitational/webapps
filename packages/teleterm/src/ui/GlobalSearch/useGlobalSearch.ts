@@ -40,17 +40,27 @@ export default function useGlobalSearch() {
       case KeyEnum.RETURN:
         if (searchResults.length > 0) {
           e.target['value'] = '';
+          e.stopPropagation();
+          e.preventDefault();
+
           setResults([]);
 
           const selectedResult = searchResults[current];
-          // TODO (alex-kovoy): implement a command pattern
-          if (selectedResult.kind === 'server') {
-            ctx.serviceModals.openDialog({
-              kind: 'server-connect',
-              serverUri: selectedResult.data.uri,
-            });
-          } else {
-            ctx.serviceDocs.open(searchResults[current].data.uri);
+          switch (selectedResult.kind) {
+            case 'server':
+              ctx.serviceModals.openDialog({
+                kind: 'server-connect',
+                serverUri: selectedResult.data.uri,
+              });
+              return;
+            case 'db':
+              ctx.serviceModals.openDialog({
+                kind: 'create-gateway',
+                targetUri: selectedResult.data.uri,
+              });
+              return;
+            default:
+              ctx.serviceDocs.open(selectedResult.data.uri);
           }
         }
         return;
@@ -59,9 +69,13 @@ export default function useGlobalSearch() {
       case KeyEnum.TAB:
         return;
       case KeyEnum.UP:
+        e.stopPropagation();
+        e.preventDefault();
         handleArrow(e, -1);
         return;
       case KeyEnum.DOWN:
+        e.stopPropagation();
+        e.preventDefault();
         handleArrow(e, 1);
         return;
     }

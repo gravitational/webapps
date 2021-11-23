@@ -76,6 +76,13 @@ export default function DocumentGateway(props: Props) {
             mb={4}
             text={`https://${gateway.localAddress}:${gateway.localPort}`}
           />
+          <Text bold>Psql</Text>
+          <TextSelectCopy
+            bash={false}
+            bg={'primary.dark'}
+            mb={6}
+            text={`psql "${gateway.nativeClientArgs}"`}
+          />
           <Text typography="h4" bold mb={3}>
             Access Keys
           </Text>
@@ -99,13 +106,6 @@ export default function DocumentGateway(props: Props) {
             bg={'primary.dark'}
             mb={3}
             text={gateway.keyPath}
-          />
-          <Text bold>Psql</Text>
-          <TextSelectCopy
-            bash={false}
-            bg={'primary.dark'}
-            mb={3}
-            text={`psql "${gateway.nativeClientArgs}"`}
           />
         </Container>
       </Document>

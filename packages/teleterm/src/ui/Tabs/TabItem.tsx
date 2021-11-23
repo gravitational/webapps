@@ -19,14 +19,12 @@ import styled from 'styled-components';
 import { Close as CloseIcon } from 'design/Icon';
 import { space } from 'design/system';
 import { Flex, Text } from 'design';
-import JoinedUsers from './JoinedUsers';
 
 export default function TabItem(props: Props) {
-  const { name, users, active, onClick, onClose, style } = props;
+  const { name, active, onClick, onClose, style } = props;
   return (
     <StyledTabItem alignItems="center" active={active} style={style}>
       <StyledTabButton onClick={onClick}>
-        <JoinedUsers mr="1" users={users} active={active} />
         <Text mx="auto" title={name}>
           {name}
         </Text>

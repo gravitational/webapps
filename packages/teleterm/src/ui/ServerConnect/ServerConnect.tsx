@@ -16,7 +16,6 @@
 
 import React from 'react';
 import Select, { Option, DarkStyledSelect } from 'shared/components/Select';
-import styled from 'styled-components';
 import { Text, ButtonSecondary } from 'design';
 import Dialog, {
   DialogHeader,

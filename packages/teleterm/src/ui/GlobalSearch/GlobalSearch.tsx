@@ -33,12 +33,6 @@ export function GlobalSearch(props: State) {
   const ref = React.useRef<HTMLInputElement>();
   const [visible, setVisible] = React.useState(true);
 
-  useKeyboardShortcuts({
-    'focus-global-search': () => {
-      ref.current.focus();
-    },
-  });
-
   const handleOnBlur = () => {
     setVisible(false);
   };
@@ -48,6 +42,13 @@ export function GlobalSearch(props: State) {
       props.search(ref.current.value);
     }, 100);
   }, []);
+
+  useKeyboardShortcuts({
+    'focus-global-search': () => {
+      ref.current.focus();
+      handleOnChange();
+    },
+  });
 
   React.useEffect(() => {
     return () => handleOnChange.cancel();

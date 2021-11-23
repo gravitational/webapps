@@ -26,7 +26,7 @@ export default function ModalsHost() {
   const dialog = serviceModals.useState();
 
   if (dialog.kind === 'add-cluster') {
-    return <ClusterAdd onClose={() => serviceModals.openDialog(dialog)} />;
+    return <ClusterAdd onClose={() => serviceModals.closeDialog()} />;
   }
 
   if (dialog.kind === 'cluster-login') {
