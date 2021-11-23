@@ -16,4 +16,4 @@ export type MainProcessClient = {
   openContextMenu(): void;
 };
 
-export type Platform = 'darwin' | 'linux';
+export type Platform = NodeJS.Platform;

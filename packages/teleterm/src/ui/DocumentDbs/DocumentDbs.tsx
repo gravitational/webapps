@@ -16,6 +16,7 @@ limitations under the License.
 
 import React from 'react';
 import styled from 'styled-components';
+import { Danger } from 'design/Alert';
 import { Text, Flex, Box } from 'design';
 import Document from './../Document';
 import DatabaseList from './DatabaseList';
@@ -24,7 +25,7 @@ import * as types from '../types';
 
 export default function DocumentDbs(props: Props) {
   const { doc, visible } = props;
-  const { dbs, openGateway, searchValue } = useDatabases(doc);
+  const { dbs, openGateway, searchValue, syncStatus } = useDatabases(doc);
 
   return (
     <Document visible={visible}>
@@ -34,6 +35,9 @@ export default function DocumentDbs(props: Props) {
             Databases
           </Text>
         </Flex>
+        {syncStatus.status === 'failed' && (
+          <Danger>{syncStatus.statusText}</Danger>
+        )}
         <DatabaseList
           searchValue={searchValue}
           databases={dbs}

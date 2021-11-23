@@ -20,22 +20,15 @@ import { space, color } from 'design/system';
 import * as Icons from 'design/Icon';
 import { Flex } from 'design';
 
-type AccordingContextState = {
-  expanded: boolean;
-  setExpanded(boolean): void;
-};
-
-type ExpanderHeaderProps = {
-  [key: string]: any;
-};
-
 const AccordingContext = React.createContext<AccordingContextState>(null);
 
 const Expander: React.FC = props => {
   const [expanded, setExpanded] = React.useState(true);
   const [header, ...children] = React.Children.toArray(props.children);
+  const toggle = () => setExpanded(!expanded);
+
   return (
-    <AccordingContext.Provider value={{ expanded, setExpanded }}>
+    <AccordingContext.Provider value={{ expanded, toggle }}>
       {header}
       {children}
     </AccordingContext.Provider>
@@ -47,7 +40,7 @@ export const ExpanderHeader: React.FC<ExpanderHeaderProps> = props => {
   const ctx = React.useContext(AccordingContext);
   const ArrowIcon = ctx.expanded ? Icons.ArrowDown : Icons.ArrowRight;
   return (
-    <StyledHeader {...styles} onClick={() => ctx.setExpanded(!ctx.expanded)}>
+    <StyledHeader {...styles} onClick={ctx.toggle}>
       <ArrowIcon mr="2" color="inherit" style={{ fontSize: '12px' }} />
       <Flex flex="1">{children}</Flex>
     </StyledHeader>
@@ -61,13 +54,6 @@ export const ExpanderContent = styled(Flex)(props => {
     color: props.theme.colors.text.secondary,
     background: props.theme.colors.primary.dark,
     flexDirection: 'column',
-  };
-});
-
-export const StyledBorder = styled.div(({ theme }) => {
-  return {
-    background: theme.colors.primary.lighter,
-    height: '1px',
   };
 });
 
@@ -112,3 +98,12 @@ export const StyledHeader = styled(Flex)(props => {
     ...color(props),
   };
 });
+
+type AccordingContextState = {
+  expanded: boolean;
+  toggle(): void;
+};
+
+type ExpanderHeaderProps = {
+  [key: string]: any;
+};

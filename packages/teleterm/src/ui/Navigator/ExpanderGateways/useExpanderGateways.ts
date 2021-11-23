@@ -17,7 +17,7 @@ limitations under the License.
 import * as Icons from 'design/Icon';
 import { useAppContext } from 'teleterm/ui/appContextProvider';
 import AppContext from 'teleterm/ui/appContext';
-import * as types from 'teleterm/ui/types';
+import * as types from 'teleterm/ui/Navigator/types';
 
 export default function useExpanderGateways() {
   const ctx = useAppContext();

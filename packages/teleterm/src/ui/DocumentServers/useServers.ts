@@ -14,8 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import { useState, useEffect } from 'react';
-import useAsync from 'teleterm/ui/useAsync';
+import { useState } from 'react';
 import { useAppContext } from 'teleterm/ui/appContextProvider';
 import * as types from 'teleterm/ui/types';
 
@@ -23,10 +22,7 @@ export default function useServers({ clusterUri }: types.DocumentServers) {
   const ctx = useAppContext();
   const [searchValue, setSearchValue] = useState('');
   const servers = ctx.serviceClusters.findServers(clusterUri);
-
-  const [loadAttempt, load] = useAsync(() => {
-    return ctx.serviceClusters.fetchServers(clusterUri);
-  });
+  const syncStatus = ctx.serviceClusters.getClusterSyncStatus(clusterUri);
 
   const connect = (serverUri: '') =>
     ctx.serviceModals.openDialog({
@@ -36,17 +32,11 @@ export default function useServers({ clusterUri }: types.DocumentServers) {
 
   ctx.serviceClusters.useState();
 
-  useEffect(() => {
-    if (servers.length === 0) {
-      load();
-    }
-  }, [clusterUri]);
-
   return {
     searchValue,
     setSearchValue,
     connect,
     servers,
-    loadAttempt,
+    syncStatus: syncStatus.servers,
   };
 }
