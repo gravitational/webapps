@@ -16,10 +16,10 @@ limitations under the License.
 
 import React from 'react';
 import styled from 'styled-components';
+import { Warning } from 'design/Icon';
 import { color, space } from 'design/system';
-import * as types from 'teleterm/ui/types';
-import Icon from 'design/Icon';
-import { useAppContext } from './../appContextProvider';
+import * as types from 'teleterm/ui/Navigator/types';
+import { useAppContext } from 'teleterm/ui/appContextProvider';
 
 type Props = {
   item?: types.NavItem;
@@ -28,27 +28,34 @@ type Props = {
 };
 
 const NavItem: React.FC<Props> = props => {
-  const ctx = useAppContext();
   const { item, onClick, ...styles } = props;
+  const ctx = useAppContext();
   const active = ctx.serviceDocs.isActive(item.uri);
 
-  const clickRef = React.useRef(onClick);
-  clickRef.current = onClick;
-
-  const handleClick = React.useCallback(() => {
-    if (clickRef.current) {
-      clickRef.current && clickRef.current(item);
+  const handleClick = () => {
+    if (onClick) {
+      onClick(item);
     } else {
       ctx.serviceDocs.open(item.uri);
     }
-  }, [item]);
+  };
+
+  const Icon = item.status === 'failed' ? Warning : item.Icon;
 
   return (
-    <StyledNavItem $active={active} {...styles} onClick={handleClick}>
+    <StyledNavItem
+      $active={active}
+      $status={item.status}
+      {...styles}
+      onClick={handleClick}
+    >
       {!props.children && (
         <>
-          <Icon mr={2} ml={-2} as={item.Icon} fontSize="10px" color="inherit" />
-          {item.title}
+          <Icon mr={2} ml={-2} fontSize="10px" color="inherit" />
+          <div style={{ position: 'relative' }}>
+            {item.title}
+            {item.status === 'loading' && <Progress />}
+          </div>
         </>
       )}
       {props.children}
@@ -57,13 +64,17 @@ const NavItem: React.FC<Props> = props => {
 };
 
 export const StyledNavItem = styled.div(props => {
-  const { theme, $active } = props;
-  const activeColors = $active
+  const { theme, $active, $status } = props;
+  const colors = $active
     ? {
         color: theme.colors.primary.contrastText,
         background: theme.colors.primary.light,
       }
     : {};
+
+  if ($status === 'failed') {
+    colors.color = theme.colors.error.light;
+  }
 
   return {
     whiteSpace: 'nowrap',
@@ -78,7 +89,7 @@ export const StyledNavItem = styled.div(props => {
     fontWeight: theme.regular,
     fontFamily: theme.font,
     color: theme.colors.text.primary,
-    height: '36px',
+    height: '32px',
 
     '&:hover': {
       background: theme.colors.primary.light,
@@ -88,10 +99,65 @@ export const StyledNavItem = styled.div(props => {
       color: theme.colors.primary.contrastText,
     },
 
-    ...activeColors,
+    ...colors,
     ...color(props),
     ...space(props),
   };
 });
+
+const Progress: React.FC = () => {
+  return (
+    <div
+      style={{
+        position: 'absolute',
+        left: '0',
+        right: '0',
+        bottom: '0',
+      }}
+    >
+      <StyledProgress>
+        <div className="parent-bar-2" />
+      </StyledProgress>
+    </div>
+  );
+};
+
+const StyledProgress = styled.div`
+  position: relative;
+  overflow: hidden;
+  display: block;
+  height: 1px;
+  z-index: 0;
+  background-color: #222c59;
+
+  .parent-bar-2 {
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    top: 0;
+    transition: transform 0.2s linear;
+    transform-origin: left;
+    background-color: #1976d2;
+    animation: animation-linear-progress 2s cubic-bezier(0.165, 0.84, 0.44, 1)
+      1s infinite;
+  }
+
+  @keyframes animation-linear-progress {
+    0% {
+      left: -300%;
+      right: 100%;
+    }
+
+    60% {
+      left: 107%;
+      right: -8%;
+    }
+
+    100% {
+      left: 107%;
+      right: -8%;
+    }
+  }
+`;
 
 export default NavItem;

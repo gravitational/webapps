@@ -42,7 +42,7 @@ const uris = {
     return generatePath(routes.cluster, params as any);
   },
 
-  getUriServer(params: UriParams) {
+  getUriServers(params: UriParams) {
     return generatePath(routes.clusterServers, params as any);
   },
 

@@ -38,13 +38,5 @@ test('fetchClusters', async () => {
 
   //  await tsh.addCluster('localhost:4080');
 
-  //await tsh.fetchClusters();
-  //await tsh.fetchServers('/clusters/localhost');
-  //await tsh.fetchDatabases('/clusters/localhost');
-  //  await tsh.login('/clusters/localhost', 'papa', '123123');
-  //await tshClient.listClusters fetchServers('/clusters/localhost');
-
-  //await tsh.fetchClusters();
-
   // console.log(clusters);
 });

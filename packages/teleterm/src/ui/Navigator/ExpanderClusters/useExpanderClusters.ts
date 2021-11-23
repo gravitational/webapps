@@ -14,61 +14,88 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React from 'react';
 import * as Icons from 'design/Icon';
 import { useAppContext } from 'teleterm/ui/appContextProvider';
 import AppContext from 'teleterm/ui/appContext';
-import * as types from 'teleterm/ui/types';
+import * as navTypes from 'teleterm/ui/Navigator/types';
+import { SyncStatus } from 'teleterm/ui/services/clusters/types';
 
 export default function useExpanderClusters() {
   const ctx = useAppContext();
-  const { clusters } = ctx.serviceClusters.useState();
+  const clusterItems = initItems(ctx);
 
-  const clusterItems = React.useMemo(() => {
-    return initClusterItems(ctx);
-  }, [clusters]);
+  // subscribe
+  ctx.serviceClusters.useState();
 
   function addCluster() {
     ctx.serviceModals.openDialog({ kind: 'add-cluster' });
   }
 
+  function syncClusters() {
+    ctx.serviceClusters.syncClusters();
+  }
+
   return {
     clusterItems,
     addCluster,
+    syncClusters,
+    openLoginDialog(clusterUri: string) {
+      ctx.serviceModals.openDialog({
+        kind: 'cluster-login',
+        clusterUri,
+      });
+    },
   };
 }
 
-function initClusterItems(ctx: AppContext): ClusterNavItem[] {
-  return ctx.serviceClusters.getClusters().map<ClusterNavItem>(cluster => ({
-    title: cluster.name,
-    Icon: Icons.Clusters,
-    uri: cluster.uri,
-    kind: 'clusters',
-    connected: cluster.connected,
-    items: [
-      {
-        title: 'Servers',
-        Icon: Icons.Server,
-        uri: ctx.uris.getUriServer({ clusterId: cluster.name }),
-        kind: 'servers',
-        items: [],
-        group: false,
-      },
-      {
-        title: 'Databases',
-        Icon: Icons.Database,
-        uri: ctx.uris.getUriDbs({ clusterId: cluster.name }),
-        kind: 'dbs',
-        items: [],
-        group: false,
-      },
-    ],
-    group: true,
-  }));
+function initItems(ctx: AppContext): ClusterNavItem[] {
+  return ctx.serviceClusters.getClusters().map<ClusterNavItem>(cluster => {
+    const syncing = ctx.serviceClusters.getClusterSyncStatus(cluster.uri);
+    return {
+      title: cluster.name,
+      Icon: Icons.Clusters,
+      uri: cluster.uri,
+      kind: 'clusters',
+      connected: cluster.connected,
+      syncing: syncing.servers,
+      items: [
+        {
+          title: 'Servers',
+          status: getNavItemStatus(syncing.servers),
+          Icon: Icons.Server,
+          uri: ctx.uris.getUriServers({ clusterId: cluster.name }),
+          kind: 'servers',
+          items: [],
+          group: false,
+        },
+        {
+          title: 'Databases',
+          Icon: Icons.Database,
+          uri: ctx.uris.getUriDbs({ clusterId: cluster.name }),
+          kind: 'dbs',
+          items: [],
+          status: getNavItemStatus(syncing.dbs),
+          group: false,
+        },
+      ],
+      group: true,
+    };
+  });
+}
+
+function getNavItemStatus(syncStatus: SyncStatus): navTypes.NavItem['status'] {
+  switch (syncStatus.status) {
+    case 'failed':
+      return 'failed';
+    case 'processing':
+      return 'loading';
+    default:
+      return '';
+  }
 }
 
 export type State = ReturnType<typeof useExpanderClusters>;
 
-export interface ClusterNavItem extends types.NavItem {
+export interface ClusterNavItem extends navTypes.NavItem {
   connected: boolean;
 }

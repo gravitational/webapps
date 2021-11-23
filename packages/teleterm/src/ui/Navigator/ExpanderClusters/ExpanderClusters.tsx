@@ -19,7 +19,6 @@ import { Flex, Text, ButtonIcon, ButtonBorder } from 'design';
 import * as Icons from 'design/Icon';
 import Expander, { ExpanderHeader, ExpanderContent } from './../Expander';
 import NavItem, { StyledNavItem } from 'teleterm/ui/Navigator/NavItem';
-import { useAppContext } from 'teleterm/ui/appContextProvider';
 import useExpanderClusters, {
   State,
   ClusterNavItem,
@@ -31,31 +30,29 @@ export default function Container() {
 }
 
 export const ExpanderClusters: React.FC<State> = props => {
-  const { serviceModals } = useAppContext();
+  const { clusterItems, openLoginDialog, syncClusters, addCluster } = props;
 
-  const handleConnect = (clusterUri: string) => {
-    serviceModals.openDialog({
-      kind: 'cluster-login',
-      clusterUri,
-    });
-  };
-
-  const handleAdd = (e: React.SyntheticEvent) => {
+  const handleSyncClick = (e: React.BaseSyntheticEvent) => {
     e.stopPropagation();
-    serviceModals.openDialog({ kind: 'add-cluster' });
+    syncClusters();
   };
 
-  const $onlineClusters = props.clusterItems
+  const handleAddClick = (e: React.BaseSyntheticEvent) => {
+    e.stopPropagation();
+    addCluster();
+  };
+
+  const $onlineClusters = clusterItems
     .filter(i => i.connected)
     .map(i => <ClusterItem key={i.uri} item={i} />);
 
-  const $offlineClusters = props.clusterItems
+  const $offlineClusters = clusterItems
     .filter(i => !i.connected)
     .map(i => (
       <ClusterOfflineItem
         key={i.uri}
         item={i}
-        onClick={() => handleConnect(i.uri)}
+        onClick={() => openLoginDialog(i.uri)}
       />
     ));
 
@@ -70,10 +67,14 @@ export const ExpanderClusters: React.FC<State> = props => {
         >
           <Text typography="body1">Clusters</Text>
           <Flex>
-            <ButtonIcon p={3} color="text.placeholder">
+            <ButtonIcon
+              p={3}
+              color="text.placeholder"
+              onClick={handleSyncClick}
+            >
               <Icons.Restore />
             </ButtonIcon>
-            <ButtonIcon color="text.placeholder" onClick={handleAdd}>
+            <ButtonIcon color="text.placeholder" onClick={handleAddClick}>
               <Icons.Add />
             </ButtonIcon>
           </Flex>
@@ -88,11 +89,7 @@ export const ExpanderClusters: React.FC<State> = props => {
 };
 
 const ClusterItem: React.FC<{ item: ClusterNavItem }> = props => {
-  const { title } = props.item;
-  const $navItems = props.item.items.map(i => (
-    <NavItem pl={9} key={i.uri} item={i} />
-  ));
-
+  const { title, items } = props.item;
   return (
     <Expander>
       <ExpanderHeader pl={5}>
@@ -102,13 +99,19 @@ const ClusterItem: React.FC<{ item: ClusterNavItem }> = props => {
           flex="1"
           width="100%"
         >
-          <Text typography="body1">{title}</Text>
+          <Text typography="body1" style={{ position: 'relative' }}>
+            {title}
+          </Text>
           <ButtonIcon color="text.placeholder">
             <Icons.Trash />
           </ButtonIcon>
         </Flex>
       </ExpanderHeader>
-      <ExpanderContent>{$navItems}</ExpanderContent>
+      <ExpanderContent>
+        {items.map(i => (
+          <NavItem key={i.uri} pl={9} item={i} />
+        ))}
+      </ExpanderContent>
     </Expander>
   );
 };

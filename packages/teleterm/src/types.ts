@@ -7,7 +7,7 @@ export { RuntimeSettings, MainProcessClient };
 
 export type ElectronGlobals = {
   readonly mainProcessClient: MainProcessClient;
-  readonly tshdClient: TshClient;
+  readonly tshClient: TshClient;
   readonly ptyServiceClient: PtyServiceClient;
   readonly createLogger: typeof createLogger;
 };

@@ -18,6 +18,7 @@ import React from 'react';
 import AppContextProvider from 'teleterm/ui/appContextProvider';
 import Navigator from './Navigator';
 import { MockAppContext } from 'teleterm/ui/fixtures/mocks';
+import { SyncStatus } from 'teleterm/ui/services/clusters/types';
 
 export default {
   title: 'Teleterm/Navigator',
@@ -25,6 +26,15 @@ export default {
 
 export const Story = () => {
   const appContext = new MockAppContext();
+
+  appContext.serviceClusters.getClusterSyncStatus = (_ = '') => {
+    const loading: SyncStatus = { status: 'processing' };
+    const error: SyncStatus = { status: 'failed', statusText: 'Server Error' };
+    return {
+      dbs: error,
+      servers: loading,
+    };
+  };
 
   appContext.serviceClusters.getClusters = () => [
     {
