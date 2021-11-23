@@ -37,6 +37,8 @@ export default class Service extends Store<State> {
     this.setState({
       clusters: new Map(this.state.clusters),
     });
+
+    return cluster;
   }
 
   async login({ clusterUri, local, oss }: LoginOptions) {

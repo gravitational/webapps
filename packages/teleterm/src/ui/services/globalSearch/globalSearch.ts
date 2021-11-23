@@ -31,9 +31,9 @@ export default class GlobalSearchService extends Store<State> {
 
   search(value: string) {
     const results: Result[] = [];
-    if (!value) {
-      return results;
-    }
+    //if (!value) {
+    //  return results;
+    //}
 
     this.state.providers.forEach(p => {
       try {

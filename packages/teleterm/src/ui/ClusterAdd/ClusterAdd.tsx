@@ -27,13 +27,16 @@ import useAsync from 'teleterm/ui/useAsync';
 export default function AddCluster({ onClose }: Props) {
   const [addr, setAddr] = useState('');
   const ctx = useAppContext();
-  const [{ status, statusText }, run] = useAsync(() => {
+  const [{ status, statusText, data: cluster }, run] = useAsync(() => {
     return ctx.serviceClusters.addCluster(addr);
   });
 
   React.useEffect(() => {
     if (status === 'success') {
-      onClose();
+      ctx.serviceModals.openDialog({
+        kind: 'cluster-login',
+        clusterUri: cluster.uri,
+      });
     }
   }, [status]);
 
@@ -42,7 +45,7 @@ export default function AddCluster({ onClose }: Props) {
       {({ validator }) => (
         <Dialog
           dialogCss={() => ({
-            maxWidth: '800px',
+            maxWidth: '480px',
             width: '100%',
             padding: '0',
           })}
@@ -50,56 +53,54 @@ export default function AddCluster({ onClose }: Props) {
           onClose={onClose}
           open={true}
         >
-          <Flex flex="1" minHeight="400px" as="form">
-            <Flex
-              flex="1"
-              m={5}
-              flexDirection="column"
-              justifyContent="space-between"
-            >
-              <Flex flexDirection="column">
-                <Text mb={1} typography="h2">
-                  First, add your cluster address
-                </Text>
-                <Text mb={5} color="text.secondary" typography="h5">
-                  For example, https://teleport.example.com
-                </Text>
-                {status === 'error' && (
-                  <Alerts.Danger mx={5} mb={0} mt={5} children={statusText} />
-                )}
-                <FieldInput
-                  maxWidth="380px"
-                  rule={requiredField('Cluster address is required')}
-                  value={addr}
-                  autoFocus
-                  onChange={e => setAddr(e.target.value)}
-                  placeholder="https://cluster"
-                />
-              </Flex>
-              <Box mt="5">
-                <ButtonPrimary
-                  disabled={status === 'processing'}
-                  mr="3"
-                  onClick={e => {
-                    e.preventDefault();
-                    validator.validate() && run();
-                  }}
-                >
-                  Next
-                </ButtonPrimary>
-                <ButtonSecondary
-                  disabled={status === 'processing'}
-                  onClick={onClose}
-                >
-                  CANCEL
-                </ButtonSecondary>
-              </Box>
-            </Flex>
-            <Flex width="300px" flexDirection="column" bg="primary.light">
-              <Text p={5} typography="h3" color="text.secondary">
-                Some text and graphics
+          <Flex
+            flex="1"
+            minHeight="40px"
+            as="form"
+            px={3}
+            py={3}
+            flexDirection="column"
+            justifyContent="space-between"
+          >
+            <Flex flexDirection="column">
+              <Text mb={1} typography="h4">
+                First, add your cluster address
               </Text>
+              <Text mb={5} color="text.secondary" typography="h5">
+                For example, https://teleport.example.com
+              </Text>
+              {status === 'error' && (
+                <Alerts.Danger mb={5} children={statusText} />
+              )}
+              <FieldInput
+                rule={requiredField('Cluster address is required')}
+                value={addr}
+                autoFocus
+                onChange={e => setAddr(e.target.value)}
+                placeholder="https://cluster"
+              />
             </Flex>
+            <Box mt="5">
+              <ButtonPrimary
+                disabled={status === 'processing'}
+                mr="3"
+                onClick={e => {
+                  e.preventDefault();
+                  validator.validate() && run();
+                }}
+              >
+                Next
+              </ButtonPrimary>
+              <ButtonSecondary
+                disabled={status === 'processing'}
+                onClick={e => {
+                  e.preventDefault();
+                  onClose();
+                }}
+              >
+                CANCEL
+              </ButtonSecondary>
+            </Box>
           </Flex>
         </Dialog>
       )}

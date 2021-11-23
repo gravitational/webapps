@@ -32,10 +32,6 @@ export default function Container() {
 }
 
 export const ExpanderGateways: React.FC<State> = props => {
-  const $items = props.gatewayItems.map(i => (
-    <GateWayItem key={i.uri} item={i} />
-  ));
-
   return (
     <Expander>
       <ExpanderHeader>
@@ -46,12 +42,13 @@ export const ExpanderGateways: React.FC<State> = props => {
           width="100%"
         >
           <Text typography="body1">Gateways</Text>
-          <ButtonIcon color="text.placeholder">
-            <Icons.Add />
-          </ButtonIcon>
         </Flex>
       </ExpanderHeader>
-      <ExpanderContent>{$items}</ExpanderContent>
+      <ExpanderContent>
+        {props.gatewayItems.map(i => (
+          <GateWayItem key={i.uri} item={i} />
+        ))}
+      </ExpanderContent>
     </Expander>
   );
 };
@@ -68,7 +65,7 @@ const GateWayItem: React.FC<GatewayItemProps> = props => {
       >
         {props.item.title}
         <ButtonIcon color="text.placeholder">
-          <Icons.VideoGame />
+          <Icons.Trash />
         </ButtonIcon>
       </Flex>
     </NavItem>
