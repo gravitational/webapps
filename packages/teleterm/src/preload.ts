@@ -10,7 +10,7 @@ const runtimeSettings = mainProcessClient.getRuntimeSettings();
 
 initializeLogging({
   isDev: runtimeSettings.isDev,
-  directoryPath: runtimeSettings.userDataDir,
+  dir: runtimeSettings.userDataDir,
 });
 
 const tshClient = createTshClient(runtimeSettings.tshd.networkAddr);

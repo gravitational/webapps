@@ -43,6 +43,11 @@ export function GlobalSearch(props: State) {
     }, 100);
   }, []);
 
+  const handleOnFocus = () => {
+    setVisible(true);
+    handleOnChange();
+  };
+
   useKeyboardShortcuts({
     'focus-global-search': () => {
       ref.current.focus();
@@ -60,7 +65,7 @@ export function GlobalSearch(props: State) {
         <Input
           ref={ref}
           placeholder="Search..."
-          onFocus={() => setVisible(true)}
+          onFocus={handleOnFocus}
           onChange={handleOnChange}
           onKeyDown={onKeyDown}
           onBlur={handleOnBlur}

@@ -29,7 +29,6 @@ export default function TabsContainer(props: Props) {
 export function Tabs(props: Props) {
   const {
     items,
-    parties,
     activeTab,
     onSelect,
     onClose,

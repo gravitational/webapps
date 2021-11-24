@@ -2,46 +2,31 @@ import path from 'path';
 import { app, screen, BrowserWindow, ipcMain, Menu } from 'electron';
 import { ChildProcess, spawn } from 'child_process';
 import { RuntimeSettings } from 'teleterm/types';
-import { getAssetPath, getRuntimeSettings } from './runtimeSettings';
-import {
-  createLogger,
-  initializeLogging,
-  Logger,
-} from 'teleterm/services/logger';
+import { getAssetPath } from './runtimeSettings';
+import { Logger } from 'teleterm/services/logger';
+
+type Options = {
+  settings: RuntimeSettings;
+  logger: Logger;
+};
 
 export default class MainProcess {
   settings: RuntimeSettings;
   tshdProcess: ChildProcess;
   logger: Logger;
 
-  private constructor(opts?: Partial<RuntimeSettings>) {
-    this.settings = getRuntimeSettings(opts);
-    initializeLogging({
-      isDev: this.settings.isDev,
-      directoryPath: this.settings.userDataDir,
-    });
-    this.logger = createLogger('Main Process');
-
-    process.on('uncaughtException', error => {
-      createLogger('Uncaught Exception').error(error);
-      throw error;
-    });
+  private constructor(opts: Options) {
+    this.settings = opts.settings;
+    this.logger = opts.logger;
   }
 
-  static init(opts?: Partial<RuntimeSettings>) {
-    let instance = null;
-    try {
-      instance = new MainProcess(opts);
-      instance._init();
-    } catch (err) {
-      console.error('Failed to start main process: ', err.message);
-      app.exit(1);
-    }
-
+  static create(opts: Options) {
+    const instance = new MainProcess(opts);
+    instance._init();
     return instance;
   }
 
-  kill() {
+  dispose() {
     this.tshdProcess.kill('SIGTERM');
   }
 
@@ -66,16 +51,22 @@ export default class MainProcess {
     }
   }
 
-  _init() {
-    this._initTshd();
-    this._initIpc();
+  private _init() {
+    try {
+      this._initTshd();
+      this._initIpc();
+    } catch (err) {
+      this.logger.error('Failed to start main process: ', err.message);
+      app.exit(1);
+    }
   }
 
-  _initTshd() {
+  private _initTshd() {
     const { binaryPath, flags, homeDir } = this.settings.tshd;
     this.tshdProcess = spawn(binaryPath, flags, {
       stdio: 'inherit',
       env: {
+        ...process.env,
         TELEPORT_HOME: homeDir,
       },
     });
@@ -89,7 +80,7 @@ export default class MainProcess {
     });
   }
 
-  _initIpc() {
+  private _initIpc() {
     ipcMain.on('main-process-get-runtime-settings', event => {
       event.returnValue = this.settings;
     });

@@ -4,6 +4,7 @@ export type RuntimeSettings = {
   defaultShell: string;
   platform: Platform;
   tshd: {
+    insecure: boolean;
     networkAddr: string;
     binaryPath: string;
     homeDir: string;
