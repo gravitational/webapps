@@ -15,18 +15,15 @@ function onFirstBuildDonePlugin(env) {
         }
         isInitialBuild = false;
 
-        spawn(
-          'yarn',
-          ['start-electron'],
-          //      ['start-electron', '--inspect-brk=5858  --remote-debugging-port=9223'],
-          {
-            shell: true,
-            env,
-            stdio: 'inherit',
-          }
-        )
-          .on('close', code => process.exit(code))
-          .on('error', spawnError => console.error(spawnError));
+        const child = spawn('yarn', ['start-electron', '--inspect'], {
+          detached: true,
+          shell: true,
+          env,
+          stdio: 'inherit',
+          detached: true, // detaching the process will allow restarting electron without terminating the dev server
+        });
+
+        child.unref();
       });
     },
   };

@@ -1,12 +1,22 @@
 import { spawn } from 'child_process';
 import { app, globalShortcut } from 'electron';
 import MainProcess from 'teleterm/mainProcess';
+import { getRuntimeSettings } from 'teleterm/mainProcess/runtimeSettings';
+import { createLogger, initializeLogging } from 'teleterm/services/logger';
 
-const isDev =
-  process.env.NODE_ENV === 'development' || process.env.DEBUG_PROD === 'true';
+const settings = getRuntimeSettings();
+
+initializeLogging({ isDev: settings.isDev, dir: settings.userDataDir });
+
+const logger = createLogger('Main');
+
+process.on('uncaughtException', error => {
+  logger.error(error);
+  throw error;
+});
 
 // init main process
-const mainProcess = MainProcess.init({ isDev });
+const mainProcess = MainProcess.create({ settings, logger });
 
 // node-pty is not yet context aware
 app.allowRendererProcessReuse = false;
@@ -14,21 +24,24 @@ app.commandLine.appendSwitch('ignore-certificate-errors', 'true');
 
 app.on('will-quit', () => {
   globalShortcut.unregisterAll();
-  mainProcess.kill();
+  mainProcess.dispose();
 });
 
 app.whenReady().then(() => {
-  // allow process restart on F6
-  globalShortcut.register('F6', () => {
-    mainProcess.kill();
-    const child = spawn(process.argv[0], [process.argv[1]], {
-      env: process.env,
-      detached: true,
-      stdio: 'inherit',
+  if (mainProcess.settings.isDev) {
+    // allow restarts on F6
+    globalShortcut.register('F6', () => {
+      mainProcess.dispose();
+      const [bin, ...args] = process.argv;
+      const child = spawn(bin, args, {
+        env: process.env,
+        detached: true,
+        stdio: 'inherit',
+      });
+      child.unref();
+      app.exit();
     });
-    child.unref();
-    app.exit();
-  });
+  }
 
   mainProcess.createWindow();
 });

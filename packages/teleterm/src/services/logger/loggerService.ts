@@ -7,7 +7,7 @@ import {
 import { isObject } from 'lodash';
 
 type Options = {
-  directoryPath: string;
+  dir: string;
   isDev?: boolean;
 };
 
@@ -40,7 +40,7 @@ export function initializeLogging(options: Options): void {
       new transports.File({
         maxsize: 4194304, // 4 MB - max size of a single file
         maxFiles: 5,
-        dirname: options.directoryPath,
+        dirname: options.dir,
         filename: `${process.type}.log`, // browser.log, renderer.log, worker.log
       }),
     ],

@@ -8,6 +8,7 @@ export class MockMainProcessClient implements MainProcessClient {
       userDataDir: '',
       defaultShell: '',
       tshd: {
+        insecure: true,
         networkAddr: '',
         binaryPath: '',
         homeDir: '',
