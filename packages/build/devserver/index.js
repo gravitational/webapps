@@ -35,7 +35,7 @@ if (!urlObj.host) {
 
 const PROXY_TARGET = urlObj.host;
 const ROOT = '/web';
-const PORT = '8080';
+const PORT = 8080;
 
 // init webpack compiler
 const compiler = initCompiler({ webpackConfig });
@@ -56,67 +56,78 @@ function getTargetOptions() {
   };
 }
 
-const server = new WebpackDevServer(compiler.webpackCompiler, {
-  proxy: {
-    // teleport APIs
-    '/web/grafana/*': getTargetOptions(),
-    '/web/config.*': getTargetOptions(),
-    '/pack/v1/*': getTargetOptions(),
-    '/portalapi/*': getTargetOptions(),
-    '/portal*': getTargetOptions(),
-    '/proxy/*': getTargetOptions(),
-    '/v1/*': getTargetOptions(),
-    '/app/*': getTargetOptions(),
-    '/sites/v1/*': getTargetOptions(),
-    '/api/*': getTargetOptions(),
-    '/proto.TickService/*': getTargetOptions(),
+const devServer = new WebpackDevServer(
+  {
+    proxy: {
+      // teleport APIs
+      '/web/grafana/*': getTargetOptions(),
+      '/web/config.*': getTargetOptions(),
+      '/pack/v1/*': getTargetOptions(),
+      '/portalapi/*': getTargetOptions(),
+      '/portal*': getTargetOptions(),
+      '/proxy/*': getTargetOptions(),
+      '/v1/*': getTargetOptions(),
+      '/app/*': getTargetOptions(),
+      '/sites/v1/*': getTargetOptions(),
+      '/api/*': getTargetOptions(),
+      '/proto.TickService/*': getTargetOptions(),
+    },
+    static: {
+      serveIndex: false,
+      publicPath: ROOT + '/app',
+    },
+    server: {
+      type: 'https',
+    },
+    host: '0.0.0.0',
+    port: PORT,
+    allowedHosts: 'all',
+    client: {
+      overlay: false,
+    },
+    devMiddleware: {
+      stats: 'minimal',
+    },
+    hot: true,
+    headers: { 'X-Custom-Header': 'yes' },
   },
-  publicPath: ROOT + '/app',
-  hot: true,
-  disableHostCheck: true,
-  serveIndex: false,
-  https: true,
-  inline: true,
-  headers: { 'X-Custom-Header': 'yes' },
-  stats: 'minimal',
-});
-
-// proxy websockets
-server.listeningApp.on('upgrade', function(req, socket) {
-  console.log('proxying ws', req.url);
-  proxy.ws(req, socket, {
-    target: 'wss://' + PROXY_TARGET,
-    secure: false,
-  });
-});
-
-// handle index.html requests
-server.app.use(modifyIndexHtmlMiddleware(compiler));
+  compiler.webpackCompiler
+);
 
 // serveIndexHtml proxies all requests skipped by webpack-dev-server to
 // targeted server, these are requests to index.html (app entry point)
-function serveIndexHtml() {
-  return function(req, res) {
-    // prevent gzip compression so it's easier for us to parse the original response
-    // to retrieve tokens (csrf and access tokens)
-    if (req.headers['accept-encoding']) {
-      req.headers['accept-encoding'] = req.headers['accept-encoding']
-        .replace('gzip, ', '')
-        .replace(', gzip,', ',')
-        .replace('gzip', '');
-    }
+function serveIndexHtml(req, res) {
+  // prevent gzip compression so it's easier for us to parse the original response
+  // to retrieve tokens (csrf and access tokens)
+  if (req.headers['accept-encoding']) {
+    req.headers['accept-encoding'] = req.headers['accept-encoding']
+      .replace('gzip, ', '')
+      .replace(', gzip,', ',')
+      .replace('gzip', '');
+  }
 
-    function handleRequest() {
-      proxy.web(req, res, getTargetOptions());
-    }
+  function handleRequest() {
+    proxy.web(req, res, getTargetOptions());
+  }
 
-    if (!compiler.isLocalIndexHtmlReady()) {
-      compiler.callWhenReady(handleRequest);
-    } else {
-      handleRequest();
-    }
-  };
+  if (!compiler.isLocalIndexHtmlReady()) {
+    compiler.callWhenReady(handleRequest);
+  } else {
+    handleRequest();
+  }
 }
 
-server.app.get('/*', serveIndexHtml());
-server.listen(PORT, '0.0.0.0', function() {});
+devServer.start().then(() => {
+  devServer.app.use(modifyIndexHtmlMiddleware(compiler));
+  devServer.app.get('/*', serveIndexHtml);
+  devServer.server.on('upgrade', (req, socket) => {
+    if (req.url === '/ws') {  // webpack WS
+      return;
+    }
+    console.log('proxying ws', req.url);
+    proxy.ws(req, socket, {
+      target: 'wss://' + PROXY_TARGET,
+      secure: false,
+    });
+  });
+});
