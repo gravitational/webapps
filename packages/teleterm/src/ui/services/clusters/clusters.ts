@@ -86,53 +86,67 @@ export default class Service extends Store<State> {
   }
 
   async syncDbs(clusterUri: string) {
-    const { dbs, dbsSyncStatus } = this.state;
-    dbsSyncStatus.set(clusterUri, { status: 'processing' });
-
     this.setState({
-      dbsSyncStatus: new Map(dbsSyncStatus),
+      dbsSyncStatus: new Map(
+        this.state.dbsSyncStatus.set(clusterUri, {
+          status: 'processing',
+        })
+      ),
     });
 
     try {
       const received = await this.client.listDatabases(clusterUri);
-      helpers.updateMap(clusterUri, dbs, received);
+      const { dbs, dbsSyncStatus } = this.state;
+
       dbsSyncStatus.set(clusterUri, { status: 'ready' });
+      helpers.updateMap(clusterUri, dbs, received);
+
+      this.setState({
+        dbs: new Map(dbs),
+        dbsSyncStatus: new Map(dbsSyncStatus),
+      });
     } catch (err) {
-      dbsSyncStatus.set(clusterUri, {
-        status: 'failed',
-        statusText: err.message,
+      this.setState({
+        dbsSyncStatus: new Map(
+          this.state.dbsSyncStatus.set(clusterUri, {
+            status: 'failed',
+            statusText: err.message,
+          })
+        ),
       });
     }
-
-    this.setState({
-      dbs: new Map(dbs),
-      dbsSyncStatus: new Map(dbsSyncStatus),
-    });
   }
 
   async syncServers(clusterUri: string) {
-    const { servers, serversSyncStatus } = this.state;
-    serversSyncStatus.set(clusterUri, { status: 'processing' });
-
     this.setState({
-      serversSyncStatus: new Map(serversSyncStatus),
+      serversSyncStatus: new Map(
+        this.state.serversSyncStatus.set(clusterUri, {
+          status: 'processing',
+        })
+      ),
     });
 
     try {
       const received = await this.client.listServers(clusterUri);
-      helpers.updateMap(clusterUri, servers, received);
+      const { servers, serversSyncStatus } = this.state;
+
       serversSyncStatus.set(clusterUri, { status: 'ready' });
+      helpers.updateMap(clusterUri, servers, received);
+
+      this.setState({
+        servers: new Map(servers),
+        serversSyncStatus: new Map(serversSyncStatus),
+      });
     } catch (err) {
-      serversSyncStatus.set(clusterUri, {
-        status: 'failed',
-        statusText: err.message,
+      this.setState({
+        serversSyncStatus: new Map(
+          this.state.serversSyncStatus.set(clusterUri, {
+            status: 'failed',
+            statusText: err.message,
+          })
+        ),
       });
     }
-
-    this.setState({
-      servers: new Map(servers),
-      serversSyncStatus: new Map(serversSyncStatus),
-    });
   }
 
   async getAuthSettings(clusterUri: string) {

@@ -1,8 +1,8 @@
+import fs from 'fs';
+import os from 'os';
 import path from 'path';
 import { app } from 'electron';
-import fs from 'fs';
 import { Logger } from 'shared/libs/logger';
-import os from 'os';
 import { RuntimeSettings } from './types';
 
 const { argv, env } = process;
@@ -13,7 +13,7 @@ const RESOURCES_PATH = app.isPackaged
 
 const isDev = env.NODE_ENV === 'development' || env.DEBUG_PROD === 'true';
 
-// Allows running tsh in insecure mode (for development)
+// Allows running tsh in insecure mode (development)
 const isInsecure = isDev || argv.slice(2).indexOf('--insecure') !== -1;
 
 export function getRuntimeSettings(): RuntimeSettings {
@@ -24,10 +24,11 @@ export function getRuntimeSettings(): RuntimeSettings {
     binaryPath: getTshBinaryPath(),
     homeDir: getTshHomeDir(),
     networkAddr: tshNetworkAddr,
-    flags: ['daemon', 'start', '--debug', `--addr=${tshNetworkAddr}`],
+    flags: ['daemon', 'start', `--addr=${tshNetworkAddr}`],
   };
 
   if (isInsecure) {
+    tshd.flags.unshift('--debug');
     tshd.flags.unshift('--insecure');
   }
 
@@ -70,7 +71,6 @@ export function getAssetPath(...paths: string[]): string {
 }
 
 function getDefaultShell(): string {
-  //fsfdfdfd
   const logger = new Logger();
   const fallbackShell = 'bash';
   const { shell } = os.userInfo();

@@ -15,7 +15,6 @@ limitations under the License.
 */
 
 export type Props = {
-  menuIsOpen?: boolean;
   hasError?: boolean;
   isClearable?: boolean;
   isSimpleValue?: boolean;
