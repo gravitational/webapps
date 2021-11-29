@@ -5,11 +5,21 @@ var grpc = require('@grpc/grpc-js');
 var v1_service_pb = require('../v1/service_pb.js');
 var google_protobuf_empty_pb = require('google-protobuf/google/protobuf/empty_pb.js');
 var v1_cluster_pb = require('../v1/cluster_pb.js');
-var v1_auth_challenge_pb = require('../v1/auth_challenge_pb.js');
 var v1_database_pb = require('../v1/database_pb.js');
 var v1_gateway_pb = require('../v1/gateway_pb.js');
 var v1_server_pb = require('../v1/server_pb.js');
 var v1_auth_settings_pb = require('../v1/auth_settings_pb.js');
+
+function serialize_teleport_terminal_v1_AddClusterRequest(arg) {
+  if (!(arg instanceof v1_service_pb.AddClusterRequest)) {
+    throw new Error('Expected argument of type teleport.terminal.v1.AddClusterRequest');
+  }
+  return Buffer.from(arg.serializeBinary());
+}
+
+function deserialize_teleport_terminal_v1_AddClusterRequest(buffer_arg) {
+  return v1_service_pb.AddClusterRequest.deserializeBinary(new Uint8Array(buffer_arg));
+}
 
 function serialize_teleport_terminal_v1_AuthSettings(arg) {
   if (!(arg instanceof v1_auth_settings_pb.AuthSettings)) {
@@ -31,50 +41,6 @@ function serialize_teleport_terminal_v1_Cluster(arg) {
 
 function deserialize_teleport_terminal_v1_Cluster(buffer_arg) {
   return v1_cluster_pb.Cluster.deserializeBinary(new Uint8Array(buffer_arg));
-}
-
-function serialize_teleport_terminal_v1_CreateAuthChallengeRequest(arg) {
-  if (!(arg instanceof v1_service_pb.CreateAuthChallengeRequest)) {
-    throw new Error('Expected argument of type teleport.terminal.v1.CreateAuthChallengeRequest');
-  }
-  return Buffer.from(arg.serializeBinary());
-}
-
-function deserialize_teleport_terminal_v1_CreateAuthChallengeRequest(buffer_arg) {
-  return v1_service_pb.CreateAuthChallengeRequest.deserializeBinary(new Uint8Array(buffer_arg));
-}
-
-function serialize_teleport_terminal_v1_CreateAuthChallengeResponse(arg) {
-  if (!(arg instanceof v1_service_pb.CreateAuthChallengeResponse)) {
-    throw new Error('Expected argument of type teleport.terminal.v1.CreateAuthChallengeResponse');
-  }
-  return Buffer.from(arg.serializeBinary());
-}
-
-function deserialize_teleport_terminal_v1_CreateAuthChallengeResponse(buffer_arg) {
-  return v1_service_pb.CreateAuthChallengeResponse.deserializeBinary(new Uint8Array(buffer_arg));
-}
-
-function serialize_teleport_terminal_v1_CreateAuthSSOChallengeRequest(arg) {
-  if (!(arg instanceof v1_service_pb.CreateAuthSSOChallengeRequest)) {
-    throw new Error('Expected argument of type teleport.terminal.v1.CreateAuthSSOChallengeRequest');
-  }
-  return Buffer.from(arg.serializeBinary());
-}
-
-function deserialize_teleport_terminal_v1_CreateAuthSSOChallengeRequest(buffer_arg) {
-  return v1_service_pb.CreateAuthSSOChallengeRequest.deserializeBinary(new Uint8Array(buffer_arg));
-}
-
-function serialize_teleport_terminal_v1_CreateClusterRequest(arg) {
-  if (!(arg instanceof v1_service_pb.CreateClusterRequest)) {
-    throw new Error('Expected argument of type teleport.terminal.v1.CreateClusterRequest');
-  }
-  return Buffer.from(arg.serializeBinary());
-}
-
-function deserialize_teleport_terminal_v1_CreateClusterRequest(buffer_arg) {
-  return v1_service_pb.CreateClusterRequest.deserializeBinary(new Uint8Array(buffer_arg));
 }
 
 function serialize_teleport_terminal_v1_CreateGatewayRequest(arg) {
@@ -231,42 +197,28 @@ function deserialize_teleport_terminal_v1_ListServersResponse(buffer_arg) {
   return v1_service_pb.ListServersResponse.deserializeBinary(new Uint8Array(buffer_arg));
 }
 
-function serialize_teleport_terminal_v1_SolveAuthChallengeRequest(arg) {
-  if (!(arg instanceof v1_service_pb.SolveAuthChallengeRequest)) {
-    throw new Error('Expected argument of type teleport.terminal.v1.SolveAuthChallengeRequest');
+function serialize_teleport_terminal_v1_LoginRequest(arg) {
+  if (!(arg instanceof v1_service_pb.LoginRequest)) {
+    throw new Error('Expected argument of type teleport.terminal.v1.LoginRequest');
   }
   return Buffer.from(arg.serializeBinary());
 }
 
-function deserialize_teleport_terminal_v1_SolveAuthChallengeRequest(buffer_arg) {
-  return v1_service_pb.SolveAuthChallengeRequest.deserializeBinary(new Uint8Array(buffer_arg));
-}
-
-function serialize_teleport_terminal_v1_SolveAuthChallengeResponse(arg) {
-  if (!(arg instanceof v1_service_pb.SolveAuthChallengeResponse)) {
-    throw new Error('Expected argument of type teleport.terminal.v1.SolveAuthChallengeResponse');
-  }
-  return Buffer.from(arg.serializeBinary());
-}
-
-function deserialize_teleport_terminal_v1_SolveAuthChallengeResponse(buffer_arg) {
-  return v1_service_pb.SolveAuthChallengeResponse.deserializeBinary(new Uint8Array(buffer_arg));
+function deserialize_teleport_terminal_v1_LoginRequest(buffer_arg) {
+  return v1_service_pb.LoginRequest.deserializeBinary(new Uint8Array(buffer_arg));
 }
 
 
-// Note: following Google API Style guide (mostly)
-// https://cloud.google.com/apis/design/.
-//
 var TerminalServiceService = exports.TerminalServiceService = {
-  // CreateCluster
-createCluster: {
-    path: '/teleport.terminal.v1.TerminalService/CreateCluster',
+  // AddCluster
+addCluster: {
+    path: '/teleport.terminal.v1.TerminalService/AddCluster',
     requestStream: false,
     responseStream: false,
-    requestType: v1_service_pb.CreateClusterRequest,
+    requestType: v1_service_pb.AddClusterRequest,
     responseType: v1_cluster_pb.Cluster,
-    requestSerialize: serialize_teleport_terminal_v1_CreateClusterRequest,
-    requestDeserialize: deserialize_teleport_terminal_v1_CreateClusterRequest,
+    requestSerialize: serialize_teleport_terminal_v1_AddClusterRequest,
+    requestDeserialize: deserialize_teleport_terminal_v1_AddClusterRequest,
     responseSerialize: serialize_teleport_terminal_v1_Cluster,
     responseDeserialize: deserialize_teleport_terminal_v1_Cluster,
   },
@@ -354,42 +306,6 @@ listServers: {
     responseSerialize: serialize_teleport_terminal_v1_ListServersResponse,
     responseDeserialize: deserialize_teleport_terminal_v1_ListServersResponse,
   },
-  // CreateAuthChallenge
-createAuthChallenge: {
-    path: '/teleport.terminal.v1.TerminalService/CreateAuthChallenge',
-    requestStream: false,
-    responseStream: false,
-    requestType: v1_service_pb.CreateAuthChallengeRequest,
-    responseType: v1_service_pb.CreateAuthChallengeResponse,
-    requestSerialize: serialize_teleport_terminal_v1_CreateAuthChallengeRequest,
-    requestDeserialize: deserialize_teleport_terminal_v1_CreateAuthChallengeRequest,
-    responseSerialize: serialize_teleport_terminal_v1_CreateAuthChallengeResponse,
-    responseDeserialize: deserialize_teleport_terminal_v1_CreateAuthChallengeResponse,
-  },
-  // CreateAuthChallenge
-solveAuthChallenge: {
-    path: '/teleport.terminal.v1.TerminalService/SolveAuthChallenge',
-    requestStream: false,
-    responseStream: false,
-    requestType: v1_service_pb.SolveAuthChallengeRequest,
-    responseType: v1_service_pb.SolveAuthChallengeResponse,
-    requestSerialize: serialize_teleport_terminal_v1_SolveAuthChallengeRequest,
-    requestDeserialize: deserialize_teleport_terminal_v1_SolveAuthChallengeRequest,
-    responseSerialize: serialize_teleport_terminal_v1_SolveAuthChallengeResponse,
-    responseDeserialize: deserialize_teleport_terminal_v1_SolveAuthChallengeResponse,
-  },
-  // CreateAuthSSOChallenge
-createAuthSSOChallenge: {
-    path: '/teleport.terminal.v1.TerminalService/CreateAuthSSOChallenge',
-    requestStream: false,
-    responseStream: false,
-    requestType: v1_service_pb.CreateAuthSSOChallengeRequest,
-    responseType: v1_service_pb.EmptyResponse,
-    requestSerialize: serialize_teleport_terminal_v1_CreateAuthSSOChallengeRequest,
-    requestDeserialize: deserialize_teleport_terminal_v1_CreateAuthSSOChallengeRequest,
-    responseSerialize: serialize_teleport_terminal_v1_EmptyResponse,
-    responseDeserialize: deserialize_teleport_terminal_v1_EmptyResponse,
-  },
   // GetCluster
 getCluster: {
     path: '/teleport.terminal.v1.TerminalService/GetCluster',
@@ -401,6 +317,18 @@ getCluster: {
     requestDeserialize: deserialize_teleport_terminal_v1_GetClusterRequest,
     responseSerialize: serialize_teleport_terminal_v1_Cluster,
     responseDeserialize: deserialize_teleport_terminal_v1_Cluster,
+  },
+  // Login
+login: {
+    path: '/teleport.terminal.v1.TerminalService/Login',
+    requestStream: false,
+    responseStream: false,
+    requestType: v1_service_pb.LoginRequest,
+    responseType: v1_service_pb.EmptyResponse,
+    requestSerialize: serialize_teleport_terminal_v1_LoginRequest,
+    requestDeserialize: deserialize_teleport_terminal_v1_LoginRequest,
+    responseSerialize: serialize_teleport_terminal_v1_EmptyResponse,
+    responseDeserialize: deserialize_teleport_terminal_v1_EmptyResponse,
   },
 };
 

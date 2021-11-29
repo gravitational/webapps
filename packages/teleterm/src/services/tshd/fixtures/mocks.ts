@@ -5,15 +5,15 @@ export class MockTshClient implements types.TshClient {
   listClusters: () => Promise<types.Cluster[]>;
   listDatabases: (clusterUri: string) => Promise<types.Database[]>;
   listServers: (clusterUri: string) => Promise<types.Server[]>;
-  createCluster: (clusterUri: string) => Promise<types.Cluster>;
+  addCluster: (clusterUri: string) => Promise<types.Cluster>;
   createGateway: (targetUri: string, port: string) => Promise<types.Gateway>;
+  createAbortController: () => types.TshAbortController;
   getCluster: (clusterUri: string) => Promise<types.Cluster>;
   getAuthSettings: (clusterUri: string) => Promise<types.AuthSettings>;
   ssoLogin: (clusterUri: string, pType: string, pName: string) => Promise<void>;
   removeGateway: (gatewayUri: string) => Promise<void>;
-  localLogin: (
-    clusterUri: string,
-    user: string,
-    password: string
+  login: (
+    params: types.LoginParams,
+    abortSignal?: types.TshAbortSignal
   ) => Promise<void>;
 }

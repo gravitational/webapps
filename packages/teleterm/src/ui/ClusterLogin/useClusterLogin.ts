@@ -14,9 +14,8 @@
  * limitations under the License.
  */
 
-import React from 'react';
-import * as types from 'teleterm/services/tshd/types';
-import { LoginOptions } from 'teleterm/ui/services/clusters/clusters';
+import { useState, useEffect, useRef } from 'react';
+import * as types from 'teleterm/ui/services/clusters/types';
 import { useAppContext } from 'teleterm/ui/appContextProvider';
 import useAsync from 'teleterm/ui/useAsync';
 
@@ -24,26 +23,38 @@ export default function useClusterLogin(props: Props) {
   const { onClose, clusterUri } = props;
   const { serviceClusters } = useAppContext();
   const cluster = serviceClusters.findCluster(clusterUri);
+  const refAbortCtrl = useRef<types.tsh.TshAbortController>(null);
+  const [shouldPromptSsoStatus, promptSsoStatus] = useState(false);
+  const [shouldPromptHardwareKey, promptHardwareKey] = useState(false);
 
   const [initAttempt, init] = useAsync(() => {
     return serviceClusters.getAuthSettings(clusterUri);
   });
 
-  const [loginAttempt, login] = useAsync((opts: LoginOptions) => {
-    return serviceClusters.login(opts);
+  const [loginAttempt, login] = useAsync((opts: types.LoginParams) => {
+    refAbortCtrl.current = serviceClusters.client.createAbortController();
+    return serviceClusters.login(opts, refAbortCtrl.current.signal);
   });
 
-  const loginWithLocal = (username: '', password: '') => {
+  const loginWithLocal = (
+    username: '',
+    password: '',
+    token: '',
+    authType?: types.Auth2faType
+  ) => {
+    promptHardwareKey(authType === 'webauthn' || authType === 'u2f');
     login({
       clusterUri,
       local: {
         username,
         password,
+        token,
       },
     });
   };
 
   const loginWithSso = (provider: types.AuthProvider) => {
+    promptSsoStatus(true);
     login({
       clusterUri,
       oss: {
@@ -53,21 +64,40 @@ export default function useClusterLogin(props: Props) {
     });
   };
 
-  React.useEffect(() => {
+  const abortLogin = () => {
+    refAbortCtrl.current?.abort();
+  };
+
+  const closeDialog = () => {
+    abortLogin();
+    props?.onClose();
+  };
+
+  useEffect(() => {
     init();
   }, []);
 
-  React.useEffect(() => {
-    loginAttempt.status === 'success' && onClose();
+  useEffect(() => {
+    if (loginAttempt.status !== 'processing') {
+      promptHardwareKey(false);
+      promptSsoStatus(false);
+    }
+
+    if (loginAttempt.status === 'success') {
+      onClose();
+    }
   }, [loginAttempt.status]);
 
   return {
+    shouldPromptSsoStatus,
+    shouldPromptHardwareKey,
     title: cluster.name,
     loginWithLocal,
     loginWithSso,
     loginAttempt,
     initAttempt,
-    onClose: props.onClose,
+    abortLogin,
+    closeDialog,
   };
 }
 

@@ -1,6 +1,6 @@
 import { Store, useStore } from 'shared/libs/stores';
 import ClusterSearchProvider from './clustersSearchProvider';
-import { tsh, SyncStatus } from './types';
+import { tsh, SyncStatus, AuthSettings, LoginParams } from './types';
 
 type State = {
   clusters: Map<string, tsh.Cluster>;
@@ -32,7 +32,7 @@ export default class Service extends Store<State> {
   }
 
   async addCluster(addr: string) {
-    const cluster = await this.client.createCluster(addr);
+    const cluster = await this.client.addCluster(addr);
     this.state.clusters.set(cluster.uri, cluster);
     this.setState({
       clusters: new Map(this.state.clusters),
@@ -41,20 +41,9 @@ export default class Service extends Store<State> {
     return cluster;
   }
 
-  async login({ clusterUri, local, oss }: LoginOptions) {
-    if (local) {
-      await this.client.localLogin(clusterUri, local.username, local.password);
-    } else if (oss) {
-      await this.client.ssoLogin(
-        clusterUri,
-        oss.providerType,
-        oss.providerName
-      );
-    } else {
-      throw Error('unknown login request parameters');
-    }
-
-    await this.syncCluster(clusterUri);
+  async login(params: LoginParams, abortSignal: tsh.TshAbortSignal) {
+    await this.client.login(params, abortSignal);
+    await this.syncCluster(params.clusterUri);
   }
 
   async syncCluster(clusterUri: string) {
@@ -150,7 +139,7 @@ export default class Service extends Store<State> {
   }
 
   async getAuthSettings(clusterUri: string) {
-    return await this.client.getAuthSettings(clusterUri);
+    return (await this.client.getAuthSettings(clusterUri)) as AuthSettings;
   }
 
   async createGateway(targetUri: string, port: string) {
@@ -230,19 +219,6 @@ export default class Service extends Store<State> {
     return useStore(this).state;
   }
 }
-
-export type LoginOptions = {
-  clusterUri: string;
-  oss?: {
-    providerType: string;
-    providerName: string;
-  };
-  local?: {
-    username: string;
-    password: string;
-    token?: string;
-  };
-};
 
 const helpers = {
   updateMap<T extends { uri: string }>(

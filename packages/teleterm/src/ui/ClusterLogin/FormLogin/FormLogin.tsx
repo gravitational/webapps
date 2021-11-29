@@ -18,41 +18,71 @@ import React, { useState } from 'react';
 import styled from 'styled-components';
 import { Text, Flex, ButtonLink, ButtonPrimary, Box } from 'design';
 import * as Alerts from 'design/Alert';
-import { Auth2faType } from 'shared/services';
-import Validation from 'shared/components/Validation';
+import Validation, { Validator } from 'shared/components/Validation';
 import FieldInput from 'shared/components/FieldInput';
-import { requiredField } from 'shared/components/Validation/rules';
-import SSOButtonList from './SsoButtons';
+import FieldSelect from 'shared/components/FieldSelect';
+import {
+  requiredToken,
+  requiredField,
+} from 'shared/components/Validation/rules';
 import { Attempt } from 'teleterm/ui/useAsync';
-import * as types from 'teleterm/services/tshd/types';
+import createMfaOptions, { MfaOption } from 'shared/utils/createMfaOptions';
+import * as types from 'teleterm/ui/services/clusters/types';
+import SSOButtonList from './SsoButtons';
+import PromptHardwareKey from './PromptHardwareKey';
+import PromptSsoStatus from './PromptSsoStatus';
 
 export default function LoginForm(props: Props) {
   const {
     title,
     loginAttempt,
+    preferredMfa,
+    onAbort,
     onLogin,
     onLoginWithSso,
     authProviders,
+    auth2faType,
     isLocalAuthEnabled = true,
+    shouldPromptSsoStatus,
+    shouldPromptHardwareKey,
   } = props;
 
+  const isProcessing = loginAttempt.status === 'processing';
   const ssoEnabled = authProviders && authProviders.length > 0;
+  const mfaOptions = createMfaOptions({
+    auth2faType,
+    preferredType: preferredMfa,
+  });
+  const [mfaType, setMfaType] = useState<MfaOption>(mfaOptions[0]);
   const [pass, setPass] = useState('');
   const [user, setUser] = useState('');
-  const [token] = useState('');
+  const [token, setToken] = useState('');
+
   const [isExpanded, toggleExpander] = useState(
     !(isLocalAuthEnabled && ssoEnabled)
   );
 
-  function handleLoginClick() {
-    onLogin(user, pass, token);
+  function handleLocalLoginClick() {
+    onLogin(user, pass, token, mfaType.value);
+  }
+
+  function handleChangeMfaOption(option: MfaOption, validator: Validator) {
+    setToken('');
+    validator.reset();
+    setMfaType(option);
   }
 
   if (!ssoEnabled && !isLocalAuthEnabled) {
-    return <CardLoginEmpty title={title} />;
+    return <LoginDisabled title={title} />;
   }
 
-  const isProcessing = loginAttempt.status === 'processing';
+  if (shouldPromptHardwareKey) {
+    return <PromptHardwareKey onCancel={onAbort} />;
+  }
+
+  if (shouldPromptSsoStatus) {
+    return <PromptSsoStatus onCancel={onAbort} />;
+  }
 
   return (
     <Validation>
@@ -88,7 +118,7 @@ export default function LoginForm(props: Props) {
             </FlexBordered>
           )}
           {isLocalAuthEnabled && isExpanded && (
-            <FlexBordered>
+            <FlexBordered as="form" onSubmit={preventDefault}>
               <FieldInput
                 rule={requiredField('Username is required')}
                 label="Username"
@@ -109,12 +139,51 @@ export default function LoginForm(props: Props) {
                   width="100%"
                 />
               </Box>
+              {auth2faType !== 'off' && (
+                <Box mb={4}>
+                  <Flex alignItems="flex-end">
+                    <FieldSelect
+                      menuPosition="fixed"
+                      maxWidth="50%"
+                      width="100%"
+                      data-testid="mfa-select"
+                      label="Two-factor type"
+                      value={mfaType}
+                      options={mfaOptions}
+                      onChange={opt =>
+                        handleChangeMfaOption(opt as MfaOption, validator)
+                      }
+                      mr={3}
+                      mb={0}
+                      isDisabled={isProcessing}
+                    />
+                    {mfaType.value === 'otp' && (
+                      <FieldInput
+                        width="50%"
+                        label="Authenticator code"
+                        rule={requiredToken}
+                        autoComplete="off"
+                        value={token}
+                        onChange={e => setToken(e.target.value)}
+                        placeholder="123 456"
+                        mb={0}
+                      />
+                    )}
+                    {mfaType.value === 'u2f' && isProcessing && (
+                      <Text typography="body2" mb={1}>
+                        Insert your hardware key and press the button on the
+                        key.
+                      </Text>
+                    )}
+                  </Flex>
+                </Box>
+              )}
               <ButtonPrimary
                 width="100%"
                 mt={3}
                 type="submit"
                 size="large"
-                onClick={() => validator.validate() && handleLoginClick()}
+                onClick={() => validator.validate() && handleLocalLoginClick()}
                 disabled={isProcessing}
               >
                 LOGIN
@@ -131,7 +200,7 @@ const FlexBordered = props => (
   <Flex justifyContent="center" flexDirection="column" {...props} />
 );
 
-const CardLoginEmpty = ({ title = '' }) => (
+const LoginDisabled = ({ title = '' }) => (
   <>
     <Alerts.Danger my={5}>Login has not been enabled for {title}</Alerts.Danger>
     <Text mb={2} typography="paragraph2" width="100%">
@@ -152,16 +221,28 @@ const StyledOr = styled.div`
   border-radius: 50%;
 `;
 
-export type LoginAttempt = Attempt<void>;
-export type initAttempt = Attempt<types.AuthSettings>;
+type LoginAttempt = Attempt<void>;
 
 type Props = {
+  shouldPromptSsoStatus: boolean;
+  shouldPromptHardwareKey: boolean;
   loginAttempt: LoginAttempt;
-  initAttempt: initAttempt;
   title?: string;
   isLocalAuthEnabled?: boolean;
-  authProviders?: types.AuthProvider[];
-  auth2faType?: Auth2faType;
+  preferredMfa: types.PreferredMfaType;
+  auth2faType?: types.Auth2faType;
+  authProviders: types.AuthProvider[];
+  onAbort(): void;
   onLoginWithSso(provider: types.AuthProvider): void;
-  onLogin(username: string, password: string, token: string): void;
+  onLogin(
+    username: string,
+    password: string,
+    token: string,
+    auth2fa: types.Auth2faType
+  ): void;
+};
+
+const preventDefault = (e: React.SyntheticEvent) => {
+  e.stopPropagation();
+  e.preventDefault();
 };

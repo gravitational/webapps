@@ -3,7 +3,7 @@ import { PtyOptions, PtyCommand } from './types';
 import { RuntimeSettings } from 'teleterm/types';
 
 export default function createPtyService(runtimeSettings: RuntimeSettings) {
-  return {
+  const service = {
     createPtyProcess(cmd: PtyCommand) {
       let options = buildOptions(runtimeSettings, cmd);
       let _ptyProcess = new PtyProcess(options);
@@ -35,6 +35,8 @@ export default function createPtyService(runtimeSettings: RuntimeSettings) {
       };
     },
   };
+
+  return service;
 }
 
 function buildOptions(settings: RuntimeSettings, cmd: PtyCommand): PtyOptions {
@@ -56,7 +58,7 @@ function buildOptions(settings: RuntimeSettings, cmd: PtyCommand): PtyOptions {
         args: [
           `--proxy=${cmd.clusterId}`,
           'ssh',
-          `${cmd.login}@${cmd.clusterId}`,
+          `${cmd.login}@${cmd.serverId}`,
         ],
         env,
       };

@@ -7,7 +7,6 @@
 import * as jspb from "google-protobuf";
 import * as google_protobuf_empty_pb from "google-protobuf/google/protobuf/empty_pb";
 import * as v1_cluster_pb from "../v1/cluster_pb";
-import * as v1_auth_challenge_pb from "../v1/auth_challenge_pb";
 import * as v1_database_pb from "../v1/database_pb";
 import * as v1_gateway_pb from "../v1/gateway_pb";
 import * as v1_server_pb from "../v1/server_pb";
@@ -34,22 +33,113 @@ export namespace GetClusterRequest {
     }
 }
 
-export class CreateClusterRequest extends jspb.Message { 
-    getName(): string;
-    setName(value: string): CreateClusterRequest;
+export class LoginRequest extends jspb.Message { 
+    getClusterUri(): string;
+    setClusterUri(value: string): LoginRequest;
+
+
+    hasLocal(): boolean;
+    clearLocal(): void;
+    getLocal(): LoginRequest.LocalParams | undefined;
+    setLocal(value?: LoginRequest.LocalParams): LoginRequest;
+
+
+    hasSso(): boolean;
+    clearSso(): void;
+    getSso(): LoginRequest.SsoParams | undefined;
+    setSso(value?: LoginRequest.SsoParams): LoginRequest;
 
 
     serializeBinary(): Uint8Array;
-    toObject(includeInstance?: boolean): CreateClusterRequest.AsObject;
-    static toObject(includeInstance: boolean, msg: CreateClusterRequest): CreateClusterRequest.AsObject;
+    toObject(includeInstance?: boolean): LoginRequest.AsObject;
+    static toObject(includeInstance: boolean, msg: LoginRequest): LoginRequest.AsObject;
     static extensions: {[key: number]: jspb.ExtensionFieldInfo<jspb.Message>};
     static extensionsBinary: {[key: number]: jspb.ExtensionFieldBinaryInfo<jspb.Message>};
-    static serializeBinaryToWriter(message: CreateClusterRequest, writer: jspb.BinaryWriter): void;
-    static deserializeBinary(bytes: Uint8Array): CreateClusterRequest;
-    static deserializeBinaryFromReader(message: CreateClusterRequest, reader: jspb.BinaryReader): CreateClusterRequest;
+    static serializeBinaryToWriter(message: LoginRequest, writer: jspb.BinaryWriter): void;
+    static deserializeBinary(bytes: Uint8Array): LoginRequest;
+    static deserializeBinaryFromReader(message: LoginRequest, reader: jspb.BinaryReader): LoginRequest;
 }
 
-export namespace CreateClusterRequest {
+export namespace LoginRequest {
+    export type AsObject = {
+        clusterUri: string,
+        local?: LoginRequest.LocalParams.AsObject,
+        sso?: LoginRequest.SsoParams.AsObject,
+    }
+
+
+    export class LocalParams extends jspb.Message { 
+        getUser(): string;
+        setUser(value: string): LocalParams;
+
+        getPassword(): string;
+        setPassword(value: string): LocalParams;
+
+        getToken(): string;
+        setToken(value: string): LocalParams;
+
+
+        serializeBinary(): Uint8Array;
+        toObject(includeInstance?: boolean): LocalParams.AsObject;
+        static toObject(includeInstance: boolean, msg: LocalParams): LocalParams.AsObject;
+        static extensions: {[key: number]: jspb.ExtensionFieldInfo<jspb.Message>};
+        static extensionsBinary: {[key: number]: jspb.ExtensionFieldBinaryInfo<jspb.Message>};
+        static serializeBinaryToWriter(message: LocalParams, writer: jspb.BinaryWriter): void;
+        static deserializeBinary(bytes: Uint8Array): LocalParams;
+        static deserializeBinaryFromReader(message: LocalParams, reader: jspb.BinaryReader): LocalParams;
+    }
+
+    export namespace LocalParams {
+        export type AsObject = {
+            user: string,
+            password: string,
+            token: string,
+        }
+    }
+
+    export class SsoParams extends jspb.Message { 
+        getProviderType(): string;
+        setProviderType(value: string): SsoParams;
+
+        getProviderName(): string;
+        setProviderName(value: string): SsoParams;
+
+
+        serializeBinary(): Uint8Array;
+        toObject(includeInstance?: boolean): SsoParams.AsObject;
+        static toObject(includeInstance: boolean, msg: SsoParams): SsoParams.AsObject;
+        static extensions: {[key: number]: jspb.ExtensionFieldInfo<jspb.Message>};
+        static extensionsBinary: {[key: number]: jspb.ExtensionFieldBinaryInfo<jspb.Message>};
+        static serializeBinaryToWriter(message: SsoParams, writer: jspb.BinaryWriter): void;
+        static deserializeBinary(bytes: Uint8Array): SsoParams;
+        static deserializeBinaryFromReader(message: SsoParams, reader: jspb.BinaryReader): SsoParams;
+    }
+
+    export namespace SsoParams {
+        export type AsObject = {
+            providerType: string,
+            providerName: string,
+        }
+    }
+
+}
+
+export class AddClusterRequest extends jspb.Message { 
+    getName(): string;
+    setName(value: string): AddClusterRequest;
+
+
+    serializeBinary(): Uint8Array;
+    toObject(includeInstance?: boolean): AddClusterRequest.AsObject;
+    static toObject(includeInstance: boolean, msg: AddClusterRequest): AddClusterRequest.AsObject;
+    static extensions: {[key: number]: jspb.ExtensionFieldInfo<jspb.Message>};
+    static extensionsBinary: {[key: number]: jspb.ExtensionFieldBinaryInfo<jspb.Message>};
+    static serializeBinaryToWriter(message: AddClusterRequest, writer: jspb.BinaryWriter): void;
+    static deserializeBinary(bytes: Uint8Array): AddClusterRequest;
+    static deserializeBinaryFromReader(message: AddClusterRequest, reader: jspb.BinaryReader): AddClusterRequest;
+}
+
+export namespace AddClusterRequest {
     export type AsObject = {
         name: string,
     }
@@ -92,52 +182,6 @@ export class ListClustersResponse extends jspb.Message {
 export namespace ListClustersResponse {
     export type AsObject = {
         clustersList: Array<v1_cluster_pb.Cluster.AsObject>,
-    }
-}
-
-export class CreateClusterLoginChallengeRequest extends jspb.Message { 
-    getClusterId(): string;
-    setClusterId(value: string): CreateClusterLoginChallengeRequest;
-
-    getLogin(): string;
-    setLogin(value: string): CreateClusterLoginChallengeRequest;
-
-    getPassword(): string;
-    setPassword(value: string): CreateClusterLoginChallengeRequest;
-
-
-    serializeBinary(): Uint8Array;
-    toObject(includeInstance?: boolean): CreateClusterLoginChallengeRequest.AsObject;
-    static toObject(includeInstance: boolean, msg: CreateClusterLoginChallengeRequest): CreateClusterLoginChallengeRequest.AsObject;
-    static extensions: {[key: number]: jspb.ExtensionFieldInfo<jspb.Message>};
-    static extensionsBinary: {[key: number]: jspb.ExtensionFieldBinaryInfo<jspb.Message>};
-    static serializeBinaryToWriter(message: CreateClusterLoginChallengeRequest, writer: jspb.BinaryWriter): void;
-    static deserializeBinary(bytes: Uint8Array): CreateClusterLoginChallengeRequest;
-    static deserializeBinaryFromReader(message: CreateClusterLoginChallengeRequest, reader: jspb.BinaryReader): CreateClusterLoginChallengeRequest;
-}
-
-export namespace CreateClusterLoginChallengeRequest {
-    export type AsObject = {
-        clusterId: string,
-        login: string,
-        password: string,
-    }
-}
-
-export class SolveClusterLoginChallengeResponse extends jspb.Message { 
-
-    serializeBinary(): Uint8Array;
-    toObject(includeInstance?: boolean): SolveClusterLoginChallengeResponse.AsObject;
-    static toObject(includeInstance: boolean, msg: SolveClusterLoginChallengeResponse): SolveClusterLoginChallengeResponse.AsObject;
-    static extensions: {[key: number]: jspb.ExtensionFieldInfo<jspb.Message>};
-    static extensionsBinary: {[key: number]: jspb.ExtensionFieldBinaryInfo<jspb.Message>};
-    static serializeBinaryToWriter(message: SolveClusterLoginChallengeResponse, writer: jspb.BinaryWriter): void;
-    static deserializeBinary(bytes: Uint8Array): SolveClusterLoginChallengeResponse;
-    static deserializeBinaryFromReader(message: SolveClusterLoginChallengeResponse, reader: jspb.BinaryReader): SolveClusterLoginChallengeResponse;
-}
-
-export namespace SolveClusterLoginChallengeResponse {
-    export type AsObject = {
     }
 }
 
@@ -355,159 +399,6 @@ export class EmptyResponse extends jspb.Message {
 }
 
 export namespace EmptyResponse {
-    export type AsObject = {
-    }
-}
-
-export class CreateAuthChallengeRequest extends jspb.Message { 
-    getClusterUri(): string;
-    setClusterUri(value: string): CreateAuthChallengeRequest;
-
-    getUser(): string;
-    setUser(value: string): CreateAuthChallengeRequest;
-
-    getPassword(): string;
-    setPassword(value: string): CreateAuthChallengeRequest;
-
-
-    serializeBinary(): Uint8Array;
-    toObject(includeInstance?: boolean): CreateAuthChallengeRequest.AsObject;
-    static toObject(includeInstance: boolean, msg: CreateAuthChallengeRequest): CreateAuthChallengeRequest.AsObject;
-    static extensions: {[key: number]: jspb.ExtensionFieldInfo<jspb.Message>};
-    static extensionsBinary: {[key: number]: jspb.ExtensionFieldBinaryInfo<jspb.Message>};
-    static serializeBinaryToWriter(message: CreateAuthChallengeRequest, writer: jspb.BinaryWriter): void;
-    static deserializeBinary(bytes: Uint8Array): CreateAuthChallengeRequest;
-    static deserializeBinaryFromReader(message: CreateAuthChallengeRequest, reader: jspb.BinaryReader): CreateAuthChallengeRequest;
-}
-
-export namespace CreateAuthChallengeRequest {
-    export type AsObject = {
-        clusterUri: string,
-        user: string,
-        password: string,
-    }
-}
-
-export class CreateAuthSSOChallengeRequest extends jspb.Message { 
-    getClusterUri(): string;
-    setClusterUri(value: string): CreateAuthSSOChallengeRequest;
-
-    getProviderName(): string;
-    setProviderName(value: string): CreateAuthSSOChallengeRequest;
-
-    getProviderType(): string;
-    setProviderType(value: string): CreateAuthSSOChallengeRequest;
-
-
-    serializeBinary(): Uint8Array;
-    toObject(includeInstance?: boolean): CreateAuthSSOChallengeRequest.AsObject;
-    static toObject(includeInstance: boolean, msg: CreateAuthSSOChallengeRequest): CreateAuthSSOChallengeRequest.AsObject;
-    static extensions: {[key: number]: jspb.ExtensionFieldInfo<jspb.Message>};
-    static extensionsBinary: {[key: number]: jspb.ExtensionFieldBinaryInfo<jspb.Message>};
-    static serializeBinaryToWriter(message: CreateAuthSSOChallengeRequest, writer: jspb.BinaryWriter): void;
-    static deserializeBinary(bytes: Uint8Array): CreateAuthSSOChallengeRequest;
-    static deserializeBinaryFromReader(message: CreateAuthSSOChallengeRequest, reader: jspb.BinaryReader): CreateAuthSSOChallengeRequest;
-}
-
-export namespace CreateAuthSSOChallengeRequest {
-    export type AsObject = {
-        clusterUri: string,
-        providerName: string,
-        providerType: string,
-    }
-}
-
-export class CreateAuthChallengeResponse extends jspb.Message { 
-
-    hasU2f(): boolean;
-    clearU2f(): void;
-    getU2f(): v1_auth_challenge_pb.ChallengeU2F | undefined;
-    setU2f(value?: v1_auth_challenge_pb.ChallengeU2F): CreateAuthChallengeResponse;
-
-
-    hasOtp(): boolean;
-    clearOtp(): void;
-    getOtp(): v1_auth_challenge_pb.ChallengeTOTP | undefined;
-    setOtp(value?: v1_auth_challenge_pb.ChallengeTOTP): CreateAuthChallengeResponse;
-
-
-    serializeBinary(): Uint8Array;
-    toObject(includeInstance?: boolean): CreateAuthChallengeResponse.AsObject;
-    static toObject(includeInstance: boolean, msg: CreateAuthChallengeResponse): CreateAuthChallengeResponse.AsObject;
-    static extensions: {[key: number]: jspb.ExtensionFieldInfo<jspb.Message>};
-    static extensionsBinary: {[key: number]: jspb.ExtensionFieldBinaryInfo<jspb.Message>};
-    static serializeBinaryToWriter(message: CreateAuthChallengeResponse, writer: jspb.BinaryWriter): void;
-    static deserializeBinary(bytes: Uint8Array): CreateAuthChallengeResponse;
-    static deserializeBinaryFromReader(message: CreateAuthChallengeResponse, reader: jspb.BinaryReader): CreateAuthChallengeResponse;
-}
-
-export namespace CreateAuthChallengeResponse {
-    export type AsObject = {
-        u2f?: v1_auth_challenge_pb.ChallengeU2F.AsObject,
-        otp?: v1_auth_challenge_pb.ChallengeTOTP.AsObject,
-    }
-}
-
-export class SolveAuthChallengeRequest extends jspb.Message { 
-    getClusterUri(): string;
-    setClusterUri(value: string): SolveAuthChallengeRequest;
-
-    getChallengeId(): string;
-    setChallengeId(value: string): SolveAuthChallengeRequest;
-
-    getUser(): string;
-    setUser(value: string): SolveAuthChallengeRequest;
-
-    getPassword(): string;
-    setPassword(value: string): SolveAuthChallengeRequest;
-
-
-    hasUtf(): boolean;
-    clearUtf(): void;
-    getUtf(): v1_auth_challenge_pb.SolvedChallengeU2F | undefined;
-    setUtf(value?: v1_auth_challenge_pb.SolvedChallengeU2F): SolveAuthChallengeRequest;
-
-
-    hasTotp(): boolean;
-    clearTotp(): void;
-    getTotp(): v1_auth_challenge_pb.SolvedChallengeTOTP | undefined;
-    setTotp(value?: v1_auth_challenge_pb.SolvedChallengeTOTP): SolveAuthChallengeRequest;
-
-
-    serializeBinary(): Uint8Array;
-    toObject(includeInstance?: boolean): SolveAuthChallengeRequest.AsObject;
-    static toObject(includeInstance: boolean, msg: SolveAuthChallengeRequest): SolveAuthChallengeRequest.AsObject;
-    static extensions: {[key: number]: jspb.ExtensionFieldInfo<jspb.Message>};
-    static extensionsBinary: {[key: number]: jspb.ExtensionFieldBinaryInfo<jspb.Message>};
-    static serializeBinaryToWriter(message: SolveAuthChallengeRequest, writer: jspb.BinaryWriter): void;
-    static deserializeBinary(bytes: Uint8Array): SolveAuthChallengeRequest;
-    static deserializeBinaryFromReader(message: SolveAuthChallengeRequest, reader: jspb.BinaryReader): SolveAuthChallengeRequest;
-}
-
-export namespace SolveAuthChallengeRequest {
-    export type AsObject = {
-        clusterUri: string,
-        challengeId: string,
-        user: string,
-        password: string,
-        utf?: v1_auth_challenge_pb.SolvedChallengeU2F.AsObject,
-        totp?: v1_auth_challenge_pb.SolvedChallengeTOTP.AsObject,
-    }
-}
-
-export class SolveAuthChallengeResponse extends jspb.Message { 
-
-    serializeBinary(): Uint8Array;
-    toObject(includeInstance?: boolean): SolveAuthChallengeResponse.AsObject;
-    static toObject(includeInstance: boolean, msg: SolveAuthChallengeResponse): SolveAuthChallengeResponse.AsObject;
-    static extensions: {[key: number]: jspb.ExtensionFieldInfo<jspb.Message>};
-    static extensionsBinary: {[key: number]: jspb.ExtensionFieldBinaryInfo<jspb.Message>};
-    static serializeBinaryToWriter(message: SolveAuthChallengeResponse, writer: jspb.BinaryWriter): void;
-    static deserializeBinary(bytes: Uint8Array): SolveAuthChallengeResponse;
-    static deserializeBinaryFromReader(message: SolveAuthChallengeResponse, reader: jspb.BinaryReader): SolveAuthChallengeResponse;
-}
-
-export namespace SolveAuthChallengeResponse {
     export type AsObject = {
     }
 }
