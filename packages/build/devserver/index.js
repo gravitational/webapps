@@ -16,7 +16,7 @@ limitations under the License.
 
 const uri = require('url');
 const WebpackDevServer = require('webpack-dev-server');
-const proxy = require('http-proxy').createProxyServer();
+const httpProxy = require('http-proxy');
 const modifyIndexHtmlMiddleware = require('./modifyResponse');
 const initCompiler = require('./initCompiler');
 
@@ -25,11 +25,12 @@ const argv = require('optimist')
   .usage('Usage: $0 -target [url] -config [config]')
   .demand(['target', 'config']).argv;
 
-const urlObj = uri.parse(argv.target);
+const target = argv.target.startsWith('https') ? argv.target : `https://${argv.target}`;
+const urlObj = uri.parse(target);
 const webpackConfig = require(argv.config);
 
 if (!urlObj.host) {
-  console.error('invalid URL: ' + argv.target);
+  console.error('invalid URL: ' + target);
   return;
 }
 
@@ -39,10 +40,11 @@ const PORT = 8080;
 
 // init webpack compiler
 const compiler = initCompiler({ webpackConfig });
+
 compiler.callWhenReady(function() {
   console.log(
-    '\x1b[32m',
-    `Dev Server is up and running: https://localhost:${PORT}/web/`,
+    '\x1b[33m',
+    `DevServer is ready to serve: https://localhost:${PORT}/web/`,
     '\x1b[0m'
   );
 });
@@ -60,17 +62,8 @@ const devServer = new WebpackDevServer(
   {
     proxy: {
       // teleport APIs
-      '/web/grafana/*': getTargetOptions(),
       '/web/config.*': getTargetOptions(),
-      '/pack/v1/*': getTargetOptions(),
-      '/portalapi/*': getTargetOptions(),
-      '/portal*': getTargetOptions(),
-      '/proxy/*': getTargetOptions(),
       '/v1/*': getTargetOptions(),
-      '/app/*': getTargetOptions(),
-      '/sites/v1/*': getTargetOptions(),
-      '/api/*': getTargetOptions(),
-      '/proto.TickService/*': getTargetOptions(),
     },
     static: {
       serveIndex: false,
@@ -81,7 +74,7 @@ const devServer = new WebpackDevServer(
     },
     host: '0.0.0.0',
     port: PORT,
-    allowedHosts: 'all',
+    allowedHosts: 'auto',
     client: {
       overlay: false,
     },
@@ -89,10 +82,20 @@ const devServer = new WebpackDevServer(
       stats: 'minimal',
     },
     hot: true,
-    headers: { 'X-Custom-Header': 'yes' },
+    headers: {
+      'X-Custom-Header': 'yes'
+    },
   },
   compiler.webpackCompiler
 );
+
+
+// create a dedicated proxy server to proxy cherry-picked requests
+// to the remote target
+const proxyServer = httpProxy.createProxyServer();
+process.on('SIGINT', () => {
+  proxyServer.close()
+})
 
 // serveIndexHtml proxies all requests skipped by webpack-dev-server to
 // targeted server, these are requests to index.html (app entry point)
@@ -107,7 +110,7 @@ function serveIndexHtml(req, res) {
   }
 
   function handleRequest() {
-    proxy.web(req, res, getTargetOptions());
+    proxyServer.web(req, res, getTargetOptions());
   }
 
   if (!compiler.isLocalIndexHtmlReady()) {
@@ -121,11 +124,11 @@ devServer.start().then(() => {
   devServer.app.use(modifyIndexHtmlMiddleware(compiler));
   devServer.app.get('/*', serveIndexHtml);
   devServer.server.on('upgrade', (req, socket) => {
-    if (req.url === '/ws') {  // webpack WS
+    if (req.url === '/ws') {  // webpack WS (hot reloads endpoint)
       return;
     }
     console.log('proxying ws', req.url);
-    proxy.ws(req, socket, {
+    proxyServer.ws(req, socket, {
       target: 'wss://' + PROXY_TARGET,
       secure: false,
     });
