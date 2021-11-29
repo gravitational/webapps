@@ -1,0 +1,128 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`teleport/components/Accept.story story.FormAccept 1`] = `
+.c2 {
+  box-sizing: border-box;
+  padding: 40px;
+  flex: 3;
+}
+
+.c5 {
+  line-height: 1.5;
+  margin: 0;
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  box-sizing: border-box;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-family: inherit;
+  font-weight: 600;
+  outline: none;
+  position: relative;
+  text-align: center;
+  text-decoration: none;
+  text-transform: uppercase;
+  transition: all 0.3s;
+  -webkit-font-smoothing: antialiased;
+  background: #512FC9;
+  color: rgba(255,255,255,0.87);
+  min-height: 40px;
+  font-size: 12px;
+  padding: 0px 40px;
+  margin-top: 16px;
+  width: 100%;
+}
+
+.c5:active {
+  opacity: 0.56;
+}
+
+.c5:hover,
+.c5:focus {
+  background: #651FFF;
+}
+
+.c5:active {
+  background: #354AA4;
+}
+
+.c5:disabled {
+  background: rgba(255,255,255,0.12);
+  color: rgba(255,255,255,0.3);
+}
+
+.c0 {
+  box-sizing: border-box;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 40px;
+  margin-bottom: 40px;
+  width: 600px;
+  background-color: #222C59;
+  box-shadow: 0 4px 16px rgba(0,0,0,0.24);
+  border-radius: 8px;
+}
+
+.c3 {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  font-weight: 300;
+  font-size: 28px;
+  line-height: 32px;
+  margin: 0px;
+  margin-bottom: 16px;
+  color: #FFFFFF;
+  text-align: center;
+}
+
+.c4 {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  font-weight: 400;
+  font-size: 18px;
+  line-height: 32px;
+  word-break: break-all;
+  margin: 0px;
+  margin-bottom: 16px;
+  text-align: center;
+}
+
+.c1 {
+  box-sizing: border-box;
+  display: flex;
+}
+
+<form
+  class="c0"
+  width="600px"
+>
+  <div
+    class="c1"
+  >
+    <div
+      class="c2"
+    >
+      <div
+        class="c3"
+        color="light"
+      >
+        Get Started with Teleport
+      </div>
+      <div
+        class="c4"
+      >
+        Please click the link below to create an account
+      </div>
+      <button
+        class="c5"
+        kind="primary"
+        width="100%"
+      >
+        Create Account
+      </button>
+    </div>
+  </div>
+</form>
+`;

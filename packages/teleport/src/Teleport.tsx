@@ -32,6 +32,7 @@ import Player from './Player';
 import TeleportContextProvider from './teleportContextProvider';
 import TeleportContext from './teleportContext';
 import cfg from './config';
+import Accept from './Accept';
 
 const Teleport: React.FC<Props> = props => {
   const { ctx, history } = props;
@@ -97,6 +98,12 @@ export function renderPublicRoutes(children = []) {
       title="Password Reset"
       path={cfg.routes.userReset}
       component={ResetPassword}
+    />,
+    <Route
+      key={7}
+      title="Accept"
+      path={cfg.routes.userAccept}
+      component={Accept}
     />,
   ];
 }
