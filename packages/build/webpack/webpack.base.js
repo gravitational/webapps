@@ -141,6 +141,7 @@ module.exports = function createConfig() {
       },
       createESLint(options) {
         return new ESLintPlugin({
+          context: "../",
           extensions: ['ts', 'tsx', 'js', 'jsx'],
           failOnError: false,
           failOnWarning: false,
