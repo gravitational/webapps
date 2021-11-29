@@ -7,11 +7,14 @@
 import * as jspb from "google-protobuf";
 
 export class AuthSettings extends jspb.Message { 
-    getType(): string;
-    setType(value: string): AuthSettings;
+    getLocalAuthEnabled(): boolean;
+    setLocalAuthEnabled(value: boolean): AuthSettings;
 
     getSecondFactor(): string;
     setSecondFactor(value: string): AuthSettings;
+
+    getPreferredMfa(): string;
+    setPreferredMfa(value: string): AuthSettings;
 
     clearAuthProvidersList(): void;
     getAuthProvidersList(): Array<AuthProvider>;
@@ -34,8 +37,9 @@ export class AuthSettings extends jspb.Message {
 
 export namespace AuthSettings {
     export type AsObject = {
-        type: string,
+        localAuthEnabled: boolean,
         secondFactor: string,
+        preferredMfa: string,
         authProvidersList: Array<AuthProvider.AsObject>,
         hasMessageOfTheDay: boolean,
     }
@@ -48,8 +52,8 @@ export class AuthProvider extends jspb.Message {
     getName(): string;
     setName(value: string): AuthProvider;
 
-    getDisplay(): string;
-    setDisplay(value: string): AuthProvider;
+    getDisplayName(): string;
+    setDisplayName(value: string): AuthProvider;
 
 
     serializeBinary(): Uint8Array;
@@ -66,6 +70,6 @@ export namespace AuthProvider {
     export type AsObject = {
         type: string,
         name: string,
-        display: string,
+        displayName: string,
     }
 }

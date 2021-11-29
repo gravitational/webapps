@@ -20,6 +20,7 @@ import { Warning } from 'design/Icon';
 import { color, space } from 'design/system';
 import * as types from 'teleterm/ui/Navigator/types';
 import { useAppContext } from 'teleterm/ui/appContextProvider';
+import LinearProgress from 'teleterm/ui/components/LinearProgress';
 
 type Props = {
   item?: types.NavItem;
@@ -54,7 +55,7 @@ const NavItem: React.FC<Props> = props => {
           <Icon mr={2} ml={-2} fontSize="10px" color="inherit" />
           <div style={{ position: 'relative' }}>
             {item.title}
-            {item.status === 'loading' && <Progress />}
+            {item.status === 'loading' && <LinearProgress />}
           </div>
         </>
       )}
@@ -104,60 +105,5 @@ export const StyledNavItem = styled.div(props => {
     ...space(props),
   };
 });
-
-const Progress: React.FC = () => {
-  return (
-    <div
-      style={{
-        position: 'absolute',
-        left: '0',
-        right: '0',
-        bottom: '0',
-      }}
-    >
-      <StyledProgress>
-        <div className="parent-bar-2" />
-      </StyledProgress>
-    </div>
-  );
-};
-
-const StyledProgress = styled.div`
-  position: relative;
-  overflow: hidden;
-  display: block;
-  height: 1px;
-  z-index: 0;
-  background-color: #222c59;
-
-  .parent-bar-2 {
-    position: absolute;
-    left: 0;
-    bottom: 0;
-    top: 0;
-    transition: transform 0.2s linear;
-    transform-origin: left;
-    background-color: #1976d2;
-    animation: animation-linear-progress 2s cubic-bezier(0.165, 0.84, 0.44, 1)
-      1s infinite;
-  }
-
-  @keyframes animation-linear-progress {
-    0% {
-      left: -300%;
-      right: 100%;
-    }
-
-    60% {
-      left: 107%;
-      right: -8%;
-    }
-
-    100% {
-      left: 107%;
-      right: -8%;
-    }
-  }
-`;
 
 export default NavItem;

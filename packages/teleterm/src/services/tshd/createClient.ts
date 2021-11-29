@@ -3,6 +3,7 @@ import { TerminalServiceClient } from 'teleterm/services/tshd/v1/service_grpc_pb
 import * as api from 'teleterm/services/tshd/v1/service_pb';
 import * as types from 'teleterm/services/tshd/types';
 import middleware, { withLogging } from './middleware';
+import createAbortController from './createAbortController';
 
 export function createGrpcClient(addr?: string) {
   return new TerminalServiceClient(addr, grpc.credentials.createInsecure());
@@ -13,6 +14,8 @@ export default function createClient(addr: string) {
 
   // Create a client instance that could be shared with the  renderer (UI) via Electron contextBridge
   const client = {
+    createAbortController,
+
     async listGateways() {
       const req = new api.ListGatewaysRequest();
       return new Promise<types.Gateway[]>((resolve, reject) => {
@@ -65,10 +68,10 @@ export default function createClient(addr: string) {
       });
     },
 
-    async createCluster(addr: string) {
-      const req = new api.CreateClusterRequest().setName(addr);
+    async addCluster(addr: string) {
+      const req = new api.AddClusterRequest().setName(addr);
       return new Promise<types.Cluster>((resolve, reject) => {
-        tshd.createCluster(req, (err, response) => {
+        tshd.addCluster(req, (err, response) => {
           if (err) {
             reject(err);
           } else {
@@ -91,45 +94,34 @@ export default function createClient(addr: string) {
       });
     },
 
-    async localLogin(clusterUri = '', user = '', password = '') {
-      const req = new api.CreateAuthChallengeRequest()
-        .setClusterUri(clusterUri)
-        .setUser(user)
-        .setPassword(password);
-      return new Promise<void>((resolve, reject) => {
-        tshd.createAuthChallenge(req, err => {
-          if (err) {
-            reject(err);
-            return;
-          }
+    async login(params: types.LoginParams, abortSignal?: types.TshAbortSignal) {
+      const ssoParams = params.oss
+        ? new api.LoginRequest.SsoParams()
+            .setProviderName(params.oss.providerName)
+            .setProviderType(params.oss.providerType)
+        : null;
 
-          const solvedReq = new api.SolveAuthChallengeRequest();
-          solvedReq.setClusterUri(clusterUri);
-          solvedReq.setPassword(password);
-          solvedReq.setUser(user);
-          tshd.solveAuthChallenge(solvedReq, err => {
+      const localParams = params.local
+        ? new api.LoginRequest.LocalParams()
+            .setToken(params.local.token)
+            .setUser(params.local.username)
+            .setPassword(params.local.password)
+        : null;
+
+      return withAbort(abortSignal, callRef => {
+        const req = new api.LoginRequest()
+          .setClusterUri(params.clusterUri)
+          .setSso(ssoParams)
+          .setLocal(localParams);
+
+        return new Promise<void>((resolve, reject) => {
+          callRef.current = tshd.login(req, err => {
             if (err) {
               reject(err);
             } else {
               resolve();
             }
           });
-        });
-      });
-    },
-
-    async ssoLogin(clusterUri = '', pType = '', pName = '') {
-      const req = new api.CreateAuthSSOChallengeRequest()
-        .setClusterUri(clusterUri)
-        .setProviderName(pName)
-        .setProviderType(pType);
-      return new Promise<void>((resolve, reject) => {
-        tshd.createAuthSSOChallenge(req, err => {
-          if (err) {
-            reject(err);
-          } else {
-            resolve();
-          }
         });
       });
     },
@@ -177,4 +169,29 @@ export default function createClient(addr: string) {
   };
 
   return client;
+}
+
+type CallRef = {
+  current?: {
+    cancel(): void;
+  };
+};
+
+async function withAbort<T>(
+  sig: types.TshAbortSignal,
+  cb: (ref: CallRef) => Promise<T>
+) {
+  const ref = {
+    current: null,
+  };
+
+  const abort = () => {
+    ref?.current.cancel();
+  };
+
+  sig?.addEventListener(abort);
+
+  return cb(ref).finally(() => {
+    sig?.removeEventListener(abort);
+  });
 }

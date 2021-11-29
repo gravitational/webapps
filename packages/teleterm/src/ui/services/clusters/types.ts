@@ -15,10 +15,26 @@ limitations under the License.
 */
 
 import * as tsh from 'teleterm/services/tshd/types';
+import * as shared from 'shared/services/types';
 
 export type SyncStatus = {
   status: 'processing' | 'ready' | 'failed' | '';
   statusText?: string;
 };
+
+export type PreferredMfaType = shared.PreferredMfaType;
+
+export type Auth2faType = shared.Auth2faType;
+
+export type AuthProviderType = shared.AuthProviderType;
+
+export type AuthProvider = tsh.AuthProvider;
+
+export type LoginParams = tsh.LoginParams;
+
+export interface AuthSettings extends tsh.AuthSettings {
+  secondFactor: Auth2faType;
+  preferredMfa: PreferredMfaType;
+}
 
 export { tsh };

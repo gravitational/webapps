@@ -15,35 +15,60 @@ limitations under the License.
 */
 
 import React from 'react';
+import * as types from 'teleterm/ui/services/clusters/types';
+import { Attempt } from 'teleterm/ui/useAsync';
 import { ClusterLogin } from './ClusterLogin';
-import * as types from 'teleterm/services/tshd/types';
-
-const props = {
-  title: 'localhost',
-  loginAttempt: {
-    status: 'error',
-    statusText: 'fsdfd',
-  } as const,
-  initAttempt: {
-    status: 'success',
-    statusText: '',
-    data: {
-      authProvidersList: [] as types.AuthProvider[],
-      type: '',
-      secondFactor: 'off',
-      hasMessageOfTheDay: false,
-    } as const,
-  } as const,
-
-  onClose: () => null,
-
-  loginWithLocal: (email: string, password: string) =>
-    Promise.resolve<[void, Error]>([null, null]),
-  loginWithSso: (provider: types.AuthProvider) => null,
-};
 
 export default {
   title: 'Teleterm/ClusterLogin',
 };
 
-export const Basic = () => <ClusterLogin {...props} />;
+function makeProps() {
+  return {
+    shouldPromptSsoStatus: false,
+    shouldPromptHardwareKey: false,
+    title: 'localhost',
+    loginAttempt: {
+      status: '',
+      statusText: '',
+    } as Attempt<void>,
+    initAttempt: {
+      status: 'success',
+      statusText: '',
+      data: {
+        preferredMfa: 'webauthn',
+        localAuthEnabled: true,
+        authProvidersList: [],
+        type: '',
+        secondFactor: 'optional',
+        hasMessageOfTheDay: false,
+      } as types.AuthSettings,
+    } as const,
+
+    closeDialog: () => null,
+
+    abortLogin: () => null,
+
+    loginWithLocal: (email: string, password: string) =>
+      Promise.resolve<[void, Error]>([null, null]),
+    loginWithSso: (provider: types.AuthProvider) => null,
+  };
+}
+
+export const Basic = () => {
+  return <ClusterLogin {...makeProps()} />;
+};
+
+export const HardwareKeyPrompt = () => {
+  const props = makeProps();
+  props.loginAttempt.status = 'processing';
+  props.shouldPromptHardwareKey = true;
+  return <ClusterLogin {...props} />;
+};
+
+export const SsoPrompt = () => {
+  const props = makeProps();
+  props.loginAttempt.status = 'processing';
+  props.shouldPromptSsoStatus = true;
+  return <ClusterLogin {...props} />;
+};

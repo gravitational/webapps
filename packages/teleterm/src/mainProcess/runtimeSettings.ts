@@ -42,6 +42,13 @@ export function getRuntimeSettings(): RuntimeSettings {
 }
 
 function getTshNetworkAddr() {
+  const unixSocketPath = path.resolve(app.getPath('userData'), 'tsh.socket');
+
+  // try to cleanup after previous process that unexpectedly crashed
+  if (fs.existsSync(unixSocketPath)) {
+    fs.unlinkSync(unixSocketPath);
+  }
+
   return `unix://${path.resolve(app.getPath('userData'), 'tsh.socket')}`;
 }
 

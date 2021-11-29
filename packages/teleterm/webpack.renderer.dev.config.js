@@ -11,10 +11,12 @@ const cfg = extend(defaultCfg);
 cfg.devServer = {
   hot: true,
   publicPath: '/',
+  contentBase: path.join(__dirname, 'build/app/dist/renderer'),
   disableHostCheck: true,
   serveIndex: false,
   https: true,
   inline: true,
+
   before(args) {
     spawn('yarn', ['start-main'], {
       shell: true,
@@ -24,7 +26,7 @@ cfg.devServer = {
   },
 };
 
-cfg.output.publicPath = '/';
+cfg.output.publicPath = '';
 cfg.plugins = [new webpack.HotModuleReplacementPlugin(), createHtmlPlugin()];
 
 module.exports = cfg;

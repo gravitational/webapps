@@ -95,8 +95,9 @@ proto.teleport.terminal.v1.AuthSettings.prototype.toObject = function(opt_includ
  */
 proto.teleport.terminal.v1.AuthSettings.toObject = function(includeInstance, msg) {
   var f, obj = {
-    type: jspb.Message.getFieldWithDefault(msg, 1, ""),
+    localAuthEnabled: jspb.Message.getBooleanFieldWithDefault(msg, 1, false),
     secondFactor: jspb.Message.getFieldWithDefault(msg, 2, ""),
+    preferredMfa: jspb.Message.getFieldWithDefault(msg, 3, ""),
     authProvidersList: jspb.Message.toObjectList(msg.getAuthProvidersList(),
     proto.teleport.terminal.v1.AuthProvider.toObject, includeInstance),
     hasMessageOfTheDay: jspb.Message.getBooleanFieldWithDefault(msg, 5, false)
@@ -137,12 +138,16 @@ proto.teleport.terminal.v1.AuthSettings.deserializeBinaryFromReader = function(m
     var field = reader.getFieldNumber();
     switch (field) {
     case 1:
-      var value = /** @type {string} */ (reader.readString());
-      msg.setType(value);
+      var value = /** @type {boolean} */ (reader.readBool());
+      msg.setLocalAuthEnabled(value);
       break;
     case 2:
       var value = /** @type {string} */ (reader.readString());
       msg.setSecondFactor(value);
+      break;
+    case 3:
+      var value = /** @type {string} */ (reader.readString());
+      msg.setPreferredMfa(value);
       break;
     case 4:
       var value = new proto.teleport.terminal.v1.AuthProvider;
@@ -182,9 +187,9 @@ proto.teleport.terminal.v1.AuthSettings.prototype.serializeBinary = function() {
  */
 proto.teleport.terminal.v1.AuthSettings.serializeBinaryToWriter = function(message, writer) {
   var f = undefined;
-  f = message.getType();
-  if (f.length > 0) {
-    writer.writeString(
+  f = message.getLocalAuthEnabled();
+  if (f) {
+    writer.writeBool(
       1,
       f
     );
@@ -193,6 +198,13 @@ proto.teleport.terminal.v1.AuthSettings.serializeBinaryToWriter = function(messa
   if (f.length > 0) {
     writer.writeString(
       2,
+      f
+    );
+  }
+  f = message.getPreferredMfa();
+  if (f.length > 0) {
+    writer.writeString(
+      3,
       f
     );
   }
@@ -215,20 +227,20 @@ proto.teleport.terminal.v1.AuthSettings.serializeBinaryToWriter = function(messa
 
 
 /**
- * optional string type = 1;
- * @return {string}
+ * optional bool local_auth_enabled = 1;
+ * @return {boolean}
  */
-proto.teleport.terminal.v1.AuthSettings.prototype.getType = function() {
-  return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 1, ""));
+proto.teleport.terminal.v1.AuthSettings.prototype.getLocalAuthEnabled = function() {
+  return /** @type {boolean} */ (jspb.Message.getBooleanFieldWithDefault(this, 1, false));
 };
 
 
 /**
- * @param {string} value
+ * @param {boolean} value
  * @return {!proto.teleport.terminal.v1.AuthSettings} returns this
  */
-proto.teleport.terminal.v1.AuthSettings.prototype.setType = function(value) {
-  return jspb.Message.setProto3StringField(this, 1, value);
+proto.teleport.terminal.v1.AuthSettings.prototype.setLocalAuthEnabled = function(value) {
+  return jspb.Message.setProto3BooleanField(this, 1, value);
 };
 
 
@@ -247,6 +259,24 @@ proto.teleport.terminal.v1.AuthSettings.prototype.getSecondFactor = function() {
  */
 proto.teleport.terminal.v1.AuthSettings.prototype.setSecondFactor = function(value) {
   return jspb.Message.setProto3StringField(this, 2, value);
+};
+
+
+/**
+ * optional string preferred_mfa = 3;
+ * @return {string}
+ */
+proto.teleport.terminal.v1.AuthSettings.prototype.getPreferredMfa = function() {
+  return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 3, ""));
+};
+
+
+/**
+ * @param {string} value
+ * @return {!proto.teleport.terminal.v1.AuthSettings} returns this
+ */
+proto.teleport.terminal.v1.AuthSettings.prototype.setPreferredMfa = function(value) {
+  return jspb.Message.setProto3StringField(this, 3, value);
 };
 
 
@@ -340,7 +370,7 @@ proto.teleport.terminal.v1.AuthProvider.toObject = function(includeInstance, msg
   var f, obj = {
     type: jspb.Message.getFieldWithDefault(msg, 1, ""),
     name: jspb.Message.getFieldWithDefault(msg, 2, ""),
-    display: jspb.Message.getFieldWithDefault(msg, 3, "")
+    displayName: jspb.Message.getFieldWithDefault(msg, 3, "")
   };
 
   if (includeInstance) {
@@ -387,7 +417,7 @@ proto.teleport.terminal.v1.AuthProvider.deserializeBinaryFromReader = function(m
       break;
     case 3:
       var value = /** @type {string} */ (reader.readString());
-      msg.setDisplay(value);
+      msg.setDisplayName(value);
       break;
     default:
       reader.skipField();
@@ -432,7 +462,7 @@ proto.teleport.terminal.v1.AuthProvider.serializeBinaryToWriter = function(messa
       f
     );
   }
-  f = message.getDisplay();
+  f = message.getDisplayName();
   if (f.length > 0) {
     writer.writeString(
       3,
@@ -479,10 +509,10 @@ proto.teleport.terminal.v1.AuthProvider.prototype.setName = function(value) {
 
 
 /**
- * optional string display = 3;
+ * optional string display_name = 3;
  * @return {string}
  */
-proto.teleport.terminal.v1.AuthProvider.prototype.getDisplay = function() {
+proto.teleport.terminal.v1.AuthProvider.prototype.getDisplayName = function() {
   return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 3, ""));
 };
 
@@ -491,7 +521,7 @@ proto.teleport.terminal.v1.AuthProvider.prototype.getDisplay = function() {
  * @param {string} value
  * @return {!proto.teleport.terminal.v1.AuthProvider} returns this
  */
-proto.teleport.terminal.v1.AuthProvider.prototype.setDisplay = function(value) {
+proto.teleport.terminal.v1.AuthProvider.prototype.setDisplayName = function(value) {
   return jspb.Message.setProto3StringField(this, 3, value);
 };
 

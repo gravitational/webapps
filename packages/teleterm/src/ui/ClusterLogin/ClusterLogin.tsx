@@ -16,14 +16,11 @@ limitations under the License.
 
 import React from 'react';
 import * as Alerts from 'design/Alert';
-import { ButtonSecondary, Text } from 'design';
+import { ButtonIcon, Text } from 'design';
+import * as Icons from 'design/Icon';
 import LoginForm from './FormLogin';
 import useClusterLogin, { State, Props } from './useClusterLogin';
-import Dialog, {
-  DialogHeader,
-  DialogContent,
-  DialogFooter,
-} from 'design/Dialog';
+import Dialog, { DialogHeader, DialogContent } from 'design/Dialog';
 
 export default function Container(props: Props) {
   const state = useClusterLogin(props);
@@ -36,7 +33,10 @@ export function ClusterLogin({
   loginAttempt,
   loginWithLocal,
   loginWithSso,
-  onClose,
+  closeDialog,
+  abortLogin,
+  shouldPromptSsoStatus,
+  shouldPromptHardwareKey,
 }: State) {
   return (
     <Dialog
@@ -46,15 +46,18 @@ export function ClusterLogin({
         padding: '20px',
       })}
       disableEscapeKeyDown={false}
-      onClose={onClose}
+      onClose={closeDialog}
       open={true}
     >
       <DialogHeader>
-        <Text typography="h3" color="text.primary">
+        <Text typography="h4">
           Login to <b>{title}</b>
         </Text>
+        <ButtonIcon ml="auto" p={3} onClick={closeDialog}>
+          <Icons.Close fontSize="20px" />
+        </ButtonIcon>
       </DialogHeader>
-      <DialogContent>
+      <DialogContent mb={2}>
         {initAttempt.status === 'error' && (
           <Alerts.Danger>
             Unable to retrieve cluster auth preferences,{' '}
@@ -65,18 +68,18 @@ export function ClusterLogin({
           <LoginForm
             title={'Sign into Teleport'}
             authProviders={initAttempt.data.authProvidersList}
-            auth2faType="off"
-            isLocalAuthEnabled={true}
+            auth2faType={initAttempt.data.secondFactor}
+            isLocalAuthEnabled={initAttempt.data.localAuthEnabled}
+            preferredMfa={initAttempt.data.preferredMfa}
             onLoginWithSso={loginWithSso}
             onLogin={loginWithLocal}
-            initAttempt={initAttempt}
+            onAbort={abortLogin}
             loginAttempt={loginAttempt}
+            shouldPromptSsoStatus={shouldPromptSsoStatus}
+            shouldPromptHardwareKey={shouldPromptHardwareKey}
           />
         )}
       </DialogContent>
-      <DialogFooter>
-        <ButtonSecondary onClick={onClose}>Close</ButtonSecondary>
-      </DialogFooter>
     </Dialog>
   );
 }

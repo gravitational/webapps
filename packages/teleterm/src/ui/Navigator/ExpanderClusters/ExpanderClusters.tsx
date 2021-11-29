@@ -139,7 +139,7 @@ const ClusterOfflineItem: React.FC<{
           </ButtonIcon>
         </Flex>
       </ExpanderHeader>
-      <ExpanderContent></ExpanderContent>
+      <ExpanderContent />
     </Expander>
   );
 };

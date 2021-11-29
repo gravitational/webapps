@@ -64,7 +64,7 @@ export default function AddCluster({ onClose }: Props) {
           >
             <Flex flexDirection="column">
               <Text mb={1} typography="h4">
-                First, add your cluster address
+                Enter cluster address
               </Text>
               <Text mb={5} color="text.secondary" typography="h5">
                 For example, https://teleport.example.com

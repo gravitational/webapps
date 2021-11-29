@@ -9,24 +9,42 @@ export type Gateway = apigateway.Gateway.AsObject;
 export type Database = apiDb.Database.AsObject;
 export type Cluster = apiCluster.Cluster.AsObject;
 export type LoggedInUser = apiCluster.LoggedInUser.AsObject;
-export type AuthSettings = apiAuthSettings.AuthSettings.AsObject;
 export type AuthProvider = apiAuthSettings.AuthProvider.AsObject;
-export type AuthProviderType = 'oidc' | 'saml' | 'github';
+export type AuthSettings = apiAuthSettings.AuthSettings.AsObject;
 
 export type TshClient = {
   listGateways: () => Promise<Gateway[]>;
   listClusters: () => Promise<Cluster[]>;
   listDatabases: (clusterUri: string) => Promise<Database[]>;
   listServers: (clusterUri: string) => Promise<Server[]>;
-  createCluster: (clusterUri: string) => Promise<Cluster>;
+  createAbortController: () => TshAbortController;
+  addCluster: (clusterUri: string) => Promise<Cluster>;
   createGateway: (targetUri: string, port: string) => Promise<Gateway>;
   getCluster: (clusterUri: string) => Promise<Cluster>;
   getAuthSettings: (clusterUri: string) => Promise<AuthSettings>;
-  ssoLogin: (clusterUri: string, pType: string, pName: string) => Promise<void>;
   removeGateway: (gatewayUri: string) => Promise<void>;
-  localLogin: (
-    clusterUri: string,
-    user: string,
-    password: string
-  ) => Promise<void>;
+  login: (params: LoginParams, abortSignal?: TshAbortSignal) => Promise<void>;
+};
+
+export type TshAbortController = {
+  signal: TshAbortSignal;
+  abort(): void;
+};
+
+export type TshAbortSignal = {
+  addEventListener(cb: (...args: any[]) => void): void;
+  removeEventListener(cb: (...args: any[]) => void): void;
+};
+
+export type LoginParams = {
+  clusterUri: string;
+  oss?: {
+    providerType: string;
+    providerName: string;
+  };
+  local?: {
+    username: string;
+    password: string;
+    token?: string;
+  };
 };

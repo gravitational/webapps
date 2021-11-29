@@ -17,12 +17,12 @@ limitations under the License.
 import React from 'react';
 import { Box } from 'design';
 import ButtonSso, { guessProviderType } from 'shared/components/ButtonSso';
-import * as types from 'teleterm/services/tshd/types';
+import * as types from 'teleterm/ui/services/clusters/types';
 
 const SSOBtnList = ({ providers, prefixText, isDisabled, onClick }: Props) => {
   const $btns = providers.map((item, index) => {
-    let { name, type, display } = item;
-    const title = display || `${prefixText} ${name}`;
+    let { name, type, displayName } = item;
+    const title = displayName || `${prefixText} ${name}`;
     const ssoType = guessProviderType(title, type as types.AuthProviderType);
     return (
       <ButtonSso
