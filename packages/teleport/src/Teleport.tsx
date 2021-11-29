@@ -69,7 +69,7 @@ export function renderPublicRoutes(children = []) {
     ...children,
     <Route
       key={1}
-      title="Login Failed"
+      title="Login Failed!!!"
       path={cfg.routes.loginError}
       component={LoginFailed}
     />,
