@@ -23,7 +23,7 @@ export default function CardWelcome({ tokenId, inviteMode = true }: Props) {
   const title = inviteMode ? 'Welcome to Teleport' : 'Reset Password';
   const description = inviteMode
     ? 'Please click the button below to create an account'
-    : 'Please click the button below to recover your account';
+    : 'Please click the button below to begin recovery of your account';
   const buttonText = inviteMode ? 'Get started' : 'Continue';
 
   const nextStepPath = inviteMode
@@ -36,7 +36,7 @@ export default function CardWelcome({ tokenId, inviteMode = true }: Props) {
         <Text typography="h2" mb={3} textAlign="center" color="light">
           {title}
         </Text>
-        <Text typography="h4" mb={3} textAlign="center">
+        <Text typography="h5" mb={3} textAlign="center">
           {description}
         </Text>
         <ButtonPrimary
