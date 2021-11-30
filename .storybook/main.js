@@ -35,6 +35,9 @@ module.exports = {
   reactOptions: {
     fastRefresh: true,
   },
+  typescript: {
+    reactDocgen: false,
+  },
   stories,
   webpackFinal: async (config, { configType }) => {
     // configType has a value of 'DEVELOPMENT' or 'PRODUCTION'
