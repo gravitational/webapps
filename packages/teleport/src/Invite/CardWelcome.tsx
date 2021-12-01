@@ -52,8 +52,6 @@ export default function CardWelcome({ inviteMode = true }: Props) {
   );
 }
 
-export const InviteWelcome = () => <CardWelcome />;
-
 export const ResetWelcome = () => <CardWelcome inviteMode={false} />;
 
 type Props = {
