@@ -15,7 +15,7 @@ limitations under the License.
 */
 
 import React from 'react';
-import { useParams } from 'react-router';
+import { useParams, matchPath, useLocation } from 'react-router';
 import { useAttempt, withState } from 'shared/hooks';
 import cfg from 'teleport/config';
 import auth from 'teleport/services/auth';
@@ -37,6 +37,7 @@ export function Invite(props) {
     onSubmitWithU2f,
     passwordToken,
     submitAttempt,
+    tokenId,
   } = props;
 
   if (fetchAttempt.isFailed) {
@@ -48,11 +49,10 @@ export function Invite(props) {
     );
   }
 
-  if (!fetchAttempt.isSuccess) {
+  if (fetchAttempt.isProcessing) {
     return null;
   }
 
-  const { user, qrCode, tokenId } = passwordToken;
   const title = passwordResetMode ? 'Reset Password' : 'Welcome to Teleport';
   const submitBtnText = passwordResetMode
     ? 'Change Password'
@@ -68,8 +68,8 @@ export function Invite(props) {
           <InviteForm
             submitBtnText={submitBtnText}
             title={title}
-            user={user}
-            qr={qrCode}
+            user={passwordToken?.user}
+            qr={passwordToken?.qrCode}
             auth2faType={auth2faType}
             attempt={submitAttempt}
             onSubmitWithU2f={onSubmitWithU2f}
@@ -93,14 +93,21 @@ function mapState() {
   const [submitAttempt, submitAttemptActions] = useAttempt();
   const auth2faType = cfg.getAuth2faType();
   const { tokenId } = useParams();
+  const { pathname } = useLocation();
 
   React.useEffect(() => {
-    fetchAttemptActions.do(() => {
-      return auth
-        .fetchPasswordToken(tokenId)
-        .then(resetToken => setPswToken(resetToken));
-    });
-  }, []);
+    if (
+      matchPath(pathname, {
+        path: [cfg.routes.userInviteContinue, cfg.routes.userResetContinue],
+      })
+    ) {
+      fetchAttemptActions.do(() => {
+        return auth
+          .fetchPasswordToken(tokenId)
+          .then(resetToken => setPswToken(resetToken));
+      });
+    }
+  }, [pathname]);
 
   function redirect() {
     history.push(cfg.routes.root, true);
