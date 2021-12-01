@@ -25,6 +25,7 @@ import CatchError from 'teleport/components/CatchError';
 import Authenticated from 'teleport/components/Authenticated';
 import Main from './Main';
 import Invite, { ResetPassword } from './Invite';
+import CardWelcome, { ResetWelcome } from './Invite/CardWelcome';
 import Login, { LoginSuccess, LoginFailed } from './Login';
 import AppLauncher from './AppLauncher';
 import Console from './Console';
@@ -59,14 +60,28 @@ const Teleport: React.FC<Props> = ({ ctx, history, children }) => {
               component={LoginSuccess}
             />
             <Route
+              key="invite-continue"
               title="Invite"
-              path={cfg.routes.userInvite}
+              path={cfg.routes.userInviteContinue}
               component={Invite}
             />
             <Route
+              key="invite-welcome"
+              title="Invite"
+              path={cfg.routes.userInvite}
+              component={CardWelcome}
+            />
+            <Route
+              key="reset-continue"
+              title="Password Reset"
+              path={cfg.routes.userResetContinue}
+              component={ResetPassword}
+            />
+            <Route
+              key="reset-welcome"
               title="Password Reset"
               path={cfg.routes.userReset}
-              component={ResetPassword}
+              component={ResetWelcome}
             />
             <Route path={cfg.routes.root}>
               <Authenticated>
