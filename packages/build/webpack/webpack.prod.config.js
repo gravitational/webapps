@@ -14,9 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-const webpack = require('webpack');
 const createConfig = require('./webpack.base');
-const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const baseCfg = createConfig();
 
 process.env.BABEL_ENV = 'production';
@@ -49,12 +47,7 @@ var cfg = {
     ],
   },
 
-  plugins: [
-    //    new BundleAnalyzerPlugin(),
-    new CleanWebpackPlugin(),
-    new webpack.HashedModuleIdsPlugin(),
-    baseCfg.plugins.createIndexHtml(),
-  ],
+  plugins: [baseCfg.plugins.createESLint()],
 };
 
 module.exports = cfg;

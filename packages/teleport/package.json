@@ -4,8 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "g-start",
-    "build": "g-build --progress --bail",
+    "start": "g-start --config $(pwd)/webpack.dev.config.js",
+    "build": "g-build --config webpack.prod.config.js --progress --bail",
     "test": "npx jest",
     "tdd": "jest . --watch"
   },
@@ -22,8 +22,6 @@
     "xterm": "https://github.com/gravitational/xterm.js#v2.8.1"
   },
   "devDependencies": {
-    "@gravitational/build": "^1.0.0",
-    "file-loader": "6.0.0",
-    "url-loader": "4.0.0"
+    "@gravitational/build": "^1.0.0"
   }
 }
