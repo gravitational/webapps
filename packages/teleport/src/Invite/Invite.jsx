@@ -21,10 +21,8 @@ import cfg from 'teleport/config';
 import auth from 'teleport/services/auth';
 import history from 'teleport/services/history';
 import Logger from 'shared/libs/logger';
-import { Route, Switch } from 'teleport/components/Router';
 import InviteForm, { Expired } from 'shared/components/FormInvite';
 import LogoHero from 'teleport/components/LogoHero';
-import CardWelcome from './CardWelcome';
 
 const logger = Logger.create('components/Invite');
 
@@ -52,7 +50,7 @@ export function Invite(props) {
     return null;
   }
 
-  const { user, qrCode, tokenId } = passwordToken;
+  const { user, qrCode } = passwordToken;
   const title = passwordResetMode ? 'Reset Password' : 'Welcome to Teleport';
   const submitBtnText = passwordResetMode
     ? 'Change Password'
@@ -61,28 +59,16 @@ export function Invite(props) {
   return (
     <>
       <LogoHero />
-      <Switch>
-        <Route
-          path={[cfg.routes.userInviteContinue, cfg.routes.userResetContinue]}
-        >
-          <InviteForm
-            submitBtnText={submitBtnText}
-            title={title}
-            user={user}
-            qr={qrCode}
-            auth2faType={auth2faType}
-            attempt={submitAttempt}
-            onSubmitWithU2f={onSubmitWithU2f}
-            onSubmit={onSubmit}
-          />
-        </Route>
-        <Route path={cfg.routes.userInvite}>
-          <CardWelcome tokenId={tokenId} />
-        </Route>
-        <Route path={cfg.routes.userReset}>
-          <CardWelcome tokenId={tokenId} inviteMode={false} />
-        </Route>
-      </Switch>
+      <InviteForm
+        submitBtnText={submitBtnText}
+        title={title}
+        user={user}
+        qr={qrCode}
+        auth2faType={auth2faType}
+        attempt={submitAttempt}
+        onSubmitWithU2f={onSubmitWithU2f}
+        onSubmit={onSubmit}
+      />
     </>
   );
 }

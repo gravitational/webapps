@@ -12,11 +12,14 @@ limitations under the License.
 */
 
 import React from 'react';
+import { useParams } from 'react-router';
 import { Card, Box, Text, ButtonPrimary } from 'design';
 import cfg from 'teleport/config';
 import history from 'teleport/services/history';
 
-export default function CardWelcome({ tokenId, inviteMode = true }: Props) {
+export default function CardWelcome({ inviteMode = true }: Props) {
+  const { tokenId } = useParams<{ tokenId: string }>();
+
   const title = inviteMode ? 'Welcome to Teleport' : 'Reset Password';
   const description = inviteMode
     ? 'Please click the button below to create an account'
@@ -49,7 +52,10 @@ export default function CardWelcome({ tokenId, inviteMode = true }: Props) {
   );
 }
 
+export const InviteWelcome = () => <CardWelcome />;
+
+export const ResetWelcome = () => <CardWelcome inviteMode={false} />;
+
 type Props = {
-  tokenId: string;
   inviteMode?: boolean;
 };
