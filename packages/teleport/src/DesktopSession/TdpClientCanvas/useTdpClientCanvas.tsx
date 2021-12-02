@@ -32,33 +32,30 @@ export default function useTdpClientCanvas(props: Props) {
 
   // Build a client based on url parameters.
   const tdpClient = useMemo(() => {
+    const { width, height } = getDisplaySize();
+
     const addr = cfg.api.desktopWsAddr
       .replace(':fqdm', getHostName())
       .replace(':clusterId', clusterId)
       .replace(':desktopName', desktopName)
-      .replace(':token', getAccessToken());
+      .replace(':token', getAccessToken())
+      .replace(':username', username)
+      .replace(':width', width.toString())
+      .replace(':height', height.toString());
 
     return new TdpClient(addr, username);
   }, [clusterId, username, desktopName]);
 
-  const syncCanvasSizeToClientSize = (canvas: HTMLCanvasElement) => {
-    // Calculate the size of the canvas to be displayed.
-    // Setting flex to "1" ensures the canvas will fill out the area available to it,
-    // which we calculate based on the window dimensions and TopBarHeight below.
-    const width = window.innerWidth;
-    const height = window.innerHeight - TopBarHeight;
+  const syncCanvasSizeToDisplaySize = (canvas: HTMLCanvasElement) => {
+    const { width, height } = getDisplaySize();
 
-    // If it's resolution does not match change it
-    if (canvas.width !== width || canvas.height !== height) {
-      canvas.width = width;
-      canvas.height = height;
-    }
+    canvas.width = width;
+    canvas.height = height;
   };
 
   const onInit = (cli: TdpClient, canvas: HTMLCanvasElement) => {
     setConnectionAttempt({ status: 'processing' });
-    syncCanvasSizeToClientSize(canvas);
-    cli.connect(canvas.width, canvas.height);
+    syncCanvasSizeToDisplaySize(canvas);
   };
 
   const onConnect = () => {
@@ -138,6 +135,16 @@ export default function useTdpClientCanvas(props: Props) {
     onMouseDown,
     onMouseUp,
     onMouseWheelScroll,
+  };
+}
+
+// Calculates the size (in pixels) of the display.
+// Since we want to maximize the display size for the user, this is simply
+// the full width of the screen and the full height sans top bar.
+function getDisplaySize() {
+  return {
+    width: window.innerWidth,
+    height: window.innerHeight - TopBarHeight,
   };
 }
 
