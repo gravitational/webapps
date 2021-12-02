@@ -67,10 +67,10 @@ function DesktopList(props: Props) {
   function onDesktopSelect(
     e: React.MouseEvent,
     username: string,
-    desktopId: string
+    desktopName: string
   ) {
     e.preventDefault();
-    onLoginSelect(username, desktopId);
+    onLoginSelect(username, desktopName);
   }
 
   const data = sortAndFilter(searchValue);
@@ -108,19 +108,10 @@ function DesktopList(props: Props) {
   );
 }
 
-// Strips default rdp port from an ip address since this unimportant to display
-export const stripRdpPort = (addr: string): string => {
-  const splitAddr = addr.split(':');
-  if (splitAddr.length > 1 && splitAddr[1] === '3389') {
-    return splitAddr[0];
-  }
-  return addr;
-};
-
 const AddressCell = props => {
   // If default RDP port (3389) is present, don't show it
   const { rowIndex, data, columnKey, ...rest } = props;
-  const addr = stripRdpPort(data[rowIndex][columnKey]);
+  const addr = data[rowIndex][columnKey];
 
   return <Cell {...rest}>{addr}</Cell>;
 };
@@ -130,16 +121,16 @@ const LoginCell: React.FC<Required<{
   onSelect?: (
     e: React.SyntheticEvent,
     username: string,
-    desktopId: string
+    desktopName: string
   ) => void;
   onOpen: (serverUuid: string) => LoginItem[];
   [key: string]: any;
 }>> = props => {
   const { rowIndex, data, onOpen, onSelect } = props;
   const { name } = data[rowIndex] as Desktop;
-  const desktopId = name;
+  const desktopName = name;
   function handleOnOpen() {
-    return onOpen(desktopId);
+    return onOpen(desktopName);
   }
 
   function handleOnSelect(e: React.SyntheticEvent, login: string) {
@@ -147,7 +138,7 @@ const LoginCell: React.FC<Required<{
       return [];
     }
 
-    return onSelect(e, login, desktopId);
+    return onSelect(e, login, desktopName);
   }
 
   return (
@@ -198,8 +189,8 @@ type Props = {
   username: string;
   clusterId: string;
   searchValue: string;
-  onLoginMenuOpen(desktopId: string): { login: string; url: string }[];
-  onLoginSelect(username: string, desktopId: string): void;
+  onLoginMenuOpen(desktopName: string): { login: string; url: string }[];
+  onLoginSelect(username: string, desktopName: string): void;
 };
 
 export default DesktopList;
