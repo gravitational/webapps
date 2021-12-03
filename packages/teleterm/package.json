@@ -42,6 +42,8 @@
     "eslint-import-resolver-webpack": "0.13.2",
     "eslint-loader": "3.0.3",
     "file-loader": "6.0.0",
+    "react-dnd": "^14.0.4",
+    "react-dnd-html5-backend": "^14.0.2",
     "ts-protoc-gen": "0.15.0",
     "url-loader": "4.0.0",
     "winston": "^3.3.3",

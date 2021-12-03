@@ -1,15 +1,18 @@
 /*
- Copyright 2019 Gravitational, Inc.
- Licensed under the Apache License, Version 2.0 (the "License");
- you may not use this file except in compliance with the License.
- You may obtain a copy of the License at
-     http://www.apache.org/licenses/LICENSE-2.0
- Unless required by applicable law or agreed to in writing, software
- distributed under the License is distributed on an "AS IS" BASIS,
- WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- See the License for the specific language governing permissions and
- limitations under the License.
- */
+Copyright 2019 Gravitational, Inc.
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+*/
 
 import React from 'react';
 import styled from 'styled-components';
@@ -31,21 +34,25 @@ export function Tabs(props: Props) {
     onClose,
     onNew,
     disableNew,
+    moveTab,
     ...styledProps
   } = props;
 
   const $items = items
-    .filter(i => i.kind !== 'blank')
-    .map(i => {
-      const active = i.uri === activeTab;
+    .map((item, index) => ({ item, index }))
+    .filter(i => i.item.kind !== 'blank')
+    .map(({ item, index }) => {
+      const active = item.uri === activeTab;
       return (
         <TabItem
-          name={i.title}
-          key={i.uri}
+          index={index}
+          name={item.title}
+          key={item.uri}
           users={[]}
           active={active}
-          onClick={() => onSelect(i)}
-          onClose={() => onClose(i)}
+          onClick={() => onSelect(item)}
+          onClose={() => onClose(item)}
+          moveTab={moveTab}
           style={{
             flex: '1',
             flexBasis: '0',
@@ -85,6 +92,7 @@ type Props = {
   disableNew: boolean;
   onNew: () => void;
   onSelect: (doc: Document) => void;
+  moveTab: (oldIndex: number, newIndex: number) => void;
   [index: string]: any;
 };
 
