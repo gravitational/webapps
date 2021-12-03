@@ -14,7 +14,6 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import { hot } from 'react-hot-loader/root';
 import App from './App';
 
-export default hot(App);
+export default App;
