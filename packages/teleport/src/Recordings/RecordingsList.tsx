@@ -36,7 +36,7 @@ export default function RecordingsList(props: Props) {
   } = props;
   const [sortDir, setSortDir] = useState<Record<string, string>>(() => {
     return {
-      created: Table.SortTypes.ASC,
+      created: Table.SortTypes.DESC,
     };
   });
 
