@@ -1,23 +1,22 @@
 const { spawn, execSync } = require('child_process');
 const path = require('path');
-const webpack = require('webpack');
 const defaultCfg = require('@gravitational/build/webpack/webpack.dev.config');
 const { extend, createHtmlPlugin } = require('./webpack.renderer.extend');
-const { CleanWebpackPlugin } = require('clean-webpack-plugin');
-const HtmlWebPackPlugin = require('html-webpack-plugin');
-const resolvepath = require('@gravitational/build/webpack/resolvepath');
 const cfg = extend(defaultCfg);
+const configFactory = require('@gravitational/build/webpack/webpack.base');
 
 cfg.devServer = {
   hot: true,
-  publicPath: '/',
-  contentBase: path.join(__dirname, 'build/app/dist/renderer'),
-  disableHostCheck: true,
-  serveIndex: false,
-  https: true,
-  inline: true,
-
-  before(args) {
+  static: {
+    publicPath: '/',
+    directory: path.join(__dirname, 'build/app/dist/renderer'),
+    serveIndex: false,
+  },
+  allowedHosts: 'auto',
+  server: {
+    type: 'https',
+  },
+  onBeforeSetupMiddleware() {
     spawn('yarn', ['start-main'], {
       shell: true,
       env: process.env,
@@ -27,6 +26,6 @@ cfg.devServer = {
 };
 
 cfg.output.publicPath = '';
-cfg.plugins = [new webpack.HotModuleReplacementPlugin(), createHtmlPlugin()];
+cfg.plugins = [configFactory.plugins.reactRefresh(), createHtmlPlugin()];
 
 module.exports = cfg;
