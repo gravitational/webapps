@@ -2,8 +2,7 @@ const path = require('path');
 const { spawn } = require('child_process');
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const resolvepath = require('@gravitational/build/webpack/resolvepath');
-const createConfig = require('@gravitational/build/webpack/webpack.base');
-const baseCfg = createConfig();
+const configFactory = require('@gravitational/build/webpack/webpack.base');
 
 function onFirstBuildDonePlugin(env) {
   let isInitialBuild = true;
@@ -16,7 +15,6 @@ function onFirstBuildDonePlugin(env) {
         isInitialBuild = false;
 
         const child = spawn('yarn', ['start-electron', '--inspect'], {
-          detached: true,
           shell: true,
           env,
           stdio: 'inherit',
@@ -29,7 +27,7 @@ function onFirstBuildDonePlugin(env) {
   };
 }
 
-var cfg = {
+const cfg = {
   entry: {
     main: './src/main.ts',
     preload: './src/preload.ts',
@@ -41,9 +39,9 @@ var cfg = {
   },
 
   resolve: {
-    ...baseCfg.resolve,
+    ...configFactory.createDefaultConfig().resolve,
     alias: {
-      ...baseCfg.resolve.alias,
+      ...configFactory.createDefaultConfig().resolve.alias,
       teleterm: path.join(__dirname, './src'),
     },
   },
@@ -57,9 +55,8 @@ var cfg = {
   },
 
   module: {
-    noParse: baseCfg.noParse,
     strictExportPresence: true,
-    rules: [baseCfg.rules.jsx({ withHot: false })],
+    rules: [configFactory.rules.jsx()],
   },
 
   externals: {
