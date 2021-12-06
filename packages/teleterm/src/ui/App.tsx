@@ -10,25 +10,29 @@ import AppContext from './appContext';
 import TabHost from './TabHost';
 import ModalsHost from './ModalsHost';
 import GlobalSearch from './GlobalSearch';
+import { DndProvider,  } from 'react-dnd';
+import { HTML5Backend } from 'react-dnd-html5-backend';
 
 const App: React.FC<{ ctx: AppContext }> = ({ ctx }) => {
   return (
     <StyledApp>
       <CatchError>
-        <AppContextProvider value={ctx}>
-          <ThemeProviderTabs>
-            <GlobalSearch />
-            <SplitPane defaultSize="20%" flex="1" split="vertical">
-              <Box flex="1" bg="primary.light">
-                <Navigator />
-              </Box>
-              <Box flex="1" style={{ position: 'relative' }}>
-                <TabHost />
-              </Box>
-            </SplitPane>
-            <ModalsHost />
-          </ThemeProviderTabs>
-        </AppContextProvider>
+        <DndProvider backend={HTML5Backend}>
+          <AppContextProvider value={ctx}>
+            <ThemeProviderTabs>
+              <GlobalSearch />
+              <SplitPane defaultSize="20%" flex="1" split="vertical">
+                <Box flex="1" bg="primary.light">
+                  <Navigator />
+                </Box>
+                <Box flex="1" style={{ position: 'relative' }}>
+                  <TabHost />
+                </Box>
+              </SplitPane>
+              <ModalsHost />
+            </ThemeProviderTabs>
+          </AppContextProvider>
+        </DndProvider>
       </CatchError>
     </StyledApp>
   );

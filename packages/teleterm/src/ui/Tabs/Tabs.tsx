@@ -19,7 +19,7 @@ import styled from 'styled-components';
 import { typography } from 'design/system';
 import TabItem from './TabItem';
 import * as Icons from 'design/Icon';
-import { Box, ButtonIcon } from 'design';
+import { Box, ButtonIcon, Flex } from 'design';
 import { Document } from '../types';
 
 export default function TabsContainer(props: Props) {
@@ -34,21 +34,25 @@ export function Tabs(props: Props) {
     onClose,
     onNew,
     disableNew,
+    onMoved,
     ...styledProps
   } = props;
 
   const $items = items
-    .filter(i => i.kind !== 'blank')
-    .map(i => {
-      const active = i.uri === activeTab;
+    .map((item, index) => ({ item, index }))
+    .filter(i => i.item.kind !== 'blank')
+    .map(({ item, index }) => {
+      const active = item.uri === activeTab;
       return (
         <TabItem
-          name={i.title}
-          key={i.uri}
+          index={index}
+          name={item.title}
+          key={item.uri}
           users={[]}
           active={active}
-          onClick={() => onSelect(i)}
-          onClose={() => onClose(i)}
+          onClick={() => onSelect(item)}
+          onClose={() => onClose(item)}
+          onMoved={onMoved}
           style={{
             flex: '1',
             flexBasis: '0',
@@ -66,7 +70,7 @@ export function Tabs(props: Props) {
       bold
       {...styledProps}
     >
-      {$items}
+      <Flex flex="1">{$items}</Flex>
       {$items.length > 0 && (
         <ButtonIcon
           ml="2"
@@ -88,6 +92,7 @@ type Props = {
   disableNew: boolean;
   onNew: () => void;
   onSelect: (doc: Document) => void;
+  onMoved: (oldIndex: number, newIndex: number) => void;
   [index: string]: any;
 };
 
@@ -95,7 +100,7 @@ const StyledTabs = styled(Box)`
   min-height: 32px;
   border-radius: 4px;
   display: flex;
-  flex-wrap: no-wrap;
+  flex-wrap: nowrap;
   align-items: center;
   flex-shrink: 0;
   overflow: hidden;
