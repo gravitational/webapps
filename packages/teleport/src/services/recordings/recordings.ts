@@ -12,7 +12,7 @@ export default class RecordingsService {
     const start = params.from.toISOString();
     const end = params.to.toISOString();
 
-    const url = cfg.getSessionRecordingsUrl(clusterId, {
+    const url = cfg.getClusterEventsRecordingsUrl(clusterId, {
       start,
       end,
       limit: this.maxFetchLimit,

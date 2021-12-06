@@ -8,12 +8,12 @@ export default function makeRecording({
   session_stop,
   server_hostname,
   interactive,
-  session_recording,
-  proto,
+  session_recording = 'on',
   sid,
-  kubernetes_cluster,
-  kubernetes_pod_namespace,
-  kubernetes_pod_name,
+  proto = '',
+  kubernetes_cluster = '',
+  kubernetes_pod_namespace = '',
+  kubernetes_pod_name = '',
 }): Recording {
   let durationText = '';
   let duration = 0;

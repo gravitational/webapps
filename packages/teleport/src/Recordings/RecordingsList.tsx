@@ -36,7 +36,7 @@ export default function RecordingsList(props: Props) {
   } = props;
   const [sortDir, setSortDir] = useState<Record<string, string>>(() => {
     return {
-      created: Table.SortTypes.DESC,
+      createdDate: Table.SortTypes.ASC,
     };
   });
 
@@ -89,10 +89,10 @@ export default function RecordingsList(props: Props) {
         cell={<DurationCell />}
       />
       <Table.Column
-        columnKey="created"
+        columnKey="createdDate"
         header={
           <Table.SortHeaderCell
-            sortDir={sortDir.created}
+            sortDir={sortDir.createdDate}
             onSortChange={onSortChange}
             title="Created"
           />
@@ -169,7 +169,7 @@ type Props = {
 
 const searchableProps = [
   'sid',
-  'createdText',
+  'createdDate',
   'users',
   'durationText',
   'hostname',

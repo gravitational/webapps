@@ -20,10 +20,6 @@ export default function useRecordings(ctx: Ctx) {
     fetchStatus: '',
   });
 
-  useEffect(() => {
-    fetch();
-  }, [clusterId, range]);
-
   function fetchMore() {
     setResults({
       ...results,
@@ -61,6 +57,11 @@ export default function useRecordings(ctx: Ctx) {
         )
     );
   }
+
+  useEffect(() => {
+    fetch();
+  }, [clusterId, range]);
+
   return {
     ...results,
     attempt,
