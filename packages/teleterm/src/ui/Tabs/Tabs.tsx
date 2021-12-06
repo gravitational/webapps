@@ -19,7 +19,7 @@ import styled from 'styled-components';
 import { typography } from 'design/system';
 import TabItem from './TabItem';
 import * as Icons from 'design/Icon';
-import { Box, ButtonIcon } from 'design';
+import { Box, ButtonIcon, Flex } from 'design';
 import { Document } from '../types';
 
 export default function TabsContainer(props: Props) {
@@ -34,7 +34,7 @@ export function Tabs(props: Props) {
     onClose,
     onNew,
     disableNew,
-    moveTab,
+    onMoved,
     ...styledProps
   } = props;
 
@@ -52,7 +52,7 @@ export function Tabs(props: Props) {
           active={active}
           onClick={() => onSelect(item)}
           onClose={() => onClose(item)}
-          moveTab={moveTab}
+          onMoved={onMoved}
           style={{
             flex: '1',
             flexBasis: '0',
@@ -70,7 +70,7 @@ export function Tabs(props: Props) {
       bold
       {...styledProps}
     >
-      <FullWidthContainer>{$items}</FullWidthContainer>
+      <Flex flex="1">{$items}</Flex>
       {$items.length > 0 && (
         <ButtonIcon
           ml="2"
@@ -92,23 +92,17 @@ type Props = {
   disableNew: boolean;
   onNew: () => void;
   onSelect: (doc: Document) => void;
-  moveTab: (oldIndex: number, newIndex: number) => void;
+  onMoved: (oldIndex: number, newIndex: number) => void;
   [index: string]: any;
 };
 
-const FullWidthContainer = styled.div`
-  display: flex;
-  min-width: 0;
-  width: 100%;
-`;
-
 const StyledTabs = styled(Box)`
-   min-height: 32px;
-   border-radius: 4px;
-   display: flex;
-   flex-wrap: nowrap;
-   align-items: center;
-   flex-shrink: 0;
-   overflow: hidden;
-   ${typography}
- `;
+  min-height: 32px;
+  border-radius: 4px;
+  display: flex;
+  flex-wrap: nowrap;
+  align-items: center;
+  flex-shrink: 0;
+  overflow: hidden;
+  ${typography}
+`;

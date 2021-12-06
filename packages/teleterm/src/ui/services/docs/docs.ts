@@ -196,7 +196,7 @@ export default class DocumentService extends Store<State> {
     return doc;
   }
 
-  moveDocument(oldIndex: number, newIndex: number) {
+  changeIndex(oldIndex: number, newIndex: number) {
     const doc = this.state.docs[oldIndex];
     const newDocs = [...this.state.docs];
     newDocs.splice(oldIndex, 1);

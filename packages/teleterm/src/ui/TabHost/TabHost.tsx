@@ -47,8 +47,8 @@ export default function TabHost(props: Props) {
     serviceDocs.close(doc);
   }
 
-  function moveTab(oldIndex: number, newIndex: number) {
-    serviceDocs.moveDocument(oldIndex, newIndex);
+  function handleTabMoved(oldIndex: number, newIndex: number) {
+    serviceDocs.changeIndex(oldIndex, newIndex);
   }
 
   function handleTabNew() {
@@ -73,7 +73,7 @@ export default function TabHost(props: Props) {
           onClose={handleTabClose}
           onSelect={handleTabClick}
           activeTab={docActive.uri}
-          moveTab={moveTab}
+          onMoved={handleTabMoved}
           disableNew={false}
           onNew={handleTabNew}
         />

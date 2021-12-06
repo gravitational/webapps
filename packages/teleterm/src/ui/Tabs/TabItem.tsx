@@ -19,69 +19,24 @@ import styled from 'styled-components';
 import { Close as CloseIcon } from 'design/Icon';
 import { space } from 'design/system';
 import { Flex, Text } from 'design';
-import { useDrag, useDrop } from 'react-dnd';
-
-const TAB_ITEM_TYPE = 'TAB_ITEM_TYPE';
+import { useTabDnD } from './useTabDnD';
 
 export default function TabItem(props: Props) {
-  const { name, active, onClick, onClose, style, index, moveTab } = props;
-  const tabRef = useRef<HTMLDivElement>(null);
-
-  const [{ isDragging }, drag] = useDrag({
-    type: TAB_ITEM_TYPE,
-    item: () => {
-      return { index };
-    },
-    collect: monitor => ({
-      isDragging: monitor.isDragging(),
-    }),
-  });
-
-  const [, drop] = useDrop({
-    accept: TAB_ITEM_TYPE,
-    hover(item: Pick<Props, 'index'>, monitor) {
-      const dragIndex = item.index;
-      const hoverIndex = props.index;
-
-      // Don't replace items with themselves
-      if (dragIndex === hoverIndex) {
-        return;
-      }
-
-      const hoverBoundingRect = tabRef.current?.getBoundingClientRect();
-      const hoverMiddleX = hoverBoundingRect.width / 2;
-
-      // Determine mouse position
-      const clientOffset = monitor.getClientOffset();
-
-      // Get pixels to the left
-      const hoverClientX = clientOffset.x - hoverBoundingRect.left;
-
-      // Only perform the move when the mouse has crossed half of the item width
-      if (dragIndex < hoverIndex && hoverClientX < hoverMiddleX) {
-        return;
-      }
-      if (dragIndex > hoverIndex && hoverClientX > hoverMiddleX) {
-        return;
-      }
-
-      moveTab(dragIndex, hoverIndex);
-      item.index = hoverIndex;
-    },
-  });
+  const { name, active, onClick, onClose, style, index, onMoved } = props;
+  const ref = useRef<HTMLDivElement>(null);
+  const { isDragging } = useTabDnD({ index, onDrop: onMoved, ref });
 
   const handleClose = (event: MouseEvent) => {
     event.stopPropagation();
     onClose();
   };
 
-  drag(drop(tabRef));
   const opacity = isDragging ? 0 : 1;
 
   return (
     <StyledTabItem
       onClick={onClick}
-      ref={tabRef}
+      ref={ref}
       alignItems="center"
       active={active}
       title={name}
@@ -104,7 +59,7 @@ type Props = {
   active: boolean;
   onClick: () => void;
   onClose: () => void;
-  moveTab: (oldIndex: number, newIndex: number) => void;
+  onMoved: (oldIndex: number, newIndex: number) => void;
   style: any;
 };
 
