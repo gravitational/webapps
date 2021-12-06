@@ -70,7 +70,9 @@ export function Tabs(props: Props) {
       bold
       {...styledProps}
     >
-      <Flex flex="1">{$items}</Flex>
+      <Flex minWidth={0} width="100%">
+        {$items}
+      </Flex>
       {$items.length > 0 && (
         <ButtonIcon
           ml="2"
