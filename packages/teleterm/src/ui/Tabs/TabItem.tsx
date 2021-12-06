@@ -14,22 +14,38 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React from 'react';
+import React, { useRef } from 'react';
 import styled from 'styled-components';
 import { Close as CloseIcon } from 'design/Icon';
 import { space } from 'design/system';
 import { Flex, Text } from 'design';
+import { useTabDnD } from './useTabDnD';
 
 export default function TabItem(props: Props) {
-  const { name, active, onClick, onClose, style } = props;
+  const { name, active, onClick, onClose, style, index, onMoved } = props;
+  const ref = useRef<HTMLDivElement>(null);
+  const { isDragging } = useTabDnD({ index, onDrop: onMoved, ref });
+
+  const handleClose = (event: MouseEvent) => {
+    event.stopPropagation();
+    onClose();
+  };
+
+  const opacity = isDragging ? 0 : 1;
+
   return (
-    <StyledTabItem alignItems="center" active={active} style={style}>
-      <StyledTabButton onClick={onClick}>
-        <Text mx="auto" title={name}>
-          {name}
-        </Text>
+    <StyledTabItem
+      onClick={onClick}
+      ref={ref}
+      alignItems="center"
+      active={active}
+      title={name}
+      style={{ ...style, opacity }}
+    >
+      <StyledTabButton>
+        <Text mx="auto">{name}</Text>
       </StyledTabButton>
-      <StyledCloseButton title="Close" onClick={onClose}>
+      <StyledCloseButton title="Close" onClick={handleClose}>
         <CloseIcon />
       </StyledCloseButton>
     </StyledTabItem>
@@ -37,11 +53,13 @@ export default function TabItem(props: Props) {
 }
 
 type Props = {
+  index: number;
   name: string;
   users: { user: string }[];
   active: boolean;
   onClick: () => void;
   onClose: () => void;
+  onMoved: (oldIndex: number, newIndex: number) => void;
   style: any;
 };
 
@@ -69,28 +87,28 @@ function fromProps({ theme, active }) {
 }
 
 const StyledTabItem = styled(Flex)`
-  max-width: 200px;
+  min-width: 0;
   height: 100%;
+  cursor: pointer;
+
   ${fromProps}
+  &:hover {
+    background: ${props => props.theme.colors.primary.light};
+  }
 `;
 
 const StyledTabButton = styled.button`
   display: flex;
-  flex: 1;
-  align-items: center;
   cursor: pointer;
-  text-decoration: none;
   outline: none;
-  margin: 0;
-  text-decoration: none;
   color: inherit;
   line-height: 32px;
   background-color: transparent;
   white-space: nowrap;
-  overflow: hidden;
-  padding: 0 16px;
-  text-overflow: ellipsis;
+  padding: 0 8px;
   border: none;
+  min-width: 0;
+  width: 100%;
 `;
 
 const StyledCloseButton = styled.button`
@@ -108,5 +126,6 @@ const StyledCloseButton = styled.button`
   &:hover {
     background: ${props => props.theme.colors.danger};
   }
+
   ${space}
 `;
