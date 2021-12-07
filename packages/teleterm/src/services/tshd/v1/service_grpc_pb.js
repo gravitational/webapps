@@ -54,17 +54,6 @@ function deserialize_teleport_terminal_v1_CreateGatewayRequest(buffer_arg) {
   return v1_service_pb.CreateGatewayRequest.deserializeBinary(new Uint8Array(buffer_arg));
 }
 
-function serialize_teleport_terminal_v1_DeleteGatewayRequest(arg) {
-  if (!(arg instanceof v1_service_pb.DeleteGatewayRequest)) {
-    throw new Error('Expected argument of type teleport.terminal.v1.DeleteGatewayRequest');
-  }
-  return Buffer.from(arg.serializeBinary());
-}
-
-function deserialize_teleport_terminal_v1_DeleteGatewayRequest(buffer_arg) {
-  return v1_service_pb.DeleteGatewayRequest.deserializeBinary(new Uint8Array(buffer_arg));
-}
-
 function serialize_teleport_terminal_v1_EmptyResponse(arg) {
   if (!(arg instanceof v1_service_pb.EmptyResponse)) {
     throw new Error('Expected argument of type teleport.terminal.v1.EmptyResponse');
@@ -208,6 +197,39 @@ function deserialize_teleport_terminal_v1_LoginRequest(buffer_arg) {
   return v1_service_pb.LoginRequest.deserializeBinary(new Uint8Array(buffer_arg));
 }
 
+function serialize_teleport_terminal_v1_LogoutRequest(arg) {
+  if (!(arg instanceof v1_service_pb.LogoutRequest)) {
+    throw new Error('Expected argument of type teleport.terminal.v1.LogoutRequest');
+  }
+  return Buffer.from(arg.serializeBinary());
+}
+
+function deserialize_teleport_terminal_v1_LogoutRequest(buffer_arg) {
+  return v1_service_pb.LogoutRequest.deserializeBinary(new Uint8Array(buffer_arg));
+}
+
+function serialize_teleport_terminal_v1_RemoveClusterRequest(arg) {
+  if (!(arg instanceof v1_service_pb.RemoveClusterRequest)) {
+    throw new Error('Expected argument of type teleport.terminal.v1.RemoveClusterRequest');
+  }
+  return Buffer.from(arg.serializeBinary());
+}
+
+function deserialize_teleport_terminal_v1_RemoveClusterRequest(buffer_arg) {
+  return v1_service_pb.RemoveClusterRequest.deserializeBinary(new Uint8Array(buffer_arg));
+}
+
+function serialize_teleport_terminal_v1_RemoveGatewayRequest(arg) {
+  if (!(arg instanceof v1_service_pb.RemoveGatewayRequest)) {
+    throw new Error('Expected argument of type teleport.terminal.v1.RemoveGatewayRequest');
+  }
+  return Buffer.from(arg.serializeBinary());
+}
+
+function deserialize_teleport_terminal_v1_RemoveGatewayRequest(buffer_arg) {
+  return v1_service_pb.RemoveGatewayRequest.deserializeBinary(new Uint8Array(buffer_arg));
+}
+
 
 var TerminalServiceService = exports.TerminalServiceService = {
   // AddCluster
@@ -221,6 +243,18 @@ addCluster: {
     requestDeserialize: deserialize_teleport_terminal_v1_AddClusterRequest,
     responseSerialize: serialize_teleport_terminal_v1_Cluster,
     responseDeserialize: deserialize_teleport_terminal_v1_Cluster,
+  },
+  // RemoveCluster
+removeCluster: {
+    path: '/teleport.terminal.v1.TerminalService/RemoveCluster',
+    requestStream: false,
+    responseStream: false,
+    requestType: v1_service_pb.RemoveClusterRequest,
+    responseType: v1_service_pb.EmptyResponse,
+    requestSerialize: serialize_teleport_terminal_v1_RemoveClusterRequest,
+    requestDeserialize: deserialize_teleport_terminal_v1_RemoveClusterRequest,
+    responseSerialize: serialize_teleport_terminal_v1_EmptyResponse,
+    responseDeserialize: deserialize_teleport_terminal_v1_EmptyResponse,
   },
   // ListClusters
 listClusters: {
@@ -282,15 +316,15 @@ listGateways: {
     responseSerialize: serialize_teleport_terminal_v1_ListGatewaysResponse,
     responseDeserialize: deserialize_teleport_terminal_v1_ListGatewaysResponse,
   },
-  // DeleteGateway
-deleteGateway: {
-    path: '/teleport.terminal.v1.TerminalService/DeleteGateway',
+  // RemoveGateway
+removeGateway: {
+    path: '/teleport.terminal.v1.TerminalService/RemoveGateway',
     requestStream: false,
     responseStream: false,
-    requestType: v1_service_pb.DeleteGatewayRequest,
+    requestType: v1_service_pb.RemoveGatewayRequest,
     responseType: v1_service_pb.EmptyResponse,
-    requestSerialize: serialize_teleport_terminal_v1_DeleteGatewayRequest,
-    requestDeserialize: deserialize_teleport_terminal_v1_DeleteGatewayRequest,
+    requestSerialize: serialize_teleport_terminal_v1_RemoveGatewayRequest,
+    requestDeserialize: deserialize_teleport_terminal_v1_RemoveGatewayRequest,
     responseSerialize: serialize_teleport_terminal_v1_EmptyResponse,
     responseDeserialize: deserialize_teleport_terminal_v1_EmptyResponse,
   },
@@ -327,6 +361,18 @@ login: {
     responseType: v1_service_pb.EmptyResponse,
     requestSerialize: serialize_teleport_terminal_v1_LoginRequest,
     requestDeserialize: deserialize_teleport_terminal_v1_LoginRequest,
+    responseSerialize: serialize_teleport_terminal_v1_EmptyResponse,
+    responseDeserialize: deserialize_teleport_terminal_v1_EmptyResponse,
+  },
+  // ClusterLogin
+logout: {
+    path: '/teleport.terminal.v1.TerminalService/Logout',
+    requestStream: false,
+    responseStream: false,
+    requestType: v1_service_pb.LogoutRequest,
+    responseType: v1_service_pb.EmptyResponse,
+    requestSerialize: serialize_teleport_terminal_v1_LogoutRequest,
+    requestDeserialize: deserialize_teleport_terminal_v1_LogoutRequest,
     responseSerialize: serialize_teleport_terminal_v1_EmptyResponse,
     responseDeserialize: deserialize_teleport_terminal_v1_EmptyResponse,
   },

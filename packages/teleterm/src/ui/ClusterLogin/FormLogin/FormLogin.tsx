@@ -63,7 +63,7 @@ export default function LoginForm(props: Props) {
   );
 
   function handleLocalLoginClick() {
-    onLogin(user, pass, token, mfaType.value);
+    onLogin(user, pass, token, mfaType?.value);
   }
 
   function handleChangeMfaOption(option: MfaOption, validator: Validator) {

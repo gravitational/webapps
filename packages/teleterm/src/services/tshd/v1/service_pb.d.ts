@@ -12,6 +12,27 @@ import * as v1_gateway_pb from "../v1/gateway_pb";
 import * as v1_server_pb from "../v1/server_pb";
 import * as v1_auth_settings_pb from "../v1/auth_settings_pb";
 
+export class RemoveClusterRequest extends jspb.Message { 
+    getClusterUri(): string;
+    setClusterUri(value: string): RemoveClusterRequest;
+
+
+    serializeBinary(): Uint8Array;
+    toObject(includeInstance?: boolean): RemoveClusterRequest.AsObject;
+    static toObject(includeInstance: boolean, msg: RemoveClusterRequest): RemoveClusterRequest.AsObject;
+    static extensions: {[key: number]: jspb.ExtensionFieldInfo<jspb.Message>};
+    static extensionsBinary: {[key: number]: jspb.ExtensionFieldBinaryInfo<jspb.Message>};
+    static serializeBinaryToWriter(message: RemoveClusterRequest, writer: jspb.BinaryWriter): void;
+    static deserializeBinary(bytes: Uint8Array): RemoveClusterRequest;
+    static deserializeBinaryFromReader(message: RemoveClusterRequest, reader: jspb.BinaryReader): RemoveClusterRequest;
+}
+
+export namespace RemoveClusterRequest {
+    export type AsObject = {
+        clusterUri: string,
+    }
+}
+
 export class GetClusterRequest extends jspb.Message { 
     getClusterUri(): string;
     setClusterUri(value: string): GetClusterRequest;
@@ -28,6 +49,27 @@ export class GetClusterRequest extends jspb.Message {
 }
 
 export namespace GetClusterRequest {
+    export type AsObject = {
+        clusterUri: string,
+    }
+}
+
+export class LogoutRequest extends jspb.Message { 
+    getClusterUri(): string;
+    setClusterUri(value: string): LogoutRequest;
+
+
+    serializeBinary(): Uint8Array;
+    toObject(includeInstance?: boolean): LogoutRequest.AsObject;
+    static toObject(includeInstance: boolean, msg: LogoutRequest): LogoutRequest.AsObject;
+    static extensions: {[key: number]: jspb.ExtensionFieldInfo<jspb.Message>};
+    static extensionsBinary: {[key: number]: jspb.ExtensionFieldBinaryInfo<jspb.Message>};
+    static serializeBinaryToWriter(message: LogoutRequest, writer: jspb.BinaryWriter): void;
+    static deserializeBinary(bytes: Uint8Array): LogoutRequest;
+    static deserializeBinaryFromReader(message: LogoutRequest, reader: jspb.BinaryReader): LogoutRequest;
+}
+
+export namespace LogoutRequest {
     export type AsObject = {
         clusterUri: string,
     }
@@ -300,22 +342,22 @@ export namespace ListGatewaysResponse {
     }
 }
 
-export class DeleteGatewayRequest extends jspb.Message { 
+export class RemoveGatewayRequest extends jspb.Message { 
     getGatewayUri(): string;
-    setGatewayUri(value: string): DeleteGatewayRequest;
+    setGatewayUri(value: string): RemoveGatewayRequest;
 
 
     serializeBinary(): Uint8Array;
-    toObject(includeInstance?: boolean): DeleteGatewayRequest.AsObject;
-    static toObject(includeInstance: boolean, msg: DeleteGatewayRequest): DeleteGatewayRequest.AsObject;
+    toObject(includeInstance?: boolean): RemoveGatewayRequest.AsObject;
+    static toObject(includeInstance: boolean, msg: RemoveGatewayRequest): RemoveGatewayRequest.AsObject;
     static extensions: {[key: number]: jspb.ExtensionFieldInfo<jspb.Message>};
     static extensionsBinary: {[key: number]: jspb.ExtensionFieldBinaryInfo<jspb.Message>};
-    static serializeBinaryToWriter(message: DeleteGatewayRequest, writer: jspb.BinaryWriter): void;
-    static deserializeBinary(bytes: Uint8Array): DeleteGatewayRequest;
-    static deserializeBinaryFromReader(message: DeleteGatewayRequest, reader: jspb.BinaryReader): DeleteGatewayRequest;
+    static serializeBinaryToWriter(message: RemoveGatewayRequest, writer: jspb.BinaryWriter): void;
+    static deserializeBinary(bytes: Uint8Array): RemoveGatewayRequest;
+    static deserializeBinaryFromReader(message: RemoveGatewayRequest, reader: jspb.BinaryReader): RemoveGatewayRequest;
 }
 
-export namespace DeleteGatewayRequest {
+export namespace RemoveGatewayRequest {
     export type AsObject = {
         gatewayUri: string,
     }

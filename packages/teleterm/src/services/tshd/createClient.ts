@@ -16,6 +16,19 @@ export default function createClient(addr: string) {
   const client = {
     createAbortController,
 
+    async logout(clusterUri: string) {
+      const req = new api.LogoutRequest().setClusterUri(clusterUri);
+      return new Promise<void>((resolve, reject) => {
+        tshd.logout(req, err => {
+          if (err) {
+            reject(err);
+          } else {
+            resolve();
+          }
+        });
+      });
+    },
+
     async listGateways() {
       const req = new api.ListGatewaysRequest();
       return new Promise<types.Gateway[]>((resolve, reject) => {
@@ -154,10 +167,23 @@ export default function createClient(addr: string) {
       });
     },
 
-    async removeGateway(gatewayUri = '') {
-      const req = new api.DeleteGatewayRequest().setGatewayUri(gatewayUri);
+    async removeCluster(clusterUri = '') {
+      const req = new api.RemoveClusterRequest().setClusterUri(clusterUri);
       return new Promise<void>((resolve, reject) => {
-        tshd.deleteGateway(req, err => {
+        tshd.removeCluster(req, err => {
+          if (err) {
+            reject(err);
+          } else {
+            resolve();
+          }
+        });
+      });
+    },
+
+    async removeGateway(gatewayUri = '') {
+      const req = new api.RemoveGatewayRequest().setGatewayUri(gatewayUri);
+      return new Promise<void>((resolve, reject) => {
+        tshd.removeGateway(req, err => {
           if (err) {
             reject(err);
           } else {
