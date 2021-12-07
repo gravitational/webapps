@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React from 'react';
+import React, { useRef, Ref, useCallback } from 'react';
 import styled from 'styled-components';
 import { Flex } from 'design';
 import { useAppContext } from 'teleterm/ui/appContextProvider';
@@ -26,15 +26,26 @@ import DocumentDbs from 'teleterm/ui/DocumentDbs';
 import DocumentGateway from 'teleterm/ui/DocumentGateway';
 import DocumentTerminal from 'teleterm/ui/DocumentTerminal';
 import useTabShortcuts from './useTabShortcuts';
+import { ActiveDocumentRef, useDocumentCreator } from './useDocumentCreator';
 
 export default function TabHost(props: Props) {
   const ctx = useAppContext();
   const { serviceDocs, mainProcessClient } = ctx;
   const documents = serviceDocs.getDocuments();
   const docActive = serviceDocs.getActive();
+  const activeDocumentRef = useRef<ActiveDocumentRef>();
+  const { getNewDocumentBasingOnActive } = useDocumentCreator({
+    serviceDocs,
+    activeDocumentRef,
+  });
+
+  const handleTabNew = useCallback(async () => {
+    const newDocument = await getNewDocumentBasingOnActive();
+    serviceDocs.addAndOpen(newDocument);
+  }, [getNewDocumentBasingOnActive, serviceDocs]);
 
   // enable keyboard shortcuts
-  useTabShortcuts(ctx);
+  useTabShortcuts(ctx, { openNewTab: handleTabNew });
 
   // subscribe
   serviceDocs.useState();
@@ -51,14 +62,18 @@ export default function TabHost(props: Props) {
     serviceDocs.changeIndex(oldIndex, newIndex);
   }
 
-  function handleTabNew() {
-    const doc = serviceDocs.addNewTerminalShellDocument();
-    serviceDocs.open(doc.uri);
-  }
+  const $docs = documents.map(doc => {
+    const isActiveDoc = doc === docActive;
 
-  const $docs = documents.map(doc => (
-    <MemoizedDocument doc={doc} visible={doc === docActive} key={doc.uri} />
-  ));
+    return (
+      <MemoizedDocument
+        doc={doc}
+        visible={isActiveDoc}
+        activeDocumentRef={isActiveDoc ? activeDocumentRef : null}
+        key={doc.uri}
+      />
+    );
+  });
 
   const openContextMenu = () => {
     mainProcessClient.openContextMenu();
@@ -83,8 +98,12 @@ export default function TabHost(props: Props) {
   );
 }
 
-function MemoizedDocument(props: { doc: types.Document; visible: boolean }) {
-  const { doc, visible } = props;
+function MemoizedDocument(props: {
+  doc: types.Document;
+  visible: boolean;
+  activeDocumentRef: Ref<ActiveDocumentRef>;
+}) {
+  const { doc, visible, activeDocumentRef } = props;
   return React.useMemo(() => {
     switch (doc.kind) {
       case 'home':
@@ -97,12 +116,17 @@ function MemoizedDocument(props: { doc: types.Document; visible: boolean }) {
         return <DocumentGateway doc={doc} visible={visible} />;
       case 'terminal_shell':
       case 'terminal_tsh_session':
-        return <DocumentTerminal doc={doc} visible={visible} />;
-
+        return (
+          <DocumentTerminal
+            doc={doc}
+            visible={visible}
+            ref={activeDocumentRef}
+          />
+        );
       default:
         return null;
     }
-  }, [visible, doc]);
+  }, [visible, doc, activeDocumentRef]);
 }
 
 const StyledTabHost = styled.div`

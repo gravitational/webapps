@@ -29,7 +29,10 @@ export default function useDocumentTerminal(doc: Props['doc']) {
     }
 
     if (doc.kind === 'terminal_shell') {
-      return ctx.serviceTerminals.createPtyProcess({ kind: 'new-shell' });
+      return ctx.serviceTerminals.createPtyProcess({
+        kind: 'new-shell',
+        cwd: doc.cwd,
+      });
     }
   }, []);
 

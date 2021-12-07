@@ -14,15 +14,30 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React, { useRef, useEffect } from 'react';
+import React, {
+  useRef,
+  useEffect,
+  forwardRef,
+  useImperativeHandle,
+  MutableRefObject,
+} from 'react';
 import Document from 'teleterm/ui/Document';
 import useDocumentTerminal, { Props } from './useDocTerminal';
 import Terminal from './Terminal';
+import { DocumentTerminalRef } from 'teleterm/ui/TabHost/useDocumentCreator';
 
-export default function DocumentTerminal(props: Props & { visible: boolean }) {
+function DocumentTerminal(
+  props: Props & { visible: boolean },
+  ref: MutableRefObject<DocumentTerminalRef>
+) {
   const { visible, doc } = props;
   const refTerminal = useRef<Terminal>();
   const { ptyProcess } = useDocumentTerminal(doc);
+
+  useImperativeHandle(ref, () => ({
+    type: 'document_terminal' as const,
+    getWorkingDirectory: () => ptyProcess.getWorkingDirectory(),
+  }));
 
   useEffect(() => {
     if (refTerminal && refTerminal.current) {
@@ -37,3 +52,5 @@ export default function DocumentTerminal(props: Props & { visible: boolean }) {
     </Document>
   );
 }
+
+export default forwardRef(DocumentTerminal);

@@ -17,7 +17,6 @@ limitations under the License.
 import { Store, useStore } from 'shared/libs/stores';
 import uris from 'teleterm/ui/uris';
 import { Document } from 'teleterm/ui/types';
-import { unique } from 'teleterm/ui/utils/uid';
 
 type State = {
   location: string;
@@ -136,6 +135,13 @@ export default class DocumentService extends Store<State> {
     });
   }
 
+  addAndOpen(doc: Document) {
+    this.setState({
+      docs: [...this.state.docs, doc],
+      location: doc.uri,
+    });
+  }
+
   update(uri: string, partialDoc: Partial<Document>) {
     const docs = this.state.docs.map(doc => {
       if (doc.uri === uri) {
@@ -182,18 +188,6 @@ export default class DocumentService extends Store<State> {
 
   useState() {
     return useStore(this).state;
-  }
-
-  addNewTerminalShellDocument() {
-    const doc: Document = {
-      uri: uris.getUriPty({ sid: unique() }),
-      title: 'Terminal',
-      kind: 'terminal_shell',
-    };
-
-    this.add(doc);
-
-    return doc;
   }
 
   changeIndex(oldIndex: number, newIndex: number) {

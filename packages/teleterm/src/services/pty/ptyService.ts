@@ -1,9 +1,15 @@
 import PtyProcess, { TermEventEnum } from './ptyProcess';
-import { PtyOptions, PtyCommand } from './types';
+import {
+  PtyCommand,
+  PtyOptions,
+  PtyServiceClient,
+} from './types';
 import { RuntimeSettings } from 'teleterm/types';
 
-export default function createPtyService(runtimeSettings: RuntimeSettings) {
-  const service = {
+export default function createPtyService(
+  runtimeSettings: RuntimeSettings
+): PtyServiceClient {
+  return {
     createPtyProcess(cmd: PtyCommand) {
       let options = buildOptions(runtimeSettings, cmd);
       let _ptyProcess = new PtyProcess(options);
@@ -25,6 +31,10 @@ export default function createPtyService(runtimeSettings: RuntimeSettings) {
           _ptyProcess.dispose();
         },
 
+        getWorkingDirectory() {
+          return _ptyProcess.getWorkingDirectory();
+        },
+
         onData(cb: (data: string) => void) {
           _ptyProcess.addListener(TermEventEnum.DATA, cb);
         },
@@ -35,8 +45,6 @@ export default function createPtyService(runtimeSettings: RuntimeSettings) {
       };
     },
   };
-
-  return service;
 }
 
 function buildOptions(settings: RuntimeSettings, cmd: PtyCommand): PtyOptions {
@@ -49,6 +57,7 @@ function buildOptions(settings: RuntimeSettings, cmd: PtyCommand): PtyOptions {
       return {
         path: settings.defaultShell,
         args: [],
+        cwd: cmd.cwd,
         env,
       };
 
