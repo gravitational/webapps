@@ -19,16 +19,19 @@ import { Card, Box, Text, ButtonPrimary } from 'design';
 import cfg from 'teleport/config';
 import history from 'teleport/services/history';
 
-export default function CardWelcome({ tokenId, inviteMode = true }: Props) {
-  const title = inviteMode ? 'Welcome to Teleport' : 'Reset Password';
-  const description = inviteMode
-    ? 'Please click the button below to create an account'
-    : 'Please click the button below to begin recovery of your account';
-  const buttonText = inviteMode ? 'Get started' : 'Continue';
+export default function CardWelcome({
+  tokenId,
+  passwordResetMode = false,
+}: Props) {
+  const title = passwordResetMode ? 'Reset Password' : 'Welcome to Teleport';
+  const description = passwordResetMode
+    ? 'Please click the button below to begin recovery of your account'
+    : 'Please click the button below to create an account';
+  const buttonText = passwordResetMode ? 'Continue' : 'Get started';
 
-  const nextStepPath = inviteMode
-    ? cfg.getUserInviteTokenContinueRoute(tokenId)
-    : cfg.getUserResetTokenContinueRoute(tokenId);
+  const continueLink = passwordResetMode
+    ? cfg.getUserResetTokenContinueRoute(tokenId)
+    : cfg.getUserInviteTokenContinueRoute(tokenId);
 
   return (
     <Card bg="primary.light" my={6} mx="auto" width="464px">
@@ -43,7 +46,7 @@ export default function CardWelcome({ tokenId, inviteMode = true }: Props) {
           width="100%"
           mt={3}
           size="large"
-          onClick={() => history.push(nextStepPath)}
+          onClick={() => history.push(continueLink)}
         >
           {buttonText}
         </ButtonPrimary>
@@ -54,5 +57,5 @@ export default function CardWelcome({ tokenId, inviteMode = true }: Props) {
 
 type Props = {
   tokenId: string;
-  inviteMode?: boolean;
+  passwordResetMode?: boolean;
 };

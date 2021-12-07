@@ -71,7 +71,7 @@ export const WelcomeCardInvite = () => (
 
 export const WelcomeCardReset = () => (
   <Wrapper url="/web/reset/1234">
-    <CardWelcome tokenId="1234" inviteMode={false} />
+    <CardWelcome tokenId="1234" passwordResetMode={true} />
   </Wrapper>
 );
 

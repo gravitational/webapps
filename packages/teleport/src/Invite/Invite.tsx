@@ -16,14 +16,20 @@ limitations under the License.
 
 import React from 'react';
 import { useParams } from 'react-router';
-import cfg from 'teleport/config';
-import { Route, Switch } from 'teleport/components/Router';
 import InviteForm, { Expired } from 'teleport/components/FormInvite';
 import LogoHero from 'teleport/components/LogoHero';
-import CardWelcome from './CardWelcome';
+import InviteWrapper from './InviteWrapper';
 import useInvite, { State } from './useInvite';
 
-export default function Container({ passwordResetMode = false }) {
+export default function WrappedContainer({ passwordResetMode = false }) {
+  return (
+    <InviteWrapper passwordResetMode={passwordResetMode}>
+      <Container passwordResetMode={passwordResetMode} />
+    </InviteWrapper>
+  );
+}
+
+function Container({ passwordResetMode = false }) {
   const { tokenId } = useParams<{ tokenId: string }>();
   const state = useInvite(tokenId);
   return <Invite {...state} passwordResetMode={passwordResetMode} />;
@@ -56,7 +62,7 @@ export function Invite(props: State & Props) {
     return null;
   }
 
-  const { user, qrCode, tokenId } = passwordToken;
+  const { user, qrCode } = passwordToken;
 
   const title = passwordResetMode ? 'Reset Password' : 'Welcome to Teleport';
 
@@ -65,34 +71,19 @@ export function Invite(props: State & Props) {
     : 'Create Account';
 
   return (
-    <>
-      <LogoHero />
-      <Switch>
-        <Route
-          path={[cfg.routes.userInviteContinue, cfg.routes.userResetContinue]}
-        >
-          <InviteForm
-            submitBtnText={submitBtnText}
-            title={title}
-            user={user}
-            qr={qrCode}
-            auth2faType={auth2faType}
-            preferredMfaType={preferredMfaType}
-            attempt={submitAttempt}
-            clearSubmitAttempt={clearSubmitAttempt}
-            onSubmitWithU2f={onSubmitWithU2f}
-            onSubmitWithWebauthn={onSubmitWithWebauthn}
-            onSubmit={onSubmit}
-          />
-        </Route>
-        <Route path={cfg.routes.userInvite}>
-          <CardWelcome tokenId={tokenId} />
-        </Route>
-        <Route path={cfg.routes.userReset}>
-          <CardWelcome tokenId={tokenId} inviteMode={false} />
-        </Route>
-      </Switch>
-    </>
+    <InviteForm
+      submitBtnText={submitBtnText}
+      title={title}
+      user={user}
+      qr={qrCode}
+      auth2faType={auth2faType}
+      preferredMfaType={preferredMfaType}
+      attempt={submitAttempt}
+      clearSubmitAttempt={clearSubmitAttempt}
+      onSubmitWithU2f={onSubmitWithU2f}
+      onSubmitWithWebauthn={onSubmitWithWebauthn}
+      onSubmit={onSubmit}
+    />
   );
 }
 
@@ -100,4 +91,6 @@ export type Props = {
   passwordResetMode: boolean;
 };
 
-export const ResetPassword = () => <Container passwordResetMode={true} />;
+export const ResetPassword = () => (
+  <WrappedContainer passwordResetMode={true} />
+);

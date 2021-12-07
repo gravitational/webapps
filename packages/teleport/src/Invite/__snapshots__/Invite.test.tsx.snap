@@ -1,18 +1,18 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`teleport/components/Invite auth type "on" should render form with hardware key as first option in dropdown 1`] = `
-.c3 {
+.c2 {
   box-sizing: border-box;
   padding: 40px;
   flex: 3;
 }
 
-.c6 {
+.c5 {
   box-sizing: border-box;
   margin-bottom: 24px;
 }
 
-.c10 {
+.c9 {
   box-sizing: border-box;
   max-width: 50%;
   margin-bottom: 24px;
@@ -20,7 +20,7 @@ exports[`teleport/components/Invite auth type "on" should render form with hardw
   width: 100%;
 }
 
-.c12 {
+.c11 {
   line-height: 1.5;
   margin: 0;
   display: inline-flex;
@@ -48,25 +48,25 @@ exports[`teleport/components/Invite auth type "on" should render form with hardw
   width: 100%;
 }
 
-.c12:active {
+.c11:active {
   opacity: 0.56;
 }
 
-.c12:hover,
-.c12:focus {
+.c11:hover,
+.c11:focus {
   background: #651FFF;
 }
 
-.c12:active {
+.c11:active {
   background: #354AA4;
 }
 
-.c12:disabled {
+.c11:disabled {
   background: rgba(255,255,255,0.12);
   color: rgba(255,255,255,0.3);
 }
 
-.c1 {
+.c0 {
   box-sizing: border-box;
   margin-left: auto;
   margin-right: auto;
@@ -78,7 +78,7 @@ exports[`teleport/components/Invite auth type "on" should render form with hardw
   border-radius: 8px;
 }
 
-.c8 {
+.c7 {
   appearance: none;
   border: none;
   border-radius: 4px;
@@ -94,19 +94,19 @@ exports[`teleport/components/Invite auth type "on" should render form with hardw
   background-color: #FFFFFF;
 }
 
-.c8::-ms-clear {
+.c7::-ms-clear {
   display: none;
 }
 
-.c8::placeholder {
+.c7::placeholder {
   opacity: 0.4;
 }
 
-.c8:read-only {
+.c7:read-only {
   cursor: not-allowed;
 }
 
-.c7 {
+.c6 {
   color: #FFFFFF;
   display: block;
   font-size: 11px;
@@ -116,18 +116,7 @@ exports[`teleport/components/Invite auth type "on" should render form with hardw
   margin-bottom: 4px;
 }
 
-.c0 {
-  display: block;
-  outline: none;
-  margin-left: auto;
-  margin-right: auto;
-  margin-top: 40px;
-  margin-bottom: 40px;
-  max-width: 200px;
-  max-height: 120px;
-}
-
-.c4 {
+.c3 {
   overflow: hidden;
   text-overflow: ellipsis;
   font-weight: 300;
@@ -139,7 +128,7 @@ exports[`teleport/components/Invite auth type "on" should render form with hardw
   text-align: center;
 }
 
-.c5 {
+.c4 {
   overflow: hidden;
   text-overflow: ellipsis;
   font-weight: 400;
@@ -150,18 +139,18 @@ exports[`teleport/components/Invite auth type "on" should render form with hardw
   margin-bottom: 16px;
 }
 
-.c2 {
+.c1 {
   box-sizing: border-box;
   display: flex;
 }
 
-.c9 {
+.c8 {
   box-sizing: border-box;
   display: flex;
   align-items: center;
 }
 
-.c11 .react-select-container {
+.c10 .react-select-container {
   box-shadow: inset 0 2px 4px rgba(0,0,0,0.24);
   box-sizing: border-box;
   border: none;
@@ -175,8 +164,8 @@ exports[`teleport/components/Invite auth type "on" should render form with hardw
   border-radius: 4px;
 }
 
-.c11 .react-select__control,
-.c11 .react-select__control--is-focused {
+.c10 .react-select__control,
+.c10 .react-select__control--is-focused {
   min-height: 40px;
   height: 40px;
   background-color: transparent;
@@ -187,89 +176,85 @@ exports[`teleport/components/Invite auth type "on" should render form with hardw
   box-shadow: none;
 }
 
-.c11 .react-select__control:hover,
-.c11 .react-select__control--is-focused:hover {
+.c10 .react-select__control:hover,
+.c10 .react-select__control--is-focused:hover {
   border-color: transparent;
   cursor: pointer;
 }
 
-.c11 .react-select__option:hover {
+.c10 .react-select__option:hover {
   cursor: pointer;
   background-color: #eceff1;
 }
 
-.c11 .react-select__option--is-focused {
+.c10 .react-select__option--is-focused {
   background-color: #eceff1;
 }
 
-.c11 .react-select__option--is-selected {
+.c10 .react-select__option--is-selected {
   background-color: #cfd8dc;
   color: inherit;
 }
 
-.c11 .react-select__option--is-selected:hover {
+.c10 .react-select__option--is-selected:hover {
   background-color: #cfd8dc;
 }
 
-.c11 .react-select__menu {
+.c10 .react-select__menu {
   margin-top: 0px;
 }
 
-.c11 .react-select__indicator-separator {
+.c10 .react-select__indicator-separator {
   display: none;
 }
 
-.c11 .react-select__loading-indicator {
+.c10 .react-select__loading-indicator {
   display: none;
 }
 
-.c11 .react-select--is-disabled .react-select__single-value,
-.c11 .react-select--is-disabled .react-select__placeholder {
+.c10 .react-select--is-disabled .react-select__single-value,
+.c10 .react-select--is-disabled .react-select__placeholder {
   color: rgba(0,0,0,0.24);
 }
 
-.c11 .react-select--is-disabled .react-select__indicator {
+.c10 .react-select--is-disabled .react-select__indicator {
   color: rgba(0,0,0,0.14);
 }
 
 <div>
-  <img
-    class="c0"
-    src="file_stub"
-  />
   <form
-    class="c1"
+    class="c0"
     width="464px"
   >
     <div
-      class="c2"
+      class="c1"
     >
       <div
-        class="c3"
+        class="c2"
       >
         <div
-          class="c4"
+          class="c3"
           color="light"
         >
           Welcome to Teleport
         </div>
         <div
-          class="c5"
+          class="c4"
         >
           john@example.com
         </div>
         <div
-          class="c6"
+          class="c5"
         >
           <label
-            class="c7"
+            class="c6"
             font-size="0"
           >
             Password
           </label>
           <input
             autocomplete="off"
-            class="c8"
+            class="c7"
             color="text.onLight"
             placeholder="Password"
             type="password"
@@ -277,17 +262,17 @@ exports[`teleport/components/Invite auth type "on" should render form with hardw
           />
         </div>
         <div
-          class="c6"
+          class="c5"
         >
           <label
-            class="c7"
+            class="c6"
             font-size="0"
           >
             Confirm Password
           </label>
           <input
             autocomplete="off"
-            class="c8"
+            class="c7"
             color="text.onLight"
             placeholder="Confirm Password"
             type="password"
@@ -295,21 +280,21 @@ exports[`teleport/components/Invite auth type "on" should render form with hardw
           />
         </div>
         <div
-          class="c9"
+          class="c8"
         >
           <div
-            class="c10"
+            class="c9"
             data-testid="mfa-select"
             width="100%"
           >
             <label
-              class="c7"
+              class="c6"
               font-size="0"
             >
               Two-factor type
             </label>
             <div
-              class="c11"
+              class="c10"
             >
               <div
                 class="react-select-container css-2b097c-container"
@@ -364,7 +349,7 @@ exports[`teleport/components/Invite auth type "on" should render form with hardw
           </div>
         </div>
         <button
-          class="c12"
+          class="c11"
           kind="primary"
           width="100%"
         >
@@ -377,18 +362,18 @@ exports[`teleport/components/Invite auth type "on" should render form with hardw
 `;
 
 exports[`teleport/components/Invite auth type "optional" should render form with hardware key as first option in dropdown 1`] = `
-.c3 {
+.c2 {
   box-sizing: border-box;
   padding: 40px;
   flex: 3;
 }
 
-.c6 {
+.c5 {
   box-sizing: border-box;
   margin-bottom: 24px;
 }
 
-.c10 {
+.c9 {
   box-sizing: border-box;
   max-width: 50%;
   margin-bottom: 24px;
@@ -396,7 +381,7 @@ exports[`teleport/components/Invite auth type "optional" should render form with
   width: 100%;
 }
 
-.c12 {
+.c11 {
   line-height: 1.5;
   margin: 0;
   display: inline-flex;
@@ -424,25 +409,25 @@ exports[`teleport/components/Invite auth type "optional" should render form with
   width: 100%;
 }
 
-.c12:active {
+.c11:active {
   opacity: 0.56;
 }
 
-.c12:hover,
-.c12:focus {
+.c11:hover,
+.c11:focus {
   background: #651FFF;
 }
 
-.c12:active {
+.c11:active {
   background: #354AA4;
 }
 
-.c12:disabled {
+.c11:disabled {
   background: rgba(255,255,255,0.12);
   color: rgba(255,255,255,0.3);
 }
 
-.c1 {
+.c0 {
   box-sizing: border-box;
   margin-left: auto;
   margin-right: auto;
@@ -454,7 +439,7 @@ exports[`teleport/components/Invite auth type "optional" should render form with
   border-radius: 8px;
 }
 
-.c8 {
+.c7 {
   appearance: none;
   border: none;
   border-radius: 4px;
@@ -470,19 +455,19 @@ exports[`teleport/components/Invite auth type "optional" should render form with
   background-color: #FFFFFF;
 }
 
-.c8::-ms-clear {
+.c7::-ms-clear {
   display: none;
 }
 
-.c8::placeholder {
+.c7::placeholder {
   opacity: 0.4;
 }
 
-.c8:read-only {
+.c7:read-only {
   cursor: not-allowed;
 }
 
-.c7 {
+.c6 {
   color: #FFFFFF;
   display: block;
   font-size: 11px;
@@ -492,18 +477,7 @@ exports[`teleport/components/Invite auth type "optional" should render form with
   margin-bottom: 4px;
 }
 
-.c0 {
-  display: block;
-  outline: none;
-  margin-left: auto;
-  margin-right: auto;
-  margin-top: 40px;
-  margin-bottom: 40px;
-  max-width: 200px;
-  max-height: 120px;
-}
-
-.c4 {
+.c3 {
   overflow: hidden;
   text-overflow: ellipsis;
   font-weight: 300;
@@ -515,7 +489,7 @@ exports[`teleport/components/Invite auth type "optional" should render form with
   text-align: center;
 }
 
-.c5 {
+.c4 {
   overflow: hidden;
   text-overflow: ellipsis;
   font-weight: 400;
@@ -526,18 +500,18 @@ exports[`teleport/components/Invite auth type "optional" should render form with
   margin-bottom: 16px;
 }
 
-.c2 {
+.c1 {
   box-sizing: border-box;
   display: flex;
 }
 
-.c9 {
+.c8 {
   box-sizing: border-box;
   display: flex;
   align-items: center;
 }
 
-.c11 .react-select-container {
+.c10 .react-select-container {
   box-shadow: inset 0 2px 4px rgba(0,0,0,0.24);
   box-sizing: border-box;
   border: none;
@@ -551,8 +525,8 @@ exports[`teleport/components/Invite auth type "optional" should render form with
   border-radius: 4px;
 }
 
-.c11 .react-select__control,
-.c11 .react-select__control--is-focused {
+.c10 .react-select__control,
+.c10 .react-select__control--is-focused {
   min-height: 40px;
   height: 40px;
   background-color: transparent;
@@ -563,89 +537,85 @@ exports[`teleport/components/Invite auth type "optional" should render form with
   box-shadow: none;
 }
 
-.c11 .react-select__control:hover,
-.c11 .react-select__control--is-focused:hover {
+.c10 .react-select__control:hover,
+.c10 .react-select__control--is-focused:hover {
   border-color: transparent;
   cursor: pointer;
 }
 
-.c11 .react-select__option:hover {
+.c10 .react-select__option:hover {
   cursor: pointer;
   background-color: #eceff1;
 }
 
-.c11 .react-select__option--is-focused {
+.c10 .react-select__option--is-focused {
   background-color: #eceff1;
 }
 
-.c11 .react-select__option--is-selected {
+.c10 .react-select__option--is-selected {
   background-color: #cfd8dc;
   color: inherit;
 }
 
-.c11 .react-select__option--is-selected:hover {
+.c10 .react-select__option--is-selected:hover {
   background-color: #cfd8dc;
 }
 
-.c11 .react-select__menu {
+.c10 .react-select__menu {
   margin-top: 0px;
 }
 
-.c11 .react-select__indicator-separator {
+.c10 .react-select__indicator-separator {
   display: none;
 }
 
-.c11 .react-select__loading-indicator {
+.c10 .react-select__loading-indicator {
   display: none;
 }
 
-.c11 .react-select--is-disabled .react-select__single-value,
-.c11 .react-select--is-disabled .react-select__placeholder {
+.c10 .react-select--is-disabled .react-select__single-value,
+.c10 .react-select--is-disabled .react-select__placeholder {
   color: rgba(0,0,0,0.24);
 }
 
-.c11 .react-select--is-disabled .react-select__indicator {
+.c10 .react-select--is-disabled .react-select__indicator {
   color: rgba(0,0,0,0.14);
 }
 
 <div>
-  <img
-    class="c0"
-    src="file_stub"
-  />
   <form
-    class="c1"
+    class="c0"
     width="464px"
   >
     <div
-      class="c2"
+      class="c1"
     >
       <div
-        class="c3"
+        class="c2"
       >
         <div
-          class="c4"
+          class="c3"
           color="light"
         >
           Welcome to Teleport
         </div>
         <div
-          class="c5"
+          class="c4"
         >
           john@example.com
         </div>
         <div
-          class="c6"
+          class="c5"
         >
           <label
-            class="c7"
+            class="c6"
             font-size="0"
           >
             Password
           </label>
           <input
             autocomplete="off"
-            class="c8"
+            class="c7"
             color="text.onLight"
             placeholder="Password"
             type="password"
@@ -653,17 +623,17 @@ exports[`teleport/components/Invite auth type "optional" should render form with
           />
         </div>
         <div
-          class="c6"
+          class="c5"
         >
           <label
-            class="c7"
+            class="c6"
             font-size="0"
           >
             Confirm Password
           </label>
           <input
             autocomplete="off"
-            class="c8"
+            class="c7"
             color="text.onLight"
             placeholder="Confirm Password"
             type="password"
@@ -671,21 +641,21 @@ exports[`teleport/components/Invite auth type "optional" should render form with
           />
         </div>
         <div
-          class="c9"
+          class="c8"
         >
           <div
-            class="c10"
+            class="c9"
             data-testid="mfa-select"
             width="100%"
           >
             <label
-              class="c7"
+              class="c6"
               font-size="0"
             >
               Two-factor type
             </label>
             <div
-              class="c11"
+              class="c10"
             >
               <div
                 class="react-select-container css-2b097c-container"
@@ -740,7 +710,7 @@ exports[`teleport/components/Invite auth type "optional" should render form with
           </div>
         </div>
         <button
-          class="c12"
+          class="c11"
           kind="primary"
           width="100%"
         >

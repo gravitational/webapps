@@ -41,7 +41,9 @@ describe('teleport/components/Invite', () => {
     await act(async () =>
       render(
         <MemoryRouter initialEntries={['/web/invite/5182']}>
-          <Invite />
+          <Route path={cfg.routes.userInvite}>
+            <Invite />
+          </Route>
         </MemoryRouter>
       )
     );

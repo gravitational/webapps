@@ -15,6 +15,7 @@ limitations under the License.
 */
 
 import Invite, { ResetPassword } from './Invite';
+import InviteWrapper from './InviteWrapper';
 
 export default Invite;
-export { ResetPassword };
+export { ResetPassword, InviteWrapper };
