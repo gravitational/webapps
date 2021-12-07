@@ -16,18 +16,21 @@ limitations under the License.
 
 import { useAppContext } from 'teleterm/ui/appContextProvider';
 import * as types from 'teleterm/ui/types';
+import useAsync from 'teleterm/ui/useAsync';
 
 export default function useGateway(doc: types.DocumentGateway) {
   const ctx = useAppContext();
   const gateway = ctx.serviceClusters.findGateway(doc.uri);
 
-  const removeGateway = async () => {
+  const [result, removeGateway] = useAsync(async () => {
     await ctx.serviceClusters.removeGateway(doc.uri);
     ctx.serviceDocs.close(doc);
-  };
+  });
 
   return {
     gateway,
     removeGateway,
+    status: result.status,
+    statusText: result.statusText,
   };
 }

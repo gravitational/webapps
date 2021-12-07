@@ -35,10 +35,20 @@ export default function useExpanderClusters() {
     ctx.serviceClusters.syncClusters();
   }
 
+  function logout(clusterUri: string) {
+    ctx.serviceClusters.logout(clusterUri);
+  }
+
+  function remove(clusterUri: string) {
+    ctx.serviceClusters.removeCluster(clusterUri);
+  }
+
   return {
     clusterItems,
     addCluster,
     syncClusters,
+    logout,
+    remove,
     openLoginDialog(clusterUri: string) {
       ctx.serviceModals.openDialog({
         kind: 'cluster-login',

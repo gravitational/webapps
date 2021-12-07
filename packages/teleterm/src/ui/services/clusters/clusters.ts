@@ -41,6 +41,11 @@ export default class Service extends Store<State> {
     return cluster;
   }
 
+  async logout(clusterUri: string) {
+    await this.client.logout(clusterUri);
+    await this.syncCluster(clusterUri);
+  }
+
   async login(params: LoginParams, abortSignal: tsh.TshAbortSignal) {
     await this.client.login(params, abortSignal);
     await this.syncCluster(params.clusterUri);
@@ -56,6 +61,7 @@ export default class Service extends Store<State> {
     // do not await these
     this.syncDbs(clusterUri);
     this.syncServers(clusterUri);
+    this.syncGateways();
   }
 
   async syncClusters() {
@@ -75,6 +81,16 @@ export default class Service extends Store<State> {
   }
 
   async syncDbs(clusterUri: string) {
+    const cluster = this.state.clusters.get(clusterUri);
+    if (!cluster.connected) {
+      helpers.updateMap(clusterUri, this.state.dbs, []);
+      this.setState({
+        dbs: new Map(this.state.dbs),
+      });
+
+      return;
+    }
+
     this.setState({
       dbsSyncStatus: new Map(
         this.state.dbsSyncStatus.set(clusterUri, {
@@ -107,6 +123,16 @@ export default class Service extends Store<State> {
   }
 
   async syncServers(clusterUri: string) {
+    const cluster = this.state.clusters.get(clusterUri);
+    if (!cluster.connected) {
+      helpers.updateMap(clusterUri, this.state.servers, []);
+      this.setState({
+        servers: new Map(this.state.servers),
+      });
+
+      return;
+    }
+
     this.setState({
       serversSyncStatus: new Map(
         this.state.serversSyncStatus.set(clusterUri, {
@@ -136,6 +162,14 @@ export default class Service extends Store<State> {
         ),
       });
     }
+  }
+
+  async removeCluster(clusterUri: string) {
+    await this.client.removeCluster(clusterUri);
+    this.state.clusters.delete(clusterUri);
+    this.setState({
+      clusters: new Map(this.state.clusters),
+    });
   }
 
   async getAuthSettings(clusterUri: string) {

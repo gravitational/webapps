@@ -22,6 +22,7 @@ import useGateway from './useGateway';
 import { ThemeProviderTabs } from './../ThemeProvider';
 import * as types from '../types';
 import TextSelectCopy from 'teleport/components/TextSelectCopy';
+import * as Alerts from 'design/Alert';
 
 type Props = {
   visible: boolean;
@@ -30,7 +31,7 @@ type Props = {
 
 export default function DocumentGateway(props: Props) {
   const { doc, visible } = props;
-  const { gateway, removeGateway } = useGateway(doc);
+  const { gateway, status, statusText, removeGateway } = useGateway(doc);
 
   return (
     <ThemeProviderTabs>
@@ -44,7 +45,7 @@ export default function DocumentGateway(props: Props) {
               Close Gateway
             </ButtonSecondary>
           </Flex>
-
+          {status === 'error' && <Alerts.Danger mb={5} children={statusText} />}
           <Text bold>Database</Text>
           <Flex
             bg={'primary.dark'}
