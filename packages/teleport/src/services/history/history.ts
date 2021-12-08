@@ -73,7 +73,11 @@ const history = {
   ensureBaseUrl(url: string) {
     url = url || '';
     if (url.indexOf(cfg.baseUrl) !== 0) {
-      url = cfg.baseUrl + url;
+      if (url.startsWith('/')) {
+        url = `${cfg.baseUrl}${url}`;
+      } else {
+        url = `${cfg.baseUrl}/${url}`;
+      }
     }
 
     return url;
