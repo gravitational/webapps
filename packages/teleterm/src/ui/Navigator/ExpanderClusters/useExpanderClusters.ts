@@ -43,9 +43,37 @@ export default function useExpanderClusters() {
     ctx.serviceClusters.removeCluster(clusterUri);
   }
 
+  function openContextMenu(cluster: ClusterNavItem) {
+    return () => {
+      ctx.mainProcessClient.openClusterContextMenu({
+        isClusterConnected: cluster.connected,
+        onLogin() {
+          ctx.serviceModals.openDialog({
+            kind: 'cluster-login',
+            clusterUri: cluster.uri,
+          });
+        },
+        onLogout() {
+          ctx.serviceClusters.logout(cluster.uri);
+        },
+        onRemove() {
+          ctx.serviceModals.openDialog({
+            kind: 'cluster-remove',
+            clusterUri: cluster.uri,
+            clusterTitle: cluster.title,
+          });
+        },
+        onRefresh() {
+          ctx.serviceClusters.syncCluster(cluster.uri);
+        },
+      });
+    };
+  }
+
   return {
     clusterItems,
     addCluster,
+    openContextMenu,
     syncClusters,
     logout,
     remove,

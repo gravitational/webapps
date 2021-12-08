@@ -20,6 +20,7 @@ import ClusterAdd from 'teleterm/ui/ClusterAdd';
 import ClusterLogin from 'teleterm/ui/ClusterLogin';
 import GatewayCreate from 'teleterm/ui/GatewayCreate';
 import ServerConnect from 'teleterm/ui/ServerConnect';
+import ClusterRemove from '../ClusterRemove/ClusterRemove';
 
 export default function ModalsHost() {
   const { serviceModals } = useAppContext();
@@ -33,6 +34,16 @@ export default function ModalsHost() {
     return (
       <ClusterLogin
         clusterUri={dialog.clusterUri}
+        onClose={() => serviceModals.closeDialog()}
+      />
+    );
+  }
+
+  if (dialog.kind === 'cluster-remove') {
+    return (
+      <ClusterRemove
+        clusterUri={dialog.clusterUri}
+        clusterTitle={dialog.clusterTitle}
         onClose={() => serviceModals.closeDialog()}
       />
     );

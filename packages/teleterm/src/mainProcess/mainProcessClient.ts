@@ -1,3 +1,5 @@
+import { openClusterContextMenu } from './clusterContextMenu';
+
 const { ipcRenderer } = require('electron');
 import { MainProcessClient } from './types';
 
@@ -9,5 +11,6 @@ export default function createMainProcessClient(): MainProcessClient {
     openContextMenu() {
       return ipcRenderer.send('main-process-open-context-menu');
     },
+    openClusterContextMenu
   };
 }

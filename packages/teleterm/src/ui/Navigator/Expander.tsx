@@ -36,12 +36,12 @@ const Expander: React.FC = props => {
 };
 
 export const ExpanderHeader: React.FC<ExpanderHeaderProps> = props => {
-  const { children, ...styles } = props;
+  const { onContextMenu, children, ...styles } = props;
   const ctx = React.useContext(AccordingContext);
   const ArrowIcon = ctx.expanded ? Icons.ArrowDown : Icons.ArrowRight;
 
   return (
-    <StyledHeader {...styles} onClick={ctx.toggle}>
+    <StyledHeader {...styles} onClick={ctx.toggle} onContextMenu={onContextMenu}>
       <ArrowIcon mr="2" color="inherit" style={{ fontSize: '12px' }} />
       <Flex flex="1">{children}</Flex>
     </StyledHeader>
@@ -107,5 +107,6 @@ type AccordingContextState = {
 
 type ExpanderHeaderProps = {
   onClick?: () => void;
+  onContextMenu?: () => void;
   [key: string]: any;
 };

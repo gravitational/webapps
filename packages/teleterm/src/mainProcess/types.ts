@@ -1,3 +1,5 @@
+import { ClusterContextMenuOptions } from './clusterContextMenu';
+
 export type RuntimeSettings = {
   isDev: boolean;
   userDataDir: string;
@@ -15,6 +17,7 @@ export type RuntimeSettings = {
 export type MainProcessClient = {
   getRuntimeSettings(): RuntimeSettings;
   openContextMenu(): void;
+  openClusterContextMenu(options: ClusterContextMenuOptions);
 };
 
 export type Platform = NodeJS.Platform;
