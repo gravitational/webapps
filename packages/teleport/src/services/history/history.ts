@@ -48,39 +48,32 @@ const history = {
     window.location.reload();
   },
 
-  goBack(number: number) {
-    this.original().goBack(number);
-  },
-
   goToLogin(rememberLocation = false) {
     let url = cfg.routes.login;
     if (rememberLocation) {
-      let redirectUrl = _inst.createHref(_inst.location);
-      redirectUrl = this.ensureKnownRoute(redirectUrl);
-      redirectUrl = this.ensureBaseUrl(redirectUrl);
-      url = `${url}?redirect_uri=${redirectUrl}`;
+      const { search, pathname } = _inst.location;
+      const knownRoute = this.ensureKnownRoute(pathname);
+      const knownRedirect = this.ensureBaseUrl(knownRoute);
+      const query = search ? encodeURIComponent(search) : '';
+
+      url = `${url}?redirect_uri=${knownRedirect}${query}`;
     }
 
     this._pageRefresh(url);
   },
 
   getRedirectParam() {
-    return getUrlParameter(
-      'redirect_uri',
-      this.original().location.search,
-      true /* preserve filter query values */
-    );
+    return getUrlParameter('redirect_uri', this.original().location.search);
   },
 
-  ensureKnownRoute(url = '') {
-    url = this._canPush(url) ? url : cfg.routes.root;
-    return url;
+  ensureKnownRoute(route = '') {
+    return this._canPush(route) ? route : cfg.routes.root;
   },
 
   ensureBaseUrl(url: string) {
     url = url || '';
     if (url.indexOf(cfg.baseUrl) !== 0) {
-      url = withBaseUrl(url);
+      url = cfg.baseUrl + url;
     }
 
     return url;
@@ -95,13 +88,17 @@ const history = {
   },
 
   _canPush(route: string) {
-    route = route || '';
-    let routes = this.getRoutes();
-    if (route.indexOf(cfg.baseUrl) === 0) {
-      route = route.replace(cfg.baseUrl, '');
-    }
+    const knownRoutes = this.getRoutes();
+    const { pathname } = new URL(this.ensureBaseUrl(route));
 
-    return routes.some(match(route));
+    const match = (known: string) =>
+      // only match against pathname
+      matchPath(pathname, {
+        path: known,
+        exact: true,
+      });
+
+    return knownRoutes.some(match);
   },
 
   _pageRefresh(route: string) {
@@ -109,40 +106,10 @@ const history = {
   },
 };
 
-const withBaseUrl = (url: string) => cfg.baseUrl + url;
-
-const match = (url: string) => (route: string) => {
-  return matchPath(url, { path: route });
-};
-
 export default history;
 
-// regexFilterQueryParam is a regex to split a path into two groups.
-// First group captures anything before the filter param as the path we will search
-// for the target query param. The second group captures the first filter param and
-// anything else following it we assume is part of the filter.
-const regexFilterQueryParam = /(?<pathToSearch>.+?)(?<pathWithFilter>\?filter=.*)/;
-
-export function getUrlParameter(name = '', path = '', preserveFilter = false) {
-  let pathToSearch = path;
-  let pathWithFilter = '';
-
-  // We preserve the filter b/c it contains un-encoded char seperator's
-  // that we use to determine different filters. Running it through
-  // URLSearchParams will decode encoded values and other unexpected
-  // changes like "+" is converted to space.
-  if (preserveFilter) {
-    const match = regexFilterQueryParam.exec(path);
-    pathToSearch = match?.groups.pathToSearch ?? path;
-    pathWithFilter = match?.groups.pathWithFilter ?? '';
-  }
-
-  const params = new URLSearchParams(pathToSearch);
-  const foundValue = params.get(name);
-
-  if (preserveFilter && foundValue && pathWithFilter) {
-    return `${foundValue}${pathWithFilter}`;
-  }
-
-  return foundValue || '';
+export function getUrlParameter(name = '', path = '') {
+  const params = new URLSearchParams(path);
+  const value = params.get(name);
+  return value || '';
 }
