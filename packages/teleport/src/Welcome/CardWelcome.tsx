@@ -16,23 +16,13 @@ limitations under the License.
 
 import React from 'react';
 import { Card, Box, Text, ButtonPrimary } from 'design';
-import cfg from 'teleport/config';
-import history from 'teleport/services/history';
 
 export default function CardWelcome({
-  tokenId,
-  passwordResetMode = false,
+  title,
+  subTitle,
+  btnText,
+  onClick,
 }: Props) {
-  const title = passwordResetMode ? 'Reset Password' : 'Welcome to Teleport';
-  const description = passwordResetMode
-    ? 'Please click the button below to begin recovery of your account'
-    : 'Please click the button below to create an account';
-  const buttonText = passwordResetMode ? 'Continue' : 'Get started';
-
-  const continueLink = passwordResetMode
-    ? cfg.getUserResetTokenContinueRoute(tokenId)
-    : cfg.getUserInviteTokenContinueRoute(tokenId);
-
   return (
     <Card bg="primary.light" my={6} mx="auto" width="464px">
       <Box p={6}>
@@ -40,15 +30,10 @@ export default function CardWelcome({
           {title}
         </Text>
         <Text typography="h5" mb={3} textAlign="center">
-          {description}
+          {subTitle}
         </Text>
-        <ButtonPrimary
-          width="100%"
-          mt={3}
-          size="large"
-          onClick={() => history.push(continueLink)}
-        >
-          {buttonText}
+        <ButtonPrimary width="100%" mt={3} size="large" onClick={onClick}>
+          {btnText}
         </ButtonPrimary>
       </Box>
     </Card>
@@ -56,6 +41,8 @@ export default function CardWelcome({
 }
 
 type Props = {
-  tokenId: string;
-  passwordResetMode?: boolean;
+  title: string;
+  subTitle: string;
+  btnText: string;
+  onClick(): void;
 };

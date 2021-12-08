@@ -20,10 +20,10 @@ import { screen, fireEvent, act, render } from 'design/utils/testing';
 import { Logger } from 'shared/libs/logger';
 import cfg from 'teleport/config';
 import auth from 'teleport/services/auth';
-import Invite from './Invite';
-import { AuthMfaOn, AuthMfaOptional } from './Invite.story';
+import Welcome from './Welcome';
+import { AuthMfaOn, AuthMfaOptional } from './Welcome.story';
 
-describe('teleport/components/Invite', () => {
+describe('teleport/components/Welcome', () => {
   beforeEach(() => {
     jest.spyOn(Logger.prototype, 'log').mockImplementation();
     jest.spyOn(auth, 'fetchPasswordToken').mockImplementation(async () => ({
@@ -42,7 +42,7 @@ describe('teleport/components/Invite', () => {
       render(
         <MemoryRouter initialEntries={['/web/invite/5182']}>
           <Route path={cfg.routes.userInvite}>
-            <Invite />
+            <Welcome />
           </Route>
         </MemoryRouter>
       )
@@ -189,7 +189,7 @@ function renderInvite(url = `/web/invite/5182/continue`) {
   render(
     <MemoryRouter initialEntries={[url]}>
       <Route path={cfg.routes.userInviteContinue}>
-        <Invite />
+        <Welcome />
       </Route>
     </MemoryRouter>
   );
