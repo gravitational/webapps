@@ -14,8 +14,8 @@
  * limitations under the License.
  */
 
-const role = require('raw-loader!./role.yaml');
+import role from 'raw-loader!./role.yaml';
 
-const templates = { role: role.default };
+const templates = { role };
 
 export default templates;
