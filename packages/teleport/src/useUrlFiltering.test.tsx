@@ -18,10 +18,10 @@ import React from 'react';
 import { Router } from 'react-router';
 import { createMemoryHistory } from 'history';
 import renderHook, { act } from 'design/utils/renderHook';
-import { Label, makeLabelTag } from 'teleport/services/resources';
-import useUrlFiltering, { Filterable, State } from './useUrlLabelFiltering';
+import { Label } from 'teleport/types';
+import useUrlFiltering, { Filterable, State } from './useUrlFiltering';
 
-test('filter flow: init, add, add onLabelClick, delete onLabelClick', () => {
+test('filtering data and applying labels', () => {
   const history = createMemoryHistory({ initialEntries: ['/test'] });
   jest.spyOn(history, 'replace');
 
@@ -39,61 +39,97 @@ test('filter flow: init, add, add onLabelClick, delete onLabelClick', () => {
   expect(hook.labels).toHaveLength(0);
   expect(hook.result).toHaveLength(data.length);
 
-  // Test add a filter.
-  const label1 = { name: 'env', value: 'roles:prod+1,prod+2, prod+3' };
-  act(() => hook.apply([label1]));
+  // Test add a label.
+  act(() => hook.applyLabels([label1]));
   hook = result.current;
 
-  // Test selected filters is updated.
+  // Test selected labels is updated.
   expect(hook.labels).toMatchObject([label1]);
   expect(hook.labels).toHaveLength(1);
 
   // Test data has been correctly filtered.
   expect(hook.result).toHaveLength(2);
+  expect(hook.result[0].labels).toContainEqual(label1);
+  expect(hook.result[1].labels).toContainEqual(label1);
 
-  // Test list of filtered data contains the filter.
-  expect(hook.result[0].tags).toContain(makeLabelTag(label1));
-  expect(hook.result[1].tags).toContain(makeLabelTag(label1));
-
-  // Test selected filter has been correctly encoded into url.
-  const encodedOption1 = {
-    name: encodeURIComponent(label1.name),
-    value: encodeURIComponent(label1.value),
-  };
-  let expectedURL = `/test?q=l=${encodedOption1.name}:${encodedOption1.value}`;
+  // Test selected label has been correctly encoded into url.
+  let expectedURL = `/test?q=l=${encodedLabel1.name}:${encodedLabel1.value}`;
   expect(history.replace).toHaveBeenCalledWith(expectedURL);
   jest.clearAllMocks();
 
-  // Test adding multiple filters.
+  // Test applying multiple labels.
   const label2 = { name: 'country', value: 'South Korea' };
-  act(() => hook.apply([label1, label2]));
+  act(() => hook.applyLabels([label1, label2]));
   hook = result.current;
 
-  // Test selected filters is updated.
+  // Test selected labels is updated.
   expect(hook.labels).toEqual(expect.arrayContaining([label1, label2]));
   expect(hook.labels).toHaveLength(2);
 
   // Test data has been correctly filtered.
   expect(hook.result).toHaveLength(1);
-  expect(hook.result[0].tags).toEqual(
-    expect.arrayContaining([makeLabelTag(label1), makeLabelTag(label2)])
+  expect(hook.result[0].labels).toEqual(
+    expect.arrayContaining([label1, label2])
   );
 
   // Test url has been encoded correctly.
-  const encodedOption2 = {
-    name: encodeURIComponent(label2.name),
-    value: encodeURIComponent(label2.value),
-  };
-  expectedURL = `/test?q=l=${encodedOption1.name}:${encodedOption1.value}+l=${encodedOption2.name}:${encodedOption2.value}`;
+  expectedURL = `/test?q=l=${encodedLabel1.name}:${encodedLabel1.value}+l=${encodedLabel2.name}:${encodedLabel2.value}`;
   expect(history.replace).toHaveBeenCalledWith(expectedURL);
 
   // Test empty array.
-  act(() => hook.apply([]));
+  act(() => hook.applyLabels([]));
   hook = result.current;
 
   expect(hook.labels).toHaveLength(0);
   expect(hook.result).toHaveLength(data.length);
   expect(history.replace).toHaveBeenCalledWith(`/test`);
+});
+
+test('label toggling', () => {
+  const baseUrl = `/test?q=l=${encodedLabel1.name}:${encodedLabel1.value}+l=${encodedLabel2.name}:${encodedLabel2.value}`;
+  const history = createMemoryHistory({ initialEntries: [baseUrl] });
+  jest.spyOn(history, 'replace');
+
+  let result;
+  act(() => {
+    result = renderHook(() => useUrlFiltering(data), {
+      wrapper: Wrapper,
+      wrapperProps: { history },
+    });
+  });
+
+  let hook: State = result.current;
+
+  // Test initial values.
+  expect(hook.labels).toHaveLength(2);
+  expect(hook.labels).toEqual(expect.arrayContaining([label1, label2]));
+  expect(hook.result).toHaveLength(1);
+  expect(hook.result[0].labels).toEqual(
+    expect.arrayContaining([label1, label2])
+  );
+
+  // Test toggling existing label (delete).
+  act(() => hook.toggleLabel(label2));
+  hook = result.current;
+
+  // Test existing label is removed.
+  expect(hook.labels).toEqual(expect.arrayContaining([label1]));
+  expect(hook.labels).toHaveLength(1);
+
+  // Test url has been updated correctly.
+  let expectedURL = `/test?q=l=${encodedLabel1.name}:${encodedLabel1.value}`;
+  expect(history.replace).toHaveBeenCalledWith(expectedURL);
+
+  // Test toggling new label (add).
+  act(() => hook.toggleLabel(label2));
+  hook = result.current;
+
+  // Test new label is added.
+  expect(hook.labels).toEqual(expect.arrayContaining([label1, label2]));
+  expect(hook.labels).toHaveLength(2);
+
+  // Test url has been updated correctly.
+  expect(history.replace).toHaveBeenCalledWith(baseUrl);
 });
 
 describe('test decoding of urls', () => {
@@ -136,28 +172,28 @@ describe('test decoding of urls', () => {
     },
     {
       name: 'unknown filter type',
-      url: `/test?q=unknown=${enc('a')}:${enc('b')}`,
-      expect: [],
-    },
-    {
-      name: 'known with unknown filter type',
-      url: `/test?q=l=${enc('a')}:${enc('b')}+unknown=${enc('a')}:${enc('b')}`,
+      url: `/test?q=unknown=${enc('k')}:${enc('v')}`,
       expect: [],
     },
     {
       name: 'malformed label value (double delimiter)',
-      url: `/test?q=l=${enc('a')}:${enc('b')}:c`,
+      url: `/test?q=l=${enc('k')}:${enc('v')}:extra`,
       expect: [],
     },
     {
+      name: 'skip unknown filter identifier',
+      url: `/test?q=l=${enc('k')}:${enc('v')}+unkwn=${enc('k2')}:${enc('v2')}`,
+      expect: [{ name: 'k', value: 'v' }],
+    },
+    {
       name: 'missing label delimiter',
-      url: `/test?q=l=${enc('a')}${enc('b')}`,
-      expect: [{ name: 'ab', value: '' }],
+      url: `/test?q=l=${enc('k')}${enc('v')}`,
+      expect: [{ name: 'kv', value: '' }],
     },
     {
       name: 'pre label delimiter',
-      url: `/test?q=l=:${enc('a')}${enc('b')}`,
-      expect: [{ name: '', value: 'ab' }],
+      url: `/test?q=l=:${enc('k')}${enc('v')}`,
+      expect: [{ name: '', value: 'kv' }],
     },
     {
       name: 'delimiters in encoded label does not affect unencoded delimiters',
@@ -165,7 +201,7 @@ describe('test decoding of urls', () => {
       expect: [{ name: 'l=b:c', value: ':d+e+f' }],
     },
     {
-      name: 'valid url',
+      name: 'valid query',
       url: `
        /test?q=l=${enc('k')}:${enc('v')}+l=${enc('k2')}:${enc('v2')}`,
       expect: [
@@ -174,7 +210,7 @@ describe('test decoding of urls', () => {
       ],
     },
     {
-      name: 'valid url with blank label identifiers',
+      name: 'ignore blank label identifiers',
       url: `
        /test?q=l=${enc('k')}:${enc('v')}+l=${enc('k2')}:${enc('v2')}+l=+l=`,
       expect: [
@@ -207,25 +243,21 @@ function Wrapper(props: any) {
   return <Router history={props.history}>{props.children}</Router>;
 }
 
-const labels1: Label[] = [
-  { name: 'env', value: 'roles:prod+1,prod+2, prod+3' },
-];
-
-const labels2: Label[] = [
-  { name: 'env', value: 'roles:prod+1,prod+2, prod+3' },
-  { name: 'country', value: 'South Korea' },
-];
-
-const labels3: Label[] = [{ name: 'no', value: 'match' }];
-
+const label1: Label = { name: 'env', value: 'roles:prod+1,prod+2, prod+3' };
+const label2: Label = { name: 'country', value: 'South Korea' };
+const label3: Label = { name: 'no', value: 'match' };
 const data: Filterable[] = [
-  {
-    tags: labels1.map(makeLabelTag),
-  },
-  {
-    tags: labels2.map(makeLabelTag),
-  },
-  {
-    tags: labels3.map(makeLabelTag),
-  },
+  { labels: [label1] },
+  { labels: [label1, label2] },
+  { labels: [label3] },
 ];
+
+const encodedLabel1 = {
+  name: encodeURIComponent(label1.name),
+  value: encodeURIComponent(label1.value),
+};
+
+const encodedLabel2 = {
+  name: encodeURIComponent(label2.name),
+  value: encodeURIComponent(label2.value),
+};

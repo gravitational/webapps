@@ -16,7 +16,8 @@
 
 import { useMemo } from 'react';
 import { useLocation, useHistory } from 'react-router';
-import { Label, LabelTag, makeLabelTag } from 'teleport/services/resources';
+import { makeLabelTag } from 'teleport/components/formatters';
+import { Label } from 'teleport/types';
 
 // QUERY_PARAM_FILTER is the url query parameter name for filters.
 const QUERY_PARAM_FILTER = '?q=';
@@ -24,20 +25,39 @@ const QUERY_PARAM_FILTER = '?q=';
 // FILTER_TYPE_LABEL is the filter identifier name for a label in a filter query.
 const FILTER_TYPE_LABEL = 'l=';
 
-export default function useUrlLabelFiltering<T extends Filterable>(data: T[]) {
+export default function useUrlFiltering<T extends Filterable>(data: T[]) {
   const history = useHistory();
   const { search, pathname } = useLocation();
   const labels = useMemo<Label[]>(() => getLabelsFromUrl(search), [search]);
   const result = useMemo(() => filterData(data, labels), [data, labels]);
 
-  function apply(labels: Label[]) {
+  function applyLabels(labels: Label[]) {
     history.replace(getEncodedUrl(labels, pathname));
+  }
+
+  // toggleLabel removes an existing label from the
+  // labels list, else adds new label to list.
+  function toggleLabel(label: Label) {
+    let modifiedList = [...labels];
+    const index = labels.findIndex(
+      o => o.name === label.name && o.value === label.value
+    );
+
+    if (index > -1) {
+      // remove the label
+      modifiedList.splice(index, 1);
+    } else {
+      modifiedList = [...labels, label];
+    }
+
+    applyLabels(modifiedList);
   }
 
   return {
     labels,
     result,
-    apply,
+    applyLabels,
+    toggleLabel,
   };
 }
 
@@ -84,9 +104,6 @@ function getLabelsFromUrl(search: string): Label[] {
 
       continue;
     }
-
-    // Abort if undefined filter types found among query.
-    return [];
   }
 
   return labels;
@@ -102,7 +119,9 @@ function filterData<T extends Filterable>(
   }
 
   return data.filter(obj =>
-    labels.every(l => obj.tags.toString().includes(makeLabelTag(l)))
+    labels.every(l =>
+      obj.labels.map(makeLabelTag).toString().includes(makeLabelTag(l))
+    )
   );
 }
 
@@ -133,7 +152,7 @@ function getEncodedUrl(labels: Label[], pathname = '') {
 }
 
 export type Filterable = {
-  tags: LabelTag[];
+  labels: Label[];
 };
 
-export type State = ReturnType<typeof useUrlLabelFiltering>;
+export type State = ReturnType<typeof useUrlFiltering>;
