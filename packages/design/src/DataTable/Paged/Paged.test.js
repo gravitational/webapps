@@ -34,7 +34,7 @@ test('pagerPosition set to top', () => {
 
 test('pagerPosition default set to top and render search bar', () => {
   const { container } = render(
-    <Table pageSize={2} data={[]} onChangeSearchValue={() => null} />
+    <Table pageSize={2} data={[]} onSearchChange={() => null} />
   );
   expect(container.querySelectorAll('nav')).toHaveLength(1);
   screen.getByPlaceholderText(/search/i);
