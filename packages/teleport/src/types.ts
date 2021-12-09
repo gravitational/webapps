@@ -50,3 +50,8 @@ type FeatureRoute = {
   exact?: boolean;
   component: React.FunctionComponent;
 };
+
+export type Label = {
+  name: string;
+  value: string;
+};

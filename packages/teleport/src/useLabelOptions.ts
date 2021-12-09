@@ -15,7 +15,8 @@
  */
 
 import { useMemo } from 'react';
-import { Label, LabelTag, makeLabelTag } from 'teleport/services/resources';
+import { makeLabelTag } from 'teleport/components/formatters';
+import { Label } from 'teleport/types';
 
 export default function useLabelOptions<T extends Data>(
   data: T[],
@@ -24,42 +25,25 @@ export default function useLabelOptions<T extends Data>(
   const all = useMemo<Option[]>(() => makeOptionsFromData(data), [data]);
   const selected = useMemo<Option[]>(() => makeOptions(labels), [labels]);
 
-  // getUpdatedSelections removes an existing option from the
-  // selected options list, else adds the new option to list.
-  function getUpdatedSelections(label: Label) {
-    const tag = makeLabelTag(label);
-    let modifiedList = [...selected];
-    const index = selected.findIndex(o => o.value === tag);
-
-    if (index > -1) {
-      // remove the option
-      modifiedList.splice(index, 1);
-    } else {
-      modifiedList = [...selected, { label: tag, value: tag, obj: label }];
-    }
-
-    return modifiedList;
-  }
-
   return {
     all,
     selected,
-    getUpdatedSelections,
   };
 }
 
 function makeOptionsFromData<T extends Data>(data: T[] = []): Option[] {
   // Test a tags and labels field exist.
-  if (!data.length || !data[0].tags || !data[0].labels) {
+  if (!data.length || !data[0].labels) {
     return [];
   }
 
   // Extract unique labels.
   const tagDict = {};
-  data.forEach(({ tags, labels }) => {
-    tags.forEach((tag, i) => {
+  data.forEach(({ labels }) => {
+    labels.forEach(label => {
+      const tag = makeLabelTag(label);
       if (!tagDict[tag]) {
-        tagDict[tag] = labels[i];
+        tagDict[tag] = label;
       }
     });
   });
@@ -77,15 +61,14 @@ function makeOptions(labels: Label[] = []): Option[] {
 }
 
 export type Option = {
-  value: LabelTag;
-  label: LabelTag;
+  value: string;
+  label: string;
 
   // obj preserves original data
   obj: Label;
 };
 
 export type Data = {
-  tags: LabelTag[];
   labels: Label[];
 };
 
