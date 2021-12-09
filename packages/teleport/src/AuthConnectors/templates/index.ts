@@ -14,7 +14,8 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-export const github = require('!raw-loader!./github.yaml');
+export const github = require('raw-loader!./github.yaml');
 
-const templates = { github };
+const templates = { github: github.default };
+
 export default templates;

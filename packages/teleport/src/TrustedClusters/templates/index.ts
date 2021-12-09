@@ -14,8 +14,8 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-const trusted_cluster = require('!raw-loader!./trusted_cluster_enterprise.yaml');
+const trusted_cluster = require('raw-loader!./trusted_cluster_enterprise.yaml');
 
-const templates = { trusted_cluster };
+const templates = { trusted_cluster: trusted_cluster.default };
 
 export default templates;
