@@ -30,10 +30,7 @@ const fakeClient = () => {
   client.init = () => {
     client.emit('init');
   };
-  client.connect = () => {
-    client.emit('connect');
-  };
-  client.resize = (w: number, h: number) => {};
+  client.resize = () => {};
   client.disconnect = () => {
     client.emit('disconnect');
   };
@@ -57,16 +54,16 @@ const props: State = {
   onInit: (cli: TdpClient, canvas: HTMLCanvasElement) => {
     fillGray(canvas);
   },
-  onConnect: () => {},
-  onRender: (ctx: CanvasRenderingContext2D, data: ImageData) => {},
-  onDisconnect: () => {},
-  onError: (err: Error) => {},
-  onKeyDown: (cli: TdpClient, e: KeyboardEvent) => {},
-  onKeyUp: (cli: TdpClient, e: KeyboardEvent) => {},
-  onMouseMove: (cli: TdpClient, canvas: HTMLCanvasElement, e: MouseEvent) => {},
-  onMouseDown: (cli: TdpClient, e: MouseEvent) => {},
-  onMouseUp: (cli: TdpClient, e: MouseEvent) => {},
-  onMouseWheelScroll: (cli: TdpClient, e: WheelEvent) => {},
+  onConnect: () => null,
+  onRender: () => null,
+  onDisconnect: () => null,
+  onError: () => null,
+  onKeyDown: () => null,
+  onKeyUp: () => null,
+  onMouseMove: () => null,
+  onMouseDown: () => null,
+  onMouseUp: () => null,
+  onMouseWheelScroll: () => null,
 };
 
 export const Processing = () => (
