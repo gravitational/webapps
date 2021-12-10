@@ -32,7 +32,7 @@ export default function Container() {
 export const ExpanderClusters: React.FC<State> = props => {
   const {
     clusterItems,
-    openLoginDialog,
+    login,
     syncClusters,
     addCluster,
     logout,
@@ -63,7 +63,7 @@ export const ExpanderClusters: React.FC<State> = props => {
         key={i.uri}
         item={i}
         onRemove={remove}
-        onLogin={openLoginDialog}
+        onLogin={login}
         onContextMenu={openContextMenu(i)}
       />
     ));

@@ -1,5 +1,3 @@
-import { ClusterContextMenuOptions } from './clusterContextMenu';
-
 export type RuntimeSettings = {
   isDev: boolean;
   userDataDir: string;
@@ -21,3 +19,23 @@ export type MainProcessClient = {
 };
 
 export type Platform = NodeJS.Platform;
+
+export interface ClusterContextMenuOptions {
+  isClusterConnected: boolean;
+  onRefresh(): void;
+  onLogin(): void;
+  onLogout(): void;
+  onRemove(): void;
+}
+
+export enum ClusterContextMenuEventChannel {
+  ToMain = 'main-process-cluster-context-menu-to-main',
+  ToRenderer = 'main-process-cluster-context-menu-to-renderer',
+}
+
+export enum ClusterContextMenuEventType {
+  Refresh = 'Refresh',
+  Login = 'Login',
+  Logout = 'Logout',
+  Remove = 'Remove',
+}

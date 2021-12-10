@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-import React, { useEffect } from 'react';
+import React from 'react';
 import DialogConfirmation, {
   DialogContent,
   DialogFooter,
@@ -22,25 +22,20 @@ import DialogConfirmation, {
 } from 'design/DialogConfirmation';
 import * as Alerts from 'design/Alert';
 import { Text, ButtonPrimary, ButtonSecondary } from 'design';
-import { useAppContext } from 'teleterm/ui/appContextProvider';
-import useAsync from 'teleterm/ui/useAsync';
+import { State, Props, useClusterRemove } from './useClusterRemove';
 
-export default function ClusterRemove({
+export default function Container(props: Props) {
+  const state = useClusterRemove(props);
+  return <ClusterRemove {...state} />;
+}
+
+export function ClusterRemove({
+  status,
   onClose,
+  statusText,
   clusterTitle,
-  clusterUri,
-}: Props) {
-  const ctx = useAppContext();
-  const [{ status, statusText }, run] = useAsync(() => {
-    return ctx.serviceClusters.removeCluster(clusterUri);
-  });
-
-  useEffect(() => {
-    if (status === 'success') {
-      onClose();
-    }
-  }, [status]);
-
+  removeCluster,
+}: State) {
   return (
     <DialogConfirmation
       open={true}
@@ -67,7 +62,7 @@ export default function ClusterRemove({
           mr="3"
           onClick={e => {
             e.preventDefault();
-            run();
+            removeCluster();
           }}
         >
           Remove
@@ -85,9 +80,3 @@ export default function ClusterRemove({
     </DialogConfirmation>
   );
 }
-
-export type Props = {
-  onClose(): void;
-  clusterTitle: string;
-  clusterUri: string;
-};

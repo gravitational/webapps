@@ -1,28 +1,9 @@
 import { ipcMain, ipcRenderer, Menu } from 'electron';
-
-enum ClusterContextMenuEventChannel {
-  ToMain = 'main-process-cluster-context-menu-to-main',
-  ToRenderer = 'main-process-cluster-context-menu-to-renderer',
-}
-
-enum ClusterContextMenuEventType {
-  Refresh = 'Refresh',
-  Login = 'Login',
-  Logout = 'Logout',
-  Remove = 'Remove',
-}
-
-export interface ClusterContextMenuOptions {
-  isClusterConnected: boolean;
-
-  onRefresh(): void;
-
-  onLogin(): void;
-
-  onLogout(): void;
-
-  onRemove(): void;
-}
+import {
+  ClusterContextMenuEventChannel,
+  ClusterContextMenuEventType,
+  ClusterContextMenuOptions,
+} from './types';
 
 type MainClusterContextMenuOptions = Pick<
   ClusterContextMenuOptions,

@@ -26,16 +26,15 @@ export default function ModalsHost() {
   const { serviceModals } = useAppContext();
   const dialog = serviceModals.useState();
 
+  const handleClose = () => serviceModals.closeDialog();
+
   if (dialog.kind === 'add-cluster') {
-    return <ClusterAdd onClose={() => serviceModals.closeDialog()} />;
+    return <ClusterAdd onClose={handleClose} />;
   }
 
   if (dialog.kind === 'cluster-login') {
     return (
-      <ClusterLogin
-        clusterUri={dialog.clusterUri}
-        onClose={() => serviceModals.closeDialog()}
-      />
+      <ClusterLogin clusterUri={dialog.clusterUri} onClose={handleClose} />
     );
   }
 
@@ -44,27 +43,17 @@ export default function ModalsHost() {
       <ClusterRemove
         clusterUri={dialog.clusterUri}
         clusterTitle={dialog.clusterTitle}
-        onClose={() => serviceModals.closeDialog()}
+        onClose={handleClose}
       />
     );
   }
 
   if (dialog.kind === 'create-gateway') {
-    return (
-      <GatewayCreate
-        targetUri={dialog.targetUri}
-        onClose={() => serviceModals.closeDialog()}
-      />
-    );
+    return <GatewayCreate targetUri={dialog.targetUri} onClose={handleClose} />;
   }
 
   if (dialog.kind === 'server-connect') {
-    return (
-      <ServerConnect
-        serverUri={dialog.serverUri}
-        onClose={() => serviceModals.closeDialog()}
-      />
-    );
+    return <ServerConnect serverUri={dialog.serverUri} onClose={handleClose} />;
   }
 
   return null;
