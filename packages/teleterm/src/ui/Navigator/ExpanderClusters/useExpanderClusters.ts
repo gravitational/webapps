@@ -35,12 +35,24 @@ export default function useExpanderClusters() {
     ctx.serviceClusters.syncClusters();
   }
 
+  function login(clusterUri: string) {
+    ctx.serviceModals.openDialog({
+      kind: 'cluster-login',
+      clusterUri,
+    });
+  }
+
   function logout(clusterUri: string) {
     ctx.serviceClusters.logout(clusterUri);
   }
 
   function remove(clusterUri: string) {
-    ctx.serviceClusters.removeCluster(clusterUri);
+    const cluster = ctx.serviceClusters.findCluster(clusterUri);
+    ctx.serviceModals.openDialog({
+      kind: 'cluster-remove',
+      clusterUri: cluster.uri,
+      clusterTitle: cluster.name,
+    });
   }
 
   function openContextMenu(cluster: ClusterNavItem) {
@@ -48,20 +60,13 @@ export default function useExpanderClusters() {
       ctx.mainProcessClient.openClusterContextMenu({
         isClusterConnected: cluster.connected,
         onLogin() {
-          ctx.serviceModals.openDialog({
-            kind: 'cluster-login',
-            clusterUri: cluster.uri,
-          });
+          login(cluster.uri);
         },
         onLogout() {
-          ctx.serviceClusters.logout(cluster.uri);
+          logout(cluster.uri);
         },
         onRemove() {
-          ctx.serviceModals.openDialog({
-            kind: 'cluster-remove',
-            clusterUri: cluster.uri,
-            clusterTitle: cluster.title,
-          });
+          remove(cluster.uri);
         },
         onRefresh() {
           ctx.serviceClusters.syncCluster(cluster.uri);
@@ -77,12 +82,7 @@ export default function useExpanderClusters() {
     syncClusters,
     logout,
     remove,
-    openLoginDialog(clusterUri: string) {
-      ctx.serviceModals.openDialog({
-        kind: 'cluster-login',
-        clusterUri,
-      });
-    },
+    login,
   };
 }
 
