@@ -24,9 +24,130 @@ import makeNodeBashCmd from './makeNodeBashCmd';
 
 const service = {
   fetchNodes(clusterId?: string) {
-    return api
-      .get(cfg.getClusterNodesUrl(clusterId))
-      .then(json => map(json.items, makeNode));
+    return api.get(cfg.getClusterNodesUrl(clusterId)).then(json =>
+      map(
+        [
+          {
+            tunnel: false,
+            id: '104',
+            clusterId: 'one',
+            hostname: 'fujedu',
+            addr: '172.10.1.20:3022',
+            tags: [
+              { name: 'cluster', value: 'one' },
+              { name: 'kernel', value: '4.15.0-51-generic' },
+              { name: 'env', value: 'dev' },
+              { name: 'country', value: 'South Korea' },
+              { name: 'auto-scaling', value: 'C169806600-356040269900000000x' },
+              { name: 'os', value: 'windows' },
+            ],
+          },
+          {
+            tunnel: false,
+            id: '170',
+            clusterId: 'one',
+            hostname: 'facuzguv',
+            addr: '172.10.1.1:3022',
+            tags: [
+              { name: 'cluster', value: 'one' },
+              { name: 'kernel', value: '4.15.0-51-generic' },
+              { name: 'env', value: 'dev' },
+              { name: 'country', value: 'France' },
+              {
+                name: 'auto-scaling',
+                value: 'C1909900699-364191671900000000x',
+              },
+              { name: 'os', value: 'ubuntu' },
+            ],
+          },
+          {
+            tunnel: false,
+            id: '192',
+            clusterId: 'one',
+            hostname: 'duzsevkig',
+            addr: '172.10.1.1:3022',
+            tags: [
+              { name: 'cluster', value: 'one' },
+              { name: 'kernel', value: '4.15.0-51-generic' },
+              { name: 'env', value: 'dev' },
+              { name: 'country', value: 'Spain' },
+              {
+                name: 'auto-scaling',
+                value: 'D3761902655-419789406800000000x',
+              },
+              { name: 'os', value: 'ubuntu' },
+            ],
+          },
+          {
+            tunnel: false,
+            id: '64',
+            clusterId: 'one',
+            hostname: 'kuhinur',
+            addr: '172.10.1.1:3022',
+            tags: [
+              { name: 'cluster', value: 'one' },
+              { name: 'kernel', value: '4.15.0-51-generic' },
+              { name: 'env', value: 'prod' },
+              { name: 'country', value: 'France' },
+              {
+                name: 'auto-scaling',
+                value: 'B1261967664-277726327900000000x',
+              },
+              { name: 'os', value: 'macOS' },
+            ],
+          },
+          {
+            tunnel: false,
+            id: '81',
+            clusterId: 'one',
+            hostname: 'zebpecda',
+            addr: '172.10.1.1:3022',
+            tags: [
+              { name: 'cluster', value: 'one' },
+              { name: 'kernel', value: '4.15.0-51-generic' },
+              { name: 'env', value: 'dev' },
+              { name: 'country', value: 'Italy' },
+              { name: 'auto-scaling', value: 'C332530774-338276715300000000x' },
+              { name: 'os', value: 'windows' },
+            ],
+          },
+          {
+            tunnel: true,
+            id: '81',
+            clusterId: 'one',
+            hostname: 'zebpecda',
+            addr: '172.10.1.1:3022',
+            tags: [
+              { name: 'cluster', value: 'one' },
+              { name: 'kernel', value: '4.15.0-51-generic' },
+              { name: 'env', value: 'dev' },
+              { name: 'country', value: 'France' },
+              {
+                name: 'auto-scaling',
+                value: 'C1147467770-127442811700000000x',
+              },
+              { name: 'os', value: 'macOS' },
+            ],
+          },
+          {
+            tunnel: true,
+            id: '81',
+            clusterId: 'one',
+            hostname: 'zebpecda',
+            addr: '172.10.1.1:3022',
+            tags: [
+              { name: 'cluster', value: 'one' },
+              { name: 'kernel', value: '4.15.0-51-generic' },
+              { name: 'env', value: 'dev' },
+              { name: 'country', value: 'Italy' },
+              { name: 'auto-scaling', value: 'A3154447987-86890676600000000x' },
+              { name: 'os', value: 'macOS' },
+            ],
+          },
+        ],
+        makeNode
+      )
+    );
   },
 
   createNodeBashCommand() {

@@ -32,6 +32,10 @@ import useNodes, { State } from './useNodes';
 import AddNode from './AddNode';
 import ButtonAdd from './ButtonAdd';
 
+import SelectFilter from 'teleport/components/SelectFilter';
+import useUrlFiltering from 'teleport/useUrlFiltering';
+import useLabelOptions, { Option } from 'teleport/useLabelOptions';
+
 export default function Container() {
   const teleCtx = useTeleport();
   const stickyCluster = useStickyClusterId();
@@ -54,6 +58,13 @@ export function Nodes(props: State) {
     searchValue,
     setSearchValue,
   } = props;
+  const filter = useUrlFiltering(nodes);
+  const options = useLabelOptions(nodes, filter.labels);
+
+  function applyFilters(opts: Option[]) {
+    const labels = opts.map(o => o.obj);
+    filter.applyLabels(labels);
+  }
 
   function onLoginSelect(e: React.MouseEvent, login: string, serverId: string) {
     e.preventDefault();
@@ -85,17 +96,14 @@ export function Nodes(props: State) {
       )}
       {hasNodes && (
         <>
-          <Flex
-            mb={4}
-            alignItems="center"
-            flex="0 0 auto"
-            justifyContent="space-between"
-          >
-            <InputSearch mr="3" onChange={setSearchValue} />
-            <QuickLaunch width="280px" onPress={onSshEnter} />
-          </Flex>
+          <SelectFilter
+            filters={options.all}
+            appliedFilters={options.selected}
+            applyFilters={applyFilters}
+          />
           <NodeList
-            nodes={nodes}
+            nodes={filter.result}
+            onLabelClick={filter.toggleLabel}
             searchValue={searchValue}
             onLoginMenuOpen={getNodeLoginOptions}
             onLoginSelect={onLoginSelect}

@@ -29,6 +29,8 @@ import {
 import Table from 'design/DataTable/Paged';
 import MenuSshLogin, { LoginItem } from 'shared/components/MenuSshLogin';
 import { Node } from 'teleport/services/nodes';
+import { makeLabelTag } from 'teleport/components/formatters';
+import { Label } from 'teleport/types';
 
 function NodeList(props: Props) {
   const {
@@ -37,6 +39,7 @@ function NodeList(props: Props) {
     onLoginMenuOpen,
     onLoginSelect,
     pageSize = 100,
+    onLabelClick,
   } = props;
   const [sortDir, setSortDir] = React.useState<Record<string, string>>({
     hostname: SortTypes.DESC,
@@ -45,7 +48,7 @@ function NodeList(props: Props) {
   function sortAndFilter(search) {
     const filtered = nodes.filter(obj =>
       isMatch(obj, search, {
-        searchableProps: ['hostname', 'addr', 'tags', 'tunnel'],
+        searchableProps: ['hostname', 'addr', 'labels', 'tunnel'],
         cb: searchAndFilterCb,
       })
     );
@@ -90,7 +93,10 @@ function NodeList(props: Props) {
           }
           cell={<AddressCell />}
         />
-        <Column header={<Cell>Labels</Cell>} cell={<LabelCell />} />
+        <Column
+          header={<Cell>Labels</Cell>}
+          cell={<LabelCell onLabelClick={onLabelClick} />}
+        />
         <Column
           header={<Cell />}
           cell={<LoginCell onOpen={onLoginMenuOpen} onSelect={onLoginSelect} />}
@@ -109,18 +115,24 @@ function searchAndFilterCb(
     return 'TUNNEL'.indexOf(searchValue) !== -1;
   }
 
-  if (propName === 'tags') {
+  if (propName === 'labels') {
     return targetValue.some(item => {
-      return item.toLocaleUpperCase().indexOf(searchValue) !== -1;
+      return makeLabelTag(item).toLocaleUpperCase().indexOf(searchValue) !== -1;
     });
   }
 }
 
-const LoginCell: React.FC<Required<{
-  onSelect?: (e: React.SyntheticEvent, login: string, serverId: string) => void;
-  onOpen: (serverId: string) => LoginItem[];
-  [key: string]: any;
-}>> = props => {
+const LoginCell: React.FC<
+  Required<{
+    onSelect?: (
+      e: React.SyntheticEvent,
+      login: string,
+      serverId: string
+    ) => void;
+    onOpen: (serverId: string) => LoginItem[];
+    [key: string]: any;
+  }>
+> = props => {
   const { rowIndex, data, onOpen, onSelect } = props;
   const { id } = data[rowIndex] as Node;
   const serverId = id;
@@ -170,9 +182,9 @@ function renderTunnel() {
 }
 
 function LabelCell(props) {
-  const { rowIndex, data } = props;
-  const { tags = [] } = data[rowIndex];
-  return renderLabelCell(tags);
+  const { rowIndex, data, onLabelClick } = props;
+  const { labels = [] } = data[rowIndex];
+  return renderLabelCell(labels, onLabelClick, makeLabelTag);
 }
 
 const StyledTable = styled(Table)`
@@ -187,6 +199,7 @@ type Props = {
   onLoginSelect(e: React.SyntheticEvent, login: string, serverId: string): void;
   pageSize?: number;
   searchValue: string;
+  onLabelClick(label: Label): void;
 };
 
 export default NodeList;
