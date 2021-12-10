@@ -133,7 +133,7 @@ test('label toggling', () => {
 });
 
 describe('test decoding of urls', () => {
-  const enc = s => encodeURIComponent(s);
+  const enc = encodeURIComponent;
 
   const tests: {
     name: string;
