@@ -11,78 +11,62 @@ type MainClusterContextMenuOptions = Pick<
 >;
 
 export function subscribeToClusterContextMenuEvent(): void {
-  ipcMain.on(
-    ClusterContextMenuEventChannel.ToMain,
+  ipcMain.handle(
+    ClusterContextMenuEventChannel,
     (event, options: MainClusterContextMenuOptions) => {
-      Menu.buildFromTemplate([
-        {
-          label: 'Refresh',
-          enabled: options.isClusterConnected,
-          click: () =>
-            event.reply(
-              ClusterContextMenuEventChannel.ToRenderer,
-              ClusterContextMenuEventType.Refresh
-            ),
-        },
-        {
-          type: 'separator',
-        },
-        {
-          label: 'Login',
-          enabled: !options.isClusterConnected,
-          click: () =>
-            event.reply(
-              ClusterContextMenuEventChannel.ToRenderer,
-              ClusterContextMenuEventType.Login
-            ),
-        },
-        {
-          label: 'Logout',
-          enabled: options.isClusterConnected,
-          click: () =>
-            event.reply(
-              ClusterContextMenuEventChannel.ToRenderer,
-              ClusterContextMenuEventType.Logout
-            ),
-        },
-        {
-          type: 'separator',
-        },
-        {
-          label: 'Remove',
-          click: () =>
-            event.reply(
-              ClusterContextMenuEventChannel.ToRenderer,
-              ClusterContextMenuEventType.Remove
-            ),
-        },
-      ]).popup();
+      return new Promise(resolve => {
+        Menu.buildFromTemplate([
+          {
+            label: 'Refresh',
+            enabled: options.isClusterConnected,
+            click: () => resolve(ClusterContextMenuEventType.Refresh),
+          },
+          {
+            type: 'separator',
+          },
+          {
+            label: 'Login',
+            enabled: !options.isClusterConnected,
+            click: () => resolve(ClusterContextMenuEventType.Login),
+          },
+          {
+            label: 'Logout',
+            enabled: options.isClusterConnected,
+            click: () => resolve(ClusterContextMenuEventType.Logout),
+          },
+          {
+            type: 'separator',
+          },
+          {
+            label: 'Remove',
+            click: () => resolve(ClusterContextMenuEventType.Remove),
+          },
+        ]).popup({
+          callback: () => resolve(undefined),
+        });
+      });
     }
   );
 }
 
-export function openClusterContextMenu(
+export async function openClusterContextMenu(
   options: ClusterContextMenuOptions
-): void {
-  ipcRenderer.removeAllListeners(ClusterContextMenuEventChannel.ToRenderer);
-  ipcRenderer.on(
-    ClusterContextMenuEventChannel.ToRenderer,
-    (event, eventType: ClusterContextMenuEventType) => {
-      switch (eventType) {
-        case ClusterContextMenuEventType.Refresh:
-          return options.onRefresh();
-        case ClusterContextMenuEventType.Login:
-          return options.onLogin();
-        case ClusterContextMenuEventType.Logout:
-          return options.onLogout();
-        case ClusterContextMenuEventType.Remove:
-          return options.onRemove();
-      }
-    }
-  );
-
+): Promise<void> {
   const mainOptions: MainClusterContextMenuOptions = {
     isClusterConnected: options.isClusterConnected,
   };
-  ipcRenderer.send(ClusterContextMenuEventChannel.ToMain, mainOptions);
+  const eventType = await ipcRenderer.invoke(
+    ClusterContextMenuEventChannel,
+    mainOptions
+  );
+  switch (eventType) {
+    case ClusterContextMenuEventType.Refresh:
+      return options.onRefresh();
+    case ClusterContextMenuEventType.Login:
+      return options.onLogin();
+    case ClusterContextMenuEventType.Logout:
+      return options.onLogout();
+    case ClusterContextMenuEventType.Remove:
+      return options.onRemove();
+  }
 }

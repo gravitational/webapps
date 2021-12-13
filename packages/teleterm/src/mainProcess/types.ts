@@ -28,10 +28,7 @@ export interface ClusterContextMenuOptions {
   onRemove(): void;
 }
 
-export enum ClusterContextMenuEventChannel {
-  ToMain = 'main-process-cluster-context-menu-to-main',
-  ToRenderer = 'main-process-cluster-context-menu-to-renderer',
-}
+export const ClusterContextMenuEventChannel = 'ClusterContextMenuEventChannel';
 
 export enum ClusterContextMenuEventType {
   Refresh = 'Refresh',
