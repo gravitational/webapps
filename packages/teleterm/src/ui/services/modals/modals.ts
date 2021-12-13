@@ -48,9 +48,16 @@ export interface DialogNewGateway {
   kind: 'create-gateway';
   targetUri: string;
 }
+
 export interface DialogClusterLogin {
   kind: 'cluster-login';
   clusterUri: string;
+}
+
+export interface DialogClusterRemove {
+  kind: 'cluster-remove';
+  clusterUri: string;
+  clusterTitle: string;
 }
 
 export interface DialogServerConnect {
@@ -63,4 +70,5 @@ export type Dialog =
   | DialogAddCluster
   | DialogClusterLogin
   | DialogNewGateway
-  | DialogServerConnect;
+  | DialogServerConnect
+  | DialogClusterRemove

@@ -16,4 +16,6 @@ export class MockTshClient implements types.TshClient {
     params: types.LoginParams,
     abortSignal?: types.TshAbortSignal
   ) => Promise<void>;
+  logout: (params: types.LogoutParams) => Promise<void>;
+  removeCluster: (clusterUri: string) => Promise<void>;
 }

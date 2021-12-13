@@ -18,7 +18,7 @@ const ptyServiceClient = createPtyService(runtimeSettings);
 
 contextBridge.exposeInMainWorld('electron', {
   mainProcessClient,
-  tshClient: tshClient,
+  tshClient,
   ptyServiceClient,
   createLogger,
 } as ElectronGlobals);
