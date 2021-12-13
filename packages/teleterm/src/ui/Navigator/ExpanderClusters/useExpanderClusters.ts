@@ -35,26 +35,54 @@ export default function useExpanderClusters() {
     ctx.serviceClusters.syncClusters();
   }
 
+  function login(clusterUri: string) {
+    ctx.serviceModals.openDialog({
+      kind: 'cluster-login',
+      clusterUri,
+    });
+  }
+
   function logout(clusterUri: string) {
     ctx.serviceClusters.logout(clusterUri);
   }
 
   function remove(clusterUri: string) {
-    ctx.serviceClusters.removeCluster(clusterUri);
+    const cluster = ctx.serviceClusters.findCluster(clusterUri);
+    ctx.serviceModals.openDialog({
+      kind: 'cluster-remove',
+      clusterUri: cluster.uri,
+      clusterTitle: cluster.name,
+    });
+  }
+
+  function openContextMenu(cluster: ClusterNavItem) {
+    return () => {
+      ctx.mainProcessClient.openClusterContextMenu({
+        isClusterConnected: cluster.connected,
+        onLogin() {
+          login(cluster.uri);
+        },
+        onLogout() {
+          logout(cluster.uri);
+        },
+        onRemove() {
+          remove(cluster.uri);
+        },
+        onRefresh() {
+          ctx.serviceClusters.syncCluster(cluster.uri);
+        },
+      });
+    };
   }
 
   return {
     clusterItems,
     addCluster,
+    openContextMenu,
     syncClusters,
     logout,
     remove,
-    openLoginDialog(clusterUri: string) {
-      ctx.serviceModals.openDialog({
-        kind: 'cluster-login',
-        clusterUri,
-      });
-    },
+    login,
   };
 }
 

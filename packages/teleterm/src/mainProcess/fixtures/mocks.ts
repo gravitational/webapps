@@ -18,4 +18,6 @@ export class MockMainProcessClient implements MainProcessClient {
   }
 
   openContextMenu() {}
+
+  openClusterContextMenu() {}
 }

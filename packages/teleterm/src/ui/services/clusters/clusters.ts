@@ -170,6 +170,7 @@ export default class Service extends Store<State> {
     this.setState({
       clusters: new Map(this.state.clusters),
     });
+    this.cleanUpClusterResources(clusterUri);
   }
 
   async getAuthSettings(clusterUri: string) {
@@ -251,6 +252,23 @@ export default class Service extends Store<State> {
 
   useState() {
     return useStore(this).state;
+  }
+
+  private cleanUpClusterResources(clusterUri: string) {
+    this.findDbs(clusterUri).forEach(db => {
+      this.state.dbs.delete(db.uri);
+    });
+    this.findServers(clusterUri).forEach(server => {
+      this.state.servers.delete(server.uri);
+    });
+    this.state.serversSyncStatus.delete(clusterUri);
+    this.state.dbsSyncStatus.delete(clusterUri);
+    this.setState({
+      servers: new Map(this.state.servers),
+      dbs: new Map(this.state.dbs),
+      serversSyncStatus: new Map(this.state.serversSyncStatus),
+      dbsSyncStatus: new Map(this.state.dbsSyncStatus),
+    });
   }
 }
 

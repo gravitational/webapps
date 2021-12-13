@@ -32,11 +32,12 @@ export default function Container() {
 export const ExpanderClusters: React.FC<State> = props => {
   const {
     clusterItems,
-    openLoginDialog,
+    login,
     syncClusters,
     addCluster,
     logout,
     remove,
+    openContextMenu,
   } = props;
 
   const handleSyncClick = (e: React.BaseSyntheticEvent) => {
@@ -52,7 +53,7 @@ export const ExpanderClusters: React.FC<State> = props => {
   const $onlineClusters = clusterItems
     .filter(i => i.connected)
     .map(i => (
-      <ClusterItem key={i.uri} item={i} onRemove={remove} onLogout={logout} />
+      <ClusterItem key={i.uri} item={i} onRemove={remove} onLogout={logout} onContextMenu={openContextMenu(i)} />
     ));
 
   const $offlineClusters = clusterItems
@@ -62,7 +63,8 @@ export const ExpanderClusters: React.FC<State> = props => {
         key={i.uri}
         item={i}
         onRemove={remove}
-        onLogin={openLoginDialog}
+        onLogin={login}
+        onContextMenu={openContextMenu(i)}
       />
     ));
 
@@ -102,6 +104,7 @@ type ClusterItemProps = {
   item: ClusterNavItem;
   onLogout(string): void;
   onRemove(string): void;
+  onContextMenu(): void;
 };
 
 const ClusterItem: React.FC<ClusterItemProps> = props => {
@@ -119,7 +122,7 @@ const ClusterItem: React.FC<ClusterItemProps> = props => {
 
   return (
     <Expander>
-      <ExpanderHeader pl={5}>
+      <ExpanderHeader pl={5}  onContextMenu={props.onContextMenu}>
         <Flex
           alignItems="center"
           justifyContent="space-between"
@@ -150,6 +153,7 @@ const ClusterOfflineItem: React.FC<{
   item: ClusterNavItem;
   onLogin(string): void;
   onRemove(string): void;
+  onContextMenu(): void;
 }> = props => {
   const { item } = props;
 
@@ -165,7 +169,7 @@ const ClusterOfflineItem: React.FC<{
 
   return (
     <Expander>
-      <ExpanderHeader pl={5} color="grey.500">
+      <ExpanderHeader pl={5} color="grey.500" onContextMenu={props.onContextMenu}>
         <Flex
           alignItems="center"
           justifyContent="space-between"

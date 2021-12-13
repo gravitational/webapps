@@ -4,6 +4,7 @@ import { ChildProcess, spawn } from 'child_process';
 import { RuntimeSettings } from 'teleterm/types';
 import { getAssetPath } from './runtimeSettings';
 import { Logger } from 'teleterm/services/logger';
+import { subscribeToClusterContextMenuEvent } from './clusterContextMenu';
 
 type Options = {
   settings: RuntimeSettings;
@@ -97,5 +98,7 @@ export default class MainProcess {
         },
       ]).popup();
     });
+
+    subscribeToClusterContextMenuEvent();
   }
 }
