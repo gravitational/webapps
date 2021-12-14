@@ -24,11 +24,13 @@ import {
   Cell,
   TextCell,
   SortTypes,
-  renderLabelCell,
 } from 'design/DataTable';
 import Table from 'design/DataTable/Paged';
 import MenuSshLogin, { LoginItem } from 'shared/components/MenuSshLogin';
 import { Node } from 'teleport/services/nodes';
+import LabelFilterCell from 'teleport/components/LabelFilterCell';
+import { makeLabelTag } from 'teleport/components/formatters';
+import { Filter } from 'teleport/types';
 
 function NodeList(props: Props) {
   const {
@@ -37,6 +39,7 @@ function NodeList(props: Props) {
     onSearchChange,
     onLoginMenuOpen,
     onLoginSelect,
+    onLabelClick,
     pageSize = 100,
   } = props;
   const [sortDir, setSortDir] = React.useState<Record<string, string>>({
@@ -46,7 +49,7 @@ function NodeList(props: Props) {
   function sortAndFilter(search) {
     const filtered = nodes.filter(obj =>
       isMatch(obj, search, {
-        searchableProps: ['hostname', 'addr', 'tags', 'tunnel'],
+        searchableProps: ['hostname', 'addr', 'labels', 'tunnel'],
         cb: searchAndFilterCb,
       })
     );
@@ -96,7 +99,10 @@ function NodeList(props: Props) {
           }
           cell={<AddressCell />}
         />
-        <Column header={<Cell>Labels</Cell>} cell={<LabelCell />} />
+        <Column
+          header={<Cell>Labels</Cell>}
+          cell={<LabelCell onLabelClick={onLabelClick} />}
+        />
         <Column
           header={<Cell />}
           cell={<LoginCell onOpen={onLoginMenuOpen} onSelect={onLoginSelect} />}
@@ -115,9 +121,11 @@ function searchAndFilterCb(
     return 'TUNNEL'.indexOf(searchValue) !== -1;
   }
 
-  if (propName === 'tags') {
-    return targetValue.some(item => {
-      return item.toLocaleUpperCase().indexOf(searchValue) !== -1;
+  if (propName === 'labels') {
+    return targetValue.some(label => {
+      return (
+        makeLabelTag(label).toLocaleUpperCase().indexOf(searchValue) !== -1
+      );
     });
   }
 }
@@ -182,9 +190,9 @@ function renderTunnel() {
 }
 
 function LabelCell(props) {
-  const { rowIndex, data } = props;
-  const { tags = [] } = data[rowIndex];
-  return renderLabelCell(tags);
+  const { rowIndex, data, onLabelClick } = props;
+  const { labels = [] } = data[rowIndex];
+  return <LabelFilterCell labels={labels} onLabelClick={onLabelClick} />;
 }
 
 const StyledTable = styled(Table)`
@@ -200,6 +208,7 @@ type Props = {
   pageSize?: number;
   search: string;
   onSearchChange: React.Dispatch<React.SetStateAction<string>>;
+  onLabelClick(filter: Filter): void;
 };
 
 export default NodeList;

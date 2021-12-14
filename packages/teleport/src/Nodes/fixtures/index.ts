@@ -23,7 +23,10 @@ export const nodes: Node[] = [
     clusterId: 'one',
     hostname: 'fujedu',
     addr: '172.10.1.20:3022',
-    tags: ['cluster: one', 'kernel: 4.15.0-51-generic'],
+    labels: [
+      { name: 'cluster', value: 'one' },
+      { name: 'kernel', value: '4.15.0-51-generic' },
+    ],
   },
   {
     tunnel: false,
@@ -31,7 +34,10 @@ export const nodes: Node[] = [
     clusterId: 'one',
     hostname: 'facuzguv',
     addr: '172.10.1.1:3022',
-    tags: ['cluster: one', 'kernel: 4.15.0-51-generic'],
+    labels: [
+      { name: 'cluster', value: 'two' },
+      { name: 'kernel', value: '4.15.0-51-generic' },
+    ],
   },
   {
     tunnel: false,
@@ -39,7 +45,10 @@ export const nodes: Node[] = [
     clusterId: 'one',
     hostname: 'duzsevkig',
     addr: '172.10.1.1:3022',
-    tags: ['cluster: one', 'kernel: 4.15.0-51-generic'],
+    labels: [
+      { name: 'cluster', value: 'two' },
+      { name: 'kernel', value: '4.15.0-51-generic' },
+    ],
   },
   {
     tunnel: false,
@@ -47,7 +56,10 @@ export const nodes: Node[] = [
     clusterId: 'one',
     hostname: 'kuhinur',
     addr: '172.10.1.1:3022',
-    tags: ['cluster: one', 'kernel: 4.15.0-51-generic'],
+    labels: [
+      { name: 'cluster', value: 'one' },
+      { name: 'kernel', value: '4.15.0-51-generic' },
+    ],
   },
   {
     tunnel: false,
@@ -55,7 +67,10 @@ export const nodes: Node[] = [
     clusterId: 'one',
     hostname: 'zebpecda',
     addr: '172.10.1.1:3022',
-    tags: ['cluster: one', 'kernel: 4.15.0-51-generic'],
+    labels: [
+      { name: 'cluster', value: 'one' },
+      { name: 'kernel', value: '4.15.0-51-generic' },
+    ],
   },
   {
     tunnel: true,
@@ -63,7 +78,10 @@ export const nodes: Node[] = [
     clusterId: 'one',
     hostname: 'zebpecda',
     addr: '172.10.1.1:3022',
-    tags: ['cluster: one', 'kernel: 4.15.0-51-generic'],
+    labels: [
+      { name: 'cluster', value: 'one' },
+      { name: 'kernel', value: '4.15.0-51-generic' },
+    ],
   },
   {
     tunnel: true,
@@ -71,7 +89,10 @@ export const nodes: Node[] = [
     clusterId: 'one',
     hostname: 'zebpecda',
     addr: '172.10.1.1:3022',
-    tags: ['cluster: one', 'kernel: 4.15.0-51-generic'],
+    labels: [
+      { name: 'cluster', value: 'three' },
+      { name: 'kernel', value: '4.15.0-51-generic' },
+    ],
   },
 ];
 

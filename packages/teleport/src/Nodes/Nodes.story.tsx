@@ -15,6 +15,7 @@ limitations under the License.
 */
 
 import React from 'react';
+import { MemoryRouter as Router } from 'react-router';
 import { Nodes } from './Nodes';
 import { State } from './useNodes';
 import { nodes } from './fixtures';
@@ -23,22 +24,28 @@ export default {
   title: 'Teleport/Nodes',
 };
 
-export const Loaded = () => <Nodes {...props} />;
+export const Loaded = () => <Router children={<Nodes {...props} />} />;
 
-export const Empty = () => <Nodes {...props} nodes={[]} />;
+export const Empty = () => (
+  <Router children={<Nodes {...props} nodes={[]} />} />
+);
 
 export const EmptyReadOnly = () => (
-  <Nodes {...props} nodes={[]} canCreate={false} />
+  <Router children={<Nodes {...props} nodes={[]} canCreate={false} />} />
 );
 
 export const Loading = () => (
-  <Nodes {...props} attempt={{ status: 'processing' }} />
+  <Router children={<Nodes {...props} attempt={{ status: 'processing' }} />} />
 );
 
 export const Failed = () => (
-  <Nodes
-    {...props}
-    attempt={{ status: 'failed', statusText: 'some error message' }}
+  <Router
+    children={
+      <Nodes
+        {...props}
+        attempt={{ status: 'failed', statusText: 'some error message' }}
+      />
+    }
   />
 );
 

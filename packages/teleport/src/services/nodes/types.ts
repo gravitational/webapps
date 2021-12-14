@@ -14,11 +14,13 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
+import { Label } from 'teleport/types';
+
 export interface Node {
   id: string;
   clusterId: string;
   hostname: string;
-  tags: string[];
+  labels: Label[];
   addr: string;
   tunnel: boolean;
 }

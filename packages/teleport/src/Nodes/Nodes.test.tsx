@@ -31,6 +31,7 @@ test('search filter works', () => {
       nodes={nodes}
       search={searchValue}
       onSearchChange={() => null}
+      onLabelClick={() => null}
     />
   );
 

@@ -25,6 +25,8 @@ import {
 import QuickLaunch from 'teleport/components/QuickLaunch';
 import Empty, { EmptyStateInfo } from 'teleport/components/Empty';
 import NodeList from 'teleport/components/NodeList';
+import SelectFilters from 'teleport/components/SelectFilters';
+import useUrlFiltering from 'teleport/useUrlFiltering';
 import useTeleport from 'teleport/useTeleport';
 import useStickyClusterId from 'teleport/useStickyClusterId';
 import useNodes, { State } from './useNodes';
@@ -53,6 +55,8 @@ export function Nodes(props: State) {
     searchValue,
     setSearchValue,
   } = props;
+
+  const filter = useUrlFiltering(nodes);
 
   function onLoginSelect(e: React.MouseEvent, login: string, serverId: string) {
     e.preventDefault();
@@ -89,12 +93,18 @@ export function Nodes(props: State) {
       )}
       {hasNodes && (
         <>
+          <SelectFilters
+            filters={filter.filters}
+            appliedFilters={filter.appliedFilters}
+            applyFilters={filter.applyFilters}
+          />
           <NodeList
-            nodes={nodes}
+            nodes={filter.result}
             search={searchValue}
             onSearchChange={setSearchValue}
             onLoginMenuOpen={getNodeLoginOptions}
             onLoginSelect={onLoginSelect}
+            onLabelClick={filter.toggleFilter}
           />
         </>
       )}
