@@ -23,7 +23,14 @@ import AppList from './AppList';
 test('correct launch url is generated for a selected role', () => {
   jest.spyOn(cfg, 'getAppLauncherRoute');
 
-  render(<AppList apps={apps} search="aws" onSearchChange={() => null} />);
+  render(
+    <AppList
+      apps={apps}
+      search="aws"
+      onSearchChange={() => null}
+      onLabelClick={() => null}
+    />
+  );
 
   const launchBtn = screen.queryByText(/launch/i);
 

@@ -14,13 +14,15 @@
  * limitations under the License.
  */
 
+import { Label } from 'teleport/types';
+
 export interface App {
   id: string;
   name: string;
   description: string;
   uri: string;
   publicAddr: string;
-  tags: string[];
+  labels: Label[];
   clusterId: string;
   launchUrl: string;
   fqdn: string;

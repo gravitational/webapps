@@ -24,6 +24,8 @@ import {
   FeatureHeaderTitle,
 } from 'teleport/components/Layout';
 import Empty, { EmptyStateInfo } from 'teleport/components/Empty';
+import SelectFilters from 'teleport/components/SelectFilters';
+import useUrlFiltering from 'teleport/useUrlFiltering';
 import AppList from './AppList';
 import AddApp from './AddApp';
 import ButtonAdd from './ButtonAdd';
@@ -49,6 +51,8 @@ export function Apps(props: State) {
     setSearchValue,
   } = props;
 
+  const filter = useUrlFiltering(apps);
+
   const isEmpty = attempt.status === 'success' && apps.length === 0;
   const hasApps = attempt.status === 'success' && apps.length > 0;
 
@@ -69,11 +73,19 @@ export function Apps(props: State) {
       )}
       {attempt.status === 'failed' && <Danger>{attempt.statusText} </Danger>}
       {hasApps && (
-        <AppList
-          apps={apps}
-          search={searchValue}
-          onSearchChange={setSearchValue}
-        />
+        <>
+          <SelectFilters
+            filters={filter.filters}
+            appliedFilters={filter.appliedFilters}
+            applyFilters={filter.applyFilters}
+          />
+          <AppList
+            apps={filter.result}
+            search={searchValue}
+            onSearchChange={setSearchValue}
+            onLabelClick={filter.toggleFilter}
+          />
+        </>
       )}
       {isEmpty && (
         <Empty

@@ -15,6 +15,7 @@
  */
 
 import React from 'react';
+import { MemoryRouter as Router } from 'react-router';
 import { Apps } from './Apps';
 import { State } from './useApps';
 import { apps } from './fixtures';
@@ -23,22 +24,26 @@ export default {
   title: 'Teleport/Apps',
 };
 
-export const Loaded = () => <Apps {...props} />;
+export const Loaded = () => <Router children={<Apps {...props} />} />;
 
-export const Empty = () => <Apps {...props} apps={[]} />;
+export const Empty = () => <Router children={<Apps {...props} apps={[]} />} />;
 
 export const EmptyReadOnly = () => (
-  <Apps {...props} apps={[]} canCreate={false} />
+  <Router children={<Apps {...props} apps={[]} canCreate={false} />} />
 );
 
 export const Loading = () => (
-  <Apps {...props} attempt={{ status: 'processing' }} />
+  <Router children={<Apps {...props} attempt={{ status: 'processing' }} />} />
 );
 
 export const Failed = () => (
-  <Apps
-    {...props}
-    attempt={{ status: 'failed', statusText: 'some error message' }}
+  <Router
+    children={
+      <Apps
+        {...props}
+        attempt={{ status: 'failed', statusText: 'some error message' }}
+      />
+    }
   />
 );
 
