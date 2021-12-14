@@ -26,7 +26,10 @@ test('correct processed fetch response formatting', async () => {
   expect(response).toEqual([
     {
       name: 'tele.logicoma.dev-prod',
-      tags: ['kernal: 4.15.0-51-generic', 'env: prod'],
+      labels: [
+        { name: 'kernal', value: '4.15.0-51-generic' },
+        { name: 'env', value: 'prod' },
+      ],
     },
   ]);
 });
@@ -46,7 +49,7 @@ test('handling of null labels', async () => {
   const kubeService = new KubeService();
   const response = await kubeService.fetchKubernetes('clusterId');
 
-  expect(response).toEqual([{ name: 'test', tags: [] }]);
+  expect(response).toEqual([{ name: 'test', labels: [] }]);
 });
 
 const mockApiResponse = [

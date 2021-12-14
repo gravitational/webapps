@@ -14,7 +14,9 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
+import { Label } from 'teleport/types';
+
 export interface Kube {
   name: string;
-  tags: string[];
+  labels: Label[];
 }

@@ -30,6 +30,7 @@ test('search filter works', () => {
       kubes={kubes}
       search={searchValue}
       onSearchChange={() => null}
+      onLabelClick={() => null}
     />
   );
 

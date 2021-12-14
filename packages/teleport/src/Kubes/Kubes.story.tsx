@@ -15,6 +15,7 @@ limitations under the License.
 */
 
 import React from 'react';
+import { MemoryRouter as Router } from 'react-router';
 import { AuthType } from 'teleport/services/user';
 import { Kubes } from './Kubes';
 import { State } from './useKubes';
@@ -24,22 +25,28 @@ export default {
   title: 'Teleport/Kubes',
 };
 
-export const Loaded = () => <Kubes {...props} />;
+export const Loaded = () => <Router children={<Kubes {...props} />} />;
 
-export const Empty = () => <Kubes {...props} kubes={[]} />;
+export const Empty = () => (
+  <Router children={<Kubes {...props} kubes={[]} />} />
+);
 
 export const EmptyReadOnly = () => (
-  <Kubes {...props} kubes={[]} canCreate={false} />
+  <Router children={<Kubes {...props} kubes={[]} canCreate={false} />} />
 );
 
 export const Loading = () => (
-  <Kubes {...props} attempt={{ status: 'processing' }} />
+  <Router children={<Kubes {...props} attempt={{ status: 'processing' }} />} />
 );
 
 export const Failed = () => (
-  <Kubes
-    {...props}
-    attempt={{ status: 'failed', statusText: 'server error' }}
+  <Router
+    children={
+      <Kubes
+        {...props}
+        attempt={{ status: 'failed', statusText: 'server error' }}
+      />
+    }
   />
 );
 

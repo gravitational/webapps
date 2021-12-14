@@ -18,10 +18,9 @@ import { Kube } from './types';
 
 export default function makeKube(json): Kube {
   const { name } = json;
-  const labels = json.labels || [];
 
   return {
     name,
-    tags: labels.map(label => `${label.name}: ${label.value}`),
+    labels: json.labels || [],
   };
 }

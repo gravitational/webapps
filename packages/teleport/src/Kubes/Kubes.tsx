@@ -25,6 +25,9 @@ import {
 } from 'teleport/components/Layout';
 import useTeleport from 'teleport/useTeleport';
 import Empty, { EmptyStateInfo } from 'teleport/components/Empty';
+import SelectFilters from 'teleport/components/SelectFilters';
+import useUrlFiltering from 'teleport/useUrlFiltering';
+import useLabelOptions, { Option } from 'teleport/useLabelOptions';
 import useKubes, { State } from './useKubes';
 
 export default function Container() {
@@ -47,6 +50,8 @@ export function Kubes(props: State) {
     searchValue,
     setSearchValue,
   } = props;
+
+  const filter = useUrlFiltering(kubes);
 
   const isEmpty = attempt.status === 'success' && kubes.length === 0;
   const hasKubes = attempt.status === 'success' && kubes.length > 0;
@@ -73,12 +78,18 @@ export function Kubes(props: State) {
       )}
       {hasKubes && (
         <>
+          <SelectFilters
+            filters={filter.filters}
+            appliedFilters={filter.appliedFilters}
+            applyFilters={filter.applyFilters}
+          />
           <KubeList
-            kubes={kubes}
+            kubes={filter.result}
             username={username}
             authType={authType}
             search={searchValue}
             onSearchChange={setSearchValue}
+            onLabelClick={filter.toggleFilter}
           />
         </>
       )}

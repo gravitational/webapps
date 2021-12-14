@@ -24,11 +24,14 @@ import {
   TextCell,
   SortTypes,
 } from 'design/DataTable';
-import { Label, ButtonBorder } from 'design';
+import { ButtonBorder } from 'design';
 import Table from 'design/DataTable/Paged';
 import isMatch from 'design/utils/match';
 import { Kube } from 'teleport/services/kube';
 import { AuthType } from 'teleport/services/user';
+import { makeLabelTag } from 'teleport/components/formatters';
+import LabelFilterCell from 'teleport/components/LabelFilterCell';
+import { Filter } from 'teleport/types';
 import ConnectDialog from '../ConnectDialog';
 
 function KubeList(props: Props) {
@@ -39,6 +42,7 @@ function KubeList(props: Props) {
     authType,
     search,
     onSearchChange,
+    onLabelClick,
   } = props;
 
   const [sortDir, setSortDir] = useState<Record<string, string>>({
@@ -50,7 +54,7 @@ function KubeList(props: Props) {
   function sortAndFilter(search) {
     const filtered = kubes.filter(obj =>
       isMatch(obj, search, {
-        searchableProps: ['name', 'tags'],
+        searchableProps: ['name', 'labels'],
         cb: searchAndFilterCb,
       })
     );
@@ -89,7 +93,10 @@ function KubeList(props: Props) {
           }
           cell={<TextCell />}
         />
-        <Column header={<Cell>Labels</Cell>} cell={<LabelCell />} />
+        <Column
+          header={<Cell>Labels</Cell>}
+          cell={<LabelCell onLabelClick={onLabelClick} />}
+        />
         <Column
           header={<Cell />}
           cell={
@@ -125,15 +132,9 @@ export const ActionCell = props => {
 };
 
 function LabelCell(props) {
-  const { rowIndex, data } = props;
-  const { tags } = data[rowIndex];
-  const $labels = tags.map(tag => (
-    <Label mb="1" mr="1" key={tag} kind="secondary">
-      {tag}
-    </Label>
-  ));
-
-  return <Cell>{$labels}</Cell>;
+  const { rowIndex, data, onLabelClick } = props;
+  const { labels = [] } = data[rowIndex];
+  return <LabelFilterCell labels={labels} onLabelClick={onLabelClick} />;
 }
 
 const StyledTable = styled(Table)`
@@ -147,9 +148,11 @@ function searchAndFilterCb(
   searchValue: string,
   propName: string
 ) {
-  if (propName === 'tags') {
-    return targetValue.some(item => {
-      return item.toLocaleUpperCase().indexOf(searchValue) !== -1;
+  if (propName === 'labels') {
+    return targetValue.some(label => {
+      return (
+        makeLabelTag(label).toLocaleUpperCase().indexOf(searchValue) !== -1
+      );
     });
   }
 }
@@ -161,6 +164,7 @@ type Props = {
   authType: AuthType;
   search: string;
   onSearchChange: React.Dispatch<React.SetStateAction<string>>;
+  onLabelClick(filter: Filter): void;
 };
 
 export default KubeList;
