@@ -17,13 +17,13 @@ limitations under the License.
 import { createMemoryHistory } from 'history';
 import history from './history';
 
+history.init(createMemoryHistory());
+
 describe('services/history', () => {
   const fallbackRoute = '/web';
-  let browserHistory;
+  const browserHistory = history.original(/* be default returns inMemory history*/);
 
   beforeEach(() => {
-    history.init(createMemoryHistory());
-    browserHistory = history.original(/* be default returns inMemory history*/);
     jest.spyOn(browserHistory, 'push');
     jest.spyOn(history, 'getRoutes');
     jest.spyOn(history, '_pageRefresh').mockImplementation();

@@ -14,5 +14,5 @@
  * limitations under the License.
  */
 
-import SelectFilters from './SelectFilters';
-export default SelectFilters;
+import SelectFilter from './SelectFilter';
+export default SelectFilter;

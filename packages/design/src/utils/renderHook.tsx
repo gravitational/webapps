@@ -31,7 +31,7 @@ export default function renderHook<T extends (...args: any) => any>(
     // passes hooksCb to component and expect this component to execute the hook
     // and assign the return values to results.current
     create(
-      <Wrapper {...options?.wrapperProps}>
+      <Wrapper>
         <TestHook hooksCb={hooks} result={result} />{' '}
       </Wrapper>
     );
@@ -55,5 +55,4 @@ function DefaultWrapper(props: { children: any }) {
 
 type Options = {
   wrapper?: React.ComponentType;
-  wrapperProps?: any;
 };
