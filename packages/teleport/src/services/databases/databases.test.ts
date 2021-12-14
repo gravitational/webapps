@@ -29,7 +29,10 @@ test('correct formatting of database fetch response', async () => {
       desc: 'PostgreSQL 11.6: AWS Aurora',
       title: 'RDS PostgreSQL',
       protocol: 'postgres',
-      tags: ['cluster: root', 'env: aws'],
+      labels: [
+        { name: 'cluster', value: 'root' },
+        { name: 'env', value: 'aws' },
+      ],
     },
   ]);
 });
@@ -72,7 +75,7 @@ test('null labels field in database fetch response', async () => {
   const database = new DatabaseService();
   const response = await database.fetchDatabases('im-a-cluster');
 
-  expect(response[0].tags).toEqual([]);
+  expect(response[0].labels).toEqual([]);
 });
 
 const mockResponse = [
@@ -81,8 +84,7 @@ const mockResponse = [
     desc: 'PostgreSQL 11.6: AWS Aurora',
     protocol: 'postgres',
     type: 'rds',
-    uri:
-      'postgres-aurora-instance-1.c1xpjrob56xs.us-west-1.rds.amazonaws.com:5432',
+    uri: 'postgres-aurora-instance-1.c1xpjrob56xs.us-west-1.rds.amazonaws.com:5432',
     labels: [
       { name: 'cluster', value: 'root' },
       { name: 'env', value: 'aws' },

@@ -22,7 +22,6 @@ import {
   Column,
   SortHeaderCell,
   Cell,
-  renderLabelCell,
   TextCell,
   SortTypes,
 } from 'design/DataTable';
@@ -30,6 +29,9 @@ import Table from 'design/DataTable/Paged';
 import isMatch from 'design/utils/match';
 import { AuthType } from 'teleport/services/user';
 import { Database, DbProtocol } from 'teleport/services/databases';
+import { makeLabelTag } from 'teleport/components/formatters';
+import LabelFilterCell from 'teleport/components/LabelFilterCell';
+import { Filter } from 'teleport/types';
 import ConnectDialog from 'teleport/Databases/ConnectDialog';
 
 function DatabaseList(props: Props) {
@@ -41,6 +43,7 @@ function DatabaseList(props: Props) {
     authType,
     search,
     onSearchChange,
+    onLabelClick,
   } = props;
 
   const [sortDir, setSortDir] = useState<Record<string, string>>({
@@ -55,7 +58,7 @@ function DatabaseList(props: Props) {
   function sortAndFilter(search) {
     const filtered = databases.filter(obj =>
       isMatch(obj, search, {
-        searchableProps: ['name', 'desc', 'title', 'tags'],
+        searchableProps: ['name', 'desc', 'title', 'labels'],
         cb: searchAndFilterCb,
       })
     );
@@ -116,7 +119,10 @@ function DatabaseList(props: Props) {
           }
           cell={<TextCell />}
         />
-        <Column header={<Cell>Labels</Cell>} cell={<LabelCell />} />
+        <Column
+          header={<Cell>Labels</Cell>}
+          cell={<LabelCell onLabelClick={onLabelClick} />}
+        />
         <Column
           header={<Cell />}
           cell={<ConnectButton setDbConnectInfo={setDbConnectInfo} />}
@@ -137,9 +143,9 @@ function DatabaseList(props: Props) {
 }
 
 function LabelCell(props) {
-  const { rowIndex, data } = props;
-  const { tags = [] } = data[rowIndex];
-  return renderLabelCell(tags);
+  const { rowIndex, data, onLabelClick } = props;
+  const { labels = [] } = data[rowIndex];
+  return <LabelFilterCell labels={labels} onLabelClick={onLabelClick} />;
 }
 
 function ConnectButton(props) {
@@ -171,9 +177,11 @@ function searchAndFilterCb(
   searchValue: string,
   propName: string
 ) {
-  if (propName === 'tags') {
-    return targetValue.some(item => {
-      return item.toLocaleUpperCase().indexOf(searchValue) !== -1;
+  if (propName === 'labels') {
+    return targetValue.some(label => {
+      return (
+        makeLabelTag(label).toLocaleUpperCase().indexOf(searchValue) !== -1
+      );
     });
   }
 }
@@ -186,6 +194,7 @@ type Props = {
   authType: AuthType;
   search: string;
   onSearchChange: React.Dispatch<React.SetStateAction<string>>;
+  onLabelClick(filter: Filter): void;
 };
 
 export default DatabaseList;

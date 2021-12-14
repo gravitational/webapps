@@ -31,6 +31,7 @@ test('search filter works', () => {
       databases={databases}
       search={searchValue}
       onSearchChange={() => null}
+      onLabelClick={() => null}
     />
   );
 

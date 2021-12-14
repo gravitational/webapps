@@ -15,6 +15,7 @@ limitations under the License.
 */
 
 import React from 'react';
+import { MemoryRouter as Router } from 'react-router';
 import { Databases } from './Databases';
 import { State } from './useDatabases';
 import { databases } from './fixtures';
@@ -23,22 +24,32 @@ export default {
   title: 'Teleport/Databases',
 };
 
-export const Loaded = () => <Databases {...props} />;
+export const Loaded = () => <Router children={<Databases {...props} />} />;
 
-export const Empty = () => <Databases {...props} databases={[]} />;
+export const Empty = () => (
+  <Router children={<Databases {...props} databases={[]} />} />
+);
 
 export const EmptyReadOnly = () => (
-  <Databases {...props} databases={[]} canCreate={false} />
+  <Router
+    children={<Databases {...props} databases={[]} canCreate={false} />}
+  />
 );
 
 export const Loading = () => (
-  <Databases {...props} attempt={{ status: 'processing' }} />
+  <Router
+    children={<Databases {...props} attempt={{ status: 'processing' }} />}
+  />
 );
 
 export const Failed = () => (
-  <Databases
-    {...props}
-    attempt={{ status: 'failed', statusText: 'Server Error' }}
+  <Router
+    children={
+      <Databases
+        {...props}
+        attempt={{ status: 'failed', statusText: 'Server Error' }}
+      />
+    }
   />
 );
 

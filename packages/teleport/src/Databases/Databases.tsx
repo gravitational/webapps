@@ -24,6 +24,8 @@ import {
   FeatureHeaderTitle,
 } from 'teleport/components/Layout';
 import Empty, { EmptyStateInfo } from 'teleport/components/Empty';
+import SelectFilters from 'teleport/components/SelectFilters';
+import useUrlFiltering from 'teleport/useUrlFiltering';
 import DatabaseList from './DatabaseList';
 import useDatabases, { State } from './useDatabases';
 import ButtonAdd from './ButtonAdd';
@@ -52,6 +54,8 @@ export function Databases(props: State) {
     setSearchValue,
   } = props;
 
+  const filter = useUrlFiltering(databases);
+
   const isEmpty = attempt.status === 'success' && databases.length === 0;
   const hasDatabases = attempt.status === 'success' && databases.length > 0;
 
@@ -73,13 +77,19 @@ export function Databases(props: State) {
       {attempt.status === 'failed' && <Danger>{attempt.statusText}</Danger>}
       {hasDatabases && (
         <>
+          <SelectFilters
+            filters={filter.filters}
+            appliedFilters={filter.appliedFilters}
+            applyFilters={filter.applyFilters}
+          />
           <DatabaseList
-            databases={databases}
+            databases={filter.result}
             username={username}
             clusterId={clusterId}
             authType={authType}
             search={searchValue}
             onSearchChange={setSearchValue}
+            onLabelClick={filter.toggleFilter}
           />
         </>
       )}
