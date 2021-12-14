@@ -20,6 +20,8 @@ import { Indicator, Flex, Box } from 'design';
 import * as Alerts from 'design/Alert';
 import NodeList from 'teleport/components/NodeList';
 import QuickLaunch from 'teleport/components/QuickLaunch';
+import SelectFilters from 'teleport/components/SelectFilters';
+import useUrlFiltering from 'teleport/useUrlFiltering';
 import Document from 'teleport/Console/Document';
 import ClusterSelector from './ClusterSelector';
 import useNodes from './useNodes';
@@ -43,6 +45,8 @@ export default function DocumentNodes(props: Props) {
     getNodeSshLogins,
   } = useNodes(doc);
   const { isProcessing, isSuccess, isFailed, message } = attempt;
+
+  const filter = useUrlFiltering(nodes);
 
   function onLoginMenuSelect(
     e: React.MouseEvent,
@@ -90,13 +94,21 @@ export default function DocumentNodes(props: Props) {
           )}
           {isFailed && <Alerts.Danger>{message}</Alerts.Danger>}
           {isSuccess && (
-            <NodeList
-              search={searchValue}
-              onSearchChange={setSearchValue}
-              onLoginMenuOpen={onLoginMenuOpen}
-              onLoginSelect={onLoginMenuSelect}
-              nodes={nodes}
-            />
+            <>
+              <SelectFilters
+                filters={filter.filters}
+                appliedFilters={filter.appliedFilters}
+                applyFilters={filter.applyFilters}
+              />
+              <NodeList
+                search={searchValue}
+                onSearchChange={setSearchValue}
+                onLoginMenuOpen={onLoginMenuOpen}
+                onLoginSelect={onLoginMenuSelect}
+                nodes={filter.result}
+                onLabelClick={filter.toggleFilter}
+              />
+            </>
           )}
         </Container>
       </Document>
