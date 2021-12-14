@@ -18,16 +18,16 @@ import React from 'react';
 import { Router } from 'react-router';
 import { createMemoryHistory } from 'history';
 import renderHook, { act } from 'design/utils/renderHook';
-import { Label } from 'teleport/types';
+import { Label, Filter } from 'teleport/types';
 import useUrlFiltering, { Filterable, State } from './useUrlFiltering';
 
-test('filtering data and applying labels', () => {
+test('empty data list', () => {
   const history = createMemoryHistory({ initialEntries: ['/test'] });
   jest.spyOn(history, 'replace');
 
   let result;
   act(() => {
-    result = renderHook(() => useUrlFiltering(data), {
+    result = renderHook(() => useUrlFiltering([]), {
       wrapper: Wrapper,
       wrapperProps: { history },
     });
@@ -36,59 +36,80 @@ test('filtering data and applying labels', () => {
   let hook: State = result.current;
 
   // Test initial values.
-  expect(hook.labels).toHaveLength(0);
-  expect(hook.result).toHaveLength(data.length);
-
-  // Test add a label.
-  act(() => hook.applyLabels([label1]));
-  hook = result.current;
-
-  // Test selected labels is updated.
-  expect(hook.labels).toMatchObject([label1]);
-  expect(hook.labels).toHaveLength(1);
-
-  // Test data has been correctly filtered.
-  expect(hook.result).toHaveLength(2);
-  expect(hook.result[0].labels).toContainEqual(label1);
-  expect(hook.result[1].labels).toContainEqual(label1);
-
-  // Test selected label has been correctly encoded into url.
-  let expectedURL = `/test?q=l=${encodedLabel1.name}:${encodedLabel1.value}`;
-  expect(history.replace).toHaveBeenCalledWith(expectedURL);
-  jest.clearAllMocks();
-
-  // Test applying multiple labels.
-  const label2 = { name: 'country', value: 'South Korea' };
-  act(() => hook.applyLabels([label1, label2]));
-  hook = result.current;
-
-  // Test selected labels is updated.
-  expect(hook.labels).toEqual(expect.arrayContaining([label1, label2]));
-  expect(hook.labels).toHaveLength(2);
-
-  // Test data has been correctly filtered.
-  expect(hook.result).toHaveLength(1);
-  expect(hook.result[0].labels).toEqual(
-    expect.arrayContaining([label1, label2])
-  );
-
-  // Test url has been encoded correctly.
-  expectedURL = `/test?q=l=${encodedLabel1.name}:${encodedLabel1.value}+l=${encodedLabel2.name}:${encodedLabel2.value}`;
-  expect(history.replace).toHaveBeenCalledWith(expectedURL);
-
-  // Test empty array.
-  act(() => hook.applyLabels([]));
-  hook = result.current;
-
-  expect(hook.labels).toHaveLength(0);
-  expect(hook.result).toHaveLength(data.length);
-  expect(history.replace).toHaveBeenCalledWith(`/test`);
+  expect(hook.filters).toHaveLength(0);
+  expect(hook.result).toHaveLength(0);
 });
 
-test('label toggling', () => {
-  const baseUrl = `/test?q=l=${encodedLabel1.name}:${encodedLabel1.value}+l=${encodedLabel2.name}:${encodedLabel2.value}`;
-  const history = createMemoryHistory({ initialEntries: [baseUrl] });
-  jest.spyOn(history, 'replace');
+test('extracting unique labels and making sorted filters from data list', () => {
+  const label1: Label = { name: 'name100', value: 'value100' };
+  const label2: Label = { name: 'name9', value: 'value9' };
+  const label3: Label = { name: 'name80', value: 'value90' };
+  const label4: Label = { name: 'name1', value: 'value1' };
+  const label5: Label = { name: 'name10', value: 'value10' };
+
+  const data: Filterable[] = [
+    { labels: [label1] },
+    { labels: [label1, label2] },
+    { labels: [label3, label4] },
+    { labels: [label1, label2, label3, label4] },
+    { labels: [label5] },
+  ];
+  const history = createMemoryHistory({ initialEntries: ['/test'] });
+
+  let result;
+  act(() => {
+    result = renderHook(() => useUrlFiltering(data), {
+      wrapper: Wrapper,
+      wrapperProps: { history },
+    });
+  });
+
+  let hook: State = result.current;
+
+  expect(hook.appliedFilters).toHaveLength(0);
+  expect(hook.result).toEqual(data);
+  expect(hook.filters).toHaveLength(5);
+
+  // Test alphanum sorting.
+  expect(hook.filters.map(f => f.name)).toEqual([
+    'name1',
+    'name9',
+    'name10',
+    'name80',
+    'name100',
+  ]);
+
+  // Test correct filter format.
+  expect(hook.filters[0]).toMatchObject({
+    name: 'name1',
+    value: 'value1',
+    kind: 'label',
+  });
+});
+
+test('filtering data', () => {
+  const filter1: Filter = {
+    name: 'name100',
+    value: 'value100',
+    kind: 'label',
+  };
+  const filter2: Filter = {
+    name: 'name9',
+    value: 'value9',
+    kind: 'label',
+  };
+
+  const label1: Label = { name: 'name100', value: 'value100' };
+  const label2: Label = { name: 'name9', value: 'value9' };
+  const label3: Label = { name: 'name80', value: 'value90' };
+
+  const data: Filterable[] = [
+    { labels: [label1] },
+    { labels: [label1, label2] },
+    { labels: [label3] },
+  ];
+
+  const history = createMemoryHistory({ initialEntries: ['/test'] });
 
   let result;
   act(() => {
@@ -101,163 +122,31 @@ test('label toggling', () => {
   let hook: State = result.current;
 
   // Test initial values.
-  expect(hook.labels).toHaveLength(2);
-  expect(hook.labels).toEqual(expect.arrayContaining([label1, label2]));
+  expect(hook.appliedFilters).toHaveLength(0);
+  expect(hook.filters).toHaveLength(3);
+  expect(hook.result).toEqual(data);
+
+  // Test data has been correctly filtered by applying a filter.
+  act(() => hook.applyFilters([filter1]));
+  hook = result.current;
+  expect(hook.result).toHaveLength(2);
+  expect(hook.result[0].labels).toContainEqual(label1);
+  expect(hook.result[1].labels).toContainEqual(label1);
+
+  // Test adding another filter by toggle.
+  act(() => hook.toggleFilter(filter2));
+  hook = result.current;
   expect(hook.result).toHaveLength(1);
   expect(hook.result[0].labels).toEqual(
     expect.arrayContaining([label1, label2])
   );
 
-  // Test toggling existing label (delete).
-  act(() => hook.toggleLabel(label2));
+  // Test empty filters.
+  act(() => hook.applyFilters([]));
   hook = result.current;
-
-  // Test existing label is removed.
-  expect(hook.labels).toEqual(expect.arrayContaining([label1]));
-  expect(hook.labels).toHaveLength(1);
-
-  // Test url has been updated correctly.
-  let expectedURL = `/test?q=l=${encodedLabel1.name}:${encodedLabel1.value}`;
-  expect(history.replace).toHaveBeenCalledWith(expectedURL);
-
-  // Test toggling new label (add).
-  act(() => hook.toggleLabel(label2));
-  hook = result.current;
-
-  // Test new label is added.
-  expect(hook.labels).toEqual(expect.arrayContaining([label1, label2]));
-  expect(hook.labels).toHaveLength(2);
-
-  // Test url has been updated correctly.
-  expect(history.replace).toHaveBeenCalledWith(baseUrl);
-});
-
-describe('test decoding of urls', () => {
-  const enc = encodeURIComponent;
-
-  const tests: {
-    name: string;
-    url: string;
-    expect: Label[];
-  }[] = [
-    {
-      name: 'no filter param',
-      url: '/test?',
-      expect: [],
-    },
-    {
-      name: 'no filters',
-      url: '/test?q=',
-      expect: [],
-    },
-    {
-      name: 'blank label',
-      url: '/test?q=l=',
-      expect: [],
-    },
-    {
-      name: 'blank label with colon delimiter',
-      url: '/test?q=l=:',
-      expect: [],
-    },
-    {
-      name: 'blank label with plus delimiter',
-      url: '/test?q=l=+',
-      expect: [],
-    },
-    {
-      name: 'blank label with all delimiters',
-      url: '/test?q=l=:+',
-      expect: [],
-    },
-    {
-      name: 'unknown filter type',
-      url: `/test?q=unknown=${enc('k')}:${enc('v')}`,
-      expect: [],
-    },
-    {
-      name: 'malformed label value (double delimiter)',
-      url: `/test?q=l=${enc('k')}:${enc('v')}:extra`,
-      expect: [],
-    },
-    {
-      name: 'skip unknown filter identifier',
-      url: `/test?q=l=${enc('k')}:${enc('v')}+unkwn=${enc('k2')}:${enc('v2')}`,
-      expect: [{ name: 'k', value: 'v' }],
-    },
-    {
-      name: 'missing label delimiter',
-      url: `/test?q=l=${enc('k')}${enc('v')}`,
-      expect: [{ name: 'kv', value: '' }],
-    },
-    {
-      name: 'pre label delimiter',
-      url: `/test?q=l=:${enc('k')}${enc('v')}`,
-      expect: [{ name: '', value: 'kv' }],
-    },
-    {
-      name: 'delimiters in encoded label does not affect unencoded delimiters',
-      url: `/test?q=l=${enc('l=b:c')}:${enc(':d+e+f')}`,
-      expect: [{ name: 'l=b:c', value: ':d+e+f' }],
-    },
-    {
-      name: 'valid query',
-      url: `
-       /test?q=l=${enc('k')}:${enc('v')}+l=${enc('k2')}:${enc('v2')}`,
-      expect: [
-        { name: 'k', value: 'v' },
-        { name: 'k2', value: 'v2' },
-      ],
-    },
-    {
-      name: 'ignore blank label identifiers',
-      url: `
-       /test?q=l=${enc('k')}:${enc('v')}+l=${enc('k2')}:${enc('v2')}+l=+l=`,
-      expect: [
-        { name: 'k', value: 'v' },
-        { name: 'k2', value: 'v2' },
-      ],
-    },
-  ];
-
-  // eslint-disable-next-line jest/require-hook
-  tests.forEach(tc => {
-    test(`${tc.name}`, () => {
-      let result;
-      act(() => {
-        result = renderHook(() => useUrlFiltering(data), {
-          wrapper: Wrapper,
-          wrapperProps: {
-            history: createMemoryHistory({ initialEntries: [tc.url] }),
-          },
-        });
-      });
-
-      let hook: State = result.current;
-      expect(hook.labels).toMatchObject(tc.expect);
-    });
-  });
+  expect(hook.result).toEqual(data);
 });
 
 function Wrapper(props: any) {
   return <Router history={props.history}>{props.children}</Router>;
 }
-
-const label1: Label = { name: 'env', value: 'roles:prod+1,prod+2, prod+3' };
-const label2: Label = { name: 'country', value: 'South Korea' };
-const label3: Label = { name: 'no', value: 'match' };
-const data: Filterable[] = [
-  { labels: [label1] },
-  { labels: [label1, label2] },
-  { labels: [label3] },
-];
-
-const encodedLabel1 = {
-  name: encodeURIComponent(label1.name),
-  value: encodeURIComponent(label1.value),
-};
-
-const encodedLabel2 = {
-  name: encodeURIComponent(label2.name),
-  value: encodeURIComponent(label2.value),
-};

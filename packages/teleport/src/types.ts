@@ -55,3 +55,10 @@ export type Label = {
   name: string;
   value: string;
 };
+
+// TODO: create a better abscraction for a filter, right now it's just a label
+export type Filter = {
+  value: string;
+  name: string;
+  kind: 'label';
+};

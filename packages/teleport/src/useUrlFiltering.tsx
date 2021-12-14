@@ -15,140 +15,75 @@
  */
 
 import { useMemo } from 'react';
-import { useLocation, useHistory } from 'react-router';
 import { makeLabelTag } from 'teleport/components/formatters';
-import { Label } from 'teleport/types';
-
-// QUERY_PARAM_FILTER is the url query parameter name for filters.
-const QUERY_PARAM_FILTER = '?q=';
-
-// FILTER_TYPE_LABEL is the filter identifier name for a label in a filter query.
-const FILTER_TYPE_LABEL = 'l=';
+import { Label, Filter } from 'teleport/types';
+import useUrlQueryParams from './useUrlQueryParams';
 
 export default function useUrlFiltering<T extends Filterable>(data: T[]) {
-  const history = useHistory();
-  const { search, pathname } = useLocation();
-  const labels = useMemo<Label[]>(() => getLabelsFromUrl(search), [search]);
-  const result = useMemo(() => filterData(data, labels), [data, labels]);
+  const params = useUrlQueryParams();
+  const filtered = useMemo(
+    () => filterData(data, params.filters),
+    [data, params.filters]
+  );
 
-  function applyLabels(labels: Label[]) {
-    history.replace(getEncodedUrl(labels, pathname));
-  }
-
-  // toggleLabel removes an existing label from the
-  // labels list, else adds new label to list.
-  function toggleLabel(label: Label) {
-    let modifiedList = [...labels];
-    const index = labels.findIndex(
-      o => o.name === label.name && o.value === label.value
-    );
-
-    if (index > -1) {
-      // remove the label
-      modifiedList.splice(index, 1);
-    } else {
-      modifiedList = [...labels, label];
-    }
-
-    applyLabels(modifiedList);
-  }
+  const labels = useMemo(() => getLabelFilters(data), [data]);
 
   return {
-    labels,
-    result,
-    applyLabels,
-    toggleLabel,
+    result: filtered,
+    filters: labels,
+    appliedFilters: params.filters,
+    applyFilters: params.applyFilters,
+    toggleFilter: params.toggleFilter,
   };
 }
 
-// getLabelsFromUrl parses the query string
-// and returns extracted labels.
-function getLabelsFromUrl(search: string): Label[] {
-  if (!search.startsWith(QUERY_PARAM_FILTER)) {
+function getLabelFilters<T extends Filterable>(data: T[] = []): Filter[] {
+  // Test a labels field exist.
+  if (!data.length || !data[0].labels) {
     return [];
   }
 
-  const query = search.substring(QUERY_PARAM_FILTER.length);
-  if (!query) {
-    return [];
-  }
-
-  const filters = query.split('+');
-  const labels: Label[] = [];
-
-  for (let i = 0; i < filters.length; i++) {
-    const filter = filters[i];
-    if (!filter) {
-      continue;
-    }
-
-    if (filter.startsWith(FILTER_TYPE_LABEL)) {
-      const encodedLabel = filter.substring(FILTER_TYPE_LABEL.length);
-      const [encodedName, encodedValue, more] = encodedLabel.split(':');
-
-      // Abort if more than two values were split (malformed label).
-      if (more) {
-        return [];
+  // Extract unique labels.
+  const tagDict: { [tag: string]: Label } = {};
+  data.forEach(({ labels }) => {
+    labels.forEach(label => {
+      const tag = makeLabelTag(label);
+      if (!tagDict[tag]) {
+        tagDict[tag] = label;
       }
+    });
+  });
 
-      const label: Label = {
-        name: decodeURIComponent(encodedName ?? ''),
-        value: decodeURIComponent(encodedValue ?? ''),
-      };
-
-      if (!label.name && !label.value) {
-        continue;
-      }
-
-      labels.push(label);
-
-      continue;
-    }
-  }
-
-  return labels;
+  const collator = new Intl.Collator(undefined, { numeric: true });
+  return Object.keys(tagDict)
+    .sort(collator.compare)
+    .map(tag => ({
+      name: tagDict[tag].name,
+      value: tagDict[tag].value,
+      kind: 'label',
+    }));
 }
 
 // filterData returns new list of data that contains the selected labels.
 function filterData<T extends Filterable>(
   data: T[] = [],
-  labels: Label[] = []
+  filters: Filter[] = []
 ): T[] {
-  if (!labels.length) {
+  if (!filters.length) {
     return data;
   }
 
   return data.filter(obj =>
-    labels.every(l =>
-      obj.labels.map(makeLabelTag).toString().includes(makeLabelTag(l))
-    )
-  );
-}
-
-// getEncodedUrl formats and encodes the labels into a
-// query format we expect in the URL.
-//
-// Unencoded delimiters used in query string:
-//  - plus (+): used as filter separator, interpreted as AND (&&) operator
-//  - colon (:): separates name value pair of a label (ie: country:Spain)
-//  - equal (=): used with a filter identifier (ie: `l=`), defines a filter
-//
-// Format of the query:
-// <path>?q=l=<encodedName1>:<encodedValue1>+l=<encodedName2>:<encodedValue2>
-function getEncodedUrl(labels: Label[], pathname = '') {
-  if (!labels.length) {
-    return pathname;
-  }
-
-  const labelFilters = labels
-    .map(label => {
-      const encodedName = encodeURIComponent(label.name);
-      const encodedValue = encodeURIComponent(label.value);
-      return `${FILTER_TYPE_LABEL}${encodedName}:${encodedValue}`;
+    filters.every(filter => {
+      switch (filter.kind) {
+        case 'label':
+          return obj.labels
+            .map(makeLabelTag)
+            .toString()
+            .includes(makeLabelTag({ name: filter.name, value: filter.value }));
+      }
     })
-    .join('+');
-
-  return `${pathname}${QUERY_PARAM_FILTER}${labelFilters}`;
+  );
 }
 
 export type Filterable = {
