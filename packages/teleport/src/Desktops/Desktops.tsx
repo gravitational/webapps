@@ -23,6 +23,9 @@ import {
   FeatureHeader,
   FeatureHeaderTitle,
 } from 'teleport/components/Layout';
+import SelectFilters from 'teleport/components/SelectFilters';
+import useUrlFiltering from 'teleport/useUrlFiltering';
+import useLabelOptions, { Option } from 'teleport/useLabelOptions';
 import DesktopList from './DesktopList';
 import useDesktops, { State } from './useDesktops';
 
@@ -44,6 +47,8 @@ export function Desktops(props: State) {
     openRemoteDesktopTab,
   } = props;
 
+  const filter = useUrlFiltering(desktops);
+
   return (
     <FeatureBox>
       <FeatureHeader alignItems="center" justifyContent="space-between">
@@ -57,14 +62,20 @@ export function Desktops(props: State) {
       {attempt.status === 'failed' && <Danger>{attempt.statusText}</Danger>}
       {attempt.status === 'success' && (
         <>
+          <SelectFilters
+            filters={filter.filters}
+            appliedFilters={filter.appliedFilters}
+            applyFilters={filter.applyFilters}
+          />
           <DesktopList
-            desktops={desktops}
+            desktops={filter.result}
             username={username}
             clusterId={clusterId}
             search={searchValue}
             onSearchChange={setSearchValue}
             onLoginMenuOpen={getWindowsLoginOptions}
             onLoginSelect={openRemoteDesktopTab}
+            onLabelClick={filter.toggleFilter}
           />
         </>
       )}

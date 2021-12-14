@@ -15,6 +15,7 @@ limitations under the License.
 */
 
 import React from 'react';
+import { MemoryRouter as Router } from 'react-router';
 import { State } from './useDesktops';
 import { Desktops } from './Desktops';
 import { desktops } from './fixtures';
@@ -24,17 +25,25 @@ export default {
 };
 
 export const Loading = () => (
-  <Desktops {...props} attempt={{ status: 'processing' }} />
+  <Router
+    children={<Desktops {...props} attempt={{ status: 'processing' }} />}
+  />
 );
 
-export const Loaded = () => <Desktops {...props} />;
+export const Loaded = () => <Router children={<Desktops {...props} />} />;
 
-export const Empty = () => <Desktops {...props} desktops={[]} />;
+export const Empty = () => (
+  <Router children={<Desktops {...props} desktops={[]} />} />
+);
 
 export const Failed = () => (
-  <Desktops
-    {...props}
-    attempt={{ status: 'failed', statusText: 'Server Error' }}
+  <Router
+    children={
+      <Desktops
+        {...props}
+        attempt={{ status: 'failed', statusText: 'Server Error' }}
+      />
+    }
   />
 );
 
@@ -44,7 +53,7 @@ const props: State = {
   username: 'user',
   clusterId: 'im-a-cluster',
   searchValue: '',
-  setSearchValue: () => {},
-  getWindowsLoginOptions: (desktopName: string) => [{ login: '', url: '' }],
-  openRemoteDesktopTab: (username: string, desktopName: string) => {},
+  setSearchValue: () => null,
+  getWindowsLoginOptions: () => [{ login: 'login', url: 'url' }],
+  openRemoteDesktopTab: () => null,
 };
