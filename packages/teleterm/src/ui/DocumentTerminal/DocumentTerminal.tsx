@@ -14,43 +14,26 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React, {
-  useRef,
-  useEffect,
-  forwardRef,
-  useImperativeHandle,
-  MutableRefObject,
-} from 'react';
+import React, { useRef, useEffect } from 'react';
 import Document from 'teleterm/ui/Document';
 import useDocumentTerminal, { Props } from './useDocTerminal';
 import Terminal from './Terminal';
-import { DocumentTerminalRef } from 'teleterm/ui/TabHost/useDocumentCreator';
 
-function DocumentTerminal(
-  props: Props & { visible: boolean },
-  ref: MutableRefObject<DocumentTerminalRef>
-) {
+export default function DocumentTerminal(props: Props & { visible: boolean }) {
   const { visible, doc } = props;
   const refTerminal = useRef<Terminal>();
   const { ptyProcess } = useDocumentTerminal(doc);
 
-  useImperativeHandle(ref, () => ({
-    type: 'document_terminal' as const,
-    getWorkingDirectory: () => ptyProcess.getWorkingDirectory(),
-  }));
-
   useEffect(() => {
-    if (refTerminal && refTerminal.current) {
+    if (refTerminal?.current && ptyProcess) {
       // when switching tabs or closing tabs, focus on visible terminal
       refTerminal.current.terminal.term.focus();
     }
-  }, [visible]);
+  }, [visible, ptyProcess]);
 
   return (
     <Document visible={visible} flexDirection="column" pl={2}>
-      <Terminal ptyProcess={ptyProcess} ref={refTerminal} />
+      {ptyProcess && <Terminal ptyProcess={ptyProcess} ref={refTerminal} />}
     </Document>
   );
 }
-
-export default forwardRef(DocumentTerminal);

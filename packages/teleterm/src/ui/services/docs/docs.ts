@@ -17,6 +17,7 @@ limitations under the License.
 import { Store, useStore } from 'shared/libs/stores';
 import uris from 'teleterm/ui/uris';
 import { Document } from 'teleterm/ui/types';
+import { unique } from 'teleterm/ui/utils/uid';
 
 type State = {
   location: string;
@@ -24,6 +25,7 @@ type State = {
 };
 
 export default class DocumentService extends Store<State> {
+  previouslyActiveLocation: string;
   state: State = {
     location: '/home',
     docs: [
@@ -114,6 +116,10 @@ export default class DocumentService extends Store<State> {
     return this.find(this.getLocation());
   }
 
+  getPreviouslyActive() {
+    return this.find(this.previouslyActiveLocation);
+  }
+
   getLocation() {
     return this.state.location;
   }
@@ -132,13 +138,6 @@ export default class DocumentService extends Store<State> {
   add(doc: Document) {
     this.setState({
       docs: [...this.state.docs, doc],
-    });
-  }
-
-  addAndOpen(doc: Document) {
-    this.setState({
-      docs: [...this.state.docs, doc],
-      location: doc.uri,
     });
   }
 
@@ -196,5 +195,35 @@ export default class DocumentService extends Store<State> {
     newDocs.splice(oldIndex, 1);
     newDocs.splice(newIndex, 0, doc);
     this.setState({ ...this.state, docs: newDocs });
+  }
+
+  openNewDocument() {
+    this.previouslyActiveLocation = this.getActive().uri;
+    const newDocument = this.getNewDocumentBasingOnActive();
+    this.add(newDocument);
+    this.setLocation(newDocument.uri);
+  }
+
+  private getNewDocumentBasingOnActive(): Document {
+    const activeDocument = this.getActive();
+
+    switch (activeDocument.kind) {
+      case 'terminal_tsh_session':
+        return {
+          ...activeDocument,
+          uri: uris.getUriPty({ sid: unique() }),
+        };
+      case 'terminal_shell':
+        return {
+          ...activeDocument,
+          uri: uris.getUriPty({ sid: unique() }),
+        };
+      default:
+        return {
+          uri: uris.getUriPty({ sid: unique() }),
+          title: 'Terminal',
+          kind: 'terminal_shell',
+        };
+    }
   }
 }

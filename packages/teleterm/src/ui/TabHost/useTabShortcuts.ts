@@ -23,18 +23,18 @@ import {
 
 export default function useTabHostShortcuts(
   ctx: AppContext,
-  { openNewTab }: { openNewTab(): Promise<void> }
+  { openNewTab }: { openNewTab(): void }
 ) {
-  const tabsShortcuts = useMemo(() => buildTabsShortcuts(ctx, { openNewTab }), [
-    ctx,
-    openNewTab,
-  ]);
+  const tabsShortcuts = useMemo(
+    () => buildTabsShortcuts(ctx, { openNewTab }),
+    [ctx, openNewTab]
+  );
   useKeyboardShortcuts(tabsShortcuts);
 }
 
 function buildTabsShortcuts(
   ctx: AppContext,
-  { openNewTab }: { openNewTab(): Promise<void> }
+  { openNewTab }: { openNewTab(): void }
 ): KeyboardShortcutHandlers {
   const handleTabIndex = (index: number) => () => {
     const docs = ctx.serviceDocs.getDocuments();

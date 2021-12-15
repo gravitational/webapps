@@ -69,6 +69,7 @@ export interface DocumentGateway extends DocumentBase {
 export interface DocumentPtySession extends DocumentBase {
   kind: 'terminal_shell';
   cwd?: string;
+  pid?: number;
 }
 
 export type Document =

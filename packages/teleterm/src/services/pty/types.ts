@@ -12,10 +12,11 @@ export type PtyProcess = {
   onData(cb: (data: string) => void): void;
   start(cols: number, rows: number): void;
   onExit(cb: (ev: { exitCode: number; signal?: number }) => void);
-  getWorkingDirectory(): Promise<string>;
+  getPid(): number;
 };
 
 export type PtyServiceClient = {
+  getWorkingDirectory(pid: number): Promise<string>;
   createPtyProcess: (cmd: PtyCommand) => PtyProcess;
 };
 

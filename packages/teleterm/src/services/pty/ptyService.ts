@@ -1,15 +1,18 @@
 import PtyProcess, { TermEventEnum } from './ptyProcess';
-import {
-  PtyCommand,
-  PtyOptions,
-  PtyServiceClient,
-} from './types';
+import { PtyCommand, PtyOptions, PtyServiceClient } from './types';
 import { RuntimeSettings } from 'teleterm/types';
+import { promisify } from 'util';
+import { exec } from 'child_process';
+import { readlink } from 'fs';
+import { createLogger } from 'teleterm/services/logger';
+
+const getLogger = () => createLogger('PTY Service');
 
 export default function createPtyService(
   runtimeSettings: RuntimeSettings
 ): PtyServiceClient {
   return {
+    getWorkingDirectory,
     createPtyProcess(cmd: PtyCommand) {
       let options = buildOptions(runtimeSettings, cmd);
       let _ptyProcess = new PtyProcess(options);
@@ -31,12 +34,12 @@ export default function createPtyService(
           _ptyProcess.dispose();
         },
 
-        getWorkingDirectory() {
-          return _ptyProcess.getWorkingDirectory();
-        },
-
         onData(cb: (data: string) => void) {
           _ptyProcess.addListener(TermEventEnum.DATA, cb);
+        },
+
+        getPid() {
+          return _ptyProcess.getPid();
         },
 
         onExit(cb: (ev: { exitCode: number; signal?: number }) => void) {
@@ -75,4 +78,30 @@ function buildOptions(settings: RuntimeSettings, cmd: PtyCommand): PtyOptions {
   }
 
   throw Error(`Unknown pty command type: ${cmd.kind}`);
+}
+
+async function getWorkingDirectory(pid: number): Promise<string> {
+  try {
+    switch (process.platform) {
+      case 'darwin':
+        const asyncExec = promisify(exec);
+        // -a: join using AND instead of OR for the -p and -d options
+        // -p: PID
+        // -d: only include the file descriptor, cwd
+        // -F: fields to output (the n character outputs 3 things, the last one is cwd)
+        const { stdout, stderr } = await asyncExec(
+          `lsof -a -p ${pid} -d cwd -F n`
+        );
+        if (stderr) {
+          throw new Error(stderr);
+        }
+        return stdout.split('\n').filter(Boolean).reverse()[0].substring(1);
+      case 'linux':
+        const asyncReadlink = promisify(readlink);
+        return await asyncReadlink(`/proc/${pid}/cwd`);
+    }
+  } catch (error) {
+    getLogger().error(`Cannot read working directory for PID: ${pid}`, error);
+    throw new Error(error);
+  }
 }
