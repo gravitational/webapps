@@ -16,7 +16,7 @@ limitations under the License.
 
 import styled from 'styled-components';
 import { Box } from 'design';
-import 'xterm/dist/xterm.css';
+import 'xterm/css/xterm.css';
 import { colors } from 'teleport/Console/colors';
 
 const StyledXterm = styled(Box)(
@@ -35,7 +35,7 @@ const StyledXterm = styled(Box)(
     position: relative;
   }
   .terminal .xterm-viewport {
-    background-color: ${colors.bgTerminal};
+    background-color: ${colors.bgTerminal} !important;
   }
 
   .terminal * {

@@ -24,7 +24,7 @@ import StyledXterm from '../../StyledXterm';
 export default class Terminal extends React.Component<{ tty: Tty }> {
   terminal: XTermCtrl;
 
-  refTermContainer = React.createRef();
+  refTermContainer = React.createRef<HTMLElement>();
 
   componentDidMount() {
     this.terminal = new XTermCtrl(this.props.tty, {
@@ -33,7 +33,6 @@ export default class Terminal extends React.Component<{ tty: Tty }> {
 
     this.terminal.open();
 
-    // TODO deprecated, use attachCustomKeyEventHandler when we upgrade xterm
     this.terminal.term.attachCustomKeyEventHandler(event => {
       const { tabSwitch } = getMappedAction(event);
       if (tabSwitch) {
