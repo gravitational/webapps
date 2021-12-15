@@ -25,9 +25,10 @@ export default function DocumentTerminal(props: Props & { visible: boolean }) {
   const { ptyProcess } = useDocumentTerminal(doc);
 
   useEffect(() => {
-    if (refTerminal?.current && ptyProcess) {
+    if (refTerminal?.current && ptyProcess && visible) {
       // when switching tabs or closing tabs, focus on visible terminal
       refTerminal.current.terminal.term.focus();
+      window.dispatchEvent(new Event('resize'));
     }
   }, [visible, ptyProcess]);
 
