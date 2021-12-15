@@ -13,12 +13,16 @@ export class MockPtyProcess implements PtyProcess {
 
   onExit(cb: (ev: { exitCode: number; signal?: number }) => void) {}
 
-  getWorkingDirectory(): Promise<string> {
-    return Promise.resolve('');
+  getPid() {
+    return 0;
   }
 }
 
 export class MockPtyServiceClient implements PtyServiceClient {
+  getWorkingDirectory(): Promise<string> {
+    return Promise.resolve('');
+  }
+
   createPtyProcess(cmd: PtyCommand): PtyProcess {
     return new MockPtyProcess();
   }
