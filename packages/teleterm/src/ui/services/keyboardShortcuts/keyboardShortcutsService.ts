@@ -68,10 +68,10 @@ export class KeyboardShortcutsService extends Store<State> {
   }
 
   private getShortcut(event: KeyboardEvent): KeyboardShortcutType | undefined {
-    const key = [
-      ...this.getPlatformModifierKeys(event),
-      event.key.toUpperCase(),
-    ]
+    const getEventKey = () =>
+      event.key.length === 1 ? event.key.toUpperCase() : event.key;
+
+    const key = [...this.getPlatformModifierKeys(event), getEventKey()]
       .filter(Boolean)
       .join('-');
 

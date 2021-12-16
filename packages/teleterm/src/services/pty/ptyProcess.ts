@@ -38,7 +38,7 @@ class PtyProcess extends EventEmitter {
       cols,
       rows,
       name: 'xterm-color',
-      cwd: process.cwd(),
+      cwd: this._options.cwd || process.cwd(),
       env: {
         ...process.env,
         ...this._options.env,
@@ -64,6 +64,10 @@ class PtyProcess extends EventEmitter {
   dispose() {
     this.removeAllListeners();
     this._process.kill();
+  }
+
+  getPid() {
+    return this._process.pid;
   }
 
   _flushBuffer() {

@@ -25,15 +25,15 @@ export default function DocumentTerminal(props: Props & { visible: boolean }) {
   const { ptyProcess } = useDocumentTerminal(doc);
 
   useEffect(() => {
-    if (refTerminal && refTerminal.current) {
+    if (refTerminal?.current && ptyProcess) {
       // when switching tabs or closing tabs, focus on visible terminal
       refTerminal.current.terminal.term.focus();
     }
-  }, [visible]);
+  }, [visible, ptyProcess]);
 
   return (
     <Document visible={visible} flexDirection="column" pl={2}>
-      <Terminal ptyProcess={ptyProcess} ref={refTerminal} />
+      {ptyProcess && <Terminal ptyProcess={ptyProcess} ref={refTerminal} />}
     </Document>
   );
 }

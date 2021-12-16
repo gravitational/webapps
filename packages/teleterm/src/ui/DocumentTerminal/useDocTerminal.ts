@@ -14,13 +14,16 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React from 'react';
+import { useEffect, useState } from 'react';
 import { useAppContext } from 'teleterm/ui/appContextProvider';
 import * as types from 'teleterm/ui/types';
+import { PtyProcess } from 'teleterm/services/pty/types';
 
 export default function useDocumentTerminal(doc: Props['doc']) {
   const ctx = useAppContext();
-  const ptyProcess = React.useMemo(() => {
+  const [ptyProcess, setPtyProcess] = useState<PtyProcess>();
+
+  async function createPtyProcess(): Promise<PtyProcess> {
     if (doc.kind === 'terminal_tsh_session') {
       return ctx.serviceTerminals.createPtyProcess({
         ...doc,
@@ -29,17 +32,36 @@ export default function useDocumentTerminal(doc: Props['doc']) {
     }
 
     if (doc.kind === 'terminal_shell') {
-      return ctx.serviceTerminals.createPtyProcess({ kind: 'new-shell' });
+      return ctx.serviceTerminals.createPtyProcess({
+        kind: 'new-shell',
+        cwd: await getPreviousDocumentCwdIfPossible(),
+      });
     }
-  }, []);
+  }
 
-  React.useEffect(() => {
-    const cleanup = () => {
-      ptyProcess.dispose();
+  async function getPreviousDocumentCwdIfPossible(): Promise<string> {
+    const previouslyActive = ctx.serviceDocs.getPreviouslyActive();
+    if (previouslyActive.kind === 'terminal_shell') {
+      return ctx.serviceTerminals.getWorkingDirectory(previouslyActive.pid);
+    }
+  }
+
+  function updateDocumentPid(pty: PtyProcess): void {
+    ctx.serviceDocs.update(doc.uri, { pid: pty.getPid() });
+  }
+
+  useEffect(() => {
+    if (!ptyProcess) {
+      createPtyProcess().then(pty => {
+        setPtyProcess(pty);
+        updateDocumentPid(pty);
+      });
+    }
+
+    return () => {
+      ptyProcess?.dispose();
     };
-
-    return cleanup;
-  }, []);
+  }, [ptyProcess]);
 
   return {
     ptyProcess,

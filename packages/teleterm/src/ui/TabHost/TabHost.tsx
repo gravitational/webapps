@@ -52,13 +52,14 @@ export default function TabHost(props: Props) {
   }
 
   function handleTabNew() {
-    const doc = serviceDocs.addNewTerminalShellDocument();
-    serviceDocs.open(doc.uri);
+    serviceDocs.openNewTerminal();
   }
 
-  const $docs = documents.map(doc => (
-    <MemoizedDocument doc={doc} visible={doc === docActive} key={doc.uri} />
-  ));
+  const $docs = documents.map(doc => {
+    const isActiveDoc = doc === docActive;
+
+    return <MemoizedDocument doc={doc} visible={isActiveDoc} key={doc.uri} />;
+  });
 
   const openContextMenu = () => {
     mainProcessClient.openContextMenu();
@@ -98,7 +99,6 @@ function MemoizedDocument(props: { doc: types.Document; visible: boolean }) {
       case 'terminal_shell':
       case 'terminal_tsh_session':
         return <DocumentTerminal doc={doc} visible={visible} />;
-
       default:
         return null;
     }
