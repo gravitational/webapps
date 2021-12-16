@@ -16,30 +16,62 @@ limitations under the License.
 
 import { useMemo } from 'react';
 import AppContext from 'teleterm/ui/appContext';
-import { useKeyboardShortcuts } from 'teleterm/ui/services/keyboardShortcuts';
+import {
+  KeyboardShortcutHandlers,
+  useKeyboardShortcuts,
+} from 'teleterm/ui/services/keyboardShortcuts';
 
-export default function useTabHostShortcuts(ctx: AppContext) {
+export default function useTabShortcuts(ctx: AppContext) {
   const tabsShortcuts = useMemo(() => buildTabsShortcuts(ctx), [ctx]);
   useKeyboardShortcuts(tabsShortcuts);
 }
 
-function buildTabsShortcuts(ctx: AppContext) {
-  const handle = (index: number) => () => {
+function buildTabsShortcuts(ctx: AppContext): KeyboardShortcutHandlers {
+  const handleTabIndex = (index: number) => () => {
     const docs = ctx.serviceDocs.getDocuments();
     if (docs[index]) {
       ctx.serviceDocs.open(docs[index].uri);
     }
   };
 
+  const handleActiveTabClose = () => {
+    const activeDoc = ctx.serviceDocs.getActive();
+    if (activeDoc.kind !== 'blank') {
+      ctx.serviceDocs.close({ uri: activeDoc.uri });
+    }
+  };
+
+  const handleNewTabOpen = () => {
+    ctx.serviceDocs.openNewTerminal();
+  };
+
+  const handleTabSwitch = (direction: 'previous' | 'next') => () => {
+    const activeDoc = ctx.serviceDocs.getActive();
+    const allDocuments = ctx.serviceDocs
+      .getDocuments()
+      .filter(d => d.kind !== 'blank');
+    const activeDocIndex = allDocuments.indexOf(activeDoc);
+    const getPreviousIndex = () =>
+      (activeDocIndex - 1 + allDocuments.length) % allDocuments.length;
+    const getNextIndex = () => (activeDocIndex + 1) % allDocuments.length;
+    const indexToOpen =
+      direction === 'previous' ? getPreviousIndex() : getNextIndex();
+
+    ctx.serviceDocs.open(allDocuments[indexToOpen].uri);
+  };
   return {
-    'tab-1': handle(1),
-    'tab-2': handle(2),
-    'tab-3': handle(3),
-    'tab-4': handle(4),
-    'tab-5': handle(5),
-    'tab-6': handle(6),
-    'tab-7': handle(7),
-    'tab-8': handle(8),
-    'tab-9': handle(9),
+    'tab-1': handleTabIndex(1),
+    'tab-2': handleTabIndex(2),
+    'tab-3': handleTabIndex(3),
+    'tab-4': handleTabIndex(4),
+    'tab-5': handleTabIndex(5),
+    'tab-6': handleTabIndex(6),
+    'tab-7': handleTabIndex(7),
+    'tab-8': handleTabIndex(8),
+    'tab-9': handleTabIndex(9),
+    'tab-close': handleActiveTabClose,
+    'tab-previous': handleTabSwitch('previous'),
+    'tab-next': handleTabSwitch('next'),
+    'tab-new': handleNewTabOpen,
   };
 }

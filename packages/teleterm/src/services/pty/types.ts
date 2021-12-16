@@ -2,6 +2,7 @@ export type PtyOptions = {
   env?: { [key: string]: string };
   path: string;
   args: string[];
+  cwd?: string;
 };
 
 export type PtyProcess = {
@@ -10,9 +11,12 @@ export type PtyProcess = {
   dispose(): void;
   onData(cb: (data: string) => void): void;
   start(cols: number, rows: number): void;
+  onExit(cb: (ev: { exitCode: number; signal?: number }) => void);
+  getPid(): number;
 };
 
 export type PtyServiceClient = {
+  getWorkingDirectory(pid: number): Promise<string>;
   createPtyProcess: (cmd: PtyCommand) => PtyProcess;
 };
 
@@ -23,6 +27,7 @@ export type PtyCommand =
 
 export type NewShellCommand = {
   kind: 'new-shell';
+  cwd?: string;
 };
 
 export type TshLoginCommand = {

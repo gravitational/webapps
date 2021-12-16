@@ -25,6 +25,7 @@ type State = {
 };
 
 export default class DocumentService extends Store<State> {
+  previouslyActiveLocation: string;
   state: State = {
     location: '/home',
     docs: [
@@ -115,6 +116,10 @@ export default class DocumentService extends Store<State> {
     return this.find(this.getLocation());
   }
 
+  getPreviouslyActive() {
+    return this.find(this.previouslyActiveLocation);
+  }
+
   getLocation() {
     return this.state.location;
   }
@@ -184,23 +189,40 @@ export default class DocumentService extends Store<State> {
     return useStore(this).state;
   }
 
-  addNewTerminalShellDocument() {
-    const doc: Document = {
-      uri: uris.getUriPty({ sid: unique() }),
-      title: 'Terminal',
-      kind: 'terminal_shell',
-    };
-
-    this.add(doc);
-
-    return doc;
-  }
-
   changeIndex(oldIndex: number, newIndex: number) {
     const doc = this.state.docs[oldIndex];
     const newDocs = [...this.state.docs];
     newDocs.splice(oldIndex, 1);
     newDocs.splice(newIndex, 0, doc);
     this.setState({ ...this.state, docs: newDocs });
+  }
+
+  openNewTerminal() {
+    this.previouslyActiveLocation = this.getActive().uri;
+
+    const newDocument = ((): Document => {
+      const activeDocument = this.getActive();
+      switch (activeDocument.kind) {
+        case 'terminal_tsh_session':
+          return {
+            ...activeDocument,
+            uri: uris.getUriPty({ sid: unique() }),
+          };
+        case 'terminal_shell':
+          return {
+            ...activeDocument,
+            uri: uris.getUriPty({ sid: unique() }),
+          };
+        default:
+          return {
+            uri: uris.getUriPty({ sid: unique() }),
+            title: 'Terminal',
+            kind: 'terminal_shell',
+          };
+      }
+    })();
+
+    this.add(newDocument);
+    this.setLocation(newDocument.uri);
   }
 }

@@ -20,4 +20,8 @@ export type KeyboardShortcutType =
   | 'tab-7'
   | 'tab-8'
   | 'tab-9'
+  | 'tab-close'
+  | 'tab-new'
+  | 'tab-previous'
+  | 'tab-next'
   | 'focus-global-search';
