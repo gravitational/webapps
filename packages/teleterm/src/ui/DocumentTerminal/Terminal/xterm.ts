@@ -15,13 +15,14 @@ limitations under the License.
 */
 
 import 'xterm/css/xterm.css';
-import { Terminal } from 'xterm';
+import { IDisposable, Terminal } from 'xterm';
 import { FitAddon } from 'xterm-addon-fit';
 import { debounce } from 'lodash';
-import Logger from 'shared/libs/logger';
 import { PtyProcess } from 'teleterm/services/pty/types';
+import { colors } from 'teleport/Console/colors';
+import { createLogger } from 'teleterm/ui/utils/rendererLogger';
 
-const logger = Logger.create('lib/term/terminal');
+const logger = createLogger('lib/term/terminal');
 const DISCONNECT_TXT = 'disconnected';
 const WINDOW_RESIZE_DEBOUNCE_DELAY = 200;
 
@@ -30,66 +31,88 @@ type Options = {
   scrollBack?: number;
 };
 
-class TtyTerminal {
-  term: Terminal;
+export default class TtyTerminal {
+  public term: Terminal;
+  private el: HTMLElement;
+  private fitAddon = new FitAddon();
+  private resizeHandler: IDisposable;
+  private debouncedResize: () => void;
 
-  _ptyProcess: PtyProcess;
-  _el: HTMLElement;
-  _fitAddon = new FitAddon();
-
-  _debouncedResize: () => void;
-
-  constructor(ptyProcess: PtyProcess, options: Options) {
-    this._el = options.el;
-    this._ptyProcess = ptyProcess;
+  constructor(private ptyProcess: PtyProcess, options: Options) {
+    this.el = options.el;
     this.term = null;
 
-    this._debouncedResize = debounce(
-      this._requestResize.bind(this),
+    this.debouncedResize = debounce(
+      this.requestResize.bind(this),
       WINDOW_RESIZE_DEBOUNCE_DELAY
     );
   }
 
-  open() {
+  open(): void {
     this.term = new Terminal({
       cursorBlink: false,
+      theme: {
+        background: colors.bgTerminal,
+      },
+      windowOptions: {
+        setWinSizeChars: true,
+      },
     });
 
-    this.term.loadAddon(this._fitAddon);
-    this.term.open(this._el);
+    this.term.loadAddon(this.fitAddon);
+    this.registerResizeHandler();
 
-    this._fitAddon.fit();
+    this.term.open(this.el);
+
+    this.fitAddon.fit();
 
     this.term.onData(data => {
-      this._ptyProcess.write(data);
+      this.ptyProcess.write(data);
     });
 
     this.term.onResize(size => {
-      this._ptyProcess.resize(size.cols, size.rows);
+      this.ptyProcess.resize(size.cols, size.rows);
     });
 
-    this._ptyProcess.onData(this._processData.bind(this));
-    this._ptyProcess.start(this.term.cols, this.term.rows);
+    this.ptyProcess.onData(data => this.processData(data));
+    this.ptyProcess.start(this.term.cols, this.term.rows);
 
-    window.addEventListener('resize', this._debouncedResize);
+    window.addEventListener('resize', this.debouncedResize);
   }
 
-  destroy() {
-    if (this._ptyProcess != null) {
-      this._ptyProcess.dispose();
-    }
+  destroy(): void {
+    this.ptyProcess?.dispose();
+    this.term?.dispose();
+    this.fitAddon.dispose();
+    this.resizeHandler?.dispose();
+    this.el.innerHTML = null;
 
-    if (this.term !== null) {
-      this.term.dispose();
-    }
-
-    this._fitAddon.dispose();
-    this._el.innerHTML = null;
-
-    window.removeEventListener('resize', this._debouncedResize);
+    window.removeEventListener('resize', this.debouncedResize);
   }
 
-  _processData(data) {
+  private registerResizeHandler(): void {
+    let prevCols: number, prevRows: number;
+    this.resizeHandler = this.term.parser.registerCsiHandler(
+      { final: 't' },
+      params => {
+        const [ps] = params;
+        if (ps === 8) {
+          // Ps = 8 - resizes the text area to given height and width in characters.
+          const rows = params[1] as number;
+          const cols = params[2] as number;
+          if (prevRows !== rows || prevCols !== cols) {
+            prevRows = rows;
+            prevCols = cols;
+            this.term.resize(cols, rows);
+          }
+          return true; // sequence has been handled
+        }
+        return false;
+      }
+    );
+  }
+
+  private processData(data: string): void {
     try {
       this.term.write(data);
     } catch (err) {
@@ -99,7 +122,7 @@ class TtyTerminal {
     }
   }
 
-  _processClose(e) {
+  private processClose(e): void {
     const { reason } = e;
     let displayText = DISCONNECT_TXT;
     if (reason) {
@@ -110,10 +133,18 @@ class TtyTerminal {
     this.term.write(displayText);
   }
 
-  _requestResize() {
-    this._fitAddon.fit();
-    this._ptyProcess.resize(this.term.cols, this.term.rows);
+  private requestResize(): void {
+    if (!this.isTerminalVisible()) {
+      logger.info(`unable to resize terminal (container might be hidden)`);
+      return;
+    }
+    this.fitAddon.fit();
+    this.ptyProcess.resize(this.term.cols, this.term.rows);
+  }
+
+  private isTerminalVisible(): boolean {
+    const width = this.el.clientWidth;
+    const height = this.el.clientHeight;
+    return !!width && !!height;
   }
 }
-
-export default TtyTerminal;
