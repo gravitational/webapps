@@ -64,22 +64,21 @@ export default class Terminal extends React.Component<{
 
 const StyledXterm = styled(Box)(
   props => `
-  height: 100%;
-  width: 100%;
-  font-size: 14px;
-  line-height: normal;
-  overflow: hidden;
-  background-color: ${colors.bgTerminal};
-  .terminal {
-    font-family: ${props.theme.fonts.mono};
-    border: none;
-    font-size: inherit;
-    line-height: normal;
-    position: relative;
-  }
-  .terminal .xterm-viewport {
-    background-color: ${colors.bgTerminal};
-  }
-
-}`
+   height: 100%;
+   width: 100%;
+   font-size: 14px;
+   line-height: normal;
+   overflow: auto;
+   background-color: ${colors.bgTerminal};
+   .terminal {
+     font-family: ${props.theme.fonts.mono};
+     border: none;
+     font-size: inherit;
+     line-height: normal;
+     position: relative;
+   }
+   .terminal .xterm-viewport {
+     background-color: ${colors.bgTerminal};
+   }
+ }`
 );
