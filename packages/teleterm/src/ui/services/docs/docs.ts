@@ -197,33 +197,32 @@ export default class DocumentService extends Store<State> {
     this.setState({ ...this.state, docs: newDocs });
   }
 
-  openNewDocument() {
+  openNewTerminal() {
     this.previouslyActiveLocation = this.getActive().uri;
-    const newDocument = this.getNewDocumentBasingOnActive();
+
+    const newDocument = ((): Document => {
+      const activeDocument = this.getActive();
+      switch (activeDocument.kind) {
+        case 'terminal_tsh_session':
+          return {
+            ...activeDocument,
+            uri: uris.getUriPty({ sid: unique() }),
+          };
+        case 'terminal_shell':
+          return {
+            ...activeDocument,
+            uri: uris.getUriPty({ sid: unique() }),
+          };
+        default:
+          return {
+            uri: uris.getUriPty({ sid: unique() }),
+            title: 'Terminal',
+            kind: 'terminal_shell',
+          };
+      }
+    })();
+
     this.add(newDocument);
     this.setLocation(newDocument.uri);
-  }
-
-  private getNewDocumentBasingOnActive(): Document {
-    const activeDocument = this.getActive();
-
-    switch (activeDocument.kind) {
-      case 'terminal_tsh_session':
-        return {
-          ...activeDocument,
-          uri: uris.getUriPty({ sid: unique() }),
-        };
-      case 'terminal_shell':
-        return {
-          ...activeDocument,
-          uri: uris.getUriPty({ sid: unique() }),
-        };
-      default:
-        return {
-          uri: uris.getUriPty({ sid: unique() }),
-          title: 'Terminal',
-          kind: 'terminal_shell',
-        };
-    }
   }
 }

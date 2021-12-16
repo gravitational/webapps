@@ -21,21 +21,12 @@ import {
   useKeyboardShortcuts,
 } from 'teleterm/ui/services/keyboardShortcuts';
 
-export default function useTabHostShortcuts(
-  ctx: AppContext,
-  { openNewTab }: { openNewTab(): void }
-) {
-  const tabsShortcuts = useMemo(
-    () => buildTabsShortcuts(ctx, { openNewTab }),
-    [ctx, openNewTab]
-  );
+export default function useTabShortcuts(ctx: AppContext) {
+  const tabsShortcuts = useMemo(() => buildTabsShortcuts(ctx), [ctx]);
   useKeyboardShortcuts(tabsShortcuts);
 }
 
-function buildTabsShortcuts(
-  ctx: AppContext,
-  { openNewTab }: { openNewTab(): void }
-): KeyboardShortcutHandlers {
+function buildTabsShortcuts(ctx: AppContext): KeyboardShortcutHandlers {
   const handleTabIndex = (index: number) => () => {
     const docs = ctx.serviceDocs.getDocuments();
     if (docs[index]) {
@@ -48,6 +39,10 @@ function buildTabsShortcuts(
     if (activeDoc.kind !== 'blank') {
       ctx.serviceDocs.close({ uri: activeDoc.uri });
     }
+  };
+
+  const handleNewTabOpen = () => {
+    ctx.serviceDocs.openNewTerminal();
   };
 
   const handleTabSwitch = (direction: 'previous' | 'next') => () => {
@@ -77,6 +72,6 @@ function buildTabsShortcuts(
     'tab-close': handleActiveTabClose,
     'tab-previous': handleTabSwitch('previous'),
     'tab-next': handleTabSwitch('next'),
-    'tab-new': openNewTab,
+    'tab-new': handleNewTabOpen,
   };
 }

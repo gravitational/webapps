@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React, { useCallback } from 'react';
+import React from 'react';
 import styled from 'styled-components';
 import { Flex } from 'design';
 import { useAppContext } from 'teleterm/ui/appContextProvider';
@@ -33,12 +33,8 @@ export default function TabHost(props: Props) {
   const documents = serviceDocs.getDocuments();
   const docActive = serviceDocs.getActive();
 
-  const handleTabNew = useCallback(() => {
-    serviceDocs.openNewDocument();
-  }, [serviceDocs]);
-
   // enable keyboard shortcuts
-  useTabShortcuts(ctx, { openNewTab: handleTabNew });
+  useTabShortcuts(ctx);
 
   // subscribe
   serviceDocs.useState();
@@ -53,6 +49,10 @@ export default function TabHost(props: Props) {
 
   function handleTabMoved(oldIndex: number, newIndex: number) {
     serviceDocs.changeIndex(oldIndex, newIndex);
+  }
+
+  function handleTabNew() {
+    serviceDocs.openNewTerminal();
   }
 
   const $docs = documents.map(doc => {
