@@ -14,17 +14,18 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import { Store, useStore } from 'shared/libs/stores';
+import { useStore } from 'shared/libs/stores';
 import uris from 'teleterm/ui/uris';
 import { Document } from 'teleterm/ui/types';
 import { unique } from 'teleterm/ui/utils/uid';
+import { ImmutableStore } from '../immutableStore';
 
 type State = {
   location: string;
   docs: Document[];
 };
 
-export default class DocumentService extends Store<State> {
+export default class DocumentService extends ImmutableStore<State> {
   previouslyActiveLocation: string;
   state: State = {
     location: '/home',
@@ -127,7 +128,7 @@ export default class DocumentService extends Store<State> {
   close({ uri }: { uri: string }) {
     const nextUri = this.getNextUri(uri);
     const docs = this.state.docs.filter(i => i.uri !== uri);
-    this.setState({ docs, location: nextUri });
+    this.setState(draftState => ({ ...draftState, docs, location: nextUri }));
   }
 
   isActive(uri: string) {
@@ -136,24 +137,16 @@ export default class DocumentService extends Store<State> {
   }
 
   add(doc: Document) {
-    this.setState({
-      docs: [...this.state.docs, doc],
+    this.setState(draftState => {
+      draftState.docs.push(doc);
     });
   }
 
   update(uri: string, partialDoc: Partial<Document>) {
-    const docs = this.state.docs.map(doc => {
-      if (doc.uri === uri) {
-        return {
-          ...doc,
-          ...partialDoc,
-        };
-      }
-
-      return doc;
-    }) as Document[];
-
-    this.setState({ docs });
+    this.setState(draftState => {
+      const toModify = draftState.docs.find(doc => doc.uri === uri);
+      Object.assign(toModify, partialDoc);
+    });
   }
 
   filter(uri: string) {
@@ -182,7 +175,9 @@ export default class DocumentService extends Store<State> {
   }
 
   setLocation(location: string) {
-    this.setState({ location });
+    this.setState(draftState => {
+      draftState.location = location;
+    });
   }
 
   useState() {
@@ -191,10 +186,10 @@ export default class DocumentService extends Store<State> {
 
   changeIndex(oldIndex: number, newIndex: number) {
     const doc = this.state.docs[oldIndex];
-    const newDocs = [...this.state.docs];
-    newDocs.splice(oldIndex, 1);
-    newDocs.splice(newIndex, 0, doc);
-    this.setState({ ...this.state, docs: newDocs });
+    this.setState(draftState => {
+      draftState.docs.splice(oldIndex, 1);
+      draftState.docs.splice(newIndex, 0, doc);
+    });
   }
 
   openNewTerminal() {
