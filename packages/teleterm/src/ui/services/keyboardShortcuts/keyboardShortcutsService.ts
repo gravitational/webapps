@@ -1,4 +1,3 @@
-import { Store } from 'shared/libs/stores';
 import {
   defaultMacShortcuts,
   defaultLinuxShortcuts,
@@ -9,12 +8,13 @@ import {
   KeyboardShortcutType,
 } from './types';
 import { Platform } from 'teleterm/mainProcess/types';
+import { ImmutableStore } from '../immutableStore';
 
 type State = {
   shortcuts: Partial<Record<KeyboardShortcutType, string>>;
 };
 
-export class KeyboardShortcutsService extends Store<State> {
+export class KeyboardShortcutsService extends ImmutableStore<State> {
   private eventsSubscribers = new Set<KeyboardShortcutEventSubscriber>();
   private keysToShortcuts = new Map<string, KeyboardShortcutType>();
 
@@ -36,8 +36,8 @@ export class KeyboardShortcutsService extends Store<State> {
   updateShortcuts(
     newShortcuts: Partial<Record<KeyboardShortcutType, string>>
   ): void {
-    this.setState({
-      shortcuts: { ...this.state.shortcuts, ...newShortcuts },
+    this.setState(draftState => {
+      Object.assign(draftState.shortcuts, newShortcuts);
     });
     this.recalculateKeysToShortcuts();
   }

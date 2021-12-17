@@ -14,21 +14,22 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import { Store, useStore } from 'shared/libs/stores';
+import { useStore } from 'shared/libs/stores';
+import { ImmutableStore } from '../immutableStore';
 
-export default class ModalsService extends Store<Dialog> {
+export default class ModalsService extends ImmutableStore<Dialog> {
   state: Dialog = {
     kind: 'none',
   };
 
   openDialog(dialog: Dialog) {
-    this.setState(dialog);
+    this.setState(() => dialog);
   }
 
   closeDialog() {
-    this.setState({
+    this.setState(() => ({
       kind: 'none',
-    });
+    }));
   }
 
   useState() {
@@ -71,4 +72,4 @@ export type Dialog =
   | DialogClusterLogin
   | DialogNewGateway
   | DialogServerConnect
-  | DialogClusterRemove
+  | DialogClusterRemove;
