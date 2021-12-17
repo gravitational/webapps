@@ -42,15 +42,14 @@ export default function Xterm({ tty }: { tty: Tty }) {
     return cleanup;
   }, [tty]);
 
-  return <StyledXterm p="2" ref={refContainer} />;
+  return <StyledXterm style={{ overflow: 'auto' }} ref={refContainer} />;
 }
 
 class TerminalPlayer extends Terminal {
   // do not attempt to connect
   connect() {
-    // LImit scrolling to number of rows in the terminal's viewport,
-    // so users rely on players controls.
-    this.term.options.scrollback = this.term.rows;
+    this.term.options.scrollback = 0;
+    this.term.options.rendererType = 'dom';
   }
 
   resize(cols, rows) {

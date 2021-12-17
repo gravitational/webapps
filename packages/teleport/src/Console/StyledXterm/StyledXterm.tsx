@@ -25,8 +25,9 @@ const StyledXterm = styled(Box)(
   width: 100%;
   font-size: 14px;
   line-height: normal;
-  overflow: auto;
+  overflow: hidden;
   background-color: ${colors.bgTerminal};
+
   .terminal {
     font-family: ${props.theme.fonts.mono};
     border: none;
@@ -34,6 +35,7 @@ const StyledXterm = styled(Box)(
     line-height: normal;
     position: relative;
   }
+
   .terminal .xterm-viewport {
     background-color: ${colors.bgTerminal} !important;
   }
@@ -41,9 +43,6 @@ const StyledXterm = styled(Box)(
   .terminal * {
     font-weight: normal !important;
   }
-
-}
-
 `
 );
 

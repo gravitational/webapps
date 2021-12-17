@@ -30,6 +30,7 @@ export const TermEventEnum = {
   CONN_CLOSE: 'connection.close',
   U2F_CHALLENGE: 'terminal.u2f',
   WEBAUTHN_CHALLENGE: 'terminal.webauthn',
+  DEQUEUE: 'chunk.dequeue',
 };
 
 export const StatusCodeEnum = {

@@ -42,6 +42,17 @@ export default class TtyPlayer extends Tty {
     this.statusText = '';
     this._posToEventIndexMap = [];
     this._eventProvider = eventProvider;
+
+    // _chunkQueue is a list of data chunks and its sizes
+    // that are waiting to be processed by the term.
+    this._chunkQueue = [];
+    // _writeInFlight prevents a term write request while a prior write
+    // request is still processing.
+    this._writeInFlight = false;
+
+    // dequeue is emitted after term finishes processing the chunk of
+    // data we sent it, as a callback.
+    this.on(TermEventEnum.DEQUEUE, this.chunkDequeue.bind(this));
   }
 
   // override
@@ -77,6 +88,8 @@ export default class TtyPlayer extends Tty {
   }
 
   move(newPos) {
+    this._chunkQueue = []; // reset list.
+
     if (!this.isReady()) {
       return;
     }
@@ -151,9 +164,8 @@ export default class TtyPlayer extends Tty {
 
   getCurrentTime() {
     if (this.currentEventIndex) {
-      let { displayTime } = this._eventProvider.events[
-        this.currentEventIndex - 1
-      ];
+      let { displayTime } =
+        this._eventProvider.events[this.currentEventIndex - 1];
       return displayTime;
     } else {
       return '--:--';
@@ -186,6 +198,21 @@ export default class TtyPlayer extends Tty {
     // do nothing
   }
 
+  chunkDequeue() {
+    // Either term has finished processing, or first time.
+    this._writeInFlight = false;
+
+    const chunk = this._chunkQueue.shift();
+    if (!chunk) {
+      return;
+    }
+
+    const str = chunk.data.join('');
+    this._writeInFlight = true;
+    this.emit(TermEventEnum.RESIZE, { h: chunk.h, w: chunk.w });
+    this.emit(TermEventEnum.DATA, str);
+  }
+
   _display(events) {
     if (!events || events.length === 0) {
       return;
@@ -216,14 +243,9 @@ export default class TtyPlayer extends Tty {
       }
     }
 
-    // render each group
-    for (let i = 0; i < groups.length; i++) {
-      const str = groups[i].data.join('');
-      const { h, w } = groups[i];
-      if (str.length > 0) {
-        this.emit(TermEventEnum.RESIZE, { h, w });
-        this.emit(TermEventEnum.DATA, str);
-      }
+    this._chunkQueue = groups;
+    if (!this._writeInFlight) {
+      this.chunkDequeue();
     }
   }
 

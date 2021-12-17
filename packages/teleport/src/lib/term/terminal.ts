@@ -131,7 +131,7 @@ export default class TtyTerminal {
 
   _processData(data) {
     try {
-      this.term.write(data);
+      this.term.write(data, () => this.tty.emit(TermEventEnum.DEQUEUE));
     } catch (err) {
       logger.error('xterm.write', data, err);
       // recover xtermjs by resetting it
