@@ -1,6 +1,7 @@
-import { Store, useStore } from 'shared/libs/stores';
+import { useStore } from 'shared/libs/stores';
 import ClusterSearchProvider from './clustersSearchProvider';
 import { tsh, SyncStatus, AuthSettings, LoginParams } from './types';
+import { ImmutableStore } from '../immutableStore';
 
 type State = {
   clusters: Map<string, tsh.Cluster>;
@@ -11,11 +12,8 @@ type State = {
   dbsSyncStatus: Map<string, SyncStatus>;
 };
 
-export default class Service extends Store<State> {
+export default class Service extends ImmutableStore<State> {
   searchProvider: ClusterSearchProvider;
-
-  client: tsh.TshClient;
-
   state: State = {
     clusters: new Map(),
     gateways: new Map(),
@@ -25,17 +23,15 @@ export default class Service extends Store<State> {
     dbsSyncStatus: new Map(),
   };
 
-  constructor(client: tsh.TshClient) {
+  constructor(public client: tsh.TshClient) {
     super();
-    this.client = client;
     this.searchProvider = new ClusterSearchProvider(this);
   }
 
-  async addCluster(addr: string) {
-    const cluster = await this.client.addCluster(addr);
-    this.state.clusters.set(cluster.uri, cluster);
-    this.setState({
-      clusters: new Map(this.state.clusters),
+  async addCluster(clusterUri: string) {
+    const cluster = await this.client.addCluster(clusterUri);
+    this.setState(draftState => {
+      draftState.clusters.set(cluster.uri, cluster);
     });
 
     return cluster;
@@ -43,7 +39,8 @@ export default class Service extends Store<State> {
 
   async logout(clusterUri: string) {
     await this.client.logout(clusterUri);
-    await this.syncCluster(clusterUri);
+    await this.syncClusterOnly(clusterUri);
+    this.cleanUpClusterResources(clusterUri);
   }
 
   async login(params: LoginParams, abortSignal: tsh.TshAbortSignal) {
@@ -52,11 +49,7 @@ export default class Service extends Store<State> {
   }
 
   async syncCluster(clusterUri: string) {
-    const cluster = await this.client.getCluster(clusterUri);
-    this.state.clusters.set(clusterUri, cluster);
-    this.setState({
-      clusters: new Map(this.state.clusters),
-    });
+    await this.syncClusterOnly(clusterUri);
 
     // do not await these
     this.syncDbs(clusterUri);
@@ -66,8 +59,8 @@ export default class Service extends Store<State> {
 
   async syncClusters() {
     const clusters = await this.client.listClusters();
-    this.setState({
-      clusters: new Map(clusters.map(c => [c.uri, c])),
+    this.setState(draftState => {
+      draftState.clusters = new Map(clusters.map(c => [c.uri, c]));
     });
 
     clusters.filter(c => c.connected).forEach(c => this.syncCluster(c.uri));
@@ -75,49 +68,42 @@ export default class Service extends Store<State> {
 
   async syncGateways() {
     const gws = await this.client.listGateways();
-    this.setState({
-      gateways: new Map(gws.map(g => [g.uri, g])),
+
+    this.setState(draftState => {
+      draftState.gateways = new Map(gws.map(g => [g.uri, g]));
     });
   }
 
   async syncDbs(clusterUri: string) {
     const cluster = this.state.clusters.get(clusterUri);
     if (!cluster.connected) {
-      helpers.updateMap(clusterUri, this.state.dbs, []);
-      this.setState({
-        dbs: new Map(this.state.dbs),
+      this.setState(draftState => {
+        draftState.dbsSyncStatus.delete(clusterUri);
+        helpers.updateMap(clusterUri, draftState.dbs, []);
       });
 
       return;
     }
 
-    this.setState({
-      dbsSyncStatus: new Map(
-        this.state.dbsSyncStatus.set(clusterUri, {
-          status: 'processing',
-        })
-      ),
+    this.setState(draftState => {
+      draftState.dbsSyncStatus.set(clusterUri, {
+        status: 'processing',
+      });
     });
 
     try {
       const received = await this.client.listDatabases(clusterUri);
-      const { dbs, dbsSyncStatus } = this.state;
 
-      dbsSyncStatus.set(clusterUri, { status: 'ready' });
-      helpers.updateMap(clusterUri, dbs, received);
-
-      this.setState({
-        dbs: new Map(dbs),
-        dbsSyncStatus: new Map(dbsSyncStatus),
+      this.setState(draftState => {
+        draftState.dbsSyncStatus.set(clusterUri, { status: 'ready' });
+        helpers.updateMap(clusterUri, draftState.dbs, received);
       });
     } catch (err) {
-      this.setState({
-        dbsSyncStatus: new Map(
-          this.state.dbsSyncStatus.set(clusterUri, {
-            status: 'failed',
-            statusText: err.message,
-          })
-        ),
+      this.setState(draftState => {
+        draftState.dbsSyncStatus.set(clusterUri, {
+          status: 'failed',
+          statusText: err.message,
+        });
       });
     }
   }
@@ -125,50 +111,41 @@ export default class Service extends Store<State> {
   async syncServers(clusterUri: string) {
     const cluster = this.state.clusters.get(clusterUri);
     if (!cluster.connected) {
-      helpers.updateMap(clusterUri, this.state.servers, []);
-      this.setState({
-        servers: new Map(this.state.servers),
+      this.setState(draftState => {
+        draftState.serversSyncStatus.delete(clusterUri);
+        helpers.updateMap(clusterUri, draftState.servers, []);
       });
 
       return;
     }
 
-    this.setState({
-      serversSyncStatus: new Map(
-        this.state.serversSyncStatus.set(clusterUri, {
-          status: 'processing',
-        })
-      ),
+    this.setState(draftState => {
+      draftState.serversSyncStatus.set(clusterUri, {
+        status: 'processing',
+      });
     });
 
     try {
       const received = await this.client.listServers(clusterUri);
-      const { servers, serversSyncStatus } = this.state;
 
-      serversSyncStatus.set(clusterUri, { status: 'ready' });
-      helpers.updateMap(clusterUri, servers, received);
-
-      this.setState({
-        servers: new Map(servers),
-        serversSyncStatus: new Map(serversSyncStatus),
+      this.setState(draftState => {
+        draftState.serversSyncStatus.set(clusterUri, { status: 'ready' });
+        helpers.updateMap(clusterUri, draftState.servers, received);
       });
     } catch (err) {
-      this.setState({
-        serversSyncStatus: new Map(
-          this.state.serversSyncStatus.set(clusterUri, {
-            status: 'failed',
-            statusText: err.message,
-          })
-        ),
+      this.setState(draftState => {
+        draftState.serversSyncStatus.set(clusterUri, {
+          status: 'failed',
+          statusText: err.message,
+        });
       });
     }
   }
 
   async removeCluster(clusterUri: string) {
     await this.client.removeCluster(clusterUri);
-    this.state.clusters.delete(clusterUri);
-    this.setState({
-      clusters: new Map(this.state.clusters),
+    this.setState(draftState => {
+      draftState.clusters.delete(clusterUri);
     });
     this.cleanUpClusterResources(clusterUri);
   }
@@ -179,16 +156,16 @@ export default class Service extends Store<State> {
 
   async createGateway(targetUri: string, port: string) {
     const gateway = await this.client.createGateway(targetUri, port);
-    this.state.gateways.set(gateway.uri, gateway);
-    this.setState({ gateways: new Map(this.state.gateways) });
+    this.setState(draftState => {
+      draftState.gateways.set(gateway.uri, gateway);
+    });
     return gateway;
   }
 
   async removeGateway(gatewayUri: string) {
     await this.client.removeGateway(gatewayUri);
-    this.state.gateways.delete(gatewayUri);
-    this.setState({
-      gateways: new Map(this.state.gateways),
+    this.setState(draftState => {
+      draftState.gateways.delete(gatewayUri);
     });
   }
 
@@ -254,20 +231,23 @@ export default class Service extends Store<State> {
     return useStore(this).state;
   }
 
+  private async syncClusterOnly(clusterUri: string) {
+    const cluster = await this.client.getCluster(clusterUri);
+    this.setState(draftState => {
+      draftState.clusters.set(clusterUri, cluster);
+    });
+  }
+
   private cleanUpClusterResources(clusterUri: string) {
-    this.findDbs(clusterUri).forEach(db => {
-      this.state.dbs.delete(db.uri);
-    });
-    this.findServers(clusterUri).forEach(server => {
-      this.state.servers.delete(server.uri);
-    });
-    this.state.serversSyncStatus.delete(clusterUri);
-    this.state.dbsSyncStatus.delete(clusterUri);
-    this.setState({
-      servers: new Map(this.state.servers),
-      dbs: new Map(this.state.dbs),
-      serversSyncStatus: new Map(this.state.serversSyncStatus),
-      dbsSyncStatus: new Map(this.state.dbsSyncStatus),
+    this.setState(draftState => {
+      this.findDbs(clusterUri).forEach(db => {
+        draftState.dbs.delete(db.uri);
+      });
+      this.findServers(clusterUri).forEach(server => {
+        draftState.servers.delete(server.uri);
+      });
+      draftState.serversSyncStatus.delete(clusterUri);
+      draftState.dbsSyncStatus.delete(clusterUri);
     });
   }
 }

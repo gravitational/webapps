@@ -14,17 +14,15 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import { Store, useStore } from 'shared/libs/stores';
-import { Logger } from 'shared/libs/logger';
+import { useStore } from 'shared/libs/stores';
 import { GlobalSearchProvider, Result } from './types';
+import { ImmutableStore } from '../immutableStore';
 
 type State = {
   providers: GlobalSearchProvider[];
 };
 
-export default class GlobalSearchService extends Store<State> {
-  logger = new Logger('GlobalSearchService');
-
+export default class GlobalSearchService extends ImmutableStore<State> {
   state = {
     providers: [],
   };
@@ -44,7 +42,9 @@ export default class GlobalSearchService extends Store<State> {
   }
 
   registerProvider(provider: GlobalSearchProvider) {
-    this.setState({ providers: [...this.state.providers, provider] });
+    this.setState(draftState => {
+      draftState.providers.push(provider);
+    });
   }
 
   useState() {
