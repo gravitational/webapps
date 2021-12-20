@@ -51,13 +51,12 @@ export default function Xterm({ tty }: { tty: Tty }) {
     return cleanup;
   }, [tty]);
 
-  return <StyledXterm style={{ overflow: 'scroll' }} ref={refContainer} />;
+  return <StyledXterm style={{ overflow: 'auto' }} ref={refContainer} />;
 }
 
 class TerminalPlayer extends Terminal {
   // do not attempt to connect
   connect() {
-    this.term.options.rendererType = 'dom';
     // Prevents terminal scrolling to force users to rely on the
     // player controls.
     this.term.options.scrollback = 0;

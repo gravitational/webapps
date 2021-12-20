@@ -88,8 +88,6 @@ export default class TtyPlayer extends Tty {
   }
 
   move(newPos) {
-    this._chunkQueue = []; // reset list.
-
     if (!this.isReady()) {
       return;
     }
@@ -122,6 +120,7 @@ export default class TtyPlayer extends Tty {
       // 2. tell terminal to render 1 huge chunk that has everything up to current
       // location.
       if (isRewind) {
+        this._chunkQueue = []; // reset list.
         this.emit(TermEventEnum.RESET);
       }
 
@@ -243,7 +242,7 @@ export default class TtyPlayer extends Tty {
       }
     }
 
-    this._chunkQueue = groups;
+    this._chunkQueue = [...this._chunkQueue, ...groups];
     if (!this._writeInFlight) {
       this.chunkDequeue();
     }
