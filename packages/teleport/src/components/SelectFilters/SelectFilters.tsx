@@ -122,7 +122,7 @@ export default function SelectFilters({
   });
 
   return (
-    <Flex flexWrap="wrap" mb={mb}>
+    <Flex flexWrap="wrap" mb={mb} style={{ flexShrink: '0' }}>
       <Box style={{ position: 'relative' }}>
         <AddButton
           pl={2}
