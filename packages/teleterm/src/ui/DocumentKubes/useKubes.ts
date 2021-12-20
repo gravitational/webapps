@@ -14,32 +14,22 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React from 'react';
-import { Failed } from 'design/CardError';
-import Logger from 'teleterm/ui/logger';
+import { useState } from 'react';
+import { useAppContext } from 'teleterm/ui/appContextProvider';
+import * as types from 'teleterm/ui/types';
 
-export default class CatchError extends React.Component {
-  logger = new Logger('components/CatchError');
+export default function useKubes({ clusterUri }: types.DocumentKubes) {
+  const ctx = useAppContext();
+  const [searchValue, setSearchValue] = useState('');
+  const kubes = ctx.serviceClusters.findKubes(clusterUri);
+  const syncStatus = ctx.serviceClusters.getClusterSyncStatus(clusterUri);
 
-  static getDerivedStateFromError(error) {
-    return { error };
-  }
+  ctx.serviceClusters.useState();
 
-  state = {
-    error: null,
+  return {
+    searchValue,
+    setSearchValue,
+    kubes,
+    syncStatus: syncStatus.kubes,
   };
-
-  componentDidCatch(err) {
-    this.logger.error('render', err);
-  }
-
-  render() {
-    if (this.state.error) {
-      return (
-        <Failed alignSelf={'baseline'} message={this.state.error.message} />
-      );
-    }
-
-    return this.props.children;
-  }
 }

@@ -26,6 +26,7 @@ const routes = {
   cluster: '/clusters/:clusterId',
   clusterServers: '/clusters/:clusterId/servers',
   clusterApps: '/clusters/:clusterId/apps',
+  clusterKubes: '/clusters/:clusterId/kubes',
   clusterDbs: '/clusters/:clusterId/dbs',
   clusterDb: '/clusters/:clusterId/dbs/:dbId',
   clusterGateways: '/clusters/:clusterId/gateways/:gatewayId',
@@ -46,16 +47,20 @@ const uris = {
     return generatePath(routes.clusterServers, params as any);
   },
 
+  getUriKubes(params: UriParams) {
+    return generatePath(routes.clusterKubes, params as any);
+  },
+
+  getUriApps(params: UriParams) {
+    return generatePath(routes.clusterApps, params as any);
+  },
+
   getUriDbs(params: UriParams) {
     return generatePath(routes.clusterDbs, params as any);
   },
 
   getUriDb(params: UriParams) {
     return generatePath(routes.clusterDb, params as any);
-  },
-
-  getUriApps(params: UriParams) {
-    return generatePath(routes.clusterApps, params as any);
   },
 
   getUriPty(params: UriParams) {

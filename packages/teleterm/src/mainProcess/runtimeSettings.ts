@@ -11,12 +11,12 @@ const RESOURCES_PATH = app.isPackaged
   ? process.resourcesPath
   : path.join(__dirname, '../../../../');
 
-const isDev = env.NODE_ENV === 'development' || env.DEBUG_PROD === 'true';
+const dev = env.NODE_ENV === 'development' || env.DEBUG_PROD === 'true';
 
 // Allows running tsh in insecure mode (development)
-const isInsecure = isDev || argv.slice(2).indexOf('--insecure') !== -1;
+const isInsecure = dev || argv.slice(2).indexOf('--insecure') !== -1;
 
-export function getRuntimeSettings(): RuntimeSettings {
+function getRuntimeSettings(): RuntimeSettings {
   const userDataDir = app.getPath('userData');
   const tshNetworkAddr = getTshNetworkAddr();
   const tshd = {
@@ -33,11 +33,11 @@ export function getRuntimeSettings(): RuntimeSettings {
   }
 
   return {
-    isDev,
+    dev,
+    tshd,
     userDataDir,
     defaultShell: getDefaultShell(),
     platform: process.platform,
-    tshd,
   };
 }
 
@@ -73,7 +73,7 @@ function getTshBinaryPath() {
   return tshPath;
 }
 
-export function getAssetPath(...paths: string[]): string {
+function getAssetPath(...paths: string[]): string {
   return path.join(RESOURCES_PATH, 'assets', ...paths);
 }
 
@@ -92,3 +92,5 @@ function getDefaultShell(): string {
 
   return shell;
 }
+
+export { getRuntimeSettings, getAssetPath };

@@ -20,9 +20,8 @@ import { FitAddon } from 'xterm-addon-fit';
 import { debounce } from 'lodash';
 import { PtyProcess } from 'teleterm/services/pty/types';
 import { colors } from 'teleport/Console/colors';
-import { createLogger } from 'teleterm/ui/utils/rendererLogger';
+import Logger from 'teleterm/ui/logger';
 
-const logger = createLogger('lib/term/terminal');
 const DISCONNECT_TXT = 'disconnected';
 const WINDOW_RESIZE_DEBOUNCE_DELAY = 200;
 
@@ -37,6 +36,7 @@ export default class TtyTerminal {
   private fitAddon = new FitAddon();
   private resizeHandler: IDisposable;
   private debouncedResize: () => void;
+  private logger = new Logger('lib/term/terminal');
 
   constructor(private ptyProcess: PtyProcess, options: Options) {
     this.el = options.el;
@@ -116,7 +116,7 @@ export default class TtyTerminal {
     try {
       this.term.write(data);
     } catch (err) {
-      logger.error('xterm.write', data, err);
+      this.logger.error('xterm.write', data, err);
       // recover xtermjs by resetting it
       this.term.reset();
     }
@@ -135,7 +135,7 @@ export default class TtyTerminal {
 
   private requestResize(): void {
     if (!this.isTerminalVisible()) {
-      logger.info(`unable to resize terminal (container might be hidden)`);
+      this.logger.info(`unable to resize terminal (container might be hidden)`);
       return;
     }
     this.fitAddon.fit();

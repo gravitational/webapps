@@ -4,7 +4,7 @@ export class MockMainProcessClient implements MainProcessClient {
   getRuntimeSettings(): RuntimeSettings {
     return {
       platform: 'darwin',
-      isDev: true,
+      dev: true,
       userDataDir: '',
       defaultShell: '',
       tshd: {

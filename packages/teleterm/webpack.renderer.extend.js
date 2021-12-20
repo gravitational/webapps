@@ -4,6 +4,7 @@ const HtmlWebPackPlugin = require('html-webpack-plugin');
 const resolvepath = require('@gravitational/build/webpack/resolvepath');
 
 function extend(cfg) {
+  cfg.entry = { app: ['./src/ui/boot'] };
   cfg.output.publicPath = '';
   cfg.output.path = resolvepath('build/app/dist/renderer');
   cfg.output.libraryTarget = 'umd';

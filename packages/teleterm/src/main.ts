@@ -2,16 +2,15 @@ import { spawn } from 'child_process';
 import { app, globalShortcut } from 'electron';
 import MainProcess from 'teleterm/mainProcess';
 import { getRuntimeSettings } from 'teleterm/mainProcess/runtimeSettings';
-import { createLogger, initializeLogging } from 'teleterm/services/logger';
+import createLoggerService from 'teleterm/services/logger';
+import Logger from 'teleterm/logger';
+import * as types from 'teleterm/types';
 
 const settings = getRuntimeSettings();
-
-initializeLogging({ isDev: settings.isDev, dir: settings.userDataDir });
-
-const logger = createLogger('Main');
+const logger = initMainLogger(settings);
 
 process.on('uncaughtException', error => {
-  logger.error(error);
+  logger.error('', error);
   throw error;
 });
 
@@ -28,7 +27,7 @@ app.on('will-quit', () => {
 });
 
 app.whenReady().then(() => {
-  if (mainProcess.settings.isDev) {
+  if (mainProcess.settings.dev) {
     // allow restarts on F6
     globalShortcut.register('F6', () => {
       mainProcess.dispose();
@@ -45,3 +44,14 @@ app.whenReady().then(() => {
 
   mainProcess.createWindow();
 });
+
+function initMainLogger(settings: types.RuntimeSettings) {
+  const service = createLoggerService({
+    dev: settings.dev,
+    dir: settings.userDataDir,
+  });
+
+  Logger.init(service);
+
+  return new Logger('Main');
+}

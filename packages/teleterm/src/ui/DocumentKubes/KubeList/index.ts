@@ -14,6 +14,5 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import App from './App';
-
-export default App;
+import KubeList from './KubeList';
+export default KubeList;

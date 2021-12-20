@@ -14,10 +14,10 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
+import * as nodePTY from 'node-pty';
 import { EventEmitter } from 'events';
 import { PtyOptions } from './types';
-import * as nodePTY from 'node-pty';
-import { createLogger, Logger } from 'teleterm/services/logger';
+import Logger from 'teleterm/logger';
 
 class PtyProcess extends EventEmitter {
   _options: PtyOptions;
@@ -30,7 +30,7 @@ class PtyProcess extends EventEmitter {
   constructor(options: PtyOptions) {
     super();
     this._options = options;
-    this._logger = createLogger('PTY Process');
+    this._logger = new Logger('PTY Process');
   }
 
   start(cols: number, rows: number) {

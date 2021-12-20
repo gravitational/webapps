@@ -18,35 +18,32 @@ import React from 'react';
 import styled from 'styled-components';
 import { Text, Flex, Box } from 'design';
 import { Danger } from 'design/Alert';
-import QuickLaunch from 'teleport/components/QuickLaunch';
 import Document from './../Document';
-import useServers from './useServers';
-import ServerList from './ServerList';
+import useApps from './useApps';
+import AppList from './AppList';
 import * as types from '../types';
 
-export default function DocumentServers(props: Props) {
+export default function DocumentApps(props: Props) {
   const { doc, visible } = props;
-  const { servers, syncStatus, connect, searchValue } = useServers(doc);
-
-  function onQuickLaunchEnter() {}
+  const { apps, syncStatus, searchValue } = useApps(doc);
 
   return (
     <Document visible={visible}>
       <Container mx="auto" mt="4" px="5">
-        <Flex justifyContent="space-between" mb="4">
+        <Flex
+          justifyContent="space-between"
+          mb="4"
+          typography="h3"
+          color="text.secondary"
+        >
           <Text typography="h3" color="text.secondary">
-            Servers
+            Applications
           </Text>
-          <QuickLaunch width="240px" onPress={onQuickLaunchEnter} />
         </Flex>
         {syncStatus.status === 'failed' && (
           <Danger>{syncStatus.statusText}</Danger>
         )}
-        <ServerList
-          searchValue={searchValue}
-          onLogin={connect}
-          servers={servers}
-        />
+        <AppList searchValue={searchValue} apps={apps} />
       </Container>
     </Document>
   );
@@ -54,7 +51,7 @@ export default function DocumentServers(props: Props) {
 
 type Props = {
   visible: boolean;
-  doc: types.DocumentServers;
+  doc: types.DocumentApps;
 };
 
 const Container = styled(Box)`

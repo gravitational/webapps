@@ -2,16 +2,18 @@ import { contextBridge } from 'electron';
 import createTshClient from 'teleterm/services/tshd/createClient';
 import createPtyService from 'teleterm/services/pty/ptyService';
 import createMainProcessClient from 'teleterm/mainProcess/mainProcessClient';
+import createLoggerService from 'teleterm/services/logger';
+import PreloadLogger from 'teleterm/logger';
 import { ElectronGlobals } from './types';
-import { createLogger, initializeLogging } from './services/logger';
 
 const mainProcessClient = createMainProcessClient();
 const runtimeSettings = mainProcessClient.getRuntimeSettings();
-
-initializeLogging({
-  isDev: runtimeSettings.isDev,
+const loggerService = createLoggerService({
+  dev: runtimeSettings.dev,
   dir: runtimeSettings.userDataDir,
 });
+
+PreloadLogger.init(loggerService);
 
 const tshClient = createTshClient(runtimeSettings.tshd.networkAddr);
 const ptyServiceClient = createPtyService(runtimeSettings);
@@ -20,5 +22,5 @@ contextBridge.exposeInMainWorld('electron', {
   mainProcessClient,
   tshClient,
   ptyServiceClient,
-  createLogger,
+  loggerService,
 } as ElectronGlobals);

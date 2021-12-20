@@ -14,17 +14,22 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
+import { DocumentCluster } from './DocumentCluster/DocumentCluster';
+
 export type ResourceKind =
   | 'gateways'
   | 'terminal'
   | 'servers'
   | 'server'
+  | 'cluster'
   | 'blank'
   | 'home'
   | 'apps'
   | 'clusters'
   | 'dbs'
   | 'db'
+  | 'kubes'
+  | 'apps'
   | 'gateway'
   | 'terminal_shell'
   | 'terminal_tsh_session';
@@ -56,6 +61,16 @@ export interface DocumentServers extends DocumentBase {
   clusterUri: string;
 }
 
+export interface DocumentKubes extends DocumentBase {
+  kind: 'kubes';
+  clusterUri: string;
+}
+
+export interface DocumentApps extends DocumentBase {
+  kind: 'apps';
+  clusterUri: string;
+}
+
 export interface DocumentDatabases extends DocumentBase {
   kind: 'dbs';
   clusterUri: string;
@@ -63,6 +78,11 @@ export interface DocumentDatabases extends DocumentBase {
 
 export interface DocumentGateway extends DocumentBase {
   kind: 'gateway';
+  clusterUri: string;
+}
+
+export interface DocumentCluster extends DocumentBase {
+  kind: 'cluster';
   clusterUri: string;
 }
 
@@ -78,8 +98,11 @@ export type Document =
   | DocumentBlank
   | DocumentDatabases
   | DocumentGateway
+  | DocumentApps
+  | DocumentKubes
   | DocumentTshSession
-  | DocumentPtySession;
+  | DocumentPtySession
+  | DocumentCluster;
 
 export interface UriParams {
   clusterId?: string;

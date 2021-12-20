@@ -1,12 +1,12 @@
 import { enableMapSet, produce } from 'immer';
 import Store from 'shared/libs/stores/store';
 import stateLogger from 'shared/libs/stores/logger';
-import { createLogger } from '../../../ui/utils/rendererLogger';
+import Logger from 'teleterm/ui/logger';
 
 enableMapSet();
 
 export class ImmutableStore<T> extends Store<T> {
-  protected logger = createLogger(this.constructor.name);
+  protected logger = new Logger(this.constructor.name);
 
   // @ts-ignore
   setState(nextState: (draftState: Partial<T>) => T | void): void {

@@ -33,6 +33,8 @@ export const Story = () => {
     return {
       dbs: error,
       servers: loading,
+      apps: loading,
+      kubes: loading,
     };
   };
 

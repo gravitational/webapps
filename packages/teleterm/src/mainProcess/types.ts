@@ -1,5 +1,5 @@
 export type RuntimeSettings = {
-  isDev: boolean;
+  dev: boolean;
   userDataDir: string;
   defaultShell: string;
   platform: Platform;
