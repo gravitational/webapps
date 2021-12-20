@@ -22,19 +22,37 @@ import { Close, Add } from 'design/Icon';
 import Select, { Option as BaseOption } from 'shared/components/Select';
 import { makeLabelTag } from 'teleport/components/formatters';
 import { Filter } from 'teleport/types';
+import usePages from './usePages';
+import Pager from './Pager';
 
 export default function SelectFilters({
   applyFilters,
   appliedFilters,
   filters,
   mb = 3,
+  pageSize = 100,
 }: Props) {
   const selectWrapperRef = useRef(null);
-  const options = useMemo(() => makeOptions(filters), [filters]);
   const [showSelector, setShowSelector] = useState(false);
+  const [search, setSearch] = useState('');
   const [selectedOptions, setSelectedOptions] = useState<Option[]>(() =>
     makeOptions(appliedFilters)
   );
+
+  const options = useMemo(() => makeOptions(filters), [filters]);
+  const filteredOptions = useMemo(() => {
+    if (!search) {
+      return options;
+    }
+
+    const searchValue = search.toLocaleLowerCase();
+    return options.filter(opt => {
+      const targetValue = opt.value.toLocaleLowerCase();
+      return targetValue.indexOf(searchValue) !== -1;
+    });
+  }, [search]);
+
+  const pagedState = usePages({ data: filteredOptions, pageSize });
 
   function clearOptions() {
     setSelectedOptions([]);
@@ -42,9 +60,11 @@ export default function SelectFilters({
 
   function deleteFilter(filter: Filter) {
     const updatedFilters = selectedOptions
-      .filter(
-        o => o.filter.name !== filter.name && o.filter.value !== filter.value
-      )
+      .filter(o => {
+        const currFilter = `${o.filter.name}${o.filter.value}`;
+        const targetFilter = `${filter.name}${filter.value}`;
+        return currFilter !== targetFilter;
+      })
       .map(o => o.filter);
 
     applyFilters(updatedFilters);
@@ -59,6 +79,13 @@ export default function SelectFilters({
     if (e.key === 'Escape') {
       setShowSelector(false);
     }
+  }
+
+  function onInputChange(value, obj) {
+    if (obj.action === 'menu-close' || obj.action === 'set-value') {
+      return;
+    }
+    setSearch(value);
   }
 
   useEffect(() => {
@@ -115,21 +142,25 @@ export default function SelectFilters({
             borderRadius={2}
             borderTopLeftRadius={0}
             style={{ position: 'absolute', zIndex: 1 }}
+            ref={selectWrapperRef}
           >
-            <StyledSelect ref={selectWrapperRef}>
+            <StyledSelect>
               <Select
                 autoFocus
                 placeholder="Search..."
+                inputValue={search}
                 value={selectedOptions}
-                options={options}
+                options={pagedState.data}
                 isSearchable={true}
                 isClearable={false}
                 isMulti={true}
                 menuIsOpen={true}
                 hideSelectedOptions={false}
                 controlShouldRenderValue={false}
-                onChange={(o: Option[]) => setSelectedOptions(o)}
+                filterOption={() => true}
+                onChange={(o: Option[]) => o && setSelectedOptions(o)}
                 onKeyDown={handleKeyDown}
+                onInputChange={onInputChange}
                 components={{
                   Option: OptionComponent,
                   Control: ControlComponent,
@@ -142,6 +173,7 @@ export default function SelectFilters({
                 }}
               />
             </StyledSelect>
+            <Pager {...pagedState} />
           </Box>
         )}
       </Box>
@@ -284,6 +316,9 @@ const StyledSelect = styled.div`
     border-top-left-radius: 0;
     border-top-right-radius: 0;
     margin-bottom: 0;
+    box-shadow: none;
+    border-top: 1px #dddddd solid;
+    border-bottom: 1px #dddddd solid;
   }
 
   .react-select-container {
@@ -354,4 +389,6 @@ export type Props = {
   applyFilters(newFilters: Filter[]): void;
   // mb is margin-bottom and is applied to the select button.
   mb?: number;
+  // pageSize is number of filters to list per page.
+  pageSize?: number;
 };

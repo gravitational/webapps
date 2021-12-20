@@ -37,6 +37,9 @@ export type Props = {
   components?: any;
   customProps?: Record<string, any>;
   menuPosition?: 'fixed' | 'absolute';
+  inputValue?: string;
+  filterOption?(): null | boolean;
+  onInputChange?(value: string, actionMeta: { action: InputAction }): void;
 };
 
 export type AsyncProps = Omit<Props, 'options'> & {
@@ -54,3 +57,5 @@ export type Option<T = string> = {
   // label is the value user sees in the select options dropdown.
   label: string;
 };
+
+type InputAction = 'set-value' | 'input-change' | 'input-blur' | 'menu-close';
