@@ -8,9 +8,10 @@ export class MockAppContext extends AppContext {
     const mainProcessClient = new MockMainProcessClient();
     const tshdClient = new MockTshClient();
     const ptyServiceClient = new MockPtyServiceClient();
+    const loggerService = createLoggerService();
 
     super({
-      createLogger,
+      loggerService,
       mainProcessClient,
       tshClient: tshdClient,
       ptyServiceClient,
@@ -18,10 +19,14 @@ export class MockAppContext extends AppContext {
   }
 }
 
-function createLogger(context = 'default') {
+function createLoggerService() {
   return {
-    error: (...args) => {},
-    warn: (...args) => {},
-    info: (...args) => {},
+    createLogger() {
+      return {
+        error: () => {},
+        warn: () => {},
+        info: () => {},
+      };
+    },
   };
 }

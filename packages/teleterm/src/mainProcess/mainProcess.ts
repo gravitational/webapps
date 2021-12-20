@@ -1,9 +1,8 @@
 import path from 'path';
 import { app, screen, BrowserWindow, ipcMain, Menu } from 'electron';
 import { ChildProcess, spawn } from 'child_process';
-import { RuntimeSettings } from 'teleterm/types';
+import { RuntimeSettings, Logger } from 'teleterm/types';
 import { getAssetPath } from './runtimeSettings';
-import { Logger } from 'teleterm/services/logger';
 import { subscribeToClusterContextMenuEvent } from './clusterContextMenu';
 
 type Options = {
@@ -45,7 +44,7 @@ export default class MainProcess {
       },
     });
 
-    if (this.settings.isDev) {
+    if (this.settings.dev) {
       win.loadURL('https://localhost:8080');
     } else {
       win.loadFile(path.join(__dirname, '../renderer/index.html'));

@@ -43,11 +43,12 @@ export default class DocumentService extends ImmutableStore<State> {
     ],
   };
 
-  // TODO (alex-kovoy): replace it with a proper route->doc registration mechanism
   open(uri: string) {
     const clusterMatch = uris.match(uri, uris.routes.cluster);
     const homeMatch = uris.match(uri, uris.routes.home);
     const srvMatch = uris.match(uri, uris.routes.clusterServers);
+    const kubesMatch = uris.match(uri, uris.routes.clusterKubes);
+    const appsMatch = uris.match(uri, uris.routes.clusterApps);
     const gwMatch = uris.match(uri, uris.routes.clusterGateways);
     const ptyMatch = uris.match(uri, uris.routes.ptys);
     const dbsMatch = uris.match(uri, {
@@ -79,6 +80,20 @@ export default class DocumentService extends ImmutableStore<State> {
         clusterUri,
         title: `${clusterMatch.params.clusterId}/servers`,
         kind: 'servers',
+      });
+    } else if (kubesMatch) {
+      this.add({
+        uri,
+        clusterUri,
+        title: `${clusterMatch.params.clusterId}/kubes`,
+        kind: 'kubes',
+      });
+    } else if (appsMatch) {
+      this.add({
+        uri,
+        clusterUri,
+        title: `${clusterMatch.params.clusterId}/apps`,
+        kind: 'apps',
       });
     } else if (dbsMatch) {
       this.add({

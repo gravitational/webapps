@@ -4,13 +4,15 @@ import * as api from 'teleterm/services/tshd/v1/service_pb';
 import * as types from 'teleterm/services/tshd/types';
 import middleware, { withLogging } from './middleware';
 import createAbortController from './createAbortController';
+import Logger from 'teleterm/logger';
 
 export function createGrpcClient(addr?: string) {
   return new TerminalServiceClient(addr, grpc.credentials.createInsecure());
 }
 
 export default function createClient(addr: string) {
-  const tshd = middleware(createGrpcClient(addr), [withLogging]);
+  const logger = new Logger('tshd');
+  const tshd = middleware(createGrpcClient(addr), [withLogging(logger)]);
 
   // Create a client instance that could be shared with the  renderer (UI) via Electron contextBridge
   const client = {
@@ -24,6 +26,32 @@ export default function createClient(addr: string) {
             reject(err);
           } else {
             resolve();
+          }
+        });
+      });
+    },
+
+    async listApps(clusterUri: string) {
+      const req = new api.ListAppsRequest().setClusterUri(clusterUri);
+      return new Promise<types.Application[]>((resolve, reject) => {
+        tshd.listApps(req, (err, response) => {
+          if (err) {
+            reject(err);
+          } else {
+            resolve(response.toObject().appsList);
+          }
+        });
+      });
+    },
+
+    async listKubes(clusterUri: string) {
+      const req = new api.ListKubesRequest().setClusterUri(clusterUri);
+      return new Promise<types.Kube[]>((resolve, reject) => {
+        tshd.listKubes(req, (err, response) => {
+          if (err) {
+            reject(err);
+          } else {
+            resolve(response.toObject().kubesList);
           }
         });
       });

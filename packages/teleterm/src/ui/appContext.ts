@@ -23,8 +23,6 @@ import ServiceGlobalSearch from 'teleterm/ui/services/globalSearch';
 import { KeyboardShortcutsService } from 'teleterm/ui/services/keyboardShortcuts';
 import * as types from 'teleterm/types';
 
-export type Config = types.ElectronGlobals;
-
 export default class AppContext {
   serviceGlobalSearch: ServiceGlobalSearch;
   serviceClusters: ServiceClusters;
@@ -36,7 +34,7 @@ export default class AppContext {
 
   uris = uris;
 
-  constructor(config: Config) {
+  constructor(config: types.ElectronGlobals) {
     this.mainProcessClient = config.mainProcessClient;
     this.serviceGlobalSearch = new ServiceGlobalSearch();
     this.serviceClusters = new ServiceClusters(config.tshClient);

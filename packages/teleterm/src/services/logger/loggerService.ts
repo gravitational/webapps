@@ -1,85 +1,60 @@
-import {
-  createLogger as createWinstonLogger,
-  format,
-  Logger as WinstonLogger,
-  transports,
-} from 'winston';
+import { createLogger as createWinston, format, transports } from 'winston';
 import { isObject } from 'lodash';
+import { Logger, LoggerService } from './types';
 
-type Options = {
-  dir: string;
-  isDev?: boolean;
-};
-
-export interface Logger {
-  error(...args: unknown[]): void;
-
-  warn(...args: unknown[]): void;
-
-  info(...args: unknown[]): void;
-}
-
-let loggerInstance: WinstonLogger;
-
-export function initializeLogging(options: Options): void {
-  loggerInstance = createWinstonLogger({
+export default function createLoggerService(opts: Options): LoggerService {
+  const instance = createWinston({
     level: 'info',
+    exitOnError: false,
     format: format.combine(
       format.timestamp({
         format: 'DD-MM-YY HH:mm:ss',
       }),
       format.printf(({ level, message, timestamp, context }) => {
-        const strigifiedMessage = messageStringifier(
-          (message as unknown) as unknown[]
-        );
-        return `[${timestamp}] [${context}] ${level}: ${strigifiedMessage}`;
+        const text = stringifier(message as unknown as unknown[]);
+        return `[${timestamp}] [${context}] ${level}: ${text}`;
       })
     ),
-    exitOnError: false,
     transports: [
       new transports.File({
         maxsize: 4194304, // 4 MB - max size of a single file
         maxFiles: 5,
-        dirname: options.dir,
+        dirname: opts.dir,
         filename: `${process.type}.log`, // browser.log, renderer.log, worker.log
       }),
     ],
   });
 
-  if (options.isDev) {
-    loggerInstance.add(
+  if (opts.dev) {
+    instance.add(
       new transports.Console({
         format: format.printf(({ level, message, context }) => {
-          const strigifiedMessage = messageStringifier(
-            (message as unknown) as unknown[]
-          );
-          return `[${context}] ${level}: ${strigifiedMessage}`;
+          const text = stringifier(message as unknown as unknown[]);
+          return `[${context}] ${level}: ${text}`;
         }),
       })
     );
   }
-}
 
-export function createLogger(context = 'default'): Logger {
-  if (!loggerInstance) {
-    throw new Error('Logger is not initialized, use initializeLogging() first');
-  }
-
-  const childLogger = loggerInstance.child({ context });
   return {
-    error: (...args) => {
-      childLogger.error(args);
-    },
-    warn: (...args) => {
-      childLogger.warn(args);
-    },
-    info: (...args) => {
-      childLogger.info(args);
+    createLogger(context = 'default'): Logger {
+      const logger = instance.child({ context });
+      return {
+        error: (...args) => {
+          logger.error(args);
+        },
+        warn: (...args) => {
+          logger.warn(args);
+        },
+        info: (...args) => {
+          logger.info(args);
+        },
+      };
     },
   };
 }
 
-function messageStringifier(message: unknown[]): string {
+function stringifier(message: unknown[]): string {
   return message
     .map(singleMessage => {
       if (singleMessage instanceof Error) {
@@ -92,3 +67,8 @@ function messageStringifier(message: unknown[]): string {
     })
     .join(' ');
 }
+
+type Options = {
+  dir: string;
+  dev?: boolean;
+};

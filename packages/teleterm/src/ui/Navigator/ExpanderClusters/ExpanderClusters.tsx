@@ -53,7 +53,13 @@ export const ExpanderClusters: React.FC<State> = props => {
   const $onlineClusters = clusterItems
     .filter(i => i.connected)
     .map(i => (
-      <ClusterItem key={i.uri} item={i} onRemove={remove} onLogout={logout} onContextMenu={openContextMenu(i)} />
+      <ClusterItem
+        key={i.uri}
+        item={i}
+        onRemove={remove}
+        onLogout={logout}
+        onContextMenu={openContextMenu(i)}
+      />
     ));
 
   const $offlineClusters = clusterItems
@@ -122,7 +128,7 @@ const ClusterItem: React.FC<ClusterItemProps> = props => {
 
   return (
     <Expander>
-      <ExpanderHeader pl={5}  onContextMenu={props.onContextMenu}>
+      <ExpanderHeader pl={5} onContextMenu={props.onContextMenu}>
         <Flex
           alignItems="center"
           justifyContent="space-between"
@@ -169,7 +175,11 @@ const ClusterOfflineItem: React.FC<{
 
   return (
     <Expander>
-      <ExpanderHeader pl={5} color="grey.500" onContextMenu={props.onContextMenu}>
+      <ExpanderHeader
+        pl={5}
+        color="grey.500"
+        onContextMenu={props.onContextMenu}
+      >
         <Flex
           alignItems="center"
           justifyContent="space-between"

@@ -16,15 +16,18 @@ limitations under the License.
 
 import React from 'react';
 import styled from 'styled-components';
-import { Flex } from 'design';
+import { Flex, Box } from 'design';
 import { useAppContext } from 'teleterm/ui/appContextProvider';
 import * as types from 'teleterm/ui/types';
 import Tabs from 'teleterm/ui/Tabs';
+import Document from 'teleterm/ui/Document';
 import DocumentHome from 'teleterm/ui/DocumentHome';
 import DocumentServers from 'teleterm/ui/DocumentServers';
 import DocumentDbs from 'teleterm/ui/DocumentDbs';
 import DocumentGateway from 'teleterm/ui/DocumentGateway';
 import DocumentTerminal from 'teleterm/ui/DocumentTerminal';
+import DocumentKubes from 'teleterm/ui/DocumentKubes';
+import DocumentApps from 'teleterm/ui/DocumentApps';
 import useTabShortcuts from './useTabShortcuts';
 
 export default function TabHost(props: Props) {
@@ -90,6 +93,10 @@ function MemoizedDocument(props: { doc: types.Document; visible: boolean }) {
     switch (doc.kind) {
       case 'home':
         return <DocumentHome doc={doc} visible={visible} />;
+      case 'kubes':
+        return <DocumentKubes doc={doc} visible={visible} />;
+      case 'apps':
+        return <DocumentApps doc={doc} visible={visible} />;
       case 'servers':
         return <DocumentServers doc={doc} visible={visible} />;
       case 'dbs':
@@ -100,7 +107,11 @@ function MemoizedDocument(props: { doc: types.Document; visible: boolean }) {
       case 'terminal_tsh_session':
         return <DocumentTerminal doc={doc} visible={visible} />;
       default:
-        return null;
+        return (
+          <Document visible={visible}>
+            Document kind "{doc.kind}" is not supported
+          </Document>
+        );
     }
   }, [visible, doc]);
 }

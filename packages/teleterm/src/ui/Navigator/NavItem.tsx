@@ -52,7 +52,7 @@ const NavItem: React.FC<Props> = props => {
     >
       {!props.children && (
         <>
-          <Icon mr={2} ml={-2} fontSize="10px" color="inherit" />
+          <Icon mr={2} ml={-2} fontSize="10px" color="text.secondary" />
           <div style={{ position: 'relative' }}>
             {item.title}
             {item.status === 'loading' && <LinearProgress />}
