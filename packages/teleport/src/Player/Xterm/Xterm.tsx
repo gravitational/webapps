@@ -35,21 +35,32 @@ export default function Xterm({ tty }: { tty: Tty }) {
       term.term.textarea.scrollIntoView(false);
     });
 
+    function stopPropagating(e: Event) {
+      e.stopPropagation();
+    }
+
+    // Stop wheel event from reaching the terminal
+    // to allow parent container of xterm to scroll instead.
+    window.addEventListener('wheel', stopPropagating, true);
+
     function cleanup() {
       term.destroy();
+      window.removeEventListener('wheel', stopPropagating, true);
     }
 
     return cleanup;
   }, [tty]);
 
-  return <StyledXterm style={{ overflow: 'auto' }} ref={refContainer} />;
+  return <StyledXterm style={{ overflow: 'scroll' }} ref={refContainer} />;
 }
 
 class TerminalPlayer extends Terminal {
   // do not attempt to connect
   connect() {
-    this.term.options.scrollback = 0;
     this.term.options.rendererType = 'dom';
+    // Prevents terminal scrolling to force users to rely on the
+    // player controls.
+    this.term.options.scrollback = 0;
   }
 
   resize(cols, rows) {
