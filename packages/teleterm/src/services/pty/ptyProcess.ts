@@ -20,91 +20,91 @@ import { PtyOptions } from './types';
 import Logger from 'teleterm/logger';
 
 class PtyProcess extends EventEmitter {
-  _options: PtyOptions;
-  _buffered = true;
-  _attachedBufferTimer;
-  _attachedBuffer: string;
-  _process: nodePTY.IPty;
-  _logger: Logger;
+  private buffered = true;
+  private attachedBufferTimer;
+  private attachedBuffer: string;
+  private process?: nodePTY.IPty;
+  private logger: Logger;
 
-  constructor(options: PtyOptions) {
+  constructor(private options: PtyOptions) {
     super();
-    this._options = options;
-    this._logger = new Logger('PTY Process');
+    this.logger = new Logger('PTY Process');
   }
 
   start(cols: number, rows: number) {
-    this._process = nodePTY.spawn(this._options.path, this._options.args, {
+    this.process = nodePTY.spawn(this.options.path, this.options.args, {
       cols,
       rows,
       name: 'xterm-color',
-      cwd: this._options.cwd || process.cwd(),
+      cwd: this.options.cwd || process.cwd(),
       env: {
         ...process.env,
-        ...this._options.env,
+        ...this.options.env,
       },
     });
 
-    this._process.onData(data => this._onData(data));
-    this._process.onExit(ev => this._onExit(ev));
+    this.onStart();
+    this.process.onData(data => this.onData(data));
+    this.process.onExit(ev => this.onExit(ev));
   }
 
   send(data: string) {
-    if (!this._process || !data) {
+    if (!this.process || !data) {
       return;
     }
 
-    this._process.write(data);
+    this.process.write(data);
   }
 
   resize(cols: number, rows: number) {
-    this._process.resize(cols, rows);
+    this.process?.resize(cols, rows);
   }
 
   dispose() {
     this.removeAllListeners();
-    this._process.kill();
+    this.process?.kill();
   }
 
   getPid() {
-    return this._process.pid;
+    return this.process?.pid;
   }
 
-  _flushBuffer() {
-    this.emit(TermEventEnum.DATA, this._attachedBuffer);
-    this._attachedBuffer = null;
-    clearTimeout(this._attachedBufferTimer);
-    this._attachedBufferTimer = null;
+  private flushBuffer() {
+    this.emit(TermEventEnum.DATA, this.attachedBuffer);
+    this.attachedBuffer = null;
+    clearTimeout(this.attachedBufferTimer);
+    this.attachedBufferTimer = null;
   }
 
-  _pushToBuffer(data: string) {
-    if (this._attachedBuffer) {
-      this._attachedBuffer += data;
+  private pushToBuffer(data: string) {
+    if (this.attachedBuffer) {
+      this.attachedBuffer += data;
     } else {
-      this._attachedBuffer = data;
-      setTimeout(this._flushBuffer.bind(this), 10);
+      this.attachedBuffer = data;
+      setTimeout(this.flushBuffer.bind(this), 10);
     }
   }
 
-  _onExit(e: { exitCode: number; signal?: number }) {
+  private onExit(e: { exitCode: number; signal?: number }) {
     this.emit(TermEventEnum.EXIT, e);
-    this._logger.info('pty has been terminated');
+    this.process = undefined;
+    this.logger.info('pty has been terminated');
   }
 
-  _onStart() {
+  private onStart() {
     this.emit('open');
-    this._logger.info('pty is open');
+    this.logger.info('pty is open');
   }
 
-  _onData(data: string) {
+  private onData(data: string) {
     try {
-      if (this._buffered) {
-        this._pushToBuffer(data);
+      if (this.buffered) {
+        this.pushToBuffer(data);
       } else {
         this.emit(TermEventEnum.DATA, data);
       }
     } catch (err) {
-      this._logger.error('failed to parse incoming message.', err);
+      this.logger.error('failed to parse incoming message.', err);
     }
   }
 }
@@ -112,7 +112,6 @@ class PtyProcess extends EventEmitter {
 export default PtyProcess;
 
 export const TermEventEnum = {
-  RESIZE: 'terminal.resize',
   CLOSE: 'terminal.close',
   RESET: 'terminal.reset',
   DATA: 'terminal.data',
