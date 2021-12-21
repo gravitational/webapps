@@ -55,17 +55,25 @@ export default function TabHost(props: Props) {
     serviceDocs.openNewTerminal();
   }
 
-  const $docs = documents.map(doc => {
-    const isActiveDoc = doc === docActive;
-    return <MemoizedDocument doc={doc} visible={isActiveDoc} key={doc.uri} />;
-  });
-
-  const openContextMenu = () => {
-    mainProcessClient.openContextMenu();
+  const openTerminalContextMenu = () => {
+    mainProcessClient.openTerminalContextMenu();
   };
 
+  const $docs = documents.map(doc => {
+    const isActiveDoc = doc === docActive;
+    return (
+      <MemoizedDocument
+        doc={doc}
+        visible={isActiveDoc}
+        key={doc.uri}
+        onTerminalContextMenu={openTerminalContextMenu}
+        onClose={() => handleTabClose(doc)}
+      />
+    );
+  });
+
   return (
-    <StyledTabHost {...props} onContextMenu={openContextMenu}>
+    <StyledTabHost {...props}>
       <Flex bg="bgTerminal" height="32px">
         <Tabs
           flex="1"
@@ -83,8 +91,13 @@ export default function TabHost(props: Props) {
   );
 }
 
-function MemoizedDocument(props: { doc: types.Document; visible: boolean }) {
-  const { doc, visible } = props;
+function MemoizedDocument(props: {
+  doc: types.Document;
+  visible: boolean;
+  onTerminalContextMenu(): void;
+  onClose(): void;
+}) {
+  const { doc, visible, onTerminalContextMenu, onClose } = props;
   return React.useMemo(() => {
     switch (doc.kind) {
       case 'doc.home':
@@ -95,7 +108,14 @@ function MemoizedDocument(props: { doc: types.Document; visible: boolean }) {
         return <DocumentGateway doc={doc} visible={visible} />;
       case 'doc.terminal_shell':
       case 'doc.terminal_tsh_node':
-        return <DocumentTerminal doc={doc} visible={visible} />;
+        return (
+          <DocumentTerminal
+            doc={doc}
+            visible={visible}
+            onClose={onClose}
+            onContextMenu={onTerminalContextMenu}
+          />
+        );
       default:
         return (
           <Document visible={visible}>

@@ -49,7 +49,12 @@ export default function DocumentTerminal(
   }, [refreshDocumentCwd, refTerminal.current]);
 
   return (
-    <Document visible={visible} flexDirection="column" pl={2}>
+    <Document
+      visible={visible}
+      flexDirection="column"
+      pl={2}
+      onContextMenu={onContextMenu}
+    >
       {ptyProcess && <Terminal ptyProcess={ptyProcess} ref={refTerminal} />}
     </Document>
   );

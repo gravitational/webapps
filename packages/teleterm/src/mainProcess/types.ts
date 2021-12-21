@@ -14,8 +14,8 @@ export type RuntimeSettings = {
 
 export type MainProcessClient = {
   getRuntimeSettings(): RuntimeSettings;
-  openContextMenu(): void;
-  openClusterContextMenu(options: ClusterContextMenuOptions);
+  openTerminalContextMenu(): void;
+  openClusterContextMenu(options: ClusterContextMenuOptions): void;
 };
 
 export type Platform = NodeJS.Platform;
@@ -29,6 +29,7 @@ export interface ClusterContextMenuOptions {
 }
 
 export const ClusterContextMenuEventChannel = 'ClusterContextMenuEventChannel';
+export const TerminalContextMenuEventChannel = 'TerminalContextMenuEventChannel';
 
 export enum ClusterContextMenuEventType {
   Refresh = 'Refresh',
