@@ -19,8 +19,10 @@ import Document from 'teleterm/ui/Document';
 import useDocumentTerminal, { Props } from './useDocTerminal';
 import Terminal from './Terminal';
 
-export default function DocumentTerminal(props: Props & { visible: boolean }) {
-  const { visible, doc } = props;
+export default function DocumentTerminal(
+  props: Props & { visible: boolean; onContextMenu?(): void; onClose(): void }
+) {
+  const { visible, doc, onClose, onContextMenu } = props;
   const refTerminal = useRef<Terminal>();
   const { ptyProcess } = useDocumentTerminal(doc);
 
@@ -31,6 +33,10 @@ export default function DocumentTerminal(props: Props & { visible: boolean }) {
       window.dispatchEvent(new Event('resize'));
     }
   }, [visible, ptyProcess]);
+
+  useEffect(() => {
+    ptyProcess?.onExit(onClose);
+  }, [ptyProcess?.onExit]);
 
   return (
     <Document visible={visible} flexDirection="column" pl={2}>
