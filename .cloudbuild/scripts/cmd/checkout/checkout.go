@@ -37,6 +37,9 @@ func innerMain() error {
 	}
 	defer cleanupSSH()
 
+	log.Println("I am")
+	run("whoami")
+
 	err = git(args.workspace, "submodule", "update", "--init", "--recursive")
 	if err != nil {
 		return trace.Wrap(err)
@@ -83,9 +86,6 @@ func initSSH() error {
 	if err != nil {
 		return trace.Wrap(err, "failed setting known_hosts permissions")
 	}
-
-	log.Printf("Content of %s:", sshConfigDir)
-	run("cat", knownHostsFile)
 
 	log.Print("Configuring deployment SSH keys")
 
