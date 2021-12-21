@@ -3,5 +3,5 @@ steps:
     args:
       - build
       - '--build-arg'
-      - NPM_SCRIPT=test
+      - NPM_SCRIPT=ci
       - .

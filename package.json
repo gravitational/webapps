@@ -16,6 +16,7 @@
     "build-oss": "yarn build-teleport-oss",
     "build-e": "yarn build-teleport-e",
     "build": "yarn type-check && yarn build-oss && yarn build-e",
+    "ci": "yarn test && yarn build",
     "type-check": "yarn tsc"
   },
   "private": true,
@@ -27,3 +28,4 @@
     "packages/*/**"
   ]
 }
+

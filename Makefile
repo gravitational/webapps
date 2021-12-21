@@ -52,9 +52,6 @@ docker-enter:
 docker-clean:
 	docker rmi --force $(IMAGE_NAME)
 
-# update-teleport-repo has moved
-# it now lives here: https://github.com/gravitational/ops/tree/master/webapps/update-teleport-webassets.sh
-
 # clean removes this repo generated artifacts
 .PHONY: clean
 clean:
