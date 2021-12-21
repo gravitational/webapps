@@ -95,7 +95,7 @@ func initSSH() error {
 	}
 
 	webassetsKeyFile := path.Join(sshConfigDir, "webassets-e")
-	log.Print("Writing webassets deployment key to %s", webassetsKeyFile)
+	log.Printf("Writing webassets deployment key to %s", webassetsKeyFile)
 	err = writeFile(
 		webassetsKeyFile,
 		[]byte(key),
@@ -117,6 +117,9 @@ func initSSH() error {
 			return trace.Wrap(err, "failed adding deployment SSH key %q", keyFile)
 		}
 	}
+
+	configFile.Close()
+	run("cat", sshConfigPath)
 
 	return nil
 }
