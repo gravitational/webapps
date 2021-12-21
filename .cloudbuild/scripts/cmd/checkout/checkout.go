@@ -79,11 +79,13 @@ func initSSH() error {
 	if err != nil {
 		return trace.Wrap(err, "failed adding github.com to known hosts")
 	}
-
 	err = os.Chmod(knownHostsFile, 0600)
 	if err != nil {
 		return trace.Wrap(err, "failed setting known_hosts permissions")
 	}
+
+	log.Printf("Content of %s:", sshConfigDir)
+	run("cat", knownHostsFile)
 
 	log.Print("Configuring deployment SSH keys")
 
