@@ -33,12 +33,12 @@ export default class DocumentService extends ImmutableStore<State> {
       {
         uri: '/',
         kind: 'doc.blank',
-        title: 'Welcome',
+        getTitle: () => 'Welcome',
       },
       {
         uri: '/home',
         kind: 'doc.home',
-        title: 'Home',
+        getTitle: () => 'Home',
       },
     ],
   };
@@ -61,33 +61,33 @@ export default class DocumentService extends ImmutableStore<State> {
     if (ptyMatch) {
       this.add({
         uri: docUri,
-        title: 'dir/path',
+        getTitle: () => 'dir/path',
         kind: 'doc.terminal_shell',
       });
     } else if (homeMatch) {
       this.add({
         uri: docUri,
-        title: 'Home',
+        getTitle: () => 'Home',
         kind: 'doc.home',
       });
     } else if (gwMatch) {
       this.add({
         uri: docUri,
         clusterUri,
-        title: 'Gateway',
+        getTitle: () => 'Gateway',
         kind: 'doc.gateway',
       });
     } else if (clusterMatch) {
       this.add({
         uri: docUri,
         clusterUri,
-        title: 'Cluster',
+        getTitle: () => 'Cluster',
         kind: 'doc.cluster',
       });
     } else {
       this.add({
         uri: docUri,
-        title: 'not-found',
+        getTitle: () => 'not-found',
         kind: 'doc.blank',
       });
     }
@@ -123,7 +123,9 @@ export default class DocumentService extends ImmutableStore<State> {
         default:
           return {
             uri: uris.getUriPty({ sid: unique() }),
-            title: 'Terminal',
+            getTitle() {
+              return this.cwd || 'Terminal';
+            },
             kind: 'doc.terminal_shell',
           };
       }

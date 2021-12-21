@@ -14,10 +14,11 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import { useEffect, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { useAppContext } from 'teleterm/ui/appContextProvider';
 import * as types from 'teleterm/ui/services/docs/types';
 import { PtyProcess } from 'teleterm/services/pty/types';
+import { debounce } from 'lodash';
 
 export default function useDocumentTerminal(doc: Props['doc']) {
   const ctx = useAppContext();
@@ -47,24 +48,40 @@ export default function useDocumentTerminal(doc: Props['doc']) {
   }
 
   function updateDocumentPid(pty: PtyProcess): void {
-    ctx.serviceDocs.update(doc.uri, { pid: pty.getPid() });
+    const pid = pty.getPid();
+    if (pid) {
+      ctx.serviceDocs.update(doc.uri, { pid });
+    }
   }
 
+  const refreshDocumentCwd = useMemo(() => {
+    return debounce(async () => {
+      const pid = ptyProcess.getPid();
+      const cwd = await ctx.serviceTerminals.getWorkingDirectory(pid);
+      ctx.serviceDocs.update(doc.uri, { cwd });
+    }, 2000);
+  }, [ptyProcess]);
+
   useEffect(() => {
+    let disposed = false;
     if (!ptyProcess) {
       createPtyProcess().then(pty => {
-        setPtyProcess(pty);
-        updateDocumentPid(pty);
+        if (!disposed) {
+          setPtyProcess(pty);
+          updateDocumentPid(pty);
+        }
       });
     }
 
     return () => {
+      disposed = true;
       ptyProcess?.dispose();
     };
   }, [ptyProcess]);
 
   return {
     ptyProcess,
+    refreshDocumentCwd,
   };
 }
 

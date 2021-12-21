@@ -24,12 +24,12 @@ export default function DocumentTerminal(
 ) {
   const { visible, doc, onClose, onContextMenu } = props;
   const refTerminal = useRef<Terminal>();
-  const { ptyProcess } = useDocumentTerminal(doc);
+  const { ptyProcess, refreshDocumentCwd } = useDocumentTerminal(doc);
 
   useEffect(() => {
     if (refTerminal?.current && ptyProcess && visible) {
       // when switching tabs or closing tabs, focus on visible terminal
-      refTerminal.current.terminal.term.focus();
+      refTerminal.current.focus();
       window.dispatchEvent(new Event('resize'));
     }
   }, [visible, ptyProcess]);
@@ -37,6 +37,16 @@ export default function DocumentTerminal(
   useEffect(() => {
     ptyProcess?.onExit(onClose);
   }, [ptyProcess?.onExit]);
+
+  useEffect(() => {
+    refreshDocumentCwd();
+    refTerminal.current?.terminal.term.onKey(event => {
+      if (event.domEvent.key === 'Enter') {
+        refreshDocumentCwd();
+      }
+    });
+    return () => refreshDocumentCwd.cancel();
+  }, [refreshDocumentCwd, refTerminal.current]);
 
   return (
     <Document visible={visible} flexDirection="column" pl={2}>

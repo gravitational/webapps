@@ -24,7 +24,7 @@ export default function useServerConnect({ serverUri, onClose }: Props) {
 
   const connect = (login: string) => {
     const doc = ctx.serviceDocs.createTshNodeDocument(serverUri);
-    doc.title = `${login}@${server.hostname}`;
+    doc.getTitle = () => `${login}@${server.hostname}`;
     doc.login = login;
 
     ctx.serviceDocs.add(doc);
