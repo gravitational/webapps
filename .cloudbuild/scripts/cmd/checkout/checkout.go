@@ -89,10 +89,16 @@ func initSSH() error {
 
 	log.Print("Configuring deployment SSH keys")
 
+	key := os.Getenv("WEBASSETS_DEPLOYMENT_KEY")
+	if key == "" {
+		return trace.Errorf("webassets deployment key not in environment")
+	}
+
 	webassetsKeyFile := path.Join(sshConfigDir, "webassets-e")
+	log.Print("Writing webassets deployment key to %s", webassetsKeyFile)
 	err = writeFile(
 		webassetsKeyFile,
-		[]byte(os.Getenv("WEBASSETS_DEPLOYMENT_KEY")),
+		[]byte(key),
 		0600)
 	if err != nil {
 		return trace.Wrap(err, "failed writing deployment SSH key")
