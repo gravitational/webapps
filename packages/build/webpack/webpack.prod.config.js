@@ -39,5 +39,4 @@ module.exports = {
       configFactory.rules.css(),
     ],
   },
-  plugins: [configFactory.plugins.eslint()],
 };
