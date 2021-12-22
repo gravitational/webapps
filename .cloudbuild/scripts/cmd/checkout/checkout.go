@@ -37,9 +37,7 @@ func innerMain() error {
 	}
 	defer cleanupSSH()
 
-	log.Println("I am")
-	run("whoami")
-
+	log.Print("Updating submodules...")
 	err = git(args.workspace, "submodule", "update", "--init", "--recursive")
 	if err != nil {
 		return trace.Wrap(err)
@@ -94,10 +92,10 @@ func initSSH() error {
 		return trace.Errorf("webapps.e deployment key not in environment")
 	}
 
-	webassetsKeyFile := path.Join(sshConfigDir, "webapps.e")
-	log.Printf("Writing webassets deployment key to %s", webassetsKeyFile)
+	webappsKeyFile := path.Join(sshConfigDir, "webapps.e")
+	log.Printf("Writing webassets deployment key to %s", webappsKeyFile)
 	err = writeFile(
-		webassetsKeyFile,
+		webappsKeyFile,
 		[]byte(key),
 		0600)
 	if err != nil {
@@ -111,7 +109,7 @@ func initSSH() error {
 	}
 	defer configFile.Close()
 
-	for _, keyFile := range []string{webassetsKeyFile} {
+	for _, keyFile := range []string{webappsKeyFile} {
 		_, err := fmt.Fprintf(configFile, "IdentityFile %s\n", keyFile)
 		if err != nil {
 			return trace.Wrap(err, "failed adding deployment SSH key %q", keyFile)
