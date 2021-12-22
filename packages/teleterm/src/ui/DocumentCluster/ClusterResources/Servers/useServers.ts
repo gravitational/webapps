@@ -16,29 +16,26 @@ limitations under the License.
 
 import { useState } from 'react';
 import { useAppContext } from 'teleterm/ui/appContextProvider';
-import * as types from 'teleterm/ui/types';
 
-export default function useDatabases({ clusterUri }: types.DocumentDatabases) {
+export default function useServers(clusterUri: string) {
   const ctx = useAppContext();
   const [searchValue, setSearchValue] = useState('');
-  const dbs = ctx.serviceClusters.findDbs(clusterUri);
+  const servers = ctx.serviceClusters.findServers(clusterUri);
   const syncStatus = ctx.serviceClusters.getClusterSyncStatus(clusterUri);
 
-  const openGateway = (dbUri = '') => {
+  const connect = (serverUri: '') =>
     ctx.serviceModals.openDialog({
-      kind: 'create-gateway',
-      targetUri: dbUri,
+      kind: 'server-connect',
+      serverUri,
     });
-  };
 
-  // subscribe
   ctx.serviceClusters.useState();
 
   return {
-    syncStatus: syncStatus.dbs,
-    openGateway,
     searchValue,
     setSearchValue,
-    dbs,
+    connect,
+    servers,
+    syncStatus: syncStatus.servers,
   };
 }

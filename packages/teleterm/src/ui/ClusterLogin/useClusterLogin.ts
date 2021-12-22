@@ -21,7 +21,7 @@ import useAsync from 'teleterm/ui/useAsync';
 
 export default function useClusterLogin(props: Props) {
   const { onClose, clusterUri } = props;
-  const { serviceClusters } = useAppContext();
+  const { serviceClusters, serviceDocs } = useAppContext();
   const cluster = serviceClusters.findCluster(clusterUri);
   const refAbortCtrl = useRef<types.tsh.TshAbortController>(null);
   const [shouldPromptSsoStatus, promptSsoStatus] = useState(false);
@@ -36,7 +36,7 @@ export default function useClusterLogin(props: Props) {
     return serviceClusters.login(opts, refAbortCtrl.current.signal);
   });
 
-  const loginWithLocal = (
+  const onLoginWithLocal = (
     username: '',
     password: '',
     token: '',
@@ -53,7 +53,7 @@ export default function useClusterLogin(props: Props) {
     });
   };
 
-  const loginWithSso = (provider: types.AuthProvider) => {
+  const onLoginWithSso = (provider: types.AuthProvider) => {
     promptSsoStatus(true);
     login({
       clusterUri,
@@ -64,12 +64,12 @@ export default function useClusterLogin(props: Props) {
     });
   };
 
-  const abortLogin = () => {
+  const onAbort = () => {
     refAbortCtrl.current?.abort();
   };
 
-  const closeDialog = () => {
-    abortLogin();
+  const onCloseDialog = () => {
+    onAbort();
     props?.onClose();
   };
 
@@ -85,6 +85,7 @@ export default function useClusterLogin(props: Props) {
 
     if (loginAttempt.status === 'success') {
       onClose();
+      serviceDocs.open(clusterUri);
     }
   }, [loginAttempt.status]);
 
@@ -92,12 +93,12 @@ export default function useClusterLogin(props: Props) {
     shouldPromptSsoStatus,
     shouldPromptHardwareKey,
     title: cluster.name,
-    loginWithLocal,
-    loginWithSso,
+    onLoginWithLocal,
+    onLoginWithSso,
+    onCloseDialog,
+    onAbort,
     loginAttempt,
     initAttempt,
-    abortLogin,
-    closeDialog,
   };
 }
 

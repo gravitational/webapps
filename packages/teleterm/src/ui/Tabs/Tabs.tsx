@@ -17,10 +17,10 @@ limitations under the License.
 import React from 'react';
 import styled from 'styled-components';
 import { typography } from 'design/system';
-import TabItem from './TabItem';
-import * as Icons from 'design/Icon';
 import { Box, ButtonIcon, Flex } from 'design';
-import { Document } from '../types';
+import * as Icons from 'design/Icon';
+import { Document } from 'teleterm/ui/services/docs/types';
+import TabItem from './TabItem';
 
 export default function TabsContainer(props: Props) {
   return <Tabs {...props} />;
@@ -40,7 +40,7 @@ export function Tabs(props: Props) {
 
   const $items = items
     .map((item, index) => ({ item, index }))
-    .filter(i => i.item.kind !== 'blank')
+    .filter(i => i.item.kind !== 'doc.blank')
     .map(({ item, index }) => {
       const active = item.uri === activeTab;
       return (

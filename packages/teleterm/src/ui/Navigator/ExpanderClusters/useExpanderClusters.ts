@@ -18,7 +18,6 @@ import * as Icons from 'design/Icon';
 import { useAppContext } from 'teleterm/ui/appContextProvider';
 import AppContext from 'teleterm/ui/appContext';
 import * as navTypes from 'teleterm/ui/Navigator/types';
-import { SyncStatus } from 'teleterm/ui/services/clusters/types';
 
 export default function useExpanderClusters() {
   const ctx = useAppContext();
@@ -36,10 +35,7 @@ export default function useExpanderClusters() {
   }
 
   function login(clusterUri: string) {
-    ctx.serviceModals.openDialog({
-      kind: 'cluster-login',
-      clusterUri,
-    });
+    ctx.serviceModals.openLoginDialog(clusterUri);
   }
 
   function logout(clusterUri: string) {
@@ -93,61 +89,13 @@ function initItems(ctx: AppContext): ClusterNavItem[] {
       title: cluster.name,
       Icon: Icons.Clusters,
       uri: cluster.uri,
-      kind: 'clusters',
+      kind: 'cluster',
       connected: cluster.connected,
       syncing: syncing.servers,
-      items: [
-        {
-          title: 'Servers',
-          status: getNavItemStatus(syncing.servers),
-          Icon: Icons.Server,
-          uri: ctx.uris.getUriServers({ clusterId: cluster.name }),
-          kind: 'servers',
-          items: [],
-          group: false,
-        },
-        {
-          title: 'Kubes',
-          status: getNavItemStatus(syncing.kubes),
-          Icon: Icons.Server,
-          uri: ctx.uris.getUriKubes({ clusterId: cluster.name }),
-          kind: 'kubes',
-          items: [],
-          group: false,
-        },
-        {
-          title: 'Applications',
-          status: getNavItemStatus(syncing.apps),
-          Icon: Icons.Server,
-          uri: ctx.uris.getUriApps({ clusterId: cluster.name }),
-          kind: 'apps',
-          items: [],
-          group: false,
-        },
-        {
-          title: 'Databases',
-          Icon: Icons.Database,
-          uri: ctx.uris.getUriDbs({ clusterId: cluster.name }),
-          kind: 'dbs',
-          items: [],
-          status: getNavItemStatus(syncing.dbs),
-          group: false,
-        },
-      ],
+      items: [],
       group: true,
     };
   });
-}
-
-function getNavItemStatus(syncStatus: SyncStatus): navTypes.NavItem['status'] {
-  switch (syncStatus.status) {
-    case 'failed':
-      return 'failed';
-    case 'processing':
-      return 'loading';
-    default:
-      return '';
-  }
 }
 
 export type State = ReturnType<typeof useExpanderClusters>;

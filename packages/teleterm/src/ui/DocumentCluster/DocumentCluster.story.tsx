@@ -15,13 +15,14 @@
  */
 
 import React from 'react';
+import styled from 'styled-components';
 import AppContextProvider from 'teleterm/ui/appContextProvider';
-import Navigator from './Navigator';
 import { MockAppContext } from 'teleterm/ui/fixtures/mocks';
 import { SyncStatus } from 'teleterm/ui/services/clusters/types';
+import { DocumentCluster } from './DocumentCluster';
 
 export default {
-  title: 'Teleterm/Navigator2',
+  title: 'Teleterm/Cluster',
 };
 
 export const Story = () => {
@@ -42,14 +43,24 @@ export const Story = () => {
     {
       uri: 'clusters/localhost',
       uriKind: 'cluster',
-      name: 'localhosfdt',
+      name: 'localhost',
       connected: true,
     },
   ];
 
   return (
     <AppContextProvider value={appContext}>
-      <Navigator />
+      <Wrapper>
+        <DocumentCluster visible={true} />
+      </Wrapper>
     </AppContextProvider>
   );
 };
+
+const Wrapper = styled.div`
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+`;

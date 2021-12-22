@@ -16,7 +16,7 @@ limitations under the License.
 
 import { useEffect, useState } from 'react';
 import { useAppContext } from 'teleterm/ui/appContextProvider';
-import * as types from 'teleterm/ui/types';
+import * as types from 'teleterm/ui/services/docs/types';
 import { PtyProcess } from 'teleterm/services/pty/types';
 
 export default function useDocumentTerminal(doc: Props['doc']) {
@@ -24,14 +24,14 @@ export default function useDocumentTerminal(doc: Props['doc']) {
   const [ptyProcess, setPtyProcess] = useState<PtyProcess>();
 
   async function createPtyProcess(): Promise<PtyProcess> {
-    if (doc.kind === 'terminal_tsh_session') {
+    if (doc.kind === 'doc.terminal_tsh_node') {
       return ctx.serviceTerminals.createPtyProcess({
         ...doc,
         kind: 'tsh-login',
       });
     }
 
-    if (doc.kind === 'terminal_shell') {
+    if (doc.kind === 'doc.terminal_shell') {
       return ctx.serviceTerminals.createPtyProcess({
         kind: 'new-shell',
         cwd: await getPreviousDocumentCwdIfPossible(),
@@ -41,7 +41,7 @@ export default function useDocumentTerminal(doc: Props['doc']) {
 
   async function getPreviousDocumentCwdIfPossible(): Promise<string> {
     const previouslyActive = ctx.serviceDocs.getPreviouslyActive();
-    if (previouslyActive.kind === 'terminal_shell') {
+    if (previouslyActive.kind === 'doc.terminal_shell') {
       return ctx.serviceTerminals.getWorkingDirectory(previouslyActive.pid);
     }
   }
@@ -69,6 +69,6 @@ export default function useDocumentTerminal(doc: Props['doc']) {
 }
 
 export type Props = {
-  doc: types.DocumentPtySession | types.DocumentTshSession;
+  doc: types.DocumentPtySession | types.DocumentTshNode;
   visible: boolean;
 };

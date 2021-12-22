@@ -18,39 +18,34 @@ import React from 'react';
 import styled from 'styled-components';
 import { Danger } from 'design/Alert';
 import { Text, Flex, Box } from 'design';
-import Document from './../Document';
 import DatabaseList from './DatabaseList';
 import useDatabases from './useDatabases';
-import * as types from '../types';
 
 export default function DocumentDbs(props: Props) {
-  const { doc, visible } = props;
-  const { dbs, openGateway, searchValue, syncStatus } = useDatabases(doc);
-
+  const { clusterUri } = props;
+  const { dbs, openGateway, searchValue, syncStatus } =
+    useDatabases(clusterUri);
   return (
-    <Document visible={visible}>
-      <Container mx="auto" mt="4" px="5">
-        <Flex justifyContent="space-between" mb="4">
-          <Text typography="h3" color="text.secondary">
-            Databases
-          </Text>
-        </Flex>
-        {syncStatus.status === 'failed' && (
-          <Danger>{syncStatus.statusText}</Danger>
-        )}
-        <DatabaseList
-          searchValue={searchValue}
-          databases={dbs}
-          onOpenGateway={openGateway}
-        />
-      </Container>
-    </Document>
+    <Container>
+      <Flex justifyContent="space-between" mb="2">
+        <Text typography="h5" color="text.secondary">
+          Databases
+        </Text>
+      </Flex>
+      {syncStatus.status === 'failed' && (
+        <Danger>{syncStatus.statusText}</Danger>
+      )}
+      <DatabaseList
+        searchValue={searchValue}
+        databases={dbs}
+        onOpenGateway={openGateway}
+      />
+    </Container>
   );
 }
 
 type Props = {
-  visible: boolean;
-  doc: types.DocumentDatabases;
+  clusterUri: string;
 };
 
 const Container = styled(Box)`

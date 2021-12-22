@@ -14,5 +14,5 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import DocumentDbs from './DocumentDbs';
-export default DocumentDbs;
+import ClusterResources from './ClusterResources';
+export default ClusterResources;

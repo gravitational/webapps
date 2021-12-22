@@ -29,17 +29,10 @@ export const Story = () => {
   appContext.serviceGlobalSearch = new ServiceGlobalSearch();
   appContext.serviceGlobalSearch.search = () => [
     {
-      kind: 'servers',
-      data: {
-        uri: 'clusters/localhost/',
-        connected: true,
-        name: 'localhost',
-      },
-    },
-    {
-      kind: 'server',
+      kind: 'tsh.server',
       data: {
         uri: 'clusters/localhost/servers/hostname3',
+        uriKind: 'server',
         tunnel: false,
         name: 'server1',
         clusterId: 'localhost',
@@ -54,9 +47,10 @@ export const Story = () => {
       },
     },
     {
-      kind: 'server',
+      kind: 'tsh.server',
       data: {
         uri: 'clusters/localhost/servers/hostname2',
+        uriKind: 'server',
         tunnel: false,
         name: 'server2',
         clusterId: 'localhost',
@@ -66,9 +60,10 @@ export const Story = () => {
       },
     },
     {
-      kind: 'server',
+      kind: 'tsh.server',
       data: {
         uri: 'clusters/localhost/servers/hostname1',
+        uriKind: 'server',
         tunnel: false,
         name: 'server3',
         clusterId: 'localhost',
@@ -78,17 +73,10 @@ export const Story = () => {
       },
     },
     {
-      kind: 'dbs',
-      data: {
-        uri: 'clusters/localhost/',
-        connected: true,
-        name: 'localhost',
-      },
-    },
-    {
-      kind: 'db',
+      kind: 'tsh.db',
       data: {
         uri: 'clusters/localhost/dbs/db-server1',
+        uriKind: 'db',
         name: 'production',
         desc: 'postgre',
         clusterId: 'localhost',

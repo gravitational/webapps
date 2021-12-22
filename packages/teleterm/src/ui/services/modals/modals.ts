@@ -26,6 +26,13 @@ export default class ModalsService extends ImmutableStore<Dialog> {
     this.setState(() => dialog);
   }
 
+  openLoginDialog(clusterUri: string) {
+    this.setState(() => ({
+      kind: 'cluster-login',
+      clusterUri,
+    }));
+  }
+
   closeDialog() {
     this.setState(() => ({
       kind: 'none',

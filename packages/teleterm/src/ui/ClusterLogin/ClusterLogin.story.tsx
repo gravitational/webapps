@@ -45,13 +45,11 @@ function makeProps() {
       } as types.AuthSettings,
     } as const,
 
-    closeDialog: () => null,
-
-    abortLogin: () => null,
-
-    loginWithLocal: (email: string, password: string) =>
+    onCloseDialog: () => null,
+    onAbort: () => null,
+    onLoginWithLocal: (email: string, password: string) =>
       Promise.resolve<[void, Error]>([null, null]),
-    loginWithSso: (provider: types.AuthProvider) => null,
+    onLoginWithSso: (provider: types.AuthProvider) => null,
   };
 }
 

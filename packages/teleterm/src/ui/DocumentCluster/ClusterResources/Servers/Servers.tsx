@@ -18,40 +18,34 @@ import React from 'react';
 import styled from 'styled-components';
 import { Text, Flex, Box } from 'design';
 import { Danger } from 'design/Alert';
-import Document from 'teleterm/ui/Document';
-import * as types from 'teleterm/ui/types';
-import useKubes from './useKubes';
-import KubeList from './KubeList';
+import useServers from './useServers';
+import ServerList from './ServerList';
 
-export default function DocumentKubes(props: Props) {
-  const { doc, visible } = props;
-  const { kubes, syncStatus, searchValue } = useKubes(doc);
+export default function Servers(props: Props) {
+  const { clusterUri } = props;
+  const { servers, syncStatus, connect, searchValue } = useServers(clusterUri);
 
   return (
-    <Document visible={visible}>
-      <Container mx="auto" mt="4" px="5">
-        <Flex
-          justifyContent="space-between"
-          mb="4"
-          typography="h3"
-          color="text.secondary"
-        >
-          <Text typography="h3" color="text.secondary">
-            Kubernetes Clusters
-          </Text>
-        </Flex>
-        {syncStatus.status === 'failed' && (
-          <Danger>{syncStatus.statusText}</Danger>
-        )}
-        <KubeList searchValue={searchValue} kubes={kubes} />
-      </Container>
-    </Document>
+    <Container>
+      <Flex justifyContent="space-between" mb="2">
+        <Text typography="h5" color="text.secondary">
+          Servers
+        </Text>
+      </Flex>
+      {syncStatus.status === 'failed' && (
+        <Danger>{syncStatus.statusText}</Danger>
+      )}
+      <ServerList
+        searchValue={searchValue}
+        onLogin={connect}
+        servers={servers}
+      />
+    </Container>
   );
 }
 
 type Props = {
-  visible: boolean;
-  doc: types.DocumentKubes;
+  clusterUri: string;
 };
 
 const Container = styled(Box)`

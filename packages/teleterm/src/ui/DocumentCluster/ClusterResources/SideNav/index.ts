@@ -14,22 +14,6 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import { useState } from 'react';
-import { useAppContext } from 'teleterm/ui/appContextProvider';
-import * as types from 'teleterm/ui/types';
-
-export default function useApps({ clusterUri }: types.DocumentApps) {
-  const ctx = useAppContext();
-  const [searchValue, setSearchValue] = useState('');
-  const apps = ctx.serviceClusters.findApps(clusterUri);
-  const syncStatus = ctx.serviceClusters.getClusterSyncStatus(clusterUri);
-
-  ctx.serviceClusters.useState();
-
-  return {
-    searchValue,
-    setSearchValue,
-    apps,
-    syncStatus: syncStatus.apps,
-  };
-}
+import SideNav, { SideNavItem } from './SideNav';
+export default SideNav;
+export type { SideNavItem };

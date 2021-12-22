@@ -15,109 +15,122 @@ limitations under the License.
 */
 
 import { useStore } from 'shared/libs/stores';
-import uris from 'teleterm/ui/uris';
-import { Document } from 'teleterm/ui/types';
+import { RouteProps, matchPath, generatePath } from 'react-router';
 import { unique } from 'teleterm/ui/utils/uid';
+import { Document, DocumentTshNode } from './types';
 import { ImmutableStore } from '../immutableStore';
 
 type State = {
   location: string;
   docs: Document[];
 };
-
 export default class DocumentService extends ImmutableStore<State> {
   previouslyActiveLocation: string;
+
   state: State = {
     location: '/home',
     docs: [
       {
         uri: '/',
-        kind: 'blank',
+        kind: 'doc.blank',
         title: 'Welcome',
       },
       {
         uri: '/home',
-        kind: 'home',
+        kind: 'doc.home',
         title: 'Home',
       },
     ],
   };
 
-  open(uri: string) {
-    const clusterMatch = uris.match(uri, uris.routes.cluster);
-    const homeMatch = uris.match(uri, uris.routes.home);
-    const srvMatch = uris.match(uri, uris.routes.clusterServers);
-    const kubesMatch = uris.match(uri, uris.routes.clusterKubes);
-    const appsMatch = uris.match(uri, uris.routes.clusterApps);
-    const gwMatch = uris.match(uri, uris.routes.clusterGateways);
-    const ptyMatch = uris.match(uri, uris.routes.ptys);
-    const dbsMatch = uris.match(uri, {
-      path: uris.routes.clusterDbs,
-      exact: true,
-    });
+  open(docUri: string) {
+    const exists = this.find(docUri);
+    if (exists) {
+      this.setLocation(docUri);
+      return;
+    }
 
+    const clusterMatch = uris.match(docUri, uris.paths.cluster);
+    const homeMatch = uris.match(docUri, uris.paths.home);
+    const gwMatch = uris.match(docUri, uris.paths.clusterGateway);
+    const ptyMatch = uris.match(docUri, uris.paths.ptys);
     const clusterUri = clusterMatch
       ? uris.getUriCluster(clusterMatch.params)
       : '';
 
-    if (this.find(uri)) {
-      // do nothing
-    } else if (ptyMatch) {
+    if (ptyMatch) {
       this.add({
-        uri,
+        uri: docUri,
         title: 'dir/path',
-        kind: 'terminal_shell',
+        kind: 'doc.terminal_shell',
       });
     } else if (homeMatch) {
       this.add({
-        uri,
+        uri: docUri,
         title: 'Home',
-        kind: 'home',
-      });
-    } else if (srvMatch) {
-      this.add({
-        uri,
-        clusterUri,
-        title: `${clusterMatch.params.clusterId}/servers`,
-        kind: 'servers',
-      });
-    } else if (kubesMatch) {
-      this.add({
-        uri,
-        clusterUri,
-        title: `${clusterMatch.params.clusterId}/kubes`,
-        kind: 'kubes',
-      });
-    } else if (appsMatch) {
-      this.add({
-        uri,
-        clusterUri,
-        title: `${clusterMatch.params.clusterId}/apps`,
-        kind: 'apps',
-      });
-    } else if (dbsMatch) {
-      this.add({
-        uri,
-        clusterUri,
-        title: `${clusterMatch.params.clusterId}/databases`,
-        kind: 'dbs',
+        kind: 'doc.home',
       });
     } else if (gwMatch) {
       this.add({
-        uri,
+        uri: docUri,
         clusterUri,
         title: 'Gateway',
-        kind: 'gateway',
+        kind: 'doc.gateway',
+      });
+    } else if (clusterMatch) {
+      this.add({
+        uri: docUri,
+        clusterUri,
+        title: 'Cluster',
+        kind: 'doc.cluster',
       });
     } else {
       this.add({
-        uri,
+        uri: docUri,
         title: 'not-found',
-        kind: 'blank',
+        kind: 'doc.blank',
       });
     }
 
-    this.setLocation(uri);
+    this.setLocation(docUri);
+  }
+
+  createTshNodeDocument(serverUri: string): DocumentTshNode {
+    const { params } = uris.match(serverUri, uris.paths.clusterServer);
+    const uri = this.getPtyUri({ sid: unique() });
+    return {
+      uri,
+      kind: 'doc.terminal_tsh_node',
+      status: 'connecting',
+      clusterId: params.clusterId,
+      serverId: params.serverId,
+      title: '',
+      login: '',
+    };
+  }
+
+  openNewTerminal() {
+    this.previouslyActiveLocation = this.getActive().uri;
+    const doc = ((): Document => {
+      const activeDocument = this.getActive();
+      switch (activeDocument.kind) {
+        case 'doc.terminal_tsh_node':
+        case 'doc.terminal_shell':
+          return {
+            ...activeDocument,
+            uri: uris.getUriPty({ sid: unique() }),
+          };
+        default:
+          return {
+            uri: uris.getUriPty({ sid: unique() }),
+            title: 'Terminal',
+            kind: 'doc.terminal_shell',
+          };
+      }
+    })();
+
+    this.add(doc);
+    this.setLocation(doc.uri);
   }
 
   getDocuments() {
@@ -207,32 +220,44 @@ export default class DocumentService extends ImmutableStore<State> {
     });
   }
 
-  openNewTerminal() {
-    this.previouslyActiveLocation = this.getActive().uri;
+  getHomeUri() {
+    return uris.paths.home;
+  }
 
-    const newDocument = ((): Document => {
-      const activeDocument = this.getActive();
-      switch (activeDocument.kind) {
-        case 'terminal_tsh_session':
-          return {
-            ...activeDocument,
-            uri: uris.getUriPty({ sid: unique() }),
-          };
-        case 'terminal_shell':
-          return {
-            ...activeDocument,
-            uri: uris.getUriPty({ sid: unique() }),
-          };
-        default:
-          return {
-            uri: uris.getUriPty({ sid: unique() }),
-            title: 'Terminal',
-            kind: 'terminal_shell',
-          };
-      }
-    })();
-
-    this.add(newDocument);
-    this.setLocation(newDocument.uri);
+  getPtyUri(params: Params) {
+    return generatePath(uris.paths.ptys, params as any);
   }
 }
+
+const uris = {
+  paths: {
+    root: '/',
+    home: '/home',
+    gateways: '/gateways',
+    ptys: '/ptys/:sid',
+    cluster: '/clusters/:clusterId',
+    clusterServer: '/clusters/:clusterId/servers/:serverId',
+    clusterGateway: '/clusters/:clusterId/gateways/:gatewayId',
+  },
+
+  match(path: string, route: string | RouteProps) {
+    return matchPath<Params>(path, route);
+  },
+
+  getUriCluster(params: Params) {
+    return generatePath(uris.paths.cluster, params as any);
+  },
+
+  getUriPty(params: Params) {
+    return generatePath(uris.paths.ptys, params as any);
+  },
+};
+
+type Params = {
+  clusterId?: string;
+  serverId?: string;
+  dbId?: string;
+  gatewayId?: string;
+  tabId?: string;
+  sid?: string;
+};

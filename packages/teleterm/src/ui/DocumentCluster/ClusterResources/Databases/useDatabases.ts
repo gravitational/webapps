@@ -16,20 +16,28 @@ limitations under the License.
 
 import { useState } from 'react';
 import { useAppContext } from 'teleterm/ui/appContextProvider';
-import * as types from 'teleterm/ui/types';
 
-export default function useKubes({ clusterUri }: types.DocumentKubes) {
+export default function useDatabases(clusterUri: string) {
   const ctx = useAppContext();
   const [searchValue, setSearchValue] = useState('');
-  const kubes = ctx.serviceClusters.findKubes(clusterUri);
+  const dbs = ctx.serviceClusters.findDbs(clusterUri);
   const syncStatus = ctx.serviceClusters.getClusterSyncStatus(clusterUri);
 
+  const openGateway = (dbUri = '') => {
+    ctx.serviceModals.openDialog({
+      kind: 'create-gateway',
+      targetUri: dbUri,
+    });
+  };
+
+  // subscribe
   ctx.serviceClusters.useState();
 
   return {
+    syncStatus: syncStatus.dbs,
+    openGateway,
     searchValue,
     setSearchValue,
-    kubes,
-    syncStatus: syncStatus.kubes,
+    dbs,
   };
 }

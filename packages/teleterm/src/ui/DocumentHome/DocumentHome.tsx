@@ -15,12 +15,10 @@ limitations under the License.
 */
 
 import React from 'react';
-import { Box, Text, Flex } from 'design';
-import * as Icons from 'design/Icon';
-import Document from './../Document';
-import * as types from './../types';
-
+import { Box, Flex } from 'design';
 import Select, { DarkStyledSelect } from 'shared/components/Select';
+import Document from 'teleterm/ui/Document';
+import * as types from 'teleterm/ui/services/docs/types';
 
 export default function DocumentHome(props: PropTypes) {
   const { visible } = props;
@@ -45,20 +43,6 @@ export default function DocumentHome(props: PropTypes) {
               components={{ DropdownIndicator }}
             />
           </DarkStyledSelect>
-          <Box>
-            <Icons.Cli
-              style={{
-                textAlign: 'center',
-                borderRadius: '50%',
-              }}
-              fontSize="40px"
-              bg="#01172C"
-              p="8px"
-              mb={2}
-              color="text.secondary"
-            />
-            <Text color="text.secondary">Terminal</Text>
-          </Box>
         </Box>
       </Flex>
     </Document>
