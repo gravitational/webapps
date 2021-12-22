@@ -36,7 +36,7 @@ function buildTabsShortcuts(ctx: AppContext): KeyboardShortcutHandlers {
 
   const handleActiveTabClose = () => {
     const activeDoc = ctx.serviceDocs.getActive();
-    if (activeDoc.kind !== 'blank') {
+    if (activeDoc.kind !== 'doc.blank') {
       ctx.serviceDocs.close({ uri: activeDoc.uri });
     }
   };
@@ -49,7 +49,7 @@ function buildTabsShortcuts(ctx: AppContext): KeyboardShortcutHandlers {
     const activeDoc = ctx.serviceDocs.getActive();
     const allDocuments = ctx.serviceDocs
       .getDocuments()
-      .filter(d => d.kind !== 'blank');
+      .filter(d => d.kind !== 'doc.blank');
     const activeDocIndex = allDocuments.indexOf(activeDoc);
     const getPreviousIndex = () =>
       (activeDocIndex - 1 + allDocuments.length) % allDocuments.length;

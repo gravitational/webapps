@@ -15,7 +15,7 @@ limitations under the License.
 */
 
 import { useAppContext } from 'teleterm/ui/appContextProvider';
-import * as types from 'teleterm/ui/types';
+import * as types from 'teleterm/ui/services/docs/types';
 import useAsync from 'teleterm/ui/useAsync';
 
 export default function useGateway(doc: types.DocumentGateway) {

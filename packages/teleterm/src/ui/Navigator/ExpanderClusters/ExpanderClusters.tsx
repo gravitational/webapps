@@ -15,7 +15,7 @@ limitations under the License.
 */
 
 import React from 'react';
-import { Flex, Text, ButtonIcon } from 'design';
+import { Flex, Box, Text, ButtonIcon } from 'design';
 import * as Icons from 'design/Icon';
 import Expander, { ExpanderHeader, ExpanderContent } from './../Expander';
 import NavItem from 'teleterm/ui/Navigator/NavItem';
@@ -23,6 +23,8 @@ import useExpanderClusters, {
   State,
   ClusterNavItem,
 } from './useExpanderClusters';
+
+import * as palette from 'design/theme/palette';
 
 export default function Container() {
   const state = useExpanderClusters();
@@ -50,29 +52,16 @@ export const ExpanderClusters: React.FC<State> = props => {
     addCluster();
   };
 
-  const $onlineClusters = clusterItems
-    .filter(i => i.connected)
-    .map(i => (
-      <ClusterItem
-        key={i.uri}
-        item={i}
-        onRemove={remove}
-        onLogout={logout}
-        onContextMenu={openContextMenu(i)}
-      />
-    ));
-
-  const $offlineClusters = clusterItems
-    .filter(i => !i.connected)
-    .map(i => (
-      <ClusterOfflineItem
-        key={i.uri}
-        item={i}
-        onRemove={remove}
-        onLogin={login}
-        onContextMenu={openContextMenu(i)}
-      />
-    ));
+  const $clustersItems = clusterItems.map(i => (
+    <ClusterItem
+      key={i.uri}
+      item={i}
+      onLogin={login}
+      onRemove={remove}
+      onLogout={logout}
+      onContextMenu={openContextMenu(i)}
+    />
+  ));
 
   return (
     <Expander>
@@ -98,10 +87,7 @@ export const ExpanderClusters: React.FC<State> = props => {
           </Flex>
         </Flex>
       </ExpanderHeader>
-      <ExpanderContent>
-        {$onlineClusters}
-        {$offlineClusters}
-      </ExpanderContent>
+      <ExpanderContent>{$clustersItems}</ExpanderContent>
     </Expander>
   );
 };
@@ -109,16 +95,23 @@ export const ExpanderClusters: React.FC<State> = props => {
 type ClusterItemProps = {
   item: ClusterNavItem;
   onLogout(string): void;
+  onLogin(string): void;
   onRemove(string): void;
   onContextMenu(): void;
 };
 
 const ClusterItem: React.FC<ClusterItemProps> = props => {
-  const { title, items } = props.item;
+  const { item, onContextMenu } = props;
+  const { title, connected } = item;
 
   function handleLogout(e: React.SyntheticEvent) {
     e.stopPropagation();
     props.onLogout(props.item.uri);
+  }
+
+  function handleLogin(e: React.SyntheticEvent) {
+    e.stopPropagation();
+    props.onLogin(props.item.uri);
   }
 
   function handleRemove(e: React.SyntheticEvent) {
@@ -126,76 +119,78 @@ const ClusterItem: React.FC<ClusterItemProps> = props => {
     props.onRemove(props.item.uri);
   }
 
+  const color = connected ? 'text.primary' : 'text.placeholder';
+
   return (
-    <Expander>
-      <ExpanderHeader pl={5} onContextMenu={props.onContextMenu}>
-        <Flex
-          alignItems="center"
-          justifyContent="space-between"
-          flex="1"
-          width="100%"
-        >
+    <NavItem pl={5} item={props.item}>
+      <Flex
+        alignItems="center"
+        justifyContent="space-between"
+        flex="1"
+        width="100%"
+        onContextMenu={onContextMenu}
+      >
+        <Flex justifyContent="center" alignItems="center" color={color}>
+          <ClusterIcon mr={2} name={title} />
           <Text typography="body1" style={{ position: 'relative' }}>
             {title}
           </Text>
-          <ButtonIcon color="text.placeholder" onClick={handleLogout}>
-            <Icons.EmailSolid />
-          </ButtonIcon>
+        </Flex>
+        <Flex>
+          {connected && (
+            <ButtonIcon color="text.placeholder" onClick={handleLogout}>
+              <Icons.EmailSolid />
+            </ButtonIcon>
+          )}
+          {!connected && (
+            <ButtonIcon color="text.placeholder" onClick={handleLogin}>
+              <Icons.Restore />
+            </ButtonIcon>
+          )}
           <ButtonIcon color="text.placeholder" onClick={handleRemove}>
             <Icons.Trash />
           </ButtonIcon>
         </Flex>
-      </ExpanderHeader>
-      <ExpanderContent>
-        {items.map(i => (
-          <NavItem key={i.uri} pl={9} item={i} />
-        ))}
-      </ExpanderContent>
-    </Expander>
+      </Flex>
+    </NavItem>
   );
 };
 
-const ClusterOfflineItem: React.FC<{
-  item: ClusterNavItem;
-  onLogin(string): void;
-  onRemove(string): void;
-  onContextMenu(): void;
-}> = props => {
-  const { item } = props;
+const ClusterIcon = ({
+  name,
+  ...rest
+}: {
+  name: string;
+  [key: string]: any;
+}) => (
+  <Flex
+    height="10px"
+    width="10px"
+    borderRadius="100%"
+    justifyContent="center"
+    alignItems="center"
+    bg={getIconColor(name)}
+    {...rest}
+  />
+);
 
-  function handleRemove(e: React.SyntheticEvent) {
-    e.stopPropagation();
-    props.onRemove(item.uri);
+function getIconColor(appName: string) {
+  let stringValue = 0;
+  for (let i = 0; i < appName.length; i++) {
+    stringValue += appName.charCodeAt(i);
   }
 
-  function handleLogin(e: React.SyntheticEvent) {
-    e.stopPropagation();
-    props.onLogin(item.uri);
-  }
+  const colors = [
+    palette.pink[700],
+    palette.teal[700],
+    palette.cyan[700],
+    palette.blue[700],
+    palette.green[700],
+    palette.orange[700],
+    palette.brown[700],
+    palette.red[700],
+    palette.deepOrange[700],
+  ];
 
-  return (
-    <Expander>
-      <ExpanderHeader
-        pl={5}
-        color="grey.500"
-        onContextMenu={props.onContextMenu}
-      >
-        <Flex
-          alignItems="center"
-          justifyContent="space-between"
-          flex="1"
-          width="100%"
-        >
-          <Text typography="body1">{item.title}</Text>
-          <ButtonIcon color="text.placeholder" onClick={handleLogin}>
-            <Icons.Restore />
-          </ButtonIcon>
-          <ButtonIcon color="text.placeholder" onClick={handleRemove}>
-            <Icons.Trash />
-          </ButtonIcon>
-        </Flex>
-      </ExpanderHeader>
-      <ExpanderContent />
-    </Expander>
-  );
-};
+  return colors[stringValue % 9];
+}

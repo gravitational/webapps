@@ -301,7 +301,7 @@ export default class ClusterService extends ImmutableStore<State> {
     const empty: SyncStatus = { status: '' };
     return {
       dbs: this.state.dbsSyncStatus.get(clusterUri) || empty,
-      servers: this.state.serversSyncStatus[clusterUri] || empty,
+      servers: this.state.serversSyncStatus.get(clusterUri) || empty,
       apps: this.state.appsSyncStatus.get(clusterUri) || empty,
       kubes: this.state.kubesSyncStatus.get(clusterUri) || empty,
     };

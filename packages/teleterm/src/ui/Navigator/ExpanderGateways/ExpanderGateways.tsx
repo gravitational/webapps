@@ -56,7 +56,7 @@ export const ExpanderGateways: React.FC<State> = props => {
 const GateWayItem: React.FC<GatewayItemProps> = props => {
   return (
     <NavItem pl={5} item={props.item}>
-      <StatusIndicator ml={-1} mr={3} status="connected" />
+      <StatusIndicator mr={3} status="connected" />
       <Flex
         alignItems="center"
         justifyContent="space-between"

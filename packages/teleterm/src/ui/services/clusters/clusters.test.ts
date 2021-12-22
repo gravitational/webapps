@@ -1,16 +1,9 @@
+import { tsh, SyncStatus } from 'teleterm/ui/services/clusters/types';
 import Service from './clusters';
-import {
-  Cluster,
-  Database,
-  Gateway,
-  Server,
-  TshClient,
-} from '../../../services/tshd/types';
-import { SyncStatus } from '../../../ui/services/clusters/types';
 
 const clusterUri = 'testId';
 
-const clusterMock: Cluster = {
+const clusterMock: tsh.Cluster = {
   uri: clusterUri,
   name: 'Test',
   connected: true,
@@ -22,7 +15,7 @@ const clusterMock: Cluster = {
   },
 };
 
-const gatewayMock: Gateway = {
+const gatewayMock: tsh.Gateway = {
   uri: 'gatewayTestUri',
   clusterId: '100',
   status: 1,
@@ -38,7 +31,7 @@ const gatewayMock: Gateway = {
   resourceName: 'Test',
 };
 
-const databaseMock: Database = {
+const databaseMock: tsh.Database = {
   uri: 'databaseTestUri',
   desc: 'Desc',
   name: 'Name',
@@ -50,7 +43,7 @@ const databaseMock: Database = {
   labelsList: [],
 };
 
-const serverMock: Server = {
+const serverMock: tsh.Server = {
   uri: 'serverTestUri',
   addr: 'addr',
   name: 'Name',
@@ -60,11 +53,11 @@ const serverMock: Server = {
   tunnel: false,
 };
 
-function createService(client: Partial<TshClient>): Service {
-  return new Service(client as TshClient);
+function createService(client: Partial<tsh.TshClient>): Service {
+  return new Service(client as tsh.TshClient);
 }
 
-function getClientMocks(): Partial<TshClient> {
+function getClientMocks(): Partial<tsh.TshClient> {
   return {
     login: jest.fn().mockResolvedValueOnce(undefined),
     logout: jest.fn().mockResolvedValueOnce(undefined),
@@ -85,10 +78,12 @@ function testIfClusterResourcesHaveBeenCleared(service: Service): void {
   expect(service.getClusterSyncStatus(clusterUri)).toStrictEqual({
     dbs: { status: '' },
     servers: { status: '' },
+    apps: { status: '' },
+    kubes: { status: '' },
   });
 }
 
-test('should add cluster', async () => {
+test('add cluster', async () => {
   const { addCluster } = getClientMocks();
   const service = createService({
     addCluster,
@@ -102,7 +97,7 @@ test('should add cluster', async () => {
   );
 });
 
-test('should remove cluster', async () => {
+test('remove cluster', async () => {
   const { removeCluster } = getClientMocks();
   const service = createService({
     removeCluster,
@@ -114,7 +109,7 @@ test('should remove cluster', async () => {
   testIfClusterResourcesHaveBeenCleared(service);
 });
 
-test('should sync cluster and its resources', async () => {
+test('sync cluster and its resources', async () => {
   const { getCluster, listGateways, listDatabases, listServers } =
     getClientMocks();
   const service = createService({
@@ -132,7 +127,7 @@ test('should sync cluster and its resources', async () => {
   expect(listServers).toHaveBeenCalledWith(clusterUri);
 });
 
-test('should login into cluster and sync resources', async () => {
+test('login into cluster and sync resources', async () => {
   const { login, getCluster, listGateways, listDatabases, listServers } =
     getClientMocks();
   const service = createService({
@@ -157,7 +152,7 @@ test('should login into cluster and sync resources', async () => {
   expect(service.findCluster(clusterUri).connected).toBe(true);
 });
 
-test('should logout from cluster and clean its resources', async () => {
+test('logout from cluster and clean its resources', async () => {
   const { logout } = getClientMocks();
   const service = createService({
     logout,
@@ -174,7 +169,7 @@ test('should logout from cluster and clean its resources', async () => {
   testIfClusterResourcesHaveBeenCleared(service);
 });
 
-test('should create a gateway', async () => {
+test('create a gateway', async () => {
   const { createGateway } = getClientMocks();
   const service = createService({
     createGateway,
@@ -190,7 +185,7 @@ test('should create a gateway', async () => {
   );
 });
 
-test('should remove a gateway', async () => {
+test('remove a gateway', async () => {
   const { removeGateway } = getClientMocks();
   const service = createService({
     removeGateway,
@@ -203,7 +198,7 @@ test('should remove a gateway', async () => {
   expect(service.findGateway(gatewayUri)).toBeUndefined();
 });
 
-test('should sync gateways', async () => {
+test('sync gateways', async () => {
   const { listGateways } = getClientMocks();
   const service = createService({
     listGateways,
@@ -214,7 +209,7 @@ test('should sync gateways', async () => {
   expect(service.getGateways()).toStrictEqual([gatewayMock]);
 });
 
-test('should sync databases', async () => {
+test('sync databases', async () => {
   const { listDatabases } = getClientMocks();
   const service = createService({
     listDatabases,
@@ -233,7 +228,7 @@ test('should sync databases', async () => {
   );
 });
 
-test('should sync servers', async () => {
+test('sync servers', async () => {
   const { listServers } = getClientMocks();
   const service = createService({
     listServers,
@@ -252,7 +247,7 @@ test('should sync servers', async () => {
   );
 });
 
-test('should find servers by uri', () => {
+test('find servers by uri', () => {
   const service = createService({});
   service.setState(draftState => {
     draftState.servers.set(serverMock.uri, serverMock);
@@ -264,7 +259,7 @@ test('should find servers by uri', () => {
   expect(foundServers).toStrictEqual([serverMock]);
 });
 
-test('should find databases by uri', () => {
+test('find databases by uri', () => {
   const service = createService({});
   service.setState(draftState => {
     draftState.dbs.set(databaseMock.uri, databaseMock);
@@ -276,7 +271,7 @@ test('should find databases by uri', () => {
   expect(foundDbs).toStrictEqual([databaseMock]);
 });
 
-test('should find cluster by resource uri', () => {
+test('find cluster by resource uri', () => {
   const service = createService({});
   service.setState(draftState => {
     draftState.clusters.set(clusterUri, clusterMock);

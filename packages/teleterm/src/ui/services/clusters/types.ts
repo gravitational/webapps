@@ -22,6 +22,8 @@ export type SyncStatus = {
   statusText?: string;
 };
 
+export type KindTsh = 'tsh.cluster' | 'tsh.server' | 'tsh.app' | 'tsh.db';
+
 export type PreferredMfaType = shared.PreferredMfaType;
 
 export type Auth2faType = shared.Auth2faType;

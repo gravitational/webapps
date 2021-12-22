@@ -15,7 +15,6 @@ limitations under the License.
 */
 
 import { useAppContext } from 'teleterm/ui/appContextProvider';
-import { unique } from 'teleterm/ui/utils/uid';
 
 export default function useServerConnect({ serverUri, onClose }: Props) {
   const ctx = useAppContext();
@@ -24,18 +23,13 @@ export default function useServerConnect({ serverUri, onClose }: Props) {
   const logins = cluster?.loggedInUser?.sshLoginsList || [];
 
   const connect = (login: string) => {
-    const uri = ctx.uris.getUriPty({ sid: unique() });
-    ctx.serviceDocs.add({
-      uri,
-      kind: 'terminal_tsh_session',
-      status: 'connecting',
-      title: `${login}@${server.hostname}`,
-      clusterId: cluster.name,
-      serverId: server.name,
-      login,
-    });
+    const doc = ctx.serviceDocs.createTshNodeDocument(serverUri);
+    doc.title = `${login}@${server.hostname}`;
+    doc.login = login;
 
-    ctx.serviceDocs.open(uri);
+    ctx.serviceDocs.add(doc);
+    ctx.serviceDocs.setLocation(doc.uri);
+
     onClose();
   };
 

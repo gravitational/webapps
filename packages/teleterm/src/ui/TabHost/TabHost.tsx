@@ -16,18 +16,15 @@ limitations under the License.
 
 import React from 'react';
 import styled from 'styled-components';
-import { Flex, Box } from 'design';
+import { Flex } from 'design';
 import { useAppContext } from 'teleterm/ui/appContextProvider';
-import * as types from 'teleterm/ui/types';
+import * as types from 'teleterm/ui/services/docs/types';
 import Tabs from 'teleterm/ui/Tabs';
 import Document from 'teleterm/ui/Document';
 import DocumentHome from 'teleterm/ui/DocumentHome';
-import DocumentServers from 'teleterm/ui/DocumentServers';
-import DocumentDbs from 'teleterm/ui/DocumentDbs';
 import DocumentGateway from 'teleterm/ui/DocumentGateway';
 import DocumentTerminal from 'teleterm/ui/DocumentTerminal';
-import DocumentKubes from 'teleterm/ui/DocumentKubes';
-import DocumentApps from 'teleterm/ui/DocumentApps';
+import DocumentCluster from 'teleterm/ui/DocumentCluster';
 import useTabShortcuts from './useTabShortcuts';
 
 export default function TabHost(props: Props) {
@@ -60,7 +57,6 @@ export default function TabHost(props: Props) {
 
   const $docs = documents.map(doc => {
     const isActiveDoc = doc === docActive;
-
     return <MemoizedDocument doc={doc} visible={isActiveDoc} key={doc.uri} />;
   });
 
@@ -91,20 +87,14 @@ function MemoizedDocument(props: { doc: types.Document; visible: boolean }) {
   const { doc, visible } = props;
   return React.useMemo(() => {
     switch (doc.kind) {
-      case 'home':
+      case 'doc.home':
         return <DocumentHome doc={doc} visible={visible} />;
-      case 'kubes':
-        return <DocumentKubes doc={doc} visible={visible} />;
-      case 'apps':
-        return <DocumentApps doc={doc} visible={visible} />;
-      case 'servers':
-        return <DocumentServers doc={doc} visible={visible} />;
-      case 'dbs':
-        return <DocumentDbs doc={doc} visible={visible} />;
-      case 'gateway':
+      case 'doc.cluster':
+        return <DocumentCluster doc={doc} visible={visible} />;
+      case 'doc.gateway':
         return <DocumentGateway doc={doc} visible={visible} />;
-      case 'terminal_shell':
-      case 'terminal_tsh_session':
+      case 'doc.terminal_shell':
+      case 'doc.terminal_tsh_node':
         return <DocumentTerminal doc={doc} visible={visible} />;
       default:
         return (

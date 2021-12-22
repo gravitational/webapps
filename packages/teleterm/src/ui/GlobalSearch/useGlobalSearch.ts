@@ -47,20 +47,20 @@ export default function useGlobalSearch() {
 
           const selectedResult = searchResults[current];
           switch (selectedResult.kind) {
-            case 'server':
+            case 'tsh.server':
               ctx.serviceModals.openDialog({
                 kind: 'server-connect',
                 serverUri: selectedResult.data.uri,
               });
               return;
-            case 'db':
+            case 'tsh.db':
               ctx.serviceModals.openDialog({
                 kind: 'create-gateway',
                 targetUri: selectedResult.data.uri,
               });
               return;
             default:
-              ctx.serviceDocs.open(selectedResult.data.uri);
+              return;
           }
         }
         return;

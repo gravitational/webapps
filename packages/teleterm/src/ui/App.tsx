@@ -1,17 +1,17 @@
 import React from 'react';
+import { DndProvider } from 'react-dnd';
+import { HTML5Backend } from 'react-dnd-html5-backend';
 import styled from 'styled-components';
 import { Box } from 'design';
 import SplitPane from 'shared/components/SplitPane';
-import { ThemeProviderTabs } from './ThemeProvider';
+import DesignThemeProvider from 'design/ThemeProvider';
 import CatchError from './components/CatchError';
-import AppContextProvider from './appContextProvider';
 import Navigator from './Navigator';
-import AppContext from './appContext';
 import TabHost from './TabHost';
 import ModalsHost from './ModalsHost';
 import GlobalSearch from './GlobalSearch';
-import { DndProvider,  } from 'react-dnd';
-import { HTML5Backend } from 'react-dnd-html5-backend';
+import AppContextProvider from './appContextProvider';
+import AppContext from './appContext';
 
 const App: React.FC<{ ctx: AppContext }> = ({ ctx }) => {
   return (
@@ -19,7 +19,7 @@ const App: React.FC<{ ctx: AppContext }> = ({ ctx }) => {
       <CatchError>
         <DndProvider backend={HTML5Backend}>
           <AppContextProvider value={ctx}>
-            <ThemeProviderTabs>
+            <DesignThemeProvider>
               <GlobalSearch />
               <SplitPane defaultSize="20%" flex="1" split="vertical">
                 <Box flex="1" bg="primary.light">
@@ -30,7 +30,7 @@ const App: React.FC<{ ctx: AppContext }> = ({ ctx }) => {
                 </Box>
               </SplitPane>
               <ModalsHost />
-            </ThemeProviderTabs>
+            </DesignThemeProvider>
           </AppContextProvider>
         </DndProvider>
       </CatchError>

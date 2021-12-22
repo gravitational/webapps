@@ -14,7 +14,6 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import uris from 'teleterm/ui/uris';
 import ServiceClusters from 'teleterm/ui/services/clusters';
 import ServiceModals from 'teleterm/ui/services/modals';
 import ServiceDocs from 'teleterm/ui/services/docs';
@@ -29,10 +28,8 @@ export default class AppContext {
   serviceModals: ServiceModals;
   serviceDocs: ServiceDocs;
   serviceTerminals: ServiceTerminals;
-  mainProcessClient: types.MainProcessClient;
   serviceKeyboardShortcuts: KeyboardShortcutsService;
-
-  uris = uris;
+  mainProcessClient: types.MainProcessClient;
 
   constructor(config: types.ElectronGlobals) {
     this.mainProcessClient = config.mainProcessClient;

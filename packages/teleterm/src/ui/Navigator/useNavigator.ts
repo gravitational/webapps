@@ -20,7 +20,7 @@ import * as types from './types';
 
 export default function useNavigator() {
   const ctx = useAppContext();
-  const homeItem = createHomeItem(ctx.uris.routes.home);
+  const homeItem = createHomeItem(ctx.serviceDocs.getHomeUri());
 
   ctx.serviceDocs.useState();
 

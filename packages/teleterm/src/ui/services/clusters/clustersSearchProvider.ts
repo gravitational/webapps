@@ -3,7 +3,6 @@ import {
   Result,
 } from 'teleterm/ui/services/globalSearch/types';
 import ServiceClusters from './clusters';
-import uri from 'teleterm/ui/uris';
 
 export default class ClusterSearchProvider implements GlobalSearchProvider {
   serviceCluster: ServiceClusters;
@@ -13,35 +12,7 @@ export default class ClusterSearchProvider implements GlobalSearchProvider {
   }
 
   search(value: string): Result[] {
-    return [
-      ...this._searchQuickNavs(value),
-      ...this._searchServers(value),
-      ...this._searchDbs(value),
-    ];
-  }
-
-  private _searchQuickNavs(value: string): Result[] {
-    const quickNavs: Result[] = [];
-    [...this.serviceCluster.state.clusters.values()]
-      .filter(c => c.connected)
-      .forEach(c => {
-        quickNavs.push({
-          kind: 'servers',
-          data: {
-            ...c,
-            uri: uri.getUriServers({ clusterId: c.name }),
-          },
-        });
-        quickNavs.push({
-          kind: 'dbs',
-          data: {
-            ...c,
-            uri: uri.getUriDbs({ clusterId: c.name }),
-          },
-        });
-      });
-
-    return quickNavs.filter(n => n.kind.includes(value));
+    return [...this._searchServers(value), ...this._searchDbs(value)];
   }
 
   private _searchServers(value: string): Result[] {
@@ -55,7 +26,7 @@ export default class ClusterSearchProvider implements GlobalSearchProvider {
       })
       .map(server => {
         return {
-          kind: 'server',
+          kind: 'tsh.server',
           data: server,
         };
       });
@@ -72,7 +43,7 @@ export default class ClusterSearchProvider implements GlobalSearchProvider {
       })
       .map(db => {
         return {
-          kind: 'db',
+          kind: 'tsh.db',
           data: db,
         };
       });

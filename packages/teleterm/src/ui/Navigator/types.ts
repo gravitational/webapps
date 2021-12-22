@@ -1,5 +1,4 @@
 import { FC } from 'react';
-import { ResourceKind } from 'teleterm/ui/types';
 
 export interface NavItem {
   items: NavItem[];
@@ -7,6 +6,6 @@ export interface NavItem {
   uri: string;
   status?: 'offline' | 'failed' | 'loading' | '';
   Icon: FC;
-  kind: ResourceKind;
+  kind: string;
   group: boolean;
 }

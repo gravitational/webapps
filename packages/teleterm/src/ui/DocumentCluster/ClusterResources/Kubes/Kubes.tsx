@@ -18,40 +18,29 @@ import React from 'react';
 import styled from 'styled-components';
 import { Text, Flex, Box } from 'design';
 import { Danger } from 'design/Alert';
-import Document from './../Document';
-import useApps from './useApps';
-import AppList from './AppList';
-import * as types from '../types';
+import useKubes from './useKubes';
+import KubeList from './KubeList';
 
-export default function DocumentApps(props: Props) {
-  const { doc, visible } = props;
-  const { apps, syncStatus, searchValue } = useApps(doc);
+export default function Kubes(props: Props) {
+  const { kubes, syncStatus, searchValue } = useKubes(props.clusterUri);
 
   return (
-    <Document visible={visible}>
-      <Container mx="auto" mt="4" px="5">
-        <Flex
-          justifyContent="space-between"
-          mb="4"
-          typography="h3"
-          color="text.secondary"
-        >
-          <Text typography="h3" color="text.secondary">
-            Applications
-          </Text>
-        </Flex>
-        {syncStatus.status === 'failed' && (
-          <Danger>{syncStatus.statusText}</Danger>
-        )}
-        <AppList searchValue={searchValue} apps={apps} />
-      </Container>
-    </Document>
+    <Container>
+      <Flex justifyContent="space-between" mb="2">
+        <Text typography="h5" color="text.secondary">
+          Kubernetes Clusters
+        </Text>
+      </Flex>
+      {syncStatus.status === 'failed' && (
+        <Danger>{syncStatus.statusText}</Danger>
+      )}
+      <KubeList searchValue={searchValue} kubes={kubes} />
+    </Container>
   );
 }
 
 type Props = {
-  visible: boolean;
-  doc: types.DocumentApps;
+  clusterUri: string;
 };
 
 const Container = styled(Box)`

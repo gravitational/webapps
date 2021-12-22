@@ -56,30 +56,6 @@ function ServerResult(props: { result: types.ResultServer }) {
   );
 }
 
-function ServersResult(props: { result: types.ResultServers }) {
-  const { name } = props.result.data;
-  return (
-    <div>
-      <Flex alignItems="center">
-        <Box mr={2}>{`servers`}</Box>
-        <Box color="text.placeholder">{`/clusters/${name}/servers}`}</Box>
-      </Flex>
-    </div>
-  );
-}
-
-function DbsResult(props: { result: types.ResultDbs }) {
-  const { name } = props.result.data;
-  return (
-    <div>
-      <Flex alignItems="center">
-        <Box mr={2}>{`databases`}</Box>
-        <Box color="text.placeholder">{`/clusters/${name}/dbs`}</Box>
-      </Flex>
-    </div>
-  );
-}
-
 function DbResult(props: { result: types.ResultDb }) {
   const db = props.result.data;
   const $labels = db.labelsList.map((label, index) => (
@@ -143,10 +119,8 @@ const ComponentMap: Record<
   types.Result['kind'],
   React.FC<{ result: types.Result }>
 > = {
-  ['dbs']: DbsResult,
-  ['db']: DbResult,
-  ['servers']: ServersResult,
-  ['server']: ServerResult,
+  ['tsh.db']: DbResult,
+  ['tsh.server']: ServerResult,
 };
 
 type Props = {

@@ -14,5 +14,21 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import DocumentServers from './DocumentServers';
-export default DocumentServers;
+import { useState } from 'react';
+import { useAppContext } from 'teleterm/ui/appContextProvider';
+
+export default function useApps(clusterUri: string) {
+  const ctx = useAppContext();
+  const [searchValue, setSearchValue] = useState('');
+  const apps = ctx.serviceClusters.findApps(clusterUri);
+  const syncStatus = ctx.serviceClusters.getClusterSyncStatus(clusterUri);
+
+  ctx.serviceClusters.useState();
+
+  return {
+    searchValue,
+    setSearchValue,
+    apps,
+    syncStatus: syncStatus.apps,
+  };
+}

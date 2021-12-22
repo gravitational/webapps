@@ -16,13 +16,13 @@ limitations under the License.
 
 import React from 'react';
 import styled from 'styled-components';
-import { Text, Flex, Box, ButtonSecondary } from 'design';
-import Document from './../Document';
-import useGateway from './useGateway';
-import { ThemeProviderTabs } from './../ThemeProvider';
-import * as types from '../types';
-import TextSelectCopy from 'teleport/components/TextSelectCopy';
 import * as Alerts from 'design/Alert';
+import { Text, Flex, Box, ButtonSecondary } from 'design';
+import Document from 'teleterm/ui/Document';
+import TextSelectCopy from 'teleport/components/TextSelectCopy';
+import { ThemeProviderTabs } from 'teleterm/ui/ThemeProvider';
+import * as types from 'teleterm/ui/services/docs/types';
+import useGateway from './useGateway';
 
 type Props = {
   visible: boolean;

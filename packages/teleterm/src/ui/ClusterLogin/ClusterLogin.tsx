@@ -31,10 +31,10 @@ export function ClusterLogin({
   title,
   initAttempt,
   loginAttempt,
-  loginWithLocal,
-  loginWithSso,
-  closeDialog,
-  abortLogin,
+  onLoginWithLocal,
+  onLoginWithSso,
+  onCloseDialog,
+  onAbort,
   shouldPromptSsoStatus,
   shouldPromptHardwareKey,
 }: State) {
@@ -46,14 +46,14 @@ export function ClusterLogin({
         padding: '20px',
       })}
       disableEscapeKeyDown={false}
-      onClose={closeDialog}
+      onClose={onCloseDialog}
       open={true}
     >
       <DialogHeader>
         <Text typography="h4">
           Login to <b>{title}</b>
         </Text>
-        <ButtonIcon ml="auto" p={3} onClick={closeDialog}>
+        <ButtonIcon ml="auto" p={3} onClick={onCloseDialog}>
           <Icons.Close fontSize="20px" />
         </ButtonIcon>
       </DialogHeader>
@@ -71,9 +71,9 @@ export function ClusterLogin({
             auth2faType={initAttempt.data.secondFactor}
             isLocalAuthEnabled={initAttempt.data.localAuthEnabled}
             preferredMfa={initAttempt.data.preferredMfa}
-            onLoginWithSso={loginWithSso}
-            onLogin={loginWithLocal}
-            onAbort={abortLogin}
+            onLoginWithSso={onLoginWithSso}
+            onLogin={onLoginWithLocal}
+            onAbort={onAbort}
             loginAttempt={loginAttempt}
             shouldPromptSsoStatus={shouldPromptSsoStatus}
             shouldPromptHardwareKey={shouldPromptHardwareKey}

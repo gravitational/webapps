@@ -14,101 +14,58 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import { DocumentCluster } from './DocumentCluster/DocumentCluster';
-
-export type ResourceKind =
-  | 'gateways'
-  | 'terminal'
-  | 'servers'
-  | 'server'
-  | 'cluster'
-  | 'blank'
-  | 'home'
-  | 'apps'
-  | 'clusters'
-  | 'dbs'
-  | 'db'
-  | 'kubes'
-  | 'apps'
-  | 'gateway'
-  | 'terminal_shell'
-  | 'terminal_tsh_session';
+export type Kind =
+  | 'doc.cluster'
+  | 'doc.blank'
+  | 'doc.home'
+  | 'doc.gateway'
+  | 'doc.terminal_shell'
+  | 'doc.terminal_tsh_node';
 
 interface DocumentBase {
   uri: string;
   title: string;
-  kind: ResourceKind;
+  kind: Kind;
 }
 
 export interface DocumentHome extends DocumentBase {
-  kind: 'home';
+  kind: 'doc.home';
 }
 
 export interface DocumentBlank extends DocumentBase {
-  kind: 'blank';
+  kind: 'doc.blank';
 }
 
-export interface DocumentTshSession extends DocumentBase {
+export interface DocumentTshNode extends DocumentBase {
+  kind: 'doc.terminal_tsh_node';
   status: 'connecting' | 'connected' | 'disconnected';
-  kind: 'terminal_tsh_session';
   serverId: string;
   clusterId: string;
   login: string;
 }
 
-export interface DocumentServers extends DocumentBase {
-  kind: 'servers';
-  clusterUri: string;
-}
-
-export interface DocumentKubes extends DocumentBase {
-  kind: 'kubes';
-  clusterUri: string;
-}
-
-export interface DocumentApps extends DocumentBase {
-  kind: 'apps';
-  clusterUri: string;
-}
-
-export interface DocumentDatabases extends DocumentBase {
-  kind: 'dbs';
-  clusterUri: string;
-}
-
 export interface DocumentGateway extends DocumentBase {
-  kind: 'gateway';
+  kind: 'doc.gateway';
   clusterUri: string;
 }
 
 export interface DocumentCluster extends DocumentBase {
-  kind: 'cluster';
+  kind: 'doc.cluster';
   clusterUri: string;
 }
 
 export interface DocumentPtySession extends DocumentBase {
-  kind: 'terminal_shell';
+  kind: 'doc.terminal_shell';
   cwd?: string;
   pid?: number;
 }
 
+export type DocumentTerminal = DocumentPtySession | DocumentTshNode;
+
 export type Document =
-  | DocumentServers
   | DocumentHome
   | DocumentBlank
-  | DocumentDatabases
   | DocumentGateway
-  | DocumentApps
-  | DocumentKubes
-  | DocumentTshSession
+  | DocumentTshNode
   | DocumentPtySession
   | DocumentCluster;
-
-export interface UriParams {
-  clusterId?: string;
-  serverId?: string;
-  dbId?: string;
-  gatewayId?: string;
-  tabId?: string;
-  sid?: string;
-}
