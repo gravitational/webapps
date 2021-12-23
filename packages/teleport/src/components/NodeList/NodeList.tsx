@@ -45,7 +45,7 @@ function NodeList(props: Props) {
           onRender: ({ tags }) => <LabelCell data={tags} />,
         },
         {
-          key: 'loginBtn',
+          key: 'connect-btn',
           onRender: ({ id }) => (
             <LoginCell
               onOpen={onLoginMenuOpen}
