@@ -46,7 +46,7 @@ export function Tabs(props: Props) {
       return (
         <TabItem
           index={index}
-          name={item.getTitle()}
+          name={item.title}
           key={item.uri}
           users={[]}
           active={active}

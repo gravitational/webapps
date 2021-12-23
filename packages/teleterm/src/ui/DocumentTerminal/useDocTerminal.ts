@@ -58,7 +58,7 @@ export default function useDocumentTerminal(doc: Props['doc']) {
     return debounce(async () => {
       const pid = ptyProcess.getPid();
       const cwd = await ctx.serviceTerminals.getWorkingDirectory(pid);
-      ctx.serviceDocs.update(doc.uri, { cwd });
+      ctx.serviceDocs.update(doc.uri, { cwd, title: cwd });
     }, 2000);
   }, [ptyProcess]);
 

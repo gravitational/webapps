@@ -24,7 +24,7 @@ export type Kind =
 
 interface DocumentBase {
   uri: string;
-  getTitle(): string;
+  title: string;
   kind: Kind;
 }
 
