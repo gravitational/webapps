@@ -39,7 +39,7 @@ export type Props = {
   menuPosition?: 'fixed' | 'absolute';
   inputValue?: string;
   filterOption?(): null | boolean;
-  onInputChange?(value: string, actionMeta: { action: InputAction }): void;
+  onInputChange?(value: string, actionMeta: ActionMeta): void;
 };
 
 export type AsyncProps = Omit<Props, 'options'> & {
@@ -58,4 +58,6 @@ export type Option<T = string> = {
   label: string;
 };
 
-type InputAction = 'set-value' | 'input-change' | 'input-blur' | 'menu-close';
+export type ActionMeta = {
+  action: 'set-value' | 'input-change' | 'input-blur' | 'menu-close';
+};

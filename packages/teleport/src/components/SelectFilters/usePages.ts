@@ -16,7 +16,7 @@
 
 import React from 'react';
 
-export default function usePages({ pageSize = 100, data = [] }) {
+export default function usePages({ pageSize, data }) {
   const [startFrom, setFrom] = React.useState(0);
 
   // set current page to 0 when data source length changes

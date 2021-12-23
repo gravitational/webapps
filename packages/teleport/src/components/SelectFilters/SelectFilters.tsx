@@ -19,7 +19,10 @@ import styled from 'styled-components';
 import { components } from 'react-select';
 import { Flex, Text, ButtonBorder, ButtonIcon, Box } from 'design';
 import { Close, Add } from 'design/Icon';
-import Select, { Option as BaseOption } from 'shared/components/Select';
+import Select, {
+  Option as BaseOption,
+  ActionMeta,
+} from 'shared/components/Select';
 import { makeLabelTag } from 'teleport/components/formatters';
 import { Filter } from 'teleport/types';
 import usePages from './usePages';
@@ -27,8 +30,8 @@ import Pager from './Pager';
 
 export default function SelectFilters({
   applyFilters,
-  appliedFilters,
-  filters,
+  appliedFilters = [],
+  filters = [],
   mb = 3,
   pageSize = 100,
 }: Props) {
@@ -81,8 +84,8 @@ export default function SelectFilters({
     }
   }
 
-  function onInputChange(value, obj) {
-    if (obj.action === 'menu-close' || obj.action === 'set-value') {
+  function onInputChange(value: string, meta: ActionMeta) {
+    if (meta.action === 'menu-close' || meta.action === 'set-value') {
       return;
     }
     setSearch(value);
@@ -141,7 +144,7 @@ export default function SelectFilters({
             bg="#fff"
             borderRadius={2}
             borderTopLeftRadius={0}
-            style={{ position: 'absolute', zIndex: 1 }}
+            style={{ position: 'absolute', zIndex: 1, color: '#4b4b4b' }}
             ref={selectWrapperRef}
           >
             <StyledSelect>
