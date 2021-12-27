@@ -27,7 +27,7 @@ export default function useExpanderClusters() {
   ctx.serviceClusters.useState();
 
   function addCluster() {
-    ctx.serviceModals.openDialog({ kind: 'add-cluster' });
+    ctx.serviceModals.openAddClusterDialog();
   }
 
   function syncClusters() {

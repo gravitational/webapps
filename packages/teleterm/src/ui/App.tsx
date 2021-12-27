@@ -9,7 +9,7 @@ import CatchError from './components/CatchError';
 import Navigator from './Navigator';
 import TabHost from './TabHost';
 import ModalsHost from './ModalsHost';
-import GlobalSearch from './GlobalSearch';
+import QuickInput from './QuickInput';
 import AppContextProvider from './appContextProvider';
 import AppContext from './appContext';
 
@@ -20,7 +20,7 @@ const App: React.FC<{ ctx: AppContext }> = ({ ctx }) => {
         <DndProvider backend={HTML5Backend}>
           <AppContextProvider value={ctx}>
             <DesignThemeProvider>
-              <GlobalSearch />
+              <QuickInput />
               <SplitPane defaultSize="20%" flex="1" split="vertical">
                 <Box flex="1" bg="primary.light">
                   <Navigator />

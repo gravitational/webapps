@@ -26,6 +26,26 @@ export default class ModalsService extends ImmutableStore<Dialog> {
     this.setState(() => dialog);
   }
 
+  openAddClusterDialog() {
+    this.setState(() => ({
+      kind: 'add-cluster',
+    }));
+  }
+
+  openProxyDbDialog(dbUri: string) {
+    this.setState(() => ({
+      kind: 'create-gateway',
+      targetUri: dbUri,
+    }));
+  }
+
+  openProxySshDialog(serverUri: string) {
+    this.setState(() => ({
+      kind: 'server-connect',
+      serverUri,
+    }));
+  }
+
   openLoginDialog(clusterUri: string) {
     this.setState(() => ({
       kind: 'cluster-login',

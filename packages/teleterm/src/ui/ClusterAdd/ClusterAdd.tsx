@@ -33,10 +33,7 @@ export default function AddCluster({ onClose }: Props) {
 
   React.useEffect(() => {
     if (status === 'success') {
-      ctx.serviceModals.openDialog({
-        kind: 'cluster-login',
-        clusterUri: cluster.uri,
-      });
+      ctx.serviceModals.openLoginDialog(cluster.uri);
     }
   }, [status]);
 
