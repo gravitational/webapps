@@ -1,45 +1,25 @@
 import {
-  defaultMacShortcuts,
-  defaultLinuxShortcuts,
-} from './defaultKeyboardShortcuts';
-import {
   KeyboardShortcutEvent,
   KeyboardShortcutEventSubscriber,
-  KeyboardShortcutType,
 } from './types';
 import { Platform } from 'teleterm/mainProcess/types';
-import { ImmutableStore } from '../immutableStore';
+import {
+  KeyboardShortcutsConfig,
+  KeyboardShortcutType,
+  ConfigService,
+} from 'teleterm/services/config';
 
-type State = {
-  shortcuts: Partial<Record<KeyboardShortcutType, string>>;
-};
-
-export class KeyboardShortcutsService extends ImmutableStore<State> {
+export class KeyboardShortcutsService {
   private eventsSubscribers = new Set<KeyboardShortcutEventSubscriber>();
   private keysToShortcuts = new Map<string, KeyboardShortcutType>();
 
-  constructor(private platform: Platform) {
-    super();
-
-    this.state = { shortcuts: {} };
-    switch (this.platform) {
-      case 'darwin':
-        this.updateShortcuts(defaultMacShortcuts);
-        break;
-      case 'linux':
-        this.updateShortcuts(defaultLinuxShortcuts);
-    }
-
+  constructor(
+    private platform: Platform,
+    private configService: ConfigService
+  ) {
+    const config = this.configService.get();
+    this.recalculateKeysToShortcuts(config.keyboardShortcuts);
     this.attachKeydownHandler();
-  }
-
-  updateShortcuts(
-    newShortcuts: Partial<Record<KeyboardShortcutType, string>>
-  ): void {
-    this.setState(draftState => {
-      Object.assign(draftState.shortcuts, newShortcuts);
-    });
-    this.recalculateKeysToShortcuts();
   }
 
   subscribeToEvents(subscriber: KeyboardShortcutEventSubscriber): void {
@@ -99,9 +79,11 @@ export class KeyboardShortcutsService extends ImmutableStore<State> {
   /**
    * Inverts shortcuts-keys pairs to allow accessing shortcut by a key
    */
-  private recalculateKeysToShortcuts(): void {
+  private recalculateKeysToShortcuts(
+    toInvert: Partial<KeyboardShortcutsConfig>
+  ): void {
     this.keysToShortcuts.clear();
-    Object.entries(this.state.shortcuts).forEach(([shortcutType, key]) => {
+    Object.entries(toInvert).forEach(([shortcutType, key]) => {
       this.keysToShortcuts.set(key, shortcutType as KeyboardShortcutType);
     });
   }

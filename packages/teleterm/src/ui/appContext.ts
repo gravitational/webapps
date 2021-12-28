@@ -43,7 +43,8 @@ export default class AppContext {
     this.serviceDocs = new ServiceDocs();
     this.serviceTerminals = new ServiceTerminals(config.ptyServiceClient);
     this.serviceKeyboardShortcuts = new KeyboardShortcutsService(
-      this.mainProcessClient.getRuntimeSettings().platform
+      this.mainProcessClient.getRuntimeSettings().platform,
+      this.mainProcessClient.configService
     );
   }
 

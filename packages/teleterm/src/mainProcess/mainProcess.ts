@@ -5,20 +5,27 @@ import { RuntimeSettings, Logger } from 'teleterm/types';
 import { getAssetPath } from './runtimeSettings';
 import { subscribeToClusterContextMenuEvent } from './clusterContextMenu';
 import { subscribeToTerminalContextMenuEvent } from 'teleterm/mainProcess/terminalContextMenu';
+import {
+  ConfigService,
+  subscribeToConfigServiceEvents,
+} from '../services/config';
 
 type Options = {
   settings: RuntimeSettings;
   logger: Logger;
+  configService: ConfigService;
 };
 
 export default class MainProcess {
-  settings: RuntimeSettings;
-  tshdProcess: ChildProcess;
-  logger: Logger;
+  readonly settings: RuntimeSettings;
+  private readonly logger: Logger;
+  private readonly configService: ConfigService;
+  private tshdProcess: ChildProcess;
 
   private constructor(opts: Options) {
     this.settings = opts.settings;
     this.logger = opts.logger;
+    this.configService = opts.configService;
   }
 
   static create(opts: Options) {
@@ -88,5 +95,6 @@ export default class MainProcess {
 
     subscribeToTerminalContextMenuEvent();
     subscribeToClusterContextMenuEvent();
+    subscribeToConfigServiceEvents(this.configService);
   }
 }
