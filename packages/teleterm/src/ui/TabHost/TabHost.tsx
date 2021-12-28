@@ -65,7 +65,7 @@ export default function TabHost(props: Props) {
       <Flex bg="bgTerminal" height="32px">
         <Tabs
           flex="1"
-          items={documents}
+          items={documents.filter(d => d.kind !== 'doc.home')}
           onClose={handleTabClose}
           onSelect={handleTabClick}
           activeTab={docActive.uri}

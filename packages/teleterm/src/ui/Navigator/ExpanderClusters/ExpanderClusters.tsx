@@ -19,6 +19,8 @@ import { Flex, Box, Text, ButtonIcon } from 'design';
 import * as Icons from 'design/Icon';
 import Expander, { ExpanderHeader, ExpanderContent } from './../Expander';
 import NavItem from 'teleterm/ui/Navigator/NavItem';
+import LinearProgress from 'teleterm/ui/components/LinearProgress';
+
 import useExpanderClusters, {
   State,
   ClusterNavItem,
@@ -102,7 +104,7 @@ type ClusterItemProps = {
 
 const ClusterItem: React.FC<ClusterItemProps> = props => {
   const { item, onContextMenu } = props;
-  const { title, connected } = item;
+  const { title, syncing, connected } = item;
 
   function handleLogout(e: React.SyntheticEvent) {
     e.stopPropagation();
@@ -134,6 +136,7 @@ const ClusterItem: React.FC<ClusterItemProps> = props => {
           <ClusterIcon mr={2} name={title} />
           <Text typography="body1" style={{ position: 'relative' }}>
             {title}
+            {syncing && <LinearProgress />}
           </Text>
         </Flex>
         <Flex>

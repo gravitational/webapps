@@ -32,6 +32,7 @@ export const Story = () => {
     const loading: SyncStatus = { status: 'processing' };
     const error: SyncStatus = { status: 'failed', statusText: 'Server Error' };
     return {
+      syncing: true,
       dbs: error,
       servers: loading,
       apps: loading,

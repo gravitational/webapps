@@ -16,22 +16,25 @@ limitations under the License.
 
 import React from 'react';
 import { Flex, Text, ButtonIcon } from 'design';
-import * as Icons from 'design/Icon';
+import { Trash } from 'design/Icon';
+
 import Expander, {
   ExpanderHeader,
   ExpanderContent,
 } from 'teleterm/ui/Navigator/Expander';
-import * as types from 'teleterm/ui/Navigator/types';
 import NavItem from 'teleterm/ui/Navigator/NavItem';
 import StatusIndicator from './StatusIndicator';
-import useExpanderGateways, { State } from './useExpanderGateways';
+import useExpanderConnections, {
+  State,
+  ConnectionItem,
+} from './useExpanderConnections';
 
 export default function Container() {
-  const state = useExpanderGateways();
-  return <ExpanderGateways {...state} />;
+  const state = useExpanderConnections();
+  return <ExpanderConnections {...state} />;
 }
 
-export const ExpanderGateways: React.FC<State> = props => {
+export const ExpanderConnections: React.FC<State> = props => {
   return (
     <Expander>
       <ExpanderHeader>
@@ -41,37 +44,44 @@ export const ExpanderGateways: React.FC<State> = props => {
           flex="1"
           width="100%"
         >
-          <Text typography="body1">Gateways</Text>
+          <Text typography="body1">Connections</Text>
         </Flex>
       </ExpanderHeader>
       <ExpanderContent>
-        {props.gatewayItems.map(i => (
-          <GateWayItem key={i.uri} item={i} />
+        {props.items.map(i => (
+          <ConnItem key={i.uri} item={i} />
         ))}
       </ExpanderContent>
     </Expander>
   );
 };
 
-const GateWayItem: React.FC<GatewayItemProps> = props => {
+const ConnItem: React.FC<ConnItemProps> = props => {
+  const offline = props.item.status === 'disconnected';
+  const color = !offline ? 'text.primary' : 'text.placeholder';
+
   return (
     <NavItem pl={5} item={props.item}>
-      <StatusIndicator mr={3} status="connected" />
+      <StatusIndicator mr={3} status={props.item.status} />
       <Flex
         alignItems="center"
         justifyContent="space-between"
         flex="1"
         width="100%"
       >
-        {props.item.title}
-        <ButtonIcon color="text.placeholder">
-          <Icons.Trash />
-        </ButtonIcon>
+        <Text typography="body1" color={color}>
+          {props.item.title}
+        </Text>
+        {offline && (
+          <ButtonIcon color="text.placeholder">
+            <Trash />
+          </ButtonIcon>
+        )}
       </Flex>
     </NavItem>
   );
 };
 
-type GatewayItemProps = {
-  item: types.NavItem;
+type ConnItemProps = {
+  item: ConnectionItem;
 };

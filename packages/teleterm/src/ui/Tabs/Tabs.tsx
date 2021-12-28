@@ -73,17 +73,15 @@ export function Tabs(props: Props) {
       <Flex minWidth={0} width="100%">
         {$items}
       </Flex>
-      {$items.length > 0 && (
-        <ButtonIcon
-          ml="2"
-          size={0}
-          disabled={disableNew}
-          title="New Tab"
-          onClick={onNew}
-        >
-          <Icons.Add fontSize="16px" />
-        </ButtonIcon>
-      )}
+      <ButtonIcon
+        ml="2"
+        size={0}
+        disabled={disableNew}
+        title="New Tab"
+        onClick={onNew}
+      >
+        <Icons.Add fontSize="16px" />
+      </ButtonIcon>
     </StyledTabs>
   );
 }

@@ -94,7 +94,7 @@ export class QuickLoginPicker extends ClusterPicker {
       const addNew: ItemNewCluster = {
         kind: 'item.cluster-new',
         data: {
-          displayName: 'enter cluster name...',
+          displayName: 'new cluster...',
           description: 'Enter a new cluster name to login',
         },
       };
@@ -130,7 +130,7 @@ export class QuickServerPicker extends ClusterPicker {
   }
 
   onPick(item: ItemServer) {
-    this.launcher.executeCommand('proxy-ssh', {
+    this.launcher.executeCommand('ssh', {
       serverUri: item.data.uri,
     });
   }

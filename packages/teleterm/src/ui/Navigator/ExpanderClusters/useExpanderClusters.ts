@@ -25,6 +25,7 @@ export default function useExpanderClusters() {
 
   // subscribe
   ctx.serviceClusters.useState();
+  ctx.serviceDocs.useState();
 
   function addCluster() {
     ctx.serviceModals.openAddClusterDialog();
@@ -84,14 +85,14 @@ export default function useExpanderClusters() {
 
 function initItems(ctx: AppContext): ClusterNavItem[] {
   return ctx.serviceClusters.getClusters().map<ClusterNavItem>(cluster => {
-    const syncing = ctx.serviceClusters.getClusterSyncStatus(cluster.uri);
+    const { syncing } = ctx.serviceClusters.getClusterSyncStatus(cluster.uri);
     return {
       title: cluster.name,
       Icon: Icons.Clusters,
       uri: cluster.uri,
       kind: 'cluster',
       connected: cluster.connected,
-      syncing: syncing.servers,
+      syncing: syncing,
       items: [],
       group: true,
     };
@@ -102,4 +103,5 @@ export type State = ReturnType<typeof useExpanderClusters>;
 
 export interface ClusterNavItem extends navTypes.NavItem {
   connected: boolean;
+  syncing: boolean;
 }
