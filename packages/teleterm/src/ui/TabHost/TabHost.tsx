@@ -29,7 +29,7 @@ import useTabShortcuts from './useTabShortcuts';
 
 export default function TabHost(props: Props) {
   const ctx = useAppContext();
-  const { serviceDocs, mainProcessClient } = ctx;
+  const { serviceDocs } = ctx;
   const documents = serviceDocs.getDocuments();
   const docActive = serviceDocs.getActive();
 
@@ -55,21 +55,9 @@ export default function TabHost(props: Props) {
     serviceDocs.openNewTerminal();
   }
 
-  const openTerminalContextMenu = () => {
-    mainProcessClient.openTerminalContextMenu();
-  };
-
   const $docs = documents.map(doc => {
     const isActiveDoc = doc === docActive;
-    return (
-      <MemoizedDocument
-        doc={doc}
-        visible={isActiveDoc}
-        key={doc.uri}
-        onTerminalContextMenu={openTerminalContextMenu}
-        onClose={() => handleTabClose(doc)}
-      />
-    );
+    return <MemoizedDocument doc={doc} visible={isActiveDoc} key={doc.uri} />;
   });
 
   return (
@@ -91,13 +79,8 @@ export default function TabHost(props: Props) {
   );
 }
 
-function MemoizedDocument(props: {
-  doc: types.Document;
-  visible: boolean;
-  onTerminalContextMenu(): void;
-  onClose(): void;
-}) {
-  const { doc, visible, onTerminalContextMenu, onClose } = props;
+function MemoizedDocument(props: { doc: types.Document; visible: boolean }) {
+  const { doc, visible } = props;
   return React.useMemo(() => {
     switch (doc.kind) {
       case 'doc.home':
@@ -108,14 +91,7 @@ function MemoizedDocument(props: {
         return <DocumentGateway doc={doc} visible={visible} />;
       case 'doc.terminal_shell':
       case 'doc.terminal_tsh_node':
-        return (
-          <DocumentTerminal
-            doc={doc}
-            visible={visible}
-            onClose={onClose}
-            onContextMenu={onTerminalContextMenu}
-          />
-        );
+        return <DocumentTerminal doc={doc} visible={visible} />;
       default:
         return (
           <Document visible={visible}>

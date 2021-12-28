@@ -54,6 +54,10 @@ export default function useDocumentTerminal(doc: Props['doc']) {
     }
   }
 
+  function openTerminalContextMenu(): void {
+    ctx.mainProcessClient.openTerminalContextMenu();
+  }
+
   const refreshDocumentCwd = useMemo(() => {
     return debounce(async () => {
       const pid = ptyProcess.getPid();
@@ -73,6 +77,11 @@ export default function useDocumentTerminal(doc: Props['doc']) {
       });
     }
 
+    ptyProcess?.onExit(() => {
+      const activeDocUri = ctx.serviceDocs.getActive().uri;
+      ctx.serviceDocs.close({ uri: activeDocUri });
+    });
+
     return () => {
       disposed = true;
       ptyProcess?.dispose();
@@ -82,6 +91,7 @@ export default function useDocumentTerminal(doc: Props['doc']) {
   return {
     ptyProcess,
     refreshDocumentCwd,
+    openTerminalContextMenu,
   };
 }
 

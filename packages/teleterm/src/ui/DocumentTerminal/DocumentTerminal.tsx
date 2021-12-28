@@ -19,12 +19,11 @@ import Document from 'teleterm/ui/Document';
 import useDocumentTerminal, { Props } from './useDocTerminal';
 import Terminal from './Terminal';
 
-export default function DocumentTerminal(
-  props: Props & { visible: boolean; onContextMenu?(): void; onClose(): void }
-) {
-  const { visible, doc, onClose, onContextMenu } = props;
+export default function DocumentTerminal(props: Props & { visible: boolean }) {
+  const { visible, doc } = props;
   const refTerminal = useRef<Terminal>();
-  const { ptyProcess, refreshDocumentCwd } = useDocumentTerminal(doc);
+  const { ptyProcess, refreshDocumentCwd, openTerminalContextMenu } =
+    useDocumentTerminal(doc);
 
   useEffect(() => {
     if (refTerminal?.current && ptyProcess && visible) {
@@ -33,10 +32,6 @@ export default function DocumentTerminal(
       window.dispatchEvent(new Event('resize'));
     }
   }, [visible, ptyProcess]);
-
-  useEffect(() => {
-    ptyProcess?.onExit(onClose);
-  }, [ptyProcess?.onExit]);
 
   useEffect(() => {
     refreshDocumentCwd();
@@ -53,7 +48,7 @@ export default function DocumentTerminal(
       visible={visible}
       flexDirection="column"
       pl={2}
-      onContextMenu={onContextMenu}
+      onContextMenu={openTerminalContextMenu}
     >
       {ptyProcess && <Terminal ptyProcess={ptyProcess} ref={refTerminal} />}
     </Document>
