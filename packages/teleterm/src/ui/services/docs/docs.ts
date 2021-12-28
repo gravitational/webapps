@@ -181,6 +181,14 @@ export default class DocumentService extends ImmutableStore<State> {
     return this.state.docs.filter(i => i.uri !== uri);
   }
 
+  getTshNodeDocuments() {
+    function isTshNode(d: DocumentTshNode): d is DocumentTshNode {
+      return d.kind === 'doc.terminal_tsh_node';
+    }
+
+    return this.state.docs.filter(isTshNode);
+  }
+
   getNextUri(uri: string) {
     const { docs } = this.state;
     for (let i = 0; i < this.state.docs.length; i++) {

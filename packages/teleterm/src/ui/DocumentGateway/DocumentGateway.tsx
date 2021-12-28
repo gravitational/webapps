@@ -39,10 +39,10 @@ export default function DocumentGateway(props: Props) {
         <Container mx="auto" mt="4" px="5">
           <Flex justifyContent="space-between" mb="4">
             <Text typography="h3" color="text.secondary">
-              Gateway
+              DB Proxy Connection
             </Text>
             <ButtonSecondary size="small" onClick={removeGateway}>
-              Close Gateway
+              Close Connection
             </ButtonSecondary>
           </Flex>
           {status === 'error' && <Alerts.Danger mb={5} children={statusText} />}
@@ -117,14 +117,3 @@ export default function DocumentGateway(props: Props) {
 const Container = styled(Box)`
   max-width: 1024px;
 `;
-
-/*
-clusterId: "localhost"
-hostId: "5546a2f0-fc51-416b-a44d-1ef8747c3341"
-localAddress: "127.0.0.1:43293"
-localPort: ""
-protocol: "postgres"
-resourceName: "mydb"
-status: 0
-
-*/

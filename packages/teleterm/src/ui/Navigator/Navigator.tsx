@@ -17,19 +17,10 @@ limitations under the License.
 import React from 'react';
 import styled from 'styled-components';
 import { Flex, Text } from 'design';
-import * as Icons from 'design/Icon';
-import useNavigator, { State } from './useNavigator';
 import ExpanderClusters from './ExpanderClusters';
-import ExpanderGateways from './ExpanderGateways';
-import NavItem from './NavItem';
+import ExpanderConnections from './ExpanderConnections';
 
-export default function Container() {
-  const state = useNavigator();
-  return <Navigator {...state} />;
-}
-
-export function Navigator(props: State) {
-  const { homeItem } = props;
+export default function Navigator() {
   return (
     <Nav bg="primary.dark">
       <StyledBorder />
@@ -37,11 +28,7 @@ export function Navigator(props: State) {
         Teleport Terminal
       </Text>
       <StyledBorder />
-      <NavItem pl={2} item={homeItem} onClick={props.processItemClick}>
-        <Icons.Home mr={2} />
-        <Text typography="body1">{homeItem.title}</Text>
-      </NavItem>
-      <ExpanderGateways />
+      <ExpanderConnections />
       <ExpanderClusters />
     </Nav>
   );

@@ -15,8 +15,8 @@ limitations under the License.
 */
 
 import React from 'react';
-import { Box, Flex } from 'design';
-import Select, { DarkStyledSelect } from 'shared/components/Select';
+import styled from 'styled-components';
+import { Text, Box, Flex } from 'design';
 import Document from 'teleterm/ui/Document';
 import * as types from 'teleterm/ui/services/docs/types';
 
@@ -32,24 +32,21 @@ export default function DocumentHome(props: PropTypes) {
   return (
     <Document visible={visible}>
       <Flex flexDirection="column" alignItems="center" flex="1" width="100%">
-        <Box width="100%" maxWidth="60%" mt={10}>
-          <DarkStyledSelect mb={8}>
-            <Select
-              value={selected}
-              placeholder="Search..."
-              onChange={(opt: any) => setSelected(opt)}
-              options={options}
-              isMulti={false}
-              components={{ DropdownIndicator }}
-            />
-          </DarkStyledSelect>
+        <Box width="100%" maxWidth="60%" mx="auto" textAlign="center" mt="20%">
+          <Text mb={2} color="text.secondary" typography="subtitle1">
+            Show All Commands <Key>F1</Key>
+          </Text>
+          <Text mb={2} color="text.secondary" typography="subtitle1">
+            Open a new terminal tab <Key mr={1}>Ctrl</Key>+
+            <Key mx={1}>Shift</Key>+<Key mx={1}>T</Key>
+          </Text>
         </Box>
       </Flex>
     </Document>
   );
 }
 
-const DropdownIndicator = () => null;
+const Key = props => <Text p={1} as="span" {...props} bg="primary.light" />;
 
 type PropTypes = {
   visible: boolean;

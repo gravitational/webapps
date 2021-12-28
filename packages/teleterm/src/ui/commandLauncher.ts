@@ -17,7 +17,7 @@ limitations under the License.
 import { IAppContext } from 'teleterm/ui/types';
 
 const commands = {
-  'proxy-ssh': {
+  ssh: {
     displayName: '',
     description: '',
     run(ctx: IAppContext, args: { serverUri: string }) {
@@ -53,9 +53,9 @@ const commands = {
       });
     },
   },
-  'cmd-palette.proxy-ssh': {
-    displayName: 'proxy ssh',
-    description: 'Start local TLS proxy for ssh connections',
+  'cmd-palette.ssh': {
+    displayName: 'ssh',
+    description: 'Run shell or execute a command on a remote SSH node',
     run(appCtx: IAppContext) {
       appCtx.serviceQuickInput.setState({
         picker: appCtx.serviceQuickInput.quickServerPicker,
@@ -76,7 +76,7 @@ const commands = {
   },
   'cmd-palette.db-ls': {
     displayName: 'db ls',
-    description: 'Retrieve credentials for a database',
+    description: 'List cluster available databases',
     run(appCtx: IAppContext) {
       appCtx.serviceQuickInput.setState({
         picker: appCtx.serviceQuickInput.quickLoginPicker,

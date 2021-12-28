@@ -299,11 +299,23 @@ export default class ClusterService extends ImmutableStore<State> {
 
   getClusterSyncStatus(clusterUri: string) {
     const empty: SyncStatus = { status: '' };
+    const dbs = this.state.dbsSyncStatus.get(clusterUri) || empty;
+    const servers = this.state.serversSyncStatus.get(clusterUri) || empty;
+    const apps = this.state.appsSyncStatus.get(clusterUri) || empty;
+    const kubes = this.state.kubesSyncStatus.get(clusterUri) || empty;
+
+    const syncing =
+      dbs.status === 'processing' ||
+      servers.status === 'processing' ||
+      apps.status === 'processing' ||
+      kubes.status === 'processing';
+
     return {
-      dbs: this.state.dbsSyncStatus.get(clusterUri) || empty,
-      servers: this.state.serversSyncStatus.get(clusterUri) || empty,
-      apps: this.state.appsSyncStatus.get(clusterUri) || empty,
-      kubes: this.state.kubesSyncStatus.get(clusterUri) || empty,
+      syncing,
+      dbs,
+      servers,
+      apps,
+      kubes,
     };
   }
 

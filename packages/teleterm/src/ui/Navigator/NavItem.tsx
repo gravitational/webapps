@@ -16,11 +16,10 @@ limitations under the License.
 
 import React from 'react';
 import styled from 'styled-components';
-import { Warning } from 'design/Icon';
+import Icon from 'design/Icon';
 import { color, space } from 'design/system';
 import * as types from 'teleterm/ui/Navigator/types';
 import { useAppContext } from 'teleterm/ui/appContextProvider';
-import LinearProgress from 'teleterm/ui/components/LinearProgress';
 
 type Props = {
   item?: types.NavItem;
@@ -30,33 +29,29 @@ type Props = {
 
 const NavItem: React.FC<Props> = props => {
   const { item, onClick, ...styles } = props;
-  const ctx = useAppContext();
-  const active = ctx.serviceDocs.isActive(item.uri);
+  const { serviceDocs } = useAppContext();
+  const active = serviceDocs.isActive(item.uri);
 
   const handleClick = () => {
     if (onClick) {
       onClick(item);
     } else {
-      ctx.serviceDocs.open(item.uri);
+      serviceDocs.open(item.uri);
     }
   };
 
-  const Icon = item.status === 'failed' ? Warning : item.Icon;
-
   return (
-    <StyledNavItem
-      $active={active}
-      $status={item.status}
-      {...styles}
-      onClick={handleClick}
-    >
+    <StyledNavItem $active={active} {...styles} onClick={handleClick}>
       {!props.children && (
         <>
-          <Icon mr={2} ml={-2} fontSize="10px" color="text.secondary" />
-          <div style={{ position: 'relative' }}>
-            {item.title}
-            {item.status === 'loading' && <LinearProgress />}
-          </div>
+          <Icon
+            as={item.Icon}
+            mr={2}
+            ml={-2}
+            fontSize="10px"
+            color="text.secondary"
+          />
+          <div style={{ position: 'relative' }}>{item.title}</div>
         </>
       )}
       {props.children}
@@ -65,17 +60,13 @@ const NavItem: React.FC<Props> = props => {
 };
 
 export const StyledNavItem = styled.div(props => {
-  const { theme, $active, $status } = props;
+  const { theme, $active } = props;
   const colors = $active
     ? {
         color: theme.colors.primary.contrastText,
         background: theme.colors.primary.light,
       }
     : {};
-
-  if ($status === 'failed') {
-    colors.color = theme.colors.error.light;
-  }
 
   return {
     whiteSpace: 'nowrap',
