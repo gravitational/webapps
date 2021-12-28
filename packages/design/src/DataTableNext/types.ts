@@ -7,7 +7,8 @@ export type TableProps<T> = {
 };
 
 export type TableColumn<T> = {
-  key: keyof T & string;
+  key: Extract<keyof T, string>;
+  altKey?: string;
   headerText?: string;
   onRender?: (row: T) => JSX.Element;
   isSortable?: boolean;
