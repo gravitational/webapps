@@ -21,7 +21,9 @@ import Codec, {
 import Logger from 'shared/libs/logger';
 
 // Client is the TDP client. It is responsible for connecting to a websocket serving the tdp server,
-// sending client commands, and recieving and processing server messages.
+// sending client commands, and recieving and processing server messages. It's listener is responsible for
+// calling Client.nuke() (typically after Client emits a 'disconnect' or 'error' event) in order to clean
+// up its websocket listeners.
 export default class Client extends EventEmitter {
   codec: Codec;
   socket: WebSocket;
@@ -30,6 +32,7 @@ export default class Client extends EventEmitter {
   logger = Logger.create('TDPClient');
   private connected = false;
   private disconnected = false;
+  private errored = false;
 
   constructor(socketAddr: string, username: string) {
     super();
@@ -67,8 +70,10 @@ export default class Client extends EventEmitter {
 
       if (this.disconnected) {
         this.emit('disconnect');
-      } else {
-        this.handleError(new Error('websocket connection failed'));
+      } else if (!this.errored) {
+        this.handleError(
+          new Error('Connection closed due to an unknown error')
+        );
       }
     };
   }
@@ -83,6 +88,8 @@ export default class Client extends EventEmitter {
           this.emit('connect');
         }
         this.processFrame(buffer);
+      } else if (messageType === MessageType.ERROR) {
+        this.handleError(this.codec.decodeError(buffer));
       } else {
         this.handleError(
           new Error(`recieved unsupported message type ${messageType}`)
@@ -131,6 +138,8 @@ export default class Client extends EventEmitter {
   // Called to cleanup websocket when the connection is intentionally
   // closed by the end user (customer). Causes 'disconnect' event to be emitted
   disconnect() {
+    // Set disconnected to true to alert the socket.onclose handler that
+    // it should emit a disconnect event.
     this.disconnected = true;
     this.socket?.close();
   }
@@ -146,6 +155,10 @@ export default class Client extends EventEmitter {
   handleError(err: Error) {
     this.emit('error', err);
     this.logger.error(err);
+    // Set errored to true to alert the socket.onclose handler that
+    // it needn't emit another error event.
+    this.errored = true;
+    this.socket?.close();
   }
 }
 

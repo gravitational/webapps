@@ -47,22 +47,8 @@ test('encodes typical characters for username and password', () => {
   // Create a test value with letters, symbols, and numbers and its known UTF8 encodings
   const username = 'Helloworld!*@123';
   const usernameUTF8 = [
-    0x0048,
-    0x0065,
-    0x006c,
-    0x006c,
-    0x006f,
-    0x0077,
-    0x006f,
-    0x0072,
-    0x006c,
-    0x0064,
-    0x0021,
-    0x002a,
-    0x0040,
-    0x0031,
-    0x0032,
-    0x0033,
+    0x0048, 0x0065, 0x006c, 0x006c, 0x006f, 0x0077, 0x006f, 0x0072, 0x006c,
+    0x0064, 0x0021, 0x002a, 0x0040, 0x0031, 0x0032, 0x0033,
   ];
 
   // Encode test vals
@@ -82,18 +68,7 @@ test('encodes typical characters for username and password', () => {
 test('encodes utf8 characters correctly up to 3 bytes for username and password', () => {
   const first3RangesString = '\u0000\u007F\u0080\u07FF\u0800\uFFFF';
   const first3RangesUTF8 = [
-    0x00,
-    0x7f,
-    0xc2,
-    0x80,
-    0xdf,
-    0xbf,
-    0xe0,
-    0xa0,
-    0x80,
-    0xef,
-    0xbf,
-    0xbf,
+    0x00, 0x7f, 0xc2, 0x80, 0xdf, 0xbf, 0xe0, 0xa0, 0x80, 0xef, 0xbf, 0xbf,
   ];
   const message = codec.encodeUsername(first3RangesString);
   const view = new DataView(message);
@@ -130,6 +105,7 @@ test('decodes message types', () => {
   const { buffer: clipboardBuf, view: clipboardView } = makeBufView(
     MessageType.CLIPBOARD_DATA
   );
+  const { buffer: errorBuf, view: errorView } = makeBufView(MessageType.ERROR);
   const { buffer: cliScreenBuf, view: cliScreenView } = makeBufView(
     MessageType.CLIENT_SCREEN_SPEC
   );
@@ -141,6 +117,9 @@ test('decodes message types', () => {
   expect(codec.decodeMessageType(clipboardBuf)).toEqual(
     MessageType.CLIPBOARD_DATA
   );
+
+  errorView.setUint8(0, MessageType.ERROR);
+  expect(codec.decodeMessageType(errorBuf)).toEqual(MessageType.ERROR);
 
   // We only expect to need to decode png frames and clipboard data.
   cliScreenView.setUint8(0, MessageType.CLIENT_SCREEN_SPEC);
@@ -157,8 +136,29 @@ test('decodes regions', () => {
   view.setUint32(13, 64);
 
   const region = codec.decodeRegion(buffer);
-  expect(region.top).toEqual(0);
-  expect(region.left).toEqual(0);
-  expect(region.bottom).toEqual(64);
-  expect(region.right).toEqual(64);
+  expect(region.top).toBe(0);
+  expect(region.left).toBe(0);
+  expect(region.bottom).toBe(64);
+  expect(region.right).toBe(64);
+});
+
+// This test is skipped because codec.decodeError uses TextDecoder which jest doesn't currently support.
+// eslint-disable-next-line jest/no-disabled-tests
+test.skip('decodes errors', () => {
+  // First encode an error
+  const encoder = new TextEncoder();
+  const message = encoder.encode('An error occured');
+  const bufLen = 1 + 4 + message.length;
+  const tdpErrorBuffer = new ArrayBuffer(bufLen);
+  const view = new DataView(tdpErrorBuffer);
+  let offset = 0;
+  view.setUint8(offset++, MessageType.ERROR);
+  view.setUint32(offset, message.length);
+  offset += 4; // 4 bytes to offset 32-bit uint
+  message.forEach(byte => {
+    view.setUint8(offset++, byte);
+  });
+
+  const error = codec.decodeError(tdpErrorBuffer);
+  expect(error.message).toBe('An error occured');
 });
