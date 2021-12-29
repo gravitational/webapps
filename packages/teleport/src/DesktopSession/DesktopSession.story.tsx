@@ -17,7 +17,7 @@ limitations under the License.
 import React from 'react';
 import { DesktopSession } from './DesktopSession';
 import { State } from './useDesktopSession';
-import TdpClient, { ImageData } from 'teleport/lib/tdp/client';
+import TdpClient, { TdpClientEvent, ImageData } from 'teleport/lib/tdp/client';
 import useAttempt from 'shared/hooks/useAttemptNext';
 import { arrayBuf2260x1130 } from '../lib/tdp/fixtures';
 

@@ -143,8 +143,6 @@ test('decodes regions', () => {
   expect(region.right).toBe(64);
 });
 
-// This test is skipped because codec.decodeError uses TextDecoder which jest doesn't currently support.
-// eslint-disable-next-line jest/no-disabled-tests
 test('decodes errors', () => {
   // First encode an error
   const encoder = new TextEncoder();
