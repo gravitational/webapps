@@ -28,11 +28,11 @@ export default {
 const fakeClient = () => {
   const client = new TdpClient('wss://socketAddr.gov', 'username');
   client.init = () => {
-    client.emit('init');
+    client.emit(TdpClientEvent.INIT);
   };
   client.resize = (w: number, h: number) => {};
   client.disconnect = () => {
-    client.emit('disconnect');
+    client.emit(TdpClientEvent.DISCONNECT);
   };
   return client;
 };
@@ -75,12 +75,10 @@ export const Processing = () => (
 );
 
 export const ProcessingToConnectingToDisplay = () => {
-  const { attempt: fetchAttempt, setAttempt: setFetchAttempt } = useAttempt(
-    'processing'
-  );
-  const { attempt: connection, setAttempt: setConnection } = useAttempt(
-    'processing'
-  );
+  const { attempt: fetchAttempt, setAttempt: setFetchAttempt } =
+    useAttempt('processing');
+  const { attempt: connection, setAttempt: setConnection } =
+    useAttempt('processing');
 
   setTimeout(() => {
     setFetchAttempt({ status: 'success' });
@@ -161,7 +159,7 @@ export const Performance = () => {
           canvas.width = width;
           canvas.height = height;
         }
-        client.emit('connect');
+        client.emit(TdpClientEvent.CONNECT);
       }}
       onConnect={() => {
         for (let i = 0; i < arrayBuf2260x1130.length; i++) {

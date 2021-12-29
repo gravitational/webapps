@@ -1,4 +1,4 @@
-const { TextEncoder } = require('util');
+const { TextEncoder, TextDecoder } = require('util');
 import Codec, {
   MessageType,
   ButtonState,
@@ -8,6 +8,7 @@ import Codec, {
 
 // Use nodejs TextEncoder until jsdom adds support for TextEncoder (https://github.com/jsdom/jsdom/issues/2524)
 window.TextEncoder = window.TextEncoder || TextEncoder;
+window.TextDecoder = window.TextDecoder || TextDecoder;
 const codec = new Codec();
 
 test('encodes the screen spec', () => {
@@ -144,7 +145,7 @@ test('decodes regions', () => {
 
 // This test is skipped because codec.decodeError uses TextDecoder which jest doesn't currently support.
 // eslint-disable-next-line jest/no-disabled-tests
-test.skip('decodes errors', () => {
+test('decodes errors', () => {
   // First encode an error
   const encoder = new TextEncoder();
   const message = encoder.encode('An error occured');

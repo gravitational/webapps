@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 import React, { useEffect, useRef, CSSProperties } from 'react';
-import { ImageData } from 'teleport/lib/tdp/client';
+import { ImageData, TdpClientEvent } from 'teleport/lib/tdp/client';
 import useTdpClientCanvas from './useTdpClientCanvas';
 
 export default function TdpClientCanvas(props: Props) {
@@ -98,24 +98,24 @@ export default function TdpClientCanvas(props: Props) {
     canvas.onkeyup = onkeyup;
 
     // Initialize tdpClient event listeners.
-    tdpClient.on('init', () => {
+    tdpClient.on(TdpClientEvent.INIT, () => {
       onInit(canvas);
     });
 
     // TODO(ibm): do we need the connect event at all now that we send initial params in the wss string?
-    tdpClient.on('connect', () => {
+    tdpClient.on(TdpClientEvent.CONNECT, () => {
       onConnect();
     });
 
-    tdpClient.on('render', (data: ImageData) => {
+    tdpClient.on(TdpClientEvent.RENDER, (data: ImageData) => {
       buffer.push(data);
     });
 
-    tdpClient.on('disconnect', () => {
+    tdpClient.on(TdpClientEvent.DISCONNECT, () => {
       onDisconnect();
     });
 
-    tdpClient.on('error', (err: Error) => {
+    tdpClient.on(TdpClientEvent.ERROR, (err: Error) => {
       onError(err);
     });
 
