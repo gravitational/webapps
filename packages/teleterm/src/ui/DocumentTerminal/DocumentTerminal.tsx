@@ -16,14 +16,15 @@ limitations under the License.
 
 import React, { useRef, useEffect } from 'react';
 import Document from 'teleterm/ui/Document';
-import useDocumentTerminal, { Props } from './useDocTerminal';
+import useDocTerminal, { Props } from './useDocumentTerminal';
 import Terminal from './Terminal';
+import { useDocumentCwdUpdater } from './useDocumentCwdUpdater';
 
 export default function DocumentTerminal(props: Props & { visible: boolean }) {
   const { visible, doc } = props;
   const refTerminal = useRef<Terminal>();
-  const { ptyProcess, refreshDocumentCwd, openTerminalContextMenu } =
-    useDocumentTerminal(doc);
+  const { ptyProcess, openTerminalContextMenu } = useDocTerminal(doc);
+  useDocumentCwdUpdater(doc, refTerminal.current);
 
   useEffect(() => {
     if (refTerminal?.current && ptyProcess && visible) {
@@ -32,16 +33,6 @@ export default function DocumentTerminal(props: Props & { visible: boolean }) {
       window.dispatchEvent(new Event('resize'));
     }
   }, [visible, ptyProcess]);
-
-  useEffect(() => {
-    refreshDocumentCwd();
-    refTerminal.current?.terminal.term.onKey(event => {
-      if (event.domEvent.key === 'Enter') {
-        refreshDocumentCwd();
-      }
-    });
-    return () => refreshDocumentCwd.cancel();
-  }, [refreshDocumentCwd, refTerminal.current]);
 
   return (
     <Document
