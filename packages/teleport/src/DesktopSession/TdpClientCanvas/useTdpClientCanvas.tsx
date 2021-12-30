@@ -24,9 +24,9 @@ import useAttempt from 'shared/hooks/useAttemptNext';
 
 export default function useTdpClientCanvas(props: Props) {
   const { username, desktopName, clusterId } = props;
-  // status === '' means disconnected
   const { attempt: connectionAttempt, setAttempt: setConnectionAttempt } =
     useAttempt('processing');
+  var firstRender = true;
 
   // Build a client based on url parameters.
   const tdpClient = useMemo(() => {
@@ -56,11 +56,11 @@ export default function useTdpClientCanvas(props: Props) {
     syncCanvasSizeToDisplaySize(canvas);
   };
 
-  const onConnect = () => {
-    setConnectionAttempt({ status: 'success' });
-  };
-
   const onRender = (ctx: CanvasRenderingContext2D, data: ImageData) => {
+    if (firstRender) {
+      setConnectionAttempt({ status: 'success' });
+      firstRender = false;
+    }
     ctx.drawImage(data.image, data.left, data.top);
   };
 
@@ -117,7 +117,6 @@ export default function useTdpClientCanvas(props: Props) {
     connectionAttempt,
     username,
     onInit,
-    onConnect,
     onRender,
     onError,
     onKeyDown,

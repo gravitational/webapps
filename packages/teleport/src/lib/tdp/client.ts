@@ -22,7 +22,6 @@ import Logger from 'shared/libs/logger';
 
 export enum TdpClientEvent {
   INIT = 'init',
-  CONNECT = 'connect',
   RENDER = 'render',
   ERROR = 'error',
 }
@@ -37,7 +36,6 @@ export default class Client extends EventEmitter {
   socketAddr: string;
   username: string;
   logger = Logger.create('TDPClient');
-  private connected = false;
   private disconnected = false;
   private errored = false;
 
@@ -87,11 +85,6 @@ export default class Client extends EventEmitter {
     const messageType = this.codec.decodeMessageType(buffer);
     try {
       if (messageType === MessageType.PNG_FRAME) {
-        if (!this.connected) {
-          // The first png frame signals a successful connection.
-          this.connected = true;
-          this.emit(TdpClientEvent.CONNECT);
-        }
         this.processFrame(buffer);
       } else if (messageType === MessageType.ERROR) {
         this.handleError(this.codec.decodeError(buffer));

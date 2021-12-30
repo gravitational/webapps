@@ -38,7 +38,6 @@ export function DesktopSession(props: State) {
     connectionAttempt,
     username,
     onInit,
-    onConnect,
     onRender,
     onError,
     onKeyDown,
@@ -78,7 +77,7 @@ export function DesktopSession(props: State) {
       <TopBar
         onDisconnect={() => {
           tdpClient.disconnect();
-          setAttempt({ status: '' }); // show disconnected
+          setAttempt({ status: '' }); // show disconnected text
         }}
         userHost={`${username}@${hostname}`}
         clipboard={clipboard}
@@ -117,7 +116,6 @@ export function DesktopSession(props: State) {
         connectionAttempt={connectionAttempt}
         username={username}
         onInit={onInit}
-        onConnect={onConnect}
         onRender={onRender}
         onError={onError}
         onKeyDown={onKeyDown}
