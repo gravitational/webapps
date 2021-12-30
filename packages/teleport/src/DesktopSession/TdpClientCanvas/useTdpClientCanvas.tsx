@@ -51,13 +51,10 @@ export default function useTdpClientCanvas(props: Props) {
     canvas.height = height;
   };
 
-  const onInit = (canvas: HTMLCanvasElement) => {
-    setConnectionAttempt({ status: 'processing' });
-    syncCanvasSizeToDisplaySize(canvas);
-  };
-
   const onRender = (ctx: CanvasRenderingContext2D, data: ImageData) => {
+    // The first render event signals a successful rdp connection on the backend.
     if (firstRender) {
+      syncCanvasSizeToDisplaySize(ctx.canvas);
       setConnectionAttempt({ status: 'success' });
       firstRender = false;
     }
@@ -116,7 +113,6 @@ export default function useTdpClientCanvas(props: Props) {
     tdpClient,
     connectionAttempt,
     username,
-    onInit,
     onRender,
     onError,
     onKeyDown,

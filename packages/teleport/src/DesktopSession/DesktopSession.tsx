@@ -37,7 +37,6 @@ export function DesktopSession(props: State) {
     fetchAttempt,
     connectionAttempt,
     username,
-    onInit,
     onRender,
     onError,
     onKeyDown,
@@ -115,7 +114,6 @@ export function DesktopSession(props: State) {
         tdpClient={tdpClient}
         connectionAttempt={connectionAttempt}
         username={username}
-        onInit={onInit}
         onRender={onRender}
         onError={onError}
         onKeyDown={onKeyDown}

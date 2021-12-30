@@ -20,7 +20,6 @@ import useTdpClientCanvas from './useTdpClientCanvas';
 export default function TdpClientCanvas(props: Props) {
   const {
     tdpClient,
-    onInit,
     onRender,
     onError,
     onKeyDown,
@@ -94,11 +93,6 @@ export default function TdpClientCanvas(props: Props) {
       onKeyUp(tdpClient, e);
     };
     canvas.onkeyup = onkeyup;
-
-    // Initialize tdpClient event listeners.
-    tdpClient.on(TdpClientEvent.INIT, () => {
-      onInit(canvas);
-    });
 
     tdpClient.on(TdpClientEvent.RENDER, (data: ImageData) => {
       buffer.push(data);

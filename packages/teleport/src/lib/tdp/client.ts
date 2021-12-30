@@ -21,7 +21,6 @@ import Codec, {
 import Logger from 'shared/libs/logger';
 
 export enum TdpClientEvent {
-  INIT = 'init',
   RENDER = 'render',
   ERROR = 'error',
 }
@@ -53,7 +52,6 @@ export default class Client extends EventEmitter {
 
     this.socket.onopen = () => {
       this.logger.info('websocket is open');
-      this.emit(TdpClientEvent.INIT);
     };
 
     this.socket.onmessage = (ev: MessageEvent) => {
