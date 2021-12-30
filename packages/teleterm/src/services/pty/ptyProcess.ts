@@ -25,7 +25,7 @@ class PtyProcess extends EventEmitter {
   private attachedBuffer: string;
   private process: nodePTY.IPty;
   private logger: Logger;
-  private isReady: boolean;
+  private disposed: boolean;
 
   constructor(private options: PtyOptions) {
     super();
@@ -47,11 +47,11 @@ class PtyProcess extends EventEmitter {
     this.onStart();
     this.process.onData(data => this.onData(data));
     this.process.onExit(ev => this.onExit(ev));
-    this.isReady = true;
+    this.disposed = false;
   }
 
   send(data: string) {
-    if (!this.process || !this.isReady || !data) {
+    if (!this.process || this.disposed || !data) {
       return;
     }
 
@@ -59,7 +59,7 @@ class PtyProcess extends EventEmitter {
   }
 
   resize(cols: number, rows: number) {
-    if (!this.isReady) {
+    if (this.disposed) {
       return;
     }
 
@@ -69,7 +69,7 @@ class PtyProcess extends EventEmitter {
   dispose() {
     this.removeAllListeners();
     this.process?.kill();
-    this.isReady = false;
+    this.disposed = true;
   }
 
   getPid() {
