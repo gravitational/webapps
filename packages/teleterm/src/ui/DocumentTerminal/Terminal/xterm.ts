@@ -27,7 +27,7 @@ const WINDOW_RESIZE_DEBOUNCE_DELAY = 200;
 
 type Options = {
   el: HTMLElement;
-  scrollBack?: number;
+  monospacedFontFamily?: string;
 };
 
 export default class TtyTerminal {
@@ -38,7 +38,7 @@ export default class TtyTerminal {
   private debouncedResize: () => void;
   private logger = new Logger('lib/term/terminal');
 
-  constructor(private ptyProcess: PtyProcess, options: Options) {
+  constructor(private ptyProcess: PtyProcess, private options: Options) {
     this.el = options.el;
     this.term = null;
 
@@ -51,6 +51,7 @@ export default class TtyTerminal {
   open(): void {
     this.term = new Terminal({
       cursorBlink: false,
+      fontFamily: this.options.monospacedFontFamily,
       theme: {
         background: colors.bgTerminal,
       },

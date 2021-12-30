@@ -1,5 +1,6 @@
 import { merge } from 'lodash';
 import { keyboardShortcutsConfigProvider } from './providers/keyboardShortcutsConfigProvider';
+import { appearanceConfigProvider } from './providers/appearanceConfigProvider';
 import { Config, ConfigService, ConfigServiceProvider } from './types';
 
 type ConfigServiceProviders = {
@@ -10,6 +11,7 @@ export class ConfigServiceImpl implements ConfigService {
   private config: Config;
   private configProviders: ConfigServiceProviders = {
     keyboardShortcuts: keyboardShortcutsConfigProvider,
+    appearance: appearanceConfigProvider,
   };
 
   constructor() {

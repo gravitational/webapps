@@ -15,11 +15,13 @@ limitations under the License.
 */
 
 import React from 'react';
+import { createGlobalStyle } from 'styled-components';
 import theme from 'design/theme';
 import DesignThemeProvider from 'design/ThemeProvider';
 import { colors } from './colors';
+import { useAppContext } from 'teleterm/ui/appContextProvider';
 
-const customTheme = {
+const customThemeTabs: typeof theme = {
   ...theme,
   colors: {
     ...theme.colors,
@@ -30,12 +32,44 @@ const customTheme = {
   },
 };
 
-const ThemeProvider = props => (
-  <DesignThemeProvider children={props.children} />
-);
+function useTeletermTheme(): Pick<typeof theme, 'font' | 'fonts'> {
+  const { mainProcessClient } = useAppContext();
+  const { mono, sansSerif } =
+    mainProcessClient.configService.get().appearance.fonts;
+  return {
+    ...theme,
+    font: sansSerif,
+    fonts: {
+      mono,
+      sansSerif,
+    },
+  };
+}
 
-export const ThemeProviderTabs = props => (
-  <DesignThemeProvider theme={customTheme} children={props.children} />
-);
+const ThemeProvider = props => {
+  const theme = useTeletermTheme();
+  return (
+    <DesignThemeProvider theme={theme}>
+      <GlobalThemeStyle />
+      {props.children}
+    </DesignThemeProvider>
+  );
+};
+
+export const ThemeProviderTabs = props => {
+  const theme = { ...useTeletermTheme(), ...customThemeTabs };
+  return (
+    <DesignThemeProvider theme={theme}>
+      <GlobalThemeStyle />
+      {props.children}
+    </DesignThemeProvider>
+  );
+};
+
+const GlobalThemeStyle = createGlobalStyle`
+  body {
+    font-family: ${theme => theme.font}
+  }
+`;
 
 export default ThemeProvider;
