@@ -23,7 +23,6 @@ import Logger from 'shared/libs/logger';
 export enum TdpClientEvent {
   INIT = 'init',
   CONNECT = 'connect',
-  DISCONNECT = 'disconnect',
   RENDER = 'render',
   ERROR = 'error',
 }
@@ -145,7 +144,6 @@ export default class Client extends EventEmitter {
   // Sets this.disconnected to true to alert the this.socket.onclose handler that it needn't emit a generic
   // unknown error event.
   disconnect() {
-    this.emit(TdpClientEvent.DISCONNECT);
     this.disconnected = true;
     this.socket?.close();
   }

@@ -23,7 +23,6 @@ export default function TdpClientCanvas(props: Props) {
     onInit,
     onConnect,
     onRender,
-    onDisconnect,
     onError,
     onKeyDown,
     onKeyUp,
@@ -109,10 +108,6 @@ export default function TdpClientCanvas(props: Props) {
 
     tdpClient.on(TdpClientEvent.RENDER, (data: ImageData) => {
       buffer.push(data);
-    });
-
-    tdpClient.on(TdpClientEvent.DISCONNECT, () => {
-      onDisconnect();
     });
 
     tdpClient.on(TdpClientEvent.ERROR, (err: Error) => {

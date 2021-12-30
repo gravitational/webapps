@@ -31,9 +31,6 @@ const fakeClient = () => {
     client.emit(TdpClientEvent.INIT);
   };
   client.resize = (w: number, h: number) => {};
-  client.disconnect = () => {
-    client.emit(TdpClientEvent.DISCONNECT);
-  };
   return client;
 };
 
@@ -56,7 +53,6 @@ const props: State = {
   },
   onConnect: () => {},
   onRender: (ctx: CanvasRenderingContext2D, data: ImageData) => {},
-  onDisconnect: () => {},
   onError: (err: Error) => {},
   onKeyDown: (cli: TdpClient, e: KeyboardEvent) => {},
   onKeyUp: (cli: TdpClient, e: KeyboardEvent) => {},

@@ -40,7 +40,6 @@ export function DesktopSession(props: State) {
     onInit,
     onConnect,
     onRender,
-    onDisconnect,
     onError,
     onKeyDown,
     onKeyUp,
@@ -54,12 +53,11 @@ export function DesktopSession(props: State) {
 
   // Sets attempt based on combination of fetchAttempt and tdpclient connection
   useEffect(() => {
-    if (fetchAttempt.status === 'failed') {
-      setAttempt(fetchAttempt);
-    } else if (connectionAttempt.status === 'failed') {
-      setAttempt(connectionAttempt);
-    } else if (connectionAttempt.status === '') {
-      setAttempt(connectionAttempt);
+    if (
+      fetchAttempt.status === 'failed' ||
+      connectionAttempt.status === 'failed'
+    ) {
+      setAttempt({ status: 'failed' });
     } else if (
       fetchAttempt.status === 'processing' ||
       connectionAttempt.status === 'processing'
@@ -80,6 +78,7 @@ export function DesktopSession(props: State) {
       <TopBar
         onDisconnect={() => {
           tdpClient.disconnect();
+          setAttempt({ status: '' }); // show disconnected
         }}
         userHost={`${username}@${hostname}`}
         clipboard={clipboard}
@@ -120,7 +119,6 @@ export function DesktopSession(props: State) {
         onInit={onInit}
         onConnect={onConnect}
         onRender={onRender}
-        onDisconnect={onDisconnect}
         onError={onError}
         onKeyDown={onKeyDown}
         onKeyUp={onKeyUp}
