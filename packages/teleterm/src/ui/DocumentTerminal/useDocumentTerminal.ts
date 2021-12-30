@@ -23,7 +23,11 @@ export default function useDocumentTerminal(doc: Props['doc']) {
   const ctx = useAppContext();
   const [ptyProcess, setPtyProcess] = useState<PtyProcess>();
 
-  async function createPtyProcess(): Promise<PtyProcess> {
+  function openTerminalContextMenu(): void {
+    ctx.mainProcessClient.openTerminalContextMenu();
+  }
+
+  function createPtyProcess(): PtyProcess {
     if (doc.kind === 'doc.terminal_tsh_node') {
       return ctx.serviceTerminals.createPtyProcess({
         ...doc,
@@ -34,37 +38,37 @@ export default function useDocumentTerminal(doc: Props['doc']) {
     if (doc.kind === 'doc.terminal_shell') {
       return ctx.serviceTerminals.createPtyProcess({
         kind: 'new-shell',
-        cwd: await getPreviousDocumentCwdIfPossible(),
+        cwd: doc.cwd,
       });
     }
-  }
-
-  async function getPreviousDocumentCwdIfPossible(): Promise<string> {
-    const previouslyActive = ctx.serviceDocs.getPreviouslyActive();
-    if (previouslyActive.kind === 'doc.terminal_shell') {
-      return ctx.serviceTerminals.getWorkingDirectory(previouslyActive.pid);
-    }
-  }
-
-  function updateDocumentPid(pty: PtyProcess): void {
-    ctx.serviceDocs.update(doc.uri, { pid: pty.getPid() });
   }
 
   useEffect(() => {
-    if (!ptyProcess) {
-      createPtyProcess().then(pty => {
-        setPtyProcess(pty);
-        updateDocumentPid(pty);
-      });
-    }
+    const createdPtyProcess = createPtyProcess();
+    createdPtyProcess.onExit(({ exitCode }) => {
+      if (exitCode === 0) {
+        ctx.serviceDocs.close({ uri: doc.uri });
+      }
+    });
+
+    setPtyProcess(createdPtyProcess);
 
     return () => {
-      ptyProcess?.dispose();
+      createdPtyProcess.dispose();
     };
+  }, []);
+
+  useEffect(() => {
+    if (ptyProcess) {
+      ctx.serviceDocs.update(doc.uri, {
+        pid: ptyProcess.getPid(),
+      });
+    }
   }, [ptyProcess]);
 
   return {
     ptyProcess,
+    openTerminalContextMenu,
   };
 }
 

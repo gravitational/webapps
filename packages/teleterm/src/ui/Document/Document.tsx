@@ -17,14 +17,15 @@ limitations under the License.
 import React from 'react';
 import { Flex } from 'design';
 
-const Document: React.FC<{ visible: boolean; [x: string]: any }> = ({
-  visible,
-  children,
-  ...styles
-}) => (
+const Document: React.FC<{
+  visible: boolean;
+  onContextMenu?(): void;
+  [x: string]: any;
+}> = ({ visible, children, onContextMenu, ...styles }) => (
   <Flex
     flex="1"
     bg="bgTerminal"
+    onContextMenu={onContextMenu}
     style={{
       overflow: 'auto',
       display: visible ? 'flex' : 'none',

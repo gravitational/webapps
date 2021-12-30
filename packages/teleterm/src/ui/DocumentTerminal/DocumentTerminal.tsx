@@ -16,24 +16,31 @@ limitations under the License.
 
 import React, { useRef, useEffect } from 'react';
 import Document from 'teleterm/ui/Document';
-import useDocumentTerminal, { Props } from './useDocTerminal';
+import useDocTerminal, { Props } from './useDocumentTerminal';
 import Terminal from './Terminal';
+import { useDocumentCwdUpdater } from './useDocumentCwdUpdater';
 
 export default function DocumentTerminal(props: Props & { visible: boolean }) {
   const { visible, doc } = props;
   const refTerminal = useRef<Terminal>();
-  const { ptyProcess } = useDocumentTerminal(doc);
+  const { ptyProcess, openTerminalContextMenu } = useDocTerminal(doc);
+  useDocumentCwdUpdater(doc, refTerminal.current);
 
   useEffect(() => {
     if (refTerminal?.current && ptyProcess && visible) {
       // when switching tabs or closing tabs, focus on visible terminal
-      refTerminal.current.terminal.term.focus();
+      refTerminal.current.focus();
       window.dispatchEvent(new Event('resize'));
     }
   }, [visible, ptyProcess]);
 
   return (
-    <Document visible={visible} flexDirection="column" pl={2}>
+    <Document
+      visible={visible}
+      flexDirection="column"
+      pl={2}
+      onContextMenu={openTerminalContextMenu}
+    >
       {ptyProcess && <Terminal ptyProcess={ptyProcess} ref={refTerminal} />}
     </Document>
   );

@@ -29,7 +29,7 @@ import useTabShortcuts from './useTabShortcuts';
 
 export default function TabHost(props: Props) {
   const ctx = useAppContext();
-  const { serviceDocs, mainProcessClient } = ctx;
+  const { serviceDocs } = ctx;
   const documents = serviceDocs.getDocuments();
   const docActive = serviceDocs.getActive();
 
@@ -60,12 +60,8 @@ export default function TabHost(props: Props) {
     return <MemoizedDocument doc={doc} visible={isActiveDoc} key={doc.uri} />;
   });
 
-  const openContextMenu = () => {
-    mainProcessClient.openContextMenu();
-  };
-
   return (
-    <StyledTabHost {...props} onContextMenu={openContextMenu}>
+    <StyledTabHost {...props}>
       <Flex bg="bgTerminal" height="32px">
         <Tabs
           flex="1"
