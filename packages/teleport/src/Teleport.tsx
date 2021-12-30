@@ -27,6 +27,7 @@ import Login, { LoginSuccess, LoginFailed } from './Login';
 import AppLauncher from './AppLauncher';
 import Console from './Console';
 import DesktopSession from './DesktopSession';
+import DesktopPlayerPOC from './DesktopPlayerPOC';
 import Player from './Player';
 import TeleportContextProvider from './teleportContextProvider';
 import TeleportContext from './teleportContext';
@@ -105,6 +106,7 @@ export function renderPrivateRoutes(CustomMain = Main) {
   return (
     <Switch>
       <Route path={cfg.routes.desktop} component={DesktopSession} />
+      <Route path={cfg.routes.desktopPlayer} component={DesktopPlayerPOC} />
       <Route path={cfg.routes.console} component={Console} />
       <Route path={cfg.routes.player} component={Player} />
       <Route path={cfg.routes.root} component={CustomMain} />
