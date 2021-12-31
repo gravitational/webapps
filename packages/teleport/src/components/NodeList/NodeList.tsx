@@ -24,7 +24,7 @@ function NodeList(props: Props) {
   const { nodes = [], onLoginMenuOpen, onLoginSelect, pageSize = 100 } = props;
 
   return (
-    <StyledTable<Node>
+    <StyledTable
       columns={[
         {
           key: 'hostname',
@@ -35,18 +35,18 @@ function NodeList(props: Props) {
           key: 'addr',
           headerText: 'Address',
           isSortable: true,
-          onRender: ({ addr, tunnel }) => (
+          render: ({ addr, tunnel }) => (
             <AddressCell addr={addr} tunnel={tunnel} />
           ),
         },
         {
           key: 'tags',
           headerText: 'Labels',
-          onRender: ({ tags }) => <LabelCell data={tags} />,
+          render: ({ tags }) => <LabelCell data={tags} />,
         },
         {
-          key: 'connect-btn',
-          onRender: ({ id }) => (
+          altKey: 'connect-btn',
+          render: ({ id }) => (
             <LoginCell
               onOpen={onLoginMenuOpen}
               onSelect={onLoginSelect}
@@ -121,7 +121,7 @@ const StyledTable = styled(Table)`
   & > tbody > tr > td {
     vertical-align: baseline;
   }
-`;
+` as typeof Table;
 
 type Props = {
   nodes: Node[];

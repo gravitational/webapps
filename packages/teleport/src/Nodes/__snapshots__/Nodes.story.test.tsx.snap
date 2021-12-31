@@ -1172,93 +1172,93 @@ exports[`loaded 1`] = `
           zebpecda
         </td>
         <td>
-          <span
-            style="cursor: default;"
-            title="This node is connected to cluster through reverse tunnel"
-          >
-            ⟵ tunnel
-          </span>
-        </td>
-        <td>
-          <div
-            class="c17"
-            kind="secondary"
-          >
-            cluster: one
-          </div>
-          <div
-            class="c17"
-            kind="secondary"
-          >
-            kernel: 4.15.0-51-generic
-          </div>
-        </td>
-        <td
-          align="right"
-        >
-          <button
-            class="c18"
-            height="24px"
-            kind="border"
-          >
-            CONNECT
-            <span
-              class="c13 c19 icon icon-caret-down "
-              color="text.secondary"
-              font-size="2"
-            />
-          </button>
-        </td>
-      </tr>
-      <tr>
-        <td>
-          zebpecda
-        </td>
-        <td>
-          <span
-            style="cursor: default;"
-            title="This node is connected to cluster through reverse tunnel"
-          >
-            ⟵ tunnel
-          </span>
-        </td>
-        <td>
-          <div
-            class="c17"
-            kind="secondary"
-          >
-            cluster: one
-          </div>
-          <div
-            class="c17"
-            kind="secondary"
-          >
-            kernel: 4.15.0-51-generic
-          </div>
-        </td>
-        <td
-          align="right"
-        >
-          <button
-            class="c18"
-            height="24px"
-            kind="border"
-          >
-            CONNECT
-            <span
-              class="c13 c19 icon icon-caret-down "
-              color="text.secondary"
-              font-size="2"
-            />
-          </button>
-        </td>
-      </tr>
-      <tr>
-        <td>
-          zebpecda
-        </td>
-        <td>
           172.10.1.1:3022
+        </td>
+        <td>
+          <div
+            class="c17"
+            kind="secondary"
+          >
+            cluster: one
+          </div>
+          <div
+            class="c17"
+            kind="secondary"
+          >
+            kernel: 4.15.0-51-generic
+          </div>
+        </td>
+        <td
+          align="right"
+        >
+          <button
+            class="c18"
+            height="24px"
+            kind="border"
+          >
+            CONNECT
+            <span
+              class="c13 c19 icon icon-caret-down "
+              color="text.secondary"
+              font-size="2"
+            />
+          </button>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          zebpecda
+        </td>
+        <td>
+          <span
+            style="cursor: default;"
+            title="This node is connected to cluster through reverse tunnel"
+          >
+            ⟵ tunnel
+          </span>
+        </td>
+        <td>
+          <div
+            class="c17"
+            kind="secondary"
+          >
+            cluster: one
+          </div>
+          <div
+            class="c17"
+            kind="secondary"
+          >
+            kernel: 4.15.0-51-generic
+          </div>
+        </td>
+        <td
+          align="right"
+        >
+          <button
+            class="c18"
+            height="24px"
+            kind="border"
+          >
+            CONNECT
+            <span
+              class="c13 c19 icon icon-caret-down "
+              color="text.secondary"
+              font-size="2"
+            />
+          </button>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          zebpecda
+        </td>
+        <td>
+          <span
+            style="cursor: default;"
+            title="This node is connected to cluster through reverse tunnel"
+          >
+            ⟵ tunnel
+          </span>
         </td>
         <td>
           <div
