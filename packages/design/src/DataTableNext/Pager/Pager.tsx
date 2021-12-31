@@ -17,12 +17,22 @@ export function Pager({
   from,
   to,
   count,
-  fetchMore,
+  onFetchMore,
+  fetchStatus,
 }: State) {
+  const isFetchingEnabled = onFetchMore && fetchStatus !== 'disabled';
   return (
-    <Flex justifyContent={fetchMore ? 'space-between' : 'end'} width="100%">
-      {fetchMore && (
-        <StyledFetchMoreBtn onClick={fetchMore}>Fetch More</StyledFetchMoreBtn>
+    <Flex
+      justifyContent={isFetchingEnabled ? 'space-between' : 'end'}
+      width="100%"
+    >
+      {isFetchingEnabled && (
+        <StyledFetchMoreBtn
+          disabled={fetchStatus === 'loading'}
+          onClick={onFetchMore}
+        >
+          Fetch More
+        </StyledFetchMoreBtn>
       )}
       <Flex alignItems="center">
         <Text typography="body2" color="primary.contrastText" mr={2}>

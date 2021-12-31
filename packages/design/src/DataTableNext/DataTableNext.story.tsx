@@ -6,7 +6,7 @@ export default {
   title: 'Design/DataTableNext',
 };
 
-export const Demo = () => {
+export const DataTable = () => {
   return (
     <Table<DummyDataType>
       columns={[
@@ -17,21 +17,22 @@ export const Demo = () => {
           key: 'createdDate',
           headerText: 'Created Date',
           isSortable: true,
-          onRender: row => <DateCell data={row.createdDate} />,
+          render: row => <DateCell data={row.createdDate} />,
         },
         {
           key: 'removedDate',
           headerText: 'Removed Date',
           isSortable: true,
-          onRender: row => <DateCell data={row.removedDate} />,
+          render: row => <DateCell data={row.removedDate} />,
         },
         {
           key: 'tags',
           headerText: 'Labels',
-          onRender: row => <LabelCell data={row.tags} />,
+          render: row => <LabelCell data={row.tags} />,
           isSortable: true,
           onSort: sortTagsByLength,
         },
+        { key: 'bool', headerText: 'Boolean', isSortable: true },
       ]}
       data={data}
       emptyText={'No Dummy Data Found'}
@@ -40,7 +41,7 @@ export const Demo = () => {
   );
 };
 
-export const PagedDemo = () => {
+export const DataTablePaged = () => {
   const [allData, setAllData] = useState(data);
 
   return (
@@ -53,26 +54,28 @@ export const PagedDemo = () => {
           key: 'createdDate',
           headerText: 'Created Date',
           isSortable: true,
-          onRender: row => <DateCell data={row.createdDate} />,
+          render: row => <DateCell data={row.createdDate} />,
         },
         {
           key: 'removedDate',
           headerText: 'Removed Date',
           isSortable: true,
-          onRender: row => <DateCell data={row.removedDate} />,
+          render: row => <DateCell data={row.removedDate} />,
         },
         {
           key: 'tags',
           headerText: 'Labels',
-          onRender: row => <LabelCell data={row.tags} />,
+          render: row => <LabelCell data={row.tags} />,
           isSortable: true,
           onSort: sortTagsByLength,
         },
+        { key: 'bool', headerText: 'Boolean', isSortable: true },
       ]}
       pagination={{
-        pageSize: 10,
+        pageSize: 7,
         pagerPosition: 'top',
-        fetchMore: () => setAllData([...allData, ...extraData, ...data]),
+        onFetchMore: () => setAllData([...allData, ...extraData]),
+        fetchStatus: '',
       }}
       data={allData}
       emptyText={'No Dummy Data Found'}
@@ -82,13 +85,7 @@ export const PagedDemo = () => {
 };
 
 function sortTagsByLength(a: DummyDataType['tags'], b: DummyDataType['tags']) {
-  if (a.length < b.length) {
-    return 1;
-  } else if (a.length > b.length) {
-    return -1;
-  } else {
-    return 0;
-  }
+  return a.length - b.length;
 }
 
 const data: DummyDataType[] = [
@@ -99,6 +96,7 @@ const data: DummyDataType[] = [
     createdDate: new Date(1636467176000),
     removedDate: new Date(1636423403000),
     tags: ['test1: test1', 'mama: papa', 'test2: test2'],
+    bool: true,
   },
   {
     name: 'b-test',
@@ -107,6 +105,7 @@ const data: DummyDataType[] = [
     createdDate: new Date(1635367176000),
     removedDate: new Date(1635323403000),
     tags: ['test3: test3', 'mama: papa', 'test4: test4', 'test5: test5'],
+    bool: true,
   },
   {
     name: 'd-test',
@@ -115,6 +114,7 @@ const data: DummyDataType[] = [
     createdDate: new Date(1635467176000),
     removedDate: new Date(1635423403000),
     tags: ['test6: test6', 'mama: papa'],
+    bool: false,
   },
   {
     name: 'c-test',
@@ -123,6 +123,7 @@ const data: DummyDataType[] = [
     createdDate: new Date(1635364176),
     removedDate: new Date(1635322403),
     tags: ['test7: test7'],
+    bool: false,
   },
   {
     name: 'e-test',
@@ -131,6 +132,7 @@ const data: DummyDataType[] = [
     createdDate: new Date(1635364176),
     removedDate: new Date(1635322403),
     tags: ['test8: test8'],
+    bool: true,
   },
 ];
 
@@ -142,6 +144,7 @@ const extraData: DummyDataType[] = [
     createdDate: new Date(1636467176000),
     removedDate: new Date(1636423403000),
     tags: ['test9: test9', 'mama: papa', 'test2: test2'],
+    bool: true,
   },
   {
     name: 'g-test',
@@ -150,6 +153,7 @@ const extraData: DummyDataType[] = [
     createdDate: new Date(1635367176000),
     removedDate: new Date(1635323403000),
     tags: ['test10: test10', 'mama: papa', 'test4: test4', 'test5: test5'],
+    bool: true,
   },
   {
     name: 'h-test',
@@ -158,6 +162,7 @@ const extraData: DummyDataType[] = [
     createdDate: new Date(1635467176000),
     removedDate: new Date(1635423403000),
     tags: ['test11: test11', 'mama: papa'],
+    bool: false,
   },
   {
     name: 'i-test',
@@ -166,6 +171,7 @@ const extraData: DummyDataType[] = [
     createdDate: new Date(1635364176),
     removedDate: new Date(1635322403),
     tags: ['test12: test12'],
+    bool: false,
   },
   {
     name: 'j-test',
@@ -174,6 +180,7 @@ const extraData: DummyDataType[] = [
     createdDate: new Date(1635364176),
     removedDate: new Date(1635322403),
     tags: ['test13: test13'],
+    bool: false,
   },
 ];
 
@@ -184,4 +191,5 @@ type DummyDataType = {
   createdDate: Date;
   removedDate: Date;
   tags: string[];
+  bool: boolean;
 };

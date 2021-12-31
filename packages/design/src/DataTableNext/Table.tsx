@@ -25,7 +25,7 @@ export function Table<T>({
 }: State<T>) {
   const renderHeaders = () => {
     const headers = columns.map(column => {
-      const headerText = column?.headerText || '';
+      const headerText = column.headerText || '';
       const $cell = column.isSortable ? (
         <SortHeaderCell
           onClick={() => onSort(column)}
@@ -36,7 +36,11 @@ export function Table<T>({
         <th>{headerText}</th>
       );
 
-      return <React.Fragment key={column.key}>{$cell}</React.Fragment>;
+      return (
+        <React.Fragment key={column.key || column.altKey}>
+          {$cell}
+        </React.Fragment>
+      );
     });
 
     return (
@@ -46,21 +50,25 @@ export function Table<T>({
     );
   };
 
-  const renderBody = (data: any[]) => {
+  const renderBody = (data: T[]) => {
     const rows = [];
 
-    for (let i = 0; i < data.length; i++) {
-      const cells = columns.map((column, index) => {
-        const $cell = column.onRender ? (
-          column.onRender(data[i])
+    data.map((item, rowIdx) => {
+      const cells = columns.map((column, columnIdx) => {
+        const $cell = column.render ? (
+          column.render(item)
         ) : (
-          <TextCell data={data[i][column.key]} />
+          <TextCell data={item[column.key]} />
         );
 
-        return <React.Fragment key={`${i}${index}`}>{$cell}</React.Fragment>;
+        return (
+          <React.Fragment key={`${rowIdx} ${columnIdx}`}>
+            {$cell}
+          </React.Fragment>
+        );
       });
-      rows.push(<tr key={i}>{cells}</tr>);
-    }
+      rows.push(<tr key={rowIdx}>{cells}</tr>);
+    });
 
     if (rows.length) {
       return <tbody>{rows}</tbody>;
@@ -233,7 +241,7 @@ const EmptyIndicator = ({
 type BasicTableProps<T> = {
   data: T[];
   renderHeaders: () => JSX.Element;
-  renderBody: (data) => JSX.Element;
+  renderBody: (data: T[]) => JSX.Element;
 };
 
 type SearchableBasicTableProps<T> = BasicTableProps<T> & {

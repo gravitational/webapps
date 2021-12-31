@@ -1,8 +1,8 @@
 import { useEffect, useState } from 'react';
 import isMatch from 'design/utils/match';
 import { displayDate } from 'shared/services/loc';
+import paginateData from './Pager/paginateData';
 import { TableProps, TableColumn } from './types';
-import paginateData from './paginateData';
 
 export default function useTable<T>({
   data,
@@ -11,14 +11,16 @@ export default function useTable<T>({
   ...props
 }: TableProps<T>) {
   const [state, setState] = useState(() => {
+    // Finds the first sortable column to use for the initial sorting
     const col = columns.find(column => column.isSortable);
+
     return {
-      data: [],
+      data: [] as T[],
       searchValue: '',
       sort: col
         ? {
             key: col.key as string,
-            onSort: col?.onSort,
+            onSort: col.onSort,
             dir: 'ASC' as SortDir,
           }
         : null,
@@ -27,8 +29,9 @@ export default function useTable<T>({
             paginatedData: paginateData(data, pagination.pageSize),
             currentPage: 0,
             pagerPosition: pagination.pagerPosition || 'top',
-            pageSize: pagination?.pageSize || 10,
-            fetchMore: pagination?.fetchMore,
+            pageSize: pagination.pageSize || 10,
+            onFetchMore: pagination.onFetchMore,
+            fetchStatus: pagination.fetchStatus,
           }
         : null,
     };
@@ -68,8 +71,8 @@ export default function useTable<T>({
     updateData(
       {
         key: column.key,
-        onSort: column?.onSort,
-        dir: state.sort.dir === 'ASC' ? 'DESC' : 'ASC',
+        onSort: column.onSort,
+        dir: state.sort?.dir === 'ASC' ? 'DESC' : 'ASC',
       },
       state.searchValue
     );
@@ -133,24 +136,18 @@ function sortAndFilter<T>(
       output.sort((a, b) => sort.onSort(a[sort.key], b[sort.key]));
     } else {
       output.sort((a, b) => {
-        const $a = a[sort.key];
-        const $b = b[sort.key];
+        const aValue = a[sort.key];
+        const bValue = b[sort.key];
 
-        if (typeof $a === 'string' && typeof $b === 'string') {
-          return $b.localeCompare($a);
+        if (typeof aValue === 'string' && typeof bValue === 'string') {
+          return Intl.Collator().compare(aValue, bValue);
         }
 
-        if ($a < $b) {
-          return 1;
-        }
-        if ($a > $b) {
-          return -1;
-        }
-        return 0;
+        return aValue - bValue;
       });
     }
 
-    if (sort.dir === 'ASC') {
+    if (sort.dir === 'DESC') {
       output.reverse();
     }
   }

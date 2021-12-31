@@ -10,14 +10,14 @@ export type TableColumn<T> = {
   key: Extract<keyof T, string>;
   altKey?: string;
   headerText?: string;
-  onRender?: (row: T) => JSX.Element;
+  render?: (row: T) => JSX.Element;
   isSortable?: boolean;
-  sortType?: 'string' | 'number' | 'boolean' | 'auto';
-  onSort?: (a, b) => 1 | -1 | 0;
+  onSort?: (a, b) => number;
 };
 
-type PaginationConfig = {
-  pageSize: number;
+export type PaginationConfig = {
+  pageSize?: number;
   pagerPosition?: 'top' | 'bottom';
-  fetchMore?: () => void;
+  onFetchMore?: () => void;
+  fetchStatus?: 'loading' | 'disabled' | '';
 };

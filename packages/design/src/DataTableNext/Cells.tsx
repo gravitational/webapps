@@ -17,10 +17,10 @@ export const SortHeaderCell = ({ dir, text, onClick }: SortHeaderCellProps) => {
   );
 };
 
-const SortIndicator = ({
+export const SortIndicator = ({
   sortDir,
 }: {
-  sortDir: SortHeaderCellProps['dir'];
+  sortDir?: SortHeaderCellProps['dir'];
 }) => {
   if (sortDir === 'DESC') {
     return <Icons.SortDesc />;
@@ -33,7 +33,7 @@ const SortIndicator = ({
   return <Icons.Sort />;
 };
 
-export const TextCell = ({ data }: { data: string }) => <Cell>{data}</Cell>;
+export const TextCell = ({ data }) => <Cell>{`${data}`}</Cell>;
 
 export const LabelCell = ({ data }: { data: string[] }) =>
   renderLabelCell(data);

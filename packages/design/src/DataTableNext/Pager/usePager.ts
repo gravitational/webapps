@@ -1,3 +1,5 @@
+import { PaginationConfig } from '../types';
+
 export default function usePager({
   nextPage,
   prevPage,
@@ -5,7 +7,7 @@ export default function usePager({
   paginatedData = [],
   currentPage,
   pageSize,
-  fetchMore,
+  ...props
 }: Props) {
   const currentPageData = paginatedData[currentPage];
   const searchFrom = currentPage * pageSize;
@@ -24,7 +26,7 @@ export default function usePager({
     count: data.length,
     isPrevDisabled: currentPage === 0,
     isNextDisabled: to === data.length - 1,
-    fetchMore,
+    ...props,
   };
 }
 
@@ -35,7 +37,8 @@ export type Props = {
   paginatedData: Array<Array<any>>;
   currentPage: number;
   pageSize: number;
-  fetchMore: () => void;
+  onFetchMore: () => void;
+  fetchStatus: PaginationConfig['fetchStatus'];
 };
 
 export type State = ReturnType<typeof usePager>;
