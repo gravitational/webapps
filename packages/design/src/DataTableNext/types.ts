@@ -6,9 +6,7 @@ export type TableProps<T> = {
   isSearchable?: boolean;
 };
 
-export type TableColumn<T> = {
-  key: Extract<keyof T, string>;
-  altKey?: string;
+type TableColumnBase<T> = {
   headerText?: string;
   render?: (row: T) => JSX.Element;
   isSortable?: boolean;
@@ -21,3 +19,16 @@ export type PaginationConfig = {
   onFetchMore?: () => void;
   fetchStatus?: 'loading' | 'disabled' | '';
 };
+
+// Makes it so either key or altKey is required
+type TableColumnWithKey<T> = TableColumnBase<T> & {
+  key: Extract<keyof T, string>;
+  altKey?: never;
+};
+
+type TableColumnWithAltKey<T> = TableColumnBase<T> & {
+  altKey: string;
+  key?: never;
+};
+
+export type TableColumn<T> = TableColumnWithKey<T> | TableColumnWithAltKey<T>;
