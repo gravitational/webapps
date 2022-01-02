@@ -14,6 +14,7 @@ const appContext = new AppContext(globals);
 appContext.init();
 
 window.addEventListener('error', event => {
+  console.error(event.error.stack);
   logger.error(event.error.stack);
 });
 

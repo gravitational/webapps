@@ -40,18 +40,17 @@ export interface DocumentTshNode extends DocumentBase {
   kind: 'doc.terminal_tsh_node';
   status: 'connecting' | 'connected' | 'disconnected';
   serverId: string;
-  clusterId: string;
+  rootClusterId: string;
+  leafClusterId?: string;
   login: string;
 }
 
 export interface DocumentGateway extends DocumentBase {
   kind: 'doc.gateway';
-  clusterUri: string;
 }
 
 export interface DocumentCluster extends DocumentBase {
   kind: 'doc.cluster';
-  clusterUri: string;
 }
 
 export interface DocumentPtySession extends DocumentBase {

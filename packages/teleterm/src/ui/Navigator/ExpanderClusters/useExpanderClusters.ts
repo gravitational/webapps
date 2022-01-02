@@ -104,4 +104,5 @@ export type State = ReturnType<typeof useExpanderClusters>;
 export interface ClusterNavItem extends navTypes.NavItem {
   connected: boolean;
   syncing: boolean;
+  trustedClusters?: ClusterNavItem[];
 }

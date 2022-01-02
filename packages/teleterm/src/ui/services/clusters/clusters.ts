@@ -2,6 +2,7 @@ import { useStore } from 'shared/libs/stores';
 import ClusterSearchProvider from './clustersSearchProvider';
 import { tsh, SyncStatus, AuthSettings, LoginParams } from './types';
 import { ImmutableStore } from '../immutableStore';
+import { routing } from 'teleterm/ui/uri';
 
 type State = {
   clusters: Map<string, tsh.Cluster>;
@@ -36,8 +37,8 @@ export default class ClusterService extends ImmutableStore<State> {
     this.searchProvider = new ClusterSearchProvider(this);
   }
 
-  async addCluster(clusterUri: string) {
-    const cluster = await this.client.addCluster(clusterUri);
+  async addRootCluster(clusterUri: string) {
+    const cluster = await this.client.addRootCluster(clusterUri);
     this.setState(draft => {
       draft.clusters.set(cluster.uri, cluster);
     });
@@ -64,11 +65,24 @@ export default class ClusterService extends ImmutableStore<State> {
     this.syncApps(clusterUri);
     this.syncDbs(clusterUri);
     this.syncServers(clusterUri);
+    this.syncLeafClusters(clusterUri);
+    this.syncKubes(clusterUri);
+    this.syncGateways();
+  }
+
+  async syncLeafCluster(clusterUri: string) {
+    await this.syncClusterOnly(clusterUri);
+    // do not await these
+    this.syncKubes(clusterUri);
+    this.syncApps(clusterUri);
+    this.syncDbs(clusterUri);
+    this.syncServers(clusterUri);
+    this.syncKubes(clusterUri);
     this.syncGateways();
   }
 
   async syncClusters() {
-    const clusters = await this.client.listClusters();
+    const clusters = await this.client.listRootClusters();
     this.setState(draft => {
       draft.clusters = new Map(clusters.map(c => [c.uri, c]));
     });
@@ -183,6 +197,11 @@ export default class ClusterService extends ImmutableStore<State> {
     }
   }
 
+  async syncLeafClusters(clusterUri: string) {
+    const leaves = await this.client.listLeafClusters(clusterUri);
+    leaves.filter(c => c.connected).forEach(c => this.syncLeafCluster(c.uri));
+  }
+
   async syncServers(clusterUri: string) {
     const cluster = this.state.clusters.get(clusterUri);
     if (!cluster.connected) {
@@ -247,15 +266,9 @@ export default class ClusterService extends ImmutableStore<State> {
     return this.state.clusters.get(clusterUri);
   }
 
-  findClusterByResource(resourceUri: string) {
-    return [...this.state.clusters.values()].find(c =>
-      resourceUri.startsWith(c.uri)
-    );
-  }
-
   findDbs(clusterUri: string) {
     return [...this.state.dbs.values()].filter(db =>
-      db.uri.startsWith(clusterUri)
+      routing.isClusterDb(clusterUri, db.uri)
     );
   }
 
@@ -269,23 +282,29 @@ export default class ClusterService extends ImmutableStore<State> {
 
   findApps(clusterUri: string) {
     return [...this.state.apps.values()].filter(s =>
-      s.uri.startsWith(clusterUri)
+      routing.isClusterApp(clusterUri, s.uri)
     );
   }
 
   findKubes(clusterUri: string) {
     return [...this.state.kubes.values()].filter(s =>
-      s.uri.startsWith(clusterUri)
+      routing.isClusterKube(clusterUri, s.uri)
     );
   }
 
   findServers(clusterUri: string) {
     return [...this.state.servers.values()].filter(s =>
-      s.uri.startsWith(clusterUri)
+      routing.isClusterServer(clusterUri, s.uri)
     );
   }
 
-  findServer(serverUri: string) {
+  findClusterByResource(uri: string) {
+    const { params } = routing.matchCluster(uri);
+    const clusterUri = routing.getClusterUri(params);
+    return this.findCluster(clusterUri);
+  }
+
+  getServer(serverUri: string) {
     return this.state.servers.get(serverUri);
   }
 

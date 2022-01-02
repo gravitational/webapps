@@ -89,10 +89,14 @@ function buildOptions(settings: RuntimeSettings, cmd: PtyCommand): PtyOptions {
       };
 
     case 'tsh-login':
+      if (cmd.leafClusterId) {
+        env['TELEPORT_CLUSTER'] = cmd.leafClusterId;
+      }
+
       return {
         path: settings.tshd.binaryPath,
         args: [
-          `--proxy=${cmd.clusterId}`,
+          `--proxy=${cmd.rootClusterId}`,
           'ssh',
           `${cmd.login}@${cmd.serverId}`,
         ],

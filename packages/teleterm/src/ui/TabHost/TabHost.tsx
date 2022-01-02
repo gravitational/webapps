@@ -48,7 +48,7 @@ export default function TabHost(props: Props) {
   }
 
   function handleTabMoved(oldIndex: number, newIndex: number) {
-    serviceDocs.changeIndex(oldIndex, newIndex);
+    serviceDocs.swapPosition(oldIndex, newIndex);
   }
 
   function handleTabNew() {

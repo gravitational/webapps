@@ -19,19 +19,16 @@ import styled from 'styled-components';
 import ClusterNavButton from 'teleterm/ui/DocumentCluster/ClusterNavButton';
 import { NavLocation } from 'teleterm/ui/DocumentCluster/clusterContext';
 
-export type SideNavItem = {
-  to: NavLocation;
-  title: string;
-};
-
-export type SideNavProps = {
-  items: SideNavItem[];
-};
-
 export default function SideNav({ items }: SideNavProps) {
   const $items = items.map((item, index) => {
     return (
-      <ClusterNavButton py={1} title={item.title} to={item.to} key={index} />
+      <ClusterNavButton
+        py={1}
+        my={1}
+        title={item.title}
+        to={item.to}
+        key={index}
+      />
     );
   });
 
@@ -45,6 +42,15 @@ export default function SideNav({ items }: SideNavProps) {
     </Nav>
   );
 }
+
+export type SideNavItem = {
+  to: NavLocation;
+  title: string;
+};
+
+export type SideNavProps = {
+  items: SideNavItem[];
+};
 
 const Nav = styled.nav`
   min-width: 180px;

@@ -15,10 +15,10 @@ limitations under the License.
 */
 
 import { useStore } from 'shared/libs/stores';
-import { RouteProps, matchPath, generatePath } from 'react-router';
 import { unique } from 'teleterm/ui/utils/uid';
 import { Document, DocumentTshNode } from './types';
 import { ImmutableStore } from '../immutableStore';
+import { routing } from 'teleterm/ui/uri';
 
 type State = {
   location: string;
@@ -50,13 +50,10 @@ export default class DocumentService extends ImmutableStore<State> {
       return;
     }
 
-    const clusterMatch = uris.match(docUri, uris.paths.cluster);
-    const homeMatch = uris.match(docUri, uris.paths.home);
-    const gwMatch = uris.match(docUri, uris.paths.clusterGateway);
-    const ptyMatch = uris.match(docUri, uris.paths.ptys);
-    const clusterUri = clusterMatch
-      ? uris.getUriCluster(clusterMatch.params)
-      : '';
+    const clusterMatch = routing.matchCluster(docUri);
+    const homeMatch = routing.matchHome(docUri);
+    const gwMatch = routing.matchGw(docUri);
+    const ptyMatch = routing.matchPty(docUri);
 
     if (ptyMatch) {
       this.add({
@@ -73,14 +70,12 @@ export default class DocumentService extends ImmutableStore<State> {
     } else if (gwMatch) {
       this.add({
         uri: docUri,
-        clusterUri,
         title: 'Gateway',
         kind: 'doc.gateway',
       });
     } else if (clusterMatch) {
       this.add({
         uri: docUri,
-        clusterUri,
         title: 'Cluster',
         kind: 'doc.cluster',
       });
@@ -96,13 +91,14 @@ export default class DocumentService extends ImmutableStore<State> {
   }
 
   createTshNodeDocument(serverUri: string): DocumentTshNode {
-    const { params } = uris.match(serverUri, uris.paths.clusterServer);
-    const uri = this.getPtyUri({ sid: unique() });
+    const { params } = routing.matchServer(serverUri);
+    const uri = routing.getPtyUri({ sid: unique() });
     return {
       uri,
       kind: 'doc.terminal_tsh_node',
       status: 'connecting',
-      clusterId: params.clusterId,
+      rootClusterId: params.rootClusterId,
+      leafClusterId: params.leafClusterId,
       serverId: params.serverId,
       title: '',
       login: '',
@@ -118,11 +114,11 @@ export default class DocumentService extends ImmutableStore<State> {
         case 'doc.terminal_shell':
           return {
             ...activeDocument,
-            uri: uris.getUriPty({ sid: unique() }),
+            uri: routing.getPtyUri({ sid: unique() }),
           };
         default:
           return {
-            uri: uris.getUriPty({ sid: unique() }),
+            uri: routing.getPtyUri({ sid: unique() }),
             title: 'Terminal',
             kind: 'doc.terminal_shell',
           };
@@ -161,7 +157,7 @@ export default class DocumentService extends ImmutableStore<State> {
 
   isActive(uri: string) {
     const location = this.getLocation();
-    return !!uris.match(location, uri);
+    return !!routing.match(location, { exact: true, path: uri });
   }
 
   add(doc: Document) {
@@ -220,52 +216,11 @@ export default class DocumentService extends ImmutableStore<State> {
     return useStore(this).state;
   }
 
-  changeIndex(oldIndex: number, newIndex: number) {
+  swapPosition(oldIndex: number, newIndex: number) {
     const doc = this.state.docs[oldIndex];
     this.setState(draftState => {
       draftState.docs.splice(oldIndex, 1);
       draftState.docs.splice(newIndex, 0, doc);
     });
   }
-
-  getHomeUri() {
-    return uris.paths.home;
-  }
-
-  getPtyUri(params: Params) {
-    return generatePath(uris.paths.ptys, params as any);
-  }
 }
-
-const uris = {
-  paths: {
-    root: '/',
-    home: '/home',
-    gateways: '/gateways',
-    ptys: '/ptys/:sid',
-    cluster: '/clusters/:clusterId',
-    clusterServer: '/clusters/:clusterId/servers/:serverId',
-    clusterGateway: '/clusters/:clusterId/gateways/:gatewayId',
-  },
-
-  match(path: string, route: string | RouteProps) {
-    return matchPath<Params>(path, route);
-  },
-
-  getUriCluster(params: Params) {
-    return generatePath(uris.paths.cluster, params as any);
-  },
-
-  getUriPty(params: Params) {
-    return generatePath(uris.paths.ptys, params as any);
-  },
-};
-
-type Params = {
-  clusterId?: string;
-  serverId?: string;
-  dbId?: string;
-  gatewayId?: string;
-  tabId?: string;
-  sid?: string;
-};

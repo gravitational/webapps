@@ -70,10 +70,23 @@ export default function createClient(addr: string) {
       });
     },
 
-    async listClusters() {
+    async listLeafClusters(clusterUri: string) {
+      const req = new api.ListLeafClustersRequest().setClusterUri(clusterUri);
+      return new Promise<types.Cluster[]>((resolve, reject) => {
+        tshd.listLeafClusters(req, (err, response) => {
+          if (err) {
+            reject(err);
+          } else {
+            resolve(response.toObject().clustersList);
+          }
+        });
+      });
+    },
+
+    async listRootClusters() {
       const req = new api.ListClustersRequest();
       return new Promise<types.Cluster[]>((resolve, reject) => {
-        tshd.listClusters(req, (err, response) => {
+        tshd.listRootClusters(req, (err, response) => {
           if (err) {
             reject(err);
           } else {
@@ -109,7 +122,7 @@ export default function createClient(addr: string) {
       });
     },
 
-    async addCluster(addr: string) {
+    async addRootCluster(addr: string) {
       const req = new api.AddClusterRequest().setName(addr);
       return new Promise<types.Cluster>((resolve, reject) => {
         tshd.addCluster(req, (err, response) => {

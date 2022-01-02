@@ -18,7 +18,7 @@ import { useAppContext } from 'teleterm/ui/appContextProvider';
 
 export default function useServerConnect({ serverUri, onClose }: Props) {
   const ctx = useAppContext();
-  const server = ctx.serviceClusters.findServer(serverUri);
+  const server = ctx.serviceClusters.getServer(serverUri);
   const cluster = ctx.serviceClusters.findClusterByResource(serverUri);
   const logins = cluster?.loggedInUser?.sshLoginsList || [];
 
