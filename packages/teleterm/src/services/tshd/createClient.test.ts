@@ -21,6 +21,7 @@ limitations under the License.
 import createClient from './createClient';
 import { TerminalServiceClient } from './v1/service_grpc_pb';
 import * as grpc from '@grpc/grpc-js';
+import { tsh } from 'teleterm/ui/services/clusters/types';
 
 //let grpcClient = new TerminalServiceClient(
 //  'unix:///tmp/tshd/socket',
@@ -30,11 +31,25 @@ import * as grpc from '@grpc/grpc-js';
 process.env.GRPC_VERBOSITY = 'DEBUG';
 
 test('fetchClusters', async () => {
-  let tshClient = createClient('unix:///tmp/tshd/socket');
+  let tshClient = createClient(
+    'unix:///home/alexey/.config/Electron/tsh.socket'
+  );
+
   //const tsh = new Tsh(tshClient);
   //
 
-  await tshClient.listClusters();
+  await tshClient.listRootClusters();
+
+  const roots = await tshClient.listRootClusters();
+  console.log('AAAAAAAAAAAAAAAAAAAAAA:', roots[0].uri);
+
+  const leaves = await tshClient.listLeafClusters('/clusters/localhost');
+
+  console.log('BBBBBBBBBBBBBBBBBBB:', leaves[0].uri);
+
+  const servers = await tshClient.listServers(leaves[0].uri);
+
+  console.log('Servers:', servers);
 
   //  await tsh.addCluster('localhost:4080');
 

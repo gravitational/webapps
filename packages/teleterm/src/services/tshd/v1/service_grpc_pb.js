@@ -210,6 +210,17 @@ function deserialize_teleport_terminal_v1_ListKubesResponse(buffer_arg) {
   return v1_service_pb.ListKubesResponse.deserializeBinary(new Uint8Array(buffer_arg));
 }
 
+function serialize_teleport_terminal_v1_ListLeafClustersRequest(arg) {
+  if (!(arg instanceof v1_service_pb.ListLeafClustersRequest)) {
+    throw new Error('Expected argument of type teleport.terminal.v1.ListLeafClustersRequest');
+  }
+  return Buffer.from(arg.serializeBinary());
+}
+
+function deserialize_teleport_terminal_v1_ListLeafClustersRequest(buffer_arg) {
+  return v1_service_pb.ListLeafClustersRequest.deserializeBinary(new Uint8Array(buffer_arg));
+}
+
 function serialize_teleport_terminal_v1_ListServersRequest(arg) {
   if (!(arg instanceof v1_service_pb.ListServersRequest)) {
     throw new Error('Expected argument of type teleport.terminal.v1.ListServersRequest');
@@ -278,15 +289,27 @@ function deserialize_teleport_terminal_v1_RemoveGatewayRequest(buffer_arg) {
 
 
 var TerminalServiceService = exports.TerminalServiceService = {
-  // ListClusters
-listClusters: {
-    path: '/teleport.terminal.v1.TerminalService/ListClusters',
+  // ListRootClusters
+listRootClusters: {
+    path: '/teleport.terminal.v1.TerminalService/ListRootClusters',
     requestStream: false,
     responseStream: false,
     requestType: v1_service_pb.ListClustersRequest,
     responseType: v1_service_pb.ListClustersResponse,
     requestSerialize: serialize_teleport_terminal_v1_ListClustersRequest,
     requestDeserialize: deserialize_teleport_terminal_v1_ListClustersRequest,
+    responseSerialize: serialize_teleport_terminal_v1_ListClustersResponse,
+    responseDeserialize: deserialize_teleport_terminal_v1_ListClustersResponse,
+  },
+  // ListLeafClusters
+listLeafClusters: {
+    path: '/teleport.terminal.v1.TerminalService/ListLeafClusters',
+    requestStream: false,
+    responseStream: false,
+    requestType: v1_service_pb.ListLeafClustersRequest,
+    responseType: v1_service_pb.ListClustersResponse,
+    requestSerialize: serialize_teleport_terminal_v1_ListLeafClustersRequest,
+    requestDeserialize: deserialize_teleport_terminal_v1_ListLeafClustersRequest,
     responseSerialize: serialize_teleport_terminal_v1_ListClustersResponse,
     responseDeserialize: deserialize_teleport_terminal_v1_ListClustersResponse,
   },

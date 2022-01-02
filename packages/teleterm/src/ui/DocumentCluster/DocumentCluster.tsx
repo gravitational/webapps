@@ -14,11 +14,10 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React, { useMemo, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import { Text, Flex, Box, ButtonPrimary, ButtonIcon } from 'design';
 import { SyncAlt } from 'design/Icon';
-
 import * as types from 'teleterm/ui/services/docs/types';
 import Document from 'teleterm/ui/Document';
 import { useAppContext } from 'teleterm/ui/appContextProvider';
@@ -30,15 +29,14 @@ import ClusterResources from './ClusterResources';
 import ClusterNavButton from './ClusterNavButton';
 
 export default function Container(props: DocumentProps) {
-  const { clusterUri } = props.doc;
+  const { uri } = props.doc;
   const { serviceClusters, serviceDocs, serviceModals } = useAppContext();
-  const clusterCtx = useMemo(
-    () => new ClusterCtx(clusterUri, serviceClusters, serviceModals),
-    []
+  const [clusterCtx] = useState(
+    () => new ClusterCtx(uri, serviceClusters, serviceModals)
   );
 
   useEffect(() => {
-    serviceDocs.update(clusterUri, {
+    serviceDocs.update(uri, {
       title: clusterCtx.state.clusterName,
     });
 

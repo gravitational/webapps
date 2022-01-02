@@ -292,6 +292,27 @@ export namespace ListDatabasesRequest {
     }
 }
 
+export class ListLeafClustersRequest extends jspb.Message { 
+    getClusterUri(): string;
+    setClusterUri(value: string): ListLeafClustersRequest;
+
+
+    serializeBinary(): Uint8Array;
+    toObject(includeInstance?: boolean): ListLeafClustersRequest.AsObject;
+    static toObject(includeInstance: boolean, msg: ListLeafClustersRequest): ListLeafClustersRequest.AsObject;
+    static extensions: {[key: number]: jspb.ExtensionFieldInfo<jspb.Message>};
+    static extensionsBinary: {[key: number]: jspb.ExtensionFieldBinaryInfo<jspb.Message>};
+    static serializeBinaryToWriter(message: ListLeafClustersRequest, writer: jspb.BinaryWriter): void;
+    static deserializeBinary(bytes: Uint8Array): ListLeafClustersRequest;
+    static deserializeBinaryFromReader(message: ListLeafClustersRequest, reader: jspb.BinaryReader): ListLeafClustersRequest;
+}
+
+export namespace ListLeafClustersRequest {
+    export type AsObject = {
+        clusterUri: string,
+    }
+}
+
 export class ListDatabasesResponse extends jspb.Message { 
     clearDatabasesList(): void;
     getDatabasesList(): Array<v1_database_pb.Database>;

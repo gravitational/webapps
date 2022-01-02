@@ -7,6 +7,7 @@ const clusterMock: tsh.Cluster = {
   uri: clusterUri,
   name: 'Test',
   connected: true,
+  leaf: false,
   loggedInUser: {
     name: 'admin',
     acl: {},
@@ -61,7 +62,7 @@ function getClientMocks(): Partial<tsh.TshClient> {
   return {
     login: jest.fn().mockResolvedValueOnce(undefined),
     logout: jest.fn().mockResolvedValueOnce(undefined),
-    addCluster: jest.fn().mockResolvedValueOnce(clusterMock),
+    addRootCluster: jest.fn().mockResolvedValueOnce(clusterMock),
     removeCluster: jest.fn().mockResolvedValueOnce(undefined),
     getCluster: jest.fn().mockResolvedValueOnce(clusterMock),
     listGateways: jest.fn().mockResolvedValueOnce([gatewayMock]),
@@ -84,14 +85,14 @@ function testIfClusterResourcesHaveBeenCleared(service: Service): void {
 }
 
 test('add cluster', async () => {
-  const { addCluster } = getClientMocks();
+  const { addRootCluster } = getClientMocks();
   const service = createService({
-    addCluster,
+    addRootCluster,
   });
 
-  await service.addCluster(clusterUri);
+  await service.addRootCluster(clusterUri);
 
-  expect(addCluster).toHaveBeenCalledWith(clusterUri);
+  expect(addRootCluster).toHaveBeenCalledWith(clusterUri);
   expect(service.state.clusters).toStrictEqual(
     new Map([[clusterUri, clusterMock]])
   );

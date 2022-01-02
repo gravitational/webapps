@@ -31,6 +31,7 @@ export const Story = () => {
       {
         uri: '/clusters/localhost',
         name: 'Test',
+        leaf: false,
         connected: true,
         loggedInUser: {
           name: 'admin',

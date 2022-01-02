@@ -32,9 +32,10 @@ export type NewShellCommand = {
 
 export type TshLoginCommand = {
   kind: 'tsh-login';
-  clusterId: string;
   login: string;
   serverId: string;
+  rootClusterId: string;
+  leafClusterId?: string;
 };
 
 export type TshDbConnectCommand = {

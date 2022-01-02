@@ -43,7 +43,7 @@ export const Story = () => {
   appContext.serviceClusters.getClusters = () => [
     {
       uri: 'clusters/localhost',
-      uriKind: 'cluster',
+      leaf: false,
       name: 'localhost',
       connected: true,
     },

@@ -28,7 +28,7 @@ export default function AddCluster({ onClose }: Props) {
   const [addr, setAddr] = useState('');
   const ctx = useAppContext();
   const [{ status, statusText, data: cluster }, run] = useAsync(() => {
-    return ctx.serviceClusters.addCluster(addr);
+    return ctx.serviceClusters.addRootCluster(addr);
   });
 
   React.useEffect(() => {

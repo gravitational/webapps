@@ -135,6 +135,7 @@ proto.teleport.terminal.v1.Cluster.toObject = function(includeInstance, msg) {
     uri: jspb.Message.getFieldWithDefault(msg, 1, ""),
     name: jspb.Message.getFieldWithDefault(msg, 2, ""),
     connected: jspb.Message.getBooleanFieldWithDefault(msg, 3, false),
+    leaf: jspb.Message.getBooleanFieldWithDefault(msg, 4, false),
     loggedInUser: (f = msg.getLoggedInUser()) && proto.teleport.terminal.v1.LoggedInUser.toObject(includeInstance, f)
   };
 
@@ -185,6 +186,10 @@ proto.teleport.terminal.v1.Cluster.deserializeBinaryFromReader = function(msg, r
       msg.setConnected(value);
       break;
     case 4:
+      var value = /** @type {boolean} */ (reader.readBool());
+      msg.setLeaf(value);
+      break;
+    case 5:
       var value = new proto.teleport.terminal.v1.LoggedInUser;
       reader.readMessage(value,proto.teleport.terminal.v1.LoggedInUser.deserializeBinaryFromReader);
       msg.setLoggedInUser(value);
@@ -239,10 +244,17 @@ proto.teleport.terminal.v1.Cluster.serializeBinaryToWriter = function(message, w
       f
     );
   }
+  f = message.getLeaf();
+  if (f) {
+    writer.writeBool(
+      4,
+      f
+    );
+  }
   f = message.getLoggedInUser();
   if (f != null) {
     writer.writeMessage(
-      4,
+      5,
       f,
       proto.teleport.terminal.v1.LoggedInUser.serializeBinaryToWriter
     );
@@ -305,12 +317,30 @@ proto.teleport.terminal.v1.Cluster.prototype.setConnected = function(value) {
 
 
 /**
- * optional LoggedInUser logged_in_user = 4;
+ * optional bool leaf = 4;
+ * @return {boolean}
+ */
+proto.teleport.terminal.v1.Cluster.prototype.getLeaf = function() {
+  return /** @type {boolean} */ (jspb.Message.getBooleanFieldWithDefault(this, 4, false));
+};
+
+
+/**
+ * @param {boolean} value
+ * @return {!proto.teleport.terminal.v1.Cluster} returns this
+ */
+proto.teleport.terminal.v1.Cluster.prototype.setLeaf = function(value) {
+  return jspb.Message.setProto3BooleanField(this, 4, value);
+};
+
+
+/**
+ * optional LoggedInUser logged_in_user = 5;
  * @return {?proto.teleport.terminal.v1.LoggedInUser}
  */
 proto.teleport.terminal.v1.Cluster.prototype.getLoggedInUser = function() {
   return /** @type{?proto.teleport.terminal.v1.LoggedInUser} */ (
-    jspb.Message.getWrapperField(this, proto.teleport.terminal.v1.LoggedInUser, 4));
+    jspb.Message.getWrapperField(this, proto.teleport.terminal.v1.LoggedInUser, 5));
 };
 
 
@@ -319,7 +349,7 @@ proto.teleport.terminal.v1.Cluster.prototype.getLoggedInUser = function() {
  * @return {!proto.teleport.terminal.v1.Cluster} returns this
 */
 proto.teleport.terminal.v1.Cluster.prototype.setLoggedInUser = function(value) {
-  return jspb.Message.setWrapperField(this, 4, value);
+  return jspb.Message.setWrapperField(this, 5, value);
 };
 
 
@@ -337,7 +367,7 @@ proto.teleport.terminal.v1.Cluster.prototype.clearLoggedInUser = function() {
  * @return {boolean}
  */
 proto.teleport.terminal.v1.Cluster.prototype.hasLoggedInUser = function() {
-  return jspb.Message.getField(this, 4) != null;
+  return jspb.Message.getField(this, 5) != null;
 };
 
 

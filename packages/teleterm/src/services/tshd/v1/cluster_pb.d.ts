@@ -16,6 +16,9 @@ export class Cluster extends jspb.Message {
     getConnected(): boolean;
     setConnected(value: boolean): Cluster;
 
+    getLeaf(): boolean;
+    setLeaf(value: boolean): Cluster;
+
 
     hasLoggedInUser(): boolean;
     clearLoggedInUser(): void;
@@ -38,6 +41,7 @@ export namespace Cluster {
         uri: string,
         name: string,
         connected: boolean,
+        leaf: boolean,
         loggedInUser?: LoggedInUser.AsObject,
     }
 }
