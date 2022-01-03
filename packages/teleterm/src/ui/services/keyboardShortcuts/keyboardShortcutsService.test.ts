@@ -1,4 +1,7 @@
 import { KeyboardShortcutsService } from './keyboardShortcutsService';
+import {
+  ConfigService,
+} from 'teleterm/services/config';
 
 test('call subscriber on event', () => {
   const { subscriber } = getTestSetup();
@@ -14,17 +17,6 @@ test('do not call subscriber on unknown event', () => {
   expect(subscriber).not.toHaveBeenCalled();
 });
 
-test('use overridden shortcuts', () => {
-  const { service, subscriber } = getTestSetup();
-
-  service.updateShortcuts({ 'tab-1': 'Control-1' });
-  dispatchEventCommand1();
-  expect(subscriber).not.toHaveBeenCalled();
-
-  dispatchEvent(new KeyboardEvent('keydown', { ctrlKey: true, key: '1' }));
-  expect(subscriber).toHaveBeenCalledWith({ type: 'tab-1' });
-});
-
 test('do not call subscriber after it has been unsubscribed', () => {
   const { service, subscriber } = getTestSetup();
   service.unsubscribeFromEvents(subscriber);
@@ -33,9 +25,10 @@ test('do not call subscriber after it has been unsubscribed', () => {
 });
 
 function getTestSetup() {
-  const service = new KeyboardShortcutsService('darwin');
+  const service = new KeyboardShortcutsService('darwin', {
+    get: () => ({ keyboardShortcuts: { 'tab-1': 'Command-1' } }),
+  } as unknown as ConfigService);
   const subscriber = jest.fn();
-  service.updateShortcuts({ 'tab-1': 'Command-1' });
   service.subscribeToEvents(subscriber);
   return { service, subscriber };
 }

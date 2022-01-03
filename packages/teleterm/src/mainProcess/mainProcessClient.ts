@@ -2,6 +2,7 @@ import { ipcRenderer } from 'electron';
 import { openClusterContextMenu } from './clusterContextMenu';
 import { openTerminalContextMenu } from './terminalContextMenu';
 import { MainProcessClient } from './types';
+import { createConfigServiceClient } from '../services/config';
 
 export default function createMainProcessClient(): MainProcessClient {
   return {
@@ -10,5 +11,6 @@ export default function createMainProcessClient(): MainProcessClient {
     },
     openTerminalContextMenu,
     openClusterContextMenu,
+    configService: createConfigServiceClient(),
   };
 }
