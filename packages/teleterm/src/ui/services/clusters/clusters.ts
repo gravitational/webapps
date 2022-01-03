@@ -48,30 +48,28 @@ export default class ClusterService extends ImmutableStore<State> {
 
   async logout(clusterUri: string) {
     await this.client.logout(clusterUri);
-    await this.syncClusterOnly(clusterUri);
-    this.cleanUpClusterResources(clusterUri);
+    await this.syncClusterInfo(clusterUri);
+    this.removeResources(clusterUri);
   }
 
   async login(params: LoginParams, abortSignal: tsh.TshAbortSignal) {
     await this.client.login(params, abortSignal);
-    await this.syncCluster(params.clusterUri);
+    await this.syncRootCluster(params.clusterUri);
   }
 
-  async syncCluster(clusterUri: string) {
-    await this.syncClusterOnly(clusterUri);
+  async syncRootCluster(clusterUri: string) {
+    await this.syncClusterInfo(clusterUri);
 
-    // do not await these
+    this.syncLeafClusters(clusterUri);
     this.syncKubes(clusterUri);
     this.syncApps(clusterUri);
     this.syncDbs(clusterUri);
     this.syncServers(clusterUri);
-    this.syncLeafClusters(clusterUri);
     this.syncKubes(clusterUri);
     this.syncGateways();
   }
 
   async syncLeafCluster(clusterUri: string) {
-    await this.syncClusterOnly(clusterUri);
     // do not await these
     this.syncKubes(clusterUri);
     this.syncApps(clusterUri);
@@ -87,12 +85,11 @@ export default class ClusterService extends ImmutableStore<State> {
       draft.clusters = new Map(clusters.map(c => [c.uri, c]));
     });
 
-    clusters.filter(c => c.connected).forEach(c => this.syncCluster(c.uri));
+    clusters.filter(c => c.connected).forEach(c => this.syncRootCluster(c.uri));
   }
 
   async syncGateways() {
     const gws = await this.client.listGateways();
-
     this.setState(draft => {
       draft.gateways = new Map(gws.map(g => [g.uri, g]));
     });
@@ -199,6 +196,12 @@ export default class ClusterService extends ImmutableStore<State> {
 
   async syncLeafClusters(clusterUri: string) {
     const leaves = await this.client.listLeafClusters(clusterUri);
+    this.setState(draft => {
+      for (const leaf of leaves) {
+        draft.clusters.set(leaf.uri, leaf);
+      }
+    });
+
     leaves.filter(c => c.connected).forEach(c => this.syncLeafCluster(c.uri));
   }
 
@@ -240,7 +243,7 @@ export default class ClusterService extends ImmutableStore<State> {
     this.setState(draft => {
       draft.clusters.delete(clusterUri);
     });
-    this.cleanUpClusterResources(clusterUri);
+    this.removeResources(clusterUri);
   }
 
   async getAuthSettings(clusterUri: string) {
@@ -350,23 +353,35 @@ export default class ClusterService extends ImmutableStore<State> {
     return useStore(this).state;
   }
 
-  private async syncClusterOnly(clusterUri: string) {
+  private async syncClusterInfo(clusterUri: string) {
     const cluster = await this.client.getCluster(clusterUri);
     this.setState(draft => {
       draft.clusters.set(clusterUri, cluster);
     });
   }
 
-  private cleanUpClusterResources(clusterUri: string) {
+  private removeResources(clusterUri: string) {
     this.setState(draft => {
       this.findDbs(clusterUri).forEach(db => {
         draft.dbs.delete(db.uri);
       });
+
       this.findServers(clusterUri).forEach(server => {
         draft.servers.delete(server.uri);
       });
-      delete draft.serversSyncStatus[clusterUri];
+
+      this.findApps(clusterUri).forEach(app => {
+        draft.apps.delete(app.uri);
+      });
+
+      this.findKubes(clusterUri).forEach(kube => {
+        draft.kubes.delete(kube.uri);
+      });
+
+      draft.serversSyncStatus.delete(clusterUri);
       draft.dbsSyncStatus.delete(clusterUri);
+      draft.kubesSyncStatus.delete(clusterUri);
+      draft.appsSyncStatus.delete(clusterUri);
     });
   }
 }

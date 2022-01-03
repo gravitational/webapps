@@ -14,53 +14,69 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React from 'react';
+import React, { useEffect, useRef } from 'react';
 import { Box, Flex } from 'design';
 import styled from 'styled-components';
 import XTermCtrl from './xterm';
 import { colors } from 'teleterm/ui/ThemeProvider/colors';
 import { PtyProcess } from 'teleterm/services/pty/types';
+import { debounce } from 'lodash';
 
-export default class Terminal extends React.Component<{
-  ptyProcess: PtyProcess;
-}> {
-  terminal: XTermCtrl;
+export default function Terminal(props: Props) {
+  const refElement = useRef<HTMLElement>();
+  const refCtrl = useRef<XTermCtrl>();
 
-  refTermContainer = React.createRef<HTMLElement>();
-
-  componentDidMount() {
-    this.terminal = new XTermCtrl(this.props.ptyProcess, {
-      el: this.refTermContainer.current,
+  useEffect(() => {
+    const ctrl = new XTermCtrl(props.ptyProcess, {
+      el: refElement.current,
     });
 
-    this.terminal.open();
-  }
+    ctrl.open();
 
-  componentWillUnmount() {
-    this.terminal.destroy();
-  }
+    ctrl.term.onKey(event => {
+      if (event.domEvent.key === 'Enter') {
+        handleEnterPress();
+      }
+    });
 
-  shouldComponentUpdate() {
-    return false;
-  }
+    refCtrl.current = ctrl;
 
-  focus() {
-    this.terminal.term.focus();
-  }
+    const handleEnterPress = debounce(() => {
+      props.onEnterKey && props.onEnterKey();
+    }, 100);
 
-  render() {
-    return (
-      <Flex
-        flexDirection="column"
-        height="100%"
-        width="100%"
-        style={{ overflow: 'hidden' }}
-      >
-        <StyledXterm ref={this.refTermContainer} />
-      </Flex>
-    );
-  }
+    return () => {
+      handleEnterPress.cancel();
+      ctrl.destroy();
+    };
+  }, []);
+
+  useEffect(() => {
+    if (!refCtrl.current || !props.visible) {
+      return;
+    }
+
+    refCtrl.current.focus();
+    refCtrl.current.requestResize();
+  }, [props.visible]);
+
+  return (
+    <Flex
+      flexDirection="column"
+      height="100%"
+      width="100%"
+      style={{ overflow: 'hidden' }}
+    >
+      <StyledXterm ref={refElement} />
+    </Flex>
+  );
 }
+
+type Props = {
+  ptyProcess: PtyProcess;
+  visible: boolean;
+  onEnterKey?(): void;
+};
 
 const StyledXterm = styled(Box)(
   props => `

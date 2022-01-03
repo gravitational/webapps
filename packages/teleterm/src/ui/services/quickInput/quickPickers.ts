@@ -40,7 +40,8 @@ export abstract class ClusterPicker implements QuickInputPicker {
 
   protected searchClusters(value: string): Item[] {
     const clusters = this.serviceCluster.getClusters();
-    return clusters
+    const items: Item[] = clusters
+      .filter(s => !s.leaf)
       .filter(s => {
         return [s.name].join('').toLocaleLowerCase().includes(value);
       })
@@ -50,10 +51,16 @@ export abstract class ClusterPicker implements QuickInputPicker {
           data: cluster,
         };
       });
+
+    return items;
   }
 
   protected searchServers(value: string): Item[] {
     const servers = this.serviceCluster.getServers();
+    if (servers.length === 0) {
+      return [{ kind: 'item.empty', data: null }];
+    }
+
     return servers
       .filter(s => {
         return [s.uri, s.name, s.hostname]
@@ -71,6 +78,10 @@ export abstract class ClusterPicker implements QuickInputPicker {
 
   protected searchDbs(value: string): Item[] {
     const dbs = this.serviceCluster.getDbs();
+    if (dbs.length === 0) {
+      return [{ kind: 'item.empty', data: null }];
+    }
+
     return dbs
       .filter(db => {
         return [db.uri, db.name, db.hostname]
