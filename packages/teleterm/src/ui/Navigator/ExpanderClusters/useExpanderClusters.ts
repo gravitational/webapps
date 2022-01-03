@@ -66,7 +66,7 @@ export default function useExpanderClusters() {
           remove(cluster.uri);
         },
         onRefresh() {
-          ctx.serviceClusters.syncCluster(cluster.uri);
+          ctx.serviceClusters.syncRootCluster(cluster.uri);
         },
       });
     };

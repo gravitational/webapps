@@ -44,7 +44,7 @@ class PtyProcess extends EventEmitter {
       },
     });
 
-    this.onStart();
+    this.onOpen();
     this.process.onData(data => this.onData(data));
     this.process.onExit(ev => this.onExit(ev));
     this.disposed = false;
@@ -97,8 +97,8 @@ class PtyProcess extends EventEmitter {
     this.logger.info('pty has been terminated');
   }
 
-  private onStart() {
-    this.emit('open');
+  private onOpen() {
+    this.emit(TermEventEnum.OPEN);
     this.logger.info('pty is open');
   }
 
@@ -121,5 +121,6 @@ export const TermEventEnum = {
   CLOSE: 'terminal.close',
   RESET: 'terminal.reset',
   DATA: 'terminal.data',
+  OPEN: 'terminal.open',
   EXIT: 'terminal.exit',
 };

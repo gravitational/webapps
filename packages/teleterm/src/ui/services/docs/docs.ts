@@ -25,8 +25,6 @@ type State = {
   docs: Document[];
 };
 export default class DocumentService extends ImmutableStore<State> {
-  previouslyActiveLocation: string;
-
   state: State = {
     location: '/home',
     docs: [
@@ -106,7 +104,6 @@ export default class DocumentService extends ImmutableStore<State> {
   }
 
   openNewTerminal() {
-    this.previouslyActiveLocation = this.getActive().uri;
     const doc = ((): Document => {
       const activeDocument = this.getActive();
       switch (activeDocument.kind) {
@@ -139,10 +136,6 @@ export default class DocumentService extends ImmutableStore<State> {
 
   getActive() {
     return this.find(this.getLocation());
-  }
-
-  getPreviouslyActive() {
-    return this.find(this.previouslyActiveLocation);
   }
 
   getLocation() {

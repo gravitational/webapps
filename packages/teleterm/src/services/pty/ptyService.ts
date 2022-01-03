@@ -62,6 +62,10 @@ export default function createPtyService(
           _ptyProcess.addListener(TermEventEnum.DATA, cb);
         },
 
+        onOpen(cb: () => void) {
+          _ptyProcess.addListener(TermEventEnum.OPEN, cb);
+        },
+
         getPid() {
           return _ptyProcess.getPid();
         },

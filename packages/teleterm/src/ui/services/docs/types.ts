@@ -56,7 +56,6 @@ export interface DocumentCluster extends DocumentBase {
 export interface DocumentPtySession extends DocumentBase {
   kind: 'doc.terminal_shell';
   cwd?: string;
-  pid?: number;
 }
 
 export type DocumentTerminal = DocumentPtySession | DocumentTshNode;

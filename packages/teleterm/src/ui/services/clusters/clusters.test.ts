@@ -120,7 +120,7 @@ test('sync cluster and its resources', async () => {
     listServers,
   });
 
-  await service.syncCluster(clusterUri);
+  await service.syncRootCluster(clusterUri);
 
   expect(service.findCluster(clusterUri)).toStrictEqual(clusterMock);
   expect(listGateways).toHaveBeenCalledWith();

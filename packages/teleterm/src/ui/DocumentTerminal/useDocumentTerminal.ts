@@ -14,65 +14,76 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import { useAppContext } from 'teleterm/ui/appContextProvider';
+import { IAppContext } from 'teleterm/ui/types';
 import * as types from 'teleterm/ui/services/docs/types';
-import { PtyProcess } from 'teleterm/services/pty/types';
+import { PtyCommand } from 'teleterm/services/pty/types';
+import useAsync from 'teleterm/ui/useAsync';
 
-export default function useDocumentTerminal(doc: Props['doc']) {
+export default function useDocumentTerminal(doc: Doc) {
   const ctx = useAppContext();
-  const [ptyProcess, setPtyProcess] = useState<PtyProcess>();
-
-  function openTerminalContextMenu(): void {
-    ctx.mainProcessClient.openTerminalContextMenu();
-  }
-
-  function createPtyProcess(): PtyProcess {
-    if (doc.kind === 'doc.terminal_tsh_node') {
-      return ctx.serviceTerminals.createPtyProcess({
-        ...doc,
-        kind: 'tsh-login',
-      });
-    }
-
-    if (doc.kind === 'doc.terminal_shell') {
-      return ctx.serviceTerminals.createPtyProcess({
-        kind: 'new-shell',
-        cwd: doc.cwd,
-      });
-    }
-  }
+  const [state, init] = useAsync(async () => initState(ctx, doc));
 
   useEffect(() => {
-    const createdPtyProcess = createPtyProcess();
-    createdPtyProcess.onExit(({ exitCode }) => {
-      if (exitCode === 0) {
-        ctx.serviceDocs.close({ uri: doc.uri });
-      }
-    });
-
-    setPtyProcess(createdPtyProcess);
-
+    init();
     return () => {
-      createdPtyProcess.dispose();
+      state.data?.ptyProcess.dispose();
     };
   }, []);
 
-  useEffect(() => {
-    if (ptyProcess) {
-      ctx.serviceDocs.update(doc.uri, {
-        pid: ptyProcess.getPid(),
-      });
+  return state;
+}
+
+async function initState(ctx: IAppContext, doc: Doc) {
+  const cmd = createCmd(doc);
+  const ptyProcess = ctx.serviceTerminals.createPtyProcess(cmd);
+  const openContextMenu = () => ctx.mainProcessClient.openTerminalContextMenu();
+
+  const refreshTitle = async () => {
+    if (cmd.kind !== 'new-shell') {
+      return;
     }
-  }, [ptyProcess]);
+
+    const pid = ptyProcess.getPid();
+    const cwd = await ctx.serviceTerminals.getWorkingDirectory(pid);
+    ctx.serviceDocs.update(doc.uri, { cwd, title: cwd });
+  };
+
+  ptyProcess.onOpen(() => {
+    refreshTitle();
+  });
+
+  ptyProcess.onExit(({ exitCode }) => {
+    if (exitCode === 0) {
+      ctx.serviceDocs.close({ uri: doc.uri });
+    }
+  });
 
   return {
     ptyProcess,
-    openTerminalContextMenu,
+    refreshTitle,
+    openContextMenu,
   };
 }
 
+function createCmd(doc: Doc): PtyCommand {
+  if (doc.kind === 'doc.terminal_tsh_node') {
+    return {
+      ...doc,
+      kind: 'tsh-login',
+    };
+  }
+
+  return {
+    kind: 'new-shell',
+    cwd: doc.cwd,
+  };
+}
+
+type Doc = types.DocumentPtySession | types.DocumentTshNode;
+
 export type Props = {
-  doc: types.DocumentPtySession | types.DocumentTshNode;
+  doc: Doc;
   visible: boolean;
 };

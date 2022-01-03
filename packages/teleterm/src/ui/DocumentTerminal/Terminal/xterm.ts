@@ -60,6 +60,7 @@ export default class TtyTerminal {
     });
 
     this.term.loadAddon(this.fitAddon);
+
     this.registerResizeHandler();
 
     this.term.open(this.el);
@@ -75,9 +76,23 @@ export default class TtyTerminal {
     });
 
     this.ptyProcess.onData(data => this.processData(data));
+
     this.ptyProcess.start(this.term.cols, this.term.rows);
 
     window.addEventListener('resize', this.debouncedResize);
+  }
+
+  focus() {
+    this.term.focus();
+  }
+
+  requestResize(): void {
+    if (!!this.el.clientWidth && !!this.el.clientHeight) {
+      this.logger.info(`unable to resize terminal (container might be hidden)`);
+      return;
+    }
+    this.fitAddon.fit();
+    this.ptyProcess.resize(this.term.cols, this.term.rows);
   }
 
   destroy(): void {
@@ -122,6 +137,7 @@ export default class TtyTerminal {
     }
   }
 
+  /*
   private processClose(e): void {
     const { reason } = e;
     let displayText = DISCONNECT_TXT;
@@ -131,20 +147,5 @@ export default class TtyTerminal {
 
     displayText = `\x1b[31m${displayText}\x1b[m\r\n`;
     this.term.write(displayText);
-  }
-
-  private requestResize(): void {
-    if (!this.isTerminalVisible()) {
-      this.logger.info(`unable to resize terminal (container might be hidden)`);
-      return;
-    }
-    this.fitAddon.fit();
-    this.ptyProcess.resize(this.term.cols, this.term.rows);
-  }
-
-  private isTerminalVisible(): boolean {
-    const width = this.el.clientWidth;
-    const height = this.el.clientHeight;
-    return !!width && !!height;
-  }
+  }*/
 }

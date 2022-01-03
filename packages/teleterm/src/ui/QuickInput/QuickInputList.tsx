@@ -99,6 +99,10 @@ function UnknownItem(props: { item: types.Item }) {
   return <div>unknown kind: {kind} </div>;
 }
 
+function EmptyItem() {
+  return <div>Empty</div>;
+}
+
 function NewClusterItem(props: { item: types.ItemNewCluster }) {
   return (
     <Flex alignItems="center">
@@ -148,6 +152,7 @@ const ComponentMap: Record<
   ['item.cluster']: ClusterItem,
   ['item.cluster-new']: NewClusterItem,
   ['item.cmd']: CmdItem,
+  ['item.empty']: EmptyItem,
 };
 
 type Props = {
