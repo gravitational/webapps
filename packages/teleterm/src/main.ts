@@ -5,9 +5,11 @@ import { getRuntimeSettings } from 'teleterm/mainProcess/runtimeSettings';
 import createLoggerService from 'teleterm/services/logger';
 import Logger from 'teleterm/logger';
 import * as types from 'teleterm/types';
+import { ConfigServiceImpl } from 'teleterm/services/config';
 
 const settings = getRuntimeSettings();
 const logger = initMainLogger(settings);
+const configService = new ConfigServiceImpl();
 
 process.on('uncaughtException', error => {
   logger.error('', error);
@@ -15,7 +17,7 @@ process.on('uncaughtException', error => {
 });
 
 // init main process
-const mainProcess = MainProcess.create({ settings, logger });
+const mainProcess = MainProcess.create({ settings, logger, configService });
 
 // node-pty is not yet context aware
 app.allowRendererProcessReuse = false;
