@@ -1,13 +1,13 @@
 import { Platform } from '../../mainProcess/types';
 import { KeyboardShortcutsConfig } from './providers/keyboardShortcutsConfigProvider';
+import { AppearanceConfig } from './providers/appearanceConfigProvider';
 
 export interface Config {
   keyboardShortcuts: KeyboardShortcutsConfig;
+  appearance: AppearanceConfig;
 }
 
-export interface ConfigServiceProvider<
-  T extends Record<string, number | string | boolean>
-  > {
+export interface ConfigServiceProvider<T extends Record<string, any>> {
   getDefaults(platform: Platform): T;
 }
 
