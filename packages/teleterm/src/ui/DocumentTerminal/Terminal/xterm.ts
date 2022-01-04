@@ -88,7 +88,8 @@ export default class TtyTerminal {
   }
 
   requestResize(): void {
-    if (!!this.el.clientWidth && !!this.el.clientHeight) {
+    const visible = !!this.el.clientWidth && !!this.el.clientHeight;
+    if (!visible) {
       this.logger.info(`unable to resize terminal (container might be hidden)`);
       return;
     }
