@@ -138,6 +138,10 @@ export default class DocumentService extends ImmutableStore<State> {
   }
 
   close({ uri }: { uri: string }) {
+    if (uri === '/home') {
+      return;
+    }
+
     const nextUri = this.getNextUri(uri);
     const docs = this.state.docs.filter(i => i.uri !== uri);
     this.setState(draftState => ({ ...draftState, docs, location: nextUri }));

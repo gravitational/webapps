@@ -54,10 +54,8 @@ async function initState(ctx: IAppContext, doc: Doc) {
     refreshTitle();
   });
 
-  ptyProcess.onExit(({ exitCode }) => {
-    if (exitCode === 0) {
-      ctx.serviceDocs.close({ uri: doc.uri });
-    }
+  ptyProcess.onExit(() => {
+    ctx.serviceDocs.close({ uri: doc.uri });
   });
 
   return {
