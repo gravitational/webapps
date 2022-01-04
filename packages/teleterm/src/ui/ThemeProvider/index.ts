@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import ThemeProvider, { ThemeProviderTabs } from './ThemeProvider';
+import ThemeProvider, { ThemeProviderTemp } from './ThemeProvider';
 
 export default ThemeProvider;
-export { ThemeProviderTabs };
+export { ThemeProviderTemp };

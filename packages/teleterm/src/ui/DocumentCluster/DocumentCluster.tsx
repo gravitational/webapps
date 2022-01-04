@@ -60,7 +60,7 @@ export function DocumentCluster(props: { visible: boolean }) {
         <Layout mx="auto">
           <Flex flexDirection="column" mx="auto" alignItems="center" mt={4}>
             <Text typography="h3" color="text.secondary" mb={4}>
-              {`This '${clusterName}' cluster is offline`}
+              {`${clusterName} cluster is offline`}
             </Text>
             <ButtonPrimary
               width="100px"
@@ -77,7 +77,7 @@ export function DocumentCluster(props: { visible: boolean }) {
 
   return (
     <Document visible={props.visible}>
-      <Layout mx="auto" px="5" height="100%">
+      <Layout mx="auto" px={5} pt={4} height="100%">
         <Flex mb="2" justifyContent="space-between">
           <Text typography="h4" color="text.secondary">
             Cluster:

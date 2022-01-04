@@ -54,9 +54,10 @@ const Input = styled.input(props => {
     boxSizing: 'border-box',
     color: theme.colors.text.primary,
     width: '100%',
+    height: '30px',
     border: 'none',
     outline: 'none',
-    padding: '4px 12px',
+    padding: '2px 12px',
     '&:hover, &:focus': {
       color: theme.colors.primary.contrastText,
       background: theme.colors.primary.lighter,

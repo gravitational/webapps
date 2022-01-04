@@ -62,7 +62,7 @@ export default function TabHost(props: Props) {
 
   return (
     <StyledTabHost {...props}>
-      <Flex bg="bgTerminal" height="32px">
+      <Flex bg="terminalDark" height="32px">
         <Tabs
           flex="1"
           items={documents.filter(d => d.kind !== 'doc.home')}
@@ -103,7 +103,6 @@ function MemoizedDocument(props: { doc: types.Document; visible: boolean }) {
 }
 
 const StyledTabHost = styled.div`
-  background-color: ${props => props.theme.colors.bgTerminal};
   display: flex;
   flex-direction: column;
   width: 100%;

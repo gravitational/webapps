@@ -15,20 +15,12 @@ limitations under the License.
 */
 
 import React from 'react';
-import styled from 'styled-components';
 import { Text, Box, Flex } from 'design';
 import Document from 'teleterm/ui/Document';
 import * as types from 'teleterm/ui/services/docs/types';
 
 export default function DocumentHome(props: PropTypes) {
   const { visible } = props;
-  const [selected, setSelected] = React.useState([]);
-
-  const options = [
-    { value: 'prod', label: 'prod' },
-    { value: 'stage', label: 'stage' },
-  ];
-
   return (
     <Document visible={visible}>
       <Flex flexDirection="column" alignItems="center" flex="1" width="100%">

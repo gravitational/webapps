@@ -25,12 +25,12 @@ import { debounce } from 'lodash';
 export default function Terminal(props: Props) {
   const refElement = useRef<HTMLElement>();
   const refCtrl = useRef<XTermCtrl>();
-  const monoFont = useTheme().fonts.mono;
+  const fontFamily = useTheme().fonts.mono;
 
   useEffect(() => {
     const ctrl = new XTermCtrl(props.ptyProcess, {
       el: refElement.current,
-      monospacedFontFamily: monoFont
+      fontFamily,
     });
 
     ctrl.open();
