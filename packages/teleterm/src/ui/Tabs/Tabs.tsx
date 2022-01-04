@@ -40,7 +40,6 @@ export function Tabs(props: Props) {
 
   const $items = items
     .map((item, index) => ({ item, index }))
-    .filter(i => i.item.kind !== 'doc.blank')
     .map(({ item, index }) => {
       const active = item.uri === activeTab;
       return (

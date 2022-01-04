@@ -11,7 +11,7 @@ import ModalsHost from './ModalsHost';
 import QuickInput from './QuickInput';
 import AppContextProvider from './appContextProvider';
 import AppContext from './appContext';
-import ThemeProvider from './ThemeProvider';
+import ThemeProvider, { ThemeProviderTemp } from './ThemeProvider';
 
 const App: React.FC<{ ctx: AppContext }> = ({ ctx }) => {
   return (
@@ -29,7 +29,9 @@ const App: React.FC<{ ctx: AppContext }> = ({ ctx }) => {
                   <TabHost />
                 </Box>
               </SplitPane>
-              <ModalsHost />
+              <ThemeProviderTemp>
+                <ModalsHost />
+              </ThemeProviderTemp>
             </ThemeProvider>
           </AppContextProvider>
         </DndProvider>

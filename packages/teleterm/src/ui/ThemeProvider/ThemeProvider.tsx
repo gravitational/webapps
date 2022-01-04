@@ -15,11 +15,36 @@ limitations under the License.
 */
 
 import React from 'react';
-import { createGlobalStyle } from 'styled-components';
+import {
+  ThemeProvider as StyledThemeProvider,
+  StyleSheetManager,
+} from 'styled-components';
+import { GlobalStyle } from './globals';
 import theme from 'design/theme';
-import DesignThemeProvider from 'design/ThemeProvider';
 import { colors } from './colors';
 import { useAppContext } from 'teleterm/ui/appContextProvider';
+
+// ThemeProviderTemp is a temporary provider used for experimental purposes
+export const ThemeProviderTemp = props => {
+  const theme = useTheme();
+  return (
+    <StyledThemeProvider theme={theme}>{props.children}</StyledThemeProvider>
+  );
+};
+
+const ThemeProvider = props => {
+  const theme = { ...useTheme(), ...customThemeTabs };
+  return (
+    <StyledThemeProvider theme={props.theme || theme}>
+      <StyleSheetManager disableVendorPrefixes>
+        <React.Fragment>
+          <GlobalStyle />
+          {props.children}
+        </React.Fragment>
+      </StyleSheetManager>
+    </StyledThemeProvider>
+  );
+};
 
 const customThemeTabs: typeof theme = {
   ...theme,
@@ -32,7 +57,7 @@ const customThemeTabs: typeof theme = {
   },
 };
 
-function useTeletermTheme(): Pick<typeof theme, 'font' | 'fonts'> {
+function useTheme(): typeof theme {
   const { mainProcessClient } = useAppContext();
   const { mono, sansSerif } =
     mainProcessClient.configService.get().appearance.fonts;
@@ -45,31 +70,5 @@ function useTeletermTheme(): Pick<typeof theme, 'font' | 'fonts'> {
     },
   };
 }
-
-const ThemeProvider = props => {
-  const theme = useTeletermTheme();
-  return (
-    <DesignThemeProvider theme={theme}>
-      <GlobalThemeStyle />
-      {props.children}
-    </DesignThemeProvider>
-  );
-};
-
-export const ThemeProviderTabs = props => {
-  const theme = { ...useTeletermTheme(), ...customThemeTabs };
-  return (
-    <DesignThemeProvider theme={theme}>
-      <GlobalThemeStyle />
-      {props.children}
-    </DesignThemeProvider>
-  );
-};
-
-const GlobalThemeStyle = createGlobalStyle`
-  body {
-    font-family: ${theme => theme.font}
-  }
-`;
 
 export default ThemeProvider;

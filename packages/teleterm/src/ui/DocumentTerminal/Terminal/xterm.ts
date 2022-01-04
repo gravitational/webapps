@@ -22,12 +22,11 @@ import { PtyProcess } from 'teleterm/services/pty/types';
 import { colors } from 'teleport/Console/colors';
 import Logger from 'teleterm/ui/logger';
 
-const DISCONNECT_TXT = 'disconnected';
 const WINDOW_RESIZE_DEBOUNCE_DELAY = 200;
 
 type Options = {
   el: HTMLElement;
-  monospacedFontFamily?: string;
+  fontFamily?: string;
 };
 
 export default class TtyTerminal {
@@ -51,7 +50,7 @@ export default class TtyTerminal {
   open(): void {
     this.term = new Terminal({
       cursorBlink: false,
-      fontFamily: this.options.monospacedFontFamily,
+      fontFamily: this.options.fontFamily,
       theme: {
         background: colors.bgTerminal,
       },
@@ -138,16 +137,4 @@ export default class TtyTerminal {
       this.term.reset();
     }
   }
-
-  /*
-  private processClose(e): void {
-    const { reason } = e;
-    let displayText = DISCONNECT_TXT;
-    if (reason) {
-      displayText = `${displayText}: ${reason}`;
-    }
-
-    displayText = `\x1b[31m${displayText}\x1b[m\r\n`;
-    this.term.write(displayText);
-  }*/
 }

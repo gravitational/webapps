@@ -20,7 +20,6 @@ import * as Alerts from 'design/Alert';
 import { Text, Flex, Box, ButtonSecondary } from 'design';
 import Document from 'teleterm/ui/Document';
 import TextSelectCopy from 'teleport/components/TextSelectCopy';
-import { ThemeProviderTabs } from 'teleterm/ui/ThemeProvider';
 import * as types from 'teleterm/ui/services/docs/types';
 import useGateway from './useGateway';
 
@@ -34,83 +33,81 @@ export default function DocumentGateway(props: Props) {
   const { gateway, status, statusText, removeGateway } = useGateway(doc);
 
   return (
-    <ThemeProviderTabs>
-      <Document visible={visible}>
-        <Container mx="auto" mt="4" px="5">
-          <Flex justifyContent="space-between" mb="4">
-            <Text typography="h3" color="text.secondary">
-              DB Proxy Connection
-            </Text>
-            <ButtonSecondary size="small" onClick={removeGateway}>
-              Close Connection
-            </ButtonSecondary>
-          </Flex>
-          {status === 'error' && <Alerts.Danger mb={5} children={statusText} />}
-          <Text bold>Database</Text>
-          <Flex
-            bg={'primary.dark'}
-            p="2"
-            alignItems="center"
-            justifyContent="space-between"
-            borderRadius={2}
-            mb={3}
-          >
-            <Text>{gateway.protocol}</Text>
-          </Flex>
-
-          <Text bold>Host Name</Text>
-          <Flex
-            bg={'primary.dark'}
-            p="2"
-            alignItems="center"
-            justifyContent="space-between"
-            borderRadius={2}
-            mb={3}
-          >
-            <Text>{gateway.resourceName}</Text>
-          </Flex>
-
-          <Text bold>Local Address</Text>
-          <TextSelectCopy
-            bash={false}
-            bg={'primary.dark'}
-            mb={4}
-            text={`https://${gateway.localAddress}:${gateway.localPort}`}
-          />
-          <Text bold>Psql</Text>
-          <TextSelectCopy
-            bash={false}
-            bg={'primary.dark'}
-            mb={6}
-            text={`psql "${gateway.nativeClientArgs}"`}
-          />
-          <Text typography="h4" bold mb={3}>
-            Access Keys
+    <Document visible={visible}>
+      <Container mx="auto" mt="4" px="5">
+        <Flex justifyContent="space-between" mb="4">
+          <Text typography="h3" color="text.secondary">
+            DB Proxy Connection
           </Text>
-          <Text bold>CA certificate path</Text>
-          <TextSelectCopy
-            bash={false}
-            bg={'primary.dark'}
-            mb={3}
-            text={gateway.caCertPath}
-          />
-          <Text bold>Database access certificate path</Text>
-          <TextSelectCopy
-            bash={false}
-            bg={'primary.dark'}
-            mb={3}
-            text={gateway.dbCertPath}
-          />
-          <Text bold>Private Key Path</Text>
-          <TextSelectCopy
-            bash={false}
-            bg={'primary.dark'}
-            mb={3}
-            text={gateway.keyPath}
-          />
-        </Container>
-      </Document>
-    </ThemeProviderTabs>
+          <ButtonSecondary size="small" onClick={removeGateway}>
+            Close Connection
+          </ButtonSecondary>
+        </Flex>
+        {status === 'error' && <Alerts.Danger mb={5} children={statusText} />}
+        <Text bold>Database</Text>
+        <Flex
+          bg={'primary.dark'}
+          p="2"
+          alignItems="center"
+          justifyContent="space-between"
+          borderRadius={2}
+          mb={3}
+        >
+          <Text>{gateway.protocol}</Text>
+        </Flex>
+
+        <Text bold>Host Name</Text>
+        <Flex
+          bg={'primary.dark'}
+          p="2"
+          alignItems="center"
+          justifyContent="space-between"
+          borderRadius={2}
+          mb={3}
+        >
+          <Text>{gateway.resourceName}</Text>
+        </Flex>
+
+        <Text bold>Local Address</Text>
+        <TextSelectCopy
+          bash={false}
+          bg={'primary.dark'}
+          mb={4}
+          text={`https://${gateway.localAddress}:${gateway.localPort}`}
+        />
+        <Text bold>Psql</Text>
+        <TextSelectCopy
+          bash={false}
+          bg={'primary.dark'}
+          mb={6}
+          text={`psql "${gateway.nativeClientArgs}"`}
+        />
+        <Text typography="h4" bold mb={3}>
+          Access Keys
+        </Text>
+        <Text bold>CA certificate path</Text>
+        <TextSelectCopy
+          bash={false}
+          bg={'primary.dark'}
+          mb={3}
+          text={gateway.caCertPath}
+        />
+        <Text bold>Database access certificate path</Text>
+        <TextSelectCopy
+          bash={false}
+          bg={'primary.dark'}
+          mb={3}
+          text={gateway.dbCertPath}
+        />
+        <Text bold>Private Key Path</Text>
+        <TextSelectCopy
+          bash={false}
+          bg={'primary.dark'}
+          mb={3}
+          text={gateway.keyPath}
+        />
+      </Container>
+    </Document>
   );
 }
 

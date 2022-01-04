@@ -29,11 +29,6 @@ export default class DocumentService extends ImmutableStore<State> {
     location: '/home',
     docs: [
       {
-        uri: '/',
-        kind: 'doc.blank',
-        title: 'Welcome',
-      },
-      {
         uri: '/home',
         kind: 'doc.home',
         title: 'Home',
@@ -179,8 +174,8 @@ export default class DocumentService extends ImmutableStore<State> {
   }
 
   getNextUri(uri: string) {
-    const { docs } = this.state;
-    for (let i = 0; i < this.state.docs.length; i++) {
+    const docs = this.state.docs;
+    for (let i = 0; i < docs.length; i++) {
       if (docs[i].uri === uri) {
         if (docs.length > i + 1) {
           return docs[i + 1].uri;
@@ -210,6 +205,13 @@ export default class DocumentService extends ImmutableStore<State> {
   }
 
   swapPosition(oldIndex: number, newIndex: number) {
+    // account for hidden "home" document
+    // TODO(alex-kovoy): consider removing "home" document from the service
+    if (this.state.docs.some(d => d.kind === 'doc.home')) {
+      oldIndex += 1;
+      newIndex += 1;
+    }
+
     const doc = this.state.docs[oldIndex];
     this.setState(draftState => {
       draftState.docs.splice(oldIndex, 1);
