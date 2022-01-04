@@ -14,14 +14,18 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 import React, { useEffect, useRef, CSSProperties } from 'react';
-import { ImageData, TdpClientEvent } from 'teleport/lib/tdp/client';
-import useTdpClientCanvas from './useTdpClientCanvas';
+import TdpClient, {
+  ImageFragment,
+  TdpClientEvent,
+} from 'teleport/lib/tdp/client';
 
 export default function TdpClientCanvas(props: Props) {
   const {
-    tdpClient,
-    onRender,
-    onError,
+    tdpCli,
+    tdpCliOnImageFragment,
+    tdpCliOnTdpError,
+    tdpCliOnWsClose,
+    tdpCliOnWsOpen,
     onKeyDown,
     onKeyUp,
     onMouseMove,
@@ -45,17 +49,33 @@ export default function TdpClientCanvas(props: Props) {
     const ctx = canvas.getContext('2d');
 
     // Buffered rendering logic
-    var buffer: ImageData[] = [];
+    var buffer: ImageFragment[] = [];
     const renderBuffer = () => {
       if (buffer.length) {
         for (let i = 0; i < buffer.length; i++) {
-          onRender(ctx, buffer[i]);
+          tdpCliOnImageFragment(ctx, buffer[i]);
         }
         buffer = [];
       }
       requestAnimationFrame(renderBuffer);
     };
     requestAnimationFrame(renderBuffer);
+
+    tdpCli.on(TdpClientEvent.IMAGE_FRAGMENT, (data: ImageFragment) => {
+      buffer.push(data);
+    });
+
+    tdpCli.on(TdpClientEvent.TDP_ERROR, (err: Error) => {
+      tdpCliOnTdpError(err);
+    });
+
+    tdpCli.on(TdpClientEvent.WS_CLOSE, () => {
+      tdpCliOnWsClose();
+    });
+
+    tdpCli.on(TdpClientEvent.WS_OPEN, () => {
+      tdpCliOnWsOpen();
+    });
 
     // Initialize canvas, document, and window event listeners.
 
@@ -65,47 +85,39 @@ export default function TdpClientCanvas(props: Props) {
 
     // Mouse controls.
     const onmousemove = (e: MouseEvent) => {
-      onMouseMove(tdpClient, canvas, e);
+      onMouseMove(tdpCli, canvas, e);
     };
     canvas.onmousemove = onmousemove;
     const onmousedown = (e: MouseEvent) => {
-      onMouseDown(tdpClient, e);
+      onMouseDown(tdpCli, e);
     };
     canvas.onmousedown = onmousedown;
     const onmouseup = (e: MouseEvent) => {
-      onMouseUp(tdpClient, e);
+      onMouseUp(tdpCli, e);
     };
     canvas.onmouseup = onmouseup;
     const onwheel = (e: WheelEvent) => {
       e.preventDefault();
-      onMouseWheelScroll(tdpClient, e);
+      onMouseWheelScroll(tdpCli, e);
     };
     canvas.onwheel = onwheel;
 
     // Key controls.
     const onkeydown = (e: KeyboardEvent) => {
       e.preventDefault();
-      onKeyDown(tdpClient, e);
+      onKeyDown(tdpCli, e);
     };
     canvas.onkeydown = onkeydown;
     const onkeyup = (e: KeyboardEvent) => {
       e.preventDefault();
-      onKeyUp(tdpClient, e);
+      onKeyUp(tdpCli, e);
     };
     canvas.onkeyup = onkeyup;
 
-    tdpClient.on(TdpClientEvent.RENDER, (data: ImageData) => {
-      buffer.push(data);
-    });
-
-    tdpClient.on(TdpClientEvent.ERROR, (err: Error) => {
-      onError(err);
-    });
-
-    tdpClient.init();
+    tdpCli.init();
 
     return () => {
-      tdpClient.nuke();
+      tdpCli.nuke();
       canvas.removeEventListener('contextmenu', oncontextmenu);
       canvas.removeEventListener('mousemove', onmousemove);
       canvas.removeEventListener('mousedown', onmousedown);
@@ -114,11 +126,29 @@ export default function TdpClientCanvas(props: Props) {
       canvas.removeEventListener('keyup', onkeyup);
       canvas.removeEventListener('wheel', onwheel);
     };
-  }, [tdpClient]);
+  }, [tdpCli]);
 
   return <canvas style={{ ...style }} ref={canvasRef} />;
 }
 
-export type Props = ReturnType<typeof useTdpClientCanvas> & {
+export type Props = {
+  tdpCli: TdpClient;
+  tdpCliOnImageFragment: (
+    ctx: CanvasRenderingContext2D,
+    data: ImageFragment
+  ) => void;
+  tdpCliOnTdpError: (err: Error) => void;
+  tdpCliOnWsClose: () => void;
+  tdpCliOnWsOpen: () => void;
+  onKeyDown: (cli: TdpClient, e: KeyboardEvent) => void;
+  onKeyUp: (cli: TdpClient, e: KeyboardEvent) => void;
+  onMouseMove: (
+    cli: TdpClient,
+    canvas: HTMLCanvasElement,
+    e: MouseEvent
+  ) => void;
+  onMouseDown: (cli: TdpClient, e: MouseEvent) => void;
+  onMouseUp: (cli: TdpClient, e: MouseEvent) => void;
+  onMouseWheelScroll: (cli: TdpClient, e: WheelEvent) => void;
   style?: CSSProperties;
 };

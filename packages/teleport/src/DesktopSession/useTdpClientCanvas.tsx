@@ -14,19 +14,23 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import { useMemo } from 'react';
-import TdpClient, { ImageData } from 'teleport/lib/tdp/client';
+import { useMemo, Dispatch, SetStateAction } from 'react';
+import TdpClient, { ImageFragment } from 'teleport/lib/tdp/client';
 import { TopBarHeight } from './TopBar';
 import cfg from 'teleport/config';
 import { getAccessToken, getHostName } from 'teleport/services/api';
 import { ButtonState, ScrollAxis } from 'teleport/lib/tdp/codec';
-import useAttempt from 'shared/hooks/useAttemptNext';
+import { Attempt } from 'shared/hooks/useAttemptNext';
 
 export default function useTdpClientCanvas(props: Props) {
-  const { username, desktopName, clusterId } = props;
-  const { attempt: connectionAttempt, setAttempt: setConnectionAttempt } =
-    useAttempt('processing');
-  var firstRender = true;
+  const {
+    username,
+    desktopName,
+    clusterId,
+    setTdpConnection,
+    setWsConnection,
+  } = props;
+  var firstImageFragment = true;
 
   // Build a client based on url parameters.
   const tdpClient = useMemo(() => {
@@ -51,18 +55,31 @@ export default function useTdpClientCanvas(props: Props) {
     canvas.height = height;
   };
 
-  const onRender = (ctx: CanvasRenderingContext2D, data: ImageData) => {
-    // The first render event signals a successful rdp connection on the backend.
-    if (firstRender) {
+  // Default TdpClientEvent.IMAGE_FRAGMENT handler (buffered)
+  const onImageFragment = (
+    ctx: CanvasRenderingContext2D,
+    data: ImageFragment
+  ) => {
+    // The first image fragment we see signals a successful rdp connection on the backend.
+    if (firstImageFragment) {
       syncCanvasSizeToDisplaySize(ctx.canvas);
-      setConnectionAttempt({ status: 'success' });
-      firstRender = false;
+      setTdpConnection({ status: 'success' });
+      firstImageFragment = false;
     }
     ctx.drawImage(data.image, data.left, data.top);
   };
 
-  const onError = (err: Error) => {
-    setConnectionAttempt({ status: 'failed', statusText: err.message });
+  // Default TdpClientEvent.TDP_ERROR handler
+  const onTdpError = (err: Error) => {
+    setTdpConnection({ status: 'failed', statusText: err.message });
+  };
+
+  const onWsClose = () => {
+    setWsConnection('closed');
+  };
+
+  const onWsOpen = () => {
+    setWsConnection('open');
   };
 
   const onKeyDown = (cli: TdpClient, e: KeyboardEvent) => {
@@ -111,10 +128,10 @@ export default function useTdpClientCanvas(props: Props) {
 
   return {
     tdpClient,
-    connectionAttempt,
-    username,
-    onRender,
-    onError,
+    onImageFragment,
+    onTdpError,
+    onWsClose,
+    onWsOpen,
     onKeyDown,
     onKeyUp,
     onMouseMove,
@@ -138,4 +155,6 @@ type Props = {
   username: string;
   desktopName: string;
   clusterId: string;
+  setTdpConnection: Dispatch<SetStateAction<Attempt>>;
+  setWsConnection: Dispatch<SetStateAction<'open' | 'closed'>>;
 };

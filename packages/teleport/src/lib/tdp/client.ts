@@ -21,8 +21,10 @@ import Codec, {
 import Logger from 'shared/libs/logger';
 
 export enum TdpClientEvent {
-  RENDER = 'render',
-  ERROR = 'error',
+  IMAGE_FRAGMENT = 'imgfrag',
+  TDP_ERROR = 'tdperr',
+  WS_OPEN = 'wsopen',
+  WS_CLOSE = 'wsclose',
 }
 
 // Client is the TDP client. It is responsible for connecting to a websocket serving the tdp server,
@@ -35,8 +37,6 @@ export default class Client extends EventEmitter {
   socketAddr: string;
   username: string;
   logger = Logger.create('TDPClient');
-  private disconnected = false;
-  private errored = false;
 
   constructor(socketAddr: string, username: string) {
     super();
@@ -52,6 +52,7 @@ export default class Client extends EventEmitter {
 
     this.socket.onopen = () => {
       this.logger.info('websocket is open');
+      this.emit(TdpClientEvent.WS_OPEN);
     };
 
     this.socket.onmessage = (ev: MessageEvent) => {
@@ -71,11 +72,7 @@ export default class Client extends EventEmitter {
       this.socket.onclose = null;
       this.socket = null;
 
-      if (!(this.errored || this.disconnected)) {
-        this.handleError(
-          new Error('Connection closed due to an unknown error')
-        );
-      }
+      this.emit(TdpClientEvent.WS_CLOSE);
     };
   }
 
@@ -101,7 +98,8 @@ export default class Client extends EventEmitter {
   processFrame(buffer: ArrayBuffer) {
     const { left, top } = this.codec.decodeRegion(buffer);
     const image = new Image();
-    image.onload = () => this.emit(TdpClientEvent.RENDER, { image, left, top });
+    image.onload = () =>
+      this.emit(TdpClientEvent.IMAGE_FRAGMENT, { image, left, top });
     image.src = this.codec.decodePng(buffer);
   }
 
@@ -131,20 +129,11 @@ export default class Client extends EventEmitter {
     this.socket?.send(this.codec.encodeScreenSpec(w, h));
   }
 
-  // Called to cleanup websocket when the connection is intentionally closed by the end user (customer).
-  // Sets this.disconnected to true to alert the this.socket.onclose handler that it needn't emit a generic
-  // unknown error event.
-  disconnect() {
-    this.disconnected = true;
-    this.socket?.close();
-  }
-
   // Emits an TdpClientEvent.ERROR event. Sets this.errored to true to alert the socket.onclose handler that
   // it needn't emit a generic unknown error event.
   handleError(err: Error) {
     this.logger.error(err);
-    this.emit(TdpClientEvent.ERROR, err);
-    this.errored = true;
+    this.emit(TdpClientEvent.TDP_ERROR, err);
     this.socket?.close();
   }
 
@@ -157,7 +146,7 @@ export default class Client extends EventEmitter {
   }
 }
 
-export type ImageData = {
+export type ImageFragment = {
   image: HTMLImageElement;
   left: number;
   top: number;
