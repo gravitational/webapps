@@ -94,7 +94,7 @@ class PtyProcess extends EventEmitter {
 
   private onExit(e: { exitCode: number; signal?: number }) {
     this.emit(TermEventEnum.EXIT, e);
-    this.logger.info('pty has been terminated');
+    this.logger.info(`pty has been terminated with exit code: ${e.exitCode}`);
   }
 
   private onOpen() {
