@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import { useMemo, Dispatch, SetStateAction } from 'react';
+import { useMemo, useRef, Dispatch, SetStateAction } from 'react';
 import TdpClient, { ImageFragment } from 'teleport/lib/tdp/client';
 import { TopBarHeight } from './TopBar';
 import cfg from 'teleport/config';
@@ -30,7 +30,7 @@ export default function useTdpClientCanvas(props: Props) {
     setTdpConnection,
     setWsConnection,
   } = props;
-  var firstImageFragment = true;
+  const firstImageFragmentRef = useRef(true);
 
   // Build a client based on url parameters.
   const tdpClient = useMemo(() => {
@@ -61,10 +61,10 @@ export default function useTdpClientCanvas(props: Props) {
     data: ImageFragment
   ) => {
     // The first image fragment we see signals a successful rdp connection on the backend.
-    if (firstImageFragment) {
+    if (firstImageFragmentRef.current) {
       syncCanvasSizeToDisplaySize(ctx.canvas);
       setTdpConnection({ status: 'success' });
-      firstImageFragment = false;
+      firstImageFragmentRef.current = false;
     }
     ctx.drawImage(data.image, data.left, data.top);
   };
