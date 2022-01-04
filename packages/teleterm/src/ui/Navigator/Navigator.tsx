@@ -16,17 +16,16 @@ limitations under the License.
 
 import React from 'react';
 import styled from 'styled-components';
-import { Flex, Text } from 'design';
+import { Flex } from 'design';
 import ExpanderClusters from './ExpanderClusters';
 import ExpanderConnections from './ExpanderConnections';
+import { space, width, color, height } from 'styled-system';
 
 export default function Navigator() {
   return (
     <Nav bg="primary.dark">
       <StyledBorder />
-      <Text typography="body1" py={1} ml={4}>
-        Teleport Terminal
-      </Text>
+      <Input placeholder="Search..." />
       <StyledBorder />
       <ExpanderConnections />
       <ExpanderClusters />
@@ -45,5 +44,28 @@ const StyledBorder = styled.div(({ theme }) => {
   return {
     background: theme.colors.primary.lighter,
     height: '1px',
+  };
+});
+
+const Input = styled.input(props => {
+  const { theme } = props;
+  return {
+    background: theme.colors.primary.light,
+    boxSizing: 'border-box',
+    color: theme.colors.text.primary,
+    width: '100%',
+    border: 'none',
+    outline: 'none',
+    padding: '4px 12px',
+    '&:hover, &:focus': {
+      color: theme.colors.primary.contrastText,
+      background: theme.colors.primary.lighter,
+      opacity: 1,
+    },
+
+    ...space(props),
+    ...width(props),
+    ...height(props),
+    ...color(props),
   };
 });
