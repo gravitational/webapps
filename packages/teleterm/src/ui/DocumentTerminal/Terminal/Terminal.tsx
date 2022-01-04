@@ -16,7 +16,7 @@ limitations under the License.
 
 import React, { useEffect, useRef } from 'react';
 import { Box, Flex } from 'design';
-import styled from 'styled-components';
+import styled, { useTheme } from 'styled-components';
 import XTermCtrl from './xterm';
 import { colors } from 'teleterm/ui/ThemeProvider/colors';
 import { PtyProcess } from 'teleterm/services/pty/types';
@@ -25,10 +25,12 @@ import { debounce } from 'lodash';
 export default function Terminal(props: Props) {
   const refElement = useRef<HTMLElement>();
   const refCtrl = useRef<XTermCtrl>();
+  const monoFont = useTheme().fonts.mono;
 
   useEffect(() => {
     const ctrl = new XTermCtrl(props.ptyProcess, {
       el: refElement.current,
+      monospacedFontFamily: monoFont
     });
 
     ctrl.open();

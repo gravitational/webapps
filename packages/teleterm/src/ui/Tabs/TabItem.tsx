@@ -104,6 +104,7 @@ const StyledTabButton = styled.button`
   cursor: pointer;
   outline: none;
   color: inherit;
+  font-family: inherit;
   line-height: 32px;
   background-color: transparent;
   white-space: nowrap;
