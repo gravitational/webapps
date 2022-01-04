@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import { useMemo, useRef, Dispatch, SetStateAction } from 'react';
+import { useState, useEffect, useRef, Dispatch, SetStateAction } from 'react';
 import TdpClient, { ImageFragment } from 'teleport/lib/tdp/client';
 import { TopBarHeight } from './TopBar';
 import cfg from 'teleport/config';
@@ -30,10 +30,10 @@ export default function useTdpClientCanvas(props: Props) {
     setTdpConnection,
     setWsConnection,
   } = props;
+  const [tdpClient, setTdpClient] = useState<TdpClient | null>(null);
   const firstImageFragmentRef = useRef(true);
 
-  // Build a client based on url parameters.
-  const tdpClient = useMemo(() => {
+  useEffect(() => {
     const { width, height } = getDisplaySize();
 
     const addr = cfg.api.desktopWsAddr
@@ -45,7 +45,7 @@ export default function useTdpClientCanvas(props: Props) {
       .replace(':width', width.toString())
       .replace(':height', height.toString());
 
-    return new TdpClient(addr, username);
+    setTdpClient(new TdpClient(addr, username));
   }, [clusterId, username, desktopName]);
 
   const syncCanvasSizeToDisplaySize = (canvas: HTMLCanvasElement) => {

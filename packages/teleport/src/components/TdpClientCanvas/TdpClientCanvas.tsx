@@ -38,101 +38,103 @@ export default function TdpClientCanvas(props: Props) {
   const canvasRef = useRef<HTMLCanvasElement>(null);
 
   useEffect(() => {
-    const canvas = canvasRef.current;
-    // Make the canvas a focusable keyboard listener
-    // https://stackoverflow.com/a/51267699/6277051
-    // https://stackoverflow.com/a/16492878/6277051
-    canvas.tabIndex = -1;
-    canvas.style.outline = 'none';
-    canvas.focus();
+    if (tdpCli) {
+      const canvas = canvasRef.current;
+      // Make the canvas a focusable keyboard listener
+      // https://stackoverflow.com/a/51267699/6277051
+      // https://stackoverflow.com/a/16492878/6277051
+      canvas.tabIndex = -1;
+      canvas.style.outline = 'none';
+      canvas.focus();
 
-    const ctx = canvas.getContext('2d');
+      const ctx = canvas.getContext('2d');
 
-    // Buffered rendering logic
-    var buffer: ImageFragment[] = [];
-    const renderBuffer = () => {
-      if (buffer.length) {
-        for (let i = 0; i < buffer.length; i++) {
-          tdpCliOnImageFragment(ctx, buffer[i]);
+      // Buffered rendering logic
+      var buffer: ImageFragment[] = [];
+      const renderBuffer = () => {
+        if (buffer.length) {
+          for (let i = 0; i < buffer.length; i++) {
+            tdpCliOnImageFragment(ctx, buffer[i]);
+          }
+          buffer = [];
         }
-        buffer = [];
-      }
+        requestAnimationFrame(renderBuffer);
+      };
       requestAnimationFrame(renderBuffer);
-    };
-    requestAnimationFrame(renderBuffer);
 
-    tdpCli.on(TdpClientEvent.IMAGE_FRAGMENT, (data: ImageFragment) => {
-      buffer.push(data);
-    });
+      tdpCli.on(TdpClientEvent.IMAGE_FRAGMENT, (data: ImageFragment) => {
+        buffer.push(data);
+      });
 
-    tdpCli.on(TdpClientEvent.TDP_ERROR, (err: Error) => {
-      tdpCliOnTdpError(err);
-    });
+      tdpCli.on(TdpClientEvent.TDP_ERROR, (err: Error) => {
+        tdpCliOnTdpError(err);
+      });
 
-    tdpCli.on(TdpClientEvent.WS_CLOSE, () => {
-      tdpCliOnWsClose();
-    });
+      tdpCli.on(TdpClientEvent.WS_CLOSE, () => {
+        tdpCliOnWsClose();
+      });
 
-    tdpCli.on(TdpClientEvent.WS_OPEN, () => {
-      tdpCliOnWsOpen();
-    });
+      tdpCli.on(TdpClientEvent.WS_OPEN, () => {
+        tdpCliOnWsOpen();
+      });
 
-    // Initialize canvas, document, and window event listeners.
+      // Initialize canvas, document, and window event listeners.
 
-    // Prevent native context menu to not obscure remote context menu.
-    const oncontextmenu = () => false;
-    canvas.oncontextmenu = oncontextmenu;
+      // Prevent native context menu to not obscure remote context menu.
+      const oncontextmenu = () => false;
+      canvas.oncontextmenu = oncontextmenu;
 
-    // Mouse controls.
-    const onmousemove = (e: MouseEvent) => {
-      onMouseMove(tdpCli, canvas, e);
-    };
-    canvas.onmousemove = onmousemove;
-    const onmousedown = (e: MouseEvent) => {
-      onMouseDown(tdpCli, e);
-    };
-    canvas.onmousedown = onmousedown;
-    const onmouseup = (e: MouseEvent) => {
-      onMouseUp(tdpCli, e);
-    };
-    canvas.onmouseup = onmouseup;
-    const onwheel = (e: WheelEvent) => {
-      e.preventDefault();
-      onMouseWheelScroll(tdpCli, e);
-    };
-    canvas.onwheel = onwheel;
+      // Mouse controls.
+      const onmousemove = (e: MouseEvent) => {
+        onMouseMove(tdpCli, canvas, e);
+      };
+      canvas.onmousemove = onmousemove;
+      const onmousedown = (e: MouseEvent) => {
+        onMouseDown(tdpCli, e);
+      };
+      canvas.onmousedown = onmousedown;
+      const onmouseup = (e: MouseEvent) => {
+        onMouseUp(tdpCli, e);
+      };
+      canvas.onmouseup = onmouseup;
+      const onwheel = (e: WheelEvent) => {
+        e.preventDefault();
+        onMouseWheelScroll(tdpCli, e);
+      };
+      canvas.onwheel = onwheel;
 
-    // Key controls.
-    const onkeydown = (e: KeyboardEvent) => {
-      e.preventDefault();
-      onKeyDown(tdpCli, e);
-    };
-    canvas.onkeydown = onkeydown;
-    const onkeyup = (e: KeyboardEvent) => {
-      e.preventDefault();
-      onKeyUp(tdpCli, e);
-    };
-    canvas.onkeyup = onkeyup;
+      // Key controls.
+      const onkeydown = (e: KeyboardEvent) => {
+        e.preventDefault();
+        onKeyDown(tdpCli, e);
+      };
+      canvas.onkeydown = onkeydown;
+      const onkeyup = (e: KeyboardEvent) => {
+        e.preventDefault();
+        onKeyUp(tdpCli, e);
+      };
+      canvas.onkeyup = onkeyup;
 
-    tdpCli.init();
+      tdpCli.init();
 
-    return () => {
-      tdpCli.nuke();
-      canvas.removeEventListener('contextmenu', oncontextmenu);
-      canvas.removeEventListener('mousemove', onmousemove);
-      canvas.removeEventListener('mousedown', onmousedown);
-      canvas.removeEventListener('mouseup', onmouseup);
-      canvas.removeEventListener('keydown', onkeydown);
-      canvas.removeEventListener('keyup', onkeyup);
-      canvas.removeEventListener('wheel', onwheel);
-    };
+      return () => {
+        tdpCli.nuke();
+        canvas.removeEventListener('contextmenu', oncontextmenu);
+        canvas.removeEventListener('mousemove', onmousemove);
+        canvas.removeEventListener('mousedown', onmousedown);
+        canvas.removeEventListener('mouseup', onmouseup);
+        canvas.removeEventListener('keydown', onkeydown);
+        canvas.removeEventListener('keyup', onkeyup);
+        canvas.removeEventListener('wheel', onwheel);
+      };
+    }
   }, [tdpCli]);
 
   return <canvas style={{ ...style }} ref={canvasRef} />;
 }
 
 export type Props = {
-  tdpCli: TdpClient;
+  tdpCli: TdpClient | null;
   tdpCliOnImageFragment: (
     ctx: CanvasRenderingContext2D,
     data: ImageFragment
