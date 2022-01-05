@@ -159,5 +159,5 @@ test('decodes errors', () => {
   });
 
   const error = codec.decodeErrorMessage(tdpErrorBuffer);
-  expect(error.message).toBe('An error occured');
+  expect(error).toBe('An error occured');
 });

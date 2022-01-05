@@ -318,14 +318,14 @@ export default class Codec {
     }
   }
 
-  // decodeError decodes a raw tdp ERROR message and returns it as a javascript Error object
+  // decodeError decodes a raw tdp ERROR message and returns it as a string
   // | message type (9) | message_length uint32 | message []byte
-  decodeErrorMessage(buffer: ArrayBuffer): Error {
+  decodeErrorMessage(buffer: ArrayBuffer): string {
     // slice(5) ensures we skip the message type and message_length
     let messageUtf8array = new Uint8Array(buffer.slice(5));
     let decoder = new TextDecoder();
     let message = decoder.decode(messageUtf8array);
-    return new Error(message);
+    return message;
   }
 
   // decodeRegion decodes the region from a PNG_FRAME tdp message.
