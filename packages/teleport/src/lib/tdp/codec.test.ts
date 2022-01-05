@@ -158,6 +158,6 @@ test('decodes errors', () => {
     view.setUint8(offset++, byte);
   });
 
-  const error = codec.decodeError(tdpErrorBuffer);
+  const error = codec.decodeErrorMessage(tdpErrorBuffer);
   expect(error.message).toBe('An error occured');
 });

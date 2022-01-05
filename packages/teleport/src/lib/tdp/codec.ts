@@ -320,7 +320,7 @@ export default class Codec {
 
   // decodeError decodes a raw tdp ERROR message and returns it as a javascript Error object
   // | message type (9) | message_length uint32 | message []byte
-  decodeError(buffer: ArrayBuffer): Error {
+  decodeErrorMessage(buffer: ArrayBuffer): Error {
     // slice(5) ensures we skip the message type and message_length
     let messageUtf8array = new Uint8Array(buffer.slice(5));
     let decoder = new TextDecoder();

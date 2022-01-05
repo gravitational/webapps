@@ -82,7 +82,7 @@ export default class Client extends EventEmitter {
       if (messageType === MessageType.PNG_FRAME) {
         this.processFrame(buffer);
       } else if (messageType === MessageType.ERROR) {
-        this.handleError(this.codec.decodeError(buffer));
+        this.handleError(this.codec.decodeErrorMessage(buffer));
       } else {
         this.handleError(
           new Error(`recieved unsupported message type ${messageType}`)
