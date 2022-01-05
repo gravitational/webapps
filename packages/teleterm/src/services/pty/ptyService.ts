@@ -1,42 +1,11 @@
-import { readlink } from 'fs';
-import { promisify } from 'util';
-import { exec } from 'child_process';
 import { RuntimeSettings } from 'teleterm/types';
-import Logger from 'teleterm/logger';
 import PtyProcess, { TermEventEnum } from './ptyProcess';
 import { PtyCommand, PtyOptions, PtyServiceClient } from './types';
 
 export default function createPtyService(
   settings: RuntimeSettings
 ): PtyServiceClient {
-  const logger = new Logger('PTY Service');
   return {
-    async getWorkingDirectory(pid: number): Promise<string> {
-      try {
-        switch (process.platform) {
-          case 'darwin':
-            const asyncExec = promisify(exec);
-            // -a: join using AND instead of OR for the -p and -d options
-            // -p: PID
-            // -d: only include the file descriptor, cwd
-            // -F: fields to output (the n character outputs 3 things, the last one is cwd)
-            const { stdout, stderr } = await asyncExec(
-              `lsof -a -p ${pid} -d cwd -F n`
-            );
-            if (stderr) {
-              throw new Error(stderr);
-            }
-            return stdout.split('\n').filter(Boolean).reverse()[0].substring(1);
-          case 'linux':
-            const asyncReadlink = promisify(readlink);
-            return await asyncReadlink(`/proc/${pid}/cwd`);
-        }
-      } catch (error) {
-        logger.error(`Cannot read working directory for PID: ${pid}`, error);
-        throw new Error(error);
-      }
-    },
-
     createPtyProcess(cmd: PtyCommand) {
       let options = buildOptions(settings, cmd);
       let _ptyProcess = new PtyProcess(options);
@@ -66,8 +35,16 @@ export default function createPtyService(
           _ptyProcess.addListener(TermEventEnum.OPEN, cb);
         },
 
+        getStatus() {
+          return _ptyProcess.getStatus();
+        },
+
         getPid() {
           return _ptyProcess.getPid();
+        },
+
+        getCwd() {
+          return _ptyProcess.getCwd();
         },
 
         onExit(cb: (ev: { exitCode: number; signal?: number }) => void) {

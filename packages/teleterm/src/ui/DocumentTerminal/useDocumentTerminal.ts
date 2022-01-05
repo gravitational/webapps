@@ -45,8 +45,7 @@ async function initState(ctx: IAppContext, doc: Doc) {
       return;
     }
 
-    const pid = ptyProcess.getPid();
-    const cwd = await ctx.serviceTerminals.getWorkingDirectory(pid);
+    const cwd = await ptyProcess.getCwd();
     ctx.serviceDocs.update(doc.uri, { cwd, title: cwd });
   };
 

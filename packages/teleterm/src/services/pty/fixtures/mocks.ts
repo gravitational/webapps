@@ -18,13 +18,11 @@ export class MockPtyProcess implements PtyProcess {
   getPid() {
     return 0;
   }
+
+  getCwd = async () => '';
 }
 
 export class MockPtyServiceClient implements PtyServiceClient {
-  getWorkingDirectory(): Promise<string> {
-    return Promise.resolve('');
-  }
-
   createPtyProcess(cmd: PtyCommand): PtyProcess {
     return new MockPtyProcess();
   }

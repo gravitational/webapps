@@ -14,13 +14,12 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React, { useEffect, useRef } from 'react';
-import { Box, Flex } from 'design';
-import styled, { useTheme } from 'styled-components';
-import XTermCtrl from './xterm';
-import { colors } from 'teleterm/ui/ThemeProvider/colors';
-import { PtyProcess } from 'teleterm/services/pty/types';
 import { debounce } from 'lodash';
+import React, { useEffect, useRef } from 'react';
+import styled, { useTheme } from 'styled-components';
+import { Box, Flex } from 'design';
+import { PtyProcess } from 'teleterm/services/pty/types';
+import XTermCtrl from './ctrl';
 
 export default function Terminal(props: Props) {
   const refElement = useRef<HTMLElement>();
@@ -84,19 +83,9 @@ const StyledXterm = styled(Box)(
   props => `
    height: 100%;
    width: 100%;
-   font-size: 14px;
-   line-height: normal;
-   overflow: auto;
-   background-color: ${colors.bgTerminal};
-   .terminal {
-     font-family: ${props.theme.fonts.mono};
-     border: none;
-     font-size: inherit;
-     line-height: normal;
-     position: relative;
-   }
+   background-color: ${props.theme.colors.bgTerminal};
    .terminal .xterm-viewport {
-     background-color: ${colors.bgTerminal};
+     background-color: ${props.theme.bgTerminal};
    }
  }`
 );

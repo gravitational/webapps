@@ -10,8 +10,4 @@ export default class TerminalsService {
   createPtyProcess(cmd: types.PtyCommand) {
     return this.ptyServiceClient.createPtyProcess(cmd);
   }
-
-  getWorkingDirectory(pid: number) {
-    return this.ptyServiceClient.getWorkingDirectory(pid);
-  }
 }

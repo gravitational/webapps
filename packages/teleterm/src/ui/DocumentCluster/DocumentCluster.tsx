@@ -123,7 +123,7 @@ const Layout = styled(Box)`
 
 const StyledBorder = styled(Box)(({ theme }) => {
   return {
-    background: theme.colors.primary.main,
+    background: theme.colors.primary.lighter,
     height: '1px',
   };
 });
