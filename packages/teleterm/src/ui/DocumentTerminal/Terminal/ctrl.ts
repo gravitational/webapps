@@ -75,7 +75,7 @@ export default class TtyTerminal {
       this.ptyProcess.resize(size.cols, size.rows);
     });
 
-    this.ptyProcess.onData(data => this.processData(data));
+    this.ptyProcess.onData(data => this.handleData(data));
 
     this.ptyProcess.start(this.term.cols, this.term.rows);
 
@@ -93,7 +93,6 @@ export default class TtyTerminal {
       return;
     }
     this.fitAddon.fit();
-    this.ptyProcess.resize(this.term.cols, this.term.rows);
   }
 
   destroy(): void {
@@ -128,7 +127,7 @@ export default class TtyTerminal {
     );
   }
 
-  private processData(data: string): void {
+  private handleData(data: string): void {
     try {
       this.term.write(data);
     } catch (err) {

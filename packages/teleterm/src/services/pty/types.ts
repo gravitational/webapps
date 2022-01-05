@@ -14,10 +14,10 @@ export type PtyProcess = {
   start(cols: number, rows: number): void;
   onExit(cb: (ev: { exitCode: number; signal?: number }) => void);
   getPid(): number;
+  getCwd(): Promise<string>;
 };
 
 export type PtyServiceClient = {
-  getWorkingDirectory(pid: number): Promise<string>;
   createPtyProcess: (cmd: PtyCommand) => PtyProcess;
 };
 
