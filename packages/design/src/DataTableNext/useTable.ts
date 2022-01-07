@@ -140,7 +140,7 @@ function sortAndFilter<T>(
         const bValue = b[sort.key];
 
         if (typeof aValue === 'string' && typeof bValue === 'string') {
-          return Intl.Collator().compare(aValue, bValue);
+          return aValue.localeCompare(bValue, undefined, { numeric: true });
         }
 
         return aValue - bValue;
