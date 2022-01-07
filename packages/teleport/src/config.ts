@@ -105,7 +105,7 @@ const cfg = {
     desktopWsAddr:
       'wss://:fqdm/v1/webapi/sites/:clusterId/desktops/:desktopName/connect?access_token=:token&username=:username&width=:width&height=:height',
     desktopsWsPlaybackPOCPath:
-      'wss://:fqdm/v1/webapi/sites/:clusterId/desktops/playbacktest/:sid?access_token=:token',
+      'wss://:fqdm/v1/webapi/sites/:clusterId/desktopplaybacktest/:sid?access_token=:token',
     siteSessionPath: '/v1/webapi/sites/:siteId/sessions',
     ttyWsAddr:
       'wss://:fqdm/v1/webapi/sites/:clusterId/connect?access_token=:token&params=:params',
