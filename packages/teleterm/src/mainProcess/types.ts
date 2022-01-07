@@ -1,4 +1,5 @@
 import { ConfigService } from '../services/config';
+import { Kind } from 'teleterm/ui/services/docs/types';
 
 export type RuntimeSettings = {
   dev: boolean;
@@ -18,6 +19,7 @@ export type MainProcessClient = {
   getRuntimeSettings(): RuntimeSettings;
   openTerminalContextMenu(): void;
   openClusterContextMenu(options: ClusterContextMenuOptions): void;
+  openTabContextMenu(options: TabContextMenuOptions): void;
   configService: ConfigService;
 };
 
@@ -31,8 +33,17 @@ export interface ClusterContextMenuOptions {
   onRemove(): void;
 }
 
+export interface TabContextMenuOptions {
+  documentKind: Kind;
+  onClose(): void;
+  onCloseOthers(): void;
+  onCloseToRight(): void;
+  onDuplicatePty(): void;
+}
+
 export const ClusterContextMenuEventChannel = 'ClusterContextMenuEventChannel';
 export const TerminalContextMenuEventChannel = 'TerminalContextMenuEventChannel';
+export const TabContextMenuEventChannel = 'TabContextMenuEventChannel';
 export const ConfigServiceEventChannel = 'ConfigServiceEventChannel';
 
 export enum ClusterContextMenuEventType {
@@ -40,6 +51,13 @@ export enum ClusterContextMenuEventType {
   Login = 'Login',
   Logout = 'Logout',
   Remove = 'Remove',
+}
+
+export enum TabContextMenuEventType {
+  Close = 'Close',
+  CloseOthers = 'CloseOthers',
+  CloseToRight = 'CloseToRight',
+  DuplicatePty = 'DuplicatePty',
 }
 
 export enum ConfigServiceEventType {

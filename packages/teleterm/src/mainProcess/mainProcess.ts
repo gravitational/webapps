@@ -3,12 +3,13 @@ import { app, screen, BrowserWindow, ipcMain } from 'electron';
 import { ChildProcess, spawn } from 'child_process';
 import { RuntimeSettings, Logger } from 'teleterm/types';
 import { getAssetPath } from './runtimeSettings';
-import { subscribeToClusterContextMenuEvent } from './clusterContextMenu';
-import { subscribeToTerminalContextMenuEvent } from 'teleterm/mainProcess/terminalContextMenu';
+import { subscribeToClusterContextMenuEvent } from './contextMenus/clusterContextMenu';
+import { subscribeToTerminalContextMenuEvent } from './contextMenus/terminalContextMenu';
 import {
   ConfigService,
   subscribeToConfigServiceEvents,
 } from '../services/config';
+import { subscribeToTabContextMenuEvent } from './contextMenus/tabContextMenu';
 
 type Options = {
   settings: RuntimeSettings;
@@ -95,6 +96,7 @@ export default class MainProcess {
 
     subscribeToTerminalContextMenuEvent();
     subscribeToClusterContextMenuEvent();
+    subscribeToTabContextMenuEvent();
     subscribeToConfigServiceEvents(this.configService);
   }
 }

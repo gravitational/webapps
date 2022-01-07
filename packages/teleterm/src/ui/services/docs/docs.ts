@@ -147,14 +147,26 @@ export default class DocumentService extends ImmutableStore<State> {
     this.setState(draftState => ({ ...draftState, docs, location: nextUri }));
   }
 
+  closeMultiple(toClose: { uri: string }[]) {
+    toClose.forEach(toClose => this.close(toClose));
+  }
+
   isActive(uri: string) {
     const location = this.getLocation();
     return !!routing.match(location, { exact: true, path: uri });
   }
 
-  add(doc: Document) {
+  createPtyDocumentCopy(doc: Document) {
+    return { ...doc, uri: routing.getPtyUri({ sid: unique() }) };
+  }
+
+  add(doc: Document, position?: number) {
     this.setState(draftState => {
-      draftState.docs.push(doc);
+      if (position === undefined) {
+        draftState.docs.push(doc);
+      } else {
+        draftState.docs.splice(position, 0, doc);
+      }
     });
   }
 
