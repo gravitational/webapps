@@ -15,16 +15,21 @@ limitations under the License.
 */
 import React, { useEffect, useRef } from 'react';
 import Terminal from 'teleport/lib/term/terminal';
+import { getPlatform } from 'design/theme/utils';
+import { useTheme } from 'styled-components';
 import Tty from 'teleport/lib/term/tty';
 import { TermEventEnum } from 'teleport/lib/term/enums';
 import StyledXterm from 'teleport/Console/StyledXterm';
 
 export default function Xterm({ tty }: { tty: Tty }) {
   const refContainer = useRef<HTMLElement>();
+  const theme = useTheme();
 
   useEffect(() => {
     const term = new TerminalPlayer(tty, {
       el: refContainer.current,
+      fontFamily: theme.fonts.mono,
+      fontSize: getPlatform().isMac ? 12 : 14,
     });
 
     term.open();

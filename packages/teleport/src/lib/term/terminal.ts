@@ -16,7 +16,7 @@ limitations under the License.
 import 'xterm/css/xterm.css';
 import { Terminal } from 'xterm';
 import { FitAddon } from 'xterm-addon-fit';
-import { debounce, isInteger } from 'lodash';
+import { debounce, Cancelable, isInteger } from 'lodash';
 import Logger from 'shared/libs/logger';
 import { TermEventEnum } from './enums';
 import Tty from './tty';
@@ -26,8 +26,7 @@ const DISCONNECT_TXT = 'disconnected';
 const WINDOW_RESIZE_DEBOUNCE_DELAY = 200;
 
 /**
- * TtyTerminal is a wrapper on top of xtermjs that handles connections
- * and resize events
+ * TtyTerminal is a wrapper on top of xtermjs
  */
 export default class TtyTerminal {
   term: Terminal;
@@ -35,58 +34,57 @@ export default class TtyTerminal {
 
   _el: HTMLElement;
   _scrollBack: number;
+  _fontFamily: string;
+  _fontSize: number;
+  _debouncedResize: (() => void) & Cancelable;
   _fitAddon = new FitAddon();
 
-  _debouncedResize: () => void;
-
   constructor(tty: Tty, options: Options) {
-    const { el, scrollBack } = options;
+    const { el, scrollBack, fontFamily, fontSize } = options;
     this._el = el;
+    this._fontFamily = fontFamily || undefined;
+    this._fontSize = fontSize || 14;
     this._scrollBack = scrollBack;
     this.tty = tty;
     this.term = null;
 
-    this._debouncedResize = debounce(
-      this._requestResize.bind(this),
-      WINDOW_RESIZE_DEBOUNCE_DELAY
-    );
+    this._debouncedResize = debounce(() => {
+      this._requestResize();
+    }, WINDOW_RESIZE_DEBOUNCE_DELAY);
   }
 
   open() {
-    // render xtermjs with default values
     this.term = new Terminal({
-      cursorBlink: false,
+      lineHeight: 1,
+      fontFamily: this._fontFamily,
+      fontSize: this._fontSize,
       scrollback: this._scrollBack || 1000,
+      cursorBlink: false,
       allowTransparency: true,
     });
 
     this.term.loadAddon(this._fitAddon);
     this.term.open(this._el);
-
     this._fitAddon.fit();
     this.term.focus();
-
-    // subscribe to xtermjs output
     this.term.onData(data => {
       this.tty.send(data);
     });
 
-    // subscribe to window resize events
-    window.addEventListener('resize', this._debouncedResize);
-
-    // subscribe to tty
-    this.tty.on(TermEventEnum.RESET, this.reset.bind(this));
-    this.tty.on(TermEventEnum.CONN_CLOSE, this._processClose.bind(this));
-    this.tty.on(TermEventEnum.DATA, this._processData.bind(this));
-    this.tty.on(
-      TermEventEnum.U2F_CHALLENGE,
-      this._processU2FChallenge.bind(this)
+    this.tty.on(TermEventEnum.RESET, () => this.reset());
+    this.tty.on(TermEventEnum.CONN_CLOSE, e => this._processClose(e));
+    this.tty.on(TermEventEnum.DATA, data => this._processData(data));
+    this.tty.on(TermEventEnum.U2F_CHALLENGE, payload =>
+      this._processU2FChallenge(payload)
     );
 
     // subscribe tty resize event (used by session player)
     this.tty.on(TermEventEnum.RESIZE, ({ h, w }) => this.resize(w, h));
 
     this.connect();
+
+    // subscribe to window resize events
+    window.addEventListener('resize', this._debouncedResize);
   }
 
   connect() {
@@ -95,13 +93,10 @@ export default class TtyTerminal {
 
   destroy() {
     this._disconnect();
-
-    if (this.term !== null) {
-      this.term.dispose();
-    }
-
+    this._debouncedResize.cancel();
     this._fitAddon.dispose();
     this._el.innerHTML = null;
+    this.term?.dispose();
 
     window.removeEventListener('resize', this._debouncedResize);
   }
@@ -129,13 +124,31 @@ export default class TtyTerminal {
     }
   }
 
+  _disconnect() {
+    this.tty.disconnect();
+    this.tty.removeAllListeners();
+  }
+
+  _requestResize() {
+    const visible = !!this._el.clientWidth && !!this._el.clientHeight;
+    if (!visible) {
+      logger.info(`unable to resize terminal (container might be hidden)`);
+      return;
+    }
+
+    this._fitAddon.fit();
+    this.tty.requestResize(this.term.cols, this.term.rows);
+  }
+
   _processData(data) {
     try {
-      this.term.write(data, () => this.tty.emit(TermEventEnum.DEQUEUE));
+      this.tty.pauseFlow();
+      this.term.write(data, () => this.tty.resumeFlow());
     } catch (err) {
       logger.error('xterm.write', data, err);
       // recover xtermjs by resetting it
       this.term.reset();
+      this.tty.resumeFlow();
     }
   }
 
@@ -150,17 +163,7 @@ export default class TtyTerminal {
     this.term.write(displayText);
   }
 
-  _disconnect() {
-    this.tty.disconnect();
-    this.tty.removeAllListeners();
-  }
-
-  _requestResize() {
-    this._fitAddon.fit();
-    this.tty.requestResize(this.term.cols, this.term.rows);
-  }
-
-  _processU2FChallenge(payload) {
+  _processU2FChallenge(payload: string) {
     if (!window['u2f']) {
       const termMsg =
         'This browser does not support U2F required for hardware tokens, please try Chrome or Firefox instead.';
@@ -206,4 +209,6 @@ export default class TtyTerminal {
 type Options = {
   el: HTMLElement;
   scrollBack?: number;
+  fontFamily?: string;
+  fontSize?: number;
 };
