@@ -4,6 +4,7 @@ export type TableProps<T> = {
   emptyText: string;
   pagination?: PaginationConfig;
   isSearchable?: boolean;
+  initialSort?: InitialSort<T>;
 };
 
 type TableColumnBase<T> = {
@@ -30,5 +31,12 @@ type TableColumnWithAltKey<T> = TableColumnBase<T> & {
   altKey: string;
   key?: never;
 };
+
+type InitialSort<T> = {
+  key: Extract<keyof T, string>;
+  dir: SortDir;
+};
+
+export type SortDir = 'ASC' | 'DESC';
 
 export type TableColumn<T> = TableColumnWithKey<T> | TableColumnWithAltKey<T>;

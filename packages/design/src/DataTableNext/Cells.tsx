@@ -2,7 +2,7 @@ import React from 'react';
 import { Label } from 'design';
 import * as Icons from 'design/Icon';
 import { displayDate } from 'shared/services/loc';
-import { SortDir } from './useTable';
+import { SortDir } from './types';
 
 export const Cell = props => <td children={props.children} {...props} />;
 

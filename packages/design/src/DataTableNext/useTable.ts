@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import isMatch from 'design/utils/match';
 import { displayDate } from 'shared/services/loc';
 import paginateData from './Pager/paginateData';
-import { TableProps, TableColumn } from './types';
+import { TableProps, TableColumn, SortDir } from './types';
 
 export default function useTable<T>({
   data,
@@ -12,7 +12,9 @@ export default function useTable<T>({
 }: TableProps<T>) {
   const [state, setState] = useState(() => {
     // Finds the first sortable column to use for the initial sorting
-    const col = columns.find(column => column.isSortable);
+    const col = props.initialSort
+      ? columns.find(column => column.key === props.initialSort.key)
+      : columns.find(column => column.isSortable);
 
     return {
       data: [] as T[],
@@ -170,8 +172,9 @@ function searchAndFilterCb(
   }
 }
 
-export type SortDir = 'ASC' | 'DESC';
-
-export type State<T> = Omit<ReturnType<typeof useTable>, 'columns'> & {
+export type State<T> = Omit<
+  ReturnType<typeof useTable>,
+  'columns' | 'initialSort'
+> & {
   columns: TableColumn<T>[];
 };
