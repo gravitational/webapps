@@ -62,19 +62,13 @@ export default function TabHost(props: Props) {
         serviceDocs.close(document);
       },
       onCloseOthers: () => {
-        const toClose = documents.filter(d => d !== document);
-        serviceDocs.closeMultiple(toClose);
+        serviceDocs.closeOthers(document);
       },
       onCloseToRight: () => {
-        const documentIndex = documents.indexOf(document);
-        const toClose = documents.filter((_, index) => index > documentIndex);
-        serviceDocs.closeMultiple(toClose);
+        serviceDocs.closeToRight(document);
       },
       onDuplicatePty: () => {
-        const documentIndex = documents.indexOf(document);
-        const newDocument = serviceDocs.createPtyDocumentCopy(document);
-        serviceDocs.add(newDocument, documentIndex + 1);
-        serviceDocs.setLocation(newDocument.uri);
+        serviceDocs.duplicatePtyAndActivate(document);
       },
     });
   }
