@@ -14,21 +14,18 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import { useState } from 'react';
-import { useAppContext } from 'teleterm/ui/appContextProvider';
+import { useClusterContext } from 'teleterm/ui/DocumentCluster/clusterContext';
 
-export default function useApps(clusterUri: string) {
-  const ctx = useAppContext();
-  const [searchValue, setSearchValue] = useState('');
-  const apps = ctx.serviceClusters.findApps(clusterUri);
-  const syncStatus = ctx.serviceClusters.getClusterSyncStatus(clusterUri);
-
-  ctx.serviceClusters.useState();
+export default function useApps() {
+  const ctx = useClusterContext();
+  const apps = ctx.getApps();
+  const syncStatus = ctx.getSyncStatus().apps;
 
   return {
-    searchValue,
-    setSearchValue,
+    connect: ctx.connectDb,
     apps,
-    syncStatus: syncStatus.apps,
+    syncStatus,
   };
 }
+
+export type State = ReturnType<typeof useApps>;

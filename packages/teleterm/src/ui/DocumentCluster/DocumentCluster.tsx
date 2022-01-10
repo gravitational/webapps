@@ -16,8 +16,7 @@ limitations under the License.
 
 import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
-import { Text, Flex, Box, ButtonPrimary, ButtonIcon } from 'design';
-import { SyncAlt } from 'design/Icon';
+import { Text, Flex, Box, ButtonPrimary } from 'design';
 import * as types from 'teleterm/ui/services/docs/types';
 import Document from 'teleterm/ui/Document';
 import { useAppContext } from 'teleterm/ui/appContextProvider';
@@ -26,17 +25,14 @@ import ClusterCtx, {
   ClusterContextProvider,
 } from './clusterContext';
 import ClusterResources from './ClusterResources';
-import ClusterNavButton from './ClusterNavButton';
 
 export default function Container(props: DocumentProps) {
   const { uri } = props.doc;
-  const { serviceClusters, serviceDocs, serviceModals } = useAppContext();
-  const [clusterCtx] = useState(
-    () => new ClusterCtx(uri, serviceClusters, serviceModals)
-  );
+  const appCtx = useAppContext();
+  const [clusterCtx] = useState(() => new ClusterCtx(uri, appCtx));
 
   useEffect(() => {
-    serviceDocs.update(uri, {
+    appCtx.serviceDocs.update(uri, {
       title: clusterCtx.state.clusterName,
     });
 
@@ -52,58 +48,44 @@ export default function Container(props: DocumentProps) {
 
 export function DocumentCluster(props: { visible: boolean }) {
   const clusterCtx = useClusterContext();
-  const { navItems, clusterName, connected } = clusterCtx.useState();
-
-  if (!connected) {
-    return (
-      <Document visible={props.visible}>
-        <Layout mx="auto">
-          <Flex flexDirection="column" mx="auto" alignItems="center" mt={4}>
-            <Text typography="h3" color="text.secondary" mb={4}>
-              {`${clusterName} cluster is offline`}
-            </Text>
-            <ButtonPrimary
-              width="100px"
-              size="small"
-              onClick={clusterCtx.login}
-            >
-              Connect
-            </ButtonPrimary>
-          </Flex>
-        </Layout>
-      </Document>
-    );
-  }
-
+  const { clusterName, connected } = clusterCtx.useState();
   return (
     <Document visible={props.visible}>
-      <Layout mx="auto" px={5} pt={4} height="100%">
-        <Flex mb="2" justifyContent="space-between">
+      <Layout mx="auto" px={5} pt={3} height="100%">
+        <Flex justifyContent="space-between">
           <Text typography="h4" color="text.secondary">
-            Cluster:
-            <Text ml={2} as="span" typography="h4" color="text.primary">
-              {`   ${clusterName}`}
+            {`clusters / `}
+            <Text as="span" typography="h4" color="text.primary">
+              {`${clusterName}`}
             </Text>
           </Text>
-          <ButtonIcon>
-            <SyncAlt />
-          </ButtonIcon>
+          {connected && (
+            <ButtonPrimary height="24px" size="small" onClick={clusterCtx.sync}>
+              Sync
+            </ButtonPrimary>
+          )}
         </Flex>
-        <Flex typography="body1">
-          {navItems.map(item => (
-            <ClusterNavButton
-              key={item.location}
-              title={item.title}
-              to={item.location}
-            />
-          ))}
-        </Flex>
-        <StyledBorder my={2} />
-        {clusterCtx.isLocationActive('/resources/') && <ClusterResources />}
+        <StyledBorder mt={2} mb={3} />
+        {connected && clusterCtx.isLocationActive('/resources/') && (
+          <ClusterResources />
+        )}
+        {!connected && (
+          <Offline clusterName={clusterName} login={clusterCtx.login} />
+        )}
       </Layout>
     </Document>
   );
 }
+
+const Offline: React.FC<{ clusterName: string; login(): void }> = props => {
+  return (
+    <Flex flexDirection="column" mx="auto" alignItems="center">
+      <ButtonPrimary mt={4} width="100px" onClick={props.login}>
+        Connect
+      </ButtonPrimary>
+    </Flex>
+  );
+};
 
 type DocumentProps = {
   visible: boolean;

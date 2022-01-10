@@ -17,9 +17,8 @@ limitations under the License.
 import React from 'react';
 import { useStore, Store } from 'shared/libs/stores';
 import { matchPath } from 'react-router';
-import ServiceClusters from 'teleterm/ui/services/clusters';
-import ServiceDialogs from 'teleterm/ui/services/modals';
 import { tsh } from 'teleterm/ui/services/clusters/types';
+import { IAppContext } from 'teleterm/ui/types';
 
 type State = {
   navItems: ClusterNavItem[];
@@ -27,13 +26,14 @@ type State = {
   clusterUri: string;
   clusterName: string;
   connected: boolean;
+  searchValue: string;
 };
 
 class ClusterContext extends Store<State> {
   clusterUri: string;
   cluster: tsh.Cluster;
-  clusterService: ServiceClusters;
-  modalService: ServiceDialogs;
+
+  appCtx: IAppContext;
 
   state: State = {
     navItems: [],
@@ -41,14 +41,28 @@ class ClusterContext extends Store<State> {
     clusterUri: '',
     clusterName: '',
     connected: false,
+    searchValue: '',
   };
 
   login = () => {
-    this.modalService.openLoginDialog(this.clusterUri);
+    const { clusterUri } = this.state;
+    this.appCtx.commandLauncher.executeCommand('cluster-login', { clusterUri });
+  };
+
+  connectServer = (serverUri: string) => {
+    this.appCtx.commandLauncher.executeCommand('ssh', { serverUri });
+  };
+
+  connectDb = (dbUri: string) => {
+    this.appCtx.commandLauncher.executeCommand('proxy-db', { dbUri });
+  };
+
+  sync = () => {
+    this.appCtx.serviceClusters.syncRootCluster(this.state.clusterUri);
   };
 
   updateState = () => {
-    const cluster = this.clusterService.findCluster(this.clusterUri);
+    const cluster = this.appCtx.serviceClusters.findCluster(this.clusterUri);
     if (cluster === this.cluster) {
       return;
     }
@@ -61,21 +75,16 @@ class ClusterContext extends Store<State> {
     this.setState(this.state);
   };
 
-  constructor(
-    clusterUri: string,
-    clusterService: ServiceClusters,
-    modalService: ServiceDialogs
-  ) {
+  constructor(clusterUri: string, appCtx: IAppContext) {
     super();
     this.clusterUri = clusterUri;
-    this.modalService = modalService;
-    this.clusterService = clusterService;
-    this.clusterService.subscribe(this.updateState);
+    this.appCtx = appCtx;
+    this.appCtx.serviceClusters.subscribe(this.updateState);
     this.updateState();
   }
 
   dispose() {
-    this.clusterService.unsubscribe(this.updateState);
+    this.appCtx.serviceClusters.unsubscribe(this.updateState);
   }
 
   isLocationActive(location: NavLocation, exact = false) {
@@ -84,6 +93,40 @@ class ClusterContext extends Store<State> {
         path: location,
         exact,
       })
+    );
+  }
+
+  changeSearchValue = (searchValue: string) => {
+    this.setState({ searchValue });
+  };
+
+  getServers() {
+    return this.appCtx.serviceClusters.searchServers(this.state.clusterUri, {
+      search: this.state.searchValue,
+    });
+  }
+
+  getDbs() {
+    return this.appCtx.serviceClusters.searchDbs(this.state.clusterUri, {
+      search: this.state.searchValue,
+    });
+  }
+
+  getKubes() {
+    return this.appCtx.serviceClusters.searchKubes(this.state.clusterUri, {
+      search: this.state.searchValue,
+    });
+  }
+
+  getApps() {
+    return this.appCtx.serviceClusters.searchApps(this.state.clusterUri, {
+      search: this.state.searchValue,
+    });
+  }
+
+  getSyncStatus() {
+    return this.appCtx.serviceClusters.getClusterSyncStatus(
+      this.state.clusterUri
     );
   }
 

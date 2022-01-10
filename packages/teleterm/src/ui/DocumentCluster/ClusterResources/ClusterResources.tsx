@@ -18,15 +18,16 @@ import React from 'react';
 import styled from 'styled-components';
 import { Flex } from 'design';
 import { useClusterContext } from 'teleterm/ui/DocumentCluster/clusterContext';
-import SideNav, { SideNavItem } from './SideNav';
+import SideNav from './SideNav';
 import Servers from './Servers';
 import Databases from './Databases';
 import Applications from './Applications';
 import Kubes from './Kubes';
+import ClusterSearch from './ClusterSearch';
 
 export default function ClusterResources() {
   const clusterCtx = useClusterContext();
-  const { clusterUri, navLocation } = clusterCtx.useState();
+  const { navLocation } = clusterCtx.useState();
 
   React.useEffect(() => {
     if (clusterCtx.isLocationActive(`/resources/`, true)) {
@@ -36,45 +37,19 @@ export default function ClusterResources() {
 
   return (
     <StyledMain>
-      <Flex>
-        <SideNav items={items} />
+      <ClusterSearch onChange={clusterCtx.changeSearchValue} />
+      <Flex mt={3}>
+        <SideNav />
         <HorizontalSplit>
-          {clusterCtx.isLocationActive('/resources/servers') && (
-            <Servers clusterUri={clusterUri} />
-          )}
-          {clusterCtx.isLocationActive('/resources/databases') && (
-            <Databases clusterUri={clusterUri} />
-          )}
-          {clusterCtx.isLocationActive('/resources/apps') && (
-            <Applications clusterUri={clusterUri} />
-          )}
-          {clusterCtx.isLocationActive('/resources/kubes') && (
-            <Kubes clusterUri={clusterUri} />
-          )}
+          {clusterCtx.isLocationActive('/resources/servers') && <Servers />}
+          {clusterCtx.isLocationActive('/resources/databases') && <Databases />}
+          {clusterCtx.isLocationActive('/resources/apps') && <Applications />}
+          {clusterCtx.isLocationActive('/resources/kubes') && <Kubes />}
         </HorizontalSplit>
       </Flex>
     </StyledMain>
   );
 }
-
-const items: SideNavItem[] = [
-  {
-    to: '/resources/servers',
-    title: 'Servers',
-  },
-  {
-    to: '/resources/databases',
-    title: 'Databases',
-  },
-  {
-    to: '/resources/kubes',
-    title: 'Kubes',
-  },
-  {
-    to: '/resources/apps',
-    title: 'Apps',
-  },
-];
 
 const StyledMain = styled.div`
   width: 100%;

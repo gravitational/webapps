@@ -14,36 +14,115 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React from 'react';
+import React, { useState } from 'react';
+import { sortBy } from 'lodash';
 import styled from 'styled-components';
-import { Text, Flex, Box } from 'design';
+import { Box } from 'design';
 import { Danger } from 'design/Alert';
 import useKubes from './useKubes';
-import KubeList from './KubeList';
+import {
+  Column,
+  SortHeaderCell,
+  Cell,
+  TextCell,
+  SortTypes,
+} from 'design/DataTable';
+import Table from 'design/DataTable/Paged';
+import { Label, ButtonBorder } from 'design';
+import * as types from 'teleterm/ui/services/clusters/types';
 
-export default function Kubes(props: Props) {
-  const { kubes, syncStatus, searchValue } = useKubes(props.clusterUri);
+export default function Container() {
+  const { kubes, syncStatus } = useKubes();
+  return <Kubes syncStatus={syncStatus} kubes={kubes} />;
+}
+
+function Kubes(props: Props) {
+  const { kubes = [], syncStatus, pageSize = 100 } = props;
+  const [sortDir, setSortDir] = useState<Record<string, string>>({
+    name: SortTypes.DESC,
+  });
+
+  function sortKubes() {
+    const columnKey = Object.getOwnPropertyNames(sortDir)[0];
+    const sorted = sortBy(kubes, columnKey);
+    if (sortDir[columnKey] === SortTypes.ASC) {
+      return sorted.reverse();
+    }
+
+    return sorted;
+  }
+
+  function onSortChange(columnKey: string, sortDir: string) {
+    setSortDir({ [columnKey]: sortDir });
+  }
+
+  const data = sortKubes();
 
   return (
-    <Container>
-      <Flex justifyContent="space-between" mb="2">
-        <Text typography="h5" color="text.secondary">
-          Kubernetes Clusters
-        </Text>
-      </Flex>
+    <StyledKubes>
       {syncStatus.status === 'failed' && (
         <Danger>{syncStatus.statusText}</Danger>
       )}
-      <KubeList searchValue={searchValue} kubes={kubes} />
-    </Container>
+      <StyledTable pageSize={pageSize} data={data}>
+        <Column
+          columnKey="name"
+          header={
+            <SortHeaderCell
+              sortDir={sortDir.name}
+              onSortChange={onSortChange}
+              title="Name"
+            />
+          }
+          cell={<TextCell />}
+        />
+        <Column header={<Cell>Labels</Cell>} cell={<LabelCell />} />
+        <Column
+          header={<Cell />}
+          cell={<ActionCell onViewConnect={(name: string) => {}} />}
+        />
+      </StyledTable>
+    </StyledKubes>
   );
 }
 
-type Props = {
-  clusterUri: string;
+export const ActionCell = props => {
+  const { rowIndex, onViewConnect, data } = props;
+  const { name } = data[rowIndex];
+
+  return (
+    <Cell align="right">
+      <ButtonBorder size="small" onClick={() => onViewConnect(name)}>
+        Connect
+      </ButtonBorder>
+    </Cell>
+  );
 };
 
-const Container = styled(Box)`
+function LabelCell(props) {
+  const { rowIndex, data } = props;
+  const { labelsList } = data[rowIndex];
+  const $labels = labelsList.map(label => (
+    <Label mb="1" mr="1" key={label} kind="secondary">
+      {`${label.name}:${label.value}`}
+    </Label>
+  ));
+
+  return <Cell>{$labels}</Cell>;
+}
+
+type Props = {
+  kubes: types.tsh.Kube[];
+  pageSize?: number;
+  syncStatus: types.SyncStatus;
+};
+
+const StyledTable = styled(Table)`
+  & > tbody > tr > td {
+    vertical-align: baseline;
+  }
+`;
+
+const StyledKubes = styled(Box)`
   flex-direction: column;
   display: flex;
   flex: 1;

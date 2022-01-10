@@ -15,18 +15,16 @@ limitations under the License.
 */
 
 import React from 'react';
-import { Flex, Box, Text, ButtonIcon } from 'design';
+import { Flex, Text, ButtonIcon } from 'design';
 import * as Icons from 'design/Icon';
+import * as palette from 'design/theme/palette';
 import Expander, { ExpanderHeader, ExpanderContent } from './../Expander';
 import NavItem from 'teleterm/ui/Navigator/NavItem';
 import LinearProgress from 'teleterm/ui/components/LinearProgress';
-
 import useExpanderClusters, {
   State,
   ClusterNavItem,
 } from './useExpanderClusters';
-
-import * as palette from 'design/theme/palette';
 
 export default function Container() {
   const state = useExpanderClusters();
@@ -106,16 +104,6 @@ const ClusterItem: React.FC<ClusterItemProps> = props => {
   const { item, onContextMenu } = props;
   const { title, syncing, connected } = item;
 
-  function handleLogout(e: React.SyntheticEvent) {
-    e.stopPropagation();
-    props.onLogout(props.item.uri);
-  }
-
-  function handleLogin(e: React.SyntheticEvent) {
-    e.stopPropagation();
-    props.onLogin(props.item.uri);
-  }
-
   function handleRemove(e: React.SyntheticEvent) {
     e.stopPropagation();
     props.onRemove(props.item.uri);
@@ -140,16 +128,6 @@ const ClusterItem: React.FC<ClusterItemProps> = props => {
           </Text>
         </Flex>
         <Flex>
-          {connected && (
-            <ButtonIcon color="text.placeholder" onClick={handleLogout}>
-              <Icons.EmailSolid />
-            </ButtonIcon>
-          )}
-          {!connected && (
-            <ButtonIcon color="text.placeholder" onClick={handleLogin}>
-              <Icons.Restore />
-            </ButtonIcon>
-          )}
           <ButtonIcon color="text.placeholder" onClick={handleRemove}>
             <Icons.Trash />
           </ButtonIcon>
