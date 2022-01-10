@@ -21,7 +21,7 @@ import {
   getRangeOptions,
   EventRange,
 } from 'teleport/components/EventRangePicker';
-import { Event, EventCode, formatters } from 'teleport/services/audit';
+import { Event, EventCode } from 'teleport/services/audit';
 
 export default function useAuditEvents(
   ctx: Ctx,
@@ -38,7 +38,7 @@ export default function useAuditEvents(
     fetchStatus: '',
   });
 
-  const filterBy = eventCode ? formatters[eventCode].type : '';
+  const filterBy = eventCode || '';
 
   useEffect(() => {
     fetch();

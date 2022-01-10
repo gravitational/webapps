@@ -14,6 +14,8 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
+import { formatters } from 'teleport/services/audit';
+
 // eventGroupTypes contains a map of events that were grouped under the same
 // event type but have different event codes. This is used to filter out duplicate
 // event types when listing event filters and provide modified description of event.
@@ -655,7 +657,7 @@ export type EventQuery = {
   to: Date;
   limit?: number;
   startKey?: string;
-  filterBy?: string;
+  filterBy?: EventCode | '';
 };
 
 export type EventResponse = {

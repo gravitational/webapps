@@ -8,6 +8,7 @@ export default function makeRecording({
   session_stop,
   server_hostname,
   interactive,
+  user,
   session_recording = 'on',
   sid,
   proto = '',
@@ -39,7 +40,7 @@ export default function makeRecording({
     durationText,
     sid,
     createdDate: time,
-    users: participants.join(', '),
+    users: participants.join(', ') || user,
     hostname,
     description,
   };

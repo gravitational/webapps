@@ -152,16 +152,6 @@ const cfg = {
     });
   },
 
-  getClusterEventsRecordingsUrl(
-    clusterId: string,
-    params: UrlSessionRecordingsParams
-  ) {
-    return generatePath(cfg.api.clusterEventsRecordingsPath, {
-      clusterId,
-      ...params,
-    });
-  },
-
   getAuthProviders() {
     return cfg.auth && cfg.auth.providers ? cfg.auth.providers : [];
   },
