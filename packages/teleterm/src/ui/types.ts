@@ -21,6 +21,8 @@ import ServiceDocs from 'teleterm/ui/services/docs';
 import ServiceTerminals from 'teleterm/ui/services/terminals';
 import ServiceGlobalSearch from 'teleterm/ui/services/globalSearch';
 import ServiceQuickInput from 'teleterm/ui/services/quickInput';
+import CommandLauncher from 'teleterm/ui/commandLauncher';
+
 import { KeyboardShortcutsService } from 'teleterm/ui/services/keyboardShortcuts';
 
 export interface IAppContext {
@@ -32,4 +34,5 @@ export interface IAppContext {
   serviceKeyboardShortcuts: KeyboardShortcutsService;
   serviceQuickInput: ServiceQuickInput;
   mainProcessClient: MainProcessClient;
+  commandLauncher: CommandLauncher;
 }

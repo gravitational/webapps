@@ -14,30 +14,18 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import { useState } from 'react';
-import { useAppContext } from 'teleterm/ui/appContextProvider';
+import { useClusterContext } from 'teleterm/ui/DocumentCluster/clusterContext';
 
-export default function useDatabases(clusterUri: string) {
-  const ctx = useAppContext();
-  const [searchValue, setSearchValue] = useState('');
-  const dbs = ctx.serviceClusters.findDbs(clusterUri);
-  const syncStatus = ctx.serviceClusters.getClusterSyncStatus(clusterUri);
-
-  const openGateway = (dbUri = '') => {
-    ctx.serviceModals.openDialog({
-      kind: 'create-gateway',
-      targetUri: dbUri,
-    });
-  };
-
-  // subscribe
-  ctx.serviceClusters.useState();
+export default function useDbs() {
+  const ctx = useClusterContext();
+  const dbs = ctx.getDbs();
+  const syncStatus = ctx.getSyncStatus().dbs;
 
   return {
-    syncStatus: syncStatus.dbs,
-    openGateway,
-    searchValue,
-    setSearchValue,
+    connect: ctx.connectDb,
     dbs,
+    syncStatus,
   };
 }
+
+export type State = ReturnType<typeof useDbs>;

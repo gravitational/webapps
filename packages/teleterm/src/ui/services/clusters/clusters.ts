@@ -1,8 +1,10 @@
+import { sortBy } from 'lodash';
 import { useStore } from 'shared/libs/stores';
 import ClusterSearchProvider from './clustersSearchProvider';
 import { tsh, SyncStatus, AuthSettings, LoginParams } from './types';
 import { ImmutableStore } from '../immutableStore';
 import { routing } from 'teleterm/ui/uri';
+import isMatch from 'design/utils/match';
 
 type State = {
   clusters: Map<string, tsh.Cluster>;
@@ -384,7 +386,87 @@ export default class ClusterService extends ImmutableStore<State> {
       draft.appsSyncStatus.delete(clusterUri);
     });
   }
+
+  searchDbs(clusterUri: string, query: SearchQuery) {
+    function cb(targetValue: any[], searchValue: string, propName: string) {
+      if (propName === 'tags') {
+        return targetValue.some(item => {
+          return item.toLocaleUpperCase().indexOf(searchValue) !== -1;
+        });
+      }
+    }
+
+    const databases = this.findDbs(clusterUri);
+    return databases.filter(obj =>
+      isMatch(obj, query.search, {
+        searchableProps: ['name', 'desc', 'title', 'tags'],
+        cb: cb,
+      })
+    );
+  }
+
+  searchApps(clusterUri: string, query: SearchQuery) {
+    function cb(targetValue: any[], searchValue: string, propName: string) {
+      if (propName === 'tags') {
+        return targetValue.some(item => {
+          return item.toLocaleUpperCase().indexOf(searchValue) !== -1;
+        });
+      }
+    }
+
+    const apps = this.findApps(clusterUri);
+    return apps.filter(obj =>
+      isMatch(obj, query.search, {
+        searchableProps: ['name', 'publicAddr', 'description', 'tags'],
+        cb,
+      })
+    );
+  }
+
+  searchKubes(clusterUri: string, query: SearchQuery) {
+    function cb(targetValue: any[], searchValue: string, propName: string) {
+      if (propName === 'tags') {
+        return targetValue.some(item => {
+          return item.toLocaleUpperCase().indexOf(searchValue) !== -1;
+        });
+      }
+    }
+
+    const kubes = this.findKubes(clusterUri);
+    return kubes.filter(obj =>
+      isMatch(obj, query.search, {
+        searchableProps: ['name', 'labelsList'],
+        cb,
+      })
+    );
+  }
+
+  searchServers(clusterUri: string, query: SearchQuery) {
+    function cb(targetValue: any[], searchValue: string, propName: string) {
+      if (propName === 'tunnel') {
+        return 'TUNNEL'.indexOf(searchValue) !== -1;
+      }
+
+      if (propName === 'tags') {
+        return targetValue.some(item => {
+          return item.toLocaleUpperCase().indexOf(searchValue) !== -1;
+        });
+      }
+    }
+
+    const servers = this.findServers(clusterUri);
+    return servers.filter(obj =>
+      isMatch(obj, query.search, {
+        searchableProps: ['hostname', 'addr', 'tags', 'tunnel'],
+        cb,
+      })
+    );
+  }
 }
+
+type SearchQuery = {
+  search: string;
+};
 
 const helpers = {
   updateMap<T extends { uri: string }>(

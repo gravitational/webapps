@@ -17,9 +17,15 @@ limitations under the License.
 import React from 'react';
 import styled from 'styled-components';
 import ClusterNavButton from 'teleterm/ui/DocumentCluster/ClusterNavButton';
-import { NavLocation } from 'teleterm/ui/DocumentCluster/clusterContext';
+import ClusterContext, {
+  NavLocation,
+} from 'teleterm/ui/DocumentCluster/clusterContext';
+import { useClusterContext } from 'teleterm/ui/DocumentCluster/clusterContext';
 
-export default function SideNav({ items }: SideNavProps) {
+export default function SideNav() {
+  const ctx = useClusterContext();
+  const items = createItems(ctx);
+
   const $items = items.map((item, index) => {
     return (
       <ClusterNavButton
@@ -48,10 +54,6 @@ export type SideNavItem = {
   title: string;
 };
 
-export type SideNavProps = {
-  items: SideNavItem[];
-};
-
 const Nav = styled.nav`
   min-width: 180px;
   width: 240px;
@@ -60,3 +62,29 @@ const Nav = styled.nav`
   display: flex;
   flex-direction: column;
 `;
+
+function createItems(ctx: ClusterContext): SideNavItem[] {
+  const serverCount = ctx.getServers().length;
+  const dbCount = ctx.getDbs().length;
+  const appCount = ctx.getKubes().length;
+  const kubeCount = ctx.getApps().length;
+
+  return [
+    {
+      to: '/resources/servers',
+      title: `Servers (${serverCount})`,
+    },
+    {
+      to: '/resources/databases',
+      title: `Databases (${dbCount})`,
+    },
+    {
+      to: '/resources/kubes',
+      title: `Kubes (${kubeCount})`,
+    },
+    {
+      to: '/resources/apps',
+      title: `Apps (${appCount})`,
+    },
+  ];
+}

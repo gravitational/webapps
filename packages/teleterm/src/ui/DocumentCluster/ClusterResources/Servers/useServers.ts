@@ -14,28 +14,18 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import { useState } from 'react';
-import { useAppContext } from 'teleterm/ui/appContextProvider';
+import { useClusterContext } from 'teleterm/ui/DocumentCluster/clusterContext';
 
-export default function useServers(clusterUri: string) {
-  const ctx = useAppContext();
-  const [searchValue, setSearchValue] = useState('');
-  const servers = ctx.serviceClusters.findServers(clusterUri);
-  const syncStatus = ctx.serviceClusters.getClusterSyncStatus(clusterUri);
-
-  const connect = (serverUri: '') =>
-    ctx.serviceModals.openDialog({
-      kind: 'server-connect',
-      serverUri,
-    });
-
-  ctx.serviceClusters.useState();
+export default function useServers() {
+  const ctx = useClusterContext();
+  const servers = ctx.getServers();
+  const syncStatus = ctx.getSyncStatus().servers;
 
   return {
-    searchValue,
-    setSearchValue,
-    connect,
+    connect: ctx.connectServer,
     servers,
-    syncStatus: syncStatus.servers,
+    syncStatus,
   };
 }
+
+export type State = ReturnType<typeof useServers>;

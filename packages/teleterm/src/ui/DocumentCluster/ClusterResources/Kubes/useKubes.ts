@@ -14,21 +14,17 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import { useState } from 'react';
-import { useAppContext } from 'teleterm/ui/appContextProvider';
+import { useClusterContext } from 'teleterm/ui/DocumentCluster/clusterContext';
 
-export default function useKubes(clusterUri: string) {
-  const ctx = useAppContext();
-  const [searchValue, setSearchValue] = useState('');
-  const kubes = ctx.serviceClusters.findKubes(clusterUri);
-  const syncStatus = ctx.serviceClusters.getClusterSyncStatus(clusterUri);
-
-  ctx.serviceClusters.useState();
+export default function useKubes() {
+  const ctx = useClusterContext();
+  const kubes = ctx.getKubes();
+  const syncStatus = ctx.getSyncStatus().kubes;
 
   return {
-    searchValue,
-    setSearchValue,
     kubes,
-    syncStatus: syncStatus.kubes,
+    syncStatus,
   };
 }
+
+export type State = ReturnType<typeof useKubes>;
