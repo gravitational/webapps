@@ -30,7 +30,7 @@ import { tsh } from 'teleterm/ui/services/clusters/types';
 
 process.env.GRPC_VERBOSITY = 'DEBUG';
 
-test('fetchClusters', async () => {
+test.skip('fetchClusters', async () => {
   let tshClient = createClient(
     'unix:///home/alexey/.config/Electron/tsh.socket'
   );
