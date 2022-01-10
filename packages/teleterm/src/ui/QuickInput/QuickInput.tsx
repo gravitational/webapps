@@ -31,7 +31,7 @@ export default function Container() {
 export function QuickInput(props: State) {
   const { reset, listItems, onKeyDown, activeItem } = props;
   const ref = React.useRef<HTMLInputElement>();
-  const [isPickerVisible, setPickerVisible] = React.useState(false);
+  const [isPickerVisible, setPickerVisible] = React.useState(true);
 
   const handleOnBlur = () => {
     setPickerVisible(false);
@@ -44,15 +44,10 @@ export function QuickInput(props: State) {
     }, 100);
   }, []);
 
-  const handleOnFocus = () => {
-    setPickerVisible(true);
-    handleOnChange();
-  };
-
   useKeyboardShortcuts({
     'focus-global-search': () => {
+      setPickerVisible(true);
       ref.current.focus();
-      handleOnChange();
     },
   });
 
@@ -61,20 +56,25 @@ export function QuickInput(props: State) {
   }, []);
 
   return (
-    <Flex position="relative" justifyContent="center">
-      <Box width="600px">
+    <Flex
+      style={{
+        position: 'absolute',
+        width: '100%',
+        zIndex: '1',
+        visibility: isPickerVisible ? 'visible' : 'hidden',
+      }}
+      justifyContent="center"
+    >
+      <Box width="600px" mx="auto">
         <Input
           ref={ref}
-          placeholder="Search..."
-          onFocus={handleOnFocus}
+          placeholder="enter a command"
           onChange={handleOnChange}
           onKeyDown={onKeyDown}
           onBlur={handleOnBlur}
         />
       </Box>
-      {isPickerVisible && (
-        <QuickInputList items={listItems} activeItem={activeItem} />
-      )}
+      <QuickInputList items={listItems} activeItem={activeItem} />
     </Flex>
   );
 }

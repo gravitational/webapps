@@ -1,6 +1,4 @@
-import { sortBy } from 'lodash';
 import { useStore } from 'shared/libs/stores';
-import ClusterSearchProvider from './clustersSearchProvider';
 import { tsh, SyncStatus, AuthSettings, LoginParams } from './types';
 import { ImmutableStore } from '../immutableStore';
 import { routing } from 'teleterm/ui/uri';
@@ -20,7 +18,6 @@ type State = {
 };
 
 export default class ClusterService extends ImmutableStore<State> {
-  searchProvider: ClusterSearchProvider;
   state: State = {
     apps: new Map(),
     kubes: new Map(),
@@ -36,7 +33,6 @@ export default class ClusterService extends ImmutableStore<State> {
 
   constructor(public client: tsh.TshClient) {
     super();
-    this.searchProvider = new ClusterSearchProvider(this);
   }
 
   async addRootCluster(clusterUri: string) {

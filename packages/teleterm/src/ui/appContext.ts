@@ -19,13 +19,11 @@ import ServiceClusters from 'teleterm/ui/services/clusters';
 import ServiceModals from 'teleterm/ui/services/modals';
 import ServiceDocs from 'teleterm/ui/services/docs';
 import ServiceTerminals from 'teleterm/ui/services/terminals';
-import ServiceGlobalSearch from 'teleterm/ui/services/globalSearch';
 import ServiceQuickInput from 'teleterm/ui/services/quickInput';
 import { KeyboardShortcutsService } from 'teleterm/ui/services/keyboardShortcuts';
 import CommandLauncher from './commandLauncher';
 
 export default class AppContext {
-  serviceGlobalSearch: ServiceGlobalSearch;
   serviceClusters: ServiceClusters;
   serviceModals: ServiceModals;
   serviceDocs: ServiceDocs;
@@ -37,13 +35,8 @@ export default class AppContext {
 
   constructor(config: ElectronGlobals) {
     const { tshClient, ptyServiceClient, mainProcessClient } = config;
-
     this.mainProcessClient = mainProcessClient;
-    this.serviceGlobalSearch = new ServiceGlobalSearch();
     this.serviceClusters = new ServiceClusters(tshClient);
-    this.serviceGlobalSearch.registerProvider(
-      this.serviceClusters.searchProvider
-    );
     this.serviceModals = new ServiceModals();
     this.serviceDocs = new ServiceDocs();
     this.serviceTerminals = new ServiceTerminals(ptyServiceClient);
