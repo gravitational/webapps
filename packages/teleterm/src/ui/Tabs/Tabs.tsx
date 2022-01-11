@@ -35,6 +35,7 @@ export function Tabs(props: Props) {
     onNew,
     disableNew,
     onMoved,
+    onContextMenu,
     ...styledProps
   } = props;
 
@@ -51,6 +52,7 @@ export function Tabs(props: Props) {
           active={active}
           onClick={() => onSelect(item)}
           onClose={() => onClose(item)}
+          onContextMenu={() => onContextMenu(item)}
           onMoved={onMoved}
           style={{
             flex: '1',
@@ -91,6 +93,7 @@ type Props = {
   disableNew: boolean;
   onNew: () => void;
   onSelect: (doc: Document) => void;
+  onContextMenu: (doc: Document) => void;
   onMoved: (oldIndex: number, newIndex: number) => void;
   [index: string]: any;
 };

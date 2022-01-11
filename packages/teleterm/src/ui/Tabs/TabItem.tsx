@@ -22,7 +22,16 @@ import { Text } from 'design';
 import { useTabDnD } from './useTabDnD';
 
 export default function TabItem(props: Props) {
-  const { name, active, onClick, onClose, style, index, onMoved } = props;
+  const {
+    name,
+    active,
+    onClick,
+    onClose,
+    style,
+    index,
+    onMoved,
+    onContextMenu,
+  } = props;
   const ref = useRef<HTMLDivElement>(null);
   const { isDragging } = useTabDnD({ index, onDrop: onMoved, ref });
 
@@ -34,6 +43,7 @@ export default function TabItem(props: Props) {
   return (
     <StyledTabItem
       onClick={onClick}
+      onContextMenu={onContextMenu}
       ref={ref}
       active={active}
       dragging={isDragging}
@@ -60,6 +70,7 @@ type Props = {
   onClick: () => void;
   onClose: () => void;
   onMoved: (oldIndex: number, newIndex: number) => void;
+  onContextMenu: () => void;
   style: any;
 };
 

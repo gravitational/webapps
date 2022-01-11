@@ -21,6 +21,8 @@ export class MockMainProcessClient implements MainProcessClient {
 
   openClusterContextMenu() {}
 
+  openTabContextMenu() {}
+
   configService: {
     get: () => undefined;
     update: () => undefined;

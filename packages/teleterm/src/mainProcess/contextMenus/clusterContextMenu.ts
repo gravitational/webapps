@@ -3,7 +3,7 @@ import {
   ClusterContextMenuEventChannel,
   ClusterContextMenuEventType,
   ClusterContextMenuOptions,
-} from './types';
+} from '../types';
 
 type MainClusterContextMenuOptions = Pick<
   ClusterContextMenuOptions,

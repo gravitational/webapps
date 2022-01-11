@@ -20,10 +20,13 @@ import { Document, DocumentTshNode } from './types';
 import { ImmutableStore } from '../immutableStore';
 import { routing } from 'teleterm/ui/uri';
 
+type OnlyDocumentUri = Pick<Document, 'uri'>;
+
 type State = {
   location: string;
   docs: Document[];
 };
+
 export default class DocumentService extends ImmutableStore<State> {
   state: State = {
     location: '/home',
@@ -137,14 +140,39 @@ export default class DocumentService extends ImmutableStore<State> {
     return this.state.location;
   }
 
-  close({ uri }: { uri: string }) {
+  duplicatePtyAndActivate({ uri }: OnlyDocumentUri) {
+    const documentIndex = this.state.docs.findIndex(d => d.uri === uri);
+    const newDocument = {
+      ...this.state.docs[documentIndex],
+      uri: routing.getPtyUri({ sid: unique() }),
+    };
+    this.add(newDocument, documentIndex + 1);
+    this.setLocation(newDocument.uri);
+  }
+
+  close({ uri }: OnlyDocumentUri) {
     if (uri === '/home') {
       return;
     }
 
     const nextUri = this.getNextUri(uri);
-    const docs = this.state.docs.filter(i => i.uri !== uri);
+    const docs = this.state.docs.filter(d => d.uri !== uri);
     this.setState(draftState => ({ ...draftState, docs, location: nextUri }));
+  }
+
+  closeOthers({ uri }: OnlyDocumentUri) {
+    const toClose = this.filter(uri);
+    this.closeMultiple(toClose);
+  }
+
+  closeToRight({ uri }: OnlyDocumentUri) {
+    const documentIndex = this.state.docs.findIndex(d => d.uri === uri);
+    const toClose = this.state.docs.filter((_, index) => index > documentIndex);
+    this.closeMultiple(toClose);
+  }
+
+  closeMultiple(toClose: OnlyDocumentUri[]) {
+    toClose.forEach(toClose => this.close(toClose));
   }
 
   isActive(uri: string) {
@@ -152,9 +180,13 @@ export default class DocumentService extends ImmutableStore<State> {
     return !!routing.match(location, { exact: true, path: uri });
   }
 
-  add(doc: Document) {
+  add(doc: Document, position?: number) {
     this.setState(draftState => {
-      draftState.docs.push(doc);
+      if (position === undefined) {
+        draftState.docs.push(doc);
+      } else {
+        draftState.docs.splice(position, 0, doc);
+      }
     });
   }
 

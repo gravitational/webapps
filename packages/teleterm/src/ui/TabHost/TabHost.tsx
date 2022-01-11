@@ -55,6 +55,24 @@ export default function TabHost(props: Props) {
     serviceDocs.openNewTerminal();
   }
 
+  function handleTabContextMenu(document: types.Document) {
+    ctx.mainProcessClient.openTabContextMenu({
+      documentKind: document.kind,
+      onClose: () => {
+        serviceDocs.close(document);
+      },
+      onCloseOthers: () => {
+        serviceDocs.closeOthers(document);
+      },
+      onCloseToRight: () => {
+        serviceDocs.closeToRight(document);
+      },
+      onDuplicatePty: () => {
+        serviceDocs.duplicatePtyAndActivate(document);
+      },
+    });
+  }
+
   const $docs = documents.map(doc => {
     const isActiveDoc = doc === docActive;
     return <MemoizedDocument doc={doc} visible={isActiveDoc} key={doc.uri} />;
@@ -68,6 +86,7 @@ export default function TabHost(props: Props) {
           items={documents.filter(d => d.kind !== 'doc.home')}
           onClose={handleTabClose}
           onSelect={handleTabClick}
+          onContextMenu={handleTabContextMenu}
           activeTab={docActive.uri}
           onMoved={handleTabMoved}
           disableNew={false}
