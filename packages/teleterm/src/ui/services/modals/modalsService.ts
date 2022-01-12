@@ -46,10 +46,11 @@ export class ModalsService extends ImmutableStore<Dialog> {
     }));
   }
 
-  openLoginDialog(clusterUri: string) {
+  openLoginDialog(clusterUri: string, customOnSuccess?: () => void) {
     this.setState(() => ({
       kind: 'cluster-login',
       clusterUri,
+      customOnSuccess
     }));
   }
 
@@ -80,6 +81,7 @@ export interface DialogNewGateway {
 export interface DialogClusterLogin {
   kind: 'cluster-login';
   clusterUri: string;
+  customOnSuccess?(): void;
 }
 
 export interface DialogClusterRemove {

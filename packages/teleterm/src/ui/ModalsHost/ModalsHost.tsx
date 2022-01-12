@@ -34,7 +34,11 @@ export default function ModalsHost() {
 
   if (dialog.kind === 'cluster-login') {
     return (
-      <ClusterLogin clusterUri={dialog.clusterUri} onClose={handleClose} />
+      <ClusterLogin
+        clusterUri={dialog.clusterUri}
+        onClose={handleClose}
+        customOnSuccess={dialog.customOnSuccess}
+      />
     );
   }
 

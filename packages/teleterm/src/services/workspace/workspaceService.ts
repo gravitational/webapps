@@ -11,6 +11,7 @@ interface WorkspaceState {
 export interface WorkspaceService {
   get(): WorkspaceState;
   update(newWorkspaceState: Partial<WorkspaceState>): void;
+  addToRecentDocuments(document: Document): void;
   subscribe(cb: () => void): void;
   unsubscribe(cb: () => void): void;
 }
@@ -36,6 +37,24 @@ export function createWorkspaceService(options: {
       .catch(error => {
         logger.error(`Cannot update ${fileName} file`, error);
       });
+  }
+
+  function addToRecentDocuments(document: Document): void {
+    const maxRecentDocumentsCount = 5;
+    if (
+      document.kind === 'doc.terminal_tsh_node' ||
+      document.kind === 'doc.gateway'
+    ) {
+      const recentDocuments = [...get().recentDocuments];
+      if (!recentDocuments.find(d => d.uri === document.uri)) {
+        if (recentDocuments.length >= maxRecentDocumentsCount) {
+          recentDocuments.shift();
+        }
+
+        recentDocuments.push(document);
+        update({ recentDocuments });
+      }
+    }
   }
 
   function subscribe(cb: () => void): void {
@@ -72,5 +91,6 @@ export function createWorkspaceService(options: {
     update,
     subscribe,
     unsubscribe,
+    addToRecentDocuments,
   };
 }

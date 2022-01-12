@@ -20,7 +20,7 @@ import { useAppContext } from 'teleterm/ui/appContextProvider';
 import useAsync from 'teleterm/ui/useAsync';
 
 export default function useClusterLogin(props: Props) {
-  const { onClose, clusterUri } = props;
+  const { onClose, customOnSuccess, clusterUri } = props;
   const { clustersService: serviceClusters, docsService: serviceDocs } =
     useAppContext();
   const cluster = serviceClusters.findCluster(clusterUri);
@@ -86,7 +86,10 @@ export default function useClusterLogin(props: Props) {
 
     if (loginAttempt.status === 'success') {
       onClose();
-      serviceDocs.open(clusterUri);
+      if (!customOnSuccess) {
+        serviceDocs.open(clusterUri);
+      }
+      customOnSuccess?.();
     }
   }, [loginAttempt.status]);
 
@@ -108,4 +111,5 @@ export type State = ReturnType<typeof useClusterLogin>;
 export type Props = {
   clusterUri: string;
   onClose(): void;
+  customOnSuccess?(): void;
 };

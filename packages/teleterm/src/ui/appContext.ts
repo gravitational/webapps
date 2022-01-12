@@ -46,7 +46,8 @@ export default class AppContext {
       this.mainProcessClient.getRuntimeSettings().platform,
       this.mainProcessClient.configService
     );
-    this.workspaceService = config.workspaceService;
+    this.workspaceService = config.workspaceService
+    this.serviceDocs = new ServiceDocs(this.serviceWorkspace);
 
     this.commandLauncher = new CommandLauncher(this);
     this.quickInputService = new QuickInputService(
