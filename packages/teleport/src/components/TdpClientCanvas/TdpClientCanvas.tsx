@@ -55,6 +55,7 @@ export default function TdpClientCanvas(props: Props) {
         if (buffer.length) {
           for (let i = 0; i < buffer.length; i++) {
             tdpCliOnImageFragment(ctx, buffer[i]);
+            buffer[i].image.close()
           }
           buffer = [];
         }

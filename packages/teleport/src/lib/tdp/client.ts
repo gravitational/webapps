@@ -97,10 +97,9 @@ export default class Client extends EventEmitter {
   // bounds and png bitmap and emit a render event.
   processFrame(buffer: ArrayBuffer) {
     const { left, top } = this.codec.decodeRegion(buffer);
-    const image = new Image();
-    image.onload = () =>
-      this.emit(TdpClientEvent.IMAGE_FRAGMENT, { image, left, top });
-    image.src = this.codec.decodePng(buffer);
+    createImageBitmap(new Blob([buffer.slice(17)], { type: 'image/png' })).then(image => {
+      this.emit(TdpClientEvent.IMAGE_FRAGMENT, { image, left, top })
+    })
   }
 
   sendUsername(username: string) {
@@ -147,7 +146,7 @@ export default class Client extends EventEmitter {
 }
 
 export type ImageFragment = {
-  image: HTMLImageElement;
+  image: ImageBitmap;
   left: number;
   top: number;
 };

@@ -338,16 +338,4 @@ export default class Codec {
       bottom: dv.getUint32(13),
     };
   }
-
-  // Taken as the winning algorithm of https://jsbench.me/vjk9nczxst/1
-  // jsbench link was discovered in https://gist.github.com/jonleighton/958841
-  toBase64(buffer: ArrayBuffer) {
-    const binary = String.fromCharCode.apply(null, new Uint8Array(buffer, 17));
-    return btoa(binary);
-  }
-
-  // decodePng creates a data:image uri from the png data part of a PNG_FRAME tdp message.
-  decodePng(buffer: ArrayBuffer): string {
-    return `data:image/png;base64,${this.toBase64(buffer)}`;
-  }
 }
