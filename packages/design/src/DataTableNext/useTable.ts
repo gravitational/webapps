@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import isMatch from 'design/utils/match';
 import { displayDate } from 'shared/services/loc';
 import paginateData from './Pager/paginateData';
-import { TableProps, TableColumn, SortDir } from './types';
+import { TableProps, TableColumn } from './types';
 
 export default function useTable<T>({
   data,
@@ -23,7 +23,7 @@ export default function useTable<T>({
         ? {
             key: col.key as string,
             onSort: col.onSort,
-            dir: 'ASC' as SortDir,
+            dir: props.initialSort?.dir || 'ASC',
           }
         : null,
       pagination: pagination
