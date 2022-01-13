@@ -65,7 +65,11 @@ export default function EventList(props: Props) {
         emptyText={'No Events Found'}
         isSearchable
         initialSort={{ key: 'time', dir: 'DESC' }}
-        pagination={{ pageSize, fetchStatus, onFetchMore: fetchMore }}
+        pagination={{ pageSize }}
+        fetching={{
+          onFetchMore: fetchMore,
+          fetchStatus,
+        }}
       />
       {detailsToShow && (
         <EventDialog

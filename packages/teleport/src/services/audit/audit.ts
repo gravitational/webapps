@@ -20,7 +20,7 @@ import makeEvent from './makeEvent';
 import { EventQuery, EventResponse } from './types';
 
 class AuditService {
-  maxFetchLimit = 10;
+  maxFetchLimit = 50;
 
   fetchEvents(clusterId: string, params: EventQuery): Promise<EventResponse> {
     const start = params.from.toISOString();

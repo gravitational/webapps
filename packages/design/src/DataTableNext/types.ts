@@ -5,6 +5,7 @@ export type TableProps<T> = {
   pagination?: PaginationConfig;
   isSearchable?: boolean;
   initialSort?: InitialSort<T>;
+  fetching?: FetchingConfig;
 };
 
 type TableColumnBase<T> = {
@@ -17,6 +18,9 @@ type TableColumnBase<T> = {
 export type PaginationConfig = {
   pageSize?: number;
   pagerPosition?: 'top' | 'bottom';
+};
+
+export type FetchingConfig = {
   onFetchMore?: () => void;
   fetchStatus?: 'loading' | 'disabled' | '';
 };

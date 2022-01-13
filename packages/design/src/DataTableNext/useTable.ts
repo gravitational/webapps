@@ -32,8 +32,6 @@ export default function useTable<T>({
             currentPage: 0,
             pagerPosition: pagination.pagerPosition || 'top',
             pageSize: pagination.pageSize || 10,
-            onFetchMore: pagination.onFetchMore,
-            fetchStatus: pagination.fetchStatus,
           }
         : null,
     };
