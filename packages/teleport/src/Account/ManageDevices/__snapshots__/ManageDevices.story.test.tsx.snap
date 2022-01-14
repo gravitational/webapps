@@ -278,7 +278,7 @@ exports[`render device dashboard 1`] = `
 
 <div
   class="c0"
-  style="width: 904px; padding: 0px; overflow: hidden; margin-top: 0px;"
+  style="width: 904px; padding: 0px; overflow: hidden;"
 >
   <div
     class="c1"
@@ -772,7 +772,7 @@ exports[`render failed state for creating restricted privilege token 1`] = `
 
 <div
   class="c0"
-  style="width: 904px; padding: 0px; overflow: hidden; margin-top: 0px;"
+  style="width: 904px; padding: 0px; overflow: hidden;"
 >
   <div
     class="c1"
@@ -1082,7 +1082,7 @@ exports[`render failed state for fetching devices 1`] = `
 
 <div
   class="c0"
-  style="width: 904px; padding: 0px; overflow: hidden; margin-top: 0px;"
+  style="width: 904px; padding: 0px; overflow: hidden;"
 >
   <div
     class="c1"

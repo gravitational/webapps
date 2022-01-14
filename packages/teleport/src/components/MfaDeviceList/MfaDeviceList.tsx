@@ -41,7 +41,7 @@ export default function MfaDeviceList({
         {
           key: 'name',
           headerText: 'Device Name',
-          render: ({ name }) => <NameCell name={name} />,
+          render: renderNameCell,
         },
         {
           key: 'registeredDate',
@@ -61,15 +61,8 @@ export default function MfaDeviceList({
         },
         {
           altKey: 'remove-btn',
-          render: ({ id, name }) => (
-            <RemoveCell
-              id={id}
-              name={name}
-              remove={remove}
-              mostRecentDevice={mostRecentDevice}
-              mfaDisabled={mfaDisabled}
-            />
-          ),
+          render: device =>
+            renderRemoveCell(device, remove, mostRecentDevice, mfaDisabled),
         },
       ]}
       emptyText="No Devices Found"
@@ -82,7 +75,7 @@ export default function MfaDeviceList({
   );
 }
 
-const NameCell = ({ name }: { name: string }) => {
+const renderNameCell = ({ name }: MfaDevice) => {
   return (
     <Cell title={name}>
       <Text
@@ -97,19 +90,12 @@ const NameCell = ({ name }: { name: string }) => {
   );
 };
 
-const RemoveCell = ({
-  id,
-  name,
-  remove,
-  mostRecentDevice,
-  mfaDisabled,
-}: {
-  id: string;
-  name: string;
-  remove: ({ id, name }) => void;
-  mostRecentDevice: MfaDevice;
-  mfaDisabled: boolean;
-}) => {
+const renderRemoveCell = (
+  { id, name }: MfaDevice,
+  remove: ({ id, name }) => void,
+  mostRecentDevice: MfaDevice,
+  mfaDisabled: boolean
+) => {
   if (id === mostRecentDevice?.id) {
     return null;
   }
