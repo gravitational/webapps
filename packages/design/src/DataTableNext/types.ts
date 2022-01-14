@@ -8,6 +8,7 @@ export type TableProps<T> = {
   fetching?: FetchingConfig;
   showFirst?: (data: T[]) => T;
   className?: string;
+  style?: React.CSSProperties;
 };
 
 type TableColumnBase<T> = {
