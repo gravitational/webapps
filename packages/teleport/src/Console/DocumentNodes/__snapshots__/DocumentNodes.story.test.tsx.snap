@@ -7,7 +7,7 @@ exports[`render DocumentNodes 1`] = `
   width: 336px;
 }
 
-.c22 {
+.c23 {
   line-height: 1.5;
   margin: 0;
   display: inline-flex;
@@ -36,22 +36,22 @@ exports[`render DocumentNodes 1`] = `
   height: 24px;
 }
 
-.c22:active {
+.c23:active {
   opacity: 0.56;
 }
 
-.c22:hover,
-.c22:focus {
+.c23:hover,
+.c23:focus {
   background: #092F52;
   border: 1px solid rgba(255,255,255,0.1);
   opacity: 1;
 }
 
-.c22:active {
+.c23:active {
   opacity: 0.24;
 }
 
-.c22:disabled {
+.c23:disabled {
   background: rgba(255,255,255,0.12);
   color: rgba(255,255,255,0.3);
 }
@@ -63,13 +63,13 @@ exports[`render DocumentNodes 1`] = `
   font-size: 16px;
 }
 
-.c20 {
+.c21 {
   display: inline-block;
   transition: color .3s;
   color: #FFFFFF;
 }
 
-.c23 {
+.c24 {
   display: inline-block;
   transition: color .3s;
   margin-left: 8px;
@@ -78,7 +78,7 @@ exports[`render DocumentNodes 1`] = `
   font-size: 14px;
 }
 
-.c21 {
+.c22 {
   box-sizing: border-box;
   border-radius: 100px;
   display: inline-flex;
@@ -298,6 +298,10 @@ exports[`render DocumentNodes 1`] = `
 .c12::placeholder {
   color: rgba(255,255,255,0.24);
   font-size: 12px;
+}
+
+.c20 > tbody > tr > td {
+  vertical-align: baseline;
 }
 
 .c8 {
@@ -803,7 +807,7 @@ exports[`render DocumentNodes 1`] = `
         </div>
       </nav>
       <table
-        class="c19"
+        class="c19 c20"
       >
         <thead>
           <tr>
@@ -811,7 +815,7 @@ exports[`render DocumentNodes 1`] = `
               <a>
                 Hostname
                 <span
-                  class="c17 c20 icon icon-chevron-up "
+                  class="c17 c21 icon icon-chevron-up "
                   color="light"
                 />
               </a>
@@ -820,7 +824,7 @@ exports[`render DocumentNodes 1`] = `
               <a>
                 Address
                 <span
-                  class="c17 c20 icon icon-chevrons-expand-vertical "
+                  class="c17 c21 icon icon-chevrons-expand-vertical "
                   color="light"
                 />
               </a>
@@ -846,13 +850,13 @@ exports[`render DocumentNodes 1`] = `
             </td>
             <td>
               <div
-                class="c21"
+                class="c22"
                 kind="secondary"
               >
                 cluster: one
               </div>
               <div
-                class="c21"
+                class="c22"
                 kind="secondary"
               >
                 kernel: 4.15.0-51-generic
@@ -862,13 +866,13 @@ exports[`render DocumentNodes 1`] = `
               align="right"
             >
               <button
-                class="c22"
+                class="c23"
                 height="24px"
                 kind="border"
               >
                 CONNECT
                 <span
-                  class="c17 c23 icon icon-caret-down "
+                  class="c17 c24 icon icon-caret-down "
                   color="text.secondary"
                   font-size="2"
                 />
@@ -884,13 +888,13 @@ exports[`render DocumentNodes 1`] = `
             </td>
             <td>
               <div
-                class="c21"
+                class="c22"
                 kind="secondary"
               >
                 cluster: one
               </div>
               <div
-                class="c21"
+                class="c22"
                 kind="secondary"
               >
                 kernel: 4.15.0-51-generic
@@ -900,13 +904,13 @@ exports[`render DocumentNodes 1`] = `
               align="right"
             >
               <button
-                class="c22"
+                class="c23"
                 height="24px"
                 kind="border"
               >
                 CONNECT
                 <span
-                  class="c17 c23 icon icon-caret-down "
+                  class="c17 c24 icon icon-caret-down "
                   color="text.secondary"
                   font-size="2"
                 />
@@ -922,13 +926,13 @@ exports[`render DocumentNodes 1`] = `
             </td>
             <td>
               <div
-                class="c21"
+                class="c22"
                 kind="secondary"
               >
                 cluster: one
               </div>
               <div
-                class="c21"
+                class="c22"
                 kind="secondary"
               >
                 kernel: 4.15.0-51-generic
@@ -938,13 +942,13 @@ exports[`render DocumentNodes 1`] = `
               align="right"
             >
               <button
-                class="c22"
+                class="c23"
                 height="24px"
                 kind="border"
               >
                 CONNECT
                 <span
-                  class="c17 c23 icon icon-caret-down "
+                  class="c17 c24 icon icon-caret-down "
                   color="text.secondary"
                   font-size="2"
                 />
@@ -965,13 +969,13 @@ exports[`render DocumentNodes 1`] = `
             </td>
             <td>
               <div
-                class="c21"
+                class="c22"
                 kind="secondary"
               >
                 cluster: one
               </div>
               <div
-                class="c21"
+                class="c22"
                 kind="secondary"
               >
                 kernel: 4.15.0-51-generic
@@ -981,13 +985,13 @@ exports[`render DocumentNodes 1`] = `
               align="right"
             >
               <button
-                class="c22"
+                class="c23"
                 height="24px"
                 kind="border"
               >
                 CONNECT
                 <span
-                  class="c17 c23 icon icon-caret-down "
+                  class="c17 c24 icon icon-caret-down "
                   color="text.secondary"
                   font-size="2"
                 />
@@ -1003,37 +1007,37 @@ exports[`render DocumentNodes 1`] = `
             </td>
             <td>
               <div
-                class="c21"
+                class="c22"
                 kind="secondary"
               >
                 cluster: one
               </div>
               <div
-                class="c21"
+                class="c22"
                 kind="secondary"
               >
                 kernel: 4.15.0-51-generic
               </div>
               <div
-                class="c21"
+                class="c22"
                 kind="secondary"
               >
                 lortavma: one
               </div>
               <div
-                class="c21"
+                class="c22"
                 kind="secondary"
               >
                 lenisret: 4.15.0-51-generic
               </div>
               <div
-                class="c21"
+                class="c22"
                 kind="secondary"
               >
                 lofdevod: one
               </div>
               <div
-                class="c21"
+                class="c22"
                 kind="secondary"
               >
                 llhurlaz: 4.15.0-51-generic
@@ -1043,13 +1047,13 @@ exports[`render DocumentNodes 1`] = `
               align="right"
             >
               <button
-                class="c22"
+                class="c23"
                 height="24px"
                 kind="border"
               >
                 CONNECT
                 <span
-                  class="c17 c23 icon icon-caret-down "
+                  class="c17 c24 icon icon-caret-down "
                   color="text.secondary"
                   font-size="2"
                 />

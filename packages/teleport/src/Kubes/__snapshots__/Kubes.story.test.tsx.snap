@@ -531,7 +531,7 @@ exports[`loaded 1`] = `
   color: rgba(255,255,255,0.3);
 }
 
-.c15 {
+.c16 {
   line-height: 1.5;
   margin: 0;
   display: inline-flex;
@@ -559,22 +559,22 @@ exports[`loaded 1`] = `
   padding: 0px 16px;
 }
 
-.c15:active {
+.c16:active {
   opacity: 0.56;
 }
 
-.c15:hover,
-.c15:focus {
+.c16:hover,
+.c16:focus {
   background: #2C3A73;
   border: 1px solid rgba(255,255,255,0.1);
   opacity: 1;
 }
 
-.c15:active {
+.c16:active {
   opacity: 0.24;
 }
 
-.c15:disabled {
+.c16:disabled {
   background: rgba(255,255,255,0.12);
   color: rgba(255,255,255,0.3);
 }
@@ -586,13 +586,13 @@ exports[`loaded 1`] = `
   font-size: 16px;
 }
 
-.c13 {
+.c14 {
   display: inline-block;
   transition: color .3s;
   color: #FFFFFF;
 }
 
-.c14 {
+.c15 {
   box-sizing: border-box;
   border-radius: 100px;
   display: inline-flex;
@@ -781,6 +781,10 @@ exports[`loaded 1`] = `
   font-size: 12px;
 }
 
+.c13 > tbody > tr > td {
+  vertical-align: baseline;
+}
+
 .c1 {
   box-sizing: border-box;
   margin-bottom: 24px;
@@ -903,7 +907,7 @@ exports[`loaded 1`] = `
     </div>
   </nav>
   <table
-    class="c12"
+    class="c12 c13"
   >
     <thead>
       <tr>
@@ -911,7 +915,7 @@ exports[`loaded 1`] = `
           <a>
             Name
             <span
-              class="c10 c13 icon icon-chevron-up "
+              class="c10 c14 icon icon-chevron-up "
               color="light"
             />
           </a>
@@ -929,13 +933,13 @@ exports[`loaded 1`] = `
         </td>
         <td>
           <div
-            class="c14"
+            class="c15"
             kind="secondary"
           >
             cluster-name: some-cluster-name
           </div>
           <div
-            class="c14"
+            class="c15"
             kind="secondary"
           >
             env: idk
@@ -945,7 +949,7 @@ exports[`loaded 1`] = `
           align="right"
         >
           <button
-            class="c15"
+            class="c16"
             kind="border"
           >
             Connect
@@ -958,13 +962,13 @@ exports[`loaded 1`] = `
         </td>
         <td>
           <div
-            class="c14"
+            class="c15"
             kind="secondary"
           >
             kernal: 4.15.0-51-generic
           </div>
           <div
-            class="c14"
+            class="c15"
             kind="secondary"
           >
             env: prod
@@ -974,7 +978,7 @@ exports[`loaded 1`] = `
           align="right"
         >
           <button
-            class="c15"
+            class="c16"
             kind="border"
           >
             Connect
@@ -987,7 +991,7 @@ exports[`loaded 1`] = `
         </td>
         <td>
           <div
-            class="c14"
+            class="c15"
             kind="secondary"
           >
             env: staging
@@ -997,7 +1001,7 @@ exports[`loaded 1`] = `
           align="right"
         >
           <button
-            class="c15"
+            class="c16"
             kind="border"
           >
             Connect
