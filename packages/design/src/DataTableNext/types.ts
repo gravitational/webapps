@@ -7,6 +7,7 @@ export type TableProps<T> = {
   initialSort?: InitialSort<T>;
   fetching?: FetchingConfig;
   showFirst?: (data: T[]) => T;
+  className?: string;
 };
 
 type TableColumnBase<T> = {

@@ -23,6 +23,7 @@ export function Table<T>({
   setSearchValue,
   isSearchable,
   fetching,
+  className,
 }: State<T>) {
   const renderHeaders = () => {
     const headers = columns.map(column => {
@@ -81,6 +82,7 @@ export function Table<T>({
   if (state.pagination) {
     return (
       <PagedTable
+        className={className}
         data={state.data}
         renderHeaders={renderHeaders}
         renderBody={renderBody}
@@ -97,6 +99,7 @@ export function Table<T>({
   if (isSearchable) {
     return (
       <SearchableBasicTable
+        className={className}
         data={state.data}
         renderHeaders={renderHeaders}
         renderBody={renderBody}
@@ -108,6 +111,7 @@ export function Table<T>({
 
   return (
     <BasicTable
+      className={className}
       data={state.data}
       renderHeaders={renderHeaders}
       renderBody={renderBody}
@@ -119,9 +123,10 @@ function BasicTable<T>({
   data,
   renderHeaders,
   renderBody,
+  className,
 }: BasicTableProps<T>) {
   return (
-    <StyledTable>
+    <StyledTable className={className}>
       {renderHeaders()}
       {renderBody(data)}
     </StyledTable>
@@ -134,6 +139,7 @@ function SearchableBasicTable<T>({
   renderBody,
   searchValue,
   setSearchValue,
+  className,
 }: SearchableBasicTableProps<T>) {
   return (
     <>
@@ -143,7 +149,11 @@ function SearchableBasicTable<T>({
           setSearchValue={setSearchValue}
         />
       </StyledPanel>
-      <StyledTable borderTopLeftRadius={0} borderTopRightRadius={0}>
+      <StyledTable
+        className={className}
+        borderTopLeftRadius={0}
+        borderTopRightRadius={0}
+      >
         {renderHeaders()}
         {renderBody(data)}
       </StyledTable>
@@ -161,6 +171,7 @@ function PagedTable<T>({
   searchValue,
   setSearchValue,
   fetching,
+  className,
 }: PagedTableProps<T>) {
   const { pagerPosition, paginatedData, currentPage } = pagination;
   const isTopPager = pagerPosition === 'top';
@@ -196,7 +207,7 @@ function PagedTable<T>({
           />
         </StyledPanel>
       )}
-      <StyledTable {...radiusProps}>
+      <StyledTable {...radiusProps} className={className}>
         {renderHeaders()}
         {renderBody(paginatedData[currentPage])}
       </StyledTable>
@@ -246,6 +257,7 @@ type BasicTableProps<T> = {
   data: T[];
   renderHeaders: () => JSX.Element;
   renderBody: (data: T[]) => JSX.Element;
+  className?: string;
 };
 
 type SearchableBasicTableProps<T> = BasicTableProps<T> & {
