@@ -14,9 +14,8 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React, { useState } from 'react';
+import React from 'react';
 import styled from 'styled-components';
-import { sortBy } from 'lodash';
 import { ButtonBorder, Text } from 'design';
 import Table, { Cell } from 'design/DataTableNext';
 import { displayDate } from 'shared/services/loc';
@@ -28,11 +27,12 @@ export default function MfaDeviceList({
   mostRecentDevice,
   mfaDisabled = false,
   isSearchable = false,
-  ...styles
+  style,
 }: Props) {
   return (
-    <Table
+    <StyledTable
       data={devices}
+      style={style}
       columns={[
         {
           key: 'description',
@@ -41,6 +41,7 @@ export default function MfaDeviceList({
         {
           key: 'name',
           headerText: 'Device Name',
+          render: ({ name }) => <NameCell name={name} />,
         },
         {
           key: 'registeredDate',
@@ -73,60 +74,15 @@ export default function MfaDeviceList({
       ]}
       emptyText="No Devices Found"
       isSearchable={isSearchable}
+      initialSort={{
+        key: 'registeredDate',
+        dir: 'DESC',
+      }}
     />
-  );
-  return (
-    <StyledTable data={data} {...styles}>
-      <Column
-        columnKey="description"
-        cell={<TextCell />}
-        header={<Cell>Type</Cell>}
-      />
-      <Column
-        columnKey="name"
-        cell={<NameCell />}
-        header={<Cell>Device Name</Cell>}
-      />
-      <Column
-        columnKey="registeredDate"
-        header={
-          <SortHeaderCell
-            sortDir={sortDir.registeredDate}
-            onSortChange={onSortChange}
-            title="Registered"
-          />
-        }
-        cell={<DateCell />}
-      />
-      <Column
-        columnKey="lastUsedDate"
-        header={
-          <SortHeaderCell
-            sortDir={sortDir.lastUsedDate}
-            onSortChange={onSortChange}
-            title="Last Used"
-          />
-        }
-        cell={<DateCell />}
-      />
-      <Column
-        header={<Cell />}
-        cell={
-          <RemoveCell
-            remove={remove}
-            mostRecentDevice={mostRecentDevice}
-            mfaDisabled={mfaDisabled}
-          />
-        }
-      />
-    </StyledTable>
   );
 }
 
-const NameCell = props => {
-  const { data, rowIndex } = props;
-  const { name } = data[rowIndex];
-
+const NameCell = ({ name }: { name: string }) => {
   return (
     <Cell title={name}>
       <Text
@@ -139,13 +95,6 @@ const NameCell = props => {
       </Text>
     </Cell>
   );
-};
-
-const DateCell = props => {
-  const { data, rowIndex, columnKey } = props;
-  const dateText = displayDate(data[rowIndex][columnKey]);
-
-  return <Cell>{dateText}</Cell>;
 };
 
 const RemoveCell = ({
@@ -195,4 +144,4 @@ const StyledTable = styled(Table)`
       height: 32px;
     }
   }
-`;
+` as typeof Table;

@@ -48,7 +48,7 @@ export function Account({ isSso }: Props) {
           </TabItem>
         </FeatureHeaderTitle>
       </FeatureHeader>
-      <Box mt={3}>
+      <Box>
         <Switch>
           {!isSso && (
             <Route
