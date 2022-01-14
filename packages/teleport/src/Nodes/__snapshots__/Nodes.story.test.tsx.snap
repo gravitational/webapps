@@ -529,7 +529,7 @@ exports[`loaded 1`] = `
   color: rgba(255,255,255,0.3);
 }
 
-.c19 {
+.c18 {
   line-height: 1.5;
   margin: 0;
   display: inline-flex;
@@ -558,22 +558,22 @@ exports[`loaded 1`] = `
   height: 24px;
 }
 
-.c19:active {
+.c18:active {
   opacity: 0.56;
 }
 
-.c19:hover,
-.c19:focus {
+.c18:hover,
+.c18:focus {
   background: #2C3A73;
   border: 1px solid rgba(255,255,255,0.1);
   opacity: 1;
 }
 
-.c19:active {
+.c18:active {
   opacity: 0.24;
 }
 
-.c19:disabled {
+.c18:disabled {
   background: rgba(255,255,255,0.12);
   color: rgba(255,255,255,0.3);
 }
@@ -585,13 +585,13 @@ exports[`loaded 1`] = `
   font-size: 16px;
 }
 
-.c17 {
+.c16 {
   display: inline-block;
   transition: color .3s;
   color: #FFFFFF;
 }
 
-.c20 {
+.c19 {
   display: inline-block;
   transition: color .3s;
   margin-left: 8px;
@@ -600,7 +600,7 @@ exports[`loaded 1`] = `
   font-size: 14px;
 }
 
-.c18 {
+.c17 {
   box-sizing: border-box;
   border-radius: 100px;
   display: inline-flex;
@@ -782,6 +782,10 @@ exports[`loaded 1`] = `
   padding-right: 24px;
 }
 
+.c15 > tbody > tr > td {
+  vertical-align: baseline;
+}
+
 .c15 > thead > tr > th {
   background: #111B48;
   color: #FFFFFF;
@@ -888,10 +892,6 @@ exports[`loaded 1`] = `
   font-size: 12px;
 }
 
-.c16 > tbody > tr > td {
-  vertical-align: baseline;
-}
-
 <div
   class="c0"
 >
@@ -990,7 +990,7 @@ exports[`loaded 1`] = `
     </div>
   </nav>
   <table
-    class="c15 c16"
+    class="c15"
   >
     <thead>
       <tr>
@@ -998,7 +998,7 @@ exports[`loaded 1`] = `
           <a>
             Hostname
             <span
-              class="c13 c17 icon icon-chevron-up "
+              class="c13 c16 icon icon-chevron-up "
               color="light"
             />
           </a>
@@ -1007,7 +1007,7 @@ exports[`loaded 1`] = `
           <a>
             Address
             <span
-              class="c13 c17 icon icon-chevrons-expand-vertical "
+              class="c13 c16 icon icon-chevrons-expand-vertical "
               color="light"
             />
           </a>
@@ -1028,13 +1028,13 @@ exports[`loaded 1`] = `
         </td>
         <td>
           <div
-            class="c18"
+            class="c17"
             kind="secondary"
           >
             cluster: one
           </div>
           <div
-            class="c18"
+            class="c17"
             kind="secondary"
           >
             kernel: 4.15.0-51-generic
@@ -1044,13 +1044,13 @@ exports[`loaded 1`] = `
           align="right"
         >
           <button
-            class="c19"
+            class="c18"
             height="24px"
             kind="border"
           >
             CONNECT
             <span
-              class="c13 c20 icon icon-caret-down "
+              class="c13 c19 icon icon-caret-down "
               color="text.secondary"
               font-size="2"
             />
@@ -1066,13 +1066,13 @@ exports[`loaded 1`] = `
         </td>
         <td>
           <div
-            class="c18"
+            class="c17"
             kind="secondary"
           >
             cluster: one
           </div>
           <div
-            class="c18"
+            class="c17"
             kind="secondary"
           >
             kernel: 4.15.0-51-generic
@@ -1082,13 +1082,13 @@ exports[`loaded 1`] = `
           align="right"
         >
           <button
-            class="c19"
+            class="c18"
             height="24px"
             kind="border"
           >
             CONNECT
             <span
-              class="c13 c20 icon icon-caret-down "
+              class="c13 c19 icon icon-caret-down "
               color="text.secondary"
               font-size="2"
             />
@@ -1104,13 +1104,13 @@ exports[`loaded 1`] = `
         </td>
         <td>
           <div
-            class="c18"
+            class="c17"
             kind="secondary"
           >
             cluster: one
           </div>
           <div
-            class="c18"
+            class="c17"
             kind="secondary"
           >
             kernel: 4.15.0-51-generic
@@ -1120,13 +1120,13 @@ exports[`loaded 1`] = `
           align="right"
         >
           <button
-            class="c19"
+            class="c18"
             height="24px"
             kind="border"
           >
             CONNECT
             <span
-              class="c13 c20 icon icon-caret-down "
+              class="c13 c19 icon icon-caret-down "
               color="text.secondary"
               font-size="2"
             />
@@ -1142,13 +1142,13 @@ exports[`loaded 1`] = `
         </td>
         <td>
           <div
-            class="c18"
+            class="c17"
             kind="secondary"
           >
             cluster: one
           </div>
           <div
-            class="c18"
+            class="c17"
             kind="secondary"
           >
             kernel: 4.15.0-51-generic
@@ -1158,13 +1158,13 @@ exports[`loaded 1`] = `
           align="right"
         >
           <button
-            class="c19"
+            class="c18"
             height="24px"
             kind="border"
           >
             CONNECT
             <span
-              class="c13 c20 icon icon-caret-down "
+              class="c13 c19 icon icon-caret-down "
               color="text.secondary"
               font-size="2"
             />
@@ -1180,13 +1180,13 @@ exports[`loaded 1`] = `
         </td>
         <td>
           <div
-            class="c18"
+            class="c17"
             kind="secondary"
           >
             cluster: one
           </div>
           <div
-            class="c18"
+            class="c17"
             kind="secondary"
           >
             kernel: 4.15.0-51-generic
@@ -1196,13 +1196,13 @@ exports[`loaded 1`] = `
           align="right"
         >
           <button
-            class="c19"
+            class="c18"
             height="24px"
             kind="border"
           >
             CONNECT
             <span
-              class="c13 c20 icon icon-caret-down "
+              class="c13 c19 icon icon-caret-down "
               color="text.secondary"
               font-size="2"
             />
@@ -1223,13 +1223,13 @@ exports[`loaded 1`] = `
         </td>
         <td>
           <div
-            class="c18"
+            class="c17"
             kind="secondary"
           >
             cluster: one
           </div>
           <div
-            class="c18"
+            class="c17"
             kind="secondary"
           >
             kernel: 4.15.0-51-generic
@@ -1239,13 +1239,13 @@ exports[`loaded 1`] = `
           align="right"
         >
           <button
-            class="c19"
+            class="c18"
             height="24px"
             kind="border"
           >
             CONNECT
             <span
-              class="c13 c20 icon icon-caret-down "
+              class="c13 c19 icon icon-caret-down "
               color="text.secondary"
               font-size="2"
             />
@@ -1266,13 +1266,13 @@ exports[`loaded 1`] = `
         </td>
         <td>
           <div
-            class="c18"
+            class="c17"
             kind="secondary"
           >
             cluster: one
           </div>
           <div
-            class="c18"
+            class="c17"
             kind="secondary"
           >
             kernel: 4.15.0-51-generic
@@ -1282,13 +1282,13 @@ exports[`loaded 1`] = `
           align="right"
         >
           <button
-            class="c19"
+            class="c18"
             height="24px"
             kind="border"
           >
             CONNECT
             <span
-              class="c13 c20 icon icon-caret-down "
+              class="c13 c19 icon icon-caret-down "
               color="text.secondary"
               font-size="2"
             />

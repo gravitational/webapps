@@ -527,7 +527,7 @@ exports[`open source loaded 1`] = `
   color: rgba(255,255,255,0.3);
 }
 
-.c16 {
+.c15 {
   line-height: 1.5;
   margin: 0;
   display: inline-flex;
@@ -555,22 +555,22 @@ exports[`open source loaded 1`] = `
   padding: 0px 16px;
 }
 
-.c16:active {
+.c15:active {
   opacity: 0.56;
 }
 
-.c16:hover,
-.c16:focus {
+.c15:hover,
+.c15:focus {
   background: #2C3A73;
   border: 1px solid rgba(255,255,255,0.1);
   opacity: 1;
 }
 
-.c16:active {
+.c15:active {
   opacity: 0.24;
 }
 
-.c16:disabled {
+.c15:disabled {
   background: rgba(255,255,255,0.12);
   color: rgba(255,255,255,0.3);
 }
@@ -582,13 +582,13 @@ exports[`open source loaded 1`] = `
   font-size: 16px;
 }
 
-.c14 {
+.c13 {
   display: inline-block;
   transition: color .3s;
   color: #FFFFFF;
 }
 
-.c15 {
+.c14 {
   box-sizing: border-box;
   border-radius: 100px;
   display: inline-flex;
@@ -712,6 +712,10 @@ exports[`open source loaded 1`] = `
   padding-right: 24px;
 }
 
+.c12 > tbody > tr > td {
+  vertical-align: baseline;
+}
+
 .c12 > thead > tr > th {
   background: #111B48;
   color: #FFFFFF;
@@ -818,10 +822,6 @@ exports[`open source loaded 1`] = `
   font-size: 12px;
 }
 
-.c13 > tbody > tr > td {
-  vertical-align: baseline;
-}
-
 <div
   class="c0"
 >
@@ -901,7 +901,7 @@ exports[`open source loaded 1`] = `
     </div>
   </nav>
   <table
-    class="c12 c13"
+    class="c12"
   >
     <thead>
       <tr>
@@ -909,7 +909,7 @@ exports[`open source loaded 1`] = `
           <a>
             Name
             <span
-              class="c10 c14 icon icon-chevron-up "
+              class="c10 c13 icon icon-chevron-up "
               color="light"
             />
           </a>
@@ -918,7 +918,7 @@ exports[`open source loaded 1`] = `
           <a>
             Description
             <span
-              class="c10 c14 icon icon-chevrons-expand-vertical "
+              class="c10 c13 icon icon-chevrons-expand-vertical "
               color="light"
             />
           </a>
@@ -927,7 +927,7 @@ exports[`open source loaded 1`] = `
           <a>
             Type
             <span
-              class="c10 c14 icon icon-chevrons-expand-vertical "
+              class="c10 c13 icon icon-chevrons-expand-vertical "
               color="light"
             />
           </a>
@@ -951,13 +951,13 @@ exports[`open source loaded 1`] = `
         </td>
         <td>
           <div
-            class="c15"
+            class="c14"
             kind="secondary"
           >
             cluster: root
           </div>
           <div
-            class="c15"
+            class="c14"
             kind="secondary"
           >
             env: aws
@@ -967,7 +967,7 @@ exports[`open source loaded 1`] = `
           align="right"
         >
           <button
-            class="c16"
+            class="c15"
             kind="border"
           >
             Connect
@@ -986,13 +986,13 @@ exports[`open source loaded 1`] = `
         </td>
         <td>
           <div
-            class="c15"
+            class="c14"
             kind="secondary"
           >
             cluster: root
           </div>
           <div
-            class="c15"
+            class="c14"
             kind="secondary"
           >
             env: aws
@@ -1002,7 +1002,7 @@ exports[`open source loaded 1`] = `
           align="right"
         >
           <button
-            class="c16"
+            class="c15"
             kind="border"
           >
             Connect
@@ -1021,13 +1021,13 @@ exports[`open source loaded 1`] = `
         </td>
         <td>
           <div
-            class="c15"
+            class="c14"
             kind="secondary"
           >
             cluster: env
           </div>
           <div
-            class="c15"
+            class="c14"
             kind="secondary"
           >
             value: gcp
@@ -1037,7 +1037,7 @@ exports[`open source loaded 1`] = `
           align="right"
         >
           <button
-            class="c16"
+            class="c15"
             kind="border"
           >
             Connect
