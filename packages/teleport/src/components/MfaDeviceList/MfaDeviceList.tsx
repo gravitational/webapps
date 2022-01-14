@@ -18,14 +18,7 @@ import React, { useState } from 'react';
 import styled from 'styled-components';
 import { sortBy } from 'lodash';
 import { ButtonBorder, Text } from 'design';
-import {
-  Column,
-  SortHeaderCell,
-  Cell,
-  TextCell,
-  SortTypes,
-  Table,
-} from 'design/DataTable';
+import Table, { Cell } from 'design/DataTableNext';
 import { displayDate } from 'shared/services/loc';
 import { MfaDevice } from 'teleport/services/mfa/types';
 
@@ -34,28 +27,54 @@ export default function MfaDeviceList({
   remove,
   mostRecentDevice,
   mfaDisabled = false,
+  isSearchable = false,
   ...styles
 }: Props) {
-  const [sortDir, setSortDir] = useState<Record<string, string>>({
-    registeredDate: SortTypes.ASC,
-  });
-
-  function sort(data) {
-    const columnKey = Object.getOwnPropertyNames(sortDir)[0];
-    const sorted = sortBy(data, columnKey);
-    if (sortDir[columnKey] === SortTypes.ASC) {
-      return sorted.reverse();
-    }
-
-    return sorted;
-  }
-
-  function onSortChange(columnKey: string, sortDir: string) {
-    setSortDir({ [columnKey]: sortDir });
-  }
-
-  const data = sort(devices);
-
+  return (
+    <Table
+      data={devices}
+      columns={[
+        {
+          key: 'description',
+          headerText: 'Type',
+        },
+        {
+          key: 'name',
+          headerText: 'Device Name',
+        },
+        {
+          key: 'registeredDate',
+          headerText: 'Registered',
+          isSortable: true,
+          render: ({ registeredDate }) => (
+            <Cell>{displayDate(registeredDate)}</Cell>
+          ),
+        },
+        {
+          key: 'lastUsedDate',
+          headerText: 'Last Used',
+          isSortable: true,
+          render: ({ lastUsedDate }) => (
+            <Cell>{displayDate(lastUsedDate)}</Cell>
+          ),
+        },
+        {
+          altKey: 'remove-btn',
+          render: ({ id, name }) => (
+            <RemoveCell
+              id={id}
+              name={name}
+              remove={remove}
+              mostRecentDevice={mostRecentDevice}
+              mfaDisabled={mfaDisabled}
+            />
+          ),
+        },
+      ]}
+      emptyText="No Devices Found"
+      isSearchable={isSearchable}
+    />
+  );
   return (
     <StyledTable data={data} {...styles}>
       <Column
@@ -129,10 +148,19 @@ const DateCell = props => {
   return <Cell>{dateText}</Cell>;
 };
 
-const RemoveCell = props => {
-  const { data, rowIndex, remove, mostRecentDevice, mfaDisabled } = props;
-  const { id, name } = data[rowIndex];
-
+const RemoveCell = ({
+  id,
+  name,
+  remove,
+  mostRecentDevice,
+  mfaDisabled,
+}: {
+  id: string;
+  name: string;
+  remove: ({ id, name }) => void;
+  mostRecentDevice: MfaDevice;
+  mfaDisabled: boolean;
+}) => {
   if (id === mostRecentDevice?.id) {
     return null;
   }
@@ -156,6 +184,7 @@ type Props = {
   remove({ id, name }: { id: string; name: string }): void;
   mostRecentDevice?: MfaDevice;
   mfaDisabled?: boolean;
+  isSearchable?: boolean;
   [key: string]: any;
 };
 
