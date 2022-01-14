@@ -21,38 +21,31 @@ import styled from 'styled-components';
 import isMatch from 'design/utils/match';
 import { Cluster } from 'teleport/services/clusters';
 import { MenuButton, MenuItem } from 'shared/components/MenuAction';
-import {
-  SortHeaderCell,
-  Cell,
-  Table,
-  Column,
-  SortTypes,
-} from 'design/DataTable';
+import Table, { Cell } from 'design/DataTableNext';
 import { usePages, Pager, StyledPanel } from 'design/DataTable/Paged';
 import InputSearch from 'teleport/components/InputSearch';
 import * as Labels from 'design/Label';
 import cfg from 'teleport/config';
 
 export default function ClustersList(props: Props) {
-  const { clusters, search = '', onSearchChange, pageSize = 50 } = props;
-  const [sorting, setSorting] = React.useState<Sorting>({
-    clusterId: 'DESC',
-  });
+  const { clusters = [], pageSize = 50 } = props;
 
-  function onSortChange(columnKey: SortCol, sortDir: string) {
-    setSorting({ [columnKey]: sortDir });
-  }
-
-  function sort(clusters: Cluster[]) {
-    const columnName = Object.getOwnPropertyNames(sorting)[0] as SortCol;
-    const sorted = sortClusters(clusters, columnName, sorting[columnName]);
-    return rootFirst(sorted);
-  }
-
-  const filtered = filter(clusters, search);
-  const sorted = sort(filtered);
-  const paged = usePages({ pageSize, data: sorted });
-
+  return (
+    <StyledTable
+      data={clusters}
+      columns={[
+        {
+          altKey: 'root-label',
+          render: ({ clusterId }) => <RootLabelCell clusterId={clusterId} />,
+        },
+        {
+          key: 'clusterId',
+          headerText: 'Name',
+          isSortable: true,
+        },
+      ]}
+    />
+  );
   return (
     <>
       <StyledPanel
@@ -128,17 +121,13 @@ function rootFirst(clusters: Cluster[]) {
   return clusters;
 }
 
-export function NameCell(props) {
-  const { rowIndex, data } = props;
-  const { clusterId } = data[rowIndex];
-  return <Cell>{clusterId}</Cell>;
-}
-
-function RootLabelCell(props) {
-  const { rowIndex, data } = props;
-  const { clusterId } = data[rowIndex];
+function RootLabelCell({ clusterId }: { clusterId: string }) {
   const isRoot = cfg.proxyCluster === clusterId;
-  return <Cell>{isRoot && <Labels.Primary>ROOT</Labels.Primary>}</Cell>;
+  return (
+    <Cell style={{ width: '40px' }}>
+      {isRoot && <Labels.Primary>ROOT</Labels.Primary>}
+    </Cell>
+  );
 }
 
 function ActionCell(props: { flags: MenuFlags }) {
@@ -195,9 +184,7 @@ type Sorting = {
 
 type Props = {
   clusters: Cluster[];
-  onSearchChange: (value: string) => void;
-  search: string;
-  pageSize?: 500;
+  pageSize?: number;
   menuFlags: MenuFlags;
 };
 
@@ -215,4 +202,4 @@ const StyledTable = styled(Table)`
   td {
     height: 22px;
   }
-`;
+` as typeof Table;
