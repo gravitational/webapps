@@ -1,4 +1,4 @@
-import { FetchingConfig } from '../types';
+import { FetchStatus } from '../types';
 
 export default function usePager({
   nextPage,
@@ -38,7 +38,7 @@ export type Props = {
   currentPage: number;
   pageSize: number;
   onFetchMore?: () => void;
-  fetchStatus?: FetchingConfig['fetchStatus'];
+  fetchStatus?: FetchStatus;
 };
 
 export type State = ReturnType<typeof usePager>;

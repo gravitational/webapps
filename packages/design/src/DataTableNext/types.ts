@@ -21,8 +21,8 @@ export type PaginationConfig = {
 };
 
 export type FetchingConfig = {
-  onFetchMore?: () => void;
-  fetchStatus?: 'loading' | 'disabled' | '';
+  onFetchMore: () => void;
+  fetchStatus: FetchStatus;
 };
 
 // Makes it so either key or altKey is required
@@ -42,5 +42,7 @@ type InitialSort<T> = {
 };
 
 export type SortDir = 'ASC' | 'DESC';
+
+export type FetchStatus = 'loading' | 'disabled' | '';
 
 export type TableColumn<T> = TableColumnWithKey<T> | TableColumnWithAltKey<T>;

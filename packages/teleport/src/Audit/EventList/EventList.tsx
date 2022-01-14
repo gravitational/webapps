@@ -86,7 +86,7 @@ export const ActionCell = ({
   onShowDetails,
 }: {
   event: Event;
-  onShowDetails: React.Dispatch<React.SetStateAction<Event>>;
+  onShowDetails: (e: Event) => void;
 }) => (
   <Cell align="right">
     <ButtonBorder
