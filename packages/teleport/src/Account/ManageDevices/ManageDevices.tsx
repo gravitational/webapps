@@ -15,7 +15,7 @@ limitations under the License.
 */
 
 import React from 'react';
-import { Box, Text, Flex, Indicator, ButtonPrimary } from 'design';
+import { Box, Indicator, ButtonPrimary } from 'design';
 import { Danger } from 'design/Alert';
 import useTeleport from 'teleport/useTeleport';
 import {
