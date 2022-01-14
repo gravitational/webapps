@@ -43,7 +43,8 @@ function NodeList(props: Props) {
         },
         {
           altKey: 'connect-btn',
-          render: node => renderLoginCell(node, onLoginSelect, onLoginMenuOpen),
+          render: ({ id }) =>
+            renderLoginCell(id, onLoginSelect, onLoginMenuOpen),
         },
       ]}
       emptyText="No Nodes Found"
@@ -57,7 +58,7 @@ function NodeList(props: Props) {
 }
 
 const renderLoginCell = (
-  { id }: Node,
+  id: string,
   onSelect: (e: React.SyntheticEvent, login: string, serverId: string) => void,
   onOpen: (serverId: string) => LoginItem[]
 ) => {
