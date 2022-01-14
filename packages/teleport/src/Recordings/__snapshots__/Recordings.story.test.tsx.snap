@@ -166,6 +166,10 @@ exports[`rendering of Session Recordings 1`] = `
   padding-right: 24px;
 }
 
+.c13 > tbody > tr > td {
+  vertical-align: baseline;
+}
+
 .c13 > thead > tr > th {
   background: #111B48;
   color: #FFFFFF;

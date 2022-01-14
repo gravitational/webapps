@@ -16,7 +16,7 @@ limitations under the License.
 
 import React from 'react';
 import { ButtonBorder } from 'design';
-import Table, { Cell } from 'design/DataTableNext';
+import Table, { Cell, TextCell } from 'design/DataTableNext';
 import { displayDateTime } from 'shared/services/loc';
 import cfg from 'teleport/config';
 import { Recording } from 'teleport/services/recordings';
@@ -50,7 +50,7 @@ export default function RecordingsList(props: Props) {
           key: 'duration',
           headerText: 'Duration',
           isSortable: true,
-          render: ({ durationText = '' }) => <Cell>{durationText}</Cell>,
+          render: ({ durationText }) => <TextCell data={durationText} />,
         },
         {
           key: 'createdDate',
@@ -66,13 +66,7 @@ export default function RecordingsList(props: Props) {
         },
         {
           altKey: 'play-btn',
-          render: ({ description, sid }) => (
-            <PlayCell
-              description={description}
-              sid={sid}
-              clusterId={clusterId}
-            />
-          ),
+          render: recording => renderPlayCell(recording, clusterId),
         },
       ]}
       emptyText="No Recordings Found"
@@ -87,11 +81,7 @@ export default function RecordingsList(props: Props) {
   );
 }
 
-const PlayCell = ({
-  description,
-  sid,
-  clusterId,
-}: Pick<Recording, 'description' | 'sid'> & { clusterId: string }) => {
+const renderPlayCell = ({ description, sid }: Recording, clusterId: string) => {
   if (description !== 'play') {
     return (
       <Cell align="right" style={{ color: '#9F9F9F' }}>
