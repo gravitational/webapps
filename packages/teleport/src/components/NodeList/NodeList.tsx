@@ -34,9 +34,7 @@ function NodeList(props: Props) {
           key: 'addr',
           headerText: 'Address',
           isSortable: true,
-          render: ({ addr, tunnel }) => (
-            <AddressCell addr={addr} tunnel={tunnel} />
-          ),
+          render: renderAddressCell,
         },
         {
           key: 'tags',
@@ -45,13 +43,7 @@ function NodeList(props: Props) {
         },
         {
           altKey: 'connect-btn',
-          render: ({ id }) => (
-            <LoginCell
-              onOpen={onLoginMenuOpen}
-              onSelect={onLoginSelect}
-              serverId={id}
-            />
-          ),
+          render: node => renderLoginCell(node, onLoginSelect, onLoginMenuOpen),
         },
       ]}
       emptyText="No Nodes Found"
@@ -64,17 +56,13 @@ function NodeList(props: Props) {
   );
 }
 
-const LoginCell = ({
-  onSelect,
-  onOpen,
-  serverId,
-}: {
-  onSelect?: (e: React.SyntheticEvent, login: string, serverId: string) => void;
-  onOpen: (serverId: string) => LoginItem[];
-  serverId: string;
-}) => {
+const renderLoginCell = (
+  { id }: Node,
+  onSelect: (e: React.SyntheticEvent, login: string, serverId: string) => void,
+  onOpen: (serverId: string) => LoginItem[]
+) => {
   function handleOnOpen() {
-    return onOpen(serverId);
+    return onOpen(id);
   }
 
   function handleOnSelect(e: React.SyntheticEvent, login: string) {
@@ -82,7 +70,7 @@ const LoginCell = ({
       return [];
     }
 
-    return onSelect(e, login, serverId);
+    return onSelect(e, login, id);
   }
 
   return (
@@ -103,7 +91,7 @@ const LoginCell = ({
   );
 };
 
-export const AddressCell = ({ addr, tunnel }) => (
+export const renderAddressCell = ({ addr, tunnel }: Node) => (
   <Cell>{tunnel ? renderTunnel() : addr}</Cell>
 );
 
