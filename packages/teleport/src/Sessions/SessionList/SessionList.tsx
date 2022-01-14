@@ -69,6 +69,7 @@ export default function SessionList(props: Props) {
       ]}
       emptyText="No Active Sessions Found"
       pagination={{ pageSize }}
+      isSearchable
     />
   );
 }
