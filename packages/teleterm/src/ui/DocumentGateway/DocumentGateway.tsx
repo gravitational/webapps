@@ -36,7 +36,7 @@ export default function DocumentGatewayContainer(props: Props) {
   const [connected, setConnected] = useState(false);
 
   useEffect(() => {
-    if (ctx.serviceClusters.findGateway(doc.uri)) {
+    if (ctx.clustersService.findGateway(doc.uri)) {
       setConnected(true);
     }
   }, []);

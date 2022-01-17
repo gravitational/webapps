@@ -37,8 +37,8 @@ export default function useExpanderConnections() {
       rerender({});
     }
 
-    ctx.serviceWorkspace.subscribe(onChange);
-    return () => ctx.serviceDocs.unsubscribe(onChange);
+    ctx.workspaceService.subscribe(onChange);
+    return () => ctx.workspaceService.unsubscribe(onChange);
   }, []);
 
   return {
@@ -50,7 +50,7 @@ export default function useExpanderConnections() {
 
 function getWorkspaceItems(ctx: AppContext): ConnectionItem[] {
   return [
-    ...ctx.serviceWorkspace
+    ...ctx.workspaceService
       .get()
       .recentDocuments.map(document => {
         if (document.kind === 'doc.terminal_tsh_node') {
@@ -69,17 +69,17 @@ function getWorkspaceItems(ctx: AppContext): ConnectionItem[] {
 }
 
 function handleItemOpen(ctx: AppContext, item: ConnectionItem) {
-  if (!ctx.serviceDocs.getDocuments().find(d => d.uri === item.uri)) {
-    ctx.serviceDocs.add(item.document);
+  if (!ctx.docsService.getDocuments().find(d => d.uri === item.uri)) {
+    ctx.docsService.add(item.document);
   }
-  ctx.serviceDocs.open(item.uri);
+  ctx.docsService.open(item.uri);
 }
 
 function handleItemRemove(ctx: AppContext, item: ConnectionItem) {
-  const recentDocuments = ctx.serviceWorkspace
+  const recentDocuments = ctx.workspaceService
     .get()
     .recentDocuments.filter(d => d.uri !== item.uri);
-  ctx.serviceWorkspace.update({ recentDocuments });
+  ctx.workspaceService.update({ recentDocuments });
 }
 
 function createConnectionItem(
@@ -89,12 +89,12 @@ function createConnectionItem(
   function getStatus() {
     switch (document.kind) {
       case 'doc.terminal_tsh_node':
-        return (ctx.serviceDocs.getDocument(document.uri) as DocumentTshNode)
+        return (ctx.docsService.getDocument(document.uri) as DocumentTshNode)
           ?.status === 'connected'
           ? 'connected'
           : 'disconnected';
       case 'doc.gateway':
-        return ctx.serviceClusters.findGateway(document.uri)
+        return ctx.clustersService.findGateway(document.uri)
           ? 'connected'
           : 'disconnected';
     }

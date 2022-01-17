@@ -40,14 +40,13 @@ export default class AppContext {
     this.mainProcessClient = mainProcessClient;
     this.clustersService = new ClustersService(tshClient);
     this.modalsService = new ModalsService();
-    this.docsService = new DocumentsService();
     this.terminalsService = new TerminalsService(ptyServiceClient);
     this.keyboardShortcutsService = new KeyboardShortcutsService(
       this.mainProcessClient.getRuntimeSettings().platform,
       this.mainProcessClient.configService
     );
     this.workspaceService = config.workspaceService
-    this.serviceDocs = new ServiceDocs(this.serviceWorkspace);
+    this.docsService = new DocumentsService(this.workspaceService);
 
     this.commandLauncher = new CommandLauncher(this);
     this.quickInputService = new QuickInputService(

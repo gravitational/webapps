@@ -23,10 +23,10 @@ import ServerConnect from 'teleterm/ui/ServerConnect';
 import ClusterRemove from '../ClusterRemove/ClusterRemove';
 
 export default function ModalsHost() {
-  const { modalsService: serviceModals } = useAppContext();
-  const dialog = serviceModals.useState();
+  const { modalsService } = useAppContext();
+  const dialog = modalsService.useState();
 
-  const handleClose = () => serviceModals.closeDialog();
+  const handleClose = () => modalsService.closeDialog();
 
   if (dialog.kind === 'add-cluster') {
     return <ClusterAdd onClose={handleClose} />;

@@ -40,17 +40,12 @@ export function createWorkspaceService(options: {
   }
 
   function addToRecentDocuments(document: Document): void {
-    const maxRecentDocumentsCount = 5;
     if (
       document.kind === 'doc.terminal_tsh_node' ||
       document.kind === 'doc.gateway'
     ) {
       const recentDocuments = [...get().recentDocuments];
       if (!recentDocuments.find(d => d.uri === document.uri)) {
-        if (recentDocuments.length >= maxRecentDocumentsCount) {
-          recentDocuments.shift();
-        }
-
         recentDocuments.push(document);
         update({ recentDocuments });
       }

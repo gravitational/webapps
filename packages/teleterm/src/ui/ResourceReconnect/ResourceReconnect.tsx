@@ -6,19 +6,19 @@ import { Box, ButtonPrimary, Flex } from 'design';
 type ReconnectProps = {
   visible: boolean;
   children: ReactNode;
-  clusterId?: string;
+  serverUri?: string;
   connected: boolean;
   afterReconnect(): void;
 };
 
 export function ResourceReconnect(props: ReconnectProps) {
   const ctx = useAppContext();
-  const { visible, connected, children, clusterId } = props;
+  const { visible, connected, children, serverUri } = props;
 
   function reconnect() {
-    if (clusterId) {
-      const cluster = ctx.serviceClusters.findCluster(`/clusters/${clusterId}`);
-      ctx.serviceModals.openLoginDialog(cluster.uri, () => {
+    if (serverUri) {
+      const cluster = ctx.clustersService.findClusterByResource(serverUri);
+      ctx.modalsService.openLoginDialog(cluster.uri, () => {
         props.afterReconnect();
       });
     }

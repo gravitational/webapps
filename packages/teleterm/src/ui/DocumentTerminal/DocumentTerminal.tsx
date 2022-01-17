@@ -28,10 +28,10 @@ export default function DocumentTerminalContainer(props: Props) {
   useEffect(() => {
     if (
       doc.kind === 'doc.terminal_tsh_node' &&
-      ctx.serviceClusters.findCluster(`/clusters/${doc.rootClusterId}`)
+      ctx.clustersService.findClusterByResource(doc.serverUri)
         ?.connected
     ) {
-      ctx.serviceDocs.update(doc.uri, { status: 'connected' });
+      ctx.docsService.update(doc.uri, { status: 'connected' });
     }
   }, []);
 
@@ -47,9 +47,9 @@ export default function DocumentTerminalContainer(props: Props) {
     <ResourceReconnect
       visible={props.visible}
       connected={doc.status !== 'disconnected'}
-      clusterId={doc.rootClusterId}
+      serverUri={doc.serverUri}
       afterReconnect={() => {
-        ctx.serviceDocs.update(doc.uri, { status: 'connected' });
+        ctx.docsService.update(doc.uri, { status: 'connected' });
       }}
     >
       {documentTerminal}

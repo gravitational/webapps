@@ -101,6 +101,7 @@ export class DocumentsService extends ImmutableStore<State> {
       rootClusterId: params.rootClusterId,
       leafClusterId: params.leafClusterId,
       serverId: params.serverId,
+      serverUri,
       title: '',
       login: '',
     };
