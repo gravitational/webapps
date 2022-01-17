@@ -24,18 +24,18 @@ export default function useExpanderConnections() {
   const items = initItems(ctx);
 
   // subscribe to services
-  ctx.serviceClusters.useState();
-  ctx.serviceDocs.useState();
+  ctx.clustersService.useState();
+  ctx.docsService.useState();
 
   return {
-    serviceClusters: ctx.serviceClusters,
+    serviceClusters: ctx.clustersService,
     items,
   };
 }
 
 function initItems(ctx: AppContext): ConnectionItem[] {
-  const gateways = ctx.serviceClusters.getGateways();
-  const tshDocs = ctx.serviceDocs.getTshNodeDocuments();
+  const gateways = ctx.clustersService.getGateways();
+  const tshDocs = ctx.docsService.getTshNodeDocuments();
 
   const demoHistoryItems: ConnectionItem[] = [
     {

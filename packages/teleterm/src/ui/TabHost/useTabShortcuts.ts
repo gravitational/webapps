@@ -28,24 +28,24 @@ export default function useTabShortcuts(ctx: AppContext) {
 
 function buildTabsShortcuts(ctx: AppContext): KeyboardShortcutHandlers {
   const handleTabIndex = (index: number) => () => {
-    const docs = ctx.serviceDocs.getDocuments();
+    const docs = ctx.docsService.getDocuments();
     if (docs[index]) {
-      ctx.serviceDocs.open(docs[index].uri);
+      ctx.docsService.open(docs[index].uri);
     }
   };
 
   const handleActiveTabClose = () => {
-    const { uri } = ctx.serviceDocs.getActive();
-    ctx.serviceDocs.close({ uri });
+    const { uri } = ctx.docsService.getActive();
+    ctx.docsService.close({ uri });
   };
 
   const handleNewTabOpen = () => {
-    ctx.serviceDocs.openNewTerminal();
+    ctx.docsService.openNewTerminal();
   };
 
   const handleTabSwitch = (direction: 'previous' | 'next') => () => {
-    const activeDoc = ctx.serviceDocs.getActive();
-    const allDocuments = ctx.serviceDocs
+    const activeDoc = ctx.docsService.getActive();
+    const allDocuments = ctx.docsService
       .getDocuments()
       .filter(d => d.kind !== 'doc.home');
     const activeDocIndex = allDocuments.indexOf(activeDoc);
@@ -55,7 +55,7 @@ function buildTabsShortcuts(ctx: AppContext): KeyboardShortcutHandlers {
     const indexToOpen =
       direction === 'previous' ? getPreviousIndex() : getNextIndex();
 
-    ctx.serviceDocs.open(allDocuments[indexToOpen].uri);
+    ctx.docsService.open(allDocuments[indexToOpen].uri);
   };
   return {
     'tab-1': handleTabIndex(1),

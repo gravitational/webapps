@@ -1,4 +1,4 @@
-import DocumentService from './docs';
+import { DocumentsService } from './documentsService';
 import { Document } from './types';
 
 function getMockedDocuments(): Document[] {
@@ -9,8 +9,8 @@ function getMockedDocuments(): Document[] {
   ];
 }
 
-function createService(mockDocks: Document[]): DocumentService {
-  const service = new DocumentService();
+function createService(mockDocks: Document[]): DocumentsService {
+  const service = new DocumentsService();
   mockDocks.forEach(d => service.add(d));
 
   return service;

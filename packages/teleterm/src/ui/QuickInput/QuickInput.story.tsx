@@ -26,7 +26,7 @@ export default {
 export const Story = () => {
   const appContext = new MockAppContext();
 
-  appContext.serviceClusters.getClusters = () => {
+  appContext.clustersService.getClusters = () => {
     return [
       {
         uri: '/clusters/localhost',

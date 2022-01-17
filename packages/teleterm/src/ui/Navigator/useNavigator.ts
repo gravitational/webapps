@@ -18,7 +18,7 @@ import { useAppContext } from './../appContextProvider';
 
 export default function useNavigator() {
   const ctx = useAppContext();
-  ctx.serviceDocs.useState();
+  ctx.docsService.useState();
 }
 
 export type State = ReturnType<typeof useNavigator>;

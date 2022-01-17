@@ -27,7 +27,10 @@ import ClusterSearch from './ClusterSearch';
 
 export default function ClusterResources() {
   const clusterCtx = useClusterContext();
+
+  // subscribe to services
   const { navLocation } = clusterCtx.useState();
+  clusterCtx.appCtx.clustersService.useState();
 
   React.useEffect(() => {
     if (clusterCtx.isLocationActive(`/resources/`, true)) {
@@ -38,8 +41,8 @@ export default function ClusterResources() {
   return (
     <StyledMain>
       <ClusterSearch onChange={clusterCtx.changeSearchValue} />
-      <Flex mt={3}>
-        <SideNav />
+      <Flex mt={3} flexDirection="column">
+        <SideNav mb={2} />
         <HorizontalSplit>
           {clusterCtx.isLocationActive('/resources/servers') && <Servers />}
           {clusterCtx.isLocationActive('/resources/databases') && <Databases />}

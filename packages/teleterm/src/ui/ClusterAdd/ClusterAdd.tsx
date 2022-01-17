@@ -28,12 +28,12 @@ export default function AddCluster({ onClose }: Props) {
   const [addr, setAddr] = useState('');
   const ctx = useAppContext();
   const [{ status, statusText, data: cluster }, run] = useAsync(() => {
-    return ctx.serviceClusters.addRootCluster(addr);
+    return ctx.clustersService.addRootCluster(addr);
   });
 
   React.useEffect(() => {
     if (status === 'success') {
-      ctx.serviceModals.openLoginDialog(cluster.uri);
+      ctx.modalsService.openLoginDialog(cluster.uri);
     }
   }, [status]);
 

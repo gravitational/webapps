@@ -37,7 +37,7 @@ export default function useDocumentTerminal(doc: Doc) {
 
 async function initState(ctx: IAppContext, doc: Doc) {
   const cmd = createCmd(doc);
-  const ptyProcess = ctx.serviceTerminals.createPtyProcess(cmd);
+  const ptyProcess = ctx.terminalsService.createPtyProcess(cmd);
   const openContextMenu = () => ctx.mainProcessClient.openTerminalContextMenu();
 
   const refreshTitle = async () => {
@@ -46,7 +46,7 @@ async function initState(ctx: IAppContext, doc: Doc) {
     }
 
     const cwd = await ptyProcess.getCwd();
-    ctx.serviceDocs.update(doc.uri, { cwd, title: cwd });
+    ctx.docsService.update(doc.uri, { cwd, title: cwd });
   };
 
   ptyProcess.onOpen(() => {
@@ -54,7 +54,7 @@ async function initState(ctx: IAppContext, doc: Doc) {
   });
 
   ptyProcess.onExit(() => {
-    ctx.serviceDocs.close({ uri: doc.uri });
+    ctx.docsService.close({ uri: doc.uri });
   });
 
   return {

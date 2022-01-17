@@ -16,13 +16,14 @@ limitations under the License.
 
 import React from 'react';
 import styled from 'styled-components';
+import { Flex } from 'design';
 import ClusterNavButton from 'teleterm/ui/DocumentCluster/ClusterNavButton';
 import ClusterContext, {
   NavLocation,
 } from 'teleterm/ui/DocumentCluster/clusterContext';
 import { useClusterContext } from 'teleterm/ui/DocumentCluster/clusterContext';
 
-export default function SideNav() {
+export default function SideNav(props: Props) {
   const ctx = useClusterContext();
   const items = createItems(ctx);
 
@@ -38,36 +39,29 @@ export default function SideNav() {
     );
   });
 
-  return (
-    <Nav>
-      <div
-        style={{ display: 'flex', flexDirection: 'column', overflow: 'auto' }}
-      >
-        {$items}
-      </div>
-    </Nav>
-  );
+  return <StyledNav {...props}>{$items}</StyledNav>;
 }
+
+type Props = {
+  [index: string]: any;
+};
 
 export type SideNavItem = {
   to: NavLocation;
   title: string;
 };
 
-const Nav = styled.nav`
+const StyledNav = styled(Flex)`
   min-width: 180px;
-  width: 240px;
   overflow: auto;
   height: 100%;
-  display: flex;
-  flex-direction: column;
 `;
 
 function createItems(ctx: ClusterContext): SideNavItem[] {
   const serverCount = ctx.getServers().length;
   const dbCount = ctx.getDbs().length;
-  const appCount = ctx.getKubes().length;
-  const kubeCount = ctx.getApps().length;
+  const kubeCount = ctx.getKubes().length;
+  const appCount = ctx.getApps().length;
 
   return [
     {

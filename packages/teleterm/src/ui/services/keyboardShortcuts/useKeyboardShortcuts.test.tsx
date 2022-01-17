@@ -46,7 +46,11 @@ function makeWrapper() {
       };
 
       return (
-        <AppContextProvider value={{ serviceKeyboardShortcuts } as AppContext}>
+        <AppContextProvider
+          value={
+            { keyboardShortcutsService: serviceKeyboardShortcuts } as AppContext
+          }
+        >
           {props.children}
         </AppContextProvider>
       );

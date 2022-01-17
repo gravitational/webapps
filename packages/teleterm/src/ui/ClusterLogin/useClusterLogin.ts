@@ -21,7 +21,8 @@ import useAsync from 'teleterm/ui/useAsync';
 
 export default function useClusterLogin(props: Props) {
   const { onClose, clusterUri } = props;
-  const { serviceClusters, serviceDocs } = useAppContext();
+  const { clustersService: serviceClusters, docsService: serviceDocs } =
+    useAppContext();
   const cluster = serviceClusters.findCluster(clusterUri);
   const refAbortCtrl = useRef<types.tsh.TshAbortController>(null);
   const [shouldPromptSsoStatus, promptSsoStatus] = useState(false);

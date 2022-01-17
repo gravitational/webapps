@@ -101,8 +101,8 @@ export const ActionCell = props => {
 function LabelCell(props) {
   const { rowIndex, data } = props;
   const { labelsList } = data[rowIndex];
-  const $labels = labelsList.map(label => (
-    <Label mb="1" mr="1" key={label} kind="secondary">
+  const $labels = labelsList.map((label, index) => (
+    <Label mb="1" mr="1" key={index} kind="secondary">
       {`${label.name}:${label.value}`}
     </Label>
   ));

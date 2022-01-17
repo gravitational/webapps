@@ -58,11 +58,11 @@ class ClusterContext extends Store<State> {
   };
 
   sync = () => {
-    this.appCtx.serviceClusters.syncRootCluster(this.state.clusterUri);
+    this.appCtx.clustersService.syncRootCluster(this.state.clusterUri);
   };
 
   updateState = () => {
-    const cluster = this.appCtx.serviceClusters.findCluster(this.clusterUri);
+    const cluster = this.appCtx.clustersService.findCluster(this.clusterUri);
     if (cluster === this.cluster) {
       return;
     }
@@ -79,12 +79,12 @@ class ClusterContext extends Store<State> {
     super();
     this.clusterUri = clusterUri;
     this.appCtx = appCtx;
-    this.appCtx.serviceClusters.subscribe(this.updateState);
+    this.appCtx.clustersService.subscribe(this.updateState);
     this.updateState();
   }
 
   dispose() {
-    this.appCtx.serviceClusters.unsubscribe(this.updateState);
+    this.appCtx.clustersService.unsubscribe(this.updateState);
   }
 
   isLocationActive(location: NavLocation, exact = false) {
@@ -101,31 +101,31 @@ class ClusterContext extends Store<State> {
   };
 
   getServers() {
-    return this.appCtx.serviceClusters.searchServers(this.state.clusterUri, {
+    return this.appCtx.clustersService.searchServers(this.state.clusterUri, {
       search: this.state.searchValue,
     });
   }
 
   getDbs() {
-    return this.appCtx.serviceClusters.searchDbs(this.state.clusterUri, {
+    return this.appCtx.clustersService.searchDbs(this.state.clusterUri, {
       search: this.state.searchValue,
     });
   }
 
   getKubes() {
-    return this.appCtx.serviceClusters.searchKubes(this.state.clusterUri, {
+    return this.appCtx.clustersService.searchKubes(this.state.clusterUri, {
       search: this.state.searchValue,
     });
   }
 
   getApps() {
-    return this.appCtx.serviceClusters.searchApps(this.state.clusterUri, {
+    return this.appCtx.clustersService.searchApps(this.state.clusterUri, {
       search: this.state.searchValue,
     });
   }
 
   getSyncStatus() {
-    return this.appCtx.serviceClusters.getClusterSyncStatus(
+    return this.appCtx.clustersService.getClusterSyncStatus(
       this.state.clusterUri
     );
   }

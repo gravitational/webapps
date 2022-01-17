@@ -21,14 +21,14 @@ const commands = {
     displayName: '',
     description: '',
     run(ctx: IAppContext, args: { serverUri: string }) {
-      ctx.serviceModals.openProxySshDialog(args.serverUri);
+      ctx.modalsService.openProxySshDialog(args.serverUri);
     },
   },
   'proxy-db': {
     displayName: '',
     description: '',
     run(ctx: IAppContext, args: { dbUri: string }) {
-      ctx.serviceModals.openProxyDbDialog(args.dbUri);
+      ctx.modalsService.openProxyDbDialog(args.dbUri);
     },
   },
 
@@ -37,9 +37,9 @@ const commands = {
     description: '',
     run(ctx: IAppContext, args: { clusterUri?: string }) {
       if (!args.clusterUri) {
-        ctx.serviceModals.openAddClusterDialog();
+        ctx.modalsService.openAddClusterDialog();
       } else {
-        ctx.serviceModals.openLoginDialog(args.clusterUri);
+        ctx.modalsService.openLoginDialog(args.clusterUri);
       }
     },
   },
@@ -47,8 +47,8 @@ const commands = {
     displayName: 'login',
     description: 'Log in to a cluster and retrieve the session',
     run(appCtx: IAppContext) {
-      appCtx.serviceQuickInput.setState({
-        picker: appCtx.serviceQuickInput.quickLoginPicker,
+      appCtx.quickInputService.setState({
+        picker: appCtx.quickInputService.quickLoginPicker,
         inputValue: '',
       });
     },
@@ -57,8 +57,8 @@ const commands = {
     displayName: 'ssh',
     description: 'Run shell or execute a command on a remote SSH node',
     run(appCtx: IAppContext) {
-      appCtx.serviceQuickInput.setState({
-        picker: appCtx.serviceQuickInput.quickServerPicker,
+      appCtx.quickInputService.setState({
+        picker: appCtx.quickInputService.quickServerPicker,
         inputValue: '',
       });
     },
@@ -68,8 +68,8 @@ const commands = {
     description:
       'Start local TLS proxy for database connections when using Teleport',
     run(appCtx: IAppContext) {
-      appCtx.serviceQuickInput.setState({
-        picker: appCtx.serviceQuickInput.quickDbPicker,
+      appCtx.quickInputService.setState({
+        picker: appCtx.quickInputService.quickDbPicker,
         inputValue: '',
       });
     },
@@ -78,15 +78,15 @@ const commands = {
     displayName: 'db ls',
     description: 'List cluster available databases',
     run(appCtx: IAppContext) {
-      appCtx.serviceQuickInput.setState({
-        picker: appCtx.serviceQuickInput.quickLoginPicker,
+      appCtx.quickInputService.setState({
+        picker: appCtx.quickInputService.quickLoginPicker,
         inputValue: '',
       });
     },
   },
 };
 
-export default class CommandLauncher {
+export class CommandLauncher {
   appContext: IAppContext;
 
   constructor(appContext: IAppContext) {

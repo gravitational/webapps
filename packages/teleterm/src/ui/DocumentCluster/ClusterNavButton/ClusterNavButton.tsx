@@ -16,7 +16,7 @@ limitations under the License.
 
 import React from 'react';
 import styled from 'styled-components';
-import { space, width, height } from 'design/system';
+import { space, width } from 'design/system';
 import {
   useClusterContext,
   NavLocation,
@@ -60,11 +60,10 @@ const StyledNavButton = styled.button(props => {
     outline: 'inherit',
     border: 'none',
     backgroundColor: 'inherit',
+    flexShrink: '0',
 
-    '&:hover': {
-      background: props.active
-        ? props.theme.colors.primary.light
-        : 'rgba(255, 255, 255, .06)',
+    '&:hover, &:focus': {
+      background: props.theme.colors.primary.light,
     },
     ...space(props),
     ...width(props),

@@ -1,5 +1,5 @@
 import { tsh, SyncStatus } from 'teleterm/ui/services/clusters/types';
-import Service from './clusters';
+import { ClustersService } from './clustersService';
 
 const clusterUri = 'testId';
 
@@ -54,8 +54,8 @@ const serverMock: tsh.Server = {
   tunnel: false,
 };
 
-function createService(client: Partial<tsh.TshClient>): Service {
-  return new Service(client as tsh.TshClient);
+function createService(client: Partial<tsh.TshClient>): ClustersService {
+  return new ClustersService(client as tsh.TshClient);
 }
 
 function getClientMocks(): Partial<tsh.TshClient> {
@@ -74,7 +74,7 @@ function getClientMocks(): Partial<tsh.TshClient> {
   };
 }
 
-function testIfClusterResourcesHaveBeenCleared(service: Service): void {
+function testIfClusterResourcesHaveBeenCleared(service: ClustersService): void {
   expect(service.findServers(clusterUri)).toStrictEqual([]);
   expect(service.findDbs(clusterUri)).toStrictEqual([]);
   expect(service.getClusterSyncStatus(clusterUri)).toStrictEqual({

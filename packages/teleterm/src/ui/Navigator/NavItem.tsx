@@ -29,7 +29,7 @@ type Props = {
 
 const NavItem: React.FC<Props> = props => {
   const { item, onClick, ...styles } = props;
-  const { serviceDocs } = useAppContext();
+  const { docsService: serviceDocs } = useAppContext();
   const active = serviceDocs.isActive(item.uri);
 
   const handleClick = () => {

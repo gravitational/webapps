@@ -20,14 +20,14 @@ import useAsync from 'teleterm/ui/useAsync';
 
 export default function useGatewayCreate({ targetUri, onClose }: Props) {
   const ctx = useAppContext();
-  const db = ctx.serviceClusters.findDb(targetUri);
+  const db = ctx.clustersService.findDb(targetUri);
   const [createAttempt, create] = useAsync((port: string) => {
-    return ctx.serviceClusters.createGateway(targetUri, port);
+    return ctx.clustersService.createGateway(targetUri, port);
   });
 
   useEffect(() => {
     if (createAttempt.status === 'success') {
-      ctx.serviceDocs.open(createAttempt.data.uri);
+      ctx.docsService.open(createAttempt.data.uri);
       onClose();
     }
   }, [createAttempt.status]);
