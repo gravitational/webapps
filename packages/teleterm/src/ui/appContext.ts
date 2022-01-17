@@ -22,6 +22,7 @@ import { TerminalsService } from 'teleterm/ui/services/terminals';
 import { QuickInputService } from 'teleterm/ui/services/quickInput';
 import { KeyboardShortcutsService } from 'teleterm/ui/services/keyboardShortcuts';
 import { CommandLauncher } from './commandLauncher';
+import { WorkspaceService } from 'teleterm/services/workspace';
 
 export default class AppContext {
   clustersService: ClustersService;
@@ -30,6 +31,7 @@ export default class AppContext {
   terminalsService: TerminalsService;
   keyboardShortcutsService: KeyboardShortcutsService;
   quickInputService: QuickInputService;
+  workspaceService: WorkspaceService;
   mainProcessClient: MainProcessClient;
   commandLauncher: CommandLauncher;
 
@@ -44,6 +46,7 @@ export default class AppContext {
       this.mainProcessClient.getRuntimeSettings().platform,
       this.mainProcessClient.configService
     );
+    this.workspaceService = config.workspaceService;
 
     this.commandLauncher = new CommandLauncher(this);
     this.quickInputService = new QuickInputService(
