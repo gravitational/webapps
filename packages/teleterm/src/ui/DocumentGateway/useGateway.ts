@@ -20,11 +20,11 @@ import useAsync from 'teleterm/ui/useAsync';
 
 export default function useGateway(doc: types.DocumentGateway) {
   const ctx = useAppContext();
-  const gateway = ctx.serviceClusters.findGateway(doc.uri);
+  const gateway = ctx.clustersService.findGateway(doc.uri);
 
   const [result, removeGateway] = useAsync(async () => {
-    await ctx.serviceClusters.removeGateway(doc.uri);
-    ctx.serviceDocs.close(doc);
+    await ctx.clustersService.removeGateway(doc.uri);
+    ctx.docsService.close(doc);
   });
 
   return {

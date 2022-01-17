@@ -29,7 +29,7 @@ import useTabShortcuts from './useTabShortcuts';
 
 export default function TabHost(props: Props) {
   const ctx = useAppContext();
-  const { serviceDocs } = ctx;
+  const { docsService: serviceDocs } = ctx;
   const documents = serviceDocs.getDocuments();
   const docActive = serviceDocs.getActive();
 

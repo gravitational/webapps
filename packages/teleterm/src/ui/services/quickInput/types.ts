@@ -5,7 +5,7 @@ type Base<T, R> = {
   data: R;
 };
 
-export type ItemEmpty = Base<'item.empty', {}>;
+export type ItemEmpty = Base<'item.empty', { message: string }>;
 
 export type ItemCluster = Base<'item.cluster', tsh.Cluster>;
 

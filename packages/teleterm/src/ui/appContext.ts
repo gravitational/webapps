@@ -15,44 +15,44 @@ limitations under the License.
 */
 
 import { MainProcessClient, ElectronGlobals } from 'teleterm/types';
-import ServiceClusters from 'teleterm/ui/services/clusters';
-import ServiceModals from 'teleterm/ui/services/modals';
-import ServiceDocs from 'teleterm/ui/services/docs';
-import ServiceTerminals from 'teleterm/ui/services/terminals';
-import ServiceQuickInput from 'teleterm/ui/services/quickInput';
+import { ClustersService } from 'teleterm/ui/services/clusters';
+import { ModalsService } from 'teleterm/ui/services/modals';
+import { DocumentsService } from 'teleterm/ui/services/docs';
+import { TerminalsService } from 'teleterm/ui/services/terminals';
+import { QuickInputService } from 'teleterm/ui/services/quickInput';
 import { KeyboardShortcutsService } from 'teleterm/ui/services/keyboardShortcuts';
-import CommandLauncher from './commandLauncher';
+import { CommandLauncher } from './commandLauncher';
 
 export default class AppContext {
-  serviceClusters: ServiceClusters;
-  serviceModals: ServiceModals;
-  serviceDocs: ServiceDocs;
-  serviceTerminals: ServiceTerminals;
-  serviceKeyboardShortcuts: KeyboardShortcutsService;
-  serviceQuickInput: ServiceQuickInput;
+  clustersService: ClustersService;
+  modalsService: ModalsService;
+  docsService: DocumentsService;
+  terminalsService: TerminalsService;
+  keyboardShortcutsService: KeyboardShortcutsService;
+  quickInputService: QuickInputService;
   mainProcessClient: MainProcessClient;
   commandLauncher: CommandLauncher;
 
   constructor(config: ElectronGlobals) {
     const { tshClient, ptyServiceClient, mainProcessClient } = config;
     this.mainProcessClient = mainProcessClient;
-    this.serviceClusters = new ServiceClusters(tshClient);
-    this.serviceModals = new ServiceModals();
-    this.serviceDocs = new ServiceDocs();
-    this.serviceTerminals = new ServiceTerminals(ptyServiceClient);
-    this.serviceKeyboardShortcuts = new KeyboardShortcutsService(
+    this.clustersService = new ClustersService(tshClient);
+    this.modalsService = new ModalsService();
+    this.docsService = new DocumentsService();
+    this.terminalsService = new TerminalsService(ptyServiceClient);
+    this.keyboardShortcutsService = new KeyboardShortcutsService(
       this.mainProcessClient.getRuntimeSettings().platform,
       this.mainProcessClient.configService
     );
 
     this.commandLauncher = new CommandLauncher(this);
-    this.serviceQuickInput = new ServiceQuickInput(
+    this.quickInputService = new QuickInputService(
       this.commandLauncher,
-      this.serviceClusters
+      this.clustersService
     );
   }
 
   async init() {
-    await this.serviceClusters.syncClusters();
+    await this.clustersService.syncClusters();
   }
 }

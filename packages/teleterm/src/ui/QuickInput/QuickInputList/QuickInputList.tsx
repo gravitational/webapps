@@ -19,7 +19,7 @@ import styled from 'styled-components';
 import { Label, Box, Text, Flex } from 'design';
 import * as types from 'teleterm/ui/services/quickInput/types';
 
-export default function QuickInputList(props: Props) {
+const QuickInputList = React.forwardRef<HTMLElement, Props>((props, ref) => {
   const { items, activeItem } = props;
   if (items.length === 0) {
     return null;
@@ -28,14 +28,37 @@ export default function QuickInputList(props: Props) {
   const $items = items.map((r, index) => {
     const Cmpt = ComponentMap[r.kind] || UnknownItem;
     return (
-      <StyledItem $active={index === activeItem} key={` ${index}`}>
+      <StyledItem
+        data-attr={index}
+        $active={index === activeItem}
+        key={` ${index}`}
+      >
         <Cmpt item={r} />
       </StyledItem>
     );
   });
 
-  return <StyledGlobalSearchResults>{$items}</StyledGlobalSearchResults>;
-}
+  function handleClick(e: React.SyntheticEvent) {
+    const el = e.target;
+    if (el instanceof Element) {
+      const itemEl = el.closest('[data-attr]');
+      props.onPick(parseInt(itemEl.getAttribute('data-attr')));
+    }
+  }
+
+  return (
+    <StyledGlobalSearchResults
+      ref={ref}
+      tabIndex={-1}
+      data-attr="quickpicker.list"
+      onClick={handleClick}
+    >
+      {$items}
+    </StyledGlobalSearchResults>
+  );
+});
+
+export default QuickInputList;
 
 function ServerItem(props: { item: types.ItemServer }) {
   const { hostname, clusterId, labelsList } = props.item.data;
@@ -99,8 +122,8 @@ function UnknownItem(props: { item: types.Item }) {
   return <div>unknown kind: {kind} </div>;
 }
 
-function EmptyItem() {
-  return <div>Empty</div>;
+function EmptyItem(props: { item: types.ItemEmpty }) {
+  return <div>{props.item.data.message || 'Empty'}</div>;
 }
 
 function NewClusterItem(props: { item: types.ItemNewCluster }) {
@@ -114,6 +137,11 @@ function NewClusterItem(props: { item: types.ItemNewCluster }) {
 
 const StyledItem = styled.div(({ theme, $active }) => {
   return {
+    '&:hover, &:focus': {
+      cursor: 'pointer',
+      background: theme.colors.primary.lighter,
+    },
+
     borderBottom: `2px solid ${theme.colors.primary.main}`,
     padding: '2px 8px',
     color: theme.colors.primary.contrastText,
@@ -158,4 +186,5 @@ const ComponentMap: Record<
 type Props = {
   items: types.Item[];
   activeItem: number;
+  onPick(index: number): void;
 };

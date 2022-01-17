@@ -27,7 +27,7 @@ type State = {
   docs: Document[];
 };
 
-export default class DocumentService extends ImmutableStore<State> {
+export class DocumentsService extends ImmutableStore<State> {
   state: State = {
     location: '/home',
     docs: [

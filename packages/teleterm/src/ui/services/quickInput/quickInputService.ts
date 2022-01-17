@@ -15,24 +15,27 @@ limitations under the License.
 */
 
 import { Store, useStore } from 'shared/libs/stores';
-import CommandLauncher from 'teleterm/ui/commandLauncher';
-import ServiceClusters from 'teleterm/ui/services/clusters';
+import { CommandLauncher } from 'teleterm/ui/commandLauncher';
+import { ClustersService } from 'teleterm/ui/services/clusters';
 import * as pickers from './quickPickers';
 import { QuickInputPicker } from './types';
 
 type State = {
   picker: QuickInputPicker;
   inputValue: string;
+  visible: boolean;
 };
 
-export default class QuickInputService extends Store<State> {
+export class QuickInputService extends Store<State> {
   quickCmdPicker: pickers.QuickCmdPicker;
   quickLoginPicker: pickers.QuickLoginPicker;
   quickDbPicker: pickers.QuickDbPicker;
   quickServerPicker: pickers.QuickServerPicker;
+  lastFocused: WeakRef<HTMLElement>;
 
-  constructor(launcher: CommandLauncher, serviceClusters: ServiceClusters) {
+  constructor(launcher: CommandLauncher, serviceClusters: ClustersService) {
     super();
+    this.lastFocused = new WeakRef(document.createElement('div'));
     this.quickDbPicker = new pickers.QuickDbPicker(launcher, serviceClusters);
     this.quickServerPicker = new pickers.QuickServerPicker(
       launcher,
@@ -43,16 +46,47 @@ export default class QuickInputService extends Store<State> {
       launcher,
       serviceClusters
     );
-    this.reset();
+    this.setState({
+      picker: this.quickCmdPicker,
+      inputValue: '',
+    });
   }
 
   state: State = {
     picker: null,
     inputValue: '',
+    visible: false,
   };
 
-  reset = () => {
-    this.setState({ picker: this.quickCmdPicker, inputValue: '' });
+  goBack = () => {
+    if (this.state.picker !== this.quickCmdPicker) {
+      this.setState({
+        picker: this.quickCmdPicker,
+        inputValue: '',
+      });
+      return;
+    }
+
+    this.setState({
+      inputValue: '',
+      visible: false,
+    });
+
+    const el = this.lastFocused.deref();
+    el?.focus();
+  };
+
+  show = () => {
+    this.setState({
+      picker: this.quickCmdPicker,
+      visible: true,
+    });
+  };
+
+  hide = () => {
+    this.setState({
+      visible: false,
+    });
   };
 
   setInputValue = (value: string) => {

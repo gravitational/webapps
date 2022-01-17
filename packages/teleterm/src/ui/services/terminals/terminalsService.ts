@@ -1,6 +1,6 @@
 import * as types from 'teleterm/services/pty/types';
 
-export default class TerminalsService {
+export class TerminalsService {
   ptyServiceClient: types.PtyServiceClient;
 
   constructor(ptyProvider: types.PtyServiceClient) {

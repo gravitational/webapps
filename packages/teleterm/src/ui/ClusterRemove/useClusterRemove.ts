@@ -5,7 +5,7 @@ import { useEffect } from 'react';
 export function useClusterRemove({ clusterUri, onClose, clusterTitle }: Props) {
   const ctx = useAppContext();
   const [{ status, statusText }, removeCluster] = useAsync(() => {
-    return ctx.serviceClusters.removeCluster(clusterUri);
+    return ctx.clustersService.removeCluster(clusterUri);
   });
 
   useEffect(() => {

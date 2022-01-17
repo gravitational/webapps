@@ -1,2 +1,1 @@
-import TerminasService from './terminals';
-export default TerminasService;
+export * from './terminalsService';

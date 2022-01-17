@@ -23,7 +23,7 @@ import ServerConnect from 'teleterm/ui/ServerConnect';
 import ClusterRemove from '../ClusterRemove/ClusterRemove';
 
 export default function ModalsHost() {
-  const { serviceModals } = useAppContext();
+  const { modalsService: serviceModals } = useAppContext();
   const dialog = serviceModals.useState();
 
   const handleClose = () => serviceModals.closeDialog();

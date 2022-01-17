@@ -24,28 +24,28 @@ export default function useExpanderClusters() {
   const clusterItems = initItems(ctx);
 
   // subscribe
-  ctx.serviceClusters.useState();
-  ctx.serviceDocs.useState();
+  ctx.clustersService.useState();
+  ctx.docsService.useState();
 
   function addCluster() {
-    ctx.serviceModals.openAddClusterDialog();
+    ctx.modalsService.openAddClusterDialog();
   }
 
   function syncClusters() {
-    ctx.serviceClusters.syncClusters();
+    ctx.clustersService.syncClusters();
   }
 
   function login(clusterUri: string) {
-    ctx.serviceModals.openLoginDialog(clusterUri);
+    ctx.modalsService.openLoginDialog(clusterUri);
   }
 
   function logout(clusterUri: string) {
-    ctx.serviceClusters.logout(clusterUri);
+    ctx.clustersService.logout(clusterUri);
   }
 
   function remove(clusterUri: string) {
-    const cluster = ctx.serviceClusters.findCluster(clusterUri);
-    ctx.serviceModals.openDialog({
+    const cluster = ctx.clustersService.findCluster(clusterUri);
+    ctx.modalsService.openDialog({
       kind: 'cluster-remove',
       clusterUri: cluster.uri,
       clusterTitle: cluster.name,
@@ -66,7 +66,7 @@ export default function useExpanderClusters() {
           remove(cluster.uri);
         },
         onRefresh() {
-          ctx.serviceClusters.syncRootCluster(cluster.uri);
+          ctx.clustersService.syncRootCluster(cluster.uri);
         },
       });
     };
@@ -84,8 +84,8 @@ export default function useExpanderClusters() {
 }
 
 function initItems(ctx: AppContext): ClusterNavItem[] {
-  return ctx.serviceClusters.getClusters().map<ClusterNavItem>(cluster => {
-    const { syncing } = ctx.serviceClusters.getClusterSyncStatus(cluster.uri);
+  return ctx.clustersService.getClusters().map<ClusterNavItem>(cluster => {
+    const { syncing } = ctx.clustersService.getClusterSyncStatus(cluster.uri);
     return {
       title: cluster.name,
       Icon: Icons.Clusters,

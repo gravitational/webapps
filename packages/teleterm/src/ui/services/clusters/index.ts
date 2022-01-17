@@ -1,2 +1,2 @@
-import ServiceClusters from './clusters';
-export default ServiceClusters;
+export * from './clustersService';
+export * from './types';

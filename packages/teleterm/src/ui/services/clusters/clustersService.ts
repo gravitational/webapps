@@ -17,7 +17,7 @@ type State = {
   dbsSyncStatus: Map<string, SyncStatus>;
 };
 
-export default class ClusterService extends ImmutableStore<State> {
+export class ClustersService extends ImmutableStore<State> {
   state: State = {
     apps: new Map(),
     kubes: new Map(),
@@ -417,6 +417,13 @@ export default class ClusterService extends ImmutableStore<State> {
         cb,
       })
     );
+  }
+
+  searchClusters(value: string) {
+    const clusters = this.getClusters();
+    return clusters.filter(s => {
+      return [s.name].join('').toLocaleLowerCase().includes(value);
+    });
   }
 
   searchKubes(clusterUri: string, query: SearchQuery) {

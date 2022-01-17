@@ -18,17 +18,17 @@ import { useAppContext } from 'teleterm/ui/appContextProvider';
 
 export default function useServerConnect({ serverUri, onClose }: Props) {
   const ctx = useAppContext();
-  const server = ctx.serviceClusters.getServer(serverUri);
-  const cluster = ctx.serviceClusters.findClusterByResource(serverUri);
+  const server = ctx.clustersService.getServer(serverUri);
+  const cluster = ctx.clustersService.findClusterByResource(serverUri);
   const logins = cluster?.loggedInUser?.sshLoginsList || [];
 
   const connect = (login: string) => {
-    const doc = ctx.serviceDocs.createTshNodeDocument(serverUri);
+    const doc = ctx.docsService.createTshNodeDocument(serverUri);
     doc.title = `${login}@${server.hostname}`;
     doc.login = login;
 
-    ctx.serviceDocs.add(doc);
-    ctx.serviceDocs.setLocation(doc.uri);
+    ctx.docsService.add(doc);
+    ctx.docsService.setLocation(doc.uri);
 
     onClose();
   };

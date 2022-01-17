@@ -32,7 +32,7 @@ export default function Container(props: DocumentProps) {
   const [clusterCtx] = useState(() => new ClusterCtx(uri, appCtx));
 
   useEffect(() => {
-    appCtx.serviceDocs.update(uri, {
+    appCtx.docsService.update(uri, {
       title: clusterCtx.state.clusterName,
     });
 
@@ -106,6 +106,6 @@ const Layout = styled(Box)`
 const StyledBorder = styled(Box)(({ theme }) => {
   return {
     background: theme.colors.primary.lighter,
-    height: '1px',
+    minHeight: '1px',
   };
 });

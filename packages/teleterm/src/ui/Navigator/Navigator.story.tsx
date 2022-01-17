@@ -27,7 +27,7 @@ export default {
 export const Story = () => {
   const appContext = new MockAppContext();
 
-  appContext.serviceClusters.getClusterSyncStatus = (_ = '') => {
+  appContext.clustersService.getClusterSyncStatus = (_ = '') => {
     const loading: SyncStatus = { status: 'processing' };
     const error: SyncStatus = { status: 'failed', statusText: 'Server Error' };
     return {
@@ -39,7 +39,7 @@ export const Story = () => {
     };
   };
 
-  appContext.serviceClusters.getClusters = () => [
+  appContext.clustersService.getClusters = () => [
     {
       uri: 'clusters/localhost',
       leaf: false,

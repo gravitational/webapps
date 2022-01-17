@@ -14,8 +14,8 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import ServiceClusters from 'teleterm/ui/services/clusters';
-import CommandLauncher from 'teleterm/ui/commandLauncher';
+import { ClustersService } from 'teleterm/ui/services/clusters';
+import { CommandLauncher } from 'teleterm/ui/commandLauncher';
 import {
   QuickInputPicker,
   Item,
@@ -31,20 +31,17 @@ export abstract class ClusterPicker implements QuickInputPicker {
   abstract onPick(result: Item): void;
 
   launcher: CommandLauncher;
-  serviceCluster: ServiceClusters;
+  serviceCluster: ClustersService;
 
-  constructor(launcher: CommandLauncher, service: ServiceClusters) {
+  constructor(launcher: CommandLauncher, service: ClustersService) {
     this.serviceCluster = service;
     this.launcher = launcher;
   }
 
   protected searchClusters(value: string): Item[] {
-    const clusters = this.serviceCluster.getClusters();
-    const items: Item[] = clusters
+    const clusters = this.serviceCluster.searchClusters(value);
+    const items: ItemCluster[] = clusters
       .filter(s => !s.leaf)
-      .filter(s => {
-        return [s.name].join('').toLocaleLowerCase().includes(value);
-      })
       .map(cluster => {
         return {
           kind: 'item.cluster',
@@ -52,49 +49,37 @@ export abstract class ClusterPicker implements QuickInputPicker {
         };
       });
 
-    return items;
+    return ensureEmptyPlaceholder(items);
   }
 
   protected searchServers(value: string): Item[] {
-    const servers = this.serviceCluster.getServers();
-    if (servers.length === 0) {
-      return [{ kind: 'item.empty', data: null }];
-    }
-
-    return servers
-      .filter(s => {
-        return [s.uri, s.name, s.hostname]
-          .join('')
-          .toLocaleLowerCase()
-          .includes(value);
-      })
-      .map(server => {
-        return {
+    const clusters = this.serviceCluster.getClusters();
+    const items: Item[] = [];
+    for (const { uri } of clusters) {
+      const servers = this.serviceCluster.searchServers(uri, { search: value });
+      for (const server of servers) {
+        items.push({
           kind: 'item.server',
           data: server,
-        };
-      });
+        });
+      }
+    }
+    return ensureEmptyPlaceholder(items);
   }
 
   protected searchDbs(value: string): Item[] {
-    const dbs = this.serviceCluster.getDbs();
-    if (dbs.length === 0) {
-      return [{ kind: 'item.empty', data: null }];
-    }
-
-    return dbs
-      .filter(db => {
-        return [db.uri, db.name, db.hostname]
-          .join('')
-          .toLocaleLowerCase()
-          .includes(value);
-      })
-      .map(db => {
-        return {
+    const clusters = this.serviceCluster.getClusters();
+    const items: Item[] = [];
+    for (const { uri } of clusters) {
+      const dbs = this.serviceCluster.searchDbs(uri, { search: value });
+      for (const db of dbs) {
+        items.push({
           kind: 'item.db',
           data: db,
-        };
-      });
+        });
+      }
+    }
+    return ensureEmptyPlaceholder(items);
   }
 }
 
@@ -155,10 +140,13 @@ export class QuickCmdPicker implements QuickInputPicker {
   }
 
   onFilter(value = '') {
-    return this.launcher
+    const items = this.launcher
       .getPaletteCommands()
       .filter(cmd => {
-        return [cmd.description].join('').toLocaleLowerCase().includes(value);
+        return [cmd.description, cmd.displayName]
+          .join('')
+          .toLocaleLowerCase()
+          .includes(value);
       })
       .map(cmd => {
         return {
@@ -166,9 +154,19 @@ export class QuickCmdPicker implements QuickInputPicker {
           data: cmd,
         };
       });
+
+    return ensureEmptyPlaceholder(items);
   }
 
   onPick(item: ItemCmd) {
     this.launcher.executeCommand(item.data.name as any, null);
   }
+}
+
+function ensureEmptyPlaceholder(items: Item[]): Item[] {
+  if (items.length === 0) {
+    items.push({ kind: 'item.empty', data: { message: 'not found' } });
+  }
+
+  return items;
 }
