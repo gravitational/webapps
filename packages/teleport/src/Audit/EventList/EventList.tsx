@@ -14,147 +14,96 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React from 'react';
-import { sortBy } from 'lodash';
-import isMatch from 'design/utils/match';
-import * as Table from 'design/DataTable';
-import PagedTable from 'design/DataTable/Paged';
+import React, { useState } from 'react';
+import { ButtonBorder } from 'design';
+import Table, { Cell } from 'design/DataTableNext';
 import { displayDateTime } from 'shared/services/loc';
 import { Event } from 'teleport/services/audit';
 import { State } from '../useAuditEvents';
-import { ActionCell, TimeCell, DescCell } from './EventListCells';
-import TypeCell from './EventTypeCell';
 import EventDialog from '../EventDialog';
+import renderTypeCell from './EventTypeCell';
 
 export default function EventList(props: Props) {
   const {
     clusterId,
     events = [],
-    search = '',
-    onSearchChange,
     fetchMore,
     fetchStatus,
     pageSize = 50,
   } = props;
-  const [state, setState] = React.useState<EventListState>(() => {
-    return {
-      searchableProps: ['codeDesc', 'message', 'user', 'time'],
-      detailsToShow: null,
-      colSortDirs: {
-        time: Table.SortTypes.ASC,
-      },
-    };
-  });
+  const [detailsToShow, setDetailsToShow] = useState<Event>();
 
-  function onSortChange(columnKey: string, sortDir: string) {
-    setState({
-      ...state,
-      colSortDirs: { [columnKey]: sortDir },
-    });
-  }
-
-  function showDetails(detailsToShow: Event) {
-    setState({
-      ...state,
-      detailsToShow,
-    });
-  }
-
-  function closeDetails() {
-    setState({
-      ...state,
-      detailsToShow: null,
-    });
-  }
-
-  // sort and filter
-  const data = React.useMemo(() => {
-    const { colSortDirs, searchableProps } = state;
-    const filtered = events.filter(obj =>
-      isMatch(obj, search, {
-        searchableProps: searchableProps,
-        cb: (target, search, prop) => {
-          if (prop === 'time') {
-            return displayDateTime(target).includes(search);
-          }
-        },
-      })
-    );
-
-    const columnKey = Object.getOwnPropertyNames(colSortDirs)[0];
-    const sortDir = colSortDirs[columnKey];
-    const sorted = sortBy(filtered, columnKey);
-    if (sortDir === Table.SortTypes.ASC) {
-      return sorted.reverse();
-    }
-
-    return sorted;
-  }, [state, events, search]);
-
-  // paginate
-  const tableProps = {
-    pageSize,
-    data,
-    fetchMore,
-    fetchStatus,
-    search,
-    onSearchChange,
-  };
-  const { detailsToShow, colSortDirs } = state;
   return (
-    <React.Fragment>
-      <PagedTable {...tableProps}>
-        <Table.Column
-          columnKey="codeDesc"
-          cell={<TypeCell clusterId={clusterId} />}
-          header={
-            <Table.SortHeaderCell
-              sortDir={colSortDirs.codeDesc}
-              onSortChange={onSortChange}
-              title="Type"
-            />
-          }
-        />
-        <Table.Column
-          columnKey="message"
-          header={<Table.Cell>Description</Table.Cell>}
-          cell={<DescCell />}
-        />
-        <Table.Column
-          columnKey="time"
-          header={
-            <Table.SortHeaderCell
-              sortDir={colSortDirs.time}
-              onSortChange={onSortChange}
-              title="Created"
-            />
-          }
-          cell={<TimeCell />}
-        />
-        <Table.Column
-          header={<Table.Cell />}
-          cell={
-            <ActionCell clusterId={clusterId} onViewDetails={showDetails} />
-          }
-        />
-      </PagedTable>
+    <>
+      <Table
+        data={events}
+        columns={[
+          {
+            key: 'codeDesc',
+            headerText: 'Type',
+            isSortable: true,
+            render: event => renderTypeCell(event, clusterId),
+          },
+          {
+            key: 'message',
+            headerText: 'Description',
+            render: renderDescCell,
+          },
+          {
+            key: 'time',
+            headerText: 'Created',
+            isSortable: true,
+            render: renderTimeCell,
+          },
+          {
+            altKey: 'show-details-btn',
+            render: event => renderActionCell(event, setDetailsToShow),
+          },
+        ]}
+        emptyText={'No Events Found'}
+        isSearchable
+        initialSort={{ key: 'time', dir: 'DESC' }}
+        pagination={{ pageSize }}
+        fetching={{
+          onFetchMore: fetchMore,
+          fetchStatus,
+        }}
+      />
       {detailsToShow && (
-        <EventDialog event={detailsToShow} onClose={closeDetails} />
+        <EventDialog
+          event={detailsToShow}
+          onClose={() => setDetailsToShow(null)}
+        />
       )}
-    </React.Fragment>
+    </>
   );
 }
 
-type EventListState = {
-  searchableProps: string[];
-  colSortDirs: Record<string, string>;
-  detailsToShow?: Event;
-};
+export const renderActionCell = (
+  event: Event,
+  onShowDetails: (e: Event) => void
+) => (
+  <Cell align="right">
+    <ButtonBorder
+      size="small"
+      onClick={() => onShowDetails(event)}
+      width="87px"
+    >
+      Details
+    </ButtonBorder>
+  </Cell>
+);
+
+export const renderTimeCell = ({ time }: Event) => (
+  <Cell style={{ minWidth: '120px' }}>{displayDateTime(time)}</Cell>
+);
+
+export function renderDescCell({ message }: Event) {
+  return <Cell style={{ wordBreak: 'break-word' }}>{message}</Cell>;
+}
 
 type Props = {
   clusterId: State['clusterId'];
-  search: State['searchValue'];
-  onSearchChange: State['setSearchValue'];
   events: State['events'];
   fetchMore: State['fetchMore'];
   fetchStatus: State['fetchStatus'];

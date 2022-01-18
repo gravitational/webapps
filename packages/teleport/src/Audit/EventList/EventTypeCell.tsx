@@ -63,6 +63,7 @@ const EventIconMap: Record<EventCode, React.FC> = {
   [eventCodes.ACCESS_REQUEST_CREATED]: Icons.Info,
   [eventCodes.ACCESS_REQUEST_UPDATED]: Icons.Info,
   [eventCodes.ACCESS_REQUEST_REVIEWED]: Icons.Info,
+  [eventCodes.ACCESS_REQUEST_DELETED]: Icons.Info,
   [eventCodes.USER_LOCAL_LOGIN]: Icons.Info,
   [eventCodes.USER_LOCAL_LOGINFAILURE]: Icons.Info,
   [eventCodes.USER_SSO_LOGIN]: Icons.Info,
@@ -76,6 +77,11 @@ const EventIconMap: Record<EventCode, React.FC> = {
   [eventCodes.DATABASE_CREATED]: Icons.Database,
   [eventCodes.DATABASE_UPDATED]: Icons.Database,
   [eventCodes.DATABASE_DELETED]: Icons.Database,
+  [eventCodes.POSTGRES_PARSE]: Icons.Database,
+  [eventCodes.POSTGRES_BIND]: Icons.Database,
+  [eventCodes.POSTGRES_EXECUTE]: Icons.Database,
+  [eventCodes.POSTGRES_CLOSE]: Icons.Database,
+  [eventCodes.POSTGRES_FUNCTION_CALL]: Icons.Database,
   [eventCodes.DESKTOP_SESSION_STARTED]: Icons.Desktop,
   [eventCodes.DESKTOP_SESSION_STARTED_FAILED]: Icons.Desktop,
   [eventCodes.DESKTOP_SESSION_ENDED]: Icons.Desktop,
@@ -99,9 +105,7 @@ const EventIconMap: Record<EventCode, React.FC> = {
   [eventCodes.PRIVILEGE_TOKEN_CREATED]: Icons.Info,
 };
 
-export default function TypeCell(props) {
-  const { rowIndex, data, clusterId } = props;
-  const event: Event = data[rowIndex];
+export default function renderTypeCell(event: Event, clusterId: string) {
   const IconType = EventIconMap[event.code] || Icons.List;
 
   const iconProps = {

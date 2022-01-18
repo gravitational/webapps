@@ -1,5 +1,5 @@
 /*
-Copyright 2019-2020 Gravitational, Inc.
+Copyright 2021 Gravitational, Inc.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -14,18 +14,6 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React from 'react';
-import { Cell } from 'design/DataTable';
-import { Session } from 'teleport/services/ssh';
+import TdpClientCanvas from './TdpClientCanvas';
 
-export default function DescCell(props: any) {
-  const { rowIndex, data } = props;
-  const { hostname, addr } = data[rowIndex] as Session;
-  const nodeAddr = addr ? `[${addr}]` : '';
-
-  return (
-    <Cell>
-      {hostname} {nodeAddr}
-    </Cell>
-  );
-}
+export default TdpClientCanvas;
