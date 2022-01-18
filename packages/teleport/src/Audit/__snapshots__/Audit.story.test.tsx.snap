@@ -293,12 +293,12 @@ exports[`list of all events 1`] = `
         </strong>
          - 
         <strong>
-          54
+          55
         </strong>
          
         of 
         <strong>
-          54
+          55
         </strong>
       </div>
       <button
@@ -1541,6 +1541,41 @@ exports[`list of all events 1`] = `
           style="word-break: break-word;"
         >
           User [Ivan_Jordan] has changed a password
+        </td>
+        <td
+          style="min-width: 120px;"
+        >
+          2020-06-05 19:26:53
+        </td>
+        <td
+          align="right"
+        >
+          <button
+            class="c11"
+            kind="border"
+            width="87px"
+          >
+            Details
+          </button>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <div
+            class="c9"
+          >
+            <span
+              class="c5 c10 icon icon-info_outline c5 c10"
+              color="light"
+              font-size="3"
+            />
+            Access Request Deleted
+          </div>
+        </td>
+        <td
+          style="word-break: break-word;"
+        >
+          Access request [66b827b2-1b0b-512b-965d-6c789388d3c9] has been deleted
         </td>
         <td
           style="min-width: 120px;"
