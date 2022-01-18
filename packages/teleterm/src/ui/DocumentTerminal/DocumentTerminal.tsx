@@ -35,12 +35,12 @@ export default function DocumentTerminalContainer(props: Props) {
     }
   }, []);
 
-  const documentTerminal = (
+  const $documentTerminal = (
     <DocumentTerminal visible={props.visible} doc={doc} />
   );
 
   if (doc.kind === 'doc.terminal_shell') {
-    return documentTerminal;
+    return $documentTerminal;
   }
 
   return (
@@ -52,7 +52,7 @@ export default function DocumentTerminalContainer(props: Props) {
         ctx.docsService.update(doc.uri, { status: 'connected' });
       }}
     >
-      {documentTerminal}
+      {$documentTerminal}
     </ResourceReconnect>
   );
 }

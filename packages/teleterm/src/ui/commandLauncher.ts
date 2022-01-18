@@ -35,12 +35,8 @@ const commands = {
   'cluster-login': {
     displayName: '',
     description: '',
-    run(ctx: IAppContext, args: { clusterUri?: string }) {
-      if (!args.clusterUri) {
-        ctx.modalsService.openAddClusterDialog();
-      } else {
-        ctx.modalsService.openLoginDialog(args.clusterUri);
-      }
+    run(ctx: IAppContext, args: { clusterUri: string }) {
+      ctx.modalsService.openLoginDialog(args.clusterUri);
     },
   },
   'cmd-palette.cluster-login': {

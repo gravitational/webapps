@@ -8,7 +8,7 @@ type ReconnectProps = {
   children: ReactNode;
   serverUri?: string;
   connected: boolean;
-  afterReconnect(): void;
+  afterReconnect?(): void;
 };
 
 export function ResourceReconnect(props: ReconnectProps) {
@@ -19,7 +19,7 @@ export function ResourceReconnect(props: ReconnectProps) {
     if (serverUri) {
       const cluster = ctx.clustersService.findClusterByResource(serverUri);
       ctx.modalsService.openLoginDialog(cluster.uri, () => {
-        props.afterReconnect();
+        props.afterReconnect?.();
       });
     }
   }

@@ -30,7 +30,6 @@ export default function useExpanderConnections() {
   ctx.clustersService.useState();
   ctx.docsService.useState();
 
-
   //TODO: think how to use useStore for services from context bridge
   useEffect(() => {
     function onChange() {
@@ -51,14 +50,7 @@ export default function useExpanderConnections() {
 function getWorkspaceItems(ctx: AppContext): ConnectionItem[] {
   return [
     ...ctx.workspaceService
-      .get()
-      .recentDocuments.map(document => {
-        if (document.kind === 'doc.terminal_tsh_node') {
-          return { ...document, status: 'disconnected' as const };
-        } else {
-          return document;
-        }
-      })
+      .getRecentDocuments()
       .map(document => createConnectionItem(ctx, document)),
   ].sort(item => {
     if (item.status === 'connected') {
@@ -70,16 +62,26 @@ function getWorkspaceItems(ctx: AppContext): ConnectionItem[] {
 
 function handleItemOpen(ctx: AppContext, item: ConnectionItem) {
   if (!ctx.docsService.getDocuments().find(d => d.uri === item.uri)) {
-    ctx.docsService.add(item.document);
+    const recentDocument = ctx.workspaceService
+      .getRecentDocuments()
+      .find(d => d.uri === item.uri);
+    if (recentDocument) {
+      if (recentDocument.kind === 'doc.terminal_tsh_node') {
+        const disconnectedDocument: Document = {
+          ...recentDocument,
+          status: 'disconnected',
+        };
+        ctx.docsService.add(disconnectedDocument);
+      } else {
+        ctx.docsService.add(recentDocument);
+      }
+    }
   }
   ctx.docsService.open(item.uri);
 }
 
 function handleItemRemove(ctx: AppContext, item: ConnectionItem) {
-  const recentDocuments = ctx.workspaceService
-    .get()
-    .recentDocuments.filter(d => d.uri !== item.uri);
-  ctx.workspaceService.update({ recentDocuments });
+  ctx.workspaceService.removeFromRecentDocuments(item.uri);
 }
 
 function createConnectionItem(
@@ -101,25 +103,17 @@ function createConnectionItem(
   }
 
   return {
-    get status() {
-      return getStatus();
-    },
-    get uri() {
-      return document.uri;
-    },
-    get title() {
-      return document.title;
-    },
+    status: getStatus(),
+    uri: document.uri,
+    title: document.title,
     Icon: Icons.Keypair,
     items: [],
     group: false,
-    document,
   };
 }
 
 export interface ConnectionItem extends types.NavItem {
   readonly status: 'connected' | 'disconnected';
-  document: Document;
 }
 
 export type State = ReturnType<typeof useExpanderConnections>;

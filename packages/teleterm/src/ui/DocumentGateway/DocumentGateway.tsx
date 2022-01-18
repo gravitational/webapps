@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import styled from 'styled-components';
 import * as Alerts from 'design/Alert';
 import { Text, Flex, Box, ButtonSecondary } from 'design';
@@ -33,19 +33,11 @@ type Props = {
 export default function DocumentGatewayContainer(props: Props) {
   const ctx = useAppContext();
   const { doc } = props;
-  const [connected, setConnected] = useState(false);
-
-  useEffect(() => {
-    if (ctx.clustersService.findGateway(doc.uri)) {
-      setConnected(true);
-    }
-  }, []);
 
   return (
     <ResourceReconnect
       visible={props.visible}
-      connected={connected}
-      afterReconnect={() => setConnected(true)}
+      connected={!!ctx.clustersService.findGateway(doc.uri)}
     >
       <DocumentGateway visible={props.visible} doc={doc} />
     </ResourceReconnect>

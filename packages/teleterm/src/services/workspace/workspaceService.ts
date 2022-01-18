@@ -9,9 +9,9 @@ interface WorkspaceState {
 }
 
 export interface WorkspaceService {
-  get(): WorkspaceState;
-  update(newWorkspaceState: Partial<WorkspaceState>): void;
+  getRecentDocuments(): Document[];
   addToRecentDocuments(document: Document): void;
+  removeFromRecentDocuments(uri: string): void;
   subscribe(cb: () => void): void;
   unsubscribe(cb: () => void): void;
 }
@@ -26,8 +26,8 @@ export function createWorkspaceService(options: {
   const store = new Store<WorkspaceState>();
   store.setState(readWorkspaceFileSync() || defaultWorkspaceState);
 
-  function get(): WorkspaceState {
-    return store.state;
+  function getRecentDocuments(): Document[] {
+    return store.state.recentDocuments;
   }
 
   function update(newWorkspaceState: Partial<WorkspaceState>): void {
@@ -44,12 +44,19 @@ export function createWorkspaceService(options: {
       document.kind === 'doc.terminal_tsh_node' ||
       document.kind === 'doc.gateway'
     ) {
-      const recentDocuments = [...get().recentDocuments];
+      const recentDocuments = [...getRecentDocuments()];
       if (!recentDocuments.find(d => d.uri === document.uri)) {
         recentDocuments.push(document);
         update({ recentDocuments });
       }
     }
+  }
+
+  function removeFromRecentDocuments(uri: string): void {
+    const recentDocuments = getRecentDocuments().filter(
+      d => d.uri !== uri
+    );
+    update({ recentDocuments });
   }
 
   function subscribe(cb: () => void): void {
@@ -78,14 +85,14 @@ export function createWorkspaceService(options: {
   }
 
   function getStringifiedWorkspaceState(): string {
-    return JSON.stringify(get(), null, 2);
+    return JSON.stringify(store.state, null, 2);
   }
 
   return {
-    get,
-    update,
+    getRecentDocuments,
     subscribe,
     unsubscribe,
     addToRecentDocuments,
+    removeFromRecentDocuments,
   };
 }
