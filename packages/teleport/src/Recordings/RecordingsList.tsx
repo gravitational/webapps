@@ -22,7 +22,6 @@ import cfg from 'teleport/config';
 import { Recording, RecordingType } from 'teleport/services/recordings';
 import { State } from './useRecordings';
 import Icon, * as Icons from 'design/Icon/Icon';
-import styled from 'styled-components';
 
 export default function RecordingsList(props: Props) {
   const {
