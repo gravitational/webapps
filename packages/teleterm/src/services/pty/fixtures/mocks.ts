@@ -31,8 +31,9 @@ export class MockPtyServiceClient implements PtyServiceClient {
 
 export function createMockWorkspaceService(): WorkspaceService {
   return {
-    get: () => ({ recentDocuments: [] }),
-    update: () => {},
+    getRecentDocuments: () => ([]),
+    removeFromRecentDocuments: () => undefined,
+    addToRecentDocuments: () => {},
     subscribe: () => {},
     unsubscribe: () => {},
   };

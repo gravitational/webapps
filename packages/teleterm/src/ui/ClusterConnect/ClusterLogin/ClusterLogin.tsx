@@ -20,14 +20,14 @@ import { ButtonIcon, Text } from 'design';
 import * as Icons from 'design/Icon';
 import LoginForm from './FormLogin';
 import useClusterLogin, { State, Props } from './useClusterLogin';
-import Dialog, { DialogHeader, DialogContent } from 'design/Dialog';
+import { DialogHeader, DialogContent } from 'design/Dialog';
 
-export default function Container(props: Props) {
+export function ClusterLogin(props: Props) {
   const state = useClusterLogin(props);
-  return <ClusterLogin {...state} />;
+  return <ClusterLoginPresentation {...state} />;
 }
 
-export function ClusterLogin({
+export function ClusterLoginPresentation({
   title,
   initAttempt,
   loginAttempt,
@@ -39,16 +39,7 @@ export function ClusterLogin({
   shouldPromptHardwareKey,
 }: State) {
   return (
-    <Dialog
-      dialogCss={() => ({
-        maxWidth: '400px',
-        width: '100%',
-        padding: '20px',
-      })}
-      disableEscapeKeyDown={false}
-      onClose={onCloseDialog}
-      open={true}
-    >
+    <>
       <DialogHeader>
         <Text typography="h4">
           Login to <b>{title}</b>
@@ -80,6 +71,6 @@ export function ClusterLogin({
           />
         )}
       </DialogContent>
-    </Dialog>
+    </>
   );
 }

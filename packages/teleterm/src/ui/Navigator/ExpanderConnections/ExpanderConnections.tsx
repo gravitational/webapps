@@ -49,7 +49,12 @@ export const ExpanderConnections: React.FC<State> = props => {
       </ExpanderHeader>
       <ExpanderContent>
         {props.items.map(i => (
-          <ConnItem key={i.uri} item={i} />
+          <ConnItem
+            key={i.uri}
+            item={i}
+            onOpen={() => props.onItemOpen(i)}
+            onRemove={() => props.onItemRemove(i)}
+          />
         ))}
       </ExpanderContent>
     </Expander>
@@ -61,7 +66,7 @@ const ConnItem: React.FC<ConnItemProps> = props => {
   const color = !offline ? 'text.primary' : 'text.placeholder';
 
   return (
-    <NavItem pl={5} item={props.item}>
+    <NavItem pl={5} item={props.item} onClick={props.onOpen}>
       <StatusIndicator mr={3} status={props.item.status} />
       <Flex
         alignItems="center"
@@ -74,7 +79,12 @@ const ConnItem: React.FC<ConnItemProps> = props => {
         </Text>
         {offline && (
           <ButtonIcon color="text.placeholder">
-            <Trash />
+            <Trash
+              onClick={e => {
+                e.stopPropagation();
+                props.onRemove();
+              }}
+            />
           </ButtonIcon>
         )}
       </Flex>
@@ -84,4 +94,6 @@ const ConnItem: React.FC<ConnItemProps> = props => {
 
 type ConnItemProps = {
   item: ConnectionItem;
+  onOpen(): void;
+  onRemove(): void;
 };

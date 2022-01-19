@@ -20,21 +20,20 @@ import { useAppContext } from 'teleterm/ui/appContextProvider';
 import useAsync from 'teleterm/ui/useAsync';
 
 export default function useClusterLogin(props: Props) {
-  const { onClose, clusterUri } = props;
-  const { clustersService: serviceClusters, docsService: serviceDocs } =
-    useAppContext();
-  const cluster = serviceClusters.findCluster(clusterUri);
+  const { onClose, onSuccess, clusterUri } = props;
+  const { clustersService } = useAppContext();
+  const cluster = clustersService.findCluster(clusterUri);
   const refAbortCtrl = useRef<types.tsh.TshAbortController>(null);
   const [shouldPromptSsoStatus, promptSsoStatus] = useState(false);
   const [shouldPromptHardwareKey, promptHardwareKey] = useState(false);
 
   const [initAttempt, init] = useAsync(() => {
-    return serviceClusters.getAuthSettings(clusterUri);
+    return clustersService.getAuthSettings(clusterUri);
   });
 
   const [loginAttempt, login] = useAsync((opts: types.LoginParams) => {
-    refAbortCtrl.current = serviceClusters.client.createAbortController();
-    return serviceClusters.login(opts, refAbortCtrl.current.signal);
+    refAbortCtrl.current = clustersService.client.createAbortController();
+    return clustersService.login(opts, refAbortCtrl.current.signal);
   });
 
   const onLoginWithLocal = (
@@ -86,7 +85,7 @@ export default function useClusterLogin(props: Props) {
 
     if (loginAttempt.status === 'success') {
       onClose();
-      serviceDocs.open(clusterUri);
+      onSuccess?.();
     }
   }, [loginAttempt.status]);
 
@@ -108,4 +107,5 @@ export type State = ReturnType<typeof useClusterLogin>;
 export type Props = {
   clusterUri: string;
   onClose(): void;
+  onSuccess?(): void;
 };
