@@ -1,55 +1,102 @@
 import moment from 'moment';
-import { Recording, RecordingType } from './types';
+import { Recording, RecordingType, RecordingDescription } from './types';
 import { eventCodes } from 'teleport/services/audit';
 
 // Takes in json objects built by SessionEnd and WindowsDesktopSessionEnd as defined in teleport/api/types/events/events.proto.
-export default function makeRecording({
-  participants = [],
+export function makeRecording(event: any): Recording {
+  if (event.code === eventCodes.DESKTOP_SESSION_ENDED) {
+    return makeDesktopRecording(event);
+  } else {
+    return makeSshRecording(event);
+  }
+}
+
+function makeDesktopRecording({
   time,
   session_start,
   session_stop,
-  server_hostname,
-  interactive,
   user,
-  session_recording = 'on',
   sid,
-  proto = '',
-  kubernetes_cluster = '',
-  kubernetes_pod_namespace = '',
-  kubernetes_pod_name = '',
-  desktop_name = '',
-  code,
-}): Recording {
-  let type: RecordingType =
-    code === eventCodes.DESKTOP_SESSION_ENDED ? 'desktop' : 'ssh';
-  let durationText = '';
-  let duration = 0;
-  if (session_start && session_stop) {
-    duration = moment(session_stop).diff(session_start);
-    durationText = moment.duration(duration).humanize();
-  }
+  desktop_name,
+  session_recording,
+}) {
+  const { duration, durationText } = formatDuration(
+    session_start,
+    session_stop
+  );
 
-  // Desktop sessions will have desktop_name set, ssh sessions can have server_hostname or neither.
-  let hostname = desktop_name || server_hostname || 'N/A';
-  // For Kubernetes sessions, put the full pod name as 'hostname'.
-  if (proto === 'kube') {
-    hostname = `${kubernetes_cluster}/${kubernetes_pod_namespace}/${kubernetes_pod_name}`;
-  }
-
-  let description =
-    type === 'desktop' || interactive ? 'play' : 'non-interactive'; // all desktop sessions are interactive
+  let description: RecordingDescription = 'play';
   if (session_recording === 'off') {
     description = 'recording disabled';
   }
+
+  let recordingType: RecordingType = 'desktop';
 
   return {
     duration,
     durationText,
     sid,
     createdDate: time,
-    users: participants.join(', ') || user, // ssh sessions have participant(s), windows sessions just have a user
+    users: user,
+    hostname: desktop_name,
+    description,
+    recordingType,
+  };
+}
+
+function makeSshRecording({
+  participants = [],
+  time,
+  session_start,
+  session_stop,
+  server_hostname,
+  interactive,
+  session_recording = 'on',
+  sid,
+  proto = '',
+  kubernetes_cluster = '',
+  kubernetes_pod_namespace = '',
+  kubernetes_pod_name = '',
+}): Recording {
+  const { duration, durationText } = formatDuration(
+    session_start,
+    session_stop
+  );
+
+  let hostname = server_hostname || 'N/A';
+  // For Kubernetes sessions, put the full pod name as 'hostname'.
+  if (proto === 'kube') {
+    hostname = `${kubernetes_cluster}/${kubernetes_pod_namespace}/${kubernetes_pod_name}`;
+  }
+
+  // Description set to play for interactive so users can search by "play".
+  let description: RecordingDescription = interactive
+    ? 'play'
+    : 'non-interactive';
+  if (session_recording === 'off') {
+    description = 'recording disabled';
+  }
+
+  let recordingType: RecordingType = 'ssh';
+
+  return {
+    duration,
+    durationText,
+    sid,
+    createdDate: time,
+    users: participants.join(', '),
     hostname,
     description,
-    type,
+    recordingType,
   };
+}
+
+function formatDuration(start: string, stop: string) {
+  let durationText = '';
+  let duration = 0;
+  if (start && stop) {
+    duration = moment(stop).diff(start);
+    durationText = moment.duration(duration).humanize();
+  }
+  return { duration, durationText };
 }

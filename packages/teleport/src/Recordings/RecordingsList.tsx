@@ -39,13 +39,14 @@ export default function RecordingsList(props: Props) {
       columns={[
         {
           headerText: 'Type',
-          key: 'type',
+          key: 'recordingType',
           isSortable: true,
-          render: ({ type }) => iconCell(type),
+          render: ({ recordingType }) => iconCell(recordingType),
         },
         {
           key: 'hostname',
           headerText: 'Name',
+          isSortable: true,
         },
         {
           key: 'users',
@@ -53,6 +54,7 @@ export default function RecordingsList(props: Props) {
           render: ({ users }) => (
             <Cell style={{ wordBreak: 'break-word' }}>{users}</Cell>
           ),
+          isSortable: true,
         },
         {
           key: 'duration',

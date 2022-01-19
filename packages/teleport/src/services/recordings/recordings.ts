@@ -3,7 +3,7 @@ import api from 'teleport/services/api';
 import { RecordingsQuery, RecordingsResponse } from './types';
 import { formatters, eventCodes } from 'teleport/services/audit';
 
-import makeRecording from './makeRecording';
+import { makeRecording } from './makeRecording';
 export default class RecordingsService {
   maxFetchLimit = 5000;
 
