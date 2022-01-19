@@ -60,7 +60,6 @@ const cfg = {
     databases: '/web/cluster/:clusterId/databases',
     desktops: '/web/cluster/:clusterId/desktops',
     desktop: '/web/cluster/:clusterId/desktops/:desktopName/:username',
-    desktopPlayer: '/web/cluster/:clusterId/desktopSession/:sid',
     users: '/web/users',
     console: '/web/cluster/:clusterId/console',
     consoleNodes: '/web/cluster/:clusterId/console/nodes',
@@ -91,8 +90,7 @@ const cfg = {
     clustersPath: '/v1/webapi/sites',
     clusterEventsPath: `/v1/webapi/sites/:clusterId/events/search?from=:start?&to=:end?&limit=:limit?&startKey=:startKey?&include=:include?`,
     clusterEventsRecordingsPath: `/v1/webapi/sites/:clusterId/events/search/sessions?from=:start?&to=:end?&limit=:limit?&startKey=:startKey?`,
-    scp:
-      '/v1/webapi/sites/:clusterId/nodes/:serverId/:login/scp?location=:location&filename=:filename',
+    scp: '/v1/webapi/sites/:clusterId/nodes/:serverId/:login/scp?location=:location&filename=:filename',
     renewTokenPath: '/v1/webapi/sessions/renew',
     resetPasswordTokenPath: '/v1/webapi/users/password/token',
     sessionPath: '/v1/webapi/sessions',
@@ -106,8 +104,6 @@ const cfg = {
     desktopPath: `/v1/webapi/sites/:clusterId/desktops/:desktopName`,
     desktopWsAddr:
       'wss://:fqdm/v1/webapi/sites/:clusterId/desktops/:desktopName/connect?access_token=:token&username=:username&width=:width&height=:height',
-    desktopsWsPlaybackPOCPath:
-      'wss://:fqdm/v1/webapi/sites/:clusterId/desktopplaybacktest/:sid?access_token=:token',
     siteSessionPath: '/v1/webapi/sites/:siteId/sessions',
     ttyWsAddr:
       'wss://:fqdm/v1/webapi/sites/:clusterId/connect?access_token=:token&params=:params',
