@@ -709,7 +709,7 @@ export type EventQuery = {
   to: Date;
   limit?: number;
   startKey?: string;
-  filterBy?: EventCode | '';
+  filterByCode?: EventCode | '';
 };
 
 export type EventResponse = {

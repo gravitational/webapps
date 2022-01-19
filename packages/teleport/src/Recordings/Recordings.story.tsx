@@ -19,7 +19,7 @@ import { Router } from 'react-router';
 import { createMemoryHistory } from 'history';
 import { Context, ContextProvider } from 'teleport';
 import Recordings from './Recordings';
-import makeRecording from 'teleport/services/recordings/makeRecording';
+import { makeRecording } from 'teleport/services/recordings/makeRecording';
 
 export default {
   title: 'Teleport/Recordings',
