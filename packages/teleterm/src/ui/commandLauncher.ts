@@ -31,16 +31,16 @@ const commands = {
       ctx.modalsService.openProxyDbDialog(args.dbUri);
     },
   },
-
-  'cluster-login': {
+  'cluster-connect': {
     displayName: '',
     description: '',
-    run(ctx: IAppContext, args: { clusterUri?: string }) {
-      if (!args.clusterUri) {
-        ctx.modalsService.openAddClusterDialog();
-      } else {
-        ctx.modalsService.openLoginDialog(args.clusterUri);
-      }
+    run(ctx: IAppContext, args: { clusterUri?: string; onSuccess?(): void }) {
+      ctx.modalsService.openClusterConnectDialog(
+        args.clusterUri,
+        clusterUri => {
+          args.onSuccess ? args.onSuccess() : ctx.docsService.open(clusterUri);
+        }
+      );
     },
   },
   'cmd-palette.cluster-login': {

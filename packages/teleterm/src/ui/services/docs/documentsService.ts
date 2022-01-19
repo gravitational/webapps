@@ -16,9 +16,10 @@ limitations under the License.
 
 import { useStore } from 'shared/libs/stores';
 import { unique } from 'teleterm/ui/utils/uid';
-import { Document, DocumentTshNode } from './types';
+import { Document, DocumentGateway, DocumentTshNode } from './types';
 import { ImmutableStore } from '../immutableStore';
 import { routing } from 'teleterm/ui/uri';
+import { WorkspaceService } from 'teleterm/services/workspace';
 
 type OnlyDocumentUri = Pick<Document, 'uri'>;
 
@@ -38,6 +39,10 @@ export class DocumentsService extends ImmutableStore<State> {
       },
     ],
   };
+
+  constructor(private _workspaceService: WorkspaceService) {
+    super();
+  }
 
   open(docUri: string) {
     const exists = this.find(docUri);
@@ -96,6 +101,7 @@ export class DocumentsService extends ImmutableStore<State> {
       rootClusterId: params.rootClusterId,
       leafClusterId: params.leafClusterId,
       serverId: params.serverId,
+      serverUri,
       title: '',
       login: '',
     };
@@ -181,6 +187,7 @@ export class DocumentsService extends ImmutableStore<State> {
   }
 
   add(doc: Document, position?: number) {
+    this._workspaceService.addToRecentDocuments(doc);
     this.setState(draftState => {
       if (position === undefined) {
         draftState.docs.push(doc);

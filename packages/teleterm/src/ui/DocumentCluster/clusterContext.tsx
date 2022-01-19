@@ -46,7 +46,7 @@ class ClusterContext extends Store<State> {
 
   login = () => {
     const { clusterUri } = this.state;
-    this.appCtx.commandLauncher.executeCommand('cluster-login', { clusterUri });
+    this.appCtx.commandLauncher.executeCommand('cluster-connect', { clusterUri });
   };
 
   connectServer = (serverUri: string) => {

@@ -22,13 +22,29 @@ import Document from 'teleterm/ui/Document';
 import TextSelectCopy from 'teleport/components/TextSelectCopy';
 import * as types from 'teleterm/ui/services/docs/types';
 import useGateway from './useGateway';
+import { useAppContext } from 'teleterm/ui/appContextProvider';
+import { ResourceReconnect } from '../ResourceReconnect';
 
 type Props = {
   visible: boolean;
   doc: types.DocumentGateway;
 };
 
-export default function DocumentGateway(props: Props) {
+export default function DocumentGatewayContainer(props: Props) {
+  const ctx = useAppContext();
+  const { doc } = props;
+
+  return (
+    <ResourceReconnect
+      visible={props.visible}
+      connected={!!ctx.clustersService.findGateway(doc.uri)}
+    >
+      <DocumentGateway visible={props.visible} doc={doc} />
+    </ResourceReconnect>
+  );
+}
+
+export function DocumentGateway(props: Props) {
   const { doc, visible } = props;
   const { gateway, status, statusText, removeGateway } = useGateway(doc);
 

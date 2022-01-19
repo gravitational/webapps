@@ -102,7 +102,7 @@ export class QuickLoginPicker extends ClusterPicker {
   }
 
   onPick(item: ItemCluster | ItemNewCluster) {
-    this.launcher.executeCommand('cluster-login', {
+    this.launcher.executeCommand('cluster-connect', {
       clusterUri: item.data.uri,
     });
   }

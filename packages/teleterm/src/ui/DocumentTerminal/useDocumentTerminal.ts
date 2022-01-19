@@ -50,6 +50,7 @@ async function initState(ctx: IAppContext, doc: Doc) {
   };
 
   ptyProcess.onOpen(() => {
+    ctx.docsService.update(doc.uri, { status: 'connected' });
     refreshTitle();
   });
 

@@ -28,7 +28,7 @@ export default function useExpanderClusters() {
   ctx.docsService.useState();
 
   function addCluster() {
-    ctx.modalsService.openAddClusterDialog();
+    ctx.commandLauncher.executeCommand('cluster-connect', {});
   }
 
   function syncClusters() {
@@ -36,7 +36,7 @@ export default function useExpanderClusters() {
   }
 
   function login(clusterUri: string) {
-    ctx.modalsService.openLoginDialog(clusterUri);
+    ctx.commandLauncher.executeCommand('cluster-connect', { clusterUri });
   }
 
   function logout(clusterUri: string) {

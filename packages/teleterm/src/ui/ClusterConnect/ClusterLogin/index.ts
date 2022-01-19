@@ -14,5 +14,4 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import ClusterAdd from './ClusterAdd';
-export default ClusterAdd;
+export { ClusterLogin } from './ClusterLogin';

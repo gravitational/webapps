@@ -40,6 +40,7 @@ export interface DocumentTshNode extends DocumentBase {
   kind: 'doc.terminal_tsh_node';
   status: 'connecting' | 'connected' | 'disconnected';
   serverId: string;
+  serverUri: string;
   rootClusterId: string;
   leafClusterId?: string;
   login: string;

@@ -15,19 +15,19 @@
  */
 
 import React from 'react';
-import AppContextProvider from 'teleterm/ui/appContextProvider';
-import { MockAppContext } from 'teleterm/ui/fixtures/mocks';
-import AddCluster from './ClusterAdd';
+import { ClusterAddPresentation } from './ClusterAdd';
 
 export default {
-  title: 'Teleterm/NewCluster',
+  title: 'Teleterm/ClusterAdd',
 };
 
 export const Story = () => {
-  const appContext = new MockAppContext();
   return (
-    <AppContextProvider value={appContext}>
-      <AddCluster onClose={() => null} />
-    </AppContextProvider>
+    <ClusterAddPresentation
+      addCluster={() => null}
+      onClose={() => null}
+      status="success"
+      statusText="Success"
+    />
   );
 };

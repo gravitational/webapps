@@ -16,25 +16,24 @@
 
 import React from 'react';
 import { useAppContext } from 'teleterm/ui/appContextProvider';
-import ClusterAdd from 'teleterm/ui/ClusterAdd';
-import ClusterLogin from 'teleterm/ui/ClusterLogin';
 import GatewayCreate from 'teleterm/ui/GatewayCreate';
 import ServerConnect from 'teleterm/ui/ServerConnect';
 import ClusterRemove from '../ClusterRemove/ClusterRemove';
+import { ClusterConnect } from 'teleterm/ui/ClusterConnect';
 
 export default function ModalsHost() {
-  const { modalsService: serviceModals } = useAppContext();
-  const dialog = serviceModals.useState();
+  const { modalsService } = useAppContext();
+  const dialog = modalsService.useState();
 
-  const handleClose = () => serviceModals.closeDialog();
+  const handleClose = () => modalsService.closeDialog();
 
-  if (dialog.kind === 'add-cluster') {
-    return <ClusterAdd onClose={handleClose} />;
-  }
-
-  if (dialog.kind === 'cluster-login') {
+  if (dialog.kind === 'cluster-connect') {
     return (
-      <ClusterLogin clusterUri={dialog.clusterUri} onClose={handleClose} />
+      <ClusterConnect
+        clusterUri={dialog.clusterUri}
+        onClose={handleClose}
+        onSuccess={dialog.onSuccess}
+      />
     );
   }
 
