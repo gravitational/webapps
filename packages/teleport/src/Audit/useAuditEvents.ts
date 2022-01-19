@@ -37,7 +37,7 @@ export default function useAuditEvents(
     fetchStatus: '',
   });
 
-  const filterBy = eventCode || '';
+  const filterByCode = eventCode || '';
 
   useEffect(() => {
     fetch();
@@ -54,7 +54,7 @@ export default function useAuditEvents(
     ctx.auditService
       .fetchEvents(clusterId, {
         ...range,
-        filterBy,
+        filterByCode,
         startKey: results.fetchStartKey,
       })
       .then(res =>
@@ -76,7 +76,7 @@ export default function useAuditEvents(
       ctx.auditService
         .fetchEvents(clusterId, {
           ...range,
-          filterBy,
+          filterByCode,
         })
         .then(res =>
           setResults({
