@@ -19,8 +19,10 @@ import { ButtonBorder } from 'design';
 import Table, { Cell, TextCell } from 'design/DataTableNext';
 import { displayDateTime } from 'shared/services/loc';
 import cfg from 'teleport/config';
-import { Recording } from 'teleport/services/recordings';
+import { Recording, RecordingType } from 'teleport/services/recordings';
 import { State } from './useRecordings';
+import Icon, * as Icons from 'design/Icon/Icon';
+import styled from 'styled-components';
 
 export default function RecordingsList(props: Props) {
   const {
@@ -36,8 +38,14 @@ export default function RecordingsList(props: Props) {
       data={recordings}
       columns={[
         {
+          headerText: 'Type',
+          key: 'type',
+          isSortable: true,
+          render: ({ type }) => iconCell(type),
+        },
+        {
           key: 'hostname',
-          headerText: 'Node',
+          headerText: 'Name',
         },
         {
           key: 'users',
@@ -80,6 +88,21 @@ export default function RecordingsList(props: Props) {
     />
   );
 }
+
+const iconCell = (type: RecordingType) => {
+  const iconProps = {
+    p: '1',
+    mr: '3',
+    fontSize: '3',
+  };
+  const icon = type === 'ssh' ? Icons.Cli : Icons.Desktop;
+
+  return (
+    <Cell>
+      <Icon {...iconProps} as={icon} />
+    </Cell>
+  );
+};
 
 const renderPlayCell = ({ description, sid }: Recording, clusterId: string) => {
   if (description !== 'play') {
