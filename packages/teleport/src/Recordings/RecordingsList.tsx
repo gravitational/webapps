@@ -105,7 +105,10 @@ const iconCell = (type: RecordingType) => {
   );
 };
 
-const renderPlayCell = ({ description, sid }: Recording, clusterId: string) => {
+const renderPlayCell = (
+  { description, sid, recordingType }: Recording,
+  clusterId: string
+) => {
   if (description !== 'play') {
     return (
       <Cell align="right" style={{ color: '#9F9F9F' }}>
@@ -114,7 +117,7 @@ const renderPlayCell = ({ description, sid }: Recording, clusterId: string) => {
     );
   }
 
-  const url = cfg.getPlayerRoute({ clusterId, sid });
+  const url = cfg.getPlayerRoute({ clusterId, sid, recordingType });
   return (
     <Cell align="right">
       <ButtonBorder

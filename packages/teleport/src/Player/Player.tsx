@@ -20,13 +20,14 @@ import { useParams } from 'teleport/components/Router';
 import { Flex } from 'design';
 import Tabs, { TabItem } from './PlayerTabs';
 import SshPlayer from './SshPlayer';
+import { DesktopPlayer } from './DesktopPlayer';
 import ActionBar from './ActionBar';
 import session from 'teleport/services/session';
 import { colors } from 'teleport/Console/colors';
 import { UrlPlayerParams } from 'teleport/config';
 
 export default function Player() {
-  const { sid, clusterId } = useParams<UrlPlayerParams>();
+  const { sid, clusterId, recordingType } = useParams<UrlPlayerParams>();
   document.title = `${clusterId} • Play ${sid}`;
 
   function onLogout() {
@@ -49,7 +50,11 @@ export default function Player() {
           position: 'relative',
         }}
       >
-        <SshPlayer sid={sid} clusterId={clusterId} />
+        {recordingType === 'ssh' ? (
+          <SshPlayer sid={sid} clusterId={clusterId} />
+        ) : (
+          <DesktopPlayer sid={sid} clusterId={clusterId} />
+        )}
       </Flex>
     </StyledPlayer>
   );
