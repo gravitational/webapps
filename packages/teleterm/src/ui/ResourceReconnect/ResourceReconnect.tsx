@@ -18,8 +18,9 @@ export function ResourceReconnect(props: ReconnectProps) {
   function reconnect() {
     if (serverUri) {
       const cluster = ctx.clustersService.findClusterByResource(serverUri);
-      ctx.modalsService.openLoginDialog(cluster.uri, () => {
-        props.afterReconnect?.();
+      ctx.commandLauncher.executeCommand('cluster-connect', {
+        clusterUri: cluster.uri,
+        onSuccess: props.afterReconnect,
       });
     }
   }

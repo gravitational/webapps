@@ -17,7 +17,7 @@ limitations under the License.
 import React from 'react';
 import * as types from 'teleterm/ui/services/clusters/types';
 import { Attempt } from 'teleterm/ui/useAsync';
-import { ClusterLogin } from './ClusterLogin';
+import { ClusterLoginPresentation } from './ClusterLogin';
 
 export default {
   title: 'Teleterm/ClusterLogin',
@@ -54,19 +54,19 @@ function makeProps() {
 }
 
 export const Basic = () => {
-  return <ClusterLogin {...makeProps()} />;
+  return <ClusterLoginPresentation {...makeProps()} />;
 };
 
 export const HardwareKeyPrompt = () => {
   const props = makeProps();
   props.loginAttempt.status = 'processing';
   props.shouldPromptHardwareKey = true;
-  return <ClusterLogin {...props} />;
+  return <ClusterLoginPresentation {...props} />;
 };
 
 export const SsoPrompt = () => {
   const props = makeProps();
   props.loginAttempt.status = 'processing';
   props.shouldPromptSsoStatus = true;
-  return <ClusterLogin {...props} />;
+  return <ClusterLoginPresentation {...props} />;
 };

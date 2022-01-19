@@ -26,12 +26,6 @@ export class ModalsService extends ImmutableStore<Dialog> {
     this.setState(() => dialog);
   }
 
-  openAddClusterDialog() {
-    this.setState(() => ({
-      kind: 'add-cluster',
-    }));
-  }
-
   openProxyDbDialog(dbUri: string) {
     this.setState(() => ({
       kind: 'create-gateway',
@@ -46,11 +40,14 @@ export class ModalsService extends ImmutableStore<Dialog> {
     }));
   }
 
-  openLoginDialog(clusterUri: string, customOnSuccess?: () => void) {
+  openClusterConnectDialog(
+    clusterUri?: string,
+    onSuccess?: (clusterUri: string) => void
+  ) {
     this.setState(() => ({
-      kind: 'cluster-login',
+      kind: 'cluster-connect',
       clusterUri,
-      customOnSuccess
+      onSuccess,
     }));
   }
 
@@ -69,19 +66,15 @@ export interface DialogBase {
   kind: 'none';
 }
 
-export interface DialogAddCluster {
-  kind: 'add-cluster';
-}
-
 export interface DialogNewGateway {
   kind: 'create-gateway';
   targetUri: string;
 }
 
-export interface DialogClusterLogin {
-  kind: 'cluster-login';
-  clusterUri: string;
-  customOnSuccess?(): void;
+export interface DialogClusterConnect {
+  kind: 'cluster-connect';
+  clusterUri?: string;
+  onSuccess?(clusterUri: string): void;
 }
 
 export interface DialogClusterRemove {
@@ -97,8 +90,7 @@ export interface DialogServerConnect {
 
 export type Dialog =
   | DialogBase
-  | DialogAddCluster
-  | DialogClusterLogin
+  | DialogClusterConnect
   | DialogNewGateway
   | DialogServerConnect
   | DialogClusterRemove;
