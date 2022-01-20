@@ -746,16 +746,9 @@ exports[`rendering of Session Recordings 1`] = `
           </td>
           <td
             align="right"
+            style="color: rgb(159, 159, 159);"
           >
-            <a
-              class="c16"
-              href="/web/cluster/localhost/session/fe41659b-a611-4b08-974b-69564f766403"
-              kind="primary"
-              target="_blank"
-              width="80px"
-            >
-              Play
-            </a>
+            recording disabled
           </td>
         </tr>
         <tr>
