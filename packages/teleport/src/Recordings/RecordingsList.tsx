@@ -19,14 +19,9 @@ import { ButtonBorder } from 'design';
 import Table, { Cell, TextCell } from 'design/DataTableNext';
 import { displayDateTime } from 'shared/services/loc';
 import cfg from 'teleport/config';
-import {
-  Recording,
-  PlayDescription,
-  RecordingType,
-} from 'teleport/services/recordings';
+import { Recording, RecordingType } from 'teleport/services/recordings';
 import { State } from './useRecordings';
 import Icon, * as Icons from 'design/Icon/Icon';
-import { fontSize } from 'design/system';
 
 export default function RecordingsList(props: Props) {
   const {
@@ -105,8 +100,11 @@ const renderIconCell = (type: RecordingType) => {
   );
 };
 
-const renderPlayCell = ({ description, sid }: Recording, clusterId: string) => {
-  if (description !== PlayDescription) {
+const renderPlayCell = (
+  { description, sid, playable }: Recording,
+  clusterId: string
+) => {
+  if (!playable) {
     return (
       <Cell align="right" style={{ color: '#9F9F9F' }}>
         {description}

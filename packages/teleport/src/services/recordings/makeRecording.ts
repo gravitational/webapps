@@ -18,17 +18,14 @@ function makeDesktopRecording({
   user,
   sid,
   desktop_name,
-  session_recording,
+  recorded,
 }) {
   const { duration, durationText } = formatDuration(
     session_start,
     session_stop
   );
 
-  let description = PlayDescription;
-  if (session_recording === 'off') {
-    description = 'recording disabled';
-  }
+  let description = recorded ? 'play' : disabledDescription;
 
   return {
     duration,
@@ -39,6 +36,7 @@ function makeDesktopRecording({
     hostname: desktop_name,
     description,
     recordingType: 'desktop',
+    playable: recorded,
   } as Recording;
 }
 
@@ -68,9 +66,10 @@ function makeSshRecording({
   }
 
   // Description set to play for interactive so users can search by "play".
-  let description = interactive ? PlayDescription : 'non-interactive';
+  let description = interactive ? 'play' : 'non-interactive';
+  let playable = session_recording === 'off' ? false : interactive;
   if (session_recording === 'off') {
-    description = 'recording disabled';
+    description = disabledDescription;
   }
 
   return {
@@ -82,6 +81,7 @@ function makeSshRecording({
     hostname,
     description,
     recordingType: 'ssh',
+    playable,
   } as Recording;
 }
 
@@ -95,4 +95,4 @@ function formatDuration(start: string, stop: string) {
   return { duration, durationText };
 }
 
-export const PlayDescription = 'play';
+const disabledDescription = 'recording disabled';

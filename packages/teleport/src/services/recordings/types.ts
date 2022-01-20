@@ -21,4 +21,5 @@ export type Recording = {
   hostname: string;
   description: string;
   recordingType: RecordingType;
+  playable: boolean;
 };
