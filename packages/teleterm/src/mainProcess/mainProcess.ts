@@ -1,7 +1,14 @@
 import path from 'path';
-import { app, screen, BrowserWindow, ipcMain } from 'electron';
+import {
+  app,
+  BrowserWindow,
+  ipcMain,
+  Menu,
+  MenuItemConstructorOptions,
+  screen,
+} from 'electron';
 import { ChildProcess, spawn } from 'child_process';
-import { RuntimeSettings, Logger } from 'teleterm/types';
+import { Logger, RuntimeSettings } from 'teleterm/types';
 import { getAssetPath } from './runtimeSettings';
 import { subscribeToClusterContextMenuEvent } from './contextMenus/clusterContextMenu';
 import { subscribeToTerminalContextMenuEvent } from './contextMenus/terminalContextMenu';
@@ -61,6 +68,7 @@ export default class MainProcess {
   }
 
   private _init() {
+    this._setAppMenu();
     try {
       this._initTshd();
       this._initIpc();
@@ -98,5 +106,34 @@ export default class MainProcess {
     subscribeToClusterContextMenuEvent();
     subscribeToTabContextMenuEvent();
     subscribeToConfigServiceEvents(this.configService);
+  }
+
+  private _setAppMenu() {
+    const isMac = this.settings.platform === 'darwin';
+
+    const template: MenuItemConstructorOptions[] = [
+      ...(isMac ? ([{ role: 'appMenu' }] as const) : []),
+      ...(isMac ? [] : ([{ role: 'fileMenu' }] as const)),
+      { role: 'editMenu' },
+      { role: 'viewMenu' },
+      isMac
+        ? { role: 'windowMenu' }
+        : {
+            label: 'Window',
+            submenu: [{ role: 'minimize' }, { role: 'zoom' }],
+          },
+      {
+        role: 'help',
+        submenu: [
+          {
+            label: 'Learn More',
+            click: () => {},
+          },
+        ],
+      },
+    ];
+
+    const menu = Menu.buildFromTemplate(template);
+    Menu.setApplicationMenu(menu);
   }
 }
