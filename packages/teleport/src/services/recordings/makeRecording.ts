@@ -1,5 +1,5 @@
 import moment from 'moment';
-import { Recording, RecordingType, RecordingDescription } from './types';
+import { Recording } from './types';
 import { eventCodes } from 'teleport/services/audit';
 
 // Takes in json objects built by SessionEnd and WindowsDesktopSessionEnd as defined in teleport/api/types/events/events.proto.
@@ -25,12 +25,10 @@ function makeDesktopRecording({
     session_stop
   );
 
-  let description: RecordingDescription = 'play';
+  let description = PlayDescription;
   if (session_recording === 'off') {
     description = 'recording disabled';
   }
-
-  let recordingType: RecordingType = 'desktop';
 
   return {
     duration,
@@ -40,8 +38,8 @@ function makeDesktopRecording({
     users: user,
     hostname: desktop_name,
     description,
-    recordingType,
-  };
+    recordingType: 'desktop',
+  } as Recording;
 }
 
 function makeSshRecording({
@@ -70,14 +68,10 @@ function makeSshRecording({
   }
 
   // Description set to play for interactive so users can search by "play".
-  let description: RecordingDescription = interactive
-    ? 'play'
-    : 'non-interactive';
+  let description = interactive ? PlayDescription : 'non-interactive';
   if (session_recording === 'off') {
     description = 'recording disabled';
   }
-
-  let recordingType: RecordingType = 'ssh';
 
   return {
     duration,
@@ -87,8 +81,8 @@ function makeSshRecording({
     users: participants.join(', '),
     hostname,
     description,
-    recordingType,
-  };
+    recordingType: 'ssh',
+  } as Recording;
 }
 
 function formatDuration(start: string, stop: string) {
@@ -100,3 +94,5 @@ function formatDuration(start: string, stop: string) {
   }
   return { duration, durationText };
 }
+
+export const PlayDescription = 'play';

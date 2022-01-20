@@ -19,9 +19,14 @@ import { ButtonBorder } from 'design';
 import Table, { Cell, TextCell } from 'design/DataTableNext';
 import { displayDateTime } from 'shared/services/loc';
 import cfg from 'teleport/config';
-import { Recording, RecordingType } from 'teleport/services/recordings';
+import {
+  Recording,
+  PlayDescription,
+  RecordingType,
+} from 'teleport/services/recordings';
 import { State } from './useRecordings';
 import Icon, * as Icons from 'design/Icon/Icon';
+import { fontSize } from 'design/system';
 
 export default function RecordingsList(props: Props) {
   const {
@@ -40,7 +45,7 @@ export default function RecordingsList(props: Props) {
           headerText: 'Type',
           key: 'recordingType',
           isSortable: true,
-          render: ({ recordingType }) => iconCell(recordingType),
+          render: ({ recordingType }) => renderIconCell(recordingType),
         },
         {
           key: 'hostname',
@@ -90,23 +95,18 @@ export default function RecordingsList(props: Props) {
   );
 }
 
-const iconCell = (type: RecordingType) => {
-  const iconProps = {
-    p: '1',
-    mr: '3',
-    fontSize: '3',
-  };
+const renderIconCell = (type: RecordingType) => {
   const icon = type === 'ssh' ? Icons.Cli : Icons.Desktop;
 
   return (
     <Cell>
-      <Icon {...iconProps} as={icon} />
+      <Icon p={1} mr={3} fontSize={3} as={icon} />
     </Cell>
   );
 };
 
 const renderPlayCell = ({ description, sid }: Recording, clusterId: string) => {
-  if (description !== 'play') {
+  if (description !== PlayDescription) {
     return (
       <Cell align="right" style={{ color: '#9F9F9F' }}>
         {description}
