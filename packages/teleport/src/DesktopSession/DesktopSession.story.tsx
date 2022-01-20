@@ -14,14 +14,13 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React, { useState } from 'react';
+import React from 'react';
 import { DesktopSession } from './DesktopSession';
 import { State } from './useDesktopSession';
 import TdpClient, {
   TdpClientEvent,
   ImageFragment,
 } from 'teleport/lib/tdp/client';
-import useAttempt from 'shared/hooks/useAttemptNext';
 import { arrayBuf2260x1130 } from '../lib/tdp/fixtures';
 
 export default {
@@ -29,7 +28,7 @@ export default {
 };
 
 const fakeClient = () => {
-  const client = new TdpClient('wss://socketAddr.gov', 'username');
+  const client = new TdpClient('wss://socketAddr.gov');
   client.init = () => {}; // Don't actually try to connect to a websocket.
   return client;
 };

@@ -38,11 +38,10 @@ export default class Client extends EventEmitter {
   username: string;
   logger = Logger.create('TDPClient');
 
-  constructor(socketAddr: string, username: string) {
+  constructor(socketAddr: string) {
     super();
     this.socketAddr = socketAddr;
     this.codec = new Codec();
-    this.username = username;
   }
 
   // Connect to the websocket and register websocket event handlers.
