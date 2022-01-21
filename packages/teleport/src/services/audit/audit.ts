@@ -16,7 +16,7 @@ limitations under the License.
 
 import api from 'teleport/services/api';
 import cfg from 'teleport/config';
-import makeEvent, { formatters } from './makeEvent';
+import makeEvent from './makeEvent';
 import { EventQuery, EventResponse } from './types';
 
 class AuditService {
@@ -30,9 +30,7 @@ class AuditService {
       start,
       end,
       limit: this.maxFetchLimit,
-      include: params.filterByCode
-        ? formatters[params.filterByCode].type
-        : undefined,
+      include: params.filterBy || undefined,
       startKey: params.startKey || undefined,
     });
 
