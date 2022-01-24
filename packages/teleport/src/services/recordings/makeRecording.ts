@@ -72,8 +72,6 @@ function makeSshRecording({
     description = disabledDescription;
   }
 
-  let recordingType: RecordingType = 'ssh';
-
   return {
     duration,
     durationText,
