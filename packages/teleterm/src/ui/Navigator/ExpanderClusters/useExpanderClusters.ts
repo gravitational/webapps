@@ -14,18 +14,16 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import * as Icons from 'design/Icon';
 import { useAppContext } from 'teleterm/ui/appContextProvider';
 import AppContext from 'teleterm/ui/appContext';
-import * as navTypes from 'teleterm/ui/Navigator/types';
+import { NavItem } from 'teleterm/ui/Navigator/types';
 
-export default function useExpanderClusters() {
+export function useExpanderClusters() {
   const ctx = useAppContext();
   const clusterItems = initItems(ctx);
 
   // subscribe
   ctx.clustersService.useState();
-  ctx.docsService.useState();
 
   function addCluster() {
     ctx.commandLauncher.executeCommand('cluster-connect', {});
@@ -88,20 +86,18 @@ function initItems(ctx: AppContext): ClusterNavItem[] {
     const { syncing } = ctx.clustersService.getClusterSyncStatus(cluster.uri);
     return {
       title: cluster.name,
-      Icon: Icons.Clusters,
       uri: cluster.uri,
       kind: 'cluster',
       connected: cluster.connected,
       syncing: syncing,
-      items: [],
-      group: true,
     };
   });
 }
 
-export type State = ReturnType<typeof useExpanderClusters>;
 
-export interface ClusterNavItem extends navTypes.NavItem {
+export type ExpanderClusterProps = ReturnType<typeof useExpanderClusters>;
+
+export interface ClusterNavItem extends NavItem {
   connected: boolean;
   syncing: boolean;
   trustedClusters?: ClusterNavItem[];

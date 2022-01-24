@@ -23,8 +23,13 @@ export class MockMainProcessClient implements MainProcessClient {
 
   openTabContextMenu() {}
 
-  configService: {
-    get: () => undefined;
-    update: () => undefined;
+  configService = {
+    get: () => ({
+      keyboardShortcuts: {},
+      appearance: {
+        fonts: {},
+      }
+    }),
+    update: () => undefined
   };
 }

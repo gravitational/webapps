@@ -14,14 +14,13 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import * as Icons from 'design/Icon';
+import React, { useEffect } from 'react';
 import { useAppContext } from 'teleterm/ui/appContextProvider';
 import AppContext from 'teleterm/ui/appContext';
 import * as types from 'teleterm/ui/Navigator/types';
 import { Document, DocumentTshNode } from 'teleterm/ui/services/docs/types';
-import React, { useEffect } from 'react';
 
-export default function useExpanderConnections() {
+export function useExpanderConnections() {
   const ctx = useAppContext();
   const items = getWorkspaceItems(ctx);
   const [, rerender] = React.useState<any>();
@@ -106,9 +105,6 @@ function createConnectionItem(
     status: getStatus(),
     uri: document.uri,
     title: document.title,
-    Icon: Icons.Keypair,
-    items: [],
-    group: false,
   };
 }
 
@@ -116,4 +112,4 @@ export interface ConnectionItem extends types.NavItem {
   readonly status: 'connected' | 'disconnected';
 }
 
-export type State = ReturnType<typeof useExpanderConnections>;
+export type ExpanderConnectionProps = ReturnType<typeof useExpanderConnections>;
