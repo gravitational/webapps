@@ -40,7 +40,7 @@ export default function RecordingsList(props: Props) {
           headerText: 'Type',
           key: 'recordingType',
           isSortable: true,
-          render: ({ recordingType }) => iconCell(recordingType),
+          render: ({ recordingType }) => renderIconCell(recordingType),
         },
         {
           key: 'hostname',
@@ -90,26 +90,21 @@ export default function RecordingsList(props: Props) {
   );
 }
 
-const iconCell = (type: RecordingType) => {
-  const iconProps = {
-    p: '1',
-    mr: '3',
-    fontSize: '3',
-  };
+const renderIconCell = (type: RecordingType) => {
   const icon = type === 'ssh' ? Icons.Cli : Icons.Desktop;
 
   return (
     <Cell>
-      <Icon {...iconProps} as={icon} />
+      <Icon p={1} mr={3} fontSize={3} as={icon} />
     </Cell>
   );
 };
 
 const renderPlayCell = (
-  { description, sid, recordingType }: Recording,
+  { description, sid, recordingType, playable }: Recording,
   clusterId: string
 ) => {
-  if (description !== 'play') {
+  if (!playable) {
     return (
       <Cell align="right" style={{ color: '#9F9F9F' }}>
         {description}

@@ -11,10 +11,6 @@ export type RecordingsResponse = {
 };
 
 export type RecordingType = 'ssh' | 'desktop';
-export type RecordingDescription =
-  | 'play'
-  | 'recording disabled'
-  | 'non-interactive';
 
 export type Recording = {
   duration: number;
@@ -23,6 +19,7 @@ export type Recording = {
   createdDate: Date;
   users: string;
   hostname: string;
-  description: RecordingDescription;
+  description: string;
   recordingType: RecordingType;
+  playable: boolean;
 };

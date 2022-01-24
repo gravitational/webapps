@@ -746,16 +746,9 @@ exports[`rendering of Session Recordings 1`] = `
           </td>
           <td
             align="right"
+            style="color: rgb(159, 159, 159);"
           >
-            <a
-              class="c16"
-              href="/web/cluster/localhost/session/fe41659b-a611-4b08-974b-69564f766403"
-              kind="primary"
-              target="_blank"
-              width="80px"
-            >
-              Play
-            </a>
+            recording disabled
           </td>
         </tr>
         <tr>
@@ -885,7 +878,7 @@ exports[`rendering of Session Recordings 1`] = `
           >
             <a
               class="c16"
-              href="/web/cluster/localhost/session/377875-6491-11e9-80a1-427cfde50f5a"
+              href="/web/cluster/localhost/session/377875-6491-11e9-80a1-427cfde50f5a/ssh"
               kind="primary"
               target="_blank"
               width="80px"
@@ -925,7 +918,7 @@ exports[`rendering of Session Recordings 1`] = `
           >
             <a
               class="c16"
-              href="/web/cluster/localhost/session/426485-6491-11e9-80a1-427cfde50f5a"
+              href="/web/cluster/localhost/session/426485-6491-11e9-80a1-427cfde50f5a/ssh"
               kind="primary"
               target="_blank"
               width="80px"

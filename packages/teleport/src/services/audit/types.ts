@@ -122,6 +122,8 @@ export const eventCodes = {
   USER_SSO_LOGIN: 'T1001I',
   USER_SSO_LOGINFAILURE: 'T1001W',
   USER_UPDATED: 'T1003I',
+  X11_FORWARD: 'T3008I',
+  X11_FORWARD_FAILURE: 'T3008W',
 } as const;
 
 /**
@@ -530,6 +532,10 @@ export type RawEvents = {
       windows_user: string;
       windows_domain: string;
     }
+  >;
+  [eventCodes.X11_FORWARD]: RawEvent<typeof eventCodes.X11_FORWARD>;
+  [eventCodes.X11_FORWARD_FAILURE]: RawEvent<
+    typeof eventCodes.X11_FORWARD_FAILURE
   >;
 };
 
