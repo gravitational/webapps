@@ -14,8 +14,18 @@
 
 import Client from './client';
 
+enum Action {
+  TOGGLE = 'toggle',
+  // TODO: MOVE = 'move'
+}
+
 export class PlayerClient extends Client {
   constructor(socketAddr: string) {
     super(socketAddr);
+  }
+
+  // toggle toggle's the playback system between "playing" and "paused" states.
+  toggle() {
+    this.socket?.send(JSON.stringify({ action: Action.TOGGLE }));
   }
 }

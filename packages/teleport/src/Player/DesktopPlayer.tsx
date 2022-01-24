@@ -1,6 +1,5 @@
 import React, { useRef } from 'react';
 import styled from 'styled-components';
-import { Flex } from 'design';
 import ProgressBar from './ProgressBar';
 import { PlayerClient } from 'teleport/lib/tdp/playerClient';
 import cfg from 'teleport/config';
@@ -35,7 +34,7 @@ export const DesktopPlayer = ({
       console.log(value);
     },
     toggle: () => {
-      console.log('toggled!');
+      playerClient.toggle();
     },
   };
 
