@@ -37,7 +37,7 @@ export default function makeCluster(json): Cluster {
     'proxyVersion',
   ]);
 
-  const connectedText = displayDateTime(lastConnected);
+  const connectedText = displayDateTime(new Date(lastConnected));
 
   return {
     clusterId,

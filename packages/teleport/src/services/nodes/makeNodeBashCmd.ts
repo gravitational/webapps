@@ -14,13 +14,12 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import moment from 'moment';
+import { formatDistanceStrict } from 'date-fns';
 import cfg from 'teleport/config';
 import { NodeToken, BashCommand } from './types';
 
 export default function makeNodeBashCmd(token: NodeToken): BashCommand {
-  const duration = moment(new Date()).diff(token.expiry);
-  const expires = moment.duration(duration).humanize();
+  const expires = formatDistanceStrict(new Date(), new Date(token.expiry));
   const text = `sudo bash -c "$(curl -fsSL ${cfg.getNodeScriptUrl(token.id)})"`;
   return {
     text,

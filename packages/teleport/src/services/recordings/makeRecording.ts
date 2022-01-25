@@ -1,4 +1,4 @@
-import moment from 'moment';
+import { differenceInMilliseconds, formatDistanceStrict } from 'date-fns';
 import { Recording } from './types';
 import { eventCodes } from 'teleport/services/audit';
 
@@ -76,7 +76,7 @@ function makeSshRecording({
     duration,
     durationText,
     sid,
-    createdDate: time,
+    createdDate: new Date(time),
     users: participants.join(', '),
     hostname,
     description,
@@ -85,13 +85,17 @@ function makeSshRecording({
   } as Recording;
 }
 
-function formatDuration(start: string, stop: string) {
+function formatDuration(startDate: string, stopDate: string) {
   let durationText = '';
   let duration = 0;
-  if (start && stop) {
-    duration = moment(stop).diff(start);
-    durationText = moment.duration(duration).humanize();
+  if (startDate && stopDate) {
+    const start = new Date(startDate);
+    const end = new Date(stopDate);
+
+    duration = differenceInMilliseconds(end, start);
+    durationText = formatDistanceStrict(start, end);
   }
+
   return { duration, durationText };
 }
 
