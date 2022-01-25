@@ -31,7 +31,7 @@ function makeDesktopRecording({
     duration,
     durationText,
     sid,
-    createdDate: time,
+    createdDate: new Date(time),
     users: user,
     hostname: desktop_name,
     description,
