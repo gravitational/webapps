@@ -15,7 +15,7 @@
 import Client from './client';
 
 enum Action {
-  TOGGLE = 'toggle',
+  PLAY_PAUSE = 'play/pause',
   // TODO: MOVE = 'move'
 }
 
@@ -26,6 +26,6 @@ export class PlayerClient extends Client {
 
   // toggle toggle's the playback system between "playing" and "paused" states.
   toggle() {
-    this.socket?.send(JSON.stringify({ action: Action.TOGGLE }));
+    this.socket?.send(JSON.stringify({ action: Action.PLAY_PAUSE }));
   }
 }
