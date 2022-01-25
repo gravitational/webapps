@@ -16,57 +16,39 @@ limitations under the License.
 
 import React from 'react';
 import styled from 'styled-components';
-import { Flex } from 'design';
-import ExpanderClusters from './ExpanderClusters';
-import ExpanderConnections from './ExpanderConnections';
-import { space, width, color, height } from 'styled-system';
+import { Box, Text } from 'design';
+import { ExpanderClusters } from './ExpanderClusters';
+import { ExpanderConnections } from './ExpanderConnections';
 
-export default function Navigator() {
+export function Navigator() {
   return (
     <Nav bg="primary.dark">
-      <StyledBorder />
-      <Input placeholder="Search..." />
-      <StyledBorder />
-      <ExpanderConnections />
-      <ExpanderClusters />
+      <Text typography="subtitle2" m={2}>
+        NAVIGATOR
+      </Text>
+      <Scrollable>
+        <ExpanderConnections />
+        <Separator />
+        <ExpanderClusters />
+        <Separator />
+      </Scrollable>
     </Nav>
   );
 }
 
-const Nav = styled(Flex)`
-  overflow: auto;
-  height: 100%;
+const Nav = styled(Box)`
+  display: flex;
   flex-direction: column;
+  height: 100%;
   user-select: none;
 `;
 
-const StyledBorder = styled.div(({ theme }) => {
-  return {
-    background: theme.colors.primary.lighter,
-    height: '1px',
-  };
-});
+const Scrollable = styled(Box)`
+  height: 100%;
+  overflow: auto;
+`;
 
-const Input = styled.input(props => {
-  const { theme } = props;
-  return {
-    background: theme.colors.primary.light,
-    boxSizing: 'border-box',
-    color: theme.colors.text.primary,
-    width: '100%',
-    height: '30px',
-    border: 'none',
-    outline: 'none',
-    padding: '2px 12px',
-    '&:hover, &:focus': {
-      color: theme.colors.primary.contrastText,
-      background: theme.colors.primary.lighter,
-      opacity: 1,
-    },
-
-    ...space(props),
-    ...width(props),
-    ...height(props),
-    ...color(props),
-  };
-});
+const Separator = styled.div`
+  background: ${props => props.theme.colors.primary.lighter};
+  height: 1px;
+`;

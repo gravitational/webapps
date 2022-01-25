@@ -29,14 +29,14 @@ type Props = {
 
 const NavItem: React.FC<Props> = props => {
   const { item, onClick, ...styles } = props;
-  const { docsService: serviceDocs } = useAppContext();
-  const active = serviceDocs.isActive(item.uri);
+  const { docsService } = useAppContext();
+  const active = docsService.isActive(item.uri);
 
   const handleClick = () => {
     if (onClick) {
       onClick(item);
     } else {
-      serviceDocs.open(item.uri);
+      docsService.open(item.uri);
     }
   };
 
@@ -59,7 +59,7 @@ const NavItem: React.FC<Props> = props => {
   );
 };
 
-export const StyledNavItem = styled.div(props => {
+const StyledNavItem = styled.div(props => {
   const { theme, $active } = props;
   const colors = $active
     ? {

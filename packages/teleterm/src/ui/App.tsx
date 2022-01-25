@@ -2,16 +2,12 @@ import React from 'react';
 import { DndProvider } from 'react-dnd';
 import { HTML5Backend } from 'react-dnd-html5-backend';
 import styled from 'styled-components';
-import { Box } from 'design';
-import SplitPane from 'shared/components/SplitPane';
 import CatchError from './components/CatchError';
-import Navigator from './Navigator';
-import TabHost from './TabHost';
 import ModalsHost from './ModalsHost';
-import QuickInput from './QuickInput';
 import AppContextProvider from './appContextProvider';
 import AppContext from './appContext';
 import ThemeProvider, { ThemeProviderTemp } from './ThemeProvider';
+import { LayoutManager } from './LayoutManager';
 
 const App: React.FC<{ ctx: AppContext }> = ({ ctx }) => {
   return (
@@ -20,15 +16,7 @@ const App: React.FC<{ ctx: AppContext }> = ({ ctx }) => {
         <DndProvider backend={HTML5Backend}>
           <AppContextProvider value={ctx}>
             <ThemeProvider>
-              <QuickInput />
-              <SplitPane defaultSize="20%" flex="1" split="vertical">
-                <Box flex="1" bg="primary.light">
-                  <Navigator />
-                </Box>
-                <Box flex="1" style={{ position: 'relative' }}>
-                  <TabHost />
-                </Box>
-              </SplitPane>
+              <LayoutManager />
               <ThemeProviderTemp>
                 <ModalsHost />
               </ThemeProviderTemp>

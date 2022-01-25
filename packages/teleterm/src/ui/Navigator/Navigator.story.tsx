@@ -16,16 +16,32 @@
 
 import React from 'react';
 import AppContextProvider from 'teleterm/ui/appContextProvider';
-import Navigator from './Navigator';
+import { Navigator } from './Navigator';
 import { MockAppContext } from 'teleterm/ui/fixtures/mocks';
 import { SyncStatus } from 'teleterm/ui/services/clusters/types';
+import styled from 'styled-components';
 
 export default {
-  title: 'Teleterm/Navigator2',
+  title: 'Teleterm/Navigator',
 };
 
 export const Story = () => {
   const appContext = new MockAppContext();
+
+  appContext.workspaceService.getRecentDocuments = () => {
+    return [
+      {
+        uri: 'localhost',
+        kind: 'doc.terminal_shell',
+        title: 'user@localhost',
+      },
+      {
+        uri: 'example-host',
+        kind: 'doc.terminal_shell',
+        title: 'user@example-host',
+      },
+    ];
+  };
 
   appContext.clustersService.getClusterSyncStatus = (_ = '') => {
     const loading: SyncStatus = { status: 'processing' };
@@ -43,14 +59,42 @@ export const Story = () => {
     {
       uri: 'clusters/localhost',
       leaf: false,
-      name: 'localhosfdt',
+      name: 'localhost',
+      connected: true,
+    },
+    {
+      uri: 'clusters/example-host',
+      leaf: false,
+      name: 'example-host',
       connected: true,
     },
   ];
 
   return (
     <AppContextProvider value={appContext}>
-      <Navigator />
+      <Container>
+        <Navigator />
+      </Container>
     </AppContextProvider>
   );
 };
+
+export function NoData() {
+  const appContext = new MockAppContext();
+  appContext.clustersService.getClusters = () => [];
+
+  return (
+    <AppContextProvider value={appContext}>
+      <Container>
+        <Navigator />
+      </Container>
+    </AppContextProvider>
+  );
+}
+
+const Container = styled.div`
+  background: white;
+  max-width: 300px;
+  max-height: 700px;
+  overflow: auto;
+`;

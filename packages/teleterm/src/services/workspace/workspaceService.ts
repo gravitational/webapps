@@ -3,15 +3,21 @@ import fs, { readFileSync, existsSync, writeFileSync } from 'fs';
 import Logger from 'teleterm/logger';
 import { Document } from 'teleterm/ui/services/docs/types';
 import { Store } from 'shared/libs/stores';
+import { merge } from 'lodash';
 
 interface WorkspaceState {
   recentDocuments: Document[];
+  layout: {
+    navigatorWidth?: number;
+  };
 }
 
 export interface WorkspaceService {
   getRecentDocuments(): Document[];
   addToRecentDocuments(document: Document): void;
   removeFromRecentDocuments(uri: string): void;
+  setNavigatorWidth(width: number): void;
+  getNavigatorWidth(): number;
   subscribe(cb: () => void): void;
   unsubscribe(cb: () => void): void;
 }
@@ -19,12 +25,15 @@ export interface WorkspaceService {
 export function createWorkspaceService(options: {
   dir: string;
 }): WorkspaceService {
-  const defaultWorkspaceState: WorkspaceState = { recentDocuments: [] };
+  const defaultWorkspaceState: WorkspaceState = {
+    recentDocuments: [],
+    layout: {},
+  };
   const logger = new Logger('Workspace Service');
   const fileName = 'workspace.json';
   const filePath = path.join(options.dir, fileName);
   const store = new Store<WorkspaceState>();
-  store.setState(readWorkspaceFileSync() || defaultWorkspaceState);
+  store.setState(merge(readWorkspaceFileSync(), defaultWorkspaceState));
 
   function getRecentDocuments(): Document[] {
     return store.state.recentDocuments;
@@ -53,10 +62,16 @@ export function createWorkspaceService(options: {
   }
 
   function removeFromRecentDocuments(uri: string): void {
-    const recentDocuments = getRecentDocuments().filter(
-      d => d.uri !== uri
-    );
+    const recentDocuments = getRecentDocuments().filter(d => d.uri !== uri);
     update({ recentDocuments });
+  }
+
+  function setNavigatorWidth(width: number): void {
+    update({ layout: { navigatorWidth: width } });
+  }
+
+  function getNavigatorWidth(): number {
+    return store.state.layout.navigatorWidth;
   }
 
   function subscribe(cb: () => void): void {
@@ -94,5 +109,7 @@ export function createWorkspaceService(options: {
     unsubscribe,
     addToRecentDocuments,
     removeFromRecentDocuments,
+    setNavigatorWidth,
+    getNavigatorWidth,
   };
 }

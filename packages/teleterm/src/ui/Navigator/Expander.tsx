@@ -38,12 +38,19 @@ const Expander: React.FC = props => {
 export const ExpanderHeader: React.FC<ExpanderHeaderProps> = props => {
   const { onContextMenu, children, ...styles } = props;
   const ctx = React.useContext(AccordingContext);
-  const ArrowIcon = ctx.expanded ? Icons.ArrowDown : Icons.ArrowRight;
+  const ArrowIcon = ctx.expanded ? Icons.CarrotDown : Icons.CarrotRight; //replace with proper (+/-) icons
 
   return (
-    <StyledHeader {...styles} onClick={ctx.toggle} onContextMenu={onContextMenu}>
-      <ArrowIcon mr="2" color="inherit" style={{ fontSize: '12px' }} />
-      <Flex flex="1">{children}</Flex>
+    <StyledHeader {...styles} onContextMenu={onContextMenu}>
+      <ArrowIcon
+        mr="2"
+        color="inherit"
+        style={{ fontSize: '12px' }}
+        onClick={ctx.toggle}
+      />
+      <Flex flex="1" overflow="hidden">
+        {children}
+      </Flex>
     </StyledHeader>
   );
 };
