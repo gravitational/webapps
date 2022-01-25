@@ -17,10 +17,10 @@ limitations under the License.
 import React, { useEffect } from 'react';
 import { useAppContext } from 'teleterm/ui/appContextProvider';
 import AppContext from 'teleterm/ui/appContext';
-import * as types from 'teleterm/ui/Navigator/types';
 import { Document, DocumentTshNode } from 'teleterm/ui/services/docs/types';
+import { ConnectionItem, ExpanderConnectionProps } from './types';
 
-export function useExpanderConnections() {
+export function useExpanderConnections(): ExpanderConnectionProps {
   const ctx = useAppContext();
   const items = getWorkspaceItems(ctx);
   const [, rerender] = React.useState<any>();
@@ -107,9 +107,3 @@ function createConnectionItem(
     title: document.title,
   };
 }
-
-export interface ConnectionItem extends types.NavItem {
-  readonly status: 'connected' | 'disconnected';
-}
-
-export type ExpanderConnectionProps = ReturnType<typeof useExpanderConnections>;

@@ -14,13 +14,12 @@
  * limitations under the License.
  */
 
-import React, { useState } from 'react';
+import React from 'react';
 import AppContextProvider from 'teleterm/ui/appContextProvider';
 import { Navigator } from './Navigator';
 import { MockAppContext } from 'teleterm/ui/fixtures/mocks';
 import { SyncStatus } from 'teleterm/ui/services/clusters/types';
 import styled from 'styled-components';
-import { Cluster } from 'teleterm/services/tshd/types';
 
 export default {
   title: 'Teleterm/Navigator',
@@ -28,20 +27,6 @@ export default {
 
 export const Story = () => {
   const appContext = new MockAppContext();
-  const [clusters, setClusters] = useState<Cluster[]>([
-    {
-      uri: 'clusters/localhost',
-      leaf: false,
-      name: 'localhost',
-      connected: true,
-    },
-    {
-      uri: 'clusters/example-host',
-      leaf: false,
-      name: 'example-host',
-      connected: true,
-    },
-  ]);
 
   appContext.workspaceService.getRecentDocuments = () => {
     return [
@@ -70,13 +55,20 @@ export const Story = () => {
     };
   };
 
-  appContext.clustersService.getClusters = () => clusters;
-
-  appContext.clustersService.removeCluster = clusterUri => {
-    return Promise.resolve(
-      setClusters(clusters.filter(c => c.uri !== clusterUri))
-    );
-  };
+  appContext.clustersService.getClusters = () => [
+    {
+      uri: 'clusters/localhost',
+      leaf: false,
+      name: 'localhost',
+      connected: true,
+    },
+    {
+      uri: 'clusters/example-host',
+      leaf: false,
+      name: 'example-host',
+      connected: true,
+    },
+  ];
 
   return (
     <AppContextProvider value={appContext}>

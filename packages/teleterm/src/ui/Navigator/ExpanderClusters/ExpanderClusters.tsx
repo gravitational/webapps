@@ -18,44 +18,35 @@ import React from 'react';
 import { Flex, Text, ButtonIcon, Box } from 'design';
 import { Restore, Add } from 'design/Icon';
 import Expander, { ExpanderHeader, ExpanderContent } from './../Expander';
-import { ExpanderClusterProps , useExpanderClusters } from './useExpanderClusters';
+import { useExpanderClusters } from './useExpanderClusters';
 import { ExpanderClusterItem } from './ExpanderClusterItem';
+import { ExpanderClusterProps } from './types';
 
 export function ExpanderClusters() {
   const state = useExpanderClusters();
   return <ExpanderClustersPresentational {...state} />;
 }
 
-
 export function ExpanderClustersPresentational(props: ExpanderClusterProps) {
-  const {
-    clusterItems,
-    login,
-    syncClusters,
-    addCluster,
-    logout,
-    remove,
-    openContextMenu,
-  } = props;
+  const { items, onSyncClusters, onAddCluster, onRemove, onOpenContextMenu } =
+    props;
 
   const handleSyncClick = (e: React.BaseSyntheticEvent) => {
     e.stopPropagation();
-    syncClusters();
+    onSyncClusters?.();
   };
 
   const handleAddClick = (e: React.BaseSyntheticEvent) => {
     e.stopPropagation();
-    addCluster();
+    onAddCluster?.();
   };
 
-  const $clustersItems = clusterItems.map(i => (
+  const $clustersItems = items.map(i => (
     <ExpanderClusterItem
       key={i.uri}
       item={i}
-      onLogin={login}
-      onRemove={remove}
-      onLogout={logout}
-      onContextMenu={openContextMenu(i)}
+      onRemove={onRemove}
+      onContextMenu={() => onOpenContextMenu?.(i)}
     />
   ));
 
@@ -74,11 +65,16 @@ export function ExpanderClustersPresentational(props: ExpanderClusterProps) {
             <ButtonIcon
               p={3}
               color="text.placeholder"
+              title="Sync clusters"
               onClick={handleSyncClick}
             >
               <Restore />
             </ButtonIcon>
-            <ButtonIcon color="text.placeholder" onClick={handleAddClick}>
+            <ButtonIcon
+              color="text.placeholder"
+              onClick={handleAddClick}
+              title="Add cluster"
+            >
               <Add />
             </ButtonIcon>
           </Flex>

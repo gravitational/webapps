@@ -1,12 +1,12 @@
 import React from 'react';
 import Expander, { ExpanderHeader, ExpanderContent } from './../Expander';
 import { Cross } from 'design/Icon';
-import { ClusterNavItem } from './useExpanderClusters';
+import { ClusterNavItem } from './types';
 import NavItem from 'teleterm/ui/Navigator/NavItem';
 import LinearProgress from 'teleterm/ui/components/LinearProgress';
 import { Flex, Text, ButtonIcon, Box } from 'design';
 
-const standardItemPadding = 5;
+const simpleItemPadding = 5;
 const expandedItemPadding = 7;
 
 export function ExpanderClusterItem(props: ClusterItemProps) {
@@ -15,7 +15,7 @@ export function ExpanderClusterItem(props: ClusterItemProps) {
   if (item.trustedClusters?.length) {
     return <ExpandableClusterItem {...props} />;
   }
-  return <SimpleClusterItem {...props} pl={standardItemPadding} />;
+  return <SimpleClusterItem {...props} pl={simpleItemPadding} />;
 }
 
 function ExpandableClusterItem(props: ClusterItemProps) {
@@ -23,7 +23,7 @@ function ExpandableClusterItem(props: ClusterItemProps) {
 
   return (
     <Expander>
-      <ExpanderHeader pl={standardItemPadding}>
+      <ExpanderHeader pl={simpleItemPadding}>
         <SimpleClusterItem {...props} />
       </ExpanderHeader>
       <ExpanderContent>
@@ -48,7 +48,7 @@ function SimpleClusterItem(props: ClusterItemProps & { pl?: number }) {
 
   function handleRemove(e: React.SyntheticEvent) {
     e.stopPropagation();
-    props.onRemove(props.item.uri);
+    props.onRemove?.(props.item.uri);
   }
 
   return (
@@ -59,6 +59,7 @@ function SimpleClusterItem(props: ClusterItemProps & { pl?: number }) {
         flex="1"
         width="100%"
         onContextMenu={props.onContextMenu}
+        style={{position: 'relative'}}
       >
         <Flex
           justifyContent="center"
@@ -66,16 +67,17 @@ function SimpleClusterItem(props: ClusterItemProps & { pl?: number }) {
           color={titleColor}
           minWidth={0}
         >
-          <Text
-            typography="body1"
-            title={title}
-          >
+          <Text typography="body1" title={title}>
             {title}
             {syncing && <LinearProgress />}
           </Text>
         </Flex>
         <Flex>
-          <ButtonIcon color="text.placeholder" onClick={handleRemove}>
+          <ButtonIcon
+            color="text.placeholder"
+            title="Remove"
+            onClick={handleRemove}
+          >
             <Cross fontSize={12} />
           </ButtonIcon>
         </Flex>
@@ -86,8 +88,6 @@ function SimpleClusterItem(props: ClusterItemProps & { pl?: number }) {
 
 type ClusterItemProps = {
   item: ClusterNavItem;
-  onLogout(clusterUri: string): void;
-  onLogin(clusterUri: string): void;
   onRemove(clusterUri: string): void;
   onContextMenu(): void;
 };

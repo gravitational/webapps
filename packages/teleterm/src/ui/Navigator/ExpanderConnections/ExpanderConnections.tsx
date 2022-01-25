@@ -17,11 +17,9 @@ limitations under the License.
 import React from 'react';
 import { Flex, Text } from 'design';
 import Expander, { ExpanderHeader, ExpanderContent } from '../Expander';
-import {
-  ExpanderConnectionProps,
-  useExpanderConnections,
-} from './useExpanderConnections';
+import { useExpanderConnections } from './useExpanderConnections';
 import { ExpanderConnectionItem } from './ExpanderConnectionItem';
+import { ExpanderConnectionProps } from './types';
 
 export function ExpanderConnections() {
   const state = useExpanderConnections();
@@ -50,8 +48,8 @@ export function ExpanderConnectionsPresentational(
           <ExpanderConnectionItem
             key={i.uri}
             item={i}
-            onOpen={() => onItemOpen(i)}
-            onRemove={() => onItemRemove(i)}
+            onOpen={() => onItemOpen?.(i)}
+            onRemove={() => onItemRemove?.(i)}
           />
         ))}
       </ExpanderContent>

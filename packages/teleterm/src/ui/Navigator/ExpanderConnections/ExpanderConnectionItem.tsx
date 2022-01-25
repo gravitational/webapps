@@ -2,7 +2,7 @@ import React from 'react';
 import NavItem from 'teleterm/ui/Navigator/NavItem';
 import { StatusIndicator } from './StatusIndicator';
 import { Cross } from 'design/Icon';
-import { ConnectionItem } from './useExpanderConnections';
+import { ConnectionItem } from './types';
 import { ButtonIcon, Flex, Text } from 'design';
 
 export function ExpanderConnectionItem(props: ExpanderConnectionItemProps) {
@@ -23,14 +23,15 @@ export function ExpanderConnectionItem(props: ExpanderConnectionItemProps) {
           {props.item.title}
         </Text>
         {offline && (
-          <ButtonIcon color="text.placeholder">
-            <Cross
-              fontSize={12}
-              onClick={e => {
-                e.stopPropagation();
-                props.onRemove();
-              }}
-            />
+          <ButtonIcon
+            color="text.placeholder"
+            title="Remove"
+            onClick={e => {
+              e.stopPropagation();
+              props.onRemove();
+            }}
+          >
+            <Cross fontSize={12} />
           </ButtonIcon>
         )}
       </Flex>
