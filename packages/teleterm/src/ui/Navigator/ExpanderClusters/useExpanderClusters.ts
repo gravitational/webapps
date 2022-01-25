@@ -14,36 +14,34 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import * as Icons from 'design/Icon';
 import { useAppContext } from 'teleterm/ui/appContextProvider';
 import AppContext from 'teleterm/ui/appContext';
-import * as navTypes from 'teleterm/ui/Navigator/types';
+import { ExpanderClusterProps, ClusterNavItem } from './types';
 
-export default function useExpanderClusters() {
+export function useExpanderClusters(): ExpanderClusterProps {
   const ctx = useAppContext();
-  const clusterItems = initItems(ctx);
+  const items = initItems(ctx);
 
   // subscribe
   ctx.clustersService.useState();
-  ctx.docsService.useState();
 
-  function addCluster() {
+  function onAddCluster() {
     ctx.commandLauncher.executeCommand('cluster-connect', {});
   }
 
-  function syncClusters() {
+  function onSyncClusters() {
     ctx.clustersService.syncClusters();
   }
 
-  function login(clusterUri: string) {
+  function onLogin(clusterUri: string) {
     ctx.commandLauncher.executeCommand('cluster-connect', { clusterUri });
   }
 
-  function logout(clusterUri: string) {
+  function onLogout(clusterUri: string) {
     ctx.clustersService.logout(clusterUri);
   }
 
-  function remove(clusterUri: string) {
+  function onRemove(clusterUri: string) {
     const cluster = ctx.clustersService.findCluster(clusterUri);
     ctx.modalsService.openDialog({
       kind: 'cluster-remove',
@@ -52,34 +50,30 @@ export default function useExpanderClusters() {
     });
   }
 
-  function openContextMenu(cluster: ClusterNavItem) {
-    return () => {
-      ctx.mainProcessClient.openClusterContextMenu({
-        isClusterConnected: cluster.connected,
-        onLogin() {
-          login(cluster.uri);
-        },
-        onLogout() {
-          logout(cluster.uri);
-        },
-        onRemove() {
-          remove(cluster.uri);
-        },
-        onRefresh() {
-          ctx.clustersService.syncRootCluster(cluster.uri);
-        },
-      });
-    };
+  function onOpenContextMenu(cluster: ClusterNavItem) {
+    ctx.mainProcessClient.openClusterContextMenu({
+      isClusterConnected: cluster.connected,
+      onLogin() {
+        onLogin(cluster.uri);
+      },
+      onLogout() {
+        onLogout(cluster.uri);
+      },
+      onRemove() {
+        onRemove(cluster.uri);
+      },
+      onRefresh() {
+        ctx.clustersService.syncRootCluster(cluster.uri);
+      },
+    });
   }
 
   return {
-    clusterItems,
-    addCluster,
-    openContextMenu,
-    syncClusters,
-    logout,
-    remove,
-    login,
+    items,
+    onAddCluster,
+    onOpenContextMenu,
+    onSyncClusters,
+    onRemove,
   };
 }
 
@@ -88,21 +82,9 @@ function initItems(ctx: AppContext): ClusterNavItem[] {
     const { syncing } = ctx.clustersService.getClusterSyncStatus(cluster.uri);
     return {
       title: cluster.name,
-      Icon: Icons.Clusters,
       uri: cluster.uri,
-      kind: 'cluster',
       connected: cluster.connected,
       syncing: syncing,
-      items: [],
-      group: true,
     };
   });
-}
-
-export type State = ReturnType<typeof useExpanderClusters>;
-
-export interface ClusterNavItem extends navTypes.NavItem {
-  connected: boolean;
-  syncing: boolean;
-  trustedClusters?: ClusterNavItem[];
 }

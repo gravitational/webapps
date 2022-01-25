@@ -15,51 +15,38 @@ limitations under the License.
 */
 
 import React from 'react';
-import { Flex, Text, ButtonIcon } from 'design';
-import * as Icons from 'design/Icon';
-import * as palette from 'design/theme/palette';
+import { Flex, Text, ButtonIcon, Box } from 'design';
+import { Restore, Add } from 'design/Icon';
 import Expander, { ExpanderHeader, ExpanderContent } from './../Expander';
-import NavItem from 'teleterm/ui/Navigator/NavItem';
-import LinearProgress from 'teleterm/ui/components/LinearProgress';
-import useExpanderClusters, {
-  State,
-  ClusterNavItem,
-} from './useExpanderClusters';
+import { useExpanderClusters } from './useExpanderClusters';
+import { ExpanderClusterItem } from './ExpanderClusterItem';
+import { ExpanderClusterProps } from './types';
 
-export default function Container() {
+export function ExpanderClusters() {
   const state = useExpanderClusters();
-  return <ExpanderClusters {...state} />;
+  return <ExpanderClustersPresentational {...state} />;
 }
 
-export const ExpanderClusters: React.FC<State> = props => {
-  const {
-    clusterItems,
-    login,
-    syncClusters,
-    addCluster,
-    logout,
-    remove,
-    openContextMenu,
-  } = props;
+export function ExpanderClustersPresentational(props: ExpanderClusterProps) {
+  const { items, onSyncClusters, onAddCluster, onRemove, onOpenContextMenu } =
+    props;
 
   const handleSyncClick = (e: React.BaseSyntheticEvent) => {
     e.stopPropagation();
-    syncClusters();
+    onSyncClusters?.();
   };
 
   const handleAddClick = (e: React.BaseSyntheticEvent) => {
     e.stopPropagation();
-    addCluster();
+    onAddCluster?.();
   };
 
-  const $clustersItems = clusterItems.map(i => (
-    <ClusterItem
+  const $clustersItems = items.map(i => (
+    <ExpanderClusterItem
       key={i.uri}
       item={i}
-      onLogin={login}
-      onRemove={remove}
-      onLogout={logout}
-      onContextMenu={openContextMenu(i)}
+      onRemove={onRemove}
+      onContextMenu={() => onOpenContextMenu?.(i)}
     />
   ));
 
@@ -71,107 +58,31 @@ export const ExpanderClusters: React.FC<State> = props => {
           alignItems="center"
           flex="1"
           width="100%"
+          minWidth="0"
         >
           <Text typography="body1">Clusters</Text>
           <Flex>
             <ButtonIcon
               p={3}
               color="text.placeholder"
+              title="Sync clusters"
               onClick={handleSyncClick}
             >
-              <Icons.Restore />
+              <Restore />
             </ButtonIcon>
-            <ButtonIcon color="text.placeholder" onClick={handleAddClick}>
-              <Icons.Add />
+            <ButtonIcon
+              color="text.placeholder"
+              onClick={handleAddClick}
+              title="Add cluster"
+            >
+              <Add />
             </ButtonIcon>
           </Flex>
         </Flex>
       </ExpanderHeader>
-      <ExpanderContent>{$clustersItems}</ExpanderContent>
+      <ExpanderContent>
+        <Box>{$clustersItems}</Box>
+      </ExpanderContent>
     </Expander>
   );
-};
-
-type ClusterItemProps = {
-  item: ClusterNavItem;
-  onLogout(string): void;
-  onLogin(string): void;
-  onRemove(string): void;
-  onContextMenu(): void;
-};
-
-const ClusterItem: React.FC<ClusterItemProps> = props => {
-  const { item, onContextMenu } = props;
-  const { title, syncing, connected } = item;
-
-  function handleRemove(e: React.SyntheticEvent) {
-    e.stopPropagation();
-    props.onRemove(props.item.uri);
-  }
-
-  const color = connected ? 'text.primary' : 'text.placeholder';
-
-  return (
-    <NavItem pl={5} item={props.item}>
-      <Flex
-        alignItems="center"
-        justifyContent="space-between"
-        flex="1"
-        width="100%"
-        onContextMenu={onContextMenu}
-      >
-        <Flex justifyContent="center" alignItems="center" color={color}>
-          <ClusterIcon mr={2} name={title} />
-          <Text typography="body1" style={{ position: 'relative' }}>
-            {title}
-            {syncing && <LinearProgress />}
-          </Text>
-        </Flex>
-        <Flex>
-          <ButtonIcon color="text.placeholder" onClick={handleRemove}>
-            <Icons.Trash />
-          </ButtonIcon>
-        </Flex>
-      </Flex>
-    </NavItem>
-  );
-};
-
-const ClusterIcon = ({
-  name,
-  ...rest
-}: {
-  name: string;
-  [key: string]: any;
-}) => (
-  <Flex
-    height="10px"
-    width="10px"
-    borderRadius="100%"
-    justifyContent="center"
-    alignItems="center"
-    bg={getIconColor(name)}
-    {...rest}
-  />
-);
-
-function getIconColor(appName: string) {
-  let stringValue = 0;
-  for (let i = 0; i < appName.length; i++) {
-    stringValue += appName.charCodeAt(i);
-  }
-
-  const colors = [
-    palette.pink[700],
-    palette.teal[700],
-    palette.cyan[700],
-    palette.blue[700],
-    palette.green[700],
-    palette.orange[700],
-    palette.brown[700],
-    palette.red[700],
-    palette.deepOrange[700],
-  ];
-
-  return colors[stringValue % 9];
 }

@@ -31,10 +31,12 @@ export class MockPtyServiceClient implements PtyServiceClient {
 
 export function createMockWorkspaceService(): WorkspaceService {
   return {
-    getRecentDocuments: () => ([]),
+    getRecentDocuments: () => [],
     removeFromRecentDocuments: () => undefined,
     addToRecentDocuments: () => {},
     subscribe: () => {},
     unsubscribe: () => {},
+    getNavigatorWidth: () => undefined,
+    setNavigatorWidth: () => {},
   };
 }

@@ -1,4 +1,5 @@
 import { RuntimeSettings, MainProcessClient } from 'teleterm/types';
+import { ConfigService } from 'teleterm/services/config';
 
 export class MockMainProcessClient implements MainProcessClient {
   getRuntimeSettings(): RuntimeSettings {
@@ -23,8 +24,13 @@ export class MockMainProcessClient implements MainProcessClient {
 
   openTabContextMenu() {}
 
-  configService: {
-    get: () => undefined;
-    update: () => undefined;
-  };
+  configService = {
+    get: () => ({
+      keyboardShortcuts: {},
+      appearance: {
+        fonts: {},
+      },
+    }),
+    update: () => undefined,
+  } as unknown as ConfigService;
 }

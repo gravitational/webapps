@@ -14,6 +14,4 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import ExpanderClusters from './ExpanderClusters';
-
-export default ExpanderClusters;
+export { ExpanderClusters } from './ExpanderClusters';

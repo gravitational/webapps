@@ -2,7 +2,7 @@ import styled from 'styled-components';
 import React from 'react';
 import { Box } from 'design';
 
-const StatusIndicator: React.FC<Props> = props => {
+export const StatusIndicator: React.FC<Props> = props => {
   const { status, ...styles } = props;
   return <StyledStatus title={status} $status={status} {...styles} />;
 };
@@ -39,5 +39,3 @@ type Props = {
 };
 
 type Status = 'connected' | 'disconnected';
-
-export default StatusIndicator;
