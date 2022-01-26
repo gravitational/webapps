@@ -83,10 +83,12 @@ export default function useTdpClientCanvas(props: Props) {
   };
 
   const onKeyDown = (cli: TdpClient, e: KeyboardEvent) => {
+    e.preventDefault();
     cli.sendKeyboardInput(e.code, ButtonState.DOWN);
   };
 
   const onKeyUp = (cli: TdpClient, e: KeyboardEvent) => {
+    e.preventDefault();
     cli.sendKeyboardInput(e.code, ButtonState.UP);
   };
 
@@ -114,6 +116,7 @@ export default function useTdpClientCanvas(props: Props) {
   };
 
   const onMouseWheelScroll = (cli: TdpClient, e: WheelEvent) => {
+    e.preventDefault();
     // We only support pixel scroll events, not line or page events.
     // https://developer.mozilla.org/en-US/docs/Web/API/WheelEvent/deltaMode
     if (e.deltaMode === WheelEvent.DOM_DELTA_PIXEL) {
