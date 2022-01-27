@@ -15,8 +15,12 @@
 import Client from './client';
 
 enum Action {
-  PLAY_PAUSE = 'play/pause',
+  TOGGLE_PLAY_PAUSE = 'play/pause',
   // TODO: MOVE = 'move'
+}
+
+export enum PlayerClientEvent {
+  TOGGLE_PLAY_PAUSE = 'play/pause',
 }
 
 export class PlayerClient extends Client {
@@ -24,8 +28,9 @@ export class PlayerClient extends Client {
     super(socketAddr);
   }
 
-  // toggle toggle's the playback system between "playing" and "paused" states.
-  toggle() {
-    this.socket?.send(JSON.stringify({ action: Action.PLAY_PAUSE }));
+  // togglePlayPause toggles the playback system between "playing" and "paused" states.
+  togglePlayPause() {
+    this.socket?.send(JSON.stringify({ action: Action.TOGGLE_PLAY_PAUSE }));
+    this.emit(PlayerClientEvent.TOGGLE_PLAY_PAUSE);
   }
 }
