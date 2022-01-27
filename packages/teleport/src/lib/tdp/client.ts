@@ -17,6 +17,7 @@ import Codec, {
   MouseButton,
   ButtonState,
   ScrollAxis,
+  ClientScreenSpec,
 } from './codec';
 import Logger from 'shared/libs/logger';
 
@@ -79,7 +80,13 @@ export default class Client extends EventEmitter {
     const messageType = this.codec.decodeMessageType(buffer);
     try {
       if (messageType === MessageType.PNG_FRAME) {
-        this.processFrame(buffer);
+        this.handlePngFrame(buffer);
+      } else if (messageType === MessageType.CLIENT_SCREEN_SPEC) {
+        this.handleClientScreenSpec(buffer);
+      } else if (messageType === MessageType.MOUSE_BUTTON) {
+        this.handleMouseButton(buffer);
+      } else if (messageType === MessageType.MOUSE_MOVE) {
+        this.handleMouseMove(buffer);
       } else if (messageType === MessageType.ERROR) {
         this.handleError(new Error(this.codec.decodeErrorMessage(buffer)));
       } else {
@@ -92,9 +99,39 @@ export default class Client extends EventEmitter {
     }
   }
 
+  handleClientScreenSpec(buffer: ArrayBuffer) {
+    this.handleError(
+      new Error(
+        `recieved unsupported message type ${this.codec.decodeMessageType(
+          buffer
+        )}`
+      )
+    );
+  }
+
+  handleMouseButton(buffer: ArrayBuffer) {
+    this.handleError(
+      new Error(
+        `recieved unsupported message type ${this.codec.decodeMessageType(
+          buffer
+        )}`
+      )
+    );
+  }
+
+  handleMouseMove(buffer: ArrayBuffer) {
+    this.handleError(
+      new Error(
+        `recieved unsupported message type ${this.codec.decodeMessageType(
+          buffer
+        )}`
+      )
+    );
+  }
+
   // Assuming we have a message of type PNG_FRAME, extract its
   // bounds and png bitmap and emit a render event.
-  processFrame(buffer: ArrayBuffer) {
+  handlePngFrame(buffer: ArrayBuffer) {
     const { left, top } = this.codec.decodeRegion(buffer);
     const image = new Image();
     image.onload = () =>
@@ -124,8 +161,8 @@ export default class Client extends EventEmitter {
     if (msg) this.socket.send(msg);
   }
 
-  resize(w: number, h: number) {
-    this.socket?.send(this.codec.encodeScreenSpec(w, h));
+  resize(spec: ClientScreenSpec) {
+    this.socket?.send(this.codec.encodeClientScreenSpec(spec));
   }
 
   // Emits an TdpClientEvent.ERROR event. Sets this.errored to true to alert the socket.onclose handler that

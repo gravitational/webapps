@@ -6,6 +6,7 @@ import cfg from 'teleport/config';
 import { getAccessToken, getHostName } from 'teleport/services/api';
 import TdpClientCanvas from 'teleport/components/TdpClientCanvas';
 import { ImageFragment } from 'teleport/lib/tdp/client';
+import { ClientScreenSpec } from 'teleport/lib/tdp/codec';
 
 export const DesktopPlayer = ({
   sid,
@@ -14,7 +15,11 @@ export const DesktopPlayer = ({
   sid: string;
   clusterId: string;
 }) => {
-  const { playerClient, tdpCliOnImageFragment } = useDesktopPlayer({
+  const {
+    playerClient,
+    tdpCliOnImageFragment,
+    tdpCliOnClientScreenSpec,
+  } = useDesktopPlayer({
     sid,
     clusterId,
   });
@@ -26,6 +31,7 @@ export const DesktopPlayer = ({
         tdpCliOnTdpError={(err: Error) => {}} // TODO: we should show an error
         tdpCliOnWsClose={() => {}}
         tdpCliOnWsOpen={() => {}}
+        tdpCliOnClientScreenSpec={tdpCliOnClientScreenSpec}
         onKeyDown={(cli: PlayerClient, e: KeyboardEvent) => {}}
         onKeyUp={(cli: PlayerClient, e: KeyboardEvent) => {}}
         onMouseMove={(
@@ -102,9 +108,18 @@ const useDesktopPlayer = ({
     ctx.drawImage(data.image, data.left, data.top);
   };
 
+  const tdpCliOnClientScreenSpec = (
+    canvas: HTMLCanvasElement,
+    spec: ClientScreenSpec
+  ) => {
+    canvas.width = spec.width;
+    canvas.height = spec.height;
+  };
+
   return {
     playerClient,
     tdpCliOnImageFragment,
+    tdpCliOnClientScreenSpec,
   };
 };
 

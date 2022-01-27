@@ -13,6 +13,7 @@
 // limitations under the License.
 
 import Client from './client';
+import ClientScreenSpec from './codec';
 
 enum Action {
   TOGGLE_PLAY_PAUSE = 'play/pause',
@@ -21,6 +22,7 @@ enum Action {
 
 export enum PlayerClientEvent {
   TOGGLE_PLAY_PAUSE = 'play/pause',
+  CLIENT_SCREEN_SPEC = 'client screen spec',
 }
 
 export class PlayerClient extends Client {
@@ -32,5 +34,22 @@ export class PlayerClient extends Client {
   togglePlayPause() {
     this.socket?.send(JSON.stringify({ action: Action.TOGGLE_PLAY_PAUSE }));
     this.emit(PlayerClientEvent.TOGGLE_PLAY_PAUSE);
+  }
+
+  handleClientScreenSpec(buffer: ArrayBuffer) {
+    this.emit(
+      PlayerClientEvent.CLIENT_SCREEN_SPEC,
+      this.codec.decodeClientScreenSpec(buffer)
+    );
+  }
+
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  handleMouseButton(buffer: ArrayBuffer) {
+    this.logger.warn('TODO: handleMouseButton');
+  }
+
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  handleMouseMove(buffer: ArrayBuffer) {
+    this.logger.warn('TODO: handleMouseMove');
   }
 }

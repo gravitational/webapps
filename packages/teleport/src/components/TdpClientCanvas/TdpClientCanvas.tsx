@@ -18,6 +18,8 @@ import TdpClient, {
   ImageFragment,
   TdpClientEvent,
 } from 'teleport/lib/tdp/client';
+import { PlayerClientEvent } from 'teleport/lib/tdp/playerClient';
+import { ClientScreenSpec } from 'teleport/lib/tdp/codec';
 
 export default function TdpClientCanvas(props: Props) {
   const {
@@ -26,6 +28,7 @@ export default function TdpClientCanvas(props: Props) {
     tdpCliOnTdpError,
     tdpCliOnWsClose,
     tdpCliOnWsOpen,
+    tdpCliOnClientScreenSpec,
     onKeyDown,
     onKeyUp,
     onMouseMove,
@@ -77,6 +80,13 @@ export default function TdpClientCanvas(props: Props) {
       tdpCli.on(TdpClientEvent.WS_OPEN, () => {
         tdpCliOnWsOpen();
       });
+
+      tdpCli.on(
+        PlayerClientEvent.CLIENT_SCREEN_SPEC,
+        (spec: ClientScreenSpec) => {
+          tdpCliOnClientScreenSpec(canvas, spec);
+        }
+      );
 
       // Initialize canvas, document, and window event listeners.
 
@@ -139,6 +149,10 @@ export type Props = {
   tdpCliOnTdpError: (err: Error) => void;
   tdpCliOnWsClose: () => void;
   tdpCliOnWsOpen: () => void;
+  tdpCliOnClientScreenSpec: (
+    canvas: HTMLCanvasElement,
+    spec: ClientScreenSpec
+  ) => void;
   onKeyDown: (cli: TdpClient, e: KeyboardEvent) => void;
   onKeyUp: (cli: TdpClient, e: KeyboardEvent) => void;
   onMouseMove: (

@@ -25,8 +25,14 @@ export enum ScrollAxis {
   HORIZONTAL = 1,
 }
 
+export type ClientScreenSpec = {
+  width: number;
+  height: number;
+};
+
 // Region represents a rectangular region of a screen in pixel coordinates via
 // the top-left and bottom-right coordinates of the region.
+// https://github.com/gravitational/teleport/blob/master/rfd/0037-desktop-access-protocol.md#2---png-frame
 export type Region = {
   top: number;
   left: number;
@@ -201,15 +207,28 @@ export default class Codec {
     MediaSelect: 0xe06d,
   };
 
-  // encodeScreenSpec encodes the client's screen spec.
+  // encodeClientScreenSpec encodes the client's screen spec.
   // | message type (1) | width uint32 | height uint32 |
-  encodeScreenSpec(w: number, h: number): Message {
+  // https://github.com/gravitational/teleport/blob/master/rfd/0037-desktop-access-protocol.md#1---client-screen-spec
+  encodeClientScreenSpec(spec: ClientScreenSpec): Message {
+    const { width, height } = spec;
     const buffer = new ArrayBuffer(9);
     const view = new DataView(buffer);
     view.setUint8(0, MessageType.CLIENT_SCREEN_SPEC);
-    view.setUint32(1, w);
-    view.setUint32(5, h);
+    view.setUint32(1, width);
+    view.setUint32(5, height);
     return buffer;
+  }
+
+  // decodeClientScreenSpec decodes a raw tdp CLIENT_SCREEN_SPEC message
+  // | message type (1) | width uint32 | height uint32 |
+  // https://github.com/gravitational/teleport/blob/master/rfd/0037-desktop-access-protocol.md#1---client-screen-spec
+  decodeClientScreenSpec(buffer: ArrayBuffer): ClientScreenSpec {
+    let dv = new DataView(buffer);
+    return {
+      width: dv.getUint32(1),
+      height: dv.getUint32(5),
+    };
   }
 
   // encodeMouseMove encodes a mouse move event.
@@ -305,17 +324,7 @@ export default class Codec {
   // passed in as an ArrayBuffer (this typically would come from a websocket).
   // Throws an error on an invalid or unexpected MessageType value.
   decodeMessageType(buffer: ArrayBuffer): MessageType {
-    const messageType = new DataView(buffer).getUint8(0);
-    if (
-      messageType === MessageType.PNG_FRAME ||
-      messageType === MessageType.CLIPBOARD_DATA ||
-      messageType === MessageType.ERROR
-    ) {
-      return messageType;
-    } else {
-      // We don't expect to need to decode any other value on the client side
-      throw new Error(`invalid message type: ${messageType}`);
-    }
+    return new DataView(buffer).getUint8(0);
   }
 
   // decodeError decodes a raw tdp ERROR message and returns it as a string

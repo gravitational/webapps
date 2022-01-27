@@ -129,12 +129,16 @@ export default function useTdpClientCanvas(props: Props) {
     }
   };
 
+  // Not used for DesktopSessions (but needed for playback)
+  const onClientScreenSpec = () => {};
+
   return {
     tdpClient,
     onImageFragment,
     onTdpError,
     onWsClose,
     onWsOpen,
+    onClientScreenSpec,
     onKeyDown,
     onKeyUp,
     onMouseMove,

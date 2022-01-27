@@ -11,14 +11,19 @@ window.TextEncoder = window.TextEncoder || TextEncoder;
 window.TextDecoder = window.TextDecoder || TextDecoder;
 const codec = new Codec();
 
-test('encodes the screen spec', () => {
-  const w = 1800;
-  const h = 1200;
-  const message = codec.encodeScreenSpec(w, h);
+test('encodes and decodes the screen spec', () => {
+  const spec = {
+    width: 1800,
+    height: 1200,
+  };
+  const message = codec.encodeClientScreenSpec(spec);
   const view = new DataView(message);
   expect(view.getUint8(0)).toEqual(MessageType.CLIENT_SCREEN_SPEC);
-  expect(view.getUint32(1)).toEqual(w);
-  expect(view.getUint32(5)).toEqual(h);
+  expect(view.getUint32(1)).toEqual(spec.width);
+  expect(view.getUint32(5)).toEqual(spec.height);
+
+  const decodedSpec = codec.decodeClientScreenSpec(message);
+  expect(decodedSpec).toEqual(spec);
 });
 
 test('encodes mouse moves', () => {
@@ -48,8 +53,22 @@ test('encodes typical characters for username and password', () => {
   // Create a test value with letters, symbols, and numbers and its known UTF8 encodings
   const username = 'Helloworld!*@123';
   const usernameUTF8 = [
-    0x0048, 0x0065, 0x006c, 0x006c, 0x006f, 0x0077, 0x006f, 0x0072, 0x006c,
-    0x0064, 0x0021, 0x002a, 0x0040, 0x0031, 0x0032, 0x0033,
+    0x0048,
+    0x0065,
+    0x006c,
+    0x006c,
+    0x006f,
+    0x0077,
+    0x006f,
+    0x0072,
+    0x006c,
+    0x0064,
+    0x0021,
+    0x002a,
+    0x0040,
+    0x0031,
+    0x0032,
+    0x0033,
   ];
 
   // Encode test vals
@@ -69,7 +88,18 @@ test('encodes typical characters for username and password', () => {
 test('encodes utf8 characters correctly up to 3 bytes for username and password', () => {
   const first3RangesString = '\u0000\u007F\u0080\u07FF\u0800\uFFFF';
   const first3RangesUTF8 = [
-    0x00, 0x7f, 0xc2, 0x80, 0xdf, 0xbf, 0xe0, 0xa0, 0x80, 0xef, 0xbf, 0xbf,
+    0x00,
+    0x7f,
+    0xc2,
+    0x80,
+    0xdf,
+    0xbf,
+    0xe0,
+    0xa0,
+    0x80,
+    0xef,
+    0xbf,
+    0xbf,
   ];
   const message = codec.encodeUsername(first3RangesString);
   const view = new DataView(message);
