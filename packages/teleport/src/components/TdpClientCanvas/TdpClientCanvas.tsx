@@ -14,17 +14,13 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 import React, { useEffect, useRef, CSSProperties } from 'react';
-import TdpClient, {
-  ImageFragment,
-  TdpClientEvent,
-} from 'teleport/lib/tdp/client';
-import { PlayerClientEvent } from 'teleport/lib/tdp/playerClient';
-import { ClientScreenSpec } from 'teleport/lib/tdp/codec';
+import { TdpClient, TdpClientEvent } from 'teleport/lib/tdp';
+import { PngFrame, ClientScreenSpec } from 'teleport/lib/tdp/codec';
 
 export default function TdpClientCanvas(props: Props) {
   const {
     tdpCli,
-    tdpCliOnImageFragment,
+    tdpCliOnPngFrame,
     tdpCliOnTdpError,
     tdpCliOnWsClose,
     tdpCliOnWsOpen,
@@ -35,6 +31,7 @@ export default function TdpClientCanvas(props: Props) {
     onMouseDown,
     onMouseUp,
     onMouseWheelScroll,
+    onContextMenu,
     style,
   } = props;
 
@@ -53,11 +50,11 @@ export default function TdpClientCanvas(props: Props) {
       const ctx = canvas.getContext('2d');
 
       // Buffered rendering logic
-      var buffer: ImageFragment[] = [];
+      var buffer: PngFrame[] = [];
       const renderBuffer = () => {
         if (buffer.length) {
           for (let i = 0; i < buffer.length; i++) {
-            tdpCliOnImageFragment(ctx, buffer[i]);
+            tdpCliOnPngFrame(ctx, buffer[i]);
           }
           buffer = [];
         }
@@ -65,9 +62,16 @@ export default function TdpClientCanvas(props: Props) {
       };
       requestAnimationFrame(renderBuffer);
 
-      tdpCli.on(TdpClientEvent.IMAGE_FRAGMENT, (data: ImageFragment) => {
-        buffer.push(data);
+      tdpCli.on(TdpClientEvent.TDP_PNG_FRAME, (pngFrame: PngFrame) => {
+        buffer.push(pngFrame);
       });
+
+      tdpCli.on(
+        TdpClientEvent.TDP_CLIENT_SCREEN_SPEC,
+        (spec: ClientScreenSpec) => {
+          tdpCliOnClientScreenSpec(canvas, spec);
+        }
+      );
 
       tdpCli.on(TdpClientEvent.TDP_ERROR, (err: Error) => {
         tdpCliOnTdpError(err);
@@ -81,17 +85,10 @@ export default function TdpClientCanvas(props: Props) {
         tdpCliOnWsOpen();
       });
 
-      tdpCli.on(
-        PlayerClientEvent.CLIENT_SCREEN_SPEC,
-        (spec: ClientScreenSpec) => {
-          tdpCliOnClientScreenSpec(canvas, spec);
-        }
-      );
-
       // Initialize canvas, document, and window event listeners.
 
       // Prevent native context menu to not obscure remote context menu.
-      const oncontextmenu = () => false;
+      const oncontextmenu = onContextMenu;
       canvas.oncontextmenu = oncontextmenu;
 
       // Mouse controls.
@@ -142,10 +139,7 @@ export default function TdpClientCanvas(props: Props) {
 
 export type Props = {
   tdpCli: TdpClient | null;
-  tdpCliOnImageFragment: (
-    ctx: CanvasRenderingContext2D,
-    data: ImageFragment
-  ) => void;
+  tdpCliOnPngFrame: (ctx: CanvasRenderingContext2D, pngFrame: PngFrame) => void;
   tdpCliOnTdpError: (err: Error) => void;
   tdpCliOnWsClose: () => void;
   tdpCliOnWsOpen: () => void;
@@ -163,5 +157,6 @@ export type Props = {
   onMouseDown: (cli: TdpClient, e: MouseEvent) => void;
   onMouseUp: (cli: TdpClient, e: MouseEvent) => void;
   onMouseWheelScroll: (cli: TdpClient, e: WheelEvent) => void;
+  onContextMenu: () => void;
   style?: CSSProperties;
 };

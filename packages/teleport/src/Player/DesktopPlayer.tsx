@@ -1,12 +1,11 @@
-import React, { useRef, useState } from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
 import ProgressBar from './ProgressBar';
-import { PlayerClient, PlayerClientEvent } from 'teleport/lib/tdp/playerClient';
+import { PlayerClient, PlayerClientEvent } from 'teleport/lib/tdp';
+import { PngFrame, ClientScreenSpec } from 'teleport/lib/tdp/codec';
 import cfg from 'teleport/config';
 import { getAccessToken, getHostName } from 'teleport/services/api';
 import TdpClientCanvas from 'teleport/components/TdpClientCanvas';
-import { ImageFragment } from 'teleport/lib/tdp/client';
-import { ClientScreenSpec } from 'teleport/lib/tdp/codec';
 
 export const DesktopPlayer = ({
   sid,
@@ -17,31 +16,31 @@ export const DesktopPlayer = ({
 }) => {
   const {
     playerClient,
-    tdpCliOnImageFragment,
+    tdpCliOnPngFrame,
     tdpCliOnClientScreenSpec,
   } = useDesktopPlayer({
     sid,
     clusterId,
   });
+
+  let doNothing = () => {};
+
   return (
     <StyledPlayer>
       <TdpClientCanvas
         tdpCli={playerClient}
-        tdpCliOnImageFragment={tdpCliOnImageFragment}
-        tdpCliOnTdpError={(err: Error) => {}} // TODO: we should show an error
-        tdpCliOnWsClose={() => {}}
-        tdpCliOnWsOpen={() => {}}
+        tdpCliOnPngFrame={tdpCliOnPngFrame}
         tdpCliOnClientScreenSpec={tdpCliOnClientScreenSpec}
-        onKeyDown={(cli: PlayerClient, e: KeyboardEvent) => {}}
-        onKeyUp={(cli: PlayerClient, e: KeyboardEvent) => {}}
-        onMouseMove={(
-          cli: PlayerClient,
-          canvas: HTMLCanvasElement,
-          e: MouseEvent
-        ) => {}}
-        onMouseDown={(cli: PlayerClient, e: MouseEvent) => {}}
-        onMouseUp={(cli: PlayerClient, e: MouseEvent) => {}}
-        onMouseWheelScroll={(cli: PlayerClient, e: WheelEvent) => {}}
+        onContextMenu={() => true}
+        tdpCliOnTdpError={doNothing} // TODO: we can show the error
+        tdpCliOnWsClose={doNothing}
+        tdpCliOnWsOpen={doNothing}
+        onKeyDown={doNothing}
+        onKeyUp={doNothing}
+        onMouseMove={doNothing}
+        onMouseDown={doNothing}
+        onMouseUp={doNothing}
+        onMouseWheelScroll={doNothing}
         // overflow: 'hidden' is needed to prevent the canvas from outgrowing the container due to some weird css flex idiosyncracy.
         // See https://gaurav5430.medium.com/css-flex-positioning-gotchas-child-expands-to-more-than-the-width-allowed-by-the-parent-799c37428dd6.
         style={{ display: 'flex', flexGrow: 1, overflow: 'hidden' }}
@@ -60,8 +59,9 @@ export const ProgressBarDesktop = (props: { playerClient: PlayerClient }) => {
     current: 0, // TODO: the current time the playback is at
     time: '-:--', // TODO: the human readable time the playback is at
     isPlaying: true, // determines whether play or pause symbol is shown
-    move: value => {
-      console.log(value);
+    move: () => {
+      // TODO
+      return;
     },
     toggle: () => {
       // emits PlayerClientEvent.TOGGLE_PLAY_PAUSE
@@ -94,18 +94,11 @@ const useDesktopPlayer = ({
       .replace(':token', getAccessToken())
   );
 
-  const firstImageFragmentRef = useRef(true);
-
-  const tdpCliOnImageFragment = (
+  const tdpCliOnPngFrame = (
     ctx: CanvasRenderingContext2D,
-    data: ImageFragment
+    pngFrame: PngFrame
   ) => {
-    if (firstImageFragmentRef.current) {
-      ctx.canvas.width = ctx.canvas.clientWidth;
-      ctx.canvas.height = ctx.canvas.clientHeight;
-      firstImageFragmentRef.current = false;
-    }
-    ctx.drawImage(data.image, data.left, data.top);
+    ctx.drawImage(pngFrame.data, pngFrame.left, pngFrame.top);
   };
 
   const tdpCliOnClientScreenSpec = (
@@ -118,7 +111,7 @@ const useDesktopPlayer = ({
 
   return {
     playerClient,
-    tdpCliOnImageFragment,
+    tdpCliOnPngFrame,
     tdpCliOnClientScreenSpec,
   };
 };

@@ -142,35 +142,21 @@ test('decodes message types', () => {
   );
 
   pngFrameView.setUint8(0, MessageType.PNG_FRAME);
-  expect(codec.decodeMessageType(pngFrameBuf)).toEqual(MessageType.PNG_FRAME);
+  expect(codec._decodeMessageType(pngFrameBuf)).toEqual(MessageType.PNG_FRAME);
 
   clipboardView.setUint8(0, MessageType.CLIPBOARD_DATA);
-  expect(codec.decodeMessageType(clipboardBuf)).toEqual(
+  expect(codec._decodeMessageType(clipboardBuf)).toEqual(
     MessageType.CLIPBOARD_DATA
   );
 
   errorView.setUint8(0, MessageType.ERROR);
-  expect(codec.decodeMessageType(errorBuf)).toEqual(MessageType.ERROR);
+  expect(codec._decodeMessageType(errorBuf)).toEqual(MessageType.ERROR);
 
   // We only expect to need to decode png frames and clipboard data.
   cliScreenView.setUint8(0, MessageType.CLIENT_SCREEN_SPEC);
   expect(() => {
-    codec.decodeMessageType(cliScreenBuf);
+    codec._decodeMessageType(cliScreenBuf);
   }).toThrow(`invalid message type: ${MessageType.CLIENT_SCREEN_SPEC}`);
-});
-
-test('decodes regions', () => {
-  const { buffer, view } = makeBufView(MessageType.PNG_FRAME);
-  view.setUint32(1, 0);
-  view.setUint32(5, 0);
-  view.setUint32(9, 64);
-  view.setUint32(13, 64);
-
-  const region = codec.decodeRegion(buffer);
-  expect(region.top).toBe(0);
-  expect(region.left).toBe(0);
-  expect(region.bottom).toBe(64);
-  expect(region.right).toBe(64);
 });
 
 test('decodes errors', () => {

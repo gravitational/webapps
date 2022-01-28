@@ -15,11 +15,11 @@ limitations under the License.
 */
 
 import { useState, useEffect, useRef, Dispatch, SetStateAction } from 'react';
-import TdpClient, { ImageFragment } from 'teleport/lib/tdp/client';
+import { TdpClient, ButtonState, ScrollAxis } from 'teleport/lib/tdp';
+import { PngFrame } from 'teleport/lib/tdp/codec';
 import { TopBarHeight } from './TopBar';
 import cfg from 'teleport/config';
 import { getAccessToken, getHostName } from 'teleport/services/api';
-import { ButtonState, ScrollAxis } from 'teleport/lib/tdp/codec';
 import { Attempt } from 'shared/hooks/useAttemptNext';
 
 export default function useTdpClientCanvas(props: Props) {
@@ -56,17 +56,14 @@ export default function useTdpClientCanvas(props: Props) {
   };
 
   // Default TdpClientEvent.IMAGE_FRAGMENT handler (buffered)
-  const onImageFragment = (
-    ctx: CanvasRenderingContext2D,
-    data: ImageFragment
-  ) => {
+  const onPngFrame = (ctx: CanvasRenderingContext2D, pngFrame: PngFrame) => {
     // The first image fragment we see signals a successful rdp connection on the backend.
     if (firstImageFragmentRef.current) {
       syncCanvasSizeToDisplaySize(ctx.canvas);
       setTdpConnection({ status: 'success' });
       firstImageFragmentRef.current = false;
     }
-    ctx.drawImage(data.image, data.left, data.top);
+    ctx.drawImage(pngFrame.data, pngFrame.left, pngFrame.top);
   };
 
   // Default TdpClientEvent.TDP_ERROR handler
@@ -132,9 +129,13 @@ export default function useTdpClientCanvas(props: Props) {
   // Not used for DesktopSessions (but needed for playback)
   const onClientScreenSpec = () => {};
 
+  // Block browser context menu so as not to obscure the context menu
+  // on the remote machine.
+  const onContextMenu = () => false;
+
   return {
     tdpClient,
-    onImageFragment,
+    onPngFrame,
     onTdpError,
     onWsClose,
     onWsOpen,
@@ -145,6 +146,7 @@ export default function useTdpClientCanvas(props: Props) {
     onMouseDown,
     onMouseUp,
     onMouseWheelScroll,
+    onContextMenu,
   };
 }
 

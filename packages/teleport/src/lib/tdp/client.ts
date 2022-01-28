@@ -18,14 +18,16 @@ import Codec, {
   ButtonState,
   ScrollAxis,
   ClientScreenSpec,
+  PngFrame,
 } from './codec';
 import Logger from 'shared/libs/logger';
 
 export enum TdpClientEvent {
-  IMAGE_FRAGMENT = 'imgfrag',
-  TDP_ERROR = 'tdperr',
-  WS_OPEN = 'wsopen',
-  WS_CLOSE = 'wsclose',
+  TDP_CLIENT_SCREEN_SPEC = 'tdp client screen spec',
+  TDP_PNG_FRAME = 'tdp png frame',
+  TDP_ERROR = 'tdp error',
+  WS_OPEN = 'ws open',
+  WS_CLOSE = 'ws close',
 }
 
 // Client is the TDP client. It is responsible for connecting to a websocket serving the tdp server,
@@ -77,7 +79,7 @@ export default class Client extends EventEmitter {
   }
 
   processMessage(buffer: ArrayBuffer) {
-    const messageType = this.codec.decodeMessageType(buffer);
+    const messageType = this.codec._decodeMessageType(buffer);
     try {
       if (messageType === MessageType.PNG_FRAME) {
         this.handlePngFrame(buffer);
@@ -102,7 +104,7 @@ export default class Client extends EventEmitter {
   handleClientScreenSpec(buffer: ArrayBuffer) {
     this.handleError(
       new Error(
-        `recieved unsupported message type ${this.codec.decodeMessageType(
+        `recieved unsupported message type ${this.codec._decodeMessageType(
           buffer
         )}`
       )
@@ -112,7 +114,7 @@ export default class Client extends EventEmitter {
   handleMouseButton(buffer: ArrayBuffer) {
     this.handleError(
       new Error(
-        `recieved unsupported message type ${this.codec.decodeMessageType(
+        `recieved unsupported message type ${this.codec._decodeMessageType(
           buffer
         )}`
       )
@@ -122,7 +124,7 @@ export default class Client extends EventEmitter {
   handleMouseMove(buffer: ArrayBuffer) {
     this.handleError(
       new Error(
-        `recieved unsupported message type ${this.codec.decodeMessageType(
+        `recieved unsupported message type ${this.codec._decodeMessageType(
           buffer
         )}`
       )
@@ -132,11 +134,9 @@ export default class Client extends EventEmitter {
   // Assuming we have a message of type PNG_FRAME, extract its
   // bounds and png bitmap and emit a render event.
   handlePngFrame(buffer: ArrayBuffer) {
-    const { left, top } = this.codec.decodeRegion(buffer);
-    const image = new Image();
-    image.onload = () =>
-      this.emit(TdpClientEvent.IMAGE_FRAGMENT, { image, left, top });
-    image.src = this.codec.decodePng(buffer);
+    this.codec.decodePngFrame(buffer, (pngFrame: PngFrame) =>
+      this.emit(TdpClientEvent.TDP_PNG_FRAME, pngFrame)
+    );
   }
 
   sendUsername(username: string) {
@@ -181,9 +181,3 @@ export default class Client extends EventEmitter {
     this.socket?.close();
   }
 }
-
-export type ImageFragment = {
-  image: HTMLImageElement;
-  left: number;
-  top: number;
-};

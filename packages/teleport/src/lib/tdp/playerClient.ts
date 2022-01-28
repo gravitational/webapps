@@ -12,8 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import Client from './client';
-import ClientScreenSpec from './codec';
+import Client, { TdpClientEvent } from './client';
 
 enum Action {
   TOGGLE_PLAY_PAUSE = 'play/pause',
@@ -22,7 +21,6 @@ enum Action {
 
 export enum PlayerClientEvent {
   TOGGLE_PLAY_PAUSE = 'play/pause',
-  CLIENT_SCREEN_SPEC = 'client screen spec',
 }
 
 export class PlayerClient extends Client {
@@ -38,7 +36,7 @@ export class PlayerClient extends Client {
 
   handleClientScreenSpec(buffer: ArrayBuffer) {
     this.emit(
-      PlayerClientEvent.CLIENT_SCREEN_SPEC,
+      TdpClientEvent.TDP_CLIENT_SCREEN_SPEC,
       this.codec.decodeClientScreenSpec(buffer)
     );
   }
