@@ -88,7 +88,7 @@ export const ConnectedSettingsFalse = () => {
       disconnected={false}
       clipboard={false}
       recording={false}
-      onPngFrame={(ctx: CanvasRenderingContext2D, pngFrame: PngFrame) => {
+      onPngFrame={(ctx: CanvasRenderingContext2D) => {
         fillGray(ctx.canvas);
       }}
     />
@@ -111,7 +111,7 @@ export const ConnectedSettingsTrue = () => {
       disconnected={false}
       clipboard={true}
       recording={true}
-      onPngFrame={(ctx: CanvasRenderingContext2D, pngFrame: PngFrame) => {
+      onPngFrame={(ctx: CanvasRenderingContext2D) => {
         fillGray(ctx.canvas);
       }}
     />
