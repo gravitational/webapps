@@ -122,41 +122,27 @@ test('encodes mouse wheel scroll event', () => {
   expect(view.getUint16(2)).toEqual(delta);
 });
 
-function makeBufView(type: MessageType, size = 100) {
+function makeBuf(type: MessageType, size = 100) {
   const buffer = new ArrayBuffer(size);
   const view = new DataView(buffer);
   view.setUint8(0, type);
-  return { buffer, view };
+  return { buffer };
 }
 
 test('decodes message types', () => {
-  const { buffer: pngFrameBuf, view: pngFrameView } = makeBufView(
-    MessageType.PNG_FRAME
-  );
-  const { buffer: clipboardBuf, view: clipboardView } = makeBufView(
-    MessageType.CLIPBOARD_DATA
-  );
-  const { buffer: errorBuf, view: errorView } = makeBufView(MessageType.ERROR);
-  const { buffer: cliScreenBuf, view: cliScreenView } = makeBufView(
-    MessageType.CLIENT_SCREEN_SPEC
-  );
+  const { buffer: pngFrameBuf } = makeBuf(MessageType.PNG_FRAME);
+  const { buffer: clipboardBuf } = makeBuf(MessageType.CLIPBOARD_DATA);
+  const { buffer: errorBuf } = makeBuf(MessageType.ERROR);
+  const { buffer: invalidBuf } = makeBuf(MessageType.ERROR + 1);
 
-  pngFrameView.setUint8(0, MessageType.PNG_FRAME);
   expect(codec._decodeMessageType(pngFrameBuf)).toEqual(MessageType.PNG_FRAME);
-
-  clipboardView.setUint8(0, MessageType.CLIPBOARD_DATA);
   expect(codec._decodeMessageType(clipboardBuf)).toEqual(
     MessageType.CLIPBOARD_DATA
   );
-
-  errorView.setUint8(0, MessageType.ERROR);
   expect(codec._decodeMessageType(errorBuf)).toEqual(MessageType.ERROR);
-
-  // We only expect to need to decode png frames and clipboard data.
-  cliScreenView.setUint8(0, MessageType.CLIENT_SCREEN_SPEC);
   expect(() => {
-    codec._decodeMessageType(cliScreenBuf);
-  }).toThrow(`invalid message type: ${MessageType.CLIENT_SCREEN_SPEC}`);
+    codec._decodeMessageType(invalidBuf);
+  }).toThrow(`invalid message type: ${MessageType.ERROR + 1}`);
 });
 
 test('decodes errors', () => {

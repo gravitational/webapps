@@ -336,7 +336,11 @@ export default class Codec {
   // passed in as an ArrayBuffer (this typically would come from a websocket).
   // Throws an error on an invalid or unexpected MessageType value.
   _decodeMessageType(buffer: ArrayBuffer): MessageType {
-    return new DataView(buffer).getUint8(0);
+    const messageType = new DataView(buffer).getUint8(0);
+    if (messageType > MessageType.ERROR) {
+      throw new Error(`invalid message type: ${messageType}`);
+    }
+    return messageType;
   }
 
   // decodeError decodes a raw tdp ERROR message and returns it as a string
