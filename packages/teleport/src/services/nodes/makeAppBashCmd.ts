@@ -23,7 +23,7 @@ export default function makeAppBashCmd(
   appName = '',
   appUri = ''
 ): BashCommand {
-  const expires = formatDistanceStrict(new Date(), new Date(token.expiry));
+  const expires = formatDistanceStrict(new Date(), token.expiry);
 
   // encode uri so it can be passed around as URL query parameter
   const encoded = encodeURIComponent(appUri)

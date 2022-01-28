@@ -21,7 +21,7 @@ import { Session, Participant } from './types';
 export default function makeSession(json): Session {
   const clusterId = json.cluster_name;
   const created = new Date(json.created);
-  const durationText = formatDistanceStrict(new Date(), new Date(created));
+  const durationText = formatDistanceStrict(new Date(), created);
   const login = json.login;
   const namespace = json.namespace;
   const parties = map(json.parties, makeParticipant);

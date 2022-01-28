@@ -16,11 +16,14 @@ limitations under the License.
 
 import { formatDistanceStrict } from 'date-fns';
 import cfg from 'teleport/config';
-import { NodeToken, BashCommand } from './types';
+import { BashCommand } from './types';
 
-export default function makeNodeBashCmd(token: NodeToken): BashCommand {
-  const expires = formatDistanceStrict(new Date(), new Date(token.expiry));
-  const text = `sudo bash -c "$(curl -fsSL ${cfg.getNodeScriptUrl(token.id)})"`;
+export default function makeNodeBashCmd(json): BashCommand {
+  const { expiry, id } = json;
+
+  const expires = formatDistanceStrict(new Date(), new Date(expiry));
+  const text = `sudo bash -c "$(curl -fsSL ${cfg.getNodeScriptUrl(id)})"`;
+
   return {
     text,
     expires,

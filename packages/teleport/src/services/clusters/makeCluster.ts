@@ -37,11 +37,12 @@ export default function makeCluster(json): Cluster {
     'proxyVersion',
   ]);
 
-  const connectedText = displayDateTime(new Date(lastConnected));
+  const lastConnectedDate = new Date(lastConnected);
+  const connectedText = displayDateTime(lastConnected);
 
   return {
     clusterId,
-    lastConnected: new Date(lastConnected),
+    lastConnected: lastConnectedDate,
     connectedText,
     status,
     url: cfg.getClusterRoute(clusterId),

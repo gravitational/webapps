@@ -33,7 +33,7 @@ export default function UserTokenLink({
   asInvite = false,
 }: Props) {
   const tokenUrl = cfg.getUserResetTokenRoute(token.value, asInvite);
-  const expiresText = formatDistanceStrict(Date.now(), new Date(token.expires));
+  const expiresText = formatDistanceStrict(Date.now(), token.expires);
 
   return (
     <Dialog

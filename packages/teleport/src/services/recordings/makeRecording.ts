@@ -85,12 +85,12 @@ function makeSshRecording({
   } as Recording;
 }
 
-function formatDuration(startDate: string, stopDate: string) {
+function formatDuration(startDateString: string, stopDateString: string) {
   let durationText = '';
   let duration = 0;
-  if (startDate && stopDate) {
-    const start = new Date(startDate);
-    const end = new Date(stopDate);
+  if (startDateString && stopDateString) {
+    const start = new Date(startDateString);
+    const end = new Date(stopDateString);
 
     duration = differenceInMilliseconds(end, start);
     durationText = formatDistanceStrict(start, end);

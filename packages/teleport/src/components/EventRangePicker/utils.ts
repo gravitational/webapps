@@ -1,6 +1,6 @@
 import { startOfDay, endOfDay, subDays } from 'date-fns';
 
-export function getRangeOptions() {
+export function getRangeOptions(): EventRange[] {
   return [
     {
       name: 'Today',
