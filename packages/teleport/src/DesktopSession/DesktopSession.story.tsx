@@ -17,7 +17,8 @@ limitations under the License.
 import React from 'react';
 import { DesktopSession } from './DesktopSession';
 import { State } from './useDesktopSession';
-import { TdpClient, TdpClientEvent, ImageFragment } from 'teleport/lib/tdp';
+import { TdpClient, TdpClientEvent } from 'teleport/lib/tdp';
+import { PngFrame } from 'teleport/lib/tdp/codec';
 import { arrayBuf2260x1130 } from '../lib/tdp/fixtures';
 
 export default {
@@ -49,14 +50,16 @@ const props: State = {
   wsConnection: 'closed',
   disconnected: false,
   setDisconnected: () => null,
-  onPngFrame: (ctx: CanvasRenderingContext2D, data: ImageFragment) => {},
-  onTdpError: (err: Error) => {},
-  onKeyDown: (cli: TdpClient, e: KeyboardEvent) => {},
-  onKeyUp: (cli: TdpClient, e: KeyboardEvent) => {},
-  onMouseMove: (cli: TdpClient, canvas: HTMLCanvasElement, e: MouseEvent) => {},
-  onMouseDown: (cli: TdpClient, e: MouseEvent) => {},
-  onMouseUp: (cli: TdpClient, e: MouseEvent) => {},
-  onMouseWheelScroll: (cli: TdpClient, e: WheelEvent) => {},
+  onPngFrame: () => {},
+  onTdpError: () => {},
+  onKeyDown: () => {},
+  onKeyUp: () => {},
+  onMouseMove: () => {},
+  onMouseDown: () => {},
+  onMouseUp: () => {},
+  onMouseWheelScroll: () => {},
+  onClientScreenSpec: () => {},
+  onContextMenu: () => false,
 };
 
 export const Processing = () => (
@@ -85,7 +88,7 @@ export const ConnectedSettingsFalse = () => {
       disconnected={false}
       clipboard={false}
       recording={false}
-      onPngFrame={(ctx: CanvasRenderingContext2D, data: ImageFragment) => {
+      onPngFrame={(ctx: CanvasRenderingContext2D, pngFrame: PngFrame) => {
         fillGray(ctx.canvas);
       }}
     />
@@ -108,7 +111,7 @@ export const ConnectedSettingsTrue = () => {
       disconnected={false}
       clipboard={true}
       recording={true}
-      onPngFrame={(ctx: CanvasRenderingContext2D, data: ImageFragment) => {
+      onPngFrame={(ctx: CanvasRenderingContext2D, pngFrame: PngFrame) => {
         fillGray(ctx.canvas);
       }}
     />
@@ -187,7 +190,7 @@ export const Performance = () => {
       tdpConnection={{ status: 'success' }}
       wsConnection={'open'}
       disconnected={false}
-      onPngFrame={(ctx: CanvasRenderingContext2D, data: ImageFragment) => {
+      onPngFrame={(ctx: CanvasRenderingContext2D, pngFrame: PngFrame) => {
         if (!resized) {
           resize(ctx.canvas);
         }
@@ -195,7 +198,7 @@ export const Performance = () => {
           startTime = performance.now();
         }
 
-        ctx.drawImage(data.image, data.left, data.top);
+        ctx.drawImage(pngFrame.data, pngFrame.left, pngFrame.top);
 
         if (i === arrayBuf2260x1130.length - 1) {
           endTime = performance.now();
