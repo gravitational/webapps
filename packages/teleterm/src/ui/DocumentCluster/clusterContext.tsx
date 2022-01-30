@@ -19,34 +19,53 @@ import { useStore, Store } from 'shared/libs/stores';
 import { matchPath } from 'react-router';
 import { tsh } from 'teleterm/ui/services/clusters/types';
 import { IAppContext } from 'teleterm/ui/types';
+import { routing } from 'teleterm/ui/uri';
 
 type State = {
-  navItems: ClusterNavItem[];
   navLocation: NavLocation;
   clusterUri: string;
   clusterName: string;
-  connected: boolean;
   searchValue: string;
+  leaf: boolean;
+  leafConnected: boolean;
+  status: 'requires_login' | 'not_found' | '';
+  statusText: string;
 };
 
 class ClusterContext extends Store<State> {
-  clusterUri: string;
-  cluster: tsh.Cluster;
+  private cluster: tsh.Cluster;
 
-  appCtx: IAppContext;
+  readonly clusterUri: string;
 
-  state: State = {
-    navItems: [],
+  readonly appCtx: IAppContext;
+
+  readonly state: State = {
     navLocation: '/resources/servers',
     clusterUri: '',
     clusterName: '',
-    connected: false,
     searchValue: '',
+    leaf: false,
+    leafConnected: false,
+    status: '',
+    statusText: '',
   };
 
+  constructor(clusterUri: string, appCtx: IAppContext) {
+    super();
+    this.clusterUri = clusterUri;
+    this.appCtx = appCtx;
+    this.appCtx.clustersService.subscribe(this.refresh);
+    this.refresh();
+  }
+
   login = () => {
-    const { clusterUri } = this.state;
-    this.appCtx.commandLauncher.executeCommand('cluster-connect', { clusterUri });
+    const rootCluster = this.appCtx.clustersService.findRootClusterByResource(
+      this.clusterUri
+    );
+
+    this.appCtx.commandLauncher.executeCommand('cluster-connect', {
+      clusterUri: rootCluster?.uri,
+    });
   };
 
   connectServer = (serverUri: string) => {
@@ -58,33 +77,50 @@ class ClusterContext extends Store<State> {
   };
 
   sync = () => {
-    this.appCtx.clustersService.syncRootCluster(this.state.clusterUri);
+    this.appCtx.clustersService.syncCluster(this.state.clusterUri);
   };
 
-  updateState = () => {
+  refresh = () => {
+    const rootCluster = this.appCtx.clustersService.findRootClusterByResource(
+      this.clusterUri
+    );
     const cluster = this.appCtx.clustersService.findCluster(this.clusterUri);
+
+    if (!rootCluster) {
+      this.state.status = 'not_found';
+      this.state.statusText = `cluster ${this.clusterUri} is not found'`;
+      this.setState(this.state);
+      return;
+    }
+
+    if (!rootCluster.connected) {
+      this.state.status = 'requires_login';
+      this.setState(this.state);
+      return;
+    }
+
+    if (!cluster) {
+      this.state.status = 'not_found';
+      this.state.statusText = `cluster ${this.clusterUri} is not found'`;
+      this.setState(this.state);
+      return;
+    }
+
     if (cluster === this.cluster) {
       return;
     }
 
     this.cluster = cluster;
-    this.state.connected = cluster.connected;
+    this.state.status = '';
     this.state.clusterName = cluster.name;
     this.state.clusterUri = cluster.uri;
-    this.state.navItems = getNavItems();
+    this.state.leaf = cluster.leaf;
+    this.state.leafConnected = cluster.leaf && cluster.connected;
     this.setState(this.state);
   };
 
-  constructor(clusterUri: string, appCtx: IAppContext) {
-    super();
-    this.clusterUri = clusterUri;
-    this.appCtx = appCtx;
-    this.appCtx.clustersService.subscribe(this.updateState);
-    this.updateState();
-  }
-
   dispose() {
-    this.appCtx.clustersService.unsubscribe(this.updateState);
+    this.appCtx.clustersService.unsubscribe(this.refresh);
   }
 
   isLocationActive(location: NavLocation, exact = false) {
@@ -136,30 +172,9 @@ class ClusterContext extends Store<State> {
     });
   }
 
-  getNavItems() {
-    return this.state.navItems;
-  }
-
   useState() {
     return useStore(this).state;
   }
-}
-
-function getNavItems(): ClusterNavItem[] {
-  return [
-    {
-      location: '/resources/',
-      title: 'Resources',
-    },
-    {
-      location: '/audit/',
-      title: 'Audit/Monitoring',
-    },
-    {
-      location: '/my-roles/',
-      title: 'My Roles',
-    },
-  ];
 }
 
 const ClusterReactContext = React.createContext<ClusterContext>(null);
@@ -178,8 +193,6 @@ export type ClusterNavItem = {
 };
 
 export type NavLocation =
-  | '/audit/'
-  | '/my-roles/'
   | '/resources/'
   | '/resources/databases'
   | '/resources/servers'

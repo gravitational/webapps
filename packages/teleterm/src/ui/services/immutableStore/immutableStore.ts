@@ -9,7 +9,7 @@ export class ImmutableStore<T> extends Store<T> {
   protected logger = new Logger(this.constructor.name);
 
   // @ts-ignore
-  setState(nextState: (draftState: Partial<T>) => T | void): void {
+  setState(nextState: (draftState: T) => T | void): void {
     const prevState = this.state;
     this.state = produce(this.state, nextState);
     stateLogger.logState(this.constructor.name, prevState, 'with', this.state);

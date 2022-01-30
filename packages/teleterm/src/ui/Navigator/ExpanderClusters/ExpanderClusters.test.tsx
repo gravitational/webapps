@@ -27,7 +27,7 @@ test('should render simple and trusted clusters', () => {
       title: 'Test title',
       connected: false,
       syncing: false,
-      trustedClusters: [
+      leaves: [
         {
           uri: 'trusted-cluster-test-uri',
           title: 'Trusted cluster',
@@ -45,7 +45,7 @@ test('should render simple and trusted clusters', () => {
   );
 
   expect(getByText(items[0].title)).toBeInTheDocument();
-  expect(getByText(items[0].trustedClusters[0].title)).toBeInTheDocument();
+  expect(getByText(items[0].leaves[0].title)).toBeInTheDocument();
 });
 
 test('should invoke callback when context menu is clicked', () => {

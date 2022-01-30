@@ -19,10 +19,11 @@ import { ClustersService } from 'teleterm/ui/services/clusters';
 import { ModalsService } from 'teleterm/ui/services/modals';
 import { DocumentsService } from 'teleterm/ui/services/docs';
 import { TerminalsService } from 'teleterm/ui/services/terminals';
+import { ConnectionTrackerService } from 'teleterm/ui/services/connectionTracker';
 import { QuickInputService } from 'teleterm/ui/services/quickInput';
+import { WorkspaceService } from 'teleterm/ui/services/workspace';
 import { KeyboardShortcutsService } from 'teleterm/ui/services/keyboardShortcuts';
 import { CommandLauncher } from './commandLauncher';
-import { WorkspaceService } from 'teleterm/services/workspace';
 
 export default class AppContext {
   clustersService: ClustersService;
@@ -34,6 +35,7 @@ export default class AppContext {
   workspaceService: WorkspaceService;
   mainProcessClient: MainProcessClient;
   commandLauncher: CommandLauncher;
+  connectionTracker: ConnectionTrackerService;
 
   constructor(config: ElectronGlobals) {
     const { tshClient, ptyServiceClient, mainProcessClient } = config;
@@ -41,21 +43,29 @@ export default class AppContext {
     this.clustersService = new ClustersService(tshClient);
     this.modalsService = new ModalsService();
     this.terminalsService = new TerminalsService(ptyServiceClient);
+    this.docsService = new DocumentsService();
+
     this.keyboardShortcutsService = new KeyboardShortcutsService(
       this.mainProcessClient.getRuntimeSettings().platform,
       this.mainProcessClient.configService
     );
-    this.workspaceService = config.workspaceService
-    this.docsService = new DocumentsService(this.workspaceService);
 
+    this.workspaceService = new WorkspaceService(config.fileStorage);
     this.commandLauncher = new CommandLauncher(this);
+
     this.quickInputService = new QuickInputService(
       this.commandLauncher,
+      this.clustersService
+    );
+
+    this.connectionTracker = new ConnectionTrackerService(
+      this.workspaceService,
+      this.docsService,
       this.clustersService
     );
   }
 
   async init() {
-    await this.clustersService.syncClusters();
+    await this.clustersService.syncRootClusters();
   }
 }

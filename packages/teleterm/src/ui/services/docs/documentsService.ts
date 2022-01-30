@@ -16,10 +16,16 @@ limitations under the License.
 
 import { useStore } from 'shared/libs/stores';
 import { unique } from 'teleterm/ui/utils/uid';
-import { Document, DocumentGateway, DocumentTshNode } from './types';
+import {
+  Document,
+  DocumentGateway,
+  DocumentTshNode,
+  CreateGatewayDocumentOpts,
+  CreateClusterDocumentOpts,
+  DocumentCluster,
+} from './types';
 import { ImmutableStore } from '../immutableStore';
-import { routing } from 'teleterm/ui/uri';
-import { WorkspaceService } from 'teleterm/services/workspace';
+import { routing, paths } from 'teleterm/ui/uri';
 
 type OnlyDocumentUri = Pick<Document, 'uri'>;
 
@@ -30,60 +36,25 @@ type State = {
 
 export class DocumentsService extends ImmutableStore<State> {
   state: State = {
-    location: '/home',
+    location: paths.docHome,
     docs: [
       {
-        uri: '/home',
+        uri: paths.docHome,
         kind: 'doc.home',
         title: 'Home',
       },
     ],
   };
 
-  constructor(private _workspaceService: WorkspaceService) {
+  constructor() {
     super();
   }
 
   open(docUri: string) {
-    const exists = this.find(docUri);
-    if (exists) {
-      this.setLocation(docUri);
-      return;
-    }
-
-    const clusterMatch = routing.matchCluster(docUri);
-    const homeMatch = routing.matchHome(docUri);
-    const gwMatch = routing.matchGw(docUri);
-    const ptyMatch = routing.matchPty(docUri);
-
-    if (ptyMatch) {
+    if (!this.find(docUri)) {
       this.add({
         uri: docUri,
-        title: 'dir/path',
-        kind: 'doc.terminal_shell',
-      });
-    } else if (homeMatch) {
-      this.add({
-        uri: docUri,
-        title: 'Home',
-        kind: 'doc.home',
-      });
-    } else if (gwMatch) {
-      this.add({
-        uri: docUri,
-        title: 'Gateway',
-        kind: 'doc.gateway',
-      });
-    } else if (clusterMatch) {
-      this.add({
-        uri: docUri,
-        title: 'Cluster',
-        kind: 'doc.cluster',
-      });
-    } else {
-      this.add({
-        uri: docUri,
-        title: 'not-found',
+        title: docUri,
         kind: 'doc.blank',
       });
     }
@@ -91,9 +62,19 @@ export class DocumentsService extends ImmutableStore<State> {
     this.setLocation(docUri);
   }
 
+  createClusterDocument(opts: CreateClusterDocumentOpts): DocumentCluster {
+    const uri = routing.getDocUri({ docId: unique() });
+    return {
+      uri,
+      clusterUri: opts.clusterUri,
+      title: opts.clusterUri,
+      kind: 'doc.cluster',
+    };
+  }
+
   createTshNodeDocument(serverUri: string): DocumentTshNode {
-    const { params } = routing.matchServer(serverUri);
-    const uri = routing.getPtyUri({ sid: unique() });
+    const { params } = routing.parseServerUri(serverUri);
+    const uri = routing.getDocUri({ docId: unique() });
     return {
       uri,
       kind: 'doc.terminal_tsh_node',
@@ -107,6 +88,18 @@ export class DocumentsService extends ImmutableStore<State> {
     };
   }
 
+  createGatewayDocument(opts: CreateGatewayDocumentOpts): DocumentGateway {
+    const { gatewayUri, targetUri, title } = opts;
+    const uri = routing.getDocUri({ docId: unique() });
+    return {
+      uri,
+      kind: 'doc.gateway',
+      gatewayUri,
+      targetUri,
+      title,
+    };
+  }
+
   openNewTerminal() {
     const doc = ((): Document => {
       const activeDocument = this.getActive();
@@ -115,11 +108,11 @@ export class DocumentsService extends ImmutableStore<State> {
         case 'doc.terminal_shell':
           return {
             ...activeDocument,
-            uri: routing.getPtyUri({ sid: unique() }),
+            uri: routing.getDocUri({ docId: unique() }),
           };
         default:
           return {
-            uri: routing.getPtyUri({ sid: unique() }),
+            uri: routing.getDocUri({ docId: unique() }),
             title: 'Terminal',
             kind: 'doc.terminal_shell',
           };
@@ -150,20 +143,20 @@ export class DocumentsService extends ImmutableStore<State> {
     const documentIndex = this.state.docs.findIndex(d => d.uri === uri);
     const newDocument = {
       ...this.state.docs[documentIndex],
-      uri: routing.getPtyUri({ sid: unique() }),
+      uri: routing.getDocUri({ docId: unique() }),
     };
     this.add(newDocument, documentIndex + 1);
     this.setLocation(newDocument.uri);
   }
 
   close({ uri }: OnlyDocumentUri) {
-    if (uri === '/home') {
+    if (uri === paths.docHome) {
       return;
     }
 
     const nextUri = this.getNextUri(uri);
     const docs = this.state.docs.filter(d => d.uri !== uri);
-    this.setState(draftState => ({ ...draftState, docs, location: nextUri }));
+    this.setState(draft => ({ ...draft, docs, location: nextUri }));
   }
 
   closeOthers({ uri }: OnlyDocumentUri) {
@@ -183,24 +176,28 @@ export class DocumentsService extends ImmutableStore<State> {
 
   isActive(uri: string) {
     const location = this.getLocation();
-    return !!routing.match(location, { exact: true, path: uri });
+    return !!routing.parseUri(location, { exact: true, path: uri });
+  }
+
+  isClusterDocumentActive(clusterUri: string) {
+    const doc = this.getActive();
+    return doc.kind === 'doc.cluster' && doc.clusterUri === clusterUri;
   }
 
   add(doc: Document, position?: number) {
-    this._workspaceService.addToRecentDocuments(doc);
-    this.setState(draftState => {
+    this.setState(draft => {
       if (position === undefined) {
-        draftState.docs.push(doc);
+        draft.docs.push(doc);
       } else {
-        draftState.docs.splice(position, 0, doc);
+        draft.docs.splice(position, 0, doc);
       }
     });
   }
 
   update(uri: string, partialDoc: Partial<Document>) {
-    this.setState(draftState => {
-      const toModify = draftState.docs.find(doc => doc.uri === uri);
-      Object.assign(toModify, partialDoc);
+    this.setState(draft => {
+      const toUpdate = draft.docs.find(doc => doc.uri === uri);
+      Object.assign(toUpdate, partialDoc);
     });
   }
 
@@ -214,6 +211,14 @@ export class DocumentsService extends ImmutableStore<State> {
     }
 
     return this.state.docs.filter(isTshNode);
+  }
+
+  getGatewayDocuments() {
+    function isGw(d: DocumentGateway): d is DocumentGateway {
+      return d.kind === 'doc.gateway';
+    }
+
+    return this.state.docs.filter(isGw);
   }
 
   getNextUri(uri: string) {
@@ -237,9 +242,15 @@ export class DocumentsService extends ImmutableStore<State> {
     return this.state.docs.find(i => i.uri === uri);
   }
 
+  findClusterDocument(clusterUri: string) {
+    return this.state.docs.find(
+      i => i.kind === 'doc.cluster' && i.clusterUri === clusterUri
+    );
+  }
+
   setLocation(location: string) {
-    this.setState(draftState => {
-      draftState.location = location;
+    this.setState(draft => {
+      draft.location = location;
     });
   }
 
@@ -256,9 +267,9 @@ export class DocumentsService extends ImmutableStore<State> {
     }
 
     const doc = this.state.docs[oldIndex];
-    this.setState(draftState => {
-      draftState.docs.splice(oldIndex, 1);
-      draftState.docs.splice(newIndex, 0, doc);
+    this.setState(draft => {
+      draft.docs.splice(oldIndex, 1);
+      draft.docs.splice(newIndex, 0, doc);
     });
   }
 }

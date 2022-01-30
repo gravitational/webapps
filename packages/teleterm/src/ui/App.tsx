@@ -6,7 +6,7 @@ import CatchError from './components/CatchError';
 import ModalsHost from './ModalsHost';
 import AppContextProvider from './appContextProvider';
 import AppContext from './appContext';
-import ThemeProvider, { ThemeProviderTemp } from './ThemeProvider';
+import ThemeProvider from './ThemeProvider';
 import { LayoutManager } from './LayoutManager';
 
 const App: React.FC<{ ctx: AppContext }> = ({ ctx }) => {
@@ -17,9 +17,7 @@ const App: React.FC<{ ctx: AppContext }> = ({ ctx }) => {
           <AppContextProvider value={ctx}>
             <ThemeProvider>
               <LayoutManager />
-              <ThemeProviderTemp>
-                <ModalsHost />
-              </ThemeProviderTemp>
+              <ModalsHost />
             </ThemeProvider>
           </AppContextProvider>
         </DndProvider>

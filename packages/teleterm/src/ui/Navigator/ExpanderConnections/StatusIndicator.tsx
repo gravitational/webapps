@@ -3,8 +3,8 @@ import React from 'react';
 import { Box } from 'design';
 
 export const StatusIndicator: React.FC<Props> = props => {
-  const { status, ...styles } = props;
-  return <StyledStatus title={status} $status={status} {...styles} />;
+  const { connected, ...styles } = props;
+  return <StyledStatus $connected={connected} {...styles} />;
 };
 
 const StyledStatus = styled<Props>(Box)`
@@ -12,30 +12,22 @@ const StyledStatus = styled<Props>(Box)`
   height: 6px;
   border-radius: 50%;
   ${props => {
-    const { $status, theme } = props;
-    switch ($status as Status) {
-      case 'disconnected':
-        return {
-          backgroundColor: theme.colors.grey[300],
-          boxShadow: `0px 0px 8px 2px ${theme.colors.grey[300]}`,
-        };
-      case 'connected':
-        return {
-          backgroundColor: theme.colors.success,
-          boxShadow: `0px 0px 8px 2px ${theme.colors.success}`,
-        };
-      default:
-        return {
-          backgroundColor: theme.colors.warning,
-          boxShadow: `0px 0px 8px 2px ${theme.colors.warning}`,
-        };
+    const { $connected, theme } = props;
+    if ($connected) {
+      return {
+        backgroundColor: theme.colors.success,
+        boxShadow: `0px 0px 8px 2px ${theme.colors.success}`,
+      };
     }
+
+    return {
+      backgroundColor: theme.colors.grey[300],
+      boxShadow: `0px 0px 8px 2px ${theme.colors.grey[300]}`,
+    };
   }}
 `;
 
 type Props = {
-  status: Status;
+  connected: boolean;
   [key: string]: any;
 };
-
-type Status = 'connected' | 'disconnected';

@@ -20,15 +20,15 @@ import { Restore, Add } from 'design/Icon';
 import Expander, { ExpanderHeader, ExpanderContent } from './../Expander';
 import { useExpanderClusters } from './useExpanderClusters';
 import { ExpanderClusterItem } from './ExpanderClusterItem';
-import { ExpanderClusterProps } from './types';
+import { ExpanderClusterState } from './types';
 
 export function ExpanderClusters() {
   const state = useExpanderClusters();
   return <ExpanderClustersPresentational {...state} />;
 }
 
-export function ExpanderClustersPresentational(props: ExpanderClusterProps) {
-  const { items, onSyncClusters, onAddCluster, onRemove, onOpenContextMenu } =
+export function ExpanderClustersPresentational(props: ExpanderClusterState) {
+  const { items, onSyncClusters, onAddCluster, onOpen, onOpenContextMenu } =
     props;
 
   const handleSyncClick = (e: React.BaseSyntheticEvent) => {
@@ -43,9 +43,9 @@ export function ExpanderClustersPresentational(props: ExpanderClusterProps) {
 
   const $clustersItems = items.map(i => (
     <ExpanderClusterItem
-      key={i.uri}
+      key={i.clusterUri}
       item={i}
-      onRemove={onRemove}
+      onOpen={onOpen}
       onContextMenu={() => onOpenContextMenu?.(i)}
     />
   ));
@@ -60,7 +60,9 @@ export function ExpanderClustersPresentational(props: ExpanderClusterProps) {
           width="100%"
           minWidth="0"
         >
-          <Text typography="body1">Clusters</Text>
+          <Text typography="body1" bold>
+            Clusters
+          </Text>
           <Flex>
             <ButtonIcon
               p={3}

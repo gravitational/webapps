@@ -16,44 +16,19 @@ limitations under the License.
 
 import React from 'react';
 import styled from 'styled-components';
-import Icon from 'design/Icon';
 import { color, space } from 'design/system';
 import * as types from 'teleterm/ui/Navigator/types';
-import { useAppContext } from 'teleterm/ui/appContextProvider';
 
 type Props = {
-  item?: types.NavItem;
+  active: boolean;
   onClick?: (item: types.NavItem) => void;
   [key: string]: any;
 };
 
 const NavItem: React.FC<Props> = props => {
-  const { item, onClick, ...styles } = props;
-  const { docsService } = useAppContext();
-  const active = docsService.isActive(item.uri);
-
-  const handleClick = () => {
-    if (onClick) {
-      onClick(item);
-    } else {
-      docsService.open(item.uri);
-    }
-  };
-
+  const { active, onClick, ...styles } = props;
   return (
-    <StyledNavItem $active={active} {...styles} onClick={handleClick}>
-      {!props.children && (
-        <>
-          <Icon
-            as={item.Icon}
-            mr={2}
-            ml={-2}
-            fontSize="10px"
-            color="text.secondary"
-          />
-          <div style={{ position: 'relative' }}>{item.title}</div>
-        </>
-      )}
+    <StyledNavItem $active={active} {...styles} onClick={onClick}>
       {props.children}
     </StyledNavItem>
   );
@@ -64,7 +39,7 @@ const StyledNavItem = styled.div(props => {
   const colors = $active
     ? {
         color: theme.colors.primary.contrastText,
-        background: theme.colors.primary.light,
+        background: theme.colors.primary.lighter,
       }
     : {};
 

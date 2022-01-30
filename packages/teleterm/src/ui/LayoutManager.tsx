@@ -34,7 +34,7 @@ export function LayoutManager() {
   useEffect(() => {
     const updateNavigatorWidth = debounce((width: number) => {
       if (ctx.workspaceService.getNavigatorWidth() !== width) {
-        ctx.workspaceService.setNavigatorWidth(width);
+        ctx.workspaceService.saveNavigatorWidth(width);
       }
     }, 1000);
 

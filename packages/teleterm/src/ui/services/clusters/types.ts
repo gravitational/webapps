@@ -40,3 +40,16 @@ export interface AuthSettings extends tsh.AuthSettings {
 }
 
 export { tsh };
+
+export type ClustersServiceState = {
+  clusters: Map<string, tsh.Cluster>;
+  gateways: Map<string, tsh.Gateway>;
+  apps: Map<string, tsh.Application>;
+  servers: Map<string, tsh.Server>;
+  kubes: Map<string, tsh.Kube>;
+  dbs: Map<string, tsh.Database>;
+  kubesSyncStatus: Map<string, SyncStatus>;
+  appsSyncStatus: Map<string, SyncStatus>;
+  serversSyncStatus: Map<string, SyncStatus>;
+  dbsSyncStatus: Map<string, SyncStatus>;
+};

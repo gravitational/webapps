@@ -18,45 +18,65 @@ import React from 'react';
 import styled from 'styled-components';
 import AppContextProvider from 'teleterm/ui/appContextProvider';
 import { MockAppContext } from 'teleterm/ui/fixtures/mocks';
-import { SyncStatus } from 'teleterm/ui/services/clusters/types';
-import { DocumentCluster } from './DocumentCluster';
+import {
+  createClusterServiceState,
+  ClustersServiceState,
+} from 'teleterm/ui/services/clusters';
+import DocumentCluster from './DocumentCluster';
 
 export default {
   title: 'Teleterm/Cluster',
 };
 
-export const Story = () => {
+export const Online = () => {
+  const state = createClusterServiceState();
+  state.clusters.set('/clusters/localhost', {
+    uri: '/clusters/localhost',
+    leaf: false,
+    name: 'localhost',
+    connected: true,
+  });
+
+  return renderState(state);
+};
+
+export const Offline = () => {
+  const state = createClusterServiceState();
+  state.clusters.set('/clusters/localhost', {
+    uri: '/clusters/localhost',
+    leaf: false,
+    name: 'localhost',
+    connected: false,
+  });
+
+  return renderState(state);
+};
+
+export const Notfound = () => {
+  const state = createClusterServiceState();
+  return renderState(state);
+};
+
+function renderState(state: ClustersServiceState) {
   const appContext = new MockAppContext();
+  appContext.docsService.update = () => null;
+  appContext.clustersService.state = state;
 
-  appContext.clustersService.getClusterSyncStatus = (_ = '') => {
-    const loading: SyncStatus = { status: 'processing' };
-    const error: SyncStatus = { status: 'failed', statusText: 'Server Error' };
-    return {
-      syncing: true,
-      dbs: error,
-      servers: loading,
-      apps: loading,
-      kubes: loading,
-    };
-  };
-
-  appContext.clustersService.getClusters = () => [
-    {
-      uri: 'clusters/localhost',
-      leaf: false,
-      name: 'localhost',
-      connected: true,
-    },
-  ];
+  const doc = {
+    kind: 'doc.cluster',
+    clusterUri: '/clusters/localhost',
+    uri: '123',
+    title: 'sample',
+  } as const;
 
   return (
     <AppContextProvider value={appContext}>
       <Wrapper>
-        <DocumentCluster visible={true} />
+        <DocumentCluster visible={true} doc={doc} />
       </Wrapper>
     </AppContextProvider>
   );
-};
+}
 
 const Wrapper = styled.div`
   position: absolute;

@@ -8,7 +8,8 @@ export function useClusterAdd(
   const ctx = useAppContext();
   const [{ status, statusText }, addCluster] = useAsync(
     async (addr: string) => {
-      const cluster = await ctx.clustersService.addRootCluster(addr);
+      const proxyAddr = parseClusterProxyWebAddr(addr);
+      const cluster = await ctx.clustersService.addRootCluster(proxyAddr);
       return props.onSuccess(cluster.uri);
     }
   );
@@ -19,4 +20,14 @@ export function useClusterAdd(
     statusText,
     onClose: props.onClose,
   };
+}
+
+function parseClusterProxyWebAddr(addr: string) {
+  addr = addr || '';
+  if (addr.startsWith('http')) {
+    const url = new URL(addr);
+    return url.host;
+  }
+
+  return addr;
 }

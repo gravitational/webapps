@@ -1,24 +1,17 @@
 import { useStore } from 'shared/libs/stores';
-import { tsh, SyncStatus, AuthSettings, LoginParams } from './types';
+import {
+  tsh,
+  SyncStatus,
+  AuthSettings,
+  LoginParams,
+  ClustersServiceState,
+} from './types';
 import { ImmutableStore } from '../immutableStore';
 import { routing } from 'teleterm/ui/uri';
 import isMatch from 'design/utils/match';
 
-type State = {
-  clusters: Map<string, tsh.Cluster>;
-  gateways: Map<string, tsh.Gateway>;
-  apps: Map<string, tsh.Application>;
-  servers: Map<string, tsh.Server>;
-  kubes: Map<string, tsh.Kube>;
-  dbs: Map<string, tsh.Database>;
-  kubesSyncStatus: Map<string, SyncStatus>;
-  appsSyncStatus: Map<string, SyncStatus>;
-  serversSyncStatus: Map<string, SyncStatus>;
-  dbsSyncStatus: Map<string, SyncStatus>;
-};
-
-export class ClustersService extends ImmutableStore<State> {
-  state: State = {
+export function createClusterServiceState(): ClustersServiceState {
+  return {
     apps: new Map(),
     kubes: new Map(),
     clusters: new Map(),
@@ -30,13 +23,17 @@ export class ClustersService extends ImmutableStore<State> {
     kubesSyncStatus: new Map(),
     appsSyncStatus: new Map(),
   };
+}
+
+export class ClustersService extends ImmutableStore<ClustersServiceState> {
+  state: ClustersServiceState = createClusterServiceState();
 
   constructor(public client: tsh.TshClient) {
     super();
   }
 
-  async addRootCluster(clusterUri: string) {
-    const cluster = await this.client.addRootCluster(clusterUri);
+  async addRootCluster(addr: string) {
+    const cluster = await this.client.addRootCluster(addr);
     this.setState(draft => {
       draft.clusters.set(cluster.uri, cluster);
     });
@@ -77,13 +74,26 @@ export class ClustersService extends ImmutableStore<State> {
     this.syncGateways();
   }
 
-  async syncClusters() {
+  async syncRootClusters() {
     const clusters = await this.client.listRootClusters();
     this.setState(draft => {
       draft.clusters = new Map(clusters.map(c => [c.uri, c]));
     });
 
     clusters.filter(c => c.connected).forEach(c => this.syncRootCluster(c.uri));
+  }
+
+  async syncCluster(clusterUri: string) {
+    const cluster = this.findCluster(clusterUri);
+    if (!cluster) {
+      throw Error(`missing cluster: ${clusterUri}`);
+    }
+
+    if (cluster.leaf) {
+      return this.syncLeafCluster(clusterUri);
+    } else {
+      return this.syncRootCluster(clusterUri);
+    }
   }
 
   async syncGateways() {
@@ -248,7 +258,7 @@ export class ClustersService extends ImmutableStore<State> {
     return (await this.client.getAuthSettings(clusterUri)) as AuthSettings;
   }
 
-  async createGateway(targetUri: string, port: string) {
+  async createGateway(targetUri: string, port?: string) {
     const gateway = await this.client.createGateway(targetUri, port);
     this.setState(draft => {
       draft.gateways.set(gateway.uri, gateway);
@@ -300,9 +310,25 @@ export class ClustersService extends ImmutableStore<State> {
   }
 
   findClusterByResource(uri: string) {
-    const { params } = routing.matchCluster(uri);
-    const clusterUri = routing.getClusterUri(params);
+    const parsed = routing.parseClusterUri(uri);
+    if (!parsed) {
+      return null;
+    }
+
+    const clusterUri = routing.getClusterUri(parsed.params);
     return this.findCluster(clusterUri);
+  }
+
+  findRootClusterByResource(uri: string) {
+    const parsed = routing.parseClusterUri(uri);
+    if (!parsed) {
+      return null;
+    }
+
+    const rootClusterUri = routing.getClusterUri({
+      rootClusterId: parsed.params.rootClusterId,
+    });
+    return this.findCluster(rootClusterUri);
   }
 
   getServer(serverUri: string) {

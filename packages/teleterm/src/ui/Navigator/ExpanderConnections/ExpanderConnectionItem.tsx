@@ -2,16 +2,16 @@ import React from 'react';
 import NavItem from 'teleterm/ui/Navigator/NavItem';
 import { StatusIndicator } from './StatusIndicator';
 import { Cross } from 'design/Icon';
-import { ConnectionItem } from './types';
 import { ButtonIcon, Flex, Text } from 'design';
+import { Connection } from 'teleterm/ui/services/connectionTracker';
 
 export function ExpanderConnectionItem(props: ExpanderConnectionItemProps) {
-  const offline = props.item.status === 'disconnected';
+  const offline = !props.item.connected;
   const color = !offline ? 'text.primary' : 'text.placeholder';
 
   return (
-    <NavItem pl={5} item={props.item} onClick={props.onOpen}>
-      <StatusIndicator mr={3} status={props.item.status} />
+    <NavItem active={false} pl={5} onClick={() => props.onOpen(props.item.id)}>
+      <StatusIndicator mr={2} connected={props.item.connected} />
       <Flex
         alignItems="center"
         justifyContent="space-between"
@@ -28,7 +28,7 @@ export function ExpanderConnectionItem(props: ExpanderConnectionItemProps) {
             title="Remove"
             onClick={e => {
               e.stopPropagation();
-              props.onRemove();
+              props.onRemove(props.item.id);
             }}
           >
             <Cross fontSize={12} />
@@ -40,7 +40,7 @@ export function ExpanderConnectionItem(props: ExpanderConnectionItemProps) {
 }
 
 type ExpanderConnectionItemProps = {
-  item: ConnectionItem;
-  onOpen(): void;
-  onRemove(): void;
+  item: Connection;
+  onOpen(id: string): void;
+  onRemove(id: string): void;
 };

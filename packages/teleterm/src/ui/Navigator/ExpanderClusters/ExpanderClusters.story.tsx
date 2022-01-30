@@ -34,7 +34,7 @@ function getItems({
       title: 'Root cluster',
       connected,
       syncing,
-      trustedClusters: [
+      leaves: [
         {
           uri: 'trusted-cluster-uri',
           title: 'Trusted cluster 1',

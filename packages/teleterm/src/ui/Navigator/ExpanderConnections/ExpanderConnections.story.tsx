@@ -16,49 +16,51 @@
 
 import React from 'react';
 import { ExpanderConnectionsPresentational } from './ExpanderConnections';
-import { ConnectionItem } from './types';
 import { MockAppContextProvider } from 'teleterm/ui/fixtures/MockAppContextProvider';
+import { State } from './useExpanderConnections';
 
 export default {
   title: 'Teleterm/Navigator/ExpanderConnections',
 };
 
-function getItems({
-  status,
-}: { status?: 'connected' | 'disconnected' } = {}): ConnectionItem[] {
-  return [
-    { uri: 'connection-1', title: 'Connection 1', status },
-    { uri: 'connection-2', title: 'Connection 2', status },
-    { uri: 'connection-3', title: 'Connection 3', status },
-  ];
+function getState(): State {
+  return {
+    processRemove(id: string) {},
+    processClick(id: string) {},
+    items: [
+      {
+        connected: true,
+        kind: 'nav.connection-server',
+        title: 'graves',
+        id: 'morris',
+        serverUri: 'brock',
+        login: 'casey',
+      },
+      {
+        connected: true,
+        kind: 'nav.connection-gateway',
+        title: 'graves',
+        id: 'morris',
+        targetUri: 'brock',
+        port: '22',
+        gatewayUri: 'empty',
+      },
+      {
+        connected: false,
+        kind: 'nav.connection-server',
+        title: 'graves',
+        id: 'morris',
+        serverUri: 'brock',
+        login: 'casey',
+      },
+    ],
+  };
 }
 
-export function UnknownConnection() {
-  const items = getItems();
-
+export function ExpanderConnections() {
   return (
     <MockAppContextProvider>
-      <ExpanderConnectionsPresentational items={items} />
-    </MockAppContextProvider>
-  );
-}
-
-export function NotConnected() {
-  const items = getItems({ status: 'disconnected' });
-
-  return (
-    <MockAppContextProvider>
-      <ExpanderConnectionsPresentational items={items} />
-    </MockAppContextProvider>
-  );
-}
-
-export function Connected() {
-  const items = getItems({ status: 'connected' });
-
-  return (
-    <MockAppContextProvider>
-      <ExpanderConnectionsPresentational items={items} />
+      <ExpanderConnectionsPresentational {...getState()} />
     </MockAppContextProvider>
   );
 }
