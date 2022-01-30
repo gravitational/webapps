@@ -14,26 +14,4 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-/**
- * Colors are un-themeable color variables used by console
- */
-export const colors = {
-  dark: '#000',
-  light: '#fff',
-  subtle: '#CFD8DC',
-  inverse: '#B0BEC5',
-  link: '#039BE5',
-  error: '#FF1744',
-  terminal: '#28FE14',
-  terminalDark: '#01172C',
-  bgTerminal: '#010B1C',
-  primary: {
-    light: '#03203C',
-    lighter: '#092F52',
-    dark: '#01172C',
-    main: '#010B1C',
-  },
-  text: '#263238',
-  success: '#00BFA5',
-  progressBarColor: '#00BFA5',
-};
+export * from './connectionTrackerService';

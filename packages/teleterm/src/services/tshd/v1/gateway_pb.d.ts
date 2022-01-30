@@ -10,8 +10,11 @@ export class Gateway extends jspb.Message {
     getUri(): string;
     setUri(value: string): Gateway;
 
-    getResourceName(): string;
-    setResourceName(value: string): Gateway;
+    getTargetName(): string;
+    setTargetName(value: string): Gateway;
+
+    getTargetUri(): string;
+    setTargetUri(value: string): Gateway;
 
     getLocalAddress(): string;
     setLocalAddress(value: string): Gateway;
@@ -22,17 +25,11 @@ export class Gateway extends jspb.Message {
     getProtocol(): string;
     setProtocol(value: string): Gateway;
 
-    getHostId(): string;
-    setHostId(value: string): Gateway;
-
-    getClusterId(): string;
-    setClusterId(value: string): Gateway;
-
     getCaCertPath(): string;
     setCaCertPath(value: string): Gateway;
 
-    getDbCertPath(): string;
-    setDbCertPath(value: string): Gateway;
+    getCertPath(): string;
+    setCertPath(value: string): Gateway;
 
     getKeyPath(): string;
     setKeyPath(value: string): Gateway;
@@ -42,9 +39,6 @@ export class Gateway extends jspb.Message {
 
     getNativeClientArgs(): string;
     setNativeClientArgs(value: string): Gateway;
-
-    getStatus(): Gateway.GatewayStatus;
-    setStatus(value: Gateway.GatewayStatus): Gateway;
 
 
     serializeBinary(): Uint8Array;
@@ -60,23 +54,15 @@ export class Gateway extends jspb.Message {
 export namespace Gateway {
     export type AsObject = {
         uri: string,
-        resourceName: string,
+        targetName: string,
+        targetUri: string,
         localAddress: string,
         localPort: string,
         protocol: string,
-        hostId: string,
-        clusterId: string,
         caCertPath: string,
-        dbCertPath: string,
+        certPath: string,
         keyPath: string,
         nativeClientPath: string,
         nativeClientArgs: string,
-        status: Gateway.GatewayStatus,
     }
-
-    export enum GatewayStatus {
-    CONNECTED = 0,
-    DISCONNECTED = 1,
-    }
-
 }

@@ -1,5 +1,4 @@
 import { PtyProcess, PtyCommand, PtyServiceClient } from './../types';
-import { WorkspaceService } from 'teleterm/services/workspace';
 
 export class MockPtyProcess implements PtyProcess {
   start(cols: number, rows: number) {}
@@ -27,16 +26,4 @@ export class MockPtyServiceClient implements PtyServiceClient {
   createPtyProcess(cmd: PtyCommand): PtyProcess {
     return new MockPtyProcess();
   }
-}
-
-export function createMockWorkspaceService(): WorkspaceService {
-  return {
-    getRecentDocuments: () => [],
-    removeFromRecentDocuments: () => undefined,
-    addToRecentDocuments: () => {},
-    subscribe: () => {},
-    unsubscribe: () => {},
-    getNavigatorWidth: () => undefined,
-    setNavigatorWidth: () => {},
-  };
 }

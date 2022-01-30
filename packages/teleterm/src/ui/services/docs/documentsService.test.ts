@@ -1,6 +1,5 @@
 import { DocumentsService } from './documentsService';
 import { Document } from './types';
-import { createMockWorkspaceService } from 'teleterm/services/pty/fixtures/mocks';
 
 function getMockedDocuments(): Document[] {
   return [
@@ -11,7 +10,7 @@ function getMockedDocuments(): Document[] {
 }
 
 function createService(mockDocks: Document[]): DocumentsService {
-  const service = new DocumentsService(createMockWorkspaceService());
+  const service = new DocumentsService();
   mockDocks.forEach(d => service.add(d));
 
   return service;

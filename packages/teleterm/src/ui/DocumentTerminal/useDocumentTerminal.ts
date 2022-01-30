@@ -55,7 +55,7 @@ async function initState(ctx: IAppContext, doc: Doc) {
   });
 
   ptyProcess.onExit(() => {
-    ctx.docsService.close({ uri: doc.uri });
+    //ctx.docsService.close({ uri: doc.uri });
   });
 
   return {

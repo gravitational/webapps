@@ -17,20 +17,16 @@ limitations under the License.
 import React from 'react';
 import { Flex, Text } from 'design';
 import Expander, { ExpanderHeader, ExpanderContent } from '../Expander';
-import { useExpanderConnections } from './useExpanderConnections';
+import { useExpanderConnections, State } from './useExpanderConnections';
 import { ExpanderConnectionItem } from './ExpanderConnectionItem';
-import { ExpanderConnectionProps } from './types';
 
 export function ExpanderConnections() {
   const state = useExpanderConnections();
   return <ExpanderConnectionsPresentational {...state} />;
 }
 
-export function ExpanderConnectionsPresentational(
-  props: ExpanderConnectionProps
-) {
-  const { onItemOpen, onItemRemove, items } = props;
-
+export function ExpanderConnectionsPresentational(props: State) {
+  const { items } = props;
   return (
     <Expander>
       <ExpanderHeader>
@@ -40,16 +36,18 @@ export function ExpanderConnectionsPresentational(
           flex="1"
           width="100%"
         >
-          <Text typography="body1">Connections</Text>
+          <Text typography="body1" bold>
+            Connections
+          </Text>
         </Flex>
       </ExpanderHeader>
       <ExpanderContent>
         {items.map(i => (
           <ExpanderConnectionItem
-            key={i.uri}
+            key={i.id}
             item={i}
-            onOpen={() => onItemOpen?.(i)}
-            onRemove={() => onItemRemove?.(i)}
+            onOpen={props.processClick}
+            onRemove={props.processRemove}
           />
         ))}
       </ExpanderContent>

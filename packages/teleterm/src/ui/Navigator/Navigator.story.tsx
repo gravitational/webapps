@@ -28,19 +28,28 @@ export default {
 export const Story = () => {
   const appContext = new MockAppContext();
 
-  appContext.workspaceService.getRecentDocuments = () => {
-    return [
-      {
-        uri: 'localhost',
-        kind: 'doc.terminal_shell',
-        title: 'user@localhost',
-      },
-      {
-        uri: 'example-host',
-        kind: 'doc.terminal_shell',
-        title: 'user@example-host',
-      },
-    ];
+  appContext.workspaceService.getConnectionTrackerState = () => {
+    return {
+      connections: [
+        {
+          connected: true,
+          kind: 'nav.connection-server',
+          title: 'graves',
+          id: 'morris',
+          serverUri: 'brock',
+          login: 'casey',
+        },
+        {
+          connected: true,
+          kind: 'nav.connection-gateway',
+          title: 'graves',
+          id: 'morris',
+          targetUri: 'brock',
+          port: '22',
+          gatewayUri: 'empty',
+        },
+      ],
+    };
   };
 
   appContext.clustersService.getClusterSyncStatus = (_ = '') => {

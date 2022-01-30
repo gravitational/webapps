@@ -122,7 +122,7 @@ export function QuickInput(props: State) {
       <Box width="600px" mx="auto">
         <Input
           ref={refInput}
-          placeholder="enter a command"
+          placeholder="Enter a command and press enter"
           onChange={handleInputChange}
           onKeyDown={handleKeyDown}
         />
@@ -142,7 +142,8 @@ export function QuickInput(props: State) {
 const Input = styled.input(props => {
   const { theme } = props;
   return {
-    background: theme.colors.primary.light,
+    height: '32px',
+    background: theme.colors.primary.lighter,
     boxSizing: 'border-box',
     color: theme.colors.text.primary,
     width: '100%',
@@ -152,12 +153,8 @@ const Input = styled.input(props => {
     '&:hover, &:focus': {
       color: theme.colors.primary.contrastText,
       background: theme.colors.primary.lighter,
-      padding: '1px 7px',
-      opacity: 1,
-    },
 
-    '::placeholder': {
-      opacity: '0.4',
+      opacity: 1,
     },
 
     ...space(props),

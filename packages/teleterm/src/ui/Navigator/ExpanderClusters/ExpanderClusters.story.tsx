@@ -18,66 +18,79 @@ import React from 'react';
 import { ExpanderClustersPresentational } from 'teleterm/ui/Navigator/ExpanderClusters/ExpanderClusters';
 import { ClusterNavItem } from 'teleterm/ui/Navigator/ExpanderClusters/types';
 import { MockAppContextProvider } from 'teleterm/ui/fixtures/MockAppContextProvider';
+import { ExpanderClusterState } from './types';
 
 export default {
   title: 'Teleterm/Navigator/ExpanderClusters',
 };
 
-function getItems({
-  syncing,
-  connected,
-}: { syncing?: boolean; connected?: boolean } = {}): ClusterNavItem[] {
-  return [
-    { uri: 'simple-cluster-uri', title: 'Simple cluster', syncing, connected },
-    {
-      uri: 'root-cluster-uri',
-      title: 'Root cluster',
-      connected,
-      syncing,
-      trustedClusters: [
-        {
-          uri: 'trusted-cluster-uri',
-          title: 'Trusted cluster 1',
-          syncing,
-          connected,
-        },
-        {
-          uri: 'trusted-cluster-uri-2',
-          title: 'Trusted cluster 2',
-          syncing,
-          connected,
-        },
-      ],
-    },
-  ];
-}
-
-export function NotConnected() {
-  const items = getItems();
-
-  return (
-    <MockAppContextProvider>
-      <ExpanderClustersPresentational items={items} />
-    </MockAppContextProvider>
-  );
+function getState(): ExpanderClusterState {
+  return {
+    onAddCluster() {},
+    onSyncClusters() {},
+    onOpenContextMenu(item: ClusterNavItem) {},
+    onOpen(clusterUri: string) {},
+    items: [
+      {
+        clusterUri: '/clusters/root1.teleport.sh',
+        title: 'root1.teleport.sh',
+        syncing: false,
+        connected: false,
+        active: false,
+      },
+      {
+        clusterUri: '/clusters/root2.teleport.sh',
+        title: 'root2.teleport.sh',
+        syncing: false,
+        connected: true,
+        active: true,
+      },
+      {
+        clusterUri: '/clusters/root3.teleport.sh',
+        title: 'root3.teleport.sh',
+        connected: true,
+        syncing: false,
+        active: false,
+        leaves: [
+          {
+            clusterUri:
+              '/clusters/root3.teleport.sh/leaves/internal1.example.com',
+            title: 'internal1.example.com',
+            syncing: false,
+            connected: false,
+            active: false,
+          },
+          {
+            clusterUri:
+              '/clusters/root3.teleport.sh/leaves/internal2.example.com',
+            title: 'internal2.example.com',
+            syncing: false,
+            connected: true,
+            active: false,
+          },
+        ],
+      },
+    ],
+  };
 }
 
 export function Syncing() {
-  const items = getItems({ syncing: true });
-
+  const state = getState();
+  state.items.forEach(i => {
+    i.syncing = true;
+  });
   return (
     <MockAppContextProvider>
-      <ExpanderClustersPresentational items={items} />
+      <ExpanderClustersPresentational {...state} />
     </MockAppContextProvider>
   );
 }
 
-export function Connected() {
-  const items = getItems({ connected: true });
-
+export function ClusterItems() {
+  const state = getState();
   return (
     <MockAppContextProvider>
-      <ExpanderClustersPresentational items={items} />
+      <ExpanderClustersPresentational {...state} />
     </MockAppContextProvider>
   );
 }

@@ -22,7 +22,7 @@ import { ExpanderConnections } from './ExpanderConnections';
 
 export function Navigator() {
   return (
-    <Nav bg="primary.dark">
+    <Nav bg="primary.main">
       <Text typography="subtitle2" m={2}>
         NAVIGATOR
       </Text>

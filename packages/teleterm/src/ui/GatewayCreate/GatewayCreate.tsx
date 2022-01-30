@@ -50,7 +50,7 @@ export function GatewayCreate(props: State) {
         >
           <DialogHeader>
             <Text typography="h3" color="text.primary">
-              Create Gateway to <b>{db.name}</b>
+              Create connection <b>{db.name}</b>
             </Text>
           </DialogHeader>
           <DialogContent>

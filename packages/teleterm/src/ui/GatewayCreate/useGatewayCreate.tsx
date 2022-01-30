@@ -18,7 +18,11 @@ import { useEffect } from 'react';
 import { useAppContext } from 'teleterm/ui/appContextProvider';
 import useAsync from 'teleterm/ui/useAsync';
 
-export default function useGatewayCreate({ targetUri, onClose }: Props) {
+export default function useGatewayCreate({
+  targetUri,
+  onClose,
+  onSuccess,
+}: Props) {
   const ctx = useAppContext();
   const db = ctx.clustersService.findDb(targetUri);
   const [createAttempt, create] = useAsync((port: string) => {
@@ -27,8 +31,10 @@ export default function useGatewayCreate({ targetUri, onClose }: Props) {
 
   useEffect(() => {
     if (createAttempt.status === 'success') {
-      ctx.docsService.open(createAttempt.data.uri);
       onClose();
+      if (onSuccess) {
+        onSuccess(createAttempt.data.uri);
+      }
     }
   }, [createAttempt.status]);
 
@@ -42,7 +48,9 @@ export default function useGatewayCreate({ targetUri, onClose }: Props) {
 
 export type Props = {
   onClose(): void;
+  onSuccess?(gatewayUri: string): void;
   targetUri: string;
+  port?: string;
 };
 
 export type State = ReturnType<typeof useGatewayCreate>;

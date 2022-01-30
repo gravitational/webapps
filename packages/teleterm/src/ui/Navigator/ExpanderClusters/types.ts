@@ -19,13 +19,15 @@ import { NavItem } from 'teleterm/ui/Navigator/types';
 export interface ClusterNavItem extends NavItem {
   connected: boolean;
   syncing: boolean;
-  trustedClusters?: ClusterNavItem[];
+  leaves?: ClusterNavItem[];
+  clusterUri: string;
+  active: boolean;
 }
 
-export interface ExpanderClusterProps {
-  items: ClusterNavItem[],
+export interface ExpanderClusterState {
+  items: ClusterNavItem[];
   onAddCluster?(): void;
   onSyncClusters?(): void;
   onOpenContextMenu?(item: ClusterNavItem): void;
-  onRemove?(clusterUri: string): void;
+  onOpen(clusterUri: string): void;
 }

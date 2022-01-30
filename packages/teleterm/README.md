@@ -63,10 +63,25 @@ Teleport Terminal is a desktop application that allows easy access to Teleport r
  +------------------------+---------------------------------------------+
 ```
 
+### Building
+
+Prepare Teleport repo:
+1. Switch to `/teleterm` branch
+2. $ make
+
+Prepare Webapps repo
+1. Make sure that your node version is v16 (current tls) https://nodejs.org/en/about/releases/
+2. Switch to `/teleterm` branch
+3. yarn install
+4. yarn build-term
+5. yarn package
+
+The installable file could be found in /webapps/packages/teleterm/build/release/
+
+
 ### Development
 
  Teleport Terminal consists of two main components: the `tsh` that runs in a deamon mode and the main app.
-
 
 #### How to build tsh
 

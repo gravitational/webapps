@@ -158,7 +158,7 @@ const StyledGlobalSearchResults = styled.div(({ theme }) => {
     background: theme.colors.primary.light,
     boxSizing: 'border-box',
     width: '600px',
-    marginTop: '24px',
+    marginTop: '32px',
     display: 'block',
     position: 'absolute',
     border: '1px solid ' + theme.colors.action.hover,

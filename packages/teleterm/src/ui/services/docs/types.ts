@@ -48,10 +48,14 @@ export interface DocumentTshNode extends DocumentBase {
 
 export interface DocumentGateway extends DocumentBase {
   kind: 'doc.gateway';
+  gatewayUri: string;
+  targetUri: string;
+  port?: string;
 }
 
 export interface DocumentCluster extends DocumentBase {
   kind: 'doc.cluster';
+  clusterUri: string;
 }
 
 export interface DocumentPtySession extends DocumentBase {
@@ -68,3 +72,14 @@ export type Document =
   | DocumentTshNode
   | DocumentPtySession
   | DocumentCluster;
+
+export type CreateGatewayDocumentOpts = {
+  gatewayUri: string;
+  targetUri: string;
+  title: string;
+  port?: string;
+};
+
+export type CreateClusterDocumentOpts = {
+  clusterUri: string;
+};

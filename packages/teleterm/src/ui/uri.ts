@@ -16,47 +16,50 @@ limitations under the License.
 
 import { RouteProps, matchPath, generatePath } from 'react-router';
 
-const clusterPath = '/clusters/:rootClusterId/(leaves)?/:leafClusterId?';
-
-const paths = {
-  root: '/',
-  home: '/home',
-  ptys: '/ptys/:sid',
+export const paths = {
   rootCluster: '/clusters/:rootClusterId',
   leafCluster: '/clusters/:rootClusterId/leaves/:leafClusterId',
-  server: `${clusterPath}/servers/:serverId`,
+  server:
+    '/clusters/:rootClusterId/(leaves)?/:leafClusterId?/servers/:serverId',
   gateway: '/gateways/:gatewayId',
+  docHome: '/docs/home',
+  doc: '/docs/:docId',
 };
 
 export const routing = {
-  matchCluster(uri: string) {
-    const leafMatch = routing.match(uri, paths.leafCluster);
-    const rootMatch = routing.match(uri, paths.rootCluster);
+  parseClusterUri(uri: string) {
+    const leafMatch = routing.parseUri(uri, paths.leafCluster);
+    const rootMatch = routing.parseUri(uri, paths.rootCluster);
     return leafMatch || rootMatch;
   },
 
-  matchHome(uri: string) {
-    return routing.match(uri, paths.home);
+  parseServerUri(uri: string) {
+    return routing.parseUri(uri, paths.server);
   },
 
-  matchGw(uri: string) {
-    return routing.match(uri, paths.gateway);
-  },
-
-  matchPty(uri: string) {
-    return routing.match(uri, paths.ptys);
-  },
-
-  matchServer(uri: string) {
-    return routing.match(uri, paths.server);
-  },
-
-  match(path: string, route: string | RouteProps) {
+  parseUri(path: string, route: string | RouteProps) {
     return matchPath<Params>(path, route);
   },
 
-  getPtyUri(params: Params) {
-    return generatePath(paths.ptys, params as any);
+  parseClusterName(clusterUri: string) {
+    const parsed = routing.parseClusterUri(clusterUri);
+    if (!parsed) {
+      return '';
+    }
+
+    if (parsed.params.leafClusterId) {
+      return parsed.params.leafClusterId;
+    }
+
+    if (parsed.params.rootClusterId) {
+      return parsed.params.rootClusterId;
+    }
+
+    return '';
+  },
+
+  getDocUri(params: Params) {
+    return generatePath(paths.doc, params as any);
   },
 
   getClusterUri(params: Params) {
@@ -92,4 +95,5 @@ export type Params = {
   gatewayId?: string;
   tabId?: string;
   sid?: string;
+  docId?: string;
 };
