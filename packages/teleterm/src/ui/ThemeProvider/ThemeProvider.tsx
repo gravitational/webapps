@@ -15,60 +15,31 @@ limitations under the License.
 */
 
 import React from 'react';
-import {
-  ThemeProvider as StyledThemeProvider,
-  StyleSheetManager,
-} from 'styled-components';
+import { ThemeProvider, StyleSheetManager } from 'styled-components';
 import { GlobalStyle } from './globals';
-import theme from 'design/theme';
-import { colors } from './colors';
-import { useAppContext } from 'teleterm/ui/appContextProvider';
+import theme from './theme';
+import { AppearanceConfig } from 'teleterm/types';
 
-// ThemeProviderTemp is a temporary provider used for experimental purposes
-export const ThemeProviderTemp = props => {
-  const theme = useTheme();
-  return (
-    <StyledThemeProvider theme={theme}>{props.children}</StyledThemeProvider>
-  );
+export type TeletermThemeProvider = {
+  appearanceConfig?: AppearanceConfig;
 };
 
-const ThemeProvider = props => {
-  const theme = { ...useTheme(), ...customThemeTabs };
+const TeletermThemeProvider: React.FC<TeletermThemeProvider> = props => {
+  if (props?.appearanceConfig?.fonts) {
+    theme.font = props?.appearanceConfig?.fonts?.sansSerif;
+    theme.fonts = props?.appearanceConfig?.fonts;
+  }
+
   return (
-    <StyledThemeProvider theme={props.theme || theme}>
+    <ThemeProvider theme={theme}>
       <StyleSheetManager disableVendorPrefixes>
         <React.Fragment>
           <GlobalStyle />
           {props.children}
         </React.Fragment>
       </StyleSheetManager>
-    </StyledThemeProvider>
+    </ThemeProvider>
   );
 };
 
-const customThemeTabs: typeof theme = {
-  ...theme,
-  colors: {
-    ...theme.colors,
-    primary: {
-      ...theme.colors.primary,
-      ...colors.primary,
-    },
-  },
-};
-
-function useTheme(): typeof theme {
-  const { mainProcessClient } = useAppContext();
-  const { mono, sansSerif } =
-    mainProcessClient.configService.get().appearance.fonts;
-  return {
-    ...theme,
-    font: sansSerif,
-    fonts: {
-      mono,
-      sansSerif,
-    },
-  };
-}
-
-export default ThemeProvider;
+export default TeletermThemeProvider;

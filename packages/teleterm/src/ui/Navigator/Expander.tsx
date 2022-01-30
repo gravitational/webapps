@@ -38,7 +38,7 @@ const Expander: React.FC = props => {
 export const ExpanderHeader: React.FC<ExpanderHeaderProps> = props => {
   const { onContextMenu, children, ...styles } = props;
   const ctx = React.useContext(AccordingContext);
-  const ArrowIcon = ctx.expanded ? Icons.CarrotDown : Icons.CarrotRight; //replace with proper (+/-) icons
+  const ArrowIcon = ctx.expanded ? Icons.CarrotDown : Icons.CarrotRight;
 
   return (
     <StyledHeader {...styles} onContextMenu={onContextMenu}>
@@ -60,7 +60,6 @@ export const ExpanderContent = styled(Flex)(props => {
   return {
     display: ctx.expanded ? 'block' : 'none',
     color: props.theme.colors.text.secondary,
-    background: props.theme.colors.primary.dark,
     flexDirection: 'column',
   };
 });
@@ -85,7 +84,7 @@ export const StyledHeader = styled(Flex)(props => {
     fontWeight: theme.regular,
     fontFamily: theme.font,
     paddingLeft: theme.space[2] + 'px',
-    background: theme.colors.primary.dark,
+    background: theme.colors.primary.main,
     color: theme.colors.text.primary,
     '&.active': {
       borderLeftColor: theme.colors.accent,

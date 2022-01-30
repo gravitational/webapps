@@ -14,47 +14,18 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React, { useEffect } from 'react';
+import React from 'react';
 import Document from 'teleterm/ui/Document';
 import useDocTerminal, { Props } from './useDocumentTerminal';
 import Terminal from './Terminal';
-import { useAppContext } from 'teleterm/ui/appContextProvider';
-import { ResourceReconnect } from 'teleterm/ui/ResourceReconnect';
+import DocumentReconnect from './DocumentReconnect';
 
-export default function DocumentTerminalContainer(props: Props) {
-  const ctx = useAppContext();
-  const { doc } = props;
-
-  useEffect(() => {
-    if (
-      doc.kind === 'doc.terminal_tsh_node' &&
-      ctx.clustersService.findClusterByResource(doc.serverUri)
-        ?.connected
-    ) {
-      ctx.docsService.update(doc.uri, { status: 'connected' });
-    }
-  }, []);
-
-  const $documentTerminal = (
-    <DocumentTerminal visible={props.visible} doc={doc} />
-  );
-
-  if (doc.kind === 'doc.terminal_shell') {
-    return $documentTerminal;
+export default function DocumentTerminalContainer({ doc, visible }: Props) {
+  if (doc.kind === 'doc.terminal_tsh_node' && doc.status === 'disconnected') {
+    return <DocumentReconnect visible={visible} doc={doc} />;
   }
 
-  return (
-    <ResourceReconnect
-      visible={props.visible}
-      connected={doc.status !== 'disconnected'}
-      serverUri={doc.serverUri}
-      afterReconnect={() => {
-        ctx.docsService.update(doc.uri, { status: 'connected' });
-      }}
-    >
-      {$documentTerminal}
-    </ResourceReconnect>
-  );
+  return <DocumentTerminal visible={visible} doc={doc} />;
 }
 
 export function DocumentTerminal(props: Props & { visible: boolean }) {

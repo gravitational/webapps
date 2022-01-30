@@ -1,39 +1,39 @@
 import React from 'react';
 import Expander, { ExpanderHeader, ExpanderContent } from './../Expander';
-import { Cross } from 'design/Icon';
 import { ClusterNavItem } from './types';
 import NavItem from 'teleterm/ui/Navigator/NavItem';
 import LinearProgress from 'teleterm/ui/components/LinearProgress';
-import { Flex, Text, ButtonIcon, Box } from 'design';
+import { Flex, Text, Box } from 'design';
 
 const simpleItemPadding = 5;
 const expandedItemPadding = 7;
 
-export function ExpanderClusterItem(props: ClusterItemProps) {
+export function ExpanderClusterItem(props: ExpanderClusterItem) {
   const { item } = props;
 
-  if (item.trustedClusters?.length) {
-    return <ExpandableClusterItem {...props} />;
+  if (item.leaves?.length) {
+    return <ExpanderClusterWithLeaves {...props} />;
   }
-  return <SimpleClusterItem {...props} pl={simpleItemPadding} />;
+  return <ClusterItem {...props} pl={simpleItemPadding} />;
 }
 
-function ExpandableClusterItem(props: ClusterItemProps) {
+function ExpanderClusterWithLeaves(props: ExpanderClusterItem) {
   const { item } = props;
 
   return (
     <Expander>
-      <ExpanderHeader pl={simpleItemPadding}>
-        <SimpleClusterItem {...props} />
+      <ExpanderHeader pl="18px">
+        <ClusterItem {...props} />
       </ExpanderHeader>
       <ExpanderContent>
         <Box>
-          {item.trustedClusters.map(tc => (
-            <SimpleClusterItem
+          {item.leaves.map(tc => (
+            <ClusterItem
               {...props}
               item={tc}
-              key={tc.uri}
+              key={tc.clusterUri}
               pl={expandedItemPadding}
+              onOpen={props.onOpen}
             />
           ))}
         </Box>
@@ -42,24 +42,28 @@ function ExpandableClusterItem(props: ClusterItemProps) {
   );
 }
 
-function SimpleClusterItem(props: ClusterItemProps & { pl?: number }) {
-  const { title, syncing, connected } = props.item;
+function ClusterItem(props: ExpanderClusterItem & { pl?: number }) {
+  const { title, syncing, clusterUri, connected } = props.item;
   const titleColor = connected ? 'text.primary' : 'text.placeholder';
 
-  function handleRemove(e: React.SyntheticEvent) {
-    e.stopPropagation();
-    props.onRemove?.(props.item.uri);
+  function handleClick() {
+    props.onOpen(clusterUri);
   }
 
   return (
-    <NavItem item={props.item} pl={props.pl}>
+    <NavItem
+      active={props.item.active}
+      item={props.item}
+      pl={props.pl}
+      onClick={handleClick}
+    >
       <Flex
         alignItems="center"
         justifyContent="space-between"
         flex="1"
         width="100%"
         onContextMenu={props.onContextMenu}
-        style={{position: 'relative'}}
+        style={{ position: 'relative' }}
       >
         <Flex
           justifyContent="center"
@@ -72,22 +76,13 @@ function SimpleClusterItem(props: ClusterItemProps & { pl?: number }) {
             {syncing && <LinearProgress />}
           </Text>
         </Flex>
-        <Flex>
-          <ButtonIcon
-            color="text.placeholder"
-            title="Remove"
-            onClick={handleRemove}
-          >
-            <Cross fontSize={12} />
-          </ButtonIcon>
-        </Flex>
       </Flex>
     </NavItem>
   );
 }
 
-type ClusterItemProps = {
+type ExpanderClusterItem = {
   item: ClusterNavItem;
-  onRemove(clusterUri: string): void;
   onContextMenu(): void;
+  onOpen(clusterUri: string): void;
 };

@@ -51,9 +51,7 @@ export default function TabItem(props: Props) {
       style={{ ...style }}
     >
       <StyledTabButton>
-        <Text css={{ direction: 'rtl' }} mx="auto">
-          {name}
-        </Text>
+        <Text mx="auto">{name}</Text>
       </StyledTabButton>
       <StyledCloseButton title="Close" onClick={handleClose}>
         <CloseIcon />

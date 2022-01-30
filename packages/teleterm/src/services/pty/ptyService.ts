@@ -7,8 +7,8 @@ export default function createPtyService(
 ): PtyServiceClient {
   return {
     createPtyProcess(cmd: PtyCommand) {
-      let options = buildOptions(settings, cmd);
-      let _ptyProcess = new PtyProcess(options);
+      const options = buildOptions(settings, cmd);
+      const _ptyProcess = new PtyProcess(options);
 
       return {
         start(cols: number, rows: number) {

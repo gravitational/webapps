@@ -27,22 +27,80 @@ const commands = {
   'proxy-db': {
     displayName: '',
     description: '',
-    run(ctx: IAppContext, args: { dbUri: string }) {
-      ctx.modalsService.openProxyDbDialog(args.dbUri);
+    run(
+      ctx: IAppContext,
+      args: {
+        dbUri: string;
+        port?: string;
+        onSuccess?(gatewayUri: string): void;
+      }
+    ) {
+      const onSuccess = (gatewayUri: string) => {
+        const db = ctx.clustersService.findDb(args.dbUri);
+        const gateway = ctx.clustersService.findGateway(gatewayUri);
+        const doc = ctx.docsService.createGatewayDocument({
+          title: db.name,
+          gatewayUri: gatewayUri,
+          targetUri: args.dbUri,
+          port: gateway.localPort,
+        });
+
+        ctx.docsService.add(doc);
+        ctx.docsService.open(doc.uri);
+      };
+
+      ctx.modalsService.openProxyDbDialog({
+        dbUri: args.dbUri,
+        port: args.port,
+        onSuccess: args.onSuccess || onSuccess,
+      });
     },
   },
+
   'cluster-connect': {
     displayName: '',
     description: '',
     run(ctx: IAppContext, args: { clusterUri?: string; onSuccess?(): void }) {
+      const defaultHandler = (clusterUri: string) => {
+        ctx.commandLauncher.executeCommand('cluster-open', { clusterUri });
+      };
+
       ctx.modalsService.openClusterConnectDialog(
         args.clusterUri,
-        clusterUri => {
-          args.onSuccess ? args.onSuccess() : ctx.docsService.open(clusterUri);
-        }
+        args.onSuccess || defaultHandler
       );
     },
   },
+
+  'cluster-remove': {
+    displayName: '',
+    description: '',
+    run(ctx: IAppContext, args: { clusterUri: string }) {
+      const cluster = ctx.clustersService.findCluster(args.clusterUri);
+      ctx.modalsService.openDialog({
+        kind: 'cluster-remove',
+        clusterUri: cluster.uri,
+        clusterTitle: cluster.name,
+      });
+    },
+  },
+
+  'cluster-open': {
+    displayName: '',
+    description: '',
+    run(ctx: IAppContext, args: { clusterUri: string }) {
+      const { clusterUri } = args;
+      const doc = ctx.docsService.findClusterDocument(clusterUri);
+      if (doc) {
+        ctx.docsService.open(doc.uri);
+      } else {
+        const newDoc = ctx.docsService.createClusterDocument({ clusterUri });
+        ctx.docsService.add(newDoc);
+        ctx.docsService.open(newDoc.uri);
+      }
+    },
+  },
+
   'cmd-palette.cluster-login': {
     displayName: 'login',
     description: 'Log in to a cluster and retrieve the session',

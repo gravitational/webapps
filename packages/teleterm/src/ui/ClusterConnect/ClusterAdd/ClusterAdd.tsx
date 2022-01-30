@@ -45,9 +45,6 @@ export function ClusterAddPresentation({
             <Text typography="h4">Enter cluster address</Text>
           </DialogHeader>
           <DialogContent mb={2}>
-            <Text mb={5} color="text.secondary" typography="h5">
-              For example, https://teleport.example.com
-            </Text>
             {status === 'error' && (
               <Alerts.Danger mb={5} children={statusText} />
             )}

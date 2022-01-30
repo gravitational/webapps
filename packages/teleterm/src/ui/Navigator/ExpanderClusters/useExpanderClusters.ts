@@ -16,21 +16,22 @@ limitations under the License.
 
 import { useAppContext } from 'teleterm/ui/appContextProvider';
 import AppContext from 'teleterm/ui/appContext';
-import { ExpanderClusterProps, ClusterNavItem } from './types';
+import { ExpanderClusterState, ClusterNavItem } from './types';
 
-export function useExpanderClusters(): ExpanderClusterProps {
+export function useExpanderClusters(): ExpanderClusterState {
   const ctx = useAppContext();
   const items = initItems(ctx);
 
   // subscribe
   ctx.clustersService.useState();
+  ctx.docsService.useState();
 
   function onAddCluster() {
     ctx.commandLauncher.executeCommand('cluster-connect', {});
   }
 
   function onSyncClusters() {
-    ctx.clustersService.syncClusters();
+    ctx.clustersService.syncRootClusters();
   }
 
   function onLogin(clusterUri: string) {
@@ -41,29 +42,28 @@ export function useExpanderClusters(): ExpanderClusterProps {
     ctx.clustersService.logout(clusterUri);
   }
 
-  function onRemove(clusterUri: string) {
-    const cluster = ctx.clustersService.findCluster(clusterUri);
-    ctx.modalsService.openDialog({
-      kind: 'cluster-remove',
-      clusterUri: cluster.uri,
-      clusterTitle: cluster.name,
-    });
+  function onOpen(clusterUri: string) {
+    ctx.commandLauncher.executeCommand('cluster-open', { clusterUri });
   }
 
-  function onOpenContextMenu(cluster: ClusterNavItem) {
+  function onRemove(clusterUri: string) {
+    ctx.commandLauncher.executeCommand('cluster-remove', { clusterUri });
+  }
+
+  function onOpenContextMenu(navItem: ClusterNavItem) {
     ctx.mainProcessClient.openClusterContextMenu({
-      isClusterConnected: cluster.connected,
+      isClusterConnected: navItem.connected,
       onLogin() {
-        onLogin(cluster.uri);
+        onLogin(navItem.clusterUri);
       },
       onLogout() {
-        onLogout(cluster.uri);
+        onLogout(navItem.clusterUri);
       },
       onRemove() {
-        onRemove(cluster.uri);
+        onRemove(navItem.clusterUri);
       },
       onRefresh() {
-        ctx.clustersService.syncRootCluster(cluster.uri);
+        ctx.clustersService.syncRootCluster(navItem.clusterUri);
       },
     });
   }
@@ -73,18 +73,38 @@ export function useExpanderClusters(): ExpanderClusterProps {
     onAddCluster,
     onOpenContextMenu,
     onSyncClusters,
-    onRemove,
+    onOpen,
   };
 }
 
 function initItems(ctx: AppContext): ClusterNavItem[] {
-  return ctx.clustersService.getClusters().map<ClusterNavItem>(cluster => {
-    const { syncing } = ctx.clustersService.getClusterSyncStatus(cluster.uri);
-    return {
-      title: cluster.name,
-      uri: cluster.uri,
-      connected: cluster.connected,
-      syncing: syncing,
-    };
-  });
+  function findLeaves(clusterUri: string) {
+    return ctx.clustersService
+      .getClusters()
+      .filter(c => c.leaf && c.uri.startsWith(clusterUri))
+      .map<ClusterNavItem>(cluster => {
+        return {
+          active: ctx.docsService.isClusterDocumentActive(cluster.uri),
+          clusterUri: cluster.uri,
+          title: cluster.name,
+          connected: true,
+          syncing: false,
+        };
+      });
+  }
+
+  return ctx.clustersService
+    .getClusters()
+    .filter(c => !c.leaf)
+    .map<ClusterNavItem>(cluster => {
+      const { syncing } = ctx.clustersService.getClusterSyncStatus(cluster.uri);
+      return {
+        active: ctx.docsService.isClusterDocumentActive(cluster.uri),
+        title: cluster.name,
+        clusterUri: cluster.uri,
+        connected: cluster.connected,
+        syncing: syncing,
+        leaves: cluster.connected ? findLeaves(cluster.uri) : [],
+      };
+    });
 }

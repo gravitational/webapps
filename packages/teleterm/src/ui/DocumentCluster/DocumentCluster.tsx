@@ -27,65 +27,105 @@ import ClusterCtx, {
 import ClusterResources from './ClusterResources';
 
 export default function Container(props: DocumentProps) {
-  const { uri } = props.doc;
+  const { clusterUri } = props.doc;
   const appCtx = useAppContext();
-  const [clusterCtx] = useState(() => new ClusterCtx(uri, appCtx));
+  const [clusterCtx] = useState(() => new ClusterCtx(clusterUri, appCtx));
 
   useEffect(() => {
-    appCtx.docsService.update(uri, {
-      title: clusterCtx.state.clusterName,
-    });
-
     return () => clusterCtx.dispose();
   }, []);
 
   return (
     <ClusterContextProvider value={clusterCtx}>
-      <DocumentCluster {...props} />
+      <Document visible={props.visible}>
+        <Cluster />
+      </Document>
     </ClusterContextProvider>
   );
 }
 
-export function DocumentCluster(props: { visible: boolean }) {
+export function Cluster() {
   const clusterCtx = useClusterContext();
-  const { clusterName, connected } = clusterCtx.useState();
+  const state = clusterCtx.useState();
+
+  if (state.status === 'requires_login') {
+    return (
+      <RequiresLogin
+        clusterUri={clusterCtx.clusterUri}
+        onLogin={clusterCtx.login}
+      />
+    );
+  }
+
+  if (state.status === 'not_found') {
+    return <NotFound clusterUri={clusterCtx.clusterUri} />;
+  }
+
+  if (state.leaf && !state.leafConnected) {
+    return <LeafDisconnected clusterUri={clusterCtx.clusterUri} />;
+  }
+
   return (
-    <Document visible={props.visible}>
-      <Layout mx="auto" px={5} pt={3} height="100%">
-        <Flex justifyContent="space-between">
-          <Text typography="h4" color="text.secondary">
-            {`clusters / `}
-            <Text as="span" typography="h4" color="text.primary">
-              {`${clusterName}`}
-            </Text>
+    <Layout mx="auto" px={5} pt={3} height="100%">
+      <Flex justifyContent="space-between">
+        <Text typography="h4" color="text.secondary">
+          {`clusters / `}
+          <Text as="span" typography="h4" color="text.primary">
+            {`${clusterCtx.state.clusterName}`}
           </Text>
-          {connected && (
-            <ButtonPrimary height="24px" size="small" onClick={clusterCtx.sync}>
-              Sync
-            </ButtonPrimary>
-          )}
-        </Flex>
-        <StyledBorder mt={2} mb={3} />
-        {connected && clusterCtx.isLocationActive('/resources/') && (
-          <ClusterResources />
-        )}
-        {!connected && (
-          <Offline clusterName={clusterName} login={clusterCtx.login} />
-        )}
-      </Layout>
-    </Document>
+        </Text>
+        <ButtonPrimary height="24px" size="small" onClick={clusterCtx.sync}>
+          Sync
+        </ButtonPrimary>
+      </Flex>
+      <StyledBorder mt={2} mb={3} />
+      <ClusterResources />
+    </Layout>
   );
 }
 
-const Offline: React.FC<{ clusterName: string; login(): void }> = props => {
+function RequiresLogin(props: { clusterUri: string; onLogin(): void }) {
   return (
-    <Flex flexDirection="column" mx="auto" alignItems="center">
-      <ButtonPrimary mt={4} width="100px" onClick={props.login}>
+    <Flex
+      flexDirection="column"
+      mx="auto"
+      justifyContent="center"
+      alignItems="center"
+    >
+      <Text typography="h4" color="text.primary" bold>
+        {props.clusterUri}
+        <Text as="span" typography="h5">
+          {` cluster is offline`}
+        </Text>
+      </Text>
+      <ButtonPrimary mt={4} width="100px" onClick={props.onLogin}>
         Connect
       </ButtonPrimary>
     </Flex>
   );
-};
+}
+
+function LeafDisconnected(props: { clusterUri: string }) {
+  return (
+    <Flex flexDirection="column" mx="auto" alignItems="center">
+      <Text typography="h5">{props.clusterUri}</Text>
+      <Text as="span" typography="h5">
+        trusted cluster is offline
+      </Text>
+    </Flex>
+  );
+}
+
+function NotFound(props: { clusterUri: string }) {
+  return (
+    <Flex flexDirection="column" mx="auto" alignItems="center">
+      <Text typography="h5">{props.clusterUri}</Text>
+      <Text as="span" typography="h5">
+        Not Found
+      </Text>
+    </Flex>
+  );
+}
 
 type DocumentProps = {
   visible: boolean;

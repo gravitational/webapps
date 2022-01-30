@@ -48,7 +48,7 @@ export default function ModalsHost() {
   }
 
   if (dialog.kind === 'create-gateway') {
-    return <GatewayCreate targetUri={dialog.targetUri} onClose={handleClose} />;
+    return <GatewayCreate {...dialog} onClose={handleClose} />;
   }
 
   if (dialog.kind === 'server-connect') {

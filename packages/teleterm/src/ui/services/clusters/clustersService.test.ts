@@ -18,18 +18,16 @@ const clusterMock: tsh.Cluster = {
 
 const gatewayMock: tsh.Gateway = {
   uri: 'gatewayTestUri',
-  clusterId: '100',
-  status: 1,
   caCertPath: '',
-  dbCertPath: '',
-  hostId: '1000',
+  certPath: '',
   keyPath: '',
   localAddress: 'localhost',
   localPort: '2000',
   nativeClientArgs: '',
   nativeClientPath: '',
   protocol: 'https',
-  resourceName: 'Test',
+  targetName: 'Test',
+  targetUri: 'clusters/xxx/',
 };
 
 const databaseMock: tsh.Database = {
