@@ -357,20 +357,23 @@ export default class Codec {
       data: image,
     };
     pngFrame.data.onload = onload(pngFrame);
-    pngFrame.data.src = this._decodePng(buffer);
+    pngFrame.data.src = this._asBase64Url(buffer);
 
     return pngFrame;
   }
 
   // Taken as the winning algorithm of https://jsbench.me/vjk9nczxst/1
   // jsbench link was discovered in https://gist.github.com/jonleighton/958841
-  _toBase64(buffer: ArrayBuffer) {
-    const binary = String.fromCharCode.apply(null, new Uint8Array(buffer, 17));
+  _toBase64(array: Uint8Array) {
+    const binary = String.fromCharCode.apply(null, array);
     return btoa(binary);
   }
 
-  // decodePng creates a data:image uri from the png data part of a PNG_FRAME tdp message.
-  _decodePng(buffer: ArrayBuffer): string {
-    return `data:image/png;base64,${this._toBase64(buffer)}`;
+  // _asBase64Url creates a data:image uri from the png data part of a PNG_FRAME tdp message.
+  _asBase64Url(buffer: ArrayBuffer): string {
+    // return `data:image/png;base64,${this._toBase64(buffer)}`;
+    return `data:image/png;base64,${this._toBase64(
+      new Uint8Array(buffer, 17)
+    )}`;
   }
 }
