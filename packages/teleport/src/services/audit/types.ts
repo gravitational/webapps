@@ -713,7 +713,7 @@ export type EventQuery = {
   to: Date;
   limit?: number;
   startKey?: string;
-  filterByCode?: EventCode | '';
+  filterBy?: string;
 };
 
 export type EventResponse = {
