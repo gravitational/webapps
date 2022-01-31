@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import ProgressBar from './ProgressBar';
 import { PlayerClient, PlayerClientEvent } from 'teleport/lib/tdp';
@@ -66,12 +66,20 @@ export const ProgressBarDesktop = (props: { playerClient: PlayerClient }) => {
     },
   });
 
-  playerClient.on(PlayerClientEvent.TOGGLE_PLAY_PAUSE, () => {
-    setState({
-      ...state,
-      isPlaying: !state.isPlaying,
+  useEffect(() => {
+    playerClient.addListener(PlayerClientEvent.TOGGLE_PLAY_PAUSE, () => {
+      // setState({...state, isPlaying: !state.isPlaying}) doesn't work because
+      // the listener is added when state == initialState, and that initialState
+      // value is effectively hardcoded into its logic.
+      setState(prevState => {
+        return { ...prevState, isPlaying: !prevState.isPlaying };
+      });
     });
-  });
+
+    return () => {
+      playerClient.nuke();
+    };
+  }, [playerClient]);
 
   return <ProgressBar {...state} />;
 };
