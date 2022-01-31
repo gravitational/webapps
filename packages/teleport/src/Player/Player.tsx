@@ -16,7 +16,7 @@ limitations under the License.
 
 import React from 'react';
 import styled from 'styled-components';
-import { useParams } from 'teleport/components/Router';
+import { useParams, useLocation } from 'teleport/components/Router';
 import { Flex } from 'design';
 import Tabs, { TabItem } from './PlayerTabs';
 import SshPlayer from './SshPlayer';
@@ -25,9 +25,17 @@ import ActionBar from './ActionBar';
 import session from 'teleport/services/session';
 import { colors } from 'teleport/Console/colors';
 import { UrlPlayerParams } from 'teleport/config';
+import { getUrlParameter } from 'teleport/services/history';
 
 export default function Player() {
-  const { sid, clusterId, recordingType } = useParams<UrlPlayerParams>();
+  const { sid, clusterId } = useParams<UrlPlayerParams>();
+  const recordingType = getUrlParameter('recordingType', useLocation().search);
+  if (recordingType !== 'ssh' && recordingType !== 'desktop') {
+    throw new Error(
+      `Invalid recording type: ${recordingType}, should be 'ssh' or 'desktop'`
+    );
+  }
+
   document.title = `${clusterId} • Play ${sid}`;
 
   function onLogout() {

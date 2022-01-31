@@ -112,7 +112,7 @@ const renderPlayCell = (
     );
   }
 
-  const url = cfg.getPlayerRoute({ clusterId, sid, recordingType });
+  const url = cfg.getPlayerRoute({ clusterId, sid }, { recordingType });
   return (
     <Cell align="right">
       <ButtonBorder

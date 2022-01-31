@@ -127,11 +127,15 @@ export default function renderTypeCell(event: Event, clusterId: string) {
         <StyledEventType>
           <a
             title="Open Session Player"
-            href={cfg.getPlayerRoute({
-              clusterId,
-              sid: event.raw.sid,
-              recordingType: 'ssh',
-            })}
+            href={cfg.getPlayerRoute(
+              {
+                clusterId,
+                sid: event.raw.sid,
+              },
+              {
+                recordingType: 'ssh',
+              }
+            )}
             target="_blank"
             style={{ textDecoration: 'none' }}
           >
