@@ -327,6 +327,7 @@ export default class Codec {
   // Throws an error on an invalid or unexpected MessageType value.
   _decodeMessageType(buffer: ArrayBuffer): MessageType {
     const messageType = new DataView(buffer).getUint8(0);
+    // TODO(isaiah): this is fragile, instead switch all possibilities here.
     if (messageType > MessageType.ERROR) {
       throw new Error(`invalid message type: ${messageType}`);
     }
