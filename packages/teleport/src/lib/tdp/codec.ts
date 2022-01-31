@@ -42,16 +42,6 @@ export type PngFrame = {
   data: HTMLImageElement;
 };
 
-// Region represents a rectangular region of a screen in pixel coordinates via
-// the top-left and bottom-right coordinates of the region.
-// https://github.com/gravitational/teleport/blob/master/rfd/0037-desktop-access-protocol.md#2---png-frame
-export type Region = {
-  top: number;
-  left: number;
-  bottom: number;
-  right: number;
-};
-
 // TdaCodec provides an api for encoding and decoding teleport desktop access protocol messages [1]
 // Buffers in TdaCodec are manipulated as DataView's [2] in order to give us low level control
 // of endianness (defaults to big endian, which is what we want), as opposed to using *Array
