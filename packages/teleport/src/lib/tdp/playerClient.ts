@@ -43,11 +43,13 @@ export class PlayerClient extends Client {
 
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   handleMouseButton(buffer: ArrayBuffer) {
-    this.logger.warn('TODO: handleMouseButton');
+    // TODO
+    return;
   }
 
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   handleMouseMove(buffer: ArrayBuffer) {
-    this.logger.warn('TODO: handleMouseMove');
+    // TODO
+    return;
   }
 }

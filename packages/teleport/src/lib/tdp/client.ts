@@ -93,7 +93,7 @@ export default class Client extends EventEmitter {
         this.handleError(new Error(this.codec.decodeErrorMessage(buffer)));
       } else {
         this.handleError(
-          new Error(`recieved unsupported message type ${messageType}`)
+          new Error(`received unsupported message type ${messageType}`)
         );
       }
     } catch (err) {
@@ -104,7 +104,7 @@ export default class Client extends EventEmitter {
   handleClientScreenSpec(buffer: ArrayBuffer) {
     this.handleError(
       new Error(
-        `recieved unsupported message type ${this.codec._decodeMessageType(
+        `received unsupported message type ${this.codec._decodeMessageType(
           buffer
         )}`
       )
@@ -114,7 +114,7 @@ export default class Client extends EventEmitter {
   handleMouseButton(buffer: ArrayBuffer) {
     this.handleError(
       new Error(
-        `recieved unsupported message type ${this.codec._decodeMessageType(
+        `received unsupported message type ${this.codec._decodeMessageType(
           buffer
         )}`
       )
@@ -124,7 +124,7 @@ export default class Client extends EventEmitter {
   handleMouseMove(buffer: ArrayBuffer) {
     this.handleError(
       new Error(
-        `recieved unsupported message type ${this.codec._decodeMessageType(
+        `received unsupported message type ${this.codec._decodeMessageType(
           buffer
         )}`
       )
