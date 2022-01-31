@@ -14,14 +14,11 @@ export const DesktopPlayer = ({
   sid: string;
   clusterId: string;
 }) => {
-  const {
-    playerClient,
-    tdpCliOnPngFrame,
-    tdpCliOnClientScreenSpec,
-  } = useDesktopPlayer({
-    sid,
-    clusterId,
-  });
+  const { playerClient, tdpCliOnPngFrame, tdpCliOnClientScreenSpec } =
+    useDesktopPlayer({
+      sid,
+      clusterId,
+    });
 
   let doNothing = () => {};
 
@@ -88,7 +85,7 @@ const useDesktopPlayer = ({
 }) => {
   const playerClient = new PlayerClient(
     cfg.api.desktopPlaybackWsAddr
-      .replace(':fqdm', getHostName())
+      .replace(':fqdn', getHostName())
       .replace(':clusterId', clusterId)
       .replace(':sid', sid)
       .replace(':token', getAccessToken())
