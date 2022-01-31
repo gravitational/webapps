@@ -19,6 +19,7 @@
   "dependencies": {
     "@gravitational/design": "1.0.0",
     "@gravitational/shared": "1.0.0",
+    "base64-arraybuffer": "^1.0.2",
     "xterm": "^4.15.0",
     "xterm-addon-fit": "^0.5.0"
   },

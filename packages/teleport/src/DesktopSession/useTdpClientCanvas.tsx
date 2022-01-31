@@ -37,7 +37,7 @@ export default function useTdpClientCanvas(props: Props) {
     const { width, height } = getDisplaySize();
 
     const addr = cfg.api.desktopWsAddr
-      .replace(':fqdm', getHostName())
+      .replace(':fqdn', getHostName())
       .replace(':clusterId', clusterId)
       .replace(':desktopName', desktopName)
       .replace(':token', getAccessToken())

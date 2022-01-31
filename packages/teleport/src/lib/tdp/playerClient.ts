@@ -13,6 +13,7 @@
 // limitations under the License.
 
 import Client, { TdpClientEvent } from './client';
+import { decode } from 'base64-arraybuffer';
 
 enum Action {
   TOGGLE_PLAY_PAUSE = 'play/pause',
@@ -24,6 +25,10 @@ export enum PlayerClientEvent {
 }
 
 export class PlayerClient extends Client {
+  currentMs = 0; // the current time of the playback in milliseconds
+  totalMs: number; // the total time of the playback in milliseconds
+  textDecoder = new TextDecoder();
+
   constructor(socketAddr: string) {
     super(socketAddr);
   }
@@ -34,6 +39,14 @@ export class PlayerClient extends Client {
     this.emit(PlayerClientEvent.TOGGLE_PLAY_PAUSE);
   }
 
+  // Overrides Client implementation.
+  processMessage(buffer: ArrayBuffer) {
+    const json = JSON.parse(this.textDecoder.decode(buffer));
+    this.currentMs = json.ms;
+    super.processMessage(decode(json.message));
+  }
+
+  // Overrides Client implementation.
   handleClientScreenSpec(buffer: ArrayBuffer) {
     this.emit(
       TdpClientEvent.TDP_CLIENT_SCREEN_SPEC,
@@ -42,11 +55,13 @@ export class PlayerClient extends Client {
   }
 
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  // Overrides Client implementation.
   handleMouseButton(buffer: ArrayBuffer) {
     this.logger.warn('TODO: handleMouseButton');
   }
 
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  // Overrides Client implementation.
   handleMouseMove(buffer: ArrayBuffer) {
     this.logger.warn('TODO: handleMouseMove');
   }
