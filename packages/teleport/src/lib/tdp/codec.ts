@@ -42,16 +42,6 @@ export type PngFrame = {
   data: HTMLImageElement;
 };
 
-// Region represents a rectangular region of a screen in pixel coordinates via
-// the top-left and bottom-right coordinates of the region.
-// https://github.com/gravitational/teleport/blob/master/rfd/0037-desktop-access-protocol.md#2---png-frame
-export type Region = {
-  top: number;
-  left: number;
-  bottom: number;
-  right: number;
-};
-
 // TdaCodec provides an api for encoding and decoding teleport desktop access protocol messages [1]
 // Buffers in TdaCodec are manipulated as DataView's [2] in order to give us low level control
 // of endianness (defaults to big endian, which is what we want), as opposed to using *Array
@@ -337,6 +327,7 @@ export default class Codec {
   // Throws an error on an invalid or unexpected MessageType value.
   _decodeMessageType(buffer: ArrayBuffer): MessageType {
     const messageType = new DataView(buffer).getUint8(0);
+    // TODO(isaiah): this is fragile, instead switch all possibilities here.
     if (messageType > MessageType.ERROR) {
       throw new Error(`invalid message type: ${messageType}`);
     }
@@ -367,20 +358,23 @@ export default class Codec {
       data: image,
     };
     pngFrame.data.onload = onload(pngFrame);
-    pngFrame.data.src = this._decodePng(buffer);
+    pngFrame.data.src = this._asBase64Url(buffer);
 
     return pngFrame;
   }
 
   // Taken as the winning algorithm of https://jsbench.me/vjk9nczxst/1
   // jsbench link was discovered in https://gist.github.com/jonleighton/958841
-  _toBase64(buffer: ArrayBuffer) {
-    const binary = String.fromCharCode.apply(null, new Uint8Array(buffer, 17));
+  _toBase64(array: Uint8Array) {
+    const binary = String.fromCharCode.apply(null, array);
     return btoa(binary);
   }
 
-  // decodePng creates a data:image uri from the png data part of a PNG_FRAME tdp message.
-  _decodePng(buffer: ArrayBuffer): string {
-    return `data:image/png;base64,${this._toBase64(buffer)}`;
+  // _asBase64Url creates a data:image uri from the png data part of a PNG_FRAME tdp message.
+  _asBase64Url(buffer: ArrayBuffer): string {
+    // return `data:image/png;base64,${this._toBase64(buffer)}`;
+    return `data:image/png;base64,${this._toBase64(
+      new Uint8Array(buffer, 17)
+    )}`;
   }
 }

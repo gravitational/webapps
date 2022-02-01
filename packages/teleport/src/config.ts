@@ -17,6 +17,7 @@ limitations under the License.
 import { generatePath } from 'react-router';
 import { merge } from 'lodash';
 import { AuthProvider, Auth2faType, PreferredMfaType } from 'shared/services';
+import { RecordingType } from 'teleport/services/recordings';
 
 const cfg = {
   isEnterprise: false,
@@ -65,7 +66,7 @@ const cfg = {
     consoleNodes: '/web/cluster/:clusterId/console/nodes',
     consoleConnect: '/web/cluster/:clusterId/console/node/:serverId/:login',
     consoleSession: '/web/cluster/:clusterId/console/session/:sid',
-    player: '/web/cluster/:clusterId/session/:sid/:recordingType', // recordingType is one of 'ssh' | 'desktop'
+    player: '/web/cluster/:clusterId/session/:sid', // ?recordingType=ssh|desktop
     login: '/web/login',
     loginSuccess: '/web/msg/info/login_success',
     loginErrorLegacy: '/web/msg/error/login_failed',
@@ -266,8 +267,11 @@ const cfg = {
     return generatePath(cfg.routes.appLauncher, { ...params });
   },
 
-  getPlayerRoute(params: UrlPlayerParams) {
-    return generatePath(cfg.routes.player, { ...params });
+  getPlayerRoute(params: UrlPlayerParams, search: UrlPlayerSearch) {
+    return (
+      generatePath(cfg.routes.player, { ...params }) +
+      `?recordingType=${search.recordingType}`
+    );
   },
 
   getUserContextUrl() {
@@ -433,7 +437,10 @@ export interface UrlLauncherParams {
 export interface UrlPlayerParams {
   clusterId: string;
   sid: string;
-  recordingType: 'ssh' | 'desktop';
+}
+
+export interface UrlPlayerSearch {
+  recordingType: RecordingType;
 }
 
 // /web/cluster/:clusterId/desktops/:desktopName/:username

@@ -21,7 +21,7 @@ import {
   getRangeOptions,
   EventRange,
 } from 'teleport/components/EventRangePicker';
-import { Event, EventCode } from 'teleport/services/audit';
+import { Event, EventCode, formatters } from 'teleport/services/audit';
 
 export default function useAuditEvents(
   ctx: Ctx,
@@ -37,7 +37,7 @@ export default function useAuditEvents(
     fetchStatus: '',
   });
 
-  const filterByCode = eventCode || '';
+  const filterBy = eventCode ? formatters[eventCode].type : '';
 
   useEffect(() => {
     fetch();
@@ -54,7 +54,7 @@ export default function useAuditEvents(
     ctx.auditService
       .fetchEvents(clusterId, {
         ...range,
-        filterByCode,
+        filterBy,
         startKey: results.fetchStartKey,
       })
       .then(res =>
@@ -76,7 +76,7 @@ export default function useAuditEvents(
       ctx.auditService
         .fetchEvents(clusterId, {
           ...range,
-          filterByCode,
+          filterBy,
         })
         .then(res =>
           setResults({
