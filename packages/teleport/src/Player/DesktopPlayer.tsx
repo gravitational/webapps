@@ -20,8 +20,6 @@ export const DesktopPlayer = ({
       clusterId,
     });
 
-  const doNothing = () => {};
-
   return (
     <StyledPlayer>
       <TdpClientCanvas
@@ -29,15 +27,6 @@ export const DesktopPlayer = ({
         tdpCliOnPngFrame={tdpCliOnPngFrame}
         tdpCliOnClientScreenSpec={tdpCliOnClientScreenSpec}
         onContextMenu={() => true}
-        tdpCliOnTdpError={doNothing} // TODO: we can show the error
-        tdpCliOnWsClose={doNothing}
-        tdpCliOnWsOpen={doNothing}
-        onKeyDown={doNothing}
-        onKeyUp={doNothing}
-        onMouseMove={doNothing}
-        onMouseDown={doNothing}
-        onMouseUp={doNothing}
-        onMouseWheelScroll={doNothing}
         // overflow: 'hidden' is needed to prevent the canvas from outgrowing the container due to some weird css flex idiosyncracy.
         // See https://gaurav5430.medium.com/css-flex-positioning-gotchas-child-expands-to-more-than-the-width-allowed-by-the-parent-799c37428dd6.
         style={{ display: 'flex', flexGrow: 1, overflow: 'hidden' }}
