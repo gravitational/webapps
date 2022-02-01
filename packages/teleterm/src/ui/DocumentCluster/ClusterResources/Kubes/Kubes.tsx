@@ -19,7 +19,7 @@ import { sortBy } from 'lodash';
 import styled from 'styled-components';
 import { Box } from 'design';
 import { Danger } from 'design/Alert';
-import useKubes from './useKubes';
+import { useKubes, State } from './useKubes';
 import {
   Column,
   SortHeaderCell,
@@ -32,12 +32,12 @@ import { Label, ButtonBorder } from 'design';
 import * as types from 'teleterm/ui/services/clusters/types';
 
 export default function Container() {
-  const { kubes, syncStatus } = useKubes();
-  return <Kubes syncStatus={syncStatus} kubes={kubes} />;
+  const state = useKubes();
+  return <Kubes {...state} />;
 }
 
-function Kubes(props: Props) {
-  const { kubes = [], syncStatus, pageSize = 100 } = props;
+function Kubes(props: State) {
+  const { kubes = [], syncStatus, connect, pageSize = 100 } = props;
   const [sortDir, setSortDir] = useState<Record<string, string>>({
     name: SortTypes.DESC,
   });
@@ -78,25 +78,29 @@ function Kubes(props: Props) {
         <Column header={<Cell>Labels</Cell>} cell={<LabelCell />} />
         <Column
           header={<Cell />}
-          cell={<ActionCell onViewConnect={(name: string) => {}} />}
+          cell={<ConnectButton onConnect={connect} />}
         />
       </StyledTable>
     </StyledKubes>
   );
 }
 
-export const ActionCell = props => {
-  const { rowIndex, onViewConnect, data } = props;
-  const { name } = data[rowIndex];
-
+function ConnectButton(props) {
+  const { onConnect, rowIndex, data } = props;
+  const { uri } = data[rowIndex] as types.tsh.Kube;
   return (
     <Cell align="right">
-      <ButtonBorder size="small" onClick={() => onViewConnect(name)}>
+      <ButtonBorder
+        size="small"
+        onClick={() => {
+          onConnect(uri);
+        }}
+      >
         Connect
       </ButtonBorder>
     </Cell>
   );
-};
+}
 
 function LabelCell(props) {
   const { rowIndex, data } = props;
@@ -109,12 +113,6 @@ function LabelCell(props) {
 
   return <Cell>{$labels}</Cell>;
 }
-
-type Props = {
-  kubes: types.tsh.Kube[];
-  pageSize?: number;
-  syncStatus: types.SyncStatus;
-};
 
 const StyledTable = styled(Table)`
   & > tbody > tr > td {

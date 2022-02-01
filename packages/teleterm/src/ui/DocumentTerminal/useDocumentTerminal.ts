@@ -73,13 +73,21 @@ function createCmd(doc: Doc): PtyCommand {
     };
   }
 
+  debugger;
+  if (doc.kind === 'doc.terminal_tsh_kube') {
+    return {
+      ...doc,
+      kind: 'tsh-kube-login',
+    };
+  }
+
   return {
     kind: 'new-shell',
     cwd: doc.cwd,
   };
 }
 
-type Doc = types.DocumentPtySession | types.DocumentTshNode;
+type Doc = types.DocumentTerminal;
 
 export type Props = {
   doc: Doc;

@@ -58,6 +58,16 @@ const commands = {
     },
   },
 
+  'kube-connect': {
+    displayName: '',
+    description: '',
+    run(ctx: IAppContext, args: { kubeUri: string }) {
+      const kubeDoc = ctx.docsService.createTshKubeDocument(args.kubeUri);
+      ctx.docsService.add(kubeDoc);
+      ctx.docsService.open(kubeDoc.uri);
+    },
+  },
+
   'cluster-connect': {
     displayName: '',
     description: '',

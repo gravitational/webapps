@@ -67,6 +67,10 @@ class ClusterContext extends Store<State> {
     });
   };
 
+  connectKube = (kubeUri: string) => {
+    this.appCtx.commandLauncher.executeCommand('kube-connect', { kubeUri });
+  };
+
   connectServer = (serverUri: string) => {
     this.appCtx.commandLauncher.executeCommand('ssh', { serverUri });
   };

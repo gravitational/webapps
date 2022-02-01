@@ -44,7 +44,7 @@ export default function TabHost(props: Props) {
   }
 
   function handleTabClose(doc: types.Document) {
-    serviceDocs.close(doc);
+    serviceDocs.close(doc.uri);
   }
 
   function handleTabMoved(oldIndex: number, newIndex: number) {
@@ -55,20 +55,20 @@ export default function TabHost(props: Props) {
     serviceDocs.openNewTerminal();
   }
 
-  function handleTabContextMenu(document: types.Document) {
+  function handleTabContextMenu(doc: types.Document) {
     ctx.mainProcessClient.openTabContextMenu({
-      documentKind: document.kind,
+      documentKind: doc.kind,
       onClose: () => {
-        serviceDocs.close(document);
+        serviceDocs.close(doc.uri);
       },
       onCloseOthers: () => {
-        serviceDocs.closeOthers(document);
+        serviceDocs.closeOthers(doc.uri);
       },
       onCloseToRight: () => {
-        serviceDocs.closeToRight(document);
+        serviceDocs.closeToRight(doc.uri);
       },
       onDuplicatePty: () => {
-        serviceDocs.duplicatePtyAndActivate(document);
+        serviceDocs.duplicatePtyAndActivate(doc.uri);
       },
     });
   }
@@ -110,6 +110,7 @@ function MemoizedDocument(props: { doc: types.Document; visible: boolean }) {
         return <DocumentGateway doc={doc} visible={visible} />;
       case 'doc.terminal_shell':
       case 'doc.terminal_tsh_node':
+      case 'doc.terminal_tsh_kube':
         return <DocumentTerminal doc={doc} visible={visible} />;
       default:
         return (

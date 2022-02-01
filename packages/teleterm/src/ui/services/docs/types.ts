@@ -20,7 +20,8 @@ export type Kind =
   | 'doc.home'
   | 'doc.gateway'
   | 'doc.terminal_shell'
-  | 'doc.terminal_tsh_node';
+  | 'doc.terminal_tsh_node'
+  | 'doc.terminal_tsh_kube';
 
 interface DocumentBase {
   uri: string;
@@ -46,6 +47,15 @@ export interface DocumentTshNode extends DocumentBase {
   login: string;
 }
 
+export interface DocumentTshKube extends DocumentBase {
+  kind: 'doc.terminal_tsh_kube';
+  status: 'connecting' | 'connected' | 'disconnected';
+  kubeId: string;
+  kubeUri: string;
+  rootClusterId: string;
+  leafClusterId?: string;
+}
+
 export interface DocumentGateway extends DocumentBase {
   kind: 'doc.gateway';
   gatewayUri: string;
@@ -64,15 +74,17 @@ export interface DocumentPtySession extends DocumentBase {
   cwd?: string;
 }
 
-export type DocumentTerminal = DocumentPtySession | DocumentTshNode;
+export type DocumentTerminal =
+  | DocumentPtySession
+  | DocumentTshNode
+  | DocumentTshKube;
 
 export type Document =
   | DocumentHome
   | DocumentBlank
   | DocumentGateway
-  | DocumentTshNode
-  | DocumentPtySession
-  | DocumentCluster;
+  | DocumentCluster
+  | DocumentTerminal;
 
 export type CreateGatewayDocumentOpts = {
   gatewayUri: string;

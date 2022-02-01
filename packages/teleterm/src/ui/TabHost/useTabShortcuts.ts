@@ -36,7 +36,7 @@ function buildTabsShortcuts(ctx: AppContext): KeyboardShortcutHandlers {
 
   const handleActiveTabClose = () => {
     const { uri } = ctx.docsService.getActive();
-    ctx.docsService.close({ uri });
+    ctx.docsService.close(uri);
   };
 
   const handleNewTabOpen = () => {

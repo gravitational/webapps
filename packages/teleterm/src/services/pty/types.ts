@@ -21,11 +21,6 @@ export type PtyServiceClient = {
   createPtyProcess: (cmd: PtyCommand) => PtyProcess;
 };
 
-export type PtyCommand =
-  | TshLoginCommand
-  | TshDbConnectCommand
-  | NewShellCommand;
-
 export type NewShellCommand = {
   kind: 'new-shell';
   cwd?: string;
@@ -39,9 +34,22 @@ export type TshLoginCommand = {
   leafClusterId?: string;
 };
 
+export type TshKubeLoginCommand = {
+  kind: 'tsh-kube-login';
+  kubeId: string;
+  rootClusterId: string;
+  leafClusterId?: string;
+};
+
 export type TshDbConnectCommand = {
   kind: 'tsh-db-connect';
   clusterId: string;
   login: string;
   serverId: string;
 };
+
+export type PtyCommand =
+  | TshLoginCommand
+  | TshDbConnectCommand
+  | NewShellCommand
+  | TshKubeLoginCommand;
