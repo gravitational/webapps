@@ -54,6 +54,7 @@ export class PlayerClient extends Client {
     );
   }
 
+  // Overrides Client implementation.
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   // Overrides Client implementation.
   handleMouseButton(buffer: ArrayBuffer) {
@@ -61,6 +62,7 @@ export class PlayerClient extends Client {
     return;
   }
 
+  // Overrides Client implementation.
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   // Overrides Client implementation.
   handleMouseMove(buffer: ArrayBuffer) {
