@@ -10,6 +10,7 @@ export type Application = apiApp.App.AsObject;
 export type Kube = apiKube.Kube.AsObject;
 export type Server = apiServer.Server.AsObject;
 export type Gateway = apigateway.Gateway.AsObject;
+export type GatewayProtocol = 'postgres' | 'mysql' | 'mongodb' | 'cockroachdb';
 export type Database = apiDb.Database.AsObject;
 export type Cluster = apiCluster.Cluster.AsObject;
 export type LoggedInUser = apiCluster.LoggedInUser.AsObject;
@@ -26,7 +27,7 @@ export type TshClient = {
   listServers: (clusterUri: string) => Promise<Server[]>;
   createAbortController: () => TshAbortController;
   addRootCluster: (addr: string) => Promise<Cluster>;
-  createGateway: (targetUri: string, port: string) => Promise<Gateway>;
+  createGateway: (params: CreateGatewayParams) => Promise<Gateway>;
   getCluster: (clusterUri: string) => Promise<Cluster>;
   getAuthSettings: (clusterUri: string) => Promise<AuthSettings>;
   removeGateway: (gatewayUri: string) => Promise<void>;
@@ -56,4 +57,10 @@ export type LoginParams = {
     password: string;
     token?: string;
   };
+};
+
+export type CreateGatewayParams = {
+  targetUri: string;
+  port?: string;
+  user?: string;
 };

@@ -27,6 +27,7 @@ const gatewayMock: tsh.Gateway = {
   nativeClientPath: '',
   protocol: 'https',
   targetName: 'Test',
+  targetUser: '',
   targetUri: 'clusters/xxx/',
 };
 
@@ -191,7 +192,7 @@ test('create a gateway', async () => {
   const targetUri = 'testId';
   const port = '2000';
 
-  await service.createGateway(targetUri, port);
+  await service.createGateway({ targetUri, port });
 
   expect(createGateway).toHaveBeenCalledWith(targetUri, port);
   expect(service.state.gateways).toStrictEqual(

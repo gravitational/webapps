@@ -32,8 +32,17 @@ export default function Container(props: Props) {
 }
 
 export function GatewayCreate(props: State) {
-  const { db, onClose, createAttempt, create } = props;
-  const [port, setPort] = useState('');
+  const {
+    db,
+    port,
+    user,
+    userRequired,
+    setUser,
+    setPort,
+    onClose,
+    createAttempt,
+    createGateway,
+  } = props;
 
   return (
     <Validation>
@@ -49,23 +58,36 @@ export function GatewayCreate(props: State) {
           open={true}
         >
           <DialogHeader>
-            <Text typography="h3" color="text.primary">
+            <Text typography="h4" color="text.primary">
               Create connection <b>{db.name}</b>
             </Text>
           </DialogHeader>
-          <DialogContent>
+          <DialogContent
+            onKeyPress={e =>
+              e.key === 'Enter' &&
+              validator.validate() &&
+              createGateway({ port, user })
+            }
+          >
             {createAttempt.status === 'error' && (
               <Alerts.Danger>{createAttempt.statusText}</Alerts.Danger>
+            )}
+            {userRequired && (
+              <FieldInput
+                label="User"
+                width="100%"
+                value={user}
+                autoFocus
+                placeholder="mongo db user"
+                onChange={e => setUser(e.target.value)}
+              />
             )}
             <FieldInput
               label="Port (Optional)"
               width="100%"
               value={port}
-              autoFocus
+              autoFocus={!userRequired}
               placeholder="10211"
-              onKeyPress={e =>
-                e.key === 'Enter' && validator.validate() && create(port)
-              }
               onChange={e => setPort(e.target.value)}
             />
           </DialogContent>
@@ -73,7 +95,9 @@ export function GatewayCreate(props: State) {
             <ButtonPrimary
               mr="3"
               disabled={createAttempt.status === 'processing'}
-              onClick={() => validator.validate() && create(port)}
+              onClick={() =>
+                validator.validate() && createGateway({ port, user })
+              }
             >
               Create
             </ButtonPrimary>

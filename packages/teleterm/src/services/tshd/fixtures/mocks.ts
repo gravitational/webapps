@@ -9,7 +9,7 @@ export class MockTshClient implements types.TshClient {
   listApps: (clusterUri: string) => Promise<types.Application[]>;
   listServers: (clusterUri: string) => Promise<types.Server[]>;
   addRootCluster: (clusterUri: string) => Promise<types.Cluster>;
-  createGateway: (targetUri: string, port: string) => Promise<types.Gateway>;
+  createGateway: (params: types.CreateGatewayParams) => Promise<types.Gateway>;
   createAbortController: () => types.TshAbortController;
   getCluster: (clusterUri: string) => Promise<types.Cluster>;
   getAuthSettings: (clusterUri: string) => Promise<types.AuthSettings>;

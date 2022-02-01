@@ -33,7 +33,7 @@ export const Story = () => {
       connections: [
         {
           connected: true,
-          kind: 'nav.connection-server',
+          kind: 'connection.server',
           title: 'graves',
           id: 'morris',
           serverUri: 'brock',
@@ -41,7 +41,7 @@ export const Story = () => {
         },
         {
           connected: true,
-          kind: 'nav.connection-gateway',
+          kind: 'connection.gateway',
           title: 'graves',
           id: 'morris',
           targetUri: 'brock',

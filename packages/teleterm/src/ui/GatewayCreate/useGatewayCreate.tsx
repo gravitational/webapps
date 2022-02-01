@@ -14,9 +14,10 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { useAppContext } from 'teleterm/ui/appContextProvider';
 import useAsync from 'teleterm/ui/useAsync';
+import { GatewayProtocol } from 'teleterm/ui/services/clusters/types';
 
 export default function useGatewayCreate({
   targetUri,
@@ -25,9 +26,15 @@ export default function useGatewayCreate({
 }: Props) {
   const ctx = useAppContext();
   const db = ctx.clustersService.findDb(targetUri);
-  const [createAttempt, create] = useAsync((port: string) => {
-    return ctx.clustersService.createGateway(targetUri, port);
-  });
+
+  const [port, setPort] = useState('');
+  const [user, setUser] = useState('');
+
+  const [createAttempt, createGateway] = useAsync(
+    (params: { port: string; user?: string }) => {
+      return ctx.clustersService.createGateway({ targetUri, ...params });
+    }
+  );
 
   useEffect(() => {
     if (createAttempt.status === 'success') {
@@ -40,9 +47,14 @@ export default function useGatewayCreate({
 
   return {
     createAttempt,
-    create,
+    createGateway,
+    port,
+    user,
+    userRequired: (db.protocol as GatewayProtocol) === 'mongodb',
     db,
     onClose,
+    setPort,
+    setUser,
   };
 }
 

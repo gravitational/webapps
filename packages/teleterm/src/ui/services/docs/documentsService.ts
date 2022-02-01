@@ -27,8 +27,6 @@ import {
 import { ImmutableStore } from '../immutableStore';
 import { routing, paths } from 'teleterm/ui/uri';
 
-type OnlyDocumentUri = Pick<Document, 'uri'>;
-
 type State = {
   location: string;
   docs: Document[];
@@ -90,14 +88,16 @@ export class DocumentsService extends ImmutableStore<State> {
   }
 
   createGatewayDocument(opts: CreateGatewayDocumentOpts): DocumentGateway {
-    const { gatewayUri, targetUri, title } = opts;
+    const { gatewayUri, targetUri, title, targetUser, port } = opts;
     const uri = routing.getDocUri({ docId: unique() });
     return {
       uri,
       kind: 'doc.gateway',
       gatewayUri,
       targetUri,
+      targetUser,
       title,
+      port,
     };
   }
 
@@ -140,7 +140,7 @@ export class DocumentsService extends ImmutableStore<State> {
     return this.state.location;
   }
 
-  duplicatePtyAndActivate({ uri }: OnlyDocumentUri) {
+  duplicatePtyAndActivate(uri: string) {
     const documentIndex = this.state.docs.findIndex(d => d.uri === uri);
     const newDocument = {
       ...this.state.docs[documentIndex],
@@ -150,7 +150,7 @@ export class DocumentsService extends ImmutableStore<State> {
     this.setLocation(newDocument.uri);
   }
 
-  close({ uri }: OnlyDocumentUri) {
+  close(uri: string) {
     if (uri === paths.docHome) {
       return;
     }
@@ -160,19 +160,15 @@ export class DocumentsService extends ImmutableStore<State> {
     this.setState(draft => ({ ...draft, docs, location: nextUri }));
   }
 
-  closeOthers({ uri }: OnlyDocumentUri) {
-    const toClose = this.filter(uri);
-    this.closeMultiple(toClose);
+  closeOthers(uri: string) {
+    this.filter(uri).forEach(d => this.close(d.uri));
   }
 
-  closeToRight({ uri }: OnlyDocumentUri) {
+  closeToRight(uri: string) {
     const documentIndex = this.state.docs.findIndex(d => d.uri === uri);
-    const toClose = this.state.docs.filter((_, index) => index > documentIndex);
-    this.closeMultiple(toClose);
-  }
-
-  closeMultiple(toClose: OnlyDocumentUri[]) {
-    toClose.forEach(toClose => this.close(toClose));
+    this.state.docs
+      .filter((_, index) => index > documentIndex)
+      .forEach(d => this.close(d.uri));
   }
 
   isActive(uri: string) {

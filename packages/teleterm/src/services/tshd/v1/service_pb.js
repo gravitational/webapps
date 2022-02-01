@@ -2632,7 +2632,8 @@ proto.teleport.terminal.v1.CreateGatewayRequest.prototype.toObject = function(op
 proto.teleport.terminal.v1.CreateGatewayRequest.toObject = function(includeInstance, msg) {
   var f, obj = {
     targetUri: jspb.Message.getFieldWithDefault(msg, 1, ""),
-    port: jspb.Message.getFieldWithDefault(msg, 2, "")
+    targetUser: jspb.Message.getFieldWithDefault(msg, 2, ""),
+    localPort: jspb.Message.getFieldWithDefault(msg, 3, "")
   };
 
   if (includeInstance) {
@@ -2675,7 +2676,11 @@ proto.teleport.terminal.v1.CreateGatewayRequest.deserializeBinaryFromReader = fu
       break;
     case 2:
       var value = /** @type {string} */ (reader.readString());
-      msg.setPort(value);
+      msg.setTargetUser(value);
+      break;
+    case 3:
+      var value = /** @type {string} */ (reader.readString());
+      msg.setLocalPort(value);
       break;
     default:
       reader.skipField();
@@ -2713,10 +2718,17 @@ proto.teleport.terminal.v1.CreateGatewayRequest.serializeBinaryToWriter = functi
       f
     );
   }
-  f = message.getPort();
+  f = message.getTargetUser();
   if (f.length > 0) {
     writer.writeString(
       2,
+      f
+    );
+  }
+  f = message.getLocalPort();
+  if (f.length > 0) {
+    writer.writeString(
+      3,
       f
     );
   }
@@ -2742,10 +2754,10 @@ proto.teleport.terminal.v1.CreateGatewayRequest.prototype.setTargetUri = functio
 
 
 /**
- * optional string port = 2;
+ * optional string target_user = 2;
  * @return {string}
  */
-proto.teleport.terminal.v1.CreateGatewayRequest.prototype.getPort = function() {
+proto.teleport.terminal.v1.CreateGatewayRequest.prototype.getTargetUser = function() {
   return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 2, ""));
 };
 
@@ -2754,8 +2766,26 @@ proto.teleport.terminal.v1.CreateGatewayRequest.prototype.getPort = function() {
  * @param {string} value
  * @return {!proto.teleport.terminal.v1.CreateGatewayRequest} returns this
  */
-proto.teleport.terminal.v1.CreateGatewayRequest.prototype.setPort = function(value) {
+proto.teleport.terminal.v1.CreateGatewayRequest.prototype.setTargetUser = function(value) {
   return jspb.Message.setProto3StringField(this, 2, value);
+};
+
+
+/**
+ * optional string local_port = 3;
+ * @return {string}
+ */
+proto.teleport.terminal.v1.CreateGatewayRequest.prototype.getLocalPort = function() {
+  return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 3, ""));
+};
+
+
+/**
+ * @param {string} value
+ * @return {!proto.teleport.terminal.v1.CreateGatewayRequest} returns this
+ */
+proto.teleport.terminal.v1.CreateGatewayRequest.prototype.setLocalPort = function(value) {
+  return jspb.Message.setProto3StringField(this, 3, value);
 };
 
 

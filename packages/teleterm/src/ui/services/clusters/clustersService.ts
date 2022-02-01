@@ -5,6 +5,7 @@ import {
   AuthSettings,
   LoginParams,
   ClustersServiceState,
+  CreateGatewayParams,
 } from './types';
 import { ImmutableStore } from '../immutableStore';
 import { routing } from 'teleterm/ui/uri';
@@ -258,8 +259,8 @@ export class ClustersService extends ImmutableStore<ClustersServiceState> {
     return (await this.client.getAuthSettings(clusterUri)) as AuthSettings;
   }
 
-  async createGateway(targetUri: string, port?: string) {
-    const gateway = await this.client.createGateway(targetUri, port);
+  async createGateway(params: CreateGatewayParams) {
+    const gateway = await this.client.createGateway(params);
     this.setState(draft => {
       draft.gateways.set(gateway.uri, gateway);
     });

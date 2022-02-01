@@ -29,6 +29,5 @@ contextBridge.exposeInMainWorld('electron', {
   tshClient,
   ptyServiceClient,
   loggerService,
-
   fileStorage,
 } as ElectronGlobals);

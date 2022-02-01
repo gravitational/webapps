@@ -30,7 +30,7 @@ function getState(): State {
     items: [
       {
         connected: true,
-        kind: 'nav.connection-server',
+        kind: 'connection.server',
         title: 'graves',
         id: 'e9c4fbc2',
         serverUri: 'brock',
@@ -38,7 +38,7 @@ function getState(): State {
       },
       {
         connected: true,
-        kind: 'nav.connection-gateway',
+        kind: 'connection.gateway',
         title: 'graves',
         id: '68b6a281',
         targetUri: 'brock',
@@ -47,7 +47,7 @@ function getState(): State {
       },
       {
         connected: false,
-        kind: 'nav.connection-server',
+        kind: 'connection.server',
         title: 'graves',
         id: '949651ed',
         serverUri: 'brock',

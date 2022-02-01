@@ -41,7 +41,8 @@ const commands = {
         const doc = ctx.docsService.createGatewayDocument({
           title: db.name,
           gatewayUri: gatewayUri,
-          targetUri: args.dbUri,
+          targetUri: gateway.targetUri,
+          targetUser: gateway.targetUser,
           port: gateway.localPort,
         });
 
