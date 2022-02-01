@@ -21,6 +21,7 @@ export const paths = {
   leafCluster: '/clusters/:rootClusterId/leaves/:leafClusterId',
   server:
     '/clusters/:rootClusterId/(leaves)?/:leafClusterId?/servers/:serverId',
+  kube: '/clusters/:rootClusterId/(leaves)?/:leafClusterId?/kubes/:kubeId',
   gateway: '/gateways/:gatewayId',
   docHome: '/docs/home',
   doc: '/docs/:docId',
@@ -31,6 +32,10 @@ export const routing = {
     const leafMatch = routing.parseUri(uri, paths.leafCluster);
     const rootMatch = routing.parseUri(uri, paths.rootCluster);
     return leafMatch || rootMatch;
+  },
+
+  parseKubeUri(uri: string) {
+    return routing.parseUri(uri, paths.kube);
   },
 
   parseServerUri(uri: string) {
@@ -91,6 +96,7 @@ export type Params = {
   rootClusterId?: string;
   leafClusterId?: string;
   serverId?: string;
+  kubeId?: string;
   dbId?: string;
   gatewayId?: string;
   tabId?: string;

@@ -17,6 +17,7 @@ limitations under the License.
 import { useStore } from 'shared/libs/stores';
 import { unique } from 'teleterm/ui/utils/uid';
 import {
+  DocumentTshKube,
   Document,
   DocumentGateway,
   DocumentTshNode,
@@ -68,6 +69,21 @@ export class DocumentsService extends ImmutableStore<State> {
       clusterUri: opts.clusterUri,
       title: clusterName,
       kind: 'doc.cluster',
+    };
+  }
+
+  createTshKubeDocument(kubeUri: string): DocumentTshKube {
+    const { params } = routing.parseKubeUri(kubeUri);
+    const uri = routing.getDocUri({ docId: unique() });
+    return {
+      uri,
+      kind: 'doc.terminal_tsh_kube',
+      status: 'connecting',
+      rootClusterId: params.rootClusterId,
+      leafClusterId: params.leafClusterId,
+      kubeId: params.kubeId,
+      kubeUri,
+      title: params.kubeId,
     };
   }
 

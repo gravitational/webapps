@@ -16,14 +16,16 @@ limitations under the License.
 
 import { useClusterContext } from 'teleterm/ui/DocumentCluster/clusterContext';
 
-export default function useKubes() {
+export function useKubes() {
   const ctx = useClusterContext();
   const kubes = ctx.getKubes();
   const syncStatus = ctx.getSyncStatus().kubes;
 
   return {
+    pageSize: 100,
     kubes,
     syncStatus,
+    connect: ctx.connectKube,
   };
 }
 

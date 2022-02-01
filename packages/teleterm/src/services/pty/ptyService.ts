@@ -69,6 +69,17 @@ function buildOptions(settings: RuntimeSettings, cmd: PtyCommand): PtyOptions {
         env,
       };
 
+    case 'tsh-kube-login':
+      if (cmd.leafClusterId) {
+        env['TELEPORT_CLUSTER'] = cmd.leafClusterId;
+      }
+
+      return {
+        path: settings.tshd.binaryPath,
+        args: [`--proxy=${cmd.rootClusterId}`, 'kube', 'login', cmd.kubeId],
+        env,
+      };
+
     case 'tsh-login':
       if (cmd.leafClusterId) {
         env['TELEPORT_CLUSTER'] = cmd.leafClusterId;
