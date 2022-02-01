@@ -76,7 +76,9 @@ export const ProgressBarDesktop = (props: { playerClient: PlayerClient }) => {
       });
     });
 
-    return playerClient.nuke();
+    return () => {
+      playerClient.nuke();
+    };
   }, [playerClient]);
 
   return <ProgressBar {...state} />;
