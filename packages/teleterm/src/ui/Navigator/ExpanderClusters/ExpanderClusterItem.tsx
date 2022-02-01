@@ -4,6 +4,7 @@ import { ClusterNavItem } from './types';
 import NavItem from 'teleterm/ui/Navigator/NavItem';
 import LinearProgress from 'teleterm/ui/components/LinearProgress';
 import { Flex, Text, Box } from 'design';
+import styled from 'styled-components';
 
 const simpleItemPadding = 5;
 const expandedItemPadding = 7;
@@ -22,9 +23,13 @@ function ExpanderClusterWithLeaves(props: ExpanderClusterItem) {
 
   return (
     <Expander>
-      <ExpanderHeader pl="18px">
+      <StyledExpanderHeader
+        toggleTrigger="icon"
+        pl="18px"
+        $active={item.active}
+      >
         <ClusterItem {...props} />
-      </ExpanderHeader>
+      </StyledExpanderHeader>
       <ExpanderContent>
         <Box>
           {item.leaves.map(tc => (
@@ -86,3 +91,17 @@ type ExpanderClusterItem = {
   onContextMenu(item: ClusterNavItem): void;
   onOpen(clusterUri: string): void;
 };
+
+const StyledExpanderHeader = styled(ExpanderHeader)(props => {
+  const colors = props.$active
+    ? {
+        color: props.theme.colors.primary.contrastText,
+        background: props.theme.colors.primary.lighter,
+      }
+    : {};
+
+  return {
+    ...colors,
+    height: '32px'
+  };
+});

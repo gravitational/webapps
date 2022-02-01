@@ -19,6 +19,7 @@ import styled from 'styled-components';
 import { space, color } from 'design/system';
 import * as Icons from 'design/Icon';
 import { Flex } from 'design';
+import Icon from 'design/Icon';
 
 const AccordingContext = React.createContext<AccordingContextState>(null);
 
@@ -36,17 +37,41 @@ const Expander: React.FC = props => {
 };
 
 export const ExpanderHeader: React.FC<ExpanderHeaderProps> = props => {
-  const { onContextMenu, children, ...styles } = props;
+  const {
+    onContextMenu,
+    children,
+    toggleTrigger = 'header',
+    icons: { Expanded = Icons.CarrotDown, Collapsed = Icons.CarrotRight } = {},
+    ...styles
+  } = props;
   const ctx = React.useContext(AccordingContext);
-  const ArrowIcon = ctx.expanded ? Icons.CarrotDown : Icons.CarrotRight;
+  const ArrowIcon = ctx.expanded ? Expanded : Collapsed;
+
+  function handleHeaderClick(event: MouseEvent) {
+    if (toggleTrigger === 'header') {
+      ctx.toggle();
+      event.stopPropagation();
+    }
+  }
+
+  function handleIconClick(event: MouseEvent) {
+    if (toggleTrigger === 'icon') {
+      ctx.toggle();
+      event.stopPropagation();
+    }
+  }
 
   return (
-    <StyledHeader {...styles} onContextMenu={onContextMenu}>
+    <StyledHeader
+      {...styles}
+      onContextMenu={onContextMenu}
+      onClick={handleHeaderClick}
+    >
       <ArrowIcon
         mr="2"
         color="inherit"
         style={{ fontSize: '12px' }}
-        onClick={ctx.toggle}
+        onClick={handleIconClick}
       />
       <Flex flex="1" overflow="hidden">
         {children}
@@ -112,7 +137,11 @@ type AccordingContextState = {
 };
 
 type ExpanderHeaderProps = {
-  onClick?: () => void;
   onContextMenu?: () => void;
+  toggleTrigger?: 'icon' | 'header';
+  icons?: {
+    Expanded: typeof Icon;
+    Collapsed: typeof Icon;
+  };
   [key: string]: any;
 };

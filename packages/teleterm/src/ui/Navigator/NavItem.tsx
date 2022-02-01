@@ -21,13 +21,14 @@ import { color, space } from 'design/system';
 type Props = {
   active: boolean;
   onClick?: () => void;
+  onContextMenu?(): void;
   [key: string]: any;
 };
 
 const NavItem: React.FC<Props> = props => {
-  const { active, onClick, ...styles } = props;
+  const { active, onClick, onContextMenu, ...styles } = props;
   return (
-    <StyledNavItem $active={active} {...styles} onClick={onClick}>
+    <StyledNavItem $active={active} {...styles} onClick={onClick} onContextMenu={onContextMenu}>
       {props.children}
     </StyledNavItem>
   );
