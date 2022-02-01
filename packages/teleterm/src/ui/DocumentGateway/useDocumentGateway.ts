@@ -26,7 +26,12 @@ export default function useGateway(doc: types.DocumentGateway) {
 
   const [reconnectAttempt, createGateway, setReconnectAttempt] = useAsync(
     async () => {
-      const gw = await ctx.clustersService.createGateway(doc.targetUri, '');
+      const gw = await ctx.clustersService.createGateway({
+        targetUri: doc.targetUri,
+        port: doc.port,
+        user: doc.targetUser,
+      });
+
       ctx.docsService.update(doc.uri, {
         gatewayUri: gw.uri,
       });

@@ -50,24 +50,24 @@ export class ConnectionTrackerService extends ImmutableStore<ConnectionTrackerSt
     const conn = this.state.connections.find(i => i.id === id);
 
     switch (conn.kind) {
-      case 'nav.connection-server':
-        let tsdDoc = this._documentService
+      case 'connection.server':
+        let srvDoc = this._documentService
           .getTshNodeDocuments()
           .find(
             doc => conn.serverUri === doc.serverUri && conn.login === doc.login
           );
 
-        if (!tsdDoc) {
-          tsdDoc = this._documentService.createTshNodeDocument(conn.serverUri);
-          tsdDoc.status = 'disconnected';
-          tsdDoc.login = conn.login;
-          tsdDoc.title = conn.title;
+        if (!srvDoc) {
+          srvDoc = this._documentService.createTshNodeDocument(conn.serverUri);
+          srvDoc.status = 'disconnected';
+          srvDoc.login = conn.login;
+          srvDoc.title = conn.title;
 
-          this._documentService.add(tsdDoc);
+          this._documentService.add(srvDoc);
         }
-        this._documentService.open(tsdDoc.uri);
+        this._documentService.open(srvDoc.uri);
         return;
-      case 'nav.connection-gateway':
+      case 'connection.gateway':
         let gwDoc = this._documentService
           .getGatewayDocuments()
           .find(
@@ -77,8 +77,10 @@ export class ConnectionTrackerService extends ImmutableStore<ConnectionTrackerSt
         if (!gwDoc) {
           gwDoc = this._documentService.createGatewayDocument({
             targetUri: conn.targetUri,
+            targetUser: conn.targetUser,
             title: conn.title,
             gatewayUri: conn.gatewayUri,
+            port: conn.port,
           });
 
           this._documentService.add(gwDoc);
@@ -103,7 +105,7 @@ export class ConnectionTrackerService extends ImmutableStore<ConnectionTrackerSt
     this.setState(draft => {
       // assign default "connected" values
       draft.connections.forEach(i => {
-        if (i.kind === 'nav.connection-gateway') {
+        if (i.kind === 'connection.gateway') {
           i.connected = !!this._clusterService.findGateway(i.gatewayUri);
         } else {
           i.connected = false;
@@ -124,7 +126,7 @@ export class ConnectionTrackerService extends ImmutableStore<ConnectionTrackerSt
           case 'doc.gateway':
             const gwConn = draft.connections.find(
               i =>
-                i.kind === 'nav.connection-gateway' &&
+                i.kind === 'connection.gateway' &&
                 i.targetUri === doc.targetUri &&
                 i.port === doc.port
             ) as GatewayConnection;
@@ -144,7 +146,7 @@ export class ConnectionTrackerService extends ImmutableStore<ConnectionTrackerSt
           case 'doc.terminal_tsh_node':
             const tshConn = draft.connections.find(
               i =>
-                i.kind === 'nav.connection-server' &&
+                i.kind === 'connection.server' &&
                 i.serverUri === doc.serverUri &&
                 i.login === doc.login
             );
@@ -170,7 +172,7 @@ export class ConnectionTrackerService extends ImmutableStore<ConnectionTrackerSt
       title: doc.title,
       login: doc.login,
       serverUri: doc.serverUri,
-      kind: 'nav.connection-server',
+      kind: 'connection.server',
     };
   }
 
@@ -181,7 +183,8 @@ export class ConnectionTrackerService extends ImmutableStore<ConnectionTrackerSt
       title: doc.title,
       port: doc.port,
       targetUri: doc.targetUri,
-      kind: 'nav.connection-gateway',
+      targetUser: doc.targetUser,
+      kind: 'connection.gateway',
       gatewayUri: doc.gatewayUri,
     };
   }
@@ -206,12 +209,12 @@ export type ConnectionTrackerState = {
 };
 
 type Item = {
-  kind: 'nav.connection-server' | 'nav.connection-gateway';
+  kind: 'connection.server' | 'connection.gateway';
   connected: boolean;
 };
 
 export interface ServerConnection extends Item {
-  kind: 'nav.connection-server';
+  kind: 'connection.server';
   title: string;
   id?: string;
   serverUri: string;
@@ -219,12 +222,13 @@ export interface ServerConnection extends Item {
 }
 
 export interface GatewayConnection extends Item {
-  kind: 'nav.connection-gateway';
+  kind: 'connection.gateway';
   title: string;
   id: string;
   targetUri: string;
+  targetUser?: string;
+  port?: string;
   gatewayUri: string;
-  port: string;
 }
 
 export type Connection = ServerConnection | GatewayConnection;

@@ -16,22 +16,11 @@ function createService(mockDocks: Document[]): DocumentsService {
   return service;
 }
 
-test('close multiple docs', () => {
-  const mockedDocuments = getMockedDocuments();
-  const service = createService(mockedDocuments);
-
-  service.closeMultiple([mockedDocuments[0], mockedDocuments[1]]);
-
-  expect(service.getDocuments()).not.toContain(mockedDocuments[0]);
-  expect(service.getDocuments()).not.toContain(mockedDocuments[1]);
-  expect(service.getDocuments()).toContain(mockedDocuments[2]);
-});
-
 test('close other docs', () => {
   const mockedDocks = getMockedDocuments();
   const service = createService(mockedDocks);
 
-  service.closeOthers(mockedDocks[0]);
+  service.closeOthers(mockedDocks[0].uri);
 
   expect(service.getDocuments()).toContain(mockedDocks[0]);
   expect(service.getDocuments()).not.toContain(mockedDocks[1]);
@@ -42,7 +31,7 @@ test('close docs to the right', () => {
   const mockedDocks = getMockedDocuments();
   const service = createService(mockedDocks);
 
-  service.closeToRight(mockedDocks[1]);
+  service.closeToRight(mockedDocks[1].uri);
 
   expect(service.getDocuments()).toContain(mockedDocks[0]);
   expect(service.getDocuments()).toContain(mockedDocks[1]);
@@ -56,7 +45,7 @@ test('duplicate PTY doc and activate it', () => {
   const ptyToDuplicateIndex = service.getDocuments().indexOf(ptyToDuplicate);
   const initialLength = service.getDocuments().length;
 
-  service.duplicatePtyAndActivate(ptyToDuplicate);
+  service.duplicatePtyAndActivate(ptyToDuplicate.uri);
 
   expect(service.getDocuments()).toHaveLength(initialLength + 1);
   expect({

@@ -340,8 +340,11 @@ export class CreateGatewayRequest extends jspb.Message {
     getTargetUri(): string;
     setTargetUri(value: string): CreateGatewayRequest;
 
-    getPort(): string;
-    setPort(value: string): CreateGatewayRequest;
+    getTargetUser(): string;
+    setTargetUser(value: string): CreateGatewayRequest;
+
+    getLocalPort(): string;
+    setLocalPort(value: string): CreateGatewayRequest;
 
 
     serializeBinary(): Uint8Array;
@@ -357,7 +360,8 @@ export class CreateGatewayRequest extends jspb.Message {
 export namespace CreateGatewayRequest {
     export type AsObject = {
         targetUri: string,
-        port: string,
+        targetUser: string,
+        localPort: string,
     }
 }
 

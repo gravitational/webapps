@@ -193,10 +193,11 @@ export default function createClient(addr: string) {
       });
     },
 
-    async createGateway(targetUri = '', port = '') {
+    async createGateway(params: types.CreateGatewayParams) {
       const req = new api.CreateGatewayRequest()
-        .setTargetUri(targetUri)
-        .setPort(port);
+        .setTargetUri(params.targetUri)
+        .setTargetUser(params.user)
+        .setLocalPort(params.port);
       return new Promise<types.Gateway>((resolve, reject) => {
         tshd.createGateway(req, (err, response) => {
           if (err) {
