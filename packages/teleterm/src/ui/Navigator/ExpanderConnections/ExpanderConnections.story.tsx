@@ -25,6 +25,7 @@ export default {
 
 function getState(): State {
   return {
+    onContextMenu() {},
     processRemove() {},
     processClick() {},
     items: [

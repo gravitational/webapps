@@ -24,6 +24,8 @@ export class MockMainProcessClient implements MainProcessClient {
 
   openTabContextMenu() {}
 
+  openConnectionContextMenu() {}
+
   configService = {
     get: () => ({
       keyboardShortcuts: {},

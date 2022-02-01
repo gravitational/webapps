@@ -17,14 +17,42 @@ limitations under the License.
 import { useAppContext } from 'teleterm/ui/appContextProvider';
 
 export function useExpanderConnections() {
-  const { connectionTracker } = useAppContext();
+  const { connectionTracker, mainProcessClient, docsService } = useAppContext();
 
   connectionTracker.useState();
+
+  function onContextMenu(id: string) {
+    if (connectionTracker.findConnection(id).kind === 'connection.gateway') {
+      return; //TODO: add 'connection.gateway' support
+    }
+
+    mainProcessClient.openConnectionContextMenu({
+      isConnected: connectionTracker.isConnected(id),
+      onConnect() {
+        console.log('TODO');
+      },
+      onClose() {
+        connectionTracker
+          .findAllTshDocuments(id)
+          .forEach(document => docsService.close(document.uri));
+      },
+      onRemove() {
+        connectionTracker.processItemRemove(id);
+      },
+      onDuplicate() {
+        const [tshDocument] = connectionTracker.findAllTshDocuments(id);
+        if (tshDocument) {
+          docsService.duplicatePtyAndActivate(tshDocument.uri);
+        }
+      },
+    });
+  }
 
   return {
     processRemove: connectionTracker.processItemRemove,
     processClick: connectionTracker.processItemClick,
     items: connectionTracker.state.connections,
+    onContextMenu,
   };
 }
 

@@ -17,6 +17,7 @@ import {
   subscribeToConfigServiceEvents,
 } from '../services/config';
 import { subscribeToTabContextMenuEvent } from './contextMenus/tabContextMenu';
+import { subscribeToConnectionContextMenuEvent } from './contextMenus/connectionContextMenu';
 
 type Options = {
   settings: RuntimeSettings;
@@ -103,6 +104,7 @@ export default class MainProcess {
     });
 
     subscribeToTerminalContextMenuEvent();
+    subscribeToConnectionContextMenuEvent();
     subscribeToClusterContextMenuEvent();
     subscribeToTabContextMenuEvent();
     subscribeToConfigServiceEvents(this.configService);

@@ -46,6 +46,25 @@ export class ConnectionTrackerService extends ImmutableStore<ConnectionTrackerSt
     return useStore(this).state;
   }
 
+  findAllTshDocuments(id: string) {
+    const conn = this.state.connections.find(i => i.id === id);
+    if (conn.kind === 'connection.server') {
+      return this._documentService
+        .getTshNodeDocuments()
+        .filter(
+          doc => conn.serverUri === doc.serverUri && conn.login === doc.login
+        );
+    }
+  }
+
+  isConnected(id: string) {
+    return this.findConnection(id).connected;
+  }
+
+  findConnection(id: string) {
+    return this.state.connections.find(i => i.id === id);
+  }
+
   processItemClick = (id: string) => {
     const conn = this.state.connections.find(i => i.id === id);
 

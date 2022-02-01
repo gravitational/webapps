@@ -18,6 +18,7 @@ export type RuntimeSettings = {
 export type MainProcessClient = {
   getRuntimeSettings(): RuntimeSettings;
   openTerminalContextMenu(): void;
+  openConnectionContextMenu(options: ConnectionContextMenuOptions): void;
   openClusterContextMenu(options: ClusterContextMenuOptions): void;
   openTabContextMenu(options: TabContextMenuOptions): void;
   configService: ConfigService;
@@ -34,6 +35,14 @@ export interface ClusterContextMenuOptions {
   onRemove(): void;
 }
 
+export interface ConnectionContextMenuOptions {
+  isConnected: boolean;
+  onConnect(): void;
+  onDuplicate(): void;
+  onClose(): void;
+  onRemove(): void;
+}
+
 export interface TabContextMenuOptions {
   documentKind: Kind;
   onClose(): void;
@@ -43,6 +52,7 @@ export interface TabContextMenuOptions {
 }
 
 export const ClusterContextMenuEventChannel = 'ClusterContextMenuEventChannel';
+export const ConnectionContextMenuEventChannel = 'ConnectionContextMenuEventChannel';
 export const TerminalContextMenuEventChannel = 'TerminalContextMenuEventChannel';
 export const TabContextMenuEventChannel = 'TabContextMenuEventChannel';
 export const ConfigServiceEventChannel = 'ConfigServiceEventChannel';
@@ -51,6 +61,13 @@ export enum ClusterContextMenuEventType {
   Refresh = 'Refresh',
   Login = 'Login',
   Logout = 'Logout',
+  Remove = 'Remove',
+}
+
+export enum ConnectionContextMenuEventType {
+  Connect = 'Connect',
+  Duplicate = 'Duplicate',
+  Close = 'Close',
   Remove = 'Remove',
 }
 

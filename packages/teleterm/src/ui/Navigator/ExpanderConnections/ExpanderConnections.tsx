@@ -48,6 +48,7 @@ export function ExpanderConnectionsPresentational(props: State) {
             item={i}
             onOpen={props.processClick}
             onRemove={props.processRemove}
+            onContextMenu={props.onContextMenu}
           />
         ))}
       </ExpanderContent>
