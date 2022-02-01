@@ -62,7 +62,7 @@ function ClusterItem(props: ExpanderClusterItem & { pl?: number }) {
         justifyContent="space-between"
         flex="1"
         width="100%"
-        onContextMenu={props.onContextMenu}
+        onContextMenu={() => props.onContextMenu(props.item)}
         style={{ position: 'relative' }}
       >
         <Flex
@@ -83,6 +83,6 @@ function ClusterItem(props: ExpanderClusterItem & { pl?: number }) {
 
 type ExpanderClusterItem = {
   item: ClusterNavItem;
-  onContextMenu(): void;
+  onContextMenu(item: ClusterNavItem): void;
   onOpen(clusterUri: string): void;
 };

@@ -51,8 +51,11 @@ export function useExpanderClusters(): ExpanderClusterState {
   }
 
   function onOpenContextMenu(navItem: ClusterNavItem) {
+    const isRoot = Array.isArray(navItem.leaves);
+
     ctx.mainProcessClient.openClusterContextMenu({
-      isClusterConnected: navItem.connected,
+      isConnected: navItem.connected,
+      isRoot,
       onLogin() {
         onLogin(navItem.clusterUri);
       },
@@ -63,7 +66,9 @@ export function useExpanderClusters(): ExpanderClusterState {
         onRemove(navItem.clusterUri);
       },
       onRefresh() {
-        ctx.clustersService.syncRootCluster(navItem.clusterUri);
+        isRoot
+          ? ctx.clustersService.syncRootCluster(navItem.clusterUri)
+          : ctx.clustersService.syncLeafCluster(navItem.clusterUri);
       },
     });
   }
@@ -103,7 +108,7 @@ function initItems(ctx: AppContext): ClusterNavItem[] {
         title: cluster.name,
         clusterUri: cluster.uri,
         connected: cluster.connected,
-        syncing: syncing,
+        syncing,
         leaves: cluster.connected ? findLeaves(cluster.uri) : [],
       };
     });

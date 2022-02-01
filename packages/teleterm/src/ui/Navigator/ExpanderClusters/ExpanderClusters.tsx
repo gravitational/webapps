@@ -46,7 +46,7 @@ export function ExpanderClustersPresentational(props: ExpanderClusterState) {
       key={i.clusterUri}
       item={i}
       onOpen={onOpen}
-      onContextMenu={() => onOpenContextMenu?.(i)}
+      onContextMenu={onOpenContextMenu}
     />
   ));
 

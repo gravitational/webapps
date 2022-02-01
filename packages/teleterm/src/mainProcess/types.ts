@@ -26,7 +26,8 @@ export type MainProcessClient = {
 export type Platform = NodeJS.Platform;
 
 export interface ClusterContextMenuOptions {
-  isClusterConnected: boolean;
+  isConnected: boolean;
+  isRoot: boolean;
   onRefresh(): void;
   onLogin(): void;
   onLogout(): void;

@@ -7,7 +7,7 @@ import {
 
 type MainClusterContextMenuOptions = Pick<
   ClusterContextMenuOptions,
-  'isClusterConnected'
+  'isConnected' | 'isRoot'
 >;
 
 export function subscribeToClusterContextMenuEvent(): void {
@@ -18,7 +18,7 @@ export function subscribeToClusterContextMenuEvent(): void {
         Menu.buildFromTemplate([
           {
             label: 'Refresh',
-            enabled: options.isClusterConnected,
+            enabled: options.isConnected,
             click: () => resolve(ClusterContextMenuEventType.Refresh),
           },
           {
@@ -26,12 +26,12 @@ export function subscribeToClusterContextMenuEvent(): void {
           },
           {
             label: 'Login',
-            enabled: !options.isClusterConnected,
+            enabled: options.isRoot && !options.isConnected,
             click: () => resolve(ClusterContextMenuEventType.Login),
           },
           {
             label: 'Logout',
-            enabled: options.isClusterConnected,
+            enabled: options.isRoot && options.isConnected,
             click: () => resolve(ClusterContextMenuEventType.Logout),
           },
           {
@@ -39,6 +39,7 @@ export function subscribeToClusterContextMenuEvent(): void {
           },
           {
             label: 'Remove',
+            enabled: options.isRoot,
             click: () => resolve(ClusterContextMenuEventType.Remove),
           },
         ]).popup({
@@ -53,7 +54,8 @@ export async function openClusterContextMenu(
   options: ClusterContextMenuOptions
 ): Promise<void> {
   const mainOptions: MainClusterContextMenuOptions = {
-    isClusterConnected: options.isClusterConnected,
+    isConnected: options.isConnected,
+    isRoot: options.isRoot,
   };
   const eventType = await ipcRenderer.invoke(
     ClusterContextMenuEventChannel,
