@@ -412,9 +412,9 @@ export class ClustersService extends ImmutableStore<ClustersServiceState> {
 
   searchDbs(clusterUri: string, query: SearchQuery) {
     function cb(targetValue: any[], searchValue: string, propName: string) {
-      if (propName === 'tags') {
+      if (propName === 'labelsList') {
         return targetValue.some(item => {
-          return item.toLocaleUpperCase().indexOf(searchValue) !== -1;
+          return item.value.toLocaleUpperCase().indexOf(searchValue) !== -1;
         });
       }
     }
@@ -422,7 +422,7 @@ export class ClustersService extends ImmutableStore<ClustersServiceState> {
     const databases = this.findDbs(clusterUri);
     return databases.filter(obj =>
       isMatch(obj, query.search, {
-        searchableProps: ['name', 'desc', 'title', 'tags'],
+        searchableProps: ['name', 'desc', 'labelsList'],
         cb: cb,
       })
     );
@@ -430,9 +430,9 @@ export class ClustersService extends ImmutableStore<ClustersServiceState> {
 
   searchApps(clusterUri: string, query: SearchQuery) {
     function cb(targetValue: any[], searchValue: string, propName: string) {
-      if (propName === 'tags') {
+      if (propName === 'labelsList') {
         return targetValue.some(item => {
-          return item.toLocaleUpperCase().indexOf(searchValue) !== -1;
+          return item.value.toLocaleUpperCase().indexOf(searchValue) !== -1;
         });
       }
     }
@@ -440,7 +440,7 @@ export class ClustersService extends ImmutableStore<ClustersServiceState> {
     const apps = this.findApps(clusterUri);
     return apps.filter(obj =>
       isMatch(obj, query.search, {
-        searchableProps: ['name', 'publicAddr', 'description', 'tags'],
+        searchableProps: ['name', 'publicAddr', 'description', 'labelsList'],
         cb,
       })
     );
@@ -455,9 +455,9 @@ export class ClustersService extends ImmutableStore<ClustersServiceState> {
 
   searchKubes(clusterUri: string, query: SearchQuery) {
     function cb(targetValue: any[], searchValue: string, propName: string) {
-      if (propName === 'tags') {
+      if (propName === 'labelsList') {
         return targetValue.some(item => {
-          return item.toLocaleUpperCase().indexOf(searchValue) !== -1;
+          return item.value.toLocaleUpperCase().indexOf(searchValue) !== -1;
         });
       }
     }
@@ -477,9 +477,9 @@ export class ClustersService extends ImmutableStore<ClustersServiceState> {
         return 'TUNNEL'.indexOf(searchValue) !== -1;
       }
 
-      if (propName === 'tags') {
+      if (propName === 'labelsList') {
         return targetValue.some(item => {
-          return item.toLocaleUpperCase().indexOf(searchValue) !== -1;
+          return item.value.toLocaleUpperCase().indexOf(searchValue) !== -1;
         });
       }
     }
@@ -487,7 +487,7 @@ export class ClustersService extends ImmutableStore<ClustersServiceState> {
     const servers = this.findServers(clusterUri);
     return servers.filter(obj =>
       isMatch(obj, query.search, {
-        searchableProps: ['hostname', 'addr', 'tags', 'tunnel'],
+        searchableProps: ['hostname', 'addr', 'labelsList', 'tunnel'],
         cb,
       })
     );
