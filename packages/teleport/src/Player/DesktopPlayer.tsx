@@ -20,7 +20,7 @@ export const DesktopPlayer = ({
       clusterId,
     });
 
-  let doNothing = () => {};
+  const doNothing = () => {};
 
   return (
     <StyledPlayer>
