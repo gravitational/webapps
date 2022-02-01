@@ -6,13 +6,16 @@ import { PngFrame, ClientScreenSpec } from 'teleport/lib/tdp/codec';
 import cfg from 'teleport/config';
 import { getAccessToken, getHostName } from 'teleport/services/api';
 import TdpClientCanvas from 'teleport/components/TdpClientCanvas';
+import { throttle } from 'lodash';
 
 export const DesktopPlayer = ({
   sid,
   clusterId,
+  durationMs,
 }: {
   sid: string;
   clusterId: string;
+  durationMs: number;
 }) => {
   const { playerClient, tdpCliOnPngFrame, tdpCliOnClientScreenSpec } =
     useDesktopPlayer({
@@ -42,19 +45,28 @@ export const DesktopPlayer = ({
         // See https://gaurav5430.medium.com/css-flex-positioning-gotchas-child-expands-to-more-than-the-width-allowed-by-the-parent-799c37428dd6.
         style={{ display: 'flex', flexGrow: 1, overflow: 'hidden' }}
       />
-      <ProgressBarDesktop playerClient={playerClient} />
+      <ProgressBarDesktop playerClient={playerClient} durationMs={durationMs} />
     </StyledPlayer>
   );
 };
 
-export const ProgressBarDesktop = (props: { playerClient: PlayerClient }) => {
-  const { playerClient } = props;
+export const ProgressBarDesktop = (props: {
+  playerClient: PlayerClient;
+  durationMs: number;
+}) => {
+  const { playerClient, durationMs } = props;
+
+  const toHuman = (currentMs: number) => {
+    const date = new Date(null);
+    date.setMilliseconds(currentMs);
+    return date.toISOString().substr(14, 5);
+  };
 
   const [state, setState] = useState({
-    max: 500, // TODO: total time of the recording in ms
-    min: 0, // TODO: the recording always starts at 0 ms
-    current: 0, // TODO: the current time the playback is at
-    time: '-:--', // TODO: the human readable time the playback is at
+    max: durationMs,
+    min: 0,
+    current: 0, // the recording always starts at 0 ms
+    time: toHuman(0),
     isPlaying: true, // determines whether play or pause symbol is shown
     move: () => {
       // TODO
@@ -76,7 +88,41 @@ export const ProgressBarDesktop = (props: { playerClient: PlayerClient }) => {
       });
     });
 
-    return playerClient.nuke();
+    const throttledUpdateCurrentTime = throttle(
+      currentTimeMs => {
+        setState(prevState => {
+          return {
+            ...prevState,
+            current: currentTimeMs,
+            time: toHuman(currentTimeMs),
+          };
+        });
+      },
+      // Magic number to throttle progress bar updates so that the playback is smoother.
+      50
+    );
+
+    playerClient.addListener(
+      PlayerClientEvent.UPDATE_CURRENT_TIME,
+      currentTimeMs => throttledUpdateCurrentTime(currentTimeMs)
+    );
+
+    playerClient.addListener(PlayerClientEvent.SESSION_END, () => {
+      throttledUpdateCurrentTime.cancel();
+      // TODO: This logic can cause the progress bar to jump abruptly to the end, if the session was sitting without
+      // any events happening for a while before being ended, e.g. if a user got an error screen, sat there
+      // reading it for 10 seconds, and then ended the session. We can solve this by adding logic for calculating
+      // the difference between durationMs and prevState.current, and then updating state on a regular interval until
+      // we reach durationMs.
+      setState(prevState => {
+        return { ...prevState, current: durationMs };
+      });
+    });
+
+    return () => {
+      throttledUpdateCurrentTime.cancel();
+      playerClient.nuke();
+    };
   }, [playerClient]);
 
   return <ProgressBar {...state} />;

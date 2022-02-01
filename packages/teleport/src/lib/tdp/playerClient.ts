@@ -22,11 +22,11 @@ enum Action {
 
 export enum PlayerClientEvent {
   TOGGLE_PLAY_PAUSE = 'play/pause',
+  UPDATE_CURRENT_TIME = 'time',
+  SESSION_END = 'end',
 }
 
 export class PlayerClient extends Client {
-  currentMs = 0; // the current time of the playback in milliseconds
-  totalMs: number; // the total time of the playback in milliseconds
   textDecoder = new TextDecoder();
 
   constructor(socketAddr: string) {
@@ -41,9 +41,16 @@ export class PlayerClient extends Client {
 
   // Overrides Client implementation.
   processMessage(buffer: ArrayBuffer) {
-    const json = JSON.parse(this.textDecoder.decode(buffer));
-    this.currentMs = json.ms;
+    const raw = this.textDecoder.decode(buffer);
+    if (raw === PlayerClientEvent.SESSION_END) {
+      this.emit(PlayerClientEvent.SESSION_END);
+      return;
+    }
+
+    const json = JSON.parse(raw);
+    let ms = json.ms;
     super.processMessage(decode(json.message));
+    this.emit(PlayerClientEvent.UPDATE_CURRENT_TIME, ms);
   }
 
   // Overrides Client implementation.
@@ -56,7 +63,6 @@ export class PlayerClient extends Client {
 
   // Overrides Client implementation.
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  // Overrides Client implementation.
   handleMouseButton(buffer: ArrayBuffer) {
     // TODO
     return;
@@ -64,7 +70,6 @@ export class PlayerClient extends Client {
 
   // Overrides Client implementation.
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  // Overrides Client implementation.
   handleMouseMove(buffer: ArrayBuffer) {
     // TODO
     return;

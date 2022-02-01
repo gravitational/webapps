@@ -30,9 +30,21 @@ import { getUrlParameter } from 'teleport/services/history';
 export default function Player() {
   const { sid, clusterId } = useParams<UrlPlayerParams>();
   const recordingType = getUrlParameter('recordingType', useLocation().search);
+  const durationMs = parseFloat(
+    getUrlParameter('durationMs', useLocation().search)
+  );
+
   if (recordingType !== 'ssh' && recordingType !== 'desktop') {
     throw new Error(
-      `Invalid recording type: ${recordingType}, should be 'ssh' or 'desktop'`
+      `Invalid query parameter recordingType: ${recordingType}, should be 'ssh' or 'desktop'.`
+    );
+  }
+  if (isNaN(durationMs) || !Number.isInteger(durationMs)) {
+    throw new Error(
+      `Invalid query parameter durationMs: ${getUrlParameter(
+        'durationMs',
+        useLocation().search
+      )}, should be an integer.`
     );
   }
 
@@ -61,7 +73,11 @@ export default function Player() {
         {recordingType === 'ssh' ? (
           <SshPlayer sid={sid} clusterId={clusterId} />
         ) : (
-          <DesktopPlayer sid={sid} clusterId={clusterId} />
+          <DesktopPlayer
+            sid={sid}
+            clusterId={clusterId}
+            durationMs={durationMs}
+          />
         )}
       </Flex>
     </StyledPlayer>
