@@ -134,7 +134,6 @@ export default function renderTypeCell(event: Event, clusterId: string) {
               },
               {
                 recordingType: 'ssh',
-                durationMs: 0, // unused by ssh recordings
               }
             )}
             target="_blank"

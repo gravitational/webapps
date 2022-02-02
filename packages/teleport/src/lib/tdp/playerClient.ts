@@ -41,13 +41,11 @@ export class PlayerClient extends Client {
 
   // Overrides Client implementation.
   processMessage(buffer: ArrayBuffer) {
-    const raw = this.textDecoder.decode(buffer);
-    if (raw === PlayerClientEvent.SESSION_END) {
+    const json = JSON.parse(this.textDecoder.decode(buffer));
+    if (json.message === 'end') {
       this.emit(PlayerClientEvent.SESSION_END);
       return;
     }
-
-    const json = JSON.parse(raw);
     let ms = json.ms;
     super.processMessage(decode(json.message));
     this.emit(PlayerClientEvent.UPDATE_CURRENT_TIME, ms);

@@ -40,3 +40,20 @@ export const Player = () => {
     </Router>
   );
 };
+
+export const Error = () => {
+  const history = createMemoryHistory({
+    initialEntries: ['/web/cluster/localhost/session/123?recordingType=bla'],
+    initialIndex: 0,
+  });
+
+  return (
+    <Router history={history}>
+      <Flex m={-3}>
+        <Route path="/web/cluster/:clusterId/session/:sid">
+          <PlayerComponent />
+        </Route>
+      </Flex>
+    </Router>
+  );
+};

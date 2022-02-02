@@ -268,10 +268,13 @@ const cfg = {
   },
 
   getPlayerRoute(params: UrlPlayerParams, search: UrlPlayerSearch) {
-    return (
+    let route =
       generatePath(cfg.routes.player, { ...params }) +
-      `?recordingType=${search.recordingType}&durationMs=${search.durationMs}`
-    );
+      `?recordingType=${search.recordingType}`;
+    if (search.durationMs) {
+      route += `&durationMs=${search.durationMs}`;
+    }
+    return route;
   },
 
   getUserContextUrl() {
@@ -441,7 +444,7 @@ export interface UrlPlayerParams {
 
 export interface UrlPlayerSearch {
   recordingType: RecordingType;
-  durationMs: number; // this is only necessary for recordingType == desktop
+  durationMs?: number; // this is only necessary for recordingType == desktop
 }
 
 // /web/cluster/:clusterId/desktops/:desktopName/:username

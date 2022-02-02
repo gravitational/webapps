@@ -114,7 +114,10 @@ const renderPlayCell = (
 
   const url = cfg.getPlayerRoute(
     { clusterId, sid },
-    { recordingType, durationMs: duration }
+    {
+      recordingType,
+      durationMs: recordingType === 'desktop' ? duration : undefined,
+    }
   );
   return (
     <Cell align="right">

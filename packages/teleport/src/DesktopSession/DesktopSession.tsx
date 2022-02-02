@@ -41,7 +41,6 @@ export function DesktopSession(props: State) {
     onTdpError,
     onWsClose,
     onWsOpen,
-    onClientScreenSpec,
     disconnected,
     setDisconnected,
     onKeyDown,
@@ -130,7 +129,6 @@ export function DesktopSession(props: State) {
         tdpCliOnTdpError={onTdpError}
         tdpCliOnWsClose={onWsClose}
         tdpCliOnWsOpen={onWsOpen}
-        tdpCliOnClientScreenSpec={onClientScreenSpec}
         onKeyDown={onKeyDown}
         onKeyUp={onKeyUp}
         onMouseMove={onMouseMove}

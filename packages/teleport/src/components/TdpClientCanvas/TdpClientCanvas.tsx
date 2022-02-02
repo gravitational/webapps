@@ -97,53 +97,53 @@ export default function TdpClientCanvas(props: Props) {
 
       // Initialize canvas, document, and window event listeners.
 
+      const _oncontextmenu = onContextMenu;
       if (onContextMenu) {
-        const oncontextmenu = onContextMenu;
-        canvas.oncontextmenu = oncontextmenu;
+        canvas.oncontextmenu = _oncontextmenu;
       }
 
       // Mouse controls.
+      const _onmousemove = (e: MouseEvent) => {
+        onMouseMove(tdpCli, canvas, e);
+      };
       if (onMouseMove) {
-        const onmousemove = (e: MouseEvent) => {
-          onMouseMove(tdpCli, canvas, e);
-        };
-        canvas.onmousemove = onmousemove;
+        canvas.onmousemove = _onmousemove;
       }
 
+      const _onmousedown = (e: MouseEvent) => {
+        onMouseDown(tdpCli, e);
+      };
       if (onMouseDown) {
-        const onmousedown = (e: MouseEvent) => {
-          onMouseDown(tdpCli, e);
-        };
-        canvas.onmousedown = onmousedown;
+        canvas.onmousedown = _onmousedown;
       }
 
+      const _onmouseup = (e: MouseEvent) => {
+        onMouseUp(tdpCli, e);
+      };
       if (onMouseUp) {
-        const onmouseup = (e: MouseEvent) => {
-          onMouseUp(tdpCli, e);
-        };
-        canvas.onmouseup = onmouseup;
+        canvas.onmouseup = _onmouseup;
       }
 
+      const _onwheel = (e: WheelEvent) => {
+        onMouseWheelScroll(tdpCli, e);
+      };
       if (onMouseWheelScroll) {
-        const onwheel = (e: WheelEvent) => {
-          onMouseWheelScroll(tdpCli, e);
-        };
-        canvas.onwheel = onwheel;
+        canvas.onwheel = _onwheel;
       }
 
       // Key controls.
+      const _onkeydown = (e: KeyboardEvent) => {
+        onKeyDown(tdpCli, e);
+      };
       if (onKeyDown) {
-        const onkeydown = (e: KeyboardEvent) => {
-          onKeyDown(tdpCli, e);
-        };
-        canvas.onkeydown = onkeydown;
+        canvas.onkeydown = _onkeydown;
       }
 
+      const _onkeyup = (e: KeyboardEvent) => {
+        onKeyUp(tdpCli, e);
+      };
       if (onKeyUp) {
-        const onkeyup = (e: KeyboardEvent) => {
-          onKeyUp(tdpCli, e);
-        };
-        canvas.onkeyup = onkeyup;
+        canvas.onkeyup = _onkeyup;
       }
 
       tdpCli.init();
@@ -151,13 +151,13 @@ export default function TdpClientCanvas(props: Props) {
       return () => {
         tdpCli.nuke();
         if (onContextMenu)
-          canvas.removeEventListener('contextmenu', oncontextmenu);
-        if (onMouseMove) canvas.removeEventListener('mousemove', onmousemove);
-        if (onMouseDown) canvas.removeEventListener('mousedown', onmousedown);
-        if (onMouseUp) canvas.removeEventListener('mouseup', onmouseup);
-        if (onKeyDown) canvas.removeEventListener('keydown', onkeydown);
-        if (onKeyUp) canvas.removeEventListener('keyup', onkeyup);
-        if (onMouseWheelScroll) canvas.removeEventListener('wheel', onwheel);
+          canvas.removeEventListener('contextmenu', _oncontextmenu);
+        if (onMouseMove) canvas.removeEventListener('mousemove', _onmousemove);
+        if (onMouseDown) canvas.removeEventListener('mousedown', _onmousedown);
+        if (onMouseUp) canvas.removeEventListener('mouseup', _onmouseup);
+        if (onKeyDown) canvas.removeEventListener('keydown', _onkeydown);
+        if (onKeyUp) canvas.removeEventListener('keyup', _onkeyup);
+        if (onMouseWheelScroll) canvas.removeEventListener('wheel', _onwheel);
       };
     }
   }, [tdpCli]);
