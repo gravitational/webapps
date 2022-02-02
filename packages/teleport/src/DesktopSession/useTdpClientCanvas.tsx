@@ -126,9 +126,6 @@ export default function useTdpClientCanvas(props: Props) {
     }
   };
 
-  // Not used for DesktopSessions (but needed for playback)
-  const onClientScreenSpec = () => {};
-
   // Block browser context menu so as not to obscure the context menu
   // on the remote machine.
   const onContextMenu = () => false;
@@ -139,7 +136,6 @@ export default function useTdpClientCanvas(props: Props) {
     onTdpError,
     onWsClose,
     onWsOpen,
-    onClientScreenSpec,
     onKeyDown,
     onKeyUp,
     onMouseMove,
