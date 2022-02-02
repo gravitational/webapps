@@ -17,7 +17,7 @@ limitations under the License.
 import React from 'react';
 import styled from 'styled-components';
 import { useParams, useLocation } from 'teleport/components/Router';
-import { Flex } from 'design';
+import { Flex, Box } from 'design';
 import Tabs, { TabItem } from './PlayerTabs';
 import SshPlayer from './SshPlayer';
 import { DesktopPlayer } from './DesktopPlayer';
@@ -26,15 +26,12 @@ import session from 'teleport/services/session';
 import { colors } from 'teleport/Console/colors';
 import { UrlPlayerParams } from 'teleport/config';
 import { getUrlParameter } from 'teleport/services/history';
+import { Danger } from 'design/Alert';
 
 export default function Player() {
   const { sid, clusterId } = useParams<UrlPlayerParams>();
+
   const recordingType = getUrlParameter('recordingType', useLocation().search);
-  if (recordingType !== 'ssh' && recordingType !== 'desktop') {
-    throw new Error(
-      `Invalid recording type: ${recordingType}, should be 'ssh' or 'desktop'`
-    );
-  }
 
   document.title = `${clusterId} • Play ${sid}`;
 
@@ -44,26 +41,40 @@ export default function Player() {
 
   return (
     <StyledPlayer>
-      <Flex bg={colors.primary.light} height="38px">
-        <Tabs flex="1 0">
-          <TabItem title="Session Player" />
-        </Tabs>
-        <ActionBar onLogout={onLogout} />
-      </Flex>
-      <Flex
-        bg={colors.bgTerminal}
-        flex="1"
-        style={{
-          overflow: 'auto',
-          position: 'relative',
-        }}
-      >
-        {recordingType === 'ssh' ? (
-          <SshPlayer sid={sid} clusterId={clusterId} />
-        ) : (
-          <DesktopPlayer sid={sid} clusterId={clusterId} />
-        )}
-      </Flex>
+      {recordingType !== 'ssh' && recordingType !== 'desktop' ? (
+        <Box textAlign="center" m={10}>
+          <Danger>
+            {' '}
+            `Invalid recording type: {recordingType}, should be 'ssh' or
+            'desktop'`{' '}
+          </Danger>
+        </Box>
+      ) : (
+        <>
+          <Flex bg={colors.primary.light} height="38px">
+            <Tabs flex="1 0">
+              <TabItem title="Session Player" />
+            </Tabs>
+            <ActionBar onLogout={onLogout} />
+          </Flex>
+          <Flex
+            bg={colors.bgTerminal}
+            flex="1"
+            style={{
+              overflow: 'auto',
+              position: 'relative',
+            }}
+          >
+            {recordingType === 'ssh' && (
+              <SshPlayer sid={sid} clusterId={clusterId} />
+            )}
+
+            {recordingType === 'desktop' && (
+              <DesktopPlayer sid={sid} clusterId={clusterId} />
+            )}
+          </Flex>
+        </>
+      )}
     </StyledPlayer>
   );
 }
