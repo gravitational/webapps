@@ -20,8 +20,8 @@ import { render } from 'design/utils/testing';
 
 it('renders a <button> and respects default "size" to 1', () => {
   const { container } = render(<ButtonIcon />);
-  expect(container.firstChild.nodeName).toEqual('BUTTON');
-  expect(container.firstChild).toHaveStyle('font-size: 16px');
+  expect(container.firstChild.nodeName).toBe('BUTTON');
+  expect(container.firstChild).toHaveStyle('font-size: 18px');
 });
 
 test('"size" 0 maps to font-size 12px', () => {
@@ -29,9 +29,9 @@ test('"size" 0 maps to font-size 12px', () => {
   expect(container.firstChild).toHaveStyle('font-size: 12px');
 });
 
-test('"size" 1 maps to font-size 16px', () => {
+test('"size" 1 maps to font-size 18px', () => {
   const { container } = render(<ButtonIcon size={1} />);
-  expect(container.firstChild).toHaveStyle('font-size: 16px');
+  expect(container.firstChild).toHaveStyle('font-size: 18px');
 });
 
 test('"size" 2 maps to font-size 24px', () => {

@@ -6,8 +6,8 @@ import LinearProgress from 'teleterm/ui/components/LinearProgress';
 import { Flex, Text, Box } from 'design';
 import styled from 'styled-components';
 
-const simpleItemPadding = 5;
-const expandedItemPadding = 7;
+const simpleItemPadding = '35px';
+const expandedItemPadding = '50px';
 
 export function ExpanderClusterItem(props: ExpanderClusterItem) {
   const { item } = props;
@@ -25,7 +25,7 @@ function ExpanderClusterWithLeaves(props: ExpanderClusterItem) {
     <Expander>
       <StyledExpanderHeader
         toggleTrigger="icon"
-        pl="18px"
+        pl="25px"
         $active={item.active}
       >
         <ClusterItem {...props} />
@@ -47,7 +47,7 @@ function ExpanderClusterWithLeaves(props: ExpanderClusterItem) {
   );
 }
 
-function ClusterItem(props: ExpanderClusterItem & { pl?: number }) {
+function ClusterItem(props: ExpanderClusterItem & { pl?: string }) {
   const { title, syncing, clusterUri, connected } = props.item;
   const titleColor = connected ? 'text.primary' : 'text.placeholder';
 

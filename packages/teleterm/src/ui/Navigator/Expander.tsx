@@ -20,6 +20,7 @@ import { space, color } from 'design/system';
 import * as Icons from 'design/Icon';
 import { Flex } from 'design';
 import Icon from 'design/Icon';
+import { ButtonIcon } from 'teleterm/ui/components/ButtonIcon';
 
 const AccordingContext = React.createContext<AccordingContextState>(null);
 
@@ -67,12 +68,9 @@ export const ExpanderHeader: React.FC<ExpanderHeaderProps> = props => {
       onContextMenu={onContextMenu}
       onClick={handleHeaderClick}
     >
-      <ArrowIcon
-        mr="2"
-        color="inherit"
-        style={{ fontSize: '12px' }}
-        onClick={handleIconClick}
-      />
+      <ButtonIcon mr="1" onClick={handleIconClick}>
+        <ArrowIcon style={{ fontSize: '12px' }} />
+      </ButtonIcon>
       <Flex flex="1" overflow="hidden">
         {children}
       </Flex>

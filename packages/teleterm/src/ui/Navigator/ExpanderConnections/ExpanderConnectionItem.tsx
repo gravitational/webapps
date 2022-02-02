@@ -13,7 +13,7 @@ export function ExpanderConnectionItem(props: ExpanderConnectionItemProps) {
   return (
     <NavItem
       active={false}
-      pl={5}
+      pl="35px"
       onClick={() => props.onOpen(props.item.id)}
       onContextMenu={() => props.onContextMenu(props.item.id)}
     >
