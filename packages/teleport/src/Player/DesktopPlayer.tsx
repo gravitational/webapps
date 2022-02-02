@@ -98,11 +98,8 @@ export const ProgressBarDesktop = (props: {
 
     playerClient.addListener(PlayerClientEvent.SESSION_END, () => {
       throttledUpdateCurrentTime.cancel();
-      // TODO: This logic can cause the progress bar to jump abruptly to the end, if the session was sitting without
-      // any events happening for a while before being ended, e.g. if a user got an error screen, sat there
-      // reading it for 10 seconds, and then ended the session. We can solve this by adding logic for calculating
-      // the difference between durationMs and prevState.current, and then updating state on a regular interval until
-      // we reach durationMs.
+      // TODO(isaiah): Make this smoother
+      // https://github.com/gravitational/webapps/issues/579
       setState(prevState => {
         return { ...prevState, current: durationMs };
       });
