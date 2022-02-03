@@ -40,10 +40,10 @@ export const ProgressBarDesktop = (props: { playerClient: PlayerClient }) => {
   const { playerClient } = props;
 
   const [state, setState] = useState({
-    max: 500, // TODO: total time of the recording in ms
-    min: 0, // TODO: the recording always starts at 0 ms
-    current: 0, // TODO: the current time the playback is at
-    time: '-:--', // TODO: the human readable time the playback is at
+    max: 500, // TODO(isaiah): total time of the recording in ms
+    min: 0, // TODO(isaiah): the recording always starts at 0 ms
+    current: 0, // TODO(isaiah): the current time the playback is at
+    time: '-:--', // TODO(isaiah): the human readable time the playback is at
     isPlaying: true, // determines whether play or pause symbol is shown
   });
 

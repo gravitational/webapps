@@ -268,7 +268,9 @@ const cfg = {
   },
 
   getPlayerRoute(params: UrlPlayerParams, search: UrlPlayerSearch) {
-    return `${generatePath(cfg.routes.player, { ...params })}?recordingType=${search.recordingType}`
+    return `${generatePath(cfg.routes.player, { ...params })}?recordingType=${
+      search.recordingType
+    }`;
   },
 
   getUserContextUrl() {
