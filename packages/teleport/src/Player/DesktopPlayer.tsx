@@ -7,6 +7,8 @@ import cfg from 'teleport/config';
 import { getAccessToken, getHostName } from 'teleport/services/api';
 import TdpClientCanvas from 'teleport/components/TdpClientCanvas';
 import { throttle } from 'lodash';
+import { dateToUtc } from 'shared/services/loc';
+import { format } from 'date-fns';
 
 export const DesktopPlayer = ({
   sid,
@@ -46,9 +48,7 @@ export const ProgressBarDesktop = (props: {
   const { playerClient, durationMs } = props;
 
   const toHuman = (currentMs: number) => {
-    const date = new Date(null);
-    date.setMilliseconds(currentMs);
-    return date.toISOString().substr(14, 5);
+    return format(dateToUtc(new Date(currentMs)), 'mm:ss');
   };
 
   const [state, setState] = useState({
