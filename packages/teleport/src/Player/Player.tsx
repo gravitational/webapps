@@ -43,7 +43,7 @@ export default function Player() {
   const validRecordingType =
     recordingType === 'ssh' || recordingType === 'desktop';
   const validDurationMs =
-    recordingType === 'ssh' || // durationMs not needed for ssh recordings, so always consider it "valid"
+    recordingType !== 'desktop' || // durationMs only needed for desktop recordings
     (!isNaN(durationMs) && Number.isInteger(durationMs));
 
   document.title = `${clusterId} • Play ${sid}`;
