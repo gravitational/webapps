@@ -36,7 +36,7 @@ export default function Player() {
     'recordingType',
     useLocation().search
   ) as RecordingType;
-  const durationMs = parseFloat(
+  const durationMs = Number(
     getUrlParameter('durationMs', useLocation().search)
   );
 
@@ -44,7 +44,7 @@ export default function Player() {
     recordingType === 'ssh' || recordingType === 'desktop';
   const validDurationMs =
     recordingType !== 'desktop' || // durationMs only needed for desktop recordings
-    (!isNaN(durationMs) && Number.isInteger(durationMs));
+    Number.isInteger(durationMs);
 
   document.title = `${clusterId} • Play ${sid}`;
 

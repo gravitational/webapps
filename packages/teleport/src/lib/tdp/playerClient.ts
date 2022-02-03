@@ -46,7 +46,7 @@ export class PlayerClient extends Client {
       this.emit(PlayerClientEvent.SESSION_END);
       return;
     }
-    let ms = json.ms;
+    const ms = json.ms;
     super.processMessage(base64ToBuffer(json.message));
     this.emit(PlayerClientEvent.UPDATE_CURRENT_TIME, ms);
   }

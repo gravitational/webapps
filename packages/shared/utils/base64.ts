@@ -23,6 +23,7 @@ function base64urlToBase64(baseurl64String: Base64urlString): string {
   return baseurl64String.replace(/-/g, '+').replace(/_/g, '/') + padding;
 }
 
+// Sourced from https://github.com/github/webauthn-json
 export function base64ToBuffer(base64String: string): ArrayBuffer {
   // Base64 to binary string
   const str = atob(base64String);

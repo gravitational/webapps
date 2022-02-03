@@ -268,12 +268,11 @@ const cfg = {
   },
 
   getPlayerRoute(params: UrlPlayerParams, search: UrlPlayerSearch) {
-    let route = `${generatePath(cfg.routes.player, {
-      ...params,
-    })}?recordingType=${search.recordingType}`;
+    let route = generatePath(cfg.routes.player, { ...params });
+    route = `${route}?recordingType=${search.recordingType}`;
 
     if (search.durationMs) {
-      route += `&durationMs=${search.durationMs}`;
+      route = `${route}&durationMs=${search.durationMs}`;
     }
 
     return route;
