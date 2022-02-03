@@ -27,11 +27,15 @@ import { colors } from 'teleport/Console/colors';
 import { UrlPlayerParams } from 'teleport/config';
 import { getUrlParameter } from 'teleport/services/history';
 import { Danger } from 'design/Alert';
+import { RecordingType } from 'teleport/services/recordings';
 
 export default function Player() {
   const { sid, clusterId } = useParams<UrlPlayerParams>();
 
-  const recordingType = getUrlParameter('recordingType', useLocation().search);
+  const recordingType = getUrlParameter(
+    'recordingType',
+    useLocation().search
+  ) as RecordingType;
 
   document.title = `${clusterId} • Play ${sid}`;
 
@@ -39,9 +43,9 @@ export default function Player() {
     session.logout();
   }
 
-  return (
-    <StyledPlayer>
-      {recordingType !== 'ssh' && recordingType !== 'desktop' ? (
+  if (recordingType !== 'ssh' && recordingType !== 'desktop') {
+    return (
+      <StyledPlayer>
         <Box textAlign="center" m={10}>
           <Danger>
             {' '}
@@ -49,32 +53,34 @@ export default function Player() {
             'desktop'`{' '}
           </Danger>
         </Box>
-      ) : (
-        <>
-          <Flex bg={colors.primary.light} height="38px">
-            <Tabs flex="1 0">
-              <TabItem title="Session Player" />
-            </Tabs>
-            <ActionBar onLogout={onLogout} />
-          </Flex>
-          <Flex
-            bg={colors.bgTerminal}
-            flex="1"
-            style={{
-              overflow: 'auto',
-              position: 'relative',
-            }}
-          >
-            {recordingType === 'ssh' && (
-              <SshPlayer sid={sid} clusterId={clusterId} />
-            )}
+      </StyledPlayer>
+    );
+  }
 
-            {recordingType === 'desktop' && (
-              <DesktopPlayer sid={sid} clusterId={clusterId} />
-            )}
-          </Flex>
-        </>
-      )}
+  return (
+    <StyledPlayer>
+      <Flex bg={colors.primary.light} height="38px">
+        <Tabs flex="1 0">
+          <TabItem title="Session Player" />
+        </Tabs>
+        <ActionBar onLogout={onLogout} />
+      </Flex>
+      <Flex
+        bg={colors.bgTerminal}
+        flex="1"
+        style={{
+          overflow: 'auto',
+          position: 'relative',
+        }}
+      >
+        {recordingType === 'ssh' && (
+          <SshPlayer sid={sid} clusterId={clusterId} />
+        )}
+
+        {recordingType === 'desktop' && (
+          <DesktopPlayer sid={sid} clusterId={clusterId} />
+        )}
+      </Flex>
     </StyledPlayer>
   );
 }
