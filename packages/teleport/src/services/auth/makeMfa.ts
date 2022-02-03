@@ -15,7 +15,10 @@ limitations under the License.
 */
 
 import { MfaAuthenticateChallenge, MfaRegistrationChallenge } from './types';
-import { base64urlToBuffer, bufferToBase64url } from 'shared/utils/base64url';
+import {
+  base64urlToBuffer,
+  bufferToBase64url,
+} from '@gravitational/shared/utils/base64';
 
 // makeMfaRegistrationChallenge formats fetched register challenge JSON.
 // Webauthn challange contains Base64URL(byte) fields that needs to

@@ -17,14 +17,13 @@
 export type Base64urlString = string;
 
 // Sourced from https://github.com/github/webauthn-json
-export function base64urlToBuffer(
-  baseurl64String: Base64urlString
-): ArrayBuffer {
-  // Base64url to Base64
+// Converts Base64url to Base64
+function base64urlToBase64(baseurl64String: Base64urlString): string {
   const padding = '=='.slice(0, (4 - (baseurl64String.length % 4)) % 4);
-  const base64String =
-    baseurl64String.replace(/-/g, '+').replace(/_/g, '/') + padding;
+  return baseurl64String.replace(/-/g, '+').replace(/_/g, '/') + padding;
+}
 
+export function base64ToBuffer(base64String: string): ArrayBuffer {
   // Base64 to binary string
   const str = atob(base64String);
 
@@ -35,6 +34,13 @@ export function base64urlToBuffer(
     byteView[i] = str.charCodeAt(i);
   }
   return buffer;
+}
+
+// Sourced from https://github.com/github/webauthn-json
+export function base64urlToBuffer(
+  baseurl64String: Base64urlString
+): ArrayBuffer {
+  return base64ToBuffer(base64urlToBase64(baseurl64String));
 }
 
 export function bufferToBase64url(buffer: ArrayBuffer): Base64urlString {
