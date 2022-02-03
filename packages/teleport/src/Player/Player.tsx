@@ -27,11 +27,15 @@ import { colors } from 'teleport/Console/colors';
 import { UrlPlayerParams } from 'teleport/config';
 import { getUrlParameter } from 'teleport/services/history';
 import { Danger } from 'design/Alert';
+import { RecordingType } from 'teleport/services/recordings';
 
 export default function Player() {
   const { sid, clusterId } = useParams<UrlPlayerParams>();
 
-  const recordingType = getUrlParameter('recordingType', useLocation().search);
+  const recordingType = getUrlParameter(
+    'recordingType',
+    useLocation().search
+  ) as RecordingType;
   const durationMs = parseFloat(
     getUrlParameter('durationMs', useLocation().search)
   );
@@ -48,58 +52,58 @@ export default function Player() {
     session.logout();
   }
 
+  if (!validRecordingType || !validDurationMs) {
+    return (
+      <StyledPlayer>
+        {!validRecordingType && (
+          <Box textAlign="center" mx={10} mt={5}>
+            <Danger mb={0}>
+              Invalid query parameter recordingType: {recordingType}, should be
+              'ssh' or 'desktop'
+            </Danger>
+          </Box>
+        )}
+        {!validDurationMs && (
+          <Box textAlign="center" mx={10} mt={5}>
+            <Danger mb={0}>
+              Invalid query parameter durationMs:{' '}
+              {getUrlParameter('durationMs', useLocation().search)}, should be
+              an integer.
+            </Danger>
+          </Box>
+        )}
+      </StyledPlayer>
+    );
+  }
+
   return (
     <StyledPlayer>
-      {!validRecordingType || !validDurationMs ? (
-        <>
-          {!validRecordingType && (
-            <Box textAlign="center" mx={10} mt={5}>
-              <Danger mb={0}>
-                `Invalid recording type: {recordingType}, should be 'ssh' or
-                'desktop'`
-              </Danger>
-            </Box>
-          )}
-          {!validDurationMs && (
-            <Box textAlign="center" mx={10} mt={5}>
-              <Danger mb={0}>
-                `Invalid query parameter durationMs:{' '}
-                {getUrlParameter('durationMs', useLocation().search)}, should be
-                an integer.`
-              </Danger>
-            </Box>
-          )}
-        </>
-      ) : (
-        <>
-          <Flex bg={colors.primary.light} height="38px">
-            <Tabs flex="1 0">
-              <TabItem title="Session Player" />
-            </Tabs>
-            <ActionBar onLogout={onLogout} />
-          </Flex>
-          <Flex
-            bg={colors.bgTerminal}
-            flex="1"
-            style={{
-              overflow: 'auto',
-              position: 'relative',
-            }}
-          >
-            {recordingType === 'ssh' && (
-              <SshPlayer sid={sid} clusterId={clusterId} />
-            )}
+      <Flex bg={colors.primary.light} height="38px">
+        <Tabs flex="1 0">
+          <TabItem title="Session Player" />
+        </Tabs>
+        <ActionBar onLogout={onLogout} />
+      </Flex>
+      <Flex
+        bg={colors.bgTerminal}
+        flex="1"
+        style={{
+          overflow: 'auto',
+          position: 'relative',
+        }}
+      >
+        {recordingType === 'ssh' && (
+          <SshPlayer sid={sid} clusterId={clusterId} />
+        )}
 
-            {recordingType === 'desktop' && (
-              <DesktopPlayer
-                sid={sid}
-                clusterId={clusterId}
-                durationMs={durationMs}
-              />
-            )}
-          </Flex>
-        </>
-      )}
+        {recordingType === 'desktop' && (
+          <DesktopPlayer
+            sid={sid}
+            clusterId={clusterId}
+            durationMs={durationMs}
+          />
+        )}
+      </Flex>
     </StyledPlayer>
   );
 }

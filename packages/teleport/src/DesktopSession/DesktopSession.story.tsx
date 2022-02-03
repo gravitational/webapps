@@ -58,7 +58,6 @@ const props: State = {
   onMouseDown: () => {},
   onMouseUp: () => {},
   onMouseWheelScroll: () => {},
-  onClientScreenSpec: () => {},
   onContextMenu: () => false,
 };
 

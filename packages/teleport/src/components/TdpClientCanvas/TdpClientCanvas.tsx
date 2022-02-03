@@ -188,6 +188,6 @@ export type Props = {
   onMouseDown?: (cli: TdpClient, e: MouseEvent) => void;
   onMouseUp?: (cli: TdpClient, e: MouseEvent) => void;
   onMouseWheelScroll?: (cli: TdpClient, e: WheelEvent) => void;
-  onContextMenu?: () => void;
+  onContextMenu?: () => boolean;
   style?: CSSProperties;
 };

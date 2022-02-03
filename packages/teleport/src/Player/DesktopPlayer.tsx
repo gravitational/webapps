@@ -57,14 +57,6 @@ export const ProgressBarDesktop = (props: {
     current: 0, // the recording always starts at 0 ms
     time: toHuman(0),
     isPlaying: true, // determines whether play or pause symbol is shown
-    move: () => {
-      // TODO
-      return;
-    },
-    toggle: () => {
-      // emits PlayerClientEvent.TOGGLE_PLAY_PAUSE
-      playerClient.togglePlayPause();
-    },
   });
 
   useEffect(() => {
@@ -111,7 +103,13 @@ export const ProgressBarDesktop = (props: {
     };
   }, [playerClient]);
 
-  return <ProgressBar {...state} />;
+  return (
+    <ProgressBar
+      {...state}
+      toggle={() => playerClient.togglePlayPause()}
+      move={() => {}}
+    />
+  );
 };
 
 const useDesktopPlayer = ({

@@ -81,20 +81,24 @@ export default class Client extends EventEmitter {
   processMessage(buffer: ArrayBuffer) {
     const messageType = this.codec._decodeMessageType(buffer);
     try {
-      if (messageType === MessageType.PNG_FRAME) {
-        this.handlePngFrame(buffer);
-      } else if (messageType === MessageType.CLIENT_SCREEN_SPEC) {
-        this.handleClientScreenSpec(buffer);
-      } else if (messageType === MessageType.MOUSE_BUTTON) {
-        this.handleMouseButton(buffer);
-      } else if (messageType === MessageType.MOUSE_MOVE) {
-        this.handleMouseMove(buffer);
-      } else if (messageType === MessageType.ERROR) {
-        this.handleError(new Error(this.codec.decodeErrorMessage(buffer)));
-      } else {
-        this.handleError(
-          new Error(`received unsupported message type ${messageType}`)
-        );
+      switch (messageType) {
+        case MessageType.PNG_FRAME:
+          this.handlePngFrame(buffer);
+          break;
+        case MessageType.CLIENT_SCREEN_SPEC:
+          this.handleClientScreenSpec(buffer);
+          break;
+        case MessageType.MOUSE_BUTTON:
+          this.handleMouseButton(buffer);
+          break;
+        case MessageType.MOUSE_MOVE:
+          this.handleMouseMove(buffer);
+          break;
+        case MessageType.ERROR:
+          this.handleError(new Error(this.codec.decodeErrorMessage(buffer)));
+          break;
+        default:
+          this.logger.warn(`received unsupported message type ${messageType}`);
       }
     } catch (err) {
       this.handleError(err);
@@ -102,32 +106,26 @@ export default class Client extends EventEmitter {
   }
 
   handleClientScreenSpec(buffer: ArrayBuffer) {
-    this.handleError(
-      new Error(
-        `received unsupported message type ${this.codec._decodeMessageType(
-          buffer
-        )}`
-      )
+    this.logger.warn(
+      `received unsupported message type ${this.codec._decodeMessageType(
+        buffer
+      )}`
     );
   }
 
   handleMouseButton(buffer: ArrayBuffer) {
-    this.handleError(
-      new Error(
-        `received unsupported message type ${this.codec._decodeMessageType(
-          buffer
-        )}`
-      )
+    this.logger.warn(
+      `received unsupported message type ${this.codec._decodeMessageType(
+        buffer
+      )}`
     );
   }
 
   handleMouseMove(buffer: ArrayBuffer) {
-    this.handleError(
-      new Error(
-        `received unsupported message type ${this.codec._decodeMessageType(
-          buffer
-        )}`
-      )
+    this.logger.warn(
+      `received unsupported message type ${this.codec._decodeMessageType(
+        buffer
+      )}`
     );
   }
 
