@@ -775,6 +775,18 @@ export const events = [
     uid: '0629c7-3d98-4451-ac90-dc5330',
     user: 'lisa',
   },
+  {
+    'addr.local': '192.168.0.106:43858',
+    'addr.remote': '192.168.0.106:3022',
+    cluster_name: 'im-a-cluster-name',
+    code: 'T2010I',
+    ei: 0,
+    event: 'session.connect',
+    server_addr: '192.168.0.106:43858',
+    server_id: 'bd5eff-f59b-4fb3-b8ed-757c52ff',
+    time: '2022-02-04T18:15:28.572Z',
+    uid: 'f2a0f9-d78c-4c38-b3fa-ca63453b',
+  },
 ].map(makeEvent);
 
 export const eventsSample = [
