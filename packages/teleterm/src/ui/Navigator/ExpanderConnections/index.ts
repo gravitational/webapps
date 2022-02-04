@@ -14,4 +14,4 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-export { ExpanderConnections } from './ExpanderConnections';
+export { ExpanderConnectionsBody, ExpanderConnectionsHeader } from './ExpanderConnections';

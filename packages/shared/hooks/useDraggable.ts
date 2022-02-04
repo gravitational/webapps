@@ -18,7 +18,7 @@ import { useState, useCallback, useEffect } from 'react';
 
 const POSITION = { x: 0, y: 0 };
 
-export default function useDraggable() {
+export default function useDraggable(boundaries?: DraggableBoundaries) {
   const [state, setState] = useState({
     isDragging: false,
     origin: POSITION,
@@ -39,9 +39,12 @@ export default function useDraggable() {
 
   const onMouseMove = useCallback(
     event => {
+      const absolutePosition = boundaries
+        ? getPositionWithinBoundaries(event, boundaries)
+        : { x: event.clientX, y: event.clientY };
       const position = {
-        x: event.clientX - state.origin.x,
-        y: event.clientY - state.origin.y,
+        x: absolutePosition.x - state.origin.x,
+        y: absolutePosition.y - state.origin.y,
       };
 
       setState(state => ({
@@ -76,4 +79,44 @@ export default function useDraggable() {
     isDragging: state.isDragging,
     position: state.position,
   };
+}
+
+function getPositionWithinBoundaries(
+  event: MouseEvent,
+  boundaries: DraggableBoundaries
+): DraggablePosition {
+  const position = {
+    y: event.clientY,
+    x: event.clientX,
+  };
+  const minX = boundaries.getMinX?.();
+  const maxX = boundaries.getMaxX?.();
+  const minY = boundaries.getMinY?.();
+  const maxY = boundaries.getMaxY?.();
+
+  if (!isNaN(minY) && event.clientY < minY) {
+    position.y = minY;
+  }
+  if (!isNaN(maxY) && event.clientY > maxY) {
+    position.y = maxY;
+  }
+  if (!isNaN(minX) && event.clientX < minX) {
+    position.x = minX;
+  }
+  if (!isNaN(maxX) && event.clientX > maxX) {
+    position.x = maxX;
+  }
+  return position;
+}
+
+export interface DraggablePosition {
+  x: number;
+  y: number;
+}
+
+interface DraggableBoundaries {
+  getMinX?(): number;
+  getMaxX?(): number;
+  getMinY?(): number;
+  getMaxY?(): number;
 }

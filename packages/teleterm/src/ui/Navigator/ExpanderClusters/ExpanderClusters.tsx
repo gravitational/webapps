@@ -17,30 +17,24 @@ limitations under the License.
 import React from 'react';
 import { Flex, Text, Box } from 'design';
 import { Restore, Add } from 'design/Icon';
-import Expander, { ExpanderHeader, ExpanderContent } from './../Expander';
+import {
+  ExpanderHeader,
+  ExpanderContent,
+} from './../Expander';
 import { useExpanderClusters } from './useExpanderClusters';
 import { ExpanderClusterItem } from './ExpanderClusterItem';
 import { ExpanderClusterState } from './types';
 import { ButtonIcon } from 'teleterm/ui/components/ButtonIcon';
+import styled from 'styled-components';
+import { NavigatorSplitPaneHeaderProps } from '../NavigatorSplitPanes';
 
-export function ExpanderClusters() {
+export function ExpanderClustersBody() {
   const state = useExpanderClusters();
-  return <ExpanderClustersPresentational {...state} />;
+  return <ExpanderClustersBodyPresentational {...state} />;
 }
 
-export function ExpanderClustersPresentational(props: ExpanderClusterState) {
-  const { items, onSyncClusters, onAddCluster, onOpen, onOpenContextMenu } =
-    props;
-
-  const handleSyncClick = (e: React.BaseSyntheticEvent) => {
-    e.stopPropagation();
-    onSyncClusters?.();
-  };
-
-  const handleAddClick = (e: React.BaseSyntheticEvent) => {
-    e.stopPropagation();
-    onAddCluster?.();
-  };
+export function ExpanderClustersBodyPresentational(props: ExpanderClusterState) {
+  const { items, onOpen, onOpenContextMenu } = props;
 
   const $clustersItems = items.map(i => (
     <ExpanderClusterItem
@@ -52,41 +46,65 @@ export function ExpanderClustersPresentational(props: ExpanderClusterState) {
   ));
 
   return (
-    <Expander>
-      <ExpanderHeader toggleTrigger='header'>
-        <Flex
-          justifyContent="space-between"
-          alignItems="center"
-          flex="1"
-          width="100%"
-          minWidth="0"
-        >
-          <Text typography="body1" bold>
-            Clusters
-          </Text>
-          <Flex>
-            <ButtonIcon
-              mr={2}
-              color="text.primary"
-              title="Sync clusters"
-              onClick={handleSyncClick}
-            >
-              <Restore />
-            </ButtonIcon>
-            <ButtonIcon
-              mr={1}
-              color="text.primary"
-              onClick={handleAddClick}
-              title="Add cluster"
-            >
-              <Add />
-            </ButtonIcon>
-          </Flex>
-        </Flex>
-      </ExpanderHeader>
-      <ExpanderContent>
-        <Box>{$clustersItems}</Box>
-      </ExpanderContent>
-    </Expander>
+    <ExpanderContent>
+      <Scrollable>{$clustersItems}</Scrollable>
+    </ExpanderContent>
   );
 }
+
+export function ExpanderClustersHeader(props: NavigatorSplitPaneHeaderProps) {
+  const state = useExpanderClusters();
+
+  const handleSyncClick = (e: React.BaseSyntheticEvent) => {
+    e.stopPropagation();
+    state.onSyncClusters?.();
+  };
+
+  const handleAddClick = (e: React.BaseSyntheticEvent) => {
+    e.stopPropagation();
+    state.onAddCluster?.();
+  };
+
+  return (
+    <ExpanderHeader
+      onToggle={props.onToggle}
+      expanded={props.expanded}
+    >
+      <Flex
+        justifyContent="space-between"
+        alignItems="center"
+        flex="1"
+        width="100%"
+        minWidth="0"
+      >
+        <Text typography="body1" bold>
+          Clusters
+        </Text>
+        <Flex>
+          <ButtonIcon
+            mr={2}
+            color="text.primary"
+            title="Sync clusters"
+            onClick={handleSyncClick}
+          >
+            <Restore />
+          </ButtonIcon>
+          <ButtonIcon
+            mr={1}
+            color="text.primary"
+            onClick={handleAddClick}
+            title="Add cluster"
+          >
+            <Add />
+          </ButtonIcon>
+        </Flex>
+      </Flex>
+    </ExpanderHeader>
+  );
+}
+
+const Scrollable = styled(Box)`
+  height: 100%;
+  min-height: 0;
+  overflow: auto;
+`;

@@ -1,5 +1,9 @@
 import React from 'react';
-import Expander, { ExpanderHeader, ExpanderContent } from './../Expander';
+import {
+  ContextualExpander,
+  ContextualExpanderHeader,
+  ContextualExpanderContent,
+} from './../ContextualExpander';
 import { ClusterNavItem } from './types';
 import NavItem from 'teleterm/ui/Navigator/NavItem';
 import LinearProgress from 'teleterm/ui/components/LinearProgress';
@@ -22,7 +26,7 @@ function ExpanderClusterWithLeaves(props: ExpanderClusterItem) {
   const { item } = props;
 
   return (
-    <Expander>
+    <ContextualExpander>
       <StyledExpanderHeader
         toggleTrigger="icon"
         pl="25px"
@@ -30,7 +34,7 @@ function ExpanderClusterWithLeaves(props: ExpanderClusterItem) {
       >
         <ClusterItem {...props} />
       </StyledExpanderHeader>
-      <ExpanderContent>
+      <ContextualExpanderContent>
         <Box>
           {item.leaves.map(tc => (
             <ClusterItem
@@ -42,8 +46,8 @@ function ExpanderClusterWithLeaves(props: ExpanderClusterItem) {
             />
           ))}
         </Box>
-      </ExpanderContent>
-    </Expander>
+      </ContextualExpanderContent>
+    </ContextualExpander>
   );
 }
 
@@ -92,7 +96,7 @@ type ExpanderClusterItem = {
   onOpen(clusterUri: string): void;
 };
 
-const StyledExpanderHeader = styled(ExpanderHeader)(props => {
+const StyledExpanderHeader = styled(ContextualExpanderHeader)(props => {
   const colors = props.$active
     ? {
         color: props.theme.colors.primary.contrastText,
@@ -102,6 +106,6 @@ const StyledExpanderHeader = styled(ExpanderHeader)(props => {
 
   return {
     ...colors,
-    height: '32px'
+    height: '32px',
   };
 });

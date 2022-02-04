@@ -15,33 +15,26 @@ limitations under the License.
 */
 
 import React from 'react';
-import { Flex, Text } from 'design';
-import Expander, { ExpanderHeader, ExpanderContent } from '../Expander';
+import { Box, Flex, Text } from 'design';
+import {
+  ExpanderHeader,
+  ExpanderContent,
+} from '../Expander';
 import { useExpanderConnections, State } from './useExpanderConnections';
 import { ExpanderConnectionItem } from './ExpanderConnectionItem';
+import styled from 'styled-components';
+import { NavigatorSplitPaneHeaderProps } from '../NavigatorSplitPanes';
 
-export function ExpanderConnections() {
+export function ExpanderConnectionsBody() {
   const state = useExpanderConnections();
-  return <ExpanderConnectionsPresentational {...state} />;
+  return <ExpanderConnectionsBodyPresentational {...state} />;
 }
 
-export function ExpanderConnectionsPresentational(props: State) {
+export function ExpanderConnectionsBodyPresentational(props: State) {
   const { items } = props;
   return (
-    <Expander>
-      <ExpanderHeader>
-        <Flex
-          justifyContent="space-between"
-          alignItems="center"
-          flex="1"
-          width="100%"
-        >
-          <Text typography="body1" bold>
-            Connections
-          </Text>
-        </Flex>
-      </ExpanderHeader>
-      <ExpanderContent>
+    <ExpanderContent>
+      <Scrollable>
         {items.map(i => (
           <ExpanderConnectionItem
             key={i.id}
@@ -51,7 +44,33 @@ export function ExpanderConnectionsPresentational(props: State) {
             onContextMenu={props.onContextMenu}
           />
         ))}
-      </ExpanderContent>
-    </Expander>
+      </Scrollable>
+    </ExpanderContent>
   );
 }
+
+export function ExpanderConnectionsHeader(props: NavigatorSplitPaneHeaderProps) {
+  return (
+    <ExpanderHeader
+      onToggle={props.onToggle}
+      expanded={props.expanded}
+    >
+      <Flex
+        justifyContent="space-between"
+        alignItems="center"
+        flex="1"
+        width="100%"
+      >
+        <Text typography="body1" bold>
+          Connections
+        </Text>
+      </Flex>
+    </ExpanderHeader>
+  );
+}
+
+const Scrollable = styled(Box)`
+  height: 100%;
+  min-height: 0;
+  overflow: auto;
+`;

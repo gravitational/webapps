@@ -15,7 +15,7 @@
  */
 
 import React from 'react';
-import { ExpanderConnectionsPresentational } from './ExpanderConnections';
+import { ExpanderConnectionsBodyPresentational } from './ExpanderConnections';
 import { MockAppContextProvider } from 'teleterm/ui/fixtures/MockAppContextProvider';
 import { State } from './useExpanderConnections';
 
@@ -61,7 +61,7 @@ function getState(): State {
 export function ExpanderConnections() {
   return (
     <MockAppContextProvider>
-      <ExpanderConnectionsPresentational {...getState()} />
+      <ExpanderConnectionsBodyPresentational {...getState()} />
     </MockAppContextProvider>
   );
 }

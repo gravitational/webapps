@@ -18,7 +18,7 @@
 
 import React from 'react';
 import { fireEvent, render } from 'design/utils/testing';
-import { ExpanderClustersPresentational } from './ExpanderClusters';
+import { ExpanderClustersBodyPresentational } from './ExpanderClusters';
 import { ExpanderClusterState } from './types';
 import { MockAppContextProvider } from 'teleterm/ui/fixtures/MockAppContextProvider';
 
@@ -50,7 +50,7 @@ test('should render simple and trusted clusters', () => {
 
   const { getByText } = render(
     <MockAppContextProvider>
-      <ExpanderClustersPresentational {...state} />
+      <ExpanderClustersBodyPresentational {...state} />
     </MockAppContextProvider>
   );
 
@@ -77,7 +77,7 @@ test('should invoke callback when context menu is clicked', () => {
 
   const { getByText } = render(
     <MockAppContextProvider>
-      <ExpanderClustersPresentational {...state} />
+      <ExpanderClustersBodyPresentational {...state} />
     </MockAppContextProvider>
   );
 

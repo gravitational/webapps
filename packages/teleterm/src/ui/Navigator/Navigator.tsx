@@ -17,8 +17,15 @@ limitations under the License.
 import React from 'react';
 import styled from 'styled-components';
 import { Box, Text } from 'design';
-import { ExpanderClusters } from './ExpanderClusters';
-import { ExpanderConnections } from './ExpanderConnections';
+import {
+  ExpanderClustersHeader,
+  ExpanderClustersBody,
+} from './ExpanderClusters';
+import {
+  ExpanderConnectionsHeader,
+  ExpanderConnectionsBody,
+} from './ExpanderConnections';
+import { NavigatorSplitPanes } from './NavigatorSplitPanes';
 
 export function Navigator() {
   return (
@@ -26,12 +33,30 @@ export function Navigator() {
       <Text typography="subtitle2" m={2}>
         NAVIGATOR
       </Text>
-      <Scrollable>
-        <ExpanderConnections />
-        <Separator />
-        <ExpanderClusters />
-        <Separator />
-      </Scrollable>
+      <NavigatorSplitPanes
+        panes={[
+          {
+            key: 'connections',
+            initialSize: '50%',
+            minSize: 100,
+            Header: ({ onToggle, expanded }) => (
+              <ExpanderConnectionsHeader
+                onToggle={onToggle}
+                expanded={expanded}
+              />
+            ),
+            Body: <ExpanderConnectionsBody />,
+          },
+          {
+            key: 'clusters',
+            minSize: 100,
+            Header: ({ onToggle, expanded }) => (
+              <ExpanderClustersHeader onToggle={onToggle} expanded={expanded} />
+            ),
+            Body: <ExpanderClustersBody />,
+          },
+        ]}
+      />
     </Nav>
   );
 }
@@ -41,14 +66,4 @@ const Nav = styled(Box)`
   flex-direction: column;
   height: 100%;
   user-select: none;
-`;
-
-const Scrollable = styled(Box)`
-  height: 100%;
-  overflow: auto;
-`;
-
-const Separator = styled.div`
-  background: ${props => props.theme.colors.primary.lighter};
-  height: 1px;
 `;

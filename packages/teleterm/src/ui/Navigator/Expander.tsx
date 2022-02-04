@@ -17,47 +17,35 @@ limitations under the License.
 import React from 'react';
 import styled from 'styled-components';
 import { space, color } from 'design/system';
-import * as Icons from 'design/Icon';
 import { Flex } from 'design';
 import Icon from 'design/Icon';
+import * as Icons from 'design/Icon';
 import { ButtonIcon } from 'teleterm/ui/components/ButtonIcon';
 
-const AccordingContext = React.createContext<AccordingContextState>(null);
-
-const Expander: React.FC = props => {
-  const [expanded, setExpanded] = React.useState(true);
-  const [header, ...children] = React.Children.toArray(props.children);
-  const toggle = () => setExpanded(!expanded);
-
-  return (
-    <AccordingContext.Provider value={{ expanded, toggle }}>
-      {header}
-      {children}
-    </AccordingContext.Provider>
-  );
-};
-
-export const ExpanderHeader: React.FC<ExpanderHeaderProps> = props => {
+export const ExpanderHeader: React.FC<
+  ExpanderHeaderProps
+  > = props => {
   const {
     onContextMenu,
     children,
     toggleTrigger = 'header',
     icons: { Expanded = Icons.CarrotDown, Collapsed = Icons.CarrotRight } = {},
+    expanded,
+    onToggle,
     ...styles
   } = props;
-  const ctx = React.useContext(AccordingContext);
-  const ArrowIcon = ctx.expanded ? Expanded : Collapsed;
+  const ArrowIcon = expanded ? Expanded : Collapsed;
 
   function handleHeaderClick(event: MouseEvent) {
     if (toggleTrigger === 'header') {
-      ctx.toggle();
+      onToggle?.();
       event.stopPropagation();
     }
   }
 
   function handleIconClick(event: MouseEvent) {
     if (toggleTrigger === 'icon') {
-      ctx.toggle();
+      onToggle?.();
       event.stopPropagation();
     }
   }
@@ -79,15 +67,12 @@ export const ExpanderHeader: React.FC<ExpanderHeaderProps> = props => {
 };
 
 export const ExpanderContent = styled(Flex)(props => {
-  const ctx = React.useContext(AccordingContext);
   return {
-    display: ctx.expanded ? 'block' : 'none',
     color: props.theme.colors.text.secondary,
     flexDirection: 'column',
+    height: '100%',
   };
 });
-
-export default Expander;
 
 export const StyledHeader = styled(Flex)(props => {
   const theme = props.theme;
@@ -96,6 +81,7 @@ export const StyledHeader = styled(Flex)(props => {
     margin: '0',
     boxSizing: 'border-box',
     display: 'flex',
+    flexShrink: 0,
     alignItems: 'center',
     justifyContent: 'flex-start',
     border: 'none',
@@ -129,17 +115,14 @@ export const StyledHeader = styled(Flex)(props => {
   };
 });
 
-type AccordingContextState = {
-  expanded: boolean;
-  toggle(): void;
-};
-
-type ExpanderHeaderProps = {
+export type ExpanderHeaderProps = {
   onContextMenu?: () => void;
   toggleTrigger?: 'icon' | 'header';
   icons?: {
     Expanded: typeof Icon;
     Collapsed: typeof Icon;
   };
+  onToggle?(): void;
+  expanded?: boolean;
   [key: string]: any;
 };

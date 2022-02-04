@@ -15,7 +15,7 @@
  */
 
 import React from 'react';
-import { ExpanderClustersPresentational } from 'teleterm/ui/Navigator/ExpanderClusters/ExpanderClusters';
+import { ExpanderClustersBodyPresentational } from 'teleterm/ui/Navigator/ExpanderClusters/ExpanderClusters';
 import { MockAppContextProvider } from 'teleterm/ui/fixtures/MockAppContextProvider';
 import { ExpanderClusterState } from './types';
 
@@ -80,7 +80,7 @@ export function Syncing() {
   });
   return (
     <MockAppContextProvider>
-      <ExpanderClustersPresentational {...state} />
+      <ExpanderClustersBodyPresentational {...state} />
     </MockAppContextProvider>
   );
 }
@@ -89,7 +89,7 @@ export function ClusterItems() {
   const state = getState();
   return (
     <MockAppContextProvider>
-      <ExpanderClustersPresentational {...state} />
+      <ExpanderClustersBodyPresentational {...state} />
     </MockAppContextProvider>
   );
 }
