@@ -55,6 +55,7 @@ const EventIconMap: Record<EventCode, React.FC> = {
   [eventCodes.SESSION_DISK]: Icons.Cli,
   [eventCodes.SESSION_COMMAND]: Icons.Cli,
   [eventCodes.SESSION_PROCESS_EXIT]: Icons.Cli,
+  [eventCodes.SESSION_CONNECT]: Icons.Cli,
   [eventCodes.USER_CREATED]: Icons.Info,
   [eventCodes.USER_UPDATED]: Icons.Info,
   [eventCodes.USER_DELETED]: Icons.Info,
