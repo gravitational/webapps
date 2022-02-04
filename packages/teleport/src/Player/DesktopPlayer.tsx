@@ -1,14 +1,17 @@
 import React, { useState, useEffect } from 'react';
+
 import styled from 'styled-components';
-import ProgressBar from './ProgressBar';
-import { PlayerClient, PlayerClientEvent } from 'teleport/lib/tdp';
-import { PngFrame, ClientScreenSpec } from 'teleport/lib/tdp/codec';
-import cfg from 'teleport/config';
-import { getAccessToken, getHostName } from 'teleport/services/api';
-import TdpClientCanvas from 'teleport/components/TdpClientCanvas';
 import { throttle } from 'lodash';
 import { dateToUtc } from 'shared/services/loc';
 import { format } from 'date-fns';
+
+import cfg from 'teleport/config';
+import { PlayerClient, PlayerClientEvent } from 'teleport/lib/tdp';
+import { PngFrame, ClientScreenSpec } from 'teleport/lib/tdp/codec';
+import { getAccessToken, getHostName } from 'teleport/services/api';
+import TdpClientCanvas from 'teleport/components/TdpClientCanvas';
+
+import ProgressBar from './ProgressBar';
 
 export const DesktopPlayer = ({
   sid,

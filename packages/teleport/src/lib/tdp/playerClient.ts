@@ -12,8 +12,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import Client, { TdpClientEvent } from './client';
 import { base64ToArrayBuffer } from 'shared/utils/base64';
+import Client, { TdpClientEvent } from './client';
 
 enum Action {
   TOGGLE_PLAY_PAUSE = 'play/pause',
