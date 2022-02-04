@@ -392,6 +392,16 @@ export const formatters: Formatters = {
     desc: 'Billing Information Updated',
     format: ({ user }) => `User [${user}] has updated the billing information`,
   },
+  [eventCodes.CERTIFICATE_CREATED]: {
+    type: "cert.create",
+    desc: "Certificate Issued",
+    format: ({ cert_type, identity: { user } }) => {
+      if (cert_type === 'user') {
+        return `User certificate issued for [${user}]`
+      }
+      return `Certificate of type [${cert_type}] issued for [${user}]`
+    }
+  }
 };
 
 const unknownFormatter = {
