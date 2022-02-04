@@ -124,7 +124,7 @@ export default function renderTypeCell(event: Event, clusterId: string) {
     event.raw.session_recording !== 'off'
   ) {
     return (
-      <Cell>
+      <Cell style={{ verticalAlign: 'inherit' }}>
         <StyledEventType>
           <a
             title="Open Session Player"
@@ -149,7 +149,7 @@ export default function renderTypeCell(event: Event, clusterId: string) {
   }
 
   return (
-    <Cell>
+    <Cell style={{ verticalAlign: 'inherit' }}>
       <StyledEventType>
         <Icon {...iconProps} as={IconType} />
         {event.codeDesc}
