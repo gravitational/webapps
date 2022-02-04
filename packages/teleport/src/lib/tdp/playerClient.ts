@@ -13,7 +13,7 @@
 // limitations under the License.
 
 import Client, { TdpClientEvent } from './client';
-import { base64ToBuffer } from '@gravitational/shared/utils/base64';
+import { base64ToArrayBuffer } from 'shared/utils/base64';
 
 enum Action {
   TOGGLE_PLAY_PAUSE = 'play/pause',
@@ -47,7 +47,7 @@ export class PlayerClient extends Client {
       return;
     }
     const ms = json.ms;
-    super.processMessage(base64ToBuffer(json.message));
+    super.processMessage(base64ToArrayBuffer(json.message));
     this.emit(PlayerClientEvent.UPDATE_CURRENT_TIME, ms);
   }
 
