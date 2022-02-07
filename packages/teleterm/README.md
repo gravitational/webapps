@@ -113,7 +113,7 @@ build/
 $ cd webapps
 
 ## TELETERM_TSH_PATH is the environment variable that points to local tsh binary
-$ TELETERM_TSH_PATH=../teleport/build/tsh yarn start-term
+$ TELETERM_TSH_PATH=$PWD/../teleport/build/tsh yarn start-term
 ```
 
 This will start Teleport Terminal in development mode. To restart main process press `F6`.
