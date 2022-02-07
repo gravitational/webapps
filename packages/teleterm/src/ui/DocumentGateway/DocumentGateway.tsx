@@ -15,13 +15,16 @@ limitations under the License.
 */
 
 import React from 'react';
-import { Text, Flex, Box, ButtonPrimary, ButtonSecondary } from 'design';
+import { Text, Flex, Box, ButtonPrimary } from 'design';
 import Document from 'teleterm/ui/Document';
-import TextSelectCopy from 'teleport/components/TextSelectCopy';
 import * as Alerts from 'design/Alert';
 import * as types from 'teleterm/ui/services/docs/types';
 import LinearProgress from 'teleterm/ui/components/LinearProgress';
+import { GatewayProtocol } from 'teleterm/ui/services/clusters/types';
 import useDocumentGateway, { State } from './useDocumentGateway';
+import { Postgres } from './Postgres';
+import { Mongo } from './Mongo';
+import { MySql } from './MySql';
 
 type Props = {
   visible: boolean;
@@ -39,14 +42,8 @@ export default function Container(props: Props) {
 }
 
 export function DocumentGateway(props: State) {
-  const {
-    doc,
-    gateway,
-    connected,
-    removeGateway,
-    reconnect,
-    reconnectAttempt,
-  } = props;
+  const { doc, gateway, connected, connectAttempt, disconnect, reconnect } =
+    props;
 
   if (!connected) {
     return (
@@ -57,16 +54,16 @@ export function DocumentGateway(props: State) {
           style={{ position: 'relative' }}
         >
           The Database Proxy connection is currently offline
-          {reconnectAttempt.status === 'processing' && <LinearProgress />}
+          {connectAttempt.status === 'processing' && <LinearProgress />}
         </Text>
-        {reconnectAttempt.status === 'error' && (
-          <Alerts.Danger>{reconnectAttempt.statusText}</Alerts.Danger>
+        {connectAttempt.status === 'error' && (
+          <Alerts.Danger>{connectAttempt.statusText}</Alerts.Danger>
         )}
         <ButtonPrimary
           mt={4}
           width="100px"
           onClick={reconnect}
-          disabled={reconnectAttempt.status === 'processing'}
+          disabled={connectAttempt.status === 'processing'}
         >
           Reconnect
         </ButtonPrimary>
@@ -74,77 +71,20 @@ export function DocumentGateway(props: State) {
     );
   }
 
-  return (
-    <Box maxWidth="1024px" mx="auto" mt="4" px="5">
-      <Flex justifyContent="space-between" mb="4">
-        <Text typography="h3" color="text.secondary">
-          DB Proxy Connection
-        </Text>
-        <ButtonSecondary size="small" onClick={removeGateway}>
-          Close Connection
-        </ButtonSecondary>
-      </Flex>
-      <Text bold>Database</Text>
-      <Flex
-        bg={'primary.dark'}
-        p="2"
-        alignItems="center"
-        justifyContent="space-between"
-        borderRadius={2}
-        mb={3}
-      >
-        <Text>{gateway.protocol}</Text>
-      </Flex>
-      <Text bold>Host Name</Text>
-      <Flex
-        bg={'primary.dark'}
-        p="2"
-        alignItems="center"
-        justifyContent="space-between"
-        borderRadius={2}
-        mb={3}
-      >
-        <Text>{doc.title}</Text>
-      </Flex>
-
-      <Text bold>Local Address</Text>
-      <TextSelectCopy
-        bash={false}
-        bg={'primary.dark'}
-        mb={4}
-        text={`https://${gateway.localAddress}:${gateway.localPort}`}
-      />
-      <Text bold>Psql</Text>
-      <TextSelectCopy
-        bash={false}
-        bg={'primary.dark'}
-        mb={6}
-        text={`psql "${gateway.nativeClientArgs}"`}
-      />
-      <Text typography="h4" bold mb={3}>
-        Access Keys
-      </Text>
-      <Text bold>CA certificate path</Text>
-      <TextSelectCopy
-        bash={false}
-        bg={'primary.dark'}
-        mb={3}
-        text={gateway.caCertPath}
-      />
-      <Text bold>Database access certificate path</Text>
-      <TextSelectCopy
-        bash={false}
-        bg={'primary.dark'}
-        mb={3}
-        text={gateway.certPath}
-      />
-      <Text bold>Private Key Path</Text>
-      <TextSelectCopy
-        bash={false}
-        bg={'primary.dark'}
-        mb={3}
-        text={gateway.keyPath}
-      />
-    </Box>
-  );
+  switch (gateway.protocol as GatewayProtocol) {
+    case 'mongodb':
+      return (
+        <Mongo gateway={gateway} title={doc.title} disconnect={disconnect} />
+      );
+    case 'postgres':
+      return (
+        <Postgres gateway={gateway} title={doc.title} disconnect={disconnect} />
+      );
+    case 'mysql':
+      return (
+        <MySql gateway={gateway} title={doc.title} disconnect={disconnect} />
+      );
+    default:
+      return <Box> {`Unknown protocol type ${gateway.protocol}`}</Box>;
+  }
 }

@@ -22,6 +22,7 @@ export const paths = {
   server:
     '/clusters/:rootClusterId/(leaves)?/:leafClusterId?/servers/:serverId',
   kube: '/clusters/:rootClusterId/(leaves)?/:leafClusterId?/kubes/:kubeId',
+  db: '/clusters/:rootClusterId/(leaves)?/:leafClusterId?/dbs/:dbId',
   gateway: '/gateways/:gatewayId',
   docHome: '/docs/home',
   doc: '/docs/:docId',
@@ -40,6 +41,10 @@ export const routing = {
 
   parseServerUri(uri: string) {
     return routing.parseUri(uri, paths.server);
+  },
+
+  parseDbUri(uri: string) {
+    return routing.parseUri(uri, paths.db);
   },
 
   parseUri(path: string, route: string | RouteProps) {

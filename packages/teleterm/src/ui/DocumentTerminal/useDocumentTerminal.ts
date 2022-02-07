@@ -41,7 +41,7 @@ async function initState(ctx: IAppContext, doc: Doc) {
   const openContextMenu = () => ctx.mainProcessClient.openTerminalContextMenu();
 
   const refreshTitle = async () => {
-    if (cmd.kind !== 'new-shell') {
+    if (cmd.kind !== 'pty.shell') {
       return;
     }
 
@@ -55,7 +55,7 @@ async function initState(ctx: IAppContext, doc: Doc) {
   });
 
   ptyProcess.onExit(() => {
-    //ctx.docsService.close({ uri: doc.uri });
+    ctx.docsService.close(doc.uri);
   });
 
   return {
@@ -69,20 +69,19 @@ function createCmd(doc: Doc): PtyCommand {
   if (doc.kind === 'doc.terminal_tsh_node') {
     return {
       ...doc,
-      kind: 'tsh-login',
+      kind: 'pty.tsh-login',
     };
   }
 
-  debugger;
   if (doc.kind === 'doc.terminal_tsh_kube') {
     return {
       ...doc,
-      kind: 'tsh-kube-login',
+      kind: 'pty.tsh-kube-login',
     };
   }
 
   return {
-    kind: 'new-shell',
+    kind: 'pty.shell',
     cwd: doc.cwd,
   };
 }

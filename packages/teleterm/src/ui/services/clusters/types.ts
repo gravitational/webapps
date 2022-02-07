@@ -38,6 +38,8 @@ export type CreateGatewayParams = tsh.CreateGatewayParams;
 
 export type GatewayProtocol = tsh.GatewayProtocol;
 
+export type Gateway = tsh.Gateway;
+
 export interface AuthSettings extends tsh.AuthSettings {
   secondFactor: Auth2faType;
   preferredMfa: PreferredMfaType;
