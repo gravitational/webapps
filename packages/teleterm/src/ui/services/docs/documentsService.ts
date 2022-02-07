@@ -121,7 +121,6 @@ export class DocumentsService extends ImmutableStore<State> {
     const doc = ((): Document => {
       const activeDocument = this.getActive();
       switch (activeDocument.kind) {
-        case 'doc.terminal_tsh_node':
         case 'doc.terminal_shell':
           return {
             ...activeDocument,

@@ -53,7 +53,7 @@
   },
   "build": {
     "electronVersion": "13.2.3",
-    "productName": "Teleport Terminal",
+    "productName": "teleterm",
     "appId": "gravitational.teleport.terminal",
     "asar": true,
     "asarUnpack": "**\\*.{node,dll}",

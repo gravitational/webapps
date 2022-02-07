@@ -24,7 +24,7 @@ export default function useGateway(doc: types.DocumentGateway) {
   const gateway = ctx.clustersService.findGateway(doc.gatewayUri);
   const connected = !!gateway;
 
-  const [reconnectAttempt, createGateway, setReconnectAttempt] = useAsync(
+  const [connectAttempt, createGateway, setConnectAttempt] = useAsync(
     async () => {
       const gw = await ctx.clustersService.createGateway({
         targetUri: doc.targetUri,
@@ -38,12 +38,14 @@ export default function useGateway(doc: types.DocumentGateway) {
     }
   );
 
-  const [remoteGatewayAttempt, removeGateway] = useAsync(async () => {
+  const [disconnectAttempt, disconnect] = useAsync(async () => {
     await ctx.clustersService.removeGateway(doc.gatewayUri);
   });
 
   const reconnect = () => {
-    const cluster = ctx.clustersService.findClusterByResource(doc.targetUri);
+    const cluster = ctx.clustersService.findRootClusterByResource(
+      doc.targetUri
+    );
     if (cluster && cluster.connected) {
       createGateway();
       return;
@@ -58,7 +60,7 @@ export default function useGateway(doc: types.DocumentGateway) {
     }
 
     if (!cluster) {
-      setReconnectAttempt({
+      setConnectAttempt({
         status: 'error',
         statusText: `unable to resolve cluster for ${doc.targetUri}`,
       });
@@ -66,18 +68,18 @@ export default function useGateway(doc: types.DocumentGateway) {
   };
 
   React.useEffect(() => {
-    if (remoteGatewayAttempt.status === 'success') {
-      ctx.docsService.close(doc);
+    if (disconnectAttempt.status === 'success') {
+      ctx.docsService.close(doc.uri);
     }
-  }, [remoteGatewayAttempt.status]);
+  }, [disconnectAttempt.status]);
 
   return {
     doc,
     gateway,
-    removeGateway,
+    disconnect,
     connected,
     reconnect,
-    reconnectAttempt,
+    connectAttempt,
   };
 }
 

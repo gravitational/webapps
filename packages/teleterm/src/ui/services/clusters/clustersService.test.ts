@@ -23,12 +23,11 @@ const gatewayMock: tsh.Gateway = {
   keyPath: '',
   localAddress: 'localhost',
   localPort: '2000',
-  nativeClientArgs: '',
-  nativeClientPath: '',
   protocol: 'https',
   targetName: 'Test',
   targetUser: '',
   targetUri: 'clusters/xxx/',
+  insecure: true,
 };
 
 const databaseMock: tsh.Database = {

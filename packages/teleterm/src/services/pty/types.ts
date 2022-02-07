@@ -1,7 +1,7 @@
 export type PtyOptions = {
   env?: { [key: string]: string };
   path: string;
-  args: string[];
+  args: string[] | string;
   cwd?: string;
 };
 
@@ -21,13 +21,13 @@ export type PtyServiceClient = {
   createPtyProcess: (cmd: PtyCommand) => PtyProcess;
 };
 
-export type NewShellCommand = {
-  kind: 'new-shell';
+export type ShellCommand = {
+  kind: 'pty.shell';
   cwd?: string;
 };
 
 export type TshLoginCommand = {
-  kind: 'tsh-login';
+  kind: 'pty.tsh-login';
   login: string;
   serverId: string;
   rootClusterId: string;
@@ -35,21 +35,10 @@ export type TshLoginCommand = {
 };
 
 export type TshKubeLoginCommand = {
-  kind: 'tsh-kube-login';
+  kind: 'pty.tsh-kube-login';
   kubeId: string;
   rootClusterId: string;
   leafClusterId?: string;
 };
 
-export type TshDbConnectCommand = {
-  kind: 'tsh-db-connect';
-  clusterId: string;
-  login: string;
-  serverId: string;
-};
-
-export type PtyCommand =
-  | TshLoginCommand
-  | TshDbConnectCommand
-  | NewShellCommand
-  | TshKubeLoginCommand;
+export type PtyCommand = ShellCommand | TshLoginCommand | TshKubeLoginCommand;
