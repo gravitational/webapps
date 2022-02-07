@@ -31,20 +31,20 @@ import { RecordingType } from 'teleport/services/recordings';
 
 export default function Player() {
   const { sid, clusterId } = useParams<UrlPlayerParams>();
+  const loc = useLocation();
 
   const recordingType = getUrlParameter(
     'recordingType',
-    useLocation().search
+    loc.search
   ) as RecordingType;
-  const durationMs = Number(
-    getUrlParameter('durationMs', useLocation().search)
-  );
+  const durationMs = Number(getUrlParameter('durationMs', loc.search));
 
   const validRecordingType =
     recordingType === 'ssh' || recordingType === 'desktop';
+  // True if (recordingType !== 'desktop') because
+  // durationMs is only needed for desktop recordings.
   const validDurationMs =
-    recordingType !== 'desktop' || // durationMs only needed for desktop recordings
-    Number.isInteger(durationMs);
+    recordingType !== 'desktop' || Number.isInteger(durationMs);
 
   document.title = `${clusterId} • Play ${sid}`;
 
@@ -52,26 +52,28 @@ export default function Player() {
     session.logout();
   }
 
-  if (!validRecordingType || !validDurationMs) {
+  if (!validRecordingType) {
     return (
       <StyledPlayer>
-        {!validRecordingType && (
-          <Box textAlign="center" mx={10} mt={5}>
-            <Danger mb={0}>
-              Invalid query parameter recordingType: {recordingType}, should be
-              'ssh' or 'desktop'
-            </Danger>
-          </Box>
-        )}
-        {!validDurationMs && (
-          <Box textAlign="center" mx={10} mt={5}>
-            <Danger mb={0}>
-              Invalid query parameter durationMs:{' '}
-              {getUrlParameter('durationMs', useLocation().search)}, should be
-              an integer.
-            </Danger>
-          </Box>
-        )}
+        <Box textAlign="center" mx={10} mt={5}>
+          <Danger mb={0}>
+            Invalid query parameter recordingType: {recordingType}, should be
+            'ssh' or 'desktop'
+          </Danger>
+        </Box>
+      </StyledPlayer>
+    );
+  }
+
+  if (!validDurationMs) {
+    return (
+      <StyledPlayer>
+        <Box textAlign="center" mx={10} mt={5}>
+          <Danger mb={0}>
+            Invalid query parameter durationMs:{' '}
+            {getUrlParameter('durationMs', loc.search)}, should be an integer.
+          </Danger>
+        </Box>
       </StyledPlayer>
     );
   }

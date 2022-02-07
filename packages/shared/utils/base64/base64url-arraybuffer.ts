@@ -16,23 +16,21 @@
 
 import { arrayBufferToBase64, base64ToArrayBuffer } from './base64-arraybuffer';
 
-// Converts Base64url to Base64
-// Sourced from https://github.com/github/webauthn-json
-function base64urlToBase64(base64url: string): string {
+export function base64urlToBuffer(base64url: string): ArrayBuffer {
+  // Base64url to Base64string
   const padding = '=='.slice(0, (4 - (base64url.length % 4)) % 4);
-  return base64url.replace(/-/g, '+').replace(/_/g, '/') + padding;
-}
+  const base64String =
+    base64url.replace(/-/g, '+').replace(/_/g, '/') + padding;
 
-// Converts Base64 to Base64url
-// We assume that the base64url string is well-formed.
-function base64ToBase64url(base64: string): string {
-  return base64.replace(/\+/g, '-').replace(/\//g, '_').replace(/=/g, '');
-}
-
-export function base64urlToBuffer(baseurl64String: string): ArrayBuffer {
-  return base64ToArrayBuffer(base64urlToBase64(baseurl64String));
+  return base64ToArrayBuffer(base64String);
 }
 
 export function bufferToBase64url(buffer: ArrayBuffer): string {
-  return base64ToBase64url(arrayBufferToBase64(buffer));
+  const base64str = arrayBufferToBase64(buffer);
+
+  // Assuming the base64str is a well-formed url.
+  return base64str
+    .replace(/\+/g, '-')
+    .replace(/\//g, '_')
+    .replace(/=/g, '');
 }
