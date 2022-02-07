@@ -41,10 +41,7 @@ export default function Player() {
 
   const validRecordingType =
     recordingType === 'ssh' || recordingType === 'desktop';
-  // True if (recordingType !== 'desktop') because
-  // durationMs is only needed for desktop recordings.
-  const validDurationMs =
-    recordingType !== 'desktop' || Number.isInteger(durationMs);
+  const validDurationMs = durationMs > 0 && Number.isInteger(durationMs);
 
   document.title = `${clusterId} • Play ${sid}`;
 
@@ -65,7 +62,7 @@ export default function Player() {
     );
   }
 
-  if (!validDurationMs) {
+  if (recordingType === 'desktop' && !validDurationMs) {
     return (
       <StyledPlayer>
         <Box textAlign="center" mx={10} mt={5}>
