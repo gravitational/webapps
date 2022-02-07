@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-import { Base64urlString } from '@gravitational/shared/utils/base64';
+export type Base64urlString = string;
 
 export type DeviceType = 'totp' | 'u2f' | 'webauthn';
 
