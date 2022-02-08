@@ -25,8 +25,8 @@ export default {
 
 function getState(): State {
   return {
-    processRemove(id: string) {},
-    processClick(id: string) {},
+    processRemove() {},
+    processClick() {},
     items: [
       {
         connected: true,

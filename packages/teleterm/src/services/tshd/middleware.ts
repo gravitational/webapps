@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/ban-types */
 import * as grpc from '@grpc/grpc-js';
 import Logger from 'teleterm/logger';
 

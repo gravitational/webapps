@@ -14,6 +14,8 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
+/* eslint-disable @typescript-eslint/ban-types */
+
 import React from 'react';
 
 export default function useAsync<R, T extends Function>(cb?: AsyncCb<R, T>) {

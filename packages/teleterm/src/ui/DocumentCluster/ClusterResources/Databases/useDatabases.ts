@@ -16,7 +16,7 @@ limitations under the License.
 
 import { useClusterContext } from 'teleterm/ui/DocumentCluster/clusterContext';
 
-export default function useDbs() {
+export function useDatabases() {
   const ctx = useClusterContext();
   const dbs = ctx.getDbs();
   const syncStatus = ctx.getSyncStatus().dbs;
@@ -28,4 +28,4 @@ export default function useDbs() {
   };
 }
 
-export type State = ReturnType<typeof useDbs>;
+export type State = ReturnType<typeof useDatabases>;

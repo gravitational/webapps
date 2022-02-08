@@ -14,18 +14,20 @@
  * limitations under the License.
  */
 
+/* eslint-disable jest/no-commented-out-tests */
+
 import React from 'react';
 import { fireEvent, render } from 'design/utils/testing';
 import { ExpanderClustersPresentational } from './ExpanderClusters';
-import { ClusterNavItem, ExpanderClusterState } from './types';
+import { ExpanderClusterState } from './types';
 import { MockAppContextProvider } from 'teleterm/ui/fixtures/MockAppContextProvider';
 
 test('should render simple and trusted clusters', () => {
   const state: ExpanderClusterState = {
     onAddCluster() {},
     onSyncClusters() {},
-    onOpenContextMenu(item: ClusterNavItem) {},
-    onOpen(clusterUri: string) {},
+    onOpenContextMenu() {},
+    onOpen() {},
     items: [
       {
         clusterUri: 'test-uri',
@@ -61,7 +63,7 @@ test('should invoke callback when context menu is clicked', () => {
     onAddCluster() {},
     onSyncClusters() {},
     onOpenContextMenu: jest.fn(),
-    onOpen(clusterUri: string) {},
+    onOpen() {},
     items: [
       {
         clusterUri: 'test-uri',

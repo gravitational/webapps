@@ -31,7 +31,7 @@ class PtyProcess extends EventEmitter {
   private _process: nodePTY.IPty;
   private _logger: Logger;
   private _status: Status = 'not_initialized';
-  private _disposed: boolean = false;
+  private _disposed = false;
 
   constructor(private options: PtyOptions) {
     super();

@@ -47,9 +47,8 @@ function makeProps() {
 
     onCloseDialog: () => null,
     onAbort: () => null,
-    onLoginWithLocal: (email: string, password: string) =>
-      Promise.resolve<[void, Error]>([null, null]),
-    onLoginWithSso: (provider: types.AuthProvider) => null,
+    onLoginWithLocal: () => Promise.resolve<[void, Error]>([null, null]),
+    onLoginWithSso: () => null,
   };
 }
 

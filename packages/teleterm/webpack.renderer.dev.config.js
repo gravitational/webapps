@@ -1,4 +1,4 @@
-const { spawn, execSync } = require('child_process');
+const { spawn } = require('child_process');
 const path = require('path');
 const defaultCfg = require('@gravitational/build/webpack/webpack.dev.config');
 const configFactory = require('@gravitational/build/webpack/webpack.base');

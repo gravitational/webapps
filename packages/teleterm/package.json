@@ -13,11 +13,11 @@
     "start": "webpack serve --config webpack.renderer.dev.config.js --progress",
     "start-main": "webpack build --config webpack.main.config.js --mode=development --progress --watch",
     "start-electron": "electron build/app/dist/main/main.js",
-    "build": "yarn build-main && yarn build-renderer",
+    "build": "yarn build-natives && yarn build-main && yarn build-renderer",
     "build-main": "webpack build --config webpack.main.config.js --progress --mode=production",
     "build-renderer": "webpack build --config webpack.renderer.prod.config.js --progress",
-    "package": "electron-builder build --publish never -c.extraMetadata.name=teleterm",
-    "postinstall": "electron-builder install-app-deps"
+    "build-natives": "electron-builder install-app-deps",
+    "package": "electron-builder build --publish never -c.extraMetadata.name=teleterm"
   },
   "repository": {
     "type": "git",
@@ -46,7 +46,7 @@
     "react-dnd": "^14.0.4",
     "react-dnd-html5-backend": "^14.0.2",
     "ts-protoc-gen": "0.15.0",
-    "url-loader": "4.0.0",
+    "url-loader": "^4.1.1",
     "winston": "^3.3.3",
     "xterm": "^4.15.0",
     "xterm-addon-fit": "^0.5.0"

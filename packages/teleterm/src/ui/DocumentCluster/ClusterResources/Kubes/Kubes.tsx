@@ -14,119 +14,70 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React, { useState } from 'react';
-import { sortBy } from 'lodash';
-import styled from 'styled-components';
-import { Box } from 'design';
-import { Danger } from 'design/Alert';
+import React from 'react';
 import { useKubes, State } from './useKubes';
-import {
-  Column,
-  SortHeaderCell,
-  Cell,
-  TextCell,
-  SortTypes,
-} from 'design/DataTable';
-import Table from 'design/DataTable/Paged';
+import Table, { Cell } from 'design/DataTable';
 import { Label, ButtonBorder } from 'design';
 import * as types from 'teleterm/ui/services/clusters/types';
 
 export default function Container() {
   const state = useKubes();
-  return <Kubes {...state} />;
+  return <KubeList {...state} />;
 }
 
-function Kubes(props: State) {
-  const { kubes = [], syncStatus, connect, pageSize = 100 } = props;
-  const [sortDir, setSortDir] = useState<Record<string, string>>({
-    name: SortTypes.DESC,
-  });
-
-  function sortKubes() {
-    const columnKey = Object.getOwnPropertyNames(sortDir)[0];
-    const sorted = sortBy(kubes, columnKey);
-    if (sortDir[columnKey] === SortTypes.ASC) {
-      return sorted.reverse();
-    }
-
-    return sorted;
-  }
-
-  function onSortChange(columnKey: string, sortDir: string) {
-    setSortDir({ [columnKey]: sortDir });
-  }
-
-  const data = sortKubes();
+function KubeList(props: State) {
+  const { kubes = [], pageSize = 100, connect } = props;
 
   return (
-    <StyledKubes>
-      {syncStatus.status === 'failed' && (
-        <Danger>{syncStatus.statusText}</Danger>
-      )}
-      <StyledTable pageSize={pageSize} data={data}>
-        <Column
-          columnKey="name"
-          header={
-            <SortHeaderCell
-              sortDir={sortDir.name}
-              onSortChange={onSortChange}
-              title="Name"
-            />
-          }
-          cell={<TextCell />}
-        />
-        <Column header={<Cell>Labels</Cell>} cell={<LabelCell />} />
-        <Column
-          header={<Cell />}
-          cell={<ConnectButton onConnect={connect} />}
-        />
-      </StyledTable>
-    </StyledKubes>
+    <Table
+      data={kubes}
+      columns={[
+        {
+          key: 'name',
+          headerText: 'Name',
+          isSortable: true,
+        },
+        {
+          key: 'labelsList',
+          headerText: 'Labels',
+          render: renderLabelCell,
+        },
+        {
+          altKey: 'connect-btn',
+          render: kube => renderConnectButtonCell(kube.uri, connect),
+        },
+      ]}
+      emptyText="No Kubernetes Clusters Found"
+      pagination={{ pageSize, pagerPosition: 'bottom' }}
+    />
   );
 }
 
-function ConnectButton(props) {
-  const { onConnect, rowIndex, data } = props;
-  const { uri } = data[rowIndex] as types.tsh.Kube;
+export const renderConnectButtonCell = (
+  uri: string,
+  connect: (kubeUri: string) => void
+) => {
   return (
     <Cell align="right">
       <ButtonBorder
         size="small"
         onClick={() => {
-          onConnect(uri);
+          connect(uri);
         }}
       >
         Connect
       </ButtonBorder>
     </Cell>
   );
-}
+};
 
-function LabelCell(props) {
-  const { rowIndex, data } = props;
-  const { labelsList } = data[rowIndex];
-  const $labels = labelsList.map((label, index) => (
-    <Label mb="1" mr="1" key={index} kind="secondary">
-      {`${label.name}:${label.value}`}
+const renderLabelCell = ({ labelsList }: types.Kube) => {
+  const labels = labelsList.map(l => `${l.name}:${l.value}`);
+  const $labels = labels.map(label => (
+    <Label mb="1" mr="1" key={label} kind="secondary">
+      {label}
     </Label>
   ));
 
   return <Cell>{$labels}</Cell>;
-}
-
-const StyledTable = styled(Table)`
-  & > tbody > tr > td {
-    vertical-align: baseline;
-  }
-`;
-
-const StyledKubes = styled(Box)`
-  flex-direction: column;
-  display: flex;
-  flex: 1;
-  max-width: 1024px;
-  ::after {
-    content: ' ';
-    padding-bottom: 24px;
-  }
-`;
+};

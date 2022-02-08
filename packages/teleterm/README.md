@@ -1,6 +1,6 @@
 ## Teleport Terminal
 
-Teleport Terminal is a desktop application that allows easy access to Teleport resources.
+Teleport Terminal (teleterm) is a desktop application that allows easy access to Teleport resources.
 
 ### Diagram
 ```pro
@@ -35,7 +35,7 @@ Teleport Terminal is a desktop application that allows easy access to Teleport r
           ^           +-------------------+         tsh daemon         |
           |                               |          (golang)          |
           +<------------------------------+                            |
-          |                               +-------------+--------------+
+                                          +-------------+--------------+
  +--------+-----------------+                           ^
  |         Terminal         |                           |
  |    Electron Main Process |                           |    GRPC API
@@ -55,7 +55,7 @@ Teleport Terminal is a desktop application that allows easy access to Teleport r
  |   +servers             | babel.config.js                             |
  |     node1              | build/                                      |
  |     node2              | src/                                        |
- |   -dbs                 | alexey@p14s:~/go/src/                       |
+ |   -dbs                 |                                             |
  |    mysql+prod          |                                             |
  |    mysql+test          |                                             |
  |  +cluster2             |                                             |
@@ -63,39 +63,21 @@ Teleport Terminal is a desktop application that allows easy access to Teleport r
  +------------------------+---------------------------------------------+
 ```
 
-### Building
+### Building and Packaging
+
+Teleport Terminal consists of two main components: the `tsh` tool the Electron app. To get started, first we need to build `tsh` that resides in the `Teleport` repo.
 
 Prepare Teleport repo:
-1. Switch to `/teleterm` branch
-2. $ make
 
-Prepare Webapps repo
-1. Make sure that your node version is v16 (current tls) https://nodejs.org/en/about/releases/
-2. Switch to `/teleterm` branch
-3. yarn install
-4. yarn build-term
-5. yarn package
-
-The installable file could be found in /webapps/packages/teleterm/build/release/
-
-
-### Development
-
- Teleport Terminal consists of two main components: the `tsh` that runs in a deamon mode and the main app.
-
-#### How to build tsh
-
-1. Get Teleport source code and build it locally
-
-```sh
-# get the source code and build:
+```bash
+## Clone Teleport repo
 $ git clone https://github.com/gravitational/teleport.git
 $ cd teleport
+## Build Teleport tools and binaries
 $ make
 ```
 
 The build output could be found in the `/teleport/build` directory
-
 ```pro
 build/
 ├── tctl
@@ -103,20 +85,32 @@ build/
 └── tsh     <--- will be packaged together with Electron app.
 ```
 
-#### How to start local dev server.
 
-1. Clone Gravitational [webapps repository](https://github.com/gravitational/webapps)
+Prepare Webapps repo
+1. Make sure that your node version is v16 (current tls) https://nodejs.org/en/about/releases/
+2. Clone and build Webapps repository
+```bash
+$ git clone https://github.com/gravitational/webapps.git
+$ cd webapps
+$ yarn install
+$ yarn build-term
+$ yarn package-term
+```
 
-2. Start the server
+The installable file could be found in /webapps/packages/teleterm/build/release/
+
+### Development
+
+To launch `teleterm` in the development mode:
 
 ```sh
 $ cd webapps
 
 ## TELETERM_TSH_PATH is the environment variable that points to local tsh binary
-$ TELETERM_TSH_PATH=../teleport/build/tsh yarn start-term
+$ TELETERM_TSH_PATH=$PWD/../teleport/build/tsh yarn start-term
 ```
 
-This will start Teleport Terminal in development mode. To restart main process press `F6`.
+For quick restarts, that restarts all processes and `tsh` daemon, press `F6`.
 
 ### Tips
 

@@ -14,6 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
+// eslint-disable-next-line import/named
 import { RouteProps, matchPath, generatePath } from 'react-router';
 
 export const paths = {
