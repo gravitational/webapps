@@ -31,17 +31,17 @@ import { RecordingType } from 'teleport/services/recordings';
 
 export default function Player() {
   const { sid, clusterId } = useParams<UrlPlayerParams>();
-  const loc = useLocation();
+  const { search } = useLocation();
 
   const recordingType = getUrlParameter(
     'recordingType',
-    loc.search
+    search
   ) as RecordingType;
-  const durationMs = Number(getUrlParameter('durationMs', loc.search));
+  const durationMs = Number(getUrlParameter('durationMs', search));
 
   const validRecordingType =
     recordingType === 'ssh' || recordingType === 'desktop';
-  const validDurationMs = durationMs > 0 && Number.isInteger(durationMs);
+  const validDurationMs = Number.isInteger(durationMs) && durationMs > 0;
 
   document.title = `${clusterId} • Play ${sid}`;
 
@@ -68,7 +68,7 @@ export default function Player() {
         <Box textAlign="center" mx={10} mt={5}>
           <Danger mb={0}>
             Invalid query parameter durationMs:{' '}
-            {getUrlParameter('durationMs', loc.search)}, should be an integer.
+            {getUrlParameter('durationMs', search)}, should be an integer.
           </Danger>
         </Box>
       </StyledPlayer>
