@@ -34,19 +34,7 @@ export default function Container() {
 }
 
 export function Main(props: State) {
-  const { status, statusText, ctx } = props;
-
-  if (status === 'failed') {
-    return <Failed message={statusText} />;
-  }
-
-  if (status !== 'success') {
-    return (
-      <StyledIndicator>
-        <Indicator />
-      </StyledIndicator>
-    );
-  }
+  const { ctx } = props;
 
   // render feature routes
   const $features = ctx.features.map((f, index) => {

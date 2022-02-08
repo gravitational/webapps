@@ -14,7 +14,11 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React from 'react';
+import React, { useEffect } from 'react';
+import styled from 'styled-components';
+import { Indicator } from 'design';
+import { Failed } from 'design/CardError';
+import useAttempt from 'shared/hooks/useAttemptNext';
 import TeleportContext from './teleportContext';
 
 // ReactContext is an instance of React context that is used to
@@ -22,8 +26,34 @@ import TeleportContext from './teleportContext';
 const ReactContext = React.createContext<TeleportContext>(null);
 
 const TeleportContextProvider: React.FC<Props> = props => {
-  return <ReactContext.Provider value={props.ctx} children={props.children} />;
+  const { ctx } = props;
+  const { attempt, run } = useAttempt('processing');
+  useEffect(() => {
+    run(() => ctx.init());
+  }, [ctx]);
+
+  if (attempt.status === 'failed') {
+    return <Failed message={attempt.statusText} />;
+  }
+
+  if (attempt.status !== 'success') {
+    return (
+      <StyledIndicator>
+        <Indicator />
+      </StyledIndicator>
+    );
+  }
+  return <ReactContext.Provider value={ctx} children={props.children} />;
 };
+
+const StyledIndicator = styled.div`
+  align-items: center;
+  justify-content: center;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  height: 100%;
+`;
 
 export default TeleportContextProvider;
 
