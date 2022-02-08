@@ -15,148 +15,86 @@ limitations under the License.
 */
 
 import React from 'react';
-import styled from 'styled-components';
-import { Danger } from 'design/Alert';
-import useServers from './useServers';
-import { sortBy } from 'lodash';
-import { ButtonBorder } from 'design';
-import {
-  Column,
-  SortHeaderCell,
-  Cell,
-  TextCell,
-  SortTypes,
-  renderLabelCell,
-} from 'design/DataTable';
-import Table from 'design/DataTable/Paged';
+import { useServers, State } from './useServers';
 import * as types from 'teleterm/ui/services/clusters/types';
+import Table, { Cell } from 'design/DataTable';
+import { ButtonBorder, Label } from 'design';
 
 export default function Container() {
-  const { servers, syncStatus, connect } = useServers();
+  const state = useServers();
+  return <ServerList {...state} />;
+}
+
+function ServerList(props: State) {
+  const { servers = [], connect } = props;
   return (
-    <ServerList servers={servers} syncStatus={syncStatus} onConnect={connect} />
+    <Table
+      columns={[
+        {
+          key: 'hostname',
+          headerText: 'Hostname',
+          isSortable: true,
+        },
+        {
+          key: 'addr',
+          headerText: 'Address',
+          isSortable: true,
+          render: renderAddressCell,
+        },
+        {
+          key: 'labelsList',
+          headerText: 'Labels',
+          render: renderLabelCell,
+        },
+        {
+          altKey: 'connect-btn',
+          render: server => renderConnectCell(server.uri, connect),
+        },
+      ]}
+      emptyText="No Nodes Found"
+      data={servers}
+      pagination={{ pageSize: 100, pagerPosition: 'bottom' }}
+    />
   );
 }
 
-function ServerList(props: Props) {
-  const { servers = [], syncStatus, onConnect, pageSize = 100 } = props;
-  const [sortDir, setSortDir] = React.useState<Record<string, string>>({
-    hostname: SortTypes.DESC,
-  });
+const renderLabelCell = ({ labelsList }: types.Server) => {
+  const labels = labelsList.map(l => `${l.name}:${l.value}`);
+  const $labels = labels.map(label => (
+    <Label mb="1" mr="1" key={label} kind="secondary">
+      {label}
+    </Label>
+  ));
 
-  function sortServers() {
-    const columnKey = Object.getOwnPropertyNames(sortDir)[0];
-    const sorted = sortBy(servers, columnKey);
-    if (sortDir[columnKey] === SortTypes.ASC) {
-      return sorted.reverse();
-    }
+  return <Cell>{$labels}</Cell>;
+};
 
-    return sorted;
-  }
-
-  function onSortChange(columnKey: string, sortDir: string) {
-    setSortDir({ [columnKey]: sortDir });
-  }
-
-  const sorted = sortServers();
-
-  return (
-    <StyledServers>
-      {syncStatus.status === 'failed' && (
-        <Danger>{syncStatus.statusText}</Danger>
-      )}
-      <StyledTable pageSize={pageSize} data={sorted}>
-        <Column
-          columnKey="hostname"
-          header={
-            <SortHeaderCell
-              sortDir={sortDir.hostname}
-              onSortChange={onSortChange}
-              title="Hostname"
-            />
-          }
-          cell={<TextCell />}
-        />
-        <Column
-          columnKey="addr"
-          header={
-            <SortHeaderCell
-              sortDir={sortDir.addr}
-              onSortChange={onSortChange}
-              title="Address"
-            />
-          }
-          cell={<AddressCell />}
-        />
-        <Column header={<Cell>Labels</Cell>} cell={<LabelCell />} />
-        <Column
-          header={<Cell />}
-          cell={<ConnectButton onClick={onConnect} />}
-        />
-      </StyledTable>
-    </StyledServers>
-  );
-}
-
-function ConnectButton(props) {
-  const { onClick, rowIndex, data } = props;
-  const { uri } = data[rowIndex] as types.tsh.Database;
-
+const renderConnectCell = (
+  serverUri: string,
+  connect: (serverUri: string) => void
+) => {
   return (
     <Cell align="right">
       <ButtonBorder
         size="small"
         onClick={() => {
-          onClick(uri);
+          connect(serverUri);
         }}
       >
         Connect
       </ButtonBorder>
     </Cell>
   );
-}
-
-function AddressCell(props) {
-  const { rowIndex, data, ...rest } = props;
-  const { addr, tunnel } = data[rowIndex] as types.tsh.Server;
-  return <Cell {...rest}>{tunnel ? renderTunnel() : addr}</Cell>;
-}
-
-function renderTunnel() {
-  return (
-    <span
-      style={{ cursor: 'default' }}
-      title="This node is connected to cluster through reverse tunnel"
-    >{`⟵ tunnel`}</span>
-  );
-}
-
-function LabelCell(props) {
-  const { rowIndex, data } = props;
-  const { tags = [] } = data[rowIndex];
-  return renderLabelCell(tags);
-}
-
-type Props = {
-  servers: types.tsh.Server[];
-  syncStatus: types.SyncStatus;
-  onConnect(serverUri: string): void;
-  pageSize?: number;
 };
 
-const StyledTable = styled(Table)`
-  & > tbody > tr > td {
-    vertical-align: baseline;
-  }
-`;
-
-const StyledServers = styled.div`
-  flex-direction: column;
-  display: flex;
-  flex: 1;
-  max-width: 1024px;
-  ::after {
-    content: ' ';
-    padding-bottom: 24px;
-  }
-`;
+const renderAddressCell = ({ addr, tunnel }: types.Server) => (
+  <Cell>
+    {tunnel && (
+      <span
+        style={{ cursor: 'default' }}
+        title="This node is connected to cluster through reverse tunnel"
+      >{`⟵ tunnel`}</span>
+    )}
+    {!tunnel && addr}
+  </Cell>
+);

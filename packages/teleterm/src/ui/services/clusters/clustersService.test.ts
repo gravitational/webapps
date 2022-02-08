@@ -193,7 +193,7 @@ test('create a gateway', async () => {
 
   await service.createGateway({ targetUri, port });
 
-  expect(createGateway).toHaveBeenCalledWith(targetUri, port);
+  expect(createGateway).toHaveBeenCalledWith({ targetUri, port });
   expect(service.state.gateways).toStrictEqual(
     new Map([[gatewayMock.uri, gatewayMock]])
   );

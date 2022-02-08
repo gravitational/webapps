@@ -101,7 +101,7 @@ const renderIconCell = (type: RecordingType) => {
 };
 
 const renderPlayCell = (
-  { description, sid, recordingType, playable, duration }: Recording,
+  { description, sid, recordingType, playable }: Recording,
   clusterId: string
 ) => {
   if (!playable) {
@@ -112,13 +112,7 @@ const renderPlayCell = (
     );
   }
 
-  const url = cfg.getPlayerRoute(
-    { clusterId, sid },
-    {
-      recordingType,
-      durationMs: recordingType === 'desktop' ? duration : undefined,
-    }
-  );
+  const url = cfg.getPlayerRoute({ clusterId, sid }, { recordingType });
   return (
     <Cell align="right">
       <ButtonBorder

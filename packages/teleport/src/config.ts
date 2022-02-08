@@ -66,7 +66,7 @@ const cfg = {
     consoleNodes: '/web/cluster/:clusterId/console/nodes',
     consoleConnect: '/web/cluster/:clusterId/console/node/:serverId/:login',
     consoleSession: '/web/cluster/:clusterId/console/session/:sid',
-    player: '/web/cluster/:clusterId/session/:sid', // ?recordingType=ssh|desktop&durationMs=1234
+    player: '/web/cluster/:clusterId/session/:sid', // ?recordingType=ssh|desktop
     login: '/web/login',
     loginSuccess: '/web/msg/info/login_success',
     loginErrorLegacy: '/web/msg/error/login_failed',
@@ -268,14 +268,9 @@ const cfg = {
   },
 
   getPlayerRoute(params: UrlPlayerParams, search: UrlPlayerSearch) {
-    let route = generatePath(cfg.routes.player, { ...params });
-    route = `${route}?recordingType=${search.recordingType}`;
-
-    if (search.durationMs) {
-      route = `${route}&durationMs=${search.durationMs}`;
-    }
-
-    return route;
+    return `${generatePath(cfg.routes.player, { ...params })}?recordingType=${
+      search.recordingType
+    }`;
   },
 
   getUserContextUrl() {
@@ -445,7 +440,6 @@ export interface UrlPlayerParams {
 
 export interface UrlPlayerSearch {
   recordingType: RecordingType;
-  durationMs?: number; // this is only necessary for recordingType == desktop
 }
 
 // /web/cluster/:clusterId/desktops/:desktopName/:username

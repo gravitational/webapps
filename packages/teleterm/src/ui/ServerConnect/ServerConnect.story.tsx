@@ -37,7 +37,7 @@ export const Story = () => {
   const props: State = {
     server,
     logins: ['a', 'test', 'test2', 'test3', 'test4', 'test5'],
-    connect: (login: string) => null,
+    connect: () => null,
     onClose: () => null,
   };
 

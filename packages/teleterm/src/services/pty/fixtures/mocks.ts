@@ -1,19 +1,19 @@
-import { PtyProcess, PtyCommand, PtyServiceClient } from './../types';
+import { PtyProcess, PtyServiceClient } from './../types';
 
 export class MockPtyProcess implements PtyProcess {
-  start(cols: number, rows: number) {}
+  start() {}
 
-  write(data: string) {}
+  write() {}
 
-  resize(cols: number, rows: number) {}
+  resize() {}
 
   dispose() {}
 
-  onData(cb: (data: string) => void) {}
+  onData() {}
 
-  onExit(cb: (ev: { exitCode: number; signal?: number }) => void) {}
+  onExit() {}
 
-  onOpen(cb: () => void) {}
+  onOpen() {}
 
   getPid() {
     return 0;
@@ -23,7 +23,7 @@ export class MockPtyProcess implements PtyProcess {
 }
 
 export class MockPtyServiceClient implements PtyServiceClient {
-  createPtyProcess(cmd: PtyCommand): PtyProcess {
+  createPtyProcess(): PtyProcess {
     return new MockPtyProcess();
   }
 }

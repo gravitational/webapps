@@ -114,4 +114,13 @@ function filterOptions(value = '', options: Option[] = []) {
 
 type Option = { value: string; label: string };
 
-const StyledSelect = styled(DarkStyledSelect)``;
+const StyledSelect = styled(DarkStyledSelect)`
+  .react-select__single-value {
+    transform: none;
+    position: absolute;
+    left: 78px;
+    top: 4px;
+    width: 270px;
+    text-overflow: ellipsis;
+  }
+`;

@@ -16,7 +16,6 @@
 
 import React from 'react';
 import { ExpanderClustersPresentational } from 'teleterm/ui/Navigator/ExpanderClusters/ExpanderClusters';
-import { ClusterNavItem } from 'teleterm/ui/Navigator/ExpanderClusters/types';
 import { MockAppContextProvider } from 'teleterm/ui/fixtures/MockAppContextProvider';
 import { ExpanderClusterState } from './types';
 
@@ -28,8 +27,8 @@ function getState(): ExpanderClusterState {
   return {
     onAddCluster() {},
     onSyncClusters() {},
-    onOpenContextMenu(item: ClusterNavItem) {},
-    onOpen(clusterUri: string) {},
+    onOpenContextMenu() {},
+    onOpen() {},
     items: [
       {
         clusterUri: '/clusters/root1.teleport.sh',

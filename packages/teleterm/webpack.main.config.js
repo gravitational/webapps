@@ -8,7 +8,7 @@ function onFirstBuildDonePlugin(env) {
   let isInitialBuild = true;
   return {
     apply: compiler => {
-      compiler.hooks.done.tap('OnFirstBuildDonePlugin', compilation => {
+      compiler.hooks.done.tap('OnFirstBuildDonePlugin', (/*compilation*/) => {
         if (!isInitialBuild) {
           return;
         }

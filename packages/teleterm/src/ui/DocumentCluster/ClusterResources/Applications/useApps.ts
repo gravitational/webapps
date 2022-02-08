@@ -16,7 +16,7 @@ limitations under the License.
 
 import { useClusterContext } from 'teleterm/ui/DocumentCluster/clusterContext';
 
-export default function useApps() {
+export function useApps() {
   const ctx = useClusterContext();
   const apps = ctx.getApps();
   const syncStatus = ctx.getSyncStatus().apps;

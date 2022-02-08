@@ -20,8 +20,8 @@ import { Flex } from 'design';
 import ClusterNavButton from 'teleterm/ui/DocumentCluster/ClusterNavButton';
 import ClusterContext, {
   NavLocation,
+  useClusterContext,
 } from 'teleterm/ui/DocumentCluster/clusterContext';
-import { useClusterContext } from 'teleterm/ui/DocumentCluster/clusterContext';
 
 export default function SideNav(props: Props) {
   const ctx = useClusterContext();

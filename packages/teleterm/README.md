@@ -35,7 +35,7 @@ Teleport Terminal is a desktop application that allows easy access to Teleport r
           ^           +-------------------+         tsh daemon         |
           |                               |          (golang)          |
           +<------------------------------+                            |
-          |                               +-------------+--------------+
+                                          +-------------+--------------+
  +--------+-----------------+                           ^
  |         Terminal         |                           |
  |    Electron Main Process |                           |    GRPC API
@@ -55,7 +55,7 @@ Teleport Terminal is a desktop application that allows easy access to Teleport r
  |   +servers             | babel.config.js                             |
  |     node1              | build/                                      |
  |     node2              | src/                                        |
- |   -dbs                 | alexey@p14s:~/go/src/                       |
+ |   -dbs                 |                                             |
  |    mysql+prod          |                                             |
  |    mysql+test          |                                             |
  |  +cluster2             |                                             |
@@ -113,7 +113,7 @@ build/
 $ cd webapps
 
 ## TELETERM_TSH_PATH is the environment variable that points to local tsh binary
-$ TELETERM_TSH_PATH=../teleport/build/tsh yarn start-term
+$ TELETERM_TSH_PATH=$PWD/../teleport/build/tsh yarn start-term
 ```
 
 This will start Teleport Terminal in development mode. To restart main process press `F6`.

@@ -31,17 +31,11 @@ import { RecordingType } from 'teleport/services/recordings';
 
 export default function Player() {
   const { sid, clusterId } = useParams<UrlPlayerParams>();
-  const { search } = useLocation();
 
   const recordingType = getUrlParameter(
     'recordingType',
-    search
+    useLocation().search
   ) as RecordingType;
-  const durationMs = Number(getUrlParameter('durationMs', search));
-
-  const validRecordingType =
-    recordingType === 'ssh' || recordingType === 'desktop';
-  const validDurationMs = Number.isInteger(durationMs) && durationMs > 0;
 
   document.title = `${clusterId} • Play ${sid}`;
 
@@ -49,26 +43,14 @@ export default function Player() {
     session.logout();
   }
 
-  if (!validRecordingType) {
+  if (recordingType !== 'ssh' && recordingType !== 'desktop') {
     return (
       <StyledPlayer>
-        <Box textAlign="center" mx={10} mt={5}>
-          <Danger mb={0}>
-            Invalid query parameter recordingType: {recordingType}, should be
-            'ssh' or 'desktop'
-          </Danger>
-        </Box>
-      </StyledPlayer>
-    );
-  }
-
-  if (recordingType === 'desktop' && !validDurationMs) {
-    return (
-      <StyledPlayer>
-        <Box textAlign="center" mx={10} mt={5}>
-          <Danger mb={0}>
-            Invalid query parameter durationMs:{' '}
-            {getUrlParameter('durationMs', search)}, should be an integer.
+        <Box textAlign="center" m={10}>
+          <Danger>
+            {' '}
+            `Invalid recording type: {recordingType}, should be 'ssh' or
+            'desktop'`{' '}
           </Danger>
         </Box>
       </StyledPlayer>
@@ -96,11 +78,7 @@ export default function Player() {
         )}
 
         {recordingType === 'desktop' && (
-          <DesktopPlayer
-            sid={sid}
-            clusterId={clusterId}
-            durationMs={durationMs}
-          />
+          <DesktopPlayer sid={sid} clusterId={clusterId} />
         )}
       </Flex>
     </StyledPlayer>

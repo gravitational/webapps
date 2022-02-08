@@ -52,7 +52,7 @@ export const Story = () => {
     };
   };
 
-  appContext.clustersService.getClusterSyncStatus = (_ = '') => {
+  appContext.clustersService.getClusterSyncStatus = () => {
     const loading: SyncStatus = { status: 'processing' };
     const error: SyncStatus = { status: 'failed', statusText: 'Server Error' };
     return {

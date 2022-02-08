@@ -34,11 +34,19 @@ export type AuthProvider = tsh.AuthProvider;
 
 export type LoginParams = tsh.LoginParams;
 
+export type Application = tsh.Application;
+
 export type CreateGatewayParams = tsh.CreateGatewayParams;
 
 export type GatewayProtocol = tsh.GatewayProtocol;
 
 export type Gateway = tsh.Gateway;
+
+export type Server = tsh.Server;
+
+export type Kube = tsh.Kube;
+
+export type Database = tsh.Database;
 
 export interface AuthSettings extends tsh.AuthSettings {
   secondFactor: Auth2faType;

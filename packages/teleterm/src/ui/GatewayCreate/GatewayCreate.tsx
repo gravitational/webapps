@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-import React, { useState } from 'react';
+import React from 'react';
 import * as Alerts from 'design/Alert';
 import { Text, ButtonPrimary, ButtonSecondary } from 'design';
 import Dialog, {

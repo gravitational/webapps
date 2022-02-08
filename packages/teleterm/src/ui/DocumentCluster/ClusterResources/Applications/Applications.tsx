@@ -14,12 +14,9 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React, { useState } from 'react';
+import React from 'react';
 import styled from 'styled-components';
-import { sortBy } from 'lodash';
-import { Box, Flex, Text, ButtonBorder } from 'design';
-import { Danger } from 'design/Alert';
-import Table from 'design/DataTable/Paged';
+import { Label, Flex, Text, ButtonBorder } from 'design';
 import {
   pink,
   teal,
@@ -32,159 +29,98 @@ import {
   deepOrange,
   blueGrey,
 } from 'design/theme/palette';
-import {
-  Column,
-  SortHeaderCell,
-  Cell,
-  renderLabelCell,
-  TextCell,
-  SortTypes,
-} from 'design/DataTable';
+import Table, { Cell } from 'design/DataTable';
 import * as types from 'teleterm/ui/services/clusters/types';
-import useApps from './useApps';
+import { useApps, State } from './useApps';
 
 export default function Container() {
-  const { apps, syncStatus } = useApps();
-  return <Applications apps={apps} syncStatus={syncStatus} />;
+  const state = useApps();
+  return <AppList {...state} />;
 }
 
-function Applications(props: Props) {
-  const { apps = [], syncStatus, pageSize = 100 } = props;
-  const [sortDir, setSortDir] = useState<Record<string, string>>({
-    name: SortTypes.DESC,
-  });
-
-  function sortApps() {
-    const columnKey = Object.getOwnPropertyNames(sortDir)[0];
-    const sorted = sortBy(apps, columnKey);
-    if (sortDir[columnKey] === SortTypes.ASC) {
-      return sorted.reverse();
-    }
-
-    return sorted;
-  }
-
-  function onSortChange(columnKey: string, sortDir: string) {
-    setSortDir({ [columnKey]: sortDir });
-  }
-
-  const data = sortApps();
+export function AppList(props: State) {
+  const { apps = [] } = props;
 
   return (
-    <StyledApps>
-      {syncStatus.status === 'failed' && (
-        <Danger>{syncStatus.statusText}</Danger>
-      )}
-      <StyledTable pageSize={pageSize} data={data}>
-        <Column header={<Cell />} cell={<AppIconCell />} />
-        <Column
-          columnKey="name"
-          header={
-            <SortHeaderCell
-              sortDir={sortDir.name}
-              onSortChange={onSortChange}
-              title="Name"
-            />
-          }
-          cell={<TextCell />}
-        />
-        <Column
-          columnKey="description"
-          header={
-            <SortHeaderCell
-              sortDir={sortDir.description}
-              onSortChange={onSortChange}
-              title="Description"
-            />
-          }
-          cell={<TextCell />}
-        />
-        <Column
-          columnKey="publicAddr"
-          header={
-            <SortHeaderCell
-              sortDir={sortDir.publicAddr}
-              onSortChange={onSortChange}
-              title="Address"
-            />
-          }
-          cell={<AddressCell />}
-        />
-        <Column header={<Cell>Labels</Cell>} cell={<LabelCell />} />
-        <Column header={<Cell />} cell={<LaunchButtonCell />} />
-      </StyledTable>
-    </StyledApps>
+    <StyledTable
+      data={apps}
+      columns={[
+        {
+          altKey: 'app-icon',
+          render: renderAppIcon,
+        },
+        {
+          key: 'name',
+          headerText: 'Name',
+          isSortable: true,
+        },
+        {
+          key: 'description',
+          headerText: 'Description',
+          isSortable: true,
+        },
+        {
+          key: 'publicAddr',
+          headerText: 'Address',
+          render: renderAddress,
+          isSortable: true,
+        },
+        {
+          key: 'tags',
+          headerText: 'Labels',
+          render: renderLabels,
+        },
+        {
+          altKey: 'launch-btn',
+          render: renderConnectButton,
+        },
+      ]}
+      emptyText="No Applications Found"
+      pagination={{ pageSize: 100, pagerPosition: 'bottom' }}
+    />
   );
 }
 
-export const ActionCell = props => {
-  const { rowIndex, onViewConnect, data } = props;
-  const { name } = data[rowIndex];
+const renderConnectButton = () => {
   return (
     <Cell align="right">
-      <ButtonBorder size="small" onClick={() => onViewConnect(name)}>
-        Connect
-      </ButtonBorder>
+      <ButtonBorder size="small">LAUNCH</ButtonBorder>
     </Cell>
   );
 };
 
-function AppIconCell(props) {
-  const { rowIndex, data } = props;
-  const { name } = data[rowIndex];
+const renderAppIcon = (app: types.Application) => {
   return (
     <Cell style={{ userSelect: 'none' }}>
       <Flex
         height="32px"
         width="32px"
-        bg={getIconColor(name)}
+        bg={getIconColor(app.name)}
         borderRadius="100%"
         justifyContent="center"
         alignItems="center"
       >
         <Text fontSize={3} bold caps>
-          {name[0]}
+          {app.name[0]}
         </Text>
       </Flex>
     </Cell>
   );
-}
+};
 
-function LabelCell(props) {
-  const { rowIndex, data } = props;
-  const { tags = [] } = data[rowIndex];
-  return renderLabelCell(tags);
-}
+const renderLabels = ({ labelsList }: types.Kube) => {
+  const labels = labelsList.map(l => `${l.name}:${l.value}`);
+  const $labels = labels.map(label => (
+    <Label mb="1" mr="1" key={label} kind="secondary">
+      {label}
+    </Label>
+  ));
 
-function AddressCell(props) {
-  const { rowIndex, data } = props;
-  const { publicAddr } = data[rowIndex];
-  return <Cell>https://{publicAddr}</Cell>;
-}
+  return <Cell>{$labels}</Cell>;
+};
 
-function LaunchButtonCell(props) {
-  const { rowIndex, data } = props;
-  const { launchUrl } = data[rowIndex];
-  return (
-    <Cell align="right">
-      <ButtonBorder
-        as="a"
-        width="88px"
-        size="small"
-        target="_blank"
-        href={launchUrl}
-        rel="noreferrer"
-      >
-        LAUNCH
-      </ButtonBorder>
-    </Cell>
-  );
-}
-
-type Props = {
-  apps: types.tsh.Application[];
-  pageSize?: number;
-  syncStatus: types.SyncStatus;
+const renderAddress = (app: types.Application) => {
+  return <Cell>https://{app.publicAddr}</Cell>;
 };
 
 function getIconColor(appName: string) {
@@ -212,16 +148,5 @@ function getIconColor(appName: string) {
 const StyledTable = styled(Table)`
   & > tbody > tr > td {
     vertical-align: baseline;
-  }
-`;
-
-const StyledApps = styled(Box)`
-  flex-direction: column;
-  display: flex;
-  flex: 1;
-  max-width: 1024px;
-  ::after {
-    content: ' ';
-    padding-bottom: 24px;
   }
 `;
