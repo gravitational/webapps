@@ -3,58 +3,80 @@ import { useState, useEffect } from 'react';
 const clipboardRead = 'clipboard-read';
 const clipboardWrite = 'clipboard-write';
 type ClipboardPermissionType = 'clipboard-read' | 'clipboard-write';
-// PermissionState sans "prompt"
-type DefinedPermissionState = 'denied' | 'granted';
 
 function useClipboardPermission(
-  state: DefinedPermissionState,
+  promptUser = true,
+  initialState: PermissionState,
   type: ClipboardPermissionType
 ) {
-  const [permission, setPermission] = useState<DefinedPermissionState>(state);
+  const permissionName = type as PermissionName;
 
-  useEffect(() => {
-    const permissionName = type as PermissionName;
+  const [permission, setPermission] = useState<PermissionState>(initialState);
+
+  const setOnly = () => {
+    navigator.permissions
+      .query({ name: permissionName })
+      .then(result => setPermission(result.state));
+  };
+
+  const setOrPromptUser = () => {
     navigator.permissions.query({ name: permissionName }).then(result => {
-      if (result.state === 'granted') {
+      if (result.state === 'granted' || result.state === 'denied') {
         setPermission(result.state);
-      } else if (result.state === 'prompt') {
-        const ensureDecision = () => {
-          navigator.permissions.query({ name: permissionName }).then(result => {
-            if (result.state === 'granted') {
-              setPermission('granted');
+      } else {
+        // result.state === 'pending';
+        // Force the prompt to appear for the user
+        navigator.clipboard
+          .readText()
+          .then(() => {
+            // readText's promise only resolves if permission is granted.
+            setPermission('granted');
+          })
+          .catch(err => {
+            if (err && err.name === 'NotAllowedError') {
+              // NotAllowedError will be caught if the permission was 'denied' or remained 'prompt'.
+              // Try again, which result in either setPermission('denied') or re-prompting the user.
+              setOrPromptUser();
             } else {
-              setPermission('denied');
+              throw err;
             }
           });
-        };
-
-        // Force the prompt to appear for the user
-        navigator.clipboard.readText().then(() => {
-          ensureDecision();
-        });
       }
     });
+  };
+
+  useEffect(() => {
+    if (promptUser) {
+      setOrPromptUser();
+    } else {
+      setOnly();
+    }
   }, [permission]);
 
   return permission;
 }
 
-function useClipboardRead(state: DefinedPermissionState) {
-  return useClipboardPermission(state, clipboardRead);
+function useClipboardRead(promptUser = true, initialState: PermissionState) {
+  return useClipboardPermission(promptUser, initialState, clipboardRead);
 }
 
-function useClipboardWrite(state: DefinedPermissionState) {
-  return useClipboardPermission(state, clipboardWrite);
+function useClipboardWrite(promptUser = true, initialState: PermissionState) {
+  return useClipboardPermission(promptUser, initialState, clipboardWrite);
 }
 
-export function useClipboardFull(state: DefinedPermissionState) {
-  const [permission, setPermission] = useState<DefinedPermissionState>(state);
+export function useClipboardRW(
+  promptUser = true,
+  initialState: PermissionState = 'prompt'
+) {
+  const [permission, setPermission] = useState<PermissionState>(initialState);
 
-  const read = useClipboardRead(state);
-  const write = useClipboardWrite(state);
+  const read = useClipboardRead(promptUser, initialState);
+  const write = useClipboardWrite(promptUser, initialState);
 
   useEffect(() => {
-    if (read === 'granted' && write === 'granted') {
+    if (read === 'prompt' || write === 'prompt') {
+      setPermission('prompt');
+    } else if (read === 'granted' && write === 'granted') {
       setPermission('granted');
     } else {
       setPermission('denied');

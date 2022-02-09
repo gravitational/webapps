@@ -52,6 +52,22 @@ export function DesktopSession(props: State) {
     onContextMenu,
   } = props;
 
+  // The clipboard helper variables below are built from the clipboard prop, which is itself updated
+  // with useState/setState. Hence they don't need to use state management primitives themselves in
+  // order to manage conditional renders.
+  const clipboardSharingActive =
+    clipboard.isRequired && clipboard.permission === 'granted';
+  const clipboardError = clipboard.isRequired && clipboard.hasError;
+  const clipboardProcessing =
+    clipboard.isRequired &&
+    clipboard.permission === 'prompt' &&
+    !clipboard.hasError;
+  const clipboardSuccess =
+    !clipboard.isRequired ||
+    (clipboard.isRequired &&
+      clipboard.permission === 'granted' &&
+      !clipboard.hasError);
+
   return (
     <Flex flexDirection="column">
       <TopBar
@@ -60,7 +76,7 @@ export function DesktopSession(props: State) {
           tdpClient.nuke();
         }}
         userHost={`${username}@${hostname}`}
-        clipboard={clipboard}
+        clipboard={clipboardSharingActive}
         recording={recording}
       />
 
@@ -85,6 +101,16 @@ export function DesktopSession(props: State) {
             children={tdpConnection.statusText}
           />
         )}
+        {clipboardError && (
+          <Alert
+            style={{
+              alignSelf: 'center',
+            }}
+            width={'450px'}
+            my={2}
+            children={clipboard.errorText}
+          />
+        )}
         {wsConnection === 'closed' &&
           tdpConnection.status !== 'failed' &&
           !disconnected &&
@@ -106,7 +132,8 @@ export function DesktopSession(props: State) {
           </Box>
         )}
         {(fetchAttempt.status === 'processing' ||
-          tdpConnection.status === 'processing') && (
+          tdpConnection.status === 'processing' ||
+          clipboardProcessing) && (
           <Box textAlign="center" m={10}>
             <Indicator />
           </Box>
@@ -119,7 +146,8 @@ export function DesktopSession(props: State) {
             fetchAttempt.status === 'success' &&
             tdpConnection.status === 'success' &&
             wsConnection === 'open' &&
-            !disconnected
+            !disconnected &&
+            clipboardSuccess
               ? 'flex'
               : 'none',
           flex: 1, // ensures the canvas fills available screen space

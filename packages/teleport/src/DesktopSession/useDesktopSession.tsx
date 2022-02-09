@@ -17,6 +17,7 @@ limitations under the License.
 import { useEffect, useState, useMemo } from 'react';
 import { useParams } from 'react-router';
 import useAttempt from 'shared/hooks/useAttemptNext';
+import { useClipboardRW } from 'shared/hooks';
 import { UrlDesktopParams } from 'teleport/config';
 import Ctx from 'teleport/teleportContext';
 import useTdpClientCanvas from './useTdpClientCanvas';
@@ -50,6 +51,45 @@ export default function useDesktopSession(ctx: Ctx) {
     setWsConnection,
   });
 
+  const isUsingChrome = navigator.userAgent.indexOf('Chrome') > -1;
+  const clipboardIsRequired = ctx.storeUser.getClipboardAccess();
+  const clipboardRWPermission = useClipboardRW(clipboardIsRequired, 'prompt');
+  const [clipboard, setClipboard] = useState({
+    isRequired: clipboardIsRequired,
+    permission: clipboardRWPermission,
+    hasError: false,
+    errorText: '',
+  });
+
+  useEffect(() => {
+    // errors:
+    // - role permits, browser not chromium
+    // - role permits, clipboard permissions denied
+    if (clipboardIsRequired && !isUsingChrome) {
+      setClipboard({
+        isRequired: clipboardIsRequired,
+        permission: clipboardRWPermission,
+        hasError: true,
+        errorText:
+          'Your user role supports clipboard sharing over desktop access, however this feature is only available on chromium based browsers like Brave, Google Chrome, or Microsoft Edge. Please switch to a supported browser.',
+      });
+    } else if (clipboardIsRequired && clipboardRWPermission === 'denied') {
+      setClipboard({
+        isRequired: clipboardIsRequired,
+        permission: clipboardRWPermission,
+        hasError: true,
+        errorText: `Your user role supports clipboard sharing over desktop access, but your browser is blocking clipboard read or clipboard write permissions. Please grant both of these permissions to Teleport in your browser's settings.`,
+      });
+    } else {
+      setClipboard({
+        isRequired: clipboardIsRequired,
+        permission: clipboardRWPermission,
+        hasError: false,
+        errorText: '',
+      });
+    }
+  }, [isUsingChrome, clipboardIsRequired, clipboardRWPermission]);
+
   document.title = useMemo(
     () => `${clusterId} • ${username}@${hostname}`,
     [hostname]
@@ -66,8 +106,7 @@ export default function useDesktopSession(ctx: Ctx) {
   return {
     hostname,
     username,
-    // clipboard and recording settings will eventuall come from backend, hardcoded for now
-    clipboard: false,
+    clipboard,
     recording: false,
     fetchAttempt,
     tdpConnection,
