@@ -331,13 +331,6 @@ export default class Codec {
     return buffer;
   }
 
-  // encodeClipboard encodes clipboard data
-  // TODO: need to iterate on protocol in order to syncronize clipboards
-  // see https://gravitational.slack.com/archives/D0275RJQHUY/p1629130769002200
-  encodeClipboard() {
-    throw new Error('Not implemented');
-  }
-
   // decodeClipboard decodes clipboard data
   // TODO: see docstring for encClipboard
   decodeClipboardData(buffer: ArrayBuffer): ClipboardData {
