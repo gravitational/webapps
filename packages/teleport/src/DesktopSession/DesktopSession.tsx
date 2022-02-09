@@ -50,21 +50,22 @@ export function DesktopSession(props: State) {
     onMouseUp,
     onMouseWheelScroll,
     onContextMenu,
+    onMouseEnter,
   } = props;
 
   // The clipboard helper variables below are built from the clipboard prop, which is itself updated
   // with useState/setState. Hence they don't need to use state management primitives themselves in
   // order to manage conditional renders.
   const clipboardSharingActive =
-    clipboard.isRequired && clipboard.permission === 'granted';
-  const clipboardError = clipboard.isRequired && clipboard.hasError;
+    clipboard.enabled && clipboard.permission === 'granted';
+  const clipboardError = clipboard.enabled && clipboard.hasError;
   const clipboardProcessing =
-    clipboard.isRequired &&
+    clipboard.enabled &&
     clipboard.permission === 'prompt' &&
     !clipboard.hasError;
   const clipboardSuccess =
-    !clipboard.isRequired ||
-    (clipboard.isRequired &&
+    !clipboard.enabled ||
+    (clipboard.enabled &&
       clipboard.permission === 'granted' &&
       !clipboard.hasError);
 
@@ -164,6 +165,7 @@ export function DesktopSession(props: State) {
         onMouseUp={onMouseUp}
         onMouseWheelScroll={onMouseWheelScroll}
         onContextMenu={onContextMenu}
+        onMouseEnter={onMouseEnter}
       />
     </Flex>
   );

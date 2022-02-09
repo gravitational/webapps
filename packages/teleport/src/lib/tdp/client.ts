@@ -19,6 +19,7 @@ import Codec, {
   ScrollAxis,
   ClientScreenSpec,
   PngFrame,
+  ClipboardData,
 } from './codec';
 import Logger from 'shared/libs/logger';
 
@@ -157,6 +158,10 @@ export default class Client extends EventEmitter {
     // Only send message if key is recognized, otherwise do nothing.
     const msg = this.codec.encodeKeyboardInput(code, state);
     if (msg) this.socket.send(msg);
+  }
+
+  sendClipboardData(clipboardData: ClipboardData) {
+    this.socket.send(this.codec.encodeClipboardData(clipboardData));
   }
 
   resize(spec: ClientScreenSpec) {

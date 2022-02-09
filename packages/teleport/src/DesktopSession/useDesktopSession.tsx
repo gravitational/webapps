@@ -43,52 +43,54 @@ export default function useDesktopSession(ctx: Ctx) {
 
   const { username, desktopName, clusterId } = useParams<UrlDesktopParams>();
   const [hostname, setHostname] = useState<string>('');
+
+  const isUsingChrome = navigator.userAgent.indexOf('Chrome') > -1;
+  const clipboardEnabled = ctx.storeUser.getClipboardAccess();
+  const clipboardRWPermission = useClipboardRW(clipboardEnabled, 'prompt');
+  const [clipboard, setClipboard] = useState({
+    enabled: clipboardEnabled,
+    permission: clipboardRWPermission,
+    hasError: false,
+    errorText: '',
+  });
+
   const clientCanvasProps = useTdpClientCanvas({
     username,
     desktopName,
     clusterId,
     setTdpConnection,
     setWsConnection,
-  });
-
-  const isUsingChrome = navigator.userAgent.indexOf('Chrome') > -1;
-  const clipboardIsRequired = ctx.storeUser.getClipboardAccess();
-  const clipboardRWPermission = useClipboardRW(clipboardIsRequired, 'prompt');
-  const [clipboard, setClipboard] = useState({
-    isRequired: clipboardIsRequired,
-    permission: clipboardRWPermission,
-    hasError: false,
-    errorText: '',
+    clipboardEnabled,
   });
 
   useEffect(() => {
     // errors:
     // - role permits, browser not chromium
     // - role permits, clipboard permissions denied
-    if (clipboardIsRequired && !isUsingChrome) {
+    if (clipboardEnabled && !isUsingChrome) {
       setClipboard({
-        isRequired: clipboardIsRequired,
+        enabled: clipboardEnabled,
         permission: clipboardRWPermission,
         hasError: true,
         errorText:
           'Your user role supports clipboard sharing over desktop access, however this feature is only available on chromium based browsers like Brave, Google Chrome, or Microsoft Edge. Please switch to a supported browser.',
       });
-    } else if (clipboardIsRequired && clipboardRWPermission === 'denied') {
+    } else if (clipboardEnabled && clipboardRWPermission === 'denied') {
       setClipboard({
-        isRequired: clipboardIsRequired,
+        enabled: clipboardEnabled,
         permission: clipboardRWPermission,
         hasError: true,
         errorText: `Your user role supports clipboard sharing over desktop access, but your browser is blocking clipboard read or clipboard write permissions. Please grant both of these permissions to Teleport in your browser's settings.`,
       });
     } else {
       setClipboard({
-        isRequired: clipboardIsRequired,
+        enabled: clipboardEnabled,
         permission: clipboardRWPermission,
         hasError: false,
         errorText: '',
       });
     }
-  }, [isUsingChrome, clipboardIsRequired, clipboardRWPermission]);
+  }, [isUsingChrome, clipboardEnabled, clipboardRWPermission]);
 
   document.title = useMemo(
     () => `${clusterId} • ${username}@${hostname}`,

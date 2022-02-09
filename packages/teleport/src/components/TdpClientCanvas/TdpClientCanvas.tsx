@@ -32,6 +32,7 @@ export default function TdpClientCanvas(props: Props) {
     onMouseUp,
     onMouseWheelScroll,
     onContextMenu,
+    onMouseEnter,
     style,
   } = props;
 
@@ -131,6 +132,13 @@ export default function TdpClientCanvas(props: Props) {
         canvas.onwheel = _onwheel;
       }
 
+      const _onmouseenter = (e: MouseEvent) => {
+        onMouseEnter(tdpCli, e);
+      };
+      if (onMouseEnter) {
+        canvas.onmouseenter = _onmouseenter;
+      }
+
       // Key controls.
       const _onkeydown = (e: KeyboardEvent) => {
         onKeyDown(tdpCli, e);
@@ -158,6 +166,8 @@ export default function TdpClientCanvas(props: Props) {
         if (onKeyDown) canvas.removeEventListener('keydown', _onkeydown);
         if (onKeyUp) canvas.removeEventListener('keyup', _onkeyup);
         if (onMouseWheelScroll) canvas.removeEventListener('wheel', _onwheel);
+        if (onMouseEnter)
+          canvas.removeEventListener('onmouseenter', _onmouseenter);
       };
     }
   }, [tdpCli]);
@@ -189,5 +199,6 @@ export type Props = {
   onMouseUp?: (cli: TdpClient, e: MouseEvent) => void;
   onMouseWheelScroll?: (cli: TdpClient, e: WheelEvent) => void;
   onContextMenu?: () => boolean;
+  onMouseEnter?: (cli: TdpClient, e: MouseEvent) => void;
   style?: CSSProperties;
 };
