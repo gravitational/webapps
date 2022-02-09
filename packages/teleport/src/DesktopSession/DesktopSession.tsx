@@ -38,6 +38,7 @@ export function DesktopSession(props: State) {
     tdpConnection,
     wsConnection,
     onPngFrame,
+    onClipboardData,
     onTdpError,
     onWsClose,
     onWsOpen,
@@ -155,6 +156,7 @@ export function DesktopSession(props: State) {
         }}
         tdpCli={tdpClient}
         tdpCliOnPngFrame={onPngFrame}
+        tdpCliOnClipboardData={onClipboardData}
         tdpCliOnTdpError={onTdpError}
         tdpCliOnWsClose={onWsClose}
         tdpCliOnWsOpen={onWsOpen}

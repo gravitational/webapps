@@ -16,7 +16,7 @@ limitations under the License.
 
 import { useState, useEffect, useRef, Dispatch, SetStateAction } from 'react';
 import { TdpClient, ButtonState, ScrollAxis } from 'teleport/lib/tdp';
-import { PngFrame } from 'teleport/lib/tdp/codec';
+import { ClipboardData, PngFrame } from 'teleport/lib/tdp/codec';
 import { TopBarHeight } from './TopBar';
 import cfg from 'teleport/config';
 import { getAccessToken, getHostName } from 'teleport/services/api';
@@ -33,7 +33,7 @@ export default function useTdpClientCanvas(props: Props) {
   } = props;
   const [tdpClient, setTdpClient] = useState<TdpClient | null>(null);
   const initialTdpConnectionSucceeded = useRef(false);
-  const lastCopiedClipboardText = useRef<string>(null);
+  const latestClipboardText = useRef<string>(null);
 
   useEffect(() => {
     const { width, height } = getDisplaySize();
@@ -57,18 +57,27 @@ export default function useTdpClientCanvas(props: Props) {
     canvas.height = height;
   };
 
-  // Default TdpClientEvent.IMAGE_FRAGMENT handler (buffered)
+  // Default TdpClientEvent.TDP_PNG_FRAME handler (buffered)
   const onPngFrame = (ctx: CanvasRenderingContext2D, pngFrame: PngFrame) => {
     // The first image fragment we see signals a successful tdp connection.
     if (!initialTdpConnectionSucceeded.current) {
       syncCanvasSizeToDisplaySize(ctx.canvas);
       setTdpConnection({ status: 'success' });
       initialTdpConnectionSucceeded.current = true;
-      // syncLocalClipboardToRemote must be called only after
+      // sendLocalClipboardToRemote must be called only after
       // initialTdpConnectionSucceeded.current === true or else it won't do anything.
       sendLocalClipboardToRemote(tdpClient);
     }
     ctx.drawImage(pngFrame.data, pngFrame.left, pngFrame.top);
+  };
+
+  // Default TdpClientEvent.TDP_CLIPBOARD_DATA handler.
+  const onClipboardData = (clipboardData: ClipboardData) => {
+    if (clipboardData.data !== latestClipboardText.current) {
+      navigator.clipboard.writeText(clipboardData.data).then(() => {
+        latestClipboardText.current = clipboardData.data;
+      });
+    }
   };
 
   // Default TdpClientEvent.TDP_ERROR handler
@@ -141,7 +150,7 @@ export default function useTdpClientCanvas(props: Props) {
     // to a backend that isn't ready for it yet, which would fail silently.
     if (document.hasFocus() && initialTdpConnectionSucceeded.current) {
       navigator.clipboard.readText().then(text => {
-        if (text != lastCopiedClipboardText.current) {
+        if (text != latestClipboardText.current) {
           // Wrap in try catch so that lastCopiedClipboardText is only
           // updated if sendClipboardData succeeds.
           // eslint-disable-next-line no-useless-catch
@@ -149,7 +158,7 @@ export default function useTdpClientCanvas(props: Props) {
             cli.sendClipboardData({
               data: text,
             });
-            lastCopiedClipboardText.current = text;
+            latestClipboardText.current = text;
           } catch (e) {
             throw e;
           }
@@ -171,6 +180,7 @@ export default function useTdpClientCanvas(props: Props) {
     tdpClient,
     onPngFrame,
     onTdpError,
+    onClipboardData,
     onWsClose,
     onWsOpen,
     onKeyDown,

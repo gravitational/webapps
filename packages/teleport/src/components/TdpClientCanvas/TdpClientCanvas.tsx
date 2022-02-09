@@ -15,12 +15,17 @@ limitations under the License.
 */
 import React, { useEffect, useRef, CSSProperties } from 'react';
 import { TdpClient, TdpClientEvent } from 'teleport/lib/tdp';
-import { PngFrame, ClientScreenSpec } from 'teleport/lib/tdp/codec';
+import {
+  PngFrame,
+  ClientScreenSpec,
+  ClipboardData,
+} from 'teleport/lib/tdp/codec';
 
 export default function TdpClientCanvas(props: Props) {
   const {
     tdpCli,
     tdpCliOnPngFrame,
+    tdpCliOnClipboardData,
     tdpCliOnTdpError,
     tdpCliOnWsClose,
     tdpCliOnWsOpen,
@@ -76,6 +81,12 @@ export default function TdpClientCanvas(props: Props) {
             tdpCliOnClientScreenSpec(canvas, spec);
           }
         );
+      }
+
+      if (tdpCliOnClipboardData) {
+        tdpCli.on(TdpClientEvent.TDP_CLIPBOARD_DATA, (data: ClipboardData) => {
+          tdpCliOnClipboardData(data);
+        });
       }
 
       if (tdpCliOnTdpError) {
@@ -181,6 +192,7 @@ export type Props = {
     ctx: CanvasRenderingContext2D,
     pngFrame: PngFrame
   ) => void;
+  tdpCliOnClipboardData?: (clipboardData: ClipboardData) => void;
   tdpCliOnTdpError?: (err: Error) => void;
   tdpCliOnWsClose?: () => void;
   tdpCliOnWsOpen?: () => void;

@@ -140,7 +140,7 @@ test('decodes errors', () => {
 });
 
 // Username/password tests inspired by https://github.com/google/closure-library/blob/master/closure/goog/crypt/crypt_test.js (Apache License)
-test('encodes clipboard data', () => {
+test('encodes and decodes clipboard data', () => {
   // Create a test value with letters, symbols, and numbers and its known UTF8 encodings
   const clipboardData = 'Helloworld!*@123';
   const clipboardDataUTF8 = [
@@ -149,10 +149,10 @@ test('encodes clipboard data', () => {
   ];
 
   // Encode test vals
-  const message = codec.encodeClipboardData({
+  const encodedData = codec.encodeClipboardData({
     data: clipboardData,
   });
-  const view = new DataView(message);
+  const view = new DataView(encodedData);
 
   // Walk through output
   let offset = 0;
@@ -162,4 +162,7 @@ test('encodes clipboard data', () => {
   clipboardDataUTF8.forEach(byte => {
     expect(view.getUint8(offset++)).toEqual(byte);
   });
+
+  const decoded = codec.decodeClipboardData(encodedData);
+  expect(decoded.data).toEqual(clipboardData);
 });

@@ -26,6 +26,7 @@ import Logger from 'shared/libs/logger';
 export enum TdpClientEvent {
   TDP_CLIENT_SCREEN_SPEC = 'tdp client screen spec',
   TDP_PNG_FRAME = 'tdp png frame',
+  TDP_CLIPBOARD_DATA = 'tdp clipboard data',
   TDP_ERROR = 'tdp error',
   WS_OPEN = 'ws open',
   WS_CLOSE = 'ws close',
@@ -95,6 +96,9 @@ export default class Client extends EventEmitter {
         case MessageType.MOUSE_MOVE:
           this.handleMouseMove(buffer);
           break;
+        case MessageType.CLIPBOARD_DATA:
+          this.handleClipboardData(buffer);
+          break;
         case MessageType.ERROR:
           this.handleError(new Error(this.codec.decodeErrorMessage(buffer)));
           break;
@@ -127,6 +131,13 @@ export default class Client extends EventEmitter {
       `received unsupported message type ${this.codec._decodeMessageType(
         buffer
       )}`
+    );
+  }
+
+  handleClipboardData(buffer: ArrayBuffer) {
+    this.emit(
+      TdpClientEvent.TDP_CLIPBOARD_DATA,
+      this.codec.decodeClipboardData(buffer)
     );
   }
 

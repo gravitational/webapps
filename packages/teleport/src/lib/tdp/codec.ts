@@ -59,6 +59,7 @@ export type ClipboardData = {
 // [3] https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Int32Array
 export default class Codec {
   encoder = new TextEncoder();
+  decoder = new TextDecoder();
 
   // Maps from browser KeyboardEvent.code values to Windows hardware keycodes.
   // Currently only supports Chrome keycodes: TODO(isaiah) -- add support for firefox/safari/edge.
@@ -339,8 +340,10 @@ export default class Codec {
 
   // decodeClipboard decodes clipboard data
   // TODO: see docstring for encClipboard
-  decodeClipboard() {
-    throw new Error('Not implemented');
+  decodeClipboardData(buffer: ArrayBuffer): ClipboardData {
+    return {
+      data: this._decodeStringMessage(buffer),
+    };
   }
 
   // _decodeMessageType decodes the MessageType from a raw tdp message
@@ -358,11 +361,14 @@ export default class Codec {
   // decodeError decodes a raw tdp ERROR message and returns it as a string
   // | message type (9) | message_length uint32 | message []byte
   decodeErrorMessage(buffer: ArrayBuffer): string {
+    return this._decodeStringMessage(buffer);
+  }
+
+  // _decodeStringMessage decodes a tdp message of the form
+  // | message type (N) | message_length uint32 | message []byte
+  _decodeStringMessage(buffer: ArrayBuffer): string {
     // slice(5) ensures we skip the message type and message_length
-    let messageUtf8array = new Uint8Array(buffer.slice(5));
-    let decoder = new TextDecoder();
-    let message = decoder.decode(messageUtf8array);
-    return message;
+    return this.decoder.decode(new Uint8Array(buffer.slice(5)));
   }
 
   // decodePngFrame decodes a raw tdp PNG frame message and returns it as a PngFrame
