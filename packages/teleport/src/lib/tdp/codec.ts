@@ -44,6 +44,12 @@ export type PngFrame = {
   data: HTMLImageElement;
 };
 
+// | message type (6) | length uint32 | data []byte |
+// https://github.com/gravitational/teleport/blob/master/rfd/0037-desktop-access-protocol.md#6---clipboard-data
+export type ClipboardData = {
+  data: string;
+};
+
 // TdaCodec provides an api for encoding and decoding teleport desktop access protocol messages [1]
 // Buffers in TdaCodec are manipulated as DataView's [2] in order to give us low level control
 // of endianness (defaults to big endian, which is what we want), as opposed to using *Array
@@ -52,6 +58,8 @@ export type PngFrame = {
 // [2] https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/DataView
 // [3] https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Int32Array
 export default class Codec {
+  encoder = new TextEncoder();
+
   // Maps from browser KeyboardEvent.code values to Windows hardware keycodes.
   // Currently only supports Chrome keycodes: TODO(isaiah) -- add support for firefox/safari/edge.
   // See https://developer.mozilla.org/en-US/docs/Web/API/KeyboardEvent/code/code_values#code_values_on_windows
@@ -273,29 +281,40 @@ export default class Codec {
     return buffer;
   }
 
-  // encodeUsername encodes a username to log in to the remote desktop with.
-  // | message type (7) | username_length uint32 | username []byte |
-  encodeUsername(username: string): Message {
-    // Encode username/pass to utf8
-    let encoder = new TextEncoder();
-    const usernameUtf8array = encoder.encode(username);
+  // _encodeStringMessage encodes a message of the form
+  // | message type (N) | length uint32 | data []byte |
+  _encodeStringMessage(messageType: MessageType, data: string) {
+    const dataUtf8array = this.encoder.encode(data);
 
-    // Initialize buffer and corresponding view.
-    // Numbers correspond to message spec
-    const bufLen = 1 + 4 + usernameUtf8array.length;
+    const bufLen = 1 + 4 + dataUtf8array.length;
     const buffer = new ArrayBuffer(bufLen);
     const view = new DataView(buffer);
     let offset = 0;
 
-    // set data
-    view.setUint8(offset++, MessageType.CLIENT_USERNAME);
-    view.setUint32(offset, usernameUtf8array.length);
-    offset += 4; // 4 bytes to offset 32-bit uint
-    usernameUtf8array.forEach(byte => {
+    view.setUint8(offset++, messageType);
+    view.setUint32(offset, dataUtf8array.length);
+    offset += 4;
+    dataUtf8array.forEach(byte => {
       view.setUint8(offset++, byte);
     });
 
     return buffer;
+  }
+
+  // encodeClipboardData encodes clipboard data
+  // | message type (6) | length uint32 | data []byte |
+  // https://github.com/gravitational/teleport/blob/master/rfd/0037-desktop-access-protocol.md#6---clipboard-data
+  encodeClipboardData(clipboardData: ClipboardData) {
+    return this._encodeStringMessage(
+      MessageType.CLIPBOARD_DATA,
+      clipboardData.data
+    );
+  }
+
+  // encodeUsername encodes a username to log in to the remote desktop with.
+  // | message type (7) | username_length uint32 | username []byte |
+  encodeUsername(username: string): Message {
+    return this._encodeStringMessage(MessageType.CLIENT_USERNAME, username);
   }
 
   // encodeMouseWheelScroll encodes a mouse wheel scroll event.
