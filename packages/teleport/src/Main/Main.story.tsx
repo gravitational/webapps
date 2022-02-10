@@ -15,10 +15,12 @@ limitations under the License.
 */
 
 import React from 'react';
+
 import { createMemoryHistory } from 'history';
 import { Router } from 'react-router';
 import { Flex } from 'design';
-import { ContextProvider, Context } from 'teleport';
+import { Context } from 'teleport';
+import { TeleportContextProvider } from 'teleport/TeleportContextProvider';
 import getFeatures from 'teleport/features';
 import { Main } from './Main';
 import { clusters } from 'teleport/Clusters/fixtures';
@@ -31,20 +33,49 @@ import { userContext } from './fixtures';
 import { kubes } from 'teleport/Kubes/fixtures';
 import { desktops } from 'teleport/Desktops/fixtures';
 
-export function OSS() {
-  const state = useMainStory();
+export function Oss() {
+  const { ctx, history } = useMainStory();
   return (
     <Flex my={-3} mx={-4}>
-      <ContextProvider ctx={state.ctx}>
-        <Router history={state.history}>
-          <Main {...state} />
+      <TeleportContextProvider ctx={ctx} attempt={{ status: 'success' }}>
+        <Router history={history}>
+          <Main ctx={ctx} />
         </Router>
-      </ContextProvider>
+      </TeleportContextProvider>
     </Flex>
   );
 }
 
-OSS.storyName = 'Main';
+Oss.storyName = 'Main';
+
+export function ContextInitProcessing() {
+  const { ctx, history } = useMainStory();
+  return (
+    <Flex my={-3} mx={-4}>
+      <TeleportContextProvider ctx={ctx} attempt={{ status: 'processing' }}>
+        <Router history={history}>
+          <Main ctx={ctx} />
+        </Router>
+      </TeleportContextProvider>
+    </Flex>
+  );
+}
+
+export function ContextInitFailed() {
+  const { ctx, history } = useMainStory();
+  return (
+    <Flex my={-3} mx={-4}>
+      <TeleportContextProvider
+        ctx={ctx}
+        attempt={{ status: 'failed', statusText: 'ctx.init() failed' }}
+      >
+        <Router history={history}>
+          <Main ctx={ctx} />
+        </Router>
+      </TeleportContextProvider>
+    </Flex>
+  );
+}
 
 export default {
   title: 'Teleport/Main',
@@ -70,6 +101,8 @@ function useMainStory() {
     ctx.kubeService.fetchKubernetes = () => Promise.resolve(kubes);
     ctx.databaseService.fetchDatabases = () => Promise.resolve(databases);
     ctx.desktopService.fetchDesktops = () => Promise.resolve(desktops);
+    ctx.userService.fetchUserContext = () => Promise.resolve(userContext);
+    ctx.init = () => Promise.resolve();
     ctx.storeUser.setState(userContext);
     getFeatures().forEach(f => f.register(ctx));
     return ctx;

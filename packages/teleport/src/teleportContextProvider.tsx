@@ -25,12 +25,8 @@ import TeleportContext from './teleportContext';
 // access TeleportContext instance from within the virtual DOM
 const ReactContext = React.createContext<TeleportContext>(null);
 
-const TeleportContextProvider: React.FC<Props> = props => {
-  const { ctx } = props;
-  const { attempt, run } = useAttempt('processing');
-  useEffect(() => {
-    run(() => ctx.init());
-  }, [ctx]);
+export const TeleportContextProvider: React.FC<State> = props => {
+  const { ctx, attempt } = props;
 
   if (attempt.status === 'failed') {
     return <Failed message={attempt.statusText} />;
@@ -46,6 +42,15 @@ const TeleportContextProvider: React.FC<Props> = props => {
   return <ReactContext.Provider value={ctx} children={props.children} />;
 };
 
+const useTeleportContextProvider = (ctx: TeleportContext) => {
+  const { attempt, run } = useAttempt('processing');
+  useEffect(() => {
+    run(() => ctx.init());
+  }, [ctx]);
+
+  return { ctx, attempt };
+};
+
 const StyledIndicator = styled.div`
   align-items: center;
   justify-content: center;
@@ -55,10 +60,21 @@ const StyledIndicator = styled.div`
   height: 100%;
 `;
 
-export default TeleportContextProvider;
+const Container: React.FC<Props> = props => {
+  const { ctx } = props;
+  const state = useTeleportContextProvider(ctx);
+  return (
+    <TeleportContextProvider {...state}>
+      {props.children}
+    </TeleportContextProvider>
+  );
+};
 
+export default Container;
 export { ReactContext };
 
 type Props = {
   ctx: TeleportContext;
 };
+
+type State = ReturnType<typeof useTeleportContextProvider>;

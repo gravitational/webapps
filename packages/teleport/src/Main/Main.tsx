@@ -17,8 +17,6 @@ limitations under the License.
 import * as RouterDOM from 'react-router-dom';
 import React, { Suspense } from 'react';
 import styled from 'styled-components';
-import { Indicator } from 'design';
-import { Failed } from 'design/CardError';
 import { Redirect, Switch, Route } from 'teleport/components/Router';
 import CatchError from 'teleport/components/CatchError';
 import cfg from 'teleport/config';
@@ -89,9 +87,4 @@ const HorizontalSplit = styled.div`
 
   // Allows shrinking beyond content size on flexed childrens.
   min-width: 0;
-`;
-
-const StyledIndicator = styled(HorizontalSplit)`
-  align-items: center;
-  justify-content: center;
 `;
