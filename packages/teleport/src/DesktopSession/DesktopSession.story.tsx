@@ -41,7 +41,12 @@ const props: State = {
   hostname: 'host.com',
   fetchAttempt: { status: 'processing' },
   tdpConnection: { status: 'processing' },
-  clipboard: false,
+  clipboard: {
+    enabled: false,
+    permission: 'prompt',
+    hasError: false,
+    errorText: '',
+  },
   recording: false,
   tdpClient: fakeClient(),
   username: 'user',
@@ -59,6 +64,8 @@ const props: State = {
   onMouseUp: () => {},
   onMouseWheelScroll: () => {},
   onContextMenu: () => false,
+  onMouseEnter: () => {},
+  onClipboardData: () => {},
 };
 
 export const Processing = () => (
@@ -85,7 +92,12 @@ export const ConnectedSettingsFalse = () => {
       tdpConnection={{ status: 'success' }}
       wsConnection={'open'}
       disconnected={false}
-      clipboard={false}
+      clipboard={{
+        enabled: false,
+        permission: 'prompt',
+        hasError: false,
+        errorText: '',
+      }}
       recording={false}
       onPngFrame={(ctx: CanvasRenderingContext2D) => {
         fillGray(ctx.canvas);
@@ -108,7 +120,12 @@ export const ConnectedSettingsTrue = () => {
       tdpConnection={{ status: 'success' }}
       wsConnection={'open'}
       disconnected={false}
-      clipboard={true}
+      clipboard={{
+        enabled: true,
+        permission: 'granted',
+        hasError: false,
+        errorText: '',
+      }}
       recording={true}
       onPngFrame={(ctx: CanvasRenderingContext2D) => {
         fillGray(ctx.canvas);
