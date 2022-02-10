@@ -163,17 +163,21 @@ export const ConnectionError = () => (
     disconnected={false}
   />
 );
-export const BothError = () => (
+export const ClipboardError = () => (
   <DesktopSession
     {...props}
-    fetchAttempt={{ status: 'failed', statusText: 'some fetch  error' }}
-    tdpConnection={{
-      status: 'failed',
-      statusText: 'some connection error',
+    fetchAttempt={{ status: 'success' }}
+    tdpConnection={{ status: 'success' }}
+    wsConnection={'open'}
+    disconnected={false}
+    clipboard={{
+      enabled: true,
+      permission: 'prompt',
+      hasError: true,
+      errorText: 'clipboard error',
     }}
   />
 );
-
 export const Performance = () => {
   const client = fakeClient();
   client.init = () => {

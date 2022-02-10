@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React from 'react';
+import React, { PropsWithChildren } from 'react';
 import useDesktopSession, { State } from './useDesktopSession';
 import TopBar from './TopBar';
 import { Indicator, Box, Alert, Text, Flex } from 'design';
@@ -28,22 +28,127 @@ export default function Container() {
 }
 
 export function DesktopSession(props: State) {
+  const { clipboard, fetchAttempt, tdpConnection, wsConnection, disconnected } =
+    props;
+
+  const clipboardError = clipboard.enabled && clipboard.hasError;
+  const clipboardProcessing =
+    clipboard.enabled &&
+    clipboard.permission === 'prompt' &&
+    !clipboard.hasError;
+
+  // Websocket is closed but we haven't
+  // closed it on purpose or registered a tdp error.
+  const unknownConnectionError =
+    wsConnection === 'closed' &&
+    !disconnected &&
+    tdpConnection.status === 'success';
+
+  const processing =
+    fetchAttempt.status === 'processing' ||
+    tdpConnection.status === 'processing' ||
+    clipboardProcessing;
+
+  if (fetchAttempt.status === 'failed') {
+    return (
+      <Session {...props}>
+        <Alert
+          style={{
+            alignSelf: 'center',
+            minWidth: '450px',
+          }}
+          my={2}
+          children={fetchAttempt.statusText}
+        />
+      </Session>
+    );
+  }
+
+  if (tdpConnection.status === 'failed') {
+    return (
+      <Session {...props}>
+        <Alert
+          style={{
+            alignSelf: 'center',
+            minWidth: '450px',
+          }}
+          my={2}
+          children={tdpConnection.status}
+        />
+      </Session>
+    );
+  }
+
+  if (clipboardError) {
+    return (
+      <Session {...props}>
+        <Alert
+          style={{
+            alignSelf: 'center',
+            minWidth: '450px',
+          }}
+          my={2}
+          children={clipboard.errorText}
+        />
+      </Session>
+    );
+  }
+
+  if (unknownConnectionError) {
+    return (
+      <Session {...props}>
+        <Alert
+          style={{
+            alignSelf: 'center',
+          }}
+          width={'450px'}
+          my={2}
+          children={'Session disconnected for an unkown reason'}
+        />
+      </Session>
+    );
+  }
+
+  if (disconnected) {
+    return (
+      <Session {...props}>
+        <Box textAlign="center" m={10}>
+          <Text>Session successfully disconnected</Text>
+        </Box>
+      </Session>
+    );
+  }
+
+  if (processing) {
+    return (
+      <Session {...props}>
+        <Box textAlign="center" m={10}>
+          <Indicator />
+        </Box>
+      </Session>
+    );
+  }
+
+  return <Session {...props}></Session>;
+}
+
+function Session(props: PropsWithChildren<State>) {
   const {
-    hostname,
-    username,
-    clipboard,
-    recording,
-    tdpClient,
     fetchAttempt,
     tdpConnection,
     wsConnection,
+    disconnected,
+    setDisconnected,
+    tdpClient,
+    username,
+    hostname,
+    clipboard,
+    recording,
     onPngFrame,
     onClipboardData,
     onTdpError,
     onWsClose,
     onWsOpen,
-    disconnected,
-    setDisconnected,
     onKeyDown,
     onKeyUp,
     onMouseMove,
@@ -54,21 +159,20 @@ export function DesktopSession(props: State) {
     onMouseEnter,
   } = props;
 
-  // The clipboard helper variables below are built from the clipboard prop, which is itself updated
-  // with useState/setState. Hence they don't need to use state management primitives themselves in
-  // order to manage conditional renders.
   const clipboardSharingActive =
     clipboard.enabled && clipboard.permission === 'granted';
-  const clipboardError = clipboard.enabled && clipboard.hasError;
-  const clipboardProcessing =
-    clipboard.enabled &&
-    clipboard.permission === 'prompt' &&
-    !clipboard.hasError;
   const clipboardSuccess =
     !clipboard.enabled ||
     (clipboard.enabled &&
       clipboard.permission === 'granted' &&
       !clipboard.hasError);
+
+  const showCanvas =
+    fetchAttempt.status === 'success' &&
+    tdpConnection.status === 'success' &&
+    wsConnection === 'open' &&
+    !disconnected &&
+    clipboardSuccess;
 
   return (
     <Flex flexDirection="column">
@@ -82,76 +186,15 @@ export function DesktopSession(props: State) {
         recording={recording}
       />
 
-      <>
-        {fetchAttempt.status === 'failed' && (
-          <Alert
-            style={{
-              alignSelf: 'center',
-            }}
-            width={'450px'}
-            my={2}
-            children={fetchAttempt.statusText}
-          />
-        )}
-        {tdpConnection.status === 'failed' && (
-          <Alert
-            style={{
-              alignSelf: 'center',
-            }}
-            width={'450px'}
-            my={2}
-            children={tdpConnection.statusText}
-          />
-        )}
-        {clipboardError && (
-          <Alert
-            style={{
-              alignSelf: 'center',
-            }}
-            width={'450px'}
-            my={2}
-            children={clipboard.errorText}
-          />
-        )}
-        {wsConnection === 'closed' &&
-          tdpConnection.status !== 'failed' &&
-          !disconnected &&
-          tdpConnection.status !== 'processing' && (
-            // If the websocket was closed for an unknown reason
-            <Alert
-              style={{
-                alignSelf: 'center',
-              }}
-              width={'450px'}
-              my={2}
-              children={'Session disconnected for an unkown reason'}
-            />
-          )}
+      {props.children}
 
-        {disconnected && (
-          <Box textAlign="center" m={10}>
-            <Text>Session successfully disconnected</Text>
-          </Box>
-        )}
-        {(fetchAttempt.status === 'processing' ||
-          tdpConnection.status === 'processing' ||
-          clipboardProcessing) && (
-          <Box textAlign="center" m={10}>
-            <Indicator />
-          </Box>
-        )}
-      </>
-
+      {/* TdpClientCanvas should always be present in th DOM so that it calls
+          tdpClient.init() and initializes the required tdpClient event listeners,
+          both of which are needed for this component's state to properly respond to
+          initialization events. */}
       <TdpClientCanvas
         style={{
-          display:
-            fetchAttempt.status === 'success' &&
-            tdpConnection.status === 'success' &&
-            wsConnection === 'open' &&
-            !disconnected &&
-            clipboardSuccess
-              ? 'flex'
-              : 'none',
+          display: showCanvas ? 'flex' : 'none',
           flex: 1, // ensures the canvas fills available screen space
         }}
         tdpCli={tdpClient}
