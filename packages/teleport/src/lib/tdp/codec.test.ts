@@ -1,4 +1,3 @@
-const { TextEncoder, TextDecoder } = require('util');
 import Codec, {
   MessageType,
   ButtonState,
@@ -6,9 +5,6 @@ import Codec, {
   ScrollAxis,
 } from './codec';
 
-// Use nodejs TextEncoder until jsdom adds support for TextEncoder (https://github.com/jsdom/jsdom/issues/2524)
-window.TextEncoder = window.TextEncoder || TextEncoder;
-window.TextDecoder = window.TextDecoder || TextDecoder;
 const codec = new Codec();
 
 test('encodes and decodes the screen spec', () => {
