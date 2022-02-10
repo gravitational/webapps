@@ -73,8 +73,14 @@ export default function useTdpClientCanvas(props: Props) {
 
   // Default TdpClientEvent.TDP_CLIPBOARD_DATA handler.
   const onClipboardData = (clipboardData: ClipboardData) => {
-    if (clipboardData.data !== latestClipboardText.current) {
+    if (
+      document.hasFocus() &&
+      clipboardData.data !== latestClipboardText.current
+    ) {
       navigator.clipboard.writeText(clipboardData.data).then(() => {
+        // Set latestClipboardText.current to whatever we got, so that
+        // next time onMouseEnter fires we don't try to send it back to
+        // the remote machine.
         latestClipboardText.current = clipboardData.data;
       });
     }

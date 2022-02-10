@@ -73,7 +73,7 @@ export default function useDesktopSession(ctx: Ctx) {
         permission: clipboardRWPermission,
         hasError: true,
         errorText:
-          'Your user role supports clipboard sharing over desktop access, however this feature is only available on chromium based browsers like Brave, Google Chrome, or Microsoft Edge. Please switch to a supported browser.',
+          'Your user role supports clipboard sharing over desktop access, however this feature is only available on chromium based browsers like Brave or Google Chrome. Please switch to a supported browser.',
       });
     } else if (clipboardEnabled && clipboardRWPermission === 'denied') {
       setClipboard({
