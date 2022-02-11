@@ -14,15 +14,23 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
+import { useState } from 'react';
+import useAttempt from 'shared/hooks/useAttemptNext';
 import useTeleport from 'teleport/useTeleport';
 import { Feature } from 'teleport/types';
 
 export default function useMain(features: Feature[]) {
   const ctx = useTeleport();
-  features.forEach(f => f.register(ctx));
+  const { attempt, run } = useAttempt('processing');
+
+  useState(() =>
+    run(() => ctx.init().then(() => features.forEach(f => f.register(ctx))))
+  );
 
   return {
     ctx,
+    status: attempt.status,
+    statusText: attempt.statusText,
   };
 }
 

@@ -16,8 +16,7 @@ limitations under the License.
 
 import React from 'react';
 import { render, fireEvent, waitFor, screen } from 'design/utils/testing';
-import { Context } from 'teleport';
-import { TeleportContextProvider } from 'teleport/TeleportContextProvider';
+import { Context, ContextProvider } from 'teleport';
 import authService from 'teleport/services/auth';
 import ManageDevices from './ManageDevices';
 import cfg from 'teleport/config';
@@ -67,9 +66,9 @@ describe('mfa device dashboard testing', () => {
 
     renderManageDevices = () =>
       render(
-        <TeleportContextProvider ctx={ctx} attempt={{ status: 'success' }}>
+        <ContextProvider ctx={ctx}>
           <ManageDevices />
-        </TeleportContextProvider>
+        </ContextProvider>
       );
 
     jest.spyOn(cfg, 'getAuth2faType').mockReturnValue('optional');

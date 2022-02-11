@@ -142,6 +142,7 @@ test('undefined values in context response gives proper default values', async (
         create: false,
         remove: false,
       },
+      clipboard: true,
     },
     cluster: {
       clusterId: 'aws',

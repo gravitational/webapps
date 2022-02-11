@@ -1,9 +1,12 @@
 import { arrayBufferToBase64 } from 'shared/utils/base64';
 
 // This is needed for tests until jsdom adds support for TextEncoder (https://github.com/jsdom/jsdom/issues/2524)
-const { TextEncoder, TextDecoder } = require('util');
-window.TextEncoder = window.TextEncoder || TextEncoder;
-window.TextDecoder = window.TextDecoder || TextDecoder;
+const {
+  TextEncoder: TestTextEncoder,
+  TextDecoder: TestTextDecoder,
+} = require('util');
+window.TextEncoder = window.TextEncoder || TestTextEncoder;
+window.TextDecoder = window.TextDecoder || TestTextDecoder;
 
 export type Message = ArrayBuffer;
 
@@ -63,8 +66,8 @@ export type ClipboardData = {
 // [2] https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/DataView
 // [3] https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Int32Array
 export default class Codec {
-  encoder = new TextEncoder();
-  decoder = new TextDecoder();
+  encoder = new window.TextEncoder();
+  decoder = new window.TextDecoder();
 
   // Maps from browser KeyboardEvent.code values to Windows hardware keycodes.
   // Currently only supports Chrome keycodes: TODO(isaiah) -- add support for firefox/safari/edge.

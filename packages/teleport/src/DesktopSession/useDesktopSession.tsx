@@ -19,10 +19,11 @@ import { useParams } from 'react-router';
 import useAttempt from 'shared/hooks/useAttemptNext';
 import { useClipboardRW } from 'shared/hooks';
 import { UrlDesktopParams } from 'teleport/config';
-import Ctx from 'teleport/teleportContext';
+import desktopService from 'teleport/services/desktops';
+import userService from 'teleport/services/user';
 import useTdpClientCanvas from './useTdpClientCanvas';
 
-export default function useDesktopSession(ctx: Ctx) {
+export default function useDesktopSession() {
   const { attempt: fetchAttempt, run } = useAttempt('processing');
 
   // tdpConnection tracks the state of the tdpClient's TDP connection
@@ -41,11 +42,12 @@ export default function useDesktopSession(ctx: Ctx) {
   // disconnected tracks whether the user intentionally disconnected the client
   const [disconnected, setDisconnected] = useState(false);
 
+  const [clipboardEnabled, setClipboardEnabled] = useState(false);
+
   const { username, desktopName, clusterId } = useParams<UrlDesktopParams>();
   const [hostname, setHostname] = useState<string>('');
 
   const isUsingChrome = navigator.userAgent.indexOf('Chrome') > -1;
-  const clipboardEnabled = ctx.storeUser.getClipboardAccess();
   const clipboardRWPermission = useClipboardRW(clipboardEnabled, 'prompt');
   const [clipboard, setClipboard] = useState({
     enabled: clipboardEnabled,
@@ -99,9 +101,14 @@ export default function useDesktopSession(ctx: Ctx) {
 
   useEffect(() => {
     run(() =>
-      ctx.desktopService
-        .fetchDesktop(clusterId, desktopName)
-        .then(desktop => setHostname(desktop.addr))
+      Promise.all([
+        desktopService
+          .fetchDesktop(clusterId, desktopName)
+          .then(desktop => setHostname(desktop.addr)),
+        userService.fetchUserContext().then(user => {
+          setClipboardEnabled(user.acl.clipboard);
+        }),
+      ])
     );
   }, [clusterId, desktopName]);
 

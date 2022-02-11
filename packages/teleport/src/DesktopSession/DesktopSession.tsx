@@ -18,12 +18,10 @@ import React, { PropsWithChildren } from 'react';
 import useDesktopSession, { State } from './useDesktopSession';
 import TopBar from './TopBar';
 import { Indicator, Box, Alert, Text, Flex } from 'design';
-import useTeleport from 'teleport/useTeleport';
 import TdpClientCanvas from 'teleport/components/TdpClientCanvas';
 
 export default function Container() {
-  const ctx = useTeleport();
-  const state = useDesktopSession(ctx);
+  const state = useDesktopSession();
   return <DesktopSession {...state} />;
 }
 
