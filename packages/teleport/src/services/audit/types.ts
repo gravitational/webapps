@@ -100,6 +100,7 @@ export const eventCodes = {
   USER_SSO_LOGIN: 'T1001I',
   USER_SSO_LOGINFAILURE: 'T1001W',
   USER_UPDATED: 'T1003I',
+  CERTIFICATE_CREATED: 'TC000I',
 } as const;
 
 /**
@@ -385,6 +386,13 @@ export type RawEvents = {
       mfa_device_name: string;
       mfa_device_uuid: string;
       mfa_device_type: string;
+    }
+  >;
+  [eventCodes.CERTIFICATE_CREATED]: RawEvent<
+    typeof eventCodes.CERTIFICATE_CREATED,
+    {
+      cert_type: 'user';
+      identity: { user: string };
     }
   >;
 };
