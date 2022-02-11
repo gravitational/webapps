@@ -590,4 +590,13 @@ export const events = [
     uid: 'e4630384-ac85-5a43-9ba9-3355b8d5cae4',
     user: 'df83fda8-1111-5567-8bcc-c282dec3290e.im-a-cluster-name',
   },
+  {
+    cert_type: 'user',
+    code: 'TC000I',
+    event: 'cert.create',
+    identity: {
+      user: 'alice',
+    },
+    time: '2022-02-04T19:43:23.529Z',
+  },
 ].map(makeEvent);

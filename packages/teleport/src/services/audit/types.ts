@@ -103,6 +103,7 @@ export const eventCodes = {
   USER_SSO_LOGIN: 'T1001I',
   USER_SSO_LOGINFAILURE: 'T1001W',
   USER_UPDATED: 'T1003I',
+  CERTIFICATE_CREATED: 'TC000I',
 } as const;
 
 /**
@@ -407,6 +408,13 @@ export type RawEvents = {
   [eventCodes.LOCK_DELETED]: RawEvent<
     typeof eventCodes.LOCK_DELETED,
     { name: string }
+  >;
+  [eventCodes.CERTIFICATE_CREATED]: RawEvent<
+    typeof eventCodes.CERTIFICATE_CREATED,
+    {
+      cert_type: 'user';
+      identity: { user: string };
+    }
   >;
 };
 

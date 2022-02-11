@@ -676,12 +676,12 @@ exports[`loaded 1`] = `
           </strong>
            - 
           <strong>
-            44
+            45
           </strong>
            
           of 
           <strong>
-            44
+            45
           </strong>
         </div>
       </div>
@@ -740,6 +740,41 @@ exports[`loaded 1`] = `
         </tr>
       </thead>
       <tbody>
+        <tr>
+          <td>
+            <div
+              class="c15"
+            >
+              <span
+                class="c11 c16 icon icon-keypair c11 c16"
+                color="light"
+                font-size="3"
+              />
+              Certificate Issued
+            </div>
+          </td>
+          <td
+            style="word-break: break-word;"
+          >
+            User certificate issued for [alice]
+          </td>
+          <td
+            style="min-width: 120px;"
+          >
+            2022-02-04 19:43:23
+          </td>
+          <td
+            align="right"
+          >
+            <button
+              class="c17"
+              kind="border"
+              width="87px"
+            >
+              Details
+            </button>
+          </td>
+        </tr>
         <tr>
           <td>
             <div
