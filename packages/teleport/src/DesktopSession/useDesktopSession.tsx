@@ -17,7 +17,7 @@ limitations under the License.
 import { useEffect, useState, useMemo } from 'react';
 import { useParams } from 'react-router';
 import useAttempt from 'shared/hooks/useAttemptNext';
-import { useClipboardReadWrite } from 'shared/hooks';
+import { useClipboardReadWrite } from './useClipboard';
 import { UrlDesktopParams } from 'teleport/config';
 import desktopService from 'teleport/services/desktops';
 import userService from 'teleport/services/user';
