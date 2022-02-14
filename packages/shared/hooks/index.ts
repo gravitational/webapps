@@ -19,7 +19,7 @@ import useAttempt from './useAttempt';
 import useFavicon from './useFavicon';
 import useDocTitle from './useDocTitle';
 import useAttemptNext from './useAttemptNext';
-import { useClipboardRW } from './useClipboard';
+import { useClipboardReadWrite } from './useClipboard';
 
 export {
   useRef,
@@ -29,5 +29,5 @@ export {
   useEffect,
   useFavicon,
   useDocTitle,
-  useClipboardRW,
+  useClipboardReadWrite,
 };

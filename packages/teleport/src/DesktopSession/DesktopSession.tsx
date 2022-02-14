@@ -30,9 +30,10 @@ export function DesktopSession(props: State) {
     props;
 
   const clipboardError = clipboard.enabled && clipboard.hasError;
+
   const clipboardProcessing =
     clipboard.enabled &&
-    clipboard.permission === 'prompt' &&
+    clipboard.permission.state === 'prompt' &&
     !clipboard.hasError;
 
   // Websocket is closed but we haven't
@@ -158,11 +159,11 @@ function Session(props: PropsWithChildren<State>) {
   } = props;
 
   const clipboardSharingActive =
-    clipboard.enabled && clipboard.permission === 'granted';
+    clipboard.enabled && clipboard.permission.state === 'granted';
   const clipboardSuccess =
     !clipboard.enabled ||
     (clipboard.enabled &&
-      clipboard.permission === 'granted' &&
+      clipboard.permission.state === 'granted' &&
       !clipboard.hasError);
 
   const showCanvas =

@@ -29,7 +29,7 @@ export default function useTdpClientCanvas(props: Props) {
     clusterId,
     setTdpConnection,
     setWsConnection,
-    clipboardEnabled,
+    shareClipboard,
   } = props;
   const [tdpClient, setTdpClient] = useState<TdpClient | null>(null);
   const initialTdpConnectionSucceeded = useRef(false);
@@ -66,7 +66,7 @@ export default function useTdpClientCanvas(props: Props) {
       initialTdpConnectionSucceeded.current = true;
       // sendLocalClipboardToRemote must be called only after
       // initialTdpConnectionSucceeded.current === true or else it won't do anything.
-      sendLocalClipboardToRemote(tdpClient);
+      if (shareClipboard) sendLocalClipboardToRemote(tdpClient);
     }
     ctx.drawImage(pngFrame.data, pngFrame.left, pngFrame.top);
   };
@@ -175,7 +175,7 @@ export default function useTdpClientCanvas(props: Props) {
 
   // Syncs the browser-side's clipboard. See the note about mouseenter in the relevant RFD for why this makes sense:
   // https://github.com/gravitational/teleport/blob/master/rfd/0049-desktop-clipboard.md#local-copy-remote-paste
-  const onMouseEnter = clipboardEnabled
+  const onMouseEnter = shareClipboard
     ? (cli: TdpClient, e: MouseEvent) => {
         e.preventDefault();
         sendLocalClipboardToRemote(cli);
@@ -216,5 +216,5 @@ type Props = {
   clusterId: string;
   setTdpConnection: Dispatch<SetStateAction<Attempt>>;
   setWsConnection: Dispatch<SetStateAction<'open' | 'closed'>>;
-  clipboardEnabled: boolean;
+  shareClipboard: boolean;
 };

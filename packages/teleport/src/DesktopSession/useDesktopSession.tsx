@@ -17,7 +17,7 @@ limitations under the License.
 import { useEffect, useState, useMemo } from 'react';
 import { useParams } from 'react-router';
 import useAttempt from 'shared/hooks/useAttemptNext';
-import { useClipboardRW } from 'shared/hooks';
+import { useClipboardReadWrite } from 'shared/hooks';
 import { UrlDesktopParams } from 'teleport/config';
 import desktopService from 'teleport/services/desktops';
 import userService from 'teleport/services/user';
@@ -48,7 +48,7 @@ export default function useDesktopSession() {
   const [hostname, setHostname] = useState<string>('');
 
   const isUsingChrome = navigator.userAgent.indexOf('Chrome') > -1;
-  const clipboardRWPermission = useClipboardRW(clipboardEnabled, 'prompt');
+  const clipboardRWPermission = useClipboardReadWrite(isUsingChrome);
   const [clipboard, setClipboard] = useState({
     enabled: clipboardEnabled,
     permission: clipboardRWPermission,
@@ -62,14 +62,21 @@ export default function useDesktopSession() {
     clusterId,
     setTdpConnection,
     setWsConnection,
-    clipboardEnabled,
+    shareClipboard: clipboardEnabled && isUsingChrome,
   });
 
   useEffect(() => {
     // errors:
     // - role permits, browser not chromium
     // - role permits, clipboard permissions denied
-    if (clipboardEnabled && !isUsingChrome) {
+    if (clipboardRWPermission.state === 'error') {
+      setClipboard({
+        enabled: clipboardEnabled,
+        permission: clipboardRWPermission,
+        hasError: true,
+        errorText: clipboardRWPermission.errorText,
+      });
+    } else if (clipboardEnabled && !isUsingChrome) {
       setClipboard({
         enabled: clipboardEnabled,
         permission: clipboardRWPermission,
@@ -77,7 +84,7 @@ export default function useDesktopSession() {
         errorText:
           'Your user role supports clipboard sharing over desktop access, however this feature is only available on chromium based browsers like Brave or Google Chrome. Please switch to a supported browser.',
       });
-    } else if (clipboardEnabled && clipboardRWPermission === 'denied') {
+    } else if (clipboardEnabled && clipboardRWPermission.state === 'denied') {
       setClipboard({
         enabled: clipboardEnabled,
         permission: clipboardRWPermission,
