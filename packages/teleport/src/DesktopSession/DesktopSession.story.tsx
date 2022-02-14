@@ -43,8 +43,7 @@ const props: State = {
   tdpConnection: { status: 'processing' },
   clipboard: {
     enabled: false,
-    permission: 'prompt',
-    hasError: false,
+    permission: { state: 'unknown' },
     errorText: '',
   },
   recording: false,
@@ -73,6 +72,11 @@ export const Processing = () => (
     {...props}
     fetchAttempt={{ status: 'processing' }}
     tdpConnection={{ status: 'processing' }}
+    clipboard={{
+      enabled: true,
+      permission: { state: 'prompt' },
+      errorText: '',
+    }}
     wsConnection={'open'}
     disconnected={false}
   />
@@ -94,8 +98,7 @@ export const ConnectedSettingsFalse = () => {
       disconnected={false}
       clipboard={{
         enabled: false,
-        permission: 'prompt',
-        hasError: false,
+        permission: { state: 'unknown' },
         errorText: '',
       }}
       recording={false}
@@ -122,8 +125,7 @@ export const ConnectedSettingsTrue = () => {
       disconnected={false}
       clipboard={{
         enabled: true,
-        permission: 'granted',
-        hasError: false,
+        permission: { state: 'granted' },
         errorText: '',
       }}
       recording={true}
@@ -172,8 +174,7 @@ export const ClipboardError = () => (
     disconnected={false}
     clipboard={{
       enabled: true,
-      permission: 'prompt',
-      hasError: true,
+      permission: { state: 'prompt' },
       errorText: 'clipboard error',
     }}
   />
