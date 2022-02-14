@@ -52,8 +52,7 @@ export default function useDesktopSession() {
   const [clipboard, setClipboard] = useState({
     enabled: clipboardEnabled,
     permission: clipboardRWPermission,
-    hasError: false,
-    errorText: '',
+    errorText: '', // empty string means no error
   });
 
   const clientCanvasProps = useTdpClientCanvas({
@@ -73,14 +72,14 @@ export default function useDesktopSession() {
       setClipboard({
         enabled: clipboardEnabled,
         permission: clipboardRWPermission,
-        hasError: true,
-        errorText: clipboardRWPermission.errorText,
+        errorText:
+          clipboardRWPermission.errorText ||
+          'unknown clipboard permission error',
       });
     } else if (clipboardEnabled && !isUsingChrome) {
       setClipboard({
         enabled: clipboardEnabled,
         permission: clipboardRWPermission,
-        hasError: true,
         errorText:
           'Your user role supports clipboard sharing over desktop access, however this feature is only available on chromium based browsers like Brave or Google Chrome. Please switch to a supported browser.',
       });
@@ -88,14 +87,12 @@ export default function useDesktopSession() {
       setClipboard({
         enabled: clipboardEnabled,
         permission: clipboardRWPermission,
-        hasError: true,
         errorText: `Your user role supports clipboard sharing over desktop access, but your browser is blocking clipboard read or clipboard write permissions. Please grant both of these permissions to Teleport in your browser's settings.`,
       });
     } else {
       setClipboard({
         enabled: clipboardEnabled,
         permission: clipboardRWPermission,
-        hasError: false,
         errorText: '',
       });
     }

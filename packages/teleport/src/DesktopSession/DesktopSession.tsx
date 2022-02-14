@@ -29,12 +29,10 @@ export function DesktopSession(props: State) {
   const { clipboard, fetchAttempt, tdpConnection, wsConnection, disconnected } =
     props;
 
-  const clipboardError = clipboard.enabled && clipboard.hasError;
+  const clipboardError = clipboard.enabled && clipboard.errorText !== '';
 
   const clipboardProcessing =
-    clipboard.enabled &&
-    clipboard.permission.state === 'prompt' &&
-    !clipboard.hasError;
+    clipboard.enabled && clipboard.permission.state === 'prompt';
 
   // Websocket is closed but we haven't
   // closed it on purpose or registered a tdp error.
@@ -164,7 +162,7 @@ function Session(props: PropsWithChildren<State>) {
     !clipboard.enabled ||
     (clipboard.enabled &&
       clipboard.permission.state === 'granted' &&
-      !clipboard.hasError);
+      clipboard.errorText === '');
 
   const showCanvas =
     fetchAttempt.status === 'success' &&
