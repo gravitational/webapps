@@ -1,14 +1,14 @@
 import { useState, useEffect } from 'react';
 
 export function useClipboardReadWrite(
-  isChrome: boolean
+  shouldSetOrPrompt: boolean
 ): ClipboardPermissionState {
   const [permission, setPermission] = useState<ClipboardPermissionState>({
     state: 'unknown',
   });
 
-  const read = useClipboardRead(isChrome);
-  const write = useClipboardWrite(isChrome);
+  const read = useClipboardRead(shouldSetOrPrompt);
+  const write = useClipboardWrite(shouldSetOrPrompt);
 
   useEffect(() => {
     if (read.state === 'error') {
@@ -29,17 +29,24 @@ export function useClipboardReadWrite(
   return permission;
 }
 
-function useClipboardRead(isChrome: boolean) {
-  return useClipboardPermission(ClipboardPermisionType.Read, isChrome);
+function useClipboardRead(shouldSetOrPrompt: boolean) {
+  return useClipboardPermission(ClipboardPermisionType.Read, shouldSetOrPrompt);
 }
 
-function useClipboardWrite(isChrome: boolean) {
-  return useClipboardPermission(ClipboardPermisionType.Write, isChrome);
+function useClipboardWrite(shouldSetOrPrompt: boolean) {
+  return useClipboardPermission(
+    ClipboardPermisionType.Write,
+    shouldSetOrPrompt
+  );
 }
 
+// If shouldSetOrPrompt is set to false, then {state: 'unknown'} will simply be returned.
+// This is desireable so that useClipboardPermission can always be used unconditionally as a hook,
+// even in cases where we don't want to check/prompt-for the premission i.e. if the user isn't using
+// a Chromium based browser.
 function useClipboardPermission(
   type: ClipboardPermisionType,
-  isChrome: boolean
+  shouldSetOrPrompt: boolean
 ) {
   const permissionName = type as unknown as PermissionName;
 
@@ -82,7 +89,7 @@ function useClipboardPermission(
   };
 
   useEffect(() => {
-    if (isChrome) {
+    if (shouldSetOrPrompt) {
       setOrPromptUser();
     } else {
       setPermission({ state: 'unknown' });
