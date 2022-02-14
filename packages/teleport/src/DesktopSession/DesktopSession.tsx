@@ -46,7 +46,18 @@ export function DesktopSession(props: State) {
     tdpConnection.status === 'processing' ||
     clipboardProcessing;
 
-  if (fetchAttempt.status === 'failed') {
+  const alertText =
+    fetchAttempt.status === 'failed'
+      ? fetchAttempt.statusText
+      : tdpConnection.status === 'failed'
+      ? tdpConnection.status
+      : clipboardError
+      ? clipboard.errorText
+      : unknownConnectionError
+      ? 'Session disconnected for an unkown reason'
+      : '';
+
+  if (alertText !== '') {
     return (
       <Session {...props}>
         <Alert
@@ -55,52 +66,7 @@ export function DesktopSession(props: State) {
             minWidth: '450px',
           }}
           my={2}
-          children={fetchAttempt.statusText}
-        />
-      </Session>
-    );
-  }
-
-  if (tdpConnection.status === 'failed') {
-    return (
-      <Session {...props}>
-        <Alert
-          style={{
-            alignSelf: 'center',
-            minWidth: '450px',
-          }}
-          my={2}
-          children={tdpConnection.status}
-        />
-      </Session>
-    );
-  }
-
-  if (clipboardError) {
-    return (
-      <Session {...props}>
-        <Alert
-          style={{
-            alignSelf: 'center',
-            minWidth: '450px',
-          }}
-          my={2}
-          children={clipboard.errorText}
-        />
-      </Session>
-    );
-  }
-
-  if (unknownConnectionError) {
-    return (
-      <Session {...props}>
-        <Alert
-          style={{
-            alignSelf: 'center',
-          }}
-          width={'450px'}
-          my={2}
-          children={'Session disconnected for an unkown reason'}
+          children={alertText}
         />
       </Session>
     );

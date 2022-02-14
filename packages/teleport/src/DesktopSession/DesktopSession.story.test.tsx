@@ -8,6 +8,7 @@ import {
   FetchError,
   ConnectionError,
   ClipboardError,
+  UnintendedDisconnect,
 } from './DesktopSession.story';
 
 test('connected settings false', () => {
@@ -37,5 +38,10 @@ test('connection error', () => {
 
 test('clipboard error', () => {
   const { container } = render(<ClipboardError />);
+  expect(container).toMatchSnapshot();
+});
+
+test('unintended disconnect', () => {
+  const { container } = render(<UnintendedDisconnect />);
   expect(container).toMatchSnapshot();
 });

@@ -179,6 +179,15 @@ export const ClipboardError = () => (
     }}
   />
 );
+export const UnintendedDisconnect = () => (
+  <DesktopSession
+    {...props}
+    fetchAttempt={{ status: 'success' }}
+    tdpConnection={{ status: 'success' }}
+    disconnected={false}
+    wsConnection={'closed'}
+  />
+);
 export const Performance = () => {
   const client = fakeClient();
   client.init = () => {
