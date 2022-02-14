@@ -15,9 +15,10 @@ limitations under the License.
 */
 
 import React, { PropsWithChildren } from 'react';
+import styled from 'styled-components';
+import { Indicator, Box, Alert, Text, Flex } from 'design';
 import useDesktopSession, { State } from './useDesktopSession';
 import TopBar from './TopBar';
-import { Indicator, Box, Alert, Text, Flex } from 'design';
 import TdpClientCanvas from 'teleport/components/TdpClientCanvas';
 
 export default function Container() {
@@ -60,14 +61,7 @@ export function DesktopSession(props: State) {
   if (alertText !== '') {
     return (
       <Session {...props}>
-        <Alert
-          style={{
-            alignSelf: 'center',
-            minWidth: '450px',
-          }}
-          my={2}
-          children={alertText}
-        />
+        <DesktopSessionAlert my={2} children={alertText} />
       </Session>
     );
   }
@@ -178,3 +172,8 @@ function Session(props: PropsWithChildren<State>) {
     </Flex>
   );
 }
+
+const DesktopSessionAlert = styled(Alert)`
+  align-self: center;
+  min-width: 450px;
+`;

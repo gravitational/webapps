@@ -1,29 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`clipboard error 1`] = `
-.c12 {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  border-radius: 2px;
-  box-sizing: border-box;
-  box-shadow: 0 1px 4px rgba(0,0,0,.24);
-  margin: 0 0 24px 0;
-  min-height: 40px;
-  padding: 8px 16px;
-  overflow: auto;
-  word-break: break-all;
-  line-height: 1.5;
-  margin-top: 8px;
-  margin-bottom: 8px;
-  background: #f50057;
-  color: #FFFFFF;
-}
-
-.c12 a {
-  color: #FFFFFF;
-}
-
 .c5 {
   display: inline-block;
   transition: color .3s;
@@ -133,6 +110,31 @@ exports[`clipboard error 1`] = `
   vertical-align: text-bottom;
 }
 
+.c12 {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 2px;
+  box-sizing: border-box;
+  box-shadow: 0 1px 4px rgba(0,0,0,.24);
+  margin: 0 0 24px 0;
+  min-height: 40px;
+  padding: 8px 16px;
+  overflow: auto;
+  word-break: break-all;
+  line-height: 1.5;
+  margin-top: 8px;
+  margin-bottom: 8px;
+  background: #f50057;
+  color: #FFFFFF;
+  align-self: center;
+  min-width: 450px;
+}
+
+.c12 a {
+  color: #FFFFFF;
+}
+
 <div>
   <div
     class="c0"
@@ -198,7 +200,6 @@ exports[`clipboard error 1`] = `
     <div
       class="c12"
       kind="danger"
-      style="align-self: center; min-width: 450px;"
     >
       clipboard error
     </div>
@@ -571,29 +572,6 @@ exports[`connected settings true 1`] = `
 `;
 
 exports[`connection error 1`] = `
-.c12 {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  border-radius: 2px;
-  box-sizing: border-box;
-  box-shadow: 0 1px 4px rgba(0,0,0,.24);
-  margin: 0 0 24px 0;
-  min-height: 40px;
-  padding: 8px 16px;
-  overflow: auto;
-  word-break: break-all;
-  line-height: 1.5;
-  margin-top: 8px;
-  margin-bottom: 8px;
-  background: #f50057;
-  color: #FFFFFF;
-}
-
-.c12 a {
-  color: #FFFFFF;
-}
-
 .c5 {
   display: inline-block;
   transition: color .3s;
@@ -703,6 +681,31 @@ exports[`connection error 1`] = `
   vertical-align: text-bottom;
 }
 
+.c12 {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 2px;
+  box-sizing: border-box;
+  box-shadow: 0 1px 4px rgba(0,0,0,.24);
+  margin: 0 0 24px 0;
+  min-height: 40px;
+  padding: 8px 16px;
+  overflow: auto;
+  word-break: break-all;
+  line-height: 1.5;
+  margin-top: 8px;
+  margin-bottom: 8px;
+  background: #f50057;
+  color: #FFFFFF;
+  align-self: center;
+  min-width: 450px;
+}
+
+.c12 a {
+  color: #FFFFFF;
+}
+
 <div>
   <div
     class="c0"
@@ -768,7 +771,6 @@ exports[`connection error 1`] = `
     <div
       class="c12"
       kind="danger"
-      style="align-self: center; min-width: 450px;"
     >
       failed
     </div>
@@ -976,29 +978,6 @@ exports[`disconnected 1`] = `
 `;
 
 exports[`fetch error 1`] = `
-.c12 {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  border-radius: 2px;
-  box-sizing: border-box;
-  box-shadow: 0 1px 4px rgba(0,0,0,.24);
-  margin: 0 0 24px 0;
-  min-height: 40px;
-  padding: 8px 16px;
-  overflow: auto;
-  word-break: break-all;
-  line-height: 1.5;
-  margin-top: 8px;
-  margin-bottom: 8px;
-  background: #f50057;
-  color: #FFFFFF;
-}
-
-.c12 a {
-  color: #FFFFFF;
-}
-
 .c5 {
   display: inline-block;
   transition: color .3s;
@@ -1108,6 +1087,31 @@ exports[`fetch error 1`] = `
   vertical-align: text-bottom;
 }
 
+.c12 {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 2px;
+  box-sizing: border-box;
+  box-shadow: 0 1px 4px rgba(0,0,0,.24);
+  margin: 0 0 24px 0;
+  min-height: 40px;
+  padding: 8px 16px;
+  overflow: auto;
+  word-break: break-all;
+  line-height: 1.5;
+  margin-top: 8px;
+  margin-bottom: 8px;
+  background: #f50057;
+  color: #FFFFFF;
+  align-self: center;
+  min-width: 450px;
+}
+
+.c12 a {
+  color: #FFFFFF;
+}
+
 <div>
   <div
     class="c0"
@@ -1173,7 +1177,6 @@ exports[`fetch error 1`] = `
     <div
       class="c12"
       kind="danger"
-      style="align-self: center; min-width: 450px;"
     >
       some fetch  error
     </div>
@@ -1186,29 +1189,6 @@ exports[`fetch error 1`] = `
 `;
 
 exports[`unintended disconnect 1`] = `
-.c12 {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  border-radius: 2px;
-  box-sizing: border-box;
-  box-shadow: 0 1px 4px rgba(0,0,0,.24);
-  margin: 0 0 24px 0;
-  min-height: 40px;
-  padding: 8px 16px;
-  overflow: auto;
-  word-break: break-all;
-  line-height: 1.5;
-  margin-top: 8px;
-  margin-bottom: 8px;
-  background: #f50057;
-  color: #FFFFFF;
-}
-
-.c12 a {
-  color: #FFFFFF;
-}
-
 .c5 {
   display: inline-block;
   transition: color .3s;
@@ -1318,6 +1298,31 @@ exports[`unintended disconnect 1`] = `
   vertical-align: text-bottom;
 }
 
+.c12 {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 2px;
+  box-sizing: border-box;
+  box-shadow: 0 1px 4px rgba(0,0,0,.24);
+  margin: 0 0 24px 0;
+  min-height: 40px;
+  padding: 8px 16px;
+  overflow: auto;
+  word-break: break-all;
+  line-height: 1.5;
+  margin-top: 8px;
+  margin-bottom: 8px;
+  background: #f50057;
+  color: #FFFFFF;
+  align-self: center;
+  min-width: 450px;
+}
+
+.c12 a {
+  color: #FFFFFF;
+}
+
 <div>
   <div
     class="c0"
@@ -1383,7 +1388,6 @@ exports[`unintended disconnect 1`] = `
     <div
       class="c12"
       kind="danger"
-      style="align-self: center; min-width: 450px;"
     >
       Session disconnected for an unkown reason
     </div>
