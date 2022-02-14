@@ -7,16 +7,9 @@ export interface VirtualScrollProps<T> {
   items: T[];
   Node(props: {
     item: T;
-    deepLevel: number;
+    depth: number;
     isExpanded: boolean;
     isLeaf: boolean;
     onToggle(): void;
   }): ReactNode;
-}
-
-export interface VirtualScrollItem<T> {
-  item: T;
-  deepLevel: number;
-  parentKeys: string[];
-  isLeaf: boolean;
 }

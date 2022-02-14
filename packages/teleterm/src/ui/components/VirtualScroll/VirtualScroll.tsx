@@ -4,6 +4,8 @@ import { useVirtualScrollNodes } from './useVirtualScrollNodes';
 import { VirtualScrollProps } from './types';
 
 export function VirtualScroll<T>(props: VirtualScrollProps<T>) {
+  // consider using `content-visibility: auto` https://github.com/gravitational/webapps/pull/595#pullrequestreview-880424544
+
   const scrollableRef = useRef<HTMLDivElement>();
   const {
     setScrollTop,

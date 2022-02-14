@@ -38,7 +38,7 @@ interface TreeItem {
 }
 
 export function TreeList() {
-  const deepLevels = 6;
+  const depth = 6;
   const childrenPerLevel = 6;
 
   function createTree(currentLevel = 0): TreeItem {
@@ -47,7 +47,7 @@ export function TreeList() {
       id: unique(),
     };
 
-    if (currentLevel === deepLevels) {
+    if (currentLevel === depth) {
       return item;
     }
 
@@ -60,15 +60,15 @@ export function TreeList() {
 
   return (
     <>
-      <h2>Rendering up to {Math.pow(deepLevels, childrenPerLevel)} items</h2>
+      <h2>Rendering up to {Math.pow(depth, childrenPerLevel)} items</h2>
       <Container>
         <VirtualScroll<TreeItem>
           keyProp="id"
           childrenProp="children"
           rowHeight={24}
           items={[createTree()]}
-          Node={({ item, isLeaf, onToggle, isExpanded, deepLevel }) => {
-            const marginLeft = deepLevel * 15 + 'px';
+          Node={({ item, isLeaf, onToggle, isExpanded, depth }) => {
+            const marginLeft = depth * 15 + 'px';
             return (
               <Text>
                 <ClickableItem

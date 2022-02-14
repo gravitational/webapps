@@ -56,7 +56,7 @@ export function useVirtualScrollNodes<T>(props: VirtualScrollProps<T>) {
             item: i.item,
             isExpanded: expandedKeys.has(itemKey),
             isLeaf: i.isLeaf,
-            deepLevel: i.deepLevel,
+            depth: i.depth,
             onToggle: () => {
               setExpandedKeys(prevExpandedKeys => {
                 const newExpandedKeys = new Set(prevExpandedKeys);
