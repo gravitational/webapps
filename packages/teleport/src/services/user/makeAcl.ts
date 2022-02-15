@@ -36,7 +36,13 @@ export default function makeAcl(json): Acl {
   const desktops = json.desktops || defaultAccess;
   // Defaults to true, see RFD 0049
   // https://github.com/gravitational/teleport/blob/master/rfd/0049-desktop-clipboard.md#security
-  const clipboard = json.clipboard || true;
+  const clipboard = json.clipboard !== undefined ? json.clipboard : true;
+  // Defaults to true, see RFD 0033
+  // https://github.com/gravitational/teleport/blob/master/rfd/0033-desktop-access.md#authorization
+  const desktopSessionRecording =
+    json.desktopSessionRecording !== undefined
+      ? json.desktopSessionRecording
+      : true;
 
   return {
     sshLogins,
@@ -55,6 +61,7 @@ export default function makeAcl(json): Acl {
     dbServers,
     desktops,
     clipboard,
+    desktopSessionRecording,
   };
 }
 
