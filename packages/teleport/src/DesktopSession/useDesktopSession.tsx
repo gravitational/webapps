@@ -42,8 +42,7 @@ export default function useDesktopSession() {
   // disconnected tracks whether the user intentionally disconnected the client
   const [disconnected, setDisconnected] = useState(false);
 
-  const [clipboardSharingPermitted, setClipboardSharingPermitted] =
-    useState(false);
+  const [hasClipboardAccess, setHasClipboardAccess] = useState(false);
 
   // recording tracks whether or not a recording is in progress
   const [recording, setRecording] = useState(false);
@@ -53,10 +52,10 @@ export default function useDesktopSession() {
 
   const isUsingChrome = navigator.userAgent.indexOf('Chrome') > -1;
   const clipboardRWPermission = useClipboardReadWrite(
-    isUsingChrome && clipboardSharingPermitted
+    isUsingChrome && hasClipboardAccess
   );
   const [clipboard, setClipboard] = useState({
-    enabled: clipboardSharingPermitted,
+    enabled: hasClipboardAccess,
     permission: clipboardRWPermission,
     errorText: '', // empty string means no error
   });
@@ -67,7 +66,7 @@ export default function useDesktopSession() {
     clusterId,
     setTdpConnection,
     setWsConnection,
-    shareClipboard: clipboardSharingPermitted && isUsingChrome,
+    shareClipboard: hasClipboardAccess && isUsingChrome,
   });
 
   useEffect(() => {
@@ -76,36 +75,33 @@ export default function useDesktopSession() {
     // - role permits, clipboard permissions denied
     if (clipboardRWPermission.state === 'error') {
       setClipboard({
-        enabled: clipboardSharingPermitted,
+        enabled: hasClipboardAccess,
         permission: clipboardRWPermission,
         errorText:
           clipboardRWPermission.errorText ||
           'unknown clipboard permission error',
       });
-    } else if (clipboardSharingPermitted && !isUsingChrome) {
+    } else if (hasClipboardAccess && !isUsingChrome) {
       setClipboard({
-        enabled: clipboardSharingPermitted,
+        enabled: hasClipboardAccess,
         permission: clipboardRWPermission,
         errorText:
           'Your user role supports clipboard sharing over desktop access, however this feature is only available on chromium based browsers like Brave or Google Chrome. Please switch to a supported browser.',
       });
-    } else if (
-      clipboardSharingPermitted &&
-      clipboardRWPermission.state === 'denied'
-    ) {
+    } else if (hasClipboardAccess && clipboardRWPermission.state === 'denied') {
       setClipboard({
-        enabled: clipboardSharingPermitted,
+        enabled: hasClipboardAccess,
         permission: clipboardRWPermission,
         errorText: `Your user role supports clipboard sharing over desktop access, but your browser is blocking clipboard read or clipboard write permissions. Please grant both of these permissions to Teleport in your browser's settings.`,
       });
     } else {
       setClipboard({
-        enabled: clipboardSharingPermitted,
+        enabled: hasClipboardAccess,
         permission: clipboardRWPermission,
         errorText: '',
       });
     }
-  }, [isUsingChrome, clipboardSharingPermitted, clipboardRWPermission]);
+  }, [isUsingChrome, hasClipboardAccess, clipboardRWPermission]);
 
   document.title = useMemo(
     () => `${clusterId} • ${username}@${hostname}`,
@@ -119,7 +115,7 @@ export default function useDesktopSession() {
           .fetchDesktop(clusterId, desktopName)
           .then(desktop => setHostname(desktop.addr)),
         userService.fetchUserContext().then(user => {
-          setClipboardSharingPermitted(user.acl.clipboard);
+          setHasClipboardAccess(user.acl.clipboard);
           setRecording(user.acl.desktopSessionRecording);
         }),
       ])

@@ -2,8 +2,8 @@ import { useState, useEffect } from 'react';
 
 export function useClipboardReadWrite(
   shouldSetOrPrompt: boolean
-): ClipboardPermissionState {
-  const [permission, setPermission] = useState<ClipboardPermissionState>({
+): ClipboardPermissionStatus {
+  const [permission, setPermission] = useState<ClipboardPermissionStatus>({
     state: 'unknown',
   });
 
@@ -30,12 +30,15 @@ export function useClipboardReadWrite(
 }
 
 function useClipboardRead(shouldSetOrPrompt: boolean) {
-  return useClipboardPermission(ClipboardPermisionType.Read, shouldSetOrPrompt);
+  return useClipboardPermission(
+    ClipboardPermissionType.Read,
+    shouldSetOrPrompt
+  );
 }
 
 function useClipboardWrite(shouldSetOrPrompt: boolean) {
   return useClipboardPermission(
-    ClipboardPermisionType.Write,
+    ClipboardPermissionType.Write,
     shouldSetOrPrompt
   );
 }
@@ -45,20 +48,20 @@ function useClipboardWrite(shouldSetOrPrompt: boolean) {
 // even in cases where we don't want to check/prompt-for the premission i.e. if the user isn't using
 // a Chromium based browser.
 function useClipboardPermission(
-  type: ClipboardPermisionType,
+  readOrWrite: ClipboardPermissionType,
   shouldSetOrPrompt: boolean
 ) {
-  const permissionName = type as unknown as PermissionName;
+  const permissionName = readOrWrite as unknown as PermissionName;
 
-  const [permission, setPermission] = useState<ClipboardPermissionState>({
+  const [permission, setPermission] = useState<ClipboardPermissionStatus>({
     state: 'unknown',
   });
 
-  const setOrPromptUser = () => {
-    navigator.permissions.query({ name: permissionName }).then(result => {
-      if (result.state === 'granted' || result.state === 'denied') {
-        if (permission.state !== result.state) {
-          setPermission({ state: result.state });
+  const setPermissionOrPromptUser = () => {
+    navigator.permissions.query({ name: permissionName }).then(perm => {
+      if (perm.state === 'granted' || perm.state === 'denied') {
+        if (permission.state !== perm.state) {
+          setPermission({ state: perm.state });
         }
       } else {
         // result.state === 'prompt';
@@ -79,7 +82,7 @@ function useClipboardPermission(
             if (err && err.name === 'NotAllowedError') {
               // NotAllowedError will be caught if the permission was 'denied' or remained 'prompt'.
               // Try again, which result in either setPermission('denied') or re-prompting the user.
-              setOrPromptUser();
+              setPermissionOrPromptUser();
             } else {
               setPermission({ state: 'error', errorText: err.message });
             }
@@ -90,7 +93,7 @@ function useClipboardPermission(
 
   useEffect(() => {
     if (shouldSetOrPrompt) {
-      setOrPromptUser();
+      setPermissionOrPromptUser();
     } else {
       setPermission({ state: 'unknown' });
     }
@@ -99,12 +102,12 @@ function useClipboardPermission(
   return permission;
 }
 
-enum ClipboardPermisionType {
+enum ClipboardPermissionType {
   Read = 'clipboard-read',
   Write = 'clipboard-write',
 }
 
-type ClipboardPermissionState = {
+type ClipboardPermissionStatus = {
   state: PermissionState | 'unknown' | 'error';
   errorText?: string;
 };

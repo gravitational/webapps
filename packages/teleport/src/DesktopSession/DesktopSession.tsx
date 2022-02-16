@@ -30,7 +30,7 @@ export function DesktopSession(props: State) {
   const { clipboard, fetchAttempt, tdpConnection, wsConnection, disconnected } =
     props;
 
-  const clipboardError = clipboard.enabled && clipboard.errorText !== '';
+  const clipboardError = clipboard.enabled && clipboard.errorText;
 
   const clipboardProcessing =
     clipboard.enabled && clipboard.permission.state === 'prompt';
@@ -47,18 +47,20 @@ export function DesktopSession(props: State) {
     tdpConnection.status === 'processing' ||
     clipboardProcessing;
 
-  const alertText =
-    fetchAttempt.status === 'failed'
-      ? fetchAttempt.statusText
-      : tdpConnection.status === 'failed'
-      ? tdpConnection.status
-      : clipboardError
-      ? clipboard.errorText
-      : unknownConnectionError
-      ? 'Session disconnected for an unkown reason'
-      : '';
+  let alertText: string;
+  if (fetchAttempt.status === 'failed') {
+    alertText = fetchAttempt.statusText;
+  } else if (tdpConnection.status === 'failed') {
+    alertText = tdpConnection.status;
+  } else if (clipboardError) {
+    alertText = clipboard.errorText;
+  } else if (unknownConnectionError) {
+    alertText = 'Session disconnected for an unkown reason';
+  } else {
+    alertText = '';
+  }
 
-  if (alertText !== '') {
+  if (alertText) {
     return (
       <Session {...props}>
         <DesktopSessionAlert my={2} children={alertText} />
