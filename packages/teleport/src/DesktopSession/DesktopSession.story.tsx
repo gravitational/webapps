@@ -41,7 +41,11 @@ const props: State = {
   hostname: 'host.com',
   fetchAttempt: { status: 'processing' },
   tdpConnection: { status: 'processing' },
-  clipboard: false,
+  clipboard: {
+    enabled: false,
+    permission: { state: '' },
+    errorText: '',
+  },
   recording: false,
   tdpClient: fakeClient(),
   username: 'user',
@@ -59,6 +63,8 @@ const props: State = {
   onMouseUp: () => {},
   onMouseWheelScroll: () => {},
   onContextMenu: () => false,
+  onMouseEnter: () => {},
+  onClipboardData: () => {},
 };
 
 export const Processing = () => (
@@ -66,6 +72,11 @@ export const Processing = () => (
     {...props}
     fetchAttempt={{ status: 'processing' }}
     tdpConnection={{ status: 'processing' }}
+    clipboard={{
+      enabled: true,
+      permission: { state: 'prompt' },
+      errorText: '',
+    }}
     wsConnection={'open'}
     disconnected={false}
   />
@@ -85,7 +96,11 @@ export const ConnectedSettingsFalse = () => {
       tdpConnection={{ status: 'success' }}
       wsConnection={'open'}
       disconnected={false}
-      clipboard={false}
+      clipboard={{
+        enabled: false,
+        permission: { state: '' },
+        errorText: '',
+      }}
       recording={false}
       onPngFrame={(ctx: CanvasRenderingContext2D) => {
         fillGray(ctx.canvas);
@@ -108,7 +123,11 @@ export const ConnectedSettingsTrue = () => {
       tdpConnection={{ status: 'success' }}
       wsConnection={'open'}
       disconnected={false}
-      clipboard={true}
+      clipboard={{
+        enabled: true,
+        permission: { state: 'granted' },
+        errorText: '',
+      }}
       recording={true}
       onPngFrame={(ctx: CanvasRenderingContext2D) => {
         fillGray(ctx.canvas);
@@ -146,17 +165,29 @@ export const ConnectionError = () => (
     disconnected={false}
   />
 );
-export const BothError = () => (
+export const ClipboardError = () => (
   <DesktopSession
     {...props}
-    fetchAttempt={{ status: 'failed', statusText: 'some fetch  error' }}
-    tdpConnection={{
-      status: 'failed',
-      statusText: 'some connection error',
+    fetchAttempt={{ status: 'success' }}
+    tdpConnection={{ status: 'success' }}
+    wsConnection={'open'}
+    disconnected={false}
+    clipboard={{
+      enabled: true,
+      permission: { state: 'prompt' },
+      errorText: 'clipboard error',
     }}
   />
 );
-
+export const UnintendedDisconnect = () => (
+  <DesktopSession
+    {...props}
+    fetchAttempt={{ status: 'success' }}
+    tdpConnection={{ status: 'success' }}
+    disconnected={false}
+    wsConnection={'closed'}
+  />
+);
 export const Performance = () => {
   const client = fakeClient();
   client.init = () => {

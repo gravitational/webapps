@@ -1,4 +1,3 @@
-const { TextEncoder, TextDecoder } = require('util');
 import Codec, {
   MessageType,
   ButtonState,
@@ -6,9 +5,6 @@ import Codec, {
   ScrollAxis,
 } from './codec';
 
-// Use nodejs TextEncoder until jsdom adds support for TextEncoder (https://github.com/jsdom/jsdom/issues/2524)
-window.TextEncoder = window.TextEncoder || TextEncoder;
-window.TextDecoder = window.TextDecoder || TextDecoder;
 const codec = new Codec();
 
 test('encodes and decodes the screen spec', () => {
@@ -137,4 +133,32 @@ test('decodes errors', () => {
 
   const error = codec.decodeErrorMessage(tdpErrorBuffer);
   expect(error).toBe('An error occured');
+});
+
+// Username/password tests inspired by https://github.com/google/closure-library/blob/master/closure/goog/crypt/crypt_test.js (Apache License)
+test('encodes and decodes clipboard data', () => {
+  // Create a test value with letters, symbols, and numbers and its known UTF8 encodings
+  const clipboardData = 'Helloworld!*@123';
+  const clipboardDataUTF8 = [
+    0x0048, 0x0065, 0x006c, 0x006c, 0x006f, 0x0077, 0x006f, 0x0072, 0x006c,
+    0x0064, 0x0021, 0x002a, 0x0040, 0x0031, 0x0032, 0x0033,
+  ];
+
+  // Encode test vals
+  const encodedData = codec.encodeClipboardData({
+    data: clipboardData,
+  });
+  const view = new DataView(encodedData);
+
+  // Walk through output
+  let offset = 0;
+  expect(view.getUint8(offset++)).toEqual(MessageType.CLIPBOARD_DATA);
+  expect(view.getUint32(offset)).toEqual(clipboardDataUTF8.length);
+  offset += 4;
+  clipboardDataUTF8.forEach(byte => {
+    expect(view.getUint8(offset++)).toEqual(byte);
+  });
+
+  const decoded = codec.decodeClipboardData(encodedData);
+  expect(decoded.data).toEqual(clipboardData);
 });

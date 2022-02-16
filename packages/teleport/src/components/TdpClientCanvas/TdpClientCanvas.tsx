@@ -15,12 +15,17 @@ limitations under the License.
 */
 import React, { useEffect, useRef, CSSProperties } from 'react';
 import { TdpClient, TdpClientEvent } from 'teleport/lib/tdp';
-import { PngFrame, ClientScreenSpec } from 'teleport/lib/tdp/codec';
+import {
+  PngFrame,
+  ClientScreenSpec,
+  ClipboardData,
+} from 'teleport/lib/tdp/codec';
 
 export default function TdpClientCanvas(props: Props) {
   const {
     tdpCli,
     tdpCliOnPngFrame,
+    tdpCliOnClipboardData,
     tdpCliOnTdpError,
     tdpCliOnWsClose,
     tdpCliOnWsOpen,
@@ -32,6 +37,7 @@ export default function TdpClientCanvas(props: Props) {
     onMouseUp,
     onMouseWheelScroll,
     onContextMenu,
+    onMouseEnter,
     style,
   } = props;
 
@@ -75,6 +81,12 @@ export default function TdpClientCanvas(props: Props) {
             tdpCliOnClientScreenSpec(canvas, spec);
           }
         );
+      }
+
+      if (tdpCliOnClipboardData) {
+        tdpCli.on(TdpClientEvent.TDP_CLIPBOARD_DATA, (data: ClipboardData) => {
+          tdpCliOnClipboardData(data);
+        });
       }
 
       if (tdpCliOnTdpError) {
@@ -131,6 +143,13 @@ export default function TdpClientCanvas(props: Props) {
         canvas.onwheel = _onwheel;
       }
 
+      const _onmouseenter = (e: MouseEvent) => {
+        onMouseEnter(tdpCli, e);
+      };
+      if (onMouseEnter) {
+        canvas.onmouseenter = _onmouseenter;
+      }
+
       // Key controls.
       const _onkeydown = (e: KeyboardEvent) => {
         onKeyDown(tdpCli, e);
@@ -158,6 +177,8 @@ export default function TdpClientCanvas(props: Props) {
         if (onKeyDown) canvas.removeEventListener('keydown', _onkeydown);
         if (onKeyUp) canvas.removeEventListener('keyup', _onkeyup);
         if (onMouseWheelScroll) canvas.removeEventListener('wheel', _onwheel);
+        if (onMouseEnter)
+          canvas.removeEventListener('onmouseenter', _onmouseenter);
       };
     }
   }, [tdpCli]);
@@ -171,6 +192,7 @@ export type Props = {
     ctx: CanvasRenderingContext2D,
     pngFrame: PngFrame
   ) => void;
+  tdpCliOnClipboardData?: (clipboardData: ClipboardData) => void;
   tdpCliOnTdpError?: (err: Error) => void;
   tdpCliOnWsClose?: () => void;
   tdpCliOnWsOpen?: () => void;
@@ -189,5 +211,6 @@ export type Props = {
   onMouseUp?: (cli: TdpClient, e: MouseEvent) => void;
   onMouseWheelScroll?: (cli: TdpClient, e: WheelEvent) => void;
   onContextMenu?: () => boolean;
+  onMouseEnter?: (cli: TdpClient, e: MouseEvent) => void;
   style?: CSSProperties;
 };

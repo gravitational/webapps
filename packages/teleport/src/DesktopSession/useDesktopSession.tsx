@@ -17,11 +17,13 @@ limitations under the License.
 import { useEffect, useState, useMemo } from 'react';
 import { useParams } from 'react-router';
 import useAttempt from 'shared/hooks/useAttemptNext';
+import { useClipboardReadWrite } from './useClipboard';
 import { UrlDesktopParams } from 'teleport/config';
-import Ctx from 'teleport/teleportContext';
+import desktopService from 'teleport/services/desktops';
+import userService from 'teleport/services/user';
 import useTdpClientCanvas from './useTdpClientCanvas';
 
-export default function useDesktopSession(ctx: Ctx) {
+export default function useDesktopSession() {
   const { attempt: fetchAttempt, run } = useAttempt('processing');
 
   // tdpConnection tracks the state of the tdpClient's TDP connection
@@ -40,15 +42,66 @@ export default function useDesktopSession(ctx: Ctx) {
   // disconnected tracks whether the user intentionally disconnected the client
   const [disconnected, setDisconnected] = useState(false);
 
+  const [hasClipboardAccess, setHasClipboardAccess] = useState(false);
+
+  // recording tracks whether or not a recording is in progress
+  const [recording, setRecording] = useState(false);
+
   const { username, desktopName, clusterId } = useParams<UrlDesktopParams>();
   const [hostname, setHostname] = useState<string>('');
+
+  const isUsingChrome = navigator.userAgent.indexOf('Chrome') > -1;
+  const clipboardRWPermission = useClipboardReadWrite(
+    isUsingChrome && hasClipboardAccess
+  );
+  const [clipboard, setClipboard] = useState({
+    enabled: hasClipboardAccess,
+    permission: clipboardRWPermission,
+    errorText: '', // empty string means no error
+  });
+
   const clientCanvasProps = useTdpClientCanvas({
     username,
     desktopName,
     clusterId,
     setTdpConnection,
     setWsConnection,
+    canShareClipboard: hasClipboardAccess && isUsingChrome,
   });
+
+  useEffect(() => {
+    // errors:
+    // - role permits, browser not chromium
+    // - role permits, clipboard permissions denied
+    if (clipboardRWPermission.state === 'error') {
+      setClipboard({
+        enabled: hasClipboardAccess,
+        permission: clipboardRWPermission,
+        errorText:
+          clipboardRWPermission.errorText ||
+          'unknown clipboard permission error',
+      });
+    } else if (hasClipboardAccess && !isUsingChrome) {
+      setClipboard({
+        enabled: hasClipboardAccess,
+        permission: clipboardRWPermission,
+        errorText:
+          'Your user role supports clipboard sharing over desktop access, however this feature is only available on chromium based browsers like Brave or Google Chrome. Please switch to a supported browser.',
+      });
+    } else if (hasClipboardAccess && clipboardRWPermission.state === 'denied') {
+      setClipboard({
+        enabled: hasClipboardAccess,
+        permission: clipboardRWPermission,
+        errorText: `Your user role supports clipboard sharing over desktop access, but your browser is blocking clipboard read or clipboard write permissions. Please grant both of these permissions to Teleport in your browser's settings.`,
+      });
+    } else {
+      setClipboard({
+        enabled: hasClipboardAccess,
+        permission: clipboardRWPermission,
+        errorText: '',
+      });
+    }
+  }, [isUsingChrome, hasClipboardAccess, clipboardRWPermission]);
 
   document.title = useMemo(
     () => `${clusterId} • ${username}@${hostname}`,
@@ -57,18 +110,23 @@ export default function useDesktopSession(ctx: Ctx) {
 
   useEffect(() => {
     run(() =>
-      ctx.desktopService
-        .fetchDesktop(clusterId, desktopName)
-        .then(desktop => setHostname(desktop.addr))
+      Promise.all([
+        desktopService
+          .fetchDesktop(clusterId, desktopName)
+          .then(desktop => setHostname(desktop.addr)),
+        userService.fetchUserContext().then(user => {
+          setHasClipboardAccess(user.acl.canShareClipboard);
+          setRecording(user.acl.desktopSessionRecording);
+        }),
+      ])
     );
   }, [clusterId, desktopName]);
 
   return {
     hostname,
     username,
-    // clipboard and recording settings will eventuall come from backend, hardcoded for now
-    clipboard: false,
-    recording: false,
+    clipboard,
+    recording,
     fetchAttempt,
     tdpConnection,
     wsConnection,

@@ -16,7 +16,7 @@ limitations under the License.
 
 import { useState, useEffect, useRef, Dispatch, SetStateAction } from 'react';
 import { TdpClient, ButtonState, ScrollAxis } from 'teleport/lib/tdp';
-import { PngFrame } from 'teleport/lib/tdp/codec';
+import { ClipboardData, PngFrame } from 'teleport/lib/tdp/codec';
 import { TopBarHeight } from './TopBar';
 import cfg from 'teleport/config';
 import { getAccessToken, getHostName } from 'teleport/services/api';
@@ -29,9 +29,23 @@ export default function useTdpClientCanvas(props: Props) {
     clusterId,
     setTdpConnection,
     setWsConnection,
+    canShareClipboard: canShareClipboardIn,
   } = props;
   const [tdpClient, setTdpClient] = useState<TdpClient | null>(null);
-  const firstImageFragmentRef = useRef(true);
+  const initialTdpConnectionSucceeded = useRef(false);
+  const latestClipboardText = useRef<string>(null);
+
+  // The canShareClipboard prop is used in sendLocalClipboardToRemote to determine
+  // whether or not we actually want to check for and send clipboard data. Because
+  // this information must be fetched from the server (in useDesktopSession), the component
+  // must give us an initial value and update it subsequently. This useRef system below
+  // ensures that canShareClipboard.current gets updated with the latest info from the server,
+  // and that sendLocalClipboardToRemote actually uses that latest value (as opposed to whatever
+  // value the canShareClipboard prop was initialized to, which is what happens in the naive implementation).
+  const canShareClipboard = useRef<boolean>(canShareClipboardIn);
+  if (canShareClipboard.current !== canShareClipboardIn) {
+    canShareClipboard.current = canShareClipboardIn;
+  }
 
   useEffect(() => {
     const { width, height } = getDisplaySize();
@@ -55,15 +69,34 @@ export default function useTdpClientCanvas(props: Props) {
     canvas.height = height;
   };
 
-  // Default TdpClientEvent.IMAGE_FRAGMENT handler (buffered)
+  // Default TdpClientEvent.TDP_PNG_FRAME handler (buffered)
   const onPngFrame = (ctx: CanvasRenderingContext2D, pngFrame: PngFrame) => {
-    // The first image fragment we see signals a successful rdp connection on the backend.
-    if (firstImageFragmentRef.current) {
+    // The first image fragment we see signals a successful tdp connection.
+    if (!initialTdpConnectionSucceeded.current) {
       syncCanvasSizeToDisplaySize(ctx.canvas);
       setTdpConnection({ status: 'success' });
-      firstImageFragmentRef.current = false;
+      initialTdpConnectionSucceeded.current = true;
+      // sendLocalClipboardToRemote must be called only after
+      // initialTdpConnectionSucceeded.current === true or else it won't do anything.
+      if (canShareClipboard.current) sendLocalClipboardToRemote(tdpClient);
     }
     ctx.drawImage(pngFrame.data, pngFrame.left, pngFrame.top);
+  };
+
+  // Default TdpClientEvent.TDP_CLIPBOARD_DATA handler.
+  const onClipboardData = (clipboardData: ClipboardData) => {
+    if (
+      canShareClipboard.current &&
+      document.hasFocus() &&
+      clipboardData.data !== latestClipboardText.current
+    ) {
+      navigator.clipboard.writeText(clipboardData.data).then(() => {
+        // Set latestClipboardText.current to whatever we got, so that
+        // next time onMouseEnter fires we don't try to send it back to
+        // the remote machine.
+        latestClipboardText.current = clipboardData.data;
+      });
+    }
   };
 
   // Default TdpClientEvent.TDP_ERROR handler
@@ -130,10 +163,45 @@ export default function useTdpClientCanvas(props: Props) {
   // on the remote machine.
   const onContextMenu = () => false;
 
+  const sendLocalClipboardToRemote = (cli: TdpClient) => {
+    // We must check that the DOM is focused or navigator.clipboard.readText throws an error.
+    // We check that initialTdpConnectionSucceeded so that we don't mistakenly send clipboard data
+    // to a backend that isn't ready for it yet, which would fail silently.
+    if (
+      canShareClipboard.current &&
+      document.hasFocus() &&
+      initialTdpConnectionSucceeded.current
+    ) {
+      navigator.clipboard.readText().then(text => {
+        if (text != latestClipboardText.current) {
+          // Wrap in try catch so that lastCopiedClipboardText is only
+          // updated if sendClipboardData succeeds.
+          // eslint-disable-next-line no-useless-catch
+          try {
+            cli.sendClipboardData({
+              data: text,
+            });
+            latestClipboardText.current = text;
+          } catch (e) {
+            throw e;
+          }
+        }
+      });
+    }
+  };
+
+  // Syncs the browser-side's clipboard. See the note about mouseenter in the relevant RFD for why this makes sense:
+  // https://github.com/gravitational/teleport/blob/master/rfd/0049-desktop-clipboard.md#local-copy-remote-paste
+  const onMouseEnter = (cli: TdpClient, e: MouseEvent) => {
+    e.preventDefault();
+    sendLocalClipboardToRemote(cli);
+  };
+
   return {
     tdpClient,
     onPngFrame,
     onTdpError,
+    onClipboardData,
     onWsClose,
     onWsOpen,
     onKeyDown,
@@ -143,6 +211,7 @@ export default function useTdpClientCanvas(props: Props) {
     onMouseUp,
     onMouseWheelScroll,
     onContextMenu,
+    onMouseEnter,
   };
 }
 
@@ -162,4 +231,5 @@ type Props = {
   clusterId: string;
   setTdpConnection: Dispatch<SetStateAction<Attempt>>;
   setWsConnection: Dispatch<SetStateAction<'open' | 'closed'>>;
+  canShareClipboard: boolean;
 };
