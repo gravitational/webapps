@@ -21,6 +21,7 @@ import Codec, {
   PngFrame,
 } from './codec';
 import Logger from 'shared/libs/logger';
+import { TermEventEnum } from 'teleport/lib/term/enums.js';
 
 export enum TdpClientEvent {
   TDP_CLIENT_SCREEN_SPEC = 'tdp client screen spec',
@@ -79,8 +80,8 @@ export default class Client extends EventEmitter {
   }
 
   processMessage(buffer: ArrayBuffer) {
-    const messageType = this.codec._decodeMessageType(buffer);
     try {
+      const messageType = this.codec.decodeMessageType(buffer);
       switch (messageType) {
         case MessageType.PNG_FRAME:
           this.handlePngFrame(buffer);
@@ -107,7 +108,7 @@ export default class Client extends EventEmitter {
 
   handleClientScreenSpec(buffer: ArrayBuffer) {
     this.logger.warn(
-      `received unsupported message type ${this.codec._decodeMessageType(
+      `received unsupported message type ${this.codec.decodeMessageType(
         buffer
       )}`
     );
@@ -115,7 +116,7 @@ export default class Client extends EventEmitter {
 
   handleMouseButton(buffer: ArrayBuffer) {
     this.logger.warn(
-      `received unsupported message type ${this.codec._decodeMessageType(
+      `received unsupported message type ${this.codec.decodeMessageType(
         buffer
       )}`
     );
@@ -123,7 +124,7 @@ export default class Client extends EventEmitter {
 
   handleMouseMove(buffer: ArrayBuffer) {
     this.logger.warn(
-      `received unsupported message type ${this.codec._decodeMessageType(
+      `received unsupported message type ${this.codec.decodeMessageType(
         buffer
       )}`
     );
