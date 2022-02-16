@@ -122,7 +122,7 @@ const cfg = {
     githubConnectorsPath: '/v1/webapi/github/:name?',
     trustedClustersPath: '/v1/webapi/trustedcluster/:name?',
 
-    nodeTokenPath: '/v1/enterprise/nodes/token',
+    nodeTokenPath: '/v1/webapi/nodes/token',
     nodeScriptPath: '/scripts/:token/install-node.sh',
     appNodeScriptPath: '/scripts/:token/install-app.sh?name=:name&uri=:uri',
 
@@ -149,6 +149,16 @@ const cfg = {
 
   getClusterEventsUrl(clusterId: string, params: UrlClusterEventsParams) {
     return generatePath(cfg.api.clusterEventsPath, {
+      clusterId,
+      ...params,
+    });
+  },
+
+  getClusterEventsRecordingsUrl(
+    clusterId: string,
+    params: UrlSessionRecordingsParams
+  ) {
+    return generatePath(cfg.api.clusterEventsRecordingsPath, {
       clusterId,
       ...params,
     });
