@@ -98,6 +98,6 @@ export default class StoreUserContext extends Store<UserContext> {
   }
 
   getClipboardAccess() {
-    return this.state.acl.clipboard;
+    return this.state.acl.canShareClipboard;
   }
 }

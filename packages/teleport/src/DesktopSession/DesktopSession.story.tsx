@@ -43,7 +43,7 @@ const props: State = {
   tdpConnection: { status: 'processing' },
   clipboard: {
     enabled: false,
-    permission: { state: 'unknown' },
+    permission: { state: '' },
     errorText: '',
   },
   recording: false,
@@ -98,7 +98,7 @@ export const ConnectedSettingsFalse = () => {
       disconnected={false}
       clipboard={{
         enabled: false,
-        permission: { state: 'unknown' },
+        permission: { state: '' },
         errorText: '',
       }}
       recording={false}

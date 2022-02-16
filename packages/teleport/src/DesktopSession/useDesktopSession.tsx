@@ -66,7 +66,7 @@ export default function useDesktopSession() {
     clusterId,
     setTdpConnection,
     setWsConnection,
-    shareClipboard: hasClipboardAccess && isUsingChrome,
+    canShareClipboard: hasClipboardAccess && isUsingChrome,
   });
 
   useEffect(() => {
@@ -115,7 +115,7 @@ export default function useDesktopSession() {
           .fetchDesktop(clusterId, desktopName)
           .then(desktop => setHostname(desktop.addr)),
         userService.fetchUserContext().then(user => {
-          setHasClipboardAccess(user.acl.clipboard);
+          setHasClipboardAccess(user.acl.canShareClipboard);
           setRecording(user.acl.desktopSessionRecording);
         }),
       ])

@@ -29,22 +29,22 @@ export default function useTdpClientCanvas(props: Props) {
     clusterId,
     setTdpConnection,
     setWsConnection,
-    shareClipboard: shareClipboardIn,
+    canShareClipboard: canShareClipboardIn,
   } = props;
   const [tdpClient, setTdpClient] = useState<TdpClient | null>(null);
   const initialTdpConnectionSucceeded = useRef(false);
   const latestClipboardText = useRef<string>(null);
 
-  // The shareClipboard prop is used in sendLocalClipboardToRemote to determine
+  // The canShareClipboard prop is used in sendLocalClipboardToRemote to determine
   // whether or not we actually want to check for and send clipboard data. Because
   // this information must be fetched from the server (in useDesktopSession), the component
   // must give us an initial value and update it subsequently. This useRef system below
-  // ensures that shareClipboard.current gets updated with the latest info from the server,
+  // ensures that canShareClipboard.current gets updated with the latest info from the server,
   // and that sendLocalClipboardToRemote actually uses that latest value (as opposed to whatever
-  // value the shareClipboard prop was initialized to, which is what happens in the naive implementation).
-  const shareClipboard = useRef<boolean>(shareClipboardIn);
-  if (shareClipboard.current !== shareClipboardIn) {
-    shareClipboard.current = shareClipboardIn;
+  // value the canShareClipboard prop was initialized to, which is what happens in the naive implementation).
+  const canShareClipboard = useRef<boolean>(canShareClipboardIn);
+  if (canShareClipboard.current !== canShareClipboardIn) {
+    canShareClipboard.current = canShareClipboardIn;
   }
 
   useEffect(() => {
@@ -78,7 +78,7 @@ export default function useTdpClientCanvas(props: Props) {
       initialTdpConnectionSucceeded.current = true;
       // sendLocalClipboardToRemote must be called only after
       // initialTdpConnectionSucceeded.current === true or else it won't do anything.
-      if (shareClipboard.current) sendLocalClipboardToRemote(tdpClient);
+      if (canShareClipboard.current) sendLocalClipboardToRemote(tdpClient);
     }
     ctx.drawImage(pngFrame.data, pngFrame.left, pngFrame.top);
   };
@@ -167,7 +167,7 @@ export default function useTdpClientCanvas(props: Props) {
     // We check that initialTdpConnectionSucceeded so that we don't mistakenly send clipboard data
     // to a backend that isn't ready for it yet, which would fail silently.
     if (
-      shareClipboard.current &&
+      canShareClipboard.current &&
       document.hasFocus() &&
       initialTdpConnectionSucceeded.current
     ) {
@@ -230,5 +230,5 @@ type Props = {
   clusterId: string;
   setTdpConnection: Dispatch<SetStateAction<Attempt>>;
   setWsConnection: Dispatch<SetStateAction<'open' | 'closed'>>;
-  shareClipboard: boolean;
+  canShareClipboard: boolean;
 };

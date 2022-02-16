@@ -1,14 +1,14 @@
 import { useState, useEffect } from 'react';
 
 export function useClipboardReadWrite(
-  shouldSetOrPrompt: boolean
+  canUseClipboardReadWrite: boolean
 ): ClipboardPermissionStatus {
   const [permission, setPermission] = useState<ClipboardPermissionStatus>({
-    state: 'unknown',
+    state: '',
   });
 
-  const read = useClipboardRead(shouldSetOrPrompt);
-  const write = useClipboardWrite(shouldSetOrPrompt);
+  const read = useClipboardRead(canUseClipboardReadWrite);
+  const write = useClipboardWrite(canUseClipboardReadWrite);
 
   useEffect(() => {
     if (read.state === 'error') {
@@ -22,39 +22,39 @@ export function useClipboardReadWrite(
     } else if (read.state === 'granted' && write.state === 'granted') {
       setPermission({ state: 'granted' });
     } else {
-      setPermission({ state: 'unknown' });
+      setPermission({ state: '' });
     }
   }, [read, write]);
 
   return permission;
 }
 
-function useClipboardRead(shouldSetOrPrompt: boolean) {
+function useClipboardRead(canUseClipboardReadWrite: boolean) {
   return useClipboardPermission(
     ClipboardPermissionType.Read,
-    shouldSetOrPrompt
+    canUseClipboardReadWrite
   );
 }
 
-function useClipboardWrite(shouldSetOrPrompt: boolean) {
+function useClipboardWrite(canUseClipboardReadWrite: boolean) {
   return useClipboardPermission(
     ClipboardPermissionType.Write,
-    shouldSetOrPrompt
+    canUseClipboardReadWrite
   );
 }
 
-// If shouldSetOrPrompt is set to false, then {state: 'unknown'} will simply be returned.
+// If canUseClipboardReadWrite is set to false, then {state: ''} will simply be returned.
 // This is desireable so that useClipboardPermission can always be used unconditionally as a hook,
 // even in cases where we don't want to check/prompt-for the premission i.e. if the user isn't using
 // a Chromium based browser.
 function useClipboardPermission(
   readOrWrite: ClipboardPermissionType,
-  shouldSetOrPrompt: boolean
+  canUseClipboardReadWrite: boolean
 ) {
   const permissionName = readOrWrite as unknown as PermissionName;
 
   const [permission, setPermission] = useState<ClipboardPermissionStatus>({
-    state: 'unknown',
+    state: '',
   });
 
   const setPermissionOrPromptUser = () => {
@@ -92,10 +92,10 @@ function useClipboardPermission(
   };
 
   useEffect(() => {
-    if (shouldSetOrPrompt) {
+    if (canUseClipboardReadWrite) {
       setPermissionOrPromptUser();
     } else {
-      setPermission({ state: 'unknown' });
+      setPermission({ state: '' });
     }
   }, [permission]);
 
@@ -108,6 +108,6 @@ enum ClipboardPermissionType {
 }
 
 type ClipboardPermissionStatus = {
-  state: PermissionState | 'unknown' | 'error';
+  state: PermissionState | 'error' | '';
   errorText?: string;
 };

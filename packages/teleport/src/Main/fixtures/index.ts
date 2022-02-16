@@ -41,7 +41,8 @@ export const fullAcl: Acl = {
   billing: fullAccess,
   dbServers: fullAccess,
   desktops: fullAccess,
-  clipboard: true,
+  canShareClipboard: true,
+  desktopSessionRecording: true,
 };
 
 export const userContext = makeUserContext({
