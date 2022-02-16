@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import { EventEmitter } from 'events';
+import { EmitterSender } from 'teleport/lib/EmitterSender';
 import Logger from 'shared/libs/logger';
 import { EventTypeEnum, TermEventEnum, StatusCodeEnum } from './enums';
 import { Protobuf, MessageTypeEnum } from './protobuf';
@@ -25,7 +25,7 @@ const defaultOptions = {
   buffered: true,
 };
 
-class Tty extends EventEmitter {
+class Tty extends EmitterSender {
   socket = null;
 
   _buffered = true;

@@ -15,14 +15,14 @@ limitations under the License.
 */
 
 import { useState, useEffect } from 'react';
-import Tty from 'teleport/lib/term/tty';
+import { EmitterSender } from 'teleport/lib/EmitterSender';
 import { TermEventEnum } from 'teleport/lib/term/enums';
 import {
   makeMfaAuthenticateChallenge,
   makeWebauthnAssertionResponse,
 } from 'teleport/services/auth';
 
-export default function useWebauthn(tty: Tty) {
+export default function useWebAuthn(emitterSender: EmitterSender) {
   const [state, setState] = useState({
     requested: false,
     errorText: '',
@@ -46,7 +46,7 @@ export default function useWebauthn(tty: Tty) {
       .get({ publicKey: state.publicKey })
       .then(res => {
         const credential = makeWebauthnAssertionResponse(res);
-        tty.send(JSON.stringify(credential));
+        emitterSender.send(JSON.stringify(credential));
 
         setState({
           ...state,
@@ -63,8 +63,8 @@ export default function useWebauthn(tty: Tty) {
   }
 
   useEffect(() => {
-    if (tty) {
-      tty.on(TermEventEnum.WEBAUTHN_CHALLENGE, challenge => {
+    if (emitterSender) {
+      emitterSender.on(TermEventEnum.WEBAUTHN_CHALLENGE, challenge => {
         const json = JSON.parse(challenge);
         const publicKey = makeMfaAuthenticateChallenge(json).webauthnPublicKey;
 
@@ -75,7 +75,7 @@ export default function useWebauthn(tty: Tty) {
         });
       });
     }
-  }, [tty]);
+  }, [emitterSender]);
 
   return {
     errorText: state.errorText,
