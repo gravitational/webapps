@@ -86,6 +86,7 @@ export default function useTdpClientCanvas(props: Props) {
   // Default TdpClientEvent.TDP_CLIPBOARD_DATA handler.
   const onClipboardData = (clipboardData: ClipboardData) => {
     if (
+      canShareClipboard.current &&
       document.hasFocus() &&
       clipboardData.data !== latestClipboardText.current
     ) {
