@@ -58,14 +58,18 @@ export function getMockDocuments(): Document[] {
       title: 'Test 3',
     },
     {
-      kind: 'doc.terminal_shell',
+      kind: 'doc.gateway',
       uri: 'test_uri_4',
       title: 'Test 4',
+      gatewayUri: '',
+      targetUri: ''
     },
     {
-      kind: 'doc.terminal_shell',
+      kind: 'doc.gateway',
       uri: 'test_uri_5',
       title: 'Test 5',
+      gatewayUri: '',
+      targetUri: ''
     },
     {
       kind: 'doc.cluster',
@@ -80,23 +84,16 @@ export function getMockDocuments(): Document[] {
       clusterUri: 'test_uri',
     },
     {
-      kind: 'doc.terminal_tsh_node',
+      kind: 'doc.cluster',
       uri: 'test_uri_8',
       title: 'Test 8',
-      login: '',
-      status: 'connecting',
-      rootClusterId: '',
-      serverUri: '',
-      serverId: '',
+      clusterUri: 'test_uri_8',
     },
     {
-      kind: 'doc.terminal_tsh_kube',
+      kind: 'doc.cluster',
       uri: 'test_uri_9',
       title: 'Test 9',
-      status: 'connecting',
-      rootClusterId: '',
-      kubeId: '',
-      kubeUri: '',
+      clusterUri: 'test_uri_9',
     },
   ];
 }

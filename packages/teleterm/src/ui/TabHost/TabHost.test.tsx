@@ -47,6 +47,7 @@ function getTestSetup() {
     unsubscribe: jest.fn(),
     findRootClusterByResource: jest.fn(),
     findCluster: jest.fn(),
+    findGateway: jest.fn()
   };
 
   const utils = render(
