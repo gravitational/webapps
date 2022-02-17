@@ -13,7 +13,7 @@
 // limitations under the License.
 import Logger from 'shared/libs/logger';
 import { TermEventEnum } from 'teleport/lib/term/enums.js';
-import { EventEmitterMfaSender } from 'teleport/lib/EventEmitterMfaSender';
+import { EventEmitterWebAuthnSender } from 'teleport/lib/EventEmitterWebAuthnSender';
 import { WebauthnAssertionResponse } from 'teleport/services/auth';
 import Codec, {
   MessageType,
@@ -38,7 +38,7 @@ export enum TdpClientEvent {
 // sending client commands, and recieving and processing server messages. It's listener is responsible for
 // calling Client.nuke() (typically after Client emits a TdpClientEvent.DISCONNECT or TdpClientEvent.ERROR event) in order to clean
 // up its websocket listeners.
-export default class Client extends EventEmitterMfaSender {
+export default class Client extends EventEmitterWebAuthnSender {
   codec: Codec;
   socket: WebSocket;
   socketAddr: string;
@@ -157,10 +157,10 @@ export default class Client extends EventEmitterMfaSender {
   handleMfaChallenge(buffer: ArrayBuffer) {
     const mfaJson = this.codec.decodeMfaJson(buffer);
     if (mfaJson.mfaType == 'n') {
-      this.emit(
-        TermEventEnum.WEBAUTHN_CHALLENGE,
-        this.codec.decodeMfaJson(buffer).jsonString
-      );
+      this.emit(TermEventEnum.WEBAUTHN_CHALLENGE, mfaJson.jsonString);
+    } else {
+      // mfaJson.mfaType === 'u', or else decodeMfaJson would have thrown an error.
+      this.emit(TermEventEnum.U2F_CHALLENGE, mfaJson.jsonString);
     }
   }
 

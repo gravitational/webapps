@@ -15,14 +15,14 @@ limitations under the License.
 */
 
 import { useState, useEffect } from 'react';
-import { EventEmitterMfaSender } from 'teleport/lib/EventEmitterMfaSender';
+import { EventEmitterWebAuthnSender } from 'teleport/lib/EventEmitterWebAuthnSender';
 import { TermEventEnum } from 'teleport/lib/term/enums';
 import {
   makeMfaAuthenticateChallenge,
   makeWebauthnAssertionResponse,
 } from 'teleport/services/auth';
 
-export default function useWebAuthn(emitterSender: EventEmitterMfaSender) {
+export default function useWebAuthn(emitterSender: EventEmitterWebAuthnSender) {
   const [state, setState] = useState({
     requested: false,
     errorText: '',

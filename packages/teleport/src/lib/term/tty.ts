@@ -15,7 +15,7 @@ limitations under the License.
 */
 
 import Logger from 'shared/libs/logger';
-import { EventEmitterMfaSender } from 'teleport/lib/EventEmitterMfaSender';
+import { EventEmitterWebAuthnSender } from 'teleport/lib/EventEmitterWebAuthnSender';
 import { WebauthnAssertionResponse } from 'teleport/services/auth';
 import { EventTypeEnum, TermEventEnum, StatusCodeEnum } from './enums';
 import { Protobuf, MessageTypeEnum } from './protobuf';
@@ -26,7 +26,7 @@ const defaultOptions = {
   buffered: true,
 };
 
-class Tty extends EventEmitterMfaSender {
+class Tty extends EventEmitterWebAuthnSender {
   socket = null;
 
   _buffered = true;

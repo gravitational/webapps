@@ -1,7 +1,7 @@
 import { EventEmitter } from 'events';
 import { WebauthnAssertionResponse } from 'teleport/services/auth';
 
-class EventEmitterMfaSender extends EventEmitter {
+class EventEmitterWebAuthnSender extends EventEmitter {
   constructor() {
     super();
   }
@@ -12,4 +12,4 @@ class EventEmitterMfaSender extends EventEmitter {
   }
 }
 
-export { EventEmitterMfaSender as EventEmitterMfaSender };
+export { EventEmitterWebAuthnSender };
