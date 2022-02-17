@@ -229,7 +229,6 @@ exports[`list of all events 1`] = `
   font-weight: bold;
   line-height: 0;
   font-size: 12px;
-  margin-right: 8px;
 }
 
 .c5:hover,
