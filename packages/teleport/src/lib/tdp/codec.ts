@@ -20,6 +20,7 @@ export enum MessageType {
   CLIENT_USERNAME = 7,
   MOUSE_WHEEL_SCROLL = 8,
   ERROR = 9,
+  MFA_JSON = 10,
 }
 
 // 0 is left button, 1 is middle button, 2 is right button
@@ -56,6 +57,13 @@ export type PngFrame = {
 // https://github.com/gravitational/teleport/blob/master/rfd/0037-desktop-access-protocol.md#6---clipboard-data
 export type ClipboardData = {
   data: string;
+};
+
+// | message type (10) | mfa_type byte | message_length uint32 | json []byte
+export type MfaJson = {
+  // TODO(isaiah) make this a type that ensures it's the same as MessageTypeEnum.U2F_CHALLENGE and MessageTypeEnum.WEBAUTHN_CHALLENGE
+  mfaType: 'u' | 'n';
+  jsonString: string;
 };
 
 // TdaCodec provides an api for encoding and decoding teleport desktop access protocol messages [1]
@@ -339,6 +347,26 @@ export default class Codec {
     return buffer;
   }
 
+  // | message type (10) | mfa_type byte | message_length uint32 | json []byte
+  encodeMfaJson(mfaJson: MfaJson): Message {
+    const dataUtf8array = this.encoder.encode(mfaJson.jsonString);
+
+    const bufLen = 1 + 1 + 4 + dataUtf8array.length;
+    const buffer = new ArrayBuffer(bufLen);
+    const view = new DataView(buffer);
+    let offset = 0;
+
+    view.setUint8(offset++, MessageType.MFA_JSON);
+    view.setUint8(offset++, mfaJson.mfaType.charCodeAt(0));
+    view.setUint32(offset, dataUtf8array.length);
+    offset += 4;
+    dataUtf8array.forEach(byte => {
+      view.setUint8(offset++, byte);
+    });
+
+    return buffer;
+  }
+
   // decodeClipboard decodes clipboard data
   // TODO: see docstring for encClipboard
   decodeClipboardData(buffer: ArrayBuffer): ClipboardData {
@@ -351,10 +379,9 @@ export default class Codec {
   // passed in as an ArrayBuffer (this typically would come from a websocket).
   // Throws an error on an invalid or unexpected MessageType value.
   decodeMessageType(buffer: ArrayBuffer): MessageType {
-    console.log(JSON.parse(this.decoder.decode(new Uint8Array(buffer))));
     const messageType = new DataView(buffer).getUint8(0);
     // TODO(isaiah): this is fragile, instead switch all possibilities here.
-    if (messageType > MessageType.ERROR) {
+    if (messageType > MessageType.MFA_JSON) {
       throw new Error(`invalid message type: ${messageType}`);
     }
     return messageType;
@@ -364,6 +391,18 @@ export default class Codec {
   // | message type (9) | message_length uint32 | message []byte
   decodeErrorMessage(buffer: ArrayBuffer): string {
     return this._decodeStringMessage(buffer);
+  }
+
+  // decodeMfaChallenge decodes a raw tdp MFA challenge message and returns it as a string (of a json).
+  // | message type (10) | mfa_type byte | message_length uint32 | json []byte
+  decodeMfaJson(buffer: ArrayBuffer): MfaJson {
+    let dv = new DataView(buffer);
+    const mfaType = String.fromCharCode(dv.getUint8(1));
+    if (mfaType !== 'n' && mfaType !== 'u') {
+      throw new Error(`invalid mfa type ${mfaType}, should be "n" or "u"`);
+    }
+    const jsonString = this.decoder.decode(new Uint8Array(buffer.slice(6)));
+    return { mfaType, jsonString };
   }
 
   // _decodeStringMessage decodes a tdp message of the form

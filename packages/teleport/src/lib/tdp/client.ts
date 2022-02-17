@@ -11,7 +11,10 @@
 // WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 // See the License for the specific language governing permissions and
 // limitations under the License.
-import { EventEmitter } from 'events';
+import Logger from 'shared/libs/logger';
+import { TermEventEnum } from 'teleport/lib/term/enums.js';
+import { EventEmitterMfaSender } from 'teleport/lib/EventEmitterMfaSender';
+import { WebauthnAssertionResponse } from 'teleport/services/auth';
 import Codec, {
   MessageType,
   MouseButton,
@@ -21,8 +24,6 @@ import Codec, {
   PngFrame,
   ClipboardData,
 } from './codec';
-import Logger from 'shared/libs/logger';
-import { TermEventEnum } from 'teleport/lib/term/enums.js';
 
 export enum TdpClientEvent {
   TDP_CLIENT_SCREEN_SPEC = 'tdp client screen spec',
@@ -37,7 +38,7 @@ export enum TdpClientEvent {
 // sending client commands, and recieving and processing server messages. It's listener is responsible for
 // calling Client.nuke() (typically after Client emits a TdpClientEvent.DISCONNECT or TdpClientEvent.ERROR event) in order to clean
 // up its websocket listeners.
-export default class Client extends EventEmitter {
+export default class Client extends EventEmitterMfaSender {
   codec: Codec;
   socket: WebSocket;
   socketAddr: string;
@@ -103,6 +104,9 @@ export default class Client extends EventEmitter {
         case MessageType.ERROR:
           this.handleError(new Error(this.codec.decodeErrorMessage(buffer)));
           break;
+        case MessageType.MFA_JSON:
+          this.handleMfaChallenge(buffer);
+          break;
         default:
           this.logger.warn(`received unsupported message type ${messageType}`);
       }
@@ -150,6 +154,16 @@ export default class Client extends EventEmitter {
     );
   }
 
+  handleMfaChallenge(buffer: ArrayBuffer) {
+    const mfaJson = this.codec.decodeMfaJson(buffer);
+    if (mfaJson.mfaType == 'n') {
+      this.emit(
+        TermEventEnum.WEBAUTHN_CHALLENGE,
+        this.codec.decodeMfaJson(buffer).jsonString
+      );
+    }
+  }
+
   sendUsername(username: string) {
     this.socket?.send(this.codec.encodeUsername(username));
   }
@@ -174,6 +188,14 @@ export default class Client extends EventEmitter {
 
   sendClipboardData(clipboardData: ClipboardData) {
     this.socket.send(this.codec.encodeClipboardData(clipboardData));
+  }
+
+  sendWebAuthn(data: WebauthnAssertionResponse) {
+    const msg = this.codec.encodeMfaJson({
+      mfaType: 'n',
+      jsonString: JSON.stringify(data),
+    });
+    this.socket.send(msg);
   }
 
   resize(spec: ClientScreenSpec) {

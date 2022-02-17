@@ -17,9 +17,10 @@ limitations under the License.
 import React, { PropsWithChildren } from 'react';
 import styled from 'styled-components';
 import { Indicator, Box, Alert, Text, Flex } from 'design';
+import TdpClientCanvas from 'teleport/components/TdpClientCanvas';
+import AuthnDialog from 'teleport/components/AuthnDialog';
 import useDesktopSession, { State } from './useDesktopSession';
 import TopBar from './TopBar';
-import TdpClientCanvas from 'teleport/components/TdpClientCanvas';
 
 export default function Container() {
   const state = useDesktopSession();
@@ -51,7 +52,7 @@ export function DesktopSession(props: State) {
   if (fetchAttempt.status === 'failed') {
     alertText = fetchAttempt.statusText;
   } else if (tdpConnection.status === 'failed') {
-    alertText = tdpConnection.status;
+    alertText = tdpConnection.statusText;
   } else if (clipboardError) {
     alertText = clipboard.errorText;
   } else if (unknownConnectionError) {
@@ -97,6 +98,7 @@ function Session(props: PropsWithChildren<State>) {
     tdpConnection,
     wsConnection,
     disconnected,
+    webauthn,
     setDisconnected,
     tdpClient,
     username,
@@ -146,6 +148,22 @@ function Session(props: PropsWithChildren<State>) {
       />
 
       {props.children}
+
+      {webauthn.requested && (
+        <AuthnDialog
+          onContinue={webauthn.authenticate}
+          onCancel={() => {
+            webauthn.setState(prevState => {
+              return {
+                ...prevState,
+                errorText:
+                  'This session requires multi factor authentication to continue. Please hit "Retry" and follow the prompts given by your browser to complete authentication.',
+              };
+            });
+          }}
+          errorText={webauthn.errorText}
+        />
+      )}
 
       {/* TdpClientCanvas should always be present in th DOM so that it calls
           tdpClient.init() and initializes the required tdpClient event listeners,
