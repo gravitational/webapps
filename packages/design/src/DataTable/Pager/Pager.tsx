@@ -22,39 +22,39 @@ export function Pager({
 }: State) {
   const isFetchingEnabled = onFetchMore && fetchStatus !== 'disabled';
   return (
-    <Flex alignItems="center">
-      <Text
-        typography="body2"
-        color="primary.contrastText"
-        mr={isFetchingEnabled ? 1 : 2}
-      >
-        SHOWING <strong>{from + 1}</strong> - <strong>{to + 1}</strong> of{' '}
-        <strong>{count}</strong>
-      </Text>
-      {isFetchingEnabled && (
-        <StyledFetchMoreBtn
-          disabled={fetchStatus === 'loading'}
-          onClick={onFetchMore}
+    <Flex>
+      <Flex alignItems="center" mr={2}>
+        <Text typography="body2" color="primary.contrastText" mr={1}>
+          SHOWING <strong>{from + 1}</strong> - <strong>{to + 1}</strong> of{' '}
+          <strong>{count}</strong>
+        </Text>
+        {isFetchingEnabled && (
+          <StyledFetchMoreBtn
+            disabled={fetchStatus === 'loading'}
+            onClick={onFetchMore}
+          >
+            Fetch More
+          </StyledFetchMoreBtn>
+        )}
+      </Flex>
+      <Flex>
+        <StyledArrowBtn
+          onClick={prevPage}
+          title="Previous page"
+          disabled={isPrevDisabled}
+          mx={0}
         >
-          Fetch More
-        </StyledFetchMoreBtn>
-      )}
-      <StyledArrowBtn
-        onClick={prevPage}
-        title="Previous page"
-        disabled={isPrevDisabled}
-        mx={0}
-      >
-        <CircleArrowLeft fontSize="3" />
-      </StyledArrowBtn>
-      <StyledArrowBtn
-        ml={0}
-        onClick={nextPage}
-        title="Next page"
-        disabled={isNextDisabled}
-      >
-        <CircleArrowRight fontSize="3" />
-      </StyledArrowBtn>
+          <CircleArrowLeft fontSize="3" />
+        </StyledArrowBtn>
+        <StyledArrowBtn
+          ml={0}
+          onClick={nextPage}
+          title="Next page"
+          disabled={isNextDisabled}
+        >
+          <CircleArrowRight fontSize="3" />
+        </StyledArrowBtn>
+      </Flex>
     </Flex>
   );
 }

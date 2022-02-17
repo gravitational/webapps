@@ -1,7 +1,7 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`loaded 1`] = `
-.c13 {
+.c14 {
   line-height: 1.5;
   margin: 0;
   display: inline-flex;
@@ -30,34 +30,34 @@ exports[`loaded 1`] = `
   height: 24px;
 }
 
-.c13:active {
+.c14:active {
   opacity: 0.56;
 }
 
-.c13:hover,
-.c13:focus {
+.c14:hover,
+.c14:focus {
   background: #2C3A73;
   border: 1px solid rgba(255,255,255,0.1);
   opacity: 1;
 }
 
-.c13:active {
+.c14:active {
   opacity: 0.24;
 }
 
-.c13:disabled {
+.c14:disabled {
   background: rgba(255,255,255,0.12);
   color: rgba(255,255,255,0.3);
 }
 
-.c9 {
+.c10 {
   display: inline-block;
   transition: color .3s;
   color: #FFFFFF;
   font-size: 16px;
 }
 
-.c12 {
+.c13 {
   display: inline-block;
   transition: color .3s;
   margin-right: 16px;
@@ -67,7 +67,7 @@ exports[`loaded 1`] = `
   font-size: 14px;
 }
 
-.c14 {
+.c15 {
   display: inline-block;
   transition: color .3s;
   margin-left: 8px;
@@ -76,19 +76,25 @@ exports[`loaded 1`] = `
   font-size: 14px;
 }
 
-.c6 {
+.c7 {
   overflow: hidden;
   text-overflow: ellipsis;
   font-weight: 400;
   font-size: 12px;
   line-height: 16px;
   margin: 0px;
-  margin-right: 8px;
+  margin-right: 4px;
   color: #FFFFFF;
 }
 
 .c5 {
   box-sizing: border-box;
+  display: flex;
+}
+
+.c6 {
+  box-sizing: border-box;
+  margin-right: 8px;
   display: flex;
   align-items: center;
 }
@@ -133,7 +139,7 @@ exports[`loaded 1`] = `
   padding-bottom: 24px;
 }
 
-.c10 {
+.c11 {
   background: #222C59;
   box-shadow: 0 4px 16px rgba(0,0,0,0.24);
   border-collapse: collapse;
@@ -147,39 +153,39 @@ exports[`loaded 1`] = `
   border-bottom-left-radius: 8px;
 }
 
-.c10 > thead > tr > th,
-.c10 > tbody > tr > th,
-.c10 > tfoot > tr > th,
-.c10 > thead > tr > td,
-.c10 > tbody > tr > td,
-.c10 > tfoot > tr > td {
+.c11 > thead > tr > th,
+.c11 > tbody > tr > th,
+.c11 > tfoot > tr > th,
+.c11 > thead > tr > td,
+.c11 > tbody > tr > td,
+.c11 > tfoot > tr > td {
   padding: 8px 8px;
   vertical-align: middle;
 }
 
-.c10 > thead > tr > th:first-child,
-.c10 > tbody > tr > th:first-child,
-.c10 > tfoot > tr > th:first-child,
-.c10 > thead > tr > td:first-child,
-.c10 > tbody > tr > td:first-child,
-.c10 > tfoot > tr > td:first-child {
+.c11 > thead > tr > th:first-child,
+.c11 > tbody > tr > th:first-child,
+.c11 > tfoot > tr > th:first-child,
+.c11 > thead > tr > td:first-child,
+.c11 > tbody > tr > td:first-child,
+.c11 > tfoot > tr > td:first-child {
   padding-left: 24px;
 }
 
-.c10 > thead > tr > th:last-child,
-.c10 > tbody > tr > th:last-child,
-.c10 > tfoot > tr > th:last-child,
-.c10 > thead > tr > td:last-child,
-.c10 > tbody > tr > td:last-child,
-.c10 > tfoot > tr > td:last-child {
+.c11 > thead > tr > th:last-child,
+.c11 > tbody > tr > th:last-child,
+.c11 > tfoot > tr > th:last-child,
+.c11 > thead > tr > td:last-child,
+.c11 > tbody > tr > td:last-child,
+.c11 > tfoot > tr > td:last-child {
   padding-right: 24px;
 }
 
-.c10 > tbody > tr > td {
+.c11 > tbody > tr > td {
   vertical-align: baseline;
 }
 
-.c10 > thead > tr > th {
+.c11 > thead > tr > th {
   background: #111B48;
   color: #FFFFFF;
   cursor: pointer;
@@ -193,30 +199,30 @@ exports[`loaded 1`] = `
   white-space: nowrap;
 }
 
-.c10 > thead > tr > th .c8 {
+.c11 > thead > tr > th .c9 {
   font-weight: bold;
   font-size: 8px;
   margin-left: 8px;
 }
 
-.c10 > tbody > tr > td {
+.c11 > tbody > tr > td {
   color: rgba(255,255,255,0.87);
   line-height: 16px;
 }
 
-.c10 tbody tr {
+.c11 tbody tr {
   border-bottom: 1px solid #1C254D;
 }
 
-.c10 tbody tr:hover {
+.c11 tbody tr:hover {
   background-color: rgb(37,49,98);
 }
 
-.c10 tbody > tr:last-child td:first-child {
+.c11 tbody > tr:last-child td:first-child {
   border-bottom-left-radius: 8px;
 }
 
-.c10 tbody > tr:last-child td:last-child {
+.c11 tbody > tr:last-child td:last-child {
   border-bottom-right-radius: 8px;
 }
 
@@ -232,28 +238,28 @@ exports[`loaded 1`] = `
   border-top-right-radius: 8px;
 }
 
-.c7 {
+.c8 {
   background: none;
   border: none;
   cursor: pointer;
 }
 
-.c7 .c8 {
+.c8 .c9 {
   font-size: 20px;
   transition: all 0.3s;
   opacity: 0.5;
 }
 
-.c7:hover .c8,
-.c7:focus .c8 {
+.c8:hover .c9,
+.c8:focus .c9 {
   opacity: 1;
 }
 
-.c7:disabled {
+.c8:disabled {
   cursor: default;
 }
 
-.c7:disabled .c8 {
+.c8:disabled .c9 {
   opacity: 0.1;
 }
 
@@ -285,7 +291,7 @@ exports[`loaded 1`] = `
   font-size: 12px;
 }
 
-.c11 {
+.c12 {
   display: flex;
   align-items: center;
   min-width: 130px;
@@ -316,48 +322,56 @@ exports[`loaded 1`] = `
     >
       <div
         class="c6"
-        color="primary.contrastText"
       >
-        SHOWING 
-        <strong>
-          1
-        </strong>
-         - 
-        <strong>
-          1
-        </strong>
-         of
-         
-        <strong>
-          1
-        </strong>
+        <div
+          class="c7"
+          color="primary.contrastText"
+        >
+          SHOWING 
+          <strong>
+            1
+          </strong>
+           - 
+          <strong>
+            1
+          </strong>
+           of
+           
+          <strong>
+            1
+          </strong>
+        </div>
       </div>
-      <button
-        class="c7"
-        disabled=""
-        title="Previous page"
+      <div
+        class="c5"
       >
-        <span
-          class="c8 c9 icon icon-arrow-left-circle "
-          color="light"
-          font-size="3"
-        />
-      </button>
-      <button
-        class="c7"
-        disabled=""
-        title="Next page"
-      >
-        <span
-          class="c8 c9 icon icon-arrow-right-circle "
-          color="light"
-          font-size="3"
-        />
-      </button>
+        <button
+          class="c8"
+          disabled=""
+          title="Previous page"
+        >
+          <span
+            class="c9 c10 icon icon-arrow-left-circle "
+            color="light"
+            font-size="3"
+          />
+        </button>
+        <button
+          class="c8"
+          disabled=""
+          title="Next page"
+        >
+          <span
+            class="c9 c10 icon icon-arrow-right-circle "
+            color="light"
+            font-size="3"
+          />
+        </button>
+      </div>
     </div>
   </nav>
   <table
-    class="c10"
+    class="c11"
   >
     <thead>
       <tr>
@@ -383,10 +397,10 @@ exports[`loaded 1`] = `
       <tr>
         <td>
           <div
-            class="c11"
+            class="c12"
           >
             <a
-              class="c8 c12 icon icon-terminal "
+              class="c9 c13 icon icon-terminal "
               color="light"
               font-size="2"
               href="/web/cluster/one/console/session/sid0"
@@ -414,13 +428,13 @@ exports[`loaded 1`] = `
           align="right"
         >
           <button
-            class="c13"
+            class="c14"
             height="24px"
             kind="border"
           >
             OPTIONS
             <span
-              class="c8 c14 icon icon-caret-down "
+              class="c9 c15 icon icon-caret-down "
               color="text.secondary"
               font-size="2"
             />
