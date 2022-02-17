@@ -65,6 +65,12 @@ const props: State = {
   onContextMenu: () => false,
   onMouseEnter: () => {},
   onClipboardData: () => {},
+  webauthn: {
+    errorText: '',
+    requested: false,
+    authenticate: () => {},
+    setState: () => {},
+  },
 };
 
 export const Processing = () => (
@@ -188,6 +194,28 @@ export const UnintendedDisconnect = () => (
     wsConnection={'closed'}
   />
 );
+
+export const WebAuthnPrompt = () => (
+  <DesktopSession
+    {...props}
+    fetchAttempt={{ status: 'processing' }}
+    tdpConnection={{ status: 'processing' }}
+    clipboard={{
+      enabled: true,
+      permission: { state: 'prompt' },
+      errorText: '',
+    }}
+    wsConnection={'open'}
+    disconnected={false}
+    webauthn={{
+      errorText: '',
+      requested: true,
+      authenticate: () => {},
+      setState: () => {},
+    }}
+  />
+);
+
 export const Performance = () => {
   const client = fakeClient();
   client.init = () => {
