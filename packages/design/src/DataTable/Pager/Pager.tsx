@@ -23,7 +23,11 @@ export function Pager({
   const isFetchingEnabled = onFetchMore && fetchStatus !== 'disabled';
   return (
     <Flex alignItems="center">
-      <Text typography="body2" color="primary.contrastText" mr={1}>
+      <Text
+        typography="body2"
+        color="primary.contrastText"
+        mr={isFetchingEnabled ? 1 : 2}
+      >
         SHOWING <strong>{from + 1}</strong> - <strong>{to + 1}</strong> of{' '}
         <strong>{count}</strong>
       </Text>

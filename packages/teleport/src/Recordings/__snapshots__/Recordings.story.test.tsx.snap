@@ -75,7 +75,7 @@ exports[`rendering of Session Recordings 1`] = `
   font-size: 12px;
   line-height: 16px;
   margin: 0px;
-  margin-right: 4px;
+  margin-right: 8px;
   color: #FFFFFF;
 }
 
