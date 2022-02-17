@@ -112,7 +112,7 @@ exports[`render DocumentNodes 1`] = `
   font-size: 12px;
   line-height: 16px;
   margin: 0px;
-  margin-right: 8px;
+  margin-right: 4px;
   color: #FFFFFF;
 }
 
