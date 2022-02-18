@@ -29,11 +29,11 @@ export default function useTdpClientCanvas(props: Props) {
     clusterId,
     setTdpConnection,
     setWsConnection,
-    canShareClipboard: canShareClipboardIn,
+    enableClipboardSharing: enableClipboardSharingIn,
   } = props;
   const [tdpClient, setTdpClient] = useState<TdpClient | null>(null);
   const initialTdpConnectionSucceeded = useRef(false);
-  const latestClipboardText = useRef<string>(null);
+  const latestClipboardData = useRef<string>(null);
 
   // The canShareClipboard prop is used in sendLocalClipboardToRemote to determine
   // whether or not we actually want to check for and send clipboard data. Because
@@ -42,9 +42,9 @@ export default function useTdpClientCanvas(props: Props) {
   // ensures that canShareClipboard.current gets updated with the latest info from the server,
   // and that sendLocalClipboardToRemote actually uses that latest value (as opposed to whatever
   // value the canShareClipboard prop was initialized to, which is what happens in the naive implementation).
-  const canShareClipboard = useRef<boolean>(canShareClipboardIn);
-  if (canShareClipboard.current !== canShareClipboardIn) {
-    canShareClipboard.current = canShareClipboardIn;
+  const canShareClipboard = useRef<boolean>(enableClipboardSharingIn);
+  if (canShareClipboard.current !== enableClipboardSharingIn) {
+    canShareClipboard.current = enableClipboardSharingIn;
   }
 
   useEffect(() => {
@@ -88,13 +88,13 @@ export default function useTdpClientCanvas(props: Props) {
     if (
       canShareClipboard.current &&
       document.hasFocus() &&
-      clipboardData.data !== latestClipboardText.current
+      clipboardData.data !== latestClipboardData.current
     ) {
       navigator.clipboard.writeText(clipboardData.data).then(() => {
         // Set latestClipboardText.current to whatever we got, so that
         // next time onMouseEnter fires we don't try to send it back to
         // the remote machine.
-        latestClipboardText.current = clipboardData.data;
+        latestClipboardData.current = clipboardData.data;
       });
     }
   };
@@ -173,7 +173,7 @@ export default function useTdpClientCanvas(props: Props) {
       initialTdpConnectionSucceeded.current
     ) {
       navigator.clipboard.readText().then(text => {
-        if (text != latestClipboardText.current) {
+        if (text != latestClipboardData.current) {
           // Wrap in try catch so that lastCopiedClipboardText is only
           // updated if sendClipboardData succeeds.
           // eslint-disable-next-line no-useless-catch
@@ -181,7 +181,7 @@ export default function useTdpClientCanvas(props: Props) {
             cli.sendClipboardData({
               data: text,
             });
-            latestClipboardText.current = text;
+            latestClipboardData.current = text;
           } catch (e) {
             throw e;
           }
@@ -231,5 +231,5 @@ type Props = {
   clusterId: string;
   setTdpConnection: Dispatch<SetStateAction<Attempt>>;
   setWsConnection: Dispatch<SetStateAction<'open' | 'closed'>>;
-  canShareClipboard: boolean;
+  enableClipboardSharing: boolean;
 };

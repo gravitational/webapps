@@ -27,13 +27,18 @@ export default function Container() {
 }
 
 export function DesktopSession(props: State) {
-  const { clipboard, fetchAttempt, tdpConnection, wsConnection, disconnected } =
-    props;
+  const {
+    clipboardState,
+    fetchAttempt,
+    tdpConnection,
+    wsConnection,
+    disconnected,
+  } = props;
 
-  const clipboardError = clipboard.enabled && clipboard.errorText;
+  const clipboardError = clipboardState.enabled && clipboardState.errorText;
 
   const clipboardProcessing =
-    clipboard.enabled && clipboard.permission.state === 'prompt';
+    clipboardState.enabled && clipboardState.permission.state === 'prompt';
 
   // Websocket is closed but we haven't
   // closed it on purpose or registered a tdp error.
@@ -53,7 +58,7 @@ export function DesktopSession(props: State) {
   } else if (tdpConnection.status === 'failed') {
     alertText = tdpConnection.status;
   } else if (clipboardError) {
-    alertText = clipboard.errorText;
+    alertText = clipboardState.errorText;
   } else if (unknownConnectionError) {
     alertText = 'Session disconnected for an unkown reason';
   } else {
@@ -101,8 +106,8 @@ function Session(props: PropsWithChildren<State>) {
     tdpClient,
     username,
     hostname,
-    clipboard,
-    recording,
+    clipboardState,
+    isRecording,
     onPngFrame,
     onClipboardData,
     onTdpError,
@@ -119,12 +124,12 @@ function Session(props: PropsWithChildren<State>) {
   } = props;
 
   const clipboardSharingActive =
-    clipboard.enabled && clipboard.permission.state === 'granted';
+    clipboardState.enabled && clipboardState.permission.state === 'granted';
   const clipboardSuccess =
-    !clipboard.enabled ||
-    (clipboard.enabled &&
-      clipboard.permission.state === 'granted' &&
-      clipboard.errorText === '');
+    !clipboardState.enabled ||
+    (clipboardState.enabled &&
+      clipboardState.permission.state === 'granted' &&
+      clipboardState.errorText === '');
 
   const showCanvas =
     fetchAttempt.status === 'success' &&
@@ -142,7 +147,7 @@ function Session(props: PropsWithChildren<State>) {
         }}
         userHost={`${username}@${hostname}`}
         clipboard={clipboardSharingActive}
-        recording={recording}
+        recording={isRecording}
       />
 
       {props.children}
