@@ -107,8 +107,6 @@ export default function useDesktopSession() {
     }
   }, [isUsingChrome, hasClipboardSharingEnabled, clipboardRWPermission]);
 
-  const webauthn = useWebAuthn(clientCanvasProps.tdpClient);
-
   document.title = useMemo(
     () => `${clusterId} • ${username}@${hostname}`,
     [hostname]
@@ -139,6 +137,8 @@ export default function useDesktopSession() {
       clipboardState.permission.state === 'granted' &&
       !clipboardState.errorText,
   });
+
+  const webauthn = useWebAuthn(clientCanvasProps.tdpClient);
 
   return {
     hostname,
