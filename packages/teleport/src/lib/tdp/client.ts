@@ -160,7 +160,15 @@ export default class Client extends EventEmitterWebAuthnSender {
       this.emit(TermEventEnum.WEBAUTHN_CHALLENGE, mfaJson.jsonString);
     } else {
       // mfaJson.mfaType === 'u', or else decodeMfaJson would have thrown an error.
-      this.emit(TermEventEnum.U2F_CHALLENGE, mfaJson.jsonString);
+      this.emit(
+        TdpClientEvent.TDP_ERROR,
+        new Error(
+          'Multifactor authentication is required for accessing this desktop, \
+      however the U2F API for hardware keys is not supported for desktop sessions. \
+      Please notify your system administrator to update cluster settings \
+      to use WebAuthn as the second factor protocol.'
+        )
+      );
     }
   }
 
