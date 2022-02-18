@@ -29,23 +29,11 @@ export default function useTdpClientCanvas(props: Props) {
     clusterId,
     setTdpConnection,
     setWsConnection,
-    enableClipboardSharing: enableClipboardSharingIn,
+    enableClipboardSharing,
   } = props;
   const [tdpClient, setTdpClient] = useState<TdpClient | null>(null);
   const initialTdpConnectionSucceeded = useRef(false);
   const latestClipboardData = useRef<string>(null);
-
-  // The canShareClipboard prop is used in sendLocalClipboardToRemote to determine
-  // whether or not we actually want to check for and send clipboard data. Because
-  // this information must be fetched from the server (in useDesktopSession), the component
-  // must give us an initial value and update it subsequently. This useRef system below
-  // ensures that canShareClipboard.current gets updated with the latest info from the server,
-  // and that sendLocalClipboardToRemote actually uses that latest value (as opposed to whatever
-  // value the canShareClipboard prop was initialized to, which is what happens in the naive implementation).
-  const canShareClipboard = useRef<boolean>(enableClipboardSharingIn);
-  if (canShareClipboard.current !== enableClipboardSharingIn) {
-    canShareClipboard.current = enableClipboardSharingIn;
-  }
 
   useEffect(() => {
     const { width, height } = getDisplaySize();
@@ -78,7 +66,7 @@ export default function useTdpClientCanvas(props: Props) {
       initialTdpConnectionSucceeded.current = true;
       // sendLocalClipboardToRemote must be called only after
       // initialTdpConnectionSucceeded.current === true or else it won't do anything.
-      if (canShareClipboard.current) sendLocalClipboardToRemote(tdpClient);
+      if (enableClipboardSharing) sendLocalClipboardToRemote(tdpClient);
     }
     ctx.drawImage(pngFrame.data, pngFrame.left, pngFrame.top);
   };
@@ -86,7 +74,7 @@ export default function useTdpClientCanvas(props: Props) {
   // Default TdpClientEvent.TDP_CLIPBOARD_DATA handler.
   const onClipboardData = (clipboardData: ClipboardData) => {
     if (
-      canShareClipboard.current &&
+      enableClipboardSharing &&
       document.hasFocus() &&
       clipboardData.data !== latestClipboardData.current
     ) {
@@ -168,7 +156,7 @@ export default function useTdpClientCanvas(props: Props) {
     // We check that initialTdpConnectionSucceeded so that we don't mistakenly send clipboard data
     // to a backend that isn't ready for it yet, which would fail silently.
     if (
-      canShareClipboard.current &&
+      enableClipboardSharing &&
       document.hasFocus() &&
       initialTdpConnectionSucceeded.current
     ) {
