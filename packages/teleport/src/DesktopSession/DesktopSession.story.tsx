@@ -41,12 +41,12 @@ const props: State = {
   hostname: 'host.com',
   fetchAttempt: { status: 'processing' },
   tdpConnection: { status: 'processing' },
-  clipboard: {
+  clipboardState: {
     enabled: false,
     permission: { state: '' },
     errorText: '',
   },
-  recording: false,
+  isRecording: false,
   tdpClient: fakeClient(),
   username: 'user',
   onWsOpen: () => {},
@@ -78,7 +78,7 @@ export const Processing = () => (
     {...props}
     fetchAttempt={{ status: 'processing' }}
     tdpConnection={{ status: 'processing' }}
-    clipboard={{
+    clipboardState={{
       enabled: true,
       permission: { state: 'prompt' },
       errorText: '',
@@ -102,12 +102,12 @@ export const ConnectedSettingsFalse = () => {
       tdpConnection={{ status: 'success' }}
       wsConnection={'open'}
       disconnected={false}
-      clipboard={{
+      clipboardState={{
         enabled: false,
         permission: { state: '' },
         errorText: '',
       }}
-      recording={false}
+      isRecording={false}
       onPngFrame={(ctx: CanvasRenderingContext2D) => {
         fillGray(ctx.canvas);
       }}
@@ -129,12 +129,12 @@ export const ConnectedSettingsTrue = () => {
       tdpConnection={{ status: 'success' }}
       wsConnection={'open'}
       disconnected={false}
-      clipboard={{
+      clipboardState={{
         enabled: true,
         permission: { state: 'granted' },
         errorText: '',
       }}
-      recording={true}
+      isRecording={true}
       onPngFrame={(ctx: CanvasRenderingContext2D) => {
         fillGray(ctx.canvas);
       }}
@@ -178,7 +178,7 @@ export const ClipboardError = () => (
     tdpConnection={{ status: 'success' }}
     wsConnection={'open'}
     disconnected={false}
-    clipboard={{
+    clipboardState={{
       enabled: true,
       permission: { state: 'prompt' },
       errorText: 'clipboard error',

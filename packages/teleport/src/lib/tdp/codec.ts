@@ -56,6 +56,8 @@ export type PngFrame = {
 // | message type (6) | length uint32 | data []byte |
 // https://github.com/gravitational/teleport/blob/master/rfd/0037-desktop-access-protocol.md#6---clipboard-data
 export type ClipboardData = {
+  // TODO(isaiah): store this as a byte array
+  // https://github.com/gravitational/webapps/issues/610
   data: string;
 };
 
@@ -303,6 +305,9 @@ export default class Codec {
   _encodeStringMessage(messageType: MessageType, data: string) {
     const dataUtf8array = this.encoder.encode(data);
 
+    // bufLen is 1 byte for the `message type`,
+    // 4 bytes for the `length uint32`,
+    // and enough bytes for the full `data []byte`
     const bufLen = 1 + 4 + dataUtf8array.length;
     const buffer = new ArrayBuffer(bufLen);
     const view = new DataView(buffer);
@@ -367,8 +372,7 @@ export default class Codec {
     return buffer;
   }
 
-  // decodeClipboard decodes clipboard data
-  // TODO: see docstring for encClipboard
+  // decodeClipboardData decodes clipboard data
   decodeClipboardData(buffer: ArrayBuffer): ClipboardData {
     return {
       data: this._decodeStringMessage(buffer),

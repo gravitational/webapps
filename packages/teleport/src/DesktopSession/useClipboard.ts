@@ -24,7 +24,7 @@ export function useClipboardReadWrite(
     } else {
       setPermission({ state: '' });
     }
-  }, [read, write]);
+  }, [read, write, canUseClipboardReadWrite]);
 
   return permission;
 }
@@ -84,7 +84,15 @@ function useClipboardPermission(
               // Try again, which result in either setPermission('denied') or re-prompting the user.
               setPermissionOrPromptUser();
             } else {
-              setPermission({ state: 'error', errorText: err.message });
+              if (err && err.message) {
+                setPermission({ state: 'error', errorText: err.message });
+              } else {
+                setPermission({
+                  state: 'error',
+                  errorText:
+                    'unkown error reading browser clibpoard permissions',
+                });
+              }
             }
           });
       }
@@ -94,10 +102,8 @@ function useClipboardPermission(
   useEffect(() => {
     if (canUseClipboardReadWrite) {
       setPermissionOrPromptUser();
-    } else {
-      setPermission({ state: '' });
     }
-  }, [permission]);
+  }, [permission, canUseClipboardReadWrite]);
 
   return permission;
 }

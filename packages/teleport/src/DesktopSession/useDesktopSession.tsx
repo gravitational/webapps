@@ -43,66 +43,69 @@ export default function useDesktopSession() {
   // disconnected tracks whether the user intentionally disconnected the client
   const [disconnected, setDisconnected] = useState(false);
 
-  const [hasClipboardAccess, setHasClipboardAccess] = useState(false);
-
   // recording tracks whether or not a recording is in progress
-  const [recording, setRecording] = useState(false);
+  const [isRecording, setIsRecording] = useState(false);
 
   const { username, desktopName, clusterId } = useParams<UrlDesktopParams>();
+
   const [hostname, setHostname] = useState<string>('');
 
-  const isUsingChrome = navigator.userAgent.indexOf('Chrome') > -1;
+  const isUsingChrome = navigator.userAgent.includes('Chrome');
+  // hasClipboardSharingEnabled tracks whether the acl grants this user
+  // clipboard sharing permissions (based on the user's RBAC settings).
+  const [hasClipboardSharingEnabled, setHasClipboardSharingEnabled] =
+    useState(false);
+  // clipboardRWPermission tracks the browser's clipboard api permission.
   const clipboardRWPermission = useClipboardReadWrite(
-    isUsingChrome && hasClipboardAccess
+    isUsingChrome && hasClipboardSharingEnabled
   );
-  const [clipboard, setClipboard] = useState({
-    enabled: hasClipboardAccess,
-    permission: clipboardRWPermission,
+
+  // clipboardState tracks the overall clipboard state for the component,
+  // based on `isUsingChrome`, `hasClipboardSharingEnabled` (whether user's RBAC grants
+  // them permission to share their clipboard), and `clipboardRWPermission` (the known
+  // state of the browser's clipboard permission).
+  const [clipboardState, setClipboardState] = useState({
+    enabled: hasClipboardSharingEnabled, // tracks whether the acl grants this user clipboard sharing permissions
+    permission: clipboardRWPermission, // tracks the browser clipboard api permission
     errorText: '', // empty string means no error
   });
-
-  const clientCanvasProps = useTdpClientCanvas({
-    username,
-    desktopName,
-    clusterId,
-    setTdpConnection,
-    setWsConnection,
-    canShareClipboard: hasClipboardAccess && isUsingChrome,
-  });
-
   useEffect(() => {
     // errors:
-    // - role permits, browser not chromium
-    // - role permits, clipboard permissions denied
+    // - browser clipboard permissions error
+    // - RBAC permits, browser not chromium
+    // - RBAC permits, browser clipboard permissions denied
     if (clipboardRWPermission.state === 'error') {
-      setClipboard({
-        enabled: hasClipboardAccess,
+      setClipboardState({
+        enabled: hasClipboardSharingEnabled,
         permission: clipboardRWPermission,
         errorText:
           clipboardRWPermission.errorText ||
           'unknown clipboard permission error',
       });
-    } else if (hasClipboardAccess && !isUsingChrome) {
-      setClipboard({
-        enabled: hasClipboardAccess,
+    } else if (hasClipboardSharingEnabled && !isUsingChrome) {
+      setClipboardState({
+        enabled: hasClipboardSharingEnabled,
         permission: clipboardRWPermission,
         errorText:
           'Your user role supports clipboard sharing over desktop access, however this feature is only available on chromium based browsers like Brave or Google Chrome. Please switch to a supported browser.',
       });
-    } else if (hasClipboardAccess && clipboardRWPermission.state === 'denied') {
-      setClipboard({
-        enabled: hasClipboardAccess,
+    } else if (
+      hasClipboardSharingEnabled &&
+      clipboardRWPermission.state === 'denied'
+    ) {
+      setClipboardState({
+        enabled: hasClipboardSharingEnabled,
         permission: clipboardRWPermission,
         errorText: `Your user role supports clipboard sharing over desktop access, but your browser is blocking clipboard read or clipboard write permissions. Please grant both of these permissions to Teleport in your browser's settings.`,
       });
     } else {
-      setClipboard({
-        enabled: hasClipboardAccess,
+      setClipboardState({
+        enabled: hasClipboardSharingEnabled,
         permission: clipboardRWPermission,
         errorText: '',
       });
     }
-  }, [isUsingChrome, hasClipboardAccess, clipboardRWPermission]);
+  }, [isUsingChrome, hasClipboardSharingEnabled, clipboardRWPermission]);
 
   const webauthn = useWebAuthn(clientCanvasProps.tdpClient);
 
@@ -118,18 +121,30 @@ export default function useDesktopSession() {
           .fetchDesktop(clusterId, desktopName)
           .then(desktop => setHostname(desktop.addr)),
         userService.fetchUserContext().then(user => {
-          setHasClipboardAccess(user.acl.canShareClipboard);
-          setRecording(user.acl.desktopSessionRecording);
+          setHasClipboardSharingEnabled(user.acl.clipboardSharingEnabled);
+          setIsRecording(user.acl.desktopSessionRecordingEnabled);
         }),
       ])
     );
   }, [clusterId, desktopName]);
 
+  const clientCanvasProps = useTdpClientCanvas({
+    username,
+    desktopName,
+    clusterId,
+    setTdpConnection,
+    setWsConnection,
+    enableClipboardSharing:
+      clipboardState.enabled &&
+      clipboardState.permission.state === 'granted' &&
+      !clipboardState.errorText,
+  });
+
   return {
     hostname,
     username,
-    clipboard,
-    recording,
+    clipboardState,
+    isRecording,
     fetchAttempt,
     tdpConnection,
     wsConnection,

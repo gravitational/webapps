@@ -46,8 +46,8 @@ export interface Access {
 }
 
 export interface Acl {
-  desktopSessionRecording: boolean;
-  canShareClipboard: boolean;
+  desktopSessionRecordingEnabled: boolean;
+  clipboardSharingEnabled: boolean;
   sshLogins: string[];
   windowsLogins: string[];
   authConnectors: Access;
