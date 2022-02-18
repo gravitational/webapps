@@ -49,7 +49,7 @@ export default function useDesktopSession() {
 
   const [hostname, setHostname] = useState<string>('');
 
-  const isUsingChrome = navigator.userAgent.indexOf('Chrome') > -1;
+  const isUsingChrome = navigator.userAgent.includes('Chrome');
   // hasClipboardSharingEnabled tracks whether the acl grants this user
   // clipboard sharing permissions (based on the user's RBAC settings).
   const [hasClipboardSharingEnabled, setHasClipboardSharingEnabled] =

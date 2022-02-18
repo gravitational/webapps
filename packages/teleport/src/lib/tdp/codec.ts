@@ -55,6 +55,8 @@ export type PngFrame = {
 // | message type (6) | length uint32 | data []byte |
 // https://github.com/gravitational/teleport/blob/master/rfd/0037-desktop-access-protocol.md#6---clipboard-data
 export type ClipboardData = {
+  // TODO(isaiah): store this as a byte array
+  // https://github.com/gravitational/webapps/issues/610
   data: string;
 };
 

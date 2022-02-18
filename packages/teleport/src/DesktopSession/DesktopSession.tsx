@@ -152,7 +152,7 @@ function Session(props: PropsWithChildren<State>) {
 
       {props.children}
 
-      {/* TdpClientCanvas should always be present in th DOM so that it calls
+      {/* TdpClientCanvas should always be present in the DOM so that it calls
           tdpClient.init() and initializes the required tdpClient event listeners,
           both of which are needed for this component's state to properly respond to
           initialization events. */}

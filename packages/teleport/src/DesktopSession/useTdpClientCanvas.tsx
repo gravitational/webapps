@@ -64,9 +64,6 @@ export default function useTdpClientCanvas(props: Props) {
       syncCanvasSizeToDisplaySize(ctx.canvas);
       setTdpConnection({ status: 'success' });
       initialTdpConnectionSucceeded.current = true;
-      // sendLocalClipboardToRemote must be called only after
-      // initialTdpConnectionSucceeded.current === true or else it won't do anything.
-      if (enableClipboardSharing) sendLocalClipboardToRemote(tdpClient);
     }
     ctx.drawImage(pngFrame.data, pngFrame.left, pngFrame.top);
   };

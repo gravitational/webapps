@@ -204,8 +204,7 @@ exports[`clipboard error 1`] = `
       clipboard error
     </div>
     <canvas
-      style="display: none; flex: 1; outline: none;"
-      tabindex="-1"
+      style="display: none; flex: 1;"
     />
   </div>
 </div>
@@ -384,8 +383,7 @@ exports[`connected settings false 1`] = `
       </div>
     </nav>
     <canvas
-      style="display: flex; flex: 1; outline: none;"
-      tabindex="-1"
+      style="display: flex; flex: 1;"
     />
   </div>
 </div>
@@ -564,8 +562,7 @@ exports[`connected settings true 1`] = `
       </div>
     </nav>
     <canvas
-      style="display: flex; flex: 1; outline: none;"
-      tabindex="-1"
+      style="display: flex; flex: 1;"
     />
   </div>
 </div>
@@ -775,8 +772,7 @@ exports[`connection error 1`] = `
       failed
     </div>
     <canvas
-      style="display: none; flex: 1; outline: none;"
-      tabindex="-1"
+      style="display: none; flex: 1;"
     />
   </div>
 </div>
@@ -970,8 +966,7 @@ exports[`disconnected 1`] = `
       </div>
     </div>
     <canvas
-      style="display: none; flex: 1; outline: none;"
-      tabindex="-1"
+      style="display: none; flex: 1;"
     />
   </div>
 </div>
@@ -1181,8 +1176,7 @@ exports[`fetch error 1`] = `
       some fetch  error
     </div>
     <canvas
-      style="display: none; flex: 1; outline: none;"
-      tabindex="-1"
+      style="display: none; flex: 1;"
     />
   </div>
 </div>
@@ -1392,8 +1386,7 @@ exports[`unintended disconnect 1`] = `
       Session disconnected for an unkown reason
     </div>
     <canvas
-      style="display: none; flex: 1; outline: none;"
-      tabindex="-1"
+      style="display: none; flex: 1;"
     />
   </div>
 </div>
