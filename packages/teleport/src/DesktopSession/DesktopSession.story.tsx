@@ -200,7 +200,7 @@ export const WebAuthnPrompt = () => (
     {...props}
     fetchAttempt={{ status: 'processing' }}
     tdpConnection={{ status: 'processing' }}
-    clipboard={{
+    clipboardState={{
       enabled: true,
       permission: { state: 'prompt' },
       errorText: '',
