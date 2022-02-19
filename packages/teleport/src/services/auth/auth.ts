@@ -35,7 +35,7 @@ const auth = {
         'The U2F API for hardware keys is not supported by your browser. \
         Please notify your system administrator to update cluster settings \
         to use WebAuthn as the second factor protocol. In the meantime, \
-        you can use Firefox to log in.'
+        you can use Firefox to use this hardware key.'
       );
     }
   },
