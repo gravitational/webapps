@@ -8,12 +8,24 @@ import {
   MainProcessClient,
   TabContextMenuOptions,
 } from 'teleterm/mainProcess/types';
-import { getMockDocuments } from 'teleterm/ui/fixtures/mocks';
 import { ClustersService } from 'teleterm/ui/services/clusters';
 
-function getTestSetup() {
-  const mockedDocuments = getMockDocuments();
+function getMockDocuments(): Document[] {
+  return [
+    {
+      kind: 'doc.blank',
+      uri: 'test_uri_1',
+      title: 'Test 1',
+    },
+    {
+      kind: 'doc.blank',
+      uri: 'test_uri_2',
+      title: 'Test 2',
+    },
+  ];
+}
 
+function getTestSetup({ documents }: { documents: Document[] }) {
   const keyboardShortcutsService: Partial<KeyboardShortcutsService> = {
     subscribeToEvents() {},
     unsubscribeFromEvents() {},
@@ -25,10 +37,10 @@ function getTestSetup() {
 
   const docsService: Partial<DocumentsService> = {
     getDocuments(): Document[] {
-      return mockedDocuments;
+      return documents;
     },
     getActive() {
-      return mockedDocuments[0];
+      return documents[0];
     },
     close: jest.fn(),
     open: jest.fn(),
@@ -47,7 +59,7 @@ function getTestSetup() {
     unsubscribe: jest.fn(),
     findRootClusterByResource: jest.fn(),
     findCluster: jest.fn(),
-    findGateway: jest.fn()
+    findGateway: jest.fn(),
   };
 
   const utils = render(
@@ -74,36 +86,48 @@ function getTestSetup() {
   };
 }
 
-test('should render documents without home document', () => {
-  const { queryByTitle, docsService } = getTestSetup();
+test('render documents without home document', () => {
+  const { queryByTitle, docsService } = getTestSetup({
+    documents: [
+      {
+        kind: 'doc.home',
+        uri: 'test_uri_0',
+        title: 'Test 0',
+      },
+      ...getMockDocuments(),
+    ],
+  });
   const documents = docsService.getDocuments();
 
   expect(queryByTitle(documents[0].title)).not.toBeInTheDocument();
   expect(queryByTitle(documents[1].title)).toBeInTheDocument();
   expect(queryByTitle(documents[2].title)).toBeInTheDocument();
-  expect(queryByTitle(documents[3].title)).toBeInTheDocument();
 });
 
-test('should open tab on click', () => {
-  const { getByTitle, docsService } = getTestSetup();
+test('open tab on click', () => {
+  const { getByTitle, docsService } = getTestSetup({
+    documents: [getMockDocuments()[0]],
+  });
   const documents = docsService.getDocuments();
   const { open } = docsService;
-  const $tabTitle = getByTitle(documents[1].title);
+  const $tabTitle = getByTitle(documents[0].title);
 
   fireEvent.click($tabTitle);
 
-  expect(open).toHaveBeenCalledWith(documents[1].uri);
+  expect(open).toHaveBeenCalledWith(documents[0].uri);
 });
 
-test('should open context menu', () => {
-  const { getByTitle, docsService, mainProcessClient } = getTestSetup();
+test('open context menu', () => {
+  const { getByTitle, docsService, mainProcessClient } = getTestSetup({
+    documents: [getMockDocuments()[0]],
+  });
   const { openTabContextMenu } = mainProcessClient;
   const { close, closeOthers, closeToRight, duplicatePtyAndActivate } =
     docsService;
   const documents = docsService.getDocuments();
-  const document = documents[1];
+  const document = documents[0];
 
-  const $tabTitle = getByTitle(documents[1].title);
+  const $tabTitle = getByTitle(documents[0].title);
 
   fireEvent.contextMenu($tabTitle);
   expect(openTabContextMenu).toHaveBeenCalled();
@@ -125,8 +149,10 @@ test('should open context menu', () => {
   expect(duplicatePtyAndActivate).toHaveBeenCalledWith(document.uri);
 });
 
-test('should open new tab', () => {
-  const { getByTitle, docsService } = getTestSetup();
+test('open new tab', () => {
+  const { getByTitle, docsService } = getTestSetup({
+    documents: [getMockDocuments()[0]],
+  });
   const { openNewTerminal } = docsService;
   const $newTabButton = getByTitle('New Tab');
 
@@ -135,14 +161,16 @@ test('should open new tab', () => {
   expect(openNewTerminal).toHaveBeenCalledWith();
 });
 
-test('should swap tabs', () => {
-  const { getByTitle, docsService } = getTestSetup();
+test('swap tabs', () => {
+  const { getByTitle, docsService } = getTestSetup({
+    documents: getMockDocuments(),
+  });
   const documents = docsService.getDocuments();
-  const $firstTab = getByTitle(documents[1].title);
-  const $thirdTab = getByTitle(documents[3].title);
+  const $firstTab = getByTitle(documents[0].title);
+  const $secondTab = getByTitle(documents[1].title);
 
-  fireEvent.dragStart($thirdTab);
+  fireEvent.dragStart($secondTab);
   fireEvent.drop($firstTab);
 
-  expect(docsService.swapPosition).toHaveBeenCalledWith(2, 0); // not '3, 1' because doc.home is omitted
+  expect(docsService.swapPosition).toHaveBeenCalledWith(1, 0);
 });

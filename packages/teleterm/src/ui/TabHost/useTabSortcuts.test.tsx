@@ -8,11 +8,71 @@ import {
   KeyboardShortcutsService,
 } from 'teleterm/ui/services/keyboardShortcuts';
 import AppContextProvider from 'teleterm/ui/appContextProvider';
-import { getMockDocuments } from 'teleterm/ui/fixtures/mocks';
 
-function getTestSetup() {
-  const mockedDocuments = getMockDocuments();
+function getMockDocuments(): Document[] {
+  return [
+    {
+      kind: 'doc.home',
+      uri: 'test_uri_0',
+      title: 'Test 0',
+    },
+    {
+      kind: 'doc.blank',
+      uri: 'test_uri_1',
+      title: 'Test 1',
+    },
+    {
+      kind: 'doc.blank',
+      uri: 'test_uri_2',
+      title: 'Test 2',
+    },
+    {
+      kind: 'doc.blank',
+      uri: 'test_uri_3',
+      title: 'Test 3',
+    },
+    {
+      kind: 'doc.gateway',
+      uri: 'test_uri_4',
+      title: 'Test 4',
+      gatewayUri: '',
+      targetUri: '',
+    },
+    {
+      kind: 'doc.gateway',
+      uri: 'test_uri_5',
+      title: 'Test 5',
+      gatewayUri: '',
+      targetUri: '',
+    },
+    {
+      kind: 'doc.cluster',
+      uri: 'test_uri_6',
+      title: 'Test 6',
+      clusterUri: 'none',
+    },
+    {
+      kind: 'doc.cluster',
+      uri: 'test_uri_7',
+      title: 'Test 7',
+      clusterUri: 'test_uri',
+    },
+    {
+      kind: 'doc.cluster',
+      uri: 'test_uri_8',
+      title: 'Test 8',
+      clusterUri: 'test_uri_8',
+    },
+    {
+      kind: 'doc.cluster',
+      uri: 'test_uri_9',
+      title: 'Test 9',
+      clusterUri: 'test_uri_9',
+    },
+  ];
+}
 
+function getTestSetup({ documents }: { documents: Document[] }) {
   let eventEmitter: KeyboardShortcutEventSubscriber;
   const keyboardShortcutsService: Partial<KeyboardShortcutsService> = {
     subscribeToEvents(subscriber: KeyboardShortcutEventSubscriber) {
@@ -25,10 +85,10 @@ function getTestSetup() {
 
   const docsService: Partial<DocumentsService> = {
     getDocuments(): Document[] {
-      return mockedDocuments;
+      return documents;
     },
     getActive() {
-      return mockedDocuments[0];
+      return documents[0];
     },
     close: jest.fn(),
     open: jest.fn(),
@@ -68,8 +128,10 @@ test.each([
   { type: 'tab-7', value: 7 },
   { type: 'tab-8', value: 8 },
   { type: 'tab-9', value: 9 },
-])('should open tab using $type shortcut', ({ type, value }) => {
-  const { emitKeyboardShortcutEvent, docsService } = getTestSetup();
+])('open tab using $type shortcut', ({ type, value }) => {
+  const { emitKeyboardShortcutEvent, docsService } = getTestSetup({
+    documents: getMockDocuments(),
+  });
 
   emitKeyboardShortcutEvent({ type } as KeyboardShortcutEvent);
 
@@ -78,9 +140,11 @@ test.each([
   );
 });
 
-test('should close active tab', () => {
-  const { emitKeyboardShortcutEvent, docsService } = getTestSetup();
-  const documentToClose = docsService.getDocuments()[2];
+test('close active tab', () => {
+  const { emitKeyboardShortcutEvent, docsService } = getTestSetup({
+    documents: [getMockDocuments()[0]],
+  });
+  const documentToClose = docsService.getDocuments()[0];
   docsService.getActive = () => documentToClose;
 
   emitKeyboardShortcutEvent({ type: 'tab-close' });
@@ -88,8 +152,10 @@ test('should close active tab', () => {
   expect(docsService.close).toHaveBeenCalledWith(documentToClose.uri);
 });
 
-test('should open new tab', () => {
-  const { emitKeyboardShortcutEvent, docsService } = getTestSetup();
+test('open new tab', () => {
+  const { emitKeyboardShortcutEvent, docsService } = getTestSetup({
+    documents: [],
+  });
 
   emitKeyboardShortcutEvent({ type: 'tab-new' });
 
@@ -97,7 +163,9 @@ test('should open new tab', () => {
 });
 
 describe('open next/previous tab', () => {
-  const { emitKeyboardShortcutEvent, docsService } = getTestSetup();
+  const { emitKeyboardShortcutEvent, docsService } = getTestSetup({
+    documents: getMockDocuments(),
+  });
 
   test('should open next tab', () => {
     const activeTabIndex = 2;
@@ -110,7 +178,7 @@ describe('open next/previous tab', () => {
     );
   });
 
-  test('should open first tab if active is last (omitting doc.home)', () => {
+  test('open first tab if active is last (omitting doc.home)', () => {
     const activeTabIndex = docsService.getDocuments().length - 1;
     docsService.getActive = () => docsService.getDocuments()[activeTabIndex];
 
@@ -121,7 +189,7 @@ describe('open next/previous tab', () => {
     );
   });
 
-  test('should open previous tab', () => {
+  test('open previous tab', () => {
     const activeTabIndex = 2;
     docsService.getActive = () => docsService.getDocuments()[activeTabIndex];
 
@@ -132,7 +200,7 @@ describe('open next/previous tab', () => {
     );
   });
 
-  test('should open the last tab if active is the first one (omitting doc.home)', () => {
+  test('open the last tab if active is the first one (omitting doc.home)', () => {
     const activeTabIndex = 1;
     docsService.getActive = () => docsService.getDocuments()[activeTabIndex];
 
