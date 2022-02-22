@@ -308,14 +308,14 @@ export default class Codec {
     // bufLen is 1 byte for the `message type`,
     // 4 bytes for the `length uint32`,
     // and enough bytes for the full `data []byte`
-    const bufLen = 1 + 4 + dataUtf8array.length;
+    const bufLen = byteLength + uint32Length + dataUtf8array.length;
     const buffer = new ArrayBuffer(bufLen);
     const view = new DataView(buffer);
     let offset = 0;
 
     view.setUint8(offset++, messageType);
     view.setUint32(offset, dataUtf8array.length);
-    offset += 4;
+    offset += uint32Length;
     dataUtf8array.forEach(byte => {
       view.setUint8(offset++, byte);
     });
@@ -356,7 +356,8 @@ export default class Codec {
   encodeMfaJson(mfaJson: MfaJson): Message {
     const dataUtf8array = this.encoder.encode(mfaJson.jsonString);
 
-    const bufLen = 1 + 1 + 4 + dataUtf8array.length;
+    const bufLen =
+      byteLength + byteLength + uint32Length + dataUtf8array.length;
     const buffer = new ArrayBuffer(bufLen);
     const view = new DataView(buffer);
     let offset = 0;
@@ -364,7 +365,7 @@ export default class Codec {
     view.setUint8(offset++, MessageType.MFA_JSON);
     view.setUint8(offset++, mfaJson.mfaType.charCodeAt(0));
     view.setUint32(offset, dataUtf8array.length);
-    offset += 4;
+    offset += uint32Length;
     dataUtf8array.forEach(byte => {
       view.setUint8(offset++, byte);
     });
@@ -440,3 +441,6 @@ export default class Codec {
     return `data:image/png;base64,${arrayBufferToBase64(buffer.slice(17))}`;
   }
 }
+
+const byteLength = 1;
+const uint32Length = 4;
