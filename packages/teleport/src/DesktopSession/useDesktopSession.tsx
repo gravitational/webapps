@@ -87,7 +87,9 @@ export default function useDesktopSession() {
         enabled: hasClipboardSharingEnabled,
         permission: clipboardRWPermission,
         errorText:
-          'Your user role supports clipboard sharing over desktop access, however this feature is only available on chromium based browsers like Brave or Google Chrome. Please switch to a supported browser.',
+          'Your user role supports clipboard sharing over desktop access, \
+          however this feature is only available on chromium based browsers \
+          like Brave or Google Chrome. Please switch to a supported browser.',
       });
     } else if (
       hasClipboardSharingEnabled &&
@@ -96,7 +98,9 @@ export default function useDesktopSession() {
       setClipboardState({
         enabled: hasClipboardSharingEnabled,
         permission: clipboardRWPermission,
-        errorText: `Your user role supports clipboard sharing over desktop access, but your browser is blocking clipboard read or clipboard write permissions. Please grant both of these permissions to Teleport in your browser's settings.`,
+        errorText: `Your user role supports clipboard sharing over desktop access, \
+        but your browser is blocking clipboard read or clipboard write permissions. \
+        Please grant both of these permissions to Teleport in your browser's settings.`,
       });
     } else {
       setClipboardState({

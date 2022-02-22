@@ -141,6 +141,7 @@ export const ConnectedSettingsTrue = () => {
     />
   );
 };
+
 export const Disconnected = () => (
   <DesktopSession
     {...props}
@@ -150,6 +151,7 @@ export const Disconnected = () => (
     disconnected={true}
   />
 );
+
 export const FetchError = () => (
   <DesktopSession
     {...props}
@@ -159,6 +161,7 @@ export const FetchError = () => (
     disconnected={false}
   />
 );
+
 export const ConnectionError = () => (
   <DesktopSession
     {...props}
@@ -171,6 +174,7 @@ export const ConnectionError = () => (
     disconnected={false}
   />
 );
+
 export const ClipboardError = () => (
   <DesktopSession
     {...props}
@@ -185,6 +189,7 @@ export const ClipboardError = () => (
     }}
   />
 );
+
 export const UnintendedDisconnect = () => (
   <DesktopSession
     {...props}

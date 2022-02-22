@@ -1574,8 +1574,7 @@ exports[`webauthn prompt 1`] = `
       class="c12"
     />
     <canvas
-      style="display: none; flex: 1; outline: none;"
-      tabindex="-1"
+      style="display: none; flex: 1;"
     />
   </div>
 </div>
