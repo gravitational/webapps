@@ -154,21 +154,28 @@ export default class Client extends EventEmitterWebAuthnSender {
     );
   }
 
+  // TODO(isaiah): neither of the TdpClientEvent.TDP_ERROR are accurate, they should
+  // instead be associated with a new event TdpClientEvent.CLIENT_ERROR.
+  // https://github.com/gravitational/webapps/issues/615
   handleMfaChallenge(buffer: ArrayBuffer) {
-    const mfaJson = this.codec.decodeMfaJson(buffer);
-    if (mfaJson.mfaType == 'n') {
-      this.emit(TermEventEnum.WEBAUTHN_CHALLENGE, mfaJson.jsonString);
-    } else {
-      // mfaJson.mfaType === 'u', or else decodeMfaJson would have thrown an error.
-      this.emit(
-        TdpClientEvent.TDP_ERROR,
-        new Error(
-          'Multifactor authentication is required for accessing this desktop, \
+    try {
+      const mfaJson = this.codec.decodeMfaJson(buffer);
+      if (mfaJson.mfaType == 'n') {
+        this.emit(TermEventEnum.WEBAUTHN_CHALLENGE, mfaJson.jsonString);
+      } else {
+        // mfaJson.mfaType === 'u', or else decodeMfaJson would have thrown an error.
+        this.emit(
+          TdpClientEvent.TDP_ERROR,
+          new Error(
+            'Multifactor authentication is required for accessing this desktop, \
       however the U2F API for hardware keys is not supported for desktop sessions. \
       Please notify your system administrator to update cluster settings \
       to use WebAuthn as the second factor protocol.'
-        )
-      );
+          )
+        );
+      }
+    } catch (err) {
+      this.emit(TdpClientEvent.TDP_ERROR, err);
     }
   }
 

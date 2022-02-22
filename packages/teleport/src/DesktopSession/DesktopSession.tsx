@@ -55,11 +55,11 @@ export function DesktopSession(props: State) {
 
   let alertText: string;
   if (fetchAttempt.status === 'failed') {
-    alertText = fetchAttempt.statusText;
+    alertText = fetchAttempt.statusText || 'fetch attempt failed';
   } else if (tdpConnection.status === 'failed') {
-    alertText = tdpConnection.statusText;
+    alertText = tdpConnection.statusText || 'tdp connection failed';
   } else if (clipboardError) {
-    alertText = clipboardState.errorText;
+    alertText = clipboardState.errorText || 'clipboard sharing failed';
   } else if (unknownConnectionError) {
     alertText = 'Session disconnected for an unkown reason';
   } else {
