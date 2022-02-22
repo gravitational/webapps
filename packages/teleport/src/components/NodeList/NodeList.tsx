@@ -18,6 +18,7 @@ import React from 'react';
 import Table, { Cell, LabelCell } from 'design/DataTable';
 import { LoginItem, MenuLogin } from 'shared/components/MenuLogin';
 import { Node } from 'teleport/services/nodes';
+import AdvancedSearchPanel from 'teleport/Nodes/AdvancedSearchInput/AdvancedSearchInput';
 
 function NodeList(props: Props) {
   const { nodes = [], onLoginMenuOpen, onLoginSelect, pageSize = 100 } = props;
