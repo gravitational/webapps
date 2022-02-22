@@ -188,6 +188,7 @@ export default function LoginForm(props: Props) {
                         label="Authenticator code"
                         rule={requiredToken}
                         autoComplete="off"
+                        type="tel"
                         value={token}
                         onChange={e => setToken(e.target.value)}
                         placeholder="123 456"
