@@ -20,6 +20,7 @@ import { AuthProvider, Auth2faType } from 'shared/services';
 
 const cfg = {
   isEnterprise: false,
+  tunnelPublicAddress: '',
 
   baseUrl: window.location.origin,
 
