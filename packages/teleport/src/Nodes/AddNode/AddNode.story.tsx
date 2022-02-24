@@ -34,8 +34,35 @@ export const Failed = () => (
   />
 );
 
-export const ManuallyLocal = () => (
+export const ManuallyProcessing = () => (
+  <AddNode
+    {...props}
+    automatic={false}
+    canCreateToken={false}
+    attempt={{ status: 'processing' }}
+  />
+);
+
+export const ManuallyWithToken = () => (
   <AddNode {...props} automatic={false} canCreateToken={false} />
+);
+
+export const ManuallyWithoutToken = () => (
+  <AddNode
+    {...props}
+    automatic={false}
+    canCreateToken={false}
+    attempt={{ status: 'failed' }}
+  />
+);
+
+export const ManuallyLocal = () => (
+  <AddNode
+    {...props}
+    automatic={false}
+    canCreateToken={false}
+    attempt={{ status: 'failed' }}
+  />
 );
 
 export const ManuallySSO = () => (
@@ -44,6 +71,7 @@ export const ManuallySSO = () => (
     automatic={false}
     canCreateToken={false}
     isAuthTypeLocal={false}
+    attempt={{ status: 'failed' }}
   />
 );
 
@@ -67,4 +95,5 @@ const props = {
     status: 'success',
     statusText: '',
   } as any,
+  token: 'some-join-token-hash',
 };

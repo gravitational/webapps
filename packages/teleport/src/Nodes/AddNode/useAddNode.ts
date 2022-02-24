@@ -27,6 +27,7 @@ export default function useAddNode(ctx: TeleportContext) {
   const [automatic, setAutomatic] = useState(true);
   const [script, setScript] = useState('');
   const [expiry, setExpiry] = useState('');
+  const [token, setToken] = useState('');
 
   useEffect(() => {
     createJoinToken();
@@ -34,9 +35,11 @@ export default function useAddNode(ctx: TeleportContext) {
 
   function createJoinToken() {
     return run(() =>
-      ctx.nodeService.createNodeBashCommand().then(cmd => {
+      ctx.nodeService.getJoinToken().then(token => {
+        const cmd = ctx.nodeService.createNodeBashCommand(token);
         setExpiry(cmd.expires);
         setScript(cmd.text);
+        setToken(token.id);
       })
     );
   }
@@ -52,6 +55,7 @@ export default function useAddNode(ctx: TeleportContext) {
     version,
     user,
     isAuthTypeLocal,
+    token,
   };
 }
 

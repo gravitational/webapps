@@ -21,6 +21,7 @@ import makeNode from './makeNode';
 import makeNodeToken from './makeNodeToken';
 import makeAppBashCmd from './makeAppBashCmd';
 import makeNodeBashCmd from './makeNodeBashCmd';
+import { NodeToken, BashCommand } from './types';
 
 const service = {
   fetchNodes(clusterId?: string) {
@@ -29,8 +30,12 @@ const service = {
       .then(json => map(json.items, makeNode));
   },
 
-  createNodeBashCommand() {
-    return api.post(cfg.getNodeJoinTokenUrl()).then(makeNodeBashCmd);
+  getJoinToken(): Promise<NodeToken> {
+    return api.post(cfg.getNodeJoinTokenUrl());
+  },
+
+  createNodeBashCommand(token: NodeToken): BashCommand {
+    return makeNodeBashCmd(token);
   },
 
   createAppBashCommand(appName: string, appUri: string) {

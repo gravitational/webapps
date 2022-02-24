@@ -45,6 +45,7 @@ export function AddNode({
   version,
   attempt,
   isAuthTypeLocal,
+  token,
 }: Props & State) {
   return (
     <Dialog
@@ -88,6 +89,10 @@ export function AddNode({
               user={user}
               version={version}
               isAuthTypeLocal={isAuthTypeLocal}
+              joinToken={token}
+              expiry={expiry}
+              createJoinToken={createJoinToken}
+              attempt={attempt}
             />
           )}
         </DialogContent>
