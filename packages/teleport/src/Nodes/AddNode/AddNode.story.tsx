@@ -35,41 +35,19 @@ export const Failed = () => (
 );
 
 export const ManuallyProcessing = () => (
+  <AddNode {...props} automatic={false} attempt={{ status: 'processing' }} />
+);
+
+export const ManuallyWithToken = () => <AddNode {...props} automatic={false} />;
+
+export const ManuallyWithoutTokenLocal = () => (
+  <AddNode {...props} automatic={false} attempt={{ status: 'failed' }} />
+);
+
+export const ManuallyWithoutTokenSSO = () => (
   <AddNode
     {...props}
     automatic={false}
-    canCreateToken={false}
-    attempt={{ status: 'processing' }}
-  />
-);
-
-export const ManuallyWithToken = () => (
-  <AddNode {...props} automatic={false} canCreateToken={false} />
-);
-
-export const ManuallyWithoutToken = () => (
-  <AddNode
-    {...props}
-    automatic={false}
-    canCreateToken={false}
-    attempt={{ status: 'failed' }}
-  />
-);
-
-export const ManuallyLocal = () => (
-  <AddNode
-    {...props}
-    automatic={false}
-    canCreateToken={false}
-    attempt={{ status: 'failed' }}
-  />
-);
-
-export const ManuallySSO = () => (
-  <AddNode
-    {...props}
-    automatic={false}
-    canCreateToken={false}
     isAuthTypeLocal={false}
     attempt={{ status: 'failed' }}
   />
@@ -88,7 +66,6 @@ const props = {
   setAutomatic: () => null,
   version: '5.0.0-dev',
   isEnterprise: true,
-  canCreateToken: true,
   script: 'some bash script',
   expiry: '4 hours',
   attempt: {

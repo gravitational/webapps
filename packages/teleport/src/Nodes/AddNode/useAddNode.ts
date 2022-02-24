@@ -20,7 +20,6 @@ import useAttempt from 'shared/hooks/useAttemptNext';
 
 export default function useAddNode(ctx: TeleportContext) {
   const { attempt, run } = useAttempt('processing');
-  const canCreateToken = ctx.storeUser.getTokenAccess().create;
   const version = ctx.storeUser.state.cluster.authVersion;
   const user = ctx.storeUser.state.username;
   const isAuthTypeLocal = !ctx.storeUser.isSso();
@@ -45,7 +44,6 @@ export default function useAddNode(ctx: TeleportContext) {
   }
 
   return {
-    canCreateToken,
     createJoinToken,
     automatic,
     setAutomatic,
