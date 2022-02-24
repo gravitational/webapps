@@ -18,3 +18,9 @@ export interface Kube {
   name: string;
   tags: string[];
 }
+
+export interface KubesResponse {
+  kubes: Kube[];
+  startKey?: string;
+  totalCount?: number;
+}
