@@ -15,8 +15,11 @@ limitations under the License.
 */
 
 import { useState, useEffect } from 'react';
-import TeleportContext from 'teleport/teleportContext';
+import { formatDistanceStrict } from 'date-fns';
 import useAttempt from 'shared/hooks/useAttemptNext';
+import cfg from 'teleport/config';
+import TeleportContext from 'teleport/teleportContext';
+import { BashCommand, NodeToken } from 'teleport/services/nodes';
 
 export default function useAddNode(ctx: TeleportContext) {
   const { attempt, run } = useAttempt('processing');
@@ -35,12 +38,24 @@ export default function useAddNode(ctx: TeleportContext) {
   function createJoinToken() {
     return run(() =>
       ctx.nodeService.fetchJoinToken().then(token => {
-        const cmd = ctx.nodeService.createNodeBashCommand(token);
+        const cmd = createNodeBashCommand(token);
         setExpiry(cmd.expires);
         setScript(cmd.text);
         setToken(token.id);
       })
     );
+  }
+
+  function createNodeBashCommand(node: NodeToken): BashCommand {
+    const { expiry, id } = node;
+
+    const expires = formatDistanceStrict(new Date(), new Date(expiry));
+    const text = `sudo bash -c "$(curl -fsSL ${cfg.getNodeScriptUrl(id)})"`;
+
+    return {
+      text,
+      expires,
+    };
   }
 
   return {
