@@ -124,7 +124,7 @@ const StepsWithToken = ({ joinToken, host, createJoinToken, expiry }) => (
       text={`teleport start --roles=node --token=${joinToken} --auth-server=${host} `}
     />
     <Box>
-      <ButtonLink onClick={createJoinToken}>Regenerate Script</ButtonLink>
+      <ButtonLink onClick={createJoinToken}>Regenerate Token</ButtonLink>
     </Box>
   </Box>
 );
