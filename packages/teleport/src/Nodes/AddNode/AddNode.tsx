@@ -81,7 +81,6 @@ export function AddNode({
               expiry={expiry}
               createJoinToken={createJoinToken}
               attempt={attempt}
-              mb={3}
             />
           )}
           {!automatic && (

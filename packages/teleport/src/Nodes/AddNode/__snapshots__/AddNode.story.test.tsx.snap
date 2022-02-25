@@ -131,7 +131,6 @@ exports[`render automatic tab 1`] = `
   overflow: hidden;
   text-overflow: ellipsis;
   margin: 0px;
-  margin-bottom: 16px;
 }
 
 .c12 {
@@ -165,7 +164,7 @@ exports[`render automatic tab 1`] = `
 
 .c14 {
   box-sizing: border-box;
-  margin-bottom: 8px;
+  margin-top: 8px;
   padding: 8px;
   background-color: #010B1C;
   border-radius: 4px;
@@ -1088,7 +1087,7 @@ exports[`render manual tab with join token 1`] = `
                 class="c21 c20"
                 kind="primary"
               >
-                Regenerate Script
+                Regenerate Token
               </a>
             </div>
           </div>
