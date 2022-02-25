@@ -34,7 +34,7 @@ export default function useAddNode(ctx: TeleportContext) {
 
   function createJoinToken() {
     return run(() =>
-      ctx.nodeService.getJoinToken().then(token => {
+      ctx.nodeService.fetchJoinToken().then(token => {
         const cmd = ctx.nodeService.createNodeBashCommand(token);
         setExpiry(cmd.expires);
         setScript(cmd.text);

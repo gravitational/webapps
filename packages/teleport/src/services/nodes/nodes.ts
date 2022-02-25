@@ -30,8 +30,8 @@ const service = {
       .then(json => map(json.items, makeNode));
   },
 
-  getJoinToken(): Promise<NodeToken> {
-    return api.post(cfg.getNodeJoinTokenUrl());
+  fetchJoinToken(): Promise<NodeToken> {
+    return api.post(cfg.getNodeJoinTokenUrl()).then(makeNodeToken);
   },
 
   createNodeBashCommand(token: NodeToken): BashCommand {
