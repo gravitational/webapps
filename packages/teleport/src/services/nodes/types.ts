@@ -33,8 +33,8 @@ export interface BashCommand {
   expires: string;
 }
 
-export interface NodesResponse {
+export type NodesResponse = {
   nodes: Node[];
   startKey?: string;
   totalCount?: number;
-}
+};

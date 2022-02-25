@@ -19,8 +19,8 @@ export interface Kube {
   tags: string[];
 }
 
-export interface KubesResponse {
+export type KubesResponse = {
   kubes: Kube[];
   startKey?: string;
   totalCount?: number;
-}
+};

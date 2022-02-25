@@ -28,11 +28,11 @@ export interface App {
   awsConsole: boolean;
 }
 
-export interface AppsResponse {
+export type AppsResponse = {
   apps: App[];
   startKey?: string;
   totalCount?: number;
-}
+};
 
 export type AwsRole = {
   arn: string;
