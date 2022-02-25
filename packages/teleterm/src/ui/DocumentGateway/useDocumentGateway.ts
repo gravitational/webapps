@@ -16,7 +16,7 @@ limitations under the License.
 
 import React from 'react';
 import { useAppContext } from 'teleterm/ui/appContextProvider';
-import * as types from 'teleterm/ui/services/docs/types';
+import * as types from 'teleterm/ui/services/workspacesService';
 import useAsync from 'teleterm/ui/useAsync';
 
 export default function useGateway(doc: types.DocumentGateway) {
@@ -32,9 +32,11 @@ export default function useGateway(doc: types.DocumentGateway) {
         user: doc.targetUser,
       });
 
-      ctx.docsService.update(doc.uri, {
-        gatewayUri: gw.uri,
-      });
+      ctx.workspacesService
+        .getActiveWorkspaceDocumentService()
+        .update(doc.uri, {
+          gatewayUri: gw.uri,
+        });
     }
   );
 
@@ -69,7 +71,7 @@ export default function useGateway(doc: types.DocumentGateway) {
 
   React.useEffect(() => {
     if (disconnectAttempt.status === 'success') {
-      ctx.docsService.close(doc.uri);
+      ctx.workspacesService.getActiveWorkspaceDocumentService().close(doc.uri);
     }
   }, [disconnectAttempt.status]);
 

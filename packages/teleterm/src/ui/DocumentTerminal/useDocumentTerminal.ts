@@ -17,13 +17,15 @@ limitations under the License.
 import { useEffect } from 'react';
 import { useAppContext } from 'teleterm/ui/appContextProvider';
 import { IAppContext } from 'teleterm/ui/types';
-import * as types from 'teleterm/ui/services/docs/types';
+import * as types from 'teleterm/ui/services/workspacesService';
 import { PtyCommand } from 'teleterm/services/pty/types';
 import useAsync from 'teleterm/ui/useAsync';
+import { DocumentsService } from 'teleterm/ui/services/workspacesService';
 
 export default function useDocumentTerminal(doc: Doc) {
   const ctx = useAppContext();
-  const [state, init] = useAsync(async () => initState(ctx, doc));
+  const docsService = ctx.workspacesService.getActiveWorkspaceDocumentService();
+  const [state, init] = useAsync(async () => initState(ctx, docsService, doc));
 
   useEffect(() => {
     init();
@@ -35,7 +37,7 @@ export default function useDocumentTerminal(doc: Doc) {
   return state;
 }
 
-async function initState(ctx: IAppContext, doc: Doc) {
+async function initState(ctx: IAppContext, docsService: DocumentsService, doc: Doc) {
   const cmd = createCmd(doc);
   const ptyProcess = ctx.terminalsService.createPtyProcess(cmd);
   const openContextMenu = () => ctx.mainProcessClient.openTerminalContextMenu();
@@ -46,16 +48,16 @@ async function initState(ctx: IAppContext, doc: Doc) {
     }
 
     const cwd = await ptyProcess.getCwd();
-    ctx.docsService.update(doc.uri, { cwd, title: cwd });
+    docsService.update(doc.uri, { cwd, title: cwd });
   };
 
   ptyProcess.onOpen(() => {
-    ctx.docsService.update(doc.uri, { status: 'connected' });
+    docsService.update(doc.uri, { status: 'connected' });
     refreshTitle();
   });
 
   ptyProcess.onExit(() => {
-    ctx.docsService.close(doc.uri);
+    docsService.close(doc.uri);
   });
 
   return {
