@@ -182,6 +182,13 @@ export default function useTdpClientCanvas(props: Props) {
     sendLocalClipboardToRemote(cli);
   };
 
+  // onMouseEnter does not fire in certain situations, so ensure we cover all of our bases by adding a window level
+  // onfocus handler. See https://github.com/gravitational/webapps/issues/626 for further details.
+  const windowOnFocus = (cli: TdpClient, e: FocusEvent) => {
+    e.preventDefault();
+    sendLocalClipboardToRemote(cli);
+  };
+
   return {
     tdpClient,
     onPngFrame,
@@ -197,6 +204,7 @@ export default function useTdpClientCanvas(props: Props) {
     onMouseWheelScroll,
     onContextMenu,
     onMouseEnter,
+    windowOnFocus,
   };
 }
 
