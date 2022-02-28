@@ -164,7 +164,7 @@ export default function TdpClientCanvas(props: Props) {
 
     return () => {
       if (onContextMenu)
-        canvas.removeEventListener('contextmenu', onContextMenu);
+        canvas.removeEventListener('contextmenu', _oncontextmenu);
     };
   }, [onContextMenu]);
 
