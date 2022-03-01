@@ -21,11 +21,14 @@ import * as types from 'teleterm/ui/services/workspacesService';
 import { PtyCommand } from 'teleterm/services/pty/types';
 import useAsync from 'teleterm/ui/useAsync';
 import { DocumentsService } from 'teleterm/ui/services/workspacesService';
+import { useWorkspaceDocumentsService } from 'teleterm/ui/Documents';
 
 export default function useDocumentTerminal(doc: Doc) {
   const ctx = useAppContext();
-  const docsService = ctx.workspacesService.getActiveWorkspaceDocumentService();
-  const [state, init] = useAsync(async () => initState(ctx, docsService, doc));
+  const workspaceDocumentsService = useWorkspaceDocumentsService();
+  const [state, init] = useAsync(async () =>
+    initState(ctx, workspaceDocumentsService, doc)
+  );
 
   useEffect(() => {
     init();
@@ -37,7 +40,11 @@ export default function useDocumentTerminal(doc: Doc) {
   return state;
 }
 
-async function initState(ctx: IAppContext, docsService: DocumentsService, doc: Doc) {
+async function initState(
+  ctx: IAppContext,
+  docsService: DocumentsService,
+  doc: Doc
+) {
   const cmd = createCmd(doc);
   const ptyProcess = ctx.terminalsService.createPtyProcess(cmd);
   const openContextMenu = () => ctx.mainProcessClient.openTerminalContextMenu();

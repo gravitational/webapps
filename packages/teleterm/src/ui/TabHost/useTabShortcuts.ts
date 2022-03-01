@@ -20,23 +20,21 @@ import {
   useKeyboardShortcuts,
 } from 'teleterm/ui/services/keyboardShortcuts';
 import { useAppContext } from 'teleterm/ui/appContextProvider';
-import { DocumentsService } from 'teleterm/ui/services/workspacesService/documentsService';
+import { DocumentsService } from 'teleterm/ui/services/workspacesService';
 
 export function useTabShortcuts() {
   const { workspacesService } = useAppContext();
   workspacesService.useState();
   const documentService = workspacesService.getActiveWorkspaceDocumentService();
-  const clusterUri = workspacesService.state.rootClusterUri;
   const tabsShortcuts = useMemo(
-    () => buildTabsShortcuts(documentService, clusterUri),
-    [documentService, clusterUri]
+    () => buildTabsShortcuts(documentService),
+    [documentService]
   );
   useKeyboardShortcuts(tabsShortcuts);
 }
 
 function buildTabsShortcuts(
-  documentService: DocumentsService,
-  clusterUri: string
+  documentService: DocumentsService
 ): KeyboardShortcutHandlers {
   const handleTabIndex = (index: number) => () => {
     const docs = documentService.getDocuments();
@@ -51,7 +49,7 @@ function buildTabsShortcuts(
   };
 
   const handleNewTabOpen = () => {
-    const doc = documentService.createClusterDocument({ clusterUri });
+    const doc = documentService.createClusterDocument();
     documentService.add(doc);
     documentService.open(doc.uri);
   };

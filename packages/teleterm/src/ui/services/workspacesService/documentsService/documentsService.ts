@@ -21,7 +21,6 @@ import {
   DocumentGateway,
   DocumentTshNode,
   CreateGatewayDocumentOpts,
-  CreateClusterDocumentOpts,
   DocumentCluster,
 } from './types';
 import { routing, paths } from 'teleterm/ui/uri';
@@ -31,7 +30,8 @@ export class DocumentsService {
     private getState: () => { documents: Document[]; location: string },
     private setState: (
       draftState: (draft: { documents: Document[]; location: string }) => void
-    ) => void
+    ) => void,
+    private clusterUri: string
   ) {}
 
   open(docUri: string) {
@@ -46,12 +46,12 @@ export class DocumentsService {
     this.setLocation(docUri);
   }
 
-  createClusterDocument(opts: CreateClusterDocumentOpts): DocumentCluster {
+  createClusterDocument(): DocumentCluster {
     const uri = routing.getDocUri({ docId: unique() });
-    const clusterName = routing.parseClusterName(opts.clusterUri);
+    const clusterName = routing.parseClusterName(this.clusterUri);
     return {
       uri,
-      clusterUri: opts.clusterUri,
+      clusterUri: this.clusterUri,
       title: clusterName,
       kind: 'doc.cluster',
     };

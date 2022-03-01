@@ -46,7 +46,7 @@ export class ConnectionTrackerService extends ImmutableStore<ConnectionTrackerSt
 
   processItemClick = async (id: string) => {
     const conn = this.state.connections.find(i => i.id === id);
-    if (conn.clusterUri !== this._workspacesService.state.rootClusterUri) {
+    if (conn.clusterUri !== this._workspacesService.getRootClusterUri()) {
       await this._workspacesService.setActiveWorkspace(conn.clusterUri);
     }
     const docService = this._workspacesService.getWorkspaceDocumentService(

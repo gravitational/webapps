@@ -20,18 +20,14 @@ import { Flex } from 'design';
 import { useAppContext } from 'teleterm/ui/appContextProvider';
 import * as types from 'teleterm/ui/services/workspacesService/documentsService/types';
 import { Tabs } from 'teleterm/ui/Tabs';
-import Document from 'teleterm/ui/Document';
-import DocumentGateway from 'teleterm/ui/DocumentGateway';
-import DocumentTerminal from 'teleterm/ui/DocumentTerminal';
-import DocumentCluster from 'teleterm/ui/DocumentCluster';
 import { useTabShortcuts } from './useTabShortcuts';
-import { Workspace } from 'teleterm/ui/services/workspacesService/workspacesService';
+import { DocumentsRenderer } from 'teleterm/ui/Documents';
 
 export function TabHostContainer() {
   const ctx = useAppContext();
   ctx.workspacesService.useState();
 
-  const isRootClusterSelected = !!ctx.workspacesService.state.rootClusterUri;
+  const isRootClusterSelected = !!ctx.workspacesService.getRootClusterUri();
 
   return useMemo(() => {
     if (isRootClusterSelected) {
@@ -43,8 +39,9 @@ export function TabHostContainer() {
 
 export function TabHost() {
   const ctx = useAppContext();
-  const documentsService = ctx.workspacesService.getActiveWorkspaceDocumentService();
-  const docActive = documentsService.getActive();
+  const documentsService =
+    ctx.workspacesService.getActiveWorkspaceDocumentService();
+  const activeDocument = documentsService.getActive();
   ctx.workspacesService.useState();
 
   // enable keyboard shortcuts
@@ -63,9 +60,7 @@ export function TabHost() {
   }
 
   function handleTabNew() {
-    const doc = documentsService.createClusterDocument({
-      clusterUri: ctx.workspacesService.state.rootClusterUri,
-    });
+    const doc = documentsService.createClusterDocument();
     documentsService.add(doc);
     documentsService.open(doc.uri);
   }
@@ -88,23 +83,10 @@ export function TabHost() {
     });
   }
 
-  function getVisibleDocuments() {
-    return ctx.workspacesService.getActiveWorkspace().documents;
-  }
-
-  function getAllDocuments(): Array<{ clusterUri: string; value: Workspace }> {
-    return Object.entries(ctx.workspacesService.state.workspaces).map(
-      ([clusterUri, value]) => {
-        return { clusterUri, value };
-      }
-    );
-  }
-
-  function renderDocuments(documents: types.Document[]) {
-    return documents.map(doc => {
-      const isActiveDoc = doc === docActive;
-      return <MemoizedDocument doc={doc} visible={isActiveDoc} key={doc.uri} />;
-    });
+  function getActiveWorkspaceDocuments() {
+    return ctx.workspacesService
+      .getActiveWorkspaceDocumentService()
+      .getDocuments();
   }
 
   return (
@@ -112,53 +94,19 @@ export function TabHost() {
       <Flex bg="terminalDark" height="32px">
         <Tabs
           flex="1"
-          items={getVisibleDocuments()}
+          items={getActiveWorkspaceDocuments()}
           onClose={handleTabClose}
           onSelect={handleTabClick}
           onContextMenu={handleTabContextMenu}
-          activeTab={docActive?.uri}
+          activeTab={activeDocument?.uri}
           onMoved={handleTabMoved}
           disableNew={false}
           onNew={handleTabNew}
         />
       </Flex>
-      {getAllDocuments().map((d, index) => (
-        <div
-          style={{
-            display:
-              d.clusterUri === ctx.workspacesService.state.rootClusterUri
-                ? 'contents'
-                : 'none',
-          }}
-          key={index}
-        >
-          {renderDocuments(d.value.documents)}
-        </div>
-      ))}
+      <DocumentsRenderer />
     </StyledTabHost>
   );
-}
-
-function MemoizedDocument(props: { doc: types.Document; visible: boolean }) {
-  const { doc, visible } = props;
-  return React.useMemo(() => {
-    switch (doc.kind) {
-      case 'doc.cluster':
-        return <DocumentCluster doc={doc} visible={visible} />;
-      case 'doc.gateway':
-        return <DocumentGateway doc={doc} visible={visible} />;
-      case 'doc.terminal_shell':
-      case 'doc.terminal_tsh_node':
-      case 'doc.terminal_tsh_kube':
-        return <DocumentTerminal doc={doc} visible={visible} />;
-      default:
-        return (
-          <Document visible={visible}>
-            Document kind "{doc.kind}" is not supported
-          </Document>
-        );
-    }
-  }, [visible, doc]);
 }
 
 const StyledTabHost = styled.div`

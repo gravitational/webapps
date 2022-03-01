@@ -34,8 +34,8 @@ export class WorkspacesService extends ImmutableStore<WorkspacesState> {
     super();
   }
 
-  getActiveWorkspace(): Workspace {
-    return this.state.workspaces[this.state.rootClusterUri];
+  getRootClusterUri(): string | undefined {
+    return this.state.rootClusterUri;
   }
 
   getWorkspaces(): Record<string, Workspace> {
@@ -47,6 +47,16 @@ export class WorkspacesService extends ImmutableStore<WorkspacesState> {
       return;
     }
     return this.getWorkspaceDocumentService(this.state.rootClusterUri);
+  }
+
+  getWorkspacesDocumentsServices(): Array<{
+    clusterUri: string;
+    workspaceDocumentsService: DocumentsService;
+  }> {
+    return Object.entries(this.state.workspaces).map(([clusterUri]) => ({
+      clusterUri,
+      workspaceDocumentsService: this.getWorkspaceDocumentService(clusterUri),
+    }));
   }
 
   getWorkspaceDocumentService(
@@ -62,7 +72,8 @@ export class WorkspacesService extends ImmutableStore<WorkspacesState> {
           newState =>
             this.setState(draftState => {
               newState(draftState.workspaces[clusterUri]);
-            })
+            }),
+          clusterUri
         )
       );
     }

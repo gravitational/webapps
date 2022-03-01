@@ -67,6 +67,15 @@ function getTestSetup({ documents }: { documents: Document[] }) {
   };
 
   const workspacesService: Partial<WorkspacesService> = {
+    // @ts-expect-error - using mocks
+    getWorkspacesDocumentsServices() {
+      return [
+        { clusterUri: 'test_uri', workspaceDocumentsService: docsService },
+      ];
+    },
+    getRootClusterUri() {
+      return 'test_uri';
+    },
     getActiveWorkspace() {
       return {
         documents,
@@ -81,7 +90,7 @@ function getTestSetup({ documents }: { documents: Document[] }) {
     useState: jest.fn(),
     state: {
       workspaces: {},
-      rootClusterUri: '',
+      rootClusterUri: 'test_uri',
     },
   };
 

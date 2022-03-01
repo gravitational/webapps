@@ -17,15 +17,15 @@ limitations under the License.
 import { useAppContext } from 'teleterm/ui/appContextProvider';
 import * as types from 'teleterm/ui/services/workspacesService';
 import useAttempt from 'shared/hooks/useAttemptNext';
+import { useWorkspaceDocumentsService } from 'teleterm/ui/Documents';
 
 export function useReconnect(doc: types.DocumentTshNode) {
   const ctx = useAppContext();
+  const workspaceDocumentsService = useWorkspaceDocumentsService();
   const { attempt, setAttempt } = useAttempt('');
 
   function updateDoc() {
-    ctx.workspacesService
-      .getActiveWorkspaceDocumentService()
-      .update(doc.uri, { status: 'connected' });
+    workspaceDocumentsService.update(doc.uri, { status: 'connected' });
   }
 
   function reconnect() {

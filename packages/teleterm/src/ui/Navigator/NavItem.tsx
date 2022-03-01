@@ -32,7 +32,7 @@ import { color, space } from 'design/system';
 //   );
 // };
 
-export const ListItem = styled.div`
+export const ListItem = styled.button`
   white-space: nowrap;
   box-sizing: border-box;
   display: flex;
@@ -47,6 +47,8 @@ export const ListItem = styled.div`
   font-family: ${props => props.theme.font};
   color: ${props => props.theme.colors.text.primary};
   height: 36px;
+  background: inherit;
+  border: none;
 
   &:hover {
     background: ${props => props.theme.colors.primary.light};

@@ -87,7 +87,3 @@ export type CreateGatewayDocumentOpts = {
   title: string;
   port?: string;
 };
-
-export type CreateClusterDocumentOpts = {
-  clusterUri: string;
-};

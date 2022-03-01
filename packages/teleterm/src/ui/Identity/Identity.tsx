@@ -9,7 +9,7 @@ import { Cluster } from 'teleterm/services/tshd/types';
 import { SortDesc } from 'design/Icon';
 
 export function Identity() {
-  const shortInfoRef = useRef<HTMLDivElement>();
+  const shortInfoRef = useRef<HTMLButtonElement>();
   const [isLongInfoOpened, setIsLongInfoOpened] = useState(false);
   const ctx = useAppContext();
 
@@ -21,7 +21,7 @@ export function Identity() {
   }
 
   function getActiveCluster(): Cluster | undefined {
-    const clusterUri = ctx.workspacesService.state.rootClusterUri;
+    const clusterUri = ctx.workspacesService.getRootClusterUri();
     if (!clusterUri) {
       return;
     }
@@ -32,7 +32,7 @@ export function Identity() {
     .getClusters()
     .filter(c => !c.leaf)
     .map(cluster => ({
-      active: ctx.workspacesService.state.rootClusterUri === cluster.uri,
+      active: cluster.uri === ctx.workspacesService.getRootClusterUri(),
       title: cluster.name,
       uri: cluster.uri,
       connected: cluster.connected,
@@ -53,12 +53,12 @@ export function Identity() {
   const loggedInUser = activeCluster?.loggedInUser;
   return (
     <>
-      <div
+      <ShortInfoButton
         ref={shortInfoRef}
         onClick={() => setIsLongInfoOpened(prevState => !prevState)}
       >
         {loggedInUser ? (
-          <Container alignItems="center">
+          <ShortInfoContainer alignItems="center">
             <Flex flexDirection="column">
               <Text typography="paragraph2" bold>
                 {loggedInUser.name}
@@ -73,11 +73,11 @@ export function Identity() {
               </Text>
             </Flex>
             <SortDesc ml={24} />
-          </Container>
+          </ShortInfoContainer>
         ) : (
           'Select cluster'
         )}
-      </div>
+      </ShortInfoButton>
       <Popover
         open={isLongInfoOpened}
         anchorEl={shortInfoRef.current}
@@ -86,8 +86,11 @@ export function Identity() {
       >
         <Background>
           <Padding>
-            Roles: {loggedInUser?.rolesList?.map((role, index) => (
-              <Text as="span" bold key={index}>{role}</Text>
+            Roles:{' '}
+            {loggedInUser?.rolesList?.map((role, index) => (
+              <Text as="span" bold key={index}>
+                {role}
+              </Text>
             ))}
           </Padding>
           <Separator />
@@ -100,8 +103,14 @@ export function Identity() {
   );
 }
 
-const Container = styled(Flex)`
+const ShortInfoButton = styled.button`
+  background: inherit;
+  border: none;
+`;
+
+const ShortInfoContainer = styled(Flex)`
   cursor: pointer;
+  color: ${props => props.theme.colors.text.primary};
 `;
 
 const Padding = styled.div`

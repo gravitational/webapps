@@ -18,9 +18,11 @@ import React from 'react';
 import { useAppContext } from 'teleterm/ui/appContextProvider';
 import * as types from 'teleterm/ui/services/workspacesService';
 import useAsync from 'teleterm/ui/useAsync';
+import { useWorkspaceDocumentsService } from 'teleterm/ui/Documents';
 
 export default function useGateway(doc: types.DocumentGateway) {
   const ctx = useAppContext();
+  const workspaceDocumentsService = useWorkspaceDocumentsService();
   const gateway = ctx.clustersService.findGateway(doc.gatewayUri);
   const connected = !!gateway;
 
@@ -32,11 +34,9 @@ export default function useGateway(doc: types.DocumentGateway) {
         user: doc.targetUser,
       });
 
-      ctx.workspacesService
-        .getActiveWorkspaceDocumentService()
-        .update(doc.uri, {
-          gatewayUri: gw.uri,
-        });
+      workspaceDocumentsService.update(doc.uri, {
+        gatewayUri: gw.uri,
+      });
     }
   );
 
@@ -71,7 +71,7 @@ export default function useGateway(doc: types.DocumentGateway) {
 
   React.useEffect(() => {
     if (disconnectAttempt.status === 'success') {
-      ctx.workspacesService.getActiveWorkspaceDocumentService().close(doc.uri);
+      workspaceDocumentsService.close(doc.uri);
     }
   }, [disconnectAttempt.status]);
 
