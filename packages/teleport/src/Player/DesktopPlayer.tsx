@@ -1,6 +1,8 @@
-import React from 'react';
+import React, { useState } from 'react';
 
 import styled from 'styled-components';
+
+import { Indicator, Box } from 'design';
 
 import cfg from 'teleport/config';
 import { PlayerClient } from 'teleport/lib/tdp';
@@ -19,30 +21,49 @@ export const DesktopPlayer = ({
   clusterId: string;
   durationMs: number;
 }) => {
-  const { playerClient, tdpCliOnPngFrame, tdpCliOnClientScreenSpec } =
-    useDesktopPlayer({
-      sid,
-      clusterId,
-    });
+  const {
+    playerClient,
+    tdpCliOnPngFrame,
+    tdpCliOnClientScreenSpec,
+    showCanvas,
+  } = useDesktopPlayer({
+    sid,
+    clusterId,
+  });
 
   return (
-    <StyledPlayer>
-      {/* NOTE: tdpCliOnClientScreenSpec depends on the order of elements within StyledPlayer.
+    <>
+      <StyledPlayer>
+        {/* NOTE: tdpCliOnClientScreenSpec depends on the order of elements within StyledPlayer.
       Be sure to update it if the elements within are changed. */}
-      <TdpClientCanvas
-        tdpCli={playerClient}
-        tdpCliOnPngFrame={tdpCliOnPngFrame}
-        tdpCliOnClientScreenSpec={tdpCliOnClientScreenSpec}
-        onContextMenu={() => true}
-        // overflow: 'hidden' is needed to prevent the canvas from outgrowing the container due to some weird css flex idiosyncracy.
-        // See https://gaurav5430.medium.com/css-flex-positioning-gotchas-child-expands-to-more-than-the-width-allowed-by-the-parent-799c37428dd6.
-        style={{
-          alignSelf: 'center',
-          overflow: 'hidden',
-        }}
-      />
-      <ProgressBarDesktop playerClient={playerClient} durationMs={durationMs} />
-    </StyledPlayer>
+        {!showCanvas && (
+          <Box textAlign="center" m={10}>
+            <Indicator />
+          </Box>
+        )}
+
+        <TdpClientCanvas
+          tdpCli={playerClient}
+          tdpCliOnPngFrame={tdpCliOnPngFrame}
+          tdpCliOnClientScreenSpec={tdpCliOnClientScreenSpec}
+          onContextMenu={() => true}
+          // overflow: 'hidden' is needed to prevent the canvas from outgrowing the container due to some weird css flex idiosyncracy.
+          // See https://gaurav5430.medium.com/css-flex-positioning-gotchas-child-expands-to-more-than-the-width-allowed-by-the-parent-799c37428dd6.
+          style={{
+            alignSelf: 'center',
+            overflow: 'hidden',
+            display: showCanvas ? 'flex' : 'none',
+          }}
+        />
+        <ProgressBarDesktop
+          playerClient={playerClient}
+          durationMs={durationMs}
+          style={{
+            display: showCanvas ? 'flex' : 'none',
+          }}
+        />
+      </StyledPlayer>
+    </>
   );
 };
 
@@ -60,6 +81,8 @@ const useDesktopPlayer = ({
       .replace(':sid', sid)
       .replace(':token', getAccessToken())
   );
+
+  const [showCanvas, setShowCanvas] = useState(false);
 
   const tdpCliOnPngFrame = (
     ctx: CanvasRenderingContext2D,
@@ -84,17 +107,21 @@ const useDesktopPlayer = ({
       // Use the full width of the screen and scale the height.
       canvas.style.height = `${(fullWidth * spec.height) / spec.width}px`;
     } else if (originalAspectRatio < currentAspectRatio) {
+      // Use the full height of the screen and scale the width.
       canvas.style.width = `${(fullHeight * spec.width) / spec.height}px`;
     }
 
     canvas.width = spec.width;
     canvas.height = spec.height;
+
+    setShowCanvas(true);
   };
 
   return {
     playerClient,
     tdpCliOnPngFrame,
     tdpCliOnClientScreenSpec,
+    showCanvas,
   };
 };
 

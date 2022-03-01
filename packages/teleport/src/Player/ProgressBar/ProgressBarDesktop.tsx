@@ -11,8 +11,9 @@ import ProgressBar from './ProgressBar';
 export const ProgressBarDesktop = (props: {
   playerClient: PlayerClient;
   durationMs: number;
+  style?: React.CSSProperties;
 }) => {
-  const { playerClient, durationMs } = props;
+  const { playerClient, durationMs, style } = props;
 
   const toHuman = (currentMs: number) => {
     return format(dateToUtc(new Date(currentMs)), 'mm:ss');
@@ -75,6 +76,7 @@ export const ProgressBarDesktop = (props: {
       {...state}
       toggle={() => playerClient.togglePlayPause()}
       move={() => {}}
+      style={style}
     />
   );
 };
