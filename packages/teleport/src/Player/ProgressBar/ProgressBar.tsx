@@ -23,7 +23,7 @@ import Slider from './Slider';
 export default function ProgressBar(props: ProgressBarProps) {
   const Icon = props.isPlaying ? Icons.CirclePause : Icons.CirclePlay;
   return (
-    <StyledProgessBar style={props.style}>
+    <StyledProgessBar style={props.style} id={props.id}>
       <ActionButton onClick={props.toggle}>
         <Icon />
       </ActionButton>
@@ -52,6 +52,7 @@ export type ProgressBarProps = {
   move: (value: any) => void;
   toggle: () => void;
   style?: React.CSSProperties;
+  id?: string;
 };
 
 const SliderContainer = styled.div`

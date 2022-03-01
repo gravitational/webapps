@@ -12,8 +12,9 @@ export const ProgressBarDesktop = (props: {
   playerClient: PlayerClient;
   durationMs: number;
   style?: React.CSSProperties;
+  id?: string;
 }) => {
-  const { playerClient, durationMs, style } = props;
+  const { playerClient, durationMs } = props;
 
   const toHuman = (currentMs: number) => {
     return format(dateToUtc(new Date(currentMs)), 'mm:ss');
@@ -76,7 +77,8 @@ export const ProgressBarDesktop = (props: {
       {...state}
       toggle={() => playerClient.togglePlayPause()}
       move={() => {}}
-      style={style}
+      style={props.style}
+      id={props.id}
     />
   );
 };

@@ -34,8 +34,6 @@ export const DesktopPlayer = ({
   return (
     <>
       <StyledPlayer>
-        {/* NOTE: tdpCliOnClientScreenSpec depends on the order of elements within StyledPlayer.
-      Be sure to update it if the elements within are changed. */}
         {!showCanvas && (
           <Box textAlign="center" m={10}>
             <Indicator />
@@ -61,6 +59,7 @@ export const DesktopPlayer = ({
           style={{
             display: showCanvas ? 'flex' : 'none',
           }}
+          id="progressBarDesktop"
         />
       </StyledPlayer>
     </>
@@ -96,7 +95,7 @@ const useDesktopPlayer = ({
     spec: ClientScreenSpec
   ) => {
     const styledPlayer = canvas.parentElement;
-    const progressBar = styledPlayer.children.item(1);
+    const progressBar = styledPlayer.children.namedItem('progressBarDesktop');
 
     const fullWidth = styledPlayer.clientWidth;
     const fullHeight = styledPlayer.clientHeight - progressBar.clientHeight;
