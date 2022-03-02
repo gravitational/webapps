@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 
 import styled from 'styled-components';
 
@@ -73,15 +73,21 @@ const useDesktopPlayer = ({
   sid: string;
   clusterId: string;
 }) => {
-  const playerClient = new PlayerClient(
-    cfg.api.desktopPlaybackWsAddr
-      .replace(':fqdn', getHostName())
-      .replace(':clusterId', clusterId)
-      .replace(':sid', sid)
-      .replace(':token', getAccessToken())
-  );
+  const [playerClient, setPlayerClient] = useState<PlayerClient | null>(null);
 
   const [showCanvas, setShowCanvas] = useState(false);
+
+  useEffect(() => {
+    setPlayerClient(
+      new PlayerClient(
+        cfg.api.desktopPlaybackWsAddr
+          .replace(':fqdn', getHostName())
+          .replace(':clusterId', clusterId)
+          .replace(':sid', sid)
+          .replace(':token', getAccessToken())
+      )
+    );
+  }, [clusterId, sid]);
 
   const tdpCliOnPngFrame = (
     ctx: CanvasRenderingContext2D,
