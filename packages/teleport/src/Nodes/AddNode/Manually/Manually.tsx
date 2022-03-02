@@ -21,7 +21,6 @@ import * as links from 'teleport/services/links';
 import { State } from './../useAddNode';
 
 export default function Manually({
-  isEnterprise,
   user,
   version,
   isAuthTypeLocal,
@@ -131,7 +130,6 @@ const StepsWithToken = ({ joinToken, host, createJoinToken, expiry }) => (
 );
 
 type Props = {
-  isEnterprise: boolean;
   user: string;
   version: string;
   isAuthTypeLocal: boolean;

@@ -35,7 +35,6 @@ export default function Container(props: Props) {
 }
 
 export function AddNode({
-  isEnterprise,
   user,
   onClose,
   script,
@@ -86,7 +85,6 @@ export function AddNode({
           )}
           {!automatic && (
             <Manually
-              isEnterprise={isEnterprise}
               user={user}
               version={version}
               isAuthTypeLocal={isAuthTypeLocal}

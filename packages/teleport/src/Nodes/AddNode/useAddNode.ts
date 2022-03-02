@@ -23,7 +23,6 @@ import { BashCommand, NodeToken } from 'teleport/services/nodes';
 
 export default function useAddNode(ctx: TeleportContext) {
   const { attempt, run } = useAttempt('processing');
-  const isEnterprise = ctx.isEnterprise;
   const version = ctx.storeUser.state.cluster.authVersion;
   const user = ctx.storeUser.state.username;
   const isAuthTypeLocal = !ctx.storeUser.isSso();
@@ -60,7 +59,6 @@ export default function useAddNode(ctx: TeleportContext) {
   }
 
   return {
-    isEnterprise,
     createJoinToken,
     automatic,
     setAutomatic,
