@@ -4,7 +4,11 @@ import { throttle } from 'lodash';
 import { dateToUtc } from 'shared/services/loc';
 import { format } from 'date-fns';
 
-import { PlayerClient, PlayerClientEvent } from 'teleport/lib/tdp';
+import {
+  PlayerClient,
+  PlayerClientEvent,
+  TdpClientEvent,
+} from 'teleport/lib/tdp';
 
 import ProgressBar from './ProgressBar';
 
@@ -58,13 +62,21 @@ export const ProgressBarDesktop = (props: {
         currentTimeMs => throttledUpdateCurrentTime(currentTimeMs)
       );
 
-      playerClient.addListener(PlayerClientEvent.SESSION_END, () => {
+      const progressToEnd = () => {
         throttledUpdateCurrentTime.cancel();
         // TODO(isaiah): Make this smoother
         // https://github.com/gravitational/webapps/issues/579
         setState(prevState => {
           return { ...prevState, current: durationMs };
         });
+      };
+
+      playerClient.addListener(PlayerClientEvent.SESSION_END, () => {
+        progressToEnd();
+      });
+
+      playerClient.addListener(TdpClientEvent.TDP_ERROR, () => {
+        progressToEnd();
       });
 
       return () => {

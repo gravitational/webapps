@@ -50,8 +50,8 @@ export class PlayerClient extends Client {
       this.emit(PlayerClientEvent.PLAYBACK_ERROR, new Error(json.errorText));
     } else {
       const ms = json.ms;
-      super.processMessage(base64ToArrayBuffer(json.message));
       this.emit(PlayerClientEvent.UPDATE_CURRENT_TIME, ms);
+      super.processMessage(base64ToArrayBuffer(json.message));
     }
   }
 
