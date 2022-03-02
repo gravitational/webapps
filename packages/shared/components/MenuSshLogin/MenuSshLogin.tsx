@@ -120,7 +120,7 @@ export const LoginItemList = ({ logins, onClick, onKeyPress }) => {
         type="text"
         autoFocus
         placeholder="Enter login name..."
-        autocomplete="off"
+        autoComplete="off"
       />
       {$menuItems}
     </React.Fragment>
