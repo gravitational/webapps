@@ -7,6 +7,7 @@ import styled from 'styled-components';
 import { ListItem } from 'teleterm/ui/Navigator/NavItem';
 import { Cluster } from 'teleterm/services/tshd/types';
 import { SortDesc } from 'design/Icon';
+import AppContext from 'teleterm/ui/appContext';
 
 export function Identity() {
   const shortInfoRef = useRef<HTMLButtonElement>();
@@ -20,13 +21,7 @@ export function Identity() {
     ctx.workspacesService.setActiveWorkspace(clusterUri);
   }
 
-  function getActiveCluster(): Cluster | undefined {
-    const clusterUri = ctx.workspacesService.getRootClusterUri();
-    if (!clusterUri) {
-      return;
-    }
-    return ctx.clustersService.findCluster(clusterUri);
-  }
+  const activeRootCluster = getActiveRootCluster(ctx);
 
   const $clustersItems = ctx.clustersService
     .getClusters()
@@ -48,9 +43,7 @@ export function Identity() {
       />
     ));
 
-  const activeCluster = getActiveCluster();
-
-  const loggedInUser = activeCluster?.loggedInUser;
+  const loggedInUser = activeRootCluster?.loggedInUser;
   return (
     <>
       <ShortInfoButton
@@ -69,7 +62,7 @@ export function Identity() {
                 mb="0"
                 css={{ opacity: 0.7, lineHeight: '14px' }}
               >
-                {activeCluster.name}
+                {activeRootCluster.name}
               </Text>
             </Flex>
             <SortDesc ml={24} />
@@ -101,6 +94,14 @@ export function Identity() {
       </Popover>
     </>
   );
+}
+
+function getActiveRootCluster(ctx: AppContext): Cluster | undefined {
+  const clusterUri = ctx.workspacesService.getRootClusterUri();
+  if (!clusterUri) {
+    return;
+  }
+  return ctx.clustersService.findCluster(clusterUri);
 }
 
 const ShortInfoButton = styled.button`
