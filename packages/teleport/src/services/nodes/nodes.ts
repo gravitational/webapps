@@ -14,23 +14,28 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import { map } from 'lodash';
 import api from 'teleport/services/api';
 import cfg from 'teleport/config';
 import makeNode from './makeNode';
 import makeNodeToken from './makeNodeToken';
 import makeAppBashCmd from './makeAppBashCmd';
-import makeNodeBashCmd from './makeNodeBashCmd';
+import { NodeToken, NodesResponse } from './types';
 
 const service = {
-  fetchNodes(clusterId?: string) {
-    return api
-      .get(cfg.getClusterNodesUrl(clusterId))
-      .then(json => map(json.items, makeNode));
+  fetchNodes(clusterId?: string): Promise<NodesResponse> {
+    return api.get(cfg.getClusterNodesUrl(clusterId)).then(json => {
+      const items = json?.items || [];
+
+      return {
+        nodes: items.map(makeNode),
+        startKey: json?.startKey,
+        totalCount: json?.totalCount,
+      };
+    });
   },
 
-  createNodeBashCommand() {
-    return api.post(cfg.getNodeJoinTokenUrl()).then(makeNodeBashCmd);
+  fetchJoinToken(): Promise<NodeToken> {
+    return api.post(cfg.getNodeJoinTokenUrl()).then(makeNodeToken);
   },
 
   createAppBashCommand(appName: string, appUri: string) {

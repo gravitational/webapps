@@ -16,7 +16,7 @@ limitations under the License.
 
 import { useState, useEffect, useRef, Dispatch, SetStateAction } from 'react';
 import { TdpClient, ButtonState, ScrollAxis } from 'teleport/lib/tdp';
-import { PngFrame } from 'teleport/lib/tdp/codec';
+import { ClipboardData, PngFrame } from 'teleport/lib/tdp/codec';
 import { TopBarHeight } from './TopBar';
 import cfg from 'teleport/config';
 import { getAccessToken, getHostName } from 'teleport/services/api';
@@ -29,9 +29,10 @@ export default function useTdpClientCanvas(props: Props) {
     clusterId,
     setTdpConnection,
     setWsConnection,
+    enableClipboardSharing,
   } = props;
   const [tdpClient, setTdpClient] = useState<TdpClient | null>(null);
-  const firstImageFragmentRef = useRef(true);
+  const initialTdpConnectionSucceeded = useRef(false);
 
   useEffect(() => {
     const { width, height } = getDisplaySize();
@@ -55,15 +56,22 @@ export default function useTdpClientCanvas(props: Props) {
     canvas.height = height;
   };
 
-  // Default TdpClientEvent.IMAGE_FRAGMENT handler (buffered)
+  // Default TdpClientEvent.TDP_PNG_FRAME handler (buffered)
   const onPngFrame = (ctx: CanvasRenderingContext2D, pngFrame: PngFrame) => {
-    // The first image fragment we see signals a successful rdp connection on the backend.
-    if (firstImageFragmentRef.current) {
+    // The first image fragment we see signals a successful tdp connection.
+    if (!initialTdpConnectionSucceeded.current) {
       syncCanvasSizeToDisplaySize(ctx.canvas);
       setTdpConnection({ status: 'success' });
-      firstImageFragmentRef.current = false;
+      initialTdpConnectionSucceeded.current = true;
     }
     ctx.drawImage(pngFrame.data, pngFrame.left, pngFrame.top);
+  };
+
+  // Default TdpClientEvent.TDP_CLIPBOARD_DATA handler.
+  const onClipboardData = (clipboardData: ClipboardData) => {
+    if (enableClipboardSharing && document.hasFocus()) {
+      navigator.clipboard.writeText(clipboardData.data);
+    }
   };
 
   // Default TdpClientEvent.TDP_ERROR handler
@@ -130,10 +138,36 @@ export default function useTdpClientCanvas(props: Props) {
   // on the remote machine.
   const onContextMenu = () => false;
 
+  const sendLocalClipboardToRemote = (cli: TdpClient) => {
+    // We must check that the DOM is focused or navigator.clipboard.readText throws an error.
+    if (enableClipboardSharing && document.hasFocus()) {
+      navigator.clipboard.readText().then(text => {
+        cli.sendClipboardData({
+          data: text,
+        });
+      });
+    }
+  };
+
+  // Syncs the browser-side's clipboard. See the note about mouseenter in the relevant RFD for why this makes sense:
+  // https://github.com/gravitational/teleport/blob/master/rfd/0049-desktop-clipboard.md#local-copy-remote-paste
+  const onMouseEnter = (cli: TdpClient, e: MouseEvent) => {
+    e.preventDefault();
+    sendLocalClipboardToRemote(cli);
+  };
+
+  // onMouseEnter does not fire in certain situations, so ensure we cover all of our bases by adding a window level
+  // onfocus handler. See https://github.com/gravitational/webapps/issues/626 for further details.
+  const windowOnFocus = (cli: TdpClient, e: FocusEvent) => {
+    e.preventDefault();
+    sendLocalClipboardToRemote(cli);
+  };
+
   return {
     tdpClient,
     onPngFrame,
     onTdpError,
+    onClipboardData,
     onWsClose,
     onWsOpen,
     onKeyDown,
@@ -143,6 +177,8 @@ export default function useTdpClientCanvas(props: Props) {
     onMouseUp,
     onMouseWheelScroll,
     onContextMenu,
+    onMouseEnter,
+    windowOnFocus,
   };
 }
 
@@ -162,4 +198,5 @@ type Props = {
   clusterId: string;
   setTdpConnection: Dispatch<SetStateAction<Attempt>>;
   setWsConnection: Dispatch<SetStateAction<'open' | 'closed'>>;
+  enableClipboardSharing: boolean;
 };

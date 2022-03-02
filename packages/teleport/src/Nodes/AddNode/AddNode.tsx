@@ -35,6 +35,7 @@ export default function Container(props: Props) {
 }
 
 export function AddNode({
+  isEnterprise,
   user,
   onClose,
   script,
@@ -45,6 +46,7 @@ export function AddNode({
   version,
   attempt,
   isAuthTypeLocal,
+  token,
 }: Props & State) {
   return (
     <Dialog
@@ -80,14 +82,18 @@ export function AddNode({
               expiry={expiry}
               createJoinToken={createJoinToken}
               attempt={attempt}
-              mb={3}
             />
           )}
           {!automatic && (
             <Manually
+              isEnterprise={isEnterprise}
               user={user}
               version={version}
               isAuthTypeLocal={isAuthTypeLocal}
+              joinToken={token}
+              expiry={expiry}
+              createJoinToken={createJoinToken}
+              attempt={attempt}
             />
           )}
         </DialogContent>
