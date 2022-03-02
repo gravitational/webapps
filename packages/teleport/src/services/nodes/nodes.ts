@@ -20,7 +20,7 @@ import cfg from 'teleport/config';
 import makeNode from './makeNode';
 import makeNodeToken from './makeNodeToken';
 import makeAppBashCmd from './makeAppBashCmd';
-import makeNodeBashCmd from './makeNodeBashCmd';
+import { NodeToken } from './types';
 
 const service = {
   fetchNodes(clusterId?: string) {
@@ -29,8 +29,8 @@ const service = {
       .then(json => map(json.items, makeNode));
   },
 
-  createNodeBashCommand() {
-    return api.post(cfg.getNodeJoinTokenUrl()).then(makeNodeBashCmd);
+  fetchJoinToken(): Promise<NodeToken> {
+    return api.post(cfg.getNodeJoinTokenUrl()).then(makeNodeToken);
   },
 
   createAppBashCommand(appName: string, appUri: string) {

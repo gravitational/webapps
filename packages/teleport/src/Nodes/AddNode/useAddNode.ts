@@ -15,12 +15,14 @@ limitations under the License.
 */
 
 import { useState, useEffect } from 'react';
-import TeleportContext from 'teleport/teleportContext';
+import moment from 'moment';
 import useAttempt from 'shared/hooks/useAttemptNext';
+import cfg from 'teleport/config';
+import TeleportContext from 'teleport/teleportContext';
+import { BashCommand, NodeToken } from 'teleport/services/nodes';
 
 export default function useAddNode(ctx: TeleportContext) {
   const { attempt, run } = useAttempt('processing');
-  const canCreateToken = ctx.storeUser.getTokenAccess().create;
   const version = ctx.storeUser.state.cluster.authVersion;
   const user = ctx.storeUser.state.username;
   const isAuthTypeLocal = !ctx.storeUser.isSso();
@@ -28,6 +30,7 @@ export default function useAddNode(ctx: TeleportContext) {
   const [automatic, setAutomatic] = useState(isEnterprise);
   const [script, setScript] = useState('');
   const [expiry, setExpiry] = useState('');
+  const [token, setToken] = useState('');
 
   useEffect(() => {
     createJoinToken();
@@ -35,15 +38,29 @@ export default function useAddNode(ctx: TeleportContext) {
 
   function createJoinToken() {
     return run(() =>
-      ctx.nodeService.createNodeBashCommand().then(cmd => {
+      ctx.nodeService.fetchJoinToken().then(token => {
+        const cmd = createNodeBashCommand(token);
         setExpiry(cmd.expires);
         setScript(cmd.text);
+        setToken(token.id);
       })
     );
   }
 
+  function createNodeBashCommand(node: NodeToken): BashCommand {
+    const { expiry, id } = node;
+
+    const duration = moment(new Date()).diff(expiry);
+    const expires = moment.duration(duration).humanize();
+    const text = `sudo bash -c "$(curl -fsSL ${cfg.getNodeScriptUrl(id)})"`;
+
+    return {
+      text,
+      expires,
+    };
+  }
+
   return {
-    canCreateToken,
     createJoinToken,
     automatic,
     setAutomatic,
@@ -54,6 +71,7 @@ export default function useAddNode(ctx: TeleportContext) {
     user,
     isEnterprise,
     isAuthTypeLocal,
+    token,
   };
 }
 
