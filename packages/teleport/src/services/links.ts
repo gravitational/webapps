@@ -14,29 +14,22 @@
  * limitations under the License.
  */
 
-export const DOWNLOAD_BASE_URL = 'https://get.gravitational.com/';
+const DOWNLOAD_BASE_URL = 'https://get.gravitational.com/';
 
-export function getLinux64(version: string) {
-  return getLink('linux64', version);
-}
-
-export function getLinux32(version: string) {
-  return getLink('linux32', version);
-}
-
-export function getMacOS(version: string) {
-  return getLink('mac', version);
-}
-
-function getLink(type: Arch, version: string) {
+export default function getDownloadLink(
+  type: Arch,
+  version: string,
+  isEnterprise: boolean
+) {
   let infix = 'linux-amd64';
+  const enterprise = isEnterprise ? 'ent-' : '';
   if (type === 'mac') {
     infix = 'darwin-amd64';
   } else if (type === 'linux32') {
     infix = 'linux-386';
   }
 
-  return `${DOWNLOAD_BASE_URL}teleport-v${version}-${infix}-bin.tar.gz`;
+  return `${DOWNLOAD_BASE_URL}teleport-${enterprise}v${version}-${infix}-bin.tar.gz`;
 }
 
 type Arch = 'mac' | 'linux32' | 'linux64';
