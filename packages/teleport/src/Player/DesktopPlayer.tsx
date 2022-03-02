@@ -166,7 +166,7 @@ const useDesktopPlayer = ({
       if (prevAttempt.status !== '' && prevAttempt.status !== 'failed') {
         return {
           status: 'failed',
-          statusText: 'Playback failed for an unknown reason.',
+          statusText: 'connection to the server failed for an unknown reason',
         };
       }
       return prevAttempt;
