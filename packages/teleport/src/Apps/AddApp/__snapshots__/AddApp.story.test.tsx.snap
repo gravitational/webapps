@@ -1556,7 +1556,6 @@ exports[`render manual tab with local user 1`] = `
 .c7 {
   box-sizing: border-box;
   margin-bottom: 32px;
-  min-height: 240px;
   flex: 0 0 auto;
   display: flex;
   flex-direction: column;
@@ -1991,7 +1990,6 @@ exports[`render manual tab with sso user 1`] = `
 .c7 {
   box-sizing: border-box;
   margin-bottom: 32px;
-  min-height: 240px;
   flex: 0 0 auto;
   display: flex;
   flex-direction: column;
@@ -2447,7 +2445,6 @@ exports[`render manual tab with token 1`] = `
 .c7 {
   box-sizing: border-box;
   margin-bottom: 32px;
-  min-height: 240px;
   flex: 0 0 auto;
   display: flex;
   flex-direction: column;

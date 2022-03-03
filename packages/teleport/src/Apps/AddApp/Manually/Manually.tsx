@@ -57,7 +57,7 @@ export default function Manually({
 
   return (
     <>
-      <DialogContent minHeight="240px" flex="0 0 auto">
+      <DialogContent flex="0 0 auto">
         <Box mb={4}>
           <Text bold as="span">
             Step 1
