@@ -44,7 +44,8 @@ export default function useTable<T>({
       data,
       searchValue,
       sort,
-      searchableProps || columns.map(column => column.key),
+      searchableProps ||
+        columns.filter(column => column.key).map(column => column.key),
       showFirst
     );
 
@@ -172,11 +173,6 @@ function searchAndFilterCb<T>(
   searchValue: string,
   propName: keyof T & string
 ) {
-  if (propName === 'tags') {
-    return targetValue.some(item => {
-      return item.toLocaleLowerCase().includes(searchValue.toLocaleLowerCase());
-    });
-  }
   if (propName.toLocaleLowerCase().includes('date')) {
     return displayDate(targetValue).includes(searchValue);
   }
