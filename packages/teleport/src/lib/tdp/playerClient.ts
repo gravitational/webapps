@@ -48,9 +48,10 @@ export class PlayerClient extends Client {
       this.emit(PlayerClientEvent.SESSION_END);
     } else if (json.message === 'error') {
       this.emit(PlayerClientEvent.PLAYBACK_ERROR, new Error(json.errorText));
+    } else if (json.message === 'tick') {
+      this.emit(PlayerClientEvent.UPDATE_CURRENT_TIME, json.ms);
     } else {
-      const ms = json.ms;
-      this.emit(PlayerClientEvent.UPDATE_CURRENT_TIME, ms);
+      this.emit(PlayerClientEvent.UPDATE_CURRENT_TIME, json.ms);
       super.processMessage(base64ToArrayBuffer(json.message));
     }
   }
