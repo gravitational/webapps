@@ -17,6 +17,7 @@ limitations under the License.
 import { useState } from 'react';
 import TeleportContext from 'teleport/teleportContext';
 import useAttempt from 'shared/hooks/useAttemptNext';
+import makeAppBashCmd from 'teleport/services/nodes/makeAppBashCmd';
 
 export default function useAddApp(ctx: TeleportContext) {
   const { attempt, run } = useAttempt('');
@@ -27,12 +28,15 @@ export default function useAddApp(ctx: TeleportContext) {
   const [automatic, setAutomatic] = useState(isEnterprise);
   const [cmd, setCmd] = useState('');
   const [expires, setExpires] = useState('');
+  const [token, setToken] = useState('');
 
   function createToken(appName = '', appUri = '') {
     return run(() =>
-      ctx.nodeService.createAppBashCommand(appName, appUri).then(result => {
-        setCmd(result.text);
-        setExpires(result.expires);
+      ctx.nodeService.fetchJoinToken().then(token => {
+        const cmd = makeAppBashCmd(token)
+        setExpires(cmd.expires);
+        setCmd(cmd.text);
+        setToken(token.id);
       })
     );
   }
@@ -48,6 +52,7 @@ export default function useAddApp(ctx: TeleportContext) {
     setAutomatic,
     isAuthTypeLocal,
     isEnterprise,
+    token,
   };
 }
 

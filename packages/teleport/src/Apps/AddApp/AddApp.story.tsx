@@ -40,10 +40,23 @@ export const Failed = () => (
   />
 );
 
-export const ManuallyLocal = () => <AddApp {...props} automatic={false} />;
+export const ManuallyProcessing = () => (
+  <AddApp {...props} automatic={false} attempt={{ status: 'processing' }} />
+);
 
-export const ManuallySSO = () => (
-  <AddApp {...props} automatic={false} isAuthTypeLocal={false} />
+export const ManuallyWithToken = () => <AddApp {...props} automatic={false} />;
+
+export const ManuallyWithoutTokenLocal = () => (
+  <AddApp {...props} automatic={false} attempt={{ status: 'failed' }} />
+);
+
+export const ManuallyWithoutTokenSSO = () => (
+  <AddApp
+    {...props}
+    automatic={false}
+    attempt={{ status: 'failed' }}
+    isAuthTypeLocal={false}
+  />
 );
 
 const props = {
@@ -63,4 +76,5 @@ const props = {
     status: '',
     statusText: '',
   } as any,
+  token: 'join-token',
 };

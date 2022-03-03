@@ -39,9 +39,7 @@ const service = {
   },
 
   createAppBashCommand(appName: string, appUri: string) {
-    return api
-      .post(cfg.getNodeJoinTokenUrl())
-      .then(makeNodeToken)
+    return this.fetchJoinToken()
       .then(token => makeAppBashCmd(token, appName, appUri));
   },
 };

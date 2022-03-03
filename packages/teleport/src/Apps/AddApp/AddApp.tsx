@@ -42,6 +42,7 @@ export function AddApp({
   automatic,
   setAutomatic,
   isAuthTypeLocal,
+  token,
 }: State & Props) {
   return (
     <Dialog
@@ -90,6 +91,10 @@ export function AddApp({
             onClose={onClose}
             user={user}
             version={version}
+            expires={expires}
+            createToken={createToken}
+            attempt={attempt}
+            token={token}
           />
         )}
       </Flex>
