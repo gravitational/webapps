@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useRef } from 'react';
+import React, { useEffect, useState } from 'react';
 
 import styled from 'styled-components';
 
@@ -39,43 +39,41 @@ export const DesktopPlayer = ({
   const displayProgressBar = attempt.status !== 'processing';
 
   return (
-    <>
-      <StyledPlayer>
-        {attempt.status === 'processing' && (
-          <Box textAlign="center" m={10}>
-            <Indicator />
-          </Box>
-        )}
+    <StyledPlayer>
+      {attempt.status === 'processing' && (
+        <Box textAlign="center" m={10}>
+          <Indicator />
+        </Box>
+      )}
 
-        {attempt.status === 'failed' && (
-          <DesktopPlayerAlert my={4} children={attempt.statusText} />
-        )}
+      {attempt.status === 'failed' && (
+        <DesktopPlayerAlert my={4} children={attempt.statusText} />
+      )}
 
-        <TdpClientCanvas
-          tdpCli={playerClient}
-          tdpCliOnPngFrame={tdpCliOnPngFrame}
-          tdpCliOnClientScreenSpec={tdpCliOnClientScreenSpec}
-          tdpCliOnWsClose={tdpCliOnWsClose}
-          tdpCliOnTdpError={tdpCliOnTdpError}
-          onContextMenu={() => true}
-          // overflow: 'hidden' is needed to prevent the canvas from outgrowing the container due to some weird css flex idiosyncracy.
-          // See https://gaurav5430.medium.com/css-flex-positioning-gotchas-child-expands-to-more-than-the-width-allowed-by-the-parent-799c37428dd6.
-          style={{
-            alignSelf: 'center',
-            overflow: 'hidden',
-            display: displayCanvas ? 'flex' : 'none',
-          }}
-        />
-        <ProgressBarDesktop
-          playerClient={playerClient}
-          durationMs={durationMs}
-          style={{
-            display: displayProgressBar ? 'flex' : 'none',
-          }}
-          id="progressBarDesktop"
-        />
-      </StyledPlayer>
-    </>
+      <TdpClientCanvas
+        tdpCli={playerClient}
+        tdpCliOnPngFrame={tdpCliOnPngFrame}
+        tdpCliOnClientScreenSpec={tdpCliOnClientScreenSpec}
+        tdpCliOnWsClose={tdpCliOnWsClose}
+        tdpCliOnTdpError={tdpCliOnTdpError}
+        onContextMenu={() => true}
+        // overflow: 'hidden' is needed to prevent the canvas from outgrowing the container due to some weird css flex idiosyncracy.
+        // See https://gaurav5430.medium.com/css-flex-positioning-gotchas-child-expands-to-more-than-the-width-allowed-by-the-parent-799c37428dd6.
+        style={{
+          alignSelf: 'center',
+          overflow: 'hidden',
+          display: displayCanvas ? 'flex' : 'none',
+        }}
+      />
+      <ProgressBarDesktop
+        playerClient={playerClient}
+        durationMs={durationMs}
+        style={{
+          display: displayProgressBar ? 'flex' : 'none',
+        }}
+        id="progressBarDesktop"
+      />
+    </StyledPlayer>
   );
 };
 
@@ -146,7 +144,7 @@ const useDesktopPlayer = ({
         (err: Error) => {
           setAttempt({
             status: 'failed',
-            statusText: 'playback error: ' + err.message,
+            statusText: `There was an error while playing this session: ${err.message}`,
           });
         }
       );
