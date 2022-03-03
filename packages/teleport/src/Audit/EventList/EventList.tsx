@@ -32,7 +32,6 @@ export default function EventList(props: Props) {
     pageSize = 50,
   } = props;
   const [detailsToShow, setDetailsToShow] = useState<Event>();
-
   return (
     <>
       <Table
@@ -62,6 +61,7 @@ export default function EventList(props: Props) {
         ]}
         emptyText={'No Events Found'}
         isSearchable
+        searchableProps={['code', 'codeDesc', 'time', 'user', 'message', 'id']}
         initialSort={{ key: 'time', dir: 'DESC' }}
         pagination={{ pageSize }}
         fetching={{
