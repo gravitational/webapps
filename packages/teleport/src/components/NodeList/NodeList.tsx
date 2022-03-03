@@ -53,6 +53,14 @@ function NodeList(props: Props) {
         pageSize,
       }}
       isSearchable
+      searchableProps={[
+        'addr',
+        'hostname',
+        'id',
+        'tunnel',
+        'tags',
+        'clusterId',
+      ]}
     />
   );
 }

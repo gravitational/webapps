@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import isMatch from 'design/utils/match';
-import { displayDate } from 'shared/services/loc';
+import { displayDate, displayDateTime } from 'shared/services/loc';
 import paginateData from './Pager/paginateData';
 import { TableProps, TableColumn } from './types';
 
@@ -9,6 +9,7 @@ export default function useTable<T>({
   columns,
   pagination,
   showFirst,
+  searchableProps,
   ...props
 }: TableProps<T>) {
   const [state, setState] = useState(() => {
@@ -43,7 +44,7 @@ export default function useTable<T>({
       data,
       searchValue,
       sort,
-      columns.map(column => column.key),
+      searchableProps || columns.map(column => column.key),
       showFirst
     );
 
@@ -124,16 +125,15 @@ function sortAndFilter<T>(
   data: T[] = [],
   searchValue = '',
   sort: State<T>['state']['sort'],
-  columnKeys: (keyof T)[],
+  searchableProps: (keyof T)[],
   showFirst?: TableProps<T>['showFirst']
 ) {
   const output = data.filter(obj =>
     isMatch(obj, searchValue, {
-      searchableProps: columnKeys,
+      searchableProps,
       cb: searchAndFilterCb,
     })
   );
-
   if (sort) {
     if (sort.onSort) {
       output.sort((a, b) => sort.onSort(a[sort.key], b[sort.key]));
@@ -179,6 +179,36 @@ function searchAndFilterCb<T>(
   }
   if (propName.toLocaleLowerCase().includes('date')) {
     return displayDate(targetValue).includes(searchValue);
+  }
+  if (propName.toLocaleLowerCase().includes('time')) {
+    return displayDateTime(targetValue).includes(searchValue);
+  }
+  if (typeof targetValue === 'boolean') {
+    return (
+      propName.toLocaleLowerCase().includes(searchValue.toLocaleLowerCase()) &&
+      targetValue
+    );
+  }
+
+  // For searching through elements of an array
+  if (Array.isArray(targetValue)) {
+    return targetValue.some(item => {
+      if (typeof item === 'object') {
+        for (const key in item) {
+          if (
+            item[key]
+              .toLocaleLowerCase()
+              .includes(searchValue.toLocaleLowerCase())
+          ) {
+            return true;
+          }
+        }
+      } else {
+        return item
+          .toLocaleLowerCase()
+          .includes(searchValue.toLocaleLowerCase());
+      }
+    });
   }
 }
 

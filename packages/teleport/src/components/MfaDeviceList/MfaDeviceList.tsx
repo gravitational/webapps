@@ -97,7 +97,7 @@ const renderRemoveCell = (
   mfaDisabled: boolean
 ) => {
   if (id === mostRecentDevice?.id) {
-    return null;
+    return <Cell align="right"></Cell>;
   }
 
   return (

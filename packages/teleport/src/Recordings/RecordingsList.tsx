@@ -86,6 +86,15 @@ export default function RecordingsList(props: Props) {
         dir: 'DESC',
       }}
       isSearchable
+      searchableProps={[
+        'recordingType',
+        'hostname',
+        'description',
+        'createdDate',
+        'sid',
+        'users',
+        'durationText',
+      ]}
     />
   );
 }

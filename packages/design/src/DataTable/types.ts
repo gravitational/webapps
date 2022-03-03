@@ -4,6 +4,7 @@ export type TableProps<T> = {
   emptyText: string;
   pagination?: PaginationConfig;
   isSearchable?: boolean;
+  searchableProps?: Extract<keyof T, string>[];
   initialSort?: InitialSort<T>;
   fetching?: FetchingConfig;
   showFirst?: (data: T[]) => T;
