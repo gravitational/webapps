@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import TeleportContext from 'teleport/teleportContext';
 import useAttempt from 'shared/hooks/useAttemptNext';
 import makeAppBashCmd from 'teleport/services/nodes/makeAppBashCmd';
@@ -30,10 +30,14 @@ export default function useAddApp(ctx: TeleportContext) {
   const [expires, setExpires] = useState('');
   const [token, setToken] = useState('');
 
+  useEffect(() => {
+    createToken();
+  }, []);
+
   function createToken(appName = '', appUri = '') {
     return run(() =>
       ctx.nodeService.fetchJoinToken().then(token => {
-        const cmd = makeAppBashCmd(token)
+        const cmd = makeAppBashCmd(token, appName, appUri);
         setExpires(cmd.expires);
         setCmd(cmd.text);
         setToken(token.id);
