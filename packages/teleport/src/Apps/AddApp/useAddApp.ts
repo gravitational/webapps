@@ -30,10 +30,6 @@ export default function useAddApp(ctx: TeleportContext) {
   const [expires, setExpires] = useState('');
   const [token, setToken] = useState('');
 
-  useEffect(() => {
-    createToken();
-  }, []);
-
   function createToken(appName = '', appUri = '') {
     return run(() =>
       ctx.nodeService.fetchJoinToken().then(token => {
