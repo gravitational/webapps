@@ -137,6 +137,7 @@ export default function LoginForm(props: Props) {
             <FlexBordered as="form" bg={bgColor}>
               <FieldInput
                 rule={requiredField('Username is required')}
+                autoComplete="username"
                 label="Username"
                 autoFocus
                 value={user}
@@ -146,6 +147,7 @@ export default function LoginForm(props: Props) {
               <Box mb={isRecoveryEnabled ? 2 : 4}>
                 <FieldInput
                   rule={requiredField('Password is required')}
+                  autoComplete="current-password"
                   label="Password"
                   value={pass}
                   onChange={e => setPass(e.target.value)}
@@ -187,7 +189,7 @@ export default function LoginForm(props: Props) {
                         width="50%"
                         label="Authenticator code"
                         rule={requiredToken}
-                        autoComplete="off"
+                        autoComplete="one-time-code"
                         value={token}
                         onChange={e => setToken(e.target.value)}
                         type="tel"

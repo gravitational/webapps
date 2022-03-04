@@ -255,7 +255,7 @@ exports[`2fa set to "on" with preferredMfa renders hardware key as first in drop
           Username
         </label>
         <input
-          autocomplete="off"
+          autocomplete="username"
           class="c6"
           color="text.onLight"
           placeholder="Username"
@@ -277,7 +277,7 @@ exports[`2fa set to "on" with preferredMfa renders hardware key as first in drop
             Password
           </label>
           <input
-            autocomplete="off"
+            autocomplete="current-password"
             class="c6"
             color="text.onLight"
             placeholder="Password"

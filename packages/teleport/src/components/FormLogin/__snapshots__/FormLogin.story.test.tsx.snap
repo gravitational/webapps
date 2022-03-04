@@ -154,7 +154,7 @@ exports[`auth2faType: off 1`] = `
         Username
       </label>
       <input
-        autocomplete="off"
+        autocomplete="username"
         class="c5"
         color="text.onLight"
         placeholder="Username"
@@ -176,7 +176,7 @@ exports[`auth2faType: off 1`] = `
           Password
         </label>
         <input
-          autocomplete="off"
+          autocomplete="current-password"
           class="c5"
           color="text.onLight"
           placeholder="Password"
@@ -436,7 +436,7 @@ exports[`auth2faType: optional rendering 1`] = `
         Username
       </label>
       <input
-        autocomplete="off"
+        autocomplete="username"
         class="c5"
         color="text.onLight"
         placeholder="Username"
@@ -458,7 +458,7 @@ exports[`auth2faType: optional rendering 1`] = `
           Password
         </label>
         <input
-          autocomplete="off"
+          autocomplete="current-password"
           class="c5"
           color="text.onLight"
           placeholder="Password"
@@ -797,7 +797,7 @@ exports[`auth2faType: otp rendering 1`] = `
         Username
       </label>
       <input
-        autocomplete="off"
+        autocomplete="username"
         class="c5"
         color="text.onLight"
         placeholder="Username"
@@ -819,7 +819,7 @@ exports[`auth2faType: otp rendering 1`] = `
           Password
         </label>
         <input
-          autocomplete="off"
+          autocomplete="current-password"
           class="c5"
           color="text.onLight"
           placeholder="Password"
@@ -910,7 +910,7 @@ exports[`auth2faType: otp rendering 1`] = `
             Authenticator code
           </label>
           <input
-            autocomplete="off"
+            autocomplete="one-time-code"
             class="c5"
             color="text.onLight"
             placeholder="123 456"
@@ -1181,7 +1181,7 @@ exports[`auth2faType: u2f rendering 1`] = `
         Username
       </label>
       <input
-        autocomplete="off"
+        autocomplete="username"
         class="c5"
         color="text.onLight"
         placeholder="Username"
@@ -1203,7 +1203,7 @@ exports[`auth2faType: u2f rendering 1`] = `
           Password
         </label>
         <input
-          autocomplete="off"
+          autocomplete="current-password"
           class="c5"
           color="text.onLight"
           placeholder="Password"
@@ -1543,7 +1543,7 @@ exports[`auth2faType: webauthn rendering 1`] = `
         Username
       </label>
       <input
-        autocomplete="off"
+        autocomplete="username"
         class="c5"
         color="text.onLight"
         placeholder="Username"
@@ -1565,7 +1565,7 @@ exports[`auth2faType: webauthn rendering 1`] = `
           Password
         </label>
         <input
-          autocomplete="off"
+          autocomplete="current-password"
           class="c5"
           color="text.onLight"
           placeholder="Password"
@@ -1971,7 +1971,7 @@ exports[`cloud auth2faType: on rendering 1`] = `
         Username
       </label>
       <input
-        autocomplete="off"
+        autocomplete="username"
         class="c5"
         color="text.onLight"
         placeholder="Username"
@@ -1993,7 +1993,7 @@ exports[`cloud auth2faType: on rendering 1`] = `
           Password
         </label>
         <input
-          autocomplete="off"
+          autocomplete="current-password"
           class="c5"
           color="text.onLight"
           placeholder="Password"
@@ -2561,7 +2561,7 @@ exports[`server error rendering 1`] = `
         Username
       </label>
       <input
-        autocomplete="off"
+        autocomplete="username"
         class="c6"
         color="text.onLight"
         placeholder="Username"
@@ -2583,7 +2583,7 @@ exports[`server error rendering 1`] = `
           Password
         </label>
         <input
-          autocomplete="off"
+          autocomplete="current-password"
           class="c6"
           color="text.onLight"
           placeholder="Password"
