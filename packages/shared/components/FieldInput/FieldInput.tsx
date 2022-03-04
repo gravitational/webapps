@@ -59,7 +59,7 @@ type Props = {
   label?: string;
   placeholder?: string;
   autoFocus?: boolean;
-  autoComplete?: 'off' | 'on';
+  autoComplete?: 'off' | 'on' | 'username' | 'current-password' | 'new-password' | 'one-time-code';
   type?: 'email' | 'text' | 'password' | 'number' | 'date' | 'week' | 'tel';
   rule?: (options: unknown) => () => unknown;
   onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
