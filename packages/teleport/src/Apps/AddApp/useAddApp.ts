@@ -85,16 +85,4 @@ export function createAppBashCommand(
   };
 }
 
-export function createNodeBashCommand(node: NodeToken): BashCommand {
-  const { expiry, id } = node;
-
-  const expires = formatDistanceStrict(new Date(), new Date(expiry));
-  const text = `sudo bash -c "$(curl -fsSL ${cfg.getNodeScriptUrl(id)})"`;
-
-  return {
-    text,
-    expires,
-  };
-}
-
 export type State = ReturnType<typeof useAddApp>;
