@@ -21,7 +21,14 @@ import Dialog, {
   DialogContent,
   DialogFooter,
 } from 'design/Dialog';
-import { Text, Box, ButtonSecondary, Link } from 'design';
+import {
+  Text,
+  Box,
+  ButtonSecondary,
+  Link,
+  ButtonLink,
+  Indicator,
+} from 'design';
 import Select, { Option } from 'shared/components/Select';
 import { AuthType } from 'teleport/services/user';
 import { DbType, DbProtocol } from 'teleport/services/databases';
@@ -31,17 +38,28 @@ import {
 } from 'teleport/services/databases/makeDatabase';
 import TextSelectCopy from 'teleport/components/TextSelectCopy';
 import DownloadLinks from 'teleport/components/DownloadLinks';
+import useTeleport from 'teleport/useTeleport';
+import useAddDatabase, { State } from './useAddDatabase';
 
-export default function AddDatabase({
-  isEnterprise,
-  username,
-  version,
+export default function Container(props: Props) {
+  const ctx = useTeleport();
+  const state = useAddDatabase(ctx);
+  return <AddDatabase {...state} {...props} />;
+}
+
+export function AddDatabase({
+  createJoinToken,
+  expiry,
+  attempt,
+  token,
   authType,
+  username,
   onClose,
-}: Props) {
+  isEnterprise,
+  version,
+}: Props & State) {
   const { hostname, port } = window.document.location;
   const host = `${hostname}:${port || '443'}`;
-
   const [dbOptions] = useState<Option<DatabaseInfo>[]>(() =>
     options.map(dbOption => {
       return {
@@ -59,6 +77,14 @@ export default function AddDatabase({
     authType === 'sso'
       ? `tsh login --proxy=${host}`
       : `tsh login --proxy=${host} --auth=local --user=${username}`;
+
+  if (attempt.status === 'processing') {
+    return (
+      <Box textAlign="center">
+        <Indicator />
+      </Box>
+    );
+  }
 
   return (
     <Dialog
@@ -81,59 +107,34 @@ export default function AddDatabase({
           {' - Download Teleport package to your computer '}
           <DownloadLinks isEnterprise={isEnterprise} version={version} />
         </Box>
-        <Box mb={4}>
-          <Text bold as="span">
-            Step 2
-          </Text>
-          {' - Login to Teleport'}
-          <TextSelectCopy mt="2" text={connectCmd} />
-        </Box>
-        <Box mb={4}>
-          <Text bold as="span">
-            Step 3
-          </Text>
-          {' - Generate a join token'}
-          <TextSelectCopy mt="2" text="tctl tokens add --type=db" />
-        </Box>
-        <Box mb={4}>
-          <Text bold as="span">
-            Step 4
-          </Text>
-          {` - Select the database type and protocol to use`}
-          <Box mt={2}>
-            <Select
-              value={selectedDbOption}
-              onChange={(o: Option<DatabaseInfo>) => setSelectedDbOption(o)}
-              options={dbOptions}
-              isSearchable={true}
-              maxMenuHeight={220}
-            />
-          </Box>
-        </Box>
-        <Box mb={4}>
-          <Text bold as="span">
-            Step 5
-          </Text>
-          {' - Start the Teleport agent with the following parameters'}
-          <TextSelectCopy
-            mt="2"
-            text={`${generateDbStartCmd(
+        {attempt.status === 'failed' ? (
+          <StepsWithoutToken
+            addCommand={connectCmd}
+            loginCommand={generateDbStartCmd(
               selectedDbOption.value.type,
               selectedDbOption.value.protocol,
-              host
-            )}`}
+              host,
+              ''
+            )}
+            selectedDb={selectedDbOption}
+            onDbChange={(o: Option<DatabaseInfo>) => setSelectedDbOption(o)}
+            dbOptions={dbOptions}
           />
-        </Box>
-        <Box>
-          {`* Note: Learn more about database access in our `}
-          <Link
-            href={'https://goteleport.com/docs/database-access/'}
-            target="_blank"
-          >
-            documentation
-          </Link>
-          .
-        </Box>
+        ) : (
+          <StepsWithToken
+            selectedDb={selectedDbOption}
+            onDbChange={(o: Option<DatabaseInfo>) => setSelectedDbOption(o)}
+            dbOptions={dbOptions}
+            command={generateDbStartCmd(
+              selectedDbOption.value.type,
+              selectedDbOption.value.protocol,
+              host,
+              token
+            )}
+            expiry={expiry}
+            onRegenerateToken={createJoinToken}
+          />
+        )}
       </DialogContent>
       <DialogFooter>
         <ButtonSecondary onClick={onClose}>Close</ButtonSecondary>
@@ -142,12 +143,125 @@ export default function AddDatabase({
   );
 }
 
+const StepsWithToken = ({
+  selectedDb,
+  onDbChange,
+  dbOptions,
+  expiry,
+  command,
+  onRegenerateToken,
+}) => (
+  <>
+    <Box mb={4}>
+      <Text bold as="span">
+        Step 4
+      </Text>
+      {` - Select the database type and protocol to use`}
+      <Box mt={2}>
+        <Select
+          value={selectedDb}
+          onChange={onDbChange}
+          options={dbOptions}
+          isSearchable={true}
+          maxMenuHeight={220}
+        />
+      </Box>
+    </Box>
+    <Box mb={4}>
+      <Text bold as="span">
+        Step 5
+      </Text>
+      {' - Start the Teleport agent with the following parameters'}
+      <Text mt="1">
+        The token will be valid for{' '}
+        <Text bold as={'span'}>
+          {expiry}.
+        </Text>
+      </Text>
+      <TextSelectCopy mt="2" text={command} />
+    </Box>
+    <Box>
+      <ButtonLink onClick={onRegenerateToken}>Regenerate Token</ButtonLink>
+    </Box>
+    <Box>
+      {`* Note: Learn more about database access in our `}
+      <Link
+        href={'https://goteleport.com/docs/database-access/'}
+        target="_blank"
+      >
+        documentation
+      </Link>
+      .
+    </Box>
+  </>
+);
+
+const StepsWithoutToken = ({
+  loginCommand,
+  addCommand,
+  selectedDb,
+  dbOptions,
+  onDbChange,
+}) => (
+  <>
+    <Box mb={4}>
+      <Text bold as="span">
+        Step 2
+      </Text>
+      {' - Login to Teleport'}
+      <TextSelectCopy mt="2" text={loginCommand} />
+    </Box>
+    <Box mb={4}>
+      <Text bold as="span">
+        Step 3
+      </Text>
+      {' - Generate a join token'}
+      <TextSelectCopy mt="2" text="tctl tokens add --type=db" />
+    </Box>
+    <Box mb={4}>
+      <Text bold as="span">
+        Step 4
+      </Text>
+      {` - Select the database type and protocol to use`}
+      <Box mt={2}>
+        <Select
+          value={selectedDb}
+          onChange={onDbChange}
+          options={dbOptions}
+          isSearchable={true}
+          maxMenuHeight={220}
+        />
+      </Box>
+    </Box>
+    <Box mb={4}>
+      <Text bold as="span">
+        Step 5
+      </Text>
+      {' - Start the Teleport agent with the following parameters'}
+      <TextSelectCopy mt="2" text={addCommand} />
+    </Box>
+    <Box>
+      {`* Note: Learn more about database access in our `}
+      <Link
+        href={'https://goteleport.com/docs/database-access/'}
+        target="_blank"
+      >
+        documentation
+      </Link>
+      .
+    </Box>
+  </>
+);
+
 const generateDbStartCmd = (
   type: DbType,
   protocol: DbProtocol,
-  host: string
+  host: string,
+  token: string
 ) => {
-  const baseCommand = `teleport db start --token=[generated-join-token] --auth-server=${host} --name=[db-name] --protocol=${protocol} --uri=[uri]`;
+  const baseCommand = `teleport db start --token=${
+    token || '[generated-join-token]'
+  } --auth-server=${host} --name=[db-name] --protocol=${protocol} --uri=[uri]`;
 
   switch (type) {
     case 'self-hosted':
