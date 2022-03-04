@@ -17,7 +17,8 @@ limitations under the License.
 import api from 'teleport/services/api';
 import cfg from 'teleport/config';
 import makeDatabase from './makeDatabase';
-import { DatabasesResponse } from './types';
+import makeDatabaseToken from './makeDatabaseToken';
+import { DatabasesResponse, JoinToken } from './types';
 
 class DatabaseService {
   fetchDatabases(clusterId?: string): Promise<DatabasesResponse> {
@@ -30,6 +31,10 @@ class DatabaseService {
         totalCount: json?.totalCount,
       };
     });
+  }
+
+  fetchJoinToken(): Promise<JoinToken> {
+    return api.post(cfg.getDatabaseJoinTokenUrl()).then(makeDatabaseToken);
   }
 }
 

@@ -1,5 +1,5 @@
 /*
-Copyright 2021 Gravitational, Inc.
+Copyright 2020 Gravitational, Inc.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -14,24 +14,14 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-export interface Database {
-  name: string;
-  desc: string;
-  title: string;
-  protocol: DbProtocol;
-  tags: string[];
-}
+import { at } from 'lodash';
+import { JoinToken } from './types';
 
-export type DbType = 'redshift' | 'rds' | 'gcp' | 'self-hosted';
-export type DbProtocol = 'postgres' | 'mysql' | 'mongodb';
+export default function makeDatabaseToken(json): JoinToken {
+  const [id, expiry] = at(json, ['id', 'expiry']);
 
-export type DatabasesResponse = {
-  databases: Database[];
-  startKey?: string;
-  totalCount?: number;
-};
-
-export interface JoinToken {
-  id: string;
-  expiry: Date;
+  return {
+    id,
+    expiry: new Date(expiry),
+  };
 }
