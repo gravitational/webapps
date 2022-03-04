@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import { createAppBashCommand } from './commands';
+import { createAppBashCommand } from './useAddApp';
 
 test('encoding', () => {
   const token = { id: '86', expiry: new Date('2019-05-13T20:18:09Z') };
