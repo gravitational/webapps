@@ -116,7 +116,6 @@ export const ProgressBarDesktop = (props: {
       });
 
       return () => {
-        throttledUpdateCurrentTime.cancel();
         playerClient.nuke();
         stopProgress();
       };
