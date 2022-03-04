@@ -33,18 +33,24 @@ export const ProgressBarDesktop = (props: {
     isPlaying: true, // determines whether play or pause symbol is shown
   });
 
+  // updateCurrentTime is a helper function to update the state variable.
+  // It should be used within a setState, like
+  // setState(prevState => {
+  //   return updateCurrentTime(prevState, newTime)
+  // })
+  const updateCurrentTime = (
+    prevState: typeof state,
+    currentTimeMs: number
+  ) => {
+    return {
+      ...prevState,
+      current: currentTimeMs,
+      time: toHuman(currentTimeMs),
+    };
+  };
+
   useEffect(() => {
     if (playerClient) {
-      const updateCurrentTime = (currentTimeMs: number) => {
-        setState(prevState => {
-          return {
-            ...prevState,
-            current: currentTimeMs,
-            time: toHuman(currentTimeMs),
-          };
-        });
-      };
-
       // Starts the smoothing interval, which smooths out the progress of the progress bar.
       // This ensures the bar continues to progress even during playbacks where there are long
       // intervals between TDP events sent to us by the server. The interval should be active
@@ -56,18 +62,10 @@ export const ProgressBarDesktop = (props: {
           setState(prevState => {
             const nextTimeMs = prevState.current + smoothingInterval;
             if (nextTimeMs <= durationMs) {
-              return {
-                ...prevState,
-                current: nextTimeMs,
-                time: toHuman(nextTimeMs),
-              };
+              return updateCurrentTime(prevState, nextTimeMs);
             } else {
               stopProgress();
-              return {
-                ...prevState,
-                current: durationMs,
-                time: toHuman(durationMs),
-              };
+              return updateCurrentTime(prevState, durationMs);
             }
           });
         }, smoothingInterval);
@@ -85,7 +83,9 @@ export const ProgressBarDesktop = (props: {
 
       const throttledUpdateCurrentTime = throttle(
         currentTimeMs => {
-          updateCurrentTime(currentTimeMs);
+          setState(prevState => {
+            return updateCurrentTime(prevState, currentTimeMs);
+          });
         },
         // Magic number to throttle progress bar updates caused by TDP events
         //  so that the playback is smoother.
@@ -113,10 +113,6 @@ export const ProgressBarDesktop = (props: {
           }
           return { ...prevState, isPlaying: !prevState.isPlaying };
         });
-      });
-
-      playerClient.addListener(TdpClientEvent.WS_CLOSE, () => {
-        stopProgress();
       });
 
       return () => {
