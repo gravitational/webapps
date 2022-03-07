@@ -135,6 +135,16 @@ export function AddDatabase({
             onRegenerateToken={createJoinToken}
           />
         )}
+        <Box ml={2} mt={4}>
+          {`Learn more about database access in our `}
+          <Link
+            href={'https://goteleport.com/docs/database-access/'}
+            target="_blank"
+          >
+            documentation
+          </Link>
+          .
+        </Box>
       </DialogContent>
       <DialogFooter>
         <ButtonSecondary onClick={onClose}>Close</ButtonSecondary>
@@ -154,7 +164,7 @@ const StepsWithToken = ({
   <>
     <Box mb={4}>
       <Text bold as="span">
-        Step 4
+        Step 2
       </Text>
       {` - Select the database type and protocol to use`}
       <Box mt={2}>
@@ -167,9 +177,9 @@ const StepsWithToken = ({
         />
       </Box>
     </Box>
-    <Box mb={4}>
+    <Box>
       <Text bold as="span">
-        Step 5
+        Step 3
       </Text>
       {' - Start the Teleport agent with the following parameters'}
       <Text mt="1">
@@ -182,16 +192,6 @@ const StepsWithToken = ({
     </Box>
     <Box>
       <ButtonLink onClick={onRegenerateToken}>Regenerate Token</ButtonLink>
-    </Box>
-    <Box>
-      {`* Note: Learn more about database access in our `}
-      <Link
-        href={'https://goteleport.com/docs/database-access/'}
-        target="_blank"
-      >
-        documentation
-      </Link>
-      .
     </Box>
   </>
 );
@@ -233,22 +233,12 @@ const StepsWithoutToken = ({
         />
       </Box>
     </Box>
-    <Box mb={4}>
+    <Box>
       <Text bold as="span">
         Step 5
       </Text>
       {' - Start the Teleport agent with the following parameters'}
       <TextSelectCopy mt="2" text={addCommand} />
-    </Box>
-    <Box>
-      {`* Note: Learn more about database access in our `}
-      <Link
-        href={'https://goteleport.com/docs/database-access/'}
-        target="_blank"
-      >
-        documentation
-      </Link>
-      .
     </Box>
   </>
 );
