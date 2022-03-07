@@ -109,8 +109,8 @@ export function AddDatabase({
         </Box>
         {attempt.status === 'failed' ? (
           <StepsWithoutToken
-            addCommand={connectCmd}
-            loginCommand={generateDbStartCmd(
+            loginCommand={connectCmd}
+            addCommand={generateDbStartCmd(
               selectedDbOption.value.type,
               selectedDbOption.value.protocol,
               host,
