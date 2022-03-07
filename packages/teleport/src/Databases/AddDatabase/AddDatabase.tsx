@@ -77,15 +77,6 @@ export function AddDatabase({
     authType === 'sso'
       ? `tsh login --proxy=${host}`
       : `tsh login --proxy=${host} --auth=local --user=${username}`;
-
-  if (attempt.status === 'processing') {
-    return (
-      <Box textAlign="center">
-        <Indicator />
-      </Box>
-    );
-  }
-
   return (
     <Dialog
       dialogCss={() => ({
@@ -99,56 +90,64 @@ export function AddDatabase({
       <DialogHeader mb={4}>
         <DialogTitle>Add Database</DialogTitle>
       </DialogHeader>
-      <DialogContent>
-        <Box mb={4}>
-          <Text bold as="span">
-            Step 1
-          </Text>
-          {' - Download Teleport package to your computer '}
-          <DownloadLinks isEnterprise={isEnterprise} version={version} />
+      {attempt.status === 'processing' ? (
+        <Box textAlign="center">
+          <Indicator />
         </Box>
-        {attempt.status === 'failed' ? (
-          <StepsWithoutToken
-            loginCommand={connectCmd}
-            addCommand={generateDbStartCmd(
-              selectedDbOption.value.type,
-              selectedDbOption.value.protocol,
-              host,
-              ''
+      ) : (
+        <>
+          <DialogContent>
+            <Box mb={4}>
+              <Text bold as="span">
+                Step 1
+              </Text>
+              {' - Download Teleport package to your computer '}
+              <DownloadLinks isEnterprise={isEnterprise} version={version} />
+            </Box>
+            {attempt.status === 'failed' ? (
+              <StepsWithoutToken
+                loginCommand={connectCmd}
+                addCommand={generateDbStartCmd(
+                  selectedDbOption.value.type,
+                  selectedDbOption.value.protocol,
+                  host,
+                  ''
+                )}
+                selectedDb={selectedDbOption}
+                onDbChange={(o: Option<DatabaseInfo>) => setSelectedDbOption(o)}
+                dbOptions={dbOptions}
+              />
+            ) : (
+              <StepsWithToken
+                selectedDb={selectedDbOption}
+                onDbChange={(o: Option<DatabaseInfo>) => setSelectedDbOption(o)}
+                dbOptions={dbOptions}
+                command={generateDbStartCmd(
+                  selectedDbOption.value.type,
+                  selectedDbOption.value.protocol,
+                  host,
+                  token
+                )}
+                expiry={expiry}
+                onRegenerateToken={createJoinToken}
+              />
             )}
-            selectedDb={selectedDbOption}
-            onDbChange={(o: Option<DatabaseInfo>) => setSelectedDbOption(o)}
-            dbOptions={dbOptions}
-          />
-        ) : (
-          <StepsWithToken
-            selectedDb={selectedDbOption}
-            onDbChange={(o: Option<DatabaseInfo>) => setSelectedDbOption(o)}
-            dbOptions={dbOptions}
-            command={generateDbStartCmd(
-              selectedDbOption.value.type,
-              selectedDbOption.value.protocol,
-              host,
-              token
-            )}
-            expiry={expiry}
-            onRegenerateToken={createJoinToken}
-          />
-        )}
-        <Box ml={2} mt={4}>
-          {`Learn more about database access in our `}
-          <Link
-            href={'https://goteleport.com/docs/database-access/'}
-            target="_blank"
-          >
-            documentation
-          </Link>
-          .
-        </Box>
-      </DialogContent>
-      <DialogFooter>
-        <ButtonSecondary onClick={onClose}>Close</ButtonSecondary>
-      </DialogFooter>
+            <Box ml={2} mt={4}>
+              {`Learn more about database access in our `}
+              <Link
+                href={'https://goteleport.com/docs/database-access/'}
+                target="_blank"
+              >
+                documentation
+              </Link>
+              .
+            </Box>
+          </DialogContent>
+          <DialogFooter>
+            <ButtonSecondary onClick={onClose}>Close</ButtonSecondary>
+          </DialogFooter>
+        </>
+      )}
     </Dialog>
   );
 }

@@ -22,8 +22,14 @@ export default {
   title: 'Teleport/Databases/Add',
 };
 
-export const AddWithToken = () => <AddDatabase {...props} />;
-export const AddWithoutToken = () => (
+export const WithToken = () => <AddDatabase {...props} />;
+export const Processing = () => (
+  <AddDatabase
+    {...props}
+    attempt={{ status: 'processing', statusText: 'processing request' }}
+  />
+);
+export const WithoutToken = () => (
   <AddDatabase
     {...props}
     attempt={{ status: 'failed', statusText: 'some error message' }}

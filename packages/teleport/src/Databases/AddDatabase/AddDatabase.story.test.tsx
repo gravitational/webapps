@@ -16,14 +16,19 @@ limitations under the License.
 
 import React from 'react';
 import { render, screen } from 'design/utils/testing';
-import { AddWithToken, AddWithoutToken } from './AddDatabase.story';
+import { WithToken, Processing, WithoutToken } from './AddDatabase.story';
 
 test('render without token', async () => {
-  render(<AddWithoutToken />);
+  render(<WithoutToken />);
+  expect(screen.getByTestId('Modal')).toMatchSnapshot();
+});
+
+test('render processing', async () => {
+  render(<Processing />);
   expect(screen.getByTestId('Modal')).toMatchSnapshot();
 });
 
 test('render with token', async () => {
-  render(<AddWithToken />);
+  render(<WithToken />);
   expect(screen.getByTestId('Modal')).toMatchSnapshot();
 });
