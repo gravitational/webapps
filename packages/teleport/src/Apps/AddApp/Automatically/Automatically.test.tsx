@@ -30,6 +30,6 @@ test('render command only after form submit', async () => {
   // click button
   screen.getByRole('button', { name: /Generate Script/i }).click();
 
-  // after form submissionm should show the command
+  // after form submission should show the command
   expect(screen.queryByText(cmd)).not.toBeNull();
 });
