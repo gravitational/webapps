@@ -47,6 +47,11 @@ export default function useAddApp(ctx: TeleportContext) {
     );
   }
 
+  function setCmdParams(appName, appUri) {
+    const cmd = createAppBashText(token, appName, appUri);
+    setCmd(cmd);
+  }
+
   return {
     user,
     version,
@@ -59,6 +64,7 @@ export default function useAddApp(ctx: TeleportContext) {
     isAuthTypeLocal,
     isEnterprise,
     token,
+    setCmdParams,
   };
 }
 
@@ -68,25 +74,27 @@ export function createAppBashCommand(
   appUri = ''
 ): BashCommand {
   const expires = formatDistanceStrict(new Date(), token.expiry);
-
-  // encode uri so it can be passed around as URL query parameter
-  const encoded = encodeURIComponent(appUri)
-    // encode single quotes so they do not break the curl parameters
-    .replace(/'/g, '%27');
-
-  const bashUrl =
-    cfg.baseUrl +
-    cfg.api.appNodeScriptPath
-      .replace(':token', token.id)
-      .replace(':name', appName)
-      .replace(':uri', encoded);
-
-  const text = `sudo bash -c "$(curl -fsSL '${bashUrl}')"`;
+  const text = createAppBashText(token.id, appName, appUri);
 
   return {
     text,
     expires,
   };
+}
+
+function createAppBashText(tokenId, appName, appUri): string {
+  // encode uri so it can be passed around as URL query parameter
+  const encoded = encodeURIComponent(appUri)
+    // encode single quotes so they do not break the curl parameters
+    .replace(/'/g, '%27');
+  const bashUrl =
+    cfg.baseUrl +
+    cfg.api.appNodeScriptPath
+      .replace(':token', tokenId)
+      .replace(':name', appName)
+      .replace(':uri', encoded);
+
+  return `sudo bash -c "$(curl -fsSL '${bashUrl}')"`;
 }
 
 export type State = ReturnType<typeof useAddApp>;

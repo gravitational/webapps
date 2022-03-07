@@ -43,6 +43,7 @@ export function AddApp({
   setAutomatic,
   isAuthTypeLocal,
   token,
+  setCmdParams,
 }: State & Props) {
   return (
     <Dialog
@@ -81,6 +82,7 @@ export function AddApp({
             expires={expires}
             onClose={onClose}
             onCreate={createToken}
+            onSubmit={setCmdParams}
             attempt={attempt}
           />
         )}

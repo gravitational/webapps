@@ -30,19 +30,27 @@ import { DialogContent, DialogFooter } from 'design/Dialog';
 import { Attempt } from 'shared/hooks/useAttemptNext';
 
 export default function Automatically(props: Props) {
-  const { cmd, onClose, attempt, expires } = props;
+  const { cmd, onClose, attempt, expires, onSubmit } = props;
 
   const [name, setName] = React.useState('');
   const [uri, setUri] = React.useState('');
   const [showCmd, setShowCmd] = React.useState(false);
 
-  function handleCreate(validator: Validator) {
+  function handleRegenerate(validator: Validator) {
     if (!validator.validate()) {
       return;
     }
 
     props.onCreate(name, uri);
+  }
+
+  function handleGenerate(validator: Validator) {
+    if (!validator.validate()) {
+      return;
+    }
+
     setShowCmd(true);
+    onSubmit(name, uri);
   }
 
   function handleEnterPress(
@@ -50,7 +58,11 @@ export default function Automatically(props: Props) {
     validator: Validator
   ) {
     if (e.key === 'Enter') {
-      handleCreate(validator);
+      if (showCmd) {
+        handleRegenerate(validator);
+      } else {
+        handleGenerate(validator);
+      }
     }
   }
 
@@ -114,7 +126,7 @@ export default function Automatically(props: Props) {
               <ButtonPrimary
                 mr="3"
                 disabled={attempt.status === 'processing'}
-                onClick={() => handleCreate(validator)}
+                onClick={() => handleGenerate(validator)}
               >
                 Generate Script
               </ButtonPrimary>
@@ -123,7 +135,7 @@ export default function Automatically(props: Props) {
               <ButtonPrimary
                 mr="3"
                 disabled={attempt.status === 'processing'}
-                onClick={() => handleCreate(validator)}
+                onClick={() => handleRegenerate(validator)}
               >
                 Regenerate
               </ButtonPrimary>
@@ -224,6 +236,7 @@ const requiredAppName = value => () => {
 type Props = {
   onClose(): void;
   onCreate(name: string, uri: string): Promise<any>;
+  onSubmit(name: string, uri: string);
   cmd: string;
   expires: string;
   attempt: Attempt;

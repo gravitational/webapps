@@ -9,6 +9,7 @@ test('render command only after form submit', async () => {
       cmd={cmd}
       attempt={{ status: 'success' }}
       onClose={() => {}}
+      onSubmit={() => {}}
       onCreate={() => Promise.resolve(true)}
       expires=""
     />

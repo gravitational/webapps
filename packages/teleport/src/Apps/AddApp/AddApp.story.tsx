@@ -67,6 +67,7 @@ const props = {
   setAutomatic: () => null,
   createToken: () => Promise.resolve(true),
   onClose: () => null,
+  setCmdParams: () => null,
   createJoinToken: () => Promise.resolve(null),
   version: '5.0.0-dev',
   cmd: `sudo bash -c "$(curl -fsSL 'http://localhost/scripts/86/install-app.sh?name=test&uri=http://myapp/')"`,
