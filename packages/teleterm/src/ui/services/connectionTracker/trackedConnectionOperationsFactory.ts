@@ -55,12 +55,12 @@ export class TrackedConnectionOperationsFactory {
         documentsService.open(srvDoc.uri);
       },
       disconnect: async () => {
-        const document = documentsService
+        documentsService
           .getDocuments()
-          .find(getServerDocumentByConnection(connection));
-        if (document) {
-          documentsService.close(document.uri);
-        }
+          .filter(getServerDocumentByConnection(connection))
+          .forEach(document => {
+            documentsService.close(document.uri);
+          });
       },
     };
   }
@@ -100,12 +100,12 @@ export class TrackedConnectionOperationsFactory {
         return this._clustersService
           .removeGateway(connection.gatewayUri)
           .then(() => {
-            const document = documentsService
+            documentsService
               .getDocuments()
-              .find(getGatewayDocumentByConnection(connection));
-            if (document) {
-              documentsService.close(document.uri);
-            }
+              .filter(getGatewayDocumentByConnection(connection))
+              .forEach(document => {
+                documentsService.close(document.uri);
+              });
           });
       },
     };
