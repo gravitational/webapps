@@ -38,6 +38,15 @@ export default function Automatically(props: Props) {
   const [cmd, setCmd] = React.useState('');
   const [showCmd, setShowCmd] = React.useState(false);
 
+  React.useEffect(() => {
+    if (!name || !uri) {
+      return;
+    }
+
+    const cmd = createAppBashCommand(token, name, uri);
+    setCmd(cmd);
+  }, [token]);
+
   function handleRegenerate(validator: Validator) {
     if (!validator.validate()) {
       return;
