@@ -43,10 +43,6 @@ export default function Manually({
   const host = `${hostname}:${port || '443'}`;
   let tshLoginCmd = `tsh login --proxy=${host}`;
 
-  useEffect(() => {
-    createToken();
-  }, []);
-
   if (isAuthTypeLocal) {
     tshLoginCmd = `${tshLoginCmd} --auth=local --user=${user}`;
   }

@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { formatDistanceStrict } from 'date-fns';
 import useAttempt from 'shared/hooks/useAttemptNext';
 import { BashCommand, NodeToken } from 'teleport/services/nodes';
@@ -31,6 +31,10 @@ export default function useAddApp(ctx: TeleportContext) {
   const [cmd, setCmd] = useState('');
   const [expires, setExpires] = useState('');
   const [token, setToken] = useState('');
+
+  useEffect(() => {
+    createToken();
+  }, []);
 
   function createToken(appName = '', appUri = '') {
     return run(() =>

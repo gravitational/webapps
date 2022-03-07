@@ -34,6 +34,7 @@ export default function Automatically(props: Props) {
 
   const [name, setName] = React.useState('');
   const [uri, setUri] = React.useState('');
+  const [showCmd, setShowCmd] = React.useState(false);
 
   function handleCreate(validator: Validator) {
     if (!validator.validate()) {
@@ -41,6 +42,7 @@ export default function Automatically(props: Props) {
     }
 
     props.onCreate(name, uri);
+    setShowCmd(true);
   }
 
   function handleEnterPress(
@@ -79,7 +81,7 @@ export default function Automatically(props: Props) {
                 onChange={e => setUri(e.target.value)}
               />
             </Flex>
-            {!cmd && (
+            {!showCmd && (
               <Text mb="3">
                 Teleport can automatically set up application access. Provide
                 the name and URL of your application to generate our
@@ -93,7 +95,7 @@ export default function Automatically(props: Props) {
             {attempt.status === 'failed' && (
               <Alert kind="danger" children={attempt.statusText} />
             )}
-            {cmd && (
+            {showCmd && (
               <>
                 <Text mb="3">
                   Use the script below to add an application to your cluster.{' '}
@@ -108,7 +110,7 @@ export default function Automatically(props: Props) {
             )}
           </DialogContent>
           <DialogFooter>
-            {!cmd && (
+            {!showCmd && (
               <ButtonPrimary
                 mr="3"
                 disabled={attempt.status === 'processing'}
@@ -117,7 +119,7 @@ export default function Automatically(props: Props) {
                 Generate Script
               </ButtonPrimary>
             )}
-            {cmd && (
+            {showCmd && (
               <ButtonPrimary
                 mr="3"
                 disabled={attempt.status === 'processing'}
