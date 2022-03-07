@@ -28,12 +28,14 @@ import Validation, { Validator } from 'shared/components/Validation';
 import FieldInput from 'shared/components/FieldInput';
 import { DialogContent, DialogFooter } from 'design/Dialog';
 import { Attempt } from 'shared/hooks/useAttemptNext';
+import cfg from 'teleport/config';
 
 export default function Automatically(props: Props) {
-  const { cmd, onClose, attempt, expires, onSubmit } = props;
+  const { onClose, attempt, expires, token } = props;
 
   const [name, setName] = React.useState('');
   const [uri, setUri] = React.useState('');
+  const [cmd, setCmd] = React.useState('');
   const [showCmd, setShowCmd] = React.useState(false);
 
   function handleRegenerate(validator: Validator) {
@@ -50,7 +52,8 @@ export default function Automatically(props: Props) {
     }
 
     setShowCmd(true);
-    onSubmit(name, uri);
+    const cmd = createAppBashCommand(token, name, uri);
+    setCmd(cmd);
   }
 
   function handleEnterPress(
@@ -233,11 +236,25 @@ const requiredAppName = value => () => {
   };
 };
 
+export const createAppBashCommand = (token, appName, appUri): string => {
+  // encode uri so it can be passed around as URL query parameter
+  const encoded = encodeURIComponent(appUri)
+    // encode single quotes so they do not break the curl parameters
+    .replace(/'/g, '%27');
+  const bashUrl =
+    cfg.baseUrl +
+    cfg.api.appNodeScriptPath
+      .replace(':token', token)
+      .replace(':name', appName)
+      .replace(':uri', encoded);
+
+  return `sudo bash -c "$(curl -fsSL '${bashUrl}')"`;
+};
+
 type Props = {
   onClose(): void;
   onCreate(name: string, uri: string): Promise<any>;
-  onSubmit(name: string, uri: string);
-  cmd: string;
+  token: string;
   expires: string;
   attempt: Attempt;
 };

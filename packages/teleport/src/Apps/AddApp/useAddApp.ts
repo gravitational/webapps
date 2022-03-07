@@ -17,8 +17,6 @@ limitations under the License.
 import { useEffect, useState } from 'react';
 import { formatDistanceStrict } from 'date-fns';
 import useAttempt from 'shared/hooks/useAttemptNext';
-import { BashCommand, NodeToken } from 'teleport/services/nodes';
-import cfg from 'teleport/config';
 import TeleportContext from 'teleport/teleportContext';
 
 export default function useAddApp(ctx: TeleportContext) {
@@ -28,7 +26,6 @@ export default function useAddApp(ctx: TeleportContext) {
   const isAuthTypeLocal = !ctx.storeUser.isSso();
   const isEnterprise = ctx.isEnterprise;
   const [automatic, setAutomatic] = useState(isEnterprise);
-  const [cmd, setCmd] = useState('');
   const [expires, setExpires] = useState('');
   const [token, setToken] = useState('');
 
@@ -36,27 +33,20 @@ export default function useAddApp(ctx: TeleportContext) {
     createToken();
   }, []);
 
-  function createToken(appName = '', appUri = '') {
+  function createToken() {
     return run(() =>
       ctx.nodeService.fetchJoinToken().then(token => {
-        const cmd = createAppBashCommand(token, appName, appUri);
-        setExpires(cmd.expires);
-        setCmd(cmd.text);
+        const expires = formatDistanceStrict(new Date(), token.expiry);
+        setExpires(expires);
         setToken(token.id);
       })
     );
-  }
-
-  function setCmdParams(appName, appUri) {
-    const cmd = createAppBashText(token, appName, appUri);
-    setCmd(cmd);
   }
 
   return {
     user,
     version,
     createToken,
-    cmd,
     expires,
     attempt,
     automatic,
@@ -64,37 +54,7 @@ export default function useAddApp(ctx: TeleportContext) {
     isAuthTypeLocal,
     isEnterprise,
     token,
-    setCmdParams,
   };
-}
-
-export function createAppBashCommand(
-  token: NodeToken,
-  appName = '',
-  appUri = ''
-): BashCommand {
-  const expires = formatDistanceStrict(new Date(), token.expiry);
-  const text = createAppBashText(token.id, appName, appUri);
-
-  return {
-    text,
-    expires,
-  };
-}
-
-function createAppBashText(tokenId, appName, appUri): string {
-  // encode uri so it can be passed around as URL query parameter
-  const encoded = encodeURIComponent(appUri)
-    // encode single quotes so they do not break the curl parameters
-    .replace(/'/g, '%27');
-  const bashUrl =
-    cfg.baseUrl +
-    cfg.api.appNodeScriptPath
-      .replace(':token', tokenId)
-      .replace(':name', appName)
-      .replace(':uri', encoded);
-
-  return `sudo bash -c "$(curl -fsSL '${bashUrl}')"`;
 }
 
 export type State = ReturnType<typeof useAddApp>;

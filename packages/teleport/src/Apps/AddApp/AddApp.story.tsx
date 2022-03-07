@@ -26,7 +26,7 @@ export const Created = () => (
 );
 
 export const Loaded = () => {
-  return <AddApp {...props} cmd="" />;
+  return <AddApp {...props} />;
 };
 
 export const Processing = () => (
@@ -70,7 +70,6 @@ const props = {
   setCmdParams: () => null,
   createJoinToken: () => Promise.resolve(null),
   version: '5.0.0-dev',
-  cmd: `sudo bash -c "$(curl -fsSL 'http://localhost/scripts/86/install-app.sh?name=test&uri=http://myapp/')"`,
   expires: '1 hour',
   reset: () => null,
   attempt: {
