@@ -68,6 +68,30 @@ test('correct tsh login command generated with sso authType', () => {
   expect(screen.queryByText(output)).not.toBeNull();
 });
 
+test('show correct steps when token attempt succeeded', () => {
+  render(
+    <AddDatabase {...props} authType="sso" attempt={{ status: 'success' }} />
+  );
+
+  expect(screen.queryByText('Step 1')).not.toBeNull();
+  expect(screen.queryByText('Step 2')).not.toBeNull();
+  expect(screen.queryByText('Step 3')).not.toBeNull();
+  expect(screen.queryByText('Step 4')).toBeNull();
+  expect(screen.queryByText('Step 5')).toBeNull();
+});
+
+test('show correct steps when token attempt failed', () => {
+  render(
+    <AddDatabase {...props} authType="sso" attempt={{ status: 'failed' }} />
+  );
+
+  expect(screen.queryByText('Step 1')).not.toBeNull();
+  expect(screen.queryByText('Step 2')).not.toBeNull();
+  expect(screen.queryByText('Step 3')).not.toBeNull();
+  expect(screen.queryByText('Step 4')).not.toBeNull();
+  expect(screen.queryByText('Step 5')).not.toBeNull();
+});
+
 test('render instructions dialog for adding database', () => {
   render(<AddDatabase {...props} />);
   expect(screen.getByTestId('Modal')).toMatchSnapshot();

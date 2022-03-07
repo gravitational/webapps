@@ -87,6 +87,12 @@ exports[`render instructions dialog for adding database 1`] = `
   margin-top: 8px;
 }
 
+.c18 {
+  box-sizing: border-box;
+  margin-left: 8px;
+  margin-top: 24px;
+}
+
 .c12 {
   box-sizing: border-box;
   margin-top: 8px;
@@ -156,7 +162,7 @@ exports[`render instructions dialog for adding database 1`] = `
   color: rgba(255,255,255,0.3);
 }
 
-.c19 {
+.c20 {
   line-height: 1.5;
   margin: 0;
   display: inline-flex;
@@ -182,16 +188,16 @@ exports[`render instructions dialog for adding database 1`] = `
   padding: 0px 24px;
 }
 
-.c19:active {
+.c20:active {
   opacity: 0.56;
 }
 
-.c19:hover,
-.c19:focus {
+.c20:hover,
+.c20:focus {
   background: #2C3A73;
 }
 
-.c19:disabled {
+.c20:disabled {
   background: rgba(255,255,255,0.12);
   color: rgba(255,255,255,0.3);
 }
@@ -221,7 +227,7 @@ exports[`render instructions dialog for adding database 1`] = `
   flex-direction: column;
 }
 
-.c18 {
+.c19 {
   box-sizing: border-box;
 }
 
@@ -385,7 +391,7 @@ exports[`render instructions dialog for adding database 1`] = `
                 $
               </div>
               <div>
-                teleport db start --token=[generated-join-token] --auth-server=localhost:443 --name=[db-name] --protocol=postgres --uri=[uri] --aws-region=[region]
+                tsh login --proxy=localhost:443 --auth=local --user=yassine
               </div>
             </div>
             <button
@@ -472,7 +478,7 @@ exports[`render instructions dialog for adding database 1`] = `
                           autocapitalize="none"
                           autocomplete="off"
                           autocorrect="off"
-                          id="react-select-20-input"
+                          id="react-select-22-input"
                           spellcheck="false"
                           style="box-sizing: content-box; width: 2px; border: 0px; opacity: 1; outline: 0; padding: 0px;"
                           tabindex="0"
@@ -515,7 +521,7 @@ exports[`render instructions dialog for adding database 1`] = `
           </div>
         </div>
         <div
-          class="c7"
+          class="c9"
         >
           <span
             class="c8"
@@ -536,7 +542,7 @@ exports[`render instructions dialog for adding database 1`] = `
                 $
               </div>
               <div>
-                tsh login --proxy=localhost:443 --auth=local --user=yassine
+                teleport db start --token=[generated-join-token] --auth-server=localhost:443 --name=[db-name] --protocol=postgres --uri=[uri] --aws-region=[region]
               </div>
             </div>
             <button
@@ -549,9 +555,9 @@ exports[`render instructions dialog for adding database 1`] = `
           </div>
         </div>
         <div
-          class="c9"
+          class="c18"
         >
-          * Note: Learn more about database access in our 
+          Learn more about database access in our 
           <a
             class="c11"
             href="https://goteleport.com/docs/database-access/"
@@ -564,10 +570,10 @@ exports[`render instructions dialog for adding database 1`] = `
         </div>
       </div>
       <div
-        class="c18"
+        class="c19"
       >
         <button
-          class="c19"
+          class="c20"
           kind="secondary"
         >
           Close

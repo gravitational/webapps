@@ -94,6 +94,12 @@ exports[`render with token 1`] = `
   margin-right: 4px;
 }
 
+.c20 {
+  box-sizing: border-box;
+  margin-left: 8px;
+  margin-top: 24px;
+}
+
 .c15 {
   box-sizing: border-box;
   margin-top: 8px;
@@ -163,7 +169,7 @@ exports[`render with token 1`] = `
   color: rgba(255,255,255,0.3);
 }
 
-.c21 {
+.c22 {
   line-height: 1.5;
   margin: 0;
   display: inline-flex;
@@ -189,16 +195,16 @@ exports[`render with token 1`] = `
   padding: 0px 24px;
 }
 
-.c21:active {
+.c22:active {
   opacity: 0.56;
 }
 
-.c21:hover,
-.c21:focus {
+.c22:hover,
+.c22:focus {
   background: #2C3A73;
 }
 
-.c21:disabled {
+.c22:disabled {
   background: rgba(255,255,255,0.12);
   color: rgba(255,255,255,0.3);
 }
@@ -242,7 +248,7 @@ exports[`render with token 1`] = `
   flex-direction: column;
 }
 
-.c20 {
+.c21 {
   box-sizing: border-box;
 }
 
@@ -390,7 +396,7 @@ exports[`render with token 1`] = `
           <span
             class="c8"
           >
-            Step 4
+            Step 2
           </span>
            - Select the database type and protocol to use
           <div
@@ -468,12 +474,12 @@ exports[`render with token 1`] = `
           </div>
         </div>
         <div
-          class="c7"
+          class="c9"
         >
           <span
             class="c8"
           >
-            Step 5
+            Step 3
           </span>
            - Start the Teleport agent with the following parameters
           <div
@@ -524,9 +530,9 @@ exports[`render with token 1`] = `
           </a>
         </div>
         <div
-          class="c9"
+          class="c20"
         >
-          * Note: Learn more about database access in our 
+          Learn more about database access in our 
           <a
             class="c11"
             href="https://goteleport.com/docs/database-access/"
@@ -539,10 +545,10 @@ exports[`render with token 1`] = `
         </div>
       </div>
       <div
-        class="c20"
+        class="c21"
       >
         <button
-          class="c21"
+          class="c22"
           kind="secondary"
         >
           Close
@@ -640,6 +646,12 @@ exports[`render without token 1`] = `
   margin-top: 8px;
 }
 
+.c18 {
+  box-sizing: border-box;
+  margin-left: 8px;
+  margin-top: 24px;
+}
+
 .c12 {
   box-sizing: border-box;
   margin-top: 8px;
@@ -709,7 +721,7 @@ exports[`render without token 1`] = `
   color: rgba(255,255,255,0.3);
 }
 
-.c19 {
+.c20 {
   line-height: 1.5;
   margin: 0;
   display: inline-flex;
@@ -735,16 +747,16 @@ exports[`render without token 1`] = `
   padding: 0px 24px;
 }
 
-.c19:active {
+.c20:active {
   opacity: 0.56;
 }
 
-.c19:hover,
-.c19:focus {
+.c20:hover,
+.c20:focus {
   background: #2C3A73;
 }
 
-.c19:disabled {
+.c20:disabled {
   background: rgba(255,255,255,0.12);
   color: rgba(255,255,255,0.3);
 }
@@ -774,7 +786,7 @@ exports[`render without token 1`] = `
   flex-direction: column;
 }
 
-.c18 {
+.c19 {
   box-sizing: border-box;
 }
 
@@ -938,7 +950,7 @@ exports[`render without token 1`] = `
                 $
               </div>
               <div>
-                teleport db start --token=[generated-join-token] --auth-server=localhost:443 --name=[db-name] --protocol=postgres --uri=[uri] --aws-region=[region]
+                tsh login --proxy=localhost:443 --auth=local --user=yassine
               </div>
             </div>
             <button
@@ -1068,7 +1080,7 @@ exports[`render without token 1`] = `
           </div>
         </div>
         <div
-          class="c7"
+          class="c9"
         >
           <span
             class="c8"
@@ -1089,7 +1101,7 @@ exports[`render without token 1`] = `
                 $
               </div>
               <div>
-                tsh login --proxy=localhost:443 --auth=local --user=yassine
+                teleport db start --token=[generated-join-token] --auth-server=localhost:443 --name=[db-name] --protocol=postgres --uri=[uri] --aws-region=[region]
               </div>
             </div>
             <button
@@ -1102,9 +1114,9 @@ exports[`render without token 1`] = `
           </div>
         </div>
         <div
-          class="c9"
+          class="c18"
         >
-          * Note: Learn more about database access in our 
+          Learn more about database access in our 
           <a
             class="c11"
             href="https://goteleport.com/docs/database-access/"
@@ -1117,10 +1129,10 @@ exports[`render without token 1`] = `
         </div>
       </div>
       <div
-        class="c18"
+        class="c19"
       >
         <button
-          class="c19"
+          class="c20"
           kind="secondary"
         >
           Close
