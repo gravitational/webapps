@@ -36,7 +36,6 @@ export default function Automatically(props: Props) {
   const [name, setName] = React.useState('');
   const [uri, setUri] = React.useState('');
   const [cmd, setCmd] = React.useState('');
-  const [showCmd, setShowCmd] = React.useState(false);
 
   React.useEffect(() => {
     if (name && uri) {
@@ -58,7 +57,6 @@ export default function Automatically(props: Props) {
       return;
     }
 
-    setShowCmd(true);
     const cmd = createAppBashCommand(token, name, uri);
     setCmd(cmd);
   }
@@ -68,7 +66,7 @@ export default function Automatically(props: Props) {
     validator: Validator
   ) {
     if (e.key === 'Enter') {
-      if (showCmd) {
+      if (cmd) {
         handleRegenerate(validator);
       } else {
         handleGenerate(validator);
@@ -103,7 +101,7 @@ export default function Automatically(props: Props) {
                 onChange={e => setUri(e.target.value)}
               />
             </Flex>
-            {!showCmd && (
+            {!cmd && (
               <Text mb="3">
                 Teleport can automatically set up application access. Provide
                 the name and URL of your application to generate our
@@ -117,7 +115,7 @@ export default function Automatically(props: Props) {
             {attempt.status === 'failed' && (
               <Alert kind="danger" children={attempt.statusText} />
             )}
-            {showCmd && (
+            {cmd && (
               <>
                 <Text mb="3">
                   Use the script below to add an application to your cluster.{' '}
@@ -132,7 +130,7 @@ export default function Automatically(props: Props) {
             )}
           </DialogContent>
           <DialogFooter>
-            {!showCmd && (
+            {!cmd && (
               <ButtonPrimary
                 mr="3"
                 disabled={attempt.status === 'processing'}
@@ -141,7 +139,7 @@ export default function Automatically(props: Props) {
                 Generate Script
               </ButtonPrimary>
             )}
-            {showCmd && (
+            {cmd && (
               <ButtonPrimary
                 mr="3"
                 disabled={attempt.status === 'processing'}

@@ -332,6 +332,7 @@ exports[`render automatic tab 1`] = `
               The script will install the Teleport agent to provide secure access to your application.
             </div>
           </div>
+          
         </div>
         <div
           class="c15"
@@ -342,6 +343,7 @@ exports[`render automatic tab 1`] = `
           >
             Generate Script
           </button>
+          
           <button
             class="c17"
             kind="secondary"
@@ -687,6 +689,7 @@ exports[`render automatic tab on created state 1`] = `
               The script will install the Teleport agent to provide secure access to your application.
             </div>
           </div>
+          
         </div>
         <div
           class="c15"
@@ -697,6 +700,7 @@ exports[`render automatic tab on created state 1`] = `
           >
             Generate Script
           </button>
+          
           <button
             class="c17"
             kind="secondary"
@@ -1069,6 +1073,7 @@ exports[`render failed automatic tab 1`] = `
           >
             some error message
           </div>
+          
         </div>
         <div
           class="c16"
@@ -1079,6 +1084,7 @@ exports[`render failed automatic tab 1`] = `
           >
             Generate Script
           </button>
+          
           <button
             class="c18"
             kind="secondary"
