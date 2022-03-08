@@ -31,7 +31,7 @@ export type DatabasesResponse = {
   totalCount?: number;
 };
 
-export interface JoinToken {
+export type JoinToken = {
   id: string;
   expiry: Date;
-}
+};
