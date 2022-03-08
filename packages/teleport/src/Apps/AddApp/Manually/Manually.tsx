@@ -151,7 +151,7 @@ type Props = {
   version: string;
   user: string;
   isAuthTypeLocal: boolean;
-  token: string;
+  token: State['token'];
   expires: State['expires'];
   createToken: State['createToken'];
   attempt: State['attempt'];
