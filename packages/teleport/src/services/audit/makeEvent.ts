@@ -39,8 +39,7 @@ export const formatters: Formatters = {
   [eventCodes.ACCESS_REQUEST_DELETED]: {
     type: 'access_request.delete',
     desc: 'Access Request Deleted',
-    format: ({ id }) =>
-      `Access request [${id}] has been deleted`,
+    format: ({ id }) => `Access request [${id}] has been deleted`,
   },
   [eventCodes.SESSION_COMMAND]: {
     type: 'session.command',
@@ -495,15 +494,21 @@ export const formatters: Formatters = {
     format: ({ server_addr }) => `Session connected to [${server_addr}]`,
   },
   [eventCodes.CERTIFICATE_CREATED]: {
-    type: "cert.create",
-    desc: "Certificate Issued",
+    type: 'cert.create',
+    desc: 'Certificate Issued',
     format: ({ cert_type, identity: { user } }) => {
       if (cert_type === 'user') {
-        return `User certificate issued for [${user}]`
+        return `User certificate issued for [${user}]`;
       }
-      return `Certificate of type [${cert_type}] issued for [${user}]`
-    }
-  }
+      return `Certificate of type [${cert_type}] issued for [${user}]`;
+    },
+  },
+  [eventCodes.UNKNOWN]: {
+    type: 'unknown',
+    desc: 'Unknown Event',
+    format: ({ unknown_type, unknown_code }) =>
+      `Unknown '${unknown_type}' event (${unknown_code})`,
+  },
 };
 
 const unknownFormatter = {

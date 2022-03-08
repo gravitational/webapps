@@ -102,6 +102,7 @@ const EventIconMap: Record<EventCode, React.FC> = {
   [eventCodes.X11_FORWARD]: Icons.Info,
   [eventCodes.X11_FORWARD_FAILURE]: Icons.Info,
   [eventCodes.CERTIFICATE_CREATED]: Icons.Keypair,
+  [eventCodes.UNKNOWN]: Icons.Question,
 };
 
 export default function TypeCell(props) {
