@@ -46,20 +46,6 @@ describe('correct database add command generated with given input', () => {
   );
 });
 
-test('correct tsh login command generated with local authType', () => {
-  render(<AddDatabase {...props} />);
-  const output = 'tsh login --proxy=localhost:443 --auth=local --user=yassine';
-
-  expect(screen.queryByText(output)).not.toBeNull();
-});
-
-test('correct tsh login command generated with sso authType', () => {
-  render(<AddDatabase {...props} authType="sso" />);
-  const output = 'tsh login --proxy=localhost:443';
-
-  expect(screen.queryByText(output)).not.toBeNull();
-});
-
 const props: Props & State = {
   isEnterprise: false,
   username: 'yassine',
