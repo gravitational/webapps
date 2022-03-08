@@ -16,10 +16,15 @@ limitations under the License.
 
 import React from 'react';
 import { render, screen } from 'design/utils/testing';
-import { WithToken, Processing, WithoutToken } from './AddDatabase.story';
+import {
+  WithToken,
+  Processing,
+  WithoutTokenLocal,
+  WithoutTokenSSO,
+} from './AddDatabase.story';
 
 test('render without token', async () => {
-  render(<WithoutToken />);
+  render(<WithoutTokenLocal />);
   expect(screen.getByTestId('Modal')).toMatchSnapshot();
 });
 
@@ -30,5 +35,10 @@ test('render processing', async () => {
 
 test('render with token', async () => {
   render(<WithToken />);
+  expect(screen.getByTestId('Modal')).toMatchSnapshot();
+});
+
+test('render without token with SSO auth', async () => {
+  render(<WithoutTokenSSO />);
   expect(screen.getByTestId('Modal')).toMatchSnapshot();
 });

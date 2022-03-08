@@ -26,8 +26,11 @@ export const WithToken = () => <AddDatabase {...props} />;
 export const Processing = () => (
   <AddDatabase {...props} attempt={{ status: 'processing' }} />
 );
-export const WithoutToken = () => (
+export const WithoutTokenLocal = () => (
   <AddDatabase {...props} attempt={{ status: 'failed' }} />
+);
+export const WithoutTokenSSO = () => (
+  <AddDatabase {...props} attempt={{ status: 'failed' }} authType="sso" />
 );
 
 const props = {
