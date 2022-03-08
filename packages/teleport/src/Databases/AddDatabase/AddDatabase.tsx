@@ -132,7 +132,7 @@ export function AddDatabase({
                 onRegenerateToken={createJoinToken}
               />
             )}
-            <Box ml={2} mt={4}>
+            <Box mt={4}>
               {`Learn more about database access in our `}
               <Link
                 href={'https://goteleport.com/docs/database-access/'}
