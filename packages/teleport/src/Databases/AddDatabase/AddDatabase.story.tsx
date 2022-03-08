@@ -24,16 +24,10 @@ export default {
 
 export const WithToken = () => <AddDatabase {...props} />;
 export const Processing = () => (
-  <AddDatabase
-    {...props}
-    attempt={{ status: 'processing', statusText: 'processing request' }}
-  />
+  <AddDatabase {...props} attempt={{ status: 'processing' }} />
 );
 export const WithoutToken = () => (
-  <AddDatabase
-    {...props}
-    attempt={{ status: 'failed', statusText: 'some error message' }}
-  />
+  <AddDatabase {...props} attempt={{ status: 'failed' }} />
 );
 
 const props = {
