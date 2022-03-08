@@ -21,27 +21,19 @@ import { State } from './useAddDatabase';
 
 describe('correct database add command generated with given input', () => {
   test.each`
-    input                     | atemptStatus | output
-    ${'self-hosted mysql'}    | ${'failed'}  | ${'teleport db start --token=[generated-join-token] --auth-server=localhost:443 --name=[db-name] --protocol=mysql --uri=[uri]'}
-    ${'self-hosted mysql'}    | ${'success'} | ${'teleport db start --token=some-token --auth-server=localhost:443 --name=[db-name] --protocol=mysql --uri=[uri]'}
-    ${'rds mysql'}            | ${'failed'}  | ${'teleport db start --token=[generated-join-token] --auth-server=localhost:443 --name=[db-name] --protocol=mysql --uri=[uri] --aws-region=[region]'}
-    ${'rds mysql'}            | ${'success'} | ${'teleport db start --token=some-token --auth-server=localhost:443 --name=[db-name] --protocol=mysql --uri=[uri] --aws-region=[region]'}
-    ${'cloud sql mysql'}      | ${'failed'}  | ${'teleport db start --token=[generated-join-token] --auth-server=localhost:443 --name=[db-name] --protocol=mysql --uri=[uri] --ca-cert=[instance-ca-filepath] --gcp-project-id=[project-id] --gcp-instance-id=[instance-id]'}
-    ${'cloud sql mysql'}      | ${'success'} | ${'teleport db start --token=some-token --auth-server=localhost:443 --name=[db-name] --protocol=mysql --uri=[uri] --ca-cert=[instance-ca-filepath] --gcp-project-id=[project-id] --gcp-instance-id=[instance-id]'}
-    ${'self-hosted postgres'} | ${'failed'}  | ${'teleport db start --token=[generated-join-token] --auth-server=localhost:443 --name=[db-name] --protocol=postgres --uri=[uri]'}
-    ${'self-hosted postgres'} | ${'success'} | ${'teleport db start --token=some-token --auth-server=localhost:443 --name=[db-name] --protocol=postgres --uri=[uri]'}
-    ${'rds postgres'}         | ${'failed'}  | ${'teleport db start --token=[generated-join-token] --auth-server=localhost:443 --name=[db-name] --protocol=postgres --uri=[uri] --aws-region=[region]'}
-    ${'rds postgres'}         | ${'success'} | ${'teleport db start --token=some-token --auth-server=localhost:443 --name=[db-name] --protocol=postgres --uri=[uri] --aws-region=[region]'}
-    ${'cloud sql postgres'}   | ${'failed'}  | ${'teleport db start --token=[generated-join-token] --auth-server=localhost:443 --name=[db-name] --protocol=postgres --uri=[uri] --ca-cert=[instance-ca-filepath] --gcp-project-id=[project-id] --gcp-instance-id=[instance-id]'}
-    ${'cloud sql postgres'}   | ${'success'} | ${'teleport db start --token=some-token --auth-server=localhost:443 --name=[db-name] --protocol=postgres --uri=[uri] --ca-cert=[instance-ca-filepath] --gcp-project-id=[project-id] --gcp-instance-id=[instance-id]'}
-    ${'redshift'}             | ${'failed'}  | ${'teleport db start --token=[generated-join-token] --auth-server=localhost:443 --name=[db-name] --protocol=postgres --uri=[uri] --aws-region=[region] --aws-redshift-cluster-id=[cluster-id]'}
-    ${'redshift'}             | ${'success'} | ${'teleport db start --token=some-token --auth-server=localhost:443 --name=[db-name] --protocol=postgres --uri=[uri] --aws-region=[region] --aws-redshift-cluster-id=[cluster-id]'}
-    ${'self-hosted mongodb'}  | ${'failed'}  | ${'teleport db start --token=[generated-join-token] --auth-server=localhost:443 --name=[db-name] --protocol=mongodb --uri=[uri]'}
-    ${'self-hosted mongodb'}  | ${'success'} | ${'teleport db start --token=some-token --auth-server=localhost:443 --name=[db-name] --protocol=mongodb --uri=[uri]'}
+    input                     | output
+    ${'self-hosted mysql'}    | ${'teleport db start --token=[generated-join-token] --auth-server=localhost:443 --name=[db-name] --protocol=mysql --uri=[uri]'}
+    ${'rds mysql'}            | ${'teleport db start --token=[generated-join-token] --auth-server=localhost:443 --name=[db-name] --protocol=mysql --uri=[uri] --aws-region=[region]'}
+    ${'cloud sql mysql'}      | ${'teleport db start --token=[generated-join-token] --auth-server=localhost:443 --name=[db-name] --protocol=mysql --uri=[uri] --ca-cert=[instance-ca-filepath] --gcp-project-id=[project-id] --gcp-instance-id=[instance-id]'}
+    ${'self-hosted postgres'} | ${'teleport db start --token=[generated-join-token] --auth-server=localhost:443 --name=[db-name] --protocol=postgres --uri=[uri]'}
+    ${'rds postgres'}         | ${'teleport db start --token=[generated-join-token] --auth-server=localhost:443 --name=[db-name] --protocol=postgres --uri=[uri] --aws-region=[region]'}
+    ${'cloud sql postgres'}   | ${'teleport db start --token=[generated-join-token] --auth-server=localhost:443 --name=[db-name] --protocol=postgres --uri=[uri] --ca-cert=[instance-ca-filepath] --gcp-project-id=[project-id] --gcp-instance-id=[instance-id]'}
+    ${'redshift'}             | ${'teleport db start --token=[generated-join-token] --auth-server=localhost:443 --name=[db-name] --protocol=postgres --uri=[uri] --aws-region=[region] --aws-redshift-cluster-id=[cluster-id]'}
+    ${'self-hosted mongodb'}  | ${'teleport db start --token=[generated-join-token] --auth-server=localhost:443 --name=[db-name] --protocol=mongodb --uri=[uri]'}
   `(
-    'should generate correct command for input: $input with atempt $atemptStatus',
-    ({ input, atemptStatus, output }) => {
-      render(<AddDatabase {...props} attempt={{ status: atemptStatus }} />);
+    'should generate correct command for input: $input',
+    ({ input, output }) => {
+      render(<AddDatabase {...props} />);
 
       const dropDownInputEl = document.querySelector('input');
 
@@ -66,35 +58,6 @@ test('correct tsh login command generated with sso authType', () => {
   const output = 'tsh login --proxy=localhost:443';
 
   expect(screen.queryByText(output)).not.toBeNull();
-});
-
-test('show correct steps when token attempt succeeded', () => {
-  render(
-    <AddDatabase {...props} authType="sso" attempt={{ status: 'success' }} />
-  );
-
-  expect(screen.queryByText('Step 1')).not.toBeNull();
-  expect(screen.queryByText('Step 2')).not.toBeNull();
-  expect(screen.queryByText('Step 3')).not.toBeNull();
-  expect(screen.queryByText('Step 4')).toBeNull();
-  expect(screen.queryByText('Step 5')).toBeNull();
-});
-
-test('show correct steps when token attempt failed', () => {
-  render(
-    <AddDatabase {...props} authType="sso" attempt={{ status: 'failed' }} />
-  );
-
-  expect(screen.queryByText('Step 1')).not.toBeNull();
-  expect(screen.queryByText('Step 2')).not.toBeNull();
-  expect(screen.queryByText('Step 3')).not.toBeNull();
-  expect(screen.queryByText('Step 4')).not.toBeNull();
-  expect(screen.queryByText('Step 5')).not.toBeNull();
-});
-
-test('render instructions dialog for adding database', () => {
-  render(<AddDatabase {...props} />);
-  expect(screen.getByTestId('Modal')).toMatchSnapshot();
 });
 
 const props: Props & State = {
