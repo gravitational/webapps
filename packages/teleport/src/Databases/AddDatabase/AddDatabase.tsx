@@ -90,63 +90,50 @@ export function AddDatabase({
       <DialogHeader mb={4}>
         <DialogTitle>Add Database</DialogTitle>
       </DialogHeader>
-      {attempt.status === 'processing' ? (
-        <Box textAlign="center">
-          <Indicator />
-        </Box>
-      ) : (
-        <>
-          <DialogContent>
-            <Box mb={4}>
-              <Text bold as="span">
-                Step 1
-              </Text>
-              {' - Download Teleport package to your computer '}
-              <DownloadLinks isEnterprise={isEnterprise} version={version} />
-            </Box>
-            {attempt.status === 'failed' ? (
-              <StepsWithoutToken
-                loginCommand={connectCmd}
-                addCommand={generateDbStartCmd(
-                  selectedDbOption.value.type,
-                  selectedDbOption.value.protocol,
-                  host,
-                  ''
-                )}
-                selectedDb={selectedDbOption}
-                onDbChange={(o: Option<DatabaseInfo>) => setSelectedDbOption(o)}
-                dbOptions={dbOptions}
-              />
-            ) : (
-              <StepsWithToken
-                selectedDb={selectedDbOption}
-                onDbChange={(o: Option<DatabaseInfo>) => setSelectedDbOption(o)}
-                dbOptions={dbOptions}
-                command={generateDbStartCmd(
-                  selectedDbOption.value.type,
-                  selectedDbOption.value.protocol,
-                  host,
-                  token
-                )}
-                expiry={expiry}
-                onRegenerateToken={createJoinToken}
-              />
+      <DialogContent>
+        {attempt.status === 'processing' && (
+          <Box textAlign="center">
+            <Indicator />
+          </Box>
+        )}
+        {attempt.status === 'failed' && (
+          <StepsWithoutToken
+            loginCommand={connectCmd}
+            addCommand={generateDbStartCmd(
+              selectedDbOption.value.type,
+              selectedDbOption.value.protocol,
+              host,
+              ''
             )}
-            <Box mt={4}>
-              {`Learn more about database access in our `}
-              <Link
-                href={'https://goteleport.com/docs/database-access/'}
-                target="_blank"
-              >
-                documentation
-              </Link>
-              .
-            </Box>
-          </DialogContent>
-          <DialogFooter>
-            <ButtonSecondary onClick={onClose}>Close</ButtonSecondary>
-          </DialogFooter>
-        </>
+            selectedDb={selectedDbOption}
+            onDbChange={(o: Option<DatabaseInfo>) => setSelectedDbOption(o)}
+            dbOptions={dbOptions}
+            isEnterprise={isEnterprise}
+            version={version}
+          />
+        )}
+        {attempt.status === 'success' && (
+          <StepsWithToken
+            selectedDb={selectedDbOption}
+            onDbChange={(o: Option<DatabaseInfo>) => setSelectedDbOption(o)}
+            dbOptions={dbOptions}
+            command={generateDbStartCmd(
+              selectedDbOption.value.type,
+              selectedDbOption.value.protocol,
+              host,
+              token
+            )}
+            expiry={expiry}
+            onRegenerateToken={createJoinToken}
+            isEnterprise={isEnterprise}
+            version={version}
+          />
+        )}
+      </DialogContent>
+      {attempt.status !== 'processing' && (
+        <DialogFooter>
+          <ButtonSecondary onClick={onClose}>Close</ButtonSecondary>
+        </DialogFooter>
       )}
     </Dialog>
   );
@@ -159,6 +146,8 @@ type StepsWithTokenProps = {
   command: string;
   expiry: string;
   onRegenerateToken: () => Promise<boolean>;
+  isEnterprise: boolean;
+  version: string;
 };
 
 const StepsWithToken = ({
@@ -168,8 +157,17 @@ const StepsWithToken = ({
   expiry,
   command,
   onRegenerateToken,
+  isEnterprise,
+  version,
 }: StepsWithTokenProps) => (
   <>
+    <Box mb={4}>
+      <Text bold as="span">
+        Step 1
+      </Text>
+      {' - Download Teleport package to your computer '}
+      <DownloadLinks isEnterprise={isEnterprise} version={version} />
+    </Box>
     <Box mb={4}>
       <Text bold as="span">
         Step 2
@@ -201,6 +199,16 @@ const StepsWithToken = ({
     <Box>
       <ButtonLink onClick={onRegenerateToken}>Regenerate Token</ButtonLink>
     </Box>
+    <Box mt={4}>
+      {`Learn more about database access in our `}
+      <Link
+        href={'https://goteleport.com/docs/database-access/'}
+        target="_blank"
+      >
+        documentation
+      </Link>
+      .
+    </Box>
   </>
 );
 
@@ -208,6 +216,8 @@ type StepsWithoutTokenProps = {
   selectedDb: Option<DatabaseInfo>;
   onDbChange: (o: Option<DatabaseInfo>) => void;
   dbOptions: Option<DatabaseInfo>[];
+  isEnterprise: boolean;
+  version: string;
   loginCommand: string;
   addCommand: string;
 };
@@ -218,8 +228,17 @@ const StepsWithoutToken = ({
   selectedDb,
   dbOptions,
   onDbChange,
+  isEnterprise,
+  version,
 }: StepsWithoutTokenProps) => (
   <>
+    <Box mb={4}>
+      <Text bold as="span">
+        Step 1
+      </Text>
+      {' - Download Teleport package to your computer '}
+      <DownloadLinks isEnterprise={isEnterprise} version={version} />
+    </Box>
     <Box mb={4}>
       <Text bold as="span">
         Step 2
@@ -255,6 +274,16 @@ const StepsWithoutToken = ({
       </Text>
       {' - Start the Teleport agent with the following parameters'}
       <TextSelectCopy mt="2" text={addCommand} />
+    </Box>
+    <Box mt={4}>
+      {`Learn more about database access in our `}
+      <Link
+        href={'https://goteleport.com/docs/database-access/'}
+        target="_blank"
+      >
+        documentation
+      </Link>
+      .
     </Box>
   </>
 );

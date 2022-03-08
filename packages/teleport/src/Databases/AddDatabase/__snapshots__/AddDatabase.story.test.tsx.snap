@@ -61,7 +61,7 @@ exports[`render processing 1`] = `
   color: rgba(255,255,255,0.87);
 }
 
-.c6 {
+.c7 {
   box-sizing: border-box;
   text-align: center;
 }
@@ -72,6 +72,14 @@ exports[`render processing 1`] = `
   min-height: 32px;
   display: flex;
   align-items: center;
+}
+
+.c6 {
+  box-sizing: border-box;
+  margin-bottom: 32px;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
 }
 
 <div
@@ -102,7 +110,11 @@ exports[`render processing 1`] = `
       </div>
       <div
         class="c6"
-      />
+      >
+        <div
+          class="c7"
+        />
+      </div>
     </div>
   </div>
 </div>
@@ -204,7 +216,6 @@ exports[`render with token 1`] = `
 
 .c20 {
   box-sizing: border-box;
-  margin-left: 8px;
   margin-top: 24px;
 }
 
@@ -756,7 +767,6 @@ exports[`render without token 1`] = `
 
 .c18 {
   box-sizing: border-box;
-  margin-left: 8px;
   margin-top: 24px;
 }
 
@@ -1340,7 +1350,6 @@ exports[`render without token with SSO auth 1`] = `
 
 .c18 {
   box-sizing: border-box;
-  margin-left: 8px;
   margin-top: 24px;
 }
 
