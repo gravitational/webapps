@@ -152,6 +152,15 @@ export function AddDatabase({
   );
 }
 
+type StepsWithTokenProps = {
+  selectedDb: Option<DatabaseInfo>;
+  onDbChange: (o: Option<DatabaseInfo>) => void;
+  dbOptions: Option<DatabaseInfo>[];
+  command: string;
+  expiry: string;
+  onRegenerateToken: () => Promise<boolean>;
+};
+
 const StepsWithToken = ({
   selectedDb,
   onDbChange,
@@ -159,7 +168,7 @@ const StepsWithToken = ({
   expiry,
   command,
   onRegenerateToken,
-}) => (
+}: StepsWithTokenProps) => (
   <>
     <Box mb={4}>
       <Text bold as="span">
@@ -195,13 +204,21 @@ const StepsWithToken = ({
   </>
 );
 
+type StepsWithoutTokenProps = {
+  selectedDb: Option<DatabaseInfo>;
+  onDbChange: (o: Option<DatabaseInfo>) => void;
+  dbOptions: Option<DatabaseInfo>[];
+  loginCommand: string;
+  addCommand: string;
+};
+
 const StepsWithoutToken = ({
   loginCommand,
   addCommand,
   selectedDb,
   dbOptions,
   onDbChange,
-}) => (
+}: StepsWithoutTokenProps) => (
   <>
     <Box mb={4}>
       <Text bold as="span">
