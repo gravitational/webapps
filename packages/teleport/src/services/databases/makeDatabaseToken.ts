@@ -14,11 +14,10 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import { at } from 'lodash';
 import { JoinToken } from './types';
 
 export default function makeDatabaseToken(json): JoinToken {
-  const [id, expiry] = at(json, ['id', 'expiry']);
+  const { id, expiry } = json;
 
   return {
     id,
