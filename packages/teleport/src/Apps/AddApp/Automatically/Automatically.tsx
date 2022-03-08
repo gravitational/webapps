@@ -39,12 +39,10 @@ export default function Automatically(props: Props) {
   const [showCmd, setShowCmd] = React.useState(false);
 
   React.useEffect(() => {
-    if (!name || !uri) {
-      return;
+    if (name && uri) {
+      const cmd = createAppBashCommand(token, name, uri);
+      setCmd(cmd);
     }
-
-    const cmd = createAppBashCommand(token, name, uri);
-    setCmd(cmd);
   }, [token]);
 
   function handleRegenerate(validator: Validator) {
