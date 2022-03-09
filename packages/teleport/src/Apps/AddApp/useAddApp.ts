@@ -15,7 +15,7 @@ limitations under the License.
 */
 
 import { useEffect, useState } from 'react';
-import { formatDistanceStrict } from 'date-fns';
+import moment from 'moment';
 import useAttempt from 'shared/hooks/useAttemptNext';
 import TeleportContext from 'teleport/teleportContext';
 
@@ -36,7 +36,8 @@ export default function useAddApp(ctx: TeleportContext) {
   function createToken() {
     return run(() =>
       ctx.nodeService.fetchJoinToken().then(token => {
-        const expires = formatDistanceStrict(new Date(), token.expiry);
+        const duration = moment(new Date()).diff(token.expiry);
+        const expires = moment.duration(duration).humanize();
         setExpires(expires);
         setToken(token.id);
       })

@@ -8,7 +8,7 @@ describe('correct node bash command', () => {
     token            | hours  | expires      | cmd
     ${'some-token'}  | ${1.1} | ${'1 hour'}  | ${'sudo bash -c "$(curl -fsSL http://localhost/scripts/some-token/install-node.sh)"'}
     ${'other-token'} | ${2.1} | ${'2 hours'} | ${'sudo bash -c "$(curl -fsSL http://localhost/scripts/other-token/install-node.sh)"'}
-    ${'some-token'}  | ${25}  | ${'1 day'}   | ${'sudo bash -c "$(curl -fsSL http://localhost/scripts/some-token/install-node.sh)"'}
+    ${'some-token'}  | ${25}  | ${'a day'}   | ${'sudo bash -c "$(curl -fsSL http://localhost/scripts/some-token/install-node.sh)"'}
   `(
     'test bash command with: $token expiring in $hours',
     ({ token, hours, expires, cmd }) => {
