@@ -14,9 +14,10 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import { useState } from 'react';
-import TeleportContext from 'teleport/teleportContext';
+import { useEffect, useState } from 'react';
+import moment from 'moment';
 import useAttempt from 'shared/hooks/useAttemptNext';
+import TeleportContext from 'teleport/teleportContext';
 
 export default function useAddApp(ctx: TeleportContext) {
   const { attempt, run } = useAttempt('');
@@ -25,14 +26,20 @@ export default function useAddApp(ctx: TeleportContext) {
   const isAuthTypeLocal = !ctx.storeUser.isSso();
   const isEnterprise = ctx.isEnterprise;
   const [automatic, setAutomatic] = useState(isEnterprise);
-  const [cmd, setCmd] = useState('');
   const [expires, setExpires] = useState('');
+  const [token, setToken] = useState('');
 
-  function createToken(appName = '', appUri = '') {
+  useEffect(() => {
+    createToken();
+  }, []);
+
+  function createToken() {
     return run(() =>
-      ctx.nodeService.createAppBashCommand(appName, appUri).then(result => {
-        setCmd(result.text);
-        setExpires(result.expires);
+      ctx.nodeService.fetchJoinToken().then(token => {
+        const duration = moment(new Date()).diff(token.expiry);
+        const expires = moment.duration(duration).humanize();
+        setExpires(expires);
+        setToken(token.id);
       })
     );
   }
@@ -41,13 +48,13 @@ export default function useAddApp(ctx: TeleportContext) {
     user,
     version,
     createToken,
-    cmd,
     expires,
     attempt,
     automatic,
     setAutomatic,
     isAuthTypeLocal,
     isEnterprise,
+    token,
   };
 }
 
