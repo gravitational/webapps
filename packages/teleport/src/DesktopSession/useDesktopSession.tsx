@@ -59,7 +59,7 @@ export default function useDesktopSession(ctx: Ctx) {
     run(() =>
       ctx.desktopService
         .fetchDesktop(clusterId, desktopName)
-        .then(desktop => setHostname(desktop.addr))
+        .then(desktop => setHostname(desktop.name))
     );
   }, [clusterId, desktopName]);
 
