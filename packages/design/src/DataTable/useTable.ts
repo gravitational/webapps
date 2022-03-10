@@ -173,39 +173,35 @@ function searchAndFilterCb<T>(
   searchValue: string,
   propName: keyof T & string
 ) {
-  if (propName.toLocaleLowerCase().includes('date')) {
-    return displayDate(targetValue).includes(searchValue);
-  }
-  if (propName.toLocaleLowerCase().includes('time')) {
-    return displayDateTime(targetValue).includes(searchValue);
-  }
-  if (typeof targetValue === 'boolean') {
-    return (
-      propName.toLocaleLowerCase().includes(searchValue.toLocaleLowerCase()) &&
-      targetValue
-    );
+  const propNameLowerCased = propName.toLocaleLowerCase();
+  const searchValueLowerCased = searchValue.toLocaleLowerCase();
+
+  let targetValueArr = targetValue;
+
+  if (!Array.isArray(targetValue)) {
+    targetValueArr = [targetValue];
   }
 
-  // For searching through elements of an array
-  if (Array.isArray(targetValue)) {
-    return targetValue.some(item => {
-      if (typeof item === 'object') {
-        for (const key in item) {
-          if (
-            item[key]
-              .toLocaleLowerCase()
-              .includes(searchValue.toLocaleLowerCase())
-          ) {
-            return true;
-          }
+  return targetValueArr.some(item => {
+    if (typeof item === 'object' && item !== null && !Array.isArray(item)) {
+      for (const key in item) {
+        if (item[key].toLocaleLowerCase().includes(searchValueLowerCased)) {
+          return true;
         }
-      } else {
-        return item
-          .toLocaleLowerCase()
-          .includes(searchValue.toLocaleLowerCase());
       }
-    });
-  }
+    } else if (propNameLowerCased.includes('date')) {
+      return displayDate(item).includes(searchValueLowerCased);
+    } else if (propNameLowerCased.includes('time')) {
+      return displayDateTime(item).includes(searchValueLowerCased);
+    } else if (typeof item === 'boolean') {
+      return propNameLowerCased.includes(searchValueLowerCased) && item;
+    } else {
+      return item
+        .toString()
+        .toLocaleLowerCase()
+        .includes(searchValueLowerCased);
+    }
+  });
 }
 
 export type State<T> = Omit<
