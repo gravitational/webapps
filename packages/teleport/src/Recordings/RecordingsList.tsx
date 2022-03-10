@@ -17,6 +17,7 @@ limitations under the License.
 import React from 'react';
 import { ButtonBorder } from 'design';
 import Table, { Cell, TextCell } from 'design/DataTable';
+import { dateTimeMatcher } from 'design/utils/match';
 import { displayDateTime } from 'shared/services/loc';
 import cfg from 'teleport/config';
 import { Recording, RecordingType } from 'teleport/services/recordings';
@@ -95,6 +96,7 @@ export default function RecordingsList(props: Props) {
         'users',
         'durationText',
       ]}
+      customSearchMatchers={[dateTimeMatcher(['createdDate'])]}
     />
   );
 }

@@ -61,6 +61,7 @@ function NodeList(props: Props) {
         'tags',
         'clusterId',
       ]}
+      customSearchMatchers={[tunnelMatcher]}
     />
   );
 }
@@ -103,6 +104,23 @@ const renderLoginCell = (
 export const renderAddressCell = ({ addr, tunnel }: Node) => (
   <Cell>{tunnel ? renderTunnel() : addr}</Cell>
 );
+
+function tunnelMatcher(
+  targetValue: any,
+  searchValue: string,
+  propName: keyof Node & string
+) {
+  if (
+    propName === 'tunnel' &&
+    targetValue &&
+    propName.includes(searchValue.toLocaleLowerCase())
+  ) {
+    console.log('reached here');
+    return true;
+  }
+
+  return false;
+}
 
 function renderTunnel() {
   return (

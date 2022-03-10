@@ -1,3 +1,5 @@
+import { MatchCallback } from 'design/utils/match';
+
 export type TableProps<T> = {
   data: T[];
   columns: TableColumn<T>[];
@@ -5,6 +7,7 @@ export type TableProps<T> = {
   pagination?: PaginationConfig;
   isSearchable?: boolean;
   searchableProps?: Extract<keyof T, string>[];
+  customSearchMatchers?: MatchCallback<T>[];
   initialSort?: InitialSort<T>;
   fetching?: FetchingConfig;
   showFirst?: (data: T[]) => T;

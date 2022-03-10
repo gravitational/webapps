@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import isMatch from 'design/utils/match';
+import isMatch, { MatchCallback } from 'design/utils/match';
 import { displayDate, displayDateTime } from 'shared/services/loc';
 import paginateData from './Pager/paginateData';
 import { TableProps, TableColumn } from './types';
@@ -10,6 +10,7 @@ export default function useTable<T>({
   pagination,
   showFirst,
   searchableProps,
+  customSearchMatchers = [],
   ...props
 }: TableProps<T>) {
   const [state, setState] = useState(() => {
@@ -39,6 +40,24 @@ export default function useTable<T>({
     };
   });
 
+  const [searchAndFilterCb] = useState<MatchCallback<T>>(() => {
+    return (
+      targetValue: any,
+      searchValue: string,
+      propName: keyof T & string
+    ) => {
+      for (const matcher of customSearchMatchers) {
+        const isMatched = matcher(targetValue, searchValue, propName);
+        if (isMatched) {
+          return true;
+        }
+      }
+
+      // No match found.
+      return false;
+    };
+  });
+
   const updateData = (sort: typeof state.sort, searchValue: string) => {
     const sortedAndFiltered = sortAndFilter(
       data,
@@ -46,6 +65,7 @@ export default function useTable<T>({
       sort,
       searchableProps ||
         columns.filter(column => column.key).map(column => column.key),
+      searchAndFilterCb,
       showFirst
     );
 
@@ -126,7 +146,8 @@ function sortAndFilter<T>(
   data: T[] = [],
   searchValue = '',
   sort: State<T>['state']['sort'],
-  searchableProps: (keyof T)[],
+  searchableProps: (keyof T & string)[],
+  searchAndFilterCb: MatchCallback<T>,
   showFirst?: TableProps<T>['showFirst']
 ) {
   const output = data.filter(obj =>
@@ -166,42 +187,6 @@ function sortAndFilter<T>(
   }
 
   return output;
-}
-
-function searchAndFilterCb<T>(
-  targetValue: any,
-  searchValue: string,
-  propName: keyof T & string
-) {
-  const propNameLowerCased = propName.toLocaleLowerCase();
-  const searchValueLowerCased = searchValue.toLocaleLowerCase();
-
-  let targetValueArr = targetValue;
-
-  if (!Array.isArray(targetValue)) {
-    targetValueArr = [targetValue];
-  }
-
-  return targetValueArr.some(item => {
-    if (typeof item === 'object' && item !== null && !Array.isArray(item)) {
-      for (const key in item) {
-        if (item[key].toLocaleLowerCase().includes(searchValueLowerCased)) {
-          return true;
-        }
-      }
-    } else if (propNameLowerCased.includes('date')) {
-      return displayDate(item).includes(searchValueLowerCased);
-    } else if (propNameLowerCased.includes('time')) {
-      return displayDateTime(item).includes(searchValueLowerCased);
-    } else if (typeof item === 'boolean') {
-      return propNameLowerCased.includes(searchValueLowerCased) && item;
-    } else {
-      return item
-        .toString()
-        .toLocaleLowerCase()
-        .includes(searchValueLowerCased);
-    }
-  });
 }
 
 export type State<T> = Omit<
