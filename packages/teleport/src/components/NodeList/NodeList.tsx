@@ -61,6 +61,7 @@ function NodeList(props: Props) {
         'tags',
         'clusterId',
       ]}
+      searchLabelsPropName="tags"
     />
   );
 }

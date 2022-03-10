@@ -1,3 +1,5 @@
+import { MatchCallback } from 'design/utils/match';
+
 export type TableProps<T> = {
   data: T[];
   columns: TableColumn<T>[];
@@ -9,6 +11,17 @@ export type TableProps<T> = {
   fetching?: FetchingConfig;
   showFirst?: (data: T[]) => T;
   className?: string;
+  // searchDatePropName is the searchable prop name for a date (type Date) that
+  // requires its value to be formatted as string 'yyyy-MM-dd' before a search match.
+  searchDatePropName?: string;
+  // searchDateTimePropName is the searchable prop name for a date (type Date)
+  // that requires its value to be formatted as string 'yyyy-MM-dd HH:mm:ss'
+  // before a search match.
+  searchDateTimePropName?: string;
+  // customSearchMatchers contains custom functions to run when search matching.
+  // 'targetValue' prop will have to be upper cased for proper matching since
+  // the root matcher will upper case the search value.
+  customSearchMatchers?: MatchCallback<T>[];
   style?: React.CSSProperties;
 };
 

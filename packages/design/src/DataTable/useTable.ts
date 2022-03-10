@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import isMatch from 'design/utils/match';
+import isMatch, { MatchCallback } from 'design/utils/match';
 import { displayDate, displayDateTime } from 'shared/services/loc';
 import paginateData from './Pager/paginateData';
 import { TableProps, TableColumn } from './types';
@@ -10,6 +10,9 @@ export default function useTable<T>({
   pagination,
   showFirst,
   searchableProps,
+  searchDatePropName,
+  searchDateTimePropName,
+  customSearchMatchers = [],
   ...props
 }: TableProps<T>) {
   const [state, setState] = useState(() => {
@@ -39,6 +42,40 @@ export default function useTable<T>({
     };
   });
 
+  const [searchAndFilterCb] = useState<MatchCallback<T>>(() => {
+    return (
+      targetValue: any,
+      searchValue: string,
+      propName: keyof T & string
+    ) => {
+      // We upper case prop targetValue here b/c the searchValue
+      // passed in from the root matcher, also gets upper cased.
+
+      if (propName === searchDatePropName) {
+        return displayDate(targetValue)
+          .toLocaleUpperCase()
+          .includes(searchValue);
+      }
+
+      if (propName === searchDateTimePropName) {
+        return displayDateTime(targetValue)
+          .toLocaleUpperCase()
+          .includes(searchValue);
+      }
+
+      // Run through each custom matcher to find a match.
+      for (const matcher of customSearchMatchers) {
+        const isMatched = matcher(targetValue, searchValue, propName);
+        if (isMatched) {
+          return true;
+        }
+      }
+
+      // No match found.
+      return false;
+    };
+  });
+
   const updateData = (sort: typeof state.sort, searchValue: string) => {
     const sortedAndFiltered = sortAndFilter(
       data,
@@ -46,6 +83,7 @@ export default function useTable<T>({
       sort,
       searchableProps ||
         columns.filter(column => column.key).map(column => column.key),
+      searchAndFilterCb,
       showFirst
     );
 
@@ -127,6 +165,7 @@ function sortAndFilter<T>(
   searchValue = '',
   sort: State<T>['state']['sort'],
   searchableProps: (keyof T)[],
+  searchAndFilterCb: MatchCallback<T>,
   showFirst?: TableProps<T>['showFirst']
 ) {
   const output = data.filter(obj =>

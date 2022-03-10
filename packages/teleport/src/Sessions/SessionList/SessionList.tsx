@@ -20,6 +20,7 @@ import { MenuButton, MenuItem } from 'shared/components/MenuAction';
 import cfg from 'teleport/config';
 import { Session } from 'teleport/services/ssh';
 import renderDescCell from './DescCell';
+import { Participant } from 'teleport/services/ssh';
 
 export default function SessionList(props: Props) {
   const { sessions, pageSize = 100 } = props;
@@ -71,8 +72,28 @@ export default function SessionList(props: Props) {
         'created',
         'parties',
       ]}
+      searchDateTimePropName="created"
+      customSearchMatchers={[particpantMatcher]}
     />
   );
+}
+
+function particpantMatcher(
+  targetValue: any,
+  searchValue: string,
+  propName: keyof Session & string
+) {
+  if (propName === 'parties') {
+    return targetValue.some((participant: Participant) => {
+      if (participant.remoteAddr.toLocaleUpperCase().includes(searchValue)) {
+        return true;
+      }
+
+      return participant.user.toLocaleUpperCase().includes(searchValue);
+    });
+  }
+  // No match.
+  return false;
 }
 
 function renderActionCell({ sid, clusterId }: Session) {

@@ -37,7 +37,7 @@ export default function match<T>(
     cb,
   }: {
     searchableProps: (keyof T)[];
-    cb?(targetValue: any, searchValue: string, propName: keyof T): boolean;
+    cb?: MatchCallback<T>;
   }
 ) {
   searchValue = searchValue.toLocaleUpperCase();
@@ -63,3 +63,9 @@ export default function match<T>(
 
   return false;
 }
+
+export type MatchCallback<T> = (
+  targetValue: any,
+  searchValue: string,
+  propName: keyof T
+) => boolean;
