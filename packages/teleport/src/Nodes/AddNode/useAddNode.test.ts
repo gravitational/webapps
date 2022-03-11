@@ -6,7 +6,7 @@ describe('correct node bash command', () => {
 
   test.each`
     token            | hours  | expires      | cmd
-    ${'some-token'}  | ${1.1} | ${'1 hour'}  | ${'sudo bash -c "$(curl -fsSL http://localhost/scripts/some-token/install-node.sh)"'}
+    ${'some-token'}  | ${1.1} | ${'an hour'} | ${'sudo bash -c "$(curl -fsSL http://localhost/scripts/some-token/install-node.sh)"'}
     ${'other-token'} | ${2.1} | ${'2 hours'} | ${'sudo bash -c "$(curl -fsSL http://localhost/scripts/other-token/install-node.sh)"'}
     ${'some-token'}  | ${25}  | ${'a day'}   | ${'sudo bash -c "$(curl -fsSL http://localhost/scripts/some-token/install-node.sh)"'}
   `(
