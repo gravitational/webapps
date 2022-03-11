@@ -40,6 +40,8 @@ export default function match<T>(
     cb?: MatchCallback<T>;
   }
 ) {
+  searchValue = searchValue.toLocaleLowerCase();
+
   let propNames =
     searchableProps ||
     (Object.getOwnPropertyNames(obj) as (keyof T & string)[]);
@@ -54,10 +56,7 @@ export default function match<T>(
       }
 
       if (
-        targetValue
-          .toString()
-          .toLocaleLowerCase()
-          .indexOf(searchValue.toLocaleLowerCase()) !== -1
+        targetValue.toString().toLocaleLowerCase().indexOf(searchValue) !== -1
       ) {
         return true;
       }

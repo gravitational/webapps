@@ -117,7 +117,6 @@ function participantMatcher(
   searchValue: string,
   propName: keyof Session & string
 ) {
-  searchValue = searchValue.toLocaleLowerCase();
   if (propName === 'parties') {
     return targetValue.some((participant: Participant) => {
       if (participant.remoteAddr.toLocaleLowerCase().includes(searchValue)) {
