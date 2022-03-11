@@ -40,23 +40,21 @@ export default function useTable<T>({
     };
   });
 
-  const [searchAndFilterCb] = useState<MatchCallback<T>>(() => {
-    return (
-      targetValue: any,
-      searchValue: string,
-      propName: keyof T & string
-    ) => {
-      for (const matcher of customSearchMatchers) {
-        const isMatched = matcher(targetValue, searchValue, propName);
-        if (isMatched) {
-          return true;
-        }
+  function searchAndFilterCb(
+    targetValue: any,
+    searchValue: string,
+    propName: keyof T & string
+  ) {
+    for (const matcher of customSearchMatchers) {
+      const isMatched = matcher(targetValue, searchValue, propName);
+      if (isMatched) {
+        return true;
       }
+    }
 
-      // No match found.
-      return false;
-    };
-  });
+    // No match found.
+    return false;
+  }
 
   const updateData = (sort: typeof state.sort, searchValue: string) => {
     const sortedAndFiltered = sortAndFilter(

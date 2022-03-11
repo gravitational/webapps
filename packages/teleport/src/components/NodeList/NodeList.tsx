@@ -110,16 +110,8 @@ function tunnelMatcher(
   searchValue: string,
   propName: keyof Node & string
 ) {
-  if (
-    propName === 'tunnel' &&
-    targetValue &&
-    propName.includes(searchValue.toLocaleLowerCase())
-  ) {
-    console.log('reached here');
-    return true;
-  }
-
-  return false;
+  searchValue = searchValue.toLocaleLowerCase();
+  return propName === 'tunnel' && targetValue && propName.includes(searchValue);
 }
 
 function renderTunnel() {

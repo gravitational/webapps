@@ -117,15 +117,14 @@ function participantMatcher(
   searchValue: string,
   propName: keyof Session & string
 ) {
+  searchValue = searchValue.toLocaleLowerCase();
   if (propName === 'parties') {
     return targetValue.some((participant: Participant) => {
-      if (participant.remoteAddr.toLocaleUpperCase().includes(searchValue)) {
+      if (participant.remoteAddr.toLocaleLowerCase().includes(searchValue)) {
         return true;
       }
 
-      return participant.user.toLocaleUpperCase().includes(searchValue);
+      return participant.user.toLocaleLowerCase().includes(searchValue);
     });
   }
-  // No match.
-  return false;
 }
