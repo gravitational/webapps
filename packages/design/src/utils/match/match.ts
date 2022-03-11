@@ -29,9 +29,22 @@ limitations under the License.
  *      - param searchValue: the value to look for in target
  *      - param prop: the current obj property name where searchValue may be matched
  */
-export default function match(obj, searchValue, { searchableProps, cb }) {
+export default function match<T>(
+  obj: T,
+  searchValue: string,
+  {
+    searchableProps,
+    cb,
+  }: {
+    searchableProps: (keyof T & string)[];
+    cb?: MatchCallback<T>;
+  }
+) {
   searchValue = searchValue.toLocaleUpperCase();
-  let propNames = searchableProps || Object.getOwnPropertyNames(obj);
+
+  let propNames =
+    searchableProps ||
+    (Object.getOwnPropertyNames(obj) as (keyof T & string)[]);
   for (let i = 0; i < propNames.length; i++) {
     let targetValue = obj[propNames[i]];
     if (targetValue) {
@@ -43,10 +56,7 @@ export default function match(obj, searchValue, { searchableProps, cb }) {
       }
 
       if (
-        targetValue
-          .toString()
-          .toLocaleUpperCase()
-          .indexOf(searchValue) !== -1
+        targetValue.toString().toLocaleUpperCase().indexOf(searchValue) !== -1
       ) {
         return true;
       }
@@ -55,3 +65,9 @@ export default function match(obj, searchValue, { searchableProps, cb }) {
 
   return false;
 }
+
+export type MatchCallback<T> = (
+  targetValue: any,
+  searchValue: string,
+  propName: keyof T & string
+) => boolean;
