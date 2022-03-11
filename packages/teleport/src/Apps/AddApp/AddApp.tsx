@@ -89,6 +89,7 @@ export function AddApp({
             onClose={onClose}
             version={version}
             isAuthTypeLocal={isAuthTypeLocal}
+            isEnterprise={isEnterprise}
             expires={expires}
             createToken={createToken}
             attempt={attempt}
