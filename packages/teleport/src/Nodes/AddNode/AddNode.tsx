@@ -90,6 +90,7 @@ export function AddNode({
           )}
           {!automatic && (
             <Manually
+              isEnterprise={isEnterprise}
               user={user}
               version={version}
               isAuthTypeLocal={isAuthTypeLocal}
