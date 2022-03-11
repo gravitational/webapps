@@ -1,7 +1,7 @@
 import React, { forwardRef } from 'react';
 import { SortAsc, SortDesc } from 'design/Icon';
 import styled from 'styled-components';
-import { Box, Text } from 'design';
+import { Text } from 'design';
 
 interface ClusterSelectorProps {
   clusterName?: string;
@@ -13,24 +13,26 @@ interface ClusterSelectorProps {
 export const ClusterSelector = forwardRef<HTMLDivElement, ClusterSelectorProps>(
   (props, ref) => {
     const SortIcon = props.isOpened ? SortAsc : SortDesc;
-    const text = props.clusterName || 'Select Resource';
+    const text = props.clusterName || 'Select Cluster';
     return (
-      <StyledButton
+      <Container
         ref={ref}
         onClick={props.onClick}
         isOpened={props.isOpened}
         isClusterSelected={!!props.clusterName}
-        m="auto"
         title={text}
       >
         <Text css={{ whiteSpace: 'nowrap' }}>{text}</Text>
         <SortIcon fontSize={12} ml={3} />
-      </StyledButton>
+      </Container>
     );
   }
 );
 
-const StyledButton = styled(Box)`
+const Container = styled.button`
+  background: inherit;
+  color: inherit;
+  font-family: inherit;
   width: 100%;
   height: 40px;
   border: 0.5px ${props => props.theme.colors.action.disabledBackground} solid;
