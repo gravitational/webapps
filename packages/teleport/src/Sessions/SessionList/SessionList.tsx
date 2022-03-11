@@ -119,11 +119,11 @@ function participantMatcher(
 ) {
   if (propName === 'parties') {
     return targetValue.some((participant: Participant) => {
-      if (participant.remoteAddr.toLocaleLowerCase().includes(searchValue)) {
+      if (participant.remoteAddr.toLocaleUpperCase().includes(searchValue)) {
         return true;
       }
 
-      return participant.user.toLocaleLowerCase().includes(searchValue);
+      return participant.user.toLocaleUpperCase().includes(searchValue);
     });
   }
 }

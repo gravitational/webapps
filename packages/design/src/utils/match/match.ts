@@ -40,7 +40,7 @@ export default function match<T>(
     cb?: MatchCallback<T>;
   }
 ) {
-  searchValue = searchValue.toLocaleLowerCase();
+  searchValue = searchValue.toLocaleUpperCase();
 
   let propNames =
     searchableProps ||
@@ -56,7 +56,7 @@ export default function match<T>(
       }
 
       if (
-        targetValue.toString().toLocaleLowerCase().indexOf(searchValue) !== -1
+        targetValue.toString().toLocaleUpperCase().indexOf(searchValue) !== -1
       ) {
         return true;
       }

@@ -110,7 +110,11 @@ function tunnelMatcher(
   searchValue: string,
   propName: keyof Node & string
 ) {
-  return propName === 'tunnel' && targetValue && propName.includes(searchValue);
+  return (
+    propName === 'tunnel' &&
+    targetValue &&
+    propName.includes(searchValue.toLocaleLowerCase())
+  );
 }
 
 function renderTunnel() {

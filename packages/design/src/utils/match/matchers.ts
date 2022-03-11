@@ -6,7 +6,7 @@ export function dateMatcher<T>(
 ): MatchCallback<T> {
   return (targetValue, searchValue, propName) => {
     if (datePropNames.includes(propName)) {
-      return displayDate(targetValue).toLocaleLowerCase().includes(searchValue);
+      return displayDate(targetValue).toLocaleUpperCase().includes(searchValue);
     }
   };
 }
@@ -17,7 +17,7 @@ export function dateTimeMatcher<T>(
   return (targetValue, searchValue, propName) => {
     if (dateTimePropNames.includes(propName)) {
       return displayDateTime(targetValue)
-        .toLocaleLowerCase()
+        .toLocaleUpperCase()
         .includes(searchValue);
     }
   };
