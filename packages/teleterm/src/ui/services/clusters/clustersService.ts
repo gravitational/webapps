@@ -422,7 +422,7 @@ export class ClustersService extends ImmutableStore<ClustersServiceState> {
     const databases = this.findDbs(clusterUri);
     return databases.filter(obj =>
       isMatch(obj, query.search, {
-        searchableProps: ['name', 'desc', 'title', 'tags'],
+        searchableProps: ['name', 'desc', 'labelsList'],
         cb: cb,
       })
     );
@@ -440,7 +440,7 @@ export class ClustersService extends ImmutableStore<ClustersServiceState> {
     const apps = this.findApps(clusterUri);
     return apps.filter(obj =>
       isMatch(obj, query.search, {
-        searchableProps: ['name', 'publicAddr', 'description', 'tags'],
+        searchableProps: ['name', 'publicAddr', 'description', 'labelsList'],
         cb,
       })
     );
@@ -487,7 +487,7 @@ export class ClustersService extends ImmutableStore<ClustersServiceState> {
     const servers = this.findServers(clusterUri);
     return servers.filter(obj =>
       isMatch(obj, query.search, {
-        searchableProps: ['hostname', 'addr', 'tags', 'tunnel'],
+        searchableProps: ['hostname', 'addr', 'labelsList', 'tunnel'],
         cb,
       })
     );
