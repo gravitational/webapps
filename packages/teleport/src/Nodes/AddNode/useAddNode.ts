@@ -25,6 +25,7 @@ export default function useAddNode(ctx: TeleportContext) {
   const { attempt, run } = useAttempt('processing');
   const version = ctx.storeUser.state.cluster.authVersion;
   const user = ctx.storeUser.state.username;
+  const isEnterprise = ctx.isEnterprise;
   const isAuthTypeLocal = !ctx.storeUser.isSso();
   const [automatic, setAutomatic] = useState(true);
   const [script, setScript] = useState('');
@@ -48,6 +49,7 @@ export default function useAddNode(ctx: TeleportContext) {
 
   return {
     createJoinToken,
+    isEnterprise,
     automatic,
     setAutomatic,
     script,

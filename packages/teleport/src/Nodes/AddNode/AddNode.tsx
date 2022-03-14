@@ -36,6 +36,7 @@ export default function Container(props: Props) {
 
 export function AddNode({
   user,
+  isEnterprise,
   onClose,
   script,
   expiry,
