@@ -1,5 +1,5 @@
 /*
-Copyright 2015 Gravitational, Inc.
+Copyright 2022 Gravitational, Inc.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -14,22 +14,13 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-export interface Node {
-  id: string;
-  clusterId: string;
-  hostname: string;
-  tags: string[];
-  addr: string;
-  tunnel: boolean;
-}
+import { JoinToken } from './types';
 
-export interface BashCommand {
-  text: string;
-  expires: string;
-}
+export default function makeToken(json): JoinToken {
+  const { id, expiry } = json;
 
-export type NodesResponse = {
-  nodes: Node[];
-  startKey?: string;
-  totalCount?: number;
-};
+  return {
+    id,
+    expiry: new Date(expiry),
+  };
+}

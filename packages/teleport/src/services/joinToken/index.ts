@@ -1,5 +1,5 @@
 /*
-Copyright 2019 Gravitational, Inc.
+Copyright 2022 Gravitational, Inc.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -14,23 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import api from 'teleport/services/api';
-import cfg from 'teleport/config';
-import makeNode from './makeNode';
-import { NodesResponse } from './types';
+import service from './joinToken';
 
-const service = {
-  fetchNodes(clusterId?: string): Promise<NodesResponse> {
-    return api.get(cfg.getClusterNodesUrl(clusterId)).then(json => {
-      const items = json?.items || [];
-
-      return {
-        nodes: items.map(makeNode),
-        startKey: json?.startKey,
-        totalCount: json?.totalCount,
-      };
-    });
-  },
-};
-
+export * from './types';
 export default service;

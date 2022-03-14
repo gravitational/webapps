@@ -18,6 +18,7 @@ import { useEffect, useState } from 'react';
 import { formatDistanceStrict } from 'date-fns';
 import useAttempt from 'shared/hooks/useAttemptNext';
 import TeleportContext from 'teleport/teleportContext';
+import { NodeRoles } from 'teleport/services/joinToken';
 
 export default function useAddApp(ctx: TeleportContext) {
   const { attempt, run } = useAttempt('');
@@ -35,7 +36,7 @@ export default function useAddApp(ctx: TeleportContext) {
 
   function createToken() {
     return run(() =>
-      ctx.nodeService.fetchJoinToken().then(token => {
+      ctx.joinTokenService.fetchJoinToken([NodeRoles.App]).then(token => {
         const expires = formatDistanceStrict(new Date(), token.expiry);
         setExpires(expires);
         setToken(token.id);
