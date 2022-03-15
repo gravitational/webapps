@@ -36,6 +36,7 @@ export default function Container(props: Props) {
 
 export function AddNode({
   user,
+  isEnterprise,
   onClose,
   script,
   expiry,
@@ -44,7 +45,6 @@ export function AddNode({
   setAutomatic,
   version,
   attempt,
-  isEnterprise,
   isAuthTypeLocal,
   token,
 }: Props & State) {
@@ -62,22 +62,18 @@ export function AddNode({
       <Flex flex="1" flexDirection="column">
         <Flex alignItems="center" justifyContent="space-between" mb="4">
           <DialogTitle mr="auto">Add Server</DialogTitle>
-          {isEnterprise && (
-            <>
-              <TabIcon
-                Icon={Icons.Wand}
-                title="Automatically"
-                active={automatic}
-                onClick={() => setAutomatic(true)}
-              />
-              <TabIcon
-                Icon={Icons.Cog}
-                title="Manually"
-                active={!automatic}
-                onClick={() => setAutomatic(false)}
-              />
-            </>
-          )}
+          <TabIcon
+            Icon={Icons.Wand}
+            title="Automatically"
+            active={automatic}
+            onClick={() => setAutomatic(true)}
+          />
+          <TabIcon
+            Icon={Icons.Cog}
+            title="Manually"
+            active={!automatic}
+            onClick={() => setAutomatic(false)}
+          />
         </Flex>
         <DialogContent minHeight="100px">
           {automatic && (
