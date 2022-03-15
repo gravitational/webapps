@@ -18,7 +18,6 @@ import React from 'react';
 import { Text, Box, ButtonLink, Indicator } from 'design';
 import TextSelectCopy from 'teleport/components/TextSelectCopy';
 import DownloadLinks from 'teleport/components/DownloadLinks';
-import * as links from 'teleport/services/links';
 import { State } from './../useAddNode';
 
 export default function Manually({
