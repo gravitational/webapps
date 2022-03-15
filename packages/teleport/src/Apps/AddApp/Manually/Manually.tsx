@@ -25,7 +25,7 @@ import {
 } from 'design';
 import { DialogContent, DialogFooter } from 'design/Dialog';
 import TextSelectCopy from 'teleport/components/TextSelectCopy';
-import * as links from 'teleport/services/links';
+import DownloadLinks from 'teleport/components/DownloadLinks';
 import { State } from '../useAddApp';
 
 export default function Manually({
@@ -33,6 +33,7 @@ export default function Manually({
   version,
   onClose,
   isAuthTypeLocal,
+  isEnterprise,
   token,
   createToken,
   expires,
@@ -62,17 +63,7 @@ export default function Manually({
             Step 1
           </Text>{' '}
           - Download Teleport package to your computer
-          <Box>
-            <Link href={links.getMacOS(version)} target="_blank" mr="2">
-              MacOS
-            </Link>
-            <Link href={links.getLinux64(version)} target="_blank" mr="2">
-              Linux 64-bit
-            </Link>
-            <Link href={links.getLinux32(version)} target="_blank">
-              Linux 32-bit
-            </Link>
-          </Box>
+          <DownloadLinks isEnterprise={isEnterprise} version={version} />
         </Box>
         {attempt.status === 'failed' ? (
           <StepsWithoutToken host={host} tshLoginCmd={tshLoginCmd} />
@@ -159,6 +150,7 @@ type Props = {
   version: string;
   user: string;
   isAuthTypeLocal: boolean;
+  isEnterprise: boolean;
   token: State['token'];
   expires: State['expires'];
   createToken: State['createToken'];

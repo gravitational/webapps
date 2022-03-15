@@ -24,6 +24,7 @@ export default {
 export const Add = () => (
   <Component
     username="yassine"
+    isEnterprise={false}
     version="6.1.3"
     onClose={() => null}
     authType="local"

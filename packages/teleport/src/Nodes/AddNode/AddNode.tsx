@@ -36,6 +36,7 @@ export default function Container(props: Props) {
 
 export function AddNode({
   user,
+  isEnterprise,
   onClose,
   script,
   expiry,
@@ -87,6 +88,7 @@ export function AddNode({
             <Manually
               user={user}
               version={version}
+              isEnterprise={isEnterprise}
               isAuthTypeLocal={isAuthTypeLocal}
               joinToken={token}
               expiry={expiry}
