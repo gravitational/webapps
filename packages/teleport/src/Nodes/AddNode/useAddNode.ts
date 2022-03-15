@@ -20,7 +20,7 @@ import useAttempt from 'shared/hooks/useAttemptNext';
 import TeleportContext from 'teleport/teleportContext';
 import { BashCommand } from 'teleport/services/nodes';
 import cfg from 'teleport/config';
-import { JoinToken, NodeRoles } from 'teleport/services/joinToken';
+import { JoinToken } from 'teleport/services/joinToken';
 
 export default function useAddNode(ctx: TeleportContext) {
   const { attempt, run } = useAttempt('processing');
@@ -39,7 +39,7 @@ export default function useAddNode(ctx: TeleportContext) {
 
   function createJoinToken() {
     return run(() =>
-      ctx.joinTokenService.fetchJoinToken([NodeRoles.Node]).then(token => {
+      ctx.joinTokenService.fetchJoinToken(['Node']).then(token => {
         const cmd = createNodeBashCommand(token);
         setExpiry(cmd.expires);
         setScript(cmd.text);

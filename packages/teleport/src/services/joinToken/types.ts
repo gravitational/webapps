@@ -19,8 +19,4 @@ export type JoinToken = {
   expiry: Date;
 };
 
-export enum NodeRoles {
-  App = 'App',
-  Node = 'Node',
-  Database = 'Db',
-}
+export type Roles = 'App' | 'Node' | 'Db';
