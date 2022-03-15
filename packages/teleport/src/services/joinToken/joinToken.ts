@@ -19,10 +19,10 @@ import cfg from 'teleport/config';
 import makeJoinToken from './makeJoinToken';
 import { JoinToken, Roles } from './types';
 
-const service = {
+class JoinTokenService {
   fetchJoinToken(roles: Roles[]): Promise<JoinToken> {
     return api.post(cfg.getJoinTokenUrl(), { roles }).then(makeJoinToken);
-  },
-};
+  }
+}
 
-export default service;
+export default JoinTokenService;
