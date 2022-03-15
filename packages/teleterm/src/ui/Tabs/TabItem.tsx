@@ -17,8 +17,7 @@ limitations under the License.
 import React, { useRef } from 'react';
 import styled from 'styled-components';
 import { Close as CloseIcon } from 'design/Icon';
-import { space } from 'design/system';
-import { Text } from 'design';
+import { ButtonIcon, Text } from 'design';
 import { useTabDnD } from './useTabDnD';
 
 export function TabItem(props: Props) {
@@ -41,29 +40,32 @@ export function TabItem(props: Props) {
   };
 
   return (
-    <StyledTabItem
-      onClick={onClick}
-      onContextMenu={onContextMenu}
-      ref={ref}
-      active={active}
-      dragging={isDragging}
-      title={name}
-      style={{ ...style }}
-    >
-      <StyledTabButton>
-        <Text mx="auto">{name}</Text>
-      </StyledTabButton>
-      <StyledCloseButton title="Close" onClick={handleClose}>
-        <CloseIcon />
-      </StyledCloseButton>
-    </StyledTabItem>
+    <>
+      <StyledTabItem
+        onClick={onClick}
+        onContextMenu={onContextMenu}
+        ref={ref}
+        active={active}
+        dragging={isDragging}
+        title={name}
+        style={{ ...style }}
+      >
+        <StyledTabButton>
+          <Text color="inherit" fontWeight={700} fontSize="12px">
+            {name}
+          </Text>
+        </StyledTabButton>
+        <ButtonIcon size={0} mr={1} title="Close" onClick={handleClose}>
+          <CloseIcon fontSize="16px" />
+        </ButtonIcon>
+      </StyledTabItem>
+    </>
   );
 }
 
 type Props = {
   index: number;
   name: string;
-  users: { user: string }[];
   active: boolean;
   onClick: () => void;
   onClose: () => void;
@@ -81,7 +83,7 @@ const StyledTabItem = styled.div(({ theme, active, dragging }) => {
     height: '100%',
     cursor: 'pointer',
     border: 'none',
-    borderRight: `1px solid ${theme.colors.bgTerminal}`,
+    borderRadius: '8px 8px 0 0',
     '&:hover, &:focus': {
       color: theme.colors.primary.contrastText,
       transition: 'color .3s',
@@ -89,9 +91,8 @@ const StyledTabItem = styled.div(({ theme, active, dragging }) => {
   };
 
   if (active) {
-    styles['backgroundColor'] = theme.colors.bgTerminal;
-    styles['color'] = theme.colors.primary.contrastText;
-    styles['fontWeight'] = 'bold';
+    styles['backgroundColor'] = theme.colors.terminalDark;
+    styles['color'] = theme.colors.secondary.contrastText;
     styles['transition'] = 'none';
   }
 
@@ -111,23 +112,8 @@ const StyledTabButton = styled.button`
   line-height: 32px;
   background-color: transparent;
   white-space: nowrap;
-  padding: 0 8px;
+  padding: 0 12px;
   border: none;
   min-width: 0;
   width: 100%;
-`;
-
-const StyledCloseButton = styled.button`
-  background: transparent;
-  border-radius: 2px;
-  border: none;
-  cursor: pointer;
-  height: 16px;
-  width: 16px;
-  outline: none;
-  padding: 0;
-  margin: 0 8px 0 0;
-  transition: all 0.3s;
-
-  ${space}
 `;

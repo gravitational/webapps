@@ -87,7 +87,7 @@ export function TabHost() {
 
   return (
     <StyledTabHost>
-      <Flex bg="terminalDark" height="32px">
+      <Flex height="32px">
         <Tabs
           flex="1"
           items={getActiveWorkspaceDocuments()}

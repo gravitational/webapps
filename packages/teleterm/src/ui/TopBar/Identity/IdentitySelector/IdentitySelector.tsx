@@ -54,7 +54,7 @@ const Container = styled.button`
   border-color: ${props =>
     props.isOpened
       ? props.theme.colors.action.disabledBackground
-      : props.theme.colors.primary.dark};
+      : 'transparent'};
 
   &:hover {
     background: ${props => props.theme.colors.primary.light};
