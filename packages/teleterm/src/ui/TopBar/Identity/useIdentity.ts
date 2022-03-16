@@ -7,7 +7,7 @@ export function useIdentity() {
   ctx.clustersService.useState();
   ctx.workspacesService.useState();
 
-  function changeContext(clusterUri: string): Promise<void> {
+  function changeRootCluster(clusterUri: string): Promise<void> {
     return ctx.workspacesService.setActiveWorkspace(clusterUri);
   }
 
@@ -52,7 +52,7 @@ export function useIdentity() {
     }));
 
   return {
-    changeContext,
+    changeRootCluster,
     addCluster,
     removeCluster,
     logout,

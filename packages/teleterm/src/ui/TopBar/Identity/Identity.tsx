@@ -11,7 +11,7 @@ export function Identity() {
   const {
     activeRootCluster,
     rootClusters,
-    changeContext,
+    changeRootCluster,
     logout,
     removeCluster,
     addCluster,
@@ -50,7 +50,7 @@ export function Identity() {
         <IdentityList
           loggedInUser={loggedInUser}
           clusters={rootClusters}
-          selectCluster={changeContext}
+          selectCluster={changeRootCluster}
           logout={logout}
           removeCluster={removeCluster}
           addCluster={addCluster}
