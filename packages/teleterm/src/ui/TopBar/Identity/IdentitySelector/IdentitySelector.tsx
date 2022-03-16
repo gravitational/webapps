@@ -19,7 +19,7 @@ export const IdentitySelector = forwardRef<
   const text =
     props.userName && props.hostName
       ? `${props.userName}@${props.hostName}`
-      : 'No cluster';
+      : 'Select Root Cluster';
   const Icon = props.isOpened ? SortAsc : SortDesc;
 
   return (
