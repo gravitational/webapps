@@ -20,23 +20,31 @@ import { Close as CloseIcon } from 'design/Icon';
 import { ButtonIcon, Text } from 'design';
 import { useTabDnD } from './useTabDnD';
 
-export function TabItem(props: Props) {
-  const {
-    name,
-    active,
-    onClick,
-    onClose,
-    style,
-    index,
-    onMoved,
-    onContextMenu,
-  } = props;
+type TabItemProps = {
+  index?: number;
+  name?: string;
+  active?: boolean;
+  onClick?(): void;
+  onClose?(): void;
+  onMoved?(oldIndex: number, newIndex: number): void;
+  onContextMenu?(): void;
+};
+
+export function TabItem(props: TabItemProps) {
+  const { name, active, onClick, onClose, index, onMoved, onContextMenu } =
+    props;
   const ref = useRef<HTMLDivElement>(null);
-  const { isDragging } = useTabDnD({ index, onDrop: onMoved, ref });
+  const canDrag = !!onMoved;
+  const { isDragging } = useTabDnD({
+    index,
+    onDrop: onMoved,
+    ref,
+    canDrag,
+  });
 
   const handleClose = (event: MouseEvent) => {
     event.stopPropagation();
-    onClose();
+    onClose?.();
   };
 
   return (
@@ -48,40 +56,32 @@ export function TabItem(props: Props) {
         active={active}
         dragging={isDragging}
         title={name}
-        style={{ ...style }}
+        canDrag={canDrag}
       >
         <StyledTabButton>
           <Text color="inherit" fontWeight={700} fontSize="12px">
             {name}
           </Text>
         </StyledTabButton>
-        <ButtonIcon size={0} mr={1} title="Close" onClick={handleClose}>
-          <CloseIcon fontSize="16px" />
-        </ButtonIcon>
+        {onClose && (
+          <ButtonIcon size={0} mr={1} title="Close" onClick={handleClose}>
+            <CloseIcon fontSize="16px" />
+          </ButtonIcon>
+        )}
       </StyledTabItem>
     </>
   );
 }
 
-type Props = {
-  index: number;
-  name: string;
-  active: boolean;
-  onClick: () => void;
-  onClose: () => void;
-  onMoved: (oldIndex: number, newIndex: number) => void;
-  onContextMenu: () => void;
-  style: any;
-};
-
-const StyledTabItem = styled.div(({ theme, active, dragging }) => {
+const StyledTabItem = styled.div(({ theme, active, dragging, canDrag }) => {
   const styles: any = {
     display: 'flex',
+    flexBasis: '0',
+    flexGrow: '1',
     opacity: '1',
     alignItems: 'center',
     minWidth: '0',
     height: '100%',
-    cursor: 'pointer',
     border: 'none',
     borderRadius: '8px 8px 0 0',
     '&:hover, &:focus': {
@@ -98,6 +98,10 @@ const StyledTabItem = styled.div(({ theme, active, dragging }) => {
 
   if (dragging) {
     styles['opacity'] = 0;
+  }
+
+  if (canDrag) {
+    styles['cursor'] = 'pointer';
   }
 
   return styles;

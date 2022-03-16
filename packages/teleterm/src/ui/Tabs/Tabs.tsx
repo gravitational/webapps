@@ -35,28 +35,32 @@ export function Tabs(props: Props) {
     ...styledProps
   } = props;
 
-  const $items = items.map((item, index) => {
-    const active = item.uri === activeTab;
-    return (
-      <Fragment key={item.uri}>
-        <TabItem
-          index={index}
-          name={item.title}
-          active={active}
-          onClick={() => onSelect(item)}
-          onClose={() => onClose(item)}
-          onContextMenu={() => onContextMenu(item)}
-          onMoved={onMoved}
-          style={{
-            flex: '1',
-            flexBasis: '0',
-            flexGrow: '1',
-          }}
-        />
-        <Separator />
-      </Fragment>
-    );
-  });
+  const $emptyTab = (
+    <>
+      <TabItem active={true} />
+      <Separator />
+    </>
+  );
+
+  const $items = items.length
+    ? items.map((item, index) => {
+        const active = item.uri === activeTab;
+        return (
+          <Fragment key={item.uri}>
+            <TabItem
+              index={index}
+              name={item.title}
+              active={active}
+              onClick={() => onSelect(item)}
+              onClose={() => onClose(item)}
+              onContextMenu={() => onContextMenu(item)}
+              onMoved={onMoved}
+            />
+            <Separator />
+          </Fragment>
+        );
+      })
+    : $emptyTab;
 
   return (
     <StyledTabs
