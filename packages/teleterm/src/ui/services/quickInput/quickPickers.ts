@@ -18,6 +18,7 @@ import { ClustersService } from 'teleterm/ui/services/clusters';
 import { WorkspacesService } from 'teleterm/ui/services/workspacesService';
 import { QuickInputService } from 'teleterm/ui/services/quickInput';
 import { CommandLauncher } from 'teleterm/ui/commandLauncher';
+import { toAst } from './commandBarParser';
 import {
   QuickInputPicker,
   SuggestionCmd,
@@ -25,6 +26,9 @@ import {
   SuggestionSshLogin,
   AutocompleteResult,
 } from './types';
+
+// TODO: Remove this.
+window.toAst = toAst;
 
 export class QuickCommandPicker implements QuickInputPicker {
   private pickerRegistry: Map<string, QuickInputPicker>;
