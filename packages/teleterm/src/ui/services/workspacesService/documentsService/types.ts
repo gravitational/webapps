@@ -39,7 +39,7 @@ export interface DocumentTshNode extends DocumentBase {
   serverUri: string;
   rootClusterId: string;
   leafClusterId?: string;
-  login: string;
+  login?: string;
 }
 
 export interface DocumentTshKube extends DocumentBase {
@@ -67,6 +67,7 @@ export interface DocumentCluster extends DocumentBase {
 export interface DocumentPtySession extends DocumentBase {
   kind: 'doc.terminal_shell';
   cwd?: string;
+  initCommand?: string;
 }
 
 export type DocumentTerminal =
@@ -86,4 +87,8 @@ export type CreateGatewayDocumentOpts = {
   targetUser?: string;
   title: string;
   port?: string;
+};
+
+export type CreateClusterDocumentOpts = {
+  clusterUri: string;
 };

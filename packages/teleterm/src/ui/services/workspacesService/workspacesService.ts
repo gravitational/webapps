@@ -34,6 +34,10 @@ export class WorkspacesService extends ImmutableStore<WorkspacesState> {
     super();
   }
 
+  getActiveWorkspace(): Workspace | undefined {
+    return this.state.workspaces[this.state.rootClusterUri];
+  }
+
   getRootClusterUri(): string | undefined {
     return this.state.rootClusterUri;
   }
@@ -59,6 +63,15 @@ export class WorkspacesService extends ImmutableStore<WorkspacesState> {
     }));
   }
 
+  setWorkspaceLocalClusterUri(
+    clusterUri: string,
+    localClusterUri: string
+  ): void {
+    this.setState(draftState => {
+      draftState.workspaces[clusterUri].localClusterUri = localClusterUri;
+    });
+  }
+
   getWorkspaceDocumentService(
     clusterUri: string
   ): DocumentsService | undefined {
@@ -72,8 +85,7 @@ export class WorkspacesService extends ImmutableStore<WorkspacesState> {
           newState =>
             this.setState(draftState => {
               newState(draftState.workspaces[clusterUri]);
-            }),
-          clusterUri
+            })
         )
       );
     }
@@ -93,11 +105,12 @@ export class WorkspacesService extends ImmutableStore<WorkspacesState> {
   setActiveWorkspace(clusterUri: string): Promise<void> {
     const setWorkspace = () => {
       this.setState(draftState => {
-        if (!draftState.workspaces[clusterUri]) {
+        // clusterUri can be undefined - we don't want to create a workspace for it
+        if (clusterUri && !draftState.workspaces[clusterUri]) {
           const persistedWorkspace =
             this.statePersistenceService.getWorkspaces().workspaces[clusterUri];
           draftState.workspaces[clusterUri] = {
-            localClusterUri: persistedWorkspace?.localClusterUri,
+            localClusterUri: persistedWorkspace?.localClusterUri || clusterUri,
             location: persistedWorkspace?.location,
             documents: persistedWorkspace?.documents || [],
           };
@@ -108,7 +121,7 @@ export class WorkspacesService extends ImmutableStore<WorkspacesState> {
 
     const isConnected = this.clustersService.findCluster(clusterUri)?.connected;
     return new Promise((resolve, reject) => {
-      if (!isConnected) {
+      if (clusterUri && !isConnected) {
         this.modalsService.openClusterConnectDialog(clusterUri, () => {
           setWorkspace();
           resolve();
@@ -120,5 +133,17 @@ export class WorkspacesService extends ImmutableStore<WorkspacesState> {
 
       //TODO: add reject
     });
+  }
+
+  removeWorkspace(clusterUri: string): void {
+    this.setState(draftState => {
+      delete draftState.workspaces[clusterUri];
+    });
+  }
+
+  getConnectedWorkspacesClustersUri(): string[] {
+    return Object.keys(this.state.workspaces).filter(
+      clusterUri => this.clustersService.findCluster(clusterUri)?.connected
+    );
   }
 }

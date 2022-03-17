@@ -17,8 +17,7 @@ limitations under the License.
 import api from 'teleport/services/api';
 import cfg from 'teleport/config';
 import makeNode from './makeNode';
-import makeNodeToken from './makeNodeToken';
-import { NodeToken, NodesResponse } from './types';
+import { NodesResponse } from './types';
 
 const service = {
   fetchNodes(clusterId?: string): Promise<NodesResponse> {
@@ -31,10 +30,6 @@ const service = {
         totalCount: json?.totalCount,
       };
     });
-  },
-
-  fetchJoinToken(): Promise<NodeToken> {
-    return api.post(cfg.getNodeJoinTokenUrl()).then(makeNodeToken);
   },
 };
 

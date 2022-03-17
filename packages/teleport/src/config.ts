@@ -123,7 +123,7 @@ const cfg = {
     githubConnectorsPath: '/v1/webapi/github/:name?',
     trustedClustersPath: '/v1/webapi/trustedcluster/:name?',
 
-    nodeTokenPath: '/v1/webapi/nodes/token',
+    joinTokenPath: '/v1/webapi/token',
     nodeScriptPath: '/scripts/:token/install-node.sh',
     appNodeScriptPath: '/scripts/:token/install-app.sh?name=:name&uri=:uri',
 
@@ -205,8 +205,8 @@ const cfg = {
     return generatePath(cfg.routes.desktops, { clusterId });
   },
 
-  getNodeJoinTokenUrl() {
-    return cfg.api.nodeTokenPath;
+  getJoinTokenUrl() {
+    return cfg.api.joinTokenPath;
   },
 
   getNodeScriptUrl(token: string) {

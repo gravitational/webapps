@@ -6,6 +6,7 @@ import { useConnections } from './useConnections';
 import { ConnectionsIcon } from './ConnectionsIcon/ConnectionsIcon';
 import { ConnectionsFilterableList } from './ConnectionsFilterableList/ConnectionsFilterableList';
 import { useKeyboardShortcuts } from 'teleterm/ui/services/keyboardShortcuts';
+import { KeyboardArrowsNavigation } from 'teleterm/ui/components/KeyboardArrowsNavigation';
 
 export function Connections() {
   const iconRef = useRef();
@@ -44,12 +45,14 @@ export function Connections() {
         onClose={() => setIsPopoverOpened(false)}
       >
         <Container p="12px">
-          <ConnectionsFilterableList
-            items={connections.items}
-            onActivateItem={activateItem}
-            onRemoveItem={connections.removeItem}
-            onDisconnectItem={connections.disconnectItem}
-          />
+          <KeyboardArrowsNavigation>
+            <ConnectionsFilterableList
+              items={connections.items}
+              onActivateItem={activateItem}
+              onRemoveItem={connections.removeItem}
+              onDisconnectItem={connections.disconnectItem}
+            />
+          </KeyboardArrowsNavigation>
         </Container>
       </Popover>
     </>

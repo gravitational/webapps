@@ -16,22 +16,22 @@ limitations under the License.
 
 import { unique } from 'teleterm/ui/utils/uid';
 import {
-  DocumentTshKube,
-  Document,
-  DocumentGateway,
-  DocumentTshNode,
+  CreateClusterDocumentOpts,
   CreateGatewayDocumentOpts,
+  Document,
   DocumentCluster,
+  DocumentGateway,
+  DocumentTshKube,
+  DocumentTshNode,
 } from './types';
-import { routing, paths } from 'teleterm/ui/uri';
+import { paths, routing } from 'teleterm/ui/uri';
 
 export class DocumentsService {
   constructor(
     private getState: () => { documents: Document[]; location: string },
     private setState: (
       draftState: (draft: { documents: Document[]; location: string }) => void
-    ) => void,
-    private clusterUri: string
+    ) => void
   ) {}
 
   open(docUri: string) {
@@ -46,12 +46,12 @@ export class DocumentsService {
     this.setLocation(docUri);
   }
 
-  createClusterDocument(): DocumentCluster {
+  createClusterDocument(opts: CreateClusterDocumentOpts): DocumentCluster {
     const uri = routing.getDocUri({ docId: unique() });
-    const clusterName = routing.parseClusterName(this.clusterUri);
+    const clusterName = routing.parseClusterName(opts.clusterUri);
     return {
       uri,
-      clusterUri: this.clusterUri,
+      clusterUri: opts.clusterUri,
       title: clusterName,
       kind: 'doc.cluster',
     };
@@ -102,21 +102,23 @@ export class DocumentsService {
     };
   }
 
-  openNewTerminal() {
+  openNewTerminal(initCommand?: string) {
     const doc = ((): Document => {
       const activeDocument = this.getActive();
-      switch (activeDocument.kind) {
-        case 'doc.terminal_shell':
-          return {
-            ...activeDocument,
-            uri: routing.getDocUri({ docId: unique() }),
-          };
-        default:
-          return {
-            uri: routing.getDocUri({ docId: unique() }),
-            title: 'Terminal',
-            kind: 'doc.terminal_shell',
-          };
+
+      if (activeDocument && activeDocument.kind == 'doc.terminal_shell') {
+        return {
+          ...activeDocument,
+          uri: routing.getDocUri({ docId: unique() }),
+          initCommand,
+        };
+      } else {
+        return {
+          uri: routing.getDocUri({ docId: unique() }),
+          initCommand,
+          title: 'Terminal',
+          kind: 'doc.terminal_shell',
+        };
       }
     })();
 
@@ -157,11 +159,12 @@ export class DocumentsService {
       return;
     }
 
-    const nextUri = this.getNextUri(uri);
-    const docs = this.getState().documents.filter(d => d.uri !== uri);
     this.setState(draft => {
-      draft.documents = docs;
-      draft.location = nextUri;
+      if (draft.location === uri) {
+        draft.location = this.getNextUri(uri);
+      }
+
+      draft.documents = this.getState().documents.filter(d => d.uri !== uri);
     });
   }
 

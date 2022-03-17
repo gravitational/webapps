@@ -22,6 +22,8 @@ import * as types from 'teleterm/ui/services/workspacesService/documentsService/
 import { Tabs } from 'teleterm/ui/Tabs';
 import { useTabShortcuts } from './useTabShortcuts';
 import { DocumentsRenderer } from 'teleterm/ui/Documents';
+import { useNewTabOpener } from './useNewTabOpener';
+import { ClusterConnectPanel } from './ClusterConnectPanel/ClusterConnectPanel';
 
 export function TabHostContainer() {
   const ctx = useAppContext();
@@ -33,7 +35,7 @@ export function TabHostContainer() {
     if (isRootClusterSelected) {
       return <TabHost />;
     }
-    return <p>Select a cluster first</p>;
+    return <ClusterConnectPanel />;
   }, [isRootClusterSelected]);
 }
 
@@ -42,6 +44,7 @@ export function TabHost() {
   const documentsService =
     ctx.workspacesService.getActiveWorkspaceDocumentService();
   const activeDocument = documentsService.getActive();
+  const { openClusterTab } = useNewTabOpener();
   ctx.workspacesService.useState();
 
   // enable keyboard shortcuts
@@ -57,12 +60,6 @@ export function TabHost() {
 
   function handleTabMoved(oldIndex: number, newIndex: number) {
     documentsService.swapPosition(oldIndex, newIndex);
-  }
-
-  function handleTabNew() {
-    const doc = documentsService.createClusterDocument();
-    documentsService.add(doc);
-    documentsService.open(doc.uri);
   }
 
   function handleTabContextMenu(doc: types.Document) {
@@ -91,7 +88,7 @@ export function TabHost() {
 
   return (
     <StyledTabHost>
-      <Flex bg="terminalDark" height="32px">
+      <Flex height="32px">
         <Tabs
           flex="1"
           items={getActiveWorkspaceDocuments()}
@@ -101,7 +98,7 @@ export function TabHost() {
           activeTab={activeDocument?.uri}
           onMoved={handleTabMoved}
           disableNew={false}
-          onNew={handleTabNew}
+          onNew={openClusterTab}
         />
       </Flex>
       <DocumentsRenderer />

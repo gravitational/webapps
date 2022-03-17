@@ -28,7 +28,9 @@ export default function Container() {
 }
 
 export function QuickInput(props: State) {
-  const { visible, listItems, activeItem } = props;
+  const { visible, activeSuggestion, autocompleteResult, inputValue } = props;
+  const hasSuggestions =
+    autocompleteResult.kind === 'autocomplete.partial-match';
   const refInput = useRef<HTMLInputElement>();
   const refList = useRef<HTMLElement>();
   const refContainer = useRef<HTMLElement>();
@@ -38,6 +40,14 @@ export function QuickInput(props: State) {
       props.onInputChange(refInput.current.value);
     }, 100);
   }, []);
+
+  // Update input value if it changed outside of this component. This happens when the user pick an
+  // autocomplete suggestion.
+  useEffect(() => {
+    if (refInput.current.value !== inputValue) {
+      refInput.current.value = inputValue;
+    }
+  }, [inputValue]);
 
   function handleOnFocus(e: React.SyntheticEvent) {
     // trigger a callback when focus is coming from external element
@@ -66,22 +76,24 @@ export function QuickInput(props: State) {
 
   const handleArrowKey = (e: React.KeyboardEvent, nudge = 0) => {
     e.stopPropagation();
-    const next = getNext(activeItem + nudge, listItems.length);
-    props.onActiveItem(next);
+    if (!hasSuggestions) {
+      return;
+    }
+    const next = getNext(
+      activeSuggestion + nudge,
+      autocompleteResult.suggestions.length
+    );
+    props.onActiveSuggestion(next);
   };
 
   const handleKeyDown = (e: React.KeyboardEvent) => {
     const keyCode = e.which;
     switch (keyCode) {
       case KeyEnum.RETURN:
-        if (listItems.length > 0) {
-          e.stopPropagation();
-          e.preventDefault();
-          if (listItems[activeItem].kind !== 'item.empty') {
-            refInput.current.value = '';
-            props.onPickItem(activeItem);
-          }
-        }
+        e.stopPropagation();
+        e.preventDefault();
+
+        props.onEnter(activeSuggestion);
         return;
       case KeyEnum.ESC:
         props.onBack();
@@ -127,12 +139,12 @@ export function QuickInput(props: State) {
           onKeyDown={handleKeyDown}
         />
       </Box>
-      {visible && (
+      {visible && hasSuggestions && (
         <QuickInputList
           ref={refList}
-          items={listItems}
-          activeItem={activeItem}
-          onPick={props.onPickItem}
+          items={autocompleteResult.suggestions}
+          activeItem={activeSuggestion}
+          onPick={props.onEnter}
         />
       )}
     </Flex>
