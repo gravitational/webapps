@@ -102,7 +102,6 @@ const cfg = {
     changeUserPasswordPath: '/v1/webapi/users/password',
     nodesPath: '/v1/webapi/sites/:clusterId/nodes',
     databasesPath: `/v1/webapi/sites/:clusterId/databases`,
-    databaseTokenPath: `/v1/webapi/databases/token`,
     desktopsPath: `/v1/webapi/sites/:clusterId/desktops`,
     desktopPath: `/v1/webapi/sites/:clusterId/desktops/:desktopName`,
     desktopWsAddr:
@@ -334,10 +333,6 @@ const cfg = {
 
   getDatabasesUrl(clusterId: string) {
     return generatePath(cfg.api.databasesPath, { clusterId });
-  },
-
-  getDatabaseJoinTokenUrl() {
-    return cfg.api.databaseTokenPath;
   },
 
   getDesktopsUrl(clusterId: string) {

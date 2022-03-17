@@ -30,8 +30,3 @@ export type DatabasesResponse = {
   startKey?: string;
   totalCount?: number;
 };
-
-export type JoinToken = {
-  id: string;
-  expiry: Date;
-};

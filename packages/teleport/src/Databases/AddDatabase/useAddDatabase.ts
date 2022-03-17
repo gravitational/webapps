@@ -30,7 +30,7 @@ export default function useAddDatabase(ctx: TeleportContext) {
 
   function createJoinToken() {
     return run(() =>
-      ctx.databaseService.fetchJoinToken().then(token => {
+      ctx.joinTokenService.fetchJoinToken(['Db']).then(token => {
         const expires = formatDistanceStrict(
           new Date(),
           new Date(token.expiry)
