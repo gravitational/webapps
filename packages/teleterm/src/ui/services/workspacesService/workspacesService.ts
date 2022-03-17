@@ -7,6 +7,7 @@ import { useStore } from 'shared/libs/stores';
 import { ModalsService } from 'teleterm/ui/services/modals';
 import { ClustersService } from 'teleterm/ui/services/clusters';
 import { StatePersistenceService } from 'teleterm/ui/services/statePersistence';
+import { routing } from 'teleterm/ui/uri';
 
 export interface WorkspacesState {
   rootClusterUri?: string;
@@ -75,22 +76,30 @@ export class WorkspacesService extends ImmutableStore<WorkspacesState> {
   getWorkspaceDocumentService(
     clusterUri: string
   ): DocumentsService | undefined {
-    if (!this.documentsServicesCache.has(clusterUri)) {
+    // If the passed clusterUri is a leaf cluster URI, create a root cluster URI from it.
+    // Otherwise just use clusterUri.
+    const { leafClusterId, rootClusterId } =
+      routing.parseClusterUri(clusterUri).params;
+    const rootClusterUri = leafClusterId
+      ? routing.getClusterUri({ rootClusterId })
+      : clusterUri;
+
+    if (!this.documentsServicesCache.has(rootClusterUri)) {
       this.documentsServicesCache.set(
-        clusterUri,
+        rootClusterUri,
         new DocumentsService(
           () => {
-            return this.state.workspaces[clusterUri];
+            return this.state.workspaces[rootClusterUri];
           },
           newState =>
             this.setState(draftState => {
-              newState(draftState.workspaces[clusterUri]);
+              newState(draftState.workspaces[rootClusterUri]);
             })
         )
       );
     }
 
-    return this.documentsServicesCache.get(clusterUri);
+    return this.documentsServicesCache.get(rootClusterUri);
   }
 
   useState() {
