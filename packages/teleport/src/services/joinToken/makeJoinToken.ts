@@ -16,9 +16,11 @@ limitations under the License.
 
 import { JoinToken } from './types';
 
-export default function makeToken({ id, expiry }): JoinToken {
+export default function makeToken(
+  { id, expiry } = { id: null, expiry: null }
+): JoinToken {
   return {
     id,
-    expiry: new Date(expiry),
+    expiry: expiry ? new Date(expiry) : null,
   };
 }
