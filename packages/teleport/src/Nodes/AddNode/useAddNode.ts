@@ -20,7 +20,7 @@ import useAttempt from 'shared/hooks/useAttemptNext';
 import TeleportContext from 'teleport/teleportContext';
 import { BashCommand } from 'teleport/services/nodes';
 import cfg from 'teleport/config';
-import { JoinToken } from 'teleport/services/joinToken';
+import { JoinToken, Rule } from 'teleport/services/joinToken';
 
 export default function useAddNode(ctx: TeleportContext) {
   const { attempt, run } = useAttempt('processing');
@@ -28,10 +28,12 @@ export default function useAddNode(ctx: TeleportContext) {
   const version = ctx.storeUser.state.cluster.authVersion;
   const user = ctx.storeUser.state.username;
   const isAuthTypeLocal = !ctx.storeUser.isSso();
-  const [automatic, setAutomatic] = useState(true);
+  const [method, setMethod] = useState<JoinMethod>('automatic');
   const [script, setScript] = useState('');
   const [expiry, setExpiry] = useState('');
   const [token, setToken] = useState('');
+  const [iamJoinToken, setIamJoinToken] = useState('');
+  const [iamExpiry, setIamExpiry] = useState('');
 
   useEffect(() => {
     createJoinToken();
@@ -39,7 +41,7 @@ export default function useAddNode(ctx: TeleportContext) {
 
   function createJoinToken() {
     return run(() =>
-      ctx.joinTokenService.fetchJoinToken(['Node']).then(token => {
+      ctx.joinTokenService.fetchJoinToken(['Node'], 'token').then(token => {
         const cmd = createNodeBashCommand(token);
         setExpiry(cmd.expires);
         setScript(cmd.text);
@@ -48,11 +50,27 @@ export default function useAddNode(ctx: TeleportContext) {
     );
   }
 
+  function createIamJoinToken(rules: Rule[] = []) {
+    return run(() =>
+      ctx.joinTokenService
+        .fetchJoinToken(['Node'], 'iam', rules)
+        .then(iamToken => {
+          // TODO: consider making this its own hook
+          const expires = formatDistanceStrict(
+            new Date(),
+            new Date(iamToken.expiry)
+          );
+          setIamExpiry(expires);
+          setIamJoinToken(iamToken.id);
+        })
+    );
+  }
+
   return {
     isEnterprise,
     createJoinToken,
-    automatic,
-    setAutomatic,
+    method,
+    setMethod,
     script,
     expiry,
     attempt,
@@ -60,6 +78,9 @@ export default function useAddNode(ctx: TeleportContext) {
     user,
     isAuthTypeLocal,
     token,
+    iamJoinToken,
+    createIamJoinToken,
+    iamExpiry,
   };
 }
 
@@ -74,5 +95,7 @@ export function createNodeBashCommand(node: JoinToken): BashCommand {
     expires,
   };
 }
+
+export type JoinMethod = 'automatic' | 'manual' | 'iam';
 
 export type State = ReturnType<typeof useAddNode>;

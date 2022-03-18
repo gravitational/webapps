@@ -35,19 +35,32 @@ export const Failed = () => (
 );
 
 export const ManuallyProcessing = () => (
-  <AddNode {...props} automatic={false} attempt={{ status: 'processing' }} />
+  <AddNode
+    {...props}
+    method="manual"
+    setMethod={() => {}}
+    attempt={{ status: 'processing' }}
+  />
 );
 
-export const ManuallyWithToken = () => <AddNode {...props} automatic={false} />;
+export const ManuallyWithToken = () => (
+  <AddNode {...props} method="manual" setMethod={() => {}} />
+);
 
 export const ManuallyWithoutTokenLocal = () => (
-  <AddNode {...props} automatic={false} attempt={{ status: 'failed' }} />
+  <AddNode
+    {...props}
+    method="manual"
+    setMethod={() => {}}
+    attempt={{ status: 'failed' }}
+  />
 );
 
 export const ManuallyWithoutTokenSSO = () => (
   <AddNode
     {...props}
-    automatic={false}
+    method="manual"
+    setMethod={() => {}}
     isAuthTypeLocal={false}
     attempt={{ status: 'failed' }}
   />
@@ -62,7 +75,8 @@ const props = {
     return Promise.resolve(null);
   },
   user: 'sam',
-  automatic: true,
+  method: 'automatic' as any,
+  setMethod: () => null,
   setAutomatic: () => null,
   version: '5.0.0-dev',
   isEnterprise: true,
@@ -73,4 +87,9 @@ const props = {
     statusText: '',
   } as any,
   token: 'some-join-token-hash',
+  iamJoinToken: 'some-join-token-hash',
+  iamExpiry: '4 hours',
+  createIamJoinToken() {
+    return Promise.resolve(null);
+  },
 };

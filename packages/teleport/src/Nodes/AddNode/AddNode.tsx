@@ -26,6 +26,7 @@ import Dialog, {
 } from 'design/Dialog';
 import Manually from './Manually';
 import Automatically from './Automatically';
+import Iam from './Iam';
 import useAddNode, { State } from './useAddNode';
 
 export default function Container(props: Props) {
@@ -41,12 +42,15 @@ export function AddNode({
   script,
   expiry,
   createJoinToken,
-  automatic,
-  setAutomatic,
+  method,
+  setMethod,
   version,
   attempt,
   isAuthTypeLocal,
   token,
+  iamJoinToken,
+  createIamJoinToken,
+  iamExpiry,
 }: Props & State) {
   return (
     <Dialog
@@ -65,18 +69,24 @@ export function AddNode({
           <TabIcon
             Icon={Icons.Wand}
             title="Automatically"
-            active={automatic}
-            onClick={() => setAutomatic(true)}
+            active={method === 'automatic'}
+            onClick={() => setMethod('automatic')}
           />
           <TabIcon
             Icon={Icons.Cog}
             title="Manually"
-            active={!automatic}
-            onClick={() => setAutomatic(false)}
+            active={method === 'manual'}
+            onClick={() => setMethod('manual')}
+          />
+          <TabIcon
+            Icon={Icons.Server}
+            title="IAM"
+            active={method === 'iam'}
+            onClick={() => setMethod('iam')}
           />
         </Flex>
         <DialogContent minHeight="100px">
-          {automatic && (
+          {method === 'automatic' && (
             <Automatically
               script={script}
               expiry={expiry}
@@ -84,7 +94,7 @@ export function AddNode({
               attempt={attempt}
             />
           )}
-          {!automatic && (
+          {method === 'manual' && (
             <Manually
               isEnterprise={isEnterprise}
               user={user}
@@ -94,6 +104,14 @@ export function AddNode({
               expiry={expiry}
               createJoinToken={createJoinToken}
               attempt={attempt}
+            />
+          )}
+          {method === 'iam' && (
+            <Iam
+              onGenerate={createIamJoinToken}
+              attempt={attempt}
+              token={iamJoinToken}
+              expiry={iamExpiry}
             />
           )}
         </DialogContent>
