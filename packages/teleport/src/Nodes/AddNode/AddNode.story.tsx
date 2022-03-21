@@ -35,34 +35,45 @@ export const Failed = () => (
 );
 
 export const ManuallyProcessing = () => (
-  <AddNode
-    {...props}
-    method="manual"
-    setMethod={() => {}}
-    attempt={{ status: 'processing' }}
-  />
+  <AddNode {...props} method="manual" attempt={{ status: 'processing' }} />
 );
 
-export const ManuallyWithToken = () => (
-  <AddNode {...props} method="manual" setMethod={() => {}} />
-);
+export const ManuallyWithToken = () => <AddNode {...props} method="manual" />;
 
 export const ManuallyWithoutTokenLocal = () => (
-  <AddNode
-    {...props}
-    method="manual"
-    setMethod={() => {}}
-    attempt={{ status: 'failed' }}
-  />
+  <AddNode {...props} method="manual" attempt={{ status: 'failed' }} />
 );
 
 export const ManuallyWithoutTokenSSO = () => (
   <AddNode
     {...props}
     method="manual"
-    setMethod={() => {}}
     isAuthTypeLocal={false}
     attempt={{ status: 'failed' }}
+  />
+);
+
+export const IamWithoutToken = () => (
+  <AddNode {...props} method="iam" iamJoinToken="" />
+);
+
+export const IamWithToken = () => <AddNode {...props} method="iam" />;
+
+export const IamProcessing = () => (
+  <AddNode
+    {...props}
+    method="iam"
+    iamJoinToken=""
+    attempt={{ status: 'processing' }}
+  />
+);
+
+export const IamFailed = () => (
+  <AddNode
+    {...props}
+    method="iam"
+    iamJoinToken=""
+    attempt={{ status: 'failed', statusText: 'some err' }}
   />
 );
 

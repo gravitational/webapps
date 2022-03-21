@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import { DialogContent } from 'design/Dialog';
-import { Text, Box, ButtonPrimary, Link } from 'design';
+import { Text, Box, ButtonPrimary, Link, Alert } from 'design';
 import TextSelectCopy from 'teleport/components/TextSelectCopy';
 import FieldInput from 'shared/components/FieldInput';
 import Validation, { Validator } from 'shared/components/Validation';
@@ -25,13 +25,14 @@ export default function Iam({ token, expiry, attempt, onGenerate }: Props) {
     onGenerate([{ awsAccount, awsArn }]);
   }
 
-  // TODO deal with token generation failed
-  // show err, ask user to regenerate
   return (
     <Validation>
       {({ validator }) => (
         <>
           <DialogContent flex="0 0 auto">
+            {attempt.status === 'failed' && (
+              <Alert kind="danger" children={attempt.statusText} />
+            )}
             <Text>
               {`The IAM join method is available to any Teleport Node or Proxy
               with access to IAM credentials.`}
@@ -44,7 +45,7 @@ export default function Iam({ token, expiry, attempt, onGenerate }: Props) {
               </Link>
               .
             </Text>
-            <Box mb={4}>
+            <Box>
               <Box>
                 <FieldInput
                   label="AWS Account"
@@ -78,7 +79,7 @@ export default function Iam({ token, expiry, attempt, onGenerate }: Props) {
                     {expiry}.
                   </Text>
                 </Text>
-                <Box mb={4}>
+                <Box>
                   {'Start the Teleport agent  with the following parameters'}
                   <TextSelectCopy
                     mt="2"
