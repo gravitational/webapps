@@ -55,7 +55,6 @@ export default function useAddNode(ctx: TeleportContext) {
       ctx.joinTokenService
         .fetchJoinToken(['Node'], 'iam', rules)
         .then(iamToken => {
-          // TODO: consider making this its own hook
           const expires = formatDistanceStrict(
             new Date(),
             new Date(iamToken.expiry)

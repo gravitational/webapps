@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react';
+import styled from 'styled-components';
 import { DialogContent } from 'design/Dialog';
-import { Text, Box, ButtonPrimary, Link, Alert } from 'design';
+import { Text, Box, ButtonPrimary, Link, Alert, ButtonLink } from 'design';
 import TextSelectCopy from 'teleport/components/TextSelectCopy';
 import FieldInput from 'shared/components/FieldInput';
 import Validation, { Validator } from 'shared/components/Validation';
@@ -11,8 +12,24 @@ export default function Iam({ token, expiry, attempt, onGenerate }: Props) {
   const { hostname, port } = window.document.location;
   const host = `${hostname}:${port || '443'}`;
 
-  const [awsAccount, setAwsAccount] = React.useState('');
-  const [awsArn, setAwsArn] = React.useState('');
+  const [rules, setRules] = React.useState<Rule[]>([
+    {
+      awsAccount: '',
+      awsArn: '',
+    },
+  ]);
+
+  function setRuleAtIndex(index: number, rule: Rule) {
+    const newRules = [...rules];
+    newRules[index] = rule;
+    setRules(newRules);
+  }
+
+  function removeRule(index: number) {
+    const newRules = [...rules];
+    newRules.splice(index, 1);
+    setRules(newRules);
+  }
 
   useEffect(() => {}, [token]);
 
@@ -21,8 +38,7 @@ export default function Iam({ token, expiry, attempt, onGenerate }: Props) {
       return;
     }
 
-    // TODO allow multiple aws accounts and arns
-    onGenerate([{ awsAccount, awsArn }]);
+    onGenerate(rules);
   }
 
   return (
@@ -46,23 +62,54 @@ export default function Iam({ token, expiry, attempt, onGenerate }: Props) {
               .
             </Text>
             <Box>
-              <Box>
-                <FieldInput
-                  label="AWS Account"
-                  autoFocus
-                  onChange={e => setAwsAccount(e.target.value)}
-                  rule={requiredAwsAccount}
-                  placeholder="111111111111"
-                  value={awsAccount}
-                />
-              </Box>
-              <FieldInput
-                label="AWS ARN (optional)"
-                autoFocus
-                onChange={e => setAwsArn(e.target.value)}
-                placeholder="arn:aws:sts::111111111111:assumed-role/teleport-node-role/i-*"
-                value={awsArn}
-              />
+              {rules.map((rule, index) => (
+                <RuleBox key={index}>
+                  <Text typography="h5">{`Rule #${index + 1}`}</Text>
+                  {index !== 0 && (
+                    <ButtonRemoveRule onClick={() => removeRule(index)}>
+                      Remove
+                    </ButtonRemoveRule>
+                  )}
+                  <Box>
+                    <FieldInput
+                      label="AWS Account"
+                      autoFocus
+                      onChange={e =>
+                        setRuleAtIndex(index, {
+                          ...rules[index],
+                          awsAccount: e.target.value,
+                        })
+                      }
+                      rule={requiredAwsAccount}
+                      placeholder="111111111111"
+                      value={rule.awsAccount}
+                    />
+                  </Box>
+                  <FieldInput
+                    mb={2}
+                    label="AWS ARN (optional)"
+                    onChange={e =>
+                      setRuleAtIndex(index, {
+                        ...rules[index],
+                        awsArn: e.target.value,
+                      })
+                    }
+                    placeholder="arn:aws:sts::111111111111:assumed-role/teleport-node-role/i-*"
+                    value={rule.awsArn}
+                  />
+                </RuleBox>
+              ))}
+            </Box>
+            <Box mb="2">
+              <ButtonLink
+                onClick={() =>
+                  setRules([...rules, { awsAccount: '', awsArn: '' }])
+                }
+              >
+                Add new rule
+              </ButtonLink>
+            </Box>
+            <Box>
               <ButtonPrimary
                 mr="3"
                 disabled={attempt.status === 'processing'}
@@ -94,6 +141,25 @@ export default function Iam({ token, expiry, attempt, onGenerate }: Props) {
     </Validation>
   );
 }
+
+const RuleBox = styled.div`
+  border: 1px solid #512fc9;
+  background-color: #222c59;
+  border-radius: 4px;
+  margin: 4px 0 18px 0;
+  padding: 12px;
+  position: relative;
+
+  &:last-of-type {
+    margin-bottom: 8px;
+  }
+`;
+
+const ButtonRemoveRule = styled(ButtonLink)`
+  position: absolute;
+  top: 12px;
+  right: 12px;
+`;
 
 export const AWS_ACC_ID_REGEXP = /^\d{12}$/;
 const requiredAwsAccount = value => () => {
