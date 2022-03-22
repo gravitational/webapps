@@ -23,12 +23,8 @@ import {
 } from 'teleterm/ui/services/quickInput/types';
 
 export default function useQuickInput() {
-  const {
-    quickInputService,
-    workspacesService,
-    clustersService,
-    commandLauncher,
-  } = useAppContext();
+  const { quickInputService, workspacesService, commandLauncher } =
+    useAppContext();
   workspacesService.useState();
   const documentsService =
     workspacesService.getActiveWorkspaceDocumentService();
@@ -36,7 +32,9 @@ export default function useQuickInput() {
   const [activeSuggestion, setActiveSuggestion] = React.useState(0);
   const autocompleteResult = React.useMemo(
     () => quickInputService.getAutocompleteResult(inputValue),
-    [inputValue]
+    // `localClusterUri` has been added to refresh suggestions from
+    // `QuickSshLoginPicker` and `QuickServerPicker` when it changes
+    [inputValue, workspacesService.getActiveWorkspace()?.localClusterUri]
   );
   const hasSuggestions =
     autocompleteResult.kind === 'autocomplete.partial-match';
@@ -113,7 +111,7 @@ export default function useQuickInput() {
   };
 
   useKeyboardShortcuts({
-    'focus-global-search': () => {
+    'open-quick-input': () => {
       quickInputService.show();
     },
   });

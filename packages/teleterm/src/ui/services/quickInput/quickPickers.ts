@@ -23,6 +23,7 @@ import {
   SuggestionCmd,
   SuggestionServer,
   SuggestionSshLogin,
+  SuggestionDatabase,
   AutocompleteResult,
 } from './types';
 
@@ -39,10 +40,6 @@ export class QuickCommandPicker implements QuickInputPicker {
   registerPickerForCommand(command: string, picker: QuickInputPicker) {
     this.pickerRegistry.set(command, picker);
   }
-
-  // TODO(ravicious): Handle env vars.
-  // TODO(ravicious): Take cursor position into account.
-  onPick(suggestion: SuggestionCmd) {}
 
   // TODO(ravicious): Handle env vars.
   getAutocompleteResult(rawInput: string): AutocompleteResult {
@@ -160,19 +157,9 @@ export class QuickTshSshPicker implements QuickInputPicker {
   );
 
   constructor(
-    private launcher: CommandLauncher,
     private sshLoginPicker: QuickSshLoginPicker,
     private serverPicker: QuickServerPicker
   ) {}
-
-  onFilter() {
-    return [];
-  }
-
-  onPick(suggestion: SuggestionCmd) {
-    // TODO: Execute SSH.
-    // this.launcher.executeCommand('ssh', { serverUri: suggestion.data.uri, });
-  }
 
   // TODO: Support cluster arg.
   getAutocompleteResult(
@@ -192,9 +179,9 @@ export class QuickTshSshPicker implements QuickInputPicker {
 
     // Show autocomplete only after at least one space after `tsh ssh`.
     if (rawInput !== '' && input === '') {
+      // Returning unknown command for the same reasons as outlined at the end of this function.
       const command = {
-        kind: 'command.tsh-ssh' as const,
-        loginHost: '',
+        kind: 'command.unknown' as const,
       };
       return {
         ...this.sshLoginPicker.getAutocompleteResult('', startIndex),
@@ -233,27 +220,65 @@ export class QuickTshSshPicker implements QuickInputPicker {
       };
     }
 
+    // The code gets to this point if either `input` is empty or it has additional arguments besides
+    // the first positional argument.
+    //
+    // In case of the input being empty, we know that at this point we don't have enough arguments
+    // to successfully launch tsh ssh. But we also don't have code to handle this error case. So
+    // instead we return an unknown command, so that if the user presses enter at this point, we'll
+    // launch `tsh ssh` in a local shell and it'll show the appropriate error.
+    //
+    // In case of additional arguments, the command bar doesn't know how to handle them. This would
+    // require adding a real parser which we're going to do soon. In the meantime, we just run the
+    // command in a local shell to a similar effect (though the host to which someone tries to
+    // connect to won't show up in the connection tracker and so on).
     return {
       kind: 'autocomplete.no-match',
-      command: { kind: 'command.tsh-ssh', loginHost: '' },
+      command: { kind: 'command.unknown' },
     };
   }
 }
 
-// TODO: Implement the rest of this class.
 export class QuickTshProxyDbPicker implements QuickInputPicker {
-  constructor(private launcher: CommandLauncher) {}
+  private totalDbNameRegex = /^\S+$/i;
 
-  onFilter() {
-    return [];
-  }
+  constructor(private databasePicker: QuickDatabasePicker) {}
 
-  onPick(suggestion: SuggestionCmd) {
-    // TODO: Execute Proxy db.
-    // this.launcher.executeCommand(suggestion.data.name as any, null);
-  }
+  getAutocompleteResult(
+    rawInput: string,
+    startIndex: number
+  ): AutocompleteResult {
+    // We can safely ignore any whitespace at the start. However, `startIndex` needs to account for
+    // any removed whitespace.
+    const input = rawInput.trimStart();
+    if (input === '') {
+      // input is empty, so rawInput must include only whitespace.
+      // Add length of the whitespace to startIndex.
+      startIndex += rawInput.length;
+    } else {
+      startIndex += rawInput.indexOf(input);
+    }
 
-  getAutocompleteResult(input: string): AutocompleteResult {
+    // Show autocomplete only after at least one space after `tsh proxy db`.
+    if (rawInput !== '' && input === '') {
+      return {
+        ...this.databasePicker.getAutocompleteResult('', startIndex),
+        command: { kind: 'command.unknown' },
+      };
+    }
+
+    const dbNameMatch = input.match(this.totalDbNameRegex);
+
+    if (dbNameMatch) {
+      return {
+        ...this.databasePicker.getAutocompleteResult(
+          dbNameMatch[0],
+          startIndex
+        ),
+        command: { kind: 'command.unknown' },
+      };
+    }
+
     return {
       kind: 'autocomplete.no-match',
       command: { kind: 'command.unknown' },
@@ -268,10 +293,13 @@ export class QuickSshLoginPicker implements QuickInputPicker {
   ) {}
 
   private filterSshLogins(input: string): SuggestionSshLogin[] {
-    // TODO(ravicious): Use local cluster URI.
     // TODO(ravicious): Handle the `--cluster` tsh ssh flag.
-    const rootClusterUri = this.workspacesService.getRootClusterUri();
-    const cluster = this.clustersService.findCluster(rootClusterUri);
+    const localClusterUri =
+      this.workspacesService.getActiveWorkspace()?.localClusterUri;
+    if (!localClusterUri) {
+      return [];
+    }
+    const cluster = this.clustersService.findCluster(localClusterUri);
     const allLogins = cluster?.loggedInUser?.sshLoginsList || [];
     let matchingLogins: typeof allLogins;
 
@@ -291,8 +319,6 @@ export class QuickSshLoginPicker implements QuickInputPicker {
       data: login,
     }));
   }
-
-  onPick(suggestion: SuggestionCmd) {}
 
   getAutocompleteResult(input: string, startIndex: number): AutocompleteResult {
     const suggestions = this.filterSshLogins(input);
@@ -315,10 +341,13 @@ export class QuickServerPicker implements QuickInputPicker {
   ) {}
 
   private filterServers(input: string): SuggestionServer[] {
-    // TODO(ravicious): Use local cluster URI.
     // TODO(ravicious): Handle the `--cluster` tsh ssh flag.
-    const rootClusterUri = this.workspacesService.getRootClusterUri();
-    const servers = this.clustersService.searchServers(rootClusterUri, {
+    const localClusterUri =
+      this.workspacesService.getActiveWorkspace()?.localClusterUri;
+    if (!localClusterUri) {
+      return [];
+    }
+    const servers = this.clustersService.searchServers(localClusterUri, {
       search: input,
     });
 
@@ -329,10 +358,45 @@ export class QuickServerPicker implements QuickInputPicker {
     }));
   }
 
-  onPick(suggestion: SuggestionCmd) {}
-
   getAutocompleteResult(input: string, startIndex: number): AutocompleteResult {
     const suggestions = this.filterServers(input);
+    return {
+      kind: 'autocomplete.partial-match',
+      suggestions,
+      command: { kind: 'command.unknown' },
+      targetToken: {
+        startIndex,
+        value: input,
+      },
+    };
+  }
+}
+
+export class QuickDatabasePicker implements QuickInputPicker {
+  constructor(
+    private workspacesService: WorkspacesService,
+    private clustersService: ClustersService
+  ) {}
+
+  private filterDatabases(input: string): SuggestionDatabase[] {
+    const localClusterUri =
+      this.workspacesService.getActiveWorkspace()?.localClusterUri;
+    if (!localClusterUri) {
+      return [];
+    }
+    const databases = this.clustersService.searchDbs(localClusterUri, {
+      search: input,
+    });
+
+    return databases.map(database => ({
+      kind: 'suggestion.database' as const,
+      token: database.name,
+      data: database,
+    }));
+  }
+
+  getAutocompleteResult(input: string, startIndex: number): AutocompleteResult {
+    const suggestions = this.filterDatabases(input);
     return {
       kind: 'autocomplete.partial-match',
       suggestions,

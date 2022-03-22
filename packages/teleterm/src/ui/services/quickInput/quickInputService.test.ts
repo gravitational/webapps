@@ -175,6 +175,54 @@ test('getAutocompleteResult returns correct result for an SSH login suggestion w
   });
 });
 
+test('getAutocompleteResult returns correct result for a database name suggestion', () => {
+  mockCommandLauncherAutocompleteCommands(CommandLauncherMock, [
+    {
+      name: 'autocomplete.tsh-proxy-db',
+      displayName: 'tsh proxy db',
+      description: '',
+      run: () => {},
+    },
+  ]);
+  jest
+    .spyOn(WorkspacesServiceMock.prototype, 'getActiveWorkspace')
+    .mockImplementation(() => ({
+      localClusterUri: 'test_uri',
+      documents: [],
+      location: '',
+    }));
+  jest
+    .spyOn(ClustersServiceMock.prototype, 'searchDbs')
+    .mockImplementation(() => {
+      return [
+        {
+          hostname: 'foobar',
+          uri: '',
+          name: '',
+          desc: '',
+          protocol: '',
+          type: '',
+          addr: '',
+          labelsList: null,
+        },
+      ];
+    });
+  const quickInputService = new QuickInputService(
+    new CommandLauncherMock(undefined),
+    new ClustersServiceMock(undefined),
+    new WorkspacesServiceMock(undefined, undefined, undefined)
+  );
+
+  const autocompleteResult =
+    quickInputService.getAutocompleteResult('tsh proxy db foo');
+  expect(autocompleteResult.kind).toBe('autocomplete.partial-match');
+  expect((autocompleteResult as AutocompletePartialMatch).targetToken).toEqual({
+    value: 'foo',
+    startIndex: 13,
+  });
+  expect(autocompleteResult.command).toEqual({ kind: 'command.unknown' });
+});
+
 test("getAutocompleteResult doesn't return any suggestions if the only suggestion completely matches the target token", () => {
   jest.mock('./quickPickers');
   const QuickCommandPickerMock = pickers.QuickCommandPicker as jest.MockedClass<
@@ -253,10 +301,7 @@ test("the SSH login autocomplete isn't shown if there's no space after `tsh ssh`
 
   const autocompleteResult = quickInputService.getAutocompleteResult('tsh ssh');
   expect(autocompleteResult.kind).toBe('autocomplete.no-match');
-  expect(autocompleteResult.command).toEqual({
-    kind: 'command.tsh-ssh',
-    loginHost: '',
-  });
+  expect(autocompleteResult.command).toEqual({ kind: 'command.unknown' });
 });
 
 test("the SSH login autocomplete is shown only if there's at least one space after `tsh ssh`", () => {
@@ -294,10 +339,7 @@ test("the SSH login autocomplete is shown only if there's at least one space aft
     value: '',
     startIndex: 8,
   });
-  expect(autocompleteResult.command).toEqual({
-    kind: 'command.tsh-ssh',
-    loginHost: '',
-  });
+  expect(autocompleteResult.command).toEqual({ kind: 'command.unknown' });
 });
 
 test('getAutocompleteResult returns correct result for an SSH host suggestion right after user@', () => {
@@ -305,6 +347,13 @@ test('getAutocompleteResult returns correct result for an SSH host suggestion ri
     CommandLauncherMock,
     onlyTshSshCommand
   );
+  jest
+    .spyOn(WorkspacesServiceMock.prototype, 'getActiveWorkspace')
+    .mockImplementation(() => ({
+      localClusterUri: 'test_uri',
+      documents: [],
+      location: '',
+    }));
   jest
     .spyOn(ClustersServiceMock.prototype, 'searchServers')
     .mockImplementation(() => {
@@ -357,6 +406,13 @@ test('getAutocompleteResult returns correct result for a partial match on an SSH
         },
       ];
     });
+  jest
+    .spyOn(WorkspacesServiceMock.prototype, 'getActiveWorkspace')
+    .mockImplementation(() => ({
+      localClusterUri: 'test_uri',
+      documents: [],
+      location: '',
+    }));
   const quickInputService = new QuickInputService(
     new CommandLauncherMock(undefined),
     new ClustersServiceMock(undefined),
