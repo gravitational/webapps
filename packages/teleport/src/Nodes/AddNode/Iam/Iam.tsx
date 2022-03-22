@@ -1,6 +1,5 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import styled from 'styled-components';
-import theme from 'design/theme';
 import { DialogContent } from 'design/Dialog';
 import { Text, Box, ButtonPrimary, Link, Alert, ButtonLink } from 'design';
 import TextSelectCopy from 'teleport/components/TextSelectCopy';
@@ -26,13 +25,11 @@ export default function Iam({ token, expiry, attempt, onGenerate }: Props) {
     setRules(newRules);
   }
 
-  function removeRule(index: number) {
+  function handleRemove(index: number) {
     const newRules = [...rules];
     newRules.splice(index, 1);
     setRules(newRules);
   }
-
-  useEffect(() => {}, [token]);
 
   function handleGenerate(validator: Validator) {
     if (!validator.validate()) {
@@ -73,7 +70,7 @@ export default function Iam({ token, expiry, attempt, onGenerate }: Props) {
                 >
                   <Text typography="h5">{`Rule #${index + 1}`}</Text>
                   {index !== 0 && (
-                    <ButtonRemoveRule onClick={() => removeRule(index)}>
+                    <ButtonRemoveRule onClick={() => handleRemove(index)}>
                       Remove
                     </ButtonRemoveRule>
                   )}

@@ -1074,11 +1074,11 @@ exports[`render iam method after token generation 1`] = `
 }
 
 .c16 {
-  border: 1px solid #512fc9;
-  background-color: #222c59;
+  box-sizing: border-box;
+  padding: 16px;
+  background-color: #2C3A73;
   border-radius: 4px;
   margin: 4px 0 18px 0;
-  padding: 12px;
   position: relative;
 }
 
@@ -1685,11 +1685,11 @@ exports[`render iam method when failed 1`] = `
 }
 
 .c17 {
-  border: 1px solid #512fc9;
-  background-color: #222c59;
+  box-sizing: border-box;
+  padding: 16px;
+  background-color: #2C3A73;
   border-radius: 4px;
   margin: 4px 0 18px 0;
-  padding: 12px;
   position: relative;
 }
 
@@ -2241,11 +2241,11 @@ exports[`render iam method while processing 1`] = `
 }
 
 .c16 {
-  border: 1px solid #512fc9;
-  background-color: #222c59;
+  box-sizing: border-box;
+  padding: 16px;
+  background-color: #2C3A73;
   border-radius: 4px;
   margin: 4px 0 18px 0;
-  padding: 12px;
   position: relative;
 }
 
@@ -2792,11 +2792,11 @@ exports[`render iam method without a token generated yet 1`] = `
 }
 
 .c16 {
-  border: 1px solid #512fc9;
-  background-color: #222c59;
+  box-sizing: border-box;
+  padding: 16px;
+  background-color: #2C3A73;
   border-radius: 4px;
   margin: 4px 0 18px 0;
-  padding: 12px;
   position: relative;
 }
 
