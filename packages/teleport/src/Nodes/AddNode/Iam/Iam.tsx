@@ -1,5 +1,6 @@
 import React, { useEffect } from 'react';
 import styled from 'styled-components';
+import theme from 'design/theme';
 import { DialogContent } from 'design/Dialog';
 import { Text, Box, ButtonPrimary, Link, Alert, ButtonLink } from 'design';
 import TextSelectCopy from 'teleport/components/TextSelectCopy';
@@ -63,7 +64,13 @@ export default function Iam({ token, expiry, attempt, onGenerate }: Props) {
             </Text>
             <Box>
               {rules.map((rule, index) => (
-                <RuleBox key={index}>
+                <RuleBox
+                  key={index}
+                  bg="primary.lighter"
+                  borderRadius="2"
+                  p="3"
+                  position="relative"
+                >
                   <Text typography="h5">{`Rule #${index + 1}`}</Text>
                   {index !== 0 && (
                     <ButtonRemoveRule onClick={() => removeRule(index)}>
@@ -142,12 +149,8 @@ export default function Iam({ token, expiry, attempt, onGenerate }: Props) {
   );
 }
 
-const RuleBox = styled.div`
-  border: 1px solid #512fc9;
-  background-color: #222c59;
-  border-radius: 4px;
+const RuleBox = styled(Box)`
   margin: 4px 0 18px 0;
-  padding: 12px;
   position: relative;
 
   &:last-of-type {
