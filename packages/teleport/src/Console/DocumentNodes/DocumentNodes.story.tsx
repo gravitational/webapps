@@ -61,7 +61,7 @@ export function createContext() {
     return Promise.resolve<any>(clusters);
   };
   ctx.fetchNodes = () => {
-    return Promise.resolve({ nodes, logins: ['root'] });
+    return Promise.resolve({ nodes, logins: ['root'], totalNodesCount: 50 });
   };
 
   return ctx;

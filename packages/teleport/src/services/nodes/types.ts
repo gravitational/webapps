@@ -30,6 +30,8 @@ export interface BashCommand {
 
 export type NodesResponse = {
   nodes: Node[];
+  hasResources: boolean;
   startKey?: string;
   totalCount?: number;
+  fetchStatus?: 'loading' | 'disabled' | '';
 };

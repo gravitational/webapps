@@ -1,4 +1,5 @@
 import { FetchStatus } from '../types';
+import { State as TableState } from '../useTable';
 
 export default function usePager({
   nextPage,
@@ -7,9 +8,10 @@ export default function usePager({
   paginatedData = [],
   currentPage,
   pageSize,
+  serverside,
   ...props
 }: Props) {
-  const currentPageData = paginatedData[currentPage];
+  const currentPageData = paginatedData[currentPage] || [];
   const searchFrom = currentPage * pageSize;
 
   const from = data.indexOf(currentPageData[0], searchFrom);
@@ -18,14 +20,20 @@ export default function usePager({
     searchFrom + pageSize - 1
   );
 
+  const count = serverside ? serverside.totalItemCount : data.length;
+  const isNextDisabled = serverside
+    ? serverside.totalItemCount <= data.length
+    : to === data.length - 1;
+
   return {
     nextPage,
     prevPage,
     from,
     to,
-    count: data.length,
+    count,
     isPrevDisabled: currentPage === 0,
-    isNextDisabled: to === data.length - 1,
+    isNextDisabled,
+    serverside,
     ...props,
   };
 }
@@ -39,6 +47,7 @@ export type Props = {
   pageSize: number;
   onFetchMore?: () => void;
   fetchStatus?: FetchStatus;
+  serverside?: TableState<any>['state']['serverside'];
 };
 
 export type State = ReturnType<typeof usePager>;

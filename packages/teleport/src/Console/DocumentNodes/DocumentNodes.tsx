@@ -33,8 +33,14 @@ type Props = {
 
 export default function DocumentNodes(props: Props) {
   const { doc, visible } = props;
-  const { nodes, attempt, createSshSession, changeCluster, getNodeSshLogins } =
-    useNodes(doc);
+  const {
+    nodes,
+    totalNodesCount,
+    attempt,
+    createSshSession,
+    changeCluster,
+    getNodeSshLogins,
+  } = useNodes(doc);
   const { isProcessing, isSuccess, isFailed, message } = attempt;
 
   function onLoginMenuSelect(
@@ -87,6 +93,7 @@ export default function DocumentNodes(props: Props) {
               onLoginMenuOpen={onLoginMenuOpen}
               onLoginSelect={onLoginMenuSelect}
               nodes={nodes}
+              totalCount={totalNodesCount}
             />
           )}
         </Container>

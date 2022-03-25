@@ -150,6 +150,7 @@ export default class ConsoleContext {
       return {
         logins: user.acl.sshLogins,
         nodes: nodesRes.nodes,
+        totalNodesCount: nodesRes.totalCount,
       };
     });
   }

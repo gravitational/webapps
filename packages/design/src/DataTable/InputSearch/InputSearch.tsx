@@ -2,37 +2,53 @@ import React, { SetStateAction } from 'react';
 import styled from 'styled-components';
 import { height, space, color } from 'design/system';
 
-export default function InputSearch({ searchValue, setSearchValue }: Props) {
+export default function InputSearch({
+  searchValue,
+  setSearchValue,
+  children,
+}: Props) {
   return (
-    <Input
-      placeholder="SEARCH..."
-      px={3}
-      value={searchValue}
-      onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-        setSearchValue(e.target.value)
-      }
-    />
+    <Wrapper>
+      <StyledInput
+        placeholder="SEARCH..."
+        px={3}
+        value={searchValue}
+        onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+          setSearchValue(e.target.value)
+        }
+      />
+      {children}
+    </Wrapper>
   );
 }
 
 type Props = {
   searchValue: string;
   setSearchValue: React.Dispatch<SetStateAction<string>>;
+  children?: JSX.Element;
 };
 
-const Input = styled.input`
-  box-sizing: border-box;
-  font-size: 12px;
+const Wrapper = styled.div`
+  display: flex;
+  overflow: hidden;
   min-width: 200px;
-  outline: none;
-  border: none;
   border-radius: 200px;
   height: 32px;
+  background: ${props => props.theme.colors.primary.dark};
+`;
+
+const StyledInput = styled.input`
+  border: none;
+  outline: none;
+  box-sizing: border-box;
+  height: 100%;
+  font-size: 12px;
+  width: 100%;
   transition: all 0.2s;
-  ${fromTheme}
-  ${space}
   ${color}
+  ${space}
   ${height}
+  ${fromTheme};
 `;
 
 function fromTheme(props) {

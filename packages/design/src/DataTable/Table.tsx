@@ -55,6 +55,7 @@ export function Table<T>({
 
   const renderBody = (data: T[]) => {
     const rows = [];
+    data = data || [];
 
     data.map((item, rowIdx) => {
       const cells = columns.map((column, columnIdx) => {
@@ -79,6 +80,23 @@ export function Table<T>({
 
     return <EmptyIndicator emptyText={emptyText} colSpan={columns.length} />;
   };
+
+  if (state.serverside) {
+    return (
+      <ServersideTable
+        style={style}
+        className={className}
+        data={state.data}
+        renderHeaders={renderHeaders}
+        renderBody={renderBody}
+        nextPage={nextPage}
+        prevPage={prevPage}
+        pagination={state.pagination}
+        fetching={fetching}
+        serverside={state.serverside}
+      />
+    );
+  }
 
   if (state.pagination) {
     return (
@@ -233,6 +251,40 @@ function PagedTable<T>({
   );
 }
 
+function ServersideTable<T>({
+  nextPage,
+  prevPage,
+  renderHeaders,
+  renderBody,
+  data,
+  pagination,
+  fetching,
+  className,
+  style,
+  serverside,
+}: ServersideTableProps<T>) {
+  const { paginatedData, currentPage } = pagination;
+
+  return (
+    <>
+      <StyledTable className={className} style={style}>
+        {renderHeaders()}
+        {renderBody(paginatedData[currentPage])}
+      </StyledTable>
+      <StyledPanel borderBottomLeftRadius={3} borderBottomRightRadius={3}>
+        <Pager
+          nextPage={nextPage}
+          prevPage={prevPage}
+          data={data}
+          serverside={serverside}
+          {...fetching}
+          {...pagination}
+        />
+      </StyledPanel>
+    </>
+  );
+}
+
 const EmptyIndicator = ({
   emptyText,
   colSpan,
@@ -278,5 +330,13 @@ type PagedTableProps<T> = SearchableBasicTableProps<T> & {
   nextPage: () => void;
   prevPage: () => void;
   pagination: State<T>['state']['pagination'];
+  fetching?: State<T>['fetching'];
+};
+
+type ServersideTableProps<T> = BasicTableProps<T> & {
+  nextPage: () => void;
+  prevPage: () => void;
+  pagination: State<T>['state']['pagination'];
+  serverside: State<T>['state']['serverside'];
   fetching?: State<T>['fetching'];
 };

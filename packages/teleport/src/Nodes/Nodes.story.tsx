@@ -25,10 +25,12 @@ export default {
 
 export const Loaded = () => <Nodes {...props} />;
 
-export const Empty = () => <Nodes {...props} nodes={[]} />;
+export const Empty = () => (
+  <Nodes {...props} results={{ nodes: [], totalCount: 0 }} />
+);
 
 export const EmptyReadOnly = () => (
-  <Nodes {...props} nodes={[]} canCreate={false} />
+  <Nodes {...props} results={{ nodes: [], totalCount: 0 }} canCreate={false} />
 );
 
 export const Loading = () => (
@@ -43,7 +45,10 @@ export const Failed = () => (
 );
 
 const props: State = {
-  nodes,
+  results: {
+    nodes,
+    totalCount: nodes.length,
+  },
   isLeafCluster: false,
   canCreate: true,
   attempt: { status: 'success' },

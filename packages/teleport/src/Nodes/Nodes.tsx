@@ -40,7 +40,7 @@ export default function Container() {
 
 export function Nodes(props: State) {
   const {
-    nodes,
+    results,
     getNodeLoginOptions,
     startSshSession,
     attempt,
@@ -50,7 +50,10 @@ export function Nodes(props: State) {
     isLeafCluster,
     isAddNodeVisible,
     clusterId,
+    fetchMore,
   } = props;
+
+  const { nodes, totalCount } = results;
 
   function onLoginSelect(e: React.MouseEvent, login: string, serverId: string) {
     e.preventDefault();
@@ -61,8 +64,8 @@ export function Nodes(props: State) {
     startSshSession(login, serverId);
   }
 
-  const isEmpty = attempt.status === 'success' && nodes.length === 0;
-  const hasNodes = attempt.status === 'success' && nodes.length > 0;
+  const isEmpty = attempt.status === 'success' && !results.hasResources;
+  const hasNodes = attempt.status === 'success' && results.hasResources;
 
   return (
     <FeatureBox>
@@ -89,8 +92,12 @@ export function Nodes(props: State) {
         <>
           <NodeList
             nodes={nodes}
+            totalCount={totalCount}
             onLoginMenuOpen={getNodeLoginOptions}
             onLoginSelect={onLoginSelect}
+            fetchMore={fetchMore}
+            fetchStatus={results.fetchStatus}
+            pageSize={50}
           />
         </>
       )}

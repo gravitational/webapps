@@ -10,6 +10,8 @@ export default function useTable<T>({
   showFirst,
   searchableProps,
   customSearchMatchers = [],
+  serverside,
+  fetching,
   ...props
 }: TableProps<T>) {
   const [state, setState] = useState(() => {
@@ -36,6 +38,12 @@ export default function useTable<T>({
             pageSize: pagination.pageSize || 10,
           }
         : null,
+      serverside: serverside
+        ? {
+            totalItemCount: serverside.totalItemCount,
+            setItemCountText: serverside.setItemCountText,
+          }
+        : null,
     };
   });
 
@@ -56,16 +64,18 @@ export default function useTable<T>({
   }
 
   const updateData = (sort: typeof state.sort, searchValue: string) => {
-    const sortedAndFiltered = sortAndFilter(
-      data,
-      searchValue,
-      sort,
-      searchableProps ||
-        columns.filter(column => column.key).map(column => column.key),
-      searchAndFilterCb,
-      showFirst
-    );
-
+    // Don't do clientside sorting and filtering if serverside
+    const sortedAndFiltered = serverside
+      ? data
+      : sortAndFilter(
+          data,
+          searchValue,
+          sort,
+          searchableProps ||
+            columns.filter(column => column.key).map(column => column.key),
+          searchAndFilterCb,
+          showFirst
+        );
     if (pagination) {
       setState({
         ...state,
@@ -104,6 +114,11 @@ export default function useTable<T>({
   }
 
   function nextPage() {
+    const pageCount = Math.ceil(data.length / pagination.pageSize);
+    // If is serverside, on the last page, and there are more items, fetch more
+    if (serverside && serverside.totalItemCount > data.length) {
+      fetching.onFetchMore();
+    }
     setState({
       ...state,
       pagination: {
@@ -127,6 +142,18 @@ export default function useTable<T>({
     updateData(state.sort, state.searchValue);
   }, [data]);
 
+  useEffect(() => {
+    setState({
+      ...state,
+      serverside: serverside
+        ? {
+            totalItemCount: serverside.totalItemCount,
+            setItemCountText: serverside.setItemCountText,
+          }
+        : null,
+    });
+  }, [serverside]);
+
   return {
     state,
     columns,
@@ -135,6 +162,7 @@ export default function useTable<T>({
     onSort,
     nextPage,
     prevPage,
+    fetching,
     ...props,
   };
 }

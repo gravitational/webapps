@@ -19,8 +19,10 @@ export function Pager({
   count,
   onFetchMore,
   fetchStatus,
+  serverside,
 }: State) {
   const isFetchingEnabled = onFetchMore && fetchStatus !== 'disabled';
+  console.log(serverside);
   return (
     <Flex>
       <Flex alignItems="center" mr={2}>
@@ -28,7 +30,7 @@ export function Pager({
           SHOWING <strong>{from + 1}</strong> - <strong>{to + 1}</strong> of{' '}
           <strong>{count}</strong>
         </Text>
-        {isFetchingEnabled && (
+        {isFetchingEnabled && !serverside && (
           <StyledFetchMoreBtn
             disabled={fetchStatus === 'loading'}
             onClick={onFetchMore}

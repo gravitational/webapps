@@ -100,7 +100,8 @@ const cfg = {
     userStatusPath: '/v1/webapi/user/status',
     passwordTokenPath: '/v1/webapi/users/password/token/:tokenId?',
     changeUserPasswordPath: '/v1/webapi/users/password',
-    nodesPath: '/v1/webapi/sites/:clusterId/nodes',
+    nodesPath:
+      '/v1/webapi/sites/:clusterId/nodes?limit=:limit?&startKey=:startKey?&query=:query?&search=:search?',
     databasesPath: `/v1/webapi/sites/:clusterId/databases`,
     desktopsPath: `/v1/webapi/sites/:clusterId/desktops`,
     desktopPath: `/v1/webapi/sites/:clusterId/desktops/:desktopName`,
@@ -327,8 +328,8 @@ const cfg = {
     return generatePath(cfg.api.terminalSessionPath, { clusterId, sid });
   },
 
-  getClusterNodesUrl(clusterId: string) {
-    return generatePath(cfg.api.nodesPath, { clusterId });
+  getClusterNodesUrl(clusterId: string, params: UrlResourcesParams) {
+    return generatePath(cfg.api.nodesPath, { clusterId, ...params });
   },
 
   getDatabasesUrl(clusterId: string) {
@@ -464,6 +465,13 @@ export interface UrlDesktopParams {
   username?: string;
   desktopName?: string;
   clusterId: string;
+}
+
+export interface UrlResourcesParams {
+  query?: string;
+  search?: string;
+  limit?: number;
+  startKey?: string;
 }
 
 export default cfg;

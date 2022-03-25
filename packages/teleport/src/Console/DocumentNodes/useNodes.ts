@@ -23,19 +23,27 @@ import * as stores from './../stores';
 export default function useNodes({ clusterId, id }: stores.DocumentNodes) {
   const consoleCtx = useConsoleContext();
   const [attempt, attemptActions] = useAttempt({ isProcessing: true });
-  const [state, setState] = useState<{ nodes: Node[]; logins: string[] }>({
+  const [state, setState] = useState<{
+    nodes: Node[];
+    totalNodesCount: number;
+    logins: string[];
+  }>({
     nodes: [],
+    totalNodesCount: undefined,
     logins: [],
   });
 
   useEffect(() => {
     attemptActions.do(() => {
-      return consoleCtx.fetchNodes(clusterId).then(({ nodes, logins }) => {
-        setState({
-          logins,
-          nodes,
+      return consoleCtx
+        .fetchNodes(clusterId)
+        .then(({ nodes, totalNodesCount, logins }) => {
+          setState({
+            logins,
+            nodes,
+            totalNodesCount,
+          });
         });
-      });
     });
   }, [clusterId]);
 
@@ -69,6 +77,7 @@ export default function useNodes({ clusterId, id }: stores.DocumentNodes) {
 
   return {
     nodes: state.nodes,
+    totalNodesCount: state.totalNodesCount,
     attempt,
     createSshSession,
     changeCluster,

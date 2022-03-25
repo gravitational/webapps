@@ -14,56 +14,66 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React from 'react';
+import React, { useState } from 'react';
 import Table, { Cell, LabelCell } from 'design/DataTable';
 import { LoginItem, MenuLogin } from 'shared/components/MenuLogin';
 import { Node } from 'teleport/services/nodes';
-import AdvancedSearchPanel from 'teleport/Nodes/AdvancedSearchInput/AdvancedSearchInput';
+import ServersideSearchPanel from 'teleport/components/ServersideSearchPanel';
 
 function NodeList(props: Props) {
-  const { nodes = [], onLoginMenuOpen, onLoginSelect, pageSize = 100 } = props;
+  const {
+    nodes = [],
+    onLoginMenuOpen,
+    onLoginSelect,
+    pageSize = 4,
+    totalCount,
+    fetchMore,
+    fetchStatus,
+  } = props;
+  const [itemCountText, setItemCountText] = useState('');
 
   return (
-    <Table
-      columns={[
-        {
-          key: 'hostname',
-          headerText: 'Hostname',
-          isSortable: true,
-        },
-        {
-          key: 'addr',
-          headerText: 'Address',
-          isSortable: true,
-          render: renderAddressCell,
-        },
-        {
-          key: 'tags',
-          headerText: 'Labels',
-          render: ({ tags }) => <LabelCell data={tags} />,
-        },
-        {
-          altKey: 'connect-btn',
-          render: ({ id }) =>
-            renderLoginCell(id, onLoginSelect, onLoginMenuOpen),
-        },
-      ]}
-      emptyText="No Nodes Found"
-      data={nodes}
-      pagination={{
-        pageSize,
-      }}
-      isSearchable
-      searchableProps={[
-        'addr',
-        'hostname',
-        'id',
-        'tunnel',
-        'tags',
-        'clusterId',
-      ]}
-      customSearchMatchers={[tunnelMatcher]}
-    />
+    <>
+      <ServersideSearchPanel itemCountText={itemCountText} />
+      <Table
+        columns={[
+          {
+            key: 'hostname',
+            headerText: 'Hostname',
+            isSortable: true,
+          },
+          {
+            key: 'addr',
+            headerText: 'Address',
+            isSortable: true,
+            render: renderAddressCell,
+          },
+          {
+            key: 'tags',
+            headerText: 'Labels',
+            render: ({ tags }) => <LabelCell data={tags} />,
+          },
+          {
+            altKey: 'connect-btn',
+            render: ({ id }) =>
+              renderLoginCell(id, onLoginSelect, onLoginMenuOpen),
+          },
+        ]}
+        emptyText="No Nodes Found"
+        data={nodes}
+        pagination={{
+          pageSize,
+        }}
+        fetching={{
+          onFetchMore: fetchMore,
+          fetchStatus,
+        }}
+        serverside={{
+          totalItemCount: totalCount,
+          setItemCountText,
+        }}
+      />
+    </>
   );
 }
 
@@ -106,18 +116,6 @@ export const renderAddressCell = ({ addr, tunnel }: Node) => (
   <Cell>{tunnel ? renderTunnel() : addr}</Cell>
 );
 
-function tunnelMatcher(
-  targetValue: any,
-  searchValue: string,
-  propName: keyof Node & string
-) {
-  return (
-    propName === 'tunnel' &&
-    targetValue &&
-    propName.includes(searchValue.toLocaleLowerCase())
-  );
-}
-
 function renderTunnel() {
   return (
     <span
@@ -131,6 +129,9 @@ type Props = {
   nodes: Node[];
   onLoginMenuOpen(serverId: string): { login: string; url: string }[];
   onLoginSelect(e: React.SyntheticEvent, login: string, serverId: string): void;
+  fetchMore: () => void;
+  fetchStatus: any;
+  totalCount: number;
   pageSize?: number;
 };
 

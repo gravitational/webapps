@@ -12,6 +12,7 @@ export type TableProps<T> = {
   // the root matcher will uppercase the searchValue.
   customSearchMatchers?: MatchCallback<T>[];
   initialSort?: InitialSort<T>;
+  serverside?: ServersideConfig;
   fetching?: FetchingConfig;
   showFirst?: (data: T[]) => T;
   className?: string;
@@ -33,6 +34,12 @@ export type PaginationConfig = {
 export type FetchingConfig = {
   onFetchMore: () => void;
   fetchStatus: FetchStatus;
+};
+
+type ServersideConfig = {
+  totalItemCount: number;
+  // Sets the text that indicates what items are displayed and how many there are total eg. 'Showing '10-20 of 50'
+  setItemCountText: (itemCountText: string) => void;
 };
 
 // Makes it so either key or altKey is required
