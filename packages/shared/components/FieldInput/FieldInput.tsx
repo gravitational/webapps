@@ -15,7 +15,7 @@ limitations under the License.
 */
 
 import React from 'react';
-import { Box, Input, LabelInput } from 'design';
+import { Box, Flex, Input, LabelInput } from 'design';
 import { useRule } from 'shared/components/Validation';
 
 export default function FieldInput({
@@ -29,6 +29,7 @@ export default function FieldInput({
   autoFocus = false,
   autoComplete = 'off',
   readonly = false,
+  labelIcon,
   ...styles
 }: Props) {
   const { valid, message } = useRule(rule(value));
@@ -36,7 +37,20 @@ export default function FieldInput({
   const labelText = hasError ? message : label;
   return (
     <Box mb="4" {...styles}>
-      {label && <LabelInput hasError={hasError}>{labelText}</LabelInput>}
+      {label && (
+        <Flex alignItems="center">
+          <LabelInput
+            style={{
+              display: 'inline-block',
+              width: 'auto',
+            }}
+            hasError={hasError}
+          >
+            {labelText}
+          </LabelInput>
+          {labelIcon}
+        </Flex>
+      )}
       <Input
         type={type}
         autoFocus={autoFocus}
@@ -65,6 +79,7 @@ type Props = {
   onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
   onKeyPress?: (e: React.KeyboardEvent<HTMLInputElement>) => void;
   readonly?: boolean;
+  labelIcon?: JSX.Element;
   // TS: temporary handles ...styles
   [key: string]: any;
 };
