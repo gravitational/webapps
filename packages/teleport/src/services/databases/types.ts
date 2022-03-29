@@ -23,7 +23,7 @@ export interface Database {
 }
 
 export type DbType = 'redshift' | 'rds' | 'gcp' | 'self-hosted';
-export type DbProtocol = 'postgres' | 'mysql' | 'mongodb';
+export type DbProtocol = 'postgres' | 'mysql' | 'mongodb' | 'sqlserver';
 
 export type DatabasesResponse = {
   databases: Database[];

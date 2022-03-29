@@ -315,12 +315,15 @@ const generateDbStartCmd = (
 const options: DatabaseInfo[] = [
   formatDatabaseInfo('rds', 'postgres'),
   formatDatabaseInfo('rds', 'mysql'),
+  formatDatabaseInfo('rds', 'sqlserver'),
   formatDatabaseInfo('redshift', 'postgres'),
   formatDatabaseInfo('gcp', 'postgres'),
   formatDatabaseInfo('gcp', 'mysql'),
+  formatDatabaseInfo('gcp', 'sqlserver'),
   formatDatabaseInfo('self-hosted', 'postgres'),
   formatDatabaseInfo('self-hosted', 'mysql'),
   formatDatabaseInfo('self-hosted', 'mongodb'),
+  formatDatabaseInfo('self-hosted', 'sqlserver'),
 ];
 
 export type Props = {
