@@ -16,8 +16,11 @@ limitations under the License.
 
 import React from 'react';
 import FormLogin from 'teleport/components/FormLogin';
+import { Link } from 'react-router-dom';
+
 import Logo from 'teleport/components/LogoHero';
 import useLogin, { State } from './useLogin';
+import cfg from 'teleport/config';
 
 const logoSrc = require('design/assets/images/teleport-medallion.svg');
 
@@ -31,18 +34,20 @@ export function Login({
   onLogin,
   onLoginWithU2f,
   onLoginWithWebauthn,
+  onLoginWithPasswordless,
   onLoginWithSso,
   authProviders,
   auth2faType,
   preferredMfaType,
   isLocalAuthEnabled,
   clearAttempt,
+  authType,
 }: State) {
   return (
     <>
-      <Logo src={logoSrc} />
+      <Logo src={logoSrc} as={Link} to={cfg.routes.root} />
       <FormLogin
-        title={'Sign into Teleport'}
+        title={'Login to Teleport'}
         authProviders={authProviders}
         auth2faType={auth2faType}
         preferredMfaType={preferredMfaType}
@@ -50,9 +55,11 @@ export function Login({
         onLoginWithSso={onLoginWithSso}
         onLoginWithU2f={onLoginWithU2f}
         onLoginWithWebauthn={onLoginWithWebauthn}
+        onLoginWithPasswordless={onLoginWithPasswordless}
         onLogin={onLogin}
         attempt={attempt}
         clearAttempt={clearAttempt}
+        authType={authType}
       />
     </>
   );

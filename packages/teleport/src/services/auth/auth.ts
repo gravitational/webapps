@@ -27,6 +27,7 @@ import {
   makeWebauthnCreationResponse,
 } from './makeMfa';
 import { DeviceType } from './types';
+import { DeviceUsage } from 'teleport/services/mfa';
 
 const auth = {
   u2fBrowserSupported() {
@@ -52,10 +53,15 @@ const auth = {
     );
   },
 
-  createMfaRegistrationChallenge(tokenId: string, deviceType: DeviceType) {
+  createMfaRegistrationChallenge(
+    tokenId: string,
+    deviceType: DeviceType,
+    deviceUsage: DeviceUsage = 'mfa'
+  ) {
     return api
       .post(cfg.getMfaCreateRegistrationChallengeUrl(tokenId), {
         deviceType,
+        deviceUsage,
       })
       .then(makeMfaRegistrationChallenge);
   },
@@ -69,9 +75,17 @@ const auth = {
   // mfaLoginBegin retrieves users mfa challenges for their
   // registered devices after verifying given username and password
   // at login.
-  mfaLoginBegin(user: string, pass: string) {
+  mfaLoginBegin(passwordless = false, user: string, pass: string) {
+    console.log(
+      '--passwordless: ',
+      passwordless,
+      ' --user: ',
+      user,
+      ' --pass: ',
+      pass
+    );
     return api
-      .post(cfg.api.mfaLoginBegin, { user, pass })
+      .post(cfg.api.mfaLoginBegin, { passwordless, user, pass })
       .then(makeMfaAuthenticateChallenge);
   },
 
@@ -100,7 +114,7 @@ const auth = {
       return Promise.reject(err);
     }
 
-    return auth.mfaLoginBegin(name, password).then(data => {
+    return auth.mfaLoginBegin(false, name, password).then(data => {
       const promise = new Promise((resolve, reject) => {
         const { appId, challenge, registeredKeys } = data.u2f;
         window['u2f'].sign(appId, challenge, registeredKeys, function (res) {
@@ -130,10 +144,10 @@ const auth = {
     });
   },
 
-  loginWithWebauthn(user: string, pass: string) {
+  loginWithWebauthn(passwordless = true, user?: string, pass?: string) {
     return auth
       .checkWebauthnSupport()
-      .then(() => auth.mfaLoginBegin(user, pass))
+      .then(() => auth.mfaLoginBegin(passwordless, user, pass))
       .then(res =>
         navigator.credentials.get({
           publicKey: res.webauthnPublicKey,
@@ -154,7 +168,7 @@ const auth = {
     return api.get(path).then(makePasswordToken);
   },
 
-  resetPasswordWithWebauthn(tokenId: string, password: string) {
+  resetPasswordWithWebauthn(tokenId: string, password?: string) {
     return auth
       .checkWebauthnSupport()
       .then(() => auth.createMfaRegistrationChallenge(tokenId, 'webauthn'))

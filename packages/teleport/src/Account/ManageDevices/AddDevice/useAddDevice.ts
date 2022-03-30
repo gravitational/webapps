@@ -19,6 +19,7 @@ import useAttempt from 'shared/hooks/useAttemptNext';
 import Ctx from 'teleport/teleportContext';
 import authService from 'teleport/services/auth';
 import cfg from 'teleport/config';
+import { DeviceUsage } from 'teleport/services/mfa';
 
 export default function useAddDevice(
   ctx: Ctx,
@@ -57,12 +58,13 @@ export default function useAddDevice(
       .catch(addDeviceAttempt.handleError);
   }
 
-  function addWebauthnDevice(deviceName: string) {
+  function addWebauthnDevice(deviceName: string, deviceUsage: DeviceUsage) {
     addDeviceAttempt.setAttempt({ status: 'processing' });
     ctx.mfaService
       .addNewWebauthnDevice({
         tokenId: token,
         deviceName,
+        deviceUsage,
       })
       .then(() => {
         onClose();

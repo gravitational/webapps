@@ -15,4 +15,7 @@ export type AddNewTotpDeviceRequest = {
 export type AddNewHardwareDeviceRequest = {
   tokenId: string;
   deviceName: string;
+  deviceUsage?: DeviceUsage;
 };
+
+export type DeviceUsage = 'passwordless' | 'mfa';

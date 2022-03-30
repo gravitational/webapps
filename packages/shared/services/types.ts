@@ -35,3 +35,11 @@ export type AuthProvider = {
   type: AuthProviderType;
   url: string;
 };
+
+export type AuthType =
+  | 'local'
+  | 'github'
+  | 'oidc'
+  | 'saml'
+  | 'false'
+  | 'pwdless';

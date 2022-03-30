@@ -33,7 +33,13 @@ class MfaService {
   addNewWebauthnDevice(req: AddNewHardwareDeviceRequest) {
     return auth
       .checkWebauthnSupport()
-      .then(() => auth.createMfaRegistrationChallenge(req.tokenId, 'webauthn'))
+      .then(() =>
+        auth.createMfaRegistrationChallenge(
+          req.tokenId,
+          'webauthn',
+          req.deviceUsage
+        )
+      )
       .then(res =>
         navigator.credentials.create({
           publicKey: res.webauthnPublicKey,

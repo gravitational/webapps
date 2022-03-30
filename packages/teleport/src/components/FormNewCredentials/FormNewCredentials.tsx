@@ -15,6 +15,7 @@ limitations under the License.
 */
 
 import React, { useState, useMemo } from 'react';
+import styled from 'styled-components';
 import { Text, Card, ButtonPrimary, Flex, Box, Link } from 'design';
 import * as Alerts from 'design/Alert';
 import { Auth2faType, PreferredMfaType } from 'shared/services';
@@ -29,6 +30,7 @@ import {
 } from 'shared/components/Validation/rules';
 import { getMfaOptions, MfaOption } from 'teleport/services/mfa/utils';
 import TwoFAData from './TwoFaInfo';
+import { Key, ArrowForward } from 'design/Icon';
 
 const U2F_ERROR_CODES_URL =
   'https://developers.yubico.com/U2F/Libraries/Client_error_codes.html';
@@ -39,6 +41,7 @@ export default function FormNewCredentials(props: Props) {
     preferredMfaType,
     onSubmitWithU2f,
     onSubmitWithWebauthn,
+    onSubmitWithPasswordless,
     onSubmit,
     attempt,
     clearSubmitAttempt,
@@ -92,6 +95,10 @@ export default function FormNewCredentials(props: Props) {
     validator.reset();
     setMfaType(option);
   }
+  const webauthnEnabled =
+    auth2faType === 'on' ||
+    auth2faType === 'optional' ||
+    auth2faType === 'webauthn';
 
   return (
     <Validation>
@@ -105,9 +112,51 @@ export default function FormNewCredentials(props: Props) {
               {attempt.status === 'failed' && (
                 <ErrorMessage message={attempt.statusText} />
               )}
+              {}
               <Text typography="h4" breakAll mb={3}>
                 {user}
               </Text>
+              {webauthnEnabled && (
+                <>
+                  <Box mb={6}>
+                    <PwdlessBtn
+                      mt={3}
+                      py={2}
+                      px={3}
+                      border={1}
+                      borderRadius={2}
+                      borderColor="text.placeholder"
+                      width="100%"
+                      onClick={() => onSubmitWithPasswordless()}
+                    >
+                      <Flex alignItems="center" justifyContent="space-between">
+                        <Flex alignItems="center">
+                          <Key mr={3} fontSize={16} />
+                          <Box>
+                            <Text typography="h6">Go Passwordless</Text>
+                            <Text fontSize={1} color="text.secondary">
+                              Follow the prompt from your browser
+                            </Text>
+                          </Box>
+                        </Flex>
+                        <ArrowForward fontSize={16} />
+                      </Flex>
+                    </PwdlessBtn>
+                  </Box>
+                  <Flex
+                    alignItems="center"
+                    justifyContent="center"
+                    flexDirection="column"
+                    borderBottom={1}
+                    borderColor="text.placeholder"
+                    mx={5}
+                    mt={2}
+                    mb={5}
+                  >
+                    <StyledOr>Or</StyledOr>
+                  </Flex>
+                </>
+              )}
               <FieldInput
                 rule={requiredPassword}
                 autoFocus
@@ -128,39 +177,41 @@ export default function FormNewCredentials(props: Props) {
                 placeholder="Confirm Password"
               />
               {secondFactorEnabled && (
-                <Flex alignItems="center">
-                  <FieldSelect
-                    maxWidth="50%"
-                    width="100%"
-                    data-testid="mfa-select"
-                    label="Two-factor type"
-                    value={mfaType}
-                    options={mfaOptions}
-                    onChange={opt =>
-                      onSetMfaOption(opt as MfaOption, validator)
-                    }
-                    mr={3}
-                    isDisabled={attempt.status === 'processing'}
-                  />
-                  {mfaType.value === 'otp' && (
-                    <FieldInput
-                      width="50%"
-                      label="Authenticator code"
-                      rule={requiredToken}
-                      autoComplete="off"
-                      value={token}
-                      onChange={e => setToken(e.target.value)}
-                      placeholder="123 456"
+                <>
+                  <Flex alignItems="center">
+                    <FieldSelect
+                      maxWidth="50%"
+                      width="100%"
+                      data-testid="mfa-select"
+                      label="Two-factor type"
+                      value={mfaType}
+                      options={mfaOptions}
+                      onChange={opt =>
+                        onSetMfaOption(opt as MfaOption, validator)
+                      }
+                      mr={3}
+                      isDisabled={attempt.status === 'processing'}
                     />
-                  )}
-                  {mfaType.value === 'u2f' &&
-                    attempt.status === 'processing' && (
-                      <Text typography="body2">
-                        Insert your hardware key and press the button on the
-                        key.
-                      </Text>
+                    {mfaType.value === 'otp' && (
+                      <FieldInput
+                        width="50%"
+                        label="Authenticator code"
+                        rule={requiredToken}
+                        autoComplete="off"
+                        value={token}
+                        onChange={e => setToken(e.target.value)}
+                        placeholder="123 456"
+                      />
                     )}
-                </Flex>
+                    {mfaType.value === 'u2f' &&
+                      attempt.status === 'processing' && (
+                        <Text typography="body2">
+                          Insert your hardware key and press the button on the
+                          key.
+                        </Text>
+                      )}
+                  </Flex>
+                </>
               )}
               <ButtonPrimary
                 width="100%"
@@ -205,6 +256,7 @@ export type Props = {
   clearSubmitAttempt: () => void;
   onSubmitWithU2f(password: string): void;
   onSubmitWithWebauthn(password: string): void;
+  onSubmitWithPasswordless(): void;
   onSubmit(password: string, optToken: string): void;
 };
 
@@ -230,3 +282,24 @@ function ErrorMessage({ message = '' }) {
     </Alerts.Danger>
   );
 }
+
+const PwdlessBtn = styled(Box)`
+  cursor: pointer;
+  transition: all 0.3s;
+
+  &:hover {
+    border-color: ${({ theme }) => theme.colors.action.active};
+  }
+`;
+
+const StyledOr = styled.div`
+  background: ${props => props.theme.colors.primary.light};
+  display: flex;
+  align-items: center;
+  font-size: 10px;
+  height: 32px;
+  width: 32px;
+  justify-content: center;
+  position: absolute;
+  z-index: 1;
+`;

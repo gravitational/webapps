@@ -39,10 +39,23 @@ import {
 } from 'shared/components/Validation/rules';
 import FieldSelect from 'shared/components/FieldSelect';
 import useTeleport from 'teleport/useTeleport';
+import { DeviceUsage } from 'teleport/services/mfa';
 import { getMfaOptions, MfaOption } from 'teleport/services/mfa/utils';
 import useAddDevice, { State, Props } from './useAddDevice';
 
 const u2fGraphic = require('design/assets/images/u2f-graphic.svg');
+
+type PwdlessOpt = { value: DeviceUsage; label: string };
+const pwdlessOptions: PwdlessOpt[] = [
+  {
+    value: 'mfa',
+    label: 'no',
+  },
+  {
+    value: 'passwordless',
+    label: 'yes',
+  },
+];
 
 export default function Container(props: Props) {
   const ctx = useTeleport();
@@ -70,7 +83,8 @@ export function AddDevice({
     []
   );
 
-  const [mfaOption, setMfaOption] = useState<MfaOption>(mfaOptions[0]);
+  const [mfaOption, setMfaOption] = useState(mfaOptions[0]);
+  const [pwdlessOption, setPwdlessOption] = useState(pwdlessOptions[0]);
 
   function onSetMfaOption(option: MfaOption) {
     setOtpToken('');
@@ -85,7 +99,7 @@ export function AddDevice({
       addU2fDevice(deviceName);
     }
     if (mfaOption.value === 'webauthn') {
-      addWebauthnDevice(deviceName);
+      addWebauthnDevice(deviceName, pwdlessOption.value);
     }
     if (mfaOption.value === 'otp') {
       addTotpDevice(otpToken, deviceName);
@@ -200,6 +214,19 @@ export function AddDevice({
                   onChange={e => setOtpToken(e.target.value)}
                   placeholder="123 456"
                   readonly={addDeviceAttempt.status === 'processing'}
+                />
+              )}
+              {mfaOption.value === 'webauthn' && (
+                <FieldSelect
+                  width="50%"
+                  label="Allow Passwordless Login?"
+                  value={pwdlessOption}
+                  options={pwdlessOptions}
+                  onChange={(o: PwdlessOpt) => {
+                    validator.reset();
+                    setPwdlessOption(o);
+                  }}
+                  isDisabled={addDeviceAttempt.status === 'processing'}
                 />
               )}
             </Flex>

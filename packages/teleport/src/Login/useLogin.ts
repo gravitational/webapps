@@ -49,7 +49,18 @@ export default function useLogin() {
   function onLoginWithWebauthn(name, password) {
     attemptActions.start();
     auth
-      .loginWithWebauthn(name, password)
+      .loginWithWebauthn(false, name, password)
+      .then(onSuccess)
+      .catch(err => {
+        attemptActions.error(err);
+      });
+  }
+
+  function onLoginWithPasswordless() {
+    console.log('---- onclick on login with passwordless');
+    attemptActions.start();
+    auth
+      .loginWithWebauthn()
       .then(onSuccess)
       .catch(err => {
         attemptActions.error(err);
@@ -70,9 +81,11 @@ export default function useLogin() {
     onLoginWithSso,
     authProviders,
     auth2faType,
+    authType: cfg.getAuthType(),
     preferredMfaType: cfg.getPreferredMfaType(),
     isLocalAuthEnabled,
     onLoginWithWebauthn,
+    onLoginWithPasswordless,
     clearAttempt: attemptActions.clear,
   };
 }

@@ -17,6 +17,7 @@ limitations under the License.
 import React from 'react';
 import styled from 'styled-components';
 import Button from 'design/Button';
+import Text from 'design/Text';
 import { fade } from 'design/theme/utils/colorManipulator';
 import * as Icons from 'design/Icon';
 import { AuthProviderType } from 'shared/services';
@@ -32,7 +33,11 @@ const ButtonSso = (props: Props) => {
           <Icon data-testid="icon" />
         </IconBox>
       )}
-      {title}
+      <Text
+        style={{ whiteSpace: 'nowrap', margin: '0 auto', maxWidth: '200px' }}
+      >
+        {title}
+      </Text>
     </StyledButton>
   );
 };
