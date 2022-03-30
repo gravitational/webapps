@@ -21,8 +21,9 @@ import './../assets/icomoon/style.css';
 
 const Icon = styled.span`
   display: inline-block;
-  transition: color .3s;
-  ${space} ${width} ${color} ${fontSize} `;
+  transition: color 0.3s;
+  ${space} ${width} ${color} ${fontSize}
+`;
 
 Icon.displayName = `Icon`;
 Icon.defaultProps = {
@@ -31,7 +32,7 @@ Icon.defaultProps = {
 
 function makeFontIcon(name, iconClassName) {
   const iconClass = `icon ${iconClassName}`;
-  return function({ className = '', ...rest }) {
+  return function ({ className = '', ...rest }) {
     const classes = `${iconClass} ${className}`;
     return <Icon className={classes} {...rest} />;
   };
@@ -47,6 +48,7 @@ export const Apple = makeFontIcon('Apple', 'icon-apple');
 export const AppRollback = makeFontIcon('AppRollback', 'icon-app-rollback');
 export const Archive = makeFontIcon('Archive', 'icon-archive2');
 export const ArrowDown = makeFontIcon('ArrowDown', 'icon-chevron-down');
+export const ArrowForward = makeFontIcon('ArrowForward', 'icon-arrow_forward');
 export const ArrowLeft = makeFontIcon('ArrowLeft', 'icon-chevron-left');
 export const ArrowRight = makeFontIcon('ArrowRight', 'icon-chevron-right');
 export const ArrowsVertical = makeFontIcon(
@@ -152,6 +154,7 @@ export const Google = makeFontIcon('Google', 'icon-google-plus');
 export const Graph = makeFontIcon('Graph', 'icon-graph');
 export const Home = makeFontIcon('Home', 'icon-home3');
 export const Info = makeFontIcon('Info', 'icon-info_outline');
+export const Key = makeFontIcon('Key', 'icon-key');
 export const Keypair = makeFontIcon('Keypair', 'icon-keypair');
 export const Kubernetes = makeFontIcon('Kubernetes', 'icon-kubernetes');
 export const Label = makeFontIcon('Label', 'icon-label');
