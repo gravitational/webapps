@@ -98,7 +98,6 @@ export default function LoginForm(props: Props) {
 
   const bgColor =
     ssoEnabled && isLocalAuthEnabled ? 'primary.main' : 'primary.light';
-
   return (
     <Validation>
       {({ validator }) => (
@@ -187,7 +186,8 @@ export default function LoginForm(props: Props) {
                         width="50%"
                         label="Authenticator code"
                         rule={requiredToken}
-                        autoComplete="off"
+                        autoComplete="one-time-code"
+                        inputMode="numeric"
                         value={token}
                         onChange={e => setToken(e.target.value)}
                         placeholder="123 456"
