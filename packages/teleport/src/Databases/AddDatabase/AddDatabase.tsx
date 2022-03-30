@@ -324,6 +324,7 @@ const options: DatabaseInfo[] = [
   formatDatabaseInfo('self-hosted', 'mysql'),
   formatDatabaseInfo('self-hosted', 'mongodb'),
   formatDatabaseInfo('self-hosted', 'sqlserver'),
+  formatDatabaseInfo('self-hosted', 'redis'),
 ];
 
 export type Props = {
