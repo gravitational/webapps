@@ -5,6 +5,7 @@ import App from 'teleterm/ui/App';
 import AppContext from 'teleterm/ui/appContext';
 import Logger, { initLogger } from 'teleterm/ui/logger';
 import useAsync from 'teleterm/ui/useAsync';
+import theme from 'teleterm/ui/ThemeProvider/theme';
 
 const globals = window['electron'] as ElectronGlobals;
 initLogger(globals);
@@ -31,5 +32,20 @@ function AppLoader() {
   if (status === 'success' || status === 'error') {
     return <App ctx={appContext} />;
   }
-  return <div>Loading</div>;
+  return (
+    <div
+      style={{
+        backgroundColor: theme.colors.primary.main,
+        color: theme.colors.text.primary,
+        left: 0,
+        top: 0,
+        position: 'absolute',
+        height: '100vh',
+        width: '100vw',
+        fontFamily: 'sans-serif',
+      }}
+    >
+      Loading
+    </div>
+  );
 }
