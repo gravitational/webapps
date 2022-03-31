@@ -79,8 +79,8 @@ export type ClipboardData = {
 
 // | message type (10) | mfa_type byte | message_length uint32 | json []byte
 export type MfaJson = {
-  // TODO(isaiah) make this a type that ensures it's the same as MessageTypeEnum.WEBAUTHN_CHALLENGE
-  mfaType: 'n';
+  // TODO(isaiah) make this a type that ensures it's the same as MessageTypeEnum.U2F_CHALLENGE and MessageTypeEnum.WEBAUTHN_CHALLENGE
+  mfaType: 'u' | 'n';
   jsonString: string;
 };
 
@@ -419,8 +419,8 @@ export default class Codec {
   decodeMfaJson(buffer: ArrayBuffer): MfaJson {
     let dv = new DataView(buffer);
     const mfaType = String.fromCharCode(dv.getUint8(1));
-    if (mfaType !== 'n') {
-      throw new Error(`invalid mfa type ${mfaType}, should be "n"`);
+    if (mfaType !== 'n' && mfaType !== 'u') {
+      throw new Error(`invalid mfa type ${mfaType}, should be "n" or "u"`);
     }
     const jsonString = this.decoder.decode(new Uint8Array(buffer.slice(6)));
     return { mfaType, jsonString };

@@ -21,6 +21,8 @@ export type Auth2faType = 'otp' | 'off' | 'optional' | 'on' | 'webauthn';
 // PreferredMfaType is used to determine which MFA option
 // is preferred when more than one option can be available
 // and only one should be preferred.
+//
+// TODO(lisa) remove, currently does nothing.
 export type PreferredMfaType = 'webauthn' | '';
 
 export type AuthProvider = {
