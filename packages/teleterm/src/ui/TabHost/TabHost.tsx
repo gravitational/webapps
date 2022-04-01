@@ -24,6 +24,7 @@ import { useTabShortcuts } from './useTabShortcuts';
 import { DocumentsRenderer } from 'teleterm/ui/Documents';
 import { useNewTabOpener } from './useNewTabOpener';
 import { ClusterConnectPanel } from './ClusterConnectPanel/ClusterConnectPanel';
+import { useTabsReopen } from './useTabsReopen';
 
 export function TabHostContainer() {
   const ctx = useAppContext();
@@ -49,6 +50,7 @@ export function TabHost() {
 
   // enable keyboard shortcuts
   useTabShortcuts();
+  useTabsReopen();
 
   function handleTabClick(doc: types.Document) {
     documentsService.open(doc.uri);

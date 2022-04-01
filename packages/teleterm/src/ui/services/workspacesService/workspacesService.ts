@@ -17,6 +17,10 @@ export interface Workspace {
   localClusterUri: string;
   documents: Document[];
   location: string;
+  previous?: {
+    documents: Document[];
+    location: string;
+  };
 }
 
 export class WorkspacesService extends ImmutableStore<WorkspacesState> {
@@ -111,8 +115,14 @@ export class WorkspacesService extends ImmutableStore<WorkspacesState> {
             this.statePersistenceService.getWorkspaces().workspaces[clusterUri];
           draftState.workspaces[clusterUri] = {
             localClusterUri: persistedWorkspace?.localClusterUri || clusterUri,
-            location: persistedWorkspace?.location,
-            documents: persistedWorkspace?.documents || [],
+            location: undefined,
+            documents: [],
+            previous: persistedWorkspace.documents
+              ? {
+                  documents: persistedWorkspace.documents,
+                  location: persistedWorkspace.location,
+                }
+              : undefined,
           };
         }
         draftState.rootClusterUri = clusterUri;
@@ -145,5 +155,14 @@ export class WorkspacesService extends ImmutableStore<WorkspacesState> {
     return Object.keys(this.state.workspaces).filter(
       clusterUri => this.clustersService.findCluster(clusterUri)?.connected
     );
+  }
+
+  reopenPreviousDocuments(clusterUri: string): void {
+    this.setState(draftState => {
+      const workspace = draftState.workspaces[clusterUri];
+      workspace.documents = workspace.previous.documents;
+      workspace.location = workspace.previous.location;
+      workspace.previous = undefined;
+    });
   }
 }
