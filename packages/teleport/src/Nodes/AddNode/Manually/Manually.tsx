@@ -15,10 +15,11 @@
  */
 
 import React from 'react';
-import { Text, Box, ButtonLink, Indicator } from 'design';
+import { Text, Box, ButtonLink, Indicator, ButtonSecondary } from 'design';
 import TextSelectCopy from 'teleport/components/TextSelectCopy';
 import DownloadLinks from 'teleport/components/DownloadLinks';
 import { State } from './../useAddNode';
+import { DialogContent, DialogFooter } from 'design/Dialog';
 
 export default function Manually({
   isEnterprise,
@@ -29,6 +30,7 @@ export default function Manually({
   createJoinToken,
   expiry,
   attempt,
+  onClose,
 }: Props) {
   const { hostname, port } = window.document.location;
   const host = `${hostname}:${port || '443'}`;
@@ -48,23 +50,28 @@ export default function Manually({
 
   return (
     <>
-      <Box mb={4}>
-        <Text bold as="span">
-          Step 1
-        </Text>{' '}
-        - Download Teleport package to your computer
-        <DownloadLinks isEnterprise={isEnterprise} version={version} />
-      </Box>
-      {attempt.status === 'failed' ? (
-        <StepsWithoutToken host={host} tshLoginCmd={tshLoginCmd} />
-      ) : (
-        <StepsWithToken
-          joinToken={joinToken}
-          host={host}
-          createJoinToken={createJoinToken}
-          expiry={expiry}
-        />
-      )}
+      <DialogContent>
+        <Box mb={4}>
+          <Text bold as="span">
+            Step 1
+          </Text>{' '}
+          - Download Teleport package to your computer
+          <DownloadLinks isEnterprise={isEnterprise} version={version} />
+        </Box>
+        {attempt.status === 'failed' ? (
+          <StepsWithoutToken host={host} tshLoginCmd={tshLoginCmd} />
+        ) : (
+          <StepsWithToken
+            joinToken={joinToken}
+            host={host}
+            createJoinToken={createJoinToken}
+            expiry={expiry}
+          />
+        )}
+      </DialogContent>
+      <DialogFooter>
+        <ButtonSecondary onClick={onClose}>Close</ButtonSecondary>
+      </DialogFooter>
     </>
   );
 }
@@ -129,4 +136,5 @@ type Props = {
   expiry: State['expiry'];
   createJoinToken: State['createJoinToken'];
   attempt: State['attempt'];
+  onClose(): void;
 };

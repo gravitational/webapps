@@ -15,15 +15,11 @@
  */
 
 import React from 'react';
-import { ButtonSecondary, Flex } from 'design';
+import { Flex } from 'design';
 import { TabIcon } from 'teleport/components/Tabs';
 import useTeleport from 'teleport/useTeleport';
 import * as Icons from 'design/Icon';
-import Dialog, {
-  DialogContent,
-  DialogFooter,
-  DialogTitle,
-} from 'design/Dialog';
+import Dialog, { DialogTitle } from 'design/Dialog';
 import Manually from './Manually';
 import Automatically from './Automatically';
 import Iam from './Iam';
@@ -85,39 +81,39 @@ export function AddNode({
             onClick={() => setMethod('manual')}
           />
         </Flex>
-        <DialogContent minHeight="100px">
-          {method === 'automatic' && (
-            <Automatically
-              script={script}
-              expiry={expiry}
-              createJoinToken={createJoinToken}
-              attempt={attempt}
-            />
-          )}
-          {method === 'manual' && (
-            <Manually
-              isEnterprise={isEnterprise}
-              user={user}
-              version={version}
-              isAuthTypeLocal={isAuthTypeLocal}
-              joinToken={token}
-              expiry={expiry}
-              createJoinToken={createJoinToken}
-              attempt={attempt}
-            />
-          )}
-          {method === 'iam' && (
-            <Iam
-              onGenerate={createIamJoinToken}
-              attempt={attempt}
-              token={iamJoinToken}
-              expiry={iamExpiry}
-            />
-          )}
-        </DialogContent>
-        <DialogFooter>
-          <ButtonSecondary onClick={onClose}>Close</ButtonSecondary>
-        </DialogFooter>
+        {method === 'automatic' && (
+          <Automatically
+            script={script}
+            expiry={expiry}
+            createJoinToken={createJoinToken}
+            attempt={attempt}
+            onClose={onClose}
+          />
+        )}
+        {method === 'manual' && (
+          <Manually
+            isEnterprise={isEnterprise}
+            user={user}
+            version={version}
+            isAuthTypeLocal={isAuthTypeLocal}
+            joinToken={token}
+            expiry={expiry}
+            createJoinToken={createJoinToken}
+            attempt={attempt}
+            onClose={onClose}
+          />
+        )}
+        {method === 'iam' && (
+          <Iam
+            onGenerate={createIamJoinToken}
+            attempt={attempt}
+            token={iamJoinToken}
+            expiry={iamExpiry}
+            isEnterprise={isEnterprise}
+            version={version}
+            onClose={onClose}
+          />
+        )}
       </Flex>
     </Dialog>
   );

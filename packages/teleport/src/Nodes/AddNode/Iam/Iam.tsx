@@ -1,7 +1,15 @@
 import React from 'react';
 import styled from 'styled-components';
-import { DialogContent } from 'design/Dialog';
-import { Text, Box, ButtonPrimary, Link, Alert, ButtonLink } from 'design';
+import { DialogContent, DialogFooter } from 'design/Dialog';
+import {
+  Text,
+  Box,
+  ButtonPrimary,
+  Link,
+  Alert,
+  ButtonLink,
+  ButtonSecondary,
+} from 'design';
 import TextSelectCopy from 'teleport/components/TextSelectCopy';
 import FieldInput from 'shared/components/FieldInput';
 import Validation, { Validator } from 'shared/components/Validation';
@@ -16,6 +24,7 @@ export default function Iam({
   onGenerate,
   isEnterprise,
   version,
+  onClose,
 }: Props) {
   const { hostname, port } = window.document.location;
   const host = `${hostname}:${port || '443'}`;
@@ -72,7 +81,7 @@ export default function Iam({
               - Download Teleport package to your computer
               <DownloadLinks isEnterprise={isEnterprise} version={version} />
             </Box>
-            <Box mb={0}>
+            <Box>
               <Text bold as="span">
                 Step 2
               </Text>{' '}
@@ -82,6 +91,7 @@ export default function Iam({
                   key={index}
                   bg="primary.lighter"
                   borderRadius="2"
+                  mt={1}
                   p="3"
                   position="relative"
                 >
@@ -129,15 +139,6 @@ export default function Iam({
             >
               <ButtonAddRule>+ Add new rule</ButtonAddRule>
             </Box>
-            <Box>
-              <ButtonPrimary
-                mr="3"
-                disabled={attempt.status === 'processing'}
-                onClick={() => handleGenerate(validator)}
-              >
-                {token ? 'Regenerate Script' : 'Generate Script'}
-              </ButtonPrimary>
-            </Box>
             {token && (
               <>
                 <Text mt="3">
@@ -156,6 +157,16 @@ export default function Iam({
               </>
             )}
           </DialogContent>
+          <DialogFooter>
+            <ButtonPrimary
+              mr="3"
+              disabled={attempt.status === 'processing'}
+              onClick={() => handleGenerate(validator)}
+            >
+              {token ? 'Regenerate Script' : 'Generate Script'}
+            </ButtonPrimary>
+            <ButtonSecondary onClick={onClose}>Close</ButtonSecondary>
+          </DialogFooter>
         </>
       )}
     </Validation>
@@ -212,4 +223,5 @@ type Props = {
   onGenerate(rules: Rule[]): Promise<any>;
   isEnterprise: boolean;
   version: string;
+  onClose(): void;
 };
