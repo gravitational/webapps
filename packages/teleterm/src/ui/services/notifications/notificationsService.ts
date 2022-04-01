@@ -2,6 +2,7 @@ import { ImmutableStore } from 'teleterm/ui/services/immutableStore';
 import {
   NotificationItem,
   NotificationItemContent,
+  NotificationItemOptions,
 } from 'teleterm/ui/components/Notifcations';
 import { useStore } from 'shared/libs/stores';
 import { unique } from 'teleterm/ui/utils/uid';
@@ -9,16 +10,25 @@ import { unique } from 'teleterm/ui/utils/uid';
 export class NotificationsService extends ImmutableStore<NotificationItem[]> {
   state: NotificationItem[] = [];
 
-  notifyError(content: NotificationItemContent): string {
-    return this.notify({ severity: 'error', content });
+  notifyError(
+    content: NotificationItemContent,
+    options?: NotificationItemOptions
+  ): string {
+    return this.notify({ severity: 'error', content, ...options });
   }
 
-  notifyWarning(content: NotificationItemContent): string {
-    return this.notify({ severity: 'warn', content });
+  notifyWarning(
+    content: NotificationItemContent,
+    options?: NotificationItemOptions
+  ): string {
+    return this.notify({ severity: 'warn', content, ...options });
   }
 
-  notifyInfo(content: NotificationItemContent): string {
-    return this.notify({ severity: 'info', content });
+  notifyInfo(
+    content: NotificationItemContent,
+    options?: NotificationItemOptions
+  ): string {
+    return this.notify({ severity: 'info', content, ...options });
   }
 
   removeNotification(id: string): void {
@@ -40,8 +50,7 @@ export class NotificationsService extends ImmutableStore<NotificationItem[]> {
 
     this.setState(draftState => {
       draftState.push({
-        severity: options.severity,
-        content: options.content,
+        ...options,
         id,
       });
     });

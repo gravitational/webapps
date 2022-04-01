@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { ReactNode, useEffect, useRef, useState } from 'react';
 import styled, { css, useTheme } from 'styled-components';
 import { ButtonIcon, Flex, Text } from 'design';
 import { Close, Info, Warning } from 'design/Icon';
@@ -41,7 +41,11 @@ export function Notification(props: NotificationProps) {
   const theme = useTheme();
 
   useEffect(() => {
-    if (!isHovered && config.isAutoRemovable) {
+    if (
+      !isHovered &&
+      config.isAutoRemovable &&
+      !props.item.autoRemoveDisabled
+    ) {
       timeoutHandler.current = setTimeout(
         props.onRemove,
         autoRemoveDurationMs
@@ -105,7 +109,7 @@ export function Notification(props: NotificationProps) {
 function getRenderedContent(
   content: NotificationItemContent,
   isExpanded: boolean,
-  removeIcon: React.ReactNode
+  removeIcon: ReactNode
 ) {
   const longerTextCss = isExpanded ? textCss : shortTextCss;
 
@@ -120,6 +124,14 @@ function getRenderedContent(
         >
           {content}
         </Text>
+        {removeIcon}
+      </Flex>
+    );
+  }
+  if (React.isValidElement(content)) {
+    return (
+      <Flex justifyContent="space-between" width="100%">
+        {content}
         {removeIcon}
       </Flex>
     );
@@ -183,7 +195,7 @@ const Container = styled(Flex)`
   justify-content: space-between;
   background: ${props => props.theme.colors.primary.darker};
   min-height: 40px;
-  width: 320px;
+  width: 300px;
   margin-bottom: 15px;
   box-shadow: 0 4px 16px rgba(0, 0, 0, 0.24);
   color: ${props => props.theme.colors.text.primary};
