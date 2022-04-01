@@ -17,6 +17,13 @@ const dev = env.NODE_ENV === 'development' || env.DEBUG_PROD === 'true';
 const isInsecure = dev || argv.slice(2).indexOf('--insecure') !== -1;
 
 function getRuntimeSettings(): RuntimeSettings {
+  console.log(
+    '*'.repeat(50) +
+      '\n\n' +
+      'runtimeSettings getRuntimeSettings called' +
+      '\n\n' +
+      '*'.repeat(50)
+  );
   const userDataDir = app.getPath('userData');
   const tshNetworkAddr = getTshNetworkAddr();
   const tshd = {
@@ -46,8 +53,17 @@ function getTshNetworkAddr() {
 
   // try to cleanup after previous process that unexpectedly crashed
   if (fs.existsSync(unixSocketPath)) {
+    console.log(
+      'runtimeSettings getTshNetworkAddr: Socket file found, removing'
+    );
     fs.unlinkSync(unixSocketPath);
+  } else {
+    console.log('runtimeSettings getTshNetworkAddr: No socket file found');
   }
+
+  // setTimeout(() => {
+  //   fs.unlinkSync(unixSocketPath);
+  // }, 250);
 
   return `unix://${path.resolve(app.getPath('userData'), 'tsh.socket')}`;
 }

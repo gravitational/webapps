@@ -26,6 +26,7 @@ app.commandLine.appendSwitch('ignore-certificate-errors', 'true');
 app.on('will-quit', () => {
   globalShortcut.unregisterAll();
   mainProcess.dispose();
+  logger.info('Disposed of main process');
 });
 
 app.whenReady().then(() => {

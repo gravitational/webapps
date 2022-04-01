@@ -9,7 +9,9 @@ import { ElectronGlobals } from './types';
 import { createFileStorage } from 'teleterm/services/fileStorage';
 
 const mainProcessClient = createMainProcessClient();
+console.log('runtimeSettings getting runtime settings from preload');
 const runtimeSettings = mainProcessClient.getRuntimeSettings();
+console.log('runtimeSettings', runtimeSettings);
 const loggerService = createLoggerService({
   dev: runtimeSettings.dev,
   dir: runtimeSettings.userDataDir,
