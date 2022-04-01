@@ -7,8 +7,16 @@ import FieldInput from 'shared/components/FieldInput';
 import Validation, { Validator } from 'shared/components/Validation';
 import { Attempt } from 'shared/hooks/useAttemptNext';
 import { Rule } from 'teleport/services/joinToken';
+import DownloadLinks from 'teleport/components/DownloadLinks';
 
-export default function Iam({ token, expiry, attempt, onGenerate }: Props) {
+export default function Iam({
+  token,
+  expiry,
+  attempt,
+  onGenerate,
+  isEnterprise,
+  version,
+}: Props) {
   const { hostname, port } = window.document.location;
   const host = `${hostname}:${port || '443'}`;
 
@@ -47,11 +55,9 @@ export default function Iam({ token, expiry, attempt, onGenerate }: Props) {
             {attempt.status === 'failed' && (
               <Alert kind="danger" children={attempt.statusText} />
             )}
-            <Text>
-              {`The IAM join method is available to any Teleport Node or Proxy
-              with access to IAM credentials.`}
-            </Text>
             <Text mb={4}>
+              {`Add any Teleport Node or Proxy
+              with access to IAM credentials.`}
               {`You can read more
               about the IAM method in the `}
               <Link href="https://goteleport.com/docs/setup/guides/joining-nodes-aws/">
@@ -59,7 +65,18 @@ export default function Iam({ token, expiry, attempt, onGenerate }: Props) {
               </Link>
               .
             </Text>
-            <Box>
+            <Box mb={4}>
+              <Text bold as="span">
+                Step 1
+              </Text>{' '}
+              - Download Teleport package to your computer
+              <DownloadLinks isEnterprise={isEnterprise} version={version} />
+            </Box>
+            <Box mb={0}>
+              <Text bold as="span">
+                Step 2
+              </Text>{' '}
+              - Setup AWS Rules
               {rules.map((rule, index) => (
                 <RuleBox
                   key={index}
@@ -91,7 +108,7 @@ export default function Iam({ token, expiry, attempt, onGenerate }: Props) {
                   </Box>
                   <FieldInput
                     mb={2}
-                    label="AWS ARN (optional)"
+                    label="AWS ARN"
                     onChange={e =>
                       setRuleAtIndex(index, {
                         ...rules[index],
@@ -104,14 +121,13 @@ export default function Iam({ token, expiry, attempt, onGenerate }: Props) {
                 </RuleBox>
               ))}
             </Box>
-            <Box mb="2">
-              <ButtonLink
-                onClick={() =>
-                  setRules([...rules, { awsAccount: '', awsArn: '' }])
-                }
-              >
-                Add new rule
-              </ButtonLink>
+            <Box
+              mb={4}
+              onClick={() =>
+                setRules([...rules, { awsAccount: '', awsArn: '' }])
+              }
+            >
+              <ButtonAddRule>+ Add new rule</ButtonAddRule>
             </Box>
             <Box>
               <ButtonPrimary
@@ -147,12 +163,19 @@ export default function Iam({ token, expiry, attempt, onGenerate }: Props) {
 }
 
 const RuleBox = styled(Box)`
-  margin: 4px 0 18px 0;
+  margin: 4px 0 12px 0;
   position: relative;
 
   &:last-of-type {
     margin-bottom: 8px;
   }
+`;
+
+const ButtonAddRule = styled(ButtonLink)`
+  font-weight: bold;
+  font-size: 14px;
+  color: white;
+  text-decoration: none;
 `;
 
 const ButtonRemoveRule = styled(ButtonLink)`
@@ -187,4 +210,6 @@ type Props = {
   expiry: string;
   attempt: Attempt;
   onGenerate(rules: Rule[]): Promise<any>;
+  isEnterprise: boolean;
+  version: string;
 };

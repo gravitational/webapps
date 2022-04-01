@@ -67,6 +67,12 @@ export function AddNode({
         <Flex alignItems="center" justifyContent="space-between" mb="4">
           <DialogTitle mr="auto">Add Server</DialogTitle>
           <TabIcon
+            Icon={Icons.Server}
+            title="AWS"
+            active={method === 'iam'}
+            onClick={() => setMethod('iam')}
+          />
+          <TabIcon
             Icon={Icons.Wand}
             title="Automatically"
             active={method === 'automatic'}
@@ -77,12 +83,6 @@ export function AddNode({
             title="Manually"
             active={method === 'manual'}
             onClick={() => setMethod('manual')}
-          />
-          <TabIcon
-            Icon={Icons.Server}
-            title="IAM"
-            active={method === 'iam'}
-            onClick={() => setMethod('iam')}
           />
         </Flex>
         <DialogContent minHeight="100px">
