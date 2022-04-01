@@ -111,7 +111,7 @@ export default function Iam({
                           awsAccount: e.target.value,
                         })
                       }
-                      rule={requiredAwsAccount}
+                      rule={value => requiredAwsAccount(value, rule)}
                       placeholder="111111111111"
                       value={rule.awsAccount}
                     />
@@ -151,7 +151,7 @@ export default function Iam({
                   {'Start the Teleport agent  with the following parameters'}
                   <TextSelectCopy
                     mt="2"
-                    text={`teleport start --roles=node --token=${token} --auth-server=${host}`}
+                    text={`teleport start --roles=node --token=${token} --auth-server=${host} --join-method=iam`}
                   />
                 </Box>
               </>
@@ -196,12 +196,17 @@ const ButtonRemoveRule = styled(ButtonLink)`
 `;
 
 export const AWS_ACC_ID_REGEXP = /^\d{12}$/;
-const requiredAwsAccount = value => () => {
-  if (!value || value.length === 0) {
+const requiredAwsAccount = (value, rule: Rule) => () => {
+  if (!rule.awsAccount && !rule.awsArn) {
     return {
       valid: false,
-      message: 'AWS account is required',
+      message: 'Rule cannot be empty',
     };
+  }
+
+  // no need for an AWS account if an ARN is set
+  if (!value) {
+    return { valid: true };
   }
 
   const isValidId = value.match(AWS_ACC_ID_REGEXP);
