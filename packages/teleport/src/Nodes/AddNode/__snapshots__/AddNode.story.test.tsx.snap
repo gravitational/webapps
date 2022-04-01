@@ -621,7 +621,7 @@ exports[`render iam method after token generation 1`] = `
   margin-bottom: 8px;
 }
 
-.c28 {
+.c29 {
   box-sizing: border-box;
   margin-right: 4px;
 }
@@ -670,7 +670,7 @@ exports[`render iam method after token generation 1`] = `
   color: rgba(255,255,255,0.3);
 }
 
-.c30 {
+.c31 {
   line-height: 1.5;
   margin: 0;
   display: inline-flex;
@@ -697,25 +697,25 @@ exports[`render iam method after token generation 1`] = `
   margin-right: 16px;
 }
 
-.c30:active {
+.c31:active {
   opacity: 0.56;
 }
 
-.c30:hover,
-.c30:focus {
+.c31:hover,
+.c31:focus {
   background: #651FFF;
 }
 
-.c30:active {
+.c31:active {
   background: #354AA4;
 }
 
-.c30:disabled {
+.c31:disabled {
   background: rgba(255,255,255,0.12);
   color: rgba(255,255,255,0.3);
 }
 
-.c31 {
+.c32 {
   line-height: 1.5;
   margin: 0;
   display: inline-flex;
@@ -741,16 +741,16 @@ exports[`render iam method after token generation 1`] = `
   padding: 0px 24px;
 }
 
-.c31:active {
+.c32:active {
   opacity: 0.56;
 }
 
-.c31:hover,
-.c31:focus {
+.c32:hover,
+.c32:focus {
   background: #2C3A73;
 }
 
-.c31:disabled {
+.c32:disabled {
   background: rgba(255,255,255,0.12);
   color: rgba(255,255,255,0.3);
 }
@@ -869,8 +869,18 @@ exports[`render iam method after token generation 1`] = `
 .c25 {
   overflow: hidden;
   text-overflow: ellipsis;
+  font-weight: 600;
+  font-size: 16px;
+  line-height: 24px;
   margin: 0px;
+  margin-bottom: 8px;
   margin-top: 16px;
+}
+
+.c26 {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  margin: 0px;
 }
 
 .c4 {
@@ -888,7 +898,7 @@ exports[`render iam method after token generation 1`] = `
   justify-content: space-between;
 }
 
-.c26 {
+.c27 {
   box-sizing: border-box;
   margin-top: 8px;
   padding: 8px;
@@ -899,7 +909,7 @@ exports[`render iam method after token generation 1`] = `
   justify-content: space-between;
 }
 
-.c27 {
+.c28 {
   box-sizing: border-box;
   margin-right: 8px;
   display: flex;
@@ -995,7 +1005,7 @@ exports[`render iam method after token generation 1`] = `
   flex-direction: column;
 }
 
-.c29 {
+.c30 {
   box-sizing: border-box;
 }
 
@@ -1195,7 +1205,7 @@ exports[`render iam method after token generation 1`] = `
             </div>
           </div>
           <div
-            class="c13"
+            class="c15"
           >
             <a
               class="c22 c23 c24"
@@ -1207,7 +1217,12 @@ exports[`render iam method after token generation 1`] = `
           <div
             class="c25"
           >
-            The script will be valid for
+            Script Generated
+          </div>
+          <div
+            class="c26"
+          >
+            Start teleport with the following parameters. The script will be valid for
              
             <span
               class="c14"
@@ -1219,16 +1234,15 @@ exports[`render iam method after token generation 1`] = `
           <div
             class="c15"
           >
-            Start the Teleport agent  with the following parameters
             <div
-              class="c26"
+              class="c27"
             >
               <div
-                class="c27"
+                class="c28"
                 style="overflow: auto; white-space: pre; word-break: break-all; font-size: 12px; font-family: \\"Droid Sans Mono\\", \\"monospace\\", monospace, \\"Droid Sans Fallback\\";"
               >
                 <div
-                  class="c28"
+                  class="c29"
                 >
                   $
                 </div>
@@ -1247,16 +1261,16 @@ exports[`render iam method after token generation 1`] = `
           </div>
         </div>
         <div
-          class="c29"
+          class="c30"
         >
           <button
-            class="c30"
+            class="c31"
             kind="primary"
           >
             Regenerate Script
           </button>
           <button
-            class="c31"
+            class="c32"
             kind="secondary"
           >
             Close
@@ -1855,7 +1869,7 @@ exports[`render iam method when failed 1`] = `
             </div>
           </div>
           <div
-            class="c14"
+            class="c16"
           >
             <a
               class="c23 c24 c25"
@@ -2448,7 +2462,7 @@ exports[`render iam method while processing 1`] = `
             </div>
           </div>
           <div
-            class="c13"
+            class="c15"
           >
             <a
               class="c22 c23 c24"
@@ -3042,7 +3056,7 @@ exports[`render iam method without a token generated yet 1`] = `
             </div>
           </div>
           <div
-            class="c13"
+            class="c15"
           >
             <a
               class="c22 c23 c24"

@@ -132,7 +132,6 @@ export default function Iam({
               ))}
             </Box>
             <Box
-              mb={4}
               onClick={() =>
                 setRules([...rules, { awsAccount: '', awsArn: '' }])
               }
@@ -141,14 +140,17 @@ export default function Iam({
             </Box>
             {token && (
               <>
-                <Text mt="3">
-                  The script will be valid for{' '}
+                <Text mt="3" mb="2" bold typography="h5">
+                  Script Generated
+                </Text>
+                <Text>
+                  Start teleport with the following parameters. The script will
+                  be valid for{' '}
                   <Text bold as={'span'}>
                     {expiry}.
                   </Text>
                 </Text>
                 <Box>
-                  {'Start the Teleport agent  with the following parameters'}
                   <TextSelectCopy
                     mt="2"
                     text={`teleport start --roles=node --token=${token} --auth-server=${host} --join-method=iam`}
