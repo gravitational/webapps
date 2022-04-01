@@ -213,8 +213,6 @@ exports[`render automatic tab 1`] = `
   padding: 4px 8px;
   cursor: pointer;
   border-bottom: 4px solid transparent;
-  font-weight: 500;
-  border-bottom: 4px solid #651FFF;
 }
 
 .c9 {
@@ -230,6 +228,8 @@ exports[`render automatic tab 1`] = `
   padding: 4px 8px;
   cursor: pointer;
   border-bottom: 4px solid transparent;
+  font-weight: 500;
+  border-bottom: 4px solid #651FFF;
 }
 
 .c2 {
@@ -264,7 +264,6 @@ exports[`render automatic tab 1`] = `
 .c10 {
   box-sizing: border-box;
   margin-bottom: 32px;
-  min-height: 100px;
   flex: 1;
   display: flex;
   flex-direction: column;
@@ -306,28 +305,28 @@ exports[`render automatic tab 1`] = `
             class="c7"
           >
             <span
+              class="c8 icon icon-server sc-AxhCb c8"
+              color="light"
+            />
+            AWS
+          </div>
+          <div
+            class="c9"
+          >
+            <span
               class="c8 icon icon-magic-wand sc-AxhCb c8"
               color="light"
             />
             Automatically
           </div>
           <div
-            class="c9"
+            class="c7"
           >
             <span
               class="c8 icon icon-cog sc-AxhCb c8"
               color="light"
             />
             Manually
-          </div>
-          <div
-            class="c9"
-          >
-            <span
-              class="c8 icon icon-server sc-AxhCb c8"
-              color="light"
-            />
-            IAM
           </div>
         </div>
         <div
@@ -402,7 +401,7 @@ exports[`render automatic tab 1`] = `
 `;
 
 exports[`render failed automatic tab 1`] = `
-.c11 {
+.c10 {
   display: flex;
   align-items: center;
   justify-content: center;
@@ -419,48 +418,8 @@ exports[`render failed automatic tab 1`] = `
   color: #FFFFFF;
 }
 
-.c11 a {
+.c10 a {
   color: #FFFFFF;
-}
-
-.c13 {
-  line-height: 1.5;
-  margin: 0;
-  display: inline-flex;
-  justify-content: center;
-  align-items: center;
-  box-sizing: border-box;
-  border: none;
-  border-radius: 4px;
-  cursor: pointer;
-  font-family: inherit;
-  font-weight: 600;
-  outline: none;
-  position: relative;
-  text-align: center;
-  text-decoration: none;
-  text-transform: uppercase;
-  transition: all 0.3s;
-  -webkit-font-smoothing: antialiased;
-  background: #222C59;
-  color: rgba(255,255,255,0.87);
-  min-height: 32px;
-  font-size: 12px;
-  padding: 0px 24px;
-}
-
-.c13:active {
-  opacity: 0.56;
-}
-
-.c13:hover,
-.c13:focus {
-  background: #2C3A73;
-}
-
-.c13:disabled {
-  background: rgba(255,255,255,0.12);
-  color: rgba(255,255,255,0.3);
 }
 
 .c8 {
@@ -531,8 +490,6 @@ exports[`render failed automatic tab 1`] = `
   padding: 4px 8px;
   cursor: pointer;
   border-bottom: 4px solid transparent;
-  font-weight: 500;
-  border-bottom: 4px solid #651FFF;
 }
 
 .c9 {
@@ -548,6 +505,8 @@ exports[`render failed automatic tab 1`] = `
   padding: 4px 8px;
   cursor: pointer;
   border-bottom: 4px solid transparent;
+  font-weight: 500;
+  border-bottom: 4px solid #651FFF;
 }
 
 .c2 {
@@ -577,19 +536,6 @@ exports[`render failed automatic tab 1`] = `
   max-width: 600px;
   width: 100%;
   min-height: 328px;
-}
-
-.c10 {
-  box-sizing: border-box;
-  margin-bottom: 32px;
-  min-height: 100px;
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-}
-
-.c12 {
-  box-sizing: border-box;
 }
 
 <div
@@ -624,13 +570,22 @@ exports[`render failed automatic tab 1`] = `
             class="c7"
           >
             <span
+              class="c8 icon icon-server sc-AxhCb c8"
+              color="light"
+            />
+            AWS
+          </div>
+          <div
+            class="c9"
+          >
+            <span
               class="c8 icon icon-magic-wand sc-AxhCb c8"
               color="light"
             />
             Automatically
           </div>
           <div
-            class="c9"
+            class="c7"
           >
             <span
               class="c8 icon icon-cog sc-AxhCb c8"
@@ -638,35 +593,12 @@ exports[`render failed automatic tab 1`] = `
             />
             Manually
           </div>
-          <div
-            class="c9"
-          >
-            <span
-              class="c8 icon icon-server sc-AxhCb c8"
-              color="light"
-            />
-            IAM
-          </div>
         </div>
         <div
           class="c10"
+          kind="danger"
         >
-          <div
-            class="c11"
-            kind="danger"
-          >
-            some error message
-          </div>
-        </div>
-        <div
-          class="c12"
-        >
-          <button
-            class="c13"
-            kind="secondary"
-          >
-            Close
-          </button>
+          some error message
         </div>
       </div>
     </div>
@@ -675,13 +607,13 @@ exports[`render failed automatic tab 1`] = `
 `;
 
 exports[`render iam method after token generation 1`] = `
-.c15 {
-  box-sizing: border-box;
-}
-
-.c18 {
+.c13 {
   box-sizing: border-box;
   margin-bottom: 24px;
+}
+
+.c15 {
+  box-sizing: border-box;
 }
 
 .c21 {
@@ -689,7 +621,7 @@ exports[`render iam method after token generation 1`] = `
   margin-bottom: 8px;
 }
 
-.c29 {
+.c28 {
   box-sizing: border-box;
   margin-right: 4px;
 }
@@ -738,7 +670,7 @@ exports[`render iam method after token generation 1`] = `
   color: rgba(255,255,255,0.3);
 }
 
-.c24 {
+.c30 {
   line-height: 1.5;
   margin: 0;
   display: inline-flex;
@@ -765,20 +697,20 @@ exports[`render iam method after token generation 1`] = `
   margin-right: 16px;
 }
 
-.c24:active {
+.c30:active {
   opacity: 0.56;
 }
 
-.c24:hover,
-.c24:focus {
+.c30:hover,
+.c30:focus {
   background: #651FFF;
 }
 
-.c24:active {
+.c30:active {
   background: #354AA4;
 }
 
-.c24:disabled {
+.c30:disabled {
   background: rgba(255,255,255,0.12);
   color: rgba(255,255,255,0.3);
 }
@@ -882,12 +814,21 @@ exports[`render iam method after token generation 1`] = `
   margin-bottom: 4px;
 }
 
-.c14 {
+.c12 {
   color: #03a9f4;
   font-weight: normal;
   background: none;
   text-decoration: underline;
   text-transform: none;
+}
+
+.c16 {
+  color: #03a9f4;
+  font-weight: normal;
+  background: none;
+  text-decoration: underline;
+  text-transform: none;
+  margin-right: 8px;
 }
 
 .c6 {
@@ -902,20 +843,21 @@ exports[`render iam method after token generation 1`] = `
   color: rgba(255,255,255,0.87);
 }
 
-.c12 {
-  overflow: hidden;
-  text-overflow: ellipsis;
-  margin: 0px;
-}
-
-.c13 {
+.c11 {
   overflow: hidden;
   text-overflow: ellipsis;
   margin: 0px;
   margin-bottom: 24px;
 }
 
-.c17 {
+.c14 {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  font-weight: 600;
+  margin: 0px;
+}
+
+.c18 {
   overflow: hidden;
   text-overflow: ellipsis;
   font-weight: 400;
@@ -929,13 +871,6 @@ exports[`render iam method after token generation 1`] = `
   text-overflow: ellipsis;
   margin: 0px;
   margin-top: 16px;
-}
-
-.c26 {
-  overflow: hidden;
-  text-overflow: ellipsis;
-  font-weight: 600;
-  margin: 0px;
 }
 
 .c4 {
@@ -953,7 +888,7 @@ exports[`render iam method after token generation 1`] = `
   justify-content: space-between;
 }
 
-.c27 {
+.c26 {
   box-sizing: border-box;
   margin-top: 8px;
   padding: 8px;
@@ -964,7 +899,7 @@ exports[`render iam method after token generation 1`] = `
   justify-content: space-between;
 }
 
-.c28 {
+.c27 {
   box-sizing: border-box;
   margin-right: 8px;
   display: flex;
@@ -1004,6 +939,8 @@ exports[`render iam method after token generation 1`] = `
   padding: 4px 8px;
   cursor: pointer;
   border-bottom: 4px solid transparent;
+  font-weight: 500;
+  border-bottom: 4px solid #651FFF;
 }
 
 .c9 {
@@ -1019,8 +956,6 @@ exports[`render iam method after token generation 1`] = `
   padding: 4px 8px;
   cursor: pointer;
   border-bottom: 4px solid transparent;
-  font-weight: 500;
-  border-bottom: 4px solid #651FFF;
 }
 
 .c2 {
@@ -1055,35 +990,34 @@ exports[`render iam method after token generation 1`] = `
 .c10 {
   box-sizing: border-box;
   margin-bottom: 32px;
-  min-height: 100px;
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-}
-
-.c11 {
-  box-sizing: border-box;
-  margin-bottom: 32px;
   flex: 0 0 auto;
   display: flex;
   flex-direction: column;
 }
 
-.c30 {
+.c29 {
   box-sizing: border-box;
 }
 
-.c16 {
+.c17 {
   box-sizing: border-box;
+  margin-top: 4px;
   padding: 16px;
   background-color: #2C3A73;
   border-radius: 4px;
-  margin: 4px 0 18px 0;
+  margin: 4px 0 12px 0;
   position: relative;
 }
 
-.c16:last-of-type {
+.c17:last-of-type {
   margin-bottom: 8px;
+}
+
+.c24 {
+  font-weight: bold;
+  font-size: 14px;
+  color: white;
+  text-decoration: none;
 }
 
 <div
@@ -1118,28 +1052,28 @@ exports[`render iam method after token generation 1`] = `
             class="c7"
           >
             <span
+              class="c8 icon icon-server sc-AxhCb c8"
+              color="light"
+            />
+            AWS
+          </div>
+          <div
+            class="c9"
+          >
+            <span
               class="c8 icon icon-magic-wand sc-AxhCb c8"
               color="light"
             />
             Automatically
           </div>
           <div
-            class="c7"
+            class="c9"
           >
             <span
               class="c8 icon icon-cog sc-AxhCb c8"
               color="light"
             />
             Manually
-          </div>
-          <div
-            class="c9"
-          >
-            <span
-              class="c8 icon icon-server sc-AxhCb c8"
-              color="light"
-            />
-            IAM
           </div>
         </div>
         <div
@@ -1148,145 +1082,179 @@ exports[`render iam method after token generation 1`] = `
           <div
             class="c11"
           >
-            <div
-              class="c12"
-            >
-              The IAM join method is available to any Teleport Node or Proxy
+            Add any Teleport Node or Proxy
               with access to IAM credentials.
-            </div>
-            <div
-              class="c13"
-            >
-              You can read more
+            You can read more
               about the IAM method in the 
-              <a
-                class="c14"
-                href="https://goteleport.com/docs/setup/guides/joining-nodes-aws/"
-                rel="noreferrer"
-              >
-                documentation
-              </a>
-              .
-            </div>
+            <a
+              class="c12"
+              href="https://goteleport.com/docs/setup/guides/joining-nodes-aws/"
+              rel="noreferrer"
+            >
+              documentation
+            </a>
+            .
+          </div>
+          <div
+            class="c13"
+          >
+            <span
+              class="c14"
+            >
+              Step 1
+            </span>
+             
+            - Download Teleport package to your computer
             <div
               class="c15"
             >
-              <div
+              <a
                 class="c16"
+                href="https://get.gravitational.com/teleport-ent-v5.0.0-dev-darwin-amd64-bin.tar.gz"
+                rel="noreferrer"
+                target="_blank"
+              >
+                MacOS
+              </a>
+              <a
+                class="c16"
+                href="https://get.gravitational.com/teleport-ent-v5.0.0-dev-linux-amd64-bin.tar.gz"
+                rel="noreferrer"
+                target="_blank"
+              >
+                Linux 64-bit
+              </a>
+              <a
+                class="c12"
+                href="https://get.gravitational.com/teleport-ent-v5.0.0-dev-linux-386-bin.tar.gz"
+                rel="noreferrer"
+                target="_blank"
+              >
+                Linux 32-bit
+              </a>
+            </div>
+          </div>
+          <div
+            class="c15"
+          >
+            <span
+              class="c14"
+            >
+              Step 2
+            </span>
+             
+            - Setup AWS Rules
+            <div
+              class="c17"
+            >
+              <div
+                class="c18"
+              >
+                Rule #1
+              </div>
+              <div
+                class="c15"
               >
                 <div
-                  class="c17"
-                >
-                  Rule #1
-                </div>
-                <div
-                  class="c15"
-                >
-                  <div
-                    class="c18"
-                  >
-                    <label
-                      class="c19"
-                      font-size="0"
-                    >
-                      AWS Account
-                    </label>
-                    <input
-                      autocomplete="off"
-                      class="c20"
-                      color="text.onLight"
-                      placeholder="111111111111"
-                      type="text"
-                      value=""
-                    />
-                  </div>
-                </div>
-                <div
-                  class="c21"
+                  class="c13"
                 >
                   <label
                     class="c19"
                     font-size="0"
                   >
-                    AWS ARN (optional)
+                    AWS Account
                   </label>
                   <input
                     autocomplete="off"
                     class="c20"
                     color="text.onLight"
-                    placeholder="arn:aws:sts::111111111111:assumed-role/teleport-node-role/i-*"
+                    placeholder="111111111111"
                     type="text"
                     value=""
                   />
                 </div>
               </div>
-            </div>
-            <div
-              class="c21"
-            >
-              <a
-                class="c22 c23"
-                kind="primary"
+              <div
+                class="c21"
               >
-                Add new rule
-              </a>
+                <label
+                  class="c19"
+                  font-size="0"
+                >
+                  AWS ARN
+                </label>
+                <input
+                  autocomplete="off"
+                  class="c20"
+                  color="text.onLight"
+                  placeholder="arn:aws:sts::111111111111:assumed-role/teleport-node-role/i-*"
+                  type="text"
+                  value=""
+                />
+              </div>
             </div>
-            <div
-              class="c15"
+          </div>
+          <div
+            class="c13"
+          >
+            <a
+              class="c22 c23 c24"
+              kind="primary"
             >
-              <button
-                class="c24"
-                kind="primary"
-              >
-                Regenerate Script
-              </button>
-            </div>
-            <div
-              class="c25"
+              + Add new rule
+            </a>
+          </div>
+          <div
+            class="c25"
+          >
+            The script will be valid for
+             
+            <span
+              class="c14"
             >
-              The script will be valid for
-               
-              <span
-                class="c26"
-              >
-                4 hours
-                .
-              </span>
-            </div>
+              4 hours
+              .
+            </span>
+          </div>
+          <div
+            class="c15"
+          >
+            Start the Teleport agent  with the following parameters
             <div
-              class="c15"
+              class="c26"
             >
-              Start the Teleport agent  with the following parameters
               <div
                 class="c27"
+                style="overflow: auto; white-space: pre; word-break: break-all; font-size: 12px; font-family: \\"Droid Sans Mono\\", \\"monospace\\", monospace, \\"Droid Sans Fallback\\";"
               >
                 <div
                   class="c28"
-                  style="overflow: auto; white-space: pre; word-break: break-all; font-size: 12px; font-family: \\"Droid Sans Mono\\", \\"monospace\\", monospace, \\"Droid Sans Fallback\\";"
                 >
-                  <div
-                    class="c29"
-                  >
-                    $
-                  </div>
-                  <div>
-                    teleport start --roles=node --token=some-join-token-hash --auth-server=localhost:443
-                  </div>
+                  $
                 </div>
-                <button
-                  class="c23"
-                  kind="primary"
-                  style="max-width: 48px; width: 100%; padding: 4px 8px; min-height: 10px; font-size: 10px;"
-                >
-                  Copy
-                </button>
+                <div>
+                  teleport start --roles=node --token=some-join-token-hash --auth-server=localhost:443 --join-method=iam
+                </div>
               </div>
+              <button
+                class="c23"
+                kind="primary"
+                style="max-width: 48px; width: 100%; padding: 4px 8px; min-height: 10px; font-size: 10px;"
+              >
+                Copy
+              </button>
             </div>
           </div>
         </div>
         <div
-          class="c30"
+          class="c29"
         >
+          <button
+            class="c30"
+            kind="primary"
+          >
+            Regenerate Script
+          </button>
           <button
             class="c31"
             kind="secondary"
@@ -1301,7 +1269,7 @@ exports[`render iam method after token generation 1`] = `
 `;
 
 exports[`render iam method when failed 1`] = `
-.c12 {
+.c11 {
   display: flex;
   align-items: center;
   justify-content: center;
@@ -1318,17 +1286,17 @@ exports[`render iam method when failed 1`] = `
   color: #FFFFFF;
 }
 
-.c12 a {
+.c11 a {
   color: #FFFFFF;
+}
+
+.c14 {
+  box-sizing: border-box;
+  margin-bottom: 24px;
 }
 
 .c16 {
   box-sizing: border-box;
-}
-
-.c19 {
-  box-sizing: border-box;
-  margin-bottom: 24px;
 }
 
 .c22 {
@@ -1380,7 +1348,7 @@ exports[`render iam method when failed 1`] = `
   color: rgba(255,255,255,0.3);
 }
 
-.c25 {
+.c27 {
   line-height: 1.5;
   margin: 0;
   display: inline-flex;
@@ -1407,25 +1375,25 @@ exports[`render iam method when failed 1`] = `
   margin-right: 16px;
 }
 
-.c25:active {
+.c27:active {
   opacity: 0.56;
 }
 
-.c25:hover,
-.c25:focus {
+.c27:hover,
+.c27:focus {
   background: #651FFF;
 }
 
-.c25:active {
+.c27:active {
   background: #354AA4;
 }
 
-.c25:disabled {
+.c27:disabled {
   background: rgba(255,255,255,0.12);
   color: rgba(255,255,255,0.3);
 }
 
-.c27 {
+.c28 {
   line-height: 1.5;
   margin: 0;
   display: inline-flex;
@@ -1451,16 +1419,16 @@ exports[`render iam method when failed 1`] = `
   padding: 0px 24px;
 }
 
-.c27:active {
+.c28:active {
   opacity: 0.56;
 }
 
-.c27:hover,
-.c27:focus {
+.c28:hover,
+.c28:focus {
   background: #2C3A73;
 }
 
-.c27:disabled {
+.c28:disabled {
   background: rgba(255,255,255,0.12);
   color: rgba(255,255,255,0.3);
 }
@@ -1524,12 +1492,21 @@ exports[`render iam method when failed 1`] = `
   margin-bottom: 4px;
 }
 
-.c15 {
+.c13 {
   color: #03a9f4;
   font-weight: normal;
   background: none;
   text-decoration: underline;
   text-transform: none;
+}
+
+.c17 {
+  color: #03a9f4;
+  font-weight: normal;
+  background: none;
+  text-decoration: underline;
+  text-transform: none;
+  margin-right: 8px;
 }
 
 .c6 {
@@ -1544,17 +1521,617 @@ exports[`render iam method when failed 1`] = `
   color: rgba(255,255,255,0.87);
 }
 
-.c13 {
+.c12 {
   overflow: hidden;
   text-overflow: ellipsis;
   margin: 0px;
+  margin-bottom: 24px;
+}
+
+.c15 {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  font-weight: 600;
+  margin: 0px;
+}
+
+.c19 {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 24px;
+  margin: 0px;
+}
+
+.c4 {
+  box-sizing: border-box;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.c5 {
+  box-sizing: border-box;
+  margin-bottom: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.c1 {
+  z-index: -1;
+  position: fixed;
+  right: 0;
+  bottom: 0;
+  top: 0;
+  left: 0;
+  background-color: rgba(0,0,0,0.5);
+  opacity: 1;
+  touch-action: none;
+}
+
+.c0 {
+  position: fixed;
+  z-index: 1200;
+  right: 0;
+  bottom: 0;
+  top: 0;
+  left: 0;
+}
+
+.c7 {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 24px;
+  margin: 0px;
+  margin-left: 24px;
+  align-items: center;
+  display: flex;
+  padding: 4px 8px;
+  cursor: pointer;
+  border-bottom: 4px solid transparent;
+  font-weight: 500;
+  border-bottom: 4px solid #651FFF;
+}
+
+.c9 {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 24px;
+  margin: 0px;
+  margin-left: 24px;
+  align-items: center;
+  display: flex;
+  padding: 4px 8px;
+  cursor: pointer;
+  border-bottom: 4px solid transparent;
+}
+
+.c2 {
+  height: 100%;
+  outline: none;
+  color: black;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 1;
+  will-change: opacity;
+  transition: opacity 225ms cubic-bezier(0.4,0,0.2,1) 0ms;
+}
+
+.c3 {
+  padding: 32px;
+  padding-top: 24px;
+  background: #1C254D;
+  color: rgba(255,255,255,0.87);
+  border-radius: 8px;
+  box-shadow: 0 8px 32px rgba(0,0,0,0.24);
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  overflow-y: auto;
+  max-height: calc(100% - 96px);
+  max-width: 600px;
+  width: 100%;
+  min-height: 328px;
+}
+
+.c10 {
+  box-sizing: border-box;
+  margin-bottom: 32px;
+  flex: 0 0 auto;
+  display: flex;
+  flex-direction: column;
+}
+
+.c26 {
+  box-sizing: border-box;
+}
+
+.c18 {
+  box-sizing: border-box;
+  margin-top: 4px;
+  padding: 16px;
+  background-color: #2C3A73;
+  border-radius: 4px;
+  margin: 4px 0 12px 0;
+  position: relative;
+}
+
+.c18:last-of-type {
+  margin-bottom: 8px;
+}
+
+.c25 {
+  font-weight: bold;
+  font-size: 14px;
+  color: white;
+  text-decoration: none;
+}
+
+<div
+  class="c0"
+  data-testid="Modal"
+>
+  <div
+    aria-hidden="true"
+    class="c1"
+    data-testid="backdrop"
+  />
+  <div
+    class="c2"
+  >
+    <div
+      class="c3"
+      data-testid="dialogbox"
+    >
+      <div
+        class="c4"
+      >
+        <div
+          class="c5"
+        >
+          <div
+            class="c6"
+            color="text.primary"
+          >
+            Add Server
+          </div>
+          <div
+            class="c7"
+          >
+            <span
+              class="c8 icon icon-server sc-AxhCb c8"
+              color="light"
+            />
+            AWS
+          </div>
+          <div
+            class="c9"
+          >
+            <span
+              class="c8 icon icon-magic-wand sc-AxhCb c8"
+              color="light"
+            />
+            Automatically
+          </div>
+          <div
+            class="c9"
+          >
+            <span
+              class="c8 icon icon-cog sc-AxhCb c8"
+              color="light"
+            />
+            Manually
+          </div>
+        </div>
+        <div
+          class="c10"
+        >
+          <div
+            class="c11"
+            kind="danger"
+          >
+            some err
+          </div>
+          <div
+            class="c12"
+          >
+            Add any Teleport Node or Proxy
+              with access to IAM credentials.
+            You can read more
+              about the IAM method in the 
+            <a
+              class="c13"
+              href="https://goteleport.com/docs/setup/guides/joining-nodes-aws/"
+              rel="noreferrer"
+            >
+              documentation
+            </a>
+            .
+          </div>
+          <div
+            class="c14"
+          >
+            <span
+              class="c15"
+            >
+              Step 1
+            </span>
+             
+            - Download Teleport package to your computer
+            <div
+              class="c16"
+            >
+              <a
+                class="c17"
+                href="https://get.gravitational.com/teleport-ent-v5.0.0-dev-darwin-amd64-bin.tar.gz"
+                rel="noreferrer"
+                target="_blank"
+              >
+                MacOS
+              </a>
+              <a
+                class="c17"
+                href="https://get.gravitational.com/teleport-ent-v5.0.0-dev-linux-amd64-bin.tar.gz"
+                rel="noreferrer"
+                target="_blank"
+              >
+                Linux 64-bit
+              </a>
+              <a
+                class="c13"
+                href="https://get.gravitational.com/teleport-ent-v5.0.0-dev-linux-386-bin.tar.gz"
+                rel="noreferrer"
+                target="_blank"
+              >
+                Linux 32-bit
+              </a>
+            </div>
+          </div>
+          <div
+            class="c16"
+          >
+            <span
+              class="c15"
+            >
+              Step 2
+            </span>
+             
+            - Setup AWS Rules
+            <div
+              class="c18"
+            >
+              <div
+                class="c19"
+              >
+                Rule #1
+              </div>
+              <div
+                class="c16"
+              >
+                <div
+                  class="c14"
+                >
+                  <label
+                    class="c20"
+                    font-size="0"
+                  >
+                    AWS Account
+                  </label>
+                  <input
+                    autocomplete="off"
+                    class="c21"
+                    color="text.onLight"
+                    placeholder="111111111111"
+                    type="text"
+                    value=""
+                  />
+                </div>
+              </div>
+              <div
+                class="c22"
+              >
+                <label
+                  class="c20"
+                  font-size="0"
+                >
+                  AWS ARN
+                </label>
+                <input
+                  autocomplete="off"
+                  class="c21"
+                  color="text.onLight"
+                  placeholder="arn:aws:sts::111111111111:assumed-role/teleport-node-role/i-*"
+                  type="text"
+                  value=""
+                />
+              </div>
+            </div>
+          </div>
+          <div
+            class="c14"
+          >
+            <a
+              class="c23 c24 c25"
+              kind="primary"
+            >
+              + Add new rule
+            </a>
+          </div>
+          
+        </div>
+        <div
+          class="c26"
+        >
+          <button
+            class="c27"
+            kind="primary"
+          >
+            Generate Script
+          </button>
+          <button
+            class="c28"
+            kind="secondary"
+          >
+            Close
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+`;
+
+exports[`render iam method while processing 1`] = `
+.c13 {
+  box-sizing: border-box;
+  margin-bottom: 24px;
+}
+
+.c15 {
+  box-sizing: border-box;
+}
+
+.c21 {
+  box-sizing: border-box;
+  margin-bottom: 8px;
+}
+
+.c23 {
+  line-height: 1.5;
+  margin: 0;
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  box-sizing: border-box;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-family: inherit;
+  font-weight: 600;
+  outline: none;
+  position: relative;
+  text-align: center;
+  text-decoration: none;
+  text-transform: uppercase;
+  transition: all 0.3s;
+  -webkit-font-smoothing: antialiased;
+  background: #512FC9;
+  color: rgba(255,255,255,0.87);
+  min-height: 32px;
+  font-size: 12px;
+  padding: 0px 24px;
+}
+
+.c23:active {
+  opacity: 0.56;
+}
+
+.c23:hover,
+.c23:focus {
+  background: #651FFF;
+}
+
+.c23:active {
+  background: #354AA4;
+}
+
+.c23:disabled {
+  background: rgba(255,255,255,0.12);
+  color: rgba(255,255,255,0.3);
+}
+
+.c26 {
+  line-height: 1.5;
+  margin: 0;
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  box-sizing: border-box;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-family: inherit;
+  font-weight: 600;
+  outline: none;
+  position: relative;
+  text-align: center;
+  text-decoration: none;
+  text-transform: uppercase;
+  transition: all 0.3s;
+  -webkit-font-smoothing: antialiased;
+  background: #512FC9;
+  color: rgba(255,255,255,0.87);
+  min-height: 32px;
+  font-size: 12px;
+  padding: 0px 24px;
+  margin-right: 16px;
+}
+
+.c26:active {
+  opacity: 0.56;
+}
+
+.c26:hover,
+.c26:focus {
+  background: #651FFF;
+}
+
+.c26:active {
+  background: #354AA4;
+}
+
+.c26:disabled {
+  background: rgba(255,255,255,0.12);
+  color: rgba(255,255,255,0.3);
+}
+
+.c27 {
+  line-height: 1.5;
+  margin: 0;
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  box-sizing: border-box;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-family: inherit;
+  font-weight: 600;
+  outline: none;
+  position: relative;
+  text-align: center;
+  text-decoration: none;
+  text-transform: uppercase;
+  transition: all 0.3s;
+  -webkit-font-smoothing: antialiased;
+  background: #222C59;
+  color: rgba(255,255,255,0.87);
+  min-height: 32px;
+  font-size: 12px;
+  padding: 0px 24px;
+}
+
+.c27:active {
+  opacity: 0.56;
+}
+
+.c27:hover,
+.c27:focus {
+  background: #2C3A73;
+}
+
+.c27:disabled {
+  background: rgba(255,255,255,0.12);
+  color: rgba(255,255,255,0.3);
+}
+
+.c8 {
+  display: inline-block;
+  transition: color .3s;
+  margin-right: 8px;
+  color: #FFFFFF;
+}
+
+.c22 {
+  color: #03a9f4;
+  font-weight: normal;
+  background: none;
+  text-decoration: underline;
+  text-transform: none;
+  padding: 0 8px;
+}
+
+.c22:hover,
+.c22:focus {
+  background: #222C59;
+}
+
+.c20 {
+  appearance: none;
+  border: none;
+  border-radius: 4px;
+  box-shadow: inset 0 2px 4px rgba(0,0,0,.24);
+  box-sizing: border-box;
+  display: block;
+  height: 40px;
+  font-size: 16px;
+  padding: 0 16px;
+  outline: none;
+  width: 100%;
+  color: #324148;
+  background-color: #FFFFFF;
+}
+
+.c20::-ms-clear {
+  display: none;
+}
+
+.c20::placeholder {
+  opacity: 0.4;
+}
+
+.c20:read-only {
+  cursor: not-allowed;
+}
+
+.c19 {
+  color: #FFFFFF;
+  display: block;
+  font-size: 11px;
+  font-weight: 500;
+  text-transform: uppercase;
+  width: 100%;
+  margin-bottom: 4px;
+}
+
+.c12 {
+  color: #03a9f4;
+  font-weight: normal;
+  background: none;
+  text-decoration: underline;
+  text-transform: none;
+}
+
+.c16 {
+  color: #03a9f4;
+  font-weight: normal;
+  background: none;
+  text-decoration: underline;
+  text-transform: none;
+  margin-right: 8px;
+}
+
+.c6 {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  font-weight: 300;
+  font-size: 22px;
+  line-height: 32px;
+  text-transform: uppercase;
+  margin: 0px;
+  margin-right: auto;
+  color: rgba(255,255,255,0.87);
+}
+
+.c11 {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  margin: 0px;
+  margin-bottom: 24px;
 }
 
 .c14 {
   overflow: hidden;
   text-overflow: ellipsis;
+  font-weight: 600;
   margin: 0px;
-  margin-bottom: 24px;
 }
 
 .c18 {
@@ -1615,6 +2192,8 @@ exports[`render iam method when failed 1`] = `
   padding: 4px 8px;
   cursor: pointer;
   border-bottom: 4px solid transparent;
+  font-weight: 500;
+  border-bottom: 4px solid #651FFF;
 }
 
 .c9 {
@@ -1630,8 +2209,6 @@ exports[`render iam method when failed 1`] = `
   padding: 4px 8px;
   cursor: pointer;
   border-bottom: 4px solid transparent;
-  font-weight: 500;
-  border-bottom: 4px solid #651FFF;
 }
 
 .c2 {
@@ -1666,35 +2243,34 @@ exports[`render iam method when failed 1`] = `
 .c10 {
   box-sizing: border-box;
   margin-bottom: 32px;
-  min-height: 100px;
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-}
-
-.c11 {
-  box-sizing: border-box;
-  margin-bottom: 32px;
   flex: 0 0 auto;
   display: flex;
   flex-direction: column;
 }
 
-.c26 {
+.c25 {
   box-sizing: border-box;
 }
 
 .c17 {
   box-sizing: border-box;
+  margin-top: 4px;
   padding: 16px;
   background-color: #2C3A73;
   border-radius: 4px;
-  margin: 4px 0 18px 0;
+  margin: 4px 0 12px 0;
   position: relative;
 }
 
 .c17:last-of-type {
   margin-bottom: 8px;
+}
+
+.c24 {
+  font-weight: bold;
+  font-size: 14px;
+  color: white;
+  text-decoration: none;
 }
 
 <div
@@ -1729,28 +2305,28 @@ exports[`render iam method when failed 1`] = `
             class="c7"
           >
             <span
+              class="c8 icon icon-server sc-AxhCb c8"
+              color="light"
+            />
+            AWS
+          </div>
+          <div
+            class="c9"
+          >
+            <span
               class="c8 icon icon-magic-wand sc-AxhCb c8"
               color="light"
             />
             Automatically
           </div>
           <div
-            class="c7"
+            class="c9"
           >
             <span
               class="c8 icon icon-cog sc-AxhCb c8"
               color="light"
             />
             Manually
-          </div>
-          <div
-            class="c9"
-          >
-            <span
-              class="c8 icon icon-server sc-AxhCb c8"
-              color="light"
-            />
-            IAM
           </div>
         </div>
         <div
@@ -1759,111 +2335,140 @@ exports[`render iam method when failed 1`] = `
           <div
             class="c11"
           >
-            <div
-              class="c12"
-              kind="danger"
-            >
-              some err
-            </div>
-            <div
-              class="c13"
-            >
-              The IAM join method is available to any Teleport Node or Proxy
+            Add any Teleport Node or Proxy
               with access to IAM credentials.
-            </div>
-            <div
+            You can read more
+              about the IAM method in the 
+            <a
+              class="c12"
+              href="https://goteleport.com/docs/setup/guides/joining-nodes-aws/"
+              rel="noreferrer"
+            >
+              documentation
+            </a>
+            .
+          </div>
+          <div
+            class="c13"
+          >
+            <span
               class="c14"
             >
-              You can read more
-              about the IAM method in the 
-              <a
-                class="c15"
-                href="https://goteleport.com/docs/setup/guides/joining-nodes-aws/"
-                rel="noreferrer"
-              >
-                documentation
-              </a>
-              .
-            </div>
+              Step 1
+            </span>
+             
+            - Download Teleport package to your computer
             <div
-              class="c16"
+              class="c15"
+            >
+              <a
+                class="c16"
+                href="https://get.gravitational.com/teleport-ent-v5.0.0-dev-darwin-amd64-bin.tar.gz"
+                rel="noreferrer"
+                target="_blank"
+              >
+                MacOS
+              </a>
+              <a
+                class="c16"
+                href="https://get.gravitational.com/teleport-ent-v5.0.0-dev-linux-amd64-bin.tar.gz"
+                rel="noreferrer"
+                target="_blank"
+              >
+                Linux 64-bit
+              </a>
+              <a
+                class="c12"
+                href="https://get.gravitational.com/teleport-ent-v5.0.0-dev-linux-386-bin.tar.gz"
+                rel="noreferrer"
+                target="_blank"
+              >
+                Linux 32-bit
+              </a>
+            </div>
+          </div>
+          <div
+            class="c15"
+          >
+            <span
+              class="c14"
+            >
+              Step 2
+            </span>
+             
+            - Setup AWS Rules
+            <div
+              class="c17"
             >
               <div
-                class="c17"
+                class="c18"
+              >
+                Rule #1
+              </div>
+              <div
+                class="c15"
               >
                 <div
-                  class="c18"
-                >
-                  Rule #1
-                </div>
-                <div
-                  class="c16"
-                >
-                  <div
-                    class="c19"
-                  >
-                    <label
-                      class="c20"
-                      font-size="0"
-                    >
-                      AWS Account
-                    </label>
-                    <input
-                      autocomplete="off"
-                      class="c21"
-                      color="text.onLight"
-                      placeholder="111111111111"
-                      type="text"
-                      value=""
-                    />
-                  </div>
-                </div>
-                <div
-                  class="c22"
+                  class="c13"
                 >
                   <label
-                    class="c20"
+                    class="c19"
                     font-size="0"
                   >
-                    AWS ARN (optional)
+                    AWS Account
                   </label>
                   <input
                     autocomplete="off"
-                    class="c21"
+                    class="c20"
                     color="text.onLight"
-                    placeholder="arn:aws:sts::111111111111:assumed-role/teleport-node-role/i-*"
+                    placeholder="111111111111"
                     type="text"
                     value=""
                   />
                 </div>
               </div>
-            </div>
-            <div
-              class="c22"
-            >
-              <a
-                class="c23 c24"
-                kind="primary"
+              <div
+                class="c21"
               >
-                Add new rule
-              </a>
+                <label
+                  class="c19"
+                  font-size="0"
+                >
+                  AWS ARN
+                </label>
+                <input
+                  autocomplete="off"
+                  class="c20"
+                  color="text.onLight"
+                  placeholder="arn:aws:sts::111111111111:assumed-role/teleport-node-role/i-*"
+                  type="text"
+                  value=""
+                />
+              </div>
             </div>
-            <div
-              class="c16"
-            >
-              <button
-                class="c25"
-                kind="primary"
-              >
-                Generate Script
-              </button>
-            </div>
-            
           </div>
+          <div
+            class="c13"
+          >
+            <a
+              class="c22 c23 c24"
+              kind="primary"
+            >
+              + Add new rule
+            </a>
+          </div>
+          
         </div>
         <div
-          class="c26"
+          class="c25"
         >
+          <button
+            class="c26"
+            disabled=""
+            kind="primary"
+          >
+            Generate Script
+          </button>
           <button
             class="c27"
             kind="secondary"
@@ -1877,565 +2482,14 @@ exports[`render iam method when failed 1`] = `
 </div>
 `;
 
-exports[`render iam method while processing 1`] = `
-.c15 {
-  box-sizing: border-box;
-}
-
-.c18 {
-  box-sizing: border-box;
-  margin-bottom: 24px;
-}
-
-.c21 {
-  box-sizing: border-box;
-  margin-bottom: 8px;
-}
-
-.c23 {
-  line-height: 1.5;
-  margin: 0;
-  display: inline-flex;
-  justify-content: center;
-  align-items: center;
-  box-sizing: border-box;
-  border: none;
-  border-radius: 4px;
-  cursor: pointer;
-  font-family: inherit;
-  font-weight: 600;
-  outline: none;
-  position: relative;
-  text-align: center;
-  text-decoration: none;
-  text-transform: uppercase;
-  transition: all 0.3s;
-  -webkit-font-smoothing: antialiased;
-  background: #512FC9;
-  color: rgba(255,255,255,0.87);
-  min-height: 32px;
-  font-size: 12px;
-  padding: 0px 24px;
-}
-
-.c23:active {
-  opacity: 0.56;
-}
-
-.c23:hover,
-.c23:focus {
-  background: #651FFF;
-}
-
-.c23:active {
-  background: #354AA4;
-}
-
-.c23:disabled {
-  background: rgba(255,255,255,0.12);
-  color: rgba(255,255,255,0.3);
-}
-
-.c24 {
-  line-height: 1.5;
-  margin: 0;
-  display: inline-flex;
-  justify-content: center;
-  align-items: center;
-  box-sizing: border-box;
-  border: none;
-  border-radius: 4px;
-  cursor: pointer;
-  font-family: inherit;
-  font-weight: 600;
-  outline: none;
-  position: relative;
-  text-align: center;
-  text-decoration: none;
-  text-transform: uppercase;
-  transition: all 0.3s;
-  -webkit-font-smoothing: antialiased;
-  background: #512FC9;
-  color: rgba(255,255,255,0.87);
-  min-height: 32px;
-  font-size: 12px;
-  padding: 0px 24px;
-  margin-right: 16px;
-}
-
-.c24:active {
-  opacity: 0.56;
-}
-
-.c24:hover,
-.c24:focus {
-  background: #651FFF;
-}
-
-.c24:active {
-  background: #354AA4;
-}
-
-.c24:disabled {
-  background: rgba(255,255,255,0.12);
-  color: rgba(255,255,255,0.3);
-}
-
-.c26 {
-  line-height: 1.5;
-  margin: 0;
-  display: inline-flex;
-  justify-content: center;
-  align-items: center;
-  box-sizing: border-box;
-  border: none;
-  border-radius: 4px;
-  cursor: pointer;
-  font-family: inherit;
-  font-weight: 600;
-  outline: none;
-  position: relative;
-  text-align: center;
-  text-decoration: none;
-  text-transform: uppercase;
-  transition: all 0.3s;
-  -webkit-font-smoothing: antialiased;
-  background: #222C59;
-  color: rgba(255,255,255,0.87);
-  min-height: 32px;
-  font-size: 12px;
-  padding: 0px 24px;
-}
-
-.c26:active {
-  opacity: 0.56;
-}
-
-.c26:hover,
-.c26:focus {
-  background: #2C3A73;
-}
-
-.c26:disabled {
-  background: rgba(255,255,255,0.12);
-  color: rgba(255,255,255,0.3);
-}
-
-.c8 {
-  display: inline-block;
-  transition: color .3s;
-  margin-right: 8px;
-  color: #FFFFFF;
-}
-
-.c22 {
-  color: #03a9f4;
-  font-weight: normal;
-  background: none;
-  text-decoration: underline;
-  text-transform: none;
-  padding: 0 8px;
-}
-
-.c22:hover,
-.c22:focus {
-  background: #222C59;
-}
-
-.c20 {
-  appearance: none;
-  border: none;
-  border-radius: 4px;
-  box-shadow: inset 0 2px 4px rgba(0,0,0,.24);
-  box-sizing: border-box;
-  display: block;
-  height: 40px;
-  font-size: 16px;
-  padding: 0 16px;
-  outline: none;
-  width: 100%;
-  color: #324148;
-  background-color: #FFFFFF;
-}
-
-.c20::-ms-clear {
-  display: none;
-}
-
-.c20::placeholder {
-  opacity: 0.4;
-}
-
-.c20:read-only {
-  cursor: not-allowed;
-}
-
-.c19 {
-  color: #FFFFFF;
-  display: block;
-  font-size: 11px;
-  font-weight: 500;
-  text-transform: uppercase;
-  width: 100%;
-  margin-bottom: 4px;
-}
-
-.c14 {
-  color: #03a9f4;
-  font-weight: normal;
-  background: none;
-  text-decoration: underline;
-  text-transform: none;
-}
-
-.c6 {
-  overflow: hidden;
-  text-overflow: ellipsis;
-  font-weight: 300;
-  font-size: 22px;
-  line-height: 32px;
-  text-transform: uppercase;
-  margin: 0px;
-  margin-right: auto;
-  color: rgba(255,255,255,0.87);
-}
-
-.c12 {
-  overflow: hidden;
-  text-overflow: ellipsis;
-  margin: 0px;
-}
-
-.c13 {
-  overflow: hidden;
-  text-overflow: ellipsis;
-  margin: 0px;
-  margin-bottom: 24px;
-}
-
-.c17 {
-  overflow: hidden;
-  text-overflow: ellipsis;
-  font-weight: 400;
-  font-size: 16px;
-  line-height: 24px;
-  margin: 0px;
-}
-
-.c4 {
-  box-sizing: border-box;
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-}
-
-.c5 {
-  box-sizing: border-box;
-  margin-bottom: 24px;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-}
-
-.c1 {
-  z-index: -1;
-  position: fixed;
-  right: 0;
-  bottom: 0;
-  top: 0;
-  left: 0;
-  background-color: rgba(0,0,0,0.5);
-  opacity: 1;
-  touch-action: none;
-}
-
-.c0 {
-  position: fixed;
-  z-index: 1200;
-  right: 0;
-  bottom: 0;
-  top: 0;
-  left: 0;
-}
-
-.c7 {
-  overflow: hidden;
-  text-overflow: ellipsis;
-  font-weight: 400;
-  font-size: 16px;
-  line-height: 24px;
-  margin: 0px;
-  margin-left: 24px;
-  align-items: center;
-  display: flex;
-  padding: 4px 8px;
-  cursor: pointer;
-  border-bottom: 4px solid transparent;
-}
-
-.c9 {
-  overflow: hidden;
-  text-overflow: ellipsis;
-  font-weight: 400;
-  font-size: 16px;
-  line-height: 24px;
-  margin: 0px;
-  margin-left: 24px;
-  align-items: center;
-  display: flex;
-  padding: 4px 8px;
-  cursor: pointer;
-  border-bottom: 4px solid transparent;
-  font-weight: 500;
-  border-bottom: 4px solid #651FFF;
-}
-
-.c2 {
-  height: 100%;
-  outline: none;
-  color: black;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  opacity: 1;
-  will-change: opacity;
-  transition: opacity 225ms cubic-bezier(0.4,0,0.2,1) 0ms;
-}
-
-.c3 {
-  padding: 32px;
-  padding-top: 24px;
-  background: #1C254D;
-  color: rgba(255,255,255,0.87);
-  border-radius: 8px;
-  box-shadow: 0 8px 32px rgba(0,0,0,0.24);
-  display: flex;
-  flex-direction: column;
-  position: relative;
-  overflow-y: auto;
-  max-height: calc(100% - 96px);
-  max-width: 600px;
-  width: 100%;
-  min-height: 328px;
-}
-
-.c10 {
-  box-sizing: border-box;
-  margin-bottom: 32px;
-  min-height: 100px;
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-}
-
-.c11 {
-  box-sizing: border-box;
-  margin-bottom: 32px;
-  flex: 0 0 auto;
-  display: flex;
-  flex-direction: column;
-}
-
-.c25 {
-  box-sizing: border-box;
-}
-
-.c16 {
-  box-sizing: border-box;
-  padding: 16px;
-  background-color: #2C3A73;
-  border-radius: 4px;
-  margin: 4px 0 18px 0;
-  position: relative;
-}
-
-.c16:last-of-type {
-  margin-bottom: 8px;
-}
-
-<div
-  class="c0"
-  data-testid="Modal"
->
-  <div
-    aria-hidden="true"
-    class="c1"
-    data-testid="backdrop"
-  />
-  <div
-    class="c2"
-  >
-    <div
-      class="c3"
-      data-testid="dialogbox"
-    >
-      <div
-        class="c4"
-      >
-        <div
-          class="c5"
-        >
-          <div
-            class="c6"
-            color="text.primary"
-          >
-            Add Server
-          </div>
-          <div
-            class="c7"
-          >
-            <span
-              class="c8 icon icon-magic-wand sc-AxhCb c8"
-              color="light"
-            />
-            Automatically
-          </div>
-          <div
-            class="c7"
-          >
-            <span
-              class="c8 icon icon-cog sc-AxhCb c8"
-              color="light"
-            />
-            Manually
-          </div>
-          <div
-            class="c9"
-          >
-            <span
-              class="c8 icon icon-server sc-AxhCb c8"
-              color="light"
-            />
-            IAM
-          </div>
-        </div>
-        <div
-          class="c10"
-        >
-          <div
-            class="c11"
-          >
-            <div
-              class="c12"
-            >
-              The IAM join method is available to any Teleport Node or Proxy
-              with access to IAM credentials.
-            </div>
-            <div
-              class="c13"
-            >
-              You can read more
-              about the IAM method in the 
-              <a
-                class="c14"
-                href="https://goteleport.com/docs/setup/guides/joining-nodes-aws/"
-                rel="noreferrer"
-              >
-                documentation
-              </a>
-              .
-            </div>
-            <div
-              class="c15"
-            >
-              <div
-                class="c16"
-              >
-                <div
-                  class="c17"
-                >
-                  Rule #1
-                </div>
-                <div
-                  class="c15"
-                >
-                  <div
-                    class="c18"
-                  >
-                    <label
-                      class="c19"
-                      font-size="0"
-                    >
-                      AWS Account
-                    </label>
-                    <input
-                      autocomplete="off"
-                      class="c20"
-                      color="text.onLight"
-                      placeholder="111111111111"
-                      type="text"
-                      value=""
-                    />
-                  </div>
-                </div>
-                <div
-                  class="c21"
-                >
-                  <label
-                    class="c19"
-                    font-size="0"
-                  >
-                    AWS ARN (optional)
-                  </label>
-                  <input
-                    autocomplete="off"
-                    class="c20"
-                    color="text.onLight"
-                    placeholder="arn:aws:sts::111111111111:assumed-role/teleport-node-role/i-*"
-                    type="text"
-                    value=""
-                  />
-                </div>
-              </div>
-            </div>
-            <div
-              class="c21"
-            >
-              <a
-                class="c22 c23"
-                kind="primary"
-              >
-                Add new rule
-              </a>
-            </div>
-            <div
-              class="c15"
-            >
-              <button
-                class="c24"
-                disabled=""
-                kind="primary"
-              >
-                Generate Script
-              </button>
-            </div>
-            
-          </div>
-        </div>
-        <div
-          class="c25"
-        >
-          <button
-            class="c26"
-            kind="secondary"
-          >
-            Close
-          </button>
-        </div>
-      </div>
-    </div>
-  </div>
-</div>
-`;
-
 exports[`render iam method without a token generated yet 1`] = `
-.c15 {
-  box-sizing: border-box;
-}
-
-.c18 {
+.c13 {
   box-sizing: border-box;
   margin-bottom: 24px;
+}
+
+.c15 {
+  box-sizing: border-box;
 }
 
 .c21 {
@@ -2487,7 +2541,7 @@ exports[`render iam method without a token generated yet 1`] = `
   color: rgba(255,255,255,0.3);
 }
 
-.c24 {
+.c26 {
   line-height: 1.5;
   margin: 0;
   display: inline-flex;
@@ -2514,25 +2568,25 @@ exports[`render iam method without a token generated yet 1`] = `
   margin-right: 16px;
 }
 
-.c24:active {
+.c26:active {
   opacity: 0.56;
 }
 
-.c24:hover,
-.c24:focus {
+.c26:hover,
+.c26:focus {
   background: #651FFF;
 }
 
-.c24:active {
+.c26:active {
   background: #354AA4;
 }
 
-.c24:disabled {
+.c26:disabled {
   background: rgba(255,255,255,0.12);
   color: rgba(255,255,255,0.3);
 }
 
-.c26 {
+.c27 {
   line-height: 1.5;
   margin: 0;
   display: inline-flex;
@@ -2558,16 +2612,16 @@ exports[`render iam method without a token generated yet 1`] = `
   padding: 0px 24px;
 }
 
-.c26:active {
+.c27:active {
   opacity: 0.56;
 }
 
-.c26:hover,
-.c26:focus {
+.c27:hover,
+.c27:focus {
   background: #2C3A73;
 }
 
-.c26:disabled {
+.c27:disabled {
   background: rgba(255,255,255,0.12);
   color: rgba(255,255,255,0.3);
 }
@@ -2631,12 +2685,21 @@ exports[`render iam method without a token generated yet 1`] = `
   margin-bottom: 4px;
 }
 
-.c14 {
+.c12 {
   color: #03a9f4;
   font-weight: normal;
   background: none;
   text-decoration: underline;
   text-transform: none;
+}
+
+.c16 {
+  color: #03a9f4;
+  font-weight: normal;
+  background: none;
+  text-decoration: underline;
+  text-transform: none;
+  margin-right: 8px;
 }
 
 .c6 {
@@ -2651,20 +2714,21 @@ exports[`render iam method without a token generated yet 1`] = `
   color: rgba(255,255,255,0.87);
 }
 
-.c12 {
-  overflow: hidden;
-  text-overflow: ellipsis;
-  margin: 0px;
-}
-
-.c13 {
+.c11 {
   overflow: hidden;
   text-overflow: ellipsis;
   margin: 0px;
   margin-bottom: 24px;
 }
 
-.c17 {
+.c14 {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  font-weight: 600;
+  margin: 0px;
+}
+
+.c18 {
   overflow: hidden;
   text-overflow: ellipsis;
   font-weight: 400;
@@ -2722,6 +2786,8 @@ exports[`render iam method without a token generated yet 1`] = `
   padding: 4px 8px;
   cursor: pointer;
   border-bottom: 4px solid transparent;
+  font-weight: 500;
+  border-bottom: 4px solid #651FFF;
 }
 
 .c9 {
@@ -2737,8 +2803,6 @@ exports[`render iam method without a token generated yet 1`] = `
   padding: 4px 8px;
   cursor: pointer;
   border-bottom: 4px solid transparent;
-  font-weight: 500;
-  border-bottom: 4px solid #651FFF;
 }
 
 .c2 {
@@ -2773,15 +2837,6 @@ exports[`render iam method without a token generated yet 1`] = `
 .c10 {
   box-sizing: border-box;
   margin-bottom: 32px;
-  min-height: 100px;
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-}
-
-.c11 {
-  box-sizing: border-box;
-  margin-bottom: 32px;
   flex: 0 0 auto;
   display: flex;
   flex-direction: column;
@@ -2791,17 +2846,25 @@ exports[`render iam method without a token generated yet 1`] = `
   box-sizing: border-box;
 }
 
-.c16 {
+.c17 {
   box-sizing: border-box;
+  margin-top: 4px;
   padding: 16px;
   background-color: #2C3A73;
   border-radius: 4px;
-  margin: 4px 0 18px 0;
+  margin: 4px 0 12px 0;
   position: relative;
 }
 
-.c16:last-of-type {
+.c17:last-of-type {
   margin-bottom: 8px;
+}
+
+.c24 {
+  font-weight: bold;
+  font-size: 14px;
+  color: white;
+  text-decoration: none;
 }
 
 <div
@@ -2836,28 +2899,28 @@ exports[`render iam method without a token generated yet 1`] = `
             class="c7"
           >
             <span
+              class="c8 icon icon-server sc-AxhCb c8"
+              color="light"
+            />
+            AWS
+          </div>
+          <div
+            class="c9"
+          >
+            <span
               class="c8 icon icon-magic-wand sc-AxhCb c8"
               color="light"
             />
             Automatically
           </div>
           <div
-            class="c7"
+            class="c9"
           >
             <span
               class="c8 icon icon-cog sc-AxhCb c8"
               color="light"
             />
             Manually
-          </div>
-          <div
-            class="c9"
-          >
-            <span
-              class="c8 icon icon-server sc-AxhCb c8"
-              color="light"
-            />
-            IAM
           </div>
         </div>
         <div
@@ -2866,107 +2929,141 @@ exports[`render iam method without a token generated yet 1`] = `
           <div
             class="c11"
           >
-            <div
-              class="c12"
-            >
-              The IAM join method is available to any Teleport Node or Proxy
+            Add any Teleport Node or Proxy
               with access to IAM credentials.
-            </div>
-            <div
-              class="c13"
-            >
-              You can read more
+            You can read more
               about the IAM method in the 
-              <a
-                class="c14"
-                href="https://goteleport.com/docs/setup/guides/joining-nodes-aws/"
-                rel="noreferrer"
-              >
-                documentation
-              </a>
-              .
-            </div>
+            <a
+              class="c12"
+              href="https://goteleport.com/docs/setup/guides/joining-nodes-aws/"
+              rel="noreferrer"
+            >
+              documentation
+            </a>
+            .
+          </div>
+          <div
+            class="c13"
+          >
+            <span
+              class="c14"
+            >
+              Step 1
+            </span>
+             
+            - Download Teleport package to your computer
             <div
               class="c15"
             >
-              <div
+              <a
                 class="c16"
+                href="https://get.gravitational.com/teleport-ent-v5.0.0-dev-darwin-amd64-bin.tar.gz"
+                rel="noreferrer"
+                target="_blank"
+              >
+                MacOS
+              </a>
+              <a
+                class="c16"
+                href="https://get.gravitational.com/teleport-ent-v5.0.0-dev-linux-amd64-bin.tar.gz"
+                rel="noreferrer"
+                target="_blank"
+              >
+                Linux 64-bit
+              </a>
+              <a
+                class="c12"
+                href="https://get.gravitational.com/teleport-ent-v5.0.0-dev-linux-386-bin.tar.gz"
+                rel="noreferrer"
+                target="_blank"
+              >
+                Linux 32-bit
+              </a>
+            </div>
+          </div>
+          <div
+            class="c15"
+          >
+            <span
+              class="c14"
+            >
+              Step 2
+            </span>
+             
+            - Setup AWS Rules
+            <div
+              class="c17"
+            >
+              <div
+                class="c18"
+              >
+                Rule #1
+              </div>
+              <div
+                class="c15"
               >
                 <div
-                  class="c17"
-                >
-                  Rule #1
-                </div>
-                <div
-                  class="c15"
-                >
-                  <div
-                    class="c18"
-                  >
-                    <label
-                      class="c19"
-                      font-size="0"
-                    >
-                      AWS Account
-                    </label>
-                    <input
-                      autocomplete="off"
-                      class="c20"
-                      color="text.onLight"
-                      placeholder="111111111111"
-                      type="text"
-                      value=""
-                    />
-                  </div>
-                </div>
-                <div
-                  class="c21"
+                  class="c13"
                 >
                   <label
                     class="c19"
                     font-size="0"
                   >
-                    AWS ARN (optional)
+                    AWS Account
                   </label>
                   <input
                     autocomplete="off"
                     class="c20"
                     color="text.onLight"
-                    placeholder="arn:aws:sts::111111111111:assumed-role/teleport-node-role/i-*"
+                    placeholder="111111111111"
                     type="text"
                     value=""
                   />
                 </div>
               </div>
-            </div>
-            <div
-              class="c21"
-            >
-              <a
-                class="c22 c23"
-                kind="primary"
+              <div
+                class="c21"
               >
-                Add new rule
-              </a>
+                <label
+                  class="c19"
+                  font-size="0"
+                >
+                  AWS ARN
+                </label>
+                <input
+                  autocomplete="off"
+                  class="c20"
+                  color="text.onLight"
+                  placeholder="arn:aws:sts::111111111111:assumed-role/teleport-node-role/i-*"
+                  type="text"
+                  value=""
+                />
+              </div>
             </div>
-            <div
-              class="c15"
-            >
-              <button
-                class="c24"
-                kind="primary"
-              >
-                Generate Script
-              </button>
-            </div>
-            
           </div>
+          <div
+            class="c13"
+          >
+            <a
+              class="c22 c23 c24"
+              kind="primary"
+            >
+              + Add new rule
+            </a>
+          </div>
+          
         </div>
         <div
           class="c25"
         >
           <button
             class="c26"
+            kind="primary"
+          >
+            Generate Script
+          </button>
+          <button
+            class="c27"
             kind="secondary"
           >
             Close
@@ -3258,7 +3355,6 @@ exports[`render manual tab with join token 1`] = `
 .c10 {
   box-sizing: border-box;
   margin-bottom: 32px;
-  min-height: 100px;
   flex: 1;
   display: flex;
   flex-direction: column;
@@ -3300,6 +3396,15 @@ exports[`render manual tab with join token 1`] = `
             class="c7"
           >
             <span
+              class="c8 icon icon-server sc-AxhCb c8"
+              color="light"
+            />
+            AWS
+          </div>
+          <div
+            class="c7"
+          >
+            <span
               class="c8 icon icon-magic-wand sc-AxhCb c8"
               color="light"
             />
@@ -3313,15 +3418,6 @@ exports[`render manual tab with join token 1`] = `
               color="light"
             />
             Manually
-          </div>
-          <div
-            class="c7"
-          >
-            <span
-              class="c8 icon icon-server sc-AxhCb c8"
-              color="light"
-            />
-            IAM
           </div>
         </div>
         <div
@@ -3698,7 +3794,6 @@ exports[`render manual tab with local user 1`] = `
 .c10 {
   box-sizing: border-box;
   margin-bottom: 32px;
-  min-height: 100px;
   flex: 1;
   display: flex;
   flex-direction: column;
@@ -3740,6 +3835,15 @@ exports[`render manual tab with local user 1`] = `
             class="c7"
           >
             <span
+              class="c8 icon icon-server sc-AxhCb c8"
+              color="light"
+            />
+            AWS
+          </div>
+          <div
+            class="c7"
+          >
+            <span
               class="c8 icon icon-magic-wand sc-AxhCb c8"
               color="light"
             />
@@ -3753,15 +3857,6 @@ exports[`render manual tab with local user 1`] = `
               color="light"
             />
             Manually
-          </div>
-          <div
-            class="c7"
-          >
-            <span
-              class="c8 icon icon-server sc-AxhCb c8"
-              color="light"
-            />
-            IAM
           </div>
         </div>
         <div
@@ -4184,7 +4279,6 @@ exports[`render manual tab with sso user 1`] = `
 .c10 {
   box-sizing: border-box;
   margin-bottom: 32px;
-  min-height: 100px;
   flex: 1;
   display: flex;
   flex-direction: column;
@@ -4226,6 +4320,15 @@ exports[`render manual tab with sso user 1`] = `
             class="c7"
           >
             <span
+              class="c8 icon icon-server sc-AxhCb c8"
+              color="light"
+            />
+            AWS
+          </div>
+          <div
+            class="c7"
+          >
+            <span
               class="c8 icon icon-magic-wand sc-AxhCb c8"
               color="light"
             />
@@ -4239,15 +4342,6 @@ exports[`render manual tab with sso user 1`] = `
               color="light"
             />
             Manually
-          </div>
-          <div
-            class="c7"
-          >
-            <span
-              class="c8 icon icon-server sc-AxhCb c8"
-              color="light"
-            />
-            IAM
           </div>
         </div>
         <div
