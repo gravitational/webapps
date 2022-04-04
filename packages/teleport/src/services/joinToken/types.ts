@@ -19,4 +19,4 @@ export type JoinToken = {
   expiry: Date;
 };
 
-export type Roles = 'App' | 'Node' | 'Db';
+export type Roles = 'App' | 'Node' | 'Db' | 'Kube';

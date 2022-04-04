@@ -56,14 +56,7 @@ export function Kubes(props: State) {
     <FeatureBox>
       <FeatureHeader alignItems="center" justifyContent="space-between">
         <FeatureHeaderTitle>Kubernetes</FeatureHeaderTitle>
-        <ButtonPrimary
-          // as="a"
-          // href={DOC_URL}
-          // target="_blank"
-          // rel="noreferrer"
-          width="240px"
-          onClick={() => setShowAddKube(true)}
-        >
+        <ButtonPrimary width="240px" onClick={() => setShowAddKube(true)}>
           Add Kubernetes
         </ButtonPrimary>
       </FeatureHeader>
@@ -87,7 +80,7 @@ export function Kubes(props: State) {
         <Empty
           clusterId={clusterId}
           canCreate={canCreate && !isLeafCluster}
-          onClick={() => window.open(DOC_URL)}
+          onClick={() => setShowAddKube(true)}
           emptyStateInfo={emptyStateInfo}
         />
       )}
@@ -100,15 +93,15 @@ const emptyStateInfo: EmptyStateInfo = {
   title: 'ADD YOUR FIRST KUBERNETES CLUSTER',
   description: (
     <Text>
-      Fast, secure access to Kubernetes clusters. Follow{' '}
+      Fast, secure access to Kubernetes clusters. Read more about kubernetes
+      access in{' '}
       <Link target="_blank" href={DOC_URL}>
         the documentation
       </Link>{' '}
-      to connect your first cluster.
     </Text>
   ),
   videoLink: 'https://www.youtube.com/watch?v=2diX_UAmJ1c',
-  buttonText: 'VIEW DOCUMENTATION',
+  buttonText: 'ADD KUBERNETES',
   readOnly: {
     title: 'No Kubernetes Clusters Found',
     resource: 'kubernetes clusters',
