@@ -24,6 +24,6 @@ export type Roles = 'App' | 'Node' | 'Db';
 export type Method = 'token' | 'ec2' | 'iam';
 
 export type Rule = {
-  awsAccount: string;
+  awsAccount?: string;
   awsArn?: string;
 };
