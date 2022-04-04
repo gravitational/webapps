@@ -1093,7 +1093,7 @@ exports[`render iam method after token generation 1`] = `
             class="c11"
           >
             Add any Teleport Node or Proxy
-              with access to IAM credentials.
+              with access to IAM credentials. 
             You can read more
               about the IAM method in the 
             <a
@@ -1757,7 +1757,7 @@ exports[`render iam method when failed 1`] = `
             class="c12"
           >
             Add any Teleport Node or Proxy
-              with access to IAM credentials.
+              with access to IAM credentials. 
             You can read more
               about the IAM method in the 
             <a
@@ -2350,7 +2350,7 @@ exports[`render iam method while processing 1`] = `
             class="c11"
           >
             Add any Teleport Node or Proxy
-              with access to IAM credentials.
+              with access to IAM credentials. 
             You can read more
               about the IAM method in the 
             <a
@@ -2944,7 +2944,7 @@ exports[`render iam method without a token generated yet 1`] = `
             class="c11"
           >
             Add any Teleport Node or Proxy
-              with access to IAM credentials.
+              with access to IAM credentials. 
             You can read more
               about the IAM method in the 
             <a

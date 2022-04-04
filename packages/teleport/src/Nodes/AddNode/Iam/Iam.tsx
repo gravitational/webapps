@@ -16,6 +16,7 @@ import Validation, { Validator } from 'shared/components/Validation';
 import { Attempt } from 'shared/hooks/useAttemptNext';
 import { Rule } from 'teleport/services/joinToken';
 import DownloadLinks from 'teleport/components/DownloadLinks';
+import { Pencil } from 'design/Icon';
 
 export default function Iam({
   token,
@@ -29,14 +30,15 @@ export default function Iam({
   const { hostname, port } = window.document.location;
   const host = `${hostname}:${port || '443'}`;
 
-  const [rules, setRules] = React.useState<Rule[]>([
+  const [rules, setRules] = React.useState<RuleForm[]>([
     {
       awsAccount: '',
       awsArn: '',
+      isCollapsed: false,
     },
   ]);
 
-  function setRuleAtIndex(index: number, rule: Rule) {
+  function setRuleAtIndex(index: number, rule: RuleForm) {
     const newRules = [...rules];
     newRules[index] = rule;
     setRules(newRules);
@@ -52,6 +54,8 @@ export default function Iam({
     if (!validator.validate()) {
       return;
     }
+
+    setRules(rules.map((rule: RuleForm) => ({ ...rule, isCollapsed: true })));
 
     onGenerate(rules);
   }
@@ -96,44 +100,61 @@ export default function Iam({
                   position="relative"
                 >
                   <Text typography="h5">{`Rule #${index + 1}`}</Text>
-                  {index !== 0 && (
-                    <ButtonRemoveRule onClick={() => handleRemove(index)}>
-                      Remove
-                    </ButtonRemoveRule>
-                  )}
-                  <Box>
-                    <FieldInput
-                      label="AWS Account"
-                      autoFocus
-                      onChange={e =>
-                        setRuleAtIndex(index, {
-                          ...rules[index],
-                          awsAccount: e.target.value,
-                        })
+                  {rule.isCollapsed && (
+                    <ButtonEditRule
+                      title="edit rule"
+                      onClick={() =>
+                        setRuleAtIndex(index, { ...rule, isCollapsed: false })
                       }
-                      rule={value => requiredAwsAccount(value, rule)}
-                      placeholder="111111111111"
-                      value={rule.awsAccount}
-                    />
-                  </Box>
-                  <FieldInput
-                    mb={2}
-                    label="AWS ARN"
-                    onChange={e =>
-                      setRuleAtIndex(index, {
-                        ...rules[index],
-                        awsArn: e.target.value,
-                      })
-                    }
-                    placeholder="arn:aws:sts::111111111111:assumed-role/teleport-node-role/i-*"
-                    value={rule.awsArn}
-                  />
+                    >
+                      <Pencil />
+                    </ButtonEditRule>
+                  )}
+                  {!rule.isCollapsed && (
+                    <>
+                      {index !== 0 && (
+                        <ButtonRemoveRule onClick={() => handleRemove(index)}>
+                          Remove
+                        </ButtonRemoveRule>
+                      )}
+                      <Box>
+                        <FieldInput
+                          label="AWS Account"
+                          autoFocus
+                          onChange={e =>
+                            setRuleAtIndex(index, {
+                              ...rules[index],
+                              awsAccount: e.target.value,
+                            })
+                          }
+                          rule={value => requiredAwsAccount(value, rule)}
+                          placeholder="111111111111"
+                          value={rule.awsAccount}
+                        />
+                      </Box>
+                      <FieldInput
+                        mb={2}
+                        label="AWS ARN"
+                        onChange={e =>
+                          setRuleAtIndex(index, {
+                            ...rules[index],
+                            awsArn: e.target.value,
+                          })
+                        }
+                        placeholder="arn:aws:sts::111111111111:assumed-role/teleport-node-role/i-*"
+                        value={rule.awsArn}
+                      />
+                    </>
+                  )}
                 </RuleBox>
               ))}
             </Box>
             <Box
               onClick={() =>
-                setRules([...rules, { awsAccount: '', awsArn: '' }])
+                setRules([
+                  ...rules,
+                  { awsAccount: '', awsArn: '', isCollapsed: false },
+                ])
               }
             >
               <ButtonAddRule>+ Add new rule</ButtonAddRule>
@@ -191,6 +212,14 @@ const ButtonAddRule = styled(ButtonLink)`
   text-decoration: none;
 `;
 
+const ButtonEditRule = styled(ButtonLink)`
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  font-size: 16px;
+  text-decoration: none;
+`;
+
 const ButtonRemoveRule = styled(ButtonLink)`
   position: absolute;
   top: 12px;
@@ -221,6 +250,10 @@ const requiredAwsAccount = (value, rule: Rule) => () => {
   return {
     valid: true,
   };
+};
+
+type RuleForm = Rule & {
+  isCollapsed: boolean;
 };
 
 type Props = {
