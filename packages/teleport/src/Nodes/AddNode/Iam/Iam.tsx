@@ -66,7 +66,7 @@ export default function Iam({
             )}
             <Text mb={4}>
               {`Add any Teleport Node or Proxy
-              with access to IAM credentials.`}
+              with access to IAM credentials. `}
               {`You can read more
               about the IAM method in the `}
               <Link href="https://goteleport.com/docs/setup/guides/joining-nodes-aws/">
