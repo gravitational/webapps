@@ -15,20 +15,8 @@ export function useIdentity() {
     ctx.commandLauncher.executeCommand('cluster-connect', {});
   }
 
-  function removeCluster(clusterUri: string): void {
-    ctx.commandLauncher.executeCommand('cluster-remove', { clusterUri });
-  }
-
-  async function logout(): Promise<void> {
-    const rootClusterUri = ctx.workspacesService.getRootClusterUri();
-    await ctx.clustersService.logout(rootClusterUri);
-    const [firstConnectedWorkspace] =
-      ctx.workspacesService.getConnectedWorkspacesClustersUri();
-    if (firstConnectedWorkspace) {
-      await ctx.workspacesService.setActiveWorkspace(firstConnectedWorkspace);
-    } else {
-      await ctx.workspacesService.setActiveWorkspace(null);
-    }
+  function logout(clusterUri: string): void {
+    ctx.commandLauncher.executeCommand('cluster-logout', {clusterUri})
   }
 
   function getActiveRootCluster(): Cluster | undefined {
@@ -44,7 +32,8 @@ export function useIdentity() {
     .filter(c => !c.leaf)
     .map(cluster => ({
       active: cluster.uri === ctx.workspacesService.getRootClusterUri(),
-      name: cluster.name,
+      clusterName: cluster.name,
+      userName: cluster.loggedInUser?.name,
       uri: cluster.uri,
       connected: cluster.connected,
       clusterSyncStatus: ctx.clustersService.getClusterSyncStatus(cluster.uri)
@@ -54,7 +43,6 @@ export function useIdentity() {
   return {
     changeRootCluster,
     addCluster,
-    removeCluster,
     logout,
     activeRootCluster: getActiveRootCluster(),
     rootClusters,
@@ -63,7 +51,8 @@ export function useIdentity() {
 
 export interface IdentityRootCluster {
   active: boolean;
-  name: string;
+  clusterName: string;
+  userName: string;
   uri: string;
   connected: boolean;
   clusterSyncStatus: boolean;
