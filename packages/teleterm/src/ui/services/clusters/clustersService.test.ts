@@ -84,7 +84,7 @@ const appMock: tsh.Application = {
 };
 
 function createService(client: Partial<tsh.TshClient>): ClustersService {
-  return new ClustersService(client as tsh.TshClient);
+  return new ClustersService(client as tsh.TshClient, undefined);
 }
 
 function getClientMocks(): Partial<tsh.TshClient> {
@@ -185,7 +185,6 @@ test('login into cluster and sync resources', async () => {
   const loginParams = {
     clusterUri,
     local: { username: 'admin', password: 'admin', token: '1234' },
-    oss: { providerType: 'github', providerName: 'GitHub' },
   };
 
   await service.login(loginParams, undefined);
@@ -419,3 +418,4 @@ test.each([
 
   expect(foundServers).toStrictEqual([serverMock]);
 });
+

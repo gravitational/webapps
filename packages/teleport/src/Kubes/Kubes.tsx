@@ -15,7 +15,7 @@ limitations under the License.
 */
 
 import React, { useState } from 'react';
-import { Box, Indicator, ButtonPrimary, Text, Link } from 'design';
+import { Box, Indicator, ButtonPrimary } from 'design';
 import { Danger } from 'design/Alert';
 import KubeList from 'teleport/Kubes/KubeList';
 import {
@@ -56,9 +56,20 @@ export function Kubes(props: State) {
     <FeatureBox>
       <FeatureHeader alignItems="center" justifyContent="space-between">
         <FeatureHeaderTitle>Kubernetes</FeatureHeaderTitle>
-        <ButtonPrimary width="240px" onClick={() => setShowAddKube(true)}>
-          Add Kubernetes
-        </ButtonPrimary>
+        {hasKubes && (
+          // <ButtonPrimary
+          //   as="a"
+          //   width="240px"
+          //   target="_blank"
+          //   href={DOC_URL}
+          //   rel="noreferrer"
+          // >
+          //   View documentation
+          // </ButtonPrimary>
+          <ButtonPrimary width="240px" onClick={() => setShowAddKube(true)}>
+            Add Kubernetes
+          </ButtonPrimary>
+        )}
       </FeatureHeader>
       {attempt.status === 'failed' && <Danger>{attempt.statusText}</Danger>}
       {attempt.status === 'processing' && (
@@ -90,18 +101,11 @@ export function Kubes(props: State) {
 }
 
 const emptyStateInfo: EmptyStateInfo = {
-  title: 'ADD YOUR FIRST KUBERNETES CLUSTER',
-  description: (
-    <Text>
-      Fast, secure access to Kubernetes clusters. Read more about kubernetes
-      access in{' '}
-      <Link target="_blank" href={DOC_URL}>
-        the documentation
-      </Link>{' '}
-    </Text>
-  ),
-  videoLink: 'https://www.youtube.com/watch?v=2diX_UAmJ1c',
-  buttonText: 'ADD KUBERNETES',
+  title: 'Add your first Kubernetes cluster to Teleport',
+  byline:
+    'Teleport Kubenetes Access provides secure access to Kubernetes clusters.',
+  docsURL: DOC_URL,
+  resourceType: 'kubernetes',
   readOnly: {
     title: 'No Kubernetes Clusters Found',
     resource: 'kubernetes clusters',
