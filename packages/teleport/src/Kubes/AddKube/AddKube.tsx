@@ -125,12 +125,6 @@ export function AddKube({
                     mr="3"
                     // onKeyPress={e => handleEnterPress(e, validator)}
                     onChange={e => setNamespace(e.target.value)}
-                    labelIcon={
-                      <Question
-                        style={{ margin: '0 0 4px 4px' }}
-                        title="Information"
-                      />
-                    }
                   />
                   <FieldInput
                     mb={2}
@@ -143,12 +137,6 @@ export function AddKube({
                     mr="3"
                     // onKeyPress={e => handleEnterPress(e, validator)}
                     onChange={e => setClusterName(e.target.value)}
-                    labelIcon={
-                      <Question
-                        style={{ margin: '0 0 4px 4px' }}
-                        title="Information"
-                      />
-                    }
                   />
                 </Flex>
               </Box>
