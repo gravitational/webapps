@@ -142,7 +142,7 @@ export function AddKube({
               </Box>
               {cmd && (
                 <Box>
-                  <Text mt="3" mb="2" bold typography="h5">
+                  <Text mb="2" bold typography="h5">
                     Script Generated
                   </Text>
                   <Text mt="1">
