@@ -57,7 +57,7 @@ export function AddApp({
       <Flex flex="1" flexDirection="column">
         <Flex alignItems="center" justifyContent="space-between" mb="4">
           <DialogTitle mr="auto">Add Application</DialogTitle>
-          {true && (
+          {isEnterprise && (
             <>
               <TabIcon
                 Icon={Icons.Wand}

@@ -37,20 +37,7 @@ export default function FieldInput({
   const labelText = hasError ? message : label;
   return (
     <Box mb="4" {...styles}>
-      {label && (
-        <Flex alignItems="center">
-          <LabelInput
-            style={{
-              display: 'inline-block',
-              width: 'auto',
-            }}
-            hasError={hasError}
-          >
-            {labelText}
-          </LabelInput>
-          {labelIcon}
-        </Flex>
-      )}
+      {label && <LabelInput hasError={hasError}>{labelText}</LabelInput>}
       <Input
         type={type}
         autoFocus={autoFocus}
@@ -79,7 +66,6 @@ type Props = {
   onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
   onKeyPress?: (e: React.KeyboardEvent<HTMLInputElement>) => void;
   readonly?: boolean;
-  labelIcon?: JSX.Element;
   // TS: temporary handles ...styles
   [key: string]: any;
 };
