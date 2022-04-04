@@ -1,5 +1,5 @@
 /*
-Copyright 2019 Gravitational, Inc.
+Copyright 2019-2022 Gravitational, Inc.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -27,7 +27,7 @@ import {
   requiredToken,
   requiredField,
 } from 'shared/components/Validation/rules';
-import { getMfaOptions, MfaOption } from 'teleport/services/mfa/utils';
+import createMfaOptions, { MfaOption } from 'shared/utils/createMfaOptions';
 import SSOButtonList from './SsoButtons';
 
 export default function LoginForm(props: Props) {
@@ -54,7 +54,11 @@ export default function LoginForm(props: Props) {
   const [token, setToken] = useState('');
 
   const mfaOptions = useMemo<MfaOption[]>(
-    () => getMfaOptions(auth2faType, preferredMfaType),
+    () =>
+      createMfaOptions({
+        auth2faType: auth2faType,
+        preferredType: preferredMfaType,
+      }),
     []
   );
 
@@ -98,7 +102,6 @@ export default function LoginForm(props: Props) {
 
   const bgColor =
     ssoEnabled && isLocalAuthEnabled ? 'primary.main' : 'primary.light';
-
   return (
     <Validation>
       {({ validator }) => (
@@ -187,10 +190,10 @@ export default function LoginForm(props: Props) {
                         width="50%"
                         label="Authenticator code"
                         rule={requiredToken}
-                        autoComplete="off"
+                        autoComplete="one-time-code"
+                        inputMode="numeric"
                         value={token}
                         onChange={e => setToken(e.target.value)}
-                        type="tel"
                         placeholder="123 456"
                         mb={0}
                       />
