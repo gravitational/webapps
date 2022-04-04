@@ -258,16 +258,13 @@ exports[`empty state 1`] = `
       >
         Kubernetes
       </div>
-      <a
+      <button
         class="c3"
-        href="https://goteleport.com/docs/kubernetes-access/guides"
         kind="primary"
-        rel="noreferrer"
-        target="_blank"
         width="240px"
       >
-        View documentation
-      </a>
+        Add Kubernetes
+      </button>
     </div>
     <div
       class="c4 sc-AxirZ c5"
@@ -319,7 +316,7 @@ exports[`empty state 1`] = `
           <div
             class="c15"
           >
-            Fast, secure access to Kubernetes clusters. Follow
+            Fast, secure access to Kubernetes clusters. Read more about kubernetes access in
              
             <a
               class="c16"
@@ -330,7 +327,6 @@ exports[`empty state 1`] = `
               the documentation
             </a>
              
-            to connect your first cluster.
           </div>
         </div>
         <button
@@ -338,7 +334,7 @@ exports[`empty state 1`] = `
           kind="primary"
           width="224px"
         >
-          VIEW DOCUMENTATION
+          ADD KUBERNETES
         </button>
       </div>
     </div>
@@ -465,16 +461,13 @@ exports[`failed 1`] = `
     >
       Kubernetes
     </div>
-    <a
+    <button
       class="c3"
-      href="https://goteleport.com/docs/kubernetes-access/guides"
       kind="primary"
-      rel="noreferrer"
-      target="_blank"
       width="240px"
     >
-      View documentation
-    </a>
+      Add Kubernetes
+    </button>
   </div>
   <div
     class="c4"
@@ -836,16 +829,13 @@ exports[`loaded 1`] = `
     >
       Kubernetes
     </div>
-    <a
+    <button
       class="c3"
-      href="https://goteleport.com/docs/kubernetes-access/guides"
       kind="primary"
-      rel="noreferrer"
-      target="_blank"
       width="240px"
     >
-      View documentation
-    </a>
+      Add Kubernetes
+    </button>
   </div>
   <nav
     class="c4"
@@ -1151,16 +1141,13 @@ exports[`readonly empty state 1`] = `
       >
         Kubernetes
       </div>
-      <a
+      <button
         class="c3"
-        href="https://goteleport.com/docs/kubernetes-access/guides"
         kind="primary"
-        rel="noreferrer"
-        target="_blank"
         width="240px"
       >
-        View documentation
-      </a>
+        Add Kubernetes
+      </button>
     </div>
     <div
       class="c4"

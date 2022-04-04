@@ -1,0 +1,9 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`render failed 1`] = `null`;
+
+exports[`render loaded 1`] = `null`;
+
+exports[`render processing 1`] = `null`;
+
+exports[`render with token generated 1`] = `null`;
