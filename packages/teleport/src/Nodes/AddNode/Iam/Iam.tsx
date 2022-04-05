@@ -38,7 +38,7 @@ export default function Iam({
     },
   ]);
 
-  function setRuleAtIndex(index: number, rule: RuleForm) {
+  function updateRule(index: number, rule: RuleForm) {
     const newRules = [...rules];
     newRules[index] = rule;
     setRules(newRules);
@@ -61,6 +61,13 @@ export default function Iam({
 
   function addRule() {
     setRules([...rules, { awsAccountId: '', awsArn: '', isCollapsed: false }]);
+  }
+
+  function handleChange(index: number, e: React.ChangeEvent<HTMLInputElement>) {
+    updateRule(index, {
+      ...rules[index],
+      [e.target.name]: e.target.value,
+    });
   }
 
   return (
@@ -107,7 +114,7 @@ export default function Iam({
                     <ButtonEditRule
                       title="edit rule"
                       onClick={() =>
-                        setRuleAtIndex(index, { ...rule, isCollapsed: false })
+                        updateRule(index, { ...rule, isCollapsed: false })
                       }
                     >
                       <Pencil />
@@ -124,12 +131,8 @@ export default function Iam({
                         <FieldInput
                           label="AWS Account"
                           autoFocus
-                          onChange={e =>
-                            setRuleAtIndex(index, {
-                              ...rules[index],
-                              awsAccountId: e.target.value,
-                            })
-                          }
+                          name="awsAccountId"
+                          onChange={e => handleChange(index, e)}
                           rule={value => requiredAwsAccountId(value, rule)}
                           placeholder="111111111111"
                           value={rule.awsAccountId}
@@ -138,12 +141,8 @@ export default function Iam({
                       <FieldInput
                         mb={2}
                         label="AWS ARN"
-                        onChange={e =>
-                          setRuleAtIndex(index, {
-                            ...rules[index],
-                            awsArn: e.target.value,
-                          })
-                        }
+                        name="awsArn"
+                        onChange={e => handleChange(index, e)}
                         placeholder="arn:aws:sts::111111111111:assumed-role/teleport-node-role/i-*"
                         value={rule.awsArn}
                       />
