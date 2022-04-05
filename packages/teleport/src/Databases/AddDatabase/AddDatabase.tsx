@@ -294,29 +294,26 @@ const generateDbStartCmd = (
   host: string,
   token: string
 ) => {
-  const baseCommand = `teleport db start --token=${
+  let baseCommand = `teleport db start --token=${
     token || '[generated-join-token]'
   } --auth-server=${host} --name=[db-name] --protocol=${protocol} --uri=[uri]`;
 
-  let cmd = baseCommand;
-  switch (protocol) {
-    case 'sqlserver':
-      cmd =
-        `${baseCommand} --ad-keytab-file=/path/to/teleport.keytab ` +
-        `--ad-domain=EXAMPLE.COM ` +
-        `--ad-spn=MSSQLSvc/sqlserver.example.com:1433`;
-      break;
+  if (protocol === 'sqlserver') {
+    baseCommand =
+      `${baseCommand} --ad-keytab-file=/path/to/teleport.keytab ` +
+      `--ad-domain=EXAMPLE.COM ` +
+      `--ad-spn=MSSQLSvc/sqlserver.example.com:1433`;
   }
 
   switch (type) {
     case 'self-hosted':
-      return cmd;
+      return baseCommand;
     case 'rds':
-      return `${cmd} --aws-region=[region]`;
+      return `${baseCommand} --aws-region=[region]`;
     case 'redshift':
-      return `${cmd} --aws-region=[region] --aws-redshift-cluster-id=[cluster-id]`;
+      return `${baseCommand} --aws-region=[region] --aws-redshift-cluster-id=[cluster-id]`;
     case 'gcp':
-      return `${cmd} --ca-cert=[instance-ca-filepath] --gcp-project-id=[project-id] --gcp-instance-id=[instance-id]`;
+      return `${baseCommand} --ca-cert=[instance-ca-filepath] --gcp-project-id=[project-id] --gcp-instance-id=[instance-id]`;
     default:
       return 'unknown type and protocol';
   }
