@@ -244,7 +244,7 @@ const requiredAwsAccount = (value, rule: Rule) => () => {
   if (!isValidId) {
     return {
       valid: false,
-      message: 'AWS account must have 12 digits',
+      message: 'AWS account must be 12 digits',
     };
   }
   return {
