@@ -1,5 +1,5 @@
 /*
-Copyright 2021 Gravitational, Inc.
+Copyright 2021-2022 Gravitational, Inc.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -39,10 +39,10 @@ import {
 } from 'shared/components/Validation/rules';
 import FieldSelect from 'shared/components/FieldSelect';
 import useTeleport from 'teleport/useTeleport';
-import { getMfaOptions, MfaOption } from 'teleport/services/mfa/utils';
+import createMfaOptions, { MfaOption } from 'shared/utils/createMfaOptions';
 import useAddDevice, { State, Props } from './useAddDevice';
 
-const u2fGraphic = require('design/assets/images/u2f-graphic.svg');
+const secKeyGraphic = require('design/assets/images/sec-key-graphic.svg');
 
 export default function Container(props: Props) {
   const ctx = useTeleport();
@@ -54,7 +54,6 @@ export function AddDevice({
   addDeviceAttempt,
   fetchQrCodeAttempt,
   addTotpDevice,
-  addU2fDevice,
   addWebauthnDevice,
   clearAttempt,
   onClose,
@@ -66,7 +65,12 @@ export function AddDevice({
   const [deviceName, setDeviceName] = useState('');
 
   const mfaOptions = useMemo<MfaOption[]>(
-    () => getMfaOptions(auth2faType, preferredMfaType, true),
+    () =>
+      createMfaOptions({
+        auth2faType: auth2faType,
+        preferredType: preferredMfaType,
+        required: true,
+      }),
     []
   );
 
@@ -81,9 +85,6 @@ export function AddDevice({
   function onSubmit(e: React.MouseEvent<HTMLButtonElement>) {
     e.preventDefault();
 
-    if (mfaOption.value === 'u2f') {
-      addU2fDevice(deviceName);
-    }
     if (mfaOption.value === 'webauthn') {
       addWebauthnDevice(deviceName);
     }
@@ -94,10 +95,7 @@ export function AddDevice({
 
   let hardwareInstructions = 'Enter a name for your hardware key.';
   if (addDeviceAttempt.status === 'processing') {
-    hardwareInstructions =
-      mfaOption.value === 'u2f'
-        ? 'Insert your new hardware key and press the button on the key.'
-        : 'Follow the prompts from your browser.';
+    hardwareInstructions = 'Follow the prompts from your browser.';
   }
 
   return (
@@ -167,10 +165,9 @@ export function AddDevice({
                   </Text>
                 </>
               )}
-              {(mfaOption.value === 'u2f' ||
-                mfaOption.value === 'webauthn') && (
+              {mfaOption.value === 'webauthn' && (
                 <>
-                  <Image src={u2fGraphic} height="168px" />
+                  <Image src={secKeyGraphic} height="168px" />
                   <Text mt={3}>{hardwareInstructions}</Text>
                 </>
               )}

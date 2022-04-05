@@ -1,5 +1,5 @@
 /*
-Copyright 2019 Gravitational, Inc.
+Copyright 2019-2022 Gravitational, Inc.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -118,7 +118,13 @@ export default function LoginForm(props: Props) {
             </FlexBordered>
           )}
           {isLocalAuthEnabled && isExpanded && (
-            <FlexBordered as="form" onSubmit={preventDefault}>
+            <FlexBordered
+              as="form"
+              onSubmit={e => {
+                e.preventDefault();
+                validator.validate() && handleLocalLoginClick();
+              }}
+            >
               <FieldInput
                 rule={requiredField('Username is required')}
                 label="Username"
@@ -170,12 +176,6 @@ export default function LoginForm(props: Props) {
                         mb={0}
                       />
                     )}
-                    {mfaType.value === 'u2f' && isProcessing && (
-                      <Text typography="body2" mb={1}>
-                        Insert your hardware key and press the button on the
-                        key.
-                      </Text>
-                    )}
                   </Flex>
                 </Box>
               )}
@@ -184,7 +184,6 @@ export default function LoginForm(props: Props) {
                 mt={3}
                 type="submit"
                 size="large"
-                onClick={() => validator.validate() && handleLocalLoginClick()}
                 disabled={isProcessing}
               >
                 LOGIN
@@ -241,9 +240,4 @@ type Props = {
     token: string,
     auth2fa: types.Auth2faType
   ): void;
-};
-
-const preventDefault = (e: React.SyntheticEvent) => {
-  e.stopPropagation();
-  e.preventDefault();
 };

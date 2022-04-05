@@ -1,5 +1,5 @@
 /**
- * Copyright 2021 Gravitational, Inc.
+ * Copyright 2022 Gravitational, Inc.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-import { getMfaOptions } from './utils';
+import createMfaOptions from './createMfaOptions';
 import { Auth2faType, PreferredMfaType } from 'shared/services';
 
 describe('test retrieving mfa options', () => {
@@ -31,62 +31,42 @@ describe('test retrieving mfa options', () => {
     {
       name: 'type off',
       type: 'off',
-      preferred: 'u2f',
       expect: [],
     },
     {
-      name: 'type on with u2f preferred',
+      name: 'type on',
       type: 'on',
-      preferred: 'u2f',
-      expect: ['u2f', 'otp'],
-    },
-    {
-      name: 'type on with webauthn preferred',
-      type: 'on',
-      preferred: 'webauthn',
       expect: ['webauthn', 'otp'],
     },
     {
-      name: 'type optional with u2f preferred',
+      name: 'type optional',
       type: 'optional',
-      preferred: 'u2f',
-      expect: ['u2f', 'otp', 'optional'],
-    },
-    {
-      name: 'type optional with webauthn preferred',
-      type: 'optional',
-      preferred: 'webauthn',
       expect: ['webauthn', 'otp', 'optional'],
-    },
-    {
-      name: 'type u2f only',
-      type: 'u2f',
-      preferred: 'webauthn',
-      expect: ['u2f'],
     },
     {
       name: 'type webauthn only',
       type: 'webauthn',
-      preferred: 'u2f',
       expect: ['webauthn'],
     },
     {
       name: 'type otp only',
       type: 'otp',
-      preferred: 'webauthn',
       expect: ['otp'],
     },
   ];
 
   test.each(testCases)('$name', testCase => {
-    const mfa = getMfaOptions(testCase.type, testCase.preferred).map(
-      o => o.value
-    );
+    const mfa = createMfaOptions({
+      auth2faType: testCase.type,
+    }).map(o => o.value);
     expect(mfa).toEqual(testCase.expect);
   });
 
   test('no "none" option if requireMfa=true', () => {
-    const mfa = getMfaOptions('optional', 'webauthn', true).map(o => o.value);
+    const mfa = createMfaOptions({
+      auth2faType: 'optional',
+      required: true,
+    }).map(o => o.value);
     expect(mfa).toEqual(['webauthn', 'otp']);
   });
 });

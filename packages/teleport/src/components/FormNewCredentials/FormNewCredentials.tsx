@@ -1,5 +1,5 @@
 /*
-Copyright 2019 Gravitational, Inc.
+Copyright 2019-2022 Gravitational, Inc.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -15,7 +15,7 @@ limitations under the License.
 */
 
 import React, { useState, useMemo } from 'react';
-import { Text, Card, ButtonPrimary, Flex, Box, Link } from 'design';
+import { Text, Card, ButtonPrimary, Flex, Box } from 'design';
 import * as Alerts from 'design/Alert';
 import { Auth2faType, PreferredMfaType } from 'shared/services';
 import { Attempt } from 'shared/hooks/useAttemptNext';
@@ -27,17 +27,13 @@ import {
   requiredPassword,
   requiredConfirmedPassword,
 } from 'shared/components/Validation/rules';
-import { getMfaOptions, MfaOption } from 'teleport/services/mfa/utils';
+import createMfaOptions, { MfaOption } from 'shared/utils/createMfaOptions';
 import TwoFAData from './TwoFaInfo';
-
-const U2F_ERROR_CODES_URL =
-  'https://developers.yubico.com/U2F/Libraries/Client_error_codes.html';
 
 export default function FormNewCredentials(props: Props) {
   const {
     auth2faType,
     preferredMfaType,
-    onSubmitWithU2f,
     onSubmitWithWebauthn,
     onSubmit,
     attempt,
@@ -53,7 +49,11 @@ export default function FormNewCredentials(props: Props) {
   const [token, setToken] = useState('');
 
   const mfaOptions = useMemo<MfaOption[]>(
-    () => getMfaOptions(auth2faType, preferredMfaType),
+    () =>
+      createMfaOptions({
+        auth2faType: auth2faType,
+        preferredType: preferredMfaType,
+      }),
     []
   );
   const [mfaType, setMfaType] = useState(mfaOptions[0]);
@@ -75,9 +75,6 @@ export default function FormNewCredentials(props: Props) {
     }
 
     switch (mfaType?.value) {
-      case 'u2f':
-        onSubmitWithU2f(password);
-        break;
       case 'webauthn':
         onSubmitWithWebauthn(password);
         break;
@@ -103,7 +100,7 @@ export default function FormNewCredentials(props: Props) {
                 {title}
               </Text>
               {attempt.status === 'failed' && (
-                <ErrorMessage message={attempt.statusText} />
+                <Alerts.Danger children={attempt.statusText} />
               )}
               <Text typography="h4" breakAll mb={3}>
                 {user}
@@ -154,13 +151,6 @@ export default function FormNewCredentials(props: Props) {
                       placeholder="123 456"
                     />
                   )}
-                  {mfaType.value === 'u2f' &&
-                    attempt.status === 'processing' && (
-                      <Text typography="body2">
-                        Insert your hardware key and press the button on the
-                        key.
-                      </Text>
-                    )}
                 </Flex>
               )}
               <ButtonPrimary
@@ -181,11 +171,7 @@ export default function FormNewCredentials(props: Props) {
                 borderTopRightRadius={3}
                 borderBottomRightRadius={3}
               >
-                <TwoFAData
-                  auth2faType={mfaType.value}
-                  qr={qr}
-                  submitBtnText={submitBtnText}
-                />
+                <TwoFAData auth2faType={mfaType.value} qr={qr} />
               </Box>
             )}
           </Flex>
@@ -204,30 +190,6 @@ export type Props = {
   preferredMfaType: PreferredMfaType;
   attempt: Attempt;
   clearSubmitAttempt: () => void;
-  onSubmitWithU2f(password: string): void;
   onSubmitWithWebauthn(password: string): void;
   onSubmit(password: string, optToken: string): void;
 };
-
-function ErrorMessage({ message = '' }) {
-  // quick fix: check if error text has U2F substring
-  const notSupportedErr = !message.includes('is not supported');
-  const showU2fErrorLink = notSupportedErr && message.includes('U2F');
-
-  return (
-    <Alerts.Danger>
-      <div>
-        {message}
-        {showU2fErrorLink && (
-          <span>
-            , click{' '}
-            <Link target="_blank" href={U2F_ERROR_CODES_URL}>
-              here
-            </Link>{' '}
-            to learn more about U2F error codes
-          </span>
-        )}
-      </div>
-    </Alerts.Danger>
-  );
-}

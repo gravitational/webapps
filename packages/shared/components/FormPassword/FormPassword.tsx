@@ -1,5 +1,5 @@
 /*
-Copyright 2019 Gravitational, Inc.
+Copyright 2019-2022 Gravitational, Inc.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -18,7 +18,7 @@ import React from 'react';
 import { Card, ButtonPrimary, Flex, Box } from 'design';
 import * as Alerts from 'design/Alert';
 import useAttempt from 'shared/hooks/useAttempt';
-import { getMfaOptions, MfaOption } from 'teleport/services/mfa/utils';
+import createMfaOptions, { MfaOption } from 'shared/utils/createMfaOptions';
 import FieldInput from '../FieldInput';
 import FieldSelect from '../FieldSelect';
 import Validation, { Validator } from '../Validation';
@@ -33,7 +33,6 @@ import { Auth2faType, PreferredMfaType } from 'shared/services';
 function FormPassword(props: Props) {
   const {
     onChangePassWithWebauthn,
-    onChangePassWithU2f,
     onChangePass,
     auth2faType = 'off',
     preferredMfaType,
@@ -46,18 +45,19 @@ function FormPassword(props: Props) {
   const [newPass, setNewPass] = React.useState('');
   const [newPassConfirmed, setNewPassConfirmed] = React.useState('');
   const mfaOptions = React.useMemo<MfaOption[]>(
-    () => getMfaOptions(auth2faType, preferredMfaType),
+    () =>
+      createMfaOptions({
+        auth2faType: auth2faType,
+        preferredType: preferredMfaType,
+      }),
     []
   );
   const [mfaType, setMfaType] = React.useState(mfaOptions[0]);
 
   const { isProcessing } = attempt;
-  const isU2fSelected = auth2faType === 'u2f' || mfaType?.value === 'u2f';
 
   function submit() {
     switch (mfaType?.value) {
-      case 'u2f':
-        return onChangePassWithU2f(oldPass, newPass);
       case 'webauthn':
         return onChangePassWithWebauthn(oldPass, newPass);
       default:
@@ -105,7 +105,7 @@ function FormPassword(props: Props) {
     <Validation>
       {({ validator }) => (
         <Card as="form" bg="primary.light" width="456px" p="6">
-          <Status isU2F={isU2fSelected} attempt={attempt} />
+          <Status attempt={attempt} />
           <FieldInput
             rule={requiredField('Current Password is required')}
             label="Current Password"
@@ -174,7 +174,7 @@ function FormPassword(props: Props) {
   );
 }
 
-function Status({ attempt, isU2F }: StatusProps) {
+function Status({ attempt }: StatusProps) {
   if (attempt.isFailed) {
     return <Alerts.Danger>{attempt.message}</Alerts.Danger>;
   }
@@ -183,28 +183,17 @@ function Status({ attempt, isU2F }: StatusProps) {
     return <Alerts.Success>Your password has been changed!</Alerts.Success>;
   }
 
-  const waitForU2fKeyResponse = attempt.isProcessing && isU2F;
-  if (waitForU2fKeyResponse) {
-    return (
-      <Alerts.Info>
-        Insert your U2F key and press the button on the key.
-      </Alerts.Info>
-    );
-  }
-
   return null;
 }
 
 type StatusProps = {
   attempt: ReturnType<typeof useAttempt>[0];
-  isU2F: boolean;
 };
 
 type Props = {
   auth2faType?: Auth2faType;
   preferredMfaType?: PreferredMfaType;
   onChangePass(oldPass: string, newPass: string, token: string): Promise<any>;
-  onChangePassWithU2f(oldPass: string, newPass: string): Promise<any>;
   onChangePassWithWebauthn(oldPass: string, newPass: string): Promise<any>;
 };
 
