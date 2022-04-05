@@ -147,16 +147,16 @@ export default function Iam({
                   )}
                 </RuleBox>
               ))}
-            </Box>
-            <Box
-              onClick={() =>
-                setRules([
-                  ...rules,
-                  { awsAccountId: '', awsArn: '', isCollapsed: false },
-                ])
-              }
-            >
-              <ButtonAddRule>+ Add new rule</ButtonAddRule>
+              <ButtonAddRule
+                onClick={() =>
+                  setRules([
+                    ...rules,
+                    { awsAccountId: '', awsArn: '', isCollapsed: false },
+                  ])
+                }
+              >
+                + Add new rule
+              </ButtonAddRule>
             </Box>
             {token && (
               <>

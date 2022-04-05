@@ -1206,10 +1206,6 @@ exports[`render iam method after token generation 1`] = `
                 />
               </div>
             </div>
-          </div>
-          <div
-            class="c15"
-          >
             <a
               class="c22 c23 c24"
               kind="primary"
@@ -1873,10 +1869,6 @@ exports[`render iam method when failed 1`] = `
                 />
               </div>
             </div>
-          </div>
-          <div
-            class="c16"
-          >
             <a
               class="c23 c24 c25"
               kind="primary"
@@ -2469,10 +2461,6 @@ exports[`render iam method while processing 1`] = `
                 />
               </div>
             </div>
-          </div>
-          <div
-            class="c15"
-          >
             <a
               class="c22 c23 c24"
               kind="primary"
@@ -3066,10 +3054,6 @@ exports[`render iam method without a token generated yet 1`] = `
                 />
               </div>
             </div>
-          </div>
-          <div
-            class="c15"
-          >
             <a
               class="c22 c23 c24"
               kind="primary"
