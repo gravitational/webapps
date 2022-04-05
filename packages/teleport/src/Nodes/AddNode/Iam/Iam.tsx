@@ -56,7 +56,6 @@ export default function Iam({
     }
 
     setRules(rules.map((rule: RuleForm) => ({ ...rule, isCollapsed: true })));
-
     onGenerate(rules);
   }
 
@@ -226,6 +225,7 @@ const ButtonRemoveRule = styled(ButtonLink)`
   right: 12px;
 `;
 
+// AWS account ID is a 12 digit string
 export const AWS_ACC_ID_REGEXP = /^\d{12}$/;
 const requiredAwsAccount = (value, rule: Rule) => () => {
   if (!rule.awsAccount && !rule.awsArn) {
