@@ -59,6 +59,10 @@ export default function Iam({
     onGenerate(rules);
   }
 
+  function addRule() {
+    setRules([...rules, { awsAccountId: '', awsArn: '', isCollapsed: false }]);
+  }
+
   return (
     <Validation>
       {({ validator }) => (
@@ -147,16 +151,7 @@ export default function Iam({
                   )}
                 </RuleBox>
               ))}
-              <ButtonAddRule
-                onClick={() =>
-                  setRules([
-                    ...rules,
-                    { awsAccountId: '', awsArn: '', isCollapsed: false },
-                  ])
-                }
-              >
-                + Add new rule
-              </ButtonAddRule>
+              <ButtonAddRule onClick={addRule}>+ Add new rule</ButtonAddRule>
             </Box>
             {token && (
               <>
