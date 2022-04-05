@@ -51,6 +51,9 @@ export default function Iam({
   }
 
   function handleGenerate(validator: Validator) {
+    // validate() will run the rule functions of the form inputs
+    // it will automatically update the UI with error messages if the validation fails.
+    // No need for further actions here in case it fails
     if (!validator.validate()) {
       return;
     }
