@@ -1000,6 +1000,7 @@ exports[`render iam method after token generation 1`] = `
 .c10 {
   box-sizing: border-box;
   margin-bottom: 32px;
+  min-height: 400px;
   flex: 0 0 auto;
   display: flex;
   flex-direction: column;
@@ -1660,6 +1661,7 @@ exports[`render iam method when failed 1`] = `
 .c10 {
   box-sizing: border-box;
   margin-bottom: 32px;
+  min-height: 400px;
   flex: 0 0 auto;
   display: flex;
   flex-direction: column;
@@ -2261,6 +2263,7 @@ exports[`render iam method while processing 1`] = `
 .c10 {
   box-sizing: border-box;
   margin-bottom: 32px;
+  min-height: 400px;
   flex: 0 0 auto;
   display: flex;
   flex-direction: column;
@@ -2857,6 +2860,7 @@ exports[`render iam method without a token generated yet 1`] = `
 .c10 {
   box-sizing: border-box;
   margin-bottom: 32px;
+  min-height: 400px;
   flex: 0 0 auto;
   display: flex;
   flex-direction: column;

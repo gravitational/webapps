@@ -32,7 +32,7 @@ export default function Iam({
 
   const [rules, setRules] = React.useState<RuleForm[]>([
     {
-      awsAccount: '',
+      awsAccountId: '',
       awsArn: '',
       isCollapsed: false,
     },
@@ -63,7 +63,7 @@ export default function Iam({
     <Validation>
       {({ validator }) => (
         <>
-          <DialogContent flex="0 0 auto">
+          <DialogContent flex="0 0 auto" minHeight="400px">
             {attempt.status === 'failed' && (
               <Alert kind="danger" children={attempt.statusText} />
             )}
@@ -123,12 +123,12 @@ export default function Iam({
                           onChange={e =>
                             setRuleAtIndex(index, {
                               ...rules[index],
-                              awsAccount: e.target.value,
+                              awsAccountId: e.target.value,
                             })
                           }
-                          rule={value => requiredAwsAccount(value, rule)}
+                          rule={value => requiredAwsAccountId(value, rule)}
                           placeholder="111111111111"
-                          value={rule.awsAccount}
+                          value={rule.awsAccountId}
                         />
                       </Box>
                       <FieldInput
@@ -152,7 +152,7 @@ export default function Iam({
               onClick={() =>
                 setRules([
                   ...rules,
-                  { awsAccount: '', awsArn: '', isCollapsed: false },
+                  { awsAccountId: '', awsArn: '', isCollapsed: false },
                 ])
               }
             >
@@ -227,8 +227,8 @@ const ButtonRemoveRule = styled(ButtonLink)`
 
 // AWS account ID is a 12 digit string
 export const AWS_ACC_ID_REGEXP = /^\d{12}$/;
-const requiredAwsAccount = (value, rule: Rule) => () => {
-  if (!rule.awsAccount && !rule.awsArn) {
+const requiredAwsAccountId = (value, rule: Rule) => () => {
+  if (!rule.awsAccountId && !rule.awsArn) {
     return {
       valid: false,
       message: 'Rule cannot be empty',

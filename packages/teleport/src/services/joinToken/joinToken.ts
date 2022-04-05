@@ -37,7 +37,7 @@ class JoinTokenService {
 
 function makeAllowField(rules: Rule[]) {
   return rules.map(rule => ({
-    aws_account: rule.awsAccount,
+    aws_account: rule.awsAccountId,
     aws_arn: rule.awsArn,
   }));
 }
