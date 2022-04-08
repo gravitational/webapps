@@ -16,11 +16,9 @@ import Validation, { Validator } from 'shared/components/Validation';
 import { Attempt } from 'shared/hooks/useAttemptNext';
 import { Rule } from 'teleport/services/joinToken';
 import { Pencil } from 'design/Icon';
+import { createBashCommand } from '../useAddNode';
 
 export default function Iam({ token, attempt, onGenerate, onClose }: Props) {
-  const { hostname, port } = window.document.location;
-  const host = `${hostname}:${port || '443'}`;
-
   const [rules, setRules] = React.useState<RuleForm[]>([
     {
       awsAccountId: '',
@@ -168,7 +166,7 @@ export default function Iam({ token, attempt, onGenerate, onClose }: Props) {
                 <Box>
                   <TextSelectCopy
                     mt="2"
-                    text={`teleport start --roles=node --token=${token} --auth-server=${host} --join-method=iam`}
+                    text={createBashCommand(token, 'iam')}
                   />
                   <Text mt={2}>
                     The token generated is not a secret and will not expire. You

@@ -83,16 +83,26 @@ export default function useAddNode(ctx: TeleportContext) {
   };
 }
 
-export function createNodeBashCommand(node: JoinToken): BashCommand {
+export function createNodeBashCommand(
+  node: JoinToken,
+  method?: JoinMethod
+): BashCommand {
   const { expiry, id } = node;
 
+  const text = createBashCommand(id, method);
   const expires = formatDistanceStrict(new Date(), new Date(expiry));
-  const text = `sudo bash -c "$(curl -fsSL ${cfg.getNodeScriptUrl(id)})"`;
 
   return {
     text,
     expires,
   };
+}
+
+export function createBashCommand(tokenId: string, method?: JoinMethod) {
+  const param = method === 'iam' ? '?method=iam' : '';
+  return `sudo bash -c "$(curl -fsSL ${cfg.getNodeScriptUrl(
+    tokenId
+  )}${param})"`;
 }
 
 export type JoinMethod = 'automatic' | 'manual' | 'iam';
