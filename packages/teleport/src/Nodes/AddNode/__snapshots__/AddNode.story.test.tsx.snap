@@ -607,26 +607,26 @@ exports[`render failed automatic tab 1`] = `
 `;
 
 exports[`render iam method after token generation 1`] = `
-.c13 {
+.c11 {
   box-sizing: border-box;
   margin-bottom: 24px;
 }
 
-.c15 {
+.c17 {
   box-sizing: border-box;
 }
 
-.c21 {
+.c20 {
   box-sizing: border-box;
   margin-bottom: 8px;
 }
 
-.c29 {
+.c28 {
   box-sizing: border-box;
   margin-right: 4px;
 }
 
-.c23 {
+.c22 {
   line-height: 1.5;
   margin: 0;
   display: inline-flex;
@@ -652,20 +652,66 @@ exports[`render iam method after token generation 1`] = `
   padding: 0px 24px;
 }
 
-.c23:active {
+.c22:active {
   opacity: 0.56;
 }
 
-.c23:hover,
-.c23:focus {
+.c22:hover,
+.c22:focus {
   background: #651FFF;
 }
 
-.c23:active {
+.c22:active {
   background: #354AA4;
 }
 
-.c23:disabled {
+.c22:disabled {
+  background: rgba(255,255,255,0.12);
+  color: rgba(255,255,255,0.3);
+}
+
+.c25 {
+  line-height: 1.5;
+  margin: 0;
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  box-sizing: border-box;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-family: inherit;
+  font-weight: 600;
+  outline: none;
+  position: relative;
+  text-align: center;
+  text-decoration: none;
+  text-transform: uppercase;
+  transition: all 0.3s;
+  -webkit-font-smoothing: antialiased;
+  background: #512FC9;
+  color: rgba(255,255,255,0.87);
+  min-height: 32px;
+  font-size: 12px;
+  padding: 0px 24px;
+  margin-top: 4px;
+  width: 100%;
+}
+
+.c25:active {
+  opacity: 0.56;
+}
+
+.c25:hover,
+.c25:focus {
+  background: #651FFF;
+}
+
+.c25:active {
+  background: #354AA4;
+}
+
+.c25:disabled {
   background: rgba(255,255,255,0.12);
   color: rgba(255,255,255,0.3);
 }
@@ -689,12 +735,11 @@ exports[`render iam method after token generation 1`] = `
   text-transform: uppercase;
   transition: all 0.3s;
   -webkit-font-smoothing: antialiased;
-  background: #512FC9;
+  background: #222C59;
   color: rgba(255,255,255,0.87);
   min-height: 32px;
   font-size: 12px;
   padding: 0px 24px;
-  margin-right: 16px;
 }
 
 .c31:active {
@@ -703,54 +748,10 @@ exports[`render iam method after token generation 1`] = `
 
 .c31:hover,
 .c31:focus {
-  background: #651FFF;
-}
-
-.c31:active {
-  background: #354AA4;
-}
-
-.c31:disabled {
-  background: rgba(255,255,255,0.12);
-  color: rgba(255,255,255,0.3);
-}
-
-.c32 {
-  line-height: 1.5;
-  margin: 0;
-  display: inline-flex;
-  justify-content: center;
-  align-items: center;
-  box-sizing: border-box;
-  border: none;
-  border-radius: 4px;
-  cursor: pointer;
-  font-family: inherit;
-  font-weight: 600;
-  outline: none;
-  position: relative;
-  text-align: center;
-  text-decoration: none;
-  text-transform: uppercase;
-  transition: all 0.3s;
-  -webkit-font-smoothing: antialiased;
-  background: #222C59;
-  color: rgba(255,255,255,0.87);
-  min-height: 32px;
-  font-size: 12px;
-  padding: 0px 24px;
-}
-
-.c32:active {
-  opacity: 0.56;
-}
-
-.c32:hover,
-.c32:focus {
   background: #2C3A73;
 }
 
-.c32:disabled {
+.c31:disabled {
   background: rgba(255,255,255,0.12);
   color: rgba(255,255,255,0.3);
 }
@@ -762,7 +763,7 @@ exports[`render iam method after token generation 1`] = `
   color: #FFFFFF;
 }
 
-.c22 {
+.c21 {
   color: #03a9f4;
   font-weight: normal;
   background: none;
@@ -771,16 +772,16 @@ exports[`render iam method after token generation 1`] = `
   padding: 0 8px;
 }
 
-.c22:hover,
-.c22:focus {
+.c21:hover,
+.c21:focus {
   background: #222C59;
 }
 
-.c20 {
+.c19 {
   appearance: none;
   border: none;
   border-radius: 4px;
-  box-shadow: inset 0 2px 4px rgba(0,0,0,.24);
+  box-shadow: inset 0 2px 4px rgba(0,0,0,0.24);
   box-sizing: border-box;
   display: block;
   height: 40px;
@@ -792,19 +793,19 @@ exports[`render iam method after token generation 1`] = `
   background-color: #FFFFFF;
 }
 
-.c20::-ms-clear {
+.c19::-ms-clear {
   display: none;
 }
 
-.c20::placeholder {
+.c19::placeholder {
   opacity: 0.4;
 }
 
-.c20:read-only {
+.c19:read-only {
   cursor: not-allowed;
 }
 
-.c19 {
+.c18 {
   color: #FFFFFF;
   display: block;
   font-size: 11px;
@@ -814,21 +815,12 @@ exports[`render iam method after token generation 1`] = `
   margin-bottom: 4px;
 }
 
-.c12 {
+.c14 {
   color: #03a9f4;
   font-weight: normal;
   background: none;
   text-decoration: underline;
   text-transform: none;
-}
-
-.c16 {
-  color: #03a9f4;
-  font-weight: normal;
-  background: none;
-  text-decoration: underline;
-  text-transform: none;
-  margin-right: 8px;
 }
 
 .c6 {
@@ -843,21 +835,22 @@ exports[`render iam method after token generation 1`] = `
   color: rgba(255,255,255,0.87);
 }
 
-.c11 {
-  overflow: hidden;
-  text-overflow: ellipsis;
-  margin: 0px;
-  margin-bottom: 24px;
-}
-
-.c14 {
+.c12 {
   overflow: hidden;
   text-overflow: ellipsis;
   font-weight: 600;
   margin: 0px;
+  margin-top: 4px;
 }
 
-.c18 {
+.c13 {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  margin: 0px;
+  margin-top: 4px;
+}
+
+.c16 {
   overflow: hidden;
   text-overflow: ellipsis;
   font-weight: 400;
@@ -866,21 +859,18 @@ exports[`render iam method after token generation 1`] = `
   margin: 0px;
 }
 
-.c25 {
+.c24 {
   overflow: hidden;
   text-overflow: ellipsis;
   font-weight: 600;
-  font-size: 16px;
-  line-height: 24px;
   margin: 0px;
-  margin-bottom: 8px;
-  margin-top: 16px;
 }
 
-.c26 {
+.c29 {
   overflow: hidden;
   text-overflow: ellipsis;
   margin: 0px;
+  margin-top: 8px;
 }
 
 .c4 {
@@ -898,7 +888,7 @@ exports[`render iam method after token generation 1`] = `
   justify-content: space-between;
 }
 
-.c27 {
+.c26 {
   box-sizing: border-box;
   margin-top: 8px;
   padding: 8px;
@@ -909,7 +899,7 @@ exports[`render iam method after token generation 1`] = `
   justify-content: space-between;
 }
 
-.c28 {
+.c27 {
   box-sizing: border-box;
   margin-right: 8px;
   display: flex;
@@ -1010,7 +1000,7 @@ exports[`render iam method after token generation 1`] = `
   box-sizing: border-box;
 }
 
-.c17 {
+.c15 {
   box-sizing: border-box;
   margin-top: 4px;
   padding: 16px;
@@ -1020,11 +1010,11 @@ exports[`render iam method after token generation 1`] = `
   position: relative;
 }
 
-.c17:last-of-type {
+.c15:last-of-type {
   margin-bottom: 8px;
 }
 
-.c24 {
+.c23 {
   font-weight: bold;
   font-size: 14px;
   color: white;
@@ -1093,91 +1083,71 @@ exports[`render iam method after token generation 1`] = `
           <div
             class="c11"
           >
-            Add any Teleport Node or Proxy
-              with access to IAM credentials. 
-            You can read more
-              about the IAM method in the 
-            <a
-              class="c12"
-              href="https://goteleport.com/docs/setup/guides/joining-nodes-aws/"
-              rel="noreferrer"
-            >
-              documentation
-            </a>
-            .
-          </div>
-          <div
-            class="c13"
-          >
             <span
-              class="c14"
+              class="c12"
             >
               Step 1
             </span>
              
-            - Download Teleport package to your computer
+            - Assign IAM role to AWS resources
             <div
-              class="c15"
+              class="c13"
             >
+              Every node using AWS IAM method to join your Teleport cluster needs to be assigned an IAM role.
+            </div>
+            <div
+              class="c13"
+            >
+              If it doesn't already exist, create the IAM role "teleport_join" and add it to all resources you wish to join your Teleport cluster
+            </div>
+            <div
+              class="c13"
+            >
+              For more information, see documentation
+               
               <a
-                class="c16"
-                href="https://get.gravitational.com/teleport-ent-v5.0.0-dev-darwin-amd64-bin.tar.gz"
+                class="c14"
+                href="https://goteleport.com/docs/setup/guides/joining-nodes-aws/"
                 rel="noreferrer"
-                target="_blank"
               >
-                MacOS
+                here
               </a>
-              <a
-                class="c16"
-                href="https://get.gravitational.com/teleport-ent-v5.0.0-dev-linux-amd64-bin.tar.gz"
-                rel="noreferrer"
-                target="_blank"
-              >
-                Linux 64-bit
-              </a>
-              <a
-                class="c12"
-                href="https://get.gravitational.com/teleport-ent-v5.0.0-dev-linux-386-bin.tar.gz"
-                rel="noreferrer"
-                target="_blank"
-              >
-                Linux 32-bit
-              </a>
+              .
             </div>
           </div>
           <div
-            class="c15"
+            class="c11"
           >
             <span
-              class="c14"
+              class="c12"
             >
               Step 2
             </span>
              
-            - Setup AWS Rules
+            - Specify which nodes can join your Teleport cluster.
             <div
-              class="c17"
+              class="c15"
             >
               <div
-                class="c18"
+                class="c16"
               >
                 Rule #1
               </div>
               <div
-                class="c15"
+                class="c17"
               >
                 <div
-                  class="c13"
+                  class="c11"
                 >
                   <label
-                    class="c19"
+                    class="c18"
                     font-size="0"
                   >
-                    AWS Account
+                    AWS Account ID - nodes must match this AWS Account ID to join your Teleport cluster
                   </label>
                   <input
                     autocomplete="off"
-                    class="c20"
+                    class="c19"
                     color="text.onLight"
                     inputmode="text"
                     name="awsAccountId"
@@ -1188,17 +1158,17 @@ exports[`render iam method after token generation 1`] = `
                 </div>
               </div>
               <div
-                class="c21"
+                class="c20"
               >
                 <label
-                  class="c19"
+                  class="c18"
                   font-size="0"
                 >
-                  AWS ARN
+                  AWS ARN (optional) - nodes must match this AWS ARN to join your Teleport cluster
                 </label>
                 <input
                   autocomplete="off"
-                  class="c20"
+                  class="c19"
                   color="text.onLight"
                   inputmode="text"
                   name="awsArn"
@@ -1209,55 +1179,60 @@ exports[`render iam method after token generation 1`] = `
               </div>
             </div>
             <a
-              class="c22 c23 c24"
+              class="c21 c22 c23"
               kind="primary"
             >
               + Add new rule
             </a>
           </div>
           <div
-            class="c25"
+            class="c17"
           >
-            Script Generated
-          </div>
-          <div
-            class="c26"
-          >
-            Start teleport with the following parameters. The script will be valid for
-             
             <span
-              class="c14"
+              class="c24"
             >
-              4 hours
-              .
+              Step 3
             </span>
-          </div>
-          <div
-            class="c15"
-          >
+             
+            - Generate and run script
+            <button
+              class="c25"
+              kind="primary"
+            >
+              Generate Script
+            </button>
             <div
-              class="c27"
+              class="c17"
             >
               <div
-                class="c28"
-                style="overflow: auto; white-space: pre; word-break: break-all; font-size: 12px; font-family: \\"Droid Sans Mono\\", \\"monospace\\", monospace, \\"Droid Sans Fallback\\";"
+                class="c26"
               >
                 <div
-                  class="c29"
+                  class="c27"
+                  style="overflow: auto; white-space: pre; word-break: break-all; font-size: 12px; font-family: \\"Droid Sans Mono\\", \\"monospace\\", monospace, \\"Droid Sans Fallback\\";"
                 >
-                  $
+                  <div
+                    class="c28"
+                  >
+                    $
+                  </div>
+                  <div>
+                    teleport start --roles=node --token=some-join-token-hash --auth-server=localhost:443 --join-method=iam
+                  </div>
                 </div>
-                <div>
-                  teleport start --roles=node --token=some-join-token-hash --auth-server=localhost:443 --join-method=iam
-                </div>
+                <button
+                  class="c22"
+                  kind="primary"
+                  style="max-width: 48px; width: 100%; padding: 4px 8px; min-height: 10px; font-size: 10px;"
+                >
+                  Copy
+                </button>
               </div>
-              <button
-                class="c23"
-                kind="primary"
-                style="max-width: 48px; width: 100%; padding: 4px 8px; min-height: 10px; font-size: 10px;"
+              <div
+                class="c29"
               >
-                Copy
-              </button>
+                The token generated is not a secret and will not expire. You can use this script to join multiple nodes.
+              </div>
             </div>
           </div>
         </div>
@@ -1266,12 +1241,6 @@ exports[`render iam method after token generation 1`] = `
         >
           <button
             class="c31"
-            kind="primary"
-          >
-            Regenerate Script
-          </button>
-          <button
-            class="c32"
             kind="secondary"
           >
             Close
@@ -1305,21 +1274,21 @@ exports[`render iam method when failed 1`] = `
   color: #FFFFFF;
 }
 
-.c14 {
+.c12 {
   box-sizing: border-box;
   margin-bottom: 24px;
 }
 
-.c16 {
+.c18 {
   box-sizing: border-box;
 }
 
-.c22 {
+.c21 {
   box-sizing: border-box;
   margin-bottom: 8px;
 }
 
-.c24 {
+.c23 {
   line-height: 1.5;
   margin: 0;
   display: inline-flex;
@@ -1345,25 +1314,25 @@ exports[`render iam method when failed 1`] = `
   padding: 0px 24px;
 }
 
-.c24:active {
+.c23:active {
   opacity: 0.56;
 }
 
-.c24:hover,
-.c24:focus {
+.c23:hover,
+.c23:focus {
   background: #651FFF;
 }
 
-.c24:active {
+.c23:active {
   background: #354AA4;
 }
 
-.c24:disabled {
+.c23:disabled {
   background: rgba(255,255,255,0.12);
   color: rgba(255,255,255,0.3);
 }
 
-.c27 {
+.c26 {
   line-height: 1.5;
   margin: 0;
   display: inline-flex;
@@ -1387,23 +1356,24 @@ exports[`render iam method when failed 1`] = `
   min-height: 32px;
   font-size: 12px;
   padding: 0px 24px;
-  margin-right: 16px;
+  margin-top: 4px;
+  width: 100%;
 }
 
-.c27:active {
+.c26:active {
   opacity: 0.56;
 }
 
-.c27:hover,
-.c27:focus {
+.c26:hover,
+.c26:focus {
   background: #651FFF;
 }
 
-.c27:active {
+.c26:active {
   background: #354AA4;
 }
 
-.c27:disabled {
+.c26:disabled {
   background: rgba(255,255,255,0.12);
   color: rgba(255,255,255,0.3);
 }
@@ -1455,7 +1425,7 @@ exports[`render iam method when failed 1`] = `
   color: #FFFFFF;
 }
 
-.c23 {
+.c22 {
   color: #03a9f4;
   font-weight: normal;
   background: none;
@@ -1464,16 +1434,16 @@ exports[`render iam method when failed 1`] = `
   padding: 0 8px;
 }
 
-.c23:hover,
-.c23:focus {
+.c22:hover,
+.c22:focus {
   background: #222C59;
 }
 
-.c21 {
+.c20 {
   appearance: none;
   border: none;
   border-radius: 4px;
-  box-shadow: inset 0 2px 4px rgba(0,0,0,.24);
+  box-shadow: inset 0 2px 4px rgba(0,0,0,0.24);
   box-sizing: border-box;
   display: block;
   height: 40px;
@@ -1485,19 +1455,19 @@ exports[`render iam method when failed 1`] = `
   background-color: #FFFFFF;
 }
 
-.c21::-ms-clear {
+.c20::-ms-clear {
   display: none;
 }
 
-.c21::placeholder {
+.c20::placeholder {
   opacity: 0.4;
 }
 
-.c21:read-only {
+.c20:read-only {
   cursor: not-allowed;
 }
 
-.c20 {
+.c19 {
   color: #FFFFFF;
   display: block;
   font-size: 11px;
@@ -1507,21 +1477,12 @@ exports[`render iam method when failed 1`] = `
   margin-bottom: 4px;
 }
 
-.c13 {
+.c15 {
   color: #03a9f4;
   font-weight: normal;
   background: none;
   text-decoration: underline;
   text-transform: none;
-}
-
-.c17 {
-  color: #03a9f4;
-  font-weight: normal;
-  background: none;
-  text-decoration: underline;
-  text-transform: none;
-  margin-right: 8px;
 }
 
 .c6 {
@@ -1536,26 +1497,34 @@ exports[`render iam method when failed 1`] = `
   color: rgba(255,255,255,0.87);
 }
 
-.c12 {
-  overflow: hidden;
-  text-overflow: ellipsis;
-  margin: 0px;
-  margin-bottom: 24px;
-}
-
-.c15 {
+.c13 {
   overflow: hidden;
   text-overflow: ellipsis;
   font-weight: 600;
   margin: 0px;
+  margin-top: 4px;
 }
 
-.c19 {
+.c14 {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  margin: 0px;
+  margin-top: 4px;
+}
+
+.c17 {
   overflow: hidden;
   text-overflow: ellipsis;
   font-weight: 400;
   font-size: 16px;
   line-height: 24px;
+  margin: 0px;
+}
+
+.c25 {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  font-weight: 600;
   margin: 0px;
 }
 
@@ -1665,11 +1634,11 @@ exports[`render iam method when failed 1`] = `
   flex-direction: column;
 }
 
-.c26 {
+.c27 {
   box-sizing: border-box;
 }
 
-.c18 {
+.c16 {
   box-sizing: border-box;
   margin-top: 4px;
   padding: 16px;
@@ -1679,11 +1648,11 @@ exports[`render iam method when failed 1`] = `
   position: relative;
 }
 
-.c18:last-of-type {
+.c16:last-of-type {
   margin-bottom: 8px;
 }
 
-.c25 {
+.c24 {
   font-weight: bold;
   font-size: 14px;
   color: white;
@@ -1758,91 +1727,71 @@ exports[`render iam method when failed 1`] = `
           <div
             class="c12"
           >
-            Add any Teleport Node or Proxy
-              with access to IAM credentials. 
-            You can read more
-              about the IAM method in the 
-            <a
-              class="c13"
-              href="https://goteleport.com/docs/setup/guides/joining-nodes-aws/"
-              rel="noreferrer"
-            >
-              documentation
-            </a>
-            .
-          </div>
-          <div
-            class="c14"
-          >
             <span
-              class="c15"
+              class="c13"
             >
               Step 1
             </span>
              
-            - Download Teleport package to your computer
+            - Assign IAM role to AWS resources
             <div
-              class="c16"
+              class="c14"
             >
+              Every node using AWS IAM method to join your Teleport cluster needs to be assigned an IAM role.
+            </div>
+            <div
+              class="c14"
+            >
+              If it doesn't already exist, create the IAM role "teleport_join" and add it to all resources you wish to join your Teleport cluster
+            </div>
+            <div
+              class="c14"
+            >
+              For more information, see documentation
+               
               <a
-                class="c17"
-                href="https://get.gravitational.com/teleport-ent-v5.0.0-dev-darwin-amd64-bin.tar.gz"
+                class="c15"
+                href="https://goteleport.com/docs/setup/guides/joining-nodes-aws/"
                 rel="noreferrer"
-                target="_blank"
               >
-                MacOS
+                here
               </a>
-              <a
-                class="c17"
-                href="https://get.gravitational.com/teleport-ent-v5.0.0-dev-linux-amd64-bin.tar.gz"
-                rel="noreferrer"
-                target="_blank"
-              >
-                Linux 64-bit
-              </a>
-              <a
-                class="c13"
-                href="https://get.gravitational.com/teleport-ent-v5.0.0-dev-linux-386-bin.tar.gz"
-                rel="noreferrer"
-                target="_blank"
-              >
-                Linux 32-bit
-              </a>
+              .
             </div>
           </div>
           <div
-            class="c16"
+            class="c12"
           >
             <span
-              class="c15"
+              class="c13"
             >
               Step 2
             </span>
              
-            - Setup AWS Rules
+            - Specify which nodes can join your Teleport cluster.
             <div
-              class="c18"
+              class="c16"
             >
               <div
-                class="c19"
+                class="c17"
               >
                 Rule #1
               </div>
               <div
-                class="c16"
+                class="c18"
               >
                 <div
-                  class="c14"
+                  class="c12"
                 >
                   <label
-                    class="c20"
+                    class="c19"
                     font-size="0"
                   >
-                    AWS Account
+                    AWS Account ID - nodes must match this AWS Account ID to join your Teleport cluster
                   </label>
                   <input
                     autocomplete="off"
-                    class="c21"
+                    class="c20"
                     color="text.onLight"
                     inputmode="text"
                     name="awsAccountId"
@@ -1853,17 +1802,17 @@ exports[`render iam method when failed 1`] = `
                 </div>
               </div>
               <div
-                class="c22"
+                class="c21"
               >
                 <label
-                  class="c20"
+                  class="c19"
                   font-size="0"
                 >
-                  AWS ARN
+                  AWS ARN (optional) - nodes must match this AWS ARN to join your Teleport cluster
                 </label>
                 <input
                   autocomplete="off"
-                  class="c21"
+                  class="c20"
                   color="text.onLight"
                   inputmode="text"
                   name="awsArn"
@@ -1874,23 +1823,34 @@ exports[`render iam method when failed 1`] = `
               </div>
             </div>
             <a
-              class="c23 c24 c25"
+              class="c22 c23 c24"
               kind="primary"
             >
               + Add new rule
             </a>
           </div>
-          
+          <div
+            class="c18"
+          >
+            <span
+              class="c25"
+            >
+              Step 3
+            </span>
+             
+            - Generate and run script
+            <button
+              class="c26"
+              kind="primary"
+            >
+              Generate Script
+            </button>
+            
+          </div>
         </div>
         <div
-          class="c26"
+          class="c27"
         >
-          <button
-            class="c27"
-            kind="primary"
-          >
-            Generate Script
-          </button>
           <button
             class="c28"
             kind="secondary"
@@ -1905,21 +1865,21 @@ exports[`render iam method when failed 1`] = `
 `;
 
 exports[`render iam method while processing 1`] = `
-.c13 {
+.c11 {
   box-sizing: border-box;
   margin-bottom: 24px;
 }
 
-.c15 {
+.c17 {
   box-sizing: border-box;
 }
 
-.c21 {
+.c20 {
   box-sizing: border-box;
   margin-bottom: 8px;
 }
 
-.c23 {
+.c22 {
   line-height: 1.5;
   margin: 0;
   display: inline-flex;
@@ -1945,25 +1905,25 @@ exports[`render iam method while processing 1`] = `
   padding: 0px 24px;
 }
 
-.c23:active {
+.c22:active {
   opacity: 0.56;
 }
 
-.c23:hover,
-.c23:focus {
+.c22:hover,
+.c22:focus {
   background: #651FFF;
 }
 
-.c23:active {
+.c22:active {
   background: #354AA4;
 }
 
-.c23:disabled {
+.c22:disabled {
   background: rgba(255,255,255,0.12);
   color: rgba(255,255,255,0.3);
 }
 
-.c26 {
+.c25 {
   line-height: 1.5;
   margin: 0;
   display: inline-flex;
@@ -1987,23 +1947,24 @@ exports[`render iam method while processing 1`] = `
   min-height: 32px;
   font-size: 12px;
   padding: 0px 24px;
-  margin-right: 16px;
+  margin-top: 4px;
+  width: 100%;
 }
 
-.c26:active {
+.c25:active {
   opacity: 0.56;
 }
 
-.c26:hover,
-.c26:focus {
+.c25:hover,
+.c25:focus {
   background: #651FFF;
 }
 
-.c26:active {
+.c25:active {
   background: #354AA4;
 }
 
-.c26:disabled {
+.c25:disabled {
   background: rgba(255,255,255,0.12);
   color: rgba(255,255,255,0.3);
 }
@@ -2055,7 +2016,7 @@ exports[`render iam method while processing 1`] = `
   color: #FFFFFF;
 }
 
-.c22 {
+.c21 {
   color: #03a9f4;
   font-weight: normal;
   background: none;
@@ -2064,16 +2025,16 @@ exports[`render iam method while processing 1`] = `
   padding: 0 8px;
 }
 
-.c22:hover,
-.c22:focus {
+.c21:hover,
+.c21:focus {
   background: #222C59;
 }
 
-.c20 {
+.c19 {
   appearance: none;
   border: none;
   border-radius: 4px;
-  box-shadow: inset 0 2px 4px rgba(0,0,0,.24);
+  box-shadow: inset 0 2px 4px rgba(0,0,0,0.24);
   box-sizing: border-box;
   display: block;
   height: 40px;
@@ -2085,19 +2046,19 @@ exports[`render iam method while processing 1`] = `
   background-color: #FFFFFF;
 }
 
-.c20::-ms-clear {
+.c19::-ms-clear {
   display: none;
 }
 
-.c20::placeholder {
+.c19::placeholder {
   opacity: 0.4;
 }
 
-.c20:read-only {
+.c19:read-only {
   cursor: not-allowed;
 }
 
-.c19 {
+.c18 {
   color: #FFFFFF;
   display: block;
   font-size: 11px;
@@ -2107,21 +2068,12 @@ exports[`render iam method while processing 1`] = `
   margin-bottom: 4px;
 }
 
-.c12 {
+.c14 {
   color: #03a9f4;
   font-weight: normal;
   background: none;
   text-decoration: underline;
   text-transform: none;
-}
-
-.c16 {
-  color: #03a9f4;
-  font-weight: normal;
-  background: none;
-  text-decoration: underline;
-  text-transform: none;
-  margin-right: 8px;
 }
 
 .c6 {
@@ -2136,26 +2088,34 @@ exports[`render iam method while processing 1`] = `
   color: rgba(255,255,255,0.87);
 }
 
-.c11 {
-  overflow: hidden;
-  text-overflow: ellipsis;
-  margin: 0px;
-  margin-bottom: 24px;
-}
-
-.c14 {
+.c12 {
   overflow: hidden;
   text-overflow: ellipsis;
   font-weight: 600;
   margin: 0px;
+  margin-top: 4px;
 }
 
-.c18 {
+.c13 {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  margin: 0px;
+  margin-top: 4px;
+}
+
+.c16 {
   overflow: hidden;
   text-overflow: ellipsis;
   font-weight: 400;
   font-size: 16px;
   line-height: 24px;
+  margin: 0px;
+}
+
+.c24 {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  font-weight: 600;
   margin: 0px;
 }
 
@@ -2265,11 +2225,11 @@ exports[`render iam method while processing 1`] = `
   flex-direction: column;
 }
 
-.c25 {
+.c26 {
   box-sizing: border-box;
 }
 
-.c17 {
+.c15 {
   box-sizing: border-box;
   margin-top: 4px;
   padding: 16px;
@@ -2279,11 +2239,11 @@ exports[`render iam method while processing 1`] = `
   position: relative;
 }
 
-.c17:last-of-type {
+.c15:last-of-type {
   margin-bottom: 8px;
 }
 
-.c24 {
+.c23 {
   font-weight: bold;
   font-size: 14px;
   color: white;
@@ -2352,91 +2312,71 @@ exports[`render iam method while processing 1`] = `
           <div
             class="c11"
           >
-            Add any Teleport Node or Proxy
-              with access to IAM credentials. 
-            You can read more
-              about the IAM method in the 
-            <a
-              class="c12"
-              href="https://goteleport.com/docs/setup/guides/joining-nodes-aws/"
-              rel="noreferrer"
-            >
-              documentation
-            </a>
-            .
-          </div>
-          <div
-            class="c13"
-          >
             <span
-              class="c14"
+              class="c12"
             >
               Step 1
             </span>
              
-            - Download Teleport package to your computer
+            - Assign IAM role to AWS resources
             <div
-              class="c15"
+              class="c13"
             >
+              Every node using AWS IAM method to join your Teleport cluster needs to be assigned an IAM role.
+            </div>
+            <div
+              class="c13"
+            >
+              If it doesn't already exist, create the IAM role "teleport_join" and add it to all resources you wish to join your Teleport cluster
+            </div>
+            <div
+              class="c13"
+            >
+              For more information, see documentation
+               
               <a
-                class="c16"
-                href="https://get.gravitational.com/teleport-ent-v5.0.0-dev-darwin-amd64-bin.tar.gz"
+                class="c14"
+                href="https://goteleport.com/docs/setup/guides/joining-nodes-aws/"
                 rel="noreferrer"
-                target="_blank"
               >
-                MacOS
+                here
               </a>
-              <a
-                class="c16"
-                href="https://get.gravitational.com/teleport-ent-v5.0.0-dev-linux-amd64-bin.tar.gz"
-                rel="noreferrer"
-                target="_blank"
-              >
-                Linux 64-bit
-              </a>
-              <a
-                class="c12"
-                href="https://get.gravitational.com/teleport-ent-v5.0.0-dev-linux-386-bin.tar.gz"
-                rel="noreferrer"
-                target="_blank"
-              >
-                Linux 32-bit
-              </a>
+              .
             </div>
           </div>
           <div
-            class="c15"
+            class="c11"
           >
             <span
-              class="c14"
+              class="c12"
             >
               Step 2
             </span>
              
-            - Setup AWS Rules
+            - Specify which nodes can join your Teleport cluster.
             <div
-              class="c17"
+              class="c15"
             >
               <div
-                class="c18"
+                class="c16"
               >
                 Rule #1
               </div>
               <div
-                class="c15"
+                class="c17"
               >
                 <div
-                  class="c13"
+                  class="c11"
                 >
                   <label
-                    class="c19"
+                    class="c18"
                     font-size="0"
                   >
-                    AWS Account
+                    AWS Account ID - nodes must match this AWS Account ID to join your Teleport cluster
                   </label>
                   <input
                     autocomplete="off"
-                    class="c20"
+                    class="c19"
                     color="text.onLight"
                     inputmode="text"
                     name="awsAccountId"
@@ -2447,17 +2387,17 @@ exports[`render iam method while processing 1`] = `
                 </div>
               </div>
               <div
-                class="c21"
+                class="c20"
               >
                 <label
-                  class="c19"
+                  class="c18"
                   font-size="0"
                 >
-                  AWS ARN
+                  AWS ARN (optional) - nodes must match this AWS ARN to join your Teleport cluster
                 </label>
                 <input
                   autocomplete="off"
-                  class="c20"
+                  class="c19"
                   color="text.onLight"
                   inputmode="text"
                   name="awsArn"
@@ -2468,24 +2408,35 @@ exports[`render iam method while processing 1`] = `
               </div>
             </div>
             <a
-              class="c22 c23 c24"
+              class="c21 c22 c23"
               kind="primary"
             >
               + Add new rule
             </a>
           </div>
-          
+          <div
+            class="c17"
+          >
+            <span
+              class="c24"
+            >
+              Step 3
+            </span>
+             
+            - Generate and run script
+            <button
+              class="c25"
+              disabled=""
+              kind="primary"
+            >
+              Generate Script
+            </button>
+            
+          </div>
         </div>
         <div
-          class="c25"
+          class="c26"
         >
-          <button
-            class="c26"
-            disabled=""
-            kind="primary"
-          >
-            Generate Script
-          </button>
           <button
             class="c27"
             kind="secondary"
@@ -2500,21 +2451,21 @@ exports[`render iam method while processing 1`] = `
 `;
 
 exports[`render iam method without a token generated yet 1`] = `
-.c13 {
+.c11 {
   box-sizing: border-box;
   margin-bottom: 24px;
 }
 
-.c15 {
+.c17 {
   box-sizing: border-box;
 }
 
-.c21 {
+.c20 {
   box-sizing: border-box;
   margin-bottom: 8px;
 }
 
-.c23 {
+.c22 {
   line-height: 1.5;
   margin: 0;
   display: inline-flex;
@@ -2540,25 +2491,25 @@ exports[`render iam method without a token generated yet 1`] = `
   padding: 0px 24px;
 }
 
-.c23:active {
+.c22:active {
   opacity: 0.56;
 }
 
-.c23:hover,
-.c23:focus {
+.c22:hover,
+.c22:focus {
   background: #651FFF;
 }
 
-.c23:active {
+.c22:active {
   background: #354AA4;
 }
 
-.c23:disabled {
+.c22:disabled {
   background: rgba(255,255,255,0.12);
   color: rgba(255,255,255,0.3);
 }
 
-.c26 {
+.c25 {
   line-height: 1.5;
   margin: 0;
   display: inline-flex;
@@ -2582,23 +2533,24 @@ exports[`render iam method without a token generated yet 1`] = `
   min-height: 32px;
   font-size: 12px;
   padding: 0px 24px;
-  margin-right: 16px;
+  margin-top: 4px;
+  width: 100%;
 }
 
-.c26:active {
+.c25:active {
   opacity: 0.56;
 }
 
-.c26:hover,
-.c26:focus {
+.c25:hover,
+.c25:focus {
   background: #651FFF;
 }
 
-.c26:active {
+.c25:active {
   background: #354AA4;
 }
 
-.c26:disabled {
+.c25:disabled {
   background: rgba(255,255,255,0.12);
   color: rgba(255,255,255,0.3);
 }
@@ -2650,7 +2602,7 @@ exports[`render iam method without a token generated yet 1`] = `
   color: #FFFFFF;
 }
 
-.c22 {
+.c21 {
   color: #03a9f4;
   font-weight: normal;
   background: none;
@@ -2659,16 +2611,16 @@ exports[`render iam method without a token generated yet 1`] = `
   padding: 0 8px;
 }
 
-.c22:hover,
-.c22:focus {
+.c21:hover,
+.c21:focus {
   background: #222C59;
 }
 
-.c20 {
+.c19 {
   appearance: none;
   border: none;
   border-radius: 4px;
-  box-shadow: inset 0 2px 4px rgba(0,0,0,.24);
+  box-shadow: inset 0 2px 4px rgba(0,0,0,0.24);
   box-sizing: border-box;
   display: block;
   height: 40px;
@@ -2680,19 +2632,19 @@ exports[`render iam method without a token generated yet 1`] = `
   background-color: #FFFFFF;
 }
 
-.c20::-ms-clear {
+.c19::-ms-clear {
   display: none;
 }
 
-.c20::placeholder {
+.c19::placeholder {
   opacity: 0.4;
 }
 
-.c20:read-only {
+.c19:read-only {
   cursor: not-allowed;
 }
 
-.c19 {
+.c18 {
   color: #FFFFFF;
   display: block;
   font-size: 11px;
@@ -2702,21 +2654,12 @@ exports[`render iam method without a token generated yet 1`] = `
   margin-bottom: 4px;
 }
 
-.c12 {
+.c14 {
   color: #03a9f4;
   font-weight: normal;
   background: none;
   text-decoration: underline;
   text-transform: none;
-}
-
-.c16 {
-  color: #03a9f4;
-  font-weight: normal;
-  background: none;
-  text-decoration: underline;
-  text-transform: none;
-  margin-right: 8px;
 }
 
 .c6 {
@@ -2731,26 +2674,34 @@ exports[`render iam method without a token generated yet 1`] = `
   color: rgba(255,255,255,0.87);
 }
 
-.c11 {
-  overflow: hidden;
-  text-overflow: ellipsis;
-  margin: 0px;
-  margin-bottom: 24px;
-}
-
-.c14 {
+.c12 {
   overflow: hidden;
   text-overflow: ellipsis;
   font-weight: 600;
   margin: 0px;
+  margin-top: 4px;
 }
 
-.c18 {
+.c13 {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  margin: 0px;
+  margin-top: 4px;
+}
+
+.c16 {
   overflow: hidden;
   text-overflow: ellipsis;
   font-weight: 400;
   font-size: 16px;
   line-height: 24px;
+  margin: 0px;
+}
+
+.c24 {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  font-weight: 600;
   margin: 0px;
 }
 
@@ -2860,11 +2811,11 @@ exports[`render iam method without a token generated yet 1`] = `
   flex-direction: column;
 }
 
-.c25 {
+.c26 {
   box-sizing: border-box;
 }
 
-.c17 {
+.c15 {
   box-sizing: border-box;
   margin-top: 4px;
   padding: 16px;
@@ -2874,11 +2825,11 @@ exports[`render iam method without a token generated yet 1`] = `
   position: relative;
 }
 
-.c17:last-of-type {
+.c15:last-of-type {
   margin-bottom: 8px;
 }
 
-.c24 {
+.c23 {
   font-weight: bold;
   font-size: 14px;
   color: white;
@@ -2947,91 +2898,71 @@ exports[`render iam method without a token generated yet 1`] = `
           <div
             class="c11"
           >
-            Add any Teleport Node or Proxy
-              with access to IAM credentials. 
-            You can read more
-              about the IAM method in the 
-            <a
-              class="c12"
-              href="https://goteleport.com/docs/setup/guides/joining-nodes-aws/"
-              rel="noreferrer"
-            >
-              documentation
-            </a>
-            .
-          </div>
-          <div
-            class="c13"
-          >
             <span
-              class="c14"
+              class="c12"
             >
               Step 1
             </span>
              
-            - Download Teleport package to your computer
+            - Assign IAM role to AWS resources
             <div
-              class="c15"
+              class="c13"
             >
+              Every node using AWS IAM method to join your Teleport cluster needs to be assigned an IAM role.
+            </div>
+            <div
+              class="c13"
+            >
+              If it doesn't already exist, create the IAM role "teleport_join" and add it to all resources you wish to join your Teleport cluster
+            </div>
+            <div
+              class="c13"
+            >
+              For more information, see documentation
+               
               <a
-                class="c16"
-                href="https://get.gravitational.com/teleport-ent-v5.0.0-dev-darwin-amd64-bin.tar.gz"
+                class="c14"
+                href="https://goteleport.com/docs/setup/guides/joining-nodes-aws/"
                 rel="noreferrer"
-                target="_blank"
               >
-                MacOS
+                here
               </a>
-              <a
-                class="c16"
-                href="https://get.gravitational.com/teleport-ent-v5.0.0-dev-linux-amd64-bin.tar.gz"
-                rel="noreferrer"
-                target="_blank"
-              >
-                Linux 64-bit
-              </a>
-              <a
-                class="c12"
-                href="https://get.gravitational.com/teleport-ent-v5.0.0-dev-linux-386-bin.tar.gz"
-                rel="noreferrer"
-                target="_blank"
-              >
-                Linux 32-bit
-              </a>
+              .
             </div>
           </div>
           <div
-            class="c15"
+            class="c11"
           >
             <span
-              class="c14"
+              class="c12"
             >
               Step 2
             </span>
              
-            - Setup AWS Rules
+            - Specify which nodes can join your Teleport cluster.
             <div
-              class="c17"
+              class="c15"
             >
               <div
-                class="c18"
+                class="c16"
               >
                 Rule #1
               </div>
               <div
-                class="c15"
+                class="c17"
               >
                 <div
-                  class="c13"
+                  class="c11"
                 >
                   <label
-                    class="c19"
+                    class="c18"
                     font-size="0"
                   >
-                    AWS Account
+                    AWS Account ID - nodes must match this AWS Account ID to join your Teleport cluster
                   </label>
                   <input
                     autocomplete="off"
-                    class="c20"
+                    class="c19"
                     color="text.onLight"
                     inputmode="text"
                     name="awsAccountId"
@@ -3042,17 +2973,17 @@ exports[`render iam method without a token generated yet 1`] = `
                 </div>
               </div>
               <div
-                class="c21"
+                class="c20"
               >
                 <label
-                  class="c19"
+                  class="c18"
                   font-size="0"
                 >
-                  AWS ARN
+                  AWS ARN (optional) - nodes must match this AWS ARN to join your Teleport cluster
                 </label>
                 <input
                   autocomplete="off"
-                  class="c20"
+                  class="c19"
                   color="text.onLight"
                   inputmode="text"
                   name="awsArn"
@@ -3063,23 +2994,34 @@ exports[`render iam method without a token generated yet 1`] = `
               </div>
             </div>
             <a
-              class="c22 c23 c24"
+              class="c21 c22 c23"
               kind="primary"
             >
               + Add new rule
             </a>
           </div>
-          
+          <div
+            class="c17"
+          >
+            <span
+              class="c24"
+            >
+              Step 3
+            </span>
+             
+            - Generate and run script
+            <button
+              class="c25"
+              kind="primary"
+            >
+              Generate Script
+            </button>
+            
+          </div>
         </div>
         <div
-          class="c25"
+          class="c26"
         >
-          <button
-            class="c26"
-            kind="primary"
-          >
-            Generate Script
-          </button>
           <button
             class="c27"
             kind="secondary"

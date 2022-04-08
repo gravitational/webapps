@@ -15,18 +15,9 @@ import FieldInput from 'shared/components/FieldInput';
 import Validation, { Validator } from 'shared/components/Validation';
 import { Attempt } from 'shared/hooks/useAttemptNext';
 import { Rule } from 'teleport/services/joinToken';
-import DownloadLinks from 'teleport/components/DownloadLinks';
 import { Pencil } from 'design/Icon';
 
-export default function Iam({
-  token,
-  expiry,
-  attempt,
-  onGenerate,
-  isEnterprise,
-  version,
-  onClose,
-}: Props) {
+export default function Iam({ token, attempt, onGenerate, onClose }: Props) {
   const { hostname, port } = window.document.location;
   const host = `${hostname}:${port || '443'}`;
 
@@ -81,28 +72,33 @@ export default function Iam({
             {attempt.status === 'failed' && (
               <Alert kind="danger" children={attempt.statusText} />
             )}
-            <Text mb={4}>
-              {`Add any Teleport Node or Proxy
-              with access to IAM credentials. `}
-              {`You can read more
-              about the IAM method in the `}
-              <Link href="https://goteleport.com/docs/setup/guides/joining-nodes-aws/">
-                documentation
-              </Link>
-              .
-            </Text>
             <Box mb={4}>
-              <Text bold as="span">
+              <Text bold as="span" mt={1}>
                 Step 1
               </Text>{' '}
-              - Download Teleport package to your computer
-              <DownloadLinks isEnterprise={isEnterprise} version={version} />
+              - Assign IAM role to AWS resources
+              <Text mt={1}>
+                Every node using AWS IAM method to join your Teleport cluster
+                needs to be assigned an IAM role.
+              </Text>
+              <Text mt={1}>
+                If it doesn't already exist, create the IAM role "teleport_join"
+                and add it to all resources you wish to join your Teleport
+                cluster
+              </Text>
+              <Text mt={1}>
+                For more information, see documentation{' '}
+                <Link href="https://goteleport.com/docs/setup/guides/joining-nodes-aws/">
+                  here
+                </Link>
+                .
+              </Text>
             </Box>
-            <Box>
-              <Text bold as="span">
+            <Box mb={4}>
+              <Text bold as="span" mt={1}>
                 Step 2
               </Text>{' '}
-              - Setup AWS Rules
+              - Specify which nodes can join your Teleport cluster.
               {rules.map((rule, index) => (
                 <RuleBox
                   key={index}
@@ -132,18 +128,18 @@ export default function Iam({
                       )}
                       <Box>
                         <FieldInput
-                          label="AWS Account"
+                          label="AWS Account ID - nodes must match this AWS Account ID to join your Teleport cluster"
                           autoFocus
                           name="awsAccountId"
                           onChange={e => handleChange(index, e)}
-                          rule={value => requiredAwsAccountId(value, rule)}
+                          rule={requiredAwsAccountId}
                           placeholder="111111111111"
                           value={rule.awsAccountId}
                         />
                       </Box>
                       <FieldInput
                         mb={2}
-                        label="AWS ARN"
+                        label="AWS ARN (optional) - nodes must match this AWS ARN to join your Teleport cluster"
                         name="awsArn"
                         onChange={e => handleChange(index, e)}
                         placeholder="arn:aws:sts::111111111111:assumed-role/teleport-node-role/i-*"
@@ -155,35 +151,34 @@ export default function Iam({
               ))}
               <ButtonAddRule onClick={addRule}>+ Add new rule</ButtonAddRule>
             </Box>
-            {token && (
-              <>
-                <Text mt="3" mb="2" bold typography="h5">
-                  Script Generated
-                </Text>
-                <Text>
-                  Start teleport with the following parameters. The script will
-                  be valid for{' '}
-                  <Text bold as={'span'}>
-                    {expiry}.
-                  </Text>
-                </Text>
+            <Box>
+              <Text bold as="span">
+                Step 3
+              </Text>{' '}
+              - Generate and run script
+              <ButtonPrimary
+                mt={1}
+                block
+                disabled={attempt.status === 'processing'}
+                onClick={() => handleGenerate(validator)}
+              >
+                Generate Script
+              </ButtonPrimary>
+              {token && (
                 <Box>
                   <TextSelectCopy
                     mt="2"
                     text={`teleport start --roles=node --token=${token} --auth-server=${host} --join-method=iam`}
                   />
+                  <Text mt={2}>
+                    The token generated is not a secret and will not expire. You
+                    can use this script to join multiple nodes.
+                  </Text>
                 </Box>
-              </>
-            )}
+              )}
+            </Box>
           </DialogContent>
           <DialogFooter>
-            <ButtonPrimary
-              mr="3"
-              disabled={attempt.status === 'processing'}
-              onClick={() => handleGenerate(validator)}
-            >
-              {token ? 'Regenerate Script' : 'Generate Script'}
-            </ButtonPrimary>
             <ButtonSecondary onClick={onClose}>Close</ButtonSecondary>
           </DialogFooter>
         </>
@@ -224,19 +219,7 @@ const ButtonRemoveRule = styled(ButtonLink)`
 
 // AWS account ID is a 12 digit string
 export const AWS_ACC_ID_REGEXP = /^\d{12}$/;
-const requiredAwsAccountId = (value, rule: Rule) => () => {
-  if (!rule.awsAccountId && !rule.awsArn) {
-    return {
-      valid: false,
-      message: 'Rule cannot be empty',
-    };
-  }
-
-  // no need for an AWS account if an ARN is set
-  if (!value) {
-    return { valid: true };
-  }
-
+const requiredAwsAccountId = value => () => {
   const isValidId = value.match(AWS_ACC_ID_REGEXP);
   if (!isValidId) {
     return {
