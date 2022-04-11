@@ -1105,6 +1105,7 @@ exports[`render iam method after token generation 1`] = `
                   AWS Account ID
                   <span
                     class="c18"
+                    style="font-weight: normal;"
                   >
                      - nodes must match this AWS Account ID to join your Teleport cluster
                   </span>
@@ -1131,6 +1132,7 @@ exports[`render iam method after token generation 1`] = `
                 AWS ARN (optional)
                 <span
                   class="c18"
+                  style="font-weight: normal;"
                 >
                    - nodes must match this AWS ARN to join your Teleport cluster
                 </span>
@@ -1674,6 +1676,7 @@ exports[`render iam method when failed 1`] = `
                   AWS Account ID
                   <span
                     class="c19"
+                    style="font-weight: normal;"
                   >
                      - nodes must match this AWS Account ID to join your Teleport cluster
                   </span>
@@ -1700,6 +1703,7 @@ exports[`render iam method when failed 1`] = `
                 AWS ARN (optional)
                 <span
                   class="c19"
+                  style="font-weight: normal;"
                 >
                    - nodes must match this AWS ARN to join your Teleport cluster
                 </span>
@@ -2184,6 +2188,7 @@ exports[`render iam method while processing 1`] = `
                   AWS Account ID
                   <span
                     class="c18"
+                    style="font-weight: normal;"
                   >
                      - nodes must match this AWS Account ID to join your Teleport cluster
                   </span>
@@ -2210,6 +2215,7 @@ exports[`render iam method while processing 1`] = `
                 AWS ARN (optional)
                 <span
                   class="c18"
+                  style="font-weight: normal;"
                 >
                    - nodes must match this AWS ARN to join your Teleport cluster
                 </span>
@@ -2695,6 +2701,7 @@ exports[`render iam method without a token generated yet 1`] = `
                   AWS Account ID
                   <span
                     class="c18"
+                    style="font-weight: normal;"
                   >
                      - nodes must match this AWS Account ID to join your Teleport cluster
                   </span>
@@ -2721,6 +2728,7 @@ exports[`render iam method without a token generated yet 1`] = `
                 AWS ARN (optional)
                 <span
                   class="c18"
+                  style="font-weight: normal;"
                 >
                    - nodes must match this AWS ARN to join your Teleport cluster
                 </span>

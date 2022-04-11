@@ -65,7 +65,7 @@ export default function FieldInput({
 const defaultRule = () => () => ({ valid: true });
 
 const LabelTip = ({ text }) => (
-  <Text as="span" style={{ fontWeigth: 'normal' }}>{` - ${text}`}</Text>
+  <Text as="span" style={{ fontWeight: 'normal' }}>{` - ${text}`}</Text>
 );
 
 type Props = {
