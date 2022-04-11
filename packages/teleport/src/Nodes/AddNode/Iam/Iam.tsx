@@ -123,15 +123,6 @@ export default function Iam({ token, attempt, onGenerate, onClose }: Props) {
   );
 }
 
-const RuleBox = styled(Box)`
-  margin: 4px 0 12px 0;
-  position: relative;
-
-  &:last-of-type {
-    margin-bottom: 8px;
-  }
-`;
-
 // AWS account ID is a 12 digit string
 export const AWS_ACC_ID_REGEXP = /^\d{12}$/;
 const requiredAwsAccountId = value => () => {
