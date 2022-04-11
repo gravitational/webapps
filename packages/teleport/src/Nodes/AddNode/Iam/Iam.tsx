@@ -62,7 +62,8 @@ export default function Iam({ token, attempt, onGenerate, onClose }: Props) {
               - Specify which nodes can join your Teleport cluster.
               <Box mt={2}>
                 <FieldInput
-                  label="AWS Account ID - nodes must match this AWS Account ID to join your Teleport cluster"
+                  label="AWS Account ID"
+                  labelTip="nodes must match this AWS Account ID to join your Teleport cluster"
                   autoFocus
                   name="awsAccountId"
                   onChange={e =>
@@ -78,7 +79,8 @@ export default function Iam({ token, attempt, onGenerate, onClose }: Props) {
               </Box>
               <FieldInput
                 mb={2}
-                label="AWS ARN (optional) - nodes must match this AWS ARN to join your Teleport cluster"
+                label="AWS ARN (optional)"
+                labelTip="nodes must match this AWS ARN to join your Teleport cluster"
                 name="awsArn"
                 onChange={e => setRule({ ...rule, awsArn: e.target.value })}
                 placeholder="arn:aws:sts::111111111111:assumed-role/teleport-node-role/i-*"
