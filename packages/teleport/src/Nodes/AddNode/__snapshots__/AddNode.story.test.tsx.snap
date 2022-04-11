@@ -1044,70 +1044,98 @@ exports[`render iam method after token generation 1`] = `
             Manually
           </div>
         </div>
-        <div
-          class="c10"
-        >
+        <form>
           <div
-            class="c11"
+            class="c10"
           >
-            <span
-              class="c12"
-            >
-              Step 1
-            </span>
-             
-            - Assign IAM role to AWS resources
             <div
-              class="c13"
+              class="c11"
             >
-              Every node using AWS IAM method to join your Teleport cluster needs to be assigned an IAM role.
-            </div>
-            <div
-              class="c14"
-            >
-              If it doesn't already exist, create the IAM role "teleport_join" and add it to all resources you wish to join your Teleport cluster
-            </div>
-            <div
-              class="c14"
-            >
-              For more information, see documentation
-               
-              <a
-                class="c15"
-                href="https://goteleport.com/docs/setup/guides/joining-nodes-aws/"
-                rel="noreferrer"
+              <span
+                class="c12"
               >
-                here
-              </a>
-              .
-            </div>
-          </div>
-          <div
-            class="c11"
-          >
-            <span
-              class="c12"
-            >
-              Step 2
-            </span>
-             
-            - Specify which nodes can join your Teleport cluster.
-            <div
-              class="c16"
-            >
+                Step 1
+              </span>
+               
+              - Assign IAM role to AWS resources
               <div
-                class="c11"
+                class="c13"
+              >
+                Every node using AWS IAM method to join your Teleport cluster needs to be assigned an IAM role.
+              </div>
+              <div
+                class="c14"
+              >
+                If it doesn't already exist, create the IAM role "teleport_join" and add it to all resources you wish to join your Teleport cluster
+              </div>
+              <div
+                class="c14"
+              >
+                For more information, see documentation
+                 
+                <a
+                  class="c15"
+                  href="https://goteleport.com/docs/setup/guides/joining-nodes-aws/"
+                  rel="noreferrer"
+                >
+                  here
+                </a>
+                .
+              </div>
+            </div>
+            <div
+              class="c11"
+            >
+              <span
+                class="c12"
+              >
+                Step 2
+              </span>
+               
+              - Specify which nodes can join your Teleport cluster.
+              <div
+                class="c16"
+              >
+                <div
+                  class="c11"
+                >
+                  <label
+                    class="c17"
+                    font-size="0"
+                  >
+                    AWS Account ID
+                    <span
+                      class="c18"
+                      style="font-weight: normal;"
+                    >
+                       - nodes must match this AWS Account ID to join your Teleport cluster
+                    </span>
+                  </label>
+                  <input
+                    autocomplete="off"
+                    class="c19"
+                    color="text.onLight"
+                    inputmode="text"
+                    name="awsAccountId"
+                    placeholder="111111111111"
+                    type="text"
+                    value=""
+                  />
+                </div>
+              </div>
+              <div
+                class="c20"
               >
                 <label
                   class="c17"
                   font-size="0"
                 >
-                  AWS Account ID
+                  AWS ARN (optional)
                   <span
                     class="c18"
                     style="font-weight: normal;"
                   >
-                     - nodes must match this AWS Account ID to join your Teleport cluster
+                     - nodes must match this AWS ARN to join your Teleport cluster
                   </span>
                 </label>
                 <input
@@ -1115,101 +1143,76 @@ exports[`render iam method after token generation 1`] = `
                   class="c19"
                   color="text.onLight"
                   inputmode="text"
-                  name="awsAccountId"
-                  placeholder="111111111111"
+                  name="awsArn"
+                  placeholder="arn:aws:sts::111111111111:assumed-role/teleport-node-role/i-*"
                   type="text"
                   value=""
                 />
               </div>
             </div>
             <div
-              class="c20"
+              class="c21"
             >
-              <label
-                class="c17"
-                font-size="0"
+              <span
+                class="c22"
               >
-                AWS ARN (optional)
-                <span
-                  class="c18"
-                  style="font-weight: normal;"
+                Step 3
+              </span>
+               
+              - Generate and run script
+              <button
+                class="c23"
+                kind="primary"
+                type="submit"
+              >
+                Generate Script
+              </button>
+              <div
+                class="c21"
+              >
+                <div
+                  class="c24"
                 >
-                   - nodes must match this AWS ARN to join your Teleport cluster
-                </span>
-              </label>
-              <input
-                autocomplete="off"
-                class="c19"
-                color="text.onLight"
-                inputmode="text"
-                name="awsArn"
-                placeholder="arn:aws:sts::111111111111:assumed-role/teleport-node-role/i-*"
-                type="text"
-                value=""
-              />
+                  <div
+                    class="c25"
+                    style="overflow: auto; white-space: pre; word-break: break-all; font-size: 12px; font-family: \\"Droid Sans Mono\\", \\"monospace\\", monospace, \\"Droid Sans Fallback\\";"
+                  >
+                    <div
+                      class="c26"
+                    >
+                      $
+                    </div>
+                    <div>
+                      sudo bash -c "$(curl -fsSL http://localhost/scripts/some-join-token-hash/install-node.sh?method=iam)"
+                    </div>
+                  </div>
+                  <button
+                    class="c27"
+                    kind="primary"
+                    style="max-width: 48px; width: 100%; padding: 4px 8px; min-height: 10px; font-size: 10px;"
+                  >
+                    Copy
+                  </button>
+                </div>
+                <div
+                  class="c13"
+                >
+                  The token generated is not a secret and will not expire. You can use this script in multiple nodes.
+                </div>
+              </div>
             </div>
           </div>
           <div
-            class="c21"
+            class="c28"
           >
-            <span
-              class="c22"
-            >
-              Step 3
-            </span>
-             
-            - Generate and run script
             <button
-              class="c23"
-              kind="primary"
+              class="c29"
+              kind="secondary"
             >
-              Generate Script
+              Close
             </button>
-            <div
-              class="c21"
-            >
-              <div
-                class="c24"
-              >
-                <div
-                  class="c25"
-                  style="overflow: auto; white-space: pre; word-break: break-all; font-size: 12px; font-family: \\"Droid Sans Mono\\", \\"monospace\\", monospace, \\"Droid Sans Fallback\\";"
-                >
-                  <div
-                    class="c26"
-                  >
-                    $
-                  </div>
-                  <div>
-                    sudo bash -c "$(curl -fsSL http://localhost/scripts/some-join-token-hash/install-node.sh?method=iam)"
-                  </div>
-                </div>
-                <button
-                  class="c27"
-                  kind="primary"
-                  style="max-width: 48px; width: 100%; padding: 4px 8px; min-height: 10px; font-size: 10px;"
-                >
-                  Copy
-                </button>
-              </div>
-              <div
-                class="c13"
-              >
-                The token generated is not a secret and will not expire. You can use this script in multiple nodes.
-              </div>
-            </div>
           </div>
-        </div>
-        <div
-          class="c28"
-        >
-          <button
-            class="c29"
-            kind="secondary"
-          >
-            Close
-          </button>
-        </div>
+        </form>
       </div>
     </div>
   </div>
@@ -1609,76 +1612,104 @@ exports[`render iam method when failed 1`] = `
             Manually
           </div>
         </div>
-        <div
-          class="c10"
-        >
+        <form>
           <div
-            class="c11"
-            kind="danger"
+            class="c10"
           >
-            some err
-          </div>
-          <div
-            class="c12"
-          >
-            <span
-              class="c13"
-            >
-              Step 1
-            </span>
-             
-            - Assign IAM role to AWS resources
             <div
-              class="c14"
+              class="c11"
+              kind="danger"
             >
-              Every node using AWS IAM method to join your Teleport cluster needs to be assigned an IAM role.
+              some err
             </div>
             <div
-              class="c15"
+              class="c12"
             >
-              If it doesn't already exist, create the IAM role "teleport_join" and add it to all resources you wish to join your Teleport cluster
-            </div>
-            <div
-              class="c15"
-            >
-              For more information, see documentation
-               
-              <a
-                class="c16"
-                href="https://goteleport.com/docs/setup/guides/joining-nodes-aws/"
-                rel="noreferrer"
+              <span
+                class="c13"
               >
-                here
-              </a>
-              .
-            </div>
-          </div>
-          <div
-            class="c12"
-          >
-            <span
-              class="c13"
-            >
-              Step 2
-            </span>
-             
-            - Specify which nodes can join your Teleport cluster.
-            <div
-              class="c17"
-            >
+                Step 1
+              </span>
+               
+              - Assign IAM role to AWS resources
               <div
-                class="c12"
+                class="c14"
+              >
+                Every node using AWS IAM method to join your Teleport cluster needs to be assigned an IAM role.
+              </div>
+              <div
+                class="c15"
+              >
+                If it doesn't already exist, create the IAM role "teleport_join" and add it to all resources you wish to join your Teleport cluster
+              </div>
+              <div
+                class="c15"
+              >
+                For more information, see documentation
+                 
+                <a
+                  class="c16"
+                  href="https://goteleport.com/docs/setup/guides/joining-nodes-aws/"
+                  rel="noreferrer"
+                >
+                  here
+                </a>
+                .
+              </div>
+            </div>
+            <div
+              class="c12"
+            >
+              <span
+                class="c13"
+              >
+                Step 2
+              </span>
+               
+              - Specify which nodes can join your Teleport cluster.
+              <div
+                class="c17"
+              >
+                <div
+                  class="c12"
+                >
+                  <label
+                    class="c18"
+                    font-size="0"
+                  >
+                    AWS Account ID
+                    <span
+                      class="c19"
+                      style="font-weight: normal;"
+                    >
+                       - nodes must match this AWS Account ID to join your Teleport cluster
+                    </span>
+                  </label>
+                  <input
+                    autocomplete="off"
+                    class="c20"
+                    color="text.onLight"
+                    inputmode="text"
+                    name="awsAccountId"
+                    placeholder="111111111111"
+                    type="text"
+                    value=""
+                  />
+                </div>
+              </div>
+              <div
+                class="c21"
               >
                 <label
                   class="c18"
                   font-size="0"
                 >
-                  AWS Account ID
+                  AWS ARN (optional)
                   <span
                     class="c19"
                     style="font-weight: normal;"
                   >
-                     - nodes must match this AWS Account ID to join your Teleport cluster
+                     - nodes must match this AWS ARN to join your Teleport cluster
                   </span>
                 </label>
                 <input
@@ -1686,69 +1717,44 @@ exports[`render iam method when failed 1`] = `
                   class="c20"
                   color="text.onLight"
                   inputmode="text"
-                  name="awsAccountId"
-                  placeholder="111111111111"
+                  name="awsArn"
+                  placeholder="arn:aws:sts::111111111111:assumed-role/teleport-node-role/i-*"
                   type="text"
                   value=""
                 />
               </div>
             </div>
             <div
-              class="c21"
+              class="c22"
             >
-              <label
-                class="c18"
-                font-size="0"
+              <span
+                class="c23"
               >
-                AWS ARN (optional)
-                <span
-                  class="c19"
-                  style="font-weight: normal;"
-                >
-                   - nodes must match this AWS ARN to join your Teleport cluster
-                </span>
-              </label>
-              <input
-                autocomplete="off"
-                class="c20"
-                color="text.onLight"
-                inputmode="text"
-                name="awsArn"
-                placeholder="arn:aws:sts::111111111111:assumed-role/teleport-node-role/i-*"
-                type="text"
-                value=""
-              />
+                Step 3
+              </span>
+               
+              - Generate and run script
+              <button
+                class="c24"
+                kind="primary"
+                type="submit"
+              >
+                Generate Script
+              </button>
+              
             </div>
           </div>
           <div
-            class="c22"
+            class="c25"
           >
-            <span
-              class="c23"
-            >
-              Step 3
-            </span>
-             
-            - Generate and run script
             <button
-              class="c24"
-              kind="primary"
+              class="c26"
+              kind="secondary"
             >
-              Generate Script
+              Close
             </button>
-            
           </div>
-        </div>
-        <div
-          class="c25"
-        >
-          <button
-            class="c26"
-            kind="secondary"
-          >
-            Close
-          </button>
-        </div>
+        </form>
       </div>
     </div>
   </div>
@@ -2127,70 +2133,98 @@ exports[`render iam method while processing 1`] = `
             Manually
           </div>
         </div>
-        <div
-          class="c10"
-        >
+        <form>
           <div
-            class="c11"
+            class="c10"
           >
-            <span
-              class="c12"
-            >
-              Step 1
-            </span>
-             
-            - Assign IAM role to AWS resources
             <div
-              class="c13"
+              class="c11"
             >
-              Every node using AWS IAM method to join your Teleport cluster needs to be assigned an IAM role.
-            </div>
-            <div
-              class="c14"
-            >
-              If it doesn't already exist, create the IAM role "teleport_join" and add it to all resources you wish to join your Teleport cluster
-            </div>
-            <div
-              class="c14"
-            >
-              For more information, see documentation
-               
-              <a
-                class="c15"
-                href="https://goteleport.com/docs/setup/guides/joining-nodes-aws/"
-                rel="noreferrer"
+              <span
+                class="c12"
               >
-                here
-              </a>
-              .
-            </div>
-          </div>
-          <div
-            class="c11"
-          >
-            <span
-              class="c12"
-            >
-              Step 2
-            </span>
-             
-            - Specify which nodes can join your Teleport cluster.
-            <div
-              class="c16"
-            >
+                Step 1
+              </span>
+               
+              - Assign IAM role to AWS resources
               <div
-                class="c11"
+                class="c13"
+              >
+                Every node using AWS IAM method to join your Teleport cluster needs to be assigned an IAM role.
+              </div>
+              <div
+                class="c14"
+              >
+                If it doesn't already exist, create the IAM role "teleport_join" and add it to all resources you wish to join your Teleport cluster
+              </div>
+              <div
+                class="c14"
+              >
+                For more information, see documentation
+                 
+                <a
+                  class="c15"
+                  href="https://goteleport.com/docs/setup/guides/joining-nodes-aws/"
+                  rel="noreferrer"
+                >
+                  here
+                </a>
+                .
+              </div>
+            </div>
+            <div
+              class="c11"
+            >
+              <span
+                class="c12"
+              >
+                Step 2
+              </span>
+               
+              - Specify which nodes can join your Teleport cluster.
+              <div
+                class="c16"
+              >
+                <div
+                  class="c11"
+                >
+                  <label
+                    class="c17"
+                    font-size="0"
+                  >
+                    AWS Account ID
+                    <span
+                      class="c18"
+                      style="font-weight: normal;"
+                    >
+                       - nodes must match this AWS Account ID to join your Teleport cluster
+                    </span>
+                  </label>
+                  <input
+                    autocomplete="off"
+                    class="c19"
+                    color="text.onLight"
+                    inputmode="text"
+                    name="awsAccountId"
+                    placeholder="111111111111"
+                    type="text"
+                    value=""
+                  />
+                </div>
+              </div>
+              <div
+                class="c20"
               >
                 <label
                   class="c17"
                   font-size="0"
                 >
-                  AWS Account ID
+                  AWS ARN (optional)
                   <span
                     class="c18"
                     style="font-weight: normal;"
                   >
-                     - nodes must match this AWS Account ID to join your Teleport cluster
+                     - nodes must match this AWS ARN to join your Teleport cluster
                   </span>
                 </label>
                 <input
@@ -2198,70 +2232,45 @@ exports[`render iam method while processing 1`] = `
                   class="c19"
                   color="text.onLight"
                   inputmode="text"
-                  name="awsAccountId"
-                  placeholder="111111111111"
+                  name="awsArn"
+                  placeholder="arn:aws:sts::111111111111:assumed-role/teleport-node-role/i-*"
                   type="text"
                   value=""
                 />
               </div>
             </div>
             <div
-              class="c20"
+              class="c21"
             >
-              <label
-                class="c17"
-                font-size="0"
+              <span
+                class="c22"
               >
-                AWS ARN (optional)
-                <span
-                  class="c18"
-                  style="font-weight: normal;"
-                >
-                   - nodes must match this AWS ARN to join your Teleport cluster
-                </span>
-              </label>
-              <input
-                autocomplete="off"
-                class="c19"
-                color="text.onLight"
-                inputmode="text"
-                name="awsArn"
-                placeholder="arn:aws:sts::111111111111:assumed-role/teleport-node-role/i-*"
-                type="text"
-                value=""
-              />
+                Step 3
+              </span>
+               
+              - Generate and run script
+              <button
+                class="c23"
+                disabled=""
+                kind="primary"
+                type="submit"
+              >
+                Generate Script
+              </button>
+              
             </div>
           </div>
           <div
-            class="c21"
+            class="c24"
           >
-            <span
-              class="c22"
-            >
-              Step 3
-            </span>
-             
-            - Generate and run script
             <button
-              class="c23"
-              disabled=""
-              kind="primary"
+              class="c25"
+              kind="secondary"
             >
-              Generate Script
+              Close
             </button>
-            
           </div>
-        </div>
-        <div
-          class="c24"
-        >
-          <button
-            class="c25"
-            kind="secondary"
-          >
-            Close
-          </button>
-        </div>
+        </form>
       </div>
     </div>
   </div>
@@ -2640,70 +2649,98 @@ exports[`render iam method without a token generated yet 1`] = `
             Manually
           </div>
         </div>
-        <div
-          class="c10"
-        >
+        <form>
           <div
-            class="c11"
+            class="c10"
           >
-            <span
-              class="c12"
-            >
-              Step 1
-            </span>
-             
-            - Assign IAM role to AWS resources
             <div
-              class="c13"
+              class="c11"
             >
-              Every node using AWS IAM method to join your Teleport cluster needs to be assigned an IAM role.
-            </div>
-            <div
-              class="c14"
-            >
-              If it doesn't already exist, create the IAM role "teleport_join" and add it to all resources you wish to join your Teleport cluster
-            </div>
-            <div
-              class="c14"
-            >
-              For more information, see documentation
-               
-              <a
-                class="c15"
-                href="https://goteleport.com/docs/setup/guides/joining-nodes-aws/"
-                rel="noreferrer"
+              <span
+                class="c12"
               >
-                here
-              </a>
-              .
-            </div>
-          </div>
-          <div
-            class="c11"
-          >
-            <span
-              class="c12"
-            >
-              Step 2
-            </span>
-             
-            - Specify which nodes can join your Teleport cluster.
-            <div
-              class="c16"
-            >
+                Step 1
+              </span>
+               
+              - Assign IAM role to AWS resources
               <div
-                class="c11"
+                class="c13"
+              >
+                Every node using AWS IAM method to join your Teleport cluster needs to be assigned an IAM role.
+              </div>
+              <div
+                class="c14"
+              >
+                If it doesn't already exist, create the IAM role "teleport_join" and add it to all resources you wish to join your Teleport cluster
+              </div>
+              <div
+                class="c14"
+              >
+                For more information, see documentation
+                 
+                <a
+                  class="c15"
+                  href="https://goteleport.com/docs/setup/guides/joining-nodes-aws/"
+                  rel="noreferrer"
+                >
+                  here
+                </a>
+                .
+              </div>
+            </div>
+            <div
+              class="c11"
+            >
+              <span
+                class="c12"
+              >
+                Step 2
+              </span>
+               
+              - Specify which nodes can join your Teleport cluster.
+              <div
+                class="c16"
+              >
+                <div
+                  class="c11"
+                >
+                  <label
+                    class="c17"
+                    font-size="0"
+                  >
+                    AWS Account ID
+                    <span
+                      class="c18"
+                      style="font-weight: normal;"
+                    >
+                       - nodes must match this AWS Account ID to join your Teleport cluster
+                    </span>
+                  </label>
+                  <input
+                    autocomplete="off"
+                    class="c19"
+                    color="text.onLight"
+                    inputmode="text"
+                    name="awsAccountId"
+                    placeholder="111111111111"
+                    type="text"
+                    value=""
+                  />
+                </div>
+              </div>
+              <div
+                class="c20"
               >
                 <label
                   class="c17"
                   font-size="0"
                 >
-                  AWS Account ID
+                  AWS ARN (optional)
                   <span
                     class="c18"
                     style="font-weight: normal;"
                   >
-                     - nodes must match this AWS Account ID to join your Teleport cluster
+                     - nodes must match this AWS ARN to join your Teleport cluster
                   </span>
                 </label>
                 <input
@@ -2711,69 +2748,44 @@ exports[`render iam method without a token generated yet 1`] = `
                   class="c19"
                   color="text.onLight"
                   inputmode="text"
-                  name="awsAccountId"
-                  placeholder="111111111111"
+                  name="awsArn"
+                  placeholder="arn:aws:sts::111111111111:assumed-role/teleport-node-role/i-*"
                   type="text"
                   value=""
                 />
               </div>
             </div>
             <div
-              class="c20"
+              class="c21"
             >
-              <label
-                class="c17"
-                font-size="0"
+              <span
+                class="c22"
               >
-                AWS ARN (optional)
-                <span
-                  class="c18"
-                  style="font-weight: normal;"
-                >
-                   - nodes must match this AWS ARN to join your Teleport cluster
-                </span>
-              </label>
-              <input
-                autocomplete="off"
-                class="c19"
-                color="text.onLight"
-                inputmode="text"
-                name="awsArn"
-                placeholder="arn:aws:sts::111111111111:assumed-role/teleport-node-role/i-*"
-                type="text"
-                value=""
-              />
+                Step 3
+              </span>
+               
+              - Generate and run script
+              <button
+                class="c23"
+                kind="primary"
+                type="submit"
+              >
+                Generate Script
+              </button>
+              
             </div>
           </div>
           <div
-            class="c21"
+            class="c24"
           >
-            <span
-              class="c22"
-            >
-              Step 3
-            </span>
-             
-            - Generate and run script
             <button
-              class="c23"
-              kind="primary"
+              class="c25"
+              kind="secondary"
             >
-              Generate Script
+              Close
             </button>
-            
           </div>
-        </div>
-        <div
-          class="c24"
-        >
-          <button
-            class="c25"
-            kind="secondary"
-          >
-            Close
-          </button>
-        </div>
+        </form>
       </div>
     </div>
   </div>
