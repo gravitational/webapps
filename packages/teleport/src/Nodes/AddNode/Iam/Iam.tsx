@@ -39,7 +39,7 @@ export default function Iam({ token, attempt, onGenerate, onClose }: Props) {
                 Step 1
               </Text>{' '}
               - Assign IAM role to AWS resources
-              <Text mt={1}>
+              <Text mt={2}>
                 Every node using AWS IAM method to join your Teleport cluster
                 needs to be assigned an IAM role.
               </Text>
@@ -61,44 +61,31 @@ export default function Iam({ token, attempt, onGenerate, onClose }: Props) {
                 Step 2
               </Text>{' '}
               - Specify which nodes can join your Teleport cluster.
-              <RuleBox
-                bg="primary.lighter"
-                borderRadius="2"
-                mt={1}
-                p="3"
-                position="relative"
-              >
-                <Text typography="h5">{`Rule`}</Text>
-                <>
-                  <Box>
-                    <FieldInput
-                      label="AWS Account ID - nodes must match this AWS Account ID to join your Teleport cluster"
-                      autoFocus
-                      name="awsAccountId"
-                      onChange={e =>
-                        setRule({ ...rule, awsAccountId: e.target.value })
-                      }
-                      rule={requiredAwsAccountId}
-                      placeholder="111111111111"
-                      value={rule.awsAccountId}
-                      onKeyPress={e =>
-                        e.key === 'Enter' && handleGenerate(validator)
-                      }
-                    />
-                  </Box>
-                  <FieldInput
-                    mb={2}
-                    label="AWS ARN (optional) - nodes must match this AWS ARN to join your Teleport cluster"
-                    name="awsArn"
-                    onChange={e => setRule({ ...rule, awsArn: e.target.value })}
-                    placeholder="arn:aws:sts::111111111111:assumed-role/teleport-node-role/i-*"
-                    value={rule.awsArn}
-                    onKeyPress={e =>
-                      e.key === 'Enter' && handleGenerate(validator)
-                    }
-                  />
-                </>
-              </RuleBox>
+              <Box mt={2}>
+                <FieldInput
+                  label="AWS Account ID - nodes must match this AWS Account ID to join your Teleport cluster"
+                  autoFocus
+                  name="awsAccountId"
+                  onChange={e =>
+                    setRule({ ...rule, awsAccountId: e.target.value })
+                  }
+                  rule={requiredAwsAccountId}
+                  placeholder="111111111111"
+                  value={rule.awsAccountId}
+                  onKeyPress={e =>
+                    e.key === 'Enter' && handleGenerate(validator)
+                  }
+                />
+              </Box>
+              <FieldInput
+                mb={2}
+                label="AWS ARN (optional) - nodes must match this AWS ARN to join your Teleport cluster"
+                name="awsArn"
+                onChange={e => setRule({ ...rule, awsArn: e.target.value })}
+                placeholder="arn:aws:sts::111111111111:assumed-role/teleport-node-role/i-*"
+                value={rule.awsArn}
+                onKeyPress={e => e.key === 'Enter' && handleGenerate(validator)}
+              />
             </Box>
             <Box>
               <Text bold as="span">
@@ -106,7 +93,7 @@ export default function Iam({ token, attempt, onGenerate, onClose }: Props) {
               </Text>{' '}
               - Generate and run script
               <ButtonPrimary
-                mt={1}
+                mt={2}
                 block
                 disabled={attempt.status === 'processing'}
                 onClick={() => handleGenerate(validator)}
