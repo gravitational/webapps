@@ -1177,7 +1177,7 @@ exports[`render iam method after token generation 1`] = `
               <div
                 class="c13"
               >
-                The token generated is not a secret and will not expire. You can use this script to join multiple nodes.
+                The token generated is not a secret and will not expire. You can use this script in multiple nodes.
               </div>
             </div>
           </div>

@@ -1,5 +1,4 @@
 import React from 'react';
-import styled from 'styled-components';
 import { DialogContent, DialogFooter } from 'design/Dialog';
 import { Text, Box, ButtonPrimary, Link, Alert, ButtonSecondary } from 'design';
 import TextSelectCopy from 'teleport/components/TextSelectCopy';
