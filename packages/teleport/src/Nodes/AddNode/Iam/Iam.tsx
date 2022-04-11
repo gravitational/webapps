@@ -133,6 +133,9 @@ export default function Iam({ token, attempt, onGenerate, onClose }: Props) {
                           rule={requiredAwsAccountId}
                           placeholder="111111111111"
                           value={rule.awsAccountId}
+                          onKeyPress={e =>
+                            e.key === 'Enter' && handleGenerate(validator)
+                          }
                         />
                       </Box>
                       <FieldInput
@@ -142,6 +145,9 @@ export default function Iam({ token, attempt, onGenerate, onClose }: Props) {
                         onChange={e => handleChange(index, e)}
                         placeholder="arn:aws:sts::111111111111:assumed-role/teleport-node-role/i-*"
                         value={rule.awsArn}
+                        onKeyPress={e =>
+                          e.key === 'Enter' && handleGenerate(validator)
+                        }
                       />
                     </>
                   )}
