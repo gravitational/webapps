@@ -108,7 +108,7 @@ export default function Iam({ token, attempt, onGenerate, onClose }: Props) {
                   />
                   <Text mt={2}>
                     The token generated is not a secret and will not expire. You
-                    can use this script to join multiple nodes.
+                    can use this script in multiple nodes.
                   </Text>
                 </Box>
               )}
