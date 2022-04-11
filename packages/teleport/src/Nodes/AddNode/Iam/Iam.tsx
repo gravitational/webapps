@@ -14,21 +14,22 @@ export default function Iam({ token, attempt, onGenerate, onClose }: Props) {
     awsArn: '',
   });
 
-  function handleGenerate(validator: Validator) {
+  function handleGenerate(e: React.SyntheticEvent, validator: Validator) {
+    e.preventDefault();
+
     // validate() will run the rule functions of the form inputs
     // it will automatically update the UI with error messages if the validation fails.
     // No need for further actions here in case it fails
     if (!validator.validate()) {
       return;
     }
-
     onGenerate(rule);
   }
 
   return (
     <Validation>
       {({ validator }) => (
-        <>
+        <form onSubmit={e => handleGenerate(e, validator)}>
           <DialogContent flex="0 0 auto" minHeight="400px">
             {attempt.status === 'failed' && (
               <Alert kind="danger" children={attempt.statusText} />
@@ -72,9 +73,6 @@ export default function Iam({ token, attempt, onGenerate, onClose }: Props) {
                   rule={requiredAwsAccountId}
                   placeholder="111111111111"
                   value={rule.awsAccountId}
-                  onKeyPress={e =>
-                    e.key === 'Enter' && handleGenerate(validator)
-                  }
                 />
               </Box>
               <FieldInput
@@ -85,7 +83,6 @@ export default function Iam({ token, attempt, onGenerate, onClose }: Props) {
                 onChange={e => setRule({ ...rule, awsArn: e.target.value })}
                 placeholder="arn:aws:sts::111111111111:assumed-role/teleport-node-role/i-*"
                 value={rule.awsArn}
-                onKeyPress={e => e.key === 'Enter' && handleGenerate(validator)}
               />
             </Box>
             <Box>
@@ -97,7 +94,7 @@ export default function Iam({ token, attempt, onGenerate, onClose }: Props) {
                 mt={2}
                 block
                 disabled={attempt.status === 'processing'}
-                onClick={() => handleGenerate(validator)}
+                type="submit"
               >
                 Generate Script
               </ButtonPrimary>
@@ -118,7 +115,7 @@ export default function Iam({ token, attempt, onGenerate, onClose }: Props) {
           <DialogFooter>
             <ButtonSecondary onClick={onClose}>Close</ButtonSecondary>
           </DialogFooter>
-        </>
+        </form>
       )}
     </Validation>
   );
