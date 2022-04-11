@@ -621,7 +621,7 @@ exports[`render iam method after token generation 1`] = `
   margin-bottom: 8px;
 }
 
-.c28 {
+.c25 {
   box-sizing: border-box;
   margin-right: 4px;
 }
@@ -650,6 +650,8 @@ exports[`render iam method after token generation 1`] = `
   min-height: 32px;
   font-size: 12px;
   padding: 0px 24px;
+  margin-top: 4px;
+  width: 100%;
 }
 
 .c22:active {
@@ -670,7 +672,7 @@ exports[`render iam method after token generation 1`] = `
   color: rgba(255,255,255,0.3);
 }
 
-.c25 {
+.c26 {
   line-height: 1.5;
   margin: 0;
   display: inline-flex;
@@ -694,29 +696,27 @@ exports[`render iam method after token generation 1`] = `
   min-height: 32px;
   font-size: 12px;
   padding: 0px 24px;
-  margin-top: 4px;
-  width: 100%;
 }
 
-.c25:active {
+.c26:active {
   opacity: 0.56;
 }
 
-.c25:hover,
-.c25:focus {
+.c26:hover,
+.c26:focus {
   background: #651FFF;
 }
 
-.c25:active {
+.c26:active {
   background: #354AA4;
 }
 
-.c25:disabled {
+.c26:disabled {
   background: rgba(255,255,255,0.12);
   color: rgba(255,255,255,0.3);
 }
 
-.c31 {
+.c29 {
   line-height: 1.5;
   margin: 0;
   display: inline-flex;
@@ -742,16 +742,16 @@ exports[`render iam method after token generation 1`] = `
   padding: 0px 24px;
 }
 
-.c31:active {
+.c29:active {
   opacity: 0.56;
 }
 
-.c31:hover,
-.c31:focus {
+.c29:hover,
+.c29:focus {
   background: #2C3A73;
 }
 
-.c31:disabled {
+.c29:disabled {
   background: rgba(255,255,255,0.12);
   color: rgba(255,255,255,0.3);
 }
@@ -761,20 +761,6 @@ exports[`render iam method after token generation 1`] = `
   transition: color .3s;
   margin-right: 8px;
   color: #FFFFFF;
-}
-
-.c21 {
-  color: #03a9f4;
-  font-weight: normal;
-  background: none;
-  text-decoration: underline;
-  text-transform: none;
-  padding: 0 8px;
-}
-
-.c21:hover,
-.c21:focus {
-  background: #222C59;
 }
 
 .c19 {
@@ -859,14 +845,14 @@ exports[`render iam method after token generation 1`] = `
   margin: 0px;
 }
 
-.c24 {
+.c21 {
   overflow: hidden;
   text-overflow: ellipsis;
   font-weight: 600;
   margin: 0px;
 }
 
-.c29 {
+.c27 {
   overflow: hidden;
   text-overflow: ellipsis;
   margin: 0px;
@@ -888,7 +874,7 @@ exports[`render iam method after token generation 1`] = `
   justify-content: space-between;
 }
 
-.c26 {
+.c23 {
   box-sizing: border-box;
   margin-top: 8px;
   padding: 8px;
@@ -899,7 +885,7 @@ exports[`render iam method after token generation 1`] = `
   justify-content: space-between;
 }
 
-.c27 {
+.c24 {
   box-sizing: border-box;
   margin-right: 8px;
   display: flex;
@@ -996,7 +982,7 @@ exports[`render iam method after token generation 1`] = `
   flex-direction: column;
 }
 
-.c30 {
+.c28 {
   box-sizing: border-box;
 }
 
@@ -1012,13 +998,6 @@ exports[`render iam method after token generation 1`] = `
 
 .c15:last-of-type {
   margin-bottom: 8px;
-}
-
-.c23 {
-  font-weight: bold;
-  font-size: 14px;
-  color: white;
-  text-decoration: none;
 }
 
 <div
@@ -1131,7 +1110,7 @@ exports[`render iam method after token generation 1`] = `
               <div
                 class="c16"
               >
-                Rule #1
+                Rule
               </div>
               <div
                 class="c17"
@@ -1178,25 +1157,19 @@ exports[`render iam method after token generation 1`] = `
                 />
               </div>
             </div>
-            <a
-              class="c21 c22 c23"
-              kind="primary"
-            >
-              + Add new rule
-            </a>
           </div>
           <div
             class="c17"
           >
             <span
-              class="c24"
+              class="c21"
             >
               Step 3
             </span>
              
             - Generate and run script
             <button
-              class="c25"
+              class="c22"
               kind="primary"
             >
               Generate Script
@@ -1205,23 +1178,23 @@ exports[`render iam method after token generation 1`] = `
               class="c17"
             >
               <div
-                class="c26"
+                class="c23"
               >
                 <div
-                  class="c27"
+                  class="c24"
                   style="overflow: auto; white-space: pre; word-break: break-all; font-size: 12px; font-family: \\"Droid Sans Mono\\", \\"monospace\\", monospace, \\"Droid Sans Fallback\\";"
                 >
                   <div
-                    class="c28"
+                    class="c25"
                   >
                     $
                   </div>
                   <div>
-                    teleport start --roles=node --token=some-join-token-hash --auth-server=localhost:443 --join-method=iam
+                    sudo bash -c "$(curl -fsSL http://localhost/scripts/some-join-token-hash/install-node.sh?method=iam)"
                   </div>
                 </div>
                 <button
-                  class="c22"
+                  class="c26"
                   kind="primary"
                   style="max-width: 48px; width: 100%; padding: 4px 8px; min-height: 10px; font-size: 10px;"
                 >
@@ -1229,7 +1202,7 @@ exports[`render iam method after token generation 1`] = `
                 </button>
               </div>
               <div
-                class="c29"
+                class="c27"
               >
                 The token generated is not a secret and will not expire. You can use this script to join multiple nodes.
               </div>
@@ -1237,10 +1210,10 @@ exports[`render iam method after token generation 1`] = `
           </div>
         </div>
         <div
-          class="c30"
+          class="c28"
         >
           <button
-            class="c31"
+            class="c29"
             kind="secondary"
           >
             Close
@@ -1312,6 +1285,8 @@ exports[`render iam method when failed 1`] = `
   min-height: 32px;
   font-size: 12px;
   padding: 0px 24px;
+  margin-top: 4px;
+  width: 100%;
 }
 
 .c23:active {
@@ -1332,53 +1307,7 @@ exports[`render iam method when failed 1`] = `
   color: rgba(255,255,255,0.3);
 }
 
-.c26 {
-  line-height: 1.5;
-  margin: 0;
-  display: inline-flex;
-  justify-content: center;
-  align-items: center;
-  box-sizing: border-box;
-  border: none;
-  border-radius: 4px;
-  cursor: pointer;
-  font-family: inherit;
-  font-weight: 600;
-  outline: none;
-  position: relative;
-  text-align: center;
-  text-decoration: none;
-  text-transform: uppercase;
-  transition: all 0.3s;
-  -webkit-font-smoothing: antialiased;
-  background: #512FC9;
-  color: rgba(255,255,255,0.87);
-  min-height: 32px;
-  font-size: 12px;
-  padding: 0px 24px;
-  margin-top: 4px;
-  width: 100%;
-}
-
-.c26:active {
-  opacity: 0.56;
-}
-
-.c26:hover,
-.c26:focus {
-  background: #651FFF;
-}
-
-.c26:active {
-  background: #354AA4;
-}
-
-.c26:disabled {
-  background: rgba(255,255,255,0.12);
-  color: rgba(255,255,255,0.3);
-}
-
-.c28 {
+.c25 {
   line-height: 1.5;
   margin: 0;
   display: inline-flex;
@@ -1404,16 +1333,16 @@ exports[`render iam method when failed 1`] = `
   padding: 0px 24px;
 }
 
-.c28:active {
+.c25:active {
   opacity: 0.56;
 }
 
-.c28:hover,
-.c28:focus {
+.c25:hover,
+.c25:focus {
   background: #2C3A73;
 }
 
-.c28:disabled {
+.c25:disabled {
   background: rgba(255,255,255,0.12);
   color: rgba(255,255,255,0.3);
 }
@@ -1423,20 +1352,6 @@ exports[`render iam method when failed 1`] = `
   transition: color .3s;
   margin-right: 8px;
   color: #FFFFFF;
-}
-
-.c22 {
-  color: #03a9f4;
-  font-weight: normal;
-  background: none;
-  text-decoration: underline;
-  text-transform: none;
-  padding: 0 8px;
-}
-
-.c22:hover,
-.c22:focus {
-  background: #222C59;
 }
 
 .c20 {
@@ -1521,7 +1436,7 @@ exports[`render iam method when failed 1`] = `
   margin: 0px;
 }
 
-.c25 {
+.c22 {
   overflow: hidden;
   text-overflow: ellipsis;
   font-weight: 600;
@@ -1634,7 +1549,7 @@ exports[`render iam method when failed 1`] = `
   flex-direction: column;
 }
 
-.c27 {
+.c24 {
   box-sizing: border-box;
 }
 
@@ -1650,13 +1565,6 @@ exports[`render iam method when failed 1`] = `
 
 .c16:last-of-type {
   margin-bottom: 8px;
-}
-
-.c24 {
-  font-weight: bold;
-  font-size: 14px;
-  color: white;
-  text-decoration: none;
 }
 
 <div
@@ -1775,7 +1683,7 @@ exports[`render iam method when failed 1`] = `
               <div
                 class="c17"
               >
-                Rule #1
+                Rule
               </div>
               <div
                 class="c18"
@@ -1822,25 +1730,19 @@ exports[`render iam method when failed 1`] = `
                 />
               </div>
             </div>
-            <a
-              class="c22 c23 c24"
-              kind="primary"
-            >
-              + Add new rule
-            </a>
           </div>
           <div
             class="c18"
           >
             <span
-              class="c25"
+              class="c22"
             >
               Step 3
             </span>
              
             - Generate and run script
             <button
-              class="c26"
+              class="c23"
               kind="primary"
             >
               Generate Script
@@ -1849,10 +1751,10 @@ exports[`render iam method when failed 1`] = `
           </div>
         </div>
         <div
-          class="c27"
+          class="c24"
         >
           <button
-            class="c28"
+            class="c25"
             kind="secondary"
           >
             Close
@@ -1903,6 +1805,8 @@ exports[`render iam method while processing 1`] = `
   min-height: 32px;
   font-size: 12px;
   padding: 0px 24px;
+  margin-top: 4px;
+  width: 100%;
 }
 
 .c22:active {
@@ -1923,53 +1827,7 @@ exports[`render iam method while processing 1`] = `
   color: rgba(255,255,255,0.3);
 }
 
-.c25 {
-  line-height: 1.5;
-  margin: 0;
-  display: inline-flex;
-  justify-content: center;
-  align-items: center;
-  box-sizing: border-box;
-  border: none;
-  border-radius: 4px;
-  cursor: pointer;
-  font-family: inherit;
-  font-weight: 600;
-  outline: none;
-  position: relative;
-  text-align: center;
-  text-decoration: none;
-  text-transform: uppercase;
-  transition: all 0.3s;
-  -webkit-font-smoothing: antialiased;
-  background: #512FC9;
-  color: rgba(255,255,255,0.87);
-  min-height: 32px;
-  font-size: 12px;
-  padding: 0px 24px;
-  margin-top: 4px;
-  width: 100%;
-}
-
-.c25:active {
-  opacity: 0.56;
-}
-
-.c25:hover,
-.c25:focus {
-  background: #651FFF;
-}
-
-.c25:active {
-  background: #354AA4;
-}
-
-.c25:disabled {
-  background: rgba(255,255,255,0.12);
-  color: rgba(255,255,255,0.3);
-}
-
-.c27 {
+.c24 {
   line-height: 1.5;
   margin: 0;
   display: inline-flex;
@@ -1995,16 +1853,16 @@ exports[`render iam method while processing 1`] = `
   padding: 0px 24px;
 }
 
-.c27:active {
+.c24:active {
   opacity: 0.56;
 }
 
-.c27:hover,
-.c27:focus {
+.c24:hover,
+.c24:focus {
   background: #2C3A73;
 }
 
-.c27:disabled {
+.c24:disabled {
   background: rgba(255,255,255,0.12);
   color: rgba(255,255,255,0.3);
 }
@@ -2014,20 +1872,6 @@ exports[`render iam method while processing 1`] = `
   transition: color .3s;
   margin-right: 8px;
   color: #FFFFFF;
-}
-
-.c21 {
-  color: #03a9f4;
-  font-weight: normal;
-  background: none;
-  text-decoration: underline;
-  text-transform: none;
-  padding: 0 8px;
-}
-
-.c21:hover,
-.c21:focus {
-  background: #222C59;
 }
 
 .c19 {
@@ -2112,7 +1956,7 @@ exports[`render iam method while processing 1`] = `
   margin: 0px;
 }
 
-.c24 {
+.c21 {
   overflow: hidden;
   text-overflow: ellipsis;
   font-weight: 600;
@@ -2225,7 +2069,7 @@ exports[`render iam method while processing 1`] = `
   flex-direction: column;
 }
 
-.c26 {
+.c23 {
   box-sizing: border-box;
 }
 
@@ -2241,13 +2085,6 @@ exports[`render iam method while processing 1`] = `
 
 .c15:last-of-type {
   margin-bottom: 8px;
-}
-
-.c23 {
-  font-weight: bold;
-  font-size: 14px;
-  color: white;
-  text-decoration: none;
 }
 
 <div
@@ -2360,7 +2197,7 @@ exports[`render iam method while processing 1`] = `
               <div
                 class="c16"
               >
-                Rule #1
+                Rule
               </div>
               <div
                 class="c17"
@@ -2407,25 +2244,19 @@ exports[`render iam method while processing 1`] = `
                 />
               </div>
             </div>
-            <a
-              class="c21 c22 c23"
-              kind="primary"
-            >
-              + Add new rule
-            </a>
           </div>
           <div
             class="c17"
           >
             <span
-              class="c24"
+              class="c21"
             >
               Step 3
             </span>
              
             - Generate and run script
             <button
-              class="c25"
+              class="c22"
               disabled=""
               kind="primary"
             >
@@ -2435,10 +2266,10 @@ exports[`render iam method while processing 1`] = `
           </div>
         </div>
         <div
-          class="c26"
+          class="c23"
         >
           <button
-            class="c27"
+            class="c24"
             kind="secondary"
           >
             Close
@@ -2489,6 +2320,8 @@ exports[`render iam method without a token generated yet 1`] = `
   min-height: 32px;
   font-size: 12px;
   padding: 0px 24px;
+  margin-top: 4px;
+  width: 100%;
 }
 
 .c22:active {
@@ -2509,53 +2342,7 @@ exports[`render iam method without a token generated yet 1`] = `
   color: rgba(255,255,255,0.3);
 }
 
-.c25 {
-  line-height: 1.5;
-  margin: 0;
-  display: inline-flex;
-  justify-content: center;
-  align-items: center;
-  box-sizing: border-box;
-  border: none;
-  border-radius: 4px;
-  cursor: pointer;
-  font-family: inherit;
-  font-weight: 600;
-  outline: none;
-  position: relative;
-  text-align: center;
-  text-decoration: none;
-  text-transform: uppercase;
-  transition: all 0.3s;
-  -webkit-font-smoothing: antialiased;
-  background: #512FC9;
-  color: rgba(255,255,255,0.87);
-  min-height: 32px;
-  font-size: 12px;
-  padding: 0px 24px;
-  margin-top: 4px;
-  width: 100%;
-}
-
-.c25:active {
-  opacity: 0.56;
-}
-
-.c25:hover,
-.c25:focus {
-  background: #651FFF;
-}
-
-.c25:active {
-  background: #354AA4;
-}
-
-.c25:disabled {
-  background: rgba(255,255,255,0.12);
-  color: rgba(255,255,255,0.3);
-}
-
-.c27 {
+.c24 {
   line-height: 1.5;
   margin: 0;
   display: inline-flex;
@@ -2581,16 +2368,16 @@ exports[`render iam method without a token generated yet 1`] = `
   padding: 0px 24px;
 }
 
-.c27:active {
+.c24:active {
   opacity: 0.56;
 }
 
-.c27:hover,
-.c27:focus {
+.c24:hover,
+.c24:focus {
   background: #2C3A73;
 }
 
-.c27:disabled {
+.c24:disabled {
   background: rgba(255,255,255,0.12);
   color: rgba(255,255,255,0.3);
 }
@@ -2600,20 +2387,6 @@ exports[`render iam method without a token generated yet 1`] = `
   transition: color .3s;
   margin-right: 8px;
   color: #FFFFFF;
-}
-
-.c21 {
-  color: #03a9f4;
-  font-weight: normal;
-  background: none;
-  text-decoration: underline;
-  text-transform: none;
-  padding: 0 8px;
-}
-
-.c21:hover,
-.c21:focus {
-  background: #222C59;
 }
 
 .c19 {
@@ -2698,7 +2471,7 @@ exports[`render iam method without a token generated yet 1`] = `
   margin: 0px;
 }
 
-.c24 {
+.c21 {
   overflow: hidden;
   text-overflow: ellipsis;
   font-weight: 600;
@@ -2811,7 +2584,7 @@ exports[`render iam method without a token generated yet 1`] = `
   flex-direction: column;
 }
 
-.c26 {
+.c23 {
   box-sizing: border-box;
 }
 
@@ -2827,13 +2600,6 @@ exports[`render iam method without a token generated yet 1`] = `
 
 .c15:last-of-type {
   margin-bottom: 8px;
-}
-
-.c23 {
-  font-weight: bold;
-  font-size: 14px;
-  color: white;
-  text-decoration: none;
 }
 
 <div
@@ -2946,7 +2712,7 @@ exports[`render iam method without a token generated yet 1`] = `
               <div
                 class="c16"
               >
-                Rule #1
+                Rule
               </div>
               <div
                 class="c17"
@@ -2993,25 +2759,19 @@ exports[`render iam method without a token generated yet 1`] = `
                 />
               </div>
             </div>
-            <a
-              class="c21 c22 c23"
-              kind="primary"
-            >
-              + Add new rule
-            </a>
           </div>
           <div
             class="c17"
           >
             <span
-              class="c24"
+              class="c21"
             >
               Step 3
             </span>
              
             - Generate and run script
             <button
-              class="c25"
+              class="c22"
               kind="primary"
             >
               Generate Script
@@ -3020,10 +2780,10 @@ exports[`render iam method without a token generated yet 1`] = `
           </div>
         </div>
         <div
-          class="c26"
+          class="c23"
         >
           <button
-            class="c27"
+            class="c24"
             kind="secondary"
           >
             Close

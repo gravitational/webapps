@@ -1,43 +1,19 @@
 import React from 'react';
 import styled from 'styled-components';
 import { DialogContent, DialogFooter } from 'design/Dialog';
-import {
-  Text,
-  Box,
-  ButtonPrimary,
-  Link,
-  Alert,
-  ButtonLink,
-  ButtonSecondary,
-} from 'design';
+import { Text, Box, ButtonPrimary, Link, Alert, ButtonSecondary } from 'design';
 import TextSelectCopy from 'teleport/components/TextSelectCopy';
 import FieldInput from 'shared/components/FieldInput';
 import Validation, { Validator } from 'shared/components/Validation';
 import { Attempt } from 'shared/hooks/useAttemptNext';
 import { Rule } from 'teleport/services/joinToken';
-import { Pencil } from 'design/Icon';
 import { createBashCommand } from '../useAddNode';
 
 export default function Iam({ token, attempt, onGenerate, onClose }: Props) {
-  const [rules, setRules] = React.useState<RuleForm[]>([
-    {
-      awsAccountId: '',
-      awsArn: '',
-      isCollapsed: false,
-    },
-  ]);
-
-  function updateRule(index: number, rule: RuleForm) {
-    const newRules = [...rules];
-    newRules[index] = rule;
-    setRules(newRules);
-  }
-
-  function handleRemove(index: number) {
-    const newRules = [...rules];
-    newRules.splice(index, 1);
-    setRules(newRules);
-  }
+  const [rule, setRule] = React.useState<Rule>({
+    awsAccountId: '',
+    awsArn: '',
+  });
 
   function handleGenerate(validator: Validator) {
     // validate() will run the rule functions of the form inputs
@@ -47,19 +23,7 @@ export default function Iam({ token, attempt, onGenerate, onClose }: Props) {
       return;
     }
 
-    setRules(rules.map((rule: RuleForm) => ({ ...rule, isCollapsed: true })));
-    onGenerate(rules);
-  }
-
-  function addRule() {
-    setRules([...rules, { awsAccountId: '', awsArn: '', isCollapsed: false }]);
-  }
-
-  function handleChange(index: number, e: React.ChangeEvent<HTMLInputElement>) {
-    updateRule(index, {
-      ...rules[index],
-      [e.target.name]: e.target.value,
-    });
+    onGenerate(rule);
   }
 
   return (
@@ -97,63 +61,44 @@ export default function Iam({ token, attempt, onGenerate, onClose }: Props) {
                 Step 2
               </Text>{' '}
               - Specify which nodes can join your Teleport cluster.
-              {rules.map((rule, index) => (
-                <RuleBox
-                  key={index}
-                  bg="primary.lighter"
-                  borderRadius="2"
-                  mt={1}
-                  p="3"
-                  position="relative"
-                >
-                  <Text typography="h5">{`Rule #${index + 1}`}</Text>
-                  {rule.isCollapsed && (
-                    <ButtonEditRule
-                      title="edit rule"
-                      onClick={() =>
-                        updateRule(index, { ...rule, isCollapsed: false })
+              <RuleBox
+                bg="primary.lighter"
+                borderRadius="2"
+                mt={1}
+                p="3"
+                position="relative"
+              >
+                <Text typography="h5">{`Rule`}</Text>
+                <>
+                  <Box>
+                    <FieldInput
+                      label="AWS Account ID - nodes must match this AWS Account ID to join your Teleport cluster"
+                      autoFocus
+                      name="awsAccountId"
+                      onChange={e =>
+                        setRule({ ...rule, awsAccountId: e.target.value })
                       }
-                    >
-                      <Pencil />
-                    </ButtonEditRule>
-                  )}
-                  {!rule.isCollapsed && (
-                    <>
-                      {index !== 0 && (
-                        <ButtonRemoveRule onClick={() => handleRemove(index)}>
-                          Remove
-                        </ButtonRemoveRule>
-                      )}
-                      <Box>
-                        <FieldInput
-                          label="AWS Account ID - nodes must match this AWS Account ID to join your Teleport cluster"
-                          autoFocus
-                          name="awsAccountId"
-                          onChange={e => handleChange(index, e)}
-                          rule={requiredAwsAccountId}
-                          placeholder="111111111111"
-                          value={rule.awsAccountId}
-                          onKeyPress={e =>
-                            e.key === 'Enter' && handleGenerate(validator)
-                          }
-                        />
-                      </Box>
-                      <FieldInput
-                        mb={2}
-                        label="AWS ARN (optional) - nodes must match this AWS ARN to join your Teleport cluster"
-                        name="awsArn"
-                        onChange={e => handleChange(index, e)}
-                        placeholder="arn:aws:sts::111111111111:assumed-role/teleport-node-role/i-*"
-                        value={rule.awsArn}
-                        onKeyPress={e =>
-                          e.key === 'Enter' && handleGenerate(validator)
-                        }
-                      />
-                    </>
-                  )}
-                </RuleBox>
-              ))}
-              <ButtonAddRule onClick={addRule}>+ Add new rule</ButtonAddRule>
+                      rule={requiredAwsAccountId}
+                      placeholder="111111111111"
+                      value={rule.awsAccountId}
+                      onKeyPress={e =>
+                        e.key === 'Enter' && handleGenerate(validator)
+                      }
+                    />
+                  </Box>
+                  <FieldInput
+                    mb={2}
+                    label="AWS ARN (optional) - nodes must match this AWS ARN to join your Teleport cluster"
+                    name="awsArn"
+                    onChange={e => setRule({ ...rule, awsArn: e.target.value })}
+                    placeholder="arn:aws:sts::111111111111:assumed-role/teleport-node-role/i-*"
+                    value={rule.awsArn}
+                    onKeyPress={e =>
+                      e.key === 'Enter' && handleGenerate(validator)
+                    }
+                  />
+                </>
+              </RuleBox>
             </Box>
             <Box>
               <Text bold as="span">
@@ -200,27 +145,6 @@ const RuleBox = styled(Box)`
   }
 `;
 
-const ButtonAddRule = styled(ButtonLink)`
-  font-weight: bold;
-  font-size: 14px;
-  color: white;
-  text-decoration: none;
-`;
-
-const ButtonEditRule = styled(ButtonLink)`
-  position: absolute;
-  top: 12px;
-  right: 12px;
-  font-size: 16px;
-  text-decoration: none;
-`;
-
-const ButtonRemoveRule = styled(ButtonLink)`
-  position: absolute;
-  top: 12px;
-  right: 12px;
-`;
-
 // AWS account ID is a 12 digit string
 export const AWS_ACC_ID_REGEXP = /^\d{12}$/;
 const requiredAwsAccountId = value => () => {
@@ -236,15 +160,11 @@ const requiredAwsAccountId = value => () => {
   };
 };
 
-type RuleForm = Rule & {
-  isCollapsed: boolean;
-};
-
 type Props = {
   token: string;
   expiry: string;
   attempt: Attempt;
-  onGenerate(rules: Rule[]): Promise<any>;
+  onGenerate(rules: Rule): Promise<any>;
   isEnterprise: boolean;
   version: string;
   onClose(): void;

@@ -50,10 +50,10 @@ export default function useAddNode(ctx: TeleportContext) {
     );
   }
 
-  function createIamJoinToken(rules: Rule[] = []) {
+  function createIamJoinToken(rules: Rule) {
     return run(() =>
       ctx.joinTokenService
-        .fetchJoinToken(['Node'], 'iam', rules)
+        .fetchJoinToken(['Node'], 'iam', [rules])
         .then(iamToken => {
           const expires = formatDistanceStrict(
             new Date(),
