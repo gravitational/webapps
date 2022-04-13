@@ -90,15 +90,22 @@ const StepsWithoutToken = ({ tshLoginCmd, host }) => (
       <Text bold as="span">
         Step 3
       </Text>
+      {' - Generate a join token'}
+      <TextSelectCopy mt="2" text="tctl tokens add --type=node --ttl=1h" />
+    </Box>
+    <Box mb={4}>
+      <Text bold as="span">
+        Step 4
+      </Text>
       {` - Configure your teleport agent`}
       <TextSelectCopy
         mt="2"
-        text={getConfigCmd('[generated-join-token', host)}
+        text={getConfigCmd('[generated-join-token]', host)}
       />
     </Box>
     <Box>
       <Text bold as="span">
-        Step 4
+        Step 5
       </Text>
       {` - Start the Teleport agent with the generated configuration file`}
       <TextSelectCopy mt="2" text={startCmd} />
