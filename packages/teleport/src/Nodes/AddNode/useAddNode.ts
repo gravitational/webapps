@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import useAttempt from 'shared/hooks/useAttemptNext';
 import TeleportContext from 'teleport/teleportContext';
 import cfg from 'teleport/config';
@@ -29,10 +29,6 @@ export default function useAddNode(ctx: TeleportContext) {
   const [method, setMethod] = useState<JoinMethod>('iam');
   const [token, setToken] = useState<JoinToken>(null);
   const [iamJoinToken, setIamJoinToken] = useState<JoinToken>(null);
-
-  useEffect(() => {
-    createJoinToken();
-  }, []);
 
   function createJoinToken() {
     return run(() =>
