@@ -29,7 +29,11 @@ storiesOf('Shared/MenuLogin', module).add('MenuLogin', () => (
     justifyContent="space-around"
     bg="primary.light"
   >
-    <MenuLogin onOpen={() => []} onSelect={() => null} />
+    <MenuLogin
+      onOpen={() => []}
+      onSelect={() => null}
+      placeholder="Please provide user name…"
+    />
     <SampleMenu />
   </Flex>
 ));

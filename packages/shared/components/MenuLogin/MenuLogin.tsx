@@ -60,6 +60,7 @@ class MenuLogin extends React.Component<MenuLoginProps> {
 
   render() {
     const { anchorOrigin, transformOrigin } = this.props;
+    const placeholder = this.props.placeholder || 'Enter login name…';
     const { open, logins } = this.state;
     return (
       <React.Fragment>
@@ -84,6 +85,7 @@ class MenuLogin extends React.Component<MenuLoginProps> {
             logins={logins}
             onKeyPress={this.onKeyPress}
             onClick={this.onItemClick}
+            placeholder={placeholder}
           />
         </Menu>
       </React.Fragment>
@@ -91,7 +93,7 @@ class MenuLogin extends React.Component<MenuLoginProps> {
   }
 }
 
-export const LoginItemList = ({ logins, onClick, onKeyPress }) => {
+export const LoginItemList = ({ logins, onClick, onKeyPress, placeholder }) => {
   logins = logins || [];
   const $menuItems = logins.map((item, key) => {
     const { login, url } = item;
@@ -119,7 +121,7 @@ export const LoginItemList = ({ logins, onClick, onKeyPress }) => {
         onKeyPress={onKeyPress}
         type="text"
         autoFocus
-        placeholder="Enter login name…"
+        placeholder={placeholder}
         autoComplete="off"
       />
       {$menuItems}

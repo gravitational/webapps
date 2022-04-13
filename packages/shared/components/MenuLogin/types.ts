@@ -24,4 +24,5 @@ export type MenuLoginProps = {
   onSelect: (e: React.SyntheticEvent, login: string) => void;
   anchorOrigin?: any;
   transformOrigin?: any;
+  placeholder?: string;
 };
