@@ -100,14 +100,14 @@ export default function Iam({ token, attempt, onGenerate, onClose }: Props) {
               </ButtonPrimary>
               {token && (
                 <Box>
-                  <TextSelectCopy
-                    mt="2"
-                    text={createBashCommand(token, 'iam')}
-                  />
                   <Text mt={2}>
                     The token generated is not a secret and will not expire. You
                     can use this script in multiple nodes.
                   </Text>
+                  <TextSelectCopy
+                    mt="2"
+                    text={createBashCommand(token, 'iam')}
+                  />
                 </Box>
               )}
             </Box>
