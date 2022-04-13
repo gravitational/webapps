@@ -362,7 +362,7 @@ exports[`render automatic tab 1`] = `
                 $
               </div>
               <div>
-                some bash script
+                sudo bash -c "$(curl -fsSL http://localhost/scripts/some-join-token-hash/install-node.sh)"
               </div>
             </div>
             <button
@@ -1737,7 +1737,6 @@ exports[`render iam method when failed 1`] = `
               >
                 Generate Script
               </button>
-              
             </div>
           </div>
           <div
@@ -2251,7 +2250,6 @@ exports[`render iam method while processing 1`] = `
               >
                 Generate Script
               </button>
-              
             </div>
           </div>
           <div
@@ -2764,7 +2762,6 @@ exports[`render iam method without a token generated yet 1`] = `
               >
                 Generate Script
               </button>
-              
             </div>
           </div>
           <div

@@ -28,7 +28,6 @@ export default function Manually({
   isAuthTypeLocal,
   joinToken,
   createJoinToken,
-  expiry,
   attempt,
   onClose,
 }: Props) {
@@ -65,7 +64,6 @@ export default function Manually({
             joinToken={joinToken}
             host={host}
             createJoinToken={createJoinToken}
-            expiry={expiry}
           />
         )}
       </DialogContent>
@@ -76,7 +74,12 @@ export default function Manually({
   );
 }
 
-const StepsWithoutToken = ({ tshLoginCmd, host }) => (
+type StepsWithoutTokenProps = {
+  tshLoginCmd: string;
+  host: string;
+};
+
+const StepsWithoutToken = ({ tshLoginCmd, host }: StepsWithoutTokenProps) => (
   <>
     <Box mb={4}>
       <Text bold as="span">
@@ -105,7 +108,17 @@ const StepsWithoutToken = ({ tshLoginCmd, host }) => (
   </>
 );
 
-const StepsWithToken = ({ joinToken, host, createJoinToken, expiry }) => (
+type StepsWithTokenProps = {
+  joinToken: State['token'];
+  host: string;
+  createJoinToken: State['createJoinToken'];
+};
+
+const StepsWithToken = ({
+  joinToken,
+  host,
+  createJoinToken,
+}: StepsWithTokenProps) => (
   <Box>
     <Text bold as="span">
       Step 2
@@ -114,12 +127,12 @@ const StepsWithToken = ({ joinToken, host, createJoinToken, expiry }) => (
     <Text mt="1">
       The token will be valid for{' '}
       <Text bold as={'span'}>
-        {expiry}.
+        {joinToken.expiryText}.
       </Text>
     </Text>
     <TextSelectCopy
       mt="2"
-      text={`teleport start --roles=node --token=${joinToken} --auth-server=${host} `}
+      text={`teleport start --roles=node --token=${joinToken.id} --auth-server=${host} `}
     />
     <Box>
       <ButtonLink onClick={createJoinToken}>Regenerate Token</ButtonLink>
@@ -132,8 +145,7 @@ type Props = {
   user: string;
   version: string;
   isAuthTypeLocal: boolean;
-  joinToken: string;
-  expiry: State['expiry'];
+  joinToken: State['token'];
   createJoinToken: State['createJoinToken'];
   attempt: State['attempt'];
   onClose(): void;

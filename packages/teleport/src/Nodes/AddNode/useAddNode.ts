@@ -15,10 +15,8 @@ limitations under the License.
 */
 
 import { useState, useEffect } from 'react';
-import { formatDistanceStrict } from 'date-fns';
 import useAttempt from 'shared/hooks/useAttemptNext';
 import TeleportContext from 'teleport/teleportContext';
-import { BashCommand } from 'teleport/services/nodes';
 import cfg from 'teleport/config';
 import { JoinToken, Rule } from 'teleport/services/joinToken';
 
@@ -29,10 +27,8 @@ export default function useAddNode(ctx: TeleportContext) {
   const user = ctx.storeUser.state.username;
   const isAuthTypeLocal = !ctx.storeUser.isSso();
   const [method, setMethod] = useState<JoinMethod>('iam');
-  const [script, setScript] = useState('');
-  const [expiry, setExpiry] = useState('');
-  const [token, setToken] = useState('');
-  const [iamJoinToken, setIamJoinToken] = useState('');
+  const [token, setToken] = useState<JoinToken>(null);
+  const [iamJoinToken, setIamJoinToken] = useState<JoinToken>(null);
 
   useEffect(() => {
     createJoinToken();
@@ -41,10 +37,7 @@ export default function useAddNode(ctx: TeleportContext) {
   function createJoinToken() {
     return run(() =>
       ctx.joinTokenService.fetchJoinToken(['Node'], 'token').then(token => {
-        const cmd = createNodeBashCommand(token);
-        setExpiry(cmd.expires);
-        setScript(cmd.text);
-        setToken(token.id);
+        setToken(token);
       })
     );
   }
@@ -54,7 +47,7 @@ export default function useAddNode(ctx: TeleportContext) {
       ctx.joinTokenService
         .fetchJoinToken(['Node'], 'iam', [rules])
         .then(iamToken => {
-          setIamJoinToken(iamToken.id);
+          setIamJoinToken(iamToken);
         })
     );
   }
@@ -64,8 +57,6 @@ export default function useAddNode(ctx: TeleportContext) {
     createJoinToken,
     method,
     setMethod,
-    script,
-    expiry,
     attempt,
     version,
     user,
@@ -73,21 +64,6 @@ export default function useAddNode(ctx: TeleportContext) {
     token,
     iamJoinToken,
     createIamJoinToken,
-  };
-}
-
-export function createNodeBashCommand(
-  node: JoinToken,
-  method?: JoinMethod
-): BashCommand {
-  const { expiry, id } = node;
-
-  const text = createBashCommand(id, method);
-  const expires = formatDistanceStrict(new Date(), new Date(expiry));
-
-  return {
-    text,
-    expires,
   };
 }
 

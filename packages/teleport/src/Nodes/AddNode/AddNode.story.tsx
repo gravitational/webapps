@@ -54,7 +54,7 @@ export const ManuallyWithoutTokenSSO = () => (
 );
 
 export const IamWithoutToken = () => (
-  <AddNode {...props} method="iam" iamJoinToken="" />
+  <AddNode {...props} method="iam" iamJoinToken={null} />
 );
 
 export const IamWithToken = () => <AddNode {...props} method="iam" />;
@@ -63,7 +63,7 @@ export const IamProcessing = () => (
   <AddNode
     {...props}
     method="iam"
-    iamJoinToken=""
+    iamJoinToken={null}
     attempt={{ status: 'processing' }}
   />
 );
@@ -72,7 +72,7 @@ export const IamFailed = () => (
   <AddNode
     {...props}
     method="iam"
-    iamJoinToken=""
+    iamJoinToken={null}
     attempt={{ status: 'failed', statusText: 'some err' }}
   />
 );
@@ -91,15 +91,20 @@ const props = {
   setAutomatic: () => null,
   version: '5.0.0-dev',
   isEnterprise: true,
-  script: 'some bash script',
-  expiry: '4 hours',
   attempt: {
     status: 'success',
     statusText: '',
   } as any,
-  token: 'some-join-token-hash',
-  iamJoinToken: 'some-join-token-hash',
-  iamExpiry: '4 hours',
+  token: {
+    id: 'some-join-token-hash',
+    expiryText: '4 hours',
+    expiry: new Date(),
+  },
+  iamJoinToken: {
+    id: 'some-join-token-hash',
+    expiryText: '1000 years',
+    expiry: new Date(),
+  },
   createIamJoinToken() {
     return Promise.resolve(null);
   },

@@ -15,7 +15,6 @@
  */
 
 import React from 'react';
-import { State } from './../useAddNode';
 import TextSelectCopy from 'teleport/components/TextSelectCopy';
 import {
   Alert,
@@ -26,9 +25,10 @@ import {
   ButtonSecondary,
 } from 'design';
 import { DialogContent, DialogFooter } from 'design/Dialog';
+import { createBashCommand, State } from './../useAddNode';
 
 export default function Automatically(props: Props) {
-  const { script, expiry, createJoinToken, attempt, onClose } = props;
+  const { createJoinToken, attempt, onClose, joinToken } = props;
 
   if (attempt.status === 'processing') {
     return (
@@ -51,11 +51,11 @@ export default function Automatically(props: Props) {
           <Text mt="3">
             The script will be valid for{' '}
             <Text bold as={'span'}>
-              {expiry}.
+              {joinToken.expiryText}.
             </Text>
           </Text>
         </Text>
-        <TextSelectCopy text={script} mt={2} />
+        <TextSelectCopy text={createBashCommand(joinToken.id)} mt={2} />
         <Box>
           <ButtonLink onClick={createJoinToken}>Regenerate Script</ButtonLink>
         </Box>
@@ -68,9 +68,8 @@ export default function Automatically(props: Props) {
 }
 
 type Props = {
-  script: State['script'];
-  expiry: State['expiry'];
   createJoinToken: State['createJoinToken'];
   attempt: State['attempt'];
+  joinToken: State['token'];
   onClose(): void;
 };

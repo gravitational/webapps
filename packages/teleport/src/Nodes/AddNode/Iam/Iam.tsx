@@ -6,7 +6,7 @@ import FieldInput from 'shared/components/FieldInput';
 import Validation, { Validator } from 'shared/components/Validation';
 import { Attempt } from 'shared/hooks/useAttemptNext';
 import { Rule } from 'teleport/services/joinToken';
-import { createBashCommand } from '../useAddNode';
+import { createBashCommand, State } from '../useAddNode';
 
 export default function Iam({ token, attempt, onGenerate, onClose }: Props) {
   const [rule, setRule] = React.useState<Rule>({
@@ -104,7 +104,7 @@ export default function Iam({ token, attempt, onGenerate, onClose }: Props) {
                   </Text>
                   <TextSelectCopy
                     mt="2"
-                    text={createBashCommand(token, 'iam')}
+                    text={createBashCommand(token.id, 'iam')}
                   />
                 </Box>
               )}
@@ -135,7 +135,7 @@ const requiredAwsAccountId = value => () => {
 };
 
 type Props = {
-  token: string;
+  token?: State['iamJoinToken'];
   attempt: Attempt;
   onGenerate(rules: Rule): Promise<any>;
   isEnterprise: boolean;

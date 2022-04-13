@@ -35,8 +35,6 @@ export function AddNode({
   isEnterprise,
   user,
   onClose,
-  script,
-  expiry,
   createJoinToken,
   method,
   setMethod,
@@ -82,8 +80,7 @@ export function AddNode({
         </Flex>
         {method === 'automatic' && (
           <Automatically
-            script={script}
-            expiry={expiry}
+            joinToken={token}
             createJoinToken={createJoinToken}
             attempt={attempt}
             onClose={onClose}
@@ -96,7 +93,6 @@ export function AddNode({
             version={version}
             isAuthTypeLocal={isAuthTypeLocal}
             joinToken={token}
-            expiry={expiry}
             createJoinToken={createJoinToken}
             attempt={attempt}
             onClose={onClose}
