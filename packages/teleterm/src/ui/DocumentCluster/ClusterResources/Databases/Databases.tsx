@@ -60,14 +60,7 @@ function DatabaseList(props: State) {
 function renderConnectButton(uri: string, connect: (uri: string) => void) {
   return (
     <Cell align="right">
-      <ButtonBorder
-        size="small"
-        onClick={() => {
-          connect(uri);
-        }}
-      >
-        Connect
-      </ButtonBorder>
+      <ButtonBorder size="small">Connect</ButtonBorder>
     </Cell>
   );
 }

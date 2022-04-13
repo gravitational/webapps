@@ -22,7 +22,7 @@ export function useDatabases() {
   const syncStatus = ctx.getSyncStatus().dbs;
 
   return {
-    connect: ctx.connectDb,
+    connect: () => {},
     dbs,
     syncStatus,
   };
