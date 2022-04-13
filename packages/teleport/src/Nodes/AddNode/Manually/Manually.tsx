@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Text, Box, ButtonLink, Indicator, ButtonSecondary } from 'design';
 import TextSelectCopy from 'teleport/components/TextSelectCopy';
 import DownloadLinks from 'teleport/components/DownloadLinks';
@@ -34,6 +34,12 @@ export default function Manually({
   const { hostname, port } = window.document.location;
   const host = `${hostname}:${port || '443'}`;
   let tshLoginCmd = `tsh login --proxy=${host}`;
+
+  useEffect(() => {
+    if (!joinToken) {
+      createJoinToken();
+    }
+  }, [joinToken]);
 
   if (isAuthTypeLocal) {
     tshLoginCmd = `${tshLoginCmd} --auth=local --user=${user}`;

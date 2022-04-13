@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-import React from 'react';
+import React, { useEffect } from 'react';
 import TextSelectCopy from 'teleport/components/TextSelectCopy';
 import {
   Alert,
@@ -29,6 +29,12 @@ import { createBashCommand, State } from './../useAddNode';
 
 export default function Automatically(props: Props) {
   const { createJoinToken, attempt, onClose, joinToken } = props;
+
+  useEffect(() => {
+    if (!joinToken) {
+      createJoinToken();
+    }
+  }, [joinToken]);
 
   if (attempt.status === 'processing') {
     return (
