@@ -136,7 +136,6 @@ const requiredAwsAccountId = value => () => {
 
 type Props = {
   token: string;
-  expiry: string;
   attempt: Attempt;
   onGenerate(rules: Rule): Promise<any>;
   isEnterprise: boolean;

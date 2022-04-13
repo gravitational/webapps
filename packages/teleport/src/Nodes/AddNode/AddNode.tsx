@@ -46,7 +46,6 @@ export function AddNode({
   token,
   iamJoinToken,
   createIamJoinToken,
-  iamExpiry,
 }: Props & State) {
   return (
     <Dialog
@@ -108,7 +107,6 @@ export function AddNode({
             onGenerate={createIamJoinToken}
             attempt={attempt}
             token={iamJoinToken}
-            expiry={iamExpiry}
             isEnterprise={isEnterprise}
             version={version}
             onClose={onClose}

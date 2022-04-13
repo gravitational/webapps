@@ -33,7 +33,6 @@ export default function useAddNode(ctx: TeleportContext) {
   const [expiry, setExpiry] = useState('');
   const [token, setToken] = useState('');
   const [iamJoinToken, setIamJoinToken] = useState('');
-  const [iamExpiry, setIamExpiry] = useState('');
 
   useEffect(() => {
     createJoinToken();
@@ -55,11 +54,6 @@ export default function useAddNode(ctx: TeleportContext) {
       ctx.joinTokenService
         .fetchJoinToken(['Node'], 'iam', [rules])
         .then(iamToken => {
-          const expires = formatDistanceStrict(
-            new Date(),
-            new Date(iamToken.expiry)
-          );
-          setIamExpiry(expires);
           setIamJoinToken(iamToken.id);
         })
     );
@@ -79,7 +73,6 @@ export default function useAddNode(ctx: TeleportContext) {
     token,
     iamJoinToken,
     createIamJoinToken,
-    iamExpiry,
   };
 }
 
