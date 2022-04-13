@@ -17,7 +17,6 @@ limitations under the License.
 import { FileStorage } from 'teleterm/types';
 import { ConnectionTrackerState } from 'teleterm/ui/services/connectionTracker';
 import { WorkspacesState } from 'teleterm/ui/services/workspacesService';
-import { debounce } from 'lodash';
 
 interface StatePersistenceState {
   connectionTracker: ConnectionTrackerState;
@@ -33,20 +32,17 @@ export class StatePersistenceService {
       workspaces: {},
     },
   };
-  private readonly putIntoFileStorage: (path: string, json: any) => void;
 
   constructor(private _fileStorage: FileStorage) {
-    const restored =
-      this._fileStorage.get<StatePersistenceState>('state');
+    const restored = this._fileStorage.get<StatePersistenceState>('state');
     if (restored) {
       this.state = restored;
     }
-    this.putIntoFileStorage = debounce(this._fileStorage.put, 2000);
   }
 
   saveConnectionTrackerState(navigatorState: ConnectionTrackerState): void {
     this.state.connectionTracker = navigatorState;
-    this.putIntoFileStorage('state', this.state);
+    this._fileStorage.put('state', this.state);
   }
 
   getConnectionTrackerState(): ConnectionTrackerState {
@@ -57,11 +53,14 @@ export class StatePersistenceService {
     this.state.workspacesState.rootClusterUri = workspacesState.rootClusterUri;
     for (let w in workspacesState.workspaces) {
       if (workspacesState.workspaces[w]) {
-        this.state.workspacesState.workspaces[w] =
-          workspacesState.workspaces[w];
+        this.state.workspacesState.workspaces[w] = {
+          location: workspacesState.workspaces[w].location,
+          localClusterUri: workspacesState.workspaces[w].localClusterUri,
+          documents: workspacesState.workspaces[w].documents,
+        };
       }
     }
-    this.putIntoFileStorage('state', this.state);
+    this._fileStorage.put('state', this.state);
   }
 
   getWorkspaces(): WorkspacesState {
