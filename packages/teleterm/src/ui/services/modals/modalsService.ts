@@ -41,14 +41,24 @@ export class ModalsService extends ImmutableStore<Dialog> {
     }));
   }
 
-  openClusterConnectDialog(
-    clusterUri?: string,
-    onSuccess?: (clusterUri: string) => void
-  ) {
+  openClusterConnectDialog(options: {
+    clusterUri?: string;
+    onSuccess?(clusterUri: string): void;
+    onCancel?(): void;
+  }) {
     this.setState(() => ({
       kind: 'cluster-connect',
-      clusterUri,
-      onSuccess,
+      ...options,
+    }));
+  }
+
+  openDocumentsReopenDialog(options: {
+    onConfirm?(): void;
+    onCancel?(): void;
+  }) {
+    this.setState(() => ({
+      kind: 'documents-reopen',
+      ...options,
     }));
   }
 
@@ -77,7 +87,10 @@ export interface DialogNewGateway {
 export interface DialogClusterConnect {
   kind: 'cluster-connect';
   clusterUri?: string;
+
   onSuccess?(clusterUri: string): void;
+
+  onCancel?(): void;
 }
 
 export interface DialogClusterLogout {
@@ -86,8 +99,17 @@ export interface DialogClusterLogout {
   clusterTitle: string;
 }
 
+export interface DialogDocumentsReopen {
+  kind: 'documents-reopen';
+
+  onConfirm?(): void;
+
+  onCancel?(): void;
+}
+
 export type Dialog =
   | DialogBase
   | DialogClusterConnect
   | DialogNewGateway
-  | DialogClusterLogout;
+  | DialogClusterLogout
+  | DialogDocumentsReopen;

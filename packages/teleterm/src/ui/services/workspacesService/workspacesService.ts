@@ -7,6 +7,8 @@ import { useStore } from 'shared/libs/stores';
 import { ModalsService } from 'teleterm/ui/services/modals';
 import { ClustersService } from 'teleterm/ui/services/clusters';
 import { StatePersistenceService } from 'teleterm/ui/services/statePersistence';
+import { isEqual } from 'lodash';
+import { NotificationsService } from 'teleterm/ui/services/notifications';
 
 export interface WorkspacesState {
   rootClusterUri?: string;
@@ -17,6 +19,10 @@ export interface Workspace {
   localClusterUri: string;
   documents: Document[];
   location: string;
+  previous?: {
+    documents: Document[];
+    location: string;
+  };
 }
 
 export class WorkspacesService extends ImmutableStore<WorkspacesState> {
@@ -27,8 +33,9 @@ export class WorkspacesService extends ImmutableStore<WorkspacesState> {
   };
 
   constructor(
-    private clustersService: ClustersService,
     private modalsService: ModalsService,
+    private clustersService: ClustersService,
+    private notificationsService: NotificationsService,
     private statePersistenceService: StatePersistenceService
   ) {
     super();
@@ -44,6 +51,10 @@ export class WorkspacesService extends ImmutableStore<WorkspacesState> {
 
   getWorkspaces(): Record<string, Workspace> {
     return this.state.workspaces;
+  }
+
+  getWorkspace(clusterUri): Workspace {
+    return this.state.workspaces[clusterUri];
   }
 
   getActiveWorkspaceDocumentService(): DocumentsService | undefined {
@@ -111,28 +122,66 @@ export class WorkspacesService extends ImmutableStore<WorkspacesState> {
             this.statePersistenceService.getWorkspaces().workspaces[clusterUri];
           draftState.workspaces[clusterUri] = {
             localClusterUri: persistedWorkspace?.localClusterUri || clusterUri,
-            location: persistedWorkspace?.location,
-            documents: persistedWorkspace?.documents || [],
+            location: '',
+            documents: [],
+            previous: persistedWorkspace?.documents
+              ? {
+                  documents: persistedWorkspace.documents,
+                  location: persistedWorkspace.location,
+                }
+              : undefined,
           };
         }
         draftState.rootClusterUri = clusterUri;
       });
     };
 
-    const isConnected = this.clustersService.findCluster(clusterUri)?.connected;
-    return new Promise((resolve, reject) => {
-      if (clusterUri && !isConnected) {
-        this.modalsService.openClusterConnectDialog(clusterUri, () => {
+    const cluster = this.clustersService.findCluster(clusterUri);
+    if (!cluster) {
+      this.notificationsService.notifyError({
+        title: 'Could not set cluster as active',
+        description: `Cluster with URI ${clusterUri} does not exist`,
+      });
+      this.logger.warn(
+        `Could not find cluster with uri ${clusterUri} when changing active cluster`
+      );
+      return Promise.resolve();
+    }
+
+    return new Promise<void>((resolve, reject) => {
+      if (cluster.connected) {
+        setWorkspace();
+        return resolve();
+      }
+      this.modalsService.openClusterConnectDialog({
+        clusterUri: clusterUri,
+        onCancel: () => {
+          reject();
+        },
+        onSuccess: () => {
           setWorkspace();
           resolve();
+        },
+      });
+    })
+      .then(() => {
+        return new Promise<void>(resolve => {
+          if (!this.canReopenPreviousDocuments(this.getWorkspace(clusterUri))) {
+            return resolve();
+          }
+          this.modalsService.openDocumentsReopenDialog({
+            onConfirm: () => {
+              this.reopenPreviousDocuments(clusterUri);
+              resolve();
+            },
+            onCancel: () => {
+              this.discardPreviousDocuments(clusterUri);
+              resolve();
+            },
+          });
         });
-      } else {
-        setWorkspace();
-        resolve();
-      }
-
-      //TODO: add reject
-    });
+      })
+      .catch(() => undefined); // catch ClusterConnectDialog cancellation
   }
 
   removeWorkspace(clusterUri: string): void {
@@ -144,6 +193,35 @@ export class WorkspacesService extends ImmutableStore<WorkspacesState> {
   getConnectedWorkspacesClustersUri(): string[] {
     return Object.keys(this.state.workspaces).filter(
       clusterUri => this.clustersService.findCluster(clusterUri)?.connected
+    );
+  }
+
+  private reopenPreviousDocuments(clusterUri: string): void {
+    this.setState(draftState => {
+      const workspace = draftState.workspaces[clusterUri];
+      workspace.documents = workspace.previous.documents;
+      workspace.location = workspace.previous.location;
+      workspace.previous = undefined;
+    });
+  }
+
+  private discardPreviousDocuments(clusterUri: string): void {
+    this.setState(draftState => {
+      const workspace = draftState.workspaces[clusterUri];
+      workspace.previous = undefined;
+    });
+  }
+
+  private canReopenPreviousDocuments(workspace: Workspace): boolean {
+    const removeUri = (documents: Document[]) =>
+      documents.map(d => ({ ...d, uri: undefined }));
+
+    return (
+      workspace.previous &&
+      !isEqual(
+        removeUri(workspace.previous.documents),
+        removeUri(workspace.documents)
+      )
     );
   }
 }
