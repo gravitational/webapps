@@ -17,7 +17,7 @@ limitations under the License.
 import React from 'react';
 import Table, { Cell, LabelCell } from 'design/DataTable';
 import { Desktop } from 'teleport/services/desktops';
-import MenuSshLogin, { LoginItem } from 'shared/components/MenuSshLogin';
+import MenuLogin, { LoginItem } from 'shared/components/MenuLogin';
 
 function DesktopList(props: Props) {
   const {
@@ -97,7 +97,7 @@ function renderLoginCell(
 
   return (
     <Cell align="right">
-      <MenuSshLogin
+      <MenuLogin
         onOpen={handleOnOpen}
         onSelect={handleOnSelect}
         transformOrigin={{

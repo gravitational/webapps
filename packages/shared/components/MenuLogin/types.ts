@@ -14,6 +14,14 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import MenuSshLogin from './MenuSshLogin';
-export default MenuSshLogin;
-export * from './types';
+export type LoginItem = {
+  url: string;
+  login: string;
+};
+
+export type MenuLoginProps = {
+  onOpen: () => LoginItem[];
+  onSelect: (e: React.SyntheticEvent, login: string) => void;
+  anchorOrigin?: any;
+  transformOrigin?: any;
+};

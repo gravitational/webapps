@@ -19,12 +19,12 @@ import styled from 'styled-components';
 import { NavLink } from 'react-router-dom';
 import Menu, { MenuItem } from 'design/Menu';
 import { space } from 'design/system';
-import { MenuSshLoginProps } from './types';
+import { MenuLoginProps } from './types';
 import { ButtonBorder, Flex } from 'design';
 import { CarrotDown } from 'design/Icon';
 
-class MenuSshLogin extends React.Component<MenuSshLoginProps> {
-  static displayName = 'MenuSshLogin';
+class MenuLogin extends React.Component<MenuLoginProps> {
+  static displayName = 'MenuLogin';
 
   anchorEl = React.createRef();
 
@@ -119,7 +119,7 @@ export const LoginItemList = ({ logins, onClick, onKeyPress }) => {
         onKeyPress={onKeyPress}
         type="text"
         autoFocus
-        placeholder="Enter login name..."
+        placeholder="Enter login name…"
         autoComplete="off"
       />
       {$menuItems}
@@ -173,4 +173,4 @@ const Input = styled.input(
   space
 );
 
-export default MenuSshLogin;
+export default MenuLogin;

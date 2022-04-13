@@ -19,8 +19,8 @@ import { useServers, State } from './useServers';
 import * as types from 'teleterm/ui/services/clusters/types';
 import Table, { Cell } from 'design/DataTable';
 import { renderLabelCell } from '../renderLabelCell';
-import MenuSshLogin from 'shared/components/MenuSshLogin';
-import { MenuSshLoginTheme } from './MenuSshLoginTheme';
+import MenuLogin from 'shared/components/MenuLogin';
+import { MenuLoginTheme } from '../MenuLoginTheme';
 import { Danger } from 'design/Alert';
 
 export default function Container() {
@@ -76,8 +76,8 @@ const renderConnectCell = (
 ) => {
   return (
     <Cell align="right">
-      <MenuSshLoginTheme>
-        <MenuSshLogin
+      <MenuLoginTheme>
+        <MenuLogin
           onOpen={() => getSshLogins().map(login => ({ login, url: '' }))}
           onSelect={(e, login) => onConnect(login)}
           transformOrigin={{
@@ -89,7 +89,7 @@ const renderConnectCell = (
             horizontal: 'right',
           }}
         />
-      </MenuSshLoginTheme>
+      </MenuLoginTheme>
     </Cell>
   );
 };
@@ -105,3 +105,4 @@ const renderAddressCell = ({ addr, tunnel }: types.Server) => (
     {!tunnel && addr}
   </Cell>
 );
+
