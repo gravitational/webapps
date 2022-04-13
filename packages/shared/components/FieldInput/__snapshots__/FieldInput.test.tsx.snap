@@ -58,6 +58,7 @@ Object {
     <div>
       <div
         class="c0"
+        name="optional name"
       >
         <label
           class="c1"
@@ -76,13 +77,13 @@ Object {
           class="c3"
           color="text.onLight"
           inputmode="text"
-          name="optional name"
           type="text"
           value="value"
         />
       </div>
       <div
         class="c0"
+        name="optional name"
       >
         <label
           class="c1"
@@ -95,7 +96,6 @@ Object {
           class="c3"
           color="text.onLight"
           inputmode="text"
-          name="optional name"
           placeholder="placeholder"
           type="text"
           value=""
@@ -170,6 +170,7 @@ Object {
 <div>
     <div
       class="c0"
+      name="optional name"
     >
       <label
         class="c1"
@@ -188,13 +189,13 @@ Object {
         class="c3"
         color="text.onLight"
         inputmode="text"
-        name="optional name"
         type="text"
         value="value"
       />
     </div>
     <div
       class="c0"
+      name="optional name"
     >
       <label
         class="c1"
@@ -207,7 +208,6 @@ Object {
         class="c3"
         color="text.onLight"
         inputmode="text"
-        name="optional name"
         placeholder="placeholder"
         type="text"
         value=""

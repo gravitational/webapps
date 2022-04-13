@@ -1116,7 +1116,6 @@ exports[`render iam method after token generation 1`] = `
                     class="c19"
                     color="text.onLight"
                     inputmode="text"
-                    name="awsAccountId"
                     placeholder="111111111111"
                     type="text"
                     value=""
@@ -1143,7 +1142,6 @@ exports[`render iam method after token generation 1`] = `
                   class="c19"
                   color="text.onLight"
                   inputmode="text"
-                  name="awsArn"
                   placeholder="arn:aws:sts::111111111111:assumed-role/teleport-node-role/i-*"
                   type="text"
                   value=""
@@ -1171,6 +1169,11 @@ exports[`render iam method after token generation 1`] = `
                 class="c21"
               >
                 <div
+                  class="c13"
+                >
+                  The token generated is not a secret and will not expire. You can use this script in multiple nodes.
+                </div>
+                <div
                   class="c24"
                 >
                   <div
@@ -1193,11 +1196,6 @@ exports[`render iam method after token generation 1`] = `
                   >
                     Copy
                   </button>
-                </div>
-                <div
-                  class="c13"
-                >
-                  The token generated is not a secret and will not expire. You can use this script in multiple nodes.
                 </div>
               </div>
             </div>
@@ -1690,7 +1688,6 @@ exports[`render iam method when failed 1`] = `
                     class="c20"
                     color="text.onLight"
                     inputmode="text"
-                    name="awsAccountId"
                     placeholder="111111111111"
                     type="text"
                     value=""
@@ -1717,7 +1714,6 @@ exports[`render iam method when failed 1`] = `
                   class="c20"
                   color="text.onLight"
                   inputmode="text"
-                  name="awsArn"
                   placeholder="arn:aws:sts::111111111111:assumed-role/teleport-node-role/i-*"
                   type="text"
                   value=""
@@ -2205,7 +2201,6 @@ exports[`render iam method while processing 1`] = `
                     class="c19"
                     color="text.onLight"
                     inputmode="text"
-                    name="awsAccountId"
                     placeholder="111111111111"
                     type="text"
                     value=""
@@ -2232,7 +2227,6 @@ exports[`render iam method while processing 1`] = `
                   class="c19"
                   color="text.onLight"
                   inputmode="text"
-                  name="awsArn"
                   placeholder="arn:aws:sts::111111111111:assumed-role/teleport-node-role/i-*"
                   type="text"
                   value=""
@@ -2721,7 +2715,6 @@ exports[`render iam method without a token generated yet 1`] = `
                     class="c19"
                     color="text.onLight"
                     inputmode="text"
-                    name="awsAccountId"
                     placeholder="111111111111"
                     type="text"
                     value=""
@@ -2748,7 +2741,6 @@ exports[`render iam method without a token generated yet 1`] = `
                   class="c19"
                   color="text.onLight"
                   inputmode="text"
-                  name="awsArn"
                   placeholder="arn:aws:sts::111111111111:assumed-role/teleport-node-role/i-*"
                   type="text"
                   value=""
