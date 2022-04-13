@@ -66,7 +66,6 @@ export default function Iam({ token, attempt, onGenerate, onClose }: Props) {
                   label="AWS Account ID"
                   labelTip="nodes must match this AWS Account ID to join your Teleport cluster"
                   autoFocus
-                  name="awsAccountId"
                   onChange={e =>
                     setRule({ ...rule, awsAccountId: e.target.value })
                   }
@@ -79,7 +78,6 @@ export default function Iam({ token, attempt, onGenerate, onClose }: Props) {
                 mb={2}
                 label="AWS ARN (optional)"
                 labelTip="nodes must match this AWS ARN to join your Teleport cluster"
-                name="awsArn"
                 onChange={e => setRule({ ...rule, awsArn: e.target.value })}
                 placeholder="arn:aws:sts::111111111111:assumed-role/teleport-node-role/i-*"
                 value={rule.awsArn}
