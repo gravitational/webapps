@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-import React, { useEffect } from 'react';
+import React from 'react';
 import {
   Text,
   Box,
@@ -83,6 +83,14 @@ export default function Manually({
   );
 }
 
+const configDir = '$HOME/.config';
+const configFile = `$HOME/.config/teleport.yaml`;
+const startCmd = `teleport start --config=${configDir}/teleport.yaml`;
+
+function getConfigCmd(token, host) {
+  return `teleport configure --output=${configFile} --app-name=[example-app] --app-uri=http://localhost/ --roles=app --token=${token} --auth-server=${host} --data-dir=${configDir}`;
+}
+
 const StepsWithoutToken = ({ tshLoginCmd, host }) => (
   <>
     <Box mb={4}>
@@ -103,11 +111,18 @@ const StepsWithoutToken = ({ tshLoginCmd, host }) => (
       <Text bold as="span">
         Step 4
       </Text>
-      {` - Start the Teleport agent with the following parameters`}
+      {` - Configure your teleport agent`}
       <TextSelectCopy
         mt="2"
-        text={`teleport start --roles=app --app-name=[example-app] --app-uri=http://localhost/ --token=[generated-join-token] --auth-server=${host}`}
+        text={getConfigCmd('[generated-join-token]', host)}
       />
+    </Box>
+    <Box>
+      <Text bold as="span">
+        Step 5
+      </Text>
+      {` - Start the Teleport agent with the generated configuration file`}
+      <TextSelectCopy mt="2" text={startCmd} />
     </Box>
     <Box>
       {`* Note: For a self-hosted Teleport version, you may need to update DNS and obtain a TLS certificate for this application.
@@ -124,25 +139,31 @@ const StepsWithoutToken = ({ tshLoginCmd, host }) => (
 );
 
 const StepsWithToken = ({ token, host, createToken, expires }) => (
-  <Box>
-    <Text bold as="span">
-      Step 2
-    </Text>
-    {` - Start the Teleport agent with the following parameters`}
-    <Text mt="1">
-      The token will be valid for{' '}
-      <Text bold as={'span'}>
-        {expires}.
+  <>
+    <Box mb={4}>
+      <Text bold as="span">
+        Step 2
       </Text>
-    </Text>
-    <TextSelectCopy
-      mt="2"
-      text={`teleport start --roles=app --app-name=[example-app] --app-uri=http://localhost/ --token=${token} --auth-server=${host}`}
-    />
-    <Box>
-      <ButtonLink onClick={createToken}>Regenerate Token</ButtonLink>
+      {` - Configure your teleport agent`}
+      <Text mt="1">
+        The token will be valid for{' '}
+        <Text bold as={'span'}>
+          {expires}.
+        </Text>
+      </Text>
+      <TextSelectCopy mt="2" text={getConfigCmd(token, host)} />
+      <Box>
+        <ButtonLink onClick={createToken}>Regenerate Token</ButtonLink>
+      </Box>
     </Box>
-  </Box>
+    <Box>
+      <Text bold as="span">
+        Step 3
+      </Text>
+      {` - Start the Teleport agent with the configuration file`}
+      <TextSelectCopy mt="2" text={startCmd} />
+    </Box>
+  </>
 );
 
 type Props = {

@@ -71,7 +71,7 @@ export default function Manually({
 
 const configDir = '$HOME/.config';
 const configFile = `$HOME/.config/teleport.yaml`;
-const startCmd = `sudo teleport start --config=${configDir}/teleport.yaml`;
+const startCmd = `teleport start --config=${configDir}/teleport.yaml`;
 
 function getConfigCmd(token, host) {
   return `teleport configure --output=${configFile} --roles=node --token=${token} --auth-server=${host} --data-dir=${configDir}`;
