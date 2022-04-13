@@ -70,6 +70,13 @@ export default function Manually({
 }
 
 const configDir = '$HOME/.config';
+const configFile = `$HOME/.config/teleport.yaml`;
+const startCmd = `sudo teleport start --config=${configDir}/teleport.yaml`;
+
+function getConfigCmd(token, host) {
+  return `teleport configure --output=${configFile} --roles=node --token=${token} --auth-server=${host} --data-dir=${configDir}`;
+}
+
 const StepsWithoutToken = ({ tshLoginCmd, host }) => (
   <>
     <Box mb={4}>
@@ -86,7 +93,7 @@ const StepsWithoutToken = ({ tshLoginCmd, host }) => (
       {` - Configure your teleport agent`}
       <TextSelectCopy
         mt="2"
-        text={`teleport configure --roles=node --token=[generated-join-token] --auth-server=${host} --data-dir=${configDir}/teleport --output=${configDir}/teleport.yaml`}
+        text={getConfigCmd('[generated-join-token', host)}
       />
     </Box>
     <Box>
@@ -94,10 +101,7 @@ const StepsWithoutToken = ({ tshLoginCmd, host }) => (
         Step 4
       </Text>
       {` - Start the Teleport agent with the generated configuration file`}
-      <TextSelectCopy
-        mt="2"
-        text={`sudo teleport start --config=${configDir}/teleport.yaml`}
-      />
+      <TextSelectCopy mt="2" text={startCmd} />
     </Box>
   </>
 );
@@ -115,10 +119,7 @@ const StepsWithToken = ({ joinToken, host, createJoinToken, expiry }) => (
           {expiry}.
         </Text>
       </Text>
-      <TextSelectCopy
-        mt="2"
-        text={`teleport configure --roles=node --token=${joinToken} --auth-server=${host} --data-dir=${configDir}/teleport --output=${configDir}/teleport.yaml`}
-      />
+      <TextSelectCopy mt="2" text={getConfigCmd(joinToken, host)} />
       <Box>
         <ButtonLink onClick={createJoinToken}>Regenerate Token</ButtonLink>
       </Box>
@@ -127,11 +128,8 @@ const StepsWithToken = ({ joinToken, host, createJoinToken, expiry }) => (
       <Text bold as="span">
         Step 3
       </Text>
-      {` - Start the Teleport agent with the generated configuration file`}
-      <TextSelectCopy
-        mt="2"
-        text={`sudo teleport start --config=${configDir}/teleport.yaml`}
-      />
+      {` - Start the Teleport agent with the configuration file`}
+      <TextSelectCopy mt="2" text={startCmd} />
     </Box>
   </>
 );
