@@ -17,7 +17,7 @@ limitations under the License.
 import React from 'react';
 import { storiesOf } from '@storybook/react';
 import { Flex } from 'design';
-import MenuLogin from './MenuLogin';
+import { MenuLogin } from './MenuLogin';
 import { Router } from 'react-router';
 import { createMemoryHistory } from 'history';
 

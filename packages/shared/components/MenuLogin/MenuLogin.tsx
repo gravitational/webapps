@@ -23,7 +23,7 @@ import { MenuLoginProps } from './types';
 import { ButtonBorder, Flex } from 'design';
 import { CarrotDown } from 'design/Icon';
 
-class MenuLogin extends React.Component<MenuLoginProps> {
+export class MenuLogin extends React.Component<MenuLoginProps> {
   static displayName = 'MenuLogin';
 
   anchorEl = React.createRef();
@@ -174,5 +174,3 @@ const Input = styled.input(
 `,
   space
 );
-
-export default MenuLogin;

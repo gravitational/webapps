@@ -19,7 +19,7 @@ import { useDatabases, State } from './useDatabases';
 import Table, { Cell } from 'design/DataTable';
 import { renderLabelCell } from '../renderLabelCell';
 import { Danger } from 'design/Alert';
-import MenuLogin from 'shared/components/MenuLogin';
+import { MenuLogin } from 'shared/components/MenuLogin';
 import { MenuLoginTheme } from '../MenuLoginTheme';
 
 export default function Container() {
