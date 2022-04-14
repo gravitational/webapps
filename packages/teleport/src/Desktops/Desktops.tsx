@@ -40,15 +40,27 @@ export function Desktops(props: State) {
     attempt,
     username,
     clusterId,
-    desktops,
     canCreate,
     isLeafCluster,
     getWindowsLoginOptions,
     openRemoteDesktopTab,
+    results,
+    fetchNext,
+    fetchPrev,
+    from,
+    to,
+    pageSize,
+    params,
+    setParams,
+    startKeys,
+    setSort,
+    pathname,
+    replaceHistory,
+    fetchStatus,
   } = props;
 
-  const isEmpty = attempt.status === 'success' && desktops.length === 0;
-  const hasDesktops = attempt.status === 'success' && desktops.length > 0;
+  const isEmpty = attempt.status === 'success' && !results.hasResources;
+  const hasDesktops = attempt.status === 'success' && results.hasResources;
 
   return (
     <FeatureBox>
@@ -72,16 +84,27 @@ export function Desktops(props: State) {
         </Box>
       )}
       {attempt.status === 'failed' && <Danger>{attempt.statusText}</Danger>}
-      {hasDesktops && (
-        <>
-          <DesktopList
-            desktops={desktops}
-            username={username}
-            clusterId={clusterId}
-            onLoginMenuOpen={getWindowsLoginOptions}
-            onLoginSelect={openRemoteDesktopTab}
-          />
-        </>
+      {attempt.status !== 'processing' && !isEmpty && (
+        <DesktopList
+          desktops={results.desktops}
+          username={username}
+          clusterId={clusterId}
+          onLoginMenuOpen={getWindowsLoginOptions}
+          onLoginSelect={openRemoteDesktopTab}
+          fetchNext={fetchNext}
+          fetchPrev={fetchPrev}
+          fetchStatus={fetchStatus}
+          from={from}
+          to={to}
+          totalCount={results.totalCount}
+          pageSize={pageSize}
+          params={params}
+          setParams={setParams}
+          startKeys={startKeys}
+          setSort={setSort}
+          pathname={pathname}
+          replaceHistory={replaceHistory}
+        />
       )}
       {isEmpty && (
         <Empty

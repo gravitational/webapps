@@ -37,7 +37,6 @@ export default function Container() {
 
 export function Databases(props: State) {
   const {
-    databases,
     attempt,
     isLeafCluster,
     canCreate,
@@ -49,10 +48,23 @@ export function Databases(props: State) {
     version,
     clusterId,
     authType,
+    results,
+    fetchNext,
+    fetchPrev,
+    from,
+    to,
+    pageSize,
+    params,
+    setParams,
+    startKeys,
+    setSort,
+    pathname,
+    replaceHistory,
+    fetchStatus,
   } = props;
 
-  const isEmpty = attempt.status === 'success' && databases.length === 0;
-  const hasDatabases = attempt.status === 'success' && databases.length > 0;
+  const isEmpty = attempt.status === 'success' && !results.hasResources;
+  const hasDatabases = attempt.status === 'success' && results.hasResources;
 
   return (
     <FeatureBox>
@@ -72,13 +84,26 @@ export function Databases(props: State) {
         </Box>
       )}
       {attempt.status === 'failed' && <Danger>{attempt.statusText}</Danger>}
-      {hasDatabases && (
+      {attempt.status !== 'processing' && !isEmpty && (
         <>
           <DatabaseList
-            databases={databases}
+            databases={results.databases}
             username={username}
             clusterId={clusterId}
             authType={authType}
+            fetchNext={fetchNext}
+            fetchPrev={fetchPrev}
+            fetchStatus={fetchStatus}
+            from={from}
+            to={to}
+            totalCount={results.totalCount}
+            pageSize={pageSize}
+            params={params}
+            setParams={setParams}
+            startKeys={startKeys}
+            setSort={setSort}
+            pathname={pathname}
+            replaceHistory={replaceHistory}
           />
         </>
       )}

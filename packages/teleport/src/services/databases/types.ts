@@ -34,4 +34,5 @@ export type DatabasesResponse = {
   databases: Database[];
   startKey?: string;
   totalCount?: number;
+  hasResources: boolean;
 };

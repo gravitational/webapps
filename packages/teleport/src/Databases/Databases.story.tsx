@@ -25,10 +25,16 @@ export default {
 
 export const Loaded = () => <Databases {...props} />;
 
-export const Empty = () => <Databases {...props} databases={[]} />;
+export const Empty = () => (
+  <Databases {...props} results={{ databases: [], hasResources: false }} />
+);
 
 export const EmptyReadOnly = () => (
-  <Databases {...props} databases={[]} canCreate={false} />
+  <Databases
+    {...props}
+    results={{ databases: [], hasResources: false }}
+    canCreate={false}
+  />
 );
 
 export const Loading = () => (
@@ -42,9 +48,14 @@ export const Failed = () => (
   />
 );
 
-const props: State = {
+export const props: State = {
+  results: {
+    databases,
+    totalCount: databases.length,
+    hasResources: true,
+  },
+  fetchStatus: '',
   attempt: { status: 'success' },
-  databases,
   clusterId: 'im-a-cluster',
   isLeafCluster: false,
   isEnterprise: false,
@@ -55,4 +66,19 @@ const props: State = {
   username: 'sam',
   version: '6.1.3',
   authType: 'local',
+  fetchNext: () => null,
+  fetchPrev: () => null,
+  pageSize: databases.length,
+  from: 1,
+  to: databases.length,
+  params: {
+    search: '',
+    query: '',
+    sort: { fieldName: 'name', dir: 'ASC' },
+  },
+  setParams: () => null,
+  setSort: () => null,
+  startKeys: [''],
+  pathname: '',
+  replaceHistory: () => null,
 };

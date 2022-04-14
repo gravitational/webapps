@@ -69,9 +69,12 @@ function useMainStory() {
     ctx.sshService.fetchSessions = () => Promise.resolve(sessions);
     ctx.appService.fetchApps = () =>
       Promise.resolve({ apps, hasResources: true });
-    ctx.kubeService.fetchKubernetes = () => Promise.resolve({ kubes });
-    ctx.databaseService.fetchDatabases = () => Promise.resolve({ databases });
-    ctx.desktopService.fetchDesktops = () => Promise.resolve({ desktops });
+    ctx.kubeService.fetchKubernetes = () =>
+      Promise.resolve({ kubes, hasResources: true });
+    ctx.databaseService.fetchDatabases = () =>
+      Promise.resolve({ databases, hasResources: true });
+    ctx.desktopService.fetchDesktops = () =>
+      Promise.resolve({ desktops, hasResources: true });
     ctx.storeUser.setState(userContext);
     getFeatures().forEach(f => f.register(ctx));
     return ctx;

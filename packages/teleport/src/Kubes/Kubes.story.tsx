@@ -26,10 +26,16 @@ export default {
 
 export const Loaded = () => <Kubes {...props} />;
 
-export const Empty = () => <Kubes {...props} kubes={[]} />;
+export const Empty = () => (
+  <Kubes {...props} results={{ kubes: [], hasResources: false }} />
+);
 
 export const EmptyReadOnly = () => (
-  <Kubes {...props} kubes={[]} canCreate={false} />
+  <Kubes
+    {...props}
+    results={{ kubes: [], hasResources: false }}
+    canCreate={false}
+  />
 );
 
 export const Loading = () => (
@@ -43,12 +49,32 @@ export const Failed = () => (
   />
 );
 
-const props: State = {
+export const props: State = {
+  results: {
+    kubes,
+    totalCount: kubes.length,
+    hasResources: true,
+  },
+  fetchStatus: '',
   attempt: { status: 'success' },
-  kubes: kubes,
   username: 'sam',
   authType: 'local' as AuthType,
   clusterId: 'im-a-cluster',
   isLeafCluster: false,
   canCreate: true,
+  fetchNext: () => null,
+  fetchPrev: () => null,
+  pageSize: kubes.length,
+  from: 1,
+  to: kubes.length,
+  params: {
+    search: '',
+    query: '',
+    sort: { fieldName: 'name', dir: 'ASC' },
+  },
+  setParams: () => null,
+  setSort: () => null,
+  startKeys: [''],
+  pathname: '',
+  replaceHistory: () => null,
 };

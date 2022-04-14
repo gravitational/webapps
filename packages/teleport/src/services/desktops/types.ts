@@ -30,4 +30,5 @@ export type DesktopsResponse = {
   desktops: Desktop[];
   startKey?: string;
   totalCount?: number;
+  hasResources: boolean;
 };

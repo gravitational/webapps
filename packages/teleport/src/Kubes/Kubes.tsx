@@ -37,17 +37,29 @@ const DOC_URL = 'https://goteleport.com/docs/kubernetes-access/guides';
 
 export function Kubes(props: State) {
   const {
-    kubes,
     attempt,
     username,
     authType,
     isLeafCluster,
     clusterId,
     canCreate,
+    results,
+    fetchNext,
+    fetchPrev,
+    from,
+    to,
+    pageSize,
+    params,
+    setParams,
+    startKeys,
+    setSort,
+    pathname,
+    replaceHistory,
+    fetchStatus,
   } = props;
 
-  const isEmpty = attempt.status === 'success' && kubes.length === 0;
-  const hasKubes = attempt.status === 'success' && kubes.length > 0;
+  const isEmpty = attempt.status === 'success' && !results.hasResources;
+  const hasKubes = attempt.status === 'success' && results.hasResources;
 
   return (
     <FeatureBox>
@@ -71,13 +83,26 @@ export function Kubes(props: State) {
           <Indicator />
         </Box>
       )}
-      {hasKubes && (
+      {attempt.status !== 'processing' && !isEmpty && (
         <>
           <KubeList
-            kubes={kubes}
+            kubes={results.kubes}
             username={username}
             authType={authType}
             clusterId={clusterId}
+            fetchNext={fetchNext}
+            fetchPrev={fetchPrev}
+            fetchStatus={fetchStatus}
+            from={from}
+            to={to}
+            totalCount={results.totalCount}
+            pageSize={pageSize}
+            params={params}
+            setParams={setParams}
+            startKeys={startKeys}
+            setSort={setSort}
+            pathname={pathname}
+            replaceHistory={replaceHistory}
           />
         </>
       )}

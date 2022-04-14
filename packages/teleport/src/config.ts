@@ -105,8 +105,8 @@ const cfg = {
     changeUserPasswordPath: '/v1/webapi/users/password',
     nodesPath:
       '/v1/webapi/sites/:clusterId/nodes?limit=:limit?&startKey=:startKey?&query=:query?&search=:search?&sort=:sort?',
-    databasesPath: `/v1/webapi/sites/:clusterId/databases`,
-    desktopsPath: `/v1/webapi/sites/:clusterId/desktops`,
+    databasesPath: `/v1/webapi/sites/:clusterId/databases?limit=:limit?&startKey=:startKey?&query=:query?&search=:search?&sort=:sort?`,
+    desktopsPath: `/v1/webapi/sites/:clusterId/desktops?limit=:limit?&startKey=:startKey?&query=:query?&search=:search?&sort=:sort?`,
     desktopPath: `/v1/webapi/sites/:clusterId/desktops/:desktopName`,
     desktopWsAddr:
       'wss://:fqdn/v1/webapi/sites/:clusterId/desktops/:desktopName/connect?access_token=:token&username=:username&width=:width&height=:height',
@@ -116,7 +116,8 @@ const cfg = {
     ttyWsAddr:
       'wss://:fqdn/v1/webapi/sites/:clusterId/connect?access_token=:token&params=:params',
     terminalSessionPath: '/v1/webapi/sites/:clusterId/sessions/:sid?',
-    kubernetesPath: '/v1/webapi/sites/:clusterId/kubernetes',
+    kubernetesPath:
+      '/v1/webapi/sites/:clusterId/kubernetes?limit=:limit?&startKey=:startKey?&query=:query?&search=:search?&sort=:sort?',
 
     usersPath: '/v1/webapi/users',
     usersDelete: '/v1/webapi/users/:username',
@@ -338,12 +339,18 @@ const cfg = {
     });
   },
 
-  getDatabasesUrl(clusterId: string) {
-    return generatePath(cfg.api.databasesPath, { clusterId });
+  getDatabasesUrl(clusterId: string, params: UrlResourcesParams) {
+    return generateResourcePath(cfg.api.databasesPath, {
+      clusterId,
+      ...params,
+    });
   },
 
-  getDesktopsUrl(clusterId: string) {
-    return generatePath(cfg.api.desktopsPath, { clusterId });
+  getDesktopsUrl(clusterId: string, params: UrlResourcesParams) {
+    return generateResourcePath(cfg.api.desktopsPath, {
+      clusterId,
+      ...params,
+    });
   },
 
   getDesktopUrl(clusterId: string, desktopName: string) {
@@ -379,8 +386,11 @@ const cfg = {
     return generatePath(cfg.api.rolesPath, { name });
   },
 
-  getKubernetesUrl(clusterId: string) {
-    return generatePath(cfg.api.kubernetesPath, { clusterId });
+  getKubernetesUrl(clusterId: string, params: UrlResourcesParams) {
+    return generateResourcePath(cfg.api.kubernetesPath, {
+      clusterId,
+      ...params,
+    });
   },
 
   getAuthnChallengeWithTokenUrl(tokenId: string) {

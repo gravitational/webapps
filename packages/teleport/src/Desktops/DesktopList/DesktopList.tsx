@@ -18,13 +18,29 @@ import React from 'react';
 import Table, { Cell, LabelCell } from 'design/DataTable';
 import { Desktop } from 'teleport/services/desktops';
 import { LoginItem, MenuLogin } from 'shared/components/MenuLogin';
+import ServersideSearchPanel, {
+  SortType,
+} from 'teleport/components/ServersideSearchPanel';
+import { ResourceUrlQueryParams } from 'teleport/getUrlQueryParams';
 
 function DesktopList(props: Props) {
   const {
     desktops = [],
-    pageSize = 100,
+    pageSize,
     onLoginMenuOpen,
     onLoginSelect,
+    totalCount,
+    fetchNext,
+    fetchPrev,
+    fetchStatus,
+    from,
+    to,
+    params,
+    setParams,
+    startKeys,
+    setSort,
+    pathname,
+    replaceHistory,
   } = props;
 
   function onDesktopSelect(
@@ -43,7 +59,6 @@ function DesktopList(props: Props) {
         {
           key: 'addr',
           headerText: 'Address',
-          isSortable: true,
         },
         {
           key: 'name',
@@ -64,9 +79,26 @@ function DesktopList(props: Props) {
       pagination={{
         pageSize,
       }}
-      initialSort={{
-        key: 'name',
-        dir: 'ASC',
+      fetching={{
+        onFetchNext: fetchNext,
+        onFetchPrev: fetchPrev,
+        fetchStatus,
+      }}
+      serverside={{
+        sort: params.sort,
+        setSort,
+        startKeys,
+        serversideSearchPanel: (
+          <ServersideSearchPanel
+            from={from}
+            to={to}
+            count={totalCount}
+            params={params}
+            setParams={setParams}
+            pathname={pathname}
+            replaceHistory={replaceHistory}
+          />
+        ),
       }}
       isSearchable
       emptyText="No Desktops Found"
@@ -115,11 +147,23 @@ function renderLoginCell(
 
 type Props = {
   desktops: Desktop[];
-  pageSize?: number;
+  pageSize: number;
   username: string;
   clusterId: string;
   onLoginMenuOpen(desktopName: string): { login: string; url: string }[];
   onLoginSelect(username: string, desktopName: string): void;
+  fetchNext: () => void;
+  fetchPrev: () => void;
+  fetchStatus: any;
+  from: number;
+  to: number;
+  totalCount: number;
+  params: ResourceUrlQueryParams;
+  setParams: (params: ResourceUrlQueryParams) => void;
+  startKeys: string[];
+  setSort: (sort: SortType) => void;
+  pathname: string;
+  replaceHistory: (path: string) => void;
 };
 
 export default DesktopList;

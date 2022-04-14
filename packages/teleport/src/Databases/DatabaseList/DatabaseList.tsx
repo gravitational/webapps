@@ -20,14 +20,30 @@ import Table, { Cell, LabelCell } from 'design/DataTable';
 import { AuthType } from 'teleport/services/user';
 import { Database, DbProtocol } from 'teleport/services/databases';
 import ConnectDialog from 'teleport/Databases/ConnectDialog';
+import ServersideSearchPanel, {
+  SortType,
+} from 'teleport/components/ServersideSearchPanel';
+import { ResourceUrlQueryParams } from 'teleport/getUrlQueryParams';
 
 function DatabaseList(props: Props) {
   const {
     databases = [],
-    pageSize = 100,
+    pageSize,
     username,
     clusterId,
     authType,
+    totalCount,
+    fetchNext,
+    fetchPrev,
+    fetchStatus,
+    from,
+    to,
+    params,
+    setParams,
+    startKeys,
+    setSort,
+    pathname,
+    replaceHistory,
   } = props;
 
   const [dbConnectInfo, setDbConnectInfo] = useState<{
@@ -48,12 +64,10 @@ function DatabaseList(props: Props) {
           {
             key: 'desc',
             headerText: 'Description',
-            isSortable: true,
           },
           {
             key: 'title',
             headerText: 'Type',
-            isSortable: true,
           },
           {
             key: 'tags',
@@ -66,6 +80,27 @@ function DatabaseList(props: Props) {
           },
         ]}
         pagination={{ pageSize }}
+        fetching={{
+          onFetchNext: fetchNext,
+          onFetchPrev: fetchPrev,
+          fetchStatus,
+        }}
+        serverside={{
+          sort: params.sort,
+          setSort,
+          startKeys,
+          serversideSearchPanel: (
+            <ServersideSearchPanel
+              from={from}
+              to={to}
+              count={totalCount}
+              params={params}
+              setParams={setParams}
+              pathname={pathname}
+              replaceHistory={replaceHistory}
+            />
+          ),
+        }}
         isSearchable
         emptyText="No Databases Found"
       />
@@ -108,10 +143,22 @@ function renderConnectButton(
 
 type Props = {
   databases: Database[];
-  pageSize?: number;
+  pageSize: number;
   username: string;
   clusterId: string;
   authType: AuthType;
+  fetchNext: () => void;
+  fetchPrev: () => void;
+  fetchStatus: any;
+  from: number;
+  to: number;
+  totalCount: number;
+  params: ResourceUrlQueryParams;
+  setParams: (params: ResourceUrlQueryParams) => void;
+  startKeys: string[];
+  setSort: (sort: SortType) => void;
+  pathname: string;
+  replaceHistory: (path: string) => void;
 };
 
 export default DatabaseList;
