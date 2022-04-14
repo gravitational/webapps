@@ -314,6 +314,153 @@ exports[`failed 1`] = `
   color: #FFFFFF;
 }
 
+.c7 {
+  box-sizing: border-box;
+  margin-right: 16px;
+  width: 100%;
+}
+
+.c23 {
+  line-height: 1.5;
+  margin: 0;
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  box-sizing: border-box;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-family: inherit;
+  font-weight: 600;
+  outline: none;
+  position: relative;
+  text-align: center;
+  text-decoration: none;
+  text-transform: uppercase;
+  transition: all 0.3s;
+  -webkit-font-smoothing: antialiased;
+  background: #2C3A73;
+  border: 1px solid #1C254D;
+  opacity: .87;
+  color: rgba(255,255,255,0.87);
+  font-size: 10px;
+  min-height: 24px;
+  padding: 0px 16px;
+  height: 24px;
+}
+
+.c23:active {
+  opacity: 0.56;
+}
+
+.c23:hover,
+.c23:focus {
+  background: #2C3A73;
+  border: 1px solid rgba(255,255,255,0.1);
+  opacity: 1;
+}
+
+.c23:active {
+  opacity: 0.24;
+}
+
+.c23:disabled {
+  background: rgba(255,255,255,0.12);
+  color: rgba(255,255,255,0.3);
+}
+
+.c18 {
+  display: inline-block;
+  transition: color .3s;
+  color: #FFFFFF;
+}
+
+.c29 {
+  display: inline-block;
+  transition: color .3s;
+  color: #FFFFFF;
+  font-size: 16px;
+}
+
+.c24 {
+  display: inline-block;
+  transition: color .3s;
+  margin-left: 8px;
+  margin-right: -8px;
+  color: rgba(255,255,255,0.56);
+  font-size: 14px;
+}
+
+.c22 {
+  box-sizing: border-box;
+  border-radius: 100px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 16px;
+  line-height: 1.4;
+  font-size: 10px;
+  font-weight: 500;
+  padding: 0 8px;
+  background-color: #111B48;
+  color: rgba(255,255,255,0.87);
+  margin-bottom: 4px;
+  margin-right: 4px;
+}
+
+.c16 {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  font-weight: 300;
+  font-size: 12px;
+  line-height: 24px;
+  margin: 0px;
+}
+
+.c20 {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  font-weight: 400;
+  font-size: 12px;
+  line-height: 16px;
+  margin: 0px;
+  margin-right: 4px;
+  color: #FFFFFF;
+}
+
+.c5 {
+  box-sizing: border-box;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.c6 {
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+}
+
+.c19 {
+  box-sizing: border-box;
+  display: flex;
+}
+
+.c26 {
+  box-sizing: border-box;
+  width: 100%;
+  display: flex;
+  justify-content: end;
+}
+
+.c27 {
+  box-sizing: border-box;
+  margin-right: 8px;
+  display: flex;
+  align-items: center;
+}
+
 .c1 {
   box-sizing: border-box;
   margin-bottom: 24px;
@@ -355,6 +502,227 @@ exports[`failed 1`] = `
   padding-bottom: 24px;
 }
 
+.c21 {
+  background: #222C59;
+  box-shadow: 0 4px 16px rgba(0,0,0,0.24);
+  border-collapse: collapse;
+  border-spacing: 0;
+  font-size: 12px;
+  width: 100%;
+}
+
+.c21 > thead > tr > th,
+.c21 > tbody > tr > th,
+.c21 > tfoot > tr > th,
+.c21 > thead > tr > td,
+.c21 > tbody > tr > td,
+.c21 > tfoot > tr > td {
+  padding: 8px 8px;
+  vertical-align: middle;
+}
+
+.c21 > thead > tr > th:first-child,
+.c21 > tbody > tr > th:first-child,
+.c21 > tfoot > tr > th:first-child,
+.c21 > thead > tr > td:first-child,
+.c21 > tbody > tr > td:first-child,
+.c21 > tfoot > tr > td:first-child {
+  padding-left: 24px;
+}
+
+.c21 > thead > tr > th:last-child,
+.c21 > tbody > tr > th:last-child,
+.c21 > tfoot > tr > th:last-child,
+.c21 > thead > tr > td:last-child,
+.c21 > tbody > tr > td:last-child,
+.c21 > tfoot > tr > td:last-child {
+  padding-right: 24px;
+}
+
+.c21 > tbody > tr > td {
+  vertical-align: baseline;
+}
+
+.c21 > thead > tr > th {
+  background: #111B48;
+  color: #FFFFFF;
+  cursor: pointer;
+  font-size: 10px;
+  font-weight: 400;
+  padding-bottom: 0;
+  padding-top: 0;
+  text-align: left;
+  opacity: 0.75;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+.c21 > thead > tr > th .c17 {
+  font-weight: bold;
+  font-size: 8px;
+  margin-left: 8px;
+}
+
+.c21 > tbody > tr > td {
+  color: rgba(255,255,255,0.87);
+  line-height: 16px;
+}
+
+.c21 tbody tr {
+  border-bottom: 1px solid #1C254D;
+}
+
+.c21 tbody tr:hover {
+  background-color: rgb(37,49,98);
+}
+
+.c4 {
+  padding: 16px 24px;
+  display: flex;
+  height: 24px;
+  flex-shrink: 0;
+  align-items: center;
+  justify-content: space-between;
+  background: #222C59;
+  border-top-left-radius: 8px;
+  border-top-right-radius: 8px;
+}
+
+.c25 {
+  padding: 16px 24px;
+  display: flex;
+  height: 24px;
+  flex-shrink: 0;
+  align-items: center;
+  justify-content: space-between;
+  background: #222C59;
+  border-bottom-right-radius: 8px;
+  border-bottom-left-radius: 8px;
+}
+
+.c28 {
+  background: none;
+  border: none;
+  cursor: pointer;
+}
+
+.c28 .c17 {
+  font-size: 20px;
+  transition: all 0.3s;
+  opacity: 0.5;
+}
+
+.c28:hover .c17,
+.c28:focus .c17 {
+  opacity: 1;
+}
+
+.c28:disabled {
+  cursor: default;
+}
+
+.c28:disabled .c17 {
+  opacity: 0.1;
+}
+
+.c10 {
+  position: absolute;
+  height: 100%;
+  right: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #2C3A73;
+  border-radius: 200px;
+}
+
+.c8 {
+  position: relative;
+  display: flex;
+  overflow: hidden;
+  width: 100%;
+  border-radius: 200px;
+  height: 32px;
+  background: #111B48;
+}
+
+.c9 {
+  border: none;
+  outline: none;
+  box-sizing: border-box;
+  height: 100%;
+  font-size: 12px;
+  width: 100%;
+  transition: all 0.2s;
+  padding-left: 16px;
+  padding-right: 16px;
+  color: rgba(255,255,255,0.87);
+  background: #111B48;
+  padding-right: 184px;
+}
+
+.c9:hover,
+.c9:focus,
+.c9:active {
+  background: #1C254D;
+  box-shadow: inset 0 2px 4px rgba(0,0,0,.24);
+  color: rgba(255,255,255,0.87);
+}
+
+.c9::placeholder {
+  color: rgba(255,255,255,0.24);
+  font-size: 12px;
+}
+
+.c12 {
+  position: relative;
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+}
+
+.c15 {
+  width: 32px;
+  height: 12px;
+  border-radius: 12px;
+  background: #222C59;
+  cursor: pointer;
+}
+
+.c15:before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  transform: translate(0,-50%);
+  width: 16px;
+  height: 16px;
+  border-radius: 16px;
+  background: #651FFF;
+}
+
+.c13 {
+  opacity: 0;
+  position: absolute;
+  cursor: pointer;
+}
+
+.c13:checked + .c14 {
+  background: #512FC9;
+}
+
+.c13:checked + .c14:before {
+  transform: translate(16px,-50%);
+}
+
+.c11 {
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  padding-right: 16px;
+  padding-left: 16px;
+  width: 120px;
+}
+
 <div
   class="c0"
 >
@@ -374,10 +742,439 @@ exports[`failed 1`] = `
     some error message
      
   </div>
+  <form
+    class="c4"
+  >
+    <div
+      class="c5"
+      width="100%"
+    >
+      <div
+        class="c6"
+        style="width: 70%;"
+      >
+        <div
+          class="c7"
+          width="100%"
+        >
+          <div
+            class="c8"
+          >
+            <input
+              class="c9"
+              placeholder="SEARCH..."
+              value=""
+            />
+            <div
+              class="c10"
+            >
+              <div
+                class="c11"
+              >
+                <label
+                  class="c12"
+                >
+                  <input
+                    class="c13"
+                    type="checkbox"
+                  />
+                  <div
+                    class="c14 c15"
+                  />
+                </label>
+                <div
+                  class="c16"
+                >
+                  Advanced
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div
+          style="line-height: 0px;"
+        >
+          <span
+            class="c17 c18 icon icon-info_outline "
+            color="light"
+            style="cursor: pointer; font-size: 20px;"
+          />
+        </div>
+      </div>
+      <div
+        class="c19"
+      >
+        <div
+          class="c20"
+          color="primary.contrastText"
+        >
+          SHOWING 
+          <strong>
+            1
+          </strong>
+           - 
+          <strong>
+            7
+          </strong>
+           of
+           
+          <strong>
+            7
+          </strong>
+        </div>
+      </div>
+    </div>
+  </form>
+  <table
+    class="c21"
+  >
+    <thead>
+      <tr>
+        <th>
+          <a>
+            Hostname
+            <span
+              class="c17 c18 icon icon-chevron-up "
+              color="light"
+            />
+          </a>
+        </th>
+        <th>
+          Address
+        </th>
+        <th>
+          Labels
+        </th>
+        <th />
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>
+          fujedu
+        </td>
+        <td>
+          172.10.1.20:3022
+        </td>
+        <td>
+          <div
+            class="c22"
+            kind="secondary"
+          >
+            cluster: one
+          </div>
+          <div
+            class="c22"
+            kind="secondary"
+          >
+            kernel: 4.15.0-51-generic
+          </div>
+        </td>
+        <td
+          align="right"
+        >
+          <button
+            class="c23"
+            height="24px"
+            kind="border"
+          >
+            CONNECT
+            <span
+              class="c17 c24 icon icon-caret-down "
+              color="text.secondary"
+              font-size="2"
+            />
+          </button>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          facuzguv
+        </td>
+        <td>
+          172.10.1.1:3022
+        </td>
+        <td>
+          <div
+            class="c22"
+            kind="secondary"
+          >
+            cluster: one
+          </div>
+          <div
+            class="c22"
+            kind="secondary"
+          >
+            kernel: 4.15.0-51-generic
+          </div>
+        </td>
+        <td
+          align="right"
+        >
+          <button
+            class="c23"
+            height="24px"
+            kind="border"
+          >
+            CONNECT
+            <span
+              class="c17 c24 icon icon-caret-down "
+              color="text.secondary"
+              font-size="2"
+            />
+          </button>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          duzsevkig
+        </td>
+        <td>
+          172.10.1.1:3022
+        </td>
+        <td>
+          <div
+            class="c22"
+            kind="secondary"
+          >
+            cluster: one
+          </div>
+          <div
+            class="c22"
+            kind="secondary"
+          >
+            kernel: 4.15.0-51-generic
+          </div>
+        </td>
+        <td
+          align="right"
+        >
+          <button
+            class="c23"
+            height="24px"
+            kind="border"
+          >
+            CONNECT
+            <span
+              class="c17 c24 icon icon-caret-down "
+              color="text.secondary"
+              font-size="2"
+            />
+          </button>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          kuhinur
+        </td>
+        <td>
+          172.10.1.1:3022
+        </td>
+        <td>
+          <div
+            class="c22"
+            kind="secondary"
+          >
+            cluster: one
+          </div>
+          <div
+            class="c22"
+            kind="secondary"
+          >
+            kernel: 4.15.0-51-generic
+          </div>
+        </td>
+        <td
+          align="right"
+        >
+          <button
+            class="c23"
+            height="24px"
+            kind="border"
+          >
+            CONNECT
+            <span
+              class="c17 c24 icon icon-caret-down "
+              color="text.secondary"
+              font-size="2"
+            />
+          </button>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          zebpecda
+        </td>
+        <td>
+          172.10.1.1:3022
+        </td>
+        <td>
+          <div
+            class="c22"
+            kind="secondary"
+          >
+            cluster: one
+          </div>
+          <div
+            class="c22"
+            kind="secondary"
+          >
+            kernel: 4.15.0-51-generic
+          </div>
+        </td>
+        <td
+          align="right"
+        >
+          <button
+            class="c23"
+            height="24px"
+            kind="border"
+          >
+            CONNECT
+            <span
+              class="c17 c24 icon icon-caret-down "
+              color="text.secondary"
+              font-size="2"
+            />
+          </button>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          zebpecda
+        </td>
+        <td>
+          <span
+            style="cursor: default;"
+            title="This node is connected to cluster through reverse tunnel"
+          >
+            ⟵ tunnel
+          </span>
+        </td>
+        <td>
+          <div
+            class="c22"
+            kind="secondary"
+          >
+            cluster: one
+          </div>
+          <div
+            class="c22"
+            kind="secondary"
+          >
+            kernel: 4.15.0-51-generic
+          </div>
+        </td>
+        <td
+          align="right"
+        >
+          <button
+            class="c23"
+            height="24px"
+            kind="border"
+          >
+            CONNECT
+            <span
+              class="c17 c24 icon icon-caret-down "
+              color="text.secondary"
+              font-size="2"
+            />
+          </button>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          zebpecda
+        </td>
+        <td>
+          <span
+            style="cursor: default;"
+            title="This node is connected to cluster through reverse tunnel"
+          >
+            ⟵ tunnel
+          </span>
+        </td>
+        <td>
+          <div
+            class="c22"
+            kind="secondary"
+          >
+            cluster: one
+          </div>
+          <div
+            class="c22"
+            kind="secondary"
+          >
+            kernel: 4.15.0-51-generic
+          </div>
+        </td>
+        <td
+          align="right"
+        >
+          <button
+            class="c23"
+            height="24px"
+            kind="border"
+          >
+            CONNECT
+            <span
+              class="c17 c24 icon icon-caret-down "
+              color="text.secondary"
+              font-size="2"
+            />
+          </button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+  <nav
+    class="c25"
+  >
+    <div
+      class="c26"
+      width="100%"
+    >
+      <div
+        class="c27"
+      />
+      <div
+        class="c19"
+      >
+        <button
+          class="c28"
+          disabled=""
+          title="Previous page"
+        >
+          <span
+            class="c17 c29 icon icon-arrow-left-circle "
+            color="light"
+            font-size="3"
+          />
+        </button>
+        <button
+          class="c28"
+          disabled=""
+          title="Next page"
+        >
+          <span
+            class="c17 c29 icon icon-arrow-right-circle "
+            color="light"
+            font-size="3"
+          />
+        </button>
+      </div>
+    </div>
+  </nav>
 </div>
 `;
 
 exports[`loaded 1`] = `
+.c10 {
+  box-sizing: border-box;
+  margin-right: 16px;
+  width: 100%;
+}
+
 .c7 {
   line-height: 1.5;
   margin: 0;
@@ -423,7 +1220,7 @@ exports[`loaded 1`] = `
   color: rgba(255,255,255,0.3);
 }
 
-.c19 {
+.c26 {
   line-height: 1.5;
   margin: 0;
   display: inline-flex;
@@ -452,40 +1249,40 @@ exports[`loaded 1`] = `
   height: 24px;
 }
 
-.c19:active {
+.c26:active {
   opacity: 0.56;
 }
 
-.c19:hover,
-.c19:focus {
+.c26:hover,
+.c26:focus {
   background: #2C3A73;
   border: 1px solid rgba(255,255,255,0.1);
   opacity: 1;
 }
 
-.c19:active {
+.c26:active {
   opacity: 0.24;
 }
 
-.c19:disabled {
+.c26:disabled {
   background: rgba(255,255,255,0.12);
   color: rgba(255,255,255,0.3);
 }
 
-.c15 {
+.c21 {
+  display: inline-block;
+  transition: color .3s;
+  color: #FFFFFF;
+}
+
+.c32 {
   display: inline-block;
   transition: color .3s;
   color: #FFFFFF;
   font-size: 16px;
 }
 
-.c17 {
-  display: inline-block;
-  transition: color .3s;
-  color: #FFFFFF;
-}
-
-.c20 {
+.c27 {
   display: inline-block;
   transition: color .3s;
   margin-left: 8px;
@@ -494,7 +1291,7 @@ exports[`loaded 1`] = `
   font-size: 14px;
 }
 
-.c18 {
+.c25 {
   box-sizing: border-box;
   border-radius: 100px;
   display: inline-flex;
@@ -511,7 +1308,16 @@ exports[`loaded 1`] = `
   margin-right: 4px;
 }
 
-.c12 {
+.c19 {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  font-weight: 300;
+  font-size: 12px;
+  line-height: 24px;
+  margin: 0px;
+}
+
+.c23 {
   overflow: hidden;
   text-overflow: ellipsis;
   font-weight: 400;
@@ -528,12 +1334,27 @@ exports[`loaded 1`] = `
   align-items: center;
 }
 
-.c10 {
+.c9 {
+  box-sizing: border-box;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.c22 {
   box-sizing: border-box;
   display: flex;
 }
 
-.c11 {
+.c29 {
+  box-sizing: border-box;
+  width: 100%;
+  display: flex;
+  justify-content: end;
+}
+
+.c30 {
   box-sizing: border-box;
   margin-right: 8px;
   display: flex;
@@ -639,53 +1460,48 @@ exports[`loaded 1`] = `
   background: #2C3A73;
 }
 
-.c16 {
+.c24 {
   background: #222C59;
   box-shadow: 0 4px 16px rgba(0,0,0,0.24);
   border-collapse: collapse;
   border-spacing: 0;
-  border-radius: 8px;
   font-size: 12px;
   width: 100%;
-  border-top-left-radius: 0px;
-  border-top-right-radius: 0px;
-  border-bottom-right-radius: 8px;
-  border-bottom-left-radius: 8px;
 }
 
-.c16 > thead > tr > th,
-.c16 > tbody > tr > th,
-.c16 > tfoot > tr > th,
-.c16 > thead > tr > td,
-.c16 > tbody > tr > td,
-.c16 > tfoot > tr > td {
+.c24 > thead > tr > th,
+.c24 > tbody > tr > th,
+.c24 > tfoot > tr > th,
+.c24 > thead > tr > td,
+.c24 > tbody > tr > td,
+.c24 > tfoot > tr > td {
   padding: 8px 8px;
   vertical-align: middle;
 }
 
-.c16 > thead > tr > th:first-child,
-.c16 > tbody > tr > th:first-child,
-.c16 > tfoot > tr > th:first-child,
-.c16 > thead > tr > td:first-child,
-.c16 > tbody > tr > td:first-child,
-.c16 > tfoot > tr > td:first-child {
+.c24 > thead > tr > th:first-child,
+.c24 > tbody > tr > th:first-child,
+.c24 > tfoot > tr > th:first-child,
+.c24 > thead > tr > td:first-child,
+.c24 > tbody > tr > td:first-child,
+.c24 > tfoot > tr > td:first-child {
   padding-left: 24px;
 }
 
-.c16 > thead > tr > th:last-child,
-.c16 > tbody > tr > th:last-child,
-.c16 > tfoot > tr > th:last-child,
-.c16 > thead > tr > td:last-child,
-.c16 > tbody > tr > td:last-child,
-.c16 > tfoot > tr > td:last-child {
+.c24 > thead > tr > th:last-child,
+.c24 > tbody > tr > th:last-child,
+.c24 > tfoot > tr > th:last-child,
+.c24 > thead > tr > td:last-child,
+.c24 > tbody > tr > td:last-child,
+.c24 > tfoot > tr > td:last-child {
   padding-right: 24px;
 }
 
-.c16 > tbody > tr > td {
+.c24 > tbody > tr > td {
   vertical-align: baseline;
 }
 
-.c16 > thead > tr > th {
+.c24 > thead > tr > th {
   background: #111B48;
   color: #FFFFFF;
   cursor: pointer;
@@ -699,31 +1515,23 @@ exports[`loaded 1`] = `
   white-space: nowrap;
 }
 
-.c16 > thead > tr > th .c14 {
+.c24 > thead > tr > th .c20 {
   font-weight: bold;
   font-size: 8px;
   margin-left: 8px;
 }
 
-.c16 > tbody > tr > td {
+.c24 > tbody > tr > td {
   color: rgba(255,255,255,0.87);
   line-height: 16px;
 }
 
-.c16 tbody tr {
+.c24 tbody tr {
   border-bottom: 1px solid #1C254D;
 }
 
-.c16 tbody tr:hover {
+.c24 tbody tr:hover {
   background-color: rgb(37,49,98);
-}
-
-.c16 tbody > tr:last-child td:first-child {
-  border-bottom-left-radius: 8px;
-}
-
-.c16 tbody > tr:last-child td:last-child {
-  border-bottom-right-radius: 8px;
 }
 
 .c8 {
@@ -738,57 +1546,139 @@ exports[`loaded 1`] = `
   border-top-right-radius: 8px;
 }
 
-.c13 {
+.c28 {
+  padding: 16px 24px;
+  display: flex;
+  height: 24px;
+  flex-shrink: 0;
+  align-items: center;
+  justify-content: space-between;
+  background: #222C59;
+  border-bottom-right-radius: 8px;
+  border-bottom-left-radius: 8px;
+}
+
+.c31 {
   background: none;
   border: none;
   cursor: pointer;
 }
 
-.c13 .c14 {
+.c31 .c20 {
   font-size: 20px;
   transition: all 0.3s;
   opacity: 0.5;
 }
 
-.c13:hover .c14,
-.c13:focus .c14 {
+.c31:hover .c20,
+.c31:focus .c20 {
   opacity: 1;
 }
 
-.c13:disabled {
+.c31:disabled {
   cursor: default;
 }
 
-.c13:disabled .c14 {
+.c31:disabled .c20 {
   opacity: 0.1;
 }
 
-.c9 {
-  box-sizing: border-box;
-  font-size: 12px;
-  min-width: 200px;
-  outline: none;
-  border: none;
+.c13 {
+  position: absolute;
+  height: 100%;
+  right: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #2C3A73;
   border-radius: 200px;
-  height: 32px;
-  transition: all .2s;
-  color: rgba(255,255,255,0.87);
-  background: #111B48;
-  padding-left: 16px;
-  padding-right: 16px;
 }
 
-.c9:hover,
-.c9:focus,
-.c9:active {
+.c11 {
+  position: relative;
+  display: flex;
+  overflow: hidden;
+  width: 100%;
+  border-radius: 200px;
+  height: 32px;
+  background: #111B48;
+}
+
+.c12 {
+  border: none;
+  outline: none;
+  box-sizing: border-box;
+  height: 100%;
+  font-size: 12px;
+  width: 100%;
+  transition: all 0.2s;
+  padding-left: 16px;
+  padding-right: 16px;
+  color: rgba(255,255,255,0.87);
+  background: #111B48;
+  padding-right: 184px;
+}
+
+.c12:hover,
+.c12:focus,
+.c12:active {
   background: #1C254D;
   box-shadow: inset 0 2px 4px rgba(0,0,0,.24);
   color: rgba(255,255,255,0.87);
 }
 
-.c9::placeholder {
+.c12::placeholder {
   color: rgba(255,255,255,0.24);
   font-size: 12px;
+}
+
+.c15 {
+  position: relative;
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+}
+
+.c18 {
+  width: 32px;
+  height: 12px;
+  border-radius: 12px;
+  background: #222C59;
+  cursor: pointer;
+}
+
+.c18:before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  transform: translate(0,-50%);
+  width: 16px;
+  height: 16px;
+  border-radius: 16px;
+  background: #651FFF;
+}
+
+.c16 {
+  opacity: 0;
+  position: absolute;
+  cursor: pointer;
+}
+
+.c16:checked + .c17 {
+  background: #512FC9;
+}
+
+.c16:checked + .c17:before {
+  transform: translate(16px,-50%);
+}
+
+.c14 {
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  padding-right: 16px;
+  padding-left: 16px;
+  width: 120px;
 }
 
 <div
@@ -830,22 +1720,70 @@ exports[`loaded 1`] = `
       </button>
     </div>
   </div>
-  <nav
+  <form
     class="c8"
   >
-    <input
-      class="c9"
-      placeholder="SEARCH..."
-      value=""
-    />
     <div
-      class="c10"
+      class="c9"
+      width="100%"
     >
       <div
-        class="c11"
+        class="c3"
+        style="width: 70%;"
       >
         <div
-          class="c12"
+          class="c10"
+          width="100%"
+        >
+          <div
+            class="c11"
+          >
+            <input
+              class="c12"
+              placeholder="SEARCH..."
+              value=""
+            />
+            <div
+              class="c13"
+            >
+              <div
+                class="c14"
+              >
+                <label
+                  class="c15"
+                >
+                  <input
+                    class="c16"
+                    type="checkbox"
+                  />
+                  <div
+                    class="c17 c18"
+                  />
+                </label>
+                <div
+                  class="c19"
+                >
+                  Advanced
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div
+          style="line-height: 0px;"
+        >
+          <span
+            class="c20 c21 icon icon-info_outline "
+            color="light"
+            style="cursor: pointer; font-size: 20px;"
+          />
+        </div>
+      </div>
+      <div
+        class="c22"
+      >
+        <div
+          class="c23"
           color="primary.contrastText"
         >
           SHOWING 
@@ -863,36 +1801,10 @@ exports[`loaded 1`] = `
           </strong>
         </div>
       </div>
-      <div
-        class="c10"
-      >
-        <button
-          class="c13"
-          disabled=""
-          title="Previous page"
-        >
-          <span
-            class="c14 c15 icon icon-arrow-left-circle "
-            color="light"
-            font-size="3"
-          />
-        </button>
-        <button
-          class="c13"
-          disabled=""
-          title="Next page"
-        >
-          <span
-            class="c14 c15 icon icon-arrow-right-circle "
-            color="light"
-            font-size="3"
-          />
-        </button>
-      </div>
     </div>
-  </nav>
+  </form>
   <table
-    class="c16"
+    class="c24"
   >
     <thead>
       <tr>
@@ -900,19 +1812,13 @@ exports[`loaded 1`] = `
           <a>
             Hostname
             <span
-              class="c14 c17 icon icon-chevron-up "
+              class="c20 c21 icon icon-chevron-up "
               color="light"
             />
           </a>
         </th>
         <th>
-          <a>
-            Address
-            <span
-              class="c14 c17 icon icon-chevrons-expand-vertical "
-              color="light"
-            />
-          </a>
+          Address
         </th>
         <th>
           Labels
@@ -923,20 +1829,20 @@ exports[`loaded 1`] = `
     <tbody>
       <tr>
         <td>
-          duzsevkig
+          fujedu
         </td>
         <td>
-          172.10.1.1:3022
+          172.10.1.20:3022
         </td>
         <td>
           <div
-            class="c18"
+            class="c25"
             kind="secondary"
           >
             cluster: one
           </div>
           <div
-            class="c18"
+            class="c25"
             kind="secondary"
           >
             kernel: 4.15.0-51-generic
@@ -946,13 +1852,13 @@ exports[`loaded 1`] = `
           align="right"
         >
           <button
-            class="c19"
+            class="c26"
             height="24px"
             kind="border"
           >
             CONNECT
             <span
-              class="c14 c20 icon icon-caret-down "
+              class="c20 c27 icon icon-caret-down "
               color="text.secondary"
               font-size="2"
             />
@@ -968,13 +1874,13 @@ exports[`loaded 1`] = `
         </td>
         <td>
           <div
-            class="c18"
+            class="c25"
             kind="secondary"
           >
             cluster: one
           </div>
           <div
-            class="c18"
+            class="c25"
             kind="secondary"
           >
             kernel: 4.15.0-51-generic
@@ -984,13 +1890,13 @@ exports[`loaded 1`] = `
           align="right"
         >
           <button
-            class="c19"
+            class="c26"
             height="24px"
             kind="border"
           >
             CONNECT
             <span
-              class="c14 c20 icon icon-caret-down "
+              class="c20 c27 icon icon-caret-down "
               color="text.secondary"
               font-size="2"
             />
@@ -999,20 +1905,20 @@ exports[`loaded 1`] = `
       </tr>
       <tr>
         <td>
-          fujedu
+          duzsevkig
         </td>
         <td>
-          172.10.1.20:3022
+          172.10.1.1:3022
         </td>
         <td>
           <div
-            class="c18"
+            class="c25"
             kind="secondary"
           >
             cluster: one
           </div>
           <div
-            class="c18"
+            class="c25"
             kind="secondary"
           >
             kernel: 4.15.0-51-generic
@@ -1022,13 +1928,13 @@ exports[`loaded 1`] = `
           align="right"
         >
           <button
-            class="c19"
+            class="c26"
             height="24px"
             kind="border"
           >
             CONNECT
             <span
-              class="c14 c20 icon icon-caret-down "
+              class="c20 c27 icon icon-caret-down "
               color="text.secondary"
               font-size="2"
             />
@@ -1044,13 +1950,13 @@ exports[`loaded 1`] = `
         </td>
         <td>
           <div
-            class="c18"
+            class="c25"
             kind="secondary"
           >
             cluster: one
           </div>
           <div
-            class="c18"
+            class="c25"
             kind="secondary"
           >
             kernel: 4.15.0-51-generic
@@ -1060,13 +1966,13 @@ exports[`loaded 1`] = `
           align="right"
         >
           <button
-            class="c19"
+            class="c26"
             height="24px"
             kind="border"
           >
             CONNECT
             <span
-              class="c14 c20 icon icon-caret-down "
+              class="c20 c27 icon icon-caret-down "
               color="text.secondary"
               font-size="2"
             />
@@ -1082,13 +1988,13 @@ exports[`loaded 1`] = `
         </td>
         <td>
           <div
-            class="c18"
+            class="c25"
             kind="secondary"
           >
             cluster: one
           </div>
           <div
-            class="c18"
+            class="c25"
             kind="secondary"
           >
             kernel: 4.15.0-51-generic
@@ -1098,13 +2004,13 @@ exports[`loaded 1`] = `
           align="right"
         >
           <button
-            class="c19"
+            class="c26"
             height="24px"
             kind="border"
           >
             CONNECT
             <span
-              class="c14 c20 icon icon-caret-down "
+              class="c20 c27 icon icon-caret-down "
               color="text.secondary"
               font-size="2"
             />
@@ -1125,13 +2031,13 @@ exports[`loaded 1`] = `
         </td>
         <td>
           <div
-            class="c18"
+            class="c25"
             kind="secondary"
           >
             cluster: one
           </div>
           <div
-            class="c18"
+            class="c25"
             kind="secondary"
           >
             kernel: 4.15.0-51-generic
@@ -1141,13 +2047,13 @@ exports[`loaded 1`] = `
           align="right"
         >
           <button
-            class="c19"
+            class="c26"
             height="24px"
             kind="border"
           >
             CONNECT
             <span
-              class="c14 c20 icon icon-caret-down "
+              class="c20 c27 icon icon-caret-down "
               color="text.secondary"
               font-size="2"
             />
@@ -1168,13 +2074,13 @@ exports[`loaded 1`] = `
         </td>
         <td>
           <div
-            class="c18"
+            class="c25"
             kind="secondary"
           >
             cluster: one
           </div>
           <div
-            class="c18"
+            class="c25"
             kind="secondary"
           >
             kernel: 4.15.0-51-generic
@@ -1184,13 +2090,13 @@ exports[`loaded 1`] = `
           align="right"
         >
           <button
-            class="c19"
+            class="c26"
             height="24px"
             kind="border"
           >
             CONNECT
             <span
-              class="c14 c20 icon icon-caret-down "
+              class="c20 c27 icon icon-caret-down "
               color="text.secondary"
               font-size="2"
             />
@@ -1199,6 +2105,44 @@ exports[`loaded 1`] = `
       </tr>
     </tbody>
   </table>
+  <nav
+    class="c28"
+  >
+    <div
+      class="c29"
+      width="100%"
+    >
+      <div
+        class="c30"
+      />
+      <div
+        class="c22"
+      >
+        <button
+          class="c31"
+          disabled=""
+          title="Previous page"
+        >
+          <span
+            class="c20 c32 icon icon-arrow-left-circle "
+            color="light"
+            font-size="3"
+          />
+        </button>
+        <button
+          class="c31"
+          disabled=""
+          title="Next page"
+        >
+          <span
+            class="c20 c32 icon icon-arrow-right-circle "
+            color="light"
+            font-size="3"
+          />
+        </button>
+      </div>
+    </div>
+  </nav>
 </div>
 `;
 

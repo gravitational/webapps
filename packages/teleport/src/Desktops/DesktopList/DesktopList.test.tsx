@@ -32,6 +32,7 @@ test('search generates correct url params', () => {
       pathname="test.com/cluster/one/desktops"
       onLoginMenuOpen={() => null}
       onLoginSelect={() => null}
+      replaceHistory={replaceHistory}
     />
   );
 
