@@ -1,3 +1,4 @@
+import { SortType } from 'teleport/components/ServersideSearchPanel/useServerSideSearchPanel';
 import { MatchCallback } from 'design/utils/match';
 
 export type TableProps<T> = {
@@ -32,14 +33,18 @@ export type PaginationConfig = {
 };
 
 export type FetchingConfig = {
-  onFetchMore: () => void;
+  onFetchNext?: () => void;
+  onFetchPrev?: () => void;
+  onFetchMore?: () => void;
   fetchStatus: FetchStatus;
 };
 
-type ServersideConfig = {
-  totalItemCount: number;
-  // Sets the text that indicates what items are displayed and how many there are total eg. 'Showing '10-20 of 50'
-  setItemCountText: (itemCountText: string) => void;
+export type ServersideConfig = {
+  // 'from and 'to' are the indices of the first and last items on the page, respectively, for displaying: "SHOWING from - to of totalItemCount"
+  serversideSearchPanel: JSX.Element;
+  startKeys: string[];
+  sort: SortType;
+  setSort: (sort: SortType) => void;
 };
 
 // Makes it so either key or altKey is required

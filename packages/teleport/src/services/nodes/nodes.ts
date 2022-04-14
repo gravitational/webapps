@@ -20,29 +20,20 @@ import makeNode from './makeNode';
 import { NodesResponse } from './types';
 
 class NodeService {
-  maxFetchLimit = 50;
-
   fetchNodes(
     clusterId?: string,
     params?: UrlResourcesParams
   ): Promise<NodesResponse> {
-    return api
-      .get(
-        cfg.getClusterNodesUrl(clusterId, {
-          ...params,
-          limit: this.maxFetchLimit,
-        })
-      )
-      .then(json => {
-        const items = json?.items || [];
+    return api.get(cfg.getClusterNodesUrl(clusterId, params)).then(json => {
+      const items = json?.items || [];
 
-        return {
-          nodes: items.map(makeNode),
-          startKey: json?.startKey,
-          totalCount: json?.totalCount,
-          hasResources: json?.hasResources,
-        };
-      });
+      return {
+        nodes: items.map(makeNode),
+        startKey: json?.startKey,
+        totalCount: json?.totalCount,
+        hasResources: json?.hasResources,
+      };
+    });
   }
 }
 

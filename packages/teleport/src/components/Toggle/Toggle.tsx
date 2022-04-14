@@ -23,9 +23,9 @@ const StyledWrapper = styled.label`
 `;
 
 const StyledSlider = styled.div`
-  width: 40px;
-  height: 16px;
-  border-radius: 16px;
+  width: 32px;
+  height: 12px;
+  border-radius: 12px;
   background: ${props => props.theme.colors.primary.light};
   cursor: pointer;
 
@@ -34,10 +34,10 @@ const StyledSlider = styled.div`
     position: absolute;
     top: 50%;
     transform: translate(0, -50%);
-    width: 20px;
-    height: 20px;
-    border-radius: 20px;
-    background: ${props => props.theme.colors.secondary.main};
+    width: 16px;
+    height: 16px;
+    border-radius: 16px;
+    background: ${props => props.theme.colors.secondary.light};
   }
 `;
 
@@ -47,9 +47,9 @@ const StyledInput = styled.input.attrs({ type: 'checkbox' })`
   cursor: pointer;
 
   &:checked + ${StyledSlider} {
-    background: ${props => props.theme.colors.primary.lighter};
+    background: ${props => props.theme.colors.secondary.main};
     &:before {
-      transform: translate(20px, -50%);
+      transform: translate(16px, -50%);
     }
   }
 `;

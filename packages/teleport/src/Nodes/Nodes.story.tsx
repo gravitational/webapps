@@ -26,11 +26,18 @@ export default {
 export const Loaded = () => <Nodes {...props} />;
 
 export const Empty = () => (
-  <Nodes {...props} results={{ nodes: [], totalCount: 0 }} />
+  <Nodes
+    {...props}
+    results={{ nodes: [], totalCount: 0, hasResources: false }}
+  />
 );
 
 export const EmptyReadOnly = () => (
-  <Nodes {...props} results={{ nodes: [], totalCount: 0 }} canCreate={false} />
+  <Nodes
+    {...props}
+    results={{ nodes: [], totalCount: 0, hasResources: false }}
+    canCreate={false}
+  />
 );
 
 export const Loading = () => (
@@ -48,7 +55,9 @@ const props: State = {
   results: {
     nodes,
     totalCount: nodes.length,
+    hasResources: true,
   },
+  fetchStatus: '',
   isLeafCluster: false,
   canCreate: true,
   attempt: { status: 'success' },
@@ -58,4 +67,19 @@ const props: State = {
   hideAddNode: () => null,
   showAddNode: () => null,
   clusterId: 'im-a-cluster',
+  fetchNext: () => null,
+  fetchPrev: () => null,
+  pageSize: 15,
+  from: 1,
+  to: nodes.length,
+  params: {
+    search: '',
+    query: '',
+    sort: { fieldName: 'hostname', dir: 'ASC' },
+  },
+  setParams: () => null,
+  setSort: () => null,
+  startKeys: [''],
+  pathname: '',
+  replaceHistory: () => null,
 };

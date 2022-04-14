@@ -32,10 +32,29 @@ import {
 } from 'design/theme/palette';
 import { AmazonAws } from 'design/Icon';
 import { App } from 'teleport/services/apps';
+import ServersideSearchPanel, {
+  SortType,
+} from 'teleport/components/ServersideSearchPanel';
+import { ResourceUrlQueryParams } from 'teleport/getUrlQueryParams';
 import AwsLaunchButton from './AwsLaunchButton';
 
 export default function AppList(props: Props) {
-  const { apps = [], pageSize = 100 } = props;
+  const {
+    apps = [],
+    pageSize,
+    totalCount,
+    fetchNext,
+    fetchPrev,
+    fetchStatus,
+    from,
+    to,
+    params,
+    setParams,
+    startKeys,
+    setSort,
+    pathname,
+    replaceHistory,
+  } = props;
 
   return (
     <StyledTable
@@ -74,6 +93,27 @@ export default function AppList(props: Props) {
       emptyText="No Applications Found"
       pagination={{
         pageSize,
+      }}
+      fetching={{
+        onFetchNext: fetchNext,
+        onFetchPrev: fetchPrev,
+        fetchStatus,
+      }}
+      serverside={{
+        sort: params.sort,
+        setSort,
+        startKeys,
+        serversideSearchPanel: (
+          <ServersideSearchPanel
+            from={from}
+            to={to}
+            count={totalCount}
+            params={params}
+            setParams={setParams}
+            pathname={pathname}
+            replaceHistory={replaceHistory}
+          />
+        ),
       }}
       isSearchable
     />
@@ -162,7 +202,19 @@ function getIconColor(appName: string) {
 
 type Props = {
   apps: App[];
-  pageSize?: number;
+  pageSize: number;
+  fetchNext: () => void;
+  fetchPrev: () => void;
+  fetchStatus: any;
+  from: number;
+  to: number;
+  totalCount: number;
+  params: ResourceUrlQueryParams;
+  setParams: (params: ResourceUrlQueryParams) => void;
+  startKeys: string[];
+  setSort: (sort: SortType) => void;
+  pathname: string;
+  replaceHistory: (path: string) => void;
 };
 
 const StyledTable = styled(Table)`

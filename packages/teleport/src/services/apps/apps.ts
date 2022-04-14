@@ -15,19 +15,23 @@
  */
 
 import api from 'teleport/services/api';
-import cfg, { UrlAppParams } from 'teleport/config';
+import cfg, { UrlAppParams, UrlResourcesParams } from 'teleport/config';
 import makeApp from './makeApps';
 import { AppsResponse } from './types';
 
 const service = {
-  fetchApps(clusterId: string): Promise<AppsResponse> {
-    return api.get(cfg.getApplicationsUrl(clusterId)).then(json => {
+  fetchApps(
+    clusterId: string,
+    params: UrlResourcesParams
+  ): Promise<AppsResponse> {
+    return api.get(cfg.getApplicationsUrl(clusterId, params)).then(json => {
       const items = json?.items || [];
 
       return {
         apps: items.map(makeApp),
         startKey: json?.startKey,
         totalCount: json?.totalCount,
+        hasResources: json?.hasResources,
       };
     });
   },

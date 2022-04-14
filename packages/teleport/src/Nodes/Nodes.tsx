@@ -50,10 +50,19 @@ export function Nodes(props: State) {
     isLeafCluster,
     isAddNodeVisible,
     clusterId,
-    fetchMore,
+    fetchNext,
+    fetchPrev,
+    from,
+    to,
+    pageSize,
+    params,
+    setParams,
+    startKeys,
+    setSort,
+    pathname,
+    replaceHistory,
+    fetchStatus,
   } = props;
-
-  const { nodes, totalCount } = results;
 
   function onLoginSelect(e: React.MouseEvent, login: string, serverId: string) {
     e.preventDefault();
@@ -88,20 +97,29 @@ export function Nodes(props: State) {
           <Indicator />
         </Box>
       )}
-      {hasNodes && (
+      {attempt.status !== 'processing' && !isEmpty && (
         <>
           <NodeList
-            nodes={nodes}
-            totalCount={totalCount}
+            nodes={results.nodes}
+            totalCount={results.totalCount}
             onLoginMenuOpen={getNodeLoginOptions}
             onLoginSelect={onLoginSelect}
-            fetchMore={fetchMore}
-            fetchStatus={results.fetchStatus}
-            pageSize={50}
+            fetchNext={fetchNext}
+            fetchPrev={fetchPrev}
+            fetchStatus={fetchStatus}
+            from={from}
+            to={to}
+            pageSize={pageSize}
+            params={params}
+            setParams={setParams}
+            startKeys={startKeys}
+            setSort={setSort}
+            pathname={pathname}
+            replaceHistory={replaceHistory}
           />
         </>
       )}
-      {isEmpty && (
+      {attempt.status === 'success' && isEmpty && (
         <Empty
           clusterId={clusterId}
           canCreate={canCreate && !isLeafCluster}

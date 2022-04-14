@@ -33,5 +33,4 @@ export type NodesResponse = {
   hasResources: boolean;
   startKey?: string;
   totalCount?: number;
-  fetchStatus?: 'loading' | 'disabled' | '';
 };

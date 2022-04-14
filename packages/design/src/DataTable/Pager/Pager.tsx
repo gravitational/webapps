@@ -22,14 +22,12 @@ export function Pager({
   serverside,
 }: State) {
   const isFetchingEnabled = onFetchMore && fetchStatus !== 'disabled';
-  console.log(serverside);
   return (
-    <Flex>
+    <Flex justifyContent="end" width="100%">
       <Flex alignItems="center" mr={2}>
-        <Text typography="body2" color="primary.contrastText" mr={1}>
-          SHOWING <strong>{from + 1}</strong> - <strong>{to + 1}</strong> of{' '}
-          <strong>{count}</strong>
-        </Text>
+        {!serverside && (
+          <PageIndicatorText from={from + 1} to={to + 1} count={count} />
+        )}
         {isFetchingEnabled && !serverside && (
           <StyledFetchMoreBtn
             disabled={fetchStatus === 'loading'}
@@ -58,5 +56,22 @@ export function Pager({
         </StyledArrowBtn>
       </Flex>
     </Flex>
+  );
+}
+
+export function PageIndicatorText({
+  from,
+  to,
+  count,
+}: {
+  from: number;
+  to: number;
+  count: number;
+}) {
+  return (
+    <Text typography="body2" color="primary.contrastText" mr={1}>
+      SHOWING <strong>{from}</strong> - <strong>{to}</strong> of{' '}
+      <strong>{count}</strong>
+    </Text>
   );
 }

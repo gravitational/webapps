@@ -1,5 +1,5 @@
 import React from 'react';
-import { Text } from 'design';
+import { Text, Indicator, Box } from 'design';
 import * as Icons from 'design/Icon';
 import { StyledTable, StyledPanel } from './StyledTable';
 import { TableProps } from './types';
@@ -25,14 +25,17 @@ export function Table<T>({
   fetching,
   className,
   style,
+  serverside,
 }: State<T>) {
   const renderHeaders = () => {
     const headers = columns.map(column => {
       const headerText = column.headerText || '';
       const $cell = column.isSortable ? (
-        <SortHeaderCell
-          onClick={() => onSort(column)}
+        <SortHeaderCell<T>
+          column={column}
+          serverside={serverside}
           text={headerText}
+          onClick={() => onSort(column)}
           dir={state.sort.key === column.key ? state.sort.dir : null}
         />
       ) : (
@@ -55,33 +58,36 @@ export function Table<T>({
 
   const renderBody = (data: T[]) => {
     const rows = [];
-    data = data || [];
 
-    data.map((item, rowIdx) => {
-      const cells = columns.map((column, columnIdx) => {
-        const $cell = column.render ? (
-          column.render(item)
-        ) : (
-          <TextCell data={item[column.key]} />
-        );
+    if (fetching?.fetchStatus === 'loading') {
+      return <LoadingIndicator colSpan={columns.length} />;
+    } else {
+      data.map((item, rowIdx) => {
+        const cells = columns.map((column, columnIdx) => {
+          const $cell = column.render ? (
+            column.render(item)
+          ) : (
+            <TextCell data={item[column.key]} />
+          );
 
-        return (
-          <React.Fragment key={`${rowIdx} ${columnIdx}`}>
-            {$cell}
-          </React.Fragment>
-        );
+          return (
+            <React.Fragment key={`${rowIdx} ${columnIdx}`}>
+              {$cell}
+            </React.Fragment>
+          );
+        });
+        rows.push(<tr key={rowIdx}>{cells}</tr>);
       });
-      rows.push(<tr key={rowIdx}>{cells}</tr>);
-    });
 
-    if (rows.length) {
-      return <tbody>{rows}</tbody>;
+      if (rows.length) {
+        return <tbody>{rows}</tbody>;
+      }
+
+      return <EmptyIndicator emptyText={emptyText} colSpan={columns.length} />;
     }
-
-    return <EmptyIndicator emptyText={emptyText} colSpan={columns.length} />;
   };
 
-  if (state.serverside) {
+  if (serverside) {
     return (
       <ServersideTable
         style={style}
@@ -93,7 +99,7 @@ export function Table<T>({
         prevPage={prevPage}
         pagination={state.pagination}
         fetching={fetching}
-        serverside={state.serverside}
+        serverside={serverside}
       />
     );
   }
@@ -257,19 +263,17 @@ function ServersideTable<T>({
   renderHeaders,
   renderBody,
   data,
-  pagination,
   fetching,
   className,
   style,
   serverside,
 }: ServersideTableProps<T>) {
-  const { paginatedData, currentPage } = pagination;
-
   return (
     <>
+      {serverside.serversideSearchPanel}
       <StyledTable className={className} style={style}>
         {renderHeaders()}
-        {renderBody(paginatedData[currentPage])}
+        {renderBody(data)}
       </StyledTable>
       <StyledPanel borderBottomLeftRadius={3} borderBottomRightRadius={3}>
         <Pager
@@ -278,7 +282,6 @@ function ServersideTable<T>({
           data={data}
           serverside={serverside}
           {...fetching}
-          {...pagination}
         />
       </StyledPanel>
     </>
@@ -313,6 +316,18 @@ const EmptyIndicator = ({
   </tfoot>
 );
 
+const LoadingIndicator = ({ colSpan }: { colSpan: number }) => (
+  <tfoot>
+    <tr>
+      <td colSpan={colSpan}>
+        <Box textAlign="center">
+          <Indicator />
+        </Box>
+      </td>
+    </tr>
+  </tfoot>
+);
+
 type BasicTableProps<T> = {
   data: T[];
   renderHeaders: () => JSX.Element;
@@ -337,6 +352,6 @@ type ServersideTableProps<T> = BasicTableProps<T> & {
   nextPage: () => void;
   prevPage: () => void;
   pagination: State<T>['state']['pagination'];
-  serverside: State<T>['state']['serverside'];
-  fetching?: State<T>['fetching'];
+  fetching: State<T>['fetching'];
+  serverside: State<T>['serverside'];
 };

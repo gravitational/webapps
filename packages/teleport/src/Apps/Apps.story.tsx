@@ -25,10 +25,16 @@ export default {
 
 export const Loaded = () => <Apps {...props} />;
 
-export const Empty = () => <Apps {...props} apps={[]} />;
+export const Empty = () => (
+  <Apps {...props} results={{ apps: [], hasResources: false }} />
+);
 
 export const EmptyReadOnly = () => (
-  <Apps {...props} apps={[]} canCreate={false} />
+  <Apps
+    {...props}
+    results={{ apps: [], hasResources: false }}
+    canCreate={false}
+  />
 );
 
 export const Loading = () => (
@@ -42,8 +48,13 @@ export const Failed = () => (
   />
 );
 
-const props: State = {
-  apps,
+export const props: State = {
+  results: {
+    apps,
+    totalCount: apps.length,
+    hasResources: true,
+  },
+  fetchStatus: '',
   attempt: { status: 'success' },
   clusterId: 'im-a-cluster',
   isLeafCluster: false,
@@ -52,4 +63,19 @@ const props: State = {
   canCreate: true,
   hideAddApp: () => null,
   showAddApp: () => null,
+  fetchNext: () => null,
+  fetchPrev: () => null,
+  pageSize: 15,
+  from: 1,
+  to: apps.length,
+  params: {
+    search: '',
+    query: '',
+    sort: { fieldName: 'hostname', dir: 'ASC' },
+  },
+  setParams: () => null,
+  setSort: () => null,
+  startKeys: [''],
+  pathname: '',
+  replaceHistory: () => null,
 };

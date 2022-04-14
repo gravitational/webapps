@@ -34,14 +34,24 @@ type Props = {
 export default function DocumentNodes(props: Props) {
   const { doc, visible } = props;
   const {
-    nodes,
-    totalNodesCount,
+    results,
+    fetchNext,
+    fetchPrev,
+    pageSize,
+    from,
+    to,
+    params,
+    setParams,
+    startKeys,
+    setSort,
+    pathname,
+    replaceHistory,
+    fetchStatus,
     attempt,
     createSshSession,
     changeCluster,
     getNodeSshLogins,
   } = useNodes(doc);
-  const { isProcessing, isSuccess, isFailed, message } = attempt;
 
   function onLoginMenuSelect(
     e: React.MouseEvent,
@@ -82,20 +92,32 @@ export default function DocumentNodes(props: Props) {
             />
             <QuickLaunch width="240px" onPress={onQuickLaunchEnter} />
           </Flex>
-          {isProcessing && (
+          {attempt.status === 'processing' && (
             <Box textAlign="center" m={10}>
               <Indicator />
             </Box>
           )}
-          {isFailed && <Alerts.Danger>{message}</Alerts.Danger>}
-          {isSuccess && (
-            <NodeList
-              onLoginMenuOpen={onLoginMenuOpen}
-              onLoginSelect={onLoginMenuSelect}
-              nodes={nodes}
-              totalCount={totalNodesCount}
-            />
+          {attempt.status === 'failed' && (
+            <Alerts.Danger>{attempt.statusText}</Alerts.Danger>
           )}
+          <NodeList
+            nodes={results.nodes}
+            totalCount={results.totalCount}
+            onLoginMenuOpen={onLoginMenuOpen}
+            onLoginSelect={onLoginMenuSelect}
+            fetchNext={fetchNext}
+            fetchPrev={fetchPrev}
+            fetchStatus={fetchStatus}
+            from={from}
+            to={to}
+            pageSize={pageSize}
+            params={params}
+            setParams={setParams}
+            startKeys={startKeys}
+            setSort={setSort}
+            pathname={pathname}
+            replaceHistory={replaceHistory}
+          />
         </Container>
       </Document>
     </ThemeProvider>

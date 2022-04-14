@@ -64,9 +64,11 @@ function useMainStory() {
     ctx.auditService.fetchEvents = () =>
       Promise.resolve({ events, startKey: '' });
     ctx.clusterService.fetchClusters = () => Promise.resolve(clusters);
-    ctx.nodeService.fetchNodes = () => Promise.resolve({ nodes });
+    ctx.nodeService.fetchNodes = () =>
+      Promise.resolve({ nodes, hasResources: true });
     ctx.sshService.fetchSessions = () => Promise.resolve(sessions);
-    ctx.appService.fetchApps = () => Promise.resolve({ apps });
+    ctx.appService.fetchApps = () =>
+      Promise.resolve({ apps, hasResources: true });
     ctx.kubeService.fetchKubernetes = () => Promise.resolve({ kubes });
     ctx.databaseService.fetchDatabases = () => Promise.resolve({ databases });
     ctx.desktopService.fetchDesktops = () => Promise.resolve({ desktops });

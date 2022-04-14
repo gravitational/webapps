@@ -1,27 +1,56 @@
 import { useEffect, useState } from 'react';
-import { useLocation } from 'react-router';
-import history from 'teleport/services/history';
-import getResourceUrlQueryParams, {
+import {
   decodeUrlQueryParam,
+  ResourceUrlQueryParams,
 } from 'teleport/getUrlQueryParams';
+import { SortDir } from 'design/DataTable/types';
 
 export default function useServersideSearchPanel(props: Props) {
-  const location = useLocation();
+  const { pathname, params, setParams, replaceHistory } = props;
 
-  const [searchString, setSearchString] = useState('');
-  const [isAdvancedSearch, setIsAdvancedSearch] = useState(false);
+  const [isInitialLoad, setIsInitialLoad] = useState(true);
+  const [searchString, setSearchString] = useState(() => {
+    if (params.query) {
+      return params.query;
+    } else if (params.search) {
+      return params.search;
+    } else {
+      return '';
+    }
+  });
+  const [isAdvancedSearch, setIsAdvancedSearch] = useState(!!params.query);
 
   function onSubmitSearch(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
+    submitSearch();
+  }
 
-    history.replace(
-      encodeUrlQueryParams(location.pathname, searchString, isAdvancedSearch)
+  function submitSearch() {
+    if (isAdvancedSearch) {
+      setParams({
+        ...params,
+        search: null,
+        query: searchString,
+      });
+    } else {
+      setParams({
+        ...params,
+        query: null,
+        search: searchString,
+      });
+    }
+    replaceHistory(
+      encodeUrlQueryParams(
+        pathname,
+        searchString,
+        isAdvancedSearch,
+        params.sort
+      )
     );
   }
 
   // Populate search bar with existing query
   useEffect(() => {
-    const params = getResourceUrlQueryParams(location.search);
     if (params.query) {
       setIsAdvancedSearch(true);
       setSearchString(decodeUrlQueryParam(params.query));
@@ -29,7 +58,14 @@ export default function useServersideSearchPanel(props: Props) {
       setIsAdvancedSearch(false);
       setSearchString(decodeUrlQueryParam(params.search));
     }
-  }, [location]);
+  }, []);
+
+  useEffect(() => {
+    if (!isInitialLoad) {
+      submitSearch();
+    }
+    setIsInitialLoad(false);
+  }, [params.sort]);
 
   return {
     searchString,
@@ -43,29 +79,44 @@ export default function useServersideSearchPanel(props: Props) {
 
 const ADVANCED_SEARCH_PARAM = 'query=';
 const SIMPLE_SEARCH_PARAM = 'search=';
+const SORT_SEARCH_PARAM = 'sort=';
 
 function encodeUrlQueryParams(
   pathname: string,
   searchString: string,
-  isAdvancedSearch: boolean
+  isAdvancedSearch: boolean,
+  sort: SortType
 ) {
-  if (!searchString.length) {
+  if (!searchString.length && !sort) {
     return pathname;
   }
-
   const encodedQuery = encodeURIComponent(searchString);
-  console.log('ENCODED: ' + encodedQuery);
-  const beautifiedQuery = !isAdvancedSearch
-    ? encodedQuery.replaceAll('%20', '+')
-    : encodedQuery;
+  const beautifiedQuery = `${
+    !isAdvancedSearch ? encodedQuery.replaceAll('%20', '+') : encodedQuery
+  }&`;
 
   return `${pathname}?${
     isAdvancedSearch ? ADVANCED_SEARCH_PARAM : SIMPLE_SEARCH_PARAM
-  }${beautifiedQuery}`;
+  }${beautifiedQuery}${
+    sort
+      ? `${SORT_SEARCH_PARAM}${sort.fieldName}:${sort.dir.toLowerCase()}`
+      : ''
+  }`;
 }
 
 export type Props = {
-  itemCountText: string;
+  pathname: string;
+  replaceHistory: (path: string) => void;
+  params: ResourceUrlQueryParams;
+  setParams: (params: ResourceUrlQueryParams) => void;
+  from: number;
+  to: number;
+  count: number;
+};
+
+export type SortType = {
+  fieldName: string;
+  dir: SortDir;
 };
 
 export type State = ReturnType<typeof useServersideSearchPanel>;

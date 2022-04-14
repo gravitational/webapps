@@ -44,11 +44,23 @@ export function Apps(props: State) {
     hideAddApp,
     canCreate,
     attempt,
-    apps,
+    results,
+    fetchNext,
+    fetchPrev,
+    from,
+    to,
+    pageSize,
+    params,
+    setParams,
+    startKeys,
+    setSort,
+    pathname,
+    replaceHistory,
+    fetchStatus,
   } = props;
 
-  const isEmpty = attempt.status === 'success' && apps.length === 0;
-  const hasApps = attempt.status === 'success' && apps.length > 0;
+  const isEmpty = attempt.status === 'success' && !results.hasResources;
+  const hasApps = attempt.status === 'success' && results.hasResources;
 
   return (
     <FeatureBox>
@@ -68,7 +80,24 @@ export function Apps(props: State) {
         </Box>
       )}
       {attempt.status === 'failed' && <Danger>{attempt.statusText} </Danger>}
-      {hasApps && <AppList apps={apps} />}
+      {attempt.status !== 'processing' && !isEmpty && (
+        <AppList
+          apps={results.apps}
+          fetchNext={fetchNext}
+          fetchPrev={fetchPrev}
+          fetchStatus={fetchStatus}
+          from={from}
+          to={to}
+          totalCount={results.totalCount}
+          pageSize={pageSize}
+          params={params}
+          setParams={setParams}
+          startKeys={startKeys}
+          setSort={setSort}
+          pathname={pathname}
+          replaceHistory={replaceHistory}
+        />
+      )}
       {isEmpty && (
         <Empty
           clusterId={clusterId}

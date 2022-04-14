@@ -16,38 +16,57 @@ limitations under the License.
 
 import { useState, useEffect } from 'react';
 import { useLocation } from 'react-router';
+import { FetchStatus } from 'design/DataTable/types';
 import useAttempt from 'shared/hooks/useAttemptNext';
+import history from 'teleport/services/history';
 import Ctx from 'teleport/teleportContext';
 import { StickyCluster } from 'teleport/types';
 import cfg from 'teleport/config';
 import { NodesResponse } from 'teleport/services/nodes';
 import { openNewTab } from 'teleport/lib/util';
-import getResourceUrlQueryParams from 'teleport/getUrlQueryParams';
+import getResourceUrlQueryParams, {
+  ResourceUrlQueryParams,
+} from 'teleport/getUrlQueryParams';
+import { SortType } from 'teleport/components/ServersideSearchPanel';
 
 export default function useNodes(ctx: Ctx, stickyCluster: StickyCluster) {
   const { isLeafCluster, clusterId } = stickyCluster;
-  const searchPath = useLocation().search;
-  const params = getResourceUrlQueryParams(searchPath);
+  const { search, pathname } = useLocation();
+  const [startKeys, setStartKeys] = useState<string[]>([]);
+  const { attempt, setAttempt } = useAttempt('processing');
+  const [isAddNodeVisible, setIsAddNodeVisible] = useState(false);
+  const canCreate = ctx.storeUser.getTokenAccess().create;
+  const logins = ctx.storeUser.getSshLogins();
+  const [fetchStatus, setFetchStatus] = useState<FetchStatus>('');
+  const [params, setParams] = useState<ResourceUrlQueryParams>({
+    ...getResourceUrlQueryParams(search),
+    sort: { fieldName: 'hostname', dir: 'ASC' },
+  });
 
   const [results, setResults] = useState<NodesResponse>({
     nodes: [],
     hasResources: false,
     startKey: '',
-    fetchStatus: '',
     totalCount: 0,
   });
 
-  const { attempt, run, setAttempt } = useAttempt('processing');
-  const [isAddNodeVisible, setIsAddNodeVisible] = useState(false);
-  const canCreate = ctx.storeUser.getTokenAccess().create;
-  const logins = ctx.storeUser.getSshLogins();
+  const pageSize = 15;
+
+  const from =
+    results.totalCount > 0 ? (startKeys.length - 2) * pageSize + 1 : 0;
+  const to = results.totalCount > 0 ? from + results.nodes.length - 1 : 0;
 
   useEffect(() => {
     fetch();
-  }, [clusterId, searchPath]);
+  }, [clusterId, search]);
 
-  const getNodeLoginOptions = (serverId: string) =>
-    makeOptions(clusterId, serverId, logins);
+  function replaceHistory(path: string) {
+    history.replace(path);
+  }
+
+  function getNodeLoginOptions(serverId: string) {
+    return makeOptions(clusterId, serverId, logins);
+  }
 
   const startSshSession = (login: string, serverId: string) => {
     const url = cfg.getSshConnectRoute({
@@ -59,41 +78,71 @@ export default function useNodes(ctx: Ctx, stickyCluster: StickyCluster) {
     openNewTab(url);
   };
 
-  function fetch() {
-    run(() =>
-      ctx.nodeService
-        .fetchNodes(clusterId, { ...params })
-        .then(res =>
-          setResults({
-            ...res,
-            fetchStatus: res.startKey ? '' : 'disabled',
-          })
-        )
-        .catch((err: Error) => {
-          setAttempt({ status: 'failed', statusText: err.message });
-        })
-    );
+  function setSort(sort: SortType) {
+    setParams({ ...params, sort });
   }
 
-  const fetchMore = () => {
-    console.log('heyyyy');
-    setResults({
-      ...results,
-      fetchStatus: 'loading',
-    });
+  function fetch() {
+    setAttempt({ status: 'processing' });
     ctx.nodeService
-      .fetchNodes(clusterId, { ...params, startKey: results.startKey })
-      .then(res =>
+      .fetchNodes(clusterId, { ...params, limit: pageSize })
+      .then(res => {
+        setResults(res);
+        setFetchStatus(res.startKey ? '' : 'disabled');
+        setStartKeys([res.nodes[0]?.id, res.startKey]);
+        setAttempt({ status: 'success' });
+      })
+      .catch((err: Error) => {
+        setAttempt({ status: 'failed', statusText: err.message });
+        setResults({ ...results, nodes: [], totalCount: 0 });
+        setStartKeys(['']);
+      });
+  }
+
+  const fetchNext = () => {
+    setFetchStatus('loading');
+    ctx.nodeService
+      .fetchNodes(clusterId, {
+        ...params,
+        limit: pageSize,
+        startKey: results.startKey,
+      })
+      .then(res => {
         setResults({
           ...results,
-          nodes: [...results.nodes, ...res.nodes],
+          nodes: res.nodes,
           startKey: res.startKey,
-          fetchStatus: res.startKey ? '' : 'disabled',
-        })
-      )
-      .catch((err: Error) =>
-        setAttempt({ status: 'failed', statusText: err.message })
-      );
+        });
+        setFetchStatus(res.startKey ? '' : 'disabled');
+        setStartKeys([...startKeys, res.startKey]);
+      })
+      .catch((err: Error) => {
+        setAttempt({ status: 'failed', statusText: err.message });
+      });
+  };
+
+  const fetchPrev = () => {
+    setFetchStatus('loading');
+    ctx.nodeService
+      .fetchNodes(clusterId, {
+        ...params,
+        limit: pageSize,
+        startKey: startKeys.at(-3),
+      })
+      .then(res => {
+        const tempStartKeys = startKeys;
+        tempStartKeys.pop();
+        setStartKeys(tempStartKeys);
+        setResults({
+          ...results,
+          nodes: res.nodes,
+          startKey: res.startKey,
+        });
+        setFetchStatus('');
+      })
+      .catch((err: Error) => {
+        setAttempt({ status: 'failed', statusText: err.message });
+      });
   };
 
   const hideAddNode = () => {
@@ -115,7 +164,18 @@ export default function useNodes(ctx: Ctx, stickyCluster: StickyCluster) {
     hideAddNode,
     showAddNode,
     results,
-    fetchMore,
+    fetchNext,
+    fetchPrev,
+    pageSize,
+    from,
+    to,
+    params,
+    setParams,
+    startKeys,
+    setSort,
+    pathname,
+    replaceHistory,
+    fetchStatus,
   };
 }
 

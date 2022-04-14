@@ -17,7 +17,7 @@ export default function InputSearch({
           setSearchValue(e.target.value)
         }
       />
-      {children}
+      <ChildWrapper>{children}</ChildWrapper>
     </Wrapper>
   );
 }
@@ -28,10 +28,22 @@ type Props = {
   children?: JSX.Element;
 };
 
+const ChildWrapper = styled.div`
+  position: absolute;
+  height: 100%;
+  right: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: ${props => props.theme.colors.primary.lighter};
+  border-radius: 200px;
+`;
+
 const Wrapper = styled.div`
+  position: relative;
   display: flex;
   overflow: hidden;
-  min-width: 200px;
+  width: 100%;
   border-radius: 200px;
   height: 32px;
   background: ${props => props.theme.colors.primary.dark};
@@ -49,6 +61,7 @@ const StyledInput = styled.input`
   ${space}
   ${height}
   ${fromTheme};
+  padding-right: 184px;
 `;
 
 function fromTheme(props) {

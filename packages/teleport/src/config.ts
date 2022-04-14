@@ -18,6 +18,8 @@ import { generatePath } from 'react-router';
 import { merge } from 'lodash';
 import { AuthProvider, Auth2faType, PreferredMfaType } from 'shared/services';
 import { RecordingType } from 'teleport/services/recordings';
+import { SortType } from './components/ServersideSearchPanel/useServerSideSearchPanel';
+import generateResourcePath from './generateResourcePath';
 
 const cfg = {
   isEnterprise: false,
@@ -88,7 +90,8 @@ const cfg = {
   api: {
     appSession: '/v1/webapi/sessions/app',
     appFqdnPath: '/v1/webapi/apps/:fqdn/:clusterId?/:publicAddr?',
-    applicationsPath: '/v1/webapi/sites/:clusterId/apps',
+    applicationsPath:
+      '/v1/webapi/sites/:clusterId/apps?limit=:limit?&startKey=:startKey?&query=:query?&search=:search?&sort=:sort?',
     clustersPath: '/v1/webapi/sites',
     clusterEventsPath: `/v1/webapi/sites/:clusterId/events/search?from=:start?&to=:end?&limit=:limit?&startKey=:startKey?&include=:include?`,
     clusterEventsRecordingsPath: `/v1/webapi/sites/:clusterId/events/search/sessions?from=:start?&to=:end?&limit=:limit?&startKey=:startKey?`,
@@ -101,7 +104,7 @@ const cfg = {
     passwordTokenPath: '/v1/webapi/users/password/token/:tokenId?',
     changeUserPasswordPath: '/v1/webapi/users/password',
     nodesPath:
-      '/v1/webapi/sites/:clusterId/nodes?limit=:limit?&startKey=:startKey?&query=:query?&search=:search?',
+      '/v1/webapi/sites/:clusterId/nodes?limit=:limit?&startKey=:startKey?&query=:query?&search=:search?&sort=:sort?',
     databasesPath: `/v1/webapi/sites/:clusterId/databases`,
     desktopsPath: `/v1/webapi/sites/:clusterId/desktops`,
     desktopPath: `/v1/webapi/sites/:clusterId/desktops/:desktopName`,
@@ -329,7 +332,10 @@ const cfg = {
   },
 
   getClusterNodesUrl(clusterId: string, params: UrlResourcesParams) {
-    return generatePath(cfg.api.nodesPath, { clusterId, ...params });
+    return generateResourcePath(cfg.api.nodesPath, {
+      clusterId,
+      ...params,
+    });
   },
 
   getDatabasesUrl(clusterId: string) {
@@ -344,8 +350,11 @@ const cfg = {
     return generatePath(cfg.api.desktopPath, { clusterId, desktopName });
   },
 
-  getApplicationsUrl(clusterId: string) {
-    return generatePath(cfg.api.applicationsPath, { clusterId });
+  getApplicationsUrl(clusterId: string, params: UrlResourcesParams) {
+    return generateResourcePath(cfg.api.applicationsPath, {
+      clusterId,
+      ...params,
+    });
   },
 
   getScpUrl(params: UrlScpParams) {
@@ -470,6 +479,7 @@ export interface UrlDesktopParams {
 export interface UrlResourcesParams {
   query?: string;
   search?: string;
+  sort?: SortType;
   limit?: number;
   startKey?: string;
 }

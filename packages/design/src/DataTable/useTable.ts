@@ -38,12 +38,6 @@ export default function useTable<T>({
             pageSize: pagination.pageSize || 10,
           }
         : null,
-      serverside: serverside
-        ? {
-            totalItemCount: serverside.totalItemCount,
-            setItemCountText: serverside.setItemCountText,
-          }
-        : null,
     };
   });
 
@@ -76,7 +70,7 @@ export default function useTable<T>({
           searchAndFilterCb,
           showFirst
         );
-    if (pagination) {
+    if (pagination && !serverside) {
       setState({
         ...state,
         sort,
@@ -114,10 +108,9 @@ export default function useTable<T>({
   }
 
   function nextPage() {
-    const pageCount = Math.ceil(data.length / pagination.pageSize);
     // If is serverside, on the last page, and there are more items, fetch more
-    if (serverside && serverside.totalItemCount > data.length) {
-      fetching.onFetchMore();
+    if (serverside) {
+      fetching.onFetchNext();
     }
     setState({
       ...state,
@@ -129,6 +122,9 @@ export default function useTable<T>({
   }
 
   function prevPage() {
+    if (serverside) {
+      fetching.onFetchPrev();
+    }
     setState({
       ...state,
       pagination: {
@@ -139,20 +135,15 @@ export default function useTable<T>({
   }
 
   useEffect(() => {
-    updateData(state.sort, state.searchValue);
-  }, [data]);
-
-  useEffect(() => {
-    setState({
-      ...state,
-      serverside: serverside
-        ? {
-            totalItemCount: serverside.totalItemCount,
-            setItemCountText: serverside.setItemCountText,
-          }
-        : null,
-    });
-  }, [serverside]);
+    if (serverside) {
+      setState({
+        ...state,
+        data,
+      });
+    } else {
+      updateData(state.sort, state.searchValue);
+    }
+  }, [data, serverside]);
 
   return {
     state,
@@ -163,6 +154,7 @@ export default function useTable<T>({
     nextPage,
     prevPage,
     fetching,
+    serverside,
     ...props,
   };
 }
