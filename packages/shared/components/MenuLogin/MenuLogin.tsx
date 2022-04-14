@@ -35,7 +35,7 @@ class MenuLogin extends React.Component<MenuLoginProps> {
   };
 
   onOpen = () => {
-    const logins = this.props.onOpen();
+    const logins = this.props.getLoginItems();
     this.setState({
       logins,
       open: true,

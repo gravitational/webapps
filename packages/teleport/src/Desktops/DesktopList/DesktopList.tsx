@@ -98,7 +98,7 @@ function renderLoginCell(
   return (
     <Cell align="right">
       <MenuLogin
-        onOpen={handleOnOpen}
+        getLoginItems={handleOnOpen}
         onSelect={handleOnSelect}
         transformOrigin={{
           vertical: 'top',

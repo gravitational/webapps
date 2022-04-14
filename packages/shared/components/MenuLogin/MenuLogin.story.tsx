@@ -30,7 +30,7 @@ storiesOf('Shared/MenuLogin', module).add('MenuLogin', () => (
     bg="primary.light"
   >
     <MenuLogin
-      onOpen={() => []}
+      getLoginItems={() => []}
       onSelect={() => null}
       placeholder="Please provide user name…"
     />
@@ -50,7 +50,7 @@ class SampleMenu extends React.Component {
       <Router history={createMemoryHistory()}>
         <MenuLogin
           ref={this.menuRef}
-          onOpen={() => loginItems}
+          getLoginItems={() => loginItems}
           onSelect={() => null}
         />
       </Router>

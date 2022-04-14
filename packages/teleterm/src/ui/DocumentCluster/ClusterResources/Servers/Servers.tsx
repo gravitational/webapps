@@ -78,7 +78,9 @@ const renderConnectCell = (
     <Cell align="right">
       <MenuLoginTheme>
         <MenuLogin
-          onOpen={() => getSshLogins().map(login => ({ login, url: '' }))}
+          getLoginItems={() =>
+            getSshLogins().map(login => ({ login, url: '' }))
+          }
           onSelect={(e, login) => onConnect(login)}
           transformOrigin={{
             vertical: 'top',
@@ -105,4 +107,3 @@ const renderAddressCell = ({ addr, tunnel }: types.Server) => (
     {!tunnel && addr}
   </Cell>
 );
-

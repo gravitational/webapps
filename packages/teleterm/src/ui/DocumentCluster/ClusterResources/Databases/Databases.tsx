@@ -65,7 +65,7 @@ function renderConnectButton(onConnect: (user: string) => void) {
       <MenuLoginTheme>
         <MenuLogin
           placeholder="Enter username…"
-          onOpen={() => []}
+          getLoginItems={() => []}
           onSelect={(_, user) => onConnect(user)}
           transformOrigin={{
             vertical: 'top',

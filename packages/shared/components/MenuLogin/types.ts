@@ -20,7 +20,7 @@ export type LoginItem = {
 };
 
 export type MenuLoginProps = {
-  onOpen: () => LoginItem[];
+  getLoginItems: () => LoginItem[];
   onSelect: (e: React.SyntheticEvent, login: string) => void;
   anchorOrigin?: any;
   transformOrigin?: any;
