@@ -293,12 +293,12 @@ exports[`list of all events 1`] = `
         </strong>
          - 
         <strong>
-          59
+          73
         </strong>
          
         of 
         <strong>
-          59
+          73
         </strong>
       </div>
       <button
@@ -362,6 +362,524 @@ exports[`list of all events 1`] = `
       </tr>
     </thead>
     <tbody>
+      <tr>
+        <td
+          style="vertical-align: inherit;"
+        >
+          <div
+            class="c9"
+          >
+            <span
+              class="c5 c10 icon icon-database c5 c10"
+              color="light"
+              font-size="3"
+            />
+            MySQL Change Database
+          </div>
+        </td>
+        <td
+          style="word-break: break-word;"
+        >
+          User [alice@example.com] has changed default database to [another_database] on [self-hosted-mysql]
+        </td>
+        <td
+          style="min-width: 120px;"
+        >
+          2022-04-13 20:00:10
+        </td>
+        <td
+          align="right"
+        >
+          <button
+            class="c11"
+            kind="border"
+            width="87px"
+          >
+            Details
+          </button>
+        </td>
+      </tr>
+      <tr>
+        <td
+          style="vertical-align: inherit;"
+        >
+          <div
+            class="c9"
+          >
+            <span
+              class="c5 c10 icon icon-database c5 c10"
+              color="light"
+              font-size="3"
+            />
+            MySQL Create Database
+          </div>
+        </td>
+        <td
+          style="word-break: break-word;"
+        >
+          User [alice@example.com] has created database [another_database] on [self-hosted-mysql]
+        </td>
+        <td
+          style="min-width: 120px;"
+        >
+          2022-04-13 20:00:09
+        </td>
+        <td
+          align="right"
+        >
+          <button
+            class="c11"
+            kind="border"
+            width="87px"
+          >
+            Details
+          </button>
+        </td>
+      </tr>
+      <tr>
+        <td
+          style="vertical-align: inherit;"
+        >
+          <div
+            class="c9"
+          >
+            <span
+              class="c5 c10 icon icon-database c5 c10"
+              color="light"
+              font-size="3"
+            />
+            MySQL Drop Database
+          </div>
+        </td>
+        <td
+          style="word-break: break-word;"
+        >
+          User [alice@example.com] has dropped database [another_database] on [self-hosted-mysql]
+        </td>
+        <td
+          style="min-width: 120px;"
+        >
+          2022-04-13 20:00:08
+        </td>
+        <td
+          align="right"
+        >
+          <button
+            class="c11"
+            kind="border"
+            width="87px"
+          >
+            Details
+          </button>
+        </td>
+      </tr>
+      <tr>
+        <td
+          style="vertical-align: inherit;"
+        >
+          <div
+            class="c9"
+          >
+            <span
+              class="c5 c10 icon icon-database c5 c10"
+              color="light"
+              font-size="3"
+            />
+            MySQL Shut Down
+          </div>
+        </td>
+        <td
+          style="word-break: break-word;"
+        >
+          User [alice@example.com] has attempted to shut down [self-hosted-mysql]
+        </td>
+        <td
+          style="min-width: 120px;"
+        >
+          2022-04-13 20:00:07
+        </td>
+        <td
+          align="right"
+        >
+          <button
+            class="c11"
+            kind="border"
+            width="87px"
+          >
+            Details
+          </button>
+        </td>
+      </tr>
+      <tr>
+        <td
+          style="vertical-align: inherit;"
+        >
+          <div
+            class="c9"
+          >
+            <span
+              class="c5 c10 icon icon-database c5 c10"
+              color="light"
+              font-size="3"
+            />
+            MySQL Kill Process
+          </div>
+        </td>
+        <td
+          style="word-break: break-word;"
+        >
+          User [alice@example.com] has attempted to kill process [60] on [self-hosted-mysql]
+        </td>
+        <td
+          style="min-width: 120px;"
+        >
+          2022-04-13 20:00:06
+        </td>
+        <td
+          align="right"
+        >
+          <button
+            class="c11"
+            kind="border"
+            width="87px"
+          >
+            Details
+          </button>
+        </td>
+      </tr>
+      <tr>
+        <td
+          style="vertical-align: inherit;"
+        >
+          <div
+            class="c9"
+          >
+            <span
+              class="c5 c10 icon icon-database c5 c10"
+              color="light"
+              font-size="3"
+            />
+            MySQL Debug
+          </div>
+        </td>
+        <td
+          style="word-break: break-word;"
+        >
+          User [alice@example.com] has asked [self-hosted-mysql] to dump debug information
+        </td>
+        <td
+          style="min-width: 120px;"
+        >
+          2022-04-13 20:00:05
+        </td>
+        <td
+          align="right"
+        >
+          <button
+            class="c11"
+            kind="border"
+            width="87px"
+          >
+            Details
+          </button>
+        </td>
+      </tr>
+      <tr>
+        <td
+          style="vertical-align: inherit;"
+        >
+          <div
+            class="c9"
+          >
+            <span
+              class="c5 c10 icon icon-database c5 c10"
+              color="light"
+              font-size="3"
+            />
+            MySQL Refresh
+          </div>
+        </td>
+        <td
+          style="word-break: break-word;"
+        >
+          User [alice@example.com] has sent command [REFRESH_THREADS] to [self-hosted-mysql]
+        </td>
+        <td
+          style="min-width: 120px;"
+        >
+          2022-04-13 20:00:04
+        </td>
+        <td
+          align="right"
+        >
+          <button
+            class="c11"
+            kind="border"
+            width="87px"
+          >
+            Details
+          </button>
+        </td>
+      </tr>
+      <tr>
+        <td
+          style="vertical-align: inherit;"
+        >
+          <div
+            class="c9"
+          >
+            <span
+              class="c5 c10 icon icon-database c5 c10"
+              color="light"
+              font-size="3"
+            />
+            MySQL Statement Close
+          </div>
+        </td>
+        <td
+          style="word-break: break-word;"
+        >
+          User [alice@example.com] has closed statement [1] in database [test] on [self-hosted-mysql]
+        </td>
+        <td
+          style="min-width: 120px;"
+        >
+          2022-02-10 20:57:56
+        </td>
+        <td
+          align="right"
+        >
+          <button
+            class="c11"
+            kind="border"
+            width="87px"
+          >
+            Details
+          </button>
+        </td>
+      </tr>
+      <tr>
+        <td
+          style="vertical-align: inherit;"
+        >
+          <div
+            class="c9"
+          >
+            <span
+              class="c5 c10 icon icon-database c5 c10"
+              color="light"
+              font-size="3"
+            />
+            MySQL Statement Fetch
+          </div>
+        </td>
+        <td
+          style="word-break: break-word;"
+        >
+          User [alice@example.com] has fetched 5 rows of statement [1] in database [test] on [self-hosted-mysql]
+        </td>
+        <td
+          style="min-width: 120px;"
+        >
+          2022-02-10 20:57:55
+        </td>
+        <td
+          align="right"
+        >
+          <button
+            class="c11"
+            kind="border"
+            width="87px"
+          >
+            Details
+          </button>
+        </td>
+      </tr>
+      <tr>
+        <td
+          style="vertical-align: inherit;"
+        >
+          <div
+            class="c9"
+          >
+            <span
+              class="c5 c10 icon icon-database c5 c10"
+              color="light"
+              font-size="3"
+            />
+            MySQL Statement Execute
+          </div>
+        </td>
+        <td
+          style="word-break: break-word;"
+        >
+          User [alice@example.com] has executed statement [1] in database [test] on [self-hosted-mysql]
+        </td>
+        <td
+          style="min-width: 120px;"
+        >
+          2022-02-10 20:57:54
+        </td>
+        <td
+          align="right"
+        >
+          <button
+            class="c11"
+            kind="border"
+            width="87px"
+          >
+            Details
+          </button>
+        </td>
+      </tr>
+      <tr>
+        <td
+          style="vertical-align: inherit;"
+        >
+          <div
+            class="c9"
+          >
+            <span
+              class="c5 c10 icon icon-database c5 c10"
+              color="light"
+              font-size="3"
+            />
+            MySQL Statement Bulk Execute
+          </div>
+        </td>
+        <td
+          style="word-break: break-word;"
+        >
+          User [alice@example.com] has executed statement [1] in database [test] on [self-hosted-mysql]
+        </td>
+        <td
+          style="min-width: 120px;"
+        >
+          2022-02-10 20:57:53
+        </td>
+        <td
+          align="right"
+        >
+          <button
+            class="c11"
+            kind="border"
+            width="87px"
+          >
+            Details
+          </button>
+        </td>
+      </tr>
+      <tr>
+        <td
+          style="vertical-align: inherit;"
+        >
+          <div
+            class="c9"
+          >
+            <span
+              class="c5 c10 icon icon-database c5 c10"
+              color="light"
+              font-size="3"
+            />
+            MySQL Statement Reset
+          </div>
+        </td>
+        <td
+          style="word-break: break-word;"
+        >
+          User [alice@example.com] has reset statement [1] in database [test] on [self-hosted-mysql]
+        </td>
+        <td
+          style="min-width: 120px;"
+        >
+          2022-02-10 20:57:52
+        </td>
+        <td
+          align="right"
+        >
+          <button
+            class="c11"
+            kind="border"
+            width="87px"
+          >
+            Details
+          </button>
+        </td>
+      </tr>
+      <tr>
+        <td
+          style="vertical-align: inherit;"
+        >
+          <div
+            class="c9"
+          >
+            <span
+              class="c5 c10 icon icon-database c5 c10"
+              color="light"
+              font-size="3"
+            />
+            MySQL Statement Send Long Data
+          </div>
+        </td>
+        <td
+          style="word-break: break-word;"
+        >
+          User [alice@example.com] has sent 32 bytes of data to parameter [2] of statement [1] in database [test] on [self-hosted-mysql]
+        </td>
+        <td
+          style="min-width: 120px;"
+        >
+          2022-02-10 20:57:51
+        </td>
+        <td
+          align="right"
+        >
+          <button
+            class="c11"
+            kind="border"
+            width="87px"
+          >
+            Details
+          </button>
+        </td>
+      </tr>
+      <tr>
+        <td
+          style="vertical-align: inherit;"
+        >
+          <div
+            class="c9"
+          >
+            <span
+              class="c5 c10 icon icon-database c5 c10"
+              color="light"
+              font-size="3"
+            />
+            MySQL Statement Prepare
+          </div>
+        </td>
+        <td
+          style="word-break: break-word;"
+        >
+          User [alice@example.com] has prepared [UPDATE \`test\`.\`user\` SET \`age\` = '7' WHERE (\`name\` = 'alice')] in database [test] on [self-hosted-mysql]
+        </td>
+        <td
+          style="min-width: 120px;"
+        >
+          2022-02-10 20:57:50
+        </td>
+        <td
+          align="right"
+        >
+          <button
+            class="c11"
+            kind="border"
+            width="87px"
+          >
+            Details
+          </button>
+        </td>
+      </tr>
       <tr>
         <td
           style="vertical-align: inherit;"

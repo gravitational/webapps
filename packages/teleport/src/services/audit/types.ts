@@ -60,6 +60,25 @@ export const eventCodes = {
   DATABASE_CREATED: 'TDB03I',
   DATABASE_UPDATED: 'TDB04I',
   DATABASE_DELETED: 'TDB05I',
+  POSTGRES_PARSE: 'TPG00I',
+  POSTGRES_BIND: 'TPG01I',
+  POSTGRES_EXECUTE: 'TPG02I',
+  POSTGRES_CLOSE: 'TPG03I',
+  POSTGRES_FUNCTION_CALL: 'TPG04I',
+  MYSQL_STATEMENT_PREPARE: 'TMY00I',
+  MYSQL_STATEMENT_EXECUTE: 'TMY01I',
+  MYSQL_STATEMENT_SEND_LONG_DATA: 'TMY02I',
+  MYSQL_STATEMENT_CLOSE: 'TMY03I',
+  MYSQL_STATEMENT_RESET: 'TMY04I',
+  MYSQL_STATEMENT_FETCH: 'TMY05I',
+  MYSQL_STATEMENT_BULK_EXECUTE: 'TMY06I',
+  MYSQL_INIT_DB: 'TMY07I',
+  MYSQL_CREATE_DB: 'TMY08I',
+  MYSQL_DROP_DB: 'TMY09I',
+  MYSQL_SHUT_DOWN: 'TMY10I',
+  MYSQL_PROCESS_KILL: 'TMY11I',
+  MYSQL_DEBUG: 'TMY12I',
+  MYSQL_REFRESH: 'TMY13I',
   DESKTOP_SESSION_STARTED: 'TDP00I',
   DESKTOP_SESSION_STARTED_FAILED: 'TDP00W',
   DESKTOP_SESSION_ENDED: 'TDP01I',
@@ -421,6 +440,155 @@ export type RawEvents = {
     typeof eventCodes.DATABASE_DELETED,
     {
       name: string;
+    }
+  >;
+  [eventCodes.POSTGRES_PARSE]: RawEvent<
+    typeof eventCodes.POSTGRES_PARSE,
+    {
+      name: string;
+      db_service: string;
+      statement_name: string;
+      query: string;
+    }
+  >;
+  [eventCodes.POSTGRES_BIND]: RawEvent<
+    typeof eventCodes.POSTGRES_BIND,
+    {
+      name: string;
+      db_service: string;
+      statement_name: string;
+      portal_name: string;
+    }
+  >;
+  [eventCodes.POSTGRES_EXECUTE]: RawEvent<
+    typeof eventCodes.POSTGRES_EXECUTE,
+    {
+      name: string;
+      db_service: string;
+      portal_name: string;
+    }
+  >;
+  [eventCodes.POSTGRES_CLOSE]: RawEvent<
+    typeof eventCodes.POSTGRES_CLOSE,
+    {
+      name: string;
+      db_service: string;
+      statement_name: string;
+      portal_name: string;
+    }
+  >;
+  [eventCodes.POSTGRES_FUNCTION_CALL]: RawEvent<
+    typeof eventCodes.POSTGRES_FUNCTION_CALL,
+    {
+      name: string;
+      db_service: string;
+      function_oid: string;
+    }
+  >;
+  [eventCodes.MYSQL_STATEMENT_PREPARE]: RawEvent<
+    typeof eventCodes.MYSQL_STATEMENT_PREPARE,
+    {
+      db_service: string;
+      db_name: string;
+      query: string;
+    }
+  >;
+  [eventCodes.MYSQL_STATEMENT_EXECUTE]: RawEvent<
+    typeof eventCodes.MYSQL_STATEMENT_EXECUTE,
+    {
+      db_service: string;
+      db_name: string;
+      statement_id: number;
+    }
+  >;
+  [eventCodes.MYSQL_STATEMENT_SEND_LONG_DATA]: RawEvent<
+    typeof eventCodes.MYSQL_STATEMENT_SEND_LONG_DATA,
+    {
+      db_service: string;
+      db_name: string;
+      statement_id: number;
+      parameter_id: number;
+      data_size: number;
+    }
+  >;
+  [eventCodes.MYSQL_STATEMENT_CLOSE]: RawEvent<
+    typeof eventCodes.MYSQL_STATEMENT_CLOSE,
+    {
+      db_service: string;
+      db_name: string;
+      statement_id: number;
+    }
+  >;
+  [eventCodes.MYSQL_STATEMENT_RESET]: RawEvent<
+    typeof eventCodes.MYSQL_STATEMENT_RESET,
+    {
+      db_service: string;
+      db_name: string;
+      statement_id: number;
+    }
+  >;
+  [eventCodes.MYSQL_STATEMENT_FETCH]: RawEvent<
+    typeof eventCodes.MYSQL_STATEMENT_FETCH,
+    {
+      db_service: string;
+      db_name: string;
+      rows_count: number;
+      statement_id: number;
+    }
+  >;
+  [eventCodes.MYSQL_STATEMENT_BULK_EXECUTE]: RawEvent<
+    typeof eventCodes.MYSQL_STATEMENT_BULK_EXECUTE,
+    {
+      db_service: string;
+      db_name: string;
+      statement_id: number;
+    }
+  >;
+  [eventCodes.MYSQL_INIT_DB]: RawEvent<
+    typeof eventCodes.MYSQL_INIT_DB,
+    {
+      db_service: string;
+      schema_name: string;
+    }
+  >;
+  [eventCodes.MYSQL_CREATE_DB]: RawEvent<
+    typeof eventCodes.MYSQL_CREATE_DB,
+    {
+      db_service: string;
+      schema_name: string;
+    }
+  >;
+  [eventCodes.MYSQL_DROP_DB]: RawEvent<
+    typeof eventCodes.MYSQL_DROP_DB,
+    {
+      db_service: string;
+      schema_name: string;
+    }
+  >;
+  [eventCodes.MYSQL_SHUT_DOWN]: RawEvent<
+    typeof eventCodes.MYSQL_SHUT_DOWN,
+    {
+      db_service: string;
+    }
+  >;
+  [eventCodes.MYSQL_PROCESS_KILL]: RawEvent<
+    typeof eventCodes.MYSQL_PROCESS_KILL,
+    {
+      db_service: string;
+      process_id: number;
+    }
+  >;
+  [eventCodes.MYSQL_DEBUG]: RawEvent<
+    typeof eventCodes.MYSQL_DEBUG,
+    {
+      db_service: string;
+    }
+  >;
+  [eventCodes.MYSQL_REFRESH]: RawEvent<
+    typeof eventCodes.MYSQL_REFRESH,
+    {
+      db_service: string;
+      subcommand: string;
     }
   >;
   [eventCodes.MFA_DEVICE_ADD]: RawEvent<
