@@ -16,10 +16,8 @@ limitations under the License.
 
 import React from 'react';
 import { Text, Flex, Box, ButtonPrimary, ButtonSecondary, Link } from 'design';
-import TextSelectCopy from 'teleport/components/TextSelectCopy';
 import Document from 'teleterm/ui/Document';
 import * as Alerts from 'design/Alert';
-import { useTheme } from 'styled-components';
 import * as types from 'teleterm/ui/services/workspacesService';
 import LinearProgress from 'teleterm/ui/components/LinearProgress';
 import useDocumentGateway, { State } from './useDocumentGateway';
@@ -123,26 +121,26 @@ function CliCommand({
     >
       <Flex
         mr="2"
-        style={{
-          overflow: 'auto',
-          whiteSpace: 'pre',
-          wordBreak: 'break-all',
-          fontSize: '12px',
-          fontFamily: useTheme().fonts.mono,
-        }}
+        css={`
+          overflow: auto;
+          white-space: pre;
+          word-break: break-all;
+          font-size: 12px;
+          font-family: ${props => props.theme.fonts.mono};
+        `}
       >
         <Box mr="1">{`$`}</Box>
         <div>{cliCommand}</div>
       </Flex>
       <ButtonPrimary
         onClick={onClick}
-        style={{
-          maxWidth: '48px',
-          width: '100%',
-          padding: '4px 8px',
-          minHeight: '10px',
-          fontSize: '10px',
-        }}
+        css={`
+          max-width: 48px;
+          width: 100%;
+          padding: 4px 8px;
+          min-height: 10px;
+          font-size: 10px;
+        `}
       >
         Run
       </ButtonPrimary>
