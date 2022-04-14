@@ -1,5 +1,3 @@
-import { generatePath } from 'react-router';
-
 export default function generateResourcePath(
   path: string,
   params?: {
@@ -13,9 +11,18 @@ export default function generateResourcePath(
         param
       ].dir.toLowerCase()}`;
     } else {
-      processedParams[param] = params[param] ? params[param] : null;
+      processedParams[param] = params[param]
+        ? encodeURIComponent(params[param])
+        : '';
     }
   }
+  const output = path
+    .replace(':clusterId', params.clusterId)
+    .replace(':limit?', params.limit)
+    .replace(':startKey?', params.startKey || '')
+    .replace(':query?', processedParams.query || '')
+    .replace(':search?', processedParams.search || '')
+    .replace(':sort?', processedParams.sort || '');
 
-  return generatePath(path, processedParams);
+  return output;
 }

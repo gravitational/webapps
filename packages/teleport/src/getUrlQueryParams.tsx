@@ -21,7 +21,9 @@ export default function getResourceUrlQueryParams(
 }
 
 export function decodeUrlQueryParam(param: string) {
-  const decodedQuery = decodeURIComponent(param);
+  const decodedQuery = decodeURIComponent(
+    param.replace(/%(?![0-9][0-9a-fA-F]+)/g, '%25')
+  );
   const beautifiedDecodedQuery = decodedQuery.replaceAll('+', ' ');
   return beautifiedDecodedQuery;
 }

@@ -57,7 +57,7 @@ export default function useNodes(ctx: Ctx, stickyCluster: StickyCluster) {
   const to = results.totalCount > 0 ? from + results.nodes.length - 1 : 0;
 
   useEffect(() => {
-    fetch();
+    fetchNodes();
   }, [clusterId, search]);
 
   function replaceHistory(path: string) {
@@ -82,7 +82,7 @@ export default function useNodes(ctx: Ctx, stickyCluster: StickyCluster) {
     setParams({ ...params, sort });
   }
 
-  function fetch() {
+  function fetchNodes() {
     setAttempt({ status: 'processing' });
     ctx.nodeService
       .fetchNodes(clusterId, { ...params, limit: pageSize })
