@@ -21,7 +21,7 @@ import cfg from 'teleport/config';
 import { JoinToken, Rule } from 'teleport/services/joinToken';
 
 export default function useAddNode(ctx: TeleportContext) {
-  const { attempt, run } = useAttempt('processing');
+  const { attempt, run } = useAttempt('');
   const isEnterprise = ctx.isEnterprise;
   const version = ctx.storeUser.state.cluster.authVersion;
   const user = ctx.storeUser.state.username;
