@@ -19,6 +19,7 @@ import { Text, Flex, Box, ButtonPrimary, ButtonSecondary, Link } from 'design';
 import TextSelectCopy from 'teleport/components/TextSelectCopy';
 import Document from 'teleterm/ui/Document';
 import * as Alerts from 'design/Alert';
+import { useTheme } from 'styled-components';
 import * as types from 'teleterm/ui/services/workspacesService';
 import LinearProgress from 'teleterm/ui/components/LinearProgress';
 import useDocumentGateway, { State } from './useDocumentGateway';
@@ -39,7 +40,14 @@ export default function Container(props: Props) {
 }
 
 export function DocumentGateway(props: State) {
-  const { gateway, connected, connectAttempt, disconnect, reconnect } = props;
+  const {
+    gateway,
+    connected,
+    connectAttempt,
+    disconnect,
+    reconnect,
+    runCliCommand,
+  } = props;
 
   if (!connected) {
     const statusDescription =
@@ -81,12 +89,7 @@ export function DocumentGateway(props: State) {
         </ButtonSecondary>
       </Flex>
       <Text bold>Connect with CLI</Text>
-      <TextSelectCopy
-        bash={true}
-        bg={'primary.dark'}
-        mb={4}
-        text={gateway.cliCommand}
-      />
+      <CliCommand cliCommand={gateway.cliCommand} onClick={runCliCommand} />
       <Text bold>Connect with GUI</Text>
       <Text>
         To connect with a GUI database client, see our{' '}
@@ -99,5 +102,50 @@ export function DocumentGateway(props: State) {
         for instructions.
       </Text>
     </Box>
+  );
+}
+
+function CliCommand({
+  cliCommand,
+  onClick,
+}: {
+  cliCommand: string;
+  onClick(): void;
+}) {
+  return (
+    <Flex
+      p="2"
+      alignItems="center"
+      justifyContent="space-between"
+      borderRadius={2}
+      bg={'primary.dark'}
+      mb={4}
+    >
+      <Flex
+        mr="2"
+        style={{
+          overflow: 'auto',
+          whiteSpace: 'pre',
+          wordBreak: 'break-all',
+          fontSize: '12px',
+          fontFamily: useTheme().fonts.mono,
+        }}
+      >
+        <Box mr="1">{`$`}</Box>
+        <div>{cliCommand}</div>
+      </Flex>
+      <ButtonPrimary
+        onClick={onClick}
+        style={{
+          maxWidth: '48px',
+          width: '100%',
+          padding: '4px 8px',
+          minHeight: '10px',
+          fontSize: '10px',
+        }}
+      >
+        Run
+      </ButtonPrimary>
+    </Flex>
   );
 }
