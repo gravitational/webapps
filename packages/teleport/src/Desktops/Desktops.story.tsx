@@ -21,6 +21,7 @@ import { desktops } from './fixtures';
 
 export default {
   title: 'Teleport/Desktops',
+  excludeStories: ['props'],
 };
 
 export const Loading = () => (
@@ -30,7 +31,7 @@ export const Loading = () => (
 export const Loaded = () => <Desktops {...props} />;
 
 export const Empty = () => (
-  <Desktops {...props} results={{ desktops: [], hasResources: false }} />
+  <Desktops {...props} results={{ desktops: [] }} isSearchEmpty={true} />
 );
 
 export const Failed = () => (
@@ -44,7 +45,6 @@ export const props: State = {
   results: {
     desktops,
     totalCount: desktops.length,
-    hasResources: true,
   },
   fetchStatus: '',
   attempt: { status: 'success' },
@@ -69,4 +69,5 @@ export const props: State = {
   startKeys: [''],
   pathname: '',
   replaceHistory: () => null,
+  isSearchEmpty: false,
 };

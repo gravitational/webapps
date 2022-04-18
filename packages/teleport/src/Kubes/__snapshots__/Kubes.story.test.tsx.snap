@@ -240,7 +240,7 @@ exports[`empty state 1`] = `
 `;
 
 exports[`failed 1`] = `
-.c3 {
+.c4 {
   display: flex;
   align-items: center;
   justify-content: center;
@@ -257,17 +257,62 @@ exports[`failed 1`] = `
   color: #FFFFFF;
 }
 
-.c3 a {
+.c4 a {
   color: #FFFFFF;
 }
 
-.c7 {
+.c8 {
   box-sizing: border-box;
   margin-right: 16px;
   width: 100%;
 }
 
-.c23 {
+.c3 {
+  line-height: 1.5;
+  margin: 0;
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  box-sizing: border-box;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-family: inherit;
+  font-weight: 600;
+  outline: none;
+  position: relative;
+  text-align: center;
+  text-decoration: none;
+  text-transform: uppercase;
+  transition: all 0.3s;
+  -webkit-font-smoothing: antialiased;
+  background: #512FC9;
+  color: rgba(255,255,255,0.87);
+  min-height: 32px;
+  font-size: 12px;
+  padding: 0px 24px;
+  width: 240px;
+}
+
+.c3:active {
+  opacity: 0.56;
+}
+
+.c3:hover,
+.c3:focus {
+  background: #651FFF;
+}
+
+.c3:active {
+  background: #354AA4;
+}
+
+.c3:disabled {
+  background: rgba(255,255,255,0.12);
+  color: rgba(255,255,255,0.3);
+}
+
+.c24 {
   line-height: 1.5;
   margin: 0;
   display: inline-flex;
@@ -295,40 +340,40 @@ exports[`failed 1`] = `
   padding: 0px 16px;
 }
 
-.c23:active {
+.c24:active {
   opacity: 0.56;
 }
 
-.c23:hover,
-.c23:focus {
+.c24:hover,
+.c24:focus {
   background: #2C3A73;
   border: 1px solid rgba(255,255,255,0.1);
   opacity: 1;
 }
 
-.c23:active {
+.c24:active {
   opacity: 0.24;
 }
 
-.c23:disabled {
+.c24:disabled {
   background: rgba(255,255,255,0.12);
   color: rgba(255,255,255,0.3);
 }
 
-.c18 {
+.c19 {
   display: inline-block;
   transition: color .3s;
   color: #FFFFFF;
 }
 
-.c28 {
+.c29 {
   display: inline-block;
   transition: color .3s;
   color: #FFFFFF;
   font-size: 16px;
 }
 
-.c22 {
+.c23 {
   box-sizing: border-box;
   border-radius: 100px;
   display: inline-flex;
@@ -345,7 +390,7 @@ exports[`failed 1`] = `
   margin-right: 4px;
 }
 
-.c16 {
+.c17 {
   overflow: hidden;
   text-overflow: ellipsis;
   font-weight: 300;
@@ -354,7 +399,7 @@ exports[`failed 1`] = `
   margin: 0px;
 }
 
-.c20 {
+.c21 {
   overflow: hidden;
   text-overflow: ellipsis;
   font-weight: 400;
@@ -365,7 +410,7 @@ exports[`failed 1`] = `
   color: #FFFFFF;
 }
 
-.c5 {
+.c6 {
   box-sizing: border-box;
   width: 100%;
   display: flex;
@@ -373,32 +418,32 @@ exports[`failed 1`] = `
   justify-content: space-between;
 }
 
-.c6 {
+.c7 {
   box-sizing: border-box;
   display: flex;
   align-items: center;
 }
 
-.c19 {
+.c20 {
   box-sizing: border-box;
   display: flex;
 }
 
-.c25 {
+.c26 {
   box-sizing: border-box;
   width: 100%;
   display: flex;
   justify-content: end;
 }
 
-.c26 {
+.c27 {
   box-sizing: border-box;
   margin-right: 8px;
   display: flex;
   align-items: center;
 }
 
-.c21 {
+.c22 {
   background: #222C59;
   box-shadow: 0 4px 16px rgba(0,0,0,0.24);
   border-collapse: collapse;
@@ -407,39 +452,39 @@ exports[`failed 1`] = `
   width: 100%;
 }
 
-.c21 > thead > tr > th,
-.c21 > tbody > tr > th,
-.c21 > tfoot > tr > th,
-.c21 > thead > tr > td,
-.c21 > tbody > tr > td,
-.c21 > tfoot > tr > td {
+.c22 > thead > tr > th,
+.c22 > tbody > tr > th,
+.c22 > tfoot > tr > th,
+.c22 > thead > tr > td,
+.c22 > tbody > tr > td,
+.c22 > tfoot > tr > td {
   padding: 8px 8px;
   vertical-align: middle;
 }
 
-.c21 > thead > tr > th:first-child,
-.c21 > tbody > tr > th:first-child,
-.c21 > tfoot > tr > th:first-child,
-.c21 > thead > tr > td:first-child,
-.c21 > tbody > tr > td:first-child,
-.c21 > tfoot > tr > td:first-child {
+.c22 > thead > tr > th:first-child,
+.c22 > tbody > tr > th:first-child,
+.c22 > tfoot > tr > th:first-child,
+.c22 > thead > tr > td:first-child,
+.c22 > tbody > tr > td:first-child,
+.c22 > tfoot > tr > td:first-child {
   padding-left: 24px;
 }
 
-.c21 > thead > tr > th:last-child,
-.c21 > tbody > tr > th:last-child,
-.c21 > tfoot > tr > th:last-child,
-.c21 > thead > tr > td:last-child,
-.c21 > tbody > tr > td:last-child,
-.c21 > tfoot > tr > td:last-child {
+.c22 > thead > tr > th:last-child,
+.c22 > tbody > tr > th:last-child,
+.c22 > tfoot > tr > th:last-child,
+.c22 > thead > tr > td:last-child,
+.c22 > tbody > tr > td:last-child,
+.c22 > tfoot > tr > td:last-child {
   padding-right: 24px;
 }
 
-.c21 > tbody > tr > td {
+.c22 > tbody > tr > td {
   vertical-align: baseline;
 }
 
-.c21 > thead > tr > th {
+.c22 > thead > tr > th {
   background: #111B48;
   color: #FFFFFF;
   cursor: pointer;
@@ -453,26 +498,26 @@ exports[`failed 1`] = `
   white-space: nowrap;
 }
 
-.c21 > thead > tr > th .c17 {
+.c22 > thead > tr > th .c18 {
   font-weight: bold;
   font-size: 8px;
   margin-left: 8px;
 }
 
-.c21 > tbody > tr > td {
+.c22 > tbody > tr > td {
   color: rgba(255,255,255,0.87);
   line-height: 16px;
 }
 
-.c21 tbody tr {
+.c22 tbody tr {
   border-bottom: 1px solid #1C254D;
 }
 
-.c21 tbody tr:hover {
+.c22 tbody tr:hover {
   background-color: rgb(37,49,98);
 }
 
-.c4 {
+.c5 {
   padding: 16px 24px;
   display: flex;
   height: 24px;
@@ -484,7 +529,7 @@ exports[`failed 1`] = `
   border-top-right-radius: 8px;
 }
 
-.c24 {
+.c25 {
   padding: 16px 24px;
   display: flex;
   height: 24px;
@@ -496,32 +541,32 @@ exports[`failed 1`] = `
   border-bottom-left-radius: 8px;
 }
 
-.c27 {
+.c28 {
   background: none;
   border: none;
   cursor: pointer;
 }
 
-.c27 .c17 {
+.c28 .c18 {
   font-size: 20px;
   transition: all 0.3s;
   opacity: 0.5;
 }
 
-.c27:hover .c17,
-.c27:focus .c17 {
+.c28:hover .c18,
+.c28:focus .c18 {
   opacity: 1;
 }
 
-.c27:disabled {
+.c28:disabled {
   cursor: default;
 }
 
-.c27:disabled .c17 {
+.c28:disabled .c18 {
   opacity: 0.1;
 }
 
-.c10 {
+.c11 {
   position: absolute;
   height: 100%;
   right: 0;
@@ -532,7 +577,7 @@ exports[`failed 1`] = `
   border-radius: 200px;
 }
 
-.c8 {
+.c9 {
   position: relative;
   display: flex;
   overflow: hidden;
@@ -542,7 +587,7 @@ exports[`failed 1`] = `
   background: #111B48;
 }
 
-.c9 {
+.c10 {
   border: none;
   outline: none;
   box-sizing: border-box;
@@ -557,27 +602,27 @@ exports[`failed 1`] = `
   padding-right: 184px;
 }
 
-.c9:hover,
-.c9:focus,
-.c9:active {
+.c10:hover,
+.c10:focus,
+.c10:active {
   background: #1C254D;
   box-shadow: inset 0 2px 4px rgba(0,0,0,.24);
   color: rgba(255,255,255,0.87);
 }
 
-.c9::placeholder {
+.c10::placeholder {
   color: rgba(255,255,255,0.24);
   font-size: 12px;
 }
 
-.c12 {
+.c13 {
   position: relative;
   display: flex;
   align-items: center;
   cursor: pointer;
 }
 
-.c15 {
+.c16 {
   width: 32px;
   height: 12px;
   border-radius: 12px;
@@ -585,7 +630,7 @@ exports[`failed 1`] = `
   cursor: pointer;
 }
 
-.c15:before {
+.c16:before {
   content: '';
   position: absolute;
   top: 50%;
@@ -596,21 +641,21 @@ exports[`failed 1`] = `
   background: #651FFF;
 }
 
-.c13 {
+.c14 {
   opacity: 0;
   position: absolute;
   cursor: pointer;
 }
 
-.c13:checked + .c14 {
+.c14:checked + .c15 {
   background: #512FC9;
 }
 
-.c13:checked + .c14:before {
+.c14:checked + .c15:before {
   transform: translate(16px,-50%);
 }
 
-.c11 {
+.c12 {
   display: flex;
   align-items: center;
   justify-content: space-around;
@@ -671,55 +716,65 @@ exports[`failed 1`] = `
     >
       Kubernetes
     </div>
+    <a
+      class="c3"
+      href="https://goteleport.com/docs/kubernetes-access/guides"
+      kind="primary"
+      rel="noreferrer"
+      target="_blank"
+      width="240px"
+    >
+      View documentation
+    </a>
   </div>
   <div
-    class="c3"
+    class="c4"
     kind="danger"
   >
     server error
   </div>
   <form
-    class="c4"
+    class="c5"
   >
     <div
-      class="c5"
+      class="c6"
       width="100%"
     >
       <div
-        class="c6"
+        class="c7"
         style="width: 70%;"
       >
         <div
-          class="c7"
+          class="c8"
           width="100%"
         >
           <div
-            class="c8"
+            class="c9"
           >
             <input
-              class="c9"
+              class="c10"
               placeholder="SEARCH..."
               value=""
             />
             <div
-              class="c10"
+              class="c11"
             >
               <div
-                class="c11"
+                class="c12"
               >
                 <label
-                  class="c12"
+                  class="c13"
                 >
                   <input
-                    class="c13"
+                    class="c14"
                     type="checkbox"
                   />
                   <div
-                    class="c14 c15"
+                    class="c15 c16"
                   />
                 </label>
                 <div
-                  class="c16"
+                  class="c17"
                 >
                   Advanced
                 </div>
@@ -731,17 +786,17 @@ exports[`failed 1`] = `
           style="line-height: 0px;"
         >
           <span
-            class="c17 c18 icon icon-info_outline "
+            class="c18 c19 icon icon-info_outline "
             color="light"
             style="cursor: pointer; font-size: 20px;"
           />
         </div>
       </div>
       <div
-        class="c19"
+        class="c20"
       >
         <div
-          class="c20"
+          class="c21"
           color="primary.contrastText"
         >
           SHOWING 
@@ -762,7 +817,7 @@ exports[`failed 1`] = `
     </div>
   </form>
   <table
-    class="c21"
+    class="c22"
   >
     <thead>
       <tr>
@@ -770,7 +825,7 @@ exports[`failed 1`] = `
           <a>
             Name
             <span
-              class="c17 c18 icon icon-chevron-up "
+              class="c18 c19 icon icon-chevron-up "
               color="light"
             />
           </a>
@@ -788,13 +843,13 @@ exports[`failed 1`] = `
         </td>
         <td>
           <div
-            class="c22"
+            class="c23"
             kind="secondary"
           >
             kernal: 4.15.0-51-generic
           </div>
           <div
-            class="c22"
+            class="c23"
             kind="secondary"
           >
             env: prod
@@ -804,7 +859,7 @@ exports[`failed 1`] = `
           align="right"
         >
           <button
-            class="c23"
+            class="c24"
             kind="border"
           >
             Connect
@@ -817,7 +872,7 @@ exports[`failed 1`] = `
         </td>
         <td>
           <div
-            class="c22"
+            class="c23"
             kind="secondary"
           >
             env: staging
@@ -827,7 +882,7 @@ exports[`failed 1`] = `
           align="right"
         >
           <button
-            class="c23"
+            class="c24"
             kind="border"
           >
             Connect
@@ -840,13 +895,13 @@ exports[`failed 1`] = `
         </td>
         <td>
           <div
-            class="c22"
+            class="c23"
             kind="secondary"
           >
             cluster-name: some-cluster-name
           </div>
           <div
-            class="c22"
+            class="c23"
             kind="secondary"
           >
             env: idk
@@ -856,7 +911,7 @@ exports[`failed 1`] = `
           align="right"
         >
           <button
-            class="c23"
+            class="c24"
             kind="border"
           >
             Connect
@@ -866,36 +921,36 @@ exports[`failed 1`] = `
     </tbody>
   </table>
   <nav
-    class="c24"
+    class="c25"
   >
     <div
-      class="c25"
+      class="c26"
       width="100%"
     >
       <div
-        class="c26"
+        class="c27"
       />
       <div
-        class="c19"
+        class="c20"
       >
         <button
-          class="c27"
+          class="c28"
           disabled=""
           title="Previous page"
         >
           <span
-            class="c17 c28 icon icon-arrow-left-circle "
+            class="c18 c29 icon icon-arrow-left-circle "
             color="light"
             font-size="3"
           />
         </button>
         <button
-          class="c27"
+          class="c28"
           disabled=""
           title="Next page"
         >
           <span
-            class="c17 c28 icon icon-arrow-right-circle "
+            class="c18 c29 icon icon-arrow-right-circle "
             color="light"
             font-size="3"
           />

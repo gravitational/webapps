@@ -22,19 +22,21 @@ import { kubes } from './fixtures';
 
 export default {
   title: 'Teleport/Kubes',
+  excludeStories: ['props'],
 };
 
 export const Loaded = () => <Kubes {...props} />;
 
 export const Empty = () => (
-  <Kubes {...props} results={{ kubes: [], hasResources: false }} />
+  <Kubes {...props} results={{ kubes: [] }} isSearchEmpty={true} />
 );
 
 export const EmptyReadOnly = () => (
   <Kubes
     {...props}
-    results={{ kubes: [], hasResources: false }}
+    results={{ kubes: [] }}
     canCreate={false}
+    isSearchEmpty={true}
   />
 );
 
@@ -53,7 +55,6 @@ export const props: State = {
   results: {
     kubes,
     totalCount: kubes.length,
-    hasResources: true,
   },
   fetchStatus: '',
   attempt: { status: 'success' },
@@ -77,4 +78,5 @@ export const props: State = {
   startKeys: [''],
   pathname: '',
   replaceHistory: () => null,
+  isSearchEmpty: false,
 };

@@ -57,16 +57,19 @@ export function Desktops(props: State) {
     pathname,
     replaceHistory,
     fetchStatus,
+    isSearchEmpty,
   } = props;
 
-  const isEmpty = attempt.status === 'success' && !results.hasResources;
-  const hasDesktops = attempt.status === 'success' && results.hasResources;
+  const hasNoDesktops =
+    attempt.status === 'success' &&
+    results.desktops.length === 0 &&
+    isSearchEmpty;
 
   return (
     <FeatureBox>
       <FeatureHeader alignItems="center" justifyContent="space-between">
         <FeatureHeaderTitle>Desktops</FeatureHeaderTitle>
-        {hasDesktops && (
+        {!hasNoDesktops && (
           <ButtonPrimary
             as="a"
             width="240px"
@@ -84,7 +87,7 @@ export function Desktops(props: State) {
         </Box>
       )}
       {attempt.status === 'failed' && <Danger>{attempt.statusText}</Danger>}
-      {attempt.status !== 'processing' && !isEmpty && (
+      {attempt.status !== 'processing' && !hasNoDesktops && (
         <DesktopList
           desktops={results.desktops}
           username={username}
@@ -106,7 +109,7 @@ export function Desktops(props: State) {
           replaceHistory={replaceHistory}
         />
       )}
-      {isEmpty && (
+      {hasNoDesktops && (
         <Empty
           clusterId={clusterId}
           canCreate={canCreate && !isLeafCluster}

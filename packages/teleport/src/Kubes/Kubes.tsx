@@ -56,16 +56,17 @@ export function Kubes(props: State) {
     pathname,
     replaceHistory,
     fetchStatus,
+    isSearchEmpty,
   } = props;
 
-  const isEmpty = attempt.status === 'success' && !results.hasResources;
-  const hasKubes = attempt.status === 'success' && results.hasResources;
+  const hasNoKubes =
+    attempt.status === 'success' && results.kubes.length === 0 && isSearchEmpty;
 
   return (
     <FeatureBox>
       <FeatureHeader alignItems="center" justifyContent="space-between">
         <FeatureHeaderTitle>Kubernetes</FeatureHeaderTitle>
-        {hasKubes && (
+        {!hasNoKubes && (
           <ButtonPrimary
             as="a"
             width="240px"
@@ -83,7 +84,7 @@ export function Kubes(props: State) {
           <Indicator />
         </Box>
       )}
-      {attempt.status !== 'processing' && !isEmpty && (
+      {attempt.status !== 'processing' && !hasNoKubes && (
         <>
           <KubeList
             kubes={results.kubes}
@@ -106,7 +107,7 @@ export function Kubes(props: State) {
           />
         </>
       )}
-      {isEmpty && (
+      {hasNoKubes && (
         <Empty
           clusterId={clusterId}
           canCreate={canCreate && !isLeafCluster}

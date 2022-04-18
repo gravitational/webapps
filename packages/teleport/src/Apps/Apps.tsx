@@ -57,16 +57,17 @@ export function Apps(props: State) {
     pathname,
     replaceHistory,
     fetchStatus,
+    isSearchEmpty,
   } = props;
 
-  const isEmpty = attempt.status === 'success' && !results.hasResources;
-  const hasApps = attempt.status === 'success' && results.hasResources;
+  const hasNoApps =
+    attempt.status === 'success' && results.apps.length === 0 && isSearchEmpty;
 
   return (
     <FeatureBox>
       <FeatureHeader alignItems="center" justifyContent="space-between">
         <FeatureHeaderTitle>Applications</FeatureHeaderTitle>
-        {hasApps && (
+        {!hasNoApps && (
           <ButtonAdd
             isLeafCluster={isLeafCluster}
             canCreate={canCreate}
@@ -80,7 +81,7 @@ export function Apps(props: State) {
         </Box>
       )}
       {attempt.status === 'failed' && <Danger>{attempt.statusText} </Danger>}
-      {attempt.status !== 'processing' && !isEmpty && (
+      {attempt.status !== 'processing' && !hasNoApps && (
         <AppList
           apps={results.apps}
           fetchNext={fetchNext}
@@ -98,7 +99,7 @@ export function Apps(props: State) {
           replaceHistory={replaceHistory}
         />
       )}
-      {isEmpty && (
+      {hasNoApps && (
         <Empty
           clusterId={clusterId}
           canCreate={canCreate && !isLeafCluster}

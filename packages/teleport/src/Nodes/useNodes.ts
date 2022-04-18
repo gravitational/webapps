@@ -43,9 +43,10 @@ export default function useNodes(ctx: Ctx, stickyCluster: StickyCluster) {
     sort: { fieldName: 'hostname', dir: 'ASC' },
   });
 
+  const isSearchEmpty = !params?.query && !params?.search;
+
   const [results, setResults] = useState<NodesResponse>({
     nodes: [],
-    hasResources: false,
     startKey: '',
     totalCount: 0,
   });
@@ -176,6 +177,7 @@ export default function useNodes(ctx: Ctx, stickyCluster: StickyCluster) {
     pathname,
     replaceHistory,
     fetchStatus,
+    isSearchEmpty,
   };
 }
 

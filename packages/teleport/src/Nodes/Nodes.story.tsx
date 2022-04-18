@@ -21,6 +21,7 @@ import { nodes } from './fixtures';
 
 export default {
   title: 'Teleport/Nodes',
+  excludeStories: ['props'],
 };
 
 export const Loaded = () => <Nodes {...props} />;
@@ -28,14 +29,16 @@ export const Loaded = () => <Nodes {...props} />;
 export const Empty = () => (
   <Nodes
     {...props}
-    results={{ nodes: [], totalCount: 0, hasResources: false }}
+    results={{ nodes: [], totalCount: 0 }}
+    isSearchEmpty={true}
   />
 );
 
 export const EmptyReadOnly = () => (
   <Nodes
     {...props}
-    results={{ nodes: [], totalCount: 0, hasResources: false }}
+    results={{ nodes: [], totalCount: 0 }}
+    isSearchEmpty={true}
     canCreate={false}
   />
 );
@@ -55,7 +58,6 @@ const props: State = {
   results: {
     nodes,
     totalCount: nodes.length,
-    hasResources: true,
   },
   fetchStatus: '',
   isLeafCluster: false,
@@ -82,4 +84,5 @@ const props: State = {
   startKeys: [''],
   pathname: '',
   replaceHistory: () => null,
+  isSearchEmpty: false,
 };

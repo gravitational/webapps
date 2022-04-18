@@ -21,19 +21,21 @@ import { databases } from './fixtures';
 
 export default {
   title: 'Teleport/Databases',
+  excludeStories: ['props'],
 };
 
 export const Loaded = () => <Databases {...props} />;
 
 export const Empty = () => (
-  <Databases {...props} results={{ databases: [], hasResources: false }} />
+  <Databases {...props} results={{ databases: [] }} isSearchEmpty={true} />
 );
 
 export const EmptyReadOnly = () => (
   <Databases
     {...props}
-    results={{ databases: [], hasResources: false }}
+    results={{ databases: [] }}
     canCreate={false}
+    isSearchEmpty={true}
   />
 );
 
@@ -52,7 +54,6 @@ export const props: State = {
   results: {
     databases,
     totalCount: databases.length,
-    hasResources: true,
   },
   fetchStatus: '',
   attempt: { status: 'success' },
@@ -81,4 +82,5 @@ export const props: State = {
   startKeys: [''],
   pathname: '',
   replaceHistory: () => null,
+  isSearchEmpty: false,
 };

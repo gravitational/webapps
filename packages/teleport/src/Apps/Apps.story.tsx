@@ -21,19 +21,21 @@ import { apps } from './fixtures';
 
 export default {
   title: 'Teleport/Apps',
+  excludeStories: ['props'],
 };
 
 export const Loaded = () => <Apps {...props} />;
 
 export const Empty = () => (
-  <Apps {...props} results={{ apps: [], hasResources: false }} />
+  <Apps {...props} results={{ apps: [] }} isSearchEmpty={true} />
 );
 
 export const EmptyReadOnly = () => (
   <Apps
     {...props}
-    results={{ apps: [], hasResources: false }}
+    results={{ apps: [] }}
     canCreate={false}
+    isSearchEmpty={true}
   />
 );
 
@@ -52,7 +54,6 @@ export const props: State = {
   results: {
     apps,
     totalCount: apps.length,
-    hasResources: true,
   },
   fetchStatus: '',
   attempt: { status: 'success' },
@@ -78,4 +79,5 @@ export const props: State = {
   startKeys: [''],
   pathname: '',
   replaceHistory: () => null,
+  isSearchEmpty: false,
 };

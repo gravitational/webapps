@@ -40,9 +40,10 @@ export default function useKubes(ctx: TeleportContext) {
     sort: { fieldName: 'name', dir: 'ASC' },
   });
 
+  const isSearchEmpty = !params?.query && !params?.search;
+
   const [results, setResults] = useState<KubesResponse>({
     kubes: [],
-    hasResources: false,
     startKey: '',
     totalCount: 0,
   });
@@ -148,6 +149,7 @@ export default function useKubes(ctx: TeleportContext) {
     pathname,
     replaceHistory,
     fetchStatus,
+    isSearchEmpty,
   };
 }
 

@@ -43,10 +43,11 @@ export default function useApps(ctx: Ctx) {
 
   const [results, setResults] = useState<AppsResponse>({
     apps: [],
-    hasResources: false,
     startKey: '',
     totalCount: 0,
   });
+
+  const isSearchEmpty = !params?.query && !params?.search;
 
   const pageSize = 15;
 
@@ -160,6 +161,7 @@ export default function useApps(ctx: Ctx) {
     pathname,
     replaceHistory,
     fetchStatus,
+    isSearchEmpty,
   };
 }
 

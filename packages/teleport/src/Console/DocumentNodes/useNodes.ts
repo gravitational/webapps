@@ -41,7 +41,6 @@ export default function useNodes({ clusterId, id }: stores.DocumentNodes) {
   const [results, setResults] = useState<NodesResponse & { logins: string[] }>({
     logins: [],
     nodes: [],
-    hasResources: false,
     startKey: '',
     totalCount: 0,
   });

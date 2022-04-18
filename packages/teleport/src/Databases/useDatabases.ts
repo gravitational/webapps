@@ -44,9 +44,10 @@ export default function useDatabases(ctx: Ctx) {
     sort: { fieldName: 'name', dir: 'ASC' },
   });
 
+  const isSearchEmpty = !params?.query && !params?.search;
+
   const [results, setResults] = useState<DatabasesResponse>({
     databases: [],
-    hasResources: false,
     startKey: '',
     totalCount: 0,
   });
@@ -166,6 +167,7 @@ export default function useDatabases(ctx: Ctx) {
     pathname,
     replaceHistory,
     fetchStatus,
+    isSearchEmpty,
   };
 }
 

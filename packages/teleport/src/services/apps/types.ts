@@ -30,7 +30,6 @@ export interface App {
 
 export type AppsResponse = {
   apps: App[];
-  hasResources: boolean;
   startKey?: string;
   totalCount?: number;
 };

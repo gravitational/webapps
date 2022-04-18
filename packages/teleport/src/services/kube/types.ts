@@ -21,7 +21,6 @@ export interface Kube {
 
 export type KubesResponse = {
   kubes: Kube[];
-  hasResources: boolean;
   startKey?: string;
   totalCount?: number;
 };

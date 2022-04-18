@@ -62,6 +62,7 @@ export function Nodes(props: State) {
     pathname,
     replaceHistory,
     fetchStatus,
+    isSearchEmpty,
   } = props;
 
   function onLoginSelect(e: React.MouseEvent, login: string, serverId: string) {
@@ -73,14 +74,14 @@ export function Nodes(props: State) {
     startSshSession(login, serverId);
   }
 
-  const isEmpty = attempt.status === 'success' && !results.hasResources;
-  const hasNodes = attempt.status === 'success' && results.hasResources;
+  const hasNoNodes =
+    attempt.status === 'success' && results.nodes.length === 0 && isSearchEmpty;
 
   return (
     <FeatureBox>
       <FeatureHeader alignItems="center" justifyContent="space-between">
         <FeatureHeaderTitle>Servers</FeatureHeaderTitle>
-        {hasNodes && (
+        {!hasNoNodes && (
           <Flex alignItems="center">
             <QuickLaunch width="280px" onPress={onSshEnter} mr={3} />
             <ButtonAdd
@@ -97,7 +98,7 @@ export function Nodes(props: State) {
           <Indicator />
         </Box>
       )}
-      {attempt.status !== 'processing' && !isEmpty && (
+      {attempt.status !== 'processing' && !hasNoNodes && (
         <>
           <NodeList
             nodes={results.nodes}
@@ -119,7 +120,7 @@ export function Nodes(props: State) {
           />
         </>
       )}
-      {attempt.status === 'success' && isEmpty && (
+      {hasNoNodes && (
         <Empty
           clusterId={clusterId}
           canCreate={canCreate && !isLeafCluster}

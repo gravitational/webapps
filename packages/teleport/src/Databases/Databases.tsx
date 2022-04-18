@@ -61,16 +61,19 @@ export function Databases(props: State) {
     pathname,
     replaceHistory,
     fetchStatus,
+    isSearchEmpty,
   } = props;
 
-  const isEmpty = attempt.status === 'success' && !results.hasResources;
-  const hasDatabases = attempt.status === 'success' && results.hasResources;
+  const hasNoDatabases =
+    attempt.status === 'success' &&
+    results.databases.length === 0 &&
+    isSearchEmpty;
 
   return (
     <FeatureBox>
       <FeatureHeader alignItems="center" justifyContent="space-between">
         <FeatureHeaderTitle>Databases</FeatureHeaderTitle>
-        {hasDatabases && (
+        {!hasNoDatabases && (
           <ButtonAdd
             isLeafCluster={isLeafCluster}
             canCreate={canCreate}
@@ -84,7 +87,7 @@ export function Databases(props: State) {
         </Box>
       )}
       {attempt.status === 'failed' && <Danger>{attempt.statusText}</Danger>}
-      {attempt.status !== 'processing' && !isEmpty && (
+      {attempt.status !== 'processing' && !hasNoDatabases && (
         <>
           <DatabaseList
             databases={results.databases}
@@ -107,7 +110,7 @@ export function Databases(props: State) {
           />
         </>
       )}
-      {isEmpty && (
+      {hasNoDatabases && (
         <Empty
           clusterId={clusterId}
           canCreate={canCreate && !isLeafCluster}

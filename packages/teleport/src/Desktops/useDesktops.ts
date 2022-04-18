@@ -43,9 +43,10 @@ export default function useDesktops(ctx: Ctx) {
     sort: { fieldName: 'name', dir: 'ASC' },
   });
 
+  const isSearchEmpty = !params?.query && !params?.search;
+
   const [results, setResults] = useState<DesktopsResponse>({
     desktops: [],
-    hasResources: false,
     startKey: '',
     totalCount: 0,
   });
@@ -165,6 +166,7 @@ export default function useDesktops(ctx: Ctx) {
     pathname,
     replaceHistory,
     fetchStatus,
+    isSearchEmpty,
   };
 }
 
