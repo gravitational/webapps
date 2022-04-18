@@ -25,7 +25,6 @@ import { ButtonPrimary, ButtonSecondary } from 'design/Button';
 import FieldInput from 'shared/components/FieldInput';
 import TextSelectCopy from 'teleport/components/TextSelectCopy';
 import Validation, { Validator } from 'shared/components/Validation';
-import { Question } from 'design/Icon';
 import Box from 'design/Box';
 import Text from 'design/Text';
 import useAddKube, { State } from './useAddKube';
@@ -44,6 +43,7 @@ export function AddKube({
   createToken,
   expires,
   token,
+  version,
 }: Props & State) {
   const { hostname, port } = window.document.location;
   const host = `${hostname}:${port || '443'}`;
@@ -57,14 +57,25 @@ export function AddKube({
       return;
     }
 
-    const generatedCmd = generateCmd(namespace, clusterName, host, token);
+    const generatedCmd = generateCmd(
+      namespace,
+      clusterName,
+      host,
+      token,
+      version
+    );
     setCmd(generatedCmd);
   }, [token]);
 
-  function handleGenerate(validator: Validator) {
-    // if (validator.valid) {
-    //   return;
-    // }
+  function handleGenerate(e: React.SyntheticEvent, validator: Validator) {
+    e.preventDefault();
+
+    // validate() will run the rule functions of the form inputs
+    // it will automatically update the UI with error messages if the validation fails.
+    // No need for further actions here in case it fails
+    if (!validator.validate()) {
+      return;
+    }
 
     createToken();
   }
@@ -80,115 +91,146 @@ export function AddKube({
       onClose={onClose}
       open={true}
     >
-      <Validation>
-        {({ validator }) => (
-          <Flex flex="1" flexDirection="column">
-            <DialogTitle mr="auto" mb="4">
-              Add Kubernetes
-            </DialogTitle>
-            {attempt.status == 'failed' && (
-              <Alert kind="danger" children={attempt.statusText} />
-            )}
-            <DialogContent minHeight="254px" flex="0 0 auto">
-              <Box mb={4}>
-                Install Teleport Agent in your cluster via Helm to easily
-                connect your Kubernetes cluster with Teleport.
-              </Box>
-              <Box mb={4}>
-                <Text>
-                  <Text bold as="span">
-                    Step 1
-                  </Text>
-                  {' - Add teleport-agent chart to charts repository'}
-                </Text>
-                <TextSelectCopy
-                  text={
-                    'helm repo add teleport https://charts.releases.teleport.dev && helm repo update'
-                  }
-                />
-              </Box>
-              <Box mb={4}>
-                <Text bold as="span">
-                  Step 2
-                </Text>
-                {' - Enter your cluster information'}
-
-                <Flex alignItems="center" flexDirection="row">
-                  <FieldInput
-                    mb={2}
-                    // rule={requiredAppName}
-                    label="Namespace"
-                    autoFocus
-                    value={namespace}
-                    placeholder="teleport"
-                    width="320px"
-                    mr="3"
-                    // onKeyPress={e => handleEnterPress(e, validator)}
-                    onChange={e => setNamespace(e.target.value)}
-                  />
-                  <FieldInput
-                    mb={2}
-                    // rule={requiredAppName}
-                    label="Kubernetes Cluster Name"
-                    autoFocus
-                    value={clusterName}
-                    placeholder="my-cluster"
-                    width="320px"
-                    mr="3"
-                    // onKeyPress={e => handleEnterPress(e, validator)}
-                    onChange={e => setClusterName(e.target.value)}
-                  />
-                </Flex>
-              </Box>
-              {cmd && (
-                <Box>
-                  <Text mb="2" bold typography="h5">
-                    Script Generated
-                  </Text>
-                  <Text mt="1">
-                    The token will be valid for{' '}
-                    <Text bold as={'span'}>
-                      {expires}.
-                    </Text>
-                  </Text>
-                  <TextSelectCopy text={cmd} mb={2} />
-                  <Text>Tip: save the YAML file to apply updates later</Text>
-                </Box>
-              )}
-            </DialogContent>
-            <DialogFooter>
-              <ButtonPrimary
-                disabled={attempt.status === 'processing'}
-                onClick={() => handleGenerate(validator)}
-              >
-                {cmd ? 'Regenerate Script' : 'Generate Script'}
-              </ButtonPrimary>
-              <ButtonSecondary onClick={onClose}>Close</ButtonSecondary>
-            </DialogFooter>
-          </Flex>
+      <Flex flex="1" flexDirection="column">
+        <DialogTitle mr="auto" mb="4">
+          Add Kubernetes
+        </DialogTitle>
+        {attempt.status == 'failed' && (
+          <Alert kind="danger" children={attempt.statusText} />
         )}
-      </Validation>
+        <DialogContent minHeight="254px" flex="0 0 auto">
+          <Box mb={4}>
+            Install Teleport Agent in your cluster via Helm to easily connect
+            your Kubernetes cluster with Teleport. For all the available values
+            of the helm chart see{' '}
+            <a href="https://goteleport.com/docs/kubernetes-access/helm/reference/teleport-kube-agent/">
+              the documentation
+            </a>
+            {' .'}
+          </Box>
+          <Box mb={4}>
+            <Text>
+              <Text bold as="span">
+                Step 1
+              </Text>
+              {' - Add teleport-agent chart to your charts repository'}
+            </Text>
+            <TextSelectCopy
+              text={
+                'helm repo add teleport https://charts.releases.teleport.dev && helm repo update'
+              }
+            />
+          </Box>
+          <Box mb={4}>
+            <Text bold as="span">
+              Step 2
+            </Text>
+            {
+              ' - Generate a script to automatically configure and install the teleport-agent'
+            }
+            <Validation>
+              {({ validator }) => (
+                // TODO: use labelTips when they are merged, add these infos: https://goteleport.com/docs/kubernetes-access/helm/reference/teleport-kube-agent/#kubeclustername
+                <Flex alignItems="center" flexDirection="row">
+                  <form
+                    onSubmit={e => handleGenerate(e, validator)}
+                    style={{ width: '100%' }}
+                  >
+                    <FieldInput
+                      mb={2}
+                      rule={(val: string) => requriedField(val, 'Namespace')}
+                      label="Namespace"
+                      autoFocus
+                      value={namespace}
+                      placeholder="teleport"
+                      width="100%"
+                      mr="3"
+                      onChange={e => setNamespace(e.target.value)}
+                    />
+                    <FieldInput
+                      mb={2}
+                      rule={(val: string) =>
+                        requriedField(val, 'Kubernetes Cluster Name')
+                      }
+                      label="Kubernetes Cluster Name"
+                      value={clusterName}
+                      placeholder="my-cluster"
+                      width="100%"
+                      mr="3"
+                      onChange={e => setClusterName(e.target.value)}
+                    />
+                    <ButtonPrimary
+                      block
+                      mt="1"
+                      disabled={attempt.status === 'processing'}
+                      type="submit"
+                    >
+                      {cmd ? 'Regenerate Script' : 'Generate Script'}
+                    </ButtonPrimary>
+                  </form>
+                </Flex>
+              )}
+            </Validation>
+          </Box>
+          {cmd && (
+            <Box mb={4}>
+              <Text bold as="span">
+                Step 3
+              </Text>
+              {' - Install the helm chart'}
+
+              <Box>
+                <Text mt="2" mb="1">
+                  The token will be valid for{' '}
+                  <Text bold as={'span'}>
+                    {expires}.
+                  </Text>
+                </Text>
+                <TextSelectCopy text={cmd} mb={2} />
+                <Text>Tip: save the YAML file to apply updates later</Text>
+              </Box>
+            </Box>
+          )}
+        </DialogContent>
+        <DialogFooter>
+          <ButtonSecondary onClick={onClose}>Close</ButtonSecondary>
+        </DialogFooter>
+      </Flex>
     </Dialog>
   );
 }
 
-function generateCmd(
+const requriedField = (value: string, fieldName: string) => () => {
+  if (!value || value.length === 0) {
+    return {
+      valid: false,
+      message: `${fieldName} is required`,
+    };
+  }
+
+  return {
+    valid: true,
+  };
+};
+
+const generateCmd = (
   namespace: string,
   clusterName: string,
   proxyAddr: string,
-  token: string
-) {
+  token: string,
+  clusterVersion: string
+) => {
   return `cat << EOF > prod-cluster-values.yaml  
 roles: kube   
 authToken: ${token}   
 proxyAddr: ${proxyAddr}   
 kubeClusterName: ${clusterName}   
-teleportVersionOverride: <proxy version>  
+teleportVersionOverride: ${clusterVersion} 
 EOF  
     
 helm repo add teleport https://charts.releases.teleport.dev && helm repo update
 helm install -f prod-cluster-values.yaml --create-namespace --namespace ${namespace}`;
-}
+};
 
 type Props = {
   onClose(): void;

@@ -23,6 +23,7 @@ export default function useAddKube(ctx: TeleportContext) {
   const { attempt, run } = useAttempt('');
   const [expires, setExpires] = useState('');
   const [token, setToken] = useState('');
+  const version = ctx.storeUser.state.cluster.authVersion;
 
   function createToken() {
     return run(() =>
@@ -39,6 +40,7 @@ export default function useAddKube(ctx: TeleportContext) {
     expires,
     attempt,
     token,
+    version,
   };
 }
 
