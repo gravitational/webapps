@@ -31,7 +31,6 @@ class DesktopService {
         desktops: items.map(makeDesktop),
         startKey: json?.startKey,
         totalCount: json?.totalCount,
-        hasResources: json?.hasResources,
       };
     });
   }

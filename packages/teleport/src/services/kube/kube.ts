@@ -31,7 +31,6 @@ class KubeService {
         kubes: items.map(makeKube),
         startKey: json?.startKey,
         totalCount: json?.totalCount,
-        hasResources: json?.hasResources,
       };
     });
   }

@@ -31,7 +31,6 @@ class DatabaseService {
         databases: items.map(makeDatabase),
         startKey: json?.startKey,
         totalCount: json?.totalCount,
-        hasResources: json?.hasResources,
       };
     });
   }

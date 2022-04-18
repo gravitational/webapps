@@ -31,7 +31,6 @@ const service = {
         apps: items.map(makeApp),
         startKey: json?.startKey,
         totalCount: json?.totalCount,
-        hasResources: json?.hasResources,
       };
     });
   },

@@ -31,7 +31,6 @@ class NodeService {
         nodes: items.map(makeNode),
         startKey: json?.startKey,
         totalCount: json?.totalCount,
-        hasResources: json?.hasResources,
       };
     });
   }
