@@ -25,7 +25,7 @@ export function Table<T>({
   fetching,
   className,
   style,
-  serverside,
+  serversideProps,
 }: State<T>) {
   const renderHeaders = () => {
     const headers = columns.map(column => {
@@ -33,7 +33,7 @@ export function Table<T>({
       const $cell = column.isSortable ? (
         <SortHeaderCell<T>
           column={column}
-          serverside={serverside}
+          serversideProps={serversideProps}
           text={headerText}
           onClick={() => onSort(column)}
           dir={state.sort.key === column.key ? state.sort.dir : null}
@@ -61,33 +61,32 @@ export function Table<T>({
 
     if (fetching?.fetchStatus === 'loading') {
       return <LoadingIndicator colSpan={columns.length} />;
-    } else {
-      data.map((item, rowIdx) => {
-        const cells = columns.map((column, columnIdx) => {
-          const $cell = column.render ? (
-            column.render(item)
-          ) : (
-            <TextCell data={item[column.key]} />
-          );
-
-          return (
-            <React.Fragment key={`${rowIdx} ${columnIdx}`}>
-              {$cell}
-            </React.Fragment>
-          );
-        });
-        rows.push(<tr key={rowIdx}>{cells}</tr>);
-      });
-
-      if (rows.length) {
-        return <tbody>{rows}</tbody>;
-      }
-
-      return <EmptyIndicator emptyText={emptyText} colSpan={columns.length} />;
     }
+    data.map((item, rowIdx) => {
+      const cells = columns.map((column, columnIdx) => {
+        const $cell = column.render ? (
+          column.render(item)
+        ) : (
+          <TextCell data={item[column.key]} />
+        );
+
+        return (
+          <React.Fragment key={`${rowIdx} ${columnIdx}`}>
+            {$cell}
+          </React.Fragment>
+        );
+      });
+      rows.push(<tr key={rowIdx}>{cells}</tr>);
+    });
+
+    if (rows.length) {
+      return <tbody>{rows}</tbody>;
+    }
+
+    return <EmptyIndicator emptyText={emptyText} colSpan={columns.length} />;
   };
 
-  if (serverside) {
+  if (serversideProps) {
     return (
       <ServersideTable
         style={style}
@@ -99,7 +98,7 @@ export function Table<T>({
         prevPage={prevPage}
         pagination={state.pagination}
         fetching={fetching}
-        serverside={serverside}
+        serversideProps={serversideProps}
       />
     );
   }
@@ -266,11 +265,11 @@ function ServersideTable<T>({
   fetching,
   className,
   style,
-  serverside,
+  serversideProps,
 }: ServersideTableProps<T>) {
   return (
     <>
-      {serverside.serversideSearchPanel}
+      {serversideProps.serversideSearchPanel}
       <StyledTable className={className} style={style}>
         {renderHeaders()}
         {renderBody(data)}
@@ -280,7 +279,7 @@ function ServersideTable<T>({
           nextPage={nextPage}
           prevPage={prevPage}
           data={data}
-          serverside={serverside}
+          serversideProps={serversideProps}
           {...fetching}
         />
       </StyledPanel>
@@ -353,5 +352,5 @@ type ServersideTableProps<T> = BasicTableProps<T> & {
   prevPage: () => void;
   pagination: State<T>['state']['pagination'];
   fetching: State<T>['fetching'];
-  serverside: State<T>['serverside'];
+  serversideProps: State<T>['serversideProps'];
 };

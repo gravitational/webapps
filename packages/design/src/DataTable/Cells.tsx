@@ -2,37 +2,35 @@ import React from 'react';
 import { Label } from 'design';
 import * as Icons from 'design/Icon';
 import { displayDate } from 'shared/services/loc';
-import { ServersideConfig, SortDir, TableColumn } from './types';
+import { ServersideProps, SortDir, TableColumn } from './types';
 
 export const Cell = props => <td children={props.children} {...props} />;
 
 export function SortHeaderCell<T>({
   column,
-  serverside,
+  serversideProps,
   dir,
   text,
   onClick,
 }: SortHeaderCellProps<T>) {
-  function handleClick() {
-    if (serverside?.sort) {
-      serverside.setSort({
-        dir: serverside.sort.dir === 'ASC' ? 'DESC' : 'ASC',
+  function handleServersideClick() {
+    if (serversideProps?.sort) {
+      serversideProps.setSort({
+        dir: serversideProps.sort.dir === 'ASC' ? 'DESC' : 'ASC',
         fieldName: column.key,
       });
-    } else {
-      onClick();
     }
   }
 
-  if (serverside?.sort) {
+  if (serversideProps?.sort) {
     return (
       <th>
-        <a onClick={handleClick}>
+        <a onClick={handleServersideClick}>
           {text}
           <SortIndicator
             sortDir={
-              serverside.sort.fieldName === column.key
-                ? serverside.sort.dir
+              serversideProps.sort.fieldName === column.key
+                ? serversideProps.sort.dir
                 : null
             }
           />
@@ -43,7 +41,7 @@ export function SortHeaderCell<T>({
 
   return (
     <th>
-      <a onClick={handleClick}>
+      <a onClick={onClick}>
         {text}
         <SortIndicator sortDir={dir} />
       </a>
@@ -88,7 +86,7 @@ const renderLabelCell = (labels: string[] = []) => {
 
 type SortHeaderCellProps<T> = {
   column: TableColumn<T>;
-  serverside: ServersideConfig;
+  serversideProps: ServersideProps;
   text: string;
   dir: SortDir;
   onClick: () => void;

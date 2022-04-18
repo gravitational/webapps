@@ -99,7 +99,7 @@ export default function AppList(props: Props) {
         onFetchPrev: fetchPrev,
         fetchStatus,
       }}
-      serverside={{
+      serversideProps={{
         sort: params.sort,
         setSort,
         startKeys,

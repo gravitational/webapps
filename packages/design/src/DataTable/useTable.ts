@@ -10,7 +10,7 @@ export default function useTable<T>({
   showFirst,
   searchableProps,
   customSearchMatchers = [],
-  serverside,
+  serversideProps,
   fetching,
   ...props
 }: TableProps<T>) {
@@ -59,7 +59,7 @@ export default function useTable<T>({
 
   const updateData = (sort: typeof state.sort, searchValue: string) => {
     // Don't do clientside sorting and filtering if serverside
-    const sortedAndFiltered = serverside
+    const sortedAndFiltered = serversideProps
       ? data
       : sortAndFilter(
           data,
@@ -70,7 +70,7 @@ export default function useTable<T>({
           searchAndFilterCb,
           showFirst
         );
-    if (pagination && !serverside) {
+    if (pagination && !serversideProps) {
       setState({
         ...state,
         sort,
@@ -108,8 +108,7 @@ export default function useTable<T>({
   }
 
   function nextPage() {
-    // If is serverside, on the last page, and there are more items, fetch more
-    if (serverside) {
+    if (serversideProps) {
       fetching.onFetchNext();
     }
     setState({
@@ -122,7 +121,7 @@ export default function useTable<T>({
   }
 
   function prevPage() {
-    if (serverside) {
+    if (serversideProps) {
       fetching.onFetchPrev();
     }
     setState({
@@ -135,7 +134,7 @@ export default function useTable<T>({
   }
 
   useEffect(() => {
-    if (serverside) {
+    if (serversideProps) {
       setState({
         ...state,
         data,
@@ -143,7 +142,7 @@ export default function useTable<T>({
     } else {
       updateData(state.sort, state.searchValue);
     }
-  }, [data, serverside]);
+  }, [data, serversideProps]);
 
   return {
     state,
@@ -154,7 +153,7 @@ export default function useTable<T>({
     nextPage,
     prevPage,
     fetching,
-    serverside,
+    serversideProps,
     ...props,
   };
 }

@@ -1,4 +1,4 @@
-import { FetchStatus, ServersideConfig } from './../types';
+import { FetchStatus, ServersideProps } from './../types';
 
 export default function usePager({
   nextPage,
@@ -7,7 +7,7 @@ export default function usePager({
   paginatedData = [],
   currentPage,
   pageSize,
-  serverside,
+  serversideProps,
   ...props
 }: Props) {
   const currentPageData = paginatedData[currentPage] || [];
@@ -21,12 +21,12 @@ export default function usePager({
 
   const count = data.length;
 
-  const isNextDisabled = serverside
-    ? serverside.startKeys.at(-1) === ''
+  const isNextDisabled = serversideProps
+    ? serversideProps.startKeys.at(-1) === ''
     : to === data.length - 1;
 
-  const isPrevDisabled = serverside
-    ? serverside.startKeys.length <= 2
+  const isPrevDisabled = serversideProps
+    ? serversideProps.startKeys.length <= 2
     : currentPage === 0;
 
   return {
@@ -37,7 +37,7 @@ export default function usePager({
     count,
     isNextDisabled,
     isPrevDisabled,
-    serverside,
+    serversideProps,
     ...props,
   };
 }
@@ -51,7 +51,7 @@ export type Props = {
   pageSize?: number;
   onFetchMore?: () => void;
   fetchStatus?: FetchStatus;
-  serverside?: ServersideConfig;
+  serversideProps?: ServersideProps;
 };
 
 export type State = ReturnType<typeof usePager>;

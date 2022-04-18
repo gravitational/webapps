@@ -13,7 +13,7 @@ export type TableProps<T> = {
   // the root matcher will uppercase the searchValue.
   customSearchMatchers?: MatchCallback<T>[];
   initialSort?: InitialSort<T>;
-  serverside?: ServersideConfig;
+  serversideProps?: ServersideProps;
   fetching?: FetchingConfig;
   showFirst?: (data: T[]) => T;
   className?: string;
@@ -39,8 +39,7 @@ export type FetchingConfig = {
   fetchStatus: FetchStatus;
 };
 
-export type ServersideConfig = {
-  // 'from and 'to' are the indices of the first and last items on the page, respectively, for displaying: "SHOWING from - to of totalItemCount"
+export type ServersideProps = {
   serversideSearchPanel: JSX.Element;
   startKeys: string[];
   sort: SortType;
