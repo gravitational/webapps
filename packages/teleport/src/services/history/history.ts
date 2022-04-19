@@ -54,7 +54,32 @@ const history = {
       const { search, pathname } = _inst.location;
       const knownRoute = this.ensureKnownRoute(pathname);
       const knownRedirect = this.ensureBaseUrl(knownRoute);
-      const query = search ? encodeURIComponent(search) : '';
+
+      // The `search` is the query string part of the redirect URL.
+      // We are double encoding this string (minus the question mark)
+      // to handle an edge case with SSO logins where the server decodes it
+      // and interprets this string as separate from the SSO query param `redirect_url`.
+      // The question mark is encoded only once so that react router can
+      // correctly interpret it as a query param (it will get decoded once
+      // from either the server with SSO flow or from local login flow with "getUrlParameter").
+      //
+      // Example SSO flow:
+      // My redirect URL is:
+      //   https://cluster.dev/web/nodes?search=some-search-value&sort=name:asc
+      // To remember this URL we set it as a query param `redirect_uri`:
+      //   https://cluster.dev/web?redirect_uri=https://cluster.dev/web/nodes?search=some-search-value&sort=name:asc
+      // With SSO logins, we provide the redirect url with other query params:
+      //   https://cluster.dev/v1/webapi/github/login/web?connector_id=some-id&redirect_url=https://cluster.dev/web/nodes?search=some-search-value&sort=name:asc
+      //
+      // The server will decode once and query split the request URL into `connector_id`, `redirect_url` AND `sort`.
+      // Param `sort` is part of the redirect URL and double encoding prevents this misinterpretation.
+      let query = '';
+      if (search) {
+        const splitted = search.split('?');
+        if (splitted.length > 1) {
+          query = encodeURIComponent(`?${encodeURIComponent(splitted[1])}`);
+        }
+      }
 
       url = `${url}?redirect_uri=${knownRedirect}${query}`;
     }
