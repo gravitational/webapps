@@ -35,7 +35,6 @@ test('correct formatting of nodes fetch response', async () => {
     ],
     startKey: mockResponse.startKey,
     totalCount: mockResponse.totalCount,
-    hasResources: true,
   });
 });
 
@@ -49,7 +48,6 @@ test('null response from nodes fetch', async () => {
     nodes: [],
     startKey: undefined,
     totalCount: undefined,
-    hasResources: undefined,
   });
 });
 
@@ -74,5 +72,4 @@ const mockResponse = {
   ],
   startKey: 'mockKey',
   totalCount: 100,
-  hasResources: true,
 };
