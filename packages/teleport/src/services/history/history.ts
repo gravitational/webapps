@@ -63,6 +63,9 @@ const history = {
       // correctly interpret it as a query param (it will get decoded once
       // from either the server with SSO flow or from local login flow with "getUrlParameter").
       //
+      // In addition, we add a query param flag called `encoded` to help differentiate a query string
+      // manipulated by redirect versus a regular page navigation.
+      //
       // Example SSO flow:
       // My redirect URL is:
       //   https://cluster.dev/web/nodes?search=some-search-value&sort=name:asc
@@ -77,7 +80,9 @@ const history = {
       if (search) {
         const splitted = search.split('?');
         if (splitted.length > 1) {
-          query = encodeURIComponent(`?${encodeURIComponent(splitted[1])}`);
+          query = encodeURIComponent(
+            `?${encodeURIComponent(`${splitted[1]}&encoded`)}`
+          );
         }
       }
 
