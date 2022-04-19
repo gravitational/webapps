@@ -127,7 +127,7 @@ export default function useDesktops(ctx: Ctx) {
       .fetchDesktops(clusterId, {
         ...params,
         limit: pageSize,
-        startKey: startKeys.at(-3),
+        startKey: startKeys[startKeys.length - 3],
       })
       .then(res => {
         const tempStartKeys = startKeys;

@@ -39,7 +39,7 @@ export function Table<T>({
           dir={state.sort.key === column.key ? state.sort.dir : null}
         />
       ) : (
-        <th>{headerText}</th>
+        <th style={{ cursor: 'default' }}>{headerText}</th>
       );
 
       return (
@@ -319,8 +319,8 @@ const LoadingIndicator = ({ colSpan }: { colSpan: number }) => (
   <tfoot>
     <tr>
       <td colSpan={colSpan}>
-        <Box textAlign="center">
-          <Indicator />
+        <Box m={4} textAlign="center">
+          <Indicator delay="none" />
         </Box>
       </td>
     </tr>

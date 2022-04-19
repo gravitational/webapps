@@ -23,7 +23,7 @@ export function Pager({
 }: State) {
   const isFetchingEnabled = onFetchMore && fetchStatus !== 'disabled';
   return (
-    <Flex justifyContent="end" width="100%">
+    <Flex justifyContent="flex-end" width="100%">
       <Flex alignItems="center" mr={2}>
         {!serversideProps && (
           <PageIndicatorText from={from + 1} to={to + 1} count={count} />

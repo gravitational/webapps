@@ -6,6 +6,7 @@ export default function generateResourcePath(
 ) {
   const processedParams: typeof params = {};
   for (const param in params) {
+    // If the param is SortType, turn it into string with "[param.fieldName]:[param.dir]"
     if (params[param]?.dir) {
       processedParams[param] = `${params[param].fieldName}:${params[
         param

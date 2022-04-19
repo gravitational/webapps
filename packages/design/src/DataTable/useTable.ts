@@ -21,7 +21,7 @@ export default function useTable<T>({
       : columns.find(column => column.isSortable);
 
     return {
-      data: [] as T[],
+      data: serversideProps ? data : [],
       searchValue: '',
       sort: col
         ? {
@@ -58,7 +58,7 @@ export default function useTable<T>({
   }
 
   const updateData = (sort: typeof state.sort, searchValue: string) => {
-    // Don't do clientside sorting and filtering if serverside
+    // Don't do clientside sorting and filtering if serversideProps are defined
     const sortedAndFiltered = serversideProps
       ? data
       : sortAndFilter(

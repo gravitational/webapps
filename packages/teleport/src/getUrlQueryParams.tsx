@@ -21,6 +21,7 @@ export default function getResourceUrlQueryParams(
 }
 
 export function decodeUrlQueryParam(param: string) {
+  // Prevents URI malformed error by replacing lone % with %25
   const decodedQuery = decodeURIComponent(
     param.replace(/%(?![0-9][0-9a-fA-F]+)/g, '%25')
   );

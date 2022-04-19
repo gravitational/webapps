@@ -22,7 +22,7 @@ export default function usePager({
   const count = data.length;
 
   const isNextDisabled = serversideProps
-    ? serversideProps.startKeys.at(-1) === ''
+    ? serversideProps.startKeys[serversideProps.startKeys.length - 1] === ''
     : to === data.length - 1;
 
   const isPrevDisabled = serversideProps

@@ -128,7 +128,7 @@ export default function useNodes(ctx: Ctx, stickyCluster: StickyCluster) {
       .fetchNodes(clusterId, {
         ...params,
         limit: pageSize,
-        startKey: startKeys.at(-3),
+        startKey: startKeys[startKeys.length - 3],
       })
       .then(res => {
         const tempStartKeys = startKeys;

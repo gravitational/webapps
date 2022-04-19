@@ -78,7 +78,6 @@ export default function AppList(props: Props) {
           key: 'publicAddr',
           headerText: 'Address',
           render: renderAddressCell,
-          isSortable: true,
         },
         {
           key: 'tags',
