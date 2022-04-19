@@ -15,21 +15,25 @@
  */
 
 import React, { useEffect, useState } from 'react';
+import {
+  Box,
+  Link,
+  Text,
+  Alert,
+  Flex,
+  ButtonPrimary,
+  ButtonSecondary,
+} from 'design';
 import Dialog, {
   DialogContent,
   DialogFooter,
   DialogTitle,
 } from 'design/Dialog';
-import Flex from 'design/Flex';
-import { ButtonPrimary, ButtonSecondary } from 'design/Button';
 import FieldInput from 'shared/components/FieldInput';
-import TextSelectCopy from 'teleport/components/TextSelectCopy';
 import Validation, { Validator } from 'shared/components/Validation';
-import Box from 'design/Box';
-import Text from 'design/Text';
-import useAddKube, { State } from './useAddKube';
+import TextSelectCopy from 'teleport/components/TextSelectCopy';
 import useTeleport from 'teleport/useTeleport';
-import Alert from 'design/Alert';
+import useAddKube, { State } from './useAddKube';
 
 export default function Container(props: Props) {
   const ctx = useTeleport();
@@ -103,9 +107,12 @@ export function AddKube({
             Install Teleport Agent in your cluster via Helm to easily connect
             your Kubernetes cluster with Teleport. For all the available values
             of the helm chart see{' '}
-            <a href="https://goteleport.com/docs/kubernetes-access/helm/reference/teleport-kube-agent/">
+            <Link
+              href="https://goteleport.com/docs/kubernetes-access/helm/reference/teleport-kube-agent/"
+              target="_blank"
+            >
               the documentation
-            </a>
+            </Link>
             {' .'}
           </Box>
           <Box mb={4}>
@@ -153,6 +160,7 @@ export function AddKube({
                         requriedField(val, 'Kubernetes Cluster Name')
                       }
                       label="Kubernetes Cluster Name"
+                      labelTip="Name shown to Teleport users connecting to the cluster."
                       value={clusterName}
                       placeholder="my-cluster"
                       width="100%"
@@ -187,7 +195,12 @@ export function AddKube({
                   </Text>
                 </Text>
                 <TextSelectCopy text={cmd} mb={2} />
-                <Text>Tip: save the YAML file to apply updates later</Text>
+                <Text>
+                  <Text as="span" bold>
+                    Tip
+                  </Text>
+                  : Save the YAML file to apply updates later
+                </Text>
               </Box>
             </Box>
           )}
