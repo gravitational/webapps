@@ -49,4 +49,5 @@ const props = {
     statusText: '',
   } as any,
   token: '',
+  version: '10.0.0',
 };
