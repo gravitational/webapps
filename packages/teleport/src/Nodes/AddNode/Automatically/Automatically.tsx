@@ -34,7 +34,7 @@ export default function Automatically(props: Props) {
     if (!joinToken) {
       createJoinToken();
     }
-  }, [joinToken]);
+  }, []);
 
   if (attempt.status === 'processing' || attempt.status == '') {
     return (

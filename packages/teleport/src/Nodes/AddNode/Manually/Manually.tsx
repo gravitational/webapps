@@ -39,7 +39,7 @@ export default function Manually({
     if (!joinToken) {
       createJoinToken();
     }
-  }, [joinToken]);
+  }, []);
 
   if (isAuthTypeLocal) {
     tshLoginCmd = `${tshLoginCmd} --auth=local --user=${user}`;
