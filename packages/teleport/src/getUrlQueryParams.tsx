@@ -3,12 +3,10 @@ import { SortType } from './components/ServersideSearchPanel/useServerSideSearch
 export default function getResourceUrlQueryParams(
   searchPath: string
 ): ResourceUrlQueryParams {
-  console.log(searchPath);
   const searchParams = new URLSearchParams(searchPath);
   const query = searchParams.get('query');
   const search = searchParams.get('search');
   const sort = searchParams.get('sort');
-  console.log(sort);
 
   return {
     query,

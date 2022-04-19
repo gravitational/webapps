@@ -58,7 +58,7 @@ export default class Tooltip extends React.Component {
 const PopoverContent = styled(Box)`
   height: fit-content;
   width: fit-content;
-  max-width: 504px;
+  max-width: 536px;
   background: ${props => props.theme.colors.primary.lighter};
 `;
 

@@ -92,7 +92,7 @@ const TooltipContents = () => (
     <Text typography="paragraph2">
       Label Matching:{' '}
       <Text ml={1} as="span" bold>
-        <code>labels.key1 == "value1" && labels.key2 != "value2"</code>{' '}
+        <code>labels.key1 == "value1" && labels["key-2"] != "value2"</code>{' '}
       </Text>
       <br />
       Fuzzy Searching:{' '}
