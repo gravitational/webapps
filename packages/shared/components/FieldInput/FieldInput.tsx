@@ -31,7 +31,6 @@ export default function FieldInput({
   autoComplete = 'off',
   inputMode = 'text',
   readonly = false,
-  labelIcon,
   ...styles
 }: Props) {
   const { valid, message } = useRule(rule(value));
