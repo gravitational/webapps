@@ -420,13 +420,6 @@ exports[`failed state 1`] = `
   color: #FFFFFF;
 }
 
-.c37 {
-  display: inline-block;
-  transition: color .3s;
-  color: #FFFFFF;
-  font-size: 16px;
-}
-
 .c31 {
   display: inline-block;
   transition: color .3s;
@@ -440,6 +433,13 @@ exports[`failed state 1`] = `
   margin-left: 4px;
   color: rgba(255,255,255,0.56);
   font-size: 14px;
+}
+
+.c37 {
+  display: inline-block;
+  transition: color .3s;
+  color: #FFFFFF;
+  font-size: 16px;
 }
 
 .c26 {
@@ -507,20 +507,6 @@ exports[`failed state 1`] = `
   display: flex;
 }
 
-.c34 {
-  box-sizing: border-box;
-  width: 100%;
-  display: flex;
-  justify-content: end;
-}
-
-.c35 {
-  box-sizing: border-box;
-  margin-right: 8px;
-  display: flex;
-  align-items: center;
-}
-
 .c24 {
   box-sizing: border-box;
   height: 32px;
@@ -563,6 +549,20 @@ exports[`failed state 1`] = `
   display: flex;
   align-items: center;
   justify-content: center;
+}
+
+.c34 {
+  box-sizing: border-box;
+  width: 100%;
+  display: flex;
+  justify-content: flex-end;
+}
+
+.c35 {
+  box-sizing: border-box;
+  margin-right: 8px;
+  display: flex;
+  align-items: center;
 }
 
 .c1 {
@@ -947,7 +947,9 @@ exports[`failed state 1`] = `
     >
       <thead>
         <tr>
-          <th />
+          <th
+            style="cursor: default;"
+          />
           <th>
             <a>
               Name
@@ -966,19 +968,19 @@ exports[`failed state 1`] = `
               />
             </a>
           </th>
-          <th>
-            <a>
-              Address
-              <span
-                class="c18 c19 icon icon-chevrons-expand-vertical "
-                color="light"
-              />
-            </a>
+          <th
+            style="cursor: default;"
+          >
+            Address
           </th>
-          <th>
+          <th
+            style="cursor: default;"
+          >
             Labels
           </th>
-          <th />
+          <th
+            style="cursor: default;"
+          />
         </tr>
       </thead>
       <tbody>
@@ -1364,13 +1366,6 @@ exports[`loaded state 1`] = `
   color: #FFFFFF;
 }
 
-.c36 {
-  display: inline-block;
-  transition: color .3s;
-  color: #FFFFFF;
-  font-size: 16px;
-}
-
 .c30 {
   display: inline-block;
   transition: color .3s;
@@ -1384,6 +1379,13 @@ exports[`loaded state 1`] = `
   margin-left: 4px;
   color: rgba(255,255,255,0.56);
   font-size: 14px;
+}
+
+.c36 {
+  display: inline-block;
+  transition: color .3s;
+  color: #FFFFFF;
+  font-size: 16px;
 }
 
 .c25 {
@@ -1451,20 +1453,6 @@ exports[`loaded state 1`] = `
   display: flex;
 }
 
-.c33 {
-  box-sizing: border-box;
-  width: 100%;
-  display: flex;
-  justify-content: end;
-}
-
-.c34 {
-  box-sizing: border-box;
-  margin-right: 8px;
-  display: flex;
-  align-items: center;
-}
-
 .c23 {
   box-sizing: border-box;
   height: 32px;
@@ -1507,6 +1495,20 @@ exports[`loaded state 1`] = `
   display: flex;
   align-items: center;
   justify-content: center;
+}
+
+.c33 {
+  box-sizing: border-box;
+  width: 100%;
+  display: flex;
+  justify-content: flex-end;
+}
+
+.c34 {
+  box-sizing: border-box;
+  margin-right: 8px;
+  display: flex;
+  align-items: center;
 }
 
 .c1 {
@@ -1884,7 +1886,9 @@ exports[`loaded state 1`] = `
     >
       <thead>
         <tr>
-          <th />
+          <th
+            style="cursor: default;"
+          />
           <th>
             <a>
               Name
@@ -1903,19 +1907,19 @@ exports[`loaded state 1`] = `
               />
             </a>
           </th>
-          <th>
-            <a>
-              Address
-              <span
-                class="c17 c18 icon icon-chevrons-expand-vertical "
-                color="light"
-              />
-            </a>
+          <th
+            style="cursor: default;"
+          >
+            Address
           </th>
-          <th>
+          <th
+            style="cursor: default;"
+          >
             Labels
           </th>
-          <th />
+          <th
+            style="cursor: default;"
+          />
         </tr>
       </thead>
       <tbody>

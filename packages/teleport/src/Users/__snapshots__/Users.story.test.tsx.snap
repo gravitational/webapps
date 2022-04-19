@@ -150,7 +150,7 @@ exports[`success state 1`] = `
   box-sizing: border-box;
   width: 100%;
   display: flex;
-  justify-content: end;
+  justify-content: flex-end;
 }
 
 .c9 {
@@ -490,7 +490,9 @@ exports[`success state 1`] = `
               />
             </a>
           </th>
-          <th />
+          <th
+            style="cursor: default;"
+          />
         </tr>
       </thead>
       <tbody>

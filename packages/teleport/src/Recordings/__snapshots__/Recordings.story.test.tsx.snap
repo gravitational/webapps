@@ -83,7 +83,7 @@ exports[`rendering of Session Recordings 1`] = `
   box-sizing: border-box;
   width: 100%;
   display: flex;
-  justify-content: end;
+  justify-content: flex-end;
 }
 
 .c10 {
@@ -741,10 +741,14 @@ exports[`rendering of Session Recordings 1`] = `
               />
             </a>
           </th>
-          <th>
+          <th
+            style="cursor: default;"
+          >
             Session ID
           </th>
-          <th />
+          <th
+            style="cursor: default;"
+          />
         </tr>
       </thead>
       <tbody>

@@ -433,7 +433,7 @@ exports[`failed 1`] = `
   box-sizing: border-box;
   width: 100%;
   display: flex;
-  justify-content: end;
+  justify-content: flex-end;
 }
 
 .c27 {
@@ -830,10 +830,14 @@ exports[`failed 1`] = `
             />
           </a>
         </th>
-        <th>
+        <th
+          style="cursor: default;"
+        >
           Labels
         </th>
-        <th />
+        <th
+          style="cursor: default;"
+        />
       </tr>
     </thead>
     <tbody>
@@ -1135,7 +1139,7 @@ exports[`loaded 1`] = `
   box-sizing: border-box;
   width: 100%;
   display: flex;
-  justify-content: end;
+  justify-content: flex-end;
 }
 
 .c26 {
@@ -1526,10 +1530,14 @@ exports[`loaded 1`] = `
             />
           </a>
         </th>
-        <th>
+        <th
+          style="cursor: default;"
+        >
           Labels
         </th>
-        <th />
+        <th
+          style="cursor: default;"
+        />
       </tr>
     </thead>
     <tbody>

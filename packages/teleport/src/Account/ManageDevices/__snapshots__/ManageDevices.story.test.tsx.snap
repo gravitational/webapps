@@ -330,10 +330,14 @@ exports[`render device dashboard 1`] = `
   >
     <thead>
       <tr>
-        <th>
+        <th
+          style="cursor: default;"
+        >
           Type
         </th>
-        <th>
+        <th
+          style="cursor: default;"
+        >
           Device Name
         </th>
         <th>
@@ -354,7 +358,9 @@ exports[`render device dashboard 1`] = `
             />
           </a>
         </th>
-        <th />
+        <th
+          style="cursor: default;"
+        />
       </tr>
     </thead>
     <tbody>
@@ -849,10 +855,14 @@ exports[`render failed state for creating restricted privilege token 1`] = `
   >
     <thead>
       <tr>
-        <th>
+        <th
+          style="cursor: default;"
+        >
           Type
         </th>
-        <th>
+        <th
+          style="cursor: default;"
+        >
           Device Name
         </th>
         <th>
@@ -873,7 +883,9 @@ exports[`render failed state for creating restricted privilege token 1`] = `
             />
           </a>
         </th>
-        <th />
+        <th
+          style="cursor: default;"
+        />
       </tr>
     </thead>
     <tbody>

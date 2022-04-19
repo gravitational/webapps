@@ -420,13 +420,6 @@ exports[`failed 1`] = `
   color: #FFFFFF;
 }
 
-.c33 {
-  display: inline-block;
-  transition: color .3s;
-  color: #FFFFFF;
-  font-size: 16px;
-}
-
 .c28 {
   display: inline-block;
   transition: color .3s;
@@ -434,6 +427,13 @@ exports[`failed 1`] = `
   margin-right: -8px;
   color: rgba(255,255,255,0.56);
   font-size: 14px;
+}
+
+.c33 {
+  display: inline-block;
+  transition: color .3s;
+  color: #FFFFFF;
+  font-size: 16px;
 }
 
 .c26 {
@@ -496,7 +496,7 @@ exports[`failed 1`] = `
   box-sizing: border-box;
   width: 100%;
   display: flex;
-  justify-content: end;
+  justify-content: flex-end;
 }
 
 .c31 {
@@ -969,13 +969,19 @@ exports[`failed 1`] = `
             />
           </a>
         </th>
-        <th>
+        <th
+          style="cursor: default;"
+        >
           Address
         </th>
-        <th>
+        <th
+          style="cursor: default;"
+        >
           Labels
         </th>
-        <th />
+        <th
+          style="cursor: default;"
+        />
       </tr>
     </thead>
     <tbody>
@@ -1405,13 +1411,6 @@ exports[`loaded 1`] = `
   color: #FFFFFF;
 }
 
-.c32 {
-  display: inline-block;
-  transition: color .3s;
-  color: #FFFFFF;
-  font-size: 16px;
-}
-
 .c27 {
   display: inline-block;
   transition: color .3s;
@@ -1419,6 +1418,13 @@ exports[`loaded 1`] = `
   margin-right: -8px;
   color: rgba(255,255,255,0.56);
   font-size: 14px;
+}
+
+.c32 {
+  display: inline-block;
+  transition: color .3s;
+  color: #FFFFFF;
+  font-size: 16px;
 }
 
 .c25 {
@@ -1481,7 +1487,7 @@ exports[`loaded 1`] = `
   box-sizing: border-box;
   width: 100%;
   display: flex;
-  justify-content: end;
+  justify-content: flex-end;
 }
 
 .c30 {
@@ -1947,13 +1953,19 @@ exports[`loaded 1`] = `
             />
           </a>
         </th>
-        <th>
+        <th
+          style="cursor: default;"
+        >
           Address
         </th>
-        <th>
+        <th
+          style="cursor: default;"
+        >
           Labels
         </th>
-        <th />
+        <th
+          style="cursor: default;"
+        />
       </tr>
     </thead>
     <tbody>

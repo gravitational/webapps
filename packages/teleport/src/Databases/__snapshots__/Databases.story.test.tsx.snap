@@ -486,7 +486,7 @@ exports[`failed 1`] = `
   box-sizing: border-box;
   width: 100%;
   display: flex;
-  justify-content: end;
+  justify-content: flex-end;
 }
 
 .c27 {
@@ -881,16 +881,24 @@ exports[`failed 1`] = `
             />
           </a>
         </th>
-        <th>
+        <th
+          style="cursor: default;"
+        >
           Description
         </th>
-        <th>
+        <th
+          style="cursor: default;"
+        >
           Type
         </th>
-        <th>
+        <th
+          style="cursor: default;"
+        >
           Labels
         </th>
-        <th />
+        <th
+          style="cursor: default;"
+        />
       </tr>
     </thead>
     <tbody>
@@ -1215,7 +1223,7 @@ exports[`open source loaded 1`] = `
   box-sizing: border-box;
   width: 100%;
   display: flex;
-  justify-content: end;
+  justify-content: flex-end;
 }
 
 .c26 {
@@ -1604,16 +1612,24 @@ exports[`open source loaded 1`] = `
             />
           </a>
         </th>
-        <th>
+        <th
+          style="cursor: default;"
+        >
           Description
         </th>
-        <th>
+        <th
+          style="cursor: default;"
+        >
           Type
         </th>
-        <th>
+        <th
+          style="cursor: default;"
+        >
           Labels
         </th>
-        <th />
+        <th
+          style="cursor: default;"
+        />
       </tr>
     </thead>
     <tbody>

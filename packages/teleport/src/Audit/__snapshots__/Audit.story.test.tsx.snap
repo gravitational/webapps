@@ -87,7 +87,7 @@ exports[`list of all events 1`] = `
   box-sizing: border-box;
   width: 100%;
   display: flex;
-  justify-content: end;
+  justify-content: flex-end;
 }
 
 .c5 {
@@ -414,7 +414,9 @@ exports[`list of all events 1`] = `
             />
           </a>
         </th>
-        <th>
+        <th
+          style="cursor: default;"
+        >
           Description
         </th>
         <th>
@@ -426,7 +428,9 @@ exports[`list of all events 1`] = `
             />
           </a>
         </th>
-        <th />
+        <th
+          style="cursor: default;"
+        />
       </tr>
     </thead>
     <tbody>
@@ -3489,7 +3493,7 @@ exports[`loaded audit log screen 1`] = `
   box-sizing: border-box;
   width: 100%;
   display: flex;
-  justify-content: end;
+  justify-content: flex-end;
 }
 
 .c10 {
@@ -4120,7 +4124,9 @@ exports[`loaded audit log screen 1`] = `
             />
           </a>
         </th>
-        <th>
+        <th
+          style="cursor: default;"
+        >
           Description
         </th>
         <th>
@@ -4132,7 +4138,9 @@ exports[`loaded audit log screen 1`] = `
             />
           </a>
         </th>
-        <th />
+        <th
+          style="cursor: default;"
+        />
       </tr>
     </thead>
     <tbody>

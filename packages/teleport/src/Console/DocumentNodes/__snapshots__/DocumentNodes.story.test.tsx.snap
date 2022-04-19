@@ -177,7 +177,7 @@ exports[`render DocumentNodes 1`] = `
   box-sizing: border-box;
   width: 100%;
   display: flex;
-  justify-content: end;
+  justify-content: flex-end;
 }
 
 .c34 {
@@ -949,13 +949,19 @@ exports[`render DocumentNodes 1`] = `
                 />
               </a>
             </th>
-            <th>
+            <th
+              style="cursor: default;"
+            >
               Address
             </th>
-            <th>
+            <th
+              style="cursor: default;"
+            >
               Labels
             </th>
-            <th />
+            <th
+              style="cursor: default;"
+            />
           </tr>
         </thead>
         <tbody>

@@ -101,7 +101,7 @@ exports[`render clusters 1`] = `
   box-sizing: border-box;
   width: 100%;
   display: flex;
-  justify-content: end;
+  justify-content: flex-end;
 }
 
 .c8 {
@@ -410,7 +410,9 @@ exports[`render clusters 1`] = `
   >
     <thead>
       <tr>
-        <th />
+        <th
+          style="cursor: default;"
+        />
         <th>
           <a>
             Name
@@ -420,7 +422,9 @@ exports[`render clusters 1`] = `
             />
           </a>
         </th>
-        <th />
+        <th
+          style="cursor: default;"
+        />
       </tr>
     </thead>
     <tbody>

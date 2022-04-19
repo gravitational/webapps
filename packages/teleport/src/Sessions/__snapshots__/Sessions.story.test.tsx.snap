@@ -91,7 +91,7 @@ exports[`loaded 1`] = `
   box-sizing: border-box;
   width: 100%;
   display: flex;
-  justify-content: end;
+  justify-content: flex-end;
 }
 
 .c8 {
@@ -406,22 +406,34 @@ exports[`loaded 1`] = `
   >
     <thead>
       <tr>
-        <th>
+        <th
+          style="cursor: default;"
+        >
           Description
         </th>
-        <th>
+        <th
+          style="cursor: default;"
+        >
           Session ID
         </th>
-        <th>
+        <th
+          style="cursor: default;"
+        >
           Users
         </th>
-        <th>
+        <th
+          style="cursor: default;"
+        >
           Node
         </th>
-        <th>
+        <th
+          style="cursor: default;"
+        >
           Duration
         </th>
-        <th />
+        <th
+          style="cursor: default;"
+        />
       </tr>
     </thead>
     <tbody>
