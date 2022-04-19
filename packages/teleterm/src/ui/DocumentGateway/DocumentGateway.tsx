@@ -15,16 +15,12 @@ limitations under the License.
 */
 
 import React from 'react';
-import { Text, Flex, Box, ButtonPrimary } from 'design';
+import { Text, Flex, Box, ButtonPrimary, ButtonSecondary, Link } from 'design';
 import Document from 'teleterm/ui/Document';
 import * as Alerts from 'design/Alert';
 import * as types from 'teleterm/ui/services/workspacesService';
 import LinearProgress from 'teleterm/ui/components/LinearProgress';
-import { GatewayProtocol } from 'teleterm/ui/services/clusters/types';
 import useDocumentGateway, { State } from './useDocumentGateway';
-import { Postgres } from './Postgres';
-import { Mongo } from './Mongo';
-import { MySql } from './MySql';
 
 type Props = {
   visible: boolean;
@@ -42,10 +38,19 @@ export default function Container(props: Props) {
 }
 
 export function DocumentGateway(props: State) {
-  const { doc, gateway, connected, connectAttempt, disconnect, reconnect } =
-    props;
+  const {
+    gateway,
+    connected,
+    connectAttempt,
+    disconnect,
+    reconnect,
+    runCliCommand,
+  } = props;
 
   if (!connected) {
+    const statusDescription =
+      connectAttempt.status === 'processing' ? 'being set up' : 'offline';
+
     return (
       <Flex flexDirection="column" mx="auto" alignItems="center" mt={100}>
         <Text
@@ -53,7 +58,7 @@ export function DocumentGateway(props: State) {
           color="text.primary"
           style={{ position: 'relative' }}
         >
-          The Database Proxy connection is currently offline
+          The database connection is {statusDescription}
           {connectAttempt.status === 'processing' && <LinearProgress />}
         </Text>
         {connectAttempt.status === 'error' && (
@@ -71,20 +76,74 @@ export function DocumentGateway(props: State) {
     );
   }
 
-  switch (gateway.protocol as GatewayProtocol) {
-    case 'mongodb':
-      return (
-        <Mongo gateway={gateway} title={doc.title} disconnect={disconnect} />
-      );
-    case 'postgres':
-      return (
-        <Postgres gateway={gateway} title={doc.title} disconnect={disconnect} />
-      );
-    case 'mysql':
-      return (
-        <MySql gateway={gateway} title={doc.title} disconnect={disconnect} />
-      );
-    default:
-      return <Box> {`Unknown protocol type ${gateway.protocol}`}</Box>;
-  }
+  return (
+    <Box maxWidth="1024px" mx="auto" mt="4" px="5">
+      <Flex justifyContent="space-between" mb="4">
+        <Text typography="h3" color="text.secondary">
+          Database Connection
+        </Text>
+        <ButtonSecondary size="small" onClick={disconnect}>
+          Close Connection
+        </ButtonSecondary>
+      </Flex>
+      <Text bold>Connect with CLI</Text>
+      <CliCommand cliCommand={gateway.cliCommand} onClick={runCliCommand} />
+      <Text bold>Connect with GUI</Text>
+      <Text>
+        To connect with a GUI database client, see our{' '}
+        <Link
+          href="https://goteleport.com/docs/database-access/guides/gui-clients/"
+          target="_blank"
+        >
+          documentation
+        </Link>{' '}
+        for instructions.
+      </Text>
+    </Box>
+  );
+}
+
+function CliCommand({
+  cliCommand,
+  onClick,
+}: {
+  cliCommand: string;
+  onClick(): void;
+}) {
+  return (
+    <Flex
+      p="2"
+      alignItems="center"
+      justifyContent="space-between"
+      borderRadius={2}
+      bg={'primary.dark'}
+      mb={4}
+    >
+      <Flex
+        mr="2"
+        css={`
+          overflow: auto;
+          white-space: pre;
+          word-break: break-all;
+          font-size: 12px;
+          font-family: ${props => props.theme.fonts.mono};
+        `}
+      >
+        <Box mr="1">{`$`}</Box>
+        <div>{cliCommand}</div>
+      </Flex>
+      <ButtonPrimary
+        onClick={onClick}
+        css={`
+          max-width: 48px;
+          width: 100%;
+          padding: 4px 8px;
+          min-height: 10px;
+          font-size: 10px;
+        `}
+      >
+        Run
+      </ButtonPrimary>
+    </Flex>
+  );
 }

@@ -19,9 +19,10 @@ export type LoginItem = {
   login: string;
 };
 
-export type MenuSshLoginProps = {
-  onOpen: () => LoginItem[];
+export type MenuLoginProps = {
+  getLoginItems: () => LoginItem[];
   onSelect: (e: React.SyntheticEvent, login: string) => void;
   anchorOrigin?: any;
   transformOrigin?: any;
+  placeholder?: string;
 };
