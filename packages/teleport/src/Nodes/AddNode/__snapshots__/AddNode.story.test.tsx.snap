@@ -3144,7 +3144,7 @@ exports[`render manual tab with join token 1`] = `
             >
               <a
                 class="c14"
-                href="https://get.gravitational.com/teleport-ent-v5.0.0-dev-darwin-amd64-bin.tar.gz"
+                href="https://get.gravitational.com/teleport-ent-5.0.0-dev.pkg"
                 rel="noreferrer"
                 target="_blank"
               >
@@ -3583,7 +3583,7 @@ exports[`render manual tab with local user 1`] = `
             >
               <a
                 class="c14"
-                href="https://get.gravitational.com/teleport-ent-v5.0.0-dev-darwin-amd64-bin.tar.gz"
+                href="https://get.gravitational.com/teleport-ent-5.0.0-dev.pkg"
                 rel="noreferrer"
                 target="_blank"
               >
@@ -4068,7 +4068,7 @@ exports[`render manual tab with sso user 1`] = `
             >
               <a
                 class="c14"
-                href="https://get.gravitational.com/teleport-ent-v5.0.0-dev-darwin-amd64-bin.tar.gz"
+                href="https://get.gravitational.com/teleport-ent-5.0.0-dev.pkg"
                 rel="noreferrer"
                 target="_blank"
               >
