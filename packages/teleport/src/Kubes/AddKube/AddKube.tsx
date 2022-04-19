@@ -145,7 +145,7 @@ export function AddKube({
                   >
                     <FieldInput
                       mb={2}
-                      rule={(val: string) => requriedField(val, 'Namespace')}
+                      rule={(val: string) => requiredField(val, 'Namespace')}
                       label="Namespace"
                       autoFocus
                       value={namespace}
@@ -157,7 +157,7 @@ export function AddKube({
                     <FieldInput
                       mb={2}
                       rule={(val: string) =>
-                        requriedField(val, 'Kubernetes Cluster Name')
+                        requiredField(val, 'Kubernetes Cluster Name')
                       }
                       label="Kubernetes Cluster Name"
                       labelTip="Name shown to Teleport users connecting to the cluster."
@@ -213,7 +213,7 @@ export function AddKube({
   );
 }
 
-const requriedField = (value: string, fieldName: string) => () => {
+const requiredField = (value: string, fieldName: string) => () => {
   if (!value || value.length === 0) {
     return {
       valid: false,
