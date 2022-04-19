@@ -63,7 +63,7 @@ export function createContext() {
   ctx.fetchNodes = () => {
     return Promise.resolve({
       logins: ['root'],
-      nodesRes: { nodes, totalCount: nodes.length, hasResources: true },
+      nodesRes: { nodes, totalCount: nodes.length },
     });
   };
 

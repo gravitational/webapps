@@ -38,10 +38,9 @@ export default function useNodes(ctx: Ctx, stickyCluster: StickyCluster) {
   const canCreate = ctx.storeUser.getTokenAccess().create;
   const logins = ctx.storeUser.getSshLogins();
   const [fetchStatus, setFetchStatus] = useState<FetchStatus>('');
-  const [params, setParams] = useState<ResourceUrlQueryParams>({
-    ...getResourceUrlQueryParams(search),
-    sort: { fieldName: 'hostname', dir: 'ASC' },
-  });
+  const [params, setParams] = useState<ResourceUrlQueryParams>(() =>
+    getResourceUrlQueryParams(search)
+  );
 
   const isSearchEmpty = !params?.query && !params?.search;
 

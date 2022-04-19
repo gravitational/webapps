@@ -38,10 +38,9 @@ export default function useDesktops(ctx: Ctx) {
   const username = ctx.storeUser.state.username;
   const windowsLogins = ctx.storeUser.getWindowsLogins();
   const [fetchStatus, setFetchStatus] = useState<FetchStatus>('');
-  const [params, setParams] = useState<ResourceUrlQueryParams>({
-    ...getResourceUrlQueryParams(search),
-    sort: { fieldName: 'name', dir: 'ASC' },
-  });
+  const [params, setParams] = useState<ResourceUrlQueryParams>(() =>
+    getResourceUrlQueryParams(search)
+  );
 
   const isSearchEmpty = !params?.query && !params?.search;
 

@@ -3,10 +3,12 @@ import { SortType } from './components/ServersideSearchPanel/useServerSideSearch
 export default function getResourceUrlQueryParams(
   searchPath: string
 ): ResourceUrlQueryParams {
+  console.log(searchPath);
   const searchParams = new URLSearchParams(searchPath);
   const query = searchParams.get('query');
   const search = searchParams.get('search');
   const sort = searchParams.get('sort');
+  console.log(sort);
 
   return {
     query,
@@ -25,8 +27,8 @@ export function decodeUrlQueryParam(param: string) {
   const decodedQuery = decodeURIComponent(
     param.replace(/%(?![0-9][0-9a-fA-F]+)/g, '%25')
   );
-  const beautifiedDecodedQuery = decodedQuery.replaceAll('+', ' ');
-  return beautifiedDecodedQuery;
+
+  return decodedQuery;
 }
 
 export type ResourceUrlQueryParams = {

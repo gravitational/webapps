@@ -39,10 +39,9 @@ export default function useDatabases(ctx: Ctx) {
   const authType = ctx.storeUser.state.authType;
   const [isAddDialogVisible, setIsAddDialogVisible] = useState(false);
   const [fetchStatus, setFetchStatus] = useState<FetchStatus>('');
-  const [params, setParams] = useState<ResourceUrlQueryParams>({
-    ...getResourceUrlQueryParams(search),
-    sort: { fieldName: 'name', dir: 'ASC' },
-  });
+  const [params, setParams] = useState<ResourceUrlQueryParams>(() =>
+    getResourceUrlQueryParams(search)
+  );
 
   const isSearchEmpty = !params?.query && !params?.search;
 

@@ -36,10 +36,9 @@ export default function useApps(ctx: Ctx) {
   const { attempt, setAttempt } = useAttempt('processing');
   const isEnterprise = ctx.isEnterprise;
   const [fetchStatus, setFetchStatus] = useState<FetchStatus>('');
-  const [params, setParams] = useState<ResourceUrlQueryParams>({
-    ...getResourceUrlQueryParams(search),
-    sort: { fieldName: 'name', dir: 'ASC' },
-  });
+  const [params, setParams] = useState<ResourceUrlQueryParams>(() =>
+    getResourceUrlQueryParams(search)
+  );
 
   const [results, setResults] = useState<AppsResponse>({
     apps: [],

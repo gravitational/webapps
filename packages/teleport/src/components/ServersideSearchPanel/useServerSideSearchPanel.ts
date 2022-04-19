@@ -7,7 +7,6 @@ import { SortDir } from 'design/DataTable/types';
 
 export default function useServersideSearchPanel(props: Props) {
   const { pathname, params, setParams, replaceHistory } = props;
-
   const [isInitialLoad, setIsInitialLoad] = useState(true);
   const [searchString, setSearchString] = useState(() => {
     if (params.query) {
@@ -87,21 +86,28 @@ function encodeUrlQueryParams(
   isAdvancedSearch: boolean,
   sort: SortType
 ) {
-  if (!searchString.length && !sort) {
+  if (!searchString && !sort) {
     return pathname;
   }
   const encodedQuery = encodeURIComponent(searchString);
-  const beautifiedQuery = `${
-    !isAdvancedSearch ? encodedQuery.replaceAll('%20', '+') : encodedQuery
-  }&`;
+
+  if (encodedQuery && !sort) {
+    return `${pathname}?${
+      isAdvancedSearch ? ADVANCED_SEARCH_PARAM : SIMPLE_SEARCH_PARAM
+    }${encodedQuery}`;
+  }
+
+  if (!encodedQuery && sort) {
+    return `${pathname}?${`${SORT_SEARCH_PARAM}${
+      sort.fieldName
+    }:${sort.dir.toLowerCase()}`}`;
+  }
 
   return `${pathname}?${
     isAdvancedSearch ? ADVANCED_SEARCH_PARAM : SIMPLE_SEARCH_PARAM
-  }${beautifiedQuery}${
-    sort
-      ? `${SORT_SEARCH_PARAM}${sort.fieldName}:${sort.dir.toLowerCase()}`
-      : ''
-  }`;
+  }${encodedQuery}&${`${SORT_SEARCH_PARAM}${
+    sort.fieldName
+  }:${sort.dir.toLowerCase()}`}`;
 }
 
 export type Props = {

@@ -14,22 +14,20 @@ export function SortHeaderCell<T>({
   onClick,
 }: SortHeaderCellProps<T>) {
   function handleServersideClick() {
-    if (serversideProps?.sort) {
-      serversideProps.setSort({
-        dir: serversideProps.sort.dir === 'ASC' ? 'DESC' : 'ASC',
-        fieldName: column.key,
-      });
-    }
+    serversideProps.setSort({
+      dir: serversideProps.sort?.dir === 'ASC' ? 'DESC' : 'ASC',
+      fieldName: column.key,
+    });
   }
 
-  if (serversideProps?.sort) {
+  if (serversideProps) {
     return (
       <th>
         <a onClick={handleServersideClick}>
           {text}
           <SortIndicator
             sortDir={
-              serversideProps.sort.fieldName === column.key
+              serversideProps.sort?.fieldName === column.key
                 ? serversideProps.sort.dir
                 : null
             }
