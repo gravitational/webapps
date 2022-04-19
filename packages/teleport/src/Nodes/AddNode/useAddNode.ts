@@ -27,14 +27,12 @@ export default function useAddNode(ctx: TeleportContext) {
   const user = ctx.storeUser.state.username;
   const isAuthTypeLocal = !ctx.storeUser.isSso();
   const [method, setMethod] = useState<JoinMethod>('iam');
-  const [token, setToken] = useState<JoinToken>(null);
-  const [iamJoinToken, setIamJoinToken] = useState<JoinToken>(null);
+  const [token, setToken] = useState<JoinToken>();
+  const [iamJoinToken, setIamJoinToken] = useState<JoinToken>();
 
   function createJoinToken() {
     return run(() =>
-      ctx.joinTokenService.fetchJoinToken(['Node'], 'token').then(token => {
-        setToken(token);
-      })
+      ctx.joinTokenService.fetchJoinToken(['Node'], 'token').then(setToken)
     );
   }
 
@@ -42,9 +40,7 @@ export default function useAddNode(ctx: TeleportContext) {
     return run(() =>
       ctx.joinTokenService
         .fetchJoinToken(['Node'], 'iam', [rules])
-        .then(iamToken => {
-          setIamJoinToken(iamToken);
-        })
+        .then(setIamJoinToken)
     );
   }
 

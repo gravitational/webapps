@@ -26,7 +26,7 @@ export default function useAddApp(ctx: TeleportContext) {
   const isAuthTypeLocal = !ctx.storeUser.isSso();
   const isEnterprise = ctx.isEnterprise;
   const [automatic, setAutomatic] = useState(isEnterprise);
-  const [token, setToken] = useState<JoinToken>(null);
+  const [token, setToken] = useState<JoinToken>();
 
   useEffect(() => {
     createToken();
@@ -34,9 +34,7 @@ export default function useAddApp(ctx: TeleportContext) {
 
   function createToken() {
     return run(() =>
-      ctx.joinTokenService.fetchJoinToken(['App']).then(token => {
-        setToken(token);
-      })
+      ctx.joinTokenService.fetchJoinToken(['App']).then(setToken)
     );
   }
 

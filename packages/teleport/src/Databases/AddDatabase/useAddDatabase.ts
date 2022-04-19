@@ -21,7 +21,7 @@ import { JoinToken } from 'teleport/services/joinToken';
 
 export default function useAddDatabase(ctx: TeleportContext) {
   const { attempt, run } = useAttempt('processing');
-  const [token, setToken] = useState<JoinToken>(null);
+  const [token, setToken] = useState<JoinToken>();
 
   useEffect(() => {
     createJoinToken();
@@ -29,9 +29,7 @@ export default function useAddDatabase(ctx: TeleportContext) {
 
   function createJoinToken() {
     return run(() =>
-      ctx.joinTokenService.fetchJoinToken(['Db']).then(token => {
-        setToken(token);
-      })
+      ctx.joinTokenService.fetchJoinToken(['Db']).then(setToken)
     );
   }
 
