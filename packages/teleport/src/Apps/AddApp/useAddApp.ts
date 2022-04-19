@@ -15,9 +15,9 @@ limitations under the License.
 */
 
 import { useEffect, useState } from 'react';
-import moment from 'moment';
 import useAttempt from 'shared/hooks/useAttemptNext';
 import TeleportContext from 'teleport/teleportContext';
+import { JoinToken } from 'teleport/services/joinToken';
 
 export default function useAddApp(ctx: TeleportContext) {
   const { attempt, run } = useAttempt('');
@@ -26,8 +26,7 @@ export default function useAddApp(ctx: TeleportContext) {
   const isAuthTypeLocal = !ctx.storeUser.isSso();
   const isEnterprise = ctx.isEnterprise;
   const [automatic, setAutomatic] = useState(isEnterprise);
-  const [expires, setExpires] = useState('');
-  const [token, setToken] = useState('');
+  const [token, setToken] = useState<JoinToken>();
 
   useEffect(() => {
     createToken();
@@ -35,12 +34,7 @@ export default function useAddApp(ctx: TeleportContext) {
 
   function createToken() {
     return run(() =>
-      ctx.joinTokenService.fetchJoinToken(['App']).then(token => {
-        const duration = moment(new Date()).diff(token.expiry);
-        const expires = moment.duration(duration).humanize();
-        setExpires(expires);
-        setToken(token.id);
-      })
+      ctx.joinTokenService.fetchJoinToken(['App']).then(setToken)
     );
   }
 
@@ -48,7 +42,6 @@ export default function useAddApp(ctx: TeleportContext) {
     user,
     version,
     createToken,
-    expires,
     attempt,
     automatic,
     setAutomatic,
