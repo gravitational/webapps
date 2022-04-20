@@ -57,15 +57,6 @@ export function Kubes(props: State) {
       <FeatureHeader alignItems="center" justifyContent="space-between">
         <FeatureHeaderTitle>Kubernetes</FeatureHeaderTitle>
         {hasKubes && (
-          // <ButtonPrimary
-          //   as="a"
-          //   width="240px"
-          //   target="_blank"
-          //   href={DOC_URL}
-          //   rel="noreferrer"
-          // >
-          //   View documentation
-          // </ButtonPrimary>
           <ButtonPrimary width="240px" onClick={() => setShowAddKube(true)}>
             Add Kubernetes
           </ButtonPrimary>
