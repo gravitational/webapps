@@ -102,7 +102,7 @@ export function AddKube({
         {attempt.status == 'failed' && (
           <Alert kind="danger" children={attempt.statusText} />
         )}
-        <DialogContent minHeight="254px" flex="0 0 auto">
+        <DialogContent minHeight="254px" flex="0 0 auto" mb="2">
           <Box mb={4}>
             Install Teleport Agent in your cluster via Helm to easily connect
             your Kubernetes cluster with Teleport. For all the available values
@@ -137,7 +137,6 @@ export function AddKube({
             }
             <Validation>
               {({ validator }) => (
-                // TODO: use labelTips when they are merged, add these infos: https://goteleport.com/docs/kubernetes-access/helm/reference/teleport-kube-agent/#kubeclustername
                 <Flex alignItems="center" flexDirection="row">
                   <form
                     onSubmit={e => handleGenerate(e, validator)}
