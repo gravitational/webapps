@@ -29,7 +29,7 @@ test('correct formatting of database fetch response', async () => {
     databases: [
       {
         name: 'aurora',
-        desc: 'PostgreSQL 11.6: AWS Aurora',
+        description: 'PostgreSQL 11.6: AWS Aurora',
         title: 'RDS PostgreSQL',
         protocol: 'postgres',
         tags: ['cluster: root', 'env: aws'],

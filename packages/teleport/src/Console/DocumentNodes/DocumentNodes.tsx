@@ -100,24 +100,26 @@ export default function DocumentNodes(props: Props) {
           {attempt.status === 'failed' && (
             <Alerts.Danger>{attempt.statusText}</Alerts.Danger>
           )}
-          <NodeList
-            nodes={results.nodes}
-            totalCount={results.totalCount}
-            onLoginMenuOpen={onLoginMenuOpen}
-            onLoginSelect={onLoginMenuSelect}
-            fetchNext={fetchNext}
-            fetchPrev={fetchPrev}
-            fetchStatus={fetchStatus}
-            from={from}
-            to={to}
-            pageSize={pageSize}
-            params={params}
-            setParams={setParams}
-            startKeys={startKeys}
-            setSort={setSort}
-            pathname={pathname}
-            replaceHistory={replaceHistory}
-          />
+          {attempt.status !== 'processing' && (
+            <NodeList
+              nodes={results.nodes}
+              totalCount={results.totalCount}
+              onLoginMenuOpen={onLoginMenuOpen}
+              onLoginSelect={onLoginMenuSelect}
+              fetchNext={fetchNext}
+              fetchPrev={fetchPrev}
+              fetchStatus={fetchStatus}
+              from={from}
+              to={to}
+              pageSize={pageSize}
+              params={params}
+              setParams={setParams}
+              startKeys={startKeys}
+              setSort={setSort}
+              pathname={pathname}
+              replaceHistory={replaceHistory}
+            />
+          )}
         </Container>
       </Document>
     </ThemeProvider>

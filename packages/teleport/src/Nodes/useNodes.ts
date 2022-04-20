@@ -147,6 +147,7 @@ export default function useNodes(ctx: Ctx, stickyCluster: StickyCluster) {
 
   const hideAddNode = () => {
     setIsAddNodeVisible(false);
+    fetchNodes();
   };
 
   const showAddNode = () => {
