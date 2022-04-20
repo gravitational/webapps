@@ -6,10 +6,17 @@ import createLoggerService from 'teleterm/services/logger';
 import Logger from 'teleterm/logger';
 import * as types from 'teleterm/types';
 import { ConfigServiceImpl } from 'teleterm/services/config';
+import { createFileStorage } from 'teleterm/services/fileStorage';
+import path from 'path';
+import { WindowsManager } from 'teleterm/mainProcess/windowsManager';
 
 const settings = getRuntimeSettings();
+const fileStorage = createFileStorage({
+  filePath: path.join(settings.userDataDir, 'app_state.json'),
+});
 const logger = initMainLogger(settings);
 const configService = new ConfigServiceImpl();
+const windowsManager = new WindowsManager(fileStorage, settings);
 
 process.on('uncaughtException', error => {
   logger.error('', error);
@@ -17,13 +24,19 @@ process.on('uncaughtException', error => {
 });
 
 // init main process
-const mainProcess = MainProcess.create({ settings, logger, configService });
+const mainProcess = MainProcess.create({
+  settings,
+  logger,
+  configService,
+  fileStorage,
+});
 
 // node-pty is not yet context aware
 app.allowRendererProcessReuse = false;
 app.commandLine.appendSwitch('ignore-certificate-errors', 'true');
 
 app.on('will-quit', () => {
+  fileStorage.putAllSync();
   globalShortcut.unregisterAll();
   mainProcess.dispose();
 });
@@ -40,11 +53,11 @@ app.whenReady().then(() => {
         stdio: 'inherit',
       });
       child.unref();
-      app.exit();
+      app.quit();
     });
   }
 
-  mainProcess.createWindow();
+  windowsManager.createWindow();
 });
 
 // Limit navigation capabilities to reduce the attack surface.

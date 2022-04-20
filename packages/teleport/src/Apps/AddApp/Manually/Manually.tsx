@@ -36,7 +36,6 @@ export default function Manually({
   isAuthTypeLocal,
   token,
   createToken,
-  expires,
   attempt,
 }: Props) {
   const { hostname, port } = window.document.location;
@@ -68,12 +67,7 @@ export default function Manually({
         {attempt.status === 'failed' ? (
           <StepsWithoutToken host={host} tshLoginCmd={tshLoginCmd} />
         ) : (
-          <StepsWithToken
-            createToken={createToken}
-            expires={expires}
-            host={host}
-            token={token}
-          />
+          <StepsWithToken createToken={createToken} host={host} token={token} />
         )}
       </DialogContent>
       <DialogFooter>
@@ -91,7 +85,12 @@ function getConfigCmd(token, host) {
   return `teleport configure --output=${configFile} --app-name=[example-app] --app-uri=http://localhost/ --roles=app --token=${token} --auth-server=${host} --data-dir=${configDir}`;
 }
 
-const StepsWithoutToken = ({ tshLoginCmd, host }) => (
+type StepsWithoutTokenProps = {
+  tshLoginCmd: string;
+  host: string;
+};
+
+const StepsWithoutToken = ({ tshLoginCmd, host }: StepsWithoutTokenProps) => (
   <>
     <Box mb={4}>
       <Text bold as="span">
@@ -173,7 +172,6 @@ type Props = {
   user: string;
   isAuthTypeLocal: boolean;
   token: State['token'];
-  expires: State['expires'];
   createToken: State['createToken'];
   attempt: State['attempt'];
 };
