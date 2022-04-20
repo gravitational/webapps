@@ -76,7 +76,9 @@ export class ConnectionTrackerService extends ImmutableStore<ConnectionTrackerSt
       this._trackedConnectionOperationsFactory.create(connection);
 
     if (rootClusterUri !== this._workspacesService.getRootClusterUri()) {
-      await this._workspacesService.setActiveWorkspace(rootClusterUri);
+      await this._workspacesService.setActiveWorkspace(rootClusterUri, {
+        skipPreviousDocuments: true,
+      });
     }
     activate();
   }

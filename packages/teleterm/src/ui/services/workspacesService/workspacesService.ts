@@ -110,7 +110,10 @@ export class WorkspacesService extends ImmutableStore<WorkspacesState> {
     this.statePersistenceService.saveWorkspaces(this.state);
   }
 
-  setActiveWorkspace(clusterUri: string): Promise<void> {
+  setActiveWorkspace(
+    clusterUri: string,
+    options?: { skipPreviousDocuments?: boolean }
+  ): Promise<void> {
     const setWorkspace = () => {
       this.setState(draftState => {
         if (!draftState.workspaces[clusterUri]) {
@@ -174,7 +177,10 @@ export class WorkspacesService extends ImmutableStore<WorkspacesState> {
     })
       .then(() => {
         return new Promise<void>(resolve => {
-          if (!this.canReopenPreviousDocuments(this.getWorkspace(clusterUri))) {
+          if (
+            options?.skipPreviousDocuments ||
+            !this.canReopenPreviousDocuments(this.getWorkspace(clusterUri))
+          ) {
             this.discardPreviousDocuments(clusterUri);
             return resolve();
           }
