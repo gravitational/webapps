@@ -23,7 +23,12 @@ export default {
 
 export const Loaded = () => <AddKube {...props} />;
 
-export const TokenGenerated = () => <AddKube {...props} token="soem token" />;
+export const TokenGenerated = () => (
+  <AddKube
+    {...props}
+    token={{ id: 'some token', expiry: null, expiryText: '4 hours' }}
+  />
+);
 
 export const Processing = () => (
   <AddKube {...props} attempt={{ status: 'processing' }} />
@@ -43,11 +48,10 @@ const props = {
   createToken() {
     return Promise.resolve(null);
   },
-  expires: '4 hours',
   attempt: {
     status: 'success',
     statusText: '',
   } as any,
-  token: '',
+  token: null,
   version: '10.0.0',
 };

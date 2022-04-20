@@ -45,7 +45,6 @@ export function AddKube({
   onClose,
   attempt,
   createToken,
-  expires,
   token,
   version,
 }: Props & State) {
@@ -58,6 +57,7 @@ export function AddKube({
 
   useEffect(() => {
     if (!token) {
+      setCmd('');
       return;
     }
 
@@ -65,7 +65,7 @@ export function AddKube({
       namespace,
       clusterName,
       host,
-      token,
+      token.id,
       version
     );
     setCmd(generatedCmd);
@@ -191,7 +191,7 @@ export function AddKube({
                 <Text mt="2" mb="1">
                   The token will be valid for{' '}
                   <Text bold as={'span'}>
-                    {expires}.
+                    {token.expiryText}.
                   </Text>
                 </Text>
                 <TextSelectCopy text={cmd} mb={2} />
@@ -241,7 +241,6 @@ kubeClusterName: ${clusterName}
 teleportVersionOverride: ${clusterVersion} 
 EOF  
     
-helm repo add teleport https://charts.releases.teleport.dev && helm repo update
 helm install -f prod-cluster-values.yaml --create-namespace --namespace ${namespace}`;
 };
 

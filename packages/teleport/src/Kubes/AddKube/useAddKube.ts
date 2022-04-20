@@ -15,29 +15,23 @@
  */
 
 import { useState } from 'react';
-import { formatDistanceStrict } from 'date-fns';
 import useAttempt from 'shared/hooks/useAttemptNext';
+import { JoinToken } from 'teleport/services/joinToken';
 import TeleportContext from 'teleport/teleportContext';
 
 export default function useAddKube(ctx: TeleportContext) {
   const { attempt, run } = useAttempt('');
-  const [expires, setExpires] = useState('');
-  const [token, setToken] = useState('');
+  const [token, setToken] = useState<JoinToken>();
   const version = ctx.storeUser.state.cluster.authVersion;
 
   function createToken() {
     return run(() =>
-      ctx.joinTokenService.fetchJoinToken(['Kube']).then(token => {
-        const expires = formatDistanceStrict(new Date(), token.expiry);
-        setExpires(expires);
-        setToken(token.id);
-      })
+      ctx.joinTokenService.fetchJoinToken(['Kube']).then(setToken)
     );
   }
 
   return {
     createToken,
-    expires,
     attempt,
     token,
     version,
