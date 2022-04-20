@@ -18,6 +18,45 @@ limitations under the License.
 
 import React from 'react';
 
+// useAsync lets you represent the state of an async operation as data. It accepts an async function
+// that you want to execute. Calling the hook returns an array of three elements:
+//
+// * The first element is the representation of the attempt to run that async function as data, the
+//   so called attempt object.
+// * The second element is a function which when called starts to execute the async function.
+// * The third element is a function that let's you directly update the attempt object if needed.
+//
+// An example usage:
+//
+//     export function useUserProfile(userId) {
+//       const [fetchUserProfileAttempt, fetchUserProfile] = useAsync(async () => {
+//         return await fetch(`/users/${userId`);
+//       })
+//
+//       return { fetchUserProfileAttempt, fetchUserProfile };
+//     }
+//
+// Then in the view layer you can use it like this:
+//
+//     function UserProfile(props) {
+//       const { fetchUserProfileAttempt, fetchUserProfile } = useUserProfile(props.id);
+//
+//       useEffect(() => {
+//         if (!fetchUserProfileAttempt.status) {
+//           fetchUserProfile()
+//         }
+//       }, [fetchUserProfileAttempt])
+//
+//       switch (fetchUserProfileAttempt.status) {
+//         case '':
+//         case 'processing':
+//           return <Spinner />;
+//         case 'error':
+//           return <ErrorMessage text={fetchUserProfileAttempt.statusText} />;
+//         case 'success':
+//           return <UserAvatar url={fetchUserProfileAttempt.data.avatarUrl} />;
+//       }
+//     }
 export default function useAsync<R, T extends Function>(cb?: AsyncCb<R, T>) {
   const [state, setState] = React.useState<Attempt<R>>(() => ({
     data: null,
