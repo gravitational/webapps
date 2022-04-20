@@ -14,6 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
+import moment from 'moment';
 import { JoinToken } from './types';
 
 export default function makeToken(json): JoinToken {
@@ -22,5 +23,8 @@ export default function makeToken(json): JoinToken {
   return {
     id,
     expiry: expiry ? new Date(expiry) : null,
+    expiryText: expiry
+      ? moment.duration(moment(new Date()).diff(expiry)).humanize()
+      : '',
   };
 }
