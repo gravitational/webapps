@@ -881,14 +881,10 @@ exports[`failed 1`] = `
             />
           </a>
         </th>
-        <th>
-          <a>
-            Description
-            <span
-              class="c18 c19 icon icon-chevrons-expand-vertical "
-              color="light"
-            />
-          </a>
+        <th
+          style="cursor: default;"
+        >
+          Description
         </th>
         <th
           style="cursor: default;"
@@ -1616,14 +1612,10 @@ exports[`open source loaded 1`] = `
             />
           </a>
         </th>
-        <th>
-          <a>
-            Description
-            <span
-              class="c17 c18 icon icon-chevrons-expand-vertical "
-              color="light"
-            />
-          </a>
+        <th
+          style="cursor: default;"
+        >
+          Description
         </th>
         <th
           style="cursor: default;"
