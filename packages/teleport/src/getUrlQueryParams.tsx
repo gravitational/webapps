@@ -30,7 +30,7 @@ export default function getResourceUrlQueryParams(
     sort: sort
       ? ({
           fieldName: sort.split(':')[0],
-          dir: sort.split(':')[1].toUpperCase(),
+          dir: sort.split(':')[1]?.toUpperCase() || 'ASC',
         } as SortType)
       : null,
   };
