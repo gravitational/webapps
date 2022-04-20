@@ -129,7 +129,17 @@ const StepsWithoutToken = ({ tshLoginCmd, host }: StepsWithoutTokenProps) => (
   </>
 );
 
-const StepsWithToken = ({ joinToken, host, createJoinToken, expiry }) => (
+type StepsWithTokenProps = {
+  joinToken: State['token'];
+  host: string;
+  createJoinToken: State['createJoinToken'];
+};
+
+const StepsWithToken = ({
+  joinToken,
+  host,
+  createJoinToken,
+}: StepsWithTokenProps) => (
   <>
     <Box mb={4}>
       <Text bold as="span">
@@ -139,7 +149,7 @@ const StepsWithToken = ({ joinToken, host, createJoinToken, expiry }) => (
       <Text mt="1">
         The token will be valid for{' '}
         <Text bold as={'span'}>
-          {expiry}.
+          {joinToken.expiryText}.
         </Text>
       </Text>
       <TextSelectCopy mt="2" text={getConfigCmd(joinToken, host)} />

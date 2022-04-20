@@ -137,7 +137,13 @@ const StepsWithoutToken = ({ tshLoginCmd, host }: StepsWithoutTokenProps) => (
   </>
 );
 
-const StepsWithToken = ({ token, host, createToken, expires }) => (
+type StepsWithTokenProps = {
+  token: State['token'];
+  host: string;
+  createToken: State['createToken'];
+};
+
+const StepsWithToken = ({ token, host, createToken }: StepsWithTokenProps) => (
   <>
     <Box mb={4}>
       <Text bold as="span">
@@ -147,7 +153,7 @@ const StepsWithToken = ({ token, host, createToken, expires }) => (
       <Text mt="1">
         The token will be valid for{' '}
         <Text bold as={'span'}>
-          {expires}.
+          {token.expiryText}.
         </Text>
       </Text>
       <TextSelectCopy mt="2" text={getConfigCmd(token, host)} />
