@@ -17,9 +17,8 @@ limitations under the License.
 import React from 'react';
 import { storiesOf } from '@storybook/react';
 import { Flex } from 'design';
-import { MenuLogin, MenuLoginAsync } from './MenuLogin';
-import { LoginItem } from './types';
-import { makeProcessingAttempt } from 'shared/hooks/useAsync';
+import { MenuLogin } from './MenuLogin';
+import { MenuLoginHandle } from './types';
 import { MenuLoginTheme } from 'teleterm/ui/DocumentCluster/ClusterResources/MenuLoginTheme';
 
 storiesOf('Shared/MenuLogin', module).add('MenuLogin', () => {
@@ -38,8 +37,6 @@ storiesOf('Shared/MenuLogin', module).add(
 );
 
 function MenuLoginExamples() {
-  const processingAttempt = makeProcessingAttempt<LoginItem[]>();
-
   return (
     <Flex
       width="400px"
@@ -53,9 +50,8 @@ function MenuLoginExamples() {
         onSelect={() => null}
         placeholder="Please provide user name…"
       />
-      <MenuLoginAsync
-        getLoginItems={() => {}}
-        getLoginItemsAttempt={processingAttempt}
+      <MenuLogin
+        getLoginItems={() => new Promise(() => {})}
         placeholder="MenuLogin in processing state"
         onSelect={() => null}
       />
@@ -65,10 +61,10 @@ function MenuLoginExamples() {
 }
 
 class SampleMenu extends React.Component {
-  menuRef = React.createRef<MenuLogin>();
+  menuRef = React.createRef<MenuLoginHandle>();
 
   componentDidMount() {
-    this.menuRef.current.onOpen();
+    this.menuRef.current.open();
   }
 
   render() {

@@ -16,13 +16,15 @@ limitations under the License.
 
 import React from 'react';
 import { useDatabases, State } from './useDatabases';
-import { useDatabaseUsers } from './useDatabaseUsers';
 import { Table } from 'teleterm/ui/components/Table';
 import { Cell } from 'design/DataTable';
 import { renderLabelCell } from '../renderLabelCell';
 import { Danger } from 'design/Alert';
-import { MenuLoginAsync } from 'shared/components/MenuLogin';
+import { MenuLogin } from 'shared/components/MenuLogin';
 import { MenuLoginTheme } from '../MenuLoginTheme';
+import { useAppContext } from 'teleterm/ui/appContextProvider';
+import { ClustersService } from 'teleterm/ui/services/clusters';
+import { NotificationsService } from 'teleterm/ui/services/notifications';
 
 export default function Container() {
   const state = useDatabases();
@@ -72,19 +74,16 @@ function ConnectButton({
   dbUri: string;
   onConnect: (user: string) => void;
 }) {
-  const { getUsersAttempt, getUsers } = useDatabaseUsers(dbUri);
+  const { clustersService, notificationsService } = useAppContext();
 
   return (
     <Cell align="right">
       <MenuLoginTheme>
-        <MenuLoginAsync
+        <MenuLogin
           placeholder="Enter username…"
-          getLoginItemsAttempt={getUsersAttempt}
-          getLoginItems={() => {
-            if (!getUsersAttempt.status) {
-              getUsers();
-            }
-          }}
+          getLoginItems={() =>
+            getDatabaseUsers(dbUri, clustersService, notificationsService)
+          }
           onSelect={(_, user) => onConnect(user)}
           transformOrigin={{
             vertical: 'top',
@@ -98,4 +97,24 @@ function ConnectButton({
       </MenuLoginTheme>
     </Cell>
   );
+}
+
+async function getDatabaseUsers(
+  dbUri: string,
+  clustersService: ClustersService,
+  notificationsService: NotificationsService
+) {
+  try {
+    const dbUsers = await clustersService.getDbUsers(dbUri);
+    return dbUsers.map(user => ({ login: user, url: '' }));
+  } catch (e) {
+    // Emitting a warning instead of an error here because fetching those username suggestions is
+    // not the most important part of the app.
+    notificationsService.notifyWarning({
+      title: 'Could not fetch database usernames',
+      description: e.message,
+    });
+
+    throw e;
+  }
 }

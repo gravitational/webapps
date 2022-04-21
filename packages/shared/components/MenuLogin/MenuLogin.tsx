@@ -14,89 +14,62 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React from 'react';
+import React, { useImperativeHandle, useRef, useState } from 'react';
 import styled from 'styled-components';
 import { NavLink } from 'react-router-dom';
 import Menu, { MenuItem } from 'design/Menu';
 import { space } from 'design/system';
-import { MenuLoginProps, MenuLoginAsyncProps, LoginItem } from './types';
+import { MenuLoginProps, LoginItem, MenuLoginHandle } from './types';
 import { ButtonBorder, Flex, Indicator } from 'design';
 import { CarrotDown } from 'design/Icon';
-import { Attempt, makeSuccessAttempt } from 'shared/hooks/useAsync';
+import { useAsync, Attempt } from 'shared/hooks/useAsync';
 
-export class MenuLogin extends React.Component<MenuLoginProps> {
-  static displayName = 'MenuLogin';
-
-  state = {
-    logins: [],
-  };
-
-  onOpen = () => {
-    const logins = this.props.getLoginItems();
-    this.setState({ logins });
-  };
-
-  render() {
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    const { getLoginItems, ...otherProps } = this.props;
-    // Making a success attempt so that we never use the spinner with the sync version of MenuLogin.
-    const getLoginItemsAttempt = makeSuccessAttempt(this.state.logins);
-
-    return (
-      <MenuLoginAsync
-        {...otherProps}
-        getLoginItems={this.onOpen}
-        getLoginItemsAttempt={getLoginItemsAttempt}
-      />
+export const MenuLogin = React.forwardRef<MenuLoginHandle, MenuLoginProps>(
+  (props, ref) => {
+    const { onSelect, anchorOrigin, transformOrigin } = props;
+    const anchorRef = useRef<HTMLElement>();
+    const [isOpen, setIsOpen] = useState(false);
+    const [getLoginItemsAttempt, runGetLoginItems] = useAsync(async () =>
+      props.getLoginItems()
     );
-  }
-}
 
-export class MenuLoginAsync extends React.Component<MenuLoginAsyncProps> {
-  static displayName = 'MenuLoginAsync';
+    const placeholder = props.placeholder || 'Enter login name…';
+    const onOpen = () => {
+      if (!getLoginItemsAttempt.status) {
+        runGetLoginItems();
+      }
+      setIsOpen(true);
+    };
+    const onClose = () => {
+      setIsOpen(false);
+    };
+    const onItemClick = (
+      e: React.MouseEvent<HTMLAnchorElement>,
+      login: string
+    ) => {
+      onClose();
+      onSelect(e, login);
+    };
+    const onKeyPress = (e: React.KeyboardEvent<HTMLInputElement>) => {
+      if (e.key === 'Enter' && e.currentTarget.value) {
+        onClose();
+        onSelect(e, e.currentTarget.value);
+      }
+    };
 
-  anchorEl = React.createRef();
-
-  state = {
-    open: false,
-    anchorEl: null,
-  };
-
-  onOpen = () => {
-    this.props.getLoginItems();
-    this.setState({
-      open: true,
-    });
-  };
-
-  onItemClick = (e: React.MouseEvent<HTMLAnchorElement>, login: string) => {
-    this.onClose();
-    this.props.onSelect(e, login);
-  };
-
-  onClose = () => {
-    this.setState({ open: false });
-  };
-
-  onKeyPress = (e: React.KeyboardEvent<HTMLInputElement>) => {
-    if (e.key === 'Enter' && e.currentTarget.value) {
-      this.onClose();
-      this.props.onSelect(e, e.currentTarget.value);
-    }
-  };
-
-  render() {
-    const { anchorOrigin, transformOrigin, getLoginItemsAttempt } = this.props;
-    const placeholder = this.props.placeholder || 'Enter login name…';
-    const { open } = this.state;
+    useImperativeHandle(ref, () => ({
+      open: () => {
+        onOpen();
+      },
+    }));
 
     return (
       <React.Fragment>
         <ButtonBorder
           height="24px"
           size="small"
-          setRef={e => (this.anchorEl = e)}
-          onClick={this.onOpen}
+          setRef={anchorRef}
+          onClick={onOpen}
         >
           CONNECT
           <CarrotDown ml={2} mr={-2} fontSize="2" color="text.secondary" />
@@ -104,28 +77,33 @@ export class MenuLoginAsync extends React.Component<MenuLoginAsyncProps> {
         <Menu
           anchorOrigin={anchorOrigin}
           transformOrigin={transformOrigin}
-          anchorEl={this.anchorEl}
-          open={open}
-          onClose={this.onClose}
+          anchorEl={anchorRef.current}
+          open={isOpen}
+          onClose={onClose}
           getContentAnchorEl={null}
         >
           <LoginItemList
             getLoginItemsAttempt={getLoginItemsAttempt}
-            onKeyPress={this.onKeyPress}
-            onClick={this.onItemClick}
+            onKeyPress={onKeyPress}
+            onClick={onItemClick}
             placeholder={placeholder}
           />
         </Menu>
       </React.Fragment>
     );
   }
-}
+);
 
-export const LoginItemList = ({
+const LoginItemList = ({
   getLoginItemsAttempt,
   onClick,
   onKeyPress,
   placeholder,
+}: {
+  getLoginItemsAttempt: Attempt<LoginItem[]>;
+  onClick: (e: React.MouseEvent<HTMLAnchorElement>, login: string) => void;
+  onKeyPress: (e: React.KeyboardEvent<HTMLInputElement>) => void;
+  placeholder: string;
 }) => {
   const content = getLoginItemListContent(getLoginItemsAttempt, onClick);
 
@@ -147,7 +125,7 @@ export const LoginItemList = ({
 
 function getLoginItemListContent(
   getLoginItemsAttempt: Attempt<LoginItem[]>,
-  onClick
+  onClick: (e: React.MouseEvent<HTMLAnchorElement>, login: string) => void
 ) {
   switch (getLoginItemsAttempt.status) {
     case '':
@@ -176,7 +154,7 @@ function getLoginItemListContent(
             mx="2"
             as={url ? NavLink : StyledButton}
             to={url}
-            onClick={(e: Event) => {
+            onClick={(e: React.MouseEvent<HTMLAnchorElement>) => {
               onClick(e, login);
             }}
           >
