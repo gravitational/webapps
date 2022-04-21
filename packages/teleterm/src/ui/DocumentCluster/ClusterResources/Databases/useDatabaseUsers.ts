@@ -1,4 +1,4 @@
-import useAsync from 'shared/hooks/useAsync';
+import { useAsync } from 'shared/hooks/useAsync';
 import { useAppContext } from 'teleterm/ui/appContextProvider';
 
 export function useDatabaseUsers(dbUri: string) {

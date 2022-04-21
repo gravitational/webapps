@@ -59,7 +59,7 @@ import React from 'react';
  *    }
  * }
  */
-export default function useAsync<R, T extends Function>(cb?: AsyncCb<R, T>) {
+export function useAsync<R, T extends Function>(cb?: AsyncCb<R, T>) {
   const [state, setState] = React.useState<Attempt<R>>(() =>
     makeEmptyAttempt()
   );
