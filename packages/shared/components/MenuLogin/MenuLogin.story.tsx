@@ -20,8 +20,24 @@ import { Flex } from 'design';
 import { MenuLogin, MenuLoginAsync } from './MenuLogin';
 import { LoginItem } from './types';
 import { makeProcessingAttempt } from 'shared/hooks/useAsync';
+import { MenuLoginTheme } from 'teleterm/ui/DocumentCluster/ClusterResources/MenuLoginTheme';
 
 storiesOf('Shared/MenuLogin', module).add('MenuLogin', () => {
+  return <MenuLoginExamples />;
+});
+
+storiesOf('Shared/MenuLogin', module).add(
+  'MenuLogin in Teleport Connect',
+  () => {
+    return (
+      <MenuLoginTheme>
+        <MenuLoginExamples />
+      </MenuLoginTheme>
+    );
+  }
+);
+
+function MenuLoginExamples() {
   const processingAttempt = makeProcessingAttempt<LoginItem[]>();
 
   return (
@@ -46,7 +62,7 @@ storiesOf('Shared/MenuLogin', module).add('MenuLogin', () => {
       <SampleMenu />
     </Flex>
   );
-});
+}
 
 class SampleMenu extends React.Component {
   menuRef = React.createRef<MenuLogin>();
@@ -57,11 +73,11 @@ class SampleMenu extends React.Component {
 
   render() {
     return (
-        <MenuLogin
-          ref={this.menuRef}
-          getLoginItems={() => loginItems}
-          onSelect={() => null}
-        />
+      <MenuLogin
+        ref={this.menuRef}
+        getLoginItems={() => loginItems}
+        onSelect={() => null}
+      />
     );
   }
 }
