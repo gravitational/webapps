@@ -16,11 +16,12 @@ limitations under the License.
 
 import React from 'react';
 import { useDatabases, State } from './useDatabases';
+import { useDatabaseUsers } from './useDatabaseUsers';
 import { Table } from 'teleterm/ui/components/Table';
 import { Cell } from 'design/DataTable';
 import { renderLabelCell } from '../renderLabelCell';
 import { Danger } from 'design/Alert';
-import { MenuLogin } from 'shared/components/MenuLogin';
+import { MenuLoginAsync } from 'shared/components/MenuLogin';
 import { MenuLoginTheme } from '../MenuLoginTheme';
 
 export default function Container() {
@@ -49,8 +50,12 @@ function DatabaseList(props: State) {
           },
           {
             altKey: 'connect-btn',
-            render: db =>
-              renderConnectButton(user => props.connect(db.uri, user)),
+            render: db => (
+              <ConnectButton
+                dbUri={db.uri}
+                onConnect={user => props.connect(db.uri, user)}
+              />
+            ),
           },
         ]}
         pagination={{ pageSize: 100, pagerPosition: 'bottom' }}
@@ -60,13 +65,26 @@ function DatabaseList(props: State) {
   );
 }
 
-function renderConnectButton(onConnect: (user: string) => void) {
+function ConnectButton({
+  dbUri,
+  onConnect,
+}: {
+  dbUri: string;
+  onConnect: (user: string) => void;
+}) {
+  const { getUsersAttempt, getUsers } = useDatabaseUsers(dbUri);
+
   return (
     <Cell align="right">
       <MenuLoginTheme>
-        <MenuLogin
+        <MenuLoginAsync
           placeholder="Enter username…"
-          getLoginItems={() => []}
+          getLoginItemsAttempt={getUsersAttempt}
+          getLoginItems={() => {
+            if (!getUsersAttempt.status) {
+              getUsers();
+            }
+          }}
           onSelect={(_, user) => onConnect(user)}
           transformOrigin={{
             vertical: 'top',
