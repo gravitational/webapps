@@ -19,25 +19,52 @@ import styled from 'styled-components';
 import { NavLink } from 'react-router-dom';
 import Menu, { MenuItem } from 'design/Menu';
 import { space } from 'design/system';
-import { MenuLoginProps } from './types';
-import { ButtonBorder, Flex } from 'design';
+import { MenuLoginProps, MenuLoginAsyncProps, LoginItem } from './types';
+import { ButtonBorder, Flex, Indicator } from 'design';
 import { CarrotDown } from 'design/Icon';
+import { Attempt, makeSuccessAttempt } from 'shared/hooks/useAsync';
 
 export class MenuLogin extends React.Component<MenuLoginProps> {
   static displayName = 'MenuLogin';
 
+  state = {
+    logins: [],
+  };
+
+  onOpen = () => {
+    const logins = this.props.getLoginItems();
+    this.setState({ logins });
+  };
+
+  render() {
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    const { getLoginItems, ...otherProps } = this.props;
+    // Making a success attempt so that we never use the spinner with the sync version of MenuLogin.
+    const getLoginItemsAttempt = makeSuccessAttempt(this.state.logins);
+
+    return (
+      <MenuLoginAsync
+        {...otherProps}
+        getLoginItems={this.onOpen}
+        getLoginItemsAttempt={getLoginItemsAttempt}
+      />
+    );
+  }
+}
+
+export class MenuLoginAsync extends React.Component<MenuLoginAsyncProps> {
+  static displayName = 'MenuLoginAsync';
+
   anchorEl = React.createRef();
 
   state = {
-    logins: [],
     open: false,
     anchorEl: null,
   };
 
   onOpen = () => {
-    const logins = this.props.getLoginItems();
+    this.props.getLoginItems();
     this.setState({
-      logins,
       open: true,
     });
   };
@@ -59,9 +86,10 @@ export class MenuLogin extends React.Component<MenuLoginProps> {
   };
 
   render() {
-    const { anchorOrigin, transformOrigin } = this.props;
+    const { anchorOrigin, transformOrigin, getLoginItemsAttempt } = this.props;
     const placeholder = this.props.placeholder || 'Enter login name…';
-    const { open, logins } = this.state;
+    const { open } = this.state;
+
     return (
       <React.Fragment>
         <ButtonBorder
@@ -82,7 +110,7 @@ export class MenuLogin extends React.Component<MenuLoginProps> {
           getContentAnchorEl={null}
         >
           <LoginItemList
-            logins={logins}
+            getLoginItemsAttempt={getLoginItemsAttempt}
             onKeyPress={this.onKeyPress}
             onClick={this.onItemClick}
             placeholder={placeholder}
@@ -93,25 +121,13 @@ export class MenuLogin extends React.Component<MenuLoginProps> {
   }
 }
 
-export const LoginItemList = ({ logins, onClick, onKeyPress, placeholder }) => {
-  logins = logins || [];
-  const $menuItems = logins.map((item, key) => {
-    const { login, url } = item;
-    return (
-      <StyledMenuItem
-        key={key}
-        px="2"
-        mx="2"
-        as={url ? NavLink : StyledButton}
-        to={url}
-        onClick={(e: Event) => {
-          onClick(e, login);
-        }}
-      >
-        {login}
-      </StyledMenuItem>
-    );
-  });
+export const LoginItemList = ({
+  getLoginItemsAttempt,
+  onClick,
+  onKeyPress,
+  placeholder,
+}) => {
+  const content = getLoginItemListContent(getLoginItemsAttempt, onClick);
 
   return (
     <Flex flexDirection="column">
@@ -124,10 +140,52 @@ export const LoginItemList = ({ logins, onClick, onKeyPress, placeholder }) => {
         placeholder={placeholder}
         autoComplete="off"
       />
-      {$menuItems}
+      {content}
     </Flex>
   );
 };
+
+function getLoginItemListContent(
+  getLoginItemsAttempt: Attempt<LoginItem[]>,
+  onClick
+) {
+  switch (getLoginItemsAttempt.status) {
+    case '':
+    case 'processing':
+      return (
+        <Indicator
+          css={({ theme }) => `
+            align-self: center;
+            color: ${theme.colors.secondary.dark}
+          `}
+        />
+      );
+    case 'error':
+      // Ignore errors and let the caller handle them outside of this component. There's little
+      // space to show the error inside the menu.
+      return null;
+    case 'success':
+      const logins = getLoginItemsAttempt.data;
+
+      return logins.map((item, key) => {
+        const { login, url } = item;
+        return (
+          <StyledMenuItem
+            key={key}
+            px="2"
+            mx="2"
+            as={url ? NavLink : StyledButton}
+            to={url}
+            onClick={(e: Event) => {
+              onClick(e, login);
+            }}
+          >
+            {login}
+          </StyledMenuItem>
+        );
+      });
+  }
+}
 
 const StyledButton = styled.button`
   color: inherit;

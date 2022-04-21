@@ -17,26 +17,36 @@ limitations under the License.
 import React from 'react';
 import { storiesOf } from '@storybook/react';
 import { Flex } from 'design';
-import { MenuLogin } from './MenuLogin';
-import { Router } from 'react-router';
-import { createMemoryHistory } from 'history';
+import { MenuLogin, MenuLoginAsync } from './MenuLogin';
+import { LoginItem } from './types';
+import { makeProcessingAttempt } from 'shared/hooks/useAsync';
 
-storiesOf('Shared/MenuLogin', module).add('MenuLogin', () => (
-  <Flex
-    width="400px"
-    height="100px"
-    alignItems="center"
-    justifyContent="space-around"
-    bg="primary.light"
-  >
-    <MenuLogin
-      getLoginItems={() => []}
-      onSelect={() => null}
-      placeholder="Please provide user name…"
-    />
-    <SampleMenu />
-  </Flex>
-));
+storiesOf('Shared/MenuLogin', module).add('MenuLogin', () => {
+  const processingAttempt = makeProcessingAttempt<LoginItem[]>();
+
+  return (
+    <Flex
+      width="400px"
+      height="100px"
+      alignItems="center"
+      justifyContent="space-around"
+      bg="primary.light"
+    >
+      <MenuLogin
+        getLoginItems={() => []}
+        onSelect={() => null}
+        placeholder="Please provide user name…"
+      />
+      <MenuLoginAsync
+        getLoginItems={() => {}}
+        getLoginItemsAttempt={processingAttempt}
+        placeholder="MenuLogin in processing state"
+        onSelect={() => null}
+      />
+      <SampleMenu />
+    </Flex>
+  );
+});
 
 class SampleMenu extends React.Component {
   menuRef = React.createRef<MenuLogin>();
@@ -47,13 +57,11 @@ class SampleMenu extends React.Component {
 
   render() {
     return (
-      <Router history={createMemoryHistory()}>
         <MenuLogin
           ref={this.menuRef}
           getLoginItems={() => loginItems}
           onSelect={() => null}
         />
-      </Router>
     );
   }
 }

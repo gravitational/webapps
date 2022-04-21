@@ -14,15 +14,25 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
+import { Attempt } from 'shared/hooks/useAsync';
+
 export type LoginItem = {
   url: string;
   login: string;
 };
 
-export type MenuLoginProps = {
-  getLoginItems: () => LoginItem[];
+type MenuLoginSharedProps = {
   onSelect: (e: React.SyntheticEvent, login: string) => void;
   anchorOrigin?: any;
   transformOrigin?: any;
   placeholder?: string;
+};
+
+export type MenuLoginProps = MenuLoginSharedProps & {
+  getLoginItems: () => LoginItem[];
+};
+
+export type MenuLoginAsyncProps = MenuLoginSharedProps & {
+  getLoginItems: () => void;
+  getLoginItemsAttempt: Attempt<LoginItem[]>;
 };

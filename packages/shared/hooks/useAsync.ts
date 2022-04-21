@@ -58,11 +58,9 @@ import React from 'react';
 //       }
 //     }
 export default function useAsync<R, T extends Function>(cb?: AsyncCb<R, T>) {
-  const [state, setState] = React.useState<Attempt<R>>(() => ({
-    data: null,
-    status: '',
-    statusText: '',
-  }));
+  const [state, setState] = React.useState<Attempt<R>>(() =>
+    makeEmptyAttempt()
+  );
 
   const run = async (...p: Parameters<AsyncCb<R, T>>) => {
     try {
@@ -104,6 +102,38 @@ export type Attempt<T> = {
   status: 'processing' | 'success' | 'error' | '';
   statusText: string;
 };
+
+export function makeEmptyAttempt<T>(): Attempt<T> {
+  return {
+    data: null,
+    status: '',
+    statusText: '',
+  };
+}
+
+export function makeSuccessAttempt<T>(data: T): Attempt<T> {
+  return {
+    data,
+    status: 'success',
+    statusText: '',
+  };
+}
+
+export function makeProcessingAttempt<T>(): Attempt<T> {
+  return {
+    data: null,
+    status: 'processing',
+    statusText: '',
+  };
+}
+
+export function makeErrorAttempt<T>(statusText: string): Attempt<T> {
+  return {
+    data: null,
+    status: 'error',
+    statusText,
+  };
+}
 
 type IsValidArg<T> = T extends object
   ? keyof T extends never
