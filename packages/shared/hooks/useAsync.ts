@@ -64,33 +64,37 @@ export function useAsync<R, T extends Function>(cb?: AsyncCb<R, T>) {
     makeEmptyAttempt()
   );
 
-  const run = async (...p: Parameters<AsyncCb<R, T>>) => {
-    try {
-      setState({
-        ...state,
-        status: 'processing',
-      });
+  const run = (...p: Parameters<AsyncCb<R, T>>) =>
+    Promise.resolve()
+      .then(() => {
+        setState({
+          ...state,
+          status: 'processing',
+        });
 
-      const data = (await cb.call(null, ...p)) as R;
+        return cb.call(null, ...p) as R;
+      })
+      .then(
+        data => {
+          setState({
+            ...state,
+            status: 'success',
+            data,
+          });
 
-      setState({
-        ...state,
-        status: 'success',
-        data,
-      });
+          return [data, null] as [R, Error];
+        },
+        err => {
+          setState({
+            ...state,
+            status: 'error',
+            statusText: err.message,
+            data: null,
+          });
 
-      return [data, null] as [R, Error];
-    } catch (err) {
-      setState({
-        ...state,
-        status: 'error',
-        statusText: err.message,
-        data: null,
-      });
-
-      return [null, err] as [R, Error];
-    }
-  };
+          return [null, err] as [R, Error];
+        }
+      );
 
   function setAttempt(attempt: Attempt<R>) {
     setState(attempt);
