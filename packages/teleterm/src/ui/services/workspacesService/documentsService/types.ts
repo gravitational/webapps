@@ -56,6 +56,7 @@ export interface DocumentGateway extends DocumentBase {
   gatewayUri?: string;
   targetUri: string;
   targetUser: string;
+  targetSubresourceName?: string;
   port?: string;
 }
 
@@ -85,6 +86,7 @@ export type CreateGatewayDocumentOpts = {
   gatewayUri?: string;
   targetUri: string;
   targetUser: string;
+  targetSubresourceName?: string;
   title: string;
   port?: string;
 };

@@ -19,6 +19,7 @@ export interface TrackedGatewayConnection extends TrackedConnectionBase {
   targetUser?: string;
   port?: string;
   gatewayUri: string;
+  targetSubresourceName?: string;
 }
 
 export type TrackedConnection =
