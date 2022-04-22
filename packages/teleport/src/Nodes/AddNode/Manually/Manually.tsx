@@ -20,6 +20,7 @@ import TextSelectCopy from 'teleport/components/TextSelectCopy';
 import DownloadLinks from 'teleport/components/DownloadLinks';
 import { State } from './../useAddNode';
 import { DialogContent, DialogFooter } from 'design/Dialog';
+import { JoinToken } from 'teleport/services/joinToken';
 
 export default function Manually({
   isEnterprise,
@@ -84,7 +85,7 @@ const configDir = '$HOME/.config';
 const configFile = `$HOME/.config/teleport.yaml`;
 const startCmd = `teleport start --config=${configDir}/teleport.yaml`;
 
-function getConfigCmd(token, host) {
+function getConfigCmd(token: string, host: string) {
   return `teleport configure --output=${configFile} --roles=node --token=${token} --auth-server=${host} --data-dir=${configDir}`;
 }
 
@@ -152,7 +153,7 @@ const StepsWithToken = ({
           {joinToken.expiryText}.
         </Text>
       </Text>
-      <TextSelectCopy mt="2" text={getConfigCmd(joinToken, host)} />
+      <TextSelectCopy mt="2" text={getConfigCmd(joinToken.id, host)} />
       <Box>
         <ButtonLink onClick={createJoinToken}>Regenerate Token</ButtonLink>
       </Box>

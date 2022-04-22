@@ -81,7 +81,7 @@ const configDir = '$HOME/.config';
 const configFile = `$HOME/.config/teleport.yaml`;
 const startCmd = `teleport start --config=${configDir}/teleport.yaml`;
 
-function getConfigCmd(token, host) {
+function getConfigCmd(token: string, host: string) {
   return `teleport configure --output=${configFile} --app-name=[example-app] --app-uri=http://localhost/ --roles=app --token=${token} --auth-server=${host} --data-dir=${configDir}`;
 }
 
@@ -156,7 +156,7 @@ const StepsWithToken = ({ token, host, createToken }: StepsWithTokenProps) => (
           {token.expiryText}.
         </Text>
       </Text>
-      <TextSelectCopy mt="2" text={getConfigCmd(token, host)} />
+      <TextSelectCopy mt="2" text={getConfigCmd(token.id, host)} />
       <Box>
         <ButtonLink onClick={createToken}>Regenerate Token</ButtonLink>
       </Box>
