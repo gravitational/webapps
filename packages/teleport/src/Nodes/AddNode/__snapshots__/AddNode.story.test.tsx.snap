@@ -3202,7 +3202,7 @@ exports[`render manual tab with join token 1`] = `
                   $
                 </div>
                 <div>
-                  teleport configure --output=$HOME/.config/teleport.yaml --roles=node --token=some-join-token-hash --auth-server=localhost:443 --data-dir=$HOME/.config
+                  teleport configure --output=$HOME/.config/node_config.yaml --roles=node --token=some-join-token-hash --auth-server=localhost:443 --data-dir=$HOME/.config
                 </div>
               </div>
               <button
@@ -3246,7 +3246,7 @@ exports[`render manual tab with join token 1`] = `
                   $
                 </div>
                 <div>
-                  teleport start --config=$HOME/.config/teleport.yaml
+                  teleport start --config=$HOME/.config/node_config.yaml
                 </div>
               </div>
               <button
@@ -3731,7 +3731,7 @@ exports[`render manual tab with local user 1`] = `
                   $
                 </div>
                 <div>
-                  teleport configure --output=$HOME/.config/teleport.yaml --roles=node --token=[generated-join-token] --auth-server=localhost:443 --data-dir=$HOME/.config
+                  teleport configure --output=$HOME/.config/node_config.yaml --roles=node --token=[generated-join-token] --auth-server=localhost:443 --data-dir=$HOME/.config
                 </div>
               </div>
               <button
@@ -3765,7 +3765,7 @@ exports[`render manual tab with local user 1`] = `
                   $
                 </div>
                 <div>
-                  teleport start --config=$HOME/.config/teleport.yaml
+                  teleport start --config=$HOME/.config/node_config.yaml
                 </div>
               </div>
               <button
@@ -4250,7 +4250,7 @@ exports[`render manual tab with sso user 1`] = `
                   $
                 </div>
                 <div>
-                  teleport configure --output=$HOME/.config/teleport.yaml --roles=node --token=[generated-join-token] --auth-server=localhost:443 --data-dir=$HOME/.config
+                  teleport configure --output=$HOME/.config/node_config.yaml --roles=node --token=[generated-join-token] --auth-server=localhost:443 --data-dir=$HOME/.config
                 </div>
               </div>
               <button
@@ -4284,7 +4284,7 @@ exports[`render manual tab with sso user 1`] = `
                   $
                 </div>
                 <div>
-                  teleport start --config=$HOME/.config/teleport.yaml
+                  teleport start --config=$HOME/.config/node_config.yaml
                 </div>
               </div>
               <button

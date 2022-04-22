@@ -26,6 +26,7 @@ import {
 import { DialogContent, DialogFooter } from 'design/Dialog';
 import TextSelectCopy from 'teleport/components/TextSelectCopy';
 import DownloadLinks from 'teleport/components/DownloadLinks';
+import cfg from 'teleport/config';
 import { State } from '../useAddApp';
 
 export default function Manually({
@@ -77,12 +78,12 @@ export default function Manually({
   );
 }
 
-const configDir = '$HOME/.config';
-const configFile = `$HOME/.config/teleport.yaml`;
-const startCmd = `teleport start --config=${configDir}/teleport.yaml`;
+const configFile = `${cfg.configDir}/app_config.yaml`;
+const startCmd = `teleport start --config=${configFile}`;
 
 function getConfigCmd(token: string, host: string) {
-  return `teleport configure --output=${configFile} --app-name=[example-app] --app-uri=http://localhost/ --roles=app --token=${token} --auth-server=${host} --data-dir=${configDir}`;
+  return `teleport configure --output=${configFile} --app-name=[example-app] --app-uri=http://localhost/ \
+--roles=app --token=${token} --auth-server=${host} --data-dir=${cfg.configDir}`;
 }
 
 type StepsWithoutTokenProps = {

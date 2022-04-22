@@ -18,9 +18,9 @@ import React, { useEffect } from 'react';
 import { Text, Box, ButtonLink, Indicator, ButtonSecondary } from 'design';
 import TextSelectCopy from 'teleport/components/TextSelectCopy';
 import DownloadLinks from 'teleport/components/DownloadLinks';
+import cfg from 'teleport/config';
 import { State } from './../useAddNode';
 import { DialogContent, DialogFooter } from 'design/Dialog';
-import { JoinToken } from 'teleport/services/joinToken';
 
 export default function Manually({
   isEnterprise,
@@ -81,12 +81,11 @@ export default function Manually({
   );
 }
 
-const configDir = '$HOME/.config';
-const configFile = `$HOME/.config/teleport.yaml`;
-const startCmd = `teleport start --config=${configDir}/teleport.yaml`;
+const configFile = `${cfg.configDir}/node_config.yaml`;
+const startCmd = `teleport start --config=${configFile}`;
 
 function getConfigCmd(token: string, host: string) {
-  return `teleport configure --output=${configFile} --roles=node --token=${token} --auth-server=${host} --data-dir=${configDir}`;
+  return `teleport configure --output=${configFile} --roles=node --token=${token} --auth-server=${host} --data-dir=${cfg.configDir}`;
 }
 
 type StepsWithoutTokenProps = {
