@@ -3202,7 +3202,7 @@ exports[`render manual tab with join token 1`] = `
                   $
                 </div>
                 <div>
-                  teleport configure --roles=node --token=some-join-token-hash --auth-server=localhost:443 --data-dir=$HOME/.config/teleport --output=$HOME/.config/teleport.yaml
+                  teleport configure --output=$HOME/.config/teleport.yaml --roles=node --token=some-join-token-hash --auth-server=localhost:443 --data-dir=$HOME/.config
                 </div>
               </div>
               <button
@@ -3232,7 +3232,7 @@ exports[`render manual tab with join token 1`] = `
             >
               Step 3
             </span>
-             - Start the Teleport agent with the generated configuration file
+             - Start the Teleport agent with the configuration file
             <div
               class="c17"
             >
@@ -3246,7 +3246,7 @@ exports[`render manual tab with join token 1`] = `
                   $
                 </div>
                 <div>
-                  sudo teleport start --config=$HOME/.config/teleport.yaml
+                  teleport start --config=$HOME/.config/teleport.yaml
                 </div>
               </div>
               <button
@@ -3683,6 +3683,40 @@ exports[`render manual tab with local user 1`] = `
             >
               Step 3
             </span>
+             - Generate a join token
+            <div
+              class="c16"
+            >
+              <div
+                class="c17"
+                style="overflow: auto; white-space: pre; word-break: break-all; font-size: 12px; font-family: \\"Droid Sans Mono\\", \\"monospace\\", monospace, \\"Droid Sans Fallback\\";"
+              >
+                <div
+                  class="c18"
+                >
+                  $
+                </div>
+                <div>
+                  tctl tokens add --type=node --ttl=1h
+                </div>
+              </div>
+              <button
+                class="c19"
+                kind="primary"
+                style="max-width: 48px; width: 100%; padding: 4px 8px; min-height: 10px; font-size: 10px;"
+              >
+                Copy
+              </button>
+            </div>
+          </div>
+          <div
+            class="c11"
+          >
+            <span
+              class="c12"
+            >
+              Step 4
+            </span>
              - Configure your teleport agent
             <div
               class="c16"
@@ -3697,7 +3731,7 @@ exports[`render manual tab with local user 1`] = `
                   $
                 </div>
                 <div>
-                  teleport configure --roles=node --token=[generated-join-token] --auth-server=localhost:443 --data-dir=$HOME/.config/teleport --output=$HOME/.config/teleport.yaml
+                  teleport configure --output=$HOME/.config/teleport.yaml --roles=node --token=[generated-join-token] --auth-server=localhost:443 --data-dir=$HOME/.config
                 </div>
               </div>
               <button
@@ -3715,7 +3749,7 @@ exports[`render manual tab with local user 1`] = `
             <span
               class="c12"
             >
-              Step 4
+              Step 5
             </span>
              - Start the Teleport agent with the generated configuration file
             <div
@@ -3731,7 +3765,7 @@ exports[`render manual tab with local user 1`] = `
                   $
                 </div>
                 <div>
-                  sudo teleport start --config=$HOME/.config/teleport.yaml
+                  teleport start --config=$HOME/.config/teleport.yaml
                 </div>
               </div>
               <button
@@ -4168,6 +4202,40 @@ exports[`render manual tab with sso user 1`] = `
             >
               Step 3
             </span>
+             - Generate a join token
+            <div
+              class="c16"
+            >
+              <div
+                class="c17"
+                style="overflow: auto; white-space: pre; word-break: break-all; font-size: 12px; font-family: \\"Droid Sans Mono\\", \\"monospace\\", monospace, \\"Droid Sans Fallback\\";"
+              >
+                <div
+                  class="c18"
+                >
+                  $
+                </div>
+                <div>
+                  tctl tokens add --type=node --ttl=1h
+                </div>
+              </div>
+              <button
+                class="c19"
+                kind="primary"
+                style="max-width: 48px; width: 100%; padding: 4px 8px; min-height: 10px; font-size: 10px;"
+              >
+                Copy
+              </button>
+            </div>
+          </div>
+          <div
+            class="c11"
+          >
+            <span
+              class="c12"
+            >
+              Step 4
+            </span>
              - Configure your teleport agent
             <div
               class="c16"
@@ -4182,7 +4250,7 @@ exports[`render manual tab with sso user 1`] = `
                   $
                 </div>
                 <div>
-                  teleport configure --roles=node --token=[generated-join-token] --auth-server=localhost:443 --data-dir=$HOME/.config/teleport --output=$HOME/.config/teleport.yaml
+                  teleport configure --output=$HOME/.config/teleport.yaml --roles=node --token=[generated-join-token] --auth-server=localhost:443 --data-dir=$HOME/.config
                 </div>
               </div>
               <button
@@ -4200,7 +4268,7 @@ exports[`render manual tab with sso user 1`] = `
             <span
               class="c12"
             >
-              Step 4
+              Step 5
             </span>
              - Start the Teleport agent with the generated configuration file
             <div
@@ -4216,7 +4284,7 @@ exports[`render manual tab with sso user 1`] = `
                   $
                 </div>
                 <div>
-                  sudo teleport start --config=$HOME/.config/teleport.yaml
+                  teleport start --config=$HOME/.config/teleport.yaml
                 </div>
               </div>
               <button
