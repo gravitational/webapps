@@ -29,8 +29,8 @@ export const MenuLogin = React.forwardRef<MenuLoginHandle, MenuLoginProps>(
     const { onSelect, anchorOrigin, transformOrigin } = props;
     const anchorRef = useRef<HTMLElement>();
     const [isOpen, setIsOpen] = useState(false);
-    const [getLoginItemsAttempt, runGetLoginItems] = useAsync(async () =>
-      props.getLoginItems()
+    const [getLoginItemsAttempt, runGetLoginItems] = useAsync(() =>
+      Promise.resolve().then(() => props.getLoginItems())
     );
 
     const placeholder = props.placeholder || 'Enter login name…';
