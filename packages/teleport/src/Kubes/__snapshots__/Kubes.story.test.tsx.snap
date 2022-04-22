@@ -1472,16 +1472,13 @@ exports[`loaded 1`] = `
     >
       Kubernetes
     </div>
-    <a
+    <button
       class="c3"
-      href="https://goteleport.com/docs/kubernetes-access/guides"
       kind="primary"
-      rel="noreferrer"
-      target="_blank"
       width="240px"
     >
-      View documentation
-    </a>
+      Add Kubernetes
+    </button>
   </div>
   <form
     class="c4"
