@@ -33,8 +33,8 @@ export function useDatabases() {
     const doc = documentsService.createGatewayDocument({
       // Not passing the `gatewayUri` field here, as at this point the gateway doesn't exist yet.
       // `port` is not passed as well, we'll let the tsh daemon pick a random one.
-      title: db.name,
       targetUri: db.uri,
+      targetName: db.name,
       targetUser: dbUser,
       targetSubresourceName: dbName,
     });

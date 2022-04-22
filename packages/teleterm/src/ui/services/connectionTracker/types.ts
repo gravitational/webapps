@@ -16,6 +16,7 @@ export interface TrackedGatewayConnection extends TrackedConnectionBase {
   title: string;
   id: string;
   targetUri: string;
+  targetName: string;
   targetUser?: string;
   port?: string;
   gatewayUri: string;
