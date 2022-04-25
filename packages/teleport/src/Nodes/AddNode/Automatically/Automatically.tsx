@@ -36,7 +36,7 @@ export default function Automatically(props: Props) {
     }
   }, []);
 
-  if (attempt.status === 'processing' || attempt.status == '') {
+  if (!joinToken || attempt.status === 'processing' || attempt.status == '') {
     return (
       <Box textAlign="center">
         <Indicator />
