@@ -71,7 +71,7 @@ export function AddKube({
     setCmd(generatedCmd);
   }, [token]);
 
-  function handleGenerate(e: React.SyntheticEvent, validator: Validator) {
+  function handleSubmit(e: React.SyntheticEvent, validator: Validator) {
     e.preventDefault();
 
     // validate() will run the rule functions of the form inputs
@@ -113,7 +113,7 @@ export function AddKube({
             >
               the documentation
             </Link>
-            {' .'}
+            {'.'}
           </Box>
           <Box mb={4}>
             <Text>
@@ -139,7 +139,7 @@ export function AddKube({
               {({ validator }) => (
                 <Flex alignItems="center" flexDirection="row">
                   <form
-                    onSubmit={e => handleGenerate(e, validator)}
+                    onSubmit={e => handleSubmit(e, validator)}
                     style={{ width: '100%' }}
                   >
                     <FieldInput
@@ -168,7 +168,7 @@ export function AddKube({
                     />
                     <ButtonPrimary
                       block
-                      mt="1"
+                      mt="2"
                       disabled={attempt.status === 'processing'}
                       type="submit"
                     >
