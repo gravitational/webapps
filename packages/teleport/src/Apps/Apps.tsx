@@ -26,8 +26,8 @@ import {
 import Empty, { EmptyStateInfo } from 'teleport/components/Empty';
 import AppList from './AppList';
 import AddApp from './AddApp';
-import ButtonAdd from './ButtonAdd';
 import useApps, { State } from './useApps';
+import ResourceButtonAdd from 'teleport/components/ResourceButtonAdd';
 
 export default function Container() {
   const ctx = useTeleport();
@@ -68,7 +68,8 @@ export function Apps(props: State) {
       <FeatureHeader alignItems="center" justifyContent="space-between">
         <FeatureHeaderTitle>Applications</FeatureHeaderTitle>
         {!hasNoApps && (
-          <ButtonAdd
+          <ResourceButtonAdd
+            resource="application"
             isLeafCluster={isLeafCluster}
             canCreate={canCreate}
             onClick={showAddApp}

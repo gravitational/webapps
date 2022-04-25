@@ -1,5 +1,5 @@
 /*
-Copyright 2020 Gravitational, Inc.
+Copyright 2022 Gravitational, Inc.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -23,11 +23,11 @@ export default function ResourceButtonAdd(props: Props) {
 
   let title = '';
   if (!canCreate) {
-    title = `You do not have access to add ${resource.toLocaleLowerCase()}`;
+    title = `You do not have access to add ${resource}`;
   }
 
   if (isLeafCluster) {
-    title = `Adding ${resource.toLocaleLowerCase()} to a leaf cluster is not supported`;
+    title = `Adding ${resource} to a leaf cluster is not supported`;
   }
 
   return (

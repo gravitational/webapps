@@ -772,9 +772,11 @@ exports[`failed 1`] = `
     <button
       class="c3"
       kind="primary"
+      title=""
       width="240px"
     >
-      Add Kubernetes
+      Add 
+      kubernetes
     </button>
   </div>
   <div
@@ -1475,9 +1477,11 @@ exports[`loaded 1`] = `
     <button
       class="c3"
       kind="primary"
+      title=""
       width="240px"
     >
-      Add Kubernetes
+      Add 
+      kubernetes
     </button>
   </div>
   <form

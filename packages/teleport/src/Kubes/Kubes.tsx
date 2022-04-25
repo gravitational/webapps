@@ -73,7 +73,7 @@ export function Kubes(props: State) {
         {!hasNoKubes && (
           <ResourceButtonAdd
             onClick={() => setShowAddKube(true)}
-            resource="Kubernetes"
+            resource="kubernetes"
             isLeafCluster={isLeafCluster}
             canCreate={canCreate}
           />
