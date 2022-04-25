@@ -42,12 +42,8 @@ export const Failed = () => (
 );
 
 const props = {
-  onClose() {
-    return null;
-  },
-  createToken() {
-    return Promise.resolve(null);
-  },
+  onClose: () => null,
+  createToken: () => Promise.resolve(null),
   attempt: {
     status: 'success',
     statusText: '',
