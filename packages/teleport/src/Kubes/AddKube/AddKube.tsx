@@ -31,6 +31,7 @@ import Dialog, {
 } from 'design/Dialog';
 import FieldInput from 'shared/components/FieldInput';
 import Validation, { Validator } from 'shared/components/Validation';
+import { requiredField } from 'shared/components/Validation/rules';
 import TextSelectCopy from 'teleport/components/TextSelectCopy';
 import useTeleport from 'teleport/useTeleport';
 import useAddKube, { State } from './useAddKube';
@@ -144,7 +145,7 @@ export function AddKube({
                   >
                     <FieldInput
                       mb={2}
-                      rule={(val: string) => requiredField(val, 'Namespace')}
+                      rule={requiredField('Namespace is required')}
                       label="Namespace"
                       autoFocus
                       value={namespace}
@@ -155,9 +156,9 @@ export function AddKube({
                     />
                     <FieldInput
                       mb={2}
-                      rule={(val: string) =>
-                        requiredField(val, 'Kubernetes Cluster Name')
-                      }
+                      rule={requiredField(
+                        'Kubernetes Cluster Name is required'
+                      )}
                       label="Kubernetes Cluster Name"
                       labelTip="Name shown to Teleport users connecting to the cluster."
                       value={clusterName}
@@ -211,20 +212,6 @@ export function AddKube({
     </Dialog>
   );
 }
-
-const requiredField = (value: string, fieldName: string) => () => {
-  if (!value || value.length === 0) {
-    return {
-      valid: false,
-      message: `${fieldName} is required`,
-    };
-  }
-
-  return {
-    valid: true,
-  };
-};
-
 const generateCmd = (
   namespace: string,
   clusterName: string,
