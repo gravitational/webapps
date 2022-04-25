@@ -15,25 +15,25 @@ limitations under the License.
 */
 
 import React from 'react';
-import { render } from 'design/utils/testing';
+import { render, screen } from 'design/utils/testing';
 import { Loaded, TokenGenerated, Processing, Failed } from './AddKube.story';
 
 test('render loaded', () => {
-  const { container } = render(<Loaded />);
-  expect(container.firstChild).toMatchSnapshot();
+  render(<Loaded />);
+  expect(screen.getByTestId('Modal')).toMatchSnapshot();
 });
 
 test('render with token generated', () => {
-  const { container } = render(<TokenGenerated />);
-  expect(container.firstChild).toMatchSnapshot();
+  render(<TokenGenerated />);
+  expect(screen.getByTestId('Modal')).toMatchSnapshot();
 });
 
 test('render processing', () => {
-  const { container } = render(<Processing />);
-  expect(container.firstChild).toMatchSnapshot();
+  render(<Processing />);
+  expect(screen.getByTestId('Modal')).toMatchSnapshot();
 });
 
 test('render failed', () => {
-  const { container } = render(<Failed />);
-  expect(container.firstChild).toMatchSnapshot();
+  render(<Failed />);
+  expect(screen.getByTestId('Modal')).toMatchSnapshot();
 });
