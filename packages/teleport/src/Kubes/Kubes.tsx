@@ -27,6 +27,7 @@ import useTeleport from 'teleport/useTeleport';
 import Empty, { EmptyStateInfo } from 'teleport/components/Empty';
 import useKubes, { State } from './useKubes';
 import AddKube from './AddKube';
+import ResourceButtonAdd from 'teleport/components/ResourceButtonAdd';
 
 export default function Container() {
   const ctx = useTeleport();
@@ -70,9 +71,12 @@ export function Kubes(props: State) {
       <FeatureHeader alignItems="center" justifyContent="space-between">
         <FeatureHeaderTitle>Kubernetes</FeatureHeaderTitle>
         {!hasNoKubes && (
-          <ButtonPrimary width="240px" onClick={() => setShowAddKube(true)}>
-            Add Kubernetes
-          </ButtonPrimary>
+          <ResourceButtonAdd
+            onClick={() => setShowAddKube(true)}
+            resource="Kubernetes"
+            isLeafCluster={isLeafCluster}
+            canCreate={canCreate}
+          />
         )}
       </FeatureHeader>
       {attempt.status === 'failed' && <Danger>{attempt.statusText}</Danger>}
