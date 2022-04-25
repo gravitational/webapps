@@ -15,6 +15,7 @@ limitations under the License.
 */
 
 import React from 'react';
+import { Attempt } from 'shared/hooks/useAttemptNext';
 import { AddKube } from './AddKube';
 
 export default {
@@ -47,7 +48,7 @@ const props = {
   attempt: {
     status: 'success',
     statusText: '',
-  } as any,
+  } as Attempt,
   token: null,
   version: '10.0.0',
 };
