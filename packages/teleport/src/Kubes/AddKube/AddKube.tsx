@@ -216,18 +216,18 @@ const generateCmd = (
   namespace: string,
   clusterName: string,
   proxyAddr: string,
-  token: string,
+  tokenId: string,
   clusterVersion: string
 ) => {
-  return `cat << EOF > prod-cluster-values.yaml  
-roles: kube   
-authToken: ${token}   
-proxyAddr: ${proxyAddr}   
-kubeClusterName: ${clusterName}   
-teleportVersionOverride: ${clusterVersion} 
-EOF  
-    
-helm install -f prod-cluster-values.yaml --create-namespace --namespace ${namespace}`;
+  return `cat << EOF > prod-cluster-values.yaml
+roles: kube
+authToken: ${tokenId}
+proxyAddr: ${proxyAddr}
+kubeClusterName: ${clusterName}
+teleportVersionOverride: ${clusterVersion}
+EOF
+ 
+helm install teleport-agent teleport/teleport-kube-agent -f prod-cluster-values.yaml --create-namespace --namespace ${namespace}`;
 };
 
 export type Props = {

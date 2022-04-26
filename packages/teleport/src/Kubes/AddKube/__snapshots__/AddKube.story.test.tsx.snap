@@ -2002,15 +2002,15 @@ exports[`render with token generated 1`] = `
                     $
                   </div>
                   <div>
-                    cat &lt;&lt; EOF &gt; prod-cluster-values.yaml  
-roles: kube   
-authToken: some token   
-proxyAddr: localhost:443   
-kubeClusterName:    
-teleportVersionOverride: 10.0.0 
-EOF  
-    
-helm install -f prod-cluster-values.yaml --create-namespace --namespace 
+                    cat &lt;&lt; EOF &gt; prod-cluster-values.yaml
+roles: kube
+authToken: some token
+proxyAddr: localhost:443
+kubeClusterName: 
+teleportVersionOverride: 10.0.0
+EOF
+ 
+helm install teleport-agent teleport/teleport-kube-agent -f prod-cluster-values.yaml --create-namespace --namespace 
                   </div>
                 </div>
                 <button
