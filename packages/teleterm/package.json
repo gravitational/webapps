@@ -100,7 +100,7 @@
       "./assets/**",
       {
         "from": "../../../teleport/build/tsh",
-        "to": "."
+        "to": "./bin/tsh"
       }
     ],
     "publish": {
