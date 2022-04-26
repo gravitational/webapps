@@ -92,7 +92,14 @@ export class DocumentsService {
    * If title is not present in opts, createGatewayDocument will create one based on opts.
    */
   createGatewayDocument(opts: CreateGatewayDocumentOpts): DocumentGateway {
-    const { targetUri, targetUser, targetName, targetSubresourceName } = opts;
+    const {
+      targetUri,
+      targetUser,
+      targetName,
+      targetSubresourceName,
+      port,
+      gatewayUri,
+    } = opts;
     const uri = routing.getDocUri({ docId: unique() });
     let title = opts.title;
 
@@ -111,7 +118,9 @@ export class DocumentsService {
       targetUser,
       targetName,
       targetSubresourceName,
+      gatewayUri,
       title,
+      port,
     };
   }
 
