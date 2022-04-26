@@ -27,7 +27,7 @@ import useTeleport from 'teleport/useTeleport';
 import Empty, { EmptyStateInfo } from 'teleport/components/Empty';
 import useKubes, { State } from './useKubes';
 import AddKube from './AddKube';
-import ResourceButtonAdd from 'teleport/components/ResourceButtonAdd';
+import AgentButtonAdd from 'teleport/components/AgentButtonAdd';
 
 export default function Container() {
   const ctx = useTeleport();
@@ -71,9 +71,9 @@ export function Kubes(props: State) {
       <FeatureHeader alignItems="center" justifyContent="space-between">
         <FeatureHeaderTitle>Kubernetes</FeatureHeaderTitle>
         {!hasNoKubes && (
-          <ResourceButtonAdd
+          <AgentButtonAdd
             onClick={() => setShowAddKube(true)}
-            resource="kubernetes"
+            agent="kubernetes"
             isLeafCluster={isLeafCluster}
             canCreate={canCreate}
           />

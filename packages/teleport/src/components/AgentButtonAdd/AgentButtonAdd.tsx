@@ -17,17 +17,17 @@ limitations under the License.
 import React from 'react';
 import { ButtonPrimary } from 'design';
 
-export default function ResourceButtonAdd(props: Props) {
-  const { canCreate, isLeafCluster, onClick, resource } = props;
+export default function AgentButtonAdd(props: Props) {
+  const { canCreate, isLeafCluster, onClick, agent } = props;
   const disabled = isLeafCluster || !canCreate;
 
   let title = '';
   if (!canCreate) {
-    title = `You do not have access to add ${resource}`;
+    title = `You do not have access to add ${agent}`;
   }
 
   if (isLeafCluster) {
-    title = `Adding ${resource} to a leaf cluster is not supported`;
+    title = `Adding ${agent} to a leaf cluster is not supported`;
   }
 
   return (
@@ -37,7 +37,7 @@ export default function ResourceButtonAdd(props: Props) {
       width="240px"
       onClick={onClick}
     >
-      Add {resource}
+      Add {agent}
     </ButtonPrimary>
   );
 }
@@ -46,5 +46,5 @@ type Props = {
   isLeafCluster: boolean;
   canCreate: boolean;
   onClick?: () => void;
-  resource: string;
+  agent: string;
 };
