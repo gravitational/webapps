@@ -96,6 +96,7 @@ export class TrackedConnectionOperationsFactory {
             targetUri: connection.targetUri,
             targetName: connection.targetName,
             targetUser: connection.targetUser,
+            targetSubresourceName: connection.targetSubresourceName,
             title: connection.title,
             gatewayUri: connection.gatewayUri,
             port: connection.port,
