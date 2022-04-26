@@ -93,14 +93,8 @@ function ConnectButton({
             required={false}
             getLoginItems={() => []}
             onSelect={(_, dbName) => onConnect(dbUser, dbName)}
-            transformOrigin={{
-              vertical: 'top',
-              horizontal: 'right',
-            }}
-            anchorOrigin={{
-              vertical: 'center',
-              horizontal: 'right',
-            }}
+            transformOrigin={transformOrigin}
+            anchorOrigin={anchorOrigin}
           />
           <MenuLogin
             placeholder="Enter username"
@@ -111,20 +105,23 @@ function ConnectButton({
               setDbUser(user);
               dbNameMenuLoginRef.current.open();
             }}
-            transformOrigin={{
-              vertical: 'top',
-              horizontal: 'right',
-            }}
-            anchorOrigin={{
-              vertical: 'center',
-              horizontal: 'right',
-            }}
+            transformOrigin={transformOrigin}
+            anchorOrigin={anchorOrigin}
           />
         </OverlayGrid>
       </MenuLoginTheme>
     </Cell>
   );
 }
+
+const transformOrigin = {
+  vertical: 'top',
+  horizontal: 'right',
+};
+const anchorOrigin = {
+  vertical: 'center',
+  horizontal: 'right',
+};
 
 const OverlayGrid = styled.div`
   display: inline-grid;
