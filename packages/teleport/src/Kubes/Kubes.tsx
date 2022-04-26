@@ -74,6 +74,7 @@ export function Kubes(props: State) {
           <AgentButtonAdd
             onClick={() => setShowAddKube(true)}
             agent="kubernetes"
+            beginsWithVowel={false}
             isLeafCluster={isLeafCluster}
             canCreate={canCreate}
           />

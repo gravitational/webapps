@@ -18,16 +18,20 @@ import React from 'react';
 import { ButtonPrimary } from 'design';
 
 export default function AgentButtonAdd(props: Props) {
-  const { canCreate, isLeafCluster, onClick, agent } = props;
+  const { canCreate, isLeafCluster, onClick, agent, beginsWithVowel } = props;
   const disabled = isLeafCluster || !canCreate;
 
   let title = '';
   if (!canCreate) {
-    title = `You do not have access to add ${agent}`;
+    title = `You do not have access to add ${
+      beginsWithVowel ? 'an' : 'a'
+    } ${agent}`;
   }
 
   if (isLeafCluster) {
-    title = `Adding ${agent} to a leaf cluster is not supported`;
+    title = `Adding ${
+      beginsWithVowel ? 'an' : 'a'
+    } ${agent} to a leaf cluster is not supported`;
   }
 
   return (
@@ -42,9 +46,10 @@ export default function AgentButtonAdd(props: Props) {
   );
 }
 
-type Props = {
+export type Props = {
   isLeafCluster: boolean;
   canCreate: boolean;
   onClick?: () => void;
   agent: string;
+  beginsWithVowel: boolean;
 };

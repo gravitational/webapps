@@ -70,6 +70,7 @@ export function Apps(props: State) {
         {!hasNoApps && (
           <AgentButtonAdd
             agent="application"
+            beginsWithVowel={true}
             isLeafCluster={isLeafCluster}
             canCreate={canCreate}
             onClick={showAddApp}
