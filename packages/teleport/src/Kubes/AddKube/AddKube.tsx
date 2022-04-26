@@ -230,6 +230,6 @@ EOF
 helm install -f prod-cluster-values.yaml --create-namespace --namespace ${namespace}`;
 };
 
-type Props = {
+export type Props = {
   onClose(): void;
 };

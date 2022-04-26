@@ -16,7 +16,8 @@ limitations under the License.
 
 import React from 'react';
 import { Attempt } from 'shared/hooks/useAttemptNext';
-import { AddKube } from './AddKube';
+import { AddKube, Props } from './AddKube';
+import { State } from './useAddKube';
 
 export default {
   title: 'Teleport/Kubes/Add',
@@ -42,7 +43,7 @@ export const Failed = () => (
   />
 );
 
-const props = {
+const props: Props & State = {
   onClose: () => null,
   createToken: () => Promise.resolve(null),
   attempt: {
