@@ -258,16 +258,15 @@ exports[`empty state 1`] = `
       >
         Kubernetes
       </div>
-      <a
+      <button
         class="c3"
-        href="https://goteleport.com/docs/kubernetes-access/guides"
         kind="primary"
-        rel="noreferrer"
-        target="_blank"
+        title=""
         width="240px"
       >
-        View documentation
-      </a>
+        Add 
+        kubernetes
+      </button>
     </div>
     <div
       class="c4 sc-AxirZ c5"
@@ -465,16 +464,15 @@ exports[`failed 1`] = `
     >
       Kubernetes
     </div>
-    <a
+    <button
       class="c3"
-      href="https://goteleport.com/docs/kubernetes-access/guides"
       kind="primary"
-      rel="noreferrer"
-      target="_blank"
+      title=""
       width="240px"
     >
-      View documentation
-    </a>
+      Add 
+      kubernetes
+    </button>
   </div>
   <div
     class="c4"
@@ -846,16 +844,15 @@ exports[`loaded 1`] = `
     >
       Kubernetes
     </div>
-    <a
+    <button
       class="c3"
-      href="https://goteleport.com/docs/kubernetes-access/guides"
       kind="primary"
-      rel="noreferrer"
-      target="_blank"
+      title=""
       width="240px"
     >
-      View documentation
-    </a>
+      Add 
+      kubernetes
+    </button>
   </div>
   <div
     class="sc-AxirZ c4"
@@ -1164,16 +1161,16 @@ exports[`readonly empty state 1`] = `
       >
         Kubernetes
       </div>
-      <a
+      <button
         class="c3"
-        href="https://goteleport.com/docs/kubernetes-access/guides"
+        disabled=""
         kind="primary"
-        rel="noreferrer"
-        target="_blank"
+        title="You do not have access to add a kubernetes"
         width="240px"
       >
-        View documentation
-      </a>
+        Add 
+        kubernetes
+      </button>
     </div>
     <div
       class="c4"
