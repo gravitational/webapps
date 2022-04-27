@@ -858,7 +858,6 @@ exports[`failed state 1`] = `
       kind="danger"
     >
       some error message
-       
     </div>
     <form
       class="c5"
