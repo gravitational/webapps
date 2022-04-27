@@ -18,7 +18,6 @@ import React, { useEffect } from 'react';
 import { Text, Box, ButtonLink, Indicator, ButtonSecondary } from 'design';
 import TextSelectCopy from 'teleport/components/TextSelectCopy';
 import DownloadLinks from 'teleport/components/DownloadLinks';
-import cfg from 'teleport/config';
 import { State } from './../useAddNode';
 import { DialogContent, DialogFooter } from 'design/Dialog';
 
@@ -81,13 +80,6 @@ export default function Manually({
   );
 }
 
-const configFile = `${cfg.configDir}/node_config.yaml`;
-const startCmd = `teleport start --config=${configFile}`;
-
-function getConfigCmd(token: string, host: string) {
-  return `teleport configure --output=${configFile} --roles=node --token=${token} --auth-server=${host} --data-dir=${cfg.configDir}`;
-}
-
 type StepsWithoutTokenProps = {
   tshLoginCmd: string;
   host: string;
@@ -109,22 +101,15 @@ const StepsWithoutToken = ({ tshLoginCmd, host }: StepsWithoutTokenProps) => (
       {' - Generate a join token'}
       <TextSelectCopy mt="2" text="tctl tokens add --type=node --ttl=1h" />
     </Box>
-    <Box mb={4}>
+    <Box>
       <Text bold as="span">
         Step 4
       </Text>
-      {` - Configure your teleport agent`}
+      {` - Start the Teleport agent with the following parameters`}
       <TextSelectCopy
         mt="2"
-        text={getConfigCmd('[generated-join-token]', host)}
+        text={`teleport start --roles=node --token=[generated-join-token] --auth-server=${host} `}
       />
-    </Box>
-    <Box>
-      <Text bold as="span">
-        Step 5
-      </Text>
-      {` - Start the Teleport agent with the generated configuration file`}
-      <TextSelectCopy mt="2" text={startCmd} />
     </Box>
   </>
 );
@@ -140,31 +125,25 @@ const StepsWithToken = ({
   host,
   createJoinToken,
 }: StepsWithTokenProps) => (
-  <>
-    <Box mb={4}>
-      <Text bold as="span">
-        Step 2
+  <Box>
+    <Text bold as="span">
+      Step 2
+    </Text>
+    {` - Start the Teleport agent with the following parameters`}
+    <Text mt="1">
+      The token will be valid for{' '}
+      <Text bold as={'span'}>
+        {joinToken.expiryText}.
       </Text>
-      {` - Configure your teleport agent`}
-      <Text mt="1">
-        The token will be valid for{' '}
-        <Text bold as={'span'}>
-          {joinToken.expiryText}.
-        </Text>
-      </Text>
-      <TextSelectCopy mt="2" text={getConfigCmd(joinToken.id, host)} />
-      <Box>
-        <ButtonLink onClick={createJoinToken}>Regenerate Token</ButtonLink>
-      </Box>
-    </Box>
+    </Text>
+    <TextSelectCopy
+      mt="2"
+      text={`teleport start --roles=node --token=${joinToken.id} --auth-server=${host} `}
+    />
     <Box>
-      <Text bold as="span">
-        Step 3
-      </Text>
-      {` - Start the Teleport agent with the configuration file`}
-      <TextSelectCopy mt="2" text={startCmd} />
+      <ButtonLink onClick={createJoinToken}>Regenerate Token</ButtonLink>
     </Box>
-  </>
+  </Box>
 );
 
 type Props = {
