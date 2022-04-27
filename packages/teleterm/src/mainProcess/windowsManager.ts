@@ -22,10 +22,10 @@ export class WindowsManager {
       y: windowState.y,
       width: windowState.width,
       height: windowState.height,
-      backgroundColor: theme.colors.primary.main,
+      backgroundColor: theme.colors.primary.darker,
       minWidth: 400,
       minHeight: 300,
-      title: 'Teleport Terminal',
+      title: 'Teleport Connect Preview',
       icon: getAssetPath('icon.png'),
       webPreferences: {
         contextIsolation: true,

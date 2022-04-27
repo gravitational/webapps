@@ -278,12 +278,28 @@ export class ClustersService extends ImmutableStore<ClustersServiceState> {
     }
   }
 
+  /**
+   * Removes cluster and its leaf clusters (if any)
+   */
   async removeCluster(clusterUri: string) {
     await this.client.removeCluster(clusterUri);
+    const leafClustersUris = this.getClusters()
+      .filter(
+        item =>
+          item.leaf && routing.ensureRootClusterUri(item.uri) === clusterUri
+      )
+      .map(cluster => cluster.uri);
     this.setState(draft => {
       draft.clusters.delete(clusterUri);
+      leafClustersUris.forEach(leafClusterUri => {
+        draft.clusters.delete(leafClusterUri);
+      });
     });
+
     this.removeResources(clusterUri);
+    leafClustersUris.forEach(leafClusterUri => {
+      this.removeResources(leafClusterUri);
+    });
   }
 
   async getAuthSettings(clusterUri: string) {
@@ -411,6 +427,10 @@ export class ClustersService extends ImmutableStore<ClustersServiceState> {
 
   getDbs() {
     return [...this.state.dbs.values()];
+  }
+
+  async getDbUsers(dbUri: string): Promise<string[]> {
+    return await this.client.listDatabaseUsers(dbUri);
   }
 
   useState() {

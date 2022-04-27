@@ -109,6 +109,19 @@ export default function createClient(addr: string) {
       });
     },
 
+    async listDatabaseUsers(dbUri: string) {
+      const req = new api.ListDatabaseUsersRequest().setDbUri(dbUri);
+      return new Promise<string[]>((resolve, reject) => {
+        tshd.listDatabaseUsers(req, (err, response) => {
+          if (err) {
+            reject(err);
+          } else {
+            resolve(response.toObject().usersList);
+          }
+        });
+      });
+    },
+
     async listServers(clusterUri: string) {
       const req = new api.ListServersRequest().setClusterUri(clusterUri);
       return new Promise<types.Server[]>((resolve, reject) => {
@@ -202,7 +215,8 @@ export default function createClient(addr: string) {
       const req = new api.CreateGatewayRequest()
         .setTargetUri(params.targetUri)
         .setTargetUser(params.user)
-        .setLocalPort(params.port);
+        .setLocalPort(params.port)
+        .setTargetSubresourceName(params.subresource_name);
       return new Promise<types.Gateway>((resolve, reject) => {
         tshd.createGateway(req, (err, response) => {
           if (err) {

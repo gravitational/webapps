@@ -34,6 +34,7 @@ export type TshClient = {
   listApps: (clusterUri: string) => Promise<Application[]>;
   listKubes: (clusterUri: string) => Promise<Kube[]>;
   listDatabases: (clusterUri: string) => Promise<Database[]>;
+  listDatabaseUsers: (dbUri: string) => Promise<string[]>;
   listServers: (clusterUri: string) => Promise<Server[]>;
   createAbortController: () => TshAbortController;
   addRootCluster: (addr: string) => Promise<Cluster>;
@@ -73,4 +74,5 @@ export type CreateGatewayParams = {
   targetUri: string;
   port?: string;
   user?: string;
+  subresource_name?: string;
 };
