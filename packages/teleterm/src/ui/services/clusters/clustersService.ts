@@ -1,17 +1,18 @@
 import { useStore } from 'shared/libs/stores';
 import {
-  tsh,
-  SyncStatus,
   AuthSettings,
-  LoginParams,
   ClustersServiceState,
   CreateGatewayParams,
+  LoginParams,
+  SyncStatus,
+  tsh,
 } from './types';
 import { ImmutableStore } from '../immutableStore';
 import { routing } from 'teleterm/ui/uri';
 import isMatch from 'design/utils/match';
 import { makeLabelTag } from 'teleport/components/formatters';
 import { Label } from 'teleport/types';
+import { NotificationsService } from 'teleterm/ui/services/notifications';
 
 export function createClusterServiceState(): ClustersServiceState {
   return {
@@ -31,7 +32,10 @@ export function createClusterServiceState(): ClustersServiceState {
 export class ClustersService extends ImmutableStore<ClustersServiceState> {
   state: ClustersServiceState = createClusterServiceState();
 
-  constructor(public client: tsh.TshClient) {
+  constructor(
+    public client: tsh.TshClient,
+    private notificationsService: NotificationsService
+  ) {
     super();
   }
 
@@ -56,9 +60,19 @@ export class ClustersService extends ImmutableStore<ClustersServiceState> {
   }
 
   async syncRootCluster(clusterUri: string) {
-    await this.syncClusterInfo(clusterUri);
-
-    this.syncLeafClusters(clusterUri);
+    try {
+      await Promise.all([
+        this.syncClusterInfo(clusterUri),
+        this.syncLeafClusters(clusterUri),
+      ]);
+    } catch (e) {
+      this.notificationsService.notifyError({
+        title: `Could not synchronize cluster ${
+          routing.parseClusterUri(clusterUri).params.rootClusterId
+        }`,
+        description: e.message,
+      });
+    }
     this.syncKubes(clusterUri);
     this.syncApps(clusterUri);
     this.syncDbs(clusterUri);
@@ -78,13 +92,20 @@ export class ClustersService extends ImmutableStore<ClustersServiceState> {
   }
 
   async syncRootClusters() {
-    const clusters = await this.client.listRootClusters();
-    console.log('synced', clusters);
-    this.setState(draft => {
-      draft.clusters = new Map(clusters.map(c => [c.uri, c]));
-    });
-
-    clusters.filter(c => c.connected).forEach(c => this.syncRootCluster(c.uri));
+    try {
+      const clusters = await this.client.listRootClusters();
+      this.setState(draft => {
+        draft.clusters = new Map(clusters.map(c => [c.uri, c]));
+      });
+      clusters
+        .filter(c => c.connected)
+        .forEach(c => this.syncRootCluster(c.uri));
+    } catch (error) {
+      this.notificationsService.notifyError({
+        title: 'Could not fetch root clusters',
+        description: error.message,
+      });
+    }
   }
 
   async syncCluster(clusterUri: string) {
@@ -101,10 +122,17 @@ export class ClustersService extends ImmutableStore<ClustersServiceState> {
   }
 
   async syncGateways() {
-    const gws = await this.client.listGateways();
-    this.setState(draft => {
-      draft.gateways = new Map(gws.map(g => [g.uri, g]));
-    });
+    try {
+      const gws = await this.client.listGateways();
+      this.setState(draft => {
+        draft.gateways = new Map(gws.map(g => [g.uri, g]));
+      });
+    } catch (error) {
+      this.notificationsService.notifyError({
+        title: 'Could not fetch databases',
+        description: error.message,
+      });
+    }
   }
 
   async syncKubes(clusterUri: string) {
@@ -221,7 +249,7 @@ export class ClustersService extends ImmutableStore<ClustersServiceState> {
     const cluster = this.state.clusters.get(clusterUri);
     if (!cluster.connected) {
       this.setState(draft => {
-        delete draft.serversSyncStatus[clusterUri];
+        draft.serversSyncStatus.delete(clusterUri);
         helpers.updateMap(clusterUri, draft.servers, []);
       });
 
@@ -229,9 +257,9 @@ export class ClustersService extends ImmutableStore<ClustersServiceState> {
     }
 
     this.setState(draft => {
-      draft.serversSyncStatus[clusterUri] = {
+      draft.serversSyncStatus.set(clusterUri, {
         status: 'processing',
-      };
+      });
     });
 
     try {
@@ -242,10 +270,10 @@ export class ClustersService extends ImmutableStore<ClustersServiceState> {
       });
     } catch (err) {
       this.setState(draft => {
-        draft.serversSyncStatus[clusterUri] = {
+        draft.serversSyncStatus.set(clusterUri, {
           status: 'failed',
           statusText: err.message,
-        };
+        });
       });
     }
   }
@@ -271,10 +299,18 @@ export class ClustersService extends ImmutableStore<ClustersServiceState> {
   }
 
   async removeGateway(gatewayUri: string) {
-    await this.client.removeGateway(gatewayUri);
-    this.setState(draft => {
-      draft.gateways.delete(gatewayUri);
-    });
+    try {
+      await this.client.removeGateway(gatewayUri);
+      this.setState(draft => {
+        draft.gateways.delete(gatewayUri);
+      });
+    } catch (error) {
+      this.notificationsService.notifyError({
+        title: 'Could not close the database connection',
+        description: error.message,
+      });
+      throw error;
+    }
   }
 
   findCluster(clusterUri: string) {
