@@ -17,8 +17,6 @@ limitations under the License.
 import React from 'react';
 import styled from 'styled-components';
 import { Box, Text } from 'design';
-import { ExpanderClusters } from './ExpanderClusters';
-import { ExpanderConnections } from './ExpanderConnections';
 
 export function Navigator() {
   return (
@@ -27,9 +25,8 @@ export function Navigator() {
         NAVIGATOR
       </Text>
       <Scrollable>
-        <ExpanderConnections />
         <Separator />
-        <ExpanderClusters />
+        {/*<ExpanderClusters />*/}
         <Separator />
       </Scrollable>
     </Nav>
