@@ -49,7 +49,7 @@ const props: Props & State = {
   attempt: {
     status: 'success',
     statusText: '',
-  } as Attempt,
+  },
   token: null,
   version: '10.0.0',
 };
