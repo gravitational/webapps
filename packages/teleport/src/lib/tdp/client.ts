@@ -213,6 +213,16 @@ export default class Client extends EventEmitterWebAuthnSender {
     this.socket.send(msg);
   }
 
+  sendSharedDirectoryAnnounce(name: string) {
+    this.socket.send(
+      this.codec.encodeSharedDirectoryAnnounce({
+        completionId: 0, // This is always the first request.
+        directoryId: 2, // Hardcode for now since we only support sharing 1 directory.
+        name,
+      })
+    );
+  }
+
   resize(spec: ClientScreenSpec) {
     this.socket?.send(this.codec.encodeClientScreenSpec(spec));
   }
