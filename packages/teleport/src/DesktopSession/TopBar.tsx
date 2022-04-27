@@ -15,9 +15,10 @@ limitations under the License.
 */
 import React from 'react';
 import styled, { useTheme } from 'styled-components';
-import { Text, TopNav, Flex } from 'design';
+import { Text, TopNav, Flex, ButtonPrimary } from 'design';
 import { Clipboard } from 'design/Icon';
 import { colors } from 'teleport/Console/colors';
+import { TdpClient } from 'teleport/lib/tdp';
 import ActionMenu from './ActionMenu';
 
 export default function TopBar(props: Props) {
@@ -65,6 +66,18 @@ export default function TopBar(props: Props) {
             {recording ? '' : 'Not '}Recording
           </Text>
         </Flex>
+        {/* TODO(isaiah): Remove or refactor ButtonPrimary (obviously) */}
+        <ButtonPrimary
+          size="large"
+          width="100%"
+          type="submit"
+          onClick={() =>
+            props.tdpClient.sendSharedDirectoryAnnounce('testing123')
+          }
+          disabled={false}
+        >
+          Share Fake Directory
+        </ButtonPrimary>
         <ActionMenu onDisconnect={onDisconnect} />
       </Flex>
     </TopNav>
@@ -92,4 +105,5 @@ type Props = {
   clipboard: boolean;
   recording: boolean;
   onDisconnect: VoidFunction;
+  tdpClient: TdpClient;
 };

@@ -149,6 +149,7 @@ function Session(props: PropsWithChildren<State>) {
         userHost={`${username}@${hostname}`}
         clipboard={clipboardSharingActive}
         recording={isRecording}
+        tdpClient={tdpClient}
       />
 
       {props.children}
