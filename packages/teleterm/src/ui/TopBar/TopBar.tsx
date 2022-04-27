@@ -24,7 +24,7 @@ export function TopBar() {
 
 const Grid = styled.div`
   display: grid;
-  grid-template-columns: 1fr auto 1fr;
+  grid-template-columns: 1fr auto minmax(250px, 1fr);
   width: 100%;
   padding: 8px 25px;
   height: 56px;
@@ -45,10 +45,12 @@ const JustifyLeft = styled.div`
   display: flex;
   justify-self: start;
   align-items: center;
+  height: 100%;
 `;
 
 const JustifyRight = styled.div`
-  display: flex;
+  display: grid;
   justify-self: end;
   align-items: center;
+  height: 100%;
 `;
