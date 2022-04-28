@@ -38,6 +38,7 @@ export enum MessageType {
   ERROR = 9,
   MFA_JSON = 10,
   SHARED_DIRECTORY_ANNOUNCE = 11,
+  SHARED_DIRECTORY_ACKNOWLEDGE = 12,
 }
 
 // 0 is left button, 1 is middle button, 2 is right button
@@ -90,6 +91,12 @@ export type SharedDirectoryAnnounce = {
   completionId: number;
   directoryId: number;
   name: string;
+};
+
+// | message type (12) | directory_id uint32 | succeeded byte |
+export type SharedDirectoryAcknowledge = {
+  directoryId: number;
+  succeeded: boolean;
 };
 
 // TdaCodec provides an api for encoding and decoding teleport desktop access protocol messages [1]
@@ -435,7 +442,7 @@ export default class Codec {
   decodeMessageType(buffer: ArrayBuffer): MessageType {
     const messageType = new DataView(buffer).getUint8(0);
     // TODO(isaiah): this is fragile, instead switch all possibilities here.
-    if (messageType > MessageType.MFA_JSON) {
+    if (messageType > MessageType.SHARED_DIRECTORY_ACKNOWLEDGE) {
       throw new Error(`invalid message type: ${messageType}`);
     }
     return messageType;
@@ -483,6 +490,17 @@ export default class Codec {
     pngFrame.data.src = this._asBase64Url(buffer);
 
     return pngFrame;
+  }
+
+  // | message type (12) | directory_id uint32 | succeeded byte |
+  decodeSharedDirectoryAcknowledge(
+    buffer: ArrayBuffer
+  ): SharedDirectoryAcknowledge {
+    let dv = new DataView(buffer);
+    return {
+      directoryId: dv.getUint32(1),
+      succeeded: dv.getUint8(5) !== 0,
+    };
   }
 
   // _asBase64Url creates a data:image uri from the png data part of a PNG_FRAME tdp message.

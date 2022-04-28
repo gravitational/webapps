@@ -107,6 +107,9 @@ export default class Client extends EventEmitterWebAuthnSender {
         case MessageType.MFA_JSON:
           this.handleMfaChallenge(buffer);
           break;
+        case MessageType.SHARED_DIRECTORY_ACKNOWLEDGE:
+          this.handleSharedDirectoryAcknowledge(buffer);
+          break;
         default:
           this.logger.warn(`received unsupported message type ${messageType}`);
       }
@@ -177,6 +180,12 @@ export default class Client extends EventEmitterWebAuthnSender {
     } catch (err) {
       this.emit(TdpClientEvent.TDP_ERROR, err);
     }
+  }
+
+  handleSharedDirectoryAcknowledge(buffer: ArrayBuffer) {
+    // TODO(isaiah)
+    const ack = this.codec.decodeSharedDirectoryAcknowledge(buffer);
+    console.log(ack);
   }
 
   sendUsername(username: string) {
