@@ -23,6 +23,8 @@ const cfg = {
   isCloud: false,
   tunnelPublicAddress: '',
 
+  configDir: '$HOME/.config',
+
   baseUrl: window.location.origin,
 
   auth: {
