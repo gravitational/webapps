@@ -256,7 +256,8 @@ exports[`empty state 1`] = `
         title=""
         width="240px"
       >
-        Add Server
+        Add 
+        server
       </button>
     </div>
     <div
@@ -450,7 +451,8 @@ exports[`failed 1`] = `
       title=""
       width="240px"
     >
-      Add Server
+      Add 
+      server
     </button>
   </div>
   <div
@@ -899,7 +901,8 @@ exports[`loaded 1`] = `
       title=""
       width="240px"
     >
-      Add Server
+      Add 
+      server
     </button>
   </div>
   <div
@@ -1433,10 +1436,11 @@ exports[`readonly empty state 1`] = `
         class="c3"
         disabled=""
         kind="primary"
-        title="You do not have access to add a server"
+        title="You do not have access to add an server"
         width="240px"
       >
-        Add Server
+        Add 
+        server
       </button>
     </div>
     <div

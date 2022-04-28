@@ -14,8 +14,8 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React from 'react';
-import { Box, Indicator, ButtonPrimary, Flex, Text, Link } from 'design';
+import React, { useState } from 'react';
+import { Box, Indicator, Flex, Text, Link } from 'design';
 import { Danger } from 'design/Alert';
 import KubeList from 'teleport/Kubes/KubeList';
 import {
@@ -27,6 +27,8 @@ import useTeleport from 'teleport/useTeleport';
 import InputSearch from 'teleport/components/InputSearch';
 import Empty, { EmptyStateInfo } from 'teleport/components/Empty';
 import useKubes, { State } from './useKubes';
+import AddKube from './AddKube';
+import AgentButtonAdd from 'teleport/components/AgentButtonAdd';
 
 export default function Container() {
   const ctx = useTeleport();
@@ -51,20 +53,19 @@ export function Kubes(props: State) {
 
   const isEmpty = attempt.status === 'success' && kubes.length === 0;
   const hasKubes = attempt.status === 'success' && kubes.length > 0;
+  const [showAddKube, setShowAddKube] = useState(false);
 
   return (
     <FeatureBox>
       <FeatureHeader alignItems="center" justifyContent="space-between">
         <FeatureHeaderTitle>Kubernetes</FeatureHeaderTitle>
-        <ButtonPrimary
-          as="a"
-          width="240px"
-          target="_blank"
-          href={DOC_URL}
-          rel="noreferrer"
-        >
-          View documentation
-        </ButtonPrimary>
+        <AgentButtonAdd
+          onClick={() => setShowAddKube(true)}
+          agent="kubernetes"
+          beginsWithVowel={false}
+          isLeafCluster={isLeafCluster}
+          canCreate={canCreate}
+        />
       </FeatureHeader>
       {attempt.status === 'failed' && <Danger>{attempt.statusText}</Danger>}
       {attempt.status === 'processing' && (
@@ -89,10 +90,11 @@ export function Kubes(props: State) {
         <Empty
           clusterId={clusterId}
           canCreate={canCreate && !isLeafCluster}
-          onClick={() => window.open(DOC_URL)}
+          onClick={() => setShowAddKube(true)}
           emptyStateInfo={emptyStateInfo}
         />
       )}
+      {showAddKube && <AddKube onClose={() => setShowAddKube(false)} />}
     </FeatureBox>
   );
 }
