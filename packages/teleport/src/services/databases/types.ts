@@ -14,12 +14,14 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
+import { Label } from 'teleport/services/resources';
+
 export interface Database {
   name: string;
   description: string;
   title: string;
   protocol: DbProtocol;
-  tags: string[];
+  labels: Label[];
 }
 
 export type DbType = 'redshift' | 'rds' | 'gcp' | 'self-hosted';

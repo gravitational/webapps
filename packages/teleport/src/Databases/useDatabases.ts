@@ -25,7 +25,7 @@ import getResourceUrlQueryParams, {
 import useStickyClusterId from 'teleport/useStickyClusterId';
 import history from 'teleport/services/history';
 import { DatabasesResponse } from 'teleport/services/databases';
-import { SortType } from 'teleport/components/ServersideSearchPanel';
+import { SortType } from 'teleport/encodeUrlQueryParams';
 
 export default function useDatabases(ctx: Ctx) {
   const { search, pathname } = useLocation();

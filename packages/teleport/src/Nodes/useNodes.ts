@@ -27,7 +27,7 @@ import { openNewTab } from 'teleport/lib/util';
 import getResourceUrlQueryParams, {
   ResourceUrlQueryParams,
 } from 'teleport/getUrlQueryParams';
-import { SortType } from 'teleport/components/ServersideSearchPanel';
+import { SortType } from 'teleport/encodeUrlQueryParams';
 
 export default function useNodes(ctx: Ctx, stickyCluster: StickyCluster) {
   const { isLeafCluster, clusterId } = stickyCluster;

@@ -23,7 +23,7 @@ import {
   PreferredMfaType,
 } from 'shared/services';
 import { RecordingType } from 'teleport/services/recordings';
-import { SortType } from './components/ServersideSearchPanel/useServerSideSearchPanel';
+import { SortType } from './encodeUrlQueryParams';
 import generateResourcePath from './generateResourcePath';
 
 const cfg = {

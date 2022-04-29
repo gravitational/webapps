@@ -27,7 +27,7 @@ import getResourceUrlQueryParams, {
   ResourceUrlQueryParams,
 } from 'teleport/getUrlQueryParams';
 import { openNewTab } from 'teleport/lib/util';
-import { SortType } from 'teleport/components/ServersideSearchPanel';
+import { SortType } from 'teleport/encodeUrlQueryParams';
 
 export default function useDesktops(ctx: Ctx) {
   const { attempt, setAttempt } = useAttempt('processing');

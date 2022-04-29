@@ -23,7 +23,7 @@ import { NodesResponse } from 'teleport/services/nodes';
 import getResourceUrlQueryParams, {
   ResourceUrlQueryParams,
 } from 'teleport/getUrlQueryParams';
-import { SortType } from 'teleport/components/ServersideSearchPanel';
+import { SortType } from 'teleport/encodeUrlQueryParams';
 import { useConsoleContext } from './../consoleContextProvider';
 import * as stores from './../stores';
 

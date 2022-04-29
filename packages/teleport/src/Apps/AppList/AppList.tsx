@@ -14,10 +14,10 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
 import { Flex, Text, ButtonBorder } from 'design';
-import Table, { Cell, LabelCell } from 'design/DataTable';
+import Table, { Cell, ClickableLabelCell } from 'design/DataTable';
 import {
   pink,
   teal,
@@ -32,10 +32,11 @@ import {
 } from 'design/theme/palette';
 import { AmazonAws } from 'design/Icon';
 import { App } from 'teleport/services/apps';
-import ServersideSearchPanel, {
-  SortType,
-} from 'teleport/components/ServersideSearchPanel';
+import { Label } from 'teleport/services/resources';
+import ServersideSearchPanel from 'teleport/components/ServersideSearchPanel';
+import { SortType } from 'teleport/encodeUrlQueryParams';
 import { ResourceUrlQueryParams } from 'teleport/getUrlQueryParams';
+import labelClick from 'teleport/labelClick';
 import AwsLaunchButton from './AwsLaunchButton';
 
 export default function AppList(props: Props) {
@@ -55,6 +56,21 @@ export default function AppList(props: Props) {
     pathname,
     replaceHistory,
   } = props;
+
+  const [searchString, setSearchString] = useState('');
+  const [isAdvancedSearch, setIsAdvancedSearch] = useState(false);
+
+  function onLabelClick(label: Label) {
+    labelClick(
+      label,
+      isAdvancedSearch,
+      setIsAdvancedSearch,
+      searchString,
+      setSearchString,
+      params,
+      setParams
+    );
+  }
 
   return (
     <StyledTable
@@ -80,9 +96,11 @@ export default function AppList(props: Props) {
           render: renderAddressCell,
         },
         {
-          key: 'tags',
+          key: 'labels',
           headerText: 'Labels',
-          render: ({ tags }) => <LabelCell data={tags} />,
+          render: ({ labels }) => (
+            <ClickableLabelCell labels={labels} onClick={onLabelClick} />
+          ),
         },
         {
           altKey: 'launch-btn',
@@ -104,6 +122,10 @@ export default function AppList(props: Props) {
         startKeys,
         serversideSearchPanel: (
           <ServersideSearchPanel
+            searchString={searchString}
+            setSearchString={setSearchString}
+            isAdvancedSearch={isAdvancedSearch}
+            setIsAdvancedSearch={setIsAdvancedSearch}
             from={from}
             to={to}
             count={totalCount}

@@ -25,7 +25,7 @@ import useStickyClusterId from 'teleport/useStickyClusterId';
 import getResourceUrlQueryParams, {
   ResourceUrlQueryParams,
 } from 'teleport/getUrlQueryParams';
-import { SortType } from 'teleport/components/ServersideSearchPanel';
+import { SortType } from 'teleport/encodeUrlQueryParams';
 
 export default function useKubes(ctx: TeleportContext) {
   const { clusterId, isLeafCluster } = useStickyClusterId();

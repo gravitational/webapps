@@ -1,5 +1,5 @@
-import { SortType } from 'teleport/components/ServersideSearchPanel/useServerSideSearchPanel';
 import { MatchCallback } from 'design/utils/match';
+import { SortType } from 'teleport/encodeUrlQueryParams';
 
 export type TableProps<T> = {
   data: T[];

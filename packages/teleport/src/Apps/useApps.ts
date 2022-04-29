@@ -25,7 +25,7 @@ import getResourceUrlQueryParams, {
   ResourceUrlQueryParams,
 } from 'teleport/getUrlQueryParams';
 import useStickyClusterId from 'teleport/useStickyClusterId';
-import { SortType } from 'teleport/components/ServersideSearchPanel';
+import { SortType } from 'teleport/encodeUrlQueryParams';
 
 export default function useApps(ctx: Ctx) {
   const canCreate = ctx.storeUser.getTokenAccess().create;
