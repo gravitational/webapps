@@ -26,15 +26,18 @@ export default function AgentErrorMessage({ message = '' }) {
 
   return (
     <Danger>
-      {message}
-      {showDocLink && (
-        <span>
-          , check{' '}
-          <Link target="_blank" href={PREDICATE_DOC}>
-            syntax
-          </Link>
-        </span>
-      )}
+      <div>
+        {message}
+        {showDocLink && (
+          <>
+            , click{' '}
+            <Link target="_blank" href={PREDICATE_DOC}>
+              here
+            </Link>{' '}
+            for syntax examples
+          </>
+        )}
+      </div>
     </Danger>
   );
 }
