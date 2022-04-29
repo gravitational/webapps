@@ -17,7 +17,7 @@ export default function labelClick(
     queryParts.push(searchString);
   }
 
-  // If existing simple search, convert it to predicate language and add it
+  // If there is an existing simple search, convert it to predicate language and add it
   if (searchString && !isAdvancedSearch) {
     queryParts.push(`search("${searchString}")`);
   }
