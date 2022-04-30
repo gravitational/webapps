@@ -138,7 +138,6 @@ const auth = {
           token: tokenId,
           password: password ? base64EncodeUnicode(password) : null,
           webauthnCreationResponse: makeWebauthnCreationResponse(res),
-          passwordless: !password,
         };
 
         return api.put(cfg.getPasswordTokenUrl(), request);
