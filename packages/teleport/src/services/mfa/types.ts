@@ -35,4 +35,6 @@ export type AddNewHardwareDeviceRequest = {
 };
 
 export type DeviceType = 'totp' | 'webauthn';
+
+// DeviceUsage is the intended usage of the device (MFA, Passwordless, etc).
 export type DeviceUsage = 'passwordless' | 'mfa';
