@@ -56,8 +56,12 @@ export const formatters: Formatters = {
   [eventCodes.SESSION_NETWORK]: {
     type: 'session.network',
     desc: 'Session Network Connection',
-    format: ({ sid, program, src_addr, dst_addr, dst_port }) =>
-      `Program [${program}] opened a connection [${src_addr} <-> ${dst_addr}:${dst_port}] within a session [${sid}]`,
+    format: ({ action, sid, program, src_addr, dst_addr, dst_port }) => {
+      const a = action === 1 ? '[DENY]' : '[ALLOW]';
+      const desc =
+        action === 1 ? 'was prevented from opening' : 'successfully opened';
+      return `${a} Program [${program}] ${desc} a connection [${src_addr} <-> ${dst_addr}:${dst_port}] within a session [${sid}]`;
+    },
   },
   [eventCodes.SESSION_PROCESS_EXIT]: {
     type: 'session.process_exit',
