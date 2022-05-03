@@ -2,7 +2,7 @@ import React from 'react';
 import { Label } from 'design';
 import * as Icons from 'design/Icon';
 import { displayDate } from 'shared/services/loc';
-import { Label as LabelType } from 'teleport/services/resources';
+import { AgentLabel } from 'teleport/services/resources';
 import { ServersideProps, SortDir, TableColumn } from './types';
 
 export const Cell = props => <td children={props.children} {...props} />;
@@ -87,8 +87,8 @@ export const ClickableLabelCell = ({
   labels,
   onClick,
 }: {
-  labels: LabelType[];
-  onClick: (label: LabelType) => void;
+  labels: AgentLabel[];
+  onClick: (label: AgentLabel) => void;
 }) => {
   const $labels = labels.map(label => (
     <Label

@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import { Label } from 'teleport/services/resources';
+import { AgentLabel } from 'teleport/services/resources';
 
 // Desktop is a remote desktop.
 export type Desktop = {
@@ -25,7 +25,7 @@ export type Desktop = {
   // Addr is the network address the desktop can be reached at.
   addr: string;
   // Labels.
-  labels: Label[];
+  labels: AgentLabel[];
 };
 
 export type DesktopsResponse = {

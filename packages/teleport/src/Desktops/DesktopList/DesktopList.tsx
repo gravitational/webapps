@@ -14,15 +14,14 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React, { useState } from 'react';
+import React from 'react';
 import Table, { Cell, ClickableLabelCell } from 'design/DataTable';
+import { SortType } from 'design/DataTable/types';
 import { Desktop } from 'teleport/services/desktops';
-import { Label } from 'teleport/services/resources';
+import { AgentLabel } from 'teleport/services/resources';
 import { LoginItem, MenuLogin } from 'shared/components/MenuLogin';
 import ServersideSearchPanel from 'teleport/components/ServersideSearchPanel';
 import { ResourceUrlQueryParams } from 'teleport/getUrlQueryParams';
-import { SortType } from 'teleport/encodeUrlQueryParams';
-import labelClick from 'teleport/labelClick';
 
 function DesktopList(props: Props) {
   const {
@@ -42,10 +41,8 @@ function DesktopList(props: Props) {
     setSort,
     pathname,
     replaceHistory,
+    onLabelClick,
   } = props;
-
-  const [searchString, setSearchString] = useState('');
-  const [isAdvancedSearch, setIsAdvancedSearch] = useState(false);
 
   function onDesktopSelect(
     e: React.MouseEvent,
@@ -54,18 +51,6 @@ function DesktopList(props: Props) {
   ) {
     e.preventDefault();
     onLoginSelect(username, desktopName);
-  }
-
-  function onLabelClick(label: Label) {
-    labelClick(
-      label,
-      isAdvancedSearch,
-      setIsAdvancedSearch,
-      searchString,
-      setSearchString,
-      params,
-      setParams
-    );
   }
 
   return (
@@ -108,10 +93,6 @@ function DesktopList(props: Props) {
         startKeys,
         serversideSearchPanel: (
           <ServersideSearchPanel
-            searchString={searchString}
-            setSearchString={setSearchString}
-            isAdvancedSearch={isAdvancedSearch}
-            setIsAdvancedSearch={setIsAdvancedSearch}
             from={from}
             to={to}
             count={totalCount}
@@ -186,6 +167,7 @@ type Props = {
   setSort: (sort: SortType) => void;
   pathname: string;
   replaceHistory: (path: string) => void;
+  onLabelClick: (label: AgentLabel) => void;
 };
 
 export default DesktopList;

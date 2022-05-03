@@ -13,13 +13,13 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 */
-import { Label } from 'teleport/services/resources';
+import { AgentLabel } from 'teleport/services/resources';
 
 export interface Node {
   id: string;
   clusterId: string;
   hostname: string;
-  labels: Label[];
+  labels: AgentLabel[];
   addr: string;
   tunnel: boolean;
 }

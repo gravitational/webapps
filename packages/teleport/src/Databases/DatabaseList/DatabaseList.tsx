@@ -17,14 +17,13 @@ limitations under the License.
 import React, { useState } from 'react';
 import { ButtonBorder } from 'design';
 import Table, { Cell, ClickableLabelCell } from 'design/DataTable';
+import { SortType } from 'design/DataTable/types';
 import { AuthType } from 'teleport/services/user';
 import { Database, DbProtocol } from 'teleport/services/databases';
-import { Label } from 'teleport/services/resources';
+import { AgentLabel } from 'teleport/services/resources';
 import ConnectDialog from 'teleport/Databases/ConnectDialog';
 import ServersideSearchPanel from 'teleport/components/ServersideSearchPanel';
-import { SortType } from 'teleport/encodeUrlQueryParams';
 import { ResourceUrlQueryParams } from 'teleport/getUrlQueryParams';
-import labelClick from 'teleport/labelClick';
 
 function DatabaseList(props: Props) {
   const {
@@ -45,26 +44,13 @@ function DatabaseList(props: Props) {
     setSort,
     pathname,
     replaceHistory,
+    onLabelClick,
   } = props;
 
   const [dbConnectInfo, setDbConnectInfo] = useState<{
     name: string;
     protocol: DbProtocol;
   }>(null);
-  const [searchString, setSearchString] = useState('');
-  const [isAdvancedSearch, setIsAdvancedSearch] = useState(false);
-
-  function onLabelClick(label: Label) {
-    labelClick(
-      label,
-      isAdvancedSearch,
-      setIsAdvancedSearch,
-      searchString,
-      setSearchString,
-      params,
-      setParams
-    );
-  }
 
   return (
     <>
@@ -109,10 +95,6 @@ function DatabaseList(props: Props) {
           startKeys,
           serversideSearchPanel: (
             <ServersideSearchPanel
-              searchString={searchString}
-              setSearchString={setSearchString}
-              isAdvancedSearch={isAdvancedSearch}
-              setIsAdvancedSearch={setIsAdvancedSearch}
               from={from}
               to={to}
               count={totalCount}
@@ -181,6 +163,7 @@ type Props = {
   setSort: (sort: SortType) => void;
   pathname: string;
   replaceHistory: (path: string) => void;
+  onLabelClick: (label: AgentLabel) => void;
 };
 
 export default DatabaseList;

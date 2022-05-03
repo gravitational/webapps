@@ -1,25 +1,24 @@
-import { Label } from 'teleport/services/resources';
+import { AgentLabel } from 'teleport/services/resources';
 import { ResourceUrlQueryParams } from './getUrlQueryParams';
+import encodeUrlQueryParams from './encodeUrlQueryParams';
 
 export default function labelClick(
-  label: Label,
-  isAdvancedSearch: boolean,
-  setIsAdvancedSearch: (isAdvancedSearch: boolean) => void,
-  searchString: string,
-  setSearchString: (searchString: string) => void,
+  label: AgentLabel,
   params: ResourceUrlQueryParams,
-  setParams: (params: ResourceUrlQueryParams) => void
+  setParams: (params: ResourceUrlQueryParams) => void,
+  pathname: string,
+  replaceHistory: (path: string) => void
 ) {
   const queryParts: string[] = [];
 
   // Add existing query
-  if (searchString && isAdvancedSearch) {
-    queryParts.push(searchString);
+  if (params.query) {
+    queryParts.push(params.query);
   }
 
   // If there is an existing simple search, convert it to predicate language and add it
-  if (searchString && !isAdvancedSearch) {
-    queryParts.push(`search("${searchString}")`);
+  if (params.search) {
+    queryParts.push(`search("${params.search}")`);
   }
 
   const labelQuery = `labels["${label.name}"] == "${label.value}"`;
@@ -28,6 +27,5 @@ export default function labelClick(
   const finalQuery = queryParts.join(' && ');
 
   setParams({ ...params, search: '', query: finalQuery });
-  setIsAdvancedSearch(true);
-  setSearchString(finalQuery);
+  replaceHistory(encodeUrlQueryParams(pathname, finalQuery, params.sort, true));
 }

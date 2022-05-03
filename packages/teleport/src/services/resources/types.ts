@@ -22,7 +22,7 @@ export type Resource<T extends Kind> = {
   content: string;
 };
 
-export type Label = {
+export type AgentLabel = {
   name: string;
   value: string;
 };

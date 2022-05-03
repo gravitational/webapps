@@ -1,4 +1,4 @@
-import { SortDir } from 'design/DataTable/types';
+import { SortType } from 'design/DataTable/types';
 
 const ADVANCED_SEARCH_PARAM = 'query=';
 const SIMPLE_SEARCH_PARAM = 'search=';
@@ -33,8 +33,3 @@ export default function encodeUrlQueryParams(
     sort.fieldName
   }:${sort.dir.toLowerCase()}`}`;
 }
-
-export type SortType = {
-  fieldName: string;
-  dir: SortDir;
-};

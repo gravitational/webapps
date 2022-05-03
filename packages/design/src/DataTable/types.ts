@@ -1,5 +1,4 @@
 import { MatchCallback } from 'design/utils/match';
-import { SortType } from 'teleport/encodeUrlQueryParams';
 
 export type TableProps<T> = {
   data: T[];
@@ -59,6 +58,11 @@ type TableColumnWithAltKey<T> = TableColumnBase<T> & {
 
 type InitialSort<T> = {
   key: Extract<keyof T, string>;
+  dir: SortDir;
+};
+
+export type SortType = {
+  fieldName: string;
   dir: SortDir;
 };
 

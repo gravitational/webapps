@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import { SortType } from './encodeUrlQueryParams';
+import { SortType } from 'design/DataTable/types';
 
 export default function getResourceUrlQueryParams(
   searchPath: string

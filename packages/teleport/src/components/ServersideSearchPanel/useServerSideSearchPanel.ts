@@ -22,17 +22,10 @@ import {
 import encodeUrlQueryParams from 'teleport/encodeUrlQueryParams';
 
 export default function useServersideSearchPanel(props: Props) {
-  const {
-    searchString,
-    setSearchString,
-    isAdvancedSearch,
-    setIsAdvancedSearch,
-    pathname,
-    params,
-    setParams,
-    replaceHistory,
-  } = props;
+  const { pathname, params, setParams, replaceHistory } = props;
 
+  const [searchString, setSearchString] = useState('');
+  const [isAdvancedSearch, setIsAdvancedSearch] = useState(false);
   const [isInitialLoad, setIsInitialLoad] = useState(true);
 
   function onSubmitSearch(e: React.FormEvent<HTMLFormElement>) {
@@ -73,14 +66,14 @@ export default function useServersideSearchPanel(props: Props) {
       setIsAdvancedSearch(false);
       setSearchString(decodeUrlQueryParam(params.search));
     }
-  }, [params.query, params.search]);
+  }, []);
 
   useEffect(() => {
     if (!isInitialLoad) {
       submitSearch();
     }
     setIsInitialLoad(false);
-  }, [params]);
+  }, [params.sort]);
 
   return {
     searchString,
@@ -93,10 +86,6 @@ export default function useServersideSearchPanel(props: Props) {
 }
 
 export type Props = {
-  searchString: string;
-  setSearchString: (searchString: string) => void;
-  isAdvancedSearch: boolean;
-  setIsAdvancedSearch: (isAdvancedSaerch: boolean) => void;
   pathname: string;
   replaceHistory: (path: string) => void;
   params: ResourceUrlQueryParams;
