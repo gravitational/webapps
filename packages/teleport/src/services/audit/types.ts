@@ -571,6 +571,7 @@ type RawEventCommand<T extends EventCode> = RawEvent<
 type RawEventNetwork<T extends EventCode> = RawEvent<
   T,
   {
+    action: number;
     login: string;
     namespace: string;
     pid: number;
