@@ -93,10 +93,10 @@ export type SharedDirectoryAnnounce = {
   name: string;
 };
 
-// | message type (12) | directory_id uint32 | succeeded byte |
+// | message type (12) | err error | directory_id uint32 |
 export type SharedDirectoryAcknowledge = {
+  err: number;
   directoryId: number;
-  succeeded: boolean;
 };
 
 // TdaCodec provides an api for encoding and decoding teleport desktop access protocol messages [1]
@@ -497,9 +497,12 @@ export default class Codec {
     buffer: ArrayBuffer
   ): SharedDirectoryAcknowledge {
     let dv = new DataView(buffer);
+    let err = dv.getUint32(1);
+    let directoryId = dv.getUint32(5);
+
     return {
-      directoryId: dv.getUint32(1),
-      succeeded: dv.getUint8(5) !== 0,
+      err,
+      directoryId,
     };
   }
 
