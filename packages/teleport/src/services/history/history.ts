@@ -44,6 +44,15 @@ const history = {
     }
   },
 
+  pushLoc(loc, withRefresh = false) {
+    const route = this.ensureKnownRoute(loc.pathname);
+    if (withRefresh) {
+      this._pageRefresh(route);
+    } else {
+      _inst.push(loc);
+    }
+  },
+
   reload() {
     window.location.reload();
   },
@@ -55,6 +64,8 @@ const history = {
       const knownRoute = this.ensureKnownRoute(pathname);
       const knownRedirect = this.ensureBaseUrl(knownRoute);
       const query = search ? encodeURIComponent(search) : '';
+
+      console.log('------ search, pathname ', search, pathname);
 
       url = `${url}?redirect_uri=${knownRedirect}${query}`;
     }

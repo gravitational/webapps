@@ -17,7 +17,7 @@ limitations under the License.
 import React from 'react';
 import { MemoryRouter } from 'react-router-dom';
 import Welcome from './Welcome';
-import { NewCredentials, Props } from './NewCredentials';
+import { NewCredentials, State } from './NewCredentials';
 import { mockedProps } from './fixtures/fixtures';
 
 export default { title: 'Teleport/Welcome' };
@@ -46,21 +46,21 @@ export const AuthMfaOnOtp = () => (
   <MockedWelcome url="/web/invite/1234/continue" Form={Otp} />
 );
 
-const MfaOn = (props: Props) => (
+const MfaOn = (props: State) => (
   <NewCredentials {...props} {...mockedProps} auth2faType="on" />
 );
 
-const Otp = (props: Props) => (
+const Otp = (props: State) => (
   <NewCredentials {...props} {...mockedProps} auth2faType="otp" />
 );
 
-const MfaOptional = (props: Props) => (
+const MfaOptional = (props: State) => (
   <NewCredentials {...props} {...mockedProps} auth2faType="optional" />
 );
 
 type MockedWelcomeProps = {
   url: string;
-  Form?: React.FC<Props>;
+  Form?: React.FC<State>;
 };
 
 function MockedWelcome({ url, Form }: MockedWelcomeProps) {

@@ -39,3 +39,9 @@ export type RecoveryCodes = {
   codes?: string[];
   createdDate: Date;
 };
+
+export type ResetToken = {
+  tokenId: string;
+  qrCode: string;
+  user: string;
+};

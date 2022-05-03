@@ -14,7 +14,9 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-export default function makePasswordToken(json) {
+import { ResetToken } from './types';
+
+export default function makePasswordToken(json): ResetToken {
   json = json || {};
   return {
     tokenId: json.tokenId,

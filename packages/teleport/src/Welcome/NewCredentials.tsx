@@ -16,7 +16,7 @@ limitations under the License.
 
 import React from 'react';
 import Form, { Expired } from 'teleport/components/FormNewCredentials';
-import useToken, { State } from './useToken';
+import useToken, { State as TokenState } from './useToken';
 
 export default function Container({ tokenId = '', title, submitBtnText }) {
   const state = useToken(tokenId);
@@ -25,7 +25,7 @@ export default function Container({ tokenId = '', title, submitBtnText }) {
   );
 }
 
-export function NewCredentials(props: Props) {
+export function NewCredentials(props: State) {
   const { submitAttempt, fetchAttempt, passwordToken, ...rest } = props;
 
   if (fetchAttempt.status === 'failed') {
@@ -41,8 +41,16 @@ export function NewCredentials(props: Props) {
   return <Form user={user} qr={qrCode} attempt={submitAttempt} {...rest} />;
 }
 
-export type Props = State & {
+export type State = TokenState & {
   submitBtnText: string;
   title: string;
   resetMode?: boolean;
+  onClick?: () => void;
+};
+
+export type Props = {
+  tokenId: string;
+  title: string;
+  submitBtnText: string;
+  onClick?: () => void;
 };

@@ -1,6 +1,6 @@
-import { Props } from './../NewCredentials';
+import { State } from './../NewCredentials';
 
-export const mockedProps: Partial<Props> = {
+export const mockedProps: Partial<State> = {
   auth2faType: 'off',
   preferredMfaType: 'webauthn',
   submitAttempt: { status: '' },

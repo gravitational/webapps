@@ -18,20 +18,15 @@ import { useState, useEffect } from 'react';
 import useAttempt from 'shared/hooks/useAttemptNext';
 import cfg from 'teleport/config';
 import history from 'teleport/services/history';
-import auth from 'teleport/services/auth';
+import auth, { ResetToken } from 'teleport/services/auth';
 
 export default function useToken(tokenId: string) {
-  const [passwordToken, setPswToken] = useState<ResetToken>();
+  const [token, setToken] = useState<ResetToken>();
   const fetchAttempt = useAttempt('');
   const submitAttempt = useAttempt('');
-  const auth2faType = cfg.getAuth2faType();
 
   useEffect(() => {
-    fetchAttempt.run(() =>
-      auth
-        .fetchPasswordToken(tokenId)
-        .then(resetToken => setPswToken(resetToken))
-    );
+    fetchAttempt.run(() => auth.fetchPasswordToken(tokenId).then(setToken));
   }, []);
 
   function onSubmit(password: string, otpToken: string) {
@@ -59,21 +54,24 @@ export default function useToken(tokenId: string) {
   }
 
   return {
-    auth2faType,
-    preferredMfaType: cfg.getPreferredMfaType(),
+    token,
+    auth2faType: cfg.getAuth2faType(),
+    primaryAuthType: cfg.getPrimaryAuthType(),
+    isPwdlessEnabled: cfg.isPwdlessEnabled(),
+    redirect,
     fetchAttempt: fetchAttempt.attempt,
     submitAttempt: submitAttempt.attempt,
     clearSubmitAttempt,
     onSubmit,
     onSubmitWithWebauthn,
-    passwordToken,
   };
 }
 
-type ResetToken = {
-  tokenId: string;
-  qrCode: string;
-  user: string;
-};
-
 export type State = ReturnType<typeof useToken>;
+
+type NewUserCredentials = {
+  tokenId: string;
+  deviceName?: string;
+  password?: string;
+  optToken?: string;
+};

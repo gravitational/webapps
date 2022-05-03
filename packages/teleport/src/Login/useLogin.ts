@@ -22,9 +22,6 @@ import { AuthProvider } from 'shared/services';
 
 export default function useLogin() {
   const [attempt, attemptActions] = useAttempt({ isProcessing: false });
-  const authProviders = cfg.getAuthProviders();
-  const auth2faType = cfg.getAuth2faType();
-  const isLocalAuthEnabled = cfg.getLocalAuthFlag();
 
   function onLogin(email, password, token) {
     attemptActions.start();
@@ -57,12 +54,15 @@ export default function useLogin() {
     attempt,
     onLogin,
     onLoginWithSso,
-    authProviders,
-    auth2faType,
-    preferredMfaType: cfg.getPreferredMfaType(),
-    isLocalAuthEnabled,
     onLoginWithWebauthn,
     clearAttempt: attemptActions.clear,
+    authProviders: cfg.getAuthProviders(),
+    auth2faType: cfg.getAuth2faType(),
+    // authType: cfg.getAuthType(),
+    primaryAuthType: cfg.getPrimaryAuthType(),
+    preferredMfaType: cfg.getPreferredMfaType(),
+    isLocalAuthEnabled: cfg.getLocalAuthFlag(),
+    isPwdlessEnabled: cfg.isPwdlessEnabled(),
   };
 }
 

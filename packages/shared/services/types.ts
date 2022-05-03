@@ -20,6 +20,12 @@ export type Auth2faType = 'otp' | 'off' | 'optional' | 'on' | 'webauthn';
 
 export type AuthType = 'local' | 'github' | 'oidc' | 'saml';
 
+// PrimaryAuthPref defines types where if:
+//  - local: primary authn is with username and password
+//  - pwdless: primary authn is passwordless
+//  - sso: primary authn is either with github, oidc or saml provider
+export type PrimaryAuthType = 'local' | 'pwdless' | 'sso';
+
 // PreferredMfaType is used to determine which MFA option
 // is preferred when more than one option can be available
 // and only one should be preferred.

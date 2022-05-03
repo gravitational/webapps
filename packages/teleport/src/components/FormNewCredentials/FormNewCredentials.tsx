@@ -15,25 +15,20 @@ limitations under the License.
 */
 
 import React, { useState, useMemo } from 'react';
-import { Text, Card, ButtonPrimary, Flex, Box } from 'design';
-import * as Alerts from 'design/Alert';
-import { Auth2faType, PreferredMfaType } from 'shared/services';
+import styled from 'styled-components';
+import { AuthType, Auth2faType, PreferredMfaType } from 'shared/services';
 import { Attempt } from 'shared/hooks/useAttemptNext';
-import FieldSelect from 'shared/components/FieldSelect';
-import FieldInput from 'shared/components/FieldInput';
-import Validation, { Validator } from 'shared/components/Validation';
-import {
-  requiredToken,
-  requiredPassword,
-  requiredConfirmedPassword,
-} from 'shared/components/Validation/rules';
-import createMfaOptions, { MfaOption } from 'shared/utils/createMfaOptions';
-import TwoFAData from './TwoFaInfo';
+
+import NewPassword from './NewPassword';
+import NewMfaDevice from './NewMfaDevice';
+import NewPwdlessDevice from './NewPwdlessDevice';
+import RegisterSuccess from './RegisterSuccess';
 
 export default function FormNewCredentials(props: Props) {
   const {
     auth2faType,
-    preferredMfaType,
+    primaryAuthType,
+    isPwdlessEnabled,
     onSubmitWithWebauthn,
     onSubmit,
     attempt,
@@ -43,141 +38,80 @@ export default function FormNewCredentials(props: Props) {
     title = '',
     submitBtnText = 'Submit',
   } = props;
-
+  const [showAddDevice, setShowAddDevice] = useState(false);
   const [password, setPassword] = useState('');
-  const [passwordConfirmed, setPasswordConfirmed] = useState('');
-  const [token, setToken] = useState('');
+  const [authnOption, setAuthnOption] = useState<'pwdless' | 'local'>(() => {
+    if (primaryAuthType === 'pwdless') {
+      return primaryAuthType;
+    }
+    return 'local';
+  });
+  const mfaEnabled = auth2faType !== 'off';
 
-  const mfaOptions = useMemo<MfaOption[]>(
-    () =>
-      createMfaOptions({
-        auth2faType: auth2faType,
-        preferredType: preferredMfaType,
-      }),
-    []
-  );
-  const [mfaType, setMfaType] = useState(mfaOptions[0]);
-
-  const secondFactorEnabled = auth2faType !== 'off';
-  const showSideNote =
-    secondFactorEnabled &&
-    mfaType.value !== 'optional' &&
-    mfaType.value !== 'webauthn';
-  const boxWidth = (showSideNote ? 720 : 464) + 'px';
-
-  function onBtnClick(
-    e: React.MouseEvent<HTMLButtonElement>,
-    validator: Validator
-  ) {
-    e.preventDefault();
-    if (!validator.validate()) {
+  function handleOnSubmit(deviceName: string, otp: string) {
+    if (mfaEnabled && !showAddDevice) {
+      setShowAddDevice(true);
       return;
     }
 
-    switch (mfaType?.value) {
-      case 'webauthn':
-        onSubmitWithWebauthn(password);
-        break;
-      default:
-        onSubmit(password, token);
-    }
+    onSubmit(password, otp);
   }
 
-  function onSetMfaOption(option: MfaOption, validator: Validator) {
-    setToken('');
+  function handleOnSubmitWithWebauthn() {
+    onSubmitWithWebauthn(password);
+  }
+
+  function onPasswordless() {
+    setAuthnOption('pwdless');
     clearSubmitAttempt();
-    validator.reset();
-    setMfaType(option);
   }
 
+  function onPassword() {
+    setAuthnOption('local');
+    setShowAddDevice(false);
+    clearSubmitAttempt();
+  }
+
+  function OnPassword() {
+    setAuthnOption('local');
+    setShowAddDevice(false);
+    clearSubmitAttempt();
+  }
+
+  if (authnOption === 'pwdless') {
+    return (
+      <NewPwdlessDevice
+        attempt={attempt}
+        onPassword={OnPassword}
+        onSubmit={onSubmitWithWebauthn}
+      />
+    );
+  }
+
+  if (showAddDevice) {
+    return (
+      <NewMfaDevice
+        qr={qr}
+        attempt={attempt}
+        auth2faType={auth2faType}
+        onSubmitWithWebauthn={handleOnSubmitWithWebauthn}
+        onSubmit={handleOnSubmit}
+        onPassword={onPassword}
+      />
+    );
+  }
+
+  // Default is to render password form.
   return (
-    <Validation>
-      {({ validator }) => (
-        <Card as="form" bg="primary.light" my={6} mx="auto" width={boxWidth}>
-          <Flex>
-            <Box flex="3" p="6">
-              <Text typography="h2" mb={3} textAlign="center" color="light">
-                {title}
-              </Text>
-              {attempt.status === 'failed' && (
-                <Alerts.Danger children={attempt.statusText} />
-              )}
-              <Text typography="h4" breakAll mb={3}>
-                {user}
-              </Text>
-              <FieldInput
-                rule={requiredPassword}
-                autoFocus
-                autoComplete="off"
-                label="Password"
-                value={password}
-                onChange={e => setPassword(e.target.value)}
-                type="password"
-                placeholder="Password"
-              />
-              <FieldInput
-                rule={requiredConfirmedPassword(password)}
-                autoComplete="off"
-                label="Confirm Password"
-                value={passwordConfirmed}
-                onChange={e => setPasswordConfirmed(e.target.value)}
-                type="password"
-                placeholder="Confirm Password"
-              />
-              {secondFactorEnabled && (
-                <Flex alignItems="center">
-                  <FieldSelect
-                    maxWidth="50%"
-                    width="100%"
-                    data-testid="mfa-select"
-                    label="Two-factor type"
-                    value={mfaType}
-                    options={mfaOptions}
-                    onChange={opt =>
-                      onSetMfaOption(opt as MfaOption, validator)
-                    }
-                    mr={3}
-                    isDisabled={attempt.status === 'processing'}
-                  />
-                  {mfaType.value === 'otp' && (
-                    <FieldInput
-                      width="50%"
-                      label="Authenticator code"
-                      rule={requiredToken}
-                      inputMode="numeric"
-                      autoComplete="one-time-code"
-                      value={token}
-                      onChange={e => setToken(e.target.value)}
-                      placeholder="123 456"
-                    />
-                  )}
-                </Flex>
-              )}
-              <ButtonPrimary
-                width="100%"
-                mt={3}
-                disabled={attempt.status === 'processing'}
-                size="large"
-                onClick={e => onBtnClick(e, validator)}
-              >
-                {submitBtnText}
-              </ButtonPrimary>
-            </Box>
-            {showSideNote && (
-              <Box
-                flex="1"
-                bg="primary.main"
-                p={6}
-                borderTopRightRadius={3}
-                borderBottomRightRadius={3}
-              >
-                <TwoFAData auth2faType={mfaType.value} qr={qr} />
-              </Box>
-            )}
-          </Flex>
-        </Card>
-      )}
-    </Validation>
+    <NewPassword
+      attempt={attempt}
+      username={user}
+      mfaEnabled={mfaEnabled}
+      onSubmit={handleOnSubmit}
+      onPasswordless={onPasswordless}
+      password={password}
+      setPassword={setPassword}
+    />
   );
 }
 
@@ -186,10 +120,13 @@ export type Props = {
   submitBtnText?: string;
   user: string;
   qr: string;
+  authType: AuthType;
   auth2faType: Auth2faType;
+  isPwdlessEnabled: boolean;
+  isPwdlessAuthnPreferred: boolean;
   preferredMfaType: PreferredMfaType;
   attempt: Attempt;
   clearSubmitAttempt: () => void;
-  onSubmitWithWebauthn(password: string): void;
+  onSubmitWithWebauthn(password?: string): void;
   onSubmit(password: string, optToken: string): void;
 };
