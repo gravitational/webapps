@@ -24,15 +24,6 @@ export default function getResourceUrlQueryParams(
   const search = searchParams.get('search');
   const sort = searchParams.get('sort');
 
-  console.log({
-    sort: sort
-      ? ({
-          fieldName: sort.split(':')[0],
-          dir: sort.split(':')[1]?.toUpperCase() || 'ASC',
-        } as SortType)
-      : null,
-  });
-
   // Converts the "fieldname:dir" format into {fieldName: "", dir: ""}
   const processedSortParam = sort
     ? ({
