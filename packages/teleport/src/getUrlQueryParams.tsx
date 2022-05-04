@@ -24,15 +24,28 @@ export default function getResourceUrlQueryParams(
   const search = searchParams.get('search');
   const sort = searchParams.get('sort');
 
-  return {
-    query,
-    search,
+  console.log({
     sort: sort
       ? ({
           fieldName: sort.split(':')[0],
           dir: sort.split(':')[1]?.toUpperCase() || 'ASC',
         } as SortType)
       : null,
+  });
+
+  // Converts the "fieldname:dir" format into {fieldName: "", dir: ""}
+  const processedSortParam = sort
+    ? ({
+        fieldName: sort.split(':')[0],
+        dir: sort.split(':')[1]?.toUpperCase() || 'ASC',
+      } as SortType)
+    : null;
+
+  return {
+    query,
+    search,
+    // Conditionally adds the sort field based on whether it exists or not
+    ...(!!processedSortParam && { sort: processedSortParam }),
   };
 }
 
