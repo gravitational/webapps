@@ -63,6 +63,8 @@ export default function useLogin() {
     isLocalAuthEnabled,
     onLoginWithWebauthn,
     clearAttempt: attemptActions.clear,
+    isPwdlessEnabled: cfg.isPasswordlessEnabled(),
+    primaryAuthType: cfg.getPrimaryAuthType(),
   };
 }
 

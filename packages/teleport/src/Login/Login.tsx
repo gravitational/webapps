@@ -36,6 +36,8 @@ export function Login({
   preferredMfaType,
   isLocalAuthEnabled,
   clearAttempt,
+  isPwdlessEnabled,
+  primaryAuthType,
 }: State) {
   return (
     <>
@@ -51,6 +53,8 @@ export function Login({
         onLogin={onLogin}
         attempt={attempt}
         clearAttempt={clearAttempt}
+        isPwdlessEnabled={isPwdlessEnabled}
+        primaryAuthType={primaryAuthType}
       />
     </>
   );
