@@ -39,8 +39,10 @@ const cfg = {
   auth: {
     localAuthEnabled: true,
     allowPasswordless: false,
-    // localConnectorName is used to determine if the primary
-    // login preference is "passwordless".
+    // localConnectorName is used to determine primary "local" auth preference.
+    // Currently, there is only one bookmarked connector name "passwordless"
+    // that when used, passwordless is the preferred authn method. Empty means
+    // local user + password authn preference.
     localConnectorName: '',
     providers: [] as AuthProvider[],
     second_factor: 'off' as Auth2faType,
