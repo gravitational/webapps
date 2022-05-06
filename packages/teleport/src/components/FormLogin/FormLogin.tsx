@@ -119,7 +119,7 @@ const SsoList = ({ attempt, authProviders, onLoginWithSso }: Props) => {
 };
 
 const Passwordless = ({ onLoginWithWebauthn, attempt }: Props) => (
-  <Box px={5} pb={4} pt={2}>
+  <Box px={5} pb={4} pt={2} data-testid="passwordless">
     <StyledPwdlessBtn
       mt={3}
       py={2}
@@ -206,6 +206,7 @@ const LocalForm = ({
           flexDirection="column"
           borderBottomLeftRadius="3"
           borderBottomRightRadius="3"
+          data-testid="userpassword"
         >
           <FieldInput
             rule={requiredField('Username is required')}

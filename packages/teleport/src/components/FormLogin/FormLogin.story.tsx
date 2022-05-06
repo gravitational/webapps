@@ -78,35 +78,8 @@ export const ServerError = () => {
 
 export const LocalWithSso = () => {
   const ssoProvider = [
-    {
-      displayName: 'github',
-      name: 'github',
-      type: 'oidc',
-      url: '',
-    } as const,
-    {
-      displayName: 'google',
-      name: 'google',
-      type: 'oidc',
-      url: '',
-    } as const,
-    {
-      displayName: 'bitbucket',
-      name: 'bitbucket',
-      type: 'oidc',
-      url: '',
-    } as const,
-    {
-      name: 'Mission Control',
-      type: 'oidc',
-      url: '',
-    } as const,
-    {
-      displayName: 'Microsoft',
-      name: 'microsoft',
-      type: 'oidc',
-      url: '',
-    } as const,
+    { name: 'github', type: 'oidc', url: '' } as const,
+    { name: 'google', type: 'oidc', url: '' } as const,
   ];
 
   return <FormLogin {...props} title="Welcome!" authProviders={ssoProvider} />;
@@ -156,6 +129,18 @@ export const PrimarySso = () => {
   const ssoProvider = [
     { name: 'github', type: 'oidc', url: '' } as const,
     { name: 'google', type: 'oidc', url: '' } as const,
+    { name: 'bitbucket', type: 'oidc', url: '' } as const,
+    {
+      name: 'Mission Control',
+      type: 'oidc',
+      url: '',
+    } as const,
+    {
+      displayName: 'Microsoft',
+      name: 'microsoft',
+      type: 'oidc',
+      url: '',
+    } as const,
   ];
 
   return (
