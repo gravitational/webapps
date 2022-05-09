@@ -28,16 +28,15 @@ function SlideTabs({ tabs, name = 'slide-tab', onChange = () => {} }: props) {
     <Wrapper>
       <TabNav>
         {tabs.map((tabName, tabIndex) => (
-          <>
+          <TabLabel
+            htmlFor={`${name}-${tabName}`}
+            onClick={() => setActiveIndex(tabIndex)}
+            itemCount={tabs.length}
+            key={`${tabName}-${tabIndex}`}
+          >
+            {tabName}
             <TabInput type="radio" name={name} id={`${name}-${tabName}`} />
-            <TabLabel
-              HTMLfor={`${name}-${tabName}`}
-              onClick={() => setActiveIndex(tabIndex)}
-              itemCount={tabs.length}
-            >
-              {tabName}
-            </TabLabel>
-          </>
+          </TabLabel>
         ))}
       </TabNav>
       <TabSlider itemCount={tabs.length} activeIndex={activeIndex} />
