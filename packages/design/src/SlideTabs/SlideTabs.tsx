@@ -15,6 +15,7 @@ limitations under the License.
 */
 import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
+import { props } from 'teleport/Apps/Apps.story';
 
 function SlideTabs({ tabs, name = 'slide-tab', onChange = () => {} }: props) {
   const [activeIndex, setActiveIndex] = useState(0);
@@ -32,6 +33,7 @@ function SlideTabs({ tabs, name = 'slide-tab', onChange = () => {} }: props) {
             <TabLabel
               HTMLfor={`${name}-${tabName}`}
               onClick={() => setActiveIndex(tabIndex)}
+              itemCount={tabs.length}
             >
               {tabName}
             </TabLabel>
@@ -62,7 +64,7 @@ const TabLabel = styled.label`
   display: flex;
   justify-content: center;
   padding: 10px;
-  width: 33%;
+  width: ${props => 100 / props.itemCount}%;
   z-index: 1; /* Ensures that the label is above the background slider. */
 `;
 
@@ -75,12 +77,12 @@ const TabSlider = styled.div`
   border-radius: 60px;
   box-shadow: 0px 2px 6px rgba(12, 12, 14, 0.1);
   height: 40px;
+  left: calc(${props => (100 / props.itemCount) * props.activeIndex}% + 8px);
+  margin: 8px 8px 8px 0;
   position: absolute;
-  width: 30%;
   top: 0;
-  margin: 8px;
-  left: ${props => (100 / props.itemCount) * props.activeIndex}%;
   transition: all 0.3s ease;
+  width: calc(33% - 16px);
 `;
 
 const TabNav = styled.nav`
