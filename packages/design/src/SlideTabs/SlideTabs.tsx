@@ -58,9 +58,12 @@ const Wrapper = styled.div`
 `;
 
 const TabLabel = styled.label`
+  cursor: pointer;
   display: flex;
   justify-content: center;
+  padding: 10px;
   width: 33%;
+  z-index: 1; /* Ensures that the label is above the background slider. */
 `;
 
 const TabInput = styled.input`
@@ -77,6 +80,7 @@ const TabSlider = styled.div`
   top: 0;
   margin: 8px;
   left: ${props => (100 / props.itemCount) * props.activeIndex}%;
+  transition: all 0.3s ease;
 `;
 
 const TabNav = styled.nav`
