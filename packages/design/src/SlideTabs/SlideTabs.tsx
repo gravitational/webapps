@@ -82,7 +82,7 @@ const TabSlider = styled.div`
   position: absolute;
   top: 0;
   transition: all 0.3s ease;
-  width: calc(33% - 16px);
+  width: calc(${props => 100 / props.itemCount}% - 16px);
 `;
 
 const TabNav = styled.nav`
