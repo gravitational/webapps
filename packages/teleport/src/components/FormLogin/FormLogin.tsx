@@ -95,11 +95,6 @@ export default function LoginForm(props: Props) {
       <Slider<typeof loginViews>
         flows={loginViews}
         currFlow={'default'}
-        render={(slider, ref, parentStyle) => (
-          <Box ref={ref} style={parentStyle}>
-            {slider}
-          </Box>
-        )}
         {...props}
       />
     </Card>
@@ -120,7 +115,7 @@ const SsoList = ({ attempt, authProviders, onLoginWithSso }: Props) => {
 
 const Passwordless = ({ onLoginWithWebauthn, attempt }: Props) => (
   <Box px={5} pb={4} pt={2} data-testid="passwordless">
-    <StyledPwdlessBtn
+    <StyledPaswordlessBtn
       mt={3}
       py={2}
       px={3}
@@ -143,7 +138,7 @@ const Passwordless = ({ onLoginWithWebauthn, attempt }: Props) => (
         </Flex>
         <ArrowForward fontSize={16} />
       </Flex>
-    </StyledPwdlessBtn>
+    </StyledPaswordlessBtn>
   </Box>
 );
 
@@ -296,7 +291,7 @@ const LocalForm = ({
 };
 
 const Primary = ({
-  onNext,
+  next,
   refCallback,
   willTransition,
   ...otherProps
@@ -305,12 +300,12 @@ const Primary = ({
   let otherOptionsAvailable = true;
   let $primary;
 
-  if (otherProps.primaryAuthType === 'pwdless') {
+  if (otherProps.primaryAuthType === 'passwordless') {
     $primary = <Passwordless {...otherProps} />;
   }
 
   if (otherProps.primaryAuthType === 'local') {
-    otherOptionsAvailable = otherProps.isPwdlessEnabled || ssoEnabled;
+    otherOptionsAvailable = otherProps.isPasswordlessEnabled || ssoEnabled;
     $primary = (
       <LocalForm {...otherProps} autoFocusOnTransitionEnd={willTransition} />
     );
@@ -329,7 +324,7 @@ const Primary = ({
             disabled={otherProps.attempt.isProcessing}
             onClick={() => {
               otherProps.clearAttempt();
-              onNext();
+              next();
             }}
           >
             Other sign-in options
@@ -341,20 +336,20 @@ const Primary = ({
 };
 
 const Secondary = ({
-  onPrev,
+  prev,
   refCallback,
   ...otherProps
 }: Props & SliderProps<'default'>) => {
   const ssoEnabled = otherProps.authProviders?.length > 0;
-  const { primaryAuthType, isPwdlessEnabled } = otherProps;
+  const { primaryAuthType, isPasswordlessEnabled } = otherProps;
 
   const $local = <LocalForm {...otherProps} autoFocusOnTransitionEnd={true} />;
   const $sso = <SsoList {...otherProps} />;
-  const $pwdless = <Passwordless {...otherProps} />;
+  const $passwordless = <Passwordless {...otherProps} />;
 
   let $secondary;
 
-  if (primaryAuthType === 'pwdless') {
+  if (primaryAuthType === 'passwordless') {
     $secondary = (
       <>
         {ssoEnabled && (
@@ -371,8 +366,8 @@ const Secondary = ({
   if (primaryAuthType === 'local') {
     $secondary = (
       <>
-        {isPwdlessEnabled && $pwdless}
-        {isPwdlessEnabled && ssoEnabled && <Divider />}
+        {isPasswordlessEnabled && $passwordless}
+        {isPasswordlessEnabled && ssoEnabled && <Divider />}
         {ssoEnabled && $sso}
       </>
     );
@@ -381,9 +376,9 @@ const Secondary = ({
   if (primaryAuthType === 'sso') {
     $secondary = (
       <>
-        {isPwdlessEnabled && (
+        {isPasswordlessEnabled && (
           <>
-            {$pwdless}
+            {$passwordless}
             <Divider />
           </>
         )}
@@ -400,7 +395,7 @@ const Secondary = ({
           disabled={otherProps.attempt.isProcessing}
           onClick={() => {
             otherProps.clearAttempt();
-            onPrev();
+            prev();
           }}
         >
           Back
@@ -425,7 +420,7 @@ const Divider = () => (
   </Flex>
 );
 
-const StyledPwdlessBtn = styled(Box)`
+const StyledPaswordlessBtn = styled(Box)`
   cursor: pointer;
   transition: all 0.3s;
 
@@ -472,7 +467,7 @@ const loginViews = { default: [Primary, Secondary] };
 export type Props = {
   title?: string;
   isLocalAuthEnabled?: boolean;
-  isPwdlessEnabled: boolean;
+  isPasswordlessEnabled: boolean;
   authProviders?: AuthProvider[];
   auth2faType?: Auth2faType;
   primaryAuthType: PrimaryAuthType;

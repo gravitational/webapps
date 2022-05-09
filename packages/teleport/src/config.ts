@@ -204,11 +204,8 @@ const cfg = {
   },
 
   getPrimaryAuthType(): PrimaryAuthType {
-    if (
-      cfg.auth.allowPasswordless &&
-      cfg.auth.localConnectorName === 'passwordless'
-    ) {
-      return 'pwdless';
+    if (cfg.auth.localConnectorName === 'passwordless') {
+      return 'passwordless';
     }
 
     if (cfg.auth.authType === 'local') return 'local';

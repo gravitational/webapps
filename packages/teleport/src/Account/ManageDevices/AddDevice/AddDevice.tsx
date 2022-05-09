@@ -213,10 +213,7 @@ export function AddDevice({
                   label="Allow Passwordless Login?"
                   value={usageOption}
                   options={deviceUsageOpts}
-                  onChange={(o: DeviceusageOpt) => {
-                    validator.reset();
-                    setUsageOption(o);
-                  }}
+                  onChange={(o: DeviceusageOpt) => setUsageOption(o)}
                   isDisabled={addDeviceAttempt.status === 'processing'}
                 />
               )}

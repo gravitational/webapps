@@ -48,6 +48,6 @@ const sample: State = {
   preferredMfaType: 'webauthn',
   isLocalAuthEnabled: true,
   clearAttempt: () => null,
-  isPwdlessEnabled: false,
+  isPasswordlessEnabled: false,
   primaryAuthType: 'local',
 };

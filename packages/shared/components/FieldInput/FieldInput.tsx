@@ -53,7 +53,7 @@ export default function FieldInput({
     // transitioning which causes transition to be jumpy caused by trying to bring focused
     // element into view. This also prevents prematurely showing the browser password
     // manager icons and tooltips while transitioing.
-    function autoFocusOnTransitionEnd(e) {
+    function autoFocusOnTransitionEnd(e: TransitionEvent) {
       if (e.propertyName !== transitionPropertyName) return;
       inputRef.current.focus();
       // Since we only need to auto focus one time, the listener is no longer needed.

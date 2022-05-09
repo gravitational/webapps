@@ -22,9 +22,9 @@ export type AuthType = 'local' | 'github' | 'oidc' | 'saml';
 
 // PrimaryAuthType defines types where if:
 //  - local: preferred authn is with username and password
-//  - pwdless: preferred authn is passwordless
+//  - passwordless: preferred authn is passwordless
 //  - sso: preferred authn is either with github, oidc or saml provider
-export type PrimaryAuthType = 'local' | 'pwdless' | 'sso';
+export type PrimaryAuthType = 'local' | 'passwordless' | 'sso';
 
 // PreferredMfaType is used to determine which MFA option
 // is preferred when more than one option can be available

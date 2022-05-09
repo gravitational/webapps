@@ -175,7 +175,7 @@ test('primary passwordless', () => {
     <FormLogin
       {...props}
       onLoginWithSso={onLoginWithSso}
-      primaryAuthType="pwdless"
+      primaryAuthType="passwordless"
     />
   );
 
@@ -197,6 +197,6 @@ const props: Props = {
   onLogin: null,
   onLoginWithSso: null,
   onLoginWithWebauthn: null,
-  isPwdlessEnabled: false,
+  isPasswordlessEnabled: false,
   primaryAuthType: 'local',
 };

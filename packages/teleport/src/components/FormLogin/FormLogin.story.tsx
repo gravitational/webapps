@@ -32,7 +32,7 @@ const props: Props = {
   clearAttempt: () => null,
   auth2faType: 'off',
   primaryAuthType: 'local',
-  isPwdlessEnabled: false,
+  isPasswordlessEnabled: false,
 };
 
 export default {
@@ -52,7 +52,7 @@ export const LocalWithOptional = () => (
 );
 
 export const LocalWithOnAndPwdless = () => (
-  <FormLogin {...props} auth2faType="on" isPwdlessEnabled={true} />
+  <FormLogin {...props} auth2faType="on" isPasswordlessEnabled={true} />
 );
 
 export const Cloud = () => (
@@ -100,7 +100,7 @@ export const LocalWithSsoAndPwdless = () => {
       {...props}
       title="Welcome!"
       authProviders={ssoProvider}
-      isPwdlessEnabled={true}
+      isPasswordlessEnabled={true}
     />
   );
 };
@@ -165,7 +165,7 @@ export const PrimarySsoWithPwdless = () => {
       title="Welcome!"
       primaryAuthType="sso"
       authProviders={ssoProvider}
-      isPwdlessEnabled={true}
+      isPasswordlessEnabled={true}
     />
   );
 };
@@ -197,7 +197,7 @@ export const PrimaryPwdless = () => {
     <FormLogin
       {...props}
       title="Welcome!"
-      primaryAuthType="pwdless"
+      primaryAuthType="passwordless"
       auth2faType="webauthn"
       authProviders={ssoProvider}
     />
@@ -209,7 +209,7 @@ export const PrimaryPwdlessWithNoSso = () => {
     <FormLogin
       {...props}
       title="Welcome!"
-      primaryAuthType="pwdless"
+      primaryAuthType="passwordless"
       auth2faType="optional"
     />
   );
