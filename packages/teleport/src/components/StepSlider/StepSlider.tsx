@@ -13,24 +13,29 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-import React, { useState, useRef, useEffect, RefObject } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import { TransitionGroup, CSSTransition } from 'react-transition-group';
 import styled from 'styled-components';
+import { Box } from 'design';
 
 export default function StepSlider<T>(props: Props<T>) {
   const {
     flows,
     currFlow,
     onSwitchFlow,
-    render,
     tDuration = 500,
-    ...rest
+    // stepProps are the props required by our step components defined in our flows.
+    ...stepProps
   } = props;
 
   // step defines the current step we are in the current flow.
   const [step, setStep] = useState(0);
+  // animationDirectionPrefix defines the prefix of the class name that contains
+  // the animations to apply when transitioning.
+  const [animationDirectionPrefix, setAnimationDirectionPrefix] = useState<
+    'next' | 'prev' | ''
+  >('');
   const [height, setHeight] = useState(0);
-  const [className, setClassName] = useState<'next' | 'prev' | ''>('');
 
   // preMount is used to invisibly render the next view so we
   // can get its height. This height is needed in advance
@@ -68,33 +73,36 @@ export default function StepSlider<T>(props: Props<T>) {
     }
   };
 
-  function getStep(View: StepComponent, requirePreMount = false) {
+  function generateCurrentStep(
+    View: StepComponent<keyof T>,
+    requirePreMount = false
+  ) {
     return (
       <View
         key={step}
         refCallback={requirePreMount ? setHeightOnPreMount : null}
-        onNext={() => {
+        next={() => {
           preMountState.current.step = step + 1;
           setPreMount(true);
-          setClassName('next');
+          setAnimationDirectionPrefix('next');
         }}
-        onPrev={() => {
+        prev={() => {
           preMountState.current.step = step - 1;
           setPreMount(true);
-          setClassName('prev');
+          setAnimationDirectionPrefix('prev');
         }}
-        onSwitchFlow={(flow, isBack = false) => {
+        switchFlow={(flow, isBack = false) => {
           preMountState.current.step = 0;
           preMountState.current.flow = flow;
 
           setPreMount(true);
           if (isBack) {
-            setClassName('next');
+            setAnimationDirectionPrefix('prev');
             return;
           }
-          setClassName('prev');
+          setAnimationDirectionPrefix('next');
         }}
-        {...rest}
+        {...stepProps}
       />
     );
   }
@@ -102,7 +110,7 @@ export default function StepSlider<T>(props: Props<T>) {
   let $content;
   const Step = flows[currFlow][step];
   if (Step) {
-    $content = getStep(Step);
+    $content = generateCurrentStep(Step);
   }
 
   let $preContent;
@@ -113,20 +121,31 @@ export default function StepSlider<T>(props: Props<T>) {
     }
     const PreStep = flows[flow][preMountState.current.step];
     if (PreStep) {
-      $preContent = getStep(PreStep, true /* pass ref callback */);
+      $preContent = generateCurrentStep(PreStep, true /* pass ref callback */);
     }
   }
 
-  const $slider = (
-    <>
+  const rootStyle = {
+    // During the *-enter transition state, children are positioned absolutely
+    // to keep views "stacked" on top of each other. Position relative is needed
+    // so these children's position themselves relative to parent.
+    position: 'relative',
+    // Height 'auto' is only ever used on the initial render to let it
+    // take up as much space it needs.
+    height: height || 'auto',
+    transition: `height ${tDuration}ms ease`,
+  };
+
+  return (
+    <Box ref={rootRef} style={rootStyle}>
       {preMount && <HiddenBox>{$preContent}</HiddenBox>}
-      <Wrap className={className} tDuration={tDuration}>
+      <Wrap className={animationDirectionPrefix} tDuration={tDuration}>
         <TransitionGroup component={null}>
           <CSSTransition
             // timeout needs to match the css transition duration for smoothness
             timeout={tDuration}
             key={`${step}${currFlow}`}
-            classNames={`${className}-slide`}
+            classNames={`${animationDirectionPrefix}-slide`}
             onEnter={() => {
               // When steps are translating (sliding), hides overflow content
               rootRef.current.style.overflow = 'hidden';
@@ -141,21 +160,8 @@ export default function StepSlider<T>(props: Props<T>) {
           </CSSTransition>
         </TransitionGroup>
       </Wrap>
-    </>
+    </Box>
   );
-
-  const parentStyle = {
-    // During -enter transition state, childrens are positioned absolute
-    // to keep views "stacked" on top of each other. Position relative is needed
-    // so these children's position themselves relative to parent.
-    position: 'relative',
-    // Height 'auto' is only ever used on the initial render to let it
-    // take up as much space it needs.
-    height: height || 'auto',
-    transition: `height ${tDuration}ms ease`,
-  };
-
-  return render($slider, rootRef, parentStyle);
 }
 
 const HiddenBox = styled.div`
@@ -212,11 +218,15 @@ const Wrap = styled.div(
  `
 );
 
-type StepComponent = (props: any) => JSX.Element;
+type StepComponentProps<T> = SliderProps<T> & {
+  [remainingProps: string]: any;
+};
+
+type StepComponent<T> = (props: StepComponentProps<T>) => JSX.Element;
 
 type Props<T> = {
   // flows contains the different flows and its accompanying steps.
-  flows: Record<keyof T, StepComponent[]>;
+  flows: Record<keyof T, StepComponent<keyof T>[]>;
   // currFlow refers to the current set of steps.
   // E.g. we have a flow named "passwordless", flow "passwordless"
   // will refer to all the steps related to "passwordless".
@@ -228,17 +238,6 @@ type Props<T> = {
   // E.g, toggling between "passwordless" or "local" login flow.
   // This is optional if there is only one flow.
   onSwitchFlow?(flow: keyof T): void;
-  // render passes the slider component as a children wrapped in a
-  // parent componet of our choosing.
-  render(
-    // slider is the component that applies the transitions
-    // and contains the current step.
-    slider: JSX.Element,
-    ref: RefObject<HTMLElement>,
-    // parentStyle contains the styles needed to make
-    // translate and height animations to work correctly.
-    parentStyle: Record<string, string | number>
-  ): JSX.Element;
   // remainingProps are the rest of the props that needs to be passed
   // down to the flows StepComponent's.
   [remainingProps: string]: any;
@@ -248,11 +247,11 @@ export type SliderProps<T> = {
   // refCallback is a func that is called after component mounts.
   // Required to calculate dimensions of the component for height animations.
   refCallback(node: HTMLElement): void;
-  // onNext goes to the next step in the flow.
-  onNext(): void;
-  // onPrev goes back a step in the flow.
-  onPrev(): void;
-  // onSwitchFlow switches to a different flow with different steps.
+  // next goes to the next step in the flow.
+  next(): void;
+  // prev goes back a step in the flow.
+  prev(): void;
+  // switchFlow switches to a different flow with different steps.
   // The isBack flag is used to apply the prev-slide-* transition.
-  onSwitchFlow?(flow: T, isBack?: boolean): void;
+  switchFlow?(flow: T, isBack?: boolean): void;
 };
