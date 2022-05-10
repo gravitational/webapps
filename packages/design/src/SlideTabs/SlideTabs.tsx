@@ -15,9 +15,8 @@ limitations under the License.
 */
 import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
-import { props } from 'teleport/Apps/Apps.story';
 
-function SlideTabs({ tabs, name = 'slide-tab', onChange = () => {} }: props) {
+function SlideTabs({ tabs, name = 'slide-tab', onChange }: props) {
   const [activeIndex, setActiveIndex] = useState(0);
 
   useEffect(() => {
@@ -51,7 +50,7 @@ type props = {
   // Default: "slide-tab"
   name?: string;
   // To be notified when the selected tab changes supply it with this fn.
-  onChange?: (selectedTab: number) => void;
+  onChange: (selectedTab: number) => void;
 };
 
 const Wrapper = styled.div`

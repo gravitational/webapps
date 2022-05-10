@@ -21,7 +21,10 @@ import { render, fireEvent } from 'design/utils/testing';
 describe('design/SlideTabs', () => {
   it('renders the supplied number of tabs(3)', () => {
     const { container } = render(
-      <SlideTabs tabs={['aws', 'automatically', 'manually']} />
+      <SlideTabs
+        tabs={['aws', 'automatically', 'manually']}
+        onChange={() => {}}
+      />
     );
     expect(container.getElementsByTagName('label')).toHaveLength(3);
   });
@@ -30,6 +33,7 @@ describe('design/SlideTabs', () => {
     const { container } = render(
       <SlideTabs
         tabs={['aws', 'automatically', 'manually', 'apple', 'purple']}
+        onChange={() => {}}
       />
     );
     expect(container.getElementsByTagName('label')).toHaveLength(5);
@@ -37,7 +41,11 @@ describe('design/SlideTabs', () => {
 
   it('respects a custom form name', () => {
     const { container } = render(
-      <SlideTabs name="pineapple" tabs={['aws', 'automatically', 'manually']} />
+      <SlideTabs
+        name="pineapple"
+        tabs={['aws', 'automatically', 'manually']}
+        onChange={() => {}}
+      />
     );
     expect(container.querySelectorAll('input[name=pineapple]')).toHaveLength(3);
   });
@@ -49,6 +57,9 @@ describe('design/SlideTabs', () => {
     );
     fireEvent.click(container.querySelector('label[for=slide-tab-manually]'));
     expect(cb.mock.calls).toHaveLength(2);
+    // The reason there are two calls to the callback is because when the
+    // component is initially rendered it selects the first tab which is in
+    // index 0 and calls the callback as such.
     expect(cb.mock.calls).toEqual([[0], [2]]);
   });
 });
