@@ -19,7 +19,7 @@ import { useAppContext } from 'teleterm/ui/appContextProvider';
 import { IAppContext } from 'teleterm/ui/types';
 import * as types from 'teleterm/ui/services/workspacesService';
 import { DocumentsService } from 'teleterm/ui/services/workspacesService';
-import { PtyCommand, PtyProcess } from 'teleterm/services/pty/types';
+import { PtyCommand, PtyProcess } from 'teleterm/sharedProcess/ptyHost';
 import { useAsync } from 'shared/hooks/useAsync';
 import { useWorkspaceDocumentsService } from 'teleterm/ui/Documents';
 import { routing } from 'teleterm/ui/uri';

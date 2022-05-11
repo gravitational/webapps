@@ -1,4 +1,4 @@
-import * as types from 'teleterm/services/pty/types';
+import * as types from 'teleterm/sharedProcess/ptyHost';
 
 export class TerminalsService {
   ptyServiceClient: types.PtyServiceClient;
