@@ -33,7 +33,9 @@ function Pill({ label, dismissable = false, onDismiss = () => {} }: Props) {
 const Wrapper = styled.span`
   background: rgba(255, 255, 255, 0.05);
   border-radius: 35px;
-  padding: ${props => (props.dismissable ? '8px 8px 8px 16px;' : '8px 16px;')};
+  cursor: default;
+  display: inline-block;
+  padding: ${props => (props.dismissable ? '6px 6px 6px 14px;' : '6px 14px;')};
   white-space: nowrap;
 `;
 
