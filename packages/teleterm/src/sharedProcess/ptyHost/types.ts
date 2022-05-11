@@ -1,7 +1,7 @@
-export type PtyOptions = {
-  env?: { [key: string]: string };
+export type PtyProcessOptions = {
+  env: Record<string, string>
   path: string;
-  args: string[] | string;
+  args: string[];
   cwd?: string;
   initCommand?: string;
 };
@@ -13,8 +13,7 @@ export type PtyProcess = {
   onData(cb: (data: string) => void): void;
   onOpen(cb: () => void): void;
   start(cols: number, rows: number): void;
-  onExit(cb: (ev: { exitCode: number; signal?: number }) => void);
-  getPid(): number;
+  onExit(cb: (ev: { exitCode: number; signal?: number }) => void): void;
   getCwd(): Promise<string>;
 };
 

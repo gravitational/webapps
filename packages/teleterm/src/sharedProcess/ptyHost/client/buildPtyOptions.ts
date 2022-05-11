@@ -1,65 +1,11 @@
-import { RuntimeSettings } from 'teleterm/types';
-import PtyProcess, { TermEventEnum } from './ptyProcess';
-import { PtyCommand, PtyOptions, PtyServiceClient } from './types';
+import { RuntimeSettings } from 'teleterm/mainProcess/types';
+import { PtyCommand, PtyProcessOptions } from 'teleterm/sharedProcess/ptyHost/types';
 import { resolveShellEnvCached } from './resolveShellEnv';
 
-export default function createPtyService(
-  settings: RuntimeSettings
-): PtyServiceClient {
-  return {
-    async createPtyProcess(cmd: PtyCommand) {
-      const options = await buildOptions(settings, cmd);
-      const _ptyProcess = new PtyProcess(options);
-
-      return {
-        start(cols: number, rows: number) {
-          _ptyProcess.start(cols, rows);
-        },
-
-        write(data: string) {
-          _ptyProcess.send(data);
-        },
-
-        resize(cols: number, rows: number) {
-          _ptyProcess.resize(cols, rows);
-        },
-
-        dispose() {
-          _ptyProcess.dispose();
-        },
-
-        onData(cb: (data: string) => void) {
-          _ptyProcess.addListener(TermEventEnum.DATA, cb);
-        },
-
-        onOpen(cb: () => void) {
-          _ptyProcess.addListener(TermEventEnum.OPEN, cb);
-        },
-
-        getStatus() {
-          return _ptyProcess.getStatus();
-        },
-
-        getPid() {
-          return _ptyProcess.getPid();
-        },
-
-        getCwd() {
-          return _ptyProcess.getCwd();
-        },
-
-        onExit(cb: (ev: { exitCode: number; signal?: number }) => void) {
-          _ptyProcess.addListener(TermEventEnum.EXIT, cb);
-        },
-      };
-    },
-  };
-}
-
-async function buildOptions(
+export async function buildPtyOptions(
   settings: RuntimeSettings,
   cmd: PtyCommand
-): Promise<PtyOptions> {
+): Promise<PtyProcessOptions> {
   const env = {
     ...process.env,
     ...(await resolveShellEnvCached(settings.defaultShell)),
@@ -124,11 +70,11 @@ async function buildOptions(
 function prependBinDirToPath(
   env: typeof process.env,
   settings: RuntimeSettings
-) {
+): void {
   let path: string = env['PATH'] || '';
 
   if (!path.trim()) {
-    path = settings.binDir;
+    path = settings.binDir || '';
   } else {
     path = settings.binDir + ':' + path;
   }
