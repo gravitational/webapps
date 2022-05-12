@@ -20,11 +20,11 @@ import { PrimaryAuthType } from 'shared/services';
 import RecoveryCodes from 'teleport/components/RecoveryCodes';
 import StepSlider from 'teleport/components/StepSlider';
 import useToken, { State } from '../useToken';
-import Expired from './Expired';
-import RegisterSuccess from './Success';
-import NewMfaDevice from './NewMfaDevice';
-import NewPasswordlessDevice from './NewPasswordlessDevice';
-import NewPassword from './NewPassword';
+import { Expired } from './Expired';
+import { RegisterSuccess } from './Success';
+import { NewMfaDevice } from './NewMfaDevice';
+import { NewPasswordlessDevice } from './NewPasswordlessDevice';
+import { NewPassword } from './NewPassword';
 
 export type LoginFlow = Extract<PrimaryAuthType, 'passwordless' | 'local'>;
 const loginFlows = {
@@ -32,21 +32,9 @@ const loginFlows = {
   passwordless: [NewPasswordlessDevice],
 };
 
-export default function Container({
-  tokenId = '',
-  title = '',
-  submitBtnText = '',
-  resetMode = false,
-}) {
+export function Container({ tokenId = '', resetMode = false }) {
   const state = useToken(tokenId);
-  return (
-    <NewCredentials
-      {...state}
-      title={title}
-      submitBtnText={submitBtnText}
-      resetMode={resetMode}
-    />
-  );
+  return <NewCredentials {...state} resetMode={resetMode} />;
 }
 
 export function NewCredentials(props: State & Props) {
@@ -114,7 +102,5 @@ export function NewCredentials(props: State & Props) {
 }
 
 export type Props = State & {
-  submitBtnText: string;
-  title: string;
   resetMode?: boolean;
 };

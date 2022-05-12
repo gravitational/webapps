@@ -31,7 +31,7 @@ import { Props as CredentialsProps, LoginFlow } from './NewCredentials';
 import secKeyGraphic from './sec-key-with-bg.png';
 import { Auth2faType } from 'shared/services';
 
-export default function NewMfaDevice(props: Props) {
+export function NewMfaDevice(props: Props) {
   const {
     resetToken,
     submitAttempt,

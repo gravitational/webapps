@@ -18,7 +18,7 @@ import React from 'react';
 import { Card } from 'design';
 import { SliderProps } from 'teleport/components/StepSlider';
 import { Props, NewCredentials } from './NewCredentials';
-import NewMfaDevice from './NewMfaDevice';
+import { NewMfaDevice } from './NewMfaDevice';
 
 export default {
   title: 'Teleport/Welcome/Form',
@@ -163,8 +163,6 @@ const sliderProps: SliderProps<any> & {
   updatePassword: () => null,
 };
 const props: Props = {
-  submitBtnText: 'Some Button Text',
-  title: 'Some Title',
   auth2faType: 'off',
   primaryAuthType: 'local',
   isPasswordlessEnabled: true,

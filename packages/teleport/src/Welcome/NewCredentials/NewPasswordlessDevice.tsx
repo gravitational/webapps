@@ -23,9 +23,7 @@ import { requiredField } from 'shared/components/Validation/rules';
 import { SliderProps } from 'teleport/components/StepSlider';
 import { Props, LoginFlow } from './NewCredentials';
 
-export default function NewPasswordlessDevice(
-  props: Props & SliderProps<LoginFlow>
-) {
+export function NewPasswordlessDevice(props: Props & SliderProps<LoginFlow>) {
   const {
     submitAttempt,
     onSubmitWithWebauthn,

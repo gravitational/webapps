@@ -26,7 +26,7 @@ import {
 import { SliderProps } from 'teleport/components/StepSlider';
 import { Props as CredentialsProps, LoginFlow } from './NewCredentials';
 
-export default function NewPassword(props: Props) {
+export function NewPassword(props: Props) {
   const {
     submitAttempt,
     resetToken,

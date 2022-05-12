@@ -18,7 +18,7 @@ import React from 'react';
 import { Card, Text, ButtonPrimary, Flex, Image } from 'design';
 import shieldCheck from './shield-check.png';
 
-export default function RegisterSuccess({
+export function RegisterSuccess({
   redirect,
   resetMode = false,
 }: {
