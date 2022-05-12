@@ -39,6 +39,8 @@ export enum MessageType {
   MFA_JSON = 10,
   SHARED_DIRECTORY_ANNOUNCE = 11,
   SHARED_DIRECTORY_ACKNOWLEDGE = 12,
+  SHARED_DIRECTORY_INFO_REQUEST = 13,
+  SHARED_DIRECTORY_INFO_RESPONSE = 14,
 }
 
 // 0 is left button, 1 is middle button, 2 is right button
@@ -97,6 +99,28 @@ export type SharedDirectoryAnnounce = {
 export type SharedDirectoryAcknowledge = {
   err: number;
   directoryId: number;
+};
+
+// | message type (13) | completion_id uint32 | directory_id uint32 | path_length uint32 | path []byte |
+export type SharedDirectoryInfoRequest = {
+  completionId: number;
+  directoryId: number;
+  path: string;
+};
+
+// | message type (14) | completion_id uint32 | err_code uint32 | file_system_object fso |
+export type SharedDirectoryInfoResponse = {
+  completionId: number;
+  errCode: number;
+  fso: FileSystemObject;
+};
+
+// | last_modified uint64 | size uint64 | file_type uint32 | path_length uint32 | path byte[] |
+export type FileSystemObject = {
+  lastModified: bigint;
+  size: bigint;
+  fileType: 0 | 1; // 0=file, 1=directory
+  path: string;
 };
 
 // TdaCodec provides an api for encoding and decoding teleport desktop access protocol messages [1]
@@ -410,7 +434,7 @@ export default class Codec {
   ): Message {
     const dataUtf8array = this.encoder.encode(sharedDirAnnounce.name);
 
-    const bufLen = byteLength + (3 * uint32Length + dataUtf8array.length);
+    const bufLen = byteLength + 3 * uint32Length + dataUtf8array.length;
     const buffer = new ArrayBuffer(bufLen);
     const view = new DataView(buffer);
     let offset = 0;
@@ -419,6 +443,37 @@ export default class Codec {
     view.setUint32(offset, sharedDirAnnounce.completionId);
     offset += uint32Length;
     view.setUint32(offset, sharedDirAnnounce.directoryId);
+    offset += uint32Length;
+    view.setUint32(offset, dataUtf8array.length);
+    offset += uint32Length;
+    dataUtf8array.forEach(byte => {
+      view.setUint8(offset++, byte);
+    });
+
+    return buffer;
+  }
+
+  // | message type (14) | completion_id uint32 | err_code uint32 | file_system_object fso |
+  // FileSystemObject: | last_modified uint64 | size uint64 | file_type uint32 | path_length uint32 | path byte[] |
+  encodeSharedDirectoryInfoResponse(res: SharedDirectoryInfoResponse): Message {
+    const dataUtf8array = this.encoder.encode(res.fso.path);
+
+    const bufLen =
+      byteLength + 4 * uint32Length + 2 * uint64Length + dataUtf8array.length;
+    const buffer = new ArrayBuffer(bufLen);
+    const view = new DataView(buffer);
+    let offset = 0;
+
+    view.setUint8(offset++, MessageType.SHARED_DIRECTORY_INFO_RESPONSE);
+    view.setUint32(offset, res.completionId);
+    offset += uint32Length;
+    view.setUint32(offset, res.errCode);
+    offset += uint32Length;
+    view.setBigUint64(offset, res.fso.lastModified);
+    offset += uint64Length;
+    view.setBigUint64(offset, res.fso.size);
+    offset += uint64Length;
+    view.setUint32(offset, res.fso.fileType);
     offset += uint32Length;
     view.setUint32(offset, dataUtf8array.length);
     offset += uint32Length;
@@ -442,7 +497,7 @@ export default class Codec {
   decodeMessageType(buffer: ArrayBuffer): MessageType {
     const messageType = new DataView(buffer).getUint8(0);
     // TODO(isaiah): this is fragile, instead switch all possibilities here.
-    if (messageType > MessageType.SHARED_DIRECTORY_ACKNOWLEDGE) {
+    if (messageType > MessageType.SHARED_DIRECTORY_INFO_REQUEST) {
       throw new Error(`invalid message type: ${messageType}`);
     }
     return messageType;
@@ -506,6 +561,22 @@ export default class Codec {
     };
   }
 
+  // | message type (13) | completion_id uint32 | directory_id uint32 | path_length uint32 | path []byte |
+  decodeSharedDirectoryInfoRequest(
+    buffer: ArrayBuffer
+  ): SharedDirectoryInfoRequest {
+    let dv = new DataView(buffer);
+    let completionId = dv.getUint32(1);
+    let directoryId = dv.getUint32(5);
+    let path = this.decoder.decode(new Uint8Array(buffer.slice(13)));
+
+    return {
+      completionId,
+      directoryId,
+      path,
+    };
+  }
+
   // _asBase64Url creates a data:image uri from the png data part of a PNG_FRAME tdp message.
   _asBase64Url(buffer: ArrayBuffer): string {
     return `data:image/png;base64,${arrayBufferToBase64(buffer.slice(17))}`;
@@ -513,4 +584,5 @@ export default class Codec {
 }
 
 const byteLength = 1;
-const uint32Length = 4;
+const uint32Length = byteLength * 4;
+const uint64Length = uint32Length * 2;

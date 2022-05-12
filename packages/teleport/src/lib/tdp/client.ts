@@ -23,6 +23,7 @@ import Codec, {
   ClientScreenSpec,
   PngFrame,
   ClipboardData,
+  SharedDirectoryInfoResponse,
 } from './codec';
 
 export enum TdpClientEvent {
@@ -110,6 +111,9 @@ export default class Client extends EventEmitterWebAuthnSender {
         case MessageType.SHARED_DIRECTORY_ACKNOWLEDGE:
           this.handleSharedDirectoryAcknowledge(buffer);
           break;
+        case MessageType.SHARED_DIRECTORY_INFO_REQUEST:
+          this.handleSharedDirectoryInfoRequest(buffer);
+          break;
         default:
           this.logger.warn(`received unsupported message type ${messageType}`);
       }
@@ -183,9 +187,26 @@ export default class Client extends EventEmitterWebAuthnSender {
   }
 
   handleSharedDirectoryAcknowledge(buffer: ArrayBuffer) {
-    // TODO(isaiah)
     const ack = this.codec.decodeSharedDirectoryAcknowledge(buffer);
     console.log(ack);
+  }
+
+  handleSharedDirectoryInfoRequest(buffer: ArrayBuffer) {
+    const req = this.codec.decodeSharedDirectoryInfoRequest(buffer);
+    console.log(req);
+
+    if (req.path === '') {
+      this.sendSharedDirectoryInfoResponse({
+        completionId: req.completionId,
+        errCode: 0,
+        fso: {
+          lastModified: BigInt(1111111111111),
+          fileType: 1,
+          size: BigInt(1024),
+          path: req.path,
+        },
+      });
+    }
   }
 
   sendUsername(username: string) {
@@ -230,6 +251,10 @@ export default class Client extends EventEmitterWebAuthnSender {
         name,
       })
     );
+  }
+
+  sendSharedDirectoryInfoResponse(res: SharedDirectoryInfoResponse) {
+    this.socket.send(this.codec.encodeSharedDirectoryInfoResponse(res));
   }
 
   resize(spec: ClientScreenSpec) {
