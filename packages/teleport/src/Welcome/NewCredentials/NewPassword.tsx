@@ -62,9 +62,9 @@ export default function NewPassword(props: Props) {
     onSubmit(password);
   }
 
-  function switchToPasswordlessFlow(e, isBack = false) {
+  function switchToPasswordlessFlow(e, applyNextAnimation = false) {
     e.preventDefault();
-    switchFlow('passwordless', isBack);
+    switchFlow('passwordless', applyNextAnimation);
   }
 
   return (

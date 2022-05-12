@@ -23,7 +23,7 @@ import { requiredField } from 'shared/components/Validation/rules';
 import { SliderProps } from 'teleport/components/StepSlider';
 import { Props, LoginFlow } from './NewCredentials';
 
-export default function NewPwdlessDevice(
+export default function NewPasswordlessDevice(
   props: Props & SliderProps<LoginFlow>
 ) {
   const {
@@ -51,10 +51,10 @@ export default function NewPwdlessDevice(
     onSubmitWithWebauthn('', deviceName);
   }
 
-  function switchToLocalFlow(e, isBack = false) {
+  function switchToLocalFlow(e, applyNextAnimation = false) {
     e.preventDefault();
     clearSubmitAttempt();
-    switchFlow('local', isBack);
+    switchFlow('local', applyNextAnimation);
   }
 
   return (

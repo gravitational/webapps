@@ -57,14 +57,32 @@ export default function FieldInput({
     function autoFocusOnTransitionEnd(e: TransitionEvent) {
       if (e.propertyName !== transitionPropertyName) return;
       inputRef.current.focus();
+      // Since we only need to auto focus one time, the listener's are no longer needed.
+      removeListeners();
+    }
+
+    // autoFocusOnTransitionCancel is fallback to autoFocusOnTransitionEnd when the transition
+    // we are expecting gets canceled (sometimes happens in chrome, but strangely not in firefox).
+    function autoFocusOnTransitionCancel(e: TransitionEvent) {
+      if (e.propertyName !== transitionPropertyName) return;
+      inputRef.current.focus();
       // Since we only need to auto focus one time, the listener is no longer needed.
+      removeListeners();
+    }
+
+    function removeListeners() {
       window.removeEventListener('transitionend', autoFocusOnTransitionEnd);
+      window.removeEventListener(
+        'transitioncancel',
+        autoFocusOnTransitionCancel
+      );
     }
 
     window.addEventListener('transitionend', autoFocusOnTransitionEnd);
+    window.addEventListener('transitioncancel', autoFocusOnTransitionCancel);
 
     return () => {
-      window.removeEventListener('transitionend', autoFocusOnTransitionEnd);
+      removeListeners();
     };
   }, [refocusIndicator]);
 

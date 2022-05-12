@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-import React, { useState, useMemo, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import { Text, ButtonPrimary, Flex, Box, Link, Image } from 'design';
 import { Danger } from 'design/Alert';
@@ -44,13 +44,9 @@ export default function NewMfaDevice(props: Props) {
     refCallback,
   } = props;
   const [otp, setOtp] = useState('');
-  const mfaOptions = useMemo(
-    () =>
-      createMfaOptions({
-        auth2faType: auth2faType,
-      }),
-    []
-  );
+  const mfaOptions = createMfaOptions({
+    auth2faType: auth2faType,
+  });
   const [transitionPropertyName, setTransitionPropertyName] =
     useState('height');
   const [mfaType, setMfaType] = useState(mfaOptions[0]);
@@ -171,8 +167,8 @@ export default function NewMfaDevice(props: Props) {
               <>
                 <Image src={imgSrc} width="220px" height="154px" />
                 <Text fontSize={1} color="text.secondary" textAlign="center">
-                  We support a wide range of hardware devices including yubi
-                  keys, touch ID, watches, and more.
+                  We support a wide range of hardware devices including
+                  YubiKeys, Touch ID, watches, and more.
                 </Text>
               </>
             )}

@@ -23,13 +23,13 @@ import useToken, { State } from '../useToken';
 import Expired from './Expired';
 import RegisterSuccess from './Success';
 import NewMfaDevice from './NewMfaDevice';
-import NewPwdlessDevice from './NewPasswordlessDevice';
+import NewPasswordlessDevice from './NewPasswordlessDevice';
 import NewPassword from './NewPassword';
 
 export type LoginFlow = Extract<PrimaryAuthType, 'passwordless' | 'local'>;
 const loginFlows = {
   local: [NewPassword, NewMfaDevice],
-  passwordless: [NewPwdlessDevice],
+  passwordless: [NewPasswordlessDevice],
 };
 
 export default function Container({
