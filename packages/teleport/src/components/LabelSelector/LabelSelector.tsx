@@ -2,13 +2,20 @@ import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 
 import Text from 'design/Text';
-import { Info } from '../../../../design/src/Icon';
+import { Info, Warning } from '../../../../design/src/Icon';
 import Pill from '../../../../design/src/Pill';
+
+const VALID_LABEL = /^[a-z]+:\s?[a-z]+$/;
 
 function LabelSelector({ existingLabels = [], onChange }: LabelSelectorProps) {
   const [labels, setLabels] = useState<string[]>([]);
   const [showAdd, setShowAdd] = useState(false);
   const [newLabel, setNewLabel] = useState('');
+  const [validLabel, setValidLabel] = useState(true);
+
+  useEffect(() => {
+    setValidLabel(VALID_LABEL.test(newLabel));
+  }, [newLabel]);
 
   return (
     <div>
@@ -36,7 +43,21 @@ function LabelSelector({ existingLabels = [], onChange }: LabelSelectorProps) {
             setNewLabel(e.target.value);
           }}
         />
-        <CreateLabel>+ Create new label "{newLabel}"</CreateLabel>
+        {validLabel ? (
+          <CreateLabel>+ Create new label "{newLabel}"</CreateLabel>
+        ) : (
+          <CreateLabelError>
+            <WarningIconWrapper>
+              <Warning />
+            </WarningIconWrapper>
+            <WarningText>
+              <Text style={{ color: '#D83C31', fontWeight: 700 }}>
+                Invalid label format
+              </Text>
+              <Text>Follow `key:pair` format to add a new label</Text>
+            </WarningText>
+          </CreateLabelError>
+        )}
       </AddLabelContainer>
     </div>
   );
@@ -90,6 +111,27 @@ const CreateLabel = styled.button`
   font-size: 1rem;
   margin-left: 16px;
   margin-top: 25px;
+`;
+
+const CreateLabelError = styled.div`
+  margin-top: 8px;
+`;
+
+const WarningIconWrapper = styled.div`
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 54px;
+  float: left;
+  height: 20px;
+  line-height: 20px;
+  margin-top: 10px;
+  padding: 5px;
+  text-align: center;
+  width: 20px;
+`;
+
+const WarningText = styled.div`
+  float: left;
+  margin-left: 8px;
 `;
 
 type LabelSelectorProps = {
