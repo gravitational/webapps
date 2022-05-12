@@ -11,11 +11,20 @@ function LabelSelector({ existingLabels = [], onChange }: LabelSelectorProps) {
   const [labels, setLabels] = useState<string[]>([]);
   const [showAdd, setShowAdd] = useState(false);
   const [newLabel, setNewLabel] = useState('');
-  const [validLabel, setValidLabel] = useState(true);
+  const [validLabel, setValidLabel] = useState(false);
 
   useEffect(() => {
     setValidLabel(VALID_LABEL.test(newLabel));
   }, [newLabel]);
+
+  useEffect(() => {
+    onChange(labels);
+  }, [labels]);
+
+  const handleAddLabel = () => {
+    setLabels([...labels, newLabel.trim()]);
+    setNewLabel('');
+  };
 
   return (
     <div>
@@ -28,7 +37,7 @@ function LabelSelector({ existingLabels = [], onChange }: LabelSelectorProps) {
           </Link>
         </Text>
       </Heading>
-      <LabelContainer>
+      <LabelContainer onClick={() => setShowAdd(!showAdd)}>
         {labels.length === 0 && existingLabels.length === 0 && (
           <Text style={{ color: 'rgba(255, 255, 255, 0.1)' }}>
             Click to add new labels.
@@ -37,28 +46,39 @@ function LabelSelector({ existingLabels = [], onChange }: LabelSelectorProps) {
         {labelList({ labels: existingLabels })}
         {labelList({ labels })}
       </LabelContainer>
-      <AddLabelContainer>
-        <AddLabelInput
-          onChange={e => {
-            setNewLabel(e.target.value);
-          }}
-        />
-        {validLabel ? (
-          <CreateLabel>+ Create new label "{newLabel}"</CreateLabel>
-        ) : (
-          <CreateLabelError>
-            <WarningIconWrapper>
-              <Warning />
-            </WarningIconWrapper>
-            <WarningText>
-              <Text style={{ color: '#D83C31', fontWeight: 700 }}>
-                Invalid label format
-              </Text>
-              <Text>Follow `key:pair` format to add a new label</Text>
-            </WarningText>
-          </CreateLabelError>
-        )}
-      </AddLabelContainer>
+      {showAdd && (
+        <AddLabelContainer>
+          <AddLabelInput
+            value={newLabel}
+            onChange={e => {
+              setNewLabel(e.target.value);
+            }}
+            onKeyPress={e => {
+              // Add a new label on `Enter` if it's valid.
+              if (e.charCode === 13 && validLabel) {
+                handleAddLabel();
+              }
+            }}
+          />
+          {validLabel ? (
+            <CreateLabel onClick={handleAddLabel}>
+              + Create new label "{newLabel}"
+            </CreateLabel>
+          ) : (
+            <CreateLabelError>
+              <WarningIconWrapper>
+                <Warning />
+              </WarningIconWrapper>
+              <WarningText>
+                <Text style={{ color: '#D83C31', fontWeight: 700 }}>
+                  Invalid label format
+                </Text>
+                <Text>Follow `key:pair` format to add a new label</Text>
+              </WarningText>
+            </CreateLabelError>
+          )}
+        </AddLabelContainer>
+      )}
     </div>
   );
 }
