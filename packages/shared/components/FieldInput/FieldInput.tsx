@@ -29,6 +29,7 @@ export default function FieldInput({
   type = 'text',
   autoFocus = false,
   transitionPropertyName = '',
+  refocusIndicator = '',
   autoComplete = 'off',
   inputMode = 'text',
   readonly = false,
@@ -65,7 +66,7 @@ export default function FieldInput({
     return () => {
       window.removeEventListener('transitionend', autoFocusOnTransitionEnd);
     };
-  }, []);
+  }, [refocusIndicator]);
 
   return (
     <Box mb="4" {...styles}>
@@ -108,6 +109,9 @@ type Props = {
   // to determine if input element should be auto focused after
   // a transition has ended.
   transitionPropertyName?: string;
+  // refocusIndicator is used as a listener for change (with any text value)
+  // for the useEffect that handles the auto-focusing.
+  refocusIndicator?: string;
   type?: 'email' | 'text' | 'password' | 'number' | 'date' | 'week';
   inputMode?: 'text' | 'numeric';
   rule?: (options: unknown) => () => unknown;

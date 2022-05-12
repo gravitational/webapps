@@ -47,7 +47,7 @@ export default function Welcome() {
         </Route>
         <Route exact path={cfg.routes.userReset}>
           <CardWelcome
-            title="Reset Password"
+            title="Reset Authentication"
             subTitle="Please click the button below to begin recovery of your account"
             btnText="Continue"
             onClick={handleOnResetContinue}
