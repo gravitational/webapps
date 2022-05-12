@@ -7,6 +7,8 @@ import Pill from '../../../../design/src/Pill';
 
 function LabelSelector({ existingLabels = [], onChange }: LabelSelectorProps) {
   const [labels, setLabels] = useState<string[]>([]);
+  const [showAdd, setShowAdd] = useState(false);
+  const [newLabel, setNewLabel] = useState('');
 
   return (
     <div>
@@ -28,6 +30,14 @@ function LabelSelector({ existingLabels = [], onChange }: LabelSelectorProps) {
         {labelList({ labels: existingLabels })}
         {labelList({ labels })}
       </LabelContainer>
+      <AddLabelContainer>
+        <AddLabelInput
+          onChange={e => {
+            setNewLabel(e.target.value);
+          }}
+        />
+        <CreateLabel>+ Create new label "{newLabel}"</CreateLabel>
+      </AddLabelContainer>
     </div>
   );
 }
@@ -43,15 +53,43 @@ const Link = styled.a`
 `;
 
 const LabelContainer = styled.div`
-  clear: both;
-  display: flex;
   border-radius: 4px;
   border: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow: 0px 8px 10px rgba(12, 12, 14, 0.07);
+  clear: both;
   cursor: pointer;
+  display: flex;
   gap: 10px;
-  min-height: 36px;
   margin-top: 8px;
+  min-height: 36px;
   padding: 10px 16px;
+`;
+
+const AddLabelContainer = styled.div`
+  background: #182250;
+  border-radius: 4px;
+  height: 100px;
+  padding: 1rem;
+`;
+
+const AddLabelInput = styled.input`
+  background: #182250;
+  border-radius: 52px;
+  border: 1.5px solid #512fc9;
+  color: white;
+  height: 40px;
+  padding: 0 12px;
+  width: calc(100% - 2rem);
+`;
+
+const CreateLabel = styled.button`
+  background: none;
+  border: none;
+  color: white;
+  cursor: pointer;
+  font-size: 1rem;
+  margin-left: 16px;
+  margin-top: 25px;
 `;
 
 type LabelSelectorProps = {
