@@ -1,4 +1,4 @@
-import { fork, spawn } from 'child_process';
+import { spawn } from 'child_process';
 import { app, globalShortcut, shell } from 'electron';
 import MainProcess from 'teleterm/mainProcess';
 import { getRuntimeSettings } from 'teleterm/mainProcess/runtimeSettings';
@@ -20,7 +20,7 @@ const windowsManager = new WindowsManager(fileStorage, settings);
 
 process.on('uncaughtException', error => {
   logger.error('', error);
-  throw error;
+  app.quit();
 });
 
 // init main process
@@ -31,20 +31,11 @@ const mainProcess = MainProcess.create({
   fileStorage,
 });
 
-const sharedProcess = fork(
-  path.join(__dirname, 'sharedProcess.js'),
-  [`--addr=${settings.shared.networkAddr}`],
-  {
-    stdio: 'inherit',
-  }
-);
-
 app.commandLine.appendSwitch('ignore-certificate-errors', 'true');
 
 app.on('will-quit', () => {
   fileStorage.putAllSync();
   globalShortcut.unregisterAll();
-  sharedProcess.kill();
   mainProcess.dispose();
 });
 
@@ -53,7 +44,6 @@ app.whenReady().then(() => {
     // allow restarts on F6
     globalShortcut.register('F6', () => {
       mainProcess.dispose();
-      sharedProcess.kill();
       const [bin, ...args] = process.argv;
       const child = spawn(bin, args, {
         env: process.env,

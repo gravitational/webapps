@@ -27,7 +27,7 @@ function getRuntimeSettings(): RuntimeSettings {
     networkAddr: tshNetworkAddr,
     flags: ['daemon', 'start', `--addr=${tshNetworkAddr}`],
   };
-  const shared = {
+  const sharedProcess = {
     networkAddr: getSharedProcessNetworkAddress()
   }
 
@@ -39,7 +39,7 @@ function getRuntimeSettings(): RuntimeSettings {
   return {
     dev,
     tshd,
-    shared,
+    sharedProcess,
     userDataDir,
     binDir,
     defaultShell: getDefaultShell(),
