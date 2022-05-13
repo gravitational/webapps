@@ -175,6 +175,12 @@ export default function createClient(addr: string) {
             .setPassword(params.local.password)
         : null;
 
+      const passwordlessParams = params.passwordless
+        ? new api.LoginRequest.PasswordlessParams().setUser(
+            params.passwordless.username
+          )
+        : null;
+
       return withAbort(abortSignal, callRef => {
         const req = new api.LoginRequest().setClusterUri(params.clusterUri);
 
@@ -182,8 +188,10 @@ export default function createClient(addr: string) {
         // the other.
         if (ssoParams) {
           req.setSso(ssoParams);
-        } else {
+        } else if (localParams) {
           req.setLocal(localParams);
+        } else {
+          req.setPasswordless(passwordlessParams);
         }
 
         return new Promise<void>((resolve, reject) => {
@@ -193,6 +201,66 @@ export default function createClient(addr: string) {
             } else {
               resolve();
             }
+          });
+        });
+      });
+    },
+
+    async loginPasswordless(
+      params: types.LoginParams,
+      abortSignal?: types.TshAbortSignal
+    ) {
+      return withAbort(abortSignal, callRef => {
+        const req = new api.LoginPasswordlessRequest().setClusterUri(
+          params.clusterUri
+        );
+        req.setUser('sumo');
+
+        return new Promise<void>((resolve, reject) => {
+          callRef.current = tshd.loginPasswordless();
+
+          // it's init
+          callRef.current.write(req);
+
+          callRef.current.on('data', function (response) {
+            console.log(
+              '>>>> ------------ response: ',
+              response,
+              response.array[0]
+            );
+
+            if (response.array[0] === 1) {
+              params.passwordless.cb('PIN', pin => {
+                console.log('-------- about to write back pin: ', pin);
+                const req = new api.LoginPasswordlessRequest().setPin(pin);
+                console.log('------- pin req: ', req);
+                callRef.current.write(req);
+              });
+              return;
+            }
+
+            if (response.array[0] === 2) {
+              params.passwordless.cb('TAP');
+              return;
+            }
+            if (response.array[0] === 3) {
+              params.passwordless.cb('RETAP');
+              return;
+            }
+          });
+
+          callRef.current.on('end', function (response) {
+            console.log('---------------- stream ended', response);
+            // if (err) {
+            //   reject(err);
+            // } else {
+            resolve();
+            // }
+          });
+
+          callRef.current.on('error', function (err) {
+            console.log('---------------- stream error out?', err);
+            reject(err);
           });
         });
       });

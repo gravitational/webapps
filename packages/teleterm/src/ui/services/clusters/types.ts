@@ -30,6 +30,10 @@ export type Auth2faType = shared.Auth2faType;
 
 export type AuthProviderType = shared.AuthProviderType;
 
+export type PrimaryAuthType = shared.PrimaryAuthType;
+
+export type AuthType = shared.AuthType;
+
 export type AuthProvider = tsh.AuthProvider;
 
 export type LoginParams = tsh.LoginParams;
@@ -51,6 +55,7 @@ export type Database = tsh.Database;
 export interface AuthSettings extends tsh.AuthSettings {
   secondFactor: Auth2faType;
   preferredMfa: PreferredMfaType;
+  authType: AuthType;
 }
 
 export { tsh };

@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-import { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import * as types from 'teleterm/ui/services/clusters/types';
 import { useAppContext } from 'teleterm/ui/appContextProvider';
 import { useAsync } from 'shared/hooks/useAsync';
@@ -27,20 +27,27 @@ export default function useClusterLogin(props: Props) {
   const refAbortCtrl = useRef<types.tsh.TshAbortController>(null);
   const [shouldPromptSsoStatus, promptSsoStatus] = useState(false);
   const [shouldPromptHardwareKey, promptHardwareKey] = useState(false);
+  const [shouldPromptHardwareKeyAgain, promptHardwareKeyAgain] =
+    useState(false);
+  const [shouldPromptHardwarePin, promptHardwarePin] = useState(false);
+  const [shouldPromptName, setPromptName] = useState(false);
+  const [pinCallback, setPinCallback] = useState();
 
   const [initAttempt, init] = useAsync(() => {
     return clustersService.getAuthSettings(clusterUri);
   });
 
-  const [loginAttempt, login] = useAsync((opts: types.LoginParams) => {
-    refAbortCtrl.current = clustersService.client.createAbortController();
-    return clustersService.login(opts, refAbortCtrl.current.signal);
-  });
+  const [loginAttempt, login, _, loginAttemptClear] = useAsync(
+    (opts: types.LoginParams) => {
+      refAbortCtrl.current = clustersService.client.createAbortController();
+      return clustersService.login(opts, refAbortCtrl.current.signal);
+    }
+  );
 
   const onLoginWithLocal = (
-    username: '',
-    password: '',
-    token: '',
+    username = '',
+    password = '',
+    token = '',
     authType?: types.Auth2faType
   ) => {
     promptHardwareKey(authType === 'webauthn');
@@ -50,6 +57,37 @@ export default function useClusterLogin(props: Props) {
         username,
         password,
         token,
+      },
+    });
+  };
+
+  const onLoginWithPwdless = (username = '') => {
+    console.log('---- here i am on passwordless login?');
+    login({
+      clusterUri,
+      passwordless: {
+        username,
+        cb: (t: string, cb) => {
+          if (t === 'TAP') {
+            setPromptName(false);
+            console.log('-------- TAP!');
+            promptHardwarePin(() => false);
+
+            promptHardwareKey(() => true);
+          } else if (t === 'RETAP') {
+            console.log('-------- RE-TAP!');
+            promptHardwareKeyAgain(() => true);
+            promptHardwarePin(() => false);
+          } else if (t === 'PIN') {
+            console.log('-------- PIN!', cb);
+            promptHardwarePin(() => true);
+            promptHardwareKey(() => false);
+            setPinCallback(() => cb);
+          } else {
+            // error maybe?
+            console.log('-------- prompt error?');
+          }
+        },
       },
     });
   };
@@ -81,6 +119,8 @@ export default function useClusterLogin(props: Props) {
   useEffect(() => {
     if (loginAttempt.status !== 'processing') {
       promptHardwareKey(false);
+      promptHardwareKeyAgain(false);
+      promptHardwarePin(false);
       promptSsoStatus(false);
     }
 
@@ -92,13 +132,20 @@ export default function useClusterLogin(props: Props) {
   return {
     shouldPromptSsoStatus,
     shouldPromptHardwareKey,
+    shouldPromptHardwareKeyAgain,
+    shouldPromptHardwarePin,
     title: getClusterName(cluster),
     onLoginWithLocal,
+    onLoginWithPwdless,
     onLoginWithSso,
     onCloseDialog,
     onAbort,
     loginAttempt,
     initAttempt,
+    clearLoginAttempt: loginAttemptClear,
+    pinCallback,
+    shouldPromptName,
+    setPromptName,
   };
 }
 

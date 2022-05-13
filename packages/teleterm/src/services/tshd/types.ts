@@ -44,6 +44,10 @@ export type TshClient = {
   removeGateway: (gatewayUri: string) => Promise<void>;
   removeCluster: (clusterUri: string) => Promise<void>;
   login: (params: LoginParams, abortSignal?: TshAbortSignal) => Promise<void>;
+  loginPasswordless: (
+    params: LoginParams,
+    abortSignal?: TshAbortSignal
+  ) => Promise<void>;
   logout: (clusterUri: string) => Promise<void>;
 };
 
@@ -67,6 +71,10 @@ export type LoginParams = {
     username: string;
     password: string;
     token?: string;
+  };
+  passwordless?: {
+    username: string;
+    cb(prompt: string, cb?: (params: any) => void): void;
   };
 };
 

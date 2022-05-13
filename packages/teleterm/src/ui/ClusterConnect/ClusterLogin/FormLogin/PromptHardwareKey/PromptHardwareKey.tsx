@@ -33,7 +33,11 @@ export default function PromptHardwareKey(props: Props) {
     >
       <Image mb={4} width="200px" src={svg} />
       <Box mb={4} style={{ position: 'relative' }}>
-        <Text bold>Insert your security key and touch it</Text>
+        {props.retap ? (
+          <Text bold>Touch your security key again to complete login</Text>
+        ) : (
+          <Text bold>Insert your security key and touch it</Text>
+        )}
         <LinearProgress />
       </Box>
       <ButtonSecondary width={120} size="small" onClick={props.onCancel}>
@@ -45,4 +49,5 @@ export default function PromptHardwareKey(props: Props) {
 
 export type Props = {
   onCancel(): void;
+  retap?: boolean;
 };

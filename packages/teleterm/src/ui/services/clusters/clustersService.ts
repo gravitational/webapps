@@ -55,9 +55,20 @@ export class ClustersService extends ImmutableStore<ClustersServiceState> {
   }
 
   async login(params: LoginParams, abortSignal: tsh.TshAbortSignal) {
-    await this.client.login(params, abortSignal);
+    console.log('--- params: ', params);
+    if (params.passwordless) {
+      await this.client.loginPasswordless(params, abortSignal);
+    } else {
+      await this.client.login(params, abortSignal);
+    }
     await this.syncRootCluster(params.clusterUri);
   }
+
+  // async loginPasswordless(params: LoginParams, abortSignal: tsh.TshAbortSignal) {
+  //   console.log('--- params: ', params);
+  //   await this.client.loginPassword(params, abortSignal);
+  //   await this.syncRootCluster(params.clusterUri);
+  // }
 
   async syncRootCluster(clusterUri: string) {
     try {

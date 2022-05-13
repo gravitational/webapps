@@ -100,7 +100,11 @@ export function useAsync<R, T extends Function>(cb?: AsyncCb<R, T>) {
     setState(attempt);
   }
 
-  return [state, run, setAttempt] as const;
+  function clear() {
+    setState(makeEmptyAttempt());
+  }
+
+  return [state, run, setAttempt, clear] as const;
 }
 
 export type Attempt<T> = {

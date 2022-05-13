@@ -1,5 +1,5 @@
 /*
-Copyright 2019-2021 Gravitational, Inc.
+Copyright 2019-2022 Gravitational, Inc.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -31,17 +31,24 @@ export function ClusterLoginPresentation({
   title,
   initAttempt,
   loginAttempt,
+  clearLoginAttempt,
   onLoginWithLocal,
+  onLoginWithPwdless,
   onLoginWithSso,
   onCloseDialog,
   onAbort,
   shouldPromptSsoStatus,
   shouldPromptHardwareKey,
+  shouldPromptHardwareKeyAgain,
+  shouldPromptHardwarePin,
+  pinCallback,
+  shouldPromptName,
+  setPromptName,
 }: State) {
   return (
     <>
       <DialogHeader>
-        <Text typography="h4">
+        <Text typography="h4" pl={2} pt={1}>
           Login to <b>{title}</b>
         </Text>
         <ButtonIcon ml="auto" p={3} onClick={onCloseDialog}>
@@ -61,13 +68,23 @@ export function ClusterLoginPresentation({
             authProviders={initAttempt.data.authProvidersList}
             auth2faType={initAttempt.data.secondFactor}
             isLocalAuthEnabled={initAttempt.data.localAuthEnabled}
+            isPasswordlessEnabled={initAttempt.data.allowPasswordless}
+            localConnectorName={initAttempt.data.localConnectorName}
+            authType={initAttempt.data.authType}
             preferredMfa={initAttempt.data.preferredMfa}
             onLoginWithSso={onLoginWithSso}
+            onLoginWithPwdless={onLoginWithPwdless}
             onLogin={onLoginWithLocal}
             onAbort={onAbort}
             loginAttempt={loginAttempt}
+            clearLoginAttempt={clearLoginAttempt}
             shouldPromptSsoStatus={shouldPromptSsoStatus}
             shouldPromptHardwareKey={shouldPromptHardwareKey}
+            shouldPromptHardwareKeyAgain={shouldPromptHardwareKeyAgain}
+            shouldPromptHardwarePin={shouldPromptHardwarePin}
+            pinCallback={pinCallback}
+            shouldPromptName={shouldPromptName}
+            setPromptName={setPromptName}
           />
         )}
       </DialogContent>
