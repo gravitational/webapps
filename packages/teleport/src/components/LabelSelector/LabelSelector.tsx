@@ -7,6 +7,8 @@ import Pill from '../../../../design/src/Pill';
 import Popover from 'design/Popover';
 import Box from 'design/Box';
 
+import useClickOutside from 'shared/hooks/useClickOutside';
+
 const VALID_LABEL = /^[a-z]+:\s?[a-z]+$/;
 
 function LabelSelector({ existingLabels = [], onChange }: LabelSelectorProps) {
@@ -18,6 +20,7 @@ function LabelSelector({ existingLabels = [], onChange }: LabelSelectorProps) {
 
   const infoIconRef = useRef<HTMLDivElement>();
   const addLabelInputRef = useRef<HTMLInputElement>();
+  const addLabelContainerRef = useRef<HTMLDivElement>();
 
   useEffect(() => {
     setValidLabel(VALID_LABEL.test(newLabel));
@@ -33,12 +36,16 @@ function LabelSelector({ existingLabels = [], onChange }: LabelSelectorProps) {
     }
   }, [showAdd]);
 
+  useClickOutside(addLabelContainerRef, () => {
+    setShowAdd(false);
+  });
+
   const handleAddLabel = () => {
     setLabels([...labels, newLabel.trim()]);
     setNewLabel('');
   };
 
-  const handleDismiss = (label: string) => {
+  const handleLabelDismiss = (label: string) => {
     setLabels(labels.splice(labels.indexOf(label), 1));
   };
 
@@ -118,11 +125,11 @@ function LabelSelector({ existingLabels = [], onChange }: LabelSelectorProps) {
             Click to add new labels.
           </Text>
         )}
-        {labelList({ labels: existingLabels, onDismiss: handleDismiss })}
-        {labelList({ labels, onDismiss: handleDismiss })}
+        {labelList({ labels: existingLabels, onDismiss: handleLabelDismiss })}
+        {labelList({ labels, onDismiss: handleLabelDismiss })}
       </LabelContainer>
       {showAdd && (
-        <AddLabelContainer>
+        <AddLabelContainer ref={addLabelContainerRef}>
           <AddLabelInput
             value={newLabel}
             onChange={e => {
