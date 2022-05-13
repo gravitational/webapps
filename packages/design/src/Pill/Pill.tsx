@@ -23,7 +23,13 @@ function Pill({ label, dismissable = false, onDismiss = () => {} }: Props) {
   return (
     <Wrapper dismissable={dismissable}>
       <Label>{label}</Label>
-      <Dismiss dismissable={dismissable} onClick={() => onDismiss(label)}>
+      <Dismiss
+        dismissable={dismissable}
+        onClick={(e: MouseEvent) => {
+          e.stopPropagation();
+          onDismiss(label);
+        }}
+      >
         <Cross />
       </Dismiss>
     </Wrapper>

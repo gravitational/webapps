@@ -8,6 +8,7 @@ import Popover from 'design/Popover';
 import Box from 'design/Box';
 
 import useClickOutside from 'shared/hooks/useClickOutside';
+import useEscape from 'shared/hooks/useEscape';
 
 const VALID_LABEL = /^[a-z]+:\s?[a-z]+$/;
 
@@ -40,13 +41,19 @@ function LabelSelector({ existingLabels = [], onChange }: LabelSelectorProps) {
     setShowAdd(false);
   });
 
+  useEscape(() => {
+    setShowAdd(false);
+  });
+
   const handleAddLabel = () => {
     setLabels([...labels, newLabel.trim()]);
     setNewLabel('');
   };
 
   const handleLabelDismiss = (label: string) => {
-    setLabels(labels.splice(labels.indexOf(label), 1));
+    const labelList = [...labels];
+    labelList.splice(labelList.indexOf(label), 1);
+    setLabels(labelList);
   };
 
   return (
