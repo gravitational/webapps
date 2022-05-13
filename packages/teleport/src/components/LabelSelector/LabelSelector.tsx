@@ -1,9 +1,11 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import styled from 'styled-components';
 
 import Text from 'design/Text';
 import { Info, Warning } from '../../../../design/src/Icon';
 import Pill from '../../../../design/src/Pill';
+import Popover from 'design/Popover';
+import Box from 'design/Box';
 
 const VALID_LABEL = /^[a-z]+:\s?[a-z]+$/;
 
@@ -12,6 +14,9 @@ function LabelSelector({ existingLabels = [], onChange }: LabelSelectorProps) {
   const [showAdd, setShowAdd] = useState(false);
   const [newLabel, setNewLabel] = useState('');
   const [validLabel, setValidLabel] = useState(false);
+  const [showTooltip, setShowTooltip] = useState(false);
+
+  const infoIconRef = useRef();
 
   useEffect(() => {
     setValidLabel(VALID_LABEL.test(newLabel));
@@ -30,11 +35,70 @@ function LabelSelector({ existingLabels = [], onChange }: LabelSelectorProps) {
     <div>
       <Heading>
         <Text style={{ float: 'left' }}>Assign Labels (optional)</Text>
-        <Info style={{ float: 'left' }} />
+        <div ref={infoIconRef} style={{ marginLeft: '12px', float: 'left' }}>
+          <Info
+            style={{
+              cursor: 'pointer',
+              fontSize: '16px',
+              paddingTop: '5px',
+            }}
+            onClick={() => setShowTooltip(!showTooltip)}
+          />
+        </div>
+        <Popover
+          id="simple-popper"
+          open={showTooltip}
+          anchorOrigin={{
+            vertical: 'bottom',
+            horizontal: 'right',
+          }}
+          transformOrigin={{
+            vertical: 'top',
+            horizontal: 'left',
+          }}
+          anchorEl={infoIconRef.current}
+          onClose={() => setShowTooltip(false)}
+        >
+          <Box
+            bg="#011223"
+            color="white"
+            width={362}
+            p={4}
+            style={{
+              boxShadow: '0px 8px 14px rgba(12, 12, 14, 0.07)',
+              borderRadius: '8px',
+            }}
+          >
+            Teleport provides users the ability to add labels (in the form of
+            key:value pairs) to resources. Some valid example labels are “env:
+            prod” and “arch: x86_64”. Labels, used in conjunction with roles,
+            define access in Teleport. For example, you can specify that users
+            with the “on-call” role can access resources labeled “env: prod”.
+            For more information, check out our documentation on{' '}
+            <a
+              href="https://goteleport.com/docs/setup/admin/trustedclusters/"
+              target="_blank"
+            >
+              RBAC
+            </a>{' '}
+            and{' '}
+            <a
+              href="https://goteleport.com/docs/setup/admin/labels/"
+              target="_blank"
+            >
+              labels
+            </a>
+            .
+          </Box>
+        </Popover>
         <Text style={{ float: 'right' }}>
-          <Link href="https://goteleport.com/docs/setup/admin/labels/">
+          <a
+            href="https://goteleport.com/docs/setup/admin/labels/"
+            target="_blank"
+            style={{ color: 'rgb(255, 255, 255)' }}
+          >
             View Documentation
-          </Link>
+          </a>
         </Text>
       </Heading>
       <LabelContainer onClick={() => setShowAdd(!showAdd)}>
@@ -89,10 +153,6 @@ const Heading = styled.div`
   position: relative;
 `;
 
-const Link = styled.a`
-  color: rgb(255, 255, 255);
-`;
-
 const LabelContainer = styled.div`
   border-radius: 4px;
   border: 1px solid rgba(255, 255, 255, 0.1);
@@ -100,6 +160,7 @@ const LabelContainer = styled.div`
   clear: both;
   cursor: pointer;
   display: flex;
+  flex-wrap: wrap;
   gap: 10px;
   margin-top: 8px;
   min-height: 36px;
