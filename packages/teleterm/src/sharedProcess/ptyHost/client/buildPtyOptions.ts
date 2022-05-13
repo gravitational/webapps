@@ -74,7 +74,7 @@ function prependBinDirToPath(
   let path: string = env['PATH'] || '';
 
   if (!path.trim()) {
-    path = settings.binDir || '';
+    path = settings.binDir;
   } else {
     path = settings.binDir + ':' + path;
   }

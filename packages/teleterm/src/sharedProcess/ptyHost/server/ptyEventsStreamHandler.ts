@@ -34,26 +34,29 @@ export class PtyEventsStreamHandler {
   }
 
   private handleStartEvent(event: PtyEventStart): void {
+    /**
+     * There is no way to add any data when the channel is created
+     * (so we could set `ptyId` for it). To overcome this, we set `ptyId` in the first
+     * event which is sent (start), so sever knows which process this channel belongs to.
+     */
     this.ptyId = event.getId();
     const ptyProcess = this.getPtyProcess();
-    if (ptyProcess) {
-      ptyProcess.onData(data =>
-        this.stream.write(
-          new PtyServerEvent().setData(new PtyEventData().setMessage(data))
+    ptyProcess.onData(data =>
+      this.stream.write(
+        new PtyServerEvent().setData(new PtyEventData().setMessage(data))
+      )
+    );
+    ptyProcess.onOpen(() =>
+      this.stream.write(new PtyServerEvent().setOpen(new PtyEventOpen()))
+    );
+    ptyProcess.onExit(({ exitCode, signal }) =>
+      this.stream.write(
+        new PtyServerEvent().setExit(
+          new PtyEventExit().setExitCode(exitCode).setSignal(signal)
         )
-      );
-      ptyProcess.onOpen(() =>
-        this.stream.write(new PtyServerEvent().setOpen(new PtyEventOpen()))
-      );
-      ptyProcess.onExit(({ exitCode, signal }) =>
-        this.stream.write(
-          new PtyServerEvent().setExit(
-            new PtyEventExit().setExitCode(exitCode).setSignal(signal)
-          )
-        )
-      );
-      ptyProcess.start(event.getColumns(), event.getRows());
-    }
+      )
+    );
+    ptyProcess.start(event.getColumns(), event.getRows());
   }
 
   private handleDataEvent(event: PtyEventData): void {
