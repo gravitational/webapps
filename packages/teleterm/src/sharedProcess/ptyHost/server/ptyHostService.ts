@@ -4,7 +4,7 @@ import { IPtyHostServer } from '../v1/ptyHostService_grpc_pb';
 import { PtyCwd, PtyId } from '../v1/ptyHostService_pb';
 import { PtyEventsStreamHandler } from './ptyEventsStreamHandler';
 
-export function getPtyHostServiceServerImpl(): IPtyHostServer {
+export function createPtyHostService(): IPtyHostServer {
   const ptyProcesses = new Map<string, PtyProcess>();
 
   return {

@@ -1,6 +1,6 @@
 import { Server, ServerCredentials } from '@grpc/grpc-js';
 import { PtyHostService } from './ptyHost/v1/ptyHostService_grpc_pb';
-import { getPtyHostServiceServerImpl } from './ptyHost/server';
+import { createPtyHostService } from './ptyHost/server';
 
 function createServer(): void {
   const args = process.argv.slice(2);
@@ -15,7 +15,7 @@ function createServer(): void {
 
   const server = new Server();
   // @ts-expect-error we have a typed service
-  server.addService(PtyHostService, getPtyHostServiceServerImpl());
+  server.addService(PtyHostService, createPtyHostService());
   server.bindAsync(address, ServerCredentials.createInsecure(), error => {
     console.error(error);
     server.start();

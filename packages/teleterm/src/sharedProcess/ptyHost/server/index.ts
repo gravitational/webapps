@@ -1,1 +1,1 @@
-export * from './ptyHostServiceServer';
+export * from './ptyHostService';

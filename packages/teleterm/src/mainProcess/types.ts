@@ -16,7 +16,7 @@ export type RuntimeSettings = {
     homeDir: string;
     flags: string[];
   };
-  shared: {
+  sharedProcess: {
     networkAddr: string;
   }
 };

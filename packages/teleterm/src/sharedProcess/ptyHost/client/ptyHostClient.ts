@@ -11,11 +11,11 @@ import {
 } from '../types';
 import { PtyCreate } from '../v1/ptyHostService_pb';
 
-export function createPtyHostServiceClient(
+export function createPtyHostClient(
   runtimeSettings: RuntimeSettings
 ): PtyServiceClient {
   const client = new PtyHostClient(
-    runtimeSettings.shared.networkAddr,
+    runtimeSettings.sharedProcess.networkAddr,
     grpc.credentials.createInsecure()
   );
 
