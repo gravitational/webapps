@@ -16,7 +16,8 @@ function LabelSelector({ existingLabels = [], onChange }: LabelSelectorProps) {
   const [validLabel, setValidLabel] = useState(false);
   const [showTooltip, setShowTooltip] = useState(false);
 
-  const infoIconRef = useRef();
+  const infoIconRef = useRef<HTMLDivElement>();
+  const addLabelInputRef = useRef<HTMLInputElement>();
 
   useEffect(() => {
     setValidLabel(VALID_LABEL.test(newLabel));
@@ -26,9 +27,19 @@ function LabelSelector({ existingLabels = [], onChange }: LabelSelectorProps) {
     onChange(labels);
   }, [labels]);
 
+  useEffect(() => {
+    if (showAdd && addLabelInputRef.current) {
+      addLabelInputRef.current.focus();
+    }
+  }, [showAdd]);
+
   const handleAddLabel = () => {
     setLabels([...labels, newLabel.trim()]);
     setNewLabel('');
+  };
+
+  const handleDismiss = (label: string) => {
+    setLabels(labels.splice(labels.indexOf(label), 1));
   };
 
   return (
@@ -107,8 +118,8 @@ function LabelSelector({ existingLabels = [], onChange }: LabelSelectorProps) {
             Click to add new labels.
           </Text>
         )}
-        {labelList({ labels: existingLabels })}
-        {labelList({ labels })}
+        {labelList({ labels: existingLabels, onDismiss: handleDismiss })}
+        {labelList({ labels, onDismiss: handleDismiss })}
       </LabelContainer>
       {showAdd && (
         <AddLabelContainer>
@@ -123,6 +134,7 @@ function LabelSelector({ existingLabels = [], onChange }: LabelSelectorProps) {
                 handleAddLabel();
               }
             }}
+            ref={addLabelInputRef}
           />
           {validLabel ? (
             <CreateLabel onClick={handleAddLabel}>
@@ -220,8 +232,16 @@ type LabelSelectorProps = {
   onChange: (labels: string[]) => void;
 };
 
-function labelList({ labels }: { labels: string[] }) {
-  return labels.map(label => <Pill label={label} dismissable />);
+function labelList({
+  labels,
+  onDismiss,
+}: {
+  labels: string[];
+  onDismiss: (string) => void;
+}) {
+  return labels.map(label => (
+    <Pill key={label} label={label} dismissable onDismiss={onDismiss} />
+  ));
 }
 
 export default LabelSelector;
