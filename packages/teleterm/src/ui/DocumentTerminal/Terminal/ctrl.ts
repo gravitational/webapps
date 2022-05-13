@@ -18,7 +18,7 @@ import 'xterm/css/xterm.css';
 import { IDisposable, Terminal } from 'xterm';
 import { FitAddon } from 'xterm-addon-fit';
 import { debounce } from 'lodash';
-import { PtyProcess } from 'teleterm/services/pty/types';
+import { PtyProcess } from 'teleterm/sharedProcess/ptyHost';
 import Logger from 'teleterm/ui/logger';
 import theme from 'teleterm/ui/ThemeProvider/theme';
 
