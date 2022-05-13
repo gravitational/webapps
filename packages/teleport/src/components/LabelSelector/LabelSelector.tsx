@@ -12,7 +12,7 @@ import useEscape from 'shared/hooks/useEscape';
 
 const VALID_LABEL = /^[a-z]+:\s?[a-z]+$/;
 
-function LabelSelector({ existingLabels = [], onChange }: LabelSelectorProps) {
+function LabelSelector({ onChange }: LabelSelectorProps) {
   const [labels, setLabels] = useState<string[]>([]);
   const [showAdd, setShowAdd] = useState(false);
   const [newLabel, setNewLabel] = useState('');
@@ -127,12 +127,11 @@ function LabelSelector({ existingLabels = [], onChange }: LabelSelectorProps) {
         </Text>
       </Heading>
       <LabelContainer onClick={() => setShowAdd(!showAdd)}>
-        {labels.length === 0 && existingLabels.length === 0 && (
+        {labels.length === 0 && (
           <Text style={{ color: 'rgba(255, 255, 255, 0.1)' }}>
             Click to add new labels.
           </Text>
         )}
-        {labelList({ labels: existingLabels, onDismiss: handleLabelDismiss })}
         {labelList({ labels, onDismiss: handleLabelDismiss })}
       </LabelContainer>
       {showAdd && (
@@ -242,7 +241,6 @@ const WarningText = styled.div`
 `;
 
 type LabelSelectorProps = {
-  existingLabels?: string[];
   onChange: (labels: string[]) => void;
 };
 

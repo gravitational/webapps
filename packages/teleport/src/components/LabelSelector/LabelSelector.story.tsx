@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 
 import LabelSelector from './LabelSelector';
 
@@ -7,14 +7,14 @@ export default {
 };
 
 export const LabelSelectorEmpty = () => {
-  return <LabelSelector onChange={() => {}} />;
-};
-
-export const LabelSelectorPills = () => {
+  const [labels, setLabels] = useState([]);
   return (
-    <LabelSelector
-      onChange={() => {}}
-      existingLabels={['arch: x86_64', 'aws: staging']}
-    />
+    <>
+      <LabelSelector onChange={setLabels} />
+      <div>
+        <h3>Labels</h3>
+        {labels}
+      </div>
+    </>
   );
 };
