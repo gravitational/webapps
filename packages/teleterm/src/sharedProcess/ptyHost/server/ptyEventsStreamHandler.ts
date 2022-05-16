@@ -7,7 +7,7 @@ import {
   PtyEventResize,
   PtyEventStart,
   PtyServerEvent,
-} from '../v1/ptyHostService_pb';
+} from '../../api/protogen/ptyHostService_pb';
 import { PtyProcess } from '../server/ptyProcess';
 
 export class PtyEventsStreamHandler {

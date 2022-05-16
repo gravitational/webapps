@@ -1,7 +1,7 @@
 import * as grpc from '@grpc/grpc-js';
 import { Struct } from 'google-protobuf/google/protobuf/struct_pb';
 import { RuntimeSettings } from 'teleterm/mainProcess/types';
-import { PtyHostClient } from '../../ptyHost/v1/ptyHostService_grpc_pb';
+import { PtyHostClient } from '../../api/protogen/ptyHostService_grpc_pb';
 import { createPtyProcessClient } from './createPtyProcessClient';
 import { buildPtyOptions } from './buildPtyOptions';
 import {
@@ -9,7 +9,7 @@ import {
   PtyProcessOptions,
   PtyServiceClient,
 } from '../types';
-import { PtyCreate } from '../v1/ptyHostService_pb';
+import { PtyCreate } from '../../api/protogen/ptyHostService_pb';
 
 export function createPtyHostClient(
   runtimeSettings: RuntimeSettings

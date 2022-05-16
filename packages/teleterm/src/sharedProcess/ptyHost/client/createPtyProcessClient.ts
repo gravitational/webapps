@@ -5,8 +5,8 @@ import {
   PtyEventStart,
   PtyId,
   PtyServerEvent,
-} from '../v1/ptyHostService_pb';
-import { PtyHostClient } from '../v1/ptyHostService_grpc_pb';
+} from '../../api/protogen/ptyHostService_pb';
+import { PtyHostClient } from '../../api/protogen/ptyHostService_grpc_pb';
 import { PtyProcess } from '../types';
 import { Metadata } from '@grpc/grpc-js';
 
