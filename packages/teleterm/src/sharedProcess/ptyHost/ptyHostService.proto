@@ -38,7 +38,6 @@ message PtyServerEvent {
 }
 
 message PtyEventStart {
-  string id = 1;
   uint32 columns = 2;
   uint32 rows = 3;
 }

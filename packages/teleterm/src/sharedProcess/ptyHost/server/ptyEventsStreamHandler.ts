@@ -11,12 +11,13 @@ import {
 import { PtyProcess } from '../server/ptyProcess';
 
 export class PtyEventsStreamHandler {
-  private ptyId?: string;
+  private readonly ptyId: string;
 
   constructor(
     private readonly stream: ServerDuplexStream<PtyClientEvent, PtyServerEvent>,
     private readonly ptyProcesses: Map<string, PtyProcess>
   ) {
+    this.ptyId = stream.metadata.get('ptyId')[0].toString();
     stream.addListener('data', event => this.handleStreamData(event));
     stream.addListener('error', event => this.handleStreamError(event));
     stream.addListener('end', () => this.handleStreamEnd());
@@ -34,12 +35,6 @@ export class PtyEventsStreamHandler {
   }
 
   private handleStartEvent(event: PtyEventStart): void {
-    /**
-     * There is no way to add any data when the channel is created
-     * (so we could set `ptyId` for it). To overcome this, we set `ptyId` in the first
-     * event which is sent (start), so sever knows which process this channel belongs to.
-     */
-    this.ptyId = event.getId();
     const ptyProcess = this.getPtyProcess();
     ptyProcess.onData(data =>
       this.stream.write(
@@ -86,9 +81,6 @@ export class PtyEventsStreamHandler {
   }
 
   private getPtyProcess(): PtyProcess | undefined {
-    if (!this.ptyId) {
-      return;
-    }
     return this.ptyProcesses.get(this.ptyId);
   }
 }

@@ -8,12 +8,15 @@ import {
 } from '../v1/ptyHostService_pb';
 import { PtyHostClient } from '../v1/ptyHostService_grpc_pb';
 import { PtyProcess } from '../types';
+import { Metadata } from '@grpc/grpc-js';
 
 export function createPtyProcessClient(
   client: PtyHostClient,
   ptyId: string
 ): PtyProcess {
-  const stream = client.exchangeEvents();
+  const metadata = new Metadata();
+  metadata.set('ptyId', ptyId);
+  const stream = client.exchangeEvents(metadata);
 
   function writeOrThrow(event: PtyClientEvent) {
     return stream.write(event, (error: Error | undefined) => {
@@ -27,7 +30,7 @@ export function createPtyProcessClient(
     start(columns: number, rows: number): void {
       writeOrThrow(
         new PtyClientEvent().setStart(
-          new PtyEventStart().setId(ptyId).setColumns(columns).setRows(rows)
+          new PtyEventStart().setColumns(columns).setRows(rows)
         )
       );
     },

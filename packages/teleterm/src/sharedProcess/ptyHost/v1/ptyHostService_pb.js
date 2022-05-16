@@ -8,6 +8,8 @@
  */
 // GENERATED CODE -- DO NOT EDIT!
 
+/* eslint-disable */
+
 var jspb = require('google-protobuf');
 var goog = jspb;
 var global = Function('return this')();
@@ -1325,7 +1327,6 @@ proto.PtyEventStart.prototype.toObject = function(opt_includeInstance) {
  */
 proto.PtyEventStart.toObject = function(includeInstance, msg) {
   var f, obj = {
-    id: jspb.Message.getFieldWithDefault(msg, 1, ""),
     columns: jspb.Message.getFieldWithDefault(msg, 2, 0),
     rows: jspb.Message.getFieldWithDefault(msg, 3, 0)
   };
@@ -1364,10 +1365,6 @@ proto.PtyEventStart.deserializeBinaryFromReader = function(msg, reader) {
     }
     var field = reader.getFieldNumber();
     switch (field) {
-    case 1:
-      var value = /** @type {string} */ (reader.readString());
-      msg.setId(value);
-      break;
     case 2:
       var value = /** @type {number} */ (reader.readUint32());
       msg.setColumns(value);
@@ -1405,13 +1402,6 @@ proto.PtyEventStart.prototype.serializeBinary = function() {
  */
 proto.PtyEventStart.serializeBinaryToWriter = function(message, writer) {
   var f = undefined;
-  f = message.getId();
-  if (f.length > 0) {
-    writer.writeString(
-      1,
-      f
-    );
-  }
   f = message.getColumns();
   if (f !== 0) {
     writer.writeUint32(
@@ -1426,24 +1416,6 @@ proto.PtyEventStart.serializeBinaryToWriter = function(message, writer) {
       f
     );
   }
-};
-
-
-/**
- * optional string id = 1;
- * @return {string}
- */
-proto.PtyEventStart.prototype.getId = function() {
-  return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 1, ""));
-};
-
-
-/**
- * @param {string} value
- * @return {!proto.PtyEventStart} returns this
- */
-proto.PtyEventStart.prototype.setId = function(value) {
-  return jspb.Message.setProto3StringField(this, 1, value);
 };
 
 

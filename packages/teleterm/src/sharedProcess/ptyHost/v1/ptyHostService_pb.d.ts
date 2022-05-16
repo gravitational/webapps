@@ -1,4 +1,4 @@
-// package:
+// package: 
 // file: v1/ptyHostService.proto
 
 /* tslint:disable */
@@ -7,7 +7,7 @@
 import * as jspb from "google-protobuf";
 import * as google_protobuf_struct_pb from "google-protobuf/google/protobuf/struct_pb";
 
-export class PtyId extends jspb.Message {
+export class PtyId extends jspb.Message { 
     getId(): string;
     setId(value: string): PtyId;
 
@@ -28,7 +28,7 @@ export namespace PtyId {
     }
 }
 
-export class PtyCreate extends jspb.Message {
+export class PtyCreate extends jspb.Message { 
     getPath(): string;
     setPath(value: string): PtyCreate;
 
@@ -76,14 +76,14 @@ export namespace PtyCreate {
 
     export enum InitCommandCase {
         _INIT_COMMAND_NOT_SET = 0,
-
+    
     INIT_COMMAND = 6,
 
     }
 
 }
 
-export class PtyClientEvent extends jspb.Message {
+export class PtyClientEvent extends jspb.Message { 
 
     hasStart(): boolean;
     clearStart(): void;
@@ -124,7 +124,7 @@ export namespace PtyClientEvent {
 
     export enum EventCase {
         EVENT_NOT_SET = 0,
-
+    
     START = 2,
 
     RESIZE = 3,
@@ -135,7 +135,7 @@ export namespace PtyClientEvent {
 
 }
 
-export class PtyServerEvent extends jspb.Message {
+export class PtyServerEvent extends jspb.Message { 
 
     hasResize(): boolean;
     clearResize(): void;
@@ -183,7 +183,7 @@ export namespace PtyServerEvent {
 
     export enum EventCase {
         EVENT_NOT_SET = 0,
-
+    
     RESIZE = 1,
 
     DATA = 2,
@@ -196,10 +196,7 @@ export namespace PtyServerEvent {
 
 }
 
-export class PtyEventStart extends jspb.Message {
-    getId(): string;
-    setId(value: string): PtyEventStart;
-
+export class PtyEventStart extends jspb.Message { 
     getColumns(): number;
     setColumns(value: number): PtyEventStart;
 
@@ -219,13 +216,12 @@ export class PtyEventStart extends jspb.Message {
 
 export namespace PtyEventStart {
     export type AsObject = {
-        id: string,
         columns: number,
         rows: number,
     }
 }
 
-export class PtyEventData extends jspb.Message {
+export class PtyEventData extends jspb.Message { 
     getMessage(): string;
     setMessage(value: string): PtyEventData;
 
@@ -246,7 +242,7 @@ export namespace PtyEventData {
     }
 }
 
-export class PtyEventResize extends jspb.Message {
+export class PtyEventResize extends jspb.Message { 
     getColumns(): number;
     setColumns(value: number): PtyEventResize;
 
@@ -271,7 +267,7 @@ export namespace PtyEventResize {
     }
 }
 
-export class PtyEventOpen extends jspb.Message {
+export class PtyEventOpen extends jspb.Message { 
 
     serializeBinary(): Uint8Array;
     toObject(includeInstance?: boolean): PtyEventOpen.AsObject;
@@ -288,7 +284,7 @@ export namespace PtyEventOpen {
     }
 }
 
-export class PtyEventExit extends jspb.Message {
+export class PtyEventExit extends jspb.Message { 
     getExitCode(): number;
     setExitCode(value: number): PtyEventExit;
 
@@ -319,14 +315,14 @@ export namespace PtyEventExit {
 
     export enum SignalCase {
         _SIGNAL_NOT_SET = 0,
-
+    
     SIGNAL = 2,
 
     }
 
 }
 
-export class PtyCwd extends jspb.Message {
+export class PtyCwd extends jspb.Message { 
     getCwd(): string;
     setCwd(value: string): PtyCwd;
 

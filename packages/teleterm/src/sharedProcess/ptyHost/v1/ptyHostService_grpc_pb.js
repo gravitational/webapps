@@ -1,6 +1,9 @@
 // GENERATED CODE -- DO NOT EDIT!
 
 'use strict';
+
+/* eslint-disable */
+
 var grpc = require('@grpc/grpc-js');
 var v1_ptyHostService_pb = require('../v1/ptyHostService_pb.js');
 var google_protobuf_struct_pb = require('google-protobuf/google/protobuf/struct_pb.js');
