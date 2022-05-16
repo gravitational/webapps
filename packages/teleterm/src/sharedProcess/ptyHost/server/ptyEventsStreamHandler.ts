@@ -9,9 +9,11 @@ import {
   PtyServerEvent,
 } from '../../api/protogen/ptyHostService_pb';
 import { PtyProcess } from '../server/ptyProcess';
+import Logger from 'teleterm/logger';
 
 export class PtyEventsStreamHandler {
   private readonly ptyId: string;
+  private logger = new Logger('PtyEventsStreamHandler');
 
   constructor(
     private readonly stream: ServerDuplexStream<PtyClientEvent, PtyServerEvent>,
@@ -52,6 +54,7 @@ export class PtyEventsStreamHandler {
       )
     );
     ptyProcess.start(event.getColumns(), event.getRows());
+    this.logger.info(`stream for pty ${this.ptyId} has started`);
   }
 
   private handleDataEvent(event: PtyEventData): void {
@@ -63,11 +66,15 @@ export class PtyEventsStreamHandler {
   }
 
   private handleStreamError(error: Error): void {
-    console.error(error); //TODO(gzdunek) use proper logger
+    this.logger.error(
+      `stream for pty ${this.ptyId} has ended with error`,
+      error
+    );
     this.cleanResources();
   }
 
   private handleStreamEnd(): void {
+    this.logger.info(`stream for pty ${this.ptyId} has ended`);
     this.cleanResources();
   }
 
