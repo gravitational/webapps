@@ -1,4 +1,4 @@
-// package: 
+// package:
 // file: v1/ptyHostService.proto
 
 /* tslint:disable */
