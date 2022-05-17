@@ -10,7 +10,7 @@ import Box from 'design/Box';
 import useClickOutside from 'shared/hooks/useClickOutside';
 import useEscape from 'shared/hooks/useEscape';
 
-const VALID_LABEL = /^[a-z]+:\s?[a-z]+$/;
+const VALID_LABEL = /^[a-z]+:\s?[0-9a-z-.]+$/;
 
 function LabelSelector({ onChange }: LabelSelectorProps) {
   const [labels, setLabels] = useState<string[]>([]);
