@@ -16,16 +16,19 @@ export const ClusterSelector = forwardRef<HTMLDivElement, ClusterSelectorProps>(
     const { getLabelWithShortcut } = useKeyboardShortcutFormatters();
     const SortIcon = props.isOpened ? SortAsc : SortDesc;
     const text = props.clusterName || 'Select Cluster';
+
     return (
       <Container
         ref={ref}
         onClick={props.onClick}
         isOpened={props.isOpened}
         isClusterSelected={!!props.clusterName}
-        title={getLabelWithShortcut('Open Clusters', 'toggle-clusters')}
+        title={getLabelWithShortcut(
+          [props.clusterName, 'Open Clusters'].filter(Boolean).join('\n'),
+          'toggle-clusters'
+        )}
       >
         <Text
-          title={text}
           css={`
             white-space: nowrap;
           `}

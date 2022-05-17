@@ -26,7 +26,7 @@ export function KeyboardShortcutsPanel() {
       shortcutKey: 'toggle-clusters',
     },
     {
-      title: 'Open Profile',
+      title: 'Open Profiles',
       shortcutKey: 'toggle-identity',
     },
   ];

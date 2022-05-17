@@ -20,7 +20,7 @@ export const IdentitySelector = forwardRef<
 >((props, ref) => {
   const { getLabelWithShortcut } = useKeyboardShortcutFormatters();
   const isSelected = props.userName && props.clusterName;
-  const text = isSelected && `${props.userName}@${props.clusterName}`;
+  const selectorText = isSelected && `${props.userName}@${props.clusterName}`;
   const Icon = props.isOpened ? SortAsc : SortDesc;
 
   return (
@@ -28,19 +28,18 @@ export const IdentitySelector = forwardRef<
       isOpened={props.isOpened}
       ref={ref}
       onClick={props.onClick}
-      title={getLabelWithShortcut('Open Profile', 'toggle-identity')}
+      title={getLabelWithShortcut(
+        [selectorText, 'Open Profiles'].filter(Boolean).join('\n'),
+        'toggle-identity'
+      )}
     >
       {isSelected ? (
         <>
           <Box mr={2}>
             <UserIcon letter={props.userName[0]} />
           </Box>
-          <Text
-            style={{ whiteSpace: 'nowrap' }}
-            typography="subtitle1"
-            title={text}
-          >
-            {text}
+          <Text style={{ whiteSpace: 'nowrap' }} typography="subtitle1">
+            {selectorText}
           </Text>
         </>
       ) : (
