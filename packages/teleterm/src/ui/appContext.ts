@@ -46,6 +46,27 @@ export default class AppContext {
       this.mainProcessClient.fileStorage
     );
     this.modalsService = new ModalsService();
+    window['openMultipleModals'] = () => {
+      this.modalsService.openDialog({
+        kind: 'documents-reopen',
+        onConfirm: () => {
+          console.log('documents-reopen confirmed');
+        },
+        onCancel: () => {
+          console.log('documents-reopen canceled');
+        },
+      });
+      this.modalsService.openDialog({
+        kind: 'cluster-connect',
+        clusterUri: '/clusters/teleport-local',
+        onSuccess: () => {
+          console.log('cluster-connect success');
+        },
+        onCancel: () => {
+          console.log('cluster-connect canceled');
+        },
+      });
+    };
     this.notificationsService = new NotificationsService();
     this.clustersService = new ClustersService(
       tshClient,

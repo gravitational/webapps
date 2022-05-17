@@ -17,13 +17,17 @@ limitations under the License.
 import { useStore } from 'shared/libs/stores';
 import { ImmutableStore } from '../immutableStore';
 
-export class ModalsService extends ImmutableStore<Dialog> {
-  state: Dialog = {
-    kind: 'none',
-  };
+export class ModalsService extends ImmutableStore<Dialog[]> {
+  // The DialogNone dialog is always present in this array. The array is then modified either by
+  // prepending it with a dialog or by appending a dialog  just before DialogNone.
+  state: Dialog[] = [
+    {
+      kind: 'none',
+    },
+  ];
 
   openDialog(dialog: Dialog) {
-    this.setState(() => dialog);
+    this.appendDialog(dialog);
   }
 
   openClusterConnectDialog(options: {
@@ -31,34 +35,42 @@ export class ModalsService extends ImmutableStore<Dialog> {
     onSuccess?(clusterUri: string): void;
     onCancel?(): void;
   }) {
-    this.setState(() => ({
+    this.appendDialog({
       kind: 'cluster-connect',
       ...options,
-    }));
+    });
   }
 
   openDocumentsReopenDialog(options: {
     onConfirm?(): void;
     onCancel?(): void;
   }) {
-    this.setState(() => ({
+    this.appendDialog({
       kind: 'documents-reopen',
       ...options,
-    }));
+    });
   }
 
   closeDialog() {
-    this.setState(() => ({
-      kind: 'none',
-    }));
+    this.setState(draftDialogs => {
+      draftDialogs.shift();
+    });
   }
 
   useState() {
     return useStore(this).state;
   }
+
+  private appendDialog(dialog: Dialog) {
+    this.setState(draftDialogs => {
+      const dialogNone = draftDialogs.pop();
+      draftDialogs.push(dialog);
+      draftDialogs.push(dialogNone);
+    });
+  }
 }
 
-export interface DialogBase {
+export interface DialogNone {
   kind: 'none';
 }
 
@@ -86,7 +98,7 @@ export interface DialogDocumentsReopen {
 }
 
 export type Dialog =
-  | DialogBase
+  | DialogNone
   | DialogClusterConnect
   | DialogClusterLogout
   | DialogDocumentsReopen;
