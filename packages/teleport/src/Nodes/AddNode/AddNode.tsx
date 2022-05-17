@@ -80,7 +80,6 @@ export function AddNode({
             onClick={() => setMethod('manual')}
           />
         </Flex>
-        <LabelSelector />
         {method === 'automatic' && (
           <Automatically
             joinToken={token}
