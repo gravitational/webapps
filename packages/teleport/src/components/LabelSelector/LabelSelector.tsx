@@ -126,7 +126,10 @@ function LabelSelector({ onChange }: LabelSelectorProps) {
           </a>
         </Text>
       </Heading>
-      <LabelContainer onClick={() => setShowAdd(!showAdd)}>
+      <LabelContainer
+        onClick={() => setShowAdd(!showAdd)}
+        data-testid="label-container"
+      >
         {labels.length === 0 && (
           <Text style={{ color: 'rgba(255, 255, 255, 0.1)' }}>
             Click to add new labels.
@@ -135,8 +138,12 @@ function LabelSelector({ onChange }: LabelSelectorProps) {
         {labelList({ labels, onDismiss: handleLabelDismiss })}
       </LabelContainer>
       {showAdd && (
-        <AddLabelContainer ref={addLabelContainerRef}>
+        <AddLabelContainer
+          ref={addLabelContainerRef}
+          data-testid="add-label-container"
+        >
           <AddLabelInput
+            name="addLabel"
             value={newLabel}
             onChange={e => {
               setNewLabel(e.target.value);
@@ -150,11 +157,14 @@ function LabelSelector({ onChange }: LabelSelectorProps) {
             ref={addLabelInputRef}
           />
           {validLabel ? (
-            <CreateLabel onClick={handleAddLabel}>
+            <CreateLabel
+              onClick={handleAddLabel}
+              data-testid="create-label-msg"
+            >
               + Create new label "{newLabel}"
             </CreateLabel>
           ) : (
-            <CreateLabelError>
+            <CreateLabelError data-testid="create-label-error">
               <WarningIconWrapper>
                 <Warning />
               </WarningIconWrapper>
