@@ -225,8 +225,8 @@ const Shortcut = styled(Box)`
   right: 12px;
   top: 12px;
   padding: 2px 3px;
-  color: rgba(255, 255, 255, 0.6);
-  background-color: rgba(255, 255, 255, 0.05);
+  color: ${({ theme }) => theme.colors.text.secondary};
+  background-color: ${({ theme }) => theme.colors.primary.light};
   line-height: 12px;
   font-size: 12px;
   border-radius: 2px;
