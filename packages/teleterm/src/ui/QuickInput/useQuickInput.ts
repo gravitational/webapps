@@ -16,7 +16,10 @@ limitations under the License.
 
 import React, { useEffect } from 'react';
 import { useAppContext } from 'teleterm/ui/appContextProvider';
-import { useKeyboardShortcuts, useKeyboardShortcutFormatters } from 'teleterm/ui/services/keyboardShortcuts';
+import {
+  useKeyboardShortcuts,
+  useKeyboardShortcutFormatters,
+} from 'teleterm/ui/services/keyboardShortcuts';
 import {
   AutocompleteResult,
   AutocompletePartialMatch,
@@ -25,11 +28,8 @@ import { routing } from 'teleterm/ui/uri';
 import { KeyboardShortcutType } from 'teleterm/services/config';
 
 export default function useQuickInput() {
-  const {
-    quickInputService,
-    workspacesService,
-    commandLauncher,
-  } = useAppContext();
+  const { quickInputService, workspacesService, commandLauncher } =
+    useAppContext();
   workspacesService.useState();
   const documentsService =
     workspacesService.getActiveWorkspaceDocumentService();
