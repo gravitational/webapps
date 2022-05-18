@@ -113,6 +113,7 @@ const cfg = {
     renewTokenPath: '/v1/webapi/sessions/renew',
     resetPasswordTokenPath: '/v1/webapi/users/password/token',
     sessionPath: '/v1/webapi/sessions',
+    webSessionPath: '/v1/webapi/sessions/web',
     userContextPath: '/v1/webapi/sites/:clusterId/context',
     userStatusPath: '/v1/webapi/user/status',
     passwordTokenPath: '/v1/webapi/users/password/token/:tokenId?',
