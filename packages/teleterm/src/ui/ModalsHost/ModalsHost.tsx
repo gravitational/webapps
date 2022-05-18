@@ -22,50 +22,59 @@ import { DocumentsReopen } from 'teleterm/ui/DocumentsReopen';
 
 export default function ModalsHost() {
   const { modalsService } = useAppContext();
-  const dialog = modalsService.useState();
+  // There can be multiple dialogs. We want the user to interact with the one that's first before
+  // the others. To achieve that, we have to render those dialogs in reverse order.
+  const reversedDialogs = [...modalsService.useState()].reverse();
 
   const handleClose = () => modalsService.closeDialog();
 
-  if (dialog.kind === 'cluster-connect') {
-    return (
-      <ClusterConnect
-        clusterUri={dialog.clusterUri}
-        onCancel={() => {
-          handleClose();
-          dialog.onCancel?.();
-        }}
-        onSuccess={clusterUri => {
-          handleClose();
-          dialog.onSuccess(clusterUri);
-        }}
-      />
-    );
-  }
+  return (
+    <>
+      {reversedDialogs.map(dialog => {
+        if (dialog.kind === 'cluster-connect') {
+          return (
+            <ClusterConnect
+              key={`cluster-connect-${dialog.clusterUri}`}
+              clusterUri={dialog.clusterUri}
+              onCancel={() => {
+                handleClose();
+                dialog.onCancel?.();
+              }}
+              onSuccess={clusterUri => {
+                handleClose();
+                dialog.onSuccess(clusterUri);
+              }}
+            />
+          );
+        }
 
-  if (dialog.kind === 'cluster-logout') {
-    return (
-      <ClusterLogout
-        clusterUri={dialog.clusterUri}
-        clusterTitle={dialog.clusterTitle}
-        onClose={handleClose}
-      />
-    );
-  }
+        if (dialog.kind === 'cluster-logout') {
+          return (
+            <ClusterLogout
+              key={`cluster-logout-${dialog.clusterUri}`}
+              clusterUri={dialog.clusterUri}
+              clusterTitle={dialog.clusterTitle}
+              onClose={handleClose}
+            />
+          );
+        }
 
-  if (dialog.kind === 'documents-reopen') {
-    return (
-      <DocumentsReopen
-        onCancel={() => {
-          handleClose();
-          dialog.onCancel();
-        }}
-        onConfirm={() => {
-          handleClose();
-          dialog.onConfirm();
-        }}
-      />
-    );
-  }
-
-  return null;
+        if (dialog.kind === 'documents-reopen') {
+          return (
+            <DocumentsReopen
+              key="documents-reopen"
+              onCancel={() => {
+                handleClose();
+                dialog.onCancel();
+              }}
+              onConfirm={() => {
+                handleClose();
+                dialog.onConfirm();
+              }}
+            />
+          );
+        }
+      })}
+    </>
+  );
 }

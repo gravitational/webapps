@@ -1,4 +1,4 @@
-import { BrowserWindow, Rectangle, screen } from 'electron';
+import { BrowserWindow, Rectangle, screen, app } from 'electron';
 import { getAssetPath } from 'teleterm/mainProcess/runtimeSettings';
 import path from 'path';
 import { FileStorage } from 'teleterm/services/fileStorage';
@@ -43,6 +43,17 @@ export class WindowsManager {
     } else {
       window.loadFile(path.join(__dirname, '../renderer/index.html'));
     }
+
+    setTimeout(() => {
+      // const modal = new BrowserWindow({
+      //   parent: window,
+      //   modal: true,
+      //   show: true,
+      // });
+      // modal.loadURL('https://goteleport.com');
+      // app.focus({ steal: true });
+      // BrowserWindow.getAllWindows()[0].focus();
+    }, 3000);
   }
 
   private saveWindowState(window: BrowserWindow): void {
