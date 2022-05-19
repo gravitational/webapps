@@ -1,7 +1,4 @@
-import {
-  PtyProcessOptions,
-  PtyProcessType,
-} from 'teleterm/sharedProcess/ptyHost';
+import { PtyProcessOptions, IPtyProcess } from 'teleterm/sharedProcess/ptyHost';
 import { PtyEventsStreamHandler } from './ptyHost/ptyEventsStreamHandler';
 
 export interface PtyHostClient {
@@ -13,7 +10,7 @@ export interface PtyHostClient {
 }
 
 export type PtyServiceClient = {
-  createPtyProcess: (cmd: PtyCommand) => Promise<PtyProcessType>;
+  createPtyProcess: (cmd: PtyCommand) => Promise<IPtyProcess>;
 };
 
 export type ShellCommand = PtyCommandBase & {

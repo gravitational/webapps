@@ -19,7 +19,7 @@ import { useAppContext } from 'teleterm/ui/appContextProvider';
 import { IAppContext } from 'teleterm/ui/types';
 import * as types from 'teleterm/ui/services/workspacesService';
 import { DocumentsService } from 'teleterm/ui/services/workspacesService';
-import { PtyProcessType } from 'teleterm/sharedProcess/ptyHost';
+import { IPtyProcess } from 'teleterm/sharedProcess/ptyHost';
 import { useAsync } from 'shared/hooks/useAsync';
 import { useWorkspaceDocumentsService } from 'teleterm/ui/Documents';
 import { routing } from 'teleterm/ui/uri';
@@ -52,7 +52,7 @@ async function initState(
   const rootCluster = ctx.clustersService.findRootClusterByResource(clusterUri);
   const cluster = ctx.clustersService.findCluster(clusterUri);
   const cmd = createCmd(doc, rootCluster.proxyHost, cluster.actualName);
-  let ptyProcess: PtyProcessType;
+  let ptyProcess: IPtyProcess;
   try {
     ptyProcess = await ctx.terminalsService.createPtyProcess(cmd);
   } catch (e) {

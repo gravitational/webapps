@@ -19,12 +19,12 @@ import { readlink } from 'fs';
 import { promisify } from 'util';
 import { exec } from 'child_process';
 import { EventEmitter } from 'events';
-import { PtyProcessOptions, PtyProcessType } from './types';
+import { PtyProcessOptions, IPtyProcess } from './types';
 import Logger from 'teleterm/logger';
 
 type Status = 'open' | 'not_initialized' | 'terminated';
 
-export class PtyProcess extends EventEmitter implements PtyProcessType {
+export class PtyProcess extends EventEmitter implements IPtyProcess {
   private _buffered = true;
   private _attachedBufferTimer;
   private _attachedBuffer: string;
