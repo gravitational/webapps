@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react';
 import styled from 'styled-components';
 
-import { Box, Pill, Popover, Link, Text } from 'design';
+import { Box, Flex, Pill, Popover, Link, Text } from 'design';
 import { Info, Warning } from '../../../../design/src/Icon';
 
 import { useClickOutside } from 'shared/hooks/useClickOutside';
@@ -56,73 +56,81 @@ function LabelSelector({ onChange }: LabelSelectorProps) {
   return (
     <div>
       <Heading>
-        <Text style={{ float: 'left' }}>Assign Labels (optional)</Text>
-        <div ref={infoIconRef} style={{ marginLeft: '12px', float: 'left' }}>
-          <Info
-            style={{
-              cursor: 'pointer',
-              fontSize: '16px',
-              paddingTop: '5px',
-            }}
-            onClick={() => setShowTooltip(!showTooltip)}
-          />
-        </div>
-        <Popover
-          id="simple-popper"
-          open={showTooltip}
-          anchorOrigin={{
-            vertical: 'bottom',
-            horizontal: 'right',
-          }}
-          transformOrigin={{
-            vertical: 'top',
-            horizontal: 'left',
-          }}
-          anchorEl={infoIconRef.current}
-          onClose={() => setShowTooltip(false)}
-        >
-          <Box
-            bg="#011223"
-            color="white"
-            width={362}
-            p={4}
-            style={{
-              boxShadow: '0px 8px 14px rgba(12, 12, 14, 0.07)',
-              borderRadius: '8px',
-            }}
-          >
-            Teleport provides users the ability to add labels (in the form of
-            key:value pairs) to resources. Some valid example labels are “env:
-            prod” and “arch: x86_64”. Labels, used in conjunction with roles,
-            define access in Teleport. For example, you can specify that users
-            with the “on-call” role can access resources labeled “env: prod”.
-            For more information, check out our documentation on{' '}
-            <Link
-              href="https://goteleport.com/docs/setup/admin/trustedclusters/"
-              target="_blank"
+        <Flex justifyContent="space-between">
+          <Flex>
+            <Text>Assign Labels (optional)</Text>
+            <div
+              ref={infoIconRef}
+              style={{ marginLeft: '12px', float: 'left' }}
             >
-              RBAC
-            </Link>{' '}
-            and{' '}
+              <Info
+                style={{
+                  cursor: 'pointer',
+                  fontSize: '16px',
+                  paddingTop: '5px',
+                }}
+                onClick={() => setShowTooltip(!showTooltip)}
+              />
+            </div>
+            <Popover
+              id="simple-popper"
+              open={showTooltip}
+              anchorOrigin={{
+                vertical: 'bottom',
+                horizontal: 'right',
+              }}
+              transformOrigin={{
+                vertical: 'top',
+                horizontal: 'left',
+              }}
+              anchorEl={infoIconRef.current}
+              onClose={() => setShowTooltip(false)}
+            >
+              <Box
+                bg="#011223"
+                color="white"
+                width={362}
+                p={4}
+                style={{
+                  boxShadow: '0px 8px 14px rgba(12, 12, 14, 0.07)',
+                  borderRadius: '8px',
+                }}
+              >
+                Teleport provides users the ability to add labels (in the form
+                of key:value pairs) to resources. Some valid example labels are
+                “env: prod” and “arch: x86_64”. Labels, used in conjunction with
+                roles, define access in Teleport. For example, you can specify
+                that users with the “on-call” role can access resources labeled
+                “env: prod”. For more information, check out our documentation
+                on{' '}
+                <Link
+                  href="https://goteleport.com/docs/setup/admin/trustedclusters/"
+                  target="_blank"
+                >
+                  RBAC
+                </Link>{' '}
+                and{' '}
+                <Link
+                  href="https://goteleport.com/docs/setup/admin/labels/"
+                  target="_blank"
+                  rel="noreferrer"
+                >
+                  labels
+                </Link>
+                .
+              </Box>
+            </Popover>
+          </Flex>
+          <Text>
             <Link
               href="https://goteleport.com/docs/setup/admin/labels/"
               target="_blank"
-              rel="noreferrer"
+              color="rgb(255, 255, 255)"
             >
-              labels
+              View Documentation
             </Link>
-            .
-          </Box>
-        </Popover>
-        <Text style={{ float: 'right' }}>
-          <Link
-            href="https://goteleport.com/docs/setup/admin/labels/"
-            target="_blank"
-            color="rgb(255, 255, 255)"
-          >
-            View Documentation
-          </Link>
-        </Text>
+          </Text>
+        </Flex>
       </Heading>
       <LabelContainer
         onClick={() => setShowAdd(!showAdd)}
