@@ -58,7 +58,8 @@ describe('teleport/LabelSelector', () => {
     );
     fireEvent.change(labelInput, { target: { value: 'foo bar' } });
     fireEvent.keyPress(labelInput, { key: 'Enter', charCode: 13 });
-    expect(onChange.mock.calls).toEqual([[[]]]);
+    expect(onChange).toHaveBeenCalledTimes(1);
+    expect(onChange).toHaveBeenCalledWith([]);
   });
 
   it('shows a message when a label is invalid', () => {
