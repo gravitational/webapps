@@ -7,14 +7,14 @@ import {
   PtyEventResize,
   PtyEventStart,
   PtyServerEvent,
-} from '../../api/protogen/ptyHostService_pb';
-import { PtyProcess } from '../server/ptyProcess';
+} from '../api/protogen/ptyHostService_pb';
 import Logger from 'teleterm/logger';
+import { PtyProcess } from './ptyProcess';
 
 export class PtyEventsStreamHandler {
   private readonly ptyId: string;
   private readonly ptyProcess: PtyProcess;
-  private logger = new Logger('PtyEventsStreamHandler');
+  private readonly logger: Logger;
 
   constructor(
     private readonly stream: ServerDuplexStream<PtyClientEvent, PtyServerEvent>,
@@ -22,6 +22,8 @@ export class PtyEventsStreamHandler {
   ) {
     this.ptyId = stream.metadata.get('ptyId')[0].toString();
     this.ptyProcess = ptyProcesses.get(this.ptyId);
+    this.logger = new Logger(`PtyEventsStreamHandler (id: ${this.ptyId})`);
+
     stream.addListener('data', event => this.handleStreamData(event));
     stream.addListener('error', event => this.handleStreamError(event));
     stream.addListener('end', () => this.handleStreamEnd());
@@ -55,7 +57,7 @@ export class PtyEventsStreamHandler {
       )
     );
     this.ptyProcess.start(event.getColumns(), event.getRows());
-    this.logger.info(`stream for pty ${this.ptyId} has started`);
+    this.logger.info(`stream has started`);
   }
 
   private handleDataEvent(event: PtyEventData): void {
@@ -67,15 +69,12 @@ export class PtyEventsStreamHandler {
   }
 
   private handleStreamError(error: Error): void {
-    this.logger.error(
-      `stream for pty ${this.ptyId} has ended with error`,
-      error
-    );
+    this.logger.error(`stream has ended with error`, error);
     this.cleanResources();
   }
 
   private handleStreamEnd(): void {
-    this.logger.info(`stream for pty ${this.ptyId} has ended`);
+    this.logger.info(`stream has ended`);
     this.cleanResources();
   }
 
