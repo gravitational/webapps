@@ -1,12 +1,12 @@
 export type PtyProcessOptions = {
-  env: Record<string, string>
+  env: Record<string, string>;
   path: string;
   args: string[];
   cwd?: string;
   initCommand?: string;
 };
 
-export type PtyProcess = {
+export type PtyProcessType = {
   write(data: string): void;
   resize(cols: number, rows: number): void;
   dispose(): void;
@@ -16,35 +16,3 @@ export type PtyProcess = {
   onExit(cb: (ev: { exitCode: number; signal?: number }) => void): void;
   getCwd(): Promise<string>;
 };
-
-export type PtyServiceClient = {
-  createPtyProcess: (cmd: PtyCommand) => Promise<PtyProcess>;
-};
-
-export type ShellCommand = PtyCommandBase & {
-  kind: 'pty.shell';
-  cwd?: string;
-  initCommand?: string;
-};
-
-export type TshLoginCommand = PtyCommandBase & {
-  kind: 'pty.tsh-login';
-  login?: string;
-  serverId: string;
-  rootClusterId: string;
-  leafClusterId?: string;
-};
-
-export type TshKubeLoginCommand = PtyCommandBase & {
-  kind: 'pty.tsh-kube-login';
-  kubeId: string;
-  rootClusterId: string;
-  leafClusterId?: string;
-};
-
-type PtyCommandBase = {
-  proxyHost: string;
-  actualClusterName: string;
-}
-
-export type PtyCommand = ShellCommand | TshLoginCommand | TshKubeLoginCommand;

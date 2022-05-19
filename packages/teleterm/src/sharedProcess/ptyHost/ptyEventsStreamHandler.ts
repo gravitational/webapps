@@ -13,6 +13,7 @@ import Logger from 'teleterm/logger';
 
 export class PtyEventsStreamHandler {
   private readonly ptyId: string;
+  private readonly ptyProcess: PtyProcess;
   private logger = new Logger('PtyEventsStreamHandler');
 
   constructor(
@@ -20,6 +21,7 @@ export class PtyEventsStreamHandler {
     private readonly ptyProcesses: Map<string, PtyProcess>
   ) {
     this.ptyId = stream.metadata.get('ptyId')[0].toString();
+    this.ptyProcess = ptyProcesses.get(this.ptyId);
     stream.addListener('data', event => this.handleStreamData(event));
     stream.addListener('error', event => this.handleStreamError(event));
     stream.addListener('end', () => this.handleStreamEnd());
@@ -37,32 +39,31 @@ export class PtyEventsStreamHandler {
   }
 
   private handleStartEvent(event: PtyEventStart): void {
-    const ptyProcess = this.getPtyProcess();
-    ptyProcess.onData(data =>
+    this.ptyProcess.onData(data =>
       this.stream.write(
         new PtyServerEvent().setData(new PtyEventData().setMessage(data))
       )
     );
-    ptyProcess.onOpen(() =>
+    this.ptyProcess.onOpen(() =>
       this.stream.write(new PtyServerEvent().setOpen(new PtyEventOpen()))
     );
-    ptyProcess.onExit(({ exitCode, signal }) =>
+    this.ptyProcess.onExit(({ exitCode, signal }) =>
       this.stream.write(
         new PtyServerEvent().setExit(
           new PtyEventExit().setExitCode(exitCode).setSignal(signal)
         )
       )
     );
-    ptyProcess.start(event.getColumns(), event.getRows());
+    this.ptyProcess.start(event.getColumns(), event.getRows());
     this.logger.info(`stream for pty ${this.ptyId} has started`);
   }
 
   private handleDataEvent(event: PtyEventData): void {
-    this.getPtyProcess()?.write(event.getMessage());
+    this.ptyProcess.write(event.getMessage());
   }
 
   private handleResizeEvent(event: PtyEventResize): void {
-    this.getPtyProcess()?.resize(event.getColumns(), event.getRows());
+    this.ptyProcess.resize(event.getColumns(), event.getRows());
   }
 
   private handleStreamError(error: Error): void {
@@ -79,15 +80,11 @@ export class PtyEventsStreamHandler {
   }
 
   private cleanResources(): void {
-    this.getPtyProcess()?.dispose();
+    this.ptyProcess.dispose();
     if (this.ptyId) {
       this.ptyProcesses.delete(this.ptyId);
     }
     this.stream.destroy();
     this.stream.removeAllListeners();
-  }
-
-  private getPtyProcess(): PtyProcess | undefined {
-    return this.ptyProcesses.get(this.ptyId);
   }
 }

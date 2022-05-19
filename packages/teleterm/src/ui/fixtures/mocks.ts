@@ -1,6 +1,6 @@
 import { MockMainProcessClient } from 'teleterm/mainProcess/fixtures/mocks';
 import { MockTshClient } from 'teleterm/services/tshd/fixtures/mocks';
-import { MockPtyServiceClient } from 'teleterm/sharedProcess/ptyHost/client/fixtures/mocks';
+import { MockPtyServiceClient } from 'teleterm/services/pty/fixtures/mocks';
 import AppContext from 'teleterm/ui/appContext';
 
 export class MockAppContext extends AppContext {
