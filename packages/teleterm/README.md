@@ -55,7 +55,7 @@ For quick restarts, that restarts all processes and `tsh` daemon, press `F6`.
 
 ### Tips
 
-#### gRPC protobuf files
+#### Generating tshd gRPC protobuf files
 
 Rebulding them is needed only if you change any of the files in `/teleport/lib/teleterm/api/proto/`
 dir.
@@ -91,6 +91,11 @@ $ cd teleport
 $ rm -rf ./../webapps/packages/teleterm/src/services/tshd/v1/ && cp -R lib/teleterm/api/protogen/js/v1 ./../webapps/packages/teleterm/src/services/tshd/v1
 ```
 
+#### Generating shared process gRPC protobuf files
+Run `generate-grpc-shared` script from `teleterm/package.json`.
+It generates protobuf files from `*.proto` files in `sharedProcess/api/proto`.
+Resulting files can be found in `sharedProcess/api/protogen`.
+
 ### Architecture diagram
 ```pro
                                                   +------------+
@@ -102,7 +107,7 @@ $ rm -rf ./../webapps/packages/teleterm/src/services/tshd/v1/ && cp -R lib/telet
                                           |                 |
                                           +------+-+--------+
                                                  ^ ^           External Network
-+------------------------------------------------|-|---------------------+
++------------------------------------------------|-|--------------------------------------------------------------+
                                                  | |           Host OS
            Clients (psql)                        | |
               |                                  | |
@@ -119,21 +124,21 @@ $ rm -rf ./../webapps/packages/teleterm/src/services/tshd/v1/ && cp -R lib/telet
   +---------------+   | tls/tcp on localhost     | |
   |    local      |   |                          | |
   | user profile  |   |                          v v
-  |   (files)     |   |                   +------+-+-------------------+
-  +-------^-------+   |                   |                            |
-          ^           +-------------------+         tsh daemon         |
-          |                               |          (golang)          |
-          +<------------------------------+                            |
-                                          +-------------+--------------+
- +--------+-----------------+                           ^
- |         Terminal         |                           |
- |    Electron Main Process |                           |    GRPC API
- +-----------+--------------+                           | (domain socket)
-             ^                                          |
-             |                                          |
-    IPC      |                                          |
- named pipes |                                          |
-             v  Terminal UI (Electron Renderer Process) |
+  |   (files)     |   |                   +------+-+-------------------+        +-------------------------------+
+  +-------^-------+   |                   |                            |        |                               |
+          ^           +-------------------+         tsh daemon         |        |    Electron Shared Process    |
+          |                               |          (golang)          |        |            (PTY)              |
+          +<------------------------------+                            |        |                               |
+                                          +-------------+--------------+        +-------------------------------+
+ +--------+-----------------+                           ^                                       ^
+ |         Terminal         |                           |                                       |
+ |    Electron Main Process |                           |    GRPC API                           |   GRPC API   
+ +-----------+--------------+                           | (domain socket)                       |   (domain socket)
+             ^                                          |                                       |
+             |                                          |                                       |  
+    IPC      |                                          |        +------------------------------+ 
+ named pipes |                                          |        |                              
+             v  Terminal UI (Electron Renderer Process) |        |                              
  +-----------+------------+---------------------------------------------+
  | -gateways              | root@node1 × | k8s_c  × | rdp_win2 ×  |     |
  |   https://localhost:22 +---------------------------------------------+
@@ -151,4 +156,6 @@ $ rm -rf ./../webapps/packages/teleterm/src/services/tshd/v1/ && cp -R lib/telet
  |  +cluster3             |                                             |
  +------------------------+---------------------------------------------+
 ```
+### PTY communication overview (Renderer Process <=> Shared Process)
+![PTY communication](docs/ptyCommunication.png)
 
