@@ -23,7 +23,6 @@ import Dialog, { DialogTitle } from 'design/Dialog';
 import Manually from './Manually';
 import Automatically from './Automatically';
 import Iam from './Iam';
-import LabelSelector from 'teleport/components/LabelSelector';
 import useAddNode, { State } from './useAddNode';
 
 export default function Container(props: Props) {

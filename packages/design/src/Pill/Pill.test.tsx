@@ -15,7 +15,7 @@
  */
 
 import React from 'react';
-import Pill from './Pill';
+import { Pill } from './Pill';
 import { render, fireEvent } from 'design/utils/testing';
 
 describe('design/Pill', () => {
@@ -26,16 +26,16 @@ describe('design/Pill', () => {
   });
 
   it('render the label with dismissable', () => {
-    const { container } = render(<Pill label="arch: x86_64" dismissable />);
+    const { container } = render(
+      <Pill label="arch: x86_64" onDismiss={() => {}} />
+    );
     expect(container).toHaveTextContent('arch: x86_64');
     expect(container.getElementsByTagName('button')).toMatchSnapshot();
   });
 
   it('dismissing pill calls onDismiss', () => {
     const cb = jest.fn();
-    const { container } = render(
-      <Pill label="arch: x86_64" dismissable onDismiss={cb} />
-    );
+    const { container } = render(<Pill label="arch: x86_64" onDismiss={cb} />);
     fireEvent.click(container.querySelector('button'));
     expect(cb.mock.calls).toHaveLength(1);
     expect(cb.mock.calls).toEqual([['arch: x86_64']]);

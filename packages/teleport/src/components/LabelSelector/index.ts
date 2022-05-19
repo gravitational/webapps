@@ -1,3 +1,3 @@
-import LabelSelector from "./LabelSelector";
+import { LabelSelector } from './LabelSelector';
 
-export default LabelSelector
+export { LabelSelector };

@@ -39,4 +39,4 @@ function useClickOutside(ref, handler) {
   );
 }
 
-export default useClickOutside;
+export {useClickOutside};

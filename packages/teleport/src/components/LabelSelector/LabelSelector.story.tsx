@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 
-import LabelSelector from './LabelSelector';
+import { LabelSelector } from './LabelSelector';
 
 export default {
   title: 'Teleport/LabelSelector',

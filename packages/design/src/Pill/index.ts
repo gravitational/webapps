@@ -1,3 +1,3 @@
-import Pill from "./Pill";
+import {Pill} from "./Pill";
 
-export default Pill
+export {Pill}

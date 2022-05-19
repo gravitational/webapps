@@ -14,26 +14,22 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import {useCallback, useEffect} from "react";
+import { useCallback, useEffect } from 'react';
 
 function useEscape(handler) {
-
   const handlerMemo = useCallback(handler, [handler]);
 
-  useEffect(
-    () => {
-      const listener = (e) => {
-        if (e.keyCode === 27) {
-          handlerMemo(e);
-        }
-      };
-      document.addEventListener("keydown", listener);
-      return () => {
-        document.removeEventListener("keydown", listener);
-      };
-    },
-    [handlerMemo]
-  );
+  useEffect(() => {
+    const listener = (e: KeyboardEvent) => {
+      if (e.key === "Escape") {
+        handlerMemo(e);
+      }
+    };
+    document.addEventListener('keydown', listener);
+    return () => {
+      document.removeEventListener('keydown', listener);
+    };
+  }, [handlerMemo]);
 }
 
-export default useEscape;
+export { useEscape };

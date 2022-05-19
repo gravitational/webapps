@@ -1,14 +1,11 @@
 import React, { useEffect, useRef, useState } from 'react';
 import styled from 'styled-components';
 
-import Text from 'design/Text';
+import { Box, Pill, Popover, Link, Text } from 'design';
 import { Info, Warning } from '../../../../design/src/Icon';
-import Pill from '../../../../design/src/Pill';
-import Popover from 'design/Popover';
-import Box from 'design/Box';
 
-import useClickOutside from 'shared/hooks/useClickOutside';
-import useEscape from 'shared/hooks/useEscape';
+import { useClickOutside } from 'shared/hooks/useClickOutside';
+import { useEscape } from 'shared/hooks/useEscape';
 
 const VALID_LABEL = /^[a-z]+:\s?[0-9a-z-.]+$/;
 
@@ -100,30 +97,31 @@ function LabelSelector({ onChange }: LabelSelectorProps) {
             define access in Teleport. For example, you can specify that users
             with the “on-call” role can access resources labeled “env: prod”.
             For more information, check out our documentation on{' '}
-            <a
+            <Link
               href="https://goteleport.com/docs/setup/admin/trustedclusters/"
               target="_blank"
             >
               RBAC
-            </a>{' '}
+            </Link>{' '}
             and{' '}
-            <a
+            <Link
               href="https://goteleport.com/docs/setup/admin/labels/"
               target="_blank"
+              rel="noreferrer"
             >
               labels
-            </a>
+            </Link>
             .
           </Box>
         </Popover>
         <Text style={{ float: 'right' }}>
-          <a
+          <Link
             href="https://goteleport.com/docs/setup/admin/labels/"
             target="_blank"
-            style={{ color: 'rgb(255, 255, 255)' }}
+            color="rgb(255, 255, 255)"
           >
             View Documentation
-          </a>
+          </Link>
         </Text>
       </Heading>
       <LabelContainer
@@ -131,9 +129,7 @@ function LabelSelector({ onChange }: LabelSelectorProps) {
         data-testid="label-container"
       >
         {labels.length === 0 && (
-          <Text style={{ color: 'rgba(255, 255, 255, 0.1)' }}>
-            Click to add new labels.
-          </Text>
+          <Text color="rgba(255, 255, 255, 0.1)">Click to add new labels.</Text>
         )}
         {labelList({ labels, onDismiss: handleLabelDismiss })}
       </LabelContainer>
@@ -262,8 +258,8 @@ function labelList({
   onDismiss: (string) => void;
 }) {
   return labels.map(label => (
-    <Pill key={label} label={label} dismissable onDismiss={onDismiss} />
+    <Pill key={label} label={label} onDismiss={onDismiss} />
   ));
 }
 
-export default LabelSelector;
+export { LabelSelector };

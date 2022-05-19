@@ -15,7 +15,7 @@
  */
 
 import React from 'react';
-import LabelSelector from './LabelSelector';
+import { LabelSelector } from './LabelSelector';
 import { render, screen, fireEvent } from 'design/utils/testing';
 
 describe('teleport/LabelSelector', () => {

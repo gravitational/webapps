@@ -19,7 +19,8 @@ import styled from 'styled-components';
 
 import { Cross } from '../Icon';
 
-function Pill({ label, dismissable = false, onDismiss = () => {} }: Props) {
+function Pill({ label, onDismiss = () => {} }: Props) {
+  const dismissable = !!onDismiss;
   return (
     <Wrapper dismissable={dismissable}>
       <Label>{label}</Label>
@@ -62,4 +63,4 @@ type Props = {
   onDismiss?: (labelName: string) => void;
 };
 
-export default Pill;
+export { Pill };
