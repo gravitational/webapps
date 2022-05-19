@@ -1,6 +1,7 @@
 import { RuntimeSettings } from 'teleterm/mainProcess/types';
-import { PtyCommand, PtyProcessOptions } from 'teleterm/sharedProcess/ptyHost/types';
+import { PtyProcessOptions } from 'teleterm/sharedProcess/ptyHost';
 import { resolveShellEnvCached } from './resolveShellEnv';
+import { PtyCommand } from '../types';
 
 export async function buildPtyOptions(
   settings: RuntimeSettings,

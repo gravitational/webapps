@@ -1,7 +1,7 @@
 import { unique } from 'teleterm/ui/utils';
 import { PtyProcess } from './ptyProcess';
-import { IPtyHostServer } from '../v1/ptyHostService_grpc_pb';
-import { PtyCwd, PtyId } from '../v1/ptyHostService_pb';
+import { IPtyHostServer } from './v1/ptyHostService_grpc_pb';
+import { PtyCwd, PtyId } from './v1/ptyHostService_pb';
 import { PtyEventsStreamHandler } from './ptyEventsStreamHandler';
 
 export function createPtyHostService(): IPtyHostServer {

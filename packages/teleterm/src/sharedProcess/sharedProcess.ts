@@ -1,6 +1,6 @@
 import { Server, ServerCredentials } from '@grpc/grpc-js';
-import { PtyHostService } from './ptyHost/v1/ptyHostService_grpc_pb';
-import { createPtyHostService } from './ptyHost/server';
+import { PtyHostService } from './ptyHost';
+import { createPtyHostService } from './ptyHost/ptyHostService';
 
 function createServer(): void {
   const args = process.argv.slice(2);

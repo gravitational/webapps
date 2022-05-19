@@ -1,0 +1,45 @@
+import {
+  PtyProcessOptions,
+  PtyProcessType,
+} from 'teleterm/sharedProcess/ptyHost';
+import { PtyEventsStreamHandler } from './ptyHost/ptyEventsStreamHandler';
+
+export interface PtyHostClient {
+  createPtyProcess(ptyOptions: PtyProcessOptions): Promise<string>;
+
+  getCwd(ptyId: string): Promise<string>;
+
+  exchangeEvents(ptyId: string): PtyEventsStreamHandler;
+}
+
+export type PtyServiceClient = {
+  createPtyProcess: (cmd: PtyCommand) => Promise<PtyProcessType>;
+};
+
+export type ShellCommand = PtyCommandBase & {
+  kind: 'pty.shell';
+  cwd?: string;
+  initCommand?: string;
+};
+
+export type TshLoginCommand = PtyCommandBase & {
+  kind: 'pty.tsh-login';
+  login?: string;
+  serverId: string;
+  rootClusterId: string;
+  leafClusterId?: string;
+};
+
+export type TshKubeLoginCommand = PtyCommandBase & {
+  kind: 'pty.tsh-kube-login';
+  kubeId: string;
+  rootClusterId: string;
+  leafClusterId?: string;
+};
+
+type PtyCommandBase = {
+  proxyHost: string;
+  actualClusterName: string;
+};
+
+export type PtyCommand = ShellCommand | TshLoginCommand | TshKubeLoginCommand;
