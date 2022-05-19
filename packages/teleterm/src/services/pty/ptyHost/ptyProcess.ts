@@ -1,10 +1,10 @@
-import { PtyProcessType } from 'teleterm/sharedProcess/ptyHost';
+import { IPtyProcess } from 'teleterm/sharedProcess/ptyHost';
 import { PtyHostClient } from '../types';
 
 export function createPtyProcess(
   ptyHostClient: PtyHostClient,
   ptyId: string
-): PtyProcessType {
+): IPtyProcess {
   const exchangeEventsStream = ptyHostClient.exchangeEvents(ptyId);
 
   return {

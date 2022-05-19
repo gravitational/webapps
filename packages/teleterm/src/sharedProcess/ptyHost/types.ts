@@ -6,7 +6,7 @@ export type PtyProcessOptions = {
   initCommand?: string;
 };
 
-export type PtyProcessType = {
+export type IPtyProcess = {
   write(data: string): void;
   resize(cols: number, rows: number): void;
   dispose(): void;
