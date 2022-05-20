@@ -31,6 +31,7 @@ export function createClusterServiceState(): ClustersServiceState {
 
 export class ClustersService extends ImmutableStore<ClustersServiceState> {
   state: ClustersServiceState = createClusterServiceState();
+  private clusterEventsStream: tsh.ClusterEventsStream;
 
   constructor(
     public client: tsh.TshClient,
@@ -61,10 +62,9 @@ export class ClustersService extends ImmutableStore<ClustersServiceState> {
 
   async syncRootCluster(clusterUri: string) {
     try {
-      await Promise.all([
-        this.syncClusterInfo(clusterUri),
-        this.syncLeafClusters(clusterUri),
-      ]);
+      // TODO: Bring it back to what it was.
+      await this.syncClusterInfo(clusterUri);
+      await this.syncLeafClusters(clusterUri);
     } catch (e) {
       this.notificationsService.notifyError({
         title: `Could not synchronize cluster ${
@@ -431,6 +431,21 @@ export class ClustersService extends ImmutableStore<ClustersServiceState> {
 
   async getDbUsers(dbUri: string): Promise<string[]> {
     return await this.client.listDatabaseUsers(dbUri);
+  }
+
+  async initializeClusterEventsStream() {
+    // TODO: We might need to move this logic somewhere else if it grows too much.
+    // TODO: On error we need to try to re-establish the channel.
+    this.clusterEventsStream = this.client.clusterEvents();
+    console.log('clustersService: Created ClusterEventsStream');
+
+    this.clusterEventsStream.onCertExpired(clusterUri => {
+      console.log(`clustersService: Got cert expired for ${clusterUri}`);
+    });
+
+    console.log('clustersService: Calling loginSuccess');
+    this.clusterEventsStream.loginSuccess('/clusters/teleport-local');
+    console.log('clustersService: loginSuccess called');
   }
 
   useState() {

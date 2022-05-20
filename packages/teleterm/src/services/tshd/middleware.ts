@@ -7,6 +7,9 @@ export type UnaryInterceptor = (
   nextCall: any
 ) => grpc.InterceptingCall;
 
+// TODO: Add interceptors for streams.
+// https://github.com/grpc/proposal/blob/master/L5-node-client-interceptors.md
+
 // This is custom grpc middleware implementation that uses JS Proxy to intercept method calls
 // Curtesy of https://github.com/echo-health/node-grpc-interceptors/blob/master/client-proxy.js
 export default function middleware<T extends Record<string, any>>(

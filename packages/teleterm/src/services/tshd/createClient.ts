@@ -4,6 +4,7 @@ import * as api from 'teleterm/services/tshd/v1/service_pb';
 import * as types from 'teleterm/services/tshd/types';
 import middleware, { withLogging } from './middleware';
 import createAbortController from './createAbortController';
+import { createClusterEventsStream } from './createClusterEventsStream';
 import Logger from 'teleterm/logger';
 
 export function createGrpcClient(addr?: string) {
@@ -252,6 +253,11 @@ export default function createClient(addr: string) {
           }
         });
       });
+    },
+
+    clusterEvents() {
+      const stream = tshd.clusterEvents();
+      return createClusterEventsStream(stream);
     },
   };
 

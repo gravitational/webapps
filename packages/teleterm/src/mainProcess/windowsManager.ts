@@ -34,6 +34,8 @@ export class WindowsManager {
       },
     });
 
+    window.webContents.openDevTools();
+
     window.once('close', () => {
       this.saveWindowState(window);
     });

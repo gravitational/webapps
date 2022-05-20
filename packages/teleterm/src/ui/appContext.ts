@@ -80,6 +80,7 @@ export default class AppContext {
   }
 
   async init(): Promise<void> {
+    this.clustersService.initializeClusterEventsStream();
     await this.clustersService.syncRootClusters();
     this.workspacesService.restorePersistedState();
   }

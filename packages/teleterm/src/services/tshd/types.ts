@@ -45,6 +45,12 @@ export type TshClient = {
   removeCluster: (clusterUri: string) => Promise<void>;
   login: (params: LoginParams, abortSignal?: TshAbortSignal) => Promise<void>;
   logout: (clusterUri: string) => Promise<void>;
+  clusterEvents: () => ClusterEventsStream;
+};
+
+export type ClusterEventsStream = {
+  loginSuccess(clusterUri: string): void;
+  onCertExpired(callback: (clusterUri: string) => void): void;
 };
 
 export type TshAbortController = {
