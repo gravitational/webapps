@@ -619,3 +619,113 @@ export namespace EmptyResponse {
     export type AsObject = {
     }
 }
+
+export class ClusterClientEvent extends jspb.Message { 
+    getClusterUri(): string;
+    setClusterUri(value: string): ClusterClientEvent;
+
+
+    hasLoginSuccess(): boolean;
+    clearLoginSuccess(): void;
+    getLoginSuccess(): LoginSuccess | undefined;
+    setLoginSuccess(value?: LoginSuccess): ClusterClientEvent;
+
+
+    getEventCase(): ClusterClientEvent.EventCase;
+
+    serializeBinary(): Uint8Array;
+    toObject(includeInstance?: boolean): ClusterClientEvent.AsObject;
+    static toObject(includeInstance: boolean, msg: ClusterClientEvent): ClusterClientEvent.AsObject;
+    static extensions: {[key: number]: jspb.ExtensionFieldInfo<jspb.Message>};
+    static extensionsBinary: {[key: number]: jspb.ExtensionFieldBinaryInfo<jspb.Message>};
+    static serializeBinaryToWriter(message: ClusterClientEvent, writer: jspb.BinaryWriter): void;
+    static deserializeBinary(bytes: Uint8Array): ClusterClientEvent;
+    static deserializeBinaryFromReader(message: ClusterClientEvent, reader: jspb.BinaryReader): ClusterClientEvent;
+}
+
+export namespace ClusterClientEvent {
+    export type AsObject = {
+        clusterUri: string,
+        loginSuccess?: LoginSuccess.AsObject,
+    }
+
+    export enum EventCase {
+        EVENT_NOT_SET = 0,
+    
+    LOGIN_SUCCESS = 2,
+
+    }
+
+}
+
+export class ClusterServerEvent extends jspb.Message { 
+    getClusterUri(): string;
+    setClusterUri(value: string): ClusterServerEvent;
+
+
+    hasCertExpired(): boolean;
+    clearCertExpired(): void;
+    getCertExpired(): CertExpired | undefined;
+    setCertExpired(value?: CertExpired): ClusterServerEvent;
+
+
+    getEventCase(): ClusterServerEvent.EventCase;
+
+    serializeBinary(): Uint8Array;
+    toObject(includeInstance?: boolean): ClusterServerEvent.AsObject;
+    static toObject(includeInstance: boolean, msg: ClusterServerEvent): ClusterServerEvent.AsObject;
+    static extensions: {[key: number]: jspb.ExtensionFieldInfo<jspb.Message>};
+    static extensionsBinary: {[key: number]: jspb.ExtensionFieldBinaryInfo<jspb.Message>};
+    static serializeBinaryToWriter(message: ClusterServerEvent, writer: jspb.BinaryWriter): void;
+    static deserializeBinary(bytes: Uint8Array): ClusterServerEvent;
+    static deserializeBinaryFromReader(message: ClusterServerEvent, reader: jspb.BinaryReader): ClusterServerEvent;
+}
+
+export namespace ClusterServerEvent {
+    export type AsObject = {
+        clusterUri: string,
+        certExpired?: CertExpired.AsObject,
+    }
+
+    export enum EventCase {
+        EVENT_NOT_SET = 0,
+    
+    CERT_EXPIRED = 2,
+
+    }
+
+}
+
+export class LoginSuccess extends jspb.Message { 
+
+    serializeBinary(): Uint8Array;
+    toObject(includeInstance?: boolean): LoginSuccess.AsObject;
+    static toObject(includeInstance: boolean, msg: LoginSuccess): LoginSuccess.AsObject;
+    static extensions: {[key: number]: jspb.ExtensionFieldInfo<jspb.Message>};
+    static extensionsBinary: {[key: number]: jspb.ExtensionFieldBinaryInfo<jspb.Message>};
+    static serializeBinaryToWriter(message: LoginSuccess, writer: jspb.BinaryWriter): void;
+    static deserializeBinary(bytes: Uint8Array): LoginSuccess;
+    static deserializeBinaryFromReader(message: LoginSuccess, reader: jspb.BinaryReader): LoginSuccess;
+}
+
+export namespace LoginSuccess {
+    export type AsObject = {
+    }
+}
+
+export class CertExpired extends jspb.Message { 
+
+    serializeBinary(): Uint8Array;
+    toObject(includeInstance?: boolean): CertExpired.AsObject;
+    static toObject(includeInstance: boolean, msg: CertExpired): CertExpired.AsObject;
+    static extensions: {[key: number]: jspb.ExtensionFieldInfo<jspb.Message>};
+    static extensionsBinary: {[key: number]: jspb.ExtensionFieldBinaryInfo<jspb.Message>};
+    static serializeBinaryToWriter(message: CertExpired, writer: jspb.BinaryWriter): void;
+    static deserializeBinary(bytes: Uint8Array): CertExpired;
+    static deserializeBinaryFromReader(message: CertExpired, reader: jspb.BinaryReader): CertExpired;
+}
+
+export namespace CertExpired {
+    export type AsObject = {
+    }
+}

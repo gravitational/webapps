@@ -60,6 +60,28 @@ function deserialize_teleport_terminal_v1_Cluster(buffer_arg) {
   return v1_cluster_pb.Cluster.deserializeBinary(new Uint8Array(buffer_arg));
 }
 
+function serialize_teleport_terminal_v1_ClusterClientEvent(arg) {
+  if (!(arg instanceof v1_service_pb.ClusterClientEvent)) {
+    throw new Error('Expected argument of type teleport.terminal.v1.ClusterClientEvent');
+  }
+  return Buffer.from(arg.serializeBinary());
+}
+
+function deserialize_teleport_terminal_v1_ClusterClientEvent(buffer_arg) {
+  return v1_service_pb.ClusterClientEvent.deserializeBinary(new Uint8Array(buffer_arg));
+}
+
+function serialize_teleport_terminal_v1_ClusterServerEvent(arg) {
+  if (!(arg instanceof v1_service_pb.ClusterServerEvent)) {
+    throw new Error('Expected argument of type teleport.terminal.v1.ClusterServerEvent');
+  }
+  return Buffer.from(arg.serializeBinary());
+}
+
+function deserialize_teleport_terminal_v1_ClusterServerEvent(buffer_arg) {
+  return v1_service_pb.ClusterServerEvent.deserializeBinary(new Uint8Array(buffer_arg));
+}
+
 function serialize_teleport_terminal_v1_CreateGatewayRequest(arg) {
   if (!(arg instanceof v1_service_pb.CreateGatewayRequest)) {
     throw new Error('Expected argument of type teleport.terminal.v1.CreateGatewayRequest');
@@ -518,6 +540,17 @@ logout: {
     requestDeserialize: deserialize_teleport_terminal_v1_LogoutRequest,
     responseSerialize: serialize_teleport_terminal_v1_EmptyResponse,
     responseDeserialize: deserialize_teleport_terminal_v1_EmptyResponse,
+  },
+  clusterEvents: {
+    path: '/teleport.terminal.v1.TerminalService/ClusterEvents',
+    requestStream: true,
+    responseStream: true,
+    requestType: v1_service_pb.ClusterClientEvent,
+    responseType: v1_service_pb.ClusterServerEvent,
+    requestSerialize: serialize_teleport_terminal_v1_ClusterClientEvent,
+    requestDeserialize: deserialize_teleport_terminal_v1_ClusterClientEvent,
+    responseSerialize: serialize_teleport_terminal_v1_ClusterServerEvent,
+    responseDeserialize: deserialize_teleport_terminal_v1_ClusterServerEvent,
   },
 };
 
