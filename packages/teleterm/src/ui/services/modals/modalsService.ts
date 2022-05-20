@@ -17,12 +17,6 @@ limitations under the License.
 import { useStore } from 'shared/libs/stores';
 import { ImmutableStore } from '../immutableStore';
 
-type OpenProxyDbDialogOpts = {
-  dbUri: string;
-  port?: string;
-  onSuccess?: (gatewayUri: string) => void;
-};
-
 export class ModalsService extends ImmutableStore<Dialog> {
   state: Dialog = {
     kind: 'none',
@@ -32,23 +26,24 @@ export class ModalsService extends ImmutableStore<Dialog> {
     this.setState(() => dialog);
   }
 
-  openProxyDbDialog(opts: OpenProxyDbDialogOpts) {
+  openClusterConnectDialog(options: {
+    clusterUri?: string;
+    onSuccess?(clusterUri: string): void;
+    onCancel?(): void;
+  }) {
     this.setState(() => ({
-      kind: 'create-gateway',
-      onSuccess: opts.onSuccess,
-      targetUri: opts.dbUri,
-      port: opts.port,
+      kind: 'cluster-connect',
+      ...options,
     }));
   }
 
-  openClusterConnectDialog(
-    clusterUri?: string,
-    onSuccess?: (clusterUri: string) => void
-  ) {
+  openDocumentsReopenDialog(options: {
+    onConfirm?(): void;
+    onCancel?(): void;
+  }) {
     this.setState(() => ({
-      kind: 'cluster-connect',
-      clusterUri,
-      onSuccess,
+      kind: 'documents-reopen',
+      ...options,
     }));
   }
 
@@ -67,17 +62,13 @@ export interface DialogBase {
   kind: 'none';
 }
 
-export interface DialogNewGateway {
-  kind: 'create-gateway';
-  targetUri: string;
-  port?: string;
-  onSuccess?: (gatewayUri: string) => void;
-}
-
 export interface DialogClusterConnect {
   kind: 'cluster-connect';
   clusterUri?: string;
+
   onSuccess?(clusterUri: string): void;
+
+  onCancel?(): void;
 }
 
 export interface DialogClusterLogout {
@@ -86,8 +77,16 @@ export interface DialogClusterLogout {
   clusterTitle: string;
 }
 
+export interface DialogDocumentsReopen {
+  kind: 'documents-reopen';
+
+  onConfirm?(): void;
+
+  onCancel?(): void;
+}
+
 export type Dialog =
   | DialogBase
   | DialogClusterConnect
-  | DialogNewGateway
-  | DialogClusterLogout;
+  | DialogClusterLogout
+  | DialogDocumentsReopen;

@@ -1,5 +1,5 @@
 /*
-Copyright 2021 Gravitational, Inc.
+Copyright 2021-2022 Gravitational, Inc.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -16,18 +16,35 @@ limitations under the License.
 
 import React, { useState } from 'react';
 import { ButtonBorder } from 'design';
-import Table, { Cell, LabelCell } from 'design/DataTable';
+import Table, { Cell, ClickableLabelCell } from 'design/DataTable';
+import { SortType } from 'design/DataTable/types';
 import { AuthType } from 'teleport/services/user';
 import { Database, DbProtocol } from 'teleport/services/databases';
+import { AgentLabel } from 'teleport/services/resources';
 import ConnectDialog from 'teleport/Databases/ConnectDialog';
+import ServersideSearchPanel from 'teleport/components/ServersideSearchPanel';
+import { ResourceUrlQueryParams } from 'teleport/getUrlQueryParams';
 
 function DatabaseList(props: Props) {
   const {
     databases = [],
-    pageSize = 100,
+    pageSize,
     username,
     clusterId,
     authType,
+    totalCount,
+    fetchNext,
+    fetchPrev,
+    fetchStatus,
+    from,
+    to,
+    params,
+    setParams,
+    startKeys,
+    setSort,
+    pathname,
+    replaceHistory,
+    onLabelClick,
   } = props;
 
   const [dbConnectInfo, setDbConnectInfo] = useState<{
@@ -46,19 +63,21 @@ function DatabaseList(props: Props) {
             isSortable: true,
           },
           {
-            key: 'desc',
+            key: 'description',
             headerText: 'Description',
             isSortable: true,
           },
           {
-            key: 'title',
+            key: 'type',
             headerText: 'Type',
             isSortable: true,
           },
           {
-            key: 'tags',
+            key: 'labels',
             headerText: 'Labels',
-            render: ({ tags }) => <LabelCell data={tags} />,
+            render: ({ labels }) => (
+              <ClickableLabelCell labels={labels} onClick={onLabelClick} />
+            ),
           },
           {
             altKey: 'connect-btn',
@@ -66,6 +85,27 @@ function DatabaseList(props: Props) {
           },
         ]}
         pagination={{ pageSize }}
+        fetching={{
+          onFetchNext: fetchNext,
+          onFetchPrev: fetchPrev,
+          fetchStatus,
+        }}
+        serversideProps={{
+          sort: params.sort,
+          setSort,
+          startKeys,
+          serversideSearchPanel: (
+            <ServersideSearchPanel
+              from={from}
+              to={to}
+              count={totalCount}
+              params={params}
+              setParams={setParams}
+              pathname={pathname}
+              replaceHistory={replaceHistory}
+            />
+          ),
+        }}
         isSearchable
         emptyText="No Databases Found"
       />
@@ -108,10 +148,23 @@ function renderConnectButton(
 
 type Props = {
   databases: Database[];
-  pageSize?: number;
+  pageSize: number;
   username: string;
   clusterId: string;
   authType: AuthType;
+  fetchNext: () => void;
+  fetchPrev: () => void;
+  fetchStatus: any;
+  from: number;
+  to: number;
+  totalCount: number;
+  params: ResourceUrlQueryParams;
+  setParams: (params: ResourceUrlQueryParams) => void;
+  startKeys: string[];
+  setSort: (sort: SortType) => void;
+  pathname: string;
+  replaceHistory: (path: string) => void;
+  onLabelClick: (label: AgentLabel) => void;
 };
 
 export default DatabaseList;

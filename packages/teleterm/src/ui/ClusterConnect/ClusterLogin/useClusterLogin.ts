@@ -1,5 +1,5 @@
 /**
- * Copyright 2021 Gravitational, Inc.
+ * Copyright 2021-2022 Gravitational, Inc.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -17,10 +17,11 @@
 import { useState, useEffect, useRef } from 'react';
 import * as types from 'teleterm/ui/services/clusters/types';
 import { useAppContext } from 'teleterm/ui/appContextProvider';
-import useAsync from 'teleterm/ui/useAsync';
+import { useAsync } from 'shared/hooks/useAsync';
+import { getClusterName } from 'teleterm/ui/utils';
 
 export default function useClusterLogin(props: Props) {
-  const { onClose, onSuccess, clusterUri } = props;
+  const { onSuccess, clusterUri } = props;
   const { clustersService } = useAppContext();
   const cluster = clustersService.findCluster(clusterUri);
   const refAbortCtrl = useRef<types.tsh.TshAbortController>(null);
@@ -42,7 +43,7 @@ export default function useClusterLogin(props: Props) {
     token: '',
     authType?: types.Auth2faType
   ) => {
-    promptHardwareKey(authType === 'webauthn' || authType === 'u2f');
+    promptHardwareKey(authType === 'webauthn');
     login({
       clusterUri,
       local: {
@@ -70,7 +71,7 @@ export default function useClusterLogin(props: Props) {
 
   const onCloseDialog = () => {
     onAbort();
-    props?.onClose();
+    props.onCancel();
   };
 
   useEffect(() => {
@@ -84,7 +85,6 @@ export default function useClusterLogin(props: Props) {
     }
 
     if (loginAttempt.status === 'success') {
-      onClose();
       onSuccess?.();
     }
   }, [loginAttempt.status]);
@@ -92,7 +92,7 @@ export default function useClusterLogin(props: Props) {
   return {
     shouldPromptSsoStatus,
     shouldPromptHardwareKey,
-    title: cluster.name,
+    title: getClusterName(cluster),
     onLoginWithLocal,
     onLoginWithSso,
     onCloseDialog,
@@ -106,6 +106,6 @@ export type State = ReturnType<typeof useClusterLogin>;
 
 export type Props = {
   clusterUri: string;
-  onClose(): void;
+  onCancel(): void;
   onSuccess?(): void;
 };

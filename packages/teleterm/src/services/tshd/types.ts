@@ -10,7 +10,17 @@ export type Application = apiApp.App.AsObject;
 export type Kube = apiKube.Kube.AsObject;
 export type Server = apiServer.Server.AsObject;
 export type Gateway = apigateway.Gateway.AsObject;
-export type GatewayProtocol = 'postgres' | 'mysql' | 'mongodb' | 'cockroachdb';
+// Available types are listed here:
+// https://github.com/gravitational/teleport/blob/v9.0.3/lib/defaults/defaults.go#L513-L530
+//
+// The list below can get out of sync with what tsh actually implements.
+export type GatewayProtocol =
+  | 'postgres'
+  | 'mysql'
+  | 'mongodb'
+  | 'cockroachdb'
+  | 'redis'
+  | 'sqlserver';
 export type Database = apiDb.Database.AsObject;
 export type Cluster = apiCluster.Cluster.AsObject;
 export type LoggedInUser = apiCluster.LoggedInUser.AsObject;
@@ -24,6 +34,7 @@ export type TshClient = {
   listApps: (clusterUri: string) => Promise<Application[]>;
   listKubes: (clusterUri: string) => Promise<Kube[]>;
   listDatabases: (clusterUri: string) => Promise<Database[]>;
+  listDatabaseUsers: (dbUri: string) => Promise<string[]>;
   listServers: (clusterUri: string) => Promise<Server[]>;
   createAbortController: () => TshAbortController;
   addRootCluster: (addr: string) => Promise<Cluster>;
@@ -63,4 +74,5 @@ export type CreateGatewayParams = {
   targetUri: string;
   port?: string;
   user?: string;
+  subresource_name?: string;
 };

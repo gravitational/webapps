@@ -1,5 +1,5 @@
 /*
-Copyright 2021 Gravitational, Inc.
+Copyright 2021-2022 Gravitational, Inc.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -18,10 +18,12 @@ import { useState, useEffect } from 'react';
 import useAttempt from 'shared/hooks/useAttemptNext';
 import cfg from 'teleport/config';
 import history from 'teleport/services/history';
-import auth from 'teleport/services/auth';
+import auth, { RecoveryCodes, ResetToken } from 'teleport/services/auth';
 
 export default function useToken(tokenId: string) {
-  const [passwordToken, setPswToken] = useState<ResetToken>();
+  const [resetToken, setResetToken] = useState<ResetToken>();
+  const [recoveryCodes, setRecoveryCodes] = useState<RecoveryCodes>();
+  const [success, setSuccess] = useState(false); // TODO rename
   const fetchAttempt = useAttempt('');
   const submitAttempt = useAttempt('');
   const auth2faType = cfg.getAuth2faType();
@@ -30,31 +32,35 @@ export default function useToken(tokenId: string) {
     fetchAttempt.run(() =>
       auth
         .fetchPasswordToken(tokenId)
-        .then(resetToken => setPswToken(resetToken))
+        .then(resetToken => setResetToken(resetToken))
     );
   }, []);
 
-  function onSubmit(password: string, otpToken: string) {
+  function onSubmit(password: string, otpCode = '', deviceName = '') {
     submitAttempt.setAttempt({ status: 'processing' });
     auth
-      .resetPassword(tokenId, password, otpToken)
-      .then(redirect)
+      .resetPassword({ tokenId, password, otpCode, deviceName })
+      .then(recoveryCodes => {
+        if (recoveryCodes.createdDate) {
+          setRecoveryCodes(recoveryCodes);
+        } else {
+          finishedRegister();
+        }
+      })
       .catch(submitAttempt.handleError);
   }
 
-  function onSubmitWithU2f(password: string) {
+  function onSubmitWithWebauthn(password?: string, deviceName = '') {
     submitAttempt.setAttempt({ status: 'processing' });
     auth
-      .resetPasswordWithU2f(tokenId, password)
-      .then(redirect)
-      .catch(submitAttempt.handleError);
-  }
-
-  function onSubmitWithWebauthn(password: string) {
-    submitAttempt.setAttempt({ status: 'processing' });
-    auth
-      .resetPasswordWithWebauthn(tokenId, password)
-      .then(redirect)
+      .resetPasswordWithWebauthn({ tokenId, password, deviceName })
+      .then(recoveryCodes => {
+        if (recoveryCodes.createdDate) {
+          setRecoveryCodes(recoveryCodes);
+        } else {
+          finishedRegister();
+        }
+      })
       .catch(submitAttempt.handleError);
   }
 
@@ -66,23 +72,25 @@ export default function useToken(tokenId: string) {
     submitAttempt.setAttempt({ status: '' });
   }
 
+  function finishedRegister() {
+    setSuccess(true);
+  }
+
   return {
     auth2faType,
-    preferredMfaType: cfg.getPreferredMfaType(),
+    primaryAuthType: cfg.getPrimaryAuthType(),
+    isPasswordlessEnabled: cfg.isPasswordlessEnabled(),
     fetchAttempt: fetchAttempt.attempt,
     submitAttempt: submitAttempt.attempt,
     clearSubmitAttempt,
     onSubmit,
-    onSubmitWithU2f,
     onSubmitWithWebauthn,
-    passwordToken,
+    resetToken,
+    recoveryCodes,
+    redirect,
+    success,
+    finishedRegister,
   };
 }
-
-type ResetToken = {
-  tokenId: string;
-  qrCode: string;
-  user: string;
-};
 
 export type State = ReturnType<typeof useToken>;

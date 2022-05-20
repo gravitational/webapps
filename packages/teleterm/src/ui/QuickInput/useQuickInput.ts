@@ -16,11 +16,16 @@ limitations under the License.
 
 import React, { useEffect } from 'react';
 import { useAppContext } from 'teleterm/ui/appContextProvider';
-import { useKeyboardShortcuts } from 'teleterm/ui/services/keyboardShortcuts';
+import {
+  useKeyboardShortcuts,
+  useKeyboardShortcutFormatters,
+} from 'teleterm/ui/services/keyboardShortcuts';
 import {
   AutocompleteResult,
   AutocompletePartialMatch,
 } from 'teleterm/ui/services/quickInput/types';
+import { routing } from 'teleterm/ui/uri';
+import { KeyboardShortcutType } from 'teleterm/services/config';
 
 export default function useQuickInput() {
   const { quickInputService, workspacesService, commandLauncher } =
@@ -38,6 +43,8 @@ export default function useQuickInput() {
   );
   const hasSuggestions =
     autocompleteResult.kind === 'autocomplete.partial-match';
+  const openQuickInputShortcutKey: KeyboardShortcutType = 'open-quick-input';
+  const { getShortcut } = useKeyboardShortcutFormatters();
 
   const onFocus = (e: any) => {
     if (e.relatedTarget) {
@@ -68,7 +75,16 @@ export default function useQuickInput() {
 
     switch (command.kind) {
       case 'command.unknown': {
-        documentsService.openNewTerminal(inputValue);
+        const params = routing.parseClusterUri(
+          workspacesService.getActiveWorkspace()?.localClusterUri
+        ).params;
+        documentsService.openNewTerminal({
+          initCommand: inputValue,
+          rootClusterId: routing.parseClusterUri(
+            workspacesService.getRootClusterUri()
+          ).params.rootClusterId,
+          leafClusterId: params.leafClusterId,
+        });
         break;
       }
       case 'command.tsh-ssh': {
@@ -111,7 +127,7 @@ export default function useQuickInput() {
   };
 
   useKeyboardShortcuts({
-    'open-quick-input': () => {
+    [openQuickInputShortcutKey]: () => {
       quickInputService.show();
     },
   });
@@ -140,6 +156,7 @@ export default function useQuickInput() {
     onInputChange: quickInputService.setInputValue,
     onHide: quickInputService.hide,
     onShow: quickInputService.show,
+    keyboardShortcut: getShortcut(openQuickInputShortcutKey),
   };
 }
 

@@ -1,5 +1,5 @@
 /**
- * Copyright 2020 Gravitational, Inc.
+ * Copyright 2020-2022 Gravitational, Inc.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -15,7 +15,6 @@
  */
 
 import React from 'react';
-import { Danger } from 'design/Alert';
 import { Indicator, Box } from 'design';
 import useTeleport from 'teleport/useTeleport';
 import {
@@ -24,10 +23,11 @@ import {
   FeatureHeaderTitle,
 } from 'teleport/components/Layout';
 import Empty, { EmptyStateInfo } from 'teleport/components/Empty';
+import ErrorMessage from 'teleport/components/AgentErrorMessage';
 import AppList from './AppList';
 import AddApp from './AddApp';
-import ButtonAdd from './ButtonAdd';
 import useApps, { State } from './useApps';
+import AgentButtonAdd from 'teleport/components/AgentButtonAdd';
 
 export default function Container() {
   const ctx = useTeleport();
@@ -44,18 +44,34 @@ export function Apps(props: State) {
     hideAddApp,
     canCreate,
     attempt,
-    apps,
+    results,
+    fetchNext,
+    fetchPrev,
+    from,
+    to,
+    pageSize,
+    params,
+    setParams,
+    startKeys,
+    setSort,
+    pathname,
+    replaceHistory,
+    fetchStatus,
+    isSearchEmpty,
+    onLabelClick,
   } = props;
 
-  const isEmpty = attempt.status === 'success' && apps.length === 0;
-  const hasApps = attempt.status === 'success' && apps.length > 0;
+  const hasNoApps =
+    attempt.status === 'success' && results.apps.length === 0 && isSearchEmpty;
 
   return (
     <FeatureBox>
       <FeatureHeader alignItems="center" justifyContent="space-between">
         <FeatureHeaderTitle>Applications</FeatureHeaderTitle>
-        {hasApps && (
-          <ButtonAdd
+        {!hasNoApps && (
+          <AgentButtonAdd
+            agent="application"
+            beginsWithVowel={true}
             isLeafCluster={isLeafCluster}
             canCreate={canCreate}
             onClick={showAddApp}
@@ -67,9 +83,29 @@ export function Apps(props: State) {
           <Indicator />
         </Box>
       )}
-      {attempt.status === 'failed' && <Danger>{attempt.statusText} </Danger>}
-      {hasApps && <AppList apps={apps} />}
-      {isEmpty && (
+      {attempt.status === 'failed' && (
+        <ErrorMessage message={attempt.statusText} />
+      )}
+      {attempt.status !== 'processing' && !hasNoApps && (
+        <AppList
+          apps={results.apps}
+          fetchNext={fetchNext}
+          fetchPrev={fetchPrev}
+          fetchStatus={fetchStatus}
+          from={from}
+          to={to}
+          totalCount={results.totalCount}
+          pageSize={pageSize}
+          params={params}
+          setParams={setParams}
+          startKeys={startKeys}
+          setSort={setSort}
+          pathname={pathname}
+          replaceHistory={replaceHistory}
+          onLabelClick={onLabelClick}
+        />
+      )}
+      {hasNoApps && (
         <Empty
           clusterId={clusterId}
           canCreate={canCreate && !isLeafCluster}

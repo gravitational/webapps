@@ -1,5 +1,5 @@
 /*
-Copyright 2021 Gravitational, Inc.
+Copyright 2021-2022 Gravitational, Inc.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -18,6 +18,7 @@ import { useState, useEffect } from 'react';
 import useAttempt from 'shared/hooks/useAttemptNext';
 import Ctx from 'teleport/teleportContext';
 import authService from 'teleport/services/auth';
+import { DeviceUsage } from 'teleport/services/mfa';
 import cfg from 'teleport/config';
 
 export default function useAddDevice(
@@ -43,26 +44,13 @@ export default function useAddDevice(
       .catch(addDeviceAttempt.handleError);
   }
 
-  function addU2fDevice(deviceName: string) {
-    addDeviceAttempt.setAttempt({ status: 'processing' });
-    ctx.mfaService
-      .addNewU2fDevice({
-        tokenId: token,
-        deviceName,
-      })
-      .then(() => {
-        onClose();
-        fetchDevices();
-      })
-      .catch(addDeviceAttempt.handleError);
-  }
-
-  function addWebauthnDevice(deviceName: string) {
+  function addWebauthnDevice(deviceName: string, deviceUsage: DeviceUsage) {
     addDeviceAttempt.setAttempt({ status: 'processing' });
     ctx.mfaService
       .addNewWebauthnDevice({
         tokenId: token,
         deviceName,
+        deviceUsage,
       })
       .then(() => {
         onClose();
@@ -87,13 +75,11 @@ export default function useAddDevice(
     addDeviceAttempt: addDeviceAttempt.attempt,
     fetchQrCodeAttempt: fetchQrCodeAttempt.attempt,
     addTotpDevice,
-    addU2fDevice,
     addWebauthnDevice,
     onClose,
     clearAttempt,
     qrCode,
     auth2faType: cfg.getAuth2faType(),
-    preferredMfaType: cfg.getPreferredMfaType(),
   };
 }
 

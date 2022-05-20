@@ -53,9 +53,11 @@ export interface DocumentTshKube extends DocumentBase {
 
 export interface DocumentGateway extends DocumentBase {
   kind: 'doc.gateway';
-  gatewayUri: string;
+  gatewayUri?: string;
   targetUri: string;
-  targetUser?: string;
+  targetUser: string;
+  targetName: string;
+  targetSubresourceName?: string;
   port?: string;
 }
 
@@ -68,6 +70,8 @@ export interface DocumentPtySession extends DocumentBase {
   kind: 'doc.terminal_shell';
   cwd?: string;
   initCommand?: string;
+  rootClusterId?: string;
+  leafClusterId?: string;
 }
 
 export type DocumentTerminal =
@@ -82,13 +86,21 @@ export type Document =
   | DocumentTerminal;
 
 export type CreateGatewayDocumentOpts = {
-  gatewayUri: string;
+  gatewayUri?: string;
   targetUri: string;
-  targetUser?: string;
-  title: string;
+  targetName: string;
+  targetUser: string;
+  targetSubresourceName?: string;
+  title?: string;
   port?: string;
 };
 
 export type CreateClusterDocumentOpts = {
   clusterUri: string;
+};
+
+export type CreateNewTerminalOpts = {
+  initCommand?: string;
+  rootClusterId: string;
+  leafClusterId?: string;
 };

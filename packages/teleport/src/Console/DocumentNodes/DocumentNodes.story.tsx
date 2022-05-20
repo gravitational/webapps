@@ -61,7 +61,10 @@ export function createContext() {
     return Promise.resolve<any>(clusters);
   };
   ctx.fetchNodes = () => {
-    return Promise.resolve({ nodes, logins: ['root'] });
+    return Promise.resolve({
+      logins: ['root'],
+      nodesRes: { nodes, totalCount: nodes.length },
+    });
   };
 
   return ctx;
@@ -98,7 +101,16 @@ const nodes: Node[] = [
     clusterId: 'cluseter-1',
     hostname: 'fujedu',
     addr: '172.10.1.20:3022',
-    tags: ['cluster: one', 'kernel: 4.15.0-51-generic'],
+    labels: [
+      {
+        name: 'cluster',
+        value: 'one',
+      },
+      {
+        name: 'kernel',
+        value: '4.15.0-51-generic',
+      },
+    ],
   },
   {
     tunnel: false,
@@ -106,7 +118,16 @@ const nodes: Node[] = [
     clusterId: 'cluseter-1',
     hostname: 'facuzguv',
     addr: '172.10.1.42:3022',
-    tags: ['cluster: one', 'kernel: 4.15.0-51-generic'],
+    labels: [
+      {
+        name: 'cluster',
+        value: 'one',
+      },
+      {
+        name: 'kernel',
+        value: '4.15.0-51-generic',
+      },
+    ],
   },
   {
     tunnel: true,
@@ -114,7 +135,16 @@ const nodes: Node[] = [
     clusterId: 'cluseter-1',
     hostname: 'duzsevkig',
     addr: '172.10.1.156:3022',
-    tags: ['cluster: one', 'kernel: 4.15.0-51-generic'],
+    labels: [
+      {
+        name: 'cluster',
+        value: 'one',
+      },
+      {
+        name: 'kernel',
+        value: '4.15.0-51-generic',
+      },
+    ],
   },
   {
     tunnel: true,
@@ -122,7 +152,16 @@ const nodes: Node[] = [
     clusterId: 'cluseter-1',
     hostname: 'kuhinur',
     addr: '172.10.1.145:3022',
-    tags: ['cluster: one', 'kernel: 4.15.0-51-generic'],
+    labels: [
+      {
+        name: 'cluster',
+        value: 'one',
+      },
+      {
+        name: 'kernel',
+        value: '4.15.0-51-generic',
+      },
+    ],
   },
   {
     tunnel: false,
@@ -130,13 +169,31 @@ const nodes: Node[] = [
     clusterId: 'cluseter-1',
     hostname: 'zebpecda',
     addr: '172.10.1.24:3022',
-    tags: [
-      'cluster: one',
-      'kernel: 4.15.0-51-generic',
-      'lortavma: one',
-      'lenisret: 4.15.0-51-generic',
-      'lofdevod: one',
-      'llhurlaz: 4.15.0-51-generic',
+    labels: [
+      {
+        name: 'cluster',
+        value: 'one',
+      },
+      {
+        name: 'kernel',
+        value: '4.15.0-51-generic',
+      },
+      {
+        name: 'lortavma',
+        value: 'one',
+      },
+      {
+        name: 'lenisret',
+        value: '4.15.0-51-generic',
+      },
+      {
+        name: 'lofdevod',
+        value: 'one',
+      },
+      {
+        name: 'llhurlaz',
+        value: '4.15.0-51-generic',
+      },
     ],
   },
 ];

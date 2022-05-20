@@ -18,7 +18,7 @@ import { debounce } from 'lodash';
 import React, { useEffect, useRef } from 'react';
 import styled, { useTheme } from 'styled-components';
 import { Box, Flex } from 'design';
-import { PtyProcess } from 'teleterm/services/pty/types';
+import { IPtyProcess } from 'teleterm/sharedProcess/ptyHost';
 import XTermCtrl from './ctrl';
 
 export default function Terminal(props: Props) {
@@ -74,18 +74,13 @@ export default function Terminal(props: Props) {
 }
 
 type Props = {
-  ptyProcess: PtyProcess;
+  ptyProcess: IPtyProcess;
   visible: boolean;
   onEnterKey?(): void;
 };
 
-const StyledXterm = styled(Box)(
-  props => `
-   height: 100%;
-   width: 100%;
-   background-color: ${props.theme.colors.bgTerminal};
-   .terminal .xterm-viewport {
-     background-color: ${props.theme.bgTerminal};
-   }
- }`
-);
+const StyledXterm = styled(Box)`
+  height: 100%;
+  width: 100%;
+  background-color: ${props => props.theme.colors.primary.darker};
+`;

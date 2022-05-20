@@ -14,11 +14,13 @@
  * limitations under the License.
  */
 
-import React from 'react';
-import { Text, Box, ButtonLink, Indicator } from 'design';
+import React, { useEffect } from 'react';
+import { Text, Box, ButtonLink, Indicator, ButtonSecondary } from 'design';
 import TextSelectCopy from 'teleport/components/TextSelectCopy';
 import DownloadLinks from 'teleport/components/DownloadLinks';
+import cfg from 'teleport/config';
 import { State } from './../useAddNode';
+import { DialogContent, DialogFooter } from 'design/Dialog';
 
 export default function Manually({
   isEnterprise,
@@ -27,18 +29,24 @@ export default function Manually({
   isAuthTypeLocal,
   joinToken,
   createJoinToken,
-  expiry,
   attempt,
+  onClose,
 }: Props) {
   const { hostname, port } = window.document.location;
   const host = `${hostname}:${port || '443'}`;
   let tshLoginCmd = `tsh login --proxy=${host}`;
 
+  useEffect(() => {
+    if (!joinToken) {
+      createJoinToken();
+    }
+  }, []);
+
   if (isAuthTypeLocal) {
     tshLoginCmd = `${tshLoginCmd} --auth=local --user=${user}`;
   }
 
-  if (attempt.status === 'processing') {
+  if (attempt.status === 'processing' || attempt.status === '') {
     return (
       <Box textAlign="center">
         <Indicator />
@@ -48,28 +56,44 @@ export default function Manually({
 
   return (
     <>
-      <Box mb={4}>
-        <Text bold as="span">
-          Step 1
-        </Text>{' '}
-        - Download Teleport package to your computer
-        <DownloadLinks isEnterprise={isEnterprise} version={version} />
-      </Box>
-      {attempt.status === 'failed' ? (
-        <StepsWithoutToken host={host} tshLoginCmd={tshLoginCmd} />
-      ) : (
-        <StepsWithToken
-          joinToken={joinToken}
-          host={host}
-          createJoinToken={createJoinToken}
-          expiry={expiry}
-        />
-      )}
+      <DialogContent>
+        <Box mb={4}>
+          <Text bold as="span">
+            Step 1
+          </Text>{' '}
+          - Download Teleport package to your computer
+          <DownloadLinks isEnterprise={isEnterprise} version={version} />
+        </Box>
+        {attempt.status === 'failed' ? (
+          <StepsWithoutToken host={host} tshLoginCmd={tshLoginCmd} />
+        ) : (
+          <StepsWithToken
+            joinToken={joinToken}
+            host={host}
+            createJoinToken={createJoinToken}
+          />
+        )}
+      </DialogContent>
+      <DialogFooter>
+        <ButtonSecondary onClick={onClose}>Close</ButtonSecondary>
+      </DialogFooter>
     </>
   );
 }
 
-const StepsWithoutToken = ({ tshLoginCmd, host }) => (
+const configFile = `${cfg.configDir}/node_config.yaml`;
+const startCmd = `teleport start --config=${configFile}`;
+
+function getConfigCmd(token: string, host: string) {
+  return `teleport configure --output=${configFile} --roles=node --token=${token} --auth-server=${host} --data-dir=${cfg.configDir}`;
+}
+
+type StepsWithoutTokenProps = {
+  tshLoginCmd: string;
+  host: string;
+};
+
+const StepsWithoutToken = ({ tshLoginCmd, host }: StepsWithoutTokenProps) => (
   <>
     <Box mb={4}>
       <Text bold as="span">
@@ -85,39 +109,62 @@ const StepsWithoutToken = ({ tshLoginCmd, host }) => (
       {' - Generate a join token'}
       <TextSelectCopy mt="2" text="tctl tokens add --type=node --ttl=1h" />
     </Box>
-    <Box>
+    <Box mb={4}>
       <Text bold as="span">
         Step 4
       </Text>
-      {` - Start the Teleport agent with the following parameters`}
+      {` - Configure your teleport agent`}
       <TextSelectCopy
         mt="2"
-        text={`teleport start --roles=node --token=[generated-join-token] --auth-server=${host} `}
+        text={getConfigCmd('[generated-join-token]', host)}
       />
+    </Box>
+    <Box>
+      <Text bold as="span">
+        Step 5
+      </Text>
+      {` - Start the Teleport agent with the generated configuration file`}
+      <TextSelectCopy mt="2" text={startCmd} />
     </Box>
   </>
 );
 
-const StepsWithToken = ({ joinToken, host, createJoinToken, expiry }) => (
-  <Box>
-    <Text bold as="span">
-      Step 2
-    </Text>
-    {` - Start the Teleport agent with the following parameters`}
-    <Text mt="1">
-      The token will be valid for{' '}
-      <Text bold as={'span'}>
-        {expiry}.
+type StepsWithTokenProps = {
+  joinToken: State['token'];
+  host: string;
+  createJoinToken: State['createJoinToken'];
+};
+
+const StepsWithToken = ({
+  joinToken,
+  host,
+  createJoinToken,
+}: StepsWithTokenProps) => (
+  <>
+    <Box mb={4}>
+      <Text bold as="span">
+        Step 2
       </Text>
-    </Text>
-    <TextSelectCopy
-      mt="2"
-      text={`teleport start --roles=node --token=${joinToken} --auth-server=${host} `}
-    />
-    <Box>
-      <ButtonLink onClick={createJoinToken}>Regenerate Token</ButtonLink>
+      {` - Configure your teleport agent`}
+      <Text mt="1">
+        The token will be valid for{' '}
+        <Text bold as={'span'}>
+          {joinToken.expiryText}.
+        </Text>
+      </Text>
+      <TextSelectCopy mt="2" text={getConfigCmd(joinToken.id, host)} />
+      <Box>
+        <ButtonLink onClick={createJoinToken}>Regenerate Token</ButtonLink>
+      </Box>
     </Box>
-  </Box>
+    <Box>
+      <Text bold as="span">
+        Step 3
+      </Text>
+      {` - Start the Teleport agent with the configuration file`}
+      <TextSelectCopy mt="2" text={startCmd} />
+    </Box>
+  </>
 );
 
 type Props = {
@@ -125,8 +172,8 @@ type Props = {
   user: string;
   version: string;
   isAuthTypeLocal: boolean;
-  joinToken: string;
-  expiry: State['expiry'];
+  joinToken: State['token'];
   createJoinToken: State['createJoinToken'];
   attempt: State['attempt'];
+  onClose(): void;
 };

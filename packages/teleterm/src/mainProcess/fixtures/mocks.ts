@@ -1,5 +1,6 @@
 import { RuntimeSettings, MainProcessClient } from 'teleterm/types';
 import { ConfigService } from 'teleterm/services/config';
+import { createMockFileStorage } from 'teleterm/services/fileStorage/fixtures/mocks';
 
 export class MockMainProcessClient implements MainProcessClient {
   getRuntimeSettings(): RuntimeSettings {
@@ -7,6 +8,7 @@ export class MockMainProcessClient implements MainProcessClient {
       platform: 'darwin',
       dev: true,
       userDataDir: '',
+      binDir: undefined,
       defaultShell: '',
       tshd: {
         insecure: true,
@@ -15,6 +17,9 @@ export class MockMainProcessClient implements MainProcessClient {
         homeDir: '',
         flags: [],
       },
+      sharedProcess: {
+        networkAddr: ''
+      }
     };
   }
 
@@ -33,4 +38,6 @@ export class MockMainProcessClient implements MainProcessClient {
     }),
     update: () => undefined,
   } as unknown as ConfigService;
+
+  fileStorage = createMockFileStorage();
 }

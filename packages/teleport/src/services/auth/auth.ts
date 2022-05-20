@@ -1,5 +1,5 @@
 /*
-Copyright 2019-2021 Gravitational, Inc.
+Copyright 2019-2022 Gravitational, Inc.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -14,10 +14,9 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-// This puts it in window.u2f
-import 'u2f-api-polyfill';
 import api from 'teleport/services/api';
 import cfg from 'teleport/config';
+import { DeviceType, DeviceUsage } from 'teleport/services/mfa';
 import makePasswordToken from './makePasswordToken';
 import { makeRecoveryCodes } from './makeRecoveryCodes';
 import {
@@ -26,20 +25,9 @@ import {
   makeWebauthnAssertionResponse,
   makeWebauthnCreationResponse,
 } from './makeMfa';
-import { DeviceType } from './types';
+import { UserCredentials, NewCredentialRequest } from './types';
 
 const auth = {
-  u2fBrowserSupported() {
-    if (!window['u2f'] || navigator.userAgent.includes('Chrome')) {
-      return new Error(
-        'The U2F API for hardware keys is not supported by your browser. \
-        Please notify your system administrator to update cluster settings \
-        to use WebAuthn as the second factor protocol. In the meantime, \
-        you can use Firefox to use this hardware key.'
-      );
-    }
-  },
-
   checkWebauthnSupport() {
     if (window.PublicKeyCredential) {
       return Promise.resolve();
@@ -52,10 +40,15 @@ const auth = {
     );
   },
 
-  createMfaRegistrationChallenge(tokenId: string, deviceType: DeviceType) {
+  createMfaRegistrationChallenge(
+    tokenId: string,
+    deviceType: DeviceType,
+    deviceUsage: DeviceUsage = 'mfa'
+  ) {
     return api
       .post(cfg.getMfaCreateRegistrationChallengeUrl(tokenId), {
         deviceType,
+        deviceUsage,
       })
       .then(makeMfaRegistrationChallenge);
   },
@@ -67,11 +60,15 @@ const auth = {
   },
 
   // mfaLoginBegin retrieves users mfa challenges for their
-  // registered devices after verifying given username and password
-  // at login.
-  mfaLoginBegin(user: string, pass: string) {
+  // registered devices. Empty creds indicates request for passwordless challenges.
+  // Otherwise non-passwordless challenges requires creds to be verified.
+  mfaLoginBegin(creds?: UserCredentials) {
     return api
-      .post(cfg.api.mfaLoginBegin, { user, pass })
+      .post(cfg.api.mfaLoginBegin, {
+        passwordless: !creds,
+        user: creds?.username,
+        pass: creds?.password,
+      })
       .then(makeMfaAuthenticateChallenge);
   },
 
@@ -84,56 +81,20 @@ const auth = {
       .then(makeMfaAuthenticateChallenge);
   },
 
-  login(userId: string, password: string, token: string) {
+  login(userId: string, password: string, otpCode: string) {
     const data = {
       user: userId,
       pass: password,
-      second_factor_token: token,
+      second_factor_token: otpCode,
     };
 
     return api.post(cfg.api.sessionPath, data);
   },
 
-  loginWithU2f(name: string, password: string) {
-    const err = this.u2fBrowserSupported();
-    if (err) {
-      return Promise.reject(err);
-    }
-
-    return auth.mfaLoginBegin(name, password).then(data => {
-      const promise = new Promise((resolve, reject) => {
-        const { appId, challenge, registeredKeys } = data.u2f;
-        window['u2f'].sign(appId, challenge, registeredKeys, function (res) {
-          if (res.errorCode) {
-            const err = auth._getU2fErr(res.errorCode);
-            reject(err);
-            return;
-          }
-
-          const response = {
-            user: name,
-            u2f_sign_response: res,
-          };
-
-          api
-            .post(cfg.api.mfaLoginFinish, response)
-            .then(data => {
-              resolve(data);
-            })
-            .catch(data => {
-              reject(data);
-            });
-        });
-      });
-
-      return promise;
-    });
-  },
-
-  loginWithWebauthn(user: string, pass: string) {
+  loginWithWebauthn(creds?: UserCredentials) {
     return auth
       .checkWebauthnSupport()
-      .then(() => auth.mfaLoginBegin(user, pass))
+      .then(() => auth.mfaLoginBegin(creds))
       .then(res =>
         navigator.credentials.get({
           publicKey: res.webauthnPublicKey,
@@ -141,7 +102,7 @@ const auth = {
       )
       .then(res => {
         const request = {
-          user,
+          user: creds?.username,
           webauthnAssertionResponse: makeWebauthnAssertionResponse(res),
         };
 
@@ -154,10 +115,19 @@ const auth = {
     return api.get(path).then(makePasswordToken);
   },
 
-  resetPasswordWithWebauthn(tokenId: string, password: string) {
+  // resetPasswordWithWebauthn either sets a new password and a new webauthn device,
+  // or if passwordless is requested (indicated by empty password param),
+  // skips setting a new password and only sets a passwordless device.
+  resetPasswordWithWebauthn(req: NewCredentialRequest) {
     return auth
       .checkWebauthnSupport()
-      .then(() => auth.createMfaRegistrationChallenge(tokenId, 'webauthn'))
+      .then(() =>
+        auth.createMfaRegistrationChallenge(
+          req.tokenId,
+          'webauthn',
+          req.password ? 'mfa' : 'passwordless'
+        )
+      )
       .then(res =>
         navigator.credentials.create({
           publicKey: res.webauthnPublicKey,
@@ -165,9 +135,10 @@ const auth = {
       )
       .then(res => {
         const request = {
-          token: tokenId,
-          password: base64EncodeUnicode(password),
+          token: req.tokenId,
+          password: req.password ? base64EncodeUnicode(req.password) : null,
           webauthnCreationResponse: makeWebauthnCreationResponse(res),
+          deviceName: req.deviceName,
         };
 
         return api.put(cfg.getPasswordTokenUrl(), request);
@@ -175,19 +146,15 @@ const auth = {
       .then(makeRecoveryCodes);
   },
 
-  resetPasswordWithU2f(tokenId: string, password: string) {
-    const err = this.u2fBrowserSupported();
-    if (err) {
-      return Promise.reject(err);
-    }
+  resetPassword(req: NewCredentialRequest) {
+    const request = {
+      password: base64EncodeUnicode(req.password),
+      second_factor_token: req.otpCode,
+      token: req.tokenId,
+      deviceName: req.deviceName,
+    };
 
-    return auth._getU2FRegisterRes(tokenId).then(u2fRes => {
-      return auth._resetPassword(tokenId, password, null, u2fRes);
-    });
-  },
-
-  resetPassword(tokenId: string, password: string, hotpToken: string) {
-    return this._resetPassword(tokenId, password, hotpToken);
+    return api.put(cfg.getPasswordTokenUrl(), request).then(makeRecoveryCodes);
   },
 
   changePassword(oldPass: string, newPass: string, token: string) {
@@ -198,40 +165,6 @@ const auth = {
     };
 
     return api.put(cfg.api.changeUserPasswordPath, data);
-  },
-
-  changePasswordWithU2f(oldPass: string, newPass: string) {
-    const err = this.u2fBrowserSupported();
-    if (err) {
-      return Promise.reject(err);
-    }
-
-    return auth.mfaChangePasswordBegin(oldPass).then(data => {
-      return new Promise((resolve, reject) => {
-        const { appId, challenge, registeredKeys } = data.u2f;
-        window['u2f'].sign(appId, challenge, registeredKeys, function (res) {
-          if (res.errorCode) {
-            const err = auth._getU2fErr(res.errorCode);
-            reject(err);
-            return;
-          }
-
-          const data = {
-            new_password: base64EncodeUnicode(newPass),
-            u2f_sign_response: res,
-          };
-
-          api
-            .put(cfg.api.changeUserPasswordPath, data)
-            .then(data => {
-              resolve(data);
-            })
-            .catch(data => {
-              reject(data);
-            });
-        });
-      });
-    });
   },
 
   changePasswordWithWebauthn(oldPass: string, newPass: string) {
@@ -278,88 +211,8 @@ const auth = {
       );
   },
 
-  createPrivilegeTokenWithU2f() {
-    const err = auth.u2fBrowserSupported();
-    if (err) {
-      return Promise.reject(err);
-    }
-
-    return api.post(cfg.api.mfaAuthnChallengePath).then(data => {
-      return new Promise((resolve, reject) => {
-        let devices = [data];
-
-        if (data.u2f_challenges) {
-          devices = data.u2f_challenges;
-        }
-
-        window['u2f'].sign(data.appId, data.challenge, devices, res => {
-          if (res.errorCode) {
-            const err = auth._getU2fErr(res.errorCode);
-            reject(err);
-            return;
-          }
-
-          api
-            .post(cfg.api.createPrivilegeTokenPath, {
-              u2fSignResponse: res,
-            })
-            .then(resolve)
-            .catch(err => {
-              reject(err);
-            });
-        });
-      });
-    });
-  },
-
   createRestrictedPrivilegeToken() {
     return api.post(cfg.api.createPrivilegeTokenPath, {});
-  },
-
-  _resetPassword(tokenId: string, psw: string, hotpToken: string, u2fResponse) {
-    const request = {
-      password: base64EncodeUnicode(psw),
-      second_factor_token: hotpToken,
-      token: tokenId,
-      u2f_register_response: u2fResponse,
-    };
-
-    return api.put(cfg.getPasswordTokenUrl(), request).then(makeRecoveryCodes);
-  },
-
-  _getU2FRegisterRes(tokenId: string) {
-    return auth.createMfaRegistrationChallenge(tokenId, 'u2f').then(data => {
-      const challenge = data.u2fRegisterRequest;
-      return new Promise((resolve, reject) => {
-        window['u2f'].register(
-          challenge.appId,
-          [challenge],
-          [],
-          function (res) {
-            if (res.errorCode) {
-              const err = auth._getU2fErr(res.errorCode);
-              reject(err);
-              return;
-            }
-            resolve(res);
-          }
-        );
-      });
-    });
-  },
-
-  _getU2fErr(errorCode: number) {
-    let errorMsg = `error code ${errorCode}`;
-    // lookup error message...
-    for (var msg in window['u2f'].ErrorCodes) {
-      if (window['u2f'].ErrorCodes[msg] == errorCode) {
-        errorMsg = msg;
-      }
-    }
-
-    let message = `Please check your U2F settings, make sure it is plugged in and you are using the supported browser.\nU2F error: ${errorMsg}`;
-
-    return new Error(message);
   },
 };
 

@@ -43,7 +43,7 @@ export default class AppContext {
     const { tshClient, ptyServiceClient, mainProcessClient } = config;
     this.mainProcessClient = mainProcessClient;
     this.statePersistenceService = new StatePersistenceService(
-      config.fileStorage
+      this.mainProcessClient.fileStorage
     );
     this.modalsService = new ModalsService();
     this.notificationsService = new NotificationsService();
@@ -52,8 +52,9 @@ export default class AppContext {
       this.notificationsService
     );
     this.workspacesService = new WorkspacesService(
-      this.clustersService,
       this.modalsService,
+      this.clustersService,
+      this.notificationsService,
       this.statePersistenceService
     );
     this.terminalsService = new TerminalsService(ptyServiceClient);
@@ -74,11 +75,12 @@ export default class AppContext {
     this.connectionTracker = new ConnectionTrackerService(
       this.statePersistenceService,
       this.workspacesService,
-      this.clustersService,
+      this.clustersService
     );
   }
 
   async init(): Promise<void> {
     await this.clustersService.syncRootClusters();
+    this.workspacesService.restorePersistedState();
   }
 }

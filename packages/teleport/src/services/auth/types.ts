@@ -1,5 +1,5 @@
 /**
- * Copyright 2021 Gravitational, Inc.
+ * Copyright 2021-2022 Gravitational, Inc.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,8 +16,6 @@
 
 export type Base64urlString = string;
 
-export type DeviceType = 'totp' | 'u2f' | 'webauthn';
-
 export type UserCredentials = {
   username: string;
   password: string;
@@ -28,37 +26,29 @@ export type AuthnChallengeRequest = {
   userCred: UserCredentials;
 };
 
-export type U2fRegisterRequest = {
-  version: string;
-  challenge: string;
-  appId: string;
-};
-
-export type U2fChallenge = {
-  appId: string;
-  challenge: string;
-  registeredKeys: U2fSignRequest[];
-};
-
-export type U2fSignRequest = {
-  version: string;
-  challenge: string;
-  keyhandle: string;
-  appId: string;
-};
-
 export type MfaAuthenticateChallenge = {
-  u2f: U2fChallenge;
   webauthnPublicKey: PublicKeyCredentialRequestOptions;
 };
 
 export type MfaRegistrationChallenge = {
   qrCode: Base64urlString;
-  u2fRegisterRequest: U2fRegisterRequest;
   webauthnPublicKey: PublicKeyCredentialCreationOptions;
 };
 
 export type RecoveryCodes = {
   codes?: string[];
   createdDate: Date;
+};
+
+export type NewCredentialRequest = {
+  tokenId: string;
+  password?: string;
+  otpCode?: string;
+  deviceName?: string;
+};
+
+export type ResetToken = {
+  tokenId: string;
+  qrCode: string;
+  user: string;
 };

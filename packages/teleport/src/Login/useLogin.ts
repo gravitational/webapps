@@ -1,5 +1,5 @@
 /**
- * Copyright 2021 Gravitational, Inc.
+ * Copyright 2021-2022 Gravitational, Inc.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -17,7 +17,7 @@
 import { useAttempt } from 'shared/hooks';
 import history from 'teleport/services/history';
 import cfg from 'teleport/config';
-import auth from 'teleport/services/auth';
+import auth, { UserCredentials } from 'teleport/services/auth';
 import { AuthProvider } from 'shared/services';
 
 export default function useLogin() {
@@ -36,20 +36,10 @@ export default function useLogin() {
       });
   }
 
-  function onLoginWithU2f(name, password) {
+  function onLoginWithWebauthn(creds?: UserCredentials) {
     attemptActions.start();
     auth
-      .loginWithU2f(name, password)
-      .then(onSuccess)
-      .catch(err => {
-        attemptActions.error(err);
-      });
-  }
-
-  function onLoginWithWebauthn(name, password) {
-    attemptActions.start();
-    auth
-      .loginWithWebauthn(name, password)
+      .loginWithWebauthn(creds)
       .then(onSuccess)
       .catch(err => {
         attemptActions.error(err);
@@ -66,7 +56,6 @@ export default function useLogin() {
   return {
     attempt,
     onLogin,
-    onLoginWithU2f,
     onLoginWithSso,
     authProviders,
     auth2faType,
@@ -74,6 +63,8 @@ export default function useLogin() {
     isLocalAuthEnabled,
     onLoginWithWebauthn,
     clearAttempt: attemptActions.clear,
+    isPasswordlessEnabled: cfg.isPasswordlessEnabled(),
+    primaryAuthType: cfg.getPrimaryAuthType(),
   };
 }
 

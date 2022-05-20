@@ -1,5 +1,5 @@
 /*
-Copyright 2019 Gravitational, Inc.
+Copyright 2019-2022 Gravitational, Inc.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -17,9 +17,9 @@ limitations under the License.
 import React from 'react';
 import styled from 'styled-components';
 import { Indicator, Flex, Box } from 'design';
-import * as Alerts from 'design/Alert';
 import NodeList from 'teleport/components/NodeList';
 import QuickLaunch from 'teleport/components/QuickLaunch';
+import ErrorMessage from 'teleport/components/AgentErrorMessage';
 import Document from 'teleport/Console/Document';
 import ClusterSelector from './ClusterSelector';
 import useNodes from './useNodes';
@@ -33,9 +33,26 @@ type Props = {
 
 export default function DocumentNodes(props: Props) {
   const { doc, visible } = props;
-  const { nodes, attempt, createSshSession, changeCluster, getNodeSshLogins } =
-    useNodes(doc);
-  const { isProcessing, isSuccess, isFailed, message } = attempt;
+  const {
+    results,
+    fetchNext,
+    fetchPrev,
+    pageSize,
+    from,
+    to,
+    params,
+    setParams,
+    startKeys,
+    setSort,
+    pathname,
+    replaceHistory,
+    fetchStatus,
+    attempt,
+    createSshSession,
+    changeCluster,
+    getNodeSshLogins,
+    onLabelClick,
+  } = useNodes(doc);
 
   function onLoginMenuSelect(
     e: React.MouseEvent,
@@ -76,17 +93,33 @@ export default function DocumentNodes(props: Props) {
             />
             <QuickLaunch width="240px" onPress={onQuickLaunchEnter} />
           </Flex>
-          {isProcessing && (
+          {attempt.status === 'processing' && (
             <Box textAlign="center" m={10}>
               <Indicator />
             </Box>
           )}
-          {isFailed && <Alerts.Danger>{message}</Alerts.Danger>}
-          {isSuccess && (
+          {attempt.status === 'failed' && (
+            <ErrorMessage message={attempt.statusText} />
+          )}
+          {attempt.status !== 'processing' && (
             <NodeList
+              nodes={results.nodes}
+              totalCount={results.totalCount}
               onLoginMenuOpen={onLoginMenuOpen}
               onLoginSelect={onLoginMenuSelect}
-              nodes={nodes}
+              fetchNext={fetchNext}
+              fetchPrev={fetchPrev}
+              fetchStatus={fetchStatus}
+              from={from}
+              to={to}
+              pageSize={pageSize}
+              params={params}
+              setParams={setParams}
+              startKeys={startKeys}
+              setSort={setSort}
+              pathname={pathname}
+              replaceHistory={replaceHistory}
+              onLabelClick={onLabelClick}
             />
           )}
         </Container>

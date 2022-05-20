@@ -23,10 +23,10 @@ export default function makeDatabase(json): Database {
 
   return {
     name,
-    desc,
-    title: formatDatabaseInfo(type, protocol).title,
+    description: desc,
+    type: formatDatabaseInfo(type, protocol).title,
     protocol,
-    tags: labels.map(label => `${label.name}: ${label.value}`),
+    labels,
   };
 }
 
@@ -57,9 +57,13 @@ const formatProtocol = (input: DbProtocol) => {
     case 'postgres':
       return 'PostgreSQL';
     case 'mysql':
-      return 'MySQL';
+      return 'MySQL/MariaDB';
     case 'mongodb':
       return 'MongoDB';
+    case 'sqlserver':
+      return 'SQL Server';
+    case 'redis':
+      return 'Redis';
     default:
       return input;
   }

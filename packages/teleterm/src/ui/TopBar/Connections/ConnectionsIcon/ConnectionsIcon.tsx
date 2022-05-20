@@ -3,6 +3,7 @@ import { Cluster } from 'design/Icon';
 import styled from 'styled-components';
 import { Button } from 'design';
 import { ConnectionsIconStatusIndicator } from './ConnectionsIconStatusIndicator';
+import { useKeyboardShortcutFormatters } from 'teleterm/ui/services/keyboardShortcuts';
 
 interface ConnectionsIconProps {
   isAnyConnectionActive: boolean;
@@ -12,6 +13,7 @@ interface ConnectionsIconProps {
 
 export const ConnectionsIcon = forwardRef<HTMLDivElement, ConnectionsIconProps>(
   (props, ref) => {
+    const { getLabelWithShortcut } = useKeyboardShortcutFormatters();
     return (
       <Container ref={ref}>
         <ConnectionsIconStatusIndicator
@@ -22,7 +24,7 @@ export const ConnectionsIcon = forwardRef<HTMLDivElement, ConnectionsIconProps>(
           kind="secondary"
           size="small"
           m="auto"
-          title="Connections"
+          title={getLabelWithShortcut('Open Connections', 'toggle-connections')}
         >
           <Cluster fontSize={16} />
         </StyledButton>
@@ -37,7 +39,7 @@ const Container = styled.div`
 `;
 
 const StyledButton = styled(Button)`
-  background: ${props => props.theme.colors.primary.lighter};
+  background: ${props => props.theme.colors.primary.light};
   padding: 9px;
   width: 30px;
   height: 30px;

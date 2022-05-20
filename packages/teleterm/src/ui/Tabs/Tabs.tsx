@@ -32,6 +32,8 @@ export function Tabs(props: Props) {
     disableNew,
     onMoved,
     onContextMenu,
+    newTabTooltip,
+    closeTabTooltip,
     ...styledProps
   } = props;
 
@@ -55,6 +57,7 @@ export function Tabs(props: Props) {
               onClose={() => onClose(item)}
               onContextMenu={() => onContextMenu(item)}
               onMoved={onMoved}
+              closeTabTooltip={closeTabTooltip}
             />
             <Separator />
           </Fragment>
@@ -63,20 +66,15 @@ export function Tabs(props: Props) {
     : $emptyTab;
 
   return (
-    <StyledTabs
-      as="nav"
-      typography="h5"
-      color="text.placeholder"
-      bold
-      {...styledProps}
-    >
+    <StyledTabs as="nav" typography="h5" bold {...styledProps}>
       {$items}
       <ButtonIcon
-        ml="2"
+        ml="1"
+        mr="2"
         size={0}
         color="light"
         disabled={disableNew}
-        title="New Tab"
+        title={newTabTooltip}
         onClick={onNew}
       >
         <Icons.Add fontSize="16px" />
@@ -89,6 +87,8 @@ type Props = {
   items: Document[];
   activeTab: string;
   disableNew: boolean;
+  newTabTooltip: string;
+  closeTabTooltip: string;
   onNew: () => void;
   onSelect: (doc: Document) => void;
   onContextMenu: (doc: Document) => void;
@@ -104,6 +104,7 @@ const Separator = styled.div`
 `;
 
 const StyledTabs = styled(Box)`
+  background-color: ${props => props.theme.colors.primary.main};
   min-height: 32px;
   border-radius: 4px;
   display: flex;

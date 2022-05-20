@@ -17,17 +17,25 @@
 import React, { useEffect, useMemo, useRef, useState } from 'react';
 import styled from 'styled-components';
 import { debounce } from 'lodash';
-import { Flex } from 'design';
+import { Box, Flex } from 'design';
 import { color, height, space, width } from 'styled-system';
-import useQuickInput, { State } from './useQuickInput';
+import useQuickInput from './useQuickInput';
 import QuickInputList from './QuickInputList';
+import { useAppContext } from 'teleterm/ui/appContextProvider';
 
 export default function Container() {
-  const state = useQuickInput();
-  return <QuickInput {...state} />;
+  const { workspacesService } = useAppContext();
+
+  workspacesService.useState();
+
+  if (!workspacesService.getRootClusterUri()) {
+    return null;
+  }
+  return <QuickInput />;
 }
 
-export function QuickInput(props: State) {
+function QuickInput() {
+  const props = useQuickInput();
   const { visible, activeSuggestion, autocompleteResult, inputValue } = props;
   const hasSuggestions =
     autocompleteResult.kind === 'autocomplete.partial-match';
@@ -152,6 +160,7 @@ export function QuickInput(props: State) {
         onKeyDown={handleKeyDown}
         isOpened={visible}
       />
+      {!visible && <Shortcut>{props.keyboardShortcut}</Shortcut>}
       {visible && hasSuggestions && (
         <QuickInputList
           ref={refList}
@@ -188,7 +197,7 @@ const Input = styled.input(props => {
     border: `0.5px ${theme.colors.action.disabledBackground} solid`,
     borderRadius: '4px',
     outline: 'none',
-    padding: '2px 8px',
+    padding: props.isOpened ? '2px 8px' : '2px 46px 2px 8px', // wider right margin makes place for a shortcut
     '::placeholder': {
       color: theme.colors.text.secondary,
     },
@@ -198,6 +207,7 @@ const Input = styled.input(props => {
     },
     '&:focus': {
       borderColor: theme.colors.secondary.main,
+      backgroundColor: theme.colors.primary.darker,
       '::placeholder': {
         color: theme.colors.text.placeholder,
       },
@@ -209,6 +219,18 @@ const Input = styled.input(props => {
     ...color(props),
   };
 });
+
+const Shortcut = styled(Box)`
+  position: absolute;
+  right: 12px;
+  top: 12px;
+  padding: 2px 3px;
+  color: ${({ theme }) => theme.colors.text.secondary};
+  background-color: ${({ theme }) => theme.colors.primary.light};
+  line-height: 12px;
+  font-size: 12px;
+  border-radius: 2px;
+`;
 
 const KeyEnum = {
   BACKSPACE: 8,

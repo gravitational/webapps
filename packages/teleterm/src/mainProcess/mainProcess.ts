@@ -1,26 +1,20 @@
-import path from 'path';
-import {
-  app,
-  BrowserWindow,
-  ipcMain,
-  Menu,
-  MenuItemConstructorOptions,
-  screen,
-} from 'electron';
-import { ChildProcess, spawn } from 'child_process';
-import { Logger, RuntimeSettings } from 'teleterm/types';
-import { getAssetPath } from './runtimeSettings';
+import { app, ipcMain, Menu, MenuItemConstructorOptions } from 'electron';
+import { ChildProcess, fork, spawn } from 'child_process';
+import { FileStorage, Logger, RuntimeSettings } from 'teleterm/types';
 import { subscribeToTerminalContextMenuEvent } from './contextMenus/terminalContextMenu';
 import {
   ConfigService,
   subscribeToConfigServiceEvents,
 } from '../services/config';
 import { subscribeToTabContextMenuEvent } from './contextMenus/tabContextMenu';
+import { subscribeToFileStorageEvents } from 'teleterm/services/fileStorage';
+import path from 'path';
 
 type Options = {
   settings: RuntimeSettings;
   logger: Logger;
   configService: ConfigService;
+  fileStorage: FileStorage;
 };
 
 export default class MainProcess {
@@ -28,11 +22,14 @@ export default class MainProcess {
   private readonly logger: Logger;
   private readonly configService: ConfigService;
   private tshdProcess: ChildProcess;
+  private sharedProcess: ChildProcess;
+  private fileStorage: FileStorage;
 
   private constructor(opts: Options) {
     this.settings = opts.settings;
     this.logger = opts.logger;
     this.configService = opts.configService;
+    this.fileStorage = opts.fileStorage;
   }
 
   static create(opts: Options) {
@@ -42,34 +39,15 @@ export default class MainProcess {
   }
 
   dispose() {
+    this.sharedProcess.kill('SIGTERM');
     this.tshdProcess.kill('SIGTERM');
-  }
-
-  createWindow() {
-    const { width, height } = screen.getPrimaryDisplay().workAreaSize;
-    const win = new BrowserWindow({
-      width,
-      height,
-      title: 'Teleport Terminal',
-      icon: getAssetPath('icon.png'),
-      webPreferences: {
-        contextIsolation: true,
-        nodeIntegration: false,
-        preload: path.join(__dirname, 'preload.js'),
-      },
-    });
-
-    if (this.settings.dev) {
-      win.loadURL('https://localhost:8080');
-    } else {
-      win.loadFile(path.join(__dirname, '../renderer/index.html'));
-    }
   }
 
   private _init() {
     this._setAppMenu();
     try {
       this._initTshd();
+      this._initSharedProcess();
       this._initIpc();
     } catch (err) {
       this.logger.error('Failed to start main process: ', err.message);
@@ -96,6 +74,24 @@ export default class MainProcess {
     });
   }
 
+  private _initSharedProcess() {
+    this.sharedProcess = fork(
+      path.join(__dirname, 'sharedProcess.js'),
+      [`--runtimeSettingsJson=${JSON.stringify(this.settings)}`],
+      {
+        stdio: 'inherit',
+      }
+    );
+
+    this.sharedProcess.on('error', error => {
+      this.logger.error('shared process failed to start', error);
+    });
+
+    this.sharedProcess.once('exit', code => {
+      this.logger.info('shared process exited with code:', code);
+    });
+  }
+
   private _initIpc() {
     ipcMain.on('main-process-get-runtime-settings', event => {
       event.returnValue = this.settings;
@@ -104,6 +100,7 @@ export default class MainProcess {
     subscribeToTerminalContextMenuEvent();
     subscribeToTabContextMenuEvent();
     subscribeToConfigServiceEvents(this.configService);
+    subscribeToFileStorageEvents(this.fileStorage);
   }
 
   private _setAppMenu() {

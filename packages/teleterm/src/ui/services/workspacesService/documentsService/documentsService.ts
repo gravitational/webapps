@@ -18,6 +18,7 @@ import { unique } from 'teleterm/ui/utils/uid';
 import {
   CreateClusterDocumentOpts,
   CreateGatewayDocumentOpts,
+  CreateNewTerminalOpts,
   Document,
   DocumentCluster,
   DocumentGateway,
@@ -88,21 +89,43 @@ export class DocumentsService {
     };
   }
 
+  /**
+   * If title is not present in opts, createGatewayDocument will create one based on opts.
+   */
   createGatewayDocument(opts: CreateGatewayDocumentOpts): DocumentGateway {
-    const { gatewayUri, targetUri, title, targetUser, port } = opts;
+    const {
+      targetUri,
+      targetUser,
+      targetName,
+      targetSubresourceName,
+      port,
+      gatewayUri,
+    } = opts;
     const uri = routing.getDocUri({ docId: unique() });
+    let title = opts.title;
+
+    if (!title) {
+      title = `${targetUser}@${targetName}`;
+
+      if (targetSubresourceName) {
+        title += `/${targetSubresourceName}`;
+      }
+    }
+
     return {
       uri,
       kind: 'doc.gateway',
-      gatewayUri,
       targetUri,
       targetUser,
+      targetName,
+      targetSubresourceName,
+      gatewayUri,
       title,
       port,
     };
   }
 
-  openNewTerminal(initCommand?: string) {
+  openNewTerminal(opts: CreateNewTerminalOpts) {
     const doc = ((): Document => {
       const activeDocument = this.getActive();
 
@@ -110,14 +133,14 @@ export class DocumentsService {
         return {
           ...activeDocument,
           uri: routing.getDocUri({ docId: unique() }),
-          initCommand,
+          ...opts,
         };
       } else {
         return {
           uri: routing.getDocUri({ docId: unique() }),
-          initCommand,
           title: 'Terminal',
           kind: 'doc.terminal_shell',
+          ...opts,
         };
       }
     })();

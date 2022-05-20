@@ -56,8 +56,12 @@ export const formatters: Formatters = {
   [eventCodes.SESSION_NETWORK]: {
     type: 'session.network',
     desc: 'Session Network Connection',
-    format: ({ sid, program, src_addr, dst_addr, dst_port }) =>
-      `Program [${program}] opened a connection [${src_addr} <-> ${dst_addr}:${dst_port}] within a session [${sid}]`,
+    format: ({ action, sid, program, src_addr, dst_addr, dst_port }) => {
+      const a = action === 1 ? '[DENY]' : '[ALLOW]';
+      const desc =
+        action === 1 ? 'was prevented from opening' : 'successfully opened';
+      return `${a} Program [${program}] ${desc} a connection [${src_addr} <-> ${dst_addr}:${dst_port}] within a session [${sid}]`;
+    },
   },
   [eventCodes.SESSION_PROCESS_EXIT]: {
     type: 'session.process_exit',
@@ -455,7 +459,14 @@ export const formatters: Formatters = {
   [eventCodes.MYSQL_STATEMENT_SEND_LONG_DATA]: {
     type: 'db.session.mysql.statements.send_long_data',
     desc: 'MySQL Statement Send Long Data',
-    format: ({ user, db_service, db_name, statement_id, parameter_id, data_size }) =>
+    format: ({
+      user,
+      db_service,
+      db_name,
+      statement_id,
+      parameter_id,
+      data_size,
+    }) =>
       `User [${user}] has sent ${data_size} bytes of data to parameter [${parameter_id}] of statement [${statement_id}] in database [${db_name}] on [${db_service}]`,
   },
   [eventCodes.MYSQL_STATEMENT_CLOSE]: {
@@ -481,6 +492,48 @@ export const formatters: Formatters = {
     desc: 'MySQL Statement Bulk Execute',
     format: ({ user, db_service, db_name, statement_id }) =>
       `User [${user}] has executed statement [${statement_id}] in database [${db_name}] on [${db_service}]`,
+  },
+  [eventCodes.MYSQL_INIT_DB]: {
+    type: 'db.session.mysql.init_db',
+    desc: 'MySQL Change Database',
+    format: ({ user, db_service, schema_name }) =>
+      `User [${user}] has changed default database to [${schema_name}] on [${db_service}]`,
+  },
+  [eventCodes.MYSQL_CREATE_DB]: {
+    type: 'db.session.mysql.create_db',
+    desc: 'MySQL Create Database',
+    format: ({ user, db_service, schema_name }) =>
+      `User [${user}] has created database [${schema_name}] on [${db_service}]`,
+  },
+  [eventCodes.MYSQL_DROP_DB]: {
+    type: 'db.session.mysql.drop_db',
+    desc: 'MySQL Drop Database',
+    format: ({ user, db_service, schema_name }) =>
+      `User [${user}] has dropped database [${schema_name}] on [${db_service}]`,
+  },
+  [eventCodes.MYSQL_SHUT_DOWN]: {
+    type: 'db.session.mysql.shut_down',
+    desc: 'MySQL Shut Down',
+    format: ({ user, db_service }) =>
+      `User [${user}] has attempted to shut down [${db_service}]`,
+  },
+  [eventCodes.MYSQL_PROCESS_KILL]: {
+    type: 'db.session.mysql.process_kill',
+    desc: 'MySQL Kill Process',
+    format: ({ user, db_service, process_id }) =>
+      `User [${user}] has attempted to kill process [${process_id}] on [${db_service}]`,
+  },
+  [eventCodes.MYSQL_DEBUG]: {
+    type: 'db.session.mysql.debug',
+    desc: 'MySQL Debug',
+    format: ({ user, db_service }) =>
+      `User [${user}] has asked [${db_service}] to dump debug information`,
+  },
+  [eventCodes.MYSQL_REFRESH]: {
+    type: 'db.session.mysql.refresh',
+    desc: 'MySQL Refresh',
+    format: ({ user, db_service, subcommand }) =>
+      `User [${user}] has sent command [${subcommand}] to [${db_service}]`,
   },
   [eventCodes.MFA_DEVICE_ADD]: {
     type: 'mfa.add',
@@ -599,20 +652,21 @@ export const formatters: Formatters = {
     format: ({ server_addr }) => `Session connected to [${server_addr}]`,
   },
   [eventCodes.CERTIFICATE_CREATED]: {
-    type: "cert.create",
-    desc: "Certificate Issued",
+    type: 'cert.create',
+    desc: 'Certificate Issued',
     format: ({ cert_type, identity: { user } }) => {
       if (cert_type === 'user') {
-        return `User certificate issued for [${user}]`
+        return `User certificate issued for [${user}]`;
       }
-      return `Certificate of type [${cert_type}] issued for [${user}]`
-    }
+      return `Certificate of type [${cert_type}] issued for [${user}]`;
+    },
   },
   [eventCodes.UNKNOWN]: {
     type: 'unknown',
     desc: 'Unknown Event',
-    format: ({ unknown_type, unknown_code }) => `Unknown '${unknown_type}' event (${unknown_code})`,
-  }
+    format: ({ unknown_type, unknown_code }) =>
+      `Unknown '${unknown_type}' event (${unknown_code})`,
+  },
 };
 
 const unknownFormatter = {

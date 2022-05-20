@@ -5,6 +5,7 @@ import { ListItem } from 'teleterm/ui/components/ListItem';
 import { useKeyboardArrowsNavigation } from 'teleterm/ui/components/KeyboardArrowsNavigation';
 import { Cluster } from 'teleterm/services/tshd/types';
 import styled from 'styled-components';
+import { getClusterName } from 'teleterm/ui/utils';
 
 interface ClusterItemProps {
   index: number;
@@ -21,6 +22,7 @@ export function ClusterItem(props: ClusterItemProps) {
   });
 
   const LabelVersion = props.isSelected ? InvertedLabel : Label;
+  const clusterName = getClusterName(props.item);
 
   return (
     <StyledListItem
@@ -36,8 +38,8 @@ export function ClusterItem(props: ClusterItemProps) {
         width="100%"
         minWidth="0"
       >
-        <Text typography="body1" title={props.item.name}>
-          {props.item.name}
+        <Text typography="body1" title={clusterName}>
+          {clusterName}
         </Text>
         {!props.item.leaf ? (
           <LabelVersion ml={1} kind="primary">
@@ -73,7 +75,7 @@ function getBackgroundColor(props) {
     return props.theme.colors.secondary.main;
   }
   if (props.isActive) {
-    return 'rgba(255, 255, 255, 0.05)';
+    return props.theme.colors.secondary.lighter;
   }
 }
 
@@ -82,6 +84,6 @@ function getHoverBackgroundColor(props) {
     return props.theme.colors.secondary.light;
   }
   if (props.isActive) {
-    return 'rgba(255, 255, 255, 0.05)';
+    return props.theme.colors.secondary.lighter;
   }
 }

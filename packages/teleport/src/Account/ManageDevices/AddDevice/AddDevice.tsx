@@ -38,11 +38,23 @@ import {
   requiredField,
 } from 'shared/components/Validation/rules';
 import FieldSelect from 'shared/components/FieldSelect';
+import { DeviceUsage } from 'teleport/services/mfa';
 import useTeleport from 'teleport/useTeleport';
 import createMfaOptions, { MfaOption } from 'shared/utils/createMfaOptions';
 import useAddDevice, { State, Props } from './useAddDevice';
 
-const u2fGraphic = require('design/assets/images/u2f-graphic.svg');
+const secKeyGraphic = require('design/assets/images/sec-key-graphic.svg');
+
+const deviceUsageOpts: DeviceusageOpt[] = [
+  {
+    value: 'mfa',
+    label: 'no',
+  },
+  {
+    value: 'passwordless',
+    label: 'yes',
+  },
+];
 
 export default function Container(props: Props) {
   const ctx = useTeleport();
@@ -54,28 +66,22 @@ export function AddDevice({
   addDeviceAttempt,
   fetchQrCodeAttempt,
   addTotpDevice,
-  addU2fDevice,
   addWebauthnDevice,
   clearAttempt,
   onClose,
   qrCode,
   auth2faType,
-  preferredMfaType,
 }: State) {
   const [otpToken, setOtpToken] = useState('');
   const [deviceName, setDeviceName] = useState('');
 
-  const mfaOptions = useMemo<MfaOption[]>(
-    () =>
-      createMfaOptions({
-        auth2faType: auth2faType,
-        preferredType: preferredMfaType,
-        required: true,
-      }),
+  const mfaOptions = useMemo(
+    () => createMfaOptions({ auth2faType: auth2faType, required: true }),
     []
   );
 
-  const [mfaOption, setMfaOption] = useState<MfaOption>(mfaOptions[0]);
+  const [mfaOption, setMfaOption] = useState(mfaOptions[0]);
+  const [usageOption, setUsageOption] = useState(deviceUsageOpts[0]);
 
   function onSetMfaOption(option: MfaOption) {
     setOtpToken('');
@@ -86,11 +92,8 @@ export function AddDevice({
   function onSubmit(e: React.MouseEvent<HTMLButtonElement>) {
     e.preventDefault();
 
-    if (mfaOption.value === 'u2f') {
-      addU2fDevice(deviceName);
-    }
     if (mfaOption.value === 'webauthn') {
-      addWebauthnDevice(deviceName);
+      addWebauthnDevice(deviceName, usageOption.value);
     }
     if (mfaOption.value === 'otp') {
       addTotpDevice(otpToken, deviceName);
@@ -99,10 +102,7 @@ export function AddDevice({
 
   let hardwareInstructions = 'Enter a name for your hardware key.';
   if (addDeviceAttempt.status === 'processing') {
-    hardwareInstructions =
-      mfaOption.value === 'u2f'
-        ? 'Insert your new hardware key and press the button on the key.'
-        : 'Follow the prompts from your browser.';
+    hardwareInstructions = 'Follow the prompts from your browser.';
   }
 
   return (
@@ -172,10 +172,9 @@ export function AddDevice({
                   </Text>
                 </>
               )}
-              {(mfaOption.value === 'u2f' ||
-                mfaOption.value === 'webauthn') && (
+              {mfaOption.value === 'webauthn' && (
                 <>
-                  <Image src={u2fGraphic} height="168px" />
+                  <Image src={secKeyGraphic} height="168px" />
                   <Text mt={3}>{hardwareInstructions}</Text>
                 </>
               )}
@@ -206,6 +205,16 @@ export function AddDevice({
                   onChange={e => setOtpToken(e.target.value)}
                   placeholder="123 456"
                   readonly={addDeviceAttempt.status === 'processing'}
+                />
+              )}
+              {mfaOption.value === 'webauthn' && (
+                <FieldSelect
+                  width="50%"
+                  label="Allow Passwordless Login?"
+                  value={usageOption}
+                  options={deviceUsageOpts}
+                  onChange={(o: DeviceusageOpt) => setUsageOption(o)}
+                  isDisabled={addDeviceAttempt.status === 'processing'}
                 />
               )}
             </Flex>
@@ -242,3 +251,5 @@ export function AddDevice({
     </Validation>
   );
 }
+
+type DeviceusageOpt = { value: DeviceUsage; label: string };

@@ -19,7 +19,9 @@ import desktops from 'teleport/services/desktops';
 
 test('correct formatting of desktops fetch response', async () => {
   jest.spyOn(api, 'get').mockResolvedValue(mockResponse);
-  const response = await desktops.fetchDesktops('does-not-matter');
+  const response = await desktops.fetchDesktops('does-not-matter', {
+    search: 'does-not-matter',
+  });
 
   expect(response).toEqual({
     desktops: [
@@ -27,7 +29,7 @@ test('correct formatting of desktops fetch response', async () => {
         os: 'windows',
         name: 'DC1-teleport-demo',
         addr: '10.0.0.10',
-        tags: ['env: test'],
+        labels: [{ name: 'env', value: 'test' }],
       },
     ],
     startKey: mockResponse.startKey,
@@ -38,7 +40,9 @@ test('correct formatting of desktops fetch response', async () => {
 test('null response from desktops fetch', async () => {
   jest.spyOn(api, 'get').mockResolvedValue(null);
 
-  const response = await desktops.fetchDesktops('does-not-matter');
+  const response = await desktops.fetchDesktops('does-not-matter', {
+    search: 'does-not-matter',
+  });
 
   expect(response).toEqual({
     desktops: [],
@@ -49,9 +53,11 @@ test('null response from desktops fetch', async () => {
 
 test('null labels field in desktops fetch response', async () => {
   jest.spyOn(api, 'get').mockResolvedValue({ items: [{ labels: null }] });
-  const response = await desktops.fetchDesktops('does-not-matter');
+  const response = await desktops.fetchDesktops('does-not-matter', {
+    search: 'does-not-matter',
+  });
 
-  expect(response.desktops[0].tags).toEqual([]);
+  expect(response.desktops[0].labels).toEqual([]);
 });
 
 const mockResponse = {

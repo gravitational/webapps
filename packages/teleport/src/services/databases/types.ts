@@ -14,16 +14,23 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
+import { AgentLabel } from 'teleport/services/resources';
+
 export interface Database {
   name: string;
-  desc: string;
-  title: string;
+  description: string;
+  type: string;
   protocol: DbProtocol;
-  tags: string[];
+  labels: AgentLabel[];
 }
 
 export type DbType = 'redshift' | 'rds' | 'gcp' | 'self-hosted';
-export type DbProtocol = 'postgres' | 'mysql' | 'mongodb';
+export type DbProtocol =
+  | 'postgres'
+  | 'mysql'
+  | 'mongodb'
+  | 'sqlserver'
+  | 'redis';
 
 export type DatabasesResponse = {
   databases: Database[];

@@ -1,5 +1,5 @@
 /*
-Copyright 2021 Gravitational, Inc.
+Copyright 2021-2022 Gravitational, Inc.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -17,78 +17,27 @@ limitations under the License.
 import React from 'react';
 import { MemoryRouter } from 'react-router-dom';
 import Welcome from './Welcome';
-import { NewCredentials, Props } from './NewCredentials';
-import { mockedProps } from './fixtures/fixtures';
+import { CardWelcome } from './CardWelcome';
 
 export default { title: 'Teleport/Welcome' };
 
-export const GetStarted = () => <MockedWelcome url="/web/invite/1234" />;
-
-export const Continue = () => (
-  <MockedWelcome url="/web/invite/1234/continue" Form={Otp} />
-);
-
-export const GetStartedReset = () => <MockedWelcome url="/web/reset/1234" />;
-
-export const ContinueReset = () => (
-  <MockedWelcome url="/web/reset/1234/continue" Form={Otp} />
-);
-
-export const AuthMfaOn = () => (
-  <MockedWelcome url="/web/invite/1234/continue" Form={MfaOn} />
-);
-
-export const AuthMfaOnWithU2f = () => (
-  <MockedWelcome url="/web/invite/1234/continue" Form={MfaOnWithU2f} />
-);
-
-export const AuthMfaOptional = () => (
-  <MockedWelcome url="/web/invite/1234/continue" Form={MfaOptional} />
-);
-
-export const AuthMfaOnOtp = () => (
-  <MockedWelcome url="/web/invite/1234/continue" Form={Otp} />
-);
-
-const MfaOn = (props: Props) => (
-  <NewCredentials {...props} {...mockedProps} auth2faType="on" />
-);
-
-const Otp = (props: Props) => (
-  <NewCredentials {...props} {...mockedProps} auth2faType="otp" />
-);
-
-const MfaOnWithU2f = (props: Props) => (
-  <NewCredentials
-    {...props}
-    {...mockedProps}
-    auth2faType="on"
-    preferredMfaType="u2f"
+export const WelcomeCustom = () => (
+  <CardWelcome
+    title="Some Title"
+    subTitle="some small subtitle"
+    btnText="Button Text"
+    onClick={() => null}
   />
 );
 
-const MfaOptional = (props: Props) => (
-  <NewCredentials {...props} {...mockedProps} auth2faType="optional" />
+export const WelcomeInvite = () => (
+  <MemoryRouter initialEntries={['/web/invite/1234']}>
+    <Welcome />
+  </MemoryRouter>
 );
 
-type MockedWelcomeProps = {
-  url: string;
-  Form?: React.FC<Props>;
-};
-
-function MockedWelcome({ url, Form }: MockedWelcomeProps) {
-  return (
-    <MemoryRouter initialEntries={[url]}>
-      <Welcome CustomForm={Form} />
-    </MemoryRouter>
-  );
-}
-
-GetStarted.storyName = 'GetStarted';
-GetStartedReset.storyName = 'GetStartedReset';
-ContinueReset.storyName = 'ContinueReset';
-Continue.storyName = 'Continue';
-AuthMfaOnOtp.storyName = 'MfaOnOtp';
-AuthMfaOn.storyName = 'MfaOn';
-AuthMfaOptional.storyName = 'MfaOptional';
-AuthMfaOnWithU2f.storyName = 'MfaOnWithU2f';
+export const WelcomeReset = () => (
+  <MemoryRouter initialEntries={['/web/reset/1234']}>
+    <Welcome />
+  </MemoryRouter>
+);

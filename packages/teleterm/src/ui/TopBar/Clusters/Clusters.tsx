@@ -7,6 +7,7 @@ import { ClusterSelector } from './ClusterSelector/ClusterSelector';
 import { ClustersFilterableList } from './ClustersFilterableList/ClustersFilterableList';
 import { useKeyboardShortcuts } from 'teleterm/ui/services/keyboardShortcuts';
 import { KeyboardArrowsNavigation } from 'teleterm/ui/components/KeyboardArrowsNavigation';
+import { getClusterName } from 'teleterm/ui/utils';
 
 export function Clusters() {
   const iconRef = useRef();
@@ -31,10 +32,14 @@ export function Clusters() {
     clusters.selectItem(id);
   }
 
+  if (!clusters.hasLeaves) {
+    return null;
+  }
+
   return (
     <>
       <ClusterSelector
-        clusterName={clusters.selectedItem?.name}
+        clusterName={getClusterName(clusters.selectedItem)}
         onClick={togglePopover}
         isOpened={isPopoverOpened}
         ref={iconRef}
@@ -60,5 +65,5 @@ export function Clusters() {
 }
 
 const Container = styled(Box)`
-  background: ${props => props.theme.colors.primary.dark};
+  background: ${props => props.theme.colors.primary.light};
 `;

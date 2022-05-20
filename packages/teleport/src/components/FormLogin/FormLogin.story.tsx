@@ -1,5 +1,5 @@
 /*
-Copyright 2019 Gravitational, Inc.
+Copyright 2019-2022 Gravitational, Inc.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -27,41 +27,33 @@ const props: Props = {
   },
   authProviders: [],
   onLoginWithSso: () => null,
-  onLoginWithU2f: () => null,
   onLoginWithWebauthn: () => null,
   onLogin: () => null,
   clearAttempt: () => null,
   auth2faType: 'off',
-  preferredMfaType: 'webauthn',
+  primaryAuthType: 'local',
+  isPasswordlessEnabled: false,
 };
 
 export default {
   title: 'Teleport/FormLogin',
 };
 
-export const Off = () => <FormLogin {...props} />;
+export const LocalOnly = () => <FormLogin {...props} />;
 
-export const Otp = () => <FormLogin {...props} auth2faType="otp" />;
+export const LocalWithOtp = () => <FormLogin {...props} auth2faType="otp" />;
 
-export const Webauthn = () => <FormLogin {...props} auth2faType="webauthn" />;
+export const LocalWithWebauthn = () => (
+  <FormLogin {...props} auth2faType="webauthn" />
+);
 
-export const Universal2ndFactor = () => {
-  const attempt = {
-    ...props.attempt,
-    isProcessing: true,
-  };
+export const LocalWithOptional = () => (
+  <FormLogin {...props} auth2faType="optional" />
+);
 
-  return (
-    <FormLogin
-      {...props}
-      title="Welcome!"
-      auth2faType="u2f"
-      attempt={attempt}
-    />
-  );
-};
-
-export const Optional = () => <FormLogin {...props} auth2faType="optional" />;
+export const LocalWithOnAndPwdless = () => (
+  <FormLogin {...props} auth2faType="on" isPasswordlessEnabled={true} />
+);
 
 export const Cloud = () => (
   <FormLogin
@@ -84,7 +76,16 @@ export const ServerError = () => {
   return <FormLogin {...props} title="Welcome!" attempt={attempt} />;
 };
 
-export const SSOProviders = () => {
+export const LocalWithSso = () => {
+  const ssoProvider = [
+    { name: 'github', type: 'oidc', url: '' } as const,
+    { name: 'google', type: 'oidc', url: '' } as const,
+  ];
+
+  return <FormLogin {...props} title="Welcome!" authProviders={ssoProvider} />;
+};
+
+export const LocalWithSsoAndPwdless = () => {
   const ssoProvider = [
     {
       displayName: 'github',
@@ -92,35 +93,19 @@ export const SSOProviders = () => {
       type: 'oidc',
       url: '',
     } as const,
-    {
-      displayName: 'google',
-      name: 'google',
-      type: 'oidc',
-      url: '',
-    } as const,
-    {
-      displayName: 'bitbucket',
-      name: 'bitbucket',
-      type: 'oidc',
-      url: '',
-    } as const,
-    {
-      name: 'Mission Control',
-      type: 'oidc',
-      url: '',
-    } as const,
-    {
-      displayName: 'Microsoft',
-      name: 'microsoft',
-      type: 'oidc',
-      url: '',
-    } as const,
   ];
 
-  return <FormLogin {...props} title="Welcome!" authProviders={ssoProvider} />;
+  return (
+    <FormLogin
+      {...props}
+      title="Welcome!"
+      authProviders={ssoProvider}
+      isPasswordlessEnabled={true}
+    />
+  );
 };
 
-export const LocalAuthDisabled = () => {
+export const LocalDisabledWithSso = () => {
   const ssoProvider = [
     { name: 'github', type: 'oidc', url: '' } as const,
     { name: 'google', type: 'oidc', url: '' } as const,
@@ -136,6 +121,96 @@ export const LocalAuthDisabled = () => {
   );
 };
 
-export const LocalAuthDisabledNoSSO = () => (
+export const LocalDisabledNoSso = () => (
   <FormLogin {...props} title="Welcome!" isLocalAuthEnabled={false} />
 );
+
+export const PrimarySso = () => {
+  const ssoProvider = [
+    { name: 'github', type: 'oidc', url: '' } as const,
+    { name: 'google', type: 'oidc', url: '' } as const,
+    { name: 'bitbucket', type: 'oidc', url: '' } as const,
+    {
+      name: 'Mission Control',
+      type: 'oidc',
+      url: '',
+    } as const,
+    {
+      displayName: 'Microsoft',
+      name: 'microsoft',
+      type: 'oidc',
+      url: '',
+    } as const,
+  ];
+
+  return (
+    <FormLogin
+      {...props}
+      title="Welcome!"
+      primaryAuthType="sso"
+      authProviders={ssoProvider}
+    />
+  );
+};
+
+export const PrimarySsoWithPwdless = () => {
+  const ssoProvider = [
+    { name: 'github', type: 'oidc', url: '' } as const,
+    { name: 'google', type: 'oidc', url: '' } as const,
+  ];
+
+  return (
+    <FormLogin
+      {...props}
+      title="Welcome!"
+      primaryAuthType="sso"
+      authProviders={ssoProvider}
+      isPasswordlessEnabled={true}
+    />
+  );
+};
+
+export const PrimarySsoWithSecondFactor = () => {
+  const ssoProvider = [
+    { name: 'github', type: 'oidc', url: '' } as const,
+    { name: 'google', type: 'oidc', url: '' } as const,
+  ];
+
+  return (
+    <FormLogin
+      {...props}
+      title="Welcome!"
+      primaryAuthType="sso"
+      auth2faType="on"
+      authProviders={ssoProvider}
+    />
+  );
+};
+
+export const PrimaryPwdless = () => {
+  const ssoProvider = [
+    { name: 'github', type: 'oidc', url: '' } as const,
+    { name: 'google', type: 'oidc', url: '' } as const,
+  ];
+
+  return (
+    <FormLogin
+      {...props}
+      title="Welcome!"
+      primaryAuthType="passwordless"
+      auth2faType="webauthn"
+      authProviders={ssoProvider}
+    />
+  );
+};
+
+export const PrimaryPwdlessWithNoSso = () => {
+  return (
+    <FormLogin
+      {...props}
+      title="Welcome!"
+      primaryAuthType="passwordless"
+      auth2faType="optional"
+    />
+  );
+};

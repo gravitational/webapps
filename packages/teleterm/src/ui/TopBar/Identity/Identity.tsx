@@ -7,6 +7,7 @@ import { IdentityList } from './IdentityList/IdentityList';
 import { IdentitySelector } from './IdentitySelector/IdentitySelector';
 import { useKeyboardShortcuts } from 'teleterm/ui/services/keyboardShortcuts';
 import { EmptyIdentityList } from './EmptyIdentityList/EmptyIdentityList';
+import { getClusterName } from 'teleterm/ui/utils';
 
 export function Identity() {
   const selectorRef = useRef<HTMLButtonElement>();
@@ -23,6 +24,15 @@ export function Identity() {
     setIsPopoverOpened(wasOpened => !wasOpened);
   }, [setIsPopoverOpened]);
 
+  function withClose<T extends (...args) => any>(
+    fn: T
+  ): (...args: Parameters<T>) => ReturnType<T> {
+    return (...args) => {
+      setIsPopoverOpened(false);
+      return fn(...args);
+    };
+  }
+
   useKeyboardShortcuts(
     useMemo(
       () => ({
@@ -33,6 +43,7 @@ export function Identity() {
   );
 
   const loggedInUser = activeRootCluster?.loggedInUser;
+
   return (
     <>
       <IdentitySelector
@@ -40,25 +51,27 @@ export function Identity() {
         onClick={togglePopover}
         isOpened={isPopoverOpened}
         userName={loggedInUser?.name}
-        clusterName={activeRootCluster?.name}
+        clusterName={getClusterName(activeRootCluster)}
       />
       <Popover
         open={isPopoverOpened}
         anchorEl={selectorRef.current}
         anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}
+        transformOrigin={{ vertical: 'top', horizontal: 'right' }}
         onClose={() => setIsPopoverOpened(false)}
+        popoverCss={() => `max-width: min(560px, 90%)`}
       >
         <Container>
           {rootClusters.length ? (
             <IdentityList
               loggedInUser={loggedInUser}
               clusters={rootClusters}
-              onSelectCluster={changeRootCluster}
-              onLogout={logout}
-              onAddCluster={addCluster}
+              onSelectCluster={withClose(changeRootCluster)}
+              onLogout={withClose(logout)}
+              onAddCluster={withClose(addCluster)}
             />
           ) : (
-            <EmptyIdentityList />
+            <EmptyIdentityList onConnect={withClose(addCluster)} />
           )}
         </Container>
       </Popover>
@@ -67,5 +80,5 @@ export function Identity() {
 }
 
 const Container = styled(Box)`
-  background: ${props => props.theme.colors.primary.dark};
+  background: ${props => props.theme.colors.primary.light};
 `;

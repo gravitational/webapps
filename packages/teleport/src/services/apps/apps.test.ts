@@ -19,7 +19,9 @@ import apps from 'teleport/services/apps';
 
 test('correct formatting of apps fetch response', async () => {
   jest.spyOn(api, 'get').mockResolvedValue(mockResponse);
-  const response = await apps.fetchApps('does-not-matter');
+  const response = await apps.fetchApps('does-not-matter', {
+    search: 'does-not-matter',
+  });
 
   expect(response).toEqual({
     apps: [
@@ -29,7 +31,7 @@ test('correct formatting of apps fetch response', async () => {
         description: 'some description',
         uri: 'http://localhost:3001',
         publicAddr: 'app-name.example.com',
-        tags: ['env: dev'],
+        labels: [{ name: 'env', value: 'dev' }],
         clusterId: 'cluster-id',
         fqdn: 'app-name.example.com',
         launchUrl:
@@ -46,7 +48,9 @@ test('correct formatting of apps fetch response', async () => {
 test('null response from apps fetch', async () => {
   jest.spyOn(api, 'get').mockResolvedValue(null);
 
-  const response = await apps.fetchApps('does-not-matter');
+  const response = await apps.fetchApps('does-not-matter', {
+    search: 'does-not-matter',
+  });
 
   expect(response).toEqual({
     apps: [],
@@ -57,9 +61,11 @@ test('null response from apps fetch', async () => {
 
 test('null labels field in apps fetch response', async () => {
   jest.spyOn(api, 'get').mockResolvedValue({ items: [{ labels: null }] });
-  const response = await apps.fetchApps('does-not-matter');
+  const response = await apps.fetchApps('does-not-matter', {
+    search: 'does-not-matter',
+  });
 
-  expect(response.apps[0].tags).toEqual([]);
+  expect(response.apps[0].labels).toEqual([]);
 });
 
 const mockResponse = {

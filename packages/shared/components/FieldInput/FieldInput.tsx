@@ -14,12 +14,13 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React from 'react';
-import { Box, Input, LabelInput } from 'design';
+import React, { useRef, useEffect } from 'react';
+import { Box, Input, LabelInput, Text } from 'design';
 import { useRule } from 'shared/components/Validation';
 
 export default function FieldInput({
   label,
+  labelTip,
   value,
   onChange,
   onKeyPress,
@@ -27,6 +28,8 @@ export default function FieldInput({
   rule = defaultRule,
   type = 'text',
   autoFocus = false,
+  transitionPropertyName = '',
+  refocusIndicator = '',
   autoComplete = 'off',
   inputMode = 'text',
   readonly = false,
@@ -35,12 +38,65 @@ export default function FieldInput({
   const { valid, message } = useRule(rule(value));
   const hasError = !valid;
   const labelText = hasError ? message : label;
+
+  const inputRef = useRef<HTMLInputElement>();
+
+  useEffect(() => {
+    if (!autoFocus) return;
+
+    if (!transitionPropertyName) {
+      inputRef.current.focus();
+      return;
+    }
+
+    // autoFocusOnTransitionEnd focus's the input element after transition property name
+    // defined by 'transitionPropertyName' has ended. This prevents auto focusing during
+    // transitioning which causes transition to be jumpy caused by trying to bring focused
+    // element into view. This also prevents prematurely showing the browser password
+    // manager icons and tooltips while transitioing.
+    function autoFocusOnTransitionEnd(e: TransitionEvent) {
+      if (e.propertyName !== transitionPropertyName) return;
+      inputRef.current.focus();
+      // Since we only need to auto focus one time, the listener's are no longer needed.
+      removeListeners();
+    }
+
+    // autoFocusOnTransitionCancel is fallback to autoFocusOnTransitionEnd when the transition
+    // we are expecting gets canceled (sometimes happens in chrome, but strangely not in firefox).
+    function autoFocusOnTransitionCancel(e: TransitionEvent) {
+      if (e.propertyName !== transitionPropertyName) return;
+      inputRef.current.focus();
+      // Since we only need to auto focus one time, the listener is no longer needed.
+      removeListeners();
+    }
+
+    function removeListeners() {
+      window.removeEventListener('transitionend', autoFocusOnTransitionEnd);
+      window.removeEventListener(
+        'transitioncancel',
+        autoFocusOnTransitionCancel
+      );
+    }
+
+    window.addEventListener('transitionend', autoFocusOnTransitionEnd);
+    window.addEventListener('transitioncancel', autoFocusOnTransitionCancel);
+
+    return () => {
+      removeListeners();
+    };
+  }, [refocusIndicator]);
+
   return (
     <Box mb="4" {...styles}>
-      {label && <LabelInput hasError={hasError}>{labelText}</LabelInput>}
+      {label && (
+        <LabelInput hasError={hasError}>
+          {labelText}
+          {labelTip && <LabelTip text={labelTip} />}
+        </LabelInput>
+      )}
       <Input
+        ref={inputRef}
         type={type}
-        autoFocus={autoFocus}
         hasError={hasError}
         placeholder={placeholder}
         value={value}
@@ -56,12 +112,24 @@ export default function FieldInput({
 
 const defaultRule = () => () => ({ valid: true });
 
+const LabelTip = ({ text }) => (
+  <Text as="span" style={{ fontWeight: 'normal' }}>{` - ${text}`}</Text>
+);
+
 type Props = {
   value?: string;
   label?: string;
+  labelTip?: string;
   placeholder?: string;
   autoFocus?: boolean;
   autoComplete?: 'off' | 'on' | 'one-time-code';
+  // transitionPropertyName if defined with flag 'autoFocus', is used
+  // to determine if input element should be auto focused after
+  // a transition has ended.
+  transitionPropertyName?: string;
+  // refocusIndicator is used as a listener for change (with any text value)
+  // for the useEffect that handles the auto-focusing.
+  refocusIndicator?: string;
   type?: 'email' | 'text' | 'password' | 'number' | 'date' | 'week';
   inputMode?: 'text' | 'numeric';
   rule?: (options: unknown) => () => unknown;

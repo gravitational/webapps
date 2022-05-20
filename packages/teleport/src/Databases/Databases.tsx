@@ -1,5 +1,5 @@
 /*
-Copyright 2021 Gravitational, Inc.
+Copyright 2021-2022 Gravitational, Inc.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -16,7 +16,6 @@ limitations under the License.
 
 import React from 'react';
 import { Indicator, Box } from 'design';
-import { Danger } from 'design/Alert';
 import useTeleport from 'teleport/useTeleport';
 import {
   FeatureBox,
@@ -24,6 +23,7 @@ import {
   FeatureHeaderTitle,
 } from 'teleport/components/Layout';
 import Empty, { EmptyStateInfo } from 'teleport/components/Empty';
+import ErrorMessage from 'teleport/components/AgentErrorMessage';
 import DatabaseList from './DatabaseList';
 import useDatabases, { State } from './useDatabases';
 import ButtonAdd from './ButtonAdd';
@@ -37,7 +37,6 @@ export default function Container() {
 
 export function Databases(props: State) {
   const {
-    databases,
     attempt,
     isLeafCluster,
     canCreate,
@@ -49,16 +48,33 @@ export function Databases(props: State) {
     version,
     clusterId,
     authType,
+    results,
+    fetchNext,
+    fetchPrev,
+    from,
+    to,
+    pageSize,
+    params,
+    setParams,
+    startKeys,
+    setSort,
+    pathname,
+    replaceHistory,
+    fetchStatus,
+    isSearchEmpty,
+    onLabelClick,
   } = props;
 
-  const isEmpty = attempt.status === 'success' && databases.length === 0;
-  const hasDatabases = attempt.status === 'success' && databases.length > 0;
+  const hasNoDatabases =
+    attempt.status === 'success' &&
+    results.databases.length === 0 &&
+    isSearchEmpty;
 
   return (
     <FeatureBox>
       <FeatureHeader alignItems="center" justifyContent="space-between">
         <FeatureHeaderTitle>Databases</FeatureHeaderTitle>
-        {hasDatabases && (
+        {!hasNoDatabases && (
           <ButtonAdd
             isLeafCluster={isLeafCluster}
             canCreate={canCreate}
@@ -71,18 +87,34 @@ export function Databases(props: State) {
           <Indicator />
         </Box>
       )}
-      {attempt.status === 'failed' && <Danger>{attempt.statusText}</Danger>}
-      {hasDatabases && (
+      {attempt.status === 'failed' && (
+        <ErrorMessage message={attempt.statusText} />
+      )}
+      {attempt.status !== 'processing' && !hasNoDatabases && (
         <>
           <DatabaseList
-            databases={databases}
+            databases={results.databases}
             username={username}
             clusterId={clusterId}
             authType={authType}
+            fetchNext={fetchNext}
+            fetchPrev={fetchPrev}
+            fetchStatus={fetchStatus}
+            from={from}
+            to={to}
+            totalCount={results.totalCount}
+            pageSize={pageSize}
+            params={params}
+            setParams={setParams}
+            startKeys={startKeys}
+            setSort={setSort}
+            pathname={pathname}
+            replaceHistory={replaceHistory}
+            onLabelClick={onLabelClick}
           />
         </>
       )}
-      {isEmpty && (
+      {hasNoDatabases && (
         <Empty
           clusterId={clusterId}
           canCreate={canCreate && !isLeafCluster}

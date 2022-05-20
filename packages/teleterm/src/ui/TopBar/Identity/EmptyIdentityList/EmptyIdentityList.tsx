@@ -1,16 +1,13 @@
 import React from 'react';
 import { ButtonPrimary, Flex, Text } from 'design';
-import { useAppContext } from 'teleterm/ui/appContextProvider';
 import Image from 'design/Image';
 import clusterPng from './clusters.png';
 
-export function EmptyIdentityList() {
-  const ctx = useAppContext();
+interface EmptyIdentityListProps {
+  onConnect(): void;
+}
 
-  function handleConnect() {
-    ctx.commandLauncher.executeCommand('cluster-connect', {});
-  }
-
+export function EmptyIdentityList(props: EmptyIdentityListProps) {
   return (
     <Flex
       m="auto"
@@ -20,20 +17,10 @@ export function EmptyIdentityList() {
       p={3}
     >
       <Image width="60px" src={clusterPng} />
-      <Text fontSize={1} bold>
-        No root cluster connected
+      <Text fontSize={1} bold mb={2}>
+        No cluster connected
       </Text>
-      <Text
-        typography="subtitle2"
-        fontWeight="regular"
-        color="text.secondary"
-        mb={3}
-        textAlign="center"
-        fontSize={1}
-      >
-        Lorem ipsum dolor sit amet, consectetur adipiscing elit
-      </Text>
-      <ButtonPrimary size="small" onClick={handleConnect}>
+      <ButtonPrimary size="small" onClick={props.onConnect}>
         Connect
       </ButtonPrimary>
     </Flex>

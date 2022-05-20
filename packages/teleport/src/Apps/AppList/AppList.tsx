@@ -1,5 +1,5 @@
 /*
-Copyright 2021 Gravitational, Inc.
+Copyright 2021-2022 Gravitational, Inc.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -17,7 +17,8 @@ limitations under the License.
 import React from 'react';
 import styled from 'styled-components';
 import { Flex, Text, ButtonBorder } from 'design';
-import Table, { Cell, LabelCell } from 'design/DataTable';
+import Table, { Cell, ClickableLabelCell } from 'design/DataTable';
+import { SortType } from 'design/DataTable/types';
 import {
   pink,
   teal,
@@ -32,10 +33,29 @@ import {
 } from 'design/theme/palette';
 import { AmazonAws } from 'design/Icon';
 import { App } from 'teleport/services/apps';
+import { AgentLabel } from 'teleport/services/resources';
+import ServersideSearchPanel from 'teleport/components/ServersideSearchPanel';
+import { ResourceUrlQueryParams } from 'teleport/getUrlQueryParams';
 import AwsLaunchButton from './AwsLaunchButton';
 
 export default function AppList(props: Props) {
-  const { apps = [], pageSize = 100 } = props;
+  const {
+    apps = [],
+    pageSize,
+    totalCount,
+    fetchNext,
+    fetchPrev,
+    fetchStatus,
+    from,
+    to,
+    params,
+    setParams,
+    startKeys,
+    setSort,
+    pathname,
+    replaceHistory,
+    onLabelClick,
+  } = props;
 
   return (
     <StyledTable
@@ -59,12 +79,13 @@ export default function AppList(props: Props) {
           key: 'publicAddr',
           headerText: 'Address',
           render: renderAddressCell,
-          isSortable: true,
         },
         {
-          key: 'tags',
+          key: 'labels',
           headerText: 'Labels',
-          render: ({ tags }) => <LabelCell data={tags} />,
+          render: ({ labels }) => (
+            <ClickableLabelCell labels={labels} onClick={onLabelClick} />
+          ),
         },
         {
           altKey: 'launch-btn',
@@ -74,6 +95,27 @@ export default function AppList(props: Props) {
       emptyText="No Applications Found"
       pagination={{
         pageSize,
+      }}
+      fetching={{
+        onFetchNext: fetchNext,
+        onFetchPrev: fetchPrev,
+        fetchStatus,
+      }}
+      serversideProps={{
+        sort: params.sort,
+        setSort,
+        startKeys,
+        serversideSearchPanel: (
+          <ServersideSearchPanel
+            from={from}
+            to={to}
+            count={totalCount}
+            params={params}
+            setParams={setParams}
+            pathname={pathname}
+            replaceHistory={replaceHistory}
+          />
+        ),
       }}
       isSearchable
     />
@@ -162,7 +204,20 @@ function getIconColor(appName: string) {
 
 type Props = {
   apps: App[];
-  pageSize?: number;
+  pageSize: number;
+  fetchNext: () => void;
+  fetchPrev: () => void;
+  fetchStatus: any;
+  from: number;
+  to: number;
+  totalCount: number;
+  params: ResourceUrlQueryParams;
+  setParams: (params: ResourceUrlQueryParams) => void;
+  startKeys: string[];
+  setSort: (sort: SortType) => void;
+  pathname: string;
+  replaceHistory: (path: string) => void;
+  onLabelClick: (label: AgentLabel) => void;
 };
 
 const StyledTable = styled(Table)`

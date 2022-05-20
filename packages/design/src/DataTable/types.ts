@@ -12,6 +12,7 @@ export type TableProps<T> = {
   // the root matcher will uppercase the searchValue.
   customSearchMatchers?: MatchCallback<T>[];
   initialSort?: InitialSort<T>;
+  serversideProps?: ServersideProps;
   fetching?: FetchingConfig;
   showFirst?: (data: T[]) => T;
   className?: string;
@@ -31,8 +32,17 @@ export type PaginationConfig = {
 };
 
 export type FetchingConfig = {
-  onFetchMore: () => void;
+  onFetchNext?: () => void;
+  onFetchPrev?: () => void;
+  onFetchMore?: () => void;
   fetchStatus: FetchStatus;
+};
+
+export type ServersideProps = {
+  serversideSearchPanel: JSX.Element;
+  startKeys: string[];
+  sort: SortType;
+  setSort: (sort: SortType) => void;
 };
 
 // Makes it so either key or altKey is required
@@ -48,6 +58,11 @@ type TableColumnWithAltKey<T> = TableColumnBase<T> & {
 
 type InitialSort<T> = {
   key: Extract<keyof T, string>;
+  dir: SortDir;
+};
+
+export type SortType = {
+  fieldName: string;
   dir: SortDir;
 };
 

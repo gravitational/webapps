@@ -1,5 +1,5 @@
 /*
-Copyright 2021 Gravitational, Inc.
+Copyright 2021-2022 Gravitational, Inc.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -16,7 +16,6 @@ limitations under the License.
 
 import React from 'react';
 import { Indicator, Box, ButtonPrimary } from 'design';
-import { Danger } from 'design/Alert';
 import useTeleport from 'teleport/useTeleport';
 import {
   FeatureBox,
@@ -24,6 +23,7 @@ import {
   FeatureHeaderTitle,
 } from 'teleport/components/Layout';
 import Empty, { EmptyStateInfo } from 'teleport/components/Empty';
+import ErrorMessage from 'teleport/components/AgentErrorMessage';
 import DesktopList from './DesktopList';
 import useDesktops, { State } from './useDesktops';
 
@@ -40,21 +40,37 @@ export function Desktops(props: State) {
     attempt,
     username,
     clusterId,
-    desktops,
     canCreate,
     isLeafCluster,
     getWindowsLoginOptions,
     openRemoteDesktopTab,
+    results,
+    fetchNext,
+    fetchPrev,
+    from,
+    to,
+    pageSize,
+    params,
+    setParams,
+    startKeys,
+    setSort,
+    pathname,
+    replaceHistory,
+    fetchStatus,
+    isSearchEmpty,
+    onLabelClick,
   } = props;
 
-  const isEmpty = attempt.status === 'success' && desktops.length === 0;
-  const hasDesktops = attempt.status === 'success' && desktops.length > 0;
+  const hasNoDesktops =
+    attempt.status === 'success' &&
+    results.desktops.length === 0 &&
+    isSearchEmpty;
 
   return (
     <FeatureBox>
       <FeatureHeader alignItems="center" justifyContent="space-between">
         <FeatureHeaderTitle>Desktops</FeatureHeaderTitle>
-        {hasDesktops && (
+        {!hasNoDesktops && (
           <ButtonPrimary
             as="a"
             width="240px"
@@ -71,19 +87,33 @@ export function Desktops(props: State) {
           <Indicator />
         </Box>
       )}
-      {attempt.status === 'failed' && <Danger>{attempt.statusText}</Danger>}
-      {hasDesktops && (
-        <>
-          <DesktopList
-            desktops={desktops}
-            username={username}
-            clusterId={clusterId}
-            onLoginMenuOpen={getWindowsLoginOptions}
-            onLoginSelect={openRemoteDesktopTab}
-          />
-        </>
+      {attempt.status === 'failed' && (
+        <ErrorMessage message={attempt.statusText} />
       )}
-      {isEmpty && (
+      {attempt.status !== 'processing' && !hasNoDesktops && (
+        <DesktopList
+          desktops={results.desktops}
+          username={username}
+          clusterId={clusterId}
+          onLoginMenuOpen={getWindowsLoginOptions}
+          onLoginSelect={openRemoteDesktopTab}
+          fetchNext={fetchNext}
+          fetchPrev={fetchPrev}
+          fetchStatus={fetchStatus}
+          from={from}
+          to={to}
+          totalCount={results.totalCount}
+          pageSize={pageSize}
+          params={params}
+          setParams={setParams}
+          startKeys={startKeys}
+          setSort={setSort}
+          pathname={pathname}
+          replaceHistory={replaceHistory}
+          onLabelClick={onLabelClick}
+        />
+      )}
+      {hasNoDesktops && (
         <Empty
           clusterId={clusterId}
           canCreate={canCreate && !isLeafCluster}

@@ -16,8 +16,12 @@ export function useClusters() {
   const rootClusterUri = workspacesService.getRootClusterUri();
   const localClusterUri =
     workspacesService.getActiveWorkspace()?.localClusterUri;
+  const rootCluster = clustersService.findCluster(rootClusterUri);
+  const items =
+    (rootCluster && [rootCluster, ...findLeaves(rootClusterUri)]) || [];
 
   return {
+    hasLeaves: items.some(i => i.leaf),
     selectedItem:
       localClusterUri && clustersService.findCluster(localClusterUri),
     selectItem: (localClusterUri: string) => {
@@ -29,11 +33,6 @@ export function useClusters() {
         clusterUri: localClusterUri,
       });
     },
-    items: rootClusterUri
-      ? [
-          clustersService.findCluster(rootClusterUri),
-          ...findLeaves(rootClusterUri),
-        ]
-      : [],
+    items,
   };
 }

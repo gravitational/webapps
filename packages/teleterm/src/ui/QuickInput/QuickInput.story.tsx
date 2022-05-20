@@ -26,6 +26,17 @@ export default {
 export const Story = () => {
   const appContext = new MockAppContext();
 
+  appContext.workspacesService.state = {
+    workspaces: {
+      '/clusters/localhost': {
+        documents: [],
+        location: '',
+        localClusterUri: '/clusters/localhost',
+      },
+    },
+    rootClusterUri: '/clusters/localhost',
+  };
+
   appContext.clustersService.getClusters = () => {
     return [
       {
@@ -33,6 +44,8 @@ export const Story = () => {
         name: 'Test',
         leaf: false,
         connected: true,
+        actualName: 'Test',
+        proxyHost: 'localhost:3080',
         loggedInUser: {
           name: 'admin',
           acl: {},

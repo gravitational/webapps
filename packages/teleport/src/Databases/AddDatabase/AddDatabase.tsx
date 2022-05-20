@@ -49,7 +49,6 @@ export default function Container(props: Props) {
 
 export function AddDatabase({
   createJoinToken,
-  expiry,
   attempt,
   token,
   authType,
@@ -121,9 +120,9 @@ export function AddDatabase({
               selectedDbOption.value.type,
               selectedDbOption.value.protocol,
               host,
-              token
+              token.id
             )}
-            expiry={expiry}
+            expiry={token.expiryText}
             onRegenerateToken={createJoinToken}
             isEnterprise={isEnterprise}
             version={version}
@@ -294,9 +293,16 @@ const generateDbStartCmd = (
   host: string,
   token: string
 ) => {
-  const baseCommand = `teleport db start --token=${
+  let baseCommand = `teleport db start --token=${
     token || '[generated-join-token]'
   } --auth-server=${host} --name=[db-name] --protocol=${protocol} --uri=[uri]`;
+
+  if (protocol === 'sqlserver') {
+    baseCommand =
+      `${baseCommand} --ad-keytab-file=/path/to/teleport.keytab ` +
+      `--ad-domain=EXAMPLE.COM ` +
+      `--ad-spn=MSSQLSvc/sqlserver.example.com:1433`;
+  }
 
   switch (type) {
     case 'self-hosted':
@@ -315,12 +321,16 @@ const generateDbStartCmd = (
 const options: DatabaseInfo[] = [
   formatDatabaseInfo('rds', 'postgres'),
   formatDatabaseInfo('rds', 'mysql'),
+  formatDatabaseInfo('rds', 'sqlserver'),
   formatDatabaseInfo('redshift', 'postgres'),
   formatDatabaseInfo('gcp', 'postgres'),
   formatDatabaseInfo('gcp', 'mysql'),
+  formatDatabaseInfo('gcp', 'sqlserver'),
   formatDatabaseInfo('self-hosted', 'postgres'),
   formatDatabaseInfo('self-hosted', 'mysql'),
   formatDatabaseInfo('self-hosted', 'mongodb'),
+  formatDatabaseInfo('self-hosted', 'sqlserver'),
+  formatDatabaseInfo('self-hosted', 'redis'),
 ];
 
 export type Props = {

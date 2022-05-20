@@ -18,10 +18,13 @@ import { useEffect } from 'react';
 import { useAppContext } from 'teleterm/ui/appContextProvider';
 import { IAppContext } from 'teleterm/ui/types';
 import * as types from 'teleterm/ui/services/workspacesService';
-import { PtyCommand } from 'teleterm/services/pty/types';
-import useAsync from 'teleterm/ui/useAsync';
 import { DocumentsService } from 'teleterm/ui/services/workspacesService';
+import { IPtyProcess } from 'teleterm/sharedProcess/ptyHost';
+import { useAsync } from 'shared/hooks/useAsync';
 import { useWorkspaceDocumentsService } from 'teleterm/ui/Documents';
+import { routing } from 'teleterm/ui/uri';
+import { getClusterName } from 'teleterm/ui/utils';
+import { PtyCommand } from 'teleterm/services/pty';
 
 export default function useDocumentTerminal(doc: Doc) {
   const ctx = useAppContext();
@@ -45,8 +48,17 @@ async function initState(
   docsService: DocumentsService,
   doc: Doc
 ) {
-  const cmd = createCmd(doc);
-  const ptyProcess = ctx.terminalsService.createPtyProcess(cmd);
+  const clusterUri = routing.getClusterUri(doc);
+  const rootCluster = ctx.clustersService.findRootClusterByResource(clusterUri);
+  const cluster = ctx.clustersService.findCluster(clusterUri);
+  const cmd = createCmd(doc, rootCluster.proxyHost, cluster.actualName);
+  let ptyProcess: IPtyProcess;
+  try {
+    ptyProcess = await ctx.terminalsService.createPtyProcess(cmd);
+  } catch (e) {
+    ctx.notificationsService.notifyError(e.message);
+    return;
+  }
   const openContextMenu = () => ctx.mainProcessClient.openTerminalContextMenu();
 
   const refreshTitle = async () => {
@@ -55,7 +67,10 @@ async function initState(
     }
 
     const cwd = await ptyProcess.getCwd();
-    docsService.update(doc.uri, { cwd, title: cwd });
+    docsService.update(doc.uri, {
+      cwd,
+      title: `${cwd} · ${getClusterName(cluster)}`,
+    });
   };
 
   const removeInitCommand = () => {
@@ -95,10 +110,16 @@ async function initState(
   };
 }
 
-function createCmd(doc: Doc): PtyCommand {
+function createCmd(
+  doc: Doc,
+  proxyHost: string,
+  actualClusterName: string
+): PtyCommand {
   if (doc.kind === 'doc.terminal_tsh_node') {
     return {
       ...doc,
+      proxyHost,
+      actualClusterName,
       kind: 'pty.tsh-login',
     };
   }
@@ -106,12 +127,17 @@ function createCmd(doc: Doc): PtyCommand {
   if (doc.kind === 'doc.terminal_tsh_kube') {
     return {
       ...doc,
+      proxyHost,
+      actualClusterName,
       kind: 'pty.tsh-kube-login',
     };
   }
 
   return {
+    ...doc,
     kind: 'pty.shell',
+    proxyHost,
+    actualClusterName,
     cwd: doc.cwd,
     initCommand: doc.initCommand,
   };

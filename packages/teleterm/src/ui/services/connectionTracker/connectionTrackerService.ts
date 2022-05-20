@@ -31,6 +31,7 @@ import {
   TrackedConnection,
   TrackedGatewayConnection,
 } from './types';
+import { getClusterName } from 'teleterm/ui/utils';
 
 export class ConnectionTrackerService extends ImmutableStore<ConnectionTrackerState> {
   private _trackedConnectionOperationsFactory: TrackedConnectionOperationsFactory;
@@ -66,7 +67,7 @@ export class ConnectionTrackerService extends ImmutableStore<ConnectionTrackerSt
       const cluster = this._clusterService.findCluster(
         leafClusterUri || rootClusterUri
       );
-      return { ...connection, clusterName: cluster?.name };
+      return { ...connection, clusterName: getClusterName(cluster) };
     });
   }
 
@@ -102,6 +103,12 @@ export class ConnectionTrackerService extends ImmutableStore<ConnectionTrackerSt
 
   private _refreshState = () => {
     this.setState(draft => {
+      // filter out connections from removed clusters
+      draft.connections = draft.connections.filter(i => {
+        const uri = i.kind === 'connection.gateway' ? i.targetUri : i.serverUri;
+        return !!this._clusterService.findClusterByResource(uri);
+      });
+
       // assign default "connected" values
       draft.connections.forEach(i => {
         if (i.kind === 'connection.gateway') {
@@ -134,6 +141,9 @@ export class ConnectionTrackerService extends ImmutableStore<ConnectionTrackerSt
         switch (doc.kind) {
           // process gateway connections
           case 'doc.gateway':
+            if (!doc.port) {
+              break;
+            }
             const gwConn = draft.connections.find(
               getGatewayConnectionByDocument(doc)
             ) as TrackedGatewayConnection;
