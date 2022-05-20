@@ -62,7 +62,7 @@ describe('restoring workspace', () => {
     return { workspacesService, clusterDocument };
   }
 
-  it('should restore the workspace if it there is a persisted state for given clusterUri', () => {
+  it('restores the workspace if it there is a persisted state for given clusterUri', () => {
     const testClusterUri = '/clusters/test-uri';
     const testWorkspace: Workspace = {
       localClusterUri: testClusterUri,
@@ -95,7 +95,7 @@ describe('restoring workspace', () => {
     });
   });
 
-  it('should create empty workspace if there is no persisted state for given clusterUri', () => {
+  it('creates empty workspace if there is no persisted state for given clusterUri', () => {
     const testClusterUri = '/clusters/test-uri';
     const { workspacesService, clusterDocument } = getTestSetup({
       clusterUri: testClusterUri,
