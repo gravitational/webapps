@@ -1,8 +1,8 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
 import styled from 'styled-components';
 
 import { Box, Flex, Pill, Popover, Link, Text } from 'design';
-import { Info, Warning } from '../../../../design/src/Icon';
+import { Info, Warning } from 'design/Icon';
 
 import { useClickOutside } from 'shared/hooks/useClickOutside';
 import { useEscape } from 'shared/hooks/useEscape';
@@ -38,9 +38,9 @@ function LabelSelector({ onChange }: LabelSelectorProps) {
     setShowAdd(false);
   });
 
-  useEscape(() => {
-    setShowAdd(false);
-  });
+  const escapeHandler = useCallback(() => setShowAdd(false), []);
+
+  useEscape(escapeHandler);
 
   const handleAddLabel = () => {
     setLabels([...labels, newLabel.trim()]);
@@ -59,10 +59,7 @@ function LabelSelector({ onChange }: LabelSelectorProps) {
         <Flex justifyContent="space-between">
           <Flex>
             <Text>Assign Labels (optional)</Text>
-            <div
-              ref={infoIconRef}
-              style={{ marginLeft: '12px', float: 'left' }}
-            >
+            <div ref={infoIconRef} style={{ marginLeft: '12px' }}>
               <Info
                 style={{
                   cursor: 'pointer',
@@ -154,7 +151,7 @@ function LabelSelector({ onChange }: LabelSelectorProps) {
             }}
             onKeyPress={e => {
               // Add a new label on `Enter` if it's valid.
-              if (e.charCode === 13 && validLabel) {
+              if (e.key === 'Enter' && validLabel) {
                 handleAddLabel();
               }
             }}
@@ -170,7 +167,7 @@ function LabelSelector({ onChange }: LabelSelectorProps) {
           ) : (
             <CreateLabelError data-testid="create-label-error">
               <WarningIconWrapper>
-                <Warning />
+                <Warning style={{ padding: '3px' }} />
               </WarningIconWrapper>
               <WarningText>
                 <Text style={{ color: '#D83C31', fontWeight: 700 }}>
@@ -234,15 +231,15 @@ const CreateLabel = styled.button`
 `;
 
 const CreateLabelError = styled.div`
+  display: flex;
   margin-top: 8px;
 `;
 
 const WarningIconWrapper = styled.div`
   background: rgba(255, 255, 255, 0.05);
   border-radius: 54px;
-  float: left;
+  display: flex;
   height: 20px;
-  line-height: 20px;
   margin-top: 10px;
   padding: 5px;
   text-align: center;
@@ -250,7 +247,6 @@ const WarningIconWrapper = styled.div`
 `;
 
 const WarningText = styled.div`
-  float: left;
   margin-left: 8px;
 `;
 

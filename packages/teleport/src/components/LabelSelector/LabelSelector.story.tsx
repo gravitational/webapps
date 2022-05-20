@@ -6,7 +6,7 @@ export default {
   title: 'Teleport/LabelSelector',
 };
 
-export const LabelSelectorEmpty = () => {
+export const LabelSelectorFull = () => {
   const [labels, setLabels] = useState([]);
   return (
     <>

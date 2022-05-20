@@ -38,7 +38,7 @@ HTMLCollection [
   border-color: rgba(0,0,0,0);
   background-color: rgba(0,0,0,0);
   cursor: pointer;
-  display: inline-block;
+  display: none;
 }
 
 <button
