@@ -22,13 +22,13 @@ import history from 'teleport/services/history';
 import Ctx from 'teleport/teleportContext';
 import { StickyCluster } from 'teleport/types';
 import cfg from 'teleport/config';
-import { NodesResponse } from 'teleport/services/nodes';
+import { NodesResponse, Node } from 'teleport/services/nodes';
 import { openNewTab } from 'teleport/lib/util';
 import getResourceUrlQueryParams, {
   ResourceUrlQueryParams,
 } from 'teleport/getUrlQueryParams';
 import labelClick from 'teleport/labelClick';
-import { AgentLabel } from 'teleport/services/resources';
+import { AgentLabel } from 'teleport/services/agents';
 
 export default function useNodes(ctx: Ctx, stickyCluster: StickyCluster) {
   const { isLeafCluster, clusterId } = stickyCluster;
@@ -89,7 +89,11 @@ export default function useNodes(ctx: Ctx, stickyCluster: StickyCluster) {
     ctx.nodeService
       .fetchNodes(clusterId, { ...params, limit: pageSize })
       .then(res => {
-        setResults(res);
+        setResults({
+          nodes: res.agents as Node[],
+          startKey: res.startKey,
+          totalCount: res.totalCount,
+        });
         setFetchStatus(res.startKey ? '' : 'disabled');
         setStartKeys(['', res.startKey]);
         setAttempt({ status: 'success' });
@@ -112,7 +116,7 @@ export default function useNodes(ctx: Ctx, stickyCluster: StickyCluster) {
       .then(res => {
         setResults({
           ...results,
-          nodes: res.nodes,
+          nodes: res.agents as Node[],
           startKey: res.startKey,
         });
         setFetchStatus(res.startKey ? '' : 'disabled');
@@ -137,7 +141,7 @@ export default function useNodes(ctx: Ctx, stickyCluster: StickyCluster) {
         setStartKeys(tempStartKeys);
         setResults({
           ...results,
-          nodes: res.nodes,
+          nodes: res.agents as Node[],
           startKey: res.startKey,
         });
         setFetchStatus('');

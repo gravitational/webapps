@@ -22,13 +22,13 @@ import Ctx from 'teleport/teleportContext';
 import cfg from 'teleport/config';
 import useStickyClusterId from 'teleport/useStickyClusterId';
 import history from 'teleport/services/history';
-import { DesktopsResponse } from 'teleport/services/desktops';
+import { DesktopsResponse, Desktop } from 'teleport/services/desktops';
 import getResourceUrlQueryParams, {
   ResourceUrlQueryParams,
 } from 'teleport/getUrlQueryParams';
 import { openNewTab } from 'teleport/lib/util';
 import labelClick from 'teleport/labelClick';
-import { AgentLabel } from 'teleport/services/resources';
+import { AgentLabel } from 'teleport/services/agents';
 
 export default function useDesktops(ctx: Ctx) {
   const { attempt, setAttempt } = useAttempt('processing');
@@ -88,7 +88,11 @@ export default function useDesktops(ctx: Ctx) {
     ctx.desktopService
       .fetchDesktops(clusterId, { ...params, limit: pageSize })
       .then(res => {
-        setResults(res);
+        setResults({
+          desktops: res.agents as Desktop[],
+          startKey: res.startKey,
+          totalCount: res.totalCount,
+        });
         setFetchStatus(res.startKey ? '' : 'disabled');
         setStartKeys(['', res.startKey]);
         setAttempt({ status: 'success' });
@@ -111,7 +115,7 @@ export default function useDesktops(ctx: Ctx) {
       .then(res => {
         setResults({
           ...results,
-          desktops: res.desktops,
+          desktops: res.agents as Desktop[],
           startKey: res.startKey,
         });
         setFetchStatus(res.startKey ? '' : 'disabled');
@@ -136,7 +140,7 @@ export default function useDesktops(ctx: Ctx) {
         setStartKeys(tempStartKeys);
         setResults({
           ...results,
-          desktops: res.desktops,
+          desktops: res.agents as Desktop[],
           startKey: res.startKey,
         });
         setFetchStatus('');
