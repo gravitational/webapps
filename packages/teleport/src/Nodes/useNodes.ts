@@ -22,7 +22,7 @@ import history from 'teleport/services/history';
 import Ctx from 'teleport/teleportContext';
 import { StickyCluster } from 'teleport/types';
 import cfg from 'teleport/config';
-import { NodesResponse } from 'teleport/services/nodes';
+import { NodesResponse, Node } from 'teleport/services/nodes';
 import { openNewTab } from 'teleport/lib/util';
 import getResourceUrlQueryParams, {
   ResourceUrlQueryParams,
