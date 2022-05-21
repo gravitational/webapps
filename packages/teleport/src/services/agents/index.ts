@@ -1,5 +1,5 @@
 /**
- * Copyright 2021 Gravitational, Inc.
+ * Copyright 2022 Gravitational, Inc.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,15 +14,4 @@
  * limitations under the License.
  */
 
-export type Resource<T extends Kind> = {
-  id: string;
-  kind: T;
-  name: string;
-  // content is config in yaml format.
-  content: string;
-};
-
-export type KindRole = 'role';
-export type KindTrustedCluster = 'trusted_cluster';
-export type KindAuthConnectors = 'github' | 'saml' | 'oidc';
-export type Kind = KindRole | KindTrustedCluster | KindAuthConnectors;
+export * from './types';
