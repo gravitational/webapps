@@ -1,5 +1,5 @@
 /*
-Copyright 2021 Gravitational, Inc.
+Copyright 2021-2022 Gravitational, Inc.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -17,18 +17,18 @@ limitations under the License.
 import api from 'teleport/services/api';
 import cfg, { UrlResourcesParams } from 'teleport/config';
 import makeDesktop from './makeDesktop';
-import { DesktopsResponse } from './types';
+import { AgentResponse } from 'teleport/services/agents';
 
 class DesktopService {
   fetchDesktops(
     clusterId: string,
     params: UrlResourcesParams
-  ): Promise<DesktopsResponse> {
+  ): Promise<AgentResponse> {
     return api.get(cfg.getDesktopsUrl(clusterId, params)).then(json => {
       const items = json?.items || [];
 
       return {
-        desktops: items.map(makeDesktop),
+        agents: items.map(makeDesktop),
         startKey: json?.startKey,
         totalCount: json?.totalCount,
       };
