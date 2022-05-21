@@ -1,7 +1,7 @@
 // paginateData breaks the data array up into chunks the length of pageSize
 export default function paginateData(
   data = [],
-  pageSize = 10
+  pageSize = 15
 ): Array<Array<any>> {
   const pageCount = Math.ceil(data.length / pageSize);
   const pages = [];

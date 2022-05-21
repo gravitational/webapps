@@ -14,6 +14,7 @@ export function SortHeaderCell<T>({
   text,
   onClick,
 }: SortHeaderCellProps<T>) {
+  console.log('---- am i here???');
   function handleServersideClick() {
     serversideProps.setSort({
       dir: serversideProps.sort?.dir === 'ASC' ? 'DESC' : 'ASC',

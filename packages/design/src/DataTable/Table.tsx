@@ -26,17 +26,27 @@ export function Table<T>({
   className,
   style,
   serversideProps,
+  customSort,
 }: State<T>) {
   const renderHeaders = () => {
     const headers = columns.map(column => {
       const headerText = column.headerText || '';
+
+      console.log('------- state: ', column);
+      let dir;
+      if (customSort) {
+        dir = customSort.fieldName == column.key ? customSort.dir : null;
+      } else {
+        dir = state.sort?.key === column.key ? state.sort?.dir : null;
+      }
+
       const $cell = column.isSortable ? (
         <SortHeaderCell<T>
           column={column}
           serversideProps={serversideProps}
           text={headerText}
           onClick={() => onSort(column)}
-          dir={state.sort.key === column.key ? state.sort.dir : null}
+          dir={dir}
         />
       ) : (
         <th style={{ cursor: 'default' }}>{headerText}</th>

@@ -17,6 +17,13 @@ export type TableProps<T> = {
   showFirst?: (data: T[]) => T;
   className?: string;
   style?: React.CSSProperties;
+  // customSort contains fields that describe the current sort direction,
+  // the field to sort by, and a custom sort function.
+  customSort?: SortType & { onSort(s: SortType): void };
+  // isServerSideFilter when true means that filtering will be handled
+  // by the server, so don't run any client table filtering
+  // supplied by default from this component.
+  isServerSideFilter?: boolean;
 };
 
 type TableColumnBase<T> = {
