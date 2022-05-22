@@ -206,6 +206,17 @@ export default class Client extends EventEmitterWebAuthnSender {
           path: req.path,
         },
       });
+    } else if (req.path === '\\desktop.ini') {
+      this.sendSharedDirectoryInfoResponse({
+        completionId: req.completionId,
+        errCode: 2,
+        fso: {
+          lastModified: BigInt(0),
+          fileType: 0,
+          size: BigInt(0),
+          path: req.path,
+        },
+      });
     }
   }
 
