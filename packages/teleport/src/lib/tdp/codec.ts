@@ -41,6 +41,7 @@ export enum MessageType {
   SHARED_DIRECTORY_ACKNOWLEDGE = 12,
   SHARED_DIRECTORY_INFO_REQUEST = 13,
   SHARED_DIRECTORY_INFO_RESPONSE = 14,
+  SHARED_DIRECTORY_LIST_REQUEST = 25,
 }
 
 // 0 is left button, 1 is middle button, 2 is right button
@@ -113,6 +114,13 @@ export type SharedDirectoryInfoResponse = {
   completionId: number;
   errCode: number;
   fso: FileSystemObject;
+};
+
+// | message type (25) | completion_id uint32 | directory_id uint32 | path_length uint32 | path []byte |
+export type SharedDirectoryListRequest = {
+  completionId: number;
+  directoryId: number;
+  path: string;
 };
 
 // | last_modified uint64 | size uint64 | file_type uint32 | path_length uint32 | path byte[] |
@@ -496,11 +504,22 @@ export default class Codec {
   // Throws an error on an invalid or unexpected MessageType value.
   decodeMessageType(buffer: ArrayBuffer): MessageType {
     const messageType = new DataView(buffer).getUint8(0);
-    // TODO(isaiah): this is fragile, instead switch all possibilities here.
-    if (messageType > MessageType.SHARED_DIRECTORY_INFO_REQUEST) {
-      throw new Error(`invalid message type: ${messageType}`);
+
+    switch (messageType) {
+      case MessageType.PNG_FRAME:
+      case MessageType.CLIENT_SCREEN_SPEC:
+      case MessageType.MOUSE_BUTTON:
+      case MessageType.MOUSE_MOVE:
+      case MessageType.CLIPBOARD_DATA:
+      case MessageType.ERROR:
+      case MessageType.MFA_JSON:
+      case MessageType.SHARED_DIRECTORY_ACKNOWLEDGE:
+      case MessageType.SHARED_DIRECTORY_INFO_REQUEST:
+      case MessageType.SHARED_DIRECTORY_LIST_REQUEST:
+        return messageType;
+      default:
+        throw new Error(`invalid message type: ${messageType}`);
     }
-    return messageType;
   }
 
   // decodeError decodes a raw tdp ERROR message and returns it as a string
@@ -575,6 +594,13 @@ export default class Codec {
       directoryId,
       path,
     };
+  }
+
+  // | message type (25) | completion_id uint32 | directory_id uint32 | path_length uint32 | path []byte |
+  decodeSharedDirectoryListRequest(
+    buffer: ArrayBuffer
+  ): SharedDirectoryListRequest {
+    return this.decodeSharedDirectoryInfoRequest(buffer);
   }
 
   // _asBase64Url creates a data:image uri from the png data part of a PNG_FRAME tdp message.
