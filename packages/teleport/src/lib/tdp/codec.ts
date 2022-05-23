@@ -42,6 +42,7 @@ export enum MessageType {
   SHARED_DIRECTORY_INFO_REQUEST = 13,
   SHARED_DIRECTORY_INFO_RESPONSE = 14,
   SHARED_DIRECTORY_LIST_REQUEST = 25,
+  SHARED_DIRECTORY_LIST_RESPONSE = 26,
 }
 
 // 0 is left button, 1 is middle button, 2 is right button
@@ -121,6 +122,13 @@ export type SharedDirectoryListRequest = {
   completionId: number;
   directoryId: number;
   path: string;
+};
+
+// | message type (26) | completion_id uint32 | err_code uint32 | fso_list_length uint32 | fso_list fso[] |
+export type SharedDirectoryListResponse = {
+  completionId: number;
+  errCode: number;
+  fsoList: FileSystemObject[];
 };
 
 // | last_modified uint64 | size uint64 | file_type uint32 | path_length uint32 | path byte[] |
@@ -462,14 +470,10 @@ export default class Codec {
   }
 
   // | message type (14) | completion_id uint32 | err_code uint32 | file_system_object fso |
-  // FileSystemObject: | last_modified uint64 | size uint64 | file_type uint32 | path_length uint32 | path byte[] |
   encodeSharedDirectoryInfoResponse(res: SharedDirectoryInfoResponse): Message {
-    const dataUtf8array = this.encoder.encode(res.fso.path);
-
-    const bufLen =
-      byteLength + 4 * uint32Length + 2 * uint64Length + dataUtf8array.length;
-    const buffer = new ArrayBuffer(bufLen);
-    const view = new DataView(buffer);
+    const bufLenSansFso = byteLength + 2 * uint32Length;
+    const bufferSansFso = new ArrayBuffer(bufLenSansFso);
+    const view = new DataView(bufferSansFso);
     let offset = 0;
 
     view.setUint8(offset++, MessageType.SHARED_DIRECTORY_INFO_RESPONSE);
@@ -477,11 +481,29 @@ export default class Codec {
     offset += uint32Length;
     view.setUint32(offset, res.errCode);
     offset += uint32Length;
-    view.setBigUint64(offset, res.fso.lastModified);
+
+    const fsoBuffer = this.encodeFileSystemObject(res.fso);
+
+    // https://gist.github.com/72lions/4528834?permalink_comment_id=2395442#gistcomment-2395442
+    return new Uint8Array([
+      ...new Uint8Array(bufferSansFso),
+      ...new Uint8Array(fsoBuffer),
+    ]).buffer;
+  }
+
+  // | last_modified uint64 | size uint64 | file_type uint32 | path_length uint32 | path byte[] |
+  encodeFileSystemObject(fso: FileSystemObject): Message {
+    const dataUtf8array = this.encoder.encode(fso.path);
+
+    const bufLen = 2 * uint64Length + 2 * uint32Length + dataUtf8array.length;
+    const buffer = new ArrayBuffer(bufLen);
+    const view = new DataView(buffer);
+    let offset = 0;
+    view.setBigUint64(offset, fso.lastModified);
     offset += uint64Length;
-    view.setBigUint64(offset, res.fso.size);
+    view.setBigUint64(offset, fso.size);
     offset += uint64Length;
-    view.setUint32(offset, res.fso.fileType);
+    view.setUint32(offset, fso.fileType);
     offset += uint32Length;
     view.setUint32(offset, dataUtf8array.length);
     offset += uint32Length;
