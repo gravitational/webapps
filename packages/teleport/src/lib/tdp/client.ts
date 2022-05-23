@@ -24,6 +24,7 @@ import Codec, {
   PngFrame,
   ClipboardData,
   SharedDirectoryInfoResponse,
+  SharedDirectoryListResponse,
 } from './codec';
 
 export enum TdpClientEvent {
@@ -226,6 +227,27 @@ export default class Client extends EventEmitterWebAuthnSender {
   handleSharedDirectoryListRequest(buffer: ArrayBuffer) {
     const req = this.codec.decodeSharedDirectoryListRequest(buffer);
     console.log('Received SharedDirectoryListRequest: ' + JSON.stringify(req));
+
+    if (req.path === '\\') {
+      this.sendSharedDirectoryListResponse({
+        completionId: req.completionId,
+        errCode: 0,
+        fsoList: [
+          {
+            lastModified: BigInt(2222222222222),
+            fileType: 0,
+            size: BigInt(1024),
+            path: 'TestFile.txt',
+          },
+          {
+            lastModified: BigInt(3333333333333),
+            fileType: 1,
+            size: BigInt(1024),
+            path: 'TestDirectory',
+          },
+        ],
+      });
+    }
   }
 
   sendUsername(username: string) {
@@ -274,6 +296,10 @@ export default class Client extends EventEmitterWebAuthnSender {
 
   sendSharedDirectoryInfoResponse(res: SharedDirectoryInfoResponse) {
     this.socket.send(this.codec.encodeSharedDirectoryInfoResponse(res));
+  }
+
+  sendSharedDirectoryListResponse(res: SharedDirectoryListResponse) {
+    this.socket.send(this.codec.encodeSharedDirectoryListResponse(res));
   }
 
   resize(spec: ClientScreenSpec) {

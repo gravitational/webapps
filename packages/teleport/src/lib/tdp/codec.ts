@@ -491,6 +491,35 @@ export default class Codec {
     ]).buffer;
   }
 
+  // | message type (26) | completion_id uint32 | err_code uint32 | fso_list_length uint32 | fso_list fso[] |
+  encodeSharedDirectoryListResponse(res: SharedDirectoryListResponse): Message {
+    const bufLenSansFsoList = byteLength + 3 * uint32Length;
+    const bufferSansFsoList = new ArrayBuffer(bufLenSansFsoList);
+    const view = new DataView(bufferSansFsoList);
+    let offset = 0;
+
+    view.setUint8(offset++, MessageType.SHARED_DIRECTORY_LIST_RESPONSE);
+    view.setUint32(offset, res.completionId);
+    offset += uint32Length;
+    view.setUint32(offset, res.errCode);
+    offset += uint32Length;
+    view.setUint32(offset, res.fsoList.length);
+    offset += uint32Length;
+
+    let withFsoList = new Uint8Array(bufferSansFsoList);
+    res.fsoList.forEach(fso => {
+      const fsoBuffer = this.encodeFileSystemObject(fso);
+
+      // https://gist.github.com/72lions/4528834?permalink_comment_id=2395442#gistcomment-2395442
+      withFsoList = new Uint8Array([
+        ...withFsoList,
+        ...new Uint8Array(fsoBuffer),
+      ]);
+    });
+
+    return withFsoList.buffer;
+  }
+
   // | last_modified uint64 | size uint64 | file_type uint32 | path_length uint32 | path byte[] |
   encodeFileSystemObject(fso: FileSystemObject): Message {
     const dataUtf8array = this.encoder.encode(fso.path);
