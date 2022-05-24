@@ -14,11 +14,9 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import {useCallback, useEffect} from "react";
+import {useEffect} from "react";
 
 function useClickOutside(ref, handler) {
-
-  const handlerMemo = useCallback(handler, [handler]);
 
   useEffect(
     () => {
@@ -26,7 +24,7 @@ function useClickOutside(ref, handler) {
         if (!ref.current || ref.current.contains(e.target)) {
           return;
         }
-        handlerMemo(e);
+        handler(e);
       };
       document.addEventListener("mousedown", listener);
       document.addEventListener("touchstart", listener);
@@ -35,7 +33,7 @@ function useClickOutside(ref, handler) {
         document.removeEventListener("touchstart", listener);
       };
     },
-    [ref, handlerMemo]
+    [ref, handler]
   );
 }
 

@@ -50,12 +50,10 @@ function LabelSelector({ onChange }: LabelSelectorProps) {
     }
   }, [showAdd]);
 
-  useClickOutside(addLabelContainerRef, () => {
-    setShowAdd(false);
-  });
-
+  const clickOutsideHandler = useCallback(() => setShowAdd(false), []);
   const escapeHandler = useCallback(() => setShowAdd(false), []);
 
+  useClickOutside(addLabelContainerRef, clickOutsideHandler);
   useEscape(escapeHandler);
 
   const handleAddLabel = () => {
@@ -200,7 +198,6 @@ function LabelSelector({ onChange }: LabelSelectorProps) {
 }
 
 const Heading = styled.div`
-  clear: both;
   height: 1.5rem;
   position: relative;
 `;
@@ -209,7 +206,6 @@ const LabelContainer = styled.div`
   border-radius: 4px;
   border: 1px solid rgba(255, 255, 255, 0.1);
   box-shadow: 0px 8px 10px rgba(12, 12, 14, 0.07);
-  clear: both;
   cursor: pointer;
   display: flex;
   flex-wrap: wrap;
