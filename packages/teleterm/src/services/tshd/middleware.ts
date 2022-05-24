@@ -68,8 +68,6 @@ export default function middleware<T extends Record<string, any>>(
 export const withLogging = (logger: Logger): UnaryInterceptor => {
   return (options, nextCall) => {
     const method = options.method_definition.path;
-    const filterPasswords = object =>
-      filterSensitiveProperties(object, ['passw']);
     const params: grpc.Requester = {
       start(metadata, listener, next) {
         next(metadata, {
@@ -78,7 +76,9 @@ export const withLogging = (logger: Logger): UnaryInterceptor => {
           },
 
           onReceiveMessage(message, next) {
-            const json = message ? filterPasswords(message.toObject()) : null;
+            const json = message
+              ? filterSensitiveProperties(message.toObject())
+              : null;
             logger.info(`receive: ${method} -> (${JSON.stringify(json)})`);
             next(message);
           },
@@ -96,7 +96,7 @@ export const withLogging = (logger: Logger): UnaryInterceptor => {
       sendMessage(message, next) {
         logger.info(
           `send: ${method}(${JSON.stringify(
-            filterPasswords(message.toObject())
+            filterSensitiveProperties(message.toObject())
           )})`
         );
         next(message);
@@ -107,10 +107,9 @@ export const withLogging = (logger: Logger): UnaryInterceptor => {
   };
 };
 
-function filterSensitiveProperties(
-  toFilter: object,
-  filteredProperties: string[]
-): object {
+function filterSensitiveProperties(toFilter: object): object {
+  const filteredProperties = ['passw'];
+
   return transform(
     toFilter,
     (result: object, value: any, key: any) => {
@@ -120,13 +119,13 @@ function filterSensitiveProperties(
         )
       ) {
         result[key] = '~FILTERED~';
-      } else {
-        if (isObject(value)) {
-          result[key] = filterSensitiveProperties(value, filteredProperties);
-        } else {
-          result[key] = value;
-        }
+        return;
       }
+      if (isObject(value)) {
+        result[key] = filterSensitiveProperties(value);
+        return;
+      }
+      result[key] = value;
     },
     {}
   );
