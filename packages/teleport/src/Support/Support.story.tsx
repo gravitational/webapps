@@ -23,9 +23,7 @@ export default {
 
 export const SupportOSS = () => <Support {...props} />;
 
-export const SupportCloud = () => (
-  <Support {...props} isEnterprise={true} isCloud={true} />
-);
+export const SupportCloud = () => <Support {...props} isCloud={true} />;
 
 export const SupportEnterprise = () => (
   <Support {...props} isEnterprise={true} />
