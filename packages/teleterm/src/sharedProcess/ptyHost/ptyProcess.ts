@@ -19,12 +19,12 @@ import { readlink } from 'fs';
 import { promisify } from 'util';
 import { exec } from 'child_process';
 import { EventEmitter } from 'events';
-import { PtyOptions } from './types';
+import { PtyProcessOptions, IPtyProcess } from './types';
 import Logger from 'teleterm/logger';
 
 type Status = 'open' | 'not_initialized' | 'terminated';
 
-class PtyProcess extends EventEmitter {
+export class PtyProcess extends EventEmitter implements IPtyProcess {
   private _buffered = true;
   private _attachedBufferTimer;
   private _attachedBuffer: string;
@@ -33,9 +33,11 @@ class PtyProcess extends EventEmitter {
   private _status: Status = 'not_initialized';
   private _disposed = false;
 
-  constructor(private options: PtyOptions) {
+  constructor(private options: PtyProcessOptions & { ptyId: string }) {
     super();
-    this._logger = new Logger(`PTY Process: ${options.path} ${options.args}`);
+    this._logger = new Logger(
+      `PtyProcess (id: ${options.ptyId} ${options.path} ${options.args})`
+    );
   }
 
   start(cols: number, rows: number) {
@@ -60,7 +62,7 @@ class PtyProcess extends EventEmitter {
     }
   }
 
-  send(data: string) {
+  write(data: string) {
     if (this._status !== 'open' || this._disposed) {
       this._logger.warn('pty is not started or has been terminated');
       return;
@@ -76,14 +78,6 @@ class PtyProcess extends EventEmitter {
     }
 
     this._process.resize(cols, rows);
-  }
-
-  getPid() {
-    return this._process?.pid;
-  }
-
-  getStatus() {
-    return this._status;
   }
 
   async getCwd() {
@@ -105,6 +99,22 @@ class PtyProcess extends EventEmitter {
     this.removeAllListeners();
     this._process?.kill();
     this._disposed = true;
+  }
+
+  onData(cb: (data: string) => void) {
+    this.addListener(TermEventEnum.DATA, cb);
+  }
+
+  onOpen(cb: () => void) {
+    this.addListener(TermEventEnum.OPEN, cb);
+  }
+
+  onExit(cb: (ev: { exitCode: number; signal?: number }) => void) {
+    this.addListener(TermEventEnum.EXIT, cb);
+  }
+
+  private getPid() {
+    return this._process?.pid;
   }
 
   private _flushBuffer() {
@@ -146,8 +156,6 @@ class PtyProcess extends EventEmitter {
     this._logger.info(`status -> ${value}`);
   }
 }
-
-export default PtyProcess;
 
 export const TermEventEnum = {
   CLOSE: 'terminal.close',
