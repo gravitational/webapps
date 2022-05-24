@@ -1,6 +1,6 @@
 {
   "name": "@gravitational/teleterm",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "Teleport Connect",
   "main": "build/app/dist/main/main.js",
   "author": {
