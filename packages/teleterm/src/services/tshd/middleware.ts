@@ -2,6 +2,8 @@ import * as grpc from '@grpc/grpc-js';
 import Logger from 'teleterm/logger';
 import { isObject, transform } from 'lodash';
 
+const SENSITIVE_PROPERTIES = ['passw'];
+
 export type UnaryInterceptor = (
   options: grpc.InterceptorOptions,
   nextCall: (options: grpc.InterceptorOptions) => grpc.InterceptingCall
@@ -108,14 +110,13 @@ export const withLogging = (logger: Logger): UnaryInterceptor => {
 };
 
 function filterSensitiveProperties(toFilter: object): object {
-  const filteredProperties = ['passw'];
-
   return transform(
     toFilter,
     (result: object, value: any, key: any) => {
       if (
-        filteredProperties.some(
-          filteredProp => typeof key === 'string' && key.includes(filteredProp)
+        SENSITIVE_PROPERTIES.some(
+          sensitiveProp =>
+            typeof key === 'string' && key.includes(sensitiveProp)
         )
       ) {
         result[key] = '~FILTERED~';
