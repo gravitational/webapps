@@ -25,6 +25,7 @@ import Codec, {
   ClipboardData,
   SharedDirectoryInfoResponse,
   SharedDirectoryListResponse,
+  FileSystemObject,
 } from './codec';
 
 export enum TdpClientEvent {
@@ -46,6 +47,7 @@ export default class Client extends EventEmitterWebAuthnSender {
   socketAddr: string;
   username: string;
   logger = Logger.create('TDPClient');
+  simulated_fsos: Record<string, FileSystemObject>; // TODO(isaiah): delete this
 
   constructor(socketAddr: string) {
     super();
@@ -81,6 +83,46 @@ export default class Client extends EventEmitterWebAuthnSender {
       this.socket = null;
 
       this.emit(TdpClientEvent.WS_CLOSE);
+    };
+
+    // TODO(isaiah): delete this
+    this.simulated_fsos = {
+      '': {
+        lastModified: BigInt(1111111111111),
+        fileType: 1,
+        size: BigInt(1024),
+        path: '',
+      },
+      '\\': {
+        lastModified: BigInt(1111111111111),
+        fileType: 1,
+        size: BigInt(1024),
+        path: '\\',
+      },
+      '\\TestFile.txt': {
+        lastModified: BigInt(2222222222222),
+        fileType: 0,
+        size: BigInt(1024),
+        path: '\\TestFile.txt',
+      },
+      'TestFile.txt': {
+        lastModified: BigInt(2222222222222),
+        fileType: 0,
+        size: BigInt(1024),
+        path: 'TestFile.txt',
+      },
+      '\\TestDirectory': {
+        lastModified: BigInt(3333333333333),
+        fileType: 1,
+        size: BigInt(1024),
+        path: '\\TestDirectory',
+      },
+      TestDirectory: {
+        lastModified: BigInt(3333333333333),
+        fileType: 1,
+        size: BigInt(1024),
+        path: 'TestDirectory',
+      },
     };
   }
 
@@ -199,21 +241,38 @@ export default class Client extends EventEmitterWebAuthnSender {
     const req = this.codec.decodeSharedDirectoryInfoRequest(buffer);
     console.log('Received SharedDirectoryInfoRequest: ' + JSON.stringify(req));
 
-    if (req.path === '' || req.path == '\\') {
+    if (
+      req.path === '' ||
+      req.path == '\\' ||
+      req.path === '\\TestFile.txt' ||
+      req.path === '\\TestDirectory'
+    ) {
       this.sendSharedDirectoryInfoResponse({
         completionId: req.completionId,
         errCode: 0,
-        fso: {
-          lastModified: BigInt(1111111111111),
-          fileType: 1,
-          size: BigInt(1024),
-          path: req.path,
-        },
+        fso: this.simulated_fsos[req.path],
       });
-    } else if (req.path === '\\desktop.ini') {
+    } else if (
+      req.path === '\\desktop.ini' ||
+      req.path === '\\TestDirectory\\desktop.ini' ||
+      req.path === '\\TestFile.txt:Zone.Identifier'
+    ) {
       this.sendSharedDirectoryInfoResponse({
         completionId: req.completionId,
         errCode: 2,
+        fso: {
+          lastModified: BigInt(0),
+          fileType: 0,
+          size: BigInt(0),
+          path: req.path,
+        },
+      });
+    } else {
+      // If we receive anything unexpected, send back an operation failed error which will kill the session,
+      // alerting us to new behavior on the backend.
+      this.sendSharedDirectoryInfoResponse({
+        completionId: req.completionId,
+        errCode: 1,
         fso: {
           lastModified: BigInt(0),
           fileType: 0,
@@ -233,19 +292,23 @@ export default class Client extends EventEmitterWebAuthnSender {
         completionId: req.completionId,
         errCode: 0,
         fsoList: [
-          {
-            lastModified: BigInt(2222222222222),
-            fileType: 0,
-            size: BigInt(1024),
-            path: 'TestFile.txt',
-          },
-          {
-            lastModified: BigInt(3333333333333),
-            fileType: 1,
-            size: BigInt(1024),
-            path: 'TestDirectory',
-          },
+          this.simulated_fsos['TestFile.txt'],
+          this.simulated_fsos['TestDirectory'],
         ],
+      });
+    } else if (req.path === '\\TestDirectory') {
+      this.sendSharedDirectoryListResponse({
+        completionId: req.completionId,
+        errCode: 0,
+        fsoList: [],
+      });
+    } else {
+      // If we receive anything unexpected, send back an operation failed error which will kill the session,
+      // alerting us to new behavior on the backend.
+      this.sendSharedDirectoryListResponse({
+        completionId: req.completionId,
+        errCode: 1,
+        fsoList: [],
       });
     }
   }
