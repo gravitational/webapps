@@ -25,6 +25,7 @@ export default function makeAcl(json): Acl {
   const trustedClusters = json.trustedClusters || defaultAccess;
   const roles = json.roles || defaultAccess;
   const sessions = json.sessions || defaultAccess;
+  const activeSessions = json.activeSessions || defaultAccess;
   const events = json.events || defaultAccess;
   const users = json.users || defaultAccess;
   const appServers = json.appServers || defaultAccess;
@@ -53,6 +54,7 @@ export default function makeAcl(json): Acl {
     trustedClusters,
     roles,
     sessions,
+    activeSessions,
     events,
     users,
     appServers,

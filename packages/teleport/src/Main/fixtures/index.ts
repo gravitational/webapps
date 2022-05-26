@@ -32,6 +32,7 @@ export const fullAcl: Acl = {
   appServers: fullAccess,
   kubeServers: fullAccess,
   sessions: fullAccess,
+  activeSessions: fullAccess,
   authConnectors: fullAccess,
   roles: fullAccess,
   users: fullAccess,

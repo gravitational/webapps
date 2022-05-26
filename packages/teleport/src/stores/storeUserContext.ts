@@ -97,6 +97,10 @@ export default class StoreUserContext extends Store<UserContext> {
     return this.state.acl.sessions;
   }
 
+  getActiveSessionsAccess() {
+    return this.state.acl.activeSessions;
+  }
+
   getClipboardAccess() {
     return this.state.acl.clipboardSharingEnabled;
   }

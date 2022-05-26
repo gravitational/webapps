@@ -244,6 +244,10 @@ export class FeatureSessions {
   };
 
   register(ctx: Ctx) {
+    if (!ctx.getFeatureFlags().activeSessions) {
+      return;
+    }
+
     ctx.storeNav.addSideItem({
       group: 'activity',
       title: 'Active Sessions',

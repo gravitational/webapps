@@ -54,6 +54,7 @@ export interface Acl {
   trustedClusters: Access;
   roles: Access;
   sessions: Access;
+  activeSessions: Access;
   events: Access;
   users: Access;
   tokens: Access;
