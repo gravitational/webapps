@@ -22,7 +22,7 @@ import Ctx from 'teleport/teleportContext';
 import cfg from 'teleport/config';
 import useStickyClusterId from 'teleport/useStickyClusterId';
 import history from 'teleport/services/history';
-import { DesktopsResponse, Desktop } from 'teleport/services/desktops';
+import { DesktopsResponse } from 'teleport/services/desktops';
 import getResourceUrlQueryParams, {
   ResourceUrlQueryParams,
 } from 'teleport/getUrlQueryParams';

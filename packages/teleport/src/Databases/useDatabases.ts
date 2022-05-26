@@ -24,7 +24,7 @@ import getResourceUrlQueryParams, {
 } from 'teleport/getUrlQueryParams';
 import useStickyClusterId from 'teleport/useStickyClusterId';
 import history from 'teleport/services/history';
-import { DatabasesResponse, Database } from 'teleport/services/databases';
+import { DatabasesResponse } from 'teleport/services/databases';
 import labelClick from 'teleport/labelClick';
 import { AgentLabel } from 'teleport/services/agents';
 
