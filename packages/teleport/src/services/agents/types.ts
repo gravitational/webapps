@@ -22,8 +22,8 @@ import { Desktop } from 'teleport/services/desktops';
 
 export type AgentKinds = App | Database | Node | Kube | Desktop;
 
-export type AgentResponse = {
-  agents: AgentKinds[];
+export type AgentResponse<T extends AgentKinds> = {
+  agents: T[];
   startKey?: string;
   totalCount?: number;
 };

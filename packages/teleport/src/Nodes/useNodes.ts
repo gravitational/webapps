@@ -22,7 +22,7 @@ import history from 'teleport/services/history';
 import Ctx from 'teleport/teleportContext';
 import { StickyCluster } from 'teleport/types';
 import cfg from 'teleport/config';
-import { NodesResponse, Node } from 'teleport/services/nodes';
+import { NodesResponse } from 'teleport/services/nodes';
 import { openNewTab } from 'teleport/lib/util';
 import getResourceUrlQueryParams, {
   ResourceUrlQueryParams,
@@ -90,7 +90,7 @@ export default function useNodes(ctx: Ctx, stickyCluster: StickyCluster) {
       .fetchNodes(clusterId, { ...params, limit: pageSize })
       .then(res => {
         setResults({
-          nodes: res.agents as Node[],
+          nodes: res.agents,
           startKey: res.startKey,
           totalCount: res.totalCount,
         });
@@ -116,7 +116,7 @@ export default function useNodes(ctx: Ctx, stickyCluster: StickyCluster) {
       .then(res => {
         setResults({
           ...results,
-          nodes: res.agents as Node[],
+          nodes: res.agents,
           startKey: res.startKey,
         });
         setFetchStatus(res.startKey ? '' : 'disabled');
@@ -141,7 +141,7 @@ export default function useNodes(ctx: Ctx, stickyCluster: StickyCluster) {
         setStartKeys(tempStartKeys);
         setResults({
           ...results,
-          nodes: res.agents as Node[],
+          nodes: res.agents,
           startKey: res.startKey,
         });
         setFetchStatus('');

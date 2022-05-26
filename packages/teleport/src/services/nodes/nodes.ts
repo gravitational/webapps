@@ -16,14 +16,15 @@ limitations under the License.
 
 import api from 'teleport/services/api';
 import cfg, { UrlResourcesParams } from 'teleport/config';
-import makeNode from './makeNode';
 import { AgentResponse } from 'teleport/services/agents';
+import { Node } from './types';
+import makeNode from './makeNode';
 
 class NodeService {
   fetchNodes(
     clusterId?: string,
     params?: UrlResourcesParams
-  ): Promise<AgentResponse> {
+  ): Promise<AgentResponse<Node>> {
     return api.get(cfg.getClusterNodesUrl(clusterId, params)).then(json => {
       const items = json?.items || [];
 

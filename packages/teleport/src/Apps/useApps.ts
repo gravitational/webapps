@@ -18,7 +18,7 @@ import { useState, useEffect } from 'react';
 import { useLocation } from 'react-router';
 import { FetchStatus, SortType } from 'design/DataTable/types';
 import useAttempt from 'shared/hooks/useAttemptNext';
-import { AppsResponse, App } from 'teleport/services/apps';
+import { AppsResponse } from 'teleport/services/apps';
 import history from 'teleport/services/history';
 import Ctx from 'teleport/teleportContext';
 import getResourceUrlQueryParams, {
@@ -83,7 +83,7 @@ export default function useApps(ctx: Ctx) {
       .fetchApps(clusterId, { ...params, limit: pageSize })
       .then(res => {
         setResults({
-          apps: res.agents as App[],
+          apps: res.agents,
           startKey: res.startKey,
           totalCount: res.totalCount,
         });
@@ -109,7 +109,7 @@ export default function useApps(ctx: Ctx) {
       .then(res => {
         setResults({
           ...results,
-          apps: res.agents as App[],
+          apps: res.agents,
           startKey: res.startKey,
         });
         setFetchStatus(res.startKey ? '' : 'disabled');
@@ -134,7 +134,7 @@ export default function useApps(ctx: Ctx) {
         setStartKeys(tempStartKeys);
         setResults({
           ...results,
-          apps: res.agents as App[],
+          apps: res.agents,
           startKey: res.startKey,
         });
         setFetchStatus('');

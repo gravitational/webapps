@@ -19,7 +19,7 @@ import { useLocation } from 'react-router';
 import { FetchStatus, SortType } from 'design/DataTable/types';
 import useAttempt from 'shared/hooks/useAttemptNext';
 import history from 'teleport/services/history';
-import { KubesResponse, Kube } from 'teleport/services/kube';
+import { KubesResponse } from 'teleport/services/kube';
 import TeleportContext from 'teleport/teleportContext';
 import useStickyClusterId from 'teleport/useStickyClusterId';
 import getResourceUrlQueryParams, {
@@ -73,7 +73,7 @@ export default function useKubes(ctx: TeleportContext) {
       .fetchKubernetes(clusterId, { ...params, limit: pageSize })
       .then(res => {
         setResults({
-          kubes: res.agents as Kube[],
+          kubes: res.agents,
           startKey: res.startKey,
           totalCount: res.totalCount,
         });
@@ -99,7 +99,7 @@ export default function useKubes(ctx: TeleportContext) {
       .then(res => {
         setResults({
           ...results,
-          kubes: res.agents as Kube[],
+          kubes: res.agents,
           startKey: res.startKey,
         });
         setFetchStatus(res.startKey ? '' : 'disabled');
@@ -124,7 +124,7 @@ export default function useKubes(ctx: TeleportContext) {
         setStartKeys(tempStartKeys);
         setResults({
           ...results,
-          kubes: res.agents as Kube[],
+          kubes: res.agents,
           startKey: res.startKey,
         });
         setFetchStatus('');

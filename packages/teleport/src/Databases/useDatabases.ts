@@ -24,7 +24,7 @@ import getResourceUrlQueryParams, {
 } from 'teleport/getUrlQueryParams';
 import useStickyClusterId from 'teleport/useStickyClusterId';
 import history from 'teleport/services/history';
-import { DatabasesResponse, Database } from 'teleport/services/databases';
+import { DatabasesResponse } from 'teleport/services/databases';
 import labelClick from 'teleport/labelClick';
 import { AgentLabel } from 'teleport/services/agents';
 
@@ -77,7 +77,7 @@ export default function useDatabases(ctx: Ctx) {
       .fetchDatabases(clusterId, { ...params, limit: pageSize })
       .then(res => {
         setResults({
-          databases: res.agents as Database[],
+          databases: res.agents,
           startKey: res.startKey,
           totalCount: res.totalCount,
         });
@@ -103,7 +103,7 @@ export default function useDatabases(ctx: Ctx) {
       .then(res => {
         setResults({
           ...results,
-          databases: res.agents as Database[],
+          databases: res.agents,
           startKey: res.startKey,
         });
         setFetchStatus(res.startKey ? '' : 'disabled');
@@ -128,7 +128,7 @@ export default function useDatabases(ctx: Ctx) {
         setStartKeys(tempStartKeys);
         setResults({
           ...results,
-          databases: res.agents as Database[],
+          databases: res.agents,
           startKey: res.startKey,
         });
         setFetchStatus('');

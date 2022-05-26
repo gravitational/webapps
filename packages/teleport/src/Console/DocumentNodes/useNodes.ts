@@ -19,7 +19,7 @@ import { useLocation } from 'react-router';
 import { FetchStatus, SortType } from 'design/DataTable/types';
 import useAttempt from 'shared/hooks/useAttemptNext';
 import history from 'teleport/services/history';
-import { NodesResponse, Node } from 'teleport/services/nodes';
+import { NodesResponse } from 'teleport/services/nodes';
 import getResourceUrlQueryParams, {
   ResourceUrlQueryParams,
 } from 'teleport/getUrlQueryParams';
@@ -71,7 +71,7 @@ export default function useNodes({ clusterId, id }: stores.DocumentNodes) {
       .then(({ logins, nodesRes }) => {
         setResults({
           logins,
-          nodes: nodesRes.agents as Node[],
+          nodes: nodesRes.agents,
           startKey: nodesRes.startKey,
           totalCount: nodesRes.totalCount,
         });
@@ -98,7 +98,7 @@ export default function useNodes({ clusterId, id }: stores.DocumentNodes) {
         setResults({
           logins,
           ...results,
-          nodes: nodesRes.agents as Node[],
+          nodes: nodesRes.agents,
           startKey: nodesRes.startKey,
         });
         setFetchStatus(nodesRes.startKey ? '' : 'disabled');
@@ -121,7 +121,7 @@ export default function useNodes({ clusterId, id }: stores.DocumentNodes) {
         setResults({
           logins,
           ...results,
-          nodes: nodesRes.agents as Node[],
+          nodes: nodesRes.agents,
           startKey: nodesRes.startKey,
         });
         const tempStartKeys = startKeys;

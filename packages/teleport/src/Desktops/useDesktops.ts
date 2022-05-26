@@ -22,7 +22,7 @@ import Ctx from 'teleport/teleportContext';
 import cfg from 'teleport/config';
 import useStickyClusterId from 'teleport/useStickyClusterId';
 import history from 'teleport/services/history';
-import { DesktopsResponse, Desktop } from 'teleport/services/desktops';
+import { DesktopsResponse } from 'teleport/services/desktops';
 import getResourceUrlQueryParams, {
   ResourceUrlQueryParams,
 } from 'teleport/getUrlQueryParams';
@@ -89,7 +89,7 @@ export default function useDesktops(ctx: Ctx) {
       .fetchDesktops(clusterId, { ...params, limit: pageSize })
       .then(res => {
         setResults({
-          desktops: res.agents as Desktop[],
+          desktops: res.agents,
           startKey: res.startKey,
           totalCount: res.totalCount,
         });
@@ -115,7 +115,7 @@ export default function useDesktops(ctx: Ctx) {
       .then(res => {
         setResults({
           ...results,
-          desktops: res.agents as Desktop[],
+          desktops: res.agents,
           startKey: res.startKey,
         });
         setFetchStatus(res.startKey ? '' : 'disabled');
@@ -140,7 +140,7 @@ export default function useDesktops(ctx: Ctx) {
         setStartKeys(tempStartKeys);
         setResults({
           ...results,
-          desktops: res.agents as Desktop[],
+          desktops: res.agents,
           startKey: res.startKey,
         });
         setFetchStatus('');

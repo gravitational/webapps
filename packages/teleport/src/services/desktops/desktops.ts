@@ -16,14 +16,15 @@ limitations under the License.
 
 import api from 'teleport/services/api';
 import cfg, { UrlResourcesParams } from 'teleport/config';
-import makeDesktop from './makeDesktop';
 import { AgentResponse } from 'teleport/services/agents';
+import { Desktop } from './types';
+import makeDesktop from './makeDesktop';
 
 class DesktopService {
   fetchDesktops(
     clusterId: string,
     params: UrlResourcesParams
-  ): Promise<AgentResponse> {
+  ): Promise<AgentResponse<Desktop>> {
     return api.get(cfg.getDesktopsUrl(clusterId, params)).then(json => {
       const items = json?.items || [];
 
