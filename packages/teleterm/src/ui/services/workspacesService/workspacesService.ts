@@ -210,18 +210,7 @@ export class WorkspacesService extends ImmutableStore<WorkspacesState> {
           })
             ? {
                 location: persistedWorkspace.location,
-                documents: persistedWorkspaceDocuments.map(d => {
-                  if (
-                    d.kind === 'doc.terminal_tsh_node' ||
-                    d.kind === 'doc.gateway'
-                  ) {
-                    return {
-                      ...d,
-                      status: 'disconnected',
-                    };
-                  }
-                  return d;
-                }),
+                documents: persistedWorkspaceDocuments,
               }
             : undefined,
         };
