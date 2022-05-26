@@ -94,7 +94,7 @@ export default class StoreUserContext extends Store<UserContext> {
   }
 
   getSessionsAccess() {
-    return this.state.acl.sessions;
+    return this.state.acl.recordedSessions;
   }
 
   getActiveSessionsAccess() {

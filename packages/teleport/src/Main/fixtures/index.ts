@@ -31,7 +31,7 @@ export const fullAcl: Acl = {
   tokens: fullAccess,
   appServers: fullAccess,
   kubeServers: fullAccess,
-  sessions: fullAccess,
+  recordedSessions: fullAccess,
   activeSessions: fullAccess,
   authConnectors: fullAccess,
   roles: fullAccess,
