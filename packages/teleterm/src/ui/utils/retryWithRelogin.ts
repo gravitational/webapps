@@ -43,29 +43,19 @@ export async function retryWithRelogin<T>(
 
   const rootClusterUri = routing.ensureRootClusterUri(resourceUri);
 
-  try {
-    await login(appContext, rootClusterUri);
-  } catch (error) {
-    // In case the user canceled the login attempt, retry the original call anyway in case the cert
-    // was refreshed externally, for example through tsh.
-    const isRetryable = error instanceof LoginAttemptCanceledError;
-
-    if (!isRetryable) {
-      throw error;
-    }
-  }
+  await login(appContext, rootClusterUri);
 
   return await actionToRepeat();
 }
 
-class LoginAttemptCanceledError extends Error {}
-
+// Notice that we don't differentiate between onSuccess and onCancel. In both cases, we're going to
+// retry the action anyway.
 function login(appContext: AppContext, rootClusterUri: string): Promise<void> {
-  return new Promise((resolve, reject) => {
+  return new Promise(resolve => {
     appContext.modalsService.openClusterConnectDialog({
       clusterUri: rootClusterUri,
       onSuccess: () => resolve(),
-      onCancel: () => reject(new LoginAttemptCanceledError()),
+      onCancel: () => resolve(),
     });
   });
 }
