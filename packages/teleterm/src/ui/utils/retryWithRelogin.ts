@@ -49,7 +49,8 @@ export async function retryWithRelogin<T>(
 }
 
 // Notice that we don't differentiate between onSuccess and onCancel. In both cases, we're going to
-// retry the action anyway.
+// retry the action anyway in case the cert was refreshed externally before the modal was closed,
+// for example through tsh login.
 function login(appContext: AppContext, rootClusterUri: string): Promise<void> {
   return new Promise(resolve => {
     appContext.modalsService.openClusterConnectDialog({
