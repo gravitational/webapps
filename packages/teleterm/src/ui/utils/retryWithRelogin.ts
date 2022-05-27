@@ -6,11 +6,11 @@ export async function retryWithRelogin<T>(
   appContext: AppContext,
   originatingDocumentUri: string,
   resourceUri: string,
-  actionToRepeat: () => Promise<T>
+  actionToRetry: () => Promise<T>
 ): Promise<T> {
-  let retryableErrorFromActionToRepeat: Error;
+  let retryableErrorFromActionToRetry: Error;
   try {
-    return await actionToRepeat();
+    return await actionToRetry();
   } catch (error) {
     // TODO(ravicious): Replace this with actual check on metadata.
     const isRetryable =
@@ -19,7 +19,7 @@ export async function retryWithRelogin<T>(
         error.message.includes('ssh: cert has expired'));
 
     if (isRetryable) {
-      retryableErrorFromActionToRepeat = error;
+      retryableErrorFromActionToRetry = error;
     } else {
       throw error;
     }
@@ -38,14 +38,14 @@ export async function retryWithRelogin<T>(
     //
     // In that situation, let's just not attempt to relogin and instead let's surface the original
     // error.
-    throw retryableErrorFromActionToRepeat;
+    throw retryableErrorFromActionToRetry;
   }
 
   const rootClusterUri = routing.ensureRootClusterUri(resourceUri);
 
   await login(appContext, rootClusterUri);
 
-  return await actionToRepeat();
+  return await actionToRetry();
 }
 
 // Notice that we don't differentiate between onSuccess and onCancel. In both cases, we're going to
