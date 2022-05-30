@@ -1,4 +1,8 @@
-import { createLogger as createWinston, format, transports } from 'winston';
+import winston, {
+  createLogger as createWinston,
+  format,
+  transports,
+} from 'winston';
 import { isObject } from 'lodash';
 import { Logger, LoggerService } from './types';
 
@@ -12,7 +16,14 @@ export default function createLoggerService(opts: Options): LoggerService {
       }),
       format.printf(({ level, message, timestamp, context }) => {
         const text = stringifier(message as unknown as unknown[]);
-        return `[${timestamp}] [${context}] ${level}: ${text}`;
+        return [
+          `[${timestamp}]`,
+          !opts.passThroughMode && ` [${context}] ${level}`,
+          ':',
+          ` ${text}`,
+        ]
+          .filter(Boolean)
+          .join('');
       })
     ),
     transports: [
@@ -30,13 +41,18 @@ export default function createLoggerService(opts: Options): LoggerService {
       new transports.Console({
         format: format.printf(({ level, message, context }) => {
           const text = stringifier(message as unknown as unknown[]);
-          return `[${context}] ${level}: ${text}`;
+          return [!opts.passThroughMode && `[${context}] ${level}: `, `${text}`]
+            .filter(Boolean)
+            .join('');
         }),
       })
     );
   }
 
   return {
+    getInstance(): winston.Logger {
+      return instance;
+    },
     createLogger(context = 'default'): Logger {
       const logger = instance.child({ context });
       return {
@@ -72,4 +88,8 @@ type Options = {
   dir: string;
   name: string;
   dev?: boolean;
+  /**
+   * Pass logs from other sources. Log level and context are not included in the log message.
+   */
+  passThroughMode?: boolean;
 };
