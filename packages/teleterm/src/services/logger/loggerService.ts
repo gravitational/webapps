@@ -19,7 +19,7 @@ export default function createLoggerService(opts: Options): LoggerService {
       new transports.File({
         maxsize: 4194304, // 4 MB - max size of a single file
         maxFiles: 5,
-        dirname: opts.dir,
+        dirname: opts.dir + '/logs',
         filename: `${opts.name}.log`,
       }),
     ],
