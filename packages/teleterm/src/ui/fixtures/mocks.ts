@@ -21,6 +21,7 @@ export class MockAppContext extends AppContext {
 
 function createLoggerService() {
   return {
+    getInstance: () => undefined,
     createLogger() {
       return {
         error: () => {},

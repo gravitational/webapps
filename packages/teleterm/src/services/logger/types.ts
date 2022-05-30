@@ -1,3 +1,5 @@
+import winston from 'winston';
+
 export interface Logger {
   error(...args: unknown[]): void;
   warn(...args: unknown[]): void;
@@ -5,5 +7,6 @@ export interface Logger {
 }
 
 export interface LoggerService {
+  getInstance(): winston.Logger;
   createLogger(context: string): Logger;
 }
