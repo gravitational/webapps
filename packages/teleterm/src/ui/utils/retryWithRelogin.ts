@@ -2,6 +2,21 @@ import {} from 'teleterm/ui/services/workspacesService/documentsService';
 import { routing } from 'teleterm/ui/uri';
 import AppContext from 'teleterm/ui/appContext';
 
+// retryWithRelogin executes actionToRetry. If actionToRetry throws an error, it checks if the error
+// can be resolved by the user logging in, according to metadata returned from the tshd client.
+//
+// If that's the case, it checks if the user is still looking at the relevant UI and if so, it shows
+// a login modal. After the user successfully logs in, it calls actionToRetry again.
+//
+// Each place using retryWithRelogin must be able to show the error to the user in case the relogin
+// attempt fails. Each place should also offer the user a way to manually retry the action which
+// results in a call to the tshd client.
+//
+// retryWithRelogin should wrap calls to the tshd client as tightly as possible. At the moment, it
+// means actionToRetry will usually involve calls to ClustersService, which so far is the only place
+// that has access to the tshd client.
+//
+// resourceUri is needed only in order to extract the root cluster URI from it.
 export async function retryWithRelogin<T>(
   appContext: AppContext,
   originatingDocumentUri: string,
