@@ -1,6 +1,8 @@
-import {} from 'teleterm/ui/services/workspacesService/documentsService';
 import { routing } from 'teleterm/ui/uri';
 import AppContext from 'teleterm/ui/appContext';
+import Logger from 'teleterm/ui/logger';
+
+const logger = new Logger('retryWithRelogin');
 
 // retryWithRelogin executes actionToRetry. If actionToRetry throws an error, it checks if the error
 // can be resolved by the user logging in, according to metadata returned from the tshd client.
@@ -35,6 +37,7 @@ export async function retryWithRelogin<T>(
 
     if (isRetryable) {
       retryableErrorFromActionToRetry = error;
+      logger.info(`Activating relogin on error ${error}`);
     } else {
       throw error;
     }
