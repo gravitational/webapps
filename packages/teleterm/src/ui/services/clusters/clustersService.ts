@@ -13,6 +13,7 @@ import isMatch from 'design/utils/match';
 import { makeLabelTag } from 'teleport/components/formatters';
 import { Label } from 'teleport/types';
 import { NotificationsService } from 'teleterm/ui/services/notifications';
+import { getClusterName } from 'teleterm/ui/utils/getClusterName';
 
 export function createClusterServiceState(): ClustersServiceState {
   return {
@@ -63,10 +64,12 @@ export class ClustersService extends ImmutableStore<ClustersServiceState> {
     try {
       await this.syncRootCluster(clusterUri);
     } catch (e) {
+      const cluster = this.findCluster(clusterUri);
+      const clusterName =
+        getClusterName(cluster) ||
+        routing.parseClusterUri(clusterUri).params.rootClusterId;
       this.notificationsService.notifyError({
-        title: `Could not synchronize cluster ${
-          routing.parseClusterUri(clusterUri).params.rootClusterId
-        }`,
+        title: `Could not synchronize cluster ${clusterName}`,
         description: e.message,
       });
     }
@@ -155,7 +158,7 @@ export class ClustersService extends ImmutableStore<ClustersServiceState> {
       });
     } catch (error) {
       this.notificationsService.notifyError({
-        title: 'Could not fetch databases',
+        title: 'Could not synchronize database connections',
         description: error.message,
       });
     }
