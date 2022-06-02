@@ -5,22 +5,23 @@ import Logger from 'teleterm/logger';
 const logger = new Logger('retryWithRelogin');
 
 /**
- * retryWithRelogin executes actionToRetry. If actionToRetry throws an error, it checks if the error
- * can be resolved by the user logging in, according to metadata returned from the tshd client.
+ * `retryWithRelogin` executes `actionToRetry`. If `actionToRetry` throws an error, it checks if the
+ * error can be resolved by the user logging in, according to metadata returned from the tshd
+ * client.
  *
  * If that's the case, it checks if the user is still looking at the relevant UI and if so, it shows
- * a login modal. After the user successfully logs in, it calls actionToRetry again.
+ * a login modal. After the user successfully logs in, it calls `actionToRetry` again.
  *
- * Each place using retryWithRelogin must be able to show the error to the user in case the relogin
- * attempt fails. Each place should also offer the user a way to manually retry the action which
- * results in a call to the tshd client.
+ * Each place using `retryWithRelogin` must be able to show the error to the user in case the
+ * relogin attempt fails. Each place should also offer the user a way to manually retry the action
+ * which results in a call to the tshd client.
  *
- * retryWithRelogin should wrap calls to the tshd client as tightly as possible. At the moment, it
- * means actionToRetry will usually involve calls to ClustersService, which so far is the only place
- * that has access to the tshd client.
+ * `retryWithRelogin` should wrap calls to the tshd client as tightly as possible. At the moment, it
+ * means `actionToRetry` will usually involve calls to `ClustersService`, which so far is the only
+ * place that has access to the tshd client.
  *
- * @param {string} resourceUri - The URI used to extract the root cluster URI. That's how we
- * determine the cluster the login modal should use.
+ * @param resourceUri - The URI used to extract the root cluster URI. That's how we determine the
+ * cluster the login modal should use.
  */
 export async function retryWithRelogin<T>(
   appContext: AppContext,
@@ -33,7 +34,6 @@ export async function retryWithRelogin<T>(
     return await actionToRetry();
   } catch (error) {
     // TODO(ravicious): Replace this with actual check on metadata.
-    // const isRetryable = error.isResolvableWithRelogin;
     const isRetryable =
       error instanceof Error &&
       (error.message.includes('ssh: handshake failed') ||
