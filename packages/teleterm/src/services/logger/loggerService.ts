@@ -1,10 +1,7 @@
-import winston, {
-  createLogger as createWinston,
-  format,
-  transports,
-} from 'winston';
+import { createLogger as createWinston, format, transports } from 'winston';
 import { isObject } from 'lodash';
 import { Logger, LoggerService } from './types';
+import split2 from 'split2';
 
 export default function createLoggerService(opts: Options): LoggerService {
   const instance = createWinston({
@@ -50,8 +47,10 @@ export default function createLoggerService(opts: Options): LoggerService {
   }
 
   return {
-    getInstance(): winston.Logger {
-      return instance;
+    pipeProcessOutput(stream): void {
+      stream
+        .pipe(split2(line => ({ level: 'info', message: [line] })))
+        .pipe(instance);
     },
     createLogger(context = 'default'): Logger {
       const logger = instance.child({ context });

@@ -10,7 +10,6 @@ import { subscribeToTabContextMenuEvent } from './contextMenus/tabContextMenu';
 import { subscribeToFileStorageEvents } from 'teleterm/services/fileStorage';
 import path from 'path';
 import createLoggerService from 'teleterm/services/logger';
-import split2 from 'split2';
 
 type Options = {
   settings: RuntimeSettings;
@@ -72,14 +71,10 @@ export default class MainProcess {
       dir: this.settings.userDataDir,
       name: 'tshd',
       passThroughMode: true,
-    }).getInstance();
+    });
 
-    this.tshdProcess.stdout
-      .pipe(split2(line => ({ level: 'info', message: [line] })))
-      .pipe(tshdLogger);
-    this.tshdProcess.stderr
-      .pipe(split2(line => ({ level: 'info', message: [line] })))
-      .pipe(tshdLogger);
+    tshdLogger.pipeProcessOutput(this.tshdProcess.stdout);
+    tshdLogger.pipeProcessOutput(this.tshdProcess.stderr);
 
     this.tshdProcess.on('error', error => {
       this.logger.error('tshd failed to start', error);

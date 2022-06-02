@@ -1,4 +1,4 @@
-import winston from 'winston';
+import { Stream } from 'stream';
 
 export interface Logger {
   error(...args: unknown[]): void;
@@ -7,6 +7,6 @@ export interface Logger {
 }
 
 export interface LoggerService {
-  getInstance(): winston.Logger;
+  pipeProcessOutput(stream: Stream): void;
   createLogger(context: string): Logger;
 }
