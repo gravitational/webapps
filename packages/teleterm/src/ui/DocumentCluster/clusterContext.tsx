@@ -20,8 +20,7 @@ import { useStore, Store } from 'shared/libs/stores';
 import { tsh } from 'teleterm/ui/services/clusters/types';
 import { IAppContext } from 'teleterm/ui/types';
 import { routing } from 'teleterm/ui/uri';
-import { getClusterName } from 'teleterm/ui/utils';
-import { retryWithRelogin } from 'teleterm/ui/utils/retryWithRelogin';
+import { getClusterName, retryWithRelogin } from 'teleterm/ui/utils';
 
 type State = {
   navLocation: NavLocation;

@@ -24,7 +24,7 @@ import { Danger } from 'design/Alert';
 import { MenuLogin, MenuLoginHandle } from 'shared/components/MenuLogin';
 import { MenuLoginTheme } from '../MenuLoginTheme';
 import { useAppContext } from 'teleterm/ui/appContextProvider';
-import { retryWithRelogin } from 'teleterm/ui/utils/retryWithRelogin';
+import { retryWithRelogin } from 'teleterm/ui/utils';
 import { IAppContext } from 'teleterm/ui/types';
 
 export default function Container() {
