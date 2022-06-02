@@ -13,14 +13,10 @@ export default function createLoggerService(opts: Options): LoggerService {
       }),
       format.printf(({ level, message, timestamp, context }) => {
         const text = stringifier(message as unknown as unknown[]);
-        return [
-          `[${timestamp}]`,
-          !opts.passThroughMode && ` [${context}] ${level}`,
-          ':',
-          ` ${text}`,
-        ]
-          .filter(Boolean)
-          .join('');
+        const contextAndLevel = opts.passThroughMode
+          ? ''
+          : ` [${context}] ${level}`;
+        return `[${timestamp}]${contextAndLevel}: ${text}`;
       })
     ),
     transports: [
@@ -38,9 +34,7 @@ export default function createLoggerService(opts: Options): LoggerService {
       new transports.Console({
         format: format.printf(({ level, message, context }) => {
           const text = stringifier(message as unknown as unknown[]);
-          return [!opts.passThroughMode && `[${context}] ${level}: `, `${text}`]
-            .filter(Boolean)
-            .join('');
+          return opts.passThroughMode ? text : `[${context}] ${level}: ${text}`;
         }),
       })
     );
