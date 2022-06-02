@@ -82,7 +82,7 @@ type Options = {
   name: string;
   dev?: boolean;
   /**
-   * Pass logs from other sources. Log level and context are not included in the log message.
+   * Mode for logger handling logs from other sources. Log level and context are not included in the log message.
    */
   passThroughMode?: boolean;
 };
