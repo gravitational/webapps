@@ -1,6 +1,6 @@
 import { routing } from 'teleterm/ui/uri';
 import AppContext from 'teleterm/ui/appContext';
-import Logger from 'teleterm/ui/logger';
+import Logger from 'teleterm/logger';
 
 const logger = new Logger('retryWithRelogin');
 
