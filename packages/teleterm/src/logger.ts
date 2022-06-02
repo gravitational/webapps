@@ -23,11 +23,11 @@ export default class Logger {
   }
 
   private getLogger(): types.Logger {
-    if (!Logger.service) {
-      throw new Error('Logger is not initialized');
-    }
-
     if (!this.logger) {
+      if (!Logger.service) {
+        throw new Error('Logger is not initialized');
+      }
+
       this.logger = Logger.service.createLogger(this.context);
     }
 
