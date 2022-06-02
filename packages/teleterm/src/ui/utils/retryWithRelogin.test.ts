@@ -1,5 +1,10 @@
 import { retryWithRelogin } from './retryWithRelogin';
 import { MockAppContext } from 'teleterm/ui/fixtures/mocks';
+import Logger, { NullService } from 'teleterm/logger';
+
+beforeAll(() => {
+  Logger.init(new NullService());
+});
 
 const makeRetryableError = () => new Error('ssh: handshake failed');
 
