@@ -5,7 +5,7 @@ import Logger from 'teleterm/logger';
 it('do not log sensitive info like password', () => {
   const infoLogger = jest.fn();
   Logger.init({
-    getInstance: () => undefined,
+    pipeProcessOutput: () => {},
     createLogger: () => ({
       info: infoLogger,
       error: () => {},
