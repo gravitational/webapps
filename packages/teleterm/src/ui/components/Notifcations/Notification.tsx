@@ -31,7 +31,7 @@ const notificationConfig: Record<
   },
 };
 
-const autoRemoveDurationMs = 5000;
+const autoRemoveDurationMs = 10_000; // 10s
 
 export function Notification(props: NotificationProps) {
   const [isHovered, setIsHovered] = useState(false);
