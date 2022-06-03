@@ -33,8 +33,6 @@ export default function useUrlFiltering(initialSort: SortType) {
     history.replace(path);
   }
 
-  console.log('using filtering hook');
-
   function setSort(sort: SortType) {
     setParams({ ...params, sort });
   }

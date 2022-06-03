@@ -33,8 +33,6 @@ export default function useServerSidePagination<T extends AgentKind>({
 }: PaginationArgs<T>) {
   const [startKeys, setStartKeys] = useState<string[]>([]);
 
-  console.log('using pagination hook');
-
   const from =
     results.totalCount > 0 ? (startKeys.length - 2) * pageSize + 1 : 0;
   const to = results.totalCount > 0 ? from + results.agents.length - 1 : 0;
