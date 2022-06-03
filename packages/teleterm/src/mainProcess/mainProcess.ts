@@ -73,8 +73,8 @@ export default class MainProcess {
       passThroughMode: true,
     });
 
-    tshdLogger.pipeProcessOutput(this.tshdProcess.stdout);
-    tshdLogger.pipeProcessOutput(this.tshdProcess.stderr);
+    tshdLogger.pipeProcessOutputIntoLogger(this.tshdProcess.stdout);
+    tshdLogger.pipeProcessOutputIntoLogger(this.tshdProcess.stderr);
 
     this.tshdProcess.on('error', error => {
       this.logger.error('tshd failed to start', error);

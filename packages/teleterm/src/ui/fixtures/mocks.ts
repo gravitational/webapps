@@ -21,7 +21,7 @@ export class MockAppContext extends AppContext {
 
 function createLoggerService() {
   return {
-    pipeProcessOutput() {},
+    pipeProcessOutputIntoLogger() {},
     createLogger() {
       return {
         error: () => {},

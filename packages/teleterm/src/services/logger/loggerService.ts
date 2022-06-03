@@ -41,7 +41,7 @@ export default function createLoggerService(opts: Options): LoggerService {
   }
 
   return {
-    pipeProcessOutput(stream): void {
+    pipeProcessOutputIntoLogger(stream): void {
       stream
         .pipe(split2(line => ({ level: 'info', message: [line] })))
         .pipe(instance);
