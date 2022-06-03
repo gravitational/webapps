@@ -1,26 +1,40 @@
 import * as types from 'teleterm/types';
 
-export class DefaultService {
-  createLogger(loggerName: string): types.Logger {
-    const name = loggerName;
+export default class Logger {
+  private static service: types.LoggerService;
+  private logger: types.Logger;
 
-    const log = (level = 'log', ...args) => {
-      console[level](`%c[${name}]`, `color: blue;`, ...args);
-    };
+  // The Logger can be initialized in the top-level scope, but any actual
+  // logging cannot be done in that scope, because we cannot guarantee that
+  // Logger.init has already been called
+  constructor(private context = '') {}
 
-    return {
-      warn(...args: any[]) {
-        log('warn', ...args);
-      },
+  warn(message: string, ...args: any[]) {
+    this.getLogger().warn(message, ...args);
+  }
 
-      info(...args: any[]) {
-        log('info', ...args);
-      },
+  info(message: string, ...args: any[]) {
+    this.getLogger().info(message, ...args);
+  }
 
-      error(...args: any[]) {
-        log('error', ...args);
-      },
-    };
+  error(message: string, ...args: any[]) {
+    this.getLogger().error(message, ...args);
+  }
+
+  static init(service: types.LoggerService) {
+    Logger.service = service;
+  }
+
+  private getLogger(): types.Logger {
+    if (!this.logger) {
+      if (!Logger.service) {
+        throw new Error('Logger is not initialized');
+      }
+
+      this.logger = Logger.service.createLogger(this.context);
+    }
+
+    return this.logger;
   }
 }
 
@@ -35,30 +49,4 @@ export class NullService {
     };
   }
   /* eslint-enable @typescript-eslint/no-unused-vars */
-}
-
-export default class Logger {
-  private logger: types.Logger;
-
-  private static service = new DefaultService();
-
-  constructor(context = '') {
-    this.logger = Logger.service.createLogger(context);
-  }
-
-  warn(message: string, ...args: any[]) {
-    this.logger.warn(message, ...args);
-  }
-
-  info(message: string, ...args: any[]) {
-    this.logger.info(message, ...args);
-  }
-
-  error(message: string, ...args: any[]) {
-    this.logger.error(message, ...args);
-  }
-
-  static init(service: types.LoggerService) {
-    Logger.service = service;
-  }
 }
