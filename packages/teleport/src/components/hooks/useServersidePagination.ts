@@ -17,11 +17,11 @@ limitations under the License.
 import { useState } from 'react';
 import { FetchStatus } from 'design/DataTable/types';
 import { Attempt } from 'shared/hooks/useAttemptNext';
-import { AgentResponse, AgentKinds } from 'teleport/services/agents';
+import { AgentResponse, AgentKind } from 'teleport/services/agents';
 import { UrlResourcesParams } from 'teleport/config';
 import { ResourceUrlQueryParams } from './useUrlFiltering/useUrlFiltering';
 
-export default function useServerSidePagination<T extends AgentKinds>({
+export default function useServerSidePagination<T extends AgentKind>({
   fetchFunc,
   clusterId,
   params,
@@ -86,7 +86,7 @@ export default function useServerSidePagination<T extends AgentKinds>({
   return { from, to, fetchNext, fetchPrev, startKeys, setStartKeys, pageSize };
 }
 
-type PaginationArgs<T extends AgentKinds> = {
+type PaginationArgs<T extends AgentKind> = {
   fetchFunc: (
     clusterId: string,
     params: UrlResourcesParams
