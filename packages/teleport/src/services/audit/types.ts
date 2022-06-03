@@ -443,7 +443,6 @@ export type RawEvents = {
       name: string;
       db_service: string;
       db_name: string;
-      db_user: string;
     }
   >;
   [eventCodes.DATABASE_CREATED]: RawEvent<
@@ -619,7 +618,6 @@ export type RawEvents = {
       name: string;
       db_service: string;
       db_name: string;
-      db_user: string;
       proc_name: string;
     }
   >;
