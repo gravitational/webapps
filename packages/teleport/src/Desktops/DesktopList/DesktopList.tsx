@@ -21,7 +21,7 @@ import { Desktop } from 'teleport/services/desktops';
 import { AgentLabel } from 'teleport/services/agents';
 import { LoginItem, MenuLogin } from 'shared/components/MenuLogin';
 import ServersideSearchPanel from 'teleport/components/ServersideSearchPanel';
-import { ResourceUrlQueryParams } from 'teleport/getUrlQueryParams';
+import { ResourceUrlQueryParams } from 'teleport/components/hooks/useUrlFiltering';
 
 function DesktopList(props: Props) {
   const {

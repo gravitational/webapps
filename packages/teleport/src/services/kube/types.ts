@@ -19,9 +19,3 @@ export interface Kube {
   name: string;
   labels: AgentLabel[];
 }
-
-export type KubesResponse = {
-  kubes: Kube[];
-  startKey?: string;
-  totalCount?: number;
-};

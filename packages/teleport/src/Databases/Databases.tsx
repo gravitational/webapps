@@ -67,7 +67,7 @@ export function Databases(props: State) {
 
   const hasNoDatabases =
     attempt.status === 'success' &&
-    results.databases.length === 0 &&
+    results.agents.length === 0 &&
     isSearchEmpty;
 
   return (
@@ -93,7 +93,7 @@ export function Databases(props: State) {
       {attempt.status !== 'processing' && !hasNoDatabases && (
         <>
           <DatabaseList
-            databases={results.databases}
+            databases={results.agents}
             username={username}
             clusterId={clusterId}
             authType={authType}

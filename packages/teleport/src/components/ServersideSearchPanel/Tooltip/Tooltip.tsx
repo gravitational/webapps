@@ -20,7 +20,9 @@ import { Box } from 'design';
 import { Info } from 'design/Icon';
 import Popover from 'design/Popover';
 
-export default class Tooltip extends React.Component {
+export default class Tooltip extends React.Component<{
+  children: JSX.Element;
+}> {
   anchorEl = createRef();
 
   state = {

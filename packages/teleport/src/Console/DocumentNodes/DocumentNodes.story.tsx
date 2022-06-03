@@ -60,11 +60,9 @@ export function createContext() {
   ctx.fetchClusters = () => {
     return Promise.resolve<any>(clusters);
   };
+  ctx.fetchLogins = () => Promise.resolve(['root']);
   ctx.fetchNodes = () => {
-    return Promise.resolve({
-      logins: ['root'],
-      nodesRes: { agents: nodes, totalCount: nodes.length },
-    });
+    return Promise.resolve({ agents: nodes, totalCount: nodes.length });
   };
 
   return ctx;

@@ -27,13 +27,13 @@ export default {
 export const Loaded = () => <Apps {...props} />;
 
 export const Empty = () => (
-  <Apps {...props} results={{ apps: [] }} isSearchEmpty={true} />
+  <Apps {...props} results={{ agents: [] }} isSearchEmpty={true} />
 );
 
 export const EmptyReadOnly = () => (
   <Apps
     {...props}
-    results={{ apps: [] }}
+    results={{ agents: [] }}
     canCreate={false}
     isSearchEmpty={true}
   />
@@ -52,7 +52,7 @@ export const Failed = () => (
 
 export const props: State = {
   results: {
-    apps,
+    agents: apps,
     totalCount: apps.length,
   },
   fetchStatus: '',

@@ -28,13 +28,13 @@ export default {
 export const Loaded = () => <Kubes {...props} />;
 
 export const Empty = () => (
-  <Kubes {...props} results={{ kubes: [] }} isSearchEmpty={true} />
+  <Kubes {...props} results={{ agents: [] }} isSearchEmpty={true} />
 );
 
 export const EmptyReadOnly = () => (
   <Kubes
     {...props}
-    results={{ kubes: [] }}
+    results={{ agents: [] }}
     canCreate={false}
     isSearchEmpty={true}
   />
@@ -53,7 +53,7 @@ export const Failed = () => (
 
 export const props: State = {
   results: {
-    kubes,
+    agents: kubes,
     totalCount: kubes.length,
   },
   fetchStatus: '',

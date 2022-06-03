@@ -76,7 +76,9 @@ export function Nodes(props: State) {
   }
 
   const hasNoNodes =
-    attempt.status === 'success' && results.nodes.length === 0 && isSearchEmpty;
+    attempt.status === 'success' &&
+    results.agents.length === 0 &&
+    isSearchEmpty;
 
   return (
     <FeatureBox>
@@ -106,7 +108,7 @@ export function Nodes(props: State) {
       {attempt.status !== 'processing' && !hasNoNodes && (
         <>
           <NodeList
-            nodes={results.nodes}
+            nodes={results.agents}
             totalCount={results.totalCount}
             onLoginMenuOpen={getNodeLoginOptions}
             onLoginSelect={onLoginSelect}

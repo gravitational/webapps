@@ -27,13 +27,13 @@ export default {
 export const Loaded = () => <Databases {...props} />;
 
 export const Empty = () => (
-  <Databases {...props} results={{ databases: [] }} isSearchEmpty={true} />
+  <Databases {...props} results={{ agents: [] }} isSearchEmpty={true} />
 );
 
 export const EmptyReadOnly = () => (
   <Databases
     {...props}
-    results={{ databases: [] }}
+    results={{ agents: [] }}
     canCreate={false}
     isSearchEmpty={true}
   />
@@ -52,7 +52,7 @@ export const Failed = () => (
 
 export const props: State = {
   results: {
-    databases,
+    agents: databases,
     totalCount: databases.length,
   },
   fetchStatus: '',

@@ -28,9 +28,3 @@ export interface BashCommand {
   text: string;
   expires: string;
 }
-
-export type NodesResponse = {
-  nodes: Node[];
-  startKey?: string;
-  totalCount?: number;
-};

@@ -29,7 +29,7 @@ export const Loaded = () => <Nodes {...props} />;
 export const Empty = () => (
   <Nodes
     {...props}
-    results={{ nodes: [], totalCount: 0 }}
+    results={{ agents: [], totalCount: 0 }}
     isSearchEmpty={true}
   />
 );
@@ -37,7 +37,7 @@ export const Empty = () => (
 export const EmptyReadOnly = () => (
   <Nodes
     {...props}
-    results={{ nodes: [], totalCount: 0 }}
+    results={{ agents: [], totalCount: 0 }}
     isSearchEmpty={true}
     canCreate={false}
   />
@@ -56,7 +56,7 @@ export const Failed = () => (
 
 const props: State = {
   results: {
-    nodes,
+    agents: nodes,
     totalCount: nodes.length,
   },
   fetchStatus: '',

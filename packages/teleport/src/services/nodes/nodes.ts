@@ -22,8 +22,8 @@ import makeNode from './makeNode';
 
 class NodeService {
   fetchNodes(
-    clusterId?: string,
-    params?: UrlResourcesParams
+    clusterId: string,
+    params: UrlResourcesParams
   ): Promise<AgentResponse<Node>> {
     return api.get(cfg.getClusterNodesUrl(clusterId, params)).then(json => {
       const items = json?.items || [];

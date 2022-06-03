@@ -31,9 +31,3 @@ export type DbProtocol =
   | 'mongodb'
   | 'sqlserver'
   | 'redis';
-
-export type DatabasesResponse = {
-  databases: Database[];
-  startKey?: string;
-  totalCount?: number;
-};

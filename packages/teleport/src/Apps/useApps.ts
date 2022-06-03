@@ -15,54 +15,48 @@
  */
 
 import { useState, useEffect } from 'react';
-import { useLocation } from 'react-router';
-import { FetchStatus, SortType } from 'design/DataTable/types';
+import { FetchStatus } from 'design/DataTable/types';
 import useAttempt from 'shared/hooks/useAttemptNext';
-import { AppsResponse } from 'teleport/services/apps';
-import history from 'teleport/services/history';
+import { App } from 'teleport/services/apps';
 import Ctx from 'teleport/teleportContext';
-import getResourceUrlQueryParams, {
-  ResourceUrlQueryParams,
-} from 'teleport/getUrlQueryParams';
 import useStickyClusterId from 'teleport/useStickyClusterId';
-import labelClick from 'teleport/labelClick';
-import { AgentLabel } from 'teleport/services/agents';
+import { AgentResponse } from 'teleport/services/agents';
+import {
+  useUrlFiltering,
+  useServerSidePagination,
+} from 'teleport/components/hooks';
 
 export default function useApps(ctx: Ctx) {
   const canCreate = ctx.storeUser.getTokenAccess().create;
-  const { search, pathname } = useLocation();
-  const [startKeys, setStartKeys] = useState<string[]>([]);
   const [isAddAppVisible, setAppAddVisible] = useState(false);
   const { clusterId, isLeafCluster } = useStickyClusterId();
   const { attempt, setAttempt } = useAttempt('processing');
   const isEnterprise = ctx.isEnterprise;
   const [fetchStatus, setFetchStatus] = useState<FetchStatus>('');
-  const [params, setParams] = useState<ResourceUrlQueryParams>({
-    sort: { fieldName: 'name', dir: 'ASC' },
-    ...getResourceUrlQueryParams(search),
-  });
-
-  const [results, setResults] = useState<AppsResponse>({
-    apps: [],
+  const [results, setResults] = useState<AgentResponse<App>>({
+    agents: [],
     startKey: '',
     totalCount: 0,
   });
 
-  const isSearchEmpty = !params?.query && !params?.search;
-
-  const pageSize = 15;
-
-  const from =
-    results.totalCount > 0 ? (startKeys.length - 2) * pageSize + 1 : 0;
-  const to = results.totalCount > 0 ? from + results.apps.length - 1 : 0;
+  const { params, search, ...filteringProps } = useUrlFiltering({
+    fieldName: 'name',
+    dir: 'ASC',
+  });
+  const { setStartKeys, pageSize, ...paginationProps } =
+    useServerSidePagination({
+      fetchFunc: ctx.appService.fetchApps,
+      clusterId,
+      params,
+      results,
+      setResults,
+      setFetchStatus,
+      setAttempt,
+    });
 
   useEffect(() => {
     fetch();
   }, [clusterId, search]);
-
-  function replaceHistory(path: string) {
-    history.replace(path);
-  }
 
   const hideAddApp = () => {
     setAppAddVisible(false);
@@ -73,79 +67,22 @@ export default function useApps(ctx: Ctx) {
     setAppAddVisible(true);
   };
 
-  function setSort(sort: SortType) {
-    setParams({ ...params, sort });
-  }
-
   function fetch() {
     setAttempt({ status: 'processing' });
     ctx.appService
       .fetchApps(clusterId, { ...params, limit: pageSize })
       .then(res => {
-        setResults({
-          apps: res.agents,
-          startKey: res.startKey,
-          totalCount: res.totalCount,
-        });
+        setResults(res);
         setFetchStatus(res.startKey ? '' : 'disabled');
         setStartKeys(['', res.startKey]);
         setAttempt({ status: 'success' });
       })
       .catch((err: Error) => {
         setAttempt({ status: 'failed', statusText: err.message });
-        setResults({ ...results, apps: [], totalCount: 0 });
+        setResults({ ...results, agents: [], totalCount: 0 });
         setStartKeys(['']);
       });
   }
-
-  const fetchNext = () => {
-    setFetchStatus('loading');
-    ctx.appService
-      .fetchApps(clusterId, {
-        ...params,
-        limit: pageSize,
-        startKey: results.startKey,
-      })
-      .then(res => {
-        setResults({
-          ...results,
-          apps: res.agents,
-          startKey: res.startKey,
-        });
-        setFetchStatus(res.startKey ? '' : 'disabled');
-        setStartKeys([...startKeys, res.startKey]);
-      })
-      .catch((err: Error) => {
-        setAttempt({ status: 'failed', statusText: err.message });
-      });
-  };
-
-  const fetchPrev = () => {
-    setFetchStatus('loading');
-    ctx.appService
-      .fetchApps(clusterId, {
-        ...params,
-        limit: pageSize,
-        startKey: startKeys[startKeys.length - 3],
-      })
-      .then(res => {
-        const tempStartKeys = startKeys;
-        tempStartKeys.pop();
-        setStartKeys(tempStartKeys);
-        setResults({
-          ...results,
-          apps: res.agents,
-          startKey: res.startKey,
-        });
-        setFetchStatus('');
-      })
-      .catch((err: Error) => {
-        setAttempt({ status: 'failed', statusText: err.message });
-      });
-  };
-
-  const onLabelClick = (label: AgentLabel) =>
-    labelClick(label, params, setParams, pathname, replaceHistory);
 
   return {
     clusterId,
@@ -157,20 +94,11 @@ export default function useApps(ctx: Ctx) {
     canCreate,
     attempt,
     results,
-    fetchNext,
-    fetchPrev,
-    pageSize,
-    from,
-    to,
-    params,
-    setParams,
-    startKeys,
-    setSort,
-    pathname,
-    replaceHistory,
     fetchStatus,
-    isSearchEmpty,
-    onLabelClick,
+    params,
+    pageSize,
+    ...filteringProps,
+    ...paginationProps,
   };
 }
 

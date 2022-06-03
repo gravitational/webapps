@@ -20,7 +20,9 @@ import NodesService from 'teleport/services/nodes';
 test('correct formatting of nodes fetch response', async () => {
   const nodesService = new NodesService();
   jest.spyOn(api, 'get').mockResolvedValue(mockResponse);
-  const response = await nodesService.fetchNodes('does-not-matter');
+  const response = await nodesService.fetchNodes('does-not-matter', {
+    search: 'does-not-matter',
+  });
 
   expect(response).toEqual({
     agents: [
@@ -42,7 +44,9 @@ test('null response from nodes fetch', async () => {
   const nodesService = new NodesService();
   jest.spyOn(api, 'get').mockResolvedValue(null);
 
-  const response = await nodesService.fetchNodes('does-not-matter');
+  const response = await nodesService.fetchNodes('does-not-matter', {
+    search: 'does-not-matter',
+  });
 
   expect(response).toEqual({
     agents: [],
@@ -54,7 +58,9 @@ test('null response from nodes fetch', async () => {
 test('null labels field in nodes fetch response', async () => {
   const nodesService = new NodesService();
   jest.spyOn(api, 'get').mockResolvedValue({ items: [{ labels: null }] });
-  const response = await nodesService.fetchNodes('does-not-matter');
+  const response = await nodesService.fetchNodes('does-not-matter', {
+    search: 'does-not-matter',
+  });
 
   expect(response.agents[0].labels).toEqual([]);
 });

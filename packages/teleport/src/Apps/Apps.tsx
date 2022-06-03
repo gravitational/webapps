@@ -62,7 +62,9 @@ export function Apps(props: State) {
   } = props;
 
   const hasNoApps =
-    attempt.status === 'success' && results.apps.length === 0 && isSearchEmpty;
+    attempt.status === 'success' &&
+    results.agents.length === 0 &&
+    isSearchEmpty;
 
   return (
     <FeatureBox>
@@ -88,7 +90,7 @@ export function Apps(props: State) {
       )}
       {attempt.status !== 'processing' && !hasNoApps && (
         <AppList
-          apps={results.apps}
+          apps={results.agents}
           fetchNext={fetchNext}
           fetchPrev={fetchPrev}
           fetchStatus={fetchStatus}

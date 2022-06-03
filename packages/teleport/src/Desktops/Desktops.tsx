@@ -63,7 +63,7 @@ export function Desktops(props: State) {
 
   const hasNoDesktops =
     attempt.status === 'success' &&
-    results.desktops.length === 0 &&
+    results.agents.length === 0 &&
     isSearchEmpty;
 
   return (
@@ -92,7 +92,7 @@ export function Desktops(props: State) {
       )}
       {attempt.status !== 'processing' && !hasNoDesktops && (
         <DesktopList
-          desktops={results.desktops}
+          desktops={results.agents}
           username={username}
           clusterId={clusterId}
           onLoginMenuOpen={getWindowsLoginOptions}

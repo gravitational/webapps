@@ -142,17 +142,12 @@ export default class ConsoleContext {
     });
   }
 
+  fetchLogins() {
+    return serviceUser.fetchUserContext().then(user => user.acl.sshLogins);
+  }
+
   fetchNodes(clusterId: string, params?: UrlResourcesParams) {
-    return Promise.all([
-      serviceUser.fetchUserContext(),
-      this.nodesService.fetchNodes(clusterId, params),
-    ]).then(values => {
-      const [user, nodesRes] = values;
-      return {
-        logins: user.acl.sshLogins,
-        nodesRes,
-      };
-    });
+    return this.nodesService.fetchNodes(clusterId, params);
   }
 
   fetchClusters() {

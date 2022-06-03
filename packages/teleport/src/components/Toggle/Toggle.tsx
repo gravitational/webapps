@@ -20,7 +20,7 @@ import styled from 'styled-components';
 export default function Toggle({ isToggled, onToggle }: Props) {
   return (
     <StyledWrapper>
-      <StyledInput checked={isToggled} onChange={() => onToggle()} />
+      <StyledInput checked={isToggled} onChange={onToggle} />
       <StyledSlider />
     </StyledWrapper>
   );

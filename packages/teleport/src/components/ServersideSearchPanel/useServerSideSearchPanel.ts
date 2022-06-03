@@ -16,10 +16,9 @@ limitations under the License.
 
 import { useEffect, useState } from 'react';
 import {
-  decodeUrlQueryParam,
+  encodeUrlQueryParams,
   ResourceUrlQueryParams,
-} from 'teleport/getUrlQueryParams';
-import encodeUrlQueryParams from 'teleport/encodeUrlQueryParams';
+} from 'teleport/components/hooks/useUrlFiltering';
 
 export default function useServersideSearchPanel(props: Props) {
   const { pathname, params, setParams, replaceHistory } = props;
@@ -83,6 +82,15 @@ export default function useServersideSearchPanel(props: Props) {
     onSubmitSearch,
     ...props,
   };
+}
+
+function decodeUrlQueryParam(param: string) {
+  // Prevents URI malformed error by replacing lone % with %25
+  const decodedQuery = decodeURIComponent(
+    param.replace(/%(?![0-9][0-9a-fA-F]+)/g, '%25')
+  );
+
+  return decodedQuery;
 }
 
 export type Props = {

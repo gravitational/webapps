@@ -27,9 +27,3 @@ export type Desktop = {
   // Labels.
   labels: AgentLabel[];
 };
-
-export type DesktopsResponse = {
-  desktops: Desktop[];
-  startKey?: string;
-  totalCount?: number;
-};
