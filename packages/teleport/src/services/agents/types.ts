@@ -20,9 +20,9 @@ import { Node } from 'teleport/services/nodes';
 import { Kube } from 'teleport/services/kube';
 import { Desktop } from 'teleport/services/desktops';
 
-export type AgentKinds = App | Database | Node | Kube | Desktop;
+export type AgentKind = App | Database | Node | Kube | Desktop;
 
-export type AgentResponse<T extends AgentKinds> = {
+export type AgentResponse<T extends AgentKind> = {
   agents: T[];
   startKey?: string;
   totalCount?: number;
