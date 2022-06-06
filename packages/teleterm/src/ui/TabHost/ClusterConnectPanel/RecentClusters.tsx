@@ -28,7 +28,7 @@ export function RecentClusters() {
   }
 
   return (
-    <Card py={3} maxWidth="400px" bg="primary.main">
+    <Card py={3} maxWidth="480px" mx={4} mb={4} bg="primary.main">
       <Text px={3} bold fontSize={3} mb={1} color="light">
         Recent clusters
       </Text>
