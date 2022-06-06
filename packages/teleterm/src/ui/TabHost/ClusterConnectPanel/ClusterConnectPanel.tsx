@@ -13,7 +13,7 @@ export function ClusterConnectPanel() {
   }
 
   return (
-    <Flex m="auto" flexDirection="column">
+    <Flex m="auto" flexDirection="column" minWidth={0}>
       <Flex
         m="auto"
         width="370px"

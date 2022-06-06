@@ -45,7 +45,7 @@ export function RecentClusters() {
           >
             <Text
               color="text.primary"
-              mr={1}
+              mr={2}
               title={cluster.userWithClusterName}
               css={`
                 white-space: nowrap;
