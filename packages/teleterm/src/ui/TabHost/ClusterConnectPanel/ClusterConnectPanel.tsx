@@ -17,8 +17,9 @@ export function ClusterConnectPanel() {
     <ScrollingContainer>
       <Flex m="auto" flexDirection="column" minWidth={0}>
         <Flex
-          mt={2}
+          m="auto"
           width="370px"
+          pt={2}
           pb={5}
           flexDirection="column"
           alignItems="center"
