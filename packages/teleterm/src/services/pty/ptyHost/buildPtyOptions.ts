@@ -1,20 +1,54 @@
 import { RuntimeSettings } from 'teleterm/mainProcess/types';
 import { PtyProcessOptions } from 'teleterm/sharedProcess/ptyHost';
-import { resolveShellEnvCached } from './resolveShellEnv';
-import { PtyCommand } from '../types';
+import {
+  resolveShellEnvCached,
+  ResolveShellEnvTimeoutError,
+} from './resolveShellEnv';
+import { PtyCommand, PtyProcessCreationStatus } from '../types';
 
 export async function buildPtyOptions(
   settings: RuntimeSettings,
   cmd: PtyCommand
-): Promise<PtyProcessOptions> {
+): Promise<{
+  processOptions: PtyProcessOptions;
+  creationStatus: PtyProcessCreationStatus;
+}> {
+  const { shellEnv, creationStatus } = await resolveShellEnvCached(
+    settings.defaultShell
+  )
+    .then(resolvedEnv => ({
+      shellEnv: resolvedEnv,
+      creationStatus: PtyProcessCreationStatus.Ok,
+    }))
+    .catch(error => {
+      if (error instanceof ResolveShellEnvTimeoutError) {
+        return {
+          shellEnv: undefined,
+          creationStatus: PtyProcessCreationStatus.ResolveShellEnvTimeout,
+        };
+      }
+      throw error;
+    });
+
   const env = {
     ...process.env,
-    ...(await resolveShellEnvCached(settings.defaultShell)),
+    ...shellEnv,
     TELEPORT_HOME: settings.tshd.homeDir,
     TELEPORT_CLUSTER: cmd.actualClusterName,
     TELEPORT_PROXY: cmd.proxyHost,
   };
 
+  return {
+    processOptions: getPtyProcessOptions(settings, cmd, env),
+    creationStatus,
+  };
+}
+
+function getPtyProcessOptions(
+  settings: RuntimeSettings,
+  cmd: PtyCommand,
+  env: typeof process.env
+): PtyProcessOptions {
   switch (cmd.kind) {
     case 'pty.shell':
       // Teleport Connect bundles a tsh binary, but the user might have one already on their system.
