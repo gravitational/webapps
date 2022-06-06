@@ -40,12 +40,7 @@ export default class AppContext {
   connectionTracker: ConnectionTrackerService;
 
   constructor(config: ElectronGlobals) {
-    const {
-      tshClient,
-      ptyServiceClient,
-      mainProcessClient,
-      notificationsEventEmitter,
-    } = config;
+    const { tshClient, ptyServiceClient, mainProcessClient } = config;
     this.mainProcessClient = mainProcessClient;
     this.statePersistenceService = new StatePersistenceService(
       this.mainProcessClient.fileStorage
@@ -82,17 +77,6 @@ export default class AppContext {
       this.workspacesService,
       this.clustersService
     );
-
-    notificationsEventEmitter
-      .on('notifyInfo', value => {
-        this.notificationsService.notifyInfo(value);
-      })
-      .on('notifyWarning', value => {
-        this.notificationsService.notifyWarning(value);
-      })
-      .on('notifyError', value => {
-        this.notificationsService.notifyError(value);
-      });
   }
 
   async init(): Promise<void> {

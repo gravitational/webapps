@@ -46,15 +46,11 @@ import { spawn } from 'child_process';
 import { memoize } from 'lodash';
 
 const logger = new Logger('resolveShellEnv()');
-const resolveShellMaxTime = 10_000; // 10s
+const resolveShellMaxTime = 8000; // 8s
 
 export const resolveShellEnvCached = memoize(resolveShellEnv);
 
-export class ResolveShellEnvTimeoutError extends Error {}
-
-async function resolveShellEnv(
-  shell: string
-): Promise<typeof process.env | undefined> {
+async function resolveShellEnv(shell: string): Promise<typeof process.env | undefined> {
   if (process.platform === 'win32') {
     logger.trace('skipped Windows platform');
     return;
@@ -106,7 +102,11 @@ async function resolveUnixShellEnv(
     abortSignal.onabort = () => {
       child.kill();
       logger.warn('Reading shell env timed out');
-      reject(new ResolveShellEnvTimeoutError());
+      reject(
+        new Error(
+          'Unable to resolve shell environment. Please review shell configuration.'
+        )
+      );
     };
 
     child.on('error', err => {

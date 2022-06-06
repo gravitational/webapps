@@ -1,34 +1,15 @@
 import { RuntimeSettings } from 'teleterm/mainProcess/types';
 import { PtyProcessOptions } from 'teleterm/sharedProcess/ptyHost';
-import {
-  resolveShellEnvCached,
-  ResolveShellEnvTimeoutError,
-} from './resolveShellEnv';
+import { resolveShellEnvCached } from './resolveShellEnv';
 import { PtyCommand } from '../types';
-import { NotificationsEventEmitter } from 'teleterm/services/notificationsEventEmitter';
 
 export async function buildPtyOptions(
   settings: RuntimeSettings,
-  cmd: PtyCommand,
-  notificationsEventEmitter: NotificationsEventEmitter
+  cmd: PtyCommand
 ): Promise<PtyProcessOptions> {
-  const shellEnv = await resolveShellEnvCached(settings.defaultShell).catch(
-    error => {
-      if (error instanceof ResolveShellEnvTimeoutError) {
-        return notificationsEventEmitter.emit('notifyWarning', {
-          title: 'Unable to resolve shell environment',
-          description:
-            'In order to source the environment variables the new shell session is opened, but the script took more than 10 seconds to finish. ' +
-            'This most likely means that your shell start up took longer to execute or it waits for an input during startup.',
-        });
-      }
-      throw error;
-    }
-  );
-
   const env = {
     ...process.env,
-    ...shellEnv,
+    ...(await resolveShellEnvCached(settings.defaultShell)),
     TELEPORT_HOME: settings.tshd.homeDir,
     TELEPORT_CLUSTER: cmd.actualClusterName,
     TELEPORT_PROXY: cmd.proxyHost,
