@@ -120,8 +120,8 @@ async function createPtyProcess(
       ctx.notificationsService.notifyWarning({
         title: 'Unable to resolve shell environment',
         description:
-          'In order to source the environment variables the new shell session is opened, but the script took more than 10 seconds to finish. ' +
-          'This most likely means that your shell start up took longer to execute or it waits for an input during startup.',
+          "In order to source the environment variables, a new temporary shell session is opened and then immediately closed, but it didn't close within 10 seconds. " +
+          'This most likely means that your shell startup took longer to execute or that your shell waits for an input during startup.',
       });
     }
     return process;
