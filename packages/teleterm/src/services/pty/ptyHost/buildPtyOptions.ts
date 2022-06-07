@@ -13,9 +13,7 @@ export async function buildPtyOptions(
   processOptions: PtyProcessOptions;
   creationStatus: PtyProcessCreationStatus;
 }> {
-  const { shellEnv, creationStatus } = await resolveShellEnvCached(
-    settings.defaultShell
-  )
+  return resolveShellEnvCached(settings.defaultShell)
     .then(resolvedEnv => ({
       shellEnv: resolvedEnv,
       creationStatus: PtyProcessCreationStatus.Ok,
@@ -28,20 +26,21 @@ export async function buildPtyOptions(
         };
       }
       throw error;
+    })
+    .then(({ shellEnv, creationStatus }) => {
+      const combinedEnv = {
+        ...process.env,
+        ...shellEnv,
+        TELEPORT_HOME: settings.tshd.homeDir,
+        TELEPORT_CLUSTER: cmd.actualClusterName,
+        TELEPORT_PROXY: cmd.proxyHost,
+      };
+
+      return {
+        processOptions: getPtyProcessOptions(settings, cmd, combinedEnv),
+        creationStatus,
+      };
     });
-
-  const env = {
-    ...process.env,
-    ...shellEnv,
-    TELEPORT_HOME: settings.tshd.homeDir,
-    TELEPORT_CLUSTER: cmd.actualClusterName,
-    TELEPORT_PROXY: cmd.proxyHost,
-  };
-
-  return {
-    processOptions: getPtyProcessOptions(settings, cmd, env),
-    creationStatus,
-  };
 }
 
 function getPtyProcessOptions(
