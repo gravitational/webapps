@@ -106,7 +106,7 @@ async function resolveUnixShellEnv(
     abortSignal.onabort = () => {
       child.kill();
       logger.warn('Reading shell env timed out');
-      reject(reject(new ResolveShellEnvTimeoutError()));
+      reject(new ResolveShellEnvTimeoutError());
     };
 
     child.on('error', err => {
