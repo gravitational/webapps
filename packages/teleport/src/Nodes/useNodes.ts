@@ -22,7 +22,7 @@ import history from 'teleport/services/history';
 import Ctx from 'teleport/teleportContext';
 import { StickyCluster } from 'teleport/types';
 import cfg from 'teleport/config';
-import { NodesResponse } from 'teleport/services/nodes';
+import { Node, NodesResponse } from 'teleport/services/nodes';
 import { openNewTab } from 'teleport/lib/util';
 import getResourceUrlQueryParams, {
   ResourceUrlQueryParams,
@@ -37,7 +37,6 @@ export default function useNodes(ctx: Ctx, stickyCluster: StickyCluster) {
   const { attempt, setAttempt } = useAttempt('processing');
   const [isAddNodeVisible, setIsAddNodeVisible] = useState(false);
   const canCreate = ctx.storeUser.getTokenAccess().create;
-  const logins = ctx.storeUser.getSshLogins();
   const [fetchStatus, setFetchStatus] = useState<FetchStatus>('');
   const [params, setParams] = useState<ResourceUrlQueryParams>({
     sort: { fieldName: 'hostname', dir: 'ASC' },
@@ -67,7 +66,8 @@ export default function useNodes(ctx: Ctx, stickyCluster: StickyCluster) {
   }
 
   function getNodeLoginOptions(serverId: string) {
-    return makeOptions(clusterId, serverId, logins);
+    const node = results.nodes.find(node => node.id == serverId);
+    return makeOptions(clusterId, node);
   }
 
   const startSshSession = (login: string, serverId: string) => {
@@ -187,15 +187,14 @@ export default function useNodes(ctx: Ctx, stickyCluster: StickyCluster) {
   };
 }
 
-function makeOptions(
-  clusterId: string,
-  serverId = '',
-  logins = [] as string[]
-) {
-  return logins.map(login => {
+function makeOptions(clusterId: string, node: Node | undefined) {
+  const nodeLogins = node?.sshLogins || [];
+  nodeLogins.unshift('root');
+
+  return nodeLogins.map(login => {
     const url = cfg.getSshConnectRoute({
       clusterId,
-      serverId,
+      serverId: node?.id || '',
       login,
     });
 
