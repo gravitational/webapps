@@ -28,7 +28,7 @@ export default function useClusterLogin(props: Props) {
   const [shouldPromptSsoStatus, promptSsoStatus] = useState(false);
   const [shouldPromptHardwareKey, promptHardwareKey] = useState(false);
 
-  const [initAttempt, init] = useAsync(() => {
+  const [initAttempt, init, setInitAttempt] = useAsync(() => {
     return clustersService.getAuthSettings(clusterUri);
   });
 
@@ -75,7 +75,15 @@ export default function useClusterLogin(props: Props) {
   };
 
   useEffect(() => {
-    init();
+    init().then(resp => {
+      const [cfg, err] = resp;
+      if (!err && cfg.preferredMfa === 'u2f') {
+        const statusText = `the U2F API for hardware keys is deprecated, \
+        please notify your system administrator to update cluster \
+        settings to use WebAuthn as the second factor protocol.`;
+        setInitAttempt({ status: 'error', statusText });
+      }
+    });
   }, []);
 
   useEffect(() => {
