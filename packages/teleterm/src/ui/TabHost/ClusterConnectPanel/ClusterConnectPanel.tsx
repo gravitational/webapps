@@ -1,5 +1,5 @@
 import React from 'react';
-import { ButtonPrimary, Flex, Text } from 'design';
+import { Box, ButtonPrimary, Flex, Text } from 'design';
 import styled from 'styled-components';
 import clusterPng from './clusters.png';
 import Image from 'design/Image';
@@ -15,11 +15,9 @@ export function ClusterConnectPanel() {
 
   return (
     <ScrollingContainer>
-      <Flex m="auto" flexDirection="column" minWidth={0}>
+      <Box width="100%" m="auto" pb={3} pt={1} px={3}>
         <Flex
-          m="auto"
-          width="370px"
-          pt={2}
+          minWidth="370px"
           pb={5}
           flexDirection="column"
           alignItems="center"
@@ -37,7 +35,7 @@ export function ClusterConnectPanel() {
           </ButtonPrimary>
         </Flex>
         <RecentClusters />
-      </Flex>
+      </Box>
     </ScrollingContainer>
   );
 }

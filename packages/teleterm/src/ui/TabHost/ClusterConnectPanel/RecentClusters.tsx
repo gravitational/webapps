@@ -28,11 +28,11 @@ export function RecentClusters() {
   }
 
   return (
-    <Card py={3} maxWidth="480px" mx={4} mb={4} bg="primary.main">
-      <Text px={3} bold fontSize={3} mb={1} color="light">
+    <Card p={3} maxWidth="480px" bg="primary.main" m="auto">
+      <Text bold fontSize={3} mb={1} color="light">
         Recent clusters
       </Text>
-      <Box as="ul" px={3} m={0} maxHeight="110px" overflow="auto">
+      <Box as="ul" p={0} m={0} maxHeight="110px" overflow="auto">
         {rootClusters.map((cluster, index) => (
           <Box
             as="li"
