@@ -19,7 +19,7 @@ import { useLocation } from 'react-router';
 import { FetchStatus, SortType } from 'design/DataTable/types';
 import useAttempt from 'shared/hooks/useAttemptNext';
 import history from 'teleport/services/history';
-import { Node, NodesResponse } from 'teleport/services/nodes';
+import type { Node, NodesResponse } from 'teleport/services/nodes';
 import getResourceUrlQueryParams, {
   ResourceUrlQueryParams,
 } from 'teleport/getUrlQueryParams';
