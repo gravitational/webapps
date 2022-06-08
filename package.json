@@ -20,7 +20,6 @@
     "build-e": "yarn build-teleport-e",
     "build": "yarn lint && yarn type-check && yarn build-oss && yarn build-e",
     "lint": "eslint --ext .js,.jsx,.ts,.tsx packages/",
-    "get-teleport-connect-dir": "node -p \"require('./package.json').teleportConnectDir\"",
     "type-check": "tsc --noEmit"
   },
   "private": true,
@@ -37,6 +36,5 @@
       "packages/webapps*/**",
       "packages/teleterm"
     ]
-  },
-  "teleportConnectDir": "packages/teleterm"
+  }
 }
