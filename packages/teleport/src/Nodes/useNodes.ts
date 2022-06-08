@@ -193,9 +193,9 @@ export default function useNodes(ctx: Ctx, stickyCluster: StickyCluster) {
 
 function makeOptions(clusterId: string, node: Node | undefined) {
   const nodeLogins = node?.sshLogins || [];
-  nodeLogins.unshift('root');
+  const logins = sortLogins(nodeLogins);
 
-  return nodeLogins.map(login => {
+  return logins.map(login => {
     const url = cfg.getSshConnectRoute({
       clusterId,
       serverId: node?.id || '',
@@ -208,5 +208,16 @@ function makeOptions(clusterId: string, node: Node | undefined) {
     };
   });
 }
+
+// sort logins by making 'root' as the first in the list
+const sortLogins = (logins: string[]) => {
+  const noRoot = logins.sort().filter(l => l !== 'root');
+  if (noRoot.length === logins.length) {
+    return logins;
+  }
+
+  noRoot.unshift('root');
+  return noRoot;
+};
 
 export type State = ReturnType<typeof useNodes>;

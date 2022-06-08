@@ -158,9 +158,9 @@ export default function useNodes({ clusterId, id }: stores.DocumentNodes) {
 
   function makeOptions(clusterId: string, node: Node | undefined) {
     const nodeLogins = node?.sshLogins || [];
-    nodeLogins.unshift('root');
+    const logins = sortLogins(nodeLogins);
 
-    return nodeLogins.map(login => {
+    return logins.map(login => {
       const url = consoleCtx.getSshDocumentUrl({
         clusterId,
         serverId: node?.id || '',
@@ -198,3 +198,14 @@ export default function useNodes({ clusterId, id }: stores.DocumentNodes) {
     onLabelClick,
   };
 }
+
+// sort logins by making 'root' as the first in the list
+const sortLogins = (logins: string[]) => {
+  const noRoot = logins.sort().filter(l => l !== 'root');
+  if (noRoot.length === logins.length) {
+    return logins;
+  }
+
+  noRoot.unshift('root');
+  return noRoot;
+};
