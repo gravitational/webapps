@@ -446,7 +446,7 @@ exports[`list of all events 1`] = `
               color="light"
               font-size="3"
             />
-            Access Request Resource Searched
+            Resource Access Request Search
           </div>
         </td>
         <td
