@@ -118,10 +118,10 @@ async function createPtyProcess(
 
     if (creationStatus === PtyProcessCreationStatus.ResolveShellEnvTimeout) {
       ctx.notificationsService.notifyWarning({
-        title: 'Unable to resolve shell environment',
+        title: 'Could not source environment variables for shell session',
         description:
           "In order to source the environment variables, a new temporary shell session is opened and then immediately closed, but it didn't close within 10 seconds. " +
-          'This most likely means that your shell startup took longer to execute or that your shell waits for an input during startup.',
+          'This most likely means that your shell startup took longer to execute or that your shell waits for an input during startup. \nPlease check your startup script.',
       });
     }
     return process;
