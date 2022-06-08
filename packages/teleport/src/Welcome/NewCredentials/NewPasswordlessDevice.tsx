@@ -16,7 +16,7 @@
 
 import React, { useState } from 'react';
 import { Text, Box, ButtonPrimary, ButtonText } from 'design';
-import { Danger } from 'design/Alert';
+import { Danger, Info } from 'design/Alert';
 import FieldInput from 'shared/components/FieldInput';
 import Validation, { Validator } from 'shared/components/Validation';
 import { requiredField } from 'shared/components/Validation/rules';
@@ -55,6 +55,8 @@ export function NewPasswordlessDevice(props: Props & SliderProps<LoginFlow>) {
     switchFlow('local', applyNextAnimation);
   }
 
+  const isFirefox = navigator?.userAgent?.toLowerCase().includes('firefox');
+
   return (
     <Validation>
       {({ validator }) => (
@@ -64,6 +66,12 @@ export function NewPasswordlessDevice(props: Props & SliderProps<LoginFlow>) {
           </Text>
           {submitAttempt.status === 'failed' && (
             <Danger children={submitAttempt.statusText} />
+          )}
+          {isFirefox && (
+            <Info mt={3}>
+              Firefox may not support passwordless register. Please try Chrome
+              or Safari.
+            </Info>
           )}
           <FieldInput
             rule={requiredField('Device name is required')}
