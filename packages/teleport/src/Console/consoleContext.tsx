@@ -25,7 +25,6 @@ import TtyAddressResolver from 'teleport/lib/term/ttyAddressResolver';
 import serviceSsh, { Session, ParticipantList } from 'teleport/services/ssh';
 import serviceNodes from 'teleport/services/nodes';
 import serviceClusters from 'teleport/services/clusters';
-import serviceUser from 'teleport/services/user';
 
 const logger = Logger.create('teleport/console');
 
