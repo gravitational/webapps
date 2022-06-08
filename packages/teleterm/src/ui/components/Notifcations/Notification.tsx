@@ -169,6 +169,7 @@ function getRenderedContent(
 const textCss = css`
   line-height: 20px;
   overflow-wrap: break-word;
+  white-space: pre-line;
 `;
 
 const shortTextCss = css`
