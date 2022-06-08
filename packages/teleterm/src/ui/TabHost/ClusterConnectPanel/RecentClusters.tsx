@@ -53,7 +53,11 @@ export function RecentClusters() {
             >
               {cluster.userWithClusterName}
             </Text>
-            <ButtonBorder size="small" onClick={() => connect(cluster.uri)}>
+            <ButtonBorder
+              size="small"
+              onClick={() => connect(cluster.uri)}
+              title={`Connect to ${cluster.userWithClusterName}`}
+            >
               Connect
             </ButtonBorder>
           </Box>
