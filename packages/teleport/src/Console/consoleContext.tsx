@@ -143,13 +143,8 @@ export default class ConsoleContext {
   }
 
   fetchNodes(clusterId: string, params?: UrlResourcesParams) {
-    return Promise.all([
-      serviceUser.fetchUserContext(),
-      this.nodesService.fetchNodes(clusterId, params),
-    ]).then(values => {
-      const [user, nodesRes] = values;
+    return this.nodesService.fetchNodes(clusterId, params).then(nodesRes => {
       return {
-        logins: user.acl.sshLogins,
         nodesRes,
       };
     });
