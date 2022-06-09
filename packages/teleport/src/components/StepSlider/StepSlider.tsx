@@ -90,7 +90,7 @@ export default function StepSlider<T>(props: Props<T>) {
       setStep(preMountState.current.step);
       setPreMount(false);
 
-      if (preMountState.current.flow) {
+      if (preMountState.current.flow && onSwitchFlow) {
         onSwitchFlow(preMountState.current.flow);
       }
     }
@@ -163,7 +163,7 @@ export default function StepSlider<T>(props: Props<T>) {
           <CSSTransition
             // timeout needs to match the css transition duration for smoothness
             timeout={tDuration}
-            key={`${step}${currFlow}`}
+            key={`${step}${String(currFlow)}`}
             classNames={`${animationDirectionPrefix}-slide`}
             onEnter={() => {
               // When steps are translating (sliding), hides overflow content
