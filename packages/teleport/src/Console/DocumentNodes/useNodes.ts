@@ -27,6 +27,7 @@ import { useConsoleContext } from './../consoleContextProvider';
 import * as stores from './../stores';
 import labelClick from 'teleport/labelClick';
 import { AgentLabel } from 'teleport/services/agents';
+import { sortLogins } from 'teleport/Nodes/useNodes';
 
 export default function useNodes({ clusterId, id }: stores.DocumentNodes) {
   const consoleCtx = useConsoleContext();
@@ -198,14 +199,3 @@ export default function useNodes({ clusterId, id }: stores.DocumentNodes) {
     onLabelClick,
   };
 }
-
-// sort logins by making 'root' as the first in the list
-const sortLogins = (logins: string[]) => {
-  const noRoot = logins.sort().filter(l => l !== 'root');
-  if (noRoot.length === logins.length) {
-    return logins;
-  }
-
-  noRoot.unshift('root');
-  return noRoot;
-};

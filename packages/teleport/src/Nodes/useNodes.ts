@@ -210,14 +210,12 @@ function makeOptions(clusterId: string, node: Node | undefined) {
 }
 
 // sort logins by making 'root' as the first in the list
-const sortLogins = (logins: string[]) => {
-  const noRoot = logins.sort().filter(l => l !== 'root');
+export const sortLogins = (logins: string[]) => {
+  const noRoot = logins.filter(l => l !== 'root').sort();
   if (noRoot.length === logins.length) {
     return logins;
   }
-
-  noRoot.unshift('root');
-  return noRoot;
+  return ['root', ...noRoot];
 };
 
 export type State = ReturnType<typeof useNodes>;
