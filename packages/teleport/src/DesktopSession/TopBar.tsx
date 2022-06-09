@@ -67,7 +67,8 @@ export default function TopBar(props: Props) {
           </Text>
         </Flex>
         {/* TODO(isaiah): Remove or refactor ButtonPrimary (obviously) */}
-        <ButtonPrimary
+
+       <ButtonPrimary
           size="large"
           width="100%"
           type="submit"

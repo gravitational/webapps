@@ -26,6 +26,8 @@ import Codec, {
   SharedDirectoryInfoResponse,
   SharedDirectoryListResponse,
   FileSystemObject,
+  SharedDirectoryReadResponse,
+  SharedDirectoryWriteResponse,
 } from './codec';
 
 export enum TdpClientEvent {
@@ -46,8 +48,12 @@ export default class Client extends EventEmitterWebAuthnSender {
   socket: WebSocket;
   socketAddr: string;
   username: string;
+  items: Map<string, string>;
   logger = Logger.create('TDPClient');
   simulated_fsos: Record<string, FileSystemObject>; // TODO(isaiah): delete this
+  // TODO(LKozlowski): delete this - only for directory sharing simulation purposes
+  simulated_files_data: Record<string, Uint8Array>;
+
 
   constructor(socketAddr: string) {
     super();
@@ -102,7 +108,7 @@ export default class Client extends EventEmitterWebAuthnSender {
       '\\TestFile.txt': {
         lastModified: BigInt(2222222222222),
         fileType: 0,
-        size: BigInt(1024),
+        size: BigInt(65),
         path: '\\TestFile.txt',
       },
       'TestFile.txt': {
@@ -124,6 +130,17 @@ export default class Client extends EventEmitterWebAuthnSender {
         path: 'TestDirectory',
       },
     };
+
+    // TODO(LKozlowski): delete this - only for directory sharing simulation purposes
+    this.simulated_files_data = {
+      "\\TestFile.txt": new Uint8Array([
+        84, 101, 108, 101, 112, 111, 114, 116, 32, 45, 32, 84, 104, 101, 32, 101, 97, 115,
+        105, 101, 115, 116, 44, 32, 109, 111, 115, 116, 32, 115, 101, 99, 117, 114, 101,
+        32, 119, 97, 121, 32, 116, 111, 32, 97, 99, 99, 101, 115, 115, 32, 105, 110, 102,
+        114, 97, 115, 116, 114, 117, 99, 116, 117, 114, 101, 46
+      ])
+  };
+ 
   }
 
   processMessage(buffer: ArrayBuffer) {
@@ -159,6 +176,12 @@ export default class Client extends EventEmitterWebAuthnSender {
           break;
         case MessageType.SHARED_DIRECTORY_LIST_REQUEST:
           this.handleSharedDirectoryListRequest(buffer);
+          break;
+        case MessageType.SHARED_DIRECTORY_READ_REQUEST:
+          this.handleSharedDirectoryReadRequest(buffer);
+          break;
+        case MessageType.SHARED_DIRECTORY_WRITE_REQUEST:
+          this.handleSharedDirectoryWriteRequest(buffer);
           break;
         default:
           this.logger.warn(`received unsupported message type ${messageType}`);
@@ -313,6 +336,53 @@ export default class Client extends EventEmitterWebAuthnSender {
     }
   }
 
+  handleSharedDirectoryReadRequest(buffer: ArrayBuffer) {
+    const request = this.codec.decodeSharedDirectoryReadRequest(buffer);
+
+    if (!this.simulated_files_data.hasOwnProperty(request.path)) {
+      this.sendSharedDirectoryReadResponse({
+        completionId: request.completionId,
+        errCode: 1,
+        readDataLength: 0,
+        readData: new Uint8Array,
+      });
+    } else {
+      let data = this.simulated_files_data[request.path];
+      this.sendSharedDirectoryReadResponse({
+        completionId: request.completionId,
+        errCode: 0,
+        readDataLength: data.length,
+        readData: data,
+      });
+    }
+  }
+
+  handleSharedDirectoryWriteRequest(buffer: ArrayBuffer) {
+    const request = this.codec.decodeSharedDirectoryWriteRequest(buffer);
+
+    // TODO(LKozlowski): delete this - only for directory sharing simulation purposes
+    // just send success respone without doing anything for now
+    if (!this.simulated_files_data.hasOwnProperty(request.path)) {
+      this.sendSharedDirectoryWriteResponse({
+        completionId: request.completionId,
+        errCode: 0,
+        bytesWritten: request.writeData.length,
+      });
+    } else {
+      // for testing let's swap the contents ignoring offsets etc
+      this.simulated_files_data[request.path] = request.writeData;
+      // update the size of our file so when we read it again then we'll see the
+      // all data. Without updating size it if we added text to the file then
+      // we would see cropped contents
+      this.simulated_fsos[request.path]["size"] = BigInt(request.writeData.length);
+      this.sendSharedDirectoryWriteResponse({
+        completionId: request.completionId,
+        errCode: 0,
+        bytesWritten: request.writeData.length,
+      });
+    }
+  }
+
   sendUsername(username: string) {
     this.socket?.send(this.codec.encodeUsername(username));
   }
@@ -355,6 +425,15 @@ export default class Client extends EventEmitterWebAuthnSender {
         name,
       })
     );
+  }
+
+  sendSharedDirectoryWriteResponse(response: SharedDirectoryWriteResponse) {
+    this.socket.send(this.codec.encodeSharedDirectoryWriteResponse(response));
+  }
+
+
+  sendSharedDirectoryReadResponse(response: SharedDirectoryReadResponse) {
+    this.socket.send(this.codec.encodeSharedDirectoryReadResponse(response));
   }
 
   sendSharedDirectoryInfoResponse(res: SharedDirectoryInfoResponse) {

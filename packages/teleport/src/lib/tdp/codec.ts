@@ -15,6 +15,7 @@
  */
 
 import { arrayBufferToBase64 } from 'shared/utils/base64';
+import ConsoleContextProvider from 'teleport/Console/consoleContextProvider';
 
 // This is needed for tests until jsdom adds support for TextEncoder (https://github.com/jsdom/jsdom/issues/2524)
 const {
@@ -41,8 +42,12 @@ export enum MessageType {
   SHARED_DIRECTORY_ACKNOWLEDGE = 12,
   SHARED_DIRECTORY_INFO_REQUEST = 13,
   SHARED_DIRECTORY_INFO_RESPONSE = 14,
-  SHARED_DIRECTORY_LIST_REQUEST = 25,
   SHARED_DIRECTORY_LIST_RESPONSE = 26,
+  SHARED_DIRECTORY_READ_REQUEST = 19,
+  SHARED_DIRECTORY_READ_RESPONSE = 20,
+  SHARED_DIRECTORY_WRITE_REQUEST = 21,
+  SHARED_DIRECTORY_WRITE_RESPONSE = 22,
+  SHARED_DIRECTORY_LIST_REQUEST = 25,
 }
 
 // 0 is left button, 1 is middle button, 2 is right button
@@ -130,6 +135,41 @@ export type SharedDirectoryListResponse = {
   errCode: number;
   fsoList: FileSystemObject[];
 };
+
+export type SharedDirectoryReadRequest = {
+  completionId: number,
+  directoryId: number,
+  path: string,
+  pathLength: number,
+  offset: bigint,
+  length: number,
+}
+
+export type SharedDirectoryReadResponse = {
+  completionId: number,
+  errCode: number,
+  readDataLength: number,
+  readData: Uint8Array,
+}
+
+// | message type (21) | completion_id uint32 | directory_id uint32 | path_length uint32 | path []byte | offset uint64 | write_data_length uint32 | write_data []byte |
+// https://github.com/gravitational/teleport/blob/c41160d963feada0b4e6f4366eefd6a7e697aeba/rfd/0067-desktop-access-file-system-sharing.md#21---shared-directory-write-request
+export type SharedDirectoryWriteRequest = {
+  completionId: number,
+  directoryId: number,
+  pathLength: number,
+  path: string,
+  offset: bigint,
+  writeData: Uint8Array,
+}
+
+// | message type (22) | completion_id uint32 | err_code uint32 | bytes_written uint32 |
+// https://github.com/gravitational/teleport/blob/c41160d963feada0b4e6f4366eefd6a7e697aeba/rfd/0067-desktop-access-file-system-sharing.md#22---shared-directory-write-response
+export type SharedDirectoryWriteResponse = {
+  completionId: number,
+  errCode: number,
+  bytesWritten: number,
+}
 
 // | last_modified uint64 | size uint64 | file_type uint32 | path_length uint32 | path byte[] |
 export type FileSystemObject = {
@@ -543,6 +583,60 @@ export default class Codec {
     return buffer;
   }
 
+  encodeSharedDirectoryWriteResponse(res: SharedDirectoryWriteResponse): Message {
+    const bufLen =
+      byteLength + 3 * uint32Length;
+    
+      const buffer = new ArrayBuffer(bufLen);
+      const view = new DataView(buffer);
+
+      let offset = 0;
+
+      view.setUint8(offset, MessageType.SHARED_DIRECTORY_WRITE_RESPONSE);
+      offset += byteLength;
+
+      view.setUint32(offset, res.completionId);
+      offset += uint32Length;
+
+      view.setUint32(offset, res.errCode);
+      offset += uint32Length;
+
+      view.setUint32(offset, res.bytesWritten);
+      offset += uint32Length;
+
+      return buffer;
+  }
+
+
+
+  encodeSharedDirectoryReadResponse(res: SharedDirectoryReadResponse): Message {
+    const bufLen =
+      byteLength + 3 * uint32Length + byteLength * res.readDataLength;
+    
+      const buffer = new ArrayBuffer(bufLen);
+      const view = new DataView(buffer);
+
+      let offset = 0;
+
+      view.setUint8(offset, MessageType.SHARED_DIRECTORY_READ_RESPONSE);
+      offset += byteLength;
+
+      view.setUint32(offset, res.completionId);
+      offset += uint32Length;
+
+      view.setUint32(offset, res.errCode);
+      offset += uint32Length;
+
+      view.setUint32(offset, res.readDataLength);
+      offset += uint32Length;
+
+      res.readData.forEach(byte => {
+        view.setUint8(offset++, byte);
+      });
+
+      return buffer;
+  }
+
   // decodeClipboardData decodes clipboard data
   decodeClipboardData(buffer: ArrayBuffer): ClipboardData {
     return {
@@ -567,6 +661,11 @@ export default class Codec {
       case MessageType.SHARED_DIRECTORY_ACKNOWLEDGE:
       case MessageType.SHARED_DIRECTORY_INFO_REQUEST:
       case MessageType.SHARED_DIRECTORY_LIST_REQUEST:
+      case MessageType.SHARED_DIRECTORY_LIST_RESPONSE:
+      case MessageType.SHARED_DIRECTORY_READ_REQUEST:
+      case MessageType.SHARED_DIRECTORY_READ_RESPONSE:
+      case MessageType.SHARED_DIRECTORY_WRITE_REQUEST:
+      case MessageType.SHARED_DIRECTORY_WRITE_RESPONSE:
         return messageType;
       default:
         throw new Error(`invalid message type: ${messageType}`);
@@ -652,6 +751,64 @@ export default class Codec {
     buffer: ArrayBuffer
   ): SharedDirectoryListRequest {
     return this.decodeSharedDirectoryInfoRequest(buffer);
+  }
+
+  decodeSharedDirectoryReadRequest(buffer: ArrayBuffer): SharedDirectoryReadRequest {
+    let view = new DataView(buffer);
+
+    let completionId = view.getUint32(1);
+    let directoryId = view.getUint32(5);
+    let pathLength = view.getUint32(9);
+    let path = this.decoder.decode(new Uint8Array(buffer.slice(13, 13 + pathLength)));
+    let offset = view.getBigUint64(13 + pathLength);
+    let length = view.getUint32(13 + pathLength + 8);
+
+    return {
+      completionId,
+      directoryId,
+      pathLength,
+      path,
+      offset,
+      length
+    }
+
+  }
+
+  decodeSharedDirectoryWriteRequest(buffer: ArrayBuffer): SharedDirectoryWriteRequest {
+    let view = new DataView(buffer);
+
+    let viewOffset = 1;
+
+    let completionId = view.getUint32(viewOffset);
+    viewOffset += 4;
+
+    let directoryId = view.getUint32(viewOffset);
+    viewOffset += 4;
+
+    let offset = view.getBigUint64(viewOffset);
+    viewOffset += 8;
+
+    let pathLength = view.getUint32(viewOffset);
+    viewOffset += 4;
+
+    let path = this.decoder.decode(new Uint8Array(buffer.slice(viewOffset, viewOffset + pathLength)));
+    viewOffset += pathLength;
+
+
+    let writeDataLength = view.getUint32(viewOffset);
+    viewOffset += 4;
+
+    let writeData = new Uint8Array(buffer.slice(viewOffset, viewOffset + writeDataLength));
+
+    return {
+      completionId,
+      directoryId,
+      pathLength,
+      path,
+      offset,
+      writeData,
+    }
+
   }
 
   // _asBase64Url creates a data:image uri from the png data part of a PNG_FRAME tdp message.
