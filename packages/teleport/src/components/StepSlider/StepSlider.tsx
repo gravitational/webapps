@@ -30,6 +30,12 @@ export default function StepSlider<T>(props: Props<T>) {
 
   // step defines the current step we are in the current flow.
   const [step, setStep] = useState(0);
+  // because of the order of events around prerendering and computing the next
+  // steps dimensions we have to provide a intermediary for the current flow
+  // in the event it is changed externally. Otherwise it'll immediately try and
+  // grab the new flows index which may be out of bounds if a previous flow had
+  // a greater index range.
+  const [activeFlow, setActiveFlow] = useState(currFlow);
   // animationDirectionPrefix defines the prefix of the class name that contains
   // the animations to apply when transitioning.
   const [animationDirectionPrefix, setAnimationDirectionPrefix] = useState<
@@ -56,6 +62,24 @@ export default function StepSlider<T>(props: Props<T>) {
     const { height } = rootRef.current.getBoundingClientRect();
     setHeight(height);
   }, []);
+
+  useEffect(() => {
+    switchFlow(currFlow);
+  }, [currFlow]);
+
+  function switchFlow(flow, applyNextAnimation = false) {
+    preMountState.current.step = 0;
+    preMountState.current.flow = flow;
+    rootRef.current.style.height = `${height}px`;
+    setStep(0);
+    setPreMount(true);
+    if (applyNextAnimation) {
+      setAnimationDirectionPrefix('next');
+      return;
+    }
+    setAnimationDirectionPrefix('prev');
+    setActiveFlow(flow);
+  }
 
   // After pre mount, we can calculate the exact height of the next step.
   // After calculating height, we increment the step to trigger the
@@ -92,18 +116,7 @@ export default function StepSlider<T>(props: Props<T>) {
           setAnimationDirectionPrefix('prev');
           rootRef.current.style.height = `${height}px`;
         }}
-        switchFlow={(flow, applyNextAnimation = false) => {
-          preMountState.current.step = 0;
-          preMountState.current.flow = flow;
-          rootRef.current.style.height = `${height}px`;
-
-          setPreMount(true);
-          if (applyNextAnimation) {
-            setAnimationDirectionPrefix('next');
-            return;
-          }
-          setAnimationDirectionPrefix('prev');
-        }}
+        switchFlow={switchFlow}
         willTransition={
           !preMount && Number.isInteger(preMountState?.current?.step)
         }
@@ -113,14 +126,14 @@ export default function StepSlider<T>(props: Props<T>) {
   }
 
   let $content;
-  const Step = flows[currFlow][step];
+  const Step = flows[activeFlow][step];
   if (Step) {
     $content = generateCurrentStep(Step);
   }
 
   let $preContent;
   if (preMount) {
-    let flow = currFlow;
+    let flow = activeFlow;
     if (preMountState?.current?.flow) {
       flow = preMountState.current.flow;
     }
