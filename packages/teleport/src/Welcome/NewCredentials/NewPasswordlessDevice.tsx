@@ -55,7 +55,14 @@ export function NewPasswordlessDevice(props: Props & SliderProps<LoginFlow>) {
     switchFlow('local', applyNextAnimation);
   }
 
-  const isFirefox = navigator?.userAgent?.toLowerCase().includes('firefox');
+  // Firefox currently does not support passwordless and when
+  // registering, users will 'soft lock' where firefox prompts
+  // but when touching the device, it does not do anything.
+  // We display a soft warning because firefox may provide
+  // support in the near future: https://github.com/gravitational/webapps/pull/876
+  const isFirefox = window.navigator?.userAgent
+    ?.toLowerCase()
+    .includes('firefox');
 
   return (
     <Validation>

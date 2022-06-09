@@ -122,7 +122,13 @@ const SsoList = ({ attempt, authProviders, onLoginWithSso }: Props) => {
 };
 
 const Passwordless = ({ onLoginWithWebauthn, attempt }: Props) => {
-  const isFirefox = navigator?.userAgent?.toLowerCase().includes('firefox');
+  // Firefox currently does not support passwordless and when
+  // logging in, it will return an ambigugous error.
+  // We display a soft warning because firefox may provide
+  // support in the near future: https://github.com/gravitational/webapps/pull/876
+  const isFirefox = window.navigator?.userAgent
+    ?.toLowerCase()
+    .includes('firefox');
   return (
     <Box px={5} pt={2} data-testid="passwordless" pb={1}>
       {isFirefox && (
