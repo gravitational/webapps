@@ -57,7 +57,7 @@ export class ClustersService extends ImmutableStore<ClustersServiceState> {
 
   async login(params: LoginParams, abortSignal: tsh.TshAbortSignal) {
     await this.client.login(params, abortSignal);
-    await Promise.all([
+    await Promise.allSettled([
       this.syncRootClusterAndCatchErrors(params.clusterUri),
       // A temporary workaround until the gateways are able to refresh their own certs on incoming
       // connections.
@@ -73,7 +73,7 @@ export class ClustersService extends ImmutableStore<ClustersServiceState> {
   }
 
   async restartClusterGatewaysAndCatchErrors(rootClusterUri: string) {
-    await Promise.all(
+    await Promise.allSettled(
       this.findGateways(rootClusterUri).map(async gateway => {
         try {
           await this.restartGateway(gateway.uri);
