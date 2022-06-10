@@ -81,9 +81,9 @@ app.on('web-contents-created', (_, contents) => {
   contents.setWindowOpenHandler(details => {
     const url = new URL(details.url);
 
-    // Open links to documentation in the external browser.
+    // Open links to documentation and GitHub issues in the external browser.
     // They need to have `target` set to `_blank`.
-    if (url.host === 'goteleport.com') {
+    if (url.host === 'goteleport.com' || url.host === 'github.com') {
       shell.openExternal(url.toString());
     } else {
       logger.warn(
