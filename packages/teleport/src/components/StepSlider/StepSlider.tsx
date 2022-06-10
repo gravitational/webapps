@@ -70,7 +70,11 @@ export default function StepSlider<T>(props: Props<T>) {
   function switchFlow(flow, applyNextAnimation = false) {
     preMountState.current.step = 0;
     preMountState.current.flow = flow;
-    rootRef.current.style.height = `${height}px`;
+    // The setHeight call isn't always completed by the time switchFlow is
+    // called so only set the height if it's not 0.
+    if (height > 0) {
+      rootRef.current.style.height = `${height}px`;
+    }
     setStep(0);
     setPreMount(true);
     if (applyNextAnimation) {
@@ -267,7 +271,7 @@ type Props<T> = {
   [remainingProps: string]: any;
 };
 
-export type SliderProps<T> = {
+export type SliderProps<T = any> = {
   // refCallback is a func that is called after component mounts.
   // Required to calculate dimensions of the component for height animations.
   refCallback(node: HTMLElement): void;
