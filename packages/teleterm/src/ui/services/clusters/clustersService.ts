@@ -78,6 +78,7 @@ export class ClustersService extends ImmutableStore<ClustersServiceState> {
   async syncRootCluster(clusterUri: string) {
     try {
       await Promise.all([
+        // syncClusterInfo never fails with a retryable error, only syncLeafClusters does.
         this.syncClusterInfo(clusterUri),
         this.syncLeafClusters(clusterUri),
       ]);
@@ -359,8 +360,14 @@ export class ClustersService extends ImmutableStore<ClustersServiceState> {
         draft.gateways.delete(gatewayUri);
       });
     } catch (error) {
+      const gateway = this.findGateway(gatewayUri);
+      const gatewayDescription = gateway
+        ? `for ${gateway.targetUser}@${gateway.targetName}`
+        : gatewayUri;
+      const title = `Could not close the database connection ${gatewayDescription}`;
+
       this.notificationsService.notifyError({
-        title: 'Could not close the database connection',
+        title,
         description: error.message,
       });
       throw error;
