@@ -220,10 +220,11 @@ test('create a gateway', async () => {
   });
   const targetUri = 'testId';
   const port = '2000';
+  const user = 'alice';
 
-  await service.createGateway({ targetUri, port });
+  await service.createGateway({ targetUri, port, user });
 
-  expect(createGateway).toHaveBeenCalledWith({ targetUri, port });
+  expect(createGateway).toHaveBeenCalledWith({ targetUri, port, user });
   expect(service.state.gateways).toStrictEqual(
     new Map([[gatewayMock.uri, gatewayMock]])
   );
