@@ -115,7 +115,7 @@ function serveIndexHtml(req, res) {
   function handleRequest() {
     proxyServer.web(req, res, getTargetOptions(), (err, req, res) => {
       const msg = `error handling request: ${err.message}. Is the target running and accessible at ${target}?`;
-      console.log(msg);
+      console.error(msg);
       res.write(msg);
       res.end();
     });
