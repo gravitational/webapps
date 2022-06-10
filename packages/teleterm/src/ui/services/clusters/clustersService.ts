@@ -57,7 +57,36 @@ export class ClustersService extends ImmutableStore<ClustersServiceState> {
 
   async login(params: LoginParams, abortSignal: tsh.TshAbortSignal) {
     await this.client.login(params, abortSignal);
-    await this.syncRootClusterAndCatchErrors(params.clusterUri);
+    await Promise.all([
+      this.syncRootClusterAndCatchErrors(params.clusterUri),
+      // A temporary workaround until the gateways are able to refresh their own certs on incoming
+      // connections.
+      //
+      // After logging in and obtaining fresh certs for the cluster, we need to make the gateways
+      // obtain fresh certs as well. Currently, the only way to achieve that is to restart them.
+      this.restartClusterGatewaysAndCatchErrors(params.clusterUri).then(() =>
+        // Sync gateways to update their status, in case one of them failed to start back up.
+        // In that case, that gateway won't be included in the gateway list in the tsh daemon.
+        this.syncGateways()
+      ),
+    ]);
+  }
+
+  async restartClusterGatewaysAndCatchErrors(rootClusterUri: string) {
+    await Promise.all(
+      this.findGateways(rootClusterUri).map(async gateway => {
+        try {
+          await this.restartGateway(gateway.uri);
+        } catch (error) {
+          const title = `Could not restart the database connection for ${gateway.targetUser}@${gateway.targetName}`;
+
+          this.notificationsService.notifyError({
+            title,
+            description: error.message,
+          });
+        }
+      })
+    );
   }
 
   async syncRootClusterAndCatchErrors(clusterUri: string) {
@@ -374,6 +403,10 @@ export class ClustersService extends ImmutableStore<ClustersServiceState> {
     }
   }
 
+  async restartGateway(gatewayUri: string) {
+    await this.client.restartGateway(gatewayUri);
+  }
+
   findCluster(clusterUri: string) {
     return this.state.clusters.get(clusterUri);
   }
@@ -407,6 +440,12 @@ export class ClustersService extends ImmutableStore<ClustersServiceState> {
   findServers(clusterUri: string) {
     return [...this.state.servers.values()].filter(s =>
       routing.isClusterServer(clusterUri, s.uri)
+    );
+  }
+
+  findGateways(clusterUri: string) {
+    return [...this.state.gateways.values()].filter(s =>
+      routing.belongsToProfile(clusterUri, s.targetUri)
     );
   }
 

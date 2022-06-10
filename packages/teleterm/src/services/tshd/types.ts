@@ -42,6 +42,7 @@ export type TshClient = {
   getCluster: (clusterUri: string) => Promise<Cluster>;
   getAuthSettings: (clusterUri: string) => Promise<AuthSettings>;
   removeGateway: (gatewayUri: string) => Promise<void>;
+  restartGateway: (gatewayUri: string) => Promise<void>;
   removeCluster: (clusterUri: string) => Promise<void>;
   login: (params: LoginParams, abortSignal?: TshAbortSignal) => Promise<void>;
   logout: (clusterUri: string) => Promise<void>;
