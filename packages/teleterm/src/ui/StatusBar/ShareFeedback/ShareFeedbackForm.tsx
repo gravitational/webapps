@@ -16,9 +16,6 @@ export function ShareFeedbackForm({
   formValues,
   setFormValues,
 }: ShareFeedbackFormProps) {
-  const isFieldRequiringEmailEnabled =
-    formValues.newsletterEnabled || formValues.salesContactEnabled;
-
   function updateFormField<T extends keyof ShareFeedbackFormValues>(
     field: T,
     value: ShareFeedbackFormValues[T]
@@ -38,11 +35,7 @@ export function ShareFeedbackForm({
             font-size: 14px;
           }
         `}
-        rule={value =>
-          isFieldRequiringEmailEnabled
-            ? requiredField('Email is required')(value)
-            : () => ({ valid: true })
-        }
+        rule={requiredField('Email is required')}
         value={formValues.email}
         onChange={e => updateFormField('email', e.target.value)}
       />
