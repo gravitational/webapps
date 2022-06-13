@@ -4,15 +4,30 @@ import Validation from 'shared/components/Validation';
 import { Close } from 'design/Icon';
 import { ShareFeedbackForm } from './ShareFeedbackForm';
 import { ShareFeedbackFormValues } from './types';
+import { useAppContext } from 'teleterm/ui/appContextProvider';
 
 interface ShareFeedbackProps {
   onClose(): void;
 }
 
 export function ShareFeedback(props: ShareFeedbackProps) {
+  const ctx = useAppContext();
+  ctx.workspacesService.useState();
+  ctx.clustersService.useState();
+
+  function getEmailFromUserName(): string {
+    const cluster = ctx.clustersService.findCluster(
+      ctx.workspacesService.getRootClusterUri()
+    );
+    const userName = cluster?.loggedInUser?.name;
+    if (/^\S+@\S+$/.test(userName)) {
+      return userName;
+    }
+  }
+
   const [formValues, setFormValues] = useState<ShareFeedbackFormValues>({
     feedback: '',
-    email: '',
+    email: getEmailFromUserName() || '',
     newsletterEnabled: false,
     salesContactEnabled: false,
   });
@@ -38,6 +53,7 @@ export function ShareFeedback(props: ShareFeedbackProps) {
               <ButtonIcon
                 type="button"
                 onClick={props.onClose}
+                title="Close"
                 color="text.secondary"
               >
                 <Close fontSize={5} />
