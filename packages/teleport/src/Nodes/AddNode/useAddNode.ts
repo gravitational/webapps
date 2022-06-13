@@ -18,30 +18,20 @@ import { useState } from 'react';
 import useAttempt from 'shared/hooks/useAttemptNext';
 import TeleportContext from 'teleport/teleportContext';
 import cfg from 'teleport/config';
-import { JoinToken, Rule } from 'teleport/services/joinToken';
+import { JoinToken } from 'teleport/services/joinToken';
 
 export default function useAddNode(ctx: TeleportContext) {
   const { attempt, run } = useAttempt('');
-  const { attempt: iamAttempt, run: iamRun } = useAttempt('');
   const isEnterprise = ctx.isEnterprise;
   const version = ctx.storeUser.state.cluster.authVersion;
   const user = ctx.storeUser.state.username;
   const isAuthTypeLocal = !ctx.storeUser.isSso();
   const [method, setMethod] = useState<JoinMethod>('aws');
   const [token, setToken] = useState<JoinToken>();
-  const [iamJoinToken, setIamJoinToken] = useState<JoinToken>();
 
   function createJoinToken() {
     return run(() =>
       ctx.joinTokenService.fetchJoinToken(['Node'], 'token').then(setToken)
-    );
-  }
-
-  function createIamJoinToken(rules: Rule) {
-    return iamRun(() =>
-      ctx.joinTokenService
-        .fetchJoinToken(['Node'], 'iam', [rules])
-        .then(setIamJoinToken)
     );
   }
 
@@ -55,9 +45,6 @@ export default function useAddNode(ctx: TeleportContext) {
     user,
     isAuthTypeLocal,
     token,
-    iamJoinToken,
-    createIamJoinToken,
-    iamAttempt,
   };
 }
 

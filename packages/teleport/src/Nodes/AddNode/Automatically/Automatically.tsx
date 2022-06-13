@@ -61,7 +61,13 @@ export default function Automatically(props: Props) {
             </Text>
           </Text>
         </Text>
-        <TextSelectCopy text={createBashCommand(joinToken.id)} mt={2} />
+        <TextSelectCopy
+          text={createBashCommand({
+            tokenId: joinToken.id,
+            labels: 'foo:bar,baz:bax',
+          })}
+          mt={2}
+        />
         <Box>
           <ButtonLink onClick={createJoinToken}>Regenerate Script</ButtonLink>
         </Box>

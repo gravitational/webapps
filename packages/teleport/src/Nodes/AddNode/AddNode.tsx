@@ -14,18 +14,18 @@
  * limitations under the License.
  */
 
-import React, { useState } from 'react';
+import React from 'react';
 import { Box, ButtonPrimary, Flex, Text } from 'design';
-import { TabIcon } from 'teleport/components/Tabs';
 import useTeleport from 'teleport/useTeleport';
-import * as Icons from 'design/Icon';
-import Dialog, { DialogHeader, DialogTitle } from 'design/Dialog';
+import Dialog, { DialogHeader } from 'design/Dialog';
 import StepSlider, { SliderProps } from 'teleport/components/StepSlider';
 import Manually from './Manually';
 import Automatically from './Automatically';
-import Iam from './Iam';
+import { Aws } from './Aws';
 import SlideTabs from 'design/SlideTabs';
 import useAddNode, { State, JoinMethod } from './useAddNode';
+import { LabelSelector } from 'teleport/components/LabelSelector';
+import NextButton from './NextButton';
 
 export default function Container(props: Props) {
   const ctx = useTeleport();
@@ -44,24 +44,33 @@ export function AddNode({
   attempt,
   isAuthTypeLocal,
   token,
-  iamJoinToken,
-  iamAttempt,
-  createIamJoinToken,
 }: Props & State) {
+  function IAMRoles({ next, refCallback }: SliderProps) {
+    return <Aws refCallback={refCallback} next={next} />;
+  }
+
+  function AssignLabels({ next, refCallback }: SliderProps) {
+    return (
+      <Box ref={refCallback}>
+        <LabelSelector onChange={() => {}} />
+        <NextButton next={next} />
+      </Box>
+    );
+  }
+
   const flows = {
     aws: [IAMRoles, AssignLabels, ScriptDisplay],
     automatically: [AssignLabels, ScriptDisplay],
     manually: [ChooseBinary, AssignLabels, ManualCommands],
   };
 
-  const slideTabs: JoinMethod[] = ['aws', 'automatically', 'manually'];
+  const slideTabs = ['AWS', 'Automatically', 'Manually'];
 
   return (
     <Dialog
       dialogCss={() => ({
         maxWidth: '600px',
         width: '100%',
-        minHeight: '328px',
       })}
       disableEscapeKeyDown={false}
       onClose={onClose}
@@ -77,7 +86,7 @@ export function AddNode({
           <SlideTabs
             tabs={slideTabs}
             onChange={index => {
-              setMethod(slideTabs[index]);
+              setMethod(slideTabs[index].toLowerCase() as JoinMethod);
             }}
           />
         </Box>
@@ -95,45 +104,11 @@ type Props = {
   onClose(): void;
 };
 
-type MultiFlow = 'aws' | 'automatically' | 'manually';
-
-function IAMRoles({ next, refCallback }: SliderProps<MultiFlow>) {
-  return (
-    <Box ref={refCallback}>
-      IAM
-      <ButtonPrimary
-        onClick={e => {
-          e.preventDefault();
-          next();
-        }}
-      >
-        Next
-      </ButtonPrimary>
-    </Box>
-  );
-}
-
-function AssignLabels({ next, refCallback }: SliderProps<MultiFlow>) {
-  return (
-    <Box ref={refCallback}>
-      Assign Labels
-      <ButtonPrimary
-        onClick={e => {
-          e.preventDefault();
-          next();
-        }}
-      >
-        Next
-      </ButtonPrimary>
-    </Box>
-  );
-}
-
-function ScriptDisplay({ refCallback }: SliderProps<MultiFlow>) {
+function ScriptDisplay({ refCallback }: SliderProps) {
   return <Box ref={refCallback}>Script Display</Box>;
 }
 
-function ChooseBinary({ next, refCallback }: SliderProps<MultiFlow>) {
+function ChooseBinary({ next, refCallback }: SliderProps) {
   return (
     <Box ref={refCallback}>
       Choose Binary
@@ -149,6 +124,6 @@ function ChooseBinary({ next, refCallback }: SliderProps<MultiFlow>) {
   );
 }
 
-function ManualCommands({ refCallback }: SliderProps<MultiFlow>) {
+function ManualCommands({ refCallback }: SliderProps) {
   return <Box ref={refCallback}>Manual Commands</Box>;
 }
