@@ -27,7 +27,7 @@ export default function useAddNode(ctx: TeleportContext) {
   const version = ctx.storeUser.state.cluster.authVersion;
   const user = ctx.storeUser.state.username;
   const isAuthTypeLocal = !ctx.storeUser.isSso();
-  const [method, setMethod] = useState<JoinMethod>('iam');
+  const [method, setMethod] = useState<JoinMethod>('aws');
   const [token, setToken] = useState<JoinToken>();
   const [iamJoinToken, setIamJoinToken] = useState<JoinToken>();
 
@@ -61,13 +61,31 @@ export default function useAddNode(ctx: TeleportContext) {
   };
 }
 
-export function createBashCommand(tokenId: string, method?: JoinMethod) {
-  const param = method === 'iam' ? '?method=iam' : '';
+type BashCommandOptions = {
+  tokenId: string;
+  labels?: string;
+  method?: JoinMethod;
+};
+
+export function createBashCommand({
+  tokenId,
+  labels,
+  method,
+}: BashCommandOptions) {
+  const args: { method?: string; 'node-labels'?: string } = {};
+  if (method === 'aws') {
+    args.method = 'aws';
+  }
+  if (labels) {
+    args['node-labels'] = labels;
+  }
+
+  const params = new URLSearchParams(args).toString();
   return `sudo bash -c "$(curl -fsSL ${cfg.getNodeScriptUrl(
     tokenId
-  )}${param})"`;
+  )}${params.length > 0 ? `?${params}`: ''})"`;
 }
 
-export type JoinMethod = 'automatic' | 'manual' | 'iam';
+export type JoinMethod = 'automatically' | 'manually' | 'aws';
 
 export type State = ReturnType<typeof useAddNode>;

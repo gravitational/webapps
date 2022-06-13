@@ -14,16 +14,18 @@
  * limitations under the License.
  */
 
-import React from 'react';
-import { Flex } from 'design';
+import React, { useState, useEffect } from 'react';
+import { Box, ButtonPrimary, Flex, Text } from 'design';
 import { TabIcon } from 'teleport/components/Tabs';
 import useTeleport from 'teleport/useTeleport';
 import * as Icons from 'design/Icon';
-import Dialog, { DialogTitle } from 'design/Dialog';
+import Dialog, { DialogHeader, DialogTitle } from 'design/Dialog';
+import StepSlider, { SliderProps } from 'teleport/components/StepSlider';
 import Manually from './Manually';
 import Automatically from './Automatically';
 import Iam from './Iam';
-import useAddNode, { State } from './useAddNode';
+import SlideTabs from 'design/SlideTabs';
+import useAddNode, { State, JoinMethod } from './useAddNode';
 
 export default function Container(props: Props) {
   const ctx = useTeleport();
@@ -46,6 +48,23 @@ export function AddNode({
   iamAttempt,
   createIamJoinToken,
 }: Props & State) {
+  const flows = {
+    aws: [IAMRoles, AssignLabels, ScriptDisplay],
+    automatically: [AssignLabels, ScriptDisplay],
+    manually: [ChooseBinary, AssignLabels, ManualCommands],
+  };
+
+  const slideTabs: JoinMethod[] = ['aws', 'automatically', 'manually'];
+
+  const [newFlow, setNewFlow] =
+    useState<{ flow: MultiFlow; applyNextAnimation?: boolean }>();
+
+  const [flow, setFlow] = useState<MultiFlow>(method);
+
+  function onSwitchFlow(flow: MultiFlow) {
+    setFlow(flow);
+  }
+
   return (
     <Dialog
       dialogCss={() => ({
@@ -57,58 +76,27 @@ export function AddNode({
       onClose={onClose}
       open={true}
     >
+      <DialogHeader onClose={onClose}>
+        <Text typography="h4" color="text.primary">
+          Add Server
+        </Text>
+      </DialogHeader>
       <Flex flex="1" flexDirection="column">
-        <Flex alignItems="center" justifyContent="space-between" mb="4">
-          <DialogTitle mr="auto">Add Server</DialogTitle>
-          <TabIcon
-            Icon={Icons.Server}
-            title="AWS"
-            active={method === 'iam'}
-            onClick={() => setMethod('iam')}
+        <Box mb={4}>
+          <SlideTabs
+            tabs={slideTabs}
+            onChange={index => {
+              setMethod(slideTabs[index]);
+              setNewFlow({ flow: slideTabs[index] });
+            }}
           />
-          <TabIcon
-            Icon={Icons.Wand}
-            title="Automatically"
-            active={method === 'automatic'}
-            onClick={() => setMethod('automatic')}
-          />
-          <TabIcon
-            Icon={Icons.Cog}
-            title="Manually"
-            active={method === 'manual'}
-            onClick={() => setMethod('manual')}
-          />
-        </Flex>
-        {method === 'automatic' && (
-          <Automatically
-            joinToken={token}
-            createJoinToken={createJoinToken}
-            attempt={attempt}
-            onClose={onClose}
-          />
-        )}
-        {method === 'manual' && (
-          <Manually
-            isEnterprise={isEnterprise}
-            user={user}
-            version={version}
-            isAuthTypeLocal={isAuthTypeLocal}
-            joinToken={token}
-            createJoinToken={createJoinToken}
-            attempt={attempt}
-            onClose={onClose}
-          />
-        )}
-        {method === 'iam' && (
-          <Iam
-            onGenerate={createIamJoinToken}
-            attempt={iamAttempt}
-            token={iamJoinToken}
-            isEnterprise={isEnterprise}
-            version={version}
-            onClose={onClose}
-          />
-        )}
+        </Box>
+        <StepSlider<typeof flows>
+          flows={flows}
+          currFlow={flow}
+          onSwitchFlow={onSwitchFlow}
+          newFlow={newFlow}
+        />
       </Flex>
     </Dialog>
   );
@@ -117,3 +105,61 @@ export function AddNode({
 type Props = {
   onClose(): void;
 };
+
+type MultiFlow = 'aws' | 'automatically' | 'manually';
+
+function IAMRoles({ next, refCallback }: SliderProps<MultiFlow>) {
+  return (
+    <Box ref={refCallback}>
+      IAM
+      <ButtonPrimary
+        onClick={e => {
+          e.preventDefault();
+          next();
+        }}
+      >
+        Next
+      </ButtonPrimary>
+    </Box>
+  );
+}
+
+function AssignLabels({ next, refCallback }: SliderProps<MultiFlow>) {
+  return (
+    <Box ref={refCallback}>
+      Assign Labels
+      <ButtonPrimary
+        onClick={e => {
+          e.preventDefault();
+          next();
+        }}
+      >
+        Next
+      </ButtonPrimary>
+    </Box>
+  );
+}
+
+function ScriptDisplay({ refCallback }: SliderProps<MultiFlow>) {
+  return <Box ref={refCallback}>Script Display</Box>;
+}
+
+function ChooseBinary({ next, refCallback }: SliderProps<MultiFlow>) {
+  return (
+    <Box ref={refCallback}>
+      Choose Binary
+      <ButtonPrimary
+        onClick={e => {
+          e.preventDefault();
+          next();
+        }}
+      >
+        Next
+      </ButtonPrimary>
+    </Box>
+  );
+}
+
+function ManualCommands({ refCallback }: SliderProps<MultiFlow>) {
+  return <Box ref={refCallback}>Manual Commands</Box>;
+}

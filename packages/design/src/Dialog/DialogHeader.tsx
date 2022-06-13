@@ -18,18 +18,35 @@ import React from 'react';
 import Flex from './../Flex';
 import styled from 'styled-components';
 import { typography } from 'design/system';
+import { Cross } from '../Icon';
 
 export default function DialogHeader(props) {
+  const { children, onClose } = props;
   return (
-    <StyledDialogHeader
-      minHeight="32px"
-      mb="3"
-      alignItems="center"
-      {...props}
-    />
+    <StyledDialogHeader minHeight="32px" mb="3" alignItems="center" {...props}>
+      <Flex justifyContent="space-between" width="100%">
+        {children}
+        {onClose && (
+          <Dismiss
+            onClick={(e: MouseEvent) => {
+              e.stopPropagation();
+              props.onClose();
+            }}
+          >
+            <Cross />
+          </Dismiss>
+        )}
+      </Flex>
+    </StyledDialogHeader>
   );
 }
 
 const StyledDialogHeader = styled(Flex)`
   ${typography}
+`;
+
+const Dismiss = styled.button`
+  border-color: rgba(0, 0, 0, 0);
+  background-color: rgba(0, 0, 0, 0);
+  cursor: pointer;
 `;

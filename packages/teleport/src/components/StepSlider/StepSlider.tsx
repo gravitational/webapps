@@ -23,6 +23,7 @@ export default function StepSlider<T>(props: Props<T>) {
     flows,
     currFlow,
     onSwitchFlow,
+    newFlow,
     tDuration = 500,
     // stepProps are the props required by our step components defined in our flows.
     ...stepProps
@@ -56,6 +57,22 @@ export default function StepSlider<T>(props: Props<T>) {
     const { height } = rootRef.current.getBoundingClientRect();
     setHeight(height);
   }, []);
+
+  // Switch Flow
+  useEffect(() => {
+    if (!newFlow) return; // only true on initial render
+
+    preMountState.current.step = 0; // reset step to 0 to start at beginning
+    preMountState.current.flow = newFlow.flow;
+    rootRef.current.style.height = `${height}px`;
+
+    setPreMount(true);
+    if (newFlow.applyNextAnimation) {
+      setAnimationDirectionPrefix('next');
+      return;
+    }
+    setAnimationDirectionPrefix('prev');
+  }, [newFlow]);
 
   // After pre mount, we can calculate the exact height of the next step.
   // After calculating height, we increment the step to trigger the
@@ -92,6 +109,7 @@ export default function StepSlider<T>(props: Props<T>) {
           setAnimationDirectionPrefix('prev');
           rootRef.current.style.height = `${height}px`;
         }}
+        // TODO (lisa): remove this and use `newFlow` instead
         switchFlow={(flow, applyNextAnimation = false) => {
           preMountState.current.step = 0;
           preMountState.current.flow = flow;
@@ -266,6 +284,10 @@ export type SliderProps<T> = {
   // The applyNextAnimation flag when true applies the next-slide-* transition,
   // otherwise prev-slide-* transitions are applied.
   switchFlow?(flow: T, applyNextAnimation?: boolean): void;
+  // newFlow switches to a different flow with different steps.
+  // The applyNextAnimation flag when true applies the next-slide-* transition,
+  // otherwise prev-slide-* transitions are applied.
+  newFlow?(newFlow: { flow: T; applyNextAnimation?: boolean }): void;
   // willTransition is a flag that when true, transition will take place on click.
   // Example of where this flag can be used:
   //   - FieldInput.tsx: this flag is used to tell this component to autoFocus
