@@ -2,7 +2,7 @@ import React from 'react';
 import FieldInput from 'shared/components/FieldInput';
 import { requiredField } from 'shared/components/Validation/rules';
 import { FieldTextArea } from 'shared/components/FieldTextArea';
-import { Flex, Text } from 'design';
+import { Text } from 'design';
 import Toggle from 'teleport/components/Toggle';
 import { ShareFeedbackFormValues } from './types';
 
@@ -56,31 +56,29 @@ export function ShareFeedbackForm({
         onChange={e => updateFormField('feedback', e.target.value)}
         placeholder="Type your suggestions here"
       />
-      <Flex>
-        <Toggle
-          isToggled={formValues.newsletterEnabled}
-          onToggle={() => {
-            updateFormField('newsletterEnabled', !formValues.newsletterEnabled);
-          }}
-        />
+      <Toggle
+        isToggled={formValues.newsletterEnabled}
+        onToggle={() => {
+          updateFormField('newsletterEnabled', !formValues.newsletterEnabled);
+        }}
+      >
         <Text ml={2} color="text.primary">
           Sign me up for the newsletter
         </Text>
-      </Flex>
-      <Flex>
-        <Toggle
-          isToggled={formValues.salesContactEnabled}
-          onToggle={() => {
-            updateFormField(
-              'salesContactEnabled',
-              !formValues.salesContactEnabled
-            );
-          }}
-        />
+      </Toggle>
+      <Toggle
+        isToggled={formValues.salesContactEnabled}
+        onToggle={() => {
+          updateFormField(
+            'salesContactEnabled',
+            !formValues.salesContactEnabled
+          );
+        }}
+      >
         <Text ml={2} color="text.primary">
           I want to be contacted by the sales team
         </Text>
-      </Flex>
+      </Toggle>
     </>
   );
 }
