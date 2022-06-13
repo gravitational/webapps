@@ -2,31 +2,38 @@ import React from 'react';
 import { fireEvent, render } from 'design/utils/testing';
 import { ShareFeedback } from './ShareFeedback';
 import { MockAppContextProvider } from 'teleterm/ui/fixtures/MockAppContextProvider';
-import { ClustersService } from 'teleterm/ui/services/clusters';
-import AppContext from 'teleterm/ui/appContext';
-import { WorkspacesService } from 'teleterm/ui/services/workspacesService';
 import { Cluster } from 'teleterm/services/tshd/v1/cluster_pb';
+import { MockAppContext } from 'teleterm/ui/fixtures/mocks';
 
-jest.mock('teleterm/ui/services/clusters');
-jest.mock('teleterm/ui/services/workspacesService');
-
-function getTestSetup() {
-  const clustersService = new ClustersService(undefined, undefined);
-  const workspacesService = new WorkspacesService(
-    undefined,
-    undefined,
-    undefined,
-    undefined
-  );
-
+test('email field is not prefilled with the username if is not an email', () => {
+  const appContext = new MockAppContext();
   jest
-    .spyOn(ClustersService.prototype, 'findCluster')
+    .spyOn(appContext.clustersService, 'findCluster')
     .mockImplementation(clusterUri => {
       if (clusterUri === '/clusters/localhost')
         return {
           loggedInUser: { name: 'alice' },
         } as Cluster.AsObject;
+    });
 
+  jest
+    .spyOn(appContext.workspacesService, 'getRootClusterUri')
+    .mockReturnValue('/clusters/localhost');
+
+  const { getByLabelText } = render(
+    <MockAppContextProvider appContext={appContext}>
+      <ShareFeedback onClose={undefined} />
+    </MockAppContextProvider>
+  );
+
+  expect(getByLabelText('Email Address')).toHaveValue('');
+});
+
+test('email field is prefilled with the username if it looks like an email', () => {
+  const appContext = new MockAppContext();
+  jest
+    .spyOn(appContext.clustersService, 'findCluster')
+    .mockImplementation(clusterUri => {
       if (clusterUri === '/clusters/production') {
         return {
           loggedInUser: {
@@ -37,62 +44,26 @@ function getTestSetup() {
     });
 
   jest
-    .spyOn(WorkspacesService.prototype, 'getRootClusterUri')
-    .mockReturnValue('/clusters/localhost');
-
-  // @ts-expect-error - using mocks
-  const appContext: AppContext = {
-    clustersService,
-    workspacesService,
-  };
-
-  return {
-    MockedAppContext: ({ children }) => (
-      <MockAppContextProvider appContext={appContext}>
-        {children}
-      </MockAppContextProvider>
-    ),
-  };
-}
-
-test('email field is not prefilled with the username if is not an email', () => {
-  const { MockedAppContext } = getTestSetup();
-  jest
-    .spyOn(WorkspacesService.prototype, 'getRootClusterUri')
-    .mockReturnValue('/clusters/localhost');
-
-  const { getByLabelText } = render(
-    <MockedAppContext>
-      <ShareFeedback onClose={undefined} />
-    </MockedAppContext>
-  );
-
-  expect(getByLabelText('Email Address')).toHaveValue('');
-});
-
-test('email field is prefilled with the username if it looks like an email', () => {
-  const { MockedAppContext } = getTestSetup();
-  jest
-    .spyOn(WorkspacesService.prototype, 'getRootClusterUri')
+    .spyOn(appContext.workspacesService, 'getRootClusterUri')
     .mockReturnValue('/clusters/production');
 
   const { getByLabelText } = render(
-    <MockedAppContext>
+    <MockAppContextProvider appContext={appContext}>
       <ShareFeedback onClose={undefined} />
-    </MockedAppContext>
+    </MockAppContextProvider>
   );
 
   expect(getByLabelText('Email Address')).toHaveValue('bob@prod.com');
 });
 
 test('onClose is called when close button is clicked', () => {
-  const { MockedAppContext } = getTestSetup();
+  const appContext = new MockAppContext();
   const handleClose = jest.fn();
 
   const { getByTitle } = render(
-    <MockedAppContext>
+    <MockAppContextProvider appContext={appContext}>
       <ShareFeedback onClose={handleClose} />
-    </MockedAppContext>
+    </MockAppContextProvider>
   );
 
   fireEvent.click(getByTitle('Close'));
