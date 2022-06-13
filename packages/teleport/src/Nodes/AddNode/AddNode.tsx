@@ -33,6 +33,13 @@ export default function Container(props: Props) {
   return <AddNode {...state} {...props} />;
 }
 
+const flows = {
+  aws: [IAMRoles, AssignLabels, ScriptDisplay],
+  automatically: [AssignLabels, ScriptDisplay],
+  manually: [ChooseBinary, AssignLabels, ManualCommands],
+};
+const slideTabs = ['AWS', 'Automatically', 'Manually'];
+
 export function AddNode({
   isEnterprise,
   user,
@@ -45,26 +52,14 @@ export function AddNode({
   isAuthTypeLocal,
   token,
 }: Props & State) {
-  function IAMRoles({ next, refCallback }: SliderProps) {
-    return <Aws refCallback={refCallback} next={next} />;
+  const [newFlow, setNewFlow] =
+    React.useState<{ flow: JoinMethod; applyNextAnimation?: boolean }>();
+
+  const [flow, setFlow] = React.useState<JoinMethod>(method);
+
+  function onSwitchFlow(flow: JoinMethod) {
+    setFlow(flow);
   }
-
-  function AssignLabels({ next, refCallback }: SliderProps) {
-    return (
-      <Box ref={refCallback}>
-        <LabelSelector onChange={() => {}} />
-        <NextButton next={next} />
-      </Box>
-    );
-  }
-
-  const flows = {
-    aws: [IAMRoles, AssignLabels, ScriptDisplay],
-    automatically: [AssignLabels, ScriptDisplay],
-    manually: [ChooseBinary, AssignLabels, ManualCommands],
-  };
-
-  const slideTabs = ['AWS', 'Automatically', 'Manually'];
 
   return (
     <Dialog
@@ -87,13 +82,17 @@ export function AddNode({
             tabs={slideTabs}
             onChange={index => {
               setMethod(slideTabs[index].toLowerCase() as JoinMethod);
+              setNewFlow({
+                flow: slideTabs[index].toLowerCase() as JoinMethod,
+              });
             }}
           />
         </Box>
         <StepSlider<typeof flows>
           flows={flows}
-          currFlow={method}
-          onSwitchFlow={setMethod}
+          currFlow={flow}
+          onSwitchFlow={onSwitchFlow}
+          newFlow={newFlow}
         />
       </Flex>
     </Dialog>
@@ -104,11 +103,11 @@ type Props = {
   onClose(): void;
 };
 
-function ScriptDisplay({ refCallback }: SliderProps) {
+function ScriptDisplay({ refCallback }: SliderProps<JoinMethod>) {
   return <Box ref={refCallback}>Script Display</Box>;
 }
 
-function ChooseBinary({ next, refCallback }: SliderProps) {
+function ChooseBinary({ next, refCallback }: SliderProps<JoinMethod>) {
   return (
     <Box ref={refCallback}>
       Choose Binary
@@ -124,6 +123,19 @@ function ChooseBinary({ next, refCallback }: SliderProps) {
   );
 }
 
-function ManualCommands({ refCallback }: SliderProps) {
+function ManualCommands({ refCallback }: SliderProps<JoinMethod>) {
   return <Box ref={refCallback}>Manual Commands</Box>;
+}
+
+function IAMRoles({ next, refCallback }: SliderProps<JoinMethod>) {
+  return <Aws refCallback={refCallback} next={next} />;
+}
+
+function AssignLabels({ next, refCallback }: SliderProps<JoinMethod>) {
+  return (
+    <Box ref={refCallback}>
+      <LabelSelector onChange={() => {}} />
+      <NextButton next={next} />
+    </Box>
+  );
 }

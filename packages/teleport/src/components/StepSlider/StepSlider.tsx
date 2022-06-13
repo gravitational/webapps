@@ -23,6 +23,7 @@ export default function StepSlider<T>(props: Props<T>) {
     flows,
     currFlow,
     onSwitchFlow,
+    newFlow,
     tDuration = 500,
     // stepProps are the props required by our step components defined in our flows.
     ...stepProps
@@ -30,12 +31,6 @@ export default function StepSlider<T>(props: Props<T>) {
 
   // step defines the current step we are in the current flow.
   const [step, setStep] = useState(0);
-  // because of the order of events around prerendering and computing the next
-  // steps dimensions we have to provide a intermediary for the current flow
-  // in the event it is changed externally. Otherwise it'll immediately try and
-  // grab the new flows index which may be out of bounds if a previous flow had
-  // a greater index range.
-  const [activeFlow, setActiveFlow] = useState(currFlow);
   // animationDirectionPrefix defines the prefix of the class name that contains
   // the animations to apply when transitioning.
   const [animationDirectionPrefix, setAnimationDirectionPrefix] = useState<
@@ -63,27 +58,21 @@ export default function StepSlider<T>(props: Props<T>) {
     setHeight(height);
   }, []);
 
+  // Switch Flow
   useEffect(() => {
-    switchFlow(currFlow);
-  }, [currFlow]);
+    if (!newFlow) return; // only true on initial render
 
-  function switchFlow(flow, applyNextAnimation = false) {
-    preMountState.current.step = 0;
-    preMountState.current.flow = flow;
-    // The setHeight call isn't always completed by the time switchFlow is
-    // called so only set the height if it's not 0.
-    if (height > 0) {
-      rootRef.current.style.height = `${height}px`;
-    }
-    setStep(0);
+    preMountState.current.step = 0; // reset step to 0 to start at beginning
+    preMountState.current.flow = newFlow.flow;
+    rootRef.current.style.height = `${height}px`;
+
     setPreMount(true);
-    if (applyNextAnimation) {
+    if (newFlow.applyNextAnimation) {
       setAnimationDirectionPrefix('next');
       return;
     }
     setAnimationDirectionPrefix('prev');
-    setActiveFlow(flow);
-  }
+  }, [newFlow]);
 
   // After pre mount, we can calculate the exact height of the next step.
   // After calculating height, we increment the step to trigger the
@@ -94,7 +83,7 @@ export default function StepSlider<T>(props: Props<T>) {
       setStep(preMountState.current.step);
       setPreMount(false);
 
-      if (preMountState.current.flow && onSwitchFlow) {
+      if (preMountState.current.flow) {
         onSwitchFlow(preMountState.current.flow);
       }
     }
@@ -120,7 +109,19 @@ export default function StepSlider<T>(props: Props<T>) {
           setAnimationDirectionPrefix('prev');
           rootRef.current.style.height = `${height}px`;
         }}
-        switchFlow={switchFlow}
+        // TODO (lisa): remove this and use `newFlow` instead
+        switchFlow={(flow, applyNextAnimation = false) => {
+          preMountState.current.step = 0;
+          preMountState.current.flow = flow;
+          rootRef.current.style.height = `${height}px`;
+
+          setPreMount(true);
+          if (applyNextAnimation) {
+            setAnimationDirectionPrefix('next');
+            return;
+          }
+          setAnimationDirectionPrefix('prev');
+        }}
         willTransition={
           !preMount && Number.isInteger(preMountState?.current?.step)
         }
@@ -130,14 +131,14 @@ export default function StepSlider<T>(props: Props<T>) {
   }
 
   let $content;
-  const Step = flows[activeFlow][step];
+  const Step = flows[currFlow][step];
   if (Step) {
     $content = generateCurrentStep(Step);
   }
 
   let $preContent;
   if (preMount) {
-    let flow = activeFlow;
+    let flow = currFlow;
     if (preMountState?.current?.flow) {
       flow = preMountState.current.flow;
     }
@@ -199,51 +200,51 @@ const HiddenBox = styled.div`
 
 const Wrap = styled.div(
   ({ tDuration }) => `
- 
- .prev-slide-enter {
-   transform: translateX(-100%);
-   opacity: 0;
-   position: absolute;
-   top: 0;
-   left: 0;
-   right: 0;
-   bottom: 0;
- }
- 
- .prev-slide-enter-active {
-   transform: translateX(0);
-   opacity: 1;
-   transition: transform ${tDuration}ms ease;
- }
- 
- .prev-slide-exit {
-   transform: translateX(100%);
-   opacity: 1;
-   transition: transform ${tDuration}ms ease;
- }
- 
- .next-slide-enter {
-   transform: translateX(100%);
-   opacity: 0;
-   position: absolute;
-   top: 0;
-   left: 0;
-   right: 0;
-   bottom: 0;
- }
- 
- .next-slide-enter-active {
-   transform: translateX(0);
-   opacity: 1;
-   transition: transform ${tDuration}ms ease;
- }
- 
- .next-slide-exit {
-   transform: translateX(-100%);
-   opacity: 1;
-   transition: transform ${tDuration}ms ease;
- }
- `
+  
+  .prev-slide-enter {
+    transform: translateX(-100%);
+    opacity: 0;
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+  }
+  
+  .prev-slide-enter-active {
+    transform: translateX(0);
+    opacity: 1;
+    transition: transform ${tDuration}ms ease;
+  }
+  
+  .prev-slide-exit {
+    transform: translateX(100%);
+    opacity: 1;
+    transition: transform ${tDuration}ms ease;
+  }
+  
+  .next-slide-enter {
+    transform: translateX(100%);
+    opacity: 0;
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+  }
+  
+  .next-slide-enter-active {
+    transform: translateX(0);
+    opacity: 1;
+    transition: transform ${tDuration}ms ease;
+  }
+  
+  .next-slide-exit {
+    transform: translateX(-100%);
+    opacity: 1;
+    transition: transform ${tDuration}ms ease;
+  }
+  `
 );
 
 type StepComponentProps<T> = SliderProps<T> & {
@@ -271,7 +272,7 @@ type Props<T> = {
   [remainingProps: string]: any;
 };
 
-export type SliderProps<T = any> = {
+export type SliderProps<T> = {
   // refCallback is a func that is called after component mounts.
   // Required to calculate dimensions of the component for height animations.
   refCallback(node: HTMLElement): void;
@@ -283,6 +284,10 @@ export type SliderProps<T = any> = {
   // The applyNextAnimation flag when true applies the next-slide-* transition,
   // otherwise prev-slide-* transitions are applied.
   switchFlow?(flow: T, applyNextAnimation?: boolean): void;
+  // newFlow switches to a different flow with different steps.
+  // The applyNextAnimation flag when true applies the next-slide-* transition,
+  // otherwise prev-slide-* transitions are applied.
+  newFlow?(newFlow: { flow: T; applyNextAnimation?: boolean }): void;
   // willTransition is a flag that when true, transition will take place on click.
   // Example of where this flag can be used:
   //   - FieldInput.tsx: this flag is used to tell this component to autoFocus
