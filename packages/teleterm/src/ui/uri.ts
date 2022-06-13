@@ -117,7 +117,7 @@ export const routing = {
     const rootClusterUri = this.ensureRootClusterUri(clusterUri);
     const resourceRootClusterUri = this.ensureRootClusterUri(resourceUri);
 
-    return resourceRootClusterUri == rootClusterUri;
+    return resourceRootClusterUri === rootClusterUri;
   },
 };
 
