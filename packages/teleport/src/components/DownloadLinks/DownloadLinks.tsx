@@ -16,30 +16,30 @@
 
 import React from 'react';
 import { Box, Link } from 'design';
-import getDownloadLink from 'teleport/services/links';
+import { getDownloadLink } from 'teleport/services/links';
 
 export default function DownloadLinks({ isEnterprise, version }: Props) {
   return (
     <Box>
       <Link
-        href={getDownloadLink('mac', version, isEnterprise)}
+        href={getDownloadLink('macos', version, isEnterprise)}
         target="_blank"
         mr="2"
       >
         MacOS
       </Link>
       <Link
-        href={getDownloadLink('linux64', version, isEnterprise)}
+        href={getDownloadLink('deb', version, isEnterprise)}
         target="_blank"
         mr="2"
       >
-        Linux 64-bit
+        Linux(.deb)
       </Link>
       <Link
-        href={getDownloadLink('linux32', version, isEnterprise)}
+        href={getDownloadLink('rpm', version, isEnterprise)}
         target="_blank"
       >
-        Linux 32-bit
+        Linux(.rpm)
       </Link>
     </Box>
   );

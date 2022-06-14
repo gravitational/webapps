@@ -16,20 +16,20 @@
 
 const DOWNLOAD_BASE_URL = 'https://get.gravitational.com/';
 
-export default function getDownloadLink(
+export function getDownloadLink(
   type: Arch,
   version: string,
   isEnterprise: boolean
 ) {
-  let infix = 'linux-amd64';
-  const enterprise = isEnterprise ? 'ent-' : '';
-  if (type === 'mac') {
-    return `${DOWNLOAD_BASE_URL}teleport-${enterprise}${version}.pkg`;
-  } else if (type === 'linux32') {
-    infix = 'linux-386';
+  let suffix = `_${version}_amd64.deb`;
+  const enterprise = isEnterprise ? '-ent' : '';
+  if (type === 'macos') {
+    suffix = `-${version}.pkg`;
+  } else if (type === 'rpm') {
+    suffix = `-${version}-1.x86_64.rpm`;
   }
 
-  return `${DOWNLOAD_BASE_URL}teleport-${enterprise}v${version}-${infix}-bin.tar.gz`;
+  return `${DOWNLOAD_BASE_URL}teleport${enterprise}${suffix}`;
 }
 
-type Arch = 'mac' | 'linux32' | 'linux64';
+export type Arch = 'macos' | 'deb' | 'rpm';
