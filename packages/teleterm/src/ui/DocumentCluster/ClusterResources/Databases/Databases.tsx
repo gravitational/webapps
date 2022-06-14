@@ -57,9 +57,7 @@ function DatabaseList(props: State) {
               <ConnectButton
                 documentUri={props.documentUri}
                 dbUri={db.uri}
-                onConnect={(dbUser, dbName) =>
-                  props.connect(db.uri, dbUser, dbName)
-                }
+                onConnect={dbUser => props.connect(db.uri, dbUser)}
               />
             ),
           },
@@ -78,40 +76,22 @@ function ConnectButton({
 }: {
   documentUri: string;
   dbUri: string;
-  onConnect: (dbUser: string, dbName: string) => void;
+  onConnect: (dbUser: string) => void;
 }) {
   const appContext = useAppContext();
-  const dbNameMenuLoginRef = useRef<MenuLoginHandle>();
-  const [dbUser, setDbUser] = useState<string>();
 
   return (
     <Cell align="right">
       <MenuLoginTheme>
-        <OverlayGrid>
-          {/* The db name MenuLogin will be overlayed by the db username MenuLogin, which the user
-          should interact with first. */}
-          <MenuLogin
-            ref={dbNameMenuLoginRef}
-            placeholder="Enter optional db name"
-            required={false}
-            getLoginItems={() => []}
-            onSelect={(_, dbName) => onConnect(dbUser, dbName)}
-            transformOrigin={transformOrigin}
-            anchorOrigin={anchorOrigin}
-          />
-          <MenuLogin
-            placeholder="Enter username"
-            getLoginItems={() =>
-              getDatabaseUsers(appContext, documentUri, dbUri)
-            }
-            onSelect={(_, user) => {
-              setDbUser(user);
-              dbNameMenuLoginRef.current.open();
-            }}
-            transformOrigin={transformOrigin}
-            anchorOrigin={anchorOrigin}
-          />
-        </OverlayGrid>
+        <MenuLogin
+          placeholder="Enter username"
+          getLoginItems={() => getDatabaseUsers(appContext, documentUri, dbUri)}
+          onSelect={(_, user) => {
+            onConnect(user);
+          }}
+          transformOrigin={transformOrigin}
+          anchorOrigin={anchorOrigin}
+        />
       </MenuLoginTheme>
     </Cell>
   );
@@ -125,18 +105,6 @@ const anchorOrigin = {
   vertical: 'center',
   horizontal: 'right',
 };
-
-const OverlayGrid = styled.div`
-  display: inline-grid;
-
-  & > button {
-    grid-area: 1 / 1;
-  }
-
-  & button:first-child {
-    visibility: hidden;
-  }
-`;
 
 async function getDatabaseUsers(
   appContext: IAppContext,
