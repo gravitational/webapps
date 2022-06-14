@@ -75,7 +75,7 @@ export function ShareFeedbackForm({
             line-height: 18px;
           `}
         >
-          I want your sales team to demo me Teleport Enterprise features
+          I want your sales team to demo me Teleport&nbsp;Enterprise features
         </Text>
       </Toggle>
     </>
