@@ -1,5 +1,5 @@
-/*
-Copyright 2019 Gravitational, Inc.
+/**
+Copyright 2022 Gravitational, Inc.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -14,18 +14,4 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-export default function makeLogins(json): string[] {
-  json = json || [];
-  return sortLogins(json);
-}
-
-// sort logins by making 'root' as the first in the list
-const sortLogins = (logins: string[]) => {
-  const noRoot = logins.sort().filter(l => l !== 'root');
-  if (noRoot.length === logins.length) {
-    return logins;
-  }
-
-  noRoot.unshift('root');
-  return noRoot;
-};
+export * from './TextArea';
