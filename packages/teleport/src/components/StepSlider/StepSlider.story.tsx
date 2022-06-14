@@ -14,8 +14,8 @@
  * limitations under the License.
  */
 
-import React from 'react';
-import StepSlider, { SliderProps } from './StepSlider';
+import React, { useState } from 'react';
+import StepSlider, { StepComponentProps, NewFlow } from './StepSlider';
 import { Text, Card, ButtonPrimary, ButtonLink, Box } from 'design';
 
 export default {
@@ -39,15 +39,23 @@ export const SingleStaticFlow = () => {
 };
 
 type MultiFlow = 'primary' | 'secondary';
+type ViewProps = StepComponentProps & {
+  changeFlow(f: NewFlow<MultiFlow>): void;
+};
 const multiflows = {
   primary: [MainStep1, MainStep2, FinalStep],
   secondary: [OtherStep1, FinalStep],
 };
 export const MultiCardFlow = () => {
-  const [flow, setFlow] = React.useState<keyof typeof multiflows>('primary');
+  const [flow, setFlow] = useState<MultiFlow>('primary');
+  const [newFlow, setNewFlow] = useState<NewFlow<MultiFlow>>();
 
-  function onSwitchFlow(flow: keyof typeof multiflows) {
+  function onSwitchFlow(flow: MultiFlow) {
     setFlow(flow);
+  }
+
+  function onNewFlow(newFlow: NewFlow<MultiFlow>) {
+    setNewFlow(newFlow);
   }
 
   return (
@@ -56,12 +64,14 @@ export const MultiCardFlow = () => {
         flows={multiflows}
         currFlow={flow}
         onSwitchFlow={onSwitchFlow}
+        newFlow={newFlow}
+        changeFlow={onNewFlow}
       />
     </Card>
   );
 };
 
-function MainStep1({ next, switchFlow, refCallback }: SliderProps<MultiFlow>) {
+function MainStep1({ next, refCallback, changeFlow }: ViewProps) {
   return (
     <Box flex="3" p="6" ref={refCallback} data-testid="multi-primary1">
       <Text typography="h2" mb={3} textAlign="center" color="light" bold>
@@ -86,7 +96,7 @@ function MainStep1({ next, switchFlow, refCallback }: SliderProps<MultiFlow>) {
         <ButtonLink
           onClick={e => {
             e.preventDefault();
-            switchFlow('secondary');
+            changeFlow({ flow: 'secondary' });
           }}
         >
           Switch Secondary Flow
@@ -96,7 +106,7 @@ function MainStep1({ next, switchFlow, refCallback }: SliderProps<MultiFlow>) {
   );
 }
 
-function MainStep2({ next, prev, refCallback }: SliderProps<MultiFlow>) {
+function MainStep2({ next, prev, refCallback }: ViewProps) {
   return (
     <Box flex="3" p="6" ref={refCallback} data-testid="multi-primary2">
       <Text typography="h2" mb={3} textAlign="center" color="light" bold>
@@ -149,11 +159,7 @@ function MainStep2({ next, prev, refCallback }: SliderProps<MultiFlow>) {
   );
 }
 
-function OtherStep1({
-  switchFlow: onSwitchFlow,
-  next: onNext,
-  refCallback,
-}: SliderProps<MultiFlow>) {
+function OtherStep1({ changeFlow, next: onNext, refCallback }: ViewProps) {
   return (
     <Box flex="3" p="6" ref={refCallback} data-testid="multi-secondary1">
       <Text typography="h2" mb={3} textAlign="center" color="light" bold>
@@ -180,7 +186,7 @@ function OtherStep1({
         <ButtonLink
           onClick={e => {
             e.preventDefault();
-            onSwitchFlow('primary', true /* go back to primary flow */);
+            changeFlow({ flow: 'primary', applyNextAnimation: true });
           }}
         >
           Switch Primary Flow
@@ -190,7 +196,7 @@ function OtherStep1({
   );
 }
 
-function FinalStep({ prev: onPrev, refCallback }: SliderProps<MultiFlow>) {
+function FinalStep({ prev, refCallback }: ViewProps) {
   return (
     <Box flex="3" p="6" ref={refCallback} data-testid="multi-final">
       <Text typography="h2" mb={3} textAlign="center" color="light" bold>
@@ -208,7 +214,7 @@ function FinalStep({ prev: onPrev, refCallback }: SliderProps<MultiFlow>) {
         <ButtonLink
           onClick={e => {
             e.preventDefault();
-            onPrev();
+            prev();
           }}
         >
           Go Back
@@ -219,11 +225,11 @@ function FinalStep({ prev: onPrev, refCallback }: SliderProps<MultiFlow>) {
 }
 
 function Body1({
-  next: onNext,
-  prev: onPrev,
+  next,
+  prev,
   refCallback,
   testProp,
-}: SliderProps<any> & { testProp: string }) {
+}: StepComponentProps & { testProp: string }) {
   return (
     <Box flex="3" p="6" ref={refCallback} data-testid="single-body1">
       <Text mb={3}>
@@ -236,7 +242,7 @@ function Body1({
         size="large"
         onClick={e => {
           e.preventDefault();
-          onNext();
+          next();
         }}
       >
         Next1
@@ -245,7 +251,7 @@ function Body1({
         <ButtonLink
           onClick={e => {
             e.preventDefault();
-            onPrev();
+            prev();
           }}
         >
           Back1
@@ -260,7 +266,7 @@ function Body2({
   next: onNext,
   refCallback,
   testProp,
-}: SliderProps<any> & { testProp: string }) {
+}: StepComponentProps & { testProp: string }) {
   return (
     <Box flex="3" p="6" ref={refCallback} data-testid="single-body2">
       <Text mb={3}>
