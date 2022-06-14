@@ -33,7 +33,7 @@ export function ShareFeedback(props: ShareFeedbackProps) {
   });
 
   return (
-    <Flex bg="primary.main" p={3} borderRadius={3}>
+    <Flex bg="primary.main" p={3} borderRadius={3} maxWidth="370px">
       <Validation>
         {({ validator }) => (
           <Flex

@@ -68,8 +68,14 @@ export function ShareFeedbackForm({
           );
         }}
       >
-        <Text ml={2} color="text.primary">
-          I want to be contacted by the sales team
+        <Text
+          ml={2}
+          color="text.primary"
+          css={`
+            line-height: 18px;
+          `}
+        >
+          I want your sales team to demo me Teleport Enterprise features
         </Text>
       </Toggle>
     </>
