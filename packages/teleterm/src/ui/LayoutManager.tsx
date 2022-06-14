@@ -22,9 +22,9 @@ import { StatusBar } from 'teleterm/ui/StatusBar';
 
 export function LayoutManager() {
   return (
-    <Flex flexDirection="column" flex="1">
+    <Flex flex="1" flexDirection="column" minHeight={0}>
       <TopBar />
-      <Flex flex="1" style={{ position: 'relative' }}>
+      <Flex flex="1" minHeight={0} style={{ position: 'relative' }}>
         <TabHostContainer />
       </Flex>
       <StatusBar />

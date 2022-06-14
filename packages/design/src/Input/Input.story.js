@@ -25,6 +25,5 @@ export const Inputs = () => (
   <>
     <Input mb={4} placeholder="Enter SomeText" />
     <Input mb={4} hasError={true} defaultValue="This field has an error" />
-    <Input mb={4} autoFocus defaultValue="This field is focused" />
   </>
 );

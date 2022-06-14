@@ -52,25 +52,32 @@ export function FieldTextArea({
   const hasError = !valid;
   const labelText = hasError ? message : label;
 
+  const $textAreaElement = (
+    <TextArea
+      mt={1}
+      name={name}
+      css={textAreaCss}
+      hasError={hasError}
+      placeholder={placeholder}
+      value={value}
+      autoComplete={autoComplete}
+      autoFocus={autoFocus}
+      onChange={onChange}
+      readOnly={readOnly}
+    />
+  );
+
   return (
     <Box mb="4" {...styles}>
-      {label && (
-        <LabelInput hasError={hasError}>
+      {label ? (
+        <LabelInput mb={0} hasError={hasError}>
           {labelText}
           {labelTip && <LabelTip text={labelTip} />}
+          {$textAreaElement}
         </LabelInput>
+      ) : (
+        $textAreaElement
       )}
-      <TextArea
-        name={name}
-        css={textAreaCss}
-        hasError={hasError}
-        placeholder={placeholder}
-        value={value}
-        autoComplete={autoComplete}
-        autoFocus={autoFocus}
-        onChange={onChange}
-        readOnly={readOnly}
-      />
     </Box>
   );
 }
