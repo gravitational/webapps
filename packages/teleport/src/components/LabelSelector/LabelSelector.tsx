@@ -41,10 +41,6 @@ function LabelSelector({ onChange }: LabelSelectorProps) {
   }, [newLabel]);
 
   useEffect(() => {
-    onChange(labels);
-  }, [labels]);
-
-  useEffect(() => {
     if (showAdd && addLabelInputRef.current) {
       addLabelInputRef.current.focus();
     }
@@ -57,7 +53,9 @@ function LabelSelector({ onChange }: LabelSelectorProps) {
   useEscape(escapeHandler);
 
   const handleAddLabel = () => {
-    setLabels([...labels, newLabel.trim()]);
+    const newLabels = [...labels, newLabel.trim()];
+    setLabels(newLabels);
+    onChange(newLabels);
     setNewLabel('');
   };
 
@@ -65,6 +63,7 @@ function LabelSelector({ onChange }: LabelSelectorProps) {
     const labelList = [...labels];
     labelList.splice(labelList.indexOf(label), 1);
     setLabels(labelList);
+    onChange(labelList);
   };
 
   return (
