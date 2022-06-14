@@ -14,15 +14,14 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React, { useRef, useState } from 'react';
-import styled from 'styled-components';
+import React from 'react';
 import { useDatabases, State } from './useDatabases';
 import { Table } from 'teleterm/ui/components/Table';
 import { Cell } from 'design/DataTable';
 import { renderLabelCell } from '../renderLabelCell';
 import { Danger } from 'design/Alert';
-import { MenuLogin, MenuLoginHandle } from 'shared/components/MenuLogin';
-import { MenuLoginTheme } from '../MenuLoginTheme';
+import { MenuLogin } from 'shared/components/MenuLogin';
+import { MenuLoginThemeProvider } from '../../../ThemeProvider';
 import { useAppContext } from 'teleterm/ui/appContextProvider';
 import { retryWithRelogin } from 'teleterm/ui/utils';
 import { IAppContext } from 'teleterm/ui/types';
@@ -82,7 +81,7 @@ function ConnectButton({
 
   return (
     <Cell align="right">
-      <MenuLoginTheme>
+      <MenuLoginThemeProvider>
         <MenuLogin
           placeholder="Enter username"
           getLoginItems={() => getDatabaseUsers(appContext, documentUri, dbUri)}
@@ -92,7 +91,7 @@ function ConnectButton({
           transformOrigin={transformOrigin}
           anchorOrigin={anchorOrigin}
         />
-      </MenuLoginTheme>
+      </MenuLoginThemeProvider>
     </Cell>
   );
 }

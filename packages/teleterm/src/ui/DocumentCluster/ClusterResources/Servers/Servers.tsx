@@ -21,7 +21,7 @@ import { Table } from 'teleterm/ui/components/Table';
 import { Cell } from 'design/DataTable';
 import { renderLabelCell } from '../renderLabelCell';
 import { MenuLogin } from 'shared/components/MenuLogin';
-import { MenuLoginTheme } from '../MenuLoginTheme';
+import { MenuLoginThemeProvider } from '../../../ThemeProvider';
 import { Danger } from 'design/Alert';
 
 export default function Container() {
@@ -77,7 +77,7 @@ const renderConnectCell = (
 ) => {
   return (
     <Cell align="right">
-      <MenuLoginTheme>
+      <MenuLoginThemeProvider>
         <MenuLogin
           getLoginItems={() =>
             getSshLogins().map(login => ({ login, url: '' }))
@@ -92,7 +92,7 @@ const renderConnectCell = (
             horizontal: 'right',
           }}
         />
-      </MenuLoginTheme>
+      </MenuLoginThemeProvider>
     </Cell>
   );
 };

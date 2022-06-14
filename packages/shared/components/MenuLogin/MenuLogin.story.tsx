@@ -19,7 +19,7 @@ import { storiesOf } from '@storybook/react';
 import { Flex } from 'design';
 import { MenuLogin } from './MenuLogin';
 import { MenuLoginHandle } from './types';
-import { MenuLoginTheme } from 'teleterm/ui/DocumentCluster/ClusterResources/MenuLoginTheme';
+import { MenuLoginThemeProvider } from 'teleterm/ui/ThemeProvider';
 
 storiesOf('Shared/MenuLogin', module).add('MenuLogin', () => {
   return <MenuLoginExamples />;
@@ -29,9 +29,9 @@ storiesOf('Shared/MenuLogin', module).add(
   'MenuLogin in Teleport Connect',
   () => {
     return (
-      <MenuLoginTheme>
+      <MenuLoginThemeProvider>
         <MenuLoginExamples />
-      </MenuLoginTheme>
+      </MenuLoginThemeProvider>
     );
   }
 );

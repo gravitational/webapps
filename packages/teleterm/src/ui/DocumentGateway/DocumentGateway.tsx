@@ -30,7 +30,7 @@ import * as types from 'teleterm/ui/services/workspacesService';
 import LinearProgress from 'teleterm/ui/components/LinearProgress';
 import useDocumentGateway, { State } from './useDocumentGateway';
 import { MenuLogin } from 'shared/components/MenuLogin';
-import { MenuLoginTheme } from 'teleterm/ui/DocumentCluster/ClusterResources/MenuLoginTheme';
+import { MenuLoginThemeProvider } from 'teleterm/ui/ThemeProvider';
 
 type Props = {
   visible: boolean;
@@ -107,7 +107,7 @@ export function DocumentGateway(props: State) {
         onRun={runCliCommand}
       />
       <Flex justifyContent="end">
-        <MenuLoginTheme>
+        <MenuLoginThemeProvider>
           <MenuLogin
             disabled={isLoading}
             placeholder="Enter database name"
@@ -119,7 +119,7 @@ export function DocumentGateway(props: State) {
             anchorOrigin={anchorOrigin}
             info="The name will persist for this connection"
           />
-        </MenuLoginTheme>
+        </MenuLoginThemeProvider>
       </Flex>
       {changeDbNameAttempt.status === 'error' && (
         <Alerts.Danger>
