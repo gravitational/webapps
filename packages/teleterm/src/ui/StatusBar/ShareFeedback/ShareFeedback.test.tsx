@@ -7,18 +7,18 @@ import { MockAppContext } from 'teleterm/ui/fixtures/mocks';
 
 test('email field is not prefilled with the username if is not an email', () => {
   const appContext = new MockAppContext();
+  const clusterUri = '/clusters/localhost';
   jest
     .spyOn(appContext.clustersService, 'findCluster')
-    .mockImplementation(clusterUri => {
-      if (clusterUri === '/clusters/localhost')
-        return {
-          loggedInUser: { name: 'alice' },
-        } as Cluster.AsObject;
+    .mockImplementation(() => {
+      return {
+        loggedInUser: { name: 'alice' },
+      } as Cluster.AsObject;
     });
 
   jest
     .spyOn(appContext.workspacesService, 'getRootClusterUri')
-    .mockReturnValue('/clusters/localhost');
+    .mockReturnValue(clusterUri);
 
   const { getByLabelText } = render(
     <MockAppContextProvider appContext={appContext}>
@@ -26,26 +26,28 @@ test('email field is not prefilled with the username if is not an email', () => 
     </MockAppContextProvider>
   );
 
+  expect(appContext.clustersService.findCluster).toHaveBeenCalledWith(
+    clusterUri
+  );
   expect(getByLabelText('Email Address')).toHaveValue('');
 });
 
 test('email field is prefilled with the username if it looks like an email', () => {
   const appContext = new MockAppContext();
+  const clusterUri = '/clusters/production';
   jest
     .spyOn(appContext.clustersService, 'findCluster')
-    .mockImplementation(clusterUri => {
-      if (clusterUri === '/clusters/production') {
-        return {
-          loggedInUser: {
-            name: 'bob@prod.com',
-          },
-        } as Cluster.AsObject;
-      }
+    .mockImplementation(() => {
+      return {
+        loggedInUser: {
+          name: 'bob@prod.com',
+        },
+      } as Cluster.AsObject;
     });
 
   jest
     .spyOn(appContext.workspacesService, 'getRootClusterUri')
-    .mockReturnValue('/clusters/production');
+    .mockReturnValue(clusterUri);
 
   const { getByLabelText } = render(
     <MockAppContextProvider appContext={appContext}>
@@ -53,6 +55,9 @@ test('email field is prefilled with the username if it looks like an email', () 
     </MockAppContextProvider>
   );
 
+  expect(appContext.clustersService.findCluster).toHaveBeenCalledWith(
+    clusterUri
+  );
   expect(getByLabelText('Email Address')).toHaveValue('bob@prod.com');
 });
 
