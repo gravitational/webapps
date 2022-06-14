@@ -177,9 +177,9 @@ export default function StepSlider<T>(props: Props<T>) {
               rootRef.current.style.height = `${height}px`;
             }}
             onExited={() => {
-              // Set it back to auto because the parent component might contain elements
+              // Set it back to visible because the parent component might contain elements
               // that may want it to be overflowed e.g. long drop down menu in a small card.
-              rootRef.current.style.overflow = 'auto';
+              rootRef.current.style.overflow = 'visible';
               // Set height back to auto to allow the parent component to grow as needed
               // e.g. rendering of a error banner
               rootRef.current.style.height = 'auto';

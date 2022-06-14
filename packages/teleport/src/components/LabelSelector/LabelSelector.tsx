@@ -218,8 +218,11 @@ const LabelContainer = styled.div`
 const AddLabelContainer = styled.div`
   background: #182250;
   border-radius: 4px;
-  height: 100px;
+  box-sizing: border-box;
   padding: 1rem;
+  position: absolute;
+  width: 100%;
+  z-index: 1;
 `;
 
 const AddLabelInput = styled.input`
