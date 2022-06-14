@@ -46,6 +46,7 @@ const StyledSlider = styled.div`
   border-radius: 12px;
   background: ${props => props.theme.colors.primary.light};
   cursor: pointer;
+  flex-shrink: 0;
 
   &:before {
     content: '';
