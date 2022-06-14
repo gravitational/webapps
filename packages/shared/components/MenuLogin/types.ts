@@ -26,6 +26,9 @@ export type MenuLoginProps = {
   transformOrigin?: any;
   placeholder?: string;
   required?: boolean;
+  disabled?: boolean;
+  buttonText?: string;
+  info?: string;
 };
 
 export type MenuLoginHandle = {

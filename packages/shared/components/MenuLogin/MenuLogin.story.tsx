@@ -55,6 +55,12 @@ function MenuLoginExamples() {
         placeholder="MenuLogin in processing state"
         onSelect={() => null}
       />
+      <MenuLogin
+        getLoginItems={() => []}
+        placeholder="MenuLogin with info"
+        info="Information for the user"
+        onSelect={() => null}
+      />
       <SampleMenu />
     </Flex>
   );
