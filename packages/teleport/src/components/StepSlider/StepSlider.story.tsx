@@ -59,7 +59,7 @@ export const MultiCardFlow = () => {
   }
 
   return (
-    <Card as="form" bg="primary.light" my={6} mx="auto" width={464}>
+    <Card as="form" bg="primary.light" mx="auto" width={464}>
       <StepSlider<typeof multiflows>
         flows={multiflows}
         currFlow={flow}
@@ -73,7 +73,7 @@ export const MultiCardFlow = () => {
 
 function MainStep1({ next, refCallback, changeFlow }: ViewProps) {
   return (
-    <Box flex="3" p="6" ref={refCallback} data-testid="multi-primary1">
+    <Box p="6" ref={refCallback} data-testid="multi-primary1">
       <Text typography="h2" mb={3} textAlign="center" color="light" bold>
         First Step
       </Text>
@@ -108,7 +108,7 @@ function MainStep1({ next, refCallback, changeFlow }: ViewProps) {
 
 function MainStep2({ next, prev, refCallback }: ViewProps) {
   return (
-    <Box flex="3" p="6" ref={refCallback} data-testid="multi-primary2">
+    <Box p="6" ref={refCallback} data-testid="multi-primary2">
       <Text typography="h2" mb={3} textAlign="center" color="light" bold>
         Second Step
       </Text>
@@ -161,7 +161,7 @@ function MainStep2({ next, prev, refCallback }: ViewProps) {
 
 function OtherStep1({ changeFlow, next: onNext, refCallback }: ViewProps) {
   return (
-    <Box flex="3" p="6" ref={refCallback} data-testid="multi-secondary1">
+    <Box p="6" ref={refCallback} data-testid="multi-secondary1">
       <Text typography="h2" mb={3} textAlign="center" color="light" bold>
         Some Other Flow Title
       </Text>
@@ -198,7 +198,7 @@ function OtherStep1({ changeFlow, next: onNext, refCallback }: ViewProps) {
 
 function FinalStep({ prev, refCallback }: ViewProps) {
   return (
-    <Box flex="3" p="6" ref={refCallback} data-testid="multi-final">
+    <Box p="6" ref={refCallback} data-testid="multi-final">
       <Text typography="h2" mb={3} textAlign="center" color="light" bold>
         Done Step
       </Text>
@@ -231,7 +231,7 @@ function Body1({
   testProp,
 }: StepComponentProps & { testProp: string }) {
   return (
-    <Box flex="3" p="6" ref={refCallback} data-testid="single-body1">
+    <Box p="6" ref={refCallback} data-testid="single-body1">
       <Text mb={3}>
         Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
         tempor incididunt ut labore et dolore magna aliqua.
@@ -268,7 +268,7 @@ function Body2({
   testProp,
 }: StepComponentProps & { testProp: string }) {
   return (
-    <Box flex="3" p="6" ref={refCallback} data-testid="single-body2">
+    <Box p="6" ref={refCallback} data-testid="single-body2">
       <Text mb={3}>
         Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
         tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim
