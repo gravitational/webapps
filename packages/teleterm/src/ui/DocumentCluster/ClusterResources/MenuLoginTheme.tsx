@@ -8,6 +8,10 @@ const menuLoginTheme = {
     ...theme.colors,
     subtle: theme.colors.primary.lighter,
     light: theme.colors.primary.light,
+    text: {
+      ...theme.colors.text,
+      onLight: theme.colors.text.secondary,
+    },
     primary: {
       ...theme.colors.primary,
       lighter: theme.colors.primary.darker,

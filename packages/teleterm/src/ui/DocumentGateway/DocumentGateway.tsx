@@ -15,12 +15,22 @@ limitations under the License.
 */
 
 import React from 'react';
-import { Text, Flex, Box, ButtonPrimary, ButtonSecondary, Link } from 'design';
+import {
+  Text,
+  Flex,
+  Box,
+  ButtonPrimary,
+  ButtonSecondary,
+  Link,
+  Indicator,
+} from 'design';
 import Document from 'teleterm/ui/Document';
 import * as Alerts from 'design/Alert';
 import * as types from 'teleterm/ui/services/workspacesService';
 import LinearProgress from 'teleterm/ui/components/LinearProgress';
 import useDocumentGateway, { State } from './useDocumentGateway';
+import { MenuLogin } from 'shared/components/MenuLogin';
+import { MenuLoginTheme } from 'teleterm/ui/DocumentCluster/ClusterResources/MenuLoginTheme';
 
 type Props = {
   visible: boolean;
@@ -45,7 +55,11 @@ export function DocumentGateway(props: State) {
     disconnect,
     reconnect,
     runCliCommand,
+    changeDbName,
+    changeDbNameAttempt,
   } = props;
+
+  const isLoading = changeDbNameAttempt.status === 'processing';
 
   if (!connected) {
     const statusDescription =
@@ -87,8 +101,34 @@ export function DocumentGateway(props: State) {
         </ButtonSecondary>
       </Flex>
       <Text bold>Connect with CLI</Text>
-      <CliCommand cliCommand={gateway.cliCommand} onClick={runCliCommand} />
-      <Text bold>Connect with GUI</Text>
+      <CliCommand
+        cliCommand={gateway.cliCommand}
+        isLoading={isLoading}
+        onRun={runCliCommand}
+      />
+      <Flex justifyContent="end">
+        <MenuLoginTheme>
+          <MenuLogin
+            disabled={isLoading}
+            placeholder="Enter database name"
+            required={false}
+            buttonText="SET DATABASE NAME"
+            getLoginItems={() => []}
+            onSelect={(_, dbName) => changeDbName(dbName)}
+            transformOrigin={transformOrigin}
+            anchorOrigin={anchorOrigin}
+            info="The name will persist for this connection"
+          />
+        </MenuLoginTheme>
+      </Flex>
+      {changeDbNameAttempt.status === 'error' && (
+        <Alerts.Danger>
+          Could not change the database name: {changeDbNameAttempt.statusText}
+        </Alerts.Danger>
+      )}
+      <Text bold mt={3}>
+        Connect with GUI
+      </Text>
       <Text>
         To connect with a GUI database client, see our{' '}
         <Link
@@ -105,10 +145,12 @@ export function DocumentGateway(props: State) {
 
 function CliCommand({
   cliCommand,
-  onClick,
+  onRun,
+  isLoading,
 }: {
   cliCommand: string;
-  onClick(): void;
+  onRun(): void;
+  isLoading: boolean;
 }) {
   return (
     <Flex
@@ -117,10 +159,12 @@ function CliCommand({
       justifyContent="space-between"
       borderRadius={2}
       bg={'primary.dark'}
-      mb={4}
+      mb={2}
     >
       <Flex
         mr="2"
+        color={isLoading ? 'text.secondary' : 'text.primary'}
+        width="100%"
         css={`
           overflow: auto;
           white-space: pre;
@@ -130,10 +174,20 @@ function CliCommand({
         `}
       >
         <Box mr="1">{`$`}</Box>
-        <div>{cliCommand}</div>
+        <span>{cliCommand}</span>
+        {isLoading && (
+          <Indicator
+            fontSize="14px"
+            css={`
+              display: inline;
+              margin: auto 0 auto auto;
+            `}
+          />
+        )}
       </Flex>
       <ButtonPrimary
-        onClick={onClick}
+        onClick={onRun}
+        disabled={isLoading}
         css={`
           max-width: 48px;
           width: 100%;
@@ -147,3 +201,12 @@ function CliCommand({
     </Flex>
   );
 }
+
+const transformOrigin = {
+  vertical: 'top',
+  horizontal: 'right',
+};
+const anchorOrigin = {
+  vertical: 'center',
+  horizontal: 'right',
+};
