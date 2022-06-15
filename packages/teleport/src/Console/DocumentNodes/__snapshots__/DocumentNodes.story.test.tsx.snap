@@ -995,6 +995,7 @@ exports[`render DocumentNodes 1`] = `
                 class="c30"
                 height="24px"
                 kind="border"
+                title="CONNECT"
               >
                 CONNECT
                 <span
@@ -1033,6 +1034,7 @@ exports[`render DocumentNodes 1`] = `
                 class="c30"
                 height="24px"
                 kind="border"
+                title="CONNECT"
               >
                 CONNECT
                 <span
@@ -1076,6 +1078,7 @@ exports[`render DocumentNodes 1`] = `
                 class="c30"
                 height="24px"
                 kind="border"
+                title="CONNECT"
               >
                 CONNECT
                 <span
@@ -1119,6 +1122,7 @@ exports[`render DocumentNodes 1`] = `
                 class="c30"
                 height="24px"
                 kind="border"
+                title="CONNECT"
               >
                 CONNECT
                 <span
@@ -1181,6 +1185,7 @@ exports[`render DocumentNodes 1`] = `
                 class="c30"
                 height="24px"
                 kind="border"
+                title="CONNECT"
               >
                 CONNECT
                 <span
