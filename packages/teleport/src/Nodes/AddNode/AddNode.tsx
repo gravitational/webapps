@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-import React from 'react';
+import React, { useRef } from 'react';
 import { Box, ButtonPrimary, Flex, Link, Text } from 'design';
 import useTeleport from 'teleport/useTeleport';
 import Dialog, { DialogHeader } from 'design/Dialog';
@@ -27,7 +27,7 @@ import useAddNode, { State, JoinMethod } from './useAddNode';
 import { LabelSelector } from 'teleport/components/LabelSelector';
 import NextButton from './NextButton';
 import TextSelectCopy from 'teleport/components/TextSelectCopy';
-import { Apple, Linux } from 'design/Icon';
+import { ChooseBinary } from './ChooseBinary';
 
 export default function Container(props: Props) {
   const ctx = useTeleport();
@@ -49,19 +49,44 @@ export function AddNode({
 }: Props & State) {
   const [newFlow, setNewFlow] =
     React.useState<{ flow: JoinMethod; applyNextAnimation?: boolean }>();
-
   const [flow, setFlow] = React.useState<JoinMethod>(method);
+  const labelsRef = React.useRef<string[]>([]);
 
   function onSwitchFlow(flow: JoinMethod) {
     setFlow(flow);
   }
 
   const flows = {
-    aws: [IAMRoles, AssignLabels, ScriptDisplayWrap],
-    automatically: [AssignLabels, ScriptDisplayWrap],
-    manually: [ChooseBinary, AssignLabels, ManualCommandsWrap],
+    aws: [IAMRoles, AssignLabelsWrap, ScriptDisplayWrap],
+    automatically: [AssignLabelsWrap, ScriptDisplayWrap],
+    manually: [ChooseBinaryWrap, AssignLabelsWrap, ManualCommandsWrap],
   };
   const slideTabs = ['AWS', 'Automatically', 'Manually'];
+
+  function AssignLabelsWrap({ next, refCallback }: SliderProps<JoinMethod>) {
+    return (
+      <AssignLabels
+        next={() => {
+          next();
+        }}
+        refCallback={refCallback}
+        onChange={labels => {
+          labelsRef.current = labels;
+        }}
+      />
+    );
+  }
+
+  function ChooseBinaryWrap({ next, refCallback }: SliderProps<JoinMethod>) {
+    return (
+      <ChooseBinary
+        next={next}
+        refCallback={refCallback}
+        isEnterprise={isEnterprise}
+        version={version}
+      />
+    );
+  }
 
   function ScriptDisplayWrap({ refCallback }: SliderProps<JoinMethod>) {
     return <ScriptDisplay onClose={onClose} refCallback={refCallback} />;
@@ -157,90 +182,23 @@ type ManualCommandsProps = {
   onClose(): void;
 };
 
-function ChooseBinary({ next, refCallback }: SliderProps<JoinMethod>) {
-  return (
-    <Box ref={refCallback}>
-      <Text bold as="span">
-        Step 1
-      </Text>{' '}
-      <Text as="span">- Select OS</Text>
-      {
-        // use isEnterprise to get the proper download links
-      }
-      <Box mt={3}>
-        <Flex style={{ gap: '0.5rem' }}>
-          <BinaryLink icon="apple" label="MacOS" />
-          <BinaryLink
-            active={true}
-            icon="linux"
-            label="Linux amd64"
-            subLabel="(Debian/Ubuntu)"
-          />
-          <BinaryLink
-            icon="linux"
-            label="Linux amd64"
-            subLabel="(RHEL/CentOS)"
-          />
-        </Flex>
-      </Box>
-      <Text mt={3}>
-        Don't see yours? <Link>Find more here</Link>.
-      </Text>
-      <TextSelectCopy text="CURL command goes here" mt={3} mb={3} />
-      <NextButton next={next} />
-    </Box>
-  );
-}
-
-function BinaryLink({
-  active = false,
-  icon,
-  label,
-  subLabel,
-}: {
-  active?: boolean;
-  icon: string;
-  label: string;
-  subLabel?: string;
-}) {
-  return (
-    <Link
-      style={{
-        backgroundColor: active ? '#512FC9' : 'rgba(255, 255, 255, 0.05)',
-        borderRadius: '8px',
-        cursor: 'pointer',
-        flexBasis: 0,
-        flexGrow: 1,
-        opacity: active ? 1 : 0.6,
-        textDecoration: 'none',
-        color: 'white',
-      }}
-    >
-      <Flex
-        justifyContent="center"
-        height="86px"
-        alignItems="center"
-        flexDirection="column"
-      >
-        {icon === 'apple' ? <Apple /> : <Linux />}
-        <Text bold>{label}</Text>
-        <Text>{subLabel}</Text>
-      </Flex>
-    </Link>
-  );
-}
-
 function IAMRoles({ next, refCallback }: SliderProps<JoinMethod>) {
   return <Aws refCallback={refCallback} next={next} />;
 }
 
-function AssignLabels({ next, refCallback }: SliderProps<JoinMethod>) {
+function AssignLabels({ next, refCallback, onChange }: AssignLabelProps) {
   return (
     <Box ref={refCallback}>
       <Box mb={3}>
-        <LabelSelector onChange={() => {}} />
+        <LabelSelector onChange={onChange} />
       </Box>
       <NextButton next={next} label="Generate Script" />
     </Box>
   );
 }
+
+type AssignLabelProps = {
+  next(): void;
+  refCallback(node: HTMLElement): void;
+  onChange(labels: string[]): void;
+};
