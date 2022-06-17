@@ -15,6 +15,4 @@ limitations under the License.
 */
 
 import ThemeProvider from './ThemeProvider';
-
-export * from './MenuLoginThemeProvider';
 export default ThemeProvider;

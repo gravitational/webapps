@@ -1,6 +1,6 @@
 import React, { FC } from 'react';
 import { ThemeProvider } from 'styled-components';
-import theme from './theme';
+import theme from 'teleterm/ui/ThemeProvider/theme';
 
 const menuLoginTheme = {
   ...theme,
@@ -29,6 +29,6 @@ const menuLoginTheme = {
   },
 };
 
-export const MenuLoginThemeProvider: FC = props => (
+export const MenuLoginTheme: FC = props => (
   <ThemeProvider theme={menuLoginTheme} children={props.children} />
 );
