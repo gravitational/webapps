@@ -20,28 +20,20 @@ import { NavLink } from 'react-router-dom';
 import Menu, { MenuItem } from 'design/Menu';
 import { space } from 'design/system';
 import { MenuLoginProps, LoginItem, MenuLoginHandle } from './types';
-import { ButtonBorder, Flex, Indicator, Text } from 'design';
-import { CarrotDown, Info } from 'design/Icon';
+import { ButtonBorder, Flex, Indicator } from 'design';
+import { CarrotDown } from 'design/Icon';
 import { useAsync, Attempt } from 'shared/hooks/useAsync';
 
 export const MenuLogin = React.forwardRef<MenuLoginHandle, MenuLoginProps>(
   (props, ref) => {
-    const {
-      onSelect,
-      anchorOrigin,
-      transformOrigin,
-      required = true,
-      buttonText = 'CONNECT',
-      placeholder = 'Enter login name…',
-      disabled,
-      info,
-    } = props;
+    const { onSelect, anchorOrigin, transformOrigin, required = true } = props;
     const anchorRef = useRef<HTMLElement>();
     const [isOpen, setIsOpen] = useState(false);
     const [getLoginItemsAttempt, runGetLoginItems] = useAsync(() =>
       Promise.resolve().then(() => props.getLoginItems())
     );
 
+    const placeholder = props.placeholder || 'Enter login name…';
     const onOpen = () => {
       if (!getLoginItemsAttempt.status) {
         runGetLoginItems();
@@ -78,10 +70,8 @@ export const MenuLogin = React.forwardRef<MenuLoginHandle, MenuLoginProps>(
           size="small"
           setRef={anchorRef}
           onClick={onOpen}
-          title={buttonText}
-          disabled={disabled}
         >
-          {buttonText}
+          CONNECT
           <CarrotDown ml={2} mr={-2} fontSize="2" color="text.secondary" />
         </ButtonBorder>
         <Menu
@@ -97,7 +87,6 @@ export const MenuLogin = React.forwardRef<MenuLoginHandle, MenuLoginProps>(
             onKeyPress={onKeyPress}
             onClick={onItemClick}
             placeholder={placeholder}
-            info={info}
           />
         </Menu>
       </React.Fragment>
@@ -110,35 +99,16 @@ const LoginItemList = ({
   onClick,
   onKeyPress,
   placeholder,
-  info,
 }: {
   getLoginItemsAttempt: Attempt<LoginItem[]>;
   onClick: (e: React.MouseEvent<HTMLAnchorElement>, login: string) => void;
   onKeyPress: (e: React.KeyboardEvent<HTMLInputElement>) => void;
   placeholder: string;
-  info: string;
 }) => {
   const content = getLoginItemListContent(getLoginItemsAttempt, onClick);
 
   return (
     <Flex flexDirection="column">
-      {info && (
-        <Text
-          fontSize={1}
-          color="text.onLight"
-          p={2}
-          pb={0}
-          css={`
-            display: flex;
-            line-height: 15px;
-            max-width: 200px;
-            align-items: baseline;
-          `}
-        >
-          <Info color="text.onLight" mr={1} />
-          <span>{info}</span>
-        </Text>
-      )}
       <Input
         p="2"
         m="2"
