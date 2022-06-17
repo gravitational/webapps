@@ -109,7 +109,7 @@ export function DocumentGateway(props: State) {
           Close Connection
         </ButtonSecondary>
       </Flex>
-      <Text bold>Connect with CLI</Text>
+      <Text typography="h4">Connect with CLI</Text>
       <Flex>
         <Validation>
           <ConfigInput
@@ -130,7 +130,7 @@ export function DocumentGateway(props: State) {
           Could not change the database name: {changeDbNameAttempt.statusText}
         </Alerts.Danger>
       )}
-      <Text bold mt={3}>
+      <Text typography="h4" mt={3}>
         Connect with GUI
       </Text>
       <Text>
