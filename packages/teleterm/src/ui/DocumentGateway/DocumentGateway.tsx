@@ -66,7 +66,7 @@ export function DocumentGateway(props: State) {
     return debounce((value: string) => {
       changeDbName(value);
     }, 150);
-  }, []);
+  }, [changeDbName]);
 
   const isLoading = changeDbNameAttempt.status === 'processing';
 
