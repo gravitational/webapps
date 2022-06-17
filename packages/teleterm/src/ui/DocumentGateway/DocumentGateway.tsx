@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import {
   Text,
   Flex,
@@ -29,8 +29,10 @@ import * as Alerts from 'design/Alert';
 import * as types from 'teleterm/ui/services/workspacesService';
 import LinearProgress from 'teleterm/ui/components/LinearProgress';
 import useDocumentGateway, { State } from './useDocumentGateway';
-import { MenuLogin } from 'shared/components/MenuLogin';
-import { MenuLoginTheme } from 'teleterm/ui/DocumentCluster/ClusterResources/MenuLoginTheme';
+import FieldInput from 'shared/components/FieldInput';
+import Validation from 'shared/components/Validation';
+import { debounce } from 'lodash';
+import styled from 'styled-components';
 
 type Props = {
   visible: boolean;
@@ -57,7 +59,14 @@ export function DocumentGateway(props: State) {
     runCliCommand,
     changeDbName,
     changeDbNameAttempt,
+    doc,
   } = props;
+
+  const handleChangeDbName = useMemo(() => {
+    return debounce((value: string) => {
+      changeDbName(value);
+    }, 150);
+  }, []);
 
   const isLoading = changeDbNameAttempt.status === 'processing';
 
@@ -101,26 +110,21 @@ export function DocumentGateway(props: State) {
         </ButtonSecondary>
       </Flex>
       <Text bold>Connect with CLI</Text>
+      <Flex>
+        <Validation>
+          <ConfigInput
+            label="Database name"
+            defaultValue={doc.targetSubresourceName}
+            onChange={e => handleChangeDbName(e.target.value)}
+            spellCheck={false}
+          />
+        </Validation>
+      </Flex>
       <CliCommand
         cliCommand={gateway.cliCommand}
         isLoading={isLoading}
         onRun={runCliCommand}
       />
-      <Flex justifyContent="end">
-        <MenuLoginTheme>
-          <MenuLogin
-            disabled={isLoading}
-            placeholder="Enter database name"
-            required={false}
-            buttonText="SET DATABASE NAME"
-            getLoginItems={() => []}
-            onSelect={(_, dbName) => changeDbName(dbName)}
-            transformOrigin={transformOrigin}
-            anchorOrigin={anchorOrigin}
-            info="The name will persist for this connection"
-          />
-        </MenuLoginTheme>
-      </Flex>
       {changeDbNameAttempt.status === 'error' && (
         <Alerts.Danger>
           Could not change the database name: {changeDbNameAttempt.statusText}
@@ -152,6 +156,21 @@ function CliCommand({
   onRun(): void;
   isLoading: boolean;
 }) {
+  const [shouldDisplayIsLoading, setShouldDisplayIsLoading] = useState(false);
+
+  useEffect(() => {
+    let timeout;
+    if (isLoading) {
+      timeout = setTimeout(() => {
+        setShouldDisplayIsLoading(true);
+      }, 200);
+    } else {
+      setShouldDisplayIsLoading(false);
+    }
+
+    return () => clearTimeout(timeout);
+  }, [isLoading]);
+
   return (
     <Flex
       p="2"
@@ -163,7 +182,7 @@ function CliCommand({
     >
       <Flex
         mr="2"
-        color={isLoading ? 'text.secondary' : 'text.primary'}
+        color={shouldDisplayIsLoading ? 'text.secondary' : 'text.primary'}
         width="100%"
         css={`
           overflow: auto;
@@ -175,9 +194,10 @@ function CliCommand({
       >
         <Box mr="1">{`$`}</Box>
         <span>{cliCommand}</span>
-        {isLoading && (
+        {shouldDisplayIsLoading && (
           <Indicator
             fontSize="14px"
+            delay="none"
             css={`
               display: inline;
               margin: auto 0 auto auto;
@@ -187,7 +207,7 @@ function CliCommand({
       </Flex>
       <ButtonPrimary
         onClick={onRun}
-        disabled={isLoading}
+        disabled={shouldDisplayIsLoading}
         css={`
           max-width: 48px;
           width: 100%;
@@ -202,11 +222,25 @@ function CliCommand({
   );
 }
 
-const transformOrigin = {
-  vertical: 'top',
-  horizontal: 'right',
-};
-const anchorOrigin = {
-  vertical: 'center',
-  horizontal: 'right',
-};
+const ConfigInput: typeof FieldInput = styled(FieldInput)`
+  input {
+    background: inherit;
+    border: 1px ${props => props.theme.colors.action.disabledBackground} solid;
+    color: ${props => props.theme.colors.text.primary};
+    box-shadow: none;
+    font-size: 14px;
+    height: 34px;
+
+    ::placeholder {
+      opacity: 1;
+      color: ${props => props.theme.colors.text.secondary};
+    }
+
+    &:hover {
+      border-color: ${props => props.theme.colors.text.secondary};
+    }
+
+    &:focus {
+      border-color: ${props => props.theme.colors.secondary.main};
+    }
+`;
