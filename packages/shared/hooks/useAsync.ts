@@ -94,7 +94,7 @@ export function useAsync<R, T extends Function>(cb?: AsyncCb<R, T>) {
             return [null, err] as [R, Error];
           }
         ),
-    [setState]
+    [setState, cb]
   );
 
   const setAttempt = useCallback(
