@@ -100,7 +100,7 @@ export function DocumentGateway(props: State) {
   }
 
   return (
-    <Box maxWidth="1024px" mx="auto" mt="4" px="5">
+    <Box maxWidth="580px" mx="auto" mt="4" px="5">
       <Flex justifyContent="space-between" mb="4">
         <Text typography="h3" color="text.secondary">
           Database Connection
