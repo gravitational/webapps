@@ -117,6 +117,7 @@ export function DocumentGateway(props: State) {
             defaultValue={doc.targetSubresourceName}
             onChange={e => handleChangeDbName(e.target.value)}
             spellCheck={false}
+            mb={2}
           />
         </Validation>
       </Flex>
