@@ -18,7 +18,7 @@ import { TransitionGroup, CSSTransition } from 'react-transition-group';
 import styled from 'styled-components';
 import { Box } from 'design';
 
-export default function StepSlider<T>(props: Props<T>) {
+export function StepSlider<T>(props: Props<T>) {
   const {
     flows,
     currFlow,

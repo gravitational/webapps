@@ -15,11 +15,11 @@
  */
 
 import React, { useState } from 'react';
-import StepSlider, { StepComponentProps, NewFlow } from './StepSlider';
+import { StepSlider, StepComponentProps, NewFlow } from './StepSlider';
 import { Text, Card, ButtonPrimary, ButtonLink, Box } from 'design';
 
 export default {
-  title: 'Teleport/StepSlider',
+  title: 'Design/StepSlider',
 };
 
 const singleFlow = { default: [Body1, Body2] };

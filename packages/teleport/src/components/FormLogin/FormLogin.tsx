@@ -42,7 +42,7 @@ import {
   requiredField,
 } from 'shared/components/Validation/rules';
 import createMfaOptions, { MfaOption } from 'shared/utils/createMfaOptions';
-import { StepSlider, StepComponentProps } from 'teleport/components/StepSlider';
+import { StepSlider, StepComponentProps } from 'design/StepSlider';
 import { UserCredentials } from 'teleport/services/auth';
 import SSOButtonList from './SsoButtons';
 
