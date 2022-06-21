@@ -1,7 +1,7 @@
 import React from 'react';
 import { Flex, Text } from 'design';
 import { useAppContext } from 'teleterm/ui/appContextProvider';
-import { ShareFeedbackContainer } from './ShareFeedback';
+import { ShareFeedback } from './ShareFeedback';
 
 export function StatusBar() {
   const ctx = useAppContext();
@@ -21,7 +21,7 @@ export function StatusBar() {
       <Text color="text.secondary" fontSize="14px">
         {ctx.workspacesService.getRootClusterUri()}
       </Text>
-      <ShareFeedbackContainer />
+      <ShareFeedback />
     </Flex>
   );
 }

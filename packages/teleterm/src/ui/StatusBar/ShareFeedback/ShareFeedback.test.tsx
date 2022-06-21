@@ -3,13 +3,13 @@ import { fireEvent, render } from 'design/utils/testing';
 import { MockAppContextProvider } from 'teleterm/ui/fixtures/MockAppContextProvider';
 import { Cluster } from 'teleterm/services/tshd/v1/cluster_pb';
 import { MockAppContext } from 'teleterm/ui/fixtures/mocks';
-import { ShareFeedbackContainer } from './ShareFeedbackContainer';
+import { ShareFeedback } from './ShareFeedback';
 import { IAppContext } from 'teleterm/ui/types';
 
 function renderOpenedShareFeedback(appContext: IAppContext) {
   const rendered = render(
     <MockAppContextProvider appContext={appContext}>
-      <ShareFeedbackContainer />
+      <ShareFeedback />
     </MockAppContextProvider>
   );
 

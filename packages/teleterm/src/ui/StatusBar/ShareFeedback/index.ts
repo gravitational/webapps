@@ -1,1 +1,1 @@
-export * from './ShareFeedbackContainer';
+export * from './ShareFeedback';
