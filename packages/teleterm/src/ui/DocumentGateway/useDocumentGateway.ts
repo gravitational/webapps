@@ -32,27 +32,29 @@ export default function useGateway(doc: types.DocumentGateway) {
   );
   const cluster = ctx.clustersService.findClusterByResource(doc.targetUri);
 
-  const [connectAttempt, createGateway] = useAsync(async () => {
-    const gw = await retryWithRelogin(ctx, doc.uri, doc.targetUri, () =>
-      ctx.clustersService.createGateway({
-        targetUri: doc.targetUri,
-        port: doc.port,
-        user: doc.targetUser,
-        subresource_name: doc.targetSubresourceName,
-      })
-    );
+  const [connectAttempt, createGateway] = useAsync(
+    async (customPort?: string) => {
+      const gw = await retryWithRelogin(ctx, doc.uri, doc.targetUri, () =>
+        ctx.clustersService.createGateway({
+          targetUri: doc.targetUri,
+          port: customPort || doc.port,
+          user: doc.targetUser,
+          subresource_name: doc.targetSubresourceName,
+        })
+      );
 
-    workspaceDocumentsService.update(doc.uri, {
-      gatewayUri: gw.uri,
-      // Set the port on doc to match the one returned from the daemon. Teleterm doesn't let the
-      // user provide a port for the gateway, so instead we have to let the daemon use a random
-      // one.
-      //
-      // Setting it here makes it so that on app restart, Teleterm will restart the proxy with the
-      // same port number.
-      port: gw.localPort,
-    });
-  });
+      workspaceDocumentsService.update(doc.uri, {
+        gatewayUri: gw.uri,
+        // Set the port on doc to match the one returned from the daemon. Teleterm doesn't let the
+        // user provide a port for the gateway, so instead we have to let the daemon use a random
+        // one.
+        //
+        // Setting it here makes it so that on app restart, Teleterm will restart the proxy with the
+        // same port number.
+        port: gw.localPort,
+      });
+    }
+  );
 
   const [disconnectAttempt, disconnect] = useAsync(async () => {
     await ctx.clustersService.removeGateway(doc.gatewayUri);
@@ -70,9 +72,21 @@ export default function useGateway(doc: types.DocumentGateway) {
     });
   });
 
-  const reconnect = () => {
+  const [changePortAttempt, changePort] = useAsync(async (port: string) => {
+    // TODO: use a real service here
+    const updatedGateway = await {
+      localPort: port,
+      targetSubresourceName: 'psql postgres://default@localhost:52939/abcde',
+    };
+    workspaceDocumentsService.update(doc.uri, {
+      targetSubresourceName: updatedGateway.targetSubresourceName,
+      port: updatedGateway.localPort,
+    });
+  });
+
+  const reconnect = (customPort?: string) => {
     if (rootCluster.connected) {
-      createGateway();
+      createGateway(customPort);
       return;
     }
 
@@ -121,7 +135,9 @@ export default function useGateway(doc: types.DocumentGateway) {
     runCliCommand,
     changeDbName,
     changeDbNameAttempt,
+    changePort,
+    changePortAttempt,
   };
 }
 
-export type State = ReturnType<typeof useGateway>;
+export type DocumentGatewayProps = ReturnType<typeof useGateway>;
