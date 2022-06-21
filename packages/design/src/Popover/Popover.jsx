@@ -129,11 +129,27 @@ export default class Popover extends React.Component {
 
   setPositioningStyles = element => {
     const positioning = this.getPositioningStyle(element);
-    if (positioning.top !== null) {
-      element.style.top = positioning.top;
+    // we don't want so set both top/bottom values (it causes the scrollbar to show when height increases)
+    // if the Popover is aligned to bottom, then set only `bottom` value
+    // if the Popover is aligned to center or top, then set only `top` value
+    // the same applies to left/right alignment
+    if (this.props.transformOrigin.vertical === 'bottom') {
+      if (positioning.bottom) {
+        element.style.bottom = positioning.bottom;
+      }
+    } else {
+      if (positioning.top) {
+        element.style.top = positioning.top;
+      }
     }
-    if (positioning.left !== null) {
-      element.style.left = positioning.left;
+    if (this.props.transformOrigin.horizontal === 'right') {
+      if (positioning.right) {
+        element.style.right = positioning.right;
+      }
+    } else {
+      if (positioning.left) {
+        element.style.left = positioning.left;
+      }
     }
     element.style.transformOrigin = positioning.transformOrigin;
   };
@@ -203,6 +219,8 @@ export default class Popover extends React.Component {
     return {
       top: `${top}px`,
       left: `${left}px`,
+      bottom: `${containerWindow.innerHeight - bottom}px`,
+      right: `${containerWindow.innerWidth - right}px`,
       transformOrigin: getTransformOriginValue(transformOrigin),
     };
   };
