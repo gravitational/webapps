@@ -39,9 +39,20 @@ export function ShareFeedbackForm({
         value={formValues.email}
         onChange={e => updateFormField('email', e.target.value)}
       />
+      <FieldInput
+        label="Company name (optional)"
+        autoFocus
+        readonly={disabled}
+        css={`
+          input {
+            font-size: 14px;
+          }
+        `}
+        value={formValues.company}
+        onChange={e => updateFormField('company', e.target.value)}
+      />
       <FieldTextArea
-        mt={1}
-        label="Any suggestions?"
+        label="Suggestions (Optional)"
         textAreaCss={`
                 font-size: 14px;
               `}
@@ -75,7 +86,7 @@ export function ShareFeedbackForm({
             line-height: 18px;
           `}
         >
-          I want your sales team to demo me Teleport&nbsp;Enterprise features
+          I would like a demo of Teleport&nbsp;Enterprise features
         </Text>
       </Toggle>
     </>
