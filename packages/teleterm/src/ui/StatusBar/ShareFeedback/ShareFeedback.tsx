@@ -1,36 +1,27 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { ButtonIcon, ButtonPrimary, Flex, Link, Text } from 'design';
 import Validation from 'shared/components/Validation';
 import { Close } from 'design/Icon';
 import { ShareFeedbackForm } from './ShareFeedbackForm';
+import { Attempt } from 'shared/hooks/useAsync';
+import * as Alerts from 'design/Alert';
+import { FEEDBACK_TOO_LONG_ERROR } from './useShareFeedback';
 import { ShareFeedbackFormValues } from './types';
-import { useAppContext } from 'teleterm/ui/appContextProvider';
 
 interface ShareFeedbackProps {
+  submitFeedbackAttempt: Attempt<Response>;
+  formValues: ShareFeedbackFormValues;
+
   onClose(): void;
+
+  setFormValues(values: ShareFeedbackFormValues): void;
+
+  submitFeedback(): Promise<[Response, Error]>;
 }
 
 export function ShareFeedback(props: ShareFeedbackProps) {
-  const ctx = useAppContext();
-  ctx.workspacesService.useState();
-  ctx.clustersService.useState();
-
-  function getEmailFromUserName(): string {
-    const cluster = ctx.clustersService.findCluster(
-      ctx.workspacesService.getRootClusterUri()
-    );
-    const userName = cluster?.loggedInUser?.name;
-    if (/^\S+@\S+$/.test(userName)) {
-      return userName;
-    }
-  }
-
-  const [formValues, setFormValues] = useState<ShareFeedbackFormValues>({
-    feedback: '',
-    email: getEmailFromUserName() || '',
-    newsletterEnabled: false,
-    salesContactEnabled: false,
-  });
+  const isSubmitInProgress =
+    props.submitFeedbackAttempt.status === 'processing';
 
   return (
     <Flex bg="primary.main" p={3} borderRadius={3} maxWidth="370px">
@@ -42,7 +33,7 @@ export function ShareFeedback(props: ShareFeedbackProps) {
             onSubmit={e => {
               e.preventDefault();
               if (validator.validate()) {
-                console.log('submit', formValues); //TODO (gzdunek): connect to a real service
+                props.submitFeedback();
               }
             }}
           >
@@ -68,16 +59,66 @@ export function ShareFeedback(props: ShareFeedbackProps) {
             <Link href="https://goteleport.com/signup/" target="_blank">
               Try Teleport Cloud
             </Link>
-            <ShareFeedbackForm
-              formValues={formValues}
-              setFormValues={setFormValues}
-            />
-            <ButtonPrimary block type="submit" mt={4}>
-              Submit
-            </ButtonPrimary>
+            {props.submitFeedbackAttempt.status === 'error' && (
+              <SubmissionError
+                submitFeedbackAttempt={props.submitFeedbackAttempt}
+              />
+            )}
+            {props.submitFeedbackAttempt.status === 'success' ? (
+              <Alerts.Success mt={3} mb={0}>
+                Your feedback has been submitted. Thank you!
+              </Alerts.Success>
+            ) : (
+              <>
+                <ShareFeedbackForm
+                  disabled={isSubmitInProgress}
+                  formValues={props.formValues}
+                  setFormValues={props.setFormValues}
+                />
+                <ButtonPrimary
+                  disabled={isSubmitInProgress}
+                  block
+                  type="submit"
+                  mt={4}
+                >
+                  Submit
+                </ButtonPrimary>
+              </>
+            )}
           </Flex>
         )}
       </Validation>
     </Flex>
+  );
+}
+
+function SubmissionError(props: { submitFeedbackAttempt: Attempt<Response> }) {
+  function getErrorText() {
+    if (props.submitFeedbackAttempt.statusText === FEEDBACK_TOO_LONG_ERROR) {
+      return (
+        <span>
+          That's a very long reason why. Please let us know more in{' '}
+          <Link
+            href="https://github.com/gravitational/teleport/discussions"
+            target="_blank"
+          >
+            our community
+          </Link>
+          .
+        </span>
+      );
+    }
+
+    return (
+      <span>
+        Unable to submit your feedback: {props.submitFeedbackAttempt.statusText}
+      </span>
+    );
+  }
+
+  return (
+    <Alerts.Danger mt={3} mb={0}>
+      {getErrorText()}
+    </Alerts.Danger>
   );
 }

@@ -7,6 +7,7 @@ import Toggle from 'teleport/components/Toggle';
 import { ShareFeedbackFormValues } from './types';
 
 interface ShareFeedbackFormProps {
+  disabled: boolean;
   formValues: ShareFeedbackFormValues;
 
   setFormValues(values: ShareFeedbackFormValues): void;
@@ -15,6 +16,7 @@ interface ShareFeedbackFormProps {
 export function ShareFeedbackForm({
   formValues,
   setFormValues,
+  disabled,
 }: ShareFeedbackFormProps) {
   function updateFormField<T extends keyof ShareFeedbackFormValues>(
     field: T,
@@ -30,6 +32,7 @@ export function ShareFeedbackForm({
         type="email"
         label="Email Address"
         autoFocus
+        readonly={disabled}
         css={`
           input {
             font-size: 14px;
@@ -56,11 +59,13 @@ export function ShareFeedbackForm({
         textAreaCss={`
                 font-size: 14px;
               `}
+        readOnly={disabled}
         value={formValues.feedback}
         onChange={e => updateFormField('feedback', e.target.value)}
         placeholder="Type your suggestions here"
       />
       <Toggle
+        disabled={disabled}
         isToggled={formValues.newsletterEnabled}
         onToggle={() => {
           updateFormField('newsletterEnabled', !formValues.newsletterEnabled);
@@ -71,6 +76,7 @@ export function ShareFeedbackForm({
         </Text>
       </Toggle>
       <Toggle
+        disabled={disabled}
         isToggled={formValues.salesContactEnabled}
         onToggle={() => {
           updateFormField(
