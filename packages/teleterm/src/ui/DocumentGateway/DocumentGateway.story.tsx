@@ -24,6 +24,7 @@ export function Online() {
   return (
     <DocumentGateway
       gateway={gateway}
+      defaultPort={gateway.localPort}
       disconnect={() => Promise.resolve([undefined, null])}
       connected={true}
       reconnect={() => {}}
@@ -31,6 +32,8 @@ export function Online() {
       runCliCommand={() => {}}
       changeDbName={() => Promise.resolve([undefined, null])}
       changeDbNameAttempt={makeEmptyAttempt()}
+      changePort={() => Promise.resolve([undefined, null])}
+      changePortAttempt={makeEmptyAttempt()}
     />
   );
 }
@@ -39,6 +42,7 @@ export function Offline() {
   return (
     <DocumentGateway
       gateway={undefined}
+      defaultPort="1337"
       disconnect={() => Promise.resolve([undefined, null])}
       connected={false}
       reconnect={() => {}}
@@ -46,6 +50,8 @@ export function Offline() {
       runCliCommand={() => {}}
       changeDbName={() => Promise.resolve([undefined, null])}
       changeDbNameAttempt={makeEmptyAttempt()}
+      changePort={() => Promise.resolve([undefined, null])}
+      changePortAttempt={makeEmptyAttempt()}
     />
   );
 }
@@ -54,6 +60,7 @@ export function Processing() {
   return (
     <DocumentGateway
       gateway={undefined}
+      defaultPort="1337"
       disconnect={() => Promise.resolve([undefined, null])}
       connected={false}
       reconnect={() => {}}
@@ -61,6 +68,8 @@ export function Processing() {
       runCliCommand={() => {}}
       changeDbName={() => Promise.resolve([undefined, null])}
       changeDbNameAttempt={makeEmptyAttempt()}
+      changePort={() => Promise.resolve([undefined, null])}
+      changePortAttempt={makeEmptyAttempt()}
     />
   );
 }
@@ -84,6 +93,7 @@ export function OnlineWithLongValues() {
   return (
     <DocumentGateway
       gateway={gateway}
+      defaultPort={gateway.localPort}
       disconnect={() => Promise.resolve([undefined, null])}
       connected={true}
       reconnect={() => {}}
@@ -91,6 +101,8 @@ export function OnlineWithLongValues() {
       runCliCommand={() => {}}
       changeDbName={() => Promise.resolve([undefined, null])}
       changeDbNameAttempt={makeEmptyAttempt()}
+      changePort={() => Promise.resolve([undefined, null])}
+      changePortAttempt={makeEmptyAttempt()}
     />
   );
 }
