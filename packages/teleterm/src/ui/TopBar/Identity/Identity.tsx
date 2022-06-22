@@ -16,7 +16,7 @@ import {
   useKeyboardShortcutFormatters,
 } from 'teleterm/ui/services/keyboardShortcuts';
 import { EmptyIdentityList } from './EmptyIdentityList/EmptyIdentityList';
-import { getClusterName, getUserWithClusterName } from 'teleterm/ui/utils';
+import { getClusterName } from 'teleterm/ui/utils';
 import * as tshd from 'teleterm/services/tshd/types';
 
 export function IdentityContainer() {
