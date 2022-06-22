@@ -36,9 +36,6 @@ export const IdentitySelector = forwardRef<
           <Box mr={2}>
             <UserIcon letter={props.userName[0]} />
           </Box>
-          <Text style={{ whiteSpace: 'nowrap' }} typography="subtitle1">
-            {selectorText}
-          </Text>
         </>
       ) : (
         <PamIcon />
