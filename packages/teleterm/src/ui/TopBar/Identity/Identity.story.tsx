@@ -1,6 +1,7 @@
 import React, { useRef, useEffect } from 'react';
 import { Identity, IdentityHandler, IdentityProps } from './Identity';
 import * as tshd from 'teleterm/services/tshd/types';
+import Flex from 'design/Flex';
 
 export default {
   title: 'Teleterm/Identity',
@@ -16,7 +17,11 @@ const OpenedIdentity = (props: IdentityProps) => {
     }
   }, [ref.current]);
 
-  return <Identity ref={ref} {...props} />;
+  return (
+    <Flex justifyContent="end" height="40px">
+      <Identity ref={ref} {...props} />
+    </Flex>
+  );
 };
 
 export function NoRootClusters() {
