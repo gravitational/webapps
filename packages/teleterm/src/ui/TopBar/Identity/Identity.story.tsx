@@ -200,8 +200,8 @@ export function LongNamesWithManyRoles() {
   };
   const identityRootCluster2 = {
     active: true,
-    clusterName: 'psv-eindhoven-eredivisie-production',
-    userName: 'ruud-van-nistelrooy',
+    clusterName: 'psv-eindhoven-eredivisie-production-lorem-ipsum',
+    userName: 'ruud-van-nistelrooy-van-der-sar',
     uri: '/clusters/psv',
     connected: true,
     clusterSyncStatus: false,
