@@ -129,26 +129,20 @@ export default class Popover extends React.Component {
 
   setPositioningStyles = element => {
     const positioning = this.getPositioningStyle(element);
-    // we don't want so set both top/bottom values (it causes the scrollbar to show when height increases)
-    // if the Popover is aligned to bottom, then set only `bottom` value
-    // if the Popover is aligned to center or top, then set only `top` value
-    // the same applies to left/right alignment
-    if (this.props.transformOrigin.vertical === 'bottom') {
-      if (positioning.bottom) {
-        element.style.bottom = positioning.bottom;
-      }
-    } else {
-      if (positioning.top) {
+
+    if (this.props.growDirections === 'bottom-right') {
+      if (positioning.top !== null) {
         element.style.top = positioning.top;
       }
-    }
-    if (this.props.transformOrigin.horizontal === 'right') {
-      if (positioning.right) {
-        element.style.right = positioning.right;
+      if (positioning.left !== null) {
+        element.style.left = positioning.left;
       }
     } else {
-      if (positioning.left) {
-        element.style.left = positioning.left;
+      if (positioning.bottom !== null) {
+        element.style.bottom = positioning.bottom;
+      }
+      if (positioning.right !== null) {
+        element.style.right = positioning.right;
       }
     }
     element.style.transformOrigin = positioning.transformOrigin;
@@ -184,8 +178,12 @@ export default class Popover extends React.Component {
     // Calculate element positioning
     let top = anchorOffset.top - transformOrigin.vertical;
     let left = anchorOffset.left - transformOrigin.horizontal;
-    const bottom = top + elemRect.height;
-    const right = left + elemRect.width;
+
+    // bottom and right correspond to the calculated position of the element from the top left, not
+    // from the bottom right, meaning they must be inverted before using them as `bottom` and
+    // `right` CSS properties.
+    let bottom = top + elemRect.height;
+    let right = left + elemRect.width;
 
     // Use the parent window of the anchorEl if provided
     const containerWindow = ownerWindow(getAnchorEl(anchorEl));
@@ -215,6 +213,9 @@ export default class Popover extends React.Component {
       left -= diff;
       transformOrigin.horizontal += diff;
     }
+
+    bottom = top + elemRect.height;
+    right = left + elemRect.width;
 
     return {
       top: `${top}px`,
@@ -379,6 +380,11 @@ Popover.propTypes = {
     left: PropTypes.number.isRequired,
     top: PropTypes.number.isRequired,
   }),
+  /**
+   * These are the directions in which `Popover` will grow
+   * if its content increase it dimensions after it is opened.
+   */
+  growDirections: PropTypes.oneOf(['top-left', 'bottom-right']),
   /*
    * This determines which anchor prop to refer to to set
    * the position of the popover.
@@ -472,6 +478,7 @@ Popover.defaultProps = {
     vertical: 'top',
     horizontal: 'left',
   },
+  growDirections: 'bottom-right',
 };
 
 export const StyledPopover = styled.div`
