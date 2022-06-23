@@ -44,7 +44,14 @@ export default function UserList({
             const aStr = a.toString();
             const bStr = b.toString();
 
-            return aStr.localeCompare(bStr);
+            if (aStr < bStr) {
+              return -1;
+            }
+            if (aStr > bStr) {
+              return 1;
+            }
+
+            return 0;
           },
           render: ({ roles }) => <RolesCell roles={roles} />,
         },
