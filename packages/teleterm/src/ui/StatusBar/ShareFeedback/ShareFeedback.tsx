@@ -37,6 +37,8 @@ export function ShareFeedback() {
         anchorEl={buttonRef.current}
         anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
         transformOrigin={{ vertical: 'bottom', horizontal: 'right' }}
+        growDirections="top-left"
+        marginThreshold={8}
         onClose={closeShareFeedback}
         data-testid="share-feedback-container"
       >
