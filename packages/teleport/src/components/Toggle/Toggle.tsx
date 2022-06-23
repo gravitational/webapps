@@ -86,4 +86,12 @@ const StyledInput = styled.input.attrs({ type: 'checkbox' })`
       transform: translate(16px, -50%);
     }
   }
+
+  &:disabled + ${StyledSlider} {
+    background: ${props => props.theme.colors.primary.light};
+
+    &:before {
+      background: ${props => props.theme.colors.grey[700]};
+    }
+  }
 `;
