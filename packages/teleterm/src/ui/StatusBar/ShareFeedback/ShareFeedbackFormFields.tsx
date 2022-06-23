@@ -44,7 +44,6 @@ export function ShareFeedbackFormFields({
       />
       <FieldInput
         label="Company name (optional)"
-        autoFocus
         readonly={disabled}
         css={`
           input {
