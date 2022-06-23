@@ -97,7 +97,7 @@ function SubmissionError(props: { submitFeedbackAttempt: Attempt<Response> }) {
     if (props.submitFeedbackAttempt.statusText === FEEDBACK_TOO_LONG_ERROR) {
       return (
         <span>
-          That's a very long reason why. Please let us know more in{' '}
+          That's a very long suggestion. Please let us know more in{' '}
           <Link
             href="https://github.com/gravitational/teleport/discussions"
             target="_blank"
