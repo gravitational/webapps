@@ -75,7 +75,19 @@ export function ConnectionItem(props: ConnectionItemProps) {
               line-height: 16px;
             `}
           >
-            {props.item.title}
+            <span
+              css={`
+                font-size: 10px;
+                background: rgba(255, 255, 255, 0.25);
+                opacity: 0.85;
+                padding: 1px 2px;
+                margin-right: 4px;
+                border-radius: 4px;
+              `}
+            >
+              {getKindName(props.item.kind)}
+            </span>
+            <span>{props.item.title}</span>
           </Text>
           <Text
             color="text.secondary"
@@ -99,4 +111,19 @@ export function ConnectionItem(props: ConnectionItemProps) {
       </Flex>
     </ListItem>
   );
+}
+
+function getKindName(kind: ExtendedTrackedConnection['kind']): string {
+  function assertUnreachable(x: never): never {
+    throw new Error(`Unhandled case: ${x}`);
+  }
+
+  switch (kind) {
+    case 'connection.gateway':
+      return 'DB';
+    case 'connection.server':
+      return 'SSH';
+    default:
+      assertUnreachable(kind);
+  }
 }
