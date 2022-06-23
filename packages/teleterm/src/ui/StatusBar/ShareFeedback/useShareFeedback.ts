@@ -10,6 +10,10 @@ export function useShareFeedback() {
   ctx.workspacesService.useState();
   ctx.clustersService.useState();
 
+  const feedbackUrl = ctx.mainProcessClient.getRuntimeSettings().dev
+    ? 'https://kcwm2is93l.execute-api.us-west-2.amazonaws.com/prod'
+    : 'https://usage.teleport.dev';
+
   const [isShareFeedbackOpened, setIsShareFeedbackOpened] = useState(false);
   const [formValues, setFormValues] = useState<ShareFeedbackFormValues>({
     feedback: '',
@@ -36,14 +40,11 @@ export function useShareFeedback() {
     const headers = new Headers();
     headers.set('content-type', 'multipart/form-data');
 
-    const response = await fetch(
-      'https://kcwm2is93l.execute-api.us-west-2.amazonaws.com/prod',
-      {
-        method: 'POST',
-        body: formData,
-        headers,
-      }
-    );
+    const response = await fetch(feedbackUrl, {
+      method: 'POST',
+      body: formData,
+      headers,
+    });
     if (!response.ok) {
       const text = await response.text();
       throw new Error(text);
