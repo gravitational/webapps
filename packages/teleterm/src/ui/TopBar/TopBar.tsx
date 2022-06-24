@@ -27,7 +27,7 @@ const Grid = styled.div`
   display: grid;
   grid-template-columns: 1fr minmax(0, 700px) 1fr;
   width: 100%;
-  padding: 8px 24px;
+  padding: 8px 16px;
   height: 56px;
   box-sizing: border-box;
   align-items: center;
