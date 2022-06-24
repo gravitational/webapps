@@ -9,14 +9,14 @@ import { FEEDBACK_TOO_LONG_ERROR } from './useShareFeedback';
 import { ShareFeedbackFormValues } from './types';
 
 interface ShareFeedbackProps {
-  submitFeedbackAttempt: Attempt<Response>;
+  submitFeedbackAttempt: Attempt<string>;
   formValues: ShareFeedbackFormValues;
 
   onClose(): void;
 
   setFormValues(values: ShareFeedbackFormValues): void;
 
-  submitFeedback(): Promise<[Response, Error]>;
+  submitFeedback(): Promise<[string, Error]>;
 }
 
 export function ShareFeedbackForm(props: ShareFeedbackProps) {
@@ -66,7 +66,7 @@ export function ShareFeedbackForm(props: ShareFeedbackProps) {
             )}
             {props.submitFeedbackAttempt.status === 'success' ? (
               <Alerts.Success mt={3} mb={0}>
-                Your feedback has been submitted. Thank you!
+                {props.submitFeedbackAttempt.data}
               </Alerts.Success>
             ) : (
               <>
@@ -92,7 +92,7 @@ export function ShareFeedbackForm(props: ShareFeedbackProps) {
   );
 }
 
-function SubmissionError(props: { submitFeedbackAttempt: Attempt<Response> }) {
+function SubmissionError(props: { submitFeedbackAttempt: Attempt<string> }) {
   function getErrorText() {
     if (props.submitFeedbackAttempt.statusText === FEEDBACK_TOO_LONG_ERROR) {
       return (

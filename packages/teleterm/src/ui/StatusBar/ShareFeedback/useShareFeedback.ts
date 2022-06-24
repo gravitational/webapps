@@ -15,18 +15,15 @@ export function useShareFeedback() {
     : 'https://usage.teleport.dev';
 
   const [isShareFeedbackOpened, setIsShareFeedbackOpened] = useState(false);
-  const [formValues, setFormValues] = useState<ShareFeedbackFormValues>({
-    feedback: '',
-    company: '',
-    email: getEmailFromUserName() || '',
-    newsletterEnabled: false,
-    salesContactEnabled: false,
-  });
+
+  const [formValues, setFormValues] = useState<ShareFeedbackFormValues>(
+    getFormInitialValues()
+  );
 
   const [submitFeedbackAttempt, submitFeedback, setSubmitFeedbackAttempt] =
     useAsync(makeSubmitFeedbackRequest);
 
-  async function makeSubmitFeedbackRequest(): Promise<Response> {
+  async function makeSubmitFeedbackRequest(): Promise<string> {
     preValidateForm();
 
     const formData = new FormData();
@@ -37,19 +34,15 @@ export function useShareFeedback() {
     formData.set('newsletter-opt-in', formValues.newsletterEnabled ? 'y' : 'n');
     formData.set('sales-opt-in', formValues.salesContactEnabled ? 'y' : 'n');
 
-    const headers = new Headers();
-    headers.set('content-type', 'multipart/form-data');
-
     const response = await fetch(feedbackUrl, {
       method: 'POST',
       body: formData,
-      headers,
     });
     if (!response.ok) {
       const text = await response.text();
       throw new Error(text);
     }
-    return response;
+    return response.text();
   }
 
   function preValidateForm(): void {
@@ -84,7 +77,18 @@ export function useShareFeedback() {
   function clearSubmissionStatusIfSuccessful(): void {
     if (submitFeedbackAttempt.status === 'success') {
       setSubmitFeedbackAttempt(makeEmptyAttempt());
+      setFormValues(getFormInitialValues());
     }
+  }
+
+  function getFormInitialValues(): ShareFeedbackFormValues {
+    return {
+      feedback: '',
+      company: '',
+      email: getEmailFromUserName() || '',
+      newsletterEnabled: false,
+      salesContactEnabled: false,
+    };
   }
 
   return {
