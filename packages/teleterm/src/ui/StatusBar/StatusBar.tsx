@@ -1,12 +1,9 @@
-import React, { useRef, useState } from 'react';
-import { ButtonIcon, Flex, Popover, Text } from 'design';
-import { ChatBubble } from 'design/Icon';
-import { ShareFeedback } from './ShareFeedback/ShareFeedback';
+import React from 'react';
+import { Flex, Text } from 'design';
 import { useActiveDocumentClusterBreadcrumbs } from './useActiveDocumentClusterBreadcrumbs';
+import { ShareFeedback } from './ShareFeedback/ShareFeedback';
 
 export function StatusBar() {
-  const shareButtonRef = useRef<HTMLButtonElement>();
-  const [isPopoverOpened, setIsPopoverOpened] = useState(false);
   const clusterBreadcrumbs = useActiveDocumentClusterBreadcrumbs();
 
   return (
@@ -31,23 +28,7 @@ export function StatusBar() {
       >
         {clusterBreadcrumbs}
       </Text>
-      <ButtonIcon
-        setRef={shareButtonRef}
-        title="Share feedback"
-        size={0}
-        onClick={() => setIsPopoverOpened(true)}
-      >
-        <ChatBubble fontSize="14px" />
-      </ButtonIcon>
-      <Popover
-        open={isPopoverOpened}
-        anchorEl={shareButtonRef.current}
-        anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
-        transformOrigin={{ vertical: 'bottom', horizontal: 'right' }}
-        onClose={() => setIsPopoverOpened(false)}
-      >
-        <ShareFeedback onClose={() => setIsPopoverOpened(false)} />
-      </Popover>
+      <ShareFeedback />
     </Flex>
   );
 }
