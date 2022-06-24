@@ -1,7 +1,7 @@
 import React from 'react';
 import { Flex, Text } from 'design';
 import { useActiveDocumentClusterBreadcrumbs } from './useActiveDocumentClusterBreadcrumbs';
-import { ShareFeedback } from './ShareFeedback/ShareFeedback';
+import { ShareFeedback } from './ShareFeedback';
 
 export function StatusBar() {
   const clusterBreadcrumbs = useActiveDocumentClusterBreadcrumbs();
