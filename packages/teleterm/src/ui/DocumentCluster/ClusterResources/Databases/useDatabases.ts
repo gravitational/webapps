@@ -36,7 +36,7 @@ export function useDatabases() {
       // `port` is not passed as well, we'll let the tsh daemon pick a random one.
       targetUri: db.uri,
       targetName: db.name,
-      targetUser: dbUser,
+      targetUser: getTargetUser(db.protocol, dbUser),
     });
 
     const connectionToReuse =
@@ -48,6 +48,14 @@ export function useDatabases() {
       documentsService.add(doc);
       documentsService.open(doc.uri);
     }
+  }
+
+  function getTargetUser(protocol: string, providedDbUser: string): string {
+    if (protocol === 'redis') {
+      return providedDbUser || 'default';
+    }
+
+    return providedDbUser;
   }
 
   return {
