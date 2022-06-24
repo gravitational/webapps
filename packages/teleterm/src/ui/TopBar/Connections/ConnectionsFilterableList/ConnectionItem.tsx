@@ -120,10 +120,6 @@ export function ConnectionItem(props: ConnectionItemProps) {
 }
 
 function getKindName(kind: ExtendedTrackedConnection['kind']): string {
-  function assertUnreachable(x: never): never {
-    throw new Error(`Unhandled case: ${x}`);
-  }
-
   switch (kind) {
     case 'connection.gateway':
       return 'DB';
@@ -132,4 +128,8 @@ function getKindName(kind: ExtendedTrackedConnection['kind']): string {
     default:
       assertUnreachable(kind);
   }
+}
+
+function assertUnreachable(x: never): never {
+  throw new Error(`Unhandled case: ${x}`);
 }
