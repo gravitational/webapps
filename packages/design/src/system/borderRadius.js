@@ -14,36 +14,36 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import { style, px, compose } from 'styled-system';
+import { style, space, compose } from 'styled-system';
 
 export const borderTopLeftRadius = style({
   prop: 'borderTopLeftRadius',
   key: 'radii',
-  transformValue: px,
+  transformValue: space.px,
 });
 
 export const borderTopRightRadius = style({
   prop: 'borderTopRightRadius',
   key: 'radii',
-  transformValue: px,
+  transformValue: space.px,
 });
 
 export const borderRadiusBottomRight = style({
   prop: 'borderBottomRightRadius',
   key: 'radii',
-  transformValue: px,
+  transformValue: space.px,
 });
 
 export const borderBottomLeftRadius = style({
   prop: 'borderBottomLeftRadius',
   key: 'radii',
-  transformValue: px,
+  transformValue: space.px,
 });
 
 export const borderRadius = style({
   prop: 'borderRadius',
   key: 'radii',
-  transformValue: px,
+  transformValue: space.px,
 });
 
 const combined = compose(

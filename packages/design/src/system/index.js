@@ -34,12 +34,12 @@ import {
   minHeight,
   minWidth,
   overflow,
-  propTypes,
   size,
   space,
   textAlign,
   width,
 } from 'styled-system';
+import propTypes from '@styled-system/prop-types';
 
 import typography from './typography';
 import borderRadius from './borderRadius';
