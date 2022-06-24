@@ -1,6 +1,7 @@
 import React, { useRef, useEffect } from 'react';
 import { Identity, IdentityHandler, IdentityProps } from './Identity';
 import * as tshd from 'teleterm/services/tshd/types';
+import Flex from 'design/Flex';
 
 export default {
   title: 'Teleterm/Identity',
@@ -16,7 +17,11 @@ const OpenedIdentity = (props: IdentityProps) => {
     }
   }, [ref.current]);
 
-  return <Identity ref={ref} {...props} />;
+  return (
+    <Flex justifyContent="end" height="40px">
+      <Identity ref={ref} {...props} />
+    </Flex>
+  );
 };
 
 export function NoRootClusters() {
@@ -39,7 +44,7 @@ export function OneClusterWithNoActiveCluster() {
     userName: '',
     uri: '/clusters/localhost',
     connected: false,
-    clusterSyncStatus: false,
+    isSyncing: false,
   };
 
   return (
@@ -61,7 +66,7 @@ export function OneClusterWithActiveCluster() {
     userName: 'alice',
     uri: '/clusters/localhost',
     connected: true,
-    clusterSyncStatus: false,
+    isSyncing: false,
   };
 
   const cluster: tshd.Cluster = {
@@ -97,7 +102,7 @@ export function ManyClustersWithNoActiveCluster() {
     userName: 'bob',
     uri: '/clusters/orange',
     connected: true,
-    clusterSyncStatus: false,
+    isSyncing: false,
   };
   const identityRootCluster2 = {
     active: false,
@@ -105,7 +110,7 @@ export function ManyClustersWithNoActiveCluster() {
     userName: 'sammy',
     uri: '/clusters/violet',
     connected: true,
-    clusterSyncStatus: true,
+    isSyncing: true,
   };
   const identityRootCluster3 = {
     active: false,
@@ -113,7 +118,7 @@ export function ManyClustersWithNoActiveCluster() {
     userName: '',
     uri: '/clusters/green',
     connected: true,
-    clusterSyncStatus: false,
+    isSyncing: false,
   };
 
   return (
@@ -139,7 +144,7 @@ export function ManyClustersWithActiveCluster() {
     userName: 'bob',
     uri: '/clusters/orange',
     connected: true,
-    clusterSyncStatus: true,
+    isSyncing: true,
   };
   const identityRootCluster2 = {
     active: true,
@@ -147,7 +152,7 @@ export function ManyClustersWithActiveCluster() {
     userName: 'sammy',
     uri: '/clusters/violet',
     connected: true,
-    clusterSyncStatus: false,
+    isSyncing: false,
   };
   const identityRootCluster3 = {
     active: false,
@@ -155,7 +160,7 @@ export function ManyClustersWithActiveCluster() {
     userName: '',
     uri: '/clusters/green',
     connected: true,
-    clusterSyncStatus: false,
+    isSyncing: false,
   };
 
   const activeIdentityRootCluster = identityRootCluster2;
@@ -196,7 +201,7 @@ export function LongNamesWithManyRoles() {
     userName: 'bob',
     uri: '/clusters/orange',
     connected: true,
-    clusterSyncStatus: true,
+    isSyncing: true,
   };
   const identityRootCluster2 = {
     active: true,
@@ -204,7 +209,7 @@ export function LongNamesWithManyRoles() {
     userName: 'ruud-van-nistelrooy-van-der-sar',
     uri: '/clusters/psv',
     connected: true,
-    clusterSyncStatus: false,
+    isSyncing: false,
   };
   const identityRootCluster3 = {
     active: false,
@@ -212,7 +217,7 @@ export function LongNamesWithManyRoles() {
     userName: '',
     uri: '/clusters/green',
     connected: true,
-    clusterSyncStatus: false,
+    isSyncing: false,
   };
 
   const activeIdentityRootCluster = identityRootCluster2;
