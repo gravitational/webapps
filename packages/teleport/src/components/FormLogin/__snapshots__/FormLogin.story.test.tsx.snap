@@ -12,7 +12,7 @@ exports[`auth2faType: off 1`] = `
 
 .c8 {
   box-sizing: border-box;
-  margin-bottom: 0px;
+  margin-bottom: 0;
   width: 100%;
 }
 
@@ -40,8 +40,8 @@ exports[`auth2faType: off 1`] = `
   min-height: 40px;
   font-size: 12px;
   padding: 0px 40px;
-  margin-bottom: 4px;
   margin-top: 16px;
+  margin-bottom: 4px;
   width: 100%;
 }
 
@@ -65,10 +65,10 @@ exports[`auth2faType: off 1`] = `
 
 .c0 {
   box-sizing: border-box;
-  margin-left: auto;
-  margin-right: auto;
   margin-top: 32px;
   margin-bottom: 32px;
+  margin-left: auto;
+  margin-right: auto;
   padding-bottom: 24px;
   width: 464px;
   background-color: #222C59;
@@ -88,8 +88,8 @@ exports[`auth2faType: off 1`] = `
   padding: 0 16px;
   outline: none;
   width: 100%;
-  color: #324148;
   background-color: #FFFFFF;
+  color: #324148;
   margin-top: 4px;
 }
 
@@ -112,7 +112,7 @@ exports[`auth2faType: off 1`] = `
   font-weight: 500;
   text-transform: uppercase;
   width: 100%;
-  margin-bottom: 0px;
+  margin-bottom: 0;
 }
 
 .c1 {
@@ -121,19 +121,19 @@ exports[`auth2faType: off 1`] = `
   font-weight: 300;
   font-size: 22px;
   line-height: 32px;
-  margin: 0px;
   padding-top: 24px;
+  margin: 0;
   color: #FFFFFF;
   text-align: center;
 }
 
 .c4 {
   box-sizing: border-box;
-  padding-top: 16px;
   padding-left: 32px;
   padding-right: 32px;
-  border-bottom-right-radius: 8px;
+  padding-top: 16px;
   border-bottom-left-radius: 8px;
+  border-bottom-right-radius: 8px;
   display: flex;
   justify-content: center;
   flex-direction: column;
@@ -277,14 +277,14 @@ exports[`auth2faType: optional rendering 1`] = `
 
 .c8 {
   box-sizing: border-box;
-  margin-bottom: 0px;
+  margin-bottom: 0;
   width: 100%;
 }
 
 .c10 {
   box-sizing: border-box;
   max-width: 50%;
-  margin-bottom: 0px;
+  margin-bottom: 0;
   margin-right: 16px;
   width: 100%;
 }
@@ -313,8 +313,8 @@ exports[`auth2faType: optional rendering 1`] = `
   min-height: 40px;
   font-size: 12px;
   padding: 0px 40px;
-  margin-bottom: 4px;
   margin-top: 16px;
+  margin-bottom: 4px;
   width: 100%;
 }
 
@@ -338,10 +338,10 @@ exports[`auth2faType: optional rendering 1`] = `
 
 .c0 {
   box-sizing: border-box;
-  margin-left: auto;
-  margin-right: auto;
   margin-top: 32px;
   margin-bottom: 32px;
+  margin-left: auto;
+  margin-right: auto;
   padding-bottom: 24px;
   width: 464px;
   background-color: #222C59;
@@ -361,8 +361,8 @@ exports[`auth2faType: optional rendering 1`] = `
   padding: 0 16px;
   outline: none;
   width: 100%;
-  color: #324148;
   background-color: #FFFFFF;
+  color: #324148;
   margin-top: 4px;
 }
 
@@ -385,7 +385,7 @@ exports[`auth2faType: optional rendering 1`] = `
   font-weight: 500;
   text-transform: uppercase;
   width: 100%;
-  margin-bottom: 0px;
+  margin-bottom: 0;
 }
 
 .c11 {
@@ -404,19 +404,19 @@ exports[`auth2faType: optional rendering 1`] = `
   font-weight: 300;
   font-size: 22px;
   line-height: 32px;
-  margin: 0px;
   padding-top: 24px;
+  margin: 0;
   color: #FFFFFF;
   text-align: center;
 }
 
 .c4 {
   box-sizing: border-box;
-  padding-top: 16px;
   padding-left: 32px;
   padding-right: 32px;
-  border-bottom-right-radius: 8px;
+  padding-top: 16px;
   border-bottom-left-radius: 8px;
+  border-bottom-right-radius: 8px;
   display: flex;
   justify-content: center;
   flex-direction: column;
@@ -710,21 +710,21 @@ exports[`auth2faType: otp rendering 1`] = `
 
 .c8 {
   box-sizing: border-box;
-  margin-bottom: 0px;
+  margin-bottom: 0;
   width: 100%;
 }
 
 .c10 {
   box-sizing: border-box;
   max-width: 50%;
-  margin-bottom: 0px;
+  margin-bottom: 0;
   margin-right: 16px;
   width: 100%;
 }
 
 .c13 {
   box-sizing: border-box;
-  margin-bottom: 0px;
+  margin-bottom: 0;
   width: 50%;
 }
 
@@ -752,8 +752,8 @@ exports[`auth2faType: otp rendering 1`] = `
   min-height: 40px;
   font-size: 12px;
   padding: 0px 40px;
-  margin-bottom: 4px;
   margin-top: 16px;
+  margin-bottom: 4px;
   width: 100%;
 }
 
@@ -777,10 +777,10 @@ exports[`auth2faType: otp rendering 1`] = `
 
 .c0 {
   box-sizing: border-box;
-  margin-left: auto;
-  margin-right: auto;
   margin-top: 32px;
   margin-bottom: 32px;
+  margin-left: auto;
+  margin-right: auto;
   padding-bottom: 24px;
   width: 464px;
   background-color: #222C59;
@@ -800,8 +800,8 @@ exports[`auth2faType: otp rendering 1`] = `
   padding: 0 16px;
   outline: none;
   width: 100%;
-  color: #324148;
   background-color: #FFFFFF;
+  color: #324148;
   margin-top: 4px;
 }
 
@@ -824,7 +824,7 @@ exports[`auth2faType: otp rendering 1`] = `
   font-weight: 500;
   text-transform: uppercase;
   width: 100%;
-  margin-bottom: 0px;
+  margin-bottom: 0;
 }
 
 .c11 {
@@ -843,19 +843,19 @@ exports[`auth2faType: otp rendering 1`] = `
   font-weight: 300;
   font-size: 22px;
   line-height: 32px;
-  margin: 0px;
   padding-top: 24px;
+  margin: 0;
   color: #FFFFFF;
   text-align: center;
 }
 
 .c4 {
   box-sizing: border-box;
-  padding-top: 16px;
   padding-left: 32px;
   padding-right: 32px;
-  border-bottom-right-radius: 8px;
+  padding-top: 16px;
   border-bottom-left-radius: 8px;
+  border-bottom-right-radius: 8px;
   display: flex;
   justify-content: center;
   flex-direction: column;
@@ -1169,14 +1169,14 @@ exports[`auth2faType: webauthn rendering 1`] = `
 
 .c8 {
   box-sizing: border-box;
-  margin-bottom: 0px;
+  margin-bottom: 0;
   width: 100%;
 }
 
 .c10 {
   box-sizing: border-box;
   max-width: 50%;
-  margin-bottom: 0px;
+  margin-bottom: 0;
   margin-right: 16px;
   width: 100%;
 }
@@ -1205,8 +1205,8 @@ exports[`auth2faType: webauthn rendering 1`] = `
   min-height: 40px;
   font-size: 12px;
   padding: 0px 40px;
-  margin-bottom: 4px;
   margin-top: 16px;
+  margin-bottom: 4px;
   width: 100%;
 }
 
@@ -1230,10 +1230,10 @@ exports[`auth2faType: webauthn rendering 1`] = `
 
 .c0 {
   box-sizing: border-box;
-  margin-left: auto;
-  margin-right: auto;
   margin-top: 32px;
   margin-bottom: 32px;
+  margin-left: auto;
+  margin-right: auto;
   padding-bottom: 24px;
   width: 464px;
   background-color: #222C59;
@@ -1253,8 +1253,8 @@ exports[`auth2faType: webauthn rendering 1`] = `
   padding: 0 16px;
   outline: none;
   width: 100%;
-  color: #324148;
   background-color: #FFFFFF;
+  color: #324148;
   margin-top: 4px;
 }
 
@@ -1277,7 +1277,7 @@ exports[`auth2faType: webauthn rendering 1`] = `
   font-weight: 500;
   text-transform: uppercase;
   width: 100%;
-  margin-bottom: 0px;
+  margin-bottom: 0;
 }
 
 .c11 {
@@ -1296,19 +1296,19 @@ exports[`auth2faType: webauthn rendering 1`] = `
   font-weight: 300;
   font-size: 22px;
   line-height: 32px;
-  margin: 0px;
   padding-top: 24px;
+  margin: 0;
   color: #FFFFFF;
   text-align: center;
 }
 
 .c4 {
   box-sizing: border-box;
-  padding-top: 16px;
   padding-left: 32px;
   padding-right: 32px;
-  border-bottom-right-radius: 8px;
+  padding-top: 16px;
   border-bottom-left-radius: 8px;
+  border-bottom-right-radius: 8px;
   display: flex;
   justify-content: center;
   flex-direction: column;
@@ -1607,7 +1607,7 @@ exports[`cloud auth2faType: on rendering 1`] = `
 
 .c9 {
   box-sizing: border-box;
-  margin-bottom: 0px;
+  margin-bottom: 0;
   width: 100%;
 }
 
@@ -1624,7 +1624,7 @@ exports[`cloud auth2faType: on rendering 1`] = `
 .c15 {
   box-sizing: border-box;
   max-width: 50%;
-  margin-bottom: 0px;
+  margin-bottom: 0;
   margin-right: 16px;
   width: 100%;
 }
@@ -1697,8 +1697,8 @@ exports[`cloud auth2faType: on rendering 1`] = `
   min-height: 40px;
   font-size: 12px;
   padding: 0px 40px;
-  margin-bottom: 4px;
   margin-top: 16px;
+  margin-bottom: 4px;
   width: 100%;
 }
 
@@ -1736,10 +1736,10 @@ exports[`cloud auth2faType: on rendering 1`] = `
 
 .c0 {
   box-sizing: border-box;
-  margin-left: auto;
-  margin-right: auto;
   margin-top: 32px;
   margin-bottom: 32px;
+  margin-left: auto;
+  margin-right: auto;
   padding-bottom: 24px;
   width: 464px;
   background-color: #222C59;
@@ -1759,8 +1759,8 @@ exports[`cloud auth2faType: on rendering 1`] = `
   padding: 0 16px;
   outline: none;
   width: 100%;
-  color: #324148;
   background-color: #FFFFFF;
+  color: #324148;
   margin-top: 4px;
 }
 
@@ -1783,7 +1783,7 @@ exports[`cloud auth2faType: on rendering 1`] = `
   font-weight: 500;
   text-transform: uppercase;
   width: 100%;
-  margin-bottom: 0px;
+  margin-bottom: 0;
 }
 
 .c16 {
@@ -1802,19 +1802,19 @@ exports[`cloud auth2faType: on rendering 1`] = `
   font-weight: 300;
   font-size: 22px;
   line-height: 32px;
-  margin: 0px;
   padding-top: 24px;
+  margin: 0;
   color: #FFFFFF;
   text-align: center;
 }
 
 .c4 {
   box-sizing: border-box;
-  padding-top: 16px;
   padding-left: 32px;
   padding-right: 32px;
-  border-bottom-right-radius: 8px;
+  padding-top: 16px;
   border-bottom-left-radius: 8px;
+  border-bottom-right-radius: 8px;
   display: flex;
   justify-content: center;
   flex-direction: column;
@@ -2140,13 +2140,13 @@ exports[`no login enabled 1`] = `
 
 .c0 {
   box-sizing: border-box;
-  margin-left: auto;
-  margin-right: auto;
   margin-top: 32px;
   margin-bottom: 32px;
-  padding-bottom: 24px;
+  margin-left: auto;
+  margin-right: auto;
   padding-left: 32px;
   padding-right: 32px;
+  padding-bottom: 24px;
   width: 464px;
   background-color: #222C59;
   box-shadow: 0 4px 16px rgba(0,0,0,0.24);
@@ -2159,8 +2159,8 @@ exports[`no login enabled 1`] = `
   font-weight: 300;
   font-size: 22px;
   line-height: 32px;
-  margin: 0px;
   padding-top: 24px;
+  margin: 0;
   color: #FFFFFF;
   text-align: center;
 }
@@ -2171,8 +2171,8 @@ exports[`no login enabled 1`] = `
   font-weight: 300;
   font-size: 12px;
   line-height: 24px;
-  margin: 0px;
   margin-bottom: 8px;
+  margin: 0;
 }
 
 <div
@@ -2215,7 +2215,7 @@ exports[`server error rendering 1`] = `
   word-break: break-word;
   line-height: 1.5;
   margin: 32px;
-  margin-bottom: 0px;
+  margin-bottom: 0;
   background: #f50057;
   color: #FFFFFF;
 }
@@ -2235,7 +2235,7 @@ exports[`server error rendering 1`] = `
 
 .c9 {
   box-sizing: border-box;
-  margin-bottom: 0px;
+  margin-bottom: 0;
   width: 100%;
 }
 
@@ -2263,8 +2263,8 @@ exports[`server error rendering 1`] = `
   min-height: 40px;
   font-size: 12px;
   padding: 0px 40px;
-  margin-bottom: 4px;
   margin-top: 16px;
+  margin-bottom: 4px;
   width: 100%;
 }
 
@@ -2288,10 +2288,10 @@ exports[`server error rendering 1`] = `
 
 .c0 {
   box-sizing: border-box;
-  margin-left: auto;
-  margin-right: auto;
   margin-top: 32px;
   margin-bottom: 32px;
+  margin-left: auto;
+  margin-right: auto;
   padding-bottom: 24px;
   width: 464px;
   background-color: #222C59;
@@ -2311,8 +2311,8 @@ exports[`server error rendering 1`] = `
   padding: 0 16px;
   outline: none;
   width: 100%;
-  color: #324148;
   background-color: #FFFFFF;
+  color: #324148;
   margin-top: 4px;
 }
 
@@ -2335,7 +2335,7 @@ exports[`server error rendering 1`] = `
   font-weight: 500;
   text-transform: uppercase;
   width: 100%;
-  margin-bottom: 0px;
+  margin-bottom: 0;
 }
 
 .c1 {
@@ -2344,19 +2344,19 @@ exports[`server error rendering 1`] = `
   font-weight: 300;
   font-size: 22px;
   line-height: 32px;
-  margin: 0px;
   padding-top: 24px;
+  margin: 0;
   color: #FFFFFF;
   text-align: center;
 }
 
 .c5 {
   box-sizing: border-box;
-  padding-top: 16px;
   padding-left: 32px;
   padding-right: 32px;
-  border-bottom-right-radius: 8px;
+  padding-top: 16px;
   border-bottom-left-radius: 8px;
+  border-bottom-right-radius: 8px;
   display: flex;
   justify-content: center;
   flex-direction: column;
@@ -2497,10 +2497,10 @@ exports[`server error rendering 1`] = `
 exports[`sso list still renders when local auth is disabled 1`] = `
 .c2 {
   box-sizing: border-box;
-  padding-bottom: 8px;
-  padding-top: 8px;
   padding-left: 40px;
   padding-right: 40px;
+  padding-top: 8px;
+  padding-bottom: 8px;
 }
 
 .c3 {
@@ -2557,10 +2557,10 @@ exports[`sso list still renders when local auth is disabled 1`] = `
 
 .c0 {
   box-sizing: border-box;
-  margin-left: auto;
-  margin-right: auto;
   margin-top: 32px;
   margin-bottom: 32px;
+  margin-left: auto;
+  margin-right: auto;
   padding-bottom: 24px;
   width: 464px;
   background-color: #222C59;
@@ -2574,8 +2574,8 @@ exports[`sso list still renders when local auth is disabled 1`] = `
   font-weight: 300;
   font-size: 22px;
   line-height: 32px;
-  margin: 0px;
   padding-top: 24px;
+  margin: 0;
   color: #FFFFFF;
   text-align: center;
 }
@@ -2689,16 +2689,16 @@ exports[`sso providers rendering 1`] = `
 
 .c4 {
   box-sizing: border-box;
-  padding-bottom: 8px;
-  padding-top: 8px;
   padding-left: 40px;
   padding-right: 40px;
+  padding-top: 8px;
+  padding-bottom: 8px;
 }
 
 .c14 {
   box-sizing: border-box;
-  margin-top: -4px;
   padding-top: 16px;
+  margin-top: -4px;
   text-align: center;
 }
 
@@ -2798,10 +2798,10 @@ exports[`sso providers rendering 1`] = `
 
 .c0 {
   box-sizing: border-box;
-  margin-left: auto;
-  margin-right: auto;
   margin-top: 32px;
   margin-bottom: 32px;
+  margin-left: auto;
+  margin-right: auto;
   padding-bottom: 24px;
   width: 464px;
   background-color: #222C59;
@@ -2815,8 +2815,8 @@ exports[`sso providers rendering 1`] = `
   font-weight: 300;
   font-size: 22px;
   line-height: 32px;
-  margin: 0px;
   padding-top: 24px;
+  margin: 0;
   color: #FFFFFF;
   text-align: center;
 }

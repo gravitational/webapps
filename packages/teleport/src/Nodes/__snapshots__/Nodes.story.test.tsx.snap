@@ -126,10 +126,10 @@ exports[`empty state 1`] = `
 
 .c4 {
   box-sizing: border-box;
-  margin-left: auto;
-  margin-right: auto;
   padding: 56px;
   padding-top: 32px;
+  margin-left: auto;
+  margin-right: auto;
   width: 100%;
   background-color: #222C59;
   box-shadow: 0 4px 16px rgba(0,0,0,0.24);
@@ -139,9 +139,9 @@ exports[`empty state 1`] = `
 .c7 {
   display: block;
   outline: none;
-  margin-bottom: 24px;
   margin-left: auto;
   margin-right: auto;
+  margin-bottom: 24px;
   height: 160px;
 }
 
@@ -152,8 +152,8 @@ exports[`empty state 1`] = `
   font-size: 16px;
   line-height: 24px;
   font-size: 24px;
-  margin: 0px;
   margin-bottom: 8px;
+  margin: 0;
   font-weight: 700;
 }
 
@@ -161,16 +161,16 @@ exports[`empty state 1`] = `
   overflow: hidden;
   text-overflow: ellipsis;
   font-size: 14px;
-  margin: 0px;
+  margin: 0;
   font-weight: 400;
 }
 
 .c3 {
   box-sizing: border-box;
-  margin-left: auto;
-  margin-right: auto;
   padding: 56px;
   padding-top: 32px;
+  margin-left: auto;
+  margin-right: auto;
   width: 100%;
   background-color: #222C59;
   display: flex;
@@ -199,7 +199,7 @@ exports[`empty state 1`] = `
   font-weight: 300;
   font-size: 22px;
   line-height: 32px;
-  margin: 0px;
+  margin: 0;
   white-space: nowrap;
 }
 
@@ -397,7 +397,7 @@ exports[`failed 1`] = `
   font-weight: 300;
   font-size: 12px;
   line-height: 24px;
-  margin: 0px;
+  margin: 0;
 }
 
 .c20 {
@@ -406,8 +406,8 @@ exports[`failed 1`] = `
   font-weight: 400;
   font-size: 12px;
   line-height: 16px;
-  margin: 0px;
   margin-right: 4px;
+  margin: 0;
   color: #FFFFFF;
 }
 
@@ -465,7 +465,7 @@ exports[`failed 1`] = `
   font-weight: 300;
   font-size: 22px;
   line-height: 32px;
-  margin: 0px;
+  margin: 0;
   white-space: nowrap;
 }
 
@@ -567,8 +567,6 @@ exports[`failed 1`] = `
   align-items: center;
   justify-content: space-between;
   background: #222C59;
-  border-top-left-radius: 8px;
-  border-top-right-radius: 8px;
 }
 
 .c25 {
@@ -579,8 +577,6 @@ exports[`failed 1`] = `
   align-items: center;
   justify-content: space-between;
   background: #222C59;
-  border-bottom-right-radius: 8px;
-  border-bottom-left-radius: 8px;
 }
 
 .c22 {
@@ -596,8 +592,8 @@ exports[`failed 1`] = `
   padding: 0 8px;
   background-color: #111B48;
   color: rgba(255,255,255,0.87);
-  margin-bottom: 4px;
   margin-right: 4px;
+  margin-bottom: 4px;
   cursor: pointer;
 }
 
@@ -1318,7 +1314,7 @@ exports[`loaded 1`] = `
   font-weight: 300;
   font-size: 12px;
   line-height: 24px;
-  margin: 0px;
+  margin: 0;
 }
 
 .c23 {
@@ -1327,8 +1323,8 @@ exports[`loaded 1`] = `
   font-weight: 400;
   font-size: 12px;
   line-height: 16px;
-  margin: 0px;
   margin-right: 4px;
+  margin: 0;
   color: #FFFFFF;
 }
 
@@ -1386,7 +1382,7 @@ exports[`loaded 1`] = `
   font-weight: 300;
   font-size: 22px;
   line-height: 32px;
-  margin: 0px;
+  margin: 0;
   white-space: nowrap;
 }
 
@@ -1441,8 +1437,8 @@ exports[`loaded 1`] = `
   box-shadow: none;
   padding-left: 8px;
   font-size: 12px;
-  color: rgba(255,255,255,0.87);
   background-color: #222C59;
+  color: rgba(255,255,255,0.87);
 }
 
 .c6::-ms-clear {
@@ -1546,8 +1542,6 @@ exports[`loaded 1`] = `
   align-items: center;
   justify-content: space-between;
   background: #222C59;
-  border-top-left-radius: 8px;
-  border-top-right-radius: 8px;
 }
 
 .c28 {
@@ -1558,8 +1552,6 @@ exports[`loaded 1`] = `
   align-items: center;
   justify-content: space-between;
   background: #222C59;
-  border-bottom-right-radius: 8px;
-  border-bottom-left-radius: 8px;
 }
 
 .c25 {
@@ -1575,8 +1567,8 @@ exports[`loaded 1`] = `
   padding: 0 8px;
   background-color: #111B48;
   color: rgba(255,255,255,0.87);
-  margin-bottom: 4px;
   margin-right: 4px;
+  margin-bottom: 4px;
   cursor: pointer;
 }
 
@@ -2192,9 +2184,9 @@ exports[`readonly empty state 1`] = `
 .c3 {
   box-sizing: border-box;
   max-width: 664px;
+  padding: 56px;
   margin-left: auto;
   margin-right: auto;
-  padding: 56px;
   color: rgba(255,255,255,0.87);
   background-color: #222C59;
   text-align: center;
@@ -2207,21 +2199,21 @@ exports[`readonly empty state 1`] = `
   font-weight: 300;
   font-size: 28px;
   line-height: 32px;
-  margin: 0px;
   margin-bottom: 16px;
+  margin: 0;
 }
 
 .c5 {
   overflow: hidden;
   text-overflow: ellipsis;
-  margin: 0px;
+  margin: 0;
 }
 
 .c6 {
   overflow: hidden;
   text-overflow: ellipsis;
   font-weight: 600;
-  margin: 0px;
+  margin: 0;
 }
 
 .c1 {
@@ -2245,7 +2237,7 @@ exports[`readonly empty state 1`] = `
   font-weight: 300;
   font-size: 22px;
   line-height: 32px;
-  margin: 0px;
+  margin: 0;
   white-space: nowrap;
 }
 

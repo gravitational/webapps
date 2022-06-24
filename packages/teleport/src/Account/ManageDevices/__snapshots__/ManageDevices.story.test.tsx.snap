@@ -102,7 +102,7 @@ exports[`render device dashboard 1`] = `
 .c12 {
   overflow: hidden;
   text-overflow: ellipsis;
-  margin: 0px;
+  margin: 0;
 }
 
 .c1 {
@@ -126,7 +126,7 @@ exports[`render device dashboard 1`] = `
   font-weight: 300;
   font-size: 22px;
   line-height: 32px;
-  margin: 0px;
+  margin: 0;
   white-space: nowrap;
 }
 
@@ -153,8 +153,6 @@ exports[`render device dashboard 1`] = `
   border-spacing: 0;
   font-size: 12px;
   width: 100%;
-  border-top-left-radius: 0px;
-  border-top-right-radius: 0px;
 }
 
 .c8 > thead > tr > th,
@@ -230,8 +228,6 @@ exports[`render device dashboard 1`] = `
   align-items: center;
   justify-content: space-between;
   background: #222C59;
-  border-top-left-radius: 8px;
-  border-top-right-radius: 8px;
 }
 
 .c7 {
@@ -621,7 +617,7 @@ exports[`render failed state for creating restricted privilege token 1`] = `
 .c13 {
   overflow: hidden;
   text-overflow: ellipsis;
-  margin: 0px;
+  margin: 0;
 }
 
 .c1 {
@@ -645,7 +641,7 @@ exports[`render failed state for creating restricted privilege token 1`] = `
   font-weight: 300;
   font-size: 22px;
   line-height: 32px;
-  margin: 0px;
+  margin: 0;
   white-space: nowrap;
 }
 
@@ -672,8 +668,6 @@ exports[`render failed state for creating restricted privilege token 1`] = `
   border-spacing: 0;
   font-size: 12px;
   width: 100%;
-  border-top-left-radius: 0px;
-  border-top-right-radius: 0px;
 }
 
 .c9 > thead > tr > th,
@@ -749,8 +743,6 @@ exports[`render failed state for creating restricted privilege token 1`] = `
   align-items: center;
   justify-content: space-between;
   background: #222C59;
-  border-top-left-radius: 8px;
-  border-top-right-radius: 8px;
 }
 
 .c8 {
@@ -1110,7 +1102,7 @@ exports[`render failed state for fetching devices 1`] = `
   font-weight: 300;
   font-size: 22px;
   line-height: 32px;
-  margin: 0px;
+  margin: 0;
   white-space: nowrap;
 }
 

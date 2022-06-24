@@ -120,8 +120,8 @@ exports[`render dialog to add a new mfa device with webauthn as preferred type 1
   padding: 0 16px;
   outline: none;
   width: 100%;
-  color: #324148;
   background-color: #FFFFFF;
+  color: #324148;
   margin-top: 4px;
 }
 
@@ -154,7 +154,7 @@ exports[`render dialog to add a new mfa device with webauthn as preferred type 1
   font-weight: 500;
   text-transform: uppercase;
   width: 100%;
-  margin-bottom: 0px;
+  margin-bottom: 0;
 }
 
 .c8 {
@@ -170,21 +170,21 @@ exports[`render dialog to add a new mfa device with webauthn as preferred type 1
   font-size: 22px;
   line-height: 32px;
   text-transform: uppercase;
-  margin: 0px;
+  margin: 0;
   color: rgba(255,255,255,0.87);
 }
 
 .c9 {
   overflow: hidden;
   text-overflow: ellipsis;
-  margin: 0px;
   margin-top: 16px;
+  margin: 0;
 }
 
 .c7 {
   box-sizing: border-box;
-  margin-bottom: 24px;
   padding: 16px;
+  margin-bottom: 24px;
   height: 256px;
   background-color: #222C59;
   border-radius: 8px;
@@ -705,8 +705,8 @@ exports[`render failed state for dialog to add a new mfa device 1`] = `
   padding: 0 16px;
   outline: none;
   width: 100%;
-  color: #324148;
   background-color: #FFFFFF;
+  color: #324148;
   margin-top: 4px;
 }
 
@@ -739,7 +739,7 @@ exports[`render failed state for dialog to add a new mfa device 1`] = `
   font-weight: 500;
   text-transform: uppercase;
   width: 100%;
-  margin-bottom: 0px;
+  margin-bottom: 0;
 }
 
 .c9 {
@@ -755,21 +755,21 @@ exports[`render failed state for dialog to add a new mfa device 1`] = `
   font-size: 22px;
   line-height: 32px;
   text-transform: uppercase;
-  margin: 0px;
+  margin: 0;
   color: rgba(255,255,255,0.87);
 }
 
 .c10 {
   overflow: hidden;
   text-overflow: ellipsis;
-  margin: 0px;
   margin-top: 16px;
+  margin: 0;
 }
 
 .c8 {
   box-sizing: border-box;
-  margin-bottom: 24px;
   padding: 16px;
+  margin-bottom: 24px;
   height: 256px;
   background-color: #222C59;
   border-radius: 8px;
@@ -1297,8 +1297,8 @@ exports[`render failed state for fetching QR Code for dialog to add a new mfa de
   padding: 0 16px;
   outline: none;
   width: 100%;
-  color: #324148;
   background-color: #FFFFFF;
+  color: #324148;
   margin-top: 4px;
 }
 
@@ -1331,7 +1331,7 @@ exports[`render failed state for fetching QR Code for dialog to add a new mfa de
   font-weight: 500;
   text-transform: uppercase;
   width: 100%;
-  margin-bottom: 0px;
+  margin-bottom: 0;
 }
 
 .c12 {
@@ -1349,7 +1349,7 @@ exports[`render failed state for fetching QR Code for dialog to add a new mfa de
   font-size: 22px;
   line-height: 32px;
   text-transform: uppercase;
-  margin: 0px;
+  margin: 0;
   color: rgba(255,255,255,0.87);
 }
 
@@ -1357,22 +1357,22 @@ exports[`render failed state for fetching QR Code for dialog to add a new mfa de
   overflow: hidden;
   text-overflow: ellipsis;
   font-size: 12px;
-  margin: 0px;
   margin-top: 8px;
+  margin: 0;
   text-align: center;
 }
 
 .c11 {
   overflow: hidden;
   text-overflow: ellipsis;
-  margin: 0px;
+  margin: 0;
   color: rgba(255,255,255,0.56);
 }
 
 .c8 {
   box-sizing: border-box;
-  margin-bottom: 24px;
   padding: 16px;
+  margin-bottom: 24px;
   height: 256px;
   background-color: #222C59;
   border-radius: 8px;

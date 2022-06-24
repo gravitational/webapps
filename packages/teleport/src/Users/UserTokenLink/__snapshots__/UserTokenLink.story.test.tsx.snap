@@ -92,23 +92,23 @@ exports[`reset link dialog 1`] = `
   font-size: 22px;
   line-height: 32px;
   text-transform: uppercase;
-  margin: 0px;
+  margin: 0;
   color: rgba(255,255,255,0.87);
 }
 
 .c7 {
   overflow: hidden;
   text-overflow: ellipsis;
-  margin: 0px;
   margin-bottom: 24px;
   margin-top: 4px;
+  margin: 0;
 }
 
 .c8 {
   overflow: hidden;
   text-overflow: ellipsis;
   font-weight: 600;
-  margin: 0px;
+  margin: 0;
 }
 
 .c9 {
@@ -365,23 +365,23 @@ exports[`reset link dialog as invite 1`] = `
   font-size: 22px;
   line-height: 32px;
   text-transform: uppercase;
-  margin: 0px;
+  margin: 0;
   color: rgba(255,255,255,0.87);
 }
 
 .c7 {
   overflow: hidden;
   text-overflow: ellipsis;
-  margin: 0px;
   margin-bottom: 24px;
   margin-top: 4px;
+  margin: 0;
 }
 
 .c8 {
   overflow: hidden;
   text-overflow: ellipsis;
   font-weight: 600;
-  margin: 0px;
+  margin: 0;
 }
 
 .c9 {

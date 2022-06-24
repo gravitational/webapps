@@ -55,9 +55,9 @@ exports[`render ConsoleTabs 1`] = `
 .c4 {
   overflow: hidden;
   text-overflow: ellipsis;
-  margin: 0px;
   margin-left: auto;
   margin-right: auto;
+  margin: 0;
 }
 
 .c0 {

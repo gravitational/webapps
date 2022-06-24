@@ -100,7 +100,7 @@ exports[`render DocumentNodes 1`] = `
   font-weight: 300;
   font-size: 12px;
   line-height: 24px;
-  margin: 0px;
+  margin: 0;
 }
 
 .c27 {
@@ -109,8 +109,8 @@ exports[`render DocumentNodes 1`] = `
   font-weight: 400;
   font-size: 12px;
   line-height: 16px;
-  margin: 0px;
   margin-right: 4px;
+  margin: 0;
   color: #FFFFFF;
 }
 
@@ -252,8 +252,6 @@ exports[`render DocumentNodes 1`] = `
   align-items: center;
   justify-content: space-between;
   background: #03203C;
-  border-top-left-radius: 8px;
-  border-top-right-radius: 8px;
 }
 
 .c32 {
@@ -264,8 +262,6 @@ exports[`render DocumentNodes 1`] = `
   align-items: center;
   justify-content: space-between;
   background: #03203C;
-  border-bottom-right-radius: 8px;
-  border-bottom-left-radius: 8px;
 }
 
 .c29 {
@@ -281,8 +277,8 @@ exports[`render DocumentNodes 1`] = `
   padding: 0 8px;
   background-color: #01172C;
   color: rgba(255,255,255,0.87);
-  margin-bottom: 4px;
   margin-right: 4px;
+  margin-bottom: 4px;
   cursor: pointer;
 }
 
@@ -456,8 +452,8 @@ exports[`render DocumentNodes 1`] = `
   box-shadow: none;
   padding-left: 8px;
   font-size: 12px;
-  color: rgba(255,255,255,0.87);
   background-color: #03203C;
+  color: rgba(255,255,255,0.87);
 }
 
 .c10::-ms-clear {
@@ -734,9 +730,9 @@ exports[`render DocumentNodes 1`] = `
 
 .c2 {
   box-sizing: border-box;
-  margin-top: 24px;
   margin-left: auto;
   margin-right: auto;
+  margin-top: 24px;
   padding-left: 32px;
   padding-right: 32px;
   flex-direction: column;

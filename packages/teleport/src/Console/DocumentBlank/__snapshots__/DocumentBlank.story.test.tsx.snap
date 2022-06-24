@@ -48,8 +48,8 @@ exports[`render DocumentBlank 1`] = `
 .c3 {
   display: inline-block;
   transition: color .3s;
-  margin-bottom: 40px;
   margin-top: 72px;
+  margin-bottom: 40px;
   color: #01172C;
   font-size: 256px;
 }

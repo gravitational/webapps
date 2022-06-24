@@ -26,7 +26,7 @@ exports[`render failed state for re-authentication dialog 1`] = `
 
 .c10 {
   box-sizing: border-box;
-  margin-bottom: 0px;
+  margin-bottom: 0;
   margin-right: 16px;
   width: 50%;
 }
@@ -139,14 +139,14 @@ exports[`render failed state for re-authentication dialog 1`] = `
   font-size: 22px;
   line-height: 32px;
   text-transform: uppercase;
-  margin: 0px;
+  margin: 0;
   color: rgba(255,255,255,0.87);
 }
 
 .c6 {
   overflow: hidden;
   text-overflow: ellipsis;
-  margin: 0px;
+  margin: 0;
   color: rgba(255,255,255,0.56);
   text-align: center;
 }
@@ -438,7 +438,7 @@ exports[`render failed state for re-authentication dialog 1`] = `
 exports[`render re-authentication dialog 1`] = `
 .c9 {
   box-sizing: border-box;
-  margin-bottom: 0px;
+  margin-bottom: 0;
   margin-right: 16px;
   width: 50%;
 }
@@ -551,14 +551,14 @@ exports[`render re-authentication dialog 1`] = `
   font-size: 22px;
   line-height: 32px;
   text-transform: uppercase;
-  margin: 0px;
+  margin: 0;
   color: rgba(255,255,255,0.87);
 }
 
 .c6 {
   overflow: hidden;
   text-overflow: ellipsis;
-  margin: 0px;
+  margin: 0;
   color: rgba(255,255,255,0.56);
   text-align: center;
 }

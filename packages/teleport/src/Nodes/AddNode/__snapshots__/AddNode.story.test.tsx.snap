@@ -122,29 +122,29 @@ exports[`render automatic tab 1`] = `
   font-size: 22px;
   line-height: 32px;
   text-transform: uppercase;
-  margin: 0px;
   margin-right: auto;
+  margin: 0;
   color: rgba(255,255,255,0.87);
 }
 
 .c11 {
   overflow: hidden;
   text-overflow: ellipsis;
-  margin: 0px;
+  margin: 0;
 }
 
 .c12 {
   overflow: hidden;
   text-overflow: ellipsis;
-  margin: 0px;
   margin-top: 16px;
+  margin: 0;
 }
 
 .c13 {
   overflow: hidden;
   text-overflow: ellipsis;
   font-weight: 600;
-  margin: 0px;
+  margin: 0;
 }
 
 .c4 {
@@ -164,8 +164,8 @@ exports[`render automatic tab 1`] = `
 
 .c14 {
   box-sizing: border-box;
-  margin-top: 8px;
   padding: 8px;
+  margin-top: 8px;
   background-color: #010B1C;
   border-radius: 4px;
   display: flex;
@@ -206,8 +206,8 @@ exports[`render automatic tab 1`] = `
   font-weight: 400;
   font-size: 16px;
   line-height: 24px;
-  margin: 0px;
   margin-left: 24px;
+  margin: 0;
   align-items: center;
   display: flex;
   padding: 4px 8px;
@@ -221,8 +221,8 @@ exports[`render automatic tab 1`] = `
   font-weight: 400;
   font-size: 16px;
   line-height: 24px;
-  margin: 0px;
   margin-left: 24px;
+  margin: 0;
   align-items: center;
   display: flex;
   padding: 4px 8px;
@@ -436,8 +436,8 @@ exports[`render failed automatic tab 1`] = `
   font-size: 22px;
   line-height: 32px;
   text-transform: uppercase;
-  margin: 0px;
   margin-right: auto;
+  margin: 0;
   color: rgba(255,255,255,0.87);
 }
 
@@ -483,8 +483,8 @@ exports[`render failed automatic tab 1`] = `
   font-weight: 400;
   font-size: 16px;
   line-height: 24px;
-  margin: 0px;
   margin-left: 24px;
+  margin: 0;
   align-items: center;
   display: flex;
   padding: 4px 8px;
@@ -498,8 +498,8 @@ exports[`render failed automatic tab 1`] = `
   font-weight: 400;
   font-size: 16px;
   line-height: 24px;
-  margin: 0px;
   margin-left: 24px;
+  margin: 0;
   align-items: center;
   display: flex;
   padding: 4px 8px;
@@ -780,8 +780,8 @@ exports[`render iam method after token generation 1`] = `
   padding: 0 16px;
   outline: none;
   width: 100%;
-  color: #324148;
   background-color: #FFFFFF;
+  color: #324148;
   margin-top: 4px;
 }
 
@@ -804,7 +804,7 @@ exports[`render iam method after token generation 1`] = `
   font-weight: 500;
   text-transform: uppercase;
   width: 100%;
-  margin-bottom: 0px;
+  margin-bottom: 0;
 }
 
 .c15 {
@@ -822,8 +822,8 @@ exports[`render iam method after token generation 1`] = `
   font-size: 22px;
   line-height: 32px;
   text-transform: uppercase;
-  margin: 0px;
   margin-right: auto;
+  margin: 0;
   color: rgba(255,255,255,0.87);
 }
 
@@ -831,35 +831,35 @@ exports[`render iam method after token generation 1`] = `
   overflow: hidden;
   text-overflow: ellipsis;
   font-weight: 600;
-  margin: 0px;
   margin-top: 4px;
+  margin: 0;
 }
 
 .c13 {
   overflow: hidden;
   text-overflow: ellipsis;
-  margin: 0px;
   margin-top: 8px;
+  margin: 0;
 }
 
 .c14 {
   overflow: hidden;
   text-overflow: ellipsis;
-  margin: 0px;
   margin-top: 4px;
+  margin: 0;
 }
 
 .c18 {
   overflow: hidden;
   text-overflow: ellipsis;
-  margin: 0px;
+  margin: 0;
 }
 
 .c22 {
   overflow: hidden;
   text-overflow: ellipsis;
   font-weight: 600;
-  margin: 0px;
+  margin: 0;
 }
 
 .c4 {
@@ -879,8 +879,8 @@ exports[`render iam method after token generation 1`] = `
 
 .c24 {
   box-sizing: border-box;
-  margin-top: 8px;
   padding: 8px;
+  margin-top: 8px;
   background-color: #010B1C;
   border-radius: 4px;
   display: flex;
@@ -921,8 +921,8 @@ exports[`render iam method after token generation 1`] = `
   font-weight: 400;
   font-size: 16px;
   line-height: 24px;
-  margin: 0px;
   margin-left: 24px;
+  margin: 0;
   align-items: center;
   display: flex;
   padding: 4px 8px;
@@ -938,8 +938,8 @@ exports[`render iam method after token generation 1`] = `
   font-weight: 400;
   font-size: 16px;
   line-height: 24px;
-  margin: 0px;
   margin-left: 24px;
+  margin: 0;
   align-items: center;
   display: flex;
   padding: 4px 8px;
@@ -1365,8 +1365,8 @@ exports[`render iam method when failed 1`] = `
   padding: 0 16px;
   outline: none;
   width: 100%;
-  color: #324148;
   background-color: #FFFFFF;
+  color: #324148;
   margin-top: 4px;
 }
 
@@ -1389,7 +1389,7 @@ exports[`render iam method when failed 1`] = `
   font-weight: 500;
   text-transform: uppercase;
   width: 100%;
-  margin-bottom: 0px;
+  margin-bottom: 0;
 }
 
 .c16 {
@@ -1407,8 +1407,8 @@ exports[`render iam method when failed 1`] = `
   font-size: 22px;
   line-height: 32px;
   text-transform: uppercase;
-  margin: 0px;
   margin-right: auto;
+  margin: 0;
   color: rgba(255,255,255,0.87);
 }
 
@@ -1416,35 +1416,35 @@ exports[`render iam method when failed 1`] = `
   overflow: hidden;
   text-overflow: ellipsis;
   font-weight: 600;
-  margin: 0px;
   margin-top: 4px;
+  margin: 0;
 }
 
 .c14 {
   overflow: hidden;
   text-overflow: ellipsis;
-  margin: 0px;
   margin-top: 8px;
+  margin: 0;
 }
 
 .c15 {
   overflow: hidden;
   text-overflow: ellipsis;
-  margin: 0px;
   margin-top: 4px;
+  margin: 0;
 }
 
 .c19 {
   overflow: hidden;
   text-overflow: ellipsis;
-  margin: 0px;
+  margin: 0;
 }
 
 .c23 {
   overflow: hidden;
   text-overflow: ellipsis;
   font-weight: 600;
-  margin: 0px;
+  margin: 0;
 }
 
 .c4 {
@@ -1489,8 +1489,8 @@ exports[`render iam method when failed 1`] = `
   font-weight: 400;
   font-size: 16px;
   line-height: 24px;
-  margin: 0px;
   margin-left: 24px;
+  margin: 0;
   align-items: center;
   display: flex;
   padding: 4px 8px;
@@ -1506,8 +1506,8 @@ exports[`render iam method when failed 1`] = `
   font-weight: 400;
   font-size: 16px;
   line-height: 24px;
-  margin: 0px;
   margin-left: 24px;
+  margin: 0;
   align-items: center;
   display: flex;
   padding: 4px 8px;
@@ -1885,8 +1885,8 @@ exports[`render iam method while processing 1`] = `
   padding: 0 16px;
   outline: none;
   width: 100%;
-  color: #324148;
   background-color: #FFFFFF;
+  color: #324148;
   margin-top: 4px;
 }
 
@@ -1909,7 +1909,7 @@ exports[`render iam method while processing 1`] = `
   font-weight: 500;
   text-transform: uppercase;
   width: 100%;
-  margin-bottom: 0px;
+  margin-bottom: 0;
 }
 
 .c15 {
@@ -1927,8 +1927,8 @@ exports[`render iam method while processing 1`] = `
   font-size: 22px;
   line-height: 32px;
   text-transform: uppercase;
-  margin: 0px;
   margin-right: auto;
+  margin: 0;
   color: rgba(255,255,255,0.87);
 }
 
@@ -1936,35 +1936,35 @@ exports[`render iam method while processing 1`] = `
   overflow: hidden;
   text-overflow: ellipsis;
   font-weight: 600;
-  margin: 0px;
   margin-top: 4px;
+  margin: 0;
 }
 
 .c13 {
   overflow: hidden;
   text-overflow: ellipsis;
-  margin: 0px;
   margin-top: 8px;
+  margin: 0;
 }
 
 .c14 {
   overflow: hidden;
   text-overflow: ellipsis;
-  margin: 0px;
   margin-top: 4px;
+  margin: 0;
 }
 
 .c18 {
   overflow: hidden;
   text-overflow: ellipsis;
-  margin: 0px;
+  margin: 0;
 }
 
 .c22 {
   overflow: hidden;
   text-overflow: ellipsis;
   font-weight: 600;
-  margin: 0px;
+  margin: 0;
 }
 
 .c4 {
@@ -2009,8 +2009,8 @@ exports[`render iam method while processing 1`] = `
   font-weight: 400;
   font-size: 16px;
   line-height: 24px;
-  margin: 0px;
   margin-left: 24px;
+  margin: 0;
   align-items: center;
   display: flex;
   padding: 4px 8px;
@@ -2026,8 +2026,8 @@ exports[`render iam method while processing 1`] = `
   font-weight: 400;
   font-size: 16px;
   line-height: 24px;
-  margin: 0px;
   margin-left: 24px;
+  margin: 0;
   align-items: center;
   display: flex;
   padding: 4px 8px;
@@ -2400,8 +2400,8 @@ exports[`render iam method without a token generated yet 1`] = `
   padding: 0 16px;
   outline: none;
   width: 100%;
-  color: #324148;
   background-color: #FFFFFF;
+  color: #324148;
   margin-top: 4px;
 }
 
@@ -2424,7 +2424,7 @@ exports[`render iam method without a token generated yet 1`] = `
   font-weight: 500;
   text-transform: uppercase;
   width: 100%;
-  margin-bottom: 0px;
+  margin-bottom: 0;
 }
 
 .c15 {
@@ -2442,8 +2442,8 @@ exports[`render iam method without a token generated yet 1`] = `
   font-size: 22px;
   line-height: 32px;
   text-transform: uppercase;
-  margin: 0px;
   margin-right: auto;
+  margin: 0;
   color: rgba(255,255,255,0.87);
 }
 
@@ -2451,35 +2451,35 @@ exports[`render iam method without a token generated yet 1`] = `
   overflow: hidden;
   text-overflow: ellipsis;
   font-weight: 600;
-  margin: 0px;
   margin-top: 4px;
+  margin: 0;
 }
 
 .c13 {
   overflow: hidden;
   text-overflow: ellipsis;
-  margin: 0px;
   margin-top: 8px;
+  margin: 0;
 }
 
 .c14 {
   overflow: hidden;
   text-overflow: ellipsis;
-  margin: 0px;
   margin-top: 4px;
+  margin: 0;
 }
 
 .c18 {
   overflow: hidden;
   text-overflow: ellipsis;
-  margin: 0px;
+  margin: 0;
 }
 
 .c22 {
   overflow: hidden;
   text-overflow: ellipsis;
   font-weight: 600;
-  margin: 0px;
+  margin: 0;
 }
 
 .c4 {
@@ -2524,8 +2524,8 @@ exports[`render iam method without a token generated yet 1`] = `
   font-weight: 400;
   font-size: 16px;
   line-height: 24px;
-  margin: 0px;
   margin-left: 24px;
+  margin: 0;
   align-items: center;
   display: flex;
   padding: 4px 8px;
@@ -2541,8 +2541,8 @@ exports[`render iam method without a token generated yet 1`] = `
   font-weight: 400;
   font-size: 16px;
   line-height: 24px;
-  margin: 0px;
   margin-left: 24px;
+  margin: 0;
   align-items: center;
   display: flex;
   padding: 4px 8px;
@@ -2933,8 +2933,8 @@ exports[`render manual tab with join token 1`] = `
   font-size: 22px;
   line-height: 32px;
   text-transform: uppercase;
-  margin: 0px;
   margin-right: auto;
+  margin: 0;
   color: rgba(255,255,255,0.87);
 }
 
@@ -2942,14 +2942,14 @@ exports[`render manual tab with join token 1`] = `
   overflow: hidden;
   text-overflow: ellipsis;
   font-weight: 600;
-  margin: 0px;
+  margin: 0;
 }
 
 .c16 {
   overflow: hidden;
   text-overflow: ellipsis;
-  margin: 0px;
   margin-top: 4px;
+  margin: 0;
 }
 
 .c4 {
@@ -2969,8 +2969,8 @@ exports[`render manual tab with join token 1`] = `
 
 .c17 {
   box-sizing: border-box;
-  margin-top: 8px;
   padding: 8px;
+  margin-top: 8px;
   background-color: #010B1C;
   border-radius: 4px;
   display: flex;
@@ -3011,8 +3011,8 @@ exports[`render manual tab with join token 1`] = `
   font-weight: 400;
   font-size: 16px;
   line-height: 24px;
-  margin: 0px;
   margin-left: 24px;
+  margin: 0;
   align-items: center;
   display: flex;
   padding: 4px 8px;
@@ -3026,8 +3026,8 @@ exports[`render manual tab with join token 1`] = `
   font-weight: 400;
   font-size: 16px;
   line-height: 24px;
-  margin: 0px;
   margin-left: 24px;
+  margin: 0;
   align-items: center;
   display: flex;
   padding: 4px 8px;
@@ -3413,8 +3413,8 @@ exports[`render manual tab with local user 1`] = `
   font-size: 22px;
   line-height: 32px;
   text-transform: uppercase;
-  margin: 0px;
   margin-right: auto;
+  margin: 0;
   color: rgba(255,255,255,0.87);
 }
 
@@ -3422,7 +3422,7 @@ exports[`render manual tab with local user 1`] = `
   overflow: hidden;
   text-overflow: ellipsis;
   font-weight: 600;
-  margin: 0px;
+  margin: 0;
 }
 
 .c4 {
@@ -3442,8 +3442,8 @@ exports[`render manual tab with local user 1`] = `
 
 .c16 {
   box-sizing: border-box;
-  margin-top: 8px;
   padding: 8px;
+  margin-top: 8px;
   background-color: #010B1C;
   border-radius: 4px;
   display: flex;
@@ -3484,8 +3484,8 @@ exports[`render manual tab with local user 1`] = `
   font-weight: 400;
   font-size: 16px;
   line-height: 24px;
-  margin: 0px;
   margin-left: 24px;
+  margin: 0;
   align-items: center;
   display: flex;
   padding: 4px 8px;
@@ -3499,8 +3499,8 @@ exports[`render manual tab with local user 1`] = `
   font-weight: 400;
   font-size: 16px;
   line-height: 24px;
-  margin: 0px;
   margin-left: 24px;
+  margin: 0;
   align-items: center;
   display: flex;
   padding: 4px 8px;
@@ -3932,8 +3932,8 @@ exports[`render manual tab with sso user 1`] = `
   font-size: 22px;
   line-height: 32px;
   text-transform: uppercase;
-  margin: 0px;
   margin-right: auto;
+  margin: 0;
   color: rgba(255,255,255,0.87);
 }
 
@@ -3941,7 +3941,7 @@ exports[`render manual tab with sso user 1`] = `
   overflow: hidden;
   text-overflow: ellipsis;
   font-weight: 600;
-  margin: 0px;
+  margin: 0;
 }
 
 .c4 {
@@ -3961,8 +3961,8 @@ exports[`render manual tab with sso user 1`] = `
 
 .c16 {
   box-sizing: border-box;
-  margin-top: 8px;
   padding: 8px;
+  margin-top: 8px;
   background-color: #010B1C;
   border-radius: 4px;
   display: flex;
@@ -4003,8 +4003,8 @@ exports[`render manual tab with sso user 1`] = `
   font-weight: 400;
   font-size: 16px;
   line-height: 24px;
-  margin: 0px;
   margin-left: 24px;
+  margin: 0;
   align-items: center;
   display: flex;
   padding: 4px 8px;
@@ -4018,8 +4018,8 @@ exports[`render manual tab with sso user 1`] = `
   font-weight: 400;
   font-size: 16px;
   line-height: 24px;
-  margin: 0px;
   margin-left: 24px;
+  margin: 0;
   align-items: center;
   display: flex;
   padding: 4px 8px;

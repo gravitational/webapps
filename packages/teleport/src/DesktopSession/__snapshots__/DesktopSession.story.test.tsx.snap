@@ -56,15 +56,15 @@ exports[`clipboard error 1`] = `
 .c2 {
   overflow: hidden;
   text-overflow: ellipsis;
-  margin: 0px;
   padding-left: 16px;
   padding-right: 16px;
+  margin: 0;
 }
 
 .c3 {
   overflow: hidden;
   text-overflow: ellipsis;
-  margin: 0px;
+  margin: 0;
 }
 
 .c0 {
@@ -123,10 +123,10 @@ exports[`clipboard error 1`] = `
   overflow: auto;
   word-break: break-word;
   line-height: 1.5;
-  margin-left: 72px;
-  margin-right: 72px;
   margin-top: 8px;
   margin-bottom: 8px;
+  margin-left: 72px;
+  margin-right: 72px;
   background: #f50057;
   color: #FFFFFF;
   align-self: center;
@@ -268,15 +268,15 @@ exports[`connected settings false 1`] = `
 .c2 {
   overflow: hidden;
   text-overflow: ellipsis;
-  margin: 0px;
   padding-left: 16px;
   padding-right: 16px;
+  margin: 0;
 }
 
 .c3 {
   overflow: hidden;
   text-overflow: ellipsis;
-  margin: 0px;
+  margin: 0;
 }
 
 .c0 {
@@ -447,15 +447,15 @@ exports[`connected settings true 1`] = `
 .c2 {
   overflow: hidden;
   text-overflow: ellipsis;
-  margin: 0px;
   padding-left: 16px;
   padding-right: 16px;
+  margin: 0;
 }
 
 .c3 {
   overflow: hidden;
   text-overflow: ellipsis;
-  margin: 0px;
+  margin: 0;
 }
 
 .c0 {
@@ -626,15 +626,15 @@ exports[`connection error 1`] = `
 .c2 {
   overflow: hidden;
   text-overflow: ellipsis;
-  margin: 0px;
   padding-left: 16px;
   padding-right: 16px;
+  margin: 0;
 }
 
 .c3 {
   overflow: hidden;
   text-overflow: ellipsis;
-  margin: 0px;
+  margin: 0;
 }
 
 .c0 {
@@ -693,10 +693,10 @@ exports[`connection error 1`] = `
   overflow: auto;
   word-break: break-word;
   line-height: 1.5;
-  margin-left: 72px;
-  margin-right: 72px;
   margin-top: 8px;
   margin-bottom: 8px;
+  margin-left: 72px;
+  margin-right: 72px;
   background: #f50057;
   color: #FFFFFF;
   align-self: center;
@@ -844,15 +844,15 @@ exports[`disconnected 1`] = `
 .c2 {
   overflow: hidden;
   text-overflow: ellipsis;
-  margin: 0px;
   padding-left: 16px;
   padding-right: 16px;
+  margin: 0;
 }
 
 .c3 {
   overflow: hidden;
   text-overflow: ellipsis;
-  margin: 0px;
+  margin: 0;
 }
 
 .c0 {
@@ -1032,15 +1032,15 @@ exports[`fetch error 1`] = `
 .c2 {
   overflow: hidden;
   text-overflow: ellipsis;
-  margin: 0px;
   padding-left: 16px;
   padding-right: 16px;
+  margin: 0;
 }
 
 .c3 {
   overflow: hidden;
   text-overflow: ellipsis;
-  margin: 0px;
+  margin: 0;
 }
 
 .c0 {
@@ -1099,10 +1099,10 @@ exports[`fetch error 1`] = `
   overflow: auto;
   word-break: break-word;
   line-height: 1.5;
-  margin-left: 72px;
-  margin-right: 72px;
   margin-top: 8px;
   margin-bottom: 8px;
+  margin-left: 72px;
+  margin-right: 72px;
   background: #f50057;
   color: #FFFFFF;
   align-self: center;
@@ -1244,15 +1244,15 @@ exports[`unintended disconnect 1`] = `
 .c2 {
   overflow: hidden;
   text-overflow: ellipsis;
-  margin: 0px;
   padding-left: 16px;
   padding-right: 16px;
+  margin: 0;
 }
 
 .c3 {
   overflow: hidden;
   text-overflow: ellipsis;
-  margin: 0px;
+  margin: 0;
 }
 
 .c0 {
@@ -1311,10 +1311,10 @@ exports[`unintended disconnect 1`] = `
   overflow: auto;
   word-break: break-word;
   line-height: 1.5;
-  margin-left: 72px;
-  margin-right: 72px;
   margin-top: 8px;
   margin-bottom: 8px;
+  margin-left: 72px;
+  margin-right: 72px;
   background: #f50057;
   color: #FFFFFF;
   align-self: center;
@@ -1462,15 +1462,15 @@ exports[`webauthn prompt 1`] = `
 .c2 {
   overflow: hidden;
   text-overflow: ellipsis;
-  margin: 0px;
   padding-left: 16px;
   padding-right: 16px;
+  margin: 0;
 }
 
 .c3 {
   overflow: hidden;
   text-overflow: ellipsis;
-  margin: 0px;
+  margin: 0;
 }
 
 .c0 {

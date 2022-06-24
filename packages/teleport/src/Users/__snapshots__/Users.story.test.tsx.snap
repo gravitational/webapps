@@ -141,8 +141,8 @@ exports[`success state 1`] = `
   font-weight: 400;
   font-size: 12px;
   line-height: 16px;
-  margin: 0px;
   margin-right: 4px;
+  margin: 0;
   color: #FFFFFF;
 }
 
@@ -185,7 +185,7 @@ exports[`success state 1`] = `
   font-weight: 300;
   font-size: 22px;
   line-height: 32px;
-  margin: 0px;
+  margin: 0;
   white-space: nowrap;
 }
 
@@ -212,10 +212,6 @@ exports[`success state 1`] = `
   border-spacing: 0;
   font-size: 12px;
   width: 100%;
-  border-top-left-radius: 0px;
-  border-top-right-radius: 0px;
-  border-bottom-right-radius: 8px;
-  border-bottom-left-radius: 8px;
 }
 
 .c15 > thead > tr > th,
@@ -291,8 +287,6 @@ exports[`success state 1`] = `
   align-items: center;
   justify-content: space-between;
   background: #222C59;
-  border-top-left-radius: 8px;
-  border-top-right-radius: 8px;
 }
 
 .c12 {

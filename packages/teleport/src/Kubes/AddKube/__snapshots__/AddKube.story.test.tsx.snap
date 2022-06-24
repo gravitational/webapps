@@ -181,8 +181,8 @@ exports[`render failed 1`] = `
   padding: 0 16px;
   outline: none;
   width: 100%;
-  color: #324148;
   background-color: #FFFFFF;
+  color: #324148;
   margin-top: 4px;
 }
 
@@ -205,7 +205,7 @@ exports[`render failed 1`] = `
   font-weight: 500;
   text-transform: uppercase;
   width: 100%;
-  margin-bottom: 0px;
+  margin-bottom: 0;
 }
 
 .c9 {
@@ -223,23 +223,23 @@ exports[`render failed 1`] = `
   font-size: 22px;
   line-height: 32px;
   text-transform: uppercase;
-  margin: 0px;
-  margin-bottom: 24px;
   margin-right: auto;
+  margin-bottom: 24px;
+  margin: 0;
   color: rgba(255,255,255,0.87);
 }
 
 .c10 {
   overflow: hidden;
   text-overflow: ellipsis;
-  margin: 0px;
+  margin: 0;
 }
 
 .c11 {
   overflow: hidden;
   text-overflow: ellipsis;
   font-weight: 600;
-  margin: 0px;
+  margin: 0;
 }
 
 .c4 {
@@ -671,8 +671,8 @@ exports[`render loaded 1`] = `
   padding: 0 16px;
   outline: none;
   width: 100%;
-  color: #324148;
   background-color: #FFFFFF;
+  color: #324148;
   margin-top: 4px;
 }
 
@@ -695,7 +695,7 @@ exports[`render loaded 1`] = `
   font-weight: 500;
   text-transform: uppercase;
   width: 100%;
-  margin-bottom: 0px;
+  margin-bottom: 0;
 }
 
 .c8 {
@@ -713,23 +713,23 @@ exports[`render loaded 1`] = `
   font-size: 22px;
   line-height: 32px;
   text-transform: uppercase;
-  margin: 0px;
-  margin-bottom: 24px;
   margin-right: auto;
+  margin-bottom: 24px;
+  margin: 0;
   color: rgba(255,255,255,0.87);
 }
 
 .c9 {
   overflow: hidden;
   text-overflow: ellipsis;
-  margin: 0px;
+  margin: 0;
 }
 
 .c10 {
   overflow: hidden;
   text-overflow: ellipsis;
   font-weight: 600;
-  margin: 0px;
+  margin: 0;
 }
 
 .c4 {
@@ -1155,8 +1155,8 @@ exports[`render processing 1`] = `
   padding: 0 16px;
   outline: none;
   width: 100%;
-  color: #324148;
   background-color: #FFFFFF;
+  color: #324148;
   margin-top: 4px;
 }
 
@@ -1179,7 +1179,7 @@ exports[`render processing 1`] = `
   font-weight: 500;
   text-transform: uppercase;
   width: 100%;
-  margin-bottom: 0px;
+  margin-bottom: 0;
 }
 
 .c8 {
@@ -1197,23 +1197,23 @@ exports[`render processing 1`] = `
   font-size: 22px;
   line-height: 32px;
   text-transform: uppercase;
-  margin: 0px;
-  margin-bottom: 24px;
   margin-right: auto;
+  margin-bottom: 24px;
+  margin: 0;
   color: rgba(255,255,255,0.87);
 }
 
 .c9 {
   overflow: hidden;
   text-overflow: ellipsis;
-  margin: 0px;
+  margin: 0;
 }
 
 .c10 {
   overflow: hidden;
   text-overflow: ellipsis;
   font-weight: 600;
-  margin: 0px;
+  margin: 0;
 }
 
 .c4 {
@@ -1644,8 +1644,8 @@ exports[`render with token generated 1`] = `
   padding: 0 16px;
   outline: none;
   width: 100%;
-  color: #324148;
   background-color: #FFFFFF;
+  color: #324148;
   margin-top: 4px;
 }
 
@@ -1668,7 +1668,7 @@ exports[`render with token generated 1`] = `
   font-weight: 500;
   text-transform: uppercase;
   width: 100%;
-  margin-bottom: 0px;
+  margin-bottom: 0;
 }
 
 .c8 {
@@ -1686,31 +1686,31 @@ exports[`render with token generated 1`] = `
   font-size: 22px;
   line-height: 32px;
   text-transform: uppercase;
-  margin: 0px;
-  margin-bottom: 24px;
   margin-right: auto;
+  margin-bottom: 24px;
+  margin: 0;
   color: rgba(255,255,255,0.87);
 }
 
 .c9 {
   overflow: hidden;
   text-overflow: ellipsis;
-  margin: 0px;
+  margin: 0;
 }
 
 .c10 {
   overflow: hidden;
   text-overflow: ellipsis;
   font-weight: 600;
-  margin: 0px;
+  margin: 0;
 }
 
 .c21 {
   overflow: hidden;
   text-overflow: ellipsis;
-  margin: 0px;
-  margin-bottom: 4px;
   margin-top: 8px;
+  margin-bottom: 4px;
+  margin: 0;
 }
 
 .c4 {
@@ -1745,8 +1745,8 @@ exports[`render with token generated 1`] = `
 
 .c22 {
   box-sizing: border-box;
-  margin-bottom: 8px;
   padding: 8px;
+  margin-bottom: 8px;
   background-color: #010B1C;
   border-radius: 4px;
   display: flex;

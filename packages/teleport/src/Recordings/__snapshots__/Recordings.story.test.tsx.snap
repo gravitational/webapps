@@ -62,8 +62,8 @@ exports[`rendering of Session Recordings 1`] = `
 .c18 {
   display: inline-block;
   transition: color .3s;
-  margin-right: 16px;
   padding: 4px;
+  margin-right: 16px;
   color: #FFFFFF;
   font-size: 16px;
 }
@@ -74,8 +74,8 @@ exports[`rendering of Session Recordings 1`] = `
   font-weight: 400;
   font-size: 12px;
   line-height: 16px;
-  margin: 0px;
   margin-right: 4px;
+  margin: 0;
   color: #FFFFFF;
 }
 
@@ -118,8 +118,8 @@ exports[`rendering of Session Recordings 1`] = `
   font-weight: 300;
   font-size: 22px;
   line-height: 32px;
-  margin: 0px;
   margin-right: 56px;
+  margin: 0;
   white-space: nowrap;
 }
 
@@ -146,10 +146,6 @@ exports[`rendering of Session Recordings 1`] = `
   border-spacing: 0;
   font-size: 12px;
   width: 100%;
-  border-top-left-radius: 0px;
-  border-top-right-radius: 0px;
-  border-bottom-right-radius: 8px;
-  border-bottom-left-radius: 8px;
 }
 
 .c16 > thead > tr > th,
@@ -225,8 +221,6 @@ exports[`rendering of Session Recordings 1`] = `
   align-items: center;
   justify-content: space-between;
   background: #222C59;
-  border-top-left-radius: 8px;
-  border-top-right-radius: 8px;
 }
 
 .c13 {

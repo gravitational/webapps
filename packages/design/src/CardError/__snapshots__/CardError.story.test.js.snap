@@ -14,8 +14,8 @@ exports[`rendering of Error Cards 1`] = `
   overflow: auto;
   word-break: break-word;
   line-height: 1.5;
-  margin-bottom: 24px;
   margin-top: 8px;
+  margin-bottom: 24px;
   background: #f50057;
   color: #FFFFFF;
 }
@@ -44,8 +44,8 @@ exports[`rendering of Error Cards 1`] = `
   font-weight: 300;
   font-size: 28px;
   line-height: 32px;
-  margin: 0px;
   margin-bottom: 24px;
+  margin: 0;
   text-align: center;
 }
 

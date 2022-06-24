@@ -58,7 +58,7 @@ exports[`kube connect dialogue local 1`] = `
   font-size: 22px;
   line-height: 32px;
   text-transform: uppercase;
-  margin: 0px;
+  margin: 0;
   color: rgba(255,255,255,0.87);
 }
 
@@ -66,7 +66,7 @@ exports[`kube connect dialogue local 1`] = `
   overflow: hidden;
   text-overflow: ellipsis;
   font-weight: 600;
-  margin: 0px;
+  margin: 0;
 }
 
 .c7 {
@@ -86,8 +86,8 @@ exports[`kube connect dialogue local 1`] = `
 
 .c9 {
   box-sizing: border-box;
-  margin-top: 8px;
   padding: 8px;
+  margin-top: 8px;
   background-color: #010B1C;
   border-radius: 4px;
   display: flex;
@@ -448,7 +448,7 @@ exports[`kube connect dialogue sso 1`] = `
   font-size: 22px;
   line-height: 32px;
   text-transform: uppercase;
-  margin: 0px;
+  margin: 0;
   color: rgba(255,255,255,0.87);
 }
 
@@ -456,7 +456,7 @@ exports[`kube connect dialogue sso 1`] = `
   overflow: hidden;
   text-overflow: ellipsis;
   font-weight: 600;
-  margin: 0px;
+  margin: 0;
 }
 
 .c7 {
@@ -476,8 +476,8 @@ exports[`kube connect dialogue sso 1`] = `
 
 .c9 {
   box-sizing: border-box;
-  margin-top: 8px;
   padding: 8px;
+  margin-top: 8px;
   background-color: #010B1C;
   border-radius: 4px;
   display: flex;

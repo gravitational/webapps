@@ -111,8 +111,8 @@ exports[`render automatic tab 1`] = `
   padding: 0 16px;
   outline: none;
   width: 100%;
-  color: #324148;
   background-color: #FFFFFF;
+  color: #324148;
   margin-top: 4px;
 }
 
@@ -135,7 +135,7 @@ exports[`render automatic tab 1`] = `
   font-weight: 500;
   text-transform: uppercase;
   width: 100%;
-  margin-bottom: 0px;
+  margin-bottom: 0;
 }
 
 .c6 {
@@ -145,23 +145,23 @@ exports[`render automatic tab 1`] = `
   font-size: 22px;
   line-height: 32px;
   text-transform: uppercase;
-  margin: 0px;
   margin-right: auto;
+  margin: 0;
   color: rgba(255,255,255,0.87);
 }
 
 .c13 {
   overflow: hidden;
   text-overflow: ellipsis;
-  margin: 0px;
   margin-bottom: 16px;
+  margin: 0;
 }
 
 .c14 {
   overflow: hidden;
   text-overflow: ellipsis;
-  margin: 0px;
   margin-top: 8px;
+  margin: 0;
 }
 
 .c4 {
@@ -471,8 +471,8 @@ exports[`render automatic tab on created state 1`] = `
   padding: 0 16px;
   outline: none;
   width: 100%;
-  color: #324148;
   background-color: #FFFFFF;
+  color: #324148;
   margin-top: 4px;
 }
 
@@ -495,7 +495,7 @@ exports[`render automatic tab on created state 1`] = `
   font-weight: 500;
   text-transform: uppercase;
   width: 100%;
-  margin-bottom: 0px;
+  margin-bottom: 0;
 }
 
 .c6 {
@@ -505,23 +505,23 @@ exports[`render automatic tab on created state 1`] = `
   font-size: 22px;
   line-height: 32px;
   text-transform: uppercase;
-  margin: 0px;
   margin-right: auto;
+  margin: 0;
   color: rgba(255,255,255,0.87);
 }
 
 .c13 {
   overflow: hidden;
   text-overflow: ellipsis;
-  margin: 0px;
   margin-bottom: 16px;
+  margin: 0;
 }
 
 .c14 {
   overflow: hidden;
   text-overflow: ellipsis;
-  margin: 0px;
   margin-top: 8px;
+  margin: 0;
 }
 
 .c4 {
@@ -852,8 +852,8 @@ exports[`render failed automatic tab 1`] = `
   padding: 0 16px;
   outline: none;
   width: 100%;
-  color: #324148;
   background-color: #FFFFFF;
+  color: #324148;
   margin-top: 4px;
 }
 
@@ -876,7 +876,7 @@ exports[`render failed automatic tab 1`] = `
   font-weight: 500;
   text-transform: uppercase;
   width: 100%;
-  margin-bottom: 0px;
+  margin-bottom: 0;
 }
 
 .c6 {
@@ -886,23 +886,23 @@ exports[`render failed automatic tab 1`] = `
   font-size: 22px;
   line-height: 32px;
   text-transform: uppercase;
-  margin: 0px;
   margin-right: auto;
+  margin: 0;
   color: rgba(255,255,255,0.87);
 }
 
 .c13 {
   overflow: hidden;
   text-overflow: ellipsis;
-  margin: 0px;
   margin-bottom: 16px;
+  margin: 0;
 }
 
 .c14 {
   overflow: hidden;
   text-overflow: ellipsis;
-  margin: 0px;
   margin-top: 8px;
+  margin: 0;
 }
 
 .c4 {
@@ -1230,8 +1230,8 @@ exports[`render manual tab with local user 1`] = `
   font-size: 22px;
   line-height: 32px;
   text-transform: uppercase;
-  margin: 0px;
   margin-right: auto;
+  margin: 0;
   color: rgba(255,255,255,0.87);
 }
 
@@ -1239,7 +1239,7 @@ exports[`render manual tab with local user 1`] = `
   overflow: hidden;
   text-overflow: ellipsis;
   font-weight: 600;
-  margin: 0px;
+  margin: 0;
 }
 
 .c4 {
@@ -1259,8 +1259,8 @@ exports[`render manual tab with local user 1`] = `
 
 .c13 {
   box-sizing: border-box;
-  margin-top: 8px;
   padding: 8px;
+  margin-top: 8px;
   background-color: #010B1C;
   border-radius: 4px;
   display: flex;
@@ -1698,8 +1698,8 @@ exports[`render manual tab with sso user 1`] = `
   font-size: 22px;
   line-height: 32px;
   text-transform: uppercase;
-  margin: 0px;
   margin-right: auto;
+  margin: 0;
   color: rgba(255,255,255,0.87);
 }
 
@@ -1707,7 +1707,7 @@ exports[`render manual tab with sso user 1`] = `
   overflow: hidden;
   text-overflow: ellipsis;
   font-weight: 600;
-  margin: 0px;
+  margin: 0;
 }
 
 .c4 {
@@ -1727,8 +1727,8 @@ exports[`render manual tab with sso user 1`] = `
 
 .c13 {
   box-sizing: border-box;
-  margin-top: 8px;
   padding: 8px;
+  margin-top: 8px;
   background-color: #010B1C;
   border-radius: 4px;
   display: flex;
@@ -2180,8 +2180,8 @@ exports[`render manual tab with token 1`] = `
   font-size: 22px;
   line-height: 32px;
   text-transform: uppercase;
-  margin: 0px;
   margin-right: auto;
+  margin: 0;
   color: rgba(255,255,255,0.87);
 }
 
@@ -2189,14 +2189,14 @@ exports[`render manual tab with token 1`] = `
   overflow: hidden;
   text-overflow: ellipsis;
   font-weight: 600;
-  margin: 0px;
+  margin: 0;
 }
 
 .c13 {
   overflow: hidden;
   text-overflow: ellipsis;
-  margin: 0px;
   margin-top: 4px;
+  margin: 0;
 }
 
 .c4 {
@@ -2216,8 +2216,8 @@ exports[`render manual tab with token 1`] = `
 
 .c14 {
   box-sizing: border-box;
-  margin-top: 8px;
   padding: 8px;
+  margin-top: 8px;
   background-color: #010B1C;
   border-radius: 4px;
   display: flex;

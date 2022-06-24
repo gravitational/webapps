@@ -13,23 +13,24 @@ exports[`support Cloud 1`] = `
 
 .c9 {
   box-sizing: border-box;
-  margin-bottom: 72px;
   margin-top: 24px;
+  margin-bottom: 72px;
   padding-left: 32px;
   padding-right: 32px;
   padding-top: 24px;
   padding-bottom: 24px;
   border: 1px solid;
+  border-color: #222C59;
   border-radius: 8px;
   border-color: #222C59;
 }
 
 .c1 {
   box-sizing: border-box;
-  padding-bottom: 40px;
-  padding-top: 4px;
   padding-left: 32px;
   padding-right: 32px;
+  padding-top: 4px;
+  padding-bottom: 40px;
   background-color: #222C59;
   box-shadow: 0 4px 16px rgba(0,0,0,0.24);
   border-radius: 8px;
@@ -39,23 +40,23 @@ exports[`support Cloud 1`] = `
   overflow: hidden;
   text-overflow: ellipsis;
   font-size: 18px;
-  margin: 0px;
   padding-right: 8px;
+  margin: 0;
 }
 
 .c7 {
   overflow: hidden;
   text-overflow: ellipsis;
   text-transform: uppercase;
-  margin: 0px;
+  margin: 0;
 }
 
 .c10 {
   overflow: hidden;
   text-overflow: ellipsis;
   text-transform: uppercase;
-  margin: 0px;
   margin-bottom: 24px;
+  margin: 0;
   font-weight: 600;
 }
 
@@ -65,7 +66,7 @@ exports[`support Cloud 1`] = `
   font-weight: 600;
   font-size: 12px;
   line-height: 16px;
-  margin: 0px;
+  margin: 0;
 }
 
 .c13 {
@@ -74,7 +75,7 @@ exports[`support Cloud 1`] = `
   font-weight: 400;
   font-size: 12px;
   line-height: 16px;
-  margin: 0px;
+  margin: 0;
 }
 
 .c2 {
@@ -91,6 +92,7 @@ exports[`support Cloud 1`] = `
   padding-bottom: 8px;
   width: 210px;
   border-bottom: 1px solid;
+  border-color: #111B48;
   border-color: #111B48;
   display: flex;
   align-items: center;
@@ -391,23 +393,24 @@ exports[`support Enterprise 1`] = `
 
 .c9 {
   box-sizing: border-box;
-  margin-bottom: 72px;
   margin-top: 24px;
+  margin-bottom: 72px;
   padding-left: 32px;
   padding-right: 32px;
   padding-top: 24px;
   padding-bottom: 24px;
   border: 1px solid;
+  border-color: #222C59;
   border-radius: 8px;
   border-color: #222C59;
 }
 
 .c1 {
   box-sizing: border-box;
-  padding-bottom: 40px;
-  padding-top: 4px;
   padding-left: 32px;
   padding-right: 32px;
+  padding-top: 4px;
+  padding-bottom: 40px;
   background-color: #222C59;
   box-shadow: 0 4px 16px rgba(0,0,0,0.24);
   border-radius: 8px;
@@ -417,23 +420,23 @@ exports[`support Enterprise 1`] = `
   overflow: hidden;
   text-overflow: ellipsis;
   font-size: 18px;
-  margin: 0px;
   padding-right: 8px;
+  margin: 0;
 }
 
 .c7 {
   overflow: hidden;
   text-overflow: ellipsis;
   text-transform: uppercase;
-  margin: 0px;
+  margin: 0;
 }
 
 .c10 {
   overflow: hidden;
   text-overflow: ellipsis;
   text-transform: uppercase;
-  margin: 0px;
   margin-bottom: 24px;
+  margin: 0;
   font-weight: 600;
 }
 
@@ -443,7 +446,7 @@ exports[`support Enterprise 1`] = `
   font-weight: 600;
   font-size: 12px;
   line-height: 16px;
-  margin: 0px;
+  margin: 0;
 }
 
 .c13 {
@@ -452,7 +455,7 @@ exports[`support Enterprise 1`] = `
   font-weight: 400;
   font-size: 12px;
   line-height: 16px;
-  margin: 0px;
+  margin: 0;
 }
 
 .c2 {
@@ -469,6 +472,7 @@ exports[`support Enterprise 1`] = `
   padding-bottom: 8px;
   width: 210px;
   border-bottom: 1px solid;
+  border-color: #111B48;
   border-color: #111B48;
   display: flex;
   align-items: center;
@@ -776,23 +780,24 @@ exports[`support OSS 1`] = `
 
 .c9 {
   box-sizing: border-box;
-  margin-bottom: 72px;
   margin-top: 24px;
+  margin-bottom: 72px;
   padding-left: 32px;
   padding-right: 32px;
   padding-top: 24px;
   padding-bottom: 24px;
   border: 1px solid;
+  border-color: #222C59;
   border-radius: 8px;
   border-color: #222C59;
 }
 
 .c1 {
   box-sizing: border-box;
-  padding-bottom: 40px;
-  padding-top: 4px;
   padding-left: 32px;
   padding-right: 32px;
+  padding-top: 4px;
+  padding-bottom: 40px;
   background-color: #222C59;
   box-shadow: 0 4px 16px rgba(0,0,0,0.24);
   border-radius: 8px;
@@ -802,23 +807,23 @@ exports[`support OSS 1`] = `
   overflow: hidden;
   text-overflow: ellipsis;
   font-size: 18px;
-  margin: 0px;
   padding-right: 8px;
+  margin: 0;
 }
 
 .c7 {
   overflow: hidden;
   text-overflow: ellipsis;
   text-transform: uppercase;
-  margin: 0px;
+  margin: 0;
 }
 
 .c10 {
   overflow: hidden;
   text-overflow: ellipsis;
   text-transform: uppercase;
-  margin: 0px;
   margin-bottom: 24px;
+  margin: 0;
   font-weight: 600;
 }
 
@@ -828,7 +833,7 @@ exports[`support OSS 1`] = `
   font-weight: 600;
   font-size: 12px;
   line-height: 16px;
-  margin: 0px;
+  margin: 0;
 }
 
 .c13 {
@@ -837,7 +842,7 @@ exports[`support OSS 1`] = `
   font-weight: 400;
   font-size: 12px;
   line-height: 16px;
-  margin: 0px;
+  margin: 0;
 }
 
 .c2 {
@@ -854,6 +859,7 @@ exports[`support OSS 1`] = `
   padding-bottom: 8px;
   width: 210px;
   border-bottom: 1px solid;
+  border-color: #111B48;
   border-color: #111B48;
   display: flex;
   align-items: center;

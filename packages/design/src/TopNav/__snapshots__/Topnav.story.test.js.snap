@@ -92,7 +92,7 @@ exports[`rendering of TopNav and TopNavItem 1`] = `
   text-overflow: ellipsis;
   font-weight: 600;
   font-size: 12px;
-  margin: 0px;
+  margin: 0;
 }
 
 .c4 {
