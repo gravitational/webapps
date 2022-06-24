@@ -382,7 +382,7 @@ Popover.propTypes = {
   }),
   /**
    * These are the directions in which `Popover` will grow
-   * if its content increase it dimensions after it is opened.
+   * if its content increases its dimensions after `Popover` is opened.
    */
   growDirections: PropTypes.oneOf(['top-left', 'bottom-right']),
   /*
