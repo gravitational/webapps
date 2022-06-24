@@ -203,7 +203,7 @@ const StepsWithToken = ({
       {' - Start the Teleport agent with the following parameters'}
       <TextSelectCopy
         mt="2"
-        text="teleport start --config=/etc/teleport.yaml"
+        text="teleport start"
       />
     </Box>
     <Box>
@@ -289,7 +289,7 @@ const StepsWithoutToken = ({
       {' - Start the Teleport agent with the following parameters'}
       <TextSelectCopy
         mt="2"
-        text="teleport start --config=/etc/teleport.yaml"
+        text="teleport start"
       />
     </Box>
     <Box>

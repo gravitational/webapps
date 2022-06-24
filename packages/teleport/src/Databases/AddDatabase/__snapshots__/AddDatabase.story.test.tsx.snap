@@ -666,7 +666,7 @@ exports[`render with token 1`] = `
                 $
               </div>
               <div>
-                teleport start --config=/etc/teleport.yaml
+                teleport start
               </div>
             </div>
             <button
@@ -1278,7 +1278,7 @@ exports[`render without token 1`] = `
                 $
               </div>
               <div>
-                teleport start --config=/etc/teleport.yaml
+                teleport start
               </div>
             </div>
             <button
@@ -1890,7 +1890,7 @@ exports[`render without token with SSO auth 1`] = `
                 $
               </div>
               <div>
-                teleport start --config=/etc/teleport.yaml
+                teleport start
               </div>
             </div>
             <button
