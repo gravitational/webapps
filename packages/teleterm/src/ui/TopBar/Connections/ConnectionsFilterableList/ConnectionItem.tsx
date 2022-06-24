@@ -87,7 +87,13 @@ export function ConnectionItem(props: ConnectionItemProps) {
             >
               {getKindName(props.item.kind)}
             </span>
-            <span>{props.item.title}</span>
+            <span
+              css={`
+                vertical-align: middle;
+              `}
+            >
+              {props.item.title}
+            </span>
           </Text>
           <Text
             color="text.secondary"
