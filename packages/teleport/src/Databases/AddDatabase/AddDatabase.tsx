@@ -330,7 +330,7 @@ const generateDbStartCmd = (
     case 'redshift':
       return `${baseCommand} --aws-region=[region] --aws-redshift-cluster-id=[cluster-id]`;
     case 'gcp':
-      return `${baseCommand} --ca-cert=[instance-ca-filepath] --gcp-project-id=[project-id] --gcp-instance-id=[instance-id]`;
+      return `${baseCommand} --ca-cert-file=[instance-ca-filepath] --gcp-project-id=[project-id] --gcp-instance-id=[instance-id]`;
     default:
       return 'unknown type and protocol';
   }
