@@ -15,22 +15,39 @@ limitations under the License.
 */
 
 import { useAppContext } from 'teleterm/ui/appContextProvider';
+import { useCallback, useMemo, useState } from 'react';
 
 export function useConnections() {
   const { connectionTracker } = useAppContext();
 
   connectionTracker.useState();
 
-  // connected first
-  const items = [...connectionTracker.getConnections()].sort((a, b) => {
-    return a.connected === b.connected ? 0 : a.connected ? -1 : 1;
-  });
+  const items = connectionTracker.getConnections();
+  const [sortedIds, setSortedIds] = useState<string[]>([]);
+  const sortedItems = useMemo(
+    () =>
+      sortedIds.map(id => items.find(item => item.id === id)).filter(Boolean),
+    [items, sortedIds]
+  );
+
+  const updateSorting = useCallback(() => {
+    const sorted = [...items]
+      // new items are pushed to the list in connection tracker
+      // sow we have to reverse them to get the newest on the top
+      .reverse()
+      // connected first
+      .sort((a, b) => (a.connected === b.connected ? 0 : a.connected ? -1 : 1))
+      .map(a => a.id);
+
+    setSortedIds(sorted);
+  }, [setSortedIds, items]);
 
   return {
-    isAnyConnectionActive: items.some(c => c.connected),
+    isAnyConnectionActive: sortedItems.some(c => c.connected),
     removeItem: (id: string) => connectionTracker.removeItem(id),
     activateItem: (id: string) => connectionTracker.activateItem(id),
     disconnectItem: (id: string) => connectionTracker.disconnectItem(id),
-    items,
+    updateSorting,
+    items: sortedItems,
   };
 }
