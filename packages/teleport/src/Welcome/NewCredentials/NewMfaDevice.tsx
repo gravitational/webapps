@@ -26,8 +26,7 @@ import {
   requiredToken,
 } from 'shared/components/Validation/rules';
 import createMfaOptions from 'shared/utils/createMfaOptions';
-import { SliderProps } from 'teleport/components/StepSlider';
-import { Props as CredentialsProps, LoginFlow } from './NewCredentials';
+import { Props as CredentialsProps, SliderProps } from './NewCredentials';
 import secKeyGraphic from './sec-key-with-bg.png';
 import { Auth2faType } from 'shared/services';
 
@@ -147,7 +146,14 @@ export function NewMfaDevice(props: Props) {
           >
             {mfaType?.value === 'otp' && (
               <>
-                <Image src={imgSrc} width="145px" height="145px" />
+                <Image
+                  src={imgSrc}
+                  width="145px"
+                  height="145px"
+                  css={`
+                    border: 4px solid white;
+                  `}
+                />
                 <Text
                   fontSize={1}
                   textAlign="center"
@@ -255,7 +261,7 @@ const Radio = styled.div`
 `;
 
 type Props = CredentialsProps &
-  SliderProps<LoginFlow> & {
+  SliderProps & {
     password: string;
     updatePassword(pwd: string): void;
   };
