@@ -135,14 +135,9 @@ export function DocumentGateway(props: State) {
         Connect with GUI
       </Text>
       <Text>
-        To connect with a GUI database client, see our{' '}
-        <Link
-          href="https://goteleport.com/docs/database-access/guides/gui-clients/"
-          target="_blank"
-        >
-          documentation
-        </Link>{' '}
-        for instructions.
+        To connect with a GUI database client, configure the client to connect
+        to <code>{gateway.localAddress}</code> on port{' '}
+        <code>{gateway.localPort}</code>.
       </Text>
     </Box>
   );
