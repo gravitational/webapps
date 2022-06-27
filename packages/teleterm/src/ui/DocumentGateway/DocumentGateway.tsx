@@ -136,7 +136,7 @@ export function DocumentGateway(props: State) {
       </Text>
       <Text>
         To connect with a GUI database client, configure the client to connect
-        to <code>{gateway.localAddress}</code> on port{' '}
+        to host <code>{gateway.localAddress}</code> on port{' '}
         <code>{gateway.localPort}</code>.
       </Text>
       <Text>
