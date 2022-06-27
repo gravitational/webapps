@@ -25,7 +25,7 @@ export function useDatabases() {
   const syncStatus = clusterContext.getSyncStatus().dbs;
   const documentUri = clusterContext.documentUri;
 
-  function connect(dbUri: string, dbUser: string, dbName: string): void {
+  function connect(dbUri: string, dbUser: string): void {
     const db = appContext.clustersService.findDb(dbUri);
     const rootClusterUri = routing.ensureRootClusterUri(db.uri);
     const documentsService =
@@ -37,10 +37,17 @@ export function useDatabases() {
       targetUri: db.uri,
       targetName: db.name,
       targetUser: dbUser,
-      targetSubresourceName: dbName,
     });
-    documentsService.add(doc);
-    documentsService.open(doc.uri);
+
+    const connectionToReuse =
+      appContext.connectionTracker.findConnectionByDocument(doc);
+
+    if (connectionToReuse) {
+      appContext.connectionTracker.activateItem(connectionToReuse.id);
+    } else {
+      documentsService.add(doc);
+      documentsService.open(doc.uri);
+    }
   }
 
   return {
