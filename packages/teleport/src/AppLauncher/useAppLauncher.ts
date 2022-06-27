@@ -47,8 +47,11 @@ function resolveRedirectUrl(params: UrlLauncherParams) {
   const location = window.location;
   const port = location.port ? ':' + location.port : '';
   const state = getUrlParameter('state', location.search);
-  const path = getUrlParameter('path', location.search);
   const arn = getUrlParameter('awsrole', location.search);
+  /*
+     capture and pass any requested App Access path during the `x-teleport-auth` process
+  */
+  const redirectPath = getUrlParameter('path', location.search);
 
   // no state value: let the target app know of a new auth exchange
   if (!state) {
@@ -60,11 +63,11 @@ function resolveRedirectUrl(params: UrlLauncherParams) {
       if (params.publicAddr) {
         url.searchParams.set('addr', params.publicAddr);
       }
-      if (params.arn) {
-        url.searchParams.set('awsrole', decodeURIComponent(params.arn));
+      if (arn) {
+        url.searchParams.set('awsrole', decodeURIComponent(arn));
       }
-      if (path) {
-        url.searchParams.set('path', path);
+      if (redirectPath) {
+        url.searchParams.set('path', redirectPath);
       }
       return url.toString();
     });
@@ -78,8 +81,8 @@ function resolveRedirectUrl(params: UrlLauncherParams) {
     const url = new URL(`https://${result.fqdn}${port}/x-teleport-auth`);
     url.searchParams.set('state', state);
     url.hash = `#value=${result.value}`;
-    if (path) {
-      url.searchParams.set('path', path);
+    if (redirectPath) {
+      url.searchParams.set('path', redirectPath);
     }
     return url.toString();
   });
