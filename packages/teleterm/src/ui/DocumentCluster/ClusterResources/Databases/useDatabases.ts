@@ -39,8 +39,16 @@ export function useDatabases() {
       targetUser: dbUser,
       targetSubresourceName: dbName,
     });
-    documentsService.add(doc);
-    documentsService.open(doc.uri);
+
+    const connectionToReuse =
+      appContext.connectionTracker.findConnectionByDocument(doc);
+
+    if (connectionToReuse) {
+      appContext.connectionTracker.activateItem(connectionToReuse.id);
+    } else {
+      documentsService.add(doc);
+      documentsService.open(doc.uri);
+    }
   }
 
   return {
