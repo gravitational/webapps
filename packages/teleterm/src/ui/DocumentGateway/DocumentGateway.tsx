@@ -139,6 +139,17 @@ export function DocumentGateway(props: State) {
         to <code>{gateway.localAddress}</code> on port{' '}
         <code>{gateway.localPort}</code>.
       </Text>
+      <Text>
+        The connection is made through an authenticated proxy so no extra
+        credentials are necessary. See our{' '}
+        <Link
+          href="https://goteleport.com/docs/database-access/guides/gui-clients/"
+          target="_blank"
+        >
+          documentation
+        </Link>{' '}
+        for more details.
+      </Text>
     </Box>
   );
 }
