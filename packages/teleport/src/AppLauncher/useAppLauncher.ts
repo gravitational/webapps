@@ -48,9 +48,7 @@ function resolveRedirectUrl(params: UrlLauncherParams) {
   const port = location.port ? ':' + location.port : '';
   const state = getUrlParameter('state', location.search);
   const arn = getUrlParameter('awsrole', location.search);
-  /*
-     capture and pass any requested App Access path during the `x-teleport-auth` process
-  */
+  // redirectPath captures and pass any requested App Access path during the `x-teleport-auth` process
   const redirectPath = getUrlParameter('path', location.search);
 
   // no state value: let the target app know of a new auth exchange
@@ -63,8 +61,8 @@ function resolveRedirectUrl(params: UrlLauncherParams) {
       if (params.publicAddr) {
         url.searchParams.set('addr', params.publicAddr);
       }
-      if (arn) {
-        url.searchParams.set('awsrole', decodeURIComponent(arn));
+      if (params.arn) {
+        url.searchParams.set('awsrole', decodeURIComponent(params.arn));
       }
       if (redirectPath) {
         url.searchParams.set('path', redirectPath);
