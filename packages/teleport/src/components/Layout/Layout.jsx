@@ -19,24 +19,6 @@ import { Flex, Text } from 'design';
 import defaultTheme from 'design/theme';
 
 /**
- * Header
- */
-const FeatureHeader = styled(Flex)`
-  flex-shrink: 0;
-  border-bottom: 1px solid ${props => props.theme.colors.primary.main};
-  height: 56px;
-  margin-left: -40px;
-  margin-right: -40px;
-  padding-left: 40px;
-  padding-right: 40px;
-`;
-
-FeatureHeader.defaultProps = {
-  alignItems: 'center',
-  mb: 4,
-};
-
-/**
  * Header Title
  */
 const FeatureHeaderTitle = styled(Text)`
@@ -125,7 +107,6 @@ export {
   AppHorizontalSplit,
   AppVerticalSplit,
   FeatureBox,
-  FeatureHeader,
   FeatureHeaderTitle,
   TabItem,
 };
