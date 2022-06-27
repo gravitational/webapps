@@ -70,7 +70,9 @@ async function initState(
     const parsed = routing.parseClusterUri(clusterUri);
 
     if (!parsed?.params?.leafClusterId) {
-      throw new Error('Incorrect cluster URI');
+      throw new Error(
+        'The leaf cluster URI was expected, but the URI does not contain the leaf cluster ID'
+      );
     }
     return parsed.params.leafClusterId;
   };
