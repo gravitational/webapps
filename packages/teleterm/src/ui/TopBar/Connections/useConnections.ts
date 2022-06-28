@@ -15,7 +15,7 @@ limitations under the License.
 */
 
 import { useAppContext } from 'teleterm/ui/appContextProvider';
-import { useCallback, useMemo, useState } from 'react';
+import { useCallback, useState } from 'react';
 import { ExtendedTrackedConnection } from 'teleterm/ui/services/connectionTracker';
 
 export function useConnections() {
@@ -26,9 +26,7 @@ export function useConnections() {
   const items = connectionTracker.getConnections();
   const [sortedIds, setSortedIds] = useState<string[]>([]);
 
-  const serializedItems = items.map(i => `${i.id}${i.connected}`).join(',');
-
-  const sortedItems = useMemo(() => {
+  const getSortedItems = () => {
     const findIndexInSorted = (item: ExtendedTrackedConnection) =>
       sortedIds.indexOf(item.id);
     // It is possible that new connections are added when the menu is open
@@ -39,8 +37,9 @@ export function useConnections() {
     return [...items].sort(
       (a, b) => findIndexInSorted(a) - findIndexInSorted(b)
     );
-  }, [serializedItems, sortedIds]);
+  };
 
+  const serializedItems = items.map(i => `${i.id}${i.connected}`).join(',');
   const updateSorting = useCallback(() => {
     const sorted = [...items]
       // new connections are pushed to the list in `connectionTracker`,
@@ -54,11 +53,11 @@ export function useConnections() {
   }, [setSortedIds, serializedItems]);
 
   return {
-    isAnyConnectionActive: sortedItems.some(c => c.connected),
+    isAnyConnectionActive: items.some(c => c.connected),
     removeItem: (id: string) => connectionTracker.removeItem(id),
     activateItem: (id: string) => connectionTracker.activateItem(id),
     disconnectItem: (id: string) => connectionTracker.disconnectItem(id),
     updateSorting,
-    items: sortedItems,
+    items: getSortedItems(),
   };
 }
