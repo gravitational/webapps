@@ -9,11 +9,24 @@ type WindowState = Rectangle;
 
 export class WindowsManager {
   private storageKey = 'windowState';
+  private selectionContextMenu: Menu;
+  private inputContextMenu: Menu;
 
   constructor(
     private fileStorage: FileStorage,
     private settings: RuntimeSettings
-  ) {}
+  ) {
+    this.selectionContextMenu = Menu.buildFromTemplate([{ role: 'copy' }]);
+
+    this.inputContextMenu = Menu.buildFromTemplate([
+      { role: 'undo' },
+      { role: 'redo' },
+      { type: 'separator' },
+      { role: 'cut' },
+      { role: 'copy' },
+      { role: 'paste' },
+    ]);
+  }
 
   createWindow(): void {
     const windowState = this.getWindowState();
@@ -44,15 +57,8 @@ export class WindowsManager {
       window.loadFile(path.join(__dirname, '../renderer/index.html'));
     }
 
-    // Taken from https://github.com/electron/electron/issues/4068#issuecomment-274159726
-    // selectall was removed from menus because it doesn't make sense in our context.
     window.webContents.on('context-menu', (_, props) => {
-      const { selectionText, isEditable } = props;
-      if (isEditable) {
-        inputContextMenu.popup({ window });
-      } else if (selectionText && selectionText.trim() !== '') {
-        selectionContextMenu.popup({ window });
-      }
+      this.popupUniversalContextMenu(window, props);
     });
   }
 
@@ -62,6 +68,21 @@ export class WindowsManager {
     };
 
     this.fileStorage.put(this.storageKey, windowState);
+  }
+
+  private popupUniversalContextMenu(
+    window: BrowserWindow,
+    props: Electron.ContextMenuParams
+  ): void {
+    // Taken from https://github.com/electron/electron/issues/4068#issuecomment-274159726
+    // selectall was removed from menus because it doesn't make sense in our context.
+    const { selectionText, isEditable } = props;
+
+    if (isEditable) {
+      this.inputContextMenu.popup({ window });
+    } else if (selectionText && selectionText.trim() !== '') {
+      this.selectionContextMenu.popup({ window });
+    }
   }
 
   private getWindowState(): WindowState {
@@ -107,14 +128,3 @@ export class WindowsManager {
     };
   }
 }
-
-const selectionContextMenu = Menu.buildFromTemplate([{ role: 'copy' }]);
-
-const inputContextMenu = Menu.buildFromTemplate([
-  { role: 'undo' },
-  { role: 'redo' },
-  { type: 'separator' },
-  { role: 'cut' },
-  { role: 'copy' },
-  { role: 'paste' },
-]);
