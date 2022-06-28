@@ -51,6 +51,9 @@ export function useDatabases() {
   }
 
   function getTargetUser(protocol: string, providedDbUser: string): string {
+    // we are replicating tsh behavior (user can be omitted for Redis)
+    // https://github.com/gravitational/teleport/blob/796e37bdbc1cb6e0a93b07115ffefa0e6922c529/tool/tsh/db.go#L240-L244
+    // but unlike tsh, Connect has to provide a user that is then used in a gateway document
     if (protocol === 'redis') {
       return providedDbUser || 'default';
     }
