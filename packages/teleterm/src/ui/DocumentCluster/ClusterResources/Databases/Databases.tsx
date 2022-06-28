@@ -14,18 +14,18 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React, { useRef, useState } from 'react';
-import styled from 'styled-components';
+import React from 'react';
 import { useDatabases, State } from './useDatabases';
 import { Table } from 'teleterm/ui/components/Table';
 import { Cell } from 'design/DataTable';
 import { renderLabelCell } from '../renderLabelCell';
 import { Danger } from 'design/Alert';
-import { MenuLogin, MenuLoginHandle } from 'shared/components/MenuLogin';
+import { MenuLogin, MenuLoginProps } from 'shared/components/MenuLogin';
 import { MenuLoginTheme } from '../MenuLoginTheme';
 import { useAppContext } from 'teleterm/ui/appContextProvider';
 import { retryWithRelogin } from 'teleterm/ui/utils';
 import { IAppContext } from 'teleterm/ui/types';
+import { GatewayProtocol } from 'teleterm/ui/services/clusters';
 
 export default function Container() {
   const state = useDatabases();
@@ -57,9 +57,8 @@ function DatabaseList(props: State) {
               <ConnectButton
                 documentUri={props.documentUri}
                 dbUri={db.uri}
-                onConnect={(dbUser, dbName) =>
-                  props.connect(db.uri, dbUser, dbName)
-                }
+                protocol={db.protocol as GatewayProtocol}
+                onConnect={dbUser => props.connect(db.uri, dbUser)}
               />
             ),
           },
@@ -74,69 +73,55 @@ function DatabaseList(props: State) {
 function ConnectButton({
   documentUri,
   dbUri,
+  protocol,
   onConnect,
 }: {
   documentUri: string;
   dbUri: string;
-  onConnect: (dbUser: string, dbName: string) => void;
+  protocol: GatewayProtocol;
+  onConnect: (dbUser: string) => void;
 }) {
   const appContext = useAppContext();
-  const dbNameMenuLoginRef = useRef<MenuLoginHandle>();
-  const [dbUser, setDbUser] = useState<string>();
 
   return (
     <Cell align="right">
       <MenuLoginTheme>
-        <OverlayGrid>
-          {/* The db name MenuLogin will be overlayed by the db username MenuLogin, which the user
-          should interact with first. */}
-          <MenuLogin
-            ref={dbNameMenuLoginRef}
-            placeholder="Enter optional db name"
-            required={false}
-            getLoginItems={() => []}
-            onSelect={(_, dbName) => onConnect(dbUser, dbName)}
-            transformOrigin={transformOrigin}
-            anchorOrigin={anchorOrigin}
-          />
-          <MenuLogin
-            placeholder="Enter username"
-            getLoginItems={() =>
-              getDatabaseUsers(appContext, documentUri, dbUri)
-            }
-            onSelect={(_, user) => {
-              setDbUser(user);
-              dbNameMenuLoginRef.current.open();
-            }}
-            transformOrigin={transformOrigin}
-            anchorOrigin={anchorOrigin}
-          />
-        </OverlayGrid>
+        <MenuLogin
+          {...getMenuLoginOptions(protocol)}
+          width="195px"
+          getLoginItems={() => getDatabaseUsers(appContext, documentUri, dbUri)}
+          onSelect={(_, user) => {
+            onConnect(user);
+          }}
+          transformOrigin={{
+            vertical: 'top',
+            horizontal: 'right',
+          }}
+          anchorOrigin={{
+            vertical: 'center',
+            horizontal: 'right',
+          }}
+        />
       </MenuLoginTheme>
     </Cell>
   );
 }
 
-const transformOrigin = {
-  vertical: 'top',
-  horizontal: 'right',
-};
-const anchorOrigin = {
-  vertical: 'center',
-  horizontal: 'right',
-};
-
-const OverlayGrid = styled.div`
-  display: inline-grid;
-
-  & > button {
-    grid-area: 1 / 1;
+function getMenuLoginOptions(
+  protocol: GatewayProtocol
+): Pick<MenuLoginProps, 'placeholder' | 'required'> {
+  if (protocol === 'redis') {
+    return {
+      placeholder: 'Enter username (optional)',
+      required: false,
+    };
   }
 
-  & button:first-child {
-    visibility: hidden;
-  }
-`;
+  return {
+    placeholder: 'Enter username',
+    required: true,
+  };
+}
 
 async function getDatabaseUsers(
   appContext: IAppContext,
