@@ -1,0 +1,398 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`rendering of header with multiple messages 1`] = `
+.c0 {
+  box-sizing: border-box;
+  margin-bottom: 24px;
+}
+
+.c5 {
+  box-sizing: border-box;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.c6 {
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+}
+
+.c7 {
+  display: inline-block;
+  transition: color .3s;
+  margin-right: 8px;
+  color: #FFFFFF;
+  font-size: 16px;
+}
+
+.c3 {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 2px;
+  box-sizing: border-box;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.24);
+  margin: 0 0 24px 0;
+  min-height: 40px;
+  padding: 8px 16px;
+  overflow: auto;
+  word-break: break-word;
+  line-height: 1.5;
+  margin-bottom: 0;
+  background: #f50057;
+  color: #FFFFFF;
+}
+
+.c3 a {
+  color: #FFFFFF;
+}
+
+.c8 {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  font-weight: 600;
+  margin: 0px;
+}
+
+.c9 {
+  color: #03a9f4;
+  font-weight: normal;
+  background: none;
+  text-decoration: underline;
+  text-transform: none;
+}
+
+.c1 {
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  flex-shrink: 0;
+  border-bottom: 1px solid #1C254D;
+  height: 56px;
+  margin-left: -40px;
+  margin-right: -40px;
+  padding-left: 40px;
+  padding-right: 40px;
+  position: relative;
+}
+
+.c4 {
+  box-shadow: 0 1px 4px rgb(0 0 0 / 50%);
+}
+
+.c2 {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  font-weight: 300;
+  font-size: 22px;
+  line-height: 32px;
+  margin: 0px;
+  white-space: nowrap;
+}
+
+<div>
+  <div
+    class="c0"
+  >
+    <div
+      class="c1"
+    >
+      <div
+        class="c2"
+      >
+        Applications
+      </div>
+    </div>
+    <div
+      class="c3 c4"
+      display="flex"
+      kind="danger"
+    >
+      <div
+        class="c5"
+        width="100%"
+      >
+        <div
+          class="c6"
+        >
+          <span
+            class="c7 icon icon-info_outline "
+            color="light"
+            font-size="3"
+          />
+          <div
+            class="c8"
+          >
+            error
+          </div>
+        </div>
+        <a
+          class="c9"
+          rel="noreferrer"
+          style="font-size: 12px; cursor: pointer; min-width: 44px;"
+        >
+          Dismiss
+        </a>
+      </div>
+    </div>
+    <div
+      class="c3 c4"
+      display="flex"
+      kind="danger"
+    >
+      <div
+        class="c5"
+        width="100%"
+      >
+        <div
+          class="c6"
+        >
+          <span
+            class="c7 icon icon-info_outline "
+            color="light"
+            font-size="3"
+          />
+          <div
+            class="c8"
+          >
+            second error
+          </div>
+        </div>
+        <a
+          class="c9"
+          rel="noreferrer"
+          style="font-size: 12px; cursor: pointer; min-width: 44px;"
+        >
+          Dismiss
+        </a>
+      </div>
+    </div>
+    <div
+      class="c3 c4"
+      display="flex"
+      kind="danger"
+      style="border-radius: 0 0 6px 6px;"
+    >
+      <div
+        class="c5"
+        width="100%"
+      >
+        <div
+          class="c6"
+        >
+          <span
+            class="c7 icon icon-info_outline "
+            color="light"
+            font-size="3"
+          />
+          <div
+            class="c8"
+          >
+            another error
+          </div>
+        </div>
+        <a
+          class="c9"
+          rel="noreferrer"
+          style="font-size: 12px; cursor: pointer; min-width: 44px;"
+        >
+          Dismiss
+        </a>
+      </div>
+    </div>
+  </div>
+</div>
+`;
+
+exports[`rendering of header without messages 1`] = `
+.c0 {
+  box-sizing: border-box;
+  margin-bottom: 24px;
+}
+
+.c1 {
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  flex-shrink: 0;
+  border-bottom: 1px solid #1C254D;
+  height: 56px;
+  margin-left: -40px;
+  margin-right: -40px;
+  padding-left: 40px;
+  padding-right: 40px;
+  position: relative;
+}
+
+.c2 {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  font-weight: 300;
+  font-size: 22px;
+  line-height: 32px;
+  margin: 0px;
+  white-space: nowrap;
+}
+
+<div>
+  <div
+    class="c0"
+  >
+    <div
+      class="c1"
+    >
+      <div
+        class="c2"
+      >
+        Applications
+      </div>
+    </div>
+  </div>
+</div>
+`;
+
+exports[`rendering of header without one message 1`] = `
+.c0 {
+  box-sizing: border-box;
+  margin-bottom: 24px;
+}
+
+.c5 {
+  box-sizing: border-box;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.c6 {
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+}
+
+.c7 {
+  display: inline-block;
+  transition: color .3s;
+  margin-right: 8px;
+  color: #FFFFFF;
+  font-size: 16px;
+}
+
+.c3 {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 2px;
+  box-sizing: border-box;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.24);
+  margin: 0 0 24px 0;
+  min-height: 40px;
+  padding: 8px 16px;
+  overflow: auto;
+  word-break: break-word;
+  line-height: 1.5;
+  margin-bottom: 0;
+  background: #f50057;
+  color: #FFFFFF;
+}
+
+.c3 a {
+  color: #FFFFFF;
+}
+
+.c8 {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  font-weight: 600;
+  margin: 0px;
+}
+
+.c9 {
+  color: #03a9f4;
+  font-weight: normal;
+  background: none;
+  text-decoration: underline;
+  text-transform: none;
+}
+
+.c1 {
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  flex-shrink: 0;
+  border-bottom: 1px solid #1C254D;
+  height: 56px;
+  margin-left: -40px;
+  margin-right: -40px;
+  padding-left: 40px;
+  padding-right: 40px;
+  position: relative;
+}
+
+.c4 {
+  box-shadow: 0 1px 4px rgb(0 0 0 / 50%);
+}
+
+.c2 {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  font-weight: 300;
+  font-size: 22px;
+  line-height: 32px;
+  margin: 0px;
+  white-space: nowrap;
+}
+
+<div>
+  <div
+    class="c0"
+  >
+    <div
+      class="c1"
+    >
+      <div
+        class="c2"
+      >
+        Applications
+      </div>
+    </div>
+    <div
+      class="c3 c4"
+      display="flex"
+      kind="danger"
+      style="border-radius: 0 0 6px 6px;"
+    >
+      <div
+        class="c5"
+        width="100%"
+      >
+        <div
+          class="c6"
+        >
+          <span
+            class="c7 icon icon-info_outline "
+            color="light"
+            font-size="3"
+          />
+          <div
+            class="c8"
+          >
+            error
+          </div>
+        </div>
+        <a
+          class="c9"
+          rel="noreferrer"
+          style="font-size: 12px; cursor: pointer; min-width: 44px;"
+        >
+          Dismiss
+        </a>
+      </div>
+    </div>
+  </div>
+</div>
+`;
