@@ -16,6 +16,7 @@ limitations under the License.
 
 import { useAppContext } from 'teleterm/ui/appContextProvider';
 import { useCallback, useMemo, useState } from 'react';
+import { ExtendedTrackedConnection } from 'teleterm/ui/services/connectionTracker';
 
 export function useConnections() {
   const { connectionTracker } = useAppContext();
@@ -24,16 +25,20 @@ export function useConnections() {
 
   const items = connectionTracker.getConnections();
   const [sortedIds, setSortedIds] = useState<string[]>([]);
-  const sortedItems = useMemo(
-    () =>
-      sortedIds.map(id => items.find(item => item.id === id)).filter(Boolean),
-    [items, sortedIds]
-  );
+  const sortedItems = useMemo(() => {
+    const findIndexInSorted = (item: ExtendedTrackedConnection) =>
+      sortedIds.indexOf(item.id);
+    // it is possible that new connections are added when the menu is open
+    // they will have -1 index and appear on the top
+    return [...items].sort(
+      (a, b) => findIndexInSorted(a) - findIndexInSorted(b)
+    );
+  }, [items, sortedIds]);
 
   const updateSorting = useCallback(() => {
     const sorted = [...items]
-      // new items are pushed to the list in connection tracker
-      // sow we have to reverse them to get the newest on the top
+      // new connections are pushed to the list in `connectionTracker`,
+      // so we have to reverse them to get the newest items on the top
       .reverse()
       // connected first
       .sort((a, b) => (a.connected === b.connected ? 0 : a.connected ? -1 : 1))
