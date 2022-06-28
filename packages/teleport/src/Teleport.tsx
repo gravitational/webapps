@@ -31,6 +31,10 @@ import Player from './Player';
 import TeleportContextProvider from './TeleportContextProvider';
 import TeleportContext from './teleportContext';
 import cfg from './config';
+import {
+  makeNotificationContextValue,
+  NotificationContext,
+} from './NotificationContext';
 
 const Teleport: React.FC<Props> = props => {
   const { ctx, history } = props;
@@ -45,15 +49,19 @@ const Teleport: React.FC<Props> = props => {
             {publicRoutes()}
             <Route path={cfg.routes.root}>
               <Authenticated>
-                <TeleportContextProvider ctx={ctx}>
-                  <Switch>
-                    <Route
-                      path={cfg.routes.appLauncher}
-                      component={AppLauncher}
-                    />
-                    <Route>{privateRoutes()}</Route>
-                  </Switch>
-                </TeleportContextProvider>
+                <NotificationContext.Provider
+                  value={makeNotificationContextValue()}
+                >
+                  <TeleportContextProvider ctx={ctx}>
+                    <Switch>
+                      <Route
+                        path={cfg.routes.appLauncher}
+                        component={AppLauncher}
+                      />
+                      <Route>{privateRoutes()}</Route>
+                    </Switch>
+                  </TeleportContextProvider>
+                </NotificationContext.Provider>
               </Authenticated>
             </Route>
           </Switch>

@@ -22,11 +22,11 @@ import {
   TabItem,
 } from './Layout';
 
-import { FeatureHeader } from './FeatureHeader';
+import Container from './FeatureHeader';
 
 export {
   FeatureBox,
-  FeatureHeader,
+  Container as FeatureHeader,
   FeatureHeaderTitle,
   AppHorizontalSplit,
   AppVerticalSplit,
