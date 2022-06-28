@@ -14,13 +14,25 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React from 'react';
-import { Text, Flex, Box, ButtonPrimary, ButtonSecondary, Link } from 'design';
+import React, { useEffect, useMemo, useState } from 'react';
+import {
+  Text,
+  Flex,
+  Box,
+  ButtonPrimary,
+  ButtonSecondary,
+  Link,
+  Indicator,
+} from 'design';
 import Document from 'teleterm/ui/Document';
 import * as Alerts from 'design/Alert';
 import * as types from 'teleterm/ui/services/workspacesService';
 import LinearProgress from 'teleterm/ui/components/LinearProgress';
 import useDocumentGateway, { State } from './useDocumentGateway';
+import FieldInput from 'shared/components/FieldInput';
+import Validation from 'shared/components/Validation';
+import { debounce } from 'lodash';
+import styled from 'styled-components';
 
 type Props = {
   visible: boolean;
@@ -45,7 +57,18 @@ export function DocumentGateway(props: State) {
     disconnect,
     reconnect,
     runCliCommand,
+    changeDbName,
+    changeDbNameAttempt,
+    doc,
   } = props;
+
+  const handleChangeDbName = useMemo(() => {
+    return debounce((value: string) => {
+      changeDbName(value);
+    }, 150);
+  }, [changeDbName]);
+
+  const isLoading = changeDbNameAttempt.status === 'processing';
 
   if (!connected) {
     const statusDescription =
@@ -77,7 +100,7 @@ export function DocumentGateway(props: State) {
   }
 
   return (
-    <Box maxWidth="1024px" mx="auto" mt="4" px="5">
+    <Box maxWidth="590px" mx="auto" mt="4" px="5">
       <Flex justifyContent="space-between" mb="4">
         <Text typography="h3" color="text.secondary">
           Database Connection
@@ -86,18 +109,48 @@ export function DocumentGateway(props: State) {
           Close Connection
         </ButtonSecondary>
       </Flex>
-      <Text bold>Connect with CLI</Text>
-      <CliCommand cliCommand={gateway.cliCommand} onClick={runCliCommand} />
-      <Text bold>Connect with GUI</Text>
+      <Text typography="h4" mb={1}>
+        Connect with CLI
+      </Text>
+      <Flex>
+        <Validation>
+          <ConfigInput
+            label="Database name"
+            defaultValue={doc.targetSubresourceName}
+            onChange={e => handleChangeDbName(e.target.value)}
+            spellCheck={false}
+            mb={2}
+          />
+        </Validation>
+      </Flex>
+      <CliCommand
+        cliCommand={gateway.cliCommand}
+        isLoading={isLoading}
+        onRun={runCliCommand}
+      />
+      {changeDbNameAttempt.status === 'error' && (
+        <Alerts.Danger>
+          Could not change the database name: {changeDbNameAttempt.statusText}
+        </Alerts.Danger>
+      )}
+      <Text typography="h4" mt={3} mb={1}>
+        Connect with GUI
+      </Text>
       <Text>
-        To connect with a GUI database client, see our{' '}
+        Configure the GUI database client to connect to host{' '}
+        <code>{gateway.localAddress}</code> on port{' '}
+        <code>{gateway.localPort}</code>.
+      </Text>
+      <Text>
+        The connection is made through an authenticated proxy so no extra
+        credentials are necessary. See{' '}
         <Link
           href="https://goteleport.com/docs/database-access/guides/gui-clients/"
           target="_blank"
         >
-          documentation
+          the documentation
         </Link>{' '}
-        for instructions.
+        for more details.
       </Text>
     </Box>
   );
@@ -105,11 +158,28 @@ export function DocumentGateway(props: State) {
 
 function CliCommand({
   cliCommand,
-  onClick,
+  onRun,
+  isLoading,
 }: {
   cliCommand: string;
-  onClick(): void;
+  onRun(): void;
+  isLoading: boolean;
 }) {
+  const [shouldDisplayIsLoading, setShouldDisplayIsLoading] = useState(false);
+
+  useEffect(() => {
+    let timeout;
+    if (isLoading) {
+      timeout = setTimeout(() => {
+        setShouldDisplayIsLoading(true);
+      }, 200);
+    } else {
+      setShouldDisplayIsLoading(false);
+    }
+
+    return () => clearTimeout(timeout);
+  }, [isLoading]);
+
   return (
     <Flex
       p="2"
@@ -117,10 +187,11 @@ function CliCommand({
       justifyContent="space-between"
       borderRadius={2}
       bg={'primary.dark'}
-      mb={4}
     >
       <Flex
         mr="2"
+        color={shouldDisplayIsLoading ? 'text.secondary' : 'text.primary'}
+        width="100%"
         css={`
           overflow: auto;
           white-space: pre;
@@ -130,10 +201,21 @@ function CliCommand({
         `}
       >
         <Box mr="1">{`$`}</Box>
-        <div>{cliCommand}</div>
+        <span>{cliCommand}</span>
+        {shouldDisplayIsLoading && (
+          <Indicator
+            fontSize="14px"
+            delay="none"
+            css={`
+              display: inline;
+              margin: auto 0 auto auto;
+            `}
+          />
+        )}
       </Flex>
       <ButtonPrimary
-        onClick={onClick}
+        onClick={onRun}
+        disabled={shouldDisplayIsLoading}
         css={`
           max-width: 48px;
           width: 100%;
@@ -147,3 +229,26 @@ function CliCommand({
     </Flex>
   );
 }
+
+const ConfigInput: typeof FieldInput = styled(FieldInput)`
+  input {
+    background: inherit;
+    border: 1px ${props => props.theme.colors.action.disabledBackground} solid;
+    color: ${props => props.theme.colors.text.primary};
+    box-shadow: none;
+    font-size: 14px;
+    height: 34px;
+
+    ::placeholder {
+      opacity: 1;
+      color: ${props => props.theme.colors.text.secondary};
+    }
+
+    &:hover {
+      border-color: ${props => props.theme.colors.text.secondary};
+    }
+
+    &:focus {
+      border-color: ${props => props.theme.colors.secondary.main};
+    }
+`;
