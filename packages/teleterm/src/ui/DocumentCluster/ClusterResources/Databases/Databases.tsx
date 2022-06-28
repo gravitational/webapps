@@ -25,6 +25,7 @@ import { MenuLoginTheme } from '../MenuLoginTheme';
 import { useAppContext } from 'teleterm/ui/appContextProvider';
 import { retryWithRelogin } from 'teleterm/ui/utils';
 import { IAppContext } from 'teleterm/ui/types';
+import { GatewayProtocol } from 'teleterm/ui/services/clusters';
 
 export default function Container() {
   const state = useDatabases();
@@ -56,7 +57,7 @@ function DatabaseList(props: State) {
               <ConnectButton
                 documentUri={props.documentUri}
                 dbUri={db.uri}
-                protocol={db.protocol}
+                protocol={db.protocol as GatewayProtocol}
                 onConnect={dbUser => props.connect(db.uri, dbUser)}
               />
             ),
@@ -77,7 +78,7 @@ function ConnectButton({
 }: {
   documentUri: string;
   dbUri: string;
-  protocol: string;
+  protocol: GatewayProtocol;
   onConnect: (dbUser: string) => void;
 }) {
   const appContext = useAppContext();
@@ -107,7 +108,7 @@ function ConnectButton({
 }
 
 function getMenuLoginOptions(
-  protocol: string
+  protocol: GatewayProtocol
 ): Pick<MenuLoginProps, 'placeholder' | 'required'> {
   if (protocol === 'redis') {
     return {
