@@ -25,15 +25,21 @@ export function useConnections() {
 
   const items = connectionTracker.getConnections();
   const [sortedIds, setSortedIds] = useState<string[]>([]);
+
+  const serializedItems = items.map(i => `${i.id}${i.connected}`).join(',');
+
   const sortedItems = useMemo(() => {
     const findIndexInSorted = (item: ExtendedTrackedConnection) =>
       sortedIds.indexOf(item.id);
-    // it is possible that new connections are added when the menu is open
-    // they will have -1 index and appear on the top
+    // It is possible that new connections are added when the menu is open
+    // they will have -1 index and appear on the top.
+    // Items are sorted by insertion order, meaning that if I add A then B
+    // then close both, open A and close it, it's going to appear after B
+    // even though it was used more recently than B
     return [...items].sort(
       (a, b) => findIndexInSorted(a) - findIndexInSorted(b)
     );
-  }, [items, sortedIds]);
+  }, [serializedItems, sortedIds]);
 
   const updateSorting = useCallback(() => {
     const sorted = [...items]
@@ -45,7 +51,7 @@ export function useConnections() {
       .map(a => a.id);
 
     setSortedIds(sorted);
-  }, [setSortedIds, items]);
+  }, [setSortedIds, serializedItems]);
 
   return {
     isAnyConnectionActive: sortedItems.some(c => c.connected),
