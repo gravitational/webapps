@@ -1,8 +1,8 @@
-## Teleport Connect
+# Teleport Connect
 
 Teleport Connect (previously Teleport Terminal, package name `teleterm`) is a desktop application that allows easy access to Teleport resources.
 
-### Building and Packaging
+## Building and Packaging
 
 Teleport Connect consists of two main components: the `tsh` tool and the Electron app. Our build
 scripts assume that the `webapps` repo and the `teleport` repo are in the same folder.
@@ -36,7 +36,7 @@ $ yarn package-term
 
 The installable file can be found in `/webapps/packages/teleterm/build/release/`
 
-### Development
+## Development
 
 **Make sure to run `yarn build-term` first** (as described above) before attempting to launch the
 app in the development mode. That's because Electron is running its own version of Node. That
@@ -53,9 +53,9 @@ $ TELETERM_TSH_PATH=$PWD/../teleport/build/tsh yarn start-term
 
 For quick restarts, that restarts all processes and `tsh` daemon, press `F6`.
 
-### Tips
+## Tips
 
-#### Generating tshd gRPC protobuf files
+### Generating tshd gRPC protobuf files
 
 Rebulding them is needed only if you change any of the files in `/teleport/lib/teleterm/api/proto/`
 dir.
@@ -91,12 +91,12 @@ $ cd webapps
 $ rm -rf ./packages/teleterm/src/services/tshd/v1/ && cp -R ../teleport/lib/teleterm/api/protogen/js/v1 ./packages/teleterm/src/services/tshd/v1
 ```
 
-#### Generating shared process gRPC protobuf files
+### Generating shared process gRPC protobuf files
 Run `generate-grpc-shared` script from `teleterm/package.json`.
 It generates protobuf files from `*.proto` files in `sharedProcess/api/proto`.
 Resulting files can be found in `sharedProcess/api/protogen`.
 
-### Architecture diagram
+## Architecture diagram
 ```pro
                                                   +------------+
                                                   |            |
@@ -156,6 +156,6 @@ Resulting files can be found in `sharedProcess/api/protogen`.
  |  +cluster3             |                                             |
  +------------------------+---------------------------------------------+
 ```
-### PTY communication overview (Renderer Process <=> Shared Process)
+## PTY communication overview (Renderer Process <=> Shared Process)
 ![PTY communication](docs/ptyCommunication.png)
 
