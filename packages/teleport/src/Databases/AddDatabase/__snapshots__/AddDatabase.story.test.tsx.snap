@@ -626,7 +626,7 @@ exports[`render with token 1`] = `
                 $
               </div>
               <div>
-                teleport db configure create --token=some-join-token-hash --auth-server=localhost:443 --name=[db-name] --protocol=postgres --uri=[uri] -o file --aws-region=[region]
+                teleport db configure create --token=some-join-token-hash --proxy=localhost:443 --name=[db-name] --protocol=postgres --uri=[uri] -o file --aws-region=[region]
               </div>
             </div>
             <button
@@ -1244,7 +1244,7 @@ exports[`render without token 1`] = `
                 $
               </div>
               <div>
-                teleport db configure create --token=[generated-join-token] --auth-server=localhost:443 --name=[db-name] --protocol=postgres --uri=[uri] -o file --aws-region=[region]
+                teleport db configure create --token=[generated-join-token] --proxy=localhost:443 --name=[db-name] --protocol=postgres --uri=[uri] -o file --aws-region=[region]
               </div>
             </div>
             <button
@@ -1856,7 +1856,7 @@ exports[`render without token with SSO auth 1`] = `
                 $
               </div>
               <div>
-                teleport db configure create --token=[generated-join-token] --auth-server=localhost:443 --name=[db-name] --protocol=postgres --uri=[uri] -o file --aws-region=[region]
+                teleport db configure create --token=[generated-join-token] --proxy=localhost:443 --name=[db-name] --protocol=postgres --uri=[uri] -o file --aws-region=[region]
               </div>
             </div>
             <button

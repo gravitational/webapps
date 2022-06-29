@@ -313,7 +313,7 @@ const generateDbStartCmd = (
 ) => {
   let baseCommand = `teleport db configure create --token=${
     token || '[generated-join-token]'
-  } --auth-server=${host} --name=[db-name] --protocol=${protocol} --uri=[uri] -o file`;
+  } --proxy=${host} --name=[db-name] --protocol=${protocol} --uri=[uri] -o file`;
 
   if (protocol === 'sqlserver') {
     baseCommand =
