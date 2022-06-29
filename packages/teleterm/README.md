@@ -173,6 +173,6 @@ Resulting files can be found in `sharedProcess/api/protogen`.
  |  +cluster3             |                                             |
  +------------------------+---------------------------------------------+
 ```
-## PTY communication overview (Renderer Process <=> Shared Process)
+### PTY communication overview (Renderer Process <=> Shared Process)
 ![PTY communication](docs/ptyCommunication.png)
 
