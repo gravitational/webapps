@@ -1,8 +1,25 @@
-## Teleport Connect
+# Teleport Connect
 
 Teleport Connect (previously Teleport Terminal, package name `teleterm`) is a desktop application that allows easy access to Teleport resources.
 
-### Building and Packaging
+## Usage
+
+### The `--insecure` flag
+
+Just like tsh, Connect supports the `--insecure` flag which skips the verification of the server
+certificate and host name.
+
+```
+open -a "Teleport Connect" --args --insecure
+```
+
+or
+
+```
+/Applications/Teleport\ Connect.app/Contents/MacOS/Teleport\ Connect --insecure
+```
+
+## Building and Packaging
 
 Teleport Connect consists of two main components: the `tsh` tool and the Electron app. Our build
 scripts assume that the `webapps` repo and the `teleport` repo are in the same folder.
@@ -36,7 +53,7 @@ $ yarn build-and-package-term
 
 The installable file can be found in `/webapps/packages/teleterm/build/release/`
 
-### Development
+## Development
 
 **Make sure to run `yarn build-native-deps-for-term` first** before attempting to launch the app in
 development mode. That's because Electron is running its own version of Node. That command will
@@ -60,9 +77,9 @@ $ TELETERM_TSH_PATH=$PWD/../teleport/build/tsh yarn start-term
 
 For a quick restart which restarts all processes and the `tsh` daemon, press `F6`.
 
-### Tips
+## Tips
 
-#### Generating tshd gRPC protobuf files
+### Generating tshd gRPC protobuf files
 
 Rebulding them is needed only if you change any of the files in `/teleport/lib/teleterm/api/proto/`
 dir.
@@ -98,13 +115,13 @@ $ cd webapps
 $ rm -rf ./packages/teleterm/src/services/tshd/v1/ && cp -R ../teleport/lib/teleterm/api/protogen/js/v1 ./packages/teleterm/src/services/tshd/v1
 ```
 
-#### Generating shared process gRPC protobuf files
+### Generating shared process gRPC protobuf files
 
 Run `generate-grpc-shared` script from `teleterm/package.json`.
 It generates protobuf files from `*.proto` files in `sharedProcess/api/proto`.
 Resulting files can be found in `sharedProcess/api/protogen`.
 
-### Architecture diagram
+## Architecture diagram
 
 ```pro
                                                   +------------+
