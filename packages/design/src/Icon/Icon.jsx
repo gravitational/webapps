@@ -21,7 +21,7 @@ import '../assets/icomoon/style.css';
 
 const Icon = styled.span`
   display: inline-block;
-  transition: color .3s;
+  transition: color 0.3s;
   ${space} ${width} ${color} ${fontSize}
 `;
 
@@ -111,6 +111,7 @@ export const ClipboardUser = makeFontIcon(
   'ClipboardUser',
   'icon-clipboard-user'
 );
+export const Clock = makeFontIcon('Clock', 'icon-clock3');
 export const Close = makeFontIcon('Close', 'icon-close');
 export const Cloud = makeFontIcon('Cloud', 'icon-cloud');
 export const CloudSync = makeFontIcon('CloudSync', 'icon-cloud-sync');
