@@ -29,7 +29,7 @@ export type Props = {
 } & typeof Flex;
 
 export default function Container(props: Props) {
-  // read messages from context
+  // read messages from notification context
   const ctx = React.useContext(NotificationContext);
   const ctxMessages = ctx?.notifications?.map((msg, index) => ({
     text: msg,
@@ -40,8 +40,8 @@ export default function Container(props: Props) {
 }
 
 export const FeatureHeader = ({
-  children,
   errMessages,
+  children,
   mb,
   ...props
 }: Props) => {

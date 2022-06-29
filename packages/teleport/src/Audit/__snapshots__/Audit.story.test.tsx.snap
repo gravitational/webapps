@@ -3592,7 +3592,12 @@ exports[`list of all events 1`] = `
 `;
 
 exports[`loaded audit log screen 1`] = `
-.c20 {
+.c1 {
+  box-sizing: border-box;
+  margin-bottom: 24px;
+}
+
+.c21 {
   line-height: 1.5;
   margin: 0;
   display: inline-flex;
@@ -3621,40 +3626,40 @@ exports[`loaded audit log screen 1`] = `
   width: 87px;
 }
 
-.c20:active {
+.c21:active {
   opacity: 0.56;
 }
 
-.c20:hover,
-.c20:focus {
+.c21:hover,
+.c21:focus {
   background: #2C3A73;
   border: 1px solid rgba(255,255,255,0.1);
   opacity: 1;
 }
 
-.c20:active {
+.c21:active {
   opacity: 0.24;
 }
 
-.c20:disabled {
+.c21:disabled {
   background: rgba(255,255,255,0.12);
   color: rgba(255,255,255,0.3);
 }
 
-.c15 {
+.c16 {
   display: inline-block;
   transition: color .3s;
   color: #FFFFFF;
   font-size: 16px;
 }
 
-.c17 {
+.c18 {
   display: inline-block;
   transition: color .3s;
   color: #FFFFFF;
 }
 
-.c19 {
+.c20 {
   display: inline-block;
   transition: color .3s;
   margin-right: 16px;
@@ -3663,7 +3668,7 @@ exports[`loaded audit log screen 1`] = `
   font-size: 16px;
 }
 
-.c11 {
+.c12 {
   overflow: hidden;
   text-overflow: ellipsis;
   font-weight: 400;
@@ -3674,40 +3679,26 @@ exports[`loaded audit log screen 1`] = `
   color: #FFFFFF;
 }
 
-.c9 {
+.c10 {
   box-sizing: border-box;
   width: 100%;
   display: flex;
   justify-content: flex-end;
 }
 
-.c10 {
+.c11 {
   box-sizing: border-box;
   margin-right: 8px;
   display: flex;
   align-items: center;
 }
 
-.c12 {
+.c13 {
   box-sizing: border-box;
   display: flex;
 }
 
-.c1 {
-  box-sizing: border-box;
-  margin-bottom: 24px;
-  display: flex;
-  align-items: center;
-  flex-shrink: 0;
-  border-bottom: 1px solid #1C254D;
-  height: 56px;
-  margin-left: -40px;
-  margin-right: -40px;
-  padding-left: 40px;
-  padding-right: 40px;
-}
-
-.c2 {
+.c3 {
   overflow: hidden;
   text-overflow: ellipsis;
   font-weight: 300;
@@ -3734,7 +3725,21 @@ exports[`loaded audit log screen 1`] = `
   padding-bottom: 24px;
 }
 
-.c16 {
+.c2 {
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  flex-shrink: 0;
+  border-bottom: 1px solid #1C254D;
+  height: 56px;
+  margin-left: -40px;
+  margin-right: -40px;
+  padding-left: 40px;
+  padding-right: 40px;
+  position: relative;
+}
+
+.c17 {
   background: #222C59;
   box-shadow: 0 4px 16px rgba(0,0,0,0.24);
   border-collapse: collapse;
@@ -3747,39 +3752,39 @@ exports[`loaded audit log screen 1`] = `
   border-bottom-left-radius: 8px;
 }
 
-.c16 > thead > tr > th,
-.c16 > tbody > tr > th,
-.c16 > tfoot > tr > th,
-.c16 > thead > tr > td,
-.c16 > tbody > tr > td,
-.c16 > tfoot > tr > td {
+.c17 > thead > tr > th,
+.c17 > tbody > tr > th,
+.c17 > tfoot > tr > th,
+.c17 > thead > tr > td,
+.c17 > tbody > tr > td,
+.c17 > tfoot > tr > td {
   padding: 8px 8px;
   vertical-align: middle;
 }
 
-.c16 > thead > tr > th:first-child,
-.c16 > tbody > tr > th:first-child,
-.c16 > tfoot > tr > th:first-child,
-.c16 > thead > tr > td:first-child,
-.c16 > tbody > tr > td:first-child,
-.c16 > tfoot > tr > td:first-child {
+.c17 > thead > tr > th:first-child,
+.c17 > tbody > tr > th:first-child,
+.c17 > tfoot > tr > th:first-child,
+.c17 > thead > tr > td:first-child,
+.c17 > tbody > tr > td:first-child,
+.c17 > tfoot > tr > td:first-child {
   padding-left: 24px;
 }
 
-.c16 > thead > tr > th:last-child,
-.c16 > tbody > tr > th:last-child,
-.c16 > tfoot > tr > th:last-child,
-.c16 > thead > tr > td:last-child,
-.c16 > tbody > tr > td:last-child,
-.c16 > tfoot > tr > td:last-child {
+.c17 > thead > tr > th:last-child,
+.c17 > tbody > tr > th:last-child,
+.c17 > tfoot > tr > th:last-child,
+.c17 > thead > tr > td:last-child,
+.c17 > tbody > tr > td:last-child,
+.c17 > tfoot > tr > td:last-child {
   padding-right: 24px;
 }
 
-.c16 > tbody > tr > td {
+.c17 > tbody > tr > td {
   vertical-align: baseline;
 }
 
-.c16 > thead > tr > th {
+.c17 > thead > tr > th {
   background: #111B48;
   color: #FFFFFF;
   cursor: pointer;
@@ -3793,26 +3798,26 @@ exports[`loaded audit log screen 1`] = `
   white-space: nowrap;
 }
 
-.c16 > thead > tr > th .c14 {
+.c17 > thead > tr > th .c15 {
   font-weight: bold;
   font-size: 8px;
   margin-left: 8px;
 }
 
-.c16 > tbody > tr > td {
+.c17 > tbody > tr > td {
   color: rgba(255,255,255,0.87);
   line-height: 16px;
 }
 
-.c16 tbody tr {
+.c17 tbody tr {
   border-bottom: 1px solid #1C254D;
 }
 
-.c16 tbody tr:hover {
+.c17 tbody tr:hover {
   background-color: rgb(37,49,98);
 }
 
-.c5 {
+.c6 {
   padding: 16px 24px;
   display: flex;
   height: 24px;
@@ -3824,32 +3829,32 @@ exports[`loaded audit log screen 1`] = `
   border-top-right-radius: 8px;
 }
 
-.c13 {
+.c14 {
   background: none;
   border: none;
   cursor: pointer;
 }
 
-.c13 .c14 {
+.c14 .c15 {
   font-size: 20px;
   transition: all 0.3s;
   opacity: 0.5;
 }
 
-.c13:hover .c14,
-.c13:focus .c14 {
+.c14:hover .c15,
+.c14:focus .c15 {
   opacity: 1;
 }
 
-.c13:disabled {
+.c14:disabled {
   cursor: default;
 }
 
-.c13:disabled .c14 {
+.c14:disabled .c15 {
   opacity: 0.1;
 }
 
-.c8 {
+.c9 {
   position: absolute;
   height: 100%;
   right: 0;
@@ -3860,7 +3865,7 @@ exports[`loaded audit log screen 1`] = `
   border-radius: 200px;
 }
 
-.c6 {
+.c7 {
   position: relative;
   display: flex;
   overflow: hidden;
@@ -3870,7 +3875,7 @@ exports[`loaded audit log screen 1`] = `
   background: #111B48;
 }
 
-.c7 {
+.c8 {
   border: none;
   outline: none;
   box-sizing: border-box;
@@ -3885,20 +3890,20 @@ exports[`loaded audit log screen 1`] = `
   padding-right: 184px;
 }
 
-.c7:hover,
-.c7:focus,
-.c7:active {
+.c8:hover,
+.c8:focus,
+.c8:active {
   background: #1C254D;
   box-shadow: inset 0 2px 4px rgba(0,0,0,.24);
   color: rgba(255,255,255,0.87);
 }
 
-.c7::placeholder {
+.c8::placeholder {
   color: rgba(255,255,255,0.24);
   font-size: 12px;
 }
 
-.c18 {
+.c19 {
   display: flex;
   align-items: center;
   min-width: 130px;
@@ -3906,6 +3911,82 @@ exports[`loaded audit log screen 1`] = `
   font-weight: 500;
   line-height: 24px;
   white-space: nowrap;
+}
+
+.c5 .react-select-container {
+  box-shadow: inset 0 2px 4px rgba(0,0,0,0.24);
+  box-sizing: border-box;
+  border: none;
+  display: block;
+  font-size: 14px;
+  outline: none;
+  width: 100%;
+  color: rgba(0,0,0,0.87);
+  background-color: #ffffff;
+  margin-bottom: 0px;
+  border-radius: 4px;
+}
+
+.c5 .react-select__control,
+.c5 .react-select__control--is-focused {
+  min-height: 40px;
+  height: 40px;
+  background-color: transparent;
+  border-color: transparent;
+  border-radius: 4px;
+  border-style: solid;
+  border-width: 1px;
+  box-shadow: none;
+}
+
+.c5 .react-select__control:hover,
+.c5 .react-select__control--is-focused:hover {
+  border-color: transparent;
+  cursor: pointer;
+}
+
+.c5 .react-select__option:hover {
+  cursor: pointer;
+  background-color: #eceff1;
+}
+
+.c5 .react-select__option--is-focused {
+  background-color: #eceff1;
+}
+
+.c5 .react-select__option--is-selected {
+  background-color: #cfd8dc;
+  color: inherit;
+}
+
+.c5 .react-select__option--is-selected:hover {
+  background-color: #cfd8dc;
+}
+
+.c5 .react-select__menu {
+  margin-top: 0px;
+}
+
+.c5 .react-select__indicator-separator {
+  display: none;
+}
+
+.c5 .react-select__loading-indicator {
+  display: none;
+}
+
+.c5 .react-select--is-disabled .react-select__single-value,
+.c5 .react-select--is-disabled .react-select__placeholder {
+  color: rgba(0,0,0,0.24);
+}
+
+.c5 .react-select--is-disabled .react-select__indicator {
+  color: rgba(0,0,0,0.14);
+}
+
+.c4 {
+  width: 210px;
+  margin-left: auto;
 }
 
 .c4 .react-select-container {
@@ -3979,131 +4060,55 @@ exports[`loaded audit log screen 1`] = `
   color: rgba(0,0,0,0.14);
 }
 
-.c3 {
-  width: 210px;
-  margin-left: auto;
-}
-
-.c3 .react-select-container {
-  box-shadow: inset 0 2px 4px rgba(0,0,0,0.24);
-  box-sizing: border-box;
-  border: none;
-  display: block;
-  font-size: 14px;
-  outline: none;
-  width: 100%;
-  color: rgba(0,0,0,0.87);
-  background-color: #ffffff;
-  margin-bottom: 0px;
-  border-radius: 4px;
-}
-
-.c3 .react-select__control,
-.c3 .react-select__control--is-focused {
-  min-height: 40px;
-  height: 40px;
-  background-color: transparent;
-  border-color: transparent;
-  border-radius: 4px;
-  border-style: solid;
-  border-width: 1px;
-  box-shadow: none;
-}
-
-.c3 .react-select__control:hover,
-.c3 .react-select__control--is-focused:hover {
-  border-color: transparent;
-  cursor: pointer;
-}
-
-.c3 .react-select__option:hover {
-  cursor: pointer;
-  background-color: #eceff1;
-}
-
-.c3 .react-select__option--is-focused {
-  background-color: #eceff1;
-}
-
-.c3 .react-select__option--is-selected {
-  background-color: #cfd8dc;
-  color: inherit;
-}
-
-.c3 .react-select__option--is-selected:hover {
-  background-color: #cfd8dc;
-}
-
-.c3 .react-select__menu {
-  margin-top: 0px;
-}
-
-.c3 .react-select__indicator-separator {
-  display: none;
-}
-
-.c3 .react-select__loading-indicator {
-  display: none;
-}
-
-.c3 .react-select--is-disabled .react-select__single-value,
-.c3 .react-select--is-disabled .react-select__placeholder {
-  color: rgba(0,0,0,0.24);
-}
-
-.c3 .react-select--is-disabled .react-select__indicator {
-  color: rgba(0,0,0,0.14);
-}
-
-.c3 .react-select-container {
+.c4 .react-select-container {
   background: transparent;
 }
 
-.c3 .react-select__option--is-focused:active {
+.c4 .react-select__option--is-focused:active {
   background-color: #eceff1;
 }
 
-.c3 .react-select__value-container {
+.c4 .react-select__value-container {
   padding: 0 8px;
 }
 
-.c3 .react-select__single-value {
+.c4 .react-select__single-value {
   color: rgba(255,255,255,0.87);
 }
 
-.c3 .react-select__control {
+.c4 .react-select__control {
   min-height: 34px;
   height: 34px;
   border-color: rgba(255,255,255,0.24);
   color: rgba(255,255,255,0.56);
 }
 
-.c3 .react-select__control:focus,
-.c3 .react-select__control:active {
+.c4 .react-select__control:focus,
+.c4 .react-select__control:active {
   background-color: #2C3A73;
 }
 
-.c3 .react-select__control:hover {
+.c4 .react-select__control:hover {
   border-color: rgba(255,255,255,0.24);
   background-color: #2C3A73;
 }
 
-.c3 .react-select__control:hover .react-select__dropdown-indicator {
+.c4 .react-select__control:hover .react-select__dropdown-indicator {
   color: #666;
 }
 
-.c3 .react-select__control .react-select__indicator,
-.c3 .react-select__control .react-select__dropdown-indicator {
+.c4 .react-select__control .react-select__indicator,
+.c4 .react-select__control .react-select__dropdown-indicator {
   padding: 4px 8px;
   color: #666;
 }
 
-.c3 .react-select__control .react-select__indicator:hover,
-.c3 .react-select__control .react-select__dropdown-indicator:hover {
+.c4 .react-select__control .react-select__indicator:hover,
+.c4 .react-select__control .react-select__dropdown-indicator:hover {
   color: #999;
 }
 
-.c3 .react-select__control--menu-is-open {
+.c4 .react-select__control--menu-is-open {
   background-color: #2C3A73;
   border-color: transparent;
   border-radius: 4px;
@@ -4113,46 +4118,46 @@ exports[`loaded audit log screen 1`] = `
   border-color: rgba(255,255,255,0.24);
 }
 
-.c3 .react-select__control--menu-is-open .react-select__indicator,
-.c3 .react-select__control--menu-is-open .react-select__dropdown-indicator {
+.c4 .react-select__control--menu-is-open .react-select__indicator,
+.c4 .react-select__control--menu-is-open .react-select__dropdown-indicator {
   color: #999 !important;
 }
 
-.c3 .react-select__control--menu-is-open .react-select__indicator:hover,
-.c3 .react-select__control--menu-is-open .react-select__dropdown-indicator:hover {
+.c4 .react-select__control--menu-is-open .react-select__indicator:hover,
+.c4 .react-select__control--menu-is-open .react-select__dropdown-indicator:hover {
   color: #ccc !important;
 }
 
-.c3 .react-select__input {
+.c4 .react-select__input {
   color: rgba(255,255,255,0.87);
 }
 
-.c3 .react-select__placeholder {
+.c4 .react-select__placeholder {
   color: rgba(255,255,255,0.56);
 }
 
-.c3 .react-select__option {
+.c4 .react-select__option {
   padding: 4px 12px;
 }
 
-.c3 .react-select__menu {
+.c4 .react-select__menu {
   border-top-left-radius: 0;
   border-top-right-radius: 0;
 }
 
-.c3 .react-select__multi-value {
+.c4 .react-select__multi-value {
   background-color: #111B48;
   border: 1px solid rgba(255,255,255,0.24);
 }
 
-.c3 .react-select__multi-value__label {
+.c4 .react-select__multi-value__label {
   color: rgba(255,255,255,0.87);
   padding: 0 6px;
 }
 
-.c3 .react-select--is-disabled .react-select__single-value,
-.c3 .react-select--is-disabled .react-select__placeholder,
-.c3 .react-select--is-disabled .react-select__indicator {
+.c4 .react-select--is-disabled .react-select__single-value,
+.c4 .react-select--is-disabled .react-select__placeholder,
+.c4 .react-select--is-disabled .react-select__indicator {
   color: rgba(255,255,255,0.24);
 }
 
@@ -4165,60 +4170,64 @@ exports[`loaded audit log screen 1`] = `
     <div
       class="c2"
     >
-      Audit Log
-    </div>
-    <div
-      class="c3"
-      width="210px"
-    >
+      <div
+        class="c3"
+      >
+        Audit Log
+      </div>
       <div
         class="c4"
+        width="210px"
       >
         <div
-          class="react-select-container css-2b097c-container"
+          class="c5"
         >
           <div
-            class="react-select__control css-yk16xz-control"
+            class="react-select-container css-2b097c-container"
           >
             <div
-              class="react-select__value-container react-select__value-container--has-value css-g1d714-ValueContainer"
+              class="react-select__control css-yk16xz-control"
             >
               <div
-                class="react-select__single-value css-1uccc91-singleValue"
+                class="react-select__value-container react-select__value-container--has-value css-g1d714-ValueContainer"
               >
-                Today
-              </div>
-              <input
-                aria-autocomplete="list"
-                class="css-62g3xt-dummyInput"
-                id="react-select-2-input"
-                readonly=""
-                tabindex="0"
-                value=""
-              />
-            </div>
-            <div
-              class="react-select__indicators css-1hb7zxy-IndicatorsContainer"
-            >
-              <span
-                class="react-select__indicator-separator css-1okebmr-indicatorSeparator"
-              />
-              <div
-                aria-hidden="true"
-                class="react-select__indicator react-select__dropdown-indicator css-tlfecz-indicatorContainer"
-              >
-                <svg
-                  aria-hidden="true"
-                  class="css-6q0nyr-Svg"
-                  focusable="false"
-                  height="20"
-                  viewBox="0 0 20 20"
-                  width="20"
+                <div
+                  class="react-select__single-value css-1uccc91-singleValue"
                 >
-                  <path
-                    d="M4.516 7.548c0.436-0.446 1.043-0.481 1.576 0l3.908 3.747 3.908-3.747c0.533-0.481 1.141-0.446 1.574 0 0.436 0.445 0.408 1.197 0 1.615-0.406 0.418-4.695 4.502-4.695 4.502-0.217 0.223-0.502 0.335-0.787 0.335s-0.57-0.112-0.789-0.335c0 0-4.287-4.084-4.695-4.502s-0.436-1.17 0-1.615z"
-                  />
-                </svg>
+                  Today
+                </div>
+                <input
+                  aria-autocomplete="list"
+                  class="css-62g3xt-dummyInput"
+                  id="react-select-2-input"
+                  readonly=""
+                  tabindex="0"
+                  value=""
+                />
+              </div>
+              <div
+                class="react-select__indicators css-1hb7zxy-IndicatorsContainer"
+              >
+                <span
+                  class="react-select__indicator-separator css-1okebmr-indicatorSeparator"
+                />
+                <div
+                  aria-hidden="true"
+                  class="react-select__indicator react-select__dropdown-indicator css-tlfecz-indicatorContainer"
+                >
+                  <svg
+                    aria-hidden="true"
+                    class="css-6q0nyr-Svg"
+                    focusable="false"
+                    height="20"
+                    viewBox="0 0 20 20"
+                    width="20"
+                  >
+                    <path
+                      d="M4.516 7.548c0.436-0.446 1.043-0.481 1.576 0l3.908 3.747 3.908-3.747c0.533-0.481 1.141-0.446 1.574 0 0.436 0.445 0.408 1.197 0 1.615-0.406 0.418-4.695 4.502-4.695 4.502-0.217 0.223-0.502 0.335-0.787 0.335s-0.57-0.112-0.789-0.335c0 0-4.287-4.084-4.695-4.502s-0.436-1.17 0-1.615z"
+                    />
+                  </svg>
+                </div>
               </div>
             </div>
           </div>
@@ -4227,29 +4236,29 @@ exports[`loaded audit log screen 1`] = `
     </div>
   </div>
   <nav
-    class="c5"
+    class="c6"
   >
     <div
-      class="c6"
+      class="c7"
     >
       <input
-        class="c7"
+        class="c8"
         placeholder="SEARCH..."
         value=""
       />
       <div
-        class="c8"
+        class="c9"
       />
     </div>
     <div
-      class="c9"
+      class="c10"
       width="100%"
     >
       <div
-        class="c10"
+        class="c11"
       >
         <div
-          class="c11"
+          class="c12"
           color="primary.contrastText"
         >
           SHOWING 
@@ -4268,26 +4277,26 @@ exports[`loaded audit log screen 1`] = `
         </div>
       </div>
       <div
-        class="c12"
+        class="c13"
       >
         <button
-          class="c13"
+          class="c14"
           disabled=""
           title="Previous page"
         >
           <span
-            class="c14 c15 icon icon-arrow-left-circle "
+            class="c15 c16 icon icon-arrow-left-circle "
             color="light"
             font-size="3"
           />
         </button>
         <button
-          class="c13"
+          class="c14"
           disabled=""
           title="Next page"
         >
           <span
-            class="c14 c15 icon icon-arrow-right-circle "
+            class="c15 c16 icon icon-arrow-right-circle "
             color="light"
             font-size="3"
           />
@@ -4296,7 +4305,7 @@ exports[`loaded audit log screen 1`] = `
     </div>
   </nav>
   <table
-    class="c16"
+    class="c17"
   >
     <thead>
       <tr>
@@ -4304,7 +4313,7 @@ exports[`loaded audit log screen 1`] = `
           <a>
             Type
             <span
-              class="c14 c17 icon icon-chevrons-expand-vertical "
+              class="c15 c18 icon icon-chevrons-expand-vertical "
               color="light"
             />
           </a>
@@ -4318,7 +4327,7 @@ exports[`loaded audit log screen 1`] = `
           <a>
             Created
             <span
-              class="c14 c17 icon icon-chevron-down "
+              class="c15 c18 icon icon-chevron-down "
               color="light"
             />
           </a>
@@ -4334,10 +4343,10 @@ exports[`loaded audit log screen 1`] = `
           style="vertical-align: inherit;"
         >
           <div
-            class="c18"
+            class="c19"
           >
             <span
-              class="c14 c19 icon icon-info_outline c14 c19"
+              class="c15 c20 icon icon-info_outline c15 c20"
               color="light"
               font-size="3"
             />
@@ -4358,7 +4367,7 @@ exports[`loaded audit log screen 1`] = `
           align="right"
         >
           <button
-            class="c20"
+            class="c21"
             kind="border"
             width="87px"
           >
@@ -4371,10 +4380,10 @@ exports[`loaded audit log screen 1`] = `
           style="vertical-align: inherit;"
         >
           <div
-            class="c18"
+            class="c19"
           >
             <span
-              class="c14 c19 icon icon-info_outline c14 c19"
+              class="c15 c20 icon icon-info_outline c15 c20"
               color="light"
               font-size="3"
             />
@@ -4395,7 +4404,7 @@ exports[`loaded audit log screen 1`] = `
           align="right"
         >
           <button
-            class="c20"
+            class="c21"
             kind="border"
             width="87px"
           >
@@ -4408,10 +4417,10 @@ exports[`loaded audit log screen 1`] = `
           style="vertical-align: inherit;"
         >
           <div
-            class="c18"
+            class="c19"
           >
             <span
-              class="c14 c19 icon icon-question-circle c14 c19"
+              class="c15 c20 icon icon-question-circle c15 c20"
               color="light"
               font-size="3"
             />
@@ -4432,7 +4441,7 @@ exports[`loaded audit log screen 1`] = `
           align="right"
         >
           <button
-            class="c20"
+            class="c21"
             kind="border"
             width="87px"
           >
@@ -4445,10 +4454,10 @@ exports[`loaded audit log screen 1`] = `
           style="vertical-align: inherit;"
         >
           <div
-            class="c18"
+            class="c19"
           >
             <span
-              class="c14 c19 icon icon-terminal c14 c19"
+              class="c15 c20 icon icon-terminal c15 c20"
               color="light"
               font-size="3"
             />
@@ -4469,7 +4478,7 @@ exports[`loaded audit log screen 1`] = `
           align="right"
         >
           <button
-            class="c20"
+            class="c21"
             kind="border"
             width="87px"
           >
@@ -4482,10 +4491,10 @@ exports[`loaded audit log screen 1`] = `
           style="vertical-align: inherit;"
         >
           <div
-            class="c18"
+            class="c19"
           >
             <span
-              class="c14 c19 icon icon-terminal c14 c19"
+              class="c15 c20 icon icon-terminal c15 c20"
               color="light"
               font-size="3"
             />
@@ -4506,7 +4515,7 @@ exports[`loaded audit log screen 1`] = `
           align="right"
         >
           <button
-            class="c20"
+            class="c21"
             kind="border"
             width="87px"
           >
