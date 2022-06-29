@@ -2,6 +2,23 @@
 
 Teleport Connect (previously Teleport Terminal, package name `teleterm`) is a desktop application that allows easy access to Teleport resources.
 
+## Usage
+
+### The `--insecure` flag
+
+Just like tsh, Connect supports the `--insecure` flag which skips the verification of the server
+certificate and host name.
+
+```
+open -a "Teleport Connect" --args --insecure
+```
+
+or
+
+```
+/Applications/Teleport\ Connect.app/Contents/MacOS/Teleport\ Connect --insecure
+```
+
 ## Building and Packaging
 
 Teleport Connect consists of two main components: the `tsh` tool and the Electron app. Our build
