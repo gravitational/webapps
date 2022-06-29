@@ -61,14 +61,16 @@ function buildTabsShortcuts(
   const handleTabSwitch = (direction: 'previous' | 'next') => () => {
     const activeDoc = documentService.getActive();
     const allDocuments = documentService.getDocuments();
-    const activeDocIndex = allDocuments.indexOf(activeDoc);
-    const getPreviousIndex = () =>
-      (activeDocIndex - 1 + allDocuments.length) % allDocuments.length;
-    const getNextIndex = () => (activeDocIndex + 1) % allDocuments.length;
-    const indexToOpen =
-      direction === 'previous' ? getPreviousIndex() : getNextIndex();
+    if (allDocuments.length > 0) {
+      const activeDocIndex = allDocuments.indexOf(activeDoc);
+      const getPreviousIndex = () =>
+        (activeDocIndex - 1 + allDocuments.length) % allDocuments.length;
+      const getNextIndex = () => (activeDocIndex + 1) % allDocuments.length;
+      const indexToOpen =
+        direction === 'previous' ? getPreviousIndex() : getNextIndex();
 
-    documentService.open(allDocuments[indexToOpen].uri);
+      documentService.open(allDocuments[indexToOpen].uri);
+    }
   };
   return {
     'tab-1': handleTabIndex(0),
