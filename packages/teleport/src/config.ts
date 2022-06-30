@@ -30,7 +30,7 @@ import generateResourcePath from './generateResourcePath';
 const cfg = {
   // TODO(isaiah): remove after feature is finished.
   enableDirectorySharing: false, // note to reviewers: should be false in any PRs.
-  allowDiscoverWizard: false, // TODO (anyone): remove after wizard is finished
+  enabledDiscoverWizard: false, // TODO (anyone): remove after wizard is finished
   isEnterprise: false,
   isCloud: false,
   tunnelPublicAddress: '',

@@ -109,7 +109,7 @@ export function TopBar(props: ReturnType<typeof useTopBar>) {
           user={username}
         >
           {$userMenuItems}
-          {cfg.allowDiscoverWizard && (
+          {cfg.enabledDiscoverWizard && (
             <MenuItem as={NavLink} to={cfg.routes.discover}>
               <MenuItemIcon as={Wand} mr="2" />
               Discovery Wizard

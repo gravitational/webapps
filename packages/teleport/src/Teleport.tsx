@@ -105,7 +105,7 @@ export function renderPublicRoutes(children = []) {
 export function renderPrivateRoutes(CustomMain = Main) {
   return (
     <Switch>
-      {cfg.allowDiscoverWizard && (
+      {cfg.enabledDiscoverWizard && (
         <Route path={cfg.routes.discover} component={Discover} />
       )}
       <Route path={cfg.routes.desktop} component={DesktopSession} />
