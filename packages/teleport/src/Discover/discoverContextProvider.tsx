@@ -29,11 +29,6 @@ export default DiscoverContextProvider;
 
 export function useDiscoverContext() {
   const ctx = React.useContext(DiscoverReactContext);
-  if (!ctx) {
-    // TODO when will it ever be null?
-    throw new Error('Unable to retrieve Teleport Discover Context');
-  }
-
   window['telediscover'] = ctx;
   return ctx;
 }
