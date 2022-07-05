@@ -164,6 +164,11 @@ function Session(props: PropsWithChildren<State>) {
         isSharingDirectory={isSharingDirectory}
         onShareDirectory={() => {
           setIsSharingDirectory(true);
+          const sharedDirHandle = window
+            .showDirectoryPicker()
+            .then(sharedDirHandle => {
+              console.log(sharedDirHandle);
+            });
         }}
       />
 
@@ -218,3 +223,9 @@ const DesktopSessionAlert = styled(Alert)`
   align-self: center;
   min-width: 450px;
 `;
+
+declare global {
+  interface Window {
+    showDirectoryPicker: () => Promise<FileSystemDirectoryHandle>;
+  }
+}
