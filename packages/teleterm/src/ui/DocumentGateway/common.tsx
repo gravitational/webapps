@@ -23,18 +23,22 @@ export const ConfigFieldInput: typeof FieldInput = styled(FieldInput)`
     &:focus {
       border-color: ${props => props.theme.colors.secondary.main};
     }
+  }
 `;
 
 const ConfigFieldInputWithoutStepper: typeof ConfigFieldInput = styled(
   ConfigFieldInput
 )`
-  ::-webkit-inner-spin-button {
-    -webkit-appearance: none;
-    margin: 0;
-  }
-  ::-webkit-outer-spin-button {
-    -webkit-appearance: none;
-    margin: 0;
+  input {
+    ::-webkit-inner-spin-button {
+      -webkit-appearance: none;
+      margin: 0;
+    }
+
+    ::-webkit-outer-spin-button {
+      -webkit-appearance: none;
+      margin: 0;
+    }
   }
 `;
 
