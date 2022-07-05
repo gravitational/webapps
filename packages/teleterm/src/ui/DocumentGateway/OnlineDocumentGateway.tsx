@@ -3,7 +3,7 @@ import { debounce } from 'lodash';
 import { Box, ButtonSecondary, Flex, Link, Text } from 'design';
 import Validation from 'shared/components/Validation';
 import { CliCommand } from './CliCommand';
-import Alerts from 'design/Alert';
+import * as Alerts from 'design/Alert';
 import { ConfigFieldInput, PortFieldInput } from './common';
 import { DocumentGatewayProps } from './useDocumentGateway';
 

@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { ButtonPrimary, Flex, Text } from 'design';
 import LinearProgress from 'teleterm/ui/components/LinearProgress';
-import Alerts from 'design/Alert';
+import * as Alerts from 'design/Alert';
 import Validation from 'shared/components/Validation';
 import { PortFieldInput } from './common';
 import { DocumentGatewayProps } from './useDocumentGateway';
