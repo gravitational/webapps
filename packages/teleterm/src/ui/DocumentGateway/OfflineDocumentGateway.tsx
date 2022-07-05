@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { ButtonPrimary, Flex, Text } from 'design';
 
-import Alerts from 'design/Alert';
+import * as Alerts from 'design/Alert';
 import Validation from 'shared/components/Validation';
 
 import LinearProgress from 'teleterm/ui/components/LinearProgress';

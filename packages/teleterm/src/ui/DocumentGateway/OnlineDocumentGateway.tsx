@@ -2,8 +2,7 @@ import React, { useMemo, useRef } from 'react';
 import { debounce } from 'lodash';
 import { Box, ButtonSecondary, Flex, Link, Text } from 'design';
 import Validation from 'shared/components/Validation';
-
-import Alerts from 'design/Alert';
+import * as Alerts from 'design/Alert';
 
 import { CliCommand } from './CliCommand';
 import { ConfigFieldInput, PortFieldInput } from './common';
