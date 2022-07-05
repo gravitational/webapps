@@ -15,6 +15,7 @@ limitations under the License.
 */
 
 import { Acl } from './types';
+import cfg from 'teleport/config';
 
 export default function makeAcl(json): Acl {
   json = json || {};
@@ -42,6 +43,12 @@ export default function makeAcl(json): Acl {
     json.desktopSessionRecording !== undefined
       ? json.desktopSessionRecording
       : true;
+  // Behaves like clipboardSharingEnabled, see
+  // https://github.com/gravitational/teleport/pull/12684#issue-1237830087
+  const directorySharingEnabled =
+    (json.directorySharing !== undefined ? json.directorySharing : true) &&
+    cfg.enableDirectorySharing;
+
   const nodes = json.nodes || defaultAccess;
 
   return {
@@ -62,6 +69,7 @@ export default function makeAcl(json): Acl {
     clipboardSharingEnabled,
     desktopSessionRecordingEnabled,
     nodes,
+    directorySharingEnabled,
   };
 }
 
