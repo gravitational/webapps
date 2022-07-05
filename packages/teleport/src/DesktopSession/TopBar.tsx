@@ -16,12 +16,20 @@ limitations under the License.
 import React from 'react';
 import styled, { useTheme } from 'styled-components';
 import { Text, TopNav, Flex } from 'design';
-import { Clipboard } from 'design/Icon';
+import { Clipboard, FolderShared } from 'design/Icon';
 import { colors } from 'teleport/Console/colors';
 import ActionMenu from './ActionMenu';
 
 export default function TopBar(props: Props) {
-  const { userHost, clipboard, recording, onDisconnect } = props;
+  const {
+    userHost,
+    clipboardSharingEnabled,
+    isRecording,
+    onDisconnect,
+    canShareDirectory,
+    isSharingDirectory,
+    onShareDirectory,
+  } = props;
   const theme = useTheme();
 
   const primaryOnTrue = (b: boolean): any => {
@@ -42,30 +50,31 @@ export default function TopBar(props: Props) {
         {userHost}
       </Text>
 
-      <Text
-        style={{
-          ...primaryOnTrue(clipboard),
-          verticalAlign: 'text-bottom',
-        }}
-      >
-        <StyledClipboard style={primaryOnTrue(clipboard)} pr={2} />
-        Clipboard Sharing {clipboard ? 'Enabled' : 'Disabled'}
-      </Text>
-
       <Flex px={3}>
         <Flex alignItems="center">
+          <StyledFolderShared
+            style={primaryOnTrue(isSharingDirectory)}
+            pr={3}
+          />
+          <StyledClipboard
+            style={primaryOnTrue(clipboardSharingEnabled)}
+            pr={3}
+          />
           <StyledRecordingIndicator
             style={{
-              backgroundColor: recording
+              backgroundColor: isRecording
                 ? theme.colors.error.light
                 : theme.colors.text.secondary,
             }}
           />
-          <Text style={primaryOnTrue(recording)}>
-            {recording ? '' : 'Not '}Recording
-          </Text>
+          <Text style={primaryOnTrue(isRecording)}>Recording</Text>
         </Flex>
-        <ActionMenu onDisconnect={onDisconnect} />
+        <ActionMenu
+          onDisconnect={onDisconnect}
+          canShareDirectory={canShareDirectory}
+          isSharingDirectory={isSharingDirectory}
+          onShareDirectory={onShareDirectory}
+        />
       </Flex>
     </TopNav>
   );
@@ -79,6 +88,12 @@ const StyledClipboard = styled(Clipboard)`
   align-self: 'center';
 `;
 
+const StyledFolderShared = styled(FolderShared)`
+  font-weight: ${({ theme }) => theme.fontWeights.bold};
+  font-size: ${({ theme }) => theme.fontSizes[6] + 'px'};
+  align-self: 'center';
+`;
+
 const StyledRecordingIndicator = styled.div`
   width: 10px;
   height: 10px;
@@ -89,7 +104,10 @@ const StyledRecordingIndicator = styled.div`
 
 type Props = {
   userHost: string;
-  clipboard: boolean;
-  recording: boolean;
+  clipboardSharingEnabled: boolean;
+  isRecording: boolean;
+  canShareDirectory: boolean;
+  isSharingDirectory: boolean;
   onDisconnect: VoidFunction;
+  onShareDirectory: VoidFunction;
 };

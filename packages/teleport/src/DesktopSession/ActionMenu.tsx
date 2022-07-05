@@ -31,6 +31,12 @@ export default function ActionMenu(props: Props) {
         }}
         menuProps={menuProps}
       >
+        {props.canShareDirectory && !props.isSharingDirectory && (
+          <MenuItem onClick={props.onShareDirectory}>
+            <MenuItemIcon as={Icons.FolderPlus} mr="2" />
+            Share Directory
+          </MenuItem>
+        )}
         <MenuItem onClick={props.onDisconnect}>
           <MenuItemIcon as={Icons.PowerSwitch} mr="2" />
           Disconnect
@@ -41,6 +47,9 @@ export default function ActionMenu(props: Props) {
 }
 
 type Props = {
+  canShareDirectory: boolean;
+  isSharingDirectory: boolean;
+  onShareDirectory: VoidFunction;
   onDisconnect: VoidFunction;
 };
 

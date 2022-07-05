@@ -21,7 +21,7 @@ import '../assets/icomoon/style.css';
 
 const Icon = styled.span`
   display: inline-block;
-  transition: color .3s;
+  transition: color 0.3s;
   ${space} ${width} ${color} ${fontSize}
 `;
 
@@ -151,6 +151,8 @@ export const Expand = makeFontIcon('Expand', 'icon-frame-expand');
 export const Facebook = makeFontIcon('Facebook', 'icon-facebook');
 export const FacebookSquare = makeFontIcon('FacebookSquare', 'icon-facebook2');
 export const FileCode = makeFontIcon('Youtube', 'icon-file-code');
+export const FolderPlus = makeFontIcon('FolderPlus', 'icon-folder-plus');
+export const FolderShared = makeFontIcon('FolderShared', 'icon-folder-shared');
 export const ForwarderAdded = makeFontIcon(
   'ForwarderAdded',
   'icon-add-fowarder'
