@@ -25,8 +25,21 @@ export const ConfigFieldInput: typeof FieldInput = styled(FieldInput)`
     }
 `;
 
+const ConfigFieldInputWithoutStepper: typeof ConfigFieldInput = styled(
+  ConfigFieldInput
+)`
+  ::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+  }
+  ::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+  }
+`;
+
 export const PortFieldInput: typeof ConfigFieldInput = props => (
-  <ConfigFieldInput
+  <ConfigFieldInputWithoutStepper
     type="number"
     min={1}
     max={65535}
