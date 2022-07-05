@@ -55,19 +55,34 @@ export default function TopBar(props: Props) {
           <StyledFolderShared
             style={primaryOnTrue(isSharingDirectory)}
             pr={3}
+            title={
+              isSharingDirectory
+                ? 'Directory Sharing Enabled'
+                : 'Directory Sharing Disabled'
+            }
           />
           <StyledClipboard
             style={primaryOnTrue(clipboardSharingEnabled)}
             pr={3}
+            title={
+              clipboardSharingEnabled
+                ? 'Clipboard Sharing Enabled'
+                : 'Clipboard Sharing Disabled'
+            }
           />
-          <StyledRecordingIndicator
-            style={{
-              backgroundColor: isRecording
-                ? theme.colors.error.light
-                : theme.colors.text.secondary,
-            }}
-          />
-          <Text style={primaryOnTrue(isRecording)}>Recording</Text>
+          <Flex
+            title={isRecording ? 'Recording In Progress' : 'Not Recording'}
+            alignItems="center"
+          >
+            <StyledRecordingIndicator
+              style={{
+                backgroundColor: isRecording
+                  ? theme.colors.error.light
+                  : theme.colors.text.secondary,
+              }}
+            />
+            <Text style={primaryOnTrue(isRecording)}>Recording</Text>
+          </Flex>
         </Flex>
         <ActionMenu
           onDisconnect={onDisconnect}
