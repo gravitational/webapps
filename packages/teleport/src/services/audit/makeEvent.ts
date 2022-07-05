@@ -680,6 +680,14 @@ export const formatters: Formatters = {
       return `Certificate of type [${cert_type}] issued for [${user}]`;
     },
   },
+  [eventCodes.UPGRADE_WINDOW_UPDATED]: {
+    type: 'upgradewindow.update',
+    desc: 'Upgrade Window Updated',
+    format: ({ user, ...props }) => {
+      console.log('format received: ', props);
+      return `Upgrade Window upddated by user ${user}`;
+    },
+  },
   [eventCodes.UNKNOWN]: {
     type: 'unknown',
     desc: 'Unknown Event',
