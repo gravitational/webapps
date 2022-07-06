@@ -31,6 +31,7 @@ import { RecordingType } from 'teleport/services/recordings';
 import generateResourcePath from './generateResourcePath';
 
 const cfg = {
+  enabledDiscoverWizard: false, // TODO (anyone): remove after wizard is finished
   isEnterprise: false,
   isCloud: false,
   tunnelPublicAddress: '',
@@ -62,6 +63,7 @@ const cfg = {
 
   routes: {
     root: '/web',
+    discover: '/web/discover',
     apps: '/web/cluster/:clusterId/apps',
     appLauncher: '/web/launch/:fqdn/:clusterId?/:publicAddr?/:arn?',
     support: '/web/support',

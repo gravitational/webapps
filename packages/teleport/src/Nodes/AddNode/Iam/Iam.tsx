@@ -7,12 +7,12 @@ import Validation, { Validator } from 'shared/components/Validation';
 import { Attempt } from 'shared/hooks/useAttemptNext';
 
 import TextSelectCopy from 'teleport/components/TextSelectCopy';
-import { Rule } from 'teleport/services/joinToken';
+import { JoinRule } from 'teleport/services/joinToken';
 
 import { createBashCommand, State } from '../useAddNode';
 
 export default function Iam({ token, attempt, onGenerate, onClose }: Props) {
-  const [rule, setRule] = React.useState<Rule>({
+  const [rule, setRule] = React.useState<JoinRule>({
     awsAccountId: '',
     awsArn: '',
   });
@@ -143,7 +143,7 @@ const requiredAwsAccountId = value => () => {
 type Props = {
   token?: State['iamJoinToken'];
   attempt: Attempt;
-  onGenerate(rules: Rule): Promise<any>;
+  onGenerate(rules: JoinRule): Promise<any>;
   isEnterprise: boolean;
   version: string;
   onClose(): void;

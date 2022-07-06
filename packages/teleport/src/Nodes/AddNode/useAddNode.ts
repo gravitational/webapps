@@ -19,7 +19,7 @@ import useAttempt from 'shared/hooks/useAttemptNext';
 
 import TeleportContext from 'teleport/teleportContext';
 import cfg from 'teleport/config';
-import { JoinToken, Rule } from 'teleport/services/joinToken';
+import type { JoinToken, JoinRule } from 'teleport/services/joinToken';
 
 export default function useAddNode(ctx: TeleportContext) {
   const { attempt, run } = useAttempt('');
@@ -38,7 +38,7 @@ export default function useAddNode(ctx: TeleportContext) {
     );
   }
 
-  function createIamJoinToken(rules: Rule) {
+  function createIamJoinToken(rules: JoinRule) {
     return iamRun(() =>
       ctx.joinTokenService
         .fetchJoinToken(['Node'], 'iam', [rules])
