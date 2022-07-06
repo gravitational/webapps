@@ -168,21 +168,28 @@ exports[`clipboard error 1`] = `
             class="c5 c6 icon icon-folder-shared c7"
             color="light"
             style="color: rgba(255, 255, 255, 0.56);"
+            title="Directory Sharing Disabled"
           />
           <span
             class="c5 c6 icon icon-clipboard-text c8"
             color="light"
             style="color: rgba(255, 255, 255, 0.56);"
+            title="Clipboard Sharing Disabled"
           />
           <div
-            class="c9"
-            style="background-color: rgba(255, 255, 255, 0.56);"
-          />
-          <div
-            class="c10"
-            style="color: rgba(255, 255, 255, 0.56);"
+            class="c4"
+            title="Not Recording"
           >
-            Recording
+            <div
+              class="c9"
+              style="background-color: rgba(255, 255, 255, 0.56);"
+            />
+            <div
+              class="c10"
+              style="color: rgba(255, 255, 255, 0.56);"
+            >
+              Recording
+            </div>
           </div>
         </div>
         <div
@@ -356,21 +363,28 @@ exports[`connected settings false 1`] = `
             class="c5 c6 icon icon-folder-shared c7"
             color="light"
             style="color: rgba(255, 255, 255, 0.56);"
+            title="Directory Sharing Disabled"
           />
           <span
             class="c5 c6 icon icon-clipboard-text c8"
             color="light"
             style="color: rgba(255, 255, 255, 0.56);"
+            title="Clipboard Sharing Disabled"
           />
           <div
-            class="c9"
-            style="background-color: rgba(255, 255, 255, 0.56);"
-          />
-          <div
-            class="c10"
-            style="color: rgba(255, 255, 255, 0.56);"
+            class="c4"
+            title="Not Recording"
           >
-            Recording
+            <div
+              class="c9"
+              style="background-color: rgba(255, 255, 255, 0.56);"
+            />
+            <div
+              class="c10"
+              style="color: rgba(255, 255, 255, 0.56);"
+            >
+              Recording
+            </div>
           </div>
         </div>
         <div
@@ -538,21 +552,28 @@ exports[`connected settings true 1`] = `
             class="c5 c6 icon icon-folder-shared c7"
             color="light"
             style="color: rgba(255, 255, 255, 0.87);"
+            title="Directory Sharing Enabled"
           />
           <span
             class="c5 c6 icon icon-clipboard-text c8"
             color="light"
             style="color: rgba(255, 255, 255, 0.87);"
+            title="Clipboard Sharing Enabled"
           />
           <div
-            class="c9"
-            style="background-color: rgb(255, 82, 82);"
-          />
-          <div
-            class="c10"
-            style="color: rgba(255, 255, 255, 0.87);"
+            class="c4"
+            title="Recording In Progress"
           >
-            Recording
+            <div
+              class="c9"
+              style="background-color: rgb(255, 82, 82);"
+            />
+            <div
+              class="c10"
+              style="color: rgba(255, 255, 255, 0.87);"
+            >
+              Recording
+            </div>
           </div>
         </div>
         <div
@@ -747,21 +768,28 @@ exports[`connection error 1`] = `
             class="c5 c6 icon icon-folder-shared c7"
             color="light"
             style="color: rgba(255, 255, 255, 0.56);"
+            title="Directory Sharing Disabled"
           />
           <span
             class="c5 c6 icon icon-clipboard-text c8"
             color="light"
             style="color: rgba(255, 255, 255, 0.56);"
+            title="Clipboard Sharing Disabled"
           />
           <div
-            class="c9"
-            style="background-color: rgba(255, 255, 255, 0.56);"
-          />
-          <div
-            class="c10"
-            style="color: rgba(255, 255, 255, 0.56);"
+            class="c4"
+            title="Not Recording"
           >
-            Recording
+            <div
+              class="c9"
+              style="background-color: rgba(255, 255, 255, 0.56);"
+            />
+            <div
+              class="c10"
+              style="color: rgba(255, 255, 255, 0.56);"
+            >
+              Recording
+            </div>
           </div>
         </div>
         <div
@@ -941,21 +969,28 @@ exports[`disconnected 1`] = `
             class="c5 c6 icon icon-folder-shared c7"
             color="light"
             style="color: rgba(255, 255, 255, 0.56);"
+            title="Directory Sharing Disabled"
           />
           <span
             class="c5 c6 icon icon-clipboard-text c8"
             color="light"
             style="color: rgba(255, 255, 255, 0.56);"
+            title="Clipboard Sharing Disabled"
           />
           <div
-            class="c9"
-            style="background-color: rgba(255, 255, 255, 0.56);"
-          />
-          <div
-            class="c10"
-            style="color: rgba(255, 255, 255, 0.56);"
+            class="c4"
+            title="Not Recording"
           >
-            Recording
+            <div
+              class="c9"
+              style="background-color: rgba(255, 255, 255, 0.56);"
+            />
+            <div
+              class="c10"
+              style="color: rgba(255, 255, 255, 0.56);"
+            >
+              Recording
+            </div>
           </div>
         </div>
         <div
@@ -1159,21 +1194,28 @@ exports[`fetch error 1`] = `
             class="c5 c6 icon icon-folder-shared c7"
             color="light"
             style="color: rgba(255, 255, 255, 0.56);"
+            title="Directory Sharing Disabled"
           />
           <span
             class="c5 c6 icon icon-clipboard-text c8"
             color="light"
             style="color: rgba(255, 255, 255, 0.56);"
+            title="Clipboard Sharing Disabled"
           />
           <div
-            class="c9"
-            style="background-color: rgba(255, 255, 255, 0.56);"
-          />
-          <div
-            class="c10"
-            style="color: rgba(255, 255, 255, 0.56);"
+            class="c4"
+            title="Not Recording"
           >
-            Recording
+            <div
+              class="c9"
+              style="background-color: rgba(255, 255, 255, 0.56);"
+            />
+            <div
+              class="c10"
+              style="color: rgba(255, 255, 255, 0.56);"
+            >
+              Recording
+            </div>
           </div>
         </div>
         <div
@@ -1374,21 +1416,28 @@ exports[`unintended disconnect 1`] = `
             class="c5 c6 icon icon-folder-shared c7"
             color="light"
             style="color: rgba(255, 255, 255, 0.56);"
+            title="Directory Sharing Disabled"
           />
           <span
             class="c5 c6 icon icon-clipboard-text c8"
             color="light"
             style="color: rgba(255, 255, 255, 0.56);"
+            title="Clipboard Sharing Disabled"
           />
           <div
-            class="c9"
-            style="background-color: rgba(255, 255, 255, 0.56);"
-          />
-          <div
-            class="c10"
-            style="color: rgba(255, 255, 255, 0.56);"
+            class="c4"
+            title="Not Recording"
           >
-            Recording
+            <div
+              class="c9"
+              style="background-color: rgba(255, 255, 255, 0.56);"
+            />
+            <div
+              class="c10"
+              style="color: rgba(255, 255, 255, 0.56);"
+            >
+              Recording
+            </div>
           </div>
         </div>
         <div
@@ -1568,21 +1617,28 @@ exports[`webauthn prompt 1`] = `
             class="c5 c6 icon icon-folder-shared c7"
             color="light"
             style="color: rgba(255, 255, 255, 0.56);"
+            title="Directory Sharing Disabled"
           />
           <span
             class="c5 c6 icon icon-clipboard-text c8"
             color="light"
             style="color: rgba(255, 255, 255, 0.56);"
+            title="Clipboard Sharing Disabled"
           />
           <div
-            class="c9"
-            style="background-color: rgba(255, 255, 255, 0.56);"
-          />
-          <div
-            class="c10"
-            style="color: rgba(255, 255, 255, 0.56);"
+            class="c4"
+            title="Not Recording"
           >
-            Recording
+            <div
+              class="c9"
+              style="background-color: rgba(255, 255, 255, 0.56);"
+            />
+            <div
+              class="c10"
+              style="color: rgba(255, 255, 255, 0.56);"
+            >
+              Recording
+            </div>
           </div>
         </div>
         <div
