@@ -183,10 +183,10 @@ export default class Client extends EventEmitterWebAuthnSender {
   ): void {
     if (this.socket && this.socket.readyState === 1) {
       this.socket.send(data);
-    } else {
-      this.handleError(new Error('websocket unavailable'));
       return;
     }
+
+    this.handleError(new Error('websocket unavailable'));
   }
 
   sendUsername(username: string) {
