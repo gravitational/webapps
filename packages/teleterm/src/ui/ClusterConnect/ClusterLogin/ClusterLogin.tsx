@@ -35,7 +35,7 @@ export function ClusterLoginPresentation({
   onLoginWithSso,
   onCloseDialog,
   onAbort,
-  loggedInUser,
+  loggedInUserName,
   shouldPromptSsoStatus,
   shouldPromptHardwareKey,
 }: State) {
@@ -63,7 +63,7 @@ export function ClusterLoginPresentation({
             auth2faType={initAttempt.data.secondFactor}
             isLocalAuthEnabled={initAttempt.data.localAuthEnabled}
             preferredMfa={initAttempt.data.preferredMfa}
-            loggedInUser={loggedInUser}
+            loggedInUserName={loggedInUserName}
             onLoginWithSso={onLoginWithSso}
             onLogin={onLoginWithLocal}
             onAbort={onAbort}
