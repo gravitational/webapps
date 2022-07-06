@@ -108,8 +108,6 @@ function Session(props: PropsWithChildren<State>) {
     hostname,
     clipboardState,
     setClipboardState,
-    isRecording,
-    setIsRecording,
     canShareDirectory,
     isSharingDirectory,
     setIsSharingDirectory,
@@ -153,13 +151,11 @@ function Session(props: PropsWithChildren<State>) {
             ...prevState,
             enabled: false,
           }));
-          setIsRecording(false);
           setIsSharingDirectory(false);
           tdpClient.nuke();
         }}
         userHost={`${username}@${hostname}`}
         clipboardSharingEnabled={clipboardSharingActive}
-        isRecording={isRecording}
         canShareDirectory={canShareDirectory}
         isSharingDirectory={isSharingDirectory}
         onShareDirectory={() => {

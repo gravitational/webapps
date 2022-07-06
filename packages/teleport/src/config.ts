@@ -29,7 +29,7 @@ import generateResourcePath from './generateResourcePath';
 
 const cfg = {
   // TODO(isaiah): remove after feature is finished.
-  enableDirectorySharing: false, // note to reviewers: should be false in any PRs.
+  enableDirectorySharing: true, // note to reviewers: should be false in any PRs.
   isEnterprise: false,
   isCloud: false,
   tunnelPublicAddress: '',
