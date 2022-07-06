@@ -86,8 +86,7 @@ export default function TopBar(props: Props) {
         </Flex>
         <ActionMenu
           onDisconnect={onDisconnect}
-          canShareDirectory={canShareDirectory}
-          isSharingDirectory={isSharingDirectory}
+          showShareDirectory={canShareDirectory && !isSharingDirectory}
           onShareDirectory={onShareDirectory}
         />
       </Flex>
