@@ -1,10 +1,6 @@
-# Ignore file types:
-packages/**/*.css
-packages/**/*.json
-packages/**/*.yaml
-
 # Ignore directories:
 packages/design/src/assets/**
+packages/**/dist/**
 
 # Ignore protobuf files:
-packages/teleterm/**/*_pb.*
+**/*_pb.*

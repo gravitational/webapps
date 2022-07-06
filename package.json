@@ -22,8 +22,8 @@
     "type-check-and-lint": "yarn type-check && yarn prettier-check && yarn lint",
     "lint": "eslint --ext .js,.jsx,.ts,.tsx packages/",
     "type-check": "tsc --noEmit",
-    "prettier-check": "yarn prettier --check packages/",
-    "prettier-write": "yarn prettier --write packages/"
+    "prettier-check": "yarn prettier --check 'packages/**/*.{ts,tsx,js,jsx,md}'",
+    "prettier-write": "yarn prettier --write 'packages/**/*.{ts,tsx,js,jsx,md}'"
   },
   "private": true,
   "resolutions": {
