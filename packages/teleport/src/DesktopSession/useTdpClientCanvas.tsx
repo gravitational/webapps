@@ -30,7 +30,6 @@ export default function useTdpClientCanvas(props: Props) {
     clusterId,
     setTdpConnection,
     setWsConnection,
-    setIsRecording,
     setClipboardState,
     setIsSharingDirectory,
     enableClipboardSharing,
@@ -81,7 +80,6 @@ export default function useTdpClientCanvas(props: Props) {
   // Default TdpClientEvent.TDP_ERROR handler
   const onTdpError = (err: Error) => {
     setIsSharingDirectory(false);
-    setIsRecording(false);
     setClipboardState(prevState => ({
       ...prevState,
       enabled: false,
@@ -210,7 +208,6 @@ type Props = {
   clusterId: string;
   setTdpConnection: Dispatch<SetStateAction<Attempt>>;
   setWsConnection: Dispatch<SetStateAction<'open' | 'closed'>>;
-  setIsRecording: Dispatch<SetStateAction<boolean>>;
   setClipboardState: Dispatch<
     SetStateAction<{
       enabled: boolean;

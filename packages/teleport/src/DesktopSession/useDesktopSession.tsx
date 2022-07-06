@@ -43,9 +43,6 @@ export default function useDesktopSession() {
   // disconnected tracks whether the user intentionally disconnected the client
   const [disconnected, setDisconnected] = useState(false);
 
-  // recording tracks whether or not a recording is in progress
-  const [isRecording, setIsRecording] = useState(false);
-
   const [canShareDirectory, setCanShareDirectory] = useState(false);
   const [isSharingDirectory, setIsSharingDirectory] = useState(false);
 
@@ -127,7 +124,6 @@ export default function useDesktopSession() {
           .then(desktop => setHostname(desktop.name)),
         userService.fetchUserContext().then(user => {
           setHasClipboardSharingEnabled(user.acl.clipboardSharingEnabled);
-          setIsRecording(user.acl.desktopSessionRecordingEnabled);
           setCanShareDirectory(user.acl.directorySharingEnabled);
         }),
       ])
@@ -140,7 +136,6 @@ export default function useDesktopSession() {
     clusterId,
     setTdpConnection,
     setWsConnection,
-    setIsRecording,
     setClipboardState,
     setIsSharingDirectory,
     enableClipboardSharing:
@@ -156,8 +151,6 @@ export default function useDesktopSession() {
     username,
     clipboardState,
     setClipboardState,
-    isRecording,
-    setIsRecording,
     canShareDirectory,
     isSharingDirectory,
     setIsSharingDirectory,
