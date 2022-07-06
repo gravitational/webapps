@@ -683,9 +683,8 @@ export const formatters: Formatters = {
   [eventCodes.UPGRADE_WINDOW_UPDATED]: {
     type: 'upgradewindow.update',
     desc: 'Upgrade Window Updated',
-    format: ({ user, ...props }) => {
-      console.log('format received: ', props);
-      return `Upgrade Window upddated by user ${user}`;
+    format: ({ user, upgrade_window }) => {
+      return `Upgrade Window updated to [${upgrade_window}] by user [${user}]`;
     },
   },
   [eventCodes.UNKNOWN]: {

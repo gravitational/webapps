@@ -40,8 +40,10 @@ export default function useUpgradeWindows(ctx: Ctx) {
 
   function onUpdate() {
     return run(() =>
-      ctx.upgradeWindowService.updateWindow(selectedUpgradeWindow)
-    ).then(() => hideScheduleUpgrade());
+      ctx.upgradeWindowService
+        .updateWindow(selectedUpgradeWindow)
+        .then(() => hideScheduleUpgrade())
+    );
   }
 
   return {
