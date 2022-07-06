@@ -225,7 +225,7 @@ const StyledOr = styled.div`
 
 type LoginAttempt = Attempt<void>;
 
-export type Props = {
+type Props = {
   shouldPromptSsoStatus: boolean;
   shouldPromptHardwareKey: boolean;
   loginAttempt: LoginAttempt;
