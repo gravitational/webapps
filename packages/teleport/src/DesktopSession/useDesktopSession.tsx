@@ -140,6 +140,9 @@ export default function useDesktopSession() {
     clusterId,
     setTdpConnection,
     setWsConnection,
+    setIsRecording,
+    setClipboardState,
+    setIsSharingDirectory,
     enableClipboardSharing:
       clipboardState.enabled &&
       clipboardState.permission.state === 'granted' &&

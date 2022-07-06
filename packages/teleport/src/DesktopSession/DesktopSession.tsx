@@ -163,11 +163,15 @@ function Session(props: PropsWithChildren<State>) {
         canShareDirectory={canShareDirectory}
         isSharingDirectory={isSharingDirectory}
         onShareDirectory={() => {
-          setIsSharingDirectory(true);
-          const sharedDirHandle = window
+          window
             .showDirectoryPicker()
             .then(sharedDirHandle => {
-              console.log(sharedDirHandle);
+              setIsSharingDirectory(true);
+              tdpClient.sharedDirectory = sharedDirHandle;
+              tdpClient.sendSharedDirectoryAnnounce();
+            })
+            .catch(() => {
+              setIsSharingDirectory(false);
             });
         }}
       />
