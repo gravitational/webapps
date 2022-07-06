@@ -16,7 +16,7 @@
 
 import { useState, useEffect } from 'react';
 import useAttempt from 'shared/hooks/useAttemptNext';
-import {
+import type {
   JoinMethod,
   JoinRole,
   JoinToken,

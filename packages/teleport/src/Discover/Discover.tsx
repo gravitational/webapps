@@ -209,7 +209,7 @@ const StepsContainer = styled(Text)`
 
   &.checked ${Bullet} {
     :before {
-      content: '✓'; // TODO (anyone): check if this is valid
+      content: '✓';
     }
   }
 `;
