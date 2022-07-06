@@ -35,6 +35,7 @@ import PromptSsoStatus from './PromptSsoStatus';
 export default function LoginForm(props: Props) {
   const {
     title,
+    loggedInUser,
     loginAttempt,
     preferredMfa,
     onAbort,
@@ -55,7 +56,7 @@ export default function LoginForm(props: Props) {
   });
   const [mfaType, setMfaType] = useState<MfaOption>(mfaOptions[0]);
   const [pass, setPass] = useState('');
-  const [user, setUser] = useState('');
+  const [user, setUser] = useState(loggedInUser || '');
   const [token, setToken] = useState('');
 
   const [isExpanded, toggleExpander] = useState(
@@ -128,7 +129,7 @@ export default function LoginForm(props: Props) {
               <FieldInput
                 rule={requiredField('Username is required')}
                 label="Username"
-                autoFocus
+                autoFocus={!loggedInUser}
                 value={user}
                 onChange={e => setUser(e.target.value)}
                 placeholder="Username"
@@ -138,6 +139,7 @@ export default function LoginForm(props: Props) {
                   rule={requiredField('Password is required')}
                   label="Password"
                   value={pass}
+                  autoFocus={!!loggedInUser}
                   onChange={e => setPass(e.target.value)}
                   type="password"
                   placeholder="Password"
@@ -223,7 +225,7 @@ const StyledOr = styled.div`
 
 type LoginAttempt = Attempt<void>;
 
-type Props = {
+export type Props = {
   shouldPromptSsoStatus: boolean;
   shouldPromptHardwareKey: boolean;
   loginAttempt: LoginAttempt;
@@ -232,6 +234,7 @@ type Props = {
   preferredMfa: types.PreferredMfaType;
   auth2faType?: types.Auth2faType;
   authProviders: types.AuthProvider[];
+  loggedInUser?: string;
   onAbort(): void;
   onLoginWithSso(provider: types.AuthProvider): void;
   onLogin(

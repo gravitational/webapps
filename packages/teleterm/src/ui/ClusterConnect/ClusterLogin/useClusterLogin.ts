@@ -27,6 +27,7 @@ export default function useClusterLogin(props: Props) {
   const refAbortCtrl = useRef<types.tsh.TshAbortController>(null);
   const [shouldPromptSsoStatus, promptSsoStatus] = useState(false);
   const [shouldPromptHardwareKey, promptHardwareKey] = useState(false);
+  const loggedInUser = cluster.loggedInUser?.name || null;
 
   const [initAttempt, init] = useAsync(async () => {
     const authSettings = await clustersService.getAuthSettings(clusterUri);
@@ -101,6 +102,7 @@ export default function useClusterLogin(props: Props) {
     shouldPromptSsoStatus,
     shouldPromptHardwareKey,
     title: getClusterName(cluster),
+    loggedInUser,
     onLoginWithLocal,
     onLoginWithSso,
     onCloseDialog,
@@ -110,7 +112,10 @@ export default function useClusterLogin(props: Props) {
   };
 }
 
-export type State = ReturnType<typeof useClusterLogin>;
+// this keeps the type synced with return type of the hook and makes loggedInUser key optional.
+export type State = Omit<ReturnType<typeof useClusterLogin>, 'loggedInUser'> & {
+  loggedInUser?: string;
+}
 
 export type Props = {
   clusterUri: string;
