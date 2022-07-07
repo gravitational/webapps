@@ -30,7 +30,6 @@ export function Online() {
       runCliCommand={() => {}}
       changeDbName={() => Promise.resolve([undefined, null])}
       changeDbNameAttempt={makeEmptyAttempt()}
-      targetSubresourceNameFromDoc={gateway.targetSubresourceName}
     />
   );
 }
@@ -46,7 +45,6 @@ export function Offline() {
       runCliCommand={() => {}}
       changeDbName={() => Promise.resolve([undefined, null])}
       changeDbNameAttempt={makeEmptyAttempt()}
-      targetSubresourceNameFromDoc=""
     />
   );
 }
@@ -62,7 +60,6 @@ export function Processing() {
       runCliCommand={() => {}}
       changeDbName={() => Promise.resolve([undefined, null])}
       changeDbNameAttempt={makeEmptyAttempt()}
-      targetSubresourceNameFromDoc=""
     />
   );
 }
@@ -93,7 +90,6 @@ export function OnlineWithLongValues() {
       runCliCommand={() => {}}
       changeDbName={() => Promise.resolve([undefined, null])}
       changeDbNameAttempt={makeEmptyAttempt()}
-      targetSubresourceNameFromDoc={gateway.targetSubresourceName}
     />
   );
 }

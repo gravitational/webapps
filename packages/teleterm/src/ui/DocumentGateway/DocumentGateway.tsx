@@ -116,7 +116,7 @@ export function DocumentGateway(props: State) {
         <Validation>
           <ConfigInput
             label="Database name"
-            defaultValue={targetSubresourceNameFromDoc}
+            defaultValue={gateway.targetSubresourceName}
             onChange={e => handleChangeDbName(e.target.value)}
             spellCheck={false}
             mb={2}

@@ -120,7 +120,6 @@ export default function useGateway(doc: types.DocumentGateway) {
     runCliCommand,
     changeDbName,
     changeDbNameAttempt,
-    targetSubresourceNameFromDoc: doc.targetSubresourceName,
   };
 }
 
