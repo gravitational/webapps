@@ -60,7 +60,12 @@ export class ClustersService extends ImmutableStore<ClustersServiceState> {
   }
 
   async login(params: LoginParams, abortSignal: tsh.TshAbortSignal) {
-    await this.client.login(params, abortSignal);
+    if (params.passwordless) {
+      await this.client.loginPasswordless(params, abortSignal);
+    } else {
+      await this.client.login(params, abortSignal);
+    }
+
     await Promise.allSettled([
       this.syncRootClusterAndCatchErrors(params.clusterUri),
       // A temporary workaround until the gateways are able to refresh their own certs on incoming

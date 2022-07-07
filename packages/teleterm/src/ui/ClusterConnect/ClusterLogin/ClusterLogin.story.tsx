@@ -18,15 +18,16 @@ import React from 'react';
 import * as types from 'teleterm/ui/services/clusters/types';
 import { Attempt } from 'shared/hooks/useAsync';
 import { ClusterLoginPresentation } from './ClusterLogin';
+import { State } from './useClusterLogin';
 
 export default {
   title: 'Teleterm/ClusterLogin',
 };
 
-function makeProps() {
+function makeProps(): State {
   return {
     shouldPromptSsoStatus: false,
-    shouldPromptHardwareKey: false,
+    webauthnPrompt: '',
     title: 'localhost',
     loginAttempt: {
       status: '',
@@ -42,6 +43,9 @@ function makeProps() {
         type: '',
         secondFactor: 'optional',
         hasMessageOfTheDay: false,
+        allowPasswordless: true,
+        localConnectorName: '',
+        authType: 'local',
       } as types.AuthSettings,
     } as const,
 
@@ -49,7 +53,12 @@ function makeProps() {
     onCloseDialog: () => null,
     onAbort: () => null,
     onLoginWithLocal: () => Promise.resolve<[void, Error]>([null, null]),
+    onLoginWithPwdless: () => Promise.resolve<[void, Error]>([null, null]),
     onLoginWithSso: () => null,
+    writePinToStream: () => null,
+    promptUsername: () => null,
+    clearLoginAttempt: () => null,
+    webauthnPromptProcessing: false,
   };
 }
 
@@ -60,7 +69,7 @@ export const Basic = () => {
 export const HardwareKeyPrompt = () => {
   const props = makeProps();
   props.loginAttempt.status = 'processing';
-  props.shouldPromptHardwareKey = true;
+  props.webauthnPrompt = 'tap';
   return <ClusterLoginPresentation {...props} />;
 };
 

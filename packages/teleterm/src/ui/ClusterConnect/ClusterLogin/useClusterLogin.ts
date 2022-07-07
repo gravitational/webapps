@@ -26,8 +26,12 @@ export default function useClusterLogin(props: Props) {
   const cluster = clustersService.findCluster(clusterUri);
   const refAbortCtrl = useRef<types.tsh.TshAbortController>(null);
   const [shouldPromptSsoStatus, promptSsoStatus] = useState(false);
-  const [shouldPromptHardwareKey, promptHardwareKey] = useState(false);
-  const loggedInUserName = cluster.loggedInUser?.name || null;
+  const [writeToStream, setWriteToStream] =
+    useState<types.LoginPasswordlessWriteToStream>();
+  const [webauthnPrompt, setWebauthnPrompt] =
+    useState<types.WebauthnLoginPrompt>('');
+  const [webauthnPromptProcessing, setWebauthnPromptProcessing] =
+    useState(false);
 
   const [initAttempt, init] = useAsync(async () => {
     const authSettings = await clustersService.getAuthSettings(clusterUri);
@@ -41,24 +45,51 @@ export default function useClusterLogin(props: Props) {
     return authSettings;
   });
 
-  const [loginAttempt, login] = useAsync((opts: types.LoginParams) => {
-    refAbortCtrl.current = clustersService.client.createAbortController();
-    return clustersService.login(opts, refAbortCtrl.current.signal);
-  });
+  const [loginAttempt, login, setAttempt] = useAsync(
+    (opts: types.LoginParams) => {
+      refAbortCtrl.current = clustersService.client.createAbortController();
+      return clustersService.login(opts, refAbortCtrl.current.signal);
+    }
+  );
 
   const onLoginWithLocal = (
-    username: '',
-    password: '',
-    token: '',
+    username = '',
+    password = '',
+    token = '',
     authType?: types.Auth2faType
   ) => {
-    promptHardwareKey(authType === 'webauthn');
+    setWebauthnPrompt(authType === 'webauthn' ? 'tap' : '');
     login({
       clusterUri,
       local: {
         username,
         password,
         token,
+      },
+    });
+  };
+
+  const onLoginWithPwdless = () => {
+    setWebauthnPromptProcessing(true);
+    login({
+      clusterUri,
+      passwordless: {
+        cb: (
+          prompt: types.WebauthnLoginPrompt,
+          res: types.LoginPasswordlessResponse
+        ) => {
+          setWebauthnPromptProcessing(false);
+          setWebauthnPrompt(prompt);
+
+          if (res.writeToStream) {
+            res.writeToStream = () => {
+              return (req: types.LoginPasswordlessRequest) => {
+                setWebauthnPromptProcessing(true);
+                writeToStream(req);
+              };
+            };
+          }
+        },
       },
     });
   };
@@ -83,13 +114,18 @@ export default function useClusterLogin(props: Props) {
     props.onCancel();
   };
 
+  const clearLoginAttempt = () => {
+    setAttempt({ status: '', statusText: '', data: null });
+  };
+
   useEffect(() => {
     init();
   }, []);
 
   useEffect(() => {
     if (loginAttempt.status !== 'processing') {
-      promptHardwareKey(false);
+      setWebauthnPrompt('');
+      setWebauthnPromptProcessing(false);
       promptSsoStatus(false);
     }
 
@@ -100,15 +136,19 @@ export default function useClusterLogin(props: Props) {
 
   return {
     shouldPromptSsoStatus,
-    shouldPromptHardwareKey,
+    webauthnPrompt,
     title: getClusterName(cluster),
     loggedInUserName,
     onLoginWithLocal,
+    onLoginWithPwdless,
     onLoginWithSso,
     onCloseDialog,
     onAbort,
     loginAttempt,
     initAttempt,
+    clearLoginAttempt,
+    writeToStream,
+    webauthnPromptProcessing,
   };
 }
 

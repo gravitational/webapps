@@ -198,6 +198,91 @@ export default function createClient(addr: string) {
       });
     },
 
+    async loginPasswordless(
+      params: types.LoginParams,
+      abortSignal?: types.TshAbortSignal
+    ) {
+      return withAbort(abortSignal, callRef => {
+        const req = new api.LoginPasswordlessRequest().setClusterUri(
+          params.clusterUri
+        );
+
+        return new Promise<void>((resolve, reject) => {
+          callRef.current = tshd.loginPasswordless();
+          const stream = callRef.current as grpc.ClientDuplexStream<
+            api.LoginPasswordlessRequest,
+            api.LoginPasswordlessResponse
+          >;
+
+          // Init the stream.
+          stream.write(req);
+
+          stream.on('data', function (response: api.LoginPasswordlessResponse) {
+            const res = response.toObject();
+            let prompt: types.WebauthnLoginPrompt = '';
+            let customRes: types.LoginPasswordlessResponse;
+
+            switch (res.prompt) {
+              case api.PasswordlessPrompt.PASSWORDLESS_PROMPT_PIN:
+                prompt = 'pin';
+                // Need to write the pin back to server.
+                customRes.writeToStream = req => {
+                  stream.write(
+                    new api.LoginPasswordlessRequest().setPin(req.pin)
+                  );
+                };
+                break;
+
+              case api.PasswordlessPrompt.PASSWORDLESS_PROMPT_CREDENTIAL:
+                prompt = 'credential';
+                customRes.usernames = res.usernamesList;
+                // Need to write the selected index back to server.
+                customRes.writeToStream = req => {
+                  stream.write(
+                    new api.LoginPasswordlessRequest().setUsernameindex(
+                      req.usernameindex
+                    )
+                  );
+                };
+                break;
+
+              case api.PasswordlessPrompt.PASSWORDLESS_PROMPT_TAP:
+                prompt = 'tap';
+                break;
+
+              case api.PasswordlessPrompt.PASSWORDLESS_PROMPT_RETAP:
+                prompt = 'retap';
+                break;
+
+              // Following cases should never happen but just in case?
+              case api.PasswordlessPrompt.PASSWORDLESS_PROMPT_UNSPECIFIED:
+                stream.cancel();
+                return reject(
+                  new Error('no passwordless prompt was specified')
+                );
+
+              default:
+                stream.cancel();
+                return reject(
+                  new Error(`passwordless prompt '${res.prompt}' not supported`)
+                );
+            }
+
+            // Call the callback to trigger rendering of prompt dialogues.
+            params.passwordless.cb(prompt, customRes);
+          });
+
+          stream.on('end', function () {
+            resolve();
+          });
+
+          stream.on('error', function (err: Error) {
+            reject(err);
+          });
+        });
+      });
+    },
+
     async getAuthSettings(clusterUri = '') {
       const req = new api.GetAuthSettingsRequest().setClusterUri(clusterUri);
       return new Promise<types.AuthSettings>((resolve, reject) => {
