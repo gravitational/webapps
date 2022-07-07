@@ -223,9 +223,3 @@ const DesktopSessionAlert = styled(Alert)`
   align-self: center;
   min-width: 450px;
 `;
-
-declare global {
-  interface Window {
-    showDirectoryPicker: () => Promise<FileSystemDirectoryHandle>;
-  }
-}
