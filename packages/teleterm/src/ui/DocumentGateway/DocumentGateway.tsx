@@ -136,10 +136,16 @@ export function DocumentGateway(props: State) {
       <Text typography="h4" mt={3} mb={1}>
         Connect with GUI
       </Text>
-      <Text>
+      <Text
+        // Break long usernames rather than putting an ellipsis.
+        css={`
+          word-break: break-word;
+        `}
+      >
         Configure the GUI database client to connect to host{' '}
         <code>{gateway.localAddress}</code> on port{' '}
-        <code>{gateway.localPort}</code>.
+        <code>{gateway.localPort}</code> as user{' '}
+        <code>{gateway.targetUser}</code>.
       </Text>
       <Text>
         The connection is made through an authenticated proxy so no extra
