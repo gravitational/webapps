@@ -59,7 +59,6 @@ export function DocumentGateway(props: State) {
     runCliCommand,
     changeDbName,
     changeDbNameAttempt,
-    targetSubresourceNameFromDoc,
   } = props;
 
   const handleChangeDbName = useMemo(() => {
