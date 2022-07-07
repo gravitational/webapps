@@ -39,6 +39,7 @@ export enum MessageType {
   MFA_JSON = 10,
   SHARED_DIRECTORY_ANNOUNCE = 11,
   SHARED_DIRECTORY_ACKNOWLEDGE = 12,
+  SHARED_DIRECTORY_INFO_REQUEST = 13,
 }
 
 // 0 is left button, 1 is middle button, 2 is right button
@@ -93,10 +94,17 @@ export type SharedDirectoryAnnounce = {
   name: string;
 };
 
-// | message type (12) | err error | directory_id uint32 |
+// | message type (12) | errCode error | directory_id uint32 |
 export type SharedDirectoryAcknowledge = {
   errCode: SharedDirectoryErrCode;
   directoryId: number;
+};
+
+// | message type (13) | completion_id uint32 | directory_id uint32 | path_length uint32 | path []byte |
+export type SharedDirectoryInfoRequest = {
+  completionId: number;
+  directoryId: number;
+  path: string;
 };
 
 export enum SharedDirectoryErrCode {
@@ -510,7 +518,7 @@ export default class Codec {
     return pngFrame;
   }
 
-  // | message type (12) | directory_id uint32 | succeeded byte |
+  // | message type (12) | errCode error | directory_id uint32 |
   decodeSharedDirectoryAcknowledge(
     buffer: ArrayBuffer
   ): SharedDirectoryAcknowledge {
@@ -521,6 +529,22 @@ export default class Codec {
     return {
       errCode,
       directoryId,
+    };
+  }
+
+  // | message type (13) | completion_id uint32 | directory_id uint32 | path_length uint32 | path []byte |
+  decodeSharedDirectoryInfoRequest(
+    buffer: ArrayBuffer
+  ): SharedDirectoryInfoRequest {
+    let dv = new DataView(buffer);
+    let completionId = dv.getUint32(1);
+    let directoryId = dv.getUint32(5);
+    let path = this.decoder.decode(new Uint8Array(buffer.slice(13)));
+
+    return {
+      completionId,
+      directoryId,
+      path,
     };
   }
 
