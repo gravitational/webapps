@@ -31,7 +31,7 @@ export function ScheduleUpgrades({
     <Dialog onClose={onClose} open={true}>
       <DialogTitle mr="auto">Select a time for upgrade</DialogTitle>
       <DialogContent minWidth="500px" flex="0 0 auto">
-        <Text my={2}>Subtitle goes here</Text>
+        <Text my={2}>Select the start time for the upgrade window</Text>
         {attempt.status === 'failed' && (
           <Alert kind="danger" children={attempt.statusText} />
         )}
