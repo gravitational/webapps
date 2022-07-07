@@ -104,9 +104,13 @@ test('decodes message types', () => {
   const { buffer: pngFrameBuf } = makeBuf(MessageType.PNG_FRAME);
   const { buffer: clipboardBuf } = makeBuf(MessageType.CLIPBOARD_DATA);
   const { buffer: errorBuf } = makeBuf(MessageType.ERROR);
-  const { buffer: invalidBuf } = makeBuf(
-    MessageType.SHARED_DIRECTORY_ACKNOWLEDGE + 1
-  );
+  let invalid =
+    Math.max(
+      ...(Object.values(MessageType).filter(
+        mt => !isNaN(Number(mt))
+      ) as number[])
+    ) + 1;
+  const { buffer: invalidBuf } = makeBuf(invalid);
 
   expect(codec.decodeMessageType(pngFrameBuf)).toEqual(MessageType.PNG_FRAME);
   expect(codec.decodeMessageType(clipboardBuf)).toEqual(
@@ -115,9 +119,7 @@ test('decodes message types', () => {
   expect(codec.decodeMessageType(errorBuf)).toEqual(MessageType.ERROR);
   expect(() => {
     codec.decodeMessageType(invalidBuf);
-  }).toThrow(
-    `invalid message type: ${MessageType.SHARED_DIRECTORY_ACKNOWLEDGE + 1}`
-  );
+  }).toThrow(`invalid message type: ${invalid}`);
 });
 
 test('decodes errors', () => {
