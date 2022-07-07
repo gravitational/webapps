@@ -59,7 +59,7 @@ export function DocumentGateway(props: State) {
     runCliCommand,
     changeDbName,
     changeDbNameAttempt,
-    doc,
+    targetSubresourceNameFromDoc,
   } = props;
 
   const handleChangeDbName = useMemo(() => {
@@ -116,7 +116,7 @@ export function DocumentGateway(props: State) {
         <Validation>
           <ConfigInput
             label="Database name"
-            defaultValue={doc.targetSubresourceName}
+            defaultValue={targetSubresourceNameFromDoc}
             onChange={e => handleChangeDbName(e.target.value)}
             spellCheck={false}
             mb={2}
