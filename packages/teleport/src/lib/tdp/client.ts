@@ -54,7 +54,6 @@ export default class Client extends EventEmitterWebAuthnSender {
   // TODO(LKozlowski): delete this - only for directory sharing simulation purposes
   simulated_files_data: Record<string, Uint8Array>;
 
-
   constructor(socketAddr: string) {
     super();
     this.socketAddr = socketAddr;
@@ -99,29 +98,11 @@ export default class Client extends EventEmitterWebAuthnSender {
         size: BigInt(1024),
         path: '',
       },
-      '\\': {
-        lastModified: BigInt(1111111111111),
-        fileType: 1,
-        size: BigInt(1024),
-        path: '\\',
-      },
-      '\\TestFile.txt': {
-        lastModified: BigInt(2222222222222),
-        fileType: 0,
-        size: BigInt(65),
-        path: '\\TestFile.txt',
-      },
       'TestFile.txt': {
         lastModified: BigInt(2222222222222),
         fileType: 0,
         size: BigInt(1024),
         path: 'TestFile.txt',
-      },
-      '\\TestDirectory': {
-        lastModified: BigInt(3333333333333),
-        fileType: 1,
-        size: BigInt(1024),
-        path: '\\TestDirectory',
       },
       TestDirectory: {
         lastModified: BigInt(3333333333333),
@@ -133,14 +114,14 @@ export default class Client extends EventEmitterWebAuthnSender {
 
     // TODO(LKozlowski): delete this - only for directory sharing simulation purposes
     this.simulated_files_data = {
-      "\\TestFile.txt": new Uint8Array([
-        84, 101, 108, 101, 112, 111, 114, 116, 32, 45, 32, 84, 104, 101, 32, 101, 97, 115,
-        105, 101, 115, 116, 44, 32, 109, 111, 115, 116, 32, 115, 101, 99, 117, 114, 101,
-        32, 119, 97, 121, 32, 116, 111, 32, 97, 99, 99, 101, 115, 115, 32, 105, 110, 102,
-        114, 97, 115, 116, 114, 117, 99, 116, 117, 114, 101, 46
-      ])
-  };
- 
+      'TestFile.txt': new Uint8Array([
+        84, 101, 108, 101, 112, 111, 114, 116, 32, 45, 32, 84, 104, 101, 32,
+        101, 97, 115, 105, 101, 115, 116, 44, 32, 109, 111, 115, 116, 32, 115,
+        101, 99, 117, 114, 101, 32, 119, 97, 121, 32, 116, 111, 32, 97, 99, 99,
+        101, 115, 115, 32, 105, 110, 102, 114, 97, 115, 116, 114, 117, 99, 116,
+        117, 114, 101, 46,
+      ]),
+    };
   }
 
   processMessage(buffer: ArrayBuffer) {
@@ -266,9 +247,8 @@ export default class Client extends EventEmitterWebAuthnSender {
 
     if (
       req.path === '' ||
-      req.path == '\\' ||
-      req.path === '\\TestFile.txt' ||
-      req.path === '\\TestDirectory'
+      req.path === 'TestFile.txt' ||
+      req.path === 'TestDirectory'
     ) {
       this.sendSharedDirectoryInfoResponse({
         completionId: req.completionId,
@@ -276,9 +256,9 @@ export default class Client extends EventEmitterWebAuthnSender {
         fso: this.simulated_fsos[req.path],
       });
     } else if (
-      req.path === '\\desktop.ini' ||
-      req.path === '\\TestDirectory\\desktop.ini' ||
-      req.path === '\\TestFile.txt:Zone.Identifier'
+      req.path === 'desktop.ini' ||
+      req.path === 'TestDirectory/desktop.ini' ||
+      req.path === 'TestFile.txt:Zone.Identifier'
     ) {
       this.sendSharedDirectoryInfoResponse({
         completionId: req.completionId,
@@ -291,6 +271,7 @@ export default class Client extends EventEmitterWebAuthnSender {
         },
       });
     } else {
+      this.logger.error('Unrecognized path: ' + req.path);
       // If we receive anything unexpected, send back an operation failed error which will kill the session,
       // alerting us to new behavior on the backend.
       this.sendSharedDirectoryInfoResponse({
@@ -310,7 +291,7 @@ export default class Client extends EventEmitterWebAuthnSender {
     const req = this.codec.decodeSharedDirectoryListRequest(buffer);
     console.log('Received SharedDirectoryListRequest: ' + JSON.stringify(req));
 
-    if (req.path === '\\') {
+    if (req.path === '') {
       this.sendSharedDirectoryListResponse({
         completionId: req.completionId,
         errCode: 0,
@@ -319,13 +300,14 @@ export default class Client extends EventEmitterWebAuthnSender {
           this.simulated_fsos['TestDirectory'],
         ],
       });
-    } else if (req.path === '\\TestDirectory') {
+    } else if (req.path === 'TestDirectory') {
       this.sendSharedDirectoryListResponse({
         completionId: req.completionId,
         errCode: 0,
         fsoList: [],
       });
     } else {
+      this.logger.error('unrecognized path: ', req.path);
       // If we receive anything unexpected, send back an operation failed error which will kill the session,
       // alerting us to new behavior on the backend.
       this.sendSharedDirectoryListResponse({
@@ -344,7 +326,7 @@ export default class Client extends EventEmitterWebAuthnSender {
         completionId: request.completionId,
         errCode: 1,
         readDataLength: 0,
-        readData: new Uint8Array,
+        readData: new Uint8Array(),
       });
     } else {
       let data = this.simulated_files_data[request.path];
@@ -374,7 +356,9 @@ export default class Client extends EventEmitterWebAuthnSender {
       // update the size of our file so when we read it again then we'll see the
       // all data. Without updating size it if we added text to the file then
       // we would see cropped contents
-      this.simulated_fsos[request.path]["size"] = BigInt(request.writeData.length);
+      this.simulated_fsos[request.path]['size'] = BigInt(
+        request.writeData.length
+      );
       this.sendSharedDirectoryWriteResponse({
         completionId: request.completionId,
         errCode: 0,
@@ -430,7 +414,6 @@ export default class Client extends EventEmitterWebAuthnSender {
   sendSharedDirectoryWriteResponse(response: SharedDirectoryWriteResponse) {
     this.socket.send(this.codec.encodeSharedDirectoryWriteResponse(response));
   }
-
 
   sendSharedDirectoryReadResponse(response: SharedDirectoryReadResponse) {
     this.socket.send(this.codec.encodeSharedDirectoryReadResponse(response));
