@@ -15,6 +15,7 @@ limitations under the License.
 */
 
 import React from 'react';
+import type { Session } from 'teleport/services/ssh';
 import DocumentSsh from './DocumentSsh';
 import { TestLayout } from './../Console.story';
 import ConsoleCtx from './../consoleContext';
@@ -86,7 +87,8 @@ const doc = {
   created: new Date(),
 } as const;
 
-const session = {
+const session: Session = {
+  kind: 'ssh',
   login: '123',
   sid: '',
   namespace: '',
