@@ -70,7 +70,13 @@
       "hardenedRuntime": true,
       "entitlements": "assets/entitlements.mac.plist",
       "entitlementsInherit": "assets/entitlements.mac.plist",
-      "gatekeeperAssess": false
+      "gatekeeperAssess": false,
+      "extraResources": [
+        {
+          "from": "../../../teleport/build/tsh",
+          "to": "./bin/tsh"
+        }
+      ]
     },
     "dmg": {
       "contents": [
@@ -89,24 +95,32 @@
     "win": {
       "target": [
         "nsis"
+      ],
+      "extraResources": [
+        {
+          "from": "../../../teleport/build/tsh.exe",
+          "to": "./bin/tsh.exe"
+        }
       ]
     },
     "linux": {
       "target": [
         "deb"
       ],
-      "category": "Development"
+      "category": "Development",
+      "extraResources": [
+        {
+          "from": "../../../teleport/build/tsh",
+          "to": "./bin/tsh"
+        }
+      ]
     },
     "directories": {
       "buildResources": "assets",
       "output": "build/release"
     },
     "extraResources": [
-      "./assets/**",
-      {
-        "from": "../../../teleport/build/tsh",
-        "to": "./bin/tsh"
-      }
+      "./assets/**"
     ],
     "publish": {
       "provider": "github",
