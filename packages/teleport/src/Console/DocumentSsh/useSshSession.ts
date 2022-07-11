@@ -16,7 +16,7 @@ limitations under the License.
 
 import React from 'react';
 import cfg from 'teleport/config';
-import { Session } from 'teleport/services/ssh';
+import { Session } from 'teleport/services/session';
 import { TermEventEnum } from 'teleport/lib/term/enums';
 import Tty from 'teleport/lib/term/tty';
 import ConsoleContext from 'teleport/Console/consoleContext';

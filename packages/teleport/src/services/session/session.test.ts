@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-import ssh from './ssh';
+import ssh from './session';
 import api from 'teleport/services/api';
 
 test('fetch active sessions, response formatting', async () => {

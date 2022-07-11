@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import { Session } from 'teleport/services/ssh';
+import { Session } from 'teleport/services/session';
 
 export const sessions: Session[] = [
   {

@@ -18,7 +18,7 @@ import React from 'react';
 import styled, { useTheme } from 'styled-components';
 import { Box } from 'design';
 import { Cell } from 'design/DataTable';
-import { Session } from 'teleport/services/ssh';
+import { Session } from 'teleport/services/session';
 import * as Icons from 'design/Icon/Icon';
 import cfg from 'teleport/config';
 

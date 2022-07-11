@@ -22,7 +22,7 @@ import Tabs, { TabItem } from './PlayerTabs';
 import SshPlayer from './SshPlayer';
 import { DesktopPlayer } from './DesktopPlayer';
 import ActionBar from './ActionBar';
-import session from 'teleport/services/session';
+import session from 'teleport/services/websession';
 import { colors } from 'teleport/Console/colors';
 import { UrlPlayerParams } from 'teleport/config';
 import { getUrlParameter } from 'teleport/services/history';

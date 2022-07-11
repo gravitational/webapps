@@ -19,7 +19,7 @@ import styled from 'styled-components';
 import Table, { Cell } from 'design/DataTable';
 import { MenuButton, MenuItem } from 'shared/components/MenuAction';
 import cfg from 'teleport/config';
-import { Session, Participant } from 'teleport/services/ssh';
+import { Session, Participant } from 'teleport/services/session';
 import renderTypeCell from './TypeCell';
 
 export default function SessionList(props: Props) {
