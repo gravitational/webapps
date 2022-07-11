@@ -76,7 +76,10 @@ function getTshHomeDir() {
 
 function getTshBinaryPath() {
   if (app.isPackaged) {
-    return path.join(getBinDir(), 'tsh');
+    return path.join(
+      getBinDir(),
+      process.platform === 'win32' ? 'tsh.exe' : 'tsh'
+    );
   }
 
   const tshPath = env.TELETERM_TSH_PATH;
