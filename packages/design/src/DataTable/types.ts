@@ -60,12 +60,17 @@ export type ServersideProps = {
 // Makes it so either key or altKey is required
 type TableColumnWithKey<T> = TableColumnBase<T> & {
   key: Extract<keyof T, string>;
+  // altSortKey is the alternative field to sort column by,
+  // if provided. Otherwise it falls back to sorting by field
+  // "key".
+  altSortKey?: Extract<keyof T, string>;
   altKey?: never;
 };
 
 type TableColumnWithAltKey<T> = TableColumnBase<T> & {
   altKey: string;
   key?: never;
+  altSortKey?: never;
 };
 
 type InitialSort<T> = {

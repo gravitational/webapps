@@ -30,7 +30,7 @@ export default function useTable<T>({
       searchValue: '',
       sort: col
         ? {
-            key: col.key as string,
+            key: (col.altSortKey || col.key) as string,
             onSort: col.onSort,
             dir: props.initialSort?.dir || 'ASC',
           }
@@ -108,7 +108,7 @@ export default function useTable<T>({
 
     updateData(
       {
-        key: column.key,
+        key: column.altSortKey || column.key,
         onSort: column.onSort,
         dir: state.sort?.dir === 'ASC' ? 'DESC' : 'ASC',
       },
