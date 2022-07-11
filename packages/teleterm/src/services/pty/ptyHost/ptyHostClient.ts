@@ -7,9 +7,20 @@ import {
 } from 'teleterm/sharedProcess/ptyHost';
 import { PtyEventsStreamHandler } from './ptyEventsStreamHandler';
 import { PtyHostClient } from '../types';
+import { GrpcCerts } from 'teleterm/services/grpcCerts';
 
-export function createPtyHostClient(address: string): PtyHostClient {
-  const client = new GrpcClient(address, credentials.createInsecure());
+export function createPtyHostClient(
+  address: string,
+  grpcCerts: GrpcCerts
+): PtyHostClient {
+  const client = new GrpcClient(
+    address,
+    credentials.createSsl(
+      grpcCerts.caCert,
+      grpcCerts.clientKey,
+      grpcCerts.clientCert
+    )
+  );
 
   return {
     createPtyProcess(ptyOptions) {

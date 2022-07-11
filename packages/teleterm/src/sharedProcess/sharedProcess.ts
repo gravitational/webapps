@@ -4,6 +4,7 @@ import createLoggerService from 'teleterm/services/logger';
 import { RuntimeSettings } from 'teleterm/mainProcess/types';
 import Logger from 'teleterm/logger';
 import { createPtyHostService } from './ptyHost/ptyHostService';
+import { readGrpcCerts } from 'teleterm/services/grpcCerts';
 
 function getRuntimeSettings(): RuntimeSettings {
   const args = process.argv.slice(2);
@@ -32,7 +33,9 @@ function initializeLogger(runtimeSettings: RuntimeSettings): void {
   process.on('uncaughtException', logger.error);
 }
 
-function initializeServer(runtimeSettings: RuntimeSettings): void {
+async function initializeServer(
+  runtimeSettings: RuntimeSettings
+): Promise<void> {
   const address = runtimeSettings.sharedProcess.networkAddr;
   const logger = new Logger('gRPC server');
   if (!address) {
@@ -42,12 +45,29 @@ function initializeServer(runtimeSettings: RuntimeSettings): void {
   const server = new Server();
   // @ts-expect-error we have a typed service
   server.addService(PtyHostService, createPtyHostService());
-  server.bindAsync(address, ServerCredentials.createInsecure(), error => {
-    if (error) {
-      return logger.error(error.message);
+  const { caCert, serverCert, serverKey } = await readGrpcCerts(
+    runtimeSettings.certsDir
+  );
+
+  server.bindAsync(
+    address,
+    ServerCredentials.createSsl(
+      caCert,
+      [
+        {
+          cert_chain: serverCert,
+          private_key: serverKey,
+        },
+      ],
+      true
+    ),
+    error => {
+      if (error) {
+        return logger.error(error.message);
+      }
+      server.start();
     }
-    server.start();
-  });
+  );
 
   process.once('exit', () => {
     server.forceShutdown();
