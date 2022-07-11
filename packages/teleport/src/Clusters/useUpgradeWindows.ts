@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import Ctx from 'teleport/teleportContext';
 import useAttempt from 'shared/hooks/useAttemptNext';
 import cfg from 'teleport/config';
@@ -26,9 +26,15 @@ export default function useUpgradeWindows(ctx: Ctx) {
   const canScheduleUpgrades = cfg.isCloud;
 
   const [scheduleUpgradesVisible, setScheduleUpgradesVisible] = useState(false);
-  const upgradeWindows = cfg.scheduledUpgradeWindows;
+  const upgradeWindowOptions = cfg.scheduledUpgradeWindows;
   const [selectedUpgradeWindow, setSelectedUpgradeWindow] =
-    useState<UpgradeWindow>(upgradeWindows[0] as UpgradeWindow); // TODO read from cluster infos
+    useState<UpgradeWindow>();
+
+  useEffect(() => {
+    run(() =>
+      ctx.upgradeWindowService.getWindow().then(setSelectedUpgradeWindow)
+    );
+  }, []);
 
   function showScheduleUpgrade() {
     setScheduleUpgradesVisible(true);
@@ -51,7 +57,7 @@ export default function useUpgradeWindows(ctx: Ctx) {
     scheduleUpgradesVisible,
     showScheduleUpgrade,
     hideScheduleUpgrade,
-    upgradeWindows,
+    upgradeWindowOptions,
     selectedUpgradeWindow,
     setSelectedUpgradeWindow,
     onUpdate,

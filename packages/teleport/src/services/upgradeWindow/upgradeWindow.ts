@@ -20,8 +20,14 @@ import api from '../api';
 export type UpgradeWindow = '08:00:00' | '16:00:00' | '23:00:00';
 
 const service = {
-  updateWindow(window: UpgradeWindow): Promise<string> {
-    return api.post(cfg.api.upgradeWindowsPath, { window: window }); // TODO then make response
+  getWindow(): Promise<UpgradeWindow> {
+    return api.get(cfg.api.upgradeWindowsPath).then(res => res.window);
+  },
+
+  updateWindow(window: UpgradeWindow): Promise<UpgradeWindow> {
+    return api
+      .post(cfg.api.upgradeWindowsPath, { window: window })
+      .then(res => res.window); // TODO then make response
   },
 };
 

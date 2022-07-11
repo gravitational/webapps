@@ -49,7 +49,7 @@ export function Clusters(props: State) {
     scheduleUpgradesVisible,
     hideScheduleUpgrade,
     onUpdate,
-    upgradeWindows,
+    upgradeWindowOptions,
     setSelectedUpgradeWindow,
     selectedUpgradeWindow,
     attempt,
@@ -91,7 +91,7 @@ export function Clusters(props: State) {
         <ScheduleUpgrades
           onSave={onUpdate}
           onClose={hideScheduleUpgrade}
-          upgradeWindows={upgradeWindows}
+          upgradeWindowOptions={upgradeWindowOptions}
           selectedWindow={selectedUpgradeWindow}
           onSelectedWindowChange={setSelectedUpgradeWindow}
           attempt={attempt}

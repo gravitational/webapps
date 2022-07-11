@@ -14,15 +14,18 @@ import Alert from 'design/Alert';
 export function ScheduleUpgrades({
   onClose,
   onSave,
-  upgradeWindows,
+  upgradeWindowOptions,
   selectedWindow,
   onSelectedWindowChange,
   attempt,
 }: Props) {
-  const options = upgradeWindows.map((window: UpgradeWindow) => ({
-    label: makeLabel(window),
-    value: window,
-  }));
+  const options =
+    attempt.status === 'processing'
+      ? []
+      : upgradeWindowOptions.map((window: UpgradeWindow) => ({
+          label: makeLabel(window),
+          value: window,
+        }));
 
   const handleChange = (selected: Option<any>) =>
     onSelectedWindowChange(selected.value);
@@ -39,7 +42,14 @@ export function ScheduleUpgrades({
           onChange={handleChange}
           menuPosition="fixed"
           options={options}
-          value={{ value: selectedWindow, label: makeLabel(selectedWindow) }}
+          value={
+            attempt.status === 'processing'
+              ? {
+                  label: 'Processing...',
+                  value: null,
+                }
+              : { value: selectedWindow, label: makeLabel(selectedWindow) }
+          }
         ></Select>
       </DialogContent>
       <DialogFooter>
@@ -68,7 +78,7 @@ export const makeLabel = (window: UpgradeWindow): string => {
 export type Props = {
   onClose: () => void;
   onSave: (window: UpgradeWindow) => any;
-  upgradeWindows: string[];
+  upgradeWindowOptions: string[];
   selectedWindow: UpgradeWindow;
   onSelectedWindowChange: (string) => void;
   attempt: Attempt;
