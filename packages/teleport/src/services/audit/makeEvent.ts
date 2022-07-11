@@ -923,8 +923,8 @@ export const formatters: Formatters = {
   [eventCodes.SESSION_RECORDING_VIEW]: {
     type: 'session.recording.view',
     desc: 'Session Recording Viewed',
-    format: ({ session_id, user }) => {
-      return `User [${user}] viewed a session recording [${session_id}]`;
+    format: ({ sid, user }) => {
+      return `User [${user}] viewed a session recording [${sid}]`;
     },
   },
   [eventCodes.UNKNOWN]: {
