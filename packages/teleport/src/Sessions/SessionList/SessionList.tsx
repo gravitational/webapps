@@ -1,5 +1,5 @@
 /*
-Copyright 2019-2020 Gravitational, Inc.
+Copyright 2019-2022 Gravitational, Inc.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -20,7 +20,7 @@ import Table, { Cell } from 'design/DataTable';
 import { MenuButton, MenuItem } from 'shared/components/MenuAction';
 import cfg from 'teleport/config';
 import { Session, Participant } from 'teleport/services/ssh';
-import renderDescCell from './DescCell';
+import renderTypeCell from './TypeCell';
 
 export default function SessionList(props: Props) {
   const { sessions, pageSize = 100 } = props;
@@ -30,9 +30,9 @@ export default function SessionList(props: Props) {
       data={sessions}
       columns={[
         {
-          altKey: 'description',
-          headerText: 'Description',
-          render: renderDescCell,
+          key: 'kind',
+          headerText: 'Session Type',
+          render: renderTypeCell,
         },
         {
           key: 'sid',
@@ -44,13 +44,11 @@ export default function SessionList(props: Props) {
           render: renderUsersCell,
         },
         {
-          altKey: 'node',
-          headerText: 'Node',
-          render: renderNodeCell,
-        },
-        {
           key: 'durationText',
+          altSortKey: 'created',
           headerText: 'Duration',
+          isSortable: true,
+          onSort: (a, b) => b - a,
         },
         {
           altKey: 'options-btn',
@@ -77,34 +75,24 @@ export default function SessionList(props: Props) {
   );
 }
 
-function renderActionCell({ sid, clusterId }: Session) {
+function renderActionCell({ sid, clusterId, kind }: Session) {
   const url = cfg.getSshSessionRoute({ sid, clusterId });
 
   return (
-    <Cell align="right">
-      <MenuButton>
-        <MenuItem as="a" href={url} target="_blank">
-          Join Session
-        </MenuItem>
-      </MenuButton>
-    </Cell>
-  );
-}
-
-function renderNodeCell({ hostname, addr }: Session) {
-  const nodeAddr = addr ? `[${addr}]` : '';
-
-  return (
-    <Cell>
-      {hostname} {nodeAddr}
+    <Cell align="right" height="26px">
+      {kind === 'ssh' ? (
+        <MenuButton>
+          <MenuItem as="a" href={url} target="_blank">
+            Join Session
+          </MenuItem>
+        </MenuButton>
+      ) : null}
     </Cell>
   );
 }
 
 function renderUsersCell({ parties }: Session) {
-  const users = parties
-    .map(({ user, remoteAddr }) => `${user} [${remoteAddr}]`)
-    .join(', ');
+  const users = parties.map(({ user }) => `${user}`).join(', ');
   return <Cell>{users}</Cell>;
 }
 
@@ -120,10 +108,6 @@ function participantMatcher(
 ) {
   if (propName === 'parties') {
     return targetValue.some((participant: Participant) => {
-      if (participant.remoteAddr.toLocaleUpperCase().includes(searchValue)) {
-        return true;
-      }
-
       return participant.user.toLocaleUpperCase().includes(searchValue);
     });
   }

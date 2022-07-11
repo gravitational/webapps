@@ -1,5 +1,5 @@
 /*
-Copyright 2019-2020 Gravitational, Inc.
+Copyright 2019-2022 Gravitational, Inc.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -16,39 +16,49 @@ limitations under the License.
 
 import React from 'react';
 import styled, { useTheme } from 'styled-components';
+import { Box } from 'design';
 import { Cell } from 'design/DataTable';
 import { Session } from 'teleport/services/ssh';
 import * as Icons from 'design/Icon/Icon';
 import cfg from 'teleport/config';
 
-export default function renderDescCell({
+export default function renderTypeCell({
   sid,
-  login,
-  hostname,
   clusterId,
+  kind,
+  hostname,
+  kubeClusterId,
 }: Session) {
-  const url = cfg.getSshSessionRoute({ sid, clusterId });
   const theme = useTheme();
-  const text = `Session is in progress [${login}@${hostname}]`;
+
+  let desc = `${kind} [${kubeClusterId}]`;
+  if (kind === 'ssh') {
+    desc = `${kind} [${hostname}]`;
+  }
 
   return (
     <Cell>
       <StyledEventType>
-        <Icons.Cli
-          as="a"
-          href={url}
-          target="_blank"
-          p="1"
-          mr="3"
-          bg="bgTerminal"
-          fontSize="2"
-          style={{
-            borderRadius: '50%',
-            border: `solid 2px ${theme.colors.success}`,
-            textDecoration: 'none',
-          }}
-        />
-        {text}
+        <Box width="40px">
+          {kind === 'ssh' && (
+            <Icons.Cli
+              as="a"
+              href={cfg.getSshSessionRoute({ sid, clusterId })}
+              target="_blank"
+              p="1"
+              mr="3"
+              bg="bgTerminal"
+              fontSize="2"
+              disabled={true}
+              style={{
+                borderRadius: '50%',
+                border: `solid 2px ${theme.colors.success}`,
+                textDecoration: 'none',
+              }}
+            />
+          )}
+        </Box>
+        {desc}
       </StyledEventType>
     </Cell>
   );
