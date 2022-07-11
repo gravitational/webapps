@@ -1,5 +1,5 @@
 /*
-Copyright 2019 Gravitational, Inc.
+Copyright 2019-2022 Gravitational, Inc.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -16,10 +16,10 @@ limitations under the License.
 
 export interface Participant {
   user: string;
-  remoteAddr: string;
 }
 
 export interface Session {
+  kind: SessionKind;
   sid: string;
   namespace: string;
   login: string;
@@ -30,6 +30,9 @@ export interface Session {
   clusterId: string;
   parties: Participant[];
   addr: string;
+  kubeClusterId?: string;
 }
 
 export type ParticipantList = Record<string, Participant[]>;
+
+export type SessionKind = 'ssh' | 'k8s';

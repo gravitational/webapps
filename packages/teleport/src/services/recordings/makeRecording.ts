@@ -80,7 +80,7 @@ function makeSshRecording({
     users: participants.join(', '),
     hostname,
     description,
-    recordingType: 'ssh',
+    recordingType: kubernetes_cluster ? 'k8s' : 'ssh',
     playable,
   } as Recording;
 }
