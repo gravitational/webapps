@@ -40,7 +40,9 @@ export default function Player() {
   const durationMs = Number(getUrlParameter('durationMs', search));
 
   const validRecordingType =
-    recordingType === 'ssh' || recordingType === 'desktop';
+    recordingType === 'ssh' ||
+    recordingType === 'k8s' ||
+    recordingType === 'desktop';
   const validDurationMs = Number.isInteger(durationMs) && durationMs > 0;
 
   document.title = `${clusterId} • Play ${sid}`;
@@ -91,16 +93,14 @@ export default function Player() {
           position: 'relative',
         }}
       >
-        {recordingType === 'ssh' && (
-          <SshPlayer sid={sid} clusterId={clusterId} />
-        )}
-
-        {recordingType === 'desktop' && (
+        {recordingType === 'desktop' ? (
           <DesktopPlayer
             sid={sid}
             clusterId={clusterId}
             durationMs={durationMs}
           />
+        ) : (
+          <SshPlayer sid={sid} clusterId={clusterId} />
         )}
       </Flex>
     </StyledPlayer>
