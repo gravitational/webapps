@@ -2672,13 +2672,13 @@ exports[`list of all events 1`] = `
               color="light"
               font-size="3"
             />
-            App Session Started
+            Session Recording Viewed
           </div>
         </td>
         <td
           style="word-break: break-word;"
         >
-          User [STeve] has connected to AWS console [aws-console]
+          User [STeve] viewed a session recording [6593cf87-9839-4f18-abf8-c54873aaeb4e]
         </td>
         <td
           style="min-width: 120px;"
@@ -2783,13 +2783,13 @@ exports[`list of all events 1`] = `
               color="light"
               font-size="3"
             />
-            App Session Started
+            Session Recording Viewed
           </div>
         </td>
         <td
           style="word-break: break-word;"
         >
-          User [kimlisa] has connected to application [test]
+          User [kimlisa] viewed a session recording [6593cf87-9839-4f18-abf8-c54873aaeb4e]
         </td>
         <td
           style="min-width: 120px;"
