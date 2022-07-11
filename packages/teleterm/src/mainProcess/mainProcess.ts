@@ -60,6 +60,7 @@ export default class MainProcess {
     const { binaryPath, flags, homeDir } = this.settings.tshd;
     this.tshdProcess = spawn(binaryPath, flags, {
       stdio: [null, 'pipe', 'pipe'],
+      windowsHide: true,
       env: {
         ...process.env,
         TELEPORT_HOME: homeDir,
