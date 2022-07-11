@@ -27,7 +27,7 @@ const service = {
   updateWindow(window: UpgradeWindow): Promise<UpgradeWindow> {
     return api
       .post(cfg.api.upgradeWindowsPath, { window: window })
-      .then(res => res.window); // TODO then make response
+      .then(res => res.window);
   },
 };
 
