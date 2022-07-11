@@ -7,7 +7,7 @@ export function makeRecording(event: any): Recording {
   if (event.code === eventCodes.DESKTOP_SESSION_ENDED) {
     return makeDesktopRecording(event);
   } else {
-    return makeSshRecording(event);
+    return makeSshOrKubeRecording(event);
   }
 }
 
@@ -40,7 +40,7 @@ function makeDesktopRecording({
   } as Recording;
 }
 
-function makeSshRecording({
+function makeSshOrKubeRecording({
   participants = [],
   time,
   session_start,
