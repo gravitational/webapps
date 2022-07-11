@@ -4,6 +4,7 @@ import path from 'path';
 import { app } from 'electron';
 import Logger from 'teleterm/logger';
 import { RuntimeSettings } from './types';
+import net from 'net';
 
 const { argv, env } = process;
 
@@ -16,19 +17,28 @@ const dev = env.NODE_ENV === 'development' || env.DEBUG_PROD === 'true';
 // Allows running tsh in insecure mode (development)
 const isInsecure = dev || argv.includes('--insecure');
 
-function getRuntimeSettings(): RuntimeSettings {
+async function getRuntimeSettings(): Promise<RuntimeSettings> {
   const userDataDir = app.getPath('userData');
+  const { tshAddress, sharedAddress } = await getGrpcAdresses();
   const binDir = getBinDir();
-  const tshNetworkAddr = getTshNetworkAddress();
   const tshd = {
     insecure: isInsecure,
     binaryPath: getTshBinaryPath(),
     homeDir: getTshHomeDir(),
-    networkAddr: tshNetworkAddr,
-    flags: ['daemon', 'start', `--addr=${tshNetworkAddr}`],
+    networkAddr: tshAddress,
+    flags: [
+      'daemon',
+      'start',
+      `--addr=${
+        // grpc-js requires us to pass localhost:port for TCP connections,
+        // for tshd we have to specify the protocol as well protocol
+        tshAddress.startsWith('unix') ? tshAddress : 'tcp://' + tshAddress
+      }`,
+      `--certsDir=${getCertsDir()}`,
+    ],
   };
   const sharedProcess = {
-    networkAddr: getSharedProcessNetworkAddress(),
+    networkAddr: sharedAddress,
   };
 
   if (isInsecure) {
@@ -42,28 +52,18 @@ function getRuntimeSettings(): RuntimeSettings {
     sharedProcess,
     userDataDir,
     binDir,
+    certsDir: getCertsDir(),
     defaultShell: getDefaultShell(),
     platform: process.platform,
   };
 }
 
-function getTshNetworkAddress() {
-  return getUnixSocketNetworkAddress('tsh.socket');
-}
-
-function getSharedProcessNetworkAddress() {
-  return getUnixSocketNetworkAddress('shared.socket');
-}
-
-function getUnixSocketNetworkAddress(socketName: string) {
-  const unixSocketPath = path.resolve(app.getPath('userData'), socketName);
-
-  // try to cleanup after previous process that unexpectedly crashed
-  if (fs.existsSync(unixSocketPath)) {
-    fs.unlinkSync(unixSocketPath);
+function getCertsDir() {
+  const certsPath = path.resolve(app.getPath('userData'), 'certs');
+  if (!fs.existsSync(certsPath)) {
+    fs.mkdirSync(certsPath);
   }
-
-  return `unix://${path.resolve(app.getPath('userData'), socketName)}`;
+  return certsPath;
 }
 
 function getTshHomeDir() {
@@ -101,18 +101,73 @@ function getAssetPath(...paths: string[]): string {
 
 function getDefaultShell(): string {
   const logger = new Logger();
-  const fallbackShell = 'bash';
-  const { shell } = os.userInfo();
+  switch (process.platform) {
+    case 'linux':
+    case 'darwin': {
+      const fallbackShell = 'bash';
+      const { shell } = os.userInfo();
 
-  if (!shell) {
-    logger.error(
-      `Failed to read ${process.platform} platform default shell, using fallback: ${fallbackShell}.\n`
-    );
+      if (!shell) {
+        logger.error(
+          `Failed to read ${process.platform} platform default shell, using fallback: ${fallbackShell}.\n`
+        );
 
-    return fallbackShell;
+        return fallbackShell;
+      }
+
+      return shell;
+    }
+    case 'win32':
+      return 'powershell.exe';
+  }
+}
+
+async function getGrpcAdresses(): Promise<{
+  tshAddress: string;
+  sharedAddress: string;
+}> {
+  switch (process.platform) {
+    case 'win32': {
+      const [tshPort, sharedPort] = await Promise.all([
+        getAvailablePort(),
+        getAvailablePort(),
+      ]);
+      return {
+        tshAddress: `localhost:${tshPort}`,
+        sharedAddress: `localhost:${sharedPort}`,
+      };
+    }
+    case 'linux':
+    case 'darwin':
+      return {
+        tshAddress: getUnixSocketNetworkAddress('tsh.socket'),
+        sharedAddress: getUnixSocketNetworkAddress('shared.socket'),
+      };
+  }
+}
+
+function getUnixSocketNetworkAddress(socketName: string) {
+  const unixSocketPath = path.resolve(app.getPath('userData'), socketName);
+
+  // try to cleanup after previous process that unexpectedly crashed
+  if (fs.existsSync(unixSocketPath)) {
+    fs.unlinkSync(unixSocketPath);
   }
 
-  return shell;
+  return `unix://${path.resolve(app.getPath('userData'), socketName)}`;
+}
+
+async function getAvailablePort(): Promise<number> {
+  const server = net.createServer();
+  return new Promise(resolve => {
+    // OS will find a free port automatically
+    server.listen({ port: 0 }, () => {
+      const { port } = server.address() as net.AddressInfo;
+      server.close(() => {
+        resolve(port);
+      });
+    });
+  });
 }
 
 export { getRuntimeSettings, getAssetPath };

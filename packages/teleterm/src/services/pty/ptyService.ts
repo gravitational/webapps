@@ -3,12 +3,15 @@ import { buildPtyOptions } from './ptyHost/buildPtyOptions';
 import { createPtyHostClient } from './ptyHost/ptyHostClient';
 import { createPtyProcess } from './ptyHost/ptyProcess';
 import { PtyServiceClient } from './types';
+import { GrpcCerts } from 'teleterm/services/grpcCerts';
 
 export function createPtyService(
-  runtimeSettings: RuntimeSettings
+  runtimeSettings: RuntimeSettings,
+  grpcCerts: GrpcCerts
 ): PtyServiceClient {
   const ptyHostClient = createPtyHostClient(
-    runtimeSettings.sharedProcess.networkAddr
+    runtimeSettings.sharedProcess.networkAddr,
+    grpcCerts
   );
 
   return {

@@ -7,6 +7,7 @@ export type RuntimeSettings = {
   userDataDir: string;
   // Points to a directory that should be prepended to PATH. Only present in the packaged version.
   binDir: string | undefined;
+  certsDir: string;
   defaultShell: string;
   platform: Platform;
   tshd: {
