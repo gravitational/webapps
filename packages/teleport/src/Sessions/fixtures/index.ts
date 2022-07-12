@@ -29,11 +29,10 @@ export const sessions: Session[] = [
     login: 'root',
     created: new Date('2022-07-11T15:34:33.256697813Z'),
     durationText: '59 minutes',
-    hostname: '',
     addr: '',
     serverId: '',
     clusterId: 'im-a-cluster-name',
-    kubeClusterId: 'minikube',
+    resourceName: 'minikube',
   },
   {
     kind: 'ssh',
@@ -48,9 +47,8 @@ export const sessions: Session[] = [
     created: new Date('2022-07-11T14:36:14.491402068Z'),
     durationText: '5 seconds',
     serverId: 'd5d6d695-97c5-4bef-b052-0f5c6203d7a1',
-    hostname: 'im-a-nodename',
+    resourceName: 'im-a-nodename',
     addr: 'd5d6d695-97c5-4bef-b052-0f5c6203d7a1',
     clusterId: 'im-a-cluster-name',
-    kubeClusterId: '',
   },
 ];

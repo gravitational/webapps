@@ -73,10 +73,19 @@ type TableColumnWithAltKey<T> = TableColumnBase<T> & {
   altSortKey?: never;
 };
 
+// InitialSort defines the field (table column) that should be initiallly
+// sorted on render. If not provided, it defaults to finding the first
+// sortable column.
+
+// Either "key" or "altSortKey" can be provided
+// but not both. If "altSortKey" is provided, than that TableColumn
+// should also define "altSortKey" (TableColumnWithAltKey).
 type InitialSort<T> = {
-  key: Extract<keyof T, string>;
   dir: SortDir;
-};
+} & (
+  | { key: Extract<keyof T, string>; altSortKey?: never }
+  | { altSortKey: Extract<keyof T, string>; key?: never }
+);
 
 export type SortType = {
   fieldName: string;

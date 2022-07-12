@@ -161,7 +161,7 @@ export default class ConsoleContext {
   }
 
   createSshSession(clusterId: string, serverId: string, login: string) {
-    return serviceSession.create({
+    return serviceSession.createSession({
       serverId,
       clusterId,
       login,

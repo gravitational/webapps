@@ -55,9 +55,8 @@ test('fetch active sessions, response formatting', async () => {
       addr: 'd5d6d695-97c5-4bef-b052-0f5c6203d7a1',
       clusterId: 'im-a-cluster-name',
       created: new Date('2022-07-11T19:52:43.733Z'),
-      hostname: 'im-a-nodename',
+      resourceName: 'im-a-nodename',
       kind: 'ssh',
-      kubeClusterId: '',
       login: 'root',
       namespace: 'default',
       parties: [

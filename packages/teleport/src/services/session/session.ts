@@ -21,7 +21,7 @@ import makeSession, { makeParticipant } from './makeSession';
 import { ParticipantList } from './types';
 
 const service = {
-  create({ serverId, clusterId, login }: CreateParams) {
+  createSession({ serverId, clusterId, login }: CreateParams) {
     const request = {
       session: {
         login,
@@ -32,18 +32,7 @@ const service = {
 
     return api
       .post(cfg.getTerminalSessionUrl({ clusterId }), request)
-      .then(response => {
-        const session = makeSession(response.session);
-
-        // Fallback is needed to prevent blank hostname in tab title.
-        // Proxies <4.4 will not return a hostname.
-        const hostname = session.hostname ? session.hostname : serverId;
-
-        return {
-          ...session,
-          hostname,
-        };
-      });
+      .then(response => makeSession(response.session));
   },
 
   fetchSession({ clusterId, sid }: FetchSessionParams) {

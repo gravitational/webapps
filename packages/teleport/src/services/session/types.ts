@@ -26,11 +26,14 @@ export interface Session {
   created: Date;
   durationText: string;
   serverId: string;
-  hostname: string;
   clusterId: string;
   parties: Participant[];
   addr: string;
-  kubeClusterId?: string;
+  // resourceName depending on the "kind" field, is the name
+  // of resource that the session is running in:
+  //  - ssh: is referring to the hostname
+  //  - k8s: is referring to the kubernetes cluster name
+  resourceName: string;
 }
 
 export type ParticipantList = Record<string, Participant[]>;

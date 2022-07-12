@@ -45,9 +45,8 @@ export default function makeSession(json): Session {
     created: createdDate,
     durationText,
     serverId: server_id,
-    hostname: server_hostname,
+    resourceName: kind === 'k8s' ? kubernetes_cluster_name : server_hostname,
     clusterId: cluster_name,
-    kubeClusterId: kubernetes_cluster_name,
     parties: parties ? parties.map(p => makeParticipant(p)) : [],
     addr: server_addr ? server_addr.replace(PORT_REGEX, '') : '',
   };

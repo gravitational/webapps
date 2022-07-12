@@ -95,7 +95,7 @@ const session: Session = {
   created: new Date(),
   durationText: '',
   serverId: '',
-  hostname: '',
+  resourceName: '',
   clusterId: '',
   parties: [],
   addr: '1.1.1.1:1111',

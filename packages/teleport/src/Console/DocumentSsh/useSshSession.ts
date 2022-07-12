@@ -98,10 +98,10 @@ function handleTtyConnect(
   session: Session,
   docId: number
 ) {
-  const { hostname, login, sid, clusterId, serverId, created } = session;
+  const { resourceName, login, sid, clusterId, serverId, created } = session;
   const url = cfg.getSshSessionRoute({ sid, clusterId });
   ctx.updateSshDocument(docId, {
-    title: `${login}@${hostname}`,
+    title: `${login}@${resourceName}`,
     status: 'connected',
     url,
     serverId,
