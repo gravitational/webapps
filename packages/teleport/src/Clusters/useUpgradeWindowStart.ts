@@ -34,12 +34,12 @@ export default function useUpgradeWindowStart(ctx: Ctx) {
     run(() =>
       ctx.upgradeWindowService
         .getUpgradeWindowStart()
-        .then(window =>
-          window
-            ? setSelectedUpgradeWindowStart(window)
-            : setSelectedUpgradeWindowStart(upgradeWindowOptions[0])
-        )
-    );
+        .then(setSelectedUpgradeWindowStart)
+    ).then(success => {
+      if (!success) {
+        setSelectedUpgradeWindowStart(upgradeWindowOptions[0]);
+      }
+    });
   }, []);
 
   function showScheduleUpgrade() {
