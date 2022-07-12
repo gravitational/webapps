@@ -34,7 +34,11 @@ export default function useUpgradeWindowStart(ctx: Ctx) {
     run(() =>
       ctx.upgradeWindowService
         .getUpgradeWindowStart()
-        .then(setSelectedUpgradeWindowStart)
+        .then(window =>
+          window
+            ? setSelectedUpgradeWindowStart(window)
+            : setSelectedUpgradeWindowStart(upgradeWindowOptions[0])
+        )
     );
   }, []);
 

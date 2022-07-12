@@ -24,6 +24,7 @@ import {
   PrimaryAuthType,
   PreferredMfaType,
 } from 'shared/services';
+import type { UpgradeWindowStart } from 'teleport/services/upgradeWindow';
 import { RecordingType } from 'teleport/services/recordings';
 import generateResourcePath from './generateResourcePath';
 
@@ -55,7 +56,11 @@ const cfg = {
 
   proxyCluster: 'localhost',
 
-  scheduledUpgradeWindows: ['08:00:00', '16:00:00', '22:00:00'],
+  scheduledUpgradeWindows: [
+    '08:00:00',
+    '16:00:00',
+    '22:00:00',
+  ] as UpgradeWindowStart[],
 
   loc: {
     dateTimeFormat: 'YYYY-MM-DD HH:mm:ss',
