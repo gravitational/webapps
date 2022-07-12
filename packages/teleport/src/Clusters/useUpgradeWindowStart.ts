@@ -18,21 +18,23 @@ import { useState, useEffect } from 'react';
 import Ctx from 'teleport/teleportContext';
 import useAttempt from 'shared/hooks/useAttemptNext';
 import cfg from 'teleport/config';
-import type { UpgradeWindow } from 'teleport/services/upgradeWindow';
+import type { UpgradeWindowStart } from 'teleport/services/upgradeWindow';
 
-export default function useUpgradeWindows(ctx: Ctx) {
+export default function useUpgradeWindowStart(ctx: Ctx) {
   const { attempt, run } = useAttempt();
 
   const canScheduleUpgrades = cfg.isCloud;
 
   const [scheduleUpgradesVisible, setScheduleUpgradesVisible] = useState(false);
   const upgradeWindowOptions = cfg.scheduledUpgradeWindows;
-  const [selectedUpgradeWindow, setSelectedUpgradeWindow] =
-    useState<UpgradeWindow>();
+  const [selectedUpgradeWindowStart, setSelectedUpgradeWindowStart] =
+    useState<UpgradeWindowStart>();
 
   useEffect(() => {
     run(() =>
-      ctx.upgradeWindowService.getWindow().then(setSelectedUpgradeWindow)
+      ctx.upgradeWindowService
+        .getUpgradeWindowStart()
+        .then(setSelectedUpgradeWindowStart)
     );
   }, []);
 
@@ -47,7 +49,7 @@ export default function useUpgradeWindows(ctx: Ctx) {
   function onUpdate() {
     return run(() =>
       ctx.upgradeWindowService
-        .updateWindow(selectedUpgradeWindow)
+        .updateUpgradeWindowStart(selectedUpgradeWindowStart)
         .then(() => hideScheduleUpgrade())
     );
   }
@@ -58,8 +60,8 @@ export default function useUpgradeWindows(ctx: Ctx) {
     showScheduleUpgrade,
     hideScheduleUpgrade,
     upgradeWindowOptions,
-    selectedUpgradeWindow,
-    setSelectedUpgradeWindow,
+    selectedUpgradeWindowStart,
+    setSelectedUpgradeWindowStart,
     onUpdate,
     attempt,
   };

@@ -17,17 +17,19 @@ limitations under the License.
 import cfg from 'e-teleport/config';
 import api from '../api';
 
-export type UpgradeWindow = '08:00:00' | '16:00:00' | '23:00:00';
+export type UpgradeWindowStart = '08:00:00' | '16:00:00' | '23:00:00';
 
 const service = {
-  getWindow(): Promise<UpgradeWindow> {
-    return api.get(cfg.api.upgradeWindowsPath).then(res => res.window);
+  getUpgradeWindowStart(): Promise<UpgradeWindowStart> {
+    return api.get(cfg.api.upgradeWindowStartPath).then(res => res.windowStart);
   },
 
-  updateWindow(window: UpgradeWindow): Promise<UpgradeWindow> {
+  updateUpgradeWindowStart(
+    windowStart: UpgradeWindowStart
+  ): Promise<UpgradeWindowStart> {
     return api
-      .post(cfg.api.upgradeWindowsPath, { window: window })
-      .then(res => res.window);
+      .post(cfg.api.upgradeWindowStartPath, { windowStart: windowStart })
+      .then(res => res.windowStart);
   },
 };
 

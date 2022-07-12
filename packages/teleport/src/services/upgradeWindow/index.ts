@@ -1,4 +1,4 @@
 import service from './upgradeWindow';
-import type { UpgradeWindow } from './upgradeWindow';
+import type { UpgradeWindowStart } from './upgradeWindow';
 
-export { service as upgradeWindowService, UpgradeWindow };
+export { service as upgradeWindowService, UpgradeWindowStart };

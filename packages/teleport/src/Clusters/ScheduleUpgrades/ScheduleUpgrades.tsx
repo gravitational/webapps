@@ -7,7 +7,7 @@ import Dialog, {
 } from 'design/Dialog';
 import Select, { Option } from 'shared/components/Select';
 import { Attempt } from 'shared/hooks/useAttemptNext';
-import { UpgradeWindow } from 'teleport/services/upgradeWindow/upgradeWindow';
+import { UpgradeWindowStart } from 'teleport/services/upgradeWindow/upgradeWindow';
 import Text from 'design/Text';
 import Alert from 'design/Alert';
 
@@ -22,7 +22,7 @@ export function ScheduleUpgrades({
   const options =
     attempt.status === 'processing'
       ? []
-      : upgradeWindowOptions.map((window: UpgradeWindow) => ({
+      : upgradeWindowOptions.map((window: UpgradeWindowStart) => ({
           label: makeLabel(window),
           value: window,
         }));
@@ -71,15 +71,15 @@ export function ScheduleUpgrades({
   );
 }
 
-export const makeLabel = (window: UpgradeWindow): string => {
+export const makeLabel = (window: UpgradeWindowStart): string => {
   return `UTC - ${window}`;
 };
 
 export type Props = {
   onClose: () => void;
-  onSave: (window: UpgradeWindow) => any;
+  onSave: (window: UpgradeWindowStart) => any;
   upgradeWindowOptions: string[];
-  selectedWindow: UpgradeWindow;
+  selectedWindow: UpgradeWindowStart;
   onSelectedWindowChange: (string) => void;
   attempt: Attempt;
 };

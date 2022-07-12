@@ -16,6 +16,7 @@ limitations under the License.
 
 import React from 'react';
 import { ScheduleUpgrades, Props } from './ScheduleUpgrades';
+import type { UpgradeWindowStart } from 'teleport/services/upgradeWindow';
 
 export default {
   title: 'Teleport/Clusters/ScheduleUpgrades',
@@ -58,5 +59,5 @@ const props: Props = {
   } as any,
   onSelectedWindowChange: () => {},
   selectedWindow: '08:00:00',
-  upgradeWindows: ['08:00:00', '16:00:00', '23:00:00'],
+  upgradeWindowOptions: ['08:00:00', '16:00:00', '23:00:00'],
 };

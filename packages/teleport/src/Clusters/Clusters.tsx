@@ -27,17 +27,17 @@ import ClusterList from './ClusterList';
 import useClusters from './useClusters';
 import { Clock } from 'design/Icon';
 import { ScheduleUpgrades } from './ScheduleUpgrades/ScheduleUpgrades';
-import useUpgradeWindows from './useUpgradeWindows';
+import useUpgradeWindowStart from './useUpgradeWindowStart';
 
 export default function Container() {
   const ctx = useTeleport();
   const state = useClusters(ctx);
-  const upgradeWindowsState = useUpgradeWindows(ctx);
+  const upgradeWindowsState = useUpgradeWindowStart(ctx);
   return <Clusters {...state} {...upgradeWindowsState} />;
 }
 
 type State = ReturnType<typeof useClusters> &
-  ReturnType<typeof useUpgradeWindows>;
+  ReturnType<typeof useUpgradeWindowStart>;
 
 export function Clusters(props: State) {
   const {
@@ -50,8 +50,8 @@ export function Clusters(props: State) {
     hideScheduleUpgrade,
     onUpdate,
     upgradeWindowOptions,
-    setSelectedUpgradeWindow,
-    selectedUpgradeWindow,
+    selectedUpgradeWindowStart,
+    setSelectedUpgradeWindowStart,
     attempt,
   } = props;
   return (
@@ -92,8 +92,8 @@ export function Clusters(props: State) {
           onSave={onUpdate}
           onClose={hideScheduleUpgrade}
           upgradeWindowOptions={upgradeWindowOptions}
-          selectedWindow={selectedUpgradeWindow}
-          onSelectedWindowChange={setSelectedUpgradeWindow}
+          selectedWindow={selectedUpgradeWindowStart}
+          onSelectedWindowChange={setSelectedUpgradeWindowStart}
           attempt={attempt}
         />
       )}
