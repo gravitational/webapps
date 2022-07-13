@@ -352,16 +352,16 @@ exports[`list of all events 1`] = `
           class="c6"
           color="primary.contrastText"
         >
-          SHOWING 
+          SHOWING
           <strong>
             1
           </strong>
-           - 
+           -
           <strong>
             85
           </strong>
            of
-           
+
           <strong>
             85
           </strong>
@@ -489,7 +489,7 @@ exports[`list of all events 1`] = `
         <td
           style="word-break: break-word;"
         >
-          Recived Malfored packed from [alice] in [master] on database [sqlserver02]
+          Recived malformed packet from [alice] in [master] on database [sqlserver02]
         </td>
         <td
           style="min-width: 120px;"
@@ -2191,7 +2191,7 @@ exports[`list of all events 1`] = `
         <td
           style="word-break: break-word;"
         >
-          User [foo] has ended a non-interactive session [9d92ad96-a45c-4add-463cc7bc48b1] on node [ip-172-31-30-254] 
+          User [foo] has ended a non-interactive session [9d92ad96-a45c-4add-463cc7bc48b1] on node [ip-172-31-30-254]
         </td>
         <td
           style="min-width: 120px;"
@@ -4252,16 +4252,16 @@ exports[`loaded audit log screen 1`] = `
           class="c11"
           color="primary.contrastText"
         >
-          SHOWING 
+          SHOWING
           <strong>
             1
           </strong>
-           - 
+           -
           <strong>
             5
           </strong>
            of
-           
+
           <strong>
             5
           </strong>
