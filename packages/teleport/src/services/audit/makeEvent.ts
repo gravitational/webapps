@@ -920,11 +920,11 @@ export const formatters: Formatters = {
       return `Upgrade Window Start updated to [${upgrade_window_start}] by user [${user}]`;
     },
   },
-  [eventCodes.SESSION_RECORDING_VIEW]: {
-    type: 'session.recording.view',
-    desc: 'Session Recording Viewed',
+  [eventCodes.SESSION_RECORDING_ACCESS]: {
+    type: 'session.recording.access',
+    desc: 'Session Recording Accessed',
     format: ({ sid, user }) => {
-      return `User [${user}] viewed a session recording [${sid}]`;
+      return `User [${user}] accessed a session recording [${sid}]`;
     },
   },
   [eventCodes.UNKNOWN]: {
