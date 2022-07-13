@@ -40,7 +40,7 @@ async function startMain(): Promise<void> {
       // allow certs errors for localhost:8080
       if (
         settings.dev &&
-        url.includes('://localhost:8080/') &&
+        new URL(url).host === 'localhost:8080' &&
         error === 'net::ERR_CERT_AUTHORITY_INVALID'
       ) {
         event.preventDefault();
