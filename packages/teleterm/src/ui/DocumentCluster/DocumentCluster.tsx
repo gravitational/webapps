@@ -90,7 +90,12 @@ export function Cluster() {
         </Text>
         <Flex>
           <ClusterSearch onChange={clusterCtx.changeSearchValue} />
-          <ButtonPrimary ml={2} size="small" onClick={clusterCtx.sync}>
+          <ButtonPrimary
+            disabled={state.syncing}
+            ml={2}
+            size="small"
+            onClick={clusterCtx.sync}
+          >
             Sync
           </ButtonPrimary>
         </Flex>

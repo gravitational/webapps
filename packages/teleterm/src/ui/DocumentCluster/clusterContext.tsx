@@ -28,6 +28,7 @@ type State = {
   searchValue: string;
   leaf: boolean;
   leafConnected: boolean;
+  syncing: boolean;
   status: 'requires_login' | 'not_found' | '';
   statusText: string;
 };
@@ -47,6 +48,7 @@ class ClusterContext extends Store<State> {
     searchValue: '',
     leaf: false,
     leafConnected: false,
+    syncing: false,
     status: '',
     statusText: '',
   };
@@ -77,6 +79,7 @@ class ClusterContext extends Store<State> {
 
   sync = async () => {
     try {
+      this.setState({ syncing: true });
       await retryWithRelogin(
         this.appCtx,
         this.documentUri,
@@ -88,6 +91,8 @@ class ClusterContext extends Store<State> {
         title: `Could not synchronize cluster ${this.state.clusterName}`,
         description: e.message,
       });
+    } finally {
+      this.setState({ syncing: false });
     }
   };
 
