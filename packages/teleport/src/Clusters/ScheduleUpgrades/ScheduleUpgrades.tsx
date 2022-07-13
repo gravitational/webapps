@@ -31,10 +31,17 @@ export function ScheduleUpgrades({
     onSelectedWindowChange(selected.value);
 
   return (
-    <Dialog onClose={onClose} open={true}>
-      <DialogTitle mr="auto">Select a time for upgrade</DialogTitle>
+    <Dialog
+      onClose={onClose}
+      open={true}
+      dialogCss={() => ({ maxWidth: '600px' })}
+    >
+      <DialogTitle mr="auto">Select a maintenance start window</DialogTitle>
       <DialogContent minWidth="500px" flex="0 0 auto">
-        <Text my={2}>Select the start time for the upgrade window</Text>
+        <Text my={2}>
+          Teleport provides different cluster maintenance windows to minimize
+          downtime during upgrades, patches, etc.
+        </Text>
         {attempt.status === 'failed' && (
           <Alert kind="danger" children={attempt.statusText} />
         )}
