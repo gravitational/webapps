@@ -32,7 +32,7 @@ async function getRuntimeSettings(): Promise<RuntimeSettings> {
       // grpc-js requires us to pass localhost:port for TCP connections,
       // for tshd we have to specify the protocol as well.
       `--addr=${tshAddress}`,
-      `--certsDir=${getCertsDir()}`,
+      `--certs-dir=${getCertsDir()}`,
     ],
   };
   const sharedProcess = {
