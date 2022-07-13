@@ -29,11 +29,9 @@ async function getRuntimeSettings(): Promise<RuntimeSettings> {
     flags: [
       'daemon',
       'start',
-      `--addr=${
-        // grpc-js requires us to pass localhost:port for TCP connections,
-        // for tshd we have to specify the protocol as well protocol
-        tshAddress.startsWith('unix') ? tshAddress : 'tcp://' + tshAddress
-      }`,
+      // grpc-js requires us to pass localhost:port for TCP connections,
+      // for tshd we have to specify the protocol as well.
+      `--addr=${tshAddress}`,
       `--certsDir=${getCertsDir()}`,
     ],
   };
