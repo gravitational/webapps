@@ -169,3 +169,29 @@ proxy_service:
 ```
 
 Then start the dev server like `yarn start-teleport --target=https://proxy.127.0.0.1.nip.io:3080` and access it at https://proxy.127.0.0.1.nip.io:8080.
+
+### Adding Packages with `yarn`
+
+We use [Yarn Workspaces](https://classic.yarnpkg.com/blog/2017/08/02/introducing-workspaces/) to manage dependencies.
+Typically you will want to add packages to the lowest level necessary, by running
+
+```
+yarn workspace <workspace-name> add <package-name>
+```
+
+The `<workspace-name>` of a given workspace is defined by its `"name"`. For example, if you wanted to add the package
+`caniuse-lite` to the workspace `packages/build`, you would run
+
+```
+yarn workspace @gravitational/build add caniuse-lite
+```
+
+After adding a package to a workspace, you should expect to find a new lockfile in the workspace's directory. In this
+example, the file `packages/build/yarn.lock` will have been created. This appears to be a bug in yarn workspaces, as
+we want to track all dependencies in a single lockfile at the workspace root (`yarn.lock` in the root of this repo). To
+fix this, you need to run the following:
+
+```
+rm packages/build/yarn.lock
+yarn install
+```
