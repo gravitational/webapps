@@ -21,14 +21,18 @@ export type UpgradeWindowStart = '08:00:00' | '16:00:00' | '23:00:00';
 
 const service = {
   getUpgradeWindowStart(): Promise<UpgradeWindowStart> {
-    return api.get(cfg.api.upgradeWindowStartPath).then(res => res.windowStart);
+    return api
+      .get(cfg.api.upgradeWindowStartPath)
+      .then(res => res.upgrade_window_start);
   },
 
   updateUpgradeWindowStart(
     windowStart: UpgradeWindowStart
   ): Promise<UpgradeWindowStart> {
     return api
-      .post(cfg.api.upgradeWindowStartPath, { windowStart: windowStart })
+      .post(cfg.api.upgradeWindowStartPath, {
+        upgrade_window_start: windowStart,
+      })
       .then(res => res.windowStart);
   },
 };
