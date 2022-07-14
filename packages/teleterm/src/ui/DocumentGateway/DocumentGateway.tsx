@@ -33,7 +33,6 @@ import FieldInput from 'shared/components/FieldInput';
 import Validation from 'shared/components/Validation';
 import { debounce } from 'lodash';
 import styled from 'styled-components';
-import { Gateway, GatewayProtocol } from 'teleterm/services/tshd/types';
 
 type Props = {
   visible: boolean;
@@ -99,8 +98,6 @@ export function DocumentGateway(props: State) {
     );
   }
 
-  const localAddressAndCliCommand = getLocalAddressAndCliCommand(gateway);
-
   return (
     <Box maxWidth="590px" width="100%" mx="auto" mt="4" px="5">
       <Flex justifyContent="space-between" mb="4" flexWrap="wrap">
@@ -126,7 +123,7 @@ export function DocumentGateway(props: State) {
         </Validation>
       </Flex>
       <CliCommand
-        cliCommand={localAddressAndCliCommand.cliCommand}
+        cliCommand={gateway.cliCommand}
         isLoading={isLoading}
         onRun={runCliCommand}
       />
@@ -145,7 +142,7 @@ export function DocumentGateway(props: State) {
         `}
       >
         Configure the GUI database client to connect to host{' '}
-        <code>{localAddressAndCliCommand.localAddress}</code> on port{' '}
+        <code>{gateway.localAddress}</code> on port{' '}
         <code>{gateway.localPort}</code> as user{' '}
         <code>{gateway.targetUser}</code>.
       </Text>
@@ -162,23 +159,6 @@ export function DocumentGateway(props: State) {
       </Text>
     </Box>
   );
-}
-
-function getLocalAddressAndCliCommand(
-  gateway: Gateway
-): Pick<Gateway, 'cliCommand' | 'localAddress'> {
-  // due to SSMS behavior, it can't connect to address like localhost:12345,
-  // we have to use IP, like 127.0.0.1:12345
-  if (
-    (gateway.protocol as GatewayProtocol) === 'sqlserver' &&
-    gateway.localAddress === 'localhost'
-  ) {
-    return {
-      cliCommand: gateway.cliCommand.replace('localhost', '127.0.0.1'),
-      localAddress: '127.0.0.1',
-    };
-  }
-  return { cliCommand: gateway.cliCommand, localAddress: gateway.localAddress };
 }
 
 function CliCommand({
