@@ -59,7 +59,7 @@ const cfg = {
   scheduledUpgradeWindows: [
     '08:00:00',
     '16:00:00',
-    '22:00:00',
+    '23:00:00',
   ] as UpgradeWindowStart[],
 
   loc: {
