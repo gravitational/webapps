@@ -13,16 +13,19 @@ export class MockMainProcessClient implements MainProcessClient {
       defaultShell: '',
       tshd: {
         insecure: true,
-        networkAddr: '',
+        requestedNetworkAddress: '',
         binaryPath: '',
         homeDir: '',
         flags: [],
       },
       sharedProcess: {
-        networkAddr: '',
+        requestedNetworkAddress: '',
       },
     };
   }
+
+  getResolvedChildProcessAddresses = () =>
+    Promise.resolve({ tsh: '', shared: '' });
 
   openTerminalContextMenu() {}
 

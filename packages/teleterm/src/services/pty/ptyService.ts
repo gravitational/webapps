@@ -6,13 +6,11 @@ import { PtyServiceClient } from './types';
 import { GrpcCerts } from 'teleterm/services/grpcCerts';
 
 export function createPtyService(
+  address: string,
   runtimeSettings: RuntimeSettings,
   grpcCerts: GrpcCerts
 ): PtyServiceClient {
-  const ptyHostClient = createPtyHostClient(
-    runtimeSettings.sharedProcess.networkAddr,
-    grpcCerts
-  );
+  const ptyHostClient = createPtyHostClient(address, grpcCerts);
 
   return {
     createPtyProcess: async command => {

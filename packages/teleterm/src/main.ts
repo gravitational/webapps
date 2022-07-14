@@ -12,7 +12,7 @@ import { WindowsManager } from 'teleterm/mainProcess/windowsManager';
 import { generateGrpcCerts } from './services/grpcCerts';
 
 async function startMain(): Promise<void> {
-  const settings = await getRuntimeSettings();
+  const settings = getRuntimeSettings();
   const logger = initMainLogger(settings);
   const fileStorage = createFileStorage({
     filePath: path.join(settings.userDataDir, 'app_state.json'),

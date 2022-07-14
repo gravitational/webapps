@@ -3,8 +3,7 @@ import os from 'os';
 import path from 'path';
 import { app } from 'electron';
 import Logger from 'teleterm/logger';
-import { RuntimeSettings } from './types';
-import net from 'net';
+import { ChildProcessAddresses, RuntimeSettings } from './types';
 
 const { argv, env } = process;
 
@@ -17,15 +16,16 @@ const dev = env.NODE_ENV === 'development' || env.DEBUG_PROD === 'true';
 // Allows running tsh in insecure mode (development)
 const isInsecure = dev || argv.includes('--insecure');
 
-async function getRuntimeSettings(): Promise<RuntimeSettings> {
+function getRuntimeSettings(): RuntimeSettings {
   const userDataDir = app.getPath('userData');
-  const { tshAddress, sharedAddress } = await getGrpcAdresses();
+  const { tsh: tshAddress, shared: sharedAddress } =
+    requestChildProcessesAddresses();
   const binDir = getBinDir();
   const tshd = {
     insecure: isInsecure,
     binaryPath: getTshBinaryPath(),
     homeDir: getTshHomeDir(),
-    networkAddr: tshAddress,
+    requestedNetworkAddress: tshAddress,
     flags: [
       'daemon',
       'start',
@@ -36,7 +36,7 @@ async function getRuntimeSettings(): Promise<RuntimeSettings> {
     ],
   };
   const sharedProcess = {
-    networkAddr: sharedAddress,
+    requestedNetworkAddress: sharedAddress,
   };
 
   if (isInsecure) {
@@ -123,26 +123,19 @@ function getDefaultShell(): string {
   }
 }
 
-async function getGrpcAdresses(): Promise<{
-  tshAddress: string;
-  sharedAddress: string;
-}> {
+function requestChildProcessesAddresses(): ChildProcessAddresses {
   switch (process.platform) {
     case 'win32': {
-      const [tshPort, sharedPort] = await Promise.all([
-        getAvailablePort(),
-        getAvailablePort(),
-      ]);
       return {
-        tshAddress: `localhost:${tshPort}`,
-        sharedAddress: `localhost:${sharedPort}`,
+        tsh: 'localhost:0',
+        shared: 'localhost:0',
       };
     }
     case 'linux':
     case 'darwin':
       return {
-        tshAddress: getUnixSocketNetworkAddress('tsh.socket'),
-        sharedAddress: getUnixSocketNetworkAddress('shared.socket'),
+        tsh: getUnixSocketNetworkAddress('tsh.socket'),
+        shared: getUnixSocketNetworkAddress('shared.socket'),
       };
   }
 }
@@ -156,19 +149,6 @@ function getUnixSocketNetworkAddress(socketName: string) {
   }
 
   return `unix://${path.resolve(app.getPath('userData'), socketName)}`;
-}
-
-async function getAvailablePort(): Promise<number> {
-  const server = net.createServer();
-  return new Promise(resolve => {
-    // OS will find a free port automatically
-    server.listen({ port: 0 }, () => {
-      const { port } = server.address() as net.AddressInfo;
-      server.close(() => {
-        resolve(port);
-      });
-    });
-  });
 }
 
 export { getRuntimeSettings, getAssetPath };

@@ -12,22 +12,28 @@ export type RuntimeSettings = {
   platform: Platform;
   tshd: {
     insecure: boolean;
-    networkAddr: string;
+    requestedNetworkAddress: string;
     binaryPath: string;
     homeDir: string;
     flags: string[];
   };
   sharedProcess: {
-    networkAddr: string;
+    requestedNetworkAddress: string;
   };
 };
 
 export type MainProcessClient = {
   getRuntimeSettings(): RuntimeSettings;
+  getResolvedChildProcessAddresses(): Promise<ChildProcessAddresses>;
   openTerminalContextMenu(): void;
   openTabContextMenu(options: TabContextMenuOptions): void;
   configService: ConfigService;
   fileStorage: FileStorage;
+};
+
+export type ChildProcessAddresses = {
+  tsh: string;
+  shared: string;
 };
 
 export type Platform = NodeJS.Platform;

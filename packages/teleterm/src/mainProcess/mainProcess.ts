@@ -10,6 +10,7 @@ import { subscribeToTabContextMenuEvent } from './contextMenus/tabContextMenu';
 import { subscribeToFileStorageEvents } from 'teleterm/services/fileStorage';
 import path from 'path';
 import createLoggerService from 'teleterm/services/logger';
+import { ChildProcessAddresses } from 'teleterm/mainProcess/types';
 
 type Options = {
   settings: RuntimeSettings;
@@ -25,6 +26,7 @@ export default class MainProcess {
   private tshdProcess: ChildProcess;
   private sharedProcess: ChildProcess;
   private fileStorage: FileStorage;
+  private resolvedChildProcessAddresses: Promise<ChildProcessAddresses>;
 
   private constructor(opts: Options) {
     this.settings = opts.settings;
@@ -50,6 +52,16 @@ export default class MainProcess {
       this._initTshd();
       this._initSharedProcess();
       this._initIpc();
+      this.resolvedChildProcessAddresses = Promise.all([
+        this.resolveNetworkAddress(
+          this.settings.tshd.requestedNetworkAddress,
+          this.tshdProcess
+        ),
+        this.resolveNetworkAddress(
+          this.settings.sharedProcess.requestedNetworkAddress,
+          this.sharedProcess
+        ),
+      ]).then(([tsh, shared]) => ({ tsh, shared }));
     } catch (err) {
       this.logger.error('Failed to start main process: ', err.message);
       app.exit(1);
@@ -59,7 +71,7 @@ export default class MainProcess {
   private _initTshd() {
     const { binaryPath, flags, homeDir } = this.settings.tshd;
     this.tshdProcess = spawn(binaryPath, flags, {
-      stdio: [null, 'pipe', 'pipe'],
+      stdio: 'pipe',
       windowsHide: true,
       env: {
         ...process.env,
@@ -91,7 +103,7 @@ export default class MainProcess {
       path.join(__dirname, 'sharedProcess.js'),
       [`--runtimeSettingsJson=${JSON.stringify(this.settings)}`],
       {
-        stdio: 'inherit',
+        stdio: 'pipe',
       }
     );
 
@@ -104,9 +116,50 @@ export default class MainProcess {
     });
   }
 
+  private resolveNetworkAddress(
+    requestedAddress: string,
+    process: ChildProcess
+  ): Promise<string> {
+    if (new URL(requestedAddress).protocol === 'unix:') {
+      return Promise.resolve(requestedAddress);
+    }
+
+    // TCP case
+    return new Promise((resolve, reject) => {
+      process.stdout.setEncoding('utf-8');
+      let chunks = '';
+
+      const removeListeners = () => {
+        process.stdout.off('data', findAddressInChunk);
+        process.off('error', rejectOnError);
+      };
+
+      const findAddressInChunk = (chunk: string) => {
+        chunks += chunk;
+        const matchResult = chunks.match(/\{CONNECT_GRPC_PORT:\s(\d+)}/);
+        if (matchResult) {
+          resolve(`localhost:${matchResult[1]}`);
+          removeListeners();
+        }
+      };
+
+      const rejectOnError = (error: Error) => {
+        reject(error);
+        removeListeners();
+      };
+
+      process.stdout.on('data', findAddressInChunk);
+      process.on('error', rejectOnError);
+    });
+  }
+
   private _initIpc() {
     ipcMain.on('main-process-get-runtime-settings', event => {
       event.returnValue = this.settings;
+    });
+
+    ipcMain.handle('main-process-get-resolved-child-process-addresses', () => {
+      return this.resolvedChildProcessAddresses;
     });
 
     subscribeToTerminalContextMenuEvent();

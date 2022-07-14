@@ -36,7 +36,7 @@ function initializeLogger(runtimeSettings: RuntimeSettings): void {
 async function initializeServer(
   runtimeSettings: RuntimeSettings
 ): Promise<void> {
-  const address = runtimeSettings.sharedProcess.networkAddr;
+  const address = runtimeSettings.sharedProcess.requestedNetworkAddress;
   const logger = new Logger('gRPC server');
   if (!address) {
     throw new Error('Provide gRPC server address');
@@ -61,10 +61,13 @@ async function initializeServer(
       ],
       true
     ),
-    error => {
+    (error, port) => {
+      sendBoundNetworkPort(port);
+
       if (error) {
         return logger.error(error.message);
       }
+
       server.start();
     }
   );
@@ -72,6 +75,11 @@ async function initializeServer(
   process.once('exit', () => {
     server.forceShutdown();
   });
+}
+
+function sendBoundNetworkPort(address: number) {
+  // writes to stdout
+  console.log(`{CONNECT_GRPC_PORT: ${address}}`);
 }
 
 const runtimeSettings = getRuntimeSettings();

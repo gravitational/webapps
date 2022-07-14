@@ -10,8 +10,9 @@ import ThemeProvider from './ThemeProvider';
 import { LayoutManager } from './LayoutManager';
 import { AppInitializer } from 'teleterm/ui/AppInitializer';
 import { NotificationsHost } from 'teleterm/ui/components/Notifcations';
+import { Failed } from 'design/CardError';
 
-const App: React.FC<{ ctx: AppContext }> = ({ ctx }) => {
+export const App: React.FC<{ ctx: AppContext }> = ({ ctx }) => {
   const { appearance } = ctx.mainProcessClient.configService.get();
   return (
     <StyledApp>
@@ -32,7 +33,13 @@ const App: React.FC<{ ctx: AppContext }> = ({ ctx }) => {
   );
 };
 
-export default App;
+export const FailedApp = (props: { message: string }) => {
+  return (
+    <StyledApp>
+      <Failed alignSelf={'baseline'} message={props.message} />
+    </StyledApp>
+  );
+};
 
 const StyledApp = styled.div`
   left: 0;

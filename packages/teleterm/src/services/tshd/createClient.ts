@@ -6,7 +6,6 @@ import middleware, { withLogging } from './middleware';
 import createAbortController from './createAbortController';
 import Logger from 'teleterm/logger';
 import { GrpcCerts } from 'teleterm/services/grpcCerts';
-import { RuntimeSettings } from 'teleterm/types';
 
 export function createGrpcClient(addr: string, grpcCertificates: GrpcCerts) {
   return new TerminalServiceClient(
@@ -19,15 +18,11 @@ export function createGrpcClient(addr: string, grpcCertificates: GrpcCerts) {
   );
 }
 
-export default function createClient(
-  runtimeSettings: RuntimeSettings,
-  grpcCerts: GrpcCerts
-) {
+export default function createClient(addr: string, grpcCerts: GrpcCerts) {
   const logger = new Logger('tshd');
-  const tshd = middleware(
-    createGrpcClient(runtimeSettings.tshd.networkAddr, grpcCerts),
-    [withLogging(logger)]
-  );
+  const tshd = middleware(createGrpcClient(addr, grpcCerts), [
+    withLogging(logger),
+  ]);
 
   // Create a client instance that could be shared with the  renderer (UI) via Electron contextBridge
   const client = {
