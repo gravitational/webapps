@@ -28,7 +28,11 @@ import Box from '../Box';
 
 const Flex = styled(Box)`
   display: flex;
-  ${alignItems} ${justifyContent} ${flexWrap} ${flexDirection} ${gap};
+  ${alignItems}
+  ${justifyContent}
+  ${flexWrap}
+  ${flexDirection}
+  ${gap};
 `;
 
 Flex.defaultProps = {
@@ -42,7 +46,6 @@ Flex.propTypes = {
   ...propTypes.flexWrap,
   ...propTypes.flexDirection,
   ...propTypes.gap,
-
 };
 
 Flex.displayName = 'Flex';
