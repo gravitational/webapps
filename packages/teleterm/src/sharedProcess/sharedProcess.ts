@@ -62,7 +62,7 @@ async function initializeServer(
       true
     ),
     (error, port) => {
-      sendBoundNetworkPort(port);
+      sendBoundNetworkPortToStdout(port);
 
       if (error) {
         return logger.error(error.message);
@@ -77,9 +77,8 @@ async function initializeServer(
   });
 }
 
-function sendBoundNetworkPort(address: number) {
-  // writes to stdout
-  console.log(`{CONNECT_GRPC_PORT: ${address}}`);
+function sendBoundNetworkPortToStdout(port: number) {
+  console.log(`{CONNECT_GRPC_PORT: ${port}}`);
 }
 
 const runtimeSettings = getRuntimeSettings();
