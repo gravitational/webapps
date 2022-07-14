@@ -1,19 +1,13 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`support Cloud 1`] = `
-.c6 {
-  display: inline-block;
-  transition: color 0.3s;
-  color: #FFFFFF;
-}
-
 .c3 {
   box-sizing: border-box;
 }
 
 .c9 {
   box-sizing: border-box;
-  margin-bottom: 72px;
+  margin-bottom: 24px;
   margin-top: 24px;
   padding-left: 32px;
   padding-right: 32px;
@@ -22,6 +16,64 @@ exports[`support Cloud 1`] = `
   border: 1px solid;
   border-radius: 8px;
   border-color: #222C59;
+}
+
+.c14 {
+  line-height: 1.5;
+  margin: 0;
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  box-sizing: border-box;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-family: inherit;
+  font-weight: 600;
+  outline: none;
+  position: relative;
+  text-align: center;
+  text-decoration: none;
+  text-transform: uppercase;
+  transition: all 0.3s;
+  -webkit-font-smoothing: antialiased;
+  background: #512FC9;
+  color: rgba(255,255,255,0.87);
+  min-height: 32px;
+  font-size: 12px;
+  padding: 0px 24px;
+  width: 210px;
+}
+
+.c14:active {
+  opacity: 0.56;
+}
+
+.c14:hover,
+.c14:focus {
+  background: #651FFF;
+}
+
+.c14:active {
+  background: #354AA4;
+}
+
+.c14:disabled {
+  background: rgba(255,255,255,0.12);
+  color: rgba(255,255,255,0.3);
+}
+
+.c6 {
+  display: inline-block;
+  transition: color 0.3s;
+  color: #FFFFFF;
+}
+
+.c15 {
+  display: inline-block;
+  transition: color 0.3s;
+  margin-right: 8px;
+  color: #FFFFFF;
 }
 
 .c1 {
@@ -375,23 +427,29 @@ exports[`support Cloud 1`] = `
       </div>
     </div>
   </div>
+  <button
+    class="c14"
+    kind="primary"
+    width="210px"
+  >
+    <span
+      class="c15 icon icon-clock3 "
+      color="light"
+      style="font-weight: bold;"
+    />
+    Schedule Upgrades
+  </button>
 </div>
 `;
 
 exports[`support Enterprise 1`] = `
-.c6 {
-  display: inline-block;
-  transition: color 0.3s;
-  color: #FFFFFF;
-}
-
 .c3 {
   box-sizing: border-box;
 }
 
 .c9 {
   box-sizing: border-box;
-  margin-bottom: 72px;
+  margin-bottom: 24px;
   margin-top: 24px;
   padding-left: 32px;
   padding-right: 32px;
@@ -400,6 +458,12 @@ exports[`support Enterprise 1`] = `
   border: 1px solid;
   border-radius: 8px;
   border-color: #222C59;
+}
+
+.c6 {
+  display: inline-block;
+  transition: color 0.3s;
+  color: #FFFFFF;
 }
 
 .c1 {
@@ -764,19 +828,13 @@ exports[`support Enterprise 1`] = `
 `;
 
 exports[`support OSS 1`] = `
-.c6 {
-  display: inline-block;
-  transition: color 0.3s;
-  color: #FFFFFF;
-}
-
 .c3 {
   box-sizing: border-box;
 }
 
 .c9 {
   box-sizing: border-box;
-  margin-bottom: 72px;
+  margin-bottom: 24px;
   margin-top: 24px;
   padding-left: 32px;
   padding-right: 32px;
@@ -785,6 +843,12 @@ exports[`support OSS 1`] = `
   border: 1px solid;
   border-radius: 8px;
   border-color: #222C59;
+}
+
+.c6 {
+  display: inline-block;
+  transition: color 0.3s;
+  color: #FFFFFF;
 }
 
 .c1 {

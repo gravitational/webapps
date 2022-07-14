@@ -20,50 +20,26 @@ import {
   FeatureHeaderTitle,
 } from 'teleport/components/Layout';
 import React from 'react';
-import { Box, ButtonPrimary, Indicator } from 'design';
+import { Box, Indicator } from 'design';
 import { Danger } from 'design/Alert';
 import useTeleport from 'teleport/useTeleport';
 import ClusterList from './ClusterList';
 import useClusters from './useClusters';
-import { Clock } from 'design/Icon';
-import { ScheduleUpgrades } from './ScheduleUpgrades/ScheduleUpgrades';
-import useUpgradeWindowStart from './useUpgradeWindowStart';
 
 export default function Container() {
   const ctx = useTeleport();
   const state = useClusters(ctx);
-  const upgradeWindowsState = useUpgradeWindowStart(ctx);
-  return <Clusters {...state} {...upgradeWindowsState} />;
+  return <Clusters {...state} />;
 }
 
-type State = ReturnType<typeof useClusters> &
-  ReturnType<typeof useUpgradeWindowStart>;
+type State = ReturnType<typeof useClusters>;
 
 export function Clusters(props: State) {
-  const {
-    clusters,
-    enabledFeatures,
-    initAttempt,
-    canScheduleUpgrades,
-    showScheduleUpgrade,
-    scheduleUpgradesVisible,
-    hideScheduleUpgrade,
-    onUpdate,
-    upgradeWindowOptions,
-    selectedUpgradeWindowStart,
-    setSelectedUpgradeWindowStart,
-    attempt,
-  } = props;
+  const { clusters, enabledFeatures, initAttempt } = props;
   return (
     <FeatureBox>
       <FeatureHeader alignItems="center" justifyContent="space-between">
         <FeatureHeaderTitle>Manage Clusters</FeatureHeaderTitle>
-        {canScheduleUpgrades && (
-          <ButtonPrimary onClick={showScheduleUpgrade}>
-            <Clock mr="2" style={{ fontWeight: 'bold' }} />
-            Schedule Upgrades
-          </ButtonPrimary>
-        )}
       </FeatureHeader>
       {initAttempt.status === 'processing' && (
         <Box textAlign="center" m={10}>
@@ -85,16 +61,6 @@ export function Clusters(props: State) {
             showKubes: enabledFeatures.kubes,
             showDesktops: enabledFeatures.desktops,
           }}
-        />
-      )}
-      {scheduleUpgradesVisible && (
-        <ScheduleUpgrades
-          onSave={onUpdate}
-          onClose={hideScheduleUpgrade}
-          upgradeWindowOptions={upgradeWindowOptions}
-          selectedWindow={selectedUpgradeWindowStart}
-          onSelectedWindowChange={setSelectedUpgradeWindowStart}
-          attempt={attempt}
         />
       )}
     </FeatureBox>

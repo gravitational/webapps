@@ -131,6 +131,7 @@ exports[`render failed 1`] = `
   position: relative;
   overflow-y: auto;
   max-height: calc(100% - 96px);
+  max-width: 600px;
 }
 
 .c4 {
@@ -278,7 +279,7 @@ exports[`render failed 1`] = `
         class="c4"
         color="text.primary"
       >
-        Select a time for upgrade
+        Select a maintenance start window
       </div>
       <div
         class="c5"
@@ -286,7 +287,7 @@ exports[`render failed 1`] = `
         <div
           class="c6"
         >
-          Select the start time for the upgrade window
+          Teleport provides different cluster maintenance windows to minimize downtime during upgrades, patches, etc.
         </div>
         <div
           class="c7"
@@ -516,6 +517,7 @@ exports[`render loaded 1`] = `
   position: relative;
   overflow-y: auto;
   max-height: calc(100% - 96px);
+  max-width: 600px;
 }
 
 .c4 {
@@ -642,7 +644,7 @@ exports[`render loaded 1`] = `
         class="c4"
         color="text.primary"
       >
-        Select a time for upgrade
+        Select a maintenance start window
       </div>
       <div
         class="c5"
@@ -650,7 +652,7 @@ exports[`render loaded 1`] = `
         <div
           class="c6"
         >
-          Select the start time for the upgrade window
+          Teleport provides different cluster maintenance windows to minimize downtime during upgrades, patches, etc.
         </div>
         <div
           class="c7"
@@ -874,6 +876,7 @@ exports[`render processing 1`] = `
   position: relative;
   overflow-y: auto;
   max-height: calc(100% - 96px);
+  max-width: 600px;
 }
 
 .c4 {
@@ -1000,7 +1003,7 @@ exports[`render processing 1`] = `
         class="c4"
         color="text.primary"
       >
-        Select a time for upgrade
+        Select a maintenance start window
       </div>
       <div
         class="c5"
@@ -1008,7 +1011,7 @@ exports[`render processing 1`] = `
         <div
           class="c6"
         >
-          Select the start time for the upgrade window
+          Teleport provides different cluster maintenance windows to minimize downtime during upgrades, patches, etc.
         </div>
         <div
           class="c7"

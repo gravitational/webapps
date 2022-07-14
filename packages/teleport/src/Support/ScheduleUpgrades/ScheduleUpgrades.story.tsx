@@ -16,10 +16,9 @@ limitations under the License.
 
 import React from 'react';
 import { ScheduleUpgrades, Props } from './ScheduleUpgrades';
-import type { UpgradeWindowStart } from 'teleport/services/upgradeWindow';
 
 export default {
-  title: 'Teleport/Clusters/ScheduleUpgrades',
+  title: 'Teleport/Support/ScheduleUpgrades',
 };
 
 export const Loaded = () => {

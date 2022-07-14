@@ -20,10 +20,8 @@ import useAttempt from 'shared/hooks/useAttemptNext';
 import cfg from 'teleport/config';
 import type { UpgradeWindowStart } from 'teleport/services/upgradeWindow';
 
-export default function useUpgradeWindowStart(ctx: Ctx) {
+export function useUpgradeWindowStart(ctx: Ctx) {
   const { attempt, run } = useAttempt();
-
-  const canScheduleUpgrades = cfg.isCloud;
 
   const [scheduleUpgradesVisible, setScheduleUpgradesVisible] = useState(false);
   const upgradeWindowOptions = cfg.scheduledUpgradeWindows;
@@ -59,7 +57,6 @@ export default function useUpgradeWindowStart(ctx: Ctx) {
   }
 
   return {
-    canScheduleUpgrades,
     scheduleUpgradesVisible,
     showScheduleUpgrade,
     hideScheduleUpgrade,

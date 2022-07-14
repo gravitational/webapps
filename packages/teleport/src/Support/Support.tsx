@@ -15,20 +15,25 @@
  */
 
 import React from 'react';
+import styled from 'styled-components';
+import { Card, Box, Text, Flex, ButtonPrimary } from 'design';
 import * as Icons from 'design/Icon';
-import { Card, Box, Text, Flex } from 'design';
+import { Clock } from 'design/Icon';
 import { FeatureBox } from 'teleport/components/Layout';
 import useTeleport from 'teleport/useTeleport';
 import cfg from 'teleport/config';
-import styled from 'styled-components';
+import { ScheduleUpgrades } from './ScheduleUpgrades/ScheduleUpgrades';
+import { useUpgradeWindowStart } from './useUpgradeWindowStart';
 
 export default function Container() {
   const ctx = useTeleport();
   const cluster = ctx.storeUser.state.cluster;
+  const upgradeWindowsState = useUpgradeWindowStart(ctx);
 
   return (
     <Support
       {...cluster}
+      {...upgradeWindowsState}
       isEnterprise={cfg.isEnterprise}
       tunnelPublicAddress={cfg.tunnelPublicAddress}
       isCloud={cfg.isCloud}
@@ -43,6 +48,14 @@ export const Support = ({
   isEnterprise,
   tunnelPublicAddress,
   isCloud,
+  showScheduleUpgrade,
+  scheduleUpgradesVisible,
+  hideScheduleUpgrade,
+  onUpdate,
+  upgradeWindowOptions,
+  selectedUpgradeWindowStart,
+  setSelectedUpgradeWindowStart,
+  attempt,
 }: Props) => {
   const docs = getDocUrls(authVersion, isEnterprise);
 
@@ -106,7 +119,7 @@ export const Support = ({
         border="1px solid"
         borderColor="primary.light"
         mt={4}
-        mb={10}
+        mb={4}
         borderRadius={3}
         px={5}
         py={4}
@@ -121,6 +134,22 @@ export const Support = ({
           <ClusterData title="Public SSH Tunnel" data={tunnelPublicAddress} />
         )}
       </Box>
+      {isCloud && (
+        <ButtonPrimary onClick={showScheduleUpgrade} width="210px">
+          <Clock mr="2" style={{ fontWeight: 'bold' }} />
+          Schedule Upgrades
+        </ButtonPrimary>
+      )}
+      {scheduleUpgradesVisible && (
+        <ScheduleUpgrades
+          onSave={onUpdate}
+          onClose={hideScheduleUpgrade}
+          upgradeWindowOptions={upgradeWindowOptions}
+          selectedWindow={selectedUpgradeWindowStart}
+          onSelectedWindowChange={setSelectedUpgradeWindowStart}
+          attempt={attempt}
+        />
+      )}
     </FeatureBox>
   );
 };
@@ -215,11 +244,11 @@ const Header = ({ title = '', icon = null }) => (
   </Flex>
 );
 
-type Props = {
+export type Props = {
   clusterId: string;
   authVersion: string;
   publicURL: string;
   isEnterprise: boolean;
   isCloud: boolean;
   tunnelPublicAddress?: string;
-};
+} & ReturnType<typeof useUpgradeWindowStart>;
