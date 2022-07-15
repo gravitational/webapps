@@ -2766,6 +2766,13 @@
     "@types/node" "*"
     form-data "^3.0.0"
 
+"@types/node-forge@^1.0.4":
+  version "1.0.4"
+  resolved "https://registry.yarnpkg.com/@types/node-forge/-/node-forge-1.0.4.tgz#82df44938848e111463080286876e4cbe2b297a0"
+  integrity sha512-UpX8LTRrarEZPQvQqF5/6KQAqZolOVckH7txWdlsWIJrhBFFtwEUTcqeDouhrJl6t0F7Wg5cyUOAqqF8a6hheg==
+  dependencies:
+    "@types/node" "*"
+
 "@types/node@*", "@types/node@^16.11.10":
   version "16.11.10"
   resolved "https://registry.yarnpkg.com/@types/node/-/node-16.11.10.tgz#2e3ad0a680d96367103d3e670d41c2fed3da61ae"
@@ -8146,11 +8153,6 @@ invariant@^2.2.4:
   dependencies:
     loose-envify "^1.0.0"
 
-ip-regex@^4.3.0:
-  version "4.3.0"
-  resolved "https://registry.yarnpkg.com/ip-regex/-/ip-regex-4.3.0.tgz#687275ab0f57fa76978ff8f4dddc8a23d5990db5"
-  integrity sha512-B9ZWJxHHOHUhUjCPrMpLD4xEq35bUTClHM1S6CBU5ixQnkZmwipwgc96vAd7AAGM9TGHvJR+Uss+/Ak6UphK+Q==
-
 ip@^1.1.0, ip@^1.1.5:
   version "1.1.5"
   resolved "https://registry.yarnpkg.com/ip/-/ip-1.1.5.tgz#bdded70114290828c0a039e72ef25f5aaec4354a"
@@ -10018,15 +10020,6 @@ mixin-deep@^1.2.0:
     for-in "^1.0.2"
     is-extendable "^1.0.1"
 
-mkcert@^1.5.0:
-  version "1.5.0"
-  resolved "https://registry.yarnpkg.com/mkcert/-/mkcert-1.5.0.tgz#5395427b2f86fbf9b3b707a81dc1dc1e680feba8"
-  integrity sha512-Jc5tW6XGpRZR/GXimztRtvv0Q46Qkv0/iqy06sBOldb1I5FfkeD7/LDPOMV9fnV6Nkx8YbNv+Z/8AmmQGfPtgg==
-  dependencies:
-    commander "^8.3.0"
-    ip-regex "^4.3.0"
-    node-forge "^1.2.1"
-
 mkdirp@^0.5.1, mkdirp@^0.5.3, mkdirp@^0.5.4, mkdirp@^0.5.5:
   version "0.5.5"
   resolved "https://registry.yarnpkg.com/mkdirp/-/mkdirp-0.5.5.tgz#d91cefd62d1436ca0f41620e251288d420099def"
@@ -10180,7 +10173,7 @@ node-forge@^0.10.0:
   resolved "https://registry.yarnpkg.com/node-forge/-/node-forge-0.10.0.tgz#32dea2afb3e9926f02ee5ce8794902691a676bf3"
   integrity sha512-PPmu8eEeG9saEUvI97fm4OYxXVB6bFvyNTyiUOBichBpFG8A1Ljw3bY62+5oOjDEMHRnd0Y7HQ+x7uzxOzC6JA==
 
-node-forge@^1.2.1:
+node-forge@^1.3.1:
   version "1.3.1"
   resolved "https://registry.yarnpkg.com/node-forge/-/node-forge-1.3.1.tgz#be8da2af243b2417d5f646a770663a92b7e9ded3"
   integrity sha512-dPEtOeMvF9VMcYV/1Wb8CPoVAXtp6MKMlcbAt4ddqmGqUJ6fQZFXkNZNkNlfevtNkGtaSoXf/vNNNSvgrdXwtA==

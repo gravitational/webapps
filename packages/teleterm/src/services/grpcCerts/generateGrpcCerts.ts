@@ -1,13 +1,13 @@
 import fs from 'fs/promises';
 import path from 'path';
-import mkcert from 'mkcert';
+import { createCA, createCert } from './makeCert';
 
 export async function generateGrpcCerts(certsDir: string): Promise<void> {
   function getPath(fileName: string): string {
     return path.join(certsDir, fileName);
   }
 
-  const ca = await mkcert.createCA({
+  const ca = await createCA({
     organization: 'localhost',
     countryCode: 'US',
     state: 'CA',
@@ -15,19 +15,20 @@ export async function generateGrpcCerts(certsDir: string): Promise<void> {
     validityDays: 365,
   });
 
-  const server = await mkcert.createCert({
-    domains: ['localhost'],
-    validityDays: 365,
-    caKey: ca.key,
-    caCert: ca.cert,
-  });
-
-  const client = await mkcert.createCert({
-    domains: ['localhost'],
-    validityDays: 365,
-    caKey: ca.key,
-    caCert: ca.cert,
-  });
+  const [server, client] = await Promise.all([
+    createCert({
+      domains: ['localhost'],
+      validityDays: 365,
+      caKey: ca.key,
+      caCert: ca.cert,
+    }),
+    createCert({
+      domains: ['localhost'],
+      validityDays: 365,
+      caKey: ca.key,
+      caCert: ca.cert,
+    }),
+  ]);
 
   await Promise.all([
     fs.writeFile(getPath('ca.crt'), ca.cert),

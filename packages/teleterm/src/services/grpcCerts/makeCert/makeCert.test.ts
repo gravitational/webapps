@@ -1,0 +1,100 @@
+/**
+ * (The MIT License)
+ *
+ * Copyright (c) 2019 Subash Pathak <subash@subash.me>
+ *
+ * Permission is hereby granted, free of charge, to any person obtaining
+ * a copy of this software and associated documentation files (the
+ * 'Software'), to deal in the Software without restriction, including
+ * without limitation the rights to use, copy, modify, merge, publish,
+ * distribute, sublicense, and/or sell copies of the Software, and to
+ * permit persons to whom the Software is furnished to do so, subject to
+ * the following conditions:
+ *
+ * The above copyright notice and this permission notice shall be
+ * included in all copies or substantial portions of the Software.
+ *
+ * THE SOFTWARE IS PROVIDED 'AS IS', WITHOUT WARRANTY OF ANY KIND,
+ * EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
+ * MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.
+ * IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY
+ * CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT,
+ * TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE
+ * SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+ */
+
+/**
+ Copyright 2022 Gravitational, Inc.
+
+ Licensed under the Apache License, Version 2.0 (the "License");
+ you may not use this file except in compliance with the License.
+ You may obtain a copy of the License at
+
+ http://www.apache.org/licenses/LICENSE-2.0
+
+ Unless required by applicable law or agreed to in writing, software
+ distributed under the License is distributed on an "AS IS" BASIS,
+ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ See the License for the specific language governing permissions and
+ limitations under the License.
+ */
+
+import { createCA, createCert } from './makeCert';
+import { pki } from 'node-forge';
+
+test('create CA cert', async () => {
+  const ca = await createCA({
+    organization: 'Test CA',
+    countryCode: 'NP',
+    state: 'Bagmati',
+    locality: 'Kathmandu',
+    validityDays: 365,
+  });
+
+  expect(ca.key).toBeDefined();
+  expect(ca.cert).toBeDefined();
+});
+
+test('create cert signed by CA', async () => {
+  const ca = await createCA({
+    organization: 'Test CA',
+    countryCode: 'NP',
+    state: 'Bagmati',
+    locality: 'Kathmandu',
+    validityDays: 365,
+  });
+
+  const tls = await createCert({
+    domains: ['127.0.0.1', 'localhost'],
+    validityDays: 365,
+    caKey: ca.key,
+    caCert: ca.cert,
+  });
+
+  expect(tls.key).toBeDefined();
+  expect(tls.cert).toBeDefined();
+});
+
+test('verify certificate chain', async () => {
+  const ca = await createCA({
+    organization: 'Test CA',
+    countryCode: 'NP',
+    state: 'Bagmati',
+    locality: 'Kathmandu',
+    validityDays: 365,
+  });
+
+  const server = await createCert({
+    domains: ['127.0.0.1', 'localhost'],
+    validityDays: 365,
+    caKey: ca.key,
+    caCert: ca.cert,
+  });
+
+  const caStore = pki.createCaStore([ca.cert]);
+  const serverCert = pki.certificateFromPem(server.cert);
+
+  expect(() => {
+    pki.verifyCertificateChain(caStore, [serverCert]);
+  }).not.toThrow();
+});
