@@ -29,16 +29,19 @@ module.exports = {
     filename: '[name].js',
     chunkFilename: '[name].js',
   },
-  devtool: false,
+  devtool: 'source-map',
   mode: 'development',
-  plugins: [configFactory.plugins.reactRefresh()],
+  plugins: [
+    configFactory.plugins.tsChecker(),
+    configFactory.plugins.reactRefresh(),
+  ],
   module: {
     strictExportPresence: true,
     rules: [
       configFactory.rules.fonts(),
       configFactory.rules.svg(),
       configFactory.rules.images(),
-      configFactory.rules.jsx(),
+      configFactory.rules.jsx(true),
       configFactory.rules.css(),
     ],
   },

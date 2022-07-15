@@ -22,12 +22,11 @@ const plugins = [
 ];
 
 function makePresents(test = false) {
-  const presents = ['@babel/preset-react', '@babel/preset-typescript'];
-
   if (test) {
     return [
       ['@babel/preset-env', { targets: { node: 'current' } }],
-      ...presents,
+      '@babel/preset-react',
+      '@babel/preset-typescript',
     ];
   }
 
@@ -39,7 +38,6 @@ function makePresents(test = false) {
           'last 2 chrome version, last 2 edge version, last 2 firefox version, last 2 safari version',
       },
     ],
-    ...presents,
   ];
 }
 

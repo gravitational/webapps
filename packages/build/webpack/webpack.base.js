@@ -16,6 +16,7 @@ limitations under the License.
 
 const path = require('path');
 const HtmlWebPackPlugin = require('html-webpack-plugin');
+const ForkTsCheckerWebpackPlugin = require('fork-ts-checker-webpack-plugin');
 const ReactRefreshPlugin = require('@pmmmwh/react-refresh-webpack-plugin');
 
 const resolvePath = require('./resolvepath');
@@ -25,6 +26,9 @@ const configFactory = {
   plugins: {
     reactRefresh(options) {
       return new ReactRefreshPlugin(options);
+    },
+    tsChecker(options) {
+      return new ForkTsCheckerWebpackPlugin(options);
     },
     indexHtml(options) {
       return new HtmlWebPackPlugin({
@@ -70,13 +74,20 @@ const configFactory = {
         },
       };
     },
-    jsx() {
+    jsx(developmentMode = false) {
       return {
         test: /\.(ts|tsx|js|jsx)$/,
         exclude: /(node_modules)|(assets)/,
         use: [
           {
             loader: 'babel-loader',
+          },
+          {
+            loader: 'ts-loader',
+            options: {
+              onlyCompileBundledFiles: true,
+              transpileOnly: developmentMode,
+            },
           },
         ],
       };
