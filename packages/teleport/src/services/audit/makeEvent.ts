@@ -673,11 +673,11 @@ export const formatters: Formatters = {
   [eventCodes.CERTIFICATE_CREATED]: {
     type: 'cert.create',
     desc: 'Certificate Issued',
-    format: ({ cert_type, identity: { users } }) => {
+    format: ({ cert_type, identity: { user } }) => {
       if (cert_type === 'user') {
-        return `User certificate issued for [${users}]`;
+        return `User certificate issued for [${user}]`;
       }
-      return `Certificate of type [${cert_type}] issued for [${users}]`;
+      return `Certificate of type [${cert_type}] issued for [${user}]`;
     },
   },
   [eventCodes.UNKNOWN]: {
