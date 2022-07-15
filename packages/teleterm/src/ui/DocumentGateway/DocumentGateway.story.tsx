@@ -1,6 +1,10 @@
 import React from 'react';
 
-import { makeEmptyAttempt, makeProcessingAttempt } from 'shared/hooks/useAsync';
+import {
+  makeEmptyAttempt,
+  makeProcessingAttempt,
+  makeErrorAttempt,
+} from 'shared/hooks/useAsync';
 
 import { DocumentGateway } from './DocumentGateway';
 
@@ -47,6 +51,28 @@ export function Offline() {
       connected={false}
       reconnect={() => {}}
       connectAttempt={makeEmptyAttempt()}
+      runCliCommand={() => {}}
+      changeDbName={() => Promise.resolve([undefined, null])}
+      changeDbNameAttempt={makeEmptyAttempt()}
+      changePort={() => Promise.resolve([undefined, null])}
+      changePortAttempt={makeEmptyAttempt()}
+    />
+  );
+}
+
+export function OfflineWithFailedConnectAttempt() {
+  const connectAttempt = makeErrorAttempt<void>(
+    'listen tcp 127.0.0.1:62414: bind: address already in use'
+  );
+
+  return (
+    <DocumentGateway
+      gateway={undefined}
+      defaultPort="62414"
+      disconnect={() => Promise.resolve([undefined, null])}
+      connected={false}
+      reconnect={() => {}}
+      connectAttempt={connectAttempt}
       runCliCommand={() => {}}
       changeDbName={() => Promise.resolve([undefined, null])}
       changeDbNameAttempt={makeEmptyAttempt()}

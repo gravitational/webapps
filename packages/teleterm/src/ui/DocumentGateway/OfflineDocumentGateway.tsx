@@ -21,7 +21,14 @@ export function OfflineDocumentGateway(props: OfflineDocumentGatewayProps) {
   const isProcessing = props.connectAttempt.status === 'processing';
 
   return (
-    <Flex flexDirection="column" mx="auto" alignItems="center" mt={100}>
+    <Flex
+      maxWidth="590px"
+      width="100%"
+      flexDirection="column"
+      mx="auto"
+      alignItems="center"
+      mt={11}
+    >
       <Text
         typography="h5"
         color="text.primary"
@@ -32,31 +39,29 @@ export function OfflineDocumentGateway(props: OfflineDocumentGatewayProps) {
         {props.connectAttempt.status === 'processing' && <LinearProgress />}
       </Text>
       {props.connectAttempt.status === 'error' && (
-        <Alerts.Danger>{props.connectAttempt.statusText}</Alerts.Danger>
+        <Alerts.Danger mb={0}>{props.connectAttempt.statusText}</Alerts.Danger>
       )}
       <Flex
         as="form"
         onSubmit={() => props.reconnect(port)}
-        alignItems="center"
+        alignItems="flex-end"
+        flexWrap="wrap"
+        justifyContent="space-between"
         mt={3}
+        gap={2}
       >
         {props.connectAttempt.status === 'error' && (
           <Validation>
             <PortFieldInput
               label="Port (optional)"
               value={port}
+              mb={0}
               readonly={isProcessing}
               onChange={e => setPort(e.target.value)}
             />
           </Validation>
         )}
-        <ButtonPrimary
-          type="submit"
-          mt={1}
-          ml={2}
-          width="100px"
-          disabled={isProcessing}
-        >
+        <ButtonPrimary type="submit" disabled={isProcessing}>
           Reconnect
         </ButtonPrimary>
       </Flex>
