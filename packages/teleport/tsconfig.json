@@ -36,9 +36,5 @@
         "../../teleterm/src/*"
       ],
     }
-  },
-  "include": [
-    "src/**/*.ts",
-    "src/**/*.tsx"
-  ]
+  }
 }
