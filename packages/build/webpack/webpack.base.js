@@ -50,17 +50,21 @@ const configFactory = {
     fonts() {
       return {
         test: /fonts\/(.)+\.(woff|woff2|ttf|eot|svg)/,
-        loader: 'url-loader',
-        options: {
-          limit: 102400, // 100kb
-          name: '/assets/fonts/[name].[ext]',
+        type: 'asset',
+        generator: {
+          filename: 'assets/fonts/[name][ext]',
+        },
+        parser: {
+          dataUrlCondition: {
+            maxSize: 102400, // 100kb
+          },
         },
       };
     },
     svg() {
       return {
         test: /\.svg$/,
-        loader: 'svg-url-loader',
+        type: 'asset/inline',
         exclude: /node_modules/,
       };
     },
@@ -73,10 +77,14 @@ const configFactory = {
     images() {
       return {
         test: /\.(png|jpg|gif|ico)$/,
-        loader: 'url-loader',
-        options: {
-          limit: 10000,
-          name: '/assets/img/img-[hash:6].[ext]',
+        type: 'asset',
+        generator: {
+          filename: 'assets/img/img-[hash:6][ext]',
+        },
+        parser: {
+          dataUrlCondition: {
+            maxSize: 10240, // 10kb
+          },
         },
       };
     },
