@@ -28,7 +28,7 @@ steps:
 
   - name: gcr.io/cloud-builders/docker
     id: build-teleport
-    waitFor: ['checkout']
+    waitFor: ['prettier-check-and-lint']
     args:
       - build
       - '--build-arg'
@@ -37,7 +37,7 @@ steps:
 
   - name: gcr.io/cloud-builders/docker
     id: build-term
-    waitFor: ['checkout']
+    waitFor: ['prettier-check-and-lint']
     args:
       - build
       - '--build-arg'
