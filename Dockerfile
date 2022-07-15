@@ -10,6 +10,7 @@ COPY packages/build/ web-apps/packages/build/
 # copy only package.json files
 COPY packages/design/package.json web-apps/packages/design/
 COPY packages/shared/package.json web-apps/packages/shared/
+COPY packages/shared/tsconfig.json web-apps/packages/shared/
 COPY packages/teleport/package.json web-apps/packages/teleport/
 COPY packages/teleterm/package.json web-apps/packages/teleterm/
 
