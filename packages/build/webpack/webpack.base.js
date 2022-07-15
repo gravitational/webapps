@@ -147,7 +147,7 @@ function createDefaultConfig() {
        * format of the output file names. [name] stands for 'entry' keys
        * defined in the 'entry' section
        **/
-      filename: '[name].[hash].js',
+      filename: '[name].[contenthash].js',
 
       // chunk file name format
       chunkFilename: '[name].[chunkhash].js',
