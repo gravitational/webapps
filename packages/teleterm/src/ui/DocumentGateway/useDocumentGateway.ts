@@ -77,11 +77,11 @@ export default function useGateway(doc: types.DocumentGateway) {
   });
 
   const [changePortAttempt, changePort] = useAsync(async (port: string) => {
-    // TODO: use a real service here
-    const updatedGateway = await {
-      localPort: port,
-      targetSubresourceName: 'psql postgres://default@localhost:52939/abcde',
-    };
+    const updatedGateway = await ctx.clustersService.setGatewayLocalPort(
+      doc.gatewayUri,
+      port
+    );
+
     workspaceDocumentsService.update(doc.uri, {
       targetSubresourceName: updatedGateway.targetSubresourceName,
       port: updatedGateway.localPort,
