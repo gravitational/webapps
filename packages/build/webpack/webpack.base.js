@@ -47,6 +47,12 @@ const configFactory = {
     },
   },
   rules: {
+    raw() {
+      return {
+        resourceQuery: /raw/,
+        type: 'asset/source',
+      };
+    },
     fonts() {
       return {
         test: /fonts\/(.)+\.(woff|woff2|ttf|eot|svg)/,
