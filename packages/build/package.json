@@ -52,7 +52,6 @@
     "eslint-plugin-jest": "^25.3.0",
     "eslint-plugin-react": "^7.27.1",
     "events": "1.0.2",
-    "file-loader": "^6.2.0",
     "fork-ts-checker-webpack-plugin": "^7.2.12",
     "html-webpack-plugin": "^5.5.0",
     "jest": "^27.3.1",

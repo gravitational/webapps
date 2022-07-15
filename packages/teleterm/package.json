@@ -43,7 +43,6 @@
     "electron-notarize": "^1.2.1",
     "eslint-import-resolver-webpack": "0.13.2",
     "eslint-loader": "3.0.3",
-    "file-loader": "6.0.0",
     "google-protobuf": "^3.20.1",
     "immer": "^9.0.7",
     "react-dnd": "^14.0.4",
