@@ -28,6 +28,7 @@ steps:
 
   - name: gcr.io/cloud-builders/docker
     id: build-teleport
+    waitFor: ['checkout']
     args:
       - build
       - '--build-arg'
@@ -36,6 +37,7 @@ steps:
 
   - name: gcr.io/cloud-builders/docker
     id: build-term
+    waitFor: ['checkout']
     args:
       - build
       - '--build-arg'
