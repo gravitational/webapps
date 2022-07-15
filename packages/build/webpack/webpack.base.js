@@ -21,14 +21,22 @@ const ReactRefreshPlugin = require('@pmmmwh/react-refresh-webpack-plugin');
 
 const resolvePath = require('./resolvepath');
 
+const tsconfigPath = path.join(__dirname, '/../../shared/tsconfig.json');
+const teleportPath = path.join(__dirname, '/../../teleport/src');
+
 const configFactory = {
   createDefaultConfig,
   plugins: {
     reactRefresh(options) {
       return new ReactRefreshPlugin(options);
     },
-    tsChecker(options) {
-      return new ForkTsCheckerWebpackPlugin(options);
+    tsChecker() {
+      return new ForkTsCheckerWebpackPlugin({
+        typescript: {
+          configFile: tsconfigPath,
+          context: teleportPath,
+        },
+      });
     },
     indexHtml(options) {
       return new HtmlWebPackPlugin({
@@ -87,6 +95,8 @@ const configFactory = {
             options: {
               onlyCompileBundledFiles: true,
               transpileOnly: developmentMode,
+              configFile: tsconfigPath,
+              context: teleportPath,
             },
           },
         ],
@@ -147,7 +157,7 @@ function createDefaultConfig() {
       // some vendor libraries expect below globals to be defined
       alias: {
         teleterm: path.join(__dirname, '/../../teleterm/src'),
-        teleport: path.join(__dirname, '/../../teleport/src'),
+        teleport: teleportPath,
         'e-teleport': path.join(__dirname, '/../../webapps.e/teleport/src'),
         design: path.join(__dirname, '/../../design/src'),
         shared: path.join(__dirname, '/../../shared'),
