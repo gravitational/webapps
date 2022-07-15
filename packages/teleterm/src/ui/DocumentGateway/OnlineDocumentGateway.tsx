@@ -23,6 +23,9 @@ export function OnlineDocumentGateway(props: OnlineDocumentGatewayProps) {
   const isPortOrDbNameProcessing =
     props.changeDbNameAttempt.status === 'processing' ||
     props.changePortAttempt.status === 'processing';
+  const hasError =
+    props.changeDbNameAttempt.status === 'error' ||
+    props.changePortAttempt.status === 'error';
   const formRef = useRef<HTMLFormElement>();
   const { gateway } = props;
 
@@ -40,9 +43,25 @@ export function OnlineDocumentGateway(props: OnlineDocumentGatewayProps) {
     }, 1000);
   }, [props.changePort]);
 
+  const $errors = hasError && (
+    <Flex flexDirection="column" gap={2} mb={3}>
+      {props.changeDbNameAttempt.status === 'error' && (
+        <Alerts.Danger mb={0}>
+          Could not change the database name:{' '}
+          {props.changeDbNameAttempt.statusText}
+        </Alerts.Danger>
+      )}
+      {props.changePortAttempt.status === 'error' && (
+        <Alerts.Danger mb={0}>
+          Could not change the port number: {props.changePortAttempt.statusText}
+        </Alerts.Danger>
+      )}
+    </Flex>
+  );
+
   return (
     <Box maxWidth="590px" width="100%" mx="auto" mt="4" px="5">
-      <Flex justifyContent="space-between" mb="4" flexWrap="wrap">
+      <Flex justifyContent="space-between" mb="4" flexWrap="wrap" gap={2}>
         <Text typography="h3" color="text.secondary">
           Database Connection
         </Text>
@@ -76,17 +95,7 @@ export function OnlineDocumentGateway(props: OnlineDocumentGatewayProps) {
         isLoading={isPortOrDbNameProcessing}
         onRun={props.runCliCommand}
       />
-      {props.changeDbNameAttempt.status === 'error' && (
-        <Alerts.Danger mt={4}>
-          Could not change the database name:{' '}
-          {props.changeDbNameAttempt.statusText}
-        </Alerts.Danger>
-      )}
-      {props.changePortAttempt.status === 'error' && (
-        <Alerts.Danger>
-          Could not change the port number: {props.changePortAttempt.statusText}
-        </Alerts.Danger>
-      )}
+      {$errors}
       <Text typography="h4" mt={3} mb={1}>
         Connect with GUI
       </Text>
