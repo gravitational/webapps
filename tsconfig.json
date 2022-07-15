@@ -4,7 +4,6 @@
     "allowJs": true,
     "baseUrl": ".",
     "esModuleInterop": true,
-    "experimentalDecorators": true,
     "importHelpers": true,
     "lib": [
       "dom",
