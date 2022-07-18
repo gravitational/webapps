@@ -85,11 +85,11 @@ export const renderActionCell = (
   event: Event,
   onShowDetails: (e: Event) => void
 ) => (
-  <Cell align='right'>
+  <Cell align="right">
     <ButtonBorder
-      size='small'
+      size="small"
       onClick={() => onShowDetails(event)}
-      width='87px'
+      width="87px"
     >
       Details
     </ButtonBorder>
