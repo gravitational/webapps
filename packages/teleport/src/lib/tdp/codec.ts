@@ -539,15 +539,15 @@ export default class Codec {
   decodeSharedDirectoryInfoRequest(
     buffer: ArrayBuffer
   ): SharedDirectoryInfoRequest {
-    let dv = new DataView(buffer);
+    const dv = new DataView(buffer);
     let offset = 0;
     offset += byteLength; // eat message type
-    let completionId = dv.getUint32(offset);
+    const completionId = dv.getUint32(offset);
     offset += uint32Length; // eat completion_id
-    let directoryId = dv.getUint32(offset);
+    const directoryId = dv.getUint32(offset);
     offset += uint32Length; // eat directory_id
     offset += uint32Length; // eat path_length
-    let path = this.decoder.decode(new Uint8Array(buffer.slice(offset)));
+    const path = this.decoder.decode(new Uint8Array(buffer.slice(offset)));
 
     return {
       completionId,
