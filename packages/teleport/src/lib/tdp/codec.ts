@@ -502,18 +502,25 @@ export default class Codec {
   // decodePngFrame decodes a raw tdp PNG frame message and returns it as a PngFrame
   // | message type (2) | left uint32 | top uint32 | right uint32 | bottom uint32 | data []byte |
   // https://github.com/gravitational/teleport/blob/master/rfd/0037-desktop-access-protocol.md#2---png-frame
-  decodePngFrame(buffer: ArrayBuffer, onload: (PngFrame) => any): PngFrame {
-    let dv = new DataView(buffer);
+  decodePngFrame(
+    buffer: ArrayBuffer,
+    onload: (pngFrame: PngFrame) => any
+  ): PngFrame {
+    const dv = new DataView(buffer);
     const image = new Image();
-    const pngFrame = {
-      left: dv.getUint32(1),
-      top: dv.getUint32(5),
-      right: dv.getUint32(9),
-      bottom: dv.getUint32(13),
-      data: image,
-    };
+    let offset = 0;
+    offset += byteLength; // eat message type
+    const left = dv.getUint32(offset);
+    offset += uint32Length; // eat left
+    const top = dv.getUint32(offset);
+    offset += uint32Length; // eat top
+    const right = dv.getUint32(offset);
+    offset += uint32Length; // eat right
+    const bottom = dv.getUint32(offset);
+    offset += uint32Length; // eat bottom
+    const pngFrame = { left, top, right, bottom, data: image };
     pngFrame.data.onload = onload(pngFrame);
-    pngFrame.data.src = this.asBase64Url(buffer);
+    pngFrame.data.src = this.asBase64Url(buffer, offset);
 
     return pngFrame;
   }
@@ -557,8 +564,8 @@ export default class Codec {
   }
 
   // asBase64Url creates a data:image uri from the png data part of a PNG_FRAME tdp message.
-  private asBase64Url(buffer: ArrayBuffer): string {
-    return `data:image/png;base64,${arrayBufferToBase64(buffer.slice(17))}`;
+  private asBase64Url(buffer: ArrayBuffer, offset: number): string {
+    return `data:image/png;base64,${arrayBufferToBase64(buffer.slice(offset))}`;
   }
 }
 
