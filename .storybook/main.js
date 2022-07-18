@@ -17,7 +17,6 @@ limitations under the License.
 const path = require('path');
 const fs = require('fs');
 const configFactory = require('@gravitational/build/webpack/webpack.base');
-const ForkTsCheckerWebpackPlugin = require('fork-ts-checker-webpack-plugin');
 
 // include open source stories
 const stories = ['../packages/**/*.story.@(js|jsx|ts|tsx)'];
