@@ -42,7 +42,7 @@ module.exports = {
       configFactory.rules.fonts(),
       configFactory.rules.svg(),
       configFactory.rules.images(),
-      configFactory.rules.jsx(true),
+      configFactory.rules.jsx(),
       configFactory.rules.css(),
     ],
   },
