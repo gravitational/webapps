@@ -23,15 +23,15 @@ const service = {
   getUpgradeWindowStart(): Promise<UpgradeWindowStart> {
     return api
       .get(cfg.api.upgradeWindowStartPath)
-      .then(res => res.upgrade_window_start);
+      .then(res => res.upgradeWindowStart);
   },
 
   updateUpgradeWindowStart(
-    windowStart: UpgradeWindowStart
+    upgradeWindowStart: UpgradeWindowStart
   ): Promise<UpgradeWindowStart> {
     return api
       .post(cfg.api.upgradeWindowStartPath, {
-        upgrade_window_start: windowStart,
+        upgradeWindowStart,
       })
       .then(res => res.windowStart);
   },
