@@ -94,7 +94,7 @@ const configFactory = {
         },
       };
     },
-    jsx(developmentMode = false) {
+    jsx() {
       return {
         test: /\.(ts|tsx|js|jsx)$/,
         exclude: /(node_modules)|(assets)/,
@@ -106,7 +106,6 @@ const configFactory = {
             loader: 'ts-loader',
             options: {
               onlyCompileBundledFiles: true,
-              transpileOnly: developmentMode,
               configFile: tsconfigPath,
             },
           },
