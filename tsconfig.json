@@ -9,7 +9,7 @@
       "dom",
       "esnext"
     ],
-    "jsx": "react",
+    "jsx": "preserve",
     "module": "esnext",
     "moduleResolution": "node",
     "noEmitHelpers": true,
