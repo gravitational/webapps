@@ -64,7 +64,7 @@ export default function RecordingsList(props: Props) {
         },
         {
           key: 'createdDate',
-          headerText: 'Created',
+          headerText: 'Created (UTC)',
           isSortable: true,
           render: ({ createdDate }) => (
             <Cell>{displayDateTime(createdDate)}</Cell>
@@ -79,7 +79,7 @@ export default function RecordingsList(props: Props) {
           render: recording => renderPlayCell(recording, clusterId),
         },
       ]}
-      emptyText="No Recordings Found"
+      emptyText='No Recordings Found'
       pagination={{ pageSize }}
       fetching={{ onFetchMore: fetchMore, fetchStatus }}
       initialSort={{
@@ -122,7 +122,7 @@ const renderPlayCell = (
 ) => {
   if (!playable) {
     return (
-      <Cell align="right" style={{ color: '#9F9F9F' }}>
+      <Cell align='right' style={{ color: '#9F9F9F' }}>
         {description}
       </Cell>
     );
@@ -136,14 +136,14 @@ const renderPlayCell = (
     }
   );
   return (
-    <Cell align="right">
+    <Cell align='right'>
       <ButtonBorder
-        kind="primary"
-        as="a"
+        kind='primary'
+        as='a'
         href={url}
-        width="80px"
-        target="_blank"
-        size="small"
+        width='80px'
+        target='_blank'
+        size='small'
       >
         Play
       </ButtonBorder>

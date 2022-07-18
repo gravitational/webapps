@@ -421,7 +421,7 @@ exports[`list of all events 1`] = `
         </th>
         <th>
           <a>
-            Created
+            Created (UTC)
             <span
               class="c10 c13 icon icon-chevron-down "
               color="light"
@@ -4316,7 +4316,7 @@ exports[`loaded audit log screen 1`] = `
         </th>
         <th>
           <a>
-            Created
+            Created (UTC)
             <span
               class="c14 c17 icon icon-chevron-down "
               color="light"
