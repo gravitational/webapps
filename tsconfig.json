@@ -20,7 +20,6 @@
     "target": "esnext",
     "types": [
       "node",
-      "webpack",
       "@emotion/core"
     ],
     "paths": {
