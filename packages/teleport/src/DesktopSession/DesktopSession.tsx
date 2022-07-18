@@ -142,6 +142,19 @@ function Session(props: PropsWithChildren<State>) {
     !disconnected &&
     clipboardSuccess;
 
+  const onShareDirectory = () => {
+    window
+      .showDirectoryPicker()
+      .then(sharedDirHandle => {
+        setIsSharingDirectory(true);
+        tdpClient.sharedDirectory = sharedDirHandle;
+        tdpClient.sendSharedDirectoryAnnounce();
+      })
+      .catch(() => {
+        setIsSharingDirectory(false);
+      });
+  };
+
   return (
     <Flex flexDirection="column">
       <TopBar
@@ -158,18 +171,7 @@ function Session(props: PropsWithChildren<State>) {
         clipboardSharingEnabled={clipboardSharingActive}
         canShareDirectory={canShareDirectory}
         isSharingDirectory={isSharingDirectory}
-        onShareDirectory={() => {
-          window
-            .showDirectoryPicker()
-            .then(sharedDirHandle => {
-              setIsSharingDirectory(true);
-              tdpClient.sharedDirectory = sharedDirHandle;
-              tdpClient.sendSharedDirectoryAnnounce();
-            })
-            .catch(() => {
-              setIsSharingDirectory(false);
-            });
-        }}
+        onShareDirectory={onShareDirectory}
       />
 
       {props.children}
