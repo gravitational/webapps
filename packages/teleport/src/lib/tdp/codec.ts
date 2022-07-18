@@ -522,9 +522,12 @@ export default class Codec {
   decodeSharedDirectoryAcknowledge(
     buffer: ArrayBuffer
   ): SharedDirectoryAcknowledge {
-    let dv = new DataView(buffer);
-    let errCode = toSharedDirectoryErrCode(dv.getUint32(1));
-    let directoryId = dv.getUint32(5);
+    const dv = new DataView(buffer);
+    let offset = 0;
+    offset += byteLength; // eat message type
+    const errCode = toSharedDirectoryErrCode(dv.getUint32(offset));
+    offset += uint32Length; // eat errCode
+    const directoryId = dv.getUint32(5);
 
     return {
       errCode,

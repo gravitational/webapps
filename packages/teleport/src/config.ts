@@ -30,6 +30,7 @@ import generateResourcePath from './generateResourcePath';
 const cfg = {
   // TODO(isaiah): remove after feature is finished.
   enableDirectorySharing: false, // note to reviewers: should be false in any PRs.
+  enabledDiscoverWizard: false, // TODO (anyone): remove after wizard is finished
   isEnterprise: false,
   isCloud: false,
   tunnelPublicAddress: '',
@@ -61,6 +62,7 @@ const cfg = {
 
   routes: {
     root: '/web',
+    discover: '/web/discover',
     apps: '/web/cluster/:clusterId/apps',
     appLauncher: '/web/launch/:fqdn/:clusterId?/:publicAddr?/:arn?',
     support: '/web/support',
@@ -85,7 +87,7 @@ const cfg = {
     consoleNodes: '/web/cluster/:clusterId/console/nodes',
     consoleConnect: '/web/cluster/:clusterId/console/node/:serverId/:login',
     consoleSession: '/web/cluster/:clusterId/console/session/:sid',
-    player: '/web/cluster/:clusterId/session/:sid', // ?recordingType=ssh|desktop&durationMs=1234
+    player: '/web/cluster/:clusterId/session/:sid', // ?recordingType=ssh|desktop|k8s&durationMs=1234
     login: '/web/login',
     loginSuccess: '/web/msg/info/login_success',
     loginErrorLegacy: '/web/msg/error/login_failed',
