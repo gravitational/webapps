@@ -55,7 +55,7 @@ const configFactory = {
     },
     fonts() {
       return {
-        test: /fonts\/(.)+\.(woff|woff2|ttf|eot|svg)/,
+        test: /fonts\/(.)+\.(woff|woff2|ttf|svg)/,
         type: 'asset',
         generator: {
           filename: 'assets/fonts/[name][ext]',
