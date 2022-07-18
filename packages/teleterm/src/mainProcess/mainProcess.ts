@@ -51,17 +51,8 @@ export default class MainProcess {
     try {
       this._initTshd();
       this._initSharedProcess();
+      this._initResolvingChildProcessAddresses();
       this._initIpc();
-      this.resolvedChildProcessAddresses = Promise.all([
-        this.resolveNetworkAddress(
-          this.settings.tshd.requestedNetworkAddress,
-          this.tshdProcess
-        ),
-        this.resolveNetworkAddress(
-          this.settings.sharedProcess.requestedNetworkAddress,
-          this.sharedProcess
-        ),
-      ]).then(([tsh, shared]) => ({ tsh, shared }));
     } catch (err) {
       this.logger.error('Failed to start main process: ', err.message);
       app.exit(1);
@@ -114,6 +105,19 @@ export default class MainProcess {
     this.sharedProcess.once('exit', code => {
       this.logger.info('shared process exited with code:', code);
     });
+  }
+
+  private _initResolvingChildProcessAddresses(): void {
+    this.resolvedChildProcessAddresses = Promise.all([
+      this.resolveNetworkAddress(
+        this.settings.tshd.requestedNetworkAddress,
+        this.tshdProcess
+      ),
+      this.resolveNetworkAddress(
+        this.settings.sharedProcess.requestedNetworkAddress,
+        this.sharedProcess
+      ),
+    ]).then(([tsh, shared]) => ({ tsh, shared }));
   }
 
   private resolveNetworkAddress(
