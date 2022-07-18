@@ -15,11 +15,7 @@ export function createPtyHostClient(
 ): PtyHostClient {
   const client = new GrpcClient(
     address,
-    credentials.createSsl(
-      grpcCerts.caCert,
-      grpcCerts.clientKey,
-      grpcCerts.clientCert
-    )
+    credentials.createSsl(grpcCerts.cert, grpcCerts.key, grpcCerts.cert)
   );
 
   return {

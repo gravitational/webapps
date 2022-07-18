@@ -45,18 +45,16 @@ async function initializeServer(
   const server = new Server();
   // @ts-expect-error we have a typed service
   server.addService(PtyHostService, createPtyHostService());
-  const { caCert, serverCert, serverKey } = await readGrpcCerts(
-    runtimeSettings.certsDir
-  );
+  const { cert, key } = await readGrpcCerts(runtimeSettings.certsDir);
 
   server.bindAsync(
     address,
     ServerCredentials.createSsl(
-      caCert,
+      cert,
       [
         {
-          cert_chain: serverCert,
-          private_key: serverKey,
+          cert_chain: cert,
+          private_key: key,
         },
       ],
       true

@@ -39,12 +39,11 @@
  limitations under the License.
  */
 
-import { createCA, createCert } from './makeCert';
-import { pki } from 'node-forge';
+import { makeCert } from './makeCert';
 
 test('create CA cert', async () => {
-  const ca = await createCA({
-    organization: 'Test CA',
+  const ca = await makeCert({
+    commonName: 'Test CA',
     countryCode: 'NP',
     state: 'Bagmati',
     locality: 'Kathmandu',
@@ -53,48 +52,4 @@ test('create CA cert', async () => {
 
   expect(ca.key).toBeDefined();
   expect(ca.cert).toBeDefined();
-});
-
-test('create cert signed by CA', async () => {
-  const ca = await createCA({
-    organization: 'Test CA',
-    countryCode: 'NP',
-    state: 'Bagmati',
-    locality: 'Kathmandu',
-    validityDays: 365,
-  });
-
-  const tls = await createCert({
-    domains: ['127.0.0.1', 'localhost'],
-    validityDays: 365,
-    caKey: ca.key,
-    caCert: ca.cert,
-  });
-
-  expect(tls.key).toBeDefined();
-  expect(tls.cert).toBeDefined();
-});
-
-test('verify certificate chain', async () => {
-  const ca = await createCA({
-    organization: 'Test CA',
-    countryCode: 'NP',
-    state: 'Bagmati',
-    locality: 'Kathmandu',
-    validityDays: 365,
-  });
-
-  const server = await createCert({
-    domains: ['127.0.0.1', 'localhost'],
-    validityDays: 365,
-    caKey: ca.key,
-    caCert: ca.cert,
-  });
-
-  const caStore = pki.createCaStore([ca.cert]);
-  const serverCert = pki.certificateFromPem(server.cert);
-
-  expect(() => {
-    pki.verifyCertificateChain(caStore, [serverCert]);
-  }).not.toThrow();
 });

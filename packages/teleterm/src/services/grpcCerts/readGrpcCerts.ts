@@ -2,11 +2,8 @@ import fs from 'fs/promises';
 import path from 'path';
 
 export interface GrpcCerts {
-  caCert: Buffer;
-  serverCert: Buffer;
-  serverKey: Buffer;
-  clientCert: Buffer;
-  clientKey: Buffer;
+  cert: Buffer;
+  key: Buffer;
 }
 
 export async function readGrpcCerts(certsDir: string): Promise<GrpcCerts> {
@@ -15,18 +12,12 @@ export async function readGrpcCerts(certsDir: string): Promise<GrpcCerts> {
   }
 
   const files = await Promise.all([
-    fs.readFile(getPath('ca.crt')),
-    fs.readFile(getPath('server.crt')),
-    fs.readFile(getPath('server.key')),
-    fs.readFile(getPath('client.crt')),
-    fs.readFile(getPath('client.key')),
+    fs.readFile(getPath('cert.crt')),
+    fs.readFile(getPath('cert.key')),
   ]);
 
   return {
-    caCert: files[0],
-    serverCert: files[1],
-    serverKey: files[2],
-    clientCert: files[3],
-    clientKey: files[4],
+    cert: files[0],
+    key: files[1],
   };
 }

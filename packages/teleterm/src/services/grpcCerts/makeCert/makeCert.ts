@@ -42,6 +42,7 @@
 import { pki, md, util, random } from 'node-forge';
 import { promisify } from 'util';
 
+const IP_REGEX = /^(?!0)(?!.*\.$)((1?\d?\d|25[0-5]|2[0-4]\d)(\.|$)){4}$/;
 const generateKeyPair = promisify(pki.rsa.generateKeyPair.bind(pki.rsa));
 
 interface GeneratedCert {
@@ -49,14 +50,14 @@ interface GeneratedCert {
   cert: string;
 }
 
-export async function createCA({
-  organization,
+export async function makeCert({
+  commonName,
   countryCode,
   state,
   locality,
   validityDays,
 }: {
-  organization: string;
+  commonName: string;
   countryCode: string;
   state: string;
   locality: string;
@@ -64,11 +65,11 @@ export async function createCA({
 }): Promise<GeneratedCert> {
   // certificate Attributes: https://git.io/fptna
   const attributes = [
-    { name: 'commonName', value: organization },
+    { name: 'commonName', value: commonName },
     { name: 'countryName', value: countryCode },
     { name: 'stateOrProvinceName', value: state },
     { name: 'localityName', value: locality },
-    { name: 'organizationName', value: organization },
+    { name: 'organizationName', value: commonName },
   ];
 
   // required certificate extensions for a certificate authority
@@ -78,10 +79,22 @@ export async function createCA({
       name: 'keyUsage',
       keyCertSign: true,
       critical: true,
+      digitalSignature: true,
+      keyEncipherment: true,
+    },
+    {
+      name: 'subjectAltName',
+      altNames: (() => {
+        const types = { domain: 2, ip: 7 }; // available Types: https://git.io/fptng
+        const isIp = IP_REGEX.test(commonName);
+
+        if (isIp) return { type: types.ip, ip: commonName };
+        return { type: types.domain, value: commonName };
+      })(),
     },
   ];
 
-  return await generateCert({
+  return await generateRawCert({
     subject: attributes,
     issuer: attributes,
     extensions,
@@ -89,58 +102,7 @@ export async function createCA({
   });
 }
 
-export async function createCert({
-  domains,
-  validityDays,
-  caKey,
-  caCert,
-}: {
-  domains: string[];
-  validityDays: number;
-  caKey: string;
-  caCert: string;
-}): Promise<GeneratedCert> {
-  // certificate Attributes: https://git.io/fptna
-  const attributes = [
-    { name: 'commonName', value: domains[0] }, // use the first address as common name
-  ];
-
-  // required certificate extensions for a tls certificate
-  // keyUsage has been extended by entries from https://github.com/digitalbazaar/forge#x509
-  const extensions = [
-    { name: 'basicConstraints', cA: false, critical: true },
-    {
-      name: 'keyUsage',
-      digitalSignature: true,
-      keyEncipherment: true,
-      critical: true,
-    },
-    { name: 'extKeyUsage', serverAuth: true, clientAuth: true },
-    {
-      name: 'subjectAltName',
-      altNames: domains.map(domain => {
-        const types = { domain: 2, ip: 7 }; // available Types: https://git.io/fptng
-        const ipRegex = /^(?!0)(?!.*\.$)((1?\d?\d|25[0-5]|2[0-4]\d)(\.|$)){4}$/;
-        const isIp = ipRegex.test(domain);
-
-        if (isIp) return { type: types.ip, ip: domain };
-        return { type: types.domain, value: domain };
-      }),
-    },
-  ];
-
-  const ca = pki.certificateFromPem(caCert);
-
-  return await generateCert({
-    subject: attributes,
-    issuer: ca.subject.attributes,
-    extensions: extensions,
-    validityDays: validityDays,
-    signWith: caKey,
-  });
-}
-
-async function generateCert({
+async function generateRawCert({
   subject,
   issuer,
   extensions,

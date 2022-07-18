@@ -11,9 +11,9 @@ export function createGrpcClient(addr: string, grpcCertificates: GrpcCerts) {
   return new TerminalServiceClient(
     addr,
     grpc.credentials.createSsl(
-      grpcCertificates.caCert,
-      grpcCertificates.clientKey,
-      grpcCertificates.clientCert
+      grpcCertificates.cert,
+      grpcCertificates.key,
+      grpcCertificates.cert
     )
   );
 }
