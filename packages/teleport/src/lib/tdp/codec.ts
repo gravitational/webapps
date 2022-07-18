@@ -484,11 +484,17 @@ export default class Codec {
   // | message type (10) | mfa_type byte | message_length uint32 | json []byte
   decodeMfaJson(buffer: ArrayBuffer): MfaJson {
     let dv = new DataView(buffer);
-    const mfaType = String.fromCharCode(dv.getUint8(1));
+    let offset = 0;
+    offset += byteLength; // eat message type
+    const mfaType = String.fromCharCode(dv.getUint8(offset));
+    offset += byteLength; // eat mfa_type
     if (mfaType !== 'n' && mfaType !== 'u') {
       throw new Error(`invalid mfa type ${mfaType}, should be "n" or "u"`);
     }
-    const jsonString = this.decoder.decode(new Uint8Array(buffer.slice(6)));
+    offset += uint32Length; // eat message_length
+    const jsonString = this.decoder.decode(
+      new Uint8Array(buffer.slice(offset))
+    );
     return { mfaType, jsonString };
   }
 
