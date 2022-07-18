@@ -93,7 +93,7 @@ export type SharedDirectoryAnnounce = {
   name: string;
 };
 
-// | message type (12) | err error | directory_id uint32 |
+// | message type (12) | errCode error | directory_id uint32 |
 export type SharedDirectoryAcknowledge = {
   errCode: SharedDirectoryErrCode;
   directoryId: number;
@@ -510,13 +510,16 @@ export default class Codec {
     return pngFrame;
   }
 
-  // | message type (12) | directory_id uint32 | succeeded byte |
+  // | message type (12) | errCode error | directory_id uint32 |
   decodeSharedDirectoryAcknowledge(
     buffer: ArrayBuffer
   ): SharedDirectoryAcknowledge {
-    let dv = new DataView(buffer);
-    let errCode = toSharedDirectoryErrCode(dv.getUint32(1));
-    let directoryId = dv.getUint32(5);
+    const dv = new DataView(buffer);
+    let offset = 0;
+    offset += byteLength; // eat message type
+    const errCode = toSharedDirectoryErrCode(dv.getUint32(offset));
+    offset += uint32Length; // eat errCode
+    const directoryId = dv.getUint32(5);
 
     return {
       errCode,
