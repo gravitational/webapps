@@ -128,10 +128,18 @@ export default class MainProcess {
     return new Promise((resolve, reject) => {
       process.stdout.setEncoding('utf-8');
       let chunks = '';
+      const timeout = setTimeout(() => {
+        rejectOnError(
+          new Error(
+            `Could not resolve address for ${requestedAddress}. The operation timed out.`
+          )
+        );
+      }, 15_000); // 15s
 
       const removeListeners = () => {
         process.stdout.off('data', findAddressInChunk);
         process.off('error', rejectOnError);
+        clearTimeout(timeout);
       };
 
       const findAddressInChunk = (chunk: string) => {
