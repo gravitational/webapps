@@ -14,11 +14,13 @@
     "moduleResolution": "node",
     "noEmitHelpers": true,
     "pretty": true,
+    "skipLibCheck": true,
     "sourceMap": true,
     "stripInternal": true,
     "target": "esnext",
     "types": [
       "node",
+      "webpack",
       "@emotion/core"
     ],
     "paths": {
