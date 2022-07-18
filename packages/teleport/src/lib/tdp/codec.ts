@@ -40,6 +40,7 @@ export enum MessageType {
   SHARED_DIRECTORY_ANNOUNCE = 11,
   SHARED_DIRECTORY_ACKNOWLEDGE = 12,
   SHARED_DIRECTORY_INFO_REQUEST = 13,
+  __LAST, // utility value
 }
 
 // 0 is left button, 1 is middle button, 2 is right button
@@ -468,7 +469,7 @@ export default class Codec {
   // Throws an error on an invalid or unexpected MessageType value.
   decodeMessageType(buffer: ArrayBuffer): MessageType {
     const messageType = new DataView(buffer).getUint8(0);
-    if (!(messageType in MessageType)) {
+    if (!(messageType in MessageType) || messageType === MessageType.__LAST) {
       throw new Error(`invalid message type: ${messageType}`);
     }
     return messageType;

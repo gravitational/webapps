@@ -104,12 +104,7 @@ test('decodes message types', () => {
   const { buffer: pngFrameBuf } = makeBuf(MessageType.PNG_FRAME);
   const { buffer: clipboardBuf } = makeBuf(MessageType.CLIPBOARD_DATA);
   const { buffer: errorBuf } = makeBuf(MessageType.ERROR);
-  let invalid =
-    Math.max(
-      ...(Object.values(MessageType).filter(
-        mt => !isNaN(Number(mt))
-      ) as number[])
-    ) + 1;
+  let invalid = MessageType.__LAST;
   const { buffer: invalidBuf } = makeBuf(invalid);
 
   expect(codec.decodeMessageType(pngFrameBuf)).toEqual(MessageType.PNG_FRAME);
