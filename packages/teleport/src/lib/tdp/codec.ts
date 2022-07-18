@@ -459,7 +459,7 @@ export default class Codec {
   // decodeClipboardData decodes clipboard data
   decodeClipboardData(buffer: ArrayBuffer): ClipboardData {
     return {
-      data: this._decodeStringMessage(buffer),
+      data: this.decodeStringMessage(buffer),
     };
   }
 
@@ -477,7 +477,7 @@ export default class Codec {
   // decodeError decodes a raw tdp ERROR message and returns it as a string
   // | message type (9) | message_length uint32 | message []byte
   decodeErrorMessage(buffer: ArrayBuffer): string {
-    return this._decodeStringMessage(buffer);
+    return this.decodeStringMessage(buffer);
   }
 
   // decodeMfaChallenge decodes a raw tdp MFA challenge message and returns it as a string (of a json).
@@ -492,11 +492,12 @@ export default class Codec {
     return { mfaType, jsonString };
   }
 
-  // _decodeStringMessage decodes a tdp message of the form
+  // decodeStringMessage decodes a tdp message of the form
   // | message type (N) | message_length uint32 | message []byte
-  _decodeStringMessage(buffer: ArrayBuffer): string {
+  private decodeStringMessage(buffer: ArrayBuffer): string {
     // slice(5) ensures we skip the message type and message_length
-    return this.decoder.decode(new Uint8Array(buffer.slice(5)));
+    const offset = 0 + byteLength + uint32Length; // eat message type and message_length
+    return this.decoder.decode(new Uint8Array(buffer.slice(offset)));
   }
 
   // decodePngFrame decodes a raw tdp PNG frame message and returns it as a PngFrame
