@@ -11,6 +11,10 @@
 // WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 // See the License for the specific language governing permissions and
 // limitations under the License.
+
+// SharedDirectoryManager manages a FileSystemDirectoryHandle for use
+// by the TDP client. Most of it's methods can potentially throw errors
+// and so should be wrapped in try/catch blocks.
 export class SharedDirectoryManager {
   private dir: FileSystemDirectoryHandle | undefined;
 
@@ -26,6 +30,84 @@ export class SharedDirectoryManager {
   getName(): string {
     this.checkReady();
     return this.dir.name;
+  }
+
+  // gets the size of item at path, where
+  // path is the relative path from the root
+  // directory. Size returned is in bytes.
+  async getSize(path: string): Promise<number> {
+    this.checkReady();
+
+    const fileOrDir = await this.walkPath(path);
+
+    if (fileOrDir.kind === 'directory') {
+      // Magic value for directories per the TDP spec.
+      return 4096;
+    }
+    let file = await fileOrDir.getFile();
+    return file.size;
+  }
+
+  // gets the last modified date at path, where
+  // path is the relative path from the root directory.
+  // The number returned is the last modified date in
+  // milliseconds since the unix epoch.
+  async getLastModified(path: string): Promise<number> {
+    this.checkReady();
+
+    const fileOrDir = await this.walkPath(path);
+
+    if (fileOrDir.kind === 'directory') {
+      // Magic value for directories per the TDP spec.
+      return 0;
+    }
+    let file = await fileOrDir.getFile();
+    return file.lastModified;
+  }
+
+  // walkPath walks a pathstr (assumed to be in the qualified Unix format specified
+  // in the TDP spec), returning the FileSystemDirectoryHandle | FileSystemFileHandle
+  // it finds at its end. If the pathstr isn't a valid path in the shared directory,
+  // it throws an error.
+  private async walkPath(
+    pathstr: string
+  ): Promise<FileSystemDirectoryHandle | FileSystemFileHandle> {
+    if (pathstr === '') {
+      return this.dir;
+    }
+
+    let path = pathstr.split('/');
+
+    let walkIt = async (
+      dir: FileSystemDirectoryHandle,
+      path: string[]
+    ): Promise<FileSystemDirectoryHandle | FileSystemFileHandle> => {
+      // Pop the next path element off the stack
+      let nextPathElem = path.shift();
+
+      // Iterate through the items in the directory
+      for await (const entry of dir.values()) {
+        // If we find the entry we're looking for
+        if (entry.name === nextPathElem) {
+          if (path.length === 0) {
+            // We're at the end of the path, so this
+            // is the end element we've been walking towards.
+            return entry;
+          } else if (entry.kind === 'directory') {
+            // We're not at the end of the path and
+            // have encountered a directory, recurse
+            // further.
+            return walkIt(entry, path);
+          } else {
+            break;
+          }
+        }
+      }
+
+      throw new Error('Invalid path');
+    };
+
+    return walkIt(this.dir, path);
   }
 
   private checkReady() {

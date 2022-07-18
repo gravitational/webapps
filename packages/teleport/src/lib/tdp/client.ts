@@ -210,11 +210,22 @@ export default class Client extends EventEmitterWebAuthnSender {
     this.logger.info('Started sharing directory: ' + this.sdManager.getName());
   }
 
-  handleSharedDirectoryInfoRequest(buffer: ArrayBuffer) {
+  async handleSharedDirectoryInfoRequest(buffer: ArrayBuffer) {
     const req = this.codec.decodeSharedDirectoryInfoRequest(buffer);
     this.logger.debug(
       'Received SharedDirectoryInfoRequest: ' + JSON.stringify(req)
     );
+    try {
+      const size = await this.sdManager.getSize(req.path);
+      console.log('size = ' + size);
+      const lastModified = await this.sdManager.getLastModified(req.path);
+      console.log('lastModified = ' + lastModified);
+    } catch (e) {
+      // TODO(isaiah) I think sometimes we want to just pass this back,
+      // since windows defaults to look for certain files like desktop.ini
+      this.handleError(e);
+    }
+
     // TODO(isaiah): here's where we'll respond with SharedDirectoryInfoResponse
   }
 
