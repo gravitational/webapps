@@ -186,6 +186,20 @@ test('fetch users, null response values gives empty array', async () => {
 
   response = await user.fetchUsers();
   expect(response).toStrictEqual([
-    { authType: '', isLocal: false, name: '', roles: [] },
+    {
+      authType: '',
+      isLocal: false,
+      name: '',
+      roles: [],
+      traits: {
+        awsRoleArns: [],
+        dbNames: [],
+        dbUsers: [],
+        kubeGroups: [],
+        kubeUsers: [],
+        logins: [],
+        windowsLogins: [],
+      },
+    },
   ]);
 });
