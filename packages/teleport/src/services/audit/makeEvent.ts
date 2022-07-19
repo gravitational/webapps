@@ -703,7 +703,7 @@ export default function makeEvent(json: any): Event {
     id: getId(json),
     code: json.code,
     user: json.user,
-    time: dateToUtc(new Date(json.time)),
+    time: new Date(json.time),
     raw: json,
   };
 
