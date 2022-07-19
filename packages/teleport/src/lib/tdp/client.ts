@@ -247,15 +247,6 @@ export default class Client extends EventEmitterWebAuthnSender {
     }
   }
 
-  handleSharedDirectoryInfoRequest(buffer: ArrayBuffer) {
-    const req = this.codec.decodeSharedDirectoryInfoRequest(buffer);
-    // TODO(isaiah): remove debug once message is handled.
-    this.logger.debug(
-      'Received SharedDirectoryInfoRequest: ' + JSON.stringify(req)
-    );
-    // TODO(isaiah): here's where we'll respond with SharedDirectoryInfoResponse
-  }
-
   protected send(
     data: string | ArrayBufferLike | Blob | ArrayBufferView
   ): void {
