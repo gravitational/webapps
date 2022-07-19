@@ -15,8 +15,8 @@ limitations under the License.
 */
 
 import { useState, useEffect } from 'react';
-import Ctx from 'teleport/teleportContext';
 import useAttempt from 'shared/hooks/useAttemptNext';
+import Ctx from 'teleport/teleportContext';
 import cfg from 'teleport/config';
 import type { UpgradeWindowStart } from 'teleport/services/upgradeWindow';
 
