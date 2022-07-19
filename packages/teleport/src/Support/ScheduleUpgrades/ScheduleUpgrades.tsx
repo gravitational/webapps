@@ -95,7 +95,7 @@ export function ScheduleUpgrades({
 }
 
 export const makeLabel = (window: UpgradeWindowStart): string => {
-  return `UTC - ${window}`;
+  return `${window} (UTC)`;
 };
 
 export type Props = {

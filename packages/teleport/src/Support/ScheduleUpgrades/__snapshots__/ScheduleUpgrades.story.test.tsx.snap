@@ -310,7 +310,7 @@ exports[`render failed 1`] = `
                 <div
                   class="react-select__single-value css-1uccc91-singleValue"
                 >
-                  UTC - 08:00:00
+                  08:00:00 (UTC)
                 </div>
                 <div
                   class="css-b8ldur-Input"
@@ -669,7 +669,7 @@ exports[`render loaded 1`] = `
                 <div
                   class="react-select__single-value css-1uccc91-singleValue"
                 >
-                  UTC - 08:00:00
+                  08:00:00 (UTC)
                 </div>
                 <div
                   class="css-b8ldur-Input"
