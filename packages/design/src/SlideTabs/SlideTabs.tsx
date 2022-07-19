@@ -20,6 +20,7 @@ function SlideTabs({
   tabs,
   name = 'slide-tab',
   onChange,
+  size = 'xlarge',
   appearance = 'square',
 }: props) {
   const [activeIndex, setActiveIndex] = useState(0);
@@ -30,7 +31,7 @@ function SlideTabs({
 
   return (
     <Wrapper>
-      <TabNav appearance={appearance}>
+      <TabNav appearance={appearance} size={size}>
         {tabs.map((tabData, tabIndex) => {
           const tabDataType = typeof tabData === 'string';
           let tabName = tabDataType ? tabData : tabData.name;
@@ -52,6 +53,7 @@ function SlideTabs({
         itemCount={tabs.length}
         activeIndex={activeIndex}
         appearance={appearance}
+        size={size}
       />
     </Wrapper>
   );
@@ -67,6 +69,8 @@ type props = {
   name?: string;
   // The style to render the selector in.
   appearance?: 'square' | 'round';
+  // The size to render the selector in.
+  size?: 'xlarge' | 'medium';
 };
 
 export type TabComponent = {
@@ -95,9 +99,10 @@ const TabSlider = styled.div`
   background-color: #512fc9;
   border-radius: ${props => (props.appearance === 'square' ? '8px' : '60px')};
   box-shadow: 0px 2px 6px rgba(12, 12, 14, 0.1);
-  height: 40px;
+  height: ${props => (props.size === 'xlarge' ? '56px' : '40px')};
   left: calc(${props => (100 / props.itemCount) * props.activeIndex}% + 8px);
-  margin: 8px 8px 8px 0;
+  margin: ${props =>
+    props.size === 'xlarge' ? '12px 12px 12px 0' : '4px 4px 4px 0'};
   position: absolute;
   top: 0;
   transition: all 0.3s ease;
@@ -109,7 +114,7 @@ const TabNav = styled.nav`
   background-color: rgba(255, 255, 255, 0.05);
   border-radius: ${props => (props.appearance === 'square' ? '8px' : '60px')};
   display: flex;
-  height: 56px;
+  height: ${props => (props.size === 'xlarge' ? '80px' : '47px')};
   justify-content: space-around;
 `;
 
