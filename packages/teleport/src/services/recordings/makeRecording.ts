@@ -1,6 +1,5 @@
 import { differenceInMilliseconds, formatDistanceStrict } from 'date-fns';
 import { Recording } from './types';
-import { dateToUtc } from 'shared/services/loc/loc';
 import { eventCodes } from 'teleport/services/audit';
 
 // Takes in json objects built by SessionEnd and WindowsDesktopSessionEnd as defined in teleport/api/types/events/events.proto.

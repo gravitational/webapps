@@ -15,7 +15,6 @@ limitations under the License.
 */
 
 import { formatDistanceStrict } from 'date-fns';
-import { dateToUtc } from 'shared/services/loc/loc';
 import { Event, RawEvent, Formatters, eventCodes } from './types';
 
 export const formatters: Formatters = {
