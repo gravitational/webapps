@@ -1,5 +1,6 @@
 import { differenceInMilliseconds, formatDistanceStrict } from 'date-fns';
 import { Recording } from './types';
+import { dateToUtc } from 'shared/services/loc/loc';
 import { eventCodes } from 'teleport/services/audit';
 
 // Takes in json objects built by SessionEnd and WindowsDesktopSessionEnd as defined in teleport/api/types/events/events.proto.
@@ -31,7 +32,7 @@ function makeDesktopRecording({
     duration,
     durationText,
     sid,
-    createdDate: new Date(time),
+    createdDate: dateToUtc(new Date(time)),
     users: user,
     hostname: desktop_name,
     description,

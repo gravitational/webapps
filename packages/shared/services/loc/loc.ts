@@ -43,7 +43,7 @@ export function displayDate(date: Date) {
 
 export function displayDateTime(date: Date) {
   try {
-    return format(dateToUtc(date), cfg.dateTimeFormat);
+    return format(date, cfg.dateTimeFormat);
   } catch (err) {
     logger.error('displayDateTime()', err);
     return 'undefined';

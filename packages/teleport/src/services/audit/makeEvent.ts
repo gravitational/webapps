@@ -15,6 +15,7 @@ limitations under the License.
 */
 
 import { formatDistanceStrict } from 'date-fns';
+import { dateToUtc } from 'shared/services/loc/loc';
 import { Event, RawEvent, Formatters, eventCodes } from './types';
 
 export const formatters: Formatters = {
@@ -702,7 +703,7 @@ export default function makeEvent(json: any): Event {
     id: getId(json),
     code: json.code,
     user: json.user,
-    time: new Date(json.time),
+    time: dateToUtc(new Date(json.time)),
     raw: json,
   };
 
