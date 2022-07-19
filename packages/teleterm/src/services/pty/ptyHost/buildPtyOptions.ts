@@ -5,6 +5,7 @@ import {
   ResolveShellEnvTimeoutError,
 } from './resolveShellEnv';
 import { PtyCommand, PtyProcessCreationStatus } from '../types';
+import { delimiter } from 'path';
 
 export async function buildPtyOptions(
   settings: RuntimeSettings,
@@ -60,7 +61,7 @@ function getPtyProcessOptions(
       //
       // settings.binDir is present only in the packaged version of the app.
       if (settings.binDir) {
-        prependBinDirToPath(env, settings);
+        prependBinDirToPath(settings);
       }
 
       return {
@@ -101,17 +102,9 @@ function getPtyProcessOptions(
   }
 }
 
-function prependBinDirToPath(
-  env: typeof process.env,
-  settings: RuntimeSettings
-): void {
-  let path: string = env['PATH'] || '';
-
-  if (!path.trim()) {
-    path = settings.binDir;
-  } else {
-    path = settings.binDir + ':' + path;
-  }
-
-  env['PATH'] = path;
+function prependBinDirToPath(settings: RuntimeSettings): void {
+  process.env.PATH = [settings.binDir, process.env.PATH]
+    .map(path => path?.trim())
+    .filter(Boolean)
+    .join(delimiter);
 }
