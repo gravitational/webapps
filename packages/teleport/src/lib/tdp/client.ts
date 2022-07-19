@@ -26,10 +26,12 @@ import Codec, {
   FileType,
   SharedDirectoryErrCode,
   SharedDirectoryInfoResponse,
+  FileSystemObject,
 } from './codec';
 import {
   PathDoesNotExistError,
   SharedDirectoryManager,
+  FileOrDirInfo,
 } from './sharedDirectoryManager';
 
 export enum TdpClientEvent {
@@ -225,12 +227,7 @@ export default class Client extends EventEmitterWebAuthnSender {
       this.sendSharedDirectoryInfoResponse({
         completionId: req.completionId,
         errCode: SharedDirectoryErrCode.Nil,
-        fso: {
-          lastModified: BigInt(info.lastModified),
-          fileType: info.kind === 'file' ? FileType.File : FileType.Directory,
-          size: BigInt(info.size),
-          path: path,
-        },
+        fso: this.toFso(info),
       });
     } catch (e) {
       if (e.constructor === PathDoesNotExistError) {
@@ -257,6 +254,15 @@ export default class Client extends EventEmitterWebAuthnSender {
       'Received SharedDirectoryListRequest: ' + JSON.stringify(req)
     );
     // TODO(isaiah): here's where we'll send back a SharedDirectoryListResponse
+  }
+
+  private toFso(info: FileOrDirInfo): FileSystemObject {
+    return {
+      lastModified: BigInt(info.lastModified),
+      fileType: info.kind === 'file' ? FileType.File : FileType.Directory,
+      size: BigInt(info.size),
+      path: info.path,
+    };
   }
 
   protected send(
