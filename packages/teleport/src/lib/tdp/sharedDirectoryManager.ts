@@ -32,37 +32,30 @@ export class SharedDirectoryManager {
     return this.dir.name;
   }
 
-  // gets the size of item at path, where
-  // path is the relative path from the root
-  // directory. Size returned is in bytes.
-  async getSize(path: string): Promise<number> {
+  // Gets the information for the file or directory
+  // at path where path is the relative path from the
+  // root directory.
+  async getInfo(path: string): Promise<{
+    size: number; // bytes
+    lastModified: number; // ms since unix epoch
+    kind: 'file' | 'directory';
+  }> {
     this.checkReady();
 
     const fileOrDir = await this.walkPath(path);
 
     if (fileOrDir.kind === 'directory') {
-      // Magic value for directories per the TDP spec.
-      return 4096;
+      // Magic numbers are the values for directories where the true
+      // value is unavailable, according to the TDP spec.
+      return { size: 4096, lastModified: 0, kind: fileOrDir.kind };
     }
+
     let file = await fileOrDir.getFile();
-    return file.size;
-  }
-
-  // gets the last modified date at path, where
-  // path is the relative path from the root directory.
-  // The number returned is the last modified date in
-  // milliseconds since the unix epoch.
-  async getLastModified(path: string): Promise<number> {
-    this.checkReady();
-
-    const fileOrDir = await this.walkPath(path);
-
-    if (fileOrDir.kind === 'directory') {
-      // Magic value for directories per the TDP spec.
-      return 0;
-    }
-    let file = await fileOrDir.getFile();
-    return file.lastModified;
+    return {
+      size: file.size,
+      lastModified: file.lastModified,
+      kind: fileOrDir.kind,
+    };
   }
 
   // walkPath walks a pathstr (assumed to be in the qualified Unix format specified
@@ -104,7 +97,7 @@ export class SharedDirectoryManager {
         }
       }
 
-      throw new Error('Invalid path');
+      throw new PathDoesNotExistError('path does not exist');
     };
 
     return walkIt(this.dir, path);
@@ -116,5 +109,11 @@ export class SharedDirectoryManager {
         'attempted to use a shared directory before one was initialized'
       );
     }
+  }
+}
+
+export class PathDoesNotExistError extends Error {
+  constructor(message: string) {
+    super(message);
   }
 }

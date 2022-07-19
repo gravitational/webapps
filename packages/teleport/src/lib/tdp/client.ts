@@ -23,10 +23,14 @@ import Codec, {
   ClientScreenSpec,
   PngFrame,
   ClipboardData,
+  FileType,
   SharedDirectoryErrCode,
   SharedDirectoryInfoResponse,
 } from './codec';
-import { SharedDirectoryManager } from './sharedDirectoryManager';
+import {
+  PathDoesNotExistError,
+  SharedDirectoryManager,
+} from './sharedDirectoryManager';
 
 export enum TdpClientEvent {
   TDP_CLIENT_SCREEN_SPEC = 'tdp client screen spec',
@@ -212,18 +216,34 @@ export default class Client extends EventEmitterWebAuthnSender {
 
   async handleSharedDirectoryInfoRequest(buffer: ArrayBuffer) {
     const req = this.codec.decodeSharedDirectoryInfoRequest(buffer);
-    this.logger.debug(
-      'Received SharedDirectoryInfoRequest: ' + JSON.stringify(req)
-    );
     try {
-      const size = await this.sdManager.getSize(req.path);
-      console.log('size = ' + size);
-      const lastModified = await this.sdManager.getLastModified(req.path);
-      console.log('lastModified = ' + lastModified);
+      // TODO(isaiah): try different paths here
+      let info = await this.sdManager.getInfo(req.path);
+      this.sendSharedDirectoryInfoResponse({
+        completionId: req.completionId,
+        errCode: SharedDirectoryErrCode.Nil,
+        fso: {
+          lastModified: BigInt(info.lastModified),
+          fileType: info.kind === 'file' ? FileType.File : FileType.Directory,
+          size: BigInt(info.size),
+          path: req.path,
+        },
+      });
     } catch (e) {
-      // TODO(isaiah) I think sometimes we want to just pass this back,
-      // since windows defaults to look for certain files like desktop.ini
-      this.handleError(e);
+      if (e.constructor === PathDoesNotExistError) {
+        this.sendSharedDirectoryInfoResponse({
+          completionId: req.completionId,
+          errCode: SharedDirectoryErrCode.DoesNotExist,
+          fso: {
+            lastModified: BigInt(0),
+            fileType: FileType.File,
+            size: BigInt(0),
+            path: req.path,
+          },
+        });
+      } else {
+        this.handleError(e);
+      }
     }
 
     // TODO(isaiah): here's where we'll respond with SharedDirectoryInfoResponse
@@ -233,7 +253,11 @@ export default class Client extends EventEmitterWebAuthnSender {
     data: string | ArrayBufferLike | Blob | ArrayBufferView
   ): void {
     if (this.socket && this.socket.readyState === 1) {
-      this.socket.send(data);
+      try {
+        this.socket.send(data);
+      } catch (e) {
+        this.handleError(e);
+      }
       return;
     }
 
@@ -283,19 +307,20 @@ export default class Client extends EventEmitterWebAuthnSender {
   }
 
   sendSharedDirectoryAnnounce() {
-    try {
-      this.socket.send(
-        this.codec.encodeSharedDirectoryAnnounce({
-          completionId: 0, // This is always the first request.
-          // Hardcode directoryId for now since we only support sharing 1 directory.
-          // We're using 2 because the smartcard device is hardcoded to 1 in the backend.
-          directoryId: 2,
-          name: this.sdManager.getName(),
-        })
-      );
-    } catch (err) {
-      this.handleError(err);
-    }
+    this.send(
+      this.codec.encodeSharedDirectoryAnnounce({
+        completionId: 0, // This is always the first request.
+        // Hardcode directoryId for now since we only support sharing 1 directory.
+        // We're using 2 because the smartcard device is hardcoded to 1 in the backend.
+        directoryId: 2,
+        name: this.sdManager.getName(),
+      })
+    );
+  }
+
+  sendSharedDirectoryInfoResponse(res: SharedDirectoryInfoResponse) {
+    this.logger.debug(res); //TODO(isaiah): remove
+    this.send(this.codec.encodeSharedDirectoryInfoResponse(res));
   }
 
   resize(spec: ClientScreenSpec) {
