@@ -343,7 +343,7 @@ exports[`support Cloud 1`] = `
     >
       <div
         class="c12"
-        style="width: 150px;"
+        style="width: 130px;"
       >
         Cluster Name
         :
@@ -359,7 +359,7 @@ exports[`support Cloud 1`] = `
     >
       <div
         class="c12"
-        style="width: 150px;"
+        style="width: 130px;"
       >
         Teleport Version
         :
@@ -375,7 +375,7 @@ exports[`support Cloud 1`] = `
     >
       <div
         class="c12"
-        style="width: 150px;"
+        style="width: 130px;"
       >
         Public Address
         :
@@ -401,7 +401,7 @@ exports[`support Cloud 1`] = `
     >
       <div
         class="c12"
-        style="width: 150px;"
+        style="width: 130px;"
       >
         Window Start Time
         :
@@ -764,7 +764,7 @@ exports[`support Enterprise 1`] = `
     >
       <div
         class="c12"
-        style="width: 150px;"
+        style="width: 130px;"
       >
         Cluster Name
         :
@@ -780,7 +780,7 @@ exports[`support Enterprise 1`] = `
     >
       <div
         class="c12"
-        style="width: 150px;"
+        style="width: 130px;"
       >
         Teleport Version
         :
@@ -796,7 +796,7 @@ exports[`support Enterprise 1`] = `
     >
       <div
         class="c12"
-        style="width: 150px;"
+        style="width: 130px;"
       >
         Public Address
         :
@@ -1141,7 +1141,7 @@ exports[`support OSS 1`] = `
     >
       <div
         class="c12"
-        style="width: 150px;"
+        style="width: 130px;"
       >
         Cluster Name
         :
@@ -1157,7 +1157,7 @@ exports[`support OSS 1`] = `
     >
       <div
         class="c12"
-        style="width: 150px;"
+        style="width: 130px;"
       >
         Teleport Version
         :
@@ -1173,7 +1173,7 @@ exports[`support OSS 1`] = `
     >
       <div
         class="c12"
-        style="width: 150px;"
+        style="width: 130px;"
       >
         Public Address
         :

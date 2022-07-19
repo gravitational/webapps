@@ -32,13 +32,11 @@ export default function Container() {
   return <Clusters {...state} />;
 }
 
-type State = ReturnType<typeof useClusters>;
-
-export function Clusters(props: State) {
+export function Clusters(props: ReturnType<typeof useClusters>) {
   const { clusters, enabledFeatures, initAttempt } = props;
   return (
     <FeatureBox>
-      <FeatureHeader alignItems="center" justifyContent="space-between">
+      <FeatureHeader alignItems="center">
         <FeatureHeaderTitle>Manage Clusters</FeatureHeaderTitle>
       </FeatureHeader>
       {initAttempt.status === 'processing' && (
