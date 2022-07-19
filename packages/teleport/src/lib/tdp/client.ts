@@ -216,9 +216,9 @@ export default class Client extends EventEmitterWebAuthnSender {
 
   async handleSharedDirectoryInfoRequest(buffer: ArrayBuffer) {
     const req = this.codec.decodeSharedDirectoryInfoRequest(buffer);
+    const path = req.path;
     try {
-      // TODO(isaiah): try different paths here
-      let info = await this.sdManager.getInfo(req.path);
+      const info = await this.sdManager.getInfo(path);
       this.sendSharedDirectoryInfoResponse({
         completionId: req.completionId,
         errCode: SharedDirectoryErrCode.Nil,
@@ -226,7 +226,7 @@ export default class Client extends EventEmitterWebAuthnSender {
           lastModified: BigInt(info.lastModified),
           fileType: info.kind === 'file' ? FileType.File : FileType.Directory,
           size: BigInt(info.size),
-          path: req.path,
+          path: path,
         },
       });
     } catch (e) {
@@ -238,15 +238,13 @@ export default class Client extends EventEmitterWebAuthnSender {
             lastModified: BigInt(0),
             fileType: FileType.File,
             size: BigInt(0),
-            path: req.path,
+            path: path,
           },
         });
       } else {
         this.handleError(e);
       }
     }
-
-    // TODO(isaiah): here's where we'll respond with SharedDirectoryInfoResponse
   }
 
   protected send(
@@ -319,7 +317,6 @@ export default class Client extends EventEmitterWebAuthnSender {
   }
 
   sendSharedDirectoryInfoResponse(res: SharedDirectoryInfoResponse) {
-    this.logger.debug(res); //TODO(isaiah): remove
     this.send(this.codec.encodeSharedDirectoryInfoResponse(res));
   }
 
