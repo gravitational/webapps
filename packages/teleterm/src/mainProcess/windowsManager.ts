@@ -41,6 +41,10 @@ export class WindowsManager {
       title: 'Teleport Connect Preview',
       icon: getAssetPath('icon.png'),
       webPreferences: {
+        devTools: this.settings.dev,
+        webgl: false,
+        enableWebSQL: false,
+        safeDialogs: true,
         contextIsolation: true,
         nodeIntegration: false,
         preload: path.join(__dirname, 'preload.js'),
@@ -60,6 +64,13 @@ export class WindowsManager {
     window.webContents.on('context-menu', (_, props) => {
       this.popupUniversalContextMenu(window, props);
     });
+
+    window.webContents.session.setPermissionRequestHandler(
+      (webContents, permission, callback) => {
+        // deny all permissions requests, we currently do not require any
+        return callback(false);
+      }
+    );
   }
 
   private saveWindowState(window: BrowserWindow): void {
