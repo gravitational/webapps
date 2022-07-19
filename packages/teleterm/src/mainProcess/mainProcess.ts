@@ -135,7 +135,7 @@ export default class MainProcess {
       const timeout = setTimeout(() => {
         rejectOnError(
           new Error(
-            `Could not resolve address for ${requestedAddress}. The operation timed out.`
+            `Could not resolve address (${requestedAddress}) for process ${process.spawnfile}. The operation timed out.`
           )
         );
       }, 10_000); // 10s
