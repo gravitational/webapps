@@ -17,9 +17,15 @@ import React, { useEffect, useState } from 'react';
 import { Cloud, Server } from 'design/Icon';
 import SlideTabs from 'design/SlideTabs';
 import styled from 'styled-components';
-import { Text, Box, ButtonPrimary, ButtonSecondary, Flex } from 'design';
+import { Image, Text, Box, ButtonPrimary, ButtonSecondary, Flex } from 'design';
+import cfg from 'teleport/config';
 
 import { resourceTypes } from './resource-lists';
+
+import applicationIcon from './assets/application.png';
+import databaseIcon from './assets/database.png';
+import serverIcon from './assets/server.png';
+import k8sIcon from './assets/kubernetes.png';
 
 import type { TabComponent } from 'design/SlideTabs/SlideTabs';
 import type { ResourceType, ResourceLocation } from './resource-lists';
@@ -32,16 +38,18 @@ export function SelectResource({ onSelect }: SelectResourceProps) {
     {
       name: 'server',
       component: (
-        <>
-          <Server /> Server
-        </>
+        <Flex style={{ lineHeight: '31px' }}>
+          <Image src={serverIcon} width="32px" mr={2} /> Server
+        </Flex>
       ),
     },
     {
       name: 'database',
       component: (
         <>
-          <Server /> Database
+          <Flex style={{ lineHeight: '31px' }}>
+            <Image src={databaseIcon} width="32px" mr={2} /> Database
+          </Flex>
         </>
       ),
     },
@@ -49,27 +57,27 @@ export function SelectResource({ onSelect }: SelectResourceProps) {
     {
       name: 'kubernetes',
       component: (
-        <>
-          <Server /> Kubernetes
-        </>
+        <Flex style={{ lineHeight: '31px' }}>
+          <Image src={k8sIcon} width="32px" mr={2} /> Kubernetes
+        </Flex>
       ),
     },
 
     {
       name: 'application',
       component: (
-        <>
-          <Server /> Application
-        </>
+        <Flex style={{ lineHeight: '31px' }}>
+          <Image src={applicationIcon} width="32px" mr={2} /> Application
+        </Flex>
       ),
     },
 
     {
       name: 'desktop',
       component: (
-        <>
-          <Server /> Desktop
-        </>
+        <Flex style={{ lineHeight: '31px' }}>
+          <Image src={serverIcon} width="32px" mr={2} /> Desktop
+        </Flex>
       ),
     },
   ];
@@ -84,7 +92,7 @@ export function SelectResource({ onSelect }: SelectResourceProps) {
   }, [selectedResource]);
 
   return (
-    <Box width="900px">
+    <Box width="1020px">
       <Text mb={4} typography="h4">
         Resource Selection
       </Text>
@@ -113,7 +121,9 @@ export function SelectResource({ onSelect }: SelectResourceProps) {
         >
           Proceed
         </ButtonPrimary>
-        <ButtonSecondary size="medium">Go to dashboard</ButtonSecondary>
+        <ButtonSecondary as="a" href={cfg.routes.root} size="medium">
+          Go to dashboard
+        </ButtonSecondary>
       </Box>
     </Box>
   );
@@ -131,23 +141,33 @@ function SelectDBDeploymentType({
   const filterTabs: FilterType[] = ['All', 'AWS', 'Self-Hosted'];
   const [filter, setFilter] = useState<FilterType>('All');
   return (
-    <Box>
-      <Flex>
+    <Box mt={6}>
+      <Flex alignItems="center" justifyContent="space-between">
         <Text mb={2}>Select Deployment Type</Text>
         <Box width="379px">
           <SlideTabs
             appearance="round"
+            size="medium"
             tabs={filterTabs}
             onChange={index => setFilter(filterTabs[index])}
           />
         </Box>
       </Flex>
-      <Flex flexWrap="wrap" gap="12">
+      <Flex
+        flexWrap="wrap"
+        mt={4}
+        justifyContent="space-between"
+        gap="12px 12px"
+        rowGap="15px"
+      >
         {resourceTypes
           .filter(resource => filter === 'All' || resource.type === filter)
           .map(resource => (
-            <ResourceTypeOption onClick={() => setSelectedType(resource.key)}>
-              <Flex>
+            <ResourceTypeOption
+              onClick={() => setSelectedType(resource.key)}
+              key={resource.key}
+            >
+              <Flex justifyContent="space-between" mb={2}>
                 <Cloud />
                 <Tag>popular</Tag>
               </Flex>
@@ -166,11 +186,17 @@ type SelectDBDeploymentTypeProps = {
 
 const ResourceTypeOption = styled.div`
   background: rgba(255, 255, 255, 0.05);
+  border: 2px solid rgba(255, 255, 255, 0);
   border-radius: 8px;
   box-sizing: border-box;
-  padding: 12px;
+  cursor: pointer;
   height: 72px;
+  padding: 12px;
   width: 242px;
+
+  &:hover {
+    border: 2px solid rgba(255, 255, 255, 0.1);
+  }
 `;
 
 const Tag = styled.div`
@@ -182,5 +208,5 @@ const Tag = styled.div`
   height: 15px;
   line-height: 11px;
   padding: 2px 10px;
-  width: 57px;
+  max-width: 57px;
 `;
