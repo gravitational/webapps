@@ -9,9 +9,6 @@ export async function generateGrpcCerts(certsDir: string): Promise<void> {
 
   const ca = await makeCert({
     commonName: 'localhost',
-    countryCode: 'US',
-    state: 'CA',
-    locality: 'Oakland',
     validityDays: 365,
   });
 

@@ -39,10 +39,9 @@
  limitations under the License.
  */
 
-import { pki, md, util, random } from 'node-forge';
+import { pki, md } from 'node-forge';
 import { promisify } from 'util';
 
-const IP_REGEX = /^(?!0)(?!.*\.$)((1?\d?\d|25[0-5]|2[0-4]\d)(\.|$)){4}$/;
 const generateKeyPair = promisify(pki.rsa.generateKeyPair.bind(pki.rsa));
 
 interface GeneratedCert {
@@ -52,25 +51,13 @@ interface GeneratedCert {
 
 export async function makeCert({
   commonName,
-  countryCode,
-  state,
-  locality,
   validityDays,
 }: {
   commonName: string;
-  countryCode: string;
-  state: string;
-  locality: string;
   validityDays: number;
 }): Promise<GeneratedCert> {
   // certificate Attributes: https://git.io/fptna
-  const attributes = [
-    { name: 'commonName', value: commonName },
-    { name: 'countryName', value: countryCode },
-    { name: 'stateOrProvinceName', value: state },
-    { name: 'localityName', value: locality },
-    { name: 'organizationName', value: commonName },
-  ];
+  const attributes = [{ name: 'commonName', value: commonName }];
 
   // required certificate extensions for a certificate authority
   const extensions = [
@@ -81,16 +68,6 @@ export async function makeCert({
       critical: true,
       digitalSignature: true,
       keyEncipherment: true,
-    },
-    {
-      name: 'subjectAltName',
-      altNames: (() => {
-        const types = { domain: 2, ip: 7 }; // available Types: https://git.io/fptng
-        const isIp = IP_REGEX.test(commonName);
-
-        if (isIp) return { type: types.ip, ip: commonName };
-        return { type: types.domain, value: commonName };
-      })(),
     },
   ];
 
@@ -119,7 +96,7 @@ async function generateRawCert({
   const cert = pki.createCertificate();
 
   cert.publicKey = keyPair.publicKey;
-  cert.serialNumber = getRandomSerialNumber();
+  cert.serialNumber = '0';
   cert.validity.notBefore = new Date();
   cert.validity.notAfter = new Date();
   cert.validity.notAfter.setDate(
@@ -139,22 +116,4 @@ async function generateRawCert({
     key: pki.privateKeyToPem(keyPair.privateKey),
     cert: pki.certificateToPem(cert),
   };
-}
-
-function getRandomSerialNumber(): string {
-  // a hexString is considered negative if its most significant bit is 1
-  // because serial numbers use ones' complement notation
-  // this RFC in section 4.1.2.2 requires serial numbers to be positive
-  // http://www.ietf.org/rfc/rfc5280.txt
-  function toPositiveHex(hexString: string): string {
-    let mostSiginficativeHexAsInt = parseInt(hexString[0], 16);
-    if (mostSiginficativeHexAsInt < 8) {
-      return hexString;
-    }
-
-    mostSiginficativeHexAsInt -= 8;
-    return mostSiginficativeHexAsInt.toString() + hexString.substring(1);
-  }
-
-  return toPositiveHex(util.bytesToHex(random.getBytesSync(16)));
 }
