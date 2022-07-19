@@ -734,7 +734,7 @@ export type RawEvents = {
   [eventCodes.UPGRADE_WINDOW_UPDATED]: RawEvent<
     typeof eventCodes.UPGRADE_WINDOW_UPDATED,
     {
-      upgradeWindowStart: string;
+      upgrade_window_start: string;
     }
   >;
 };
