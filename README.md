@@ -172,7 +172,10 @@ Then start the dev server like `yarn start-teleport --target=https://proxy.127.0
 
 ### Adding Packages/Dependencies
 
-We use [Yarn Workspaces](https://classic.yarnpkg.com/blog/2017/08/02/introducing-workspaces/) to manage dependencies.
+We use Yarn Workspaces to manage dependencies.
+
+- [Introducing Workspaces](https://yarnpkg.com/blog/2017/08/02/introducing-workspaces)
+- [Workspaces Documentation](https://yarnpkg.com/en/docs/workspaces)
 
 The easiest way to add a package is to add a line to the workspace's `package.json` file and then run `yarn install` from
 the root of this repository.

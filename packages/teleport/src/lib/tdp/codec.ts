@@ -41,6 +41,7 @@ export enum MessageType {
   SHARED_DIRECTORY_ACKNOWLEDGE = 12,
   SHARED_DIRECTORY_INFO_REQUEST = 13,
   SHARED_DIRECTORY_INFO_RESPONSE = 14,
+  __LAST, // utility value
 }
 
 // 0 is left button, 1 is middle button, 2 is right button
@@ -525,7 +526,7 @@ export default class Codec {
   // decodeClipboardData decodes clipboard data
   decodeClipboardData(buffer: ArrayBuffer): ClipboardData {
     return {
-      data: this._decodeStringMessage(buffer),
+      data: this.decodeStringMessage(buffer),
     };
   }
 
@@ -534,7 +535,7 @@ export default class Codec {
   // Throws an error on an invalid or unexpected MessageType value.
   decodeMessageType(buffer: ArrayBuffer): MessageType {
     const messageType = new DataView(buffer).getUint8(0);
-    if (!(messageType in MessageType)) {
+    if (!(messageType in MessageType) || messageType === MessageType.__LAST) {
       throw new Error(`invalid message type: ${messageType}`);
     }
     return messageType;
@@ -543,43 +544,57 @@ export default class Codec {
   // decodeError decodes a raw tdp ERROR message and returns it as a string
   // | message type (9) | message_length uint32 | message []byte
   decodeErrorMessage(buffer: ArrayBuffer): string {
-    return this._decodeStringMessage(buffer);
+    return this.decodeStringMessage(buffer);
   }
 
   // decodeMfaChallenge decodes a raw tdp MFA challenge message and returns it as a string (of a json).
   // | message type (10) | mfa_type byte | message_length uint32 | json []byte
   decodeMfaJson(buffer: ArrayBuffer): MfaJson {
     let dv = new DataView(buffer);
-    const mfaType = String.fromCharCode(dv.getUint8(1));
+    let offset = 0;
+    offset += byteLength; // eat message type
+    const mfaType = String.fromCharCode(dv.getUint8(offset));
+    offset += byteLength; // eat mfa_type
     if (mfaType !== 'n' && mfaType !== 'u') {
       throw new Error(`invalid mfa type ${mfaType}, should be "n" or "u"`);
     }
-    const jsonString = this.decoder.decode(new Uint8Array(buffer.slice(6)));
+    offset += uint32Length; // eat message_length
+    const jsonString = this.decoder.decode(
+      new Uint8Array(buffer.slice(offset))
+    );
     return { mfaType, jsonString };
   }
 
-  // _decodeStringMessage decodes a tdp message of the form
+  // decodeStringMessage decodes a tdp message of the form
   // | message type (N) | message_length uint32 | message []byte
-  _decodeStringMessage(buffer: ArrayBuffer): string {
+  private decodeStringMessage(buffer: ArrayBuffer): string {
     // slice(5) ensures we skip the message type and message_length
-    return this.decoder.decode(new Uint8Array(buffer.slice(5)));
+    const offset = 0 + byteLength + uint32Length; // eat message type and message_length
+    return this.decoder.decode(new Uint8Array(buffer.slice(offset)));
   }
 
   // decodePngFrame decodes a raw tdp PNG frame message and returns it as a PngFrame
   // | message type (2) | left uint32 | top uint32 | right uint32 | bottom uint32 | data []byte |
   // https://github.com/gravitational/teleport/blob/master/rfd/0037-desktop-access-protocol.md#2---png-frame
-  decodePngFrame(buffer: ArrayBuffer, onload: (PngFrame) => any): PngFrame {
-    let dv = new DataView(buffer);
+  decodePngFrame(
+    buffer: ArrayBuffer,
+    onload: (pngFrame: PngFrame) => any
+  ): PngFrame {
+    const dv = new DataView(buffer);
     const image = new Image();
-    const pngFrame = {
-      left: dv.getUint32(1),
-      top: dv.getUint32(5),
-      right: dv.getUint32(9),
-      bottom: dv.getUint32(13),
-      data: image,
-    };
+    let offset = 0;
+    offset += byteLength; // eat message type
+    const left = dv.getUint32(offset);
+    offset += uint32Length; // eat left
+    const top = dv.getUint32(offset);
+    offset += uint32Length; // eat top
+    const right = dv.getUint32(offset);
+    offset += uint32Length; // eat right
+    const bottom = dv.getUint32(offset);
+    offset += uint32Length; // eat bottom
+    const pngFrame = { left, top, right, bottom, data: image };
     pngFrame.data.onload = onload(pngFrame);
-    pngFrame.data.src = this.asBase64Url(buffer);
+    pngFrame.data.src = this.asBase64Url(buffer, offset);
 
     return pngFrame;
   }
@@ -588,9 +603,12 @@ export default class Codec {
   decodeSharedDirectoryAcknowledge(
     buffer: ArrayBuffer
   ): SharedDirectoryAcknowledge {
-    let dv = new DataView(buffer);
-    let errCode = toSharedDirectoryErrCode(dv.getUint32(1));
-    let directoryId = dv.getUint32(5);
+    const dv = new DataView(buffer);
+    let offset = 0;
+    offset += byteLength; // eat message type
+    const errCode = toSharedDirectoryErrCode(dv.getUint32(offset));
+    offset += uint32Length; // eat err_code
+    const directoryId = dv.getUint32(5);
 
     return {
       errCode,
@@ -602,10 +620,15 @@ export default class Codec {
   decodeSharedDirectoryInfoRequest(
     buffer: ArrayBuffer
   ): SharedDirectoryInfoRequest {
-    let dv = new DataView(buffer);
-    let completionId = dv.getUint32(1);
-    let directoryId = dv.getUint32(5);
-    let path = this.decoder.decode(new Uint8Array(buffer.slice(13)));
+    const dv = new DataView(buffer);
+    let offset = 0;
+    offset += byteLength; // eat message type
+    const completionId = dv.getUint32(offset);
+    offset += uint32Length; // eat completion_id
+    const directoryId = dv.getUint32(offset);
+    offset += uint32Length; // eat directory_id
+    offset += uint32Length; // eat path_length
+    const path = this.decoder.decode(new Uint8Array(buffer.slice(offset)));
 
     return {
       completionId,
@@ -615,8 +638,8 @@ export default class Codec {
   }
 
   // asBase64Url creates a data:image uri from the png data part of a PNG_FRAME tdp message.
-  private asBase64Url(buffer: ArrayBuffer): string {
-    return `data:image/png;base64,${arrayBufferToBase64(buffer.slice(17))}`;
+  private asBase64Url(buffer: ArrayBuffer, offset: number): string {
+    return `data:image/png;base64,${arrayBufferToBase64(buffer.slice(offset))}`;
   }
 }
 
