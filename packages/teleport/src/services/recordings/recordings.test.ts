@@ -46,7 +46,7 @@ test('fetch session recordings, response formatting', async () => {
         durationText: '0 seconds',
         hostname: 'kube-cluster/default/nginx',
         playable: false,
-        recordingType: 'k8s',
+        recordingType: 'ssh',
         sid: '456b933c-4ec4-59f1-862c-90ca9f7648b1',
         users: [],
       },
