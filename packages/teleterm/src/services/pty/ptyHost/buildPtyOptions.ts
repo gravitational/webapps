@@ -61,7 +61,7 @@ function getPtyProcessOptions(
       //
       // settings.binDir is present only in the packaged version of the app.
       if (settings.binDir) {
-        prependBinDirToPath(settings);
+        prependBinDirToPath(env, settings);
       }
 
       return {
@@ -102,8 +102,12 @@ function getPtyProcessOptions(
   }
 }
 
-function prependBinDirToPath(settings: RuntimeSettings): void {
-  process.env.PATH = [settings.binDir, process.env.PATH]
+function prependBinDirToPath(
+  env: typeof process.env,
+  settings: RuntimeSettings
+): void {
+  const pathName = settings.platform === 'win32' ? 'Path' : 'PATH';
+  env[pathName] = [settings.binDir, env[pathName]]
     .map(path => path?.trim())
     .filter(Boolean)
     .join(delimiter);
