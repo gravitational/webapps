@@ -138,7 +138,7 @@ export default class MainProcess {
             `Could not resolve address for ${requestedAddress}. The operation timed out.`
           )
         );
-      }, 15_000); // 15s
+      }, 10_000); // 10s
 
       const removeListeners = () => {
         process.stdout.off('data', findAddressInChunk);
