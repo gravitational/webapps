@@ -23,6 +23,7 @@ import Codec, {
   ClientScreenSpec,
   PngFrame,
   ClipboardData,
+  SharedDirectoryErrCode,
 } from './codec';
 
 export enum TdpClientEvent {
@@ -108,6 +109,12 @@ export default class Client extends EventEmitterWebAuthnSender {
         case MessageType.MFA_JSON:
           this.handleMfaChallenge(buffer);
           break;
+        case MessageType.SHARED_DIRECTORY_ACKNOWLEDGE:
+          this.handleSharedDirectoryAcknowledge(buffer);
+          break;
+        case MessageType.SHARED_DIRECTORY_INFO_REQUEST:
+          this.handleSharedDirectoryInfoRequest(buffer);
+          break;
         default:
           this.logger.warn(`received unsupported message type ${messageType}`);
       }
@@ -165,8 +172,7 @@ export default class Client extends EventEmitterWebAuthnSender {
         this.emit(TermEventEnum.WEBAUTHN_CHALLENGE, mfaJson.jsonString);
       } else {
         // mfaJson.mfaType === 'u', or else decodeMfaJson would have thrown an error.
-        this.emit(
-          TdpClientEvent.TDP_ERROR,
+        this.handleError(
           new Error(
             'Multifactor authentication is required for accessing this desktop, \
       however the U2F API for hardware keys is not supported for desktop sessions. \
@@ -176,8 +182,38 @@ export default class Client extends EventEmitterWebAuthnSender {
         );
       }
     } catch (err) {
-      this.emit(TdpClientEvent.TDP_ERROR, err);
+      this.handleError(err);
     }
+  }
+
+  private wasSuccessful(errCode: SharedDirectoryErrCode) {
+    if (errCode === SharedDirectoryErrCode.Nil) {
+      return true;
+    }
+
+    this.handleError(
+      new Error(`Encountered shared directory error: ${errCode}`)
+    );
+    return false;
+  }
+
+  handleSharedDirectoryAcknowledge(buffer: ArrayBuffer) {
+    const ack = this.codec.decodeSharedDirectoryAcknowledge(buffer);
+
+    if (!this.wasSuccessful(ack.errCode)) {
+      return;
+    }
+
+    this.logger.info('Started sharing directory: ' + this.sharedDirectory.name);
+  }
+
+  handleSharedDirectoryInfoRequest(buffer: ArrayBuffer) {
+    const req = this.codec.decodeSharedDirectoryInfoRequest(buffer);
+    // TODO(isaiah): remove debug once message is handled.
+    this.logger.debug(
+      'Received SharedDirectoryInfoRequest: ' + JSON.stringify(req)
+    );
+    // TODO(isaiah): here's where we'll respond with SharedDirectoryInfoResponse
   }
 
   protected send(
