@@ -8,6 +8,9 @@ module.exports = {
   globals: {
     electron: {},
   },
+  transformIgnorePatterns: [
+    '!node_modules/native-file-system-adapter/src/\\.[jt]s?$',
+  ],
   collectCoverageFrom: [
     // comment out until shared directory is finished testing
     // '**/packages/design/src/**/*.jsx',

@@ -47,6 +47,7 @@ module.exports = {
   env: {
     test: {
       presets: makePresents(true),
+      plugins: [...plugins],
     },
     development: {
       plugins: [
