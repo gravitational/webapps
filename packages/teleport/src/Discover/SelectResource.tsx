@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 import React, { useEffect, useState } from 'react';
-import { Cloud, Server } from 'design/Icon';
+import { Cloud } from 'design/Icon';
 import SlideTabs from 'design/SlideTabs';
 import styled from 'styled-components';
 import { Image, Text, Box, ButtonPrimary, ButtonSecondary, Flex } from 'design';
@@ -88,8 +88,12 @@ export function SelectResource({ onSelect }: SelectResourceProps) {
       setDisableProceed(false);
       return;
     }
+    if (selectedResource && selectedType) {
+      setDisableProceed(false);
+      return;
+    }
     setDisableProceed(true);
-  }, [selectedResource]);
+  }, [selectedResource, selectedType]);
 
   return (
     <Box width="1020px">
@@ -103,6 +107,7 @@ export function SelectResource({ onSelect }: SelectResourceProps) {
       />
       {selectedResource === 'database' && (
         <SelectDBDeploymentType
+          selectedType={selectedType}
           setSelectedType={setSelectedType}
           resourceTypes={resourceTypes}
         />
@@ -134,6 +139,7 @@ type SelectResourceProps = {
 };
 
 function SelectDBDeploymentType({
+  selectedType,
   setSelectedType,
   resourceTypes,
 }: SelectDBDeploymentTypeProps) {
@@ -166,6 +172,7 @@ function SelectDBDeploymentType({
             <ResourceTypeOption
               onClick={() => setSelectedType(resource.key)}
               key={resource.key}
+              selected={selectedType === resource.key}
             >
               <Flex justifyContent="space-between" mb={2}>
                 <Cloud />
@@ -180,13 +187,17 @@ function SelectDBDeploymentType({
 }
 
 type SelectDBDeploymentTypeProps = {
+  selectedType: string;
   setSelectedType: (string) => void;
   resourceTypes: ResourceType[];
 };
 
 const ResourceTypeOption = styled.div`
   background: rgba(255, 255, 255, 0.05);
-  border: 2px solid rgba(255, 255, 255, 0);
+  border: ${props =>
+    !props.selected
+      ? '2px solid rgba(255, 255, 255, 0)'
+      : '2px solid rgba(255, 255, 255, 0.1);'};
   border-radius: 8px;
   box-sizing: border-box;
   cursor: pointer;
