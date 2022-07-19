@@ -7,7 +7,6 @@ exports[`support Cloud 1`] = `
 
 .c9 {
   box-sizing: border-box;
-  margin-bottom: 24px;
   margin-top: 24px;
   padding-left: 32px;
   padding-right: 32px;
@@ -18,61 +17,16 @@ exports[`support Cloud 1`] = `
   border-color: #222C59;
 }
 
-.c14 {
-  line-height: 1.5;
-  margin: 0;
-  display: inline-flex;
-  justify-content: center;
-  align-items: center;
-  box-sizing: border-box;
-  border: none;
-  border-radius: 4px;
-  cursor: pointer;
-  font-family: inherit;
-  font-weight: 600;
-  outline: none;
-  position: relative;
-  text-align: center;
-  text-decoration: none;
-  text-transform: uppercase;
-  transition: all 0.3s;
-  -webkit-font-smoothing: antialiased;
-  background: #512FC9;
-  color: rgba(255,255,255,0.87);
-  min-height: 32px;
-  font-size: 12px;
-  padding: 0px 24px;
-  width: 210px;
-}
-
-.c14:active {
-  opacity: 0.56;
-}
-
-.c14:hover,
-.c14:focus {
-  background: #651FFF;
-}
-
-.c14:active {
-  background: #354AA4;
-}
-
-.c14:disabled {
-  background: rgba(255,255,255,0.12);
-  color: rgba(255,255,255,0.3);
-}
-
 .c6 {
   display: inline-block;
   transition: color 0.3s;
   color: #FFFFFF;
 }
 
-.c15 {
+.c14 {
   display: inline-block;
   transition: color 0.3s;
-  margin-right: 8px;
+  margin-left: 8px;
   color: #FFFFFF;
 }
 
@@ -126,6 +80,12 @@ exports[`support Cloud 1`] = `
   font-weight: 400;
   font-size: 12px;
   line-height: 16px;
+  margin: 0px;
+}
+
+.c15 {
+  overflow: hidden;
+  text-overflow: ellipsis;
   margin: 0px;
 }
 
@@ -383,7 +343,7 @@ exports[`support Cloud 1`] = `
     >
       <div
         class="c12"
-        style="width: 130px;"
+        style="width: 150px;"
       >
         Cluster Name
         :
@@ -399,7 +359,7 @@ exports[`support Cloud 1`] = `
     >
       <div
         class="c12"
-        style="width: 130px;"
+        style="width: 150px;"
       >
         Teleport Version
         :
@@ -415,7 +375,7 @@ exports[`support Cloud 1`] = `
     >
       <div
         class="c12"
-        style="width: 130px;"
+        style="width: 150px;"
       >
         Public Address
         :
@@ -427,18 +387,43 @@ exports[`support Cloud 1`] = `
       </div>
     </div>
   </div>
-  <button
-    class="c14"
-    kind="primary"
-    width="210px"
+  <div
+    class="c9"
   >
-    <span
-      class="c15 icon icon-clock3 "
-      color="light"
-      style="font-weight: bold;"
-    />
-    Schedule Upgrades
-  </button>
+    <h5
+      class="c10"
+      font-weight="bold"
+    >
+      Scheduled Upgrades
+    </h5>
+    <div
+      class="c11"
+    >
+      <div
+        class="c12"
+        style="width: 150px;"
+      >
+        Window Start Time
+        :
+      </div>
+      <div
+        class="c13"
+      >
+        <span>
+          08:00:00
+          <span
+            class="c14 icon icon-pencil4 "
+            color="light"
+          />
+        </span>
+      </div>
+    </div>
+    <div
+      class="c15"
+    >
+      Window Start Time is the hour in which an upgrade may begin. Changing this value changes it for everyone in your org.
+    </div>
+  </div>
 </div>
 `;
 
@@ -449,7 +434,6 @@ exports[`support Enterprise 1`] = `
 
 .c9 {
   box-sizing: border-box;
-  margin-bottom: 24px;
   margin-top: 24px;
   padding-left: 32px;
   padding-right: 32px;
@@ -780,7 +764,7 @@ exports[`support Enterprise 1`] = `
     >
       <div
         class="c12"
-        style="width: 130px;"
+        style="width: 150px;"
       >
         Cluster Name
         :
@@ -796,7 +780,7 @@ exports[`support Enterprise 1`] = `
     >
       <div
         class="c12"
-        style="width: 130px;"
+        style="width: 150px;"
       >
         Teleport Version
         :
@@ -812,7 +796,7 @@ exports[`support Enterprise 1`] = `
     >
       <div
         class="c12"
-        style="width: 130px;"
+        style="width: 150px;"
       >
         Public Address
         :
@@ -834,7 +818,6 @@ exports[`support OSS 1`] = `
 
 .c9 {
   box-sizing: border-box;
-  margin-bottom: 24px;
   margin-top: 24px;
   padding-left: 32px;
   padding-right: 32px;
@@ -1158,7 +1141,7 @@ exports[`support OSS 1`] = `
     >
       <div
         class="c12"
-        style="width: 130px;"
+        style="width: 150px;"
       >
         Cluster Name
         :
@@ -1174,7 +1157,7 @@ exports[`support OSS 1`] = `
     >
       <div
         class="c12"
-        style="width: 130px;"
+        style="width: 150px;"
       >
         Teleport Version
         :
@@ -1190,7 +1173,7 @@ exports[`support OSS 1`] = `
     >
       <div
         class="c12"
-        style="width: 130px;"
+        style="width: 150px;"
       >
         Public Address
         :

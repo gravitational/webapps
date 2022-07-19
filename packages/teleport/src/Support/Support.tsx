@@ -16,9 +16,9 @@
 
 import React from 'react';
 import styled from 'styled-components';
-import { Card, Box, Text, Flex, ButtonPrimary } from 'design';
+import { Card, Box, Text, Flex } from 'design';
 import * as Icons from 'design/Icon';
-import { Clock } from 'design/Icon';
+import { Edit } from 'design/Icon';
 import { FeatureBox } from 'teleport/components/Layout';
 import useTeleport from 'teleport/useTeleport';
 import cfg from 'teleport/config';
@@ -115,30 +115,31 @@ export const Support = ({
           </Box>
         </Flex>
       </Card>
-      <Box
-        border="1px solid"
-        borderColor="primary.light"
-        mt={4}
-        mb={4}
-        borderRadius={3}
-        px={5}
-        py={4}
-      >
-        <Text as="h5" mb={4} fontWeight="bold" caps>
-          Cluster Information
-        </Text>
-        <ClusterData title="Cluster Name" data={clusterId} />
-        <ClusterData title="Teleport Version" data={authVersion} />
-        <ClusterData title="Public Address" data={publicURL} />
+      <DataContainer title="Cluster Information">
+        <DataItem title="Cluster Name" data={clusterId} />
+        <DataItem title="Teleport Version" data={authVersion} />
+        <DataItem title="Public Address" data={publicURL} />
         {tunnelPublicAddress && (
-          <ClusterData title="Public SSH Tunnel" data={tunnelPublicAddress} />
+          <DataItem title="Public SSH Tunnel" data={tunnelPublicAddress} />
         )}
-      </Box>
+      </DataContainer>
+
       {isCloud && (
-        <ButtonPrimary onClick={showScheduleUpgrade} width="210px">
-          <Clock mr="2" style={{ fontWeight: 'bold' }} />
-          Schedule Upgrades
-        </ButtonPrimary>
+        <DataContainer title="Scheduled Upgrades">
+          <DataItem
+            title="Window Start Time"
+            data={
+              <span>
+                {selectedUpgradeWindowStart}
+                <Edit onClick={showScheduleUpgrade} ml="2" />
+              </span>
+            }
+          />
+          <Text>
+            Window Start Time is the hour in which an upgrade may begin.
+            Changing this value changes it for everyone in your org.
+          </Text>
+        </DataContainer>
       )}
       {scheduleUpgradesVisible && (
         <ScheduleUpgrades
@@ -154,6 +155,21 @@ export const Support = ({
   );
 };
 
+const DataContainer: React.FC<{ title: string }> = ({ title, children }) => (
+  <Box
+    border="1px solid"
+    borderColor="primary.light"
+    mt={4}
+    borderRadius={3}
+    px={5}
+    py={4}
+  >
+    <Text as="h5" mb={4} fontWeight="bold" caps>
+      {title}
+    </Text>
+    {children}
+  </Box>
+);
 /**
  * getDocUrls returns an object of URL's appended with
  * UTM, version, and type of teleport.
@@ -216,7 +232,7 @@ const StyledSupportLink = styled.a.attrs({
   }
 `;
 
-const ClusterData = ({ title = '', data = null }) => (
+const DataItem = ({ title = '', data = null }) => (
   <Flex mb={3}>
     <Text typography="body2" bold style={{ width: '130px' }}>
       {title}:
