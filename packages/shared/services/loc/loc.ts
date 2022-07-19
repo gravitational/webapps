@@ -43,10 +43,10 @@ export function displayDate(date: Date) {
 
 export function displayDateTime(date: Date) {
   try {
-    return format(
-      date.getTime() + date.getTimezoneOffset() * 60 * 1000,
-      cfg.dateTimeFormat
-    );
+    if (isTest) {
+      return format(dateToUtc(date), cfg.dateTimeFormat);
+    }
+    return format(date, cfg.dateTimeFormat);
   } catch (err) {
     logger.error('displayDateTime()', err);
     return 'undefined';

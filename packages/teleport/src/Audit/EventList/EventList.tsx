@@ -97,7 +97,7 @@ export const renderActionCell = (
 );
 
 export const renderTimeCell = ({ time }: Event) => (
-  <Cell style={{ minWidth: '120px' }}>{displayDateTime(time)}</Cell>
+  <Cell style={{ minWidth: '120px' }}>{time}</Cell>
 );
 
 export function renderDescCell({ message }: Event) {

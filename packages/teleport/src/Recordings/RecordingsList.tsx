@@ -64,7 +64,7 @@ export default function RecordingsList(props: Props) {
         },
         {
           key: 'createdDate',
-          headerText: 'Created (UTC)',
+          headerText: 'Created',
           isSortable: true,
           render: ({ createdDate }) => (
             <Cell>{displayDateTime(createdDate)}</Cell>

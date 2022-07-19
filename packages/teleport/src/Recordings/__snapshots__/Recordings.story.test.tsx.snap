@@ -734,7 +734,7 @@ exports[`rendering of Session Recordings 1`] = `
           </th>
           <th>
             <a>
-              Created (UTC)
+              Created
               <span
                 class="c14 c17 icon icon-chevron-down "
                 color="light"
