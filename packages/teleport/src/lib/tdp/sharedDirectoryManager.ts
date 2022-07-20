@@ -66,7 +66,10 @@ export class SharedDirectoryManager {
       throw new Error('cannot list the contents of a file');
     }
 
-    let infos: FileOrDirInfo[] = [];
+    return poolPromises(this.iterInfos(dir, path), 50);
+  }
+
+  private async *iterInfos(dir: FileSystemDirectoryHandle, path: string) {
     for await (const entry of dir.values()) {
       // Create the full relative path to the entry
       let entryPath = path;
@@ -75,10 +78,8 @@ export class SharedDirectoryManager {
       } else {
         entryPath = entry.name;
       }
-      infos.push(await this.getInfo(entryPath));
+      yield this.getInfo(entryPath);
     }
-
-    return infos;
   }
 
   // walkPath walks a pathstr (assumed to be in the qualified Unix format specified
@@ -147,3 +148,34 @@ export type FileOrDirInfo = {
   kind: 'file' | 'directory';
   path: string;
 };
+
+// Based on https://stackoverflow.com/a/63620273/6277051
+function poolPromises<T>(
+  iterPromises: AsyncGenerator<T>,
+  poolSize: number
+): Promise<T[]> {
+  return new Promise((resolve, reject) => {
+    // let resolved = false;
+    let promises: Promise<T>[] = [];
+    async function nextPromise(): Promise<boolean> {
+      // if (resolved) return false;
+      let { value, done } = await iterPromises.next();
+      if (done) {
+        // resolved = true;
+        resolve(Promise.all(promises));
+      } else {
+        promises.push(value); // value is a promise
+        value.then(nextPromise, reject);
+      }
+      return !done;
+    }
+
+    // Hack, there is a race condition here.
+    let notDone = true;
+    while (promises.length < poolSize && notDone) {
+      nextPromise().then(notDoneNext => {
+        notDone = notDoneNext;
+      });
+    }
+  });
+}
