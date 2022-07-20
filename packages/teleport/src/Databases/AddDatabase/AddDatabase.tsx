@@ -201,10 +201,7 @@ const StepsWithToken = ({
         Step 4
       </Text>
       {' - Start the Teleport agent with the following parameters'}
-      <TextSelectCopy
-        mt="2"
-        text="teleport start"
-      />
+      <TextSelectCopy mt="2" text="teleport start" />
     </Box>
     <Box>
       {`Learn more about database access in our `}
@@ -287,10 +284,7 @@ const StepsWithoutToken = ({
         Step 6
       </Text>
       {' - Start the Teleport agent with the following parameters'}
-      <TextSelectCopy
-        mt="2"
-        text="teleport start"
-      />
+      <TextSelectCopy mt="2" text="teleport start" />
     </Box>
     <Box>
       {`Learn more about database access in our `}
