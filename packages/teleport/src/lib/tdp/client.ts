@@ -26,6 +26,7 @@ import Codec, {
   FileType,
   SharedDirectoryErrCode,
   SharedDirectoryInfoResponse,
+  SharedDirectoryListResponse,
   FileSystemObject,
 } from './codec';
 import {
@@ -247,13 +248,30 @@ export default class Client extends EventEmitterWebAuthnSender {
     }
   }
 
-  handleSharedDirectoryListRequest(buffer: ArrayBuffer) {
-    const req = this.codec.decodeSharedDirectoryListRequest(buffer);
-    // TODO(isaiah): remove this once we handle SharedDirectoryListResponse
-    this.logger.debug(
-      'Received SharedDirectoryListRequest: ' + JSON.stringify(req)
-    );
-    // TODO(isaiah): here's where we'll send back a SharedDirectoryListResponse
+  async handleSharedDirectoryListRequest(buffer: ArrayBuffer) {
+    try {
+      const req = this.codec.decodeSharedDirectoryListRequest(buffer);
+      const path = req.path;
+      console.log('in handleSharedDirectoryListRequest for path: ' + path);
+      console.log('awaiting for listContents');
+      const infoList: FileOrDirInfo[] = await this.sdManager.listContents(path);
+      console.log('returned from listContents');
+      console.log('mapping listContents to fsoList');
+      const fsoList: FileSystemObject[] = infoList.map(info =>
+        this.toFso(info)
+      );
+      console.log('finished mapping listContents to fsoList');
+      console.log(fsoList);
+      console.log('');
+
+      this.sendSharedDirectoryListResponse({
+        completionId: req.completionId,
+        errCode: SharedDirectoryErrCode.Nil,
+        fsoList,
+      });
+    } catch (e) {
+      this.handleError(e);
+    }
   }
 
   private toFso(info: FileOrDirInfo): FileSystemObject {
@@ -336,6 +354,10 @@ export default class Client extends EventEmitterWebAuthnSender {
 
   sendSharedDirectoryInfoResponse(res: SharedDirectoryInfoResponse) {
     this.send(this.codec.encodeSharedDirectoryInfoResponse(res));
+  }
+
+  sendSharedDirectoryListResponse(res: SharedDirectoryListResponse) {
+    this.send(this.codec.encodeSharedDirectoryListResponse(res));
   }
 
   resize(spec: ClientScreenSpec) {

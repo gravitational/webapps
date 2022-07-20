@@ -55,6 +55,32 @@ export class SharedDirectoryManager {
     };
   }
 
+  // Gets the FileOrDirInfo for all the children of the
+  // directory at path.
+  async listContents(path: string): Promise<FileOrDirInfo[]> {
+    this.checkReady();
+
+    // Get the directory whose contents we want to list.
+    const dir = await this.walkPath(path);
+    if (dir.kind !== 'directory') {
+      throw new Error('cannot list the contents of a file');
+    }
+
+    let promises: Promise<FileOrDirInfo>[] = [];
+    for await (const entry of dir.values()) {
+      // Create the full relative path to the entry
+      let entryPath = path;
+      if (entryPath !== '') {
+        entryPath = [entryPath, entry.name].join('/');
+      } else {
+        entryPath = entry.name;
+      }
+      promises.push(this.getInfo(entryPath));
+    }
+
+    return Promise.all(promises);
+  }
+
   // walkPath walks a pathstr (assumed to be in the qualified Unix format specified
   // in the TDP spec), returning the FileSystemDirectoryHandle | FileSystemFileHandle
   // it finds at its end. If the pathstr isn't a valid path in the shared directory,
