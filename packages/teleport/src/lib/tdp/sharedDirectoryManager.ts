@@ -66,7 +66,7 @@ export class SharedDirectoryManager {
       throw new Error('cannot list the contents of a file');
     }
 
-    let promises: Promise<FileOrDirInfo>[] = [];
+    let infos: FileOrDirInfo[] = [];
     for await (const entry of dir.values()) {
       // Create the full relative path to the entry
       let entryPath = path;
@@ -75,10 +75,10 @@ export class SharedDirectoryManager {
       } else {
         entryPath = entry.name;
       }
-      promises.push(this.getInfo(entryPath));
+      infos.push(await this.getInfo(entryPath));
     }
 
-    return Promise.all(promises);
+    return infos;
   }
 
   // walkPath walks a pathstr (assumed to be in the qualified Unix format specified

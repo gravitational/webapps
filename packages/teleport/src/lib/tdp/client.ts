@@ -252,17 +252,11 @@ export default class Client extends EventEmitterWebAuthnSender {
     try {
       const req = this.codec.decodeSharedDirectoryListRequest(buffer);
       const path = req.path;
-      console.log('in handleSharedDirectoryListRequest for path: ' + path);
-      console.log('awaiting for listContents');
+
       const infoList: FileOrDirInfo[] = await this.sdManager.listContents(path);
-      console.log('returned from listContents');
-      console.log('mapping listContents to fsoList');
       const fsoList: FileSystemObject[] = infoList.map(info =>
         this.toFso(info)
       );
-      console.log('finished mapping listContents to fsoList');
-      console.log(fsoList);
-      console.log('');
 
       this.sendSharedDirectoryListResponse({
         completionId: req.completionId,
