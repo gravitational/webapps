@@ -5,7 +5,7 @@ import createLoggerService from 'teleterm/services/logger';
 import PreloadLogger from 'teleterm/logger';
 import { ElectronGlobals } from './types';
 import { createPtyService } from 'teleterm/services/pty/ptyService';
-import { readGrpcCerts } from './services/grpcCerts';
+import { getGrpcClientCredentials } from 'teleterm/services/grpcCredentials';
 
 const mainProcessClient = createMainProcessClient();
 const runtimeSettings = mainProcessClient.getRuntimeSettings();
@@ -21,15 +21,15 @@ contextBridge.exposeInMainWorld('electron', getElectronGlobals());
 
 async function getElectronGlobals(): Promise<ElectronGlobals> {
   try {
-    const [grpcCerts, resolvedAddresses] = await Promise.all([
-      readGrpcCerts(runtimeSettings.certsDir),
+    const [addresses, credentials] = await Promise.all([
       mainProcessClient.getResolvedChildProcessAddresses(),
+      getGrpcClientCredentials(runtimeSettings),
     ]);
-    const tshClient = createTshClient(resolvedAddresses.tsh, grpcCerts);
+    const tshClient = createTshClient(addresses.tsh, credentials.tsh);
     const ptyServiceClient = createPtyService(
-      resolvedAddresses.shared,
-      runtimeSettings,
-      grpcCerts
+      addresses.shared,
+      credentials.shared,
+      runtimeSettings
     );
 
     return {

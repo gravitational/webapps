@@ -1,10 +1,10 @@
-import { Server, ServerCredentials } from '@grpc/grpc-js';
+import { Server } from '@grpc/grpc-js';
 import { PtyHostService } from './api/protogen/ptyHostService_grpc_pb';
 import createLoggerService from 'teleterm/services/logger';
 import { RuntimeSettings } from 'teleterm/mainProcess/types';
 import Logger from 'teleterm/logger';
 import { createPtyHostService } from './ptyHost/ptyHostService';
-import { readGrpcCerts } from 'teleterm/services/grpcCerts';
+import { getGrpcServerCredentials } from 'teleterm/services/grpcCredentials';
 
 function getRuntimeSettings(): RuntimeSettings {
   const args = process.argv.slice(2);
@@ -45,30 +45,24 @@ async function initializeServer(
   const server = new Server();
   // @ts-expect-error we have a typed service
   server.addService(PtyHostService, createPtyHostService());
-  const { cert, key } = await readGrpcCerts(runtimeSettings.certsDir);
 
-  server.bindAsync(
-    address,
-    ServerCredentials.createSsl(
-      cert,
-      [
-        {
-          cert_chain: cert,
-          private_key: key,
-        },
-      ],
-      true
-    ),
-    (error, port) => {
-      sendBoundNetworkPortToStdout(port);
+  try {
+    server.bindAsync(
+      address,
+      (await getGrpcServerCredentials(runtimeSettings)).shared,
+      (error, port) => {
+        sendBoundNetworkPortToStdout(port);
 
-      if (error) {
-        return logger.error(error.message);
+        if (error) {
+          return logger.error(error.message);
+        }
+
+        server.start();
       }
-
-      server.start();
-    }
-  );
+    );
+  } catch (e) {
+    logger.error('Could not start shared server', e);
+  }
 
   process.once('exit', () => {
     server.forceShutdown();

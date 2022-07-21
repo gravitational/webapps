@@ -1,4 +1,4 @@
-import { Metadata, credentials } from '@grpc/grpc-js';
+import { ChannelCredentials, Metadata } from '@grpc/grpc-js';
 import { Struct } from 'google-protobuf/google/protobuf/struct_pb';
 import {
   PtyHostClient as GrpcClient,
@@ -7,17 +7,12 @@ import {
 } from 'teleterm/sharedProcess/ptyHost';
 import { PtyEventsStreamHandler } from './ptyEventsStreamHandler';
 import { PtyHostClient } from '../types';
-import { GrpcCerts } from 'teleterm/services/grpcCerts';
 
 export function createPtyHostClient(
   address: string,
-  grpcCerts: GrpcCerts
+  credentials: ChannelCredentials
 ): PtyHostClient {
-  const client = new GrpcClient(
-    address,
-    credentials.createSsl(grpcCerts.cert, grpcCerts.key, grpcCerts.cert)
-  );
-
+  const client = new GrpcClient(address, credentials);
   return {
     createPtyProcess(ptyOptions) {
       const request = new PtyCreate()
