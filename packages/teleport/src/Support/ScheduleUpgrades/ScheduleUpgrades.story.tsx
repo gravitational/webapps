@@ -58,5 +58,4 @@ const props: Props = {
   } as any,
   onSelectedWindowChange: () => {},
   selectedWindow: '08:00:00',
-  upgradeWindowOptions: ['08:00:00', '16:00:00', '23:00:00'],
 };

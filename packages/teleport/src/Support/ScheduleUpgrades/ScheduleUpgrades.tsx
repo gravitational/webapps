@@ -28,21 +28,31 @@ import { UpgradeWindowStart } from 'teleport/services/upgradeWindow/upgradeWindo
 import Text from 'design/Text';
 import Alert from 'design/Alert';
 
+const availableUpgradeWindowStarts: UpgradeWindowStart[] = [
+  '08:00:00',
+  '16:00:00',
+  '23:00:00',
+];
+
+export const makeLabel = (window: UpgradeWindowStart): string => {
+  return `${window} (UTC)`;
+};
+
+const upgradeWindowOptions: Option<any>[] = availableUpgradeWindowStarts.map(
+  (window: UpgradeWindowStart) => ({
+    label: makeLabel(window),
+    value: window,
+  })
+);
+
 export function ScheduleUpgrades({
   onCancel,
   onSave,
-  upgradeWindowOptions,
   selectedWindow,
   onSelectedWindowChange,
   attempt,
 }: Props) {
-  const options =
-    attempt.status === 'processing'
-      ? []
-      : upgradeWindowOptions.map((window: UpgradeWindowStart) => ({
-          label: makeLabel(window),
-          value: window,
-        }));
+  const options = attempt.status === 'processing' ? [] : upgradeWindowOptions;
 
   const handleChange = (selected: Option<any>) =>
     onSelectedWindowChange(selected.value);
@@ -91,14 +101,9 @@ export function ScheduleUpgrades({
   );
 }
 
-export const makeLabel = (window: UpgradeWindowStart): string => {
-  return `${window} (UTC)`;
-};
-
 export type Props = {
   onCancel: () => void;
   onSave: (window: UpgradeWindowStart) => any;
-  upgradeWindowOptions: string[];
   selectedWindow: UpgradeWindowStart;
   onSelectedWindowChange: (string) => void;
   attempt: Attempt;

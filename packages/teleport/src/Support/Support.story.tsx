@@ -46,6 +46,5 @@ const props: Props = {
   selectedUpgradeWindowStart: '08:00:00',
   setSelectedUpgradeWindowStart: () => {},
   showScheduleUpgrade: () => {},
-  upgradeWindowOptions: ['08:00:00'],
   tunnelPublicAddress: null,
 };

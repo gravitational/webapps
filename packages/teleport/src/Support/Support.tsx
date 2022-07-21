@@ -52,7 +52,6 @@ export const Support = ({
   scheduleUpgradesVisible,
   closeScheduleUpgrade,
   onUpdate,
-  upgradeWindowOptions,
   selectedUpgradeWindowStart,
   setSelectedUpgradeWindowStart,
   attempt,
@@ -145,7 +144,6 @@ export const Support = ({
         <ScheduleUpgrades
           onSave={onUpdate}
           onCancel={closeScheduleUpgrade}
-          upgradeWindowOptions={upgradeWindowOptions}
           selectedWindow={selectedUpgradeWindowStart}
           onSelectedWindowChange={setSelectedUpgradeWindowStart}
           attempt={attempt}

@@ -19,12 +19,6 @@ import useAttempt from 'shared/hooks/useAttemptNext';
 import Ctx from 'teleport/teleportContext';
 import type { UpgradeWindowStart } from 'teleport/services/upgradeWindow';
 
-const upgradeWindowOptions: UpgradeWindowStart[] = [
-  '08:00:00',
-  '16:00:00',
-  '23:00:00',
-];
-
 export function useUpgradeWindowStart(ctx: Ctx) {
   const { attempt, run } = useAttempt();
 
@@ -60,7 +54,6 @@ export function useUpgradeWindowStart(ctx: Ctx) {
     scheduleUpgradesVisible,
     showScheduleUpgrade,
     closeScheduleUpgrade,
-    upgradeWindowOptions,
     selectedUpgradeWindowStart,
     setSelectedUpgradeWindowStart,
     onUpdate,
