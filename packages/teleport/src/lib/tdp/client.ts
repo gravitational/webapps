@@ -28,6 +28,7 @@ import Codec, {
   SharedDirectoryInfoResponse,
   SharedDirectoryListResponse,
   SharedDirectoryReadResponse,
+  SharedDirectoryWriteResponse,
   FileSystemObject,
 } from './codec';
 import {
@@ -274,12 +275,20 @@ export default class Client extends EventEmitterWebAuthnSender {
     }
   }
 
-  handleSharedDirectoryWriteRequest(buffer: ArrayBuffer) {
+  async handleSharedDirectoryWriteRequest(buffer: ArrayBuffer) {
     const req = this.codec.decodeSharedDirectoryWriteRequest(buffer);
-    // TODO(isaiah): delete debug logs
-    this.logger.debug('Received SharedDirectoryWriteRequest:');
-    this.logger.debug(req);
-    // TODO(isaiah): here's where we'll respond with a SharedDirectoryWriteResponse
+
+    const bytesWritten = await this.sdManager.writeFile(
+      req.path,
+      req.offset,
+      req.writeData
+    );
+
+    this.sendSharedDirectoryWriteResponse({
+      completionId: req.completionId,
+      errCode: SharedDirectoryErrCode.Nil,
+      bytesWritten,
+    });
   }
 
   async handleSharedDirectoryListRequest(buffer: ArrayBuffer) {
@@ -390,6 +399,10 @@ export default class Client extends EventEmitterWebAuthnSender {
 
   sendSharedDirectoryReadResponse(response: SharedDirectoryReadResponse) {
     this.send(this.codec.encodeSharedDirectoryReadResponse(response));
+  }
+
+  sendSharedDirectoryWriteResponse(response: SharedDirectoryWriteResponse) {
+    this.send(this.codec.encodeSharedDirectoryWriteResponse(response));
   }
 
   resize(spec: ClientScreenSpec) {
