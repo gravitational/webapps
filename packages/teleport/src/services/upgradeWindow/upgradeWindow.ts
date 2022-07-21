@@ -19,7 +19,7 @@ import api from '../api';
 
 export type UpgradeWindowStart = '08:00:00' | '16:00:00' | '23:00:00';
 
-const service = {
+export const service = {
   getUpgradeWindowStart(): Promise<UpgradeWindowStart> {
     return api
       .get(cfg.api.upgradeWindowStartPath)
@@ -36,5 +36,3 @@ const service = {
       .then(res => res.windowStart);
   },
 };
-
-export default service;
