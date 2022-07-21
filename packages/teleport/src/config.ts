@@ -24,7 +24,6 @@ import {
   PrimaryAuthType,
   PreferredMfaType,
 } from 'shared/services';
-import type { UpgradeWindowStart } from 'teleport/services/upgradeWindow';
 import { RecordingType } from 'teleport/services/recordings';
 import generateResourcePath from './generateResourcePath';
 
