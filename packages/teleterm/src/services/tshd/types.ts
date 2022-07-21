@@ -4,6 +4,7 @@ import apigateway from './v1/gateway_pb';
 import apiServer from './v1/server_pb';
 import apiKube from './v1/kube_pb';
 import apiApp from './v1/app_pb';
+import apiService from './v1/service_pb';
 import apiAuthSettings from './v1/auth_settings_pb';
 
 export type Application = apiApp.App.AsObject;
@@ -26,6 +27,15 @@ export type Cluster = apiCluster.Cluster.AsObject;
 export type LoggedInUser = apiCluster.LoggedInUser.AsObject;
 export type AuthProvider = apiAuthSettings.AuthProvider.AsObject;
 export type AuthSettings = apiAuthSettings.AuthSettings.AsObject;
+
+export type WebauthnLoginPrompt = 'tap' | 'retap' | 'pin' | 'credential' | '';
+export type LoginPasswordlessRequest =
+  Partial<apiService.LoginPasswordlessRequest.AsObject>;
+export type LoginPasswordlessResponse = {
+  // loginUsernames are list of login usernames associated with a device.
+  loginUsernames?: string[];
+  writeToStream?(req: LoginPasswordlessRequest): void;
+};
 
 export type TshClient = {
   listRootClusters: () => Promise<Cluster[]>;
@@ -51,6 +61,10 @@ export type TshClient = {
   getAuthSettings: (clusterUri: string) => Promise<AuthSettings>;
   removeCluster: (clusterUri: string) => Promise<void>;
   login: (params: LoginParams, abortSignal?: TshAbortSignal) => Promise<void>;
+  loginPasswordless: (
+    params: LoginParams,
+    abortSignal?: TshAbortSignal
+  ) => Promise<void>;
   logout: (clusterUri: string) => Promise<void>;
 };
 
@@ -74,6 +88,9 @@ export type LoginParams = {
     username: string;
     password: string;
     token?: string;
+  };
+  passwordless?: {
+    onSuccess(prompt: WebauthnLoginPrompt, res: LoginPasswordlessResponse);
   };
 };
 
