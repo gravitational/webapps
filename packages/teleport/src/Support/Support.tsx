@@ -50,7 +50,7 @@ export const Support = ({
   isCloud,
   showScheduleUpgrade,
   scheduleUpgradesVisible,
-  hideScheduleUpgrade,
+  closeScheduleUpgrade,
   onUpdate,
   upgradeWindowOptions,
   selectedUpgradeWindowStart,
@@ -137,14 +137,14 @@ export const Support = ({
           />
           <Text>
             Window Start Time is the hour in which an upgrade may begin.
-            Changing this value changes it for everyone in your org.
+            Changing this value changes it for everyone in your organization.
           </Text>
         </DataContainer>
       )}
       {scheduleUpgradesVisible && (
         <ScheduleUpgrades
           onSave={onUpdate}
-          onClose={hideScheduleUpgrade}
+          onCancel={closeScheduleUpgrade}
           upgradeWindowOptions={upgradeWindowOptions}
           selectedWindow={selectedUpgradeWindowStart}
           onSelectedWindowChange={setSelectedUpgradeWindowStart}

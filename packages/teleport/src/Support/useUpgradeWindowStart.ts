@@ -37,18 +37,14 @@ export function useUpgradeWindowStart(ctx: Ctx) {
       ctx.upgradeWindowService
         .getUpgradeWindowStart()
         .then(setSelectedUpgradeWindowStart)
-    ).then(success => {
-      if (!success) {
-        setSelectedUpgradeWindowStart(upgradeWindowOptions[0]);
-      }
-    });
+    );
   }, []);
 
   function showScheduleUpgrade() {
     setScheduleUpgradesVisible(true);
   }
 
-  function hideScheduleUpgrade() {
+  function closeScheduleUpgrade() {
     setScheduleUpgradesVisible(false);
   }
 
@@ -56,14 +52,14 @@ export function useUpgradeWindowStart(ctx: Ctx) {
     return run(() =>
       ctx.upgradeWindowService
         .updateUpgradeWindowStart(selectedUpgradeWindowStart)
-        .then(() => hideScheduleUpgrade())
+        .then(() => closeScheduleUpgrade())
     );
   }
 
   return {
     scheduleUpgradesVisible,
     showScheduleUpgrade,
-    hideScheduleUpgrade,
+    closeScheduleUpgrade,
     upgradeWindowOptions,
     selectedUpgradeWindowStart,
     setSelectedUpgradeWindowStart,

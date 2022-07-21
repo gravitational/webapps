@@ -421,7 +421,7 @@ exports[`support Cloud 1`] = `
     <div
       class="c15"
     >
-      Window Start Time is the hour in which an upgrade may begin. Changing this value changes it for everyone in your org.
+      Window Start Time is the hour in which an upgrade may begin. Changing this value changes it for everyone in your organization.
     </div>
   </div>
 </div>

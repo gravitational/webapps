@@ -50,7 +50,7 @@ export const Failed = () => {
 };
 
 const props: Props = {
-  onClose: () => {},
+  onCancel: () => {},
   onSave: () => {},
   attempt: {
     status: '',

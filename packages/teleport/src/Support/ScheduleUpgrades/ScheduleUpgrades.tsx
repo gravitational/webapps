@@ -19,6 +19,7 @@ import { ButtonPrimary, ButtonSecondary } from 'design/Button';
 import Dialog, {
   DialogContent,
   DialogFooter,
+  DialogHeader,
   DialogTitle,
 } from 'design/Dialog';
 import Select, { Option } from 'shared/components/Select';
@@ -28,7 +29,7 @@ import Text from 'design/Text';
 import Alert from 'design/Alert';
 
 export function ScheduleUpgrades({
-  onClose,
+  onCancel,
   onSave,
   upgradeWindowOptions,
   selectedWindow,
@@ -48,31 +49,27 @@ export function ScheduleUpgrades({
 
   return (
     <Dialog
-      onClose={onClose}
+      onCancel={onCancel}
       open={true}
       dialogCss={() => ({ maxWidth: '600px' })}
     >
-      <DialogTitle mr="auto">Select a maintenance start window</DialogTitle>
+      <DialogHeader>
+        <DialogTitle>Select a maintenance start window</DialogTitle>
+      </DialogHeader>
+      {attempt.status === 'failed' && (
+        <Alert kind="danger" children={attempt.statusText} />
+      )}
       <DialogContent minWidth="500px" flex="0 0 auto">
-        <Text my={2}>
+        <Text mb={2}>
           Teleport provides different cluster maintenance windows to minimize
           downtime during upgrades, patches, etc.
         </Text>
-        {attempt.status === 'failed' && (
-          <Alert kind="danger" children={attempt.statusText} />
-        )}
         <Select
           onChange={handleChange}
           menuPosition="fixed"
           options={options}
-          value={
-            attempt.status === 'processing'
-              ? {
-                  label: 'Processing...',
-                  value: null,
-                }
-              : { value: selectedWindow, label: makeLabel(selectedWindow) }
-          }
+          isDisabled={attempt.status === 'processing'}
+          value={{ value: selectedWindow, label: makeLabel(selectedWindow) }}
         ></Select>
       </DialogContent>
       <DialogFooter>
@@ -84,10 +81,10 @@ export function ScheduleUpgrades({
           Save
         </ButtonPrimary>
         <ButtonSecondary
-          onClick={onClose}
+          onClick={onCancel}
           disabled={attempt.status === 'processing'}
         >
-          Close
+          Cancel
         </ButtonSecondary>
       </DialogFooter>
     </Dialog>
@@ -99,7 +96,7 @@ export const makeLabel = (window: UpgradeWindowStart): string => {
 };
 
 export type Props = {
-  onClose: () => void;
+  onCancel: () => void;
   onSave: (window: UpgradeWindowStart) => any;
   upgradeWindowOptions: string[];
   selectedWindow: UpgradeWindowStart;

@@ -40,7 +40,7 @@ const props: Props = {
   isEnterprise: false,
   isCloud: false,
   attempt: { status: 'success' },
-  hideScheduleUpgrade: () => {},
+  closeScheduleUpgrade: () => {},
   onUpdate: () => Promise.resolve(false),
   scheduleUpgradesVisible: false,
   selectedUpgradeWindowStart: '08:00:00',

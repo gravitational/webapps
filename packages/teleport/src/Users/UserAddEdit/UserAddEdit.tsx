@@ -83,9 +83,7 @@ export function UserAddEdit(props: ReturnType<typeof useDialog>) {
             <DialogTitle>{isNew ? 'Create User' : 'Edit User'}</DialogTitle>
           </DialogHeader>
           <DialogContent>
-            {attempt.status === 'failed' && (
-              <Alert kind="danger" children={attempt.statusText} />
-            )}
+            {<Alert kind="danger" children={attempt.statusText} />}
             <FieldInput
               label="Username"
               rule={requiredField('Username is required')}
