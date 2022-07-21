@@ -109,7 +109,12 @@ export default function LoginForm(props: Props) {
   );
 }
 
-const SsoList = ({ attempt, authProviders, onLoginWithSso }: Props) => {
+const SsoList = ({
+  attempt,
+  authProviders,
+  onLoginWithSso,
+  autoFocus = false,
+}: Props) => {
   const { isProcessing } = attempt;
   return (
     <SSOButtonList
@@ -117,11 +122,16 @@ const SsoList = ({ attempt, authProviders, onLoginWithSso }: Props) => {
       isDisabled={isProcessing}
       providers={authProviders}
       onClick={onLoginWithSso}
+      autoFocus={autoFocus}
     />
   );
 };
 
-const Passwordless = ({ onLoginWithWebauthn, attempt }: Props) => {
+const Passwordless = ({
+  onLoginWithWebauthn,
+  attempt,
+  autoFocus = false,
+}: Props) => {
   // Firefox currently does not support passwordless and when
   // logging in, it will return an ambigugous error.
   // We display a soft warning because firefox may provide
@@ -144,6 +154,7 @@ const Passwordless = ({ onLoginWithWebauthn, attempt }: Props) => {
         width="100%"
         onClick={() => onLoginWithWebauthn()}
         disabled={attempt.isProcessing}
+        autoFocus={autoFocus}
       >
         <Flex alignItems="center" justifyContent="space-between">
           <Flex alignItems="center">
@@ -171,6 +182,7 @@ const LocalForm = ({
   onLoginWithWebauthn,
   clearAttempt,
   autoFocusOnTransitionEnd = false,
+  autoFocus = false,
 }: Props & { autoFocusOnTransitionEnd?: boolean }) => {
   const { isProcessing } = attempt;
   const [pass, setPass] = useState('');
@@ -225,13 +237,14 @@ const LocalForm = ({
           <FieldInput
             rule={requiredField('Username is required')}
             label="Username"
-            autoFocus
+            autoFocus={autoFocus}
             transitionPropertyName={autoFocusOnTransitionEnd ? 'height' : ''}
             value={user}
             onChange={e => setUser(e.target.value)}
             placeholder="Username"
+            mb={3}
           />
-          <Box mb={isRecoveryEnabled ? 2 : 4}>
+          <Box mb={isRecoveryEnabled ? 1 : 3}>
             <FieldInput
               rule={requiredField('Password is required')}
               label="Password"
@@ -254,7 +267,7 @@ const LocalForm = ({
             )}
           </Box>
           {auth2faType !== 'off' && (
-            <Box mb={isRecoveryEnabled ? 3 : 4}>
+            <Box mb={isRecoveryEnabled ? 2 : 3}>
               <Flex alignItems="flex-end">
                 <FieldSelect
                   maxWidth="50%"
@@ -310,6 +323,8 @@ const LocalForm = ({
   );
 };
 
+// Primary determines which authentication type to display
+// on initial render of the login form.
 const Primary = ({
   next,
   refCallback,
@@ -320,19 +335,23 @@ const Primary = ({
   let otherOptionsAvailable = true;
   let $primary;
 
-  if (otherProps.primaryAuthType === 'passwordless') {
-    $primary = <Passwordless {...otherProps} />;
-  }
-
-  if (otherProps.primaryAuthType === 'local') {
-    otherOptionsAvailable = otherProps.isPasswordlessEnabled || ssoEnabled;
-    $primary = (
-      <LocalForm {...otherProps} autoFocusOnTransitionEnd={willTransition} />
-    );
-  }
-
-  if (otherProps.primaryAuthType === 'sso') {
-    $primary = <SsoList {...otherProps} />;
+  switch (otherProps.primaryAuthType) {
+    case 'passwordless':
+      $primary = <Passwordless {...otherProps} autoFocus={true} />;
+      break;
+    case 'sso':
+      $primary = <SsoList {...otherProps} autoFocus={true} />;
+      break;
+    case 'local':
+      otherOptionsAvailable = otherProps.isPasswordlessEnabled || ssoEnabled;
+      $primary = (
+        <LocalForm
+          {...otherProps}
+          autoFocusOnTransitionEnd={willTransition}
+          autoFocus={true}
+        />
+      );
+      break;
   }
 
   return (
@@ -355,6 +374,11 @@ const Primary = ({
   );
 };
 
+// Secondary determines what other forms of authentication
+// is allowed for the user to login with.
+//
+// There can be multiple authn types available, which will
+// be visually separated by a divider.
 const Secondary = ({
   prev,
   refCallback,
@@ -363,50 +387,60 @@ const Secondary = ({
   const ssoEnabled = otherProps.authProviders?.length > 0;
   const { primaryAuthType, isPasswordlessEnabled } = otherProps;
 
-  const $local = <LocalForm {...otherProps} autoFocusOnTransitionEnd={true} />;
-  const $sso = <SsoList {...otherProps} />;
-  const $passwordless = <Passwordless {...otherProps} />;
-
   let $secondary;
-
-  if (primaryAuthType === 'passwordless') {
-    $secondary = (
-      <>
-        {ssoEnabled && (
+  switch (primaryAuthType) {
+    case 'passwordless':
+      if (ssoEnabled) {
+        $secondary = (
           <>
-            {$sso}
+            <SsoList {...otherProps} autoFocus={true} />
             <Divider />
+            <LocalForm {...otherProps} />
           </>
-        )}
-        {$local}
-      </>
-    );
-  }
-
-  if (primaryAuthType === 'local') {
-    $secondary = (
-      <>
-        {isPasswordlessEnabled && $passwordless}
-        {isPasswordlessEnabled && ssoEnabled && <Divider />}
-        {ssoEnabled && $sso}
-      </>
-    );
-  }
-
-  if (primaryAuthType === 'sso') {
-    $secondary = (
-      <>
-        {isPasswordlessEnabled && (
+        );
+      } else {
+        $secondary = (
+          <LocalForm
+            {...otherProps}
+            autoFocusOnTransitionEnd={true}
+            autoFocus={true}
+          />
+        );
+      }
+      break;
+    case 'sso':
+      if (isPasswordlessEnabled) {
+        $secondary = (
           <>
-            {$passwordless}
+            <Passwordless {...otherProps} autoFocus={true} />
             <Divider />
+            <LocalForm {...otherProps} />
           </>
-        )}
-        {$local}
-      </>
-    );
+        );
+      } else {
+        $secondary = (
+          <LocalForm
+            {...otherProps}
+            autoFocusOnTransitionEnd={true}
+            autoFocus={true}
+          />
+        );
+      }
+      break;
+    case 'local':
+      if (isPasswordlessEnabled) {
+        $secondary = (
+          <>
+            <Passwordless {...otherProps} autoFocus={true} />
+            {otherProps.isPasswordlessEnabled && ssoEnabled && <Divider />}
+            {ssoEnabled && <SsoList {...otherProps} />}
+          </>
+        );
+      } else {
+        $secondary = <SsoList {...otherProps} autoFocus={true} />;
+      }
+      break;
   }
-
   return (
     <Box ref={refCallback}>
       {$secondary}
@@ -487,6 +521,7 @@ export type Props = {
   onLoginWithSso(provider: AuthProvider): void;
   onLoginWithWebauthn(creds?: UserCredentials): void;
   onLogin(username: string, password: string, token: string): void;
+  autoFocus?: boolean;
 };
 
 type AttemptState = ReturnType<typeof useAttempt>[0];
