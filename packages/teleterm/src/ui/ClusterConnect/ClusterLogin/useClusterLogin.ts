@@ -25,9 +25,11 @@ export default function useClusterLogin(props: Props) {
   const { clustersService } = useAppContext();
   const cluster = clustersService.findCluster(clusterUri);
   const refAbortCtrl = useRef<types.tsh.TshAbortController>(null);
-  const [shouldPromptSsoStatus, promptSsoStatus] = useState(false);
-  const [shouldPromptHardwareKey, promptHardwareKey] = useState(false);
   const loggedInUserName = cluster.loggedInUser?.name || null;
+  const [shouldPromptSsoStatus, promptSsoStatus] = useState(false);
+  const [webauthnLogin, setWebauthnLogin] = useState<WebauthnLogin>({
+    prompt: '',
+  });
 
   const [initAttempt, init] = useAsync(async () => {
     const authSettings = await clustersService.getAuthSettings(clusterUri);
@@ -41,24 +43,68 @@ export default function useClusterLogin(props: Props) {
     return authSettings;
   });
 
-  const [loginAttempt, login] = useAsync((opts: types.LoginParams) => {
-    refAbortCtrl.current = clustersService.client.createAbortController();
-    return clustersService.login(opts, refAbortCtrl.current.signal);
-  });
+  const [loginAttempt, login, setAttempt] = useAsync(
+    (opts: types.LoginParams) => {
+      refAbortCtrl.current = clustersService.client.createAbortController();
+      return clustersService.login(opts, refAbortCtrl.current.signal);
+    }
+  );
 
   const onLoginWithLocal = (
-    username: '',
-    password: '',
-    token: '',
+    username = '',
+    password = '',
+    token = '',
     authType?: types.Auth2faType
   ) => {
-    promptHardwareKey(authType === 'webauthn');
+    if (authType === 'webauthn') {
+      setWebauthnLogin({ prompt: 'tap' });
+    }
+
     login({
       clusterUri,
       local: {
         username,
         password,
         token,
+      },
+    });
+  };
+
+  const onLoginWithPwdless = () => {
+    setWebauthnLogin({
+      prompt: '',
+      processing: true,
+    });
+
+    login({
+      clusterUri,
+      passwordless: {
+        onSuccess: (
+          prompt: types.WebauthnLoginPrompt,
+          res: types.LoginPasswordlessResponse
+        ) => {
+          const newLogin: WebauthnLogin = {
+            prompt,
+            processing: false,
+          };
+
+          if (res.writeToStream) {
+            newLogin.writeToStream = (req: types.LoginPasswordlessRequest) => {
+              setWebauthnLogin({
+                ...newLogin,
+                // prevent user from clicking on submit buttons more than once
+                processing: true,
+              });
+              res.writeToStream(req);
+            };
+          }
+
+          if (res.loginUsernames) {
+            newLogin.loginUsernames = res.loginUsernames;
+          }
+
+          setWebauthnLogin(newLogin);
+        },
       },
     });
   };
@@ -83,13 +129,19 @@ export default function useClusterLogin(props: Props) {
     props.onCancel();
   };
 
+  // Since the login form can have two views (primary and secondary)
+  // we need to clear any rendered error dialogus before switching.
+  const clearLoginAttempt = () => {
+    setAttempt({ status: '', statusText: '', data: null });
+  };
+
   useEffect(() => {
     init();
   }, []);
 
   useEffect(() => {
     if (loginAttempt.status !== 'processing') {
-      promptHardwareKey(false);
+      setWebauthnLogin({ prompt: '' });
       promptSsoStatus(false);
     }
 
@@ -100,15 +152,17 @@ export default function useClusterLogin(props: Props) {
 
   return {
     shouldPromptSsoStatus,
-    shouldPromptHardwareKey,
+    webauthnLogin,
     title: getClusterName(cluster),
     loggedInUserName,
     onLoginWithLocal,
+    onLoginWithPwdless,
     onLoginWithSso,
     onCloseDialog,
     onAbort,
     loginAttempt,
     initAttempt,
+    clearLoginAttempt,
   };
 }
 
@@ -118,4 +172,12 @@ export type Props = {
   clusterUri: string;
   onCancel(): void;
   onSuccess?(): void;
+};
+
+export type WebauthnLogin = {
+  prompt: types.WebauthnLoginPrompt;
+  // The below three fields are only ever used for passwordless login flow.
+  processing?: boolean;
+  loginUsernames?: string[];
+  writeToStream?(r: types.LoginPasswordlessRequest): void;
 };

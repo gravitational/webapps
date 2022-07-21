@@ -1,5 +1,5 @@
 /*
-Copyright 2019-2021 Gravitational, Inc.
+Copyright 2019-2022 Gravitational, Inc.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -18,6 +18,8 @@ import React from 'react';
 import * as Alerts from 'design/Alert';
 import { ButtonIcon, Text } from 'design';
 import * as Icons from 'design/Icon';
+import { AuthSettings } from 'teleterm/ui/services/clusters/types';
+import { PrimaryAuthType } from 'shared/services';
 import LoginForm from './FormLogin';
 import useClusterLogin, { State, Props } from './useClusterLogin';
 import { DialogHeader, DialogContent } from 'design/Dialog';
@@ -31,17 +33,19 @@ export function ClusterLoginPresentation({
   title,
   initAttempt,
   loginAttempt,
+  clearLoginAttempt,
   onLoginWithLocal,
+  onLoginWithPwdless,
   onLoginWithSso,
   onCloseDialog,
   onAbort,
   loggedInUserName,
   shouldPromptSsoStatus,
-  shouldPromptHardwareKey,
+  webauthnLogin,
 }: State) {
   return (
     <>
-      <DialogHeader>
+      <DialogHeader px={4} pt={4} mb={0}>
         <Text typography="h4">
           Login to <b>{title}</b>
         </Text>
@@ -49,7 +53,7 @@ export function ClusterLoginPresentation({
           <Icons.Close fontSize="20px" />
         </ButtonIcon>
       </DialogHeader>
-      <DialogContent mb={2}>
+      <DialogContent mb={0}>
         {initAttempt.status === 'error' && (
           <Alerts.Danger>
             Unable to retrieve cluster auth preferences,{' '}
@@ -62,17 +66,35 @@ export function ClusterLoginPresentation({
             authProviders={initAttempt.data.authProvidersList}
             auth2faType={initAttempt.data.secondFactor}
             isLocalAuthEnabled={initAttempt.data.localAuthEnabled}
+            isPasswordlessEnabled={initAttempt.data.allowPasswordless}
+            localConnectorName={initAttempt.data.localConnectorName}
+            primaryAuthType={getPrimaryAuthType(initAttempt.data)}
             preferredMfa={initAttempt.data.preferredMfa}
             loggedInUserName={loggedInUserName}
             onLoginWithSso={onLoginWithSso}
+            onLoginWithPwdless={onLoginWithPwdless}
             onLogin={onLoginWithLocal}
             onAbort={onAbort}
             loginAttempt={loginAttempt}
+            clearLoginAttempt={clearLoginAttempt}
             shouldPromptSsoStatus={shouldPromptSsoStatus}
-            shouldPromptHardwareKey={shouldPromptHardwareKey}
+            webauthnLogin={webauthnLogin}
           />
         )}
       </DialogContent>
     </>
   );
+}
+
+function getPrimaryAuthType(auth: AuthSettings): PrimaryAuthType {
+  if (auth.localConnectorName === 'passwordless') {
+    return 'passwordless';
+  }
+
+  const { authType } = auth;
+  if (authType === 'github' || authType === 'oidc' || authType === 'saml') {
+    return 'sso';
+  }
+
+  return 'local';
 }
