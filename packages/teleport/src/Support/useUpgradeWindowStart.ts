@@ -17,14 +17,18 @@ limitations under the License.
 import { useState, useEffect } from 'react';
 import useAttempt from 'shared/hooks/useAttemptNext';
 import Ctx from 'teleport/teleportContext';
-import cfg from 'teleport/config';
 import type { UpgradeWindowStart } from 'teleport/services/upgradeWindow';
+
+const upgradeWindowOptions: UpgradeWindowStart[] = [
+  '08:00:00',
+  '16:00:00',
+  '23:00:00',
+];
 
 export function useUpgradeWindowStart(ctx: Ctx) {
   const { attempt, run } = useAttempt();
 
   const [scheduleUpgradesVisible, setScheduleUpgradesVisible] = useState(false);
-  const upgradeWindowOptions = cfg.scheduledUpgradeWindows;
   const [selectedUpgradeWindowStart, setSelectedUpgradeWindowStart] =
     useState<UpgradeWindowStart>();
 

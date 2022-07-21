@@ -56,12 +56,6 @@ const cfg = {
 
   proxyCluster: 'localhost',
 
-  scheduledUpgradeWindows: [
-    '08:00:00',
-    '16:00:00',
-    '23:00:00',
-  ] as UpgradeWindowStart[],
-
   loc: {
     dateTimeFormat: 'YYYY-MM-DD HH:mm:ss',
     dateFormat: 'YYYY-MM-DD',
