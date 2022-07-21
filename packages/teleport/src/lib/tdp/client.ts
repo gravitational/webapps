@@ -224,8 +224,13 @@ export default class Client extends EventEmitterWebAuthnSender {
     if (!this.wasSuccessful(ack.errCode)) {
       return;
     }
-
-    this.logger.info('Started sharing directory: ' + this.sdManager.getName());
+    try {
+      this.logger.info(
+        'Started sharing directory: ' + this.sdManager.getName()
+      );
+    } catch (e) {
+      this.handleError(e);
+    }
   }
 
   async handleSharedDirectoryInfoRequest(buffer: ArrayBuffer) {
@@ -278,17 +283,21 @@ export default class Client extends EventEmitterWebAuthnSender {
   async handleSharedDirectoryWriteRequest(buffer: ArrayBuffer) {
     const req = this.codec.decodeSharedDirectoryWriteRequest(buffer);
 
-    const bytesWritten = await this.sdManager.writeFile(
-      req.path,
-      req.offset,
-      req.writeData
-    );
+    try {
+      const bytesWritten = await this.sdManager.writeFile(
+        req.path,
+        req.offset,
+        req.writeData
+      );
 
-    this.sendSharedDirectoryWriteResponse({
-      completionId: req.completionId,
-      errCode: SharedDirectoryErrCode.Nil,
-      bytesWritten,
-    });
+      this.sendSharedDirectoryWriteResponse({
+        completionId: req.completionId,
+        errCode: SharedDirectoryErrCode.Nil,
+        bytesWritten,
+      });
+    } catch (e) {
+      this.handleError(e);
+    }
   }
 
   async handleSharedDirectoryListRequest(buffer: ArrayBuffer) {
@@ -378,13 +387,19 @@ export default class Client extends EventEmitterWebAuthnSender {
   }
 
   sendSharedDirectoryAnnounce() {
+    let name: string;
+    try {
+      name = this.sdManager.getName();
+    } catch (e) {
+      this.handleError(e);
+    }
     this.send(
       this.codec.encodeSharedDirectoryAnnounce({
         completionId: 0, // This is always the first request.
         // Hardcode directoryId for now since we only support sharing 1 directory.
         // We're using 2 because the smartcard device is hardcoded to 1 in the backend.
         directoryId: 2,
-        name: this.sdManager.getName(),
+        name,
       })
     );
   }
