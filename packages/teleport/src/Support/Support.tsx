@@ -131,7 +131,7 @@ export const Support = ({
             data={
               <span>
                 {selectedUpgradeWindowStart}
-                <Edit onClick={showScheduleUpgrade} ml="2" />
+                <EditLink onClick={showScheduleUpgrade} ml="2" />
               </span>
             }
           />
@@ -154,6 +154,15 @@ export const Support = ({
     </FeatureBox>
   );
 };
+
+const EditLink = styled(Edit)`
+  color: ${props => props.theme.colors.light};
+  ${props => props.theme.typography.body2}
+  &:hover, &:focus {
+    background: ${props => props.theme.colors.primary.lighter};
+    cursor: pointer;
+  }
+`;
 
 const DataContainer: React.FC<{ title: string }> = ({ title, children }) => (
   <Box
