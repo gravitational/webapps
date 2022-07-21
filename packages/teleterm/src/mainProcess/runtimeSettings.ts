@@ -61,6 +61,10 @@ function getCertsDir() {
   if (!fs.existsSync(certsPath)) {
     fs.mkdirSync(certsPath);
   }
+  if (fs.readdirSync(certsPath)) {
+    fs.rmSync(certsPath, { force: true, recursive: true });
+    fs.mkdirSync(certsPath);
+  }
   return certsPath;
 }
 
