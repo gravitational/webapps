@@ -34,15 +34,14 @@ function waitForMatchInStdout(
 
     const timeout = setTimeout(() => {
       rejectOnError(
-        new Error(
-          `Could not resolve address (${requestedAddress}) for process ${process.spawnfile}. The operation timed out.`
-        )
+        new ResolveError(requestedAddress, process, 'the operation timed out')
       );
     }, timeoutMs);
 
     const removeListeners = () => {
       process.stdout.off('data', findAddressInChunk);
       process.off('error', rejectOnError);
+      process.off('exit', rejectOnExit);
       clearTimeout(timeout);
     };
 
@@ -60,7 +59,33 @@ function waitForMatchInStdout(
       removeListeners();
     };
 
+    const rejectOnExit = (code: number, signal: NodeJS.Signals) => {
+      const codeOrSignal = [
+        code && `code ${code}`,
+        signal && `signal ${signal}`,
+      ]
+        .filter(Boolean)
+        .join(' and ');
+      const details = codeOrSignal ? ` with ${codeOrSignal}` : '';
+      rejectOnError(
+        new ResolveError(
+          requestedAddress,
+          process,
+          `the process exited${details}`
+        )
+      );
+    };
+
     process.stdout.on('data', findAddressInChunk);
     process.on('error', rejectOnError);
+    process.on('exit', rejectOnExit);
   });
+}
+
+class ResolveError extends Error {
+  constructor(requestedAddress: string, process: ChildProcess, reason: string) {
+    super(
+      `Could not resolve address (${requestedAddress}) for process ${process.spawnfile}: ${reason}.`
+    );
+  }
 }
