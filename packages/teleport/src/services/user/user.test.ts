@@ -193,8 +193,8 @@ test('fetch users, null response values gives empty array', async () => {
       roles: [],
       traits: {
         awsRoleArns: [],
-        dbNames: [],
-        dbUsers: [],
+        databaseNames: [],
+        databaseUsers: [],
         kubeGroups: [],
         kubeUsers: [],
         logins: [],

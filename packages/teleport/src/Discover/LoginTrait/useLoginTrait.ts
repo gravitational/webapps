@@ -18,20 +18,18 @@ import { useState, useEffect } from 'react';
 import useAttempt from 'shared/hooks/useAttemptNext';
 import type { User } from 'teleport/services/user';
 import { DiscoverContext } from '../discoverContext';
-import type { AgentStepProps } from '../Shared';
+import type { AgentStepProps } from '../types';
 
 export function useLoginTrait({ ctx, props }: Props) {
   const [user, setUser] = useState<User>();
   const { attempt, run, setAttempt, handleError } = useAttempt('processing');
-  const [loginMap, setLoginMap] = useState<Record<string, boolean>>({});
+  const [logins, setLogins] = useState<string[]>([]);
 
   useEffect(() => {
     run(() =>
       ctx.userService.fetchUser(ctx.username).then(user => {
         setUser(user);
-        let loginMap = {};
-        user.traits.logins.forEach(login => (loginMap[login] = true));
-        setLoginMap(loginMap);
+        setLogins(user.traits.logins);
       })
     );
   }, []);
@@ -47,24 +45,14 @@ export function useLoginTrait({ ctx, props }: Props) {
       .catch(handleError);
   }
 
-  function toggleLoginSelect(login: string) {
-    const newMap = { ...loginMap };
-    newMap[login] = !loginMap[login];
-    setLoginMap(newMap);
-  }
-
   function addLogin(login: string) {
-    setLoginMap({
-      ...loginMap,
-      [login]: true,
-    });
+    setLogins([...logins, login]);
   }
 
   return {
     attempt,
     nextStep,
-    loginMap,
-    toggleLoginSelect,
+    logins,
     addLogin,
   };
 }

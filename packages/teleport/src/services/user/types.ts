@@ -85,11 +85,11 @@ export interface UserTraits {
   // logins is the list of logins that this user is allowed to
   // start SSH sessions with.
   logins: string[];
-  // dbUsers is the list of db usernames that this user is
+  // databaseUsers is the list of db usernames that this user is
   // allowed to open db connections as.
-  dbUsers: string[];
-  // dbNames is the list of db names that this user can connect to.
-  dbNames: string[];
+  databaseUsers: string[];
+  // databaseNames is the list of db names that this user can connect to.
+  databaseNames: string[];
   // kubeUsers is the list of allowed kube logins.
   kubeUsers: string[];
   // kubeGroups is the list of allowed kube groups for a kube cluster.

@@ -16,7 +16,7 @@
 
 import { User } from './types';
 
-export default function makeUser(json): User {
+export default function makeUser(json: any): User {
   json = json || {};
   const { name, roles, authType, traits = {} } = json;
 
@@ -27,8 +27,8 @@ export default function makeUser(json): User {
     isLocal: authType === 'local',
     traits: {
       logins: traits.logins || [],
-      dbUsers: traits.dbUsers || [],
-      dbNames: traits.dbNames || [],
+      databaseUsers: traits.databaseUsers || [],
+      databaseNames: traits.databaseNames || [],
       kubeUsers: traits.kubeUsers || [],
       kubeGroups: traits.kubeGroups || [],
       windowsLogins: traits.windowsLogins || [],

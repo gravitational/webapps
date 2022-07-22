@@ -15,8 +15,7 @@
  */
 
 import React from 'react';
-// eslint-disable-next-line import/named
-import { RenderResult } from '@testing-library/react';
+import type { RenderResult } from '@testing-library/react';
 import { render, screen, act, fireEvent } from 'design/utils/testing';
 import type { User } from 'teleport/services/user';
 import { DiscoverContext } from '../discoverContext';
@@ -106,8 +105,8 @@ const mockUser: User = {
   roles: [],
   traits: {
     logins: [],
-    dbUsers: [],
-    dbNames: [],
+    databaseUsers: [],
+    databaseNames: [],
     kubeUsers: [],
     kubeGroups: [],
     windowsLogins: [],

@@ -14,14 +14,20 @@
  * limitations under the License.
  */
 
-import React, { useState } from 'react';
-import { Flex, ButtonPrimary, ButtonText, Text, Box, Indicator } from 'design';
+import React, { useState, useRef } from 'react';
+import {
+  Flex,
+  ButtonPrimary,
+  ButtonText,
+  Text,
+  Box,
+  Indicator,
+  Input,
+} from 'design';
 import { Danger } from 'design/Alert';
 import * as Icons from 'design/Icon';
-import FieldInput from 'shared/components/FieldInput';
-import Validation from 'shared/components/Validation';
 import { Header, CancelButton } from '../Shared';
-import type { AgentStepProps } from '../Shared';
+import type { AgentStepProps } from '../types';
 import { useDiscoverContext } from '../discoverContextProvider';
 import { useLoginTrait, State } from './useLoginTrait';
 
@@ -32,32 +38,39 @@ export default function Container(props: AgentStepProps) {
   return <LoginTrait {...state} />;
 }
 
-export function LoginTrait({
-  attempt,
-  nextStep,
-  loginMap,
-  toggleLoginSelect,
-  addLogin,
-}: State) {
+export function LoginTrait({ attempt, nextStep, logins, addLogin }: State) {
+  const inputRefs = useRef<HTMLInputElement[]>([]);
   const [newLogin, setNewLogin] = useState('');
   const [showInputBox, setShowInputBox] = useState(false);
 
-  return (
-    <Box>
-      <Header>Set Up Access</Header>
-      {attempt.status === 'processing' && (
+  function onAddLogin() {
+    addLogin(newLogin);
+    setNewLogin('');
+    setShowInputBox(false);
+  }
+
+  let $content;
+  switch (attempt.status) {
+    case 'failed':
+      $content = <Danger>{attempt.statusText}</Danger>;
+      break;
+
+    case 'processing':
+      $content = (
         <Box textAlign="center" m={10}>
           <Indicator />
         </Box>
-      )}
-      {attempt.status === 'failed' && <Danger>{attempt.statusText}</Danger>}
-      {attempt.status === 'success' && (
+      );
+      break;
+
+    case 'success':
+      $content = (
         <>
           <Text bold mb={2}>
             Select or Add Linux Principles
           </Text>
           <Box mb={6}>
-            {Object.keys(loginMap).map((login, index) => {
+            {logins.map((login, index) => {
               return (
                 <Flex
                   key={index}
@@ -75,7 +88,6 @@ export function LoginTrait({
                   <input
                     type="checkbox"
                     name={login}
-                    checked={loginMap[login]}
                     css={`
                       margin-right: 10px;
                       accent-color: ${props =>
@@ -84,7 +96,8 @@ export function LoginTrait({
                         cursor: pointer;
                       }
                     `}
-                    onChange={() => toggleLoginSelect(login)}
+                    ref={el => (inputRefs.current[index] = el)}
+                    defaultChecked
                   />
                   <label
                     htmlFor={login}
@@ -99,63 +112,27 @@ export function LoginTrait({
                 </Flex>
               );
             })}
-            {showInputBox && (
-              <Flex alignItems="end" mt={3}>
-                <Validation>
-                  <FieldInput
-                    placeholder="name"
-                    autoFocus
-                    width="200px"
-                    value={newLogin}
-                    type="text"
-                    onChange={e => setNewLogin(e.target.value.trim())}
-                    mr={3}
-                    mb={0}
-                  />
-                  <ButtonPrimary
-                    size="small"
-                    mb={2}
-                    disabled={newLogin.length === 0}
-                    onClick={() => {
-                      addLogin(newLogin);
-                      setNewLogin('');
-                      setShowInputBox(false);
-                    }}
-                  >
-                    Add
-                  </ButtonPrimary>
-                </Validation>
-              </Flex>
-            )}
-            {!showInputBox && (
-              <ButtonText
-                mt={2}
-                onClick={() => setShowInputBox(true)}
-                css={`
-                  line-height: normal;
-                  padding-left: 4px;
-                `}
-              >
-                <Icons.Add
-                  css={`
-                    font-weight: bold;
-                    letter-spacing: 4px;
-                    &:after {
-                      content: ' ';
-                    }
-                  `}
-                />
-                Add New Principle
-              </ButtonText>
+            {showInputBox ? (
+              <AddLoginInput
+                newLogin={newLogin}
+                addLogin={onAddLogin}
+                setNewLogin={setNewLogin}
+              />
+            ) : (
+              <AddLoginButton setShowInputBox={setShowInputBox} />
             )}
           </Box>
           <ButtonPrimary
             width="165px"
             onClick={() => {
-              let checkedLogins = Object.keys(loginMap).filter(login =>
-                loginMap[login] ? login : false
-              );
-              nextStep(checkedLogins);
+              const names: string[] = [];
+              inputRefs.current.forEach(el => {
+                if (el.checked) {
+                  names.push(el.name);
+                }
+              });
+
+              nextStep(names);
             }}
             mr={3}
           >
@@ -163,7 +140,81 @@ export function LoginTrait({
           </ButtonPrimary>
           <CancelButton />
         </>
-      )}
+      );
+      break;
+  }
+
+  return (
+    <Box>
+      <Header>Set Up Access</Header>
+      {$content}
     </Box>
   );
 }
+
+const AddLoginInput = ({
+  newLogin,
+  addLogin,
+  setNewLogin,
+}: {
+  newLogin: string;
+  addLogin(): void;
+  setNewLogin(l: React.SetStateAction<string>): void;
+}) => {
+  return (
+    <form
+      onSubmit={e => {
+        e.preventDefault();
+        addLogin();
+      }}
+    >
+      <Flex alignItems="end" mt={3}>
+        <Input
+          placeholder="name"
+          autoFocus
+          width="200px"
+          value={newLogin}
+          type="text"
+          onChange={e => setNewLogin(e.target.value.trim())}
+          mr={3}
+          mb={0}
+        />
+        <ButtonPrimary
+          type="submit"
+          size="small"
+          mb={2}
+          disabled={newLogin.length === 0}
+        >
+          Add
+        </ButtonPrimary>
+      </Flex>
+    </form>
+  );
+};
+
+const AddLoginButton = ({
+  setShowInputBox,
+}: {
+  setShowInputBox(s: React.SetStateAction<boolean>): void;
+}) => (
+  <ButtonText
+    mt={2}
+    onClick={() => setShowInputBox(true)}
+    css={`
+      line-height: normal;
+      padding-left: 4px;
+    `}
+    autoFocus
+  >
+    <Icons.Add
+      css={`
+        font-weight: bold;
+        letter-spacing: 4px;
+        &:after {
+          content: ' ';
+        }
+      `}
+    />
+    Add New Principle
+  </ButtonText>
+);

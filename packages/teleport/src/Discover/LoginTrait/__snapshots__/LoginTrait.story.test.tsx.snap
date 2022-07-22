@@ -298,15 +298,16 @@ exports[`loaded 1`] = `
       width="300px"
     >
       <input
+        checked=""
         class="c5"
-        name="foo"
+        name="llama"
         type="checkbox"
       />
       <label
         class="c6"
-        for="foo"
+        for="llama"
       >
-        foo
+        llama
       </label>
     </div>
     <div

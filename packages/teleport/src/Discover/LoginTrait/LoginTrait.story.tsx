@@ -24,7 +24,7 @@ export default {
 
 export const Loaded = () => <LoginTrait {...props} />;
 
-export const Empty = () => <LoginTrait {...props} loginMap={{}} />;
+export const Empty = () => <LoginTrait {...props} logins={[]} />;
 
 export const Processing = () => (
   <LoginTrait {...props} attempt={{ status: 'processing' }} />
@@ -42,12 +42,7 @@ const props: State = {
     status: 'success',
     statusText: '',
   },
-  loginMap: {
-    root: true,
-    foo: false,
-    george_washington_really_long_name_testing: true,
-  },
+  logins: ['root', 'llama', 'george_washington_really_long_name_testing'],
   nextStep: () => null,
-  toggleLoginSelect: () => null,
   addLogin: () => null,
 };

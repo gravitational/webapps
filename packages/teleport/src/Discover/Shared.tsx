@@ -16,7 +16,6 @@
 
 import React from 'react';
 import { Text, ButtonSecondary } from 'design';
-import { State } from './useDiscover';
 import cfg from 'teleport/config';
 import history from 'teleport/services/history';
 
@@ -40,25 +39,3 @@ export const CancelButton: React.FC = () => (
     Go To Dashboard
   </ButtonSecondary>
 );
-
-export type AgentStepProps = {
-  // attempt defines fetch attempt states when we make api calls.
-  attempt: State['attempt'];
-  // joinToken defines fields related to a fetched token.
-  joinToken: State['joinToken'];
-  // agentMeta describes fields specific to an agent kind.
-  agentMeta: State['agentMeta'];
-  // updateAgentMeta updates the data specific to agent kinds
-  // as needed as we move through the step.
-  updateAgentMeta: State['updateAgentMeta'];
-  // nextStep increments the `currentStep` to go to the next step.
-  nextStep: State['nextStep'];
-  // prevStep decrements the `currentStep` to go to the prev step.
-  // TODO (anyone): I think we established there will be no previous
-  // button, but I don't remember.
-  prevStep: State['prevStep'];
-  // createJoinToken makes a fetch api call to get a joinToken.
-  createJoinToken: State['createJoinToken'];
-};
-
-export type AgentStepComponent = (props: AgentStepProps) => JSX.Element;
