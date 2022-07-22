@@ -18,25 +18,21 @@ import React from 'react';
 import styled from 'styled-components';
 import { Card, Box, Text, Flex } from 'design';
 import * as Icons from 'design/Icon';
-import { Edit } from 'design/Icon';
 import { FeatureBox } from 'teleport/components/Layout';
 import useTeleport from 'teleport/useTeleport';
 import cfg from 'teleport/config';
-import { ScheduleUpgrades } from './ScheduleUpgrades/ScheduleUpgrades';
-import { useUpgradeWindowStart } from './useUpgradeWindowStart';
 
-export default function Container() {
+export default function Container({ children }): JSX.Element {
   const ctx = useTeleport();
   const cluster = ctx.storeUser.state.cluster;
-  const upgradeWindowsState = useUpgradeWindowStart(ctx);
 
   return (
     <Support
       {...cluster}
-      {...upgradeWindowsState}
       isEnterprise={cfg.isEnterprise}
       tunnelPublicAddress={cfg.tunnelPublicAddress}
       isCloud={cfg.isCloud}
+      children={children}
     />
   );
 }
@@ -48,13 +44,7 @@ export const Support = ({
   isEnterprise,
   tunnelPublicAddress,
   isCloud,
-  showScheduleUpgrade,
-  scheduleUpgradesVisible,
-  closeScheduleUpgrade,
-  onUpdate,
-  selectedUpgradeWindowStart,
-  setSelectedUpgradeWindowStart,
-  attempt,
+  children,
 }: Props) => {
   const docs = getDocUrls(authVersion, isEnterprise);
 
@@ -123,46 +113,15 @@ export const Support = ({
         )}
       </DataContainer>
 
-      {isCloud && (
-        <DataContainer title="Scheduled Upgrades">
-          <DataItem
-            title="Window Start Time"
-            data={
-              <span>
-                {selectedUpgradeWindowStart}
-                <EditLink onClick={showScheduleUpgrade} ml="2" />
-              </span>
-            }
-          />
-          <Text>
-            Window Start Time is the hour in which an upgrade may begin.
-            Changing this value changes it for everyone in your organization.
-          </Text>
-        </DataContainer>
-      )}
-      {scheduleUpgradesVisible && (
-        <ScheduleUpgrades
-          onSave={onUpdate}
-          onCancel={closeScheduleUpgrade}
-          selectedWindow={selectedUpgradeWindowStart}
-          onSelectedWindowChange={setSelectedUpgradeWindowStart}
-          attempt={attempt}
-        />
-      )}
+      {children}
     </FeatureBox>
   );
 };
 
-const EditLink = styled(Edit)`
-  color: ${props => props.theme.colors.light};
-  ${props => props.theme.typography.body2}
-  &:hover, &:focus {
-    background: ${props => props.theme.colors.primary.lighter};
-    cursor: pointer;
-  }
-`;
-
-const DataContainer: React.FC<{ title: string }> = ({ title, children }) => (
+export const DataContainer: React.FC<{ title: string }> = ({
+  title,
+  children,
+}) => (
   <Box
     border="1px solid"
     borderColor="primary.light"
@@ -239,7 +198,7 @@ const StyledSupportLink = styled.a.attrs({
   }
 `;
 
-const DataItem = ({ title = '', data = null }) => (
+export const DataItem = ({ title = '', data = null }) => (
   <Flex mb={3}>
     <Text typography="body2" bold style={{ width: '130px' }}>
       {title}:
@@ -274,4 +233,5 @@ export type Props = {
   isEnterprise: boolean;
   isCloud: boolean;
   tunnelPublicAddress?: string;
-} & ReturnType<typeof useUpgradeWindowStart>;
+  children?: JSX.Element;
+};
