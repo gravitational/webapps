@@ -18,8 +18,14 @@ steps:
       - "go run ./cmd/checkout -w=/workspace"
 
   - name: gcr.io/cloud-builders/docker
+    id: install-deps
+    args:
+      - build
+      - .
+
+  - name: gcr.io/cloud-builders/docker
     id: prettier-check-and-lint
-    waitFor: ['checkout']
+    waitFor: ['install-deps']
     args:
       - build
       - '--build-arg'
@@ -28,7 +34,7 @@ steps:
 
   - name: gcr.io/cloud-builders/docker
     id: build-teleport
-    waitFor: ['prettier-check-and-lint']
+    waitFor: ['install-deps']
     args:
       - build
       - '--build-arg'
@@ -37,7 +43,7 @@ steps:
 
   - name: gcr.io/cloud-builders/docker
     id: build-term
-    waitFor: ['prettier-check-and-lint']
+    waitFor: ['install-deps']
     args:
       - build
       - '--build-arg'
