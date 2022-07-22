@@ -23,8 +23,8 @@ import Dialog, {
   DialogTitle,
   DialogContent,
 } from 'design/Dialog';
-import { Event } from 'teleport/services/audit';
 import { ButtonSecondary } from 'design';
+import { Event } from 'teleport/services/audit';
 
 type EventDialogProps = {
   event: Event;

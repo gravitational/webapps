@@ -15,8 +15,8 @@
  */
 
 import React from 'react';
-import Input from './Input';
 import { render, theme } from 'design/utils/testing';
+import Input from './Input';
 
 describe('design/Input', () => {
   it('respects hasError prop', () => {

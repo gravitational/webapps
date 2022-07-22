@@ -14,8 +14,8 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import { Acl } from './types';
 import cfg from 'teleport/config';
+import { Acl } from './types';
 
 export default function makeAcl(json): Acl {
   json = json || {};

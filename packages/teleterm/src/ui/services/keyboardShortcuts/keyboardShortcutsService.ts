@@ -1,13 +1,13 @@
-import {
-  KeyboardShortcutEvent,
-  KeyboardShortcutEventSubscriber,
-} from './types';
 import { Platform } from 'teleterm/mainProcess/types';
 import {
   KeyboardShortcutsConfig,
   KeyboardShortcutType,
   ConfigService,
 } from 'teleterm/services/config';
+import {
+  KeyboardShortcutEvent,
+  KeyboardShortcutEventSubscriber,
+} from './types';
 
 export class KeyboardShortcutsService {
   private eventsSubscribers = new Set<KeyboardShortcutEventSubscriber>();

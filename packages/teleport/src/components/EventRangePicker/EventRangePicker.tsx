@@ -20,10 +20,10 @@ import 'react-day-picker/lib/style.css';
 import { Text } from 'design';
 import Dialog from 'design/DialogConfirmation';
 import { displayDate } from 'shared/services/loc';
-import CustomRange from './Custom';
-import { EventRange } from './utils';
 import Select, { Option, DarkStyledSelect } from 'shared/components/Select';
 import { State } from 'teleport/Audit/useAuditEvents';
+import CustomRange from './Custom';
+import { EventRange } from './utils';
 
 export default function DataRange({ ml, range, onChangeRange, ranges }: Props) {
   const [isPickerOpen, openDayPicker] = useState(false);

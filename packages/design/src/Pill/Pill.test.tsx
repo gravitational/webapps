@@ -15,8 +15,8 @@
  */
 
 import React from 'react';
-import { Pill } from './Pill';
 import { render, fireEvent } from 'design/utils/testing';
+import { Pill } from './Pill';
 
 describe('design/Pill', () => {
   it('renders the label without dismissable', () => {

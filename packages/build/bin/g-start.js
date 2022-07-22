@@ -6,8 +6,8 @@ process.on('unhandledRejection', err => {
   throw err;
 });
 
-const spawn = require('cross-spawn');
 const path = require('path');
+const spawn = require('cross-spawn');
 
 if (!process.argv.some(arg => arg.startsWith('--config'))) {
   const defaultWebpackConfig = path.join(

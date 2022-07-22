@@ -15,8 +15,8 @@ limitations under the License.
 */
 
 import React from 'react';
-import { FieldTextArea } from './FieldTextArea';
 import Validation from '../../components/Validation';
+import { FieldTextArea } from './FieldTextArea';
 
 export default {
   title: 'Shared/FieldTextArea',

@@ -15,6 +15,7 @@
  */
 
 import React from 'react';
+import { render, screen } from 'design/utils/testing';
 import {
   Created,
   Loaded,
@@ -23,7 +24,6 @@ import {
   ManuallyWithoutTokenLocal,
   ManuallyWithToken,
 } from './AddApp.story';
-import { render, screen } from 'design/utils/testing';
 
 test('render automatic tab', async () => {
   render(<Loaded />);

@@ -3,8 +3,8 @@ import createTshClient from 'teleterm/services/tshd/createClient';
 import createMainProcessClient from 'teleterm/mainProcess/mainProcessClient';
 import createLoggerService from 'teleterm/services/logger';
 import PreloadLogger from 'teleterm/logger';
-import { ElectronGlobals } from './types';
 import { createPtyService } from 'teleterm/services/pty/ptyService';
+import { ElectronGlobals } from './types';
 
 const mainProcessClient = createMainProcessClient();
 const runtimeSettings = mainProcessClient.getRuntimeSettings();

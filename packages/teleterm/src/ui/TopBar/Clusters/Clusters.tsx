@@ -2,12 +2,12 @@ import React, { useCallback, useMemo, useRef, useState } from 'react';
 import Popover from 'design/Popover';
 import styled from 'styled-components';
 import { Box } from 'design';
-import { useClusters } from './useClusters';
-import { ClusterSelector } from './ClusterSelector/ClusterSelector';
-import { ClustersFilterableList } from './ClustersFilterableList/ClustersFilterableList';
 import { useKeyboardShortcuts } from 'teleterm/ui/services/keyboardShortcuts';
 import { KeyboardArrowsNavigation } from 'teleterm/ui/components/KeyboardArrowsNavigation';
 import { getClusterName } from 'teleterm/ui/utils';
+import { useClusters } from './useClusters';
+import { ClusterSelector } from './ClusterSelector/ClusterSelector';
+import { ClustersFilterableList } from './ClustersFilterableList/ClustersFilterableList';
 
 export function Clusters() {
   const iconRef = useRef();

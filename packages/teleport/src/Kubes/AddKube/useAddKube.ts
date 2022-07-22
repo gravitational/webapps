@@ -16,8 +16,8 @@
 
 import { useState } from 'react';
 import useAttempt from 'shared/hooks/useAttemptNext';
-import type { JoinToken } from 'teleport/services/joinToken';
 import TeleportContext from 'teleport/teleportContext';
+import type { JoinToken } from 'teleport/services/joinToken';
 
 export default function useAddKube(ctx: TeleportContext) {
   const { attempt, run } = useAttempt('');

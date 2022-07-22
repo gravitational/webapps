@@ -15,8 +15,8 @@
  */
 
 import React from 'react';
-import Dialog from './Dialog';
 import { render } from 'design/utils/testing';
+import Dialog from './Dialog';
 
 const testCss = {
   'background-color': '#fff',

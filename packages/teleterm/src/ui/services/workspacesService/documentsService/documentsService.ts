@@ -15,6 +15,7 @@ limitations under the License.
 */
 
 import { unique } from 'teleterm/ui/utils/uid';
+import { paths, routing } from 'teleterm/ui/uri';
 import {
   CreateClusterDocumentOpts,
   CreateGatewayDocumentOpts,
@@ -25,7 +26,6 @@ import {
   DocumentTshKube,
   DocumentTshNode,
 } from './types';
-import { paths, routing } from 'teleterm/ui/uri';
 
 export class DocumentsService {
   constructor(

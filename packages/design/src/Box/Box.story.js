@@ -15,8 +15,8 @@ limitations under the License.
 */
 
 import React from 'react';
-import Box from './Box';
 import styled from 'styled-components';
+import Box from './Box';
 
 export default {
   title: 'Design/Box',

@@ -15,8 +15,8 @@
  */
 
 import React from 'react';
-import { IconExample } from './Menu.story';
 import { render } from 'design/utils/testing';
+import { IconExample } from './Menu.story';
 
 describe('design/Menu', () => {
   it('renders parent and its children', () => {

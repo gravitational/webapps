@@ -24,8 +24,8 @@ import {
   FeatureHeaderTitle,
 } from 'teleport/components/Layout';
 import MfaDeviceList, { RemoveDialog } from 'teleport/components/MfaDeviceList';
-import AddDevice from './AddDevice';
 import ReAuthenticate from 'teleport/components/ReAuthenticate';
+import AddDevice from './AddDevice';
 import useManageDevices, { State } from './useManageDevices';
 
 export default function Container() {

@@ -22,13 +22,13 @@ import history from 'teleport/services/history';
 import Ctx from 'teleport/teleportContext';
 import { StickyCluster } from 'teleport/types';
 import cfg from 'teleport/config';
-import type { Node, NodesResponse } from 'teleport/services/nodes';
 import { openNewTab } from 'teleport/lib/util';
 import getResourceUrlQueryParams, {
   ResourceUrlQueryParams,
 } from 'teleport/getUrlQueryParams';
 import labelClick from 'teleport/labelClick';
 import { AgentLabel } from 'teleport/services/agents';
+import type { Node, NodesResponse } from 'teleport/services/nodes';
 
 export default function useNodes(ctx: Ctx, stickyCluster: StickyCluster) {
   const { isLeafCluster, clusterId } = stickyCluster;

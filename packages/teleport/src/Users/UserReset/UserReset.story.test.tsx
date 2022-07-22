@@ -15,8 +15,8 @@
  */
 
 import React from 'react';
-import * as stories from './UserReset.story';
 import { render } from 'design/utils/testing';
+import * as stories from './UserReset.story';
 
 test('processing state', () => {
   const { getByTestId } = render(<stories.Processing />);

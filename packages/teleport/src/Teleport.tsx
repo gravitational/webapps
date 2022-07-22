@@ -14,7 +14,6 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import type { History } from 'history';
 import React from 'react';
 import ThemeProvider from 'design/ThemeProvider';
 import { Router, Route, Switch } from 'teleport/components/Router';
@@ -31,6 +30,7 @@ import Player from './Player';
 import TeleportContextProvider from './TeleportContextProvider';
 import TeleportContext from './teleportContext';
 import cfg from './config';
+import type { History } from 'history';
 
 const Teleport: React.FC<Props> = props => {
   const { ctx, history } = props;

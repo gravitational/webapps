@@ -15,8 +15,8 @@
  */
 
 import React from 'react';
-import ConsoleContext from './consoleContext';
 import { getPlatform } from 'design/theme/utils';
+import ConsoleContext from './consoleContext';
 
 /**
  * getMappedAction maps keyboard hot keys pressed to the ones

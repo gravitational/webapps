@@ -15,8 +15,8 @@
  */
 
 import React from 'react';
-import ButtonIcon from './index';
 import { render } from 'design/utils/testing';
+import ButtonIcon from './index';
 
 describe('design/ButtonIcon', () => {
   it('renders a <button> and respects default "size" to 1', () => {

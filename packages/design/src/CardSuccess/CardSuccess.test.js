@@ -15,8 +15,8 @@
  */
 
 import React from 'react';
-import { Cards } from './CardSuccess.story';
 import { render } from 'design/utils/testing';
+import { Cards } from './CardSuccess.story';
 
 test('rendering of CardSuccess components', () => {
   const { container } = render(<Cards />);

@@ -12,12 +12,12 @@ limitations under the License.
 */
 
 import React from 'react';
+import { Indicator, Text, Box, Flex, Link, Alert, ButtonPrimary } from 'design';
 import {
   FeatureBox,
   FeatureHeader,
   FeatureHeaderTitle,
 } from 'teleport/components/Layout';
-import { Indicator, Text, Box, Flex, Link, Alert, ButtonPrimary } from 'design';
 import ResourceEditor from 'teleport/components/ResourceEditor';
 import useResources from 'teleport/components/useResources';
 import EmptyList from './EmptyList';

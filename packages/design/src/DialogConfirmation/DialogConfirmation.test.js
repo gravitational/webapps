@@ -15,8 +15,8 @@
  */
 
 import React from 'react';
-import DialogConfirmation from './DialogConfirmation';
 import { render, fireEvent } from 'design/utils/testing';
+import DialogConfirmation from './DialogConfirmation';
 
 test('onClose is respected', () => {
   const onClose = jest.fn();

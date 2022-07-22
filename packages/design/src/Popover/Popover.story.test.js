@@ -15,8 +15,8 @@
  */
 
 import React from 'react';
-import { Sample, Tooltip } from './Popover.story';
 import { render, fireEvent } from 'design/utils/testing';
+import { Sample, Tooltip } from './Popover.story';
 
 test('onClick popovers renders', () => {
   const { getByTestId, getByText, queryByTestId } = render(<Sample />);

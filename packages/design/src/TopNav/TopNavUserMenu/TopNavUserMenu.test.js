@@ -15,8 +15,8 @@
  */
 
 import React from 'react';
-import TopNavUserMenu from './TopNavUserMenu';
 import { render, fireEvent } from 'design/utils/testing';
+import TopNavUserMenu from './TopNavUserMenu';
 
 test('onShow and onClose fn prop is respected', () => {
   const onShow = jest.fn();

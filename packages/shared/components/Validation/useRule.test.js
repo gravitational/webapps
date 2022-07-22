@@ -15,8 +15,8 @@
  */
 
 import React from 'react';
-import Validation, { useRule } from '.';
 import { render, fireEvent, waitFor, screen } from 'design/utils/testing';
+import Validation, { useRule } from '.';
 
 test('basic usage', async () => {
   let results;

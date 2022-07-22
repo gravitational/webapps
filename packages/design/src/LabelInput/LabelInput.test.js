@@ -15,8 +15,8 @@
  */
 
 import React from 'react';
-import LabelInput from './LabelInput';
 import { render, theme } from 'design/utils/testing';
+import LabelInput from './LabelInput';
 
 describe('design/LabelInput', () => {
   it('respects hasError prop', () => {

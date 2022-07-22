@@ -25,9 +25,9 @@ import {
 import Empty, { EmptyStateInfo } from 'teleport/components/Empty';
 import ErrorMessage from 'teleport/components/AgentErrorMessage';
 import useTeleport from 'teleport/useTeleport';
+import AgentButtonAdd from 'teleport/components/AgentButtonAdd';
 import useKubes, { State } from './useKubes';
 import AddKube from './AddKube';
-import AgentButtonAdd from 'teleport/components/AgentButtonAdd';
 
 export default function Container() {
   const ctx = useTeleport();

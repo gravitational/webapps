@@ -1,4 +1,5 @@
 import { ServerDuplexStream } from '@grpc/grpc-js';
+import Logger from 'teleterm/logger';
 import {
   PtyClientEvent,
   PtyEventData,
@@ -8,7 +9,6 @@ import {
   PtyEventStart,
   PtyServerEvent,
 } from '../api/protogen/ptyHostService_pb';
-import Logger from 'teleterm/logger';
 import { PtyProcess } from './ptyProcess';
 
 export class PtyEventsStreamHandler {

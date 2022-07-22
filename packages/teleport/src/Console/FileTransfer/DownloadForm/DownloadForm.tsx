@@ -15,8 +15,8 @@ limitations under the License.
 */
 
 import React from 'react';
-import * as Elements from './../Elements';
 import { Flex } from 'design';
+import * as Elements from './../Elements';
 
 export default class FileDownloadSelector extends React.Component<{
   onDownload: (path: string) => void;

@@ -15,8 +15,8 @@ limitations under the License.
 */
 
 import React from 'react';
-import { Document, createContext } from './DocumentNodes.story';
 import { waitFor, render } from 'design/utils/testing';
+import { Document, createContext } from './DocumentNodes.story';
 
 test('render DocumentNodes', async () => {
   const ctx = createContext();
