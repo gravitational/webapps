@@ -4,7 +4,8 @@ const TCP_PORT_MATCH = /\{CONNECT_GRPC_PORT:\s(\d+)}/;
 
 export async function resolveNetworkAddress(
   requestedAddress: string,
-  process: ChildProcess
+  process: ChildProcess,
+  timeoutMs = 10_000 // 10s
 ): Promise<string> {
   // UDS
   if (new URL(requestedAddress).protocol === 'unix:') {
@@ -15,7 +16,8 @@ export async function resolveNetworkAddress(
   const matchResult = await waitForMatchInStdout(
     TCP_PORT_MATCH,
     requestedAddress,
-    process
+    process,
+    timeoutMs
   );
   return `localhost:${matchResult[1]}`;
 }
@@ -23,7 +25,8 @@ export async function resolveNetworkAddress(
 function waitForMatchInStdout(
   regex: RegExp,
   requestedAddress: string,
-  process: ChildProcess
+  process: ChildProcess,
+  timeoutMs: number
 ): Promise<RegExpMatchArray> {
   return new Promise((resolve, reject) => {
     process.stdout.setEncoding('utf-8');
@@ -35,7 +38,7 @@ function waitForMatchInStdout(
           `Could not resolve address (${requestedAddress}) for process ${process.spawnfile}. The operation timed out.`
         )
       );
-    }, 10_000); // 10s
+    }, timeoutMs);
 
     const removeListeners = () => {
       process.stdout.off('data', findAddressInChunk);
