@@ -864,7 +864,7 @@ exports[`list of all events 1`] = `
         <td
           style="min-width: 120px;"
         >
-          2022-04-13 20:00:04
+          2022-04-13T20:00:04.000Z
         </td>
         <td
           align="right"
