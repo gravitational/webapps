@@ -22,7 +22,7 @@ import { FeatureBox } from 'teleport/components/Layout';
 import useTeleport from 'teleport/useTeleport';
 import cfg from 'teleport/config';
 
-export default function Container({ children }): JSX.Element {
+export default function Container({ children }: { children?: JSX.Element }) {
   const ctx = useTeleport();
   const cluster = ctx.storeUser.state.cluster;
 
