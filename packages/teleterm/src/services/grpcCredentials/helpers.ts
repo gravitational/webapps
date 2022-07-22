@@ -80,7 +80,7 @@ export async function readGrpcCert(
  * Checks if the gRPC connection should be encrypted.
  * The only source of truth is the type of tshd protocol.
  * Any other protocol than `unix` should be encrypted.
- * The same check is performed on the tshd site.
+ * The same check is performed on the tshd side.
  */
 export function shouldEncryptConnection(
   runtimeSettings: RuntimeSettings
