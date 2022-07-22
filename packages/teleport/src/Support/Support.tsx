@@ -22,7 +22,11 @@ import { FeatureBox } from 'teleport/components/Layout';
 import useTeleport from 'teleport/useTeleport';
 import cfg from 'teleport/config';
 
-export default function Container({ children }: { children?: JSX.Element }) {
+export default function Container({
+  children,
+}: {
+  children?: React.ReactNode;
+}) {
   const ctx = useTeleport();
   const cluster = ctx.storeUser.state.cluster;
 
@@ -233,5 +237,5 @@ export type Props = {
   isEnterprise: boolean;
   isCloud: boolean;
   tunnelPublicAddress?: string;
-  children?: JSX.Element;
+  children?: React.ReactNode;
 };
