@@ -4,7 +4,7 @@ import createLoggerService from 'teleterm/services/logger';
 import { RuntimeSettings } from 'teleterm/mainProcess/types';
 import Logger from 'teleterm/logger';
 import { createPtyHostService } from './ptyHost/ptyHostService';
-import { getGrpcServerCredentials } from 'teleterm/services/grpcCredentials';
+import { getServerCredentials } from 'teleterm/services/grpcCredentials';
 
 function getRuntimeSettings(): RuntimeSettings {
   const args = process.argv.slice(2);
@@ -49,7 +49,7 @@ async function initializeServer(
   try {
     server.bindAsync(
       address,
-      (await getGrpcServerCredentials(runtimeSettings)).shared,
+      (await getServerCredentials(runtimeSettings)).shared,
       (error, port) => {
         sendBoundNetworkPortToStdout(port);
 

@@ -1,2 +1,2 @@
-export * from './grpcClientCredentials';
-export * from './grpcServerCredentials';
+export * from './clientCredentials';
+export * from './serverCredentials';

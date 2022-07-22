@@ -7,7 +7,7 @@ import {
 } from './helpers';
 import { GrpcCertName } from './types';
 
-export async function getGrpcClientCredentials(
+export async function getClientCredentials(
   runtimeSettings: RuntimeSettings
 ): Promise<{
   tsh: ChannelCredentials;

@@ -7,7 +7,7 @@ import {
 } from './helpers';
 import { GrpcCertName } from './types';
 
-export async function getGrpcServerCredentials(
+export async function getServerCredentials(
   runtimeSettings: RuntimeSettings
 ): Promise<{ shared: ServerCredentials }> {
   if (shouldEncryptConnection(runtimeSettings)) {
