@@ -20,25 +20,21 @@ PreloadLogger.init(loggerService);
 contextBridge.exposeInMainWorld('electron', getElectronGlobals());
 
 async function getElectronGlobals(): Promise<ElectronGlobals> {
-  try {
-    const [addresses, credentials] = await Promise.all([
-      mainProcessClient.getResolvedChildProcessAddresses(),
-      getGrpcClientCredentials(runtimeSettings),
-    ]);
-    const tshClient = createTshClient(addresses.tsh, credentials.tsh);
-    const ptyServiceClient = createPtyService(
-      addresses.shared,
-      credentials.shared,
-      runtimeSettings
-    );
+  const [addresses, credentials] = await Promise.all([
+    mainProcessClient.getResolvedChildProcessAddresses(),
+    getGrpcClientCredentials(runtimeSettings),
+  ]);
+  const tshClient = createTshClient(addresses.tsh, credentials.tsh);
+  const ptyServiceClient = createPtyService(
+    addresses.shared,
+    credentials.shared,
+    runtimeSettings
+  );
 
-    return {
-      mainProcessClient,
-      tshClient,
-      ptyServiceClient,
-      loggerService,
-    };
-  } catch (e) {
-    return e;
-  }
+  return {
+    mainProcessClient,
+    tshClient,
+    ptyServiceClient,
+    loggerService,
+  };
 }

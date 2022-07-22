@@ -29,11 +29,7 @@ async function boot(): Promise<void> {
 }
 
 async function getElectronGlobals(): Promise<ElectronGlobals> {
-  const globals = await window['electron'];
-  if (globals instanceof Error) {
-    throw globals;
-  }
-  return globals;
+  return await window['electron'];
 }
 
 function renderApp(content: React.ReactNode): void {
