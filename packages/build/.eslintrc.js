@@ -63,6 +63,12 @@ module.exports = {
     },
   ],
   rules: {
+    'import/order': [
+      'error',
+      {
+        groups: ["builtin", "external", "internal", "parent", "sibling", "index", "object", "type"],
+      },
+    ],
     // <TODO> Enable these rules after fixing all existing issues
     '@typescript-eslint/no-use-before-define': 0,
     '@typescript-eslint/indent': 0,
