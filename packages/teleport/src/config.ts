@@ -139,7 +139,7 @@ const cfg = {
       '/v1/webapi/sites/:clusterId/kubernetes?searchAsRoles=:searchAsRoles?&limit=:limit?&startKey=:startKey?&query=:query?&search=:search?&sort=:sort?',
 
     usersPath: '/v1/webapi/users',
-    usersDelete: '/v1/webapi/users/:username',
+    userWithUsernamePath: '/v1/webapi/users/:username',
     createPrivilegeTokenPath: '/v1/webapi/users/privilege/token',
 
     rolesPath: '/v1/webapi/roles/:name?',
@@ -357,8 +357,8 @@ const cfg = {
     return cfg.api.usersPath;
   },
 
-  getUsersDeleteUrl(username = '') {
-    return generatePath(cfg.api.usersDelete, { username });
+  getUserWithUsernameUrl(username: string) {
+    return generatePath(cfg.api.userWithUsernamePath, { username });
   },
 
   getTerminalSessionUrl({ clusterId, sid }: UrlParams) {
