@@ -39,12 +39,5 @@ const props: Props = {
   publicURL: 'localhost:3080',
   isEnterprise: false,
   isCloud: false,
-  attempt: { status: 'success' },
-  closeScheduleUpgrade: () => {},
-  onUpdate: () => Promise.resolve(false),
-  scheduleUpgradesVisible: false,
-  selectedUpgradeWindowStart: '08:00:00',
-  setSelectedUpgradeWindowStart: () => {},
-  showScheduleUpgrade: () => {},
   tunnelPublicAddress: null,
 };

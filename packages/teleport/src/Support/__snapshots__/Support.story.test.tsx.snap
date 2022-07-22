@@ -23,13 +23,6 @@ exports[`support Cloud 1`] = `
   color: #FFFFFF;
 }
 
-.c14 {
-  display: inline-block;
-  transition: color 0.3s;
-  margin-left: 8px;
-  color: #FFFFFF;
-}
-
 .c1 {
   box-sizing: border-box;
   padding-bottom: 40px;
@@ -83,12 +76,6 @@ exports[`support Cloud 1`] = `
   margin: 0px;
 }
 
-.c16 {
-  overflow: hidden;
-  text-overflow: ellipsis;
-  margin: 0px;
-}
-
 .c2 {
   box-sizing: border-box;
   display: flex;
@@ -129,19 +116,6 @@ exports[`support Cloud 1`] = `
 .c0::after {
   content: ' ';
   padding-bottom: 24px;
-}
-
-.c15 {
-  color: #FFFFFF;
-  font-weight: 400;
-  font-size: 12px;
-  line-height: 16px;
-}
-
-.c15:hover,
-.c15:focus {
-  background: #2C3A73;
-  cursor: pointer;
 }
 
 .c8 {
@@ -398,43 +372,6 @@ exports[`support Cloud 1`] = `
       >
         localhost:3080
       </div>
-    </div>
-  </div>
-  <div
-    class="c9"
-  >
-    <h5
-      class="c10"
-      font-weight="bold"
-    >
-      Scheduled Upgrades
-    </h5>
-    <div
-      class="c11"
-    >
-      <div
-        class="c12"
-        style="width: 130px;"
-      >
-        Window Start Time
-        :
-      </div>
-      <div
-        class="c13"
-      >
-        <span>
-          08:00:00
-          <span
-            class="c14 icon icon-pencil4 c15"
-            color="light"
-          />
-        </span>
-      </div>
-    </div>
-    <div
-      class="c16"
-    >
-      Window Start Time is the hour in which an upgrade may begin. Changing this value changes it for everyone in your organization.
     </div>
   </div>
 </div>
