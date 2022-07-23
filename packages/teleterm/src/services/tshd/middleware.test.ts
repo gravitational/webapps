@@ -1,5 +1,7 @@
 import { InterceptingCall, InterceptorOptions } from '@grpc/grpc-js';
+
 import Logger from 'teleterm/logger';
+
 import { withLogging } from './middleware';
 
 it('do not log sensitive info like password', () => {

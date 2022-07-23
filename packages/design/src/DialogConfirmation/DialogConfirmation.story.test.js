@@ -15,7 +15,9 @@
  */
 
 import React from 'react';
+
 import { render } from 'design/utils/testing';
+
 import { Confirmation } from './DialogConfirmation.story';
 
 test('rendering', () => {

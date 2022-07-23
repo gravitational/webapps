@@ -3,6 +3,7 @@ import { PtyServiceClient } from 'teleterm/services/pty';
 import { RuntimeSettings, MainProcessClient } from 'teleterm/mainProcess/types';
 import { FileStorage } from 'teleterm/services/fileStorage';
 import { AppearanceConfig } from 'teleterm/services/config';
+
 import { Logger, LoggerService } from './services/logger/types';
 
 export {

@@ -15,7 +15,9 @@ limitations under the License.
 */
 import { at } from 'lodash';
 import { displayDateTime } from 'shared/services/loc';
+
 import cfg from 'teleport/config';
+
 import { Cluster } from './types';
 
 export default function makeCluster(json): Cluster {

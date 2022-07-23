@@ -16,6 +16,7 @@ limitations under the License.
 
 import React, { useState } from 'react';
 import { Box, Indicator } from 'design';
+
 import KubeList from 'teleport/Kubes/KubeList';
 import {
   FeatureBox,
@@ -26,6 +27,7 @@ import Empty, { EmptyStateInfo } from 'teleport/components/Empty';
 import ErrorMessage from 'teleport/components/AgentErrorMessage';
 import useTeleport from 'teleport/useTeleport';
 import AgentButtonAdd from 'teleport/components/AgentButtonAdd';
+
 import useKubes, { State } from './useKubes';
 import AddKube from './AddKube';
 

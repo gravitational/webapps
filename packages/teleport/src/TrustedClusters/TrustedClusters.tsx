@@ -19,6 +19,7 @@ import { Danger } from 'design/Alert';
 import { Indicator, Text, Box, Flex, ButtonPrimary, Link } from 'design';
 import Card from 'design/Card';
 import Image from 'design/Image';
+
 import {
   FeatureBox,
   FeatureHeader,
@@ -26,6 +27,7 @@ import {
 } from 'teleport/components/Layout';
 import ResourceEditor from 'teleport/components/ResourceEditor';
 import useResources from 'teleport/components/useResources';
+
 import DeleteTrust from './DeleteTrust';
 import templates from './templates';
 import TrustedList from './TrustedList';

@@ -15,6 +15,7 @@ limitations under the License.
 */
 
 const path = require('path');
+
 const HtmlWebPackPlugin = require('html-webpack-plugin');
 const ReactRefreshPlugin = require('@pmmmwh/react-refresh-webpack-plugin');
 

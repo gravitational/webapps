@@ -15,6 +15,7 @@
  */
 
 import api from 'teleport/services/api';
+
 import user from './user';
 
 test('undefined values in context response gives proper default values', async () => {

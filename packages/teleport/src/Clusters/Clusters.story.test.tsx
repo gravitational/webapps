@@ -16,6 +16,7 @@ limitations under the License.
 
 import React from 'react';
 import { render, waitFor } from 'design/utils/testing';
+
 import { Story, createContext } from './Clusters.story';
 
 test('render clusters', async () => {

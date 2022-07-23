@@ -15,7 +15,9 @@
  */
 
 import React from 'react';
+
 import { render, fireEvent } from 'design/utils/testing';
+
 import TopNavUserMenu from './TopNavUserMenu';
 
 test('onShow and onClose fn prop is respected', () => {

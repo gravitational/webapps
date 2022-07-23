@@ -1,5 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
+
 import { useAppContext } from 'teleterm/ui/appContextProvider';
 import * as types from 'teleterm/ui/services/workspacesService';
 import { DocumentsService } from 'teleterm/ui/services/workspacesService';
@@ -7,6 +8,7 @@ import DocumentCluster from 'teleterm/ui/DocumentCluster';
 import DocumentGateway from 'teleterm/ui/DocumentGateway';
 import DocumentTerminal from 'teleterm/ui/DocumentTerminal';
 import Document from 'teleterm/ui/Document';
+
 import { WorkspaceDocumentsServiceProvider } from './workspaceDocumentsServiceContext';
 import { KeyboardShortcutsPanel } from './KeyboardShortcutsPanel';
 

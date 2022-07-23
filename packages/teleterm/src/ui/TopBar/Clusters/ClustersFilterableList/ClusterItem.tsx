@@ -2,6 +2,7 @@ import React from 'react';
 import { Flex, Label, Text } from 'design';
 import { CircleCheck } from 'design/Icon';
 import styled from 'styled-components';
+
 import { ListItem } from 'teleterm/ui/components/ListItem';
 import { useKeyboardArrowsNavigation } from 'teleterm/ui/components/KeyboardArrowsNavigation';
 import { Cluster } from 'teleterm/services/tshd/types';

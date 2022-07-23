@@ -1,5 +1,7 @@
 import path from 'path';
+
 import { BrowserWindow, Menu, Rectangle, screen } from 'electron';
+
 import { getAssetPath } from 'teleterm/mainProcess/runtimeSettings';
 import { FileStorage } from 'teleterm/services/fileStorage';
 import { RuntimeSettings } from 'teleterm/mainProcess/types';

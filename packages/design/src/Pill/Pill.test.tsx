@@ -15,7 +15,9 @@
  */
 
 import React from 'react';
+
 import { render, fireEvent } from 'design/utils/testing';
+
 import { Pill } from './Pill';
 
 describe('design/Pill', () => {

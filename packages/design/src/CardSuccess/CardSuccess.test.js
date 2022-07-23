@@ -15,7 +15,9 @@
  */
 
 import React from 'react';
+
 import { render } from 'design/utils/testing';
+
 import { Cards } from './CardSuccess.story';
 
 test('rendering of CardSuccess components', () => {

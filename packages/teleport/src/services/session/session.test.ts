@@ -15,6 +15,7 @@
  */
 
 import api from 'teleport/services/api';
+
 import ssh from './session';
 
 test('fetch active sessions, response formatting', async () => {

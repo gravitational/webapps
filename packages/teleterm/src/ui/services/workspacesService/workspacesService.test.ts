@@ -1,5 +1,6 @@
 import { ClustersService } from '../clusters';
 import { StatePersistenceService } from '../statePersistence';
+
 import { Workspace, WorkspacesService } from './workspacesService';
 
 describe('restoring workspace', () => {

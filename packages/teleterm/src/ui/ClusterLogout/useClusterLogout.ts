@@ -1,5 +1,6 @@
 import { useAsync } from 'shared/hooks/useAsync';
 import { useEffect } from 'react';
+
 import { useAppContext } from '../appContextProvider';
 
 export function useClusterLogout({ clusterUri, onClose, clusterTitle }: Props) {

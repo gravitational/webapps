@@ -76,6 +76,7 @@ module.exports = {
           'object',
           'type',
         ],
+        'newlines-between': 'always-and-inside-groups',
       },
     ],
     // <TODO> Enable these rules after fixing all existing issues

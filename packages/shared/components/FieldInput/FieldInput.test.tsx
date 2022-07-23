@@ -17,7 +17,9 @@
 import React from 'react';
 import { render, fireEvent } from 'design/utils/testing';
 import theme from 'design/theme';
+
 import * as useRule from '../Validation/useRule';
+
 import FieldInput from './FieldInput';
 import { Fields } from './FieldInput.story';
 

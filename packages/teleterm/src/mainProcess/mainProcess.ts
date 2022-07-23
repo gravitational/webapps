@@ -1,13 +1,17 @@
 import { ChildProcess, fork, spawn } from 'child_process';
 import path from 'path';
+
 import { app, ipcMain, Menu, MenuItemConstructorOptions } from 'electron';
+
 import { FileStorage, Logger, RuntimeSettings } from 'teleterm/types';
 import { subscribeToFileStorageEvents } from 'teleterm/services/fileStorage';
 import createLoggerService from 'teleterm/services/logger';
+
 import {
   ConfigService,
   subscribeToConfigServiceEvents,
 } from '../services/config';
+
 import { subscribeToTerminalContextMenuEvent } from './contextMenus/terminalContextMenu';
 import { subscribeToTabContextMenuEvent } from './contextMenus/tabContextMenu';
 

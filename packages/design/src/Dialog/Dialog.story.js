@@ -15,7 +15,9 @@ limitations under the License.
 */
 
 import React from 'react';
+
 import { ButtonPrimary, Input, LabelInput } from './..';
+
 import Dialog, {
   DialogHeader,
   DialogContent,

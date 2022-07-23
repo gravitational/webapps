@@ -15,8 +15,10 @@
  */
 import React from 'react';
 import { render, screen, fireEvent } from 'design/utils/testing';
+
 import { kubes } from '../fixtures';
 import { props } from '../Kubes.story';
+
 import KubeList from './KubeList';
 
 test('search generates correct url params', () => {

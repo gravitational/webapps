@@ -15,7 +15,9 @@
  */
 
 import React from 'react';
+
 import session from 'teleport/services/websession';
+
 import ConsoleContext from './consoleContext';
 import * as stores from './stores/types';
 

@@ -15,6 +15,7 @@
  */
 
 import api from 'teleport/services/api';
+
 import AuditService from './audit';
 
 test('fetch events', async () => {

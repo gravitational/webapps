@@ -31,9 +31,12 @@ import {
 } from 'design/theme/palette';
 import { Cell } from 'design/DataTable';
 import { Danger } from 'design/Alert';
+
 import { Table } from 'teleterm/ui/components/Table';
 import * as types from 'teleterm/ui/services/clusters/types';
+
 import { renderLabelCell } from '../renderLabelCell';
+
 import { useApps, State } from './useApps';
 
 export default function Container() {

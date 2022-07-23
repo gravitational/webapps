@@ -16,9 +16,12 @@
 
 import React from 'react';
 import { render, screen, act, fireEvent } from 'design/utils/testing';
+
 import { DiscoverContext } from '../discoverContext';
 import ContextProvider from '../discoverContextProvider';
+
 import LoginTrait from './LoginTrait';
+
 import type { User } from 'teleport/services/user';
 import type { RenderResult } from '@testing-library/react';
 

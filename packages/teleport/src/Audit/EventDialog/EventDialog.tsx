@@ -24,6 +24,7 @@ import Dialog, {
   DialogContent,
 } from 'design/Dialog';
 import { ButtonSecondary } from 'design';
+
 import { Event } from 'teleport/services/audit';
 
 type EventDialogProps = {

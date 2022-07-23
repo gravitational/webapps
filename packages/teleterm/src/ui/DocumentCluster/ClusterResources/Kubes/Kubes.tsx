@@ -18,8 +18,11 @@ import React from 'react';
 import { Cell } from 'design/DataTable';
 import { ButtonBorder } from 'design';
 import { Danger } from 'design/Alert';
+
 import { Table } from 'teleterm/ui/components/Table';
+
 import { renderLabelCell } from '../renderLabelCell';
+
 import { useKubes, State } from './useKubes';
 
 export default function Container() {

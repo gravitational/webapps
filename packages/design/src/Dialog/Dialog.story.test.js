@@ -15,7 +15,9 @@
  */
 
 import React from 'react';
+
 import { render } from 'design/utils/testing';
+
 import { Basic } from './Dialog.story';
 
 test('rendering of Dialog* components', () => {

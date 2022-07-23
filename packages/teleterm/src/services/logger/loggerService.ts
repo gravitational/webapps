@@ -1,6 +1,7 @@
 import { createLogger as createWinston, format, transports } from 'winston';
 import { isObject } from 'lodash';
 import split2 from 'split2';
+
 import { Logger, NodeLoggerService } from './types';
 
 export default function createLoggerService(opts: Options): NodeLoggerService {

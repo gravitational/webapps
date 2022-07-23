@@ -17,9 +17,11 @@ limitations under the License.
 import React from 'react';
 import { Card, ButtonPrimary, Flex, Box } from 'design';
 import * as Alerts from 'design/Alert';
+
 import useAttempt from 'shared/hooks/useAttempt';
 import createMfaOptions, { MfaOption } from 'shared/utils/createMfaOptions';
 import { Auth2faType, PreferredMfaType } from 'shared/services';
+
 import FieldInput from '../FieldInput';
 import FieldSelect from '../FieldSelect';
 import Validation, { Validator } from '../Validation';

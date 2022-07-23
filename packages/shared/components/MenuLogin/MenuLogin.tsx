@@ -21,7 +21,9 @@ import Menu, { MenuItem } from 'design/Menu';
 import { space } from 'design/system';
 import { ButtonBorder, Flex, Indicator } from 'design';
 import { CarrotDown } from 'design/Icon';
+
 import { useAsync, Attempt } from 'shared/hooks/useAsync';
+
 import { MenuLoginProps, LoginItem, MenuLoginHandle } from './types';
 
 export const MenuLogin = React.forwardRef<MenuLoginHandle, MenuLoginProps>(

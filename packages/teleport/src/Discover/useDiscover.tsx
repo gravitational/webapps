@@ -16,7 +16,9 @@
 
 import { useState, useEffect } from 'react';
 import useAttempt from 'shared/hooks/useAttemptNext';
+
 import { DiscoverContext } from './discoverContext';
+
 import type {
   JoinMethod,
   JoinRole,

@@ -16,6 +16,7 @@
 
 import React from 'react';
 import { render } from 'design/utils/testing';
+
 import * as stories from './UserDelete.story';
 
 test('processing state', () => {

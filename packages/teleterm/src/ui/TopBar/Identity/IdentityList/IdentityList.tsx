@@ -1,9 +1,12 @@
 import React from 'react';
 import styled from 'styled-components';
 import { Box, Flex, Text } from 'design';
+
 import { KeyboardArrowsNavigation } from 'teleterm/ui/components/KeyboardArrowsNavigation';
 import { LoggedInUser } from 'teleterm/services/tshd/types';
+
 import { IdentityRootCluster } from '../useIdentity';
+
 import { IdentityListItem } from './IdentityListItem';
 import { AddNewClusterItem } from './AddNewClusterItem';
 

@@ -15,8 +15,10 @@
  */
 import React from 'react';
 import { render, screen, fireEvent } from 'design/utils/testing';
+
 import { databases } from '../fixtures';
 import { props } from '../Databases.story';
+
 import DatabaseList from './DatabaseList';
 
 test('search generates correct url params', () => {

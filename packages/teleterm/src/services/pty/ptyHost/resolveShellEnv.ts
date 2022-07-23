@@ -41,7 +41,9 @@
 // Based on https://github.com/microsoft/vscode/blob/1.66.0/src/vs/platform/shell/node/shellEnv.ts
 
 import { spawn } from 'child_process';
+
 import { memoize } from 'lodash';
+
 import Logger from 'teleterm/logger';
 import { unique } from 'teleterm/ui/utils/uid';
 

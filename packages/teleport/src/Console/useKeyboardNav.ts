@@ -16,6 +16,7 @@
 
 import React from 'react';
 import { getPlatform } from 'design/theme/utils';
+
 import ConsoleContext from './consoleContext';
 
 /**

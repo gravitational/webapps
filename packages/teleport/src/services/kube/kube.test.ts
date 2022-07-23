@@ -15,6 +15,7 @@ limitations under the License.
 */
 
 import api from 'teleport/services/api';
+
 import KubeService from './kube';
 
 test('correct processed fetch response formatting', async () => {

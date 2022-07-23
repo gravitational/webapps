@@ -4,8 +4,11 @@ import { Text, Box, ButtonPrimary, Link, Alert, ButtonSecondary } from 'design';
 import FieldInput from 'shared/components/FieldInput';
 import Validation, { Validator } from 'shared/components/Validation';
 import { Attempt } from 'shared/hooks/useAttemptNext';
+
 import TextSelectCopy from 'teleport/components/TextSelectCopy';
+
 import { createBashCommand, State } from '../useAddNode';
+
 import type { JoinRule } from 'teleport/services/joinToken';
 
 export default function Iam({ token, attempt, onGenerate, onClose }: Props) {

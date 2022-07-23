@@ -15,8 +15,11 @@
  */
 
 import React from 'react';
+
 import { render } from 'design/utils/testing';
+
 import * as Icons from '../Icon';
+
 import SideNav, { SideNavItem, SideNavItemIcon } from './index';
 
 test('renders: SideNav, SideNavItem, SideNavItemIcon', () => {

@@ -2,11 +2,14 @@ import { useStore } from 'shared/libs/stores';
 import isMatch from 'design/utils/match';
 import { makeLabelTag } from 'teleport/components/formatters';
 import { Label } from 'teleport/types';
+
 import { routing } from 'teleterm/ui/uri';
 import { NotificationsService } from 'teleterm/ui/services/notifications';
 import { getClusterName } from 'teleterm/ui/utils/getClusterName';
 import { Cluster } from 'teleterm/services/tshd/types';
+
 import { ImmutableStore } from '../immutableStore';
+
 import {
   AuthSettings,
   ClustersServiceState,

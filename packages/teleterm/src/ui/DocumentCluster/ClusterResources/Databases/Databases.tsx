@@ -18,13 +18,16 @@ import React from 'react';
 import { Cell } from 'design/DataTable';
 import { Danger } from 'design/Alert';
 import { MenuLogin, MenuLoginProps } from 'shared/components/MenuLogin';
+
 import { Table } from 'teleterm/ui/components/Table';
 import { useAppContext } from 'teleterm/ui/appContextProvider';
 import { retryWithRelogin } from 'teleterm/ui/utils';
 import { IAppContext } from 'teleterm/ui/types';
 import { GatewayProtocol } from 'teleterm/ui/services/clusters';
+
 import { MenuLoginTheme } from '../MenuLoginTheme';
 import { renderLabelCell } from '../renderLabelCell';
+
 import { useDatabases, State } from './useDatabases';
 
 export default function Container() {

@@ -20,8 +20,10 @@ import Table, { Cell, TextCell } from 'design/DataTable';
 import { dateTimeMatcher } from 'design/utils/match';
 import { displayDateTime } from 'shared/services/loc';
 import Icon, * as Icons from 'design/Icon/Icon';
+
 import cfg from 'teleport/config';
 import { Recording, RecordingType } from 'teleport/services/recordings';
+
 import { State } from './useRecordings';
 
 export default function RecordingsList(props: Props) {

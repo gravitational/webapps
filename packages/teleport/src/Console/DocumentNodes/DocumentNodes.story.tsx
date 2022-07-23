@@ -15,7 +15,9 @@ limitations under the License.
 */
 
 import React from 'react';
+
 import { Node } from 'teleport/services/nodes/types';
+
 import DocumentNodes from './DocumentNodes';
 import ConsoleCtx from './../consoleContext';
 import { TestLayout } from './../Console.story';

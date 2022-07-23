@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import Dialog from 'design/Dialog';
+
 import { useAppContext } from 'teleterm/ui/appContextProvider';
+
 import { ClusterAdd } from './ClusterAdd';
 import { ClusterLogin } from './ClusterLogin';
 

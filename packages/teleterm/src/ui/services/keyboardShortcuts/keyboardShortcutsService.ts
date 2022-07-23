@@ -4,6 +4,7 @@ import {
   KeyboardShortcutType,
   ConfigService,
 } from 'teleterm/services/config';
+
 import {
   KeyboardShortcutEvent,
   KeyboardShortcutEventSubscriber,

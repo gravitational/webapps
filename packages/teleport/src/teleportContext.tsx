@@ -15,6 +15,7 @@ limitations under the License.
 */
 
 import cfg from 'teleport/config';
+
 import { StoreNav, StoreUserContext, defaultNavState } from './stores';
 import * as types from './types';
 import AuditService from './services/audit';

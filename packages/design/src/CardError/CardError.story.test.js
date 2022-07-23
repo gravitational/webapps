@@ -15,7 +15,9 @@
  */
 
 import React from 'react';
+
 import { render } from 'design/utils/testing';
+
 import { Cards } from './CardError.story';
 
 test('rendering of Error Cards', () => {

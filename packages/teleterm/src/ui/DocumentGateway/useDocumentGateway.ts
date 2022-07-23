@@ -16,6 +16,7 @@ limitations under the License.
 
 import { useEffect } from 'react';
 import { useAsync } from 'shared/hooks/useAsync';
+
 import { useAppContext } from 'teleterm/ui/appContextProvider';
 import * as types from 'teleterm/ui/services/workspacesService';
 import { useWorkspaceDocumentsService } from 'teleterm/ui/Documents';

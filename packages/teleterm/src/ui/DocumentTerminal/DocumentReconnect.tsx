@@ -17,8 +17,10 @@ limitations under the License.
 import React from 'react';
 import { Flex, Text, ButtonPrimary } from 'design';
 import { Danger } from 'design/Alert';
+
 import Document from 'teleterm/ui/Document';
 import * as types from 'teleterm/ui/services/workspacesService';
+
 import { useReconnect, State } from './useReconnect';
 
 export default function Container(props: DocumentReconnectProps) {

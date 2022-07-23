@@ -16,7 +16,9 @@ limitations under the License.
 
 import React from 'react';
 import { ThemeProvider, StyleSheetManager } from 'styled-components';
+
 import { AppearanceConfig } from 'teleterm/types';
+
 import { GlobalStyle } from './globals';
 import theme from './theme';
 

@@ -15,7 +15,9 @@ limitations under the License.
 */
 
 import React from 'react';
+
 import { Box } from './../';
+
 import Alert from './index';
 
 export default {

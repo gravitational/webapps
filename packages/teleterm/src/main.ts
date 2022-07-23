@@ -1,6 +1,8 @@
 import { spawn } from 'child_process';
 import path from 'path';
+
 import { app, globalShortcut, shell } from 'electron';
+
 import MainProcess from 'teleterm/mainProcess';
 import { getRuntimeSettings } from 'teleterm/mainProcess/runtimeSettings';
 import createLoggerService from 'teleterm/services/logger';

@@ -16,6 +16,7 @@ limitations under the License.
 
 import React from 'react';
 import { Flex } from 'design';
+
 import * as Elements from './../Elements';
 
 export default class FileDownloadSelector extends React.Component<{

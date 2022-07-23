@@ -18,6 +18,7 @@ import React from 'react';
 import { createMemoryHistory } from 'history';
 import { Router } from 'react-router';
 import { Flex } from 'design';
+
 import { ContextProvider, Context } from 'teleport';
 import getFeatures from 'teleport/features';
 import { clusters } from 'teleport/Clusters/fixtures';
@@ -28,6 +29,7 @@ import { apps } from 'teleport/Apps/fixtures';
 import { databases } from 'teleport/Databases/fixtures';
 import { kubes } from 'teleport/Kubes/fixtures';
 import { desktops } from 'teleport/Desktops/fixtures';
+
 import { userContext } from './fixtures';
 import { Main } from './Main';
 

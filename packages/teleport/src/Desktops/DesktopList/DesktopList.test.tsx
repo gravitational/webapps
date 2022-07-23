@@ -15,8 +15,10 @@
  */
 import React from 'react';
 import { render, screen, fireEvent } from 'design/utils/testing';
+
 import { desktops } from '../fixtures';
 import { props } from '../Desktops.story';
+
 import DesktopList from './DesktopList';
 
 test('search generates correct url params', () => {

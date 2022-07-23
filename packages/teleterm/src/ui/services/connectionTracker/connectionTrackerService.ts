@@ -15,6 +15,7 @@ limitations under the License.
 */
 
 import { useStore } from 'shared/libs/stores';
+
 import { ClustersService } from 'teleterm/ui/services/clusters';
 import {
   Document,
@@ -23,7 +24,9 @@ import {
 import { StatePersistenceService } from 'teleterm/ui/services/statePersistence';
 import { getClusterName } from 'teleterm/ui/utils';
 import { routing } from 'teleterm/ui/uri';
+
 import { ImmutableStore } from '../immutableStore';
+
 import { TrackedConnectionOperationsFactory } from './trackedConnectionOperationsFactory';
 import {
   createGatewayConnection,

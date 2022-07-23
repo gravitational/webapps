@@ -7,6 +7,7 @@ process.on('unhandledRejection', err => {
 });
 
 const path = require('path');
+
 const spawn = require('cross-spawn');
 
 if (!process.argv.some(arg => arg.startsWith('--config'))) {

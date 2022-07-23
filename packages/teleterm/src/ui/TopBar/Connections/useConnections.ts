@@ -15,6 +15,7 @@ limitations under the License.
 */
 
 import { useCallback, useState } from 'react';
+
 import { useAppContext } from 'teleterm/ui/appContextProvider';
 import { ExtendedTrackedConnection } from 'teleterm/ui/services/connectionTracker';
 

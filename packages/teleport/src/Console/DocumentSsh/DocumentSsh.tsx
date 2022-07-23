@@ -18,11 +18,14 @@ import React, { useRef, useEffect } from 'react';
 import * as Icons from 'design/Icon';
 import { Indicator, Text, Box, ButtonPrimary } from 'design';
 import * as Alerts from 'design/Alert';
+
 import cfg from 'teleport/config';
 import * as stores from 'teleport/Console/stores';
 import AuthnDialog from 'teleport/components/AuthnDialog';
 import useWebAuthn from 'teleport/lib/useWebAuthn';
+
 import Document from '../Document';
+
 import Terminal from './Terminal';
 import FileTransfer, { useFileTransferDialogs } from './../FileTransfer';
 import useSshSession from './useSshSession';

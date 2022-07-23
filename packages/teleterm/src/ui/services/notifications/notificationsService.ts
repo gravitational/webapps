@@ -1,4 +1,5 @@
 import { useStore } from 'shared/libs/stores';
+
 import { ImmutableStore } from 'teleterm/ui/services/immutableStore';
 import {
   NotificationItem,

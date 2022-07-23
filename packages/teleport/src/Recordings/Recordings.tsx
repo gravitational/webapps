@@ -17,6 +17,7 @@ limitations under the License.
 import React from 'react';
 import { Danger } from 'design/Alert';
 import { Indicator, Box } from 'design';
+
 import RangePicker from 'teleport/components/EventRangePicker';
 import {
   FeatureBox,
@@ -24,6 +25,7 @@ import {
   FeatureHeaderTitle,
 } from 'teleport/components/Layout';
 import useTeleport from 'teleport/useTeleport';
+
 import RecordingsList from './RecordingsList';
 import useRecordings, { State } from './useRecordings';
 

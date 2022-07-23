@@ -15,7 +15,9 @@ limitations under the License.
 */
 
 import React from 'react';
+
 import Validation from '../../components/Validation';
+
 import FieldInput from './FieldInput';
 
 export default {

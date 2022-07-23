@@ -8,12 +8,14 @@ import React, {
 import styled from 'styled-components';
 import { Box } from 'design';
 import Popover from 'design/Popover';
+
 import {
   useKeyboardShortcuts,
   useKeyboardShortcutFormatters,
 } from 'teleterm/ui/services/keyboardShortcuts';
 import { getClusterName } from 'teleterm/ui/utils';
 import * as tshd from 'teleterm/services/tshd/types';
+
 import { IdentityRootCluster, useIdentity } from './useIdentity';
 import { IdentityList } from './IdentityList/IdentityList';
 import { IdentitySelector } from './IdentitySelector/IdentitySelector';

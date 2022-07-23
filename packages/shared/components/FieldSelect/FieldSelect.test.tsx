@@ -17,7 +17,9 @@
 import React from 'react';
 import { render, fireEvent } from 'design/utils/testing';
 import theme from '@gravitational/design/src/theme';
+
 import * as useRule from '../Validation/useRule';
+
 import FieldSelect from './FieldSelect';
 
 test('valid values and onChange prop', () => {

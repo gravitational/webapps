@@ -17,12 +17,14 @@ limitations under the License.
 import React from 'react';
 import { Box, Indicator } from 'design';
 import { Danger } from 'design/Alert';
+
 import {
   FeatureBox,
   FeatureHeader,
   FeatureHeaderTitle,
 } from 'teleport/components/Layout';
 import useTeleport from 'teleport/useTeleport';
+
 import ClusterList from './ClusterList';
 import useClusters from './useClusters';
 

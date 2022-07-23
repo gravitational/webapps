@@ -1,7 +1,9 @@
 import React from 'react';
 import styled from 'styled-components';
 import { Text } from 'design';
+
 import { unique } from 'teleterm/ui/utils/uid';
+
 import { VirtualScroll } from './VirtualScroll';
 
 const items: SimpleItem[] = new Array(10000)

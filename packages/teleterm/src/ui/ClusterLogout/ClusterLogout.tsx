@@ -23,6 +23,7 @@ import DialogConfirmation, {
 import * as Alerts from 'design/Alert';
 import { ButtonIcon, ButtonPrimary, Text } from 'design';
 import { Close } from 'design/Icon';
+
 import { Props, State, useClusterLogout } from './useClusterLogout';
 
 export default function Container(props: Props) {

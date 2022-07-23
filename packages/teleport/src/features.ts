@@ -15,8 +15,10 @@ limitations under the License.
 */
 
 import * as Icons from 'design/Icon';
+
 import Ctx from 'teleport/teleportContext';
 import cfg from 'teleport/config';
+
 import { Feature } from './types';
 import Audit from './Audit';
 import Nodes from './Nodes';

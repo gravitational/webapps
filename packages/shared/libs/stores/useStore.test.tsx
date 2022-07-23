@@ -16,6 +16,7 @@
 
 import React from 'react';
 import { render, waitFor } from 'design/utils/testing';
+
 import useStore from './useStore';
 import Store from './store';
 

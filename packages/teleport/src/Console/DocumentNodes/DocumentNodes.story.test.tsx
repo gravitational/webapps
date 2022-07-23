@@ -16,6 +16,7 @@ limitations under the License.
 
 import React from 'react';
 import { waitFor, render } from 'design/utils/testing';
+
 import { Document, createContext } from './DocumentNodes.story';
 
 test('render DocumentNodes', async () => {

@@ -1,5 +1,6 @@
 import React from 'react';
 import { render } from 'design/utils/testing';
+
 import * as story from './UserTokenLink.story';
 
 jest

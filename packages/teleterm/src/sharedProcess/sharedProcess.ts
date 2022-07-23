@@ -1,7 +1,9 @@
 import { Server, ServerCredentials } from '@grpc/grpc-js';
+
 import createLoggerService from 'teleterm/services/logger';
 import { RuntimeSettings } from 'teleterm/mainProcess/types';
 import Logger from 'teleterm/logger';
+
 import { PtyHostService } from './api/protogen/ptyHostService_grpc_pb';
 import { createPtyHostService } from './ptyHost/ptyHostService';
 

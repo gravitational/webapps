@@ -23,8 +23,10 @@ import {
   PrimaryAuthType,
   PreferredMfaType,
 } from 'shared/services';
+
 import { SortType } from 'teleport/services/agents';
 import { RecordingType } from 'teleport/services/recordings';
+
 import generateResourcePath from './generateResourcePath';
 
 const cfg = {

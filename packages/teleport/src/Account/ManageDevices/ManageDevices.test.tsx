@@ -16,9 +16,11 @@ limitations under the License.
 
 import React from 'react';
 import { render, fireEvent, waitFor, screen } from 'design/utils/testing';
+
 import { Context, ContextProvider } from 'teleport';
 import authService from 'teleport/services/auth';
 import cfg from 'teleport/config';
+
 import ManageDevices from './ManageDevices';
 
 const privilegeToken = 'privilegeToken123';

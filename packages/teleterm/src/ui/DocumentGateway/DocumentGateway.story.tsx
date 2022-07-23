@@ -1,6 +1,7 @@
 import React from 'react';
 
 import { makeEmptyAttempt, makeProcessingAttempt } from 'shared/hooks/useAsync';
+
 import { DocumentGateway } from './DocumentGateway';
 
 export default {

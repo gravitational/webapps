@@ -15,7 +15,9 @@
  */
 
 import React from 'react';
+
 import { render } from 'design/utils/testing';
+
 import ButtonIcon from './index';
 
 describe('design/ButtonIcon', () => {

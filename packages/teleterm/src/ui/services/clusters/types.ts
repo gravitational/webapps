@@ -15,6 +15,7 @@ limitations under the License.
 */
 
 import * as shared from 'shared/services/types';
+
 import * as tsh from 'teleterm/services/tshd/types';
 
 export type SyncStatus = {

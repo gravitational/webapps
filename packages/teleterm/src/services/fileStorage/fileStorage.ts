@@ -1,5 +1,7 @@
 import fs, { existsSync, readFileSync, writeFileSync } from 'fs';
+
 import { debounce } from 'lodash';
+
 import Logger from 'teleterm/logger';
 
 const logger = new Logger('FileStorage');

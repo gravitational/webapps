@@ -15,7 +15,9 @@
  */
 
 import React from 'react';
+
 import { render, waitFor, getByTestId } from 'design/utils/testing';
+
 import Indicator from './Indicator';
 
 describe('design/Indicator', () => {

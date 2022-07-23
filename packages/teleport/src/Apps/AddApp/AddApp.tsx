@@ -18,8 +18,10 @@ import React from 'react';
 import { Flex } from 'design';
 import Dialog, { DialogTitle } from 'design/Dialog';
 import * as Icons from 'design/Icon';
+
 import useTeleport from 'teleport/useTeleport';
 import { TabIcon } from 'teleport/components/Tabs';
+
 import Manually from './Manually';
 import Automatically from './Automatically';
 import useAddApp, { State } from './useAddApp';

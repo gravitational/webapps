@@ -1,6 +1,8 @@
 import { useState } from 'react';
 import { makeEmptyAttempt, useAsync } from 'shared/hooks/useAsync';
+
 import { useAppContext } from 'teleterm/ui/appContextProvider';
+
 import { ShareFeedbackFormValues } from './types';
 
 export const FEEDBACK_TOO_LONG_ERROR = 'FEEDBACK_TOO_LONG_ERROR';

@@ -15,7 +15,9 @@
  */
 
 import React from 'react';
+
 import { render, theme } from 'design/utils/testing';
+
 import Alert, { Danger, Info, Warning, Success } from './index';
 
 describe('design/Alert', () => {

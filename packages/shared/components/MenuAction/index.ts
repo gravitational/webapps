@@ -15,6 +15,7 @@ limitations under the License.
 */
 
 import { MenuItem, MenuItemIcon } from 'design/Menu';
+
 import MenuIcon from './MenuActionIcon';
 import MenuButton from './MenuActionButton';
 

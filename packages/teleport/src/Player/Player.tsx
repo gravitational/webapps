@@ -18,12 +18,14 @@ import React from 'react';
 import styled from 'styled-components';
 import { Flex, Box } from 'design';
 import { Danger } from 'design/Alert';
+
 import { useParams, useLocation } from 'teleport/components/Router';
 import session from 'teleport/services/websession';
 import { colors } from 'teleport/Console/colors';
 import { UrlPlayerParams } from 'teleport/config';
 import { getUrlParameter } from 'teleport/services/history';
 import { RecordingType } from 'teleport/services/recordings';
+
 import ActionBar from './ActionBar';
 import { DesktopPlayer } from './DesktopPlayer';
 import SshPlayer from './SshPlayer';

@@ -19,7 +19,9 @@ import styled from 'styled-components';
 import { debounce } from 'lodash';
 import { Box, Flex } from 'design';
 import { color, height, space, width } from 'styled-system';
+
 import { useAppContext } from 'teleterm/ui/appContextProvider';
+
 import useQuickInput from './useQuickInput';
 import QuickInputList from './QuickInputList';
 

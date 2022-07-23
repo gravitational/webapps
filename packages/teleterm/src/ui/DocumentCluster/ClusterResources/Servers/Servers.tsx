@@ -18,10 +18,13 @@ import React from 'react';
 import { Cell } from 'design/DataTable';
 import { MenuLogin } from 'shared/components/MenuLogin';
 import { Danger } from 'design/Alert';
+
 import * as types from 'teleterm/ui/services/clusters/types';
 import { Table } from 'teleterm/ui/components/Table';
+
 import { renderLabelCell } from '../renderLabelCell';
 import { MenuLoginTheme } from '../MenuLoginTheme';
+
 import { useServers, State } from './useServers';
 
 export default function Container() {

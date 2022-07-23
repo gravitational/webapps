@@ -1,5 +1,6 @@
 import { unique } from 'teleterm/ui/utils';
 import Logger from 'teleterm/logger';
+
 import { PtyProcess } from './ptyProcess';
 import { IPtyHostServer } from './../api/protogen/ptyHostService_grpc_pb';
 import { PtyCwd, PtyId } from './../api/protogen/ptyHostService_pb';

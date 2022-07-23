@@ -24,6 +24,7 @@ import { StatePersistenceService } from 'teleterm/ui/services/statePersistence';
 import { KeyboardShortcutsService } from 'teleterm/ui/services/keyboardShortcuts';
 import { WorkspacesService } from 'teleterm/ui/services/workspacesService/workspacesService';
 import { NotificationsService } from 'teleterm/ui/services/notifications';
+
 import { CommandLauncher } from './commandLauncher';
 import { IAppContext } from './types';
 

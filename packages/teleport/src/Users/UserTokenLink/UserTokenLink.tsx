@@ -23,6 +23,7 @@ import Dialog, {
   DialogContent,
   DialogFooter,
 } from 'design/Dialog';
+
 import TextSelectCopy from 'teleport/components/TextSelectCopy';
 import { ResetToken } from 'teleport/services/user';
 import cfg from 'teleport/config';

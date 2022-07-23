@@ -16,6 +16,7 @@
 
 import { useAttempt } from 'shared/hooks';
 import { AuthProvider } from 'shared/services';
+
 import history from 'teleport/services/history';
 import cfg from 'teleport/config';
 import auth, { UserCredentials } from 'teleport/services/auth';

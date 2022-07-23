@@ -1,7 +1,9 @@
 import renderHook from 'design/utils/renderHook';
 import React from 'react';
+
 import AppContextProvider from 'teleterm/ui/appContextProvider';
 import AppContext from 'teleterm/ui/appContext';
+
 import { useKeyboardShortcuts } from './useKeyboardShortcuts';
 import { KeyboardShortcutsService } from './keyboardShortcutsService';
 import { KeyboardShortcutEventSubscriber } from './types';

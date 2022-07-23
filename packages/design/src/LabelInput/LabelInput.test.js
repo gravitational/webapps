@@ -15,7 +15,9 @@
  */
 
 import React from 'react';
+
 import { render, theme } from 'design/utils/testing';
+
 import LabelInput from './LabelInput';
 
 describe('design/LabelInput', () => {

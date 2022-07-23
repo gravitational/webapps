@@ -15,6 +15,7 @@
  */
 
 import { Auth2faType, PreferredMfaType } from 'shared/services';
+
 import createMfaOptions from './createMfaOptions';
 
 describe('test retrieving mfa options', () => {

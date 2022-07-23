@@ -17,6 +17,7 @@ limitations under the License.
 import React from 'react';
 import { Indicator, Box } from 'design';
 import { Danger } from 'design/Alert';
+
 import AjaxPoller from 'teleport/components/AjaxPoller';
 import {
   FeatureBox,
@@ -25,6 +26,7 @@ import {
 } from 'teleport/components/Layout';
 import useTeleport from 'teleport/useTeleport';
 import useStickerClusterId from 'teleport/useStickyClusterId';
+
 import SessionList from './SessionList';
 import useSessions from './useSessions';
 const POLLING_INTERVAL = 3000; // every 3 sec

@@ -1,6 +1,8 @@
 import React from 'react';
 import styled from 'styled-components';
+
 import QuickInput from '../QuickInput';
+
 import { Connections } from './Connections';
 import { Clusters } from './Clusters';
 import { Identity } from './Identity';

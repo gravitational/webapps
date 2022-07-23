@@ -16,10 +16,13 @@ limitations under the License.
 
 import { readlink } from 'fs';
 import { exec } from 'child_process';
+
 import * as nodePTY from 'node-pty';
 import { promisify } from 'util';
 import { EventEmitter } from 'events';
+
 import Logger from 'teleterm/logger';
+
 import { PtyProcessOptions, IPtyProcess } from './types';
 
 type Status = 'open' | 'not_initialized' | 'terminated';

@@ -17,6 +17,7 @@ limitations under the License.
 import React from 'react';
 import { useParams } from 'react-router';
 import useAttempt from 'shared/hooks/useAttemptNext';
+
 import service from 'teleport/services/apps';
 import { UrlLauncherParams } from 'teleport/config';
 import { getUrlParameter } from 'teleport/services/history';
