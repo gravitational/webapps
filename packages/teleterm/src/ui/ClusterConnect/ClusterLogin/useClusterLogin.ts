@@ -22,12 +22,13 @@ import { getClusterName } from 'teleterm/ui/utils';
 
 export default function useClusterLogin(props: Props) {
   const { onSuccess, clusterUri } = props;
-  const { clustersService } = useAppContext();
+  const { clustersService, mainProcessClient } = useAppContext();
   const cluster = clustersService.findCluster(clusterUri);
   const refAbortCtrl = useRef<types.tsh.TshAbortController>(null);
   const [shouldPromptSsoStatus, promptSsoStatus] = useState(false);
   const [shouldPromptHardwareKey, promptHardwareKey] = useState(false);
   const loggedInUserName = cluster.loggedInUser?.name || null;
+  const { setSecureKeyboardEntry } = mainProcessClient;
 
   const [initAttempt, init] = useAsync(async () => {
     const authSettings = await clustersService.getAuthSettings(clusterUri);
@@ -109,6 +110,7 @@ export default function useClusterLogin(props: Props) {
     onAbort,
     loginAttempt,
     initAttempt,
+    setSecureKeyboardEntry,
   };
 }
 

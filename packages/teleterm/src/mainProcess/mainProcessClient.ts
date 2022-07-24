@@ -4,6 +4,7 @@ import { MainProcessClient } from './types';
 import { createConfigServiceClient } from '../services/config';
 import { openTabContextMenu } from './contextMenus/tabContextMenu';
 import { createFileStorageClient } from 'teleterm/services/fileStorage';
+import { setSecureKeyboardEntry } from './secureKeyboardEntry';
 
 export default function createMainProcessClient(): MainProcessClient {
   return {
@@ -14,5 +15,6 @@ export default function createMainProcessClient(): MainProcessClient {
     openTabContextMenu,
     configService: createConfigServiceClient(),
     fileStorage: createFileStorageClient(),
+    setSecureKeyboardEntry,
   };
 }

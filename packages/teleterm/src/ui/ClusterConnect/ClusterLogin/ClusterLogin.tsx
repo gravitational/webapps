@@ -38,6 +38,7 @@ export function ClusterLoginPresentation({
   loggedInUserName,
   shouldPromptSsoStatus,
   shouldPromptHardwareKey,
+  setSecureKeyboardEntry,
 }: State) {
   return (
     <>
@@ -68,6 +69,7 @@ export function ClusterLoginPresentation({
             onLogin={onLoginWithLocal}
             onAbort={onAbort}
             loginAttempt={loginAttempt}
+            setSecureKeyboardEntry={setSecureKeyboardEntry}
             shouldPromptSsoStatus={shouldPromptSsoStatus}
             shouldPromptHardwareKey={shouldPromptHardwareKey}
           />

@@ -46,6 +46,7 @@ export default function LoginForm(props: Props) {
     isLocalAuthEnabled = true,
     shouldPromptSsoStatus,
     shouldPromptHardwareKey,
+    setSecureKeyboardEntry,
   } = props;
 
   const isProcessing = loginAttempt.status === 'processing';
@@ -145,6 +146,8 @@ export default function LoginForm(props: Props) {
                   placeholder="Password"
                   mb={0}
                   width="100%"
+                  onFocus={() => setSecureKeyboardEntry(true)}
+                  onBlur={() => setSecureKeyboardEntry(false)}
                 />
               </Box>
               {auth2faType !== 'off' && (
@@ -176,6 +179,8 @@ export default function LoginForm(props: Props) {
                         onChange={e => setToken(e.target.value)}
                         placeholder="123 456"
                         mb={0}
+                        onFocus={() => setSecureKeyboardEntry(true)}
+                        onBlur={() => setSecureKeyboardEntry(false)}
                       />
                     )}
                   </Flex>
@@ -235,6 +240,7 @@ type Props = {
   auth2faType?: types.Auth2faType;
   authProviders: types.AuthProvider[];
   loggedInUserName?: string;
+  setSecureKeyboardEntry(boolean): void;
   onAbort(): void;
   onLoginWithSso(provider: types.AuthProvider): void;
   onLogin(

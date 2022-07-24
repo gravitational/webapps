@@ -108,6 +108,14 @@ export default class MainProcess {
       event.returnValue = this.settings;
     });
 
+    ipcMain.on('set-secure-keyboard-entry', (event, enabled) => {
+      const isMac = this.settings.platform === 'darwin';
+      if (isMac) {
+        app.setSecureKeyboardEntryEnabled(enabled);
+        this.logger.info(`Secure keyboard entry: ${enabled}`);
+      }
+    });
+
     subscribeToTerminalContextMenuEvent();
     subscribeToTabContextMenuEvent();
     subscribeToConfigServiceEvents(this.configService);

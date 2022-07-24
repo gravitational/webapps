@@ -27,6 +27,7 @@ export type MainProcessClient = {
   openTabContextMenu(options: TabContextMenuOptions): void;
   configService: ConfigService;
   fileStorage: FileStorage;
+  setSecureKeyboardEntry(boolean): void;
 };
 
 export type Platform = NodeJS.Platform;
