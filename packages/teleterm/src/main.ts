@@ -1,12 +1,17 @@
 import { spawn } from 'child_process';
-import { app, globalShortcut, shell } from 'electron';
+import { app, globalShortcut, shell, protocol } from 'electron';
 import MainProcess from 'teleterm/mainProcess';
 import { getRuntimeSettings } from 'teleterm/mainProcess/runtimeSettings';
+import {
+  installWebHandler,
+  interceptFileProtocol,
+} from 'teleterm/mainProcess/protocolHandler';
 import createLoggerService from 'teleterm/services/logger';
 import Logger from 'teleterm/logger';
 import * as types from 'teleterm/types';
 import { ConfigServiceImpl } from 'teleterm/services/config';
 import { createFileStorage } from 'teleterm/services/fileStorage';
+import fs from 'fs';
 import path from 'path';
 import { WindowsManager } from 'teleterm/mainProcess/windowsManager';
 
@@ -54,6 +59,16 @@ app.whenReady().then(() => {
       app.quit();
     });
   }
+
+  const isWin = process.platform === 'win32';
+
+  const userDataPath = fs.realpathSync(app.getPath('userData'));
+  const installPath = fs.realpathSync(app.getAppPath());
+  interceptFileProtocol({ protocol, isWin, userDataPath, installPath, logger });
+
+  installWebHandler({
+    protocol,
+  });
 
   windowsManager.createWindow();
 });
