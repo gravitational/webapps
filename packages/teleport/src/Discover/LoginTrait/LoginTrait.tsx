@@ -26,7 +26,7 @@ import {
 } from 'design';
 import { Danger } from 'design/Alert';
 import * as Icons from 'design/Icon';
-import { Header, CancelButton } from '../Shared';
+import { Header, ActionButtons } from '../Shared';
 import type { AgentStepProps } from '../types';
 import { useDiscoverContext } from '../discoverContextProvider';
 import { useLoginTrait, State } from './useLoginTrait';
@@ -38,7 +38,14 @@ export default function Container(props: AgentStepProps) {
   return <LoginTrait {...state} />;
 }
 
-export function LoginTrait({ attempt, nextStep, logins, addLogin }: State) {
+export function LoginTrait({
+  attempt,
+  nextStep,
+  logins,
+  addLogin,
+  confirmExit,
+  toggleConfirmExit,
+}: State) {
   const inputRefs = useRef<HTMLInputElement[]>([]);
   const [newLogin, setNewLogin] = useState('');
   const [showInputBox, setShowInputBox] = useState(false);
@@ -47,6 +54,17 @@ export function LoginTrait({ attempt, nextStep, logins, addLogin }: State) {
     addLogin(newLogin);
     setNewLogin('');
     setShowInputBox(false);
+  }
+
+  function onProceed() {
+    const names: string[] = [];
+    inputRefs.current.forEach(el => {
+      if (el.checked) {
+        names.push(el.name);
+      }
+    });
+
+    nextStep(names);
   }
 
   let $content;
@@ -122,23 +140,11 @@ export function LoginTrait({ attempt, nextStep, logins, addLogin }: State) {
               <AddLoginButton setShowInputBox={setShowInputBox} />
             )}
           </Box>
-          <ButtonPrimary
-            width="165px"
-            onClick={() => {
-              const names: string[] = [];
-              inputRefs.current.forEach(el => {
-                if (el.checked) {
-                  names.push(el.name);
-                }
-              });
-
-              nextStep(names);
-            }}
-            mr={3}
-          >
-            Proceed
-          </ButtonPrimary>
-          <CancelButton />
+          <ActionButtons
+            onProceed={onProceed}
+            confirmExit={confirmExit}
+            toggleConfirmExit={toggleConfirmExit}
+          />
         </>
       );
       break;

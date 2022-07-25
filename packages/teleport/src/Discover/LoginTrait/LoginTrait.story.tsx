@@ -45,4 +45,6 @@ const props: State = {
   logins: ['root', 'llama', 'george_washington_really_long_name_testing'],
   nextStep: () => null,
   addLogin: () => null,
+  confirmExit: false,
+  toggleConfirmExit: () => null,
 };

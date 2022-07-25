@@ -54,6 +54,8 @@ export function useLoginTrait({ ctx, props }: Props) {
     nextStep,
     logins,
     addLogin,
+    confirmExit: props.confirmExit,
+    toggleConfirmExit: props.toggleConfirmExit,
   };
 }
 
