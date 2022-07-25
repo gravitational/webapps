@@ -29,7 +29,7 @@ module.exports = {
     filename: '[name].js',
     chunkFilename: '[name].js',
   },
-  devtool: 'source-map',
+  devtool: process.env.WEBPACK_SOURCE_MAP || 'eval-source-map',
   mode: 'development',
   plugins: [
     configFactory.plugins.tsChecker(),
