@@ -28,7 +28,9 @@ export default function Container() {
 }
 
 declare global {
-  interface Window { showDirectoryPicker: () => Promise<FileSystemDirectoryHandle> }
+  interface Window {
+    showDirectoryPicker: () => Promise<FileSystemDirectoryHandle>;
+  }
 }
 
 export function DesktopSession(props: State) {
