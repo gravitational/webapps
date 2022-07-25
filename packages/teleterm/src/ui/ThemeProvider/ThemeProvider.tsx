@@ -22,8 +22,11 @@ import { AppearanceConfig } from 'teleterm/types';
 import { GlobalStyle } from './globals';
 import theme from './theme';
 
+import type { ReactNode } from 'react';
+
 export type TeletermThemeProvider = {
   appearanceConfig?: AppearanceConfig;
+  children: ReactNode;
 };
 
 const TeletermThemeProvider: React.FC<TeletermThemeProvider> = props => {

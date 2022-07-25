@@ -18,11 +18,14 @@ import React from 'react';
 
 import { DocumentsService } from 'teleterm/ui/services/workspacesService';
 
+import type { ReactNode } from 'react';
+
 const WorkspaceDocumentsServiceContext =
   React.createContext<DocumentsService>(null);
 
 export const WorkspaceDocumentsServiceProvider: React.FC<{
   value: DocumentsService;
+  children: ReactNode;
 }> = props => {
   return <WorkspaceDocumentsServiceContext.Provider {...props} />;
 };

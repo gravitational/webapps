@@ -18,6 +18,8 @@ import React from 'react';
 
 import AppContext from './appContext';
 
+import type { ReactNode } from 'react';
+
 export const AppReactContext = React.createContext<AppContext>(null);
 
 const AppContextProvider: React.FC<Props> = props => {
@@ -34,4 +36,5 @@ export function useAppContext() {
 
 type Props = {
   value: AppContext;
+  children: ReactNode;
 };

@@ -4,7 +4,9 @@ import styled from 'styled-components';
 
 import { useAppContext } from 'teleterm/ui/appContextProvider';
 
-export const AppInitializer: FC = props => {
+import type { ReactNode } from 'react';
+
+export const AppInitializer: FC<Props> = props => {
   const ctx = useAppContext();
   const [state, init] = useAsync(() => ctx.init());
 
@@ -23,6 +25,10 @@ export const AppInitializer: FC = props => {
   }
 
   return <Centered>Loading</Centered>;
+};
+
+type Props = {
+  children: ReactNode | Element[];
 };
 
 const Centered = styled.div`

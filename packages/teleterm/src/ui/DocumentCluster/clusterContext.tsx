@@ -23,6 +23,8 @@ import { IAppContext } from 'teleterm/ui/types';
 import { routing } from 'teleterm/ui/uri';
 import { getClusterName, retryWithRelogin } from 'teleterm/ui/utils';
 
+import type { ReactNode } from 'react';
+
 type State = {
   navLocation: NavLocation;
   clusterName: string;
@@ -188,7 +190,10 @@ class ClusterContext extends Store<State> {
 
 const ClusterReactContext = React.createContext<ClusterContext>(null);
 
-const ClusterContextProvider: React.FC<{ value: ClusterContext }> = props => {
+const ClusterContextProvider: React.FC<{
+  value: ClusterContext;
+  children: ReactNode;
+}> = props => {
   return <ClusterReactContext.Provider {...props} />;
 };
 

@@ -6,6 +6,8 @@ import React, {
   useState,
 } from 'react';
 
+import type { ReactNode } from 'react';
+
 export type RunActiveItemHandler = () => void;
 
 export const KeyboardArrowsNavigationContext = createContext<{
@@ -21,7 +23,11 @@ enum KeyboardArrowNavigationKeys {
   Enter = 'Enter',
 }
 
-export const KeyboardArrowsNavigation: FC = props => {
+type Props = {
+  children: ReactNode;
+};
+
+export const KeyboardArrowsNavigation: FC<Props> = props => {
   const [items, setItems] = useState<RunActiveItemHandler[]>([]);
   const [activeIndex, setActiveIndex] = useState<number>(-1);
 
