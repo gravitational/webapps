@@ -1,4 +1,3 @@
-
 import { CommandLauncher } from 'teleterm/ui/commandLauncher';
 import { ClustersService } from 'teleterm/ui/services/clusters';
 import { WorkspacesService } from 'teleterm/ui/services/workspacesService';

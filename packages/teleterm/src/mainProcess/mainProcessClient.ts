@@ -8,7 +8,6 @@ import { openTerminalContextMenu } from './contextMenus/terminalContextMenu';
 import { MainProcessClient } from './types';
 import { openTabContextMenu } from './contextMenus/tabContextMenu';
 
-
 export default function createMainProcessClient(): MainProcessClient {
   return {
     getRuntimeSettings() {

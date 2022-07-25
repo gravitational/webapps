@@ -12,7 +12,6 @@ import { createBashCommand, State } from '../useAddNode';
 
 import type { JoinRule } from 'teleport/services/joinToken';
 
-
 export default function Iam({ token, attempt, onGenerate, onClose }: Props) {
   const [rule, setRule] = React.useState<JoinRule>({
     awsAccountId: '',

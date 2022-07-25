@@ -23,7 +23,6 @@ import { IdentityList } from './IdentityList/IdentityList';
 import { IdentitySelector } from './IdentitySelector/IdentitySelector';
 import { EmptyIdentityList } from './EmptyIdentityList/EmptyIdentityList';
 
-
 export function IdentityContainer() {
   const {
     activeRootCluster,

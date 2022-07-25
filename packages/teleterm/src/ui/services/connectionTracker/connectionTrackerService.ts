@@ -42,7 +42,6 @@ import {
   TrackedGatewayConnection,
 } from './types';
 
-
 export class ConnectionTrackerService extends ImmutableStore<ConnectionTrackerState> {
   private _trackedConnectionOperationsFactory: TrackedConnectionOperationsFactory;
   state: ConnectionTrackerState = {

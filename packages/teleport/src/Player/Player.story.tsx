@@ -24,7 +24,6 @@ import { Router, Route } from 'teleport/components/Router';
 
 import PlayerComponent from './Player';
 
-
 export default {
   title: 'Teleport/Player',
 };

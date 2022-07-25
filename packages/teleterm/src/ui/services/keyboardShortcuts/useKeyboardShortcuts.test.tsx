@@ -11,7 +11,6 @@ import { useKeyboardShortcuts } from './useKeyboardShortcuts';
 import { KeyboardShortcutsService } from './keyboardShortcutsService';
 import { KeyboardShortcutEventSubscriber } from './types';
 
-
 test('call handler on its event type', () => {
   const { handler, getEventEmitter, wrapper } = getTestSetup();
 

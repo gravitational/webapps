@@ -8,7 +8,6 @@ import { ListItem } from 'teleterm/ui/components/ListItem';
 import { useKeyboardArrowsNavigation } from 'teleterm/ui/components/KeyboardArrowsNavigation';
 import LinearProgress from 'teleterm/ui/components/LinearProgress';
 
-
 import { getUserWithClusterName } from 'teleterm/ui/utils';
 
 interface IdentityListItemProps {

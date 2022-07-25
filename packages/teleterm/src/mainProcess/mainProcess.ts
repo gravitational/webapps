@@ -18,9 +18,6 @@ import {
 import { subscribeToTerminalContextMenuEvent } from './contextMenus/terminalContextMenu';
 import { subscribeToTabContextMenuEvent } from './contextMenus/tabContextMenu';
 
-
-
-
 type Options = {
   settings: RuntimeSettings;
   logger: Logger;
