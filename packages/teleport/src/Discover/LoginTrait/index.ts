@@ -1,5 +1,5 @@
 /**
- * Copyright 2021 Gravitational, Inc.
+ * Copyright 2022 Gravitational, Inc.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,8 +14,5 @@
  * limitations under the License.
  */
 
-import role from './role.yaml?raw';
-
-const templates = { role };
-
-export default templates;
+import LoginTrait from './LoginTrait';
+export { LoginTrait };

@@ -27,6 +27,12 @@ export default function Container() {
   return <DesktopSession {...state} />;
 }
 
+declare global {
+  interface Window {
+    showDirectoryPicker: () => Promise<FileSystemDirectoryHandle>;
+  }
+}
+
 export function DesktopSession(props: State) {
   const {
     clipboardState,
@@ -108,8 +114,6 @@ function Session(props: PropsWithChildren<State>) {
     hostname,
     clipboardState,
     setClipboardState,
-    isRecording,
-    setIsRecording,
     canShareDirectory,
     isSharingDirectory,
     setIsSharingDirectory,
@@ -144,6 +148,19 @@ function Session(props: PropsWithChildren<State>) {
     !disconnected &&
     clipboardSuccess;
 
+  const onShareDirectory = () => {
+    window
+      .showDirectoryPicker()
+      .then(sharedDirHandle => {
+        setIsSharingDirectory(true);
+        tdpClient.sharedDirectory = sharedDirHandle;
+        tdpClient.sendSharedDirectoryAnnounce();
+      })
+      .catch(() => {
+        setIsSharingDirectory(false);
+      });
+  };
+
   return (
     <Flex flexDirection="column">
       <TopBar
@@ -153,18 +170,14 @@ function Session(props: PropsWithChildren<State>) {
             ...prevState,
             enabled: false,
           }));
-          setIsRecording(false);
           setIsSharingDirectory(false);
           tdpClient.nuke();
         }}
         userHost={`${username}@${hostname}`}
         clipboardSharingEnabled={clipboardSharingActive}
-        isRecording={isRecording}
         canShareDirectory={canShareDirectory}
         isSharingDirectory={isSharingDirectory}
-        onShareDirectory={() => {
-          setIsSharingDirectory(true);
-        }}
+        onShareDirectory={onShareDirectory}
       />
 
       {props.children}

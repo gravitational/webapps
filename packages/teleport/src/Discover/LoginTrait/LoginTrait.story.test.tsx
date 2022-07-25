@@ -1,5 +1,5 @@
 /**
- * Copyright 2021 Gravitational, Inc.
+ * Copyright 2022 Gravitational, Inc.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,8 +14,21 @@
  * limitations under the License.
  */
 
-import role from './role.yaml?raw';
+import React from 'react';
+import { render } from 'design/utils/testing';
+import { Loaded, Empty, Failed } from './LoginTrait.story';
 
-const templates = { role };
+test('loaded', () => {
+  const { container } = render(<Loaded />);
+  expect(container.firstChild).toMatchSnapshot();
+});
 
-export default templates;
+test('loaded empty state', () => {
+  const { container } = render(<Empty />);
+  expect(container.firstChild).toMatchSnapshot();
+});
+
+test('failed', () => {
+  const { container } = render(<Failed />);
+  expect(container.firstChild).toMatchSnapshot();
+});
