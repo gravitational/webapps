@@ -44,6 +44,8 @@ function eliminateAllAfterCharacter(string, character) {
 function urlToPath(targetUrl, { isWin }) {
   const decoded = decodeURIComponent(targetUrl);
   const withoutScheme = decoded.slice(isWin ? 8 : 7);
+  // Windows: file:///C:/path/to/file
+  // unix: file:///path/to/file
 
   // remove any extra characters in requsted file path
   const withoutQuerystring = eliminateAllAfterCharacter(withoutScheme, '?');
@@ -64,6 +66,12 @@ export function interceptFileProtocol({
     const target = path.normalize(urlToPath(request.url, { isWin }));
     const realPath = fs.existsSync(target) ? fs.realpathSync(target) : target;
     const properCasing = isWin ? realPath.toLowerCase() : realPath;
+
+    if (!path.isAbsolute(realPath)) {
+      logger.error(`Denying request to non-absolute path '${realPath}'`);
+      return callback({ error: -3 });
+    }
+
     if (
       !properCasing.startsWith(
         isWin ? userDataPath.toLowerCase() : userDataPath
@@ -73,12 +81,7 @@ export function interceptFileProtocol({
       logger.error(
         `Denying request to path '${realPath}' (userDataPath: '${userDataPath}', installPath: '${installPath}'`
       );
-      return callback();
-    }
-
-    if (!path.isAbsolute(realPath)) {
-      logger.error(`Denying request to non-absolute path '${realPath}'`);
-      return callback();
+      return callback({ error: -3 });
     }
 
     return callback({
