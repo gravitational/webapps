@@ -1,5 +1,5 @@
-FROM node:16-slim
-RUN apt-get update && apt-get install git g++ make python3.6 -y
+FROM node:16
+RUN apt-get update && apt-get install git g++ make python -y
 
 RUN mkdir -p web-apps
 COPY yarn.lock web-apps/
