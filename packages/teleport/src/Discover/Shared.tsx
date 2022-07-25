@@ -32,25 +32,26 @@ export const Header: React.FC = ({ children }) => (
   </Text>
 );
 
-export const ActionButtons = ({
-  onProceed,
-  confirmExit,
-  toggleConfirmExit,
-}: {
-  onProceed(): void;
-  confirmExit: boolean;
-  toggleConfirmExit(): void;
-}) => (
-  <Box mt={4}>
-    <ButtonPrimary width="165px" onClick={onProceed} mr={3}>
-      Proceed
-    </ButtonPrimary>
-    <ButtonSecondary mt={3} width="165px" onClick={toggleConfirmExit}>
-      Exit
-    </ButtonSecondary>
-    {confirmExit && <ConfirmExitDialog onClose={toggleConfirmExit} />}
-  </Box>
-);
+export const ActionButtons = ({ onProceed }: { onProceed(): void }) => {
+  const [confirmExit, setConfirmExit] = React.useState(false);
+  return (
+    <Box mt={4}>
+      <ButtonPrimary width="165px" onClick={onProceed} mr={3}>
+        Proceed
+      </ButtonPrimary>
+      <ButtonSecondary
+        mt={3}
+        width="165px"
+        onClick={() => setConfirmExit(true)}
+      >
+        Exit
+      </ButtonSecondary>
+      {confirmExit && (
+        <ConfirmExitDialog onClose={() => setConfirmExit(false)} />
+      )}
+    </Box>
+  );
+};
 
 function ConfirmExitDialog({ onClose }: { onClose(): void }) {
   return (

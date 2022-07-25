@@ -34,8 +34,6 @@ export function useDownloadScript({ ctx, props }: Props) {
     attempt,
     joinToken,
     nextStep: props.nextStep,
-    confirmExit: props.confirmExit,
-    toggleConfirmExit: props.toggleConfirmExit,
   };
 }
 
