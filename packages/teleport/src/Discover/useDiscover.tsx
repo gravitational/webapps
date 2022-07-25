@@ -34,6 +34,7 @@ export function useDiscover(ctx: DiscoverContext) {
   const [currentStep, setCurrentStep] = useState<AgentStep>(0);
   const [selectedAgentKind, setSelectedAgentKind] = useState<AgentKind>();
   const [agentMeta, setAgentMeta] = useState<AgentMeta>();
+  const [confirmExit, setConfirmExit] = useState(false);
 
   useEffect(() => {
     initRun(() => ctx.init());
@@ -57,6 +58,10 @@ export function useDiscover(ctx: DiscoverContext) {
 
   function logout() {
     ctx.logout();
+  }
+
+  function toggleConfirmExit() {
+    setConfirmExit(!confirmExit);
   }
 
   function createJoinToken(method: JoinMethod = 'token', rules?: JoinRule[]) {
@@ -104,6 +109,8 @@ export function useDiscover(ctx: DiscoverContext) {
     nextStep,
     prevStep,
     createJoinToken,
+    confirmExit,
+    toggleConfirmExit,
   };
 }
 
