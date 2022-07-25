@@ -19,6 +19,7 @@ limitations under the License.
 const uri = require('url');
 const WebpackDevServer = require('webpack-dev-server');
 const httpProxy = require('http-proxy');
+
 const modifyIndexHtmlMiddleware = require('./modifyResponse');
 const initCompiler = require('./initCompiler');
 
