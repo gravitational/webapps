@@ -32,13 +32,7 @@ export default function Container(props: AgentStepProps) {
   return <DownloadScript {...state} />;
 }
 
-export function DownloadScript({
-  attempt,
-  joinToken,
-  nextStep,
-  confirmExit,
-  toggleConfirmExit,
-}: State) {
+export function DownloadScript({ attempt, joinToken, nextStep }: State) {
   return (
     <Box>
       <Header>Configure Resource</Header>
@@ -65,11 +59,7 @@ export function DownloadScript({
             mt={2}
             maxWidth="800px"
           />
-          <ActionButtons
-            onProceed={nextStep}
-            confirmExit={confirmExit}
-            toggleConfirmExit={toggleConfirmExit}
-          />
+          <ActionButtons onProceed={nextStep} />
         </>
       )}
     </Box>

@@ -38,14 +38,7 @@ export default function Container(props: AgentStepProps) {
   return <LoginTrait {...state} />;
 }
 
-export function LoginTrait({
-  attempt,
-  nextStep,
-  logins,
-  addLogin,
-  confirmExit,
-  toggleConfirmExit,
-}: State) {
+export function LoginTrait({ attempt, nextStep, logins, addLogin }: State) {
   const inputRefs = useRef<HTMLInputElement[]>([]);
   const [newLogin, setNewLogin] = useState('');
   const [showInputBox, setShowInputBox] = useState(false);
@@ -140,11 +133,7 @@ export function LoginTrait({
               <AddLoginButton setShowInputBox={setShowInputBox} />
             )}
           </Box>
-          <ActionButtons
-            onProceed={onProceed}
-            confirmExit={confirmExit}
-            toggleConfirmExit={toggleConfirmExit}
-          />
+          <ActionButtons onProceed={onProceed} />
         </>
       );
       break;
