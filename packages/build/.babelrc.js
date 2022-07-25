@@ -21,7 +21,7 @@ const plugins = [
   '@babel/plugin-syntax-dynamic-import',
 ];
 
-function makePresents(test = false) {
+function makePresets(test = false) {
   if (test) {
     return [
       ['@babel/preset-env', { targets: { node: 'current' } }],
@@ -45,7 +45,7 @@ function makePresents(test = false) {
 module.exports = {
   env: {
     test: {
-      presets: makePresents(true),
+      presets: makePresets(true),
     },
     development: {
       plugins: [
@@ -54,7 +54,7 @@ module.exports = {
       ],
     },
   },
-  presets: makePresents(),
+  presets: makePresets(),
   plugins: [
     ...plugins,
     ['babel-plugin-styled-components', { displayName: false, ssr: false }],
