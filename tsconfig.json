@@ -20,7 +20,8 @@
     "target": "esnext",
     "types": [
       "node",
-      "@emotion/core"
+      "@emotion/core",
+      "@types/wicg-native-file-system"
     ],
     "paths": {
       "grpc": [
