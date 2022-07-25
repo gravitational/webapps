@@ -34,6 +34,10 @@ export type AgentStepProps = {
   prevStep: State['prevStep'];
   // createJoinToken makes a fetch api call to get a joinToken.
   createJoinToken: State['createJoinToken'];
+  // confirmExit is a flag that indicates whether a user
+  // wants to exit discove or not.
+  confirmExit: State['confirmExit'];
+  toggleConfirmExit: State['toggleConfirmExit'];
 };
 
 export type AgentStepComponent = (props: AgentStepProps) => JSX.Element;
