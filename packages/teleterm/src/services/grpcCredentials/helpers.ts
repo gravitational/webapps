@@ -1,6 +1,6 @@
 import path from 'path';
 import { watch } from 'fs';
-import { readFile, writeFile, stat } from 'fs/promises';
+import { readFile, writeFile, stat, rename } from 'fs/promises';
 import { makeCert } from './makeCert';
 import { RuntimeSettings } from 'teleterm/mainProcess/types';
 
@@ -18,7 +18,12 @@ export async function generateAndSaveGrpcCert(
     validityDays: 365,
   });
 
-  await writeFile(path.join(certsDir, certName), createdCert.cert);
+  // File is first saved using under `tempFullPath` and then renamed to `fullPath`.
+  // It prevents from reading half written file.
+  const fullPath = path.join(certsDir, certName);
+  const tempFullPath = fullPath + '.tmp';
+  await writeFile(tempFullPath, createdCert.cert);
+  await rename(tempFullPath, fullPath);
 
   return {
     cert: Buffer.from(createdCert.cert),
