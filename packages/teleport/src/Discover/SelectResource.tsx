@@ -18,8 +18,9 @@ import { Cloud } from 'design/Icon';
 import SlideTabs from 'design/SlideTabs';
 import styled from 'styled-components';
 import { Image, Text, Box, ButtonPrimary, ButtonSecondary, Flex } from 'design';
-import cfg from 'teleport/config';
+import Empty from 'teleport/components/Empty';
 
+import cfg from 'teleport/config';
 import { resourceTypes } from './resource-lists';
 
 import applicationIcon from './assets/application.png';
@@ -110,6 +111,25 @@ export function SelectResource({ onSelect }: SelectResourceProps) {
           selectedType={selectedType}
           setSelectedType={setSelectedType}
           resourceTypes={resourceTypes}
+        />
+      )}
+      {selectedResource === 'application' && (
+        <Empty
+          clusterId="abc123"
+          canCreate={true}
+          onClick={() => {}}
+          emptyStateInfo={{
+            title: 'Add your first application to Teleport',
+            byline:
+              'Teleport Application Access provides secure access to internal applications.',
+            docsURL:
+              'https://goteleport.com/docs/application-access/getting-started/',
+            resourceType: 'application',
+            readOnly: {
+              title: 'No Applications Found',
+              resource: 'applications',
+            },
+          }}
         />
       )}
       <Box mt={4}>
