@@ -13,7 +13,15 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-import AgentService from './agents';
 
-export * from './types';
-export default AgentService;
+export function makeAgentConnectionDiagnostics(json: any) {
+  json = json || {};
+  const { name, labels, success, message } = json;
+
+  return {
+    name,
+    labels: labels || [],
+    success,
+    message,
+  };
+}

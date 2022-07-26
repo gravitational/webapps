@@ -23,6 +23,7 @@ import desktopService from 'teleport/services/desktops';
 import KubeService from 'teleport/services/kube';
 import DatabaseService from 'teleport/services/databases';
 import JoinTokenService from 'teleport/services/joinToken';
+import AgentService from 'teleport/services/agents';
 import type { AgentIdKind } from 'teleport/services/agents';
 
 const logger = Logger.create('teleport/discover');
@@ -43,6 +44,7 @@ export class DiscoverContext {
   nodesService = new serviceNodes();
   kubeService = new KubeService();
   databaseService = new DatabaseService();
+  agentService = new AgentService();
 
   init() {
     return userService.fetchUserContext().then(user => {

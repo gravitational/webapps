@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-import AgentService from './agents';
 
-export * from './types';
-export default AgentService;
+import ConnectionDiagnostic from './ConnectionDiagnostic';
+
+export { ConnectionDiagnostic };

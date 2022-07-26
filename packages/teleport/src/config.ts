@@ -30,7 +30,7 @@ import generateResourcePath from './generateResourcePath';
 const cfg = {
   // TODO(isaiah): remove after feature is finished.
   enableDirectorySharing: false, // note to reviewers: should be false in any PRs.
-  enabledDiscoverWizard: false, // TODO (anyone): remove after wizard is finished
+  enabledDiscoverWizard: true, // TODO (anyone): remove after wizard is finished
   isEnterprise: false,
   isCloud: false,
   tunnelPublicAddress: '',
@@ -113,6 +113,7 @@ const cfg = {
     clustersPath: '/v1/webapi/sites',
     clusterEventsPath: `/v1/webapi/sites/:clusterId/events/search?from=:start?&to=:end?&limit=:limit?&startKey=:startKey?&include=:include?`,
     clusterEventsRecordingsPath: `/v1/webapi/sites/:clusterId/events/search/sessions?from=:start?&to=:end?&limit=:limit?&startKey=:startKey?`,
+    clusterConnectionDiagnosticPath: `/webapi/sites/:clusterId/diagnostics/connections/:connectionId`,
     scp: '/v1/webapi/sites/:clusterId/nodes/:serverId/:login/scp?location=:location&filename=:filename',
     renewTokenPath: '/v1/webapi/sessions/renew',
     resetPasswordTokenPath: '/v1/webapi/users/password/token',
@@ -184,6 +185,16 @@ const cfg = {
     return generatePath(cfg.api.clusterEventsRecordingsPath, {
       clusterId,
       ...params,
+    });
+  },
+
+  getClusterConnectionDiagnosticUrl(
+    clusterId: string = cfg.proxyCluster,
+    connectionId: string
+  ) {
+    return generatePath(cfg.api.clusterConnectionDiagnosticPath, {
+      clusterId,
+      connectionId,
     });
   },
 

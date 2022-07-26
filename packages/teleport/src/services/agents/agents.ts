@@ -13,7 +13,21 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-import AgentService from './agents';
 
-export * from './types';
+import api from 'teleport/services/api';
+import cfg from 'teleport/config';
+import { AgentConnectionDiagnostic } from './types';
+import { makeAgentConnectionDiagnostics } from './make';
+
+class AgentService {
+  fetchConnectionDiagnostic(
+    connectionId: string,
+    clusterId?: string
+  ): Promise<AgentConnectionDiagnostic> {
+    return api
+      .get(cfg.getClusterConnectionDiagnosticUrl(clusterId, connectionId))
+      .then(makeAgentConnectionDiagnostics);
+  }
+}
+
 export default AgentService;

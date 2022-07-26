@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-const DOWNLOAD_BASE_URL = 'https://get.gravitational.com/';
+export const DOWNLOAD_BASE_URL = 'https://get.gravitational.com/';
 
 export default function getDownloadLink(
   type: Arch,

@@ -22,6 +22,7 @@ import type { AgentStepProps, AgentStepComponent } from './types';
 import type { AgentKind } from './useDiscover';
 import { LoginTrait } from './LoginTrait';
 import { DownloadScript } from './DownloadScript';
+import { ConnectionDiagnostic } from './ConnectionDiagnostic';
 
 // agentStepTitles defines the titles per steps defined by enum `AgentStep`.
 //
@@ -44,7 +45,7 @@ export const agentViews: Record<AgentKind, AgentStepComponent[]> = {
   db: [],
   desktop: [],
   kube: [],
-  node: [GatherReqsNode, DownloadScript, LoginTrait, InstallTeleport],
+  node: [GatherReqsNode, DownloadScript, LoginTrait, ConnectionDiagnostic],
 };
 
 export function SelectAgent(props) {

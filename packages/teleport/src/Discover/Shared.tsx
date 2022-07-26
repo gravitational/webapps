@@ -31,12 +31,20 @@ export const Header: React.FC = ({ children }) => (
   </Text>
 );
 
-export const ActionButtons = ({ onProceed }: { onProceed(): void }) => {
+export const ActionButtons = ({ onProceed }: { onProceed?(): void }) => {
   const [confirmExit, setConfirmExit] = React.useState(false);
+  let primaryText = 'Proceed';
+  let onPrimaryBtnClick = onProceed;
+
+  if (!onProceed) {
+    primaryText = 'Add Another Resource';
+    onPrimaryBtnClick = () => history.push(cfg.routes.discover, true);
+  }
+
   return (
     <Box mt={4}>
-      <ButtonPrimary width="165px" onClick={onProceed} mr={3}>
-        Proceed
+      <ButtonPrimary width="210px" onClick={onPrimaryBtnClick} mr={3}>
+        {primaryText}
       </ButtonPrimary>
       <ButtonSecondary
         mt={3}

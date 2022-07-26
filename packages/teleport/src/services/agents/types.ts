@@ -60,3 +60,15 @@ export type AgentIdKind =
   | 'db'
   | 'kube_cluster'
   | 'windows_desktop';
+
+// ConnectionDiagnostic describes a connection diagnostic.
+export type AgentConnectionDiagnostic = {
+  // name is the name of the connection diagnostic.
+  name: string;
+  // labels is a map of static and dynamic labels associated with the connection diagnostic.
+  labels: AgentLabel[];
+  // success is whether the connection was successful
+  success: boolean;
+  // message is the diagnostic summary
+  message: string;
+};
