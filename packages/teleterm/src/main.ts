@@ -1,5 +1,9 @@
 import { spawn } from 'child_process';
+
+import path from 'path';
+
 import { app, globalShortcut, shell } from 'electron';
+
 import MainProcess from 'teleterm/mainProcess';
 import { getRuntimeSettings } from 'teleterm/mainProcess/runtimeSettings';
 import createLoggerService from 'teleterm/services/logger';
@@ -7,7 +11,6 @@ import Logger from 'teleterm/logger';
 import * as types from 'teleterm/types';
 import { ConfigServiceImpl } from 'teleterm/services/config';
 import { createFileStorage } from 'teleterm/services/fileStorage';
-import path from 'path';
 import { WindowsManager } from 'teleterm/mainProcess/windowsManager';
 
 const settings = getRuntimeSettings();
@@ -31,7 +34,23 @@ const mainProcess = MainProcess.create({
   fileStorage,
 });
 
-app.commandLine.appendSwitch('ignore-certificate-errors', 'true');
+app.on(
+  'certificate-error',
+  (event, webContents, url, error, certificate, callback) => {
+    // allow certs errors for localhost:8080
+    if (
+      settings.dev &&
+      new URL(url).host === 'localhost:8080' &&
+      error === 'net::ERR_CERT_AUTHORITY_INVALID'
+    ) {
+      event.preventDefault();
+      callback(true);
+    } else {
+      callback(false);
+      console.error(error);
+    }
+  }
+);
 
 app.on('will-quit', () => {
   fileStorage.putAllSync();
