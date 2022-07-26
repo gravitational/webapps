@@ -56,7 +56,7 @@
   },
   "productName": "Teleport Connect",
   "build": {
-    "appId": "gravitational.teleport.connect",
+    "appId": "com.gravitational.teleport.connect",
     "asar": true,
     "asarUnpack": "**\\*.{node,dll}",
     "afterSign": "notarize.js",
