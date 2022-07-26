@@ -28,6 +28,10 @@ devCfg.devServer = {
 };
 
 devCfg.output.publicPath = '';
-devCfg.plugins = [configFactory.plugins.tsChecker(), configFactory.plugins.reactRefresh(), createHtmlPlugin({ isDev: true })];
+devCfg.plugins = [
+  configFactory.plugins.tsChecker(),
+  configFactory.plugins.reactRefresh(),
+  createHtmlPlugin({ isDev: true }),
+];
 
 module.exports = devCfg;
