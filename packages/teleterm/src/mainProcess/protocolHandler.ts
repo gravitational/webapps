@@ -58,28 +58,30 @@ function urlToPath(targetUrl, { isWin }) {
 export function interceptFileProtocol({
   protocol,
   isWin,
-  userDataPath,
-  installPath,
+  installPath: installPathWithCasing,
   logger,
 }) {
   protocol.interceptFileProtocol('file', (request, callback) => {
     const target = path.normalize(urlToPath(request.url, { isWin }));
-    const realPath = fs.existsSync(target) ? fs.realpathSync(target) : target;
-    const properCasing = isWin ? realPath.toLowerCase() : realPath;
+    const realPathWithCasing = fs.existsSync(target)
+      ? fs.realpathSync(target)
+      : target;
+    // normalize casing across windows (case-insensitive) and unix (case-sensitive)
+    const realPath = isWin
+      ? realPathWithCasing.toLowerCase()
+      : realPathWithCasing;
+    const installPath = isWin
+      ? installPathWithCasing.toLowerCase()
+      : installPathWithCasing;
 
     if (!path.isAbsolute(realPath)) {
       logger.error(`Denying request to non-absolute path '${realPath}'`);
       return callback({ error: -3 });
     }
 
-    if (
-      !properCasing.startsWith(
-        isWin ? userDataPath.toLowerCase() : userDataPath
-      ) &&
-      !properCasing.startsWith(isWin ? installPath.toLowerCase() : installPath)
-    ) {
+    if (!realPath.startsWith(installPath)) {
       logger.error(
-        `Denying request to path '${realPath}' (userDataPath: '${userDataPath}', installPath: '${installPath}'`
+        `Denying request to path '${realPath}' (installPath: '${installPath}'`
       );
       return callback({ error: -3 });
     }

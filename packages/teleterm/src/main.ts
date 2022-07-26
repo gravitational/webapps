@@ -60,11 +60,10 @@ app.whenReady().then(() => {
     });
   }
 
-  const isWin = process.platform === 'win32';
+  const isWin = mainProcess.settings.platform === 'win32';
 
-  const userDataPath = fs.realpathSync(app.getPath('userData'));
-  const installPath = fs.realpathSync(app.getAppPath());
-  interceptFileProtocol({ protocol, isWin, userDataPath, installPath, logger });
+  const installPath = app.getAppPath();
+  interceptFileProtocol({ protocol, isWin, installPath, logger });
 
   installWebHandler({
     protocol,
