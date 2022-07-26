@@ -1,8 +1,11 @@
 import path from 'path';
+
 import { watch } from 'fs';
 import { readFile, writeFile, stat, rename } from 'fs/promises';
-import { makeCert } from './makeCert';
+
 import { RuntimeSettings } from 'teleterm/mainProcess/types';
+
+import { makeCert } from './makeCert';
 
 /**
  * Generates self-signed cert and saves it in the `certsDir`

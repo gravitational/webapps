@@ -3,8 +3,9 @@ import { DndProvider } from 'react-dnd';
 import { HTML5Backend } from 'react-dnd-html5-backend';
 import styled from 'styled-components';
 
-import { AppInitializer } from 'teleterm/ui/AppInitializer';
+import { Failed } from 'design/CardError';
 
+import { AppInitializer } from 'teleterm/ui/AppInitializer';
 import { NotificationsHost } from 'teleterm/ui/components/Notifcations';
 
 import CatchError from './components/CatchError';
@@ -13,7 +14,6 @@ import AppContextProvider from './appContextProvider';
 import AppContext from './appContext';
 import ThemeProvider from './ThemeProvider';
 import { LayoutManager } from './LayoutManager';
-import { Failed } from 'design/CardError';
 
 export const App: React.FC<{ ctx: AppContext }> = ({ ctx }) => {
   const { appearance } = ctx.mainProcessClient.configService.get();

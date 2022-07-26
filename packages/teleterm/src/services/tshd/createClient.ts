@@ -1,8 +1,8 @@
 import { ChannelCredentials } from '@grpc/grpc-js';
+
 import { TerminalServiceClient } from 'teleterm/services/tshd/v1/service_grpc_pb';
 import * as api from 'teleterm/services/tshd/v1/service_pb';
 import * as types from 'teleterm/services/tshd/types';
-
 import Logger from 'teleterm/logger';
 
 import middleware, { withLogging } from './middleware';

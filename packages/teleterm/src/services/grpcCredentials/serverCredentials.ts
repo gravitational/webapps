@@ -1,5 +1,7 @@
 import { ServerCredentials } from '@grpc/grpc-js';
+
 import { RuntimeSettings } from 'teleterm/mainProcess/types';
+
 import {
   readGrpcCert,
   generateAndSaveGrpcCert,
