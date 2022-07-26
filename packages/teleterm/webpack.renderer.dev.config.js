@@ -1,7 +1,9 @@
 const { spawn } = require('child_process');
 const path = require('path');
+
 const defaultCfg = require('@gravitational/build/webpack/webpack.dev.config');
 const configFactory = require('@gravitational/build/webpack/webpack.base');
+
 const { extend, createHtmlPlugin } = require('./webpack.renderer.extend');
 const devCfg = extend(defaultCfg);
 
@@ -26,6 +28,6 @@ devCfg.devServer = {
 };
 
 devCfg.output.publicPath = '';
-devCfg.plugins = [configFactory.plugins.reactRefresh(), createHtmlPlugin()];
+devCfg.plugins.push(createHtmlPlugin({ isDev: true }));
 
 module.exports = devCfg;

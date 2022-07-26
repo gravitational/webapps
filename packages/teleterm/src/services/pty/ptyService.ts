@@ -1,5 +1,6 @@
 import { ChannelCredentials } from '@grpc/grpc-js';
 import { RuntimeSettings } from 'teleterm/mainProcess/types';
+
 import { buildPtyOptions } from './ptyHost/buildPtyOptions';
 import { createPtyHostClient } from './ptyHost/ptyHostClient';
 import { createPtyProcess } from './ptyHost/ptyProcess';
