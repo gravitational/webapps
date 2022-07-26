@@ -19,6 +19,8 @@ export function OfflineDocumentGateway(props: OfflineDocumentGatewayProps) {
   const statusDescription =
     props.connectAttempt.status === 'processing' ? 'being set up' : 'offline';
   const isProcessing = props.connectAttempt.status === 'processing';
+  const shouldShowPortInput =
+    props.connectAttempt.status === 'error' || port !== props.defaultPort;
 
   return (
     <Flex
@@ -50,7 +52,7 @@ export function OfflineDocumentGateway(props: OfflineDocumentGatewayProps) {
         mt={3}
         gap={2}
       >
-        {props.connectAttempt.status === 'error' && (
+        {shouldShowPortInput && (
           <Validation>
             <PortFieldInput
               label="Port (optional)"
