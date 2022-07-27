@@ -277,18 +277,21 @@ export default class Client extends EventEmitterWebAuthnSender {
 
   async handleSharedDirectoryWriteRequest(buffer: ArrayBuffer) {
     const req = this.codec.decodeSharedDirectoryWriteRequest(buffer);
+    try {
+      const bytesWritten = await this.sdManager.writeFile(
+        req.path,
+        req.offset,
+        req.writeData
+      );
 
-    const bytesWritten = await this.sdManager.writeFile(
-      req.path,
-      req.offset,
-      req.writeData
-    );
-
-    this.sendSharedDirectoryWriteResponse({
-      completionId: req.completionId,
-      errCode: SharedDirectoryErrCode.Nil,
-      bytesWritten,
-    });
+      this.sendSharedDirectoryWriteResponse({
+        completionId: req.completionId,
+        errCode: SharedDirectoryErrCode.Nil,
+        bytesWritten,
+      });
+    } catch (e) {
+      this.handleError(e);
+    }
   }
 
   async handleSharedDirectoryListRequest(buffer: ArrayBuffer) {
