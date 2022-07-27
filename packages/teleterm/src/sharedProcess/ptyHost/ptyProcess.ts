@@ -14,13 +14,18 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import * as nodePTY from 'node-pty';
 import { readlink } from 'fs';
-import { promisify } from 'util';
+
 import { exec } from 'child_process';
+
+import * as nodePTY from 'node-pty';
+import { promisify } from 'util';
+
 import { EventEmitter } from 'events';
-import { PtyProcessOptions, IPtyProcess } from './types';
+
 import Logger from 'teleterm/logger';
+
+import { PtyProcessOptions, IPtyProcess } from './types';
 
 type Status = 'open' | 'not_initialized' | 'terminated';
 
@@ -47,7 +52,7 @@ export class PtyProcess extends EventEmitter implements IPtyProcess {
       name: 'xterm-color',
       // HOME should be always defined. But just in case it isn't let's use the cwd from process.
       // https://unix.stackexchange.com/questions/123858
-      cwd: this.options.cwd || this.options.env['HOME'] || process.cwd(),
+      cwd: this.options.cwd || getDefaultCwd(this.options.env),
       env: this.options.env,
     });
 
@@ -178,5 +183,13 @@ async function getWorkingDirectory(pid: number): Promise<string> {
     case 'linux':
       const asyncReadlink = promisify(readlink);
       return await asyncReadlink(`/proc/${pid}/cwd`);
+    case 'win32':
+      return undefined;
   }
+}
+
+function getDefaultCwd(env: Record<string, string>): string {
+  const userDir = process.platform === 'win32' ? env.USERPROFILE : env.HOME;
+
+  return userDir || process.cwd();
 }

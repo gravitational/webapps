@@ -15,6 +15,7 @@
  */
 
 import React from 'react';
+
 import SlideTabs from './SlideTabs';
 
 export default {
@@ -34,6 +35,27 @@ export const FiveTabs = () => {
   return (
     <SlideTabs
       tabs={['step1', 'step2', 'step3', 'step4', 'step5']}
+      onChange={() => {}}
+    />
+  );
+};
+
+export const Round = () => {
+  return (
+    <SlideTabs
+      appearance="round"
+      tabs={['step1', 'step2', 'step3', 'step4', 'step5']}
+      onChange={() => {}}
+    />
+  );
+};
+
+export const Medium = () => {
+  return (
+    <SlideTabs
+      tabs={['step1', 'step2', 'step3', 'step4', 'step5']}
+      size="medium"
+      appearance="round"
       onChange={() => {}}
     />
   );
