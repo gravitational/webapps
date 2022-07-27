@@ -26,7 +26,7 @@ import { MenuItem, MenuItemIcon } from 'shared/components/MenuAction';
 import cfg from 'teleport/config';
 
 import { useDiscoverContext } from './discoverContextProvider';
-import { useDiscover, State, AgentStep } from './useDiscover';
+import { useDiscover, State } from './useDiscover';
 
 import { SelectResource } from './SelectResource';
 import { DownloadScript } from './DownloadScript';
@@ -34,16 +34,6 @@ import { LoginTrait } from './LoginTrait';
 
 import type { AgentKind } from './useDiscover';
 import type { AgentStepComponent } from './types';
-
-// agentStepTitles defines the titles per steps defined by enum `AgentStep`.
-// We use the enum `AgentStep` numerical values to access the list's value,
-// so this list's order and length must be equal to the enum.
-export const agentStepTitles: string[] = [
-  'Select Resource Type',
-  'Configure Resource',
-  'Configure Role',
-  'Test Connection',
-];
 
 export const agentViews: Record<AgentKind, AgentStepComponent[]> = {
   app: [],
@@ -70,7 +60,6 @@ export function Discover({
   ...agentProps
 }: State) {
   let AgentComponent;
-  console.log(selectedAgentKind, currentStep);
   if (selectedAgentKind) {
     AgentComponent = agentViews[selectedAgentKind][currentStep];
   }
@@ -152,6 +141,13 @@ function TopBar(props: { onLogout: VoidFunction; username: string }) {
 }
 
 function SideNavAgentConnect({ currentStep }) {
+  const agentStepTitles: string[] = [
+    'Select Resource Type',
+    'Configure Resource',
+    'Configure Role',
+    'Test Connection',
+  ];
+
   return (
     <SideNavContainer>
       <Box mb={4}>
