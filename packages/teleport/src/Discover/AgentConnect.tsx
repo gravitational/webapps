@@ -20,6 +20,8 @@ import { ButtonPrimary, ButtonSecondary, Text, Box } from 'design';
 
 import { LoginTrait } from './LoginTrait';
 
+import { DownloadScript } from './DownloadScript';
+
 import type { AgentStepProps, AgentStepComponent } from './types';
 import type { AgentKind } from './useDiscover';
 
@@ -29,7 +31,7 @@ import type { AgentKind } from './useDiscover';
 // so this list's order and length must be equal to the enum.
 export const agentStepTitles: string[] = [
   'Select Resource Type',
-  'Set up Teleport Agent',
+  'Configure Resource',
   'Configure Role',
   'Test Connection',
 ];
@@ -44,7 +46,7 @@ export const agentViews: Record<AgentKind, AgentStepComponent[]> = {
   db: [],
   desktop: [],
   kube: [],
-  node: [GatherReqsNode, InstallTeleport, RoleConfig],
+  node: [GatherReqsNode, DownloadScript, LoginTrait, InstallTeleport],
 };
 
 function GatherReqs(props: AgentStepProps) {
