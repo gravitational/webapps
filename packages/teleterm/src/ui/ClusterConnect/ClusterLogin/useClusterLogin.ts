@@ -17,6 +17,7 @@
 import { useState, useEffect, useRef } from 'react';
 
 import { useAsync } from 'shared/hooks/useAsync';
+import { PrimaryAuthType } from 'shared/services';
 
 import * as types from 'teleterm/ui/services/clusters/types';
 import { useAppContext } from 'teleterm/ui/appContextProvider';
@@ -29,9 +30,7 @@ export default function useClusterLogin(props: Props) {
   const refAbortCtrl = useRef<types.tsh.TshAbortController>(null);
   const loggedInUserName = cluster.loggedInUser?.name || null;
   const [shouldPromptSsoStatus, promptSsoStatus] = useState(false);
-  const [webauthnLogin, setWebauthnLogin] = useState<WebauthnLogin>({
-    prompt: '',
-  });
+  const [webauthnLogin, setWebauthnLogin] = useState<WebauthnLogin>();
 
   const [initAttempt, init] = useAsync(async () => {
     const authSettings = await clustersService.getAuthSettings(clusterUri);
@@ -46,9 +45,26 @@ export default function useClusterLogin(props: Props) {
   });
 
   const [loginAttempt, login, setAttempt] = useAsync(
-    (opts: types.LoginParams) => {
+    (authnType: PrimaryAuthType, opts: types.LoginParams) => {
       refAbortCtrl.current = clustersService.client.createAbortController();
-      return clustersService.login(opts, refAbortCtrl.current.signal);
+      switch (authnType) {
+        case 'local':
+          return clustersService.loginLocal(
+            opts as types.LoginLocalParams,
+            refAbortCtrl.current.signal
+          );
+        case 'passwordless':
+          return clustersService.loginPasswordless(
+            opts as types.LoginPasswordlessParams,
+            refAbortCtrl.current.signal
+          );
+        default:
+          // sso
+          return clustersService.loginSso(
+            opts as types.LoginSsoParams,
+            refAbortCtrl.current.signal
+          );
+      }
     }
   );
 
@@ -62,63 +78,59 @@ export default function useClusterLogin(props: Props) {
       setWebauthnLogin({ prompt: 'tap' });
     }
 
-    login({
+    login('local', {
       clusterUri,
-      local: {
-        username,
-        password,
-        token,
-      },
+      username,
+      password,
+      token,
     });
   };
 
-  const onLoginWithPwdless = () => {
-    setWebauthnLogin({
-      prompt: '',
-      processing: true,
-    });
-
-    login({
+  const onLoginWithPasswordless = () => {
+    login('passwordless', {
       clusterUri,
-      passwordless: {
-        onSuccess: (
-          prompt: types.WebauthnLoginPrompt,
-          res: types.LoginPasswordlessResponse
-        ) => {
-          const newLogin: WebauthnLogin = {
-            prompt,
-            processing: false,
+      onPromptCallback: (prompt: types.WebauthnLoginPrompt) => {
+        const newLogin: WebauthnLogin = {
+          prompt: prompt.type,
+          processing: false,
+        };
+
+        if (prompt.type === 'pin') {
+          newLogin.onUserResponse = (pin: string) => {
+            setWebauthnLogin({
+              ...newLogin,
+              // prevent user from clicking on submit buttons more than once
+              processing: true,
+            });
+            prompt.onUserResponse(pin);
           };
+        }
 
-          if (res.writeToStream) {
-            newLogin.writeToStream = (req: types.LoginPasswordlessRequest) => {
-              setWebauthnLogin({
-                ...newLogin,
-                // prevent user from clicking on submit buttons more than once
-                processing: true,
-              });
-              res.writeToStream(req);
-            };
-          }
+        if (prompt.type === 'credential') {
+          newLogin.loginUsernames = prompt.data.credentials.map(
+            c => c.username
+          );
+          newLogin.onUserResponse = (index: number) => {
+            setWebauthnLogin({
+              ...newLogin,
+              // prevent user from clicking on submit buttons more than once
+              processing: true,
+            });
+            prompt.onUserResponse(index);
+          };
+        }
 
-          if (res.loginUsernames) {
-            newLogin.loginUsernames = res.loginUsernames;
-          }
-
-          setWebauthnLogin(newLogin);
-        },
+        setWebauthnLogin(newLogin);
       },
     });
   };
 
   const onLoginWithSso = (provider: types.AuthProvider) => {
     promptSsoStatus(true);
-    login({
+    login('sso', {
       clusterUri,
-      sso: {
-        providerName: provider.name,
-        providerType: provider.type,
-      },
+      providerName: provider.name,
+      providerType: provider.type,
     });
   };
 
@@ -143,7 +155,7 @@ export default function useClusterLogin(props: Props) {
 
   useEffect(() => {
     if (loginAttempt.status !== 'processing') {
-      setWebauthnLogin({ prompt: '' });
+      setWebauthnLogin(null);
       promptSsoStatus(false);
     }
 
@@ -158,7 +170,7 @@ export default function useClusterLogin(props: Props) {
     title: getClusterName(cluster),
     loggedInUserName,
     onLoginWithLocal,
-    onLoginWithPwdless,
+    onLoginWithPasswordless,
     onLoginWithSso,
     onCloseDialog,
     onAbort,
@@ -177,9 +189,9 @@ export type Props = {
 };
 
 export type WebauthnLogin = {
-  prompt: types.WebauthnLoginPrompt;
-  // The below three fields are only ever used for passwordless login flow.
+  prompt: types.WebauthnLoginPrompt['type'];
+  // The below fields are only ever used for passwordless login flow.
   processing?: boolean;
   loginUsernames?: string[];
-  writeToStream?(r: types.LoginPasswordlessRequest): void;
+  onUserResponse?(val: number | string): void;
 };

@@ -50,7 +50,7 @@ export default function LoginForm(props: Props) {
     webauthnLogin,
   } = props;
 
-  if (webauthnLogin.prompt !== '') {
+  if (webauthnLogin) {
     return <PromptWebauthn onCancel={onAbort} {...webauthnLogin} />;
   }
 
@@ -132,7 +132,7 @@ const SsoList = ({
 
 const Passwordless = ({
   loginAttempt,
-  onLoginWithPwdless,
+  onLoginWithPasswordless,
   autoFocus = false,
 }: Props) => (
   <Box data-testid="passwordless">
@@ -143,7 +143,7 @@ const Passwordless = ({
       borderRadius={2}
       borderColor="text.placeholder"
       width="100%"
-      onClick={onLoginWithPwdless}
+      onClick={onLoginWithPasswordless}
       disabled={loginAttempt.status === 'processing'}
       autoFocus={autoFocus}
     >
@@ -205,7 +205,7 @@ const LocalForm = ({
   return (
     <Validation>
       {({ validator }) => (
-        <Box>
+        <Box as="form">
           <FieldInput
             rule={requiredField('Username is required')}
             label="Username"
@@ -477,7 +477,7 @@ type Props = {
   loggedInUserName?: string;
   onAbort(): void;
   onLoginWithSso(provider: types.AuthProvider): void;
-  onLoginWithPwdless(): void;
+  onLoginWithPasswordless(): void;
   onLogin(
     username: string,
     password: string,

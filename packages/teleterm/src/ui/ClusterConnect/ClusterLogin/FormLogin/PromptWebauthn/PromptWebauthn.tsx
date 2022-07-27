@@ -53,7 +53,7 @@ function PromptTouch({ onCancel, prompt }: Props) {
 
 function PromptCredential({
   loginUsernames,
-  writeToStream,
+  onUserResponse,
   processing,
   onCancel,
 }: Props) {
@@ -99,7 +99,7 @@ function PromptCredential({
                   background: ${props => props.theme.colors.action.hover};
                 }
               `}
-              onClick={() => writeToStream({ usernameindex: index })}
+              onClick={() => onUserResponse(index)}
             >
               {username}
             </button>
@@ -111,7 +111,7 @@ function PromptCredential({
   );
 }
 
-function PromptPin({ onCancel, writeToStream, processing }: Props) {
+function PromptPin({ onCancel, onUserResponse, processing }: Props) {
   const [pin, setPin] = React.useState('');
 
   return (
@@ -120,7 +120,7 @@ function PromptPin({ onCancel, writeToStream, processing }: Props) {
         <form
           onSubmit={e => {
             e.preventDefault();
-            validator.validate() && writeToStream({ pin });
+            validator.validate() && onUserResponse(pin);
           }}
         >
           <Box>
@@ -137,7 +137,10 @@ function PromptPin({ onCancel, writeToStream, processing }: Props) {
           </Box>
           <ActionButtons
             onCancel={onCancel}
-            isDisabled={processing || pin.length === 0}
+            nextButton={{
+              isVisible: true,
+              isDisabled: processing || pin.length === 0,
+            }}
           />
         </form>
       )}
@@ -147,16 +150,14 @@ function PromptPin({ onCancel, writeToStream, processing }: Props) {
 
 function ActionButtons({
   onCancel,
-  isDisabled,
+  nextButton = { isVisible: false, isDisabled: false },
 }: {
   onCancel(): void;
-  // isDisabled is only used to disable "next" buttons
-  // so it will also be used as a flag to render a
-  // next button if this param is set.
-  isDisabled?: boolean;
+  nextButton?: {
+    isVisible: boolean;
+    isDisabled: boolean;
+  };
 }) {
-  const requiresNextBtn = isDisabled !== undefined;
-
   return (
     <Flex justifyContent="flex-end" mt={4}>
       <ButtonSecondary
@@ -164,18 +165,18 @@ function ActionButtons({
         width={80}
         size="small"
         onClick={onCancel}
-        mr={requiresNextBtn ? 3 : 0}
+        mr={nextButton.isVisible ? 3 : 0}
       >
         Cancel
       </ButtonSecondary>
       {/* The caller of this component needs to handle wrapping
       this in a <form> element to handle `onSubmit` event on enter key*/}
-      {requiresNextBtn && (
+      {nextButton.isVisible && (
         <ButtonPrimary
           type="submit"
           width={80}
           size="small"
-          disabled={isDisabled}
+          disabled={nextButton.isDisabled}
         >
           Next
         </ButtonPrimary>
