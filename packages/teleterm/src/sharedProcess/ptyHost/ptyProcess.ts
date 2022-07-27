@@ -52,7 +52,7 @@ export class PtyProcess extends EventEmitter implements IPtyProcess {
       name: 'xterm-color',
       // HOME should be always defined. But just in case it isn't let's use the cwd from process.
       // https://unix.stackexchange.com/questions/123858
-      cwd: this.options.cwd || getDefaultCwd(),
+      cwd: this.options.cwd || getDefaultCwd(this.options.env),
       env: this.options.env,
     });
 
@@ -188,9 +188,8 @@ async function getWorkingDirectory(pid: number): Promise<string> {
   }
 }
 
-function getDefaultCwd(): string {
-  const userDir =
-    process.platform === 'win32' ? process.env.USERPROFILE : process.env.HOME;
+function getDefaultCwd(env: Record<string, string>): string {
+  const userDir = process.platform === 'win32' ? env.USERPROFILE : env.HOME;
 
   return userDir || process.cwd();
 }
