@@ -23,10 +23,6 @@ test:
 build-teleport-oss:
 	$(MAKE) docker-build NPM_CMD=build-teleport-oss FROM=dist/teleport/ TO=dist/teleport
 
-.PHONY: build-teleport-e
-build-teleport-e:
-	$(MAKE) docker-build NPM_CMD=build-teleport-e FROM=dist/e/teleport/ TO=dist/e/teleport;
-
 .PHONY: build-teleport
 build-teleport:
 	$(MAKE) docker-build NPM_CMD=build-teleport FROM=dist/ TO=dist/;

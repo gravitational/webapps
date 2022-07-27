@@ -13,9 +13,6 @@ COPY packages/shared/package.json web-apps/packages/shared/
 COPY packages/teleport/package.json web-apps/packages/teleport/
 COPY packages/teleterm/package.json web-apps/packages/teleterm/
 
-# copy enterprise package.json files if present
-COPY README.md packages/webapps.e/telepor[t]/package.json web-apps/packages/webapps.e/teleport/
-
 # download and install npm dependencies
 WORKDIR web-apps
 RUN yarn install

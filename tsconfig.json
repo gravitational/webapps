@@ -12,8 +12,7 @@
       "design": ["packages/design/src/"],
       "teleport/*": ["packages/teleport/src/*"],
       "teleport": ["packages/teleport/src/"],
-      "teleterm/*": ["packages/teleterm/src/*"],
-      "e-teleport/*": ["packages/webapps.e/teleport/src/*"]
+      "teleterm/*": ["packages/teleterm/src/*"]
     },
     // Process & infer types from .js files.
     "allowJs": true,
