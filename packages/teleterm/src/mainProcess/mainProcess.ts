@@ -172,7 +172,7 @@ export default class MainProcess {
         role: 'help',
         submenu: [
           { label: 'Learn More', click: openDocsUrl },
-          { label: 'About', role: 'about' },
+          { label: 'About Teleport Connect', role: 'about' },
         ],
       },
     ];
