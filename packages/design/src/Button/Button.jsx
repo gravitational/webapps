@@ -62,7 +62,6 @@ const themedStyles = props => {
     '&:disabled': {
       background: kind === 'text' ? 'none' : colors.action.disabledBackground,
       color: colors.action.disabled,
-      cursor: "default"
     },
   };
 
@@ -160,10 +159,6 @@ const StyledButton = styled.button`
 
   &:active {
     opacity: 0.56;
-  }
-
-  &:active[disabled] {
-    opacity: 1;
   }
 
   ${themedStyles}

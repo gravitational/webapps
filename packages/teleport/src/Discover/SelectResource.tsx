@@ -17,10 +17,12 @@ import React, { useEffect, useState } from 'react';
 import { Cloud } from 'design/Icon';
 import SlideTabs from 'design/SlideTabs';
 import styled from 'styled-components';
-import { Image, Text, Box, ButtonPrimary, ButtonSecondary, Flex } from 'design';
-import Empty from 'teleport/components/Empty';
 
+import { Image, Text, Box, ButtonPrimary, ButtonSecondary, Flex } from 'design';
+
+import Empty from 'teleport/components/Empty';
 import cfg from 'teleport/config';
+
 import { resourceTypes } from './resource-lists';
 
 import applicationIcon from './assets/application.png';

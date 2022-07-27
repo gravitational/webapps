@@ -17,6 +17,7 @@
 import React from 'react';
 
 import { ButtonPrimary, ButtonSecondary, Text, Box } from 'design';
+
 import { LoginTrait } from './LoginTrait';
 
 import type { AgentStepProps, AgentStepComponent } from './types';
