@@ -16,7 +16,7 @@ import { WindowsManager } from 'teleterm/mainProcess/windowsManager';
 if (app.requestSingleInstanceLock()) {
   initializeApp();
 } else {
-  console.log('Attempted to open a second instance of the app.');
+  console.log('Attempted to open a second instance of the app, exiting.');
   // All windows will be closed immediately without asking the user,
   // and the before-quit and will-quit events will not be emitted.
   app.exit(1);
