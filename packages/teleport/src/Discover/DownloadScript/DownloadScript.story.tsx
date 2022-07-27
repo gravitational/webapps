@@ -41,8 +41,6 @@ const props: State = {
     statusText: '',
   },
   nextStep: () => null,
-  confirmExit: false,
-  toggleConfirmExit: () => null,
   joinToken: {
     id: 'some-join-token-hash',
     expiryText: '4 hours',
