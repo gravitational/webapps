@@ -7,8 +7,8 @@
     <key>com.apple.security.cs.allow-jit</key>
     <true/>
 
-    <!-- All three keys must be identical to those in tsh.app so that Connect has access to the same
-    Touch ID credentials as tsh.app. -->
+    <!-- com.apple.developer.team-identifier and keychain-access-groups must match those in tsh.app
+      so that Connect has access to the same Secure Enclave keys as tsh.app. -->
     <key>com.apple.developer.team-identifier</key>
     <string>QH8AA5B8UP</string>
     <key>com.apple.application-identifier</key>
