@@ -34,8 +34,8 @@ function SlideTabs({
       <TabNav appearance={appearance} size={size}>
         {tabs.map((tabData, tabIndex) => {
           const tabDataType = typeof tabData === 'string';
-          let tabName = tabDataType ? tabData : tabData.name;
-          let tabContent = tabDataType ? tabData : tabData.component;
+          const tabName = tabDataType ? tabData : tabData.name;
+          const tabContent = tabDataType ? tabData : tabData.component;
           return (
             <TabLabel
               htmlFor={`${name}-${tabName}`}
