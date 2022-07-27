@@ -18,8 +18,8 @@ import React from 'react';
 import { throttle } from 'lodash';
 import Logger from 'shared/libs/logger';
 import session from 'teleport/services/websession';
-import history from 'teleport/services/history';
 import localStorage from 'teleport/services/localStorage';
+import ssoLogin from 'teleport/Login/ssoLogin';
 
 const logger = Logger.create('/components/Authenticated');
 const ACTIVITY_CHECKER_INTERVAL_MS = 30 * 1000;
@@ -42,7 +42,7 @@ const Authenticated: React.FC = ({ children }) => {
     if (!session.isValid()) {
       logger.warn('invalid session');
       session.clear();
-      history.goToLogin(true);
+      ssoLogin();
       return;
     }
 

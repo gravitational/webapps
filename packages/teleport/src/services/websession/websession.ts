@@ -21,6 +21,8 @@ import api from 'teleport/services/api';
 import localStorage, { KeysEnum } from 'teleport/services/localStorage';
 import makeBearerToken from './makeBearerToken';
 import { RenewSessionRequest } from './types';
+import ssoLogin from 'teleport/Login/ssoLogin';
+
 
 // Time to determine when to renew session which is
 // when expiry time of token is less than 3 minutes.
@@ -33,7 +35,7 @@ let sesstionCheckerTimerId = null;
 const session = {
   logout() {
     api.delete(cfg.api.sessionPath).finally(() => {
-      history.goToLogin();
+      ssoLogin()
     });
 
     this.clear();
