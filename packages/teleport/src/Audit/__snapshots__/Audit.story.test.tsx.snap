@@ -3233,7 +3233,7 @@ exports[`list of all events 1`] = `
         <td
           style="word-break: break-word;"
         >
-          User [root] failed to create symbolic link [/tmp/file] on node [[::1]:3022]
+          User [root] failed to create symbolic link [/tmp/file] on node [[::1]:3022]: [EOF]
         </td>
         <td
           style="min-width: 120px;"
@@ -3307,7 +3307,7 @@ exports[`list of all events 1`] = `
         <td
           style="word-break: break-word;"
         >
-          User [root] failed to read symbolic link [/tmp/file] on node [[::1]:3022]
+          User [root] failed to read symbolic link [/tmp/file] on node [[::1]:3022]: [EOF]
         </td>
         <td
           style="min-width: 120px;"
@@ -3381,7 +3381,7 @@ exports[`list of all events 1`] = `
         <td
           style="word-break: break-word;"
         >
-          User [root] failed to rename file [/tmp/file] on node [[::1]:3022]
+          User [root] failed to rename file [/tmp/file] on node [[::1]:3022]: [EOF]
         </td>
         <td
           style="min-width: 120px;"
@@ -3455,7 +3455,7 @@ exports[`list of all events 1`] = `
         <td
           style="word-break: break-word;"
         >
-          User [root] failed to query attributes of file [/tmp/file] on node [[::1]:3022]
+          User [root] failed to query attributes of file [/tmp/file] on node [[::1]:3022]: [EOF]
         </td>
         <td
           style="min-width: 120px;"
@@ -3529,7 +3529,7 @@ exports[`list of all events 1`] = `
         <td
           style="word-break: break-word;"
         >
-          User [root] failed to query absolute path of file [/tmp/file] on node [[::1]:3022]
+          User [root] failed to query absolute path of file [/tmp/file] on node [[::1]:3022]: [EOF]
         </td>
         <td
           style="min-width: 120px;"
@@ -3603,7 +3603,7 @@ exports[`list of all events 1`] = `
         <td
           style="word-break: break-word;"
         >
-          User [root] failed to remove directory [/tmp/file] on node [[::1]:3022]
+          User [root] failed to remove directory [/tmp/file] on node [[::1]:3022]: [EOF]
         </td>
         <td
           style="min-width: 120px;"
@@ -3677,7 +3677,7 @@ exports[`list of all events 1`] = `
         <td
           style="word-break: break-word;"
         >
-          User [root] failed to create directory [/tmp/file] on node [[::1]:3022]
+          User [root] failed to create directory [/tmp/file] on node [[::1]:3022]: [EOF]
         </td>
         <td
           style="min-width: 120px;"
@@ -3751,7 +3751,7 @@ exports[`list of all events 1`] = `
         <td
           style="word-break: break-word;"
         >
-          User [root] failed to remove file [/tmp/file] on node [[::1]:3022]
+          User [root] failed to remove file [/tmp/file] on node [[::1]:3022]: [EOF]
         </td>
         <td
           style="min-width: 120px;"
@@ -3825,7 +3825,7 @@ exports[`list of all events 1`] = `
         <td
           style="word-break: break-word;"
         >
-          User [root] failed to read directory [/tmp/file] on node [[::1]:3022]
+          User [root] failed to read directory [/tmp/file] on node [[::1]:3022]: [EOF]
         </td>
         <td
           style="min-width: 120px;"
@@ -3899,7 +3899,7 @@ exports[`list of all events 1`] = `
         <td
           style="word-break: break-word;"
         >
-          User [root] failed to open directory [/tmp/file] on node [[::1]:3022]
+          User [root] failed to open directory [/tmp/file] on node [[::1]:3022]: [EOF]
         </td>
         <td
           style="min-width: 120px;"
@@ -3973,7 +3973,7 @@ exports[`list of all events 1`] = `
         <td
           style="word-break: break-word;"
         >
-          User [root] failed to change attributes of file [/tmp/file] on node [[::1]:3022]
+          User [root] failed to change attributes of file [/tmp/file] on node [[::1]:3022]: [EOF]
         </td>
         <td
           style="min-width: 120px;"
@@ -4047,7 +4047,7 @@ exports[`list of all events 1`] = `
         <td
           style="word-break: break-word;"
         >
-          User [root] failed to change attributes of file [/tmp/file] on node [[::1]:3022]
+          User [root] failed to change attributes of file [/tmp/file] on node [[::1]:3022]: [EOF]
         </td>
         <td
           style="min-width: 120px;"
@@ -4121,7 +4121,7 @@ exports[`list of all events 1`] = `
         <td
           style="word-break: break-word;"
         >
-          User [root] failed to query attributes of file [/tmp/file] on node [[::1]:3022]
+          User [root] failed to query attributes of file [/tmp/file] on node [[::1]:3022]: [EOF]
         </td>
         <td
           style="min-width: 120px;"

@@ -996,6 +996,7 @@ type RawEventSFTP<T extends EventCode> = RawEvent<
   T,
   {
     path: string;
+    error: string;
     ['addr.local']: string;
   }
 >;

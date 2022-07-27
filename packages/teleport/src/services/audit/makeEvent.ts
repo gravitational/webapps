@@ -213,8 +213,8 @@ export const formatters: Formatters = {
   [eventCodes.SFTP_OPEN_FAILURE]: {
     type: 'sftp',
     desc: 'SFTP Open Failed',
-    format: ({ user, path, ...rest }) =>
-      `User [${user}] failed to open file [${path}] on node [${rest['addr.local']}]`,
+    format: ({ user, path, error, ...rest }) =>
+      `User [${user}] failed to open file [${path}] on node [${rest['addr.local']}]: [${error}]`,
   },
   [eventCodes.SFTP_CLOSE]: {
     type: 'sftp',
@@ -225,8 +225,8 @@ export const formatters: Formatters = {
   [eventCodes.SFTP_CLOSE_FAILURE]: {
     type: 'sftp',
     desc: 'SFTP Close Failed',
-    format: ({ user, path, ...rest }) =>
-      `User [${user}] failed to close file [${path}] on node [${rest['addr.local']}]`,
+    format: ({ user, path, error, ...rest }) =>
+      `User [${user}] failed to close file [${path}] on node [${rest['addr.local']}]: [${error}]`,
   },
   [eventCodes.SFTP_READ]: {
     type: 'sftp',
@@ -237,8 +237,8 @@ export const formatters: Formatters = {
   [eventCodes.SFTP_READ_FAILURE]: {
     type: 'sftp',
     desc: 'SFTP Read Failed',
-    format: ({ user, path, ...rest }) =>
-      `User [${user}] failed to read from file [${path}] on node [${rest['addr.local']}]`,
+    format: ({ user, path, error, ...rest }) =>
+      `User [${user}] failed to read from file [${path}] on node [${rest['addr.local']}]: [${error}]`,
   },
   [eventCodes.SFTP_WRITE]: {
     type: 'sftp',
@@ -249,8 +249,8 @@ export const formatters: Formatters = {
   [eventCodes.SFTP_WRITE_FAILURE]: {
     type: 'sftp',
     desc: 'SFTP Write Failed',
-    format: ({ user, path, ...rest }) =>
-      `User [${user}] failed to write to file [${path}] on node [${rest['addr.local']}]`,
+    format: ({ user, path, error, ...rest }) =>
+      `User [${user}] failed to write to file [${path}] on node [${rest['addr.local']}]: [${error}]`,
   },
   [eventCodes.SFTP_LSTAT]: {
     type: 'sftp',
@@ -261,8 +261,8 @@ export const formatters: Formatters = {
   [eventCodes.SFTP_LSTAT_FAILURE]: {
     type: 'sftp',
     desc: 'SFTP Lstat Failed',
-    format: ({ user, path, ...rest }) =>
-      `User [${user}] failed to query attributes of file [${path}] on node [${rest['addr.local']}]`,
+    format: ({ user, path, error, ...rest }) =>
+      `User [${user}] failed to query attributes of file [${path}] on node [${rest['addr.local']}]: [${error}]`,
   },
   [eventCodes.SFTP_FSTAT]: {
     type: 'sftp',
@@ -273,8 +273,8 @@ export const formatters: Formatters = {
   [eventCodes.SFTP_FSTAT_FAILURE]: {
     type: 'sftp',
     desc: 'SFTP Fstat Failed',
-    format: ({ user, path, ...rest }) =>
-      `User [${user}] failed to query attributes of file [${path}] on node [${rest['addr.local']}]`,
+    format: ({ user, path, error, ...rest }) =>
+      `User [${user}] failed to query attributes of file [${path}] on node [${rest['addr.local']}]: [${error}]`,
   },
   [eventCodes.SFTP_SETSTAT]: {
     type: 'sftp',
@@ -285,8 +285,8 @@ export const formatters: Formatters = {
   [eventCodes.SFTP_SETSTAT_FAILURE]: {
     type: 'sftp',
     desc: 'SFTP Setstat Failed',
-    format: ({ user, path, ...rest }) =>
-      `User [${user}] failed to change attributes of file [${path}] on node [${rest['addr.local']}]`,
+    format: ({ user, path, error, ...rest }) =>
+      `User [${user}] failed to change attributes of file [${path}] on node [${rest['addr.local']}]: [${error}]`,
   },
   [eventCodes.SFTP_FSETSTAT]: {
     type: 'sftp',
@@ -297,8 +297,8 @@ export const formatters: Formatters = {
   [eventCodes.SFTP_FSETSTAT_FAILURE]: {
     type: 'sftp',
     desc: 'SFTP Fsetstat Failed',
-    format: ({ user, path, ...rest }) =>
-      `User [${user}] failed to change attributes of file [${path}] on node [${rest['addr.local']}]`,
+    format: ({ user, path, error, ...rest }) =>
+      `User [${user}] failed to change attributes of file [${path}] on node [${rest['addr.local']}]: [${error}]`,
   },
   [eventCodes.SFTP_OPENDIR]: {
     type: 'sftp',
@@ -309,8 +309,8 @@ export const formatters: Formatters = {
   [eventCodes.SFTP_OPENDIR_FAILURE]: {
     type: 'sftp',
     desc: 'SFTP Opendir Failed',
-    format: ({ user, path, ...rest }) =>
-      `User [${user}] failed to open directory [${path}] on node [${rest['addr.local']}]`,
+    format: ({ user, path, error, ...rest }) =>
+      `User [${user}] failed to open directory [${path}] on node [${rest['addr.local']}]: [${error}]`,
   },
   [eventCodes.SFTP_READDIR]: {
     type: 'sftp',
@@ -321,8 +321,8 @@ export const formatters: Formatters = {
   [eventCodes.SFTP_READDIR_FAILURE]: {
     type: 'sftp',
     desc: 'SFTP Readdir Failed',
-    format: ({ user, path, ...rest }) =>
-      `User [${user}] failed to read directory [${path}] on node [${rest['addr.local']}]`,
+    format: ({ user, path, error, ...rest }) =>
+      `User [${user}] failed to read directory [${path}] on node [${rest['addr.local']}]: [${error}]`,
   },
   [eventCodes.SFTP_REMOVE]: {
     type: 'sftp',
@@ -333,8 +333,8 @@ export const formatters: Formatters = {
   [eventCodes.SFTP_REMOVE_FAILURE]: {
     type: 'sftp',
     desc: 'SFTP Remove Failed',
-    format: ({ user, path, ...rest }) =>
-      `User [${user}] failed to remove file [${path}] on node [${rest['addr.local']}]`,
+    format: ({ user, path, error, ...rest }) =>
+      `User [${user}] failed to remove file [${path}] on node [${rest['addr.local']}]: [${error}]`,
   },
   [eventCodes.SFTP_MKDIR]: {
     type: 'sftp',
@@ -345,8 +345,8 @@ export const formatters: Formatters = {
   [eventCodes.SFTP_MKDIR_FAILURE]: {
     type: 'sftp',
     desc: 'SFTP Mkdir Failed',
-    format: ({ user, path, ...rest }) =>
-      `User [${user}] failed to create directory [${path}] on node [${rest['addr.local']}]`,
+    format: ({ user, path, error, ...rest }) =>
+      `User [${user}] failed to create directory [${path}] on node [${rest['addr.local']}]: [${error}]`,
   },
   [eventCodes.SFTP_RMDIR]: {
     type: 'sftp',
@@ -357,8 +357,8 @@ export const formatters: Formatters = {
   [eventCodes.SFTP_RMDIR_FAILURE]: {
     type: 'sftp',
     desc: 'SFTP Rmdir Failed',
-    format: ({ user, path, ...rest }) =>
-      `User [${user}] failed to remove directory [${path}] on node [${rest['addr.local']}]`,
+    format: ({ user, path, error, ...rest }) =>
+      `User [${user}] failed to remove directory [${path}] on node [${rest['addr.local']}]: [${error}]`,
   },
   [eventCodes.SFTP_REALPATH]: {
     type: 'sftp',
@@ -369,8 +369,8 @@ export const formatters: Formatters = {
   [eventCodes.SFTP_REALPATH_FAILURE]: {
     type: 'sftp',
     desc: 'SFTP Realpath Failed',
-    format: ({ user, path, ...rest }) =>
-      `User [${user}] failed to query absolute path of file [${path}] on node [${rest['addr.local']}]`,
+    format: ({ user, path, error, ...rest }) =>
+      `User [${user}] failed to query absolute path of file [${path}] on node [${rest['addr.local']}]: [${error}]`,
   },
   [eventCodes.SFTP_STAT]: {
     type: 'sftp',
@@ -381,8 +381,8 @@ export const formatters: Formatters = {
   [eventCodes.SFTP_STAT_FAILURE]: {
     type: 'sftp',
     desc: 'SFTP Stat Failed',
-    format: ({ user, path, ...rest }) =>
-      `User [${user}] failed to query attributes of file [${path}] on node [${rest['addr.local']}]`,
+    format: ({ user, path, error, ...rest }) =>
+      `User [${user}] failed to query attributes of file [${path}] on node [${rest['addr.local']}]: [${error}]`,
   },
   [eventCodes.SFTP_RENAME]: {
     type: 'sftp',
@@ -393,8 +393,8 @@ export const formatters: Formatters = {
   [eventCodes.SFTP_RENAME_FAILURE]: {
     type: 'sftp',
     desc: 'SFTP Rename Failed',
-    format: ({ user, path, ...rest }) =>
-      `User [${user}] failed to rename file [${path}] on node [${rest['addr.local']}]`,
+    format: ({ user, path, error, ...rest }) =>
+      `User [${user}] failed to rename file [${path}] on node [${rest['addr.local']}]: [${error}]`,
   },
   [eventCodes.SFTP_READLINK]: {
     type: 'sftp',
@@ -405,8 +405,8 @@ export const formatters: Formatters = {
   [eventCodes.SFTP_READLINK_FAILURE]: {
     type: 'sftp',
     desc: 'SFTP Readlink Failed',
-    format: ({ user, path, ...rest }) =>
-      `User [${user}] failed to read symbolic link [${path}] on node [${rest['addr.local']}]`,
+    format: ({ user, path, error, ...rest }) =>
+      `User [${user}] failed to read symbolic link [${path}] on node [${rest['addr.local']}]: [${error}]`,
   },
   [eventCodes.SFTP_SYMLINK]: {
     type: 'sftp',
@@ -417,8 +417,8 @@ export const formatters: Formatters = {
   [eventCodes.SFTP_SYMLINK_FAILURE]: {
     type: 'sftp',
     desc: 'SFTP Symlink Failed',
-    format: ({ user, path, ...rest }) =>
-      `User [${user}] failed to create symbolic link [${path}] on node [${rest['addr.local']}]`,
+    format: ({ user, path, error, ...rest }) =>
+      `User [${user}] failed to create symbolic link [${path}] on node [${rest['addr.local']}]: [${error}]`,
   },
   [eventCodes.SESSION_JOIN]: {
     type: 'session.join',
