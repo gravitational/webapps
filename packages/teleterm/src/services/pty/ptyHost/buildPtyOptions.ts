@@ -1,10 +1,14 @@
+import { delimiter } from 'path';
+
 import { RuntimeSettings } from 'teleterm/mainProcess/types';
 import { PtyProcessOptions } from 'teleterm/sharedProcess/ptyHost';
+
+import { PtyCommand, PtyProcessCreationStatus } from '../types';
+
 import {
   resolveShellEnvCached,
   ResolveShellEnvTimeoutError,
 } from './resolveShellEnv';
-import { PtyCommand, PtyProcessCreationStatus } from '../types';
 
 export async function buildPtyOptions(
   settings: RuntimeSettings,
@@ -105,13 +109,9 @@ function prependBinDirToPath(
   env: typeof process.env,
   settings: RuntimeSettings
 ): void {
-  let path: string = env['PATH'] || '';
-
-  if (!path.trim()) {
-    path = settings.binDir;
-  } else {
-    path = settings.binDir + ':' + path;
-  }
-
-  env['PATH'] = path;
+  const pathName = settings.platform === 'win32' ? 'Path' : 'PATH';
+  env[pathName] = [settings.binDir, env[pathName]]
+    .map(path => path?.trim())
+    .filter(Boolean)
+    .join(delimiter);
 }
