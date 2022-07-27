@@ -14,8 +14,9 @@
  * limitations under the License.
  */
 
-import user from './user';
 import api from 'teleport/services/api';
+
+import user from './user';
 
 test('undefined values in context response gives proper default values', async () => {
   const mockContext = {
@@ -186,6 +187,20 @@ test('fetch users, null response values gives empty array', async () => {
 
   response = await user.fetchUsers();
   expect(response).toStrictEqual([
-    { authType: '', isLocal: false, name: '', roles: [] },
+    {
+      authType: '',
+      isLocal: false,
+      name: '',
+      roles: [],
+      traits: {
+        awsRoleArns: [],
+        databaseNames: [],
+        databaseUsers: [],
+        kubeGroups: [],
+        kubeUsers: [],
+        logins: [],
+        windowsLogins: [],
+      },
+    },
   ]);
 });
