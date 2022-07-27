@@ -27,8 +27,31 @@ import cfg from 'teleport/config';
 
 import { useDiscoverContext } from './discoverContextProvider';
 import { useDiscover, State, AgentStep } from './useDiscover';
-import { agentStepTitles, agentViews } from './AgentConnect';
+
 import { SelectResource } from './SelectResource';
+import { DownloadScript } from './DownloadScript';
+import { LoginTrait } from './LoginTrait';
+
+import type { AgentKind } from './useDiscover';
+import type { AgentStepComponent } from './types';
+
+// agentStepTitles defines the titles per steps defined by enum `AgentStep`.
+// We use the enum `AgentStep` numerical values to access the list's value,
+// so this list's order and length must be equal to the enum.
+export const agentStepTitles: string[] = [
+  'Select Resource Type',
+  'Configure Resource',
+  'Configure Role',
+  'Test Connection',
+];
+
+export const agentViews: Record<AgentKind, AgentStepComponent[]> = {
+  app: [],
+  db: [],
+  desktop: [],
+  kube: [],
+  node: [SelectResource, DownloadScript, LoginTrait],
+};
 
 export default function Container() {
   const ctx = useDiscoverContext();
@@ -41,15 +64,16 @@ export function Discover({
   initAttempt,
   username,
   currentStep,
-  selectedAgentKind,
+  selectedAgentKind = 'node',
   logout,
   onSelectResource,
   ...agentProps
 }: State) {
   let AgentComponent;
-  // if (selectedAgentKind) {
-  //   AgentComponent = agentViews[selectedAgentKind][currentStep];
-  // }
+  console.log(selectedAgentKind, currentStep);
+  if (selectedAgentKind) {
+    AgentComponent = agentViews[selectedAgentKind][currentStep];
+  }
 
   return (
     <MainContainer>
@@ -67,9 +91,6 @@ export function Discover({
           <Flex p={5} alignItems="flex-start">
             <SideNavAgentConnect currentStep={currentStep} />
             <Box width="100%" height="100%" minWidth="0">
-              {currentStep === AgentStep.Select && (
-                <SelectResource onSelect={onSelectResource} />
-              )}
               {AgentComponent && <AgentComponent {...agentProps} />}
             </Box>
           </Flex>
