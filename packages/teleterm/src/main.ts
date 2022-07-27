@@ -11,7 +11,6 @@ import Logger from 'teleterm/logger';
 import * as types from 'teleterm/types';
 import { ConfigServiceImpl } from 'teleterm/services/config';
 import { createFileStorage } from 'teleterm/services/fileStorage';
-import fs from 'fs';
 import path from 'path';
 import { WindowsManager } from 'teleterm/mainProcess/windowsManager';
 
@@ -67,6 +66,7 @@ app.whenReady().then(() => {
 
   installWebHandler({
     protocol,
+    logger,
   });
 
   windowsManager.createWindow();

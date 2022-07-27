@@ -1,35 +1,35 @@
-import type {
-  protocol as ElectronProtocol,
-  ProtocolRequest,
-  ProtocolResponse,
-} from 'electron';
+import type { protocol as ElectronProtocol } from 'electron';
 import * as path from 'path';
 import fs from 'fs';
 
-type CallbackType = (response: string | ProtocolResponse) => void;
+import { Logger } from 'teleterm/types';
 
-function _disabledHandler(
-  _request: ProtocolRequest,
-  callback: CallbackType
-): void {
-  callback({ error: -3 });
-}
+const disabledSchemes = [
+  'about',
+  'content',
+  'chrome',
+  'cid',
+  'data',
+  'filesystem',
+  'ftp',
+  'gopher',
+  'javascript',
+  'mailto',
+];
 
 export function installWebHandler({
   protocol,
+  logger,
 }: {
   protocol: typeof ElectronProtocol;
+  logger: Logger;
 }): void {
-  protocol.interceptFileProtocol('about', _disabledHandler);
-  protocol.interceptFileProtocol('content', _disabledHandler);
-  protocol.interceptFileProtocol('chrome', _disabledHandler);
-  protocol.interceptFileProtocol('cid', _disabledHandler);
-  protocol.interceptFileProtocol('data', _disabledHandler);
-  protocol.interceptFileProtocol('filesystem', _disabledHandler);
-  protocol.interceptFileProtocol('ftp', _disabledHandler);
-  protocol.interceptFileProtocol('gopher', _disabledHandler);
-  protocol.interceptFileProtocol('javascript', _disabledHandler);
-  protocol.interceptFileProtocol('mailto', _disabledHandler);
+  disabledSchemes.forEach(scheme => {
+    protocol.interceptFileProtocol(scheme, (_request, callback) => {
+      logger.error(`Denying request: Invalid scheme (${scheme})`);
+      callback({ error: -3 });
+    });
+  });
 }
 
 function eliminateAllAfterCharacter(string, character) {
@@ -58,21 +58,12 @@ function urlToPath(targetUrl, { isWin }) {
 export function interceptFileProtocol({
   protocol,
   isWin,
-  installPath: installPathWithCasing,
+  installPath,
   logger,
 }) {
   protocol.interceptFileProtocol('file', (request, callback) => {
     const target = path.normalize(urlToPath(request.url, { isWin }));
-    const realPathWithCasing = fs.existsSync(target)
-      ? fs.realpathSync(target)
-      : target;
-    // normalize casing across windows (case-insensitive) and unix (case-sensitive)
-    const realPath = isWin
-      ? realPathWithCasing.toLowerCase()
-      : realPathWithCasing;
-    const installPath = isWin
-      ? installPathWithCasing.toLowerCase()
-      : installPathWithCasing;
+    const realPath = fs.existsSync(target) ? fs.realpathSync(target) : target;
 
     if (!path.isAbsolute(realPath)) {
       logger.error(`Denying request to non-absolute path '${realPath}'`);
