@@ -18,9 +18,13 @@ import React from 'react';
 import styled from 'styled-components';
 import { Flex, ButtonPrimary, ButtonSecondary, Text, Box } from 'design';
 import * as Icons from 'design/Icon';
+
+import { LoginTrait } from './LoginTrait';
+
+import { DownloadScript } from './DownloadScript';
+
 import type { AgentStepProps, AgentStepComponent } from './types';
 import type { AgentKind } from './useDiscover';
-import { LoginTrait } from './LoginTrait';
 
 // agentStepTitles defines the titles per steps defined by enum `AgentStep`.
 //
@@ -28,7 +32,7 @@ import { LoginTrait } from './LoginTrait';
 // so this list's order and length must be equal to the enum.
 export const agentStepTitles: string[] = [
   'Select Resource Type',
-  'Set up Teleport Agent',
+  'Configure Resource',
   'Configure Role',
   'Test Connection',
 ];
@@ -43,7 +47,7 @@ export const agentViews: Record<AgentKind, AgentStepComponent[]> = {
   db: [],
   desktop: [],
   kube: [],
-  node: [GatherReqsNode, InstallTeleport, RoleConfig],
+  node: [GatherReqsNode, DownloadScript, LoginTrait, InstallTeleport],
 };
 
 export function SelectAgent(props) {
