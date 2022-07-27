@@ -19,10 +19,12 @@ import styled from 'styled-components';
 import { Flex, ButtonPrimary, ButtonSecondary, Text, Box } from 'design';
 import * as Icons from 'design/Icon';
 
+import { LoginTrait } from './LoginTrait';
+
+import { DownloadScript } from './DownloadScript';
+
 import type { AgentStepProps, AgentStepComponent } from './types';
 import type { AgentKind } from './useDiscover';
-import { LoginTrait } from './LoginTrait';
-import { DownloadScript } from './DownloadScript';
 
 // agentStepTitles defines the titles per steps defined by enum `AgentStep`.
 //

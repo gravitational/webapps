@@ -16,9 +16,11 @@
 
 import { useState, useEffect } from 'react';
 import useAttempt from 'shared/hooks/useAttemptNext';
-import type { JoinToken } from 'teleport/services/joinToken';
+
 import { DiscoverContext } from '../discoverContext';
 import { AgentStepProps } from '../types';
+
+import type { JoinToken } from 'teleport/services/joinToken';
 
 export function useDownloadScript({ ctx, props }: Props) {
   const { attempt, run } = useAttempt('');

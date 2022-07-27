@@ -17,13 +17,18 @@
 import React from 'react';
 import { Text, Box, Indicator } from 'design';
 import { Danger } from 'design/Alert';
+
 import cfg from 'teleport/config';
 import TextSelectCopy from 'teleport/components/TextSelectCopy';
+
 import { useDiscoverContext } from '../discoverContextProvider';
 import { AgentStepProps } from '../types';
-import { useDownloadScript } from './useDownloadScript';
-import type { State } from './useDownloadScript';
+
 import { Header, ActionButtons } from '../Shared';
+
+import { useDownloadScript } from './useDownloadScript';
+
+import type { State } from './useDownloadScript';
 
 export default function Container(props: AgentStepProps) {
   const ctx = useDiscoverContext();

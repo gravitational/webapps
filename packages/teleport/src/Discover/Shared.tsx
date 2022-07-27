@@ -23,6 +23,7 @@ import Dialog, {
   DialogHeader,
   DialogTitle,
 } from 'design/Dialog';
+
 import cfg from 'teleport/config';
 import history from 'teleport/services/history';
 

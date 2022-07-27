@@ -16,6 +16,7 @@
 
 import React from 'react';
 import { render } from 'design/utils/testing';
+
 import { Loaded, Failed } from './DownloadScript.story';
 
 test('loaded', () => {
