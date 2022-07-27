@@ -25,7 +25,8 @@ import { MenuItem, MenuItemIcon } from 'shared/components/MenuAction';
 import cfg from 'teleport/config';
 import { useDiscoverContext } from './discoverContextProvider';
 import { useDiscover, State, AgentStep } from './useDiscover';
-import { agentStepTitles, agentViews, SelectAgent } from './AgentConnect';
+import { agentStepTitles, agentViews } from './AgentConnect';
+import { SelectResource } from './SelectResource';
 
 export default function Container() {
   const ctx = useDiscoverContext();
@@ -44,9 +45,9 @@ export function Discover({
   ...agentProps
 }: State) {
   let AgentComponent;
-  if (selectedAgentKind) {
-    AgentComponent = agentViews[selectedAgentKind][currentStep];
-  }
+  // if (selectedAgentKind) {
+  //   AgentComponent = agentViews[selectedAgentKind][currentStep];
+  // }
 
   return (
     <MainContainer>
@@ -65,10 +66,7 @@ export function Discover({
             <SideNavAgentConnect currentStep={currentStep} />
             <Box width="100%" height="100%" minWidth="0">
               {currentStep === AgentStep.Select && (
-                <SelectAgent
-                  onClick={onSelectResource}
-                  agentKind={selectedAgentKind}
-                />
+                <SelectResource onSelect={onSelectResource} />
               )}
               {AgentComponent && <AgentComponent {...agentProps} />}
             </Box>
