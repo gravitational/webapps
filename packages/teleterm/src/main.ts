@@ -2,10 +2,7 @@ import { spawn } from 'child_process';
 import { app, globalShortcut, shell, protocol } from 'electron';
 import MainProcess from 'teleterm/mainProcess';
 import { getRuntimeSettings } from 'teleterm/mainProcess/runtimeSettings';
-import {
-  installWebHandler,
-  interceptFileProtocol,
-} from 'teleterm/mainProcess/protocolHandler';
+import { enableWebHandlerProtection } from 'teleterm/mainProcess/protocolHandler';
 import createLoggerService from 'teleterm/services/logger';
 import Logger from 'teleterm/logger';
 import * as types from 'teleterm/types';
@@ -62,12 +59,7 @@ app.whenReady().then(() => {
   const isWin = mainProcess.settings.platform === 'win32';
 
   const installPath = app.getAppPath();
-  interceptFileProtocol({ protocol, isWin, installPath, logger });
-
-  installWebHandler({
-    protocol,
-    logger,
-  });
+  enableWebHandlerProtection({ installPath });
 
   windowsManager.createWindow();
 });
