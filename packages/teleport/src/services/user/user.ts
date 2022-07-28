@@ -16,6 +16,7 @@ limitations under the License.
 
 import api from 'teleport/services/api';
 import cfg from 'teleport/config';
+
 import makeUserContext from './makeUserContext';
 import makeResetToken from './makeResetToken';
 import makeUser, { makeUsers } from './makeUser';
@@ -40,6 +41,10 @@ const service = {
       });
   },
 
+  fetchUser(username: string) {
+    return api.get(cfg.getUserWithUsernameUrl(username)).then(makeUser);
+  },
+
   fetchUsers() {
     return api.get(cfg.getUsersUrl()).then(makeUsers);
   },
@@ -59,7 +64,7 @@ const service = {
   },
 
   deleteUser(name: string) {
-    return api.delete(cfg.getUsersDeleteUrl(name));
+    return api.delete(cfg.getUserWithUsernameUrl(name));
   },
 };
 

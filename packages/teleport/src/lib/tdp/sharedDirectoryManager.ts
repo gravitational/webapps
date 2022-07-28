@@ -13,7 +13,7 @@
 // limitations under the License.
 
 // SharedDirectoryManager manages a FileSystemDirectoryHandle for use
-// by the TDP client. Most of it's methods can potentially throw errors
+// by the TDP client. Most of its methods can potentially throw errors
 // and so should be wrapped in try/catch blocks.
 export class SharedDirectoryManager {
   private dir: FileSystemDirectoryHandle | undefined;
@@ -190,7 +190,9 @@ export class SharedDirectoryManager {
     return walkIt(this.dir, path);
   }
 
-  // @throws Will throw an error if a directory has not already been initialized via add().
+  /**
+   * @throws Will throw an error if a directory has not already been initialized via add().
+   */
   private checkReady() {
     if (!this.dir) {
       throw new Error(
