@@ -15,8 +15,10 @@
  */
 
 import React from 'react';
-import SlideTabs from './SlideTabs';
+
 import { render, fireEvent } from 'design/utils/testing';
+
+import SlideTabs from './SlideTabs';
 
 describe('design/SlideTabs', () => {
   it('renders the supplied number of tabs(3)', () => {
@@ -61,5 +63,49 @@ describe('design/SlideTabs', () => {
     // component is initially rendered it selects the first tab which is in
     // index 0 and calls the callback as such.
     expect(cb.mock.calls).toEqual([[0], [2]]);
+  });
+
+  it('supports a square xlarge appearance (default)', () => {
+    const { container } = render(
+      <SlideTabs
+        tabs={['aws', 'automatically', 'manually']}
+        onChange={() => {}}
+      />
+    );
+    expect(container.firstChild).toMatchSnapshot();
+  });
+
+  it('supports a round xlarge appearance', () => {
+    const { container } = render(
+      <SlideTabs
+        appearance="round"
+        tabs={['aws', 'automatically', 'manually']}
+        onChange={() => {}}
+      />
+    );
+    expect(container.firstChild).toMatchSnapshot();
+  });
+
+  it('supports a square medium size', () => {
+    const { container } = render(
+      <SlideTabs
+        size="medium"
+        tabs={['aws', 'automatically', 'manually']}
+        onChange={() => {}}
+      />
+    );
+    expect(container.firstChild).toMatchSnapshot();
+  });
+
+  it('supports a round medium size', () => {
+    const { container } = render(
+      <SlideTabs
+        size="medium"
+        appearance="round"
+        tabs={['aws', 'automatically', 'manually']}
+        onChange={() => {}}
+      />
+    );
+    expect(container.firstChild).toMatchSnapshot();
   });
 });
