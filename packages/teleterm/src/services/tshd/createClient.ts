@@ -288,7 +288,7 @@ export default function createClient(
       });
     },
 
-    async setGatewayLocalPort(gatewayUri = '', localPort = '') {
+    async setGatewayLocalPort(gatewayUri: string, localPort: string) {
       const req = new api.SetGatewayLocalPortRequest()
         .setGatewayUri(gatewayUri)
         .setLocalPort(localPort);
