@@ -109,6 +109,16 @@ export default class MainProcess {
       }
     );
 
+    const sharedProcessLogger = createLoggerService({
+      dev: this.settings.dev,
+      dir: this.settings.userDataDir,
+      name: 'shared',
+      passThroughMode: true,
+    });
+
+    sharedProcessLogger.pipeProcessOutputIntoLogger(this.sharedProcess.stdout);
+    sharedProcessLogger.pipeProcessOutputIntoLogger(this.sharedProcess.stderr);
+
     this.sharedProcess.on('error', error => {
       this.logger.error('shared process failed to start', error);
     });
