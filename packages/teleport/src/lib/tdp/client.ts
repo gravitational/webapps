@@ -129,6 +129,9 @@ export default class Client extends EventEmitterWebAuthnSender {
         case MessageType.SHARED_DIRECTORY_READ_REQUEST:
           this.handleSharedDirectoryReadRequest(buffer);
           break;
+        case MessageType.SHARED_DIRECTORY_WRITE_REQUEST:
+          this.handleSharedDirectoryWriteRequest(buffer);
+          break;
         case MessageType.SHARED_DIRECTORY_LIST_REQUEST:
           this.handleSharedDirectoryListRequest(buffer);
           break;
@@ -269,6 +272,14 @@ export default class Client extends EventEmitterWebAuthnSender {
     } catch (e) {
       this.handleError(e);
     }
+  }
+
+  handleSharedDirectoryWriteRequest(buffer: ArrayBuffer) {
+    const req = this.codec.decodeSharedDirectoryWriteRequest(buffer);
+    // TODO(isaiah): delete debug logs
+    this.logger.debug('Received SharedDirectoryWriteRequest:');
+    this.logger.debug(req);
+    // TODO(isaiah): here's where we'll respond with a SharedDirectoryWriteResponse
   }
 
   async handleSharedDirectoryListRequest(buffer: ArrayBuffer) {
