@@ -16,13 +16,15 @@ limitations under the License.
 
 import React from 'react';
 import * as Alerts from 'design/Alert';
-import { ButtonIcon, Text } from 'design';
+import { ButtonIcon, Text, Indicator, Box } from 'design';
 import * as Icons from 'design/Icon';
 
 import { DialogHeader, DialogContent } from 'design/Dialog';
 
-import { AuthSettings } from 'teleterm/ui/services/clusters/types';
 import { PrimaryAuthType } from 'shared/services';
+
+import { AuthSettings } from 'teleterm/ui/services/clusters/types';
+
 import LoginForm from './FormLogin';
 import useClusterLogin, { State, Props } from './useClusterLogin';
 
@@ -37,7 +39,7 @@ export function ClusterLoginPresentation({
   loginAttempt,
   clearLoginAttempt,
   onLoginWithLocal,
-  onLoginWithPwdless,
+  onLoginWithPasswordless,
   onLoginWithSso,
   onCloseDialog,
   onAbort,
@@ -57,10 +59,15 @@ export function ClusterLoginPresentation({
       </DialogHeader>
       <DialogContent mb={0}>
         {initAttempt.status === 'error' && (
-          <Alerts.Danger>
+          <Alerts.Danger m={4}>
             Unable to retrieve cluster auth preferences,{' '}
             {initAttempt.statusText}
           </Alerts.Danger>
+        )}
+        {initAttempt.status === 'processing' && (
+          <Box textAlign="center" m={4}>
+            <Indicator />
+          </Box>
         )}
         {initAttempt.status === 'success' && (
           <LoginForm
@@ -74,7 +81,7 @@ export function ClusterLoginPresentation({
             preferredMfa={initAttempt.data.preferredMfa}
             loggedInUserName={loggedInUserName}
             onLoginWithSso={onLoginWithSso}
-            onLoginWithPwdless={onLoginWithPwdless}
+            onLoginWithPasswordless={onLoginWithPasswordless}
             onLogin={onLoginWithLocal}
             onAbort={onAbort}
             loginAttempt={loginAttempt}

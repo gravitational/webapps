@@ -56,14 +56,37 @@ function makeProps(): State {
     onCloseDialog: () => null,
     onAbort: () => null,
     onLoginWithLocal: () => Promise.resolve<[void, Error]>([null, null]),
-    onLoginWithPwdless: () => Promise.resolve<[void, Error]>([null, null]),
+    onLoginWithPasswordless: () => Promise.resolve<[void, Error]>([null, null]),
     onLoginWithSso: () => null,
     clearLoginAttempt: () => null,
-    webauthnLogin: {
-      prompt: '',
-    },
+    webauthnLogin: null,
   };
 }
+
+export const Error = () => {
+  const props = makeProps();
+  props.initAttempt = {
+    status: 'error',
+    statusText: 'some error message',
+  };
+
+  return (
+    <TestContainer>
+      <ClusterLoginPresentation {...props} />
+    </TestContainer>
+  );
+};
+
+export const Processing = () => {
+  const props = makeProps();
+  props.initAttempt.status = 'processing';
+
+  return (
+    <TestContainer>
+      <ClusterLoginPresentation {...props} />
+    </TestContainer>
+  );
+};
 
 export const LocalDisabled = () => {
   const props = makeProps();
@@ -150,7 +173,9 @@ export const SsoWithLocalAndPasswordless = () => {
 export const HardwareTapPrompt = () => {
   const props = makeProps();
   props.loginAttempt.status = 'processing';
-  props.webauthnLogin.prompt = 'tap';
+  props.webauthnLogin = {
+    prompt: 'tap',
+  };
   return (
     <TestContainer>
       <ClusterLoginPresentation {...props} />
@@ -161,7 +186,9 @@ export const HardwareTapPrompt = () => {
 export const HardwarePinPrompt = () => {
   const props = makeProps();
   props.loginAttempt.status = 'processing';
-  props.webauthnLogin.prompt = 'pin';
+  props.webauthnLogin = {
+    prompt: 'pin',
+  };
   return (
     <TestContainer>
       <ClusterLoginPresentation {...props} />
@@ -172,7 +199,9 @@ export const HardwarePinPrompt = () => {
 export const HardwareRetapPrompt = () => {
   const props = makeProps();
   props.loginAttempt.status = 'processing';
-  props.webauthnLogin.prompt = 'retap';
+  props.webauthnLogin = {
+    prompt: 'retap',
+  };
   return (
     <TestContainer>
       <ClusterLoginPresentation {...props} />
@@ -194,7 +223,6 @@ export const HardwareCredentialPrompt = () => {
       'pumpkin',
       'strawberry',
     ],
-    writeToStream: () => null,
   };
   return (
     <TestContainer>
