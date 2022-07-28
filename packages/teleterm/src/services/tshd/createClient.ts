@@ -1,4 +1,4 @@
-import { ChannelCredentials } from '@grpc/grpc-js';
+import { ChannelCredentials, ClientDuplexStream } from '@grpc/grpc-js';
 
 import { TerminalServiceClient } from 'teleterm/services/tshd/v1/service_grpc_pb';
 import * as api from 'teleterm/services/tshd/v1/service_pb';
@@ -164,30 +164,42 @@ export default function createClient(
       });
     },
 
-    async login(params: types.LoginParams, abortSignal?: types.TshAbortSignal) {
-      const ssoParams = params.sso
-        ? new api.LoginRequest.SsoParams()
-            .setProviderName(params.sso.providerName)
-            .setProviderType(params.sso.providerType)
-        : null;
-
-      const localParams = params.local
-        ? new api.LoginRequest.LocalParams()
-            .setToken(params.local.token)
-            .setUser(params.local.username)
-            .setPassword(params.local.password)
-        : null;
+    async loginLocal(
+      params: types.LoginLocalParams,
+      abortSignal?: types.TshAbortSignal
+    ) {
+      const localParams = new api.LoginRequest.LocalParams()
+        .setToken(params.token)
+        .setUser(params.username)
+        .setPassword(params.password);
 
       return withAbort(abortSignal, callRef => {
         const req = new api.LoginRequest().setClusterUri(params.clusterUri);
+        req.setLocal(localParams);
 
-        // LoginRequest has oneof on `Local` and `Sso`, which means that setting one of them clears
-        // the other.
-        if (ssoParams) {
-          req.setSso(ssoParams);
-        } else {
-          req.setLocal(localParams);
-        }
+        return new Promise<void>((resolve, reject) => {
+          callRef.current = tshd.login(req, err => {
+            if (err) {
+              reject(err);
+            } else {
+              resolve();
+            }
+          });
+        });
+      });
+    },
+
+    async loginSso(
+      params: types.LoginSsoParams,
+      abortSignal?: types.TshAbortSignal
+    ) {
+      const ssoParams = new api.LoginRequest.SsoParams()
+        .setProviderName(params.providerName)
+        .setProviderType(params.providerType);
+
+      return withAbort(abortSignal, callRef => {
+        const req = new api.LoginRequest().setClusterUri(params.clusterUri);
+        req.setSso(ssoParams);
 
         return new Promise<void>((resolve, reject) => {
           callRef.current = tshd.login(req, err => {
@@ -202,60 +214,78 @@ export default function createClient(
     },
 
     async loginPasswordless(
-      params: types.LoginParams,
+      params: types.LoginPasswordlessParams,
       abortSignal?: types.TshAbortSignal
     ) {
       return withAbort(abortSignal, callRef => {
-        const req = new api.LoginPasswordlessRequest().setClusterUri(
-          params.clusterUri
+        const streamInitReq =
+          new api.LoginPasswordlessRequest.LoginPasswordlessRequestInit().setClusterUri(
+            params.clusterUri
+          );
+        const streamReq = new api.LoginPasswordlessRequest().setInit(
+          streamInitReq
         );
 
         return new Promise<void>((resolve, reject) => {
           callRef.current = tshd.loginPasswordless();
-          const stream = callRef.current as grpc.ClientDuplexStream<
+          const stream = callRef.current as ClientDuplexStream<
             api.LoginPasswordlessRequest,
             api.LoginPasswordlessResponse
           >;
 
+          // count tracks how many "tap" requests came through.
+          let count = 0;
+
           // Init the stream.
-          stream.write(req);
+          stream.write(streamReq);
 
           stream.on('data', function (response: api.LoginPasswordlessResponse) {
-            const res = response.toObject();
-            let prompt: types.WebauthnLoginPrompt = '';
-            let customRes: types.LoginPasswordlessResponse = {};
+            const req = response.toObject();
 
-            switch (res.prompt) {
+            switch (req.prompt) {
               case api.PasswordlessPrompt.PASSWORDLESS_PROMPT_PIN:
-                prompt = 'pin';
-                // Need to write the pin back to stream.
-                customRes.writeToStream = req => {
+                const pinResponse = pin => {
+                  const pinRes =
+                    new api.LoginPasswordlessRequest.LoginPasswordlessPINResponse().setPin(
+                      pin
+                    );
                   stream.write(
-                    new api.LoginPasswordlessRequest().setPin(req.pin)
+                    new api.LoginPasswordlessRequest().setPin(pinRes)
                   );
                 };
-                break;
+
+                params.onPromptCallback({
+                  type: 'pin',
+                  onUserResponse: pinResponse,
+                });
+                return;
 
               case api.PasswordlessPrompt.PASSWORDLESS_PROMPT_CREDENTIAL:
-                prompt = 'credential';
-                customRes.loginUsernames = res.usernamesList || [];
-                // Need to write the selected index back to stream.
-                customRes.writeToStream = req => {
+                const credResponse = index => {
+                  const credRes =
+                    new api.LoginPasswordlessRequest.LoginPasswordlessCredentialResponse().setIndex(
+                      index
+                    );
                   stream.write(
-                    new api.LoginPasswordlessRequest().setUsernameindex(
-                      req.usernameindex
-                    )
+                    new api.LoginPasswordlessRequest().setCredential(credRes)
                   );
                 };
-                break;
+
+                params.onPromptCallback({
+                  type: 'credential',
+                  onUserResponse: credResponse,
+                  data: { credentials: req.credentialsList || [] },
+                });
+                return;
 
               case api.PasswordlessPrompt.PASSWORDLESS_PROMPT_TAP:
-                prompt = 'tap';
-                break;
-
-              case api.PasswordlessPrompt.PASSWORDLESS_PROMPT_RETAP:
-                prompt = 'retap';
-                break;
+                if (count == 0) {
+                  count += 1;
+                  params.onPromptCallback({ type: 'tap' });
+                } else {
+                  params.onPromptCallback({ type: 'retap' });
+                }
+                return;
 
               // Following cases should never happen but just in case?
               case api.PasswordlessPrompt.PASSWORDLESS_PROMPT_UNSPECIFIED:
@@ -267,12 +297,9 @@ export default function createClient(
               default:
                 stream.cancel();
                 return reject(
-                  new Error(`passwordless prompt '${res.prompt}' not supported`)
+                  new Error(`passwordless prompt '${req.prompt}' not supported`)
                 );
             }
-
-            // Call the callback to trigger rendering of prompt dialogues.
-            params.passwordless.onSuccess(prompt, customRes);
           });
 
           stream.on('end', function () {
