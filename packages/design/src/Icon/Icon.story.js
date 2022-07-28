@@ -15,7 +15,9 @@ limitations under the License.
 */
 
 import React from 'react';
+
 import * as Icon from '../Icon';
+
 import Flex from './../Flex';
 
 export default {
@@ -71,6 +73,7 @@ export const ListOfIcons = () => (
     <IconBox IconCmpt={Icon.Question} text="Question" />
     <IconBox IconCmpt={Icon.Info} text="Info" />
     <IconBox IconCmpt={Icon.ClipboardUser} text="ClipboardUser" />
+    <IconBox IconCmpt={Icon.Clock} text="Clock" />
     <IconBox IconCmpt={Icon.Close} text="Close" />
     <IconBox IconCmpt={Icon.Cloud} text="Cloud" />
     <IconBox IconCmpt={Icon.CloudSync} text="CloudSync" />

@@ -18,6 +18,7 @@ import React from 'react';
 import styled from 'styled-components';
 import { Cell } from 'design/DataTable';
 import Icon, * as Icons from 'design/Icon/Icon';
+
 import { eventCodes, Event, EventCode } from 'teleport/services/audit';
 import cfg from 'teleport/config';
 
@@ -128,6 +129,7 @@ const EventIconMap: Record<EventCode, React.FC> = {
   [eventCodes.X11_FORWARD]: Icons.Info,
   [eventCodes.X11_FORWARD_FAILURE]: Icons.Info,
   [eventCodes.CERTIFICATE_CREATED]: Icons.Keypair,
+  [eventCodes.UPGRADE_WINDOW_UPDATED]: Icons.Info,
   [eventCodes.UNKNOWN]: Icons.Question,
 };
 

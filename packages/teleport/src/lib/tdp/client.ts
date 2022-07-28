@@ -12,9 +12,11 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 import Logger from 'shared/libs/logger';
+
 import { TermEventEnum } from 'teleport/lib/term/enums.js';
 import { EventEmitterWebAuthnSender } from 'teleport/lib/EventEmitterWebAuthnSender';
 import { WebauthnAssertionResponse } from 'teleport/services/auth';
+
 import Codec, {
   MessageType,
   MouseButton,
@@ -282,7 +284,6 @@ export default class Client extends EventEmitterWebAuthnSender {
 
   async handleSharedDirectoryWriteRequest(buffer: ArrayBuffer) {
     const req = this.codec.decodeSharedDirectoryWriteRequest(buffer);
-
     try {
       const bytesWritten = await this.sdManager.writeFile(
         req.path,
@@ -387,19 +388,13 @@ export default class Client extends EventEmitterWebAuthnSender {
   }
 
   sendSharedDirectoryAnnounce() {
-    let name: string;
-    try {
-      name = this.sdManager.getName();
-    } catch (e) {
-      this.handleError(e);
-    }
     this.send(
       this.codec.encodeSharedDirectoryAnnounce({
         completionId: 0, // This is always the first request.
         // Hardcode directoryId for now since we only support sharing 1 directory.
         // We're using 2 because the smartcard device is hardcoded to 1 in the backend.
         directoryId: 2,
-        name,
+        name: this.sdManager.getName(),
       })
     );
   }

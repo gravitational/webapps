@@ -15,10 +15,15 @@
  */
 
 import React from 'react';
-import styled from 'styled-components';
-import { Flex, ButtonPrimary, ButtonSecondary, Text, Box } from 'design';
-import * as Icons from 'design/Icon';
-import { State, AgentKind } from './useDiscover';
+
+import { ButtonPrimary, ButtonSecondary, Text, Box } from 'design';
+
+import { LoginTrait } from './LoginTrait';
+
+import { DownloadScript } from './DownloadScript';
+
+import type { AgentStepProps, AgentStepComponent } from './types';
+import type { AgentKind } from './useDiscover';
 
 // agentStepTitles defines the titles per steps defined by enum `AgentStep`.
 //
@@ -26,7 +31,7 @@ import { State, AgentKind } from './useDiscover';
 // so this list's order and length must be equal to the enum.
 export const agentStepTitles: string[] = [
   'Select Resource Type',
-  'Set up Teleport Agent',
+  'Configure Resource',
   'Configure Role',
   'Test Connection',
 ];
@@ -37,52 +42,12 @@ export const agentStepTitles: string[] = [
 // We use the enum `AgentStep` numerical values to access the list's value,
 // so the list's order and length must be equal to the enum.
 export const agentViews: Record<AgentKind, AgentStepComponent[]> = {
-  app: [GatherReqs, InstallTeleport, RoleConfig],
+  app: [GatherReqs, InstallTeleport, LoginTrait, RoleConfig],
   db: [],
   desktop: [],
   kube: [],
-  node: [GatherReqsNode, InstallTeleport, RoleConfig],
+  node: [GatherReqsNode, DownloadScript, LoginTrait, InstallTeleport],
 };
-
-export function SelectAgent(props) {
-  return (
-    <Box width="700px">
-      <Text mb={4} typography="h4" bold>
-        Connect a Resource
-      </Text>
-      <Text mb={2} bold>
-        Select Resource Type
-      </Text>
-      <Flex
-        alignItems="center"
-        css={`
-          margin: 0 auto;
-        `}
-      >
-        <AgentButton
-          as="button"
-          onClick={() => props.onClick('node')}
-          disabled={props.agentKind === 'node'}
-        >
-          <Icons.Apple fontSize="50px" my={2} />
-          <Text typography="h6" bold mt={1}>
-            Server
-          </Text>
-        </AgentButton>
-        <AgentButton
-          as="button"
-          onClick={() => props.onClick('app')}
-          disabled={props.agentKind === 'app'}
-        >
-          <Icons.Apple fontSize="50px" my={2} />
-          <Text typography="h6" bold mt={1}>
-            Application
-          </Text>
-        </AgentButton>
-      </Flex>
-    </Box>
-  );
-}
 
 function GatherReqs(props: AgentStepProps) {
   return (
@@ -172,50 +137,3 @@ function RoleConfig(props: AgentStepProps) {
     </Box>
   );
 }
-
-const AgentButton = styled(Flex)(
-  props => `
-   align-items: center;
-   flex-direction: column;
-   transition: all 0.3s;
-   border-radius: 4px;
-   width: 160px;
-   border: none;
-   padding: 24px 32px;
-   margin-right: 16px;
-   margin-bottom: 16px;
-   background-color: ${props.theme.colors.primary.light};
-   &:disabled {
-     border: 2px solid ${props.theme.colors.secondary.main};
-     background: ${props.theme.colors.primary.lighter};
-     box-shadow: 0 4px 14px rgba(0, 0, 0, 0.56);
-   }
-   &:hover {
-     background: ${props.theme.colors.primary.lighter};
-   }
-   color: inherit;
-   cursor: pointer;
-   font-family: inherit;
-   text-align: center;
- `
-);
-
-type AgentStepProps = {
-  // attempt defines fetch attempt states when we make api calls.
-  attempt: State['attempt'];
-  // joinToken defines fields related to a fetched token.
-  joinToken: State['joinToken'];
-  // agentMeta describes fields specific to an agent kind.
-  agentMeta: State['agentMeta'];
-  // updateAgentMeta updates the data specific to agent kinds
-  // as needed as we move through the step.
-  updateAgentMeta: State['updateAgentMeta'];
-  // nextStep increments the `currentStep` to go to the next step.
-  nextStep: State['nextStep'];
-  // prevStep decrements the `currentStep` to go to the prev step.
-  prevStep: State['prevStep'];
-  // createJoinToken makes a fetch api call to get a joinToken.
-  createJoinToken: State['createJoinToken'];
-};
-
-type AgentStepComponent = (props: AgentStepProps) => JSX.Element;
