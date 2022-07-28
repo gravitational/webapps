@@ -688,7 +688,7 @@ export default class Codec {
   // decodeMfaChallenge decodes a raw tdp MFA challenge message and returns it as a string (of a json).
   // | message type (10) | mfa_type byte | message_length uint32 | json []byte
   decodeMfaJson(buffer: ArrayBuffer): MfaJson {
-    let dv = new DataView(buffer);
+    const dv = new DataView(buffer);
     let offset = 0;
     offset += byteLength; // eat message type
     const mfaType = String.fromCharCode(dv.getUint8(offset));
@@ -782,19 +782,19 @@ export default class Codec {
     const dv = new DataView(buffer);
     let bufOffset = 0;
     bufOffset += byteLength; // eat message type
-    let completionId = dv.getUint32(bufOffset);
+    const completionId = dv.getUint32(bufOffset);
     bufOffset += uint32Length; // eat completion_id
-    let directoryId = dv.getUint32(bufOffset);
+    const directoryId = dv.getUint32(bufOffset);
     bufOffset += uint32Length; // eat directory_id
-    let pathLength = dv.getUint32(bufOffset);
+    const pathLength = dv.getUint32(bufOffset);
     bufOffset += uint32Length; // eat path_length
-    let path = this.decoder.decode(
+    const path = this.decoder.decode(
       new Uint8Array(buffer.slice(bufOffset, bufOffset + pathLength))
     );
     bufOffset += pathLength; // eat path
-    let offset = dv.getBigUint64(bufOffset);
+    const offset = dv.getBigUint64(bufOffset);
     bufOffset += uint64Length; // eat offset
-    let length = dv.getUint32(bufOffset);
+    const length = dv.getUint32(bufOffset);
 
     return {
       completionId,
@@ -810,23 +810,23 @@ export default class Codec {
   decodeSharedDirectoryWriteRequest(
     buffer: ArrayBuffer
   ): SharedDirectoryWriteRequest {
-    let dv = new DataView(buffer);
+    const dv = new DataView(buffer);
     let bufOffset = byteLength; // eat message type
-    let completionId = dv.getUint32(bufOffset);
+    const completionId = dv.getUint32(bufOffset);
     bufOffset += uint32Length; // eat completion_id
-    let directoryId = dv.getUint32(bufOffset);
+    const directoryId = dv.getUint32(bufOffset);
     bufOffset += uint32Length; // eat directory_id
-    let offset = dv.getBigUint64(bufOffset);
+    const offset = dv.getBigUint64(bufOffset);
     bufOffset += uint64Length; // eat offset
-    let pathLength = dv.getUint32(bufOffset);
+    const pathLength = dv.getUint32(bufOffset);
     bufOffset += uint32Length; // eat path_length
-    let path = this.decoder.decode(
+    const path = this.decoder.decode(
       new Uint8Array(buffer.slice(bufOffset, bufOffset + pathLength))
     );
     bufOffset += pathLength; // eat path
-    let writeDataLength = dv.getUint32(bufOffset);
+    const writeDataLength = dv.getUint32(bufOffset);
     bufOffset += uint32Length; // eat write_data_length
-    let writeData = new Uint8Array(
+    const writeData = new Uint8Array(
       buffer.slice(bufOffset, bufOffset + writeDataLength)
     );
 
@@ -844,21 +844,21 @@ export default class Codec {
   decodeSharedDirectoryMoveRequest(
     buffer: ArrayBuffer
   ): SharedDirectoryMoveRequest {
-    let dv = new DataView(buffer);
+    const dv = new DataView(buffer);
     let bufOffset = byteLength; // eat message type
-    let completionId = dv.getUint32(bufOffset);
+    const completionId = dv.getUint32(bufOffset);
     bufOffset += uint32Length; // eat completion_id
-    let directoryId = dv.getUint32(bufOffset);
+    const directoryId = dv.getUint32(bufOffset);
     bufOffset += uint32Length; // eat directory_id
-    let originalPathLength = dv.getUint32(bufOffset);
+    const originalPathLength = dv.getUint32(bufOffset);
     bufOffset += uint32Length; // eat original_path_length
-    let originalPath = this.decoder.decode(
+    const originalPath = this.decoder.decode(
       new Uint8Array(buffer.slice(bufOffset, bufOffset + originalPathLength))
     );
     bufOffset += originalPathLength; // eat original_path
-    let newPathLength = dv.getUint32(bufOffset);
+    const newPathLength = dv.getUint32(bufOffset);
     bufOffset += uint32Length; // eat new_path_length
-    let newPath = this.decoder.decode(
+    const newPath = this.decoder.decode(
       new Uint8Array(buffer.slice(bufOffset, bufOffset + newPathLength))
     );
 
