@@ -13,7 +13,7 @@
 // limitations under the License.
 
 // SharedDirectoryManager manages a FileSystemDirectoryHandle for use
-// by the TDP client. Most of it's methods can potentially throw errors
+// by the TDP client. Most of its methods can potentially throw errors
 // and so should be wrapped in try/catch blocks.
 export class SharedDirectoryManager {
   private dir: FileSystemDirectoryHandle | undefined;

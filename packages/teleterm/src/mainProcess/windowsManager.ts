@@ -1,6 +1,8 @@
-import { BrowserWindow, Menu, Rectangle, screen } from 'electron';
-import { getAssetPath } from 'teleterm/mainProcess/runtimeSettings';
 import path from 'path';
+
+import { BrowserWindow, Menu, Rectangle, screen } from 'electron';
+
+import { getAssetPath } from 'teleterm/mainProcess/runtimeSettings';
 import { FileStorage } from 'teleterm/services/fileStorage';
 import { RuntimeSettings } from 'teleterm/mainProcess/types';
 import theme from 'teleterm/ui/ThemeProvider/theme';
@@ -11,6 +13,7 @@ export class WindowsManager {
   private storageKey = 'windowState';
   private selectionContextMenu: Menu;
   private inputContextMenu: Menu;
+  private window?: BrowserWindow;
 
   constructor(
     private fileStorage: FileStorage,
@@ -38,6 +41,7 @@ export class WindowsManager {
       backgroundColor: theme.colors.primary.darker,
       minWidth: 400,
       minHeight: 300,
+      autoHideMenuBar: true,
       title: 'Teleport Connect Preview',
       icon: getAssetPath('icon.png'),
       webPreferences: {
@@ -71,6 +75,20 @@ export class WindowsManager {
         return callback(false);
       }
     );
+
+    this.window = window;
+  }
+
+  focusWindow(): void {
+    if (!this.window) {
+      return;
+    }
+
+    if (this.window.isMinimized()) {
+      this.window.restore();
+    }
+
+    this.window.focus();
   }
 
   private saveWindowState(window: BrowserWindow): void {
