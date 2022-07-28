@@ -20,7 +20,7 @@ import { Text, Flex, ButtonPrimary, ButtonText, Box } from 'design';
 import * as Alerts from 'design/Alert';
 import { Key, ArrowForward } from 'design/Icon';
 import { StepSlider } from 'design/StepSlider';
-import type { StepComponentProps } from 'design/StepSlider';
+
 import Validation, { Validator } from 'shared/components/Validation';
 import FieldInput from 'shared/components/FieldInput';
 import FieldSelect from 'shared/components/FieldSelect';
@@ -33,11 +33,13 @@ import createMfaOptions, { MfaOption } from 'shared/utils/createMfaOptions';
 
 import * as types from 'teleterm/ui/services/clusters/types';
 
-import type { PrimaryAuthType } from 'shared/services';
-import type { WebauthnLogin } from '../useClusterLogin';
 import SSOButtonList from './SsoButtons';
 import { PromptWebauthn } from './PromptWebauthn';
 import PromptSsoStatus from './PromptSsoStatus';
+
+import type { WebauthnLogin } from '../useClusterLogin';
+import type { PrimaryAuthType } from 'shared/services';
+import type { StepComponentProps } from 'design/StepSlider';
 
 export default function LoginForm(props: Props) {
   const {
@@ -50,7 +52,7 @@ export default function LoginForm(props: Props) {
     webauthnLogin,
   } = props;
 
-  if (webauthnLogin.prompt !== '') {
+  if (webauthnLogin) {
     return <PromptWebauthn onCancel={onAbort} {...webauthnLogin} />;
   }
 
@@ -132,7 +134,7 @@ const SsoList = ({
 
 const Passwordless = ({
   loginAttempt,
-  onLoginWithPwdless,
+  onLoginWithPasswordless,
   autoFocus = false,
 }: Props) => (
   <Box data-testid="passwordless">
@@ -143,7 +145,7 @@ const Passwordless = ({
       borderRadius={2}
       borderColor="text.placeholder"
       width="100%"
-      onClick={onLoginWithPwdless}
+      onClick={onLoginWithPasswordless}
       disabled={loginAttempt.status === 'processing'}
       autoFocus={autoFocus}
     >
@@ -205,7 +207,7 @@ const LocalForm = ({
   return (
     <Validation>
       {({ validator }) => (
-        <Box>
+        <Box as="form" height="310px">
           <FieldInput
             rule={requiredField('Username is required')}
             label="Username"
@@ -261,6 +263,7 @@ const LocalForm = ({
           <ButtonPrimary
             width="100%"
             mt={2}
+            mb={1}
             type="submit"
             size="large"
             onClick={e => onLoginClick(e, validator)}
@@ -307,9 +310,9 @@ const Primary = ({
 
   return (
     <Box ref={refCallback} px={4} py={3}>
-      {$primary}
+      <Box mb={3}>{$primary}</Box>
       {otherOptionsAvailable && (
-        <Box mt={3} textAlign="center">
+        <Box textAlign="center">
           <ButtonText
             disabled={otherProps.loginAttempt.status === 'processing'}
             onClick={e => {
@@ -477,7 +480,7 @@ type Props = {
   loggedInUserName?: string;
   onAbort(): void;
   onLoginWithSso(provider: types.AuthProvider): void;
-  onLoginWithPwdless(): void;
+  onLoginWithPasswordless(): void;
   onLogin(
     username: string,
     password: string,

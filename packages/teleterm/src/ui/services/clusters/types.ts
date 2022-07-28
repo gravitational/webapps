@@ -39,6 +39,12 @@ export type AuthProvider = tsh.AuthProvider;
 
 export type LoginParams = tsh.LoginParams;
 
+export type LoginLocalParams = tsh.LoginLocalParams;
+
+export type LoginPasswordlessParams = tsh.LoginPasswordlessParams;
+
+export type LoginSsoParams = tsh.LoginSsoParams;
+
 export type Application = tsh.Application;
 
 export type CreateGatewayParams = tsh.CreateGatewayParams;
@@ -54,8 +60,6 @@ export type Kube = tsh.Kube;
 export type Database = tsh.Database;
 
 export type LoginPasswordlessRequest = tsh.LoginPasswordlessRequest;
-
-export type LoginPasswordlessResponse = tsh.LoginPasswordlessResponse;
 
 export type WebauthnLoginPrompt = tsh.WebauthnLoginPrompt;
 

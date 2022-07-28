@@ -28,14 +28,25 @@ export type LoggedInUser = apiCluster.LoggedInUser.AsObject;
 export type AuthProvider = apiAuthSettings.AuthProvider.AsObject;
 export type AuthSettings = apiAuthSettings.AuthSettings.AsObject;
 
-export type WebauthnLoginPrompt = 'tap' | 'retap' | 'pin' | 'credential' | '';
+export type WebauthnCredentialInfo = apiService.CredentialInfo.AsObject;
+export type WebauthnLoginPrompt =
+  | WebauthnLoginTapPrompt
+  | WebauthnLoginRetapPrompt
+  | WebauthnLoginPinPrompt
+  | WebauthnLoginCredentialPrompt;
+export type WebauthnLoginTapPrompt = { type: 'tap' };
+export type WebauthnLoginRetapPrompt = { type: 'retap' };
+export type WebauthnLoginPinPrompt = {
+  type: 'pin';
+  onUserResponse(pin: string): void;
+};
+export type WebauthnLoginCredentialPrompt = {
+  type: 'credential';
+  data: { credentials: WebauthnCredentialInfo[] };
+  onUserResponse(index: number): void;
+};
 export type LoginPasswordlessRequest =
   Partial<apiService.LoginPasswordlessRequest.AsObject>;
-export type LoginPasswordlessResponse = {
-  // loginUsernames are list of login usernames associated with a device.
-  loginUsernames?: string[];
-  writeToStream?(req: LoginPasswordlessRequest): void;
-};
 
 export type TshClient = {
   listRootClusters: () => Promise<Cluster[]>;
@@ -60,7 +71,14 @@ export type TshClient = {
   getCluster: (clusterUri: string) => Promise<Cluster>;
   getAuthSettings: (clusterUri: string) => Promise<AuthSettings>;
   removeCluster: (clusterUri: string) => Promise<void>;
-  login: (params: LoginParams, abortSignal?: TshAbortSignal) => Promise<void>;
+  loginLocal: (
+    params: LoginLocalParams,
+    abortSignal?: TshAbortSignal
+  ) => Promise<void>;
+  loginSso: (
+    params: LoginSsoParams,
+    abortSignal?: TshAbortSignal
+  ) => Promise<void>;
   loginPasswordless: (
     params: LoginParams,
     abortSignal?: TshAbortSignal
@@ -78,21 +96,28 @@ export type TshAbortSignal = {
   removeEventListener(cb: (...args: any[]) => void): void;
 };
 
-export type LoginParams = {
+export type LoginLocalParams = {
   clusterUri: string;
-  sso?: {
-    providerType: string;
-    providerName: string;
-  };
-  local?: {
-    username: string;
-    password: string;
-    token?: string;
-  };
-  passwordless?: {
-    onSuccess(prompt: WebauthnLoginPrompt, res: LoginPasswordlessResponse);
-  };
+  username: string;
+  password: string;
+  token?: string;
 };
+
+export type LoginSsoParams = {
+  clusterUri: string;
+  providerType: string;
+  providerName: string;
+};
+
+export type LoginPasswordlessParams = {
+  clusterUri: string;
+  onPromptCallback(res: WebauthnLoginPrompt);
+};
+
+export type LoginParams =
+  | LoginLocalParams
+  | LoginSsoParams
+  | LoginPasswordlessParams;
 
 export type CreateGatewayParams = {
   targetUri: string;
