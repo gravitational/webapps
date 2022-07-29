@@ -17,14 +17,22 @@ limitations under the License.
 import React, { PropsWithChildren } from 'react';
 import styled from 'styled-components';
 import { Indicator, Box, Alert, Text, Flex } from 'design';
+
 import TdpClientCanvas from 'teleport/components/TdpClientCanvas';
 import AuthnDialog from 'teleport/components/AuthnDialog';
+
 import useDesktopSession, { State } from './useDesktopSession';
 import TopBar from './TopBar';
 
 export default function Container() {
   const state = useDesktopSession();
   return <DesktopSession {...state} />;
+}
+
+declare global {
+  interface Window {
+    showDirectoryPicker: () => Promise<FileSystemDirectoryHandle>;
+  }
 }
 
 export function DesktopSession(props: State) {
@@ -147,7 +155,7 @@ function Session(props: PropsWithChildren<State>) {
       .showDirectoryPicker()
       .then(sharedDirHandle => {
         setIsSharingDirectory(true);
-        tdpClient.sharedDirectory = sharedDirHandle;
+        tdpClient.addSharedDirectory(sharedDirHandle);
         tdpClient.sendSharedDirectoryAnnounce();
       })
       .catch(() => {

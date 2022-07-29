@@ -1,4 +1,16 @@
 import { useStore } from 'shared/libs/stores';
+
+import isMatch from 'design/utils/match';
+import { makeLabelTag } from 'teleport/components/formatters';
+import { Label } from 'teleport/types';
+
+import { routing } from 'teleterm/ui/uri';
+import { NotificationsService } from 'teleterm/ui/services/notifications';
+import { getClusterName } from 'teleterm/ui/utils/getClusterName';
+import { Cluster } from 'teleterm/services/tshd/types';
+
+import { ImmutableStore } from '../immutableStore';
+
 import {
   AuthSettings,
   ClustersServiceState,
@@ -7,14 +19,6 @@ import {
   SyncStatus,
   tsh,
 } from './types';
-import { ImmutableStore } from '../immutableStore';
-import { routing } from 'teleterm/ui/uri';
-import isMatch from 'design/utils/match';
-import { makeLabelTag } from 'teleport/components/formatters';
-import { Label } from 'teleport/types';
-import { NotificationsService } from 'teleterm/ui/services/notifications';
-import { getClusterName } from 'teleterm/ui/utils/getClusterName';
-import { Cluster } from 'teleterm/services/tshd/types';
 
 export function createClusterServiceState(): ClustersServiceState {
   return {
@@ -425,6 +429,23 @@ export class ClustersService extends ImmutableStore<ClustersServiceState> {
     const gateway = await this.client.setGatewayTargetSubresourceName(
       gatewayUri,
       targetSubresourceName
+    );
+
+    this.setState(draft => {
+      draft.gateways.set(gatewayUri, gateway);
+    });
+
+    return gateway;
+  }
+
+  async setGatewayLocalPort(gatewayUri: string, localPort: string) {
+    if (!this.findGateway(gatewayUri)) {
+      throw new Error(`Could not find gateway ${gatewayUri}`);
+    }
+
+    const gateway = await this.client.setGatewayLocalPort(
+      gatewayUri,
+      localPort
     );
 
     this.setState(draft => {

@@ -15,9 +15,11 @@ limitations under the License.
 */
 
 import { useEffect } from 'react';
+
+import { useAsync } from 'shared/hooks/useAsync';
+
 import { useAppContext } from 'teleterm/ui/appContextProvider';
 import * as types from 'teleterm/ui/services/workspacesService';
-import { useAsync } from 'shared/hooks/useAsync';
 import { useWorkspaceDocumentsService } from 'teleterm/ui/Documents';
 import { routing } from 'teleterm/ui/uri';
 import { retryWithRelogin } from 'teleterm/ui/utils';
@@ -25,6 +27,10 @@ import { retryWithRelogin } from 'teleterm/ui/utils';
 export default function useGateway(doc: types.DocumentGateway) {
   const ctx = useAppContext();
   const workspaceDocumentsService = useWorkspaceDocumentsService();
+  // The port to show as default in the input field in case creating a gateway fails.
+  // This is typically the case if someone reopens the app and the port of the gateway is already
+  // occupied.
+  const defaultPort = doc.port || '0';
   const gateway = ctx.clustersService.findGateway(doc.gatewayUri);
   const connected = !!gateway;
   const rootCluster = ctx.clustersService.findRootClusterByResource(
@@ -32,11 +38,11 @@ export default function useGateway(doc: types.DocumentGateway) {
   );
   const cluster = ctx.clustersService.findClusterByResource(doc.targetUri);
 
-  const [connectAttempt, createGateway] = useAsync(async () => {
+  const [connectAttempt, createGateway] = useAsync(async (port: string) => {
     const gw = await retryWithRelogin(ctx, doc.uri, doc.targetUri, () =>
       ctx.clustersService.createGateway({
         targetUri: doc.targetUri,
-        port: doc.port,
+        port: port,
         user: doc.targetUser,
         subresource_name: doc.targetSubresourceName,
       })
@@ -70,15 +76,27 @@ export default function useGateway(doc: types.DocumentGateway) {
     });
   });
 
-  const reconnect = () => {
+  const [changePortAttempt, changePort] = useAsync(async (port: string) => {
+    const updatedGateway = await ctx.clustersService.setGatewayLocalPort(
+      doc.gatewayUri,
+      port
+    );
+
+    workspaceDocumentsService.update(doc.uri, {
+      targetSubresourceName: updatedGateway.targetSubresourceName,
+      port: updatedGateway.localPort,
+    });
+  });
+
+  const reconnect = (port: string) => {
     if (rootCluster.connected) {
-      createGateway();
+      createGateway(port);
       return;
     }
 
     ctx.commandLauncher.executeCommand('cluster-connect', {
       clusterUri: rootCluster.uri,
-      onSuccess: createGateway,
+      onSuccess: () => createGateway(doc.port),
     });
   };
 
@@ -105,7 +123,7 @@ export default function useGateway(doc: types.DocumentGateway) {
   useEffect(
     function createGatewayOnDocumentOpen() {
       if (shouldCreateGateway) {
-        createGateway();
+        createGateway(doc.port);
       }
     },
     [shouldCreateGateway]
@@ -113,6 +131,7 @@ export default function useGateway(doc: types.DocumentGateway) {
 
   return {
     gateway,
+    defaultPort,
     disconnect,
     connected,
     reconnect,
@@ -120,7 +139,7 @@ export default function useGateway(doc: types.DocumentGateway) {
     runCliCommand,
     changeDbName,
     changeDbNameAttempt,
+    changePort,
+    changePortAttempt,
   };
 }
-
-export type State = ReturnType<typeof useGateway>;

@@ -1,18 +1,21 @@
-import * as grpc from '@grpc/grpc-js';
+import { ChannelCredentials } from '@grpc/grpc-js';
+
 import { TerminalServiceClient } from 'teleterm/services/tshd/v1/service_grpc_pb';
 import * as api from 'teleterm/services/tshd/v1/service_pb';
 import * as types from 'teleterm/services/tshd/types';
-import middleware, { withLogging } from './middleware';
-import createAbortController from './createAbortController';
 import Logger from 'teleterm/logger';
 
-export function createGrpcClient(addr?: string) {
-  return new TerminalServiceClient(addr, grpc.credentials.createInsecure());
-}
+import middleware, { withLogging } from './middleware';
+import createAbortController from './createAbortController';
 
-export default function createClient(addr: string) {
+export default function createClient(
+  addr: string,
+  credentials: ChannelCredentials
+) {
   const logger = new Logger('tshd');
-  const tshd = middleware(createGrpcClient(addr), [withLogging(logger)]);
+  const tshd = middleware(new TerminalServiceClient(addr, credentials), [
+    withLogging(logger),
+  ]);
 
   // Create a client instance that could be shared with the  renderer (UI) via Electron contextBridge
   const client = {
@@ -276,6 +279,21 @@ export default function createClient(addr: string) {
         .setTargetSubresourceName(targetSubresourceName);
       return new Promise<types.Gateway>((resolve, reject) => {
         tshd.setGatewayTargetSubresourceName(req, (err, response) => {
+          if (err) {
+            reject(err);
+          } else {
+            resolve(response.toObject());
+          }
+        });
+      });
+    },
+
+    async setGatewayLocalPort(gatewayUri: string, localPort: string) {
+      const req = new api.SetGatewayLocalPortRequest()
+        .setGatewayUri(gatewayUri)
+        .setLocalPort(localPort);
+      return new Promise<types.Gateway>((resolve, reject) => {
+        tshd.setGatewayLocalPort(req, (err, response) => {
           if (err) {
             reject(err);
           } else {
