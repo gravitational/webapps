@@ -25,8 +25,19 @@ import Codec, {
   ClientScreenSpec,
   PngFrame,
   ClipboardData,
+  FileType,
   SharedDirectoryErrCode,
+  SharedDirectoryInfoResponse,
+  SharedDirectoryListResponse,
+  SharedDirectoryReadResponse,
+  SharedDirectoryWriteResponse,
+  FileSystemObject,
 } from './codec';
+import {
+  PathDoesNotExistError,
+  SharedDirectoryManager,
+  FileOrDirInfo,
+} from './sharedDirectoryManager';
 
 export enum TdpClientEvent {
   TDP_CLIENT_SCREEN_SPEC = 'tdp client screen spec',
@@ -45,7 +56,7 @@ export default class Client extends EventEmitterWebAuthnSender {
   protected codec: Codec;
   protected socket: WebSocket | undefined;
   private socketAddr: string;
-  sharedDirectory: FileSystemDirectoryHandle | undefined;
+  private sdManager: SharedDirectoryManager;
 
   private logger = Logger.create('TDPClient');
 
@@ -53,6 +64,7 @@ export default class Client extends EventEmitterWebAuthnSender {
     super();
     this.socketAddr = socketAddr;
     this.codec = new Codec();
+    this.sdManager = new SharedDirectoryManager();
   }
 
   // Connect to the websocket and register websocket event handlers.
@@ -116,6 +128,18 @@ export default class Client extends EventEmitterWebAuthnSender {
           break;
         case MessageType.SHARED_DIRECTORY_INFO_REQUEST:
           this.handleSharedDirectoryInfoRequest(buffer);
+          break;
+        case MessageType.SHARED_DIRECTORY_READ_REQUEST:
+          this.handleSharedDirectoryReadRequest(buffer);
+          break;
+        case MessageType.SHARED_DIRECTORY_WRITE_REQUEST:
+          this.handleSharedDirectoryWriteRequest(buffer);
+          break;
+        case MessageType.SHARED_DIRECTORY_MOVE_REQUEST:
+          this.handleSharedDirectoryMoveRequest(buffer);
+          break;
+        case MessageType.SHARED_DIRECTORY_LIST_REQUEST:
+          this.handleSharedDirectoryListRequest(buffer);
           break;
         default:
           this.logger.warn(`received unsupported message type ${messageType}`);
@@ -205,24 +229,127 @@ export default class Client extends EventEmitterWebAuthnSender {
     if (!this.wasSuccessful(ack.errCode)) {
       return;
     }
-
-    this.logger.info('Started sharing directory: ' + this.sharedDirectory.name);
+    try {
+      this.logger.info(
+        'Started sharing directory: ' + this.sdManager.getName()
+      );
+    } catch (e) {
+      this.handleError(e);
+    }
   }
 
-  handleSharedDirectoryInfoRequest(buffer: ArrayBuffer) {
+  async handleSharedDirectoryInfoRequest(buffer: ArrayBuffer) {
     const req = this.codec.decodeSharedDirectoryInfoRequest(buffer);
-    // TODO(isaiah): remove debug once message is handled.
-    this.logger.debug(
-      'Received SharedDirectoryInfoRequest: ' + JSON.stringify(req)
-    );
-    // TODO(isaiah): here's where we'll respond with SharedDirectoryInfoResponse
+    const path = req.path;
+    try {
+      const info = await this.sdManager.getInfo(path);
+      this.sendSharedDirectoryInfoResponse({
+        completionId: req.completionId,
+        errCode: SharedDirectoryErrCode.Nil,
+        fso: this.toFso(info),
+      });
+    } catch (e) {
+      if (e.constructor === PathDoesNotExistError) {
+        this.sendSharedDirectoryInfoResponse({
+          completionId: req.completionId,
+          errCode: SharedDirectoryErrCode.DoesNotExist,
+          fso: {
+            lastModified: BigInt(0),
+            fileType: FileType.File,
+            size: BigInt(0),
+            path: path,
+          },
+        });
+      } else {
+        this.handleError(e);
+      }
+    }
+  }
+
+  async handleSharedDirectoryReadRequest(buffer: ArrayBuffer) {
+    const req = this.codec.decodeSharedDirectoryReadRequest(buffer);
+    try {
+      const readData = await this.sdManager.readFile(
+        req.path,
+        req.offset,
+        req.length
+      );
+      this.sendSharedDirectoryReadResponse({
+        completionId: req.completionId,
+        errCode: SharedDirectoryErrCode.Nil,
+        readDataLength: readData.length,
+        readData,
+      });
+    } catch (e) {
+      this.handleError(e);
+    }
+  }
+
+  async handleSharedDirectoryWriteRequest(buffer: ArrayBuffer) {
+    const req = this.codec.decodeSharedDirectoryWriteRequest(buffer);
+    try {
+      const bytesWritten = await this.sdManager.writeFile(
+        req.path,
+        req.offset,
+        req.writeData
+      );
+
+      this.sendSharedDirectoryWriteResponse({
+        completionId: req.completionId,
+        errCode: SharedDirectoryErrCode.Nil,
+        bytesWritten,
+      });
+    } catch (e) {
+      this.handleError(e);
+    }
+  }
+
+  handleSharedDirectoryMoveRequest(buffer: ArrayBuffer) {
+    const req = this.codec.decodeSharedDirectoryMoveRequest(buffer);
+    // TODO(isaiah): delete debug logs
+    this.logger.debug('Received SharedDirectoryMoveRequest:');
+    this.logger.debug(req);
+    // TODO(isaiah): here's where we'll respond with a SharedDirectoryMoveResponse
+  }
+
+  async handleSharedDirectoryListRequest(buffer: ArrayBuffer) {
+    try {
+      const req = this.codec.decodeSharedDirectoryListRequest(buffer);
+      const path = req.path;
+
+      const infoList: FileOrDirInfo[] = await this.sdManager.listContents(path);
+      const fsoList: FileSystemObject[] = infoList.map(info =>
+        this.toFso(info)
+      );
+
+      this.sendSharedDirectoryListResponse({
+        completionId: req.completionId,
+        errCode: SharedDirectoryErrCode.Nil,
+        fsoList,
+      });
+    } catch (e) {
+      this.handleError(e);
+    }
+  }
+
+  private toFso(info: FileOrDirInfo): FileSystemObject {
+    return {
+      lastModified: BigInt(info.lastModified),
+      fileType: info.kind === 'file' ? FileType.File : FileType.Directory,
+      size: BigInt(info.size),
+      path: info.path,
+    };
   }
 
   protected send(
     data: string | ArrayBufferLike | Blob | ArrayBufferView
   ): void {
     if (this.socket && this.socket.readyState === 1) {
-      this.socket.send(data);
+      try {
+        this.socket.send(data);
+      } catch (e) {
+        this.handleError(e);
+      }
       return;
     }
 
@@ -263,30 +390,46 @@ export default class Client extends EventEmitterWebAuthnSender {
     this.send(msg);
   }
 
-  private sharedDirectoryReady() {
-    if (!this.sharedDirectory) {
-      this.handleError(
-        new Error(
-          'attempted to use a shared directory before one was initialized'
-        )
-      );
-      return false;
+  addSharedDirectory(sharedDirectory: FileSystemDirectoryHandle) {
+    try {
+      this.sdManager.add(sharedDirectory);
+    } catch (err) {
+      this.handleError(err);
     }
-
-    return true;
   }
 
   sendSharedDirectoryAnnounce() {
-    if (!this.sharedDirectoryReady()) return;
-    this.socket.send(
+    let name: string;
+    try {
+      name = this.sdManager.getName();
+    } catch (e) {
+      this.handleError(e);
+    }
+    this.send(
       this.codec.encodeSharedDirectoryAnnounce({
         completionId: 0, // This is always the first request.
         // Hardcode directoryId for now since we only support sharing 1 directory.
         // We're using 2 because the smartcard device is hardcoded to 1 in the backend.
         directoryId: 2,
-        name: this.sharedDirectory.name,
+        name,
       })
     );
+  }
+
+  sendSharedDirectoryInfoResponse(res: SharedDirectoryInfoResponse) {
+    this.send(this.codec.encodeSharedDirectoryInfoResponse(res));
+  }
+
+  sendSharedDirectoryListResponse(res: SharedDirectoryListResponse) {
+    this.send(this.codec.encodeSharedDirectoryListResponse(res));
+  }
+
+  sendSharedDirectoryReadResponse(response: SharedDirectoryReadResponse) {
+    this.send(this.codec.encodeSharedDirectoryReadResponse(response));
+  }
+
+  sendSharedDirectoryWriteResponse(response: SharedDirectoryWriteResponse) {
+    this.send(this.codec.encodeSharedDirectoryWriteResponse(response));
   }
 
   resize(spec: ClientScreenSpec) {
