@@ -65,6 +65,7 @@
       "build/app/dist"
     ],
     "mac": {
+      "appId": "QH8AA5B8UP.com.gravitational.teleport.connect",
       "target": "dmg",
       "type": "distribution",
       "hardenedRuntime": true,
