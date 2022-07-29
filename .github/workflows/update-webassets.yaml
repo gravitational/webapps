@@ -24,10 +24,12 @@ jobs:
       - name: Checkout webassets
         uses: actions/checkout@v3
         with:
-          ssh-key: ${{ secrets.SSH_PRIVATE_KEY }}
           repository: gravitational/webassets-fork # TODO(zmb3): switch off the fork
-          submodules: recursive
           path: dist
+          ref: ${{ github.ref_name }}
+          ssh-key: ${{ secrets.SSH_PRIVATE_KEY }}
+          submodules: recursive
+          fetch-depth: 0
 
       # This workflow only runs on push to a protected branch, so the code
       # has already been reviewed and is trusted. This means it is safe to
@@ -41,16 +43,16 @@ jobs:
           git config --global user.email github-goteleport-core-svc@goteleport.com
           git config --global user.name "$GITHUB_ACTOR"
 
-          export WEBAPPS_BRANCH=$(git branch --show-current)
-
+          echo "Updating webassets.e"
           cd dist/e
-          git switch $WEBAPPS_BRANCH
           git add -A
-          git commit -m "Update webassets.e from gravitational/webapps@$GITHUB_SHA"
-          git push
+          git status
+          git commit -m "Update webassets.e from gravitational/webapps@$GITHUB_SHA" --allow-empty
+          git push origin HEAD:$GITHUB_REF_NAME
 
+          echo "Updating webassets"
           cd ..
-          git switch $WEBAPPS_BRANCH
           git add -A
-          git commit -m "Update webassets from gravitational/webapps@$GITHUB_SHA"
-          git push
+          git status
+          git commit -m "Update webassets from gravitational/webapps@$GITHUB_SHA" --allow-empty
+          git push origin HEAD:$GITHUB_REF_NAME
