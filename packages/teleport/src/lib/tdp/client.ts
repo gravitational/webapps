@@ -29,6 +29,7 @@ import Codec, {
   SharedDirectoryErrCode,
   SharedDirectoryInfoResponse,
   SharedDirectoryListResponse,
+  SharedDirectoryMoveResponse,
   SharedDirectoryReadResponse,
   SharedDirectoryWriteResponse,
   FileSystemObject,
@@ -422,6 +423,10 @@ export default class Client extends EventEmitterWebAuthnSender {
 
   sendSharedDirectoryListResponse(res: SharedDirectoryListResponse) {
     this.send(this.codec.encodeSharedDirectoryListResponse(res));
+  }
+
+  sendSharedDirectoryMoveResponse(res: SharedDirectoryMoveResponse) {
+    this.send(this.codec.encodeSharedDirectoryMoveResponse(res));
   }
 
   sendSharedDirectoryReadResponse(response: SharedDirectoryReadResponse) {
