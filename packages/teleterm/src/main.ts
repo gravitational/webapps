@@ -89,6 +89,8 @@ function initializeApp(): void {
       });
     }
 
+    enableWebHandlersProtection();
+
     windowsManager.createWindow();
   });
 

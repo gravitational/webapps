@@ -1,7 +1,9 @@
-import { protocol, app } from 'electron';
 import { fileURLToPath } from 'node:url';
 import * as path from 'path';
 import fs from 'fs';
+
+import { protocol, app } from 'electron';
+
 import Logger from 'teleterm/logger';
 
 const logger = new Logger('');
