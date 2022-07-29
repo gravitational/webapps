@@ -48,28 +48,32 @@ Prepare Webapps repo
 $ git clone https://github.com/gravitational/webapps.git
 $ cd webapps
 $ yarn install
-$ yarn build-term
-$ yarn package-term
+$ yarn build-and-package-term
 ```
 
 The installable file can be found in `/webapps/packages/teleterm/build/release/`
 
 ## Development
 
-**Make sure to run `yarn build-term` first** (as described above) before attempting to launch the
-app in the development mode. That's because Electron is running its own version of Node. That
-command will fetch native packages that were built for that specific version of Node.
+**Make sure to run `yarn build-native-deps-for-term` first** before attempting to launch the app in
+development mode. That's because Electron is running its own version of Node. That command will
+fetch or build native packages that were made for that specific version of Node.
 
-To launch `teleterm` in the development mode:
+```
+$ yarn install
+$ yarn build-native-deps-for-term
+```
+
+To launch `teleterm` in development mode:
 
 ```sh
 $ cd webapps
 
-## TELETERM_TSH_PATH is the environment variable that points to local tsh binary
+## TELETERM_TSH_PATH is the environment variable that points to the local tsh binary.
 $ TELETERM_TSH_PATH=$PWD/../teleport/build/tsh yarn start-term
 ```
 
-For quick restarts, that restarts all processes and `tsh` daemon, press `F6`.
+For a quick restart which restarts all processes and the `tsh` daemon, press `F6`.
 
 ## Tips
 
