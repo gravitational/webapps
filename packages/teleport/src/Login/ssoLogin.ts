@@ -16,6 +16,6 @@ function getEntryRoute() {
     const { search, pathname } = history.original().location;
     const knownRoute = history.ensureKnownRoute(pathname);
     const knownRedirect = history.ensureBaseUrl(knownRoute);
-    const query = search ? encodeURIComponent(search) : '';
+    const query = search ? search : '';
     return knownRedirect + query
 }
