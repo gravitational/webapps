@@ -1,9 +1,10 @@
-import { protocol } from 'electron';
+import { protocol, app } from 'electron';
 import { fileURLToPath } from 'node:url';
 import * as path from 'path';
 import fs from 'fs';
 import Logger from 'teleterm/logger';
 
+const logger = new Logger('');
 const disabledSchemes = [
   'about',
   'content',
@@ -17,14 +18,20 @@ const disabledSchemes = [
   'mailto',
 ];
 
-const logger = new Logger('WebHandlerProtection');
+// these protocols are not used within the app
+function disableUnusedProtocols() {
+  disabledSchemes.forEach(scheme => {
+    protocol.interceptFileProtocol(scheme, (_request, callback) => {
+      logger.error(`Denying request: Invalid scheme (${scheme})`);
+      callback({ error: -3 });
+    });
+  });
+}
 
 // intercept, clean, and validate the requested file path.
-export function enableWebHandlerProtection({
-  installPath,
-}: {
-  installPath: string;
-}) {
+function interceptFileProtocol() {
+  const installPath = app.getAppPath();
+
   protocol.interceptFileProtocol('file', (request, callback) => {
     const target = path.normalize(fileURLToPath(request.url));
     const realPath = fs.existsSync(target) ? fs.realpathSync(target) : target;
@@ -36,7 +43,7 @@ export function enableWebHandlerProtection({
 
     if (!realPath.startsWith(installPath)) {
       logger.error(
-        `Denying request to path '${realPath}' (Not in installPath: '${installPath}'`
+        `Denying request to path '${realPath}' (not in installPath: '${installPath})'`
       );
       return callback({ error: -3 });
     }
@@ -45,11 +52,9 @@ export function enableWebHandlerProtection({
       path: realPath,
     });
   });
+}
 
-  disabledSchemes.forEach(scheme => {
-    protocol.interceptFileProtocol(scheme, (_request, callback) => {
-      logger.error(`Denying request: Invalid scheme (${scheme})`);
-      callback({ error: -3 });
-    });
-  });
+export function enableWebHandlersProtection() {
+  interceptFileProtocol();
+  disableUnusedProtocols();
 }
