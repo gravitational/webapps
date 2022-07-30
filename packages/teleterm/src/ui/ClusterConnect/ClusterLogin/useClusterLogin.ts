@@ -45,40 +45,44 @@ export default function useClusterLogin(props: Props) {
   });
 
   const [loginAttempt, login, setAttempt] = useAsync(
-    (authnType: PrimaryAuthType, opts: types.LoginParams) => {
+    (params: LoginParamsWithKind) => {
       refAbortCtrl.current = clustersService.client.createAbortController();
-      switch (authnType) {
+      switch (params.kind) {
         case 'local':
           return clustersService.loginLocal(
-            opts as types.LoginLocalParams,
+            params as types.LoginLocalParams,
             refAbortCtrl.current.signal
           );
         case 'passwordless':
           return clustersService.loginPasswordless(
-            opts as types.LoginPasswordlessParams,
+            params as types.LoginPasswordlessParams,
+            refAbortCtrl.current.signal
+          );
+        case 'sso':
+          return clustersService.loginSso(
+            params as types.LoginSsoParams,
             refAbortCtrl.current.signal
           );
         default:
-          // sso
-          return clustersService.loginSso(
-            opts as types.LoginSsoParams,
-            refAbortCtrl.current.signal
+          throw new Error(
+            `loginAttempt: login params kind ${params.kind} not implemented`
           );
       }
     }
   );
 
   const onLoginWithLocal = (
-    username = '',
-    password = '',
-    token = '',
-    authType?: types.Auth2faType
+    username: string,
+    password: string,
+    token: string,
+    secondFactor?: types.Auth2faType
   ) => {
-    if (authType === 'webauthn') {
+    if (secondFactor === 'webauthn') {
       setWebauthnLogin({ prompt: 'tap' });
     }
 
-    login('local', {
+    login({
+      kind: 'local',
       clusterUri,
       username,
       password,
@@ -87,7 +91,8 @@ export default function useClusterLogin(props: Props) {
   };
 
   const onLoginWithPasswordless = () => {
-    login('passwordless', {
+    login({
+      kind: 'passwordless',
       clusterUri,
       onPromptCallback: (prompt: types.WebauthnLoginPrompt) => {
         const newLogin: WebauthnLogin = {
@@ -113,7 +118,7 @@ export default function useClusterLogin(props: Props) {
           newLogin.onUserResponse = (index: number) => {
             setWebauthnLogin({
               ...newLogin,
-              // prevent user from clicking on submit buttons more than once
+              // prevent user from clicking on multiple usernames
               processing: true,
             });
             prompt.onUserResponse(index);
@@ -127,7 +132,8 @@ export default function useClusterLogin(props: Props) {
 
   const onLoginWithSso = (provider: types.AuthProvider) => {
     promptSsoStatus(true);
-    login('sso', {
+    login({
+      kind: 'sso',
       clusterUri,
       providerName: provider.name,
       providerType: provider.type,
@@ -144,7 +150,7 @@ export default function useClusterLogin(props: Props) {
   };
 
   // Since the login form can have two views (primary and secondary)
-  // we need to clear any rendered error dialogus before switching.
+  // we need to clear any rendered error dialogs before switching.
   const clearLoginAttempt = () => {
     setAttempt({ status: '', statusText: '', data: null });
   };
@@ -194,4 +200,8 @@ export type WebauthnLogin = {
   processing?: boolean;
   loginUsernames?: string[];
   onUserResponse?(val: number | string): void;
+};
+
+type LoginParamsWithKind = types.LoginParams & {
+  kind: PrimaryAuthType;
 };

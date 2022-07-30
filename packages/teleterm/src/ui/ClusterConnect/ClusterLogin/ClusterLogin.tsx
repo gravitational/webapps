@@ -72,13 +72,8 @@ export function ClusterLoginPresentation({
         {initAttempt.status === 'success' && (
           <LoginForm
             title={'Sign into Teleport'}
-            authProviders={initAttempt.data.authProvidersList}
-            auth2faType={initAttempt.data.secondFactor}
-            isLocalAuthEnabled={initAttempt.data.localAuthEnabled}
-            isPasswordlessEnabled={initAttempt.data.allowPasswordless}
-            localConnectorName={initAttempt.data.localConnectorName}
+            {...initAttempt.data}
             primaryAuthType={getPrimaryAuthType(initAttempt.data)}
-            preferredMfa={initAttempt.data.preferredMfa}
             loggedInUserName={loggedInUserName}
             onLoginWithSso={onLoginWithSso}
             onLoginWithPasswordless={onLoginWithPasswordless}

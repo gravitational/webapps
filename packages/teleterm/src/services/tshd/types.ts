@@ -80,7 +80,7 @@ export type TshClient = {
     abortSignal?: TshAbortSignal
   ) => Promise<void>;
   loginPasswordless: (
-    params: LoginParams,
+    params: LoginPasswordlessParams,
     abortSignal?: TshAbortSignal
   ) => Promise<void>;
   logout: (clusterUri: string) => Promise<void>;
@@ -111,7 +111,7 @@ export type LoginSsoParams = {
 
 export type LoginPasswordlessParams = {
   clusterUri: string;
-  onPromptCallback(res: WebauthnLoginPrompt);
+  onPromptCallback(res: WebauthnLoginPrompt): void;
 };
 
 export type LoginParams =

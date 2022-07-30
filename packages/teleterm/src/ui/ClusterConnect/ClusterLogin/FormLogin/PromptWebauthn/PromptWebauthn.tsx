@@ -22,8 +22,7 @@ import Validation from 'shared/components/Validation';
 import LinearProgress from 'teleterm/ui/components/LinearProgress';
 
 import type { WebauthnLogin } from '../../useClusterLogin';
-
-const svg = require('./hardware.svg');
+import svgHardwareKey from './hardware.svg';
 
 export function PromptWebauthn(props: Props) {
   const { prompt } = props;
@@ -39,7 +38,7 @@ export function PromptWebauthn(props: Props) {
 function PromptTouch({ onCancel, prompt }: Props) {
   return (
     <>
-      <Image mb={4} width="200px" src={svg} mx="auto" />
+      <Image mb={4} width="200px" src={svgHardwareKey} mx="auto" />
       <Box textAlign="center" style={{ position: 'relative' }}>
         {prompt === 'retap' ? (
           <Text bold>Tap your security key again to complete the request</Text>
