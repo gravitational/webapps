@@ -233,8 +233,7 @@ export default function createClient(
             api.LoginPasswordlessResponse
           >;
 
-          // count tracks how many "tap" requests came through.
-          let count = 0;
+          let hasDeviceBeenTapped = false;
 
           // Init the stream.
           stream.write(streamReq);
@@ -279,11 +278,11 @@ export default function createClient(
                 return;
 
               case api.PasswordlessPrompt.PASSWORDLESS_PROMPT_TAP:
-                if (count == 0) {
-                  count += 1;
-                  params.onPromptCallback({ type: 'tap' });
-                } else {
+                if (hasDeviceBeenTapped) {
                   params.onPromptCallback({ type: 'retap' });
+                } else {
+                  hasDeviceBeenTapped = true;
+                  params.onPromptCallback({ type: 'tap' });
                 }
                 return;
 

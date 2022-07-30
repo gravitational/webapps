@@ -67,12 +67,16 @@ export class ClustersService extends ImmutableStore<ClustersServiceState> {
 
   async loginLocal(params: LoginLocalParams, abortSignal: tsh.TshAbortSignal) {
     await this.client.loginLocal(params, abortSignal);
-    await this.syncAndRestartCluster(params.clusterUri);
+    await this.syncRootClusterAndRestartClusterGatewaysAndCatchErrors(
+      params.clusterUri
+    );
   }
 
   async loginSso(params: LoginSsoParams, abortSignal: tsh.TshAbortSignal) {
     await this.client.loginSso(params, abortSignal);
-    await this.syncAndRestartCluster(params.clusterUri);
+    await this.syncRootClusterAndRestartClusterGatewaysAndCatchErrors(
+      params.clusterUri
+    );
   }
 
   async loginPasswordless(
@@ -80,10 +84,14 @@ export class ClustersService extends ImmutableStore<ClustersServiceState> {
     abortSignal: tsh.TshAbortSignal
   ) {
     await this.client.loginPasswordless(params, abortSignal);
-    await this.syncAndRestartCluster(params.clusterUri);
+    await this.syncRootClusterAndRestartClusterGatewaysAndCatchErrors(
+      params.clusterUri
+    );
   }
 
-  private async syncAndRestartCluster(clusterUri: string) {
+  private async syncRootClusterAndRestartClusterGatewaysAndCatchErrors(
+    clusterUri: string
+  ) {
     await Promise.allSettled([
       this.syncRootClusterAndCatchErrors(clusterUri),
       // A temporary workaround until the gateways are able to refresh their own certs on incoming
