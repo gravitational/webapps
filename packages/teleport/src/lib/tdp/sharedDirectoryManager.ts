@@ -66,7 +66,7 @@ export class SharedDirectoryManager {
   /**
    * Gets the FileOrDirInfo for all the children of the directory at path.
    * @throws Will throw an error if a directory has not already been initialized via add().
-   * @throws {PathDoesNotExistError} if the path isn't a valid path in the shared directory
+   * @throws {PathDoesNotExistError} if the pathstr isn't a valid path in the shared directory
    */
   async listContents(path: string): Promise<FileOrDirInfo[]> {
     this.checkReady();
@@ -119,7 +119,7 @@ export class SharedDirectoryManager {
   /**
    * Writes the bytes in writeData to the file at path starting at offset.
    * @throws Will throw an error if a directory has not already been initialized via add().
-   * @throws {PathDoesNotExistError} if the path isn't a valid path in the shared directory
+   * @throws {PathDoesNotExistError} if the pathstr isn't a valid path in the shared directory
    */
   async writeFile(
     path: string,
@@ -141,29 +141,6 @@ export class SharedDirectoryManager {
     file.close(); // Needed to actually write data to disk.
 
     return writeData.length;
-  }
-
-  /**
-   * Moves the file or directory at originalPath to newPath. It's designed to work similar to
-   * the Linux mv utility with no options: https://linux.die.net/man/1/mv.
-   * @throws Will throw an error if a directory has not already been initialized via add().
-   * @throws {PathDoesNotExistError} if the path isn't a valid path in the shared directory
-   */
-  async move(originalPath: string, newPath: string): Promise<void> {
-    // See https://web.dev/file-system-access/#renaming-and-moving-files-and-folders
-    this.checkReady();
-
-    const originalFileOrDir = await this.walkPath(originalPath);
-
-    let split = newPath.split('/');
-    const newName = split.pop();
-    const newDirPath = split.join('/');
-    const newDir = await this.walkPath(newDirPath);
-    if (newDir.kind !== 'directory') {
-      throw new Error('cannot move a file into another file');
-    }
-
-    await originalFileOrDir.move(newDir, newName);
   }
 
   /**
