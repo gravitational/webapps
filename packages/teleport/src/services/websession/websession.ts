@@ -16,12 +16,11 @@ limitations under the License.
 
 import Logger from 'shared/libs/logger';
 import cfg from 'teleport/config';
-import history from 'teleport/services/history';
 import api from 'teleport/services/api';
 import localStorage, { KeysEnum } from 'teleport/services/localStorage';
 import makeBearerToken from './makeBearerToken';
 import { RenewSessionRequest } from './types';
-import ssoLogin from 'teleport/Login/ssoLogin';
+import { redirectToExternalIdentityProvider } from 'teleport/Login/ssoLogin';
 
 
 // Time to determine when to renew session which is
@@ -35,7 +34,7 @@ let sesstionCheckerTimerId = null;
 const session = {
   logout() {
     api.delete(cfg.api.sessionPath).finally(() => {
-      ssoLogin()
+      redirectToExternalIdentityProvider()
     });
 
     this.clear();
