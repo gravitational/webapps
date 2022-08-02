@@ -312,6 +312,7 @@ export default class Client extends EventEmitterWebAuthnSender {
 
   handleSharedDirectoryMoveRequest(buffer: ArrayBuffer) {
     const req = this.codec.decodeSharedDirectoryMoveRequest(buffer);
+    // Always send back Failed for now, see https://github.com/gravitational/webapps/issues/1064
     this.sendSharedDirectoryMoveResponse({
       completionId: req.completionId,
       errCode: SharedDirectoryErrCode.Failed,
