@@ -117,17 +117,20 @@ export const ProgressBarDesktop = (props: {
         });
       });
 
-      playerClient.addListener(PlayerClientEvent.PLAY_SPEED, (speed: number) => {
-        playSpeed = speed;
+      playerClient.addListener(
+        PlayerClientEvent.PLAY_SPEED,
+        (speed: number) => {
+          playSpeed = speed;
 
-        setState(prevState => {
-          if (prevState.isPlaying) {
-            stopProgress();
-            smoothOutProgress(playSpeed);
-          }
-          return { ...prevState, isPlaying: prevState.isPlaying };
-        });
-      });
+          setState(prevState => {
+            if (prevState.isPlaying) {
+              stopProgress();
+              smoothOutProgress(playSpeed);
+            }
+            return { ...prevState, isPlaying: prevState.isPlaying };
+          });
+        }
+      );
 
       return () => {
         playerClient.nuke();

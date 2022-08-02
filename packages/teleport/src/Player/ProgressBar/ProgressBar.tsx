@@ -64,10 +64,12 @@ function PlaySpeedSelector(props: { onChange?: (speed: number) => void }) {
     return null;
   }
 
-  let handleChange = (event: any) => { props.onChange(parseFloat(event.target.value)) }
+  let handleChange = (event: any) => {
+    props.onChange(parseFloat(event.target.value));
+  };
 
   return (
-    <select style={{marginLeft: "8px"}} onChange={handleChange} defaultValue={"1.0"}>
+    <PlaySpeedSelectorItem onChange={handleChange} defaultValue={'1.0'}>
       <option value="0.25">0.25x</option>
       <option value="0.5">0.5x</option>
       <option value="1.0">1.0x</option>
@@ -75,9 +77,16 @@ function PlaySpeedSelector(props: { onChange?: (speed: number) => void }) {
       <option value="4.0">4.0x</option>
       <option value="8.0">8.0x</option>
       <option value="16.0">16.0x</option>
-    </select>
-  )
+    </PlaySpeedSelectorItem>
+  );
 }
+
+const PlaySpeedSelectorItem = styled.select`
+  margin-left: 8px;
+  border: none;
+  background: ${colors.dark};
+  color: ${colors.light};
+`;
 
 const SliderContainer = styled.div`
   display: flex;
