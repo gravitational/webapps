@@ -56,14 +56,13 @@ export const ProgressBarDesktop = (props: {
       // This ensures the bar continues to progress even during playbacks where there are long
       // intervals between TDP events sent to us by the server. The interval should be active
       // whenever the playback is in "play" mode.
-      // TODO(joel): fix bar movement
       // TODO(joel): add speed selector
       const smoothOutProgress = (speed: number) => {
         const smoothingInterval = 25;
 
         intervalRef.current = setInterval(() => {
           setState(prevState => {
-            const nextTimeMs = prevState.current + smoothingInterval;
+            const nextTimeMs = prevState.current + smoothingInterval * speed;
             if (nextTimeMs <= durationMs) {
               return updateCurrentTime(prevState, nextTimeMs);
             } else {
