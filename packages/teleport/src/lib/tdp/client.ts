@@ -458,8 +458,7 @@ export default class Client extends EventEmitterWebAuthnSender {
     this.send(this.codec.encodeClientScreenSpec(spec));
   }
 
-  // Emits an TdpClientEvent.TDP_ERROR event. Sets this.errored to true to alert the socket.onclose handler that
-  // it needn't emit a generic unknown error event.
+  // Emits an errType event, closing the socket if the error was fatal.
   private handleError(
     err: Error,
     errType: TdpClientEvent.TDP_ERROR | TdpClientEvent.CLIENT_ERROR,
