@@ -11,44 +11,50 @@ import {
   ClipboardError,
   UnintendedDisconnect,
   WebAuthnPrompt,
+  DismissibleError,
 } from './DesktopSession.story';
 
-test('connected settings false', () => {
+test('connected settings false', async () => {
   const { container } = render(<ConnectedSettingsFalse />);
   expect(container).toMatchSnapshot();
 });
 
-test('connected settings true', () => {
+test('connected settings true', async () => {
   const { container } = render(<ConnectedSettingsTrue />);
   expect(container).toMatchSnapshot();
 });
 
-test('disconnected', () => {
+test('disconnected', async () => {
   const { container } = render(<Disconnected />);
   expect(container).toMatchSnapshot();
 });
 
-test('fetch error', () => {
-  const { container } = render(<FetchError />);
-  expect(container).toMatchSnapshot();
+test('fetch error', async () => {
+  const { getByTestId } = render(<FetchError />);
+  expect(getByTestId('Modal')).toMatchSnapshot();
 });
 
-test('connection error', () => {
-  const { container } = render(<ConnectionError />);
-  expect(container).toMatchSnapshot();
+test('connection error', async () => {
+  const { getByTestId } = render(<ConnectionError />);
+  expect(getByTestId('Modal')).toMatchSnapshot();
 });
 
-test('clipboard error', () => {
-  const { container } = render(<ClipboardError />);
-  expect(container).toMatchSnapshot();
+test('clipboard error', async () => {
+  const { getByTestId } = render(<ClipboardError />);
+  expect(getByTestId('Modal')).toMatchSnapshot();
 });
 
-test('unintended disconnect', () => {
-  const { container } = render(<UnintendedDisconnect />);
-  expect(container).toMatchSnapshot();
+test('unintended disconnect', async () => {
+  const { getByTestId } = render(<UnintendedDisconnect />);
+  expect(getByTestId('Modal')).toMatchSnapshot();
+});
+
+test('dismissible error', async () => {
+  const { getByTestId } = render(<DismissibleError />);
+  expect(getByTestId('Modal')).toMatchSnapshot();
 });
 
 test('webauthn prompt', () => {
-  const { container } = render(<WebAuthnPrompt />);
-  expect(container).toMatchSnapshot();
+  const { getByTestId } = render(<WebAuthnPrompt />);
+  expect(getByTestId('Modal')).toMatchSnapshot();
 });
