@@ -18,13 +18,13 @@ import Client, { TdpClientEvent } from './client';
 
 enum Action {
   TOGGLE_PLAY_PAUSE = 'play/pause',
-  PLAY_SPEED = 'play/speed',
+  PLAY_SPEED = 'speed',
   // TODO: MOVE = 'move'
 }
 
 export enum PlayerClientEvent {
   TOGGLE_PLAY_PAUSE = 'play/pause',
-  PLAY_SPEED = 'play/speed',
+  PLAY_SPEED = 'speed',
   UPDATE_CURRENT_TIME = 'time',
   SESSION_END = 'end',
   PLAYBACK_ERROR = 'playback error',
