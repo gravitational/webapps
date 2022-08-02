@@ -14,42 +14,42 @@ import {
   DismissibleError,
 } from './DesktopSession.story';
 
-test('connected settings false', async () => {
+test('connected settings false', () => {
   const { container } = render(<ConnectedSettingsFalse />);
   expect(container).toMatchSnapshot();
 });
 
-test('connected settings true', async () => {
+test('connected settings true', () => {
   const { container } = render(<ConnectedSettingsTrue />);
   expect(container).toMatchSnapshot();
 });
 
-test('disconnected', async () => {
+test('disconnected', () => {
   const { container } = render(<Disconnected />);
   expect(container).toMatchSnapshot();
 });
 
-test('fetch error', async () => {
+test('fetch error', () => {
   const { getByTestId } = render(<FetchError />);
   expect(getByTestId('Modal')).toMatchSnapshot();
 });
 
-test('connection error', async () => {
+test('connection error', () => {
   const { getByTestId } = render(<ConnectionError />);
   expect(getByTestId('Modal')).toMatchSnapshot();
 });
 
-test('clipboard error', async () => {
+test('clipboard error', () => {
   const { getByTestId } = render(<ClipboardError />);
   expect(getByTestId('Modal')).toMatchSnapshot();
 });
 
-test('unintended disconnect', async () => {
+test('unintended disconnect', () => {
   const { getByTestId } = render(<UnintendedDisconnect />);
   expect(getByTestId('Modal')).toMatchSnapshot();
 });
 
-test('dismissible error', async () => {
+test('dismissible error', () => {
   const { getByTestId } = render(<DismissibleError />);
   expect(getByTestId('Modal')).toMatchSnapshot();
 });
