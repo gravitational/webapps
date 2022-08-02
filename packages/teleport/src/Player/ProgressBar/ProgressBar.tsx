@@ -29,6 +29,7 @@ export default function ProgressBar(props: ProgressBarProps) {
       <ActionButton onClick={props.toggle}>
         <Icon />
       </ActionButton>
+      <PlaySpeedSelector onChange={props.playSpeed} />
       <TimeText>{props.time}</TimeText>
       <SliderContainer>
         <Slider
@@ -55,7 +56,28 @@ export type ProgressBarProps = {
   toggle: () => void;
   style?: React.CSSProperties;
   id?: string;
+  playSpeed?: (speed: number) => void;
 };
+
+function PlaySpeedSelector(props: { onChange?: (speed: number) => void }) {
+  if (!props.onChange) {
+    return null;
+  }
+
+  let handleChange = (event: any) => { props.onChange(parseFloat(event.target.value)) }
+
+  return (
+    <select style={{marginLeft: "8px"}} onChange={handleChange} defaultValue={"1.0"}>
+      <option value="0.25">0.25x</option>
+      <option value="0.5">0.5x</option>
+      <option value="1.0">1.0x</option>
+      <option value="2.0">2.0x</option>
+      <option value="4.0">4.0x</option>
+      <option value="8.0">8.0x</option>
+      <option value="16.0">16.0x</option>
+    </select>
+  )
+}
 
 const SliderContainer = styled.div`
   display: flex;
