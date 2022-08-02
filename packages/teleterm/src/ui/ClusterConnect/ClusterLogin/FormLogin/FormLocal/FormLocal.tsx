@@ -24,6 +24,7 @@ import {
   requiredField,
 } from 'shared/components/Validation/rules';
 import createMfaOptions, { MfaOption } from 'shared/utils/createMfaOptions';
+
 import type { Props } from '../FormLogin';
 
 export const FormLocal = ({
@@ -68,7 +69,7 @@ export const FormLocal = ({
   return (
     <Validation>
       {({ validator }) => (
-        <Box as="form" height="310px">
+        <Box as="form" height={secondFactor !== 'off' ? '310px' : 'auto'}>
           <FieldInput
             rule={requiredField('Username is required')}
             label="Username"

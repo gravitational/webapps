@@ -17,6 +17,7 @@ import React from 'react';
 import styled from 'styled-components';
 import { Text, Flex, ButtonText, Box } from 'design';
 import { Key, ArrowForward } from 'design/Icon';
+
 import type { Props } from '../FormLogin';
 
 export const FormPasswordless = ({

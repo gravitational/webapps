@@ -99,6 +99,34 @@ export const LocalDisabled = () => {
   );
 };
 
+export const LocalOnly = () => {
+  const props = makeProps();
+  props.initAttempt.data.secondFactor = 'off';
+  props.initAttempt.data.allowPasswordless = false;
+
+  return (
+    <TestContainer>
+      <ClusterLoginPresentation {...props} />
+    </TestContainer>
+  );
+};
+
+export const SsoOnly = () => {
+  const props = makeProps();
+  props.initAttempt.data.localAuthEnabled = false;
+  props.initAttempt.data.authType = 'github';
+  props.initAttempt.data.authProvidersList = [
+    { type: 'github', name: 'github', displayName: 'github' },
+    { type: 'saml', name: 'microsoft', displayName: 'microsoft' },
+  ];
+
+  return (
+    <TestContainer>
+      <ClusterLoginPresentation {...props} />
+    </TestContainer>
+  );
+};
+
 export const LocalWithPasswordless = () => {
   return (
     <TestContainer>

@@ -20,6 +20,7 @@ import { Text, Flex, ButtonText, Box } from 'design';
 import * as Alerts from 'design/Alert';
 import { StepSlider } from 'design/StepSlider';
 import { Attempt } from 'shared/hooks/useAsync';
+
 import * as types from 'teleterm/ui/services/clusters/types';
 
 import { PromptWebauthn } from './PromptWebauthn';
@@ -34,7 +35,6 @@ import type { StepComponentProps } from 'design/StepSlider';
 
 export default function LoginForm(props: Props) {
   const {
-    title,
     loginAttempt,
     onAbort,
     authProvidersList,
@@ -57,10 +57,7 @@ export default function LoginForm(props: Props) {
   // and display sso providers if any.
   if (!localAuthEnabled && ssoEnabled) {
     return (
-      <FlexBordered>
-        <Text typography="h3" pt={5} textAlign="center" color="light">
-          {title}
-        </Text>
+      <FlexBordered p={4} pb={5}>
         {loginAttempt.status === 'error' && (
           <Alerts.Danger m={5} mb={0}>
             {loginAttempt.statusText}
@@ -278,7 +275,6 @@ export type Props = types.AuthSettings & {
   webauthnLogin: WebauthnLogin;
   loginAttempt: LoginAttempt;
   clearLoginAttempt(): void;
-  title?: string;
   primaryAuthType: PrimaryAuthType;
   loggedInUserName?: string;
   onAbort(): void;

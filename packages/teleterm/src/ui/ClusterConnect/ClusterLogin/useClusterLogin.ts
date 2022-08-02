@@ -45,27 +45,24 @@ export default function useClusterLogin(props: Props) {
   });
 
   const [loginAttempt, login, setAttempt] = useAsync(
-    (params: LoginParamsWithKind) => {
+    (params: types.LoginParams) => {
       refAbortCtrl.current = clustersService.client.createAbortController();
       switch (params.kind) {
         case 'local':
           return clustersService.loginLocal(
-            params as types.LoginLocalParams,
+            params,
             refAbortCtrl.current.signal
           );
         case 'passwordless':
           return clustersService.loginPasswordless(
-            params as types.LoginPasswordlessParams,
+            params,
             refAbortCtrl.current.signal
           );
         case 'sso':
-          return clustersService.loginSso(
-            params as types.LoginSsoParams,
-            refAbortCtrl.current.signal
-          );
+          return clustersService.loginSso(params, refAbortCtrl.current.signal);
         default:
           throw new Error(
-            `loginAttempt: login params kind ${params.kind} not implemented`
+            `loginAttempt: login params kind not implemented: ${params}`
           );
       }
     }

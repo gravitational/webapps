@@ -100,28 +100,24 @@ export type TshAbortSignal = {
   removeEventListener(cb: (...args: any[]) => void): void;
 };
 
-export type LoginLocalParams = {
+interface LoginParamsBase {
   clusterUri: string;
+}
+
+export interface LoginLocalParams extends LoginParamsBase {
   username: string;
   password: string;
   token?: string;
-};
+}
 
-export type LoginSsoParams = {
-  clusterUri: string;
+export interface LoginSsoParams extends LoginParamsBase {
   providerType: string;
   providerName: string;
-};
+}
 
-export type LoginPasswordlessParams = {
-  clusterUri: string;
+export interface LoginPasswordlessParams extends LoginParamsBase {
   onPromptCallback(res: WebauthnLoginPrompt): void;
-};
-
-export type LoginParams =
-  | LoginLocalParams
-  | LoginSsoParams
-  | LoginPasswordlessParams;
+}
 
 export type CreateGatewayParams = {
   targetUri: string;

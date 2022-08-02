@@ -21,8 +21,9 @@ import Validation from 'shared/components/Validation';
 
 import LinearProgress from 'teleterm/ui/components/LinearProgress';
 
-import type { WebauthnLogin } from '../../useClusterLogin';
 import svgHardwareKey from './hardware.svg';
+
+import type { WebauthnLogin } from '../../useClusterLogin';
 
 export function PromptWebauthn(props: Props) {
   const { prompt } = props;

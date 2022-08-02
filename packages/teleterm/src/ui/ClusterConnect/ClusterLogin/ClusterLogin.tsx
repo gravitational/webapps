@@ -71,7 +71,6 @@ export function ClusterLoginPresentation({
         )}
         {initAttempt.status === 'success' && (
           <LoginForm
-            title={'Sign into Teleport'}
             {...initAttempt.data}
             primaryAuthType={getPrimaryAuthType(initAttempt.data)}
             loggedInUserName={loggedInUserName}
