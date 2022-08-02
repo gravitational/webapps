@@ -37,13 +37,18 @@ export type AuthType = shared.AuthType;
 
 export type AuthProvider = tsh.AuthProvider;
 
-export type LoginParams = tsh.LoginParams;
+export type LoginLocalParams = { kind: 'local' } & tsh.LoginLocalParams;
 
-export type LoginLocalParams = tsh.LoginLocalParams;
+export type LoginPasswordlessParams = {
+  kind: 'passwordless';
+} & tsh.LoginPasswordlessParams;
 
-export type LoginPasswordlessParams = tsh.LoginPasswordlessParams;
+export type LoginSsoParams = { kind: 'sso' } & tsh.LoginSsoParams;
 
-export type LoginSsoParams = tsh.LoginSsoParams;
+export type LoginParams =
+  | LoginLocalParams
+  | LoginPasswordlessParams
+  | LoginSsoParams;
 
 export type Application = tsh.Application;
 

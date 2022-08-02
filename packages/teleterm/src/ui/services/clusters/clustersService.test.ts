@@ -182,6 +182,7 @@ test('login into cluster and sync resources', async () => {
   const client = getClientMocks();
   const service = createService(client, new NotificationsServiceMock());
   const loginParams = {
+    kind: 'local' as const,
     clusterUri,
     username: 'admin',
     password: 'admin',
