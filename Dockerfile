@@ -25,8 +25,9 @@ WORKDIR web-apps
 RUN cp yarn.lock yarn-before-install.lock \
   && yarn install \
   && git diff --no-index --exit-code yarn-before-install.lock yarn.lock || \
-  { echo "yarn.lock needs an update; run yarn install, verify that correct dependencies were installed \
-and commit the updated version of yarn.lock"; exit 1; }
+  { echo "yarn.lock needs an update. Run yarn install, verify that correct dependencies were installed \
+and commit the updated version of yarn.lock. Make sure you have the packages/webapps.e submodule \
+cloned first."; exit 1; }
 
 # copy the rest of the files and run yarn build command
 COPY  . .
