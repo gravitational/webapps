@@ -142,7 +142,7 @@ export const ProgressBarDesktop = (props: {
     <ProgressBar
       {...state}
       toggle={() => playerClient.togglePlayPause()}
-      playSpeed={(speed: number) => playerClient.setPlaySpeed(speed)}
+      onPlaySpeedChange={(newSpeed: number) => playerClient.setPlaySpeed(newSpeed)}
       move={() => {}}
       style={props.style}
       id={props.id}
