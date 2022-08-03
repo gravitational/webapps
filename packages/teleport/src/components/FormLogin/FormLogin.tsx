@@ -185,7 +185,7 @@ const LocalForm = ({
   );
 
   const usernameInputRef = useRefAutoFocus<HTMLInputElement>({
-    canFocus: hasTransitionEnded,
+    shouldFocus: hasTransitionEnded,
   });
 
   const [mfaType, setMfaType] = useState(mfaOptions[0]);

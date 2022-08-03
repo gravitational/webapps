@@ -38,7 +38,7 @@ export function NewPasswordlessDevice(props: Props & SliderProps) {
   const [deviceName, setDeviceName] = useState('passwordless-device');
 
   const deviceNameInputRef = useRefAutoFocus<HTMLInputElement>({
-    canFocus: hasTransitionEnded,
+    shouldFocus: hasTransitionEnded,
   });
 
   function handleOnSubmit(

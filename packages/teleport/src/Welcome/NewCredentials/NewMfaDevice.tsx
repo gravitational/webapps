@@ -56,7 +56,7 @@ export function NewMfaDevice(props: Props) {
   );
 
   const deviceNameInputRef = useRefAutoFocus<HTMLInputElement>({
-    canFocus: hasTransitionEnded,
+    shouldFocus: hasTransitionEnded,
     refocusDeps: [mfaType.value],
   });
 

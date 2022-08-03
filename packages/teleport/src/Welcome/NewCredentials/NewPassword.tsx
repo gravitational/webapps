@@ -64,7 +64,7 @@ export function NewPassword(props: Props) {
   }
 
   const passwordInputRef = useRefAutoFocus<HTMLInputElement>({
-    canFocus: hasTransitionEnded,
+    shouldFocus: hasTransitionEnded,
   });
 
   function switchToPasswordlessFlow(e, applyNextAnimation = false) {
