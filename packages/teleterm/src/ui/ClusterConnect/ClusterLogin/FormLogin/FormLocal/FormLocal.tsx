@@ -48,10 +48,10 @@ export const FormLocal = ({
 
   const [mfaType, setMfaType] = useState(mfaOptions[0]);
   const usernameInputRef = useRefAutoFocus<HTMLInputElement>({
-    canFocus: hasTransitionEnded && autoFocus && !loggedInUserName,
+    shouldFocus: hasTransitionEnded && autoFocus && !loggedInUserName,
   });
   const passwordInputRef = useRefAutoFocus<HTMLInputElement>({
-    canFocus: hasTransitionEnded && autoFocus && !!loggedInUserName,
+    shouldFocus: hasTransitionEnded && autoFocus && !!loggedInUserName,
   });
 
   function onSetMfaOption(option: MfaOption, validator: Validator) {

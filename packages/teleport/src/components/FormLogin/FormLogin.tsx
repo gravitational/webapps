@@ -404,13 +404,7 @@ const Secondary = ({
           </>
         );
       } else {
-        $secondary = (
-          <LocalForm
-            {...otherProps}
-            hasTransitionEnded={otherProps.hasTransitionEnded}
-            autoFocus={true}
-          />
-        );
+        $secondary = <LocalForm {...otherProps} autoFocus={true} />;
       }
       break;
     case 'sso':
@@ -423,13 +417,7 @@ const Secondary = ({
           </>
         );
       } else {
-        $secondary = (
-          <LocalForm
-            {...otherProps}
-            hasTransitionEnded={otherProps.hasTransitionEnded}
-            autoFocus={true}
-          />
-        );
+        $secondary = <LocalForm {...otherProps} autoFocus={true} />;
       }
       break;
     case 'local':

@@ -1,5 +1,5 @@
 import { routing } from 'teleterm/ui/uri';
-import { assertUnreachable } from 'teleterm/ui/utils/utils';
+import { assertUnreachable } from 'teleterm/ui/utils';
 
 import { Document } from './types';
 

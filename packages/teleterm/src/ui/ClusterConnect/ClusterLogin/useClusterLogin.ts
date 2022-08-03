@@ -20,8 +20,7 @@ import { useAsync } from 'shared/hooks/useAsync';
 
 import * as types from 'teleterm/ui/services/clusters/types';
 import { useAppContext } from 'teleterm/ui/appContextProvider';
-import { getClusterName } from 'teleterm/ui/utils';
-import { assertUnreachable } from 'teleterm/ui/utils/utils';
+import { getClusterName, assertUnreachable } from 'teleterm/ui/utils';
 
 export default function useClusterLogin(props: Props) {
   const { onSuccess, clusterUri } = props;

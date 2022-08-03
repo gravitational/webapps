@@ -4,7 +4,7 @@ import { Trash, Unlink } from 'design/Icon';
 
 import { ExtendedTrackedConnection } from 'teleterm/ui/services/connectionTracker';
 import { ListItem } from 'teleterm/ui/components/ListItem';
-import { assertUnreachable } from 'teleterm/ui/utils/utils';
+import { assertUnreachable } from 'teleterm/ui/utils';
 
 import { useKeyboardArrowsNavigation } from 'teleterm/ui/components/KeyboardArrowsNavigation';
 
