@@ -16,7 +16,8 @@
     "build-oss": "yarn build-teleport-oss",
     "build-e": "yarn build-teleport-e",
     "build": "yarn type-check && yarn build-oss && yarn build-e",
-    "type-check": "yarn tsc"
+    "type-check": "yarn tsc",
+    "nop": "exit 0"
   },
   "private": true,
   "resolutions": {

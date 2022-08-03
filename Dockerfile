@@ -21,7 +21,7 @@ RUN yarn install
 
 # copy the rest of the files and run yarn build command
 COPY  . .
-ARG NPM_SCRIPT
+ARG NPM_SCRIPT=nop
 ARG OUTPUT
 # run npm script with optional --output-path parameter
 RUN yarn $NPM_SCRIPT $([ -z $OUTPUT ] || echo --output-path=$OUTPUT)
