@@ -19,7 +19,12 @@ COPY README.md packages/webapps.e/telepor[t]/package.json web-apps/packages/weba
 
 # download and install npm dependencies
 WORKDIR web-apps
-RUN yarn install
+ARG YARN_FROZEN_LOCKFILE
+RUN if [ -n "$YARN_FROZEN_LOCKFILE" ]; then \
+      ./packages/build/scripts/yarn-install-frozen-lockfile.sh; \
+    else \
+      yarn install; \
+    fi
 
 # copy the rest of the files and run yarn build command
 COPY  . .
