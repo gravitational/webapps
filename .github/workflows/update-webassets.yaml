@@ -4,8 +4,7 @@ on:
   push:
     branches:
       - master
-      # TODO(zmb3): enable on release branches
-      #- teleport-v**
+      - teleport-v**
 
 jobs:
   build:
