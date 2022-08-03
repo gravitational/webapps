@@ -8,7 +8,7 @@ test('focus automatically when allowed', () => {
   const element = {
     focus: jest.fn(),
   };
-  render(<Focusable element={element} canFocus={true} />);
+  render(<Focusable element={element} shouldFocus={true} />);
   expect(element.focus).toHaveBeenCalledTimes(1);
 });
 
@@ -16,7 +16,7 @@ test('do nothing when focus in not allowed', () => {
   const element = {
     focus: jest.fn(),
   };
-  render(<Focusable element={element} canFocus={false} />);
+  render(<Focusable element={element} shouldFocus={false} />);
   expect(element.focus).not.toHaveBeenCalled();
 });
 
@@ -25,10 +25,18 @@ test('refocus when deps list changes', () => {
     focus: jest.fn(),
   };
   const { rerender } = render(
-    <Focusable element={element} canFocus={true} reFocusDeps={['old prop']} />
+    <Focusable
+      element={element}
+      shouldFocus={true}
+      reFocusDeps={['old prop']}
+    />
   );
   rerender(
-    <Focusable element={element} canFocus={true} reFocusDeps={['new prop']} />
+    <Focusable
+      element={element}
+      shouldFocus={true}
+      reFocusDeps={['new prop']}
+    />
   );
   expect(element.focus).toHaveBeenCalledTimes(2);
 });
@@ -38,21 +46,29 @@ test('do not refocus when deps list does not change', () => {
     focus: jest.fn(),
   };
   const { rerender } = render(
-    <Focusable element={element} canFocus={true} reFocusDeps={['old prop']} />
+    <Focusable
+      element={element}
+      shouldFocus={true}
+      reFocusDeps={['old prop']}
+    />
   );
   rerender(
-    <Focusable element={element} canFocus={true} reFocusDeps={['old prop']} />
+    <Focusable
+      element={element}
+      shouldFocus={true}
+      reFocusDeps={['old prop']}
+    />
   );
   expect(element.focus).toHaveBeenCalledTimes(1);
 });
 
 const Focusable = (props: {
   element: { focus(): void };
-  canFocus: boolean;
+  shouldFocus: boolean;
   reFocusDeps?: DependencyList;
 }) => {
   const ref = useRefAutoFocus({
-    canFocus: props.canFocus,
+    shouldFocus: props.shouldFocus,
     refocusDeps: props.reFocusDeps,
   });
   ref.current = props.element;

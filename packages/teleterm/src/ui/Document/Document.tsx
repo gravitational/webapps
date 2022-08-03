@@ -25,7 +25,7 @@ const Document: React.FC<{
   [x: string]: any;
 }> = ({ visible, children, onContextMenu, autoFocusDisabled, ...styles }) => {
   const ref = useRefAutoFocus<HTMLDivElement>({
-    canFocus: visible && !autoFocusDisabled,
+    shouldFocus: visible && !autoFocusDisabled,
   });
 
   return (
