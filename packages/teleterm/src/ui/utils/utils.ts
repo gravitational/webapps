@@ -14,4 +14,6 @@
  * limitations under the License.
  */
 
-export { FormPasswordless } from './FormPasswordless';
+export function assertUnreachable(x: never): never {
+  throw new Error(`Unhandled case: ${x}`);
+}

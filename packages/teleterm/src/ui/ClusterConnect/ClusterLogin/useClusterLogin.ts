@@ -17,11 +17,11 @@
 import { useState, useEffect, useRef } from 'react';
 
 import { useAsync } from 'shared/hooks/useAsync';
-import { PrimaryAuthType } from 'shared/services';
 
 import * as types from 'teleterm/ui/services/clusters/types';
 import { useAppContext } from 'teleterm/ui/appContextProvider';
 import { getClusterName } from 'teleterm/ui/utils';
+import { assertUnreachable } from 'teleterm/ui/utils/utils';
 
 export default function useClusterLogin(props: Props) {
   const { onSuccess, clusterUri } = props;
@@ -61,9 +61,7 @@ export default function useClusterLogin(props: Props) {
         case 'sso':
           return clustersService.loginSso(params, refAbortCtrl.current.signal);
         default:
-          throw new Error(
-            `loginAttempt: login params kind not implemented: ${params}`
-          );
+          assertUnreachable(params);
       }
     }
   );
@@ -197,8 +195,4 @@ export type WebauthnLogin = {
   processing?: boolean;
   loginUsernames?: string[];
   onUserResponse?(val: number | string): void;
-};
-
-type LoginParamsWithKind = types.LoginParams & {
-  kind: PrimaryAuthType;
 };

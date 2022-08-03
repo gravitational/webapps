@@ -14,5 +14,4 @@
  * limitations under the License.
  */
 
-import { FormSso } from './FormSso';
-export { FormSso };
+export { FormSso } from './FormSso';

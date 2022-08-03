@@ -197,7 +197,7 @@ const LocalForm = ({
   );
 
   const usernameInputRef = useRefAutoFocus<HTMLInputElement>({
-    shouldFocus: hasTransitionEnded,
+    shouldFocus: hasTransitionEnded && autoFocus,
   });
 
   const [mfaType, setMfaType] = useState(mfaOptions[0]);
@@ -244,7 +244,6 @@ const LocalForm = ({
             ref={usernameInputRef}
             rule={requiredField('Username is required')}
             label="Username"
-            autoFocus={autoFocus}
             value={user}
             onChange={e => setUser(e.target.value)}
             placeholder="Username"
@@ -408,7 +407,7 @@ const Secondary = ({
         $secondary = (
           <LocalForm
             {...otherProps}
-            hasTransitionEnded={true}
+            hasTransitionEnded={otherProps.hasTransitionEnded}
             autoFocus={true}
           />
         );
@@ -427,7 +426,7 @@ const Secondary = ({
         $secondary = (
           <LocalForm
             {...otherProps}
-            hasTransitionEnded={true}
+            hasTransitionEnded={otherProps.hasTransitionEnded}
             autoFocus={true}
           />
         );

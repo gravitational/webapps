@@ -23,6 +23,7 @@ import {
   requiredToken,
   requiredField,
 } from 'shared/components/Validation/rules';
+import { useRefAutoFocus } from 'shared/hooks';
 import createMfaOptions, { MfaOption } from 'shared/utils/createMfaOptions';
 
 import type { Props } from '../FormLogin';
@@ -32,10 +33,10 @@ export const FormLocal = ({
   loginAttempt,
   onLogin,
   clearLoginAttempt,
-  autoFocusOnTransitionEnd = false,
+  hasTransitionEnded,
   loggedInUserName,
   autoFocus = false,
-}: Props & { autoFocusOnTransitionEnd?: boolean }) => {
+}: Props & { hasTransitionEnded?: boolean }) => {
   const [pass, setPass] = useState('');
   const [user, setUser] = useState(loggedInUserName || '');
   const [token, setToken] = useState('');
@@ -46,6 +47,12 @@ export const FormLocal = ({
   );
 
   const [mfaType, setMfaType] = useState(mfaOptions[0]);
+  const usernameInputRef = useRefAutoFocus<HTMLInputElement>({
+    canFocus: hasTransitionEnded && autoFocus && !loggedInUserName,
+  });
+  const passwordInputRef = useRefAutoFocus<HTMLInputElement>({
+    canFocus: hasTransitionEnded && autoFocus && !!loggedInUserName,
+  });
 
   function onSetMfaOption(option: MfaOption, validator: Validator) {
     setToken('');
@@ -71,21 +78,19 @@ export const FormLocal = ({
       {({ validator }) => (
         <Box as="form" height={secondFactor !== 'off' ? '310px' : 'auto'}>
           <FieldInput
+            ref={usernameInputRef}
             rule={requiredField('Username is required')}
             label="Username"
-            autoFocus={autoFocus && !loggedInUserName}
-            transitionPropertyName={autoFocusOnTransitionEnd ? 'height' : ''}
             value={user}
             onChange={e => setUser(e.target.value)}
             placeholder="Username"
             mb={3}
           />
           <FieldInput
+            ref={passwordInputRef}
             rule={requiredField('Password is required')}
             label="Password"
             value={pass}
-            autoFocus={autoFocus && !!loggedInUserName}
-            transitionPropertyName={autoFocusOnTransitionEnd ? 'height' : ''}
             onChange={e => setPass(e.target.value)}
             type="password"
             placeholder="Password"

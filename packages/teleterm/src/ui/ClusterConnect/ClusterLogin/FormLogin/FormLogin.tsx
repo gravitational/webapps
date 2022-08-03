@@ -102,7 +102,7 @@ export default function LoginForm(props: Props) {
 const Primary = ({
   next,
   refCallback,
-  willTransition,
+  hasTransitionEnded,
   ...otherProps
 }: Props & StepComponentProps) => {
   const ssoEnabled = otherProps.authProvidersList?.length > 0;
@@ -121,7 +121,7 @@ const Primary = ({
       $primary = (
         <FormLocal
           {...otherProps}
-          autoFocusOnTransitionEnd={willTransition}
+          hasTransitionEnded={hasTransitionEnded}
           autoFocus={true}
         />
       );
@@ -177,7 +177,7 @@ const Secondary = ({
         $secondary = (
           <FormLocal
             {...otherProps}
-            autoFocusOnTransitionEnd={true}
+            hasTransitionEnded={otherProps.hasTransitionEnded}
             autoFocus={true}
           />
         );
@@ -196,7 +196,7 @@ const Secondary = ({
         $secondary = (
           <FormLocal
             {...otherProps}
-            autoFocusOnTransitionEnd={true}
+            hasTransitionEnded={otherProps.hasTransitionEnded}
             autoFocus={true}
           />
         );

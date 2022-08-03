@@ -14,5 +14,4 @@
  * limitations under the License.
  */
 
-import { FormLocal } from './FormLocal';
-export { FormLocal };
+export { FormLocal } from './FormLocal';

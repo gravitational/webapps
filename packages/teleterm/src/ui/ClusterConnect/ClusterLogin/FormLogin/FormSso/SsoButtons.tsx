@@ -31,14 +31,14 @@ const SSOBtnList = ({
     let { name, type, displayName } = item;
     const title = displayName || `${prefixText} ${name}`;
     const ssoType = guessProviderType(title, type as types.AuthProviderType);
-    const len = providers.length - 1;
+    const isLastItem = providers.length - 1 === index;
     return (
       <ButtonSso
         key={index}
         title={title}
         ssoType={ssoType}
         disabled={isDisabled}
-        mb={index < len ? 3 : 0}
+        mb={isLastItem ? 0 : 3}
         autoFocus={index === 0 && autoFocus}
         onClick={e => {
           e.preventDefault();
