@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React, { PropsWithChildren, useEffect, useState } from 'react';
+import React, { PropsWithChildren } from 'react';
 import { Indicator, Box, Text, Flex, ButtonSecondary } from 'design';
 import { Danger, Warning } from 'design/Alert';
 import Dialog, {
@@ -59,13 +59,6 @@ export function DesktopSession(props: State) {
     tdpConnection.status === 'processing' ||
     clipboardProcessing;
 
-  // Manages the state of the error dialog.
-  const [errorDialog, setErrorDialog] = useState({
-    open: false,
-    text: '',
-    fatal: false,
-  });
-
   // onDialogClose is called when a user
   // dismisses a non-fatal error dialog.
   const onDialogClose = () => {
@@ -86,9 +79,7 @@ export function DesktopSession(props: State) {
     });
   };
 
-  // Calculate the state of the error dialog based on the various
-  // sub-states which determine it.
-  useEffect(() => {
+  const computeErrorDialog = () => {
     const clipboardError = clipboardState.enabled && clipboardState.errorText;
 
     // Websocket is closed but we haven't
@@ -110,12 +101,13 @@ export function DesktopSession(props: State) {
     } else if (unknownConnectionError) {
       errorText = 'Session disconnected for an unknown reason.';
     }
-
     const open = errorText !== '';
     const fatal = tdpConnection.status !== '';
 
-    setErrorDialog({ open, text: errorText, fatal });
-  }, [clipboardState, fetchAttempt, tdpConnection, wsConnection, disconnected]);
+    return { open, text: errorText, fatal };
+  };
+
+  const errorDialog = computeErrorDialog();
 
   if (errorDialog.open) {
     return (
@@ -133,18 +125,12 @@ export function DesktopSession(props: State) {
           </DialogHeader>
           <DialogContent>
             {errorDialog.fatal && (
-              <Danger
-                my={2}
-                children={
-                  <div>
-                    {errorDialog.text}
-                    <br />
-                    <br />
-                    Refresh the page to try again.
-                  </div>
-                }
-              />
+              <>
+                <Danger children={<>{errorDialog.text}</>} />
+                Refresh the page to try again.
+              </>
             )}
+
             {!errorDialog.fatal && (
               <Warning my={2} children={errorDialog.text} />
             )}
