@@ -108,7 +108,7 @@ export function DesktopSession(props: State) {
     } else if (clipboardError) {
       errorText = clipboardState.errorText || 'clipboard sharing failed';
     } else if (unknownConnectionError) {
-      errorText = 'Session disconnected for an unknown reason';
+      errorText = 'Session disconnected for an unknown reason.';
     }
 
     const open = errorText !== '';
@@ -128,16 +128,27 @@ export function DesktopSession(props: State) {
           <DialogHeader style={{ flexDirection: 'column' }}>
             {errorDialog.fatal && <DialogTitle>Fatal Error</DialogTitle>}
             {!errorDialog.fatal && (
-              <DialogTitle>Dismiss to Continue</DialogTitle>
+              <DialogTitle>Unsupported Action</DialogTitle>
             )}
           </DialogHeader>
           <DialogContent>
-            {errorDialog.fatal && <Danger my={2} children={errorDialog.text} />}
+            {errorDialog.fatal && (
+              <Danger
+                my={2}
+                children={
+                  <div>
+                    {errorDialog.text}
+                    <br />
+                    <br />
+                    Refresh the page to try again.
+                  </div>
+                }
+              />
+            )}
             {!errorDialog.fatal && (
               <Warning my={2} children={errorDialog.text} />
             )}
           </DialogContent>
-
           <DialogFooter>
             {!errorDialog.fatal && (
               <ButtonSecondary size="large" width="30%" onClick={onDialogClose}>
@@ -152,7 +163,7 @@ export function DesktopSession(props: State) {
                   window.location.reload();
                 }}
               >
-                Retry
+                Refresh
               </ButtonSecondary>
             )}
           </DialogFooter>

@@ -319,9 +319,8 @@ export default class Client extends EventEmitterWebAuthnSender {
     });
     this.handleError(
       new Error(
-        'Moving the files and directories within a shared \
-        directory on the Windows side is not supported. \
-        Try moving the files on your local machine instead.'
+        'Moving files and directories within a shared \
+        directory is not supported.'
       ),
       TdpClientEvent.CLIENT_ERROR,
       false
