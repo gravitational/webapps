@@ -70,7 +70,7 @@
       "type": "distribution",
       "hardenedRuntime": true,
       "entitlements": "assets/entitlements.mac.plist",
-      "entitlementsInherit": "assets/entitlements.mac.plist",
+      "entitlementsInherit": "assets/entitlements-inherit.mac.plist",
       "provisioningProfile": "assets/connect.provisionprofile",
       "minimumSystemVersion": "10.12.0",
       "gatekeeperAssess": false,
