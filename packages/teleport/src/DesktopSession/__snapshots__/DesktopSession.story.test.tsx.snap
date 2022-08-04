@@ -14,8 +14,6 @@ exports[`clipboard error 1`] = `
   overflow: auto;
   word-break: break-word;
   line-height: 1.5;
-  margin-top: 8px;
-  margin-bottom: 8px;
   background: #f50057;
   color: #FFFFFF;
 }
@@ -180,6 +178,7 @@ exports[`clipboard error 1`] = `
         >
           clipboard error
         </div>
+        Refresh the page to try again.
       </div>
       <div
         class="c8"
@@ -189,7 +188,7 @@ exports[`clipboard error 1`] = `
           kind="secondary"
           width="30%"
         >
-          Retry
+          Refresh
         </button>
       </div>
     </div>
@@ -351,8 +350,7 @@ exports[`connected settings false 1`] = `
       </div>
     </nav>
     <canvas
-      style="display: flex; flex: 1; outline: none;"
-      tabindex="-1"
+      style="display: flex; flex: 1;"
     />
   </div>
 </div>
@@ -512,8 +510,7 @@ exports[`connected settings true 1`] = `
       </div>
     </nav>
     <canvas
-      style="display: flex; flex: 1; outline: none;"
-      tabindex="-1"
+      style="display: flex; flex: 1;"
     />
   </div>
 </div>
@@ -533,8 +530,6 @@ exports[`connection error 1`] = `
   overflow: auto;
   word-break: break-word;
   line-height: 1.5;
-  margin-top: 8px;
-  margin-bottom: 8px;
   background: #f50057;
   color: #FFFFFF;
 }
@@ -699,6 +694,7 @@ exports[`connection error 1`] = `
         >
           some connection error
         </div>
+        Refresh the page to try again.
       </div>
       <div
         class="c8"
@@ -708,7 +704,7 @@ exports[`connection error 1`] = `
           kind="secondary"
           width="30%"
         >
-          Retry
+          Refresh
         </button>
       </div>
     </div>
@@ -891,8 +887,7 @@ exports[`disconnected 1`] = `
       </div>
     </div>
     <canvas
-      style="display: none; flex: 1; outline: none;"
-      tabindex="-1"
+      style="display: none; flex: 1;"
     />
   </div>
 </div>
@@ -1066,7 +1061,7 @@ exports[`dismissible error 1`] = `
           class="c5"
           color="text.primary"
         >
-          Dismiss to Continue
+          Unsupported Action
         </div>
       </div>
       <div
@@ -1109,8 +1104,6 @@ exports[`fetch error 1`] = `
   overflow: auto;
   word-break: break-word;
   line-height: 1.5;
-  margin-top: 8px;
-  margin-bottom: 8px;
   background: #f50057;
   color: #FFFFFF;
 }
@@ -1275,6 +1268,7 @@ exports[`fetch error 1`] = `
         >
           some fetch  error
         </div>
+        Refresh the page to try again.
       </div>
       <div
         class="c8"
@@ -1284,7 +1278,7 @@ exports[`fetch error 1`] = `
           kind="secondary"
           width="30%"
         >
-          Retry
+          Refresh
         </button>
       </div>
     </div>
@@ -1306,8 +1300,6 @@ exports[`unintended disconnect 1`] = `
   overflow: auto;
   word-break: break-word;
   line-height: 1.5;
-  margin-top: 8px;
-  margin-bottom: 8px;
   background: #f50057;
   color: #FFFFFF;
 }
@@ -1470,8 +1462,9 @@ exports[`unintended disconnect 1`] = `
           class="c7"
           kind="danger"
         >
-          Session disconnected for an unknown reason
+          Session disconnected for an unknown reason.
         </div>
+        Refresh the page to try again.
       </div>
       <div
         class="c8"
@@ -1481,7 +1474,7 @@ exports[`unintended disconnect 1`] = `
           kind="secondary"
           width="30%"
         >
-          Retry
+          Refresh
         </button>
       </div>
     </div>
