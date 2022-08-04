@@ -58,16 +58,16 @@ async function initState(
   docsService: DocumentsService,
   doc: Doc
 ) {
-  const getClusterActualName = () => {
+  const getClusterName = () => {
     const cluster = ctx.clustersService.findCluster(clusterUri);
     if (cluster) {
-      return cluster.actualName;
+      return cluster.name;
     }
 
     /*
      When restoring the documents, we do not always have the leaf clusters already fetched.
      In that case we can fall back to `clusterId` from a leaf cluster URI
-     (for a leaf cluster `clusterId` === `actualName`)
+     (for a leaf cluster `clusterId` === `name`)
     */
     const parsed = routing.parseClusterUri(clusterUri);
 
@@ -81,7 +81,7 @@ async function initState(
 
   const clusterUri = routing.getClusterUri(doc);
   const rootCluster = ctx.clustersService.findRootClusterByResource(clusterUri);
-  const cmd = createCmd(doc, rootCluster.proxyHost, getClusterActualName());
+  const cmd = createCmd(doc, rootCluster.proxyHost, getClusterName());
   const ptyProcess = await createPtyProcess(ctx, cmd);
   if (!ptyProcess) {
     return;
@@ -97,7 +97,7 @@ async function initState(
     const cwd = await ptyProcess.getCwd();
     docsService.update(doc.uri, {
       cwd,
-      title: `${cwd || 'Terminal'} · ${getClusterActualName()}`,
+      title: `${cwd || 'Terminal'} · ${getClusterName()}`,
     });
   };
 
