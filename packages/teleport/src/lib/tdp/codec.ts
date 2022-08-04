@@ -41,6 +41,7 @@ export enum MessageType {
   SHARED_DIRECTORY_ACKNOWLEDGE = 12,
   SHARED_DIRECTORY_INFO_REQUEST = 13,
   SHARED_DIRECTORY_INFO_RESPONSE = 14,
+  SHARED_DIRECTORY_CREATE_REQUEST = 15,
   SHARED_DIRECTORY_READ_REQUEST = 19,
   SHARED_DIRECTORY_READ_RESPONSE = 20,
   SHARED_DIRECTORY_WRITE_REQUEST = 21,
@@ -121,6 +122,14 @@ export type SharedDirectoryInfoResponse = {
   completionId: number;
   errCode: SharedDirectoryErrCode;
   fso: FileSystemObject;
+};
+
+// | message type (15) | completion_id uint32 | directory_id uint32 | file_type uint32 | path_length uint32 | path []byte |
+export type SharedDirectoryCreateRequest = {
+  completionId: number;
+  directoryId: number;
+  fileType: FileType;
+  path: string;
 };
 
 // | message type (19) | completion_id uint32 | directory_id uint32 | path_length uint32 | path []byte | offset uint64 | length uint32 |
@@ -771,6 +780,30 @@ export default class Codec {
     return {
       completionId,
       directoryId,
+      path,
+    };
+  }
+
+  // | message type (15) | completion_id uint32 | directory_id uint32 | file_type uint32 | path_length uint32 | path []byte |
+  decodeSharedDirectoryCreateRequest(
+    buffer: ArrayBuffer
+  ): SharedDirectoryCreateRequest {
+    const dv = new DataView(buffer);
+    let offset = 0;
+    offset += byteLength; // eat message type
+    const completionId = dv.getUint32(offset);
+    offset += uint32Length; // eat completion_id
+    const directoryId = dv.getUint32(offset);
+    offset += uint32Length; // eat directory_id
+    const fileType = dv.getUint32(offset);
+    offset += uint32Length; // eat directory_id
+    offset += uint32Length; // eat path_length
+    const path = this.decoder.decode(new Uint8Array(buffer.slice(offset)));
+
+    return {
+      completionId,
+      directoryId,
+      fileType,
       path,
     };
   }
