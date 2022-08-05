@@ -42,7 +42,7 @@ export class PlayerClient extends Client {
   }
 
   // Overrides Client implementation.
-  processMessage(buffer: ArrayBuffer) {
+  async processMessage(buffer: ArrayBuffer) {
     const json = JSON.parse(this.textDecoder.decode(buffer));
 
     if (json.message === 'end') {

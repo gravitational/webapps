@@ -31,6 +31,7 @@ import Codec, {
   SharedDirectoryListResponse,
   SharedDirectoryReadResponse,
   SharedDirectoryWriteResponse,
+  SharedDirectoryCreateResponse,
   FileSystemObject,
 } from './codec';
 import {
@@ -98,7 +99,7 @@ export default class Client extends EventEmitterWebAuthnSender {
     };
   }
 
-  processMessage(buffer: ArrayBuffer) {
+  async processMessage(buffer: ArrayBuffer) {
     try {
       const messageType = this.codec.decodeMessageType(buffer);
       switch (messageType) {
@@ -130,7 +131,12 @@ export default class Client extends EventEmitterWebAuthnSender {
           this.handleSharedDirectoryInfoRequest(buffer);
           break;
         case MessageType.SHARED_DIRECTORY_CREATE_REQUEST:
-          this.handleSharedDirectoryCreateRequest(buffer);
+          // A typical sequence is that we receive a SharedDirectoryCreateRequest
+          // immediately followed by a SharedDirectoryWriteRequest. It's important
+          // that we await here so that this client doesn't field the SharedDirectoryWriteRequest
+          // until the create has successfully completed, or else we might get an error
+          // trying to write to a file that hasn't been created yet.
+          await this.handleSharedDirectoryCreateRequest(buffer);
           break;
         case MessageType.SHARED_DIRECTORY_READ_REQUEST:
           this.handleSharedDirectoryReadRequest(buffer);
@@ -269,12 +275,28 @@ export default class Client extends EventEmitterWebAuthnSender {
     }
   }
 
-  handleSharedDirectoryCreateRequest(buffer: ArrayBuffer) {
+  async handleSharedDirectoryCreateRequest(buffer: ArrayBuffer) {
     const req = this.codec.decodeSharedDirectoryCreateRequest(buffer);
-    // TODO(isaiah) delete these log statements
-    this.logger.debug('received SharedDirectoryCreateRequest:');
-    this.logger.debug(req);
-    // TODO(isaiah): here's where we'll create a file/dir and respond.
+    console.log(
+      'received a SharedDirectoryCreateRequest: ' + JSON.stringify(req)
+    );
+    try {
+      console.log('trying a sdManager.create for path = ' + req.path);
+      await this.sdManager.create(req.path, req.fileType);
+      console.log('create supposedly succeeded');
+      this.sendSharedDirectoryCreateResponse({
+        completionId: req.completionId,
+        errCode: SharedDirectoryErrCode.Nil,
+      });
+    } catch (e) {
+      console.log('create failed');
+      this.sendSharedDirectoryCreateResponse({
+        completionId: req.completionId,
+        errCode: SharedDirectoryErrCode.Failed,
+      });
+      // TODO(isaiah): this can probably become a non-fatal error
+      this.handleError(e);
+    }
   }
 
   async handleSharedDirectoryReadRequest(buffer: ArrayBuffer) {
@@ -298,12 +320,16 @@ export default class Client extends EventEmitterWebAuthnSender {
 
   async handleSharedDirectoryWriteRequest(buffer: ArrayBuffer) {
     const req = this.codec.decodeSharedDirectoryWriteRequest(buffer);
+    console.log('received a SharedDirectoryWriteRequest');
+    console.log(req);
     try {
+      console.log('attempting sdManager.writeFile for path = ' + req.path);
       const bytesWritten = await this.sdManager.writeFile(
         req.path,
         req.offset,
         req.writeData
       );
+      console.log('writeFile supposedly succeeded');
 
       this.sendSharedDirectoryWriteResponse({
         completionId: req.completionId,
@@ -311,6 +337,7 @@ export default class Client extends EventEmitterWebAuthnSender {
         bytesWritten,
       });
     } catch (e) {
+      console.log('writeFile failed');
       this.handleError(e);
     }
   }
@@ -441,6 +468,10 @@ export default class Client extends EventEmitterWebAuthnSender {
 
   sendSharedDirectoryWriteResponse(response: SharedDirectoryWriteResponse) {
     this.send(this.codec.encodeSharedDirectoryWriteResponse(response));
+  }
+
+  sendSharedDirectoryCreateResponse(response: SharedDirectoryCreateResponse) {
+    this.send(this.codec.encodeSharedDirectoryCreateResponse(response));
   }
 
   resize(spec: ClientScreenSpec) {

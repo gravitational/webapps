@@ -146,7 +146,7 @@ export class SharedDirectoryManager {
 
   /**
    * Creates a new file or directory (determined by fileType) at path.
-   * @throws TODO(isaiah): if a file or directory already exists at the given path?
+   * If the path already exists, this operation is effectively ignored.
    * @throws Anything potentially thrown by getFileHandle/getDirectoryHandle
    * @throws {PathDoesNotExistError} if the path isn't a valid path to a directory.
    */
