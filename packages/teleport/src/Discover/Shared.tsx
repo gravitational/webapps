@@ -33,13 +33,26 @@ export const Header: React.FC = ({ children }) => (
   </Text>
 );
 
-export const ActionButtons = ({ onProceed }: { onProceed(): void }) => {
+export const ActionButtons = ({
+  onProceed,
+  isProceedDisabled,
+}: {
+  onProceed?(): void;
+  isProceedDisabled?: boolean;
+}) => {
   const [confirmExit, setConfirmExit] = React.useState(false);
   return (
     <Box mt={4}>
-      <ButtonPrimary width="165px" onClick={onProceed} mr={3}>
-        Proceed
-      </ButtonPrimary>
+      {onProceed && (
+        <ButtonPrimary
+          width="165px"
+          onClick={onProceed}
+          mr={3}
+          disabled={isProceedDisabled}
+        >
+          Proceed
+        </ButtonPrimary>
+      )}
       <ButtonSecondary
         mt={3}
         width="165px"

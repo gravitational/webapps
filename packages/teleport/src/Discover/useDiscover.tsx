@@ -19,6 +19,8 @@ import useAttempt from 'shared/hooks/useAttemptNext';
 
 import { DiscoverContext } from './discoverContext';
 
+import type { Node } from 'teleport/services/nodes';
+
 import type {
   JoinMethod,
   JoinRole,
@@ -40,7 +42,9 @@ export function useDiscover(ctx: DiscoverContext) {
   }, []);
 
   function onSelectResource(kind: AgentKind) {
-    setSelectedAgentKind(kind);
+    // TODO: hard coded for now for sake of testing the flow.
+    setSelectedAgentKind('node');
+    nextStep();
   }
 
   function nextStep() {
@@ -120,16 +124,19 @@ export enum AgentStep {
   TestConnection,
 }
 
-// NodeMeta describes the fields that may be provided or required by user
-// when connecting a node.
-type NodeMeta = {
-  awsAccountId?: string;
-  awsArn?: string;
+type BaseMeta = {
+  refResourceId: string;
+};
+
+// NodeMeta describes the fields for node resource
+// that needs to be preserved throughout the flow.
+export type NodeMeta = BaseMeta & {
+  node: Node;
 };
 
 // AppMeta describes the fields that may be provided or required by user
 // when connecting a app.
-type AppMeta = {
+type AppMeta = BaseMeta & {
   name: string;
   publicAddr: string;
 };
