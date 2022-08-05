@@ -68,6 +68,7 @@ const props: State = {
   onContextMenu: () => false,
   onMouseEnter: () => {},
   onClipboardData: () => {},
+  setTdpConnection: () => {},
   windowOnFocus: () => {},
   webauthn: {
     errorText: '',
@@ -190,6 +191,16 @@ export const ClipboardError = () => (
       permission: { state: 'prompt' },
       errorText: 'clipboard error',
     }}
+  />
+);
+
+export const DismissibleError = () => (
+  <DesktopSession
+    {...props}
+    fetchAttempt={{ status: 'success' }}
+    tdpConnection={{ status: '', statusText: 'dismissible error' }}
+    wsConnection={'open'}
+    disconnected={false}
   />
 );
 
