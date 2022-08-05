@@ -18,6 +18,7 @@ export type JoinToken = {
   id: string;
   expiry: Date;
   expiryText?: string;
+  refResourceId?: string;
 };
 
 // JoinRole defines built-in system roles and are roles associated with

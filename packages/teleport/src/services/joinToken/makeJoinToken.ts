@@ -20,9 +20,10 @@ import { JoinToken } from './types';
 
 export default function makeToken(json): JoinToken {
   json = json || {};
-  const { id, expiry } = json;
+  const { id, expiry, refResourceID } = json;
   return {
     id,
+    refResourceId: refResourceID,
     expiry: expiry ? new Date(expiry) : null,
     expiryText: expiry
       ? formatDistanceStrict(new Date(), new Date(expiry))
