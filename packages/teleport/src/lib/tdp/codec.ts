@@ -133,10 +133,11 @@ export type SharedDirectoryCreateRequest = {
   path: string;
 };
 
-// | message type (16) | completion_id uint32 | err_code uint32 |
+// | message type (16) | completion_id uint32 | err_code uint32 | file_system_object fso |
 export type SharedDirectoryCreateResponse = {
   completionId: number;
   errCode: SharedDirectoryErrCode;
+  fso: FileSystemObject;
 };
 
 // | message type (19) | completion_id uint32 | directory_id uint32 | path_length uint32 | path []byte | offset uint64 | length uint32 |
@@ -582,13 +583,13 @@ export default class Codec {
     ]).buffer;
   }
 
-  // | message type (16) | completion_id uint32 | err_code uint32 |
+  // | message type (16) | completion_id uint32 | err_code uint32 | file_system_object fso |
   encodeSharedDirectoryCreateResponse(
     res: SharedDirectoryCreateResponse
   ): Message {
-    const bufLen = byteLength + 2 * uint32Length;
-    const buffer = new ArrayBuffer(bufLen);
-    const view = new DataView(buffer);
+    const bufLenSansFso = byteLength + 2 * uint32Length;
+    const bufferSansFso = new ArrayBuffer(bufLenSansFso);
+    const view = new DataView(bufferSansFso);
     let offset = 0;
 
     view.setUint8(offset, MessageType.SHARED_DIRECTORY_CREATE_RESPONSE);
@@ -596,8 +597,15 @@ export default class Codec {
     view.setUint32(offset, res.completionId);
     offset += uint32Length;
     view.setUint32(offset, res.errCode);
+    offset += uint32Length;
 
-    return buffer;
+    const fsoBuffer = this.encodeFileSystemObject(res.fso);
+
+    // https://gist.github.com/72lions/4528834?permalink_comment_id=2395442#gistcomment-2395442
+    return new Uint8Array([
+      ...new Uint8Array(bufferSansFso),
+      ...new Uint8Array(fsoBuffer),
+    ]).buffer;
   }
 
   // | message type (20) | completion_id uint32 | err_code uint32 | read_data_length uint32 | read_data []byte |

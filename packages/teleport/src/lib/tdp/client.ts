@@ -277,22 +277,25 @@ export default class Client extends EventEmitterWebAuthnSender {
 
   async handleSharedDirectoryCreateRequest(buffer: ArrayBuffer) {
     const req = this.codec.decodeSharedDirectoryCreateRequest(buffer);
-    console.log(
-      'received a SharedDirectoryCreateRequest: ' + JSON.stringify(req)
-    );
+
     try {
-      console.log('trying a sdManager.create for path = ' + req.path);
       await this.sdManager.create(req.path, req.fileType);
-      console.log('create supposedly succeeded');
+      const info = await this.sdManager.getInfo(req.path);
       this.sendSharedDirectoryCreateResponse({
         completionId: req.completionId,
         errCode: SharedDirectoryErrCode.Nil,
+        fso: this.toFso(info),
       });
     } catch (e) {
-      console.log('create failed');
       this.sendSharedDirectoryCreateResponse({
         completionId: req.completionId,
         errCode: SharedDirectoryErrCode.Failed,
+        fso: {
+          lastModified: BigInt(0),
+          fileType: FileType.File,
+          size: BigInt(0),
+          path: req.path,
+        },
       });
       // TODO(isaiah): this can probably become a non-fatal error
       this.handleError(e);
@@ -320,16 +323,12 @@ export default class Client extends EventEmitterWebAuthnSender {
 
   async handleSharedDirectoryWriteRequest(buffer: ArrayBuffer) {
     const req = this.codec.decodeSharedDirectoryWriteRequest(buffer);
-    console.log('received a SharedDirectoryWriteRequest');
-    console.log(req);
     try {
-      console.log('attempting sdManager.writeFile for path = ' + req.path);
       const bytesWritten = await this.sdManager.writeFile(
         req.path,
         req.offset,
         req.writeData
       );
-      console.log('writeFile supposedly succeeded');
 
       this.sendSharedDirectoryWriteResponse({
         completionId: req.completionId,
@@ -337,7 +336,6 @@ export default class Client extends EventEmitterWebAuthnSender {
         bytesWritten,
       });
     } catch (e) {
-      console.log('writeFile failed');
       this.handleError(e);
     }
   }
