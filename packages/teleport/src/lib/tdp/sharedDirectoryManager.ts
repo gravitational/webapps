@@ -146,8 +146,9 @@ export class SharedDirectoryManager {
 
   /**
    * Creates a new file or directory (determined by fileType) at path.
-   * If the path already exists, this operation is effectively ignored.
-   * @throws Anything potentially thrown by getFileHandle/getDirectoryHandle
+   * If the path already exists for the given fileType, this operation is effectively ignored.
+   * @throws {DomException} If the path already exists but not for the given fileType.
+   * @throws Anything potentially thrown by getFileHandle/getDirectoryHandle.
    * @throws {PathDoesNotExistError} if the path isn't a valid path to a directory.
    */
   async create(path: string, fileType: FileType): Promise<void> {
