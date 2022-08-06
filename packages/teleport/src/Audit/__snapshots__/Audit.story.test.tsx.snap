@@ -3383,7 +3383,7 @@ exports[`list of all events 1`] = `
         <td
           style="word-break: break-word;"
         >
-          User [root] failed to create symbolic link [/tmp/file] on node [[::1]:3022]: [EOF]
+          User [root] failed to create symbolic link [/tmp/file] on node [im-a-server-hostname]: [EOF]
         </td>
         <td
           style="min-width: 120px;"
@@ -3420,7 +3420,7 @@ exports[`list of all events 1`] = `
         <td
           style="word-break: break-word;"
         >
-          User [root] created symbolic link [/tmp/file] on node [[::1]:3022]
+          User [root] created symbolic link [/tmp/file] on node [im-a-server-hostname]
         </td>
         <td
           style="min-width: 120px;"
@@ -3457,7 +3457,7 @@ exports[`list of all events 1`] = `
         <td
           style="word-break: break-word;"
         >
-          User [root] failed to read symbolic link [/tmp/file] on node [[::1]:3022]: [EOF]
+          User [root] failed to read symbolic link [/tmp/file] on node [im-a-server-hostname]: [EOF]
         </td>
         <td
           style="min-width: 120px;"
@@ -3494,7 +3494,7 @@ exports[`list of all events 1`] = `
         <td
           style="word-break: break-word;"
         >
-          User [root] read symbolic link [/tmp/file] on node [[::1]:3022]
+          User [root] read symbolic link [/tmp/file] on node [im-a-server-hostname]
         </td>
         <td
           style="min-width: 120px;"
@@ -3531,7 +3531,7 @@ exports[`list of all events 1`] = `
         <td
           style="word-break: break-word;"
         >
-          User [root] failed to rename file [/tmp/file] on node [[::1]:3022]: [EOF]
+          User [root] failed to rename file [/tmp/file] on node [im-a-server-hostname]: [EOF]
         </td>
         <td
           style="min-width: 120px;"
@@ -3568,7 +3568,7 @@ exports[`list of all events 1`] = `
         <td
           style="word-break: break-word;"
         >
-          User [root] renamed file [/tmp/file] on node [[::1]:3022]
+          User [root] renamed file [/tmp/file] on node [im-a-server-hostname]
         </td>
         <td
           style="min-width: 120px;"
@@ -3605,7 +3605,7 @@ exports[`list of all events 1`] = `
         <td
           style="word-break: break-word;"
         >
-          User [root] failed to query attributes of file [/tmp/file] on node [[::1]:3022]: [EOF]
+          User [root] failed to query attributes of file [/tmp/file] on node [im-a-server-hostname]: [EOF]
         </td>
         <td
           style="min-width: 120px;"
@@ -3642,7 +3642,7 @@ exports[`list of all events 1`] = `
         <td
           style="word-break: break-word;"
         >
-          User [root] queried attributes of file [/tmp/file] on node [[::1]:3022]
+          User [root] queried attributes of file [/tmp/file] on node [im-a-server-hostname]
         </td>
         <td
           style="min-width: 120px;"
@@ -3679,7 +3679,7 @@ exports[`list of all events 1`] = `
         <td
           style="word-break: break-word;"
         >
-          User [root] failed to query absolute path of file [/tmp/file] on node [[::1]:3022]: [EOF]
+          User [root] failed to query absolute path of file [/tmp/file] on node [im-a-server-hostname]: [EOF]
         </td>
         <td
           style="min-width: 120px;"
@@ -3716,7 +3716,7 @@ exports[`list of all events 1`] = `
         <td
           style="word-break: break-word;"
         >
-          User [root] queried absolute path of file [/tmp/file] on node [[::1]:3022]
+          User [root] queried absolute path of file [/tmp/file] on node [im-a-server-hostname]
         </td>
         <td
           style="min-width: 120px;"
@@ -3753,7 +3753,7 @@ exports[`list of all events 1`] = `
         <td
           style="word-break: break-word;"
         >
-          User [root] failed to remove directory [/tmp/file] on node [[::1]:3022]: [EOF]
+          User [root] failed to remove directory [/tmp/file] on node [im-a-server-hostname]: [EOF]
         </td>
         <td
           style="min-width: 120px;"
@@ -3790,7 +3790,7 @@ exports[`list of all events 1`] = `
         <td
           style="word-break: break-word;"
         >
-          User [root] removed directory [/tmp/file] on node [[::1]:3022]
+          User [root] removed directory [/tmp/file] on node [im-a-server-hostname]
         </td>
         <td
           style="min-width: 120px;"
@@ -3827,7 +3827,7 @@ exports[`list of all events 1`] = `
         <td
           style="word-break: break-word;"
         >
-          User [root] failed to create directory [/tmp/file] on node [[::1]:3022]: [EOF]
+          User [root] failed to create directory [/tmp/file] on node [im-a-server-hostname]: [EOF]
         </td>
         <td
           style="min-width: 120px;"
@@ -3864,7 +3864,7 @@ exports[`list of all events 1`] = `
         <td
           style="word-break: break-word;"
         >
-          User [root] created directory [/tmp/file] on node [[::1]:3022]
+          User [root] created directory [/tmp/file] on node [im-a-server-hostname]
         </td>
         <td
           style="min-width: 120px;"
@@ -3901,7 +3901,7 @@ exports[`list of all events 1`] = `
         <td
           style="word-break: break-word;"
         >
-          User [root] failed to remove file [/tmp/file] on node [[::1]:3022]: [EOF]
+          User [root] failed to remove file [/tmp/file] on node [im-a-server-hostname]: [EOF]
         </td>
         <td
           style="min-width: 120px;"
@@ -3938,7 +3938,7 @@ exports[`list of all events 1`] = `
         <td
           style="word-break: break-word;"
         >
-          User [root] removed file [/tmp/file] on node [[::1]:3022]
+          User [root] removed file [/tmp/file] on node [im-a-server-hostname]
         </td>
         <td
           style="min-width: 120px;"
@@ -3975,7 +3975,7 @@ exports[`list of all events 1`] = `
         <td
           style="word-break: break-word;"
         >
-          User [root] failed to read directory [/tmp/file] on node [[::1]:3022]: [EOF]
+          User [root] failed to read directory [/tmp/file] on node [im-a-server-hostname]: [EOF]
         </td>
         <td
           style="min-width: 120px;"
@@ -4012,7 +4012,7 @@ exports[`list of all events 1`] = `
         <td
           style="word-break: break-word;"
         >
-          User [root] read directory [/tmp/file] on node [[::1]:3022]
+          User [root] read directory [/tmp/file] on node [im-a-server-hostname]
         </td>
         <td
           style="min-width: 120px;"
@@ -4049,7 +4049,7 @@ exports[`list of all events 1`] = `
         <td
           style="word-break: break-word;"
         >
-          User [root] failed to open directory [/tmp/file] on node [[::1]:3022]: [EOF]
+          User [root] failed to open directory [/tmp/file] on node [im-a-server-hostname]: [EOF]
         </td>
         <td
           style="min-width: 120px;"
@@ -4086,7 +4086,7 @@ exports[`list of all events 1`] = `
         <td
           style="word-break: break-word;"
         >
-          User [root] opened directory [/tmp/file] on node [[::1]:3022]
+          User [root] opened directory [/tmp/file] on node [im-a-server-hostname]
         </td>
         <td
           style="min-width: 120px;"
@@ -4123,7 +4123,7 @@ exports[`list of all events 1`] = `
         <td
           style="word-break: break-word;"
         >
-          User [root] failed to change attributes of file [/tmp/file] on node [[::1]:3022]: [EOF]
+          User [root] failed to change attributes of file [/tmp/file] on node [im-a-server-hostname]: [EOF]
         </td>
         <td
           style="min-width: 120px;"
