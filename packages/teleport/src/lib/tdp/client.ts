@@ -29,6 +29,7 @@ import Codec, {
   SharedDirectoryErrCode,
   SharedDirectoryInfoResponse,
   SharedDirectoryListResponse,
+  SharedDirectoryMoveResponse,
   SharedDirectoryReadResponse,
   SharedDirectoryWriteResponse,
   SharedDirectoryCreateResponse,
@@ -44,7 +45,10 @@ export enum TdpClientEvent {
   TDP_CLIENT_SCREEN_SPEC = 'tdp client screen spec',
   TDP_PNG_FRAME = 'tdp png frame',
   TDP_CLIPBOARD_DATA = 'tdp clipboard data',
+  // TDP_ERROR corresponds with https://github.com/gravitational/teleport/blob/86e824fc7879538e4de400eb1518e4f88930c109/rfd/0037-desktop-access-protocol.md?plain=1#L200-L206
   TDP_ERROR = 'tdp error',
+  // CLIENT_ERROR represents an error event in the client that isn't a TDP_ERROR
+  CLIENT_ERROR = 'client error',
   WS_OPEN = 'ws open',
   WS_CLOSE = 'ws close',
 }
@@ -119,7 +123,10 @@ export default class Client extends EventEmitterWebAuthnSender {
           this.handleClipboardData(buffer);
           break;
         case MessageType.ERROR:
-          this.handleError(new Error(this.codec.decodeErrorMessage(buffer)));
+          this.handleError(
+            new Error(this.codec.decodeErrorMessage(buffer)),
+            TdpClientEvent.TDP_ERROR
+          );
           break;
         case MessageType.MFA_JSON:
           this.handleMfaChallenge(buffer);
@@ -154,7 +161,7 @@ export default class Client extends EventEmitterWebAuthnSender {
           this.logger.warn(`received unsupported message type ${messageType}`);
       }
     } catch (err) {
-      this.handleError(err);
+      this.handleError(err, TdpClientEvent.CLIENT_ERROR);
     }
   }
 
@@ -197,9 +204,6 @@ export default class Client extends EventEmitterWebAuthnSender {
     );
   }
 
-  // TODO(isaiah): neither of the TdpClientEvent.TDP_ERROR are accurate, they should
-  // instead be associated with a new event TdpClientEvent.CLIENT_ERROR.
-  // https://github.com/gravitational/webapps/issues/615
   handleMfaChallenge(buffer: ArrayBuffer) {
     try {
       const mfaJson = this.codec.decodeMfaJson(buffer);
@@ -213,11 +217,12 @@ export default class Client extends EventEmitterWebAuthnSender {
       however the U2F API for hardware keys is not supported for desktop sessions. \
       Please notify your system administrator to update cluster settings \
       to use WebAuthn as the second factor protocol.'
-          )
+          ),
+          TdpClientEvent.CLIENT_ERROR
         );
       }
     } catch (err) {
-      this.handleError(err);
+      this.handleError(err, TdpClientEvent.CLIENT_ERROR);
     }
   }
 
@@ -227,7 +232,8 @@ export default class Client extends EventEmitterWebAuthnSender {
     }
 
     this.handleError(
-      new Error(`Encountered shared directory error: ${errCode}`)
+      new Error(`Encountered shared directory error: ${errCode}`),
+      TdpClientEvent.CLIENT_ERROR
     );
     return false;
   }
@@ -243,7 +249,7 @@ export default class Client extends EventEmitterWebAuthnSender {
         'Started sharing directory: ' + this.sdManager.getName()
       );
     } catch (e) {
-      this.handleError(e);
+      this.handleError(e, TdpClientEvent.CLIENT_ERROR);
     }
   }
 
@@ -270,7 +276,7 @@ export default class Client extends EventEmitterWebAuthnSender {
           },
         });
       } else {
-        this.handleError(e);
+        this.handleError(e, TdpClientEvent.CLIENT_ERROR);
       }
     }
   }
@@ -317,7 +323,7 @@ export default class Client extends EventEmitterWebAuthnSender {
         readData,
       });
     } catch (e) {
-      this.handleError(e);
+      this.handleError(e, TdpClientEvent.CLIENT_ERROR);
     }
   }
 
@@ -336,16 +342,25 @@ export default class Client extends EventEmitterWebAuthnSender {
         bytesWritten,
       });
     } catch (e) {
-      this.handleError(e);
+      this.handleError(e, TdpClientEvent.CLIENT_ERROR);
     }
   }
 
   handleSharedDirectoryMoveRequest(buffer: ArrayBuffer) {
     const req = this.codec.decodeSharedDirectoryMoveRequest(buffer);
-    // TODO(isaiah): delete debug logs
-    this.logger.debug('Received SharedDirectoryMoveRequest:');
-    this.logger.debug(req);
-    // TODO(isaiah): here's where we'll respond with a SharedDirectoryMoveResponse
+    // Always send back Failed for now, see https://github.com/gravitational/webapps/issues/1064
+    this.sendSharedDirectoryMoveResponse({
+      completionId: req.completionId,
+      errCode: SharedDirectoryErrCode.Failed,
+    });
+    this.handleError(
+      new Error(
+        'Moving files and directories within a shared \
+        directory is not supported.'
+      ),
+      TdpClientEvent.CLIENT_ERROR,
+      false
+    );
   }
 
   async handleSharedDirectoryListRequest(buffer: ArrayBuffer) {
@@ -364,7 +379,7 @@ export default class Client extends EventEmitterWebAuthnSender {
         fsoList,
       });
     } catch (e) {
-      this.handleError(e);
+      this.handleError(e, TdpClientEvent.CLIENT_ERROR);
     }
   }
 
@@ -384,12 +399,15 @@ export default class Client extends EventEmitterWebAuthnSender {
       try {
         this.socket.send(data);
       } catch (e) {
-        this.handleError(e);
+        this.handleError(e, TdpClientEvent.CLIENT_ERROR);
       }
       return;
     }
 
-    this.handleError(new Error('websocket unavailable'));
+    this.handleError(
+      new Error('websocket unavailable'),
+      TdpClientEvent.CLIENT_ERROR
+    );
   }
 
   sendUsername(username: string) {
@@ -430,7 +448,7 @@ export default class Client extends EventEmitterWebAuthnSender {
     try {
       this.sdManager.add(sharedDirectory);
     } catch (err) {
-      this.handleError(err);
+      this.handleError(err, TdpClientEvent.CLIENT_ERROR);
     }
   }
 
@@ -438,18 +456,18 @@ export default class Client extends EventEmitterWebAuthnSender {
     let name: string;
     try {
       name = this.sdManager.getName();
+      this.send(
+        this.codec.encodeSharedDirectoryAnnounce({
+          completionId: 0, // This is always the first request.
+          // Hardcode directoryId for now since we only support sharing 1 directory.
+          // We're using 2 because the smartcard device is hardcoded to 1 in the backend.
+          directoryId: 2,
+          name,
+        })
+      );
     } catch (e) {
-      this.handleError(e);
+      this.handleError(e, TdpClientEvent.CLIENT_ERROR);
     }
-    this.send(
-      this.codec.encodeSharedDirectoryAnnounce({
-        completionId: 0, // This is always the first request.
-        // Hardcode directoryId for now since we only support sharing 1 directory.
-        // We're using 2 because the smartcard device is hardcoded to 1 in the backend.
-        directoryId: 2,
-        name,
-      })
-    );
   }
 
   sendSharedDirectoryInfoResponse(res: SharedDirectoryInfoResponse) {
@@ -458,6 +476,10 @@ export default class Client extends EventEmitterWebAuthnSender {
 
   sendSharedDirectoryListResponse(res: SharedDirectoryListResponse) {
     this.send(this.codec.encodeSharedDirectoryListResponse(res));
+  }
+
+  sendSharedDirectoryMoveResponse(res: SharedDirectoryMoveResponse) {
+    this.send(this.codec.encodeSharedDirectoryMoveResponse(res));
   }
 
   sendSharedDirectoryReadResponse(response: SharedDirectoryReadResponse) {
@@ -476,12 +498,15 @@ export default class Client extends EventEmitterWebAuthnSender {
     this.send(this.codec.encodeClientScreenSpec(spec));
   }
 
-  // Emits an TdpClientEvent.ERROR event. Sets this.errored to true to alert the socket.onclose handler that
-  // it needn't emit a generic unknown error event.
-  private handleError(err: Error) {
+  // Emits an errType event, closing the socket if the error was fatal.
+  private handleError(
+    err: Error,
+    errType: TdpClientEvent.TDP_ERROR | TdpClientEvent.CLIENT_ERROR,
+    isFatal = true
+  ) {
     this.logger.error(err);
-    this.emit(TdpClientEvent.TDP_ERROR, err);
-    this.socket?.close();
+    this.emit(errType, { err, isFatal });
+    if (isFatal) this.socket?.close();
   }
 
   // Ensures full cleanup of this object.
