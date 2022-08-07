@@ -303,8 +303,7 @@ export default class Client extends EventEmitterWebAuthnSender {
           path: req.path,
         },
       });
-      // TODO(isaiah): this can probably become a non-fatal error
-      this.handleError(e);
+      this.handleError(e, TdpClientEvent.CLIENT_ERROR, false);
     }
   }
 
