@@ -136,7 +136,7 @@ export function LoginTrait({
               <AddLoginButton setShowInputBox={setShowInputBox} />
             )}
           </Box>
-          <ActionButtons onProceed={onProceed} isProceedDisabled={!hasLogins} />
+          <ActionButtons onProceed={onProceed} disableProceed={!hasLogins} />
         </>
       );
       break;

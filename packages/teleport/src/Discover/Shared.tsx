@@ -35,10 +35,10 @@ export const Header: React.FC = ({ children }) => (
 
 export const ActionButtons = ({
   onProceed,
-  isProceedDisabled,
+  disableProceed,
 }: {
   onProceed?(): void;
-  isProceedDisabled?: boolean;
+  disableProceed?: boolean;
 }) => {
   const [confirmExit, setConfirmExit] = React.useState(false);
   return (
@@ -48,7 +48,7 @@ export const ActionButtons = ({
           width="165px"
           onClick={onProceed}
           mr={3}
-          disabled={isProceedDisabled}
+          disabled={disableProceed}
         >
           Proceed
         </ButtonPrimary>

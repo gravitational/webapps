@@ -120,7 +120,6 @@ const mockUser: User = {
 };
 
 const mockedNodeMeta: NodeMeta = {
-  refResourceId: 'abc',
   node: {
     sshLogins: [],
     id: '',

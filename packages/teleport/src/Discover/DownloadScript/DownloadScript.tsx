@@ -46,7 +46,6 @@ export function DownloadScript({
   pollState,
   regenerateScriptAndRepoll,
 }: State) {
-  const isInitializing = pollState === 'polling' || pollState === '';
   return (
     <Box>
       <Header>Configure Resource</Header>
@@ -69,7 +68,7 @@ export function DownloadScript({
               mt={2}
               mb={1}
             />
-            {isInitializing && (
+            {pollState === 'polling' && (
               <Text
                 css={`
                   display: flex;
@@ -106,7 +105,7 @@ export function DownloadScript({
           </ScriptBox>
           <ActionButtons
             onProceed={nextStep}
-            isProceedDisabled={pollState === 'error' || pollState === 'polling'}
+            disableProceed={pollState === 'error' || pollState === 'polling'}
           />
         </>
       )}
@@ -120,7 +119,7 @@ function createBashCommand(tokenId: string) {
 
 const ScriptBox = styled(Box)`
   max-width: 800px;
-  background: #182047;
+  background-color: rgba(255, 255, 255, 0.05);
   border: 2px solid
     ${props => {
       switch (props.pollState) {

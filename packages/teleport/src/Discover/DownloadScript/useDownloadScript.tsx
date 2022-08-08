@@ -17,6 +17,8 @@
 import { useState, useEffect } from 'react';
 import useAttempt from 'shared/hooks/useAttemptNext';
 
+import { INTERNAL_RESOURCE_ID_LABEL_KEY } from 'teleport/services/joinToken';
+
 import { DiscoverContext } from '../discoverContext';
 import { AgentStepProps } from '../types';
 
@@ -28,17 +30,21 @@ const THREE_SECONDS_IN_MS = 3000;
 export function useDownloadScript({ ctx, props }: Props) {
   const { attempt, run, setAttempt } = useAttempt('processing');
   const [joinToken, setJoinToken] = useState<JoinToken>();
-  const [pollState, setPollState] = useState<PollState>('');
-  const [retry, setRetry] = useState(false);
+  const [pollState, setPollState] = useState<PollState>('polling');
 
+  // Responsible for initial join token fetch.
   useEffect(() => {
-    if (!retry && pollState === 'polling') return;
+    fetchJoinToken();
+  }, []);
 
-    // Set flags to default.
-    setRetry(false);
+  // Responsible for initiating polling and
+  // timeout on join token change.
+  useEffect(() => {
+    if (!joinToken) return;
+
     setPollState('polling');
 
-    // abortController is required to cancel any in flight request.
+    // abortController is required to cancel in flight request.
     const abortController = new AbortController();
     const abortSignal = abortController.signal;
     let timeoutId;
@@ -50,14 +56,21 @@ export function useDownloadScript({ ctx, props }: Props) {
     // interval time.
     let inFlightReq;
 
-    function fetchNodeMatchingRefResourceId(token: JoinToken) {
+    function cleanUp() {
+      clearInterval(intervalId);
+      clearTimeout(timeoutId);
+      // Cancel any in flight request.
+      abortController.abort();
+    }
+
+    function fetchNodeMatchingRefResourceId() {
       if (inFlightReq) return;
 
       inFlightReq = ctx.nodesService
         .fetchNodes(
           ctx.clusterId,
           {
-            search: `${token.refResourceId}`,
+            search: `${INTERNAL_RESOURCE_ID_LABEL_KEY} ${joinToken.internalResourceId}`,
             limit: 1,
           },
           abortSignal
@@ -67,7 +80,6 @@ export function useDownloadScript({ ctx, props }: Props) {
             setPollState('success');
             props.updateAgentMeta({
               ...props.agentMeta,
-              refResourceId: token.refResourceId,
               node: res.agents[0],
             });
             cleanUp();
@@ -82,52 +94,47 @@ export function useDownloadScript({ ctx, props }: Props) {
         });
     }
 
-    function cleanUp() {
-      clearInterval(intervalId);
-      clearTimeout(timeoutId);
-      // Cancel any in flight request.
-      abortController.abort();
-    }
+    // Start the poller to discover the resource just added.
+    intervalId = setInterval(
+      () => fetchNodeMatchingRefResourceId(),
+      THREE_SECONDS_IN_MS
+    );
 
+    // Set a timeout in case polling continuosly produces
+    // no results. Which means there is either a network error,
+    // script is ran unsuccessfully, script has not been ran,
+    // or resource cannot connect to cluster.
+    timeoutId = setTimeout(() => {
+      setPollState('error');
+      cleanUp();
+    }, FIVE_MINUTES_IN_MS);
+
+    return () => {
+      cleanUp();
+    };
+  }, [joinToken]);
+
+  function fetchJoinToken() {
     run(() =>
       ctx.joinTokenService.fetchJoinToken(['Node'], 'token').then(token => {
         // Probably will never happen, but just in case, otherwise
         // querying for the resource can return a false positive.
-        if (!token.refResourceId) {
+        if (!token.internalResourceId) {
           setAttempt({
             status: 'failed',
             statusText:
-              'reference resource ID is required to discover the newly added resource',
+              'internal resource ID is required to discover the newly added resource, but none was provided',
           });
           return;
         }
 
         setJoinToken(token);
-
-        // Start the poller to discover the resource just added.
-        intervalId = setInterval(
-          () => fetchNodeMatchingRefResourceId(token),
-          THREE_SECONDS_IN_MS
-        );
-
-        // Set a timeout in case polling continuosly produces
-        // no results. Which means there is either a network error,
-        // script is ran unsuccessfully, script has not been ran,
-        // or resource cannot connect to cluster.
-        timeoutId = setTimeout(() => {
-          setPollState('error');
-          cleanUp();
-        }, FIVE_MINUTES_IN_MS);
       })
     );
-
-    return () => {
-      cleanUp();
-    };
-  }, [retry]);
+  }
 
   function regenerateScriptAndRepoll() {
-    setRetry(true);
+    fetchJoinToken();
   }
 
   return {
@@ -144,6 +151,6 @@ type Props = {
   props: AgentStepProps;
 };
 
-type PollState = 'polling' | 'success' | 'error' | '';
+type PollState = 'polling' | 'success' | 'error';
 
 export type State = ReturnType<typeof useDownloadScript>;

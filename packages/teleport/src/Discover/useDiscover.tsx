@@ -124,19 +124,15 @@ export enum AgentStep {
   TestConnection,
 }
 
-type BaseMeta = {
-  refResourceId: string;
-};
-
 // NodeMeta describes the fields for node resource
 // that needs to be preserved throughout the flow.
-export type NodeMeta = BaseMeta & {
+export type NodeMeta = {
   node: Node;
 };
 
 // AppMeta describes the fields that may be provided or required by user
 // when connecting a app.
-type AppMeta = BaseMeta & {
+type AppMeta = {
   name: string;
   publicAddr: string;
 };
