@@ -1,5 +1,5 @@
 FROM node:16.3-slim
-RUN apt-get update && apt-get install git g++ make python -y
+RUN apt-get update && apt-get install git g++ make python tree -y
 
 RUN mkdir -p web-apps
 COPY yarn.lock web-apps/
@@ -19,11 +19,16 @@ COPY README.md packages/webapps.e/telepor[t]/package.json web-apps/packages/weba
 
 # download and install npm dependencies
 WORKDIR web-apps
-RUN yarn install
+ARG YARN_FROZEN_LOCKFILE
+RUN if [ -n "$YARN_FROZEN_LOCKFILE" ]; then \
+      ./packages/build/scripts/yarn-install-frozen-lockfile.sh; \
+    else \
+      yarn install; \
+    fi
 
 # copy the rest of the files and run yarn build command
 COPY  . .
-ARG NPM_SCRIPT
+ARG NPM_SCRIPT=nop
 ARG OUTPUT
 # run npm script with optional --output-path parameter
 RUN yarn $NPM_SCRIPT $([ -z $OUTPUT ] || echo --output-path=$OUTPUT)
