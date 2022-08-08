@@ -45,9 +45,9 @@ export function Discover({
   ...agentProps
 }: State) {
   let AgentComponent;
-  // if (selectedAgentKind) {
-  //   AgentComponent = agentViews[selectedAgentKind][currentStep];
-  // }
+  if (selectedAgentKind) {
+    AgentComponent = agentViews[selectedAgentKind][currentStep];
+  }
 
   return (
     <MainContainer>

@@ -15,12 +15,17 @@
  */
 
 import React from 'react';
-import type { RenderResult } from '@testing-library/react';
+
 import { render, screen, act, fireEvent } from 'design/utils/testing';
-import type { User } from 'teleport/services/user';
+
 import { DiscoverContext } from '../discoverContext';
 import ContextProvider from '../discoverContextProvider';
+
 import LoginTrait from './LoginTrait';
+
+import type { User } from 'teleport/services/user';
+import type { RenderResult } from '@testing-library/react';
+import type { NodeMeta } from '../useDiscover';
 
 describe('login trait comp behavior', () => {
   const ctx = new DiscoverContext();
@@ -36,7 +41,7 @@ describe('login trait comp behavior', () => {
           attempt={null}
           joinToken={null}
           createJoinToken={null}
-          agentMeta={null}
+          agentMeta={mockedNodeMeta}
           updateAgentMeta={null}
           nextStep={null}
           prevStep={null}
@@ -45,7 +50,7 @@ describe('login trait comp behavior', () => {
     );
   });
 
-  test('add a new login', async () => {
+  test('add a new login with no existing logins', async () => {
     jest.spyOn(userSvc, 'fetchUser').mockResolvedValue(mockUser);
 
     let r: RenderResult;
@@ -58,14 +63,14 @@ describe('login trait comp behavior', () => {
     expect(checkboxes).toHaveLength(0);
 
     // Test adding a new login name.
-    fireEvent.click(screen.getByText(/add new/i));
+    fireEvent.click(screen.getByText(/add an/i));
     const inputEl = screen.getByPlaceholderText('name');
     fireEvent.change(inputEl, { target: { value: 'banana' } });
     fireEvent.click(screen.getByText('Add'));
     expect(screen.getByText('banana')).toBeInTheDocument();
   });
 
-  test('rendering of init logins', async () => {
+  test('add a new login with existing logins', async () => {
     jest.spyOn(userSvc, 'fetchUser').mockResolvedValue({
       ...mockUser,
       traits: {
@@ -79,15 +84,15 @@ describe('login trait comp behavior', () => {
       r = render(Component);
     });
 
-    // Test init logins to be rendered.
+    // Test existing logins to be rendered.
     let checkboxes: NodeListOf<HTMLInputElement> =
       r.container.querySelectorAll('input:checked');
     expect(checkboxes).toHaveLength(2);
     expect(checkboxes[0].name).toBe('apple');
     expect(checkboxes[1].name).toBe('banana');
 
-    // Test init logins to be rendered with a new login name.
-    fireEvent.click(screen.getByText(/add new/i));
+    // Test existing logins to be rendered with a new login name.
+    fireEvent.click(screen.getByText(/add an OS/i));
     const inputEl = screen.getByPlaceholderText('name');
     fireEvent.change(inputEl, { target: { value: 'carrot' } });
     fireEvent.click(screen.getByText('Add'));
@@ -111,5 +116,17 @@ const mockUser: User = {
     kubeGroups: [],
     windowsLogins: [],
     awsRoleArns: [],
+  },
+};
+
+const mockedNodeMeta: NodeMeta = {
+  node: {
+    sshLogins: [],
+    id: '',
+    clusterId: '',
+    hostname: '',
+    labels: [],
+    addr: '',
+    tunnel: false,
   },
 };
