@@ -82,8 +82,8 @@ export default class Client extends EventEmitterWebAuthnSender {
       this.emit(TdpClientEvent.WS_OPEN);
     };
 
-    this.socket.onmessage = (ev: MessageEvent) => {
-      this.processMessage(ev.data as ArrayBuffer);
+    this.socket.onmessage = async (ev: MessageEvent) => {
+      await this.processMessage(ev.data as ArrayBuffer);
     };
 
     // The socket 'error' event will only ever be emitted by the socket
@@ -103,7 +103,9 @@ export default class Client extends EventEmitterWebAuthnSender {
     };
   }
 
-  async processMessage(buffer: ArrayBuffer) {
+  // processMessage should be await-ed when called,
+  // so that its internal await-or-not logic is obeyed.
+  async processMessage(buffer: ArrayBuffer): Promise<void> {
     try {
       const messageType = this.codec.decodeMessageType(buffer);
       switch (messageType) {
