@@ -108,6 +108,8 @@
     },
     "linux": {
       "target": [
+        "tar.gz",
+        "rpm",
         "deb"
       ],
       "category": "Development",
