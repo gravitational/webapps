@@ -28,13 +28,22 @@ const Document: React.FC<{
     shouldFocus: visible && !autoFocusDisabled,
   });
 
+  function handleContextMenu(
+    e: React.MouseEvent<HTMLDivElement, MouseEvent>
+  ): void {
+    if (onContextMenu) {
+      e.preventDefault();
+      onContextMenu();
+    }
+  }
+
   return (
     <Flex
       tabIndex={visible ? 0 : -1}
       flex="1"
       ref={ref}
       bg="primary.darker"
-      onContextMenu={onContextMenu}
+      onContextMenu={handleContextMenu}
       style={{
         overflow: 'auto',
         display: visible ? 'flex' : 'none',
