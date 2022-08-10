@@ -31,6 +31,7 @@ import { useDiscover, State } from './useDiscover';
 import { SelectResource } from './SelectResource';
 import { DownloadScript } from './DownloadScript';
 import { LoginTrait } from './LoginTrait';
+import { TestConnection } from './TestConnection';
 
 import type { AgentKind } from './useDiscover';
 import type { AgentStepComponent } from './types';
@@ -40,7 +41,7 @@ export const agentViews: Record<AgentKind, AgentStepComponent[]> = {
   db: [],
   desktop: [],
   kube: [],
-  node: [SelectResource, DownloadScript, LoginTrait],
+  node: [SelectResource, DownloadScript, LoginTrait, TestConnection],
 };
 
 export default function Container() {
