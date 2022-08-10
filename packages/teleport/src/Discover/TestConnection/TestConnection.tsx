@@ -42,16 +42,40 @@ export function TestConnection({
   runConnectionDiagnostic,
   diagnosis,
 }: State) {
-  const usernameOpts = logins.map(l => ({ value: l, label: l }));
+  const [usernameOpts] = useState(() =>
+    logins.map(l => ({ value: l, label: l }))
+  );
   // There will always be one login, as the user cannot proceed
   // the step that requires users to have at least one login.
   const [selectedOpt, setSelectedOpt] = useState(usernameOpts[0]);
 
+  let $diagnosisStateComponent;
+  if (attempt.status === 'processing') {
+    $diagnosisStateComponent = (
+      <TextIcon>
+        <Icons.Restore fontSize={4} />
+        Testing in-progress
+      </TextIcon>
+    );
+  }
+
   let diagnosisStateBorderColor = 'transparent';
   if (attempt.status === 'failed' || (diagnosis && !diagnosis.success)) {
     diagnosisStateBorderColor = 'danger';
+    $diagnosisStateComponent = (
+      <TextIcon>
+        <Icons.Warning ml={1} color="danger" />
+        Testing failed
+      </TextIcon>
+    );
   } else if (attempt.status === 'success' && diagnosis?.success) {
     diagnosisStateBorderColor = 'success';
+    $diagnosisStateComponent = (
+      <TextIcon>
+        <Icons.CircleCheck ml={1} color="success" />
+        Testing complete
+      </TextIcon>
+    );
   }
 
   const showDiagnosisOutput = !!diagnosis || attempt.status === 'failed';
@@ -85,20 +109,7 @@ export function TestConnection({
           >
             {diagnosis ? 'Restart Test' : 'Test Connection'}
           </ButtonPrimary>
-          <Box ml={4}>
-            {attempt.status === 'processing' && (
-              <TextIcon>
-                <Icons.Restore fontSize={4} />
-                Testing in-progress
-              </TextIcon>
-            )}
-            {attempt.status === 'success' && (
-              <TextIcon>
-                <Icons.CircleCheck ml={1} />
-                Testing complete
-              </TextIcon>
-            )}
-          </Box>
+          <Box ml={4}>{$diagnosisStateComponent}</Box>
         </Flex>
         {showDiagnosisOutput && (
           <Box

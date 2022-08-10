@@ -18,7 +18,11 @@ import api from 'teleport/services/api';
 import cfg from 'teleport/config';
 
 import { makeConnectionDiagnostic } from './make';
-import { ConnectionDiagnostic, ConnectionDiagnosticRequest } from './types';
+
+import type {
+  ConnectionDiagnostic,
+  ConnectionDiagnosticRequest,
+} from './types';
 
 export const agentService = {
   createConnectionDiagnostic(

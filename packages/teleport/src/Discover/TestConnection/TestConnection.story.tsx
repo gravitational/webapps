@@ -23,6 +23,8 @@ export default {
   title: 'Teleport/Discover/TestConnection',
 };
 
+export const LoadedInit = () => <TestConnection {...props} />;
+
 export const Processing = () => (
   <TestConnection {...props} attempt={{ status: 'processing' }} />
 );

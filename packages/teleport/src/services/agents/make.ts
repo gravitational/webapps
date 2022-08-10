@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-import { ConnectionDiagnostic, ConnectionDiagnosticTrace } from './types';
+import type { ConnectionDiagnostic, ConnectionDiagnosticTrace } from './types';
 
 export function makeConnectionDiagnostic(json: any): ConnectionDiagnostic {
   json = json || {};
