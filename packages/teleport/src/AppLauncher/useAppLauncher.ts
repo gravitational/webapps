@@ -49,10 +49,14 @@ function resolveRedirectUrl(params: UrlLauncherParams) {
   const state = getUrlParameter('state', location.search);
   const arn = getUrlParameter('awsrole', location.search);
   // redirectPath captures and pass any requested App Access path during the `x-teleport-auth` process
-  const redirectPath = getUrlParameter('path', location.search);
-
+  let redirectPath = getUrlParameter('path', location.search);
   // no state value: let the target app know of a new auth exchange
   if (!state) {
+    //reflect the correct fqdn
+    var appUrl = new URL(decodeURIComponent(window.location.href));
+    params.fqdn = appUrl.hostname;
+    redirectPath = getUrlParameter('path', appUrl.search);
+  
     return service.getAppFqdn(params).then(result => {
       const url = new URL(`https://${result.fqdn}${port}/x-teleport-auth`);
       if (params.clusterId) {
