@@ -24,7 +24,10 @@ import AddApp from 'teleport/Apps/AddApp';
 import Empty from 'teleport/components/Empty';
 import cfg from 'teleport/config';
 
-import { useDiscoverContext } from '../discoverContextProvider';
+import useStickyClusterId from 'teleport/useStickyClusterId';
+
+import useTeleport from 'teleport/useTeleport';
+
 import { resourceTypes } from '../resource-lists';
 
 import applicationIcon from './assets/application.png';
@@ -38,17 +41,31 @@ import type { AgentStepProps } from '../types';
 import type { State } from '../useDiscover';
 
 export default function Container(props: AgentStepProps) {
-  const ctx = useDiscoverContext();
-  return <SelectResource nextStep={props.nextStep} />;
+  const ctx = useTeleport();
+  const { clusterId, isLeafCluster } = useStickyClusterId();
+  return (
+    <SelectResource
+      canCreate={ctx.storeUser.getTokenAccess().create}
+      clusterId={clusterId}
+      isLeafCluster={isLeafCluster}
+      nextStep={props.nextStep}
+    />
+  );
 }
 
 type Props = {
-  // ctx: DiscoverContext;
-  // props: AgentStepProps;
+  clusterId: string;
+  canCreate: boolean;
+  isLeafCluster: boolean;
   nextStep: State['nextStep'];
 };
 
-export function SelectResource({ nextStep }: Props) {
+export function SelectResource({
+  canCreate,
+  clusterId,
+  isLeafCluster,
+  nextStep,
+}: Props) {
   const [selectedResource, setSelectedResource] = useState<string>('server');
   const [selectedType, setSelectedType] = useState('');
   const [disableProceed, setDisableProceed] = useState<boolean>(true);
@@ -133,8 +150,8 @@ export function SelectResource({ nextStep }: Props) {
       )}
       {selectedResource === 'application' && (
         <Empty
-          clusterId="abc123"
-          canCreate={true}
+          clusterId={clusterId}
+          canCreate={canCreate && !isLeafCluster}
           onClick={() => {
             setShowAddApp(true);
           }}
@@ -148,6 +165,24 @@ export function SelectResource({ nextStep }: Props) {
             readOnly: {
               title: 'No Applications Found',
               resource: 'applications',
+            },
+          }}
+        />
+      )}
+      {selectedResource === 'desktop' && (
+        <Empty
+          clusterId={clusterId}
+          canCreate={canCreate && !isLeafCluster}
+          emptyStateInfo={{
+            title: 'Add your first Windows desktop to Teleport',
+            byline:
+              'Teleport Desktop Access provides graphical desktop access to remote Windows hosts.',
+            docsURL:
+              'https://goteleport.com/docs/desktop-access/getting-started/',
+            resourceType: 'desktop',
+            readOnly: {
+              title: 'No Desktops Found',
+              resource: 'desktops',
             },
           }}
         />
