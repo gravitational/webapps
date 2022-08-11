@@ -60,6 +60,8 @@ development mode. That's because Electron is running its own version of Node. Th
 fetch or build native packages that were made for that specific version of Node.
 
 ```
+$ cd webapps
+
 $ yarn install
 $ yarn build-native-deps-for-term
 ```
