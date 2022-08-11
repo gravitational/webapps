@@ -92,17 +92,6 @@ class ClusterContext extends Store<State> {
     }
   };
 
-  search = async (search: string, advanced = false) => {
-    try {
-      console.log(search, advanced, this.appCtx.clustersService);
-    } catch (e) {
-      this.appCtx.notificationsService.notifyError({
-        title: `Could not search cluster ${this.state.clusterName}`,
-        description: e.message,
-      });
-    }
-  };
-
   refresh = () => {
     const rootCluster = this.appCtx.clustersService.findRootClusterByResource(
       this.clusterUri
