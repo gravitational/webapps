@@ -231,8 +231,8 @@ function PagedTable<T>({
   const isTopPager = pagerPosition === 'top';
 
   const radiusProps = {
-    borderTopLeftRadius: 3,
-    borderTopRightRadius: 3,
+    borderTopLeftRadius: 0,
+    borderTopRightRadius: 0,
     borderBottomLeftRadius: 3,
     borderBottomRightRadius: 3,
   };
