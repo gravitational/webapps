@@ -20,6 +20,7 @@ import styled from 'styled-components';
 
 import { Image, Text, Box, ButtonPrimary, ButtonSecondary, Flex } from 'design';
 
+import AddApp from 'teleport/Apps/AddApp';
 import Empty from 'teleport/components/Empty';
 import cfg from 'teleport/config';
 
@@ -51,6 +52,8 @@ export function SelectResource({ nextStep }: Props) {
   const [selectedResource, setSelectedResource] = useState<string>('server');
   const [selectedType, setSelectedType] = useState('');
   const [disableProceed, setDisableProceed] = useState<boolean>(true);
+  const [showAddApp, setShowAddApp] = useState(false);
+
   const tabs: TabComponent[] = [
     {
       name: 'server',
@@ -114,9 +117,8 @@ export function SelectResource({ nextStep }: Props) {
 
   return (
     <Box width="1020px">
-      <Text mb={4} typography="h4">
-        Resource Selection
-      </Text>
+      <Text typography="h4">Resource Selection</Text>
+      <Text mb={4}>Begin with selecting resource to create a connection</Text>
       <Text mb={2}>Select Resource Type</Text>
       <SlideTabs
         tabs={tabs}
@@ -133,7 +135,9 @@ export function SelectResource({ nextStep }: Props) {
         <Empty
           clusterId="abc123"
           canCreate={true}
-          onClick={() => {}}
+          onClick={() => {
+            setShowAddApp(true);
+          }}
           emptyStateInfo={{
             title: 'Add your first application to Teleport',
             byline:
@@ -148,25 +152,29 @@ export function SelectResource({ nextStep }: Props) {
           }}
         />
       )}
-      <Box mt={4}>
-        <ButtonPrimary
-          size="medium"
-          disabled={disableProceed}
-          mr={3}
-          onClick={() => {
-            nextStep();
-            // nextStep({
-            //   resource: selectedResource,
-            //   type: selectedType,
-            // });
-          }}
-        >
-          Proceed
-        </ButtonPrimary>
-        <ButtonSecondary as="a" href={cfg.routes.root} size="medium">
-          Go to dashboard
-        </ButtonSecondary>
-      </Box>
+      {/* only show the proceed button if it's the server view for now */}
+      {selectedResource === 'server' && (
+        <Box mt={4}>
+          <ButtonPrimary
+            size="medium"
+            disabled={disableProceed}
+            mr={3}
+            onClick={() => {
+              nextStep();
+              // nextStep({
+              //   resource: selectedResource,
+              //   type: selectedType,
+              // });
+            }}
+          >
+            Proceed
+          </ButtonPrimary>
+          <ButtonSecondary as="a" href={cfg.routes.root} size="medium">
+            Go to dashboard
+          </ButtonSecondary>
+        </Box>
+      )}
+      {showAddApp && <AddApp onClose={() => setShowAddApp(false)} />}
     </Box>
   );
 }

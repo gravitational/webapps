@@ -17,7 +17,6 @@ limitations under the License.
 import React from 'react';
 
 import { Text, Box, Flex, ButtonPrimary, ButtonOutlined } from 'design';
-import Card from 'design/Card';
 import Image from 'design/Image';
 
 import application from './assets/appplication.png';
@@ -75,13 +74,12 @@ export default function Empty(props: Props) {
   }
 
   return (
-    <Card
+    <Box
       p={8}
       pt={5}
       as={Flex}
       width="100%"
       mx="auto"
-      bg="primary.light"
       alignItems="center"
       justifyContent="center"
     >
@@ -120,7 +118,7 @@ export default function Empty(props: Props) {
           </ButtonOutlined>
         </Box>
       </Box>
-    </Card>
+    </Box>
   );
 }
 
