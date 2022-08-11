@@ -28,7 +28,6 @@ import ClusterCtx, {
   ClusterContextProvider,
   useClusterContext,
 } from './clusterContext';
-import LinearProgress from '../components/LinearProgress';
 import ClusterResources from './ClusterResources';
 
 export default function Container(props: DocumentProps) {
