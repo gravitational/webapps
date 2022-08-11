@@ -21,6 +21,7 @@ import styled from 'styled-components';
 import { Image, Text, Box, ButtonPrimary, ButtonSecondary, Flex } from 'design';
 
 import AddApp from 'teleport/Apps/AddApp';
+import AddKube from 'teleport/Kubes/AddKube';
 import Empty from 'teleport/components/Empty';
 import cfg from 'teleport/config';
 
@@ -70,6 +71,7 @@ export function SelectResource({
   const [selectedType, setSelectedType] = useState('');
   const [disableProceed, setDisableProceed] = useState<boolean>(true);
   const [showAddApp, setShowAddApp] = useState(false);
+  const [showAddKube, setShowAddKube] = useState(false);
 
   const tabs: TabComponent[] = [
     {
@@ -187,6 +189,24 @@ export function SelectResource({
           }}
         />
       )}
+      {selectedResource === 'kubernetes' && (
+        <Empty
+          clusterId={clusterId}
+          canCreate={canCreate && !isLeafCluster}
+          onClick={() => setShowAddKube(true)}
+          emptyStateInfo={{
+            title: 'Add your first Kubernetes cluster to Teleport',
+            byline:
+              'Teleport Kubenetes Access provides secure access to Kubernetes clusters.',
+            docsURL: 'https://goteleport.com/docs/kubernetes-access/guides',
+            resourceType: 'kubernetes',
+            readOnly: {
+              title: 'No Kubernetes Clusters Found',
+              resource: 'kubernetes clusters',
+            },
+          }}
+        />
+      )}
       {/* only show the proceed button if it's the server view for now */}
       {selectedResource === 'server' && (
         <Box mt={4}>
@@ -210,6 +230,7 @@ export function SelectResource({
         </Box>
       )}
       {showAddApp && <AddApp onClose={() => setShowAddApp(false)} />}
+      {showAddKube && <AddKube onClose={() => setShowAddKube(false)} />}
     </Box>
   );
 }
