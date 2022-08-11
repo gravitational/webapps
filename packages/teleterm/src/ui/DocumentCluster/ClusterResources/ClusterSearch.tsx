@@ -17,54 +17,18 @@
 import React from 'react';
 import styled from 'styled-components';
 import { debounce } from 'lodash';
-import { space, width, color, height } from 'styled-system';
 
-export default function ClusterSearch(props: Props) {
-  const ref = React.useRef<HTMLInputElement>();
+export default function ClusterSearch({ onChange, children }: Props) {
 
   const handleOnChange = React.useMemo(() => {
-    return debounce(() => {
-      props.onChange(ref.current.value);
-    }, 100);
+    console.log('hi');
   }, []);
 
-  React.useEffect(() => {
-    return () => handleOnChange.cancel();
-  }, []);
-
-  return <Input ref={ref} placeholder="Search..." onChange={handleOnChange} />;
+  return (
+  );
 }
-
-const Input = styled.input(props => {
-  const { theme } = props;
-  return {
-    background: theme.colors.primary.main,
-    boxSizing: 'border-box',
-    color: theme.colors.text.primary,
-    width: '100%',
-    minHeight: '30px',
-    minWidth: '300px',
-    outline: 'none',
-    borderRadius: '4px',
-    border: '1px solid transparent',
-    padding: '2px 12px',
-    '&:hover, &:focus': {
-      color: theme.colors.primary.contrastText,
-      borderColor: theme.colors.primary.lighter,
-      opacity: 1,
-    },
-    '::placeholder': {
-      opacity: 1,
-      color: theme.colors.text.secondary,
-    },
-
-    ...space(props),
-    ...width(props),
-    ...height(props),
-    ...color(props),
-  };
-});
 
 type Props = {
   onChange(value: string): void;
+  children?: JSX.Element;
 };

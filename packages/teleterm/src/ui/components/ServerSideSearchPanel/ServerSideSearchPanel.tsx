@@ -1,9 +1,11 @@
 import React from 'react';
 import styled from 'styled-components';
 import { Text, Box, Flex, Link } from 'design';
-import ClusterSearch from 'teleterm/ui/DocumentCluster/ClusterResources/ClusterSearch';
+import { Magnifier } from 'design/Icon';
 import { StyledPanel } from 'design/DataTable';
 import Toggle from 'teleport/components/Toggle';
+import { space, color, height } from 'styled-system';
+
 import Tooltip from '../Tooltip';
 
 const GUIDE_URL =
@@ -12,26 +14,37 @@ const GUIDE_URL =
 export function ServerSideSearchPanel({
   isAdvancedSearch,
   setIsAdvancedSearch,
+  onSearchSubmit,
 }: Props) {
-  function onToggle() {
+  const ref = React.useRef<HTMLInputElement>();
+
+  const onToggle = () => {
     setIsAdvancedSearch(!isAdvancedSearch);
-  }
+  };
+
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    onSearchSubmit(ref.current?.value);
+  };
+
   return (
     <StyledPanel
       as="form"
-      onSubmit={() => console.log('onSubmit')}
+      onSubmit={handleSubmit}
       borderTopLeftRadius={3}
       borderTopRightRadius={3}
     >
       <Flex justifyContent="space-between" alignItems="center" width="100%">
         <Flex style={{ width: '70%' }} alignItems="center">
           <Box width="100%" mr={3}>
-            <ClusterSearch onChange={val => console.log('onChange', val)}>
+            <Wrapper>
+              <Magnifier ml="3" />
+              <StyledInput ref={ref} placeholder="SEARCH..." px={3} />
               <ToggleWrapper>
                 <Toggle isToggled={isAdvancedSearch} onToggle={onToggle} />
                 <Text typography="paragraph2">Advanced</Text>
               </ToggleWrapper>
-            </ClusterSearch>
+            </Wrapper>
           </Box>
           <Tooltip>
             <PredicateDoc />
@@ -101,7 +114,50 @@ const ToggleWrapper = styled.div`
   width: 120px;
 `;
 
+const Wrapper = styled.div`
+  position: relative;
+  display: flex;
+  overflow: hidden;
+  align-items: center;
+  width: 100%;
+  border-radius: 200px;
+  height: 32px;
+  background: ${props => props.theme.colors.primary.dark};
+`;
+
+const StyledInput = styled.input`
+  border: none;
+  outline: none;
+  box-sizing: border-box;
+  height: 100%;
+  font-size: 12px;
+  width: 100%;
+  transition: all 0.2s;
+  ${color}
+  ${space}
+  ${height}
+  ${fromTheme};
+`;
+
+function fromTheme(props) {
+  return {
+    color: props.theme.colors.text.primary,
+    background: props.theme.colors.primary.dark,
+
+    '&: hover, &:focus, &:active': {
+      background: props.theme.colors.primary.main,
+      boxShadow: 'inset 0 2px 4px rgba(0, 0, 0, .24)',
+      color: props.theme.colors.text.primary,
+    },
+    '&::placeholder': {
+      color: props.theme.colors.text.placeholder,
+      fontSize: props.theme.fontSizes[1],
+    },
+  };
+}
+
 type Props = {
   isAdvancedSearch: boolean;
   setIsAdvancedSearch: (boolean) => void;
+  onSearchSubmit: (string) => void;
 };

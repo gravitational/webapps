@@ -25,9 +25,12 @@ import Servers from './Servers';
 import Databases from './Databases';
 import Applications from './Applications';
 import Kubes from './Kubes';
+import { ServerSideSearchPanel } from 'teleterm/ui/components/ServerSideSearchPanel/ServerSideSearchPanel';
+import LinearProgress from 'teleterm/ui/components/LinearProgress';
 
 export default function ClusterResources() {
   const clusterCtx = useClusterContext();
+  const [isAdvancedSearch, setIsAdvancedSearch] = React.useState(false);
 
   // subscribe to services
   const { navLocation } = clusterCtx.useState();

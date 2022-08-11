@@ -155,12 +155,12 @@ export class ClustersService extends ImmutableStore<ClustersServiceState> {
       //
       // Arguably, it is a bit of a race condition, as we assume that syncClusterInfo will return
       // before syncLeafClusters, but for now this is a condition we can live with.
-      this.syncKubes(clusterUri);
-      this.syncApps(clusterUri);
-      this.syncDbs(clusterUri);
-      this.syncServers(clusterUri);
-      this.syncKubes(clusterUri);
-      this.syncGateways();
+      // this.syncKubes(clusterUri);
+      // this.syncApps(clusterUri);
+      // this.syncDbs(clusterUri);
+      this.listServers({ clusterUri });
+      // this.syncKubes(clusterUri);
+      // this.syncGateways();
     }
   }
 
@@ -177,12 +177,12 @@ export class ClustersService extends ImmutableStore<ClustersServiceState> {
 
   private async syncLeafClusterResourcesAndCatchErrors(clusterUri: string) {
     // Functions below handle their own errors, so we don't need to await them.
-    this.syncKubes(clusterUri);
-    this.syncApps(clusterUri);
-    this.syncDbs(clusterUri);
-    this.syncServers(clusterUri);
-    this.syncKubes(clusterUri);
-    this.syncGateways();
+    // this.syncKubes(clusterUri);
+    // this.syncApps(clusterUri);
+    // this.syncDbs(clusterUri);
+    this.listServers({ clusterUri });
+    // this.syncKubes(clusterUri);
+    // this.syncGateways();
   }
 
   async syncRootClusters() {
@@ -351,6 +351,51 @@ export class ClustersService extends ImmutableStore<ClustersServiceState> {
     return leaves;
   }
 
+  async listServers({
+    clusterUri,
+    search,
+    isAdvancedSearch = false,
+  }: {
+    clusterUri: string;
+    search?: string;
+    isAdvancedSearch?: boolean; // When false, search is parsed as SearchKeywords. When true, search is parsed as a predicate expression
+  }) {
+    const cluster = this.state.clusters.get(clusterUri);
+    if (!cluster.connected) {
+      this.setState(draft => {
+        draft.serversSyncStatus.delete(clusterUri);
+        helpers.updateMap(clusterUri, draft.servers, []);
+      });
+
+      return;
+    }
+
+    this.setState(draft => {
+      draft.serversSyncStatus.set(clusterUri, {
+        status: 'processing',
+      });
+    });
+
+    try {
+      const received = await this.client.listServers({
+        clusterUri,
+        search: isAdvancedSearch ? '' : search,
+        query: isAdvancedSearch ? search : '',
+      });
+      this.setState(draft => {
+        draft.serversSyncStatus.set(clusterUri, { status: 'ready' });
+        helpers.updateMap(clusterUri, draft.servers, received);
+      });
+    } catch (err) {
+      this.setState(draft => {
+        draft.serversSyncStatus.set(clusterUri, {
+          status: 'failed',
+          statusText: err.message,
+        });
+      });
+    }
+  }
+
   async syncServers(clusterUri: string) {
     const cluster = this.state.clusters.get(clusterUri);
     if (!cluster.connected) {
@@ -369,7 +414,9 @@ export class ClustersService extends ImmutableStore<ClustersServiceState> {
     });
 
     try {
-      const received = await this.client.listServers(clusterUri);
+      const received = await this.client.listServers({
+        clusterUri,
+      });
       this.setState(draft => {
         draft.serversSyncStatus.set(clusterUri, { status: 'ready' });
         helpers.updateMap(clusterUri, draft.servers, received);

@@ -24,6 +24,9 @@ import { Danger } from 'design/Alert';
 
 import * as types from 'teleterm/ui/services/clusters/types';
 import { Table } from 'teleterm/ui/components/Table';
+import { ServerSideSearchPanel } from 'teleterm/ui/components/ServerSideSearchPanel/ServerSideSearchPanel';
+import useServerSideSearch from 'teleterm/ui/components/ServerSideSearchPanel/useServerSideSearch';
+import LinearProgress from 'teleterm/ui/components/LinearProgress';
 
 import { renderLabelCell } from '../renderLabelCell';
 
@@ -37,12 +40,29 @@ export default function Container() {
 }
 
 function ServerList(props: State) {
-  const { servers = [], getSshLogins, connect, syncStatus } = props;
+  const {
+    servers = [],
+    getSshLogins,
+    connect,
+    syncStatus,
+    fetchServers,
+  } = props;
+  const { isAdvancedSearch, setIsAdvancedSearch } = useServerSideSearch();
+
+  const onSubmitSearch = (search: string) => {
+    fetchServers({ search, isAdvancedSearch });
+  };
+
   return (
     <>
       {syncStatus.status === 'failed' && (
         <Danger>{syncStatus.statusText}</Danger>
       )}
+      <ServerSideSearchPanel
+        onSearchSubmit={onSubmitSearch}
+        isAdvancedSearch={isAdvancedSearch}
+        setIsAdvancedSearch={setIsAdvancedSearch}
+      />
       <Table
         columns={[
           {
@@ -74,6 +94,7 @@ function ServerList(props: State) {
         data={servers}
         pagination={{ pageSize: 15, pagerPosition: 'bottom' }}
       />
+      {syncStatus.status === 'processing' && <LinearProgress />}
     </>
   );
 }

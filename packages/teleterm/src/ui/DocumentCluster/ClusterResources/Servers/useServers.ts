@@ -43,11 +43,21 @@ export function useServers() {
     documentsService.setLocation(doc.uri);
   }
 
+  async function fetchServers({ search = '', isAdvancedSearch = false }) {
+    // listServers has its own error handling so we'll let it handle the errors
+    await appContext.clustersService.listServers({
+      clusterUri: clusterContext.clusterUri,
+      search,
+      isAdvancedSearch,
+    });
+  }
+
   return {
     servers,
     syncStatus,
     getSshLogins,
     connect,
+    fetchServers,
   };
 }
 
