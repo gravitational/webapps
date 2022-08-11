@@ -1,6 +1,15 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`empty state for enterprise, can create 1`] = `
+.c4 {
+  box-sizing: border-box;
+  margin-left: auto;
+  margin-right: auto;
+  padding: 56px;
+  padding-top: 32px;
+  width: 100%;
+}
+
 .c5 {
   box-sizing: border-box;
   max-width: 600px;
@@ -124,18 +133,6 @@ exports[`empty state for enterprise, can create 1`] = `
   color: #FFFFFF;
 }
 
-.c4 {
-  box-sizing: border-box;
-  margin-left: auto;
-  margin-right: auto;
-  padding: 56px;
-  padding-top: 32px;
-  width: 100%;
-  background-color: #222C59;
-  box-shadow: 0 4px 16px rgba(0,0,0,0.24);
-  border-radius: 8px;
-}
-
 .c7 {
   display: block;
   outline: none;
@@ -172,7 +169,6 @@ exports[`empty state for enterprise, can create 1`] = `
   padding: 56px;
   padding-top: 32px;
   width: 100%;
-  background-color: #222C59;
   display: flex;
   align-items: center;
   justify-content: center;
