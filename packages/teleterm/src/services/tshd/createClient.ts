@@ -125,8 +125,11 @@ export default function createClient(
       });
     },
 
-    async listServers(clusterUri: string) {
-      const req = new api.ListServersRequest().setClusterUri(clusterUri);
+    async listServers(params: types.ListServersParams) {
+      const req = new api.ListServersRequest()
+        .setClusterUri(params.clusterUri)
+        .setQuery(params.query)
+        .setSearch(params.search);
       return new Promise<types.Server[]>((resolve, reject) => {
         tshd.listServers(req, (err, response) => {
           if (err) {
