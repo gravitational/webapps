@@ -73,6 +73,7 @@ export function SelectResource({
   const [disableProceed, setDisableProceed] = useState<boolean>(true);
   const [showAddApp, setShowAddApp] = useState(false);
   const [showAddKube, setShowAddKube] = useState(false);
+  const [showAddDB, setShowAddDB] = useState(false);
 
   const tabs: TabComponent[] = [
     {
@@ -145,10 +146,30 @@ export function SelectResource({
         onChange={index => setSelectedResource(tabs[index].name)}
       />
       {selectedResource === 'database' && (
-        <SelectDBDeploymentType
-          selectedType={selectedType}
-          setSelectedType={setSelectedType}
-          resourceTypes={resourceTypes}
+        // As we're focusing on the server flow uncomment this when we start
+        // implementing the database support.
+        // <SelectDBDeploymentType
+        //   selectedType={selectedType}
+        //   setSelectedType={setSelectedType}
+        //   resourceTypes={resourceTypes}
+        // />
+        <Empty
+          clusterId={clusterId}
+          canCreate={canCreate && !isLeafCluster}
+          onClick={() => {
+            setShowAddDB(true);
+          }}
+          emptyStateInfo={{
+            title: 'Add your first database to Teleport',
+            byline:
+              'Teleport Database Access provides secure access to PostgreSQL, MySQL, MariaDB, MongoDB, Redis, and Microsoft SQL Server.',
+            docsURL: 'https://goteleport.com/docs/database-access/guides/',
+            resourceType: 'database',
+            readOnly: {
+              title: 'No Databases Found',
+              resource: 'databases',
+            },
+          }}
         />
       )}
       {selectedResource === 'application' && (
