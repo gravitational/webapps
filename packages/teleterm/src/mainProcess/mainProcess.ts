@@ -59,6 +59,7 @@ export default class MainProcess {
   }
 
   private _init() {
+    this.updateAboutPanelIfNeeded();
     this._setAppMenu();
     try {
       this._initTshd();
@@ -164,20 +165,6 @@ export default class MainProcess {
       },
     ];
 
-    // There is no about menu for Linux. See https://github.com/electron/electron/issues/18918
-    // On Windows default menu does not show copyrights.
-    if (
-      this.settings.platform === 'linux' ||
-      this.settings.platform === 'win32'
-    ) {
-      app.setAboutPanelOptions({
-        applicationName: app.getName(),
-        applicationVersion: app.getVersion(),
-        iconPath: getAssetPath('icon-linux/512x512.png'), //.ico is not supported
-        copyright: `Copyright © ${new Date().getFullYear()} Gravitational, Inc.`,
-      });
-    }
-
     const otherTemplate: MenuItemConstructorOptions[] = [
       { role: 'fileMenu' },
       { role: 'editMenu' },
@@ -197,6 +184,22 @@ export default class MainProcess {
 
     const menu = Menu.buildFromTemplate(isMac ? macTemplate : otherTemplate);
     Menu.setApplicationMenu(menu);
+  }
+
+  private updateAboutPanelIfNeeded(): void {
+    // There is no about menu for Linux. See https://github.com/electron/electron/issues/18918
+    // On Windows default menu does not show copyrights.
+    if (
+      this.settings.platform === 'linux' ||
+      this.settings.platform === 'win32'
+    ) {
+      app.setAboutPanelOptions({
+        applicationName: app.getName(),
+        applicationVersion: app.getVersion(),
+        iconPath: getAssetPath('icon-linux/512x512.png'), //.ico is not supported
+        copyright: `Copyright © ${new Date().getFullYear()} Gravitational, Inc.`,
+      });
+    }
   }
 }
 
