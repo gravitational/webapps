@@ -676,7 +676,7 @@ exports[`polling state 1`] = `
         color="light"
         font-size="4"
       />
-      Waiting for node   |   05:00 minutes until script expires
+      Waiting for node   |   05:00 minutes until this script expires
     </div>
   </div>
   <div

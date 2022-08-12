@@ -78,7 +78,7 @@ export function DownloadScript({
                 <Icons.Restore fontSize={4} />
                 {`Waiting for node   |   ${formatTime(
                   countdownTime
-                )} until script expires`}
+                )} until this script expires`}
               </TextIcon>
             )}
             {pollState === 'success' && (

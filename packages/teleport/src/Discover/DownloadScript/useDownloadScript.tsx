@@ -37,6 +37,8 @@ export function useDownloadScript({ ctx, props }: Props) {
   const { attempt, run, setAttempt } = useAttempt('processing');
   const [joinToken, setJoinToken] = useState<JoinToken>();
   const [pollState, setPollState] = useState<PollState>('polling');
+
+  // TODO (lisa) extract count down logic into it's own component.
   const [countdownTime, setCountdownTime] = useState<CountdownTime>({
     minutes: 5,
     seconds: 0,
