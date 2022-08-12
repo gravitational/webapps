@@ -40,6 +40,7 @@ import type { TabComponent } from 'design/SlideTabs/SlideTabs';
 import type { ResourceType, ResourceLocation } from '../resource-lists';
 import type { AgentStepProps } from '../types';
 import type { State } from '../useDiscover';
+import { ActionButtons } from '../Shared';
 
 export default function Container(props: AgentStepProps) {
   const ctx = useTeleport();
@@ -209,25 +210,11 @@ export function SelectResource({
       )}
       {/* only show the proceed button if it's the server view for now */}
       {selectedResource === 'server' && (
-        <Box mt={4}>
-          <ButtonPrimary
-            size="medium"
-            disabled={disableProceed}
-            mr={3}
-            onClick={() => {
-              nextStep();
-              // nextStep({
-              //   resource: selectedResource,
-              //   type: selectedType,
-              // });
-            }}
-          >
-            Proceed
-          </ButtonPrimary>
-          <ButtonSecondary as="a" href={cfg.routes.root} size="medium">
-            Go to dashboard
-          </ButtonSecondary>
-        </Box>
+        <ActionButtons
+          onProceed={() => {
+            nextStep();
+          }}
+        />
       )}
       {showAddApp && <AddApp onClose={() => setShowAddApp(false)} />}
       {showAddKube && <AddKube onClose={() => setShowAddKube(false)} />}

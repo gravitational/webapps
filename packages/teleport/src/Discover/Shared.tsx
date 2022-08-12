@@ -16,6 +16,7 @@
 
 import React from 'react';
 import styled from 'styled-components';
+import { NavLink } from 'react-router-dom';
 
 import { Text, ButtonPrimary, ButtonSecondary, Box } from 'design';
 import Dialog, {
@@ -26,7 +27,6 @@ import Dialog, {
 } from 'design/Dialog';
 
 import cfg from 'teleport/config';
-import history from 'teleport/services/history';
 
 export const Header: React.FC = ({ children }) => (
   <Text mb={4} typography="h4" bold>
@@ -36,7 +36,7 @@ export const Header: React.FC = ({ children }) => (
 
 export const ActionButtons = ({
   onProceed,
-  disableProceed,
+  disableProceed = false,
 }: {
   onProceed?(): void;
   disableProceed?: boolean;
@@ -85,10 +85,7 @@ function ConfirmExitDialog({ onClose }: { onClose(): void }) {
         </Text>
       </DialogContent>
       <DialogFooter>
-        <ButtonPrimary
-          mr="3"
-          onClick={() => history.push(cfg.routes.root, true)}
-        >
+        <ButtonPrimary mr="3" as={NavLink} to={cfg.routes.root} size="medium">
           Yes
         </ButtonPrimary>
         <ButtonSecondary onClick={onClose}>Cancel</ButtonSecondary>
