@@ -15,6 +15,11 @@
  */
 
 import { useState, useEffect } from 'react';
+import {
+  addMinutes,
+  intervalToDuration,
+  differenceInMilliseconds,
+} from 'date-fns';
 import useAttempt from 'shared/hooks/useAttemptNext';
 
 import { INTERNAL_RESOURCE_ID_LABEL_KEY } from 'teleport/services/joinToken';
@@ -24,13 +29,18 @@ import { AgentStepProps } from '../types';
 
 import type { JoinToken } from 'teleport/services/joinToken';
 
-const FIVE_MINUTES_IN_MS = 300000;
+const FIVE_MINUTES = 5;
 const THREE_SECONDS_IN_MS = 3000;
+const ONE_SECOND_IN_MS = 1000;
 
 export function useDownloadScript({ ctx, props }: Props) {
   const { attempt, run, setAttempt } = useAttempt('processing');
   const [joinToken, setJoinToken] = useState<JoinToken>();
   const [pollState, setPollState] = useState<PollState>('polling');
+  const [countdownTime, setCountdownTime] = useState<CountdownTime>({
+    minutes: 5,
+    seconds: 0,
+  });
 
   // Responsible for initial join token fetch.
   useEffect(() => {
@@ -48,7 +58,11 @@ export function useDownloadScript({ ctx, props }: Props) {
     const abortController = new AbortController();
     const abortSignal = abortController.signal;
     let timeoutId;
-    let intervalId;
+    let pollingIntervalId;
+    let countdownIntervalId;
+
+    // countdownEndDate takes current date and adds 5 minutes to it.
+    let countdownEndDate = addMinutes(new Date(), FIVE_MINUTES);
 
     // inFlightReq is a flag to prevent another fetch request when a
     // previous fetch request is still in progress. May happen when a
@@ -57,8 +71,10 @@ export function useDownloadScript({ ctx, props }: Props) {
     let inFlightReq;
 
     function cleanUp() {
-      clearInterval(intervalId);
+      clearInterval(pollingIntervalId);
+      clearInterval(countdownIntervalId);
       clearTimeout(timeoutId);
+      setCountdownTime({ minutes: 5, seconds: 0 });
       // Cancel any in flight request.
       abortController.abort();
     }
@@ -94,20 +110,37 @@ export function useDownloadScript({ ctx, props }: Props) {
         });
     }
 
-    // Start the poller to discover the resource just added.
-    intervalId = setInterval(
-      () => fetchNodeMatchingRefResourceId(),
-      THREE_SECONDS_IN_MS
-    );
+    function updateCountdown() {
+      const start = new Date();
+      const end = countdownEndDate;
+      const duration = intervalToDuration({ start, end });
 
-    // Set a timeout in case polling continuosly produces
+      if (differenceInMilliseconds(end, start) <= 0) {
+        setPollState('error');
+        cleanUp();
+        return;
+      }
+
+      setCountdownTime({
+        minutes: duration.minutes,
+        seconds: duration.seconds,
+      });
+    }
+
+    // Set a countdown in case polling continuosly produces
     // no results. Which means there is either a network error,
     // script is ran unsuccessfully, script has not been ran,
     // or resource cannot connect to cluster.
-    timeoutId = setTimeout(() => {
-      setPollState('error');
-      cleanUp();
-    }, FIVE_MINUTES_IN_MS);
+    countdownIntervalId = setInterval(
+      () => updateCountdown(),
+      ONE_SECOND_IN_MS
+    );
+
+    // Start the poller to discover the resource just added.
+    pollingIntervalId = setInterval(
+      () => fetchNodeMatchingRefResourceId(),
+      THREE_SECONDS_IN_MS
+    );
 
     return () => {
       cleanUp();
@@ -143,6 +176,7 @@ export function useDownloadScript({ ctx, props }: Props) {
     nextStep: props.nextStep,
     pollState,
     regenerateScriptAndRepoll,
+    countdownTime,
   };
 }
 
@@ -152,5 +186,10 @@ type Props = {
 };
 
 type PollState = 'polling' | 'success' | 'error';
+
+export type CountdownTime = {
+  minutes: number;
+  seconds: number;
+};
 
 export type State = ReturnType<typeof useDownloadScript>;

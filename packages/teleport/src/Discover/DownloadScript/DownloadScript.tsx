@@ -30,7 +30,7 @@ import { Header, ActionButtons, TextIcon } from '../Shared';
 
 import { useDownloadScript } from './useDownloadScript';
 
-import type { State } from './useDownloadScript';
+import type { State, CountdownTime } from './useDownloadScript';
 
 export default function Container(props: AgentStepProps) {
   const ctx = useDiscoverContext();
@@ -45,6 +45,7 @@ export function DownloadScript({
   nextStep,
   pollState,
   regenerateScriptAndRepoll,
+  countdownTime,
 }: State) {
   return (
     <Box>
@@ -69,22 +70,29 @@ export function DownloadScript({
               mb={1}
             />
             {pollState === 'polling' && (
-              <TextIcon>
+              <TextIcon
+                css={`
+                  white-space: pre;
+                `}
+              >
                 <Icons.Restore fontSize={4} />
-                Waiting for resource discovery...
+                {`Waiting for node   |   ${formatTime(
+                  countdownTime
+                )} until script expires`}
               </TextIcon>
             )}
             {pollState === 'success' && (
               <TextIcon>
                 <Icons.CircleCheck ml={1} color="success" />
-                Successfully discovered resource
+                Successfully executed
               </TextIcon>
             )}
             {pollState === 'error' && (
               <TextIcon>
                 <Icons.Warning ml={1} color="danger" />
-                Timed out, failed to discover resource.{' '}
+                Timeout, script expired{' '}
                 <ButtonText
+                  ml={2}
                   onClick={regenerateScriptAndRepoll}
                   css={`
                     color: ${({ theme }) => theme.colors.link};
@@ -94,7 +102,7 @@ export function DownloadScript({
                     min-height: auto;
                   `}
                 >
-                  Generate a new script and try again.
+                  Regenerate Script
                 </ButtonText>
               </TextIcon>
             )}
@@ -111,6 +119,28 @@ export function DownloadScript({
 
 function createBashCommand(tokenId: string) {
   return `sudo bash -c "$(curl -fsSL ${cfg.getNodeScriptUrl(tokenId)})"`;
+}
+
+function formatTime({ minutes, seconds }: CountdownTime) {
+  let formattedSeconds = seconds.toString();
+  if (seconds < 10) {
+    formattedSeconds = `0${seconds}`;
+  }
+
+  let formattedMinutes = minutes.toString();
+  if (minutes < 10) {
+    formattedMinutes = `0${minutes}`;
+  }
+
+  let timeNotation = 'minute';
+  if (!minutes && seconds >= 0) {
+    timeNotation = 'seconds';
+  }
+  if (minutes) {
+    timeNotation = 'minutes';
+  }
+
+  return `${formattedMinutes}:${formattedSeconds} ${timeNotation}`;
 }
 
 const ScriptBox = styled(Box)`
