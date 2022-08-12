@@ -32,6 +32,8 @@ const Document: React.FC<{
     e: React.MouseEvent<HTMLDivElement, MouseEvent>
   ): void {
     if (onContextMenu) {
+      // `preventDefault` prevents opening the universal context menu
+      // opening two menus at the same time on Linux causes flickering
       e.preventDefault();
       onContextMenu();
     }
