@@ -59,7 +59,7 @@ The installable file can be found in `/webapps/packages/teleterm/build/release/`
 development mode. That's because Electron is running its own version of Node. That command will
 fetch or build native packages that were made for that specific version of Node.
 
-```
+```sh
 $ cd webapps
 
 $ yarn install
