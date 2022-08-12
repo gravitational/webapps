@@ -18,18 +18,17 @@ import { Cloud } from 'design/Icon';
 import SlideTabs from 'design/SlideTabs';
 import styled from 'styled-components';
 
-import { Image, Text, Box, ButtonPrimary, ButtonSecondary, Flex } from 'design';
+import { Image, Text, Box, Flex } from 'design';
 
 import AddApp from 'teleport/Apps/AddApp';
 import AddKube from 'teleport/Kubes/AddKube';
 import Empty from 'teleport/components/Empty';
-import cfg from 'teleport/config';
 
 import useStickyClusterId from 'teleport/useStickyClusterId';
 
 import useTeleport from 'teleport/useTeleport';
 
-import { resourceTypes } from '../resource-lists';
+import { ActionButtons } from '../Shared';
 
 import applicationIcon from './assets/application.png';
 import databaseIcon from './assets/database.png';
@@ -40,7 +39,6 @@ import type { TabComponent } from 'design/SlideTabs/SlideTabs';
 import type { ResourceType, ResourceLocation } from '../resource-lists';
 import type { AgentStepProps } from '../types';
 import type { State } from '../useDiscover';
-import { ActionButtons } from '../Shared';
 
 export default function Container(props: AgentStepProps) {
   const ctx = useTeleport();
