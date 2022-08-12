@@ -17,18 +17,33 @@
 import React from 'react';
 import { NavLink } from 'react-router-dom';
 import styled from 'styled-components';
-import { Flex, ButtonPrimary, Text, Box, Indicator } from 'design';
+import { Flex, ButtonPrimary, Text, Box, Image, Indicator } from 'design';
 import TopNavUserMenu from 'design/TopNav/TopNavUserMenu';
 import { Danger } from 'design/Alert';
 import * as Icons from 'design/Icon';
 import { MenuItem, MenuItemIcon } from 'shared/components/MenuAction';
+import logoSvg from 'design/assets/images/teleport-logo.svg';
 
 import cfg from 'teleport/config';
 
 import { useDiscoverContext } from './discoverContextProvider';
-import { useDiscover, State, AgentStep } from './useDiscover';
-import { agentStepTitles, agentViews } from './AgentConnect';
+import { useDiscover, State } from './useDiscover';
+
 import { SelectResource } from './SelectResource';
+import { DownloadScript } from './DownloadScript';
+import { LoginTrait } from './LoginTrait';
+import { TestConnection } from './TestConnection';
+
+import type { AgentKind } from './useDiscover';
+import type { AgentStepComponent } from './types';
+
+export const agentViews: Record<AgentKind, AgentStepComponent[]> = {
+  app: [],
+  db: [],
+  desktop: [],
+  kube: [],
+  node: [SelectResource, DownloadScript, LoginTrait, TestConnection],
+};
 
 export default function Container() {
   const ctx = useDiscoverContext();
@@ -41,7 +56,7 @@ export function Discover({
   initAttempt,
   username,
   currentStep,
-  selectedAgentKind,
+  selectedAgentKind = 'node',
   logout,
   onSelectResource,
   ...agentProps
@@ -62,18 +77,19 @@ export function Discover({
         <Danger>{initAttempt.statusText}</Danger>
       )}
       {initAttempt.status === 'success' && (
-        <>
-          <TopBar onLogout={logout} username={username} />
-          <Flex p={5} alignItems="flex-start">
+        <Flex>
+          <Flex>
             <SideNavAgentConnect currentStep={currentStep} />
-            <Box width="100%" height="100%" minWidth="0">
-              {currentStep === AgentStep.Select && (
-                <SelectResource onSelect={onSelectResource} />
-              )}
+          </Flex>
+          <Flex flexWrap="wrap">
+            <Box style={{ width: '100%' }}>
+              <TopBar onLogout={logout} username={username} />
+            </Box>
+            <Box width="100%" height="100%" minWidth="0" pl={5} pt={5}>
               {AgentComponent && <AgentComponent {...agentProps} />}
             </Box>
           </Flex>
-        </>
+        </Flex>
       )}
     </MainContainer>
   );
@@ -102,10 +118,10 @@ function TopBar(props: { onLogout: VoidFunction; username: string }) {
       height="56px"
       pl={5}
       borderColor="primary.main"
-      border="1px solid"
+      css={{ borderBottomWidth: '1px', borderBottomStyle: 'solid' }}
     >
       <Text typography="h4" bold>
-        Access Management
+        Access Manager
       </Text>
       <TopNavUserMenu
         menuListCss={() => `
@@ -131,9 +147,22 @@ function TopBar(props: { onLogout: VoidFunction; username: string }) {
 }
 
 function SideNavAgentConnect({ currentStep }) {
+  const agentStepTitles: string[] = [
+    'Select Resource Type',
+    'Configure Resource',
+    'Configure Role',
+    'Test Connection',
+  ];
+
   return (
     <SideNavContainer>
-      <Box mb={4}>
+      <Image src={logoSvg} width="141px" mb="6" />
+      <Box
+        border="1px solid rgba(255,255,255,0.1);"
+        borderRadius="8px"
+        css={{ backgroundColor: 'rgba(255,255,255,0.02);' }}
+        p={4}
+      >
         <Flex alignItems="center">
           <Flex
             borderRadius={5}
@@ -215,14 +244,14 @@ const StepsContainer = styled(Text)`
 `;
 
 const SideNavContainer = styled.nav`
-  border-radius: 8px;
-  border: 1px solid ${props => props.theme.colors.primary.light};
-  width: 300px;
-  padding: 24px;
-  margin-right: 30px;
+  background-color: ${props => props.theme.colors.primary.light};
+  box-sizing: border-box;
+  width: 348px;
+  padding: 22px 32px;
 `;
 
 export const MainContainer = styled.div`
+  display: flex;
   width: 100%;
   height: 100%;
   position: absolute;
