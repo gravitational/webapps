@@ -38,7 +38,6 @@ export interface DocumentTshNode extends DocumentBase {
   serverId: string;
   serverUri: string;
   rootClusterId: string;
-  leafClusterId?: string;
   login?: string;
 }
 
@@ -48,7 +47,6 @@ export interface DocumentTshKube extends DocumentBase {
   kubeId: string;
   kubeUri: string;
   rootClusterId: string;
-  leafClusterId?: string;
 }
 
 export interface DocumentGateway extends DocumentBase {
