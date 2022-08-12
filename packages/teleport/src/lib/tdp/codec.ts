@@ -41,11 +41,14 @@ export enum MessageType {
   SHARED_DIRECTORY_ACKNOWLEDGE = 12,
   SHARED_DIRECTORY_INFO_REQUEST = 13,
   SHARED_DIRECTORY_INFO_RESPONSE = 14,
+  SHARED_DIRECTORY_CREATE_REQUEST = 15,
+  SHARED_DIRECTORY_CREATE_RESPONSE = 16,
   SHARED_DIRECTORY_READ_REQUEST = 19,
   SHARED_DIRECTORY_READ_RESPONSE = 20,
   SHARED_DIRECTORY_WRITE_REQUEST = 21,
   SHARED_DIRECTORY_WRITE_RESPONSE = 22,
   SHARED_DIRECTORY_MOVE_REQUEST = 23,
+  SHARED_DIRECTORY_MOVE_RESPONSE = 24,
   SHARED_DIRECTORY_LIST_REQUEST = 25,
   SHARED_DIRECTORY_LIST_RESPONSE = 26,
   __LAST, // utility value
@@ -123,6 +126,21 @@ export type SharedDirectoryInfoResponse = {
   fso: FileSystemObject;
 };
 
+// | message type (15) | completion_id uint32 | directory_id uint32 | file_type uint32 | path_length uint32 | path []byte |
+export type SharedDirectoryCreateRequest = {
+  completionId: number;
+  directoryId: number;
+  fileType: FileType;
+  path: string;
+};
+
+// | message type (16) | completion_id uint32 | err_code uint32 | file_system_object fso |
+export type SharedDirectoryCreateResponse = {
+  completionId: number;
+  errCode: SharedDirectoryErrCode;
+  fso: FileSystemObject;
+};
+
 // | message type (19) | completion_id uint32 | directory_id uint32 | path_length uint32 | path []byte | offset uint64 | length uint32 |
 export type SharedDirectoryReadRequest = {
   completionId: number;
@@ -166,6 +184,12 @@ export type SharedDirectoryMoveRequest = {
   originalPath: string;
   newPathLength: number;
   newPath: string;
+};
+
+// | message type (24) | completion_id uint32 | err_code uint32 |
+export type SharedDirectoryMoveResponse = {
+  completionId: number;
+  errCode: SharedDirectoryErrCode;
 };
 
 // | message type (25) | completion_id uint32 | directory_id uint32 | path_length uint32 | path []byte |
@@ -566,6 +590,31 @@ export default class Codec {
     ]).buffer;
   }
 
+  // | message type (16) | completion_id uint32 | err_code uint32 | file_system_object fso |
+  encodeSharedDirectoryCreateResponse(
+    res: SharedDirectoryCreateResponse
+  ): Message {
+    const bufLenSansFso = byteLength + 2 * uint32Length;
+    const bufferSansFso = new ArrayBuffer(bufLenSansFso);
+    const view = new DataView(bufferSansFso);
+    let offset = 0;
+
+    view.setUint8(offset, MessageType.SHARED_DIRECTORY_CREATE_RESPONSE);
+    offset += byteLength;
+    view.setUint32(offset, res.completionId);
+    offset += uint32Length;
+    view.setUint32(offset, res.errCode);
+    offset += uint32Length;
+
+    const fsoBuffer = this.encodeFileSystemObject(res.fso);
+
+    // https://gist.github.com/72lions/4528834?permalink_comment_id=2395442#gistcomment-2395442
+    return new Uint8Array([
+      ...new Uint8Array(bufferSansFso),
+      ...new Uint8Array(fsoBuffer),
+    ]).buffer;
+  }
+
   // | message type (20) | completion_id uint32 | err_code uint32 | read_data_length uint32 | read_data []byte |
   encodeSharedDirectoryReadResponse(res: SharedDirectoryReadResponse): Message {
     const bufLen =
@@ -589,6 +638,7 @@ export default class Codec {
     return buffer;
   }
 
+  // | message type (22) | completion_id uint32 | err_code uint32 | bytes_written uint32 |
   encodeSharedDirectoryWriteResponse(
     res: SharedDirectoryWriteResponse
   ): Message {
@@ -604,6 +654,23 @@ export default class Codec {
     view.setUint32(offset, res.errCode);
     offset += uint32Length;
     view.setUint32(offset, res.bytesWritten);
+    offset += uint32Length;
+
+    return buffer;
+  }
+
+  // | message type (24) | completion_id uint32 | err_code uint32 |
+  encodeSharedDirectoryMoveResponse(res: SharedDirectoryMoveResponse): Message {
+    const bufLen = byteLength + 2 * uint32Length;
+    const buffer = new ArrayBuffer(bufLen);
+    const view = new DataView(buffer);
+    let offset = 0;
+
+    view.setUint8(offset, MessageType.SHARED_DIRECTORY_MOVE_RESPONSE);
+    offset += byteLength;
+    view.setUint32(offset, res.completionId);
+    offset += uint32Length;
+    view.setUint32(offset, res.errCode);
     offset += uint32Length;
 
     return buffer;
@@ -771,6 +838,30 @@ export default class Codec {
     return {
       completionId,
       directoryId,
+      path,
+    };
+  }
+
+  // | message type (15) | completion_id uint32 | directory_id uint32 | file_type uint32 | path_length uint32 | path []byte |
+  decodeSharedDirectoryCreateRequest(
+    buffer: ArrayBuffer
+  ): SharedDirectoryCreateRequest {
+    const dv = new DataView(buffer);
+    let offset = 0;
+    offset += byteLength; // eat message type
+    const completionId = dv.getUint32(offset);
+    offset += uint32Length; // eat completion_id
+    const directoryId = dv.getUint32(offset);
+    offset += uint32Length; // eat directory_id
+    const fileType = dv.getUint32(offset);
+    offset += uint32Length; // eat directory_id
+    offset += uint32Length; // eat path_length
+    const path = this.decoder.decode(new Uint8Array(buffer.slice(offset)));
+
+    return {
+      completionId,
+      directoryId,
+      fileType,
       path,
     };
   }

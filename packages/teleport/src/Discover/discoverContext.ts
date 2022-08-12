@@ -24,6 +24,7 @@ import desktopService from 'teleport/services/desktops';
 import KubeService from 'teleport/services/kube';
 import DatabaseService from 'teleport/services/databases';
 import JoinTokenService from 'teleport/services/joinToken';
+import { agentService } from 'teleport/services/agents';
 
 import type { AgentIdKind } from 'teleport/services/agents';
 
@@ -34,6 +35,7 @@ export class DiscoverContext {
   // be connected by a user.
   connectableAgents: AgentIdKind[] = [];
   username = '';
+  clusterId = '';
 
   // user + token services
   userService = userService;
@@ -45,10 +47,12 @@ export class DiscoverContext {
   nodesService = new serviceNodes();
   kubeService = new KubeService();
   databaseService = new DatabaseService();
+  agentService = agentService;
 
   init() {
     return userService.fetchUserContext().then(user => {
       this.username = user.username;
+      this.clusterId = user.cluster.clusterId;
 
       const { users, tokens, nodes } = user.acl;
 

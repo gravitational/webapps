@@ -19,6 +19,8 @@ import useAttempt from 'shared/hooks/useAttemptNext';
 
 import { DiscoverContext } from './discoverContext';
 
+import type { Node } from 'teleport/services/nodes';
+
 import type {
   JoinMethod,
   JoinRole,
@@ -31,7 +33,7 @@ export function useDiscover(ctx: DiscoverContext) {
   const { attempt: initAttempt, run: initRun } = useAttempt('processing');
 
   const [joinToken, setJoinToken] = useState<JoinToken>();
-  const [currentStep, setCurrentStep] = useState<AgentStep>(0);
+  const [currentStep, setCurrentStep] = useState(0);
   const [selectedAgentKind, setSelectedAgentKind] = useState<AgentKind>();
   const [agentMeta, setAgentMeta] = useState<AgentMeta>();
 
@@ -40,7 +42,9 @@ export function useDiscover(ctx: DiscoverContext) {
   }, []);
 
   function onSelectResource(kind: AgentKind) {
-    setSelectedAgentKind(kind);
+    // TODO: hard coded for now for sake of testing the flow.
+    setSelectedAgentKind('node');
+    nextStep();
   }
 
   function nextStep() {
@@ -107,24 +111,10 @@ export function useDiscover(ctx: DiscoverContext) {
   };
 }
 
-// AgentStep defines the order of steps in `connecting a agent (resource)`
-// that all agent kinds should share.
-//
-// The numerical enum value is used to determine which step the user is currently in,
-// which is also used as the `index value` to access array's values
-// for `agentStepTitles` and `agentViews`.
-export enum AgentStep {
-  Select = 0,
-  Setup,
-  RoleConfig,
-  TestConnection,
-}
-
-// NodeMeta describes the fields that may be provided or required by user
-// when connecting a node.
-type NodeMeta = {
-  awsAccountId?: string;
-  awsArn?: string;
+// NodeMeta describes the fields for node resource
+// that needs to be preserved throughout the flow.
+export type NodeMeta = {
+  node: Node;
 };
 
 // AppMeta describes the fields that may be provided or required by user

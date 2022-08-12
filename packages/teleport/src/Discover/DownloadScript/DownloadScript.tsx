@@ -15,7 +15,9 @@
  */
 
 import React from 'react';
-import { Text, Box, Indicator } from 'design';
+import styled from 'styled-components';
+import { Text, Box, Indicator, ButtonText } from 'design';
+import * as Icons from 'design/Icon';
 import { Danger } from 'design/Alert';
 
 import cfg from 'teleport/config';
@@ -24,7 +26,7 @@ import TextSelectCopy from 'teleport/components/TextSelectCopy';
 import { useDiscoverContext } from '../discoverContextProvider';
 import { AgentStepProps } from '../types';
 
-import { Header, ActionButtons } from '../Shared';
+import { Header, ActionButtons, TextIcon } from '../Shared';
 
 import { useDownloadScript } from './useDownloadScript';
 
@@ -37,7 +39,13 @@ export default function Container(props: AgentStepProps) {
   return <DownloadScript {...state} />;
 }
 
-export function DownloadScript({ attempt, joinToken, nextStep }: State) {
+export function DownloadScript({
+  attempt,
+  joinToken,
+  nextStep,
+  pollState,
+  regenerateScriptAndRepoll,
+}: State) {
   return (
     <Box>
       <Header>Configure Resource</Header>
@@ -49,22 +57,53 @@ export function DownloadScript({ attempt, joinToken, nextStep }: State) {
       )}
       {attempt.status === 'success' && (
         <>
-          <Text>
+          <Text mb={3}>
             Use below script to add a server to your cluster. This script will
             install the Teleport agent to provide secure access to your server.
-            <Text mt="3">
-              The script will be valid for{' '}
-              <Text bold as={'span'}>
-                {joinToken.expiryText}.
-              </Text>
-            </Text>
           </Text>
-          <TextSelectCopy
-            text={createBashCommand(joinToken.id)}
-            mt={2}
-            maxWidth="800px"
+          <ScriptBox p={3} borderRadius={3} pollState={pollState}>
+            <Text bold>Script</Text>
+            <TextSelectCopy
+              text={createBashCommand(joinToken.id)}
+              mt={2}
+              mb={1}
+            />
+
+            {pollState === 'polling' && (
+              <TextIcon>
+                <Icons.Restore fontSize={4} />
+                Waiting for resource discovery...
+              </TextIcon>
+            )}
+            {pollState === 'success' && (
+              <TextIcon>
+                <Icons.CircleCheck ml={1} color="success" />
+                Successfully discovered resource
+              </TextIcon>
+            )}
+            {pollState === 'error' && (
+              <TextIcon>
+                <Icons.Warning ml={1} color="danger" />
+                Timed out, failed to discover resource.{' '}
+                <ButtonText
+                  onClick={regenerateScriptAndRepoll}
+                  css={`
+                    color: ${({ theme }) => theme.colors.link};
+                    font-weight: normal;
+                    padding-left: 2px;
+                    font-size: inherit;
+                    min-height: auto;
+                  `}
+                >
+                  Generate a new script and try again.
+                </ButtonText>
+              </TextIcon>
+            )}
+          </ScriptBox>
+          <ActionButtons
+            onProceed={nextStep}
+            disableProceed={pollState === 'error' || pollState === 'polling'}
           />
-          <ActionButtons onProceed={nextStep} />
         </>
       )}
     </Box>
@@ -74,3 +113,20 @@ export function DownloadScript({ attempt, joinToken, nextStep }: State) {
 function createBashCommand(tokenId: string) {
   return `sudo bash -c "$(curl -fsSL ${cfg.getNodeScriptUrl(tokenId)})"`;
 }
+
+const ScriptBox = styled(Box)`
+  max-width: 800px;
+  background-color: rgba(255, 255, 255, 0.05);
+  border: 2px solid
+    ${props => {
+      switch (props.pollState) {
+        case 'error':
+          return props.theme.colors.danger;
+        case 'success':
+          return props.theme.colors.success;
+        default:
+          // polling
+          return '#2F3659';
+      }
+    }};
+`;
