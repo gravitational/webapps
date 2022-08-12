@@ -21,6 +21,7 @@ import styled from 'styled-components';
 import { Image, Text, Box, Flex } from 'design';
 
 import AddApp from 'teleport/Apps/AddApp';
+import AddDatabase from 'teleport/Databases/AddDatabase';
 import AddKube from 'teleport/Kubes/AddKube';
 import Empty from 'teleport/components/Empty';
 
@@ -39,32 +40,46 @@ import type { TabComponent } from 'design/SlideTabs/SlideTabs';
 import type { ResourceType, ResourceLocation } from '../resource-lists';
 import type { AgentStepProps } from '../types';
 import type { State } from '../useDiscover';
+import type { AuthType } from 'teleport/services/user';
 
 export default function Container(props: AgentStepProps) {
   const ctx = useTeleport();
   const { clusterId, isLeafCluster } = useStickyClusterId();
+  const ctxState = ctx.storeUser.state;
   return (
     <SelectResource
+      authType={ctxState.authType}
       canCreate={ctx.storeUser.getTokenAccess().create}
       clusterId={clusterId}
+      isEnterprise={ctx.isEnterprise}
       isLeafCluster={isLeafCluster}
       nextStep={props.nextStep}
+      username={ctxState.username}
+      version={ctxState.cluster.authVersion}
     />
   );
 }
 
 type Props = {
-  clusterId: string;
+  authType: AuthType;
   canCreate: boolean;
+  clusterId: string;
+  isEnterprise: boolean;
   isLeafCluster: boolean;
   nextStep: State['nextStep'];
+  username: string;
+  version: string;
 };
 
 export function SelectResource({
+  authType,
   canCreate,
   clusterId,
+  isEnterprise,
   isLeafCluster,
   nextStep,
+  username,
+  version,
 }: Props) {
   const [selectedResource, setSelectedResource] = useState<string>('server');
   const [selectedType, setSelectedType] = useState('');
@@ -233,10 +248,20 @@ export function SelectResource({
           onProceed={() => {
             nextStep();
           }}
+          disableProceed={disableProceed}
         />
       )}
       {showAddApp && <AddApp onClose={() => setShowAddApp(false)} />}
       {showAddKube && <AddKube onClose={() => setShowAddKube(false)} />}
+      {showAddDB && (
+        <AddDatabase
+          isEnterprise={isEnterprise}
+          username={username}
+          version={version}
+          authType={authType}
+          onClose={() => setShowAddKube(false)}
+        />
+      )}
     </Box>
   );
 }
