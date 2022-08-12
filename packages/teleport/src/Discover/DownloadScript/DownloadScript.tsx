@@ -69,6 +69,7 @@ export function DownloadScript({
               mt={2}
               mb={1}
             />
+
             {pollState === 'polling' && (
               <TextIcon
                 css={`
