@@ -39,5 +39,6 @@ function makeTraces(traces: any): ConnectionDiagnosticTrace[] {
     traceType: t.trace_type,
     status: t.status,
     details: t.details,
+    error: t.error,
   }));
 }
