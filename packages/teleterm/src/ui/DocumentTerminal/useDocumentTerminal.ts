@@ -163,13 +163,13 @@ async function createPtyProcess(
 function createCmd(
   doc: Doc,
   proxyHost: string,
-  actualClusterName: string
+  clusterName: string
 ): PtyCommand {
   if (doc.kind === 'doc.terminal_tsh_node') {
     return {
       ...doc,
       proxyHost,
-      actualClusterName,
+      clusterName,
       kind: 'pty.tsh-login',
     };
   }
@@ -178,7 +178,7 @@ function createCmd(
     return {
       ...doc,
       proxyHost,
-      actualClusterName,
+      clusterName,
       kind: 'pty.tsh-kube-login',
     };
   }
@@ -187,7 +187,7 @@ function createCmd(
     ...doc,
     kind: 'pty.shell',
     proxyHost,
-    actualClusterName,
+    clusterName,
     cwd: doc.cwd,
     initCommand: doc.initCommand,
   };
