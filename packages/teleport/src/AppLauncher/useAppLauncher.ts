@@ -53,9 +53,15 @@ function resolveRedirectUrl(params: UrlLauncherParams) {
   // no state value: let the target app know of a new auth exchange
   if (!state) {
     //reflect the correct fqdn
-    var appUrl = new URL(decodeURIComponent(window.location.href));
-    params.fqdn = appUrl.hostname;
-    redirectPath = getUrlParameter('path', appUrl.search);
+    if(params.fqdn.indexOf('?path=')) {
+      console.log("Fixing the app FQDN: " + params.fqdn);
+      var appFqdn = params.fqdn.split('?path=')[0];
+      params.fqdn = appFqdn;
+      //preserve the path query param passed as part of app launch
+      var appUrl = new URL(window.location.href);
+      redirectPath = getUrlParameter('path', appUrl.search);
+      console.log("Fixed app FQDN: " + appFqdn + " and redirect path = " + redirectPath);
+    }
   
     return service.getAppFqdn(params).then(result => {
       const url = new URL(`https://${result.fqdn}${port}/x-teleport-auth`);
