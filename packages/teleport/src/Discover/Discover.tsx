@@ -77,15 +77,11 @@ export function Discover({
         <Danger>{initAttempt.statusText}</Danger>
       )}
       {initAttempt.status === 'success' && (
-        <Flex>
-          <Flex>
-            <SideNavAgentConnect currentStep={currentStep} />
-          </Flex>
-          <Flex flexWrap="wrap">
-            <Box style={{ width: '100%' }}>
-              <TopBar onLogout={logout} username={username} />
-            </Box>
-            <Box width="100%" height="100%" minWidth="0" pl={5} pt={5}>
+        <Flex width="100%">
+          <SideNavAgentConnect currentStep={currentStep} />
+          <Flex flexDirection="column" width="100%">
+            <TopBar onLogout={logout} username={username} />
+            <Box pl={5} pt={5}>
               {AgentComponent && <AgentComponent {...agentProps} />}
             </Box>
           </Flex>
@@ -155,7 +151,11 @@ function SideNavAgentConnect({ currentStep }) {
   ];
 
   return (
-    <SideNavContainer>
+    <SideNavContainer
+      css={`
+        flex-direction: column;
+      `}
+    >
       <Image src={logoSvg} width="141px" mb="6" />
       <Box
         border="1px solid rgba(255,255,255,0.1);"
@@ -246,6 +246,7 @@ const StepsContainer = styled(Text)`
 const SideNavContainer = styled.nav`
   background-color: ${props => props.theme.colors.primary.light};
   box-sizing: border-box;
+  display: flex;
   width: 348px;
   padding: 22px 32px;
 `;

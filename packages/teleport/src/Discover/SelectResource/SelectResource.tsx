@@ -259,7 +259,7 @@ export function SelectResource({
           username={username}
           version={version}
           authType={authType}
-          onClose={() => setShowAddKube(false)}
+          onClose={() => setShowAddDB(false)}
         />
       )}
     </Box>

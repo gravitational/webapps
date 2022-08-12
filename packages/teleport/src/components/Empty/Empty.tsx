@@ -56,7 +56,6 @@ export default function Empty(props: Props) {
         maxWidth="664px"
         textAlign="center"
         color="text.primary"
-        bg="primary.light"
         borderRadius="12px"
       >
         <Text typography="h2" mb="3">
