@@ -71,7 +71,7 @@ To launch `teleterm` in development mode:
 ```sh
 $ cd webapps
 
-## TELETERM_TSH_PATH is the environment variable that points to the local tsh binary.
+## TELETERM_TSH_PATH has to point to a tsh binary, typically from the teleport repo.
 $ TELETERM_TSH_PATH=$PWD/../teleport/build/tsh yarn start-term
 ```
 
