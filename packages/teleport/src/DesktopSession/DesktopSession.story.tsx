@@ -79,6 +79,9 @@ const props: State = {
     authenticate: () => {},
     setState: () => {},
   },
+  directorySharingBrowserErr: false,
+  setDirectorySharingBrowserErr: () => {},
+  isUsingChrome: true,
 };
 
 export const Processing = () => (

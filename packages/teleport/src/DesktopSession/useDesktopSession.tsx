@@ -47,6 +47,8 @@ export default function useDesktopSession() {
 
   const [canShareDirectory, setCanShareDirectory] = useState(false);
   const [isSharingDirectory, setIsSharingDirectory] = useState(false);
+  const [directorySharingBrowserErr, setDirectorySharingBrowserErr] =
+    useState(false);
 
   const { username, desktopName, clusterId } = useParams<UrlDesktopParams>();
 
@@ -155,7 +157,10 @@ export default function useDesktopSession() {
     setClipboardState,
     canShareDirectory,
     isSharingDirectory,
+    directorySharingBrowserErr,
+    setDirectorySharingBrowserErr,
     setIsSharingDirectory,
+    isUsingChrome,
     fetchAttempt,
     tdpConnection,
     wsConnection,
