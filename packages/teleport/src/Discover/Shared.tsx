@@ -15,6 +15,7 @@
  */
 
 import React from 'react';
+import styled from 'styled-components';
 
 import { Text, ButtonPrimary, ButtonSecondary, Box } from 'design';
 import Dialog, {
@@ -36,9 +37,11 @@ export const Header: React.FC = ({ children }) => (
 export const ActionButtons = ({
   onProceed,
   disableProceed,
+  lastStep,
 }: {
   onProceed?(): void;
   disableProceed?: boolean;
+  lastStep?: boolean;
 }) => {
   const [confirmExit, setConfirmExit] = React.useState(false);
   return (
@@ -50,7 +53,7 @@ export const ActionButtons = ({
           mr={3}
           disabled={disableProceed}
         >
-          Proceed
+          {lastStep ? 'Finish' : 'Proceed'}
         </ButtonPrimary>
       )}
       <ButtonSecondary
@@ -95,3 +98,12 @@ function ConfirmExitDialog({ onClose }: { onClose(): void }) {
     </Dialog>
   );
 }
+
+export const TextIcon = styled(Text)`
+  display: flex;
+  align-items: center;
+
+  .icon {
+    margin-right: 8px;
+  }
+`;
