@@ -31,7 +31,7 @@ export default function useTdpClientCanvas(props: Props) {
     setTdpConnection,
     setWsConnection,
     setClipboardState,
-    setIsSharingDirectory,
+    setDirectorySharingState,
     enableClipboardSharing,
   } = props;
   const [tdpClient, setTdpClient] = useState<TdpClient | null>(null);
@@ -80,7 +80,10 @@ export default function useTdpClientCanvas(props: Props) {
   // Default TdpClientEvent.TDP_ERROR and TdpClientEvent.CLIENT_ERROR handler
   const onTdpError = (error: { err: Error; isFatal: boolean }) => {
     const { err, isFatal } = error;
-    setIsSharingDirectory(false);
+    setDirectorySharingState(prevState => ({
+      ...prevState,
+      isSharing: false,
+    }));
     setClipboardState(prevState => ({
       ...prevState,
       enabled: false,
@@ -219,6 +222,12 @@ type Props = {
       errorText: string;
     }>
   >;
-  setIsSharingDirectory: Dispatch<SetStateAction<boolean>>;
+  setDirectorySharingState: Dispatch<
+    SetStateAction<{
+      canShare: boolean;
+      isSharing: boolean;
+      browserError: boolean;
+    }>
+  >;
   enableClipboardSharing: boolean;
 };
