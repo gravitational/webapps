@@ -363,7 +363,7 @@ exports[`list of all events 1`] = `
            of
            
           <strong>
-            125
+            126
           </strong>
         </div>
         <button
@@ -441,22 +441,22 @@ exports[`list of all events 1`] = `
             class="c14"
           >
             <span
-              class="c10 c15 icon icon-list c10 c15"
+              class="c10 c15 icon icon-info_outline c10 c15"
               color="light"
               font-size="3"
             />
-            Session Recording Accessed
+            App Session Ended
           </div>
         </td>
         <td
           style="word-break: break-word;"
         >
-          User [ops@gravitational.io] accessed a session recording [44c6cea8-362f-11ea-83aa-125400432324]
+          User [alice] has disconnected from application [ponger]
         </td>
         <td
           style="min-width: 120px;"
         >
-          2022-07-14T18:04:37.067Z
+          2022-08-10T19:54:40.444Z
         </td>
         <td
           align="right"
@@ -482,18 +482,18 @@ exports[`list of all events 1`] = `
               color="light"
               font-size="3"
             />
-            App Session Ended
+            Session Recording Accessed
           </div>
         </td>
         <td
           style="word-break: break-word;"
         >
-          User [alice] has disconnected from application [ponger]
+          User [ops@gravitational.io] accessed a session recording [44c6cea8-362f-11ea-83aa-125400432324]
         </td>
         <td
           style="min-width: 120px;"
         >
-          2022-08-10T19:54:40.444Z
+          2022-07-14T18:04:37.067Z
         </td>
         <td
           align="right"
@@ -2709,13 +2709,13 @@ exports[`list of all events 1`] = `
               color="light"
               font-size="3"
             />
-            Session Recording Viewed
+            App Session Started
           </div>
         </td>
         <td
           style="word-break: break-word;"
         >
-          User [STeve] viewed a session recording [6593cf87-9839-4f18-abf8-c54873aaeb4e]
+          User [STeve] has connected to AWS console [aws-console]
         </td>
         <td
           style="min-width: 120px;"
@@ -2826,7 +2826,7 @@ exports[`list of all events 1`] = `
         <td
           style="word-break: break-word;"
         >
-          User [kimlisa] has started an app session [6593cf87-9839-4f18-abf8-c54873aaeb4e]
+          User [kimlisa] has connected to application [test]
         </td>
         <td
           style="min-width: 120px;"
@@ -4122,43 +4122,6 @@ exports[`list of all events 1`] = `
           style="word-break: break-word;"
         >
           User [root] failed to change attributes of file [/tmp/file] on node [[::1]:3022]: [EOF]
-        </td>
-        <td
-          style="min-width: 120px;"
-        >
-          2019-04-22T19:41:23Z
-        </td>
-        <td
-          align="right"
-        >
-          <button
-            class="c16"
-            kind="border"
-            width="87px"
-          >
-            Details
-          </button>
-        </td>
-      </tr>
-      <tr>
-        <td
-          style="vertical-align: inherit;"
-        >
-          <div
-            class="c14"
-          >
-            <span
-              class="c10 c15 icon icon-folder-plus c10 c15"
-              color="light"
-              font-size="3"
-            />
-            SFTP Fsetstat
-          </div>
-        </td>
-        <td
-          style="word-break: break-word;"
-        >
-          User [root] changed attributes of file [/tmp/file] on node [[::1]:3022]
         </td>
         <td
           style="min-width: 120px;"

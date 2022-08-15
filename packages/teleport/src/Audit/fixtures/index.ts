@@ -1961,7 +1961,7 @@ export const events = [
     upgrade_window_start: '23:00',
   },
   {
-    code: 'T2011I',
+    code: 'T2012I',
     event: 'session.recording.access',
     sid: '44c6cea8-362f-11ea-83aa-125400432324',
     success: true,
