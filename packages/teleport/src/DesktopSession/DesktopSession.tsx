@@ -104,7 +104,7 @@ export function DesktopSession(props: State) {
     } else if (directorySharingBrowserErr) {
       errorText =
         'Your user role supports directory sharing over desktop access, \
-      however this feature is only available by default on some chromium \
+      however this feature is only available by default on some Chromium \
       based browsers like Google Chrome or Microsoft Edge. Brave users can \
       use the feature by navigating to brave://flags/#file-system-access-api \
       and selecting "Enable". Please switch to a supported browser.';
