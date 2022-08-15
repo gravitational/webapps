@@ -26,11 +26,11 @@ import TextSelectCopy from 'teleport/components/TextSelectCopy';
 import { useDiscoverContext } from '../discoverContextProvider';
 import { AgentStepProps } from '../types';
 
-import { Header, ActionButtons } from '../Shared';
+import { Header, ActionButtons, TextIcon } from '../Shared';
 
 import { useDownloadScript } from './useDownloadScript';
 
-import type { State } from './useDownloadScript';
+import type { State, CountdownTime } from './useDownloadScript';
 
 export default function Container(props: AgentStepProps) {
   const ctx = useDiscoverContext();
@@ -45,6 +45,7 @@ export function DownloadScript({
   nextStep,
   pollState,
   regenerateScriptAndRepoll,
+  countdownTime,
 }: State) {
   return (
     <Box>
@@ -68,39 +69,43 @@ export function DownloadScript({
               mt={2}
               mb={1}
             />
+
             {pollState === 'polling' && (
-              <Text
+              <TextIcon
                 css={`
-                  display: flex;
-                  align-items: center;
+                  white-space: pre;
                 `}
               >
-                <Icons.Restore fontSize={4} mr={2} />
-                Waiting for resource discovery...
-              </Text>
+                <Icons.Restore fontSize={4} />
+                {`Waiting for node   |   ${formatTime(
+                  countdownTime
+                )} until this script expires`}
+              </TextIcon>
             )}
             {pollState === 'success' && (
-              <Text>
-                <Icons.CircleCheck mr={2} ml={1} color="success" />
-                Successfully discovered resource
-              </Text>
+              <TextIcon>
+                <Icons.CircleCheck ml={1} color="success" />
+                Successfully executed
+              </TextIcon>
             )}
             {pollState === 'error' && (
-              <Text>
-                <Icons.Warning mr={2} ml={1} color="danger" />
-                Timed out, failed to discover resource.{' '}
+              <TextIcon>
+                <Icons.Warning ml={1} color="danger" />
+                Timeout, script expired{' '}
                 <ButtonText
+                  ml={2}
                   onClick={regenerateScriptAndRepoll}
                   css={`
                     color: ${({ theme }) => theme.colors.link};
                     font-weight: normal;
                     padding-left: 2px;
                     font-size: inherit;
+                    min-height: auto;
                   `}
                 >
-                  Generate a new script and try again.
+                  Regenerate Script
                 </ButtonText>
-              </Text>
+              </TextIcon>
             )}
           </ScriptBox>
           <ActionButtons
@@ -115,6 +120,28 @@ export function DownloadScript({
 
 function createBashCommand(tokenId: string) {
   return `sudo bash -c "$(curl -fsSL ${cfg.getNodeScriptUrl(tokenId)})"`;
+}
+
+function formatTime({ minutes, seconds }: CountdownTime) {
+  let formattedSeconds = seconds.toString();
+  if (seconds < 10) {
+    formattedSeconds = `0${seconds}`;
+  }
+
+  let formattedMinutes = minutes.toString();
+  if (minutes < 10) {
+    formattedMinutes = `0${minutes}`;
+  }
+
+  let timeNotation = 'minute';
+  if (!minutes && seconds >= 0) {
+    timeNotation = 'seconds';
+  }
+  if (minutes) {
+    timeNotation = 'minutes';
+  }
+
+  return `${formattedMinutes}:${formattedSeconds} ${timeNotation}`;
 }
 
 const ScriptBox = styled(Box)`

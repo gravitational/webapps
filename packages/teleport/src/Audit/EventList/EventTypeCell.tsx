@@ -80,6 +80,7 @@ const EventIconMap: Record<EventCode, React.FC> = {
   [eventCodes.SFTP_SYMLINK]: Icons.FolderPlus,
   [eventCodes.APP_SESSION_CHUNK]: Icons.Info,
   [eventCodes.APP_SESSION_START]: Icons.Info,
+  [eventCodes.APP_SESSION_END]: Icons.Info,
   [eventCodes.SESSION_END]: Icons.Cli,
   [eventCodes.SESSION_JOIN]: Icons.Cli,
   [eventCodes.SESSION_LEAVE]: Icons.Cli,
@@ -166,6 +167,7 @@ const EventIconMap: Record<EventCode, React.FC> = {
   [eventCodes.X11_FORWARD_FAILURE]: Icons.Info,
   [eventCodes.CERTIFICATE_CREATED]: Icons.Keypair,
   [eventCodes.UPGRADE_WINDOW_UPDATED]: Icons.Info,
+  [eventCodes.SESSION_RECORDING_ACCESS]: Icons.Info,
   [eventCodes.UNKNOWN]: Icons.Question,
 };
 

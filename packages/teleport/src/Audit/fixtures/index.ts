@@ -457,6 +457,22 @@ export const events = [
     time: '2020-10-30T17:28:14.381Z',
     uid: '80400ed9-644e-4a6e-ab99-b264b34d0f55',
     user: 'kimlisa',
+    app_name: 'test',
+  },
+  {
+    app_name: 'ponger',
+    app_public_addr: 'ponger.root.gravitational.io',
+    app_uri: 'tcp://localhost:9876',
+    cluster_name: 'root',
+    code: 'T2011I',
+    ei: 0,
+    event: 'app.session.end',
+    namespace: 'default',
+    server_id: '8e70002c-7a07-4513-a3fa-ac556a1d7534',
+    sid: '11c328b4-5a1e-4adc-b7cb-206389e5f130',
+    time: '2022-08-10T19:54:40.444Z',
+    uid: 'ac8c9b6b-46a0-4b0e-8d85-2204101d5615',
+    user: 'alice',
   },
   {
     action: 1,
@@ -1172,7 +1188,8 @@ export const events = [
     sid: '6593cf87-9839-4f18-abf8-c54873aaeb4e',
     time: '2020-10-30T17:28:14.705Z',
     uid: '8ea5be3d-07b1-4308-8e0d-2d2ec57cbb20',
-    user: '',
+    user: 'alice',
+    app_name: 'test',
   },
   {
     code: 'T2007I',
@@ -1186,6 +1203,7 @@ export const events = [
     uid: '80400ed9-644e-4a6e-ab99-b264b34d0f55',
     user: 'STeve',
     aws_role_arn: 'arn:aws:iam::1234567890:role/steve',
+    app_name: 'aws-console',
   },
   {
     code: 'T2008I',
@@ -1198,6 +1216,8 @@ export const events = [
     time: '2020-10-30T17:28:15.705Z',
     uid: '8ea5be3d-07b1-4308-8e0d-2d2ec57cbb20',
     aws_role_arn: 'arn:aws:iam::1234567890:role/steve',
+    app_name: 'aws-console',
+    user: 'alice',
   },
   {
     code: 'T3002I',
@@ -1939,6 +1959,15 @@ export const events = [
     user: 'alice@example.com',
     event: 'upgradewindowstart.update',
     upgrade_window_start: '23:00',
+  },
+  {
+    code: 'T2012I',
+    event: 'session.recording.access',
+    sid: '44c6cea8-362f-11ea-83aa-125400432324',
+    success: true,
+    time: '2022-07-14T18:04:37.067Z',
+    uid: '7d440ee1-15f6-4b56-9391-344e8984fd97',
+    user: 'ops@gravitational.io',
   },
 ].map(makeEvent);
 

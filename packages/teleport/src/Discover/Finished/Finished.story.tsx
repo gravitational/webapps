@@ -14,5 +14,12 @@
  * limitations under the License.
  */
 
-export * from './types';
-export { agentService } from './agents';
+import React from 'react';
+
+import { Finished } from './Finished';
+
+export default {
+  title: 'Teleport/Discover/Finished',
+};
+
+export const Loaded = () => <Finished />;
