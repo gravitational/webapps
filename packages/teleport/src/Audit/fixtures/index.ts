@@ -1100,6 +1100,15 @@ export const events = [
     time: "2022-04-13T20:00:04.000Z",
     user: "alice@example.com"
   },
+  {
+    code: 'T2012I',
+    event: 'session.recording.access',
+    sid: '44c6cea8-362f-11ea-83aa-125400432324',
+    success: true,
+    time: '2022-07-14T18:04:37.067Z',
+    uid: '7d440ee1-15f6-4b56-9391-344e8984fd97',
+    user: 'ops@gravitational.io',
+  },
 ].map(makeEvent);
 
 export const eventsSample = [
