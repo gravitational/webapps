@@ -17,6 +17,7 @@ import React, { useEffect, useState } from 'react';
 import { Cloud } from 'design/Icon';
 import SlideTabs from 'design/SlideTabs';
 import styled from 'styled-components';
+import { useLocation } from 'react-router';
 
 import { Image, Text, Box, Flex } from 'design';
 
@@ -60,6 +61,19 @@ export default function Container(props: AgentStepProps) {
   );
 }
 
+type ValidResourceTypes =
+  | 'application'
+  | 'database'
+  | 'desktop'
+  | 'kubernetes'
+  | 'server';
+
+type Loc = {
+  state: {
+    entity: ValidResourceTypes;
+  };
+};
+
 type Props = {
   authType: AuthType;
   canCreate: boolean;
@@ -81,7 +95,11 @@ export function SelectResource({
   username,
   version,
 }: Props) {
-  const [selectedResource, setSelectedResource] = useState<string>('server');
+  const location: Loc = useLocation();
+
+  const [selectedResource, setSelectedResource] = useState<ValidResourceTypes>(
+    location?.state?.entity
+  );
   const [selectedType, setSelectedType] = useState('');
   const [disableProceed, setDisableProceed] = useState<boolean>(true);
   const [showAddApp, setShowAddApp] = useState(false);
@@ -149,14 +167,21 @@ export function SelectResource({
     setDisableProceed(true);
   }, [selectedResource, selectedType]);
 
+  const initialSelected = tabs.findIndex(
+    component => component.name === location?.state?.entity
+  );
+
   return (
     <Box width="1020px">
       <Text typography="h4">Resource Selection</Text>
       <Text mb={4}>Begin with selecting resource to create a connection</Text>
       <Text mb={2}>Select Resource Type</Text>
       <SlideTabs
+        initialSelected={initialSelected > 0 ? initialSelected : 0}
         tabs={tabs}
-        onChange={index => setSelectedResource(tabs[index].name)}
+        onChange={index =>
+          setSelectedResource(tabs[index].name as ValidResourceTypes)
+        }
       />
       {selectedResource === 'database' && (
         // As we're focusing on the server flow uncomment this when we start
@@ -166,44 +191,19 @@ export function SelectResource({
         //   setSelectedType={setSelectedType}
         //   resourceTypes={resourceTypes}
         // />
-        <Empty
-          clusterId={clusterId}
-          canCreate={canCreate && !isLeafCluster}
-          onClick={() => {
+        <ActionButtons
+          onProceed={() => {
             setShowAddDB(true);
           }}
-          emptyStateInfo={{
-            title: 'Add your first database to Teleport',
-            byline:
-              'Teleport Database Access provides secure access to PostgreSQL, MySQL, MariaDB, MongoDB, Redis, and Microsoft SQL Server.',
-            docsURL: 'https://goteleport.com/docs/database-access/guides/',
-            resourceType: 'database',
-            readOnly: {
-              title: 'No Databases Found',
-              resource: 'databases',
-            },
-          }}
+          disableProceed={false}
         />
       )}
       {selectedResource === 'application' && (
-        <Empty
-          clusterId={clusterId}
-          canCreate={canCreate && !isLeafCluster}
-          onClick={() => {
+        <ActionButtons
+          onProceed={() => {
             setShowAddApp(true);
           }}
-          emptyStateInfo={{
-            title: 'Add your first application to Teleport',
-            byline:
-              'Teleport Application Access provides secure access to internal applications.',
-            docsURL:
-              'https://goteleport.com/docs/application-access/getting-started/',
-            resourceType: 'application',
-            readOnly: {
-              title: 'No Applications Found',
-              resource: 'applications',
-            },
-          }}
+          disableProceed={false}
         />
       )}
       {selectedResource === 'desktop' && (
@@ -225,24 +225,13 @@ export function SelectResource({
         />
       )}
       {selectedResource === 'kubernetes' && (
-        <Empty
-          clusterId={clusterId}
-          canCreate={canCreate && !isLeafCluster}
-          onClick={() => setShowAddKube(true)}
-          emptyStateInfo={{
-            title: 'Add your first Kubernetes cluster to Teleport',
-            byline:
-              'Teleport Kubenetes Access provides secure access to Kubernetes clusters.',
-            docsURL: 'https://goteleport.com/docs/kubernetes-access/guides',
-            resourceType: 'kubernetes',
-            readOnly: {
-              title: 'No Kubernetes Clusters Found',
-              resource: 'kubernetes clusters',
-            },
+        <ActionButtons
+          onProceed={() => {
+            setShowAddKube(true);
           }}
+          disableProceed={false}
         />
       )}
-      {/* only show the proceed button if it's the server view for now */}
       {selectedResource === 'server' && (
         <ActionButtons
           onProceed={() => {
