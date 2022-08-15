@@ -262,14 +262,19 @@ exports[`empty state 1`] = `
         <div
           class="c10"
         >
-          <button
-            class="c11"
-            kind="primary"
-            width="224px"
+          <a
+            href="/web/discover"
+            style="text-decoration: none;"
           >
-            Add 
-            kubernetes
-          </button>
+            <button
+              class="c11"
+              kind="primary"
+              width="224px"
+            >
+              Add 
+              kubernetes
+            </button>
+          </a>
           <a
             class="c12"
             href="https://goteleport.com/docs/kubernetes-access/guides"

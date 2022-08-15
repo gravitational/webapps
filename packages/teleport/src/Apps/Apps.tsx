@@ -111,7 +111,6 @@ export function Apps(props: State) {
         <Empty
           clusterId={clusterId}
           canCreate={canCreate && !isLeafCluster}
-          onClick={showAddApp}
           emptyStateInfo={emptyStateInfo}
         />
       )}

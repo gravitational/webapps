@@ -132,7 +132,6 @@ export function Nodes(props: State) {
         <Empty
           clusterId={clusterId}
           canCreate={canCreate && !isLeafCluster}
-          onClick={showAddNode}
           emptyStateInfo={emptyStateInfo}
         />
       )}

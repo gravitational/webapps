@@ -119,7 +119,6 @@ export function Kubes(props: State) {
         <Empty
           clusterId={clusterId}
           canCreate={canCreate && !isLeafCluster}
-          onClick={() => setShowAddKube(true)}
           emptyStateInfo={emptyStateInfo}
         />
       )}
