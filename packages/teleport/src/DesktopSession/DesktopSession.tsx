@@ -43,8 +43,8 @@ declare global {
 
 export function DesktopSession(props: State) {
   const {
-    directorySharingBrowserErr,
-    setDirectorySharingBrowserErr,
+    directorySharingState,
+    setDirectorySharingState,
     clipboardState,
     fetchAttempt,
     tdpConnection,
@@ -77,7 +77,10 @@ export function DesktopSession(props: State) {
       return prevState;
     });
 
-    setDirectorySharingBrowserErr(false);
+    setDirectorySharingState(prevState => ({
+      ...prevState,
+      browserError: false,
+    }));
   };
 
   const computeErrorDialog = () => {
@@ -101,7 +104,7 @@ export function DesktopSession(props: State) {
       errorText = clipboardState.errorText || 'clipboard sharing failed';
     } else if (unknownConnectionError) {
       errorText = 'Session disconnected for an unknown reason.';
-    } else if (directorySharingBrowserErr) {
+    } else if (directorySharingState.browserError) {
       errorText =
         'Your user role supports directory sharing over desktop access, \
       however this feature is only available by default on some Chromium \
@@ -110,7 +113,9 @@ export function DesktopSession(props: State) {
       and selecting "Enable". Please switch to a supported browser.';
     }
     const open = errorText !== '';
-    const fatal = !(tdpConnection.status === '' || directorySharingBrowserErr);
+    const fatal = !(
+      tdpConnection.status === '' || directorySharingState.browserError
+    );
 
     return { open, text: errorText, fatal };
   };
@@ -202,10 +207,8 @@ function Session(props: PropsWithChildren<State>) {
     hostname,
     clipboardState,
     setClipboardState,
-    canShareDirectory,
-    isSharingDirectory,
-    setIsSharingDirectory,
-    setDirectorySharingBrowserErr,
+    directorySharingState,
+    setDirectorySharingState,
     onPngFrame,
     onClipboardData,
     onTdpError,
@@ -242,15 +245,24 @@ function Session(props: PropsWithChildren<State>) {
       window
         .showDirectoryPicker()
         .then(sharedDirHandle => {
-          setIsSharingDirectory(true);
+          setDirectorySharingState(prevState => ({
+            ...prevState,
+            isSharing: true,
+          }));
           tdpClient.addSharedDirectory(sharedDirHandle);
           tdpClient.sendSharedDirectoryAnnounce();
         })
         .catch(() => {
-          setIsSharingDirectory(false);
+          setDirectorySharingState(prevState => ({
+            ...prevState,
+            isSharing: false,
+          }));
         });
     } catch (e) {
-      setDirectorySharingBrowserErr(true);
+      setDirectorySharingState(prevState => ({
+        ...prevState,
+        browserError: true,
+      }));
     }
   };
 
@@ -263,13 +275,16 @@ function Session(props: PropsWithChildren<State>) {
             ...prevState,
             enabled: false,
           }));
-          setIsSharingDirectory(false);
+          setDirectorySharingState(prevState => ({
+            ...prevState,
+            isSharing: false,
+          }));
           tdpClient.nuke();
         }}
         userHost={`${username}@${hostname}`}
         clipboardSharingEnabled={clipboardSharingActive}
-        canShareDirectory={canShareDirectory}
-        isSharingDirectory={isSharingDirectory}
+        canShareDirectory={directorySharingState.canShare}
+        isSharingDirectory={directorySharingState.isSharing}
         onShareDirectory={onShareDirectory}
       />
 
