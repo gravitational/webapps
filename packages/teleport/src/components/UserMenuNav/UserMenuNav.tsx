@@ -26,7 +26,6 @@ import cfg from 'teleport/config';
 import { NavItem } from 'teleport/stores/storeNav';
 
 export function UserMenuNav({ navItems, username, logout }: Props) {
-  // const theme = useTheme();
   const [open, setOpen] = React.useState(false);
   const menuItemProps = {
     onClick: closeMenu,

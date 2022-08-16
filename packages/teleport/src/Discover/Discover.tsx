@@ -48,7 +48,6 @@ export const agentViews: Record<AgentKind, AgentStepComponent[]> = {
   kube: [],
   node: [SelectResource, DownloadScript, LoginTrait, TestConnection, Finished],
 };
-0;
 
 export default function Container() {
   const ctx = useDiscoverContext();
