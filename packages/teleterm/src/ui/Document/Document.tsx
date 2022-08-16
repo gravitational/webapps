@@ -33,7 +33,8 @@ const Document: React.FC<{
   ): void {
     if (onContextMenu) {
       // `preventDefault` prevents opening the universal context menu
-      // opening two menus at the same time on Linux causes flickering
+      // and thus only the document-specific menu gets displayed.
+      // Opening two menus at the same time on Linux causes flickering.
       e.preventDefault();
       onContextMenu();
     }
