@@ -74,7 +74,10 @@ To launch `teleterm` in development mode:
 ```sh
 $ cd webapps
 
-## CONNECT_TSH_BIN_PATH has to point to a tsh binary, typically from the teleport repo.
+$ yarn start-term
+
+## By default, the dev version assumes that the tsh binary is at ../teleport/build/tsh.
+## You can provide a different absolute path to a tsh binary though the CONNECT_TSH_BIN_PATH env var.
 $ CONNECT_TSH_BIN_PATH=$PWD/../teleport/build/tsh yarn start-term
 ```
 
