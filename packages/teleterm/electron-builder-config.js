@@ -62,9 +62,4 @@ module.exports = {
     output: 'build/release',
   },
   extraResources: ['./assets/**'],
-  publish: {
-    provider: 'github',
-    owner: 'gravitational',
-    repo: 'webapps',
-  },
 };
