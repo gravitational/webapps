@@ -33,12 +33,14 @@ export type TshLoginCommand = PtyCommandBase & {
   login?: string;
   serverId: string;
   rootClusterId: string;
+  leafClusterId?: string;
 };
 
 export type TshKubeLoginCommand = PtyCommandBase & {
   kind: 'pty.tsh-kube-login';
   kubeId: string;
   rootClusterId: string;
+  leafClusterId?: string;
 };
 
 type PtyCommandBase = {
