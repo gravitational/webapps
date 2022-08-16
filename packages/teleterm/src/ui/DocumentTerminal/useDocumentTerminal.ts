@@ -79,7 +79,10 @@ async function initState(
     return parsed.params.leafClusterId;
   };
 
-  const clusterUri = routing.getClusterUri(doc);
+  const clusterUri = routing.getClusterUri({
+    rootClusterId: doc.rootClusterId,
+    leafClusterId: doc.leafClusterId,
+  });
   const rootCluster = ctx.clustersService.findRootClusterByResource(clusterUri);
   const cmd = createCmd(doc, rootCluster.proxyHost, getClusterName());
   const ptyProcess = await createPtyProcess(ctx, cmd);
