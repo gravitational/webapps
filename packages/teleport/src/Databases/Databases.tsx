@@ -43,9 +43,6 @@ export function Databases(props: State) {
     attempt,
     isLeafCluster,
     canCreate,
-    showAddDialog,
-    hideAddDialog,
-    isAddDialogVisible,
     isEnterprise,
     username,
     version,
@@ -120,15 +117,6 @@ export function Databases(props: State) {
           clusterId={clusterId}
           canCreate={canCreate && !isLeafCluster}
           emptyStateInfo={emptyStateInfo}
-        />
-      )}
-      {isAddDialogVisible && (
-        <AddDatabase
-          isEnterprise={isEnterprise}
-          username={username}
-          version={version}
-          authType={authType}
-          onClose={hideAddDialog}
         />
       )}
     </FeatureBox>
