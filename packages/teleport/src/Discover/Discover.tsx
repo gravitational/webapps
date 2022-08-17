@@ -14,19 +14,20 @@
  * limitations under the License.
  */
 
-import React from 'react';
-import { NavLink } from 'react-router-dom';
+import React, { useState } from 'react';
 import styled from 'styled-components';
-import { Flex, ButtonPrimary, Text, Box, Image, Indicator } from 'design';
-import TopNavUserMenu from 'design/TopNav/TopNavUserMenu';
+import { Flex, Text, Box, Indicator } from 'design';
 import { Danger } from 'design/Alert';
 import * as Icons from 'design/Icon';
-import { MenuItem, MenuItemIcon } from 'shared/components/MenuAction';
-import logoSvg from 'design/assets/images/teleport-logo.svg';
 
-import cfg from 'teleport/config';
+import useTeleport from 'teleport/useTeleport';
+import getFeatures from 'teleport/features';
+import { UserMenuNav } from 'teleport/components/UserMenuNav';
+import * as main from 'teleport/Main';
+import * as sideNav from 'teleport/SideNav';
+import { TopBarContainer } from 'teleport/TopBar';
+import { FeatureBox } from 'teleport/components/Layout';
 
-import { useDiscoverContext } from './discoverContextProvider';
 import { useDiscover, State } from './useDiscover';
 
 import { SelectResource } from './SelectResource';
@@ -47,14 +48,16 @@ export const agentViews: Record<AgentKind, AgentStepComponent[]> = {
 };
 
 export default function Container() {
-  const ctx = useDiscoverContext();
-  const state = useDiscover(ctx);
+  const [features] = useState(() => getFeatures());
+  const ctx = useTeleport();
+  const state = useDiscover(ctx, features);
 
   return <Discover {...state} />;
 }
 
 export function Discover({
   initAttempt,
+  userMenuItems,
   username,
   currentStep,
   selectedAgentKind = 'node',
@@ -70,76 +73,34 @@ export function Discover({
   return (
     <MainContainer>
       {initAttempt.status === 'processing' && (
-        <Box textAlign="center" m={10}>
+        <main.StyledIndicator>
           <Indicator />
-        </Box>
+        </main.StyledIndicator>
       )}
       {initAttempt.status === 'failed' && (
         <Danger>{initAttempt.statusText}</Danger>
       )}
       {initAttempt.status === 'success' && (
-        <Flex width="100%">
+        <>
           <SideNavAgentConnect currentStep={currentStep} />
-          <Flex flexDirection="column" width="100%">
-            <TopBar onLogout={logout} username={username} />
-            <Box pl={5} pt={5}>
+          <main.HorizontalSplit>
+            <TopBarContainer>
+              <Text typography="h4" bold>
+                Access Manager
+              </Text>
+              <UserMenuNav
+                navItems={userMenuItems}
+                logout={logout}
+                username={username}
+              />
+            </TopBarContainer>
+            <FeatureBox pt={4}>
               {AgentComponent && <AgentComponent {...agentProps} />}
-            </Box>
-          </Flex>
-        </Flex>
+            </FeatureBox>
+          </main.HorizontalSplit>
+        </>
       )}
     </MainContainer>
-  );
-}
-
-function TopBar(props: { onLogout: VoidFunction; username: string }) {
-  const [open, setOpen] = React.useState(false);
-
-  function showMenu() {
-    setOpen(true);
-  }
-
-  function closeMenu() {
-    setOpen(false);
-  }
-
-  function logout() {
-    closeMenu();
-    props.onLogout();
-  }
-
-  return (
-    <Flex
-      alignItems="center"
-      justifyContent="space-between"
-      height="56px"
-      pl={5}
-      borderColor="primary.main"
-      css={{ borderBottomWidth: '1px', borderBottomStyle: 'solid' }}
-    >
-      <Text typography="h4" bold>
-        Access Manager
-      </Text>
-      <TopNavUserMenu
-        menuListCss={() => `
-          width: 250px;
-        `}
-        open={open}
-        onShow={showMenu}
-        onClose={closeMenu}
-        user={props.username}
-      >
-        <MenuItem as={NavLink} to={cfg.routes.root}>
-          <MenuItemIcon as={Icons.Home} mr="2" />
-          Dashboard
-        </MenuItem>
-        <MenuItem>
-          <ButtonPrimary my={3} block onClick={logout}>
-            Sign Out
-          </ButtonPrimary>
-        </MenuItem>
-      </TopNavUserMenu>
-    </Flex>
   );
 }
 
@@ -153,57 +114,55 @@ function SideNavAgentConnect({ currentStep }) {
   ];
 
   return (
-    <SideNavContainer
-      css={`
-        flex-direction: column;
-      `}
-    >
-      <Image src={logoSvg} width="141px" mb="6" />
-      <Box
-        border="1px solid rgba(255,255,255,0.1);"
-        borderRadius="8px"
-        css={{ backgroundColor: 'rgba(255,255,255,0.02);' }}
-        p={4}
-      >
-        <Flex alignItems="center">
-          <Flex
-            borderRadius={5}
-            alignItems="center"
-            justifyContent="center"
-            bg="secondary.main"
-            height="30px"
-            width="30px"
-            mr={2}
-          >
-            <Icons.Database />
+    <StyledNav>
+      <sideNav.Logo />
+      <StyledNavContent>
+        <Box
+          border="1px solid rgba(255,255,255,0.1);"
+          borderRadius="8px"
+          css={{ backgroundColor: 'rgba(255,255,255,0.02);' }}
+          p={4}
+        >
+          <Flex alignItems="center">
+            <Flex
+              borderRadius={5}
+              alignItems="center"
+              justifyContent="center"
+              bg="secondary.main"
+              height="30px"
+              width="30px"
+              mr={2}
+            >
+              <Icons.Database />
+            </Flex>
+            <Text bold>Resource Connection</Text>
           </Flex>
-          <Text bold>Resource Connection</Text>
-        </Flex>
-        <Box ml={4} mt={4}>
-          {agentStepTitles.map((stepTitle, index) => {
-            let className = '';
-            if (currentStep > index) {
-              className = 'checked';
-            } else if (currentStep === index) {
-              className = 'active';
-            }
+          <Box ml={4} mt={4}>
+            {agentStepTitles.map((stepTitle, index) => {
+              let className = '';
+              if (currentStep > index) {
+                className = 'checked';
+              } else if (currentStep === index) {
+                className = 'active';
+              }
 
-            // All flows will have a finished step that
-            // does not have a title.
-            if (!stepTitle) {
-              return null;
-            }
+              // All flows will have a finished step that
+              // does not have a title.
+              if (!stepTitle) {
+                return null;
+              }
 
-            return (
-              <StepsContainer className={className} key={stepTitle}>
-                <Bullet />
-                {stepTitle}
-              </StepsContainer>
-            );
-          })}
+              return (
+                <StepsContainer className={className} key={stepTitle}>
+                  <Bullet />
+                  {stepTitle}
+                </StepsContainer>
+              );
+            })}
+          </Box>
         </Box>
-      </Box>
-    </SideNavContainer>
+      </StyledNavContent>
+    </StyledNav>
   );
 }
 
@@ -251,18 +210,21 @@ const StepsContainer = styled(Text)`
   }
 `;
 
-const SideNavContainer = styled.nav`
-  background-color: ${props => props.theme.colors.primary.light};
-  box-sizing: border-box;
-  display: flex;
-  width: 348px;
-  padding: 22px 32px;
+const StyledNav = styled(sideNav.Nav)`
+  min-width: 350px;
+  width: 350px;
 `;
 
-export const MainContainer = styled.div`
-  display: flex;
-  width: 100%;
-  height: 100%;
-  position: absolute;
-  min-width: 1000px;
+const StyledNavContent = styled(sideNav.Content)`
+  padding: 20px 32px 32px 32px;
+`;
+
+// TODO (lisa) we should look into reducing this width.
+// Any smaller than this will produce a double stacked horizontal scrollbar
+// making navigation harder.
+//
+// Our SelectResource component is the widest and can use some space
+// tightening. Also look into shrinking the side nav if possible.
+const MainContainer = styled(main.MainContainer)`
+  min-width: 1460px;
 `;

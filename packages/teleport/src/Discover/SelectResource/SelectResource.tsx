@@ -31,6 +31,7 @@ import useStickyClusterId from 'teleport/useStickyClusterId';
 import useTeleport from 'teleport/useTeleport';
 
 import { ActionButtons } from '../Shared';
+import { resourceTypes } from '../resource-lists';
 
 import applicationIcon from './assets/application.png';
 import databaseIcon from './assets/database.png';

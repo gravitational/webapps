@@ -15,16 +15,12 @@ limitations under the License.
 */
 
 import React from 'react';
-import { NavLink } from 'react-router-dom';
-import { useTheme } from 'styled-components';
-import { Text, Flex, ButtonPrimary, TopNav } from 'design';
-import { Wand } from 'design/Icon';
-import TopNavUserMenu from 'design/TopNav/TopNavUserMenu';
-import { MenuItemIcon, MenuItem } from 'design/Menu';
+import styled from 'styled-components';
+import { Text, Flex, TopNav } from 'design';
 
-import cfg from 'teleport/config';
 import useTeleport from 'teleport/useTeleport';
 import useStickyClusterId from 'teleport/useStickyClusterId';
+import { UserMenuNav } from 'teleport/components/UserMenuNav';
 
 import ClusterSelector from './ClusterSelector';
 import useTopBar from './useTopBar';
@@ -46,35 +42,6 @@ export function TopBar(props: ReturnType<typeof useTopBar>) {
     hasClusterUrl,
   } = props;
 
-  const theme = useTheme();
-  const [open, setOpen] = React.useState(false);
-  const menuItemProps = {
-    onClick: closeMenu,
-    py: 2,
-    as: NavLink,
-    exact: true,
-  };
-
-  const $userMenuItems = popupItems.map((item, index) => (
-    <MenuItem {...menuItemProps} key={index} to={item.getLink(clusterId)}>
-      <MenuItemIcon as={item.Icon} mr="2" />
-      {item.title}
-    </MenuItem>
-  ));
-
-  function showMenu() {
-    setOpen(true);
-  }
-
-  function closeMenu() {
-    setOpen(false);
-  }
-
-  function logout() {
-    closeMenu();
-    props.logout();
-  }
-
   // instead of re-creating an expensive react-select component,
   // hide/show it instead
   const styles = {
@@ -82,16 +49,7 @@ export function TopBar(props: ReturnType<typeof useTopBar>) {
   };
 
   return (
-    <TopNav
-      height="56px"
-      bg="inherit"
-      pl="6"
-      style={{
-        overflowY: 'initial',
-        flexShrink: '0',
-        borderBottom: `1px solid ${theme.colors.primary.main}`,
-      }}
-    >
+    <TopBarContainer>
       {!hasClusterUrl && <Text typography="h2">{props.title}</Text>}
       <ClusterSelector
         value={clusterId}
@@ -103,31 +61,21 @@ export function TopBar(props: ReturnType<typeof useTopBar>) {
         style={styles}
       />
       <Flex ml="auto" height="100%">
-        <TopNavUserMenu
-          menuListCss={menuListCss}
-          open={open}
-          onShow={showMenu}
-          onClose={closeMenu}
-          user={username}
-        >
-          {$userMenuItems}
-          {cfg.enabledDiscoverWizard && (
-            <MenuItem as={NavLink} to={cfg.routes.discover}>
-              <MenuItemIcon as={Wand} mr="2" />
-              Discovery Wizard
-            </MenuItem>
-          )}
-          <MenuItem>
-            <ButtonPrimary my={3} block onClick={logout}>
-              Sign Out
-            </ButtonPrimary>
-          </MenuItem>
-        </TopNavUserMenu>
+        <UserMenuNav
+          navItems={popupItems}
+          username={username}
+          logout={props.logout}
+        />
       </Flex>
-    </TopNav>
+    </TopBarContainer>
   );
 }
 
-const menuListCss = () => `
-  width: 250px;
+export const TopBarContainer = styled(TopNav)`
+  height: 56px;
+  background-color: inherit;
+  padding-left: ${({ theme }) => `${theme.space[6]}px`};
+  overflow-y: initial;
+  flex-shrink: 0;
+  border-bottom: 1px solid ${({ theme }) => theme.colors.primary.main};
 `;

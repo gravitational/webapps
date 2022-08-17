@@ -15,21 +15,36 @@
  */
 
 import React from 'react';
+import { MemoryRouter } from 'react-router';
+import * as Icons from 'design/Icon';
 
-import { DiscoverContext } from './discoverContext';
+import { UserMenuNav } from './UserMenuNav';
 
-export const DiscoverReactContext = React.createContext<DiscoverContext>(null);
-
-const DiscoverContextProvider: React.FC<{
-  value: DiscoverContext;
-}> = props => {
-  return <DiscoverReactContext.Provider {...props} />;
+export default {
+  title: 'Teleport/UserMenuNav',
 };
 
-export default DiscoverContextProvider;
-
-export function useDiscoverContext() {
-  const ctx = React.useContext(DiscoverReactContext);
-  window['telediscover'] = ctx;
-  return ctx;
+export function Loaded() {
+  return (
+    <MemoryRouter>
+      <UserMenuNav {...props} />
+    </MemoryRouter>
+  );
 }
+
+const props = {
+  navItems: [
+    {
+      title: 'Nav Item 1',
+      Icon: Icons.Apple,
+      getLink: () => 'test',
+    },
+    {
+      title: 'Nav Item 2',
+      Icon: Icons.Cloud,
+      getLink: () => 'test2',
+    },
+  ],
+  username: 'george',
+  logout: () => null,
+};
