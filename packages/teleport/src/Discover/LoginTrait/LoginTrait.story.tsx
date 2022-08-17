@@ -18,34 +18,49 @@ import React from 'react';
 
 import { LoginTrait } from './LoginTrait';
 import { State } from './useLoginTrait';
+import { MemoryRouter } from 'react-router';
 
 export default {
   title: 'Teleport/Discover/LoginTrait',
 };
 
-export const LoadedWithStatic = () => <LoginTrait {...props} />;
+export const LoadedWithStatic = () => (
+  <MemoryRouter>
+    <LoginTrait {...props} />
+  </MemoryRouter>
+);
 
 export const LoadedWithoutStatic = () => (
-  <LoginTrait {...props} staticLogins={[]} />
+  <MemoryRouter>
+    <LoginTrait {...props} staticLogins={[]} />
+  </MemoryRouter>
 );
 
 export const EmptyWithStatic = () => (
-  <LoginTrait {...props} dynamicLogins={[]} />
+  <MemoryRouter>
+    <LoginTrait {...props} dynamicLogins={[]} />
+  </MemoryRouter>
 );
 
 export const EmptyWithoutStatic = () => (
-  <LoginTrait {...props} dynamicLogins={[]} staticLogins={[]} />
+  <MemoryRouter>
+    <LoginTrait {...props} dynamicLogins={[]} staticLogins={[]} />
+  </MemoryRouter>
 );
 
 export const Processing = () => (
-  <LoginTrait {...props} attempt={{ status: 'processing' }} />
+  <MemoryRouter>
+    <LoginTrait {...props} attempt={{ status: 'processing' }} />
+  </MemoryRouter>
 );
 
 export const Failed = () => (
-  <LoginTrait
-    {...props}
-    attempt={{ status: 'failed', statusText: 'some error message' }}
-  />
+  <MemoryRouter>
+    <LoginTrait
+      {...props}
+      attempt={{ status: 'failed', statusText: 'some error message' }}
+    />
+  </MemoryRouter>
 );
 
 const props: State = {

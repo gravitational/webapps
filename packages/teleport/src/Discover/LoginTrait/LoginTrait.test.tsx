@@ -26,6 +26,7 @@ import LoginTrait from './LoginTrait';
 import type { User } from 'teleport/services/user';
 import type { RenderResult } from '@testing-library/react';
 import type { NodeMeta } from '../useDiscover';
+import { MemoryRouter } from 'react-router';
 
 describe('login trait comp behavior', () => {
   const ctx = new TeleportContext();
@@ -35,18 +36,20 @@ describe('login trait comp behavior', () => {
 
   beforeEach(() => {
     Component = (
-      <ContextProvider ctx={ctx}>
-        <LoginTrait
-          // TODO we don't need all of this
-          attempt={null}
-          joinToken={null}
-          createJoinToken={null}
-          agentMeta={mockedNodeMeta}
-          updateAgentMeta={null}
-          nextStep={null}
-          prevStep={null}
-        />
-      </ContextProvider>
+      <MemoryRouter>
+        <ContextProvider ctx={ctx}>
+          <LoginTrait
+            // TODO we don't need all of this
+            attempt={null}
+            joinToken={null}
+            createJoinToken={null}
+            agentMeta={mockedNodeMeta}
+            updateAgentMeta={null}
+            nextStep={null}
+            prevStep={null}
+          />
+        </ContextProvider>
+      </MemoryRouter>
     );
   });
 
