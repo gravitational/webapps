@@ -26,7 +26,11 @@ export default {
   excludeStories: ['props'],
 };
 
-export const Loaded = () => <Nodes {...props} />;
+export const Loaded = () => (
+  <MemoryRouter>
+    <Nodes {...props} />
+  </MemoryRouter>
+);
 
 export const Empty = () => (
   <MemoryRouter>

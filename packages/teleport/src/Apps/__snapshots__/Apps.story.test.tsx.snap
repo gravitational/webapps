@@ -1766,15 +1766,20 @@ exports[`loaded state 1`] = `
       >
         Applications
       </div>
-      <button
-        class="c3"
-        kind="primary"
-        title=""
-        width="240px"
+      <a
+        href="/web/discover"
+        style="text-decoration: none;"
       >
-        Add 
-        application
-      </button>
+        <button
+          class="c3"
+          kind="primary"
+          title=""
+          width="240px"
+        >
+          Add 
+          application
+        </button>
+      </a>
     </div>
     <form
       class="c4"

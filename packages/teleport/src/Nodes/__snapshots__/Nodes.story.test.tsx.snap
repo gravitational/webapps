@@ -1746,15 +1746,20 @@ exports[`loaded 1`] = `
           placeholder="login@host:port"
         />
       </div>
-      <button
-        class="c7"
-        kind="primary"
-        title=""
-        width="240px"
+      <a
+        href="/web/discover"
+        style="text-decoration: none;"
       >
-        Add 
-        server
-      </button>
+        <button
+          class="c7"
+          kind="primary"
+          title=""
+          width="240px"
+        >
+          Add 
+          server
+        </button>
+      </a>
     </div>
   </div>
   <form

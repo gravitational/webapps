@@ -1492,14 +1492,20 @@ exports[`open source loaded 1`] = `
     >
       Databases
     </div>
-    <button
-      class="c3"
-      kind="primary"
-      title=""
-      width="240px"
+    <a
+      href="/web/discover"
+      style="text-decoration: none;"
     >
-      Add Database
-    </button>
+      <button
+        class="c3"
+        kind="primary"
+        title=""
+        width="240px"
+      >
+        Add 
+        database
+      </button>
+    </a>
   </div>
   <form
     class="c4"

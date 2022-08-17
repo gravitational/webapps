@@ -1451,15 +1451,20 @@ exports[`loaded 1`] = `
     >
       Kubernetes
     </div>
-    <button
-      class="c3"
-      kind="primary"
-      title=""
-      width="240px"
+    <a
+      href="/web/discover"
+      style="text-decoration: none;"
     >
-      Add 
-      kubernetes
-    </button>
+      <button
+        class="c3"
+        kind="primary"
+        title=""
+        width="240px"
+      >
+        Add 
+        kubernetes
+      </button>
+    </a>
   </div>
   <form
     class="c4"
