@@ -24,14 +24,9 @@ import { Image, Text, Box, Flex } from 'design';
 import AddApp from 'teleport/Apps/AddApp';
 import AddDatabase from 'teleport/Databases/AddDatabase';
 import AddKube from 'teleport/Kubes/AddKube';
-import Empty from 'teleport/components/Empty';
-
-import useStickyClusterId from 'teleport/useStickyClusterId';
-
 import useTeleport from 'teleport/useTeleport';
 
 import { ActionButtons } from '../Shared';
-import { resourceTypes } from '../resource-lists';
 
 import applicationIcon from './assets/application.png';
 import databaseIcon from './assets/database.png';
@@ -46,15 +41,11 @@ import type { AuthType } from 'teleport/services/user';
 
 export default function Container(props: AgentStepProps) {
   const ctx = useTeleport();
-  const { clusterId, isLeafCluster } = useStickyClusterId();
   const ctxState = ctx.storeUser.state;
   return (
     <SelectResource
       authType={ctxState.authType}
-      canCreate={ctx.storeUser.getTokenAccess().create}
-      clusterId={clusterId}
       isEnterprise={ctx.isEnterprise}
-      isLeafCluster={isLeafCluster}
       nextStep={props.nextStep}
       username={ctxState.username}
       version={ctxState.cluster.authVersion}
@@ -77,10 +68,7 @@ type Loc = {
 
 type Props = {
   authType: AuthType;
-  canCreate: boolean;
-  clusterId: string;
   isEnterprise: boolean;
-  isLeafCluster: boolean;
   nextStep: State['nextStep'];
   username: string;
   version: string;
@@ -88,10 +76,7 @@ type Props = {
 
 export function SelectResource({
   authType,
-  canCreate,
-  clusterId,
   isEnterprise,
-  isLeafCluster,
   nextStep,
   username,
   version,
