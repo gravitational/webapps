@@ -175,7 +175,11 @@ export function SelectResource({
   return (
     <Box width="1020px">
       <Text typography="h4">Resource Selection</Text>
-      <Text mb={4}>Begin with selecting resource to create a connection</Text>
+      <Text mb={4}>
+        Users are able to add and access many different types of resources
+        through Teleport. Start by selecting the type of resource you want to
+        add.
+      </Text>
       <Text mb={2}>Select Resource Type</Text>
       <SlideTabs
         initialSelected={initialSelected > 0 ? initialSelected : 0}

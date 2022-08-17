@@ -18,13 +18,7 @@ import React from 'react';
 import styled from 'styled-components';
 import { NavLink } from 'react-router-dom';
 
-import {
-  Text,
-  ButtonPrimary,
-  ButtonSecondary,
-  ButtonOutlined,
-  Box,
-} from 'design';
+import { Text, ButtonPrimary, ButtonSecondary, Box } from 'design';
 import Dialog, {
   DialogContent,
   DialogFooter,
@@ -74,7 +68,7 @@ export const ActionButtons = ({
           mr={3}
           disabled={disableProceed}
         >
-          {lastStep ? 'Finish' : 'Proceed'}
+          {lastStep ? 'Finish' : 'Next'}
         </ButtonPrimary>
       )}
       <ButtonSecondary
@@ -104,14 +98,15 @@ function ConfirmExitDialog({ onClose }: { onClose(): void }) {
       </DialogHeader>
       <DialogContent minWidth="500px" flex="0 0 auto">
         <Text mb={2}>
-          Are you sure you want to cancel the Resource connection process?
+          Are you sure you want to exit the “Add New Resource” workflow? You’ll
+          have to start from the beginning next time.
         </Text>
       </DialogContent>
       <DialogFooter>
         <ButtonPrimary mr="3" as={NavLink} to={cfg.routes.root} size="medium">
-          Yes
+          Exit
         </ButtonPrimary>
-        <ButtonSecondary onClick={onClose}>Cancel</ButtonSecondary>
+        <ButtonSecondary onClick={onClose}>Stay</ButtonSecondary>
       </DialogFooter>
     </Dialog>
   );
