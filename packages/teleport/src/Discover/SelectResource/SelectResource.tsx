@@ -208,21 +208,9 @@ export function SelectResource({
         />
       )}
       {selectedResource === 'desktop' && (
-        <Empty
-          clusterId={clusterId}
-          canCreate={canCreate && !isLeafCluster}
-          emptyStateInfo={{
-            title: 'Add your first Windows desktop to Teleport',
-            byline:
-              'Teleport Desktop Access provides graphical desktop access to remote Windows hosts.',
-            docsURL:
-              'https://goteleport.com/docs/desktop-access/getting-started/',
-            resourceType: 'desktop',
-            readOnly: {
-              title: 'No Desktops Found',
-              resource: 'desktops',
-            },
-          }}
+        <ActionButtons
+          proceedHref="https://goteleport.com/docs/desktop-access/getting-started/"
+          disableProceed={false}
         />
       )}
       {selectedResource === 'kubernetes' && (

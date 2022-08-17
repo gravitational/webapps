@@ -18,7 +18,13 @@ import React from 'react';
 import styled from 'styled-components';
 import { NavLink } from 'react-router-dom';
 
-import { Text, ButtonPrimary, ButtonSecondary, Box } from 'design';
+import {
+  Text,
+  ButtonPrimary,
+  ButtonSecondary,
+  ButtonOutlined,
+  Box,
+} from 'design';
 import Dialog, {
   DialogContent,
   DialogFooter,
@@ -35,17 +41,32 @@ export const Header: React.FC = ({ children }) => (
 );
 
 export const ActionButtons = ({
-  onProceed,
+  onProceed = null,
+  proceedHref = '',
   disableProceed = false,
   lastStep = false,
 }: {
   onProceed?(): void;
+  proceedHref?: string;
   disableProceed?: boolean;
   lastStep?: boolean;
 }) => {
   const [confirmExit, setConfirmExit] = React.useState(false);
   return (
     <Box mt={4}>
+      {proceedHref && (
+        <ButtonPrimary
+          size="medium"
+          as="a"
+          href={proceedHref}
+          target="_blank"
+          width="224px"
+          mr={3}
+          rel="noreferrer"
+        >
+          View Documentation
+        </ButtonPrimary>
+      )}
       {onProceed && (
         <ButtonPrimary
           width="165px"
