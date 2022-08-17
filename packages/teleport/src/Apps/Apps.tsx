@@ -76,7 +76,6 @@ export function Apps(props: State) {
             beginsWithVowel={true}
             isLeafCluster={isLeafCluster}
             canCreate={canCreate}
-            onClick={showAddApp}
           />
         )}
       </FeatureHeader>

@@ -89,10 +89,9 @@ export function Nodes(props: State) {
             <QuickLaunch width="280px" onPress={onSshEnter} mr={3} />
             <AgentButtonAdd
               agent="server"
-              beginsWithVowel={true}
+              beginsWithVowel={false}
               isLeafCluster={isLeafCluster}
               canCreate={canCreate}
-              onClick={showAddNode}
             />
           </Flex>
         )}
