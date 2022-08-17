@@ -36,8 +36,6 @@ export default function useDatabases(ctx: Ctx) {
   const { clusterId, isLeafCluster } = useStickyClusterId();
   const username = ctx.storeUser.state.username;
   const canCreate = ctx.storeUser.getTokenAccess().create;
-  const isEnterprise = ctx.isEnterprise;
-  const version = ctx.storeUser.state.cluster.authVersion;
   const authType = ctx.storeUser.state.authType;
   const [fetchStatus, setFetchStatus] = useState<FetchStatus>('');
   const [params, setParams] = useState<ResourceUrlQueryParams>({
@@ -145,9 +143,7 @@ export default function useDatabases(ctx: Ctx) {
     attempt,
     canCreate,
     isLeafCluster,
-    isEnterprise,
     username,
-    version,
     clusterId,
     authType,
     results,

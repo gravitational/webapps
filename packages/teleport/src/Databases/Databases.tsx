@@ -30,7 +30,6 @@ import AgentButtonAdd from 'teleport/components/AgentButtonAdd';
 
 import DatabaseList from './DatabaseList';
 import useDatabases, { State } from './useDatabases';
-import AddDatabase from './AddDatabase';
 
 export default function Container() {
   const ctx = useTeleport();
@@ -43,9 +42,7 @@ export function Databases(props: State) {
     attempt,
     isLeafCluster,
     canCreate,
-    isEnterprise,
     username,
-    version,
     clusterId,
     authType,
     results,
