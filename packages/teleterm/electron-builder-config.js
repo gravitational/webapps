@@ -14,7 +14,9 @@ if (
   throw new Error(
     'You must provide CONNECT_TSH_APP_PATH xor CONNECT_TSH_BIN_PATH'
   );
-} else if (!env.CONNECT_TSH_BIN_PATH) {
+}
+
+if (!isMac && !env.CONNECT_TSH_BIN_PATH) {
   throw new Error('You must provide CONNECT_TSH_BIN_PATH');
 }
 
