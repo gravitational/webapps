@@ -32,7 +32,6 @@ import useStickyClusterId from 'teleport/useStickyClusterId';
 import AgentButtonAdd from 'teleport/components/AgentButtonAdd';
 
 import useNodes, { State } from './useNodes';
-import AddNode from './AddNode';
 
 export default function Container() {
   const teleCtx = useTeleport();
@@ -47,11 +46,8 @@ export function Nodes(props: State) {
     getNodeLoginOptions,
     startSshSession,
     attempt,
-    showAddNode,
     canCreate,
-    hideAddNode,
     isLeafCluster,
-    isAddNodeVisible,
     clusterId,
     fetchNext,
     fetchPrev,
@@ -134,7 +130,6 @@ export function Nodes(props: State) {
           emptyStateInfo={emptyStateInfo}
         />
       )}
-      {isAddNodeVisible && <AddNode onClose={hideAddNode} />}
     </FeatureBox>
   );
 }
