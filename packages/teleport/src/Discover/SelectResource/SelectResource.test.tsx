@@ -18,7 +18,7 @@ import React from 'react';
 
 import { MemoryRouter } from 'react-router';
 
-import { render} from 'design/utils/testing';
+import { render } from 'design/utils/testing';
 
 import { SelectResource } from 'teleport/Discover/SelectResource/SelectResource';
 import { Access, Acl, makeUserContext } from 'teleport/services/user';
@@ -202,7 +202,9 @@ describe('select resource', () => {
         },
       });
 
-      const permissionsError = result.getByTestId('kubernetes-permissions-error');
+      const permissionsError = result.getByTestId(
+        'kubernetes-permissions-error'
+      );
       expect(permissionsError).toBeInTheDocument();
 
       expect(result.container.firstChild).toMatchSnapshot();
@@ -221,7 +223,9 @@ describe('select resource', () => {
         },
       });
 
-      const permissionsError = result.getByTestId('kubernetes-permissions-error');
+      const permissionsError = result.getByTestId(
+        'kubernetes-permissions-error'
+      );
       expect(permissionsError).toBeInTheDocument();
 
       expect(result.container.firstChild).toMatchSnapshot();
@@ -252,7 +256,9 @@ describe('select resource', () => {
         },
       });
 
-      const permissionsError = result.getByTestId('application-permissions-error');
+      const permissionsError = result.getByTestId(
+        'application-permissions-error'
+      );
       expect(permissionsError).toBeInTheDocument();
 
       expect(result.container.firstChild).toMatchSnapshot();
@@ -271,7 +277,9 @@ describe('select resource', () => {
         },
       });
 
-      const permissionsError = result.getByTestId('application-permissions-error');
+      const permissionsError = result.getByTestId(
+        'application-permissions-error'
+      );
       expect(permissionsError).toBeInTheDocument();
 
       expect(result.container.firstChild).toMatchSnapshot();

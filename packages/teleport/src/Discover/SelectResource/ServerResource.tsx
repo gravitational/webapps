@@ -55,11 +55,18 @@ function PermissionsErrorMessage() {
   return (
     <TextBox data-testid="server-permissions-error">
       <Text typography="h5">
-        You are not able to add new Servers. There are two possible reasons for this:
+        You are not able to add new Servers. There are two possible reasons for
+        this:
       </Text>
       <ul style={{ paddingLeft: 28 }}>
-        <li>Your Teleport Enterprise license does not include Server Access. Reach out to your Teleport admin to enable Server Access.</li>
-        <li>You don’t have sufficient permissions to add Servers. Reach out to your Teleport admin to request additional permissions.</li>
+        <li>
+          Your Teleport Enterprise license does not include Server Access. Reach
+          out to your Teleport admin to enable Server Access.
+        </li>
+        <li>
+          You don’t have sufficient permissions to add Servers. Reach out to
+          your Teleport admin to request additional permissions.
+        </li>
       </ul>
     </TextBox>
   );

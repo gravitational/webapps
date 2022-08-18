@@ -7,7 +7,10 @@ import { Cloud } from 'design/Icon';
 
 import SlideTabs from 'design/SlideTabs';
 
-import { ResourceLocation, ResourceType } from 'teleport/Discover/resource-lists';
+import {
+  ResourceLocation,
+  ResourceType,
+} from 'teleport/Discover/resource-lists';
 import { ActionButtons, TextBox } from 'teleport/Discover/Shared';
 
 interface DatabaseResourceProps {
@@ -120,9 +123,9 @@ function SelectDBDeploymentType({
 const ResourceTypeOption = styled.div`
   background: rgba(255, 255, 255, 0.05);
   border: ${props =>
-  !props.selected
-    ? '2px solid rgba(255, 255, 255, 0)'
-    : '2px solid rgba(255, 255, 255, 0.1);'};
+    !props.selected
+      ? '2px solid rgba(255, 255, 255, 0)'
+      : '2px solid rgba(255, 255, 255, 0.1);'};
   border-radius: 8px;
   box-sizing: border-box;
   cursor: pointer;
