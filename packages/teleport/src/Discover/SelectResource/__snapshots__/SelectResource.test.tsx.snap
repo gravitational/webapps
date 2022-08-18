@@ -1,0 +1,5616 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`select resource application has the proceed button enabled when having correct permissions 1`] = `
+.c4 {
+  position: relative;
+}
+
+.c6 {
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  padding: 10px;
+  width: 20%;
+  z-index: 1;
+}
+
+.c9 {
+  display: none;
+}
+
+.c10 {
+  background-color: #512fc9;
+  border-radius: 8px;
+  box-shadow: 0px 2px 6px rgba(12,12,14,0.1);
+  height: 56px;
+  left: calc(60% + 8px);
+  margin: 12px 12px 12px 0;
+  position: absolute;
+  top: 0;
+  transition: all 0.3s ease;
+  width: calc(20% - 16px);
+}
+
+.c5 {
+  align-items: center;
+  background-color: rgba(255,255,255,0.05);
+  border-radius: 8px;
+  display: flex;
+  height: 80px;
+  justify-content: space-around;
+}
+
+.c0 {
+  box-sizing: border-box;
+  width: 1020px;
+}
+
+.c11 {
+  box-sizing: border-box;
+  margin-top: 24px;
+}
+
+.c12 {
+  line-height: 1.5;
+  margin: 0;
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  box-sizing: border-box;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-family: inherit;
+  font-weight: 600;
+  outline: none;
+  position: relative;
+  text-align: center;
+  text-decoration: none;
+  text-transform: uppercase;
+  transition: all 0.3s;
+  -webkit-font-smoothing: antialiased;
+  background: #512FC9;
+  color: rgba(255,255,255,0.87);
+  min-height: 32px;
+  font-size: 12px;
+  padding: 0px 24px;
+  margin-right: 16px;
+  width: 165px;
+}
+
+.c12:active {
+  opacity: 0.56;
+}
+
+.c12:hover,
+.c12:focus {
+  background: #651FFF;
+}
+
+.c12:active {
+  background: #354AA4;
+}
+
+.c12:disabled {
+  background: rgba(255,255,255,0.12);
+  color: rgba(255,255,255,0.3);
+}
+
+.c13 {
+  line-height: 1.5;
+  margin: 0;
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  box-sizing: border-box;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-family: inherit;
+  font-weight: 600;
+  outline: none;
+  position: relative;
+  text-align: center;
+  text-decoration: none;
+  text-transform: uppercase;
+  transition: all 0.3s;
+  -webkit-font-smoothing: antialiased;
+  background: #512FC9;
+  color: rgba(255,255,255,0.87);
+  min-height: 32px;
+  font-size: 12px;
+  padding: 0px 24px;
+  margin-top: 16px;
+  width: 165px;
+}
+
+.c13:active {
+  opacity: 0.56;
+}
+
+.c13:hover,
+.c13:focus {
+  background: #651FFF;
+}
+
+.c13:active {
+  background: #354AA4;
+}
+
+.c13:disabled {
+  background: rgba(255,255,255,0.12);
+  color: rgba(255,255,255,0.3);
+}
+
+.c8 {
+  display: block;
+  outline: none;
+  margin-right: 8px;
+  width: 32px;
+}
+
+.c1 {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  font-weight: 400;
+  font-size: 18px;
+  line-height: 32px;
+  margin: 0px;
+}
+
+.c2 {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  margin: 0px;
+  margin-bottom: 24px;
+}
+
+.c3 {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  margin: 0px;
+  margin-bottom: 8px;
+}
+
+.c7 {
+  box-sizing: border-box;
+  display: flex;
+}
+
+<div
+  class="c0"
+  width="1020px"
+>
+  <div
+    class="c1"
+  >
+    Resource Selection
+  </div>
+  <div
+    class="c2"
+  >
+    Users are able to add and access many different types of resources through Teleport. Start by selecting the type of resource you want to add.
+  </div>
+  <div
+    class="c3"
+  >
+    Select Resource Type
+  </div>
+  <div
+    class="c4"
+  >
+    <nav
+      class="c5"
+    >
+      <label
+        class="c6"
+        for="slide-tab-server"
+      >
+        <div
+          class="c7"
+          style="line-height: 31px;"
+        >
+          <img
+            class="c8"
+            src="file_stub"
+            width="32px"
+          />
+           Server
+        </div>
+        <input
+          class="c9"
+          id="slide-tab-server"
+          name="slide-tab"
+          type="radio"
+        />
+      </label>
+      <label
+        class="c6"
+        for="slide-tab-database"
+      >
+        <div
+          class="c7"
+          style="line-height: 31px;"
+        >
+          <img
+            class="c8"
+            src="file_stub"
+            width="32px"
+          />
+           Database
+        </div>
+        <input
+          class="c9"
+          id="slide-tab-database"
+          name="slide-tab"
+          type="radio"
+        />
+      </label>
+      <label
+        class="c6"
+        for="slide-tab-kubernetes"
+      >
+        <div
+          class="c7"
+          style="line-height: 31px;"
+        >
+          <img
+            class="c8"
+            src="file_stub"
+            width="32px"
+          />
+           Kubernetes
+        </div>
+        <input
+          class="c9"
+          id="slide-tab-kubernetes"
+          name="slide-tab"
+          type="radio"
+        />
+      </label>
+      <label
+        class="c6"
+        for="slide-tab-application"
+      >
+        <div
+          class="c7"
+          style="line-height: 31px;"
+        >
+          <img
+            class="c8"
+            src="file_stub"
+            width="32px"
+          />
+           Application
+        </div>
+        <input
+          class="c9"
+          id="slide-tab-application"
+          name="slide-tab"
+          type="radio"
+        />
+      </label>
+      <label
+        class="c6"
+        for="slide-tab-desktop"
+      >
+        <div
+          class="c7"
+          style="line-height: 31px;"
+        >
+          <img
+            class="c8"
+            src="file_stub"
+            width="32px"
+          />
+           Desktop
+        </div>
+        <input
+          class="c9"
+          id="slide-tab-desktop"
+          name="slide-tab"
+          type="radio"
+        />
+      </label>
+    </nav>
+    <div
+      class="c10"
+    />
+  </div>
+  <div
+    class="c11"
+  >
+    
+    <button
+      class="c12"
+      data-testid="proceed-button"
+      kind="primary"
+      width="165px"
+    >
+      Next
+    </button>
+    <a
+      class="c13"
+      href="/web"
+      kind="primary"
+      mt="3"
+      theme="[object Object]"
+      width="165px"
+    >
+      Exit
+    </a>
+  </div>
+</div>
+`;
+
+exports[`select resource application shows permissions error when lacking appServers.read 1`] = `
+.c4 {
+  position: relative;
+}
+
+.c6 {
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  padding: 10px;
+  width: 20%;
+  z-index: 1;
+}
+
+.c9 {
+  display: none;
+}
+
+.c10 {
+  background-color: #512fc9;
+  border-radius: 8px;
+  box-shadow: 0px 2px 6px rgba(12,12,14,0.1);
+  height: 56px;
+  left: calc(60% + 8px);
+  margin: 12px 12px 12px 0;
+  position: absolute;
+  top: 0;
+  transition: all 0.3s ease;
+  width: calc(20% - 16px);
+}
+
+.c5 {
+  align-items: center;
+  background-color: rgba(255,255,255,0.05);
+  border-radius: 8px;
+  display: flex;
+  height: 80px;
+  justify-content: space-around;
+}
+
+.c0 {
+  box-sizing: border-box;
+  width: 1020px;
+}
+
+.c13 {
+  box-sizing: border-box;
+  margin-top: 24px;
+}
+
+.c14 {
+  line-height: 1.5;
+  margin: 0;
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  box-sizing: border-box;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-family: inherit;
+  font-weight: 600;
+  outline: none;
+  position: relative;
+  text-align: center;
+  text-decoration: none;
+  text-transform: uppercase;
+  transition: all 0.3s;
+  -webkit-font-smoothing: antialiased;
+  background: #512FC9;
+  color: rgba(255,255,255,0.87);
+  min-height: 32px;
+  font-size: 12px;
+  padding: 0px 24px;
+  margin-right: 16px;
+  width: 165px;
+}
+
+.c14:active {
+  opacity: 0.56;
+}
+
+.c14:hover,
+.c14:focus {
+  background: #651FFF;
+}
+
+.c14:active {
+  background: #354AA4;
+}
+
+.c14:disabled {
+  background: rgba(255,255,255,0.12);
+  color: rgba(255,255,255,0.3);
+}
+
+.c15 {
+  line-height: 1.5;
+  margin: 0;
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  box-sizing: border-box;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-family: inherit;
+  font-weight: 600;
+  outline: none;
+  position: relative;
+  text-align: center;
+  text-decoration: none;
+  text-transform: uppercase;
+  transition: all 0.3s;
+  -webkit-font-smoothing: antialiased;
+  background: #512FC9;
+  color: rgba(255,255,255,0.87);
+  min-height: 32px;
+  font-size: 12px;
+  padding: 0px 24px;
+  margin-top: 16px;
+  width: 165px;
+}
+
+.c15:active {
+  opacity: 0.56;
+}
+
+.c15:hover,
+.c15:focus {
+  background: #651FFF;
+}
+
+.c15:active {
+  background: #354AA4;
+}
+
+.c15:disabled {
+  background: rgba(255,255,255,0.12);
+  color: rgba(255,255,255,0.3);
+}
+
+.c8 {
+  display: block;
+  outline: none;
+  margin-right: 8px;
+  width: 32px;
+}
+
+.c1 {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  font-weight: 400;
+  font-size: 18px;
+  line-height: 32px;
+  margin: 0px;
+}
+
+.c2 {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  margin: 0px;
+  margin-bottom: 24px;
+}
+
+.c3 {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  margin: 0px;
+  margin-bottom: 8px;
+}
+
+.c12 {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 24px;
+  margin: 0px;
+}
+
+.c7 {
+  box-sizing: border-box;
+  display: flex;
+}
+
+.c11 {
+  box-sizing: border-box;
+  width: 100%;
+  margin-top: 32px;
+  border-radius: 8px;
+  background-color: #222c59;
+  padding: 24px;
+}
+
+<div
+  class="c0"
+  width="1020px"
+>
+  <div
+    class="c1"
+  >
+    Resource Selection
+  </div>
+  <div
+    class="c2"
+  >
+    Users are able to add and access many different types of resources through Teleport. Start by selecting the type of resource you want to add.
+  </div>
+  <div
+    class="c3"
+  >
+    Select Resource Type
+  </div>
+  <div
+    class="c4"
+  >
+    <nav
+      class="c5"
+    >
+      <label
+        class="c6"
+        for="slide-tab-server"
+      >
+        <div
+          class="c7"
+          style="line-height: 31px;"
+        >
+          <img
+            class="c8"
+            src="file_stub"
+            width="32px"
+          />
+           Server
+        </div>
+        <input
+          class="c9"
+          id="slide-tab-server"
+          name="slide-tab"
+          type="radio"
+        />
+      </label>
+      <label
+        class="c6"
+        for="slide-tab-database"
+      >
+        <div
+          class="c7"
+          style="line-height: 31px;"
+        >
+          <img
+            class="c8"
+            src="file_stub"
+            width="32px"
+          />
+           Database
+        </div>
+        <input
+          class="c9"
+          id="slide-tab-database"
+          name="slide-tab"
+          type="radio"
+        />
+      </label>
+      <label
+        class="c6"
+        for="slide-tab-kubernetes"
+      >
+        <div
+          class="c7"
+          style="line-height: 31px;"
+        >
+          <img
+            class="c8"
+            src="file_stub"
+            width="32px"
+          />
+           Kubernetes
+        </div>
+        <input
+          class="c9"
+          id="slide-tab-kubernetes"
+          name="slide-tab"
+          type="radio"
+        />
+      </label>
+      <label
+        class="c6"
+        for="slide-tab-application"
+      >
+        <div
+          class="c7"
+          style="line-height: 31px;"
+        >
+          <img
+            class="c8"
+            src="file_stub"
+            width="32px"
+          />
+           Application
+        </div>
+        <input
+          class="c9"
+          id="slide-tab-application"
+          name="slide-tab"
+          type="radio"
+        />
+      </label>
+      <label
+        class="c6"
+        for="slide-tab-desktop"
+      >
+        <div
+          class="c7"
+          style="line-height: 31px;"
+        >
+          <img
+            class="c8"
+            src="file_stub"
+            width="32px"
+          />
+           Desktop
+        </div>
+        <input
+          class="c9"
+          id="slide-tab-desktop"
+          name="slide-tab"
+          type="radio"
+        />
+      </label>
+    </nav>
+    <div
+      class="c10"
+    />
+  </div>
+  <div
+    class="c11"
+    data-testid="application-permissions-error"
+  >
+    <div
+      class="c12"
+    >
+      You are not able to add new Applications. There are two possible reasons for this:
+    </div>
+    <ul
+      style="padding-left: 28px;"
+    >
+      <li>
+        Your Teleport Enterprise license does not include Application Access. Reach out to your Teleport admin to enable Application Access.
+      </li>
+      <li>
+        You don’t have sufficient permissions to add Applications. Reach out to your Teleport admin to request additional permissions.
+      </li>
+    </ul>
+  </div>
+  <div
+    class="c13"
+  >
+    
+    <button
+      class="c14"
+      data-testid="proceed-button"
+      disabled=""
+      kind="primary"
+      width="165px"
+    >
+      Next
+    </button>
+    <a
+      class="c15"
+      href="/web"
+      kind="primary"
+      mt="3"
+      theme="[object Object]"
+      width="165px"
+    >
+      Exit
+    </a>
+  </div>
+</div>
+`;
+
+exports[`select resource application shows permissions error when lacking tokens.create 1`] = `
+.c4 {
+  position: relative;
+}
+
+.c6 {
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  padding: 10px;
+  width: 20%;
+  z-index: 1;
+}
+
+.c9 {
+  display: none;
+}
+
+.c10 {
+  background-color: #512fc9;
+  border-radius: 8px;
+  box-shadow: 0px 2px 6px rgba(12,12,14,0.1);
+  height: 56px;
+  left: calc(60% + 8px);
+  margin: 12px 12px 12px 0;
+  position: absolute;
+  top: 0;
+  transition: all 0.3s ease;
+  width: calc(20% - 16px);
+}
+
+.c5 {
+  align-items: center;
+  background-color: rgba(255,255,255,0.05);
+  border-radius: 8px;
+  display: flex;
+  height: 80px;
+  justify-content: space-around;
+}
+
+.c0 {
+  box-sizing: border-box;
+  width: 1020px;
+}
+
+.c13 {
+  box-sizing: border-box;
+  margin-top: 24px;
+}
+
+.c14 {
+  line-height: 1.5;
+  margin: 0;
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  box-sizing: border-box;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-family: inherit;
+  font-weight: 600;
+  outline: none;
+  position: relative;
+  text-align: center;
+  text-decoration: none;
+  text-transform: uppercase;
+  transition: all 0.3s;
+  -webkit-font-smoothing: antialiased;
+  background: #512FC9;
+  color: rgba(255,255,255,0.87);
+  min-height: 32px;
+  font-size: 12px;
+  padding: 0px 24px;
+  margin-right: 16px;
+  width: 165px;
+}
+
+.c14:active {
+  opacity: 0.56;
+}
+
+.c14:hover,
+.c14:focus {
+  background: #651FFF;
+}
+
+.c14:active {
+  background: #354AA4;
+}
+
+.c14:disabled {
+  background: rgba(255,255,255,0.12);
+  color: rgba(255,255,255,0.3);
+}
+
+.c15 {
+  line-height: 1.5;
+  margin: 0;
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  box-sizing: border-box;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-family: inherit;
+  font-weight: 600;
+  outline: none;
+  position: relative;
+  text-align: center;
+  text-decoration: none;
+  text-transform: uppercase;
+  transition: all 0.3s;
+  -webkit-font-smoothing: antialiased;
+  background: #512FC9;
+  color: rgba(255,255,255,0.87);
+  min-height: 32px;
+  font-size: 12px;
+  padding: 0px 24px;
+  margin-top: 16px;
+  width: 165px;
+}
+
+.c15:active {
+  opacity: 0.56;
+}
+
+.c15:hover,
+.c15:focus {
+  background: #651FFF;
+}
+
+.c15:active {
+  background: #354AA4;
+}
+
+.c15:disabled {
+  background: rgba(255,255,255,0.12);
+  color: rgba(255,255,255,0.3);
+}
+
+.c8 {
+  display: block;
+  outline: none;
+  margin-right: 8px;
+  width: 32px;
+}
+
+.c1 {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  font-weight: 400;
+  font-size: 18px;
+  line-height: 32px;
+  margin: 0px;
+}
+
+.c2 {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  margin: 0px;
+  margin-bottom: 24px;
+}
+
+.c3 {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  margin: 0px;
+  margin-bottom: 8px;
+}
+
+.c12 {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 24px;
+  margin: 0px;
+}
+
+.c7 {
+  box-sizing: border-box;
+  display: flex;
+}
+
+.c11 {
+  box-sizing: border-box;
+  width: 100%;
+  margin-top: 32px;
+  border-radius: 8px;
+  background-color: #222c59;
+  padding: 24px;
+}
+
+<div
+  class="c0"
+  width="1020px"
+>
+  <div
+    class="c1"
+  >
+    Resource Selection
+  </div>
+  <div
+    class="c2"
+  >
+    Users are able to add and access many different types of resources through Teleport. Start by selecting the type of resource you want to add.
+  </div>
+  <div
+    class="c3"
+  >
+    Select Resource Type
+  </div>
+  <div
+    class="c4"
+  >
+    <nav
+      class="c5"
+    >
+      <label
+        class="c6"
+        for="slide-tab-server"
+      >
+        <div
+          class="c7"
+          style="line-height: 31px;"
+        >
+          <img
+            class="c8"
+            src="file_stub"
+            width="32px"
+          />
+           Server
+        </div>
+        <input
+          class="c9"
+          id="slide-tab-server"
+          name="slide-tab"
+          type="radio"
+        />
+      </label>
+      <label
+        class="c6"
+        for="slide-tab-database"
+      >
+        <div
+          class="c7"
+          style="line-height: 31px;"
+        >
+          <img
+            class="c8"
+            src="file_stub"
+            width="32px"
+          />
+           Database
+        </div>
+        <input
+          class="c9"
+          id="slide-tab-database"
+          name="slide-tab"
+          type="radio"
+        />
+      </label>
+      <label
+        class="c6"
+        for="slide-tab-kubernetes"
+      >
+        <div
+          class="c7"
+          style="line-height: 31px;"
+        >
+          <img
+            class="c8"
+            src="file_stub"
+            width="32px"
+          />
+           Kubernetes
+        </div>
+        <input
+          class="c9"
+          id="slide-tab-kubernetes"
+          name="slide-tab"
+          type="radio"
+        />
+      </label>
+      <label
+        class="c6"
+        for="slide-tab-application"
+      >
+        <div
+          class="c7"
+          style="line-height: 31px;"
+        >
+          <img
+            class="c8"
+            src="file_stub"
+            width="32px"
+          />
+           Application
+        </div>
+        <input
+          class="c9"
+          id="slide-tab-application"
+          name="slide-tab"
+          type="radio"
+        />
+      </label>
+      <label
+        class="c6"
+        for="slide-tab-desktop"
+      >
+        <div
+          class="c7"
+          style="line-height: 31px;"
+        >
+          <img
+            class="c8"
+            src="file_stub"
+            width="32px"
+          />
+           Desktop
+        </div>
+        <input
+          class="c9"
+          id="slide-tab-desktop"
+          name="slide-tab"
+          type="radio"
+        />
+      </label>
+    </nav>
+    <div
+      class="c10"
+    />
+  </div>
+  <div
+    class="c11"
+    data-testid="application-permissions-error"
+  >
+    <div
+      class="c12"
+    >
+      You are not able to add new Applications. There are two possible reasons for this:
+    </div>
+    <ul
+      style="padding-left: 28px;"
+    >
+      <li>
+        Your Teleport Enterprise license does not include Application Access. Reach out to your Teleport admin to enable Application Access.
+      </li>
+      <li>
+        You don’t have sufficient permissions to add Applications. Reach out to your Teleport admin to request additional permissions.
+      </li>
+    </ul>
+  </div>
+  <div
+    class="c13"
+  >
+    
+    <button
+      class="c14"
+      data-testid="proceed-button"
+      disabled=""
+      kind="primary"
+      width="165px"
+    >
+      Next
+    </button>
+    <a
+      class="c15"
+      href="/web"
+      kind="primary"
+      mt="3"
+      theme="[object Object]"
+      width="165px"
+    >
+      Exit
+    </a>
+  </div>
+</div>
+`;
+
+exports[`select resource database has the proceed button enabled when having correct permissions 1`] = `
+.c4 {
+  position: relative;
+}
+
+.c6 {
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  padding: 10px;
+  width: 20%;
+  z-index: 1;
+}
+
+.c9 {
+  display: none;
+}
+
+.c10 {
+  background-color: #512fc9;
+  border-radius: 8px;
+  box-shadow: 0px 2px 6px rgba(12,12,14,0.1);
+  height: 56px;
+  left: calc(20% + 8px);
+  margin: 12px 12px 12px 0;
+  position: absolute;
+  top: 0;
+  transition: all 0.3s ease;
+  width: calc(20% - 16px);
+}
+
+.c5 {
+  align-items: center;
+  background-color: rgba(255,255,255,0.05);
+  border-radius: 8px;
+  display: flex;
+  height: 80px;
+  justify-content: space-around;
+}
+
+.c0 {
+  box-sizing: border-box;
+  width: 1020px;
+}
+
+.c11 {
+  box-sizing: border-box;
+  margin-top: 24px;
+}
+
+.c12 {
+  line-height: 1.5;
+  margin: 0;
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  box-sizing: border-box;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-family: inherit;
+  font-weight: 600;
+  outline: none;
+  position: relative;
+  text-align: center;
+  text-decoration: none;
+  text-transform: uppercase;
+  transition: all 0.3s;
+  -webkit-font-smoothing: antialiased;
+  background: #512FC9;
+  color: rgba(255,255,255,0.87);
+  min-height: 32px;
+  font-size: 12px;
+  padding: 0px 24px;
+  margin-right: 16px;
+  width: 165px;
+}
+
+.c12:active {
+  opacity: 0.56;
+}
+
+.c12:hover,
+.c12:focus {
+  background: #651FFF;
+}
+
+.c12:active {
+  background: #354AA4;
+}
+
+.c12:disabled {
+  background: rgba(255,255,255,0.12);
+  color: rgba(255,255,255,0.3);
+}
+
+.c13 {
+  line-height: 1.5;
+  margin: 0;
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  box-sizing: border-box;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-family: inherit;
+  font-weight: 600;
+  outline: none;
+  position: relative;
+  text-align: center;
+  text-decoration: none;
+  text-transform: uppercase;
+  transition: all 0.3s;
+  -webkit-font-smoothing: antialiased;
+  background: #512FC9;
+  color: rgba(255,255,255,0.87);
+  min-height: 32px;
+  font-size: 12px;
+  padding: 0px 24px;
+  margin-top: 16px;
+  width: 165px;
+}
+
+.c13:active {
+  opacity: 0.56;
+}
+
+.c13:hover,
+.c13:focus {
+  background: #651FFF;
+}
+
+.c13:active {
+  background: #354AA4;
+}
+
+.c13:disabled {
+  background: rgba(255,255,255,0.12);
+  color: rgba(255,255,255,0.3);
+}
+
+.c8 {
+  display: block;
+  outline: none;
+  margin-right: 8px;
+  width: 32px;
+}
+
+.c1 {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  font-weight: 400;
+  font-size: 18px;
+  line-height: 32px;
+  margin: 0px;
+}
+
+.c2 {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  margin: 0px;
+  margin-bottom: 24px;
+}
+
+.c3 {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  margin: 0px;
+  margin-bottom: 8px;
+}
+
+.c7 {
+  box-sizing: border-box;
+  display: flex;
+}
+
+<div
+  class="c0"
+  width="1020px"
+>
+  <div
+    class="c1"
+  >
+    Resource Selection
+  </div>
+  <div
+    class="c2"
+  >
+    Users are able to add and access many different types of resources through Teleport. Start by selecting the type of resource you want to add.
+  </div>
+  <div
+    class="c3"
+  >
+    Select Resource Type
+  </div>
+  <div
+    class="c4"
+  >
+    <nav
+      class="c5"
+    >
+      <label
+        class="c6"
+        for="slide-tab-server"
+      >
+        <div
+          class="c7"
+          style="line-height: 31px;"
+        >
+          <img
+            class="c8"
+            src="file_stub"
+            width="32px"
+          />
+           Server
+        </div>
+        <input
+          class="c9"
+          id="slide-tab-server"
+          name="slide-tab"
+          type="radio"
+        />
+      </label>
+      <label
+        class="c6"
+        for="slide-tab-database"
+      >
+        <div
+          class="c7"
+          style="line-height: 31px;"
+        >
+          <img
+            class="c8"
+            src="file_stub"
+            width="32px"
+          />
+           Database
+        </div>
+        <input
+          class="c9"
+          id="slide-tab-database"
+          name="slide-tab"
+          type="radio"
+        />
+      </label>
+      <label
+        class="c6"
+        for="slide-tab-kubernetes"
+      >
+        <div
+          class="c7"
+          style="line-height: 31px;"
+        >
+          <img
+            class="c8"
+            src="file_stub"
+            width="32px"
+          />
+           Kubernetes
+        </div>
+        <input
+          class="c9"
+          id="slide-tab-kubernetes"
+          name="slide-tab"
+          type="radio"
+        />
+      </label>
+      <label
+        class="c6"
+        for="slide-tab-application"
+      >
+        <div
+          class="c7"
+          style="line-height: 31px;"
+        >
+          <img
+            class="c8"
+            src="file_stub"
+            width="32px"
+          />
+           Application
+        </div>
+        <input
+          class="c9"
+          id="slide-tab-application"
+          name="slide-tab"
+          type="radio"
+        />
+      </label>
+      <label
+        class="c6"
+        for="slide-tab-desktop"
+      >
+        <div
+          class="c7"
+          style="line-height: 31px;"
+        >
+          <img
+            class="c8"
+            src="file_stub"
+            width="32px"
+          />
+           Desktop
+        </div>
+        <input
+          class="c9"
+          id="slide-tab-desktop"
+          name="slide-tab"
+          type="radio"
+        />
+      </label>
+    </nav>
+    <div
+      class="c10"
+    />
+  </div>
+  <div
+    class="c11"
+  >
+    
+    <button
+      class="c12"
+      data-testid="proceed-button"
+      kind="primary"
+      width="165px"
+    >
+      Next
+    </button>
+    <a
+      class="c13"
+      href="/web"
+      kind="primary"
+      mt="3"
+      theme="[object Object]"
+      width="165px"
+    >
+      Exit
+    </a>
+  </div>
+</div>
+`;
+
+exports[`select resource database shows permissions error when lacking dbServers.read 1`] = `
+.c4 {
+  position: relative;
+}
+
+.c6 {
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  padding: 10px;
+  width: 20%;
+  z-index: 1;
+}
+
+.c9 {
+  display: none;
+}
+
+.c10 {
+  background-color: #512fc9;
+  border-radius: 8px;
+  box-shadow: 0px 2px 6px rgba(12,12,14,0.1);
+  height: 56px;
+  left: calc(20% + 8px);
+  margin: 12px 12px 12px 0;
+  position: absolute;
+  top: 0;
+  transition: all 0.3s ease;
+  width: calc(20% - 16px);
+}
+
+.c5 {
+  align-items: center;
+  background-color: rgba(255,255,255,0.05);
+  border-radius: 8px;
+  display: flex;
+  height: 80px;
+  justify-content: space-around;
+}
+
+.c0 {
+  box-sizing: border-box;
+  width: 1020px;
+}
+
+.c13 {
+  box-sizing: border-box;
+  margin-top: 24px;
+}
+
+.c14 {
+  line-height: 1.5;
+  margin: 0;
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  box-sizing: border-box;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-family: inherit;
+  font-weight: 600;
+  outline: none;
+  position: relative;
+  text-align: center;
+  text-decoration: none;
+  text-transform: uppercase;
+  transition: all 0.3s;
+  -webkit-font-smoothing: antialiased;
+  background: #512FC9;
+  color: rgba(255,255,255,0.87);
+  min-height: 32px;
+  font-size: 12px;
+  padding: 0px 24px;
+  margin-right: 16px;
+  width: 165px;
+}
+
+.c14:active {
+  opacity: 0.56;
+}
+
+.c14:hover,
+.c14:focus {
+  background: #651FFF;
+}
+
+.c14:active {
+  background: #354AA4;
+}
+
+.c14:disabled {
+  background: rgba(255,255,255,0.12);
+  color: rgba(255,255,255,0.3);
+}
+
+.c15 {
+  line-height: 1.5;
+  margin: 0;
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  box-sizing: border-box;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-family: inherit;
+  font-weight: 600;
+  outline: none;
+  position: relative;
+  text-align: center;
+  text-decoration: none;
+  text-transform: uppercase;
+  transition: all 0.3s;
+  -webkit-font-smoothing: antialiased;
+  background: #512FC9;
+  color: rgba(255,255,255,0.87);
+  min-height: 32px;
+  font-size: 12px;
+  padding: 0px 24px;
+  margin-top: 16px;
+  width: 165px;
+}
+
+.c15:active {
+  opacity: 0.56;
+}
+
+.c15:hover,
+.c15:focus {
+  background: #651FFF;
+}
+
+.c15:active {
+  background: #354AA4;
+}
+
+.c15:disabled {
+  background: rgba(255,255,255,0.12);
+  color: rgba(255,255,255,0.3);
+}
+
+.c8 {
+  display: block;
+  outline: none;
+  margin-right: 8px;
+  width: 32px;
+}
+
+.c1 {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  font-weight: 400;
+  font-size: 18px;
+  line-height: 32px;
+  margin: 0px;
+}
+
+.c2 {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  margin: 0px;
+  margin-bottom: 24px;
+}
+
+.c3 {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  margin: 0px;
+  margin-bottom: 8px;
+}
+
+.c12 {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 24px;
+  margin: 0px;
+}
+
+.c7 {
+  box-sizing: border-box;
+  display: flex;
+}
+
+.c11 {
+  box-sizing: border-box;
+  width: 100%;
+  margin-top: 32px;
+  border-radius: 8px;
+  background-color: #222c59;
+  padding: 24px;
+}
+
+<div
+  class="c0"
+  width="1020px"
+>
+  <div
+    class="c1"
+  >
+    Resource Selection
+  </div>
+  <div
+    class="c2"
+  >
+    Users are able to add and access many different types of resources through Teleport. Start by selecting the type of resource you want to add.
+  </div>
+  <div
+    class="c3"
+  >
+    Select Resource Type
+  </div>
+  <div
+    class="c4"
+  >
+    <nav
+      class="c5"
+    >
+      <label
+        class="c6"
+        for="slide-tab-server"
+      >
+        <div
+          class="c7"
+          style="line-height: 31px;"
+        >
+          <img
+            class="c8"
+            src="file_stub"
+            width="32px"
+          />
+           Server
+        </div>
+        <input
+          class="c9"
+          id="slide-tab-server"
+          name="slide-tab"
+          type="radio"
+        />
+      </label>
+      <label
+        class="c6"
+        for="slide-tab-database"
+      >
+        <div
+          class="c7"
+          style="line-height: 31px;"
+        >
+          <img
+            class="c8"
+            src="file_stub"
+            width="32px"
+          />
+           Database
+        </div>
+        <input
+          class="c9"
+          id="slide-tab-database"
+          name="slide-tab"
+          type="radio"
+        />
+      </label>
+      <label
+        class="c6"
+        for="slide-tab-kubernetes"
+      >
+        <div
+          class="c7"
+          style="line-height: 31px;"
+        >
+          <img
+            class="c8"
+            src="file_stub"
+            width="32px"
+          />
+           Kubernetes
+        </div>
+        <input
+          class="c9"
+          id="slide-tab-kubernetes"
+          name="slide-tab"
+          type="radio"
+        />
+      </label>
+      <label
+        class="c6"
+        for="slide-tab-application"
+      >
+        <div
+          class="c7"
+          style="line-height: 31px;"
+        >
+          <img
+            class="c8"
+            src="file_stub"
+            width="32px"
+          />
+           Application
+        </div>
+        <input
+          class="c9"
+          id="slide-tab-application"
+          name="slide-tab"
+          type="radio"
+        />
+      </label>
+      <label
+        class="c6"
+        for="slide-tab-desktop"
+      >
+        <div
+          class="c7"
+          style="line-height: 31px;"
+        >
+          <img
+            class="c8"
+            src="file_stub"
+            width="32px"
+          />
+           Desktop
+        </div>
+        <input
+          class="c9"
+          id="slide-tab-desktop"
+          name="slide-tab"
+          type="radio"
+        />
+      </label>
+    </nav>
+    <div
+      class="c10"
+    />
+  </div>
+  <div
+    class="c11"
+    data-testid="database-permissions-error"
+  >
+    <div
+      class="c12"
+    >
+      You are not able to add new Databases. There are two possible reasons for this:
+    </div>
+    <ul
+      style="padding-left: 28px;"
+    >
+      <li>
+        Your Teleport Enterprise license does not include Database Access. Reach out to your Teleport admin to enable Database Access.
+      </li>
+      <li>
+        You don’t have sufficient permissions to add Databases. Reach out to your Teleport admin to request additional permissions.
+      </li>
+    </ul>
+  </div>
+  <div
+    class="c13"
+  >
+    
+    <button
+      class="c14"
+      data-testid="proceed-button"
+      disabled=""
+      kind="primary"
+      width="165px"
+    >
+      Next
+    </button>
+    <a
+      class="c15"
+      href="/web"
+      kind="primary"
+      mt="3"
+      theme="[object Object]"
+      width="165px"
+    >
+      Exit
+    </a>
+  </div>
+</div>
+`;
+
+exports[`select resource database shows permissions error when lacking tokens.create 1`] = `
+.c4 {
+  position: relative;
+}
+
+.c6 {
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  padding: 10px;
+  width: 20%;
+  z-index: 1;
+}
+
+.c9 {
+  display: none;
+}
+
+.c10 {
+  background-color: #512fc9;
+  border-radius: 8px;
+  box-shadow: 0px 2px 6px rgba(12,12,14,0.1);
+  height: 56px;
+  left: calc(20% + 8px);
+  margin: 12px 12px 12px 0;
+  position: absolute;
+  top: 0;
+  transition: all 0.3s ease;
+  width: calc(20% - 16px);
+}
+
+.c5 {
+  align-items: center;
+  background-color: rgba(255,255,255,0.05);
+  border-radius: 8px;
+  display: flex;
+  height: 80px;
+  justify-content: space-around;
+}
+
+.c0 {
+  box-sizing: border-box;
+  width: 1020px;
+}
+
+.c13 {
+  box-sizing: border-box;
+  margin-top: 24px;
+}
+
+.c14 {
+  line-height: 1.5;
+  margin: 0;
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  box-sizing: border-box;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-family: inherit;
+  font-weight: 600;
+  outline: none;
+  position: relative;
+  text-align: center;
+  text-decoration: none;
+  text-transform: uppercase;
+  transition: all 0.3s;
+  -webkit-font-smoothing: antialiased;
+  background: #512FC9;
+  color: rgba(255,255,255,0.87);
+  min-height: 32px;
+  font-size: 12px;
+  padding: 0px 24px;
+  margin-right: 16px;
+  width: 165px;
+}
+
+.c14:active {
+  opacity: 0.56;
+}
+
+.c14:hover,
+.c14:focus {
+  background: #651FFF;
+}
+
+.c14:active {
+  background: #354AA4;
+}
+
+.c14:disabled {
+  background: rgba(255,255,255,0.12);
+  color: rgba(255,255,255,0.3);
+}
+
+.c15 {
+  line-height: 1.5;
+  margin: 0;
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  box-sizing: border-box;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-family: inherit;
+  font-weight: 600;
+  outline: none;
+  position: relative;
+  text-align: center;
+  text-decoration: none;
+  text-transform: uppercase;
+  transition: all 0.3s;
+  -webkit-font-smoothing: antialiased;
+  background: #512FC9;
+  color: rgba(255,255,255,0.87);
+  min-height: 32px;
+  font-size: 12px;
+  padding: 0px 24px;
+  margin-top: 16px;
+  width: 165px;
+}
+
+.c15:active {
+  opacity: 0.56;
+}
+
+.c15:hover,
+.c15:focus {
+  background: #651FFF;
+}
+
+.c15:active {
+  background: #354AA4;
+}
+
+.c15:disabled {
+  background: rgba(255,255,255,0.12);
+  color: rgba(255,255,255,0.3);
+}
+
+.c8 {
+  display: block;
+  outline: none;
+  margin-right: 8px;
+  width: 32px;
+}
+
+.c1 {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  font-weight: 400;
+  font-size: 18px;
+  line-height: 32px;
+  margin: 0px;
+}
+
+.c2 {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  margin: 0px;
+  margin-bottom: 24px;
+}
+
+.c3 {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  margin: 0px;
+  margin-bottom: 8px;
+}
+
+.c12 {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 24px;
+  margin: 0px;
+}
+
+.c7 {
+  box-sizing: border-box;
+  display: flex;
+}
+
+.c11 {
+  box-sizing: border-box;
+  width: 100%;
+  margin-top: 32px;
+  border-radius: 8px;
+  background-color: #222c59;
+  padding: 24px;
+}
+
+<div
+  class="c0"
+  width="1020px"
+>
+  <div
+    class="c1"
+  >
+    Resource Selection
+  </div>
+  <div
+    class="c2"
+  >
+    Users are able to add and access many different types of resources through Teleport. Start by selecting the type of resource you want to add.
+  </div>
+  <div
+    class="c3"
+  >
+    Select Resource Type
+  </div>
+  <div
+    class="c4"
+  >
+    <nav
+      class="c5"
+    >
+      <label
+        class="c6"
+        for="slide-tab-server"
+      >
+        <div
+          class="c7"
+          style="line-height: 31px;"
+        >
+          <img
+            class="c8"
+            src="file_stub"
+            width="32px"
+          />
+           Server
+        </div>
+        <input
+          class="c9"
+          id="slide-tab-server"
+          name="slide-tab"
+          type="radio"
+        />
+      </label>
+      <label
+        class="c6"
+        for="slide-tab-database"
+      >
+        <div
+          class="c7"
+          style="line-height: 31px;"
+        >
+          <img
+            class="c8"
+            src="file_stub"
+            width="32px"
+          />
+           Database
+        </div>
+        <input
+          class="c9"
+          id="slide-tab-database"
+          name="slide-tab"
+          type="radio"
+        />
+      </label>
+      <label
+        class="c6"
+        for="slide-tab-kubernetes"
+      >
+        <div
+          class="c7"
+          style="line-height: 31px;"
+        >
+          <img
+            class="c8"
+            src="file_stub"
+            width="32px"
+          />
+           Kubernetes
+        </div>
+        <input
+          class="c9"
+          id="slide-tab-kubernetes"
+          name="slide-tab"
+          type="radio"
+        />
+      </label>
+      <label
+        class="c6"
+        for="slide-tab-application"
+      >
+        <div
+          class="c7"
+          style="line-height: 31px;"
+        >
+          <img
+            class="c8"
+            src="file_stub"
+            width="32px"
+          />
+           Application
+        </div>
+        <input
+          class="c9"
+          id="slide-tab-application"
+          name="slide-tab"
+          type="radio"
+        />
+      </label>
+      <label
+        class="c6"
+        for="slide-tab-desktop"
+      >
+        <div
+          class="c7"
+          style="line-height: 31px;"
+        >
+          <img
+            class="c8"
+            src="file_stub"
+            width="32px"
+          />
+           Desktop
+        </div>
+        <input
+          class="c9"
+          id="slide-tab-desktop"
+          name="slide-tab"
+          type="radio"
+        />
+      </label>
+    </nav>
+    <div
+      class="c10"
+    />
+  </div>
+  <div
+    class="c11"
+    data-testid="database-permissions-error"
+  >
+    <div
+      class="c12"
+    >
+      You are not able to add new Databases. There are two possible reasons for this:
+    </div>
+    <ul
+      style="padding-left: 28px;"
+    >
+      <li>
+        Your Teleport Enterprise license does not include Database Access. Reach out to your Teleport admin to enable Database Access.
+      </li>
+      <li>
+        You don’t have sufficient permissions to add Databases. Reach out to your Teleport admin to request additional permissions.
+      </li>
+    </ul>
+  </div>
+  <div
+    class="c13"
+  >
+    
+    <button
+      class="c14"
+      data-testid="proceed-button"
+      disabled=""
+      kind="primary"
+      width="165px"
+    >
+      Next
+    </button>
+    <a
+      class="c15"
+      href="/web"
+      kind="primary"
+      mt="3"
+      theme="[object Object]"
+      width="165px"
+    >
+      Exit
+    </a>
+  </div>
+</div>
+`;
+
+exports[`select resource desktop has the view documentation button visible 1`] = `
+.c4 {
+  position: relative;
+}
+
+.c6 {
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  padding: 10px;
+  width: 20%;
+  z-index: 1;
+}
+
+.c9 {
+  display: none;
+}
+
+.c10 {
+  background-color: #512fc9;
+  border-radius: 8px;
+  box-shadow: 0px 2px 6px rgba(12,12,14,0.1);
+  height: 56px;
+  left: calc(80% + 8px);
+  margin: 12px 12px 12px 0;
+  position: absolute;
+  top: 0;
+  transition: all 0.3s ease;
+  width: calc(20% - 16px);
+}
+
+.c5 {
+  align-items: center;
+  background-color: rgba(255,255,255,0.05);
+  border-radius: 8px;
+  display: flex;
+  height: 80px;
+  justify-content: space-around;
+}
+
+.c0 {
+  box-sizing: border-box;
+  width: 1020px;
+}
+
+.c11 {
+  box-sizing: border-box;
+  margin-top: 24px;
+}
+
+.c12 {
+  line-height: 1.5;
+  margin: 0;
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  box-sizing: border-box;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-family: inherit;
+  font-weight: 600;
+  outline: none;
+  position: relative;
+  text-align: center;
+  text-decoration: none;
+  text-transform: uppercase;
+  transition: all 0.3s;
+  -webkit-font-smoothing: antialiased;
+  background: #512FC9;
+  color: rgba(255,255,255,0.87);
+  min-height: 32px;
+  font-size: 12px;
+  padding: 0px 24px;
+  margin-right: 16px;
+  width: 224px;
+}
+
+.c12:active {
+  opacity: 0.56;
+}
+
+.c12:hover,
+.c12:focus {
+  background: #651FFF;
+}
+
+.c12:active {
+  background: #354AA4;
+}
+
+.c12:disabled {
+  background: rgba(255,255,255,0.12);
+  color: rgba(255,255,255,0.3);
+}
+
+.c13 {
+  line-height: 1.5;
+  margin: 0;
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  box-sizing: border-box;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-family: inherit;
+  font-weight: 600;
+  outline: none;
+  position: relative;
+  text-align: center;
+  text-decoration: none;
+  text-transform: uppercase;
+  transition: all 0.3s;
+  -webkit-font-smoothing: antialiased;
+  background: #512FC9;
+  color: rgba(255,255,255,0.87);
+  min-height: 32px;
+  font-size: 12px;
+  padding: 0px 24px;
+  margin-top: 16px;
+  width: 165px;
+}
+
+.c13:active {
+  opacity: 0.56;
+}
+
+.c13:hover,
+.c13:focus {
+  background: #651FFF;
+}
+
+.c13:active {
+  background: #354AA4;
+}
+
+.c13:disabled {
+  background: rgba(255,255,255,0.12);
+  color: rgba(255,255,255,0.3);
+}
+
+.c8 {
+  display: block;
+  outline: none;
+  margin-right: 8px;
+  width: 32px;
+}
+
+.c1 {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  font-weight: 400;
+  font-size: 18px;
+  line-height: 32px;
+  margin: 0px;
+}
+
+.c2 {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  margin: 0px;
+  margin-bottom: 24px;
+}
+
+.c3 {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  margin: 0px;
+  margin-bottom: 8px;
+}
+
+.c7 {
+  box-sizing: border-box;
+  display: flex;
+}
+
+<div
+  class="c0"
+  width="1020px"
+>
+  <div
+    class="c1"
+  >
+    Resource Selection
+  </div>
+  <div
+    class="c2"
+  >
+    Users are able to add and access many different types of resources through Teleport. Start by selecting the type of resource you want to add.
+  </div>
+  <div
+    class="c3"
+  >
+    Select Resource Type
+  </div>
+  <div
+    class="c4"
+  >
+    <nav
+      class="c5"
+    >
+      <label
+        class="c6"
+        for="slide-tab-server"
+      >
+        <div
+          class="c7"
+          style="line-height: 31px;"
+        >
+          <img
+            class="c8"
+            src="file_stub"
+            width="32px"
+          />
+           Server
+        </div>
+        <input
+          class="c9"
+          id="slide-tab-server"
+          name="slide-tab"
+          type="radio"
+        />
+      </label>
+      <label
+        class="c6"
+        for="slide-tab-database"
+      >
+        <div
+          class="c7"
+          style="line-height: 31px;"
+        >
+          <img
+            class="c8"
+            src="file_stub"
+            width="32px"
+          />
+           Database
+        </div>
+        <input
+          class="c9"
+          id="slide-tab-database"
+          name="slide-tab"
+          type="radio"
+        />
+      </label>
+      <label
+        class="c6"
+        for="slide-tab-kubernetes"
+      >
+        <div
+          class="c7"
+          style="line-height: 31px;"
+        >
+          <img
+            class="c8"
+            src="file_stub"
+            width="32px"
+          />
+           Kubernetes
+        </div>
+        <input
+          class="c9"
+          id="slide-tab-kubernetes"
+          name="slide-tab"
+          type="radio"
+        />
+      </label>
+      <label
+        class="c6"
+        for="slide-tab-application"
+      >
+        <div
+          class="c7"
+          style="line-height: 31px;"
+        >
+          <img
+            class="c8"
+            src="file_stub"
+            width="32px"
+          />
+           Application
+        </div>
+        <input
+          class="c9"
+          id="slide-tab-application"
+          name="slide-tab"
+          type="radio"
+        />
+      </label>
+      <label
+        class="c6"
+        for="slide-tab-desktop"
+      >
+        <div
+          class="c7"
+          style="line-height: 31px;"
+        >
+          <img
+            class="c8"
+            src="file_stub"
+            width="32px"
+          />
+           Desktop
+        </div>
+        <input
+          class="c9"
+          id="slide-tab-desktop"
+          name="slide-tab"
+          type="radio"
+        />
+      </label>
+    </nav>
+    <div
+      class="c10"
+    />
+  </div>
+  <div
+    class="c11"
+  >
+    <a
+      class="c12"
+      data-testid="documentation-button"
+      href="https://goteleport.com/docs/desktop-access/getting-started/"
+      kind="primary"
+      rel="noreferrer"
+      target="_blank"
+      width="224px"
+    >
+      View Documentation
+    </a>
+    <a
+      class="c13"
+      href="/web"
+      kind="primary"
+      mt="3"
+      theme="[object Object]"
+      width="165px"
+    >
+      Exit
+    </a>
+  </div>
+</div>
+`;
+
+exports[`select resource desktop shows permissions error when lacking desktops.read 1`] = `
+.c4 {
+  position: relative;
+}
+
+.c6 {
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  padding: 10px;
+  width: 20%;
+  z-index: 1;
+}
+
+.c9 {
+  display: none;
+}
+
+.c10 {
+  background-color: #512fc9;
+  border-radius: 8px;
+  box-shadow: 0px 2px 6px rgba(12,12,14,0.1);
+  height: 56px;
+  left: calc(80% + 8px);
+  margin: 12px 12px 12px 0;
+  position: absolute;
+  top: 0;
+  transition: all 0.3s ease;
+  width: calc(20% - 16px);
+}
+
+.c5 {
+  align-items: center;
+  background-color: rgba(255,255,255,0.05);
+  border-radius: 8px;
+  display: flex;
+  height: 80px;
+  justify-content: space-around;
+}
+
+.c0 {
+  box-sizing: border-box;
+  width: 1020px;
+}
+
+.c13 {
+  box-sizing: border-box;
+  margin-top: 24px;
+}
+
+.c14 {
+  line-height: 1.5;
+  margin: 0;
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  box-sizing: border-box;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-family: inherit;
+  font-weight: 600;
+  outline: none;
+  position: relative;
+  text-align: center;
+  text-decoration: none;
+  text-transform: uppercase;
+  transition: all 0.3s;
+  -webkit-font-smoothing: antialiased;
+  background: #512FC9;
+  color: rgba(255,255,255,0.87);
+  min-height: 32px;
+  font-size: 12px;
+  padding: 0px 24px;
+  margin-right: 16px;
+  width: 224px;
+}
+
+.c14:active {
+  opacity: 0.56;
+}
+
+.c14:hover,
+.c14:focus {
+  background: #651FFF;
+}
+
+.c14:active {
+  background: #354AA4;
+}
+
+.c14:disabled {
+  background: rgba(255,255,255,0.12);
+  color: rgba(255,255,255,0.3);
+}
+
+.c15 {
+  line-height: 1.5;
+  margin: 0;
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  box-sizing: border-box;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-family: inherit;
+  font-weight: 600;
+  outline: none;
+  position: relative;
+  text-align: center;
+  text-decoration: none;
+  text-transform: uppercase;
+  transition: all 0.3s;
+  -webkit-font-smoothing: antialiased;
+  background: #512FC9;
+  color: rgba(255,255,255,0.87);
+  min-height: 32px;
+  font-size: 12px;
+  padding: 0px 24px;
+  margin-top: 16px;
+  width: 165px;
+}
+
+.c15:active {
+  opacity: 0.56;
+}
+
+.c15:hover,
+.c15:focus {
+  background: #651FFF;
+}
+
+.c15:active {
+  background: #354AA4;
+}
+
+.c15:disabled {
+  background: rgba(255,255,255,0.12);
+  color: rgba(255,255,255,0.3);
+}
+
+.c8 {
+  display: block;
+  outline: none;
+  margin-right: 8px;
+  width: 32px;
+}
+
+.c1 {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  font-weight: 400;
+  font-size: 18px;
+  line-height: 32px;
+  margin: 0px;
+}
+
+.c2 {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  margin: 0px;
+  margin-bottom: 24px;
+}
+
+.c3 {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  margin: 0px;
+  margin-bottom: 8px;
+}
+
+.c12 {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 24px;
+  margin: 0px;
+}
+
+.c7 {
+  box-sizing: border-box;
+  display: flex;
+}
+
+.c11 {
+  box-sizing: border-box;
+  width: 100%;
+  margin-top: 32px;
+  border-radius: 8px;
+  background-color: #222c59;
+  padding: 24px;
+}
+
+<div
+  class="c0"
+  width="1020px"
+>
+  <div
+    class="c1"
+  >
+    Resource Selection
+  </div>
+  <div
+    class="c2"
+  >
+    Users are able to add and access many different types of resources through Teleport. Start by selecting the type of resource you want to add.
+  </div>
+  <div
+    class="c3"
+  >
+    Select Resource Type
+  </div>
+  <div
+    class="c4"
+  >
+    <nav
+      class="c5"
+    >
+      <label
+        class="c6"
+        for="slide-tab-server"
+      >
+        <div
+          class="c7"
+          style="line-height: 31px;"
+        >
+          <img
+            class="c8"
+            src="file_stub"
+            width="32px"
+          />
+           Server
+        </div>
+        <input
+          class="c9"
+          id="slide-tab-server"
+          name="slide-tab"
+          type="radio"
+        />
+      </label>
+      <label
+        class="c6"
+        for="slide-tab-database"
+      >
+        <div
+          class="c7"
+          style="line-height: 31px;"
+        >
+          <img
+            class="c8"
+            src="file_stub"
+            width="32px"
+          />
+           Database
+        </div>
+        <input
+          class="c9"
+          id="slide-tab-database"
+          name="slide-tab"
+          type="radio"
+        />
+      </label>
+      <label
+        class="c6"
+        for="slide-tab-kubernetes"
+      >
+        <div
+          class="c7"
+          style="line-height: 31px;"
+        >
+          <img
+            class="c8"
+            src="file_stub"
+            width="32px"
+          />
+           Kubernetes
+        </div>
+        <input
+          class="c9"
+          id="slide-tab-kubernetes"
+          name="slide-tab"
+          type="radio"
+        />
+      </label>
+      <label
+        class="c6"
+        for="slide-tab-application"
+      >
+        <div
+          class="c7"
+          style="line-height: 31px;"
+        >
+          <img
+            class="c8"
+            src="file_stub"
+            width="32px"
+          />
+           Application
+        </div>
+        <input
+          class="c9"
+          id="slide-tab-application"
+          name="slide-tab"
+          type="radio"
+        />
+      </label>
+      <label
+        class="c6"
+        for="slide-tab-desktop"
+      >
+        <div
+          class="c7"
+          style="line-height: 31px;"
+        >
+          <img
+            class="c8"
+            src="file_stub"
+            width="32px"
+          />
+           Desktop
+        </div>
+        <input
+          class="c9"
+          id="slide-tab-desktop"
+          name="slide-tab"
+          type="radio"
+        />
+      </label>
+    </nav>
+    <div
+      class="c10"
+    />
+  </div>
+  <div
+    class="c11"
+    data-testid="desktop-permissions-error"
+  >
+    <div
+      class="c12"
+    >
+      You are not able to add new Desktops. There are two possible reasons for this:
+    </div>
+    <ul
+      style="padding-left: 28px;"
+    >
+      <li>
+        Your Teleport Enterprise license does not include Desktop Access. Reach out to your Teleport admin to enable Desktop Access.
+      </li>
+      <li>
+        You don’t have sufficient permissions to add Desktops. Reach out to your Teleport admin to request additional permissions.
+      </li>
+    </ul>
+  </div>
+  <div
+    class="c13"
+  >
+    <a
+      class="c14"
+      data-testid="documentation-button"
+      href="https://goteleport.com/docs/desktop-access/getting-started/"
+      kind="primary"
+      rel="noreferrer"
+      target="_blank"
+      width="224px"
+    >
+      View Documentation
+    </a>
+    <a
+      class="c15"
+      href="/web"
+      kind="primary"
+      mt="3"
+      theme="[object Object]"
+      width="165px"
+    >
+      Exit
+    </a>
+  </div>
+</div>
+`;
+
+exports[`select resource desktop shows permissions error when lacking tokens.create 1`] = `
+.c4 {
+  position: relative;
+}
+
+.c6 {
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  padding: 10px;
+  width: 20%;
+  z-index: 1;
+}
+
+.c9 {
+  display: none;
+}
+
+.c10 {
+  background-color: #512fc9;
+  border-radius: 8px;
+  box-shadow: 0px 2px 6px rgba(12,12,14,0.1);
+  height: 56px;
+  left: calc(80% + 8px);
+  margin: 12px 12px 12px 0;
+  position: absolute;
+  top: 0;
+  transition: all 0.3s ease;
+  width: calc(20% - 16px);
+}
+
+.c5 {
+  align-items: center;
+  background-color: rgba(255,255,255,0.05);
+  border-radius: 8px;
+  display: flex;
+  height: 80px;
+  justify-content: space-around;
+}
+
+.c0 {
+  box-sizing: border-box;
+  width: 1020px;
+}
+
+.c13 {
+  box-sizing: border-box;
+  margin-top: 24px;
+}
+
+.c14 {
+  line-height: 1.5;
+  margin: 0;
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  box-sizing: border-box;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-family: inherit;
+  font-weight: 600;
+  outline: none;
+  position: relative;
+  text-align: center;
+  text-decoration: none;
+  text-transform: uppercase;
+  transition: all 0.3s;
+  -webkit-font-smoothing: antialiased;
+  background: #512FC9;
+  color: rgba(255,255,255,0.87);
+  min-height: 32px;
+  font-size: 12px;
+  padding: 0px 24px;
+  margin-right: 16px;
+  width: 224px;
+}
+
+.c14:active {
+  opacity: 0.56;
+}
+
+.c14:hover,
+.c14:focus {
+  background: #651FFF;
+}
+
+.c14:active {
+  background: #354AA4;
+}
+
+.c14:disabled {
+  background: rgba(255,255,255,0.12);
+  color: rgba(255,255,255,0.3);
+}
+
+.c15 {
+  line-height: 1.5;
+  margin: 0;
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  box-sizing: border-box;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-family: inherit;
+  font-weight: 600;
+  outline: none;
+  position: relative;
+  text-align: center;
+  text-decoration: none;
+  text-transform: uppercase;
+  transition: all 0.3s;
+  -webkit-font-smoothing: antialiased;
+  background: #512FC9;
+  color: rgba(255,255,255,0.87);
+  min-height: 32px;
+  font-size: 12px;
+  padding: 0px 24px;
+  margin-top: 16px;
+  width: 165px;
+}
+
+.c15:active {
+  opacity: 0.56;
+}
+
+.c15:hover,
+.c15:focus {
+  background: #651FFF;
+}
+
+.c15:active {
+  background: #354AA4;
+}
+
+.c15:disabled {
+  background: rgba(255,255,255,0.12);
+  color: rgba(255,255,255,0.3);
+}
+
+.c8 {
+  display: block;
+  outline: none;
+  margin-right: 8px;
+  width: 32px;
+}
+
+.c1 {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  font-weight: 400;
+  font-size: 18px;
+  line-height: 32px;
+  margin: 0px;
+}
+
+.c2 {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  margin: 0px;
+  margin-bottom: 24px;
+}
+
+.c3 {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  margin: 0px;
+  margin-bottom: 8px;
+}
+
+.c12 {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 24px;
+  margin: 0px;
+}
+
+.c7 {
+  box-sizing: border-box;
+  display: flex;
+}
+
+.c11 {
+  box-sizing: border-box;
+  width: 100%;
+  margin-top: 32px;
+  border-radius: 8px;
+  background-color: #222c59;
+  padding: 24px;
+}
+
+<div
+  class="c0"
+  width="1020px"
+>
+  <div
+    class="c1"
+  >
+    Resource Selection
+  </div>
+  <div
+    class="c2"
+  >
+    Users are able to add and access many different types of resources through Teleport. Start by selecting the type of resource you want to add.
+  </div>
+  <div
+    class="c3"
+  >
+    Select Resource Type
+  </div>
+  <div
+    class="c4"
+  >
+    <nav
+      class="c5"
+    >
+      <label
+        class="c6"
+        for="slide-tab-server"
+      >
+        <div
+          class="c7"
+          style="line-height: 31px;"
+        >
+          <img
+            class="c8"
+            src="file_stub"
+            width="32px"
+          />
+           Server
+        </div>
+        <input
+          class="c9"
+          id="slide-tab-server"
+          name="slide-tab"
+          type="radio"
+        />
+      </label>
+      <label
+        class="c6"
+        for="slide-tab-database"
+      >
+        <div
+          class="c7"
+          style="line-height: 31px;"
+        >
+          <img
+            class="c8"
+            src="file_stub"
+            width="32px"
+          />
+           Database
+        </div>
+        <input
+          class="c9"
+          id="slide-tab-database"
+          name="slide-tab"
+          type="radio"
+        />
+      </label>
+      <label
+        class="c6"
+        for="slide-tab-kubernetes"
+      >
+        <div
+          class="c7"
+          style="line-height: 31px;"
+        >
+          <img
+            class="c8"
+            src="file_stub"
+            width="32px"
+          />
+           Kubernetes
+        </div>
+        <input
+          class="c9"
+          id="slide-tab-kubernetes"
+          name="slide-tab"
+          type="radio"
+        />
+      </label>
+      <label
+        class="c6"
+        for="slide-tab-application"
+      >
+        <div
+          class="c7"
+          style="line-height: 31px;"
+        >
+          <img
+            class="c8"
+            src="file_stub"
+            width="32px"
+          />
+           Application
+        </div>
+        <input
+          class="c9"
+          id="slide-tab-application"
+          name="slide-tab"
+          type="radio"
+        />
+      </label>
+      <label
+        class="c6"
+        for="slide-tab-desktop"
+      >
+        <div
+          class="c7"
+          style="line-height: 31px;"
+        >
+          <img
+            class="c8"
+            src="file_stub"
+            width="32px"
+          />
+           Desktop
+        </div>
+        <input
+          class="c9"
+          id="slide-tab-desktop"
+          name="slide-tab"
+          type="radio"
+        />
+      </label>
+    </nav>
+    <div
+      class="c10"
+    />
+  </div>
+  <div
+    class="c11"
+    data-testid="desktop-permissions-error"
+  >
+    <div
+      class="c12"
+    >
+      You are not able to add new Desktops. There are two possible reasons for this:
+    </div>
+    <ul
+      style="padding-left: 28px;"
+    >
+      <li>
+        Your Teleport Enterprise license does not include Desktop Access. Reach out to your Teleport admin to enable Desktop Access.
+      </li>
+      <li>
+        You don’t have sufficient permissions to add Desktops. Reach out to your Teleport admin to request additional permissions.
+      </li>
+    </ul>
+  </div>
+  <div
+    class="c13"
+  >
+    <a
+      class="c14"
+      data-testid="documentation-button"
+      href="https://goteleport.com/docs/desktop-access/getting-started/"
+      kind="primary"
+      rel="noreferrer"
+      target="_blank"
+      width="224px"
+    >
+      View Documentation
+    </a>
+    <a
+      class="c15"
+      href="/web"
+      kind="primary"
+      mt="3"
+      theme="[object Object]"
+      width="165px"
+    >
+      Exit
+    </a>
+  </div>
+</div>
+`;
+
+exports[`select resource kubernetes has the proceed button enabled when having correct permissions 1`] = `
+.c4 {
+  position: relative;
+}
+
+.c6 {
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  padding: 10px;
+  width: 20%;
+  z-index: 1;
+}
+
+.c9 {
+  display: none;
+}
+
+.c10 {
+  background-color: #512fc9;
+  border-radius: 8px;
+  box-shadow: 0px 2px 6px rgba(12,12,14,0.1);
+  height: 56px;
+  left: calc(40% + 8px);
+  margin: 12px 12px 12px 0;
+  position: absolute;
+  top: 0;
+  transition: all 0.3s ease;
+  width: calc(20% - 16px);
+}
+
+.c5 {
+  align-items: center;
+  background-color: rgba(255,255,255,0.05);
+  border-radius: 8px;
+  display: flex;
+  height: 80px;
+  justify-content: space-around;
+}
+
+.c0 {
+  box-sizing: border-box;
+  width: 1020px;
+}
+
+.c11 {
+  box-sizing: border-box;
+  margin-top: 24px;
+}
+
+.c12 {
+  line-height: 1.5;
+  margin: 0;
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  box-sizing: border-box;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-family: inherit;
+  font-weight: 600;
+  outline: none;
+  position: relative;
+  text-align: center;
+  text-decoration: none;
+  text-transform: uppercase;
+  transition: all 0.3s;
+  -webkit-font-smoothing: antialiased;
+  background: #512FC9;
+  color: rgba(255,255,255,0.87);
+  min-height: 32px;
+  font-size: 12px;
+  padding: 0px 24px;
+  margin-right: 16px;
+  width: 165px;
+}
+
+.c12:active {
+  opacity: 0.56;
+}
+
+.c12:hover,
+.c12:focus {
+  background: #651FFF;
+}
+
+.c12:active {
+  background: #354AA4;
+}
+
+.c12:disabled {
+  background: rgba(255,255,255,0.12);
+  color: rgba(255,255,255,0.3);
+}
+
+.c13 {
+  line-height: 1.5;
+  margin: 0;
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  box-sizing: border-box;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-family: inherit;
+  font-weight: 600;
+  outline: none;
+  position: relative;
+  text-align: center;
+  text-decoration: none;
+  text-transform: uppercase;
+  transition: all 0.3s;
+  -webkit-font-smoothing: antialiased;
+  background: #512FC9;
+  color: rgba(255,255,255,0.87);
+  min-height: 32px;
+  font-size: 12px;
+  padding: 0px 24px;
+  margin-top: 16px;
+  width: 165px;
+}
+
+.c13:active {
+  opacity: 0.56;
+}
+
+.c13:hover,
+.c13:focus {
+  background: #651FFF;
+}
+
+.c13:active {
+  background: #354AA4;
+}
+
+.c13:disabled {
+  background: rgba(255,255,255,0.12);
+  color: rgba(255,255,255,0.3);
+}
+
+.c8 {
+  display: block;
+  outline: none;
+  margin-right: 8px;
+  width: 32px;
+}
+
+.c1 {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  font-weight: 400;
+  font-size: 18px;
+  line-height: 32px;
+  margin: 0px;
+}
+
+.c2 {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  margin: 0px;
+  margin-bottom: 24px;
+}
+
+.c3 {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  margin: 0px;
+  margin-bottom: 8px;
+}
+
+.c7 {
+  box-sizing: border-box;
+  display: flex;
+}
+
+<div
+  class="c0"
+  width="1020px"
+>
+  <div
+    class="c1"
+  >
+    Resource Selection
+  </div>
+  <div
+    class="c2"
+  >
+    Users are able to add and access many different types of resources through Teleport. Start by selecting the type of resource you want to add.
+  </div>
+  <div
+    class="c3"
+  >
+    Select Resource Type
+  </div>
+  <div
+    class="c4"
+  >
+    <nav
+      class="c5"
+    >
+      <label
+        class="c6"
+        for="slide-tab-server"
+      >
+        <div
+          class="c7"
+          style="line-height: 31px;"
+        >
+          <img
+            class="c8"
+            src="file_stub"
+            width="32px"
+          />
+           Server
+        </div>
+        <input
+          class="c9"
+          id="slide-tab-server"
+          name="slide-tab"
+          type="radio"
+        />
+      </label>
+      <label
+        class="c6"
+        for="slide-tab-database"
+      >
+        <div
+          class="c7"
+          style="line-height: 31px;"
+        >
+          <img
+            class="c8"
+            src="file_stub"
+            width="32px"
+          />
+           Database
+        </div>
+        <input
+          class="c9"
+          id="slide-tab-database"
+          name="slide-tab"
+          type="radio"
+        />
+      </label>
+      <label
+        class="c6"
+        for="slide-tab-kubernetes"
+      >
+        <div
+          class="c7"
+          style="line-height: 31px;"
+        >
+          <img
+            class="c8"
+            src="file_stub"
+            width="32px"
+          />
+           Kubernetes
+        </div>
+        <input
+          class="c9"
+          id="slide-tab-kubernetes"
+          name="slide-tab"
+          type="radio"
+        />
+      </label>
+      <label
+        class="c6"
+        for="slide-tab-application"
+      >
+        <div
+          class="c7"
+          style="line-height: 31px;"
+        >
+          <img
+            class="c8"
+            src="file_stub"
+            width="32px"
+          />
+           Application
+        </div>
+        <input
+          class="c9"
+          id="slide-tab-application"
+          name="slide-tab"
+          type="radio"
+        />
+      </label>
+      <label
+        class="c6"
+        for="slide-tab-desktop"
+      >
+        <div
+          class="c7"
+          style="line-height: 31px;"
+        >
+          <img
+            class="c8"
+            src="file_stub"
+            width="32px"
+          />
+           Desktop
+        </div>
+        <input
+          class="c9"
+          id="slide-tab-desktop"
+          name="slide-tab"
+          type="radio"
+        />
+      </label>
+    </nav>
+    <div
+      class="c10"
+    />
+  </div>
+  <div
+    class="c11"
+  >
+    
+    <button
+      class="c12"
+      data-testid="proceed-button"
+      kind="primary"
+      width="165px"
+    >
+      Next
+    </button>
+    <a
+      class="c13"
+      href="/web"
+      kind="primary"
+      mt="3"
+      theme="[object Object]"
+      width="165px"
+    >
+      Exit
+    </a>
+  </div>
+</div>
+`;
+
+exports[`select resource kubernetes shows permissions error when lacking kubeServers.read 1`] = `
+.c4 {
+  position: relative;
+}
+
+.c6 {
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  padding: 10px;
+  width: 20%;
+  z-index: 1;
+}
+
+.c9 {
+  display: none;
+}
+
+.c10 {
+  background-color: #512fc9;
+  border-radius: 8px;
+  box-shadow: 0px 2px 6px rgba(12,12,14,0.1);
+  height: 56px;
+  left: calc(40% + 8px);
+  margin: 12px 12px 12px 0;
+  position: absolute;
+  top: 0;
+  transition: all 0.3s ease;
+  width: calc(20% - 16px);
+}
+
+.c5 {
+  align-items: center;
+  background-color: rgba(255,255,255,0.05);
+  border-radius: 8px;
+  display: flex;
+  height: 80px;
+  justify-content: space-around;
+}
+
+.c0 {
+  box-sizing: border-box;
+  width: 1020px;
+}
+
+.c13 {
+  box-sizing: border-box;
+  margin-top: 24px;
+}
+
+.c14 {
+  line-height: 1.5;
+  margin: 0;
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  box-sizing: border-box;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-family: inherit;
+  font-weight: 600;
+  outline: none;
+  position: relative;
+  text-align: center;
+  text-decoration: none;
+  text-transform: uppercase;
+  transition: all 0.3s;
+  -webkit-font-smoothing: antialiased;
+  background: #512FC9;
+  color: rgba(255,255,255,0.87);
+  min-height: 32px;
+  font-size: 12px;
+  padding: 0px 24px;
+  margin-right: 16px;
+  width: 165px;
+}
+
+.c14:active {
+  opacity: 0.56;
+}
+
+.c14:hover,
+.c14:focus {
+  background: #651FFF;
+}
+
+.c14:active {
+  background: #354AA4;
+}
+
+.c14:disabled {
+  background: rgba(255,255,255,0.12);
+  color: rgba(255,255,255,0.3);
+}
+
+.c15 {
+  line-height: 1.5;
+  margin: 0;
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  box-sizing: border-box;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-family: inherit;
+  font-weight: 600;
+  outline: none;
+  position: relative;
+  text-align: center;
+  text-decoration: none;
+  text-transform: uppercase;
+  transition: all 0.3s;
+  -webkit-font-smoothing: antialiased;
+  background: #512FC9;
+  color: rgba(255,255,255,0.87);
+  min-height: 32px;
+  font-size: 12px;
+  padding: 0px 24px;
+  margin-top: 16px;
+  width: 165px;
+}
+
+.c15:active {
+  opacity: 0.56;
+}
+
+.c15:hover,
+.c15:focus {
+  background: #651FFF;
+}
+
+.c15:active {
+  background: #354AA4;
+}
+
+.c15:disabled {
+  background: rgba(255,255,255,0.12);
+  color: rgba(255,255,255,0.3);
+}
+
+.c8 {
+  display: block;
+  outline: none;
+  margin-right: 8px;
+  width: 32px;
+}
+
+.c1 {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  font-weight: 400;
+  font-size: 18px;
+  line-height: 32px;
+  margin: 0px;
+}
+
+.c2 {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  margin: 0px;
+  margin-bottom: 24px;
+}
+
+.c3 {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  margin: 0px;
+  margin-bottom: 8px;
+}
+
+.c12 {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 24px;
+  margin: 0px;
+}
+
+.c7 {
+  box-sizing: border-box;
+  display: flex;
+}
+
+.c11 {
+  box-sizing: border-box;
+  width: 100%;
+  margin-top: 32px;
+  border-radius: 8px;
+  background-color: #222c59;
+  padding: 24px;
+}
+
+<div
+  class="c0"
+  width="1020px"
+>
+  <div
+    class="c1"
+  >
+    Resource Selection
+  </div>
+  <div
+    class="c2"
+  >
+    Users are able to add and access many different types of resources through Teleport. Start by selecting the type of resource you want to add.
+  </div>
+  <div
+    class="c3"
+  >
+    Select Resource Type
+  </div>
+  <div
+    class="c4"
+  >
+    <nav
+      class="c5"
+    >
+      <label
+        class="c6"
+        for="slide-tab-server"
+      >
+        <div
+          class="c7"
+          style="line-height: 31px;"
+        >
+          <img
+            class="c8"
+            src="file_stub"
+            width="32px"
+          />
+           Server
+        </div>
+        <input
+          class="c9"
+          id="slide-tab-server"
+          name="slide-tab"
+          type="radio"
+        />
+      </label>
+      <label
+        class="c6"
+        for="slide-tab-database"
+      >
+        <div
+          class="c7"
+          style="line-height: 31px;"
+        >
+          <img
+            class="c8"
+            src="file_stub"
+            width="32px"
+          />
+           Database
+        </div>
+        <input
+          class="c9"
+          id="slide-tab-database"
+          name="slide-tab"
+          type="radio"
+        />
+      </label>
+      <label
+        class="c6"
+        for="slide-tab-kubernetes"
+      >
+        <div
+          class="c7"
+          style="line-height: 31px;"
+        >
+          <img
+            class="c8"
+            src="file_stub"
+            width="32px"
+          />
+           Kubernetes
+        </div>
+        <input
+          class="c9"
+          id="slide-tab-kubernetes"
+          name="slide-tab"
+          type="radio"
+        />
+      </label>
+      <label
+        class="c6"
+        for="slide-tab-application"
+      >
+        <div
+          class="c7"
+          style="line-height: 31px;"
+        >
+          <img
+            class="c8"
+            src="file_stub"
+            width="32px"
+          />
+           Application
+        </div>
+        <input
+          class="c9"
+          id="slide-tab-application"
+          name="slide-tab"
+          type="radio"
+        />
+      </label>
+      <label
+        class="c6"
+        for="slide-tab-desktop"
+      >
+        <div
+          class="c7"
+          style="line-height: 31px;"
+        >
+          <img
+            class="c8"
+            src="file_stub"
+            width="32px"
+          />
+           Desktop
+        </div>
+        <input
+          class="c9"
+          id="slide-tab-desktop"
+          name="slide-tab"
+          type="radio"
+        />
+      </label>
+    </nav>
+    <div
+      class="c10"
+    />
+  </div>
+  <div
+    class="c11"
+    data-testid="kubernetes-permissions-error"
+  >
+    <div
+      class="c12"
+    >
+      You are not able to add new Kubernetes resources. There are two possible reasons for this:
+    </div>
+    <ul
+      style="padding-left: 28px;"
+    >
+      <li>
+        Your Teleport Enterprise license does not include Kubernetes Access. Reach out to your Teleport admin to enable Kubernetes Access.
+      </li>
+      <li>
+        You don’t have sufficient permissions to add Kubernetes resources. Reach out to your Teleport admin to request additional permissions.
+      </li>
+    </ul>
+  </div>
+  <div
+    class="c13"
+  >
+    
+    <button
+      class="c14"
+      data-testid="proceed-button"
+      disabled=""
+      kind="primary"
+      width="165px"
+    >
+      Next
+    </button>
+    <a
+      class="c15"
+      href="/web"
+      kind="primary"
+      mt="3"
+      theme="[object Object]"
+      width="165px"
+    >
+      Exit
+    </a>
+  </div>
+</div>
+`;
+
+exports[`select resource kubernetes shows permissions error when lacking tokens.create 1`] = `
+.c4 {
+  position: relative;
+}
+
+.c6 {
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  padding: 10px;
+  width: 20%;
+  z-index: 1;
+}
+
+.c9 {
+  display: none;
+}
+
+.c10 {
+  background-color: #512fc9;
+  border-radius: 8px;
+  box-shadow: 0px 2px 6px rgba(12,12,14,0.1);
+  height: 56px;
+  left: calc(40% + 8px);
+  margin: 12px 12px 12px 0;
+  position: absolute;
+  top: 0;
+  transition: all 0.3s ease;
+  width: calc(20% - 16px);
+}
+
+.c5 {
+  align-items: center;
+  background-color: rgba(255,255,255,0.05);
+  border-radius: 8px;
+  display: flex;
+  height: 80px;
+  justify-content: space-around;
+}
+
+.c0 {
+  box-sizing: border-box;
+  width: 1020px;
+}
+
+.c13 {
+  box-sizing: border-box;
+  margin-top: 24px;
+}
+
+.c14 {
+  line-height: 1.5;
+  margin: 0;
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  box-sizing: border-box;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-family: inherit;
+  font-weight: 600;
+  outline: none;
+  position: relative;
+  text-align: center;
+  text-decoration: none;
+  text-transform: uppercase;
+  transition: all 0.3s;
+  -webkit-font-smoothing: antialiased;
+  background: #512FC9;
+  color: rgba(255,255,255,0.87);
+  min-height: 32px;
+  font-size: 12px;
+  padding: 0px 24px;
+  margin-right: 16px;
+  width: 165px;
+}
+
+.c14:active {
+  opacity: 0.56;
+}
+
+.c14:hover,
+.c14:focus {
+  background: #651FFF;
+}
+
+.c14:active {
+  background: #354AA4;
+}
+
+.c14:disabled {
+  background: rgba(255,255,255,0.12);
+  color: rgba(255,255,255,0.3);
+}
+
+.c15 {
+  line-height: 1.5;
+  margin: 0;
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  box-sizing: border-box;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-family: inherit;
+  font-weight: 600;
+  outline: none;
+  position: relative;
+  text-align: center;
+  text-decoration: none;
+  text-transform: uppercase;
+  transition: all 0.3s;
+  -webkit-font-smoothing: antialiased;
+  background: #512FC9;
+  color: rgba(255,255,255,0.87);
+  min-height: 32px;
+  font-size: 12px;
+  padding: 0px 24px;
+  margin-top: 16px;
+  width: 165px;
+}
+
+.c15:active {
+  opacity: 0.56;
+}
+
+.c15:hover,
+.c15:focus {
+  background: #651FFF;
+}
+
+.c15:active {
+  background: #354AA4;
+}
+
+.c15:disabled {
+  background: rgba(255,255,255,0.12);
+  color: rgba(255,255,255,0.3);
+}
+
+.c8 {
+  display: block;
+  outline: none;
+  margin-right: 8px;
+  width: 32px;
+}
+
+.c1 {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  font-weight: 400;
+  font-size: 18px;
+  line-height: 32px;
+  margin: 0px;
+}
+
+.c2 {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  margin: 0px;
+  margin-bottom: 24px;
+}
+
+.c3 {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  margin: 0px;
+  margin-bottom: 8px;
+}
+
+.c12 {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 24px;
+  margin: 0px;
+}
+
+.c7 {
+  box-sizing: border-box;
+  display: flex;
+}
+
+.c11 {
+  box-sizing: border-box;
+  width: 100%;
+  margin-top: 32px;
+  border-radius: 8px;
+  background-color: #222c59;
+  padding: 24px;
+}
+
+<div
+  class="c0"
+  width="1020px"
+>
+  <div
+    class="c1"
+  >
+    Resource Selection
+  </div>
+  <div
+    class="c2"
+  >
+    Users are able to add and access many different types of resources through Teleport. Start by selecting the type of resource you want to add.
+  </div>
+  <div
+    class="c3"
+  >
+    Select Resource Type
+  </div>
+  <div
+    class="c4"
+  >
+    <nav
+      class="c5"
+    >
+      <label
+        class="c6"
+        for="slide-tab-server"
+      >
+        <div
+          class="c7"
+          style="line-height: 31px;"
+        >
+          <img
+            class="c8"
+            src="file_stub"
+            width="32px"
+          />
+           Server
+        </div>
+        <input
+          class="c9"
+          id="slide-tab-server"
+          name="slide-tab"
+          type="radio"
+        />
+      </label>
+      <label
+        class="c6"
+        for="slide-tab-database"
+      >
+        <div
+          class="c7"
+          style="line-height: 31px;"
+        >
+          <img
+            class="c8"
+            src="file_stub"
+            width="32px"
+          />
+           Database
+        </div>
+        <input
+          class="c9"
+          id="slide-tab-database"
+          name="slide-tab"
+          type="radio"
+        />
+      </label>
+      <label
+        class="c6"
+        for="slide-tab-kubernetes"
+      >
+        <div
+          class="c7"
+          style="line-height: 31px;"
+        >
+          <img
+            class="c8"
+            src="file_stub"
+            width="32px"
+          />
+           Kubernetes
+        </div>
+        <input
+          class="c9"
+          id="slide-tab-kubernetes"
+          name="slide-tab"
+          type="radio"
+        />
+      </label>
+      <label
+        class="c6"
+        for="slide-tab-application"
+      >
+        <div
+          class="c7"
+          style="line-height: 31px;"
+        >
+          <img
+            class="c8"
+            src="file_stub"
+            width="32px"
+          />
+           Application
+        </div>
+        <input
+          class="c9"
+          id="slide-tab-application"
+          name="slide-tab"
+          type="radio"
+        />
+      </label>
+      <label
+        class="c6"
+        for="slide-tab-desktop"
+      >
+        <div
+          class="c7"
+          style="line-height: 31px;"
+        >
+          <img
+            class="c8"
+            src="file_stub"
+            width="32px"
+          />
+           Desktop
+        </div>
+        <input
+          class="c9"
+          id="slide-tab-desktop"
+          name="slide-tab"
+          type="radio"
+        />
+      </label>
+    </nav>
+    <div
+      class="c10"
+    />
+  </div>
+  <div
+    class="c11"
+    data-testid="kubernetes-permissions-error"
+  >
+    <div
+      class="c12"
+    >
+      You are not able to add new Kubernetes resources. There are two possible reasons for this:
+    </div>
+    <ul
+      style="padding-left: 28px;"
+    >
+      <li>
+        Your Teleport Enterprise license does not include Kubernetes Access. Reach out to your Teleport admin to enable Kubernetes Access.
+      </li>
+      <li>
+        You don’t have sufficient permissions to add Kubernetes resources. Reach out to your Teleport admin to request additional permissions.
+      </li>
+    </ul>
+  </div>
+  <div
+    class="c13"
+  >
+    
+    <button
+      class="c14"
+      data-testid="proceed-button"
+      disabled=""
+      kind="primary"
+      width="165px"
+    >
+      Next
+    </button>
+    <a
+      class="c15"
+      href="/web"
+      kind="primary"
+      mt="3"
+      theme="[object Object]"
+      width="165px"
+    >
+      Exit
+    </a>
+  </div>
+</div>
+`;
+
+exports[`select resource server shows permissions error when lacking nodes.read 1`] = `
+.c4 {
+  position: relative;
+}
+
+.c6 {
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  padding: 10px;
+  width: 20%;
+  z-index: 1;
+}
+
+.c9 {
+  display: none;
+}
+
+.c10 {
+  background-color: #512fc9;
+  border-radius: 8px;
+  box-shadow: 0px 2px 6px rgba(12,12,14,0.1);
+  height: 56px;
+  left: calc(0% + 8px);
+  margin: 12px 12px 12px 0;
+  position: absolute;
+  top: 0;
+  transition: all 0.3s ease;
+  width: calc(20% - 16px);
+}
+
+.c5 {
+  align-items: center;
+  background-color: rgba(255,255,255,0.05);
+  border-radius: 8px;
+  display: flex;
+  height: 80px;
+  justify-content: space-around;
+}
+
+.c0 {
+  box-sizing: border-box;
+  width: 1020px;
+}
+
+.c13 {
+  box-sizing: border-box;
+  margin-top: 24px;
+}
+
+.c14 {
+  line-height: 1.5;
+  margin: 0;
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  box-sizing: border-box;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-family: inherit;
+  font-weight: 600;
+  outline: none;
+  position: relative;
+  text-align: center;
+  text-decoration: none;
+  text-transform: uppercase;
+  transition: all 0.3s;
+  -webkit-font-smoothing: antialiased;
+  background: #512FC9;
+  color: rgba(255,255,255,0.87);
+  min-height: 32px;
+  font-size: 12px;
+  padding: 0px 24px;
+  margin-right: 16px;
+  width: 165px;
+}
+
+.c14:active {
+  opacity: 0.56;
+}
+
+.c14:hover,
+.c14:focus {
+  background: #651FFF;
+}
+
+.c14:active {
+  background: #354AA4;
+}
+
+.c14:disabled {
+  background: rgba(255,255,255,0.12);
+  color: rgba(255,255,255,0.3);
+}
+
+.c15 {
+  line-height: 1.5;
+  margin: 0;
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  box-sizing: border-box;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-family: inherit;
+  font-weight: 600;
+  outline: none;
+  position: relative;
+  text-align: center;
+  text-decoration: none;
+  text-transform: uppercase;
+  transition: all 0.3s;
+  -webkit-font-smoothing: antialiased;
+  background: #512FC9;
+  color: rgba(255,255,255,0.87);
+  min-height: 32px;
+  font-size: 12px;
+  padding: 0px 24px;
+  margin-top: 16px;
+  width: 165px;
+}
+
+.c15:active {
+  opacity: 0.56;
+}
+
+.c15:hover,
+.c15:focus {
+  background: #651FFF;
+}
+
+.c15:active {
+  background: #354AA4;
+}
+
+.c15:disabled {
+  background: rgba(255,255,255,0.12);
+  color: rgba(255,255,255,0.3);
+}
+
+.c8 {
+  display: block;
+  outline: none;
+  margin-right: 8px;
+  width: 32px;
+}
+
+.c1 {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  font-weight: 400;
+  font-size: 18px;
+  line-height: 32px;
+  margin: 0px;
+}
+
+.c2 {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  margin: 0px;
+  margin-bottom: 24px;
+}
+
+.c3 {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  margin: 0px;
+  margin-bottom: 8px;
+}
+
+.c12 {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 24px;
+  margin: 0px;
+}
+
+.c7 {
+  box-sizing: border-box;
+  display: flex;
+}
+
+.c11 {
+  box-sizing: border-box;
+  width: 100%;
+  margin-top: 32px;
+  border-radius: 8px;
+  background-color: #222c59;
+  padding: 24px;
+}
+
+<div
+  class="c0"
+  width="1020px"
+>
+  <div
+    class="c1"
+  >
+    Resource Selection
+  </div>
+  <div
+    class="c2"
+  >
+    Users are able to add and access many different types of resources through Teleport. Start by selecting the type of resource you want to add.
+  </div>
+  <div
+    class="c3"
+  >
+    Select Resource Type
+  </div>
+  <div
+    class="c4"
+  >
+    <nav
+      class="c5"
+    >
+      <label
+        class="c6"
+        for="slide-tab-server"
+      >
+        <div
+          class="c7"
+          style="line-height: 31px;"
+        >
+          <img
+            class="c8"
+            src="file_stub"
+            width="32px"
+          />
+           Server
+        </div>
+        <input
+          class="c9"
+          id="slide-tab-server"
+          name="slide-tab"
+          type="radio"
+        />
+      </label>
+      <label
+        class="c6"
+        for="slide-tab-database"
+      >
+        <div
+          class="c7"
+          style="line-height: 31px;"
+        >
+          <img
+            class="c8"
+            src="file_stub"
+            width="32px"
+          />
+           Database
+        </div>
+        <input
+          class="c9"
+          id="slide-tab-database"
+          name="slide-tab"
+          type="radio"
+        />
+      </label>
+      <label
+        class="c6"
+        for="slide-tab-kubernetes"
+      >
+        <div
+          class="c7"
+          style="line-height: 31px;"
+        >
+          <img
+            class="c8"
+            src="file_stub"
+            width="32px"
+          />
+           Kubernetes
+        </div>
+        <input
+          class="c9"
+          id="slide-tab-kubernetes"
+          name="slide-tab"
+          type="radio"
+        />
+      </label>
+      <label
+        class="c6"
+        for="slide-tab-application"
+      >
+        <div
+          class="c7"
+          style="line-height: 31px;"
+        >
+          <img
+            class="c8"
+            src="file_stub"
+            width="32px"
+          />
+           Application
+        </div>
+        <input
+          class="c9"
+          id="slide-tab-application"
+          name="slide-tab"
+          type="radio"
+        />
+      </label>
+      <label
+        class="c6"
+        for="slide-tab-desktop"
+      >
+        <div
+          class="c7"
+          style="line-height: 31px;"
+        >
+          <img
+            class="c8"
+            src="file_stub"
+            width="32px"
+          />
+           Desktop
+        </div>
+        <input
+          class="c9"
+          id="slide-tab-desktop"
+          name="slide-tab"
+          type="radio"
+        />
+      </label>
+    </nav>
+    <div
+      class="c10"
+    />
+  </div>
+  <div
+    class="c11"
+    data-testid="server-permissions-error"
+  >
+    <div
+      class="c12"
+    >
+      You are not able to add new Servers. There are two possible reasons for this:
+    </div>
+    <ul
+      style="padding-left: 28px;"
+    >
+      <li>
+        Your Teleport Enterprise license does not include Server Access. Reach out to your Teleport admin to enable Server Access.
+      </li>
+      <li>
+        You don’t have sufficient permissions to add Servers. Reach out to your Teleport admin to request additional permissions.
+      </li>
+    </ul>
+  </div>
+  <div
+    class="c13"
+  >
+    
+    <button
+      class="c14"
+      data-testid="proceed-button"
+      disabled=""
+      kind="primary"
+      width="165px"
+    >
+      Next
+    </button>
+    <a
+      class="c15"
+      href="/web"
+      kind="primary"
+      mt="3"
+      theme="[object Object]"
+      width="165px"
+    >
+      Exit
+    </a>
+  </div>
+</div>
+`;
+
+exports[`select resource server shows permissions error when lacking tokens.create 1`] = `
+.c4 {
+  position: relative;
+}
+
+.c6 {
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  padding: 10px;
+  width: 20%;
+  z-index: 1;
+}
+
+.c9 {
+  display: none;
+}
+
+.c10 {
+  background-color: #512fc9;
+  border-radius: 8px;
+  box-shadow: 0px 2px 6px rgba(12,12,14,0.1);
+  height: 56px;
+  left: calc(0% + 8px);
+  margin: 12px 12px 12px 0;
+  position: absolute;
+  top: 0;
+  transition: all 0.3s ease;
+  width: calc(20% - 16px);
+}
+
+.c5 {
+  align-items: center;
+  background-color: rgba(255,255,255,0.05);
+  border-radius: 8px;
+  display: flex;
+  height: 80px;
+  justify-content: space-around;
+}
+
+.c0 {
+  box-sizing: border-box;
+  width: 1020px;
+}
+
+.c13 {
+  box-sizing: border-box;
+  margin-top: 24px;
+}
+
+.c14 {
+  line-height: 1.5;
+  margin: 0;
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  box-sizing: border-box;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-family: inherit;
+  font-weight: 600;
+  outline: none;
+  position: relative;
+  text-align: center;
+  text-decoration: none;
+  text-transform: uppercase;
+  transition: all 0.3s;
+  -webkit-font-smoothing: antialiased;
+  background: #512FC9;
+  color: rgba(255,255,255,0.87);
+  min-height: 32px;
+  font-size: 12px;
+  padding: 0px 24px;
+  margin-right: 16px;
+  width: 165px;
+}
+
+.c14:active {
+  opacity: 0.56;
+}
+
+.c14:hover,
+.c14:focus {
+  background: #651FFF;
+}
+
+.c14:active {
+  background: #354AA4;
+}
+
+.c14:disabled {
+  background: rgba(255,255,255,0.12);
+  color: rgba(255,255,255,0.3);
+}
+
+.c15 {
+  line-height: 1.5;
+  margin: 0;
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  box-sizing: border-box;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-family: inherit;
+  font-weight: 600;
+  outline: none;
+  position: relative;
+  text-align: center;
+  text-decoration: none;
+  text-transform: uppercase;
+  transition: all 0.3s;
+  -webkit-font-smoothing: antialiased;
+  background: #512FC9;
+  color: rgba(255,255,255,0.87);
+  min-height: 32px;
+  font-size: 12px;
+  padding: 0px 24px;
+  margin-top: 16px;
+  width: 165px;
+}
+
+.c15:active {
+  opacity: 0.56;
+}
+
+.c15:hover,
+.c15:focus {
+  background: #651FFF;
+}
+
+.c15:active {
+  background: #354AA4;
+}
+
+.c15:disabled {
+  background: rgba(255,255,255,0.12);
+  color: rgba(255,255,255,0.3);
+}
+
+.c8 {
+  display: block;
+  outline: none;
+  margin-right: 8px;
+  width: 32px;
+}
+
+.c1 {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  font-weight: 400;
+  font-size: 18px;
+  line-height: 32px;
+  margin: 0px;
+}
+
+.c2 {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  margin: 0px;
+  margin-bottom: 24px;
+}
+
+.c3 {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  margin: 0px;
+  margin-bottom: 8px;
+}
+
+.c12 {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 24px;
+  margin: 0px;
+}
+
+.c7 {
+  box-sizing: border-box;
+  display: flex;
+}
+
+.c11 {
+  box-sizing: border-box;
+  width: 100%;
+  margin-top: 32px;
+  border-radius: 8px;
+  background-color: #222c59;
+  padding: 24px;
+}
+
+<div
+  class="c0"
+  width="1020px"
+>
+  <div
+    class="c1"
+  >
+    Resource Selection
+  </div>
+  <div
+    class="c2"
+  >
+    Users are able to add and access many different types of resources through Teleport. Start by selecting the type of resource you want to add.
+  </div>
+  <div
+    class="c3"
+  >
+    Select Resource Type
+  </div>
+  <div
+    class="c4"
+  >
+    <nav
+      class="c5"
+    >
+      <label
+        class="c6"
+        for="slide-tab-server"
+      >
+        <div
+          class="c7"
+          style="line-height: 31px;"
+        >
+          <img
+            class="c8"
+            src="file_stub"
+            width="32px"
+          />
+           Server
+        </div>
+        <input
+          class="c9"
+          id="slide-tab-server"
+          name="slide-tab"
+          type="radio"
+        />
+      </label>
+      <label
+        class="c6"
+        for="slide-tab-database"
+      >
+        <div
+          class="c7"
+          style="line-height: 31px;"
+        >
+          <img
+            class="c8"
+            src="file_stub"
+            width="32px"
+          />
+           Database
+        </div>
+        <input
+          class="c9"
+          id="slide-tab-database"
+          name="slide-tab"
+          type="radio"
+        />
+      </label>
+      <label
+        class="c6"
+        for="slide-tab-kubernetes"
+      >
+        <div
+          class="c7"
+          style="line-height: 31px;"
+        >
+          <img
+            class="c8"
+            src="file_stub"
+            width="32px"
+          />
+           Kubernetes
+        </div>
+        <input
+          class="c9"
+          id="slide-tab-kubernetes"
+          name="slide-tab"
+          type="radio"
+        />
+      </label>
+      <label
+        class="c6"
+        for="slide-tab-application"
+      >
+        <div
+          class="c7"
+          style="line-height: 31px;"
+        >
+          <img
+            class="c8"
+            src="file_stub"
+            width="32px"
+          />
+           Application
+        </div>
+        <input
+          class="c9"
+          id="slide-tab-application"
+          name="slide-tab"
+          type="radio"
+        />
+      </label>
+      <label
+        class="c6"
+        for="slide-tab-desktop"
+      >
+        <div
+          class="c7"
+          style="line-height: 31px;"
+        >
+          <img
+            class="c8"
+            src="file_stub"
+            width="32px"
+          />
+           Desktop
+        </div>
+        <input
+          class="c9"
+          id="slide-tab-desktop"
+          name="slide-tab"
+          type="radio"
+        />
+      </label>
+    </nav>
+    <div
+      class="c10"
+    />
+  </div>
+  <div
+    class="c11"
+    data-testid="server-permissions-error"
+  >
+    <div
+      class="c12"
+    >
+      You are not able to add new Servers. There are two possible reasons for this:
+    </div>
+    <ul
+      style="padding-left: 28px;"
+    >
+      <li>
+        Your Teleport Enterprise license does not include Server Access. Reach out to your Teleport admin to enable Server Access.
+      </li>
+      <li>
+        You don’t have sufficient permissions to add Servers. Reach out to your Teleport admin to request additional permissions.
+      </li>
+    </ul>
+  </div>
+  <div
+    class="c13"
+  >
+    
+    <button
+      class="c14"
+      data-testid="proceed-button"
+      disabled=""
+      kind="primary"
+      width="165px"
+    >
+      Next
+    </button>
+    <a
+      class="c15"
+      href="/web"
+      kind="primary"
+      mt="3"
+      theme="[object Object]"
+      width="165px"
+    >
+      Exit
+    </a>
+  </div>
+</div>
+`;
+
+exports[`select resource server shows the teleport versions when having correct permissions 1`] = `
+.c4 {
+  position: relative;
+}
+
+.c6 {
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  padding: 10px;
+  width: 20%;
+  z-index: 1;
+}
+
+.c9 {
+  display: none;
+}
+
+.c10 {
+  background-color: #512fc9;
+  border-radius: 8px;
+  box-shadow: 0px 2px 6px rgba(12,12,14,0.1);
+  height: 56px;
+  left: calc(0% + 8px);
+  margin: 12px 12px 12px 0;
+  position: absolute;
+  top: 0;
+  transition: all 0.3s ease;
+  width: calc(20% - 16px);
+}
+
+.c5 {
+  align-items: center;
+  background-color: rgba(255,255,255,0.05);
+  border-radius: 8px;
+  display: flex;
+  height: 80px;
+  justify-content: space-around;
+}
+
+.c0 {
+  box-sizing: border-box;
+  width: 1020px;
+}
+
+.c15 {
+  box-sizing: border-box;
+  margin-top: 24px;
+}
+
+.c16 {
+  line-height: 1.5;
+  margin: 0;
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  box-sizing: border-box;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-family: inherit;
+  font-weight: 600;
+  outline: none;
+  position: relative;
+  text-align: center;
+  text-decoration: none;
+  text-transform: uppercase;
+  transition: all 0.3s;
+  -webkit-font-smoothing: antialiased;
+  background: #512FC9;
+  color: rgba(255,255,255,0.87);
+  min-height: 32px;
+  font-size: 12px;
+  padding: 0px 24px;
+  margin-right: 16px;
+  width: 165px;
+}
+
+.c16:active {
+  opacity: 0.56;
+}
+
+.c16:hover,
+.c16:focus {
+  background: #651FFF;
+}
+
+.c16:active {
+  background: #354AA4;
+}
+
+.c16:disabled {
+  background: rgba(255,255,255,0.12);
+  color: rgba(255,255,255,0.3);
+}
+
+.c17 {
+  line-height: 1.5;
+  margin: 0;
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  box-sizing: border-box;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-family: inherit;
+  font-weight: 600;
+  outline: none;
+  position: relative;
+  text-align: center;
+  text-decoration: none;
+  text-transform: uppercase;
+  transition: all 0.3s;
+  -webkit-font-smoothing: antialiased;
+  background: #512FC9;
+  color: rgba(255,255,255,0.87);
+  min-height: 32px;
+  font-size: 12px;
+  padding: 0px 24px;
+  margin-top: 16px;
+  width: 165px;
+}
+
+.c17:active {
+  opacity: 0.56;
+}
+
+.c17:hover,
+.c17:focus {
+  background: #651FFF;
+}
+
+.c17:active {
+  background: #354AA4;
+}
+
+.c17:disabled {
+  background: rgba(255,255,255,0.12);
+  color: rgba(255,255,255,0.3);
+}
+
+.c14 {
+  color: #03a9f4;
+  font-weight: normal;
+  background: none;
+  text-decoration: underline;
+  text-transform: none;
+}
+
+.c8 {
+  display: block;
+  outline: none;
+  margin-right: 8px;
+  width: 32px;
+}
+
+.c1 {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  font-weight: 400;
+  font-size: 18px;
+  line-height: 32px;
+  margin: 0px;
+}
+
+.c2 {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  margin: 0px;
+  margin-bottom: 24px;
+}
+
+.c3 {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  margin: 0px;
+  margin-bottom: 8px;
+}
+
+.c12 {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 24px;
+  margin: 0px;
+}
+
+.c13 {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  margin: 0px;
+}
+
+.c7 {
+  box-sizing: border-box;
+  display: flex;
+}
+
+.c11 {
+  box-sizing: border-box;
+  width: 100%;
+  margin-top: 32px;
+  border-radius: 8px;
+  background-color: #222c59;
+  padding: 24px;
+}
+
+<div
+  class="c0"
+  width="1020px"
+>
+  <div
+    class="c1"
+  >
+    Resource Selection
+  </div>
+  <div
+    class="c2"
+  >
+    Users are able to add and access many different types of resources through Teleport. Start by selecting the type of resource you want to add.
+  </div>
+  <div
+    class="c3"
+  >
+    Select Resource Type
+  </div>
+  <div
+    class="c4"
+  >
+    <nav
+      class="c5"
+    >
+      <label
+        class="c6"
+        for="slide-tab-server"
+      >
+        <div
+          class="c7"
+          style="line-height: 31px;"
+        >
+          <img
+            class="c8"
+            src="file_stub"
+            width="32px"
+          />
+           Server
+        </div>
+        <input
+          class="c9"
+          id="slide-tab-server"
+          name="slide-tab"
+          type="radio"
+        />
+      </label>
+      <label
+        class="c6"
+        for="slide-tab-database"
+      >
+        <div
+          class="c7"
+          style="line-height: 31px;"
+        >
+          <img
+            class="c8"
+            src="file_stub"
+            width="32px"
+          />
+           Database
+        </div>
+        <input
+          class="c9"
+          id="slide-tab-database"
+          name="slide-tab"
+          type="radio"
+        />
+      </label>
+      <label
+        class="c6"
+        for="slide-tab-kubernetes"
+      >
+        <div
+          class="c7"
+          style="line-height: 31px;"
+        >
+          <img
+            class="c8"
+            src="file_stub"
+            width="32px"
+          />
+           Kubernetes
+        </div>
+        <input
+          class="c9"
+          id="slide-tab-kubernetes"
+          name="slide-tab"
+          type="radio"
+        />
+      </label>
+      <label
+        class="c6"
+        for="slide-tab-application"
+      >
+        <div
+          class="c7"
+          style="line-height: 31px;"
+        >
+          <img
+            class="c8"
+            src="file_stub"
+            width="32px"
+          />
+           Application
+        </div>
+        <input
+          class="c9"
+          id="slide-tab-application"
+          name="slide-tab"
+          type="radio"
+        />
+      </label>
+      <label
+        class="c6"
+        for="slide-tab-desktop"
+      >
+        <div
+          class="c7"
+          style="line-height: 31px;"
+        >
+          <img
+            class="c8"
+            src="file_stub"
+            width="32px"
+          />
+           Desktop
+        </div>
+        <input
+          class="c9"
+          id="slide-tab-desktop"
+          name="slide-tab"
+          type="radio"
+        />
+      </label>
+    </nav>
+    <div
+      class="c10"
+    />
+  </div>
+  <div
+    class="c11"
+    data-testid="server-teleport-versions"
+  >
+    <div
+      class="c12"
+    >
+      Teleport officially supports the following operating systems:
+    </div>
+    <ul
+      style="padding-left: 28px;"
+    >
+      <li>
+        Ubuntu 14.04+
+      </li>
+      <li>
+        Debian 8+
+      </li>
+      <li>
+        RHEL/CentOS 7+
+      </li>
+      <li>
+        Amazon Linux 2
+      </li>
+      <li>
+        macOS (Intel)
+      </li>
+    </ul>
+    <div
+      class="c13"
+    >
+      For a more comprehensive list, visit
+       
+      <a
+        class="c14"
+        href="https://goteleport.com/download"
+        rel="noreferrer"
+        target="_blank"
+      >
+        https://goteleport.com/download
+      </a>
+      .
+    </div>
+  </div>
+  <div
+    class="c15"
+  >
+    
+    <button
+      class="c16"
+      data-testid="proceed-button"
+      kind="primary"
+      width="165px"
+    >
+      Next
+    </button>
+    <a
+      class="c17"
+      href="/web"
+      kind="primary"
+      mt="3"
+      theme="[object Object]"
+      width="165px"
+    >
+      Exit
+    </a>
+  </div>
+</div>
+`;
