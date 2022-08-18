@@ -58,6 +58,7 @@ interface SelectDBDeploymentTypeProps {
   resourceTypes: ResourceType[];
 }
 
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 function SelectDBDeploymentType({
   selectedType,
   setSelectedType,
