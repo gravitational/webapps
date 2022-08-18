@@ -141,7 +141,7 @@ To make a fully-fledged build on macOS with Touch ID support, you need two thing
 - a signed version of tsh.app
 - an Apple Developer ID certificate in your Keychain
 
-When running `yarn build-and-package-term`, you need to provide three environment variables:
+When running `yarn build-and-package-term`, you need to provide these environment variables:
 
 - `APPLE_USERNAME`
 - `APPLE_PASSWORD`
@@ -179,8 +179,9 @@ Keychain is unlocked. The `CSC_NAME` env var can be additionally provided to poi
 towards the specific developer ID certificate/key we want to use, if multiple are available.
 `CSC_NAME` can either be SHA-1 of the certificate or its name.
 
-On top of that, you must provide the credentials to the account associated with the Apple Dev ID
-through the `APPLE_USERNAME` & `APPLE_PASSWORD` env vars.
+On top of that, you must provide env vars that will be used for notarization. `APPLE_USERNAME` must
+be set to the account email address associated with the developer ID. `APPLE_PASSWORD` must be [an
+app-specific password](https://support.apple.com/en-us/HT204397), not the account password.
 
 ## Architecture
 
