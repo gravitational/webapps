@@ -176,8 +176,8 @@ Gravitational-specific nuances.
 For the most part, the device that's doing the signing & notarizing needs to have access to an Apple
 Developer ID (certificate + private key). electron-builder should automatically discover it if
 Keychain is unlocked. The `CSC_NAME` env var can be additionally provided to point electron-builder
-towards the specific Dev ID we want to use if multiple are available. `CSC_NAME` can either be SHA-1
-of the cert or its name.
+towards the specific developer ID certificate/key we want to use, if multiple are available.
+`CSC_NAME` can either be SHA-1 of the certificate or its name.
 
 On top of that, you must provide the credentials to the account associated with the Apple Dev ID
 through the `APPLE_USERNAME` & `APPLE_PASSWORD` env vars.
