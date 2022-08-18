@@ -680,21 +680,29 @@ exports[`select resource application shows permissions error when lacking appSer
   </div>
   <div
     class="c11"
-    data-testid="application-permissions-error"
+    data-testid="permissions-error"
   >
     <div
       class="c12"
     >
-      You are not able to add new Applications. There are two possible reasons for this:
+      You are not able to 
+      add new Applications
+      . There are two possible reasons for this:
     </div>
     <ul
       style="padding-left: 28px;"
     >
       <li>
-        Your Teleport Enterprise license does not include Application Access. Reach out to your Teleport admin to enable Application Access.
+        Your Teleport Enterprise license does not include 
+        Application Access
+        . Reach out to your Teleport admin to enable 
+        Application Access
+        .
       </li>
       <li>
-        You don’t have sufficient permissions to add Applications. Reach out to your Teleport admin to request additional permissions.
+        You don’t have sufficient permissions to 
+        add new Applications
+        . Reach out to your Teleport admin to request additional permissions.
       </li>
     </ul>
   </div>
@@ -1062,21 +1070,29 @@ exports[`select resource application shows permissions error when lacking tokens
   </div>
   <div
     class="c11"
-    data-testid="application-permissions-error"
+    data-testid="permissions-error"
   >
     <div
       class="c12"
     >
-      You are not able to add new Applications. There are two possible reasons for this:
+      You are not able to 
+      add new Applications
+      . There are two possible reasons for this:
     </div>
     <ul
       style="padding-left: 28px;"
     >
       <li>
-        Your Teleport Enterprise license does not include Application Access. Reach out to your Teleport admin to enable Application Access.
+        Your Teleport Enterprise license does not include 
+        Application Access
+        . Reach out to your Teleport admin to enable 
+        Application Access
+        .
       </li>
       <li>
-        You don’t have sufficient permissions to add Applications. Reach out to your Teleport admin to request additional permissions.
+        You don’t have sufficient permissions to 
+        add new Applications
+        . Reach out to your Teleport admin to request additional permissions.
       </li>
     </ul>
   </div>
@@ -1787,21 +1803,29 @@ exports[`select resource database shows permissions error when lacking dbServers
   </div>
   <div
     class="c11"
-    data-testid="database-permissions-error"
+    data-testid="permissions-error"
   >
     <div
       class="c12"
     >
-      You are not able to add new Databases. There are two possible reasons for this:
+      You are not able to 
+      add new Databases
+      . There are two possible reasons for this:
     </div>
     <ul
       style="padding-left: 28px;"
     >
       <li>
-        Your Teleport Enterprise license does not include Database Access. Reach out to your Teleport admin to enable Database Access.
+        Your Teleport Enterprise license does not include 
+        Database Access
+        . Reach out to your Teleport admin to enable 
+        Database Access
+        .
       </li>
       <li>
-        You don’t have sufficient permissions to add Databases. Reach out to your Teleport admin to request additional permissions.
+        You don’t have sufficient permissions to 
+        add new Databases
+        . Reach out to your Teleport admin to request additional permissions.
       </li>
     </ul>
   </div>
@@ -2169,21 +2193,29 @@ exports[`select resource database shows permissions error when lacking tokens.cr
   </div>
   <div
     class="c11"
-    data-testid="database-permissions-error"
+    data-testid="permissions-error"
   >
     <div
       class="c12"
     >
-      You are not able to add new Databases. There are two possible reasons for this:
+      You are not able to 
+      add new Databases
+      . There are two possible reasons for this:
     </div>
     <ul
       style="padding-left: 28px;"
     >
       <li>
-        Your Teleport Enterprise license does not include Database Access. Reach out to your Teleport admin to enable Database Access.
+        Your Teleport Enterprise license does not include 
+        Database Access
+        . Reach out to your Teleport admin to enable 
+        Database Access
+        .
       </li>
       <li>
-        You don’t have sufficient permissions to add Databases. Reach out to your Teleport admin to request additional permissions.
+        You don’t have sufficient permissions to 
+        add new Databases
+        . Reach out to your Teleport admin to request additional permissions.
       </li>
     </ul>
   </div>
@@ -2896,21 +2928,29 @@ exports[`select resource desktop shows permissions error when lacking desktops.r
   </div>
   <div
     class="c11"
-    data-testid="desktop-permissions-error"
+    data-testid="permissions-error"
   >
     <div
       class="c12"
     >
-      You are not able to add new Desktops. There are two possible reasons for this:
+      You are not able to 
+      add new Desktops
+      . There are two possible reasons for this:
     </div>
     <ul
       style="padding-left: 28px;"
     >
       <li>
-        Your Teleport Enterprise license does not include Desktop Access. Reach out to your Teleport admin to enable Desktop Access.
+        Your Teleport Enterprise license does not include 
+        Desktop Access
+        . Reach out to your Teleport admin to enable 
+        Desktop Access
+        .
       </li>
       <li>
-        You don’t have sufficient permissions to add Desktops. Reach out to your Teleport admin to request additional permissions.
+        You don’t have sufficient permissions to 
+        add new Desktops
+        . Reach out to your Teleport admin to request additional permissions.
       </li>
     </ul>
   </div>
@@ -3279,21 +3319,29 @@ exports[`select resource desktop shows permissions error when lacking tokens.cre
   </div>
   <div
     class="c11"
-    data-testid="desktop-permissions-error"
+    data-testid="permissions-error"
   >
     <div
       class="c12"
     >
-      You are not able to add new Desktops. There are two possible reasons for this:
+      You are not able to 
+      add new Desktops
+      . There are two possible reasons for this:
     </div>
     <ul
       style="padding-left: 28px;"
     >
       <li>
-        Your Teleport Enterprise license does not include Desktop Access. Reach out to your Teleport admin to enable Desktop Access.
+        Your Teleport Enterprise license does not include 
+        Desktop Access
+        . Reach out to your Teleport admin to enable 
+        Desktop Access
+        .
       </li>
       <li>
-        You don’t have sufficient permissions to add Desktops. Reach out to your Teleport admin to request additional permissions.
+        You don’t have sufficient permissions to 
+        add new Desktops
+        . Reach out to your Teleport admin to request additional permissions.
       </li>
     </ul>
   </div>
@@ -4005,21 +4053,29 @@ exports[`select resource kubernetes shows permissions error when lacking kubeSer
   </div>
   <div
     class="c11"
-    data-testid="kubernetes-permissions-error"
+    data-testid="permissions-error"
   >
     <div
       class="c12"
     >
-      You are not able to add new Kubernetes resources. There are two possible reasons for this:
+      You are not able to 
+      add new Kubernetes resources
+      . There are two possible reasons for this:
     </div>
     <ul
       style="padding-left: 28px;"
     >
       <li>
-        Your Teleport Enterprise license does not include Kubernetes Access. Reach out to your Teleport admin to enable Kubernetes Access.
+        Your Teleport Enterprise license does not include 
+        Kubernetes Access
+        . Reach out to your Teleport admin to enable 
+        Kubernetes Access
+        .
       </li>
       <li>
-        You don’t have sufficient permissions to add Kubernetes resources. Reach out to your Teleport admin to request additional permissions.
+        You don’t have sufficient permissions to 
+        add new Kubernetes resources
+        . Reach out to your Teleport admin to request additional permissions.
       </li>
     </ul>
   </div>
@@ -4387,21 +4443,29 @@ exports[`select resource kubernetes shows permissions error when lacking tokens.
   </div>
   <div
     class="c11"
-    data-testid="kubernetes-permissions-error"
+    data-testid="permissions-error"
   >
     <div
       class="c12"
     >
-      You are not able to add new Kubernetes resources. There are two possible reasons for this:
+      You are not able to 
+      add new Kubernetes resources
+      . There are two possible reasons for this:
     </div>
     <ul
       style="padding-left: 28px;"
     >
       <li>
-        Your Teleport Enterprise license does not include Kubernetes Access. Reach out to your Teleport admin to enable Kubernetes Access.
+        Your Teleport Enterprise license does not include 
+        Kubernetes Access
+        . Reach out to your Teleport admin to enable 
+        Kubernetes Access
+        .
       </li>
       <li>
-        You don’t have sufficient permissions to add Kubernetes resources. Reach out to your Teleport admin to request additional permissions.
+        You don’t have sufficient permissions to 
+        add new Kubernetes resources
+        . Reach out to your Teleport admin to request additional permissions.
       </li>
     </ul>
   </div>
@@ -4769,21 +4833,29 @@ exports[`select resource server shows permissions error when lacking nodes.read 
   </div>
   <div
     class="c11"
-    data-testid="server-permissions-error"
+    data-testid="permissions-error"
   >
     <div
       class="c12"
     >
-      You are not able to add new Servers. There are two possible reasons for this:
+      You are not able to 
+      add new Servers
+      . There are two possible reasons for this:
     </div>
     <ul
       style="padding-left: 28px;"
     >
       <li>
-        Your Teleport Enterprise license does not include Server Access. Reach out to your Teleport admin to enable Server Access.
+        Your Teleport Enterprise license does not include 
+        Server Access
+        . Reach out to your Teleport admin to enable 
+        Server Access
+        .
       </li>
       <li>
-        You don’t have sufficient permissions to add Servers. Reach out to your Teleport admin to request additional permissions.
+        You don’t have sufficient permissions to 
+        add new Servers
+        . Reach out to your Teleport admin to request additional permissions.
       </li>
     </ul>
   </div>
@@ -5151,21 +5223,29 @@ exports[`select resource server shows permissions error when lacking tokens.crea
   </div>
   <div
     class="c11"
-    data-testid="server-permissions-error"
+    data-testid="permissions-error"
   >
     <div
       class="c12"
     >
-      You are not able to add new Servers. There are two possible reasons for this:
+      You are not able to 
+      add new Servers
+      . There are two possible reasons for this:
     </div>
     <ul
       style="padding-left: 28px;"
     >
       <li>
-        Your Teleport Enterprise license does not include Server Access. Reach out to your Teleport admin to enable Server Access.
+        Your Teleport Enterprise license does not include 
+        Server Access
+        . Reach out to your Teleport admin to enable 
+        Server Access
+        .
       </li>
       <li>
-        You don’t have sufficient permissions to add Servers. Reach out to your Teleport admin to request additional permissions.
+        You don’t have sufficient permissions to 
+        add new Servers
+        . Reach out to your Teleport admin to request additional permissions.
       </li>
     </ul>
   </div>

@@ -99,7 +99,7 @@ describe('select resource', () => {
         },
       });
 
-      const permissionsError = result.getByTestId('server-permissions-error');
+      const permissionsError = result.getByTestId('permissions-error');
       expect(permissionsError).toBeInTheDocument();
 
       expect(result.container.firstChild).toMatchSnapshot();
@@ -118,7 +118,7 @@ describe('select resource', () => {
         },
       });
 
-      const permissionsError = result.getByTestId('server-permissions-error');
+      const permissionsError = result.getByTestId('permissions-error');
       expect(permissionsError).toBeInTheDocument();
 
       expect(result.container.firstChild).toMatchSnapshot();
@@ -152,7 +152,7 @@ describe('select resource', () => {
         },
       });
 
-      const permissionsError = result.getByTestId('database-permissions-error');
+      const permissionsError = result.getByTestId('permissions-error');
       expect(permissionsError).toBeInTheDocument();
 
       expect(result.container.firstChild).toMatchSnapshot();
@@ -171,7 +171,7 @@ describe('select resource', () => {
         },
       });
 
-      const permissionsError = result.getByTestId('database-permissions-error');
+      const permissionsError = result.getByTestId('permissions-error');
       expect(permissionsError).toBeInTheDocument();
 
       expect(result.container.firstChild).toMatchSnapshot();
@@ -203,7 +203,7 @@ describe('select resource', () => {
       });
 
       const permissionsError = result.getByTestId(
-        'kubernetes-permissions-error'
+        'permissions-error'
       );
       expect(permissionsError).toBeInTheDocument();
 
@@ -224,7 +224,7 @@ describe('select resource', () => {
       });
 
       const permissionsError = result.getByTestId(
-        'kubernetes-permissions-error'
+        'permissions-error'
       );
       expect(permissionsError).toBeInTheDocument();
 
@@ -257,7 +257,7 @@ describe('select resource', () => {
       });
 
       const permissionsError = result.getByTestId(
-        'application-permissions-error'
+        'permissions-error'
       );
       expect(permissionsError).toBeInTheDocument();
 
@@ -278,7 +278,7 @@ describe('select resource', () => {
       });
 
       const permissionsError = result.getByTestId(
-        'application-permissions-error'
+        'permissions-error'
       );
       expect(permissionsError).toBeInTheDocument();
 
@@ -310,7 +310,7 @@ describe('select resource', () => {
         },
       });
 
-      const permissionsError = result.getByTestId('desktop-permissions-error');
+      const permissionsError = result.getByTestId('permissions-error');
       expect(permissionsError).toBeInTheDocument();
 
       expect(result.container.firstChild).toMatchSnapshot();
@@ -325,7 +325,7 @@ describe('select resource', () => {
         },
       });
 
-      const permissionsError = result.getByTestId('desktop-permissions-error');
+      const permissionsError = result.getByTestId('permissions-error');
       expect(permissionsError).toBeInTheDocument();
 
       expect(result.container.firstChild).toMatchSnapshot();

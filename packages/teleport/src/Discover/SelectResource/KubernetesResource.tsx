@@ -1,8 +1,8 @@
 import React from 'react';
 
-import { Text } from 'design';
+import { ActionButtons } from 'teleport/Discover/Shared';
 
-import { ActionButtons, TextBox } from 'teleport/Discover/Shared';
+import { PermissionsErrorMessage } from './PermissionsErrorMessage';
 
 interface KubernetesResourceProps {
   disabled: boolean;
@@ -12,7 +12,12 @@ interface KubernetesResourceProps {
 export function KubernetesResource(props: KubernetesResourceProps) {
   let content;
   if (props.disabled) {
-    content = <PermissionsErrorMessage />;
+    content = (
+      <PermissionsErrorMessage
+        action="add new Kubernetes resources"
+        productName="Kubernetes Access"
+      />
+    );
   }
 
   return (
@@ -24,26 +29,5 @@ export function KubernetesResource(props: KubernetesResourceProps) {
         disableProceed={props.disabled}
       />
     </>
-  );
-}
-
-function PermissionsErrorMessage() {
-  return (
-    <TextBox data-testid="kubernetes-permissions-error">
-      <Text typography="h5">
-        You are not able to add new Kubernetes resources. There are two possible
-        reasons for this:
-      </Text>
-      <ul style={{ paddingLeft: 28 }}>
-        <li>
-          Your Teleport Enterprise license does not include Kubernetes Access.
-          Reach out to your Teleport admin to enable Kubernetes Access.
-        </li>
-        <li>
-          You don’t have sufficient permissions to add Kubernetes resources.
-          Reach out to your Teleport admin to request additional permissions.
-        </li>
-      </ul>
-    </TextBox>
   );
 }

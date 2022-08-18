@@ -1,8 +1,8 @@
 import React from 'react';
 
-import { Text } from 'design';
+import { ActionButtons } from 'teleport/Discover/Shared';
 
-import { ActionButtons, TextBox } from 'teleport/Discover/Shared';
+import { PermissionsErrorMessage } from './PermissionsErrorMessage';
 
 interface ApplicationResourceProps {
   disabled: boolean;
@@ -12,7 +12,12 @@ interface ApplicationResourceProps {
 export function ApplicationResource(props: ApplicationResourceProps) {
   let content;
   if (props.disabled) {
-    content = <PermissionsErrorMessage />;
+    content = (
+      <PermissionsErrorMessage
+        action="add new Applications"
+        productName="Application Access"
+      />
+    );
   }
 
   return (
@@ -24,26 +29,5 @@ export function ApplicationResource(props: ApplicationResourceProps) {
         disableProceed={props.disabled}
       />
     </>
-  );
-}
-
-function PermissionsErrorMessage() {
-  return (
-    <TextBox data-testid="application-permissions-error">
-      <Text typography="h5">
-        You are not able to add new Applications. There are two possible reasons
-        for this:
-      </Text>
-      <ul style={{ paddingLeft: 28 }}>
-        <li>
-          Your Teleport Enterprise license does not include Application Access.
-          Reach out to your Teleport admin to enable Application Access.
-        </li>
-        <li>
-          You don’t have sufficient permissions to add Applications. Reach out
-          to your Teleport admin to request additional permissions.
-        </li>
-      </ul>
-    </TextBox>
   );
 }
