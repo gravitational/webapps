@@ -14,22 +14,22 @@
  * limitations under the License.
  */
 
-import React from 'react';
-import { NavLink } from 'react-router-dom';
+import React, { useState } from 'react';
 import styled from 'styled-components';
-import { Flex, ButtonPrimary, Text, Box, Indicator } from 'design';
-import TopNavUserMenu from 'design/TopNav/TopNavUserMenu';
+import { Flex, Text, Box, Indicator } from 'design';
 import { Danger } from 'design/Alert';
 import * as Icons from 'design/Icon';
-import { MenuItem, MenuItemIcon } from 'shared/components/MenuAction';
 
+import { Prompt } from 'react-router-dom';
+
+import useTeleport from 'teleport/useTeleport';
+import getFeatures from 'teleport/features';
+import { UserMenuNav } from 'teleport/components/UserMenuNav';
 import * as main from 'teleport/Main';
 import * as sideNav from 'teleport/SideNav';
+import { TopBarContainer } from 'teleport/TopBar';
 import { FeatureBox } from 'teleport/components/Layout';
 
-import cfg from 'teleport/config';
-
-import { useDiscoverContext } from './discoverContextProvider';
 import { useDiscover, State } from './useDiscover';
 
 import { SelectResource } from './SelectResource';
@@ -50,19 +50,21 @@ export const agentViews: Record<AgentKind, AgentStepComponent[]> = {
 };
 
 export default function Container() {
-  const ctx = useDiscoverContext();
-  const state = useDiscover(ctx);
+  const [features] = useState(() => getFeatures());
+  const ctx = useTeleport();
+  const state = useDiscover(ctx, features);
 
   return <Discover {...state} />;
 }
 
 export function Discover({
   initAttempt,
+  userMenuItems,
   username,
   currentStep,
   selectedAgentKind = 'node',
   logout,
-  onSelectResource,
+  // onSelectResource,
   ...agentProps
 }: State) {
   let AgentComponent;
@@ -72,6 +74,10 @@ export function Discover({
 
   return (
     <MainContainer>
+      <Prompt
+        message="Are you sure you want to exit the “Add New Resource” workflow? You’ll have to start from the beginning next time."
+        when={currentStep > 0}
+      />
       {initAttempt.status === 'processing' && (
         <main.StyledIndicator>
           <Indicator />
@@ -84,7 +90,16 @@ export function Discover({
         <>
           <SideNavAgentConnect currentStep={currentStep} />
           <main.HorizontalSplit>
-            <TopBar onLogout={logout} username={username} />
+            <TopBarContainer>
+              <Text typography="h4" bold>
+                Access Manager
+              </Text>
+              <UserMenuNav
+                navItems={userMenuItems}
+                logout={logout}
+                username={username}
+              />
+            </TopBarContainer>
             <FeatureBox pt={4}>
               {AgentComponent && <AgentComponent {...agentProps} />}
             </FeatureBox>
@@ -92,57 +107,6 @@ export function Discover({
         </>
       )}
     </MainContainer>
-  );
-}
-
-function TopBar(props: { onLogout: VoidFunction; username: string }) {
-  const [open, setOpen] = React.useState(false);
-
-  function showMenu() {
-    setOpen(true);
-  }
-
-  function closeMenu() {
-    setOpen(false);
-  }
-
-  function logout() {
-    closeMenu();
-    props.onLogout();
-  }
-
-  return (
-    <Flex
-      alignItems="center"
-      justifyContent="space-between"
-      height="56px"
-      pl={5}
-      borderColor="primary.main"
-      css={{ borderBottomWidth: '1px', borderBottomStyle: 'solid' }}
-    >
-      <Text typography="h4" bold>
-        Access Manager
-      </Text>
-      <TopNavUserMenu
-        menuListCss={() => `
-          width: 250px;
-        `}
-        open={open}
-        onShow={showMenu}
-        onClose={closeMenu}
-        user={props.username}
-      >
-        <MenuItem as={NavLink} to={cfg.routes.root}>
-          <MenuItemIcon as={Icons.Home} mr="2" />
-          Dashboard
-        </MenuItem>
-        <MenuItem>
-          <ButtonPrimary my={3} block onClick={logout}>
-            Sign Out
-          </ButtonPrimary>
-        </MenuItem>
-      </TopNavUserMenu>
-    </Flex>
   );
 }
 
