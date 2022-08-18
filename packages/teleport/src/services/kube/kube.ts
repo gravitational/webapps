@@ -33,6 +33,7 @@ class KubeService {
         agents: items.map(makeKube),
         startKey: json?.startKey,
         totalCount: json?.totalCount,
+        assumedRoleRequestId: json?.assumedRoleRequestId,
       };
     });
   }

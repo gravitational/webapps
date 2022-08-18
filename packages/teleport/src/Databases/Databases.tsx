@@ -106,6 +106,7 @@ export function Databases(props: State) {
             pathname={pathname}
             replaceHistory={replaceHistory}
             onLabelClick={onLabelClick}
+            assumedRoleRequestId={results.assumedRoleRequestId}
           />
         </>
       )}

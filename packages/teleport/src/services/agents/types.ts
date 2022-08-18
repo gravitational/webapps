@@ -26,6 +26,8 @@ export type AgentResponse<T extends AgentKind> = {
   agents: T[];
   startKey?: string;
   totalCount?: number;
+  // assumedRoleRequestId is the ID of the access request from which the currently assumed role was obtained
+  assumedRoleRequestId?: string;
 };
 
 export type AgentLabel = {

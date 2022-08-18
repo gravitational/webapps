@@ -78,6 +78,7 @@ export default function useDatabases(ctx: Ctx) {
           databases: res.agents,
           startKey: res.startKey,
           totalCount: res.totalCount,
+          assumedRoleRequestId: res.assumedRoleRequestId,
         });
         setFetchStatus(res.startKey ? '' : 'disabled');
         setStartKeys(['', res.startKey]);

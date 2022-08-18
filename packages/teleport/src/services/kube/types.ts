@@ -24,4 +24,5 @@ export type KubesResponse = {
   kubes: Kube[];
   startKey?: string;
   totalCount?: number;
+  assumedRoleRequestId?: string;
 };
