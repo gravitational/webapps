@@ -83,3 +83,11 @@ export const TextIcon = styled(Text)`
     margin-right: 8px;
   }
 `;
+
+export const TextBox = styled(Box)`
+  width: 100%;
+  margin-top: 32px;
+  border-radius: 8px;
+  background-color: #222c59;
+  padding: 24px;
+`;
