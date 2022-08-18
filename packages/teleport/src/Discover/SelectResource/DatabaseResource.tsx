@@ -11,7 +11,9 @@ import {
   ResourceLocation,
   ResourceType,
 } from 'teleport/Discover/resource-lists';
-import { ActionButtons, TextBox } from 'teleport/Discover/Shared';
+import { ActionButtons } from 'teleport/Discover/Shared';
+
+import { PermissionsErrorMessage } from './PermissionsErrorMessage';
 
 interface DatabaseResourceProps {
   disabled: boolean;
@@ -30,7 +32,12 @@ export function DatabaseResource(props: DatabaseResourceProps) {
   // );
   let content;
   if (props.disabled) {
-    content = <PermissionsErrorMessage />;
+    content = (
+      <PermissionsErrorMessage
+        action="add new Databases"
+        productName="Database Access"
+      />
+    );
   }
 
   return (
@@ -42,27 +49,6 @@ export function DatabaseResource(props: DatabaseResourceProps) {
         disableProceed={props.disabled}
       />
     </>
-  );
-}
-
-function PermissionsErrorMessage() {
-  return (
-    <TextBox data-testid="database-permissions-error">
-      <Text typography="h5">
-        You are not able to add new Databases. There are two possible reasons
-        for this:
-      </Text>
-      <ul style={{ paddingLeft: 28 }}>
-        <li>
-          Your Teleport Enterprise license does not include Database Access.
-          Reach out to your Teleport admin to enable Database Access.
-        </li>
-        <li>
-          You don’t have sufficient permissions to add Databases. Reach out to
-          your Teleport admin to request additional permissions.
-        </li>
-      </ul>
-    </TextBox>
   );
 }
 
