@@ -54,6 +54,7 @@ export const ActionButtons = ({
           width="224px"
           mr={3}
           rel="noreferrer"
+          data-testid="documentation-button"
         >
           View Documentation
         </ButtonPrimary>
@@ -64,6 +65,7 @@ export const ActionButtons = ({
           onClick={onProceed}
           mr={3}
           disabled={disableProceed}
+          data-testid="proceed-button"
         >
           {lastStep ? 'Finish' : 'Next'}
         </ButtonPrimary>
