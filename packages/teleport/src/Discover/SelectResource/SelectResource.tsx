@@ -80,7 +80,13 @@ interface Tab extends TabComponent {
 }
 
 function checkPermissions(acl: Acl, tab: Tab) {
-  const basePermissionsNeeded = [acl.tokens.create, acl.users.edit];
+  const basePermissionsNeeded = [
+    acl.tokens.create,
+    acl.users.edit,
+    acl.connectionDiagnostic.create,
+    acl.connectionDiagnostic.read,
+    acl.connectionDiagnostic.edit,
+  ];
 
   const permissionsNeeded = [
     ...basePermissionsNeeded,
