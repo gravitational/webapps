@@ -20,6 +20,13 @@ if (!isMac && !env.CONNECT_TSH_BIN_PATH) {
   throw new Error('You must provide CONNECT_TSH_BIN_PATH');
 }
 
+// Setting this env var to 'skip' is useful in environments where we don't intend to build a
+// fully-fledged Connect version but rather want to just check that the packaging step is working,
+// for example in CI.
+if (env.CONNECT_TSH_BIN_PATH === 'skip') {
+  delete env.CONNECT_TSH_BIN_PATH;
+}
+
 /**
  * @type { import('electron-builder').Configuration }
  */
