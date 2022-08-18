@@ -146,7 +146,7 @@ When running `yarn build-and-package-term`, you need to provide three environmen
 - `APPLE_USERNAME`
 - `APPLE_PASSWORD`
 - `CONNECT_TSH_APP_PATH`
-- `CSC_NAME` (optional)
+- `CSC_NAME` (optional, developer certificate ID)
 
 The details behind those vars are described below.
 
