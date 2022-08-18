@@ -202,9 +202,7 @@ describe('select resource', () => {
         },
       });
 
-      const permissionsError = result.getByTestId(
-        'permissions-error'
-      );
+      const permissionsError = result.getByTestId('permissions-error');
       expect(permissionsError).toBeInTheDocument();
 
       expect(result.container.firstChild).toMatchSnapshot();
@@ -223,9 +221,7 @@ describe('select resource', () => {
         },
       });
 
-      const permissionsError = result.getByTestId(
-        'permissions-error'
-      );
+      const permissionsError = result.getByTestId('permissions-error');
       expect(permissionsError).toBeInTheDocument();
 
       expect(result.container.firstChild).toMatchSnapshot();
@@ -256,9 +252,7 @@ describe('select resource', () => {
         },
       });
 
-      const permissionsError = result.getByTestId(
-        'permissions-error'
-      );
+      const permissionsError = result.getByTestId('permissions-error');
       expect(permissionsError).toBeInTheDocument();
 
       expect(result.container.firstChild).toMatchSnapshot();
@@ -277,9 +271,7 @@ describe('select resource', () => {
         },
       });
 
-      const permissionsError = result.getByTestId(
-        'permissions-error'
-      );
+      const permissionsError = result.getByTestId('permissions-error');
       expect(permissionsError).toBeInTheDocument();
 
       expect(result.container.firstChild).toMatchSnapshot();
