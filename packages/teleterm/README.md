@@ -53,7 +53,7 @@ $ yarn build-and-package-term
 
 The installable file can be found in `/webapps/packages/teleterm/build/release/`
 
-For more details on how Connect is built for different platform, see the [Build
+For more details on how Connect is built for different platforms, see the [Build
 process](#build-process) section.
 
 ## Development
