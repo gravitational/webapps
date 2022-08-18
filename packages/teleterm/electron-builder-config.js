@@ -7,24 +7,25 @@ const isMac = platform === 'darwin';
 //
 // However, at the moment we don't cross-build Connect and these checks protect us from undesired
 // behavior.
+//
+// Also, we just want to make sure that those are explicitly set but they can be empty. That's why
+// we check for undefined only and not for falsy values.
+//
+// Setting one of the env vars to an empty string is useful in environments where we don't intend to
+// build a fully-fledged Connect version but rather want to just check that the packaging step is
+// working, for example in CI.
 if (
   isMac &&
-  Boolean(env.CONNECT_TSH_APP_PATH) === Boolean(env.CONNECT_TSH_BIN_PATH)
+  (env.CONNECT_TSH_APP_PATH === undefined) ===
+    (env.CONNECT_TSH_BIN_PATH === undefined)
 ) {
   throw new Error(
     'You must provide CONNECT_TSH_APP_PATH xor CONNECT_TSH_BIN_PATH'
   );
 }
 
-if (!isMac && !env.CONNECT_TSH_BIN_PATH) {
+if (!isMac && env.CONNECT_TSH_BIN_PATH === undefined) {
   throw new Error('You must provide CONNECT_TSH_BIN_PATH');
-}
-
-// Setting this env var to 'skip' is useful in environments where we don't intend to build a
-// fully-fledged Connect version but rather want to just check that the packaging step is working,
-// for example in CI.
-if (env.CONNECT_TSH_BIN_PATH === 'skip') {
-  delete env.CONNECT_TSH_BIN_PATH;
 }
 
 /**

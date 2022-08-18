@@ -57,5 +57,6 @@ steps:
       - '--build-arg'
       - YARN_FROZEN_LOCKFILE=true
       - '--build-arg'
-      - CONNECT_TSH_BIN_PATH=skip
+      # Explicitly skip copying tsh binary (since we don't have access to it here).
+      - CONNECT_TSH_BIN_PATH=
       - .
