@@ -30,8 +30,8 @@ function PermissionsErrorMessage() {
   return (
     <TextBox data-testid="desktop-permissions-error">
       <Text typography="h5">
-        You are not able to add new Desktops. There are two possible reasons
-        for this:
+        You are not able to add new Desktops. There are two possible reasons for
+        this:
       </Text>
       <ul style={{ paddingLeft: 28 }}>
         <li>

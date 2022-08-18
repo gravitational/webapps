@@ -91,11 +91,7 @@ function checkPermissions(acl: Acl, tab: Tab) {
   return permissionsNeeded.some(value => !value);
 }
 
-export function SelectResource({
-  isEnterprise,
-  nextStep,
-  userContext,
-}: Props) {
+export function SelectResource({ isEnterprise, nextStep, userContext }: Props) {
   const { acl } = userContext;
 
   const location: Loc = useLocation();

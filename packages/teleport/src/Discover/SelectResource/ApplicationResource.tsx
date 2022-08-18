@@ -40,8 +40,8 @@ function PermissionsErrorMessage() {
           Reach out to your Teleport admin to enable Application Access.
         </li>
         <li>
-          You don’t have sufficient permissions to add Applications. Reach out to
-          your Teleport admin to request additional permissions.
+          You don’t have sufficient permissions to add Applications. Reach out
+          to your Teleport admin to request additional permissions.
         </li>
       </ul>
     </TextBox>
