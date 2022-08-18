@@ -138,15 +138,15 @@ bulid process documentation that is specific to Gravitational.
 
 To make a fully-fledged build on macOS with Touch ID support, you need two things:
 
-* a signed version of tsh.app
-* an Apple Developer ID certificate in your Keychain
+- a signed version of tsh.app
+- an Apple Developer ID certificate in your Keychain
 
 When running `yarn build-and-package-term`, you need to provide three environment variables:
 
-* `APPLE_USERNAME`
-* `APPLE_PASSWORD`
-* `CONNECT_TSH_APP_PATH`
-* `CSC_NAME` (optional)
+- `APPLE_USERNAME`
+- `APPLE_PASSWORD`
+- `CONNECT_TSH_APP_PATH`
+- `CSC_NAME` (optional)
 
 The details behind those vars are described below.
 

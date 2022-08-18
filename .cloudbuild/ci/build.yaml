@@ -56,4 +56,6 @@ steps:
       - NPM_SCRIPT=build-and-package-term
       - '--build-arg'
       - YARN_FROZEN_LOCKFILE=true
+      - '--build-arg'
+      - CONNECT_TSH_BIN_PATH=skip
       - .
