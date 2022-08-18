@@ -16,9 +16,10 @@
 
 import React from 'react';
 
+import { MemoryRouter } from 'react-router';
+
 import { LoginTrait } from './LoginTrait';
 import { State } from './useLoginTrait';
-import { MemoryRouter } from 'react-router';
 
 export default {
   title: 'Teleport/Discover/LoginTrait',

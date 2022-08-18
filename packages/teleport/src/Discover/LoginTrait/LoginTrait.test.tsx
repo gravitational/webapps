@@ -18,6 +18,8 @@ import React from 'react';
 
 import { render, screen, act, fireEvent } from 'design/utils/testing';
 
+import { MemoryRouter } from 'react-router';
+
 import TeleportContext from 'teleport/teleportContext';
 import ContextProvider from 'teleport/TeleportContextProvider';
 
@@ -26,7 +28,6 @@ import LoginTrait from './LoginTrait';
 import type { User } from 'teleport/services/user';
 import type { RenderResult } from '@testing-library/react';
 import type { NodeMeta } from '../useDiscover';
-import { MemoryRouter } from 'react-router';
 
 describe('login trait comp behavior', () => {
   const ctx = new TeleportContext();
