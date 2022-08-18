@@ -53,9 +53,10 @@ function resolveRedirectUrl(params: UrlLauncherParams) {
   // no state value: let the target app know of a new auth exchange
   if (!state) {
     //reflect the correct fqdn
-    if(params.fqdn.indexOf('?path=')) {
-      console.log("Fixing the app FQDN: " + params.fqdn);
-      var appFqdn = params.fqdn.split('?path=')[0];
+    var decodedAppFqdn = decodeURIComponent(params.fqdn);
+    if(decodedAppFqdn.indexOf('?path=') !== -1) {
+      console.log("Fixing the app FQDN: " + decodedAppFqdn);
+      var appFqdn = decodedAppFqdn.split('?path=')[0];
       params.fqdn = appFqdn;
       //preserve the path query param passed as part of app launch
       var appUrl = new URL(window.location.href);
