@@ -158,7 +158,7 @@ export class ClustersService extends ImmutableStore<ClustersServiceState> {
       // this.syncKubes(clusterUri);
       // this.syncApps(clusterUri);
       // this.syncDbs(clusterUri);
-      this.listServers({ clusterUri });
+      this.syncServers(clusterUri);
       // this.syncKubes(clusterUri);
       // this.syncGateways();
     }
@@ -180,7 +180,7 @@ export class ClustersService extends ImmutableStore<ClustersServiceState> {
     // this.syncKubes(clusterUri);
     // this.syncApps(clusterUri);
     // this.syncDbs(clusterUri);
-    this.listServers({ clusterUri });
+    this.syncServers(clusterUri);
     // this.syncKubes(clusterUri);
     // this.syncGateways();
   }
@@ -353,12 +353,14 @@ export class ClustersService extends ImmutableStore<ClustersServiceState> {
 
   async listServers({
     clusterUri,
-    search,
-    isAdvancedSearch = false,
+    search = '',
+    query = '',
+    sortBy = 'hostname:desc',
   }: {
     clusterUri: string;
     search?: string;
-    isAdvancedSearch?: boolean; // When false, search is parsed as SearchKeywords. When true, search is parsed as a predicate expression
+    query?: string;
+    sortBy?: string;
   }) {
     const cluster = this.state.clusters.get(clusterUri);
     if (!cluster.connected) {
@@ -369,23 +371,14 @@ export class ClustersService extends ImmutableStore<ClustersServiceState> {
 
       return;
     }
-
-    this.setState(draft => {
-      draft.serversSyncStatus.set(clusterUri, {
-        status: 'processing',
-      });
-    });
-
     try {
       const received = await this.client.listServers({
         clusterUri,
-        search: isAdvancedSearch ? '' : search,
-        query: isAdvancedSearch ? search : '',
+        search,
+        query,
+        sortBy,
       });
-      this.setState(draft => {
-        draft.serversSyncStatus.set(clusterUri, { status: 'ready' });
-        helpers.updateMap(clusterUri, draft.servers, received);
-      });
+      return received;
     } catch (err) {
       this.setState(draft => {
         draft.serversSyncStatus.set(clusterUri, {
@@ -416,6 +409,7 @@ export class ClustersService extends ImmutableStore<ClustersServiceState> {
     try {
       const received = await this.client.listServers({
         clusterUri,
+        sortBy: 'name:desc',
       });
       this.setState(draft => {
         draft.serversSyncStatus.set(clusterUri, { status: 'ready' });

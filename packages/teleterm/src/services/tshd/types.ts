@@ -130,4 +130,5 @@ export type ListServersParams = {
   clusterUri: string;
   query?: string;
   search?: string;
+  sortBy?: string;
 };

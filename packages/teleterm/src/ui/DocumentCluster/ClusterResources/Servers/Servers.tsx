@@ -24,8 +24,7 @@ import { Danger } from 'design/Alert';
 
 import * as types from 'teleterm/ui/services/clusters/types';
 import { Table } from 'teleterm/ui/components/Table';
-import { ServerSideSearchPanel } from 'teleterm/ui/components/ServerSideSearchPanel/ServerSideSearchPanel';
-import useServerSideSearch from 'teleterm/ui/components/ServerSideSearchPanel/useServerSideSearch';
+import ServerSideSearchPanel from 'teleterm/ui/components/ServerSideSearchPanel/ServerSideSearchPanel';
 import LinearProgress from 'teleterm/ui/components/LinearProgress';
 
 import { renderLabelCell } from '../renderLabelCell';
@@ -44,26 +43,22 @@ function ServerList(props: State) {
     servers = [],
     getSshLogins,
     connect,
-    syncStatus,
     fetchServers,
+    syncStatus,
   } = props;
-  const { isAdvancedSearch, setIsAdvancedSearch } = useServerSideSearch();
 
-  const onSubmitSearch = (search: string) => {
-    fetchServers({ search, isAdvancedSearch });
-  };
-
+  console.log('newservers', servers);
   return (
     <>
       {syncStatus.status === 'failed' && (
         <Danger>{syncStatus.statusText}</Danger>
       )}
-      <ServerSideSearchPanel
-        onSearchSubmit={onSubmitSearch}
-        isAdvancedSearch={isAdvancedSearch}
-        setIsAdvancedSearch={setIsAdvancedSearch}
-      />
+      <ServerSideSearchPanel onSearchSubmit={fetchServers} />
       <Table
+        fetching={{
+          // TODO (avatus): clean this up, but just showing for demo purposes. DO NOT MERGE
+          fetchStatus: syncStatus.status === 'processing' ? 'loading' : '',
+        }}
         columns={[
           {
             key: 'hostname',

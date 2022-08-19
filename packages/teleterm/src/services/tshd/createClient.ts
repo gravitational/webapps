@@ -129,7 +129,8 @@ export default function createClient(
       const req = new api.ListServersRequest()
         .setClusterUri(params.clusterUri)
         .setQuery(params.query)
-        .setSearch(params.search);
+        .setSearch(params.search)
+        .setSortBy(params.sortBy);
       return new Promise<types.Server[]>((resolve, reject) => {
         tshd.listServers(req, (err, response) => {
           if (err) {

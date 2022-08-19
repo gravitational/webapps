@@ -13,15 +13,27 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 */
+import { useState, useEffect } from 'react';
 
 import { useClusterContext } from 'teleterm/ui/DocumentCluster/clusterContext';
 import { useAppContext } from 'teleterm/ui/appContextProvider';
+import { Server } from 'teleterm/services/tshd/types';
+import { useAsync } from 'shared/hooks/useAsync';
 
 export function useServers() {
   const appContext = useAppContext();
   const clusterContext = useClusterContext();
-  const servers = clusterContext.getServers();
+  const serverCache = clusterContext.getServers();
   const syncStatus = clusterContext.getSyncStatus().servers;
+  const [isInitialLoad, setIsInitialLoad] = useState(true);
+  const [servers, setServers] = useState([]);
+
+  useEffect(() => {
+    if (isInitialLoad && syncStatus.status === 'ready') {
+      setServers(serverCache);
+      setIsInitialLoad(false);
+    }
+  }, [serverCache]);
 
   function getSshLogins(serverUri: string): string[] {
     const cluster = appContext.clustersService.findClusterByResource(serverUri);
@@ -43,21 +55,28 @@ export function useServers() {
     documentsService.setLocation(doc.uri);
   }
 
-  async function fetchServers({ search = '', isAdvancedSearch = false }) {
-    // listServers has its own error handling so we'll let it handle the errors
-    await appContext.clustersService.listServers({
-      clusterUri: clusterContext.clusterUri,
-      search,
-      isAdvancedSearch,
-    });
+  async function fetchServers({ search, query }) {
+    // set fetching state to processing
+    try {
+      const response = await appContext.clustersService.listServers({
+        clusterUri: clusterContext.clusterUri,
+        search,
+        query,
+      });
+      setServers(response);
+    } catch (error) {
+      // set fetching error
+    } finally {
+      // set fetching state to ready
+    }
   }
 
   return {
     servers,
-    syncStatus,
     getSshLogins,
     connect,
     fetchServers,
+    syncStatus,
   };
 }
 

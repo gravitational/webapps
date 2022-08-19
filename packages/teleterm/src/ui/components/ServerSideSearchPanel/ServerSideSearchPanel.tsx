@@ -5,13 +5,19 @@ import { Magnifier } from 'design/Icon';
 import { StyledPanel } from 'design/DataTable';
 import Toggle from 'teleport/components/Toggle';
 import { space, color, height } from 'styled-system';
+import useServerSideSearchPanel from 'teleterm/ui/components/ServerSideSearchPanel/useServerSideSearchPanel';
 
 import Tooltip from '../Tooltip';
 
 const GUIDE_URL =
   'https://goteleport.com/docs/setup/reference/predicate-language/#resource-filtering';
 
-export function ServerSideSearchPanel({
+export default function Container(props: Props) {
+  const state = useServerSideSearchPanel(props);
+  return <ServerSideSearchPanel {...state} />;
+}
+
+function ServerSideSearchPanel({
   isAdvancedSearch,
   setIsAdvancedSearch,
   onSearchSubmit,
@@ -22,7 +28,7 @@ export function ServerSideSearchPanel({
     setIsAdvancedSearch(!isAdvancedSearch);
   };
 
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  const handleSearchSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     onSearchSubmit(ref.current?.value);
   };
@@ -30,7 +36,7 @@ export function ServerSideSearchPanel({
   return (
     <StyledPanel
       as="form"
-      onSubmit={handleSubmit}
+      onSubmit={handleSearchSubmit}
       borderTopLeftRadius={3}
       borderTopRightRadius={3}
     >
@@ -157,7 +163,7 @@ function fromTheme(props) {
 }
 
 type Props = {
-  isAdvancedSearch: boolean;
-  setIsAdvancedSearch: (boolean) => void;
-  onSearchSubmit: (string) => void;
+  isAdvancedSearch?: boolean;
+  setIsAdvancedSearch?: (boolean) => void;
+  onSearchSubmit?: (string) => void;
 };
