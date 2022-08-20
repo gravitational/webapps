@@ -19,6 +19,7 @@ import styled from 'styled-components';
 import { NavLink } from 'react-router-dom';
 
 import { Text, ButtonPrimary, Box } from 'design';
+import { ButtonSecondary } from 'design/Button';
 
 import cfg from 'teleport/config';
 
@@ -70,9 +71,9 @@ export const ActionButtons = ({
           {lastStep ? 'Finish' : 'Next'}
         </ButtonPrimary>
       )}
-      <ButtonPrimary as={NavLink} to={cfg.routes.root} mt={3} width="165px">
+      <ButtonSecondary as={NavLink} to={cfg.routes.root} mt={3} width="165px">
         Exit
-      </ButtonPrimary>
+      </ButtonSecondary>
     </Box>
   );
 };
