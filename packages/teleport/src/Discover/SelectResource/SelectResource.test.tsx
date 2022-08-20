@@ -110,12 +110,12 @@ describe('select resource', () => {
       expect(proceedButton.hasAttribute('disabled')).toBe(true);
     });
 
-    test('shows permissions error when lacking nodes.read', () => {
+    test('shows permissions error when lacking nodes.list', () => {
       const result = create('server', {
         ...fullAcl,
         nodes: {
           ...fullAccess,
-          read: false,
+          list: false,
         },
       });
 

@@ -114,7 +114,7 @@ export function SelectResource({ isEnterprise, nextStep, userContext }: Props) {
     {
       name: 'server',
       component: <TabItem iconSrc={serverIcon} title="Server" />,
-      permissionsNeeded: [acl.nodes.read, acl.nodes.list],
+      permissionsNeeded: [acl.nodes.list],
     },
 
     {
