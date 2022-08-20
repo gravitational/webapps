@@ -19,11 +19,11 @@ export function PermissionsErrorMessage(props: PermissionsErrorMessageProps) {
       <ul style={{ paddingLeft: 28 }}>
         <li>
           Your Teleport Enterprise license does not include {props.productName}.
-          Reach out to your Teleport admin to enable {props.productName}.
+          Reach out to your Teleport administrator to enable {props.productName}.
         </li>
         <li>
           You don’t have sufficient permissions to {props.action}. Reach out to
-          your Teleport admin to request additional permissions.
+          your Teleport administrator to request additional permissions.
         </li>
       </ul>
     </TextBox>
