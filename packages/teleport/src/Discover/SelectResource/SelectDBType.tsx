@@ -7,10 +7,6 @@ import SlideTabs from 'design/SlideTabs';
 
 import type { ResourceType, ResourceLocation } from '../resource-lists';
 
-export type SelectResourceProps = {
-  onSelect: (string) => void;
-};
-
 export function SelectDBDeploymentType({
   selectedType,
   setSelectedType,
@@ -94,3 +90,7 @@ const Tag = styled.div`
   padding: 2px 10px;
   max-width: 57px;
 `;
+
+export type SelectResourceProps = {
+  onSelect: (string) => void;
+};

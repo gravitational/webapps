@@ -6,11 +6,6 @@ import { ActionButtons, TextBox } from 'teleport/Discover/Shared';
 
 import { PermissionsErrorMessage } from './PermissionsErrorMessage';
 
-interface ServerResourceProps {
-  disabled: boolean;
-  onProceed: () => void;
-}
-
 export function ServerResource(props: ServerResourceProps) {
   let content = <TeleportVersions />;
   if (props.disabled) {
@@ -56,4 +51,9 @@ function TeleportVersions() {
       </Text>
     </TextBox>
   );
+}
+
+interface ServerResourceProps {
+  disabled: boolean;
+  onProceed: () => void;
 }

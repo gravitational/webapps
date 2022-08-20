@@ -15,11 +15,6 @@ import { ActionButtons } from 'teleport/Discover/Shared';
 
 import { PermissionsErrorMessage } from './PermissionsErrorMessage';
 
-interface DatabaseResourceProps {
-  disabled: boolean;
-  onProceed: () => void;
-}
-
 export function DatabaseResource(props: DatabaseResourceProps) {
   // As we're focusing on the server flow uncomment this when we start
   // implementing the database support.
@@ -50,12 +45,6 @@ export function DatabaseResource(props: DatabaseResourceProps) {
       />
     </>
   );
-}
-
-interface SelectDBDeploymentTypeProps {
-  selectedType: string;
-  setSelectedType: (string) => void;
-  resourceTypes: ResourceType[];
 }
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
@@ -136,3 +125,14 @@ const Tag = styled.div`
   padding: 2px 10px;
   max-width: 57px;
 `;
+
+interface SelectDBDeploymentTypeProps {
+  selectedType: string;
+  setSelectedType: (string) => void;
+  resourceTypes: ResourceType[];
+}
+
+interface DatabaseResourceProps {
+  disabled: boolean;
+  onProceed: () => void;
+}

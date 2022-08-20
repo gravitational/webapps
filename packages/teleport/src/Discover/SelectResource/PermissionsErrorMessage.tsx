@@ -4,11 +4,6 @@ import { Text } from 'design';
 
 import { TextBox } from 'teleport/Discover/Shared';
 
-interface PermissionsErrorMessageProps {
-  action: string;
-  productName: string;
-}
-
 export function PermissionsErrorMessage(props: PermissionsErrorMessageProps) {
   return (
     <TextBox data-testid="permissions-error">
@@ -28,4 +23,9 @@ export function PermissionsErrorMessage(props: PermissionsErrorMessageProps) {
       </ul>
     </TextBox>
   );
+}
+
+interface PermissionsErrorMessageProps {
+  action: string;
+  productName: string;
 }

@@ -4,11 +4,6 @@ import { ActionButtons } from 'teleport/Discover/Shared';
 
 import { PermissionsErrorMessage } from './PermissionsErrorMessage';
 
-interface KubernetesResourceProps {
-  disabled: boolean;
-  onProceed: () => void;
-}
-
 export function KubernetesResource(props: KubernetesResourceProps) {
   let content;
   if (props.disabled) {
@@ -30,4 +25,9 @@ export function KubernetesResource(props: KubernetesResourceProps) {
       />
     </>
   );
+}
+
+interface KubernetesResourceProps {
+  disabled: boolean;
+  onProceed: () => void;
 }

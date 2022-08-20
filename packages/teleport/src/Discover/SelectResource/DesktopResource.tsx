@@ -4,10 +4,6 @@ import { ActionButtons } from 'teleport/Discover/Shared';
 
 import { PermissionsErrorMessage } from './PermissionsErrorMessage';
 
-interface DesktopResourceProps {
-  disabled: boolean;
-}
-
 export function DesktopResource(props: DesktopResourceProps) {
   let content;
   if (props.disabled) {
@@ -29,4 +25,8 @@ export function DesktopResource(props: DesktopResourceProps) {
       />
     </>
   );
+}
+
+interface DesktopResourceProps {
+  disabled: boolean;
 }

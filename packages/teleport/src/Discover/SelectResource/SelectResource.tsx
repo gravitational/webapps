@@ -56,6 +56,24 @@ export default function Container(props: AgentStepProps) {
   );
 }
 
+function checkPermissions(acl: Acl, tab: Tab) {
+  const basePermissionsNeeded = [
+    acl.tokens.create,
+    acl.users.edit,
+    acl.connectionDiagnostic.create,
+    acl.connectionDiagnostic.read,
+    acl.connectionDiagnostic.edit,
+  ];
+
+  const permissionsNeeded = [
+    ...basePermissionsNeeded,
+    ...tab.permissionsNeeded,
+  ];
+
+  // if some (1+) are false, we do not have enough permissions
+  return permissionsNeeded.some(value => !value);
+}
+
 type ValidResourceTypes =
   | 'application'
   | 'database'
@@ -77,24 +95,6 @@ type Props = {
 
 interface Tab extends TabComponent {
   permissionsNeeded: boolean[];
-}
-
-function checkPermissions(acl: Acl, tab: Tab) {
-  const basePermissionsNeeded = [
-    acl.tokens.create,
-    acl.users.edit,
-    acl.connectionDiagnostic.create,
-    acl.connectionDiagnostic.read,
-    acl.connectionDiagnostic.edit,
-  ];
-
-  const permissionsNeeded = [
-    ...basePermissionsNeeded,
-    ...tab.permissionsNeeded,
-  ];
-
-  // if some (1+) are false, we do not have enough permissions
-  return permissionsNeeded.some(value => !value);
 }
 
 export function SelectResource({ isEnterprise, nextStep, userContext }: Props) {
