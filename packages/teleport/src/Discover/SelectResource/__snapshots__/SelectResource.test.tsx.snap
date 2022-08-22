@@ -1,11 +1,11 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`select resource application has the proceed button enabled when having correct permissions 1`] = `
-.c4 {
+.c3 {
   position: relative;
 }
 
-.c6 {
+.c5 {
   cursor: pointer;
   display: flex;
   justify-content: center;
@@ -31,7 +31,7 @@ exports[`select resource application has the proceed button enabled when having 
   width: calc(20% - 16px);
 }
 
-.c5 {
+.c4 {
   align-items: center;
   background-color: rgba(255,255,255,0.05);
   border-radius: 8px;
@@ -115,7 +115,7 @@ exports[`select resource application has the proceed button enabled when having 
   text-transform: uppercase;
   transition: all 0.3s;
   -webkit-font-smoothing: antialiased;
-  background: #512FC9;
+  background: #222C59;
   color: rgba(255,255,255,0.87);
   min-height: 32px;
   font-size: 12px;
@@ -130,11 +130,7 @@ exports[`select resource application has the proceed button enabled when having 
 
 .c13:hover,
 .c13:focus {
-  background: #651FFF;
-}
-
-.c13:active {
-  background: #354AA4;
+  background: #2C3A73;
 }
 
 .c13:disabled {
@@ -142,7 +138,7 @@ exports[`select resource application has the proceed button enabled when having 
   color: rgba(255,255,255,0.3);
 }
 
-.c8 {
+.c7 {
   display: block;
   outline: none;
   margin-right: 8px;
@@ -152,29 +148,33 @@ exports[`select resource application has the proceed button enabled when having 
 .c1 {
   overflow: hidden;
   text-overflow: ellipsis;
-  font-weight: 400;
+  font-weight: 600;
   font-size: 18px;
-  line-height: 32px;
   margin: 0px;
+  margin-top: 4px;
+  margin-bottom: 4px;
 }
 
 .c2 {
   overflow: hidden;
   text-overflow: ellipsis;
   margin: 0px;
-  margin-bottom: 24px;
+  margin-bottom: 32px;
 }
 
-.c3 {
+.c8 {
   overflow: hidden;
   text-overflow: ellipsis;
+  font-weight: 600;
+  font-size: 16px;
+  line-height: 24px;
   margin: 0px;
-  margin-bottom: 8px;
 }
 
-.c7 {
+.c6 {
   box-sizing: border-box;
   display: flex;
+  align-items: center;
 }
 
 <div
@@ -183,39 +183,42 @@ exports[`select resource application has the proceed button enabled when having 
 >
   <div
     class="c1"
-  >
-    Resource Selection
-  </div>
-  <div
-    class="c2"
-  >
-    Users are able to add and access many different types of resources through Teleport. Start by selecting the type of resource you want to add.
-  </div>
-  <div
-    class="c3"
+    font-size="18px"
   >
     Select Resource Type
   </div>
   <div
-    class="c4"
+    class="c2"
+  >
+    Users are able to add and access many different types of resources through Teleport. 
+    <br />
+    Start by selecting the type of resource you want to add.
+  </div>
+  <div
+    class="c3"
   >
     <nav
-      class="c5"
+      class="c4"
+      role="tablist"
     >
       <label
-        class="c6"
+        class="c5"
         for="slide-tab-server"
+        role="tab"
       >
         <div
-          class="c7"
-          style="line-height: 31px;"
+          class="c6"
         >
           <img
-            class="c8"
+            class="c7"
             src="file_stub"
             width="32px"
           />
-           Server
+          <div
+            class="c8"
+          >
+            Server
+          </div>
         </div>
         <input
           class="c9"
@@ -225,19 +228,23 @@ exports[`select resource application has the proceed button enabled when having 
         />
       </label>
       <label
-        class="c6"
+        class="c5"
         for="slide-tab-database"
+        role="tab"
       >
         <div
-          class="c7"
-          style="line-height: 31px;"
+          class="c6"
         >
           <img
-            class="c8"
+            class="c7"
             src="file_stub"
             width="32px"
           />
-           Database
+          <div
+            class="c8"
+          >
+            Database
+          </div>
         </div>
         <input
           class="c9"
@@ -247,19 +254,23 @@ exports[`select resource application has the proceed button enabled when having 
         />
       </label>
       <label
-        class="c6"
+        class="c5"
         for="slide-tab-kubernetes"
+        role="tab"
       >
         <div
-          class="c7"
-          style="line-height: 31px;"
+          class="c6"
         >
           <img
-            class="c8"
+            class="c7"
             src="file_stub"
             width="32px"
           />
-           Kubernetes
+          <div
+            class="c8"
+          >
+            Kubernetes
+          </div>
         </div>
         <input
           class="c9"
@@ -269,19 +280,23 @@ exports[`select resource application has the proceed button enabled when having 
         />
       </label>
       <label
-        class="c6"
+        class="c5"
         for="slide-tab-application"
+        role="tab"
       >
         <div
-          class="c7"
-          style="line-height: 31px;"
+          class="c6"
         >
           <img
-            class="c8"
+            class="c7"
             src="file_stub"
             width="32px"
           />
-           Application
+          <div
+            class="c8"
+          >
+            Application
+          </div>
         </div>
         <input
           class="c9"
@@ -291,19 +306,23 @@ exports[`select resource application has the proceed button enabled when having 
         />
       </label>
       <label
-        class="c6"
+        class="c5"
         for="slide-tab-desktop"
+        role="tab"
       >
         <div
-          class="c7"
-          style="line-height: 31px;"
+          class="c6"
         >
           <img
-            class="c8"
+            class="c7"
             src="file_stub"
             width="32px"
           />
-           Desktop
+          <div
+            class="c8"
+          >
+            Desktop
+          </div>
         </div>
         <input
           class="c9"
@@ -332,7 +351,7 @@ exports[`select resource application has the proceed button enabled when having 
     <a
       class="c13"
       href="/web"
-      kind="primary"
+      kind="secondary"
       mt="3"
       theme="[object Object]"
       width="165px"
@@ -344,11 +363,11 @@ exports[`select resource application has the proceed button enabled when having 
 `;
 
 exports[`select resource application shows permissions error when lacking appServers.read 1`] = `
-.c4 {
+.c3 {
   position: relative;
 }
 
-.c6 {
+.c5 {
   cursor: pointer;
   display: flex;
   justify-content: center;
@@ -374,7 +393,7 @@ exports[`select resource application shows permissions error when lacking appSer
   width: calc(20% - 16px);
 }
 
-.c5 {
+.c4 {
   align-items: center;
   background-color: rgba(255,255,255,0.05);
   border-radius: 8px;
@@ -458,7 +477,7 @@ exports[`select resource application shows permissions error when lacking appSer
   text-transform: uppercase;
   transition: all 0.3s;
   -webkit-font-smoothing: antialiased;
-  background: #512FC9;
+  background: #222C59;
   color: rgba(255,255,255,0.87);
   min-height: 32px;
   font-size: 12px;
@@ -473,11 +492,7 @@ exports[`select resource application shows permissions error when lacking appSer
 
 .c15:hover,
 .c15:focus {
-  background: #651FFF;
-}
-
-.c15:active {
-  background: #354AA4;
+  background: #2C3A73;
 }
 
 .c15:disabled {
@@ -485,7 +500,7 @@ exports[`select resource application shows permissions error when lacking appSer
   color: rgba(255,255,255,0.3);
 }
 
-.c8 {
+.c7 {
   display: block;
   outline: none;
   margin-right: 8px;
@@ -495,24 +510,27 @@ exports[`select resource application shows permissions error when lacking appSer
 .c1 {
   overflow: hidden;
   text-overflow: ellipsis;
-  font-weight: 400;
+  font-weight: 600;
   font-size: 18px;
-  line-height: 32px;
   margin: 0px;
+  margin-top: 4px;
+  margin-bottom: 4px;
 }
 
 .c2 {
   overflow: hidden;
   text-overflow: ellipsis;
   margin: 0px;
-  margin-bottom: 24px;
+  margin-bottom: 32px;
 }
 
-.c3 {
+.c8 {
   overflow: hidden;
   text-overflow: ellipsis;
+  font-weight: 600;
+  font-size: 16px;
+  line-height: 24px;
   margin: 0px;
-  margin-bottom: 8px;
 }
 
 .c12 {
@@ -524,11 +542,6 @@ exports[`select resource application shows permissions error when lacking appSer
   margin: 0px;
 }
 
-.c7 {
-  box-sizing: border-box;
-  display: flex;
-}
-
 .c11 {
   box-sizing: border-box;
   width: 100%;
@@ -538,45 +551,54 @@ exports[`select resource application shows permissions error when lacking appSer
   padding: 24px;
 }
 
+.c6 {
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+}
+
 <div
   class="c0"
   width="1020px"
 >
   <div
     class="c1"
-  >
-    Resource Selection
-  </div>
-  <div
-    class="c2"
-  >
-    Users are able to add and access many different types of resources through Teleport. Start by selecting the type of resource you want to add.
-  </div>
-  <div
-    class="c3"
+    font-size="18px"
   >
     Select Resource Type
   </div>
   <div
-    class="c4"
+    class="c2"
+  >
+    Users are able to add and access many different types of resources through Teleport. 
+    <br />
+    Start by selecting the type of resource you want to add.
+  </div>
+  <div
+    class="c3"
   >
     <nav
-      class="c5"
+      class="c4"
+      role="tablist"
     >
       <label
-        class="c6"
+        class="c5"
         for="slide-tab-server"
+        role="tab"
       >
         <div
-          class="c7"
-          style="line-height: 31px;"
+          class="c6"
         >
           <img
-            class="c8"
+            class="c7"
             src="file_stub"
             width="32px"
           />
-           Server
+          <div
+            class="c8"
+          >
+            Server
+          </div>
         </div>
         <input
           class="c9"
@@ -586,19 +608,23 @@ exports[`select resource application shows permissions error when lacking appSer
         />
       </label>
       <label
-        class="c6"
+        class="c5"
         for="slide-tab-database"
+        role="tab"
       >
         <div
-          class="c7"
-          style="line-height: 31px;"
+          class="c6"
         >
           <img
-            class="c8"
+            class="c7"
             src="file_stub"
             width="32px"
           />
-           Database
+          <div
+            class="c8"
+          >
+            Database
+          </div>
         </div>
         <input
           class="c9"
@@ -608,19 +634,23 @@ exports[`select resource application shows permissions error when lacking appSer
         />
       </label>
       <label
-        class="c6"
+        class="c5"
         for="slide-tab-kubernetes"
+        role="tab"
       >
         <div
-          class="c7"
-          style="line-height: 31px;"
+          class="c6"
         >
           <img
-            class="c8"
+            class="c7"
             src="file_stub"
             width="32px"
           />
-           Kubernetes
+          <div
+            class="c8"
+          >
+            Kubernetes
+          </div>
         </div>
         <input
           class="c9"
@@ -630,19 +660,23 @@ exports[`select resource application shows permissions error when lacking appSer
         />
       </label>
       <label
-        class="c6"
+        class="c5"
         for="slide-tab-application"
+        role="tab"
       >
         <div
-          class="c7"
-          style="line-height: 31px;"
+          class="c6"
         >
           <img
-            class="c8"
+            class="c7"
             src="file_stub"
             width="32px"
           />
-           Application
+          <div
+            class="c8"
+          >
+            Application
+          </div>
         </div>
         <input
           class="c9"
@@ -652,19 +686,23 @@ exports[`select resource application shows permissions error when lacking appSer
         />
       </label>
       <label
-        class="c6"
+        class="c5"
         for="slide-tab-desktop"
+        role="tab"
       >
         <div
-          class="c7"
-          style="line-height: 31px;"
+          class="c6"
         >
           <img
-            class="c8"
+            class="c7"
             src="file_stub"
             width="32px"
           />
-           Desktop
+          <div
+            class="c8"
+          >
+            Desktop
+          </div>
         </div>
         <input
           class="c9"
@@ -695,14 +733,14 @@ exports[`select resource application shows permissions error when lacking appSer
       <li>
         Your Teleport Enterprise license does not include 
         Application Access
-        . Reach out to your Teleport admin to enable 
+        . Reach out to your Teleport administrator to enable 
         Application Access
         .
       </li>
       <li>
         You don’t have sufficient permissions to 
         add new Applications
-        . Reach out to your Teleport admin to request additional permissions.
+        . Reach out to your Teleport administrator to request additional permissions.
       </li>
     </ul>
   </div>
@@ -722,7 +760,7 @@ exports[`select resource application shows permissions error when lacking appSer
     <a
       class="c15"
       href="/web"
-      kind="primary"
+      kind="secondary"
       mt="3"
       theme="[object Object]"
       width="165px"
@@ -734,11 +772,11 @@ exports[`select resource application shows permissions error when lacking appSer
 `;
 
 exports[`select resource application shows permissions error when lacking tokens.create 1`] = `
-.c4 {
+.c3 {
   position: relative;
 }
 
-.c6 {
+.c5 {
   cursor: pointer;
   display: flex;
   justify-content: center;
@@ -764,7 +802,7 @@ exports[`select resource application shows permissions error when lacking tokens
   width: calc(20% - 16px);
 }
 
-.c5 {
+.c4 {
   align-items: center;
   background-color: rgba(255,255,255,0.05);
   border-radius: 8px;
@@ -848,7 +886,7 @@ exports[`select resource application shows permissions error when lacking tokens
   text-transform: uppercase;
   transition: all 0.3s;
   -webkit-font-smoothing: antialiased;
-  background: #512FC9;
+  background: #222C59;
   color: rgba(255,255,255,0.87);
   min-height: 32px;
   font-size: 12px;
@@ -863,11 +901,7 @@ exports[`select resource application shows permissions error when lacking tokens
 
 .c15:hover,
 .c15:focus {
-  background: #651FFF;
-}
-
-.c15:active {
-  background: #354AA4;
+  background: #2C3A73;
 }
 
 .c15:disabled {
@@ -875,7 +909,7 @@ exports[`select resource application shows permissions error when lacking tokens
   color: rgba(255,255,255,0.3);
 }
 
-.c8 {
+.c7 {
   display: block;
   outline: none;
   margin-right: 8px;
@@ -885,24 +919,27 @@ exports[`select resource application shows permissions error when lacking tokens
 .c1 {
   overflow: hidden;
   text-overflow: ellipsis;
-  font-weight: 400;
+  font-weight: 600;
   font-size: 18px;
-  line-height: 32px;
   margin: 0px;
+  margin-top: 4px;
+  margin-bottom: 4px;
 }
 
 .c2 {
   overflow: hidden;
   text-overflow: ellipsis;
   margin: 0px;
-  margin-bottom: 24px;
+  margin-bottom: 32px;
 }
 
-.c3 {
+.c8 {
   overflow: hidden;
   text-overflow: ellipsis;
+  font-weight: 600;
+  font-size: 16px;
+  line-height: 24px;
   margin: 0px;
-  margin-bottom: 8px;
 }
 
 .c12 {
@@ -914,11 +951,6 @@ exports[`select resource application shows permissions error when lacking tokens
   margin: 0px;
 }
 
-.c7 {
-  box-sizing: border-box;
-  display: flex;
-}
-
 .c11 {
   box-sizing: border-box;
   width: 100%;
@@ -928,45 +960,54 @@ exports[`select resource application shows permissions error when lacking tokens
   padding: 24px;
 }
 
+.c6 {
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+}
+
 <div
   class="c0"
   width="1020px"
 >
   <div
     class="c1"
-  >
-    Resource Selection
-  </div>
-  <div
-    class="c2"
-  >
-    Users are able to add and access many different types of resources through Teleport. Start by selecting the type of resource you want to add.
-  </div>
-  <div
-    class="c3"
+    font-size="18px"
   >
     Select Resource Type
   </div>
   <div
-    class="c4"
+    class="c2"
+  >
+    Users are able to add and access many different types of resources through Teleport. 
+    <br />
+    Start by selecting the type of resource you want to add.
+  </div>
+  <div
+    class="c3"
   >
     <nav
-      class="c5"
+      class="c4"
+      role="tablist"
     >
       <label
-        class="c6"
+        class="c5"
         for="slide-tab-server"
+        role="tab"
       >
         <div
-          class="c7"
-          style="line-height: 31px;"
+          class="c6"
         >
           <img
-            class="c8"
+            class="c7"
             src="file_stub"
             width="32px"
           />
-           Server
+          <div
+            class="c8"
+          >
+            Server
+          </div>
         </div>
         <input
           class="c9"
@@ -976,19 +1017,23 @@ exports[`select resource application shows permissions error when lacking tokens
         />
       </label>
       <label
-        class="c6"
+        class="c5"
         for="slide-tab-database"
+        role="tab"
       >
         <div
-          class="c7"
-          style="line-height: 31px;"
+          class="c6"
         >
           <img
-            class="c8"
+            class="c7"
             src="file_stub"
             width="32px"
           />
-           Database
+          <div
+            class="c8"
+          >
+            Database
+          </div>
         </div>
         <input
           class="c9"
@@ -998,19 +1043,23 @@ exports[`select resource application shows permissions error when lacking tokens
         />
       </label>
       <label
-        class="c6"
+        class="c5"
         for="slide-tab-kubernetes"
+        role="tab"
       >
         <div
-          class="c7"
-          style="line-height: 31px;"
+          class="c6"
         >
           <img
-            class="c8"
+            class="c7"
             src="file_stub"
             width="32px"
           />
-           Kubernetes
+          <div
+            class="c8"
+          >
+            Kubernetes
+          </div>
         </div>
         <input
           class="c9"
@@ -1020,19 +1069,23 @@ exports[`select resource application shows permissions error when lacking tokens
         />
       </label>
       <label
-        class="c6"
+        class="c5"
         for="slide-tab-application"
+        role="tab"
       >
         <div
-          class="c7"
-          style="line-height: 31px;"
+          class="c6"
         >
           <img
-            class="c8"
+            class="c7"
             src="file_stub"
             width="32px"
           />
-           Application
+          <div
+            class="c8"
+          >
+            Application
+          </div>
         </div>
         <input
           class="c9"
@@ -1042,19 +1095,23 @@ exports[`select resource application shows permissions error when lacking tokens
         />
       </label>
       <label
-        class="c6"
+        class="c5"
         for="slide-tab-desktop"
+        role="tab"
       >
         <div
-          class="c7"
-          style="line-height: 31px;"
+          class="c6"
         >
           <img
-            class="c8"
+            class="c7"
             src="file_stub"
             width="32px"
           />
-           Desktop
+          <div
+            class="c8"
+          >
+            Desktop
+          </div>
         </div>
         <input
           class="c9"
@@ -1085,14 +1142,14 @@ exports[`select resource application shows permissions error when lacking tokens
       <li>
         Your Teleport Enterprise license does not include 
         Application Access
-        . Reach out to your Teleport admin to enable 
+        . Reach out to your Teleport administrator to enable 
         Application Access
         .
       </li>
       <li>
         You don’t have sufficient permissions to 
         add new Applications
-        . Reach out to your Teleport admin to request additional permissions.
+        . Reach out to your Teleport administrator to request additional permissions.
       </li>
     </ul>
   </div>
@@ -1112,7 +1169,7 @@ exports[`select resource application shows permissions error when lacking tokens
     <a
       class="c15"
       href="/web"
-      kind="primary"
+      kind="secondary"
       mt="3"
       theme="[object Object]"
       width="165px"
@@ -1124,11 +1181,11 @@ exports[`select resource application shows permissions error when lacking tokens
 `;
 
 exports[`select resource database has the proceed button enabled when having correct permissions 1`] = `
-.c4 {
+.c3 {
   position: relative;
 }
 
-.c6 {
+.c5 {
   cursor: pointer;
   display: flex;
   justify-content: center;
@@ -1154,7 +1211,7 @@ exports[`select resource database has the proceed button enabled when having cor
   width: calc(20% - 16px);
 }
 
-.c5 {
+.c4 {
   align-items: center;
   background-color: rgba(255,255,255,0.05);
   border-radius: 8px;
@@ -1238,7 +1295,7 @@ exports[`select resource database has the proceed button enabled when having cor
   text-transform: uppercase;
   transition: all 0.3s;
   -webkit-font-smoothing: antialiased;
-  background: #512FC9;
+  background: #222C59;
   color: rgba(255,255,255,0.87);
   min-height: 32px;
   font-size: 12px;
@@ -1253,11 +1310,7 @@ exports[`select resource database has the proceed button enabled when having cor
 
 .c13:hover,
 .c13:focus {
-  background: #651FFF;
-}
-
-.c13:active {
-  background: #354AA4;
+  background: #2C3A73;
 }
 
 .c13:disabled {
@@ -1265,7 +1318,7 @@ exports[`select resource database has the proceed button enabled when having cor
   color: rgba(255,255,255,0.3);
 }
 
-.c8 {
+.c7 {
   display: block;
   outline: none;
   margin-right: 8px;
@@ -1275,29 +1328,33 @@ exports[`select resource database has the proceed button enabled when having cor
 .c1 {
   overflow: hidden;
   text-overflow: ellipsis;
-  font-weight: 400;
+  font-weight: 600;
   font-size: 18px;
-  line-height: 32px;
   margin: 0px;
+  margin-top: 4px;
+  margin-bottom: 4px;
 }
 
 .c2 {
   overflow: hidden;
   text-overflow: ellipsis;
   margin: 0px;
-  margin-bottom: 24px;
+  margin-bottom: 32px;
 }
 
-.c3 {
+.c8 {
   overflow: hidden;
   text-overflow: ellipsis;
+  font-weight: 600;
+  font-size: 16px;
+  line-height: 24px;
   margin: 0px;
-  margin-bottom: 8px;
 }
 
-.c7 {
+.c6 {
   box-sizing: border-box;
   display: flex;
+  align-items: center;
 }
 
 <div
@@ -1306,39 +1363,42 @@ exports[`select resource database has the proceed button enabled when having cor
 >
   <div
     class="c1"
-  >
-    Resource Selection
-  </div>
-  <div
-    class="c2"
-  >
-    Users are able to add and access many different types of resources through Teleport. Start by selecting the type of resource you want to add.
-  </div>
-  <div
-    class="c3"
+    font-size="18px"
   >
     Select Resource Type
   </div>
   <div
-    class="c4"
+    class="c2"
+  >
+    Users are able to add and access many different types of resources through Teleport. 
+    <br />
+    Start by selecting the type of resource you want to add.
+  </div>
+  <div
+    class="c3"
   >
     <nav
-      class="c5"
+      class="c4"
+      role="tablist"
     >
       <label
-        class="c6"
+        class="c5"
         for="slide-tab-server"
+        role="tab"
       >
         <div
-          class="c7"
-          style="line-height: 31px;"
+          class="c6"
         >
           <img
-            class="c8"
+            class="c7"
             src="file_stub"
             width="32px"
           />
-           Server
+          <div
+            class="c8"
+          >
+            Server
+          </div>
         </div>
         <input
           class="c9"
@@ -1348,19 +1408,23 @@ exports[`select resource database has the proceed button enabled when having cor
         />
       </label>
       <label
-        class="c6"
+        class="c5"
         for="slide-tab-database"
+        role="tab"
       >
         <div
-          class="c7"
-          style="line-height: 31px;"
+          class="c6"
         >
           <img
-            class="c8"
+            class="c7"
             src="file_stub"
             width="32px"
           />
-           Database
+          <div
+            class="c8"
+          >
+            Database
+          </div>
         </div>
         <input
           class="c9"
@@ -1370,19 +1434,23 @@ exports[`select resource database has the proceed button enabled when having cor
         />
       </label>
       <label
-        class="c6"
+        class="c5"
         for="slide-tab-kubernetes"
+        role="tab"
       >
         <div
-          class="c7"
-          style="line-height: 31px;"
+          class="c6"
         >
           <img
-            class="c8"
+            class="c7"
             src="file_stub"
             width="32px"
           />
-           Kubernetes
+          <div
+            class="c8"
+          >
+            Kubernetes
+          </div>
         </div>
         <input
           class="c9"
@@ -1392,19 +1460,23 @@ exports[`select resource database has the proceed button enabled when having cor
         />
       </label>
       <label
-        class="c6"
+        class="c5"
         for="slide-tab-application"
+        role="tab"
       >
         <div
-          class="c7"
-          style="line-height: 31px;"
+          class="c6"
         >
           <img
-            class="c8"
+            class="c7"
             src="file_stub"
             width="32px"
           />
-           Application
+          <div
+            class="c8"
+          >
+            Application
+          </div>
         </div>
         <input
           class="c9"
@@ -1414,19 +1486,23 @@ exports[`select resource database has the proceed button enabled when having cor
         />
       </label>
       <label
-        class="c6"
+        class="c5"
         for="slide-tab-desktop"
+        role="tab"
       >
         <div
-          class="c7"
-          style="line-height: 31px;"
+          class="c6"
         >
           <img
-            class="c8"
+            class="c7"
             src="file_stub"
             width="32px"
           />
-           Desktop
+          <div
+            class="c8"
+          >
+            Desktop
+          </div>
         </div>
         <input
           class="c9"
@@ -1455,7 +1531,7 @@ exports[`select resource database has the proceed button enabled when having cor
     <a
       class="c13"
       href="/web"
-      kind="primary"
+      kind="secondary"
       mt="3"
       theme="[object Object]"
       width="165px"
@@ -1467,11 +1543,11 @@ exports[`select resource database has the proceed button enabled when having cor
 `;
 
 exports[`select resource database shows permissions error when lacking dbServers.read 1`] = `
-.c4 {
+.c3 {
   position: relative;
 }
 
-.c6 {
+.c5 {
   cursor: pointer;
   display: flex;
   justify-content: center;
@@ -1497,7 +1573,7 @@ exports[`select resource database shows permissions error when lacking dbServers
   width: calc(20% - 16px);
 }
 
-.c5 {
+.c4 {
   align-items: center;
   background-color: rgba(255,255,255,0.05);
   border-radius: 8px;
@@ -1581,7 +1657,7 @@ exports[`select resource database shows permissions error when lacking dbServers
   text-transform: uppercase;
   transition: all 0.3s;
   -webkit-font-smoothing: antialiased;
-  background: #512FC9;
+  background: #222C59;
   color: rgba(255,255,255,0.87);
   min-height: 32px;
   font-size: 12px;
@@ -1596,11 +1672,7 @@ exports[`select resource database shows permissions error when lacking dbServers
 
 .c15:hover,
 .c15:focus {
-  background: #651FFF;
-}
-
-.c15:active {
-  background: #354AA4;
+  background: #2C3A73;
 }
 
 .c15:disabled {
@@ -1608,7 +1680,7 @@ exports[`select resource database shows permissions error when lacking dbServers
   color: rgba(255,255,255,0.3);
 }
 
-.c8 {
+.c7 {
   display: block;
   outline: none;
   margin-right: 8px;
@@ -1618,24 +1690,27 @@ exports[`select resource database shows permissions error when lacking dbServers
 .c1 {
   overflow: hidden;
   text-overflow: ellipsis;
-  font-weight: 400;
+  font-weight: 600;
   font-size: 18px;
-  line-height: 32px;
   margin: 0px;
+  margin-top: 4px;
+  margin-bottom: 4px;
 }
 
 .c2 {
   overflow: hidden;
   text-overflow: ellipsis;
   margin: 0px;
-  margin-bottom: 24px;
+  margin-bottom: 32px;
 }
 
-.c3 {
+.c8 {
   overflow: hidden;
   text-overflow: ellipsis;
+  font-weight: 600;
+  font-size: 16px;
+  line-height: 24px;
   margin: 0px;
-  margin-bottom: 8px;
 }
 
 .c12 {
@@ -1647,11 +1722,6 @@ exports[`select resource database shows permissions error when lacking dbServers
   margin: 0px;
 }
 
-.c7 {
-  box-sizing: border-box;
-  display: flex;
-}
-
 .c11 {
   box-sizing: border-box;
   width: 100%;
@@ -1661,45 +1731,54 @@ exports[`select resource database shows permissions error when lacking dbServers
   padding: 24px;
 }
 
+.c6 {
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+}
+
 <div
   class="c0"
   width="1020px"
 >
   <div
     class="c1"
-  >
-    Resource Selection
-  </div>
-  <div
-    class="c2"
-  >
-    Users are able to add and access many different types of resources through Teleport. Start by selecting the type of resource you want to add.
-  </div>
-  <div
-    class="c3"
+    font-size="18px"
   >
     Select Resource Type
   </div>
   <div
-    class="c4"
+    class="c2"
+  >
+    Users are able to add and access many different types of resources through Teleport. 
+    <br />
+    Start by selecting the type of resource you want to add.
+  </div>
+  <div
+    class="c3"
   >
     <nav
-      class="c5"
+      class="c4"
+      role="tablist"
     >
       <label
-        class="c6"
+        class="c5"
         for="slide-tab-server"
+        role="tab"
       >
         <div
-          class="c7"
-          style="line-height: 31px;"
+          class="c6"
         >
           <img
-            class="c8"
+            class="c7"
             src="file_stub"
             width="32px"
           />
-           Server
+          <div
+            class="c8"
+          >
+            Server
+          </div>
         </div>
         <input
           class="c9"
@@ -1709,19 +1788,23 @@ exports[`select resource database shows permissions error when lacking dbServers
         />
       </label>
       <label
-        class="c6"
+        class="c5"
         for="slide-tab-database"
+        role="tab"
       >
         <div
-          class="c7"
-          style="line-height: 31px;"
+          class="c6"
         >
           <img
-            class="c8"
+            class="c7"
             src="file_stub"
             width="32px"
           />
-           Database
+          <div
+            class="c8"
+          >
+            Database
+          </div>
         </div>
         <input
           class="c9"
@@ -1731,19 +1814,23 @@ exports[`select resource database shows permissions error when lacking dbServers
         />
       </label>
       <label
-        class="c6"
+        class="c5"
         for="slide-tab-kubernetes"
+        role="tab"
       >
         <div
-          class="c7"
-          style="line-height: 31px;"
+          class="c6"
         >
           <img
-            class="c8"
+            class="c7"
             src="file_stub"
             width="32px"
           />
-           Kubernetes
+          <div
+            class="c8"
+          >
+            Kubernetes
+          </div>
         </div>
         <input
           class="c9"
@@ -1753,19 +1840,23 @@ exports[`select resource database shows permissions error when lacking dbServers
         />
       </label>
       <label
-        class="c6"
+        class="c5"
         for="slide-tab-application"
+        role="tab"
       >
         <div
-          class="c7"
-          style="line-height: 31px;"
+          class="c6"
         >
           <img
-            class="c8"
+            class="c7"
             src="file_stub"
             width="32px"
           />
-           Application
+          <div
+            class="c8"
+          >
+            Application
+          </div>
         </div>
         <input
           class="c9"
@@ -1775,19 +1866,23 @@ exports[`select resource database shows permissions error when lacking dbServers
         />
       </label>
       <label
-        class="c6"
+        class="c5"
         for="slide-tab-desktop"
+        role="tab"
       >
         <div
-          class="c7"
-          style="line-height: 31px;"
+          class="c6"
         >
           <img
-            class="c8"
+            class="c7"
             src="file_stub"
             width="32px"
           />
-           Desktop
+          <div
+            class="c8"
+          >
+            Desktop
+          </div>
         </div>
         <input
           class="c9"
@@ -1818,14 +1913,14 @@ exports[`select resource database shows permissions error when lacking dbServers
       <li>
         Your Teleport Enterprise license does not include 
         Database Access
-        . Reach out to your Teleport admin to enable 
+        . Reach out to your Teleport administrator to enable 
         Database Access
         .
       </li>
       <li>
         You don’t have sufficient permissions to 
         add new Databases
-        . Reach out to your Teleport admin to request additional permissions.
+        . Reach out to your Teleport administrator to request additional permissions.
       </li>
     </ul>
   </div>
@@ -1845,7 +1940,7 @@ exports[`select resource database shows permissions error when lacking dbServers
     <a
       class="c15"
       href="/web"
-      kind="primary"
+      kind="secondary"
       mt="3"
       theme="[object Object]"
       width="165px"
@@ -1857,11 +1952,11 @@ exports[`select resource database shows permissions error when lacking dbServers
 `;
 
 exports[`select resource database shows permissions error when lacking tokens.create 1`] = `
-.c4 {
+.c3 {
   position: relative;
 }
 
-.c6 {
+.c5 {
   cursor: pointer;
   display: flex;
   justify-content: center;
@@ -1887,7 +1982,7 @@ exports[`select resource database shows permissions error when lacking tokens.cr
   width: calc(20% - 16px);
 }
 
-.c5 {
+.c4 {
   align-items: center;
   background-color: rgba(255,255,255,0.05);
   border-radius: 8px;
@@ -1971,7 +2066,7 @@ exports[`select resource database shows permissions error when lacking tokens.cr
   text-transform: uppercase;
   transition: all 0.3s;
   -webkit-font-smoothing: antialiased;
-  background: #512FC9;
+  background: #222C59;
   color: rgba(255,255,255,0.87);
   min-height: 32px;
   font-size: 12px;
@@ -1986,11 +2081,7 @@ exports[`select resource database shows permissions error when lacking tokens.cr
 
 .c15:hover,
 .c15:focus {
-  background: #651FFF;
-}
-
-.c15:active {
-  background: #354AA4;
+  background: #2C3A73;
 }
 
 .c15:disabled {
@@ -1998,7 +2089,7 @@ exports[`select resource database shows permissions error when lacking tokens.cr
   color: rgba(255,255,255,0.3);
 }
 
-.c8 {
+.c7 {
   display: block;
   outline: none;
   margin-right: 8px;
@@ -2008,24 +2099,27 @@ exports[`select resource database shows permissions error when lacking tokens.cr
 .c1 {
   overflow: hidden;
   text-overflow: ellipsis;
-  font-weight: 400;
+  font-weight: 600;
   font-size: 18px;
-  line-height: 32px;
   margin: 0px;
+  margin-top: 4px;
+  margin-bottom: 4px;
 }
 
 .c2 {
   overflow: hidden;
   text-overflow: ellipsis;
   margin: 0px;
-  margin-bottom: 24px;
+  margin-bottom: 32px;
 }
 
-.c3 {
+.c8 {
   overflow: hidden;
   text-overflow: ellipsis;
+  font-weight: 600;
+  font-size: 16px;
+  line-height: 24px;
   margin: 0px;
-  margin-bottom: 8px;
 }
 
 .c12 {
@@ -2037,11 +2131,6 @@ exports[`select resource database shows permissions error when lacking tokens.cr
   margin: 0px;
 }
 
-.c7 {
-  box-sizing: border-box;
-  display: flex;
-}
-
 .c11 {
   box-sizing: border-box;
   width: 100%;
@@ -2051,45 +2140,54 @@ exports[`select resource database shows permissions error when lacking tokens.cr
   padding: 24px;
 }
 
+.c6 {
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+}
+
 <div
   class="c0"
   width="1020px"
 >
   <div
     class="c1"
-  >
-    Resource Selection
-  </div>
-  <div
-    class="c2"
-  >
-    Users are able to add and access many different types of resources through Teleport. Start by selecting the type of resource you want to add.
-  </div>
-  <div
-    class="c3"
+    font-size="18px"
   >
     Select Resource Type
   </div>
   <div
-    class="c4"
+    class="c2"
+  >
+    Users are able to add and access many different types of resources through Teleport. 
+    <br />
+    Start by selecting the type of resource you want to add.
+  </div>
+  <div
+    class="c3"
   >
     <nav
-      class="c5"
+      class="c4"
+      role="tablist"
     >
       <label
-        class="c6"
+        class="c5"
         for="slide-tab-server"
+        role="tab"
       >
         <div
-          class="c7"
-          style="line-height: 31px;"
+          class="c6"
         >
           <img
-            class="c8"
+            class="c7"
             src="file_stub"
             width="32px"
           />
-           Server
+          <div
+            class="c8"
+          >
+            Server
+          </div>
         </div>
         <input
           class="c9"
@@ -2099,19 +2197,23 @@ exports[`select resource database shows permissions error when lacking tokens.cr
         />
       </label>
       <label
-        class="c6"
+        class="c5"
         for="slide-tab-database"
+        role="tab"
       >
         <div
-          class="c7"
-          style="line-height: 31px;"
+          class="c6"
         >
           <img
-            class="c8"
+            class="c7"
             src="file_stub"
             width="32px"
           />
-           Database
+          <div
+            class="c8"
+          >
+            Database
+          </div>
         </div>
         <input
           class="c9"
@@ -2121,19 +2223,23 @@ exports[`select resource database shows permissions error when lacking tokens.cr
         />
       </label>
       <label
-        class="c6"
+        class="c5"
         for="slide-tab-kubernetes"
+        role="tab"
       >
         <div
-          class="c7"
-          style="line-height: 31px;"
+          class="c6"
         >
           <img
-            class="c8"
+            class="c7"
             src="file_stub"
             width="32px"
           />
-           Kubernetes
+          <div
+            class="c8"
+          >
+            Kubernetes
+          </div>
         </div>
         <input
           class="c9"
@@ -2143,19 +2249,23 @@ exports[`select resource database shows permissions error when lacking tokens.cr
         />
       </label>
       <label
-        class="c6"
+        class="c5"
         for="slide-tab-application"
+        role="tab"
       >
         <div
-          class="c7"
-          style="line-height: 31px;"
+          class="c6"
         >
           <img
-            class="c8"
+            class="c7"
             src="file_stub"
             width="32px"
           />
-           Application
+          <div
+            class="c8"
+          >
+            Application
+          </div>
         </div>
         <input
           class="c9"
@@ -2165,19 +2275,23 @@ exports[`select resource database shows permissions error when lacking tokens.cr
         />
       </label>
       <label
-        class="c6"
+        class="c5"
         for="slide-tab-desktop"
+        role="tab"
       >
         <div
-          class="c7"
-          style="line-height: 31px;"
+          class="c6"
         >
           <img
-            class="c8"
+            class="c7"
             src="file_stub"
             width="32px"
           />
-           Desktop
+          <div
+            class="c8"
+          >
+            Desktop
+          </div>
         </div>
         <input
           class="c9"
@@ -2208,14 +2322,14 @@ exports[`select resource database shows permissions error when lacking tokens.cr
       <li>
         Your Teleport Enterprise license does not include 
         Database Access
-        . Reach out to your Teleport admin to enable 
+        . Reach out to your Teleport administrator to enable 
         Database Access
         .
       </li>
       <li>
         You don’t have sufficient permissions to 
         add new Databases
-        . Reach out to your Teleport admin to request additional permissions.
+        . Reach out to your Teleport administrator to request additional permissions.
       </li>
     </ul>
   </div>
@@ -2235,7 +2349,7 @@ exports[`select resource database shows permissions error when lacking tokens.cr
     <a
       class="c15"
       href="/web"
-      kind="primary"
+      kind="secondary"
       mt="3"
       theme="[object Object]"
       width="165px"
@@ -2247,11 +2361,11 @@ exports[`select resource database shows permissions error when lacking tokens.cr
 `;
 
 exports[`select resource desktop has the view documentation button visible 1`] = `
-.c4 {
+.c3 {
   position: relative;
 }
 
-.c6 {
+.c5 {
   cursor: pointer;
   display: flex;
   justify-content: center;
@@ -2277,7 +2391,7 @@ exports[`select resource desktop has the view documentation button visible 1`] =
   width: calc(20% - 16px);
 }
 
-.c5 {
+.c4 {
   align-items: center;
   background-color: rgba(255,255,255,0.05);
   border-radius: 8px;
@@ -2361,7 +2475,7 @@ exports[`select resource desktop has the view documentation button visible 1`] =
   text-transform: uppercase;
   transition: all 0.3s;
   -webkit-font-smoothing: antialiased;
-  background: #512FC9;
+  background: #222C59;
   color: rgba(255,255,255,0.87);
   min-height: 32px;
   font-size: 12px;
@@ -2376,11 +2490,7 @@ exports[`select resource desktop has the view documentation button visible 1`] =
 
 .c13:hover,
 .c13:focus {
-  background: #651FFF;
-}
-
-.c13:active {
-  background: #354AA4;
+  background: #2C3A73;
 }
 
 .c13:disabled {
@@ -2388,7 +2498,7 @@ exports[`select resource desktop has the view documentation button visible 1`] =
   color: rgba(255,255,255,0.3);
 }
 
-.c8 {
+.c7 {
   display: block;
   outline: none;
   margin-right: 8px;
@@ -2398,29 +2508,33 @@ exports[`select resource desktop has the view documentation button visible 1`] =
 .c1 {
   overflow: hidden;
   text-overflow: ellipsis;
-  font-weight: 400;
+  font-weight: 600;
   font-size: 18px;
-  line-height: 32px;
   margin: 0px;
+  margin-top: 4px;
+  margin-bottom: 4px;
 }
 
 .c2 {
   overflow: hidden;
   text-overflow: ellipsis;
   margin: 0px;
-  margin-bottom: 24px;
+  margin-bottom: 32px;
 }
 
-.c3 {
+.c8 {
   overflow: hidden;
   text-overflow: ellipsis;
+  font-weight: 600;
+  font-size: 16px;
+  line-height: 24px;
   margin: 0px;
-  margin-bottom: 8px;
 }
 
-.c7 {
+.c6 {
   box-sizing: border-box;
   display: flex;
+  align-items: center;
 }
 
 <div
@@ -2429,39 +2543,42 @@ exports[`select resource desktop has the view documentation button visible 1`] =
 >
   <div
     class="c1"
-  >
-    Resource Selection
-  </div>
-  <div
-    class="c2"
-  >
-    Users are able to add and access many different types of resources through Teleport. Start by selecting the type of resource you want to add.
-  </div>
-  <div
-    class="c3"
+    font-size="18px"
   >
     Select Resource Type
   </div>
   <div
-    class="c4"
+    class="c2"
+  >
+    Users are able to add and access many different types of resources through Teleport. 
+    <br />
+    Start by selecting the type of resource you want to add.
+  </div>
+  <div
+    class="c3"
   >
     <nav
-      class="c5"
+      class="c4"
+      role="tablist"
     >
       <label
-        class="c6"
+        class="c5"
         for="slide-tab-server"
+        role="tab"
       >
         <div
-          class="c7"
-          style="line-height: 31px;"
+          class="c6"
         >
           <img
-            class="c8"
+            class="c7"
             src="file_stub"
             width="32px"
           />
-           Server
+          <div
+            class="c8"
+          >
+            Server
+          </div>
         </div>
         <input
           class="c9"
@@ -2471,19 +2588,23 @@ exports[`select resource desktop has the view documentation button visible 1`] =
         />
       </label>
       <label
-        class="c6"
+        class="c5"
         for="slide-tab-database"
+        role="tab"
       >
         <div
-          class="c7"
-          style="line-height: 31px;"
+          class="c6"
         >
           <img
-            class="c8"
+            class="c7"
             src="file_stub"
             width="32px"
           />
-           Database
+          <div
+            class="c8"
+          >
+            Database
+          </div>
         </div>
         <input
           class="c9"
@@ -2493,19 +2614,23 @@ exports[`select resource desktop has the view documentation button visible 1`] =
         />
       </label>
       <label
-        class="c6"
+        class="c5"
         for="slide-tab-kubernetes"
+        role="tab"
       >
         <div
-          class="c7"
-          style="line-height: 31px;"
+          class="c6"
         >
           <img
-            class="c8"
+            class="c7"
             src="file_stub"
             width="32px"
           />
-           Kubernetes
+          <div
+            class="c8"
+          >
+            Kubernetes
+          </div>
         </div>
         <input
           class="c9"
@@ -2515,19 +2640,23 @@ exports[`select resource desktop has the view documentation button visible 1`] =
         />
       </label>
       <label
-        class="c6"
+        class="c5"
         for="slide-tab-application"
+        role="tab"
       >
         <div
-          class="c7"
-          style="line-height: 31px;"
+          class="c6"
         >
           <img
-            class="c8"
+            class="c7"
             src="file_stub"
             width="32px"
           />
-           Application
+          <div
+            class="c8"
+          >
+            Application
+          </div>
         </div>
         <input
           class="c9"
@@ -2537,19 +2666,23 @@ exports[`select resource desktop has the view documentation button visible 1`] =
         />
       </label>
       <label
-        class="c6"
+        class="c5"
         for="slide-tab-desktop"
+        role="tab"
       >
         <div
-          class="c7"
-          style="line-height: 31px;"
+          class="c6"
         >
           <img
-            class="c8"
+            class="c7"
             src="file_stub"
             width="32px"
           />
-           Desktop
+          <div
+            class="c8"
+          >
+            Desktop
+          </div>
         </div>
         <input
           class="c9"
@@ -2580,7 +2713,7 @@ exports[`select resource desktop has the view documentation button visible 1`] =
     <a
       class="c13"
       href="/web"
-      kind="primary"
+      kind="secondary"
       mt="3"
       theme="[object Object]"
       width="165px"
@@ -2592,11 +2725,11 @@ exports[`select resource desktop has the view documentation button visible 1`] =
 `;
 
 exports[`select resource desktop shows permissions error when lacking desktops.read 1`] = `
-.c4 {
+.c3 {
   position: relative;
 }
 
-.c6 {
+.c5 {
   cursor: pointer;
   display: flex;
   justify-content: center;
@@ -2622,7 +2755,7 @@ exports[`select resource desktop shows permissions error when lacking desktops.r
   width: calc(20% - 16px);
 }
 
-.c5 {
+.c4 {
   align-items: center;
   background-color: rgba(255,255,255,0.05);
   border-radius: 8px;
@@ -2706,7 +2839,7 @@ exports[`select resource desktop shows permissions error when lacking desktops.r
   text-transform: uppercase;
   transition: all 0.3s;
   -webkit-font-smoothing: antialiased;
-  background: #512FC9;
+  background: #222C59;
   color: rgba(255,255,255,0.87);
   min-height: 32px;
   font-size: 12px;
@@ -2721,11 +2854,7 @@ exports[`select resource desktop shows permissions error when lacking desktops.r
 
 .c15:hover,
 .c15:focus {
-  background: #651FFF;
-}
-
-.c15:active {
-  background: #354AA4;
+  background: #2C3A73;
 }
 
 .c15:disabled {
@@ -2733,7 +2862,7 @@ exports[`select resource desktop shows permissions error when lacking desktops.r
   color: rgba(255,255,255,0.3);
 }
 
-.c8 {
+.c7 {
   display: block;
   outline: none;
   margin-right: 8px;
@@ -2743,24 +2872,27 @@ exports[`select resource desktop shows permissions error when lacking desktops.r
 .c1 {
   overflow: hidden;
   text-overflow: ellipsis;
-  font-weight: 400;
+  font-weight: 600;
   font-size: 18px;
-  line-height: 32px;
   margin: 0px;
+  margin-top: 4px;
+  margin-bottom: 4px;
 }
 
 .c2 {
   overflow: hidden;
   text-overflow: ellipsis;
   margin: 0px;
-  margin-bottom: 24px;
+  margin-bottom: 32px;
 }
 
-.c3 {
+.c8 {
   overflow: hidden;
   text-overflow: ellipsis;
+  font-weight: 600;
+  font-size: 16px;
+  line-height: 24px;
   margin: 0px;
-  margin-bottom: 8px;
 }
 
 .c12 {
@@ -2772,11 +2904,6 @@ exports[`select resource desktop shows permissions error when lacking desktops.r
   margin: 0px;
 }
 
-.c7 {
-  box-sizing: border-box;
-  display: flex;
-}
-
 .c11 {
   box-sizing: border-box;
   width: 100%;
@@ -2786,45 +2913,54 @@ exports[`select resource desktop shows permissions error when lacking desktops.r
   padding: 24px;
 }
 
+.c6 {
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+}
+
 <div
   class="c0"
   width="1020px"
 >
   <div
     class="c1"
-  >
-    Resource Selection
-  </div>
-  <div
-    class="c2"
-  >
-    Users are able to add and access many different types of resources through Teleport. Start by selecting the type of resource you want to add.
-  </div>
-  <div
-    class="c3"
+    font-size="18px"
   >
     Select Resource Type
   </div>
   <div
-    class="c4"
+    class="c2"
+  >
+    Users are able to add and access many different types of resources through Teleport. 
+    <br />
+    Start by selecting the type of resource you want to add.
+  </div>
+  <div
+    class="c3"
   >
     <nav
-      class="c5"
+      class="c4"
+      role="tablist"
     >
       <label
-        class="c6"
+        class="c5"
         for="slide-tab-server"
+        role="tab"
       >
         <div
-          class="c7"
-          style="line-height: 31px;"
+          class="c6"
         >
           <img
-            class="c8"
+            class="c7"
             src="file_stub"
             width="32px"
           />
-           Server
+          <div
+            class="c8"
+          >
+            Server
+          </div>
         </div>
         <input
           class="c9"
@@ -2834,19 +2970,23 @@ exports[`select resource desktop shows permissions error when lacking desktops.r
         />
       </label>
       <label
-        class="c6"
+        class="c5"
         for="slide-tab-database"
+        role="tab"
       >
         <div
-          class="c7"
-          style="line-height: 31px;"
+          class="c6"
         >
           <img
-            class="c8"
+            class="c7"
             src="file_stub"
             width="32px"
           />
-           Database
+          <div
+            class="c8"
+          >
+            Database
+          </div>
         </div>
         <input
           class="c9"
@@ -2856,19 +2996,23 @@ exports[`select resource desktop shows permissions error when lacking desktops.r
         />
       </label>
       <label
-        class="c6"
+        class="c5"
         for="slide-tab-kubernetes"
+        role="tab"
       >
         <div
-          class="c7"
-          style="line-height: 31px;"
+          class="c6"
         >
           <img
-            class="c8"
+            class="c7"
             src="file_stub"
             width="32px"
           />
-           Kubernetes
+          <div
+            class="c8"
+          >
+            Kubernetes
+          </div>
         </div>
         <input
           class="c9"
@@ -2878,19 +3022,23 @@ exports[`select resource desktop shows permissions error when lacking desktops.r
         />
       </label>
       <label
-        class="c6"
+        class="c5"
         for="slide-tab-application"
+        role="tab"
       >
         <div
-          class="c7"
-          style="line-height: 31px;"
+          class="c6"
         >
           <img
-            class="c8"
+            class="c7"
             src="file_stub"
             width="32px"
           />
-           Application
+          <div
+            class="c8"
+          >
+            Application
+          </div>
         </div>
         <input
           class="c9"
@@ -2900,19 +3048,23 @@ exports[`select resource desktop shows permissions error when lacking desktops.r
         />
       </label>
       <label
-        class="c6"
+        class="c5"
         for="slide-tab-desktop"
+        role="tab"
       >
         <div
-          class="c7"
-          style="line-height: 31px;"
+          class="c6"
         >
           <img
-            class="c8"
+            class="c7"
             src="file_stub"
             width="32px"
           />
-           Desktop
+          <div
+            class="c8"
+          >
+            Desktop
+          </div>
         </div>
         <input
           class="c9"
@@ -2943,14 +3095,14 @@ exports[`select resource desktop shows permissions error when lacking desktops.r
       <li>
         Your Teleport Enterprise license does not include 
         Desktop Access
-        . Reach out to your Teleport admin to enable 
+        . Reach out to your Teleport administrator to enable 
         Desktop Access
         .
       </li>
       <li>
         You don’t have sufficient permissions to 
         add new Desktops
-        . Reach out to your Teleport admin to request additional permissions.
+        . Reach out to your Teleport administrator to request additional permissions.
       </li>
     </ul>
   </div>
@@ -2971,7 +3123,7 @@ exports[`select resource desktop shows permissions error when lacking desktops.r
     <a
       class="c15"
       href="/web"
-      kind="primary"
+      kind="secondary"
       mt="3"
       theme="[object Object]"
       width="165px"
@@ -2983,11 +3135,11 @@ exports[`select resource desktop shows permissions error when lacking desktops.r
 `;
 
 exports[`select resource desktop shows permissions error when lacking tokens.create 1`] = `
-.c4 {
+.c3 {
   position: relative;
 }
 
-.c6 {
+.c5 {
   cursor: pointer;
   display: flex;
   justify-content: center;
@@ -3013,7 +3165,7 @@ exports[`select resource desktop shows permissions error when lacking tokens.cre
   width: calc(20% - 16px);
 }
 
-.c5 {
+.c4 {
   align-items: center;
   background-color: rgba(255,255,255,0.05);
   border-radius: 8px;
@@ -3097,7 +3249,7 @@ exports[`select resource desktop shows permissions error when lacking tokens.cre
   text-transform: uppercase;
   transition: all 0.3s;
   -webkit-font-smoothing: antialiased;
-  background: #512FC9;
+  background: #222C59;
   color: rgba(255,255,255,0.87);
   min-height: 32px;
   font-size: 12px;
@@ -3112,11 +3264,7 @@ exports[`select resource desktop shows permissions error when lacking tokens.cre
 
 .c15:hover,
 .c15:focus {
-  background: #651FFF;
-}
-
-.c15:active {
-  background: #354AA4;
+  background: #2C3A73;
 }
 
 .c15:disabled {
@@ -3124,7 +3272,7 @@ exports[`select resource desktop shows permissions error when lacking tokens.cre
   color: rgba(255,255,255,0.3);
 }
 
-.c8 {
+.c7 {
   display: block;
   outline: none;
   margin-right: 8px;
@@ -3134,24 +3282,27 @@ exports[`select resource desktop shows permissions error when lacking tokens.cre
 .c1 {
   overflow: hidden;
   text-overflow: ellipsis;
-  font-weight: 400;
+  font-weight: 600;
   font-size: 18px;
-  line-height: 32px;
   margin: 0px;
+  margin-top: 4px;
+  margin-bottom: 4px;
 }
 
 .c2 {
   overflow: hidden;
   text-overflow: ellipsis;
   margin: 0px;
-  margin-bottom: 24px;
+  margin-bottom: 32px;
 }
 
-.c3 {
+.c8 {
   overflow: hidden;
   text-overflow: ellipsis;
+  font-weight: 600;
+  font-size: 16px;
+  line-height: 24px;
   margin: 0px;
-  margin-bottom: 8px;
 }
 
 .c12 {
@@ -3163,11 +3314,6 @@ exports[`select resource desktop shows permissions error when lacking tokens.cre
   margin: 0px;
 }
 
-.c7 {
-  box-sizing: border-box;
-  display: flex;
-}
-
 .c11 {
   box-sizing: border-box;
   width: 100%;
@@ -3177,45 +3323,54 @@ exports[`select resource desktop shows permissions error when lacking tokens.cre
   padding: 24px;
 }
 
+.c6 {
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+}
+
 <div
   class="c0"
   width="1020px"
 >
   <div
     class="c1"
-  >
-    Resource Selection
-  </div>
-  <div
-    class="c2"
-  >
-    Users are able to add and access many different types of resources through Teleport. Start by selecting the type of resource you want to add.
-  </div>
-  <div
-    class="c3"
+    font-size="18px"
   >
     Select Resource Type
   </div>
   <div
-    class="c4"
+    class="c2"
+  >
+    Users are able to add and access many different types of resources through Teleport. 
+    <br />
+    Start by selecting the type of resource you want to add.
+  </div>
+  <div
+    class="c3"
   >
     <nav
-      class="c5"
+      class="c4"
+      role="tablist"
     >
       <label
-        class="c6"
+        class="c5"
         for="slide-tab-server"
+        role="tab"
       >
         <div
-          class="c7"
-          style="line-height: 31px;"
+          class="c6"
         >
           <img
-            class="c8"
+            class="c7"
             src="file_stub"
             width="32px"
           />
-           Server
+          <div
+            class="c8"
+          >
+            Server
+          </div>
         </div>
         <input
           class="c9"
@@ -3225,19 +3380,23 @@ exports[`select resource desktop shows permissions error when lacking tokens.cre
         />
       </label>
       <label
-        class="c6"
+        class="c5"
         for="slide-tab-database"
+        role="tab"
       >
         <div
-          class="c7"
-          style="line-height: 31px;"
+          class="c6"
         >
           <img
-            class="c8"
+            class="c7"
             src="file_stub"
             width="32px"
           />
-           Database
+          <div
+            class="c8"
+          >
+            Database
+          </div>
         </div>
         <input
           class="c9"
@@ -3247,19 +3406,23 @@ exports[`select resource desktop shows permissions error when lacking tokens.cre
         />
       </label>
       <label
-        class="c6"
+        class="c5"
         for="slide-tab-kubernetes"
+        role="tab"
       >
         <div
-          class="c7"
-          style="line-height: 31px;"
+          class="c6"
         >
           <img
-            class="c8"
+            class="c7"
             src="file_stub"
             width="32px"
           />
-           Kubernetes
+          <div
+            class="c8"
+          >
+            Kubernetes
+          </div>
         </div>
         <input
           class="c9"
@@ -3269,19 +3432,23 @@ exports[`select resource desktop shows permissions error when lacking tokens.cre
         />
       </label>
       <label
-        class="c6"
+        class="c5"
         for="slide-tab-application"
+        role="tab"
       >
         <div
-          class="c7"
-          style="line-height: 31px;"
+          class="c6"
         >
           <img
-            class="c8"
+            class="c7"
             src="file_stub"
             width="32px"
           />
-           Application
+          <div
+            class="c8"
+          >
+            Application
+          </div>
         </div>
         <input
           class="c9"
@@ -3291,19 +3458,23 @@ exports[`select resource desktop shows permissions error when lacking tokens.cre
         />
       </label>
       <label
-        class="c6"
+        class="c5"
         for="slide-tab-desktop"
+        role="tab"
       >
         <div
-          class="c7"
-          style="line-height: 31px;"
+          class="c6"
         >
           <img
-            class="c8"
+            class="c7"
             src="file_stub"
             width="32px"
           />
-           Desktop
+          <div
+            class="c8"
+          >
+            Desktop
+          </div>
         </div>
         <input
           class="c9"
@@ -3334,14 +3505,14 @@ exports[`select resource desktop shows permissions error when lacking tokens.cre
       <li>
         Your Teleport Enterprise license does not include 
         Desktop Access
-        . Reach out to your Teleport admin to enable 
+        . Reach out to your Teleport administrator to enable 
         Desktop Access
         .
       </li>
       <li>
         You don’t have sufficient permissions to 
         add new Desktops
-        . Reach out to your Teleport admin to request additional permissions.
+        . Reach out to your Teleport administrator to request additional permissions.
       </li>
     </ul>
   </div>
@@ -3362,7 +3533,7 @@ exports[`select resource desktop shows permissions error when lacking tokens.cre
     <a
       class="c15"
       href="/web"
-      kind="primary"
+      kind="secondary"
       mt="3"
       theme="[object Object]"
       width="165px"
@@ -3374,11 +3545,11 @@ exports[`select resource desktop shows permissions error when lacking tokens.cre
 `;
 
 exports[`select resource kubernetes has the proceed button enabled when having correct permissions 1`] = `
-.c4 {
+.c3 {
   position: relative;
 }
 
-.c6 {
+.c5 {
   cursor: pointer;
   display: flex;
   justify-content: center;
@@ -3404,7 +3575,7 @@ exports[`select resource kubernetes has the proceed button enabled when having c
   width: calc(20% - 16px);
 }
 
-.c5 {
+.c4 {
   align-items: center;
   background-color: rgba(255,255,255,0.05);
   border-radius: 8px;
@@ -3488,7 +3659,7 @@ exports[`select resource kubernetes has the proceed button enabled when having c
   text-transform: uppercase;
   transition: all 0.3s;
   -webkit-font-smoothing: antialiased;
-  background: #512FC9;
+  background: #222C59;
   color: rgba(255,255,255,0.87);
   min-height: 32px;
   font-size: 12px;
@@ -3503,11 +3674,7 @@ exports[`select resource kubernetes has the proceed button enabled when having c
 
 .c13:hover,
 .c13:focus {
-  background: #651FFF;
-}
-
-.c13:active {
-  background: #354AA4;
+  background: #2C3A73;
 }
 
 .c13:disabled {
@@ -3515,7 +3682,7 @@ exports[`select resource kubernetes has the proceed button enabled when having c
   color: rgba(255,255,255,0.3);
 }
 
-.c8 {
+.c7 {
   display: block;
   outline: none;
   margin-right: 8px;
@@ -3525,29 +3692,33 @@ exports[`select resource kubernetes has the proceed button enabled when having c
 .c1 {
   overflow: hidden;
   text-overflow: ellipsis;
-  font-weight: 400;
+  font-weight: 600;
   font-size: 18px;
-  line-height: 32px;
   margin: 0px;
+  margin-top: 4px;
+  margin-bottom: 4px;
 }
 
 .c2 {
   overflow: hidden;
   text-overflow: ellipsis;
   margin: 0px;
-  margin-bottom: 24px;
+  margin-bottom: 32px;
 }
 
-.c3 {
+.c8 {
   overflow: hidden;
   text-overflow: ellipsis;
+  font-weight: 600;
+  font-size: 16px;
+  line-height: 24px;
   margin: 0px;
-  margin-bottom: 8px;
 }
 
-.c7 {
+.c6 {
   box-sizing: border-box;
   display: flex;
+  align-items: center;
 }
 
 <div
@@ -3556,39 +3727,42 @@ exports[`select resource kubernetes has the proceed button enabled when having c
 >
   <div
     class="c1"
-  >
-    Resource Selection
-  </div>
-  <div
-    class="c2"
-  >
-    Users are able to add and access many different types of resources through Teleport. Start by selecting the type of resource you want to add.
-  </div>
-  <div
-    class="c3"
+    font-size="18px"
   >
     Select Resource Type
   </div>
   <div
-    class="c4"
+    class="c2"
+  >
+    Users are able to add and access many different types of resources through Teleport. 
+    <br />
+    Start by selecting the type of resource you want to add.
+  </div>
+  <div
+    class="c3"
   >
     <nav
-      class="c5"
+      class="c4"
+      role="tablist"
     >
       <label
-        class="c6"
+        class="c5"
         for="slide-tab-server"
+        role="tab"
       >
         <div
-          class="c7"
-          style="line-height: 31px;"
+          class="c6"
         >
           <img
-            class="c8"
+            class="c7"
             src="file_stub"
             width="32px"
           />
-           Server
+          <div
+            class="c8"
+          >
+            Server
+          </div>
         </div>
         <input
           class="c9"
@@ -3598,19 +3772,23 @@ exports[`select resource kubernetes has the proceed button enabled when having c
         />
       </label>
       <label
-        class="c6"
+        class="c5"
         for="slide-tab-database"
+        role="tab"
       >
         <div
-          class="c7"
-          style="line-height: 31px;"
+          class="c6"
         >
           <img
-            class="c8"
+            class="c7"
             src="file_stub"
             width="32px"
           />
-           Database
+          <div
+            class="c8"
+          >
+            Database
+          </div>
         </div>
         <input
           class="c9"
@@ -3620,19 +3798,23 @@ exports[`select resource kubernetes has the proceed button enabled when having c
         />
       </label>
       <label
-        class="c6"
+        class="c5"
         for="slide-tab-kubernetes"
+        role="tab"
       >
         <div
-          class="c7"
-          style="line-height: 31px;"
+          class="c6"
         >
           <img
-            class="c8"
+            class="c7"
             src="file_stub"
             width="32px"
           />
-           Kubernetes
+          <div
+            class="c8"
+          >
+            Kubernetes
+          </div>
         </div>
         <input
           class="c9"
@@ -3642,19 +3824,23 @@ exports[`select resource kubernetes has the proceed button enabled when having c
         />
       </label>
       <label
-        class="c6"
+        class="c5"
         for="slide-tab-application"
+        role="tab"
       >
         <div
-          class="c7"
-          style="line-height: 31px;"
+          class="c6"
         >
           <img
-            class="c8"
+            class="c7"
             src="file_stub"
             width="32px"
           />
-           Application
+          <div
+            class="c8"
+          >
+            Application
+          </div>
         </div>
         <input
           class="c9"
@@ -3664,19 +3850,23 @@ exports[`select resource kubernetes has the proceed button enabled when having c
         />
       </label>
       <label
-        class="c6"
+        class="c5"
         for="slide-tab-desktop"
+        role="tab"
       >
         <div
-          class="c7"
-          style="line-height: 31px;"
+          class="c6"
         >
           <img
-            class="c8"
+            class="c7"
             src="file_stub"
             width="32px"
           />
-           Desktop
+          <div
+            class="c8"
+          >
+            Desktop
+          </div>
         </div>
         <input
           class="c9"
@@ -3705,7 +3895,7 @@ exports[`select resource kubernetes has the proceed button enabled when having c
     <a
       class="c13"
       href="/web"
-      kind="primary"
+      kind="secondary"
       mt="3"
       theme="[object Object]"
       width="165px"
@@ -3717,11 +3907,11 @@ exports[`select resource kubernetes has the proceed button enabled when having c
 `;
 
 exports[`select resource kubernetes shows permissions error when lacking kubeServers.read 1`] = `
-.c4 {
+.c3 {
   position: relative;
 }
 
-.c6 {
+.c5 {
   cursor: pointer;
   display: flex;
   justify-content: center;
@@ -3747,7 +3937,7 @@ exports[`select resource kubernetes shows permissions error when lacking kubeSer
   width: calc(20% - 16px);
 }
 
-.c5 {
+.c4 {
   align-items: center;
   background-color: rgba(255,255,255,0.05);
   border-radius: 8px;
@@ -3831,7 +4021,7 @@ exports[`select resource kubernetes shows permissions error when lacking kubeSer
   text-transform: uppercase;
   transition: all 0.3s;
   -webkit-font-smoothing: antialiased;
-  background: #512FC9;
+  background: #222C59;
   color: rgba(255,255,255,0.87);
   min-height: 32px;
   font-size: 12px;
@@ -3846,11 +4036,7 @@ exports[`select resource kubernetes shows permissions error when lacking kubeSer
 
 .c15:hover,
 .c15:focus {
-  background: #651FFF;
-}
-
-.c15:active {
-  background: #354AA4;
+  background: #2C3A73;
 }
 
 .c15:disabled {
@@ -3858,7 +4044,7 @@ exports[`select resource kubernetes shows permissions error when lacking kubeSer
   color: rgba(255,255,255,0.3);
 }
 
-.c8 {
+.c7 {
   display: block;
   outline: none;
   margin-right: 8px;
@@ -3868,24 +4054,27 @@ exports[`select resource kubernetes shows permissions error when lacking kubeSer
 .c1 {
   overflow: hidden;
   text-overflow: ellipsis;
-  font-weight: 400;
+  font-weight: 600;
   font-size: 18px;
-  line-height: 32px;
   margin: 0px;
+  margin-top: 4px;
+  margin-bottom: 4px;
 }
 
 .c2 {
   overflow: hidden;
   text-overflow: ellipsis;
   margin: 0px;
-  margin-bottom: 24px;
+  margin-bottom: 32px;
 }
 
-.c3 {
+.c8 {
   overflow: hidden;
   text-overflow: ellipsis;
+  font-weight: 600;
+  font-size: 16px;
+  line-height: 24px;
   margin: 0px;
-  margin-bottom: 8px;
 }
 
 .c12 {
@@ -3897,11 +4086,6 @@ exports[`select resource kubernetes shows permissions error when lacking kubeSer
   margin: 0px;
 }
 
-.c7 {
-  box-sizing: border-box;
-  display: flex;
-}
-
 .c11 {
   box-sizing: border-box;
   width: 100%;
@@ -3911,45 +4095,54 @@ exports[`select resource kubernetes shows permissions error when lacking kubeSer
   padding: 24px;
 }
 
+.c6 {
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+}
+
 <div
   class="c0"
   width="1020px"
 >
   <div
     class="c1"
-  >
-    Resource Selection
-  </div>
-  <div
-    class="c2"
-  >
-    Users are able to add and access many different types of resources through Teleport. Start by selecting the type of resource you want to add.
-  </div>
-  <div
-    class="c3"
+    font-size="18px"
   >
     Select Resource Type
   </div>
   <div
-    class="c4"
+    class="c2"
+  >
+    Users are able to add and access many different types of resources through Teleport. 
+    <br />
+    Start by selecting the type of resource you want to add.
+  </div>
+  <div
+    class="c3"
   >
     <nav
-      class="c5"
+      class="c4"
+      role="tablist"
     >
       <label
-        class="c6"
+        class="c5"
         for="slide-tab-server"
+        role="tab"
       >
         <div
-          class="c7"
-          style="line-height: 31px;"
+          class="c6"
         >
           <img
-            class="c8"
+            class="c7"
             src="file_stub"
             width="32px"
           />
-           Server
+          <div
+            class="c8"
+          >
+            Server
+          </div>
         </div>
         <input
           class="c9"
@@ -3959,19 +4152,23 @@ exports[`select resource kubernetes shows permissions error when lacking kubeSer
         />
       </label>
       <label
-        class="c6"
+        class="c5"
         for="slide-tab-database"
+        role="tab"
       >
         <div
-          class="c7"
-          style="line-height: 31px;"
+          class="c6"
         >
           <img
-            class="c8"
+            class="c7"
             src="file_stub"
             width="32px"
           />
-           Database
+          <div
+            class="c8"
+          >
+            Database
+          </div>
         </div>
         <input
           class="c9"
@@ -3981,19 +4178,23 @@ exports[`select resource kubernetes shows permissions error when lacking kubeSer
         />
       </label>
       <label
-        class="c6"
+        class="c5"
         for="slide-tab-kubernetes"
+        role="tab"
       >
         <div
-          class="c7"
-          style="line-height: 31px;"
+          class="c6"
         >
           <img
-            class="c8"
+            class="c7"
             src="file_stub"
             width="32px"
           />
-           Kubernetes
+          <div
+            class="c8"
+          >
+            Kubernetes
+          </div>
         </div>
         <input
           class="c9"
@@ -4003,19 +4204,23 @@ exports[`select resource kubernetes shows permissions error when lacking kubeSer
         />
       </label>
       <label
-        class="c6"
+        class="c5"
         for="slide-tab-application"
+        role="tab"
       >
         <div
-          class="c7"
-          style="line-height: 31px;"
+          class="c6"
         >
           <img
-            class="c8"
+            class="c7"
             src="file_stub"
             width="32px"
           />
-           Application
+          <div
+            class="c8"
+          >
+            Application
+          </div>
         </div>
         <input
           class="c9"
@@ -4025,19 +4230,23 @@ exports[`select resource kubernetes shows permissions error when lacking kubeSer
         />
       </label>
       <label
-        class="c6"
+        class="c5"
         for="slide-tab-desktop"
+        role="tab"
       >
         <div
-          class="c7"
-          style="line-height: 31px;"
+          class="c6"
         >
           <img
-            class="c8"
+            class="c7"
             src="file_stub"
             width="32px"
           />
-           Desktop
+          <div
+            class="c8"
+          >
+            Desktop
+          </div>
         </div>
         <input
           class="c9"
@@ -4068,14 +4277,14 @@ exports[`select resource kubernetes shows permissions error when lacking kubeSer
       <li>
         Your Teleport Enterprise license does not include 
         Kubernetes Access
-        . Reach out to your Teleport admin to enable 
+        . Reach out to your Teleport administrator to enable 
         Kubernetes Access
         .
       </li>
       <li>
         You don’t have sufficient permissions to 
         add new Kubernetes resources
-        . Reach out to your Teleport admin to request additional permissions.
+        . Reach out to your Teleport administrator to request additional permissions.
       </li>
     </ul>
   </div>
@@ -4095,7 +4304,7 @@ exports[`select resource kubernetes shows permissions error when lacking kubeSer
     <a
       class="c15"
       href="/web"
-      kind="primary"
+      kind="secondary"
       mt="3"
       theme="[object Object]"
       width="165px"
@@ -4107,11 +4316,11 @@ exports[`select resource kubernetes shows permissions error when lacking kubeSer
 `;
 
 exports[`select resource kubernetes shows permissions error when lacking tokens.create 1`] = `
-.c4 {
+.c3 {
   position: relative;
 }
 
-.c6 {
+.c5 {
   cursor: pointer;
   display: flex;
   justify-content: center;
@@ -4137,7 +4346,7 @@ exports[`select resource kubernetes shows permissions error when lacking tokens.
   width: calc(20% - 16px);
 }
 
-.c5 {
+.c4 {
   align-items: center;
   background-color: rgba(255,255,255,0.05);
   border-radius: 8px;
@@ -4221,7 +4430,7 @@ exports[`select resource kubernetes shows permissions error when lacking tokens.
   text-transform: uppercase;
   transition: all 0.3s;
   -webkit-font-smoothing: antialiased;
-  background: #512FC9;
+  background: #222C59;
   color: rgba(255,255,255,0.87);
   min-height: 32px;
   font-size: 12px;
@@ -4236,11 +4445,7 @@ exports[`select resource kubernetes shows permissions error when lacking tokens.
 
 .c15:hover,
 .c15:focus {
-  background: #651FFF;
-}
-
-.c15:active {
-  background: #354AA4;
+  background: #2C3A73;
 }
 
 .c15:disabled {
@@ -4248,7 +4453,7 @@ exports[`select resource kubernetes shows permissions error when lacking tokens.
   color: rgba(255,255,255,0.3);
 }
 
-.c8 {
+.c7 {
   display: block;
   outline: none;
   margin-right: 8px;
@@ -4258,24 +4463,27 @@ exports[`select resource kubernetes shows permissions error when lacking tokens.
 .c1 {
   overflow: hidden;
   text-overflow: ellipsis;
-  font-weight: 400;
+  font-weight: 600;
   font-size: 18px;
-  line-height: 32px;
   margin: 0px;
+  margin-top: 4px;
+  margin-bottom: 4px;
 }
 
 .c2 {
   overflow: hidden;
   text-overflow: ellipsis;
   margin: 0px;
-  margin-bottom: 24px;
+  margin-bottom: 32px;
 }
 
-.c3 {
+.c8 {
   overflow: hidden;
   text-overflow: ellipsis;
+  font-weight: 600;
+  font-size: 16px;
+  line-height: 24px;
   margin: 0px;
-  margin-bottom: 8px;
 }
 
 .c12 {
@@ -4287,11 +4495,6 @@ exports[`select resource kubernetes shows permissions error when lacking tokens.
   margin: 0px;
 }
 
-.c7 {
-  box-sizing: border-box;
-  display: flex;
-}
-
 .c11 {
   box-sizing: border-box;
   width: 100%;
@@ -4301,45 +4504,54 @@ exports[`select resource kubernetes shows permissions error when lacking tokens.
   padding: 24px;
 }
 
+.c6 {
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+}
+
 <div
   class="c0"
   width="1020px"
 >
   <div
     class="c1"
-  >
-    Resource Selection
-  </div>
-  <div
-    class="c2"
-  >
-    Users are able to add and access many different types of resources through Teleport. Start by selecting the type of resource you want to add.
-  </div>
-  <div
-    class="c3"
+    font-size="18px"
   >
     Select Resource Type
   </div>
   <div
-    class="c4"
+    class="c2"
+  >
+    Users are able to add and access many different types of resources through Teleport. 
+    <br />
+    Start by selecting the type of resource you want to add.
+  </div>
+  <div
+    class="c3"
   >
     <nav
-      class="c5"
+      class="c4"
+      role="tablist"
     >
       <label
-        class="c6"
+        class="c5"
         for="slide-tab-server"
+        role="tab"
       >
         <div
-          class="c7"
-          style="line-height: 31px;"
+          class="c6"
         >
           <img
-            class="c8"
+            class="c7"
             src="file_stub"
             width="32px"
           />
-           Server
+          <div
+            class="c8"
+          >
+            Server
+          </div>
         </div>
         <input
           class="c9"
@@ -4349,19 +4561,23 @@ exports[`select resource kubernetes shows permissions error when lacking tokens.
         />
       </label>
       <label
-        class="c6"
+        class="c5"
         for="slide-tab-database"
+        role="tab"
       >
         <div
-          class="c7"
-          style="line-height: 31px;"
+          class="c6"
         >
           <img
-            class="c8"
+            class="c7"
             src="file_stub"
             width="32px"
           />
-           Database
+          <div
+            class="c8"
+          >
+            Database
+          </div>
         </div>
         <input
           class="c9"
@@ -4371,19 +4587,23 @@ exports[`select resource kubernetes shows permissions error when lacking tokens.
         />
       </label>
       <label
-        class="c6"
+        class="c5"
         for="slide-tab-kubernetes"
+        role="tab"
       >
         <div
-          class="c7"
-          style="line-height: 31px;"
+          class="c6"
         >
           <img
-            class="c8"
+            class="c7"
             src="file_stub"
             width="32px"
           />
-           Kubernetes
+          <div
+            class="c8"
+          >
+            Kubernetes
+          </div>
         </div>
         <input
           class="c9"
@@ -4393,19 +4613,23 @@ exports[`select resource kubernetes shows permissions error when lacking tokens.
         />
       </label>
       <label
-        class="c6"
+        class="c5"
         for="slide-tab-application"
+        role="tab"
       >
         <div
-          class="c7"
-          style="line-height: 31px;"
+          class="c6"
         >
           <img
-            class="c8"
+            class="c7"
             src="file_stub"
             width="32px"
           />
-           Application
+          <div
+            class="c8"
+          >
+            Application
+          </div>
         </div>
         <input
           class="c9"
@@ -4415,19 +4639,23 @@ exports[`select resource kubernetes shows permissions error when lacking tokens.
         />
       </label>
       <label
-        class="c6"
+        class="c5"
         for="slide-tab-desktop"
+        role="tab"
       >
         <div
-          class="c7"
-          style="line-height: 31px;"
+          class="c6"
         >
           <img
-            class="c8"
+            class="c7"
             src="file_stub"
             width="32px"
           />
-           Desktop
+          <div
+            class="c8"
+          >
+            Desktop
+          </div>
         </div>
         <input
           class="c9"
@@ -4458,14 +4686,14 @@ exports[`select resource kubernetes shows permissions error when lacking tokens.
       <li>
         Your Teleport Enterprise license does not include 
         Kubernetes Access
-        . Reach out to your Teleport admin to enable 
+        . Reach out to your Teleport administrator to enable 
         Kubernetes Access
         .
       </li>
       <li>
         You don’t have sufficient permissions to 
         add new Kubernetes resources
-        . Reach out to your Teleport admin to request additional permissions.
+        . Reach out to your Teleport administrator to request additional permissions.
       </li>
     </ul>
   </div>
@@ -4485,7 +4713,7 @@ exports[`select resource kubernetes shows permissions error when lacking tokens.
     <a
       class="c15"
       href="/web"
-      kind="primary"
+      kind="secondary"
       mt="3"
       theme="[object Object]"
       width="165px"
@@ -4496,12 +4724,12 @@ exports[`select resource kubernetes shows permissions error when lacking tokens.
 </div>
 `;
 
-exports[`select resource server shows permissions error when lacking nodes.read 1`] = `
-.c4 {
+exports[`select resource server shows permissions error when lacking nodes.list 1`] = `
+.c3 {
   position: relative;
 }
 
-.c6 {
+.c5 {
   cursor: pointer;
   display: flex;
   justify-content: center;
@@ -4527,7 +4755,7 @@ exports[`select resource server shows permissions error when lacking nodes.read 
   width: calc(20% - 16px);
 }
 
-.c5 {
+.c4 {
   align-items: center;
   background-color: rgba(255,255,255,0.05);
   border-radius: 8px;
@@ -4611,7 +4839,7 @@ exports[`select resource server shows permissions error when lacking nodes.read 
   text-transform: uppercase;
   transition: all 0.3s;
   -webkit-font-smoothing: antialiased;
-  background: #512FC9;
+  background: #222C59;
   color: rgba(255,255,255,0.87);
   min-height: 32px;
   font-size: 12px;
@@ -4626,11 +4854,7 @@ exports[`select resource server shows permissions error when lacking nodes.read 
 
 .c15:hover,
 .c15:focus {
-  background: #651FFF;
-}
-
-.c15:active {
-  background: #354AA4;
+  background: #2C3A73;
 }
 
 .c15:disabled {
@@ -4638,7 +4862,7 @@ exports[`select resource server shows permissions error when lacking nodes.read 
   color: rgba(255,255,255,0.3);
 }
 
-.c8 {
+.c7 {
   display: block;
   outline: none;
   margin-right: 8px;
@@ -4648,24 +4872,27 @@ exports[`select resource server shows permissions error when lacking nodes.read 
 .c1 {
   overflow: hidden;
   text-overflow: ellipsis;
-  font-weight: 400;
+  font-weight: 600;
   font-size: 18px;
-  line-height: 32px;
   margin: 0px;
+  margin-top: 4px;
+  margin-bottom: 4px;
 }
 
 .c2 {
   overflow: hidden;
   text-overflow: ellipsis;
   margin: 0px;
-  margin-bottom: 24px;
+  margin-bottom: 32px;
 }
 
-.c3 {
+.c8 {
   overflow: hidden;
   text-overflow: ellipsis;
+  font-weight: 600;
+  font-size: 16px;
+  line-height: 24px;
   margin: 0px;
-  margin-bottom: 8px;
 }
 
 .c12 {
@@ -4677,11 +4904,6 @@ exports[`select resource server shows permissions error when lacking nodes.read 
   margin: 0px;
 }
 
-.c7 {
-  box-sizing: border-box;
-  display: flex;
-}
-
 .c11 {
   box-sizing: border-box;
   width: 100%;
@@ -4691,45 +4913,54 @@ exports[`select resource server shows permissions error when lacking nodes.read 
   padding: 24px;
 }
 
+.c6 {
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+}
+
 <div
   class="c0"
   width="1020px"
 >
   <div
     class="c1"
-  >
-    Resource Selection
-  </div>
-  <div
-    class="c2"
-  >
-    Users are able to add and access many different types of resources through Teleport. Start by selecting the type of resource you want to add.
-  </div>
-  <div
-    class="c3"
+    font-size="18px"
   >
     Select Resource Type
   </div>
   <div
-    class="c4"
+    class="c2"
+  >
+    Users are able to add and access many different types of resources through Teleport. 
+    <br />
+    Start by selecting the type of resource you want to add.
+  </div>
+  <div
+    class="c3"
   >
     <nav
-      class="c5"
+      class="c4"
+      role="tablist"
     >
       <label
-        class="c6"
+        class="c5"
         for="slide-tab-server"
+        role="tab"
       >
         <div
-          class="c7"
-          style="line-height: 31px;"
+          class="c6"
         >
           <img
-            class="c8"
+            class="c7"
             src="file_stub"
             width="32px"
           />
-           Server
+          <div
+            class="c8"
+          >
+            Server
+          </div>
         </div>
         <input
           class="c9"
@@ -4739,19 +4970,23 @@ exports[`select resource server shows permissions error when lacking nodes.read 
         />
       </label>
       <label
-        class="c6"
+        class="c5"
         for="slide-tab-database"
+        role="tab"
       >
         <div
-          class="c7"
-          style="line-height: 31px;"
+          class="c6"
         >
           <img
-            class="c8"
+            class="c7"
             src="file_stub"
             width="32px"
           />
-           Database
+          <div
+            class="c8"
+          >
+            Database
+          </div>
         </div>
         <input
           class="c9"
@@ -4761,19 +4996,23 @@ exports[`select resource server shows permissions error when lacking nodes.read 
         />
       </label>
       <label
-        class="c6"
+        class="c5"
         for="slide-tab-kubernetes"
+        role="tab"
       >
         <div
-          class="c7"
-          style="line-height: 31px;"
+          class="c6"
         >
           <img
-            class="c8"
+            class="c7"
             src="file_stub"
             width="32px"
           />
-           Kubernetes
+          <div
+            class="c8"
+          >
+            Kubernetes
+          </div>
         </div>
         <input
           class="c9"
@@ -4783,19 +5022,23 @@ exports[`select resource server shows permissions error when lacking nodes.read 
         />
       </label>
       <label
-        class="c6"
+        class="c5"
         for="slide-tab-application"
+        role="tab"
       >
         <div
-          class="c7"
-          style="line-height: 31px;"
+          class="c6"
         >
           <img
-            class="c8"
+            class="c7"
             src="file_stub"
             width="32px"
           />
-           Application
+          <div
+            class="c8"
+          >
+            Application
+          </div>
         </div>
         <input
           class="c9"
@@ -4805,19 +5048,23 @@ exports[`select resource server shows permissions error when lacking nodes.read 
         />
       </label>
       <label
-        class="c6"
+        class="c5"
         for="slide-tab-desktop"
+        role="tab"
       >
         <div
-          class="c7"
-          style="line-height: 31px;"
+          class="c6"
         >
           <img
-            class="c8"
+            class="c7"
             src="file_stub"
             width="32px"
           />
-           Desktop
+          <div
+            class="c8"
+          >
+            Desktop
+          </div>
         </div>
         <input
           class="c9"
@@ -4848,14 +5095,14 @@ exports[`select resource server shows permissions error when lacking nodes.read 
       <li>
         Your Teleport Enterprise license does not include 
         Server Access
-        . Reach out to your Teleport admin to enable 
+        . Reach out to your Teleport administrator to enable 
         Server Access
         .
       </li>
       <li>
         You don’t have sufficient permissions to 
         add new Servers
-        . Reach out to your Teleport admin to request additional permissions.
+        . Reach out to your Teleport administrator to request additional permissions.
       </li>
     </ul>
   </div>
@@ -4875,7 +5122,7 @@ exports[`select resource server shows permissions error when lacking nodes.read 
     <a
       class="c15"
       href="/web"
-      kind="primary"
+      kind="secondary"
       mt="3"
       theme="[object Object]"
       width="165px"
@@ -4887,11 +5134,11 @@ exports[`select resource server shows permissions error when lacking nodes.read 
 `;
 
 exports[`select resource server shows permissions error when lacking tokens.create 1`] = `
-.c4 {
+.c3 {
   position: relative;
 }
 
-.c6 {
+.c5 {
   cursor: pointer;
   display: flex;
   justify-content: center;
@@ -4917,7 +5164,7 @@ exports[`select resource server shows permissions error when lacking tokens.crea
   width: calc(20% - 16px);
 }
 
-.c5 {
+.c4 {
   align-items: center;
   background-color: rgba(255,255,255,0.05);
   border-radius: 8px;
@@ -5001,7 +5248,7 @@ exports[`select resource server shows permissions error when lacking tokens.crea
   text-transform: uppercase;
   transition: all 0.3s;
   -webkit-font-smoothing: antialiased;
-  background: #512FC9;
+  background: #222C59;
   color: rgba(255,255,255,0.87);
   min-height: 32px;
   font-size: 12px;
@@ -5016,11 +5263,7 @@ exports[`select resource server shows permissions error when lacking tokens.crea
 
 .c15:hover,
 .c15:focus {
-  background: #651FFF;
-}
-
-.c15:active {
-  background: #354AA4;
+  background: #2C3A73;
 }
 
 .c15:disabled {
@@ -5028,7 +5271,7 @@ exports[`select resource server shows permissions error when lacking tokens.crea
   color: rgba(255,255,255,0.3);
 }
 
-.c8 {
+.c7 {
   display: block;
   outline: none;
   margin-right: 8px;
@@ -5038,24 +5281,27 @@ exports[`select resource server shows permissions error when lacking tokens.crea
 .c1 {
   overflow: hidden;
   text-overflow: ellipsis;
-  font-weight: 400;
+  font-weight: 600;
   font-size: 18px;
-  line-height: 32px;
   margin: 0px;
+  margin-top: 4px;
+  margin-bottom: 4px;
 }
 
 .c2 {
   overflow: hidden;
   text-overflow: ellipsis;
   margin: 0px;
-  margin-bottom: 24px;
+  margin-bottom: 32px;
 }
 
-.c3 {
+.c8 {
   overflow: hidden;
   text-overflow: ellipsis;
+  font-weight: 600;
+  font-size: 16px;
+  line-height: 24px;
   margin: 0px;
-  margin-bottom: 8px;
 }
 
 .c12 {
@@ -5067,11 +5313,6 @@ exports[`select resource server shows permissions error when lacking tokens.crea
   margin: 0px;
 }
 
-.c7 {
-  box-sizing: border-box;
-  display: flex;
-}
-
 .c11 {
   box-sizing: border-box;
   width: 100%;
@@ -5081,45 +5322,54 @@ exports[`select resource server shows permissions error when lacking tokens.crea
   padding: 24px;
 }
 
+.c6 {
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+}
+
 <div
   class="c0"
   width="1020px"
 >
   <div
     class="c1"
-  >
-    Resource Selection
-  </div>
-  <div
-    class="c2"
-  >
-    Users are able to add and access many different types of resources through Teleport. Start by selecting the type of resource you want to add.
-  </div>
-  <div
-    class="c3"
+    font-size="18px"
   >
     Select Resource Type
   </div>
   <div
-    class="c4"
+    class="c2"
+  >
+    Users are able to add and access many different types of resources through Teleport. 
+    <br />
+    Start by selecting the type of resource you want to add.
+  </div>
+  <div
+    class="c3"
   >
     <nav
-      class="c5"
+      class="c4"
+      role="tablist"
     >
       <label
-        class="c6"
+        class="c5"
         for="slide-tab-server"
+        role="tab"
       >
         <div
-          class="c7"
-          style="line-height: 31px;"
+          class="c6"
         >
           <img
-            class="c8"
+            class="c7"
             src="file_stub"
             width="32px"
           />
-           Server
+          <div
+            class="c8"
+          >
+            Server
+          </div>
         </div>
         <input
           class="c9"
@@ -5129,19 +5379,23 @@ exports[`select resource server shows permissions error when lacking tokens.crea
         />
       </label>
       <label
-        class="c6"
+        class="c5"
         for="slide-tab-database"
+        role="tab"
       >
         <div
-          class="c7"
-          style="line-height: 31px;"
+          class="c6"
         >
           <img
-            class="c8"
+            class="c7"
             src="file_stub"
             width="32px"
           />
-           Database
+          <div
+            class="c8"
+          >
+            Database
+          </div>
         </div>
         <input
           class="c9"
@@ -5151,19 +5405,23 @@ exports[`select resource server shows permissions error when lacking tokens.crea
         />
       </label>
       <label
-        class="c6"
+        class="c5"
         for="slide-tab-kubernetes"
+        role="tab"
       >
         <div
-          class="c7"
-          style="line-height: 31px;"
+          class="c6"
         >
           <img
-            class="c8"
+            class="c7"
             src="file_stub"
             width="32px"
           />
-           Kubernetes
+          <div
+            class="c8"
+          >
+            Kubernetes
+          </div>
         </div>
         <input
           class="c9"
@@ -5173,19 +5431,23 @@ exports[`select resource server shows permissions error when lacking tokens.crea
         />
       </label>
       <label
-        class="c6"
+        class="c5"
         for="slide-tab-application"
+        role="tab"
       >
         <div
-          class="c7"
-          style="line-height: 31px;"
+          class="c6"
         >
           <img
-            class="c8"
+            class="c7"
             src="file_stub"
             width="32px"
           />
-           Application
+          <div
+            class="c8"
+          >
+            Application
+          </div>
         </div>
         <input
           class="c9"
@@ -5195,19 +5457,23 @@ exports[`select resource server shows permissions error when lacking tokens.crea
         />
       </label>
       <label
-        class="c6"
+        class="c5"
         for="slide-tab-desktop"
+        role="tab"
       >
         <div
-          class="c7"
-          style="line-height: 31px;"
+          class="c6"
         >
           <img
-            class="c8"
+            class="c7"
             src="file_stub"
             width="32px"
           />
-           Desktop
+          <div
+            class="c8"
+          >
+            Desktop
+          </div>
         </div>
         <input
           class="c9"
@@ -5238,14 +5504,14 @@ exports[`select resource server shows permissions error when lacking tokens.crea
       <li>
         Your Teleport Enterprise license does not include 
         Server Access
-        . Reach out to your Teleport admin to enable 
+        . Reach out to your Teleport administrator to enable 
         Server Access
         .
       </li>
       <li>
         You don’t have sufficient permissions to 
         add new Servers
-        . Reach out to your Teleport admin to request additional permissions.
+        . Reach out to your Teleport administrator to request additional permissions.
       </li>
     </ul>
   </div>
@@ -5265,7 +5531,7 @@ exports[`select resource server shows permissions error when lacking tokens.crea
     <a
       class="c15"
       href="/web"
-      kind="primary"
+      kind="secondary"
       mt="3"
       theme="[object Object]"
       width="165px"
@@ -5277,11 +5543,11 @@ exports[`select resource server shows permissions error when lacking tokens.crea
 `;
 
 exports[`select resource server shows the teleport versions when having correct permissions 1`] = `
-.c4 {
+.c3 {
   position: relative;
 }
 
-.c6 {
+.c5 {
   cursor: pointer;
   display: flex;
   justify-content: center;
@@ -5307,7 +5573,7 @@ exports[`select resource server shows the teleport versions when having correct 
   width: calc(20% - 16px);
 }
 
-.c5 {
+.c4 {
   align-items: center;
   background-color: rgba(255,255,255,0.05);
   border-radius: 8px;
@@ -5391,7 +5657,7 @@ exports[`select resource server shows the teleport versions when having correct 
   text-transform: uppercase;
   transition: all 0.3s;
   -webkit-font-smoothing: antialiased;
-  background: #512FC9;
+  background: #222C59;
   color: rgba(255,255,255,0.87);
   min-height: 32px;
   font-size: 12px;
@@ -5406,11 +5672,7 @@ exports[`select resource server shows the teleport versions when having correct 
 
 .c17:hover,
 .c17:focus {
-  background: #651FFF;
-}
-
-.c17:active {
-  background: #354AA4;
+  background: #2C3A73;
 }
 
 .c17:disabled {
@@ -5426,7 +5688,7 @@ exports[`select resource server shows the teleport versions when having correct 
   text-transform: none;
 }
 
-.c8 {
+.c7 {
   display: block;
   outline: none;
   margin-right: 8px;
@@ -5436,24 +5698,27 @@ exports[`select resource server shows the teleport versions when having correct 
 .c1 {
   overflow: hidden;
   text-overflow: ellipsis;
-  font-weight: 400;
+  font-weight: 600;
   font-size: 18px;
-  line-height: 32px;
   margin: 0px;
+  margin-top: 4px;
+  margin-bottom: 4px;
 }
 
 .c2 {
   overflow: hidden;
   text-overflow: ellipsis;
   margin: 0px;
-  margin-bottom: 24px;
+  margin-bottom: 32px;
 }
 
-.c3 {
+.c8 {
   overflow: hidden;
   text-overflow: ellipsis;
+  font-weight: 600;
+  font-size: 16px;
+  line-height: 24px;
   margin: 0px;
-  margin-bottom: 8px;
 }
 
 .c12 {
@@ -5471,11 +5736,6 @@ exports[`select resource server shows the teleport versions when having correct 
   margin: 0px;
 }
 
-.c7 {
-  box-sizing: border-box;
-  display: flex;
-}
-
 .c11 {
   box-sizing: border-box;
   width: 100%;
@@ -5485,45 +5745,54 @@ exports[`select resource server shows the teleport versions when having correct 
   padding: 24px;
 }
 
+.c6 {
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+}
+
 <div
   class="c0"
   width="1020px"
 >
   <div
     class="c1"
-  >
-    Resource Selection
-  </div>
-  <div
-    class="c2"
-  >
-    Users are able to add and access many different types of resources through Teleport. Start by selecting the type of resource you want to add.
-  </div>
-  <div
-    class="c3"
+    font-size="18px"
   >
     Select Resource Type
   </div>
   <div
-    class="c4"
+    class="c2"
+  >
+    Users are able to add and access many different types of resources through Teleport. 
+    <br />
+    Start by selecting the type of resource you want to add.
+  </div>
+  <div
+    class="c3"
   >
     <nav
-      class="c5"
+      class="c4"
+      role="tablist"
     >
       <label
-        class="c6"
+        class="c5"
         for="slide-tab-server"
+        role="tab"
       >
         <div
-          class="c7"
-          style="line-height: 31px;"
+          class="c6"
         >
           <img
-            class="c8"
+            class="c7"
             src="file_stub"
             width="32px"
           />
-           Server
+          <div
+            class="c8"
+          >
+            Server
+          </div>
         </div>
         <input
           class="c9"
@@ -5533,19 +5802,23 @@ exports[`select resource server shows the teleport versions when having correct 
         />
       </label>
       <label
-        class="c6"
+        class="c5"
         for="slide-tab-database"
+        role="tab"
       >
         <div
-          class="c7"
-          style="line-height: 31px;"
+          class="c6"
         >
           <img
-            class="c8"
+            class="c7"
             src="file_stub"
             width="32px"
           />
-           Database
+          <div
+            class="c8"
+          >
+            Database
+          </div>
         </div>
         <input
           class="c9"
@@ -5555,19 +5828,23 @@ exports[`select resource server shows the teleport versions when having correct 
         />
       </label>
       <label
-        class="c6"
+        class="c5"
         for="slide-tab-kubernetes"
+        role="tab"
       >
         <div
-          class="c7"
-          style="line-height: 31px;"
+          class="c6"
         >
           <img
-            class="c8"
+            class="c7"
             src="file_stub"
             width="32px"
           />
-           Kubernetes
+          <div
+            class="c8"
+          >
+            Kubernetes
+          </div>
         </div>
         <input
           class="c9"
@@ -5577,19 +5854,23 @@ exports[`select resource server shows the teleport versions when having correct 
         />
       </label>
       <label
-        class="c6"
+        class="c5"
         for="slide-tab-application"
+        role="tab"
       >
         <div
-          class="c7"
-          style="line-height: 31px;"
+          class="c6"
         >
           <img
-            class="c8"
+            class="c7"
             src="file_stub"
             width="32px"
           />
-           Application
+          <div
+            class="c8"
+          >
+            Application
+          </div>
         </div>
         <input
           class="c9"
@@ -5599,19 +5880,23 @@ exports[`select resource server shows the teleport versions when having correct 
         />
       </label>
       <label
-        class="c6"
+        class="c5"
         for="slide-tab-desktop"
+        role="tab"
       >
         <div
-          class="c7"
-          style="line-height: 31px;"
+          class="c6"
         >
           <img
-            class="c8"
+            class="c7"
             src="file_stub"
             width="32px"
           />
-           Desktop
+          <div
+            class="c8"
+          >
+            Desktop
+          </div>
         </div>
         <input
           class="c9"
@@ -5684,7 +5969,7 @@ exports[`select resource server shows the teleport versions when having correct 
     <a
       class="c17"
       href="/web"
-      kind="primary"
+      kind="secondary"
       mt="3"
       theme="[object Object]"
       width="165px"
