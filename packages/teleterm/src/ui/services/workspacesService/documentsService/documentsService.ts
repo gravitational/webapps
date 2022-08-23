@@ -23,6 +23,7 @@ import {
   CreateGatewayDocumentOpts,
   CreateNewTerminalOpts,
   Document,
+  DocumentBlank,
   DocumentCluster,
   DocumentGateway,
   DocumentTshKube,
@@ -57,6 +58,16 @@ export class DocumentsService {
       clusterUri: opts.clusterUri,
       title: clusterName,
       kind: 'doc.cluster',
+    };
+  }
+
+  createBlankDocument(opts: { clusterUri: string }): DocumentBlank {
+    const uri = routing.getDocUri({ docId: unique() });
+    const clusterName = routing.parseClusterName(opts.clusterUri);
+    return {
+      uri,
+      title: clusterName,
+      kind: 'doc.blank',
     };
   }
 

@@ -11,7 +11,7 @@ export function useNewTabOpener({
 }) {
   const openClusterTab = useCallback(() => {
     if (localClusterUri) {
-      const clusterDocument = documentsService.createClusterDocument({
+      const clusterDocument = documentsService.createBlankDocument({
         clusterUri: localClusterUri,
       });
 

@@ -12,6 +12,7 @@ import Document from 'teleterm/ui/Document';
 
 import { WorkspaceDocumentsServiceProvider } from './workspaceDocumentsServiceContext';
 import { KeyboardShortcutsPanel } from './KeyboardShortcutsPanel';
+import DocumentBlank from '../DocumentBlank';
 
 export function DocumentsRenderer() {
   const { workspacesService } = useAppContext();
@@ -55,6 +56,8 @@ function MemoizedDocument(props: { doc: types.Document; visible: boolean }) {
   const { doc, visible } = props;
   return React.useMemo(() => {
     switch (doc.kind) {
+      case 'doc.blank':
+        return <DocumentBlank doc={doc} visible={visible} />;
       case 'doc.cluster':
         return <DocumentCluster doc={doc} visible={visible} />;
       case 'doc.gateway':
@@ -65,9 +68,7 @@ function MemoizedDocument(props: { doc: types.Document; visible: boolean }) {
         return <DocumentTerminal doc={doc} visible={visible} />;
       default:
         return (
-          <Document visible={visible}>
-            Document kind "{doc.kind}" is not supported
-          </Document>
+          <Document visible={visible}>Document kind is not supported</Document>
         );
     }
   }, [visible, doc]);
