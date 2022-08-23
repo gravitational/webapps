@@ -25,15 +25,8 @@ goog.exportSymbol('proto.teleport.terminal.v1.Database', null, global);
  * @extends {jspb.Message}
  * @constructor
  */
-proto.teleport.terminal.v1.Database = function (opt_data) {
-  jspb.Message.initialize(
-    this,
-    opt_data,
-    0,
-    -1,
-    proto.teleport.terminal.v1.Database.repeatedFields_,
-    null
-  );
+proto.teleport.terminal.v1.Database = function(opt_data) {
+  jspb.Message.initialize(this, opt_data, 0, -1, proto.teleport.terminal.v1.Database.repeatedFields_, null);
 };
 goog.inherits(proto.teleport.terminal.v1.Database, jspb.Message);
 if (goog.DEBUG && !COMPILED) {
@@ -41,8 +34,7 @@ if (goog.DEBUG && !COMPILED) {
    * @public
    * @override
    */
-  proto.teleport.terminal.v1.Database.displayName =
-    'proto.teleport.terminal.v1.Database';
+  proto.teleport.terminal.v1.Database.displayName = 'proto.teleport.terminal.v1.Database';
 }
 
 /**
@@ -52,77 +44,67 @@ if (goog.DEBUG && !COMPILED) {
  */
 proto.teleport.terminal.v1.Database.repeatedFields_ = [8];
 
+
+
 if (jspb.Message.GENERATE_TO_OBJECT) {
-  /**
-   * Creates an object representation of this proto.
-   * Field names that are reserved in JavaScript and will be renamed to pb_name.
-   * Optional fields that are not set will be set to undefined.
-   * To access a reserved field use, foo.pb_<name>, eg, foo.pb_default.
-   * For the list of reserved names please see:
-   *     net/proto2/compiler/js/internal/generator.cc#kKeyword.
-   * @param {boolean=} opt_includeInstance Deprecated. whether to include the
-   *     JSPB instance for transitional soy proto support:
-   *     http://goto/soy-param-migration
-   * @return {!Object}
-   */
-  proto.teleport.terminal.v1.Database.prototype.toObject = function (
-    opt_includeInstance
-  ) {
-    return proto.teleport.terminal.v1.Database.toObject(
-      opt_includeInstance,
-      this
-    );
+/**
+ * Creates an object representation of this proto.
+ * Field names that are reserved in JavaScript and will be renamed to pb_name.
+ * Optional fields that are not set will be set to undefined.
+ * To access a reserved field use, foo.pb_<name>, eg, foo.pb_default.
+ * For the list of reserved names please see:
+ *     net/proto2/compiler/js/internal/generator.cc#kKeyword.
+ * @param {boolean=} opt_includeInstance Deprecated. whether to include the
+ *     JSPB instance for transitional soy proto support:
+ *     http://goto/soy-param-migration
+ * @return {!Object}
+ */
+proto.teleport.terminal.v1.Database.prototype.toObject = function(opt_includeInstance) {
+  return proto.teleport.terminal.v1.Database.toObject(opt_includeInstance, this);
+};
+
+
+/**
+ * Static version of the {@see toObject} method.
+ * @param {boolean|undefined} includeInstance Deprecated. Whether to include
+ *     the JSPB instance for transitional soy proto support:
+ *     http://goto/soy-param-migration
+ * @param {!proto.teleport.terminal.v1.Database} msg The msg instance to transform.
+ * @return {!Object}
+ * @suppress {unusedLocalVariables} f is only used for nested messages
+ */
+proto.teleport.terminal.v1.Database.toObject = function(includeInstance, msg) {
+  var f, obj = {
+    uri: jspb.Message.getFieldWithDefault(msg, 1, ""),
+    name: jspb.Message.getFieldWithDefault(msg, 2, ""),
+    desc: jspb.Message.getFieldWithDefault(msg, 3, ""),
+    protocol: jspb.Message.getFieldWithDefault(msg, 4, ""),
+    type: jspb.Message.getFieldWithDefault(msg, 5, ""),
+    hostname: jspb.Message.getFieldWithDefault(msg, 6, ""),
+    addr: jspb.Message.getFieldWithDefault(msg, 7, ""),
+    labelsList: jspb.Message.toObjectList(msg.getLabelsList(),
+    v1_label_pb.Label.toObject, includeInstance)
   };
 
-  /**
-   * Static version of the {@see toObject} method.
-   * @param {boolean|undefined} includeInstance Deprecated. Whether to include
-   *     the JSPB instance for transitional soy proto support:
-   *     http://goto/soy-param-migration
-   * @param {!proto.teleport.terminal.v1.Database} msg The msg instance to transform.
-   * @return {!Object}
-   * @suppress {unusedLocalVariables} f is only used for nested messages
-   */
-  proto.teleport.terminal.v1.Database.toObject = function (
-    includeInstance,
-    msg
-  ) {
-    var f,
-      obj = {
-        uri: jspb.Message.getFieldWithDefault(msg, 1, ''),
-        name: jspb.Message.getFieldWithDefault(msg, 2, ''),
-        desc: jspb.Message.getFieldWithDefault(msg, 3, ''),
-        protocol: jspb.Message.getFieldWithDefault(msg, 4, ''),
-        type: jspb.Message.getFieldWithDefault(msg, 5, ''),
-        hostname: jspb.Message.getFieldWithDefault(msg, 6, ''),
-        addr: jspb.Message.getFieldWithDefault(msg, 7, ''),
-        labelsList: jspb.Message.toObjectList(
-          msg.getLabelsList(),
-          v1_label_pb.Label.toObject,
-          includeInstance
-        ),
-      };
-
-    if (includeInstance) {
-      obj.$jspbMessageInstance = msg;
-    }
-    return obj;
-  };
+  if (includeInstance) {
+    obj.$jspbMessageInstance = msg;
+  }
+  return obj;
+};
 }
+
 
 /**
  * Deserializes binary data (in protobuf wire format).
  * @param {jspb.ByteSource} bytes The bytes to deserialize.
  * @return {!proto.teleport.terminal.v1.Database}
  */
-proto.teleport.terminal.v1.Database.deserializeBinary = function (bytes) {
+proto.teleport.terminal.v1.Database.deserializeBinary = function(bytes) {
   var reader = new jspb.BinaryReader(bytes);
-  var msg = new proto.teleport.terminal.v1.Database();
-  return proto.teleport.terminal.v1.Database.deserializeBinaryFromReader(
-    msg,
-    reader
-  );
+  var msg = new proto.teleport.terminal.v1.Database;
+  return proto.teleport.terminal.v1.Database.deserializeBinaryFromReader(msg, reader);
 };
+
 
 /**
  * Deserializes binary data (in protobuf wire format) from the
@@ -131,69 +113,65 @@ proto.teleport.terminal.v1.Database.deserializeBinary = function (bytes) {
  * @param {!jspb.BinaryReader} reader The BinaryReader to use.
  * @return {!proto.teleport.terminal.v1.Database}
  */
-proto.teleport.terminal.v1.Database.deserializeBinaryFromReader = function (
-  msg,
-  reader
-) {
+proto.teleport.terminal.v1.Database.deserializeBinaryFromReader = function(msg, reader) {
   while (reader.nextField()) {
     if (reader.isEndGroup()) {
       break;
     }
     var field = reader.getFieldNumber();
     switch (field) {
-      case 1:
-        var value = /** @type {string} */ (reader.readString());
-        msg.setUri(value);
-        break;
-      case 2:
-        var value = /** @type {string} */ (reader.readString());
-        msg.setName(value);
-        break;
-      case 3:
-        var value = /** @type {string} */ (reader.readString());
-        msg.setDesc(value);
-        break;
-      case 4:
-        var value = /** @type {string} */ (reader.readString());
-        msg.setProtocol(value);
-        break;
-      case 5:
-        var value = /** @type {string} */ (reader.readString());
-        msg.setType(value);
-        break;
-      case 6:
-        var value = /** @type {string} */ (reader.readString());
-        msg.setHostname(value);
-        break;
-      case 7:
-        var value = /** @type {string} */ (reader.readString());
-        msg.setAddr(value);
-        break;
-      case 8:
-        var value = new v1_label_pb.Label();
-        reader.readMessage(
-          value,
-          v1_label_pb.Label.deserializeBinaryFromReader
-        );
-        msg.addLabels(value);
-        break;
-      default:
-        reader.skipField();
-        break;
+    case 1:
+      var value = /** @type {string} */ (reader.readString());
+      msg.setUri(value);
+      break;
+    case 2:
+      var value = /** @type {string} */ (reader.readString());
+      msg.setName(value);
+      break;
+    case 3:
+      var value = /** @type {string} */ (reader.readString());
+      msg.setDesc(value);
+      break;
+    case 4:
+      var value = /** @type {string} */ (reader.readString());
+      msg.setProtocol(value);
+      break;
+    case 5:
+      var value = /** @type {string} */ (reader.readString());
+      msg.setType(value);
+      break;
+    case 6:
+      var value = /** @type {string} */ (reader.readString());
+      msg.setHostname(value);
+      break;
+    case 7:
+      var value = /** @type {string} */ (reader.readString());
+      msg.setAddr(value);
+      break;
+    case 8:
+      var value = new v1_label_pb.Label;
+      reader.readMessage(value,v1_label_pb.Label.deserializeBinaryFromReader);
+      msg.addLabels(value);
+      break;
+    default:
+      reader.skipField();
+      break;
     }
   }
   return msg;
 };
 
+
 /**
  * Serializes the message to binary data (in protobuf wire format).
  * @return {!Uint8Array}
  */
-proto.teleport.terminal.v1.Database.prototype.serializeBinary = function () {
+proto.teleport.terminal.v1.Database.prototype.serializeBinary = function() {
   var writer = new jspb.BinaryWriter();
   proto.teleport.terminal.v1.Database.serializeBinaryToWriter(this, writer);
   return writer.getResultBuffer();
 };
+
 
 /**
  * Serializes the given message to binary data (in protobuf wire
@@ -202,38 +180,56 @@ proto.teleport.terminal.v1.Database.prototype.serializeBinary = function () {
  * @param {!jspb.BinaryWriter} writer
  * @suppress {unusedLocalVariables} f is only used for nested messages
  */
-proto.teleport.terminal.v1.Database.serializeBinaryToWriter = function (
-  message,
-  writer
-) {
+proto.teleport.terminal.v1.Database.serializeBinaryToWriter = function(message, writer) {
   var f = undefined;
   f = message.getUri();
   if (f.length > 0) {
-    writer.writeString(1, f);
+    writer.writeString(
+      1,
+      f
+    );
   }
   f = message.getName();
   if (f.length > 0) {
-    writer.writeString(2, f);
+    writer.writeString(
+      2,
+      f
+    );
   }
   f = message.getDesc();
   if (f.length > 0) {
-    writer.writeString(3, f);
+    writer.writeString(
+      3,
+      f
+    );
   }
   f = message.getProtocol();
   if (f.length > 0) {
-    writer.writeString(4, f);
+    writer.writeString(
+      4,
+      f
+    );
   }
   f = message.getType();
   if (f.length > 0) {
-    writer.writeString(5, f);
+    writer.writeString(
+      5,
+      f
+    );
   }
   f = message.getHostname();
   if (f.length > 0) {
-    writer.writeString(6, f);
+    writer.writeString(
+      6,
+      f
+    );
   }
   f = message.getAddr();
   if (f.length > 0) {
-    writer.writeString(7, f);
+    writer.writeString(
+      7,
+      f
+    );
   }
   f = message.getLabelsList();
   if (f.length > 0) {
@@ -245,160 +241,169 @@ proto.teleport.terminal.v1.Database.serializeBinaryToWriter = function (
   }
 };
 
+
 /**
  * optional string uri = 1;
  * @return {string}
  */
-proto.teleport.terminal.v1.Database.prototype.getUri = function () {
-  return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 1, ''));
+proto.teleport.terminal.v1.Database.prototype.getUri = function() {
+  return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 1, ""));
 };
+
 
 /**
  * @param {string} value
  * @return {!proto.teleport.terminal.v1.Database} returns this
  */
-proto.teleport.terminal.v1.Database.prototype.setUri = function (value) {
+proto.teleport.terminal.v1.Database.prototype.setUri = function(value) {
   return jspb.Message.setProto3StringField(this, 1, value);
 };
+
 
 /**
  * optional string name = 2;
  * @return {string}
  */
-proto.teleport.terminal.v1.Database.prototype.getName = function () {
-  return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 2, ''));
+proto.teleport.terminal.v1.Database.prototype.getName = function() {
+  return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 2, ""));
 };
+
 
 /**
  * @param {string} value
  * @return {!proto.teleport.terminal.v1.Database} returns this
  */
-proto.teleport.terminal.v1.Database.prototype.setName = function (value) {
+proto.teleport.terminal.v1.Database.prototype.setName = function(value) {
   return jspb.Message.setProto3StringField(this, 2, value);
 };
+
 
 /**
  * optional string desc = 3;
  * @return {string}
  */
-proto.teleport.terminal.v1.Database.prototype.getDesc = function () {
-  return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 3, ''));
+proto.teleport.terminal.v1.Database.prototype.getDesc = function() {
+  return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 3, ""));
 };
+
 
 /**
  * @param {string} value
  * @return {!proto.teleport.terminal.v1.Database} returns this
  */
-proto.teleport.terminal.v1.Database.prototype.setDesc = function (value) {
+proto.teleport.terminal.v1.Database.prototype.setDesc = function(value) {
   return jspb.Message.setProto3StringField(this, 3, value);
 };
+
 
 /**
  * optional string protocol = 4;
  * @return {string}
  */
-proto.teleport.terminal.v1.Database.prototype.getProtocol = function () {
-  return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 4, ''));
+proto.teleport.terminal.v1.Database.prototype.getProtocol = function() {
+  return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 4, ""));
 };
+
 
 /**
  * @param {string} value
  * @return {!proto.teleport.terminal.v1.Database} returns this
  */
-proto.teleport.terminal.v1.Database.prototype.setProtocol = function (value) {
+proto.teleport.terminal.v1.Database.prototype.setProtocol = function(value) {
   return jspb.Message.setProto3StringField(this, 4, value);
 };
+
 
 /**
  * optional string type = 5;
  * @return {string}
  */
-proto.teleport.terminal.v1.Database.prototype.getType = function () {
-  return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 5, ''));
+proto.teleport.terminal.v1.Database.prototype.getType = function() {
+  return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 5, ""));
 };
+
 
 /**
  * @param {string} value
  * @return {!proto.teleport.terminal.v1.Database} returns this
  */
-proto.teleport.terminal.v1.Database.prototype.setType = function (value) {
+proto.teleport.terminal.v1.Database.prototype.setType = function(value) {
   return jspb.Message.setProto3StringField(this, 5, value);
 };
+
 
 /**
  * optional string hostname = 6;
  * @return {string}
  */
-proto.teleport.terminal.v1.Database.prototype.getHostname = function () {
-  return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 6, ''));
+proto.teleport.terminal.v1.Database.prototype.getHostname = function() {
+  return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 6, ""));
 };
+
 
 /**
  * @param {string} value
  * @return {!proto.teleport.terminal.v1.Database} returns this
  */
-proto.teleport.terminal.v1.Database.prototype.setHostname = function (value) {
+proto.teleport.terminal.v1.Database.prototype.setHostname = function(value) {
   return jspb.Message.setProto3StringField(this, 6, value);
 };
+
 
 /**
  * optional string addr = 7;
  * @return {string}
  */
-proto.teleport.terminal.v1.Database.prototype.getAddr = function () {
-  return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 7, ''));
+proto.teleport.terminal.v1.Database.prototype.getAddr = function() {
+  return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 7, ""));
 };
+
 
 /**
  * @param {string} value
  * @return {!proto.teleport.terminal.v1.Database} returns this
  */
-proto.teleport.terminal.v1.Database.prototype.setAddr = function (value) {
+proto.teleport.terminal.v1.Database.prototype.setAddr = function(value) {
   return jspb.Message.setProto3StringField(this, 7, value);
 };
+
 
 /**
  * repeated Label labels = 8;
  * @return {!Array<!proto.teleport.terminal.v1.Label>}
  */
-proto.teleport.terminal.v1.Database.prototype.getLabelsList = function () {
+proto.teleport.terminal.v1.Database.prototype.getLabelsList = function() {
   return /** @type{!Array<!proto.teleport.terminal.v1.Label>} */ (
-    jspb.Message.getRepeatedWrapperField(this, v1_label_pb.Label, 8)
-  );
+    jspb.Message.getRepeatedWrapperField(this, v1_label_pb.Label, 8));
 };
+
 
 /**
  * @param {!Array<!proto.teleport.terminal.v1.Label>} value
  * @return {!proto.teleport.terminal.v1.Database} returns this
- */
-proto.teleport.terminal.v1.Database.prototype.setLabelsList = function (value) {
+*/
+proto.teleport.terminal.v1.Database.prototype.setLabelsList = function(value) {
   return jspb.Message.setRepeatedWrapperField(this, 8, value);
 };
+
 
 /**
  * @param {!proto.teleport.terminal.v1.Label=} opt_value
  * @param {number=} opt_index
  * @return {!proto.teleport.terminal.v1.Label}
  */
-proto.teleport.terminal.v1.Database.prototype.addLabels = function (
-  opt_value,
-  opt_index
-) {
-  return jspb.Message.addToRepeatedWrapperField(
-    this,
-    8,
-    opt_value,
-    proto.teleport.terminal.v1.Label,
-    opt_index
-  );
+proto.teleport.terminal.v1.Database.prototype.addLabels = function(opt_value, opt_index) {
+  return jspb.Message.addToRepeatedWrapperField(this, 8, opt_value, proto.teleport.terminal.v1.Label, opt_index);
 };
+
 
 /**
  * Clears the list making it empty but non-null.
  * @return {!proto.teleport.terminal.v1.Database} returns this
  */
-proto.teleport.terminal.v1.Database.prototype.clearLabelsList = function () {
+proto.teleport.terminal.v1.Database.prototype.clearLabelsList = function() {
   return this.setLabelsList([]);
 };
+
 
 goog.object.extend(exports, proto.teleport.terminal.v1);

@@ -38,7 +38,7 @@ goog.exportSymbol('proto.PtyServerEvent.EventCase', null, global);
  * @extends {jspb.Message}
  * @constructor
  */
-proto.PtyId = function (opt_data) {
+proto.PtyId = function(opt_data) {
   jspb.Message.initialize(this, opt_data, 0, -1, null, null);
 };
 goog.inherits(proto.PtyId, jspb.Message);
@@ -59,15 +59,8 @@ if (goog.DEBUG && !COMPILED) {
  * @extends {jspb.Message}
  * @constructor
  */
-proto.PtyCreate = function (opt_data) {
-  jspb.Message.initialize(
-    this,
-    opt_data,
-    0,
-    -1,
-    proto.PtyCreate.repeatedFields_,
-    null
-  );
+proto.PtyCreate = function(opt_data) {
+  jspb.Message.initialize(this, opt_data, 0, -1, proto.PtyCreate.repeatedFields_, null);
 };
 goog.inherits(proto.PtyCreate, jspb.Message);
 if (goog.DEBUG && !COMPILED) {
@@ -87,15 +80,8 @@ if (goog.DEBUG && !COMPILED) {
  * @extends {jspb.Message}
  * @constructor
  */
-proto.PtyClientEvent = function (opt_data) {
-  jspb.Message.initialize(
-    this,
-    opt_data,
-    0,
-    -1,
-    null,
-    proto.PtyClientEvent.oneofGroups_
-  );
+proto.PtyClientEvent = function(opt_data) {
+  jspb.Message.initialize(this, opt_data, 0, -1, null, proto.PtyClientEvent.oneofGroups_);
 };
 goog.inherits(proto.PtyClientEvent, jspb.Message);
 if (goog.DEBUG && !COMPILED) {
@@ -115,15 +101,8 @@ if (goog.DEBUG && !COMPILED) {
  * @extends {jspb.Message}
  * @constructor
  */
-proto.PtyServerEvent = function (opt_data) {
-  jspb.Message.initialize(
-    this,
-    opt_data,
-    0,
-    -1,
-    null,
-    proto.PtyServerEvent.oneofGroups_
-  );
+proto.PtyServerEvent = function(opt_data) {
+  jspb.Message.initialize(this, opt_data, 0, -1, null, proto.PtyServerEvent.oneofGroups_);
 };
 goog.inherits(proto.PtyServerEvent, jspb.Message);
 if (goog.DEBUG && !COMPILED) {
@@ -143,7 +122,7 @@ if (goog.DEBUG && !COMPILED) {
  * @extends {jspb.Message}
  * @constructor
  */
-proto.PtyEventStart = function (opt_data) {
+proto.PtyEventStart = function(opt_data) {
   jspb.Message.initialize(this, opt_data, 0, -1, null, null);
 };
 goog.inherits(proto.PtyEventStart, jspb.Message);
@@ -164,7 +143,7 @@ if (goog.DEBUG && !COMPILED) {
  * @extends {jspb.Message}
  * @constructor
  */
-proto.PtyEventData = function (opt_data) {
+proto.PtyEventData = function(opt_data) {
   jspb.Message.initialize(this, opt_data, 0, -1, null, null);
 };
 goog.inherits(proto.PtyEventData, jspb.Message);
@@ -185,7 +164,7 @@ if (goog.DEBUG && !COMPILED) {
  * @extends {jspb.Message}
  * @constructor
  */
-proto.PtyEventResize = function (opt_data) {
+proto.PtyEventResize = function(opt_data) {
   jspb.Message.initialize(this, opt_data, 0, -1, null, null);
 };
 goog.inherits(proto.PtyEventResize, jspb.Message);
@@ -206,7 +185,7 @@ if (goog.DEBUG && !COMPILED) {
  * @extends {jspb.Message}
  * @constructor
  */
-proto.PtyEventOpen = function (opt_data) {
+proto.PtyEventOpen = function(opt_data) {
   jspb.Message.initialize(this, opt_data, 0, -1, null, null);
 };
 goog.inherits(proto.PtyEventOpen, jspb.Message);
@@ -227,7 +206,7 @@ if (goog.DEBUG && !COMPILED) {
  * @extends {jspb.Message}
  * @constructor
  */
-proto.PtyEventExit = function (opt_data) {
+proto.PtyEventExit = function(opt_data) {
   jspb.Message.initialize(this, opt_data, 0, -1, null, null);
 };
 goog.inherits(proto.PtyEventExit, jspb.Message);
@@ -248,7 +227,7 @@ if (goog.DEBUG && !COMPILED) {
  * @extends {jspb.Message}
  * @constructor
  */
-proto.PtyCwd = function (opt_data) {
+proto.PtyCwd = function(opt_data) {
   jspb.Message.initialize(this, opt_data, 0, -1, null, null);
 };
 goog.inherits(proto.PtyCwd, jspb.Message);
@@ -260,55 +239,59 @@ if (goog.DEBUG && !COMPILED) {
   proto.PtyCwd.displayName = 'proto.PtyCwd';
 }
 
+
+
 if (jspb.Message.GENERATE_TO_OBJECT) {
-  /**
-   * Creates an object representation of this proto.
-   * Field names that are reserved in JavaScript and will be renamed to pb_name.
-   * Optional fields that are not set will be set to undefined.
-   * To access a reserved field use, foo.pb_<name>, eg, foo.pb_default.
-   * For the list of reserved names please see:
-   *     net/proto2/compiler/js/internal/generator.cc#kKeyword.
-   * @param {boolean=} opt_includeInstance Deprecated. whether to include the
-   *     JSPB instance for transitional soy proto support:
-   *     http://goto/soy-param-migration
-   * @return {!Object}
-   */
-  proto.PtyId.prototype.toObject = function (opt_includeInstance) {
-    return proto.PtyId.toObject(opt_includeInstance, this);
+/**
+ * Creates an object representation of this proto.
+ * Field names that are reserved in JavaScript and will be renamed to pb_name.
+ * Optional fields that are not set will be set to undefined.
+ * To access a reserved field use, foo.pb_<name>, eg, foo.pb_default.
+ * For the list of reserved names please see:
+ *     net/proto2/compiler/js/internal/generator.cc#kKeyword.
+ * @param {boolean=} opt_includeInstance Deprecated. whether to include the
+ *     JSPB instance for transitional soy proto support:
+ *     http://goto/soy-param-migration
+ * @return {!Object}
+ */
+proto.PtyId.prototype.toObject = function(opt_includeInstance) {
+  return proto.PtyId.toObject(opt_includeInstance, this);
+};
+
+
+/**
+ * Static version of the {@see toObject} method.
+ * @param {boolean|undefined} includeInstance Deprecated. Whether to include
+ *     the JSPB instance for transitional soy proto support:
+ *     http://goto/soy-param-migration
+ * @param {!proto.PtyId} msg The msg instance to transform.
+ * @return {!Object}
+ * @suppress {unusedLocalVariables} f is only used for nested messages
+ */
+proto.PtyId.toObject = function(includeInstance, msg) {
+  var f, obj = {
+    id: jspb.Message.getFieldWithDefault(msg, 1, "")
   };
 
-  /**
-   * Static version of the {@see toObject} method.
-   * @param {boolean|undefined} includeInstance Deprecated. Whether to include
-   *     the JSPB instance for transitional soy proto support:
-   *     http://goto/soy-param-migration
-   * @param {!proto.PtyId} msg The msg instance to transform.
-   * @return {!Object}
-   * @suppress {unusedLocalVariables} f is only used for nested messages
-   */
-  proto.PtyId.toObject = function (includeInstance, msg) {
-    var f,
-      obj = {
-        id: jspb.Message.getFieldWithDefault(msg, 1, ''),
-      };
-
-    if (includeInstance) {
-      obj.$jspbMessageInstance = msg;
-    }
-    return obj;
-  };
+  if (includeInstance) {
+    obj.$jspbMessageInstance = msg;
+  }
+  return obj;
+};
 }
+
 
 /**
  * Deserializes binary data (in protobuf wire format).
  * @param {jspb.ByteSource} bytes The bytes to deserialize.
  * @return {!proto.PtyId}
  */
-proto.PtyId.deserializeBinary = function (bytes) {
+proto.PtyId.deserializeBinary = function(bytes) {
   var reader = new jspb.BinaryReader(bytes);
-  var msg = new proto.PtyId();
+  var msg = new proto.PtyId;
   return proto.PtyId.deserializeBinaryFromReader(msg, reader);
 };
+
 
 /**
  * Deserializes binary data (in protobuf wire format) from the
@@ -317,34 +300,36 @@ proto.PtyId.deserializeBinary = function (bytes) {
  * @param {!jspb.BinaryReader} reader The BinaryReader to use.
  * @return {!proto.PtyId}
  */
-proto.PtyId.deserializeBinaryFromReader = function (msg, reader) {
+proto.PtyId.deserializeBinaryFromReader = function(msg, reader) {
   while (reader.nextField()) {
     if (reader.isEndGroup()) {
       break;
     }
     var field = reader.getFieldNumber();
     switch (field) {
-      case 1:
-        var value = /** @type {string} */ (reader.readString());
-        msg.setId(value);
-        break;
-      default:
-        reader.skipField();
-        break;
+    case 1:
+      var value = /** @type {string} */ (reader.readString());
+      msg.setId(value);
+      break;
+    default:
+      reader.skipField();
+      break;
     }
   }
   return msg;
 };
 
+
 /**
  * Serializes the message to binary data (in protobuf wire format).
  * @return {!Uint8Array}
  */
-proto.PtyId.prototype.serializeBinary = function () {
+proto.PtyId.prototype.serializeBinary = function() {
   var writer = new jspb.BinaryWriter();
   proto.PtyId.serializeBinaryToWriter(this, writer);
   return writer.getResultBuffer();
 };
+
 
 /**
  * Serializes the given message to binary data (in protobuf wire
@@ -353,29 +338,36 @@ proto.PtyId.prototype.serializeBinary = function () {
  * @param {!jspb.BinaryWriter} writer
  * @suppress {unusedLocalVariables} f is only used for nested messages
  */
-proto.PtyId.serializeBinaryToWriter = function (message, writer) {
+proto.PtyId.serializeBinaryToWriter = function(message, writer) {
   var f = undefined;
   f = message.getId();
   if (f.length > 0) {
-    writer.writeString(1, f);
+    writer.writeString(
+      1,
+      f
+    );
   }
 };
+
 
 /**
  * optional string id = 1;
  * @return {string}
  */
-proto.PtyId.prototype.getId = function () {
-  return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 1, ''));
+proto.PtyId.prototype.getId = function() {
+  return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 1, ""));
 };
+
 
 /**
  * @param {string} value
  * @return {!proto.PtyId} returns this
  */
-proto.PtyId.prototype.setId = function (value) {
+proto.PtyId.prototype.setId = function(value) {
   return jspb.Message.setProto3StringField(this, 1, value);
 };
+
+
 
 /**
  * List of repeated fields within this message type.
@@ -384,62 +376,63 @@ proto.PtyId.prototype.setId = function (value) {
  */
 proto.PtyCreate.repeatedFields_ = [4];
 
+
+
 if (jspb.Message.GENERATE_TO_OBJECT) {
-  /**
-   * Creates an object representation of this proto.
-   * Field names that are reserved in JavaScript and will be renamed to pb_name.
-   * Optional fields that are not set will be set to undefined.
-   * To access a reserved field use, foo.pb_<name>, eg, foo.pb_default.
-   * For the list of reserved names please see:
-   *     net/proto2/compiler/js/internal/generator.cc#kKeyword.
-   * @param {boolean=} opt_includeInstance Deprecated. whether to include the
-   *     JSPB instance for transitional soy proto support:
-   *     http://goto/soy-param-migration
-   * @return {!Object}
-   */
-  proto.PtyCreate.prototype.toObject = function (opt_includeInstance) {
-    return proto.PtyCreate.toObject(opt_includeInstance, this);
+/**
+ * Creates an object representation of this proto.
+ * Field names that are reserved in JavaScript and will be renamed to pb_name.
+ * Optional fields that are not set will be set to undefined.
+ * To access a reserved field use, foo.pb_<name>, eg, foo.pb_default.
+ * For the list of reserved names please see:
+ *     net/proto2/compiler/js/internal/generator.cc#kKeyword.
+ * @param {boolean=} opt_includeInstance Deprecated. whether to include the
+ *     JSPB instance for transitional soy proto support:
+ *     http://goto/soy-param-migration
+ * @return {!Object}
+ */
+proto.PtyCreate.prototype.toObject = function(opt_includeInstance) {
+  return proto.PtyCreate.toObject(opt_includeInstance, this);
+};
+
+
+/**
+ * Static version of the {@see toObject} method.
+ * @param {boolean|undefined} includeInstance Deprecated. Whether to include
+ *     the JSPB instance for transitional soy proto support:
+ *     http://goto/soy-param-migration
+ * @param {!proto.PtyCreate} msg The msg instance to transform.
+ * @return {!Object}
+ * @suppress {unusedLocalVariables} f is only used for nested messages
+ */
+proto.PtyCreate.toObject = function(includeInstance, msg) {
+  var f, obj = {
+    path: jspb.Message.getFieldWithDefault(msg, 3, ""),
+    argsList: (f = jspb.Message.getRepeatedField(msg, 4)) == null ? undefined : f,
+    cwd: jspb.Message.getFieldWithDefault(msg, 5, ""),
+    initCommand: jspb.Message.getFieldWithDefault(msg, 6, ""),
+    env: (f = msg.getEnv()) && google_protobuf_struct_pb.Struct.toObject(includeInstance, f)
   };
 
-  /**
-   * Static version of the {@see toObject} method.
-   * @param {boolean|undefined} includeInstance Deprecated. Whether to include
-   *     the JSPB instance for transitional soy proto support:
-   *     http://goto/soy-param-migration
-   * @param {!proto.PtyCreate} msg The msg instance to transform.
-   * @return {!Object}
-   * @suppress {unusedLocalVariables} f is only used for nested messages
-   */
-  proto.PtyCreate.toObject = function (includeInstance, msg) {
-    var f,
-      obj = {
-        path: jspb.Message.getFieldWithDefault(msg, 3, ''),
-        argsList:
-          (f = jspb.Message.getRepeatedField(msg, 4)) == null ? undefined : f,
-        cwd: jspb.Message.getFieldWithDefault(msg, 5, ''),
-        initCommand: jspb.Message.getFieldWithDefault(msg, 6, ''),
-        env:
-          (f = msg.getEnv()) &&
-          google_protobuf_struct_pb.Struct.toObject(includeInstance, f),
-      };
-
-    if (includeInstance) {
-      obj.$jspbMessageInstance = msg;
-    }
-    return obj;
-  };
+  if (includeInstance) {
+    obj.$jspbMessageInstance = msg;
+  }
+  return obj;
+};
 }
+
 
 /**
  * Deserializes binary data (in protobuf wire format).
  * @param {jspb.ByteSource} bytes The bytes to deserialize.
  * @return {!proto.PtyCreate}
  */
-proto.PtyCreate.deserializeBinary = function (bytes) {
+proto.PtyCreate.deserializeBinary = function(bytes) {
   var reader = new jspb.BinaryReader(bytes);
-  var msg = new proto.PtyCreate();
+  var msg = new proto.PtyCreate;
   return proto.PtyCreate.deserializeBinaryFromReader(msg, reader);
 };
+
 
 /**
  * Deserializes binary data (in protobuf wire format) from the
@@ -448,54 +441,53 @@ proto.PtyCreate.deserializeBinary = function (bytes) {
  * @param {!jspb.BinaryReader} reader The BinaryReader to use.
  * @return {!proto.PtyCreate}
  */
-proto.PtyCreate.deserializeBinaryFromReader = function (msg, reader) {
+proto.PtyCreate.deserializeBinaryFromReader = function(msg, reader) {
   while (reader.nextField()) {
     if (reader.isEndGroup()) {
       break;
     }
     var field = reader.getFieldNumber();
     switch (field) {
-      case 3:
-        var value = /** @type {string} */ (reader.readString());
-        msg.setPath(value);
-        break;
-      case 4:
-        var value = /** @type {string} */ (reader.readString());
-        msg.addArgs(value);
-        break;
-      case 5:
-        var value = /** @type {string} */ (reader.readString());
-        msg.setCwd(value);
-        break;
-      case 6:
-        var value = /** @type {string} */ (reader.readString());
-        msg.setInitCommand(value);
-        break;
-      case 7:
-        var value = new google_protobuf_struct_pb.Struct();
-        reader.readMessage(
-          value,
-          google_protobuf_struct_pb.Struct.deserializeBinaryFromReader
-        );
-        msg.setEnv(value);
-        break;
-      default:
-        reader.skipField();
-        break;
+    case 3:
+      var value = /** @type {string} */ (reader.readString());
+      msg.setPath(value);
+      break;
+    case 4:
+      var value = /** @type {string} */ (reader.readString());
+      msg.addArgs(value);
+      break;
+    case 5:
+      var value = /** @type {string} */ (reader.readString());
+      msg.setCwd(value);
+      break;
+    case 6:
+      var value = /** @type {string} */ (reader.readString());
+      msg.setInitCommand(value);
+      break;
+    case 7:
+      var value = new google_protobuf_struct_pb.Struct;
+      reader.readMessage(value,google_protobuf_struct_pb.Struct.deserializeBinaryFromReader);
+      msg.setEnv(value);
+      break;
+    default:
+      reader.skipField();
+      break;
     }
   }
   return msg;
 };
 
+
 /**
  * Serializes the message to binary data (in protobuf wire format).
  * @return {!Uint8Array}
  */
-proto.PtyCreate.prototype.serializeBinary = function () {
+proto.PtyCreate.prototype.serializeBinary = function() {
   var writer = new jspb.BinaryWriter();
   proto.PtyCreate.serializeBinaryToWriter(this, writer);
   return writer.getResultBuffer();
 };
+
 
 /**
  * Serializes the given message to binary data (in protobuf wire
@@ -504,23 +496,35 @@ proto.PtyCreate.prototype.serializeBinary = function () {
  * @param {!jspb.BinaryWriter} writer
  * @suppress {unusedLocalVariables} f is only used for nested messages
  */
-proto.PtyCreate.serializeBinaryToWriter = function (message, writer) {
+proto.PtyCreate.serializeBinaryToWriter = function(message, writer) {
   var f = undefined;
   f = message.getPath();
   if (f.length > 0) {
-    writer.writeString(3, f);
+    writer.writeString(
+      3,
+      f
+    );
   }
   f = message.getArgsList();
   if (f.length > 0) {
-    writer.writeRepeatedString(4, f);
+    writer.writeRepeatedString(
+      4,
+      f
+    );
   }
   f = message.getCwd();
   if (f.length > 0) {
-    writer.writeString(5, f);
+    writer.writeString(
+      5,
+      f
+    );
   }
   f = /** @type {string} */ (jspb.Message.getField(message, 6));
   if (f != null) {
-    writer.writeString(6, f);
+    writer.writeString(
+      6,
+      f
+    );
   }
   f = message.getEnv();
   if (f != null) {
@@ -532,136 +536,153 @@ proto.PtyCreate.serializeBinaryToWriter = function (message, writer) {
   }
 };
 
+
 /**
  * optional string path = 3;
  * @return {string}
  */
-proto.PtyCreate.prototype.getPath = function () {
-  return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 3, ''));
+proto.PtyCreate.prototype.getPath = function() {
+  return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 3, ""));
 };
+
 
 /**
  * @param {string} value
  * @return {!proto.PtyCreate} returns this
  */
-proto.PtyCreate.prototype.setPath = function (value) {
+proto.PtyCreate.prototype.setPath = function(value) {
   return jspb.Message.setProto3StringField(this, 3, value);
 };
+
 
 /**
  * repeated string args = 4;
  * @return {!Array<string>}
  */
-proto.PtyCreate.prototype.getArgsList = function () {
+proto.PtyCreate.prototype.getArgsList = function() {
   return /** @type {!Array<string>} */ (jspb.Message.getRepeatedField(this, 4));
 };
+
 
 /**
  * @param {!Array<string>} value
  * @return {!proto.PtyCreate} returns this
  */
-proto.PtyCreate.prototype.setArgsList = function (value) {
+proto.PtyCreate.prototype.setArgsList = function(value) {
   return jspb.Message.setField(this, 4, value || []);
 };
+
 
 /**
  * @param {string} value
  * @param {number=} opt_index
  * @return {!proto.PtyCreate} returns this
  */
-proto.PtyCreate.prototype.addArgs = function (value, opt_index) {
+proto.PtyCreate.prototype.addArgs = function(value, opt_index) {
   return jspb.Message.addToRepeatedField(this, 4, value, opt_index);
 };
+
 
 /**
  * Clears the list making it empty but non-null.
  * @return {!proto.PtyCreate} returns this
  */
-proto.PtyCreate.prototype.clearArgsList = function () {
+proto.PtyCreate.prototype.clearArgsList = function() {
   return this.setArgsList([]);
 };
+
 
 /**
  * optional string cwd = 5;
  * @return {string}
  */
-proto.PtyCreate.prototype.getCwd = function () {
-  return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 5, ''));
+proto.PtyCreate.prototype.getCwd = function() {
+  return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 5, ""));
 };
+
 
 /**
  * @param {string} value
  * @return {!proto.PtyCreate} returns this
  */
-proto.PtyCreate.prototype.setCwd = function (value) {
+proto.PtyCreate.prototype.setCwd = function(value) {
   return jspb.Message.setProto3StringField(this, 5, value);
 };
+
 
 /**
  * optional string init_command = 6;
  * @return {string}
  */
-proto.PtyCreate.prototype.getInitCommand = function () {
-  return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 6, ''));
+proto.PtyCreate.prototype.getInitCommand = function() {
+  return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 6, ""));
 };
+
 
 /**
  * @param {string} value
  * @return {!proto.PtyCreate} returns this
  */
-proto.PtyCreate.prototype.setInitCommand = function (value) {
+proto.PtyCreate.prototype.setInitCommand = function(value) {
   return jspb.Message.setField(this, 6, value);
 };
+
 
 /**
  * Clears the field making it undefined.
  * @return {!proto.PtyCreate} returns this
  */
-proto.PtyCreate.prototype.clearInitCommand = function () {
+proto.PtyCreate.prototype.clearInitCommand = function() {
   return jspb.Message.setField(this, 6, undefined);
 };
+
 
 /**
  * Returns whether this field is set.
  * @return {boolean}
  */
-proto.PtyCreate.prototype.hasInitCommand = function () {
+proto.PtyCreate.prototype.hasInitCommand = function() {
   return jspb.Message.getField(this, 6) != null;
 };
+
 
 /**
  * optional google.protobuf.Struct env = 7;
  * @return {?proto.google.protobuf.Struct}
  */
-proto.PtyCreate.prototype.getEnv = function () {
+proto.PtyCreate.prototype.getEnv = function() {
   return /** @type{?proto.google.protobuf.Struct} */ (
-    jspb.Message.getWrapperField(this, google_protobuf_struct_pb.Struct, 7)
-  );
+    jspb.Message.getWrapperField(this, google_protobuf_struct_pb.Struct, 7));
 };
+
 
 /**
  * @param {?proto.google.protobuf.Struct|undefined} value
  * @return {!proto.PtyCreate} returns this
- */
-proto.PtyCreate.prototype.setEnv = function (value) {
+*/
+proto.PtyCreate.prototype.setEnv = function(value) {
   return jspb.Message.setWrapperField(this, 7, value);
 };
+
 
 /**
  * Clears the message field making it undefined.
  * @return {!proto.PtyCreate} returns this
  */
-proto.PtyCreate.prototype.clearEnv = function () {
+proto.PtyCreate.prototype.clearEnv = function() {
   return this.setEnv(undefined);
 };
+
 
 /**
  * Returns whether this field is set.
  * @return {boolean}
  */
-proto.PtyCreate.prototype.hasEnv = function () {
+proto.PtyCreate.prototype.hasEnv = function() {
   return jspb.Message.getField(this, 7) != null;
 };
+
+
 
 /**
  * Oneof group definitions for this message. Each group defines the field
@@ -671,7 +692,7 @@ proto.PtyCreate.prototype.hasEnv = function () {
  * @private {!Array<!Array<number>>}
  * @const
  */
-proto.PtyClientEvent.oneofGroups_ = [[2, 3, 4]];
+proto.PtyClientEvent.oneofGroups_ = [[2,3,4]];
 
 /**
  * @enum {number}
@@ -680,75 +701,71 @@ proto.PtyClientEvent.EventCase = {
   EVENT_NOT_SET: 0,
   START: 2,
   RESIZE: 3,
-  DATA: 4,
+  DATA: 4
 };
 
 /**
  * @return {proto.PtyClientEvent.EventCase}
  */
-proto.PtyClientEvent.prototype.getEventCase = function () {
-  return /** @type {proto.PtyClientEvent.EventCase} */ (
-    jspb.Message.computeOneofCase(this, proto.PtyClientEvent.oneofGroups_[0])
-  );
+proto.PtyClientEvent.prototype.getEventCase = function() {
+  return /** @type {proto.PtyClientEvent.EventCase} */(jspb.Message.computeOneofCase(this, proto.PtyClientEvent.oneofGroups_[0]));
 };
 
+
+
 if (jspb.Message.GENERATE_TO_OBJECT) {
-  /**
-   * Creates an object representation of this proto.
-   * Field names that are reserved in JavaScript and will be renamed to pb_name.
-   * Optional fields that are not set will be set to undefined.
-   * To access a reserved field use, foo.pb_<name>, eg, foo.pb_default.
-   * For the list of reserved names please see:
-   *     net/proto2/compiler/js/internal/generator.cc#kKeyword.
-   * @param {boolean=} opt_includeInstance Deprecated. whether to include the
-   *     JSPB instance for transitional soy proto support:
-   *     http://goto/soy-param-migration
-   * @return {!Object}
-   */
-  proto.PtyClientEvent.prototype.toObject = function (opt_includeInstance) {
-    return proto.PtyClientEvent.toObject(opt_includeInstance, this);
+/**
+ * Creates an object representation of this proto.
+ * Field names that are reserved in JavaScript and will be renamed to pb_name.
+ * Optional fields that are not set will be set to undefined.
+ * To access a reserved field use, foo.pb_<name>, eg, foo.pb_default.
+ * For the list of reserved names please see:
+ *     net/proto2/compiler/js/internal/generator.cc#kKeyword.
+ * @param {boolean=} opt_includeInstance Deprecated. whether to include the
+ *     JSPB instance for transitional soy proto support:
+ *     http://goto/soy-param-migration
+ * @return {!Object}
+ */
+proto.PtyClientEvent.prototype.toObject = function(opt_includeInstance) {
+  return proto.PtyClientEvent.toObject(opt_includeInstance, this);
+};
+
+
+/**
+ * Static version of the {@see toObject} method.
+ * @param {boolean|undefined} includeInstance Deprecated. Whether to include
+ *     the JSPB instance for transitional soy proto support:
+ *     http://goto/soy-param-migration
+ * @param {!proto.PtyClientEvent} msg The msg instance to transform.
+ * @return {!Object}
+ * @suppress {unusedLocalVariables} f is only used for nested messages
+ */
+proto.PtyClientEvent.toObject = function(includeInstance, msg) {
+  var f, obj = {
+    start: (f = msg.getStart()) && proto.PtyEventStart.toObject(includeInstance, f),
+    resize: (f = msg.getResize()) && proto.PtyEventResize.toObject(includeInstance, f),
+    data: (f = msg.getData()) && proto.PtyEventData.toObject(includeInstance, f)
   };
 
-  /**
-   * Static version of the {@see toObject} method.
-   * @param {boolean|undefined} includeInstance Deprecated. Whether to include
-   *     the JSPB instance for transitional soy proto support:
-   *     http://goto/soy-param-migration
-   * @param {!proto.PtyClientEvent} msg The msg instance to transform.
-   * @return {!Object}
-   * @suppress {unusedLocalVariables} f is only used for nested messages
-   */
-  proto.PtyClientEvent.toObject = function (includeInstance, msg) {
-    var f,
-      obj = {
-        start:
-          (f = msg.getStart()) &&
-          proto.PtyEventStart.toObject(includeInstance, f),
-        resize:
-          (f = msg.getResize()) &&
-          proto.PtyEventResize.toObject(includeInstance, f),
-        data:
-          (f = msg.getData()) &&
-          proto.PtyEventData.toObject(includeInstance, f),
-      };
-
-    if (includeInstance) {
-      obj.$jspbMessageInstance = msg;
-    }
-    return obj;
-  };
+  if (includeInstance) {
+    obj.$jspbMessageInstance = msg;
+  }
+  return obj;
+};
 }
+
 
 /**
  * Deserializes binary data (in protobuf wire format).
  * @param {jspb.ByteSource} bytes The bytes to deserialize.
  * @return {!proto.PtyClientEvent}
  */
-proto.PtyClientEvent.deserializeBinary = function (bytes) {
+proto.PtyClientEvent.deserializeBinary = function(bytes) {
   var reader = new jspb.BinaryReader(bytes);
-  var msg = new proto.PtyClientEvent();
+  var msg = new proto.PtyClientEvent;
   return proto.PtyClientEvent.deserializeBinaryFromReader(msg, reader);
 };
+
 
 /**
  * Deserializes binary data (in protobuf wire format) from the
@@ -757,54 +774,47 @@ proto.PtyClientEvent.deserializeBinary = function (bytes) {
  * @param {!jspb.BinaryReader} reader The BinaryReader to use.
  * @return {!proto.PtyClientEvent}
  */
-proto.PtyClientEvent.deserializeBinaryFromReader = function (msg, reader) {
+proto.PtyClientEvent.deserializeBinaryFromReader = function(msg, reader) {
   while (reader.nextField()) {
     if (reader.isEndGroup()) {
       break;
     }
     var field = reader.getFieldNumber();
     switch (field) {
-      case 2:
-        var value = new proto.PtyEventStart();
-        reader.readMessage(
-          value,
-          proto.PtyEventStart.deserializeBinaryFromReader
-        );
-        msg.setStart(value);
-        break;
-      case 3:
-        var value = new proto.PtyEventResize();
-        reader.readMessage(
-          value,
-          proto.PtyEventResize.deserializeBinaryFromReader
-        );
-        msg.setResize(value);
-        break;
-      case 4:
-        var value = new proto.PtyEventData();
-        reader.readMessage(
-          value,
-          proto.PtyEventData.deserializeBinaryFromReader
-        );
-        msg.setData(value);
-        break;
-      default:
-        reader.skipField();
-        break;
+    case 2:
+      var value = new proto.PtyEventStart;
+      reader.readMessage(value,proto.PtyEventStart.deserializeBinaryFromReader);
+      msg.setStart(value);
+      break;
+    case 3:
+      var value = new proto.PtyEventResize;
+      reader.readMessage(value,proto.PtyEventResize.deserializeBinaryFromReader);
+      msg.setResize(value);
+      break;
+    case 4:
+      var value = new proto.PtyEventData;
+      reader.readMessage(value,proto.PtyEventData.deserializeBinaryFromReader);
+      msg.setData(value);
+      break;
+    default:
+      reader.skipField();
+      break;
     }
   }
   return msg;
 };
 
+
 /**
  * Serializes the message to binary data (in protobuf wire format).
  * @return {!Uint8Array}
  */
-proto.PtyClientEvent.prototype.serializeBinary = function () {
+proto.PtyClientEvent.prototype.serializeBinary = function() {
   var writer = new jspb.BinaryWriter();
   proto.PtyClientEvent.serializeBinaryToWriter(this, writer);
   return writer.getResultBuffer();
 };
+
 
 /**
  * Serializes the given message to binary data (in protobuf wire
@@ -813,138 +823,146 @@ proto.PtyClientEvent.prototype.serializeBinary = function () {
  * @param {!jspb.BinaryWriter} writer
  * @suppress {unusedLocalVariables} f is only used for nested messages
  */
-proto.PtyClientEvent.serializeBinaryToWriter = function (message, writer) {
+proto.PtyClientEvent.serializeBinaryToWriter = function(message, writer) {
   var f = undefined;
   f = message.getStart();
   if (f != null) {
-    writer.writeMessage(2, f, proto.PtyEventStart.serializeBinaryToWriter);
+    writer.writeMessage(
+      2,
+      f,
+      proto.PtyEventStart.serializeBinaryToWriter
+    );
   }
   f = message.getResize();
   if (f != null) {
-    writer.writeMessage(3, f, proto.PtyEventResize.serializeBinaryToWriter);
+    writer.writeMessage(
+      3,
+      f,
+      proto.PtyEventResize.serializeBinaryToWriter
+    );
   }
   f = message.getData();
   if (f != null) {
-    writer.writeMessage(4, f, proto.PtyEventData.serializeBinaryToWriter);
+    writer.writeMessage(
+      4,
+      f,
+      proto.PtyEventData.serializeBinaryToWriter
+    );
   }
 };
+
 
 /**
  * optional PtyEventStart start = 2;
  * @return {?proto.PtyEventStart}
  */
-proto.PtyClientEvent.prototype.getStart = function () {
+proto.PtyClientEvent.prototype.getStart = function() {
   return /** @type{?proto.PtyEventStart} */ (
-    jspb.Message.getWrapperField(this, proto.PtyEventStart, 2)
-  );
+    jspb.Message.getWrapperField(this, proto.PtyEventStart, 2));
 };
+
 
 /**
  * @param {?proto.PtyEventStart|undefined} value
  * @return {!proto.PtyClientEvent} returns this
- */
-proto.PtyClientEvent.prototype.setStart = function (value) {
-  return jspb.Message.setOneofWrapperField(
-    this,
-    2,
-    proto.PtyClientEvent.oneofGroups_[0],
-    value
-  );
+*/
+proto.PtyClientEvent.prototype.setStart = function(value) {
+  return jspb.Message.setOneofWrapperField(this, 2, proto.PtyClientEvent.oneofGroups_[0], value);
 };
+
 
 /**
  * Clears the message field making it undefined.
  * @return {!proto.PtyClientEvent} returns this
  */
-proto.PtyClientEvent.prototype.clearStart = function () {
+proto.PtyClientEvent.prototype.clearStart = function() {
   return this.setStart(undefined);
 };
+
 
 /**
  * Returns whether this field is set.
  * @return {boolean}
  */
-proto.PtyClientEvent.prototype.hasStart = function () {
+proto.PtyClientEvent.prototype.hasStart = function() {
   return jspb.Message.getField(this, 2) != null;
 };
+
 
 /**
  * optional PtyEventResize resize = 3;
  * @return {?proto.PtyEventResize}
  */
-proto.PtyClientEvent.prototype.getResize = function () {
+proto.PtyClientEvent.prototype.getResize = function() {
   return /** @type{?proto.PtyEventResize} */ (
-    jspb.Message.getWrapperField(this, proto.PtyEventResize, 3)
-  );
+    jspb.Message.getWrapperField(this, proto.PtyEventResize, 3));
 };
+
 
 /**
  * @param {?proto.PtyEventResize|undefined} value
  * @return {!proto.PtyClientEvent} returns this
- */
-proto.PtyClientEvent.prototype.setResize = function (value) {
-  return jspb.Message.setOneofWrapperField(
-    this,
-    3,
-    proto.PtyClientEvent.oneofGroups_[0],
-    value
-  );
+*/
+proto.PtyClientEvent.prototype.setResize = function(value) {
+  return jspb.Message.setOneofWrapperField(this, 3, proto.PtyClientEvent.oneofGroups_[0], value);
 };
+
 
 /**
  * Clears the message field making it undefined.
  * @return {!proto.PtyClientEvent} returns this
  */
-proto.PtyClientEvent.prototype.clearResize = function () {
+proto.PtyClientEvent.prototype.clearResize = function() {
   return this.setResize(undefined);
 };
+
 
 /**
  * Returns whether this field is set.
  * @return {boolean}
  */
-proto.PtyClientEvent.prototype.hasResize = function () {
+proto.PtyClientEvent.prototype.hasResize = function() {
   return jspb.Message.getField(this, 3) != null;
 };
+
 
 /**
  * optional PtyEventData data = 4;
  * @return {?proto.PtyEventData}
  */
-proto.PtyClientEvent.prototype.getData = function () {
+proto.PtyClientEvent.prototype.getData = function() {
   return /** @type{?proto.PtyEventData} */ (
-    jspb.Message.getWrapperField(this, proto.PtyEventData, 4)
-  );
+    jspb.Message.getWrapperField(this, proto.PtyEventData, 4));
 };
+
 
 /**
  * @param {?proto.PtyEventData|undefined} value
  * @return {!proto.PtyClientEvent} returns this
- */
-proto.PtyClientEvent.prototype.setData = function (value) {
-  return jspb.Message.setOneofWrapperField(
-    this,
-    4,
-    proto.PtyClientEvent.oneofGroups_[0],
-    value
-  );
+*/
+proto.PtyClientEvent.prototype.setData = function(value) {
+  return jspb.Message.setOneofWrapperField(this, 4, proto.PtyClientEvent.oneofGroups_[0], value);
 };
+
 
 /**
  * Clears the message field making it undefined.
  * @return {!proto.PtyClientEvent} returns this
  */
-proto.PtyClientEvent.prototype.clearData = function () {
+proto.PtyClientEvent.prototype.clearData = function() {
   return this.setData(undefined);
 };
+
 
 /**
  * Returns whether this field is set.
  * @return {boolean}
  */
-proto.PtyClientEvent.prototype.hasData = function () {
+proto.PtyClientEvent.prototype.hasData = function() {
   return jspb.Message.getField(this, 4) != null;
 };
+
+
 
 /**
  * Oneof group definitions for this message. Each group defines the field
@@ -954,7 +972,7 @@ proto.PtyClientEvent.prototype.hasData = function () {
  * @private {!Array<!Array<number>>}
  * @const
  */
-proto.PtyServerEvent.oneofGroups_ = [[1, 2, 3, 4]];
+proto.PtyServerEvent.oneofGroups_ = [[1,2,3,4]];
 
 /**
  * @enum {number}
@@ -964,78 +982,72 @@ proto.PtyServerEvent.EventCase = {
   RESIZE: 1,
   DATA: 2,
   OPEN: 3,
-  EXIT: 4,
+  EXIT: 4
 };
 
 /**
  * @return {proto.PtyServerEvent.EventCase}
  */
-proto.PtyServerEvent.prototype.getEventCase = function () {
-  return /** @type {proto.PtyServerEvent.EventCase} */ (
-    jspb.Message.computeOneofCase(this, proto.PtyServerEvent.oneofGroups_[0])
-  );
+proto.PtyServerEvent.prototype.getEventCase = function() {
+  return /** @type {proto.PtyServerEvent.EventCase} */(jspb.Message.computeOneofCase(this, proto.PtyServerEvent.oneofGroups_[0]));
 };
 
+
+
 if (jspb.Message.GENERATE_TO_OBJECT) {
-  /**
-   * Creates an object representation of this proto.
-   * Field names that are reserved in JavaScript and will be renamed to pb_name.
-   * Optional fields that are not set will be set to undefined.
-   * To access a reserved field use, foo.pb_<name>, eg, foo.pb_default.
-   * For the list of reserved names please see:
-   *     net/proto2/compiler/js/internal/generator.cc#kKeyword.
-   * @param {boolean=} opt_includeInstance Deprecated. whether to include the
-   *     JSPB instance for transitional soy proto support:
-   *     http://goto/soy-param-migration
-   * @return {!Object}
-   */
-  proto.PtyServerEvent.prototype.toObject = function (opt_includeInstance) {
-    return proto.PtyServerEvent.toObject(opt_includeInstance, this);
+/**
+ * Creates an object representation of this proto.
+ * Field names that are reserved in JavaScript and will be renamed to pb_name.
+ * Optional fields that are not set will be set to undefined.
+ * To access a reserved field use, foo.pb_<name>, eg, foo.pb_default.
+ * For the list of reserved names please see:
+ *     net/proto2/compiler/js/internal/generator.cc#kKeyword.
+ * @param {boolean=} opt_includeInstance Deprecated. whether to include the
+ *     JSPB instance for transitional soy proto support:
+ *     http://goto/soy-param-migration
+ * @return {!Object}
+ */
+proto.PtyServerEvent.prototype.toObject = function(opt_includeInstance) {
+  return proto.PtyServerEvent.toObject(opt_includeInstance, this);
+};
+
+
+/**
+ * Static version of the {@see toObject} method.
+ * @param {boolean|undefined} includeInstance Deprecated. Whether to include
+ *     the JSPB instance for transitional soy proto support:
+ *     http://goto/soy-param-migration
+ * @param {!proto.PtyServerEvent} msg The msg instance to transform.
+ * @return {!Object}
+ * @suppress {unusedLocalVariables} f is only used for nested messages
+ */
+proto.PtyServerEvent.toObject = function(includeInstance, msg) {
+  var f, obj = {
+    resize: (f = msg.getResize()) && proto.PtyEventResize.toObject(includeInstance, f),
+    data: (f = msg.getData()) && proto.PtyEventData.toObject(includeInstance, f),
+    open: (f = msg.getOpen()) && proto.PtyEventOpen.toObject(includeInstance, f),
+    exit: (f = msg.getExit()) && proto.PtyEventExit.toObject(includeInstance, f)
   };
 
-  /**
-   * Static version of the {@see toObject} method.
-   * @param {boolean|undefined} includeInstance Deprecated. Whether to include
-   *     the JSPB instance for transitional soy proto support:
-   *     http://goto/soy-param-migration
-   * @param {!proto.PtyServerEvent} msg The msg instance to transform.
-   * @return {!Object}
-   * @suppress {unusedLocalVariables} f is only used for nested messages
-   */
-  proto.PtyServerEvent.toObject = function (includeInstance, msg) {
-    var f,
-      obj = {
-        resize:
-          (f = msg.getResize()) &&
-          proto.PtyEventResize.toObject(includeInstance, f),
-        data:
-          (f = msg.getData()) &&
-          proto.PtyEventData.toObject(includeInstance, f),
-        open:
-          (f = msg.getOpen()) &&
-          proto.PtyEventOpen.toObject(includeInstance, f),
-        exit:
-          (f = msg.getExit()) &&
-          proto.PtyEventExit.toObject(includeInstance, f),
-      };
-
-    if (includeInstance) {
-      obj.$jspbMessageInstance = msg;
-    }
-    return obj;
-  };
+  if (includeInstance) {
+    obj.$jspbMessageInstance = msg;
+  }
+  return obj;
+};
 }
+
 
 /**
  * Deserializes binary data (in protobuf wire format).
  * @param {jspb.ByteSource} bytes The bytes to deserialize.
  * @return {!proto.PtyServerEvent}
  */
-proto.PtyServerEvent.deserializeBinary = function (bytes) {
+proto.PtyServerEvent.deserializeBinary = function(bytes) {
   var reader = new jspb.BinaryReader(bytes);
-  var msg = new proto.PtyServerEvent();
+  var msg = new proto.PtyServerEvent;
   return proto.PtyServerEvent.deserializeBinaryFromReader(msg, reader);
 };
+
 
 /**
  * Deserializes binary data (in protobuf wire format) from the
@@ -1044,62 +1056,52 @@ proto.PtyServerEvent.deserializeBinary = function (bytes) {
  * @param {!jspb.BinaryReader} reader The BinaryReader to use.
  * @return {!proto.PtyServerEvent}
  */
-proto.PtyServerEvent.deserializeBinaryFromReader = function (msg, reader) {
+proto.PtyServerEvent.deserializeBinaryFromReader = function(msg, reader) {
   while (reader.nextField()) {
     if (reader.isEndGroup()) {
       break;
     }
     var field = reader.getFieldNumber();
     switch (field) {
-      case 1:
-        var value = new proto.PtyEventResize();
-        reader.readMessage(
-          value,
-          proto.PtyEventResize.deserializeBinaryFromReader
-        );
-        msg.setResize(value);
-        break;
-      case 2:
-        var value = new proto.PtyEventData();
-        reader.readMessage(
-          value,
-          proto.PtyEventData.deserializeBinaryFromReader
-        );
-        msg.setData(value);
-        break;
-      case 3:
-        var value = new proto.PtyEventOpen();
-        reader.readMessage(
-          value,
-          proto.PtyEventOpen.deserializeBinaryFromReader
-        );
-        msg.setOpen(value);
-        break;
-      case 4:
-        var value = new proto.PtyEventExit();
-        reader.readMessage(
-          value,
-          proto.PtyEventExit.deserializeBinaryFromReader
-        );
-        msg.setExit(value);
-        break;
-      default:
-        reader.skipField();
-        break;
+    case 1:
+      var value = new proto.PtyEventResize;
+      reader.readMessage(value,proto.PtyEventResize.deserializeBinaryFromReader);
+      msg.setResize(value);
+      break;
+    case 2:
+      var value = new proto.PtyEventData;
+      reader.readMessage(value,proto.PtyEventData.deserializeBinaryFromReader);
+      msg.setData(value);
+      break;
+    case 3:
+      var value = new proto.PtyEventOpen;
+      reader.readMessage(value,proto.PtyEventOpen.deserializeBinaryFromReader);
+      msg.setOpen(value);
+      break;
+    case 4:
+      var value = new proto.PtyEventExit;
+      reader.readMessage(value,proto.PtyEventExit.deserializeBinaryFromReader);
+      msg.setExit(value);
+      break;
+    default:
+      reader.skipField();
+      break;
     }
   }
   return msg;
 };
 
+
 /**
  * Serializes the message to binary data (in protobuf wire format).
  * @return {!Uint8Array}
  */
-proto.PtyServerEvent.prototype.serializeBinary = function () {
+proto.PtyServerEvent.prototype.serializeBinary = function() {
   var writer = new jspb.BinaryWriter();
   proto.PtyServerEvent.serializeBinaryToWriter(this, writer);
   return writer.getResultBuffer();
 };
+
 
 /**
  * Serializes the given message to binary data (in protobuf wire
@@ -1108,232 +1110,246 @@ proto.PtyServerEvent.prototype.serializeBinary = function () {
  * @param {!jspb.BinaryWriter} writer
  * @suppress {unusedLocalVariables} f is only used for nested messages
  */
-proto.PtyServerEvent.serializeBinaryToWriter = function (message, writer) {
+proto.PtyServerEvent.serializeBinaryToWriter = function(message, writer) {
   var f = undefined;
   f = message.getResize();
   if (f != null) {
-    writer.writeMessage(1, f, proto.PtyEventResize.serializeBinaryToWriter);
+    writer.writeMessage(
+      1,
+      f,
+      proto.PtyEventResize.serializeBinaryToWriter
+    );
   }
   f = message.getData();
   if (f != null) {
-    writer.writeMessage(2, f, proto.PtyEventData.serializeBinaryToWriter);
+    writer.writeMessage(
+      2,
+      f,
+      proto.PtyEventData.serializeBinaryToWriter
+    );
   }
   f = message.getOpen();
   if (f != null) {
-    writer.writeMessage(3, f, proto.PtyEventOpen.serializeBinaryToWriter);
+    writer.writeMessage(
+      3,
+      f,
+      proto.PtyEventOpen.serializeBinaryToWriter
+    );
   }
   f = message.getExit();
   if (f != null) {
-    writer.writeMessage(4, f, proto.PtyEventExit.serializeBinaryToWriter);
+    writer.writeMessage(
+      4,
+      f,
+      proto.PtyEventExit.serializeBinaryToWriter
+    );
   }
 };
+
 
 /**
  * optional PtyEventResize resize = 1;
  * @return {?proto.PtyEventResize}
  */
-proto.PtyServerEvent.prototype.getResize = function () {
+proto.PtyServerEvent.prototype.getResize = function() {
   return /** @type{?proto.PtyEventResize} */ (
-    jspb.Message.getWrapperField(this, proto.PtyEventResize, 1)
-  );
+    jspb.Message.getWrapperField(this, proto.PtyEventResize, 1));
 };
+
 
 /**
  * @param {?proto.PtyEventResize|undefined} value
  * @return {!proto.PtyServerEvent} returns this
- */
-proto.PtyServerEvent.prototype.setResize = function (value) {
-  return jspb.Message.setOneofWrapperField(
-    this,
-    1,
-    proto.PtyServerEvent.oneofGroups_[0],
-    value
-  );
+*/
+proto.PtyServerEvent.prototype.setResize = function(value) {
+  return jspb.Message.setOneofWrapperField(this, 1, proto.PtyServerEvent.oneofGroups_[0], value);
 };
+
 
 /**
  * Clears the message field making it undefined.
  * @return {!proto.PtyServerEvent} returns this
  */
-proto.PtyServerEvent.prototype.clearResize = function () {
+proto.PtyServerEvent.prototype.clearResize = function() {
   return this.setResize(undefined);
 };
+
 
 /**
  * Returns whether this field is set.
  * @return {boolean}
  */
-proto.PtyServerEvent.prototype.hasResize = function () {
+proto.PtyServerEvent.prototype.hasResize = function() {
   return jspb.Message.getField(this, 1) != null;
 };
+
 
 /**
  * optional PtyEventData data = 2;
  * @return {?proto.PtyEventData}
  */
-proto.PtyServerEvent.prototype.getData = function () {
+proto.PtyServerEvent.prototype.getData = function() {
   return /** @type{?proto.PtyEventData} */ (
-    jspb.Message.getWrapperField(this, proto.PtyEventData, 2)
-  );
+    jspb.Message.getWrapperField(this, proto.PtyEventData, 2));
 };
+
 
 /**
  * @param {?proto.PtyEventData|undefined} value
  * @return {!proto.PtyServerEvent} returns this
- */
-proto.PtyServerEvent.prototype.setData = function (value) {
-  return jspb.Message.setOneofWrapperField(
-    this,
-    2,
-    proto.PtyServerEvent.oneofGroups_[0],
-    value
-  );
+*/
+proto.PtyServerEvent.prototype.setData = function(value) {
+  return jspb.Message.setOneofWrapperField(this, 2, proto.PtyServerEvent.oneofGroups_[0], value);
 };
+
 
 /**
  * Clears the message field making it undefined.
  * @return {!proto.PtyServerEvent} returns this
  */
-proto.PtyServerEvent.prototype.clearData = function () {
+proto.PtyServerEvent.prototype.clearData = function() {
   return this.setData(undefined);
 };
+
 
 /**
  * Returns whether this field is set.
  * @return {boolean}
  */
-proto.PtyServerEvent.prototype.hasData = function () {
+proto.PtyServerEvent.prototype.hasData = function() {
   return jspb.Message.getField(this, 2) != null;
 };
+
 
 /**
  * optional PtyEventOpen open = 3;
  * @return {?proto.PtyEventOpen}
  */
-proto.PtyServerEvent.prototype.getOpen = function () {
+proto.PtyServerEvent.prototype.getOpen = function() {
   return /** @type{?proto.PtyEventOpen} */ (
-    jspb.Message.getWrapperField(this, proto.PtyEventOpen, 3)
-  );
+    jspb.Message.getWrapperField(this, proto.PtyEventOpen, 3));
 };
+
 
 /**
  * @param {?proto.PtyEventOpen|undefined} value
  * @return {!proto.PtyServerEvent} returns this
- */
-proto.PtyServerEvent.prototype.setOpen = function (value) {
-  return jspb.Message.setOneofWrapperField(
-    this,
-    3,
-    proto.PtyServerEvent.oneofGroups_[0],
-    value
-  );
+*/
+proto.PtyServerEvent.prototype.setOpen = function(value) {
+  return jspb.Message.setOneofWrapperField(this, 3, proto.PtyServerEvent.oneofGroups_[0], value);
 };
+
 
 /**
  * Clears the message field making it undefined.
  * @return {!proto.PtyServerEvent} returns this
  */
-proto.PtyServerEvent.prototype.clearOpen = function () {
+proto.PtyServerEvent.prototype.clearOpen = function() {
   return this.setOpen(undefined);
 };
+
 
 /**
  * Returns whether this field is set.
  * @return {boolean}
  */
-proto.PtyServerEvent.prototype.hasOpen = function () {
+proto.PtyServerEvent.prototype.hasOpen = function() {
   return jspb.Message.getField(this, 3) != null;
 };
+
 
 /**
  * optional PtyEventExit exit = 4;
  * @return {?proto.PtyEventExit}
  */
-proto.PtyServerEvent.prototype.getExit = function () {
+proto.PtyServerEvent.prototype.getExit = function() {
   return /** @type{?proto.PtyEventExit} */ (
-    jspb.Message.getWrapperField(this, proto.PtyEventExit, 4)
-  );
+    jspb.Message.getWrapperField(this, proto.PtyEventExit, 4));
 };
+
 
 /**
  * @param {?proto.PtyEventExit|undefined} value
  * @return {!proto.PtyServerEvent} returns this
- */
-proto.PtyServerEvent.prototype.setExit = function (value) {
-  return jspb.Message.setOneofWrapperField(
-    this,
-    4,
-    proto.PtyServerEvent.oneofGroups_[0],
-    value
-  );
+*/
+proto.PtyServerEvent.prototype.setExit = function(value) {
+  return jspb.Message.setOneofWrapperField(this, 4, proto.PtyServerEvent.oneofGroups_[0], value);
 };
+
 
 /**
  * Clears the message field making it undefined.
  * @return {!proto.PtyServerEvent} returns this
  */
-proto.PtyServerEvent.prototype.clearExit = function () {
+proto.PtyServerEvent.prototype.clearExit = function() {
   return this.setExit(undefined);
 };
+
 
 /**
  * Returns whether this field is set.
  * @return {boolean}
  */
-proto.PtyServerEvent.prototype.hasExit = function () {
+proto.PtyServerEvent.prototype.hasExit = function() {
   return jspb.Message.getField(this, 4) != null;
 };
 
+
+
+
+
 if (jspb.Message.GENERATE_TO_OBJECT) {
-  /**
-   * Creates an object representation of this proto.
-   * Field names that are reserved in JavaScript and will be renamed to pb_name.
-   * Optional fields that are not set will be set to undefined.
-   * To access a reserved field use, foo.pb_<name>, eg, foo.pb_default.
-   * For the list of reserved names please see:
-   *     net/proto2/compiler/js/internal/generator.cc#kKeyword.
-   * @param {boolean=} opt_includeInstance Deprecated. whether to include the
-   *     JSPB instance for transitional soy proto support:
-   *     http://goto/soy-param-migration
-   * @return {!Object}
-   */
-  proto.PtyEventStart.prototype.toObject = function (opt_includeInstance) {
-    return proto.PtyEventStart.toObject(opt_includeInstance, this);
+/**
+ * Creates an object representation of this proto.
+ * Field names that are reserved in JavaScript and will be renamed to pb_name.
+ * Optional fields that are not set will be set to undefined.
+ * To access a reserved field use, foo.pb_<name>, eg, foo.pb_default.
+ * For the list of reserved names please see:
+ *     net/proto2/compiler/js/internal/generator.cc#kKeyword.
+ * @param {boolean=} opt_includeInstance Deprecated. whether to include the
+ *     JSPB instance for transitional soy proto support:
+ *     http://goto/soy-param-migration
+ * @return {!Object}
+ */
+proto.PtyEventStart.prototype.toObject = function(opt_includeInstance) {
+  return proto.PtyEventStart.toObject(opt_includeInstance, this);
+};
+
+
+/**
+ * Static version of the {@see toObject} method.
+ * @param {boolean|undefined} includeInstance Deprecated. Whether to include
+ *     the JSPB instance for transitional soy proto support:
+ *     http://goto/soy-param-migration
+ * @param {!proto.PtyEventStart} msg The msg instance to transform.
+ * @return {!Object}
+ * @suppress {unusedLocalVariables} f is only used for nested messages
+ */
+proto.PtyEventStart.toObject = function(includeInstance, msg) {
+  var f, obj = {
+    columns: jspb.Message.getFieldWithDefault(msg, 2, 0),
+    rows: jspb.Message.getFieldWithDefault(msg, 3, 0)
   };
 
-  /**
-   * Static version of the {@see toObject} method.
-   * @param {boolean|undefined} includeInstance Deprecated. Whether to include
-   *     the JSPB instance for transitional soy proto support:
-   *     http://goto/soy-param-migration
-   * @param {!proto.PtyEventStart} msg The msg instance to transform.
-   * @return {!Object}
-   * @suppress {unusedLocalVariables} f is only used for nested messages
-   */
-  proto.PtyEventStart.toObject = function (includeInstance, msg) {
-    var f,
-      obj = {
-        columns: jspb.Message.getFieldWithDefault(msg, 2, 0),
-        rows: jspb.Message.getFieldWithDefault(msg, 3, 0),
-      };
-
-    if (includeInstance) {
-      obj.$jspbMessageInstance = msg;
-    }
-    return obj;
-  };
+  if (includeInstance) {
+    obj.$jspbMessageInstance = msg;
+  }
+  return obj;
+};
 }
+
 
 /**
  * Deserializes binary data (in protobuf wire format).
  * @param {jspb.ByteSource} bytes The bytes to deserialize.
  * @return {!proto.PtyEventStart}
  */
-proto.PtyEventStart.deserializeBinary = function (bytes) {
+proto.PtyEventStart.deserializeBinary = function(bytes) {
   var reader = new jspb.BinaryReader(bytes);
-  var msg = new proto.PtyEventStart();
+  var msg = new proto.PtyEventStart;
   return proto.PtyEventStart.deserializeBinaryFromReader(msg, reader);
 };
+
 
 /**
  * Deserializes binary data (in protobuf wire format) from the
@@ -1342,38 +1358,40 @@ proto.PtyEventStart.deserializeBinary = function (bytes) {
  * @param {!jspb.BinaryReader} reader The BinaryReader to use.
  * @return {!proto.PtyEventStart}
  */
-proto.PtyEventStart.deserializeBinaryFromReader = function (msg, reader) {
+proto.PtyEventStart.deserializeBinaryFromReader = function(msg, reader) {
   while (reader.nextField()) {
     if (reader.isEndGroup()) {
       break;
     }
     var field = reader.getFieldNumber();
     switch (field) {
-      case 2:
-        var value = /** @type {number} */ (reader.readUint32());
-        msg.setColumns(value);
-        break;
-      case 3:
-        var value = /** @type {number} */ (reader.readUint32());
-        msg.setRows(value);
-        break;
-      default:
-        reader.skipField();
-        break;
+    case 2:
+      var value = /** @type {number} */ (reader.readUint32());
+      msg.setColumns(value);
+      break;
+    case 3:
+      var value = /** @type {number} */ (reader.readUint32());
+      msg.setRows(value);
+      break;
+    default:
+      reader.skipField();
+      break;
     }
   }
   return msg;
 };
 
+
 /**
  * Serializes the message to binary data (in protobuf wire format).
  * @return {!Uint8Array}
  */
-proto.PtyEventStart.prototype.serializeBinary = function () {
+proto.PtyEventStart.prototype.serializeBinary = function() {
   var writer = new jspb.BinaryWriter();
   proto.PtyEventStart.serializeBinaryToWriter(this, writer);
   return writer.getResultBuffer();
 };
+
 
 /**
  * Serializes the given message to binary data (in protobuf wire
@@ -1382,99 +1400,115 @@ proto.PtyEventStart.prototype.serializeBinary = function () {
  * @param {!jspb.BinaryWriter} writer
  * @suppress {unusedLocalVariables} f is only used for nested messages
  */
-proto.PtyEventStart.serializeBinaryToWriter = function (message, writer) {
+proto.PtyEventStart.serializeBinaryToWriter = function(message, writer) {
   var f = undefined;
   f = message.getColumns();
   if (f !== 0) {
-    writer.writeUint32(2, f);
+    writer.writeUint32(
+      2,
+      f
+    );
   }
   f = message.getRows();
   if (f !== 0) {
-    writer.writeUint32(3, f);
+    writer.writeUint32(
+      3,
+      f
+    );
   }
 };
+
 
 /**
  * optional uint32 columns = 2;
  * @return {number}
  */
-proto.PtyEventStart.prototype.getColumns = function () {
+proto.PtyEventStart.prototype.getColumns = function() {
   return /** @type {number} */ (jspb.Message.getFieldWithDefault(this, 2, 0));
 };
+
 
 /**
  * @param {number} value
  * @return {!proto.PtyEventStart} returns this
  */
-proto.PtyEventStart.prototype.setColumns = function (value) {
+proto.PtyEventStart.prototype.setColumns = function(value) {
   return jspb.Message.setProto3IntField(this, 2, value);
 };
+
 
 /**
  * optional uint32 rows = 3;
  * @return {number}
  */
-proto.PtyEventStart.prototype.getRows = function () {
+proto.PtyEventStart.prototype.getRows = function() {
   return /** @type {number} */ (jspb.Message.getFieldWithDefault(this, 3, 0));
 };
+
 
 /**
  * @param {number} value
  * @return {!proto.PtyEventStart} returns this
  */
-proto.PtyEventStart.prototype.setRows = function (value) {
+proto.PtyEventStart.prototype.setRows = function(value) {
   return jspb.Message.setProto3IntField(this, 3, value);
 };
 
+
+
+
+
 if (jspb.Message.GENERATE_TO_OBJECT) {
-  /**
-   * Creates an object representation of this proto.
-   * Field names that are reserved in JavaScript and will be renamed to pb_name.
-   * Optional fields that are not set will be set to undefined.
-   * To access a reserved field use, foo.pb_<name>, eg, foo.pb_default.
-   * For the list of reserved names please see:
-   *     net/proto2/compiler/js/internal/generator.cc#kKeyword.
-   * @param {boolean=} opt_includeInstance Deprecated. whether to include the
-   *     JSPB instance for transitional soy proto support:
-   *     http://goto/soy-param-migration
-   * @return {!Object}
-   */
-  proto.PtyEventData.prototype.toObject = function (opt_includeInstance) {
-    return proto.PtyEventData.toObject(opt_includeInstance, this);
+/**
+ * Creates an object representation of this proto.
+ * Field names that are reserved in JavaScript and will be renamed to pb_name.
+ * Optional fields that are not set will be set to undefined.
+ * To access a reserved field use, foo.pb_<name>, eg, foo.pb_default.
+ * For the list of reserved names please see:
+ *     net/proto2/compiler/js/internal/generator.cc#kKeyword.
+ * @param {boolean=} opt_includeInstance Deprecated. whether to include the
+ *     JSPB instance for transitional soy proto support:
+ *     http://goto/soy-param-migration
+ * @return {!Object}
+ */
+proto.PtyEventData.prototype.toObject = function(opt_includeInstance) {
+  return proto.PtyEventData.toObject(opt_includeInstance, this);
+};
+
+
+/**
+ * Static version of the {@see toObject} method.
+ * @param {boolean|undefined} includeInstance Deprecated. Whether to include
+ *     the JSPB instance for transitional soy proto support:
+ *     http://goto/soy-param-migration
+ * @param {!proto.PtyEventData} msg The msg instance to transform.
+ * @return {!Object}
+ * @suppress {unusedLocalVariables} f is only used for nested messages
+ */
+proto.PtyEventData.toObject = function(includeInstance, msg) {
+  var f, obj = {
+    message: jspb.Message.getFieldWithDefault(msg, 2, "")
   };
 
-  /**
-   * Static version of the {@see toObject} method.
-   * @param {boolean|undefined} includeInstance Deprecated. Whether to include
-   *     the JSPB instance for transitional soy proto support:
-   *     http://goto/soy-param-migration
-   * @param {!proto.PtyEventData} msg The msg instance to transform.
-   * @return {!Object}
-   * @suppress {unusedLocalVariables} f is only used for nested messages
-   */
-  proto.PtyEventData.toObject = function (includeInstance, msg) {
-    var f,
-      obj = {
-        message: jspb.Message.getFieldWithDefault(msg, 2, ''),
-      };
-
-    if (includeInstance) {
-      obj.$jspbMessageInstance = msg;
-    }
-    return obj;
-  };
+  if (includeInstance) {
+    obj.$jspbMessageInstance = msg;
+  }
+  return obj;
+};
 }
+
 
 /**
  * Deserializes binary data (in protobuf wire format).
  * @param {jspb.ByteSource} bytes The bytes to deserialize.
  * @return {!proto.PtyEventData}
  */
-proto.PtyEventData.deserializeBinary = function (bytes) {
+proto.PtyEventData.deserializeBinary = function(bytes) {
   var reader = new jspb.BinaryReader(bytes);
-  var msg = new proto.PtyEventData();
+  var msg = new proto.PtyEventData;
   return proto.PtyEventData.deserializeBinaryFromReader(msg, reader);
 };
+
 
 /**
  * Deserializes binary data (in protobuf wire format) from the
@@ -1483,34 +1517,36 @@ proto.PtyEventData.deserializeBinary = function (bytes) {
  * @param {!jspb.BinaryReader} reader The BinaryReader to use.
  * @return {!proto.PtyEventData}
  */
-proto.PtyEventData.deserializeBinaryFromReader = function (msg, reader) {
+proto.PtyEventData.deserializeBinaryFromReader = function(msg, reader) {
   while (reader.nextField()) {
     if (reader.isEndGroup()) {
       break;
     }
     var field = reader.getFieldNumber();
     switch (field) {
-      case 2:
-        var value = /** @type {string} */ (reader.readString());
-        msg.setMessage(value);
-        break;
-      default:
-        reader.skipField();
-        break;
+    case 2:
+      var value = /** @type {string} */ (reader.readString());
+      msg.setMessage(value);
+      break;
+    default:
+      reader.skipField();
+      break;
     }
   }
   return msg;
 };
 
+
 /**
  * Serializes the message to binary data (in protobuf wire format).
  * @return {!Uint8Array}
  */
-proto.PtyEventData.prototype.serializeBinary = function () {
+proto.PtyEventData.prototype.serializeBinary = function() {
   var writer = new jspb.BinaryWriter();
   proto.PtyEventData.serializeBinaryToWriter(this, writer);
   return writer.getResultBuffer();
 };
+
 
 /**
  * Serializes the given message to binary data (in protobuf wire
@@ -1519,80 +1555,91 @@ proto.PtyEventData.prototype.serializeBinary = function () {
  * @param {!jspb.BinaryWriter} writer
  * @suppress {unusedLocalVariables} f is only used for nested messages
  */
-proto.PtyEventData.serializeBinaryToWriter = function (message, writer) {
+proto.PtyEventData.serializeBinaryToWriter = function(message, writer) {
   var f = undefined;
   f = message.getMessage();
   if (f.length > 0) {
-    writer.writeString(2, f);
+    writer.writeString(
+      2,
+      f
+    );
   }
 };
+
 
 /**
  * optional string message = 2;
  * @return {string}
  */
-proto.PtyEventData.prototype.getMessage = function () {
-  return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 2, ''));
+proto.PtyEventData.prototype.getMessage = function() {
+  return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 2, ""));
 };
+
 
 /**
  * @param {string} value
  * @return {!proto.PtyEventData} returns this
  */
-proto.PtyEventData.prototype.setMessage = function (value) {
+proto.PtyEventData.prototype.setMessage = function(value) {
   return jspb.Message.setProto3StringField(this, 2, value);
 };
 
+
+
+
+
 if (jspb.Message.GENERATE_TO_OBJECT) {
-  /**
-   * Creates an object representation of this proto.
-   * Field names that are reserved in JavaScript and will be renamed to pb_name.
-   * Optional fields that are not set will be set to undefined.
-   * To access a reserved field use, foo.pb_<name>, eg, foo.pb_default.
-   * For the list of reserved names please see:
-   *     net/proto2/compiler/js/internal/generator.cc#kKeyword.
-   * @param {boolean=} opt_includeInstance Deprecated. whether to include the
-   *     JSPB instance for transitional soy proto support:
-   *     http://goto/soy-param-migration
-   * @return {!Object}
-   */
-  proto.PtyEventResize.prototype.toObject = function (opt_includeInstance) {
-    return proto.PtyEventResize.toObject(opt_includeInstance, this);
+/**
+ * Creates an object representation of this proto.
+ * Field names that are reserved in JavaScript and will be renamed to pb_name.
+ * Optional fields that are not set will be set to undefined.
+ * To access a reserved field use, foo.pb_<name>, eg, foo.pb_default.
+ * For the list of reserved names please see:
+ *     net/proto2/compiler/js/internal/generator.cc#kKeyword.
+ * @param {boolean=} opt_includeInstance Deprecated. whether to include the
+ *     JSPB instance for transitional soy proto support:
+ *     http://goto/soy-param-migration
+ * @return {!Object}
+ */
+proto.PtyEventResize.prototype.toObject = function(opt_includeInstance) {
+  return proto.PtyEventResize.toObject(opt_includeInstance, this);
+};
+
+
+/**
+ * Static version of the {@see toObject} method.
+ * @param {boolean|undefined} includeInstance Deprecated. Whether to include
+ *     the JSPB instance for transitional soy proto support:
+ *     http://goto/soy-param-migration
+ * @param {!proto.PtyEventResize} msg The msg instance to transform.
+ * @return {!Object}
+ * @suppress {unusedLocalVariables} f is only used for nested messages
+ */
+proto.PtyEventResize.toObject = function(includeInstance, msg) {
+  var f, obj = {
+    columns: jspb.Message.getFieldWithDefault(msg, 2, 0),
+    rows: jspb.Message.getFieldWithDefault(msg, 3, 0)
   };
 
-  /**
-   * Static version of the {@see toObject} method.
-   * @param {boolean|undefined} includeInstance Deprecated. Whether to include
-   *     the JSPB instance for transitional soy proto support:
-   *     http://goto/soy-param-migration
-   * @param {!proto.PtyEventResize} msg The msg instance to transform.
-   * @return {!Object}
-   * @suppress {unusedLocalVariables} f is only used for nested messages
-   */
-  proto.PtyEventResize.toObject = function (includeInstance, msg) {
-    var f,
-      obj = {
-        columns: jspb.Message.getFieldWithDefault(msg, 2, 0),
-        rows: jspb.Message.getFieldWithDefault(msg, 3, 0),
-      };
-
-    if (includeInstance) {
-      obj.$jspbMessageInstance = msg;
-    }
-    return obj;
-  };
+  if (includeInstance) {
+    obj.$jspbMessageInstance = msg;
+  }
+  return obj;
+};
 }
+
 
 /**
  * Deserializes binary data (in protobuf wire format).
  * @param {jspb.ByteSource} bytes The bytes to deserialize.
  * @return {!proto.PtyEventResize}
  */
-proto.PtyEventResize.deserializeBinary = function (bytes) {
+proto.PtyEventResize.deserializeBinary = function(bytes) {
   var reader = new jspb.BinaryReader(bytes);
-  var msg = new proto.PtyEventResize();
+  var msg = new proto.PtyEventResize;
   return proto.PtyEventResize.deserializeBinaryFromReader(msg, reader);
 };
+
 
 /**
  * Deserializes binary data (in protobuf wire format) from the
@@ -1601,38 +1648,40 @@ proto.PtyEventResize.deserializeBinary = function (bytes) {
  * @param {!jspb.BinaryReader} reader The BinaryReader to use.
  * @return {!proto.PtyEventResize}
  */
-proto.PtyEventResize.deserializeBinaryFromReader = function (msg, reader) {
+proto.PtyEventResize.deserializeBinaryFromReader = function(msg, reader) {
   while (reader.nextField()) {
     if (reader.isEndGroup()) {
       break;
     }
     var field = reader.getFieldNumber();
     switch (field) {
-      case 2:
-        var value = /** @type {number} */ (reader.readUint32());
-        msg.setColumns(value);
-        break;
-      case 3:
-        var value = /** @type {number} */ (reader.readUint32());
-        msg.setRows(value);
-        break;
-      default:
-        reader.skipField();
-        break;
+    case 2:
+      var value = /** @type {number} */ (reader.readUint32());
+      msg.setColumns(value);
+      break;
+    case 3:
+      var value = /** @type {number} */ (reader.readUint32());
+      msg.setRows(value);
+      break;
+    default:
+      reader.skipField();
+      break;
     }
   }
   return msg;
 };
 
+
 /**
  * Serializes the message to binary data (in protobuf wire format).
  * @return {!Uint8Array}
  */
-proto.PtyEventResize.prototype.serializeBinary = function () {
+proto.PtyEventResize.prototype.serializeBinary = function() {
   var writer = new jspb.BinaryWriter();
   proto.PtyEventResize.serializeBinaryToWriter(this, writer);
   return writer.getResultBuffer();
 };
+
 
 /**
  * Serializes the given message to binary data (in protobuf wire
@@ -1641,97 +1690,115 @@ proto.PtyEventResize.prototype.serializeBinary = function () {
  * @param {!jspb.BinaryWriter} writer
  * @suppress {unusedLocalVariables} f is only used for nested messages
  */
-proto.PtyEventResize.serializeBinaryToWriter = function (message, writer) {
+proto.PtyEventResize.serializeBinaryToWriter = function(message, writer) {
   var f = undefined;
   f = message.getColumns();
   if (f !== 0) {
-    writer.writeUint32(2, f);
+    writer.writeUint32(
+      2,
+      f
+    );
   }
   f = message.getRows();
   if (f !== 0) {
-    writer.writeUint32(3, f);
+    writer.writeUint32(
+      3,
+      f
+    );
   }
 };
+
 
 /**
  * optional uint32 columns = 2;
  * @return {number}
  */
-proto.PtyEventResize.prototype.getColumns = function () {
+proto.PtyEventResize.prototype.getColumns = function() {
   return /** @type {number} */ (jspb.Message.getFieldWithDefault(this, 2, 0));
 };
+
 
 /**
  * @param {number} value
  * @return {!proto.PtyEventResize} returns this
  */
-proto.PtyEventResize.prototype.setColumns = function (value) {
+proto.PtyEventResize.prototype.setColumns = function(value) {
   return jspb.Message.setProto3IntField(this, 2, value);
 };
+
 
 /**
  * optional uint32 rows = 3;
  * @return {number}
  */
-proto.PtyEventResize.prototype.getRows = function () {
+proto.PtyEventResize.prototype.getRows = function() {
   return /** @type {number} */ (jspb.Message.getFieldWithDefault(this, 3, 0));
 };
+
 
 /**
  * @param {number} value
  * @return {!proto.PtyEventResize} returns this
  */
-proto.PtyEventResize.prototype.setRows = function (value) {
+proto.PtyEventResize.prototype.setRows = function(value) {
   return jspb.Message.setProto3IntField(this, 3, value);
 };
 
+
+
+
+
 if (jspb.Message.GENERATE_TO_OBJECT) {
-  /**
-   * Creates an object representation of this proto.
-   * Field names that are reserved in JavaScript and will be renamed to pb_name.
-   * Optional fields that are not set will be set to undefined.
-   * To access a reserved field use, foo.pb_<name>, eg, foo.pb_default.
-   * For the list of reserved names please see:
-   *     net/proto2/compiler/js/internal/generator.cc#kKeyword.
-   * @param {boolean=} opt_includeInstance Deprecated. whether to include the
-   *     JSPB instance for transitional soy proto support:
-   *     http://goto/soy-param-migration
-   * @return {!Object}
-   */
-  proto.PtyEventOpen.prototype.toObject = function (opt_includeInstance) {
-    return proto.PtyEventOpen.toObject(opt_includeInstance, this);
+/**
+ * Creates an object representation of this proto.
+ * Field names that are reserved in JavaScript and will be renamed to pb_name.
+ * Optional fields that are not set will be set to undefined.
+ * To access a reserved field use, foo.pb_<name>, eg, foo.pb_default.
+ * For the list of reserved names please see:
+ *     net/proto2/compiler/js/internal/generator.cc#kKeyword.
+ * @param {boolean=} opt_includeInstance Deprecated. whether to include the
+ *     JSPB instance for transitional soy proto support:
+ *     http://goto/soy-param-migration
+ * @return {!Object}
+ */
+proto.PtyEventOpen.prototype.toObject = function(opt_includeInstance) {
+  return proto.PtyEventOpen.toObject(opt_includeInstance, this);
+};
+
+
+/**
+ * Static version of the {@see toObject} method.
+ * @param {boolean|undefined} includeInstance Deprecated. Whether to include
+ *     the JSPB instance for transitional soy proto support:
+ *     http://goto/soy-param-migration
+ * @param {!proto.PtyEventOpen} msg The msg instance to transform.
+ * @return {!Object}
+ * @suppress {unusedLocalVariables} f is only used for nested messages
+ */
+proto.PtyEventOpen.toObject = function(includeInstance, msg) {
+  var f, obj = {
+
   };
 
-  /**
-   * Static version of the {@see toObject} method.
-   * @param {boolean|undefined} includeInstance Deprecated. Whether to include
-   *     the JSPB instance for transitional soy proto support:
-   *     http://goto/soy-param-migration
-   * @param {!proto.PtyEventOpen} msg The msg instance to transform.
-   * @return {!Object}
-   * @suppress {unusedLocalVariables} f is only used for nested messages
-   */
-  proto.PtyEventOpen.toObject = function (includeInstance, msg) {
-    var f,
-      obj = {};
-
-    if (includeInstance) {
-      obj.$jspbMessageInstance = msg;
-    }
-    return obj;
-  };
+  if (includeInstance) {
+    obj.$jspbMessageInstance = msg;
+  }
+  return obj;
+};
 }
+
 
 /**
  * Deserializes binary data (in protobuf wire format).
  * @param {jspb.ByteSource} bytes The bytes to deserialize.
  * @return {!proto.PtyEventOpen}
  */
-proto.PtyEventOpen.deserializeBinary = function (bytes) {
+proto.PtyEventOpen.deserializeBinary = function(bytes) {
   var reader = new jspb.BinaryReader(bytes);
-  var msg = new proto.PtyEventOpen();
+  var msg = new proto.PtyEventOpen;
   return proto.PtyEventOpen.deserializeBinaryFromReader(msg, reader);
 };
+
 
 /**
  * Deserializes binary data (in protobuf wire format) from the
@@ -1740,30 +1807,32 @@ proto.PtyEventOpen.deserializeBinary = function (bytes) {
  * @param {!jspb.BinaryReader} reader The BinaryReader to use.
  * @return {!proto.PtyEventOpen}
  */
-proto.PtyEventOpen.deserializeBinaryFromReader = function (msg, reader) {
+proto.PtyEventOpen.deserializeBinaryFromReader = function(msg, reader) {
   while (reader.nextField()) {
     if (reader.isEndGroup()) {
       break;
     }
     var field = reader.getFieldNumber();
     switch (field) {
-      default:
-        reader.skipField();
-        break;
+    default:
+      reader.skipField();
+      break;
     }
   }
   return msg;
 };
 
+
 /**
  * Serializes the message to binary data (in protobuf wire format).
  * @return {!Uint8Array}
  */
-proto.PtyEventOpen.prototype.serializeBinary = function () {
+proto.PtyEventOpen.prototype.serializeBinary = function() {
   var writer = new jspb.BinaryWriter();
   proto.PtyEventOpen.serializeBinaryToWriter(this, writer);
   return writer.getResultBuffer();
 };
+
 
 /**
  * Serializes the given message to binary data (in protobuf wire
@@ -1772,60 +1841,66 @@ proto.PtyEventOpen.prototype.serializeBinary = function () {
  * @param {!jspb.BinaryWriter} writer
  * @suppress {unusedLocalVariables} f is only used for nested messages
  */
-proto.PtyEventOpen.serializeBinaryToWriter = function (message, writer) {
+proto.PtyEventOpen.serializeBinaryToWriter = function(message, writer) {
   var f = undefined;
 };
 
+
+
+
+
 if (jspb.Message.GENERATE_TO_OBJECT) {
-  /**
-   * Creates an object representation of this proto.
-   * Field names that are reserved in JavaScript and will be renamed to pb_name.
-   * Optional fields that are not set will be set to undefined.
-   * To access a reserved field use, foo.pb_<name>, eg, foo.pb_default.
-   * For the list of reserved names please see:
-   *     net/proto2/compiler/js/internal/generator.cc#kKeyword.
-   * @param {boolean=} opt_includeInstance Deprecated. whether to include the
-   *     JSPB instance for transitional soy proto support:
-   *     http://goto/soy-param-migration
-   * @return {!Object}
-   */
-  proto.PtyEventExit.prototype.toObject = function (opt_includeInstance) {
-    return proto.PtyEventExit.toObject(opt_includeInstance, this);
+/**
+ * Creates an object representation of this proto.
+ * Field names that are reserved in JavaScript and will be renamed to pb_name.
+ * Optional fields that are not set will be set to undefined.
+ * To access a reserved field use, foo.pb_<name>, eg, foo.pb_default.
+ * For the list of reserved names please see:
+ *     net/proto2/compiler/js/internal/generator.cc#kKeyword.
+ * @param {boolean=} opt_includeInstance Deprecated. whether to include the
+ *     JSPB instance for transitional soy proto support:
+ *     http://goto/soy-param-migration
+ * @return {!Object}
+ */
+proto.PtyEventExit.prototype.toObject = function(opt_includeInstance) {
+  return proto.PtyEventExit.toObject(opt_includeInstance, this);
+};
+
+
+/**
+ * Static version of the {@see toObject} method.
+ * @param {boolean|undefined} includeInstance Deprecated. Whether to include
+ *     the JSPB instance for transitional soy proto support:
+ *     http://goto/soy-param-migration
+ * @param {!proto.PtyEventExit} msg The msg instance to transform.
+ * @return {!Object}
+ * @suppress {unusedLocalVariables} f is only used for nested messages
+ */
+proto.PtyEventExit.toObject = function(includeInstance, msg) {
+  var f, obj = {
+    exitCode: jspb.Message.getFieldWithDefault(msg, 1, 0),
+    signal: jspb.Message.getFieldWithDefault(msg, 2, 0)
   };
 
-  /**
-   * Static version of the {@see toObject} method.
-   * @param {boolean|undefined} includeInstance Deprecated. Whether to include
-   *     the JSPB instance for transitional soy proto support:
-   *     http://goto/soy-param-migration
-   * @param {!proto.PtyEventExit} msg The msg instance to transform.
-   * @return {!Object}
-   * @suppress {unusedLocalVariables} f is only used for nested messages
-   */
-  proto.PtyEventExit.toObject = function (includeInstance, msg) {
-    var f,
-      obj = {
-        exitCode: jspb.Message.getFieldWithDefault(msg, 1, 0),
-        signal: jspb.Message.getFieldWithDefault(msg, 2, 0),
-      };
-
-    if (includeInstance) {
-      obj.$jspbMessageInstance = msg;
-    }
-    return obj;
-  };
+  if (includeInstance) {
+    obj.$jspbMessageInstance = msg;
+  }
+  return obj;
+};
 }
+
 
 /**
  * Deserializes binary data (in protobuf wire format).
  * @param {jspb.ByteSource} bytes The bytes to deserialize.
  * @return {!proto.PtyEventExit}
  */
-proto.PtyEventExit.deserializeBinary = function (bytes) {
+proto.PtyEventExit.deserializeBinary = function(bytes) {
   var reader = new jspb.BinaryReader(bytes);
-  var msg = new proto.PtyEventExit();
+  var msg = new proto.PtyEventExit;
   return proto.PtyEventExit.deserializeBinaryFromReader(msg, reader);
 };
+
 
 /**
  * Deserializes binary data (in protobuf wire format) from the
@@ -1834,38 +1909,40 @@ proto.PtyEventExit.deserializeBinary = function (bytes) {
  * @param {!jspb.BinaryReader} reader The BinaryReader to use.
  * @return {!proto.PtyEventExit}
  */
-proto.PtyEventExit.deserializeBinaryFromReader = function (msg, reader) {
+proto.PtyEventExit.deserializeBinaryFromReader = function(msg, reader) {
   while (reader.nextField()) {
     if (reader.isEndGroup()) {
       break;
     }
     var field = reader.getFieldNumber();
     switch (field) {
-      case 1:
-        var value = /** @type {number} */ (reader.readUint32());
-        msg.setExitCode(value);
-        break;
-      case 2:
-        var value = /** @type {number} */ (reader.readUint32());
-        msg.setSignal(value);
-        break;
-      default:
-        reader.skipField();
-        break;
+    case 1:
+      var value = /** @type {number} */ (reader.readUint32());
+      msg.setExitCode(value);
+      break;
+    case 2:
+      var value = /** @type {number} */ (reader.readUint32());
+      msg.setSignal(value);
+      break;
+    default:
+      reader.skipField();
+      break;
     }
   }
   return msg;
 };
 
+
 /**
  * Serializes the message to binary data (in protobuf wire format).
  * @return {!Uint8Array}
  */
-proto.PtyEventExit.prototype.serializeBinary = function () {
+proto.PtyEventExit.prototype.serializeBinary = function() {
   var writer = new jspb.BinaryWriter();
   proto.PtyEventExit.serializeBinaryToWriter(this, writer);
   return writer.getResultBuffer();
 };
+
 
 /**
  * Serializes the given message to binary data (in protobuf wire
@@ -1874,115 +1951,133 @@ proto.PtyEventExit.prototype.serializeBinary = function () {
  * @param {!jspb.BinaryWriter} writer
  * @suppress {unusedLocalVariables} f is only used for nested messages
  */
-proto.PtyEventExit.serializeBinaryToWriter = function (message, writer) {
+proto.PtyEventExit.serializeBinaryToWriter = function(message, writer) {
   var f = undefined;
   f = message.getExitCode();
   if (f !== 0) {
-    writer.writeUint32(1, f);
+    writer.writeUint32(
+      1,
+      f
+    );
   }
   f = /** @type {number} */ (jspb.Message.getField(message, 2));
   if (f != null) {
-    writer.writeUint32(2, f);
+    writer.writeUint32(
+      2,
+      f
+    );
   }
 };
+
 
 /**
  * optional uint32 exit_code = 1;
  * @return {number}
  */
-proto.PtyEventExit.prototype.getExitCode = function () {
+proto.PtyEventExit.prototype.getExitCode = function() {
   return /** @type {number} */ (jspb.Message.getFieldWithDefault(this, 1, 0));
 };
+
 
 /**
  * @param {number} value
  * @return {!proto.PtyEventExit} returns this
  */
-proto.PtyEventExit.prototype.setExitCode = function (value) {
+proto.PtyEventExit.prototype.setExitCode = function(value) {
   return jspb.Message.setProto3IntField(this, 1, value);
 };
+
 
 /**
  * optional uint32 signal = 2;
  * @return {number}
  */
-proto.PtyEventExit.prototype.getSignal = function () {
+proto.PtyEventExit.prototype.getSignal = function() {
   return /** @type {number} */ (jspb.Message.getFieldWithDefault(this, 2, 0));
 };
+
 
 /**
  * @param {number} value
  * @return {!proto.PtyEventExit} returns this
  */
-proto.PtyEventExit.prototype.setSignal = function (value) {
+proto.PtyEventExit.prototype.setSignal = function(value) {
   return jspb.Message.setField(this, 2, value);
 };
+
 
 /**
  * Clears the field making it undefined.
  * @return {!proto.PtyEventExit} returns this
  */
-proto.PtyEventExit.prototype.clearSignal = function () {
+proto.PtyEventExit.prototype.clearSignal = function() {
   return jspb.Message.setField(this, 2, undefined);
 };
+
 
 /**
  * Returns whether this field is set.
  * @return {boolean}
  */
-proto.PtyEventExit.prototype.hasSignal = function () {
+proto.PtyEventExit.prototype.hasSignal = function() {
   return jspb.Message.getField(this, 2) != null;
 };
 
+
+
+
+
 if (jspb.Message.GENERATE_TO_OBJECT) {
-  /**
-   * Creates an object representation of this proto.
-   * Field names that are reserved in JavaScript and will be renamed to pb_name.
-   * Optional fields that are not set will be set to undefined.
-   * To access a reserved field use, foo.pb_<name>, eg, foo.pb_default.
-   * For the list of reserved names please see:
-   *     net/proto2/compiler/js/internal/generator.cc#kKeyword.
-   * @param {boolean=} opt_includeInstance Deprecated. whether to include the
-   *     JSPB instance for transitional soy proto support:
-   *     http://goto/soy-param-migration
-   * @return {!Object}
-   */
-  proto.PtyCwd.prototype.toObject = function (opt_includeInstance) {
-    return proto.PtyCwd.toObject(opt_includeInstance, this);
+/**
+ * Creates an object representation of this proto.
+ * Field names that are reserved in JavaScript and will be renamed to pb_name.
+ * Optional fields that are not set will be set to undefined.
+ * To access a reserved field use, foo.pb_<name>, eg, foo.pb_default.
+ * For the list of reserved names please see:
+ *     net/proto2/compiler/js/internal/generator.cc#kKeyword.
+ * @param {boolean=} opt_includeInstance Deprecated. whether to include the
+ *     JSPB instance for transitional soy proto support:
+ *     http://goto/soy-param-migration
+ * @return {!Object}
+ */
+proto.PtyCwd.prototype.toObject = function(opt_includeInstance) {
+  return proto.PtyCwd.toObject(opt_includeInstance, this);
+};
+
+
+/**
+ * Static version of the {@see toObject} method.
+ * @param {boolean|undefined} includeInstance Deprecated. Whether to include
+ *     the JSPB instance for transitional soy proto support:
+ *     http://goto/soy-param-migration
+ * @param {!proto.PtyCwd} msg The msg instance to transform.
+ * @return {!Object}
+ * @suppress {unusedLocalVariables} f is only used for nested messages
+ */
+proto.PtyCwd.toObject = function(includeInstance, msg) {
+  var f, obj = {
+    cwd: jspb.Message.getFieldWithDefault(msg, 1, "")
   };
 
-  /**
-   * Static version of the {@see toObject} method.
-   * @param {boolean|undefined} includeInstance Deprecated. Whether to include
-   *     the JSPB instance for transitional soy proto support:
-   *     http://goto/soy-param-migration
-   * @param {!proto.PtyCwd} msg The msg instance to transform.
-   * @return {!Object}
-   * @suppress {unusedLocalVariables} f is only used for nested messages
-   */
-  proto.PtyCwd.toObject = function (includeInstance, msg) {
-    var f,
-      obj = {
-        cwd: jspb.Message.getFieldWithDefault(msg, 1, ''),
-      };
-
-    if (includeInstance) {
-      obj.$jspbMessageInstance = msg;
-    }
-    return obj;
-  };
+  if (includeInstance) {
+    obj.$jspbMessageInstance = msg;
+  }
+  return obj;
+};
 }
+
 
 /**
  * Deserializes binary data (in protobuf wire format).
  * @param {jspb.ByteSource} bytes The bytes to deserialize.
  * @return {!proto.PtyCwd}
  */
-proto.PtyCwd.deserializeBinary = function (bytes) {
+proto.PtyCwd.deserializeBinary = function(bytes) {
   var reader = new jspb.BinaryReader(bytes);
-  var msg = new proto.PtyCwd();
+  var msg = new proto.PtyCwd;
   return proto.PtyCwd.deserializeBinaryFromReader(msg, reader);
 };
+
 
 /**
  * Deserializes binary data (in protobuf wire format) from the
@@ -1991,34 +2086,36 @@ proto.PtyCwd.deserializeBinary = function (bytes) {
  * @param {!jspb.BinaryReader} reader The BinaryReader to use.
  * @return {!proto.PtyCwd}
  */
-proto.PtyCwd.deserializeBinaryFromReader = function (msg, reader) {
+proto.PtyCwd.deserializeBinaryFromReader = function(msg, reader) {
   while (reader.nextField()) {
     if (reader.isEndGroup()) {
       break;
     }
     var field = reader.getFieldNumber();
     switch (field) {
-      case 1:
-        var value = /** @type {string} */ (reader.readString());
-        msg.setCwd(value);
-        break;
-      default:
-        reader.skipField();
-        break;
+    case 1:
+      var value = /** @type {string} */ (reader.readString());
+      msg.setCwd(value);
+      break;
+    default:
+      reader.skipField();
+      break;
     }
   }
   return msg;
 };
 
+
 /**
  * Serializes the message to binary data (in protobuf wire format).
  * @return {!Uint8Array}
  */
-proto.PtyCwd.prototype.serializeBinary = function () {
+proto.PtyCwd.prototype.serializeBinary = function() {
   var writer = new jspb.BinaryWriter();
   proto.PtyCwd.serializeBinaryToWriter(this, writer);
   return writer.getResultBuffer();
 };
+
 
 /**
  * Serializes the given message to binary data (in protobuf wire
@@ -2027,28 +2124,34 @@ proto.PtyCwd.prototype.serializeBinary = function () {
  * @param {!jspb.BinaryWriter} writer
  * @suppress {unusedLocalVariables} f is only used for nested messages
  */
-proto.PtyCwd.serializeBinaryToWriter = function (message, writer) {
+proto.PtyCwd.serializeBinaryToWriter = function(message, writer) {
   var f = undefined;
   f = message.getCwd();
   if (f.length > 0) {
-    writer.writeString(1, f);
+    writer.writeString(
+      1,
+      f
+    );
   }
 };
+
 
 /**
  * optional string cwd = 1;
  * @return {string}
  */
-proto.PtyCwd.prototype.getCwd = function () {
-  return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 1, ''));
+proto.PtyCwd.prototype.getCwd = function() {
+  return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 1, ""));
 };
+
 
 /**
  * @param {string} value
  * @return {!proto.PtyCwd} returns this
  */
-proto.PtyCwd.prototype.setCwd = function (value) {
+proto.PtyCwd.prototype.setCwd = function(value) {
   return jspb.Message.setProto3StringField(this, 1, value);
 };
+
 
 goog.object.extend(exports, proto);
