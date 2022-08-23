@@ -35,7 +35,7 @@ export interface UserContext {
   cluster: Cluster;
   accessStrategy: AccessStrategy;
   accessCapabilities: AccessCapabilities;
-  // accessRequestId is the request ID of the access request from which the current role was assumed
+  // accessRequestId is the ID of the access request from which additional roles to assume were obtained for the current session.
   accessRequestId?: string;
 }
 
