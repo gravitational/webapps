@@ -63,6 +63,7 @@ export function Kubes(props: State) {
     fetchStatus,
     isSearchEmpty,
     onLabelClick,
+    accessRequestId,
   } = props;
 
   const [showAddKube, setShowAddKube] = useState(false);
@@ -111,7 +112,7 @@ export function Kubes(props: State) {
             pathname={pathname}
             replaceHistory={replaceHistory}
             onLabelClick={onLabelClick}
-            assumedRoleRequestId={results.assumedRoleRequestId}
+            accessRequestId={accessRequestId}
           />
         </>
       )}

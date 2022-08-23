@@ -33,7 +33,6 @@ class DatabaseService {
         agents: items.map(makeDatabase),
         startKey: json?.startKey,
         totalCount: json?.totalCount,
-        assumedRoleRequestId: json?.assumedRoleRequestId,
       };
     });
   }

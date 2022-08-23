@@ -46,7 +46,7 @@ function DatabaseList(props: Props) {
     pathname,
     replaceHistory,
     onLabelClick,
-    assumedRoleRequestId,
+    accessRequestId,
   } = props;
 
   const [dbConnectInfo, setDbConnectInfo] = useState<{
@@ -119,7 +119,7 @@ function DatabaseList(props: Props) {
           dbProtocol={dbConnectInfo.protocol}
           onClose={() => setDbConnectInfo(null)}
           authType={authType}
-          assumedRoleRequestId={assumedRoleRequestId}
+          accessRequestId={accessRequestId}
         />
       )}
     </>
@@ -168,7 +168,7 @@ type Props = {
   pathname: string;
   replaceHistory: (path: string) => void;
   onLabelClick: (label: AgentLabel) => void;
-  assumedRoleRequestId?: string;
+  accessRequestId?: string;
 };
 
 export default DatabaseList;

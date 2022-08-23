@@ -42,7 +42,7 @@ export const ConnectWithRequestId = () => {
       clusterId="im-a-cluster"
       onClose={() => null}
       authType="local"
-      assumedRoleRequestId="e1e8072c-1eb8-5df4-a7bd-b6863b19271c"
+      accessRequestId="e1e8072c-1eb8-5df4-a7bd-b6863b19271c"
     />
   );
 };

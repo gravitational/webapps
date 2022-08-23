@@ -35,6 +35,7 @@ export interface UserContext {
   cluster: Cluster;
   accessStrategy: AccessStrategy;
   accessCapabilities: AccessCapabilities;
+  accessRequestId?: string;
 }
 
 export interface Access {

@@ -33,7 +33,7 @@ function ConnectDialog(props: Props) {
     authType,
     kubeConnectName,
     clusterId,
-    assumedRoleRequestId,
+    accessRequestId,
   } = props;
   const { hostname, port } = window.document.location;
   const host = `${hostname}:${port || '443'}`;
@@ -41,8 +41,8 @@ function ConnectDialog(props: Props) {
     authType === 'local' ? `--auth=${authType} --user=${username} ` : '';
   const text = `tsh login --proxy=${host} ${authSpec}${clusterId}`;
 
-  const requestIdFlag = assumedRoleRequestId
-    ? ` --request-id=${assumedRoleRequestId}`
+  const requestIdFlag = accessRequestId
+    ? ` --request-id=${accessRequestId}`
     : '';
 
   return (
@@ -88,7 +88,7 @@ function ConnectDialog(props: Props) {
           {' - Connect to the Kubernetes cluster'}
           <TextSelectCopy mt="2" text={`kubectl get pods`} />
         </Box>
-        {assumedRoleRequestId && (
+        {accessRequestId && (
           <Box mb={1} mt={3}>
             <Text bold as="span">
               Step 4 (Optional)
@@ -111,7 +111,7 @@ type Props = {
   authType: AuthType;
   kubeConnectName: string;
   clusterId: string;
-  assumedRoleRequestId?: string;
+  accessRequestId?: string;
 };
 
 const dialogCss = () => `

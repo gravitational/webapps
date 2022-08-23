@@ -42,7 +42,7 @@ export const LocalWithRequestId = () => {
       authType={'local'}
       kubeConnectName={'tele.logicoma.dev-prod'}
       clusterId={'some-cluster-name'}
-      assumedRoleRequestId={'8289cdb1-385c-5b02-85f1-fa2a934b749f'}
+      accessRequestId={'8289cdb1-385c-5b02-85f1-fa2a934b749f'}
     />
   );
 };

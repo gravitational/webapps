@@ -32,7 +32,7 @@ export default function ConnectDialog({
   dbName,
   onClose,
   authType,
-  assumedRoleRequestId,
+  accessRequestId,
 }: Props) {
   const { hostname, port } = window.document.location;
   const host = `${hostname}:${port || '443'}`;
@@ -42,8 +42,8 @@ export default function ConnectDialog({
       ? `tsh login --proxy=${host}`
       : `tsh login --proxy=${host} --auth=local --user=${username}`;
 
-  const requestIdFlag = assumedRoleRequestId
-    ? ` --request-id=${assumedRoleRequestId}`
+  const requestIdFlag = accessRequestId
+    ? ` --request-id=${accessRequestId}`
     : '';
 
   return (
@@ -87,7 +87,7 @@ export default function ConnectDialog({
             text={`tsh db connect [--db-user=<user>] [--db-name=<name>] ${dbName}`}
           />
         </Box>
-        {assumedRoleRequestId && (
+        {accessRequestId && (
           <Box mb={4}>
             <Text bold as="span">
               Step 4 (Optional)
@@ -123,5 +123,5 @@ export type Props = {
   username: string;
   clusterId: string;
   authType: AuthType;
-  assumedRoleRequestId?: string;
+  accessRequestId?: string;
 };
