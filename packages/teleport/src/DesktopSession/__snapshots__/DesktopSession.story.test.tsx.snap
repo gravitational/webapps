@@ -199,14 +199,14 @@ exports[`clipboard error 1`] = `
 exports[`connected settings false 1`] = `
 .c6 {
   display: inline-block;
-  transition: color .3s;
+  transition: color 0.3s;
   padding-right: 16px;
   color: #FFFFFF;
 }
 
 .c10 {
   display: inline-block;
-  transition: color .3s;
+  transition: color 0.3s;
   color: #FFFFFF;
 }
 
@@ -223,7 +223,7 @@ exports[`connected settings false 1`] = `
   flex: 0 0 auto;
   background: transparent;
   color: inherit;
-  transition: all .3s;
+  transition: all 0.3s;
   -webkit-font-smoothing: antialiased;
   font-size: 12px;
   height: 24px;
@@ -359,14 +359,14 @@ exports[`connected settings false 1`] = `
 exports[`connected settings true 1`] = `
 .c6 {
   display: inline-block;
-  transition: color .3s;
+  transition: color 0.3s;
   padding-right: 16px;
   color: #FFFFFF;
 }
 
 .c10 {
   display: inline-block;
-  transition: color .3s;
+  transition: color 0.3s;
   color: #FFFFFF;
 }
 
@@ -383,7 +383,7 @@ exports[`connected settings true 1`] = `
   flex: 0 0 auto;
   background: transparent;
   color: inherit;
-  transition: all .3s;
+  transition: all 0.3s;
   -webkit-font-smoothing: antialiased;
   font-size: 12px;
   height: 24px;
@@ -721,14 +721,14 @@ exports[`disconnected 1`] = `
 
 .c6 {
   display: inline-block;
-  transition: color .3s;
+  transition: color 0.3s;
   padding-right: 16px;
   color: #FFFFFF;
 }
 
 .c10 {
   display: inline-block;
-  transition: color .3s;
+  transition: color 0.3s;
   color: #FFFFFF;
 }
 
@@ -745,7 +745,7 @@ exports[`disconnected 1`] = `
   flex: 0 0 auto;
   background: transparent;
   color: inherit;
-  transition: all .3s;
+  transition: all 0.3s;
   -webkit-font-smoothing: antialiased;
   font-size: 12px;
   height: 24px;
