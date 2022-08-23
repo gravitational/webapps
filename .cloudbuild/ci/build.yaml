@@ -21,6 +21,8 @@ steps:
     id: install-deps
     args:
       - build
+      - '--build-arg'
+      - YARN_FROZEN_LOCKFILE=true
       - .
 
   - name: gcr.io/cloud-builders/docker
