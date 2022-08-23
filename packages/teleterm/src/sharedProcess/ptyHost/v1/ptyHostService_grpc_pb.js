@@ -16,7 +16,9 @@ function serialize_PtyClientEvent(arg) {
 }
 
 function deserialize_PtyClientEvent(buffer_arg) {
-  return v1_ptyHostService_pb.PtyClientEvent.deserializeBinary(new Uint8Array(buffer_arg));
+  return v1_ptyHostService_pb.PtyClientEvent.deserializeBinary(
+    new Uint8Array(buffer_arg)
+  );
 }
 
 function serialize_PtyCreate(arg) {
@@ -27,7 +29,9 @@ function serialize_PtyCreate(arg) {
 }
 
 function deserialize_PtyCreate(buffer_arg) {
-  return v1_ptyHostService_pb.PtyCreate.deserializeBinary(new Uint8Array(buffer_arg));
+  return v1_ptyHostService_pb.PtyCreate.deserializeBinary(
+    new Uint8Array(buffer_arg)
+  );
 }
 
 function serialize_PtyCwd(arg) {
@@ -38,7 +42,9 @@ function serialize_PtyCwd(arg) {
 }
 
 function deserialize_PtyCwd(buffer_arg) {
-  return v1_ptyHostService_pb.PtyCwd.deserializeBinary(new Uint8Array(buffer_arg));
+  return v1_ptyHostService_pb.PtyCwd.deserializeBinary(
+    new Uint8Array(buffer_arg)
+  );
 }
 
 function serialize_PtyId(arg) {
@@ -49,7 +55,9 @@ function serialize_PtyId(arg) {
 }
 
 function deserialize_PtyId(buffer_arg) {
-  return v1_ptyHostService_pb.PtyId.deserializeBinary(new Uint8Array(buffer_arg));
+  return v1_ptyHostService_pb.PtyId.deserializeBinary(
+    new Uint8Array(buffer_arg)
+  );
 }
 
 function serialize_PtyServerEvent(arg) {
@@ -60,11 +68,12 @@ function serialize_PtyServerEvent(arg) {
 }
 
 function deserialize_PtyServerEvent(buffer_arg) {
-  return v1_ptyHostService_pb.PtyServerEvent.deserializeBinary(new Uint8Array(buffer_arg));
+  return v1_ptyHostService_pb.PtyServerEvent.deserializeBinary(
+    new Uint8Array(buffer_arg)
+  );
 }
 
-
-var PtyHostService = exports.PtyHostService = {
+var PtyHostService = (exports.PtyHostService = {
   createPtyProcess: {
     path: '/PtyHost/CreatePtyProcess',
     requestStream: false,
@@ -98,6 +107,6 @@ var PtyHostService = exports.PtyHostService = {
     responseSerialize: serialize_PtyCwd,
     responseDeserialize: deserialize_PtyCwd,
   },
-};
+});
 
 exports.PtyHostClient = grpc.makeGenericClientConstructor(PtyHostService);

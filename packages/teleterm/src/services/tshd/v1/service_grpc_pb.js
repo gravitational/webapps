@@ -29,24 +29,32 @@ var v1_auth_settings_pb = require('../v1/auth_settings_pb.js');
 
 function serialize_teleport_terminal_v1_AddClusterRequest(arg) {
   if (!(arg instanceof v1_service_pb.AddClusterRequest)) {
-    throw new Error('Expected argument of type teleport.terminal.v1.AddClusterRequest');
+    throw new Error(
+      'Expected argument of type teleport.terminal.v1.AddClusterRequest'
+    );
   }
   return Buffer.from(arg.serializeBinary());
 }
 
 function deserialize_teleport_terminal_v1_AddClusterRequest(buffer_arg) {
-  return v1_service_pb.AddClusterRequest.deserializeBinary(new Uint8Array(buffer_arg));
+  return v1_service_pb.AddClusterRequest.deserializeBinary(
+    new Uint8Array(buffer_arg)
+  );
 }
 
 function serialize_teleport_terminal_v1_AuthSettings(arg) {
   if (!(arg instanceof v1_auth_settings_pb.AuthSettings)) {
-    throw new Error('Expected argument of type teleport.terminal.v1.AuthSettings');
+    throw new Error(
+      'Expected argument of type teleport.terminal.v1.AuthSettings'
+    );
   }
   return Buffer.from(arg.serializeBinary());
 }
 
 function deserialize_teleport_terminal_v1_AuthSettings(buffer_arg) {
-  return v1_auth_settings_pb.AuthSettings.deserializeBinary(new Uint8Array(buffer_arg));
+  return v1_auth_settings_pb.AuthSettings.deserializeBinary(
+    new Uint8Array(buffer_arg)
+  );
 }
 
 function serialize_teleport_terminal_v1_Cluster(arg) {
@@ -62,24 +70,32 @@ function deserialize_teleport_terminal_v1_Cluster(buffer_arg) {
 
 function serialize_teleport_terminal_v1_CreateGatewayRequest(arg) {
   if (!(arg instanceof v1_service_pb.CreateGatewayRequest)) {
-    throw new Error('Expected argument of type teleport.terminal.v1.CreateGatewayRequest');
+    throw new Error(
+      'Expected argument of type teleport.terminal.v1.CreateGatewayRequest'
+    );
   }
   return Buffer.from(arg.serializeBinary());
 }
 
 function deserialize_teleport_terminal_v1_CreateGatewayRequest(buffer_arg) {
-  return v1_service_pb.CreateGatewayRequest.deserializeBinary(new Uint8Array(buffer_arg));
+  return v1_service_pb.CreateGatewayRequest.deserializeBinary(
+    new Uint8Array(buffer_arg)
+  );
 }
 
 function serialize_teleport_terminal_v1_EmptyResponse(arg) {
   if (!(arg instanceof v1_service_pb.EmptyResponse)) {
-    throw new Error('Expected argument of type teleport.terminal.v1.EmptyResponse');
+    throw new Error(
+      'Expected argument of type teleport.terminal.v1.EmptyResponse'
+    );
   }
   return Buffer.from(arg.serializeBinary());
 }
 
 function deserialize_teleport_terminal_v1_EmptyResponse(buffer_arg) {
-  return v1_service_pb.EmptyResponse.deserializeBinary(new Uint8Array(buffer_arg));
+  return v1_service_pb.EmptyResponse.deserializeBinary(
+    new Uint8Array(buffer_arg)
+  );
 }
 
 function serialize_teleport_terminal_v1_Gateway(arg) {
@@ -95,273 +111,376 @@ function deserialize_teleport_terminal_v1_Gateway(buffer_arg) {
 
 function serialize_teleport_terminal_v1_GetAuthSettingsRequest(arg) {
   if (!(arg instanceof v1_service_pb.GetAuthSettingsRequest)) {
-    throw new Error('Expected argument of type teleport.terminal.v1.GetAuthSettingsRequest');
+    throw new Error(
+      'Expected argument of type teleport.terminal.v1.GetAuthSettingsRequest'
+    );
   }
   return Buffer.from(arg.serializeBinary());
 }
 
 function deserialize_teleport_terminal_v1_GetAuthSettingsRequest(buffer_arg) {
-  return v1_service_pb.GetAuthSettingsRequest.deserializeBinary(new Uint8Array(buffer_arg));
+  return v1_service_pb.GetAuthSettingsRequest.deserializeBinary(
+    new Uint8Array(buffer_arg)
+  );
 }
 
 function serialize_teleport_terminal_v1_GetClusterRequest(arg) {
   if (!(arg instanceof v1_service_pb.GetClusterRequest)) {
-    throw new Error('Expected argument of type teleport.terminal.v1.GetClusterRequest');
+    throw new Error(
+      'Expected argument of type teleport.terminal.v1.GetClusterRequest'
+    );
   }
   return Buffer.from(arg.serializeBinary());
 }
 
 function deserialize_teleport_terminal_v1_GetClusterRequest(buffer_arg) {
-  return v1_service_pb.GetClusterRequest.deserializeBinary(new Uint8Array(buffer_arg));
+  return v1_service_pb.GetClusterRequest.deserializeBinary(
+    new Uint8Array(buffer_arg)
+  );
 }
 
 function serialize_teleport_terminal_v1_ListAppsRequest(arg) {
   if (!(arg instanceof v1_service_pb.ListAppsRequest)) {
-    throw new Error('Expected argument of type teleport.terminal.v1.ListAppsRequest');
+    throw new Error(
+      'Expected argument of type teleport.terminal.v1.ListAppsRequest'
+    );
   }
   return Buffer.from(arg.serializeBinary());
 }
 
 function deserialize_teleport_terminal_v1_ListAppsRequest(buffer_arg) {
-  return v1_service_pb.ListAppsRequest.deserializeBinary(new Uint8Array(buffer_arg));
+  return v1_service_pb.ListAppsRequest.deserializeBinary(
+    new Uint8Array(buffer_arg)
+  );
 }
 
 function serialize_teleport_terminal_v1_ListAppsResponse(arg) {
   if (!(arg instanceof v1_service_pb.ListAppsResponse)) {
-    throw new Error('Expected argument of type teleport.terminal.v1.ListAppsResponse');
+    throw new Error(
+      'Expected argument of type teleport.terminal.v1.ListAppsResponse'
+    );
   }
   return Buffer.from(arg.serializeBinary());
 }
 
 function deserialize_teleport_terminal_v1_ListAppsResponse(buffer_arg) {
-  return v1_service_pb.ListAppsResponse.deserializeBinary(new Uint8Array(buffer_arg));
+  return v1_service_pb.ListAppsResponse.deserializeBinary(
+    new Uint8Array(buffer_arg)
+  );
 }
 
 function serialize_teleport_terminal_v1_ListClustersRequest(arg) {
   if (!(arg instanceof v1_service_pb.ListClustersRequest)) {
-    throw new Error('Expected argument of type teleport.terminal.v1.ListClustersRequest');
+    throw new Error(
+      'Expected argument of type teleport.terminal.v1.ListClustersRequest'
+    );
   }
   return Buffer.from(arg.serializeBinary());
 }
 
 function deserialize_teleport_terminal_v1_ListClustersRequest(buffer_arg) {
-  return v1_service_pb.ListClustersRequest.deserializeBinary(new Uint8Array(buffer_arg));
+  return v1_service_pb.ListClustersRequest.deserializeBinary(
+    new Uint8Array(buffer_arg)
+  );
 }
 
 function serialize_teleport_terminal_v1_ListClustersResponse(arg) {
   if (!(arg instanceof v1_service_pb.ListClustersResponse)) {
-    throw new Error('Expected argument of type teleport.terminal.v1.ListClustersResponse');
+    throw new Error(
+      'Expected argument of type teleport.terminal.v1.ListClustersResponse'
+    );
   }
   return Buffer.from(arg.serializeBinary());
 }
 
 function deserialize_teleport_terminal_v1_ListClustersResponse(buffer_arg) {
-  return v1_service_pb.ListClustersResponse.deserializeBinary(new Uint8Array(buffer_arg));
+  return v1_service_pb.ListClustersResponse.deserializeBinary(
+    new Uint8Array(buffer_arg)
+  );
 }
 
 function serialize_teleport_terminal_v1_ListDatabaseUsersRequest(arg) {
   if (!(arg instanceof v1_service_pb.ListDatabaseUsersRequest)) {
-    throw new Error('Expected argument of type teleport.terminal.v1.ListDatabaseUsersRequest');
+    throw new Error(
+      'Expected argument of type teleport.terminal.v1.ListDatabaseUsersRequest'
+    );
   }
   return Buffer.from(arg.serializeBinary());
 }
 
 function deserialize_teleport_terminal_v1_ListDatabaseUsersRequest(buffer_arg) {
-  return v1_service_pb.ListDatabaseUsersRequest.deserializeBinary(new Uint8Array(buffer_arg));
+  return v1_service_pb.ListDatabaseUsersRequest.deserializeBinary(
+    new Uint8Array(buffer_arg)
+  );
 }
 
 function serialize_teleport_terminal_v1_ListDatabaseUsersResponse(arg) {
   if (!(arg instanceof v1_service_pb.ListDatabaseUsersResponse)) {
-    throw new Error('Expected argument of type teleport.terminal.v1.ListDatabaseUsersResponse');
+    throw new Error(
+      'Expected argument of type teleport.terminal.v1.ListDatabaseUsersResponse'
+    );
   }
   return Buffer.from(arg.serializeBinary());
 }
 
-function deserialize_teleport_terminal_v1_ListDatabaseUsersResponse(buffer_arg) {
-  return v1_service_pb.ListDatabaseUsersResponse.deserializeBinary(new Uint8Array(buffer_arg));
+function deserialize_teleport_terminal_v1_ListDatabaseUsersResponse(
+  buffer_arg
+) {
+  return v1_service_pb.ListDatabaseUsersResponse.deserializeBinary(
+    new Uint8Array(buffer_arg)
+  );
 }
 
 function serialize_teleport_terminal_v1_ListDatabasesRequest(arg) {
   if (!(arg instanceof v1_service_pb.ListDatabasesRequest)) {
-    throw new Error('Expected argument of type teleport.terminal.v1.ListDatabasesRequest');
+    throw new Error(
+      'Expected argument of type teleport.terminal.v1.ListDatabasesRequest'
+    );
   }
   return Buffer.from(arg.serializeBinary());
 }
 
 function deserialize_teleport_terminal_v1_ListDatabasesRequest(buffer_arg) {
-  return v1_service_pb.ListDatabasesRequest.deserializeBinary(new Uint8Array(buffer_arg));
+  return v1_service_pb.ListDatabasesRequest.deserializeBinary(
+    new Uint8Array(buffer_arg)
+  );
 }
 
 function serialize_teleport_terminal_v1_ListDatabasesResponse(arg) {
   if (!(arg instanceof v1_service_pb.ListDatabasesResponse)) {
-    throw new Error('Expected argument of type teleport.terminal.v1.ListDatabasesResponse');
+    throw new Error(
+      'Expected argument of type teleport.terminal.v1.ListDatabasesResponse'
+    );
   }
   return Buffer.from(arg.serializeBinary());
 }
 
 function deserialize_teleport_terminal_v1_ListDatabasesResponse(buffer_arg) {
-  return v1_service_pb.ListDatabasesResponse.deserializeBinary(new Uint8Array(buffer_arg));
+  return v1_service_pb.ListDatabasesResponse.deserializeBinary(
+    new Uint8Array(buffer_arg)
+  );
 }
 
 function serialize_teleport_terminal_v1_ListGatewaysRequest(arg) {
   if (!(arg instanceof v1_service_pb.ListGatewaysRequest)) {
-    throw new Error('Expected argument of type teleport.terminal.v1.ListGatewaysRequest');
+    throw new Error(
+      'Expected argument of type teleport.terminal.v1.ListGatewaysRequest'
+    );
   }
   return Buffer.from(arg.serializeBinary());
 }
 
 function deserialize_teleport_terminal_v1_ListGatewaysRequest(buffer_arg) {
-  return v1_service_pb.ListGatewaysRequest.deserializeBinary(new Uint8Array(buffer_arg));
+  return v1_service_pb.ListGatewaysRequest.deserializeBinary(
+    new Uint8Array(buffer_arg)
+  );
 }
 
 function serialize_teleport_terminal_v1_ListGatewaysResponse(arg) {
   if (!(arg instanceof v1_service_pb.ListGatewaysResponse)) {
-    throw new Error('Expected argument of type teleport.terminal.v1.ListGatewaysResponse');
+    throw new Error(
+      'Expected argument of type teleport.terminal.v1.ListGatewaysResponse'
+    );
   }
   return Buffer.from(arg.serializeBinary());
 }
 
 function deserialize_teleport_terminal_v1_ListGatewaysResponse(buffer_arg) {
-  return v1_service_pb.ListGatewaysResponse.deserializeBinary(new Uint8Array(buffer_arg));
+  return v1_service_pb.ListGatewaysResponse.deserializeBinary(
+    new Uint8Array(buffer_arg)
+  );
 }
 
 function serialize_teleport_terminal_v1_ListKubesRequest(arg) {
   if (!(arg instanceof v1_service_pb.ListKubesRequest)) {
-    throw new Error('Expected argument of type teleport.terminal.v1.ListKubesRequest');
+    throw new Error(
+      'Expected argument of type teleport.terminal.v1.ListKubesRequest'
+    );
   }
   return Buffer.from(arg.serializeBinary());
 }
 
 function deserialize_teleport_terminal_v1_ListKubesRequest(buffer_arg) {
-  return v1_service_pb.ListKubesRequest.deserializeBinary(new Uint8Array(buffer_arg));
+  return v1_service_pb.ListKubesRequest.deserializeBinary(
+    new Uint8Array(buffer_arg)
+  );
 }
 
 function serialize_teleport_terminal_v1_ListKubesResponse(arg) {
   if (!(arg instanceof v1_service_pb.ListKubesResponse)) {
-    throw new Error('Expected argument of type teleport.terminal.v1.ListKubesResponse');
+    throw new Error(
+      'Expected argument of type teleport.terminal.v1.ListKubesResponse'
+    );
   }
   return Buffer.from(arg.serializeBinary());
 }
 
 function deserialize_teleport_terminal_v1_ListKubesResponse(buffer_arg) {
-  return v1_service_pb.ListKubesResponse.deserializeBinary(new Uint8Array(buffer_arg));
+  return v1_service_pb.ListKubesResponse.deserializeBinary(
+    new Uint8Array(buffer_arg)
+  );
 }
 
 function serialize_teleport_terminal_v1_ListLeafClustersRequest(arg) {
   if (!(arg instanceof v1_service_pb.ListLeafClustersRequest)) {
-    throw new Error('Expected argument of type teleport.terminal.v1.ListLeafClustersRequest');
+    throw new Error(
+      'Expected argument of type teleport.terminal.v1.ListLeafClustersRequest'
+    );
   }
   return Buffer.from(arg.serializeBinary());
 }
 
 function deserialize_teleport_terminal_v1_ListLeafClustersRequest(buffer_arg) {
-  return v1_service_pb.ListLeafClustersRequest.deserializeBinary(new Uint8Array(buffer_arg));
+  return v1_service_pb.ListLeafClustersRequest.deserializeBinary(
+    new Uint8Array(buffer_arg)
+  );
 }
 
 function serialize_teleport_terminal_v1_ListServersRequest(arg) {
   if (!(arg instanceof v1_service_pb.ListServersRequest)) {
-    throw new Error('Expected argument of type teleport.terminal.v1.ListServersRequest');
+    throw new Error(
+      'Expected argument of type teleport.terminal.v1.ListServersRequest'
+    );
   }
   return Buffer.from(arg.serializeBinary());
 }
 
 function deserialize_teleport_terminal_v1_ListServersRequest(buffer_arg) {
-  return v1_service_pb.ListServersRequest.deserializeBinary(new Uint8Array(buffer_arg));
+  return v1_service_pb.ListServersRequest.deserializeBinary(
+    new Uint8Array(buffer_arg)
+  );
 }
 
 function serialize_teleport_terminal_v1_ListServersResponse(arg) {
   if (!(arg instanceof v1_service_pb.ListServersResponse)) {
-    throw new Error('Expected argument of type teleport.terminal.v1.ListServersResponse');
+    throw new Error(
+      'Expected argument of type teleport.terminal.v1.ListServersResponse'
+    );
   }
   return Buffer.from(arg.serializeBinary());
 }
 
 function deserialize_teleport_terminal_v1_ListServersResponse(buffer_arg) {
-  return v1_service_pb.ListServersResponse.deserializeBinary(new Uint8Array(buffer_arg));
+  return v1_service_pb.ListServersResponse.deserializeBinary(
+    new Uint8Array(buffer_arg)
+  );
 }
 
 function serialize_teleport_terminal_v1_LoginRequest(arg) {
   if (!(arg instanceof v1_service_pb.LoginRequest)) {
-    throw new Error('Expected argument of type teleport.terminal.v1.LoginRequest');
+    throw new Error(
+      'Expected argument of type teleport.terminal.v1.LoginRequest'
+    );
   }
   return Buffer.from(arg.serializeBinary());
 }
 
 function deserialize_teleport_terminal_v1_LoginRequest(buffer_arg) {
-  return v1_service_pb.LoginRequest.deserializeBinary(new Uint8Array(buffer_arg));
+  return v1_service_pb.LoginRequest.deserializeBinary(
+    new Uint8Array(buffer_arg)
+  );
 }
 
 function serialize_teleport_terminal_v1_LogoutRequest(arg) {
   if (!(arg instanceof v1_service_pb.LogoutRequest)) {
-    throw new Error('Expected argument of type teleport.terminal.v1.LogoutRequest');
+    throw new Error(
+      'Expected argument of type teleport.terminal.v1.LogoutRequest'
+    );
   }
   return Buffer.from(arg.serializeBinary());
 }
 
 function deserialize_teleport_terminal_v1_LogoutRequest(buffer_arg) {
-  return v1_service_pb.LogoutRequest.deserializeBinary(new Uint8Array(buffer_arg));
+  return v1_service_pb.LogoutRequest.deserializeBinary(
+    new Uint8Array(buffer_arg)
+  );
 }
 
 function serialize_teleport_terminal_v1_RemoveClusterRequest(arg) {
   if (!(arg instanceof v1_service_pb.RemoveClusterRequest)) {
-    throw new Error('Expected argument of type teleport.terminal.v1.RemoveClusterRequest');
+    throw new Error(
+      'Expected argument of type teleport.terminal.v1.RemoveClusterRequest'
+    );
   }
   return Buffer.from(arg.serializeBinary());
 }
 
 function deserialize_teleport_terminal_v1_RemoveClusterRequest(buffer_arg) {
-  return v1_service_pb.RemoveClusterRequest.deserializeBinary(new Uint8Array(buffer_arg));
+  return v1_service_pb.RemoveClusterRequest.deserializeBinary(
+    new Uint8Array(buffer_arg)
+  );
 }
 
 function serialize_teleport_terminal_v1_RemoveGatewayRequest(arg) {
   if (!(arg instanceof v1_service_pb.RemoveGatewayRequest)) {
-    throw new Error('Expected argument of type teleport.terminal.v1.RemoveGatewayRequest');
+    throw new Error(
+      'Expected argument of type teleport.terminal.v1.RemoveGatewayRequest'
+    );
   }
   return Buffer.from(arg.serializeBinary());
 }
 
 function deserialize_teleport_terminal_v1_RemoveGatewayRequest(buffer_arg) {
-  return v1_service_pb.RemoveGatewayRequest.deserializeBinary(new Uint8Array(buffer_arg));
+  return v1_service_pb.RemoveGatewayRequest.deserializeBinary(
+    new Uint8Array(buffer_arg)
+  );
 }
 
 function serialize_teleport_terminal_v1_RestartGatewayRequest(arg) {
   if (!(arg instanceof v1_service_pb.RestartGatewayRequest)) {
-    throw new Error('Expected argument of type teleport.terminal.v1.RestartGatewayRequest');
+    throw new Error(
+      'Expected argument of type teleport.terminal.v1.RestartGatewayRequest'
+    );
   }
   return Buffer.from(arg.serializeBinary());
 }
 
 function deserialize_teleport_terminal_v1_RestartGatewayRequest(buffer_arg) {
-  return v1_service_pb.RestartGatewayRequest.deserializeBinary(new Uint8Array(buffer_arg));
+  return v1_service_pb.RestartGatewayRequest.deserializeBinary(
+    new Uint8Array(buffer_arg)
+  );
 }
 
 function serialize_teleport_terminal_v1_SetGatewayLocalPortRequest(arg) {
   if (!(arg instanceof v1_service_pb.SetGatewayLocalPortRequest)) {
-    throw new Error('Expected argument of type teleport.terminal.v1.SetGatewayLocalPortRequest');
+    throw new Error(
+      'Expected argument of type teleport.terminal.v1.SetGatewayLocalPortRequest'
+    );
   }
   return Buffer.from(arg.serializeBinary());
 }
 
-function deserialize_teleport_terminal_v1_SetGatewayLocalPortRequest(buffer_arg) {
-  return v1_service_pb.SetGatewayLocalPortRequest.deserializeBinary(new Uint8Array(buffer_arg));
+function deserialize_teleport_terminal_v1_SetGatewayLocalPortRequest(
+  buffer_arg
+) {
+  return v1_service_pb.SetGatewayLocalPortRequest.deserializeBinary(
+    new Uint8Array(buffer_arg)
+  );
 }
 
-function serialize_teleport_terminal_v1_SetGatewayTargetSubresourceNameRequest(arg) {
+function serialize_teleport_terminal_v1_SetGatewayTargetSubresourceNameRequest(
+  arg
+) {
   if (!(arg instanceof v1_service_pb.SetGatewayTargetSubresourceNameRequest)) {
-    throw new Error('Expected argument of type teleport.terminal.v1.SetGatewayTargetSubresourceNameRequest');
+    throw new Error(
+      'Expected argument of type teleport.terminal.v1.SetGatewayTargetSubresourceNameRequest'
+    );
   }
   return Buffer.from(arg.serializeBinary());
 }
 
-function deserialize_teleport_terminal_v1_SetGatewayTargetSubresourceNameRequest(buffer_arg) {
-  return v1_service_pb.SetGatewayTargetSubresourceNameRequest.deserializeBinary(new Uint8Array(buffer_arg));
+function deserialize_teleport_terminal_v1_SetGatewayTargetSubresourceNameRequest(
+  buffer_arg
+) {
+  return v1_service_pb.SetGatewayTargetSubresourceNameRequest.deserializeBinary(
+    new Uint8Array(buffer_arg)
+  );
 }
-
 
 // TerminalService describes Teleterm service
-var TerminalServiceService = exports.TerminalServiceService = {
+var TerminalServiceService = (exports.TerminalServiceService = {
   // ListRootClusters lists root clusters
-listRootClusters: {
+  listRootClusters: {
     path: '/teleport.terminal.v1.TerminalService/ListRootClusters',
     requestStream: false,
     responseStream: false,
@@ -373,19 +492,20 @@ listRootClusters: {
     responseDeserialize: deserialize_teleport_terminal_v1_ListClustersResponse,
   },
   // ListLeafClusters lists leaf clusters
-listLeafClusters: {
+  listLeafClusters: {
     path: '/teleport.terminal.v1.TerminalService/ListLeafClusters',
     requestStream: false,
     responseStream: false,
     requestType: v1_service_pb.ListLeafClustersRequest,
     responseType: v1_service_pb.ListClustersResponse,
     requestSerialize: serialize_teleport_terminal_v1_ListLeafClustersRequest,
-    requestDeserialize: deserialize_teleport_terminal_v1_ListLeafClustersRequest,
+    requestDeserialize:
+      deserialize_teleport_terminal_v1_ListLeafClustersRequest,
     responseSerialize: serialize_teleport_terminal_v1_ListClustersResponse,
     responseDeserialize: deserialize_teleport_terminal_v1_ListClustersResponse,
   },
   // ListDatabases lists databases
-listDatabases: {
+  listDatabases: {
     path: '/teleport.terminal.v1.TerminalService/ListDatabases',
     requestStream: false,
     responseStream: false,
@@ -397,19 +517,21 @@ listDatabases: {
     responseDeserialize: deserialize_teleport_terminal_v1_ListDatabasesResponse,
   },
   // ListDatabaseUsers lists allowed users for the given database based on the role set.
-listDatabaseUsers: {
+  listDatabaseUsers: {
     path: '/teleport.terminal.v1.TerminalService/ListDatabaseUsers',
     requestStream: false,
     responseStream: false,
     requestType: v1_service_pb.ListDatabaseUsersRequest,
     responseType: v1_service_pb.ListDatabaseUsersResponse,
     requestSerialize: serialize_teleport_terminal_v1_ListDatabaseUsersRequest,
-    requestDeserialize: deserialize_teleport_terminal_v1_ListDatabaseUsersRequest,
+    requestDeserialize:
+      deserialize_teleport_terminal_v1_ListDatabaseUsersRequest,
     responseSerialize: serialize_teleport_terminal_v1_ListDatabaseUsersResponse,
-    responseDeserialize: deserialize_teleport_terminal_v1_ListDatabaseUsersResponse,
+    responseDeserialize:
+      deserialize_teleport_terminal_v1_ListDatabaseUsersResponse,
   },
   // ListServers lists servers
-listServers: {
+  listServers: {
     path: '/teleport.terminal.v1.TerminalService/ListServers',
     requestStream: false,
     responseStream: false,
@@ -421,7 +543,7 @@ listServers: {
     responseDeserialize: deserialize_teleport_terminal_v1_ListServersResponse,
   },
   // ListKubes list kubes
-listKubes: {
+  listKubes: {
     path: '/teleport.terminal.v1.TerminalService/ListKubes',
     requestStream: false,
     responseStream: false,
@@ -433,7 +555,7 @@ listKubes: {
     responseDeserialize: deserialize_teleport_terminal_v1_ListKubesResponse,
   },
   // ListApps list apps
-listApps: {
+  listApps: {
     path: '/teleport.terminal.v1.TerminalService/ListApps',
     requestStream: false,
     responseStream: false,
@@ -445,7 +567,7 @@ listApps: {
     responseDeserialize: deserialize_teleport_terminal_v1_ListAppsResponse,
   },
   // AddCluster adds a cluster to profile
-addCluster: {
+  addCluster: {
     path: '/teleport.terminal.v1.TerminalService/AddCluster',
     requestStream: false,
     responseStream: false,
@@ -457,7 +579,7 @@ addCluster: {
     responseDeserialize: deserialize_teleport_terminal_v1_Cluster,
   },
   // RemoveCluster removes a cluster from profile
-removeCluster: {
+  removeCluster: {
     path: '/teleport.terminal.v1.TerminalService/RemoveCluster',
     requestStream: false,
     responseStream: false,
@@ -469,7 +591,7 @@ removeCluster: {
     responseDeserialize: deserialize_teleport_terminal_v1_EmptyResponse,
   },
   // ListGateways lists gateways
-listGateways: {
+  listGateways: {
     path: '/teleport.terminal.v1.TerminalService/ListGateways',
     requestStream: false,
     responseStream: false,
@@ -481,7 +603,7 @@ listGateways: {
     responseDeserialize: deserialize_teleport_terminal_v1_ListGatewaysResponse,
   },
   // CreateGateway creates a gateway
-createGateway: {
+  createGateway: {
     path: '/teleport.terminal.v1.TerminalService/CreateGateway',
     requestStream: false,
     responseStream: false,
@@ -493,7 +615,7 @@ createGateway: {
     responseDeserialize: deserialize_teleport_terminal_v1_Gateway,
   },
   // RemoveGateway removes a gateway
-removeGateway: {
+  removeGateway: {
     path: '/teleport.terminal.v1.TerminalService/RemoveGateway',
     requestStream: false,
     responseStream: false,
@@ -505,9 +627,9 @@ removeGateway: {
     responseDeserialize: deserialize_teleport_terminal_v1_EmptyResponse,
   },
   // RestartGateway stops a gateway and starts a new with identical parameters, keeping the
-// original URI. A temporary workaround until it's possible to refresh certs in a running
-// database proxy.
-restartGateway: {
+  // original URI. A temporary workaround until it's possible to refresh certs in a running
+  // database proxy.
+  restartGateway: {
     path: '/teleport.terminal.v1.TerminalService/RestartGateway',
     requestStream: false,
     responseStream: false,
@@ -519,35 +641,38 @@ restartGateway: {
     responseDeserialize: deserialize_teleport_terminal_v1_EmptyResponse,
   },
   // SetGatewayTargetSubresourceName changes the TargetSubresourceName field of gateway.Gateway
-// and returns the updated version of gateway.Gateway.
-//
-// In Connect this is used to update the db name of a db connection along with the CLI command.
-setGatewayTargetSubresourceName: {
+  // and returns the updated version of gateway.Gateway.
+  //
+  // In Connect this is used to update the db name of a db connection along with the CLI command.
+  setGatewayTargetSubresourceName: {
     path: '/teleport.terminal.v1.TerminalService/SetGatewayTargetSubresourceName',
     requestStream: false,
     responseStream: false,
     requestType: v1_service_pb.SetGatewayTargetSubresourceNameRequest,
     responseType: v1_gateway_pb.Gateway,
-    requestSerialize: serialize_teleport_terminal_v1_SetGatewayTargetSubresourceNameRequest,
-    requestDeserialize: deserialize_teleport_terminal_v1_SetGatewayTargetSubresourceNameRequest,
+    requestSerialize:
+      serialize_teleport_terminal_v1_SetGatewayTargetSubresourceNameRequest,
+    requestDeserialize:
+      deserialize_teleport_terminal_v1_SetGatewayTargetSubresourceNameRequest,
     responseSerialize: serialize_teleport_terminal_v1_Gateway,
     responseDeserialize: deserialize_teleport_terminal_v1_Gateway,
   },
   // SetGatewayLocalPort starts a new gateway on the new port, stops the old gateway and then
-// assigns the URI of the old gateway to the new one. It does so without fetching a new db cert.
-setGatewayLocalPort: {
+  // assigns the URI of the old gateway to the new one. It does so without fetching a new db cert.
+  setGatewayLocalPort: {
     path: '/teleport.terminal.v1.TerminalService/SetGatewayLocalPort',
     requestStream: false,
     responseStream: false,
     requestType: v1_service_pb.SetGatewayLocalPortRequest,
     responseType: v1_gateway_pb.Gateway,
     requestSerialize: serialize_teleport_terminal_v1_SetGatewayLocalPortRequest,
-    requestDeserialize: deserialize_teleport_terminal_v1_SetGatewayLocalPortRequest,
+    requestDeserialize:
+      deserialize_teleport_terminal_v1_SetGatewayLocalPortRequest,
     responseSerialize: serialize_teleport_terminal_v1_Gateway,
     responseDeserialize: deserialize_teleport_terminal_v1_Gateway,
   },
   // GetAuthSettings returns cluster auth settigns
-getAuthSettings: {
+  getAuthSettings: {
     path: '/teleport.terminal.v1.TerminalService/GetAuthSettings',
     requestStream: false,
     responseStream: false,
@@ -559,7 +684,7 @@ getAuthSettings: {
     responseDeserialize: deserialize_teleport_terminal_v1_AuthSettings,
   },
   // GetCluster returns a cluster
-getCluster: {
+  getCluster: {
     path: '/teleport.terminal.v1.TerminalService/GetCluster',
     requestStream: false,
     responseStream: false,
@@ -571,7 +696,7 @@ getCluster: {
     responseDeserialize: deserialize_teleport_terminal_v1_Cluster,
   },
   // Login logs in a user to a cluster
-login: {
+  login: {
     path: '/teleport.terminal.v1.TerminalService/Login',
     requestStream: false,
     responseStream: false,
@@ -583,7 +708,7 @@ login: {
     responseDeserialize: deserialize_teleport_terminal_v1_EmptyResponse,
   },
   // ClusterLogin logs out a user from cluster
-logout: {
+  logout: {
     path: '/teleport.terminal.v1.TerminalService/Logout',
     requestStream: false,
     responseStream: false,
@@ -594,6 +719,8 @@ logout: {
     responseSerialize: serialize_teleport_terminal_v1_EmptyResponse,
     responseDeserialize: deserialize_teleport_terminal_v1_EmptyResponse,
   },
-};
+});
 
-exports.TerminalServiceClient = grpc.makeGenericClientConstructor(TerminalServiceService);
+exports.TerminalServiceClient = grpc.makeGenericClientConstructor(
+  TerminalServiceService
+);
