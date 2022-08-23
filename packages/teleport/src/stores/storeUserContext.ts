@@ -114,7 +114,7 @@ export default class StoreUserContext extends Store<UserContext> {
   // access to add an agent:
   //  - user should be able to edit themselves to update user traits
   //  - user should be able to create provisioning tokens
-  //  - user should be able to create and update connection diagnostics
+  //  - user should be able to read, create and update connection diagnostics
   //    to test agent connection
   hasPrereqAccessToAddAgents() {
     const { users, tokens, connectionDiagnostic } = this.state.acl;
@@ -123,7 +123,8 @@ export default class StoreUserContext extends Store<UserContext> {
       users.edit &&
       tokens.create &&
       connectionDiagnostic.create &&
-      connectionDiagnostic.edit
+      connectionDiagnostic.edit &&
+      connectionDiagnostic.read
     );
   }
 
