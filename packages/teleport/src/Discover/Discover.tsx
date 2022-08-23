@@ -118,7 +118,7 @@ const agentStepTitles: string[] = [
   '',
 ];
 
-function SideNavAgentConnect({ currentStep }) {
+function SideNavAgentConnect({ currentStep }: { currentStep: number }) {
   return (
     <StyledNav>
       <sideNav.Logo />
