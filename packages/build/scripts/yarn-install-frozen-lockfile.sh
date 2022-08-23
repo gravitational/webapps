@@ -12,5 +12,5 @@ submodule initialized and updated first."
 
 cp yarn.lock yarn-before-install.lock
 yarn install
-git diff --no-index --exit-code yarn-before-install.lock yarn.lock ||
+time git diff --no-index --exit-code yarn-before-install.lock yarn.lock ||
   { echo "$message" ; exit 1; }
