@@ -1,4 +1,4 @@
-const { exec } = require('child_process');
+const { execSync } = require('child_process');
 
 /**
  * @type { import('electron-builder').Configuration }
@@ -14,7 +14,7 @@ module.exports = {
       path.endsWith('.rpm')
     );
     if (rpmPath) {
-      exec(`rpm --addsign ${rpmPath}`);
+      execSync(`yarn sign-rpm ${rpmPath}`, { stdio: 'inherit' });
     }
   },
   mac: {
