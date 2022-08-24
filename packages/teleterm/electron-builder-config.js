@@ -9,14 +9,14 @@ module.exports = {
   asarUnpack: '**\\*.{node,dll}',
   afterSign: 'notarize.js',
   files: ['build/app/dist'],
-  afterAllArtifactBuild: buildResult => {
-    const rpmPath = buildResult.artifactPaths.find(path =>
-      path.endsWith('.rpm')
-    );
-    if (rpmPath) {
-      execSync(`yarn sign-rpm ${rpmPath}`, { stdio: 'inherit' });
-    }
-  },
+  // afterAllArtifactBuild: buildResult => {
+  //   const rpmPath = buildResult.artifactPaths.find(path =>
+  //     path.endsWith('.rpm')
+  //   );
+  //   if (rpmPath) {
+  //     execSync(`yarn sign-rpm ${rpmPath}`, { stdio: 'inherit' });
+  //   }
+  // },
   mac: {
     target: 'dmg',
     category: 'public.app-category.developer-tools',
