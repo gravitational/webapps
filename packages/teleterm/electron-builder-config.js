@@ -1,3 +1,5 @@
+const { exec } = require('child_process');
+
 /**
  * @type { import('electron-builder').Configuration }
  */
@@ -7,6 +9,14 @@ module.exports = {
   asarUnpack: '**\\*.{node,dll}',
   afterSign: 'notarize.js',
   files: ['build/app/dist'],
+  afterAllArtifactBuild: buildResult => {
+    const rpmPath = buildResult.artifactPaths.find(path =>
+      path.endsWith('.rpm')
+    );
+    if (rpmPath) {
+      exec(`rpm --addsign ${rpmPath}`);
+    }
+  },
   mac: {
     target: 'dmg',
     category: 'public.app-category.developer-tools',
@@ -46,8 +56,15 @@ module.exports = {
       },
     ],
   },
+  rpm: {
+    artifactName: '${name}-${version}.${arch}.${ext}',
+  },
+  deb: {
+    artifactName: '${name}-${version}_${arch}.${ext}',
+  },
   linux: {
     target: ['tar.gz', 'rpm', 'deb'],
+    artifactName: '${name}-${version}-${arch}.${ext}', //tar.gz
     category: 'Development',
     icon: 'assets/icon-linux',
     extraResources: [
