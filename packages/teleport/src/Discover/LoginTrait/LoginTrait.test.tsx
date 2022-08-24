@@ -18,8 +18,10 @@ import React from 'react';
 
 import { render, screen, act, fireEvent } from 'design/utils/testing';
 
-import { DiscoverContext } from '../discoverContext';
-import ContextProvider from '../discoverContextProvider';
+import { MemoryRouter } from 'react-router';
+
+import TeleportContext from 'teleport/teleportContext';
+import ContextProvider from 'teleport/TeleportContextProvider';
 
 import LoginTrait from './LoginTrait';
 
@@ -28,25 +30,27 @@ import type { RenderResult } from '@testing-library/react';
 import type { NodeMeta } from '../useDiscover';
 
 describe('login trait comp behavior', () => {
-  const ctx = new DiscoverContext();
+  const ctx = new TeleportContext();
   const userSvc = ctx.userService;
 
   let Component;
 
   beforeEach(() => {
     Component = (
-      <ContextProvider value={ctx}>
-        <LoginTrait
-          // TODO we don't need all of this
-          attempt={null}
-          joinToken={null}
-          createJoinToken={null}
-          agentMeta={mockedNodeMeta}
-          updateAgentMeta={null}
-          nextStep={null}
-          prevStep={null}
-        />
-      </ContextProvider>
+      <MemoryRouter>
+        <ContextProvider ctx={ctx}>
+          <LoginTrait
+            // TODO we don't need all of this
+            attempt={null}
+            joinToken={null}
+            createJoinToken={null}
+            agentMeta={mockedNodeMeta}
+            updateAgentMeta={null}
+            nextStep={null}
+            prevStep={null}
+          />
+        </ContextProvider>
+      </MemoryRouter>
     );
   });
 

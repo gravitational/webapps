@@ -1,5 +1,5 @@
 /**
- * Copyright 2020 Gravitational, Inc.
+ * Copyright 2022 Gravitational, Inc.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,5 +14,14 @@
  * limitations under the License.
  */
 
-import Manually from './Manually';
-export default Manually;
+import React from 'react';
+
+import { OnboardDiscover } from './OnboardDiscover';
+
+export default {
+  title: 'Teleport/Discover/Onboard',
+};
+
+export const Loaded = () => (
+  <OnboardDiscover onClose={() => null} onOnboard={() => null} />
+);

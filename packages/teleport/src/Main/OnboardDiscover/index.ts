@@ -14,22 +14,4 @@
  * limitations under the License.
  */
 
-import React from 'react';
-
-import { DiscoverContext } from './discoverContext';
-
-export const DiscoverReactContext = React.createContext<DiscoverContext>(null);
-
-const DiscoverContextProvider: React.FC<{
-  value: DiscoverContext;
-}> = props => {
-  return <DiscoverReactContext.Provider {...props} />;
-};
-
-export default DiscoverContextProvider;
-
-export function useDiscoverContext() {
-  const ctx = React.useContext(DiscoverReactContext);
-  window['telediscover'] = ctx;
-  return ctx;
-}
+export { OnboardDiscover } from './OnboardDiscover';

@@ -16,17 +16,11 @@
 
 import React from 'react';
 import styled from 'styled-components';
+import { NavLink } from 'react-router-dom';
 
-import { Text, ButtonPrimary, ButtonSecondary, Box } from 'design';
-import Dialog, {
-  DialogContent,
-  DialogFooter,
-  DialogHeader,
-  DialogTitle,
-} from 'design/Dialog';
+import { Text, ButtonPrimary, Box } from 'design';
 
 import cfg from 'teleport/config';
-import history from 'teleport/services/history';
 
 export const Header: React.FC = ({ children }) => (
   <Text mb={4} typography="h4" bold>
@@ -35,17 +29,31 @@ export const Header: React.FC = ({ children }) => (
 );
 
 export const ActionButtons = ({
-  onProceed,
-  disableProceed,
-  lastStep,
+  onProceed = null,
+  proceedHref = '',
+  disableProceed = false,
+  lastStep = false,
 }: {
   onProceed?(): void;
+  proceedHref?: string;
   disableProceed?: boolean;
   lastStep?: boolean;
 }) => {
-  const [confirmExit, setConfirmExit] = React.useState(false);
   return (
     <Box mt={4}>
+      {proceedHref && (
+        <ButtonPrimary
+          size="medium"
+          as="a"
+          href={proceedHref}
+          target="_blank"
+          width="224px"
+          mr={3}
+          rel="noreferrer"
+        >
+          View Documentation
+        </ButtonPrimary>
+      )}
       {onProceed && (
         <ButtonPrimary
           width="165px"
@@ -53,51 +61,15 @@ export const ActionButtons = ({
           mr={3}
           disabled={disableProceed}
         >
-          {lastStep ? 'Finish' : 'Proceed'}
+          {lastStep ? 'Finish' : 'Next'}
         </ButtonPrimary>
       )}
-      <ButtonSecondary
-        mt={3}
-        width="165px"
-        onClick={() => setConfirmExit(true)}
-      >
+      <ButtonPrimary as={NavLink} to={cfg.routes.root} mt={3} width="165px">
         Exit
-      </ButtonSecondary>
-      {confirmExit && (
-        <ConfirmExitDialog onClose={() => setConfirmExit(false)} />
-      )}
+      </ButtonPrimary>
     </Box>
   );
 };
-
-function ConfirmExitDialog({ onClose }: { onClose(): void }) {
-  return (
-    <Dialog
-      dialogCss={() => ({ maxWidth: '600px' })}
-      disableEscapeKeyDown={false}
-      onClose={onClose}
-      open={true}
-    >
-      <DialogHeader>
-        <DialogTitle>Exit Resource Connection</DialogTitle>
-      </DialogHeader>
-      <DialogContent minWidth="500px" flex="0 0 auto">
-        <Text mb={2}>
-          Are you sure you want to cancel the Resource connection process?
-        </Text>
-      </DialogContent>
-      <DialogFooter>
-        <ButtonPrimary
-          mr="3"
-          onClick={() => history.push(cfg.routes.root, true)}
-        >
-          Yes
-        </ButtonPrimary>
-        <ButtonSecondary onClick={onClose}>Cancel</ButtonSecondary>
-      </DialogFooter>
-    </Dialog>
-  );
-}
 
 export const TextIcon = styled(Text)`
   display: flex;
