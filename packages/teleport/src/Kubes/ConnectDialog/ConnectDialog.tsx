@@ -26,12 +26,23 @@ import TextSelectCopy from 'teleport/components/TextSelectCopy';
 import { AuthType } from 'teleport/services/user';
 
 function ConnectDialog(props: Props) {
-  const { onClose, username, authType, kubeConnectName, clusterId } = props;
+  const {
+    onClose,
+    username,
+    authType,
+    kubeConnectName,
+    clusterId,
+    accessRequestId,
+  } = props;
   const { hostname, port } = window.document.location;
   const host = `${hostname}:${port || '443'}`;
   const authSpec =
     authType === 'local' ? `--auth=${authType} --user=${username} ` : '';
   const text = `tsh login --proxy=${host} ${authSpec}${clusterId}`;
+
+  const requestIdFlag = accessRequestId
+    ? ` --request-id=${accessRequestId}`
+    : '';
 
   return (
     <Dialog
@@ -49,7 +60,7 @@ function ConnectDialog(props: Props) {
             Step 1
           </Text>
           {' - Login to Teleport'}
-          <TextSelectCopy mt="2" text={text} />
+          <TextSelectCopy mt="2" text={`${text}${requestIdFlag}`} />
         </Box>
         <Box mb={4}>
           <Text bold as="span">
@@ -76,6 +87,15 @@ function ConnectDialog(props: Props) {
           {' - Connect to the Kubernetes cluster'}
           <TextSelectCopy mt="2" text={`kubectl get pods`} />
         </Box>
+        {accessRequestId && (
+          <Box mb={1} mt={3}>
+            <Text bold as="span">
+              Step 4 (Optional)
+            </Text>
+            {' - When finished, drop the assumed role'}
+            <TextSelectCopy mt="2" text={`tsh request drop`} />
+          </Box>
+        )}
       </DialogContent>
       <DialogFooter>
         <ButtonSecondary onClick={onClose}>Close</ButtonSecondary>
@@ -90,6 +110,7 @@ type Props = {
   authType: AuthType;
   kubeConnectName: string;
   clusterId: string;
+  accessRequestId?: string;
 };
 
 const dialogCss = () => `
