@@ -104,4 +104,8 @@ export default class StoreUserContext extends Store<UserContext> {
   getNodeAccess() {
     return this.state.acl.nodes;
   }
+
+  getAccessRequestId() {
+    return this.state.accessRequestId;
+  }
 }
