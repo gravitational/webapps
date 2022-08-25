@@ -26,21 +26,21 @@ describe('design/Pill', () => {
     render(<Pill label="arch: x86_64" />);
 
     expect(screen.getByText('arch: x86_64')).toBeInTheDocument();
-    expect(screen.getAllByRole('button')).toMatchSnapshot();
+    expect(screen.queryByRole('button')).not.toBeInTheDocument();
   });
 
   it('render the label with dismissable', () => {
     render(<Pill label="arch: x86_64" onDismiss={() => {}} />);
 
     expect(screen.getByText('arch: x86_64')).toBeInTheDocument();
-    expect(screen.getAllByRole('button')).toMatchSnapshot();
+    expect(screen.getByRole('button')).toBeVisible();
   });
 
   it('dismissing pill calls onDismiss', () => {
     const cb = jest.fn();
     render(<Pill label="arch: x86_64" onDismiss={cb} />);
 
-    fireEvent.click(screen.getAllByRole('button')[0]);
+    fireEvent.click(screen.getByRole('button'));
 
     expect(cb).toHaveBeenCalledWith('arch: x86_64');
   });

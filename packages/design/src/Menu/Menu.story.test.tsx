@@ -25,7 +25,7 @@ describe('design/Menu', () => {
   it('renders parent and its children', () => {
     render(<IconExample />);
 
-    const parent = screen.getByRole('dialog');
+    const parent = screen.getByTestId('Modal');
     const menu = screen.getByRole('menu');
     const item = screen.getAllByTestId('item');
     const icon = screen.getAllByTestId('icon');

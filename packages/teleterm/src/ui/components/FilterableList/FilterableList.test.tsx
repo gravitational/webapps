@@ -1,5 +1,5 @@
 import React from 'react';
-import { screen } from '@testing-library/react';
+import { screen, within } from '@testing-library/react';
 import { fireEvent, render } from 'design/utils/testing';
 
 import { FilterableList } from './FilterableList';
@@ -43,10 +43,10 @@ test('render a item that matches the search', () => {
   fireEvent.change(screen.getByRole('searchbox'), {
     target: { value: mockedItems[0].title },
   });
-  const items = screen.getByRole('listitem');
 
-  expect(items).toBeInTheDocument();
-  expect(items[0]).toHaveTextContent(mockedItems[0].title);
+  const item = screen.getByRole('listitem');
+
+  expect(within(item).getByText(mockedItems[0].title)).toBeInTheDocument();
 });
 
 test('render empty list when search does not match any item', () => {
@@ -61,9 +61,8 @@ test('render empty list when search does not match any item', () => {
   fireEvent.change(screen.getByRole('searchbox'), {
     target: { value: 'abc' },
   });
-  const items = screen.queryByRole('listitem');
 
-  expect(items).not.toBeInTheDocument();
+  expect(screen.queryByRole('listitem')).not.toBeInTheDocument();
 });
 
 test('render provided placeholder in the search box', () => {

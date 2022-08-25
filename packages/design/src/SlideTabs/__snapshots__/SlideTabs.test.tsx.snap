@@ -40,54 +40,52 @@ exports[`design/SlideTabs supports a round medium size 1`] = `
   justify-content: space-around;
 }
 
-<div>
-  <div
-    class="c0"
+<div
+  class="c0"
+>
+  <nav
+    class="c1"
   >
-    <nav
-      class="c1"
+    <label
+      class="c2"
+      for="slide-tab-aws"
     >
-      <label
-        class="c2"
-        for="slide-tab-aws"
-      >
-        aws
-        <input
-          class="c3"
-          id="slide-tab-aws"
-          name="slide-tab"
-          type="radio"
-        />
-      </label>
-      <label
-        class="c2"
-        for="slide-tab-automatically"
-      >
-        automatically
-        <input
-          class="c3"
-          id="slide-tab-automatically"
-          name="slide-tab"
-          type="radio"
-        />
-      </label>
-      <label
-        class="c2"
-        for="slide-tab-manually"
-      >
-        manually
-        <input
-          class="c3"
-          id="slide-tab-manually"
-          name="slide-tab"
-          type="radio"
-        />
-      </label>
-    </nav>
-    <div
-      class="c4"
-    />
-  </div>
+      aws
+      <input
+        class="c3"
+        id="slide-tab-aws"
+        name="slide-tab"
+        type="radio"
+      />
+    </label>
+    <label
+      class="c2"
+      for="slide-tab-automatically"
+    >
+      automatically
+      <input
+        class="c3"
+        id="slide-tab-automatically"
+        name="slide-tab"
+        type="radio"
+      />
+    </label>
+    <label
+      class="c2"
+      for="slide-tab-manually"
+    >
+      manually
+      <input
+        class="c3"
+        id="slide-tab-manually"
+        name="slide-tab"
+        type="radio"
+      />
+    </label>
+  </nav>
+  <div
+    class="c4"
+  />
 </div>
 `;
 
@@ -131,54 +129,52 @@ exports[`design/SlideTabs supports a round xlarge appearance 1`] = `
   justify-content: space-around;
 }
 
-<div>
-  <div
-    class="c0"
+<div
+  class="c0"
+>
+  <nav
+    class="c1"
   >
-    <nav
-      class="c1"
+    <label
+      class="c2"
+      for="slide-tab-aws"
     >
-      <label
-        class="c2"
-        for="slide-tab-aws"
-      >
-        aws
-        <input
-          class="c3"
-          id="slide-tab-aws"
-          name="slide-tab"
-          type="radio"
-        />
-      </label>
-      <label
-        class="c2"
-        for="slide-tab-automatically"
-      >
-        automatically
-        <input
-          class="c3"
-          id="slide-tab-automatically"
-          name="slide-tab"
-          type="radio"
-        />
-      </label>
-      <label
-        class="c2"
-        for="slide-tab-manually"
-      >
-        manually
-        <input
-          class="c3"
-          id="slide-tab-manually"
-          name="slide-tab"
-          type="radio"
-        />
-      </label>
-    </nav>
-    <div
-      class="c4"
-    />
-  </div>
+      aws
+      <input
+        class="c3"
+        id="slide-tab-aws"
+        name="slide-tab"
+        type="radio"
+      />
+    </label>
+    <label
+      class="c2"
+      for="slide-tab-automatically"
+    >
+      automatically
+      <input
+        class="c3"
+        id="slide-tab-automatically"
+        name="slide-tab"
+        type="radio"
+      />
+    </label>
+    <label
+      class="c2"
+      for="slide-tab-manually"
+    >
+      manually
+      <input
+        class="c3"
+        id="slide-tab-manually"
+        name="slide-tab"
+        type="radio"
+      />
+    </label>
+  </nav>
+  <div
+    class="c4"
+  />
 </div>
 `;
 
@@ -222,54 +218,52 @@ exports[`design/SlideTabs supports a square medium size 1`] = `
   justify-content: space-around;
 }
 
-<div>
-  <div
-    class="c0"
+<div
+  class="c0"
+>
+  <nav
+    class="c1"
   >
-    <nav
-      class="c1"
+    <label
+      class="c2"
+      for="slide-tab-aws"
     >
-      <label
-        class="c2"
-        for="slide-tab-aws"
-      >
-        aws
-        <input
-          class="c3"
-          id="slide-tab-aws"
-          name="slide-tab"
-          type="radio"
-        />
-      </label>
-      <label
-        class="c2"
-        for="slide-tab-automatically"
-      >
-        automatically
-        <input
-          class="c3"
-          id="slide-tab-automatically"
-          name="slide-tab"
-          type="radio"
-        />
-      </label>
-      <label
-        class="c2"
-        for="slide-tab-manually"
-      >
-        manually
-        <input
-          class="c3"
-          id="slide-tab-manually"
-          name="slide-tab"
-          type="radio"
-        />
-      </label>
-    </nav>
-    <div
-      class="c4"
-    />
-  </div>
+      aws
+      <input
+        class="c3"
+        id="slide-tab-aws"
+        name="slide-tab"
+        type="radio"
+      />
+    </label>
+    <label
+      class="c2"
+      for="slide-tab-automatically"
+    >
+      automatically
+      <input
+        class="c3"
+        id="slide-tab-automatically"
+        name="slide-tab"
+        type="radio"
+      />
+    </label>
+    <label
+      class="c2"
+      for="slide-tab-manually"
+    >
+      manually
+      <input
+        class="c3"
+        id="slide-tab-manually"
+        name="slide-tab"
+        type="radio"
+      />
+    </label>
+  </nav>
+  <div
+    class="c4"
+  />
 </div>
 `;
 
@@ -313,54 +307,52 @@ exports[`design/SlideTabs supports a square xlarge appearance (default) 1`] = `
   justify-content: space-around;
 }
 
-<div>
-  <div
-    class="c0"
+<div
+  class="c0"
+>
+  <nav
+    class="c1"
   >
-    <nav
-      class="c1"
+    <label
+      class="c2"
+      for="slide-tab-aws"
     >
-      <label
-        class="c2"
-        for="slide-tab-aws"
-      >
-        aws
-        <input
-          class="c3"
-          id="slide-tab-aws"
-          name="slide-tab"
-          type="radio"
-        />
-      </label>
-      <label
-        class="c2"
-        for="slide-tab-automatically"
-      >
-        automatically
-        <input
-          class="c3"
-          id="slide-tab-automatically"
-          name="slide-tab"
-          type="radio"
-        />
-      </label>
-      <label
-        class="c2"
-        for="slide-tab-manually"
-      >
-        manually
-        <input
-          class="c3"
-          id="slide-tab-manually"
-          name="slide-tab"
-          type="radio"
-        />
-      </label>
-    </nav>
-    <div
-      class="c4"
-    />
-  </div>
+      aws
+      <input
+        class="c3"
+        id="slide-tab-aws"
+        name="slide-tab"
+        type="radio"
+      />
+    </label>
+    <label
+      class="c2"
+      for="slide-tab-automatically"
+    >
+      automatically
+      <input
+        class="c3"
+        id="slide-tab-automatically"
+        name="slide-tab"
+        type="radio"
+      />
+    </label>
+    <label
+      class="c2"
+      for="slide-tab-manually"
+    >
+      manually
+      <input
+        class="c3"
+        id="slide-tab-manually"
+        name="slide-tab"
+        type="radio"
+      />
+    </label>
+  </nav>
+  <div
+    class="c4"
+  />
 </div>
 `;
 
@@ -404,53 +396,51 @@ exports[`design/SlideTabs supports passing in a selected index 1`] = `
   justify-content: space-around;
 }
 
-<div>
-  <div
-    class="c0"
+<div
+  class="c0"
+>
+  <nav
+    class="c1"
   >
-    <nav
-      class="c1"
+    <label
+      class="c2"
+      for="slide-tab-aws"
     >
-      <label
-        class="c2"
-        for="slide-tab-aws"
-      >
-        aws
-        <input
-          class="c3"
-          id="slide-tab-aws"
-          name="slide-tab"
-          type="radio"
-        />
-      </label>
-      <label
-        class="c2"
-        for="slide-tab-automatically"
-      >
-        automatically
-        <input
-          class="c3"
-          id="slide-tab-automatically"
-          name="slide-tab"
-          type="radio"
-        />
-      </label>
-      <label
-        class="c2"
-        for="slide-tab-manually"
-      >
-        manually
-        <input
-          class="c3"
-          id="slide-tab-manually"
-          name="slide-tab"
-          type="radio"
-        />
-      </label>
-    </nav>
-    <div
-      class="c4"
-    />
-  </div>
+      aws
+      <input
+        class="c3"
+        id="slide-tab-aws"
+        name="slide-tab"
+        type="radio"
+      />
+    </label>
+    <label
+      class="c2"
+      for="slide-tab-automatically"
+    >
+      automatically
+      <input
+        class="c3"
+        id="slide-tab-automatically"
+        name="slide-tab"
+        type="radio"
+      />
+    </label>
+    <label
+      class="c2"
+      for="slide-tab-manually"
+    >
+      manually
+      <input
+        class="c3"
+        id="slide-tab-manually"
+        name="slide-tab"
+        type="radio"
+      />
+    </label>
+  </nav>
+  <div
+    class="c4"
+  />
 </div>
 `;

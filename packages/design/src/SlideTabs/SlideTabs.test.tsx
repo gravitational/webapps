@@ -29,7 +29,10 @@ describe('design/SlideTabs', () => {
         onChange={() => {}}
       />
     );
-    expect(screen.getAllByRole('label')).toHaveLength(3);
+
+    expect(screen.getByLabelText('aws')).toBeInTheDocument();
+    expect(screen.getByLabelText('automatically')).toBeInTheDocument();
+    expect(screen.getByLabelText('manually')).toBeInTheDocument();
   });
 
   it('renders the supplied number of tabs(5)', () => {
@@ -39,7 +42,12 @@ describe('design/SlideTabs', () => {
         onChange={() => {}}
       />
     );
-    expect(screen.getAllByRole('label')).toHaveLength(5);
+
+    expect(screen.getByLabelText('aws')).toBeInTheDocument();
+    expect(screen.getByLabelText('automatically')).toBeInTheDocument();
+    expect(screen.getByLabelText('manually')).toBeInTheDocument();
+    expect(screen.getByLabelText('apple')).toBeInTheDocument();
+    expect(screen.getByLabelText('purple')).toBeInTheDocument();
   });
 
   it('respects a custom form name', () => {
