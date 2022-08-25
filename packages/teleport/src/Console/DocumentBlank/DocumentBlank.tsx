@@ -39,7 +39,6 @@ export default function DocumentBlank(props: PropTypes) {
           mb="6"
           color={colors.terminalDark}
         />
-        <ButtonPrimary onClick={onClick} children="Start a New Session" />
       </Flex>
     </Document>
   );

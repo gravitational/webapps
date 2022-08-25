@@ -87,7 +87,6 @@ export default function Console() {
           disableNew={disableNewTab}
           onNew={onTabNew}
         />
-        <ActionBar onLogout={onLogout} />
       </Flex>
       {$docs}
       {hasSshSessions && (

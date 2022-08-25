@@ -31,9 +31,6 @@ export default function TabItem(props: Props) {
           {name}
         </Text>
       </StyledTabButton>
-      <StyledCloseButton title="Close" onClick={onClose}>
-        <CloseIcon />
-      </StyledCloseButton>
     </StyledTabItem>
   );
 }

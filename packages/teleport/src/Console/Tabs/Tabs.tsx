@@ -79,17 +79,6 @@ export function Tabs(props: Props & { parties: stores.Parties }) {
       {...styledProps}
     >
       {$items}
-      {$items.length > 0 && (
-        <ButtonIcon
-          ml="2"
-          size={0}
-          disabled={disableNew}
-          title="New Tab"
-          onClick={onNew}
-        >
-          <Icons.Add fontSize="16px" />
-        </ButtonIcon>
-      )}
     </StyledTabs>
   );
 }
