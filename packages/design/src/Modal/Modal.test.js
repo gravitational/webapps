@@ -40,7 +40,7 @@ describe('design/Modal', () => {
       </Modal>
     );
 
-    expect(queryByTestId('Modal')).toBeNull();
+    expect(queryByTestId('Modal')).not.toBeInTheDocument();
   });
 
   it('respects onBackdropClick prop', () => {
@@ -88,7 +88,7 @@ describe('design/Modal', () => {
       hideBackdrop: true,
     });
 
-    expect(queryByTestId('backdrop')).toBeNull();
+    expect(queryByTestId('backdrop')).not.toBeInTheDocument();
   });
 
   it('respects disableBackdropClick prop', () => {
@@ -123,7 +123,7 @@ describe('design/Modal', () => {
 
     unmount();
 
-    expect(queryByTestId('Modal')).toBeNull();
+    expect(queryByTestId('Modal')).not.toBeInTheDocument();
 
     fireEvent.keyDown(container, escapeKey);
     expect(mockFn).not.toHaveBeenCalled();

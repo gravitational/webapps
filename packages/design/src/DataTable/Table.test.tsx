@@ -86,7 +86,7 @@ describe('design/Table Simple', () => {
 
   test('each th tag text == header data', () => {
     container.querySelectorAll('th').forEach((thElement, index) => {
-      expect(thElement.textContent).toEqual(colHeaders[index]);
+      expect(thElement).toHaveTextContent(colHeaders[index]);
     });
   });
 
@@ -101,10 +101,10 @@ describe('design/Table Simple', () => {
       .querySelector('tbody')
       .querySelectorAll('tr')
       .forEach((trElement, index) => {
-        expect(trElement.children[0].textContent).toEqual(
+        expect(trElement.children[0]).toHaveTextContent(
           data[index][colHeaderKeys[0]]
         );
-        expect(trElement.children[1].textContent).toEqual(
+        expect(trElement.children[1]).toHaveTextContent(
           data[index][colHeaderKeys[1]]
         );
       });
@@ -117,22 +117,21 @@ describe('design/Table SortIndicator', () => {
     expect(
       container
         .querySelector('span')
-        .classList.contains('icon-chevrons-expand-vertical')
-    ).toBe(true);
+    ).toHaveClass('icon-chevrons-expand-vertical');
   });
 
   test('sort indicator respects sortDir prop set to ASC', () => {
     const { container } = render(<SortIndicator sortDir={'ASC'} />);
     expect(
-      container.querySelector('span').classList.contains('icon-chevron-up')
-    ).toBe(true);
+      container.querySelector('span')
+    ).toHaveClass('icon-chevron-up');
   });
 
   test('sort indicator respects sortDir prop set to DESC', () => {
     const { container } = render(<SortIndicator sortDir={'DESC'} />);
     expect(
-      container.querySelector('span').classList.contains('icon-chevron-down')
-    ).toBe(true);
+      container.querySelector('span')
+    ).toHaveClass('icon-chevron-down');
   });
 
   test('clicking on col headers changes direction', () => {
@@ -161,21 +160,21 @@ describe('design/Table SortIndicator', () => {
 
     // Table initially sorts with "Hostname" ASC
     expect(
-      header1.querySelector('span').classList.contains('icon-chevron-up')
-    ).toBe(true);
+      header1.querySelector('span')
+    ).toHaveClass('icon-chevron-up');
 
     // b/c Table is initially sorted by "Hostname"
     // "Address" header starts with sort vertical (neither ASC or DESC)
     // on sort vertical, DESC is default
     fireEvent.click(screen.getByText(colHeaders[1]));
     expect(
-      header2.querySelector('span').classList.contains('icon-chevron-down')
-    ).toBe(true);
+      header2.querySelector('span')
+    ).toHaveClass('icon-chevron-down');
 
     fireEvent.click(screen.getByText(colHeaders[1]));
     expect(
-      header2.querySelector('span').classList.contains('icon-chevron-up')
-    ).toBe(true);
+      header2.querySelector('span')
+    ).toHaveClass('icon-chevron-up');
   });
 });
 
@@ -207,7 +206,7 @@ test('respects emptyText prop', () => {
   );
   const target = getByText(targetText);
 
-  expect(target.textContent).toEqual(targetText);
+  expect(target).toHaveTextContent(targetText);
 });
 
 describe('sorting by field defined in key and altSortKey', () => {

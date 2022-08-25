@@ -27,17 +27,17 @@ test('basic usage', async () => {
   });
 
   // expect no errors when not validating
-  expect(results.container.firstChild.textContent).toBe('valid');
+  expect(results.container.firstChild).toHaveTextContent('valid');
 
   // trigger validation and expect errors
   fireEvent.click(screen.getByRole('button'));
-  expect(results.container.firstChild.textContent).toBe(
+  expect(results.container.firstChild).toHaveTextContent(
     'this field is required'
   );
 
   // rerender component with proper value and expect no errors
   results.rerender(<Component value="123" rule={required} />);
-  expect(results.container.firstChild.textContent).toBe('valid');
+  expect(results.container.firstChild).toHaveTextContent('valid');
 
   // verify that useRule properly unsubscribes from validation context
   const cb = jest.fn();

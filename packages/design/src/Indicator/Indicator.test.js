@@ -25,11 +25,9 @@ describe('design/Indicator', () => {
     const { container } = render(
       <Indicator data-testid="spinner" delay={'none'} />
     );
-    expect(container.firstChild).toBeNull();
+    expect(container).toBeEmptyDOMElement();
 
-    await waitFor(() => getByTestId(container, 'spinner'), {
-      container,
-    });
+    await findByTestId(container, 'spinner');
 
     expect(container.firstChild.nodeName).toBe('SPAN');
   });

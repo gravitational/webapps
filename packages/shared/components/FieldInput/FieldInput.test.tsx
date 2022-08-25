@@ -49,7 +49,7 @@ test('valid values, autofocus, onChange, onKeyPress', () => {
 
   // test autofocus prop is respected
   const inputEl = getByPlaceholderText('placeholderText');
-  expect(document.activeElement).toEqual(inputEl);
+  expect(inputEl).toHaveFocus();
 
   // test onChange prop is respected
   fireEvent.change(inputEl, { target: { value: 'test' } });

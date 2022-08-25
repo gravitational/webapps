@@ -29,9 +29,9 @@ test('primary username and password with mfa off', () => {
 
   // Test only user/pwd form was rendered.
   expect(screen.queryByTestId('userpassword')).toBeVisible();
-  expect(queryByTestId('mfa-select')).toBeNull();
-  expect(screen.queryByTestId('sso-list')).toBeNull();
-  expect(screen.queryByTestId('passwordless')).toBeNull();
+  expect(queryByTestId('mfa-select')).not.toBeInTheDocument();
+  expect(screen.queryByTestId('sso-list')).not.toBeInTheDocument();
+  expect(screen.queryByTestId('passwordless')).not.toBeInTheDocument();
 
   // Test correct fn was called.
   fireEvent.change(getByPlaceholderText(/username/i), {
@@ -162,8 +162,8 @@ test('primary sso', () => {
 
   // Test only sso form was rendered.
   expect(screen.queryByTestId('sso-list')).toBeVisible();
-  expect(screen.queryByTestId('passwordless')).toBeNull();
-  expect(screen.queryByTestId('userpassword')).toBeNull();
+  expect(screen.queryByTestId('passwordless')).not.toBeInTheDocument();
+  expect(screen.queryByTestId('userpassword')).not.toBeInTheDocument();
 
   // Test clicking calls the right fn.
   fireEvent.click(screen.getByText(/github/i));
@@ -183,8 +183,8 @@ test('primary passwordless', () => {
 
   // Test only passwordless form was rendered.
   expect(screen.queryByTestId('passwordless')).toBeVisible();
-  expect(screen.queryByTestId('sso-list')).toBeNull();
-  expect(screen.queryByTestId('userpassword')).toBeNull();
+  expect(screen.queryByTestId('sso-list')).not.toBeInTheDocument();
+  expect(screen.queryByTestId('userpassword')).not.toBeInTheDocument();
 });
 
 const props: Props = {

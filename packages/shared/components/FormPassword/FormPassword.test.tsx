@@ -76,7 +76,7 @@ test('prop auth2faType: off', async () => {
   );
 
   // Rendering of mfa dropdown.
-  expect(screen.queryByTestId('mfa-select')).toBeNull();
+  expect(screen.queryByTestId('mfa-select')).not.toBeInTheDocument();
 
   // fill out form
   fireEvent.change(getByPlaceholderText(placeholdCurrPass), inputVal);
@@ -92,9 +92,9 @@ test('prop auth2faType: off', async () => {
   expect(getByText(/your password has been changed!/i)).toBeInTheDocument();
 
   // test clearing of form values after submit
-  expect(getByPlaceholderText(placeholdCurrPass)).toHaveAttribute('value', '');
-  expect(getByPlaceholderText(placeholdNewPass)).toHaveAttribute('value', '');
-  expect(getByPlaceholderText(placeholdConfirm)).toHaveAttribute('value', '');
+  expect(getByPlaceholderText(placeholdCurrPass)).toHaveValue('');
+  expect(getByPlaceholderText(placeholdNewPass)).toHaveValue('');
+  expect(getByPlaceholderText(placeholdConfirm)).toHaveValue('');
 });
 
 test('prop auth2faType: webauthn form with mocked error', async () => {
@@ -161,10 +161,10 @@ test('prop auth2faType: OTP form', async () => {
   expect(onChangePassWithWebauthn).not.toHaveBeenCalled();
 
   // test clearing of form values after submit
-  expect(getByPlaceholderText(placeholdCurrPass)).toHaveAttribute('value', '');
-  expect(getByPlaceholderText(placeholdNewPass)).toHaveAttribute('value', '');
-  expect(getByPlaceholderText(placeholdConfirm)).toHaveAttribute('value', '');
-  expect(getByPlaceholderText(/123 456/i)).toHaveAttribute('value', '');
+  expect(getByPlaceholderText(placeholdCurrPass)).toHaveValue('');
+  expect(getByPlaceholderText(placeholdNewPass)).toHaveValue('');
+  expect(getByPlaceholderText(placeholdConfirm)).toHaveValue('');
+  expect(getByPlaceholderText(/123 456/i)).toHaveValue('');
 });
 
 test('auth2faType "optional" should render form with hardware key as first option in dropdown', async () => {

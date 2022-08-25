@@ -29,8 +29,8 @@ describe('design/Menu', () => {
     const item = getAllByTestId('item');
     const icon = getAllByTestId('icon');
 
-    expect(parent).not.toBeNull();
-    expect(menu).not.toBeNull();
+    expect(parent).toBeInTheDocument();
+    expect(menu).toBeInTheDocument();
     expect(item).toHaveLength(3);
     expect(icon).toHaveLength(3);
   });

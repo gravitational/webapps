@@ -42,9 +42,9 @@ test('render a item that matches the search', () => {
   fireEvent.change(getByRole('searchbox'), {
     target: { value: mockedItems[0].title },
   });
-  const items = getAllByRole('listitem');
+  const items = getByRole('listitem');
 
-  expect(items).toHaveLength(1);
+  expect(items).toBeInTheDocument();
   expect(items[0]).toHaveTextContent(mockedItems[0].title);
 });
 
@@ -60,9 +60,9 @@ test('render empty list when search does not match any item', () => {
   fireEvent.change(getByRole('searchbox'), {
     target: { value: 'abc' },
   });
-  const items = queryAllByRole('listitem');
+  const items = queryByRole('listitem');
 
-  expect(items).toHaveLength(0);
+  expect(items).not.toBeInTheDocument();
 });
 
 test('render provided placeholder in the search box', () => {
