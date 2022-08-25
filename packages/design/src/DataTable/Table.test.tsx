@@ -45,6 +45,11 @@ const data = [
   },
 ];
 
+const getTableRows = () => {
+  const [header, ...rows] = screen.getAllByRole('row');
+  return { header, rows };
+};
+
 describe('design/Table Simple', () => {
   const setup = () =>
     render(
@@ -79,7 +84,7 @@ describe('design/Table Simple', () => {
   test('number of tr tags in body == data.length', () => {
     setup();
 
-    const [_header, ...rows] = screen.getAllByRole('row');
+    const { rows } = getTableRows();
 
     expect(rows).toHaveLength(data.length);
   });
@@ -87,7 +92,7 @@ describe('design/Table Simple', () => {
   test('each td tag text == data texts', () => {
     setup();
 
-    const [_header, ...rows] = screen.getAllByRole('row');
+    const { rows } = getTableRows();
 
     rows.forEach((row, index) => {
       expect(within(row).getByText(data[index].addr)).toBeInTheDocument();
@@ -192,24 +197,19 @@ describe('sorting by field defined in key and altSortKey', () => {
     {
       hostname: 'host-a',
       created: new Date('2022-07-15T15:34:33.256697813Z'),
-      durationText: '1 hour',
+      durationText: '1',
     },
     {
       hostname: 'host-b',
       created: new Date('2022-07-05T15:34:33.256697813Z'),
-      durationText: '1 second',
+      durationText: '3',
     },
     {
       hostname: 'host-c',
       created: new Date('2022-07-10T15:34:33.256697813Z'),
-      durationText: '1 minute',
+      durationText: '2',
     },
   ];
-
-  // Sorted by string ASC.
-  const expectedSortedByKey = ['1 hour', '1 minute', '1 second'];
-  // Sorted by Date ASC.
-  const expectedSortedByAltKey = ['1 second', '1 minute', '1 hour'];
 
   test('sort by key', () => {
     render(
@@ -226,17 +226,15 @@ describe('sorting by field defined in key and altSortKey', () => {
       />
     );
 
-    const cols = screen.getAllByRole('cell');
+    const cells = screen.getAllByRole('cell');
 
-    expect(cols).toHaveLength(sample.length);
-
-    const vals = [];
-    cols.forEach(c => vals.push(c.textContent));
-    expect(vals).toStrictEqual(expectedSortedByKey);
+    expect(cells[0]).toHaveTextContent('1');
+    expect(cells[1]).toHaveTextContent('2');
+    expect(cells[2]).toHaveTextContent('3');
   });
 
   test('sort by key with initialSort', () => {
-    const { container } = render(
+    render(
       <Table
         data={sample}
         columns={[
@@ -257,18 +255,16 @@ describe('sorting by field defined in key and altSortKey', () => {
         initialSort={{ key: 'durationText', dir: 'ASC' }}
       />
     );
+    const { rows } = getTableRows();
+    const cells = rows.map(row => within(row).getAllByRole('cell')[1]);
 
-    const cols = container.querySelectorAll('tbody > tr > td');
-    const vals = [];
-    // field durationText starts in the second column,
-    // which is every odd number per row.
-    cols.forEach((c, i) => i % 2 != 0 && vals.push(c.textContent));
-    expect(vals).toHaveLength(sample.length);
-    expect(vals).toStrictEqual(expectedSortedByKey);
+    expect(cells[0]).toHaveTextContent('1');
+    expect(cells[1]).toHaveTextContent('2');
+    expect(cells[2]).toHaveTextContent('3');
   });
 
   test('sort by altSortKey', () => {
-    const { container } = render(
+    render(
       <Table
         data={sample}
         columns={[
@@ -283,16 +279,15 @@ describe('sorting by field defined in key and altSortKey', () => {
       />
     );
 
-    const cols = container.querySelectorAll('tbody > tr > td');
-    expect(cols).toHaveLength(sample.length);
+    const cells = screen.getAllByRole('cell');
 
-    const vals = [];
-    cols.forEach(c => vals.push(c.textContent));
-    expect(vals).toStrictEqual(expectedSortedByAltKey);
+    expect(cells[0]).toHaveTextContent('3');
+    expect(cells[1]).toHaveTextContent('2');
+    expect(cells[2]).toHaveTextContent('1');
   });
 
   test('sort by altSortKey with initialSort', () => {
-    const { container } = render(
+    render(
       <Table
         data={sample}
         columns={[
@@ -315,12 +310,12 @@ describe('sorting by field defined in key and altSortKey', () => {
       />
     );
 
-    const cols = container.querySelectorAll('tbody > tr > td');
-    const vals = [];
-    // field durationText starts in the second column,
-    // which is every odd number per row.
-    cols.forEach((c, i) => i % 2 != 0 && vals.push(c.textContent));
-    expect(vals).toHaveLength(sample.length);
-    expect(vals).toStrictEqual(expectedSortedByAltKey);
+    const { rows } = getTableRows();
+
+    const cells = rows.map(row => within(row).getAllByRole('cell')[1]);
+
+    expect(cells[0]).toHaveTextContent('3');
+    expect(cells[1]).toHaveTextContent('2');
+    expect(cells[2]).toHaveTextContent('1');
   });
 });
