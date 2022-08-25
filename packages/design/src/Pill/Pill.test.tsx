@@ -15,6 +15,7 @@
  */
 
 import React from 'react';
+import { screen } from '@testing-library/react';
 
 import { render, fireEvent } from 'design/utils/testing';
 
@@ -22,24 +23,25 @@ import { Pill } from './Pill';
 
 describe('design/Pill', () => {
   it('renders the label without dismissable', () => {
-    const { container } = render(<Pill label="arch: x86_64" />);
-    expect(container).toHaveTextContent('arch: x86_64');
-    expect(container.getElementsByTagName('button')).toMatchSnapshot();
+    render(<Pill label="arch: x86_64" />);
+
+    expect(screen.getByText('arch: x86_64')).toBeInTheDocument();
+    expect(screen.getAllByRole('button')).toMatchSnapshot();
   });
 
   it('render the label with dismissable', () => {
-    const { container } = render(
-      <Pill label="arch: x86_64" onDismiss={() => {}} />
-    );
-    expect(container).toHaveTextContent('arch: x86_64');
-    expect(container.getElementsByTagName('button')).toMatchSnapshot();
+    render(<Pill label="arch: x86_64" onDismiss={() => {}} />);
+
+    expect(screen.getByText('arch: x86_64')).toBeInTheDocument();
+    expect(screen.getAllByRole('button')).toMatchSnapshot();
   });
 
   it('dismissing pill calls onDismiss', () => {
     const cb = jest.fn();
-    const { container } = render(<Pill label="arch: x86_64" onDismiss={cb} />);
-    fireEvent.click(container.querySelector('button'));
-    expect(cb.mock.calls).toHaveLength(1);
-    expect(cb.mock.calls).toEqual([['arch: x86_64']]);
+    render(<Pill label="arch: x86_64" onDismiss={cb} />);
+
+    fireEvent.click(screen.getAllByRole('button')[0]);
+
+    expect(cb).toHaveBeenCalledWith('arch: x86_64');
   });
 });

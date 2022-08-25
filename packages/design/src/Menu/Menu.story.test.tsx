@@ -15,6 +15,7 @@
  */
 
 import React from 'react';
+import { screen } from '@testing-library/react';
 
 import { render } from 'design/utils/testing';
 
@@ -22,12 +23,12 @@ import { IconExample } from './Menu.story';
 
 describe('design/Menu', () => {
   it('renders parent and its children', () => {
-    const { getByRole, getByTestId, getAllByTestId } = render(<IconExample />);
+    render(<IconExample />);
 
-    const parent = getByTestId('Modal');
-    const menu = getByRole('menu');
-    const item = getAllByTestId('item');
-    const icon = getAllByTestId('icon');
+    const parent = screen.getByRole('dialog');
+    const menu = screen.getByRole('menu');
+    const item = screen.getAllByTestId('item');
+    const icon = screen.getAllByTestId('icon');
 
     expect(parent).toBeInTheDocument();
     expect(menu).toBeInTheDocument();
