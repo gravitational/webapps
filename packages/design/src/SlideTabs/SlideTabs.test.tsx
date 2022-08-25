@@ -84,7 +84,7 @@ describe('design/SlideTabs', () => {
         onChange={() => {}}
       />
     );
-    expect(container.firstChild).toMatchSnapshot();
+    expect(container).toMatchSnapshot();
   });
 
   it('supports a round xlarge appearance', () => {
@@ -95,7 +95,7 @@ describe('design/SlideTabs', () => {
         onChange={() => {}}
       />
     );
-    expect(container.firstChild).toMatchSnapshot();
+    expect(container).toMatchSnapshot();
   });
 
   it('supports a square medium size', () => {
@@ -106,7 +106,7 @@ describe('design/SlideTabs', () => {
         onChange={() => {}}
       />
     );
-    expect(container.firstChild).toMatchSnapshot();
+    expect(container).toMatchSnapshot();
   });
 
   it('supports a round medium size', () => {
@@ -118,7 +118,7 @@ describe('design/SlideTabs', () => {
         onChange={() => {}}
       />
     );
-    expect(container.firstChild).toMatchSnapshot();
+    expect(container).toMatchSnapshot();
   });
 
   it('supports passing in a selected index', () => {
@@ -129,6 +129,6 @@ describe('design/SlideTabs', () => {
         onChange={() => {}}
       />
     );
-    expect(container.firstChild).toMatchSnapshot();
+    expect(container).toMatchSnapshot();
   });
 });
