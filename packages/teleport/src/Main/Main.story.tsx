@@ -85,6 +85,7 @@ function useMainStory() {
   const statusText = '';
 
   return {
+    alerts: [],
     history,
     ctx,
     status,
