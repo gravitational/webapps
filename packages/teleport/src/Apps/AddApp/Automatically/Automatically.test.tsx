@@ -33,7 +33,7 @@ test('render command only after form submit', async () => {
 
   // after form submission should show the command
   cmd = createAppBashCommand(token.id, 'app-name', 'https://gravitational.com');
-  expect(screen.queryByText(cmd)).toBeInTheDocument();
+  expect(screen.getByText(cmd)).toBeInTheDocument();
 });
 
 test('app bash command encoding', () => {
