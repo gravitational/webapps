@@ -48,7 +48,7 @@ Prepare Webapps repo
 $ git clone https://github.com/gravitational/webapps.git
 $ cd webapps
 $ yarn install
-$ yarn build-and-package-term
+$ CONNECT_TSH_BIN_PATH=$PWD/../teleport/build/tsh yarn build-and-package-term
 ```
 
 The installable file can be found in `/webapps/packages/teleterm/build/release/`
