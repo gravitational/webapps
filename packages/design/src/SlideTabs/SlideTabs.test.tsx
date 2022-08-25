@@ -43,7 +43,7 @@ describe('design/SlideTabs', () => {
   });
 
   it('respects a custom form name', () => {
-    render(
+    const { container } = render(
       <SlideTabs
         name="pineapple"
         tabs={['aws', 'automatically', 'manually']}
@@ -51,7 +51,8 @@ describe('design/SlideTabs', () => {
       />
     );
 
-    expect(screen.getAllByRole('input', { name: 'pineapple' })).toHaveLength(3);
+    // eslint-disable-next-line testing-library/no-container, testing-library/no-node-access
+    expect(container.querySelectorAll('input[name=pineapple]')).toHaveLength(3);
   });
 
   it('calls the onChange handler when the tab is changed', () => {
@@ -75,7 +76,7 @@ describe('design/SlideTabs', () => {
         onChange={() => {}}
       />
     );
-    expect(container).toMatchSnapshot();
+    expect(container.firstChild).toMatchSnapshot();
   });
 
   it('supports a round xlarge appearance', () => {
@@ -86,7 +87,7 @@ describe('design/SlideTabs', () => {
         onChange={() => {}}
       />
     );
-    expect(container).toMatchSnapshot();
+    expect(container.firstChild).toMatchSnapshot();
   });
 
   it('supports a square medium size', () => {
@@ -97,7 +98,7 @@ describe('design/SlideTabs', () => {
         onChange={() => {}}
       />
     );
-    expect(container).toMatchSnapshot();
+    expect(container.firstChild).toMatchSnapshot();
   });
 
   it('supports a round medium size', () => {
@@ -109,7 +110,7 @@ describe('design/SlideTabs', () => {
         onChange={() => {}}
       />
     );
-    expect(container).toMatchSnapshot();
+    expect(container.firstChild).toMatchSnapshot();
   });
 
   it('supports passing in a selected index', () => {
@@ -120,6 +121,6 @@ describe('design/SlideTabs', () => {
         onChange={() => {}}
       />
     );
-    expect(container).toMatchSnapshot();
+    expect(container.firstChild).toMatchSnapshot();
   });
 });
