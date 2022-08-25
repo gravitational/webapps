@@ -16,7 +16,7 @@
 
 import React from 'react';
 
-import { render, fireEvent, waitFor, screen } from 'design/utils/testing';
+import { render, fireEvent, screen } from 'design/utils/testing';
 
 import FormLogin, { Props } from './FormLogin';
 
