@@ -26,7 +26,7 @@ describe('design/Modal/Portal', () => {
     const { container } = renderPortal({});
     const content = screen.getByTestId('content');
     expect(container).not.toContainElement(content);
-    expect(content.parentNode.nodeName).toBe('BODY');
+    expect(document.body).toContainElement(screen.getByTestId('parent'));
   });
 
   test('container to be attached to custom element', () => {
