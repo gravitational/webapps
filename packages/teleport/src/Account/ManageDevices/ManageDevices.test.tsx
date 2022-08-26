@@ -114,9 +114,7 @@ describe('mfa device dashboard testing', () => {
       '321321'
     );
 
-    await expect(
-      screen.findByText('Add New Two-Factor Device')
-    ).resolves.toBeInTheDocument();
+    await screen.findByText('Add New Two-Factor Device');
 
     const deviceNameField = screen.getByPlaceholderText('Name');
     fireEvent.change(deviceNameField, { target: { value: 'yubikey' } });
@@ -145,9 +143,7 @@ describe('mfa device dashboard testing', () => {
 
     expect(authService.createPrivilegeTokenWithWebauthn).toHaveBeenCalled();
 
-    await expect(
-      screen.findByText('Add New Two-Factor Device')
-    ).resolves.toBeInTheDocument();
+    await screen.findByText('Add New Two-Factor Device');
 
     const addDeviceMfaSelectEl = within(
       screen.getByTestId('mfa-select')
@@ -179,9 +175,7 @@ describe('mfa device dashboard testing', () => {
 
     fireEvent.click(screen.getByText(/add two-factor device/i));
 
-    await expect(
-      screen.findByText('Add New Two-Factor Device')
-    ).resolves.toBeInTheDocument();
+    await screen.findByText('Add New Two-Factor Device');
 
     expect(authService.createRestrictedPrivilegeToken).toHaveBeenCalled();
 
