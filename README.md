@@ -104,6 +104,9 @@ export WEBPACK_HTTPS_CERT=/Users/you/go/src/github.com/gravitational/webapps/cer
 export WEBPACK_HTTPS_KEY=/Users/you/go/src/github.com/gravitational/webapps/certs/server.key
 ```
 
+The `certs/` directory in this repo is ignored by git, so you can place your certificate/keys
+in there without having to worry that they'll end up in a commit.
+
 ### Unit-Tests
 
 We use [jest](https://jestjs.io/) as our testing framework.
