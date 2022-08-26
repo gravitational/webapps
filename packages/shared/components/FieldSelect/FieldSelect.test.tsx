@@ -81,7 +81,7 @@ test('select element validation error state', () => {
 
   // test !valid values renders error colors
   // "react-select__control" defined by react-select library
-  // eslint-disable-next-line testing-library/no-container
+  // eslint-disable-next-line testing-library/no-container, testing-library/no-node-access
   const selectEl = container.getElementsByClassName('react-select__control')[0];
   expect(selectEl).toHaveStyle({
     'border-color': errorColor,

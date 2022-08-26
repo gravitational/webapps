@@ -28,8 +28,6 @@ describe('design/Indicator', () => {
     );
     expect(container).toBeEmptyDOMElement();
 
-    await screen.findByTestId('spinner');
-
-    expect(container.firstChild.nodeName).toBe('SPAN');
+    await expect(screen.findByTestId('spinner')).resolves.toBeInTheDocument();
   });
 });
