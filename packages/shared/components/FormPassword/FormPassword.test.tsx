@@ -89,11 +89,7 @@ test('prop auth2faType: off', async () => {
   expect(onChangePassWithWebauthn).not.toHaveBeenCalled();
 
   // test rendering of status message after submit
-  await waitFor(() => {
-    expect(
-      screen.getByText(/your password has been changed!/i)
-    ).toBeInTheDocument();
-  });
+  await screen.findByText(/your password has been changed!/i);
 
   // test clearing of form values after submit
   expect(screen.getByPlaceholderText(placeholdCurrPass)).toHaveValue('');
