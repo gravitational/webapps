@@ -80,6 +80,30 @@ To turn them off, set `WEBPACK_SOURCE_MAP` to `none` -
 $ WEBPACK_SOURCE_MAP=none yarn start-teleport --target=https://example.com:3080/web
 ```
 
+#### Custom HTTPS configuration
+
+If you'd like to provide your own key/certificate for Webpack's development server, you can
+override the default behavior by setting some environment variables.
+
+You should either set:
+
+- `WEBPACK_HTTPS_CERT` **(required)** - absolute path to the certificate
+- `WEBPACK_HTTPS_KEY` **(required)** - absolute path to the key
+- `WEBPACK_HTTPS_CA` - absolute path to the ca
+- `WEBPACK_HTTPS_PASSPHRASE` - the passphrase
+
+Or:
+
+- `WEBPACK_HTTPS_PFX` **(required)** - absolute path to the certificate
+- `WEBPACK_HTTPS_PASSPHRASE` - the passphrase
+
+You can set these in your `~/.zshrc`, `~/.bashrc`, etc.
+
+```
+export WEBPACK_HTTPS_CERT=/Users/you/go/src/github.com/gravitational/webapps/certs/server.crt
+export WEBPACK_HTTPS_KEY=/Users/you/go/src/github.com/gravitational/webapps/certs/server.key
+```
+
 ### Unit-Tests
 
 We use [jest](https://jestjs.io/) as our testing framework.
