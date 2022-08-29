@@ -46,10 +46,12 @@ exports[`design/SlideTabs supports a round medium size 1`] = `
   >
     <nav
       class="c1"
+      role="tablist"
     >
       <label
         class="c2"
         for="slide-tab-aws"
+        role="tab"
       >
         aws
         <input
@@ -62,6 +64,7 @@ exports[`design/SlideTabs supports a round medium size 1`] = `
       <label
         class="c2"
         for="slide-tab-automatically"
+        role="tab"
       >
         automatically
         <input
@@ -74,6 +77,7 @@ exports[`design/SlideTabs supports a round medium size 1`] = `
       <label
         class="c2"
         for="slide-tab-manually"
+        role="tab"
       >
         manually
         <input
@@ -137,10 +141,12 @@ exports[`design/SlideTabs supports a round xlarge appearance 1`] = `
   >
     <nav
       class="c1"
+      role="tablist"
     >
       <label
         class="c2"
         for="slide-tab-aws"
+        role="tab"
       >
         aws
         <input
@@ -153,6 +159,7 @@ exports[`design/SlideTabs supports a round xlarge appearance 1`] = `
       <label
         class="c2"
         for="slide-tab-automatically"
+        role="tab"
       >
         automatically
         <input
@@ -165,6 +172,7 @@ exports[`design/SlideTabs supports a round xlarge appearance 1`] = `
       <label
         class="c2"
         for="slide-tab-manually"
+        role="tab"
       >
         manually
         <input
@@ -228,10 +236,12 @@ exports[`design/SlideTabs supports a square medium size 1`] = `
   >
     <nav
       class="c1"
+      role="tablist"
     >
       <label
         class="c2"
         for="slide-tab-aws"
+        role="tab"
       >
         aws
         <input
@@ -244,6 +254,7 @@ exports[`design/SlideTabs supports a square medium size 1`] = `
       <label
         class="c2"
         for="slide-tab-automatically"
+        role="tab"
       >
         automatically
         <input
@@ -256,6 +267,7 @@ exports[`design/SlideTabs supports a square medium size 1`] = `
       <label
         class="c2"
         for="slide-tab-manually"
+        role="tab"
       >
         manually
         <input
@@ -319,10 +331,12 @@ exports[`design/SlideTabs supports a square xlarge appearance (default) 1`] = `
   >
     <nav
       class="c1"
+      role="tablist"
     >
       <label
         class="c2"
         for="slide-tab-aws"
+        role="tab"
       >
         aws
         <input
@@ -335,6 +349,7 @@ exports[`design/SlideTabs supports a square xlarge appearance (default) 1`] = `
       <label
         class="c2"
         for="slide-tab-automatically"
+        role="tab"
       >
         automatically
         <input
@@ -347,6 +362,7 @@ exports[`design/SlideTabs supports a square xlarge appearance (default) 1`] = `
       <label
         class="c2"
         for="slide-tab-manually"
+        role="tab"
       >
         manually
         <input
@@ -410,10 +426,12 @@ exports[`design/SlideTabs supports passing in a selected index 1`] = `
   >
     <nav
       class="c1"
+      role="tablist"
     >
       <label
         class="c2"
         for="slide-tab-aws"
+        role="tab"
       >
         aws
         <input
@@ -426,6 +444,7 @@ exports[`design/SlideTabs supports passing in a selected index 1`] = `
       <label
         class="c2"
         for="slide-tab-automatically"
+        role="tab"
       >
         automatically
         <input
@@ -438,6 +457,7 @@ exports[`design/SlideTabs supports passing in a selected index 1`] = `
       <label
         class="c2"
         for="slide-tab-manually"
+        role="tab"
       >
         manually
         <input

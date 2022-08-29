@@ -30,6 +30,8 @@ describe('design/SlideTabs', () => {
       />
     );
 
+    expect(screen.getAllByRole('tab')).toHaveLength(3);
+
     expect(screen.getByLabelText('aws')).toBeInTheDocument();
     expect(screen.getByLabelText('automatically')).toBeInTheDocument();
     expect(screen.getByLabelText('manually')).toBeInTheDocument();
@@ -42,6 +44,8 @@ describe('design/SlideTabs', () => {
         onChange={() => {}}
       />
     );
+
+    expect(screen.getAllByRole('tab')).toHaveLength(5);
 
     expect(screen.getByLabelText('aws')).toBeInTheDocument();
     expect(screen.getByLabelText('automatically')).toBeInTheDocument();
