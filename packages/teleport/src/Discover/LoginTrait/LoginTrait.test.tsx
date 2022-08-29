@@ -16,7 +16,7 @@
 
 import React from 'react';
 
-import { render, screen, fireEvent } from 'design/utils/testing';
+import { render, screen, fireEvent, waitFor } from 'design/utils/testing';
 
 import { MemoryRouter } from 'react-router';
 
@@ -77,11 +77,11 @@ describe('login trait comp behavior', () => {
     render(<Component />);
 
     // Test existing logins to be rendered.
-
-    const appleCheckbox = await screen.findByLabelText('apple');
-
-    expect(appleCheckbox).toBeChecked();
+    await waitFor(() => {
+      expect(screen.getAllByRole('checkbox')).toHaveLength(2);
+    });
     expect(screen.getByLabelText('apple')).toBeChecked();
+    expect(screen.getByLabelText('banana')).toBeChecked();
 
     // Test existing logins to be rendered with a new login name.
     fireEvent.click(screen.getByText(/add an OS/i));
@@ -89,6 +89,7 @@ describe('login trait comp behavior', () => {
     fireEvent.change(inputEl, { target: { value: 'carrot' } });
     fireEvent.click(screen.getByText('Add'));
 
+    expect(screen.getAllByRole('checkbox')).toHaveLength(3);
     expect(screen.getByLabelText('apple')).toBeChecked();
     expect(screen.getByLabelText('banana')).toBeChecked();
     expect(screen.getByLabelText('carrot')).toBeChecked();
