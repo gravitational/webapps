@@ -55,7 +55,7 @@ export type TshClient = {
   listKubes: (clusterUri: string) => Promise<Kube[]>;
   listDatabases: (clusterUri: string) => Promise<Database[]>;
   listDatabaseUsers: (dbUri: string) => Promise<string[]>;
-  listServers: (clusterUri: string) => Promise<Server[]>;
+  getAllServers: (clusterUri: string) => Promise<Server[]>;
   createAbortController: () => TshAbortController;
   addRootCluster: (addr: string) => Promise<Cluster>;
 

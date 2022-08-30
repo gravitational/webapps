@@ -18,14 +18,13 @@
 'use strict';
 var grpc = require('@grpc/grpc-js');
 var v1_service_pb = require('../v1/service_pb.js');
-var google_protobuf_empty_pb = require('google-protobuf/google/protobuf/empty_pb.js');
+var v1_app_pb = require('../v1/app_pb.js');
+var v1_auth_settings_pb = require('../v1/auth_settings_pb.js');
 var v1_cluster_pb = require('../v1/cluster_pb.js');
 var v1_database_pb = require('../v1/database_pb.js');
 var v1_gateway_pb = require('../v1/gateway_pb.js');
 var v1_kube_pb = require('../v1/kube_pb.js');
-var v1_app_pb = require('../v1/app_pb.js');
 var v1_server_pb = require('../v1/server_pb.js');
-var v1_auth_settings_pb = require('../v1/auth_settings_pb.js');
 
 function serialize_teleport_terminal_v1_AddClusterRequest(arg) {
   if (!(arg instanceof v1_service_pb.AddClusterRequest)) {
@@ -93,6 +92,28 @@ function deserialize_teleport_terminal_v1_Gateway(buffer_arg) {
   return v1_gateway_pb.Gateway.deserializeBinary(new Uint8Array(buffer_arg));
 }
 
+function serialize_teleport_terminal_v1_GetAllServersRequest(arg) {
+  if (!(arg instanceof v1_service_pb.GetAllServersRequest)) {
+    throw new Error('Expected argument of type teleport.terminal.v1.GetAllServersRequest');
+  }
+  return Buffer.from(arg.serializeBinary());
+}
+
+function deserialize_teleport_terminal_v1_GetAllServersRequest(buffer_arg) {
+  return v1_service_pb.GetAllServersRequest.deserializeBinary(new Uint8Array(buffer_arg));
+}
+
+function serialize_teleport_terminal_v1_GetAllServersResponse(arg) {
+  if (!(arg instanceof v1_service_pb.GetAllServersResponse)) {
+    throw new Error('Expected argument of type teleport.terminal.v1.GetAllServersResponse');
+  }
+  return Buffer.from(arg.serializeBinary());
+}
+
+function deserialize_teleport_terminal_v1_GetAllServersResponse(buffer_arg) {
+  return v1_service_pb.GetAllServersResponse.deserializeBinary(new Uint8Array(buffer_arg));
+}
+
 function serialize_teleport_terminal_v1_GetAuthSettingsRequest(arg) {
   if (!(arg instanceof v1_service_pb.GetAuthSettingsRequest)) {
     throw new Error('Expected argument of type teleport.terminal.v1.GetAuthSettingsRequest');
@@ -113,6 +134,28 @@ function serialize_teleport_terminal_v1_GetClusterRequest(arg) {
 
 function deserialize_teleport_terminal_v1_GetClusterRequest(buffer_arg) {
   return v1_service_pb.GetClusterRequest.deserializeBinary(new Uint8Array(buffer_arg));
+}
+
+function serialize_teleport_terminal_v1_GetServersRequest(arg) {
+  if (!(arg instanceof v1_service_pb.GetServersRequest)) {
+    throw new Error('Expected argument of type teleport.terminal.v1.GetServersRequest');
+  }
+  return Buffer.from(arg.serializeBinary());
+}
+
+function deserialize_teleport_terminal_v1_GetServersRequest(buffer_arg) {
+  return v1_service_pb.GetServersRequest.deserializeBinary(new Uint8Array(buffer_arg));
+}
+
+function serialize_teleport_terminal_v1_GetServersResponse(arg) {
+  if (!(arg instanceof v1_service_pb.GetServersResponse)) {
+    throw new Error('Expected argument of type teleport.terminal.v1.GetServersResponse');
+  }
+  return Buffer.from(arg.serializeBinary());
+}
+
+function deserialize_teleport_terminal_v1_GetServersResponse(buffer_arg) {
+  return v1_service_pb.GetServersResponse.deserializeBinary(new Uint8Array(buffer_arg));
 }
 
 function serialize_teleport_terminal_v1_ListAppsRequest(arg) {
@@ -256,28 +299,6 @@ function serialize_teleport_terminal_v1_ListLeafClustersRequest(arg) {
 
 function deserialize_teleport_terminal_v1_ListLeafClustersRequest(buffer_arg) {
   return v1_service_pb.ListLeafClustersRequest.deserializeBinary(new Uint8Array(buffer_arg));
-}
-
-function serialize_teleport_terminal_v1_ListServersRequest(arg) {
-  if (!(arg instanceof v1_service_pb.ListServersRequest)) {
-    throw new Error('Expected argument of type teleport.terminal.v1.ListServersRequest');
-  }
-  return Buffer.from(arg.serializeBinary());
-}
-
-function deserialize_teleport_terminal_v1_ListServersRequest(buffer_arg) {
-  return v1_service_pb.ListServersRequest.deserializeBinary(new Uint8Array(buffer_arg));
-}
-
-function serialize_teleport_terminal_v1_ListServersResponse(arg) {
-  if (!(arg instanceof v1_service_pb.ListServersResponse)) {
-    throw new Error('Expected argument of type teleport.terminal.v1.ListServersResponse');
-  }
-  return Buffer.from(arg.serializeBinary());
-}
-
-function deserialize_teleport_terminal_v1_ListServersResponse(buffer_arg) {
-  return v1_service_pb.ListServersResponse.deserializeBinary(new Uint8Array(buffer_arg));
 }
 
 function serialize_teleport_terminal_v1_LoginPasswordlessRequest(arg) {
@@ -430,17 +451,29 @@ listDatabaseUsers: {
     responseSerialize: serialize_teleport_terminal_v1_ListDatabaseUsersResponse,
     responseDeserialize: deserialize_teleport_terminal_v1_ListDatabaseUsersResponse,
   },
-  // ListServers lists servers
-listServers: {
-    path: '/teleport.terminal.v1.TerminalService/ListServers',
+  // GetAllServers returns all servers
+getAllServers: {
+    path: '/teleport.terminal.v1.TerminalService/GetAllServers',
     requestStream: false,
     responseStream: false,
-    requestType: v1_service_pb.ListServersRequest,
-    responseType: v1_service_pb.ListServersResponse,
-    requestSerialize: serialize_teleport_terminal_v1_ListServersRequest,
-    requestDeserialize: deserialize_teleport_terminal_v1_ListServersRequest,
-    responseSerialize: serialize_teleport_terminal_v1_ListServersResponse,
-    responseDeserialize: deserialize_teleport_terminal_v1_ListServersResponse,
+    requestType: v1_service_pb.GetAllServersRequest,
+    responseType: v1_service_pb.GetAllServersResponse,
+    requestSerialize: serialize_teleport_terminal_v1_GetAllServersRequest,
+    requestDeserialize: deserialize_teleport_terminal_v1_GetAllServersRequest,
+    responseSerialize: serialize_teleport_terminal_v1_GetAllServersResponse,
+    responseDeserialize: deserialize_teleport_terminal_v1_GetAllServersResponse,
+  },
+  // GetServers returns filtered, sorted, and paginated servers
+getServers: {
+    path: '/teleport.terminal.v1.TerminalService/GetServers',
+    requestStream: false,
+    responseStream: false,
+    requestType: v1_service_pb.GetServersRequest,
+    responseType: v1_service_pb.GetServersResponse,
+    requestSerialize: serialize_teleport_terminal_v1_GetServersRequest,
+    requestDeserialize: deserialize_teleport_terminal_v1_GetServersRequest,
+    responseSerialize: serialize_teleport_terminal_v1_GetServersResponse,
+    responseDeserialize: deserialize_teleport_terminal_v1_GetServersResponse,
   },
   // ListKubes list kubes
 listKubes: {

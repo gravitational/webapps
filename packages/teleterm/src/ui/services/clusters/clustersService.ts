@@ -368,7 +368,7 @@ export class ClustersService extends ImmutableStore<ClustersServiceState> {
     });
 
     try {
-      const received = await this.client.listServers(clusterUri);
+      const received = await this.client.getAllServers(clusterUri);
       this.setState(draft => {
         draft.serversSyncStatus.set(clusterUri, { status: 'ready' });
         helpers.updateMap(clusterUri, draft.servers, received);
