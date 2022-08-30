@@ -55,7 +55,6 @@ export const ActionButtons = ({
           width="224px"
           mr={3}
           rel="noreferrer"
-          data-testid="documentation-button"
         >
           View Documentation
         </ButtonPrimary>
@@ -66,7 +65,6 @@ export const ActionButtons = ({
           onClick={onProceed}
           mr={3}
           disabled={disableProceed}
-          data-testid="proceed-button"
         >
           {lastStep ? 'Finish' : 'Next'}
         </ButtonPrimary>
@@ -91,6 +89,6 @@ export const TextBox = styled(Box)`
   width: 100%;
   margin-top: 32px;
   border-radius: 8px;
-  background-color: #222c59;
+  background-color: ${(p) => p.theme.colors.primary.light};
   padding: 24px;
 `;

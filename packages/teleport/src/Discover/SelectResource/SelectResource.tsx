@@ -145,7 +145,7 @@ export function SelectResource({ isEnterprise, nextStep, userContext }: Props) {
   const index = tabs.findIndex(
     component => component.name === selectedResource
   );
-  const selectedTabIndex = index > 0 ? index : 0;
+  const selectedTabIndex = Math.max(0, index);
 
   const disabled = checkPermissions(acl, tabs[selectedTabIndex]);
 

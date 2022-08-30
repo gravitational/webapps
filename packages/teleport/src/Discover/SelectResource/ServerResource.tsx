@@ -31,7 +31,7 @@ export function ServerResource(props: ServerResourceProps) {
 
 function TeleportVersions() {
   return (
-    <TextBox data-testid="server-teleport-versions">
+    <TextBox>
       <Text typography="h5">
         Teleport officially supports the following operating systems:
       </Text>

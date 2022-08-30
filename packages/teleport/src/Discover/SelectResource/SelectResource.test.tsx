@@ -100,14 +100,9 @@ describe('select resource', () => {
         },
       });
 
-      const permissionsError = result.getByTestId('permissions-error');
-      expect(permissionsError).toBeInTheDocument();
-
-      expect(result.container.firstChild).toMatchSnapshot();
-
-      const proceedButton = result.getByTestId('proceed-button');
-
-      expect(proceedButton.hasAttribute('disabled')).toBe(true);
+      expect(result.getByText(/You are not able to add new Servers/)).toBeInTheDocument();
+      expect(result.getByText(/Your Teleport Enterprise license does not include Server Access/)).toBeInTheDocument();
+      expect(result.getByRole('button', { name: 'Next' })).toBeDisabled();
     });
 
     test('shows permissions error when lacking nodes.list', () => {
@@ -119,27 +114,16 @@ describe('select resource', () => {
         },
       });
 
-      const permissionsError = result.getByTestId('permissions-error');
-      expect(permissionsError).toBeInTheDocument();
-
-      expect(result.container.firstChild).toMatchSnapshot();
-
-      const proceedButton = result.getByTestId('proceed-button');
-
-      expect(proceedButton.hasAttribute('disabled')).toBe(true);
+      expect(result.getByText(/You are not able to add new Servers/)).toBeInTheDocument();
+      expect(result.getByText(/Your Teleport Enterprise license does not include Server Access/)).toBeInTheDocument();
+      expect(result.getByRole('button', { name: 'Next' })).toBeDisabled();
     });
 
     test('shows the teleport versions when having correct permissions', () => {
       const result = create('server', fullAcl);
 
-      const teleportVersions = result.getByTestId('server-teleport-versions');
-      expect(teleportVersions).toBeInTheDocument();
-
-      expect(result.container.firstChild).toMatchSnapshot();
-
-      const proceedButton = result.getByTestId('proceed-button');
-
-      expect(proceedButton.hasAttribute('disabled')).toBe(false);
+      expect(result.getByText(/Teleport officially supports the following operating systems/)).toBeInTheDocument();
+      expect(result.getByRole('button', { name: 'Next' })).not.toBeDisabled();
     });
   });
 
@@ -153,14 +137,9 @@ describe('select resource', () => {
         },
       });
 
-      const permissionsError = result.getByTestId('permissions-error');
-      expect(permissionsError).toBeInTheDocument();
-
-      expect(result.container.firstChild).toMatchSnapshot();
-
-      const proceedButton = result.getByTestId('proceed-button');
-
-      expect(proceedButton.hasAttribute('disabled')).toBe(true);
+      expect(result.getByText(/You are not able to add new Databases/)).toBeInTheDocument();
+      expect(result.getByText(/Your Teleport Enterprise license does not include Database Access/)).toBeInTheDocument();
+      expect(result.getByRole('button', { name: 'Next' })).toBeDisabled();
     });
 
     test('shows permissions error when lacking dbServers.read', () => {
@@ -172,24 +151,15 @@ describe('select resource', () => {
         },
       });
 
-      const permissionsError = result.getByTestId('permissions-error');
-      expect(permissionsError).toBeInTheDocument();
-
-      expect(result.container.firstChild).toMatchSnapshot();
-
-      const proceedButton = result.getByTestId('proceed-button');
-
-      expect(proceedButton.hasAttribute('disabled')).toBe(true);
+      expect(result.getByText(/You are not able to add new Databases/)).toBeInTheDocument();
+      expect(result.getByText(/Your Teleport Enterprise license does not include Database Access/)).toBeInTheDocument();
+      expect(result.getByRole('button', { name: 'Next' })).toBeDisabled();
     });
 
     test('has the proceed button enabled when having correct permissions', () => {
       const result = create('database', fullAcl);
 
-      expect(result.container.firstChild).toMatchSnapshot();
-
-      const proceedButton = result.getByTestId('proceed-button');
-
-      expect(proceedButton.hasAttribute('disabled')).toBe(false);
+      expect(result.getByRole('button', { name: 'Next' })).not.toBeDisabled();
     });
   });
 
@@ -203,14 +173,9 @@ describe('select resource', () => {
         },
       });
 
-      const permissionsError = result.getByTestId('permissions-error');
-      expect(permissionsError).toBeInTheDocument();
-
-      expect(result.container.firstChild).toMatchSnapshot();
-
-      const proceedButton = result.getByTestId('proceed-button');
-
-      expect(proceedButton.hasAttribute('disabled')).toBe(true);
+      expect(result.getByText(/You are not able to add new Kubernetes resources/)).toBeInTheDocument();
+      expect(result.getByText(/Your Teleport Enterprise license does not include Kubernetes Access/)).toBeInTheDocument();
+      expect(result.getByRole('button', { name: 'Next' })).toBeDisabled();
     });
 
     test('shows permissions error when lacking kubeServers.read', () => {
@@ -222,24 +187,15 @@ describe('select resource', () => {
         },
       });
 
-      const permissionsError = result.getByTestId('permissions-error');
-      expect(permissionsError).toBeInTheDocument();
-
-      expect(result.container.firstChild).toMatchSnapshot();
-
-      const proceedButton = result.getByTestId('proceed-button');
-
-      expect(proceedButton.hasAttribute('disabled')).toBe(true);
+      expect(result.getByText(/You are not able to add new Kubernetes resources/)).toBeInTheDocument();
+      expect(result.getByText(/Your Teleport Enterprise license does not include Kubernetes Access/)).toBeInTheDocument();
+      expect(result.getByRole('button', { name: 'Next' })).toBeDisabled();
     });
 
     test('has the proceed button enabled when having correct permissions', () => {
       const result = create('kubernetes', fullAcl);
 
-      expect(result.container.firstChild).toMatchSnapshot();
-
-      const proceedButton = result.getByTestId('proceed-button');
-
-      expect(proceedButton.hasAttribute('disabled')).toBe(false);
+      expect(result.getByRole('button', { name: 'Next' })).not.toBeDisabled();
     });
   });
 
@@ -253,14 +209,9 @@ describe('select resource', () => {
         },
       });
 
-      const permissionsError = result.getByTestId('permissions-error');
-      expect(permissionsError).toBeInTheDocument();
-
-      expect(result.container.firstChild).toMatchSnapshot();
-
-      const proceedButton = result.getByTestId('proceed-button');
-
-      expect(proceedButton.hasAttribute('disabled')).toBe(true);
+      expect(result.getByText(/You are not able to add new Applications/)).toBeInTheDocument();
+      expect(result.getByText(/Your Teleport Enterprise license does not include Application Access/)).toBeInTheDocument();
+      expect(result.getByRole('button', { name: 'Next' })).toBeDisabled();
     });
 
     test('shows permissions error when lacking appServers.read', () => {
@@ -272,24 +223,15 @@ describe('select resource', () => {
         },
       });
 
-      const permissionsError = result.getByTestId('permissions-error');
-      expect(permissionsError).toBeInTheDocument();
-
-      expect(result.container.firstChild).toMatchSnapshot();
-
-      const proceedButton = result.getByTestId('proceed-button');
-
-      expect(proceedButton.hasAttribute('disabled')).toBe(true);
+      expect(result.getByText(/You are not able to add new Applications/)).toBeInTheDocument();
+      expect(result.getByText(/Your Teleport Enterprise license does not include Application Access/)).toBeInTheDocument();
+      expect(result.getByRole('button', { name: 'Next' })).toBeDisabled();
     });
 
     test('has the proceed button enabled when having correct permissions', () => {
       const result = create('application', fullAcl);
 
-      expect(result.container.firstChild).toMatchSnapshot();
-
-      const proceedButton = result.getByTestId('proceed-button');
-
-      expect(proceedButton.hasAttribute('disabled')).toBe(false);
+      expect(result.getByRole('button', { name: 'Next' })).not.toBeDisabled();
     });
   });
 
@@ -303,10 +245,8 @@ describe('select resource', () => {
         },
       });
 
-      const permissionsError = result.getByTestId('permissions-error');
-      expect(permissionsError).toBeInTheDocument();
-
-      expect(result.container.firstChild).toMatchSnapshot();
+      expect(result.getByText(/You are not able to add new Desktops/)).toBeInTheDocument();
+      expect(result.getByText(/Your Teleport Enterprise license does not include Desktop Access/)).toBeInTheDocument();
     });
 
     test('shows permissions error when lacking desktops.read', () => {
@@ -318,20 +258,14 @@ describe('select resource', () => {
         },
       });
 
-      const permissionsError = result.getByTestId('permissions-error');
-      expect(permissionsError).toBeInTheDocument();
-
-      expect(result.container.firstChild).toMatchSnapshot();
+      expect(result.getByText(/You are not able to add new Desktops/)).toBeInTheDocument();
+      expect(result.getByText(/Your Teleport Enterprise license does not include Desktop Access/)).toBeInTheDocument();
     });
 
     test('has the view documentation button visible', () => {
       const result = create('desktop', fullAcl);
 
-      expect(result.container.firstChild).toMatchSnapshot();
-
-      const proceedButton = result.getByTestId('documentation-button');
-
-      expect(proceedButton).toBeInTheDocument();
+      expect(result.getByRole('link', { name: 'View Documentation' })).toBeInTheDocument();
     });
   });
 });

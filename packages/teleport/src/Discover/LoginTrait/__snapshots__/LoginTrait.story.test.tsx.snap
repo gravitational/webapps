@@ -263,7 +263,6 @@ exports[`empty state 1`] = `
     
     <button
       class="c12"
-      data-testid="proceed-button"
       disabled=""
       kind="primary"
       width="165px"
@@ -579,7 +578,6 @@ exports[`empty state with static logins 1`] = `
     
     <button
       class="c13"
-      data-testid="proceed-button"
       kind="primary"
       width="165px"
     >
@@ -1011,7 +1009,6 @@ exports[`loaded with static state 1`] = `
     
     <button
       class="c13"
-      data-testid="proceed-button"
       kind="primary"
       width="165px"
     >

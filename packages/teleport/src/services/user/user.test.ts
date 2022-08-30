@@ -164,13 +164,6 @@ test('undefined values in context response gives proper default values', async (
         remove: false,
       },
       clipboardSharingEnabled: true,
-      connectionDiagnostic: {
-        list: false,
-        read: false,
-        edit: false,
-        create: false,
-        remove: false,
-      },
       desktopSessionRecordingEnabled: true,
       directorySharingEnabled: true,
     },

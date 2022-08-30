@@ -6,7 +6,7 @@ import { TextBox } from 'teleport/Discover/Shared';
 
 export function PermissionsErrorMessage(props: PermissionsErrorMessageProps) {
   return (
-    <TextBox data-testid="permissions-error">
+    <TextBox>
       <Text typography="h5">
         You are not able to {props.action}. There are two possible reasons for
         this:
