@@ -18,13 +18,8 @@ import React from 'react';
 import styled from 'styled-components';
 import { NavLink } from 'react-router-dom';
 
-import { Text, ButtonPrimary, ButtonSecondary, Box } from 'design';
-import Dialog, {
-  DialogContent,
-  DialogFooter,
-  DialogHeader,
-  DialogTitle,
-} from 'design/Dialog';
+import { Text, ButtonPrimary, Box } from 'design';
+import { ButtonSecondary } from 'design/Button';
 
 import cfg from 'teleport/config';
 
@@ -74,9 +69,9 @@ export const ActionButtons = ({
           {lastStep ? 'Finish' : 'Next'}
         </ButtonPrimary>
       )}
-      <ButtonPrimary as={NavLink} to={cfg.routes.root} mt={3} width="165px">
+      <ButtonSecondary as={NavLink} to={cfg.routes.root} mt={3} width="165px">
         Exit
-      </ButtonPrimary>
+      </ButtonSecondary>
     </Box>
   );
 };
@@ -88,4 +83,12 @@ export const TextIcon = styled(Text)`
   .icon {
     margin-right: 8px;
   }
+`;
+
+export const TextBox = styled(Box)`
+  width: 100%;
+  margin-top: 32px;
+  border-radius: 8px;
+  background-color: ${p => p.theme.colors.primary.light};
+  padding: 24px;
 `;
