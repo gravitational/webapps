@@ -29,9 +29,13 @@ import Dialog, {
 import cfg from 'teleport/config';
 
 export const Header: React.FC = ({ children }) => (
-  <Text mb={4} typography="h4" bold>
+  <Text my={1} fontSize="18px" bold>
     {children}
   </Text>
+);
+
+export const HeaderSubtitle: React.FC = ({ children }) => (
+  <Text mb={5}>{children}</Text>
 );
 
 export const ActionButtons = ({

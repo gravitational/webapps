@@ -13,12 +13,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 */
-import React, { useEffect, useState } from 'react';
-import { Cloud } from 'design/Icon';
+import React, { useState } from 'react';
 import SlideTabs from 'design/SlideTabs';
-import styled from 'styled-components';
 import { useLocation } from 'react-router';
-
 import { Image, Text, Box, Flex } from 'design';
 
 import AddApp from 'teleport/Apps/AddApp';
@@ -26,7 +23,7 @@ import AddDatabase from 'teleport/Databases/AddDatabase';
 import AddKube from 'teleport/Kubes/AddKube';
 import useTeleport from 'teleport/useTeleport';
 
-import { ActionButtons } from '../Shared';
+import { Header, HeaderSubtitle, ActionButtons } from '../Shared';
 
 import applicationIcon from './assets/application.png';
 import databaseIcon from './assets/database.png';
@@ -34,7 +31,6 @@ import serverIcon from './assets/server.png';
 import k8sIcon from './assets/kubernetes.png';
 
 import type { TabComponent } from 'design/SlideTabs/SlideTabs';
-import type { ResourceType, ResourceLocation } from '../resource-lists';
 import type { AgentStepProps } from '../types';
 import type { State } from '../useDiscover';
 import type { AuthType } from 'teleport/services/user';
@@ -86,8 +82,7 @@ export function SelectResource({
   const [selectedResource, setSelectedResource] = useState<ValidResourceTypes>(
     location?.state?.entity
   );
-  const [selectedType, setSelectedType] = useState('');
-  const [disableProceed, setDisableProceed] = useState<boolean>(true);
+  // const [selectedType, setSelectedType] = useState('');
   const [showAddApp, setShowAddApp] = useState(false);
   const [showAddKube, setShowAddKube] = useState(false);
   const [showAddDB, setShowAddDB] = useState(false);
@@ -95,63 +90,28 @@ export function SelectResource({
   const tabs: TabComponent[] = [
     {
       name: 'server',
-      component: (
-        <Flex style={{ lineHeight: '31px' }}>
-          <Image src={serverIcon} width="32px" mr={2} /> Server
-        </Flex>
-      ),
+      component: <TabItem iconSrc={serverIcon} title="Server" />,
     },
     {
       name: 'database',
-      component: (
-        <>
-          <Flex style={{ lineHeight: '31px' }}>
-            <Image src={databaseIcon} width="32px" mr={2} /> Database
-          </Flex>
-        </>
-      ),
+      component: <TabItem iconSrc={databaseIcon} title="Database" />,
     },
 
     {
       name: 'kubernetes',
-      component: (
-        <Flex style={{ lineHeight: '31px' }}>
-          <Image src={k8sIcon} width="32px" mr={2} /> Kubernetes
-        </Flex>
-      ),
+      component: <TabItem iconSrc={k8sIcon} title="Kubernetes" />,
     },
 
     {
       name: 'application',
-      component: (
-        <Flex style={{ lineHeight: '31px' }}>
-          <Image src={applicationIcon} width="32px" mr={2} /> Application
-        </Flex>
-      ),
+      component: <TabItem iconSrc={applicationIcon} title="Application" />,
     },
 
     {
       name: 'desktop',
-      component: (
-        <Flex style={{ lineHeight: '31px' }}>
-          <Image src={serverIcon} width="32px" mr={2} /> Desktop
-        </Flex>
-      ),
+      component: <TabItem iconSrc={serverIcon} title="Desktop" />,
     },
   ];
-
-  useEffect(() => {
-    if (selectedResource === 'server') {
-      // server doesn't have any additional deployment options
-      setDisableProceed(false);
-      return;
-    }
-    if (selectedResource && selectedType) {
-      setDisableProceed(false);
-      return;
-    }
-    setDisableProceed(true);
-  }, [selectedResource, selectedType]);
 
   const initialSelected = tabs.findIndex(
     component => component.name === location?.state?.entity
@@ -159,13 +119,12 @@ export function SelectResource({
 
   return (
     <Box width="1020px">
-      <Text typography="h4">Resource Selection</Text>
-      <Text mb={4}>
+      <Header>Select Resource Type</Header>
+      <HeaderSubtitle>
         Users are able to add and access many different types of resources
-        through Teleport. Start by selecting the type of resource you want to
-        add.
-      </Text>
-      <Text mb={2}>Select Resource Type</Text>
+        through Teleport. <br />
+        Start by selecting the type of resource you want to add.
+      </HeaderSubtitle>
       <SlideTabs
         initialSelected={initialSelected > 0 ? initialSelected : 0}
         tabs={tabs}
@@ -215,7 +174,7 @@ export function SelectResource({
           onProceed={() => {
             nextStep();
           }}
-          disableProceed={disableProceed}
+          disableProceed={false}
         />
       )}
       {showAddApp && <AddApp onClose={() => setShowAddApp(false)} />}
@@ -233,90 +192,15 @@ export function SelectResource({
   );
 }
 
-type SelectResourceProps = {
-  onSelect: (string) => void;
-};
-
-function SelectDBDeploymentType({
-  selectedType,
-  setSelectedType,
-  resourceTypes,
-}: SelectDBDeploymentTypeProps) {
-  type FilterType = 'All' | ResourceLocation;
-  const filterTabs: FilterType[] = ['All', 'AWS', 'Self-Hosted'];
-  const [filter, setFilter] = useState<FilterType>('All');
-  return (
-    <Box mt={6}>
-      <Flex alignItems="center" justifyContent="space-between">
-        <Text mb={2}>Select Deployment Type</Text>
-        <Box width="379px">
-          <SlideTabs
-            appearance="round"
-            size="medium"
-            tabs={filterTabs}
-            onChange={index => setFilter(filterTabs[index])}
-          />
-        </Box>
-      </Flex>
-      <Flex
-        flexWrap="wrap"
-        mt={4}
-        justifyContent="space-between"
-        gap="12px 12px"
-        rowGap="15px"
-      >
-        {resourceTypes
-          .filter(resource => filter === 'All' || resource.type === filter)
-          .map(resource => (
-            <ResourceTypeOption
-              onClick={() => setSelectedType(resource.key)}
-              key={resource.key}
-              selected={selectedType === resource.key}
-            >
-              <Flex justifyContent="space-between" mb={2}>
-                <Cloud />
-                <Tag>popular</Tag>
-              </Flex>
-              {resource.name}
-            </ResourceTypeOption>
-          ))}
-      </Flex>
-    </Box>
-  );
-}
-
-type SelectDBDeploymentTypeProps = {
-  selectedType: string;
-  setSelectedType: (string) => void;
-  resourceTypes: ResourceType[];
-};
-
-const ResourceTypeOption = styled.div`
-  background: rgba(255, 255, 255, 0.05);
-  border: ${props =>
-    !props.selected
-      ? '2px solid rgba(255, 255, 255, 0)'
-      : '2px solid rgba(255, 255, 255, 0.1);'};
-  border-radius: 8px;
-  box-sizing: border-box;
-  cursor: pointer;
-  height: 72px;
-  padding: 12px;
-  width: 242px;
-
-  &:hover {
-    border: 2px solid rgba(255, 255, 255, 0.1);
-  }
-`;
-
-const Tag = styled.div`
-  align-items: center;
-  background-color: #512fc9;
-  border-radius: 33px;
-  box-sizing: border-box;
-  font-size: 10px;
-  height: 15px;
-  line-height: 11px;
-  padding: 2px 10px;
-  max-width: 57px;
-`;
+const TabItem = ({ iconSrc, title }: { iconSrc: string; title: string }) => (
+  <Flex
+    css={`
+      align-items: center;
+    `}
+  >
+    <Image src={iconSrc} width="32px" mr={2} />
+    <Text bold typography="h5">
+      {title}
+    </Text>
+  </Flex>
+);
