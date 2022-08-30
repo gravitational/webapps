@@ -18,7 +18,7 @@ import React from 'react';
 
 import { MemoryRouter } from 'react-router';
 
-import { render } from 'design/utils/testing';
+import { render, screen } from 'design/utils/testing';
 
 import { SelectResource } from 'teleport/Discover/SelectResource/SelectResource';
 import { Access, Acl, makeUserContext } from 'teleport/services/user';
@@ -92,7 +92,7 @@ describe('select resource', () => {
 
   describe('server', () => {
     test('shows permissions error when lacking tokens.create', () => {
-      const result = create('server', {
+      create('server', {
         ...fullAcl,
         tokens: {
           ...fullAccess,
@@ -101,18 +101,18 @@ describe('select resource', () => {
       });
 
       expect(
-        result.getByText(/You are not able to add new Servers/)
+        screen.getByText(/You are not able to add new Servers/)
       ).toBeInTheDocument();
       expect(
-        result.getByText(
+        screen.getByText(
           /Your Teleport Enterprise license does not include Server Access/
         )
       ).toBeInTheDocument();
-      expect(result.getByRole('button', { name: 'Next' })).toBeDisabled();
+      expect(screen.getByRole('button', { name: 'Next' })).toBeDisabled();
     });
 
     test('shows permissions error when lacking nodes.list', () => {
-      const result = create('server', {
+      create('server', {
         ...fullAcl,
         nodes: {
           ...fullAccess,
@@ -121,31 +121,31 @@ describe('select resource', () => {
       });
 
       expect(
-        result.getByText(/You are not able to add new Servers/)
+        screen.getByText(/You are not able to add new Servers/)
       ).toBeInTheDocument();
       expect(
-        result.getByText(
+        screen.getByText(
           /Your Teleport Enterprise license does not include Server Access/
         )
       ).toBeInTheDocument();
-      expect(result.getByRole('button', { name: 'Next' })).toBeDisabled();
+      expect(screen.getByRole('button', { name: 'Next' })).toBeDisabled();
     });
 
     test('shows the teleport versions when having correct permissions', () => {
-      const result = create('server', fullAcl);
+      create('server', fullAcl);
 
       expect(
-        result.getByText(
+        screen.getByText(
           /Teleport officially supports the following operating systems/
         )
       ).toBeInTheDocument();
-      expect(result.getByRole('button', { name: 'Next' })).not.toBeDisabled();
+      expect(screen.getByRole('button', { name: 'Next' })).toBeEnabled();
     });
   });
 
   describe('database', () => {
     test('shows permissions error when lacking tokens.create', () => {
-      const result = create('database', {
+      create('database', {
         ...fullAcl,
         tokens: {
           ...fullAccess,
@@ -154,18 +154,18 @@ describe('select resource', () => {
       });
 
       expect(
-        result.getByText(/You are not able to add new Databases/)
+        screen.getByText(/You are not able to add new Databases/)
       ).toBeInTheDocument();
       expect(
-        result.getByText(
+        screen.getByText(
           /Your Teleport Enterprise license does not include Database Access/
         )
       ).toBeInTheDocument();
-      expect(result.getByRole('button', { name: 'Next' })).toBeDisabled();
+      expect(screen.getByRole('button', { name: 'Next' })).toBeDisabled();
     });
 
     test('shows permissions error when lacking dbServers.read', () => {
-      const result = create('database', {
+      create('database', {
         ...fullAcl,
         dbServers: {
           ...fullAccess,
@@ -174,26 +174,26 @@ describe('select resource', () => {
       });
 
       expect(
-        result.getByText(/You are not able to add new Databases/)
+        screen.getByText(/You are not able to add new Databases/)
       ).toBeInTheDocument();
       expect(
-        result.getByText(
+        screen.getByText(
           /Your Teleport Enterprise license does not include Database Access/
         )
       ).toBeInTheDocument();
-      expect(result.getByRole('button', { name: 'Next' })).toBeDisabled();
+      expect(screen.getByRole('button', { name: 'Next' })).toBeDisabled();
     });
 
     test('has the proceed button enabled when having correct permissions', () => {
-      const result = create('database', fullAcl);
+      create('database', fullAcl);
 
-      expect(result.getByRole('button', { name: 'Next' })).not.toBeDisabled();
+      expect(screen.getByRole('button', { name: 'Next' })).toBeEnabled();
     });
   });
 
   describe('kubernetes', () => {
     test('shows permissions error when lacking tokens.create', () => {
-      const result = create('kubernetes', {
+      create('kubernetes', {
         ...fullAcl,
         tokens: {
           ...fullAccess,
@@ -202,18 +202,18 @@ describe('select resource', () => {
       });
 
       expect(
-        result.getByText(/You are not able to add new Kubernetes resources/)
+        screen.getByText(/You are not able to add new Kubernetes resources/)
       ).toBeInTheDocument();
       expect(
-        result.getByText(
+        screen.getByText(
           /Your Teleport Enterprise license does not include Kubernetes Access/
         )
       ).toBeInTheDocument();
-      expect(result.getByRole('button', { name: 'Next' })).toBeDisabled();
+      expect(screen.getByRole('button', { name: 'Next' })).toBeDisabled();
     });
 
     test('shows permissions error when lacking kubeServers.read', () => {
-      const result = create('kubernetes', {
+      create('kubernetes', {
         ...fullAcl,
         kubeServers: {
           ...fullAccess,
@@ -222,26 +222,26 @@ describe('select resource', () => {
       });
 
       expect(
-        result.getByText(/You are not able to add new Kubernetes resources/)
+        screen.getByText(/You are not able to add new Kubernetes resources/)
       ).toBeInTheDocument();
       expect(
-        result.getByText(
+        screen.getByText(
           /Your Teleport Enterprise license does not include Kubernetes Access/
         )
       ).toBeInTheDocument();
-      expect(result.getByRole('button', { name: 'Next' })).toBeDisabled();
+      expect(screen.getByRole('button', { name: 'Next' })).toBeDisabled();
     });
 
     test('has the proceed button enabled when having correct permissions', () => {
-      const result = create('kubernetes', fullAcl);
+      create('kubernetes', fullAcl);
 
-      expect(result.getByRole('button', { name: 'Next' })).not.toBeDisabled();
+      expect(screen.getByRole('button', { name: 'Next' })).toBeEnabled();
     });
   });
 
   describe('application', () => {
     test('shows permissions error when lacking tokens.create', () => {
-      const result = create('application', {
+      create('application', {
         ...fullAcl,
         tokens: {
           ...fullAccess,
@@ -250,18 +250,18 @@ describe('select resource', () => {
       });
 
       expect(
-        result.getByText(/You are not able to add new Applications/)
+        screen.getByText(/You are not able to add new Applications/)
       ).toBeInTheDocument();
       expect(
-        result.getByText(
+        screen.getByText(
           /Your Teleport Enterprise license does not include Application Access/
         )
       ).toBeInTheDocument();
-      expect(result.getByRole('button', { name: 'Next' })).toBeDisabled();
+      expect(screen.getByRole('button', { name: 'Next' })).toBeDisabled();
     });
 
     test('shows permissions error when lacking appServers.read', () => {
-      const result = create('application', {
+      create('application', {
         ...fullAcl,
         appServers: {
           ...fullAccess,
@@ -270,26 +270,26 @@ describe('select resource', () => {
       });
 
       expect(
-        result.getByText(/You are not able to add new Applications/)
+        screen.getByText(/You are not able to add new Applications/)
       ).toBeInTheDocument();
       expect(
-        result.getByText(
+        screen.getByText(
           /Your Teleport Enterprise license does not include Application Access/
         )
       ).toBeInTheDocument();
-      expect(result.getByRole('button', { name: 'Next' })).toBeDisabled();
+      expect(screen.getByRole('button', { name: 'Next' })).toBeDisabled();
     });
 
     test('has the proceed button enabled when having correct permissions', () => {
-      const result = create('application', fullAcl);
+      create('application', fullAcl);
 
-      expect(result.getByRole('button', { name: 'Next' })).not.toBeDisabled();
+      expect(screen.getByRole('button', { name: 'Next' })).toBeEnabled();
     });
   });
 
   describe('desktop', () => {
     test('shows permissions error when lacking tokens.create', () => {
-      const result = create('desktop', {
+      create('desktop', {
         ...fullAcl,
         tokens: {
           ...fullAccess,
@@ -298,17 +298,17 @@ describe('select resource', () => {
       });
 
       expect(
-        result.getByText(/You are not able to add new Desktops/)
+        screen.getByText(/You are not able to add new Desktops/)
       ).toBeInTheDocument();
       expect(
-        result.getByText(
+        screen.getByText(
           /Your Teleport Enterprise license does not include Desktop Access/
         )
       ).toBeInTheDocument();
     });
 
     test('shows permissions error when lacking desktops.read', () => {
-      const result = create('desktop', {
+      create('desktop', {
         ...fullAcl,
         desktops: {
           ...fullAccess,
@@ -317,20 +317,20 @@ describe('select resource', () => {
       });
 
       expect(
-        result.getByText(/You are not able to add new Desktops/)
+        screen.getByText(/You are not able to add new Desktops/)
       ).toBeInTheDocument();
       expect(
-        result.getByText(
+        screen.getByText(
           /Your Teleport Enterprise license does not include Desktop Access/
         )
       ).toBeInTheDocument();
     });
 
     test('has the view documentation button visible', () => {
-      const result = create('desktop', fullAcl);
+      create('desktop', fullAcl);
 
       expect(
-        result.getByRole('link', { name: 'View Documentation' })
+        screen.getByRole('link', { name: 'View Documentation' })
       ).toBeInTheDocument();
     });
   });
