@@ -89,6 +89,6 @@ export const TextBox = styled(Box)`
   width: 100%;
   margin-top: 32px;
   border-radius: 8px;
-  background-color: ${(p) => p.theme.colors.primary.light};
+  background-color: ${p => p.theme.colors.primary.light};
   padding: 24px;
 `;
