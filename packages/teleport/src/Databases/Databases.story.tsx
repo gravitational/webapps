@@ -57,4 +57,5 @@ const props: State = {
   authType: 'local',
   searchValue: '',
   setSearchValue: () => null,
+  accessRequestId: null,
 };
