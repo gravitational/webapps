@@ -37,8 +37,8 @@ function ConnectDialog(props: Props) {
   const { hostname, port } = window.document.location;
   const host = `${hostname}:${port || '443'}`;
   const authSpec =
-    authType === 'local' ? `--auth=${authType} --user=${username} ` : '';
-  const text = `tsh login --proxy=${host} ${authSpec}${clusterId}`;
+    authType === 'local' ? `--auth=${authType} --user=${username}` : '';
+  const text = `tsh login --proxy=${host} ${authSpec}`;
 
   const requestIdFlag = accessRequestId
     ? ` --request-id=${accessRequestId}`
@@ -60,7 +60,10 @@ function ConnectDialog(props: Props) {
             Step 1
           </Text>
           {' - Login to Teleport'}
-          <TextSelectCopy mt="2" text={`${text}${requestIdFlag}`} />
+          <TextSelectCopy
+            mt="2"
+            text={`${text}${requestIdFlag} ${clusterId}`}
+          />
         </Box>
         <Box mb={4}>
           <Text bold as="span">
