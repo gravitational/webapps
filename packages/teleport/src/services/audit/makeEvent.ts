@@ -651,6 +651,13 @@ export const formatters: Formatters = {
       return `Certificate of type [${cert_type}] issued for [${user}]`;
     },
   },
+  [eventCodes.SESSION_RECORDING_ACCESS]: {
+    type: 'session.recording.access',
+    desc: 'Session Recording Accessed',
+    format: ({ sid, user }) => {
+      return `User [${user}] accessed a session recording [${sid}]`;
+    },
+  },
   [eventCodes.UNKNOWN]: {
     type: 'unknown',
     desc: 'Unknown Event',
