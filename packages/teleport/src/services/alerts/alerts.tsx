@@ -15,12 +15,24 @@ limitations under the License.
 */
 
 import api from 'teleport/services/api';
+import cfg from 'teleport/config';
 
 export type ClusterAlert = {
-  message: string;
-  severity: number;
+  kind: string;
+  version: string;
+  metadata: {
+    name: string;
+    labels: { [key: string]: string }; //"teleport.internal/alert-on-login": "yes",
+  };
+  expires: string; //2022-08-31T17:26:05.728149Z
+  spec: {
+    severity: number;
+    message: string;
+    created: string; //2022-08-31T17:26:05.728149Z
+  };
 };
 
-export function fetchClusterAlerts() {
-  return api.get('/v1/cluster/alerts').then(json => json as ClusterAlert[]);
+export function fetchClusterAlerts(clusterId: string) {
+  const url = cfg.getClusterAlertsUrl(clusterId);
+  return api.get(url).then(json => json.alerts as ClusterAlert[]);
 }

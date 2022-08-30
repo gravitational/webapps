@@ -79,7 +79,12 @@ export function Main(props: State) {
       <BannerList>
         {props.alerts &&
           props.alerts.map(alert => {
-            return <Banner message={alert.message} severity={alert.severity} />;
+            return (
+              <Banner
+                message={alert.spec.message}
+                severity={alert.spec.severity}
+              />
+            );
           })}
       </BannerList>
       <MainContainer>

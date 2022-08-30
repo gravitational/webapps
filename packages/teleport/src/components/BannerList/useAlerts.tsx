@@ -18,6 +18,7 @@ import { useState, useEffect } from 'react';
 import Logger from 'shared/libs/logger';
 
 import { fetchClusterAlerts } from 'teleport/services/alerts';
+import useStickyClusterId from 'teleport/useStickyClusterId';
 
 import type { ClusterAlert } from 'teleport/services/alerts';
 
@@ -25,14 +26,19 @@ const logger = Logger.create('ClusterAlerts');
 
 export function useAlerts() {
   const [alerts, setAlerts] = useState<ClusterAlert[]>();
+  const { clusterId } = useStickyClusterId();
 
   useEffect(() => {
-    fetchClusterAlerts()
+    fetchClusterAlerts(clusterId)
       .then(res => {
         if (!res) {
           return;
         }
-        setAlerts(res);
+        if (Array.isArray(res)) {
+          setAlerts(res);
+          return;
+        }
+        setAlerts([]);
       })
       .catch(err => {
         logger.error(err);
