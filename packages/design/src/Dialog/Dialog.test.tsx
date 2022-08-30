@@ -1,5 +1,5 @@
 /**
- * Copyright 2022 Gravitational, Inc.
+ * Copyright 2020 Gravitational, Inc.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,16 +14,26 @@
  * limitations under the License.
  */
 
-import { State } from './useDiscover';
+import React from 'react';
+import { screen } from '@testing-library/react';
 
-export type AgentStepProps = {
-  // agentMeta describes fields specific to an agent kind.
-  agentMeta: State['agentMeta'];
-  // updateAgentMeta updates the data specific to agent kinds
-  // as needed as we move through the step.
-  updateAgentMeta: State['updateAgentMeta'];
-  // nextStep increments the `currentStep` to go to the next step.
-  nextStep: State['nextStep'];
+import { render } from 'design/utils/testing';
+
+import Dialog from './Dialog';
+
+const testCss = {
+  'background-color': '#fff',
+  color: '#000',
 };
 
-export type AgentStepComponent = (props: AgentStepProps) => JSX.Element;
+describe('design/Dialog', () => {
+  it('respects dialogCss prop', () => {
+    render(
+      <Dialog open={true} dialogCss={() => testCss}>
+        <div>hello</div>
+      </Dialog>
+    );
+
+    expect(screen.getByTestId('dialogbox')).toHaveStyle(testCss);
+  });
+});

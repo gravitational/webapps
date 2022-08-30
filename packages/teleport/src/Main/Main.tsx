@@ -27,7 +27,10 @@ import SideNav from 'teleport/SideNav';
 import TopBar from 'teleport/TopBar';
 import getFeatures from 'teleport/features';
 import { BannerList } from 'teleport/components/BannerList';
+import localStorage from 'teleport/services/localStorage';
+import history from 'teleport/services/history';
 
+import { OnboardDiscover } from './OnboardDiscover';
 import useMain, { State } from './useMain';
 
 export default function Container() {
@@ -38,6 +41,7 @@ export default function Container() {
 
 export function Main(props: State) {
   const { status, statusText, ctx } = props;
+  const [showOnboardDiscover, setShowOnboardDiscover] = React.useState(true);
 
   if (status === 'failed') {
     return <Failed message={statusText} />;
@@ -49,6 +53,21 @@ export function Main(props: State) {
         <Indicator />
       </StyledIndicator>
     );
+  }
+
+  function handleOnboard() {
+    updateOnboardDiscover();
+    history.push(cfg.routes.discover);
+  }
+
+  function handleOnClose() {
+    updateOnboardDiscover();
+    setShowOnboardDiscover(false);
+  }
+
+  function updateOnboardDiscover() {
+    const { hasResource } = localStorage.getOnboardDiscover();
+    localStorage.setOnboardDiscover({ hasResource, notified: true });
   }
 
   // render feature routes
@@ -79,6 +98,10 @@ export function Main(props: State) {
       }))
     : [];
 
+  const onboard = localStorage.getOnboardDiscover();
+  const requiresOnboarding =
+    onboard && !onboard.hasResource && !onboard.notified;
+
   return (
     <>
       <RouterDOM.Switch>
@@ -92,6 +115,9 @@ export function Main(props: State) {
           <Switch>{$features}</Switch>
         </HorizontalSplit>
       </MainContainer>
+      {requiresOnboarding && showOnboardDiscover && (
+        <OnboardDiscover onClose={handleOnClose} onOnboard={handleOnboard} />
+      )}
     </>
   );
 }

@@ -15,24 +15,19 @@
  */
 
 import React from 'react';
+import { screen } from '@testing-library/react';
 
 import { render } from 'design/utils/testing';
 
-import Dialog from './Dialog';
+import Indicator from './Indicator';
 
-const testCss = {
-  'background-color': '#fff',
-  color: '#000',
-};
-
-describe('design/Dialog', () => {
-  it('respects dialogCss prop', () => {
-    const { getByTestId } = render(
-      <Dialog open={true} dialogCss={() => testCss}>
-        <div>hello</div>
-      </Dialog>
+describe('design/Indicator', () => {
+  it('renders', async () => {
+    const { container } = render(
+      <Indicator data-testid="spinner" delay={'none'} />
     );
+    expect(container).toBeEmptyDOMElement();
 
-    expect(getByTestId('dialogbox')).toHaveStyle({ ...testCss });
+    await expect(screen.findByTestId('spinner')).resolves.toBeInTheDocument();
   });
 });

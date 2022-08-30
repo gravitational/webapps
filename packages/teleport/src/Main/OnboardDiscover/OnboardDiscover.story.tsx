@@ -1,5 +1,5 @@
 /**
- * Copyright 2020 Gravitational, Inc.
+ * Copyright 2022 Gravitational, Inc.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,22 +16,12 @@
 
 import React from 'react';
 
-import { render } from 'design/utils/testing';
+import { OnboardDiscover } from './OnboardDiscover';
 
-import { IconExample } from './Menu.story';
+export default {
+  title: 'Teleport/Discover/Onboard',
+};
 
-describe('design/Menu', () => {
-  it('renders parent and its children', () => {
-    const { getByRole, getByTestId, getAllByTestId } = render(<IconExample />);
-
-    const parent = getByTestId('Modal');
-    const menu = getByRole('menu');
-    const item = getAllByTestId('item');
-    const icon = getAllByTestId('icon');
-
-    expect(parent).not.toBeNull();
-    expect(menu).not.toBeNull();
-    expect(item).toHaveLength(3);
-    expect(icon).toHaveLength(3);
-  });
-});
+export const Loaded = () => (
+  <OnboardDiscover onClose={() => null} onOnboard={() => null} />
+);
