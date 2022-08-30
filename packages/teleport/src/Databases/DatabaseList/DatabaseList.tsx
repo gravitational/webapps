@@ -40,6 +40,7 @@ function DatabaseList(props: Props) {
     clusterId,
     authType,
     searchValue,
+    accessRequestId,
   } = props;
 
   const [sortDir, setSortDir] = useState<Record<string, string>>({
@@ -124,6 +125,7 @@ function DatabaseList(props: Props) {
           dbProtocol={dbConnectInfo.protocol}
           onClose={() => setDbConnectInfo(null)}
           authType={authType}
+          accessRequestId={accessRequestId}
         />
       )}
     </>
@@ -179,6 +181,7 @@ type Props = {
   clusterId: string;
   authType: AuthType;
   searchValue: string;
+  accessRequestId?: string;
 };
 
 export default DatabaseList;

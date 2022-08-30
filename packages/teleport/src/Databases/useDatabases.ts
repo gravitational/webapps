@@ -25,6 +25,7 @@ export default function useDatabases(ctx: Ctx) {
   const { clusterId, isLeafCluster } = useStickyClusterId();
   const username = ctx.storeUser.state.username;
   const canCreate = ctx.storeUser.getTokenAccess().create;
+  const accessRequestId = ctx.storeUser.getAccessRequestId();
   const isEnterprise = ctx.isEnterprise;
   const version = ctx.storeUser.state.cluster.authVersion;
   const authType = ctx.storeUser.state.authType;
@@ -70,6 +71,7 @@ export default function useDatabases(ctx: Ctx) {
     authType,
     searchValue,
     setSearchValue,
+    accessRequestId,
   };
 }
 
