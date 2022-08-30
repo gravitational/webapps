@@ -16,14 +16,7 @@
 
 import React, { useState } from 'react';
 import styled from 'styled-components';
-import {
-  ButtonOutlined,
-  ButtonSecondary,
-  Text,
-  Box,
-  LabelInput,
-  Flex,
-} from 'design';
+import { ButtonSecondary, Text, Box, LabelInput, Flex } from 'design';
 import * as Icons from 'design/Icon';
 import Select from 'shared/components/Select';
 
@@ -188,16 +181,4 @@ const StyledBox = styled(Box)`
   background-color: rgba(255, 255, 255, 0.05);
   border-radius: 8px;
   padding: 20px;
-`;
-
-const StyledButtonOutline = styled(ButtonOutlined)`
-  width: 200px;
-  opacity: 1;
-  color: #a8afb2;
-  border-color: #a8afb2;
-
-  &:disabled {
-    opacity: 0.5;
-    pointer-events: none;
-  }
 `;
