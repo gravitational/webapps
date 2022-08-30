@@ -87,15 +87,6 @@ function ConnectDialog(props: Props) {
           {' - Connect to the Kubernetes cluster'}
           <TextSelectCopy mt="2" text={`kubectl get pods`} />
         </Box>
-        {accessRequestId && (
-          <Box mb={1} mt={3}>
-            <Text bold as="span">
-              Step 4 (Optional)
-            </Text>
-            {' - When finished, drop the assumed role'}
-            <TextSelectCopy mt="2" text={`tsh request drop`} />
-          </Box>
-        )}
       </DialogContent>
       <DialogFooter>
         <ButtonSecondary onClick={onClose}>Close</ButtonSecondary>
