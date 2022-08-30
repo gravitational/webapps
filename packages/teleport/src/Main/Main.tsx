@@ -26,7 +26,7 @@ import cfg from 'teleport/config';
 import SideNav from 'teleport/SideNav';
 import TopBar from 'teleport/TopBar';
 import getFeatures from 'teleport/features';
-import { Banner, BannerList } from 'teleport/components/BannerList';
+import { BannerList } from 'teleport/components/BannerList';
 
 import useMain, { State } from './useMain';
 
@@ -71,22 +71,20 @@ export function Main(props: State) {
     ctx.storeNav.getSideItems()[0]?.getLink(cfg.proxyCluster) ||
     cfg.routes.support;
 
+  const banners = props.alerts
+    ? props.alerts.map(alert => ({
+        message: alert.spec.message,
+        severity: alert.spec.severity,
+        id: alert.metadata.name,
+      }))
+    : [];
+
   return (
     <>
       <RouterDOM.Switch>
         <Redirect exact={true} from={cfg.routes.root} to={indexRoute} />
       </RouterDOM.Switch>
-      <BannerList>
-        {props.alerts &&
-          props.alerts.map(alert => {
-            return (
-              <Banner
-                message={alert.spec.message}
-                severity={alert.spec.severity}
-              />
-            );
-          })}
-      </BannerList>
+      <BannerList banners={banners} />
       <MainContainer>
         <SideNav />
         <HorizontalSplit>

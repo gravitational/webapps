@@ -30,10 +30,54 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 
 import { Box } from 'design';
 
-export const BannerList: React.FC = ({ children }) => {
-  return <Box>{children}</Box>;
+import { Banner } from './Banner';
+
+export const BannerList = ({ banners = [] }: Props) => {
+  const [bannerList, setBannerList] = useState<{ [id: string]: BannerType }>(
+    {}
+  );
+
+  useEffect(() => {
+    const newList = {};
+    banners.forEach(banner => (newList[banner.id] = banner));
+    Object.assign(newList, bannerList);
+    setBannerList(newList);
+  }, [banners]);
+
+  const removeBanner = id => {
+    const newList = { ...bannerList };
+    newList[id].hidden = true;
+    setBannerList(newList);
+  };
+
+  return (
+    <Box>
+      {Object.entries(bannerList)
+        .filter(banner => !banner[1].hidden)
+        .map(banner => (
+          <Banner
+            message={banner[1].message}
+            severity={banner[1].severity}
+            id={banner[1].id}
+            onClose={removeBanner}
+            key={banner[1].id}
+          />
+        ))}
+    </Box>
+  );
+};
+
+type Props = {
+  banners: BannerType[];
+};
+
+type BannerType = {
+  message: string;
+  severity: number;
+  id: string;
+  hidden?: boolean;
 };
