@@ -27,9 +27,7 @@ import { Table } from 'teleterm/ui/components/Table';
 
 import { renderLabelCell } from '../renderLabelCell';
 
-
 import { MenuLoginTheme } from '../MenuLoginTheme';
-
 
 import { useServers, State } from './useServers';
 

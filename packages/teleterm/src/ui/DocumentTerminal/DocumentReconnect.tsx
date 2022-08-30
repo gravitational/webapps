@@ -26,8 +26,6 @@ import * as types from 'teleterm/ui/services/workspacesService';
 
 import { useReconnect, State } from './useReconnect';
 
-
-
 export default function Container(props: DocumentReconnectProps) {
   const state = useReconnect(props.doc);
   return <DocumentReconnect visible={props.visible} {...state} />;

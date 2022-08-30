@@ -77,7 +77,7 @@ module.exports = {
           'type',
         ],
         'newlines-between': 'always-and-inside-groups',
-      }
+      },
     ],
     // <TODO> Enable these rules after fixing all existing issues
     '@typescript-eslint/no-use-before-define': 0,

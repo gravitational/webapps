@@ -32,7 +32,6 @@ import { useTabShortcuts } from './useTabShortcuts';
 import { useNewTabOpener } from './useNewTabOpener';
 import { ClusterConnectPanel } from './ClusterConnectPanel/ClusterConnectPanel';
 
-
 export function TabHostContainer() {
   const ctx = useAppContext();
   ctx.workspacesService.useState();

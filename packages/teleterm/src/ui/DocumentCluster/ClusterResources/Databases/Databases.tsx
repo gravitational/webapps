@@ -23,7 +23,6 @@ import { MenuLogin, MenuLoginProps } from 'shared/components/MenuLogin';
 
 import { Table } from 'teleterm/ui/components/Table';
 
-
 import { useAppContext } from 'teleterm/ui/appContextProvider';
 import { retryWithRelogin } from 'teleterm/ui/utils';
 import { IAppContext } from 'teleterm/ui/types';
