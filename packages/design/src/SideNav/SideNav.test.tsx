@@ -15,6 +15,7 @@
  */
 
 import React from 'react';
+import { screen } from '@testing-library/react';
 
 import { render } from 'design/utils/testing';
 
@@ -23,7 +24,7 @@ import * as Icons from '../Icon';
 import SideNav, { SideNavItem, SideNavItemIcon } from './index';
 
 test('renders: SideNav, SideNavItem, SideNavItemIcon', () => {
-  const { getByTestId } = render(
+  render(
     <SideNav data-testid="parent">
       <SideNavItem data-testid="item">
         <SideNavItemIcon data-testid="icon" as={Icons.Apple} />
@@ -32,7 +33,7 @@ test('renders: SideNav, SideNavItem, SideNavItemIcon', () => {
     </SideNav>
   );
 
-  expect(getByTestId('parent')).toBeInTheDocument();
-  expect(getByTestId('item')).toBeInTheDocument();
-  expect(getByTestId('icon')).toBeInTheDocument();
+  expect(screen.getByTestId('parent')).toBeInTheDocument();
+  expect(screen.getByTestId('item')).toBeInTheDocument();
+  expect(screen.getByTestId('icon')).toBeInTheDocument();
 });
