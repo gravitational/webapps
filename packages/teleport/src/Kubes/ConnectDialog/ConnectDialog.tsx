@@ -37,8 +37,8 @@ function ConnectDialog(props: Props) {
   const { hostname, port } = window.document.location;
   const host = `${hostname}:${port || '443'}`;
   const authSpec =
-    authType === 'local' ? `--auth=${authType} --user=${username}` : '';
-  const text = `tsh login --proxy=${host} ${authSpec}`;
+    authType === 'local' ? ` --auth=${authType} --user=${username}` : '';
+  const text = `tsh login --proxy=${host}${authSpec}`;
 
   const requestIdFlag = accessRequestId
     ? ` --request-id=${accessRequestId}`
