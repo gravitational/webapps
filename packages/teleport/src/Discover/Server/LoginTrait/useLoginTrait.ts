@@ -20,8 +20,8 @@ import useAttempt from 'shared/hooks/useAttemptNext';
 import TeleportContext from 'teleport/teleportContext';
 
 import type { User } from 'teleport/services/user';
-import type { AgentStepProps } from '../types';
-import type { NodeMeta } from '../useDiscover';
+import type { AgentStepProps } from '../../types';
+import type { NodeMeta } from '../../useDiscover';
 
 export function useLoginTrait({ ctx, props }: Props) {
   const [user, setUser] = useState<User>();

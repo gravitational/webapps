@@ -24,9 +24,9 @@ import cfg from 'teleport/config';
 import TextSelectCopy from 'teleport/components/TextSelectCopy';
 import useTeleport from 'teleport/useTeleport';
 
-import { AgentStepProps } from '../types';
+import { AgentStepProps } from '../../types';
 
-import { Header, HeaderSubtitle, ActionButtons, TextIcon } from '../Shared';
+import { Header, HeaderSubtitle, ActionButtons, TextIcon } from '../../Shared';
 
 import { useDownloadScript } from './useDownloadScript';
 

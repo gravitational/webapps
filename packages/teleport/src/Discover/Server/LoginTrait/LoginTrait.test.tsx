@@ -26,7 +26,7 @@ import ContextProvider from 'teleport/TeleportContextProvider';
 import LoginTrait from './LoginTrait';
 
 import type { User } from 'teleport/services/user';
-import type { NodeMeta } from '../useDiscover';
+import type { NodeMeta } from '../../useDiscover';
 
 describe('login trait comp behavior', () => {
   const ctx = new TeleportContext();

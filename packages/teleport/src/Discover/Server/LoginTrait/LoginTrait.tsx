@@ -30,11 +30,11 @@ import * as Icons from 'design/Icon';
 
 import useTeleport from 'teleport/useTeleport';
 
-import { Header, HeaderSubtitle, ActionButtons } from '../Shared';
+import { Header, HeaderSubtitle, ActionButtons } from '../../Shared';
 
 import { useLoginTrait, State } from './useLoginTrait';
 
-import type { AgentStepProps } from '../types';
+import type { AgentStepProps } from '../../types';
 
 export default function Container(props: AgentStepProps) {
   const ctx = useTeleport();
