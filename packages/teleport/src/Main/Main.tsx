@@ -33,6 +33,8 @@ import history from 'teleport/services/history';
 import { OnboardDiscover } from './OnboardDiscover';
 import useMain, { State } from './useMain';
 
+import type { BannerType } from 'teleport/components/BannerList/BannerList';
+
 export default function Container() {
   const [features] = React.useState(() => getFeatures());
   const state = useMain(features);
@@ -90,9 +92,19 @@ export function Main(props: State) {
     ctx.storeNav.getSideItems()[0]?.getLink(cfg.proxyCluster) ||
     cfg.routes.support;
 
-  const banners = props.alerts.map(alert => ({
+  const mapSeverity = (severity: number) => {
+    if (severity < 5) {
+      return 'info';
+    }
+    if (severity < 10) {
+      return 'warning';
+    }
+    return 'danger';
+  };
+
+  const banners: BannerType[] = alerts.map(alert => ({
     message: alert.spec.message,
-    severity: alert.spec.severity,
+    severity: mapSeverity(alert.spec.severity),
     id: alert.metadata.name,
   }));
 

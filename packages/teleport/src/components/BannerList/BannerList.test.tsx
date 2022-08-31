@@ -27,12 +27,12 @@ describe('components/BannerList/Banner', () => {
     banners = [
       {
         message: 'I am steve banner',
-        severity: 7,
+        severity: 'info',
         id: 'test-banner1',
       },
       {
         message: 'I am steve banter',
-        severity: 3,
+        severity: 'warning',
         id: 'test-banner2',
       },
     ];
@@ -54,11 +54,11 @@ describe('components/BannerList/Banner', () => {
 
   it('merges new banners with the old banner list', async () => {
     const { rerender } = render(<BannerList banners={banners} />);
-    const newBanners = [
+    const newBanners: BannerType[] = [
       ...banners,
       {
         message: 'I am eve banner',
-        severity: 10,
+        severity: 'danger',
         id: 'test-banner3',
       },
     ];
@@ -72,11 +72,11 @@ describe('components/BannerList/Banner', () => {
     fireEvent.click(screen.getAllByRole('button')[0]);
     expect(screen.queryByText(banners[0].message)).not.toBeInTheDocument();
 
-    const newBanners = [
+    const newBanners: BannerType[] = [
       ...banners,
       {
         message: 'I am eve banner',
-        severity: 10,
+        severity: 'danger',
         id: 'test-banner3',
       },
     ];

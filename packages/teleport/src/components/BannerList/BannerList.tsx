@@ -20,6 +20,8 @@ import { Box } from 'design';
 
 import { Banner } from './Banner';
 
+import type { Severity } from './Banner';
+
 export const BannerList = ({ banners = [] }: Props) => {
   const [bannerList, setBannerList] = useState<{ [id: string]: BannerType }>(
     {}
@@ -61,7 +63,7 @@ type Props = {
 
 export type BannerType = {
   message: string;
-  severity: number;
+  severity: Severity;
   id: string;
   hidden?: boolean;
 };

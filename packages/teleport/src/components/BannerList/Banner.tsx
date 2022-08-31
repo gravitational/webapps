@@ -14,26 +14,45 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React, { ReactNode } from 'react';
+import React from 'react';
 import styled from 'styled-components';
 
 import { Box, Flex, Text } from 'design';
 import { Cross, Info, Warning } from 'design/Icon';
 
-type Props = {
+export type Severity = 'info' | 'warning' | 'danger';
+
+export type Props = {
   message: string;
   // The backend defines the severity as an integer value with the current
   // pre-defined values: LOW: 0; MEDIUM: 5; HIGH: 10
-  severity: number;
+  severity: Severity;
   id: string;
   onClose: (id: string) => void;
 };
 
-export function Banner({ id, message = '', severity = 0, onClose }: Props) {
+export function Banner({
+  id,
+  message = '',
+  severity = 'info',
+  onClose,
+}: Props) {
+  const icon = {
+    info: <Info mr={3} fontSize="3" role="icon" />,
+    warning: <Info mr={3} fontSize="3" role="icon" />,
+    danger: <Warning mr={3} fontSize="3" role="icon" />,
+  }[severity];
+
+  const backgroundColor = {
+    info: 'info',
+    warning: 'warning',
+    danger: 'danger',
+  }[severity];
+
   return (
-    <Box bg={getBackgroundColor(severity)} p={3}>
+    <Box bg={backgroundColor} p={3}>
       <Flex alignItems="center">
-        {generateIcon(severity)}
+        {icon}
         <Text bold>{message}</Text>
         <Close
           onClick={() => {
@@ -45,36 +64,6 @@ export function Banner({ id, message = '', severity = 0, onClose }: Props) {
       </Flex>
     </Box>
   );
-}
-
-function generateIcon(severity: number): ReactNode {
-  // severity is checked using ranges to allow additional severities to be added
-  // on the backend without requiring an update to the client.
-  if (severity < 5) {
-    return <Info mr={3} fontSize="3" role="icon" />;
-  }
-  if (severity < 10) {
-    return <Info mr={3} fontSize="3" role="icon" />;
-  }
-  if (severity >= 10) {
-    return <Warning mr={3} fontSize="3" role="icon" />;
-  }
-  return null;
-}
-
-function getBackgroundColor(severity: number): string {
-  // severity is checked using ranges to allow additional severities to be added
-  // on the backend without requiring an update to the client.
-  if (severity < 5) {
-    return 'info';
-  }
-  if (severity < 10) {
-    return 'warning';
-  }
-  if (severity >= 10) {
-    return 'danger';
-  }
-  return 'secondary.light';
 }
 
 const Close = styled.button`

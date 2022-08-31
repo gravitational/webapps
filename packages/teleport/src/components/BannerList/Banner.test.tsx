@@ -19,11 +19,18 @@ import { render, fireEvent, screen } from 'design/utils/testing';
 
 import { Banner } from './Banner';
 
+import type { Props } from './Banner';
+
 describe('components/BannerList/Banner', () => {
   it('displays the supplied message', () => {
     const msg = 'I am a banner';
     render(
-      <Banner message={msg} severity={0} id="test-banner" onClose={() => {}} />
+      <Banner
+        message={msg}
+        severity="info"
+        id="test-banner"
+        onClose={() => {}}
+      />
     );
     expect(screen.getByText(msg)).toBeInTheDocument();
   });
@@ -42,88 +49,79 @@ describe('components/BannerList/Banner', () => {
     expect(style[styleName]).toBe(styleValue);
   }
 
-  it.each([0, 1, 2, 3, 4])(
-    'renders an info banner for under severity 5',
-    severity => {
-      const bannerProps = {
-        message: 'I am steve banner',
-        severity,
-        id: 'test-banner',
-        onClose: () => {},
-      };
+  it('renders an info banner', () => {
+    const bannerProps: Props = {
+      message: 'I am steve banner',
+      severity: 'info',
+      id: 'test-banner',
+      onClose: () => {},
+    };
 
-      const { unmount } = render(<Banner {...bannerProps} />);
-      expect(screen.getByRole('icon')).toHaveClass('icon-info_outline');
+    const { unmount } = render(<Banner {...bannerProps} />);
+    expect(screen.getByRole('icon')).toHaveClass('icon-info_outline');
 
-      assertComputedStyle(
-        window,
-        document,
-        Banner,
-        bannerProps,
-        'backgroundColor',
-        'rgb(3, 155, 229)'
-      );
+    assertComputedStyle(
+      window,
+      document,
+      Banner,
+      bannerProps,
+      'backgroundColor',
+      'rgb(3, 155, 229)'
+    );
 
-      unmount();
-    }
-  );
+    unmount();
+  });
 
-  it.each([5, 6, 7, 8, 9])(
-    'renders a warning banner for severity 5 to 9',
-    severity => {
-      const bannerProps = {
-        message: 'I am a banner',
-        severity,
-        id: 'test-banner',
-        onClose: () => {},
-      };
+  it('renders a warning banner', () => {
+    const bannerProps: Props = {
+      message: 'I am a banner',
+      severity: 'warning',
+      id: 'test-banner',
+      onClose: () => {},
+    };
 
-      const { unmount } = render(<Banner {...bannerProps} />);
-      expect(screen.getByRole('icon')).toHaveClass('icon-info_outline');
+    const { unmount } = render(<Banner {...bannerProps} />);
+    expect(screen.getByRole('icon')).toHaveClass('icon-info_outline');
 
-      assertComputedStyle(
-        window,
-        document,
-        Banner,
-        bannerProps,
-        'backgroundColor',
-        'rgb(255, 145, 0)'
-      );
+    assertComputedStyle(
+      window,
+      document,
+      Banner,
+      bannerProps,
+      'backgroundColor',
+      'rgb(255, 145, 0)'
+    );
 
-      unmount();
-    }
-  );
+    unmount();
+  });
 
-  it.each([10, 11, 12, 56, 942])(
-    'renders an alert banner for severity 10 and above',
-    severity => {
-      const bannerProps = {
-        message: 'I am a banner',
-        severity,
-        id: 'test-banner',
-        onClose: () => {},
-      };
+  it('renders a danger banner', () => {
+    const bannerProps: Props = {
+      message: 'I am a banner',
+      severity: 'danger',
+      id: 'test-banner',
+      onClose: () => {},
+    };
 
-      const { unmount } = render(<Banner {...bannerProps} />);
-      expect(screen.getByRole('icon')).toHaveClass('icon-warning');
+    const { unmount } = render(<Banner {...bannerProps} />);
+    expect(screen.getByRole('icon')).toHaveClass('icon-warning');
 
-      assertComputedStyle(
-        window,
-        document,
-        Banner,
-        bannerProps,
-        'backgroundColor',
-        'rgb(245, 0, 87)'
-      );
+    assertComputedStyle(
+      window,
+      document,
+      Banner,
+      bannerProps,
+      'backgroundColor',
+      'rgb(245, 0, 87)'
+    );
 
-      unmount();
-    }
-  );
+    unmount();
+  });
 
   it('calls onClose when the X is clicked', () => {
-    const bannerProps = {
+    const bannerProps: Props = {
       message: 'I am a banner',
-      severity: 1,
+      severity: 'info',
       id: 'test-banner',
       onClose: jest.fn(),
     };
