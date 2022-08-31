@@ -82,37 +82,31 @@ const mockDiagnosis = {
   message: 'some diagnosis message',
   traces: [
     {
-      id: '',
       traceType: 'rbac node',
       status: 'success',
       details: 'Resource exists.',
     },
     {
-      id: '',
       traceType: 'network connectivity',
       status: 'success',
       details: 'Host is alive and reachable.',
     },
     {
-      id: '',
       traceType: 'rbac principal',
       status: 'success',
       details: 'Successfully authenticated.',
     },
     {
-      id: '',
       traceType: 'node ssh server',
       status: 'success',
       details: 'Established an SSH connection.',
     },
     {
-      id: '',
       traceType: 'node ssh session',
       status: 'success',
       details: 'Created an SSH session.',
     },
     {
-      id: '',
       traceType: 'node principal',
       status: 'success',
       details: 'User exists message.',
