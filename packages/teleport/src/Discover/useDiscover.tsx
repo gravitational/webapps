@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-import { useState } from 'react';
+import { useMemo, useState } from 'react';
 import useAttempt from 'shared/hooks/useAttemptNext';
 
 import { useLocation } from 'react-router';
@@ -59,14 +59,12 @@ export function useDiscover(ctx: TeleportContext, features: Feature[]) {
   const [agentMeta, setAgentMeta] = useState<AgentMeta>();
 
   const resource = resources.find(r => r.kind === selectedResourceKind);
-  const [views, setViews] = useState<View[]>(() =>
-    addIndexToViews(resource.views)
+  const views = useMemo<View[]>(
+    () => addIndexToViews(resource.views),
+    [resource.views]
   );
 
   function onSelectResource(kind: ResourceKind) {
-    const resource = resources.find(r => r.kind === kind);
-
-    setViews(addIndexToViews(resource.views));
     setSelectedResourceKind(kind);
   }
 
