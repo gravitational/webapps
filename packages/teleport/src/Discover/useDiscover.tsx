@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-import { useRef, useState } from 'react';
+import { useState } from 'react';
 import useAttempt from 'shared/hooks/useAttemptNext';
 
 import { useLocation } from 'react-router';
