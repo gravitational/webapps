@@ -15,14 +15,18 @@ limitations under the License.
 */
 
 import React, { useEffect, useState } from 'react';
+import styled from 'styled-components';
 
 import { Box } from 'design';
 
+import { MainContainer } from 'teleport/Main/MainContainer';
+
 import { Banner } from './Banner';
 
+import type { ReactNode } from 'react';
 import type { Severity } from './Banner';
 
-export const BannerList = ({ banners = [] }: Props) => {
+export const BannerList = ({ banners = [], children }: Props) => {
   const [bannerList, setBannerList] = useState<{ [id: string]: BannerType }>(
     {}
   );
@@ -40,25 +44,36 @@ export const BannerList = ({ banners = [] }: Props) => {
     setBannerList(newList);
   };
 
+  const shownBanners = Object.values(bannerList).filter(
+    banner => !banner.hidden
+  );
+
   return (
-    <Box>
-      {Object.values(bannerList)
-        .filter(banner => !banner.hidden)
-        .map(banner => (
-          <Banner
-            message={banner.message}
-            severity={banner.severity}
-            id={banner.id}
-            onClose={removeBanner}
-            key={banner.id}
-          />
-        ))}
-    </Box>
+    <Wrapper bannerCount={shownBanners.length}>
+      {shownBanners.map(banner => (
+        <Banner
+          message={banner.message}
+          severity={banner.severity}
+          id={banner.id}
+          onClose={removeBanner}
+          key={banner.id}
+        />
+      ))}
+      {children}
+    </Wrapper>
   );
 };
 
+const Wrapper = styled(Box)`
+  ${MainContainer} {
+    height: calc(100% - ${props => props.bannerCount * 62}px);
+  }
+  min-width: 1000px;
+`;
+
 type Props = {
   banners: BannerType[];
+  children?: ReactNode;
 };
 
 export type BannerType = {

@@ -25,11 +25,12 @@ import CatchError from 'teleport/components/CatchError';
 import cfg from 'teleport/config';
 import SideNav from 'teleport/SideNav';
 import TopBar from 'teleport/TopBar';
-import getFeatures from 'teleport/features';
 import { BannerList } from 'teleport/components/BannerList';
+import getFeatures from 'teleport/features';
 import localStorage from 'teleport/services/localStorage';
 import history from 'teleport/services/history';
 
+import { MainContainer } from './MainContainer';
 import { OnboardDiscover } from './OnboardDiscover';
 import useMain, { State } from './useMain';
 
@@ -117,29 +118,21 @@ export function Main(props: State) {
       <RouterDOM.Switch>
         <Redirect exact={true} from={cfg.routes.root} to={indexRoute} />
       </RouterDOM.Switch>
-      <BannerList banners={banners} />
-      <MainContainer>
-        <SideNav />
-        <HorizontalSplit>
-          <TopBar />
-          <Switch>{$features}</Switch>
-        </HorizontalSplit>
-      </MainContainer>
+      <BannerList banners={banners}>
+        <MainContainer>
+          <SideNav />
+          <HorizontalSplit>
+            <TopBar />
+            <Switch>{$features}</Switch>
+          </HorizontalSplit>
+        </MainContainer>
+      </BannerList>
       {requiresOnboarding && showOnboardDiscover && (
         <OnboardDiscover onClose={handleOnClose} onOnboard={handleOnboard} />
       )}
     </>
   );
 }
-
-export const MainContainer = styled.div`
-  width: 100%;
-  height: 100%;
-  display: flex;
-  flex: 1;
-  position: absolute;
-  min-width: 1000px;
-`;
 
 export const HorizontalSplit = styled.div`
   display: flex;

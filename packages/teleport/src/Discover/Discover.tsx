@@ -26,6 +26,7 @@ import useTeleport from 'teleport/useTeleport';
 import getFeatures from 'teleport/features';
 import { UserMenuNav } from 'teleport/components/UserMenuNav';
 import * as main from 'teleport/Main';
+import { MainContainer } from 'teleport/Main/MainContainer';
 import * as sideNav from 'teleport/SideNav';
 import { TopBarContainer } from 'teleport/TopBar';
 import { FeatureBox } from 'teleport/components/Layout';
@@ -73,7 +74,7 @@ export function Discover({
   }
 
   return (
-    <MainContainer>
+    <LocalMainContainer>
       <Prompt
         message="Are you sure you want to exit the “Add New Resource” workflow? You’ll have to start from the beginning next time."
         when={currentStep > 0}
@@ -106,7 +107,7 @@ export function Discover({
           </main.HorizontalSplit>
         </>
       )}
-    </MainContainer>
+    </LocalMainContainer>
   );
 }
 
@@ -231,6 +232,6 @@ const StyledNavContent = styled(sideNav.Content)`
 //
 // Our SelectResource component is the widest and can use some space
 // tightening. Also look into shrinking the side nav if possible.
-const MainContainer = styled(main.MainContainer)`
+const LocalMainContainer = styled(MainContainer)`
   min-width: 1460px;
 `;
