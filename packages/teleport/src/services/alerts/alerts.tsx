@@ -34,5 +34,11 @@ export type ClusterAlert = {
 
 export function fetchClusterAlerts(clusterId: string) {
   const url = cfg.getClusterAlertsUrl(clusterId);
-  return api.get(url).then(json => json.alerts as ClusterAlert[]);
+  return api.get(url).then(json => {
+    let alerts = json.alerts;
+    if (!Array.isArray(alerts)) {
+      alerts = [];
+    }
+    return alerts as ClusterAlert[];
+  });
 }

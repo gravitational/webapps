@@ -34,16 +34,13 @@ export function useAlerts() {
         if (!res) {
           return;
         }
-        if (Array.isArray(res)) {
-          setAlerts(res);
-          return;
-        }
-        setAlerts([]);
+
+        setAlerts(res);
       })
       .catch(err => {
         logger.error(err);
       });
-  }, []);
+  }, [clusterId]);
 
   return alerts;
 }
