@@ -21,5 +21,5 @@ export { Finished } from './Finished';
 export { Mark } from './Mark';
 export { ReadOnlyYamlEditor } from './YAML';
 export { ResourceKind } from './ResourceKind';
-export { Step } from './Step';
+export { Step, StepContainer } from './Step';
 export { TextBox, TextIcon } from './Text';
