@@ -16,9 +16,8 @@
 
 import React, { useState } from 'react';
 import styled from 'styled-components';
-import { Flex, Text, Box, Indicator } from 'design';
+import { Indicator, Text } from 'design';
 import { Danger } from 'design/Alert';
-import * as Icons from 'design/Icon';
 
 import { Prompt } from 'react-router-dom';
 
@@ -26,71 +25,55 @@ import useTeleport from 'teleport/useTeleport';
 import getFeatures from 'teleport/features';
 import { UserMenuNav } from 'teleport/components/UserMenuNav';
 import * as main from 'teleport/Main';
-import * as sideNav from 'teleport/SideNav';
 import { TopBarContainer } from 'teleport/TopBar';
 import { FeatureBox } from 'teleport/components/Layout';
 import { BannerList } from 'teleport/components/BannerList';
 import cfg from 'teleport/config';
 
 import { LINK_LABEL } from 'teleport/services/alerts/alerts';
+import { Sidebar } from 'teleport/Discover/Sidebar/Sidebar';
 
-import { useDiscover, State } from './useDiscover';
-import { SelectResource } from './SelectResource';
-import { DownloadScript } from './DownloadScript';
-import { LoginTrait } from './LoginTrait';
-import { TestConnection } from './TestConnection';
-import { Finished } from './Finished';
+import { SelectResource } from 'teleport/Discover/SelectResource';
 
-import type { AgentKind } from './useDiscover';
-import type { AgentStepComponent } from './types';
+import { findViewAtIndex } from './flow';
+
+import { useDiscover } from './useDiscover';
+
 import type { BannerType } from 'teleport/components/BannerList/BannerList';
 
-export const agentViews: Record<AgentKind, AgentStepComponent[]> = {
-  application: [SelectResource],
-  database: [SelectResource],
-  desktop: [SelectResource],
-  kubernetes: [SelectResource],
-  server: [
-    SelectResource,
-    DownloadScript,
-    LoginTrait,
-    TestConnection,
-    Finished,
-  ],
-};
-
-const agentStepTitles: string[] = [
-  'Select Resource Type',
-  'Configure Resource',
-  'Set Up Access',
-  'Test Connection',
-  '',
-];
-
-export default function Container() {
+export function Discover() {
   const [features] = useState(() => getFeatures());
   const ctx = useTeleport();
-  const state = useDiscover(ctx, features);
 
-  return <Discover {...state} />;
-}
+  const {
+    alerts,
+    initAttempt,
+    customBanners,
+    dismissAlert,
+    userMenuItems,
+    username,
+    currentStep,
+    selectedResourceKind,
+    onSelectResource,
+    logout,
+    views,
+    ...agentProps
+  } = useDiscover(ctx, features);
 
-export function Discover({
-  alerts = [],
-  customBanners = [],
-  dismissAlert,
-  initAttempt,
-  userMenuItems,
-  username,
-  currentStep,
-  logout,
-  // onSelectResource,
-  ...agentProps
-}: State) {
-  const selectedAgentKind = agentProps.selectedAgentKind;
-  let AgentComponent;
-  if (selectedAgentKind) {
-    AgentComponent = agentViews[selectedAgentKind][currentStep];
+  let content;
+  if (currentStep > 0) {
+    const view = findViewAtIndex(views, currentStep);
+
+    const Component = view.component;
+    content = <Component {...agentProps} />;
+  } else {
+    content = (
+      <SelectResource
+        selectedResourceKind={selectedResourceKind}
+        onSelect={kind => onSelectResource(kind)}
+        onNext={() => agentProps.nextStep()}
+      />
+    );
   }
 
   // The backend defines the severity as an integer value with the current
@@ -136,12 +119,10 @@ export function Discover({
         )}
         {initAttempt.status === 'success' && (
           <>
-            <SideNavAgentConnect
+            <Sidebar
+              views={views}
               currentStep={currentStep}
-              // TODO: hack to not show titles for unfinished flows.
-              stepTitles={
-                agentViews[selectedAgentKind].length > 1 ? agentStepTitles : []
-              }
+              selectedResourceKind={selectedResourceKind}
             />
             <main.HorizontalSplit>
               <main.ContentMinWidth>
@@ -156,7 +137,7 @@ export function Discover({
                   />
                 </TopBarContainer>
                 <FeatureBox pt={4} maxWidth="1450px">
-                  {AgentComponent && <AgentComponent {...agentProps} />}
+                  {content}
                 </FeatureBox>
               </main.ContentMinWidth>
             </main.HorizontalSplit>
@@ -167,121 +148,6 @@ export function Discover({
   );
 }
 
-function SideNavAgentConnect({
-  currentStep,
-  stepTitles,
-}: {
-  currentStep: number;
-  stepTitles: string[];
-}) {
-  return (
-    <StyledNav>
-      <sideNav.Logo />
-      <StyledNavContent>
-        <Box
-          border="1px solid rgba(255,255,255,0.1);"
-          borderRadius="8px"
-          css={{ backgroundColor: 'rgba(255,255,255,0.02);' }}
-          p={4}
-        >
-          <Flex alignItems="center">
-            <Flex
-              borderRadius={5}
-              alignItems="center"
-              justifyContent="center"
-              bg="secondary.main"
-              height="30px"
-              width="30px"
-              mr={2}
-            >
-              <Icons.Database />
-            </Flex>
-            <Text bold>Add New Resource</Text>
-          </Flex>
-          {stepTitles.length > 0 && (
-            <Box ml={4} mt={4}>
-              {stepTitles.map((stepTitle, index) => {
-                let className = '';
-                if (currentStep > index) {
-                  className = 'checked';
-                } else if (currentStep === index) {
-                  className = 'active';
-                }
-
-                // All flows will have a finished step that
-                // does not have a title.
-                if (!stepTitle) {
-                  return null;
-                }
-
-                return (
-                  <StepsContainer className={className} key={stepTitle}>
-                    <Bullet />
-                    {stepTitle}
-                  </StepsContainer>
-                );
-              })}
-            </Box>
-          )}
-        </Box>
-      </StyledNavContent>
-    </StyledNav>
-  );
-}
-
 const MainContainer = styled(main.MainContainer)`
   --sidebar-width: 280px;
-`;
-
-const Bullet = styled.span`
-  height: 14px;
-  width: 14px;
-  border: 1px solid #9b9b9b;
-  border-radius: 50%;
-  margin-right: 8px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-`;
-
-const StepsContainer = styled(Text)`
-  display: flex;
-  align-items: center;
-  color: ${props => props.theme.colors.text.secondary};
-  margin-bottom: 8px;
-
-  &.active,
-  &.checked {
-    color: inherit;
-  }
-
-  &.active ${Bullet}, &.checked ${Bullet} {
-    border-color: ${props => props.theme.colors.secondary.main};
-    background: ${props => props.theme.colors.secondary.main};
-  }
-
-  &.active ${Bullet} {
-    :before {
-      content: '';
-      height: 8px;
-      width: 8px;
-      border-radius: 50%;
-      border: 2px solid ${props => props.theme.colors.primary.main};
-    }
-  }
-
-  &.checked ${Bullet} {
-    :before {
-      content: '✓';
-    }
-  }
-`;
-
-const StyledNav = styled(sideNav.Nav)`
-  min-width: var(--sidebar-width);
-  width: var(--sidebar-width);
-`;
-
-const StyledNavContent = styled(sideNav.Content)`
-  padding: 0 20px;
 `;

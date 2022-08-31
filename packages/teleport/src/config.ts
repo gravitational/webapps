@@ -169,6 +169,10 @@ const cfg = {
     mfaDevicesWithTokenPath: '/v1/webapi/mfa/token/:tokenId/devices',
     mfaDevicesPath: '/v1/webapi/mfa/devices',
     mfaDevicePath: '/v1/webapi/mfa/token/:tokenId/devices/:deviceName',
+
+    installADDSPath: '/v1/webapi/scripts/desktop-access/install-ad-ds.ps1',
+    installADCSPath: '/v1/webapi/scripts/desktop-access/install-ad-cs.ps1',
+    configureADPath: '/v1/webapi/scripts/desktop-access/configure-ad.ps1',
   },
 
   getAppFqdnUrl(params: UrlAppParams) {
@@ -258,6 +262,18 @@ const cfg = {
 
   getNodeScriptUrl(token: string) {
     return cfg.baseUrl + generatePath(cfg.api.nodeScriptPath, { token });
+  },
+
+  getConfigureADUrl() {
+    return cfg.baseUrl + cfg.api.configureADPath;
+  },
+
+  getInstallADDSPath() {
+    return cfg.baseUrl + cfg.api.installADDSPath;
+  },
+
+  getInstallADCSPath() {
+    return cfg.baseUrl + cfg.api.installADCSPath;
   },
 
   getAppNodeScriptUrl(token: string, name: string, uri: string) {

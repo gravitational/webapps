@@ -16,7 +16,7 @@
 
 import React from 'react';
 
-import { render, screen, fireEvent, waitFor } from 'design/utils/testing';
+import { fireEvent, render, screen, waitFor } from 'design/utils/testing';
 
 import { MemoryRouter } from 'react-router';
 
@@ -24,10 +24,12 @@ import TeleportContext from 'teleport/teleportContext';
 import ContextProvider from 'teleport/TeleportContextProvider';
 import makeAcl from 'teleport/services/user/makeAcl';
 
+import { ResourceKind } from 'teleport/Discover/Shared';
+
 import LoginTrait from './LoginTrait';
 
 import type { User, UserContext } from 'teleport/services/user';
-import type { NodeMeta } from '../useDiscover';
+import type { NodeMeta } from '../../useDiscover';
 
 describe('login trait comp behavior', () => {
   const setup = (mockUserContext: Partial<UserContext>, mockUser: User) => {
@@ -46,7 +48,7 @@ describe('login trait comp behavior', () => {
             agentMeta={mockedNodeMeta}
             updateAgentMeta={() => null}
             nextStep={() => null}
-            selectedAgentKind="server"
+            selectedResourceKind={ResourceKind.Server}
             onSelectResource={() => null}
           />
         </ContextProvider>

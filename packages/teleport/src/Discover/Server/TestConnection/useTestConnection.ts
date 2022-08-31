@@ -21,10 +21,10 @@ import cfg from 'teleport/config';
 import { openNewTab } from 'teleport/lib/util';
 import TeleportContext from 'teleport/teleportContext';
 
-import { NodeMeta } from '../useDiscover';
+import { NodeMeta } from '../../useDiscover';
 
 import type { ConnectionDiagnostic } from 'teleport/services/agents';
-import type { AgentStepProps } from '../types';
+import type { AgentStepProps } from '../../types';
 
 export function useTestConnection({ ctx, props }: Props) {
   const { attempt, run } = useAttempt('');
