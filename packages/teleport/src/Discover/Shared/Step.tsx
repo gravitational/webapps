@@ -18,6 +18,7 @@ import React from 'react';
 import styled from 'styled-components';
 
 import { Text } from 'design';
+
 import TextSelectCopy from 'teleport/components/TextSelectCopy';
 
 interface StepProps {
@@ -45,7 +46,7 @@ export function Step(props: StepProps) {
   );
 }
 
-const StepContainer = styled.div`
+export const StepContainer = styled.div`
   background: rgba(255, 255, 255, 0.05);
   border-radius: 8px;
   padding: 16px;

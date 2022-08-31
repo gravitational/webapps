@@ -17,14 +17,16 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
 
+import { Text, Box } from 'design';
+
 import cfg from 'teleport/config';
 
-import { Text, Box } from 'design';
 
 import { ActionButtons, Header, Step } from 'teleport/Discover/Shared';
 
-import { ToggleAnswer } from './ToggleAnswer';
 import { State } from 'teleport/Discover/useDiscover';
+
+import { ToggleAnswer } from './ToggleAnswer';
 
 function generateCommand(url: string) {
   return `(Invoke-WebRequest -Uri ${url}).Content | Invoke-Expression`;
