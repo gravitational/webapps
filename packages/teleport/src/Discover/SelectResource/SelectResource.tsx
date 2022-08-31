@@ -25,8 +25,7 @@ import useTeleport from 'teleport/useTeleport';
 
 import { Acl } from 'teleport/services/user';
 
-import { ResourceKind , Header, HeaderSubtitle } from 'teleport/Discover/Shared';
-
+import { ResourceKind, Header, HeaderSubtitle } from 'teleport/Discover/Shared';
 
 import applicationIcon from './assets/application.png';
 import databaseIcon from './assets/database.png';

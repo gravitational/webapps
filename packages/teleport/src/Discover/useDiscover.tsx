@@ -39,7 +39,6 @@ import type {
 } from 'teleport/services/joinToken';
 import type { Feature } from 'teleport/types';
 
-
 export function getKindFromString(value: string) {
   switch (value) {
     case 'application':
