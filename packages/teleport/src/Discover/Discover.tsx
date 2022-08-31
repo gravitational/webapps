@@ -60,6 +60,7 @@ export function Discover() {
   } = useDiscover(ctx, features);
 
   let content;
+  // we reserve step 0 for "Select Resource Type", that is present in all resource configs
   if (currentStep > 0) {
     const view = findViewAtIndex(views, currentStep);
 

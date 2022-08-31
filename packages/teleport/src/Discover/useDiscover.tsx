@@ -23,11 +23,15 @@ import TeleportContext from 'teleport/teleportContext';
 import session from 'teleport/services/websession';
 import useMain from 'teleport/Main/useMain';
 
+import { ResourceKind } from 'teleport/Discover/Shared';
+
+import { addIndexToViews, findViewAtIndex, View } from './flow';
+
+import { resources } from './resources';
+
 import type { Node } from 'teleport/services/nodes';
 import type { Feature } from 'teleport/types';
-import { addIndexToViews, findViewAtIndex, View } from './flow';
-import { resources } from './resources';
-import { ResourceKind } from 'teleport/Discover/Shared';
+
 
 export function getKindFromString(value: string) {
   switch (value) {

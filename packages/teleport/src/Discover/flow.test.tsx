@@ -128,8 +128,9 @@
   The index of each stage is calculated via the `addParentAndIndexToViews` method.
  */
 
-import { computeViewChildrenSize, Resource } from './flow';
 import { ResourceKind } from 'teleport/Discover/Shared';
+
+import { computeViewChildrenSize, Resource } from './flow';
 
 describe('discover flow', () => {
   describe('computeViewChildrenSize', () => {

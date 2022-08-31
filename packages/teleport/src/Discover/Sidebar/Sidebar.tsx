@@ -27,6 +27,7 @@ import * as sideNav from 'teleport/SideNav';
 
 import { View } from '../flow';
 import { resources } from '../resources';
+
 import { StepList } from './StepList';
 
 interface SidebarProps {
