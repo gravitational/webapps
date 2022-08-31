@@ -382,6 +382,7 @@ exports[`polling error state 1`] = `
       >
         <div
           class="c7"
+          style="user-select: none;"
         >
           $
         </div>
@@ -712,6 +713,7 @@ exports[`polling state 1`] = `
       >
         <div
           class="c7"
+          style="user-select: none;"
         >
           $
         </div>
@@ -1014,6 +1016,7 @@ exports[`polling success state 1`] = `
       >
         <div
           class="c7"
+          style="user-select: none;"
         >
           $
         </div>

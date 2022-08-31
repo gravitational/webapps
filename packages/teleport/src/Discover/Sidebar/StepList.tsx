@@ -16,34 +16,25 @@
 
 import React from 'react';
 
-import { ActionButtons } from 'teleport/Discover/Shared';
+import { Box } from 'design';
 
-import { PermissionsErrorMessage } from './PermissionsErrorMessage';
+import { StepItem } from './StepItem';
 
-export function KubernetesResource(props: KubernetesResourceProps) {
-  let content;
-  if (props.disabled) {
-    content = (
-      <PermissionsErrorMessage
-        action="add new Kubernetes resources"
-        productName="Kubernetes Access"
-      />
-    );
-  }
+import type { View } from 'teleport/Discover/flow';
 
-  return (
-    <>
-      {content}
-
-      <ActionButtons
-        onProceed={() => props.onProceed()}
-        disableProceed={props.disabled}
-      />
-    </>
-  );
+interface StepListProps {
+  views: View[];
+  currentStep: number;
 }
 
-interface KubernetesResourceProps {
-  disabled: boolean;
-  onProceed: () => void;
+export function StepList(props: StepListProps) {
+  const items = props.views.map((view, index) => (
+    <StepItem key={index} view={view} currentStep={props.currentStep} />
+  ));
+
+  return (
+    <Box ml={4} mt={2}>
+      {items}
+    </Box>
+  );
 }

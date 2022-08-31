@@ -16,34 +16,26 @@
 
 import React from 'react';
 
-import { ActionButtons } from 'teleport/Discover/Shared';
+import { Box, Text } from 'design';
 
-import { PermissionsErrorMessage } from './PermissionsErrorMessage';
+import { ActionButtons, Header } from 'teleport/Discover/Shared';
+import { State } from 'teleport/Discover/useDiscover';
 
-export function KubernetesResource(props: KubernetesResourceProps) {
-  let content;
-  if (props.disabled) {
-    content = (
-      <PermissionsErrorMessage
-        action="add new Kubernetes resources"
-        productName="Kubernetes Access"
-      />
-    );
-  }
-
+export function ConfigureTeleport(props: State) {
   return (
-    <>
-      {content}
+    <Box>
+      <Header>Configure Active Directory</Header>
+
+      <Text mb={4}>
+        Refer to the output from the command you just ran. Copy and paste the
+        YAML output to your Teleport configuration file (e.g. teleport.yaml).
+        Once that's done, you will have to restart your Teleport Cluster...
+      </Text>
 
       <ActionButtons
-        onProceed={() => props.onProceed()}
-        disableProceed={props.disabled}
+        onProceed={() => props.nextStep()}
+        disableProceed={false}
       />
-    </>
+    </Box>
   );
-}
-
-interface KubernetesResourceProps {
-  disabled: boolean;
-  onProceed: () => void;
 }

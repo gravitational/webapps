@@ -14,4 +14,20 @@
  * limitations under the License.
  */
 
-export { Discover } from './Discover';
+import React from 'react';
+
+import { Finished } from './Finished';
+
+import type { AgentStepProps } from '../../types';
+
+export default {
+  title: 'Teleport/Discover/Finished',
+};
+
+export const Loaded = () => <Finished {...props} />;
+
+const props: AgentStepProps = {
+  agentMeta: { resourceName: 'some-resource-name' } as any,
+  updateAgentMeta: () => null,
+  nextStep: () => null,
+};

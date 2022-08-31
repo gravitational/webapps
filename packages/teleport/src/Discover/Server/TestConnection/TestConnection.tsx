@@ -22,12 +22,12 @@ import Select from 'shared/components/Select';
 
 import useTeleport from 'teleport/useTeleport';
 
-import { Header, ActionButtons, TextIcon, HeaderSubtitle } from '../Shared';
+import { Header, ActionButtons, TextIcon, HeaderSubtitle } from '../../Shared';
 
 import { useTestConnection, State } from './useTestConnection';
 
 import type { Option } from 'shared/components/Select';
-import type { AgentStepProps } from '../types';
+import type { AgentStepProps } from '../../types';
 
 export default function Container(props: AgentStepProps) {
   const ctx = useTeleport();

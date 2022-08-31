@@ -14,4 +14,10 @@
  * limitations under the License.
  */
 
-export { Discover } from './Discover';
+export enum ResourceKind {
+  Application,
+  Database,
+  Desktop,
+  Kubernetes,
+  Server,
+}

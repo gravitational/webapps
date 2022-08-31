@@ -25,7 +25,7 @@ import useAttempt from 'shared/hooks/useAttemptNext';
 import { INTERNAL_RESOURCE_ID_LABEL_KEY } from 'teleport/services/joinToken';
 import TeleportContext from 'teleport/teleportContext';
 
-import { AgentStepProps } from '../types';
+import { AgentStepProps } from '../../types';
 
 import type { JoinToken } from 'teleport/services/joinToken';
 

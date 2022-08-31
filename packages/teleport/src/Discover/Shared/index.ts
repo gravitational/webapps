@@ -14,20 +14,9 @@
  * limitations under the License.
  */
 
-import React from 'react';
-
-import { Finished } from './Finished';
-
-import type { AgentStepProps } from '../types';
-
-export default {
-  title: 'Teleport/Discover/Finished',
-};
-
-export const Loaded = () => <Finished {...props} />;
-
-const props: AgentStepProps = {
-  agentMeta: { resourceName: 'some-resource-name' } as any,
-  updateAgentMeta: () => null,
-  nextStep: () => null,
-};
+export { ActionButtons } from './ActionButtons';
+export { Header, HeaderSubtitle } from './Header';
+export { Finished } from './Finished';
+export { ResourceKind } from './ResourceKind';
+export { Step, StepContainer } from './Step';
+export { TextBox, TextIcon } from './Text';

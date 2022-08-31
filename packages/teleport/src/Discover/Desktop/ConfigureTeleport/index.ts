@@ -14,4 +14,4 @@
  * limitations under the License.
  */
 
-export { Discover } from './Discover';
+export { ConfigureTeleport } from './ConfigureTeleport';
