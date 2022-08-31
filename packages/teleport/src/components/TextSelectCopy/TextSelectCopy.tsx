@@ -59,7 +59,7 @@ export default function TextSelectCopy({
       {...styles}
     >
       <Flex mr="2" style={boxStyles}>
-        {bash && <Box mr="1">{`$`}</Box>}
+        {bash && <Box mr="1" style={{ userSelect: 'none' }}>{`$`}</Box>}
         <div ref={ref}>{text}</div>
       </Flex>
       <ButtonPrimary
