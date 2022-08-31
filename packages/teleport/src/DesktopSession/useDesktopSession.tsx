@@ -153,6 +153,7 @@ export default function useDesktopSession() {
   });
 
   const webauthn = useWebAuthn(clientCanvasProps.tdpClient);
+  const isActive = desktopService.checkDesktopIsActive(clusterId, desktopName)
 
   return {
     hostname,
@@ -169,6 +170,7 @@ export default function useDesktopSession() {
     setDisconnected,
     webauthn,
     setTdpConnection,
+    isActive,
     ...clientCanvasProps,
   };
 }

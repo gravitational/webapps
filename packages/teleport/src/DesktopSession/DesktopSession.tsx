@@ -223,6 +223,7 @@ function Session(props: PropsWithChildren<State>) {
     onContextMenu,
     onMouseEnter,
     windowOnFocus,
+    isActive,
   } = props;
 
   const clipboardSharingActive =
@@ -330,6 +331,7 @@ function Session(props: PropsWithChildren<State>) {
         onContextMenu={onContextMenu}
         onMouseEnter={onMouseEnter}
         windowOnFocus={windowOnFocus}
+        isActive={isActive}
       />
     </Flex>
   );

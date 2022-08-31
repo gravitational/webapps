@@ -40,6 +40,7 @@ export default function TdpClientCanvas(props: Props) {
     onContextMenu,
     onMouseEnter,
     windowOnFocus,
+    isActive,
     style,
   } = props;
 
@@ -55,12 +56,21 @@ export default function TdpClientCanvas(props: Props) {
   }
 
   useEffect(() => {
-    if (tdpCli) {
-      tdpCli.init();
-      return () => {
-        tdpCli.nuke();
-      };
-    }
+    isActive.then(active => {
+      if (active) {
+        const cont = confirm('This desktop has open session, connecting to it may close the other session. Do you want to continue?')
+        if (!cont) {
+          window.close()
+        }
+      }
+
+      if (tdpCli) {
+        tdpCli.init();
+        return () => {
+          tdpCli.nuke();
+        };
+      }
+    })
   }, [tdpCli]);
 
   useEffect(() => {
@@ -129,11 +139,9 @@ export default function TdpClientCanvas(props: Props) {
   useEffect(() => {
     if (tdpCli && tdpCliOnTdpError) {
       tdpCli.on(TdpClientEvent.TDP_ERROR, tdpCliOnTdpError);
-      tdpCli.on(TdpClientEvent.CLIENT_ERROR, tdpCliOnTdpError);
 
       return () => {
         tdpCli.removeListener(TdpClientEvent.TDP_ERROR, tdpCliOnTdpError);
-        tdpCli.removeListener(TdpClientEvent.CLIENT_ERROR, tdpCliOnTdpError);
       };
     }
   }, [tdpCli, tdpCliOnTdpError]);
@@ -314,5 +322,6 @@ export type Props = {
   onContextMenu?: () => boolean;
   onMouseEnter?: (cli: TdpClient, e: MouseEvent) => void;
   windowOnFocus?: (cli: TdpClient, e: FocusEvent) => void;
+  isActive: Promise<boolean>;
   style?: CSSProperties;
 };
