@@ -39,7 +39,6 @@ export function Banner({ id, message = '', severity = 0, onClose }: Props) {
           onClick={() => {
             onClose(id);
           }}
-          role="button"
         >
           <Cross />
         </Close>
@@ -78,8 +77,19 @@ function getBackgroundColor(severity: number): string {
   return 'secondary.light';
 }
 
-const Close = styled.div`
+const Close = styled.button`
+  background: none;
+  border: 1px solid transparent;
+  box-sizing: border-box;
   cursor: pointer;
   display: flex;
   margin-left: auto;
+  padding: 0.5rem;
+
+  :hover {
+    background-color: rgb(255, 255, 255, 0.1);
+  }
+  :focus {
+    border: 1px solid rgb(255, 255, 255, 0.1);
+  }
 `;

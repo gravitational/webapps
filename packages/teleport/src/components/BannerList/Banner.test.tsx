@@ -42,86 +42,83 @@ describe('components/BannerList/Banner', () => {
     expect(style[styleName]).toBe(styleValue);
   }
 
-  it('renders an info banner for under severity 5', async () => {
-    await Promise.all(
-      [0, 1, 2, 3, 4].map(severity => {
-        const bannerProps = {
-          message: 'I am steve banner',
-          severity,
-          id: 'test-banner',
-          onClose: () => {},
-        };
+  it.each([0, 1, 2, 3, 4])(
+    'renders an info banner for under severity 5',
+    severity => {
+      const bannerProps = {
+        message: 'I am steve banner',
+        severity,
+        id: 'test-banner',
+        onClose: () => {},
+      };
 
-        const { unmount } = render(<Banner {...bannerProps} />);
-        expect(screen.getByRole('icon')).toHaveClass('icon-info_outline');
+      const { unmount } = render(<Banner {...bannerProps} />);
+      expect(screen.getByRole('icon')).toHaveClass('icon-info_outline');
 
-        assertComputedStyle(
-          window,
-          document,
-          Banner,
-          bannerProps,
-          'backgroundColor',
-          'rgb(3, 155, 229)'
-        );
+      assertComputedStyle(
+        window,
+        document,
+        Banner,
+        bannerProps,
+        'backgroundColor',
+        'rgb(3, 155, 229)'
+      );
 
-        unmount();
-      })
-    );
-  });
+      unmount();
+    }
+  );
 
-  it('renders a warning banner for severity 5 to 9', async () => {
-    await Promise.all(
-      [5, 6, 7, 8, 9].map(severity => {
-        const bannerProps = {
-          message: 'I am a banner',
-          severity,
-          id: 'test-banner',
-          onClose: () => {},
-        };
+  it.each([5, 6, 7, 8, 9])(
+    'renders a warning banner for severity 5 to 9',
+    severity => {
+      const bannerProps = {
+        message: 'I am a banner',
+        severity,
+        id: 'test-banner',
+        onClose: () => {},
+      };
 
-        const { unmount } = render(<Banner {...bannerProps} />);
-        expect(screen.getByRole('icon')).toHaveClass('icon-info_outline');
+      const { unmount } = render(<Banner {...bannerProps} />);
+      expect(screen.getByRole('icon')).toHaveClass('icon-info_outline');
 
-        assertComputedStyle(
-          window,
-          document,
-          Banner,
-          bannerProps,
-          'backgroundColor',
-          'rgb(255, 145, 0)'
-        );
+      assertComputedStyle(
+        window,
+        document,
+        Banner,
+        bannerProps,
+        'backgroundColor',
+        'rgb(255, 145, 0)'
+      );
 
-        unmount();
-      })
-    );
-  });
+      unmount();
+    }
+  );
 
-  it('renders an alert banner for severity 10 and above', async () => {
-    await Promise.all(
-      [10, 11, 12, 56, 942].map(severity => {
-        const bannerProps = {
-          message: 'I am a banner',
-          severity,
-          id: 'test-banner',
-          onClose: () => {},
-        };
+  it.each([10, 11, 12, 56, 942])(
+    'renders an alert banner for severity 10 and above',
+    severity => {
+      const bannerProps = {
+        message: 'I am a banner',
+        severity,
+        id: 'test-banner',
+        onClose: () => {},
+      };
 
-        const { unmount } = render(<Banner {...bannerProps} />);
-        expect(screen.getByRole('icon')).toHaveClass('icon-warning');
+      const { unmount } = render(<Banner {...bannerProps} />);
+      expect(screen.getByRole('icon')).toHaveClass('icon-warning');
 
-        assertComputedStyle(
-          window,
-          document,
-          Banner,
-          bannerProps,
-          'backgroundColor',
-          'rgb(245, 0, 87)'
-        );
+      assertComputedStyle(
+        window,
+        document,
+        Banner,
+        bannerProps,
+        'backgroundColor',
+        'rgb(245, 0, 87)'
+      );
 
-        unmount();
-      })
-    );
-  });
+      unmount();
+    }
+  );
 
   it('calls onClose when the X is clicked', () => {
     const bannerProps = {

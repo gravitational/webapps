@@ -40,15 +40,15 @@ export const BannerList = ({ banners = [] }: Props) => {
 
   return (
     <Box>
-      {Object.entries(bannerList)
-        .filter(banner => !banner[1].hidden)
+      {Object.values(bannerList)
+        .filter(banner => !banner.hidden)
         .map(banner => (
           <Banner
-            message={banner[1].message}
-            severity={banner[1].severity}
-            id={banner[1].id}
+            message={banner.message}
+            severity={banner.severity}
+            id={banner.id}
             onClose={removeBanner}
-            key={banner[1].id}
+            key={banner.id}
           />
         ))}
     </Box>

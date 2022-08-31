@@ -40,7 +40,7 @@ export default function Container() {
 }
 
 export function Main(props: State) {
-  const { status, statusText, ctx } = props;
+  const { alerts = [], status, statusText, ctx } = props;
   const [showOnboardDiscover, setShowOnboardDiscover] = React.useState(true);
 
   if (status === 'failed') {
@@ -90,13 +90,11 @@ export function Main(props: State) {
     ctx.storeNav.getSideItems()[0]?.getLink(cfg.proxyCluster) ||
     cfg.routes.support;
 
-  const banners = props.alerts
-    ? props.alerts.map(alert => ({
-        message: alert.spec.message,
-        severity: alert.spec.severity,
-        id: alert.metadata.name,
-      }))
-    : [];
+  const banners = props.alerts.map(alert => ({
+    message: alert.spec.message,
+    severity: alert.spec.severity,
+    id: alert.metadata.name,
+  }));
 
   const onboard = localStorage.getOnboardDiscover();
   const requiresOnboarding =
