@@ -59,7 +59,7 @@ type Props = {
   banners: BannerType[];
 };
 
-type BannerType = {
+export type BannerType = {
   message: string;
   severity: number;
   id: string;

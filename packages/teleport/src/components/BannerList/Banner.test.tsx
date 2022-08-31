@@ -46,7 +46,7 @@ describe('components/BannerList/Banner', () => {
     await Promise.all(
       [0, 1, 2, 3, 4].map(severity => {
         const bannerProps = {
-          message: 'I am a banner',
+          message: 'I am steve banner',
           severity,
           id: 'test-banner',
           onClose: () => {},
