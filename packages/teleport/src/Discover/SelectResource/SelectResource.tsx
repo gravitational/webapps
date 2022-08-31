@@ -15,7 +15,7 @@ limitations under the License.
 */
 import React, { useState } from 'react';
 import SlideTabs from 'design/SlideTabs';
-import { Image, Text, Box, Flex } from 'design';
+import { Box, Flex, Image, Text } from 'design';
 
 import AddApp from 'teleport/Apps/AddApp';
 import AddDatabase from 'teleport/Databases/AddDatabase';
@@ -24,7 +24,7 @@ import useTeleport from 'teleport/useTeleport';
 
 import { Acl } from 'teleport/services/user';
 
-import { Header, HeaderSubtitle } from '../Shared';
+import { ResourceKind , Header, HeaderSubtitle } from 'teleport/Discover/Shared';
 
 import applicationIcon from './assets/application.png';
 import databaseIcon from './assets/database.png';
@@ -37,25 +37,7 @@ import { DesktopResource } from './DesktopResource';
 import { KubernetesResource } from './KubernetesResource';
 import { ServerResource } from './ServerResource';
 
-import type { UserContext } from 'teleport/services/user';
-import type { State, AgentKind } from '../useDiscover';
-import type { AgentStepProps } from '../types';
 import type { TabComponent } from 'design/SlideTabs/SlideTabs';
-
-export default function Container(props: AgentStepProps) {
-  const ctx = useTeleport();
-  const userContext = ctx.storeUser.state;
-
-  return (
-    <SelectResource
-      userContext={userContext}
-      isEnterprise={ctx.isEnterprise}
-      nextStep={props.nextStep}
-      selectedResource={props.selectedAgentKind}
-      onSelectResource={props.onSelectResource}
-    />
-  );
-}
 
 function checkPermissions(acl: Acl, tab: Tab) {
   const basePermissionsNeeded = [acl.tokens.create];
@@ -69,25 +51,21 @@ function checkPermissions(acl: Acl, tab: Tab) {
   return permissionsNeeded.some(value => !value);
 }
 
-type Props = {
-  userContext: UserContext;
-  isEnterprise: boolean;
-  nextStep: State['nextStep'];
-  selectedResource: State['selectedAgentKind'];
-  onSelectResource: State['onSelectResource'];
-};
-
 interface Tab extends TabComponent {
   permissionsNeeded: boolean[];
+  kind: ResourceKind;
 }
 
-export function SelectResource({
-  isEnterprise,
-  nextStep,
-  userContext,
-  selectedResource,
-  onSelectResource,
-}: Props) {
+interface SelectResourceProps {
+  onSelect: (kind: ResourceKind) => void;
+  onNext: () => void;
+  selectedResourceKind: ResourceKind;
+}
+
+export function SelectResource(props: SelectResourceProps) {
+  const ctx = useTeleport();
+
+  const userContext = ctx.storeUser.state;
   const { acl } = userContext;
 
   const [showAddApp, setShowAddApp] = useState(false);
@@ -97,37 +75,41 @@ export function SelectResource({
   const tabs: Tab[] = [
     {
       name: 'server',
+      kind: ResourceKind.Server,
       component: <TabItem iconSrc={serverIcon} title="Server" />,
       permissionsNeeded: [acl.nodes.list],
     },
 
     {
       name: 'database',
+      kind: ResourceKind.Database,
       component: <TabItem iconSrc={databaseIcon} title="Database" />,
       permissionsNeeded: [acl.dbServers.read, acl.dbServers.list],
     },
 
     {
       name: 'kubernetes',
+      kind: ResourceKind.Kubernetes,
       component: <TabItem iconSrc={k8sIcon} title="Kubernetes" />,
       permissionsNeeded: [acl.kubeServers.read, acl.kubeServers.list],
     },
 
     {
       name: 'application',
+      kind: ResourceKind.Application,
       component: <TabItem iconSrc={applicationIcon} title="Application" />,
       permissionsNeeded: [acl.appServers.read, acl.appServers.list],
     },
-
     {
       name: 'desktop',
+      kind: ResourceKind.Desktop,
       component: <TabItem iconSrc={serverIcon} title="Desktop" />,
       permissionsNeeded: [acl.desktops.read, acl.desktops.list],
     },
   ];
 
   const index = tabs.findIndex(
-    component => component.name === selectedResource
+    component => component.kind === props.selectedResourceKind
   );
   const selectedTabIndex = Math.max(0, index);
 
@@ -144,37 +126,37 @@ export function SelectResource({
       <SlideTabs
         initialSelected={selectedTabIndex}
         tabs={tabs}
-        onChange={index => onSelectResource(tabs[index].name as AgentKind)}
+        onChange={index => props.onSelect(tabs[index].kind)}
       />
-      {selectedResource === 'database' && (
+      {props.selectedResourceKind === ResourceKind.Database && (
         <DatabaseResource
           disabled={disabled}
           onProceed={() => setShowAddDB(true)}
         />
       )}
-      {selectedResource === 'application' && (
+      {props.selectedResourceKind === ResourceKind.Application && (
         <ApplicationResource
           disabled={disabled}
           onProceed={() => setShowAddApp(true)}
         />
       )}
-      {selectedResource === 'desktop' && (
-        <DesktopResource disabled={disabled} />
+      {props.selectedResourceKind === ResourceKind.Desktop && (
+        <DesktopResource disabled={disabled} onProceed={() => props.onNext()} />
       )}
-      {selectedResource === 'kubernetes' && (
+      {props.selectedResourceKind === ResourceKind.Kubernetes && (
         <KubernetesResource
           disabled={disabled}
           onProceed={() => setShowAddKube(true)}
         />
       )}
-      {selectedResource === 'server' && (
-        <ServerResource disabled={disabled} onProceed={nextStep} />
+      {props.selectedResourceKind === ResourceKind.Server && (
+        <ServerResource disabled={disabled} onProceed={() => props.onNext()} />
       )}
       {showAddApp && <AddApp onClose={() => setShowAddApp(false)} />}
       {showAddKube && <AddKube onClose={() => setShowAddKube(false)} />}
       {showAddDB && (
         <AddDatabase
-          isEnterprise={isEnterprise}
+          isEnterprise={ctx.isEnterprise}
           username={userContext.username}
           version={userContext.cluster.authVersion}
           authType={userContext.authType}

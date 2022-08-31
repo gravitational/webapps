@@ -18,7 +18,7 @@ import React from 'react';
 
 import { Finished } from './Finished';
 
-import type { AgentStepProps } from '../types';
+import type { AgentStepProps } from '../../types';
 
 export default {
   title: 'Teleport/Discover/Finished',

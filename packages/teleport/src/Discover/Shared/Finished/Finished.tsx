@@ -22,9 +22,15 @@ import history from 'teleport/services/history';
 
 import celebratePamPng from './celebrate-pam.png';
 
-import type { AgentStepProps } from '../types';
+import type { AgentStepProps } from '../../types';
 
 export function Finished(props: AgentStepProps) {
+  let resourceText;
+  if (props.agentMeta && props.agentMeta.resourceName) {
+    resourceText = `Resource [${props.agentMeta.resourceName}] has been successfully added to
+        this Teleport Cluster.`;
+  }
+
   return (
     <Flex
       width="600px"
@@ -40,9 +46,8 @@ export function Finished(props: AgentStepProps) {
         Resource Successfully Added
       </Text>
       <Text mb={3}>
-        Resource [{props.agentMeta.resourceName}] has been successfully added to
-        this Teleport Cluster. You can start accessing this resource right away
-        or add another resource.
+        {resourceText} You can start accessing this resource right away or add
+        another resource.
       </Text>
       <Flex>
         <ButtonPrimary

@@ -29,19 +29,12 @@ import * as Icons from 'design/Icon';
 
 import useTeleport from 'teleport/useTeleport';
 
-import {
-  Header,
-  HeaderSubtitle,
-  ActionButtons,
-  ButtonBlueText,
-  Mark,
-  ReadOnlyYamlEditor,
-} from '../Shared';
-import { loginsAndRuleUsers, logins } from '../templates';
+import { Header, HeaderSubtitle, ActionButtons, ButtonBlueText, Mark, ReadOnlyYamlEditor } from '../../Shared';
+import { loginsAndRuleUsers, logins } from '../../templates';
 
 import { useLoginTrait, State } from './useLoginTrait';
 
-import type { AgentStepProps } from '../types';
+import type { AgentStepProps } from '../../types';
 
 export default function Container(props: AgentStepProps) {
   const ctx = useTeleport();

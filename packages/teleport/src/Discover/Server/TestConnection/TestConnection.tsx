@@ -29,13 +29,13 @@ import {
   HeaderSubtitle,
   Mark,
   ReadOnlyYamlEditor,
-} from '../Shared';
-import { ruleConnectionDiagnostic } from '../templates';
+} from '../../Shared';
+import { ruleConnectionDiagnostic } from '../../templates';
 
 import { useTestConnection, State } from './useTestConnection';
 
 import type { Option } from 'shared/components/Select';
-import type { AgentStepProps } from '../types';
+import type { AgentStepProps } from '../../types';
 
 export default function Container(props: AgentStepProps) {
   const ctx = useTeleport();
