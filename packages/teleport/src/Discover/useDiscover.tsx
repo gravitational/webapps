@@ -32,7 +32,6 @@ import { resources } from './resources';
 import type { Node } from 'teleport/services/nodes';
 import type { Feature } from 'teleport/types';
 
-
 export function getKindFromString(value: string) {
   switch (value) {
     case 'application':
