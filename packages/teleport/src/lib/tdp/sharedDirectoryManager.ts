@@ -51,6 +51,7 @@ export class SharedDirectoryManager {
 
     let isEmpty = true;
     if (fileOrDir.kind === 'directory') {
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
       for await (const _ of fileOrDir.keys()) {
         isEmpty = false;
         break;
