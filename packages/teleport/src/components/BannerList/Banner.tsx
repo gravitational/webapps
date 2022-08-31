@@ -39,6 +39,7 @@ export function Banner({ id, message = '', severity = 0, onClose }: Props) {
           onClick={() => {
             onClose(id);
           }}
+          role="button"
         >
           <Cross />
         </Close>
@@ -51,13 +52,13 @@ function generateIcon(severity: number): ReactNode {
   // severity is checked using ranges to allow additional severities to be added
   // on the backend without requiring an update to the client.
   if (severity < 5) {
-    return <Info mr={3} fontSize="3" />;
+    return <Info mr={3} fontSize="3" role="icon" />;
   }
   if (severity < 10) {
-    return <Info mr={3} fontSize="3" />;
+    return <Info mr={3} fontSize="3" role="icon" />;
   }
   if (severity >= 10) {
-    return <Warning mr={3} fontSize="3" />;
+    return <Warning mr={3} fontSize="3" role="icon" />;
   }
   return null;
 }
