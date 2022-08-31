@@ -132,9 +132,20 @@ export function TestConnection({
                       </>
                     );
                   }
+                  if (t.status === 'success') {
+                    return (
+                      <TextIcon>
+                        <Icons.CircleCheck mr={1} color="success" />
+                        {t.details}
+                      </TextIcon>
+                    );
+                  }
+
+                  // For whatever reason the status is not the value
+                  // of failed or success.
                   return (
                     <TextIcon>
-                      <Icons.CircleCheck mr={1} color="success" />
+                      <Icons.Question mr={1} />
                       {t.details}
                     </TextIcon>
                   );
