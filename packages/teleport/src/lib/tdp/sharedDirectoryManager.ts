@@ -49,10 +49,22 @@ export class SharedDirectoryManager {
 
     const fileOrDir = await this.walkPath(path);
 
+    let isEmpty = true;
     if (fileOrDir.kind === 'directory') {
+      for await (const _ of fileOrDir.keys()) {
+        isEmpty = false;
+        break;
+      }
+
       // Magic numbers are the values for directories where the true
       // value is unavailable, according to the TDP spec.
-      return { size: 4096, lastModified: 0, kind: fileOrDir.kind, path };
+      return {
+        size: 4096,
+        lastModified: 0,
+        kind: fileOrDir.kind,
+        isEmpty,
+        path,
+      };
     }
 
     let file = await fileOrDir.getFile();
@@ -60,6 +72,7 @@ export class SharedDirectoryManager {
       size: file.size,
       lastModified: file.lastModified,
       kind: fileOrDir.kind,
+      isEmpty,
       path,
     };
   }
@@ -260,5 +273,6 @@ export type FileOrDirInfo = {
   size: number; // bytes
   lastModified: number; // ms since unix epoch
   kind: 'file' | 'directory';
+  isEmpty: boolean;
   path: string;
 };
