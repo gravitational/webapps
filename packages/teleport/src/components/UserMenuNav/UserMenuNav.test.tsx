@@ -52,10 +52,10 @@ describe('checkmark render', () => {
       fireEvent.click(screen.getByText(/llama/i));
 
       // Only one checkmark should be rendered at a time.
-      const targetEl = screen.getAllByTestId('checkmark');
-      expect(targetEl).toHaveLength(1);
+      const targetEl = screen.getByTestId('checkmark');
+      expect(targetEl).toBeInTheDocument();
 
-      expect(targetEl[0].previousSibling).toHaveTextContent(menuName);
+      expect(targetEl.previousSibling).toHaveTextContent(menuName);
     }
   );
 });
@@ -66,12 +66,10 @@ test('alert bubble rendered when there is no resources', () => {
 
   fireEvent.click(screen.getByText(/llama/i));
 
-  const targetEl = screen.getAllByTestId('alert-bubble');
-  expect(targetEl).toHaveLength(1);
+  const targetEl = screen.getByTestId('alert-bubble');
+  expect(targetEl).toBeInTheDocument();
 
-  expect(targetEl[0].parentNode.nextSibling).toHaveTextContent(
-    /manage access/i
-  );
+  expect(targetEl.parentNode.nextSibling).toHaveTextContent(/manage access/i);
 });
 
 test('alert bubble not rendered when viewing discovery', () => {
@@ -80,8 +78,8 @@ test('alert bubble not rendered when viewing discovery', () => {
 
   fireEvent.click(screen.getByText(/llama/i));
 
-  const targetEl = screen.queryAllByTestId('alert-bubble');
-  expect(targetEl).toHaveLength(0);
+  const targetEl = screen.queryByTestId('alert-bubble');
+  expect(targetEl).not.toBeInTheDocument();
 });
 
 test('alert bubble not rendered when there is resources', () => {
@@ -90,8 +88,8 @@ test('alert bubble not rendered when there is resources', () => {
 
   fireEvent.click(screen.getByText(/llama/i));
 
-  const targetEl = screen.queryAllByTestId('alert-bubble');
-  expect(targetEl).toHaveLength(0);
+  const targetEl = screen.queryByTestId('alert-bubble');
+  expect(targetEl).not.toBeInTheDocument();
 });
 
 test('clicking on discovery (going to) removes the alert bubble', () => {
@@ -103,8 +101,8 @@ test('clicking on discovery (going to) removes the alert bubble', () => {
   fireEvent.click(screen.getByText(/llama/i));
 
   // Test initially we have the alert bubble when not viewing discovery.
-  let targetEl = screen.getAllByTestId('alert-bubble');
-  expect(targetEl).toHaveLength(1);
+  let targetEl = screen.getByTestId('alert-bubble');
+  expect(targetEl).toBeInTheDocument();
 
   // Test clicking on discovery updates the local storage.
   fireEvent.click(screen.getByText(/manage access/i));
@@ -116,8 +114,8 @@ test('clicking on discovery (going to) removes the alert bubble', () => {
 
   // Test alert bubble is no longer rendered.
   fireEvent.click(screen.getByText(/llama/i));
-  targetEl = screen.queryAllByTestId('alert-bubble');
-  expect(targetEl).toHaveLength(0);
+  targetEl = screen.queryByTestId('alert-bubble');
+  expect(targetEl).not.toBeInTheDocument();
 });
 
 function render(path: string) {
