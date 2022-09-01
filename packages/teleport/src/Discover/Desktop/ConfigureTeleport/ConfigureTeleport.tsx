@@ -16,7 +16,7 @@
 
 import React from 'react';
 
-import { Flex, Text } from 'design';
+import { Flex, Link, Text } from 'design';
 
 import styled from 'styled-components';
 
@@ -33,7 +33,7 @@ export function ConfigureTeleport(props: State) {
           mr={5}
           flexDirection="column"
           justifyContent="space-between"
-          maxHeight={220}
+          maxHeight={280}
           flex="1 1 420px"
         >
           <Header>Configure Active Directory</Header>
@@ -49,6 +49,10 @@ export function ConfigureTeleport(props: State) {
 
           <Text mb={4}>
             Once that's done, you will have to restart your Teleport Cluster.
+          </Text>
+
+          <Text mb={4}>
+            <Link href="https://goteleport.com/docs/desktop-access/reference/configuration/" target="_blank">View Documentation</Link>
           </Text>
         </Flex>
 
