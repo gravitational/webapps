@@ -79,5 +79,6 @@ const AnimationContainer = styled.div`
   align-items: flex-end;
   margin-left: -101px;
   position: relative;
+  overflow: hidden;
   z-index: 1;
 `;
