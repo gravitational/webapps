@@ -81,4 +81,5 @@ const AnimationContainer = styled.div`
   position: relative;
   overflow: hidden;
   z-index: 1;
+  padding-right: 20px;
 `;
