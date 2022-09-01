@@ -38,8 +38,7 @@ export default function Container() {
   return <Roles {...state} />;
 }
 
-export function Roles(props: State) {
-  const { items, remove, save, attempt } = props;
+export function Roles({ items, remove, save, attempt }: State) {
   const resources = useResources(items, templates);
   const title =
     resources.status === 'creating' ? 'Create a new role' : 'Edit role';

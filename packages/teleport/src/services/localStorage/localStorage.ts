@@ -36,7 +36,7 @@ const storage = {
     window.localStorage.setItem(KeysEnum.TOKEN, JSON.stringify(token));
   },
 
-  getBearerToken(): BearerToken {
+  getBearerToken(): BearerToken | null {
     const item = window.localStorage.getItem(KeysEnum.TOKEN);
     if (item) {
       return JSON.parse(item);

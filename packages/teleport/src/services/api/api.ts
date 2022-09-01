@@ -14,38 +14,57 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 import 'whatwg-fetch';
-import localStorage from './../localStorage';
+import localStorage from '../localStorage';
 import parseError, { ApiError } from './parseError';
 
+const fetchWithAuth = (url: string, params: RequestInit = {}) => {
+  const fullUrl = window.location.origin + url;
+
+  const options: RequestInit = {
+    credentials: 'same-origin',
+    headers: {
+      Accept: 'application/json',
+      'Content-Type': 'application/json; charset=utf-8',
+      ...getAuthHeaders(),
+    },
+    mode: 'same-origin',
+    cache: 'no-store',
+    ...params,
+  };
+
+  // native call
+  return fetch(fullUrl, options);
+};
+
 const api = {
-  get(url, abortSignal) {
+  get(url: string, abortSignal?: AbortSignal): Promise<any> {
     return api.fetchJson(url, { signal: abortSignal });
   },
 
-  post(url, data) {
+  post(url: string, data?: unknown): Promise<any> {
     return api.fetchJson(url, {
       body: JSON.stringify(data),
       method: 'POST',
     });
   },
 
-  delete(url, data) {
+  delete(url: string, data?: unknown): Promise<any> {
     return api.fetchJson(url, {
       body: JSON.stringify(data),
       method: 'DELETE',
     });
   },
 
-  put(url, data) {
+  put(url: string, data?: unknown): Promise<any> {
     return api.fetchJson(url, {
       body: JSON.stringify(data),
       method: 'PUT',
     });
   },
 
-  fetchJson(url, params) {
+  fetchJson(url: string, params: RequestInit = {}) {
     return new Promise((resolve, reject) => {
-      this.fetch(url, params)
+      fetchWithAuth(url, params)
         .then(response => {
           if (response.ok) {
             return response
@@ -68,32 +87,6 @@ const api = {
         });
     });
   },
-
-  fetch(url, params = {}) {
-    url = window.location.origin + url;
-    const options = {
-      ...requestOptions,
-      ...params,
-    };
-
-    options.headers = {
-      ...options.headers,
-      ...getAuthHeaders(),
-    };
-
-    // native call
-    return fetch(url, options);
-  },
-};
-
-const requestOptions = {
-  credentials: 'same-origin',
-  headers: {
-    Accept: 'application/json',
-    'Content-Type': 'application/json; charset=utf-8',
-  },
-  mode: 'same-origin',
-  cache: 'no-store',
 };
 
 export function getAuthHeaders() {
@@ -115,12 +108,12 @@ export function getNoCacheHeaders() {
 
 export const getXCSRFToken = () => {
   const metaTag = document.querySelector('[name=grv_csrf_token]');
-  return metaTag ? metaTag.content : '';
+  return metaTag instanceof HTMLMetaElement ? metaTag.content || '' : '';
 };
 
 export function getAccessToken() {
-  const bearerToken = localStorage.getBearerToken() || {};
-  return bearerToken.accessToken;
+  const bearerToken = localStorage.getBearerToken();
+  return bearerToken?.accessToken;
 }
 
 export function getHostName() {
