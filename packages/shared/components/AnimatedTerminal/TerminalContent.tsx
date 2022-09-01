@@ -7,6 +7,8 @@ interface TerminalContentProps {
   lines: BufferEntry[];
   completed: boolean;
   counter: number;
+  keywords?: string[];
+  args?: string[];
 }
 
 export function TerminalContent(props: TerminalContentProps) {
@@ -18,12 +20,14 @@ export function TerminalContent(props: TerminalContentProps) {
 
   return (
     <TerminalContentContainer ref={ref}>
-      <TerminalCode>{renderLines(props.lines)}</TerminalCode>
+      <TerminalCode>
+        {renderLines(props.lines, props.keywords, props.args)}
+      </TerminalCode>
     </TerminalContentContainer>
   );
 }
 
-function renderLines(lines: BufferEntry[]) {
+function renderLines(lines: BufferEntry[], keywords: string[], args: string[]) {
   if (!lines.length) {
     return (
       <Prompt key="cursor">
@@ -37,28 +41,18 @@ function renderLines(lines: BufferEntry[]) {
       {line.isCommand ? (
         <Prompt>${line.text.length > 0 ? ' ' : ''}</Prompt>
       ) : null}
-      {formatText(line.text, line.isCommand)}
+      {formatText(line.text, line.isCommand, keywords, args)}
       {line.isCurrent ? <Cursor /> : null}
       <br />
     </React.Fragment>
   ));
 }
 
-const keywords = [
-  'Invoke-WebRequest',
-  'sudo',
-  'systemctl',
-  'Invoke-Expression',
-  'active',
-  '\\(running\\)',
-  '•',
-];
-
-const args = [
-  '-Uri'
-];
-
-function highlightWords(content: string, words: string[], color: string) {
+function highlightWords(
+  content: string,
+  words: string[],
+  color: string
+) {
   const regex = new RegExp(`(${words.join('|')})`);
 
   if (regex.test(content)) {
@@ -87,7 +81,7 @@ function highlightWords(content: string, words: string[], color: string) {
   return null;
 }
 
-function formatText(text: string, isCommand: boolean) {
+function formatText(text: string, isCommand: boolean, keywords: string[], args: string[]) {
   const words = text.split(' ');
   const result = [];
 
@@ -110,25 +104,37 @@ function formatText(text: string, isCommand: boolean) {
       continue;
     }
 
-    const highlightedWords = highlightWords(word, keywords, '#5af78e');
-    if (highlightedWords) {
-      result.push(
-        <span style={{ userSelect: 'none' }}  key={index}>{highlightedWords}{' '}</span>
-      );
+    if (keywords) {
+      const highlightedWords = highlightWords(word, keywords, '#5af78e');
+      if (highlightedWords) {
+        result.push(
+          <span style={{ userSelect: 'none' }} key={index}>
+            {highlightedWords}{' '}
+          </span>
+        );
 
-      continue;
+        continue;
+      }
     }
 
-    const highlightedArguments = highlightWords(word, args, '#cfa7ff');
-    if (highlightedArguments) {
-      result.push(
-        <span style={{ userSelect: 'none' }}  key={index}>{highlightedArguments}{' '}</span>
-      );
+    if (args) {
+      const highlightedArguments = highlightWords(word, args, '#cfa7ff');
+      if (highlightedArguments) {
+        result.push(
+          <span style={{ userSelect: 'none' }} key={index}>
+            {highlightedArguments}{' '}
+          </span>
+        );
 
-      continue;
+        continue;
+      }
     }
 
-    result.push(<span style={{ userSelect: 'none' }} key={index}>{word} </span>);
+    result.push(
+      <span style={{ userSelect: 'none' }} key={index}>
+        {word}{' '}
+      </span>
+    );
   }
 
   return <>{result}</>;

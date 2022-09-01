@@ -26,8 +26,16 @@ const lines = [
   },
 ];
 
+const keywords = [
+  'sudo',
+  'systemctl',
+  'active',
+  '\\(running\\)',
+  '•',
+];
+
 export function RestartTeleportTerminalAnimation() {
   return (
-    <AnimatedTerminal lines={lines} startDelay={800} />
+    <AnimatedTerminal lines={lines} startDelay={800} keywords={keywords} />
   );
 }
