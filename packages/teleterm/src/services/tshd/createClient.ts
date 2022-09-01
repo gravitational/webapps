@@ -7,6 +7,7 @@ import Logger from 'teleterm/logger';
 
 import middleware, { withLogging } from './middleware';
 import createAbortController from './createAbortController';
+import { createClusterEvenstsStream } from './createClusterEventsStream';
 
 export default function createClient(
   addr: string,
@@ -412,6 +413,11 @@ export default function createClient(
           }
         });
       });
+    },
+
+    clusterEvents() {
+      const stream = tshd.clusterEvents(new api.ClusterEventsRequest());
+      return createClusterEvenstsStream(stream);
     },
   };
 

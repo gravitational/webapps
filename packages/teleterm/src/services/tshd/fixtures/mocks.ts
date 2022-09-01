@@ -2,6 +2,7 @@ import {
   Application,
   AuthSettings,
   Cluster,
+  ClusterEventsStream,
   CreateGatewayParams,
   Database,
   Gateway,
@@ -55,4 +56,6 @@ export class MockTshClient implements TshClient {
     abortSignal?: TshAbortSignal
   ) => Promise<undefined>;
   logout: (clusterUri: string) => Promise<undefined>;
+
+  clusterEvents: () => ClusterEventsStream;
 }

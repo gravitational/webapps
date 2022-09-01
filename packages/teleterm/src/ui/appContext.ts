@@ -83,6 +83,10 @@ export default class AppContext implements IAppContext {
   }
 
   async init(): Promise<void> {
+    // The stream for cluster events needs to be initialized first, otherwise the code in tshd that
+    // writes to it will block execution.
+    // TODO: Expand the comment above.
+    await this.clustersService.initializeClusterEventsStream();
     await this.clustersService.syncRootClusters();
     this.workspacesService.restorePersistedState();
   }

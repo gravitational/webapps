@@ -1,5 +1,4 @@
 import { useStore } from 'shared/libs/stores';
-
 import isMatch from 'design/utils/match';
 import { makeLabelTag } from 'teleport/components/formatters';
 import { Label } from 'teleport/types';
@@ -7,8 +6,9 @@ import { Label } from 'teleport/types';
 import { routing } from 'teleterm/ui/uri';
 import { NotificationsService } from 'teleterm/ui/services/notifications';
 import { Cluster } from 'teleterm/services/tshd/types';
-
-import { ImmutableStore } from '../immutableStore';
+import { ImmutableStore } from 'teleterm/ui/services/immutableStore';
+import Logger from 'teleterm/logger';
+import { unique } from 'teleterm/ui/utils';
 
 import {
   AuthSettings,
@@ -479,6 +479,46 @@ export class ClustersService extends ImmutableStore<ClustersServiceState> {
     });
 
     return gateway;
+  }
+
+  // TODO: Move this elsewhere, perhaps ClusterEventsService?
+  async initializeClusterEventsStream() {
+    const uid = unique(5);
+    const logger = new Logger(`Cluster events ${uid}`);
+
+    logger.info('Initializing cluster events stream');
+    const clusterEventsStream = this.client.clusterEvents();
+
+    clusterEventsStream.onNewGatewayConnectionAccepted(() => {
+      logger.info('New connection accepted!');
+    });
+
+    clusterEventsStream.onError((error: Error) => {
+      // TODO: Add gRPC stream interceptor in lib/teleterm/apiserver so that error codes are
+      // properly propagated. Then match on AlreadyExists code rather than the error message.
+      if (error.message.includes('another stream is already active')) {
+        logger.error('Another cluster events stream is already open!');
+        return;
+      }
+
+      logger.error(
+        `Restarting cluster events stream because of an error`,
+        error
+      );
+
+      this.initializeClusterEventsStream();
+    });
+
+    clusterEventsStream.onEnd(() => {
+      logger.info('Cluster events stream has been closed by the server');
+    });
+
+    clusterEventsStream.onStatus(status => {
+      logger.info(
+        'Cluster events stream received status from the server',
+        status
+      );
+    });
   }
 
   findCluster(clusterUri: string) {

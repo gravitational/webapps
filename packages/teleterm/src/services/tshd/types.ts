@@ -1,3 +1,5 @@
+import { StatusObject } from '@grpc/grpc-js';
+
 import apiCluster from './v1/cluster_pb';
 import apiDb from './v1/database_pb';
 import apigateway from './v1/gateway_pb';
@@ -6,6 +8,12 @@ import apiKube from './v1/kube_pb';
 import apiApp from './v1/app_pb';
 import apiService from './v1/service_pb';
 import apiAuthSettings from './v1/auth_settings_pb';
+
+type RequiredKeys<T> = {
+  // eslint-disable-next-line @typescript-eslint/ban-types
+  [K in keyof T]-?: {} extends { [P in K]: T[K] } ? never : K;
+}[keyof T];
+type PickRequiredKeys<T> = Pick<T, RequiredKeys<T>>;
 
 export type Application = apiApp.App.AsObject;
 export type Kube = apiKube.Kube.AsObject;
@@ -23,6 +31,9 @@ export type GatewayProtocol =
   | 'redis'
   | 'sqlserver';
 export type Database = apiDb.Database.AsObject;
+export type NewGatewayConnectionAccepted =
+  apiService.NewGatewayConnectionAccepted.AsObject &
+    PickRequiredKeys<apiService.ClusterEvent.AsObject>;
 export type Cluster = apiCluster.Cluster.AsObject;
 export type LoggedInUser = apiCluster.LoggedInUser.AsObject;
 export type AuthProvider = apiAuthSettings.AuthProvider.AsObject;
@@ -88,6 +99,17 @@ export type TshClient = {
     abortSignal?: TshAbortSignal
   ) => Promise<void>;
   logout: (clusterUri: string) => Promise<void>;
+
+  clusterEvents: () => ClusterEventsStream;
+};
+
+export type ClusterEventsStream = {
+  onNewGatewayConnectionAccepted(
+    callback: (event: NewGatewayConnectionAccepted) => void
+  ): void;
+  onError(callback: (error: Error) => void): void;
+  onEnd(callback: () => void): void;
+  onStatus(callback: (status: StatusObject) => void): void;
 };
 
 export type TshAbortController = {
