@@ -56,9 +56,9 @@ export function ConfigureTeleport(props: State) {
           </Text>
         </Flex>
 
-        <TerminalContainer>
+        <AnimationContainer>
           <ConfigurationAnimation />
-        </TerminalContainer>
+        </AnimationContainer>
       </Flex>
 
       <ActionButtons
@@ -69,7 +69,7 @@ export function ConfigureTeleport(props: State) {
   );
 }
 
-const TerminalContainer = styled.div`
+const AnimationContainer = styled.div`
   width: 650px;
   display: flex;
   flex-direction: column;
