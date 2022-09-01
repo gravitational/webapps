@@ -47,6 +47,7 @@ export default function useMain(features: Feature[]) {
 
   return {
     alerts,
+    customBanners: [],
     ctx,
     status: attempt.status,
     statusText: attempt.statusText,

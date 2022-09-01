@@ -26,7 +26,11 @@ import { Banner } from './Banner';
 import type { ReactNode } from 'react';
 import type { Severity } from './Banner';
 
-export const BannerList = ({ banners = [], children }: Props) => {
+export const BannerList = ({
+  banners = [],
+  children,
+  customBanners = [],
+}: Props) => {
   const [bannerList, setBannerList] = useState<{ [id: string]: BannerType }>(
     {}
   );
@@ -51,7 +55,7 @@ export const BannerList = ({ banners = [], children }: Props) => {
   );
 
   return (
-    <Wrapper bannerCount={shownBanners.length}>
+    <Wrapper bannerCount={shownBanners.length + customBanners.length}>
       {shownBanners.map(banner => (
         <Banner
           message={banner.message}
@@ -61,6 +65,7 @@ export const BannerList = ({ banners = [], children }: Props) => {
           key={banner.id}
         />
       ))}
+      {customBanners}
       {children}
     </Wrapper>
   );
@@ -76,6 +81,7 @@ const Wrapper = styled(Box)`
 type Props = {
   banners: BannerType[];
   children?: ReactNode;
+  customBanners?: ReactNode[];
 };
 
 export type BannerType = {

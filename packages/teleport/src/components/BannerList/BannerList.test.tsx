@@ -104,4 +104,13 @@ describe('components/BannerList/Banner', () => {
     expect(screen.queryByText(banners[0].message)).not.toBeInTheDocument();
     expect(banners[0].hidden).toBeUndefined();
   });
+
+  it('supports custom banners', () => {
+    const customBannerMessage = 'Customized Steve Banner';
+    const customBanner = [<div key="foo">{customBannerMessage}</div>];
+    render(<BannerList banners={banners} customBanners={customBanner} />);
+    expect(screen.getByText(banners[0].message)).toBeInTheDocument();
+    expect(screen.getByText(banners[1].message)).toBeInTheDocument();
+    expect(screen.getByText(customBannerMessage)).toBeInTheDocument();
+  });
 });

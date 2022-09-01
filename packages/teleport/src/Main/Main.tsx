@@ -43,7 +43,7 @@ export default function Container() {
 }
 
 export function Main(props: State) {
-  const { alerts = [], status, statusText, ctx } = props;
+  const { alerts = [], customBanners = [], status, statusText, ctx } = props;
   const [showOnboardDiscover, setShowOnboardDiscover] = React.useState(true);
 
   if (status === 'failed') {
@@ -120,7 +120,7 @@ export function Main(props: State) {
       <RouterDOM.Switch>
         <Redirect exact={true} from={cfg.routes.root} to={indexRoute} />
       </RouterDOM.Switch>
-      <BannerList banners={banners}>
+      <BannerList banners={banners} customBanners={customBanners}>
         <MainContainer>
           <SideNav />
           <HorizontalSplit>
