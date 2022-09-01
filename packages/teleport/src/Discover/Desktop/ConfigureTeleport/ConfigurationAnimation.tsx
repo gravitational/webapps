@@ -39,31 +39,31 @@ const defaultStyle = {
 };
 
 const transitionStyles = {
-  entering: { opacity: 0, transform: 'translateX(100px)' },
+  entering: { opacity: 0, transform: 'translateX(50px)' },
   entered: { opacity: 1, transform: 'translateX(0%)' },
-  exiting: { opacity: 0, transform: 'translateX(-100px)' },
-  exited: { opacity: 0, transform: 'translateX(-100px)' },
+  exiting: { opacity: 0, transform: 'translateX(-50px)' },
+  exited: { opacity: 0, transform: 'translateX(-50px)' },
 };
 
 export function ConfigurationAnimation() {
-  const [animationStep, setAnimationStep] = useState(AnimationSteps.Editor);
+  const [animationStep, setAnimationStep] = useState(AnimationSteps.Terminal);
 
   const step = steps.find(s => s.kind === animationStep);
   const stepIndex = steps.findIndex(s => s.kind === animationStep);
 
-  // useEffect(() => {
-  //   const id = window.setTimeout(() => {
-  //     if (stepIndex + 1 >= steps.length) {
-  //       setAnimationStep(AnimationSteps.Terminal);
-  //
-  //       return;
-  //     }
-  //
-  //     setAnimationStep(steps[stepIndex + 1].kind);
-  //   }, step.length);
-  //
-  //   return () => clearTimeout(id);
-  // }, [stepIndex, step]);
+  useEffect(() => {
+    const id = window.setTimeout(() => {
+      if (stepIndex + 1 >= steps.length) {
+        setAnimationStep(AnimationSteps.Terminal);
+
+        return;
+      }
+
+      setAnimationStep(steps[stepIndex + 1].kind);
+    }, step.length);
+
+    return () => clearTimeout(id);
+  }, [stepIndex, step]);
 
   return (
     <>
@@ -130,16 +130,16 @@ export function ConfigurationAnimation() {
 const ContentContainer = styled.div`
   height: 420px;
   position: relative;
-  width: calc(100% - 40px);
+  width: calc(100% - 100px);
   overflow: hidden;
-  padding: 20px;
-  left: 20px;
+  padding: 20px 100px;
+  left: 100px;
 `;
 
 const AnimationContainer = styled.div`
   height: 420px;
   position: absolute;
-  width: calc(100% - 40px);
+  width: calc(100% - 200px);
 
   > div {
     position: absolute;
@@ -164,8 +164,8 @@ const StepIcon = styled.div`
 
 const StepsContainer = styled.div`
   display: flex;
-  width: 100%;
-  justify-content: flex-end;
+  width: calc(100% - 90px);
+  justify-content: flex-start;
   margin-bottom: 10px;
 `;
 

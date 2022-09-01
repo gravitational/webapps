@@ -27,7 +27,7 @@ import { ConfigurationAnimation } from './ConfigurationAnimation';
 
 export function ConfigureTeleport(props: State) {
   return (
-    <Flex minWidth="800px" flexDirection="column" maxWidth="1400px">
+    <Flex minWidth="800px" flexDirection="column" maxWidth="1450px">
       <Flex flexWrap="wrap" minWidth="800px" flexShrink={1}>
         <Flex
           mr={5}
@@ -35,6 +35,7 @@ export function ConfigureTeleport(props: State) {
           justifyContent="space-between"
           maxHeight={280}
           flex="1 1 420px"
+          style={{ position: 'relative', zIndex: 2 }}
         >
           <Header>Configure Active Directory</Header>
 
@@ -70,10 +71,13 @@ export function ConfigureTeleport(props: State) {
 }
 
 const AnimationContainer = styled.div`
-  width: 650px;
+  width: 850px;
   display: flex;
   flex-direction: column;
   max-width: 875px;
-  flex: 1 0 650px;
+  flex: 1 0 850px;
   align-items: flex-end;
+  margin-left: -101px;
+  position: relative;
+  z-index: 1;
 `;
