@@ -26,7 +26,7 @@ import { State } from 'teleport/Discover/useDiscover';
 
 import { ToggleAnswer } from './ToggleAnswer';
 
-function generateCommand(url: string) {
+export function generateCommand(url: string) {
   return `(Invoke-WebRequest -Uri ${url}).Content | Invoke-Expression`;
 }
 
