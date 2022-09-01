@@ -83,7 +83,6 @@ function formatText(text: string, isCommand: boolean) {
   const words = text.split(' ');
   const result = [];
 
-  // TODO: this is hacky and needs a cleanup
   for (const [index, word] of words.entries()) {
     if (!isCommand && /(https?:\/\/\S+)/g.test(word)) {
       result.push(
