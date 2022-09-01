@@ -113,7 +113,7 @@ function formatText(text: string, isCommand: boolean) {
     const highlightedWords = highlightWords(word, keywords, '#5af78e');
     if (highlightedWords) {
       result.push(
-        <React.Fragment key={index}>{highlightedWords}{' '}</React.Fragment>
+        <span style={{ userSelect: 'none' }}  key={index}>{highlightedWords}{' '}</span>
       );
 
       continue;
@@ -122,13 +122,13 @@ function formatText(text: string, isCommand: boolean) {
     const highlightedArguments = highlightWords(word, args, '#cfa7ff');
     if (highlightedArguments) {
       result.push(
-        <React.Fragment key={index}>{highlightedArguments}{' '}</React.Fragment>
+        <span style={{ userSelect: 'none' }}  key={index}>{highlightedArguments}{' '}</span>
       );
 
       continue;
     }
 
-    result.push(<span key={index}>{word} </span>);
+    result.push(<span style={{ userSelect: 'none' }} key={index}>{word} </span>);
   }
 
   return <>{result}</>;
