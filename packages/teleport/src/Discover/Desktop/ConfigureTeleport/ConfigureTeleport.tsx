@@ -16,21 +16,47 @@
 
 import React from 'react';
 
-import { Box, Text } from 'design';
+import { Box, Flex, Text } from 'design';
+
+import styled from 'styled-components';
 
 import { ActionButtons, Header } from 'teleport/Discover/Shared';
 import { State } from 'teleport/Discover/useDiscover';
 
+import { ConfigurationAnimation } from 'teleport/Discover/Desktop/ConfigureTeleport/ConfigurationAnimation';
+
 export function ConfigureTeleport(props: State) {
   return (
     <Box>
-      <Header>Configure Active Directory</Header>
+      <Flex flexWrap="wrap" maxWidth="1500px">
+        <Flex
+          mr={5}
+          flexShrink={1}
+          minWidth={200}
+          flexDirection="column"
+          justifyContent="space-between"
+          maxHeight={220}
+        >
+          <Header>Configure Active Directory</Header>
 
-      <Text mb={4}>
-        Refer to the output from the command you just ran. Copy and paste the
-        YAML output to your Teleport configuration file (e.g. teleport.yaml).
-        Once that's done, you will have to restart your Teleport Cluster...
-      </Text>
+          <Text mt={4} mb={4}>
+            Refer to the output from the command you just ran.
+          </Text>
+
+          <Text mb={4}>
+            Copy and paste the YAML output to your Teleport configuration file
+            (e.g. teleport.yaml).
+          </Text>
+
+          <Text mb={4}>
+            Once that's done, you will have to restart your Teleport Cluster.
+          </Text>
+        </Flex>
+
+        <TerminalContainer>
+          <ConfigurationAnimation />
+        </TerminalContainer>
+      </Flex>
 
       <ActionButtons
         onProceed={() => props.nextStep()}
@@ -39,3 +65,11 @@ export function ConfigureTeleport(props: State) {
     </Box>
   );
 }
+
+const TerminalContainer = styled.div`
+  width: 650px;
+  display: flex;
+  flex-direction: column;
+  flex: 1 0 650px;
+  align-items: flex-end;
+`;
