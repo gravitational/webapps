@@ -15,7 +15,7 @@
  */
 
 import React, { useState } from 'react';
-import styled from 'styled-components';
+
 import { Indicator, Text } from 'design';
 import { Danger } from 'design/Alert';
 
@@ -35,6 +35,7 @@ import { SelectResource } from 'teleport/Discover/SelectResource';
 import { findViewAtIndex } from './flow';
 
 import { useDiscover } from './useDiscover';
+import styled from 'styled-components';
 
 export function Discover() {
   const [features] = useState(() => getFeatures());
@@ -70,7 +71,7 @@ export function Discover() {
   }
 
   return (
-    <MainContainer>
+    <main.MainContainer>
       <Prompt
         message="Are you sure you want to exit the “Add New Resource” workflow? You’ll have to start from the beginning next time."
         when={currentStep > 0}
@@ -91,30 +92,26 @@ export function Discover() {
             selectedResourceKind={selectedResourceKind}
           />
           <main.HorizontalSplit>
-            <TopBarContainer>
-              <Text typography="h5" bold>
-                Manage Access
-              </Text>
-              <UserMenuNav
-                navItems={userMenuItems}
-                logout={logout}
-                username={username}
-              />
-            </TopBarContainer>
-            <FeatureBox pt={4}>{content}</FeatureBox>
+            <ContentMinWidth>
+              <TopBarContainer>
+                <Text typography="h5" bold>
+                  Manage Access
+                </Text>
+                <UserMenuNav
+                  navItems={userMenuItems}
+                  logout={logout}
+                  username={username}
+                />
+              </TopBarContainer>
+              <FeatureBox pt={4}>{content}</FeatureBox>
+            </ContentMinWidth>
           </main.HorizontalSplit>
         </>
       )}
-    </MainContainer>
+    </main.MainContainer>
   );
 }
 
-// TODO (lisa) we should look into reducing this width.
-// Any smaller than this will produce a double stacked horizontal scrollbar
-// making navigation harder.
-//
-// Our SelectResource component is the widest and can use some space
-// tightening. Also look into shrinking the side nav if possible.
-const MainContainer = styled(main.MainContainer)`
-  min-width: 1460px;
+const ContentMinWidth = styled.div`
+  min-width: calc(1300px - 281px);
 `;

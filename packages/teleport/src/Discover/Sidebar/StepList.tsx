@@ -33,7 +33,7 @@ export function StepList(props: StepListProps) {
   ));
 
   return (
-    <Box ml={4} mt={2}>
+    <Box style={{ marginLeft: 7 }} mt={2}>
       {items}
     </Box>
   );

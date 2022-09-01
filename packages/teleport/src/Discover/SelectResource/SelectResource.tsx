@@ -123,7 +123,7 @@ export function SelectResource(props: SelectResourceProps) {
   const disabled = checkPermissions(acl, tabs[selectedTabIndex]);
 
   return (
-    <Box width="1020px">
+    <Box>
       <Header>Select Resource Type</Header>
       <HeaderSubtitle>
         Users are able to add and access many different types of resources

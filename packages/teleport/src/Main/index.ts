@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import Main, { MainContainer, HorizontalSplit, StyledIndicator } from './Main';
+import Main, { MainContainer, HorizontalSplit, StyledIndicator, ContentMinWidth } from './Main';
 
-export { MainContainer, HorizontalSplit, StyledIndicator };
+export { MainContainer, HorizontalSplit, StyledIndicator, ContentMinWidth };
 export default Main;

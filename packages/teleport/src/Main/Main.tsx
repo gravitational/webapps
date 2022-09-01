@@ -102,8 +102,10 @@ export function Main(props: State) {
       <MainContainer>
         <SideNav />
         <HorizontalSplit>
-          <TopBar />
-          <Switch>{$features}</Switch>
+          <ContentMinWidth>
+            <TopBar />
+            <Switch>{$features}</Switch>
+          </ContentMinWidth>
         </HorizontalSplit>
       </MainContainer>
       {requiresOnboarding && showOnboardDiscover && (
@@ -119,17 +121,22 @@ export const MainContainer = styled.div`
   display: flex;
   flex: 1;
   position: absolute;
-  min-width: 1000px;
 `;
 
 export const HorizontalSplit = styled.div`
   display: flex;
   flex-direction: column;
-  width: 100%;
   height: 100%;
+  // sidebar is 280px + 1px right border
+  width: calc(100% - 281px);
+  flex: 1 0 calc(100% - 281px);
+  overflow-x: auto;
 
   // Allows shrinking beyond content size on flexed childrens.
-  min-width: 0;
+`;
+
+export const ContentMinWidth = styled.div`
+  min-width: calc(1000px - 281px);
 `;
 
 export const StyledIndicator = styled(HorizontalSplit)`

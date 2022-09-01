@@ -20,6 +20,7 @@ import { Database } from 'design/Icon';
 
 import { ResourceKind } from 'teleport/Discover/Shared';
 import { Resource } from 'teleport/Discover/flow';
+import { ConfigureActiveDirectory } from 'teleport/Discover/Desktop/ConfigureActiveDirectory';
 
 export const DatabaseResource: Resource = {
   kind: ResourceKind.Database,
@@ -27,6 +28,32 @@ export const DatabaseResource: Resource = {
   views: [
     {
       title: 'Select Resource',
+    },
+    {
+      title: 'Configure Resource',
+      component: ConfigureActiveDirectory,
+      views: [
+        {
+          title: 'Deploy Database Agent',
+          component: ConfigureActiveDirectory,
+        },
+        {
+          title: 'Register a Database',
+          component: ConfigureActiveDirectory,
+        },
+        {
+          title: 'Configure mTLS',
+          component: ConfigureActiveDirectory,
+        },
+      ],
+    },
+    {
+      title: 'Setup Access',
+      component: ConfigureActiveDirectory,
+    },
+    {
+      title: 'Test Connection',
+      component: ConfigureActiveDirectory,
     },
   ],
 };
