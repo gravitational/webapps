@@ -16,6 +16,7 @@
 
 import React, { useState } from 'react';
 import styled from 'styled-components';
+
 import { Indicator, Text } from 'design';
 import { Danger } from 'design/Alert';
 
@@ -28,7 +29,7 @@ import * as main from 'teleport/Main';
 import { TopBarContainer } from 'teleport/TopBar';
 import { FeatureBox } from 'teleport/components/Layout';
 import { BannerList } from 'teleport/components/BannerList';
-import cfg from 'teleport/config';s
+import cfg from 'teleport/config';
 
 import { Sidebar } from 'teleport/Discover/Sidebar/Sidebar';
 

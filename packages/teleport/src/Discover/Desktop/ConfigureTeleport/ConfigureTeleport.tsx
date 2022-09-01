@@ -16,26 +16,25 @@
 
 import React from 'react';
 
-import { Box, Flex, Text } from 'design';
+import { Flex, Text } from 'design';
 
 import styled from 'styled-components';
 
 import { ActionButtons, Header } from 'teleport/Discover/Shared';
 import { State } from 'teleport/Discover/useDiscover';
 
-import { ConfigurationAnimation } from 'teleport/Discover/Desktop/ConfigureTeleport/ConfigurationAnimation';
+import { ConfigurationAnimation } from './ConfigurationAnimation';
 
 export function ConfigureTeleport(props: State) {
   return (
-    <Box>
-      <Flex flexWrap="wrap" maxWidth="1500px">
+    <Flex minWidth="800px" flexDirection="column" maxWidth="1400px">
+      <Flex flexWrap="wrap" minWidth="800px" flexShrink={1}>
         <Flex
           mr={5}
-          flexShrink={1}
-          minWidth={200}
           flexDirection="column"
           justifyContent="space-between"
           maxHeight={220}
+          flex="1 1 420px"
         >
           <Header>Configure Active Directory</Header>
 
@@ -62,7 +61,7 @@ export function ConfigureTeleport(props: State) {
         onProceed={() => props.nextStep()}
         disableProceed={false}
       />
-    </Box>
+    </Flex>
   );
 }
 
@@ -70,6 +69,7 @@ const TerminalContainer = styled.div`
   width: 650px;
   display: flex;
   flex-direction: column;
+  max-width: 875px;
   flex: 1 0 650px;
   align-items: flex-end;
 `;

@@ -42,7 +42,7 @@ const StyledNav = styled(sideNav.Nav)`
 `;
 
 const StyledNavContent = styled(sideNav.Content)`
-  padding: 20px 32px 32px 32px;
+  padding: 0 20px;
 `;
 
 export function Sidebar(props: SidebarProps) {
@@ -61,7 +61,7 @@ export function Sidebar(props: SidebarProps) {
           border="1px solid rgba(255,255,255,0.1);"
           borderRadius="8px"
           css={{ backgroundColor: 'rgba(255,255,255,0.02);' }}
-          p={4}
+          p={3}
         >
           <Flex alignItems="center">
             <Flex

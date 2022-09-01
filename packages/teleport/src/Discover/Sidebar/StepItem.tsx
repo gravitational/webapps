@@ -16,7 +16,7 @@
 
 import React from 'react';
 
-import { Text } from 'design';
+import { Box, Text } from 'design';
 import styled from 'styled-components';
 
 import { hasActiveChildren } from 'teleport/Discover/flow';
@@ -38,14 +38,14 @@ export function StepItem(props: StepItemProps) {
   let list;
   let isActive = props.currentStep === props.view.index;
   if (props.view.views) {
+      list = (
+        <Box ml={2}>
+          <StepList views={props.view.views} currentStep={props.currentStep} />
+        </Box>
+      );
+
     if (!isActive) {
       isActive = hasActiveChildren(props.view.views, props.currentStep);
-    }
-
-    if (isActive) {
-      list = (
-        <StepList views={props.view.views} currentStep={props.currentStep} />
-      );
     }
   }
 
