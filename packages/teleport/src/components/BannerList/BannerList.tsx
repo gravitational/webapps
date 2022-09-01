@@ -33,14 +33,16 @@ export const BannerList = ({ banners = [], children }: Props) => {
 
   useEffect(() => {
     const newList = {};
-    banners.forEach(banner => (newList[banner.id] = banner));
+    banners.forEach(banner => (newList[banner.id] = { ...banner }));
     Object.assign(newList, bannerList);
     setBannerList(newList);
   }, [banners]);
 
   const removeBanner = id => {
-    const newList = { ...bannerList };
-    newList[id].hidden = true;
+    const newList = {
+      ...bannerList,
+      [id]: { ...bannerList[id], hidden: true },
+    };
     setBannerList(newList);
   };
 

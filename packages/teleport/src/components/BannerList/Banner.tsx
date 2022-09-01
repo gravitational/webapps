@@ -24,8 +24,6 @@ export type Severity = 'info' | 'warning' | 'danger';
 
 export type Props = {
   message: string;
-  // The backend defines the severity as an integer value with the current
-  // pre-defined values: LOW: 0; MEDIUM: 5; HIGH: 10
   severity: Severity;
   id: string;
   onClose: (id: string) => void;

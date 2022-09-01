@@ -95,4 +95,13 @@ describe('components/BannerList/Banner', () => {
     );
     expect(screen.getByText(message)).toBeInTheDocument();
   });
+
+  it('does not modify the provided banner list on hide', () => {
+    banners.pop();
+    render(<BannerList banners={banners} />);
+    expect(screen.getByText(banners[0].message)).toBeInTheDocument();
+    fireEvent.click(screen.getByRole('button'));
+    expect(screen.queryByText(banners[0].message)).not.toBeInTheDocument();
+    expect(banners[0].hidden).toBeUndefined();
+  });
 });
