@@ -24,6 +24,15 @@ export function TerminalContent(props: TerminalContentProps) {
 }
 
 function renderLines(lines: BufferEntry[]) {
+  if (!lines.length) {
+    console.log('hello!');
+    return (
+      <Prompt key="cursor">
+        $ <Cursor />
+      </Prompt>
+    );
+  }
+
   return lines.map(line => (
     <React.Fragment key={line.id}>
       {line.isCommand ? (
