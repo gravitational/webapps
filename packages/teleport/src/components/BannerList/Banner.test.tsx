@@ -19,8 +19,6 @@ import { render, fireEvent, screen } from 'design/utils/testing';
 
 import { Banner } from './Banner';
 
-import type { Props } from './Banner';
-
 describe('components/BannerList/Banner', () => {
   it('displays the supplied message', () => {
     const msg = 'I am a banner';
@@ -35,101 +33,59 @@ describe('components/BannerList/Banner', () => {
     expect(screen.getByText(msg)).toBeInTheDocument();
   });
 
-  function assertComputedStyle(
-    win,
-    doc,
-    Component,
-    props,
-    styleName,
-    styleValue
-  ) {
-    const componentClass = Component(props).type.styledComponentId;
-    const componentElement = doc.getElementsByClassName(componentClass);
-    const style = win.getComputedStyle(componentElement[0]);
-    expect(style[styleName]).toBe(styleValue);
-  }
-
   it('renders an info banner', () => {
-    const bannerProps: Props = {
-      message: 'I am steve banner',
-      severity: 'info',
-      id: 'test-banner',
-      onClose: () => {},
-    };
-
-    const { unmount } = render(<Banner {...bannerProps} />);
-    expect(screen.getByRole('icon')).toHaveClass('icon-info_outline');
-
-    assertComputedStyle(
-      window,
-      document,
-      Banner,
-      bannerProps,
-      'backgroundColor',
-      'rgb(3, 155, 229)'
+    const { container } = render(
+      <Banner
+        message="I am steve banner"
+        severity="info"
+        id="test-banner"
+        onClose={() => {}}
+      />
     );
-
-    unmount();
+    expect(screen.getByRole('icon')).toHaveClass('icon-info_outline');
+    expect(container.firstChild).toHaveStyleRule('background-color', '#039be5');
   });
 
   it('renders a warning banner', () => {
-    const bannerProps: Props = {
-      message: 'I am a banner',
-      severity: 'warning',
-      id: 'test-banner',
-      onClose: () => {},
-    };
-
-    const { unmount } = render(<Banner {...bannerProps} />);
-    expect(screen.getByRole('icon')).toHaveClass('icon-info_outline');
-
-    assertComputedStyle(
-      window,
-      document,
-      Banner,
-      bannerProps,
-      'backgroundColor',
-      'rgb(255, 145, 0)'
+    const { container } = render(
+      <Banner
+        message="I am steve banner"
+        severity="warning"
+        id="test-banner"
+        onClose={() => {}}
+      />
     );
-
-    unmount();
+    expect(screen.getByRole('icon')).toHaveClass('icon-info_outline');
+    expect(container.firstChild).toHaveStyleRule('background-color', '#ff9100');
   });
 
   it('renders a danger banner', () => {
-    const bannerProps: Props = {
-      message: 'I am a banner',
-      severity: 'danger',
-      id: 'test-banner',
-      onClose: () => {},
-    };
-
-    const { unmount } = render(<Banner {...bannerProps} />);
-    expect(screen.getByRole('icon')).toHaveClass('icon-warning');
-
-    assertComputedStyle(
-      window,
-      document,
-      Banner,
-      bannerProps,
-      'backgroundColor',
-      'rgb(245, 0, 87)'
+    const { container } = render(
+      <Banner
+        message="I am steve banner"
+        severity="danger"
+        id="test-banner"
+        onClose={() => {}}
+      />
     );
-
-    unmount();
+    expect(screen.getByRole('icon')).toHaveClass('icon-warning');
+    expect(container.firstChild).toHaveStyleRule('background-color', '#f50057');
   });
 
   it('calls onClose when the X is clicked', () => {
-    const bannerProps: Props = {
-      message: 'I am a banner',
-      severity: 'info',
-      id: 'test-banner',
-      onClose: jest.fn(),
-    };
-
-    render(<Banner {...bannerProps} />);
+    const id = 'test-banner';
+    const onClose = jest.fn();
+    render(
+      <Banner
+        message="I am steve banner"
+        severity="info"
+        id={id}
+        onClose={onClose}
+      />
+    );
 
     fireEvent.click(screen.getByRole('button'));
-    expect(bannerProps.onClose).toHaveBeenCalledTimes(1);
-    expect(bannerProps.onClose).toHaveBeenCalledWith(bannerProps.id);
+    expect(onClose).toHaveBeenCalledTimes(1);
+    expect(onClose).toHaveBeenCalledWith(id);
   });
 });

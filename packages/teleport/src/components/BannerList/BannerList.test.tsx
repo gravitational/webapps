@@ -85,4 +85,14 @@ describe('components/BannerList/Banner', () => {
     expect(screen.getByText(newBanners[1].message)).toBeInTheDocument();
     expect(screen.getByText(newBanners[2].message)).toBeInTheDocument();
   });
+
+  it('supports rendering children', () => {
+    const message = 'That was easy';
+    render(
+      <BannerList banners={banners}>
+        <button>{message}</button>
+      </BannerList>
+    );
+    expect(screen.getByText(message)).toBeInTheDocument();
+  });
 });
