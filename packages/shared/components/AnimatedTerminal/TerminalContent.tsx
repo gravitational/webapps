@@ -36,6 +36,49 @@ function renderLines(lines: BufferEntry[]) {
   ));
 }
 
+const keywords = [
+  'Invoke-WebRequest',
+  'sudo',
+  'systemctl',
+  'Invoke-Expression',
+  'active',
+  '\\(running\\)',
+  '•',
+];
+
+const args = [
+  '-Uri'
+];
+
+function highlightWords(content: string, words: string[], color: string) {
+  const regex = new RegExp(`(${words.join('|')})`);
+
+  if (regex.test(content)) {
+    const split = content.split(regex);
+
+    return split
+      .map((item, index) => {
+        if (!item) {
+          return;
+        }
+
+        // all odd occurrences are matches, the rest remain unchanged
+        if (index % 2 === 0) {
+          return <span key={index}>{item}</span>;
+        }
+
+        return (
+          <span key={index} style={{ color }}>
+            {item}
+          </span>
+        );
+      })
+      .filter(Boolean);
+  }
+
+  return null;
+}
+
 function formatText(text: string, isCommand: boolean) {
   const words = text.split(' ');
   const result = [];
@@ -59,41 +102,19 @@ function formatText(text: string, isCommand: boolean) {
       continue;
     }
 
-    if (word === '(Invoke-WebRequest') {
+    const highlightedWords = highlightWords(word, keywords, '#5af78e');
+    if (highlightedWords) {
       result.push(
-        <React.Fragment key={index}>
-          <span>(</span>
-          <span style={{ color: '#5af78e' }}>Invoke-WebRequest </span>
-        </React.Fragment>
+        <React.Fragment key={index}>{highlightedWords}{' '}</React.Fragment>
       );
 
       continue;
     }
 
-    if (['-Uri'].includes(word)) {
+    const highlightedArguments = highlightWords(word, args, '#cfa7ff');
+    if (highlightedArguments) {
       result.push(
-        <span key={index} style={{ color: '#cfa7ff' }}>
-          {word}{' '}
-        </span>
-      );
-
-      continue;
-    }
-
-    if (
-      [
-        'sudo',
-        'systemctl',
-        'Invoke-Expression',
-        'active',
-        '(running)',
-        '•',
-      ].includes(word)
-    ) {
-      result.push(
-        <span key={index} style={{ color: '#5af78e' }}>
-          {word}{' '}
-        </span>
+        <React.Fragment key={index}>{highlightedArguments}{' '}</React.Fragment>
       );
 
       continue;
