@@ -108,29 +108,31 @@ export function LoginTrait({
             )}
             {/* static logins cannot be modified */}
             {staticLogins.map((login, index) => {
+              const id = `${login}${index}`;
               return (
                 <CheckboxWrapper key={index} className="disabled">
                   <CheckboxInput
                     type="checkbox"
-                    name={login}
-                    id={login}
+                    name={id}
+                    id={id}
                     defaultChecked
                   />
-                  <Label htmlFor={login}>{login}</Label>
+                  <Label htmlFor={id}>{login}</Label>
                 </CheckboxWrapper>
               );
             })}
             {dynamicLogins.map((login, index) => {
+              const id = `${login}${index}`;
               return (
                 <CheckboxWrapper key={index}>
                   <CheckboxInput
                     type="checkbox"
-                    name={login}
-                    id={login}
+                    name={id}
+                    id={id}
                     ref={el => (inputRefs.current[index] = el)}
                     defaultChecked
                   />
-                  <Label htmlFor={login}>{login}</Label>
+                  <Label htmlFor={id}>{login}</Label>
                 </CheckboxWrapper>
               );
             })}

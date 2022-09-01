@@ -120,23 +120,23 @@ export function TestConnection({
               `Failed to Start Testing: ${attempt.statusText}`}
             {attempt.status === 'success' && (
               <Box>
-                {diagnosis.traces.map(t => {
-                  if (t.status === 'failed') {
+                {diagnosis.traces.map((trace, index) => {
+                  if (trace.status === 'failed') {
                     return (
-                      <>
+                      <React.Fragment key={index}>
                         <TextIcon>
                           <Icons.Warning mr={1} color="danger" />
-                          {t.details}
+                          {trace.details}
                         </TextIcon>
-                        <Box mt={2}>{t.error}</Box>
-                      </>
+                        <Box mt={2}>{trace.error}</Box>
+                      </React.Fragment>
                     );
                   }
-                  if (t.status === 'success') {
+                  if (trace.status === 'success') {
                     return (
-                      <TextIcon>
+                      <TextIcon key={index}>
                         <Icons.CircleCheck mr={1} color="success" />
-                        {t.details}
+                        {trace.details}
                       </TextIcon>
                     );
                   }
@@ -144,9 +144,9 @@ export function TestConnection({
                   // For whatever reason the status is not the value
                   // of failed or success.
                   return (
-                    <TextIcon>
+                    <TextIcon key={index}>
                       <Icons.Question mr={1} />
-                      {t.details}
+                      {trace.details}
                     </TextIcon>
                   );
                 })}
