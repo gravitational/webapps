@@ -46,24 +46,24 @@ const transitionStyles = {
 };
 
 export function ConfigurationAnimation() {
-  const [animationStep, setAnimationStep] = useState(AnimationSteps.Terminal);
+  const [animationStep, setAnimationStep] = useState(AnimationSteps.Editor);
 
   const step = steps.find(s => s.kind === animationStep);
   const stepIndex = steps.findIndex(s => s.kind === animationStep);
 
-  useEffect(() => {
-    const id = window.setTimeout(() => {
-      if (stepIndex + 1 >= steps.length) {
-        setAnimationStep(AnimationSteps.Terminal);
-
-        return;
-      }
-
-      setAnimationStep(steps[stepIndex + 1].kind);
-    }, step.length);
-
-    return () => clearTimeout(id);
-  }, [stepIndex, step]);
+  // useEffect(() => {
+  //   const id = window.setTimeout(() => {
+  //     if (stepIndex + 1 >= steps.length) {
+  //       setAnimationStep(AnimationSteps.Terminal);
+  //
+  //       return;
+  //     }
+  //
+  //     setAnimationStep(steps[stepIndex + 1].kind);
+  //   }, step.length);
+  //
+  //   return () => clearTimeout(id);
+  // }, [stepIndex, step]);
 
   return (
     <>
