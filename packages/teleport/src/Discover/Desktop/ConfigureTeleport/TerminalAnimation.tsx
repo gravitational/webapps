@@ -5,7 +5,6 @@ import { AnimatedTerminal } from 'shared/components/AnimatedTerminal';
 import cfg from 'teleport/config';
 
 import { generateCommand } from 'teleport/Discover/Desktop/ConfigureActiveDirectory/ConfigureActiveDirectory';
-import { Note } from 'teleport/Discover/Desktop/ConfigureTeleport/Note';
 
 const lines = [
   {
@@ -46,10 +45,6 @@ windows_desktop_service:
 
 export function TerminalAnimation() {
   return (
-    <>
-      <AnimatedTerminal lines={lines} startDelay={800} />
-
-      <Note />
-    </>
+    <AnimatedTerminal lines={lines} startDelay={800} />
   );
 }

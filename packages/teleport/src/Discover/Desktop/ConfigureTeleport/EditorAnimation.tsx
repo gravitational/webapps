@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
+import styled from 'styled-components';
 
 import { Editor, File, Language } from 'shared/components/Editor';
-import { Note } from 'teleport/Discover/Desktop/ConfigureTeleport/Note';
 
 const lines = `teleport:
   data_dir: /var/lib/teleport
@@ -53,12 +53,14 @@ export function EditorAnimation() {
   }, []);
 
   return (
-    <>
+    <DisableUserSelect>
       <Editor title="Your IDE">
         <File language={Language.YAML} name="teleport.yaml" code={content} />
       </Editor>
-
-      <Note />
-    </>
+    </DisableUserSelect>
   );
 }
+
+const DisableUserSelect = styled('div')`
+  user-select: none;
+`;
