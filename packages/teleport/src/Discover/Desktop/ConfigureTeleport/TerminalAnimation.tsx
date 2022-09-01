@@ -43,8 +43,17 @@ windows_desktop_service:
   },
 ];
 
+const keywords = ['Invoke-WebRequest', 'Invoke-Expression'];
+
+const args = ['-Uri'];
+
 export function TerminalAnimation() {
   return (
-    <AnimatedTerminal lines={lines} startDelay={800} />
+    <AnimatedTerminal
+      lines={lines}
+      startDelay={800}
+      keywords={keywords}
+      args={args}
+    />
   );
 }

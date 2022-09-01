@@ -9,6 +9,8 @@ import { BufferEntry, createTerminalContent, TerminalLine } from './content';
 interface AnimatedTerminalProps {
   lines: TerminalLine[];
   startDelay?: number;
+  keywords?: string[];
+  args?: string[];
 }
 
 export function AnimatedTerminal(props: AnimatedTerminalProps) {
@@ -54,7 +56,13 @@ export function AnimatedTerminal(props: AnimatedTerminalProps) {
 
   return (
     <Window title="Terminal">
-      <TerminalContent lines={lines} completed={completed} counter={counter} />
+      <TerminalContent
+        lines={lines}
+        completed={completed}
+        counter={counter}
+        args={props.args}
+        keywords={props.keywords}
+      />
     </Window>
   );
 }
