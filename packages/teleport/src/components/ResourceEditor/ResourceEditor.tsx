@@ -14,8 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React from 'react';
-import PropTypes from 'prop-types';
+import React, { ReactNode } from 'react';
 import Dialog, { DialogHeader, DialogTitle } from 'design/Dialog';
 import {
   ButtonPrimary,
@@ -30,22 +29,32 @@ import TextEditor from 'shared/components/TextEditor';
 import * as Alerts from 'design/Alert';
 import { useAttempt, useState } from 'shared/hooks';
 
-export default function ResourceEditor(props) {
-  const {
-    title,
-    text,
-    name,
-    directions = null,
-    docsURL = null,
-    onClose,
-    isNew,
-  } = props;
+type ResourceEditorProps = {
+  title: string;
+  text: string;
+  name: string;
+  isNew: boolean;
+  directions?: ReactNode;
+  docsURL?: string;
+  onClose: () => void;
+  onSave: (content: string) => Promise<void>;
+};
 
+export default function ResourceEditor({
+  title,
+  text,
+  name,
+  directions,
+  docsURL,
+  onClose,
+  isNew,
+  onSave,
+}: ResourceEditorProps) {
   const { attempt, attemptActions, content, isDirty, setContent } =
     useEditor(text);
 
-  const onSave = () => {
-    attemptActions.do(() => props.onSave(content)).then(() => onClose());
+  const onSaveClick = () => {
+    attemptActions.do(() => onSave(content)).then(() => onClose());
   };
 
   const isSaveDisabled = attempt.isProcessing || (!isDirty && !isNew);
@@ -75,7 +84,11 @@ export default function ResourceEditor(props) {
             />
           </Flex>
           <Box mt="5">
-            <ButtonPrimary disabled={isSaveDisabled} onClick={onSave} mr="3">
+            <ButtonPrimary
+              disabled={isSaveDisabled}
+              onClick={onSaveClick}
+              mr="3"
+            >
               Save changes
             </ButtonPrimary>
             <ButtonSecondary disabled={attempt.isProcessing} onClick={onClose}>
@@ -118,18 +131,6 @@ export default function ResourceEditor(props) {
   );
 }
 
-ResourceEditor.propTypes = {
-  name: PropTypes.string,
-  text: PropTypes.string,
-  title: PropTypes.string,
-  docsURL: PropTypes.string,
-  data: PropTypes.string,
-  onSave: PropTypes.func.isRequired,
-  onClose: PropTypes.func.isRequired,
-  isNew: PropTypes.bool.isRequired,
-  directions: PropTypes.element,
-};
-
 const dialogCss = () => `
   height: 80%;
   width: calc(100% - 20%);
@@ -137,14 +138,14 @@ const dialogCss = () => `
   padding: 0;
 `;
 
-function useEditor(initial) {
-  const [attempt, attemptActions] = useAttempt();
+function useEditor(initial: string) {
+  const [attempt, attemptActions] = useAttempt(undefined);
   const [state, setState] = useState({
     isDirty: false,
     content: initial,
   });
 
-  function setContent(content) {
+  function setContent(content: string) {
     setState({
       isDirty: initial !== content,
       content,
