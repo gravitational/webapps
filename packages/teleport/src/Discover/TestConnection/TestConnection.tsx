@@ -117,7 +117,7 @@ export function TestConnection({
             borderColor={diagnosisStateBorderColor}
           >
             {attempt.status === 'failed' &&
-              `Failed to Start Testing: ${attempt.statusText}`}
+              `Encountered Error: ${attempt.statusText}`}
             {attempt.status === 'success' && (
               <Box>
                 {diagnosis.traces.map((trace, index) => {
