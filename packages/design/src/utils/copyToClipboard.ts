@@ -19,7 +19,7 @@
  *
  * @param textToCopy the text to copy to clipboard
  */
-export default function copyToClipboard(textToCopy: string): Promise<any> {
+export default function copyToClipboard(textToCopy: string): Promise<void> {
   // DELETE when navigator.clipboard is not a working draft
   if (fallbackCopyToClipboard(textToCopy)) {
     return Promise.resolve();

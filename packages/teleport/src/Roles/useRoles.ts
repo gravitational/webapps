@@ -25,9 +25,7 @@ export default function useRoles(ctx: TeleportContext) {
   const { attempt, run } = useAttempt('processing');
 
   function fetchData() {
-    return ctx.resourceService.fetchRoles().then(received => {
-      setItems(received);
-    });
+    return ctx.resourceService.fetchRoles().then(setItems);
   }
 
   // TODO: we cannot refetch the data right after saving because this backend
@@ -35,23 +33,23 @@ export default function useRoles(ctx: TeleportContext) {
   function save(yaml: string, isNew: boolean) {
     if (isNew) {
       return ctx.resourceService.createRole(yaml).then(result => {
-        setItems([result, ...items]);
+        setItems(items => [result, ...items]);
       });
     }
 
     return ctx.resourceService.updateRole(yaml).then(result => {
-      setItems([result, ...items.filter(r => r.name !== result.name)]);
+      setItems(items => [result, ...items.filter(r => r.name !== result.name)]);
     });
   }
 
   function remove(name: string) {
     return ctx.resourceService.deleteRole(name).then(() => {
-      setItems(items.filter(r => r.name !== name));
+      setItems(items => items.filter(r => r.name !== name));
     });
   }
 
   useEffect(() => {
-    run(() => fetchData());
+    run(fetchData);
   }, []);
 
   return {
