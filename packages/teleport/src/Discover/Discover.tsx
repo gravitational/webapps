@@ -153,7 +153,7 @@ export function Discover({
                     username={username}
                   />
                 </TopBarContainer>
-                <FeatureBox pt={4}>
+                <FeatureBox pt={4} maxWidth="1450px">
                   {AgentComponent && <AgentComponent {...agentProps} />}
                 </FeatureBox>
               </ContentMinWidth>

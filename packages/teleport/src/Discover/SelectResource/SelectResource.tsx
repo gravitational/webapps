@@ -134,7 +134,7 @@ export function SelectResource({
   const disabled = checkPermissions(acl, tabs[selectedTabIndex]);
 
   return (
-    <Box maxWidth="1450px">
+    <Box>
       <Header>Select Resource Type</Header>
       <HeaderSubtitle>
         Users are able to add and access many different types of resources
