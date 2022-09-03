@@ -228,7 +228,7 @@ function SideNavAgentConnect({
 }
 
 const HorizontalSplit = styled(main.HorizontalSplit)`
-  // sidebar is 240px + 1px right border
+  // sidebar is 280px + 1px right border
   width: calc(100% - 281px);
   flex: 1 0 calc(100% - 281px);
 `;
