@@ -27,5 +27,4 @@ export const MainContainer = styled.div`
   display: flex;
   flex: 1;
   position: absolute;
-  min-width: 1000px;
 `;

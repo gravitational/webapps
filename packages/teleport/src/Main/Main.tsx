@@ -135,8 +135,10 @@ export function Main(props: State) {
         <MainContainer>
           <SideNav />
           <HorizontalSplit>
-            <TopBar />
-            <Switch>{$features}</Switch>
+            <ContentMinWidth>
+              <TopBar />
+              <Switch>{$features}</Switch>
+            </ContentMinWidth>
           </HorizontalSplit>
         </MainContainer>
       </BannerList>
@@ -147,14 +149,20 @@ export function Main(props: State) {
   );
 }
 
+export const ContentMinWidth = styled.div`
+  // sidebar is 280px + 1px right border
+  min-width: calc(1250px - 281px);
+`;
+
 export const HorizontalSplit = styled.div`
   display: flex;
   flex-direction: column;
-  width: 100%;
   height: 100%;
 
-  // Allows shrinking beyond content size on flexed childrens.
-  min-width: 0;
+  // sidebar is 280px + 1px right border
+  width: calc(100% - 281px);
+  flex: 1 0 calc(100% - 281px);
+  overflow-x: auto;
 `;
 
 export const StyledIndicator = styled(HorizontalSplit)`

@@ -142,19 +142,21 @@ export function Discover({
               }
             />
             <main.HorizontalSplit>
-              <TopBarContainer>
-                <Text typography="h5" bold>
-                  Manage Access
-                </Text>
-                <UserMenuNav
-                  navItems={userMenuItems}
-                  logout={logout}
-                  username={username}
-                />
-              </TopBarContainer>
-              <FeatureBox pt={4}>
-                {AgentComponent && <AgentComponent {...agentProps} />}
-              </FeatureBox>
+              <main.ContentMinWidth>
+                <TopBarContainer>
+                  <Text typography="h5" bold>
+                    Manage Access
+                  </Text>
+                  <UserMenuNav
+                    navItems={userMenuItems}
+                    logout={logout}
+                    username={username}
+                  />
+                </TopBarContainer>
+                <FeatureBox pt={4}>
+                  {AgentComponent && <AgentComponent {...agentProps} />}
+                </FeatureBox>
+              </main.ContentMinWidth>
             </main.HorizontalSplit>
           </>
         )}
@@ -270,10 +272,10 @@ const StepsContainer = styled(Text)`
 `;
 
 const StyledNav = styled(sideNav.Nav)`
-  min-width: 350px;
-  width: 350px;
+  min-width: 280px;
+  width: 280px;
 `;
 
 const StyledNavContent = styled(sideNav.Content)`
-  padding: 20px 32px 32px 32px;
+  padding: 0 20px;
 `;
