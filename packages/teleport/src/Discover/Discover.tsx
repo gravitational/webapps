@@ -141,25 +141,23 @@ export function Discover({
                 agentViews[selectedAgentKind].length > 1 ? agentStepTitles : []
               }
             />
-            <main.HorizontalSplit>
-              <main.HorizontalSplit>
-                <ContentMinWidth>
-                  <TopBarContainer>
-                    <Text typography="h5" bold>
-                      Manage Access
-                    </Text>
-                    <UserMenuNav
-                      navItems={userMenuItems}
-                      logout={logout}
-                      username={username}
-                    />
-                  </TopBarContainer>
-                  <FeatureBox pt={4}>
-                    {AgentComponent && <AgentComponent {...agentProps} />}
-                  </FeatureBox>
-                </ContentMinWidth>
-              </main.HorizontalSplit>
-            </main.HorizontalSplit>
+            <HorizontalSplit>
+              <ContentMinWidth>
+                <TopBarContainer>
+                  <Text typography="h5" bold>
+                    Manage Access
+                  </Text>
+                  <UserMenuNav
+                    navItems={userMenuItems}
+                    logout={logout}
+                    username={username}
+                  />
+                </TopBarContainer>
+                <FeatureBox pt={4}>
+                  {AgentComponent && <AgentComponent {...agentProps} />}
+                </FeatureBox>
+              </ContentMinWidth>
+            </HorizontalSplit>
           </>
         )}
       </MainContainer>
@@ -228,6 +226,12 @@ function SideNavAgentConnect({
     </StyledNav>
   );
 }
+
+const HorizontalSplit = styled(main.HorizontalSplit)`
+  // sidebar is 240px + 1px right border
+  width: calc(100% - 281px);
+  flex: 1 0 calc(100% - 281px);
+`;
 
 const ContentMinWidth = styled.div`
   // sidebar is 280px + 1px right border
