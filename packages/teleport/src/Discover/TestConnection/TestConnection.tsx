@@ -59,11 +59,7 @@ export function TestConnection({
         Testing in-progress
       </TextIcon>
     );
-  }
-
-  let diagnosisStateBorderColor = 'transparent';
-  if (attempt.status === 'failed' || (diagnosis && !diagnosis.success)) {
-    diagnosisStateBorderColor = 'danger';
+  } else if (attempt.status === 'failed' || (diagnosis && !diagnosis.success)) {
     $diagnosisStateComponent = (
       <TextIcon>
         <Icons.Warning ml={1} color="danger" />
@@ -71,7 +67,6 @@ export function TestConnection({
       </TextIcon>
     );
   } else if (attempt.status === 'success' && diagnosis?.success) {
-    diagnosisStateBorderColor = 'success';
     $diagnosisStateComponent = (
       <TextIcon>
         <Icons.CircleCheck ml={1} color="success" />
@@ -108,14 +103,18 @@ export function TestConnection({
         <Text typography="subtitle1" mb={3}>
           Verify that the server is accessible
         </Text>
-        {showDiagnosisOutput && (
-          <Box
-            bg="rgba(255, 255, 255, 0.05)"
-            p={3}
-            borderRadius={3}
-            border={2}
-            borderColor={diagnosisStateBorderColor}
+        <Flex alignItems="center" mt={3}>
+          <ButtonSecondary
+            width="200px"
+            onClick={() => runConnectionDiagnostic(selectedOpt.value)}
+            disabled={attempt.status === 'processing'}
           >
+            {diagnosis ? 'Restart Test' : 'Test Connection'}
+          </ButtonSecondary>
+          <Box ml={4}>{$diagnosisStateComponent}</Box>
+        </Flex>
+        {showDiagnosisOutput && (
+          <Box mt={3}>
             {attempt.status === 'failed' &&
               `Encountered Error: ${attempt.statusText}`}
             {attempt.status === 'success' && (
@@ -123,13 +122,10 @@ export function TestConnection({
                 {diagnosis.traces.map((trace, index) => {
                   if (trace.status === 'failed') {
                     return (
-                      <React.Fragment key={index}>
-                        <TextIcon>
-                          <Icons.Warning mr={1} color="danger" />
-                          {trace.details}
-                        </TextIcon>
-                        <Box mt={2}>{trace.error}</Box>
-                      </React.Fragment>
+                      <TextIcon key={index}>
+                        <Icons.Warning mr={1} color="danger" />
+                        {trace.details}
+                      </TextIcon>
                     );
                   }
                   if (trace.status === 'success') {
@@ -154,16 +150,6 @@ export function TestConnection({
             )}
           </Box>
         )}
-        <Flex alignItems="center" mt={3}>
-          <ButtonSecondary
-            width="200px"
-            onClick={() => runConnectionDiagnostic(selectedOpt.value)}
-            disabled={attempt.status === 'processing'}
-          >
-            {diagnosis ? 'Restart Test' : 'Test Connection'}
-          </ButtonSecondary>
-          <Box ml={4}>{$diagnosisStateComponent}</Box>
-        </Flex>
       </StyledBox>
       <StyledBox>
         <Text bold>Step 3</Text>

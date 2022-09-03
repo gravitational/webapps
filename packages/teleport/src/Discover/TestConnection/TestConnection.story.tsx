@@ -54,7 +54,8 @@ export const LoadedWithDiagnosisFailure = () => {
         id: '',
         traceType: 'some trace type',
         status: 'failed',
-        details: 'Some failed detail.',
+        details:
+          'Invalid user. Please ensure the principal "debian" is a valid Linux login in the target node. Output from Node: Failed to launch: user: unknown user debian.',
         error: 'ssh: handshake failed: EOF',
       } as ConnectionDiagnosticTrace,
     ],
