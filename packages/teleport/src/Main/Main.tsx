@@ -150,8 +150,8 @@ export function Main(props: State) {
 }
 
 export const ContentMinWidth = styled.div`
-  // sidebar is 280px + 1px right border
-  min-width: calc(1250px - 281px);
+  // sidebar is 240px + 1px right border
+  min-width: calc(1250px - 241px);
 `;
 
 export const HorizontalSplit = styled.div`
@@ -159,9 +159,9 @@ export const HorizontalSplit = styled.div`
   flex-direction: column;
   height: 100%;
 
-  // sidebar is 280px + 1px right border
-  width: calc(100% - 281px);
-  flex: 1 0 calc(100% - 281px);
+  // sidebar is 240px + 1px right border
+  width: calc(100% - 241px);
+  flex: 1 0 calc(100% - 241px);
   overflow-x: auto;
 `;
 

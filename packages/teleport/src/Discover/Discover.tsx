@@ -142,21 +142,23 @@ export function Discover({
               }
             />
             <main.HorizontalSplit>
-              <main.ContentMinWidth>
-                <TopBarContainer>
-                  <Text typography="h5" bold>
-                    Manage Access
-                  </Text>
-                  <UserMenuNav
-                    navItems={userMenuItems}
-                    logout={logout}
-                    username={username}
-                  />
-                </TopBarContainer>
-                <FeatureBox pt={4}>
-                  {AgentComponent && <AgentComponent {...agentProps} />}
-                </FeatureBox>
-              </main.ContentMinWidth>
+              <main.HorizontalSplit>
+                <ContentMinWidth>
+                  <TopBarContainer>
+                    <Text typography="h5" bold>
+                      Manage Access
+                    </Text>
+                    <UserMenuNav
+                      navItems={userMenuItems}
+                      logout={logout}
+                      username={username}
+                    />
+                  </TopBarContainer>
+                  <FeatureBox pt={4}>
+                    {AgentComponent && <AgentComponent {...agentProps} />}
+                  </FeatureBox>
+                </ContentMinWidth>
+              </main.HorizontalSplit>
             </main.HorizontalSplit>
           </>
         )}
@@ -226,6 +228,11 @@ function SideNavAgentConnect({
     </StyledNav>
   );
 }
+
+const ContentMinWidth = styled.div`
+  // sidebar is 280px + 1px right border
+  min-width: calc(1250px - 281px);
+`;
 
 const Bullet = styled.span`
   height: 14px;
