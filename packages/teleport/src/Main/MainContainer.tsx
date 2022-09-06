@@ -27,4 +27,5 @@ export const MainContainer = styled.div`
   display: flex;
   flex: 1;
   position: absolute;
+  --sidebar-width: 240px;
 `;

@@ -26,7 +26,6 @@ import useTeleport from 'teleport/useTeleport';
 import getFeatures from 'teleport/features';
 import { UserMenuNav } from 'teleport/components/UserMenuNav';
 import * as main from 'teleport/Main';
-import { MainContainer } from 'teleport/Main/MainContainer';
 import * as sideNav from 'teleport/SideNav';
 import { TopBarContainer } from 'teleport/TopBar';
 import { FeatureBox } from 'teleport/components/Layout';
@@ -141,8 +140,8 @@ export function Discover({
                 agentViews[selectedAgentKind].length > 1 ? agentStepTitles : []
               }
             />
-            <HorizontalSplit>
-              <ContentMinWidth>
+            <main.HorizontalSplit>
+              <main.ContentMinWidth>
                 <TopBarContainer>
                   <Text typography="h5" bold>
                     Manage Access
@@ -156,8 +155,8 @@ export function Discover({
                 <FeatureBox pt={4} maxWidth="1450px">
                   {AgentComponent && <AgentComponent {...agentProps} />}
                 </FeatureBox>
-              </ContentMinWidth>
-            </HorizontalSplit>
+              </main.ContentMinWidth>
+            </main.HorizontalSplit>
           </>
         )}
       </MainContainer>
@@ -227,15 +226,8 @@ function SideNavAgentConnect({
   );
 }
 
-const HorizontalSplit = styled(main.HorizontalSplit)`
-  // sidebar is 280px + 1px right border
-  width: calc(100% - 281px);
-  flex: 1 0 calc(100% - 281px);
-`;
-
-const ContentMinWidth = styled.div`
-  // sidebar is 280px + 1px right border
-  min-width: calc(1250px - 281px);
+const MainContainer = styled(main.MainContainer)`
+  --sidebar-width: 280px;
 `;
 
 const Bullet = styled.span`
@@ -283,8 +275,8 @@ const StepsContainer = styled(Text)`
 `;
 
 const StyledNav = styled(sideNav.Nav)`
-  min-width: 280px;
-  width: 280px;
+  min-width: var(--sidebar-width);
+  width: var(--sidebar-width);
 `;
 
 const StyledNavContent = styled(sideNav.Content)`
