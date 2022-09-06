@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import { useLocation } from 'react-router';
 import { NavLink } from 'react-router-dom';
@@ -40,20 +40,23 @@ export function UserMenuNav({ navItems, username, logout }: Props) {
   // on the dropdown items should be rendered.
   const viewingDiscover = pathname === cfg.routes.discover;
   const viewingUserMenu =
-    !viewingDiscover &&
-    navItems.filter(n => pathname.startsWith(n.getLink())).length > 0;
+    !viewingDiscover && navItems.some(n => pathname.startsWith(n.getLink()));
   const viewingResources = !viewingUserMenu && !viewingDiscover;
 
   const firstTimeDiscoverVisit =
     discover && !discover.hasResource && !discover.hasVisited;
   const showDiscoverAlertBubble = !viewingDiscover && firstTimeDiscoverVisit;
+  const isFirstTimeDiscoverVisited = viewingDiscover && firstTimeDiscoverVisit;
 
-  if (viewingDiscover && firstTimeDiscoverVisit) {
-    localStorage.setOnboardDiscover({
-      ...discover,
-      hasVisited: true,
-    });
-  }
+  useEffect(() => {
+    if (isFirstTimeDiscoverVisited) {
+      const discover = localStorage.getOnboardDiscover();
+      localStorage.setOnboardDiscover({
+        ...discover,
+        hasVisited: true,
+      });
+    }
+  }, [isFirstTimeDiscoverVisited]);
 
   const menuItemProps = {
     onClick: closeMenu,

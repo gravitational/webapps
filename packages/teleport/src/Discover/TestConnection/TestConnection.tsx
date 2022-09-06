@@ -122,10 +122,13 @@ export function TestConnection({
                 {diagnosis.traces.map((trace, index) => {
                   if (trace.status === 'failed') {
                     return (
-                      <TextIcon key={index}>
-                        <Icons.Warning mr={1} color="danger" />
-                        {trace.details}
-                      </TextIcon>
+                      <>
+                        <TextIcon>
+                          <Icons.CircleCross mr={1} color="danger" />
+                          {trace.details}
+                        </TextIcon>
+                        <Box mt={2}>{trace.error}</Box>
+                      </>
                     );
                   }
                   if (trace.status === 'success') {
