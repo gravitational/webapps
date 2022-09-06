@@ -31,26 +31,26 @@ export const BannerList = ({
   children,
   customBanners = [],
 }: Props) => {
-  const [bannerList, setBannerList] = useState<{ [id: string]: BannerType }>(
+  const [bannerData, setBannerData] = useState<{ [id: string]: BannerType }>(
     {}
   );
 
   useEffect(() => {
     const newList = {};
     banners.forEach(banner => (newList[banner.id] = { ...banner }));
-    Object.assign(newList, bannerList);
-    setBannerList(newList);
+    Object.assign(newList, bannerData);
+    setBannerData(newList);
   }, [banners]);
 
   const removeBanner = id => {
     const newList = {
-      ...bannerList,
-      [id]: { ...bannerList[id], hidden: true },
+      ...bannerData,
+      [id]: { ...bannerData[id], hidden: true },
     };
-    setBannerList(newList);
+    setBannerData(newList);
   };
 
-  const shownBanners = Object.values(bannerList).filter(
+  const shownBanners = Object.values(bannerData).filter(
     banner => !banner.hidden
   );
 
@@ -73,7 +73,7 @@ export const BannerList = ({
 
 const Wrapper = styled(Box)`
   ${MainContainer} {
-    height: calc(100% - ${props => props.bannerCount * 62}px);
+    height: calc(100% - ${props => props.bannerCount * 38}px);
   }
   min-width: 1000px;
 `;

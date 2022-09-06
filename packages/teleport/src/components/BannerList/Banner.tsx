@@ -41,30 +41,24 @@ export function Banner({
     danger: <Warning mr={3} fontSize="3" role="icon" />,
   }[severity];
 
-  const backgroundColor = {
-    info: 'info',
-    warning: 'warning',
-    danger: 'danger',
-  }[severity];
-
   return (
-    <Box bg={backgroundColor} p={3}>
+    <Box bg={severity} p={1} pl={2}>
       <Flex alignItems="center">
         {icon}
         <Text bold>{message}</Text>
-        <Close
+        <CloseButton
           onClick={() => {
             onClose(id);
           }}
         >
           <Cross />
-        </Close>
+        </CloseButton>
       </Flex>
     </Box>
   );
 }
 
-const Close = styled.button`
+const CloseButton = styled.button`
   background: none;
   border: 1px solid transparent;
   box-sizing: border-box;

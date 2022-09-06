@@ -25,7 +25,7 @@ import type { ClusterAlert } from 'teleport/services/alerts';
 const logger = Logger.create('ClusterAlerts');
 
 export function useAlerts() {
-  const [alerts, setAlerts] = useState<ClusterAlert[]>();
+  const [alerts, setAlerts] = useState<ClusterAlert[]>([]);
   const { clusterId } = useStickyClusterId();
 
   useEffect(() => {
