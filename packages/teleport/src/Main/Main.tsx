@@ -150,8 +150,7 @@ export function Main(props: State) {
 }
 
 export const ContentMinWidth = styled.div`
-  // minus 1px for the sidebar right border
-  min-width: calc(1250px - var(--sidebar-width) - 1px);
+  min-width: calc(1250px - var(--sidebar-width));
 `;
 
 export const HorizontalSplit = styled.div`

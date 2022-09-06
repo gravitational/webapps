@@ -86,6 +86,7 @@ export const Nav = styled.nav`
   flex-direction: column;
   min-width: var(--sidebar-width);
   width: var(--sidebar-width);
+  box-sizing: border-box;
 `;
 
 export const Content = styled.div`
