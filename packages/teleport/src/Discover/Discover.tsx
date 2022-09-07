@@ -30,6 +30,7 @@ import { MainContainer } from 'teleport/Main/MainContainer';
 import * as sideNav from 'teleport/SideNav';
 import { TopBarContainer } from 'teleport/TopBar';
 import { FeatureBox } from 'teleport/components/Layout';
+import { BannerList } from 'teleport/components/BannerList';
 
 import { useDiscover, State } from './useDiscover';
 
@@ -41,6 +42,7 @@ import { Finished } from './Finished';
 
 import type { AgentKind } from './useDiscover';
 import type { AgentStepComponent } from './types';
+import type { BannerType } from 'teleport/components/BannerList/BannerList';
 
 export const agentViews: Record<AgentKind, AgentStepComponent[]> = {
   app: [],
@@ -59,6 +61,8 @@ export default function Container() {
 }
 
 export function Discover({
+  alerts = [],
+  customBanners = [],
   initAttempt,
   userMenuItems,
   username,
@@ -73,41 +77,61 @@ export function Discover({
     AgentComponent = agentViews[selectedAgentKind][currentStep];
   }
 
+  // The backend defines the severity as an integer value with the current
+  // pre-defined values: LOW: 0; MEDIUM: 5; HIGH: 10
+  const mapSeverity = (severity: number) => {
+    if (severity < 5) {
+      return 'info';
+    }
+    if (severity < 10) {
+      return 'warning';
+    }
+    return 'danger';
+  };
+
+  const banners: BannerType[] = alerts.map(alert => ({
+    message: alert.spec.message,
+    severity: mapSeverity(alert.spec.severity),
+    id: alert.metadata.name,
+  }));
+
   return (
-    <LocalMainContainer>
-      <Prompt
-        message="Are you sure you want to exit the “Add New Resource” workflow? You’ll have to start from the beginning next time."
-        when={currentStep > 0}
-      />
-      {initAttempt.status === 'processing' && (
-        <main.StyledIndicator>
-          <Indicator />
-        </main.StyledIndicator>
-      )}
-      {initAttempt.status === 'failed' && (
-        <Danger>{initAttempt.statusText}</Danger>
-      )}
-      {initAttempt.status === 'success' && (
-        <>
-          <SideNavAgentConnect currentStep={currentStep} />
-          <main.HorizontalSplit>
-            <TopBarContainer>
-              <Text typography="h5" bold>
-                Manage Access
-              </Text>
-              <UserMenuNav
-                navItems={userMenuItems}
-                logout={logout}
-                username={username}
-              />
-            </TopBarContainer>
-            <FeatureBox pt={4}>
-              {AgentComponent && <AgentComponent {...agentProps} />}
-            </FeatureBox>
-          </main.HorizontalSplit>
-        </>
-      )}
-    </LocalMainContainer>
+    <BannerList banners={banners} customBanners={customBanners}>
+      <LocalMainContainer>
+        <Prompt
+          message="Are you sure you want to exit the “Add New Resource” workflow? You’ll have to start from the beginning next time."
+          when={currentStep > 0}
+        />
+        {initAttempt.status === 'processing' && (
+          <main.StyledIndicator>
+            <Indicator />
+          </main.StyledIndicator>
+        )}
+        {initAttempt.status === 'failed' && (
+          <Danger>{initAttempt.statusText}</Danger>
+        )}
+        {initAttempt.status === 'success' && (
+          <>
+            <SideNavAgentConnect currentStep={currentStep} />
+            <main.HorizontalSplit>
+              <TopBarContainer>
+                <Text typography="h5" bold>
+                  Manage Access
+                </Text>
+                <UserMenuNav
+                  navItems={userMenuItems}
+                  logout={logout}
+                  username={username}
+                />
+              </TopBarContainer>
+              <FeatureBox pt={4}>
+                {AgentComponent && <AgentComponent {...agentProps} />}
+              </FeatureBox>
+            </main.HorizontalSplit>
+          </>
+        )}
+      </LocalMainContainer>
+    </BannerList>
   );
 }
 
