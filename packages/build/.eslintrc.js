@@ -146,6 +146,8 @@ module.exports = {
 
     'react-hooks/rules-of-hooks': 1,
     'react-hooks/exhaustive-deps': 1,
+
+    'no-restricted-imports': [2, 'styled-components'],
   },
   settings: {
     react: {

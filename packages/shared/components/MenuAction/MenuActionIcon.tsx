@@ -15,20 +15,25 @@ limitations under the License.
 */
 
 import React from 'react';
-import Menu from 'design/Menu';
+
+import { Menu } from 'design/Menu';
 import { ButtonIcon } from 'design';
 import { Ellipsis } from 'design/Icon';
 
-import { MenuProps, AnchorProps } from './types';
+import { MenuProps } from 'design/Menu/Menu';
 
-export default class MenuActionIcon extends React.Component<Props> {
-  anchorEl = null;
+import { AnchorProps } from './types';
+
+export default class MenuActionIcon extends React.Component<
+  React.PropsWithChildren<Props>
+> {
+  anchorEl = React.createRef<HTMLButtonElement>();
 
   state = {
     open: false,
   };
 
-  constructor(props: Props) {
+  constructor(props: React.PropsWithChildren<Props>) {
     super(props);
     this.state.open = props.defaultOpen || false;
   }
@@ -49,7 +54,7 @@ export default class MenuActionIcon extends React.Component<Props> {
       <>
         <ButtonIcon
           {...buttonIconProps}
-          setRef={e => (this.anchorEl = e)}
+          ref={this.anchorEl}
           onClick={this.onOpen}
           data-testid="button"
         >
@@ -57,7 +62,7 @@ export default class MenuActionIcon extends React.Component<Props> {
         </ButtonIcon>
         <Menu
           menuListCss={menuListCss}
-          anchorEl={this.anchorEl}
+          anchorEl={this.anchorEl.current}
           open={open}
           onClose={this.onClose}
           anchorOrigin={{

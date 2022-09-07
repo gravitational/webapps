@@ -16,7 +16,7 @@ limitations under the License.
 
 import React from 'react';
 import { NavLink } from 'react-router-dom';
-import styled from 'styled-components';
+import styled from 'design/styled';
 
 import { MenuButton, MenuItem } from 'shared/components/MenuAction';
 import Table, { Cell } from 'design/DataTable';

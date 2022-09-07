@@ -14,7 +14,8 @@
  * limitations under the License.
  */
 import React from 'react';
-import styled from 'styled-components';
+import styled, { border } from 'design/styled';
+
 import { Text, Flex, ButtonText, Box } from 'design';
 import { Key, ArrowForward } from 'design/Icon';
 
@@ -29,9 +30,6 @@ export const FormPasswordless = ({
     <StyledPaswordlessBtn
       py={2}
       px={3}
-      border={1}
-      borderRadius={2}
-      borderColor="text.placeholder"
       width="100%"
       onClick={onLoginWithPasswordless}
       disabled={loginAttempt.status === 'processing'}
@@ -53,7 +51,7 @@ export const FormPasswordless = ({
   </Box>
 );
 
-const StyledPaswordlessBtn = styled(ButtonText)`
+const StyledPaswordlessBtn = styled(ButtonText, [border])`
   display: block;
   text-align: left;
   border: 1px solid ${({ theme }) => theme.colors.text.placeholder};

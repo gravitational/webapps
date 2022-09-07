@@ -18,7 +18,7 @@ import React, { useState } from 'react';
 import { Text, Box } from 'design';
 import { Danger } from 'design/Alert';
 import Validation, { Validator } from 'shared/components/Validation';
-import FieldInput from 'shared/components/FieldInput';
+import { FieldInput } from 'shared/components/FieldInput';
 import { requiredField } from 'shared/components/Validation/rules';
 
 import {

@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import styled from 'styled-components';
+import styled from 'design/styled';
 import React from 'react';
 import { Box, LabelInput } from 'design';
 import { SelectAsync, DarkStyledSelect } from 'shared/components/Select';

@@ -15,7 +15,7 @@ limitations under the License.
 */
 
 import React, { ReactNode } from 'react';
-import styled from 'styled-components';
+import styled from 'design/styled';
 
 export default function Toggle({
   isToggled,
@@ -43,15 +43,15 @@ type Props = {
   disabled?: boolean;
 };
 
-const StyledWrapper = styled.label`
+interface StyledWrapperProps {
+  disabled: boolean;
+}
+
+const StyledWrapper = styled.label<StyledWrapperProps>`
   position: relative;
   display: flex;
   align-items: center;
-  cursor: pointer;
-
-  &[disabled] {
-    cursor: default;
-  }
+  cursor: ${p => (p.disabled ? 'default' : 'pointer')};
 `;
 
 const StyledSlider = styled.div`

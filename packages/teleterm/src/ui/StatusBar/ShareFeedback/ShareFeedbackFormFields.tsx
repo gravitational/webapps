@@ -1,5 +1,5 @@
 import React from 'react';
-import FieldInput from 'shared/components/FieldInput';
+import { FieldInput } from 'shared/components/FieldInput';
 import { requiredField } from 'shared/components/Validation/rules';
 import { FieldTextArea } from 'shared/components/FieldTextArea';
 import { Text } from 'design';

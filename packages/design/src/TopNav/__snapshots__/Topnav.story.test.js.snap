@@ -3,48 +3,15 @@
 exports[`rendering of TopNav and TopNavItem 1`] = `
 .c0 {
   box-sizing: border-box;
-  height: 60px;
   background-color: #1C254D;
   flex: 0 0 auto;
-  display: flex;
-  align-items: center;
-  flex-direction: row;
+  height: 60px;
 }
 
 .c1 {
+  display: flex;
   align-items: center;
-  background: none;
-  border: none;
-  color: rgba(255,255,255,.56);
-  cursor: pointer;
-  display: inline-flex;
-  font-size: 11px;
-  font-weight: 600;
-  height: 100%;
-  margin: 0;
-  outline: none;
-  padding: 0 16px;
-  position: relative;
-  text-decoration: none;
-}
-
-.c1:hover {
-  background: rgba(255,255,255,.06);
-}
-
-.c1.active {
-  background: #222C59;
-  color: #FFFFFF;
-}
-
-.c1.active:after {
-  background-color: #651FFF;
-  content: '';
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  width: 100%;
-  height: 4px;
+  flex-direction: row;
 }
 
 .c2 {
@@ -62,8 +29,6 @@ exports[`rendering of TopNav and TopNavItem 1`] = `
   padding: 0 16px;
   position: relative;
   text-decoration: none;
-  margin-left: auto;
-  max-width: 250px;
 }
 
 .c2:hover {
@@ -86,14 +51,51 @@ exports[`rendering of TopNav and TopNavItem 1`] = `
 }
 
 .c3 {
+  align-items: center;
+  background: none;
+  border: none;
+  color: rgba(255,255,255,.56);
+  cursor: pointer;
+  display: inline-flex;
+  font-size: 11px;
+  font-weight: 600;
+  height: 100%;
+  margin: 0;
+  outline: none;
+  padding: 0 16px;
+  position: relative;
+  text-decoration: none;
+  margin-left: auto;
+  max-width: 250px;
+}
+
+.c3:hover {
+  background: rgba(255,255,255,.06);
+}
+
+.c3.active {
+  background: #222C59;
+  color: #FFFFFF;
+}
+
+.c3.active:after {
+  background-color: #651FFF;
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 4px;
+}
+
+.c4 {
   overflow: hidden;
   text-overflow: ellipsis;
   font-weight: 600;
   font-size: 12px;
-  margin: 0px;
 }
 
-.c4 {
+.c5 {
   align-items: center;
   background: #651FFF;
   border-radius: 50%;
@@ -109,30 +111,30 @@ exports[`rendering of TopNav and TopNavItem 1`] = `
 }
 
 <nav
-  class="c0"
+  class="c0 c1"
   height="60px"
 >
   <button
-    class="c1"
+    class="c2"
   >
     MenuItem1
   </button>
   <button
-    class="c1"
+    class="c2"
   >
     MenuItem2
   </button>
   <button
-    class="c2"
+    class="c3"
   >
     <div
-      class="c3"
+      class="c4"
       font-size="12px"
     >
       example@example.com
     </div>
     <div
-      class="c4"
+      class="c5"
     >
       E
     </div>

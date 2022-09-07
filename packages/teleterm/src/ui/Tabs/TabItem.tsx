@@ -15,7 +15,7 @@ limitations under the License.
 */
 
 import React, { useRef } from 'react';
-import styled from 'styled-components';
+import styled from 'design/styled';
 import { Close as CloseIcon } from 'design/Icon';
 import { ButtonIcon, Text } from 'design';
 
@@ -56,7 +56,7 @@ export function TabItem(props: TabItemProps) {
     canDrag,
   });
 
-  const handleClose = (event: MouseEvent) => {
+  const handleClose = (event: React.MouseEvent) => {
     event.stopPropagation();
     onClose?.();
   };
@@ -92,41 +92,36 @@ export function TabItem(props: TabItemProps) {
   );
 }
 
-const StyledTabItem = styled.div(({ theme, active, dragging, canDrag }) => {
-  const styles: any = {
-    display: 'flex',
-    flexBasis: '0',
-    flexGrow: '1',
-    opacity: '1',
-    color: theme.colors.text.secondary,
-    alignItems: 'center',
-    minWidth: '0',
-    height: '100%',
-    border: 'none',
-    borderRadius: '8px 8px 0 0',
-    '&:hover, &:focus': {
-      color: theme.colors.primary.contrastText,
-      transition: 'color .3s',
-    },
-    position: 'relative',
-  };
+interface StyledTabItemProps {
+  dragging: boolean;
+  active: boolean;
+  canDrag: boolean;
+}
 
-  if (active) {
-    styles['backgroundColor'] = theme.colors.primary.darker;
-    styles['color'] = theme.colors.secondary.contrastText;
-    styles['transition'] = 'none';
+const StyledTabItem = styled.div<StyledTabItemProps>`
+  display: flex;
+  flex-basis: 0;
+  flex-grow: 1;
+  opacity: ${p => (p.dragging ? 0 : 1)};
+  color: ${p =>
+    p.active
+      ? p.theme.colors.secondary.contrastText
+      : p.theme.colors.text.secondary};
+  align-items: center;
+  min-width: 0;
+  height: 100%;
+  border: none;
+  border-radius: 8px 8px 0 0;
+  position: relative;
+  background: ${p => (p.active ? p.theme.colors.primary.darker : 'none')};
+  cursor: ${p => (p.canDrag ? 'pointer' : 'default')};
+
+  &:hover,
+  &:focus {
+    color: ${p => p.theme.colors.primary.contrastText};
+    transition: color 0.3s;
   }
-
-  if (dragging) {
-    styles['opacity'] = 0;
-  }
-
-  if (canDrag) {
-    styles['cursor'] = 'pointer';
-  }
-
-  return styles;
-});
+`;
 
 const Title = styled(Text)`
   display: block;

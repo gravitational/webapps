@@ -20,7 +20,7 @@ import { Box, Flex, Text } from 'design';
 
 import * as Icons from 'design/Icon';
 
-import styled from 'styled-components';
+import styled from 'design/styled';
 
 import * as sideNav from 'teleport/SideNav';
 

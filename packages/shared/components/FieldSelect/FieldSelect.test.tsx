@@ -19,7 +19,7 @@ import { screen } from '@testing-library/react';
 
 import { render, fireEvent } from 'design/utils/testing';
 
-import theme from '@gravitational/design/src/theme';
+import { theme } from 'design/theme';
 
 import * as useRule from '../Validation/useRule';
 

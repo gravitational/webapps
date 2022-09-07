@@ -1,6 +1,6 @@
 import React from 'react';
 import { ButtonPrimary, Flex, Text } from 'design';
-import Image from 'design/Image';
+import { Image } from 'design/Image';
 
 import clusterPng from './clusters.png';
 

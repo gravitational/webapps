@@ -81,7 +81,7 @@ export const PrivateKeyLoginDisabledCard = ({
         </ButtonText>
         or{' '}
         <ButtonText
-          onClick={onRecover}
+          onClick={() => onRecover(false)}
           style={{ padding: '0px', minHeight: 0 }}
           ml={1}
         >

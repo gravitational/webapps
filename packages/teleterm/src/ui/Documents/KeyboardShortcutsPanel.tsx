@@ -1,7 +1,7 @@
 import React from 'react';
-import { Text } from 'design';
+import styled, { color } from 'design/styled';
 
-import styled from 'styled-components';
+import { Text } from 'design';
 
 import Document from 'teleterm/ui/Document';
 import { useKeyboardShortcutFormatters } from 'teleterm/ui/services/keyboardShortcuts';
@@ -63,7 +63,7 @@ function Entry(props: { title: string; shortcut: string }) {
   );
 }
 
-const MonoText = styled(Text)`
+const MonoText = styled(Text, [color])`
   font-family: ${props => props.theme.fonts.mono};
   width: fit-content;
   opacity: 0.7;

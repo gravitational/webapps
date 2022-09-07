@@ -1,4 +1,4 @@
-import styled from 'styled-components';
+import styled from 'design/styled';
 
 export const Mark = styled.mark`
   padding: 2px 5px;

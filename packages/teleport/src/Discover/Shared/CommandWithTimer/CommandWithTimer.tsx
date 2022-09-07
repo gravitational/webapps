@@ -13,7 +13,7 @@
 // limitations under the License.
 
 import React from 'react';
-import styled from 'styled-components';
+import styled from 'design/styled';
 import { Text, Box } from 'design';
 import * as Icons from 'design/Icon';
 
@@ -96,7 +96,11 @@ export type Poll = {
   error?: PollError;
 };
 
-export const PollBox = styled(Box)`
+interface PollBoxProps {
+  pollState: PollState;
+}
+
+export const PollBox = styled(Box)<PollBoxProps>`
   max-width: 800px;
   background-color: rgba(255, 255, 255, 0.05);
   padding: ${props => `${props.theme.space[3]}px`};

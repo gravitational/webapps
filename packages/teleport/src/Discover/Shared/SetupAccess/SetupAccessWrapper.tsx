@@ -15,7 +15,7 @@
  */
 
 import React from 'react';
-import styled from 'styled-components';
+import styled from 'design/styled';
 import { Text, Box, Indicator } from 'design';
 import * as Icons from 'design/Icon';
 

@@ -15,9 +15,9 @@ limitations under the License.
 */
 
 import React from 'react';
-import styled from 'styled-components';
+import styled, { margin, padding } from 'design/styled';
+
 import { Close as CloseIcon } from 'design/Icon';
-import { space } from 'design/system';
 import { Flex, Text } from 'design';
 
 import JoinedUsers from './JoinedUsers';
@@ -48,36 +48,26 @@ type Props = {
   style: any;
 };
 
-function fromProps({ theme, active }) {
-  let styles: Record<any, any> = {
-    border: 'none',
-    borderRight: `1px solid ${theme.colors.bgTerminal}`,
-    '&:hover, &:focus': {
-      color: theme.colors.primary.contrastText,
-      transition: 'color .3s',
-    },
-  };
-
-  if (active) {
-    styles = {
-      ...styles,
-      backgroundColor: theme.colors.bgTerminal,
-      color: theme.colors.primary.contrastText,
-      fontWeight: 'bold',
-      transition: 'none',
-    };
-  }
-
-  return styles;
+interface StyledTabItemProps {
+  active: boolean;
 }
 
-const StyledTabItem = styled(Flex)`
+const StyledTabItem = styled(Flex)<StyledTabItemProps>`
   max-width: 200px;
   height: 100%;
-  ${fromProps}
+  border: none;
+  border-right: 1px solid ${p => p.theme.colors.bgTerminal};
+  background-color: ${p => (p.active ? p.theme.colors.bgTerminal : 'none')};
+  font-weight: ${p => (p.active ? 'bold' : 'normal')};
+
+  &:hover,
+  &:focus {
+    color: ${p => p.theme.colors.primary.contrastText};
+    transition: ${p => (p.active ? 'none' : 'color .3s')};
+  }
 `;
 
-const StyledTabButton = styled.button`
+const StyledTabButton = styled.div`
   display: flex;
   flex: 1;
   align-items: center;
@@ -85,7 +75,6 @@ const StyledTabButton = styled.button`
   text-decoration: none;
   outline: none;
   margin: 0;
-  text-decoration: none;
   color: inherit;
   line-height: 32px;
   background-color: transparent;
@@ -96,7 +85,7 @@ const StyledTabButton = styled.button`
   border: none;
 `;
 
-const StyledCloseButton = styled.button`
+const StyledCloseButton = styled.button([margin, padding])`
   background: transparent;
   border-radius: 2px;
   border: none;
@@ -111,5 +100,4 @@ const StyledCloseButton = styled.button`
   &:hover {
     background: ${props => props.theme.colors.danger};
   }
-  ${space}
 `;

@@ -1,5 +1,5 @@
 import React from 'react';
-import styled from 'styled-components';
+import styled from 'design/styled';
 
 import { Cross } from 'design/Icon';
 import { Flex } from 'design';

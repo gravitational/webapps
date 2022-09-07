@@ -1,8 +1,8 @@
-import styled from 'styled-components';
+import styled, { margin } from 'design/styled';
 
-import Icon from 'design/Icon';
+import { Icon } from 'design/Icon';
 
-export const StyledArrowBtn = styled.button`
+export const StyledArrowBtn = styled.button([margin])`
   background: none;
   border: none;
   cursor: pointer;

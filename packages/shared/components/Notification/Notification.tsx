@@ -15,11 +15,9 @@ limitations under the License.
 */
 
 import React, { useEffect, useRef, useState } from 'react';
-import styled, { css, useTheme } from 'styled-components';
+import styled, { css, useTheme } from 'design/styled';
 import { ButtonIcon, Flex, Text } from 'design';
 import { Close } from 'design/Icon';
-
-import type { propTypes } from 'design/system';
 
 import type { NotificationItem, NotificationItemContent } from './types';
 
@@ -30,11 +28,13 @@ interface NotificationProps {
   getColor(theme): string;
   isAutoRemovable: boolean;
   autoRemoveDurationMs?: number;
+  style?: React.CSSProperties;
+  mt?: number;
 }
 
 const defaultAutoRemoveDurationMs = 10_000; // 10s
 
-export function Notification(props: NotificationProps & propTypes) {
+export function Notification(props: NotificationProps) {
   const [isHovered, setIsHovered] = useState(false);
   const [isExpanded, setIsExpanded] = useState(false);
   const timeoutHandler = useRef<number>();

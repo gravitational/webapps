@@ -15,13 +15,15 @@ limitations under the License.
 */
 
 import React from 'react';
+
 import {
   ThemeProvider as StyledThemeProvider,
   StyleSheetManager,
-} from 'styled-components';
+} from 'design/styled';
+
+import { theme } from '../theme';
 
 import { GlobalStyle } from './globals';
-import theme from './../theme';
 
 const ThemeProvider = props => (
   <StyledThemeProvider theme={props.theme || theme}>

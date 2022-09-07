@@ -1,6 +1,6 @@
 import React from 'react';
 
-import styled from 'styled-components';
+import styled from 'design/styled';
 
 import { Box, Flex, Text, Label } from 'design';
 

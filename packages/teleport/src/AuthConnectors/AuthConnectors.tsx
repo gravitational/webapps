@@ -61,7 +61,9 @@ export function AuthConnectors(props: State) {
           New Github Connector
         </ButtonPrimary>
       </FeatureHeader>
-      {attempt.status === 'failed' && <Alert children={attempt.statusText} />}
+      {attempt.status === 'failed' && (
+        <Alert kind="danger" children={attempt.statusText} />
+      )}
       {attempt.status === 'processing' && (
         <Box textAlign="center" m={10}>
           <Indicator />

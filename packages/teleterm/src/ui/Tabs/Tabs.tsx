@@ -15,8 +15,8 @@ limitations under the License.
 */
 
 import React, { Fragment } from 'react';
-import styled from 'styled-components';
-import { typography } from 'design/system';
+import styled, { typography } from 'design/styled';
+
 import { Box, ButtonIcon } from 'design';
 import * as Icons from 'design/Icon';
 
@@ -116,7 +116,7 @@ const Separator = styled.div`
   background: ${props => props.theme.colors.text.placeholder};
 `;
 
-const StyledTabs = styled(Box)`
+const StyledTabs = styled(Box, [typography])`
   background-color: ${props => props.theme.colors.primary.main};
   min-height: 32px;
   border-radius: 4px;
@@ -125,5 +125,4 @@ const StyledTabs = styled(Box)`
   align-items: center;
   flex-shrink: 0;
   overflow: hidden;
-  ${typography}
 `;

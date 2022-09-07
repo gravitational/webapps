@@ -15,7 +15,7 @@ limitations under the License.
 */
 
 import React from 'react';
-import styled from 'styled-components';
+import styled from 'design/styled';
 import { Card, Text } from 'design';
 
 export function Expired({ resetMode = false }) {

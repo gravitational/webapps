@@ -50,7 +50,7 @@ export default function EmptyList({ onCreate }: Props) {
           </Text>{' '}
           on how to configure a GitHub connector.
         </Text>
-        <ButtonPrimary onClick={onCreate} mt={4} width="240px">
+        <ButtonPrimary onClick={() => onCreate(null)} mt={4} width="240px">
           New Github Connector
         </ButtonPrimary>
       </Box>

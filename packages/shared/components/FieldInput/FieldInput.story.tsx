@@ -18,7 +18,7 @@ import React from 'react';
 
 import Validation from '../../components/Validation';
 
-import FieldInput from './FieldInput';
+import { FieldInput } from './FieldInput';
 
 export default {
   title: 'Shared',

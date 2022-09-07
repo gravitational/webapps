@@ -14,16 +14,14 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import styled from 'styled-components';
+import styled, { border, margin, padding } from 'design/styled';
 
-import { space, borderRadius } from 'design/system';
 import { darken } from 'design/theme/utils/colorManipulator';
 
-import Icon from '../Icon';
+import { Icon } from '../Icon';
 
-export const StyledTable = styled.table(
-  props => `
-  background: ${props.theme.colors.primary.light};
+export const StyledTable = styled.table([border, margin, padding])`
+  background: ${p => p.theme.colors.primary.light};
   box-shadow: 0 4px 16px rgba(0, 0, 0, 0.24);
   border-collapse: collapse;
   border-spacing: 0;
@@ -52,8 +50,8 @@ export const StyledTable = styled.table(
   }
 
   & > thead > tr > th {
-    background: ${props.theme.colors.primary.dark};
-    color: ${props.theme.colors.primary.contrastText};
+    background: ${p => p.theme.colors.primary.dark};
+    color: ${p => p.theme.colors.primary.contrastText};
     cursor: pointer;
     font-size: 10px;
     font-weight: 400;
@@ -77,19 +75,15 @@ export const StyledTable = styled.table(
   }
 
   tbody tr {
-    border-bottom: 1px solid ${props.theme.colors.primary.main};
+    border-bottom: 1px solid ${p => p.theme.colors.primary.main};
   }
 
   tbody tr:hover {
-    background-color: ${darken(props.theme.colors.primary.lighter, 0.14)};
+    background-color: ${p => darken(p.theme.colors.primary.lighter, 0.14)};
   }
+`;
 
-  `,
-  space,
-  borderRadius
-);
-
-export const StyledPanel = styled.nav`
+export const StyledPanel = styled.nav([border])`
   padding: 16px 24px;
   display: flex;
   height: 24px;
@@ -97,12 +91,10 @@ export const StyledPanel = styled.nav`
   align-items: center;
   justify-content: space-between;
   background: ${props => props.theme.colors.primary.light};
-  ${borderRadius}
 `;
 
-export const StyledEmptyIndicator = styled.div(
-  props => `
-  background: ${props.theme.colors.primary.main};
+export const StyledEmptyIndicator = styled.div`
+  background: ${p => p.theme.colors.primary.main};
   border-radius: 4px;
   box-sizing: border-box;
   margin: 48px auto;
@@ -111,7 +103,6 @@ export const StyledEmptyIndicator = styled.div(
   text-align: center;
 
   a {
-    color: ${props.theme.colors.link};
+    color: ${p => p.theme.colors.link};
   }
-`
-);
+`;

@@ -2,7 +2,7 @@ import React from 'react';
 import { Flex, Label, Text } from 'design';
 import { CircleCheck } from 'design/Icon';
 
-import styled from 'styled-components';
+import styled from 'design/styled';
 
 import { ListItem } from 'teleterm/ui/components/ListItem';
 import { useKeyboardArrowsNavigation } from 'teleterm/ui/components/KeyboardArrowsNavigation';
@@ -53,7 +53,13 @@ export function ClusterItem(props: ClusterItemProps) {
   );
 }
 
-const StyledListItem = styled(ListItem)`
+interface StyledListItemProps {
+  isLeaf: boolean;
+  isActive: boolean;
+  isSelected: boolean;
+}
+
+const StyledListItem = styled(ListItem)<StyledListItemProps>`
   padding-left: ${props => (props.isLeaf ? '32px' : null)};
   background: ${getBackgroundColor};
 

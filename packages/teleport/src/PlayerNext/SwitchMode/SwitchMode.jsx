@@ -16,8 +16,9 @@ limitations under the License.
 
 import React from 'react';
 import PropTypes from 'prop-types';
-import styled from 'styled-components';
-import Icon, { ListView, AddUsers, CardViewSmall } from 'design/Icon';
+import styled from 'design/styled';
+
+import { Icon, ListView, AddUsers, CardViewSmall } from 'design/Icon';
 import { Flex, ButtonSecondary } from 'design';
 
 export const ModeEnum = {

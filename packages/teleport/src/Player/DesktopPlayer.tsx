@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import styled from 'styled-components';
+import styled from 'design/styled';
 import { Indicator, Box, Alert } from 'design';
 import useAttempt from 'shared/hooks/useAttemptNext';
 
@@ -45,7 +45,12 @@ export const DesktopPlayer = ({
       )}
 
       {attempt.status === 'failed' && (
-        <DesktopPlayerAlert my={4} mx={10} children={attempt.statusText} />
+        <DesktopPlayerAlert
+          kind="danger"
+          my={4}
+          mx={10}
+          children={attempt.statusText}
+        />
       )}
 
       <TdpClientCanvas

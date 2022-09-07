@@ -1,6 +1,6 @@
 import React, { useCallback, useMemo, useRef, useState } from 'react';
-import Popover from 'design/Popover';
-import styled from 'styled-components';
+import { Popover } from 'design/Popover';
+import styled from 'design/styled';
 import { Box } from 'design';
 
 import { useKeyboardShortcuts } from 'teleterm/ui/services/keyboardShortcuts';

@@ -14,14 +14,16 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import { createGlobalStyle, css } from 'styled-components';
+import { createGlobalStyle, css } from 'design/styled';
 import { getPlatform } from 'design/theme/utils';
 
 const GlobalStyle = createGlobalStyle`
 
   html {
     font-family: ${props => props.theme.font};
-    ${props => props.theme.typography.body1};
+    font-weight: ${props => props.theme.typography.body1.fontWeight};
+    line-height: ${props => props.theme.typography.body1.lineHeight};
+    font-size: ${props => props.theme.typography.body1.fontSize};
   }
 
   body {

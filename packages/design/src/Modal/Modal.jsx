@@ -15,8 +15,10 @@ limitations under the License.
 */
 
 import React from 'react';
-import styled from 'styled-components';
+
 import PropTypes from 'prop-types';
+
+import styled from 'design/styled';
 
 import { ownerDocument } from './../utils';
 import Portal from './Portal';

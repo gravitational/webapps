@@ -15,9 +15,9 @@ limitations under the License.
 */
 
 import React from 'react';
+import styled, { height, margin, padding, color } from 'design/styled';
+
 import { debounce } from 'lodash';
-import styled from 'styled-components';
-import { height, space, color } from 'design/system';
 
 class InputSearch extends React.Component {
   constructor(props) {
@@ -84,7 +84,7 @@ function fromTheme(props) {
   };
 }
 
-const Input = styled.input`
+const Input = styled.input([color, margin, padding, height])`
   box-sizing: border-box;
   font-size: 12px;
   min-width: 200px;
@@ -94,9 +94,6 @@ const Input = styled.input`
   height: 32px;
   transition: all 0.2s;
   ${fromTheme}
-  ${space}
-  ${color}
-  ${height}
 `;
 
 export default InputSearch;

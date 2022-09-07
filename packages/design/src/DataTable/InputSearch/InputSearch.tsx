@@ -15,9 +15,8 @@ limitations under the License.
 */
 
 import React, { SetStateAction } from 'react';
-import styled from 'styled-components';
 
-import { height, space, color } from 'design/system';
+import styled, { height, margin, padding, color } from 'design/styled';
 
 export default function InputSearch({
   searchValue,
@@ -66,7 +65,7 @@ const Wrapper = styled.div`
   background: ${props => props.theme.colors.primary.dark};
 `;
 
-const StyledInput = styled.input`
+const StyledInput = styled.input([color, margin, padding, height])`
   border: none;
   outline: none;
   box-sizing: border-box;
@@ -74,11 +73,8 @@ const StyledInput = styled.input`
   font-size: 12px;
   width: 100%;
   transition: all 0.2s;
-  ${color}
-  ${space}
-  ${height}
-  ${fromTheme};
   padding-right: 184px;
+  ${fromTheme};
 `;
 
 function fromTheme(props) {

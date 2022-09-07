@@ -15,11 +15,11 @@
  */
 
 import React, { useState } from 'react';
-import styled from 'styled-components';
+import styled from 'design/styled';
 import { ButtonSecondary, Text, Box, Flex, ButtonText } from 'design';
 import * as Icons from 'design/Icon';
 import Validation, { Validator } from 'shared/components/Validation';
-import FieldInput from 'shared/components/FieldInput';
+import { FieldInput } from 'shared/components/FieldInput';
 import { requiredField } from 'shared/components/Validation/rules';
 import FieldSelect from 'shared/components/FieldSelect';
 import { Option } from 'shared/components/Select';

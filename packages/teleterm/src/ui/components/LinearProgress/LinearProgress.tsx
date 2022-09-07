@@ -15,7 +15,7 @@ limitations under the License.
 */
 
 import React from 'react';
-import styled from 'styled-components';
+import styled from 'design/styled';
 
 interface LinearProgressProps {
   transparentBackground?: boolean;
@@ -38,7 +38,11 @@ const LinearProgress = (props: LinearProgressProps) => {
   );
 };
 
-const StyledProgress = styled.div`
+interface StyledProgressProps {
+  transparentBackground: boolean;
+}
+
+const StyledProgress = styled.div<StyledProgressProps>`
   position: relative;
   overflow: hidden;
   display: block;

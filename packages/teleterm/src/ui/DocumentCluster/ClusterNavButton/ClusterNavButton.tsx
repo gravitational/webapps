@@ -15,8 +15,7 @@ limitations under the License.
 */
 
 import React from 'react';
-import styled from 'styled-components';
-import { space, width } from 'design/system';
+import styled, { margin, padding, width } from 'design/styled';
 
 import {
   useClusterContext,
@@ -45,29 +44,32 @@ export type NavButtonProps = {
   [key: string]: any;
 };
 
-const StyledNavButton = styled.button(props => {
-  return {
-    color: props.active
-      ? props.theme.colors.light
-      : props.theme.colors.text.secondary,
-    cursor: 'pointer',
-    display: 'inline-flex',
-    fontSize: '14px',
-    position: 'relative',
-    padding: '0',
-    marginRight: '24px',
-    textDecoration: 'none',
-    fontWeight: props.active ? 700 : 400,
-    outline: 'inherit',
-    border: 'none',
-    backgroundColor: 'inherit',
-    flexShrink: '0',
-    borderRadius: '4px',
+interface StyledNavButtonProps {
+  active: boolean;
+}
 
-    '&:hover, &:focus': {
-      background: props.theme.colors.primary.main,
-    },
-    ...space(props),
-    ...width(props),
-  };
-});
+const StyledNavButton = styled.button([
+  margin,
+  padding,
+  width,
+])<StyledNavButtonProps>`
+  color: ${p =>
+    p.active ? p.theme.colors.light : p.theme.colors.text.secondary};
+  cursor: pointer;
+  display: inline-flex;
+  font-size: 14px;
+  position: relative;
+  padding: 0;
+  margin-right: 24px;
+  text-decoration: none;
+  font-weight: ${p => (p.active ? 700 : 400)};
+  outline: inherit;
+  border: none;
+  background-color: inherit;
+  flex-shrink: 0;
+  border-radius: 4px;
+
+  &:hover, &:focus {
+    background: ${p => p.theme.colors.primary.main};
+  }
+`;

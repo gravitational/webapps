@@ -4,7 +4,7 @@ import { BrowserWindow, Menu, Rectangle, screen } from 'electron';
 
 import { FileStorage } from 'teleterm/services/fileStorage';
 import { RuntimeSettings } from 'teleterm/mainProcess/types';
-import theme from 'teleterm/ui/ThemeProvider/theme';
+import { theme } from 'teleterm/ui/ThemeProvider/theme';
 
 type WindowState = Rectangle;
 

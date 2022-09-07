@@ -49,6 +49,11 @@ See [`README.md` in `packages/teleterm`](packages/teleterm).
 
 ## Development
 
+### Styled Components
+
+Our usage of `styled-components` has changed. You should familiarise yourself with the [new documentation on how to use 
+the library](docs/styled-components.md). 
+
 ### Web UI
 
 To avoid having to install a dedicated Teleport cluster,

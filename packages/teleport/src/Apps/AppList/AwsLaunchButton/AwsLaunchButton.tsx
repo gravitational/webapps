@@ -1,14 +1,15 @@
 import React from 'react';
-import styled from 'styled-components';
+import styled, { margin, padding } from 'design/styled';
+
 import { ButtonBorder, Text } from 'design';
-import Menu, { MenuItem } from 'design/Menu';
+import { Menu, MenuItem } from 'design/Menu';
 import { CarrotDown } from 'design/Icon';
 
 import cfg from 'teleport/config';
 import { AwsRole } from 'teleport/services/apps';
 
-export default class AwsLaunchButton extends React.Component<Props> {
-  anchorEl = React.createRef();
+export class AwsLaunchButton extends React.Component<Props> {
+  anchorEl = React.createRef<HTMLButtonElement>();
 
   state = {
     open: false,
@@ -31,7 +32,7 @@ export default class AwsLaunchButton extends React.Component<Props> {
         <ButtonBorder
           width="88px"
           size="small"
-          setRef={e => (this.anchorEl = e)}
+          ref={this.anchorEl}
           onClick={this.onOpen}
         >
           LAUNCH
@@ -51,7 +52,7 @@ export default class AwsLaunchButton extends React.Component<Props> {
             horizontal: 'right',
           }}
           getContentAnchorEl={null}
-          anchorEl={this.anchorEl}
+          anchorEl={this.anchorEl.current}
           open={open}
           onClose={this.onClose}
         >
@@ -122,19 +123,17 @@ type Props = {
   publicAddr: string;
 };
 
-const StyledMenuItem = styled(MenuItem)(
-  ({ theme }) => `
-  color: ${theme.colors.grey[400]};
+const StyledMenuItem = styled(MenuItem, [margin, padding])`
+  color: ${p => p.theme.colors.grey[400]};
   font-size: 12px;
-  border-bottom: 1px solid ${theme.colors.subtle};
+  border-bottom: 1px solid ${p => p.theme.colors.subtle};
   min-height: 32px;
   &:hover {
-    color: ${theme.colors.link};
+    color: ${p => p.theme.colors.link};
   }
 
   :last-child {
     border-bottom: none;
     margin-bottom: 8px;
   }
-`
-);
+`;

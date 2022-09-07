@@ -16,7 +16,7 @@ limitations under the License.
 import React, { useEffect, useRef } from 'react';
 
 import { getPlatform } from 'design/theme/utils';
-import { useTheme } from 'styled-components';
+import { useTheme } from 'design/styled';
 
 import Terminal from 'teleport/lib/term/terminal';
 import Tty from 'teleport/lib/term/tty';
@@ -24,7 +24,7 @@ import { TermEventEnum } from 'teleport/lib/term/enums';
 import StyledXterm from 'teleport/Console/StyledXterm';
 
 export default function Xterm({ tty }: { tty: Tty }) {
-  const refContainer = useRef<HTMLElement>();
+  const refContainer = useRef<HTMLDivElement>();
   const theme = useTheme();
 
   useEffect(() => {

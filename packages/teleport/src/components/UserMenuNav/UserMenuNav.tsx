@@ -15,14 +15,14 @@
  */
 
 import React, { useState, useEffect } from 'react';
-import styled from 'styled-components';
+import styled from 'design/styled';
 import { useLocation } from 'react-router';
 import { NavLink } from 'react-router-dom';
 
 import { ButtonPrimary, Box, Text, Flex } from 'design';
-import { OpenBox, Person } from 'design/Icon';
+import { Icon, OpenBox, Person } from 'design/Icon';
 import TopNavUserMenu from 'design/TopNav/TopNavUserMenu';
-import { MenuItemIcon, MenuItem } from 'design/Menu';
+import { MenuItem } from 'design/Menu';
 
 import history from 'teleport/services/history';
 import cfg from 'teleport/config';
@@ -167,10 +167,13 @@ const menuListCss = () => `
   width: 220px;
 `;
 
-const FlexedMenuItemIcon = styled(MenuItemIcon)`
+const FlexedMenuItemIcon = styled(Icon)`
   display: flex;
   align-items: center;
   justify-content: center;
+  color: ${p => p.theme.colors.grey[400]};
+  font-size: 18px;
+  margin-right: 8px;
 `;
 
 const BorderedFlexedMenuItemIcon = styled(FlexedMenuItemIcon)`

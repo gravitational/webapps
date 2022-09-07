@@ -50,6 +50,7 @@ export function OfflineDocumentGateway(props: OfflineDocumentGatewayProps) {
         flexWrap="wrap"
         justifyContent="space-between"
         mt={3}
+        maxHeight={200}
         gap={2}
       >
         {shouldShowPortInput && (

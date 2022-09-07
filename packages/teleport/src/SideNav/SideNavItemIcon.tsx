@@ -13,18 +13,16 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 */
+import styled from 'design/styled';
 
-import styled from 'styled-components';
-import Icon from 'design/Icon';
+import { fontSize, margin, padding } from 'design/styled';
+import { Icon } from 'design/Icon';
 
-const SideNavItemIcon = styled(Icon)``;
+export const SideNavItemIcon = styled(Icon, [fontSize, margin, padding])``;
 
-SideNavItemIcon.displayName = 'SideNavItemIcon';
 SideNavItemIcon.defaultProps = {
   mr: 3,
   ml: -6,
   fontSize: '16px',
   color: 'inherit',
 };
-
-export default SideNavItemIcon;

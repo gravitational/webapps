@@ -1,7 +1,32 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`render clusters 1`] = `
-.c18 {
+.c0 {
+  box-sizing: border-box;
+  padding-left: 40px;
+  padding-right: 40px;
+}
+
+.c3 {
+  box-sizing: border-box;
+  margin-bottom: 24px;
+}
+
+.c12 {
+  box-sizing: border-box;
+  width: 100%;
+}
+
+.c14 {
+  box-sizing: border-box;
+  margin-right: 8px;
+}
+
+.c16 {
+  box-sizing: border-box;
+}
+
+.c25 {
   line-height: 1.5;
   margin: 0;
   display: inline-flex;
@@ -30,40 +55,40 @@ exports[`render clusters 1`] = `
   height: 24px;
 }
 
-.c18:active {
+.c25:active {
   opacity: 0.56;
 }
 
-.c18:hover,
-.c18:focus {
+.c25:hover,
+.c25:focus {
   background: #2C3A73;
   border: 1px solid rgba(255,255,255,0.1);
   opacity: 1;
 }
 
-.c18:active {
+.c25:active {
   opacity: 0.24;
 }
 
-.c18:disabled {
+.c25:disabled {
   background: rgba(255,255,255,0.12);
   color: rgba(255,255,255,0.3);
 }
 
-.c13 {
+.c19 {
   display: inline-block;
   transition: color 0.3s;
   color: #FFFFFF;
   font-size: 16px;
 }
 
-.c16 {
+.c23 {
   display: inline-block;
   transition: color 0.3s;
   color: #FFFFFF;
 }
 
-.c19 {
+.c26 {
   display: inline-block;
   transition: color 0.3s;
   margin-left: 8px;
@@ -72,7 +97,21 @@ exports[`render clusters 1`] = `
   font-size: 14px;
 }
 
-.c17 {
+.c1 {
+  display: flex;
+}
+
+.c4 {
+  display: flex;
+  align-items: center;
+}
+
+.c13 {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.c24 {
   box-sizing: border-box;
   border-radius: 100px;
   display: inline-flex;
@@ -84,43 +123,28 @@ exports[`render clusters 1`] = `
   font-weight: 500;
   padding: 0 8px;
   background-color: #512FC9;
+  color: #FFFFFF;
 }
 
-.c9 {
+.c6 {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  font-weight: 300;
+  font-size: 22px;
+  line-height: 32px;
+}
+
+.c15 {
   overflow: hidden;
   text-overflow: ellipsis;
   font-weight: 400;
   font-size: 12px;
   line-height: 16px;
-  margin: 0px;
   margin-right: 4px;
   color: #FFFFFF;
 }
 
-.c7 {
-  box-sizing: border-box;
-  width: 100%;
-  display: flex;
-  justify-content: flex-end;
-}
-
-.c8 {
-  box-sizing: border-box;
-  margin-right: 8px;
-  display: flex;
-  align-items: center;
-}
-
-.c10 {
-  box-sizing: border-box;
-  display: flex;
-}
-
-.c1 {
-  box-sizing: border-box;
-  margin-bottom: 24px;
-  display: flex;
-  align-items: center;
+.c5 {
   flex-shrink: 0;
   border-bottom: 1px solid #1C254D;
   height: 56px;
@@ -130,77 +154,67 @@ exports[`render clusters 1`] = `
   padding-right: 40px;
 }
 
-.c2 {
-  overflow: hidden;
-  text-overflow: ellipsis;
-  font-weight: 300;
-  font-size: 22px;
-  line-height: 32px;
-  margin: 0px;
+.c7 {
   white-space: nowrap;
 }
 
-.c0 {
-  box-sizing: border-box;
-  padding-left: 40px;
-  padding-right: 40px;
-  display: flex;
+.c2 {
   width: 100%;
   height: 100%;
   flex-direction: column;
 }
 
-.c0::after {
+.c2::after {
   content: ' ';
   padding-bottom: 24px;
 }
 
-.c14 {
+.c21 {
   background: #222C59;
   box-shadow: 0 4px 16px rgba(0,0,0,0.24);
   border-collapse: collapse;
   border-spacing: 0;
   font-size: 12px;
   width: 100%;
-  border-top-left-radius: 0px;
-  border-top-right-radius: 0px;
-  border-bottom-right-radius: 8px;
+  border-top-left-radius: 0;
+  border-top-right-radius: 0;
   border-bottom-left-radius: 8px;
+  border-bottom-right-radius: 8px;
 }
 
-.c14 > thead > tr > th,
-.c14 > tbody > tr > th,
-.c14 > tfoot > tr > th,
-.c14 > thead > tr > td,
-.c14 > tbody > tr > td,
-.c14 > tfoot > tr > td {
+.c21 > thead > tr > th,
+.c21 > tbody > tr > th,
+.c21 > tfoot > tr > th,
+.c21 > thead > tr > td,
+.c21 > tbody > tr > td,
+.c21 > tfoot > tr > td {
   padding: 8px 8px;
   vertical-align: middle;
 }
 
-.c14 > thead > tr > th:first-child,
-.c14 > tbody > tr > th:first-child,
-.c14 > tfoot > tr > th:first-child,
-.c14 > thead > tr > td:first-child,
-.c14 > tbody > tr > td:first-child,
-.c14 > tfoot > tr > td:first-child {
+.c21 > thead > tr > th:first-child,
+.c21 > tbody > tr > th:first-child,
+.c21 > tfoot > tr > th:first-child,
+.c21 > thead > tr > td:first-child,
+.c21 > tbody > tr > td:first-child,
+.c21 > tfoot > tr > td:first-child {
   padding-left: 24px;
 }
 
-.c14 > thead > tr > th:last-child,
-.c14 > tbody > tr > th:last-child,
-.c14 > tfoot > tr > th:last-child,
-.c14 > thead > tr > td:last-child,
-.c14 > tbody > tr > td:last-child,
-.c14 > tfoot > tr > td:last-child {
+.c21 > thead > tr > th:last-child,
+.c21 > tbody > tr > th:last-child,
+.c21 > tfoot > tr > th:last-child,
+.c21 > thead > tr > td:last-child,
+.c21 > tbody > tr > td:last-child,
+.c21 > tfoot > tr > td:last-child {
   padding-right: 24px;
 }
 
-.c14 > tbody > tr > td {
+.c21 > tbody > tr > td {
   vertical-align: baseline;
 }
 
-.c14 > thead > tr > th {
+.c21 > thead > tr > th {
   background: #111B48;
   color: #FFFFFF;
   cursor: pointer;
@@ -214,26 +228,26 @@ exports[`render clusters 1`] = `
   white-space: nowrap;
 }
 
-.c14 > thead > tr > th .c12 {
+.c21 > thead > tr > th .c18 {
   font-weight: bold;
   font-size: 8px;
   margin-left: 8px;
 }
 
-.c14 > tbody > tr > td {
+.c21 > tbody > tr > td {
   color: rgba(255,255,255,0.87);
   line-height: 16px;
 }
 
-.c14 tbody tr {
+.c21 tbody tr {
   border-bottom: 1px solid #1C254D;
 }
 
-.c14 tbody tr:hover {
+.c21 tbody tr:hover {
   background-color: rgb(37,49,98);
 }
 
-.c3 {
+.c8 {
   padding: 16px 24px;
   display: flex;
   height: 24px;
@@ -245,32 +259,60 @@ exports[`render clusters 1`] = `
   border-top-right-radius: 8px;
 }
 
-.c11 {
+.c17 {
   background: none;
   border: none;
   cursor: pointer;
+  margin-left: 0;
+  margin-right: 0;
 }
 
-.c11 .c12 {
+.c17 .c18 {
   font-size: 20px;
   transition: all 0.3s;
   opacity: 0.5;
 }
 
-.c11:hover .c12,
-.c11:focus .c12 {
+.c17:hover .c18,
+.c17:focus .c18 {
   opacity: 1;
 }
 
-.c11:disabled {
+.c17:disabled {
   cursor: default;
 }
 
-.c11:disabled .c12 {
+.c17:disabled .c18 {
   opacity: 0.1;
 }
 
-.c6 {
+.c20 {
+  background: none;
+  border: none;
+  cursor: pointer;
+  margin-left: 0;
+}
+
+.c20 .c18 {
+  font-size: 20px;
+  transition: all 0.3s;
+  opacity: 0.5;
+}
+
+.c20:hover .c18,
+.c20:focus .c18 {
+  opacity: 1;
+}
+
+.c20:disabled {
+  cursor: default;
+}
+
+.c20:disabled .c18 {
+  opacity: 0.1;
+}
+
+.c11 {
   position: absolute;
   height: 100%;
   right: 0;
@@ -281,7 +323,7 @@ exports[`render clusters 1`] = `
   border-radius: 200px;
 }
 
-.c4 {
+.c9 {
   position: relative;
   display: flex;
   overflow: hidden;
@@ -291,7 +333,7 @@ exports[`render clusters 1`] = `
   background: #111B48;
 }
 
-.c5 {
+.c10 {
   border: none;
   outline: none;
   box-sizing: border-box;
@@ -299,66 +341,66 @@ exports[`render clusters 1`] = `
   font-size: 12px;
   width: 100%;
   transition: all 0.2s;
-  padding-left: 16px;
-  padding-right: 16px;
+  padding-right: 184px;
   color: rgba(255,255,255,0.87);
   background: #111B48;
-  padding-right: 184px;
+  padding-left: 16px;
+  padding-right: 16px;
 }
 
-.c5:hover,
-.c5:focus,
-.c5:active {
+.c10:hover,
+.c10:focus,
+.c10:active {
   background: #1C254D;
   box-shadow: inset 0 2px 4px rgba(0,0,0,.24);
   color: rgba(255,255,255,0.87);
 }
 
-.c5::placeholder {
+.c10::placeholder {
   color: rgba(255,255,255,0.24);
   font-size: 12px;
 }
 
-.c15 td {
+.c22 td {
   height: 22px;
 }
 
 <div
-  class="c0"
+  class="c0 c1 c2"
 >
   <div
-    class="c1"
+    class="c3 c4 c5"
   >
     <div
-      class="c2"
+      class="c6 c7"
     >
       Manage Clusters
     </div>
   </div>
   <nav
-    class="c3"
+    class="c8"
   >
     <div
-      class="c4"
+      class="c9"
     >
       <input
-        class="c5"
+        class="c10"
         placeholder="SEARCH..."
         value=""
       />
       <div
-        class="c6"
+        class="c11"
       />
     </div>
     <div
-      class="c7"
+      class="c12 c13"
       width="100%"
     >
       <div
-        class="c8"
+        class="c14 c4"
       >
         <div
-          class="c9"
+          class="c15"
           color="primary.contrastText"
         >
           SHOWING 
@@ -377,26 +419,26 @@ exports[`render clusters 1`] = `
         </div>
       </div>
       <div
-        class="c10"
+        class="c16 c1"
       >
         <button
-          class="c11"
+          class="c17"
           disabled=""
           title="Previous page"
         >
           <span
-            class="c12 c13 icon icon-arrow-left-circle "
+            class="c18 c19 icon icon-arrow-left-circle "
             color="light"
             font-size="3"
           />
         </button>
         <button
-          class="c11"
+          class="c20"
           disabled=""
           title="Next page"
         >
           <span
-            class="c12 c13 icon icon-arrow-right-circle "
+            class="c18 c19 icon icon-arrow-right-circle "
             color="light"
             font-size="3"
           />
@@ -405,7 +447,7 @@ exports[`render clusters 1`] = `
     </div>
   </nav>
   <table
-    class="c14 c15"
+    class="c21 c22"
   >
     <thead>
       <tr>
@@ -416,7 +458,7 @@ exports[`render clusters 1`] = `
           <a>
             Name
             <span
-              class="c12 c16 icon icon-chevron-up "
+              class="c18 c23 icon icon-chevron-up "
               color="light"
               title="sort items asc"
             />
@@ -433,7 +475,7 @@ exports[`render clusters 1`] = `
           style="width: 40px;"
         >
           <div
-            class="c17"
+            class="c24"
             kind="primary"
           >
             ROOT
@@ -446,13 +488,13 @@ exports[`render clusters 1`] = `
           align="right"
         >
           <button
-            class="c18"
+            class="c25"
             height="24px"
             kind="border"
           >
             OPTIONS
             <span
-              class="c12 c19 icon icon-caret-down "
+              class="c18 c26 icon icon-caret-down "
               color="text.secondary"
               font-size="2"
             />
@@ -470,13 +512,13 @@ exports[`render clusters 1`] = `
           align="right"
         >
           <button
-            class="c18"
+            class="c25"
             height="24px"
             kind="border"
           >
             OPTIONS
             <span
-              class="c12 c19 icon icon-caret-down "
+              class="c18 c26 icon icon-caret-down "
               color="text.secondary"
               font-size="2"
             />
@@ -494,13 +536,13 @@ exports[`render clusters 1`] = `
           align="right"
         >
           <button
-            class="c18"
+            class="c25"
             height="24px"
             kind="border"
           >
             OPTIONS
             <span
-              class="c12 c19 icon icon-caret-down "
+              class="c18 c26 icon icon-caret-down "
               color="text.secondary"
               font-size="2"
             />
@@ -518,13 +560,13 @@ exports[`render clusters 1`] = `
           align="right"
         >
           <button
-            class="c18"
+            class="c25"
             height="24px"
             kind="border"
           >
             OPTIONS
             <span
-              class="c12 c19 icon icon-caret-down "
+              class="c18 c26 icon icon-caret-down "
               color="text.secondary"
               font-size="2"
             />
@@ -542,13 +584,13 @@ exports[`render clusters 1`] = `
           align="right"
         >
           <button
-            class="c18"
+            class="c25"
             height="24px"
             kind="border"
           >
             OPTIONS
             <span
-              class="c12 c19 icon icon-caret-down "
+              class="c18 c26 icon icon-caret-down "
               color="text.secondary"
               font-size="2"
             />
@@ -566,13 +608,13 @@ exports[`render clusters 1`] = `
           align="right"
         >
           <button
-            class="c18"
+            class="c25"
             height="24px"
             kind="border"
           >
             OPTIONS
             <span
-              class="c12 c19 icon icon-caret-down "
+              class="c18 c26 icon icon-caret-down "
               color="text.secondary"
               font-size="2"
             />
@@ -590,13 +632,13 @@ exports[`render clusters 1`] = `
           align="right"
         >
           <button
-            class="c18"
+            class="c25"
             height="24px"
             kind="border"
           >
             OPTIONS
             <span
-              class="c12 c19 icon icon-caret-down "
+              class="c18 c26 icon icon-caret-down "
               color="text.secondary"
               font-size="2"
             />
@@ -614,13 +656,13 @@ exports[`render clusters 1`] = `
           align="right"
         >
           <button
-            class="c18"
+            class="c25"
             height="24px"
             kind="border"
           >
             OPTIONS
             <span
-              class="c12 c19 icon icon-caret-down "
+              class="c18 c26 icon icon-caret-down "
               color="text.secondary"
               font-size="2"
             />
@@ -638,13 +680,13 @@ exports[`render clusters 1`] = `
           align="right"
         >
           <button
-            class="c18"
+            class="c25"
             height="24px"
             kind="border"
           >
             OPTIONS
             <span
-              class="c12 c19 icon icon-caret-down "
+              class="c18 c26 icon icon-caret-down "
               color="text.secondary"
               font-size="2"
             />
@@ -662,13 +704,13 @@ exports[`render clusters 1`] = `
           align="right"
         >
           <button
-            class="c18"
+            class="c25"
             height="24px"
             kind="border"
           >
             OPTIONS
             <span
-              class="c12 c19 icon icon-caret-down "
+              class="c18 c26 icon icon-caret-down "
               color="text.secondary"
               font-size="2"
             />
@@ -686,13 +728,13 @@ exports[`render clusters 1`] = `
           align="right"
         >
           <button
-            class="c18"
+            class="c25"
             height="24px"
             kind="border"
           >
             OPTIONS
             <span
-              class="c12 c19 icon icon-caret-down "
+              class="c18 c26 icon icon-caret-down "
               color="text.secondary"
               font-size="2"
             />
@@ -710,13 +752,13 @@ exports[`render clusters 1`] = `
           align="right"
         >
           <button
-            class="c18"
+            class="c25"
             height="24px"
             kind="border"
           >
             OPTIONS
             <span
-              class="c12 c19 icon icon-caret-down "
+              class="c18 c26 icon icon-caret-down "
               color="text.secondary"
               font-size="2"
             />
@@ -734,13 +776,13 @@ exports[`render clusters 1`] = `
           align="right"
         >
           <button
-            class="c18"
+            class="c25"
             height="24px"
             kind="border"
           >
             OPTIONS
             <span
-              class="c12 c19 icon icon-caret-down "
+              class="c18 c26 icon icon-caret-down "
               color="text.secondary"
               font-size="2"
             />
@@ -758,13 +800,13 @@ exports[`render clusters 1`] = `
           align="right"
         >
           <button
-            class="c18"
+            class="c25"
             height="24px"
             kind="border"
           >
             OPTIONS
             <span
-              class="c12 c19 icon icon-caret-down "
+              class="c18 c26 icon icon-caret-down "
               color="text.secondary"
               font-size="2"
             />
@@ -782,13 +824,13 @@ exports[`render clusters 1`] = `
           align="right"
         >
           <button
-            class="c18"
+            class="c25"
             height="24px"
             kind="border"
           >
             OPTIONS
             <span
-              class="c12 c19 icon icon-caret-down "
+              class="c18 c26 icon icon-caret-down "
               color="text.secondary"
               font-size="2"
             />
@@ -806,13 +848,13 @@ exports[`render clusters 1`] = `
           align="right"
         >
           <button
-            class="c18"
+            class="c25"
             height="24px"
             kind="border"
           >
             OPTIONS
             <span
-              class="c12 c19 icon icon-caret-down "
+              class="c18 c26 icon icon-caret-down "
               color="text.secondary"
               font-size="2"
             />
@@ -830,13 +872,13 @@ exports[`render clusters 1`] = `
           align="right"
         >
           <button
-            class="c18"
+            class="c25"
             height="24px"
             kind="border"
           >
             OPTIONS
             <span
-              class="c12 c19 icon icon-caret-down "
+              class="c18 c26 icon icon-caret-down "
               color="text.secondary"
               font-size="2"
             />
@@ -854,13 +896,13 @@ exports[`render clusters 1`] = `
           align="right"
         >
           <button
-            class="c18"
+            class="c25"
             height="24px"
             kind="border"
           >
             OPTIONS
             <span
-              class="c12 c19 icon icon-caret-down "
+              class="c18 c26 icon icon-caret-down "
               color="text.secondary"
               font-size="2"
             />
@@ -878,13 +920,13 @@ exports[`render clusters 1`] = `
           align="right"
         >
           <button
-            class="c18"
+            class="c25"
             height="24px"
             kind="border"
           >
             OPTIONS
             <span
-              class="c12 c19 icon icon-caret-down "
+              class="c18 c26 icon icon-caret-down "
               color="text.secondary"
               font-size="2"
             />
@@ -902,13 +944,13 @@ exports[`render clusters 1`] = `
           align="right"
         >
           <button
-            class="c18"
+            class="c25"
             height="24px"
             kind="border"
           >
             OPTIONS
             <span
-              class="c12 c19 icon icon-caret-down "
+              class="c18 c26 icon icon-caret-down "
               color="text.secondary"
               font-size="2"
             />
@@ -926,13 +968,13 @@ exports[`render clusters 1`] = `
           align="right"
         >
           <button
-            class="c18"
+            class="c25"
             height="24px"
             kind="border"
           >
             OPTIONS
             <span
-              class="c12 c19 icon icon-caret-down "
+              class="c18 c26 icon icon-caret-down "
               color="text.secondary"
               font-size="2"
             />
@@ -950,13 +992,13 @@ exports[`render clusters 1`] = `
           align="right"
         >
           <button
-            class="c18"
+            class="c25"
             height="24px"
             kind="border"
           >
             OPTIONS
             <span
-              class="c12 c19 icon icon-caret-down "
+              class="c18 c26 icon icon-caret-down "
               color="text.secondary"
               font-size="2"
             />
@@ -974,13 +1016,13 @@ exports[`render clusters 1`] = `
           align="right"
         >
           <button
-            class="c18"
+            class="c25"
             height="24px"
             kind="border"
           >
             OPTIONS
             <span
-              class="c12 c19 icon icon-caret-down "
+              class="c18 c26 icon icon-caret-down "
               color="text.secondary"
               font-size="2"
             />
@@ -998,13 +1040,13 @@ exports[`render clusters 1`] = `
           align="right"
         >
           <button
-            class="c18"
+            class="c25"
             height="24px"
             kind="border"
           >
             OPTIONS
             <span
-              class="c12 c19 icon icon-caret-down "
+              class="c18 c26 icon icon-caret-down "
               color="text.secondary"
               font-size="2"
             />
@@ -1022,13 +1064,13 @@ exports[`render clusters 1`] = `
           align="right"
         >
           <button
-            class="c18"
+            class="c25"
             height="24px"
             kind="border"
           >
             OPTIONS
             <span
-              class="c12 c19 icon icon-caret-down "
+              class="c18 c26 icon icon-caret-down "
               color="text.secondary"
               font-size="2"
             />
@@ -1046,13 +1088,13 @@ exports[`render clusters 1`] = `
           align="right"
         >
           <button
-            class="c18"
+            class="c25"
             height="24px"
             kind="border"
           >
             OPTIONS
             <span
-              class="c12 c19 icon icon-caret-down "
+              class="c18 c26 icon icon-caret-down "
               color="text.secondary"
               font-size="2"
             />
@@ -1070,13 +1112,13 @@ exports[`render clusters 1`] = `
           align="right"
         >
           <button
-            class="c18"
+            class="c25"
             height="24px"
             kind="border"
           >
             OPTIONS
             <span
-              class="c12 c19 icon icon-caret-down "
+              class="c18 c26 icon icon-caret-down "
               color="text.secondary"
               font-size="2"
             />
@@ -1094,13 +1136,13 @@ exports[`render clusters 1`] = `
           align="right"
         >
           <button
-            class="c18"
+            class="c25"
             height="24px"
             kind="border"
           >
             OPTIONS
             <span
-              class="c12 c19 icon icon-caret-down "
+              class="c18 c26 icon icon-caret-down "
               color="text.secondary"
               font-size="2"
             />
@@ -1118,13 +1160,13 @@ exports[`render clusters 1`] = `
           align="right"
         >
           <button
-            class="c18"
+            class="c25"
             height="24px"
             kind="border"
           >
             OPTIONS
             <span
-              class="c12 c19 icon icon-caret-down "
+              class="c18 c26 icon icon-caret-down "
               color="text.secondary"
               font-size="2"
             />
@@ -1142,13 +1184,13 @@ exports[`render clusters 1`] = `
           align="right"
         >
           <button
-            class="c18"
+            class="c25"
             height="24px"
             kind="border"
           >
             OPTIONS
             <span
-              class="c12 c19 icon icon-caret-down "
+              class="c18 c26 icon icon-caret-down "
               color="text.secondary"
               font-size="2"
             />
@@ -1166,13 +1208,13 @@ exports[`render clusters 1`] = `
           align="right"
         >
           <button
-            class="c18"
+            class="c25"
             height="24px"
             kind="border"
           >
             OPTIONS
             <span
-              class="c12 c19 icon icon-caret-down "
+              class="c18 c26 icon icon-caret-down "
               color="text.secondary"
               font-size="2"
             />
@@ -1190,13 +1232,13 @@ exports[`render clusters 1`] = `
           align="right"
         >
           <button
-            class="c18"
+            class="c25"
             height="24px"
             kind="border"
           >
             OPTIONS
             <span
-              class="c12 c19 icon icon-caret-down "
+              class="c18 c26 icon icon-caret-down "
               color="text.secondary"
               font-size="2"
             />
@@ -1214,13 +1256,13 @@ exports[`render clusters 1`] = `
           align="right"
         >
           <button
-            class="c18"
+            class="c25"
             height="24px"
             kind="border"
           >
             OPTIONS
             <span
-              class="c12 c19 icon icon-caret-down "
+              class="c18 c26 icon icon-caret-down "
               color="text.secondary"
               font-size="2"
             />
@@ -1238,13 +1280,13 @@ exports[`render clusters 1`] = `
           align="right"
         >
           <button
-            class="c18"
+            class="c25"
             height="24px"
             kind="border"
           >
             OPTIONS
             <span
-              class="c12 c19 icon icon-caret-down "
+              class="c18 c26 icon icon-caret-down "
               color="text.secondary"
               font-size="2"
             />
@@ -1262,13 +1304,13 @@ exports[`render clusters 1`] = `
           align="right"
         >
           <button
-            class="c18"
+            class="c25"
             height="24px"
             kind="border"
           >
             OPTIONS
             <span
-              class="c12 c19 icon icon-caret-down "
+              class="c18 c26 icon icon-caret-down "
               color="text.secondary"
               font-size="2"
             />
@@ -1286,13 +1328,13 @@ exports[`render clusters 1`] = `
           align="right"
         >
           <button
-            class="c18"
+            class="c25"
             height="24px"
             kind="border"
           >
             OPTIONS
             <span
-              class="c12 c19 icon icon-caret-down "
+              class="c18 c26 icon icon-caret-down "
               color="text.secondary"
               font-size="2"
             />
@@ -1310,13 +1352,13 @@ exports[`render clusters 1`] = `
           align="right"
         >
           <button
-            class="c18"
+            class="c25"
             height="24px"
             kind="border"
           >
             OPTIONS
             <span
-              class="c12 c19 icon icon-caret-down "
+              class="c18 c26 icon icon-caret-down "
               color="text.secondary"
               font-size="2"
             />

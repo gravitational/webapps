@@ -117,6 +117,7 @@ export function SelectResource(props: SelectResourceProps) {
   return (
     <Box>
       <Header>Select Resource Type</Header>
+
       <HeaderSubtitle>
         Users are able to add and access many different types of resources
         through Teleport. <br />

@@ -15,14 +15,16 @@ limitations under the License.
 */
 
 import React from 'react';
-import Menu from 'design/Menu';
+import { Menu } from 'design/Menu';
 import { ButtonBorder } from 'design';
 import { CarrotDown } from 'design/Icon';
 
-import { MenuProps, AnchorProps } from './types';
+import { MenuProps } from 'design/Menu/Menu';
+
+import { AnchorProps } from './types';
 
 export default class MenuActionIcon extends React.Component<Props> {
-  anchorEl = null;
+  anchorEl = React.createRef<HTMLButtonElement>();
 
   state = {
     open: false,
@@ -50,7 +52,7 @@ export default class MenuActionIcon extends React.Component<Props> {
         <ButtonBorder
           height="24px"
           size="small"
-          setRef={e => (this.anchorEl = e)}
+          ref={this.anchorEl}
           onClick={this.onOpen}
           {...buttonProps}
         >
@@ -60,7 +62,7 @@ export default class MenuActionIcon extends React.Component<Props> {
         <Menu
           getContentAnchorEl={null}
           menuListCss={menuListCss}
-          anchorEl={this.anchorEl}
+          anchorEl={this.anchorEl.current}
           open={open}
           onClose={this.onClose}
           transformOrigin={{

@@ -15,7 +15,7 @@
  */
 
 import React, { useState, useRef, useEffect, useMemo } from 'react';
-import styled from 'styled-components';
+import styled from 'design/styled';
 import { components } from 'react-select';
 import { Flex, Text, ButtonBorder, ButtonIcon, Box } from 'design';
 import { Close, Add } from 'design/Icon';
@@ -80,7 +80,7 @@ export default function SelectFilters({
     applyFilters(selectedOptions.map(o => o.filter));
   }
 
-  function handleKeyDown(e: KeyboardEvent) {
+  function handleKeyDown(e: React.KeyboardEvent) {
     if (e.key === 'Escape') {
       setShowSelector(false);
     }

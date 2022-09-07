@@ -23,7 +23,7 @@ import createMfaOptions, { MfaOption } from 'shared/utils/createMfaOptions';
 
 import { Auth2faType, PreferredMfaType } from 'shared/services';
 
-import FieldInput from '../FieldInput';
+import { FieldInput } from '../FieldInput';
 import FieldSelect from '../FieldSelect';
 import Validation, { Validator } from '../Validation';
 import {

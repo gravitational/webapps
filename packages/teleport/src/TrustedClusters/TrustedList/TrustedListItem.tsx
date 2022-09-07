@@ -61,7 +61,7 @@ export default function TrustedListItem(props: Props) {
           color="text.primary"
         />
         <Text
-          typography="p"
+          typography="paragraph"
           bold
           caps
           mb="1"

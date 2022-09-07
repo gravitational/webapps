@@ -21,7 +21,7 @@ import { render } from 'design/utils/testing';
 
 import * as Icons from '../Icon';
 
-import SideNav, { SideNavItem, SideNavItemIcon } from './index';
+import { SideNav, SideNavItem, SideNavItemIcon } from './index';
 
 test('renders: SideNav, SideNavItem, SideNavItemIcon', () => {
   render(

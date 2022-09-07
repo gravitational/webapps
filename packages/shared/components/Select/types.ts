@@ -13,6 +13,7 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 */
+import React from 'react';
 
 export type Props = {
   inputId?: string;
@@ -26,7 +27,7 @@ export type Props = {
   controlShouldRenderValue?: boolean;
   maxMenuHeight?: number;
   onChange(e: Option<any> | Option<any>[]): void;
-  onKeyDown?(e: KeyboardEvent): void;
+  onKeyDown?: React.KeyboardEventHandler<HTMLDivElement>;
   value: null | Option<any> | Option<any>[];
   isMulti?: boolean;
   autoFocus?: boolean;

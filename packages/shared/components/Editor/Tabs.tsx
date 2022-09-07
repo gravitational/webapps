@@ -1,5 +1,5 @@
 import React from 'react';
-import styled from 'styled-components';
+import styled from 'design/styled';
 
 import * as Icons from 'design/Icon';
 
@@ -49,7 +49,7 @@ export const Tab = styled.div<{ active: boolean }>`
   }
 `;
 
-const TabIcon = styled('span')`
+const TabIcon = styled.span`
   font-size: 14px;
   margin-right: 10px;
   position: relative;

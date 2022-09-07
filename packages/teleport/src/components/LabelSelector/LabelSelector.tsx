@@ -15,7 +15,7 @@ limitations under the License.
 */
 
 import React, { useCallback, useEffect, useRef, useState } from 'react';
-import styled from 'styled-components';
+import styled from 'design/styled';
 
 import { Box, Flex, Pill, Popover, Link, Text } from 'design';
 import { Info, Warning } from 'design/Icon';

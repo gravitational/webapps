@@ -15,7 +15,7 @@ limitations under the License.
 */
 
 import React from 'react';
-import styled from 'styled-components';
+import styled from 'design/styled';
 import { Flex } from 'design';
 
 import AjaxPoller from 'teleport/components/AjaxPoller';

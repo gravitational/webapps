@@ -1,5 +1,5 @@
 import React from 'react';
-import styled from 'styled-components';
+import styled, { margin, padding } from 'design/styled';
 
 import { Text } from 'design';
 
@@ -91,9 +91,8 @@ export function TreeList() {
   );
 }
 
-const ClickableItem = styled.span`
+const ClickableItem = styled.span([margin, padding])`
   visibility: ${props => (props.hidden ? 'hidden' : 'visible')};
-  margin-left: ${props => props.ml};
   font-weight: bold;
   cursor: pointer;
   display: inline-block;

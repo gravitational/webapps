@@ -16,7 +16,7 @@ limitations under the License.
 
 import React from 'react';
 import { components } from 'react-select';
-import styled from 'styled-components';
+import styled from 'design/styled';
 import { Box, Flex, Text } from 'design';
 import { SelectAsync, DarkStyledSelect } from 'shared/components/Select';
 

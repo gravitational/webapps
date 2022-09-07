@@ -15,7 +15,7 @@ limitations under the License.
 */
 
 import React from 'react';
-import styled from 'styled-components';
+import styled from 'design/styled';
 import { Flex, Text, ButtonBorder } from 'design';
 import Table, { Cell, ClickableLabelCell } from 'design/DataTable';
 import { SortType } from 'design/DataTable/types';
@@ -38,7 +38,7 @@ import { AgentLabel } from 'teleport/services/agents';
 import ServersideSearchPanel from 'teleport/components/ServersideSearchPanel';
 import { ResourceUrlQueryParams } from 'teleport/getUrlQueryParams';
 
-import AwsLaunchButton from './AwsLaunchButton';
+import { AwsLaunchButton } from './AwsLaunchButton';
 
 export default function AppList(props: Props) {
   const {

@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import styled from 'styled-components';
+import styled from 'design/styled';
 
 import { Editor, File, Language } from 'shared/components/Editor';
 
@@ -83,6 +83,6 @@ export function CreateTeleportConfigAnimation() {
   );
 }
 
-const DisableUserSelect = styled('div')`
+const DisableUserSelect = styled.div`
   user-select: none;
 `;

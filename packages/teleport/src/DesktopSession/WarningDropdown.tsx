@@ -16,7 +16,7 @@ limitations under the License.
 
 import React, { useRef, useState } from 'react';
 import { Text, Flex, Button, Card, ButtonIcon } from 'design';
-import styled from 'styled-components';
+import styled from 'design/styled';
 import { Notification } from 'shared/components/Notification';
 import { Warning, Close } from 'design/Icon';
 import { orange } from 'design/theme/palette';
@@ -95,10 +95,14 @@ export function WarningDropdown({ warnings, onRemoveWarning }: Props) {
 const StyledWarningIcon = styled(Warning)`
   font-weight: ${({ theme }) => theme.fontWeights.bold};
   font-size: ${({ theme }) => theme.fontSizes[2] + 'px'};
-  align-self: 'center';
+  align-self: center;
 `;
 
-const StyledButton = styled(Button)`
+interface StyledButtonProps {
+  hasWarnings: boolean;
+}
+
+const StyledButton = styled(Button)<StyledButtonProps>`
   min-height: 0;
   height: ${({ theme }) => theme.fontSizes[7] + 'px'};
   background-color: ${props =>

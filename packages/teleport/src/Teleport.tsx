@@ -45,8 +45,8 @@ const Teleport: React.FC<Props> = props => {
   const features = props.features || getOSSFeatures();
 
   return (
-    <CatchError>
-      <ThemeProvider>
+    <ThemeProvider>
+      <CatchError>
         <Router history={history}>
           <Suspense fallback={null}>
             <Switch>
@@ -69,8 +69,8 @@ const Teleport: React.FC<Props> = props => {
             </Switch>
           </Suspense>
         </Router>
-      </ThemeProvider>
-    </CatchError>
+      </CatchError>
+    </ThemeProvider>
   );
 };
 

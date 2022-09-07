@@ -17,7 +17,7 @@
 import React, { useState } from 'react';
 import { Cloud } from 'design/Icon';
 import { Text, Box, Flex } from 'design';
-import styled from 'styled-components';
+import styled from 'design/styled';
 
 import SlideTabs from 'design/SlideTabs';
 
@@ -49,7 +49,6 @@ export function SelectDBDeploymentType({
         mt={4}
         justifyContent="space-between"
         gap="12px 12px"
-        rowGap="15px"
       >
         {resourceTypes
           .filter(resource => filter === 'All' || resource.type === filter)
@@ -77,7 +76,11 @@ type SelectDBDeploymentTypeProps = {
   resourceTypes: ResourceType[];
 };
 
-const ResourceTypeOption = styled.div`
+interface ResourceTypeOptionProps {
+  selected: boolean;
+}
+
+const ResourceTypeOption = styled.div<ResourceTypeOptionProps>`
   background: rgba(255, 255, 255, 0.05);
   border: ${props =>
     !props.selected

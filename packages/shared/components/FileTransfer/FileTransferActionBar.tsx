@@ -29,7 +29,7 @@ export function FileTransferActionBar({
 }: FileTransferActionBarProps) {
   const fileTransferContext = useFileTransferContext();
   const areFileTransferButtonsDisabled =
-    fileTransferContext.openedDialog || !isConnected;
+    !!fileTransferContext.openedDialog || !isConnected;
 
   return (
     <Flex flex="none" alignItems="center" height="24px">

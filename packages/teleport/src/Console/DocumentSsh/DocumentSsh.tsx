@@ -124,7 +124,6 @@ const SidNotFoundError = ({ sid = '', clusterId = '' }) => (
     </Text>
     <ButtonPrimary
       block
-      secondary
       as="a"
       href={cfg.getPlayerRoute({ sid, clusterId }, { recordingType: 'ssh' })}
       target="_blank"

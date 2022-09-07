@@ -15,17 +15,20 @@ limitations under the License.
 */
 
 import React from 'react';
-import styled from 'styled-components';
+import styled from 'design/styled';
 import { NavLink } from 'react-router-dom';
 import { matchPath } from 'react-router';
 
 import * as Icons from 'design/Icon';
 
-import SideNavItemIcon from './SideNavItemIcon';
-import SideNavItem from './SideNavItem';
+import { SideNavItemIcon } from './SideNavItemIcon';
+import { SideNavItem } from './SideNavItem';
 import { Item } from './useSideNav';
 
-const SideNavItemGroup: React.FC<{ path: string; item: Item }> = props => {
+export const SideNavItemGroup: React.FC<{
+  path: string;
+  item: Item;
+}> = props => {
   const { item, path } = props;
   const hasSelectedChild = isChildActive(path, item);
   // Auto expand on initial render if a child is selected.
@@ -85,8 +88,6 @@ const SideNavItemGroup: React.FC<{ path: string; item: Item }> = props => {
     </>
   );
 };
-
-export default SideNavItemGroup;
 
 function isChildActive(url: string, item: Item) {
   return item.items.some(

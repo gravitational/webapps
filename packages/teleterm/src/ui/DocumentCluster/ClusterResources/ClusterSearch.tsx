@@ -15,9 +15,9 @@
  */
 
 import React from 'react';
-import styled from 'styled-components';
+import styled, { margin, padding, width, color, height } from 'design/styled';
+
 import { debounce } from 'lodash';
-import { space, width, color, height } from 'styled-system';
 
 export default function ClusterSearch(props: Props) {
   const ref = React.useRef<HTMLInputElement>();
@@ -35,35 +35,29 @@ export default function ClusterSearch(props: Props) {
   return <Input ref={ref} placeholder="Search..." onChange={handleOnChange} />;
 }
 
-const Input = styled.input(props => {
-  const { theme } = props;
-  return {
-    background: theme.colors.primary.main,
-    boxSizing: 'border-box',
-    color: theme.colors.text.primary,
-    width: '100%',
-    minHeight: '24px',
-    minWidth: '300px',
-    outline: 'none',
-    borderRadius: '4px',
-    border: '1px solid transparent',
-    padding: '2px 12px',
-    '&:hover, &:focus': {
-      color: theme.colors.primary.contrastText,
-      borderColor: theme.colors.primary.lighter,
-      opacity: 1,
-    },
-    '::placeholder': {
-      opacity: 1,
-      color: theme.colors.text.secondary,
-    },
+const Input = styled.input([margin, padding, width, height, color])`
+  background: ${p => p.theme.colors.primary.main};
+  box-sizing: border-box;
+  color: ${p => p.theme.colors.text.primary};
+  width: 100%;
+  min-height: 24px;
+  min-width: 300px;
+  outline: none;
+  border-radius: 4px;
+  border: 1px solid transparent;
+  padding: 2px 12px;
 
-    ...space(props),
-    ...width(props),
-    ...height(props),
-    ...color(props),
-  };
-});
+  &:hover, &:focus {
+    color: ${p => p.theme.colors.primary.contrastText};
+    border-color: ${p => p.theme.colors.primary.lighter};
+    opacity: 1;
+  }
+
+  ::placeholder {
+    opacity: 1;
+    color: ${p => p.theme.colors.text.secondary};
+  }
+`;
 
 type Props = {
   onChange(value: string): void;

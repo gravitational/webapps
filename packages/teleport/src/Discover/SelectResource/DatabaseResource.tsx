@@ -15,7 +15,7 @@
  */
 
 import React, { useState } from 'react';
-import styled from 'styled-components';
+import styled from 'design/styled';
 
 import { Box, Flex, Text } from 'design';
 
@@ -90,7 +90,6 @@ function SelectDBDeploymentType({
         mt={4}
         justifyContent="space-between"
         gap="12px 12px"
-        rowGap="15px"
       >
         {resourceTypes
           .filter(resource => filter === 'All' || resource.type === filter)
@@ -112,7 +111,11 @@ function SelectDBDeploymentType({
   );
 }
 
-const ResourceTypeOption = styled.div`
+interface ResourceTypeOptionProps {
+  selected: boolean;
+}
+
+const ResourceTypeOption = styled.div<ResourceTypeOptionProps>`
   background: rgba(255, 255, 255, 0.05);
   border: ${props =>
     !props.selected

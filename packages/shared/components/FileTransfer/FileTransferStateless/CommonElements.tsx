@@ -15,9 +15,9 @@
  */
 
 import React, { forwardRef } from 'react';
-import styled from 'styled-components';
+import styled from 'design/styled';
 
-import FieldInput from 'shared/components/FieldInput';
+import { FieldInput } from 'shared/components/FieldInput';
 import { requiredField } from 'shared/components/Validation/rules';
 import Validation from 'shared/components/Validation';
 

@@ -23,7 +23,7 @@ import Dialog, {
   DialogFooter,
 } from 'design/Dialog';
 import Validation from 'shared/components/Validation';
-import FieldInput from 'shared/components/FieldInput';
+import { FieldInput } from 'shared/components/FieldInput';
 import FieldSelect from 'shared/components/FieldSelect';
 import { Option } from 'shared/components/Select';
 import { requiredField } from 'shared/components/Validation/rules';

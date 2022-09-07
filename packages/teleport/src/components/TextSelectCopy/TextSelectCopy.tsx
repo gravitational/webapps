@@ -18,7 +18,7 @@ import React from 'react';
 import copyToClipboard from 'design/utils/copyToClipboard';
 import selectElementContent from 'design/utils/selectElementContent';
 import { ButtonPrimary, Box, Flex } from 'design';
-import { useTheme } from 'styled-components';
+import { useTheme } from 'design/styled';
 
 export function TextSelectCopy({
   text,
@@ -38,7 +38,7 @@ export function TextSelectCopy({
     onCopy && onCopy();
   }
 
-  const boxStyles =
+  const boxStyles: React.CSSProperties =
     bash && !allowMultiline
       ? {
           overflow: 'auto',

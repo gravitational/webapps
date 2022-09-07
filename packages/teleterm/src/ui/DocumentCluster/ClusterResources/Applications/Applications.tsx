@@ -15,7 +15,7 @@ limitations under the License.
 */
 
 import React from 'react';
-import styled from 'styled-components';
+import styled from 'design/styled';
 import { Flex, Text, ButtonBorder } from 'design';
 import {
   pink,
@@ -34,6 +34,8 @@ import { Cell } from 'design/DataTable';
 
 import { Danger } from 'design/Alert';
 
+import { TableColumn } from 'design/DataTable/types';
+
 import { Table } from 'teleterm/ui/components/Table';
 import * as types from 'teleterm/ui/services/clusters/types';
 
@@ -49,6 +51,38 @@ export default function Container() {
 export function AppList(props: State) {
   const { apps = [], syncStatus } = props;
 
+  const columns: TableColumn<types.Application>[] = [
+    {
+      altKey: 'app-icon',
+      render: renderAppIcon,
+    },
+    {
+      key: 'name',
+      headerText: 'Name',
+      isSortable: true,
+    },
+    {
+      key: 'description',
+      headerText: 'Description',
+      isSortable: true,
+    },
+    {
+      key: 'publicAddr',
+      headerText: 'Address',
+      render: renderAddress,
+      isSortable: true,
+    },
+    {
+      key: 'labelsList',
+      headerText: 'Labels',
+      render: renderLabelCell,
+    },
+    {
+      altKey: 'launch-btn',
+      render: renderConnectButton,
+    },
+  ];
+
   return (
     <>
       {syncStatus.status === 'failed' && (
@@ -56,37 +90,7 @@ export function AppList(props: State) {
       )}
       <StyledTable
         data={apps}
-        columns={[
-          {
-            altKey: 'app-icon',
-            render: renderAppIcon,
-          },
-          {
-            key: 'name',
-            headerText: 'Name',
-            isSortable: true,
-          },
-          {
-            key: 'description',
-            headerText: 'Description',
-            isSortable: true,
-          },
-          {
-            key: 'publicAddr',
-            headerText: 'Address',
-            render: renderAddress,
-            isSortable: true,
-          },
-          {
-            key: 'labelsList',
-            headerText: 'Labels',
-            render: renderLabelCell,
-          },
-          {
-            altKey: 'launch-btn',
-            render: renderConnectButton,
-          },
-        ]}
+        columns={columns}
         emptyText="No Applications Found"
         pagination={{ pageSize: 15, pagerPosition: 'bottom' }}
       />
@@ -151,4 +155,4 @@ const StyledTable = styled(Table)`
   & > tbody > tr > td {
     vertical-align: baseline;
   }
-`;
+` as typeof Table;

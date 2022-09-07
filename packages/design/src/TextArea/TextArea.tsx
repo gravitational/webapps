@@ -1,32 +1,56 @@
 /**
-Copyright 2022 Gravitational, Inc.
+ Copyright 2022 Gravitational, Inc.
 
-Licensed under the Apache License, Version 2.0 (the "License");
-you may not use this file except in compliance with the License.
-You may obtain a copy of the License at
+ Licensed under the Apache License, Version 2.0 (the "License");
+ you may not use this file except in compliance with the License.
+ You may obtain a copy of the License at
 
-    http://www.apache.org/licenses/LICENSE-2.0
+ http://www.apache.org/licenses/LICENSE-2.0
 
-Unless required by applicable law or agreed to in writing, software
-distributed under the License is distributed on an "AS IS" BASIS,
-WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-See the License for the specific language governing permissions and
-limitations under the License.
-*/
+ Unless required by applicable law or agreed to in writing, software
+ distributed under the License is distributed on an "AS IS" BASIS,
+ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ See the License for the specific language governing permissions and
+ limitations under the License.
+ */
 
-import React, { CSSProperties } from 'react';
-import styled from 'styled-components';
-import { space, width, color, height } from 'styled-system';
+import React from 'react';
+
+import styled, { margin, padding, width, color, height } from 'design/styled';
+
+import type { SystemRenderFunction } from 'design/styled';
 
 export interface TextAreaProps extends React.ComponentPropsWithRef<'textarea'> {
   hasError?: boolean;
   resizable?: boolean;
 
-  // TS: temporary handles ...styles
   [key: string]: any;
 }
 
-export const TextArea: React.FC<TextAreaProps> = styled.textarea`
+const error: SystemRenderFunction<{ hasError?: boolean }> = ({
+  hasError,
+  theme,
+}) =>
+  hasError && {
+    border: `2px solid ${theme.colors.error.main}`,
+    padding: '10px 14px',
+  };
+
+const resize: SystemRenderFunction<{ resizable?: boolean }> = ({
+  resizable,
+}) => ({
+  resize: resizable ? 'vertical' : 'none',
+});
+
+export const TextArea = styled.textarea([
+  color,
+  margin,
+  padding,
+  width,
+  height,
+  resize,
+  error,
+])<TextAreaProps>`
   appearance: none;
   border: none;
   border-radius: 4px;
@@ -46,28 +70,4 @@ export const TextArea: React.FC<TextAreaProps> = styled.textarea`
   :read-only {
     cursor: not-allowed;
   }
-
-  ${color} ${space} ${width} ${height} ${error} ${resize};
 `;
-
-function error({
-  hasError,
-  theme,
-}: Pick<TextAreaProps, 'hasError'> & {
-  theme: any;
-}): CSSProperties {
-  if (!hasError) {
-    return;
-  }
-
-  return {
-    border: `2px solid ${theme.colors.error.main}`,
-    padding: '10px 14px',
-  };
-}
-
-function resize({
-  resizable,
-}: Pick<TextAreaProps, 'resizable'>): CSSProperties {
-  return { resize: resizable ? 'vertical' : 'none' };
-}

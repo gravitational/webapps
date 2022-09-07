@@ -15,7 +15,7 @@ limitations under the License.
 */
 
 import React, { useEffect, useState } from 'react';
-import styled from 'styled-components';
+import styled from 'design/styled';
 import { Box, ButtonPrimary, Flex, Text } from 'design';
 
 import * as types from 'teleterm/ui/services/workspacesService';

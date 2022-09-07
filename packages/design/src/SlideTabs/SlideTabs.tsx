@@ -14,7 +14,8 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 import React, { useEffect, useState } from 'react';
-import styled from 'styled-components';
+
+import styled from 'design/styled';
 
 function SlideTabs({
   appearance = 'square',
@@ -61,9 +62,12 @@ function SlideTabs({
   );
 }
 
+type Appearance = 'square' | 'round';
+type Size = 'xlarge' | 'medium';
+
 type props = {
   // The style to render the selector in.
-  appearance?: 'square' | 'round';
+  appearance?: Appearance;
   // The index that you'd like to select on the initial render.
   initialSelected?: number;
   // The name you'd like to use for the form if using multiple tabs on the page.
@@ -72,7 +76,7 @@ type props = {
   // To be notified when the selected tab changes supply it with this fn.
   onChange: (selectedTab: number) => void;
   // The size to render the selector in.
-  size?: 'xlarge' | 'medium';
+  size?: Size;
   // A list of tab names that you'd like displayed in the list of tabs.
   tabs: string[] | TabComponent[];
 };
@@ -86,7 +90,11 @@ const Wrapper = styled.div`
   position: relative;
 `;
 
-const TabLabel = styled.label`
+interface TabLabelProps {
+  itemCount: number;
+}
+
+const TabLabel = styled.label<TabLabelProps>`
   cursor: pointer;
   display: flex;
   justify-content: center;
@@ -99,7 +107,14 @@ const TabInput = styled.input`
   display: none;
 `;
 
-const TabSlider = styled.div`
+interface TabSliderProps {
+  appearance: Appearance;
+  activeIndex: number;
+  itemCount: number;
+  size: Size;
+}
+
+const TabSlider = styled.div<TabSliderProps>`
   background-color: #512fc9;
   border-radius: ${props => (props.appearance === 'square' ? '8px' : '60px')};
   box-shadow: 0px 2px 6px rgba(12, 12, 14, 0.1);
@@ -113,7 +128,12 @@ const TabSlider = styled.div`
   width: calc(${props => 100 / props.itemCount}% - 16px);
 `;
 
-const TabNav = styled.nav`
+interface TabNavProps {
+  appearance: Appearance;
+  size: Size;
+}
+
+const TabNav = styled.nav<TabNavProps>`
   align-items: center;
   background-color: rgba(255, 255, 255, 0.05);
   border-radius: ${props => (props.appearance === 'square' ? '8px' : '60px')};

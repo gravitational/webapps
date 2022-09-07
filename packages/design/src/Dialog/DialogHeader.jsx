@@ -16,11 +16,9 @@ limitations under the License.
 
 import React from 'react';
 
-import styled from 'styled-components';
+import styled, { typography } from 'design/styled';
 
-import { typography } from 'design/system';
-
-import Flex from './../Flex';
+import { Flex } from '../Flex';
 
 export default function DialogHeader(props) {
   return (

@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import styled from 'styled-components';
+import styled from 'design/styled';
 
 // NOTE: This MainContainer component is imported in multiple places and then
 // modified using styled-components. If it's exported from the Main/index.ts

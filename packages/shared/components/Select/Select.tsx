@@ -17,8 +17,7 @@ limitations under the License.
 import React from 'react';
 import ReactSelect from 'react-select';
 import ReactSelectAsync from 'react-select/async';
-import styled from 'styled-components';
-import { width, space } from 'design/system';
+import styled, { margin, padding, width } from 'design/styled';
 
 import { Props, AsyncProps } from './types';
 
@@ -59,7 +58,15 @@ export function SelectAsync(props: AsyncProps) {
   );
 }
 
-export const StyledSelect = styled.div`
+interface StyledSelectProps {
+  hasError?: boolean;
+}
+
+export const StyledSelect = styled.div([
+  width,
+  margin,
+  padding,
+])<StyledSelectProps>`
   .react-select-container {
     box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.24);
     box-sizing: border-box;
@@ -142,7 +149,4 @@ export const StyledSelect = styled.div`
       color: rgba(0, 0, 0, 0.14);
     }
   }
-
-  ${width}
-  ${space}
 `;

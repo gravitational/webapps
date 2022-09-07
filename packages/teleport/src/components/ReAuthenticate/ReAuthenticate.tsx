@@ -25,7 +25,7 @@ import Dialog, {
 import { Danger } from 'design/Alert';
 import Validation from 'shared/components/Validation';
 import { requiredToken } from 'shared/components/Validation/rules';
-import FieldInput from 'shared/components/FieldInput';
+import { FieldInput } from 'shared/components/FieldInput';
 import FieldSelect from 'shared/components/FieldSelect';
 import createMfaOptions, { MfaOption } from 'shared/utils/createMfaOptions';
 

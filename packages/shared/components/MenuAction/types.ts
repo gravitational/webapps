@@ -16,19 +16,6 @@
 
 // TS: move *Positions and Origins types
 // to design/Popover.js once converted to ts
-type HorizontalPositions = 'left' | 'center' | 'right' | number;
-type VerticalPositions = 'top' | 'center' | 'bottom' | number;
-type Origins = {
-  vertical: VerticalPositions;
-  horizontal: HorizontalPositions;
-};
-
-export type MenuProps = {
-  anchorOrigin?: Origins;
-  transformOrigin?: Origins;
-  // CSS supplied to MenuList to be consumed by styled-component
-  menuListCss?: (props?: any) => string;
-};
 
 export type AnchorProps = {
   // inline-styling

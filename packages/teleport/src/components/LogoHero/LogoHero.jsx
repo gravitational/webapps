@@ -15,7 +15,7 @@ limitations under the License.
 */
 
 import React from 'react';
-import Image from 'design/Image';
+import { Image } from 'design/Image';
 import defaultLogoSvg from 'design/assets/images/teleport-medallion.svg';
 
 const LogoHero = ({ ...rest }) => {

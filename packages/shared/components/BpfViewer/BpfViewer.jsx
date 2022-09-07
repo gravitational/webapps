@@ -15,7 +15,7 @@ limitations under the License.
 */
 
 import React from 'react';
-import styled from 'styled-components';
+import styled from 'design/styled';
 import ace from 'ace-builds/src-min-noconflict/ace';
 
 import 'ace-builds/src-noconflict/theme-monokai';

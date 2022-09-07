@@ -16,7 +16,7 @@ limitations under the License.
 
 import React from 'react';
 import { isAfter, endOfDay, startOfDay, isSameDay, subMonths } from 'date-fns';
-import styled from 'styled-components';
+import styled from 'design/styled';
 import DayPicker, { DateUtils } from 'react-day-picker';
 import 'react-day-picker/lib/style.css';
 import { Flex } from 'design';

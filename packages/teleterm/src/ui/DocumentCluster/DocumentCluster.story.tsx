@@ -15,7 +15,7 @@
  */
 
 import React from 'react';
-import styled from 'styled-components';
+import styled from 'design/styled';
 
 import AppContextProvider from 'teleterm/ui/appContextProvider';
 import { MockAppContext } from 'teleterm/ui/fixtures/mocks';

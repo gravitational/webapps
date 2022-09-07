@@ -41,7 +41,9 @@ export default function DeleteRoleDialog(props: Props) {
         <DialogTitle>Remove Role?</DialogTitle>
       </DialogHeader>
       <DialogContent width="450px">
-        {attempt.status === 'failed' && <Alert children={attempt.statusText} />}
+        {attempt.status === 'failed' && (
+          <Alert kind="danger" children={attempt.statusText} />
+        )}
         <Text typography="paragraph" mb="6">
           Are you sure you want to delete role{' '}
           <Text as="span" bold color="primary.contrastText">

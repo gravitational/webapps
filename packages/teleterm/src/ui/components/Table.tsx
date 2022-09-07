@@ -1,8 +1,9 @@
 import React from 'react';
-import { ThemeProvider, useTheme } from 'styled-components';
+import { ThemeProvider, useTheme } from 'design/styled';
 import DesignTable from 'design/DataTable/Table';
+import { TableProps } from 'design/DataTable/types';
 
-export const Table: typeof DesignTable = props => {
+export function Table<T>(props: TableProps<T>) {
   const theme = useTheme();
 
   return (
@@ -10,7 +11,7 @@ export const Table: typeof DesignTable = props => {
       <DesignTable {...props} />
     </ThemeProvider>
   );
-};
+}
 
 function getTableTheme(theme) {
   return {

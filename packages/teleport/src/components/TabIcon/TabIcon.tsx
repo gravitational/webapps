@@ -15,9 +15,10 @@
  */
 
 import React from 'react';
-import styled from 'styled-components';
+import styled from 'design/styled';
 import { Text } from 'design';
-import Icons from 'design/Icon';
+import { Icon } from 'design/Icon';
+import { PropsWithTheme } from 'design/theme';
 
 export default function TabIcon(props: Props) {
   return (
@@ -28,7 +29,7 @@ export default function TabIcon(props: Props) {
       active={props.active}
       onClick={props.onClick}
     >
-      <Icons as={props.Icon} mr="2" />
+      <Icon as={props.Icon} mr="2" />
       {props.title}
     </StyledTab>
   );
@@ -38,10 +39,14 @@ type Props = {
   active: boolean;
   onClick(): void;
   title: string;
-  Icon(): JSX.Element;
+  Icon: React.ComponentType;
 };
 
-const StyledTab = styled(Text)`
+interface StyledTabProps {
+  active: boolean;
+}
+
+const StyledTab = styled(Text)<PropsWithTheme<StyledTabProps>>`
   align-items: center;
   display: flex;
   padding: 4px 8px;

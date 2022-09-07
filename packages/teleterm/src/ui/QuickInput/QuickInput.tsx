@@ -15,10 +15,10 @@
  */
 
 import React, { useEffect, useMemo, useRef, useState } from 'react';
-import styled from 'styled-components';
+import styled, { color, height, margin, padding, width } from 'design/styled';
+
 import { debounce } from 'lodash';
 import { Box, Flex } from 'design';
-import { color, height, space, width } from 'styled-system';
 
 import { useAppContext } from 'teleterm/ui/appContextProvider';
 
@@ -43,8 +43,8 @@ function QuickInput() {
     autocompleteResult.kind === 'autocomplete.partial-match';
   const refInput = useRef<HTMLInputElement>();
   const measuringInputRef = useRef<HTMLSpanElement>();
-  const refList = useRef<HTMLElement>();
-  const refContainer = useRef<HTMLElement>();
+  const refList = useRef<HTMLDivElement>();
+  const refContainer = useRef<HTMLDivElement>();
   const [measuredInputTextWidth, setMeasuredInputTextWidth] =
     useState<number>();
 
@@ -184,43 +184,46 @@ const MeasuringInput = styled.span`
   visibility: hidden;
 `;
 
-const Input = styled.input(props => {
-  const { theme } = props;
-  return {
-    height: '100%',
-    background: 'inherit',
-    display: 'flex',
-    flex: '1',
-    zIndex: '0',
-    boxSizing: 'border-box',
-    color: theme.colors.text.primary,
-    width: '100%',
-    fontSize: '14px',
-    border: `0.5px ${theme.colors.action.disabledBackground} solid`,
-    borderRadius: '4px',
-    outline: 'none',
-    padding: props.isOpened ? '2px 8px' : '2px 46px 2px 8px', // wider right margin makes place for a shortcut
-    '::placeholder': {
-      color: theme.colors.text.secondary,
-    },
-    '&:hover, &:focus': {
-      color: theme.colors.primary.contrastText,
-      borderColor: theme.colors.light,
-    },
-    '&:focus': {
-      borderColor: theme.colors.secondary.main,
-      backgroundColor: theme.colors.primary.darker,
-      '::placeholder': {
-        color: theme.colors.text.placeholder,
-      },
-    },
+interface InputProps {
+  isOpened: boolean;
+}
 
-    ...space(props),
-    ...width(props),
-    ...height(props),
-    ...color(props),
-  };
-});
+const Input = styled.input([margin, padding, width, height, color])<InputProps>`
+  height: 100%;
+  background: inherit;
+  display: flex;
+  flex: 1;
+  z-index: 0;
+  box-sizing: border-box;
+  color: ${p => p.theme.colors.text.primary};
+  width: 100%;
+  font-size: 14px;
+  border: 0.5px ${p => p.theme.colors.action.disabledBackground} solid;
+  border-radius: 4px;
+  outline: none;
+  padding: ${p =>
+    p.isOpened
+      ? '2px 8px'
+      : '2px 46px 2px 8px'}; // wider right margin makes place for a shortcut
+
+  &::placeholder {
+    color: ${p => p.theme.colors.text.secondary};
+  }
+
+  &:hover, &:focus {
+    color: ${p => p.theme.colors.primary.contrastText};
+    border-color: ${p => p.theme.colors.light};
+  }
+
+  &:focus {
+    border-color: ${p => p.theme.colors.secondary.main};
+    background-color: ${p => p.theme.colors.primary.darker};
+
+    ::placeholder {
+      color: ${p => p.theme.colors.text.placeholder};
+    }
+  }
+`;
 
 const Shortcut = styled(Box)`
   position: absolute;

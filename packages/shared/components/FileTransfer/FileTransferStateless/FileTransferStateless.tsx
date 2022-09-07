@@ -15,7 +15,7 @@
  */
 
 import React from 'react';
-import styled from 'styled-components';
+import styled from 'design/styled';
 import { ButtonIcon, Flex, Text } from 'design';
 import { Close as CloseIcon } from 'design/Icon';
 
@@ -84,7 +84,11 @@ function ButtonClose(props: { onClick(): void }) {
   );
 }
 
-const Container = styled.div`
+interface ContainerProps {
+  backgroundColor?: string;
+}
+
+const Container = styled.div<ContainerProps>`
   background: ${props =>
     props.backgroundColor || props.theme.colors.primary.light};
   box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);

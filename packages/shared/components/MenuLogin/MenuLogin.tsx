@@ -15,13 +15,14 @@ limitations under the License.
 */
 
 import React, { useImperativeHandle, useRef, useState } from 'react';
-import styled from 'styled-components';
+import styled, { useTheme, margin, padding } from 'design/styled';
 import { NavLink } from 'react-router-dom';
-import Menu, { MenuItem } from 'design/Menu';
-import { space } from 'design/system';
+import { Menu, MenuItem } from 'design/Menu';
 
 import { ButtonBorder, Flex, Indicator } from 'design';
 import { CarrotDown } from 'design/Icon';
+
+import { Theme } from 'design/theme';
 
 import { useAsync, Attempt } from 'shared/hooks/useAsync';
 
@@ -36,7 +37,7 @@ export const MenuLogin = React.forwardRef<MenuLoginHandle, MenuLoginProps>(
       required = true,
       width,
     } = props;
-    const anchorRef = useRef<HTMLElement>();
+    const anchorRef = useRef<HTMLButtonElement>();
     const [isOpen, setIsOpen] = useState(false);
     const [getLoginItemsAttempt, runGetLoginItems] = useAsync(() =>
       Promise.resolve().then(() => props.getLoginItems())
@@ -77,7 +78,7 @@ export const MenuLogin = React.forwardRef<MenuLoginHandle, MenuLoginProps>(
         <ButtonBorder
           height="24px"
           size="small"
-          setRef={anchorRef}
+          ref={anchorRef}
           onClick={onOpen}
         >
           CONNECT
@@ -117,7 +118,8 @@ const LoginItemList = ({
   placeholder: string;
   width?: string;
 }) => {
-  const content = getLoginItemListContent(getLoginItemsAttempt, onClick);
+  const theme = useTheme();
+  const content = getLoginItemListContent(getLoginItemsAttempt, onClick, theme);
 
   return (
     <Flex flexDirection="column" width={width}>
@@ -137,16 +139,17 @@ const LoginItemList = ({
 
 function getLoginItemListContent(
   getLoginItemsAttempt: Attempt<LoginItem[]>,
-  onClick: (e: React.MouseEvent<HTMLAnchorElement>, login: string) => void
+  onClick: (e: React.MouseEvent<HTMLAnchorElement>, login: string) => void,
+  theme: Theme
 ) {
   switch (getLoginItemsAttempt.status) {
     case '':
     case 'processing':
       return (
         <Indicator
-          css={({ theme }) => `
+          css={`
             align-self: center;
-            color: ${theme.colors.secondary.dark}
+            color: ${theme.colors.secondary.dark};
           `}
         />
       );
@@ -183,42 +186,37 @@ const StyledButton = styled.button`
   flex: 1;
 `;
 
-const StyledMenuItem = styled(MenuItem)(
-  ({ theme }) => `
-  color: ${theme.colors.grey[400]};
+const StyledMenuItem = styled(MenuItem)`
+  color: inherit;
   font-size: 12px;
-  border-bottom: 1px solid ${theme.colors.subtle};
+  border-bottom: 1px solid ${p => p.theme.colors.subtle};
   min-height: 32px;
   &:hover {
-    color: ${theme.colors.link};
+    color: ${p => p.theme.colors.link};
   }
 
   :last-child {
     border-bottom: none;
     margin-bottom: 8px;
   }
-`
-);
+`;
 
-const Input = styled.input(
-  ({ theme }) => `
-  background: ${theme.colors.subtle};
-  border: 1px solid ${theme.colors.subtle};
+const Input = styled.input([margin, padding])`
+  background: ${p => p.theme.colors.subtle};
+  border: 1px solid ${p => p.theme.colors.subtle};
   border-radius: 4px;
   box-sizing: border-box;
-  color: ${theme.colors.grey[900]};
+  color: ${p => p.theme.colors.grey[900]};
   height: 32px;
   outline: none;
 
   &:focus {
-    background: ${theme.colors.light};
-    border 1px solid ${theme.colors.link};
-    box-shadow: inset 0 1px 3px rgba(0, 0, 0, .24);
+    background: ${p => p.theme.colors.light};
+    border: 1px solid ${p => p.theme.colors.link};
+    box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.24);
   }
 
   ::placeholder {
-    color: ${theme.colors.grey[100]};
+    color: ${p => p.theme.colors.grey[100]};
   }
-`,
-  space
-);
+`;

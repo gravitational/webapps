@@ -15,7 +15,7 @@
  */
 
 import React, { useState } from 'react';
-import styled from 'styled-components';
+import styled from 'design/styled';
 import { ButtonSecondary, Text, Box, LabelInput, Flex } from 'design';
 import * as Icons from 'design/Icon';
 import Select from 'shared/components/Select';
@@ -141,12 +141,13 @@ export function TestConnection({
           <Box mt={3}>
             {attempt.status === 'failed' &&
               `Encountered Error: ${attempt.statusText}`}
+
             {attempt.status === 'success' && (
               <Box>
                 {diagnosis.traces.map((trace, index) => {
                   if (trace.status === 'failed') {
                     return (
-                      <TextIcon alignItems="baseline">
+                      <TextIcon>
                         <Icons.CircleCross mr={1} color="danger" />
                         {trace.details}
                         <br />

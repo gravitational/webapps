@@ -1,24 +1,50 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`render custom polling 1`] = `
-.c1 {
+.c0 {
   box-sizing: border-box;
-  margin-bottom: 4px;
+  border-radius: 8px;
+  margin-top: 24px;
+  padding: 16px;
+}
+
+.c2 {
+  box-sizing: border-box;
   margin-top: 8px;
+  margin-bottom: 4px;
 }
 
-.c4 {
+.c3 {
   box-sizing: border-box;
-  padding-bottom: 0px;
+  border-radius: 4px;
+  background-color: #010B1C;
+  padding-left: 16px;
   padding-top: 8px;
+  padding-right: 48px;
+  padding-bottom: 8px;
 }
 
-.c6 {
+.c5 {
   box-sizing: border-box;
   margin-right: 4px;
 }
 
+.c7 {
+  box-sizing: border-box;
+  padding-top: 8px;
+  padding-bottom: 0;
+}
+
 .c8 {
+  box-sizing: border-box;
+}
+
+.c10 {
+  box-sizing: border-box;
+  padding-right: 16px;
+}
+
+.c12 {
   line-height: 1.5;
   margin: 0;
   display: inline-flex;
@@ -44,55 +70,59 @@ exports[`render custom polling 1`] = `
   padding: 0px 24px;
 }
 
-.c8:active {
+.c12:active {
   opacity: 0.56;
 }
 
-.c8:hover,
-.c8:focus {
+.c12:hover,
+.c12:focus {
   background: #2C3A73;
 }
 
-.c8:disabled {
+.c12:disabled {
   background: rgba(255,255,255,0.12);
   color: rgba(255,255,255,0.3);
 }
 
-.c11 {
+.c15 {
   display: inline-block;
   transition: color 0.3s;
   color: #FFFFFF;
 }
 
-.c13 {
+.c19 {
   display: inline-block;
   transition: color 0.3s;
   color: #FFFFFF;
   font-size: 18px;
 }
 
-.c5 {
-  box-sizing: border-box;
+.c9 {
   display: flex;
 }
 
-.c10 .icon-check {
+.c16 {
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.c14 .icon-check {
   display: none;
 }
 
-.c10 .icon-copy {
+.c14 .icon-copy {
   display: block;
 }
 
-.c10.copied .icon-check {
+.c14.copied .icon-check {
   display: block;
 }
 
-.c10.copied .icon-copy {
+.c14.copied .icon-copy {
   display: none;
 }
 
-.c9 {
+.c13 {
   height: 28px;
   width: 28px;
   border-radius: 20px;
@@ -101,9 +131,7 @@ exports[`render custom polling 1`] = `
   margin-top: -4px;
 }
 
-.c3 {
-  box-sizing: border-box;
-  margin-right: 4px;
+.c6 {
   white-space: pre;
   word-break: break-all;
   font-size: 12px;
@@ -112,29 +140,25 @@ exports[`render custom polling 1`] = `
   line-height: 20px;
 }
 
-.c2 {
-  box-sizing: border-box;
-  padding-bottom: 8px;
-  padding-left: 16px;
-  padding-right: 48px;
-  padding-top: 8px;
-  background-color: #010B1C;
-  border-radius: 4px;
+.c4 {
   position: relative;
 }
 
-.c7 {
-  box-sizing: border-box;
-  padding-right: 16px;
+.c11 {
   position: absolute;
   right: 0px;
 }
 
-.c0 {
-  box-sizing: border-box;
-  margin-top: 24px;
-  padding: 16px;
-  border-radius: 8px;
+.c17 {
+  display: flex;
+  align-items: center;
+}
+
+.c17 .icon {
+  margin-right: 8px;
+}
+
+.c1 {
   max-width: 800px;
   background-color: rgba(255,255,255,0.05);
   padding: 16px;
@@ -142,46 +166,37 @@ exports[`render custom polling 1`] = `
   border: 2px solid #2F3659;
 }
 
-.c12 {
-  overflow: hidden;
-  text-overflow: ellipsis;
-  margin: 0px;
-  display: flex;
-  align-items: center;
+.c18 {
   white-space: pre;
-}
-
-.c12 .icon {
-  margin-right: 8px;
 }
 
 <div>
   <div
-    class="c0"
+    class="c0 c1"
   >
     <div>
       Custom Header Component
     </div>
     <div
-      class="c1"
+      class="c2"
     >
       <div
-        class="c2"
+        class="c3 c4"
       >
         <div
-          class="c3"
+          class="c5 c6"
         >
           <div
-            class="c4"
+            class="c7"
           >
             <div
-              class="c5"
+              class="c8 c9"
             >
               <div
-                class="c5"
+                class="c8 c9"
               >
                 <div
-                  class="c6"
+                  class="c5"
                 >
                   $
                 </div>
@@ -192,22 +207,22 @@ exports[`render custom polling 1`] = `
                 </div>
               </div>
               <div
-                class="c7"
+                class="c10 c11"
               >
                 <button
-                  class="c8 c9"
+                  class="c12 c13"
                   kind="secondary"
                 >
                   <div
-                    class="c10 icon-container"
+                    class="c14 icon-container"
                   >
                     <span
-                      class="c11 icon icon-copy "
+                      class="c15 icon icon-copy "
                       color="light"
                       data-testid="btn-copy"
                     />
                     <span
-                      class="c11 icon icon-check "
+                      class="c15 icon icon-check "
                       color="light"
                       data-testid="btn-check"
                     />
@@ -220,10 +235,10 @@ exports[`render custom polling 1`] = `
       </div>
     </div>
     <div
-      class="c12"
+      class="c16 c17 c18"
     >
       <span
-        class="c13 icon icon-restore "
+        class="c19 icon icon-restore "
         color="light"
         font-size="4"
       />
@@ -240,28 +255,50 @@ exports[`render custom polling 1`] = `
 `;
 
 exports[`render custom polling error 1`] = `
-.c2 {
+.c0 {
   box-sizing: border-box;
-  margin-bottom: 4px;
+  border-radius: 8px;
+  margin-top: 24px;
+  padding: 16px;
+}
+
+.c3 {
+  box-sizing: border-box;
   margin-top: 8px;
+  margin-bottom: 4px;
 }
 
-.c5 {
+.c4 {
   box-sizing: border-box;
-  padding-bottom: 0px;
+  border-radius: 4px;
+  background-color: #010B1C;
+  padding-left: 16px;
   padding-top: 8px;
+  padding-right: 48px;
+  padding-bottom: 8px;
 }
 
-.c7 {
+.c6 {
   box-sizing: border-box;
   margin-right: 4px;
 }
 
-.c13 {
+.c8 {
   box-sizing: border-box;
+  padding-top: 8px;
+  padding-bottom: 0;
 }
 
 .c9 {
+  box-sizing: border-box;
+}
+
+.c11 {
+  box-sizing: border-box;
+  padding-right: 16px;
+}
+
+.c13 {
   line-height: 1.5;
   margin: 0;
   display: inline-flex;
@@ -287,70 +324,72 @@ exports[`render custom polling error 1`] = `
   padding: 0px 24px;
 }
 
-.c9:active {
+.c13:active {
   opacity: 0.56;
 }
 
-.c9:hover,
-.c9:focus {
+.c13:hover,
+.c13:focus {
   background: #2C3A73;
 }
 
-.c9:disabled {
+.c13:disabled {
   background: rgba(255,255,255,0.12);
   color: rgba(255,255,255,0.3);
 }
 
-.c12 {
+.c16 {
   display: inline-block;
   transition: color 0.3s;
   color: #FFFFFF;
 }
 
-.c15 {
+.c19 {
   display: inline-block;
   transition: color 0.3s;
   margin-left: 4px;
   color: #f50057;
 }
 
-.c1 {
-  overflow: hidden;
-  text-overflow: ellipsis;
-  font-weight: 600;
-  margin: 0px;
-}
-
-.c16 {
-  overflow: hidden;
-  text-overflow: ellipsis;
-  font-weight: 600;
-  margin: 0px;
-  margin-top: 24px;
-}
-
-.c6 {
-  box-sizing: border-box;
+.c10 {
   display: flex;
 }
 
-.c11 .icon-check {
+.c2 {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  font-weight: 600;
+}
+
+.c17 {
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.c20 {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  font-weight: 600;
+  margin-top: 24px;
+}
+
+.c15 .icon-check {
   display: none;
 }
 
-.c11 .icon-copy {
+.c15 .icon-copy {
   display: block;
 }
 
-.c11.copied .icon-check {
+.c15.copied .icon-check {
   display: block;
 }
 
-.c11.copied .icon-copy {
+.c15.copied .icon-copy {
   display: none;
 }
 
-.c10 {
+.c14 {
   height: 28px;
   width: 28px;
   border-radius: 20px;
@@ -359,9 +398,7 @@ exports[`render custom polling error 1`] = `
   margin-top: -4px;
 }
 
-.c4 {
-  box-sizing: border-box;
-  margin-right: 4px;
+.c7 {
   white-space: pre;
   word-break: break-all;
   font-size: 12px;
@@ -370,41 +407,25 @@ exports[`render custom polling error 1`] = `
   line-height: 20px;
 }
 
-.c3 {
-  box-sizing: border-box;
-  padding-bottom: 8px;
-  padding-left: 16px;
-  padding-right: 48px;
-  padding-top: 8px;
-  background-color: #010B1C;
-  border-radius: 4px;
+.c5 {
   position: relative;
 }
 
-.c8 {
-  box-sizing: border-box;
-  padding-right: 16px;
+.c12 {
   position: absolute;
   right: 0px;
 }
 
-.c14 {
-  overflow: hidden;
-  text-overflow: ellipsis;
-  margin: 0px;
+.c18 {
   display: flex;
   align-items: center;
 }
 
-.c14 .icon {
+.c18 .icon {
   margin-right: 8px;
 }
 
-.c0 {
-  box-sizing: border-box;
-  margin-top: 24px;
-  padding: 16px;
-  border-radius: 8px;
+.c1 {
   max-width: 800px;
   background-color: rgba(255,255,255,0.05);
   padding: 16px;
@@ -412,40 +433,40 @@ exports[`render custom polling error 1`] = `
   border: 2px solid #f50057;
 }
 
-.c17 {
+.c21 {
   margin-top: 6px;
   margin-bottom: 0;
 }
 
 <div>
   <div
-    class="c0"
+    class="c0 c1"
   >
     <div
-      class="c1"
+      class="c2"
     >
       Command
     </div>
     <div
-      class="c2"
+      class="c3"
     >
       <div
-        class="c3"
+        class="c4 c5"
       >
         <div
-          class="c4"
+          class="c6 c7"
         >
           <div
-            class="c5"
+            class="c8"
           >
             <div
-              class="c6"
+              class="c9 c10"
             >
               <div
-                class="c6"
+                class="c9 c10"
               >
                 <div
-                  class="c7"
+                  class="c6"
                 >
                   $
                 </div>
@@ -456,22 +477,22 @@ exports[`render custom polling error 1`] = `
                 </div>
               </div>
               <div
-                class="c8"
+                class="c11 c12"
               >
                 <button
-                  class="c9 c10"
+                  class="c13 c14"
                   kind="secondary"
                 >
                   <div
-                    class="c11 icon-container"
+                    class="c15 icon-container"
                   >
                     <span
-                      class="c12 icon icon-copy "
+                      class="c16 icon icon-copy "
                       color="light"
                       data-testid="btn-copy"
                     />
                     <span
-                      class="c12 icon icon-check "
+                      class="c16 icon icon-check "
                       color="light"
                       data-testid="btn-check"
                     />
@@ -484,24 +505,24 @@ exports[`render custom polling error 1`] = `
       </div>
     </div>
     <div
-      class="c13"
+      class="c9"
     >
       <div
-        class="c14"
+        class="c17 c18"
       >
         <span
-          class="c15 icon icon-warning "
+          class="c19 icon icon-warning "
           color="danger"
         />
         custom error content
       </div>
       <div
-        class="c16"
+        class="c20"
       >
         Possible reasons
       </div>
       <ul
-        class="c17"
+        class="c21"
       >
         <li>
           error reason 1
@@ -516,24 +537,50 @@ exports[`render custom polling error 1`] = `
 `;
 
 exports[`render custom polling success 1`] = `
-.c2 {
+.c0 {
   box-sizing: border-box;
-  margin-bottom: 4px;
+  border-radius: 8px;
+  margin-top: 24px;
+  padding: 16px;
+}
+
+.c3 {
+  box-sizing: border-box;
   margin-top: 8px;
+  margin-bottom: 4px;
 }
 
-.c5 {
+.c4 {
   box-sizing: border-box;
-  padding-bottom: 0px;
+  border-radius: 4px;
+  background-color: #010B1C;
+  padding-left: 16px;
   padding-top: 8px;
+  padding-right: 48px;
+  padding-bottom: 8px;
 }
 
-.c7 {
+.c6 {
   box-sizing: border-box;
   margin-right: 4px;
 }
 
+.c8 {
+  box-sizing: border-box;
+  padding-top: 8px;
+  padding-bottom: 0;
+}
+
 .c9 {
+  box-sizing: border-box;
+}
+
+.c11 {
+  box-sizing: border-box;
+  padding-right: 16px;
+}
+
+.c13 {
   line-height: 1.5;
   margin: 0;
   display: inline-flex;
@@ -559,62 +606,65 @@ exports[`render custom polling success 1`] = `
   padding: 0px 24px;
 }
 
-.c9:active {
+.c13:active {
   opacity: 0.56;
 }
 
-.c9:hover,
-.c9:focus {
+.c13:hover,
+.c13:focus {
   background: #2C3A73;
 }
 
-.c9:disabled {
+.c13:disabled {
   background: rgba(255,255,255,0.12);
   color: rgba(255,255,255,0.3);
 }
 
-.c12 {
+.c16 {
   display: inline-block;
   transition: color 0.3s;
   color: #FFFFFF;
 }
 
-.c14 {
+.c19 {
   display: inline-block;
   transition: color 0.3s;
   margin-left: 4px;
   color: #00bfa5;
 }
 
-.c1 {
-  overflow: hidden;
-  text-overflow: ellipsis;
-  font-weight: 600;
-  margin: 0px;
-}
-
-.c6 {
-  box-sizing: border-box;
+.c10 {
   display: flex;
 }
 
-.c11 .icon-check {
+.c2 {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  font-weight: 600;
+}
+
+.c17 {
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.c15 .icon-check {
   display: none;
 }
 
-.c11 .icon-copy {
+.c15 .icon-copy {
   display: block;
 }
 
-.c11.copied .icon-check {
+.c15.copied .icon-check {
   display: block;
 }
 
-.c11.copied .icon-copy {
+.c15.copied .icon-copy {
   display: none;
 }
 
-.c10 {
+.c14 {
   height: 28px;
   width: 28px;
   border-radius: 20px;
@@ -623,9 +673,7 @@ exports[`render custom polling success 1`] = `
   margin-top: -4px;
 }
 
-.c4 {
-  box-sizing: border-box;
-  margin-right: 4px;
+.c7 {
   white-space: pre;
   word-break: break-all;
   font-size: 12px;
@@ -634,41 +682,25 @@ exports[`render custom polling success 1`] = `
   line-height: 20px;
 }
 
-.c3 {
-  box-sizing: border-box;
-  padding-bottom: 8px;
-  padding-left: 16px;
-  padding-right: 48px;
-  padding-top: 8px;
-  background-color: #010B1C;
-  border-radius: 4px;
+.c5 {
   position: relative;
 }
 
-.c8 {
-  box-sizing: border-box;
-  padding-right: 16px;
+.c12 {
   position: absolute;
   right: 0px;
 }
 
-.c13 {
-  overflow: hidden;
-  text-overflow: ellipsis;
-  margin: 0px;
+.c18 {
   display: flex;
   align-items: center;
 }
 
-.c13 .icon {
+.c18 .icon {
   margin-right: 8px;
 }
 
-.c0 {
-  box-sizing: border-box;
-  margin-top: 24px;
-  padding: 16px;
-  border-radius: 8px;
+.c1 {
   max-width: 800px;
   background-color: rgba(255,255,255,0.05);
   padding: 16px;
@@ -678,33 +710,33 @@ exports[`render custom polling success 1`] = `
 
 <div>
   <div
-    class="c0"
+    class="c0 c1"
   >
     <div
-      class="c1"
+      class="c2"
     >
       Command
     </div>
     <div
-      class="c2"
+      class="c3"
     >
       <div
-        class="c3"
+        class="c4 c5"
       >
         <div
-          class="c4"
+          class="c6 c7"
         >
           <div
-            class="c5"
+            class="c8"
           >
             <div
-              class="c6"
+              class="c9 c10"
             >
               <div
-                class="c6"
+                class="c9 c10"
               >
                 <div
-                  class="c7"
+                  class="c6"
                 >
                   $
                 </div>
@@ -715,22 +747,22 @@ exports[`render custom polling success 1`] = `
                 </div>
               </div>
               <div
-                class="c8"
+                class="c11 c12"
               >
                 <button
-                  class="c9 c10"
+                  class="c13 c14"
                   kind="secondary"
                 >
                   <div
-                    class="c11 icon-container"
+                    class="c15 icon-container"
                   >
                     <span
-                      class="c12 icon icon-copy "
+                      class="c16 icon icon-copy "
                       color="light"
                       data-testid="btn-copy"
                     />
                     <span
-                      class="c12 icon icon-check "
+                      class="c16 icon icon-check "
                       color="light"
                       data-testid="btn-check"
                     />
@@ -743,10 +775,10 @@ exports[`render custom polling success 1`] = `
       </div>
     </div>
     <div
-      class="c13"
+      class="c17 c18"
     >
       <span
-        class="c14 icon icon-checkmark-circle "
+        class="c19 icon icon-checkmark-circle "
         color="success"
       />
       custom polling success text
@@ -756,24 +788,50 @@ exports[`render custom polling success 1`] = `
 `;
 
 exports[`render default polling 1`] = `
-.c2 {
+.c0 {
   box-sizing: border-box;
-  margin-bottom: 4px;
+  border-radius: 8px;
+  margin-top: 24px;
+  padding: 16px;
+}
+
+.c3 {
+  box-sizing: border-box;
   margin-top: 8px;
+  margin-bottom: 4px;
 }
 
-.c5 {
+.c4 {
   box-sizing: border-box;
-  padding-bottom: 0px;
+  border-radius: 4px;
+  background-color: #010B1C;
+  padding-left: 16px;
   padding-top: 8px;
+  padding-right: 48px;
+  padding-bottom: 8px;
 }
 
-.c7 {
+.c6 {
   box-sizing: border-box;
   margin-right: 4px;
 }
 
+.c8 {
+  box-sizing: border-box;
+  padding-top: 8px;
+  padding-bottom: 0;
+}
+
 .c9 {
+  box-sizing: border-box;
+}
+
+.c11 {
+  box-sizing: border-box;
+  padding-right: 16px;
+}
+
+.c13 {
   line-height: 1.5;
   margin: 0;
   display: inline-flex;
@@ -799,62 +857,65 @@ exports[`render default polling 1`] = `
   padding: 0px 24px;
 }
 
-.c9:active {
+.c13:active {
   opacity: 0.56;
 }
 
-.c9:hover,
-.c9:focus {
+.c13:hover,
+.c13:focus {
   background: #2C3A73;
 }
 
-.c9:disabled {
+.c13:disabled {
   background: rgba(255,255,255,0.12);
   color: rgba(255,255,255,0.3);
 }
 
-.c12 {
+.c16 {
   display: inline-block;
   transition: color 0.3s;
   color: #FFFFFF;
 }
 
-.c14 {
+.c20 {
   display: inline-block;
   transition: color 0.3s;
   color: #FFFFFF;
   font-size: 18px;
 }
 
-.c1 {
-  overflow: hidden;
-  text-overflow: ellipsis;
-  font-weight: 600;
-  margin: 0px;
-}
-
-.c6 {
-  box-sizing: border-box;
+.c10 {
   display: flex;
 }
 
-.c11 .icon-check {
+.c2 {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  font-weight: 600;
+}
+
+.c17 {
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.c15 .icon-check {
   display: none;
 }
 
-.c11 .icon-copy {
+.c15 .icon-copy {
   display: block;
 }
 
-.c11.copied .icon-check {
+.c15.copied .icon-check {
   display: block;
 }
 
-.c11.copied .icon-copy {
+.c15.copied .icon-copy {
   display: none;
 }
 
-.c10 {
+.c14 {
   height: 28px;
   width: 28px;
   border-radius: 20px;
@@ -863,9 +924,7 @@ exports[`render default polling 1`] = `
   margin-top: -4px;
 }
 
-.c4 {
-  box-sizing: border-box;
-  margin-right: 4px;
+.c7 {
   white-space: pre;
   word-break: break-all;
   font-size: 12px;
@@ -874,29 +933,25 @@ exports[`render default polling 1`] = `
   line-height: 20px;
 }
 
-.c3 {
-  box-sizing: border-box;
-  padding-bottom: 8px;
-  padding-left: 16px;
-  padding-right: 48px;
-  padding-top: 8px;
-  background-color: #010B1C;
-  border-radius: 4px;
+.c5 {
   position: relative;
 }
 
-.c8 {
-  box-sizing: border-box;
-  padding-right: 16px;
+.c12 {
   position: absolute;
   right: 0px;
 }
 
-.c0 {
-  box-sizing: border-box;
-  margin-top: 24px;
-  padding: 16px;
-  border-radius: 8px;
+.c18 {
+  display: flex;
+  align-items: center;
+}
+
+.c18 .icon {
+  margin-right: 8px;
+}
+
+.c1 {
   max-width: 800px;
   background-color: rgba(255,255,255,0.05);
   padding: 16px;
@@ -904,48 +959,39 @@ exports[`render default polling 1`] = `
   border: 2px solid #2F3659;
 }
 
-.c13 {
-  overflow: hidden;
-  text-overflow: ellipsis;
-  margin: 0px;
-  display: flex;
-  align-items: center;
+.c19 {
   white-space: pre;
-}
-
-.c13 .icon {
-  margin-right: 8px;
 }
 
 <div>
   <div
-    class="c0"
+    class="c0 c1"
   >
     <div
-      class="c1"
+      class="c2"
     >
       Command
     </div>
     <div
-      class="c2"
+      class="c3"
     >
       <div
-        class="c3"
+        class="c4 c5"
       >
         <div
-          class="c4"
+          class="c6 c7"
         >
           <div
-            class="c5"
+            class="c8"
           >
             <div
-              class="c6"
+              class="c9 c10"
             >
               <div
-                class="c6"
+                class="c9 c10"
               >
                 <div
-                  class="c7"
+                  class="c6"
                 >
                   $
                 </div>
@@ -956,22 +1002,22 @@ exports[`render default polling 1`] = `
                 </div>
               </div>
               <div
-                class="c8"
+                class="c11 c12"
               >
                 <button
-                  class="c9 c10"
+                  class="c13 c14"
                   kind="secondary"
                 >
                   <div
-                    class="c11 icon-container"
+                    class="c15 icon-container"
                   >
                     <span
-                      class="c12 icon icon-copy "
+                      class="c16 icon icon-copy "
                       color="light"
                       data-testid="btn-copy"
                     />
                     <span
-                      class="c12 icon icon-check "
+                      class="c16 icon icon-check "
                       color="light"
                       data-testid="btn-check"
                     />
@@ -984,10 +1030,10 @@ exports[`render default polling 1`] = `
       </div>
     </div>
     <div
-      class="c13"
+      class="c17 c18 c19"
     >
       <span
-        class="c14 icon icon-restore "
+        class="c20 icon icon-restore "
         color="light"
         font-size="4"
       />
@@ -1004,28 +1050,50 @@ exports[`render default polling 1`] = `
 `;
 
 exports[`render default polling error 1`] = `
-.c2 {
+.c0 {
   box-sizing: border-box;
-  margin-bottom: 4px;
+  border-radius: 8px;
+  margin-top: 24px;
+  padding: 16px;
+}
+
+.c3 {
+  box-sizing: border-box;
   margin-top: 8px;
+  margin-bottom: 4px;
 }
 
-.c5 {
+.c4 {
   box-sizing: border-box;
-  padding-bottom: 0px;
+  border-radius: 4px;
+  background-color: #010B1C;
+  padding-left: 16px;
   padding-top: 8px;
+  padding-right: 48px;
+  padding-bottom: 8px;
 }
 
-.c7 {
+.c6 {
   box-sizing: border-box;
   margin-right: 4px;
 }
 
-.c13 {
+.c8 {
   box-sizing: border-box;
+  padding-top: 8px;
+  padding-bottom: 0;
 }
 
 .c9 {
+  box-sizing: border-box;
+}
+
+.c11 {
+  box-sizing: border-box;
+  padding-right: 16px;
+}
+
+.c13 {
   line-height: 1.5;
   margin: 0;
   display: inline-flex;
@@ -1051,70 +1119,72 @@ exports[`render default polling error 1`] = `
   padding: 0px 24px;
 }
 
-.c9:active {
+.c13:active {
   opacity: 0.56;
 }
 
-.c9:hover,
-.c9:focus {
+.c13:hover,
+.c13:focus {
   background: #2C3A73;
 }
 
-.c9:disabled {
+.c13:disabled {
   background: rgba(255,255,255,0.12);
   color: rgba(255,255,255,0.3);
 }
 
-.c12 {
+.c16 {
   display: inline-block;
   transition: color 0.3s;
   color: #FFFFFF;
 }
 
-.c15 {
+.c19 {
   display: inline-block;
   transition: color 0.3s;
   margin-left: 4px;
   color: #f50057;
 }
 
-.c1 {
-  overflow: hidden;
-  text-overflow: ellipsis;
-  font-weight: 600;
-  margin: 0px;
-}
-
-.c16 {
-  overflow: hidden;
-  text-overflow: ellipsis;
-  font-weight: 600;
-  margin: 0px;
-  margin-top: 24px;
-}
-
-.c6 {
-  box-sizing: border-box;
+.c10 {
   display: flex;
 }
 
-.c11 .icon-check {
+.c2 {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  font-weight: 600;
+}
+
+.c17 {
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.c20 {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  font-weight: 600;
+  margin-top: 24px;
+}
+
+.c15 .icon-check {
   display: none;
 }
 
-.c11 .icon-copy {
+.c15 .icon-copy {
   display: block;
 }
 
-.c11.copied .icon-check {
+.c15.copied .icon-check {
   display: block;
 }
 
-.c11.copied .icon-copy {
+.c15.copied .icon-copy {
   display: none;
 }
 
-.c10 {
+.c14 {
   height: 28px;
   width: 28px;
   border-radius: 20px;
@@ -1123,9 +1193,7 @@ exports[`render default polling error 1`] = `
   margin-top: -4px;
 }
 
-.c4 {
-  box-sizing: border-box;
-  margin-right: 4px;
+.c7 {
   white-space: pre;
   word-break: break-all;
   font-size: 12px;
@@ -1134,41 +1202,25 @@ exports[`render default polling error 1`] = `
   line-height: 20px;
 }
 
-.c3 {
-  box-sizing: border-box;
-  padding-bottom: 8px;
-  padding-left: 16px;
-  padding-right: 48px;
-  padding-top: 8px;
-  background-color: #010B1C;
-  border-radius: 4px;
+.c5 {
   position: relative;
 }
 
-.c8 {
-  box-sizing: border-box;
-  padding-right: 16px;
+.c12 {
   position: absolute;
   right: 0px;
 }
 
-.c14 {
-  overflow: hidden;
-  text-overflow: ellipsis;
-  margin: 0px;
+.c18 {
   display: flex;
   align-items: center;
 }
 
-.c14 .icon {
+.c18 .icon {
   margin-right: 8px;
 }
 
-.c0 {
-  box-sizing: border-box;
-  margin-top: 24px;
-  padding: 16px;
-  border-radius: 8px;
+.c1 {
   max-width: 800px;
   background-color: rgba(255,255,255,0.05);
   padding: 16px;
@@ -1176,40 +1228,40 @@ exports[`render default polling error 1`] = `
   border: 2px solid #f50057;
 }
 
-.c17 {
+.c21 {
   margin-top: 6px;
   margin-bottom: 0;
 }
 
 <div>
   <div
-    class="c0"
+    class="c0 c1"
   >
     <div
-      class="c1"
+      class="c2"
     >
       Command
     </div>
     <div
-      class="c2"
+      class="c3"
     >
       <div
-        class="c3"
+        class="c4 c5"
       >
         <div
-          class="c4"
+          class="c6 c7"
         >
           <div
-            class="c5"
+            class="c8"
           >
             <div
-              class="c6"
+              class="c9 c10"
             >
               <div
-                class="c6"
+                class="c9 c10"
               >
                 <div
-                  class="c7"
+                  class="c6"
                 >
                   $
                 </div>
@@ -1220,22 +1272,22 @@ exports[`render default polling error 1`] = `
                 </div>
               </div>
               <div
-                class="c8"
+                class="c11 c12"
               >
                 <button
-                  class="c9 c10"
+                  class="c13 c14"
                   kind="secondary"
                 >
                   <div
-                    class="c11 icon-container"
+                    class="c15 icon-container"
                   >
                     <span
-                      class="c12 icon icon-copy "
+                      class="c16 icon icon-copy "
                       color="light"
                       data-testid="btn-copy"
                     />
                     <span
-                      class="c12 icon icon-check "
+                      class="c16 icon icon-check "
                       color="light"
                       data-testid="btn-check"
                     />
@@ -1248,24 +1300,24 @@ exports[`render default polling error 1`] = `
       </div>
     </div>
     <div
-      class="c13"
+      class="c9"
     >
       <div
-        class="c14"
+        class="c17 c18"
       >
         <span
-          class="c15 icon icon-warning "
+          class="c19 icon icon-warning "
           color="danger"
         />
         We could not detect the Teleport Service you were trying to add
       </div>
       <div
-        class="c16"
+        class="c20"
       >
         Possible reasons
       </div>
       <ul
-        class="c17"
+        class="c21"
       >
         <li>
           error reason 1
@@ -1280,24 +1332,50 @@ exports[`render default polling error 1`] = `
 `;
 
 exports[`render default polling success 1`] = `
-.c2 {
+.c0 {
   box-sizing: border-box;
-  margin-bottom: 4px;
+  border-radius: 8px;
+  margin-top: 24px;
+  padding: 16px;
+}
+
+.c3 {
+  box-sizing: border-box;
   margin-top: 8px;
+  margin-bottom: 4px;
 }
 
-.c5 {
+.c4 {
   box-sizing: border-box;
-  padding-bottom: 0px;
+  border-radius: 4px;
+  background-color: #010B1C;
+  padding-left: 16px;
   padding-top: 8px;
+  padding-right: 48px;
+  padding-bottom: 8px;
 }
 
-.c7 {
+.c6 {
   box-sizing: border-box;
   margin-right: 4px;
 }
 
+.c8 {
+  box-sizing: border-box;
+  padding-top: 8px;
+  padding-bottom: 0;
+}
+
 .c9 {
+  box-sizing: border-box;
+}
+
+.c11 {
+  box-sizing: border-box;
+  padding-right: 16px;
+}
+
+.c13 {
   line-height: 1.5;
   margin: 0;
   display: inline-flex;
@@ -1323,62 +1401,65 @@ exports[`render default polling success 1`] = `
   padding: 0px 24px;
 }
 
-.c9:active {
+.c13:active {
   opacity: 0.56;
 }
 
-.c9:hover,
-.c9:focus {
+.c13:hover,
+.c13:focus {
   background: #2C3A73;
 }
 
-.c9:disabled {
+.c13:disabled {
   background: rgba(255,255,255,0.12);
   color: rgba(255,255,255,0.3);
 }
 
-.c12 {
+.c16 {
   display: inline-block;
   transition: color 0.3s;
   color: #FFFFFF;
 }
 
-.c14 {
+.c19 {
   display: inline-block;
   transition: color 0.3s;
   margin-left: 4px;
   color: #00bfa5;
 }
 
-.c1 {
-  overflow: hidden;
-  text-overflow: ellipsis;
-  font-weight: 600;
-  margin: 0px;
-}
-
-.c6 {
-  box-sizing: border-box;
+.c10 {
   display: flex;
 }
 
-.c11 .icon-check {
+.c2 {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  font-weight: 600;
+}
+
+.c17 {
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.c15 .icon-check {
   display: none;
 }
 
-.c11 .icon-copy {
+.c15 .icon-copy {
   display: block;
 }
 
-.c11.copied .icon-check {
+.c15.copied .icon-check {
   display: block;
 }
 
-.c11.copied .icon-copy {
+.c15.copied .icon-copy {
   display: none;
 }
 
-.c10 {
+.c14 {
   height: 28px;
   width: 28px;
   border-radius: 20px;
@@ -1387,9 +1468,7 @@ exports[`render default polling success 1`] = `
   margin-top: -4px;
 }
 
-.c4 {
-  box-sizing: border-box;
-  margin-right: 4px;
+.c7 {
   white-space: pre;
   word-break: break-all;
   font-size: 12px;
@@ -1398,41 +1477,25 @@ exports[`render default polling success 1`] = `
   line-height: 20px;
 }
 
-.c3 {
-  box-sizing: border-box;
-  padding-bottom: 8px;
-  padding-left: 16px;
-  padding-right: 48px;
-  padding-top: 8px;
-  background-color: #010B1C;
-  border-radius: 4px;
+.c5 {
   position: relative;
 }
 
-.c8 {
-  box-sizing: border-box;
-  padding-right: 16px;
+.c12 {
   position: absolute;
   right: 0px;
 }
 
-.c13 {
-  overflow: hidden;
-  text-overflow: ellipsis;
-  margin: 0px;
+.c18 {
   display: flex;
   align-items: center;
 }
 
-.c13 .icon {
+.c18 .icon {
   margin-right: 8px;
 }
 
-.c0 {
-  box-sizing: border-box;
-  margin-top: 24px;
-  padding: 16px;
-  border-radius: 8px;
+.c1 {
   max-width: 800px;
   background-color: rgba(255,255,255,0.05);
   padding: 16px;
@@ -1442,33 +1505,33 @@ exports[`render default polling success 1`] = `
 
 <div>
   <div
-    class="c0"
+    class="c0 c1"
   >
     <div
-      class="c1"
+      class="c2"
     >
       Command
     </div>
     <div
-      class="c2"
+      class="c3"
     >
       <div
-        class="c3"
+        class="c4 c5"
       >
         <div
-          class="c4"
+          class="c6 c7"
         >
           <div
-            class="c5"
+            class="c8"
           >
             <div
-              class="c6"
+              class="c9 c10"
             >
               <div
-                class="c6"
+                class="c9 c10"
               >
                 <div
-                  class="c7"
+                  class="c6"
                 >
                   $
                 </div>
@@ -1479,22 +1542,22 @@ exports[`render default polling success 1`] = `
                 </div>
               </div>
               <div
-                class="c8"
+                class="c11 c12"
               >
                 <button
-                  class="c9 c10"
+                  class="c13 c14"
                   kind="secondary"
                 >
                   <div
-                    class="c11 icon-container"
+                    class="c15 icon-container"
                   >
                     <span
-                      class="c12 icon icon-copy "
+                      class="c16 icon icon-copy "
                       color="light"
                       data-testid="btn-copy"
                     />
                     <span
-                      class="c12 icon icon-check "
+                      class="c16 icon icon-check "
                       color="light"
                       data-testid="btn-check"
                     />
@@ -1507,10 +1570,10 @@ exports[`render default polling success 1`] = `
       </div>
     </div>
     <div
-      class="c13"
+      class="c17 c18"
     >
       <span
-        class="c14 icon icon-checkmark-circle "
+        class="c19 icon icon-checkmark-circle "
         color="success"
       />
       The Teleport Service successfully join this Teleport cluster

@@ -15,9 +15,9 @@ limitations under the License.
 */
 
 import React from 'react';
-import styled from 'styled-components';
+import styled from 'design/styled';
 import { Cell } from 'design/DataTable';
-import Icon, * as Icons from 'design/Icon/Icon';
+import * as Icons from 'design/Icon/Icon';
 
 import { eventCodes, Event, EventCode } from 'teleport/services/audit';
 import cfg from 'teleport/config';
@@ -234,7 +234,7 @@ export default function renderTypeCell(event: Event, clusterId: string) {
   return (
     <Cell style={{ verticalAlign: 'inherit' }}>
       <StyledEventType>
-        <Icon {...iconProps} as={IconType} />
+        <Icons.Icon {...iconProps} as={IconType} />
         {event.codeDesc}
       </StyledEventType>
     </Cell>

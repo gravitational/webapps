@@ -21,7 +21,7 @@ import DialogConfirmation, {
   DialogHeader,
 } from 'design/DialogConfirmation';
 import * as Alerts from 'design/Alert';
-import { ButtonIcon, ButtonPrimary, Text } from 'design';
+import { ButtonIcon, ButtonWarning, Text } from 'design';
 
 import { Close } from 'design/Icon';
 
@@ -74,8 +74,7 @@ export function ClusterLogout({
           {status === 'error' && <Alerts.Danger mb={5} children={statusText} />}
         </DialogContent>
         <DialogFooter>
-          <ButtonPrimary
-            kind="warning"
+          <ButtonWarning
             disabled={status === 'processing'}
             size="large"
             block={true}
@@ -83,7 +82,7 @@ export function ClusterLogout({
             type="submit"
           >
             Log out
-          </ButtonPrimary>
+          </ButtonWarning>
         </DialogFooter>
       </form>
     </DialogConfirmation>

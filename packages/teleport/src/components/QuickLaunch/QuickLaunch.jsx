@@ -15,9 +15,9 @@ limitations under the License.
 */
 
 import React from 'react';
-import styled from 'styled-components';
+import styled, { color, height, margin, padding, width } from 'design/styled';
+
 import { Flex } from 'design';
-import { space, width, color, height } from 'styled-system';
 
 // Checks for spaces between chars, and
 // captures two named groups: username and host.
@@ -78,9 +78,8 @@ function error({ hasError, theme }) {
 const StyledBox = styled(Flex)`
   align-items: center;
   height: 32px;
-  border: 1px solid;
   border-radius: 4px;
-  border-color: rgba(255, 255, 255, 0.24);
+  border: 1px solid rgba(255, 255, 255, 0.24);
   ${error}
 `;
 
@@ -93,13 +92,11 @@ const StyledLabel = styled.div`
   border-top-left-radius: 4px;
 `;
 
-const StyledInput = styled.input`
+const StyledInput = styled.input([color, margin, padding, width, height])`
   appearance: none;
   border: none;
-  border-radius: 4px;
   box-sizing: border-box;
-  border-bottom-left-radius: unset;
-  border-top-left-radius: unset;
+  border-radius: 0 4px 4px 0;
   display: block;
   outline: none;
   width: 100%;
@@ -126,6 +123,4 @@ const StyledInput = styled.input`
   &:focus {
     background: ${props => props.theme.colors.primary.lighter};
   }
-
-  ${color} ${space} ${width} ${height};
 `;

@@ -1,7 +1,7 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`callback error message 1`] = `
-.c3 {
+.c4 {
   display: flex;
   align-items: center;
   justify-content: center;
@@ -14,26 +14,29 @@ exports[`callback error message 1`] = `
   overflow: auto;
   word-break: break-word;
   line-height: 1.5;
-  margin-bottom: 24px;
-  margin-top: 8px;
   background: #f50057;
   color: #FFFFFF;
+  margin-top: 8px;
+  margin-bottom: 24px;
 }
 
-.c3 a {
+.c4 a {
   color: #FFFFFF;
 }
 
 .c1 {
   box-sizing: border-box;
+  color: #324148;
+  background-color: #FFFFFF;
   margin-left: auto;
   margin-right: auto;
   margin-top: 40px;
   margin-bottom: 40px;
   padding: 32px;
   width: 540px;
-  color: #324148;
-  background-color: #FFFFFF;
+}
+
+.c2 {
   box-shadow: 0 4px 16px rgba(0,0,0,0.24);
   border-radius: 8px;
 }
@@ -41,36 +44,34 @@ exports[`callback error message 1`] = `
 .c0 {
   display: block;
   outline: none;
-  margin-left: auto;
-  margin-right: auto;
   margin-top: 40px;
   margin-bottom: 40px;
+  margin-left: auto;
+  margin-right: auto;
   max-width: 200px;
   max-height: 120px;
 }
 
-.c2 {
+.c3 {
   overflow: hidden;
   text-overflow: ellipsis;
   font-weight: 300;
   font-size: 28px;
   line-height: 32px;
-  margin: 0px;
   margin-bottom: 24px;
   text-align: center;
 }
 
-.c4 {
+.c5 {
   overflow: hidden;
   text-overflow: ellipsis;
   font-weight: 300;
   font-size: 16px;
   line-height: 32px;
-  margin: 0px;
   text-align: center;
 }
 
-.c5 {
+.c6 {
   color: #03a9f4;
 }
 
@@ -80,27 +81,26 @@ exports[`callback error message 1`] = `
     src="file_stub"
   />
   <div
-    class="c1"
+    class="c1 c2"
     color="text.onLight"
     width="540px"
   >
     <div
-      class="c2"
+      class="c3"
     >
       Login Unsuccessful
     </div>
     <div
-      class="c3"
-      kind="danger"
+      class="c4"
     >
       custom message
     </div>
      
     <div
-      class="c4"
+      class="c5"
     >
       <a
-        class="c5"
+        class="c6"
         href="/web/login"
       >
         Please attempt to log in again.
@@ -111,7 +111,7 @@ exports[`callback error message 1`] = `
 `;
 
 exports[`default error message 1`] = `
-.c3 {
+.c4 {
   display: flex;
   align-items: center;
   justify-content: center;
@@ -124,26 +124,29 @@ exports[`default error message 1`] = `
   overflow: auto;
   word-break: break-word;
   line-height: 1.5;
-  margin-bottom: 24px;
-  margin-top: 8px;
   background: #f50057;
   color: #FFFFFF;
+  margin-top: 8px;
+  margin-bottom: 24px;
 }
 
-.c3 a {
+.c4 a {
   color: #FFFFFF;
 }
 
 .c1 {
   box-sizing: border-box;
+  color: #324148;
+  background-color: #FFFFFF;
   margin-left: auto;
   margin-right: auto;
   margin-top: 40px;
   margin-bottom: 40px;
   padding: 32px;
   width: 540px;
-  color: #324148;
-  background-color: #FFFFFF;
+}
+
+.c2 {
   box-shadow: 0 4px 16px rgba(0,0,0,0.24);
   border-radius: 8px;
 }
@@ -151,36 +154,34 @@ exports[`default error message 1`] = `
 .c0 {
   display: block;
   outline: none;
-  margin-left: auto;
-  margin-right: auto;
   margin-top: 40px;
   margin-bottom: 40px;
+  margin-left: auto;
+  margin-right: auto;
   max-width: 200px;
   max-height: 120px;
 }
 
-.c2 {
+.c3 {
   overflow: hidden;
   text-overflow: ellipsis;
   font-weight: 300;
   font-size: 28px;
   line-height: 32px;
-  margin: 0px;
   margin-bottom: 24px;
   text-align: center;
 }
 
-.c4 {
+.c5 {
   overflow: hidden;
   text-overflow: ellipsis;
   font-weight: 300;
   font-size: 16px;
   line-height: 32px;
-  margin: 0px;
   text-align: center;
 }
 
-.c5 {
+.c6 {
   color: #03a9f4;
 }
 
@@ -190,27 +191,26 @@ exports[`default error message 1`] = `
     src="file_stub"
   />
   <div
-    class="c1"
+    class="c1 c2"
     color="text.onLight"
     width="540px"
   >
     <div
-      class="c2"
+      class="c3"
     >
       Login Unsuccessful
     </div>
     <div
-      class="c3"
-      kind="danger"
+      class="c4"
     >
       unable to login, please check Teleport's log for details
     </div>
      
     <div
-      class="c4"
+      class="c5"
     >
       <a
-        class="c5"
+        class="c6"
         href="/web/login"
       >
         Please attempt to log in again.

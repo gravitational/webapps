@@ -16,7 +16,7 @@ limitations under the License.
 
 import React from 'react';
 
-import Indicator from '../Indicator';
+import { Indicator } from './index';
 
 export default {
   title: 'Design/Indicator',

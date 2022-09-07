@@ -15,10 +15,10 @@ limitations under the License.
 */
 
 import React, { createRef } from 'react';
-import styled from 'styled-components';
+import styled from 'design/styled';
 import { Box } from 'design';
 import { Info } from 'design/Icon';
-import Popover from 'design/Popover';
+import { Popover } from 'design/Popover';
 
 export default class Tooltip extends React.Component {
   anchorEl = createRef();

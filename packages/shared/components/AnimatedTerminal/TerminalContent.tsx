@@ -1,5 +1,5 @@
 import React, { useEffect, useLayoutEffect, useRef } from 'react';
-import styled from 'styled-components';
+import styled from 'design/styled';
 
 import { BufferEntry } from 'shared/components/AnimatedTerminal/content';
 

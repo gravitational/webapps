@@ -1,4 +1,4 @@
-import styled from 'styled-components';
+import styled from 'design/styled';
 
 export const WindowContainer = styled.div`
   border-radius: 5px;

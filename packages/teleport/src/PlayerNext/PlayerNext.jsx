@@ -15,7 +15,7 @@ limitations under the License.
 */
 
 import React from 'react';
-import styled from 'styled-components';
+import styled from 'design/styled';
 import SplitPane from 'shared/components/SplitPane';
 import { Danger } from 'design/Alert';
 import { Indicator, Flex, Text, Box } from 'design';

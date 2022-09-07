@@ -5,9 +5,9 @@ import React, {
   useState,
   useImperativeHandle,
 } from 'react';
-import styled from 'styled-components';
+import styled from 'design/styled';
 import { Box } from 'design';
-import Popover from 'design/Popover';
+import { Popover } from 'design/Popover';
 
 import {
   useKeyboardShortcuts,

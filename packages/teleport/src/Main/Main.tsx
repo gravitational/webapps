@@ -16,14 +16,14 @@ limitations under the License.
 
 import * as RouterDOM from 'react-router-dom';
 import React, { Suspense } from 'react';
-import styled from 'styled-components';
+import styled from 'design/styled';
 import { Indicator } from 'design';
 import { Failed } from 'design/CardError';
 
 import { Redirect, Switch, Route } from 'teleport/components/Router';
 import { CatchError } from 'teleport/components/CatchError';
 import cfg from 'teleport/config';
-import SideNav from 'teleport/SideNav';
+import { SideNav } from 'teleport/SideNav';
 import TopBar from 'teleport/TopBar';
 import { BannerList } from 'teleport/components/BannerList';
 import localStorage from 'teleport/services/localStorage';

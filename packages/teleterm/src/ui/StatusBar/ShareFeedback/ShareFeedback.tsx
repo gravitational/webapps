@@ -1,7 +1,7 @@
 import { ButtonIcon, Popover } from 'design';
 import { ChatBubble } from 'design/Icon';
 import React, { useRef } from 'react';
-import styled from 'styled-components';
+import styled from 'design/styled';
 
 import { ShareFeedbackForm } from './ShareFeedbackForm';
 import { useShareFeedback } from './useShareFeedback';
@@ -25,7 +25,7 @@ export function ShareFeedback() {
         css={`
           position: relative;
         `}
-        setRef={buttonRef}
+        ref={buttonRef}
         title="Share feedback"
         size={0}
         onClick={openShareFeedback}

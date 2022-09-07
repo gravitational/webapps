@@ -15,7 +15,7 @@ limitations under the License.
 */
 
 import React, { useEffect, useState } from 'react';
-import styled from 'styled-components';
+import styled from 'design/styled';
 
 import { Box } from 'design';
 
@@ -73,7 +73,11 @@ export const BannerList = ({
   );
 };
 
-const Wrapper = styled(Box)`
+interface WrapperProps {
+  bannerCount: number;
+}
+
+const Wrapper = styled(Box)<WrapperProps>`
   display: flex;
   height: 100vh;
   flex-direction: column;

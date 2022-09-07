@@ -1,3 +1,1 @@
-import AwsLaunchButton from './AwsLaunchButton';
-
-export default AwsLaunchButton;
+export { AwsLaunchButton } from './AwsLaunchButton';

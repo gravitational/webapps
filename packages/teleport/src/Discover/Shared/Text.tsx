@@ -16,9 +16,9 @@
 
 import { Box, Text } from 'design';
 
-import styled from 'styled-components';
+import styled, { flex } from 'design/styled';
 
-export const TextIcon = styled(Text)`
+export const TextIcon = styled(Text, [flex])`
   display: flex;
   align-items: center;
 

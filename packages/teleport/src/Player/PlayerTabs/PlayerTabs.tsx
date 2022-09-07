@@ -15,8 +15,8 @@ limitations under the License.
 */
 
 import React from 'react';
-import styled from 'styled-components';
-import { typography } from 'design/system';
+import styled, { typography } from 'design/styled';
+
 import { Flex, Box } from 'design';
 
 const Tabs = props => {
@@ -65,8 +65,6 @@ const StyledTabItem = styled(Box)`
   }}
 `;
 
-const StyledTabs = styled(Flex)`
-  ${typography}
-`;
+const StyledTabs = styled(Flex, [typography])``;
 
 export default Tabs;

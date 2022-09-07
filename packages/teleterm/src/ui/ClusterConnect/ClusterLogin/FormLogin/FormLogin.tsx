@@ -15,7 +15,7 @@ limitations under the License.
 */
 
 import React from 'react';
-import styled from 'styled-components';
+import styled from 'design/styled';
 import { Text, Flex, ButtonText, Box } from 'design';
 import * as Alerts from 'design/Alert';
 import { StepSlider } from 'design/StepSlider';

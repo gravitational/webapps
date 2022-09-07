@@ -15,8 +15,9 @@ limitations under the License.
 */
 
 import React from 'react';
-import styled from 'styled-components';
-import Button from 'design/Button';
+import styled from 'design/styled';
+
+import { Button } from 'design/Button';
 import { darken, lighten } from 'design/theme/utils/colorManipulator';
 import * as Icons from 'design/Icon';
 
@@ -98,7 +99,11 @@ export function guessProviderType(
   return 'unknown';
 }
 
-const StyledButton = styled(Button)`
+interface StyledButtonProps {
+  color: string;
+}
+
+const StyledButton = styled(Button)<StyledButtonProps>`
   background-color: ${props => props.color};
   display: block;
   width: 100%;
@@ -113,7 +118,7 @@ const StyledButton = styled(Button)`
   position: relative;
   box-sizing: border-box;
 
-  ${Icons.default} {
+  ${Icons.Icon} {
     font-size: 20px;
     opacity: 0.87;
   }

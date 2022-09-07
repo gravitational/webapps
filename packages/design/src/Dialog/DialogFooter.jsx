@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import styled from 'styled-components';
+import styled from 'design/styled';
 
 import { Box } from 'design';
 

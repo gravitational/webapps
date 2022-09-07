@@ -17,7 +17,7 @@
 import React from 'react';
 
 import { Box, Text } from 'design';
-import styled from 'styled-components';
+import styled from 'design/styled';
 
 import { hasActiveChildren } from 'teleport/Discover/flow';
 
@@ -114,7 +114,7 @@ const CheckedBullet = styled(Bullet)`
   }
 `;
 
-const StepsContainer = styled<{ active: boolean }>(Text)`
+const StepsContainer = styled(Text)<{ active: boolean }>`
   display: flex;
   flex-direction: column;
   color: ${p => (p.active ? 'inherit' : p.theme.colors.text.secondary)};

@@ -1,24 +1,43 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`render multi bash texts 1`] = `
-.c2 {
+.c0 {
   box-sizing: border-box;
-  padding-bottom: 8px;
+  border-radius: 4px;
+  background-color: #010B1C;
+  padding-left: 16px;
   padding-top: 8px;
+  padding-right: 48px;
+  padding-bottom: 8px;
 }
 
-.c4 {
+.c2 {
   box-sizing: border-box;
   margin-right: 4px;
 }
 
-.c10 {
+.c4 {
   box-sizing: border-box;
-  padding-bottom: 0px;
   padding-top: 8px;
+  padding-bottom: 8px;
 }
 
-.c6 {
+.c5 {
+  box-sizing: border-box;
+}
+
+.c7 {
+  box-sizing: border-box;
+  padding-right: 16px;
+}
+
+.c13 {
+  box-sizing: border-box;
+  padding-top: 8px;
+  padding-bottom: 0;
+}
+
+.c9 {
   line-height: 1.5;
   margin: 0;
   display: inline-flex;
@@ -44,48 +63,47 @@ exports[`render multi bash texts 1`] = `
   padding: 0px 24px;
 }
 
-.c6:active {
+.c9:active {
   opacity: 0.56;
 }
 
-.c6:hover,
-.c6:focus {
+.c9:hover,
+.c9:focus {
   background: #2C3A73;
 }
 
-.c6:disabled {
+.c9:disabled {
   background: rgba(255,255,255,0.12);
   color: rgba(255,255,255,0.3);
 }
 
-.c9 {
+.c12 {
   display: inline-block;
   transition: color 0.3s;
   color: #FFFFFF;
 }
 
-.c3 {
-  box-sizing: border-box;
+.c6 {
   display: flex;
 }
 
-.c8 .icon-check {
+.c11 .icon-check {
   display: none;
 }
 
-.c8 .icon-copy {
+.c11 .icon-copy {
   display: block;
 }
 
-.c8.copied .icon-check {
+.c11.copied .icon-check {
   display: block;
 }
 
-.c8.copied .icon-copy {
+.c11.copied .icon-copy {
   display: none;
 }
 
-.c7 {
+.c10 {
   height: 28px;
   width: 28px;
   border-radius: 20px;
@@ -94,9 +112,7 @@ exports[`render multi bash texts 1`] = `
   margin-top: -4px;
 }
 
-.c1 {
-  box-sizing: border-box;
-  margin-right: 4px;
+.c3 {
   white-space: pre;
   word-break: break-all;
   font-size: 12px;
@@ -105,42 +121,33 @@ exports[`render multi bash texts 1`] = `
   line-height: 20px;
 }
 
-.c0 {
-  box-sizing: border-box;
-  padding-bottom: 8px;
-  padding-left: 16px;
-  padding-right: 48px;
-  padding-top: 8px;
-  background-color: #010B1C;
-  border-radius: 4px;
+.c1 {
   position: relative;
 }
 
-.c5 {
-  box-sizing: border-box;
-  padding-right: 16px;
+.c8 {
   position: absolute;
   right: 0px;
 }
 
 <div>
   <div
-    class="c0"
+    class="c0 c1"
   >
     <div
-      class="c1"
+      class="c2 c3"
     >
       <div
-        class="c2"
+        class="c4"
       >
         <div
-          class="c3"
+          class="c5 c6"
         >
           <div
-            class="c3"
+            class="c5 c6"
           >
             <div
-              class="c4"
+              class="c2"
             >
               $
             </div>
@@ -151,22 +158,22 @@ exports[`render multi bash texts 1`] = `
             </div>
           </div>
           <div
-            class="c5"
+            class="c7 c8"
           >
             <button
-              class="c6 c7"
+              class="c9 c10"
               kind="secondary"
             >
               <div
-                class="c8 icon-container"
+                class="c11 icon-container"
               >
                 <span
-                  class="c9 icon icon-copy "
+                  class="c12 icon icon-copy "
                   color="light"
                   data-testid="btn-copy"
                 />
                 <span
-                  class="c9 icon icon-check "
+                  class="c12 icon icon-check "
                   color="light"
                   data-testid="btn-check"
                 />
@@ -176,16 +183,16 @@ exports[`render multi bash texts 1`] = `
         </div>
       </div>
       <div
-        class="c2"
+        class="c4"
       >
         <div
-          class="c3"
+          class="c5 c6"
         >
           <div
-            class="c3"
+            class="c5 c6"
           >
             <div
-              class="c4"
+              class="c2"
             >
               $
             </div>
@@ -196,22 +203,22 @@ exports[`render multi bash texts 1`] = `
             </div>
           </div>
           <div
-            class="c5"
+            class="c7 c8"
           >
             <button
-              class="c6 c7"
+              class="c9 c10"
               kind="secondary"
             >
               <div
-                class="c8 icon-container"
+                class="c11 icon-container"
               >
                 <span
-                  class="c9 icon icon-copy "
+                  class="c12 icon icon-copy "
                   color="light"
                   data-testid="btn-copy"
                 />
                 <span
-                  class="c9 icon icon-check "
+                  class="c12 icon icon-check "
                   color="light"
                   data-testid="btn-check"
                 />
@@ -221,16 +228,16 @@ exports[`render multi bash texts 1`] = `
         </div>
       </div>
       <div
-        class="c10"
+        class="c13"
       >
         <div
-          class="c3"
+          class="c5 c6"
         >
           <div
-            class="c3"
+            class="c5 c6"
           >
             <div
-              class="c4"
+              class="c2"
             >
               $
             </div>
@@ -241,22 +248,22 @@ exports[`render multi bash texts 1`] = `
             </div>
           </div>
           <div
-            class="c5"
+            class="c7 c8"
           >
             <button
-              class="c6 c7"
+              class="c9 c10"
               kind="secondary"
             >
               <div
-                class="c8 icon-container"
+                class="c11 icon-container"
               >
                 <span
-                  class="c9 icon icon-copy "
+                  class="c12 icon icon-copy "
                   color="light"
                   data-testid="btn-copy"
                 />
                 <span
-                  class="c9 icon icon-check "
+                  class="c12 icon icon-check "
                   color="light"
                   data-testid="btn-check"
                 />
@@ -271,24 +278,43 @@ exports[`render multi bash texts 1`] = `
 `;
 
 exports[`render multi bash texts with comment 1`] = `
-.c2 {
+.c0 {
   box-sizing: border-box;
-  padding-bottom: 8px;
+  border-radius: 4px;
+  background-color: #010B1C;
+  padding-left: 16px;
   padding-top: 8px;
+  padding-right: 48px;
+  padding-bottom: 8px;
 }
 
-.c5 {
+.c2 {
   box-sizing: border-box;
   margin-right: 4px;
 }
 
-.c11 {
+.c4 {
   box-sizing: border-box;
-  padding-bottom: 0px;
   padding-top: 8px;
+  padding-bottom: 8px;
 }
 
-.c7 {
+.c6 {
+  box-sizing: border-box;
+}
+
+.c8 {
+  box-sizing: border-box;
+  padding-right: 16px;
+}
+
+.c14 {
+  box-sizing: border-box;
+  padding-top: 8px;
+  padding-bottom: 0;
+}
+
+.c10 {
   line-height: 1.5;
   margin: 0;
   display: inline-flex;
@@ -314,52 +340,51 @@ exports[`render multi bash texts with comment 1`] = `
   padding: 0px 24px;
 }
 
-.c7:active {
+.c10:active {
   opacity: 0.56;
 }
 
-.c7:hover,
-.c7:focus {
+.c10:hover,
+.c10:focus {
   background: #2C3A73;
 }
 
-.c7:disabled {
+.c10:disabled {
   background: rgba(255,255,255,0.12);
   color: rgba(255,255,255,0.3);
 }
 
-.c10 {
+.c13 {
   display: inline-block;
   transition: color 0.3s;
   color: #FFFFFF;
 }
 
-.c4 {
-  box-sizing: border-box;
+.c7 {
   display: flex;
 }
 
-.c9 .icon-check {
+.c12 .icon-check {
   display: none;
 }
 
-.c9 .icon-copy {
+.c12 .icon-copy {
   display: block;
 }
 
-.c9.copied .icon-check {
+.c12.copied .icon-check {
   display: block;
 }
 
-.c9.copied .icon-copy {
+.c12.copied .icon-copy {
   display: none;
 }
 
-.c3 {
+.c5 {
   color: rgb(117 113 94 / 80%);
 }
 
-.c8 {
+.c11 {
   height: 28px;
   width: 28px;
   border-radius: 20px;
@@ -368,9 +393,7 @@ exports[`render multi bash texts with comment 1`] = `
   margin-top: -4px;
 }
 
-.c1 {
-  box-sizing: border-box;
-  margin-right: 4px;
+.c3 {
   white-space: pre;
   word-break: break-all;
   font-size: 12px;
@@ -379,47 +402,38 @@ exports[`render multi bash texts with comment 1`] = `
   line-height: 20px;
 }
 
-.c0 {
-  box-sizing: border-box;
-  padding-bottom: 8px;
-  padding-left: 16px;
-  padding-right: 48px;
-  padding-top: 8px;
-  background-color: #010B1C;
-  border-radius: 4px;
+.c1 {
   position: relative;
 }
 
-.c6 {
-  box-sizing: border-box;
-  padding-right: 16px;
+.c9 {
   position: absolute;
   right: 0px;
 }
 
 <div>
   <div
-    class="c0"
+    class="c0 c1"
   >
     <div
-      class="c1"
+      class="c2 c3"
     >
       <div
-        class="c2"
+        class="c4"
       >
         <div
-          class="c3"
+          class="c5"
         >
           Download Teleport's PGP public key
         </div>
         <div
-          class="c4"
+          class="c6 c7"
         >
           <div
-            class="c4"
+            class="c6 c7"
           >
             <div
-              class="c5"
+              class="c2"
             >
               $
             </div>
@@ -431,22 +445,22 @@ exports[`render multi bash texts with comment 1`] = `
             </div>
           </div>
           <div
-            class="c6"
+            class="c8 c9"
           >
             <button
-              class="c7 c8"
+              class="c10 c11"
               kind="secondary"
             >
               <div
-                class="c9 icon-container"
+                class="c12 icon-container"
               >
                 <span
-                  class="c10 icon icon-copy "
+                  class="c13 icon icon-copy "
                   color="light"
                   data-testid="btn-copy"
                 />
                 <span
-                  class="c10 icon icon-check "
+                  class="c13 icon icon-check "
                   color="light"
                   data-testid="btn-check"
                 />
@@ -456,16 +470,16 @@ exports[`render multi bash texts with comment 1`] = `
         </div>
       </div>
       <div
-        class="c2"
+        class="c4"
       >
         <div
-          class="c4"
+          class="c6 c7"
         >
           <div
-            class="c4"
+            class="c6 c7"
           >
             <div
-              class="c5"
+              class="c2"
             >
               $
             </div>
@@ -476,22 +490,22 @@ exports[`render multi bash texts with comment 1`] = `
             </div>
           </div>
           <div
-            class="c6"
+            class="c8 c9"
           >
             <button
-              class="c7 c8"
+              class="c10 c11"
               kind="secondary"
             >
               <div
-                class="c9 icon-container"
+                class="c12 icon-container"
               >
                 <span
-                  class="c10 icon icon-copy "
+                  class="c13 icon icon-copy "
                   color="light"
                   data-testid="btn-copy"
                 />
                 <span
-                  class="c10 icon icon-check "
+                  class="c13 icon icon-check "
                   color="light"
                   data-testid="btn-check"
                 />
@@ -501,10 +515,10 @@ exports[`render multi bash texts with comment 1`] = `
         </div>
       </div>
       <div
-        class="c11"
+        class="c14"
       >
         <div
-          class="c3"
+          class="c5"
         >
           Add the Teleport APT repository for v10. You'll need to update this
 file for each major release of Teleport.
@@ -513,13 +527,13 @@ and the codename your distro was forked from instead of '$ID' and '$VERSION_CODE
 
         </div>
         <div
-          class="c4"
+          class="c6 c7"
         >
           <div
-            class="c4"
+            class="c6 c7"
           >
             <div
-              class="c5"
+              class="c2"
             >
               $
             </div>
@@ -532,22 +546,22 @@ https://apt.releases.teleport.dev/stable/v10" \\
             </div>
           </div>
           <div
-            class="c6"
+            class="c8 c9"
           >
             <button
-              class="c7 c8"
+              class="c10 c11"
               kind="secondary"
             >
               <div
-                class="c9 icon-container"
+                class="c12 icon-container"
               >
                 <span
-                  class="c10 icon icon-copy "
+                  class="c13 icon icon-copy "
                   color="light"
                   data-testid="btn-copy"
                 />
                 <span
-                  class="c10 icon icon-check "
+                  class="c13 icon icon-check "
                   color="light"
                   data-testid="btn-check"
                 />
@@ -562,13 +576,37 @@ https://apt.releases.teleport.dev/stable/v10" \\
 `;
 
 exports[`render non bash single text 1`] = `
+.c0 {
+  box-sizing: border-box;
+  border-radius: 4px;
+  background-color: #010B1C;
+  padding-left: 16px;
+  padding-top: 8px;
+  padding-right: 48px;
+  padding-bottom: 8px;
+}
+
 .c2 {
   box-sizing: border-box;
-  padding-bottom: 0px;
+  margin-right: 4px;
+}
+
+.c4 {
+  box-sizing: border-box;
   padding-top: 8px;
+  padding-bottom: 0;
 }
 
 .c5 {
+  box-sizing: border-box;
+}
+
+.c7 {
+  box-sizing: border-box;
+  padding-right: 16px;
+}
+
+.c9 {
   line-height: 1.5;
   margin: 0;
   display: inline-flex;
@@ -594,48 +632,47 @@ exports[`render non bash single text 1`] = `
   padding: 0px 24px;
 }
 
-.c5:active {
+.c9:active {
   opacity: 0.56;
 }
 
-.c5:hover,
-.c5:focus {
+.c9:hover,
+.c9:focus {
   background: #2C3A73;
 }
 
-.c5:disabled {
+.c9:disabled {
   background: rgba(255,255,255,0.12);
   color: rgba(255,255,255,0.3);
 }
 
-.c8 {
+.c12 {
   display: inline-block;
   transition: color 0.3s;
   color: #FFFFFF;
 }
 
-.c3 {
-  box-sizing: border-box;
+.c6 {
   display: flex;
 }
 
-.c7 .icon-check {
+.c11 .icon-check {
   display: none;
 }
 
-.c7 .icon-copy {
+.c11 .icon-copy {
   display: block;
 }
 
-.c7.copied .icon-check {
+.c11.copied .icon-check {
   display: block;
 }
 
-.c7.copied .icon-copy {
+.c11.copied .icon-copy {
   display: none;
 }
 
-.c6 {
+.c10 {
   height: 28px;
   width: 28px;
   border-radius: 20px;
@@ -644,9 +681,7 @@ exports[`render non bash single text 1`] = `
   margin-top: -4px;
 }
 
-.c1 {
-  box-sizing: border-box;
-  margin-right: 4px;
+.c3 {
   white-space: pre;
   word-break: break-all;
   font-size: 12px;
@@ -655,39 +690,30 @@ exports[`render non bash single text 1`] = `
   line-height: 20px;
 }
 
-.c0 {
-  box-sizing: border-box;
-  padding-bottom: 8px;
-  padding-left: 16px;
-  padding-right: 48px;
-  padding-top: 8px;
-  background-color: #010B1C;
-  border-radius: 4px;
+.c1 {
   position: relative;
 }
 
-.c4 {
-  box-sizing: border-box;
-  padding-right: 16px;
+.c8 {
   position: absolute;
   right: 0px;
 }
 
 <div>
   <div
-    class="c0"
+    class="c0 c1"
   >
     <div
-      class="c1"
+      class="c2 c3"
     >
       <div
-        class="c2"
+        class="c4"
       >
         <div
-          class="c3"
+          class="c5 c6"
         >
           <div
-            class="c3"
+            class="c5 c6"
           >
             <div
               class="text-to-copy"
@@ -696,22 +722,22 @@ exports[`render non bash single text 1`] = `
             </div>
           </div>
           <div
-            class="c4"
+            class="c7 c8"
           >
             <button
-              class="c5 c6"
+              class="c9 c10"
               kind="secondary"
             >
               <div
-                class="c7 icon-container"
+                class="c11 icon-container"
               >
                 <span
-                  class="c8 icon icon-copy "
+                  class="c12 icon icon-copy "
                   color="light"
                   data-testid="btn-copy"
                 />
                 <span
-                  class="c8 icon icon-check "
+                  class="c12 icon icon-check "
                   color="light"
                   data-testid="btn-check"
                 />
@@ -726,18 +752,37 @@ exports[`render non bash single text 1`] = `
 `;
 
 exports[`render single bash text 1`] = `
-.c2 {
+.c0 {
   box-sizing: border-box;
-  padding-bottom: 0px;
+  border-radius: 4px;
+  background-color: #010B1C;
+  padding-left: 16px;
   padding-top: 8px;
+  padding-right: 48px;
+  padding-bottom: 8px;
 }
 
-.c4 {
+.c2 {
   box-sizing: border-box;
   margin-right: 4px;
 }
 
-.c6 {
+.c4 {
+  box-sizing: border-box;
+  padding-top: 8px;
+  padding-bottom: 0;
+}
+
+.c5 {
+  box-sizing: border-box;
+}
+
+.c7 {
+  box-sizing: border-box;
+  padding-right: 16px;
+}
+
+.c9 {
   line-height: 1.5;
   margin: 0;
   display: inline-flex;
@@ -763,48 +808,47 @@ exports[`render single bash text 1`] = `
   padding: 0px 24px;
 }
 
-.c6:active {
+.c9:active {
   opacity: 0.56;
 }
 
-.c6:hover,
-.c6:focus {
+.c9:hover,
+.c9:focus {
   background: #2C3A73;
 }
 
-.c6:disabled {
+.c9:disabled {
   background: rgba(255,255,255,0.12);
   color: rgba(255,255,255,0.3);
 }
 
-.c9 {
+.c12 {
   display: inline-block;
   transition: color 0.3s;
   color: #FFFFFF;
 }
 
-.c3 {
-  box-sizing: border-box;
+.c6 {
   display: flex;
 }
 
-.c8 .icon-check {
+.c11 .icon-check {
   display: none;
 }
 
-.c8 .icon-copy {
+.c11 .icon-copy {
   display: block;
 }
 
-.c8.copied .icon-check {
+.c11.copied .icon-check {
   display: block;
 }
 
-.c8.copied .icon-copy {
+.c11.copied .icon-copy {
   display: none;
 }
 
-.c7 {
+.c10 {
   height: 28px;
   width: 28px;
   border-radius: 20px;
@@ -813,9 +857,7 @@ exports[`render single bash text 1`] = `
   margin-top: -4px;
 }
 
-.c1 {
-  box-sizing: border-box;
-  margin-right: 4px;
+.c3 {
   white-space: pre;
   word-break: break-all;
   font-size: 12px;
@@ -824,42 +866,33 @@ exports[`render single bash text 1`] = `
   line-height: 20px;
 }
 
-.c0 {
-  box-sizing: border-box;
-  padding-bottom: 8px;
-  padding-left: 16px;
-  padding-right: 48px;
-  padding-top: 8px;
-  background-color: #010B1C;
-  border-radius: 4px;
+.c1 {
   position: relative;
 }
 
-.c5 {
-  box-sizing: border-box;
-  padding-right: 16px;
+.c8 {
   position: absolute;
   right: 0px;
 }
 
 <div>
   <div
-    class="c0"
+    class="c0 c1"
   >
     <div
-      class="c1"
+      class="c2 c3"
     >
       <div
-        class="c2"
+        class="c4"
       >
         <div
-          class="c3"
+          class="c5 c6"
         >
           <div
-            class="c3"
+            class="c5 c6"
           >
             <div
-              class="c4"
+              class="c2"
             >
               $
             </div>
@@ -870,22 +903,22 @@ exports[`render single bash text 1`] = `
             </div>
           </div>
           <div
-            class="c5"
+            class="c7 c8"
           >
             <button
-              class="c6 c7"
+              class="c9 c10"
               kind="secondary"
             >
               <div
-                class="c8 icon-container"
+                class="c11 icon-container"
               >
                 <span
-                  class="c9 icon icon-copy "
+                  class="c12 icon icon-copy "
                   color="light"
                   data-testid="btn-copy"
                 />
                 <span
-                  class="c9 icon icon-check "
+                  class="c12 icon icon-check "
                   color="light"
                   data-testid="btn-check"
                 />
@@ -900,18 +933,37 @@ exports[`render single bash text 1`] = `
 `;
 
 exports[`render single bash text with comment 1`] = `
-.c2 {
+.c0 {
   box-sizing: border-box;
-  padding-bottom: 0px;
+  border-radius: 4px;
+  background-color: #010B1C;
+  padding-left: 16px;
   padding-top: 8px;
+  padding-right: 48px;
+  padding-bottom: 8px;
 }
 
-.c5 {
+.c2 {
   box-sizing: border-box;
   margin-right: 4px;
 }
 
-.c7 {
+.c4 {
+  box-sizing: border-box;
+  padding-top: 8px;
+  padding-bottom: 0;
+}
+
+.c6 {
+  box-sizing: border-box;
+}
+
+.c8 {
+  box-sizing: border-box;
+  padding-right: 16px;
+}
+
+.c10 {
   line-height: 1.5;
   margin: 0;
   display: inline-flex;
@@ -937,52 +989,51 @@ exports[`render single bash text with comment 1`] = `
   padding: 0px 24px;
 }
 
-.c7:active {
+.c10:active {
   opacity: 0.56;
 }
 
-.c7:hover,
-.c7:focus {
+.c10:hover,
+.c10:focus {
   background: #2C3A73;
 }
 
-.c7:disabled {
+.c10:disabled {
   background: rgba(255,255,255,0.12);
   color: rgba(255,255,255,0.3);
 }
 
-.c10 {
+.c13 {
   display: inline-block;
   transition: color 0.3s;
   color: #FFFFFF;
 }
 
-.c4 {
-  box-sizing: border-box;
+.c7 {
   display: flex;
 }
 
-.c9 .icon-check {
+.c12 .icon-check {
   display: none;
 }
 
-.c9 .icon-copy {
+.c12 .icon-copy {
   display: block;
 }
 
-.c9.copied .icon-check {
+.c12.copied .icon-check {
   display: block;
 }
 
-.c9.copied .icon-copy {
+.c12.copied .icon-copy {
   display: none;
 }
 
-.c3 {
+.c5 {
   color: rgb(117 113 94 / 80%);
 }
 
-.c8 {
+.c11 {
   height: 28px;
   width: 28px;
   border-radius: 20px;
@@ -991,9 +1042,7 @@ exports[`render single bash text with comment 1`] = `
   margin-top: -4px;
 }
 
-.c1 {
-  box-sizing: border-box;
-  margin-right: 4px;
+.c3 {
   white-space: pre;
   word-break: break-all;
   font-size: 12px;
@@ -1002,47 +1051,38 @@ exports[`render single bash text with comment 1`] = `
   line-height: 20px;
 }
 
-.c0 {
-  box-sizing: border-box;
-  padding-bottom: 8px;
-  padding-left: 16px;
-  padding-right: 48px;
-  padding-top: 8px;
-  background-color: #010B1C;
-  border-radius: 4px;
+.c1 {
   position: relative;
 }
 
-.c6 {
-  box-sizing: border-box;
-  padding-right: 16px;
+.c9 {
   position: absolute;
   right: 0px;
 }
 
 <div>
   <div
-    class="c0"
+    class="c0 c1"
   >
     <div
-      class="c1"
+      class="c2 c3"
     >
       <div
-        class="c2"
+        class="c4"
       >
         <div
-          class="c3"
+          class="c5"
         >
           Add the Teleport API repository for v10. You'll need to update this.
         </div>
         <div
-          class="c4"
+          class="c6 c7"
         >
           <div
-            class="c4"
+            class="c6 c7"
           >
             <div
-              class="c5"
+              class="c2"
             >
               $
             </div>
@@ -1053,22 +1093,22 @@ exports[`render single bash text with comment 1`] = `
             </div>
           </div>
           <div
-            class="c6"
+            class="c8 c9"
           >
             <button
-              class="c7 c8"
+              class="c10 c11"
               kind="secondary"
             >
               <div
-                class="c9 icon-container"
+                class="c12 icon-container"
               >
                 <span
-                  class="c10 icon icon-copy "
+                  class="c13 icon icon-copy "
                   color="light"
                   data-testid="btn-copy"
                 />
                 <span
-                  class="c10 icon icon-check "
+                  class="c13 icon icon-check "
                   color="light"
                   data-testid="btn-check"
                 />

@@ -1,19 +1,65 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`render DocumentNodes 1`] = `
-.c4 {
+.c0 {
+  box-sizing: border-box;
+  background-color: #010B1C;
+  height: 100%;
+  margin: -16px;
+  width: 100%;
+}
+
+.c2 {
+  box-sizing: border-box;
+  flex: 1;
+}
+
+.c3 {
+  box-sizing: border-box;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 24px;
+  padding-left: 32px;
+  padding-right: 32px;
+}
+
+.c5 {
+  box-sizing: border-box;
+  margin-bottom: 24px;
+}
+
+.c7 {
   box-sizing: border-box;
   margin-right: 20px;
   width: 336px;
 }
 
-.c14 {
+.c12 {
+  box-sizing: border-box;
+  width: 240px;
+}
+
+.c17 {
+  box-sizing: border-box;
+  width: 100%;
+}
+
+.c19 {
+  box-sizing: border-box;
+}
+
+.c21 {
   box-sizing: border-box;
   margin-right: 16px;
   width: 100%;
 }
 
-.c30 {
+.c41 {
+  box-sizing: border-box;
+  margin-right: 8px;
+}
+
+.c37 {
   line-height: 1.5;
   margin: 0;
   display: inline-flex;
@@ -42,33 +88,33 @@ exports[`render DocumentNodes 1`] = `
   height: 24px;
 }
 
-.c30:active {
+.c37:active {
   opacity: 0.56;
 }
 
-.c30:hover,
-.c30:focus {
+.c37:hover,
+.c37:focus {
   background: #092F52;
   border: 1px solid rgba(255,255,255,0.1);
   opacity: 1;
 }
 
-.c30:active {
+.c37:active {
   opacity: 0.24;
 }
 
-.c30:disabled {
+.c37:disabled {
   background: rgba(255,255,255,0.12);
   color: rgba(255,255,255,0.3);
 }
 
-.c25 {
+.c32 {
   display: inline-block;
   transition: color 0.3s;
   color: #FFFFFF;
 }
 
-.c31 {
+.c38 {
   display: inline-block;
   transition: color 0.3s;
   margin-left: 8px;
@@ -77,14 +123,57 @@ exports[`render DocumentNodes 1`] = `
   font-size: 14px;
 }
 
-.c36 {
+.c43 {
   display: inline-block;
   transition: color 0.3s;
   color: #FFFFFF;
   font-size: 16px;
 }
 
-.c5 {
+.c1 {
+  display: flex;
+}
+
+.c6 {
+  display: flex;
+  align-items: end;
+  justify-content: space-between;
+}
+
+.c18 {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.c20 {
+  display: flex;
+  align-items: center;
+}
+
+.c40 {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.c35 {
+  box-sizing: border-box;
+  border-radius: 100px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 16px;
+  line-height: 1.4;
+  font-size: 10px;
+  font-weight: 500;
+  padding: 0 8px;
+  background-color: #01172C;
+  color: rgba(255,255,255,0.87);
+  margin-right: 4px;
+  margin-bottom: 4px;
+}
+
+.c8 {
   color: #FFFFFF;
   display: block;
   font-size: 11px;
@@ -94,83 +183,25 @@ exports[`render DocumentNodes 1`] = `
   margin-bottom: 4px;
 }
 
-.c23 {
+.c30 {
   overflow: hidden;
   text-overflow: ellipsis;
   font-weight: 300;
   font-size: 12px;
   line-height: 24px;
-  margin: 0px;
 }
 
-.c27 {
+.c33 {
   overflow: hidden;
   text-overflow: ellipsis;
   font-weight: 400;
   font-size: 12px;
   line-height: 16px;
-  margin: 0px;
   margin-right: 4px;
   color: #FFFFFF;
 }
 
-.c0 {
-  box-sizing: border-box;
-  margin: -16px;
-  height: 100%;
-  width: 100%;
-  background-color: #010B1C;
-  display: flex;
-}
-
-.c1 {
-  box-sizing: border-box;
-  flex: 1;
-  display: flex;
-}
-
-.c3 {
-  box-sizing: border-box;
-  margin-bottom: 24px;
-  display: flex;
-  align-items: end;
-  justify-content: space-between;
-}
-
-.c12 {
-  box-sizing: border-box;
-  width: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-}
-
-.c13 {
-  box-sizing: border-box;
-  display: flex;
-  align-items: center;
-}
-
-.c26 {
-  box-sizing: border-box;
-  display: flex;
-}
-
-.c33 {
-  box-sizing: border-box;
-  width: 100%;
-  display: flex;
-  justify-content: flex-end;
-}
-
 .c34 {
-  box-sizing: border-box;
-  margin-right: 8px;
-  display: flex;
-  align-items: center;
-}
-
-.c28 {
   background: #03203C;
   box-shadow: 0 4px 16px rgba(0,0,0,0.24);
   border-collapse: collapse;
@@ -179,39 +210,39 @@ exports[`render DocumentNodes 1`] = `
   width: 100%;
 }
 
-.c28 > thead > tr > th,
-.c28 > tbody > tr > th,
-.c28 > tfoot > tr > th,
-.c28 > thead > tr > td,
-.c28 > tbody > tr > td,
-.c28 > tfoot > tr > td {
+.c34 > thead > tr > th,
+.c34 > tbody > tr > th,
+.c34 > tfoot > tr > th,
+.c34 > thead > tr > td,
+.c34 > tbody > tr > td,
+.c34 > tfoot > tr > td {
   padding: 8px 8px;
   vertical-align: middle;
 }
 
-.c28 > thead > tr > th:first-child,
-.c28 > tbody > tr > th:first-child,
-.c28 > tfoot > tr > th:first-child,
-.c28 > thead > tr > td:first-child,
-.c28 > tbody > tr > td:first-child,
-.c28 > tfoot > tr > td:first-child {
+.c34 > thead > tr > th:first-child,
+.c34 > tbody > tr > th:first-child,
+.c34 > tfoot > tr > th:first-child,
+.c34 > thead > tr > td:first-child,
+.c34 > tbody > tr > td:first-child,
+.c34 > tfoot > tr > td:first-child {
   padding-left: 24px;
 }
 
-.c28 > thead > tr > th:last-child,
-.c28 > tbody > tr > th:last-child,
-.c28 > tfoot > tr > th:last-child,
-.c28 > thead > tr > td:last-child,
-.c28 > tbody > tr > td:last-child,
-.c28 > tfoot > tr > td:last-child {
+.c34 > thead > tr > th:last-child,
+.c34 > tbody > tr > th:last-child,
+.c34 > tfoot > tr > th:last-child,
+.c34 > thead > tr > td:last-child,
+.c34 > tbody > tr > td:last-child,
+.c34 > tfoot > tr > td:last-child {
   padding-right: 24px;
 }
 
-.c28 > tbody > tr > td {
+.c34 > tbody > tr > td {
   vertical-align: baseline;
 }
 
-.c28 > thead > tr > th {
+.c34 > thead > tr > th {
   background: #01172C;
   color: #FFFFFF;
   cursor: pointer;
@@ -225,26 +256,26 @@ exports[`render DocumentNodes 1`] = `
   white-space: nowrap;
 }
 
-.c28 > thead > tr > th .c24 {
+.c34 > thead > tr > th .c31 {
   font-weight: bold;
   font-size: 8px;
   margin-left: 8px;
 }
 
-.c28 > tbody > tr > td {
+.c34 > tbody > tr > td {
   color: rgba(255,255,255,0.87);
   line-height: 16px;
 }
 
-.c28 tbody tr {
+.c34 tbody tr {
   border-bottom: 1px solid #010B1C;
 }
 
-.c28 tbody tr:hover {
+.c34 tbody tr:hover {
   background-color: rgb(7,40,70);
 }
 
-.c11 {
+.c16 {
   padding: 16px 24px;
   display: flex;
   height: 24px;
@@ -256,7 +287,7 @@ exports[`render DocumentNodes 1`] = `
   border-top-right-radius: 8px;
 }
 
-.c32 {
+.c39 {
   padding: 16px 24px;
   display: flex;
   height: 24px;
@@ -264,54 +295,68 @@ exports[`render DocumentNodes 1`] = `
   align-items: center;
   justify-content: space-between;
   background: #03203C;
-  border-bottom-right-radius: 8px;
   border-bottom-left-radius: 8px;
+  border-bottom-right-radius: 8px;
 }
 
-.c29 {
-  box-sizing: border-box;
-  border-radius: 100px;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  min-height: 16px;
-  line-height: 1.4;
-  font-size: 10px;
-  font-weight: 500;
-  padding: 0 8px;
-  background-color: #01172C;
-  color: rgba(255,255,255,0.87);
-  margin-bottom: 4px;
-  margin-right: 4px;
+.c36 {
   cursor: pointer;
 }
 
-.c35 {
+.c42 {
   background: none;
   border: none;
   cursor: pointer;
+  margin-left: 0;
+  margin-right: 0;
 }
 
-.c35 .c24 {
+.c42 .c31 {
   font-size: 20px;
   transition: all 0.3s;
   opacity: 0.5;
 }
 
-.c35:hover .c24,
-.c35:focus .c24 {
+.c42:hover .c31,
+.c42:focus .c31 {
   opacity: 1;
 }
 
-.c35:disabled {
+.c42:disabled {
   cursor: default;
 }
 
-.c35:disabled .c24 {
+.c42:disabled .c31 {
   opacity: 0.1;
 }
 
-.c17 {
+.c44 {
+  background: none;
+  border: none;
+  cursor: pointer;
+  margin-left: 0;
+}
+
+.c44 .c31 {
+  font-size: 20px;
+  transition: all 0.3s;
+  opacity: 0.5;
+}
+
+.c44:hover .c31,
+.c44:focus .c31 {
+  opacity: 1;
+}
+
+.c44:disabled {
+  cursor: default;
+}
+
+.c44:disabled .c31 {
+  opacity: 0.1;
+}
+
+.c24 {
   position: absolute;
   height: 100%;
   right: 0;
@@ -322,7 +367,7 @@ exports[`render DocumentNodes 1`] = `
   border-radius: 200px;
 }
 
-.c15 {
+.c22 {
   position: relative;
   display: flex;
   overflow: hidden;
@@ -332,7 +377,7 @@ exports[`render DocumentNodes 1`] = `
   background: #01172C;
 }
 
-.c16 {
+.c23 {
   border: none;
   outline: none;
   box-sizing: border-box;
@@ -340,38 +385,34 @@ exports[`render DocumentNodes 1`] = `
   font-size: 12px;
   width: 100%;
   transition: all 0.2s;
-  padding-left: 16px;
-  padding-right: 16px;
+  padding-right: 184px;
   color: rgba(255,255,255,0.87);
   background: #01172C;
-  padding-right: 184px;
+  padding-left: 16px;
+  padding-right: 16px;
 }
 
-.c16:hover,
-.c16:focus,
-.c16:active {
+.c23:hover,
+.c23:focus,
+.c23:active {
   background: #010B1C;
   box-shadow: inset 0 2px 4px rgba(0,0,0,.24);
   color: rgba(255,255,255,0.87);
 }
 
-.c16::placeholder {
+.c23::placeholder {
   color: rgba(255,255,255,0.24);
   font-size: 12px;
 }
 
-.c19 {
+.c26 {
   position: relative;
   display: flex;
   align-items: center;
   cursor: pointer;
 }
 
-.c19[disabled] {
-  cursor: default;
-}
-
-.c22 {
+.c29 {
   width: 32px;
   height: 12px;
   border-radius: 12px;
@@ -380,7 +421,7 @@ exports[`render DocumentNodes 1`] = `
   flex-shrink: 0;
 }
 
-.c22:before {
+.c29:before {
   content: '';
   position: absolute;
   top: 50%;
@@ -391,29 +432,29 @@ exports[`render DocumentNodes 1`] = `
   background: #651FFF;
 }
 
-.c20 {
+.c27 {
   opacity: 0;
   position: absolute;
   cursor: inherit;
 }
 
-.c20:checked + .c21 {
+.c27:checked + .c28 {
   background: #512FC9;
 }
 
-.c20:checked + .c21:before {
+.c27:checked + .c28:before {
   transform: translate(16px,-50%);
 }
 
-.c20:disabled + .c21 {
+.c27:disabled + .c28 {
   background: #03203C;
 }
 
-.c20:disabled + .c21:before {
+.c27:disabled + .c28:before {
   background: #455a64;
 }
 
-.c18 {
+.c25 {
   display: flex;
   align-items: center;
   justify-content: space-around;
@@ -422,18 +463,14 @@ exports[`render DocumentNodes 1`] = `
   width: 120px;
 }
 
-.c8 {
-  box-sizing: border-box;
-  width: 240px;
-  display: flex;
+.c13 {
   align-items: center;
   height: 32px;
-  border: 1px solid;
   border-radius: 4px;
-  border-color: rgba(255,255,255,0.24);
+  border: 1px solid rgba(255,255,255,0.24);
 }
 
-.c9 {
+.c14 {
   opacity: 0.75;
   font-size: 11px;
   font-weight: 500;
@@ -442,13 +479,11 @@ exports[`render DocumentNodes 1`] = `
   border-top-left-radius: 4px;
 }
 
-.c10 {
+.c15 {
   appearance: none;
   border: none;
-  border-radius: 4px;
   box-sizing: border-box;
-  border-bottom-left-radius: unset;
-  border-top-left-radius: unset;
+  border-radius: 0 4px 4px 0;
   display: block;
   outline: none;
   width: 100%;
@@ -456,30 +491,30 @@ exports[`render DocumentNodes 1`] = `
   box-shadow: none;
   padding-left: 8px;
   font-size: 12px;
-  color: rgba(255,255,255,0.87);
   background-color: #03203C;
+  color: rgba(255,255,255,0.87);
 }
 
-.c10::-ms-clear {
+.c15::-ms-clear {
   display: none;
 }
 
-.c10:read-only {
+.c15:read-only {
   cursor: not-allowed;
 }
 
-.c10::placeholder {
+.c15::placeholder {
   opacity: 1;
   color: rgba(255,255,255,0.24);
   font-size: 12px;
 }
 
-.c10:hover,
-.c10:focus {
+.c15:hover,
+.c15:focus {
   background: #092F52;
 }
 
-.c7 .react-select-container {
+.c9 .react-select-container {
   box-shadow: inset 0 2px 4px rgba(0,0,0,0.24);
   box-sizing: border-box;
   border: none;
@@ -493,8 +528,8 @@ exports[`render DocumentNodes 1`] = `
   border-radius: 4px;
 }
 
-.c7 .react-select__control,
-.c7 .react-select__control--is-focused {
+.c9 .react-select__control,
+.c9 .react-select__control--is-focused {
   min-height: 40px;
   height: 40px;
   background-color: transparent;
@@ -505,171 +540,100 @@ exports[`render DocumentNodes 1`] = `
   box-shadow: none;
 }
 
-.c7 .react-select__control:hover,
-.c7 .react-select__control--is-focused:hover {
+.c9 .react-select__control:hover,
+.c9 .react-select__control--is-focused:hover {
   border-color: transparent;
   cursor: pointer;
 }
 
-.c7 .react-select__option:hover {
+.c9 .react-select__option:hover {
   cursor: pointer;
   background-color: #eceff1;
 }
 
-.c7 .react-select__option--is-focused {
+.c9 .react-select__option--is-focused {
   background-color: #eceff1;
 }
 
-.c7 .react-select__option--is-selected {
+.c9 .react-select__option--is-selected {
   background-color: #cfd8dc;
   color: inherit;
 }
 
-.c7 .react-select__option--is-selected:hover {
+.c9 .react-select__option--is-selected:hover {
   background-color: #cfd8dc;
 }
 
-.c7 .react-select__menu {
+.c9 .react-select__menu {
   margin-top: 0px;
 }
 
-.c7 .react-select__indicator-separator {
+.c9 .react-select__indicator-separator {
   display: none;
 }
 
-.c7 .react-select__loading-indicator {
+.c9 .react-select__loading-indicator {
   display: none;
 }
 
-.c7 .react-select--is-disabled .react-select__single-value,
-.c7 .react-select--is-disabled .react-select__placeholder {
+.c9 .react-select--is-disabled .react-select__single-value,
+.c9 .react-select--is-disabled .react-select__placeholder {
   color: rgba(0,0,0,0.24);
 }
 
-.c7 .react-select--is-disabled .react-select__indicator {
+.c9 .react-select--is-disabled .react-select__indicator {
   color: rgba(0,0,0,0.14);
 }
 
-.c6 .react-select-container {
-  box-shadow: inset 0 2px 4px rgba(0,0,0,0.24);
-  box-sizing: border-box;
-  border: none;
-  display: block;
-  font-size: 14px;
-  outline: none;
-  width: 100%;
-  color: rgba(0,0,0,0.87);
-  background-color: #ffffff;
-  margin-bottom: 0px;
-  border-radius: 4px;
-}
-
-.c6 .react-select__control,
-.c6 .react-select__control--is-focused {
-  min-height: 40px;
-  height: 40px;
-  background-color: transparent;
-  border-color: transparent;
-  border-radius: 4px;
-  border-style: solid;
-  border-width: 1px;
-  box-shadow: none;
-}
-
-.c6 .react-select__control:hover,
-.c6 .react-select__control--is-focused:hover {
-  border-color: transparent;
-  cursor: pointer;
-}
-
-.c6 .react-select__option:hover {
-  cursor: pointer;
-  background-color: #eceff1;
-}
-
-.c6 .react-select__option--is-focused {
-  background-color: #eceff1;
-}
-
-.c6 .react-select__option--is-selected {
-  background-color: #cfd8dc;
-  color: inherit;
-}
-
-.c6 .react-select__option--is-selected:hover {
-  background-color: #cfd8dc;
-}
-
-.c6 .react-select__menu {
-  margin-top: 0px;
-}
-
-.c6 .react-select__indicator-separator {
-  display: none;
-}
-
-.c6 .react-select__loading-indicator {
-  display: none;
-}
-
-.c6 .react-select--is-disabled .react-select__single-value,
-.c6 .react-select--is-disabled .react-select__placeholder {
-  color: rgba(0,0,0,0.24);
-}
-
-.c6 .react-select--is-disabled .react-select__indicator {
-  color: rgba(0,0,0,0.14);
-}
-
-.c6 .react-select-container {
+.c10 .react-select-container {
   background: transparent;
 }
 
-.c6 .react-select__option--is-focused:active {
+.c10 .react-select__option--is-focused:active {
   background-color: #eceff1;
 }
 
-.c6 .react-select__value-container {
+.c10 .react-select__value-container {
   padding: 0 8px;
 }
 
-.c6 .react-select__single-value {
+.c10 .react-select__single-value {
   color: rgba(255,255,255,0.87);
 }
 
-.c6 .react-select__control {
+.c10 .react-select__control {
   min-height: 34px;
   height: 34px;
   border-color: rgba(255,255,255,0.24);
   color: rgba(255,255,255,0.56);
 }
 
-.c6 .react-select__control:focus,
-.c6 .react-select__control:active {
+.c10 .react-select__control:focus,
+.c10 .react-select__control:active {
   background-color: #092F52;
 }
 
-.c6 .react-select__control:hover {
+.c10 .react-select__control:hover {
   border-color: rgba(255,255,255,0.24);
   background-color: #092F52;
 }
 
-.c6 .react-select__control:hover .react-select__dropdown-indicator {
+.c10 .react-select__control:hover .react-select__dropdown-indicator {
   color: #666;
 }
 
-.c6 .react-select__control .react-select__indicator,
-.c6 .react-select__control .react-select__dropdown-indicator {
+.c10 .react-select__control .react-select__indicator,
+.c10 .react-select__control .react-select__dropdown-indicator {
   padding: 4px 8px;
   color: #666;
 }
 
-.c6 .react-select__control .react-select__indicator:hover,
-.c6 .react-select__control .react-select__dropdown-indicator:hover {
+.c10 .react-select__control .react-select__indicator:hover,
+.c10 .react-select__control .react-select__dropdown-indicator:hover {
   color: #999;
 }
 
-.c6 .react-select__control--menu-is-open {
+.c10 .react-select__control--menu-is-open {
   background-color: #092F52;
   border-color: transparent;
   border-radius: 4px;
@@ -679,108 +643,101 @@ exports[`render DocumentNodes 1`] = `
   border-color: rgba(255,255,255,0.24);
 }
 
-.c6 .react-select__control--menu-is-open .react-select__indicator,
-.c6 .react-select__control--menu-is-open .react-select__dropdown-indicator {
+.c10 .react-select__control--menu-is-open .react-select__indicator,
+.c10 .react-select__control--menu-is-open .react-select__dropdown-indicator {
   color: #999 !important;
 }
 
-.c6 .react-select__control--menu-is-open .react-select__indicator:hover,
-.c6 .react-select__control--menu-is-open .react-select__dropdown-indicator:hover {
+.c10 .react-select__control--menu-is-open .react-select__indicator:hover,
+.c10 .react-select__control--menu-is-open .react-select__dropdown-indicator:hover {
   color: #ccc !important;
 }
 
-.c6 .react-select__input {
+.c10 .react-select__input {
   color: rgba(255,255,255,0.87);
 }
 
-.c6 .react-select__placeholder {
+.c10 .react-select__placeholder {
   color: rgba(255,255,255,0.56);
 }
 
-.c6 .react-select__option {
+.c10 .react-select__option {
   padding: 4px 12px;
 }
 
-.c6 .react-select__menu {
+.c10 .react-select__menu {
   border-top-left-radius: 0;
   border-top-right-radius: 0;
 }
 
-.c6 .react-select__multi-value {
+.c10 .react-select__multi-value {
   background-color: #01172C;
   border: 1px solid rgba(255,255,255,0.24);
 }
 
-.c6 .react-select__multi-value__label {
+.c10 .react-select__multi-value__label {
   color: rgba(255,255,255,0.87);
   padding: 0 6px;
 }
 
-.c6 .react-select--is-disabled .react-select__single-value,
-.c6 .react-select--is-disabled .react-select__placeholder,
-.c6 .react-select--is-disabled .react-select__indicator {
+.c10 .react-select--is-disabled .react-select__single-value,
+.c10 .react-select--is-disabled .react-select__placeholder,
+.c10 .react-select--is-disabled .react-select__indicator {
   color: rgba(255,255,255,0.24);
 }
 
-.c6 .react-select-container {
+.c11 .react-select-container {
   background: #03203C;
 }
 
-.c6 .react-select__single-value {
+.c11 .react-select__single-value {
   color: white;
   padding: 0 4px;
   margin: 0;
 }
 
-.c2 {
-  box-sizing: border-box;
-  margin-top: 24px;
-  margin-left: auto;
-  margin-right: auto;
-  padding-left: 32px;
-  padding-right: 32px;
+.c4 {
   flex-direction: column;
   display: flex;
   flex: 1;
   max-width: 1024px;
 }
 
-.c2::after {
+.c4::after {
   content: ' ';
   padding-bottom: 24px;
 }
 
 <div
-  class="c0"
+  class="c0 c1"
   height="100%"
   style="position: absolute;"
   width="100%"
 >
   <div
-    class="c1"
+    class="c2 c1"
     style="overflow: auto; background: rgb(1, 11, 28); display: flex; position: relative;"
   >
     <div
-      class="c2"
+      class="c3 c4"
     >
       <div
-        class="c3"
+        class="c5 c6"
       >
         <div
-          class="c4"
+          class="c7"
           width="336px"
         >
           <label
-            class="c5"
-            font-size="0"
+            class="c8"
           >
              Clusters 
           </label>
           <div
-            class="c6"
+            class="c9 c10 c11"
           >
             <div
-              class="c7"
+              class="c9"
             >
               <div
                 class="react-select-container css-2b097c-container"
@@ -816,7 +773,7 @@ exports[`render DocumentNodes 1`] = `
                           value=""
                         />
                         <div
-                          style="position: absolute; top: 0px; left: 0px; visibility: hidden; height: 0px; overflow: scroll; white-space: pre; font-family: Ubuntu2,-apple-system,BlinkMacSystemFont,\\"Segoe UI\\",Helvetica,Arial,sans-serif,\\"Apple Color Emoji\\",\\"Segoe UI Emoji\\",\\"Segoe UI Symbol\\"; letter-spacing: normal; text-transform: none;"
+                          style="position: absolute; top: 0px; left: 0px; visibility: hidden; height: 0px; overflow: scroll; white-space: pre; font-family: -webkit-small-control; letter-spacing: normal; text-transform: none;"
                         />
                       </div>
                     </div>
@@ -851,63 +808,63 @@ exports[`render DocumentNodes 1`] = `
           </div>
         </div>
         <div
-          class="c8"
+          class="c12 c1 c13"
           width="240px"
         >
           <div
-            class="c9"
+            class="c14"
           >
             SSH:
           </div>
           <input
-            class="c10"
+            class="c15"
             color="text.primary"
             placeholder="login@host:port"
           />
         </div>
       </div>
       <form
-        class="c11"
+        class="c16"
       >
         <div
-          class="c12"
+          class="c17 c18"
           width="100%"
         >
           <div
-            class="c13"
+            class="c19 c20"
             style="width: 70%;"
           >
             <div
-              class="c14"
+              class="c21"
               width="100%"
             >
               <div
-                class="c15"
+                class="c22"
               >
                 <input
-                  class="c16"
+                  class="c23"
                   placeholder="SEARCH..."
                   value=""
                 />
                 <div
-                  class="c17"
+                  class="c24"
                 >
                   <div
-                    class="c18"
+                    class="c25"
                   >
                     <label
-                      class="c19"
+                      class="c26"
                     >
                       <input
-                        class="c20"
+                        class="c27"
                         type="checkbox"
                       />
                       <div
-                        class="c21 c22"
+                        class="c28 c29"
                       />
                     </label>
                     <div
-                      class="c23"
+                      class="c30"
                     >
                       Advanced
                     </div>
@@ -919,17 +876,17 @@ exports[`render DocumentNodes 1`] = `
               style="line-height: 0px;"
             >
               <span
-                class="c24 c25 icon icon-info_outline "
+                class="c31 c32 icon icon-info_outline "
                 color="light"
                 style="cursor: pointer; font-size: 20px;"
               />
             </div>
           </div>
           <div
-            class="c26"
+            class="c19 c1"
           >
             <div
-              class="c27"
+              class="c33"
               color="primary.contrastText"
             >
               SHOWING 
@@ -950,7 +907,7 @@ exports[`render DocumentNodes 1`] = `
         </div>
       </form>
       <table
-        class="c28"
+        class="c34"
       >
         <thead>
           <tr>
@@ -958,7 +915,7 @@ exports[`render DocumentNodes 1`] = `
               <a>
                 Hostname
                 <span
-                  class="c24 c25 icon icon-chevron-up "
+                  class="c31 c32 icon icon-chevron-up "
                   color="light"
                   title="sort items asc"
                 />
@@ -989,13 +946,13 @@ exports[`render DocumentNodes 1`] = `
             </td>
             <td>
               <div
-                class="c29"
+                class="c35 c36"
                 kind="secondary"
               >
                 cluster: one
               </div>
               <div
-                class="c29"
+                class="c35 c36"
                 kind="secondary"
               >
                 kernel: 4.15.0-51-generic
@@ -1005,13 +962,13 @@ exports[`render DocumentNodes 1`] = `
               align="right"
             >
               <button
-                class="c30"
+                class="c37"
                 height="24px"
                 kind="border"
               >
                 CONNECT
                 <span
-                  class="c24 c31 icon icon-caret-down "
+                  class="c31 c38 icon icon-caret-down "
                   color="text.secondary"
                   font-size="2"
                 />
@@ -1027,13 +984,13 @@ exports[`render DocumentNodes 1`] = `
             </td>
             <td>
               <div
-                class="c29"
+                class="c35 c36"
                 kind="secondary"
               >
                 cluster: one
               </div>
               <div
-                class="c29"
+                class="c35 c36"
                 kind="secondary"
               >
                 kernel: 4.15.0-51-generic
@@ -1043,13 +1000,13 @@ exports[`render DocumentNodes 1`] = `
               align="right"
             >
               <button
-                class="c30"
+                class="c37"
                 height="24px"
                 kind="border"
               >
                 CONNECT
                 <span
-                  class="c24 c31 icon icon-caret-down "
+                  class="c31 c38 icon icon-caret-down "
                   color="text.secondary"
                   font-size="2"
                 />
@@ -1070,13 +1027,13 @@ exports[`render DocumentNodes 1`] = `
             </td>
             <td>
               <div
-                class="c29"
+                class="c35 c36"
                 kind="secondary"
               >
                 cluster: one
               </div>
               <div
-                class="c29"
+                class="c35 c36"
                 kind="secondary"
               >
                 kernel: 4.15.0-51-generic
@@ -1086,13 +1043,13 @@ exports[`render DocumentNodes 1`] = `
               align="right"
             >
               <button
-                class="c30"
+                class="c37"
                 height="24px"
                 kind="border"
               >
                 CONNECT
                 <span
-                  class="c24 c31 icon icon-caret-down "
+                  class="c31 c38 icon icon-caret-down "
                   color="text.secondary"
                   font-size="2"
                 />
@@ -1113,13 +1070,13 @@ exports[`render DocumentNodes 1`] = `
             </td>
             <td>
               <div
-                class="c29"
+                class="c35 c36"
                 kind="secondary"
               >
                 cluster: one
               </div>
               <div
-                class="c29"
+                class="c35 c36"
                 kind="secondary"
               >
                 kernel: 4.15.0-51-generic
@@ -1129,13 +1086,13 @@ exports[`render DocumentNodes 1`] = `
               align="right"
             >
               <button
-                class="c30"
+                class="c37"
                 height="24px"
                 kind="border"
               >
                 CONNECT
                 <span
-                  class="c24 c31 icon icon-caret-down "
+                  class="c31 c38 icon icon-caret-down "
                   color="text.secondary"
                   font-size="2"
                 />
@@ -1151,37 +1108,37 @@ exports[`render DocumentNodes 1`] = `
             </td>
             <td>
               <div
-                class="c29"
+                class="c35 c36"
                 kind="secondary"
               >
                 cluster: one
               </div>
               <div
-                class="c29"
+                class="c35 c36"
                 kind="secondary"
               >
                 kernel: 4.15.0-51-generic
               </div>
               <div
-                class="c29"
+                class="c35 c36"
                 kind="secondary"
               >
                 lortavma: one
               </div>
               <div
-                class="c29"
+                class="c35 c36"
                 kind="secondary"
               >
                 lenisret: 4.15.0-51-generic
               </div>
               <div
-                class="c29"
+                class="c35 c36"
                 kind="secondary"
               >
                 lofdevod: one
               </div>
               <div
-                class="c29"
+                class="c35 c36"
                 kind="secondary"
               >
                 llhurlaz: 4.15.0-51-generic
@@ -1191,13 +1148,13 @@ exports[`render DocumentNodes 1`] = `
               align="right"
             >
               <button
-                class="c30"
+                class="c37"
                 height="24px"
                 kind="border"
               >
                 CONNECT
                 <span
-                  class="c24 c31 icon icon-caret-down "
+                  class="c31 c38 icon icon-caret-down "
                   color="text.secondary"
                   font-size="2"
                 />
@@ -1207,35 +1164,35 @@ exports[`render DocumentNodes 1`] = `
         </tbody>
       </table>
       <nav
-        class="c32"
+        class="c39"
       >
         <div
-          class="c33"
+          class="c17 c40"
           width="100%"
         >
           <div
-            class="c34"
+            class="c41 c20"
           />
           <div
-            class="c26"
+            class="c19 c1"
           >
             <button
-              class="c35"
+              class="c42"
               disabled=""
               title="Previous page"
             >
               <span
-                class="c24 c36 icon icon-arrow-left-circle "
+                class="c31 c43 icon icon-arrow-left-circle "
                 color="light"
                 font-size="3"
               />
             </button>
             <button
-              class="c35"
+              class="c44"
               title="Next page"
             >
               <span
-                class="c24 c36 icon icon-arrow-right-circle "
+                class="c31 c43 icon icon-arrow-right-circle "
                 color="light"
                 font-size="3"
               />

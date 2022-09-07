@@ -1,6 +1,6 @@
 import React, { Fragment, useMemo, useState } from 'react';
 import { debounce } from 'lodash';
-import styled from 'styled-components';
+import styled from 'design/styled';
 
 import { prepareVirtualScrollItems } from './prepareVirtualScrollItems';
 import { VirtualScrollProps } from './types';
@@ -98,7 +98,11 @@ export function useVirtualScrollNodes<T>(props: VirtualScrollProps<T>) {
   };
 }
 
-const EmptyNode = styled.div`
+interface EmptyNodeProps {
+  height: number;
+}
+
+const EmptyNode = styled.div<EmptyNodeProps>`
   width: 100%;
   height: ${props => props.height + 'px'};
 `;

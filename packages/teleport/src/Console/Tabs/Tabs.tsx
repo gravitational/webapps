@@ -15,8 +15,7 @@ limitations under the License.
 */
 
 import React from 'react';
-import styled from 'styled-components';
-import { typography } from 'design/system';
+import styled, { typography } from 'design/styled';
 
 import * as Icons from 'design/Icon';
 import { Box, ButtonIcon } from 'design';
@@ -108,14 +107,13 @@ type Props = {
   [index: string]: any;
 };
 
-const StyledTabs = styled(Box)`
+const StyledTabs = styled(Box, [typography])`
   background: ${colors.terminalDark};
   min-height: 32px;
   border-radius: 4px;
   display: flex;
-  flex-wrap: no-wrap;
+  flex-wrap: nowrap;
   align-items: center;
   flex-shrink: 0;
   overflow: hidden;
-  ${typography}
 `;

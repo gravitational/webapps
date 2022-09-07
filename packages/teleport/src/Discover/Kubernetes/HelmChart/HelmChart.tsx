@@ -15,10 +15,10 @@
  */
 
 import React, { useState, Suspense } from 'react';
-import styled from 'styled-components';
+import styled from 'design/styled';
 import { Text, Box, Link, ButtonSecondary } from 'design';
 import * as Icons from 'design/Icon';
-import FieldInput from 'shared/components/FieldInput';
+import { FieldInput } from 'shared/components/FieldInput';
 import Validation, { Validator } from 'shared/components/Validation';
 import { requiredField } from 'shared/components/Validation/rules';
 

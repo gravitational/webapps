@@ -17,7 +17,7 @@ import React, { useState, useMemo } from 'react';
 import { Flex, ButtonPrimary, Box } from 'design';
 
 import Validation, { Validator } from 'shared/components/Validation';
-import FieldInput from 'shared/components/FieldInput';
+import { FieldInput } from 'shared/components/FieldInput';
 import FieldSelect from 'shared/components/FieldSelect';
 import {
   requiredToken,

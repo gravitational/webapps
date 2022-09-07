@@ -21,7 +21,7 @@ import { debounce } from 'lodash';
 
 import { IPtyProcess } from 'teleterm/sharedProcess/ptyHost';
 import Logger from 'teleterm/logger';
-import theme from 'teleterm/ui/ThemeProvider/theme';
+import { theme } from 'teleterm/ui/ThemeProvider/theme';
 
 const WINDOW_RESIZE_DEBOUNCE_DELAY = 200;
 

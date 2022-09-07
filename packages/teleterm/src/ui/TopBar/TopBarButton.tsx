@@ -1,6 +1,10 @@
-import styled from 'styled-components';
+import styled from 'design/styled';
 
-export const TopBarButton = styled.button`
+interface ContainerProps {
+  isOpened: boolean;
+}
+
+export const TopBarButton = styled.button<ContainerProps>`
   display: flex;
   font-family: inherit;
   background: inherit;

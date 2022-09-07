@@ -1,5 +1,5 @@
 import React from 'react';
-import styled from 'styled-components';
+import styled from 'design/styled';
 import { Notification } from 'shared/components/Notification';
 import { Info, Warning } from 'design/Icon';
 

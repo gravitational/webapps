@@ -18,7 +18,7 @@ import React from 'react';
 import { Card, Box, Text, Flex } from 'design';
 import * as Icons from 'design/Icon';
 
-import styled from 'styled-components';
+import styled from 'design/styled';
 
 import { FeatureBox } from 'teleport/components/Layout';
 import useTeleport from 'teleport/useTeleport';
@@ -198,8 +198,11 @@ const StyledSupportLink = styled.a.attrs({
   margin-bottom: 8px;
   padding: 4px 8px;
   transition: all 0.3s;
-  ${props => props.theme.typography.body2}
-  &:hover, &:focus {
+  font-weight: ${props => props.theme.typography.body2.fontWeight};
+  font-size: ${props => props.theme.typography.body2.fontSize};
+  line-height: ${props => props.theme.typography.body2.lineHeight};
+  &:hover,
+  &:focus {
     background: ${props => props.theme.colors.primary.lighter};
   }
 `;

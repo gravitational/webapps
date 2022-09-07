@@ -1,5 +1,5 @@
 import React from 'react';
-import styled from 'styled-components';
+import styled from 'design/styled';
 
 import { DesktopService } from 'teleport/Discover/Desktop/DiscoverDesktops/DesktopService';
 import { WindowsDesktopService } from 'teleport/services/desktops';

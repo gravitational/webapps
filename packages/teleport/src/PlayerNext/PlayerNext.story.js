@@ -15,7 +15,7 @@ limitations under the License.
 */
 
 import React from 'react';
-import styled from 'styled-components';
+import styled from 'design/styled';
 
 import TtyPlayer from 'teleport/lib/term/ttyPlayer';
 import TtyPlayerEventProvider from 'teleport/lib/term/ttyPlayerEventProvider';

@@ -1,6 +1,6 @@
 import React, { Fragment, ReactNode, useMemo, useState } from 'react';
 import { Input } from 'design';
-import styled from 'styled-components';
+import styled from 'design/styled';
 
 interface FilterableListProps<T> {
   items: T[];

@@ -16,10 +16,11 @@ limitations under the License.
 
 import React from 'react';
 
-import TopNav from './TopNav';
-import TopNavItem from './TopNavItem';
+import { MenuItem } from '../Menu/MenuItem';
+
+import { TopNav } from './TopNav';
+import { TopNavItem } from './TopNavItem';
 import TopNavUserMenu from './TopNavUserMenu';
-import MenuItem from './../Menu/MenuItem';
 
 export default {
   title: 'Design/TopNav',

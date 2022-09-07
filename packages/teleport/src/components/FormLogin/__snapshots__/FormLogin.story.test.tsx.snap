@@ -1,22 +1,42 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`auth2faType: off 1`] = `
-.c2 {
+.c0 {
+  box-sizing: border-box;
+  background-color: #222C59;
+  margin-top: 32px;
+  margin-bottom: 32px;
+  margin-left: auto;
+  margin-right: auto;
+  padding-bottom: 24px;
+  width: 464px;
+}
+
+.c3 {
   box-sizing: border-box;
 }
 
 .c5 {
   box-sizing: border-box;
+  border-bottom-left-radius: 8px;
+  border-bottom-right-radius: 8px;
+  padding-left: 32px;
+  padding-right: 32px;
+  padding-top: 16px;
+}
+
+.c7 {
+  box-sizing: border-box;
   margin-bottom: 16px;
 }
 
-.c8 {
+.c10 {
   box-sizing: border-box;
-  margin-bottom: 0px;
+  margin-bottom: 0;
   width: 100%;
 }
 
-.c9 {
+.c11 {
   line-height: 1.5;
   margin: 0;
   display: inline-flex;
@@ -40,43 +60,41 @@ exports[`auth2faType: off 1`] = `
   min-height: 40px;
   font-size: 12px;
   padding: 0px 40px;
-  margin-bottom: 4px;
   margin-top: 16px;
+  margin-bottom: 4px;
   width: 100%;
 }
 
-.c9:active {
+.c11:active {
   opacity: 0.56;
 }
 
-.c9:hover,
-.c9:focus {
+.c11:hover,
+.c11:focus {
   background: #651FFF;
 }
 
-.c9:active {
+.c11:active {
   background: #354AA4;
 }
 
-.c9:disabled {
+.c11:disabled {
   background: rgba(255,255,255,0.12);
   color: rgba(255,255,255,0.3);
 }
 
-.c0 {
-  box-sizing: border-box;
-  margin-left: auto;
-  margin-right: auto;
-  margin-top: 32px;
-  margin-bottom: 32px;
-  padding-bottom: 24px;
-  width: 464px;
-  background-color: #222C59;
+.c1 {
   box-shadow: 0 4px 16px rgba(0,0,0,0.24);
   border-radius: 8px;
 }
 
-.c7 {
+.c6 {
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+}
+
+.c9 {
   appearance: none;
   border: none;
   border-radius: 4px;
@@ -88,58 +106,45 @@ exports[`auth2faType: off 1`] = `
   padding: 0 16px;
   outline: none;
   width: 100%;
-  color: #324148;
   background-color: #FFFFFF;
+  color: #324148;
   margin-top: 4px;
 }
 
-.c7::-ms-clear {
+.c9::-ms-clear {
   display: none;
 }
 
-.c7::placeholder {
+.c9::placeholder {
   opacity: 0.4;
 }
 
-.c7:read-only {
+.c9:read-only {
   cursor: not-allowed;
 }
 
-.c6 {
+.c8 {
   color: #FFFFFF;
   display: block;
   font-size: 11px;
   font-weight: 500;
   text-transform: uppercase;
   width: 100%;
-  margin-bottom: 0px;
+  margin-bottom: 0;
 }
 
-.c1 {
+.c2 {
   overflow: hidden;
   text-overflow: ellipsis;
   font-weight: 300;
   font-size: 22px;
   line-height: 32px;
-  margin: 0px;
   padding-top: 24px;
   color: #FFFFFF;
   text-align: center;
 }
 
-.c4 {
-  box-sizing: border-box;
-  padding-top: 16px;
-  padding-left: 32px;
-  padding-right: 32px;
-  border-bottom-right-radius: 8px;
-  border-bottom-left-radius: 8px;
-  display: flex;
-  justify-content: center;
-  flex-direction: column;
-}
-
-.c3 .prev-slide-enter {
+.c4 .prev-slide-enter {
   transform: translateX(-100%);
   opacity: 0;
   position: absolute;
@@ -149,19 +154,19 @@ exports[`auth2faType: off 1`] = `
   bottom: 0;
 }
 
-.c3 .prev-slide-enter-active {
+.c4 .prev-slide-enter-active {
   transform: translateX(0);
   opacity: 1;
   transition: transform 500ms ease;
 }
 
-.c3 .prev-slide-exit {
+.c4 .prev-slide-exit {
   transform: translateX(100%);
   opacity: 1;
   transition: transform 500ms ease;
 }
 
-.c3 .next-slide-enter {
+.c4 .next-slide-enter {
   transform: translateX(100%);
   opacity: 0;
   position: absolute;
@@ -171,53 +176,52 @@ exports[`auth2faType: off 1`] = `
   bottom: 0;
 }
 
-.c3 .next-slide-enter-active {
+.c4 .next-slide-enter-active {
   transform: translateX(0);
   opacity: 1;
   transition: transform 500ms ease;
 }
 
-.c3 .next-slide-exit {
+.c4 .next-slide-exit {
   transform: translateX(-100%);
   opacity: 1;
   transition: transform 500ms ease;
 }
 
 <div
-  class="c0"
+  class="c0 c1"
   width="464"
 >
   <div
-    class="c1"
+    class="c2"
     color="light"
   >
     Custom Title
   </div>
   <div
-    class="c2"
+    class="c3"
     style="position: relative; height: auto; transition: height 500ms ease;"
   >
     <div
-      class="c3"
+      class="c4"
     >
       <div
-        class="c2"
+        class="c3"
       >
         <form
-          class="c4"
+          class="c5 c6"
           data-testid="userpassword"
         >
           <div
-            class="c5"
+            class="c7"
           >
             <label
-              class="c6"
-              font-size="0"
+              class="c8"
             >
               Username
               <input
                 autocomplete="off"
-                class="c7"
+                class="c9"
                 color="text.onLight"
                 inputmode="text"
                 placeholder="Username"
@@ -227,20 +231,19 @@ exports[`auth2faType: off 1`] = `
             </label>
           </div>
           <div
-            class="c5"
+            class="c7"
           >
             <div
-              class="c8"
+              class="c10"
               width="100%"
             >
               <label
-                class="c6"
-                font-size="0"
+                class="c8"
               >
                 Password
                 <input
                   autocomplete="off"
-                  class="c7"
+                  class="c9"
                   color="text.onLight"
                   inputmode="text"
                   placeholder="Password"
@@ -251,7 +254,7 @@ exports[`auth2faType: off 1`] = `
             </div>
           </div>
           <button
-            class="c9"
+            class="c11"
             kind="primary"
             type="submit"
             width="100%"
@@ -266,30 +269,50 @@ exports[`auth2faType: off 1`] = `
 `;
 
 exports[`auth2faType: optional rendering 1`] = `
-.c2 {
+.c0 {
+  box-sizing: border-box;
+  background-color: #222C59;
+  margin-top: 32px;
+  margin-bottom: 32px;
+  margin-left: auto;
+  margin-right: auto;
+  padding-bottom: 24px;
+  width: 464px;
+}
+
+.c3 {
   box-sizing: border-box;
 }
 
 .c5 {
   box-sizing: border-box;
-  margin-bottom: 16px;
+  border-bottom-left-radius: 8px;
+  border-bottom-right-radius: 8px;
+  padding-left: 32px;
+  padding-right: 32px;
+  padding-top: 16px;
 }
 
-.c8 {
+.c7 {
   box-sizing: border-box;
-  margin-bottom: 0px;
-  width: 100%;
+  margin-bottom: 16px;
 }
 
 .c10 {
   box-sizing: border-box;
-  max-width: 50%;
-  margin-bottom: 0px;
-  margin-right: 16px;
+  margin-bottom: 0;
   width: 100%;
 }
 
-.c13 {
+.c12 {
+  box-sizing: border-box;
+  margin-bottom: 0;
+  margin-right: 16px;
+  max-width: 50%;
+  width: 100%;
+}
+
+.c15 {
   line-height: 1.5;
   margin: 0;
   display: inline-flex;
@@ -313,43 +336,46 @@ exports[`auth2faType: optional rendering 1`] = `
   min-height: 40px;
   font-size: 12px;
   padding: 0px 40px;
-  margin-bottom: 4px;
   margin-top: 16px;
+  margin-bottom: 4px;
   width: 100%;
 }
 
-.c13:active {
+.c15:active {
   opacity: 0.56;
 }
 
-.c13:hover,
-.c13:focus {
+.c15:hover,
+.c15:focus {
   background: #651FFF;
 }
 
-.c13:active {
+.c15:active {
   background: #354AA4;
 }
 
-.c13:disabled {
+.c15:disabled {
   background: rgba(255,255,255,0.12);
   color: rgba(255,255,255,0.3);
 }
 
-.c0 {
-  box-sizing: border-box;
-  margin-left: auto;
-  margin-right: auto;
-  margin-top: 32px;
-  margin-bottom: 32px;
-  padding-bottom: 24px;
-  width: 464px;
-  background-color: #222C59;
+.c1 {
   box-shadow: 0 4px 16px rgba(0,0,0,0.24);
   border-radius: 8px;
 }
 
-.c7 {
+.c6 {
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+}
+
+.c11 {
+  display: flex;
+  align-items: flex-end;
+}
+
+.c9 {
   appearance: none;
   border: none;
   border-radius: 4px;
@@ -361,34 +387,34 @@ exports[`auth2faType: optional rendering 1`] = `
   padding: 0 16px;
   outline: none;
   width: 100%;
-  color: #324148;
   background-color: #FFFFFF;
+  color: #324148;
   margin-top: 4px;
 }
 
-.c7::-ms-clear {
+.c9::-ms-clear {
   display: none;
 }
 
-.c7::placeholder {
+.c9::placeholder {
   opacity: 0.4;
 }
 
-.c7:read-only {
+.c9:read-only {
   cursor: not-allowed;
 }
 
-.c6 {
+.c8 {
   color: #FFFFFF;
   display: block;
   font-size: 11px;
   font-weight: 500;
   text-transform: uppercase;
   width: 100%;
-  margin-bottom: 0px;
+  margin-bottom: 0;
 }
 
-.c11 {
+.c13 {
   color: #FFFFFF;
   display: block;
   font-size: 11px;
@@ -398,37 +424,18 @@ exports[`auth2faType: optional rendering 1`] = `
   margin-bottom: 4px;
 }
 
-.c1 {
+.c2 {
   overflow: hidden;
   text-overflow: ellipsis;
   font-weight: 300;
   font-size: 22px;
   line-height: 32px;
-  margin: 0px;
   padding-top: 24px;
   color: #FFFFFF;
   text-align: center;
 }
 
-.c4 {
-  box-sizing: border-box;
-  padding-top: 16px;
-  padding-left: 32px;
-  padding-right: 32px;
-  border-bottom-right-radius: 8px;
-  border-bottom-left-radius: 8px;
-  display: flex;
-  justify-content: center;
-  flex-direction: column;
-}
-
-.c9 {
-  box-sizing: border-box;
-  display: flex;
-  align-items: flex-end;
-}
-
-.c3 .prev-slide-enter {
+.c4 .prev-slide-enter {
   transform: translateX(-100%);
   opacity: 0;
   position: absolute;
@@ -438,19 +445,19 @@ exports[`auth2faType: optional rendering 1`] = `
   bottom: 0;
 }
 
-.c3 .prev-slide-enter-active {
+.c4 .prev-slide-enter-active {
   transform: translateX(0);
   opacity: 1;
   transition: transform 500ms ease;
 }
 
-.c3 .prev-slide-exit {
+.c4 .prev-slide-exit {
   transform: translateX(100%);
   opacity: 1;
   transition: transform 500ms ease;
 }
 
-.c3 .next-slide-enter {
+.c4 .next-slide-enter {
   transform: translateX(100%);
   opacity: 0;
   position: absolute;
@@ -460,19 +467,19 @@ exports[`auth2faType: optional rendering 1`] = `
   bottom: 0;
 }
 
-.c3 .next-slide-enter-active {
+.c4 .next-slide-enter-active {
   transform: translateX(0);
   opacity: 1;
   transition: transform 500ms ease;
 }
 
-.c3 .next-slide-exit {
+.c4 .next-slide-exit {
   transform: translateX(-100%);
   opacity: 1;
   transition: transform 500ms ease;
 }
 
-.c12 .react-select-container {
+.c14 .react-select-container {
   box-shadow: inset 0 2px 4px rgba(0,0,0,0.24);
   box-sizing: border-box;
   border: none;
@@ -486,8 +493,8 @@ exports[`auth2faType: optional rendering 1`] = `
   border-radius: 4px;
 }
 
-.c12 .react-select__control,
-.c12 .react-select__control--is-focused {
+.c14 .react-select__control,
+.c14 .react-select__control--is-focused {
   min-height: 40px;
   height: 40px;
   background-color: transparent;
@@ -498,86 +505,85 @@ exports[`auth2faType: optional rendering 1`] = `
   box-shadow: none;
 }
 
-.c12 .react-select__control:hover,
-.c12 .react-select__control--is-focused:hover {
+.c14 .react-select__control:hover,
+.c14 .react-select__control--is-focused:hover {
   border-color: transparent;
   cursor: pointer;
 }
 
-.c12 .react-select__option:hover {
+.c14 .react-select__option:hover {
   cursor: pointer;
   background-color: #eceff1;
 }
 
-.c12 .react-select__option--is-focused {
+.c14 .react-select__option--is-focused {
   background-color: #eceff1;
 }
 
-.c12 .react-select__option--is-selected {
+.c14 .react-select__option--is-selected {
   background-color: #cfd8dc;
   color: inherit;
 }
 
-.c12 .react-select__option--is-selected:hover {
+.c14 .react-select__option--is-selected:hover {
   background-color: #cfd8dc;
 }
 
-.c12 .react-select__menu {
+.c14 .react-select__menu {
   margin-top: 0px;
 }
 
-.c12 .react-select__indicator-separator {
+.c14 .react-select__indicator-separator {
   display: none;
 }
 
-.c12 .react-select__loading-indicator {
+.c14 .react-select__loading-indicator {
   display: none;
 }
 
-.c12 .react-select--is-disabled .react-select__single-value,
-.c12 .react-select--is-disabled .react-select__placeholder {
+.c14 .react-select--is-disabled .react-select__single-value,
+.c14 .react-select--is-disabled .react-select__placeholder {
   color: rgba(0,0,0,0.24);
 }
 
-.c12 .react-select--is-disabled .react-select__indicator {
+.c14 .react-select--is-disabled .react-select__indicator {
   color: rgba(0,0,0,0.14);
 }
 
 <div
-  class="c0"
+  class="c0 c1"
   width="464"
 >
   <div
-    class="c1"
+    class="c2"
     color="light"
   >
     Custom Title
   </div>
   <div
-    class="c2"
+    class="c3"
     style="position: relative; height: auto; transition: height 500ms ease;"
   >
     <div
-      class="c3"
+      class="c4"
     >
       <div
-        class="c2"
+        class="c3"
       >
         <form
-          class="c4"
+          class="c5 c6"
           data-testid="userpassword"
         >
           <div
-            class="c5"
+            class="c7"
           >
             <label
-              class="c6"
-              font-size="0"
+              class="c8"
             >
               Username
               <input
                 autocomplete="off"
-                class="c7"
+                class="c9"
                 color="text.onLight"
                 inputmode="text"
                 placeholder="Username"
@@ -587,20 +593,19 @@ exports[`auth2faType: optional rendering 1`] = `
             </label>
           </div>
           <div
-            class="c5"
+            class="c7"
           >
             <div
-              class="c8"
+              class="c10"
               width="100%"
             >
               <label
-                class="c6"
-                font-size="0"
+                class="c8"
               >
                 Password
                 <input
                   autocomplete="off"
-                  class="c7"
+                  class="c9"
                   color="text.onLight"
                   inputmode="text"
                   placeholder="Password"
@@ -611,25 +616,24 @@ exports[`auth2faType: optional rendering 1`] = `
             </div>
           </div>
           <div
-            class="c5"
+            class="c7"
           >
             <div
-              class="c9"
+              class="c3 c11"
             >
               <div
-                class="c10"
+                class="c12"
                 data-testid="mfa-select"
                 width="100%"
               >
                 <label
-                  class="c11"
-                  font-size="0"
+                  class="c13"
                   for="select"
                 >
                   Two-factor type
                 </label>
                 <div
-                  class="c12"
+                  class="c14"
                 >
                   <div
                     class="react-select-container css-2b097c-container"
@@ -685,7 +689,7 @@ exports[`auth2faType: optional rendering 1`] = `
             </div>
           </div>
           <button
-            class="c13"
+            class="c15"
             kind="primary"
             type="submit"
             width="100%"
@@ -700,36 +704,56 @@ exports[`auth2faType: optional rendering 1`] = `
 `;
 
 exports[`auth2faType: otp rendering 1`] = `
-.c2 {
+.c0 {
+  box-sizing: border-box;
+  background-color: #222C59;
+  margin-top: 32px;
+  margin-bottom: 32px;
+  margin-left: auto;
+  margin-right: auto;
+  padding-bottom: 24px;
+  width: 464px;
+}
+
+.c3 {
   box-sizing: border-box;
 }
 
 .c5 {
   box-sizing: border-box;
-  margin-bottom: 16px;
+  border-bottom-left-radius: 8px;
+  border-bottom-right-radius: 8px;
+  padding-left: 32px;
+  padding-right: 32px;
+  padding-top: 16px;
 }
 
-.c8 {
+.c7 {
   box-sizing: border-box;
-  margin-bottom: 0px;
-  width: 100%;
+  margin-bottom: 16px;
 }
 
 .c10 {
   box-sizing: border-box;
-  max-width: 50%;
-  margin-bottom: 0px;
-  margin-right: 16px;
+  margin-bottom: 0;
   width: 100%;
 }
 
-.c13 {
+.c12 {
   box-sizing: border-box;
-  margin-bottom: 0px;
+  margin-bottom: 0;
+  margin-right: 16px;
+  max-width: 50%;
+  width: 100%;
+}
+
+.c15 {
+  box-sizing: border-box;
+  margin-bottom: 0;
   width: 50%;
 }
 
-.c14 {
+.c16 {
   line-height: 1.5;
   margin: 0;
   display: inline-flex;
@@ -753,43 +777,46 @@ exports[`auth2faType: otp rendering 1`] = `
   min-height: 40px;
   font-size: 12px;
   padding: 0px 40px;
-  margin-bottom: 4px;
   margin-top: 16px;
+  margin-bottom: 4px;
   width: 100%;
 }
 
-.c14:active {
+.c16:active {
   opacity: 0.56;
 }
 
-.c14:hover,
-.c14:focus {
+.c16:hover,
+.c16:focus {
   background: #651FFF;
 }
 
-.c14:active {
+.c16:active {
   background: #354AA4;
 }
 
-.c14:disabled {
+.c16:disabled {
   background: rgba(255,255,255,0.12);
   color: rgba(255,255,255,0.3);
 }
 
-.c0 {
-  box-sizing: border-box;
-  margin-left: auto;
-  margin-right: auto;
-  margin-top: 32px;
-  margin-bottom: 32px;
-  padding-bottom: 24px;
-  width: 464px;
-  background-color: #222C59;
+.c1 {
   box-shadow: 0 4px 16px rgba(0,0,0,0.24);
   border-radius: 8px;
 }
 
-.c7 {
+.c6 {
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+}
+
+.c11 {
+  display: flex;
+  align-items: flex-end;
+}
+
+.c9 {
   appearance: none;
   border: none;
   border-radius: 4px;
@@ -801,34 +828,34 @@ exports[`auth2faType: otp rendering 1`] = `
   padding: 0 16px;
   outline: none;
   width: 100%;
-  color: #324148;
   background-color: #FFFFFF;
+  color: #324148;
   margin-top: 4px;
 }
 
-.c7::-ms-clear {
+.c9::-ms-clear {
   display: none;
 }
 
-.c7::placeholder {
+.c9::placeholder {
   opacity: 0.4;
 }
 
-.c7:read-only {
+.c9:read-only {
   cursor: not-allowed;
 }
 
-.c6 {
+.c8 {
   color: #FFFFFF;
   display: block;
   font-size: 11px;
   font-weight: 500;
   text-transform: uppercase;
   width: 100%;
-  margin-bottom: 0px;
+  margin-bottom: 0;
 }
 
-.c11 {
+.c13 {
   color: #FFFFFF;
   display: block;
   font-size: 11px;
@@ -838,37 +865,18 @@ exports[`auth2faType: otp rendering 1`] = `
   margin-bottom: 4px;
 }
 
-.c1 {
+.c2 {
   overflow: hidden;
   text-overflow: ellipsis;
   font-weight: 300;
   font-size: 22px;
   line-height: 32px;
-  margin: 0px;
   padding-top: 24px;
   color: #FFFFFF;
   text-align: center;
 }
 
-.c4 {
-  box-sizing: border-box;
-  padding-top: 16px;
-  padding-left: 32px;
-  padding-right: 32px;
-  border-bottom-right-radius: 8px;
-  border-bottom-left-radius: 8px;
-  display: flex;
-  justify-content: center;
-  flex-direction: column;
-}
-
-.c9 {
-  box-sizing: border-box;
-  display: flex;
-  align-items: flex-end;
-}
-
-.c3 .prev-slide-enter {
+.c4 .prev-slide-enter {
   transform: translateX(-100%);
   opacity: 0;
   position: absolute;
@@ -878,19 +886,19 @@ exports[`auth2faType: otp rendering 1`] = `
   bottom: 0;
 }
 
-.c3 .prev-slide-enter-active {
+.c4 .prev-slide-enter-active {
   transform: translateX(0);
   opacity: 1;
   transition: transform 500ms ease;
 }
 
-.c3 .prev-slide-exit {
+.c4 .prev-slide-exit {
   transform: translateX(100%);
   opacity: 1;
   transition: transform 500ms ease;
 }
 
-.c3 .next-slide-enter {
+.c4 .next-slide-enter {
   transform: translateX(100%);
   opacity: 0;
   position: absolute;
@@ -900,19 +908,19 @@ exports[`auth2faType: otp rendering 1`] = `
   bottom: 0;
 }
 
-.c3 .next-slide-enter-active {
+.c4 .next-slide-enter-active {
   transform: translateX(0);
   opacity: 1;
   transition: transform 500ms ease;
 }
 
-.c3 .next-slide-exit {
+.c4 .next-slide-exit {
   transform: translateX(-100%);
   opacity: 1;
   transition: transform 500ms ease;
 }
 
-.c12 .react-select-container {
+.c14 .react-select-container {
   box-shadow: inset 0 2px 4px rgba(0,0,0,0.24);
   box-sizing: border-box;
   border: none;
@@ -926,8 +934,8 @@ exports[`auth2faType: otp rendering 1`] = `
   border-radius: 4px;
 }
 
-.c12 .react-select__control,
-.c12 .react-select__control--is-focused {
+.c14 .react-select__control,
+.c14 .react-select__control--is-focused {
   min-height: 40px;
   height: 40px;
   background-color: transparent;
@@ -938,86 +946,85 @@ exports[`auth2faType: otp rendering 1`] = `
   box-shadow: none;
 }
 
-.c12 .react-select__control:hover,
-.c12 .react-select__control--is-focused:hover {
+.c14 .react-select__control:hover,
+.c14 .react-select__control--is-focused:hover {
   border-color: transparent;
   cursor: pointer;
 }
 
-.c12 .react-select__option:hover {
+.c14 .react-select__option:hover {
   cursor: pointer;
   background-color: #eceff1;
 }
 
-.c12 .react-select__option--is-focused {
+.c14 .react-select__option--is-focused {
   background-color: #eceff1;
 }
 
-.c12 .react-select__option--is-selected {
+.c14 .react-select__option--is-selected {
   background-color: #cfd8dc;
   color: inherit;
 }
 
-.c12 .react-select__option--is-selected:hover {
+.c14 .react-select__option--is-selected:hover {
   background-color: #cfd8dc;
 }
 
-.c12 .react-select__menu {
+.c14 .react-select__menu {
   margin-top: 0px;
 }
 
-.c12 .react-select__indicator-separator {
+.c14 .react-select__indicator-separator {
   display: none;
 }
 
-.c12 .react-select__loading-indicator {
+.c14 .react-select__loading-indicator {
   display: none;
 }
 
-.c12 .react-select--is-disabled .react-select__single-value,
-.c12 .react-select--is-disabled .react-select__placeholder {
+.c14 .react-select--is-disabled .react-select__single-value,
+.c14 .react-select--is-disabled .react-select__placeholder {
   color: rgba(0,0,0,0.24);
 }
 
-.c12 .react-select--is-disabled .react-select__indicator {
+.c14 .react-select--is-disabled .react-select__indicator {
   color: rgba(0,0,0,0.14);
 }
 
 <div
-  class="c0"
+  class="c0 c1"
   width="464"
 >
   <div
-    class="c1"
+    class="c2"
     color="light"
   >
     Custom Title
   </div>
   <div
-    class="c2"
+    class="c3"
     style="position: relative; height: auto; transition: height 500ms ease;"
   >
     <div
-      class="c3"
+      class="c4"
     >
       <div
-        class="c2"
+        class="c3"
       >
         <form
-          class="c4"
+          class="c5 c6"
           data-testid="userpassword"
         >
           <div
-            class="c5"
+            class="c7"
           >
             <label
-              class="c6"
-              font-size="0"
+              class="c8"
             >
               Username
               <input
                 autocomplete="off"
-                class="c7"
+                class="c9"
                 color="text.onLight"
                 inputmode="text"
                 placeholder="Username"
@@ -1027,20 +1034,19 @@ exports[`auth2faType: otp rendering 1`] = `
             </label>
           </div>
           <div
-            class="c5"
+            class="c7"
           >
             <div
-              class="c8"
+              class="c10"
               width="100%"
             >
               <label
-                class="c6"
-                font-size="0"
+                class="c8"
               >
                 Password
                 <input
                   autocomplete="off"
-                  class="c7"
+                  class="c9"
                   color="text.onLight"
                   inputmode="text"
                   placeholder="Password"
@@ -1051,25 +1057,24 @@ exports[`auth2faType: otp rendering 1`] = `
             </div>
           </div>
           <div
-            class="c5"
+            class="c7"
           >
             <div
-              class="c9"
+              class="c3 c11"
             >
               <div
-                class="c10"
+                class="c12"
                 data-testid="mfa-select"
                 width="100%"
               >
                 <label
-                  class="c11"
-                  font-size="0"
+                  class="c13"
                   for="select"
                 >
                   Two-factor type
                 </label>
                 <div
-                  class="c12"
+                  class="c14"
                 >
                   <div
                     class="react-select-container css-2b097c-container"
@@ -1123,17 +1128,16 @@ exports[`auth2faType: otp rendering 1`] = `
                 </div>
               </div>
               <div
-                class="c13"
+                class="c15"
                 width="50%"
               >
                 <label
-                  class="c6"
-                  font-size="0"
+                  class="c8"
                 >
                   Authenticator code
                   <input
                     autocomplete="one-time-code"
-                    class="c7"
+                    class="c9"
                     color="text.onLight"
                     inputmode="numeric"
                     placeholder="123 456"
@@ -1145,7 +1149,7 @@ exports[`auth2faType: otp rendering 1`] = `
             </div>
           </div>
           <button
-            class="c14"
+            class="c16"
             kind="primary"
             type="submit"
             width="100%"
@@ -1160,30 +1164,50 @@ exports[`auth2faType: otp rendering 1`] = `
 `;
 
 exports[`auth2faType: webauthn rendering 1`] = `
-.c2 {
+.c0 {
+  box-sizing: border-box;
+  background-color: #222C59;
+  margin-top: 32px;
+  margin-bottom: 32px;
+  margin-left: auto;
+  margin-right: auto;
+  padding-bottom: 24px;
+  width: 464px;
+}
+
+.c3 {
   box-sizing: border-box;
 }
 
 .c5 {
   box-sizing: border-box;
-  margin-bottom: 16px;
+  border-bottom-left-radius: 8px;
+  border-bottom-right-radius: 8px;
+  padding-left: 32px;
+  padding-right: 32px;
+  padding-top: 16px;
 }
 
-.c8 {
+.c7 {
   box-sizing: border-box;
-  margin-bottom: 0px;
-  width: 100%;
+  margin-bottom: 16px;
 }
 
 .c10 {
   box-sizing: border-box;
-  max-width: 50%;
-  margin-bottom: 0px;
-  margin-right: 16px;
+  margin-bottom: 0;
   width: 100%;
 }
 
-.c13 {
+.c12 {
+  box-sizing: border-box;
+  margin-bottom: 0;
+  margin-right: 16px;
+  max-width: 50%;
+  width: 100%;
+}
+
+.c15 {
   line-height: 1.5;
   margin: 0;
   display: inline-flex;
@@ -1207,43 +1231,46 @@ exports[`auth2faType: webauthn rendering 1`] = `
   min-height: 40px;
   font-size: 12px;
   padding: 0px 40px;
-  margin-bottom: 4px;
   margin-top: 16px;
+  margin-bottom: 4px;
   width: 100%;
 }
 
-.c13:active {
+.c15:active {
   opacity: 0.56;
 }
 
-.c13:hover,
-.c13:focus {
+.c15:hover,
+.c15:focus {
   background: #651FFF;
 }
 
-.c13:active {
+.c15:active {
   background: #354AA4;
 }
 
-.c13:disabled {
+.c15:disabled {
   background: rgba(255,255,255,0.12);
   color: rgba(255,255,255,0.3);
 }
 
-.c0 {
-  box-sizing: border-box;
-  margin-left: auto;
-  margin-right: auto;
-  margin-top: 32px;
-  margin-bottom: 32px;
-  padding-bottom: 24px;
-  width: 464px;
-  background-color: #222C59;
+.c1 {
   box-shadow: 0 4px 16px rgba(0,0,0,0.24);
   border-radius: 8px;
 }
 
-.c7 {
+.c6 {
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+}
+
+.c11 {
+  display: flex;
+  align-items: flex-end;
+}
+
+.c9 {
   appearance: none;
   border: none;
   border-radius: 4px;
@@ -1255,34 +1282,34 @@ exports[`auth2faType: webauthn rendering 1`] = `
   padding: 0 16px;
   outline: none;
   width: 100%;
-  color: #324148;
   background-color: #FFFFFF;
+  color: #324148;
   margin-top: 4px;
 }
 
-.c7::-ms-clear {
+.c9::-ms-clear {
   display: none;
 }
 
-.c7::placeholder {
+.c9::placeholder {
   opacity: 0.4;
 }
 
-.c7:read-only {
+.c9:read-only {
   cursor: not-allowed;
 }
 
-.c6 {
+.c8 {
   color: #FFFFFF;
   display: block;
   font-size: 11px;
   font-weight: 500;
   text-transform: uppercase;
   width: 100%;
-  margin-bottom: 0px;
+  margin-bottom: 0;
 }
 
-.c11 {
+.c13 {
   color: #FFFFFF;
   display: block;
   font-size: 11px;
@@ -1292,37 +1319,18 @@ exports[`auth2faType: webauthn rendering 1`] = `
   margin-bottom: 4px;
 }
 
-.c1 {
+.c2 {
   overflow: hidden;
   text-overflow: ellipsis;
   font-weight: 300;
   font-size: 22px;
   line-height: 32px;
-  margin: 0px;
   padding-top: 24px;
   color: #FFFFFF;
   text-align: center;
 }
 
-.c4 {
-  box-sizing: border-box;
-  padding-top: 16px;
-  padding-left: 32px;
-  padding-right: 32px;
-  border-bottom-right-radius: 8px;
-  border-bottom-left-radius: 8px;
-  display: flex;
-  justify-content: center;
-  flex-direction: column;
-}
-
-.c9 {
-  box-sizing: border-box;
-  display: flex;
-  align-items: flex-end;
-}
-
-.c3 .prev-slide-enter {
+.c4 .prev-slide-enter {
   transform: translateX(-100%);
   opacity: 0;
   position: absolute;
@@ -1332,19 +1340,19 @@ exports[`auth2faType: webauthn rendering 1`] = `
   bottom: 0;
 }
 
-.c3 .prev-slide-enter-active {
+.c4 .prev-slide-enter-active {
   transform: translateX(0);
   opacity: 1;
   transition: transform 500ms ease;
 }
 
-.c3 .prev-slide-exit {
+.c4 .prev-slide-exit {
   transform: translateX(100%);
   opacity: 1;
   transition: transform 500ms ease;
 }
 
-.c3 .next-slide-enter {
+.c4 .next-slide-enter {
   transform: translateX(100%);
   opacity: 0;
   position: absolute;
@@ -1354,19 +1362,19 @@ exports[`auth2faType: webauthn rendering 1`] = `
   bottom: 0;
 }
 
-.c3 .next-slide-enter-active {
+.c4 .next-slide-enter-active {
   transform: translateX(0);
   opacity: 1;
   transition: transform 500ms ease;
 }
 
-.c3 .next-slide-exit {
+.c4 .next-slide-exit {
   transform: translateX(-100%);
   opacity: 1;
   transition: transform 500ms ease;
 }
 
-.c12 .react-select-container {
+.c14 .react-select-container {
   box-shadow: inset 0 2px 4px rgba(0,0,0,0.24);
   box-sizing: border-box;
   border: none;
@@ -1380,8 +1388,8 @@ exports[`auth2faType: webauthn rendering 1`] = `
   border-radius: 4px;
 }
 
-.c12 .react-select__control,
-.c12 .react-select__control--is-focused {
+.c14 .react-select__control,
+.c14 .react-select__control--is-focused {
   min-height: 40px;
   height: 40px;
   background-color: transparent;
@@ -1392,86 +1400,85 @@ exports[`auth2faType: webauthn rendering 1`] = `
   box-shadow: none;
 }
 
-.c12 .react-select__control:hover,
-.c12 .react-select__control--is-focused:hover {
+.c14 .react-select__control:hover,
+.c14 .react-select__control--is-focused:hover {
   border-color: transparent;
   cursor: pointer;
 }
 
-.c12 .react-select__option:hover {
+.c14 .react-select__option:hover {
   cursor: pointer;
   background-color: #eceff1;
 }
 
-.c12 .react-select__option--is-focused {
+.c14 .react-select__option--is-focused {
   background-color: #eceff1;
 }
 
-.c12 .react-select__option--is-selected {
+.c14 .react-select__option--is-selected {
   background-color: #cfd8dc;
   color: inherit;
 }
 
-.c12 .react-select__option--is-selected:hover {
+.c14 .react-select__option--is-selected:hover {
   background-color: #cfd8dc;
 }
 
-.c12 .react-select__menu {
+.c14 .react-select__menu {
   margin-top: 0px;
 }
 
-.c12 .react-select__indicator-separator {
+.c14 .react-select__indicator-separator {
   display: none;
 }
 
-.c12 .react-select__loading-indicator {
+.c14 .react-select__loading-indicator {
   display: none;
 }
 
-.c12 .react-select--is-disabled .react-select__single-value,
-.c12 .react-select--is-disabled .react-select__placeholder {
+.c14 .react-select--is-disabled .react-select__single-value,
+.c14 .react-select--is-disabled .react-select__placeholder {
   color: rgba(0,0,0,0.24);
 }
 
-.c12 .react-select--is-disabled .react-select__indicator {
+.c14 .react-select--is-disabled .react-select__indicator {
   color: rgba(0,0,0,0.14);
 }
 
 <div
-  class="c0"
+  class="c0 c1"
   width="464"
 >
   <div
-    class="c1"
+    class="c2"
     color="light"
   >
     Custom Title
   </div>
   <div
-    class="c2"
+    class="c3"
     style="position: relative; height: auto; transition: height 500ms ease;"
   >
     <div
-      class="c3"
+      class="c4"
     >
       <div
-        class="c2"
+        class="c3"
       >
         <form
-          class="c4"
+          class="c5 c6"
           data-testid="userpassword"
         >
           <div
-            class="c5"
+            class="c7"
           >
             <label
-              class="c6"
-              font-size="0"
+              class="c8"
             >
               Username
               <input
                 autocomplete="off"
-                class="c7"
+                class="c9"
                 color="text.onLight"
                 inputmode="text"
                 placeholder="Username"
@@ -1481,20 +1488,19 @@ exports[`auth2faType: webauthn rendering 1`] = `
             </label>
           </div>
           <div
-            class="c5"
+            class="c7"
           >
             <div
-              class="c8"
+              class="c10"
               width="100%"
             >
               <label
-                class="c6"
-                font-size="0"
+                class="c8"
               >
                 Password
                 <input
                   autocomplete="off"
-                  class="c7"
+                  class="c9"
                   color="text.onLight"
                   inputmode="text"
                   placeholder="Password"
@@ -1505,25 +1511,24 @@ exports[`auth2faType: webauthn rendering 1`] = `
             </div>
           </div>
           <div
-            class="c5"
+            class="c7"
           >
             <div
-              class="c9"
+              class="c3 c11"
             >
               <div
-                class="c10"
+                class="c12"
                 data-testid="mfa-select"
                 width="100%"
               >
                 <label
-                  class="c11"
-                  font-size="0"
+                  class="c13"
                   for="select"
                 >
                   Two-factor type
                 </label>
                 <div
-                  class="c12"
+                  class="c14"
                 >
                   <div
                     class="react-select-container css-2b097c-container"
@@ -1579,7 +1584,7 @@ exports[`auth2faType: webauthn rendering 1`] = `
             </div>
           </div>
           <button
-            class="c13"
+            class="c15"
             kind="primary"
             type="submit"
             width="100%"
@@ -1594,45 +1599,65 @@ exports[`auth2faType: webauthn rendering 1`] = `
 `;
 
 exports[`cloud auth2faType: on rendering 1`] = `
-.c2 {
+.c0 {
+  box-sizing: border-box;
+  background-color: #222C59;
+  margin-top: 32px;
+  margin-bottom: 32px;
+  margin-left: auto;
+  margin-right: auto;
+  padding-bottom: 24px;
+  width: 464px;
+}
+
+.c3 {
   box-sizing: border-box;
 }
 
 .c5 {
   box-sizing: border-box;
+  border-bottom-left-radius: 8px;
+  border-bottom-right-radius: 8px;
+  padding-left: 32px;
+  padding-right: 32px;
+  padding-top: 16px;
+}
+
+.c7 {
+  box-sizing: border-box;
   margin-bottom: 16px;
-}
-
-.c8 {
-  box-sizing: border-box;
-  margin-bottom: 4px;
-}
-
-.c9 {
-  box-sizing: border-box;
-  margin-bottom: 0px;
-  width: 100%;
 }
 
 .c10 {
   box-sizing: border-box;
-  text-align: right;
+  margin-bottom: 4px;
 }
 
-.c13 {
+.c11 {
   box-sizing: border-box;
-  margin-bottom: 8px;
-}
-
-.c15 {
-  box-sizing: border-box;
-  max-width: 50%;
-  margin-bottom: 0px;
-  margin-right: 16px;
+  margin-bottom: 0;
   width: 100%;
 }
 
 .c12 {
+  box-sizing: border-box;
+  text-align: right;
+}
+
+.c15 {
+  box-sizing: border-box;
+  margin-bottom: 8px;
+}
+
+.c17 {
+  box-sizing: border-box;
+  margin-bottom: 0;
+  margin-right: 16px;
+  max-width: 50%;
+  width: 100%;
+}
+
+.c13 {
   line-height: 1.5;
   margin: 0;
   display: inline-flex;
@@ -1658,25 +1683,25 @@ exports[`cloud auth2faType: on rendering 1`] = `
   padding: 0px 24px;
 }
 
-.c12:active {
+.c13:active {
   opacity: 0.56;
 }
 
-.c12:hover,
-.c12:focus {
+.c13:hover,
+.c13:focus {
   background: #651FFF;
 }
 
-.c12:active {
+.c13:active {
   background: #354AA4;
 }
 
-.c12:disabled {
+.c13:disabled {
   background: rgba(255,255,255,0.12);
   color: rgba(255,255,255,0.3);
 }
 
-.c18 {
+.c20 {
   line-height: 1.5;
   margin: 0;
   display: inline-flex;
@@ -1700,30 +1725,30 @@ exports[`cloud auth2faType: on rendering 1`] = `
   min-height: 40px;
   font-size: 12px;
   padding: 0px 40px;
-  margin-bottom: 4px;
   margin-top: 16px;
+  margin-bottom: 4px;
   width: 100%;
 }
 
-.c18:active {
+.c20:active {
   opacity: 0.56;
 }
 
-.c18:hover,
-.c18:focus {
+.c20:hover,
+.c20:focus {
   background: #651FFF;
 }
 
-.c18:active {
+.c20:active {
   background: #354AA4;
 }
 
-.c18:disabled {
+.c20:disabled {
   background: rgba(255,255,255,0.12);
   color: rgba(255,255,255,0.3);
 }
 
-.c11 {
+.c14 {
   color: #03a9f4;
   font-weight: normal;
   background: none;
@@ -1732,25 +1757,28 @@ exports[`cloud auth2faType: on rendering 1`] = `
   padding: 0 8px;
 }
 
-.c11:hover,
-.c11:focus {
+.c14:hover,
+.c14:focus {
   background: #222C59;
 }
 
-.c0 {
-  box-sizing: border-box;
-  margin-left: auto;
-  margin-right: auto;
-  margin-top: 32px;
-  margin-bottom: 32px;
-  padding-bottom: 24px;
-  width: 464px;
-  background-color: #222C59;
+.c1 {
   box-shadow: 0 4px 16px rgba(0,0,0,0.24);
   border-radius: 8px;
 }
 
-.c7 {
+.c6 {
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+}
+
+.c16 {
+  display: flex;
+  align-items: flex-end;
+}
+
+.c9 {
   appearance: none;
   border: none;
   border-radius: 4px;
@@ -1762,34 +1790,34 @@ exports[`cloud auth2faType: on rendering 1`] = `
   padding: 0 16px;
   outline: none;
   width: 100%;
-  color: #324148;
   background-color: #FFFFFF;
+  color: #324148;
   margin-top: 4px;
 }
 
-.c7::-ms-clear {
+.c9::-ms-clear {
   display: none;
 }
 
-.c7::placeholder {
+.c9::placeholder {
   opacity: 0.4;
 }
 
-.c7:read-only {
+.c9:read-only {
   cursor: not-allowed;
 }
 
-.c6 {
+.c8 {
   color: #FFFFFF;
   display: block;
   font-size: 11px;
   font-weight: 500;
   text-transform: uppercase;
   width: 100%;
-  margin-bottom: 0px;
+  margin-bottom: 0;
 }
 
-.c16 {
+.c18 {
   color: #FFFFFF;
   display: block;
   font-size: 11px;
@@ -1799,37 +1827,18 @@ exports[`cloud auth2faType: on rendering 1`] = `
   margin-bottom: 4px;
 }
 
-.c1 {
+.c2 {
   overflow: hidden;
   text-overflow: ellipsis;
   font-weight: 300;
   font-size: 22px;
   line-height: 32px;
-  margin: 0px;
   padding-top: 24px;
   color: #FFFFFF;
   text-align: center;
 }
 
-.c4 {
-  box-sizing: border-box;
-  padding-top: 16px;
-  padding-left: 32px;
-  padding-right: 32px;
-  border-bottom-right-radius: 8px;
-  border-bottom-left-radius: 8px;
-  display: flex;
-  justify-content: center;
-  flex-direction: column;
-}
-
-.c14 {
-  box-sizing: border-box;
-  display: flex;
-  align-items: flex-end;
-}
-
-.c3 .prev-slide-enter {
+.c4 .prev-slide-enter {
   transform: translateX(-100%);
   opacity: 0;
   position: absolute;
@@ -1839,19 +1848,19 @@ exports[`cloud auth2faType: on rendering 1`] = `
   bottom: 0;
 }
 
-.c3 .prev-slide-enter-active {
+.c4 .prev-slide-enter-active {
   transform: translateX(0);
   opacity: 1;
   transition: transform 500ms ease;
 }
 
-.c3 .prev-slide-exit {
+.c4 .prev-slide-exit {
   transform: translateX(100%);
   opacity: 1;
   transition: transform 500ms ease;
 }
 
-.c3 .next-slide-enter {
+.c4 .next-slide-enter {
   transform: translateX(100%);
   opacity: 0;
   position: absolute;
@@ -1861,19 +1870,19 @@ exports[`cloud auth2faType: on rendering 1`] = `
   bottom: 0;
 }
 
-.c3 .next-slide-enter-active {
+.c4 .next-slide-enter-active {
   transform: translateX(0);
   opacity: 1;
   transition: transform 500ms ease;
 }
 
-.c3 .next-slide-exit {
+.c4 .next-slide-exit {
   transform: translateX(-100%);
   opacity: 1;
   transition: transform 500ms ease;
 }
 
-.c17 .react-select-container {
+.c19 .react-select-container {
   box-shadow: inset 0 2px 4px rgba(0,0,0,0.24);
   box-sizing: border-box;
   border: none;
@@ -1887,8 +1896,8 @@ exports[`cloud auth2faType: on rendering 1`] = `
   border-radius: 4px;
 }
 
-.c17 .react-select__control,
-.c17 .react-select__control--is-focused {
+.c19 .react-select__control,
+.c19 .react-select__control--is-focused {
   min-height: 40px;
   height: 40px;
   background-color: transparent;
@@ -1899,86 +1908,85 @@ exports[`cloud auth2faType: on rendering 1`] = `
   box-shadow: none;
 }
 
-.c17 .react-select__control:hover,
-.c17 .react-select__control--is-focused:hover {
+.c19 .react-select__control:hover,
+.c19 .react-select__control--is-focused:hover {
   border-color: transparent;
   cursor: pointer;
 }
 
-.c17 .react-select__option:hover {
+.c19 .react-select__option:hover {
   cursor: pointer;
   background-color: #eceff1;
 }
 
-.c17 .react-select__option--is-focused {
+.c19 .react-select__option--is-focused {
   background-color: #eceff1;
 }
 
-.c17 .react-select__option--is-selected {
+.c19 .react-select__option--is-selected {
   background-color: #cfd8dc;
   color: inherit;
 }
 
-.c17 .react-select__option--is-selected:hover {
+.c19 .react-select__option--is-selected:hover {
   background-color: #cfd8dc;
 }
 
-.c17 .react-select__menu {
+.c19 .react-select__menu {
   margin-top: 0px;
 }
 
-.c17 .react-select__indicator-separator {
+.c19 .react-select__indicator-separator {
   display: none;
 }
 
-.c17 .react-select__loading-indicator {
+.c19 .react-select__loading-indicator {
   display: none;
 }
 
-.c17 .react-select--is-disabled .react-select__single-value,
-.c17 .react-select--is-disabled .react-select__placeholder {
+.c19 .react-select--is-disabled .react-select__single-value,
+.c19 .react-select--is-disabled .react-select__placeholder {
   color: rgba(0,0,0,0.24);
 }
 
-.c17 .react-select--is-disabled .react-select__indicator {
+.c19 .react-select--is-disabled .react-select__indicator {
   color: rgba(0,0,0,0.14);
 }
 
 <div
-  class="c0"
+  class="c0 c1"
   width="464"
 >
   <div
-    class="c1"
+    class="c2"
     color="light"
   >
     Teleport Cloud
   </div>
   <div
-    class="c2"
+    class="c3"
     style="position: relative; height: auto; transition: height 500ms ease;"
   >
     <div
-      class="c3"
+      class="c4"
     >
       <div
-        class="c2"
+        class="c3"
       >
         <form
-          class="c4"
+          class="c5 c6"
           data-testid="userpassword"
         >
           <div
-            class="c5"
+            class="c7"
           >
             <label
-              class="c6"
-              font-size="0"
+              class="c8"
             >
               Username
               <input
                 autocomplete="off"
-                class="c7"
+                class="c9"
                 color="text.onLight"
                 inputmode="text"
                 placeholder="Username"
@@ -1988,20 +1996,19 @@ exports[`cloud auth2faType: on rendering 1`] = `
             </label>
           </div>
           <div
-            class="c8"
+            class="c10"
           >
             <div
-              class="c9"
+              class="c11"
               width="100%"
             >
               <label
-                class="c6"
-                font-size="0"
+                class="c8"
               >
                 Password
                 <input
                   autocomplete="off"
-                  class="c7"
+                  class="c9"
                   color="text.onLight"
                   inputmode="text"
                   placeholder="Password"
@@ -2011,11 +2018,10 @@ exports[`cloud auth2faType: on rendering 1`] = `
               </label>
             </div>
             <div
-              class="c10"
+              class="c12"
             >
               <a
-                class="c11 c12"
-                kind="primary"
+                class="c13 c14"
                 style="padding: 0px; min-height: 0;"
               >
                 Forgot Password?
@@ -2023,25 +2029,24 @@ exports[`cloud auth2faType: on rendering 1`] = `
             </div>
           </div>
           <div
-            class="c13"
+            class="c15"
           >
             <div
-              class="c14"
+              class="c3 c16"
             >
               <div
-                class="c15"
+                class="c17"
                 data-testid="mfa-select"
                 width="100%"
               >
                 <label
-                  class="c16"
-                  font-size="0"
+                  class="c18"
                   for="select"
                 >
                   Two-factor type
                 </label>
                 <div
-                  class="c17"
+                  class="c19"
                 >
                   <div
                     class="react-select-container css-2b097c-container"
@@ -2096,15 +2101,14 @@ exports[`cloud auth2faType: on rendering 1`] = `
               </div>
             </div>
             <a
-              class="c11 c12"
-              kind="primary"
+              class="c13 c14"
               style="padding: 0px; min-height: 0;"
             >
               Lost Two-Factor Device?
             </a>
           </div>
           <button
-            class="c18"
+            class="c20"
             kind="primary"
             type="submit"
             width="100%"
@@ -2119,7 +2123,7 @@ exports[`cloud auth2faType: on rendering 1`] = `
 `;
 
 exports[`no login enabled 1`] = `
-.c2 {
+.c3 {
   display: flex;
   align-items: center;
   justify-content: center;
@@ -2132,71 +2136,73 @@ exports[`no login enabled 1`] = `
   overflow: auto;
   word-break: break-word;
   line-height: 1.5;
-  margin-top: 32px;
-  margin-bottom: 32px;
   background: #f50057;
   color: #FFFFFF;
+  margin-top: 32px;
+  margin-bottom: 32px;
 }
 
-.c2 a {
+.c3 a {
   color: #FFFFFF;
 }
 
 .c0 {
   box-sizing: border-box;
-  margin-left: auto;
-  margin-right: auto;
+  background-color: #222C59;
   margin-top: 32px;
   margin-bottom: 32px;
-  padding-bottom: 24px;
+  margin-left: auto;
+  margin-right: auto;
   padding-left: 32px;
   padding-right: 32px;
+  padding-bottom: 24px;
   width: 464px;
-  background-color: #222C59;
+}
+
+.c1 {
   box-shadow: 0 4px 16px rgba(0,0,0,0.24);
   border-radius: 8px;
 }
 
-.c1 {
+.c2 {
   overflow: hidden;
   text-overflow: ellipsis;
   font-weight: 300;
   font-size: 22px;
   line-height: 32px;
-  margin: 0px;
   padding-top: 24px;
   color: #FFFFFF;
   text-align: center;
 }
 
-.c3 {
+.c4 {
   overflow: hidden;
   text-overflow: ellipsis;
   font-weight: 300;
   font-size: 12px;
   line-height: 24px;
-  margin: 0px;
   margin-bottom: 8px;
+  width: 100%;
 }
 
 <div
-  class="c0"
+  class="c0 c1"
   width="464px"
 >
   <div
-    class="c1"
+    class="c2"
     color="light"
   >
     Welcome!
   </div>
   <div
-    class="c2"
+    class="c3"
     kind="danger"
   >
     Login has not been enabled
   </div>
   <div
-    class="c3"
+    class="c4"
     width="100%"
   >
     The ability to login has not been enabled. Please contact your system administrator for more information.
@@ -2205,7 +2211,7 @@ exports[`no login enabled 1`] = `
 `;
 
 exports[`server error rendering 1`] = `
-.c2 {
+.c3 {
   display: flex;
   align-items: center;
   justify-content: center;
@@ -2218,32 +2224,52 @@ exports[`server error rendering 1`] = `
   overflow: auto;
   word-break: break-word;
   line-height: 1.5;
-  margin: 32px;
-  margin-bottom: 0px;
   background: #f50057;
   color: #FFFFFF;
+  margin: 32px;
+  margin-bottom: 0;
 }
 
-.c2 a {
+.c3 a {
   color: #FFFFFF;
 }
 
-.c3 {
+.c0 {
+  box-sizing: border-box;
+  background-color: #222C59;
+  margin-top: 32px;
+  margin-bottom: 32px;
+  margin-left: auto;
+  margin-right: auto;
+  padding-bottom: 24px;
+  width: 464px;
+}
+
+.c4 {
   box-sizing: border-box;
 }
 
 .c6 {
   box-sizing: border-box;
+  border-bottom-left-radius: 8px;
+  border-bottom-right-radius: 8px;
+  padding-left: 32px;
+  padding-right: 32px;
+  padding-top: 16px;
+}
+
+.c8 {
+  box-sizing: border-box;
   margin-bottom: 16px;
 }
 
-.c9 {
+.c11 {
   box-sizing: border-box;
-  margin-bottom: 0px;
+  margin-bottom: 0;
   width: 100%;
 }
 
-.c10 {
+.c12 {
   line-height: 1.5;
   margin: 0;
   display: inline-flex;
@@ -2267,43 +2293,41 @@ exports[`server error rendering 1`] = `
   min-height: 40px;
   font-size: 12px;
   padding: 0px 40px;
-  margin-bottom: 4px;
   margin-top: 16px;
+  margin-bottom: 4px;
   width: 100%;
 }
 
-.c10:active {
+.c12:active {
   opacity: 0.56;
 }
 
-.c10:hover,
-.c10:focus {
+.c12:hover,
+.c12:focus {
   background: #651FFF;
 }
 
-.c10:active {
+.c12:active {
   background: #354AA4;
 }
 
-.c10:disabled {
+.c12:disabled {
   background: rgba(255,255,255,0.12);
   color: rgba(255,255,255,0.3);
 }
 
-.c0 {
-  box-sizing: border-box;
-  margin-left: auto;
-  margin-right: auto;
-  margin-top: 32px;
-  margin-bottom: 32px;
-  padding-bottom: 24px;
-  width: 464px;
-  background-color: #222C59;
+.c1 {
   box-shadow: 0 4px 16px rgba(0,0,0,0.24);
   border-radius: 8px;
 }
 
-.c8 {
+.c7 {
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+}
+
+.c10 {
   appearance: none;
   border: none;
   border-radius: 4px;
@@ -2315,55 +2339,601 @@ exports[`server error rendering 1`] = `
   padding: 0 16px;
   outline: none;
   width: 100%;
-  color: #324148;
   background-color: #FFFFFF;
+  color: #324148;
   margin-top: 4px;
 }
 
-.c8::-ms-clear {
+.c10::-ms-clear {
   display: none;
 }
 
-.c8::placeholder {
+.c10::placeholder {
   opacity: 0.4;
 }
 
-.c8:read-only {
+.c10:read-only {
   cursor: not-allowed;
 }
 
-.c7 {
+.c9 {
   color: #FFFFFF;
   display: block;
   font-size: 11px;
   font-weight: 500;
   text-transform: uppercase;
   width: 100%;
-  margin-bottom: 0px;
+  margin-bottom: 0;
 }
 
-.c1 {
+.c2 {
   overflow: hidden;
   text-overflow: ellipsis;
   font-weight: 300;
   font-size: 22px;
   line-height: 32px;
-  margin: 0px;
+  padding-top: 24px;
+  color: #FFFFFF;
+  text-align: center;
+}
+
+.c5 .prev-slide-enter {
+  transform: translateX(-100%);
+  opacity: 0;
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+}
+
+.c5 .prev-slide-enter-active {
+  transform: translateX(0);
+  opacity: 1;
+  transition: transform 500ms ease;
+}
+
+.c5 .prev-slide-exit {
+  transform: translateX(100%);
+  opacity: 1;
+  transition: transform 500ms ease;
+}
+
+.c5 .next-slide-enter {
+  transform: translateX(100%);
+  opacity: 0;
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+}
+
+.c5 .next-slide-enter-active {
+  transform: translateX(0);
+  opacity: 1;
+  transition: transform 500ms ease;
+}
+
+.c5 .next-slide-exit {
+  transform: translateX(-100%);
+  opacity: 1;
+  transition: transform 500ms ease;
+}
+
+<div
+  class="c0 c1"
+  width="464"
+>
+  <div
+    class="c2"
+    color="light"
+  >
+    Welcome!
+  </div>
+  <div
+    class="c3"
+    kind="danger"
+  >
+    invalid credentials with looooooooooooooooooooooooooooooooong text
+  </div>
+  <div
+    class="c4"
+    style="position: relative; height: auto; transition: height 500ms ease;"
+  >
+    <div
+      class="c5"
+    >
+      <div
+        class="c4"
+      >
+        <form
+          class="c6 c7"
+          data-testid="userpassword"
+        >
+          <div
+            class="c8"
+          >
+            <label
+              class="c9"
+            >
+              Username
+              <input
+                autocomplete="off"
+                class="c10"
+                color="text.onLight"
+                inputmode="text"
+                placeholder="Username"
+                type="text"
+                value=""
+              />
+            </label>
+          </div>
+          <div
+            class="c8"
+          >
+            <div
+              class="c11"
+              width="100%"
+            >
+              <label
+                class="c9"
+              >
+                Password
+                <input
+                  autocomplete="off"
+                  class="c10"
+                  color="text.onLight"
+                  inputmode="text"
+                  placeholder="Password"
+                  type="password"
+                  value=""
+                />
+              </label>
+            </div>
+          </div>
+          <button
+            class="c12"
+            kind="primary"
+            type="submit"
+            width="100%"
+          >
+            Sign In
+          </button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+`;
+
+exports[`sso list still renders when local auth is disabled 1`] = `
+.c0 {
+  box-sizing: border-box;
+  background-color: #222C59;
+  margin-top: 32px;
+  margin-bottom: 32px;
+  margin-left: auto;
+  margin-right: auto;
+  padding-bottom: 24px;
+  width: 464px;
+}
+
+.c3 {
+  box-sizing: border-box;
+  padding-left: 40px;
+  padding-right: 40px;
+  padding-top: 8px;
+  padding-bottom: 8px;
+}
+
+.c4 {
+  line-height: 1.5;
+  margin: 0;
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  box-sizing: border-box;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-family: inherit;
+  font-weight: 600;
+  outline: none;
+  position: relative;
+  text-align: center;
+  text-decoration: none;
+  text-transform: uppercase;
+  transition: all 0.3s;
+  -webkit-font-smoothing: antialiased;
+  background: #512FC9;
+  color: rgba(255,255,255,0.87);
+  min-height: 32px;
+  font-size: 12px;
+  padding: 0px 24px;
+  width: 100%;
+  margin-top: 16px;
+  margin-bottom: 16px;
+}
+
+.c4:active {
+  opacity: 0.56;
+}
+
+.c4:hover,
+.c4:focus {
+  background: #651FFF;
+}
+
+.c4:active {
+  background: #354AA4;
+}
+
+.c4:disabled {
+  background: rgba(255,255,255,0.12);
+  color: rgba(255,255,255,0.3);
+}
+
+.c9 {
+  line-height: 1.5;
+  margin: 0;
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  box-sizing: border-box;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-family: inherit;
+  font-weight: 600;
+  outline: none;
+  position: relative;
+  text-align: center;
+  text-decoration: none;
+  text-transform: uppercase;
+  transition: all 0.3s;
+  -webkit-font-smoothing: antialiased;
+  background: #512FC9;
+  color: rgba(255,255,255,0.87);
+  min-height: 32px;
+  font-size: 12px;
+  padding: 0px 24px;
+  width: 100%;
+  margin-top: 16px;
+  margin-bottom: 0;
+}
+
+.c9:active {
+  opacity: 0.56;
+}
+
+.c9:hover,
+.c9:focus {
+  background: #651FFF;
+}
+
+.c9:active {
+  background: #354AA4;
+}
+
+.c9:disabled {
+  background: rgba(255,255,255,0.12);
+  color: rgba(255,255,255,0.3);
+}
+
+.c8 {
+  display: inline-block;
+  transition: color 0.3s;
+  color: #FFFFFF;
+}
+
+.c1 {
+  box-shadow: 0 4px 16px rgba(0,0,0,0.24);
+  border-radius: 8px;
+}
+
+.c2 {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  font-weight: 300;
+  font-size: 22px;
+  line-height: 32px;
   padding-top: 24px;
   color: #FFFFFF;
   text-align: center;
 }
 
 .c5 {
+  background-color: #444444;
+  display: block;
+  width: 100%;
+  border: 1px solid transparent;
+  height: 40px;
+  position: relative;
   box-sizing: border-box;
-  padding-top: 16px;
-  padding-left: 32px;
-  padding-right: 32px;
-  border-bottom-right-radius: 8px;
-  border-bottom-left-radius: 8px;
+}
+
+.c5:hover,
+.c5:focus {
+  background: rgb(61,61,61);
+  border: 1px solid rgb(142,142,142);
+}
+
+.c5 .c7 {
+  font-size: 20px;
+  opacity: 0.87;
+}
+
+.c10 {
+  background-color: #dd4b39;
+  display: block;
+  width: 100%;
+  border: 1px solid transparent;
+  height: 40px;
+  position: relative;
+  box-sizing: border-box;
+}
+
+.c10:hover,
+.c10:focus {
+  background: rgb(198,67,51);
+  border: 1px solid rgb(234,147,136);
+}
+
+.c10 .c7 {
+  font-size: 20px;
+  opacity: 0.87;
+}
+
+.c6 {
+  align-items: center;
   display: flex;
   justify-content: center;
-  flex-direction: column;
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: 56px;
+  font-size: 24px;
+  text-align: center;
+  border-right: 1px solid rgba(0,0,0,0.12);
+}
+
+<div
+  class="c0 c1"
+  width="464px"
+>
+  <div
+    class="c2"
+    color="light"
+  >
+    Welcome!
+  </div>
+  <div
+    class="c3"
+    data-testid="sso-list"
+  >
+    <button
+      class="c4 c5"
+      color="#444444"
+    >
+      <div
+        class="c6"
+      >
+        <span
+          class="c7 c8 icon icon-github "
+          color="light"
+          data-testid="icon"
+        />
+      </div>
+      Login with github
+    </button>
+    <button
+      class="c9 c10"
+      color="#dd4b39"
+    >
+      <div
+        class="c6"
+      >
+        <span
+          class="c7 c8 icon icon-google-plus "
+          color="light"
+          data-testid="icon"
+        />
+      </div>
+      Login with google
+    </button>
+  </div>
+</div>
+`;
+
+exports[`sso providers rendering 1`] = `
+.c0 {
+  box-sizing: border-box;
+  background-color: #222C59;
+  margin-top: 32px;
+  margin-bottom: 32px;
+  margin-left: auto;
+  margin-right: auto;
+  padding-bottom: 24px;
+  width: 464px;
+}
+
+.c3 {
+  box-sizing: border-box;
+}
+
+.c5 {
+  box-sizing: border-box;
+  padding-left: 40px;
+  padding-right: 40px;
+  padding-top: 8px;
+  padding-bottom: 8px;
+}
+
+.c16 {
+  box-sizing: border-box;
+  margin-top: -4px;
+  padding-top: 16px;
+  text-align: center;
+}
+
+.c6 {
+  line-height: 1.5;
+  margin: 0;
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  box-sizing: border-box;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-family: inherit;
+  font-weight: 600;
+  outline: none;
+  position: relative;
+  text-align: center;
+  text-decoration: none;
+  text-transform: uppercase;
+  transition: all 0.3s;
+  -webkit-font-smoothing: antialiased;
+  background: #512FC9;
+  color: rgba(255,255,255,0.87);
+  min-height: 32px;
+  font-size: 12px;
+  padding: 0px 24px;
+  width: 100%;
+  margin-top: 16px;
+  margin-bottom: 16px;
+}
+
+.c6:active {
+  opacity: 0.56;
+}
+
+.c6:hover,
+.c6:focus {
+  background: #651FFF;
+}
+
+.c6:active {
+  background: #354AA4;
+}
+
+.c6:disabled {
+  background: rgba(255,255,255,0.12);
+  color: rgba(255,255,255,0.3);
+}
+
+.c14 {
+  line-height: 1.5;
+  margin: 0;
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  box-sizing: border-box;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-family: inherit;
+  font-weight: 600;
+  outline: none;
+  position: relative;
+  text-align: center;
+  text-decoration: none;
+  text-transform: uppercase;
+  transition: all 0.3s;
+  -webkit-font-smoothing: antialiased;
+  background: #512FC9;
+  color: rgba(255,255,255,0.87);
+  min-height: 32px;
+  font-size: 12px;
+  padding: 0px 24px;
+  width: 100%;
+  margin-top: 16px;
+  margin-bottom: 0;
+}
+
+.c14:active {
+  opacity: 0.56;
+}
+
+.c14:hover,
+.c14:focus {
+  background: #651FFF;
+}
+
+.c14:active {
+  background: #354AA4;
+}
+
+.c14:disabled {
+  background: rgba(255,255,255,0.12);
+  color: rgba(255,255,255,0.3);
+}
+
+.c17 {
+  line-height: 1.5;
+  margin: 0;
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  box-sizing: border-box;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-family: inherit;
+  font-weight: 600;
+  outline: none;
+  position: relative;
+  text-align: center;
+  text-decoration: none;
+  text-transform: uppercase;
+  transition: all 0.3s;
+  -webkit-font-smoothing: antialiased;
+  background: none;
+  text-transform: none;
+  color: rgba(255,255,255,0.87);
+  min-height: 32px;
+  font-size: 12px;
+  padding: 0px 24px;
+}
+
+.c17:active {
+  opacity: 0.56;
+}
+
+.c17:hover,
+.c17:focus {
+  background: none;
+  text-decoration: underline;
+}
+
+.c17:disabled {
+  background: none;
+  color: rgba(255,255,255,0.3);
+}
+
+.c10 {
+  display: inline-block;
+  transition: color 0.3s;
+  color: #FFFFFF;
+}
+
+.c1 {
+  box-shadow: 0 4px 16px rgba(0,0,0,0.24);
+  border-radius: 8px;
+}
+
+.c2 {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  font-weight: 300;
+  font-size: 22px;
+  line-height: 32px;
+  padding-top: 24px;
+  color: #FFFFFF;
+  text-align: center;
 }
 
 .c4 .prev-slide-enter {
@@ -2410,21 +2980,134 @@ exports[`server error rendering 1`] = `
   transition: transform 500ms ease;
 }
 
+.c7 {
+  background-color: #444444;
+  display: block;
+  width: 100%;
+  border: 1px solid transparent;
+  height: 40px;
+  position: relative;
+  box-sizing: border-box;
+}
+
+.c7:hover,
+.c7:focus {
+  background: rgb(61,61,61);
+  border: 1px solid rgb(142,142,142);
+}
+
+.c7 .c9 {
+  font-size: 20px;
+  opacity: 0.87;
+}
+
+.c11 {
+  background-color: #dd4b39;
+  display: block;
+  width: 100%;
+  border: 1px solid transparent;
+  height: 40px;
+  position: relative;
+  box-sizing: border-box;
+}
+
+.c11:hover,
+.c11:focus {
+  background: rgb(198,67,51);
+  border: 1px solid rgb(234,147,136);
+}
+
+.c11 .c9 {
+  font-size: 20px;
+  opacity: 0.87;
+}
+
+.c12 {
+  background-color: #205081;
+  display: block;
+  width: 100%;
+  border: 1px solid transparent;
+  height: 40px;
+  position: relative;
+  box-sizing: border-box;
+}
+
+.c12:hover,
+.c12:focus {
+  background: rgb(28,72,116);
+  border: 1px solid rgb(121,150,179);
+}
+
+.c12 .c9 {
+  font-size: 20px;
+  opacity: 0.87;
+}
+
+.c13 {
+  background-color: #f7931e;
+  display: block;
+  width: 100%;
+  border: 1px solid transparent;
+  height: 40px;
+  position: relative;
+  box-sizing: border-box;
+}
+
+.c13:hover,
+.c13:focus {
+  background: rgb(222,132,27);
+  border: 1px solid rgb(250,190,120);
+}
+
+.c13 .c9 {
+  font-size: 20px;
+  opacity: 0.87;
+}
+
+.c15 {
+  background-color: #2672ec;
+  display: block;
+  width: 100%;
+  border: 1px solid transparent;
+  height: 40px;
+  position: relative;
+  box-sizing: border-box;
+}
+
+.c15:hover,
+.c15:focus {
+  background: rgb(34,102,212);
+  border: 1px solid rgb(124,170,243);
+}
+
+.c15 .c9 {
+  font-size: 20px;
+  opacity: 0.87;
+}
+
+.c8 {
+  align-items: center;
+  display: flex;
+  justify-content: center;
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: 56px;
+  font-size: 24px;
+  text-align: center;
+  border-right: 1px solid rgba(0,0,0,0.12);
+}
+
 <div
-  class="c0"
+  class="c0 c1"
   width="464"
 >
   <div
-    class="c1"
+    class="c2"
     color="light"
   >
     Welcome!
-  </div>
-  <div
-    class="c2"
-    kind="danger"
-  >
-    invalid credentials with looooooooooooooooooooooooooooooooong text
   </div>
   <div
     class="c3"
@@ -2436,692 +3119,19 @@ exports[`server error rendering 1`] = `
       <div
         class="c3"
       >
-        <form
-          class="c5"
-          data-testid="userpassword"
-        >
-          <div
-            class="c6"
-          >
-            <label
-              class="c7"
-              font-size="0"
-            >
-              Username
-              <input
-                autocomplete="off"
-                class="c8"
-                color="text.onLight"
-                inputmode="text"
-                placeholder="Username"
-                type="text"
-                value=""
-              />
-            </label>
-          </div>
-          <div
-            class="c6"
-          >
-            <div
-              class="c9"
-              width="100%"
-            >
-              <label
-                class="c7"
-                font-size="0"
-              >
-                Password
-                <input
-                  autocomplete="off"
-                  class="c8"
-                  color="text.onLight"
-                  inputmode="text"
-                  placeholder="Password"
-                  type="password"
-                  value=""
-                />
-              </label>
-            </div>
-          </div>
-          <button
-            class="c10"
-            kind="primary"
-            type="submit"
-            width="100%"
-          >
-            Sign In
-          </button>
-        </form>
-      </div>
-    </div>
-  </div>
-</div>
-`;
-
-exports[`sso list still renders when local auth is disabled 1`] = `
-.c2 {
-  box-sizing: border-box;
-  padding-bottom: 8px;
-  padding-top: 8px;
-  padding-left: 40px;
-  padding-right: 40px;
-}
-
-.c3 {
-  line-height: 1.5;
-  margin: 0;
-  display: inline-flex;
-  justify-content: center;
-  align-items: center;
-  box-sizing: border-box;
-  border: none;
-  border-radius: 4px;
-  cursor: pointer;
-  font-family: inherit;
-  font-weight: 600;
-  outline: none;
-  position: relative;
-  text-align: center;
-  text-decoration: none;
-  text-transform: uppercase;
-  transition: all 0.3s;
-  -webkit-font-smoothing: antialiased;
-  background: #512FC9;
-  color: rgba(255,255,255,0.87);
-  min-height: 32px;
-  font-size: 12px;
-  padding: 0px 24px;
-  margin-bottom: 16px;
-  margin-top: 16px;
-  width: 100%;
-}
-
-.c3:active {
-  opacity: 0.56;
-}
-
-.c3:hover,
-.c3:focus {
-  background: #651FFF;
-}
-
-.c3:active {
-  background: #354AA4;
-}
-
-.c3:disabled {
-  background: rgba(255,255,255,0.12);
-  color: rgba(255,255,255,0.3);
-}
-
-.c8 {
-  line-height: 1.5;
-  margin: 0;
-  display: inline-flex;
-  justify-content: center;
-  align-items: center;
-  box-sizing: border-box;
-  border: none;
-  border-radius: 4px;
-  cursor: pointer;
-  font-family: inherit;
-  font-weight: 600;
-  outline: none;
-  position: relative;
-  text-align: center;
-  text-decoration: none;
-  text-transform: uppercase;
-  transition: all 0.3s;
-  -webkit-font-smoothing: antialiased;
-  background: #512FC9;
-  color: rgba(255,255,255,0.87);
-  min-height: 32px;
-  font-size: 12px;
-  padding: 0px 24px;
-  margin-bottom: 0px;
-  margin-top: 16px;
-  width: 100%;
-}
-
-.c8:active {
-  opacity: 0.56;
-}
-
-.c8:hover,
-.c8:focus {
-  background: #651FFF;
-}
-
-.c8:active {
-  background: #354AA4;
-}
-
-.c8:disabled {
-  background: rgba(255,255,255,0.12);
-  color: rgba(255,255,255,0.3);
-}
-
-.c7 {
-  display: inline-block;
-  transition: color 0.3s;
-  color: #FFFFFF;
-}
-
-.c0 {
-  box-sizing: border-box;
-  margin-left: auto;
-  margin-right: auto;
-  margin-top: 32px;
-  margin-bottom: 32px;
-  padding-bottom: 24px;
-  width: 464px;
-  background-color: #222C59;
-  box-shadow: 0 4px 16px rgba(0,0,0,0.24);
-  border-radius: 8px;
-}
-
-.c1 {
-  overflow: hidden;
-  text-overflow: ellipsis;
-  font-weight: 300;
-  font-size: 22px;
-  line-height: 32px;
-  margin: 0px;
-  padding-top: 24px;
-  color: #FFFFFF;
-  text-align: center;
-}
-
-.c4 {
-  background-color: #444444;
-  display: block;
-  width: 100%;
-  border: 1px solid transparent;
-  height: 40px;
-  position: relative;
-  box-sizing: border-box;
-}
-
-.c4:hover,
-.c4:focus {
-  background: rgb(61,61,61);
-  border: 1px solid rgb(142,142,142);
-}
-
-.c4 .c6 {
-  font-size: 20px;
-  opacity: 0.87;
-}
-
-.c9 {
-  background-color: #dd4b39;
-  display: block;
-  width: 100%;
-  border: 1px solid transparent;
-  height: 40px;
-  position: relative;
-  box-sizing: border-box;
-}
-
-.c9:hover,
-.c9:focus {
-  background: rgb(198,67,51);
-  border: 1px solid rgb(234,147,136);
-}
-
-.c9 .c6 {
-  font-size: 20px;
-  opacity: 0.87;
-}
-
-.c5 {
-  align-items: center;
-  display: flex;
-  justify-content: center;
-  position: absolute;
-  left: 0;
-  top: 0;
-  bottom: 0;
-  width: 56px;
-  font-size: 24px;
-  text-align: center;
-  border-right: 1px solid rgba(0,0,0,0.12);
-}
-
-<div
-  class="c0"
-  width="464px"
->
-  <div
-    class="c1"
-    color="light"
-  >
-    Welcome!
-  </div>
-  <div
-    class="c2"
-    data-testid="sso-list"
-  >
-    <button
-      class="c3 c4"
-      color="#444444"
-      kind="primary"
-    >
-      <div
-        class="c5"
-      >
-        <span
-          class="c6 c7 icon icon-github "
-          color="light"
-          data-testid="icon"
-        />
-      </div>
-      Login with github
-    </button>
-    <button
-      class="c8 c9"
-      color="#dd4b39"
-      kind="primary"
-    >
-      <div
-        class="c5"
-      >
-        <span
-          class="c6 c7 icon icon-google-plus "
-          color="light"
-          data-testid="icon"
-        />
-      </div>
-      Login with google
-    </button>
-  </div>
-</div>
-`;
-
-exports[`sso providers rendering 1`] = `
-.c2 {
-  box-sizing: border-box;
-}
-
-.c4 {
-  box-sizing: border-box;
-  padding-bottom: 8px;
-  padding-top: 8px;
-  padding-left: 40px;
-  padding-right: 40px;
-}
-
-.c15 {
-  box-sizing: border-box;
-  margin-top: -4px;
-  padding-top: 16px;
-  text-align: center;
-}
-
-.c5 {
-  line-height: 1.5;
-  margin: 0;
-  display: inline-flex;
-  justify-content: center;
-  align-items: center;
-  box-sizing: border-box;
-  border: none;
-  border-radius: 4px;
-  cursor: pointer;
-  font-family: inherit;
-  font-weight: 600;
-  outline: none;
-  position: relative;
-  text-align: center;
-  text-decoration: none;
-  text-transform: uppercase;
-  transition: all 0.3s;
-  -webkit-font-smoothing: antialiased;
-  background: #512FC9;
-  color: rgba(255,255,255,0.87);
-  min-height: 32px;
-  font-size: 12px;
-  padding: 0px 24px;
-  margin-bottom: 16px;
-  margin-top: 16px;
-  width: 100%;
-}
-
-.c5:active {
-  opacity: 0.56;
-}
-
-.c5:hover,
-.c5:focus {
-  background: #651FFF;
-}
-
-.c5:active {
-  background: #354AA4;
-}
-
-.c5:disabled {
-  background: rgba(255,255,255,0.12);
-  color: rgba(255,255,255,0.3);
-}
-
-.c13 {
-  line-height: 1.5;
-  margin: 0;
-  display: inline-flex;
-  justify-content: center;
-  align-items: center;
-  box-sizing: border-box;
-  border: none;
-  border-radius: 4px;
-  cursor: pointer;
-  font-family: inherit;
-  font-weight: 600;
-  outline: none;
-  position: relative;
-  text-align: center;
-  text-decoration: none;
-  text-transform: uppercase;
-  transition: all 0.3s;
-  -webkit-font-smoothing: antialiased;
-  background: #512FC9;
-  color: rgba(255,255,255,0.87);
-  min-height: 32px;
-  font-size: 12px;
-  padding: 0px 24px;
-  margin-bottom: 0px;
-  margin-top: 16px;
-  width: 100%;
-}
-
-.c13:active {
-  opacity: 0.56;
-}
-
-.c13:hover,
-.c13:focus {
-  background: #651FFF;
-}
-
-.c13:active {
-  background: #354AA4;
-}
-
-.c13:disabled {
-  background: rgba(255,255,255,0.12);
-  color: rgba(255,255,255,0.3);
-}
-
-.c16 {
-  line-height: 1.5;
-  margin: 0;
-  display: inline-flex;
-  justify-content: center;
-  align-items: center;
-  box-sizing: border-box;
-  border: none;
-  border-radius: 4px;
-  cursor: pointer;
-  font-family: inherit;
-  font-weight: 600;
-  outline: none;
-  position: relative;
-  text-align: center;
-  text-decoration: none;
-  text-transform: uppercase;
-  transition: all 0.3s;
-  -webkit-font-smoothing: antialiased;
-  background: none;
-  text-transform: none;
-  color: rgba(255,255,255,0.87);
-  min-height: 32px;
-  font-size: 12px;
-  padding: 0px 24px;
-}
-
-.c16:active {
-  opacity: 0.56;
-}
-
-.c16:hover,
-.c16:focus {
-  background: none;
-  text-decoration: underline;
-}
-
-.c16:disabled {
-  background: none;
-  color: rgba(255,255,255,0.3);
-}
-
-.c9 {
-  display: inline-block;
-  transition: color 0.3s;
-  color: #FFFFFF;
-}
-
-.c0 {
-  box-sizing: border-box;
-  margin-left: auto;
-  margin-right: auto;
-  margin-top: 32px;
-  margin-bottom: 32px;
-  padding-bottom: 24px;
-  width: 464px;
-  background-color: #222C59;
-  box-shadow: 0 4px 16px rgba(0,0,0,0.24);
-  border-radius: 8px;
-}
-
-.c1 {
-  overflow: hidden;
-  text-overflow: ellipsis;
-  font-weight: 300;
-  font-size: 22px;
-  line-height: 32px;
-  margin: 0px;
-  padding-top: 24px;
-  color: #FFFFFF;
-  text-align: center;
-}
-
-.c3 .prev-slide-enter {
-  transform: translateX(-100%);
-  opacity: 0;
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-}
-
-.c3 .prev-slide-enter-active {
-  transform: translateX(0);
-  opacity: 1;
-  transition: transform 500ms ease;
-}
-
-.c3 .prev-slide-exit {
-  transform: translateX(100%);
-  opacity: 1;
-  transition: transform 500ms ease;
-}
-
-.c3 .next-slide-enter {
-  transform: translateX(100%);
-  opacity: 0;
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-}
-
-.c3 .next-slide-enter-active {
-  transform: translateX(0);
-  opacity: 1;
-  transition: transform 500ms ease;
-}
-
-.c3 .next-slide-exit {
-  transform: translateX(-100%);
-  opacity: 1;
-  transition: transform 500ms ease;
-}
-
-.c6 {
-  background-color: #444444;
-  display: block;
-  width: 100%;
-  border: 1px solid transparent;
-  height: 40px;
-  position: relative;
-  box-sizing: border-box;
-}
-
-.c6:hover,
-.c6:focus {
-  background: rgb(61,61,61);
-  border: 1px solid rgb(142,142,142);
-}
-
-.c6 .c8 {
-  font-size: 20px;
-  opacity: 0.87;
-}
-
-.c10 {
-  background-color: #dd4b39;
-  display: block;
-  width: 100%;
-  border: 1px solid transparent;
-  height: 40px;
-  position: relative;
-  box-sizing: border-box;
-}
-
-.c10:hover,
-.c10:focus {
-  background: rgb(198,67,51);
-  border: 1px solid rgb(234,147,136);
-}
-
-.c10 .c8 {
-  font-size: 20px;
-  opacity: 0.87;
-}
-
-.c11 {
-  background-color: #205081;
-  display: block;
-  width: 100%;
-  border: 1px solid transparent;
-  height: 40px;
-  position: relative;
-  box-sizing: border-box;
-}
-
-.c11:hover,
-.c11:focus {
-  background: rgb(28,72,116);
-  border: 1px solid rgb(121,150,179);
-}
-
-.c11 .c8 {
-  font-size: 20px;
-  opacity: 0.87;
-}
-
-.c12 {
-  background-color: #f7931e;
-  display: block;
-  width: 100%;
-  border: 1px solid transparent;
-  height: 40px;
-  position: relative;
-  box-sizing: border-box;
-}
-
-.c12:hover,
-.c12:focus {
-  background: rgb(222,132,27);
-  border: 1px solid rgb(250,190,120);
-}
-
-.c12 .c8 {
-  font-size: 20px;
-  opacity: 0.87;
-}
-
-.c14 {
-  background-color: #2672ec;
-  display: block;
-  width: 100%;
-  border: 1px solid transparent;
-  height: 40px;
-  position: relative;
-  box-sizing: border-box;
-}
-
-.c14:hover,
-.c14:focus {
-  background: rgb(34,102,212);
-  border: 1px solid rgb(124,170,243);
-}
-
-.c14 .c8 {
-  font-size: 20px;
-  opacity: 0.87;
-}
-
-.c7 {
-  align-items: center;
-  display: flex;
-  justify-content: center;
-  position: absolute;
-  left: 0;
-  top: 0;
-  bottom: 0;
-  width: 56px;
-  font-size: 24px;
-  text-align: center;
-  border-right: 1px solid rgba(0,0,0,0.12);
-}
-
-<div
-  class="c0"
-  width="464"
->
-  <div
-    class="c1"
-    color="light"
-  >
-    Welcome!
-  </div>
-  <div
-    class="c2"
-    style="position: relative; height: auto; transition: height 500ms ease;"
-  >
-    <div
-      class="c3"
-    >
-      <div
-        class="c2"
-      >
         <div
-          class="c4"
+          class="c5"
           data-testid="sso-list"
         >
           <button
-            class="c5 c6"
+            class="c6 c7"
             color="#444444"
-            kind="primary"
           >
             <div
-              class="c7"
+              class="c8"
             >
               <span
-                class="c8 c9 icon icon-github "
+                class="c9 c10 icon icon-github "
                 color="light"
                 data-testid="icon"
               />
@@ -3129,15 +3139,14 @@ exports[`sso providers rendering 1`] = `
             Login with github
           </button>
           <button
-            class="c5 c10"
+            class="c6 c11"
             color="#dd4b39"
-            kind="primary"
           >
             <div
-              class="c7"
+              class="c8"
             >
               <span
-                class="c8 c9 icon icon-google-plus "
+                class="c9 c10 icon icon-google-plus "
                 color="light"
                 data-testid="icon"
               />
@@ -3145,15 +3154,14 @@ exports[`sso providers rendering 1`] = `
             Login with google
           </button>
           <button
-            class="c5 c11"
+            class="c6 c12"
             color="#205081"
-            kind="primary"
           >
             <div
-              class="c7"
+              class="c8"
             >
               <span
-                class="c8 c9 icon icon-bitbucket "
+                class="c9 c10 icon icon-bitbucket "
                 color="light"
                 data-testid="icon"
               />
@@ -3161,15 +3169,14 @@ exports[`sso providers rendering 1`] = `
             Login with bitbucket
           </button>
           <button
-            class="c5 c12"
+            class="c6 c13"
             color="#f7931e"
-            kind="primary"
           >
             <div
-              class="c7"
+              class="c8"
             >
               <span
-                class="c8 c9 icon icon-openid "
+                class="c9 c10 icon icon-openid "
                 color="light"
                 data-testid="icon"
               />
@@ -3177,15 +3184,14 @@ exports[`sso providers rendering 1`] = `
             Login with Mission Control
           </button>
           <button
-            class="c13 c14"
+            class="c14 c15"
             color="#2672ec"
-            kind="primary"
           >
             <div
-              class="c7"
+              class="c8"
             >
               <span
-                class="c8 c9 icon icon-windows "
+                class="c9 c10 icon icon-windows "
                 color="light"
                 data-testid="icon"
               />
@@ -3194,10 +3200,10 @@ exports[`sso providers rendering 1`] = `
           </button>
         </div>
         <div
-          class="c15"
+          class="c16"
         >
           <button
-            class="c16"
+            class="c17"
             kind="text"
           >
             Other sign-in options

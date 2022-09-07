@@ -1,5 +1,5 @@
 import React, { useLayoutEffect, useRef, useState } from 'react';
-import styled, { keyframes } from 'styled-components';
+import styled, { keyframes } from 'design/styled';
 
 import { NodeLine } from 'teleport/Discover/Desktop/DiscoverDesktops/NodeLine';
 import {

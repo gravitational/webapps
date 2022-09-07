@@ -15,7 +15,7 @@ limitations under the License.
 */
 
 import React from 'react';
-import { ThemeContext } from 'styled-components';
+import { ThemeContext } from 'design/styled';
 import { Flex } from 'design';
 
 import { getPlatform } from 'design/theme/utils';
@@ -31,7 +31,7 @@ export default class Terminal extends React.Component<{ tty: Tty }> {
 
   terminal: XTermCtrl;
 
-  refTermContainer = React.createRef<HTMLElement>();
+  refTermContainer = React.createRef<HTMLDivElement>();
 
   componentDidMount() {
     const platform = getPlatform();

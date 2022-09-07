@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import { createGlobalStyle } from 'styled-components';
+import { createGlobalStyle } from 'design/styled';
 import './../assets/ubuntu/style.css';
 
 const GlobalStyle = createGlobalStyle`

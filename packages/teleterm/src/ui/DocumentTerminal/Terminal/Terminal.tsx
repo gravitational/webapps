@@ -16,7 +16,7 @@ limitations under the License.
 
 import { debounce } from 'lodash';
 import React, { useEffect, useRef } from 'react';
-import styled, { useTheme } from 'styled-components';
+import styled, { useTheme } from 'design/styled';
 import { Box, Flex } from 'design';
 
 import { IPtyProcess } from 'teleterm/sharedProcess/ptyHost';
@@ -24,7 +24,7 @@ import { IPtyProcess } from 'teleterm/sharedProcess/ptyHost';
 import XTermCtrl from './ctrl';
 
 export default function Terminal(props: Props) {
-  const refElement = useRef<HTMLElement>();
+  const refElement = useRef<HTMLDivElement>();
   const refCtrl = useRef<XTermCtrl>();
   const fontFamily = useTheme().fonts.mono;
 

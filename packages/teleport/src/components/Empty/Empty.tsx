@@ -18,7 +18,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 
 import { Text, Box, Flex, ButtonPrimary, ButtonOutlined } from 'design';
-import Image from 'design/Image';
+import { Image } from 'design/Image';
 
 import cfg from 'teleport/config';
 

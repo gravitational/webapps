@@ -15,7 +15,7 @@ limitations under the License.
 */
 
 import React from 'react';
-import styled from 'styled-components';
+import styled from 'design/styled';
 import { Flex } from 'design';
 
 import { useAppContext } from 'teleterm/ui/appContextProvider';
@@ -124,9 +124,4 @@ const StyledTabHost = styled.div`
   display: flex;
   flex-direction: column;
   width: 100%;
-  position: absolute;
-  top: 0;
-  bottom: 0;
-  left: 0;
-  right: 0;
 `;

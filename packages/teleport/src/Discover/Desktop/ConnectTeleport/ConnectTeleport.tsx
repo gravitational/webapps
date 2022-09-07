@@ -15,7 +15,7 @@
  */
 
 import React, { Suspense, useState } from 'react';
-import styled from 'styled-components';
+import styled from 'design/styled';
 
 import { SwitchTransition, Transition } from 'react-transition-group';
 

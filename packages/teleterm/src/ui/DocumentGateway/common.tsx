@@ -1,8 +1,10 @@
-import FieldInput from 'shared/components/FieldInput';
-import styled from 'styled-components';
 import React, { forwardRef } from 'react';
+import styled from 'design/styled';
 
-export const ConfigFieldInput: typeof FieldInput = styled(FieldInput)`
+import { FieldInput } from 'shared/components/FieldInput';
+import { FieldInputProps } from 'shared/components/FieldInput/FieldInput';
+
+export const ConfigFieldInput = styled(FieldInput)`
   input {
     background: inherit;
     border: 1px ${props => props.theme.colors.action.disabledBackground} solid;
@@ -42,7 +44,7 @@ const ConfigFieldInputWithoutStepper: typeof ConfigFieldInput = styled(
   }
 `;
 
-export const PortFieldInput: typeof ConfigFieldInput = forwardRef(
+export const PortFieldInput = forwardRef<HTMLInputElement, FieldInputProps>(
   (props, ref) => (
     <ConfigFieldInputWithoutStepper
       type="number"

@@ -1,7 +1,7 @@
 import React, { useState, useRef } from 'react';
-import styled from 'styled-components';
+import styled from 'design/styled';
 
-import Popover from 'design/Popover';
+import { Popover } from 'design/Popover';
 import { MoreVert, OpenBox, Add } from 'design/Icon';
 import { Box, Text, Flex } from 'design';
 

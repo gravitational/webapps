@@ -15,7 +15,7 @@ limitations under the License.
 */
 
 import React from 'react';
-import styled from 'styled-components';
+import styled from 'design/styled';
 import { Text, Flex, TopNav } from 'design';
 
 import useTeleport from 'teleport/useTeleport';

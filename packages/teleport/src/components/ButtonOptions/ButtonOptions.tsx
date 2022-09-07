@@ -15,12 +15,13 @@ limitations under the License.
 */
 
 import React from 'react';
-import styled from 'styled-components';
+
 import 'react-day-picker/lib/style.css';
+
 import { ButtonOutlined } from 'design';
 import { CarrotDown } from 'design/Icon';
-import Menu from 'design/Menu';
-import defaultTheme from 'design/theme';
+import { Menu } from 'design/Menu';
+import styled from 'design/styled';
 
 type Props = {
   title: string;
@@ -31,11 +32,10 @@ type Props = {
 
 type State = {
   open: boolean;
-  anchorEl: HTMLElement;
 };
 
 export default class ButtonOptions extends React.Component<Props, State> {
-  anchorEl: HTMLElement;
+  anchorEl = React.createRef<HTMLButtonElement>();
 
   constructor(props: Props) {
     super(props);
@@ -63,7 +63,7 @@ export default class ButtonOptions extends React.Component<Props, State> {
           width="180px"
           disabled={props.disabled}
           ml={props.ml}
-          setRef={e => (this.anchorEl = e)}
+          ref={this.anchorEl}
           onClick={this.onOpen}
         >
           {props.title}
@@ -76,8 +76,8 @@ export default class ButtonOptions extends React.Component<Props, State> {
         </StyledButton>
         <Menu
           menuListCss={menuListCss}
-          anchorEl={this.state.anchorEl}
-          open={open}
+          anchorEl={this.anchorEl.current}
+          open={this.state.open}
           onClose={this.onClose}
           anchorOrigin={{
             vertical: 'center',
@@ -88,7 +88,7 @@ export default class ButtonOptions extends React.Component<Props, State> {
             horizontal: 'center',
           }}
         >
-          {open && this.renderItems(props.children)}
+          {this.state.open && this.renderItems(props.children)}
         </Menu>
       </>
     );
@@ -124,7 +124,3 @@ const StyledButton = styled(ButtonOutlined)`
   padding: 0 40px 0 24px;
   width: auto;
 `;
-
-StyledButton.defaultProps = {
-  theme: defaultTheme,
-};

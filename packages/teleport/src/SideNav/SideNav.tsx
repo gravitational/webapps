@@ -15,44 +15,65 @@ limitations under the License.
 */
 
 import React from 'react';
-import styled from 'styled-components';
+import styled from 'design/styled';
 import { NavLink, Link } from 'react-router-dom';
 import { Flex, Image } from 'design';
 
 import cfg from 'teleport/config';
 
-import SideNavItemIcon from './SideNavItemIcon';
-import SideNavItem from './SideNavItem';
-import SideNavItemGroup from './SideNavItemGroup';
-import logoSvg from './logo';
-import useSideNav from './useSideNav';
+import { SideNavItemIcon } from './SideNavItemIcon';
+import { SideNavItem } from './SideNavItem';
+import { SideNavItemGroup } from './SideNavItemGroup';
 
-export default function Container() {
-  const state = useSideNav();
-  return <SideNav {...state} />;
+import logoSvg from './logo';
+import useSideNav, { Item } from './useSideNav';
+
+interface SideNavItemsProps {
+  items: Item[];
+  path: string;
 }
 
-export function SideNav(props: ReturnType<typeof useSideNav>) {
-  const { items, path } = props;
-  const $items = items.map((item, index) => {
-    const isChild = item.items.length > 0;
-    if (isChild) {
-      return <SideNavItemGroup path={path} item={item} key={index} />;
-    }
+export function SideNavItems(props: SideNavItemsProps) {
+  return (
+    <>
+      {props.items.map((item, index) => {
+        const isChild = item.items.length > 0;
+        if (isChild) {
+          return <SideNavItemGroup path={props.path} item={item} key={index} />;
+        }
 
-    return (
-      <SideNavItem key={index} as={NavLink} exact={item.exact} to={item.route}>
-        <SideNavItemIcon as={item.Icon} />
-        {item.title}
-      </SideNavItem>
-    );
-  });
+        return (
+          <SideNavItem
+            key={index}
+            as={NavLink}
+            exact={item.exact}
+            to={item.route}
+          >
+            <SideNavItemIcon as={item.Icon} />
+            {item.title}
+          </SideNavItem>
+        );
+      })}
+    </>
+  );
+}
 
+export function SideNavContainer(props: { children?: React.ReactNode }) {
   return (
     <Nav>
       <Logo />
-      <Content>{$items}</Content>
+      <Content>{props.children}</Content>
     </Nav>
+  );
+}
+
+export function SideNav() {
+  const { items, path } = useSideNav();
+
+  return (
+    <SideNavContainer>
+      <SideNavItems items={items} path={path} />
+    </SideNavContainer>
   );
 }
 
@@ -62,20 +83,19 @@ export const Logo = () => (
   </LogoItem>
 );
 
-const LogoItem = styled(Flex)(
-  props => `
+const LogoItem = styled(Flex)`
   min-height: 56px;
   align-items: center;
   cursor: pointer;
   outline: none;
   text-decoration: none;
   width: 100%;
+
   &:hover {
-    background ${props.theme.colors.primary.lighter};
-    color ${props.theme.colors.primary.contrastText};
+    background: ${p => p.theme.colors.primary.lighter};
+    color: ${p => p.theme.colors.primary.contrastText};
   }
-`
-);
+`;
 
 export const Nav = styled.nav`
   background: ${props => props.theme.colors.primary.light};

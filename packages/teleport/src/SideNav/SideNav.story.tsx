@@ -20,7 +20,7 @@ import { createMemoryHistory } from 'history';
 import * as Icons from 'design/Icon';
 import { Box } from 'design';
 
-import { SideNav } from './SideNav';
+import { SideNavContainer, SideNavItems } from './SideNav';
 import { Item } from './useSideNav';
 
 export default {
@@ -44,7 +44,9 @@ export const Story = () => {
       style={{ position: 'absolute', overflow: 'hidden' }}
     >
       <Router history={inMemoryHistory}>
-        <SideNav {...props} />
+        <SideNavContainer>
+          <SideNavItems {...props} />
+        </SideNavContainer>
       </Router>
     </Box>
   );

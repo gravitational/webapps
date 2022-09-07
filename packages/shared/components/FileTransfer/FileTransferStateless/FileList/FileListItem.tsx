@@ -15,7 +15,7 @@
  */
 
 import React, { FC, useEffect } from 'react';
-import styled from 'styled-components';
+import styled from 'design/styled';
 import { ButtonIcon, Flex, Text } from 'design';
 import { CircleCheck, Cross, Warning } from 'design/Icon';
 
@@ -114,7 +114,12 @@ const ProgressBackground = styled.div`
   width: 100%;
 `;
 
-const ProgressIndicator = styled.div`
+interface ProgressIndicatorProps {
+  isFailure: boolean;
+  progress: number;
+}
+
+const ProgressIndicator = styled.div<ProgressIndicatorProps>`
   border-radius: 50px;
   background: ${props =>
     props.isFailure

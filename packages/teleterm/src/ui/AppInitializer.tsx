@@ -1,7 +1,7 @@
 import React, { FC, useEffect } from 'react';
 
 import { useAsync } from 'shared/hooks/useAsync';
-import styled from 'styled-components';
+import styled from 'design/styled';
 
 import { useAppContext } from 'teleterm/ui/appContextProvider';
 

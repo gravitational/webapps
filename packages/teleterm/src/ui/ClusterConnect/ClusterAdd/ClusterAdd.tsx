@@ -17,7 +17,7 @@
 import React, { useState } from 'react';
 import * as Alerts from 'design/Alert';
 import { Box, Text, ButtonPrimary, ButtonSecondary } from 'design';
-import FieldInput from 'shared/components/FieldInput';
+import { FieldInput } from 'shared/components/FieldInput';
 import Validation from 'shared/components/Validation';
 import { requiredField } from 'shared/components/Validation/rules';
 import { DialogContent, DialogHeader } from 'design/Dialog';
