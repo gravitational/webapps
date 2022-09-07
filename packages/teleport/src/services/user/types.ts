@@ -35,6 +35,8 @@ export interface UserContext {
   cluster: Cluster;
   accessStrategy: AccessStrategy;
   accessCapabilities: AccessCapabilities;
+  // accessRequestId is the ID of the access request from which additional roles to assume were obtained for the current session.
+  accessRequestId?: string;
 }
 
 export interface Access {
@@ -119,4 +121,7 @@ export type OnboardDiscover = {
   // hasResource is a flag to indicate if user has access to
   // any registered resource.
   hasResource: boolean;
+  // hasVisited is a flag to indicate if user has visited the
+  // discover page.
+  hasVisited?: boolean;
 };

@@ -19,18 +19,22 @@ import styled from 'styled-components';
 import {
   Flex,
   ButtonPrimary,
-  ButtonText,
   Text,
   Box,
   Indicator,
   Input,
+  ButtonText,
 } from 'design';
-import { Danger } from 'design/Alert';
 import * as Icons from 'design/Icon';
 
 import useTeleport from 'teleport/useTeleport';
 
-import { Header, ActionButtons } from '../Shared';
+import {
+  Header,
+  HeaderSubtitle,
+  ActionButtons,
+  ButtonBlueText,
+} from '../Shared';
 
 import { useLoginTrait, State } from './useLoginTrait';
 
@@ -49,6 +53,7 @@ export function LoginTrait({
   dynamicLogins,
   staticLogins,
   addLogin,
+  fetchLoginTraits,
 }: State) {
   const inputRefs = useRef<HTMLInputElement[]>([]);
   const [newLogin, setNewLogin] = useState('');
@@ -76,12 +81,22 @@ export function LoginTrait({
   let $content;
   switch (attempt.status) {
     case 'failed':
-      $content = <Danger>{attempt.statusText}</Danger>;
+      $content = (
+        <>
+          <Text my={3}>
+            <Icons.Warning ml={1} mr={2} color="danger" />
+            Encountered Error: {attempt.statusText}
+          </Text>
+          <ButtonBlueText ml={1} onClick={fetchLoginTraits}>
+            Refetch OS Users
+          </ButtonBlueText>
+        </>
+      );
       break;
 
     case 'processing':
       $content = (
-        <Box textAlign="center" m={10}>
+        <Box mt={4} textAlign="center" height="70px" width="300px">
           <Indicator />
         </Box>
       );
@@ -90,63 +105,82 @@ export function LoginTrait({
     case 'success':
       $content = (
         <>
-          <Text bold mb={2}>
-            Remove or Add OS Usernames
-          </Text>
-          <Box mb={6}>
-            {!hasLogins && (
-              <CheckboxWrapper>
-                <Text
-                  css={`
-                    font-style: italic;
-                  `}
-                >
-                  No OS usernames defined
-                </Text>
+          {!hasLogins && (
+            <CheckboxWrapper>
+              <Text
+                css={`
+                  font-style: italic;
+                  overflow: visible;
+                `}
+              >
+                No OS users added
+              </Text>
+            </CheckboxWrapper>
+          )}
+          {/* static logins cannot be modified */}
+          {staticLogins.map((login, index) => {
+            const id = `${login}${index}`;
+            return (
+              <CheckboxWrapper key={index} className="disabled">
+                <CheckboxInput
+                  type="checkbox"
+                  name={login}
+                  id={id}
+                  defaultChecked
+                />
+                <Label htmlFor={id}>{login}</Label>
               </CheckboxWrapper>
-            )}
-            {/* static logins cannot be modified */}
-            {staticLogins.map((login, index) => {
-              return (
-                <CheckboxWrapper key={index} className="disabled">
-                  <CheckboxInput type="checkbox" name={login} defaultChecked />
-                  <Label htmlFor={login}>{login}</Label>
-                </CheckboxWrapper>
-              );
-            })}
-            {dynamicLogins.map((login, index) => {
-              return (
-                <CheckboxWrapper key={index}>
-                  <CheckboxInput
-                    type="checkbox"
-                    name={login}
-                    ref={el => (inputRefs.current[index] = el)}
-                    defaultChecked
-                  />
-                  <Label htmlFor={login}>{login}</Label>
-                </CheckboxWrapper>
-              );
-            })}
-            {showInputBox ? (
-              <AddLoginInput
-                newLogin={newLogin}
-                addLogin={onAddLogin}
-                setNewLogin={setNewLogin}
-              />
-            ) : (
-              <AddLoginButton setShowInputBox={setShowInputBox} />
-            )}
-          </Box>
-          <ActionButtons onProceed={onProceed} disableProceed={!hasLogins} />
+            );
+          })}
+          {dynamicLogins.map((login, index) => {
+            const id = `${login}${index}`;
+            return (
+              <CheckboxWrapper key={index}>
+                <CheckboxInput
+                  type="checkbox"
+                  name={login}
+                  id={id}
+                  ref={el => (inputRefs.current[index] = el)}
+                  defaultChecked
+                />
+                <Label htmlFor={id}>{login}</Label>
+              </CheckboxWrapper>
+            );
+          })}
+          {showInputBox ? (
+            <AddLoginInput
+              newLogin={newLogin}
+              addLogin={onAddLogin}
+              setNewLogin={setNewLogin}
+            />
+          ) : (
+            <AddLoginButton setShowInputBox={setShowInputBox} />
+          )}
         </>
       );
       break;
   }
 
   return (
-    <Box>
+    <Box maxWidth="700px">
       <Header>Set Up Access</Header>
-      {$content}
+      <HeaderSubtitle>
+        Select the OS users you will use to connect to server.
+      </HeaderSubtitle>
+      <>
+        <Text bold mb={2}>
+          Select OS Users
+        </Text>
+        <Box mb={3}>{$content}</Box>
+        <ActionButtons
+          onProceed={onProceed}
+          disableProceed={
+            attempt.status === 'failed' ||
+            attempt.status === 'processing' ||
+            !hasLogins
+          }
+        />
+      </>
     </Box>
   );
 }
@@ -214,7 +248,7 @@ const AddLoginButton = ({
         }
       `}
     />
-    Add an OS Username
+    Add new OS User
   </ButtonText>
 );
 

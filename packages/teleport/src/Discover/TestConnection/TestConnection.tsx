@@ -16,13 +16,13 @@
 
 import React, { useState } from 'react';
 import styled from 'styled-components';
-import { ButtonOutlined, Text, Box, LabelInput, Flex } from 'design';
+import { ButtonSecondary, Text, Box, LabelInput, Flex } from 'design';
 import * as Icons from 'design/Icon';
 import Select from 'shared/components/Select';
 
 import useTeleport from 'teleport/useTeleport';
 
-import { Header, ActionButtons, TextIcon } from '../Shared';
+import { Header, ActionButtons, TextIcon, HeaderSubtitle } from '../Shared';
 
 import { useTestConnection, State } from './useTestConnection';
 
@@ -59,11 +59,7 @@ export function TestConnection({
         Testing in-progress
       </TextIcon>
     );
-  }
-
-  let diagnosisStateBorderColor = 'transparent';
-  if (attempt.status === 'failed' || (diagnosis && !diagnosis.success)) {
-    diagnosisStateBorderColor = 'danger';
+  } else if (attempt.status === 'failed' || (diagnosis && !diagnosis.success)) {
     $diagnosisStateComponent = (
       <TextIcon>
         <Icons.Warning ml={1} color="danger" />
@@ -71,7 +67,6 @@ export function TestConnection({
       </TextIcon>
     );
   } else if (attempt.status === 'success' && diagnosis?.success) {
-    diagnosisStateBorderColor = 'success';
     $diagnosisStateComponent = (
       <TextIcon>
         <Icons.CircleCheck ml={1} color="success" />
@@ -85,12 +80,16 @@ export function TestConnection({
   return (
     <Box>
       <Header>Test Connection</Header>
+      <HeaderSubtitle>
+        Verify that you can successfully connect to the server you just added.
+      </HeaderSubtitle>
       <StyledBox mb={5}>
-        <Text bold mb={3}>
-          Step 1
+        <Text bold>Step 1</Text>
+        <Text typography="subtitle1" mb={3}>
+          Pick the OS user to test
         </Text>
         <Box width="320px">
-          <LabelInput>Select OS Username</LabelInput>
+          <LabelInput>Select Login</LabelInput>
           <Select
             value={selectedOpt}
             options={usernameOpts}
@@ -100,48 +99,53 @@ export function TestConnection({
         </Box>
       </StyledBox>
       <StyledBox mb={5}>
-        <Text bold mb={3}>
-          Step 2
+        <Text bold>Step 2</Text>
+        <Text typography="subtitle1" mb={3}>
+          Verify that the server is accessible
         </Text>
-        <Flex alignItems="center">
-          <StyledButtonOutline
+        <Flex alignItems="center" mt={3}>
+          <ButtonSecondary
+            width="200px"
             onClick={() => runConnectionDiagnostic(selectedOpt.value)}
             disabled={attempt.status === 'processing'}
           >
             {diagnosis ? 'Restart Test' : 'Test Connection'}
-          </StyledButtonOutline>
+          </ButtonSecondary>
           <Box ml={4}>{$diagnosisStateComponent}</Box>
         </Flex>
         {showDiagnosisOutput && (
-          <Box
-            mt={4}
-            bg="rgba(255, 255, 255, 0.05)"
-            p={3}
-            borderRadius={3}
-            border={2}
-            borderColor={diagnosisStateBorderColor}
-          >
-            <Text bold>Output</Text>
+          <Box mt={3}>
             {attempt.status === 'failed' &&
-              `Failed to Start Testing: ${attempt.statusText}`}
+              `Encountered Error: ${attempt.statusText}`}
             {attempt.status === 'success' && (
               <Box>
-                {diagnosis.traces.map(t => {
-                  if (t.status === 'failed') {
+                {diagnosis.traces.map((trace, index) => {
+                  if (trace.status === 'failed') {
                     return (
                       <>
                         <TextIcon>
-                          <Icons.Warning mr={1} color="danger" />
-                          {t.details}
+                          <Icons.CircleCross mr={1} color="danger" />
+                          {trace.details}
                         </TextIcon>
-                        <Box mt={2}>{t.error}</Box>
+                        <Box mt={2}>{trace.error}</Box>
                       </>
                     );
                   }
+                  if (trace.status === 'success') {
+                    return (
+                      <TextIcon key={index}>
+                        <Icons.CircleCheck mr={1} color="success" />
+                        {trace.details}
+                      </TextIcon>
+                    );
+                  }
+
+                  // For whatever reason the status is not the value
+                  // of failed or success.
                   return (
-                    <TextIcon>
-                      <Icons.CircleCheck mr={1} color="success" />
-                      {t.details}
+                    <TextIcon key={index}>
+                      <Icons.Question mr={1} />
+                      {trace.details}
                     </TextIcon>
                   );
                 })}
@@ -151,15 +155,17 @@ export function TestConnection({
         )}
       </StyledBox>
       <StyledBox>
-        <Text bold mb={3}>
-          Step 3
+        <Text bold>Step 3</Text>
+        <Text typography="subtitle1" mb={3}>
+          Connect to the server
         </Text>
-        <StyledButtonOutline
+        <ButtonSecondary
+          width="200px"
           onClick={() => startSshSession(selectedOpt.value)}
           disabled={attempt.status !== 'success' || !diagnosis?.success}
         >
-          Start SSH Session
-        </StyledButtonOutline>
+          Start Session
+        </ButtonSecondary>
       </StyledBox>
       <ActionButtons
         onProceed={nextStep}
@@ -175,16 +181,4 @@ const StyledBox = styled(Box)`
   background-color: rgba(255, 255, 255, 0.05);
   border-radius: 8px;
   padding: 20px;
-`;
-
-const StyledButtonOutline = styled(ButtonOutlined)`
-  width: 200px;
-  opacity: 1;
-  color: #a8afb2;
-  border-color: #a8afb2;
-
-  &:disabled {
-    opacity: 0.5;
-    pointer-events: none;
-  }
 `;

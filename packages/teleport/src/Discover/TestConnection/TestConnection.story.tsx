@@ -15,6 +15,7 @@
  */
 
 import React from 'react';
+import { MemoryRouter } from 'react-router';
 
 import { TestConnection } from './TestConnection';
 
@@ -25,14 +26,22 @@ export default {
   title: 'Teleport/Discover/TestConnection',
 };
 
-export const LoadedInit = () => <TestConnection {...props} />;
+export const LoadedInit = () => (
+  <MemoryRouter>
+    <TestConnection {...props} />
+  </MemoryRouter>
+);
 
 export const Processing = () => (
-  <TestConnection {...props} attempt={{ status: 'processing' }} />
+  <MemoryRouter>
+    <TestConnection {...props} attempt={{ status: 'processing' }} />
+  </MemoryRouter>
 );
 
 export const LoadedWithDiagnosisSuccess = () => (
-  <TestConnection {...props} diagnosis={mockDiagnosis} />
+  <MemoryRouter>
+    <TestConnection {...props} diagnosis={mockDiagnosis} />
+  </MemoryRouter>
 );
 
 export const LoadedWithDiagnosisFailure = () => {
@@ -45,19 +54,26 @@ export const LoadedWithDiagnosisFailure = () => {
         id: '',
         traceType: 'some trace type',
         status: 'failed',
-        details: 'Some failed detail.',
+        details:
+          'Invalid user. Please ensure the principal "debian" is a valid Linux login in the target node. Output from Node: Failed to launch: user: unknown user debian.',
         error: 'ssh: handshake failed: EOF',
       } as ConnectionDiagnosticTrace,
     ],
   };
-  return <TestConnection {...props} diagnosis={diagnosisWithErr} />;
+  return (
+    <MemoryRouter>
+      <TestConnection {...props} diagnosis={diagnosisWithErr} />
+    </MemoryRouter>
+  );
 };
 
 export const Failed = () => (
-  <TestConnection
-    {...props}
-    attempt={{ status: 'failed', statusText: 'some error message' }}
-  />
+  <MemoryRouter>
+    <TestConnection
+      {...props}
+      attempt={{ status: 'failed', statusText: 'some error message' }}
+    />
+  </MemoryRouter>
 );
 
 const mockDiagnosis = {
@@ -67,37 +83,31 @@ const mockDiagnosis = {
   message: 'some diagnosis message',
   traces: [
     {
-      id: '',
       traceType: 'rbac node',
       status: 'success',
       details: 'Resource exists.',
     },
     {
-      id: '',
       traceType: 'network connectivity',
       status: 'success',
       details: 'Host is alive and reachable.',
     },
     {
-      id: '',
       traceType: 'rbac principal',
       status: 'success',
       details: 'Successfully authenticated.',
     },
     {
-      id: '',
       traceType: 'node ssh server',
       status: 'success',
       details: 'Established an SSH connection.',
     },
     {
-      id: '',
       traceType: 'node ssh session',
       status: 'success',
       details: 'Created an SSH session.',
     },
     {
-      id: '',
       traceType: 'node principal',
       status: 'success',
       details: 'User exists message.',
