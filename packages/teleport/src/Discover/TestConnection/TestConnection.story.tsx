@@ -67,6 +67,12 @@ export const LoadedWithDiagnosisFailure = () => {
   );
 };
 
+export const LoadedNoPerm = () => (
+  <MemoryRouter>
+    <TestConnection {...props} canTestConnection={false} />
+  </MemoryRouter>
+);
+
 export const Failed = () => (
   <MemoryRouter>
     <TestConnection
@@ -125,4 +131,5 @@ const props: State = {
   runConnectionDiagnostic: () => null,
   nextStep: () => null,
   diagnosis: null,
+  canTestConnection: true,
 };

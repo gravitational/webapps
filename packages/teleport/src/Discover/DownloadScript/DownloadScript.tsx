@@ -31,6 +31,7 @@ import {
   ActionButtons,
   TextIcon,
   ButtonBlueText,
+  Mark,
 } from '../Shared';
 
 import { useDownloadScript } from './useDownloadScript';
@@ -192,7 +193,7 @@ const TimeoutError = ({
         <li>
           The Teleport SSH Service could not join this Teleport cluster. Check
           the logs for errors by running <br />
-          `journalctl status teleport`
+          <Mark>journalctl status teleport</Mark>
         </li>
       </ul>
     </Box>

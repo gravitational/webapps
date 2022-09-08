@@ -22,6 +22,7 @@ import { MemoryRouter } from 'react-router';
 
 import TeleportContext from 'teleport/teleportContext';
 import ContextProvider from 'teleport/TeleportContextProvider';
+import makeAcl from 'teleport/services/user/makeAcl';
 
 import LoginTrait from './LoginTrait';
 
@@ -45,6 +46,7 @@ describe('login trait comp behavior', () => {
   );
 
   test('add a new login with no existing logins', async () => {
+    ctx.storeUser.setState(userContext);
     jest.spyOn(userSvc, 'fetchUser').mockResolvedValue(mockUser);
 
     render(<Component />);
@@ -125,4 +127,9 @@ const mockedNodeMeta: NodeMeta = {
     addr: '',
     tunnel: false,
   },
+};
+
+const userContext = {
+  acl: makeAcl({ users: { edit: true } }),
+  authType: 'local' as const,
 };

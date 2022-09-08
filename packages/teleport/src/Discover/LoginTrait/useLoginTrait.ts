@@ -91,6 +91,8 @@ export function useLoginTrait({ ctx, props }: Props) {
     staticLogins,
     addLogin,
     fetchLoginTraits,
+    isSsoUser: ctx.storeUser.state.authType === 'sso',
+    canEditUser: ctx.storeUser.getUserAccess().edit,
   };
 }
 

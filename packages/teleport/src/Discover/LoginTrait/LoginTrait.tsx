@@ -34,6 +34,7 @@ import {
   HeaderSubtitle,
   ActionButtons,
   ButtonBlueText,
+  Mark,
 } from '../Shared';
 
 import { useLoginTrait, State } from './useLoginTrait';
@@ -54,12 +55,16 @@ export function LoginTrait({
   staticLogins,
   addLogin,
   fetchLoginTraits,
+  canEditUser,
+  isSsoUser,
 }: State) {
   const inputRefs = useRef<HTMLInputElement[]>([]);
   const [newLogin, setNewLogin] = useState('');
   const [showInputBox, setShowInputBox] = useState(false);
 
   const hasLogins = staticLogins.length > 0 || dynamicLogins.length > 0;
+  const hasNoLoginAndPerms = !hasLogins && !canEditUser;
+  const canAddLoginTraits = !isSsoUser && canEditUser;
 
   function onAddLogin() {
     addLogin(newLogin);
@@ -103,61 +108,107 @@ export function LoginTrait({
       break;
 
     case 'success':
-      $content = (
-        <>
-          {!hasLogins && (
-            <CheckboxWrapper>
-              <Text
-                css={`
-                  font-style: italic;
-                  overflow: visible;
-                `}
-              >
-                No OS users added
+      if (isSsoUser && !hasLogins) {
+        $content = (
+          <Text mt={4} width="100px">
+            You don’t have any allowed logins.
+            <br />
+            Please ask your Teleport administrator to update your role and add
+            the required logins.
+          </Text>
+        );
+      } else if (!canAddLoginTraits && !hasLogins) {
+        $content = (
+          <Text mt={4} width="100px">
+            You don’t have any allowed logins and permission to add new logins.
+            <br />
+            Please ask your Teleport administrator to update your role to either
+            add the required logins or add the rule <Mark>users.update</Mark>.
+          </Text>
+        );
+      } else {
+        $content = (
+          <>
+            {!hasLogins && (
+              <CheckboxWrapper>
+                <Text
+                  css={`
+                    font-style: italic;
+                    overflow: visible;
+                  `}
+                >
+                  No OS users added
+                </Text>
+              </CheckboxWrapper>
+            )}
+            {/* static logins cannot be modified */}
+            {staticLogins.map((login, index) => {
+              const id = `${login}${index}`;
+              return (
+                <CheckboxWrapper key={index} className="disabled">
+                  <CheckboxInput
+                    type="checkbox"
+                    name={login}
+                    id={id}
+                    defaultChecked
+                  />
+                  <Label htmlFor={id}>{login}</Label>
+                </CheckboxWrapper>
+              );
+            })}
+            {dynamicLogins.map((login, index) => {
+              const id = `${login}${index}`;
+              return (
+                <CheckboxWrapper
+                  key={index}
+                  className={!canAddLoginTraits ? 'disabled' : ''}
+                >
+                  <CheckboxInput
+                    type="checkbox"
+                    name={login}
+                    id={id}
+                    ref={el => (inputRefs.current[index] = el)}
+                    defaultChecked
+                  />
+                  <Label htmlFor={id}>{login}</Label>
+                </CheckboxWrapper>
+              );
+            })}
+            {canAddLoginTraits && (
+              <>
+                {showInputBox ? (
+                  <AddLoginInput
+                    newLogin={newLogin}
+                    addLogin={onAddLogin}
+                    setNewLogin={setNewLogin}
+                  />
+                ) : (
+                  <AddLoginButton setShowInputBox={setShowInputBox} />
+                )}
+              </>
+            )}
+            {!isSsoUser && !canEditUser && (
+              <Text mt={4}>
+                You don't have permission to add new logins.
+                <br />
+                If you don't see the login that you require, please ask your
+                Teleport administrator to update your role to either add the
+                required logins or add the rule <Mark>users.update</Mark>.
               </Text>
-            </CheckboxWrapper>
-          )}
-          {/* static logins cannot be modified */}
-          {staticLogins.map((login, index) => {
-            const id = `${login}${index}`;
-            return (
-              <CheckboxWrapper key={index} className="disabled">
-                <CheckboxInput
-                  type="checkbox"
-                  name={login}
-                  id={id}
-                  defaultChecked
-                />
-                <Label htmlFor={id}>{login}</Label>
-              </CheckboxWrapper>
-            );
-          })}
-          {dynamicLogins.map((login, index) => {
-            const id = `${login}${index}`;
-            return (
-              <CheckboxWrapper key={index}>
-                <CheckboxInput
-                  type="checkbox"
-                  name={login}
-                  id={id}
-                  ref={el => (inputRefs.current[index] = el)}
-                  defaultChecked
-                />
-                <Label htmlFor={id}>{login}</Label>
-              </CheckboxWrapper>
-            );
-          })}
-          {showInputBox ? (
-            <AddLoginInput
-              newLogin={newLogin}
-              addLogin={onAddLogin}
-              setNewLogin={setNewLogin}
-            />
-          ) : (
-            <AddLoginButton setShowInputBox={setShowInputBox} />
-          )}
-        </>
-      );
+            )}
+            {isSsoUser && (
+              <Text mt={4}>
+                SSO users are not able to add new logins.
+                <br />
+                If you don't see the login that you require, please ask your
+                Teleport administrator to update your role to add the required
+                logins.
+              </Text>
+            )}
+          </>
+        );
+      }
+
       break;
   }
 
@@ -168,16 +219,14 @@ export function LoginTrait({
         Select the OS users you will use to connect to server.
       </HeaderSubtitle>
       <>
-        <Text bold mb={2}>
-          Select OS Users
-        </Text>
         <Box mb={3}>{$content}</Box>
         <ActionButtons
           onProceed={onProceed}
           disableProceed={
             attempt.status === 'failed' ||
             attempt.status === 'processing' ||
-            !hasLogins
+            hasNoLoginAndPerms ||
+            (canAddLoginTraits && !hasLogins)
           }
         />
       </>
