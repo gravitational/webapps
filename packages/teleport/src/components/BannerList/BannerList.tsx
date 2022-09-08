@@ -30,6 +30,7 @@ export const BannerList = ({
   banners = [],
   children,
   customBanners = [],
+  onBannerDismiss = () => {},
 }: Props) => {
   const [bannerData, setBannerData] = useState<{ [id: string]: BannerType }>(
     {}
@@ -38,7 +39,6 @@ export const BannerList = ({
   useEffect(() => {
     const newList = {};
     banners.forEach(banner => (newList[banner.id] = { ...banner }));
-    Object.assign(newList, bannerData);
     setBannerData(newList);
   }, [banners]);
 
@@ -47,6 +47,7 @@ export const BannerList = ({
       ...bannerData,
       [id]: { ...bannerData[id], hidden: true },
     };
+    onBannerDismiss(id);
     setBannerData(newList);
   };
 
@@ -82,6 +83,7 @@ type Props = {
   banners: BannerType[];
   children?: ReactNode;
   customBanners?: ReactNode[];
+  onBannerDismiss?: (string) => void;
 };
 
 export type BannerType = {

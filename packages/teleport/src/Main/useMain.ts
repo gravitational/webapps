@@ -24,7 +24,7 @@ import { useAlerts } from 'teleport/components/BannerList/useAlerts';
 export default function useMain(features: Feature[]) {
   const ctx = useTeleport();
   const { attempt, setAttempt, run } = useAttempt('processing');
-  const alerts = useAlerts();
+  const { alerts, dismissAlert } = useAlerts();
 
   useEffect(() => {
     // Two routes that uses this hook that can trigger this effect:
@@ -49,6 +49,7 @@ export default function useMain(features: Feature[]) {
     alerts,
     customBanners: [],
     ctx,
+    dismissAlert,
     status: attempt.status,
     statusText: attempt.statusText,
   };

@@ -63,6 +63,7 @@ export default function Container() {
 export function Discover({
   alerts = [],
   customBanners = [],
+  dismissAlert,
   initAttempt,
   userMenuItems,
   username,
@@ -96,7 +97,11 @@ export function Discover({
   }));
 
   return (
-    <BannerList banners={banners} customBanners={customBanners}>
+    <BannerList
+      banners={banners}
+      customBanners={customBanners}
+      onBannerDismiss={dismissAlert}
+    >
       <LocalMainContainer>
         <Prompt
           message="Are you sure you want to exit the “Add New Resource” workflow? You’ll have to start from the beginning next time."

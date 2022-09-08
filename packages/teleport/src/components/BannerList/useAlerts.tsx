@@ -24,9 +24,43 @@ import type { ClusterAlert } from 'teleport/services/alerts';
 
 const logger = Logger.create('ClusterAlerts');
 
+const DISABLED_BANNERS = 'disabledAlerts';
+
+function addHours(date: number, hours: number) {
+  return date + hours * 60 * 60 * 1000;
+}
+
+function getItem(key: string): string | null {
+  return window.localStorage.getItem(key);
+}
+
+function setItem(key: string, data: string) {
+  window.localStorage.setItem(key, data);
+}
+
+type DismissedAlert = {
+  [alertName: string]: string;
+};
+
 export function useAlerts() {
   const [alerts, setAlerts] = useState<ClusterAlert[]>([]);
+  const [dismissedAlerts, setDismissedAlerts] = useState<DismissedAlert[]>([]);
   const { clusterId } = useStickyClusterId();
+
+  useEffect(() => {
+    const disabledAlerts = getItem(DISABLED_BANNERS);
+    if (disabledAlerts) {
+      // Loop through the existing ones and remove those that have passed 24h.
+      const data = JSON.parse(disabledAlerts);
+      Object.entries(data).forEach(([name, expiry]) => {
+        if (new Date().getTime() > expiry) {
+          delete data[name];
+        }
+      });
+      setDismissedAlerts(data);
+      setItem(DISABLED_BANNERS, JSON.stringify(data));
+    }
+  }, []);
 
   useEffect(() => {
     fetchClusterAlerts(clusterId)
@@ -34,13 +68,30 @@ export function useAlerts() {
         if (!res) {
           return;
         }
+        const dismissedNames = Object.keys(dismissedAlerts);
 
-        setAlerts(res);
+        const newAlerts = res.filter(alert => {
+          return !dismissedNames.includes(alert.metadata.name);
+        });
+        setAlerts(newAlerts);
       })
       .catch(err => {
         logger.error(err);
       });
-  }, [clusterId]);
+  }, [clusterId, dismissedAlerts]);
 
-  return alerts;
+  function dismissAlert(name: string) {
+    const disabledAlerts = getItem(DISABLED_BANNERS);
+    let data = {};
+    if (disabledAlerts) {
+      data = JSON.parse(disabledAlerts);
+    }
+    data[name] = addHours(new Date().getTime(), 24);
+    setItem(DISABLED_BANNERS, JSON.stringify(data));
+  }
+
+  return {
+    alerts,
+    dismissAlert,
+  };
 }

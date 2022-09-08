@@ -88,6 +88,7 @@ function useMainStory() {
     alerts: [],
     history,
     ctx,
+    dismissAlert: () => {},
     status,
     statusText,
   };
