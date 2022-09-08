@@ -45,45 +45,14 @@ describe('components/BannerList/Banner', () => {
   });
 
   it('hides banner when the banner close is clicked', () => {
+    const dismiss = jest.fn();
     banners.pop();
-    render(<BannerList banners={banners} />);
+    render(<BannerList banners={banners} onBannerDismiss={dismiss} />);
     expect(screen.getByText(banners[0].message)).toBeInTheDocument();
     fireEvent.click(screen.getByRole('button'));
     expect(screen.queryByText(banners[0].message)).not.toBeInTheDocument();
-  });
-
-  it('merges new banners with the old banner list', async () => {
-    const { rerender } = render(<BannerList banners={banners} />);
-    const newBanners: BannerType[] = [
-      ...banners,
-      {
-        message: 'I am eve banner',
-        severity: 'danger',
-        id: 'test-banner3',
-      },
-    ];
-    rerender(<BannerList banners={newBanners} />);
-    expect(screen.getByText(newBanners[2].message)).toBeInTheDocument();
-  });
-
-  it('maintains hidden banners when merging banner list', async () => {
-    const { rerender } = render(<BannerList banners={banners} />);
-    expect(screen.getByText(banners[0].message)).toBeInTheDocument();
-    fireEvent.click(screen.getAllByRole('button')[0]);
-    expect(screen.queryByText(banners[0].message)).not.toBeInTheDocument();
-
-    const newBanners: BannerType[] = [
-      ...banners,
-      {
-        message: 'I am eve banner',
-        severity: 'danger',
-        id: 'test-banner3',
-      },
-    ];
-    rerender(<BannerList banners={newBanners} />);
-    expect(screen.queryByText(newBanners[0].message)).not.toBeInTheDocument();
-    expect(screen.getByText(newBanners[1].message)).toBeInTheDocument();
-    expect(screen.getByText(newBanners[2].message)).toBeInTheDocument();
+    expect(dismiss).toHaveBeenCalledTimes(1);
+    expect(dismiss).toHaveBeenCalledWith('test-banner1');
   });
 
   it('supports rendering children', () => {
