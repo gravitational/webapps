@@ -216,7 +216,7 @@ exports[`failed 1`] = `
   <div
     class="c2"
   >
-    Install and configure the Teleport SSH Service on the server you want to add. 
+    Install and configure the Teleport SSH Service.
     <br />
     Run the following command on the server you want to add.
   </div>
@@ -573,7 +573,7 @@ exports[`polling error state 1`] = `
   <div
     class="c2"
   >
-    Install and configure the Teleport SSH Service on the server you want to add. 
+    Install and configure the Teleport SSH Service.
     <br />
     Run the following command on the server you want to add.
   </div>
@@ -909,7 +909,7 @@ exports[`polling state 1`] = `
   <div
     class="c2"
   >
-    Install and configure the Teleport SSH Service on the server you want to add. 
+    Install and configure the Teleport SSH Service.
     <br />
     Run the following command on the server you want to add.
   </div>
@@ -1213,7 +1213,7 @@ exports[`polling success state 1`] = `
   <div
     class="c2"
   >
-    Install and configure the Teleport SSH Service on the server you want to add. 
+    Install and configure the Teleport SSH Service.
     <br />
     Run the following command on the server you want to add.
   </div>

@@ -28,7 +28,9 @@ import {
   TextIcon,
   HeaderSubtitle,
   Mark,
+  ReadOnlyYamlEditor,
 } from '../Shared';
+import { ruleConnectionDiagnostic } from '../templates';
 
 import { useTestConnection, State } from './useTestConnection';
 
@@ -124,14 +126,17 @@ export function TestConnection({
               <Box ml={4}>{$diagnosisStateComponent}</Box>
             </>
           ) : (
-            <Text>
-              You don't have permission to test connection.
-              <br />
-              Please ask your Teleport administrator to update your role and add
-              the rules <Mark>connection_diagnostic.update</Mark>,{' '}
-              <Mark>connection_diagnostic.create</Mark>, and{' '}
-              <Mark>connection_diagnostic.read</Mark>.
-            </Text>
+            <Box>
+              <Text>
+                You don't have permission to test connection.
+                <br />
+                Please ask your Teleport administrator to update your role and
+                add the <Mark>connection_diagnostic</Mark> rule:
+              </Text>
+              <Flex minHeight="155px" mt={3}>
+                <ReadOnlyYamlEditor content={ruleConnectionDiagnostic} />
+              </Flex>
+            </Box>
           )}
         </Flex>
         {showDiagnosisOutput && (
@@ -144,11 +149,12 @@ export function TestConnection({
                   if (trace.status === 'failed') {
                     return (
                       <>
-                        <TextIcon>
+                        <TextIcon alignItems="baseline">
                           <Icons.CircleCross mr={1} color="danger" />
                           {trace.details}
+                          <br />
+                          {trace.error}
                         </TextIcon>
-                        <Box mt={2}>{trace.error}</Box>
                       </>
                     );
                   }

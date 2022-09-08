@@ -57,8 +57,8 @@ export function DownloadScript({
     <Box>
       <Header>Configure Resource</Header>
       <HeaderSubtitle>
-        Install and configure the Teleport SSH Service on the server you want to
-        add. <br />
+        Install and configure the Teleport SSH Service.
+        <br />
         Run the following command on the server you want to add.
       </HeaderSubtitle>
       <ScriptBox
