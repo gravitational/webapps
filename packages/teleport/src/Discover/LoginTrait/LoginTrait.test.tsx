@@ -40,6 +40,8 @@ describe('login trait comp behavior', () => {
           agentMeta={mockedNodeMeta}
           updateAgentMeta={() => null}
           nextStep={() => null}
+          selectedAgentKind="server"
+          onSelectResource={() => null}
         />
       </ContextProvider>
     </MemoryRouter>

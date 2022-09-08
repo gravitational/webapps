@@ -43,12 +43,26 @@ import type { AgentKind } from './useDiscover';
 import type { AgentStepComponent } from './types';
 
 export const agentViews: Record<AgentKind, AgentStepComponent[]> = {
-  app: [],
-  db: [],
-  desktop: [],
-  kube: [],
-  node: [SelectResource, DownloadScript, LoginTrait, TestConnection, Finished],
+  application: [SelectResource],
+  database: [SelectResource],
+  desktop: [SelectResource],
+  kubernetes: [SelectResource],
+  server: [
+    SelectResource,
+    DownloadScript,
+    LoginTrait,
+    TestConnection,
+    Finished,
+  ],
 };
+
+const agentStepTitles: string[] = [
+  'Select Resource Type',
+  'Configure Resource',
+  'Set Up Access',
+  'Test Connection',
+  '',
+];
 
 export default function Container() {
   const [features] = useState(() => getFeatures());
@@ -63,11 +77,11 @@ export function Discover({
   userMenuItems,
   username,
   currentStep,
-  selectedAgentKind = 'node',
   logout,
   // onSelectResource,
   ...agentProps
 }: State) {
+  const selectedAgentKind = agentProps.selectedAgentKind;
   let AgentComponent;
   if (selectedAgentKind) {
     AgentComponent = agentViews[selectedAgentKind][currentStep];
@@ -92,7 +106,13 @@ export function Discover({
       )}
       {initAttempt.status === 'success' && (
         <>
-          <SideNavAgentConnect currentStep={currentStep} />
+          <SideNavAgentConnect
+            currentStep={currentStep}
+            // TODO: hack to not show titles for unfinished flows.
+            stepTitles={
+              agentViews[selectedAgentKind].length > 1 ? agentStepTitles : []
+            }
+          />
           <main.HorizontalSplit>
             <TopBarContainer>
               <Text typography="h5" bold>
@@ -114,15 +134,13 @@ export function Discover({
   );
 }
 
-const agentStepTitles: string[] = [
-  'Select Resource Type',
-  'Configure Resource',
-  'Set Up Access',
-  'Test Connection',
-  '',
-];
-
-function SideNavAgentConnect({ currentStep }: { currentStep: number }) {
+function SideNavAgentConnect({
+  currentStep,
+  stepTitles,
+}: {
+  currentStep: number;
+  stepTitles: string[];
+}) {
   return (
     <StyledNav>
       <sideNav.Logo />
@@ -147,29 +165,31 @@ function SideNavAgentConnect({ currentStep }: { currentStep: number }) {
             </Flex>
             <Text bold>Add New Resource</Text>
           </Flex>
-          <Box ml={4} mt={4}>
-            {agentStepTitles.map((stepTitle, index) => {
-              let className = '';
-              if (currentStep > index) {
-                className = 'checked';
-              } else if (currentStep === index) {
-                className = 'active';
-              }
+          {stepTitles.length > 0 && (
+            <Box ml={4} mt={4}>
+              {stepTitles.map((stepTitle, index) => {
+                let className = '';
+                if (currentStep > index) {
+                  className = 'checked';
+                } else if (currentStep === index) {
+                  className = 'active';
+                }
 
-              // All flows will have a finished step that
-              // does not have a title.
-              if (!stepTitle) {
-                return null;
-              }
+                // All flows will have a finished step that
+                // does not have a title.
+                if (!stepTitle) {
+                  return null;
+                }
 
-              return (
-                <StepsContainer className={className} key={stepTitle}>
-                  <Bullet />
-                  {stepTitle}
-                </StepsContainer>
-              );
-            })}
-          </Box>
+                return (
+                  <StepsContainer className={className} key={stepTitle}>
+                    <Bullet />
+                    {stepTitle}
+                  </StepsContainer>
+                );
+              })}
+            </Box>
+          )}
         </Box>
       </StyledNavContent>
     </StyledNav>

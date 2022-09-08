@@ -24,6 +24,8 @@ export type AgentStepProps = {
   updateAgentMeta: State['updateAgentMeta'];
   // nextStep increments the `currentStep` to go to the next step.
   nextStep: State['nextStep'];
+  selectedAgentKind: State['selectedAgentKind'];
+  onSelectResource: State['onSelectResource'];
 };
 
 export type AgentStepComponent = (props: AgentStepProps) => JSX.Element;
