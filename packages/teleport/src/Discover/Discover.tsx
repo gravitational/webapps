@@ -29,6 +29,7 @@ import * as main from 'teleport/Main';
 import * as sideNav from 'teleport/SideNav';
 import { TopBarContainer } from 'teleport/TopBar';
 import { FeatureBox } from 'teleport/components/Layout';
+import cfg from 'teleport/config';
 
 import { useDiscover, State } from './useDiscover';
 
@@ -75,7 +76,10 @@ export function Discover({
   return (
     <MainContainer>
       <Prompt
-        message="Are you sure you want to exit the “Add New Resource” workflow? You’ll have to start from the beginning next time."
+        message={nextLocation => {
+          if (nextLocation.pathname === cfg.routes.discover) return true;
+          return 'Are you sure you want to exit the “Add New Resource” workflow? You’ll have to start from the beginning next time.';
+        }}
         when={currentStep > 0}
       />
       {initAttempt.status === 'processing' && (
