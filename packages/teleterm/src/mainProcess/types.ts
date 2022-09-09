@@ -9,6 +9,7 @@ export type RuntimeSettings = {
   // Points to a directory that should be prepended to PATH. Only present in the packaged version.
   binDir: string | undefined;
   certsDir: string;
+  kubeConfigsDir: string;
   defaultShell: string;
   platform: Platform;
   tshd: {
