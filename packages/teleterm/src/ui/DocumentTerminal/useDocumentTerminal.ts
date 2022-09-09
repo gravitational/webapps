@@ -27,6 +27,8 @@ import { useWorkspaceDocumentsService } from 'teleterm/ui/Documents';
 import { routing } from 'teleterm/ui/uri';
 import { PtyCommand, PtyProcessCreationStatus } from 'teleterm/services/pty';
 
+import { unique } from 'teleterm/ui/utils';
+
 export default function useDocumentTerminal(doc: Doc) {
   const ctx = useAppContext();
   const workspaceDocumentsService = useWorkspaceDocumentsService();
@@ -182,6 +184,7 @@ function createCmd(
       ...doc,
       proxyHost,
       clusterName,
+      kubeConfigName: `${doc.kubeId}-${unique(5)}`,
       kind: 'pty.tsh-kube-login',
     };
   }

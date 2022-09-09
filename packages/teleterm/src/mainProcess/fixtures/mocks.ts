@@ -8,8 +8,9 @@ export class MockMainProcessClient implements MainProcessClient {
       platform: 'darwin',
       dev: true,
       userDataDir: '',
-      binDir: undefined,
-      certsDir: undefined,
+      binDir: '',
+      certsDir: '',
+      kubeConfigsDir: '',
       defaultShell: '',
       tshd: {
         insecure: true,
