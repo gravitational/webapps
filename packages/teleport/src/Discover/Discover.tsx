@@ -32,7 +32,6 @@ import { FeatureBox } from 'teleport/components/Layout';
 import cfg from 'teleport/config';
 
 import { useDiscover, State } from './useDiscover';
-
 import { SelectResource } from './SelectResource';
 import { DownloadScript } from './DownloadScript';
 import { LoginTrait } from './LoginTrait';
