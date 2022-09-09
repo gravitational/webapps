@@ -30,8 +30,10 @@ import { ImmutableStore } from '../immutableStore';
 import { TrackedConnectionOperationsFactory } from './trackedConnectionOperationsFactory';
 import {
   createGatewayConnection,
+  createKubeConnection,
   createServerConnection,
   getGatewayConnectionByDocument,
+  getKubeConnectionByDocument,
   getServerConnectionByDocument,
 } from './trackedConnectionUtils';
 import {
@@ -95,6 +97,10 @@ export class ConnectionTrackerService extends ImmutableStore<ConnectionTrackerSt
       case 'doc.terminal_tsh_node':
         return this.state.connections.find(
           getServerConnectionByDocument(document)
+        );
+      case 'doc.terminal_tsh_kube':
+        return this.state.connections.find(
+          getKubeConnectionByDocument(document)
         );
       case 'doc.gateway':
         return this.state.connections.find(
@@ -163,7 +169,10 @@ export class ConnectionTrackerService extends ImmutableStore<ConnectionTrackerSt
         })
         .filter(Boolean)
         .filter(
-          d => d.kind === 'doc.gateway' || d.kind === 'doc.terminal_tsh_node'
+          d =>
+            d.kind === 'doc.gateway' ||
+            d.kind === 'doc.terminal_tsh_node' ||
+            d.kind === 'doc.terminal_tsh_kube'
         );
 
       if (!docs) {
@@ -175,7 +184,7 @@ export class ConnectionTrackerService extends ImmutableStore<ConnectionTrackerSt
 
         switch (doc.kind) {
           // process gateway connections
-          case 'doc.gateway':
+          case 'doc.gateway': {
             if (!doc.port) {
               break;
             }
@@ -194,10 +203,10 @@ export class ConnectionTrackerService extends ImmutableStore<ConnectionTrackerSt
                 doc.gatewayUri
               );
             }
-
             break;
+          }
           // process tsh connections
-          case 'doc.terminal_tsh_node':
+          case 'doc.terminal_tsh_node': {
             const tshConn = draft.connections.find(
               getServerConnectionByDocument(doc)
             );
@@ -209,6 +218,21 @@ export class ConnectionTrackerService extends ImmutableStore<ConnectionTrackerSt
               draft.connections.push(newItem);
             }
             break;
+          }
+          // process kube connections
+          case 'doc.terminal_tsh_kube': {
+            const kubeConn = draft.connections.find(
+              getKubeConnectionByDocument(doc)
+            );
+
+            if (kubeConn) {
+              kubeConn.connected = doc.status === 'connected';
+            } else {
+              const newItem = createKubeConnection(doc);
+              draft.connections.push(newItem);
+            }
+            break;
+          }
         }
       }
     });

@@ -4,11 +4,13 @@ import { WorkspacesService } from 'teleterm/ui/services/workspacesService';
 
 import {
   getGatewayDocumentByConnection,
+  getKubeDocumentByConnection,
   getServerDocumentByConnection,
 } from './trackedConnectionUtils';
 import {
   TrackedConnection,
   TrackedGatewayConnection,
+  TrackedKubeConnection,
   TrackedServerConnection,
 } from './types';
 
@@ -24,6 +26,8 @@ export class TrackedConnectionOperationsFactory {
         return this.getConnectionServerOperations(connection);
       case 'connection.gateway':
         return this.getConnectionGatewayOperations(connection);
+      case 'connection.kube':
+        return this.getConnectionKubeOperations(connection);
     }
   }
 
@@ -117,6 +121,46 @@ export class TrackedConnectionOperationsFactory {
               .forEach(document => {
                 documentsService.close(document.uri);
               });
+          });
+      },
+    };
+  }
+
+  private getConnectionKubeOperations(
+    connection: TrackedKubeConnection
+  ): TrackedConnectionOperations {
+    const { rootClusterId, leafClusterId } = routing.parseKubeUri(
+      connection.kubeUri
+    ).params;
+    const { rootClusterUri, leafClusterUri } = this.getClusterUris({
+      rootClusterId,
+      leafClusterId,
+    });
+
+    const documentsService =
+      this._workspacesService.getWorkspaceDocumentService(rootClusterUri);
+
+    return {
+      rootClusterUri,
+      leafClusterUri,
+      activate: () => {
+        let kubeConn = documentsService
+          .getDocuments()
+          .find(getKubeDocumentByConnection(connection));
+
+        if (!kubeConn) {
+          kubeConn = documentsService.createTshKubeDocument(connection.kubeUri);
+
+          documentsService.add(kubeConn);
+        }
+        documentsService.open(kubeConn.uri);
+      },
+      disconnect: async () => {
+        documentsService
+          .getDocuments()
+          .filter(getKubeDocumentByConnection(connection))
+          .forEach(document => {
+            documentsService.close(document.uri);
           });
       },
     };
