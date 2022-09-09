@@ -2191,7 +2191,7 @@ exports[`list of all events 1`] = `
               class="c9"
             >
               <span
-                class="c5 c10 icon icon-list c5 c10"
+                class="c5 c10 icon icon-folder-plus c5 c10"
                 color="light"
                 font-size="3"
               />
@@ -2228,7 +2228,7 @@ exports[`list of all events 1`] = `
               class="c9"
             >
               <span
-                class="c5 c10 icon icon-list c5 c10"
+                class="c5 c10 icon icon-folder-plus c5 c10"
                 color="light"
                 font-size="3"
               />
@@ -2265,7 +2265,7 @@ exports[`list of all events 1`] = `
               class="c9"
             >
               <span
-                class="c5 c10 icon icon-list c5 c10"
+                class="c5 c10 icon icon-folder-plus c5 c10"
                 color="light"
                 font-size="3"
               />
@@ -2302,7 +2302,7 @@ exports[`list of all events 1`] = `
               class="c9"
             >
               <span
-                class="c5 c10 icon icon-list c5 c10"
+                class="c5 c10 icon icon-folder-plus c5 c10"
                 color="light"
                 font-size="3"
               />
@@ -2339,7 +2339,7 @@ exports[`list of all events 1`] = `
               class="c9"
             >
               <span
-                class="c5 c10 icon icon-list c5 c10"
+                class="c5 c10 icon icon-folder-plus c5 c10"
                 color="light"
                 font-size="3"
               />
@@ -2376,7 +2376,7 @@ exports[`list of all events 1`] = `
               class="c9"
             >
               <span
-                class="c5 c10 icon icon-list c5 c10"
+                class="c5 c10 icon icon-folder-plus c5 c10"
                 color="light"
                 font-size="3"
               />
@@ -2413,7 +2413,7 @@ exports[`list of all events 1`] = `
               class="c9"
             >
               <span
-                class="c5 c10 icon icon-list c5 c10"
+                class="c5 c10 icon icon-folder-plus c5 c10"
                 color="light"
                 font-size="3"
               />
@@ -2450,7 +2450,7 @@ exports[`list of all events 1`] = `
               class="c9"
             >
               <span
-                class="c5 c10 icon icon-list c5 c10"
+                class="c5 c10 icon icon-folder-plus c5 c10"
                 color="light"
                 font-size="3"
               />
@@ -2487,7 +2487,7 @@ exports[`list of all events 1`] = `
               class="c9"
             >
               <span
-                class="c5 c10 icon icon-list c5 c10"
+                class="c5 c10 icon icon-folder-plus c5 c10"
                 color="light"
                 font-size="3"
               />
@@ -2524,7 +2524,7 @@ exports[`list of all events 1`] = `
               class="c9"
             >
               <span
-                class="c5 c10 icon icon-list c5 c10"
+                class="c5 c10 icon icon-folder-plus c5 c10"
                 color="light"
                 font-size="3"
               />
@@ -2561,7 +2561,7 @@ exports[`list of all events 1`] = `
               class="c9"
             >
               <span
-                class="c5 c10 icon icon-list c5 c10"
+                class="c5 c10 icon icon-folder-plus c5 c10"
                 color="light"
                 font-size="3"
               />
@@ -2598,7 +2598,7 @@ exports[`list of all events 1`] = `
               class="c9"
             >
               <span
-                class="c5 c10 icon icon-list c5 c10"
+                class="c5 c10 icon icon-folder-plus c5 c10"
                 color="light"
                 font-size="3"
               />
@@ -2635,7 +2635,7 @@ exports[`list of all events 1`] = `
               class="c9"
             >
               <span
-                class="c5 c10 icon icon-list c5 c10"
+                class="c5 c10 icon icon-folder-plus c5 c10"
                 color="light"
                 font-size="3"
               />
@@ -2672,7 +2672,7 @@ exports[`list of all events 1`] = `
               class="c9"
             >
               <span
-                class="c5 c10 icon icon-list c5 c10"
+                class="c5 c10 icon icon-folder-plus c5 c10"
                 color="light"
                 font-size="3"
               />
@@ -2709,7 +2709,7 @@ exports[`list of all events 1`] = `
               class="c9"
             >
               <span
-                class="c5 c10 icon icon-list c5 c10"
+                class="c5 c10 icon icon-folder-plus c5 c10"
                 color="light"
                 font-size="3"
               />
@@ -2746,7 +2746,7 @@ exports[`list of all events 1`] = `
               class="c9"
             >
               <span
-                class="c5 c10 icon icon-list c5 c10"
+                class="c5 c10 icon icon-folder-plus c5 c10"
                 color="light"
                 font-size="3"
               />
@@ -2783,7 +2783,7 @@ exports[`list of all events 1`] = `
               class="c9"
             >
               <span
-                class="c5 c10 icon icon-list c5 c10"
+                class="c5 c10 icon icon-folder-plus c5 c10"
                 color="light"
                 font-size="3"
               />
@@ -2820,7 +2820,7 @@ exports[`list of all events 1`] = `
               class="c9"
             >
               <span
-                class="c5 c10 icon icon-list c5 c10"
+                class="c5 c10 icon icon-folder-plus c5 c10"
                 color="light"
                 font-size="3"
               />
@@ -2857,7 +2857,7 @@ exports[`list of all events 1`] = `
               class="c9"
             >
               <span
-                class="c5 c10 icon icon-list c5 c10"
+                class="c5 c10 icon icon-folder-plus c5 c10"
                 color="light"
                 font-size="3"
               />
@@ -2894,7 +2894,7 @@ exports[`list of all events 1`] = `
               class="c9"
             >
               <span
-                class="c5 c10 icon icon-list c5 c10"
+                class="c5 c10 icon icon-folder-plus c5 c10"
                 color="light"
                 font-size="3"
               />
@@ -2931,7 +2931,7 @@ exports[`list of all events 1`] = `
               class="c9"
             >
               <span
-                class="c5 c10 icon icon-list c5 c10"
+                class="c5 c10 icon icon-folder-plus c5 c10"
                 color="light"
                 font-size="3"
               />
@@ -2968,7 +2968,7 @@ exports[`list of all events 1`] = `
               class="c9"
             >
               <span
-                class="c5 c10 icon icon-list c5 c10"
+                class="c5 c10 icon icon-folder-plus c5 c10"
                 color="light"
                 font-size="3"
               />
@@ -3005,7 +3005,7 @@ exports[`list of all events 1`] = `
               class="c9"
             >
               <span
-                class="c5 c10 icon icon-list c5 c10"
+                class="c5 c10 icon icon-folder-plus c5 c10"
                 color="light"
                 font-size="3"
               />
@@ -3042,7 +3042,7 @@ exports[`list of all events 1`] = `
               class="c9"
             >
               <span
-                class="c5 c10 icon icon-list c5 c10"
+                class="c5 c10 icon icon-folder-plus c5 c10"
                 color="light"
                 font-size="3"
               />
@@ -3079,7 +3079,7 @@ exports[`list of all events 1`] = `
               class="c9"
             >
               <span
-                class="c5 c10 icon icon-list c5 c10"
+                class="c5 c10 icon icon-folder-plus c5 c10"
                 color="light"
                 font-size="3"
               />
@@ -3116,7 +3116,7 @@ exports[`list of all events 1`] = `
               class="c9"
             >
               <span
-                class="c5 c10 icon icon-list c5 c10"
+                class="c5 c10 icon icon-folder-plus c5 c10"
                 color="light"
                 font-size="3"
               />
@@ -3153,7 +3153,7 @@ exports[`list of all events 1`] = `
               class="c9"
             >
               <span
-                class="c5 c10 icon icon-list c5 c10"
+                class="c5 c10 icon icon-folder-plus c5 c10"
                 color="light"
                 font-size="3"
               />
@@ -3190,7 +3190,7 @@ exports[`list of all events 1`] = `
               class="c9"
             >
               <span
-                class="c5 c10 icon icon-list c5 c10"
+                class="c5 c10 icon icon-folder-plus c5 c10"
                 color="light"
                 font-size="3"
               />
@@ -3227,7 +3227,7 @@ exports[`list of all events 1`] = `
               class="c9"
             >
               <span
-                class="c5 c10 icon icon-list c5 c10"
+                class="c5 c10 icon icon-folder-plus c5 c10"
                 color="light"
                 font-size="3"
               />
@@ -3264,7 +3264,7 @@ exports[`list of all events 1`] = `
               class="c9"
             >
               <span
-                class="c5 c10 icon icon-list c5 c10"
+                class="c5 c10 icon icon-folder-plus c5 c10"
                 color="light"
                 font-size="3"
               />
@@ -3301,7 +3301,7 @@ exports[`list of all events 1`] = `
               class="c9"
             >
               <span
-                class="c5 c10 icon icon-list c5 c10"
+                class="c5 c10 icon icon-folder-plus c5 c10"
                 color="light"
                 font-size="3"
               />
@@ -3338,7 +3338,7 @@ exports[`list of all events 1`] = `
               class="c9"
             >
               <span
-                class="c5 c10 icon icon-list c5 c10"
+                class="c5 c10 icon icon-folder-plus c5 c10"
                 color="light"
                 font-size="3"
               />
@@ -3375,7 +3375,7 @@ exports[`list of all events 1`] = `
               class="c9"
             >
               <span
-                class="c5 c10 icon icon-list c5 c10"
+                class="c5 c10 icon icon-folder-plus c5 c10"
                 color="light"
                 font-size="3"
               />
@@ -3412,7 +3412,7 @@ exports[`list of all events 1`] = `
               class="c9"
             >
               <span
-                class="c5 c10 icon icon-list c5 c10"
+                class="c5 c10 icon icon-folder-plus c5 c10"
                 color="light"
                 font-size="3"
               />
@@ -3449,7 +3449,7 @@ exports[`list of all events 1`] = `
               class="c9"
             >
               <span
-                class="c5 c10 icon icon-list c5 c10"
+                class="c5 c10 icon icon-folder-plus c5 c10"
                 color="light"
                 font-size="3"
               />
@@ -3486,7 +3486,7 @@ exports[`list of all events 1`] = `
               class="c9"
             >
               <span
-                class="c5 c10 icon icon-list c5 c10"
+                class="c5 c10 icon icon-folder-plus c5 c10"
                 color="light"
                 font-size="3"
               />
