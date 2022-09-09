@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import { useEffect } from 'react';
+import { useCallback, useEffect } from 'react';
 
 import { useAsync } from 'shared/hooks/useAsync';
 
@@ -38,12 +38,32 @@ export default function useDocumentTerminal(doc: Doc) {
     initState(ctx, workspaceDocumentsService, doc)
   );
 
+  const removeKubeConfig = useCallback(
+    (kubeConfigName: string) => {
+      ctx.mainProcessClient.removeKubeConfig(kubeConfigName).catch(error => {
+        ctx.notificationsService.notifyError({
+          title: 'Could not remove temporary kube config',
+          description: error.message,
+        });
+      });
+    },
+    [ctx]
+  );
+
   useEffect(() => {
-    init();
+    if (state.status === '') {
+      init();
+    }
+
     return () => {
-      state.data?.ptyProcess.dispose();
+      if (state.status === 'success') {
+        state.data.ptyProcess.dispose();
+        if (state.data.cmd.kind === 'pty.tsh-kube-login') {
+          removeKubeConfig(state.data.cmd.kubeConfigName);
+        }
+      }
     };
-  }, []);
+  }, [state, removeKubeConfig]);
 
   useEffect(() => {
     if (state.status === 'error') {
@@ -118,7 +138,6 @@ async function initState(
   };
 
   ptyProcess.onOpen(() => {
-    docsService.update(doc.uri, { status: 'connected' });
     refreshTitle();
     removeInitCommand();
   });
@@ -146,6 +165,7 @@ async function initState(
   });
 
   return {
+    cmd,
     ptyProcess,
     refreshTitle,
     openContextMenu,

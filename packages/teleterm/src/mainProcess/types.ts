@@ -31,6 +31,7 @@ export type MainProcessClient = {
   openTabContextMenu(options: TabContextMenuOptions): void;
   configService: ConfigService;
   fileStorage: FileStorage;
+  removeKubeConfig(kubeConfigName: string): Promise<void>;
 };
 
 export type ChildProcessAddresses = {
