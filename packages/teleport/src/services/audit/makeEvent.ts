@@ -124,18 +124,18 @@ export const formatters: Formatters = {
         return `User [${user}] executed a command on kubernetes cluster [${kubernetes_cluster}]`;
       }
 
-      return `User [${user}] executed a command on node ${
+      return `User [${user}] executed a command on node [${
         event['server_hostname'] || event['addr.local']
-      }`;
+      }]`;
     },
   },
   [eventCodes.EXEC_FAILURE]: {
     type: 'exec',
     desc: 'Command Execution Failed',
     format: ({ user, exitError, ...rest }) =>
-      `User [${user}] command execution on node ${
+      `User [${user}] command execution on node [${
         rest['server_hostname'] || rest['addr.local']
-      } failed [${exitError}]`,
+      }] failed [${exitError}]`,
   },
   [eventCodes.GITHUB_CONNECTOR_CREATED]: {
     type: 'github.created',
