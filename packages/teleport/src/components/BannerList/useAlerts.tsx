@@ -25,9 +25,10 @@ import type { ClusterAlert } from 'teleport/services/alerts';
 const logger = Logger.create('ClusterAlerts');
 
 const DISABLED_BANNERS = 'disabledAlerts';
+const MS_HOUR = 60 * 60 * 1000;
 
-function addHours(date: number, hours: number) {
-  return date + hours * 60 * 60 * 1000;
+export function addHours(date: number, hours: number) {
+  return date + hours * MS_HOUR;
 }
 
 function getItem(key: string): string | null {
@@ -52,8 +53,8 @@ export function useAlerts() {
     if (disabledAlerts) {
       // Loop through the existing ones and remove those that have passed 24h.
       const data = JSON.parse(disabledAlerts);
-      Object.entries(data).forEach(([name, expiry]) => {
-        if (new Date().getTime() > expiry) {
+      Object.entries(data).forEach(([name, expiry]: [string, string]) => {
+        if (new Date().getTime() > +expiry) {
           delete data[name];
         }
       });
@@ -68,17 +69,12 @@ export function useAlerts() {
         if (!res) {
           return;
         }
-        const dismissedNames = Object.keys(dismissedAlerts);
-
-        const newAlerts = res.filter(alert => {
-          return !dismissedNames.includes(alert.metadata.name);
-        });
-        setAlerts(newAlerts);
+        setAlerts(res);
       })
       .catch(err => {
         logger.error(err);
       });
-  }, [clusterId, dismissedAlerts]);
+  }, [clusterId]);
 
   function dismissAlert(name: string) {
     const disabledAlerts = getItem(DISABLED_BANNERS);
@@ -90,8 +86,14 @@ export function useAlerts() {
     setItem(DISABLED_BANNERS, JSON.stringify(data));
   }
 
+  const dismissedAlertNames = Object.keys(dismissedAlerts);
+
+  const visibleAlerts = alerts.filter(
+    alert => !dismissedAlertNames.includes(alert.metadata.name)
+  );
+
   return {
-    alerts,
+    alerts: visibleAlerts,
     dismissAlert,
   };
 }
