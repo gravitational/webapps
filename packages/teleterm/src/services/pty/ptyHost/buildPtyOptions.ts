@@ -80,7 +80,7 @@ function getPtyProcessOptions(
       };
 
     case 'pty.tsh-kube-login': {
-      const kubeLoginCommand = `${settings.tshd.binaryPath} --proxy=${cmd.rootClusterId} kube login ${cmd.kubeId}`;
+      const kubeLoginCommand = `${settings.tshd.binaryPath} --proxy=${cmd.rootClusterId} kube login ${cmd.kubeId} --cluster=${cmd.clusterName}`;
       const bashCommandArgs = ['-c', `${kubeLoginCommand};$SHELL`];
       const powershellCommandArgs = ['-NoExit', '-c', kubeLoginCommand];
       return {
