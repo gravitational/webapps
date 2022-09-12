@@ -45,4 +45,8 @@ export class MockMainProcessClient implements MainProcessClient {
   } as unknown as ConfigService;
 
   fileStorage = createMockFileStorage();
+
+  removeKubeConfig(): Promise<void> {
+    return Promise.resolve(undefined);
+  }
 }

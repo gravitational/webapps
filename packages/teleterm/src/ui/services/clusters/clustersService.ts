@@ -7,6 +7,7 @@ import { Label } from 'teleport/types';
 import { routing } from 'teleterm/ui/uri';
 import { NotificationsService } from 'teleterm/ui/services/notifications';
 import { Cluster } from 'teleterm/services/tshd/types';
+import { MainProcessClient } from 'teleterm/mainProcess/types';
 
 import { ImmutableStore } from '../immutableStore';
 
@@ -41,6 +42,7 @@ export class ClustersService extends ImmutableStore<ClustersServiceState> {
 
   constructor(
     public client: tsh.TshClient,
+    private mainProcessClient: MainProcessClient,
     private notificationsService: NotificationsService
   ) {
     super();
@@ -589,6 +591,10 @@ export class ClustersService extends ImmutableStore<ClustersServiceState> {
 
   async getDbUsers(dbUri: string): Promise<string[]> {
     return await this.client.listDatabaseUsers(dbUri);
+  }
+
+  async removeKubeConfig(kubeConfigName: string): Promise<void> {
+    return this.mainProcessClient.removeKubeConfig(kubeConfigName);
   }
 
   useState() {
