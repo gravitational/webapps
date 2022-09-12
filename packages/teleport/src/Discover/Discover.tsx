@@ -31,9 +31,9 @@ import * as sideNav from 'teleport/SideNav';
 import { TopBarContainer } from 'teleport/TopBar';
 import { FeatureBox } from 'teleport/components/Layout';
 import { BannerList } from 'teleport/components/BannerList';
+import cfg from 'teleport/config';
 
 import { useDiscover, State } from './useDiscover';
-
 import { SelectResource } from './SelectResource';
 import { DownloadScript } from './DownloadScript';
 import { LoginTrait } from './LoginTrait';
@@ -45,12 +45,26 @@ import type { AgentStepComponent } from './types';
 import type { BannerType } from 'teleport/components/BannerList/BannerList';
 
 export const agentViews: Record<AgentKind, AgentStepComponent[]> = {
-  app: [],
-  db: [],
-  desktop: [],
-  kube: [],
-  node: [SelectResource, DownloadScript, LoginTrait, TestConnection, Finished],
+  application: [SelectResource],
+  database: [SelectResource],
+  desktop: [SelectResource],
+  kubernetes: [SelectResource],
+  server: [
+    SelectResource,
+    DownloadScript,
+    LoginTrait,
+    TestConnection,
+    Finished,
+  ],
 };
+
+const agentStepTitles: string[] = [
+  'Select Resource Type',
+  'Configure Resource',
+  'Set Up Access',
+  'Test Connection',
+  '',
+];
 
 export default function Container() {
   const [features] = useState(() => getFeatures());
@@ -68,11 +82,11 @@ export function Discover({
   userMenuItems,
   username,
   currentStep,
-  selectedAgentKind = 'node',
   logout,
   // onSelectResource,
   ...agentProps
 }: State) {
+  const selectedAgentKind = agentProps.selectedAgentKind;
   let AgentComponent;
   if (selectedAgentKind) {
     AgentComponent = agentViews[selectedAgentKind][currentStep];
@@ -102,9 +116,12 @@ export function Discover({
       customBanners={customBanners}
       onBannerDismiss={dismissAlert}
     >
-      <LocalMainContainer>
+      <MainContainer>
         <Prompt
-          message="Are you sure you want to exit the “Add New Resource” workflow? You’ll have to start from the beginning next time."
+          message={nextLocation => {
+            if (nextLocation.pathname === cfg.routes.discover) return true;
+            return 'Are you sure you want to exit the “Add New Resource” workflow? You’ll have to start from the beginning next time.';
+          }}
           when={currentStep > 0}
         />
         {initAttempt.status === 'processing' && (
@@ -117,7 +134,13 @@ export function Discover({
         )}
         {initAttempt.status === 'success' && (
           <>
-            <SideNavAgentConnect currentStep={currentStep} />
+            <SideNavAgentConnect
+              currentStep={currentStep}
+              // TODO: hack to not show titles for unfinished flows.
+              stepTitles={
+                agentViews[selectedAgentKind].length > 1 ? agentStepTitles : []
+              }
+            />
             <main.HorizontalSplit>
               <TopBarContainer>
                 <Text typography="h5" bold>
@@ -135,20 +158,18 @@ export function Discover({
             </main.HorizontalSplit>
           </>
         )}
-      </LocalMainContainer>
+      </MainContainer>
     </BannerList>
   );
 }
 
-const agentStepTitles: string[] = [
-  'Select Resource Type',
-  'Configure Resource',
-  'Set Up Access',
-  'Test Connection',
-  '',
-];
-
-function SideNavAgentConnect({ currentStep }: { currentStep: number }) {
+function SideNavAgentConnect({
+  currentStep,
+  stepTitles,
+}: {
+  currentStep: number;
+  stepTitles: string[];
+}) {
   return (
     <StyledNav>
       <sideNav.Logo />
@@ -173,29 +194,31 @@ function SideNavAgentConnect({ currentStep }: { currentStep: number }) {
             </Flex>
             <Text bold>Add New Resource</Text>
           </Flex>
-          <Box ml={4} mt={4}>
-            {agentStepTitles.map((stepTitle, index) => {
-              let className = '';
-              if (currentStep > index) {
-                className = 'checked';
-              } else if (currentStep === index) {
-                className = 'active';
-              }
+          {stepTitles.length > 0 && (
+            <Box ml={4} mt={4}>
+              {stepTitles.map((stepTitle, index) => {
+                let className = '';
+                if (currentStep > index) {
+                  className = 'checked';
+                } else if (currentStep === index) {
+                  className = 'active';
+                }
 
-              // All flows will have a finished step that
-              // does not have a title.
-              if (!stepTitle) {
-                return null;
-              }
+                // All flows will have a finished step that
+                // does not have a title.
+                if (!stepTitle) {
+                  return null;
+                }
 
-              return (
-                <StepsContainer className={className} key={stepTitle}>
-                  <Bullet />
-                  {stepTitle}
-                </StepsContainer>
-              );
-            })}
-          </Box>
+                return (
+                  <StepsContainer className={className} key={stepTitle}>
+                    <Bullet />
+                    {stepTitle}
+                  </StepsContainer>
+                );
+              })}
+            </Box>
+          )}
         </Box>
       </StyledNavContent>
     </StyledNav>
@@ -253,14 +276,4 @@ const StyledNav = styled(sideNav.Nav)`
 
 const StyledNavContent = styled(sideNav.Content)`
   padding: 20px 32px 32px 32px;
-`;
-
-// TODO (lisa) we should look into reducing this width.
-// Any smaller than this will produce a double stacked horizontal scrollbar
-// making navigation harder.
-//
-// Our SelectResource component is the widest and can use some space
-// tightening. Also look into shrinking the side nav if possible.
-const LocalMainContainer = styled(MainContainer)`
-  min-width: 1460px;
 `;
