@@ -80,15 +80,19 @@ function getPtyProcessOptions(
       };
 
     case 'pty.tsh-kube-login': {
-      const kubeLoginCommand = `${settings.tshd.binaryPath} --proxy=${cmd.rootClusterId} kube login ${cmd.kubeId} --cluster=${cmd.clusterName}`;
+      const isWindows = settings.platform === 'win32';
+
+      // backtick (PowerShell) and backslash (Bash) are used to escape a whitespace
+      const escapedBinaryPath = settings.tshd.binaryPath.replaceAll(
+        ' ',
+        isWindows ? '` ' : '\\ '
+      );
+      const kubeLoginCommand = `${escapedBinaryPath} --proxy=${cmd.rootClusterId} kube login ${cmd.kubeId} --cluster=${cmd.clusterName}`;
       const bashCommandArgs = ['-c', `${kubeLoginCommand};$SHELL`];
       const powershellCommandArgs = ['-NoExit', '-c', kubeLoginCommand];
       return {
         path: settings.defaultShell,
-        args:
-          settings.platform === 'win32'
-            ? powershellCommandArgs
-            : bashCommandArgs,
+        args: isWindows ? powershellCommandArgs : bashCommandArgs,
         env: { ...env, KUBECONFIG: getKubeConfigFilePath(cmd, settings) },
       };
     }
