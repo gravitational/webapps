@@ -14,4 +14,4 @@
  * limitations under the License.
  */
 
-export { ConfigureActiveDirectory } from './ConfigureActiveDirectory';
+export { InstallActiveDirectory } from './InstallActiveDirectory';

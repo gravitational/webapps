@@ -18,8 +18,8 @@ import React from 'react';
 
 import { Desktop } from 'design/Icon';
 
-import { ConfigureActiveDirectory } from 'teleport/Discover/Desktop/ConfigureActiveDirectory';
-import { ConfigureTeleport } from 'teleport/Discover/Desktop/ConfigureTeleport';
+import { InstallActiveDirectory } from 'teleport/Discover/Desktop/InstallActiveDirectory';
+import { ConnectTeleport } from 'teleport/Discover/Desktop/ConnectTeleport';
 import { Finished, ResourceKind } from 'teleport/Discover/Shared';
 
 import { Resource } from 'teleport/Discover/flow';
@@ -32,12 +32,12 @@ export const DesktopResource: Resource = {
       title: 'Select Resource',
     },
     {
-      title: 'Configure Active Directory',
-      component: ConfigureActiveDirectory,
+      title: 'Install Active Directory',
+      component: InstallActiveDirectory,
     },
     {
-      title: 'Configure Teleport',
-      component: ConfigureTeleport,
+      title: 'Connect Teleport',
+      component: ConnectTeleport,
     },
     {
       title: 'Finished',

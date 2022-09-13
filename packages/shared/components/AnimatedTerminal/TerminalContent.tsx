@@ -1,7 +1,12 @@
-import React, { useLayoutEffect, useRef } from 'react';
+import React, { useEffect, useLayoutEffect, useRef, useState } from 'react';
 import styled from 'styled-components';
 
 import { BufferEntry } from 'shared/components/AnimatedTerminal/content';
+
+export interface SelectedLines {
+  start: number;
+  end: number;
+}
 
 interface TerminalContentProps {
   lines: BufferEntry[];
@@ -9,7 +14,21 @@ interface TerminalContentProps {
   counter: number;
   keywords?: string[];
   args?: string[];
+  selectedLines?: SelectedLines;
 }
+
+const SelectedLinesOverlay = styled.div`
+  width: 100%;
+  background: rgba(255, 255, 255, 0.3);
+  position: absolute;
+  left: 0;
+  z-index: 0;
+`;
+
+const Lines = styled.div`
+  position: relative;
+  z-index: 1;
+`;
 
 export function TerminalContent(props: TerminalContentProps) {
   const ref = useRef<HTMLDivElement>();
@@ -18,10 +37,46 @@ export function TerminalContent(props: TerminalContentProps) {
     ref.current.scrollTop = ref.current.scrollHeight;
   }, [props.counter]);
 
+  const [renderedSelectedLineCount, setRenderedSelectedLineCount] = useState(0);
+
+  useEffect(() => {
+    if (props.selectedLines) {
+      setRenderedSelectedLineCount(0);
+
+      const numberOfLines = props.selectedLines.end - props.selectedLines.start;
+
+      let count = 0;
+      const timeout = window.setInterval(() => {
+        setRenderedSelectedLineCount(count => count + 1);
+        count += 1;
+
+        if (count > numberOfLines) {
+          clearTimeout(timeout);
+        }
+      }, 80);
+
+      return () => clearInterval(timeout);
+    }
+  }, [props.selectedLines]);
+
+  let selectedLines;
+  if (props.selectedLines) {
+    selectedLines = (
+      <SelectedLinesOverlay
+        style={{
+          height: 20 * renderedSelectedLineCount,
+          top: 20 * (props.selectedLines.start + 1),
+        }}
+      />
+    );
+  }
+
   return (
     <TerminalContentContainer ref={ref}>
       <TerminalCode>
-        {renderLines(props.lines, props.keywords, props.args)}
+        <Lines>{renderLines(props.lines, props.keywords, props.args)}</Lines>
+
+        {selectedLines}
       </TerminalCode>
     </TerminalContentContainer>
   );
@@ -48,11 +103,7 @@ function renderLines(lines: BufferEntry[], keywords: string[], args: string[]) {
   ));
 }
 
-function highlightWords(
-  content: string,
-  words: string[],
-  color: string
-) {
+function highlightWords(content: string, words: string[], color: string) {
   const regex = new RegExp(`(${words.join('|')})`);
 
   if (regex.test(content)) {
@@ -81,7 +132,24 @@ function highlightWords(
   return null;
 }
 
-function formatText(text: string, isCommand: boolean, keywords: string[], args: string[]) {
+function formatText(
+  source: string,
+  isCommand: boolean,
+  keywords: string[],
+  args: string[]
+) {
+  let text = source;
+  let comment;
+
+  const commentStartIndex = text.indexOf('#');
+  if (commentStartIndex > -1) {
+    text = source.substring(0, commentStartIndex);
+
+    comment = (
+      <Comment>{source.substring(commentStartIndex, source.length)}</Comment>
+    );
+  }
+
   const words = text.split(' ');
   const result = [];
 
@@ -137,12 +205,22 @@ function formatText(text: string, isCommand: boolean, keywords: string[], args: 
     );
   }
 
-  return <>{result}</>;
+  return (
+    <>
+      {result}
+      {comment}
+    </>
+  );
 }
 
 const Prompt = styled.span`
   user-select: none;
   color: rgb(204, 204, 204);
+`;
+
+const Comment = styled.span`
+  user-select: none;
+  color: rgb(255, 255, 255, 0.4);
 `;
 
 const Cursor = styled.span`
@@ -155,7 +233,7 @@ const Cursor = styled.span`
 
 export const TerminalContentContainer = styled.div`
   background: #04162c;
-  height: 385px;
+  height: 425px;
   overflow-y: auto;
   border-bottom-left-radius: 5px;
   border-bottom-right-radius: 5px;
@@ -167,4 +245,5 @@ export const TerminalCode = styled.div`
   line-height: 20px;
   white-space: pre-wrap;
   margin: 10px 16px;
+  position: relative;
 `;

@@ -36,7 +36,7 @@ export const Tab = styled.div<{ active: boolean }>`
   padding: 8px 20px 12px 15px;
   cursor: pointer;
   position: relative;
-  
+
   &:after {
     content: '';
     position: absolute;
@@ -44,7 +44,10 @@ export const Tab = styled.div<{ active: boolean }>`
     height: 2px;
     left: 0;
     right: 0;
-    background: ${p => (p.active ? 'linear-gradient(to right, #651fff, #a565fc, #8e00ff)' : 'transparent')}
+    background: ${p =>
+      p.active
+        ? 'linear-gradient(to right, #354aa4, #651f9b, #8e24aa)'
+        : 'transparent'};
   }
 `;
 

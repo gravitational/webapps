@@ -15,13 +15,11 @@
  */
 
 import { useMemo, useState } from 'react';
-import useAttempt from 'shared/hooks/useAttemptNext';
 
 import { useLocation } from 'react-router';
 
-import TeleportContext from 'teleport/teleportContext';
 import session from 'teleport/services/websession';
-import useMain from 'teleport/Main/useMain';
+import useMain, { UseMainConfig } from 'teleport/Main/useMain';
 
 import { ResourceKind } from 'teleport/Discover/Shared';
 
@@ -30,7 +28,6 @@ import { addIndexToViews, findViewAtIndex, View } from './flow';
 import { resources } from './resources';
 
 import type { Node } from 'teleport/services/nodes';
-import type { Feature } from 'teleport/types';
 
 export function getKindFromString(value: string) {
   switch (value) {
@@ -47,14 +44,14 @@ export function getKindFromString(value: string) {
   }
 }
 
-export function useDiscover(ctx: TeleportContext, features: Feature[]) {
-  const initState = useMain(features);
+export function useDiscover(config: UseMainConfig) {
+  const initState = useMain(config);
   const location = useLocation<{ entity: string }>();
 
   const [currentStep, setCurrentStep] = useState(0);
   const [selectedResourceKind, setSelectedResourceKind] =
     useState<ResourceKind>(
-      getKindFromString(location?.state?.entity || 'server')
+      getKindFromString(location?.state?.entity || 'desktop')
     );
   const [agentMeta, setAgentMeta] = useState<AgentMeta>();
 
@@ -96,8 +93,6 @@ export function useDiscover(ctx: TeleportContext, features: Feature[]) {
     onSelectResource,
     selectedResourceKind,
     updateAgentMeta,
-    userMenuItems: ctx.storeNav.getTopMenuItems(),
-    username: ctx.storeUser.getUsername(),
     views,
   };
 }

@@ -29,7 +29,14 @@ import * as Icons from 'design/Icon';
 
 import useTeleport from 'teleport/useTeleport';
 
-import { Header, HeaderSubtitle, ActionButtons, ButtonBlueText, Mark, ReadOnlyYamlEditor } from '../../Shared';
+import {
+  Header,
+  HeaderSubtitle,
+  ActionButtons,
+  ButtonBlueText,
+  Mark,
+  ReadOnlyYamlEditor,
+} from '../../Shared';
 import { loginsAndRuleUsers, logins } from '../../templates';
 
 import { useLoginTrait, State } from './useLoginTrait';
@@ -312,6 +319,7 @@ const AddLoginButton = ({
       css={`
         font-weight: bold;
         letter-spacing: 4px;
+
         &:after {
           content: ' ';
         }
@@ -334,7 +342,7 @@ const EditorLogins = () => (
 );
 
 const CheckboxWrapper = styled(Flex)`
-  padding: 8px;
+  padding: 8px;a
   margin-bottom: 4px;
   width: 300px;
   align-items: center;

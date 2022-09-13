@@ -34,7 +34,7 @@ export const WindowTitleBarButton = styled.div`
 
 export const WindowContentContainer = styled.div`
   background: #04162c;
-  height: 385px;
+  height: 425px;
   overflow-y: auto;
   border-bottom-left-radius: 5px;
   border-bottom-right-radius: 5px;

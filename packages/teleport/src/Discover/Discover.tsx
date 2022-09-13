@@ -22,19 +22,17 @@ import { Danger } from 'design/Alert';
 
 import { Prompt } from 'react-router-dom';
 
-import useTeleport from 'teleport/useTeleport';
 import getFeatures from 'teleport/features';
-import { UserMenuNav } from 'teleport/components/UserMenuNav';
 import * as main from 'teleport/Main';
 import { TopBarContainer } from 'teleport/TopBar';
 import { FeatureBox } from 'teleport/components/Layout';
 import { BannerList } from 'teleport/components/BannerList';
 import cfg from 'teleport/config';
 
-import { LINK_LABEL } from 'teleport/services/alerts/alerts';
+import { ClusterAlert, LINK_LABEL } from 'teleport/services/alerts/alerts';
 import { Sidebar } from 'teleport/Discover/Sidebar/Sidebar';
-
 import { SelectResource } from 'teleport/Discover/SelectResource';
+import { DiscoverUserMenuNav } from 'teleport/Discover/DiscoverUserMenuNav';
 
 import { findViewAtIndex } from './flow';
 
@@ -42,24 +40,30 @@ import { useDiscover } from './useDiscover';
 
 import type { BannerType } from 'teleport/components/BannerList/BannerList';
 
-export function Discover() {
+interface DiscoverProps {
+  initialAlerts?: ClusterAlert[];
+  customBanners?: React.ReactNode[];
+}
+
+export function Discover(props: DiscoverProps) {
   const [features] = useState(() => getFeatures());
-  const ctx = useTeleport();
 
   const {
     alerts,
     initAttempt,
     customBanners,
     dismissAlert,
-    userMenuItems,
-    username,
     currentStep,
     selectedResourceKind,
     onSelectResource,
     logout,
     views,
     ...agentProps
-  } = useDiscover(ctx, features);
+  } = useDiscover({
+    features,
+    initialAlerts: props.initialAlerts,
+    customBanners: props.customBanners,
+  });
 
   let content;
   // we reserve step 0 for "Select Resource Type", that is present in all resource configs
@@ -132,11 +136,7 @@ export function Discover() {
                   <Text typography="h5" bold>
                     Manage Access
                   </Text>
-                  <UserMenuNav
-                    navItems={userMenuItems}
-                    logout={logout}
-                    username={username}
-                  />
+                  <DiscoverUserMenuNav logout={logout} />
                 </TopBarContainer>
                 <FeatureBox pt={4} maxWidth="1450px">
                   {content}

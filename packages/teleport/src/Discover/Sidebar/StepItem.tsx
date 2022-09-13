@@ -38,11 +38,11 @@ export function StepItem(props: StepItemProps) {
   let list;
   let isActive = props.currentStep === props.view.index;
   if (props.view.views) {
-      list = (
-        <Box ml={2}>
-          <StepList views={props.view.views} currentStep={props.currentStep} />
-        </Box>
-      );
+    list = (
+      <Box ml={2}>
+        <StepList views={props.view.views} currentStep={props.currentStep} />
+      </Box>
+    );
 
     if (!isActive) {
       isActive = hasActiveChildren(props.view.views, props.currentStep);

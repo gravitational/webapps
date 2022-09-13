@@ -172,7 +172,8 @@ const cfg = {
 
     installADDSPath: '/v1/webapi/scripts/desktop-access/install-ad-ds.ps1',
     installADCSPath: '/v1/webapi/scripts/desktop-access/install-ad-cs.ps1',
-    configureADPath: '/v1/webapi/scripts/desktop-access/configure-ad.ps1',
+    configureADPath:
+      '/v1/webapi/scripts/desktop-access/:token/configure-ad.ps1',
   },
 
   getAppFqdnUrl(params: UrlAppParams) {
@@ -264,8 +265,8 @@ const cfg = {
     return cfg.baseUrl + generatePath(cfg.api.nodeScriptPath, { token });
   },
 
-  getConfigureADUrl() {
-    return cfg.baseUrl + cfg.api.configureADPath;
+  getConfigureADUrl(token: string) {
+    return cfg.baseUrl + generatePath(cfg.api.configureADPath, { token });
   },
 
   getInstallADDSPath() {
