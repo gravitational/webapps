@@ -120,6 +120,10 @@ export class ConnectionTrackerService extends ImmutableStore<ConnectionTrackerSt
 
   async disconnectItem(id: string): Promise<void> {
     const connection = this.state.connections.find(c => c.id === id);
+    if (!connection) {
+      return;
+    }
+
     return this._trackedConnectionOperationsFactory
       .create(connection)
       .disconnect();
@@ -127,6 +131,10 @@ export class ConnectionTrackerService extends ImmutableStore<ConnectionTrackerSt
 
   removeItem(id: string): void {
     const connection = this.state.connections.find(c => c.id === id);
+    if (!connection) {
+      return;
+    }
+
     this._trackedConnectionOperationsFactory.create(connection).remove?.();
 
     this.setState(draft => {
