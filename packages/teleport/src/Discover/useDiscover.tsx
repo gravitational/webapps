@@ -54,7 +54,7 @@ export function useDiscover(ctx: TeleportContext, features: Feature[]) {
   const [currentStep, setCurrentStep] = useState(0);
   const [selectedResourceKind, setSelectedResourceKind] =
     useState<ResourceKind>(
-      getKindFromString(location?.state?.entity || 'server')
+      getKindFromString(location?.state?.entity || 'desktop')
     );
   const [agentMeta, setAgentMeta] = useState<AgentMeta>();
 

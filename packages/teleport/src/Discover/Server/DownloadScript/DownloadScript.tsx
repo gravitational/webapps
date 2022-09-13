@@ -25,7 +25,14 @@ import useTeleport from 'teleport/useTeleport';
 
 import { AgentStepProps } from '../../types';
 
-import { Header, HeaderSubtitle, ActionButtons, TextIcon, ButtonBlueText, Mark } from '../../Shared';
+import {
+  ActionButtons,
+  ButtonBlueText,
+  Header,
+  HeaderSubtitle,
+  Mark,
+  TextIcon,
+} from '../../Shared';
 
 import { useDownloadScript } from './useDownloadScript';
 

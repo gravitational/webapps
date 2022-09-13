@@ -56,7 +56,7 @@ export function Editor(props: React.PropsWithChildren<EditorProps>) {
         onSelect={setActiveTabIndex}
       />
 
-      <WindowContentContainer style={{ height: 340 }}>
+      <WindowContentContainer style={{ height: 380 }}>
         <WindowCode style={{ display: 'flex' }}>
           <LineNumbers>{lineNumbers}</LineNumbers>
           <div>

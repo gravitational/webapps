@@ -16,12 +16,25 @@ function wait(ms: number) {
 }
 
 export async function* createTerminalContent(
-  lines: TerminalLine[]
+  lines: TerminalLine[],
+  lineIndex: number
 ): AsyncIterableIterator<BufferEntry[]> {
-  let lineIndex = 0;
   let linePosition = 0;
 
   const buffer: BufferEntry[] = [];
+
+  if (lineIndex > 0) {
+    for (let i = 0; i < lineIndex; i++) {
+      buffer.push({
+        id: i,
+        text: lines[i].text,
+        isCommand: lines[i].isCommand,
+        isCurrent: i === lineIndex,
+      });
+    }
+
+    yield buffer;
+  }
 
   // eslint-disable-next-line no-constant-condition
   while (true) {
@@ -56,6 +69,8 @@ export async function* createTerminalContent(
         }
 
         if (linePosition === 0) {
+          await wait(600);
+
           buffer.push({
             id: lineIndex,
             text: '',

@@ -14,4 +14,4 @@
  * limitations under the License.
  */
 
-export { ConfigureTeleport } from './ConfigureTeleport';
+export { ConnectTeleport } from './ConnectTeleport';

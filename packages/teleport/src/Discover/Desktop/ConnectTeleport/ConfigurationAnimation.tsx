@@ -7,9 +7,9 @@ import * as Icons from 'design/Icon';
 
 import logoSrc from 'design/assets/images/teleport-medallion.svg';
 
-import { TerminalAnimation } from 'teleport/Discover/Desktop/ConfigureTeleport/TerminalAnimation';
-import { EditorAnimation } from 'teleport/Discover/Desktop/ConfigureTeleport/EditorAnimation';
-import { RestartTeleportTerminalAnimation } from 'teleport/Discover/Desktop/ConfigureTeleport/RestartTeleportTerminalAnimation';
+import { TerminalAnimation } from 'teleport/Discover/Desktop/ConnectTeleport/TerminalAnimation';
+import { EditorAnimation } from 'teleport/Discover/Desktop/ConnectTeleport/EditorAnimation';
+import { StartTeleportTerminalAnimation } from 'teleport/Discover/Desktop/ConnectTeleport/StartTeleportTerminalAnimation';
 
 enum AnimationSteps {
   Terminal,
@@ -90,9 +90,7 @@ export function ConfigurationAnimation() {
           active={animationStep === AnimationSteps.RestartTeleport}
           onClick={() => setAnimationStep(AnimationSteps.RestartTeleport)}
         >
-          <StepIcon>
-            <TeleportIcon />
-          </StepIcon>
+          <StepIcon></StepIcon>
           3. Restart Teleport
         </Step>
       </StepsContainer>
@@ -108,14 +106,8 @@ export function ConfigurationAnimation() {
             >
               {state => (
                 <div style={{ ...defaultStyle, ...transitionStyles[state] }}>
-                  {animationStep === AnimationSteps.Terminal && (
-                    <TerminalAnimation />
-                  )}
                   {animationStep === AnimationSteps.Editor && (
                     <EditorAnimation />
-                  )}
-                  {animationStep === AnimationSteps.RestartTeleport && (
-                    <RestartTeleportTerminalAnimation />
                   )}
                 </div>
               )}
@@ -146,15 +138,6 @@ const AnimationContainer = styled.div`
     top: 0;
     left: 0;
   }
-`;
-
-const TeleportIcon = styled.div`
-  width: 30px;
-  height: 30px;
-  background: url(${logoSrc}) no-repeat;
-  background-size: contain;
-  top: 1px;
-  position: relative;
 `;
 
 const StepIcon = styled.div`

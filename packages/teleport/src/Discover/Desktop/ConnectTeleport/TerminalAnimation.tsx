@@ -4,11 +4,11 @@ import { AnimatedTerminal } from 'shared/components/AnimatedTerminal';
 
 import cfg from 'teleport/config';
 
-import { generateCommand } from 'teleport/Discover/Desktop/ConfigureActiveDirectory/ConfigureActiveDirectory';
+import { generateCommand } from 'teleport/Discover/Shared/generateCommand';
 
-const lines = [
+const lines = (token: string) => [
   {
-    text: generateCommand(cfg.getConfigureADUrl()),
+    text: generateCommand(cfg.getConfigureADUrl(token)),
     isCommand: true,
   },
   {
@@ -23,6 +23,11 @@ const lines = [
   },
   {
     text: `
+teleport:
+  data_dir: /var/lib/teleport
+  auth_token: thisisanexample
+  auth_servers:
+    - your.teleport.cluster:3025
 windows_desktop_service:
    enabled: yes
    listen_addr: "0.0.0.0:3028"
@@ -47,13 +52,25 @@ const keywords = ['Invoke-WebRequest', 'Invoke-Expression'];
 
 const args = ['-Uri'];
 
-export function TerminalAnimation() {
+const selectedLines = {
+  start: 6,
+  end: 21,
+};
+
+interface TerminalAnimationProps {
+  isCopying: boolean;
+  token: string;
+}
+
+export function TerminalAnimation(props: TerminalAnimationProps) {
   return (
     <AnimatedTerminal
-      lines={lines}
+      lines={lines(props.token)}
       startDelay={800}
       keywords={keywords}
       args={args}
+      selectedLines={props.isCopying ? selectedLines : null}
+      stopped={props.isCopying}
     />
   );
 }

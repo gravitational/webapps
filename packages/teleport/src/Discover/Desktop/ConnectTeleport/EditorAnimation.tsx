@@ -3,12 +3,12 @@ import styled from 'styled-components';
 
 import { Editor, File, Language } from 'shared/components/Editor';
 
-const lines = `teleport:
+const pastedLines = `teleport:
   data_dir: /var/lib/teleport
+  auth_token: thisisanexample
   auth_servers:
-    - your.teleport.cluster:3025`;
-
-const pastedLines = `windows_desktop_service:
+    - your.teleport.cluster:3025
+windows_desktop_service:
   enabled: yes
   listen_addr: "0.0.0.0:3028"
   ldap:
@@ -28,11 +28,11 @@ enum EditorState {
 const states = [
   {
     kind: EditorState.Original,
-    content: lines,
+    content: '',
   },
   {
     kind: EditorState.Pasted,
-    content: `${lines}\n${pastedLines}`,
+    content: pastedLines,
   },
 ];
 
@@ -55,7 +55,11 @@ export function EditorAnimation() {
   return (
     <DisableUserSelect>
       <Editor title="Your IDE">
-        <File language={Language.YAML} name="teleport.yaml" code={content} />
+        <File
+          language={Language.YAML}
+          name="/etc/teleport.yaml"
+          code={content}
+        />
       </Editor>
     </DisableUserSelect>
   );
