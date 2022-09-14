@@ -17,6 +17,8 @@ limitations under the License.
 import api from 'teleport/services/api';
 import cfg from 'teleport/config';
 
+export const LinkLabel = 'teleport.internal/link';
+
 export type ClusterAlert = {
   kind: string;
   version: string;

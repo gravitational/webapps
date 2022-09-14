@@ -14,10 +14,10 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React from 'react';
+import React, { useMemo } from 'react';
 import styled from 'styled-components';
 
-import { Box, Flex, Text } from 'design';
+import { Box, Flex, Link, Text } from 'design';
 import { Cross, Info, Warning } from 'design/Icon';
 
 export type Severity = 'info' | 'warning' | 'danger';
@@ -26,6 +26,7 @@ export type Props = {
   message: string;
   severity: Severity;
   id: string;
+  link?: string;
   onClose: (id: string) => void;
 };
 
@@ -33,6 +34,7 @@ export function Banner({
   id,
   message = '',
   severity = 'info',
+  link = '',
   onClose,
 }: Props) {
   const icon = {
@@ -41,11 +43,34 @@ export function Banner({
     danger: <Warning mr={3} fontSize="3" role="icon" />,
   }[severity];
 
+  const getLink = useMemo(() => {
+    // link is also validated on the back end, adding extra precautions
+    try {
+      const url = new URL(link);
+      if (url.hostname != 'goteleport.com') {
+        return <Text bold>{message}</Text>;
+      }
+    } catch (_) {
+      return <Text bold>{message}</Text>;
+    }
+
+    return (
+      <Link
+        href={link}
+        target="_blank"
+        color="light"
+        style={{ fontWeight: 'bold' }}
+      >
+        {message}
+      </Link>
+    );
+  }, [link]);
+
   return (
     <Box bg={severity} p={1} pl={2}>
       <Flex alignItems="center">
         {icon}
-        <Text bold>{message}</Text>
+        {link != '' ? getLink : <Text bold>{message}</Text>}
         <CloseButton
           onClick={() => {
             onClose(id);

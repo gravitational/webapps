@@ -30,6 +30,8 @@ import getFeatures from 'teleport/features';
 import localStorage from 'teleport/services/localStorage';
 import history from 'teleport/services/history';
 
+import { LinkLabel } from 'teleport/services/alerts/alerts';
+
 import { MainContainer } from './MainContainer';
 import { OnboardDiscover } from './OnboardDiscover';
 import useMain, { State } from './useMain';
@@ -115,6 +117,7 @@ export function Main(props: State) {
   const banners: BannerType[] = alerts.map(alert => ({
     message: alert.spec.message,
     severity: mapSeverity(alert.spec.severity),
+    link: alert.metadata.labels[LinkLabel],
     id: alert.metadata.name,
   }));
 

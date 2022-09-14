@@ -15,7 +15,7 @@ limitations under the License.
 */
 
 import React from 'react';
-import { render, fireEvent, screen } from 'design/utils/testing';
+import { fireEvent, render, screen } from 'design/utils/testing';
 
 import { Banner } from './Banner';
 
@@ -87,5 +87,54 @@ describe('components/BannerList/Banner', () => {
     fireEvent.click(screen.getByRole('button'));
     expect(onClose).toHaveBeenCalledTimes(1);
     expect(onClose).toHaveBeenCalledWith(id);
+  });
+  describe('with link', () => {
+    it('renders valid URLs as links', () => {
+      const message = 'some-message-with-valid-URL';
+      render(
+        <Banner
+          message={message}
+          severity="info"
+          id="some-id"
+          link="https://goteleport.com/docs"
+          onClose={() => {}}
+        />
+      );
+      expect(screen.getByText(message)).toBeInTheDocument();
+      expect(screen.getByText(message).closest('a')).toHaveAttribute(
+        'href',
+        'https://goteleport.com/docs'
+      );
+    });
+
+    it('renders invalid URLs as text', () => {
+      const message = 'some-message';
+      render(
+        <Banner
+          message={message}
+          severity="info"
+          id="some-id"
+          link="{https://goteleport.com/docs"
+          onClose={() => {}}
+        />
+      );
+      expect(screen.getByText(message)).toBeInTheDocument();
+      expect(screen.queryByText(message).closest('a')).not.toBeInTheDocument();
+    });
+
+    it('renders non-teleport URL as text', () => {
+      const message = 'message';
+      render(
+        <Banner
+          message={message}
+          severity="info"
+          id="some-id"
+          link="https://www.google.com/"
+          onClose={() => {}}
+        />
+      );
+      expect(screen.getByText(message)).toBeInTheDocument();
+      expect(screen.queryByText(message).closest('a')).not.toBeInTheDocument();
+    });
   });
 });
