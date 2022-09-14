@@ -1,14 +1,15 @@
 import React from 'react';
 
+import * as Icons from 'design/Icon';
+import { ButtonPrimary } from 'design/Button';
+import { Text } from 'design';
+
 import {
   StepContent,
   StepInstructions,
   StepTitle,
   StepTitleIcon,
 } from 'teleport/Discover/Desktop/ConnectTeleport/Step';
-import * as Icons from 'design/Icon';
-import { ButtonPrimary } from 'design/Button';
-import { Text } from 'design';
 
 interface CopyOutputProps {
   onNext: () => void;

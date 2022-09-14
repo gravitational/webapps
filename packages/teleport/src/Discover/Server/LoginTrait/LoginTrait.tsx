@@ -342,7 +342,7 @@ const EditorLogins = () => (
 );
 
 const CheckboxWrapper = styled(Flex)`
-  padding: 8px;a
+  padding: 8px;
   margin-bottom: 4px;
   width: 300px;
   align-items: center;

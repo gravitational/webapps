@@ -1,14 +1,15 @@
 import React from 'react';
 
+import * as Icons from 'design/Icon';
+import { Text } from 'design';
+import { ButtonPrimary } from 'design/Button';
+
 import {
   StepContent,
   StepInstructions,
   StepTitle,
   StepTitleIcon,
 } from 'teleport/Discover/Desktop/ConnectTeleport/Step';
-import * as Icons from 'design/Icon';
-import { Text } from 'design';
-import { ButtonPrimary } from 'design/Button';
 
 interface EditConfigProps {
   onNext: () => void;

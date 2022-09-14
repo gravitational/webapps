@@ -5,10 +5,19 @@ export interface BufferEntry {
   isCurrent: boolean;
 }
 
-export interface TerminalLine {
+type FrameFunction = () => Frame;
+
+interface Frame {
   text: string;
+  delay?: number;
+}
+
+export interface TerminalLine {
+  text?: string;
   isCommand: boolean;
   delay?: number;
+  hasFinished?: () => boolean;
+  frames?: FrameFunction[];
 }
 
 function wait(ms: number) {
@@ -20,6 +29,8 @@ export async function* createTerminalContent(
   lineIndex: number
 ): AsyncIterableIterator<BufferEntry[]> {
   let linePosition = 0;
+  let frameIndex = 0;
+  let hasFrame = false;
 
   const buffer: BufferEntry[] = [];
 
@@ -44,32 +55,82 @@ export async function* createTerminalContent(
 
         if (!isNaN(delay)) {
           await wait(delay);
+
+          yield buffer;
         }
 
-        buffer.push({
-          id: lineIndex,
-          text: lines[lineIndex].text,
-          isCommand: false,
-          isCurrent: false,
-        });
+        const frames = lines[lineIndex].frames;
 
-        yield buffer;
+        if (!frames) {
+          buffer.push({
+            id: lineIndex,
+            text: lines[lineIndex].text,
+            isCommand: false,
+            isCurrent: false,
+          });
 
-        linePosition = 0;
-        lineIndex += 1;
+          yield buffer;
+
+          linePosition = 0;
+          lineIndex += 1;
+        } else if (frameIndex < frames.length) {
+          const frame = frames[frameIndex]();
+
+          if (frameIndex === 0 && !hasFrame) {
+            hasFrame = true;
+            buffer.push({
+              id: lineIndex,
+              text: frame.text,
+              isCurrent: false,
+              isCommand: false,
+            });
+          }
+
+          buffer[lineIndex].text = frame.text;
+
+          if (!isNaN(frame.delay)) {
+            yield buffer;
+
+            await wait(frame.delay);
+
+            yield buffer;
+          }
+
+          frameIndex += 1;
+        } else {
+          if (hasFrame && lines[lineIndex + 1]) {
+            buffer[lineIndex].text = lines[lineIndex].text;
+
+            linePosition = 0;
+            frameIndex = 0;
+            lineIndex += 1;
+            hasFrame = false;
+          }
+
+          frameIndex = 0;
+        }
       } else if (linePosition > lines[lineIndex].text.length) {
         buffer[lineIndex].isCurrent = lineIndex === lines.length - 1;
         linePosition = 0;
+
+        yield buffer;
+
+        await wait(300);
+
         lineIndex += 1;
       } else {
         const delay = lines[lineIndex].delay;
 
         if (!isNaN(delay)) {
+          yield buffer;
+
           await wait(delay);
+
+          yield buffer;
         }
 
         if (linePosition === 0) {
-          await wait(600);
+          await wait(100);
 
           buffer.push({
             id: lineIndex,
@@ -77,6 +138,10 @@ export async function* createTerminalContent(
             isCommand: lines[lineIndex].isCommand,
             isCurrent: true,
           });
+
+          yield buffer;
+
+          await wait(600);
         }
 
         buffer[lineIndex].text = lines[lineIndex].text.substring(
@@ -89,6 +154,8 @@ export async function* createTerminalContent(
 
       yield buffer;
     } else {
+      yield buffer;
+
       return buffer;
     }
   }

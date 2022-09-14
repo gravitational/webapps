@@ -5,11 +5,7 @@ import { SwitchTransition, Transition } from 'react-transition-group';
 
 import * as Icons from 'design/Icon';
 
-import logoSrc from 'design/assets/images/teleport-medallion.svg';
-
-import { TerminalAnimation } from 'teleport/Discover/Desktop/ConnectTeleport/TerminalAnimation';
 import { EditorAnimation } from 'teleport/Discover/Desktop/ConnectTeleport/EditorAnimation';
-import { StartTeleportTerminalAnimation } from 'teleport/Discover/Desktop/ConnectTeleport/StartTeleportTerminalAnimation';
 
 enum AnimationSteps {
   Terminal,

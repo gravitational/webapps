@@ -15,6 +15,7 @@ interface TerminalContentProps {
   keywords?: string[];
   args?: string[];
   selectedLines?: SelectedLines;
+  errors?: string[];
 }
 
 const SelectedLinesOverlay = styled.div`
@@ -74,7 +75,9 @@ export function TerminalContent(props: TerminalContentProps) {
   return (
     <TerminalContentContainer ref={ref}>
       <TerminalCode>
-        <Lines>{renderLines(props.lines, props.keywords, props.args)}</Lines>
+        <Lines>
+          {renderLines(props.lines, props.keywords, props.args, props.errors)}
+        </Lines>
 
         {selectedLines}
       </TerminalCode>
@@ -82,7 +85,12 @@ export function TerminalContent(props: TerminalContentProps) {
   );
 }
 
-function renderLines(lines: BufferEntry[], keywords: string[], args: string[]) {
+function renderLines(
+  lines: BufferEntry[],
+  keywords: string[],
+  args: string[],
+  errors: string[]
+) {
   if (!lines.length) {
     return (
       <Prompt key="cursor">
@@ -91,19 +99,26 @@ function renderLines(lines: BufferEntry[], keywords: string[], args: string[]) {
     );
   }
 
-  return lines.map(line => (
+  const result = lines.map(line => (
     <React.Fragment key={line.id}>
       {line.isCommand ? (
         <Prompt>${line.text.length > 0 ? ' ' : ''}</Prompt>
       ) : null}
-      {formatText(line.text, line.isCommand, keywords, args)}
+      {formatText(line.text, line.isCommand, keywords, args, errors)}
       {line.isCurrent ? <Cursor /> : null}
       <br />
     </React.Fragment>
   ));
+
+  return result;
 }
 
-function highlightWords(content: string, words: string[], color: string) {
+function highlightWords(
+  content: string,
+  words: string[],
+  color: string,
+  key: string
+) {
   const regex = new RegExp(`(${words.join('|')})`);
 
   if (regex.test(content)) {
@@ -121,7 +136,7 @@ function highlightWords(content: string, words: string[], color: string) {
         }
 
         return (
-          <span key={index} style={{ color }}>
+          <span key={`${key}-${index}`} style={{ color }}>
             {item}
           </span>
         );
@@ -136,7 +151,8 @@ function formatText(
   source: string,
   isCommand: boolean,
   keywords: string[],
-  args: string[]
+  args: string[],
+  errors: string[]
 ) {
   let text = source;
   let comment;
@@ -173,10 +189,15 @@ function formatText(
     }
 
     if (keywords) {
-      const highlightedWords = highlightWords(word, keywords, '#5af78e');
+      const highlightedWords = highlightWords(
+        word,
+        keywords,
+        '#5af78e',
+        'keyword'
+      );
       if (highlightedWords) {
         result.push(
-          <span style={{ userSelect: 'none' }} key={index}>
+          <span style={{ userSelect: 'none' }} key={`keywords-${index}`}>
             {highlightedWords}{' '}
           </span>
         );
@@ -186,11 +207,29 @@ function formatText(
     }
 
     if (args) {
-      const highlightedArguments = highlightWords(word, args, '#cfa7ff');
+      const highlightedArguments = highlightWords(word, args, '#cfa7ff', 'arg');
       if (highlightedArguments) {
         result.push(
-          <span style={{ userSelect: 'none' }} key={index}>
+          <span style={{ userSelect: 'none' }} key={`args-${index}`}>
             {highlightedArguments}{' '}
+          </span>
+        );
+
+        continue;
+      }
+    }
+
+    if (errors) {
+      const highlightedErrors = highlightWords(
+        word,
+        errors,
+        '#f07278',
+        'error'
+      );
+      if (highlightedErrors) {
+        result.push(
+          <span style={{ userSelect: 'none' }} key={`errors-${index}`}>
+            {highlightedErrors}{' '}
           </span>
         );
 

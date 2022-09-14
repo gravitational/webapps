@@ -1130,6 +1130,13 @@ exports[`logins with no perms 1`] = `
   display: flex;
 }
 
+.c8 {
+  padding: 2px 5px;
+  border-radius: 6px;
+  background-color: rgb(255 255 255 / 17%);
+  color: inherit;
+}
+
 .c10 {
   overflow: hidden;
   border-radius: 4px;
@@ -1156,13 +1163,6 @@ exports[`logins with no perms 1`] = `
   right: 0px;
   bottom: 0px;
   left: 0px;
-}
-
-.c8 {
-  padding: 2px 5px;
-  border-radius: 6px;
-  background-color: rgb(255 255 255 / 17%);
-  color: inherit;
 }
 
 .c4 {
@@ -1571,6 +1571,13 @@ exports[`no logins and perms 1`] = `
   display: flex;
 }
 
+.c5 {
+  padding: 2px 5px;
+  border-radius: 6px;
+  background-color: rgb(255 255 255 / 17%);
+  color: inherit;
+}
+
 .c7 {
   overflow: hidden;
   border-radius: 4px;
@@ -1597,13 +1604,6 @@ exports[`no logins and perms 1`] = `
   right: 0px;
   bottom: 0px;
   left: 0px;
-}
-
-.c5 {
-  padding: 2px 5px;
-  border-radius: 6px;
-  background-color: rgb(255 255 255 / 17%);
-  color: inherit;
 }
 
 <div
