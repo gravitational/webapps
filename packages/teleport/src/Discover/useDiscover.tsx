@@ -40,6 +40,7 @@ export function getKindFromString(value: string) {
     case 'kubernetes':
       return ResourceKind.Kubernetes;
     case 'server':
+    default:
       return ResourceKind.Server;
   }
 }
@@ -50,9 +51,7 @@ export function useDiscover(config: UseMainConfig) {
 
   const [currentStep, setCurrentStep] = useState(0);
   const [selectedResourceKind, setSelectedResourceKind] =
-    useState<ResourceKind>(
-      getKindFromString(location?.state?.entity || 'desktop')
-    );
+    useState<ResourceKind>(getKindFromString(location?.state?.entity));
   const [agentMeta, setAgentMeta] = useState<AgentMeta>();
 
   const resource = resources.find(r => r.kind === selectedResourceKind);

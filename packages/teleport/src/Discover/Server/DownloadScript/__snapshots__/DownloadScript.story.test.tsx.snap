@@ -172,6 +172,14 @@ exports[`failed 1`] = `
   margin: 0px;
 }
 
+.c8 {
+  color: #03a9f4;
+  font-weight: normal;
+  padding-left: 0;
+  font-size: inherit;
+  min-height: auto;
+}
+
 .c5 {
   overflow: hidden;
   text-overflow: ellipsis;
@@ -184,14 +192,6 @@ exports[`failed 1`] = `
 
 .c5 .icon {
   margin-right: 8px;
-}
-
-.c8 {
-  color: #03a9f4;
-  font-weight: normal;
-  padding-left: 0;
-  font-size: inherit;
-  min-height: auto;
 }
 
 .c3 {
@@ -519,18 +519,6 @@ exports[`polling error state 1`] = `
   display: flex;
 }
 
-.c9 {
-  overflow: hidden;
-  text-overflow: ellipsis;
-  margin: 0px;
-  display: flex;
-  align-items: center;
-}
-
-.c9 .icon {
-  margin-right: 8px;
-}
-
 .c12 {
   color: #03a9f4;
   font-weight: normal;
@@ -544,6 +532,18 @@ exports[`polling error state 1`] = `
   border-radius: 6px;
   background-color: rgb(255 255 255 / 17%);
   color: inherit;
+}
+
+.c9 {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  margin: 0px;
+  display: flex;
+  align-items: center;
+}
+
+.c9 .icon {
+  margin-right: 8px;
 }
 
 .c3 {

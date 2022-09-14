@@ -5,6 +5,7 @@ import { AnimatedTerminal } from 'shared/components/AnimatedTerminal';
 import cfg from 'teleport/config';
 
 import { generateCommand } from 'teleport/Discover/Shared/generateCommand';
+import { useJoinToken } from 'teleport/Discover/Desktop/ConnectTeleport/JoinTokenContext';
 
 const lines = (token: string) => [
   {
@@ -59,14 +60,15 @@ const selectedLines = {
 
 interface TerminalAnimationProps {
   isCopying: boolean;
-  token: string;
 }
 
 export function TerminalAnimation(props: TerminalAnimationProps) {
+  const { joinToken } = useJoinToken();
+
   return (
     <AnimatedTerminal
-      lines={lines(props.token)}
-      startDelay={800}
+      lines={lines(joinToken.id)}
+      startDelay={200}
       keywords={keywords}
       args={args}
       selectedLines={props.isCopying ? selectedLines : null}

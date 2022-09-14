@@ -4,7 +4,7 @@ export const StepContainer = styled.div`
   width: 100%;
   display: flex;
   overflow-x: hidden;
-  padding-bottom: 100px;
+  padding-bottom: 50px;
   margin-top: -24px;
   padding-top: 24px;
 `;

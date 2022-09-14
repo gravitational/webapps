@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo, useState } from 'react';
+import React, { useEffect, useMemo, useRef, useState } from 'react';
 
 import {
   SelectedLines,
@@ -13,40 +13,52 @@ interface AnimatedTerminalProps {
   lines: TerminalLine[];
   startDelay?: number;
   keywords?: string[];
+  errors?: string[];
   args?: string[];
   selectedLines?: SelectedLines;
   stopped?: boolean;
+  onCompleted?: () => void;
 }
 
 export function AnimatedTerminal(props: AnimatedTerminalProps) {
-  const [lastLineIndex, setLastLineIndex] = useState(0);
+  const lastLineIndex = useRef(0);
   const content = useMemo(
-    () => createTerminalContent(props.lines, lastLineIndex),
-    [props.lines, lastLineIndex]
+    () => createTerminalContent(props.lines, lastLineIndex.current),
+    [props.lines]
   );
 
   const [counter, setCounter] = useState(0);
-  const [completed, setCompleted] = useState(false);
+  const [completed, setCompletedState] = useState(false);
   const [lines, setLines] = useState<BufferEntry[]>([]);
+
+  function setCompleted(completed: boolean) {
+    setCompletedState(completed);
+    if (completed) {
+      props.onCompleted && props.onCompleted();
+    }
+  }
 
   useEffect(() => {
     let timeout;
     let interval;
 
     function setup() {
-      let lastIndex = 0;
       interval = setInterval(async () => {
         const { value, done } = await content.next();
 
         if (value) {
-          lastIndex = value[value.length - 1].id;
+          if (value.length) {
+            const nextLineIndex = value[value.length - 1].id + 1;
+            if (nextLineIndex > lastLineIndex.current) {
+              lastLineIndex.current = nextLineIndex;
+            }
+          }
 
           setLines(value);
           setCounter(count => count + 1);
         }
 
         if (done) {
-          setLastLineIndex(lastIndex + 1);
           setCompleted(true);
         }
       }, 1000 / 60);
@@ -62,7 +74,7 @@ export function AnimatedTerminal(props: AnimatedTerminalProps) {
       clearInterval(interval);
       clearTimeout(timeout);
     };
-  }, [props.startDelay, content]);
+  }, [props.startDelay, props.lines, content]);
 
   let renderedLines = lines;
   if (props.stopped) {
@@ -82,6 +94,7 @@ export function AnimatedTerminal(props: AnimatedTerminalProps) {
         counter={counter}
         args={props.args}
         keywords={props.keywords}
+        errors={props.errors}
         selectedLines={props.selectedLines}
       />
     </Window>
