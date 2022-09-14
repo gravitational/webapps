@@ -26,7 +26,6 @@ import useTeleport from 'teleport/useTeleport';
 import getFeatures from 'teleport/features';
 import { UserMenuNav } from 'teleport/components/UserMenuNav';
 import * as main from 'teleport/Main';
-import { MainContainer } from 'teleport/Main/MainContainer';
 import * as sideNav from 'teleport/SideNav';
 import { TopBarContainer } from 'teleport/TopBar';
 import { FeatureBox } from 'teleport/components/Layout';
@@ -145,19 +144,21 @@ export function Discover({
               }
             />
             <main.HorizontalSplit>
-              <TopBarContainer>
-                <Text typography="h5" bold>
-                  Manage Access
-                </Text>
-                <UserMenuNav
-                  navItems={userMenuItems}
-                  logout={logout}
-                  username={username}
-                />
-              </TopBarContainer>
-              <FeatureBox pt={4}>
-                {AgentComponent && <AgentComponent {...agentProps} />}
-              </FeatureBox>
+              <main.ContentMinWidth>
+                <TopBarContainer>
+                  <Text typography="h5" bold>
+                    Manage Access
+                  </Text>
+                  <UserMenuNav
+                    navItems={userMenuItems}
+                    logout={logout}
+                    username={username}
+                  />
+                </TopBarContainer>
+                <FeatureBox pt={4} maxWidth="1450px">
+                  {AgentComponent && <AgentComponent {...agentProps} />}
+                </FeatureBox>
+              </main.ContentMinWidth>
             </main.HorizontalSplit>
           </>
         )}
@@ -228,6 +229,10 @@ function SideNavAgentConnect({
   );
 }
 
+const MainContainer = styled(main.MainContainer)`
+  --sidebar-width: 280px;
+`;
+
 const Bullet = styled.span`
   height: 14px;
   width: 14px;
@@ -273,10 +278,10 @@ const StepsContainer = styled(Text)`
 `;
 
 const StyledNav = styled(sideNav.Nav)`
-  min-width: 350px;
-  width: 350px;
+  min-width: var(--sidebar-width);
+  width: var(--sidebar-width);
 `;
 
 const StyledNavContent = styled(sideNav.Content)`
-  padding: 20px 32px 32px 32px;
+  padding: 0 20px;
 `;
