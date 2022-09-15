@@ -14,6 +14,7 @@
  * limitations under the License.
  */
 
-import TextSelectCopy from './TextSelectCopy';
+import { TextSelectCopy } from './TextSelectCopy';
+import { TextSelectCopyMulti } from './TextSelectCopyMulti';
 
-export default TextSelectCopy;
+export { TextSelectCopy, TextSelectCopyMulti };
