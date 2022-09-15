@@ -41,8 +41,8 @@ export function getKindFromString(value: string) {
       return ResourceKind.Desktop;
     case 'kubernetes':
       return ResourceKind.Kubernetes;
-    case 'server':
     default:
+    case 'server':
       return ResourceKind.Server;
   }
 }

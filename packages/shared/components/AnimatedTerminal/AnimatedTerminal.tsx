@@ -1,6 +1,7 @@
 import React, { useEffect, useMemo, useRef, useState } from 'react';
 
 import {
+  KeywordHighlight,
   SelectedLines,
   TerminalContent,
 } from 'shared/components/AnimatedTerminal/TerminalContent';
@@ -12,9 +13,7 @@ import { BufferEntry, createTerminalContent, TerminalLine } from './content';
 interface AnimatedTerminalProps {
   lines: TerminalLine[];
   startDelay?: number;
-  keywords?: string[];
-  errors?: string[];
-  args?: string[];
+  highlights?: KeywordHighlight[];
   selectedLines?: SelectedLines;
   stopped?: boolean;
   onCompleted?: () => void;
@@ -29,7 +28,8 @@ export function AnimatedTerminal(props: AnimatedTerminalProps) {
 
   const [counter, setCounter] = useState(0);
   const [completed, setCompletedState] = useState(false);
-  const [lines, setLines] = useState<BufferEntry[]>([]);
+
+  const lines = useRef<BufferEntry[]>([]);
 
   function setCompleted(completed: boolean) {
     setCompletedState(completed);
@@ -39,44 +39,51 @@ export function AnimatedTerminal(props: AnimatedTerminalProps) {
   }
 
   useEffect(() => {
-    let timeout;
-    let interval;
+    let timeout: number;
+    let request: number;
+
+    async function animate() {
+      const { value, done } = await content.next();
+
+      if (value) {
+        if (value.length) {
+          const nextLineIndex = value[value.length - 1].id + 1;
+          if (nextLineIndex > lastLineIndex.current) {
+            lastLineIndex.current = nextLineIndex;
+          }
+        }
+
+        lines.current = value;
+        setCounter(count => count + 1);
+      }
+
+      if (done) {
+        setCompleted(true);
+        setCounter(count => count + 1);
+
+        return;
+      }
+
+      request = requestAnimationFrame(animate);
+    }
 
     function setup() {
-      interval = setInterval(async () => {
-        const { value, done } = await content.next();
-
-        if (value) {
-          if (value.length) {
-            const nextLineIndex = value[value.length - 1].id + 1;
-            if (nextLineIndex > lastLineIndex.current) {
-              lastLineIndex.current = nextLineIndex;
-            }
-          }
-
-          setLines(value);
-          setCounter(count => count + 1);
-        }
-
-        if (done) {
-          setCompleted(true);
-        }
-      }, 1000 / 60);
+      request = requestAnimationFrame(animate);
     }
 
     if (!props.startDelay) {
       setup();
     } else {
-      timeout = setTimeout(setup, props.startDelay);
+      timeout = window.setTimeout(setup, props.startDelay);
     }
 
     return () => {
-      clearInterval(interval);
+      cancelAnimationFrame(request);
       clearTimeout(timeout);
     };
   }, [props.startDelay, props.lines, content]);
 
-  let renderedLines = lines;
+  let renderedLines = lines.current;
   if (props.stopped) {
     renderedLines = props.lines.map((line, index) => ({
       id: index,
@@ -92,9 +99,7 @@ export function AnimatedTerminal(props: AnimatedTerminalProps) {
         lines={renderedLines}
         completed={completed}
         counter={counter}
-        args={props.args}
-        keywords={props.keywords}
-        errors={props.errors}
+        highlights={props.highlights}
         selectedLines={props.selectedLines}
       />
     </Window>

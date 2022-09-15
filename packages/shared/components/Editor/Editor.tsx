@@ -10,6 +10,11 @@ import {
 import { Tabs } from 'shared/components/Editor/Tabs';
 import { Language } from 'shared/components/Editor/Language';
 
+import {
+  KeywordHighlight,
+  TerminalColor,
+} from 'shared/components/AnimatedTerminal/TerminalContent';
+
 import { File, FileProps } from './File';
 
 interface EditorProps {
@@ -39,11 +44,22 @@ export function Editor(props: React.PropsWithChildren<EditorProps>) {
   const { content, language } = files[activeTabIndex];
 
   const parsed = parse(content, language);
-  const numberOfLines = content.split('\n').length;
 
   const lineNumbers = [];
-  for (let i = 0; i <= numberOfLines; i++) {
-    lineNumbers.push(<LineNumber key={i} data-line-number={i + 1} />);
+  if (content) {
+    const numberOfLines = content.split('\n').length;
+
+    for (let i = 0; i <= numberOfLines; i++) {
+      lineNumbers.push(
+        <LineNumber
+          key={i}
+          data-line-number={i + 1}
+          active={i === numberOfLines}
+        />
+      );
+    }
+  } else {
+    lineNumbers.push(<LineNumber key={0} data-line-number={1} active />);
   }
 
   return (
@@ -56,15 +72,15 @@ export function Editor(props: React.PropsWithChildren<EditorProps>) {
         onSelect={setActiveTabIndex}
       />
 
-      <WindowContentContainer style={{ height: 380 }}>
+      <WindowContentContainer style={{ height: 585 }}>
         <WindowCode style={{ display: 'flex' }}>
           <LineNumbers>{lineNumbers}</LineNumbers>
-          <div>
+          <Code>
             {parsed}
-            <div>
+            <ActiveLine>
               <Cursor />
-            </div>
-          </div>
+            </ActiveLine>
+          </Code>
         </WindowCode>
       </WindowContentContainer>
     </WindowContainer>
@@ -81,40 +97,160 @@ function parse(code: string, language: Language) {
 }
 
 function parseYAML(code: string) {
+  if (!code) {
+    return [];
+  }
+
+  const highlights = [
+    {
+      key: 'string',
+      keywords: [`'\\*'`],
+      color: TerminalColor.Keyword,
+    },
+    {
+      key: 'certificate',
+      match: /(-----.*?-----)/,
+      color: TerminalColor.Punctuation,
+    },
+  ];
+
   const lines = code.split('\n');
 
   const result = [];
   for (const [index, line] of lines.entries()) {
-    const highlightHyphen = highlight(line, ' -', index);
-    if (highlightHyphen) {
-      result.push(highlightHyphen);
+    const highlightSemicolonMultiline = highlight(
+      line,
+      ': |',
+      index,
+      highlights
+    );
+    if (highlightSemicolonMultiline) {
+      result.push(highlightSemicolonMultiline);
 
       continue;
     }
 
-    const highlightSemicolon = highlight(line, ':', index);
+    const highlightSemicolon = highlight(line, ':', index, highlights);
     if (highlightSemicolon) {
       result.push(highlightSemicolon);
+
+      continue;
     }
+
+    if (line) {
+      result.push(<div key={index}>{highlightValue(line, highlights)}</div>);
+
+      continue;
+    }
+
+    result.push(<div key={index}>&nbsp;</div>);
   }
 
   return result;
 }
 
-function highlight(code: string, symbol: string, index: number) {
+function highlight(
+  code: string,
+  symbol: string,
+  index: number,
+  highlights: KeywordHighlight[]
+) {
   if (!code.includes(symbol)) {
     return;
   }
 
   const symbolIndex = code.indexOf(symbol);
 
+  let value = code.substring(symbolIndex + symbol.length, code.length);
+
   return (
     <div key={index}>
       <Keyword>{code.substring(0, symbolIndex)}</Keyword>
       <Punctuation>{symbol}</Punctuation>
-      {code.substring(symbolIndex + symbol.length, code.length)}
+      {highlightValue(value, highlights)}
     </div>
   );
+}
+
+function highlightValue(content: string, highlights: KeywordHighlight[]) {
+  for (const entry of highlights) {
+    if (entry.match && entry.match.test(content)) {
+      const split = content.split(entry.match);
+
+      return split
+        .map((item, index) => {
+          if (!item) {
+            return;
+          }
+
+          // all odd occurrences are matches, the rest remain unchanged
+          if (index % 2 === 0) {
+            return <span key={index}>{item}</span>;
+          }
+
+          return (
+            <span key={`${entry.key}-${index}`} style={{ color: entry.color }}>
+              {item}
+            </span>
+          );
+        })
+        .filter(Boolean);
+    }
+  }
+
+  const words = content.split(' ');
+  const result = [];
+
+  outer: for (const [index, word] of words.entries()) {
+    for (const entry of highlights) {
+      if (entry.keywords) {
+        const highlightedWords = highlightWord(word, entry);
+        if (highlightedWords) {
+          result.push(
+            <span key={`${entry.key}-${index}`}>{highlightedWords} </span>
+          );
+
+          continue outer;
+        }
+      }
+    }
+
+    result.push(<span key={index}>{word} </span>);
+  }
+
+  return result;
+}
+
+function highlightWord(content: string, highlight: KeywordHighlight) {
+  const regex = new RegExp(`(${highlight.keywords.join('|')})`);
+
+  if (regex.test(content)) {
+    const split = content.split(regex);
+
+    return split
+      .map((item, index) => {
+        if (!item) {
+          return;
+        }
+
+        // all odd occurrences are matches, the rest remain unchanged
+        if (index % 2 === 0) {
+          return <span key={index}>{item}</span>;
+        }
+
+        return (
+          <span
+            key={`${highlight.key}-${index}`}
+            style={{ color: highlight.color }}
+          >
+            {item}
+          </span>
+        );
+      })
+      .filter(Boolean);
+  }
+
+  return null;
 }
 
 const Keyword = styled.span`
@@ -142,14 +278,30 @@ const Cursor = styled.span`
 
 const LineNumbers = styled.div`
   user-select: none;
-  width: 40px;
-  color: rgba(255, 255, 255, 0.3);
+  width: 55px;
 `;
 
-const LineNumber = styled.div`
+interface LineNumberProps {
+  active?: boolean;
+}
+
+const LineNumber = styled.div<LineNumberProps>`
+  background: ${p => (p.active ? 'rgba(0, 0, 0, 0.3)' : 'none')};
+  color: ${p =>
+    p.active ? 'rgba(255, 255, 255, 0.6)' : 'rgba(255, 255, 255, 0.3)'};
   text-align: right;
   padding-right: 20px;
+
   &:before {
     content: attr(data-line-number);
   }
+`;
+
+const Code = styled.div`
+  width: 100%;
+`;
+
+const ActiveLine = styled.div`
+  background: rgba(0, 0, 0, 0.3);
+  width: 100%;
 `;

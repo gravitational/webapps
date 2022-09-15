@@ -1,4 +1,4 @@
-import React, { useEffect, useLayoutEffect, useRef, useState } from 'react';
+import React, { useEffect, useLayoutEffect, useRef } from 'react';
 import styled from 'styled-components';
 
 import { BufferEntry } from 'shared/components/AnimatedTerminal/content';
@@ -12,10 +12,23 @@ interface TerminalContentProps {
   lines: BufferEntry[];
   completed: boolean;
   counter: number;
-  keywords?: string[];
-  args?: string[];
   selectedLines?: SelectedLines;
-  errors?: string[];
+  highlights?: KeywordHighlight[];
+}
+
+export interface KeywordHighlight {
+  key: string;
+  match?: RegExp;
+  keywords?: string[];
+  color: TerminalColor;
+}
+
+export enum TerminalColor {
+  Argument = '#cfa7ff',
+  Keyword = '#5af78e',
+  Error = '#f07278',
+  Label = 'rgba(255, 255, 255, 0.7)',
+  Punctuation = '#81ceee',
 }
 
 const SelectedLinesOverlay = styled.div`
@@ -24,6 +37,8 @@ const SelectedLinesOverlay = styled.div`
   position: absolute;
   left: 0;
   z-index: 0;
+  transform: translate3d(0, 0, 0);
+  transition-property: height;
 `;
 
 const Lines = styled.div`
@@ -38,35 +53,34 @@ export function TerminalContent(props: TerminalContentProps) {
     ref.current.scrollTop = ref.current.scrollHeight;
   }, [props.counter]);
 
-  const [renderedSelectedLineCount, setRenderedSelectedLineCount] = useState(0);
+  const renderedLines = useRef<HTMLDivElement>();
 
   useEffect(() => {
-    if (props.selectedLines) {
-      setRenderedSelectedLineCount(0);
-
-      const numberOfLines = props.selectedLines.end - props.selectedLines.start;
-
-      let count = 0;
-      const timeout = window.setInterval(() => {
-        setRenderedSelectedLineCount(count => count + 1);
-        count += 1;
-
-        if (count > numberOfLines) {
-          clearTimeout(timeout);
-        }
-      }, 80);
-
-      return () => clearInterval(timeout);
+    if (!props.selectedLines) {
+      return;
     }
+
+    const numberOfLines = props.selectedLines.end - props.selectedLines.start;
+
+    const id = window.setTimeout(() => {
+      renderedLines.current.style.height = `${20 * (numberOfLines + 1)}px`;
+    }, 1000);
+
+    return () => clearTimeout(id);
   }, [props.selectedLines]);
 
   let selectedLines;
   if (props.selectedLines) {
+    const numberOfLines = props.selectedLines.end - props.selectedLines.start;
+
     selectedLines = (
       <SelectedLinesOverlay
+        ref={renderedLines}
         style={{
-          height: 20 * renderedSelectedLineCount,
           top: 20 * (props.selectedLines.start + 1),
+          transitionTimingFunction: `steps(${numberOfLines + 2}, jump-none)`,
+          transitionDuration: `${numberOfLines * 0.08}s`,
+          height: 0,
         }}
       />
     );
@@ -75,9 +89,7 @@ export function TerminalContent(props: TerminalContentProps) {
   return (
     <TerminalContentContainer ref={ref}>
       <TerminalCode>
-        <Lines>
-          {renderLines(props.lines, props.keywords, props.args, props.errors)}
-        </Lines>
+        <Lines>{renderLines(props.lines, props.highlights)}</Lines>
 
         {selectedLines}
       </TerminalCode>
@@ -85,12 +97,7 @@ export function TerminalContent(props: TerminalContentProps) {
   );
 }
 
-function renderLines(
-  lines: BufferEntry[],
-  keywords: string[],
-  args: string[],
-  errors: string[]
-) {
+function renderLines(lines: BufferEntry[], highlights?: KeywordHighlight[]) {
   if (!lines.length) {
     return (
       <Prompt key="cursor">
@@ -104,8 +111,8 @@ function renderLines(
       {line.isCommand ? (
         <Prompt>${line.text.length > 0 ? ' ' : ''}</Prompt>
       ) : null}
-      {formatText(line.text, line.isCommand, keywords, args, errors)}
-      {line.isCurrent ? <Cursor /> : null}
+      {formatText(line.text, line.isCommand, highlights)}
+      {line.isCurrent && line.isCommand ? <Cursor /> : null}
       <br />
     </React.Fragment>
   ));
@@ -113,13 +120,8 @@ function renderLines(
   return result;
 }
 
-function highlightWords(
-  content: string,
-  words: string[],
-  color: string,
-  key: string
-) {
-  const regex = new RegExp(`(${words.join('|')})`);
+function highlightWords(content: string, highlight: KeywordHighlight) {
+  const regex = new RegExp(`(${highlight.keywords.join('|')})`);
 
   if (regex.test(content)) {
     const split = content.split(regex);
@@ -136,7 +138,10 @@ function highlightWords(
         }
 
         return (
-          <span key={`${key}-${index}`} style={{ color }}>
+          <span
+            key={`${highlight.key}-${index}`}
+            style={{ color: highlight.color }}
+          >
             {item}
           </span>
         );
@@ -150,9 +155,7 @@ function highlightWords(
 function formatText(
   source: string,
   isCommand: boolean,
-  keywords: string[],
-  args: string[],
-  errors: string[]
+  highlights?: KeywordHighlight[]
 ) {
   let text = source;
   let comment;
@@ -169,7 +172,7 @@ function formatText(
   const words = text.split(' ');
   const result = [];
 
-  for (const [index, word] of words.entries()) {
+  outer: for (const [index, word] of words.entries()) {
     if (!isCommand && /(https?:\/\/\S+)/g.test(word)) {
       result.push(
         <React.Fragment key={index}>
@@ -188,60 +191,20 @@ function formatText(
       continue;
     }
 
-    if (keywords) {
-      const highlightedWords = highlightWords(
-        word,
-        keywords,
-        '#5af78e',
-        'keyword'
-      );
-      if (highlightedWords) {
-        result.push(
-          <span style={{ userSelect: 'none' }} key={`keywords-${index}`}>
-            {highlightedWords}{' '}
-          </span>
-        );
+    if (highlights) {
+      for (const entry of highlights) {
+        const highlightedWords = highlightWords(word, entry);
+        if (highlightedWords) {
+          result.push(
+            <Word key={`${entry.key}-${index}`}>{highlightedWords} </Word>
+          );
 
-        continue;
+          continue outer;
+        }
       }
     }
 
-    if (args) {
-      const highlightedArguments = highlightWords(word, args, '#cfa7ff', 'arg');
-      if (highlightedArguments) {
-        result.push(
-          <span style={{ userSelect: 'none' }} key={`args-${index}`}>
-            {highlightedArguments}{' '}
-          </span>
-        );
-
-        continue;
-      }
-    }
-
-    if (errors) {
-      const highlightedErrors = highlightWords(
-        word,
-        errors,
-        '#f07278',
-        'error'
-      );
-      if (highlightedErrors) {
-        result.push(
-          <span style={{ userSelect: 'none' }} key={`errors-${index}`}>
-            {highlightedErrors}{' '}
-          </span>
-        );
-
-        continue;
-      }
-    }
-
-    result.push(
-      <span style={{ userSelect: 'none' }} key={index}>
-        {word}{' '}
-      </span>
-    );
+    result.push(<Word key={index}>{word} </Word>);
   }
 
   return (
@@ -251,6 +214,10 @@ function formatText(
     </>
   );
 }
+
+const Word = styled.span`
+  user-select: none;
+`;
 
 const Prompt = styled.span`
   user-select: none;
@@ -272,7 +239,7 @@ const Cursor = styled.span`
 
 export const TerminalContentContainer = styled.div`
   background: #04162c;
-  height: 425px;
+  height: inherit;
   overflow-y: auto;
   border-bottom-left-radius: 5px;
   border-bottom-right-radius: 5px;

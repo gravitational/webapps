@@ -26,10 +26,29 @@ export type Desktop = {
   addr: string;
   // Labels.
   labels: AgentLabel[];
+
+  host_id?: string;
+  host_addr?: string;
 };
 
 export type DesktopsResponse = {
   desktops: Desktop[];
+  startKey?: string;
+  totalCount?: number;
+};
+// DesktopService is a Windows Desktop Service.
+export type WindowsDesktopService = {
+  name: string;
+  // Name is name (uuid) of the windows desktop.
+  hostname: string;
+  // Addr is the network address the desktop can be reached at.
+  addr: string;
+  // Labels.
+  labels: AgentLabel[];
+};
+
+export type WindowsDesktopServicesResponse = {
+  desktopServices: WindowsDesktopService[];
   startKey?: string;
   totalCount?: number;
 };

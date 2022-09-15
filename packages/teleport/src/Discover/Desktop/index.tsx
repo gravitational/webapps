@@ -18,9 +18,11 @@ import React from 'react';
 
 import { Desktop } from 'design/Icon';
 
-import { InstallActiveDirectory } from 'teleport/Discover/Desktop/InstallActiveDirectory';
-import { ConnectTeleport } from 'teleport/Discover/Desktop/ConnectTeleport';
 import { Finished, ResourceKind } from 'teleport/Discover/Shared';
+
+import { ConnectTeleport } from 'teleport/Discover/Desktop/ConnectTeleport';
+import { DiscoverDesktops } from 'teleport/Discover/Desktop/DiscoverDesktops';
+import { InstallActiveDirectory } from 'teleport/Discover/Desktop/InstallActiveDirectory';
 
 import { Resource } from 'teleport/Discover/flow';
 
@@ -38,6 +40,10 @@ export const DesktopResource: Resource = {
     {
       title: 'Connect Teleport',
       component: ConnectTeleport,
+    },
+    {
+      title: 'Discover Desktops',
+      component: DiscoverDesktops,
     },
     {
       title: 'Finished',

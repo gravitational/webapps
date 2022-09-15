@@ -40,6 +40,13 @@ import { findViewAtIndex } from './flow';
 import { useDiscover } from './useDiscover';
 
 import type { BannerType } from 'teleport/components/BannerList/BannerList';
+import { PingTeleportProvider } from 'teleport/Discover/Desktop/ConnectTeleport/PingTeleportContext';
+import { JoinTokenProvider } from 'teleport/Discover/Desktop/ConnectTeleport/JoinTokenContext';
+import { ResourceKind } from 'teleport/Discover/Shared';
+
+const SCRIPT_TIMEOUT = 1000 * 60 * 5; // 5 minutes
+const PING_TIMEOUT = 1000 * 60 * 10; // 10 minutes
+const PING_INTERVAL = 1000 * 3; // 3 seconds
 
 export function Discover() {
   const [features] = useState(() => getFeatures());
@@ -66,7 +73,13 @@ export function Discover() {
     const view = findViewAtIndex(views, currentStep);
 
     const Component = view.component;
-    content = <Component {...agentProps} />;
+    content = (
+      <JoinTokenProvider timeout={SCRIPT_TIMEOUT}>
+        <PingTeleportProvider timeout={PING_TIMEOUT} interval={PING_INTERVAL}>
+          <Component {...agentProps} />
+        </PingTeleportProvider>
+      </JoinTokenProvider>
+    );
   } else {
     content = (
       <SelectResource
@@ -107,7 +120,11 @@ export function Discover() {
             if (nextLocation.pathname === cfg.routes.discover) return true;
             return 'Are you sure you want to exit the “Add New Resource” workflow? You’ll have to start from the beginning next time.';
           }}
-          when={currentStep > 0}
+          when={
+            (selectedResourceKind !== ResourceKind.Desktop &&
+              currentStep > 0) ||
+            (selectedResourceKind === ResourceKind.Desktop && currentStep < 3)
+          }
         />
         {initAttempt.status === 'processing' && (
           <main.StyledIndicator>

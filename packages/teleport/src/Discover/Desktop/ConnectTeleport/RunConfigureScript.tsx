@@ -46,7 +46,13 @@ export function RunConfigureScript(
 
     content = (
       <StepInstructions>
-        <TextSelectCopy text={command} mt={2} mb={5} bash allowMultiline />
+        <TextSelectCopy
+          text={command}
+          mt={2}
+          mb={5}
+          bash
+          allowMultiline
+        />
 
         <ButtonPrimary onClick={() => props.onNext()}>
           I've ran it

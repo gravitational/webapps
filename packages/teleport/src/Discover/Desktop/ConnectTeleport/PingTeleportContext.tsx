@@ -4,13 +4,14 @@ import { useTeleport } from 'teleport';
 import { usePoll } from 'teleport/Discover/Desktop/ConnectTeleport/usePoll';
 import { INTERNAL_RESOURCE_ID_LABEL_KEY } from 'teleport/services/joinToken';
 import { useJoinTokenValue } from 'teleport/Discover/Desktop/ConnectTeleport/JoinTokenContext';
+import { WindowsDesktopService } from 'teleport/services/desktops';
 
 interface PingTeleportContextState {
   active: boolean;
   start: () => void;
   timeout: number;
   timedOut: boolean;
-  found: boolean;
+  result: WindowsDesktopService | null;
 }
 
 const pingTeleportContext = React.createContext<PingTeleportContextState>(null);
@@ -27,10 +28,10 @@ export function PingTeleportProvider(props: {
 
   const joinToken = useJoinTokenValue();
 
-  const { timedOut, result: found } = usePoll(
+  const { timedOut, result } = usePoll(
     signal =>
-      ctx.nodeService
-        .fetchNodes(
+      ctx.desktopService
+        .fetchDesktopServices(
           ctx.storeUser.getClusterId(),
           {
             search: `${INTERNAL_RESOURCE_ID_LABEL_KEY} ${joinToken.internalResourceId}`,
@@ -38,7 +39,13 @@ export function PingTeleportProvider(props: {
           },
           signal
         )
-        .then(res => res.agents.length > 0),
+        .then(res => {
+          if (res.agents.length) {
+            return res.agents[0];
+          }
+
+          return null;
+        }),
     timeout,
     active,
     props.interval
@@ -56,15 +63,15 @@ export function PingTeleportProvider(props: {
   }, [props.timeout]);
 
   useEffect(() => {
-    if (found) {
+    if (result) {
       setPollTimeout(null);
       setActive(false);
     }
-  }, [found]);
+  }, [result]);
 
   return (
     <pingTeleportContext.Provider
-      value={{ active, start, found, timedOut, timeout }}
+      value={{ active, start, result, timedOut, timeout }}
     >
       {props.children}
     </pingTeleportContext.Provider>
