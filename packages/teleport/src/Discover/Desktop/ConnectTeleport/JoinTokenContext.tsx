@@ -68,7 +68,7 @@ export function useJoinTokenValue() {
   return tokenContext.joinToken;
 }
 
-export function useJoinToken() {
+export function useJoinToken(): { joinToken: JoinToken, reloadJoinToken: () => void, timedOut: boolean, timeout: number } {
   const ctx = useTeleport();
   const tokenContext = useContext(joinTokenContext);
 
@@ -77,7 +77,7 @@ export function useJoinToken() {
 
     result = {
       promise: ctx.joinTokenService
-        .fetchJoinToken(['Node'], 'token', [], abortController.signal)
+        .fetchJoinToken(['WindowsDesktop'], 'token', [], abortController.signal)
         .then(token => {
           // Probably will never happen, but just in case, otherwise
           // querying for the resource can return a false positive.

@@ -26,15 +26,12 @@ import {
   RunConfigureScriptLoading,
 } from 'teleport/Discover/Desktop/ConnectTeleport/RunConfigureScript';
 import { StepContainer } from 'teleport/Discover/Desktop/ConnectTeleport/Step';
-import { TerminalAnimation } from 'teleport/Discover/Desktop/ConnectTeleport/TerminalAnimation';
-import { EditorAnimation } from 'teleport/Discover/Desktop/ConnectTeleport/EditorAnimation';
+import { RunConfigureScriptAnimation } from 'teleport/Discover/Desktop/ConnectTeleport/RunConfigureScriptAnimation';
+import { CreateTeleportConfigAnimation } from 'teleport/Discover/Desktop/ConnectTeleport/CreateTeleportConfigAnimation';
 import { StartTeleportTerminalAnimation } from 'teleport/Discover/Desktop/ConnectTeleport/StartTeleportTerminalAnimation';
 import { CopyOutput } from 'teleport/Discover/Desktop/ConnectTeleport/CopyOutput';
 import { CreateConfig } from 'teleport/Discover/Desktop/ConnectTeleport/CreateConfig';
 import { StartTeleport } from 'teleport/Discover/Desktop/ConnectTeleport/StartTeleport';
-import { Finished } from 'teleport/Discover/Shared';
-import { JoinTokenProvider } from 'teleport/Discover/Desktop/ConnectTeleport/JoinTokenContext';
-import { PingTeleportProvider } from 'teleport/Discover/Desktop/ConnectTeleport/PingTeleportContext';
 
 enum StepKind {
   RunConfigureScript,
@@ -98,11 +95,9 @@ const verticalTransitionStyles = {
   exited: { opacity: 0, transform: 'translateY(-50px)' },
 };
 
-const SCRIPT_TIMEOUT = 1000 * 60 * 5; // 5 minutes
-const PING_TIMEOUT = 1000 * 60 * 10; // 10 minutes
-const PING_INTERVAL = 1000 * 3; // 3 seconds
+import { State } from 'teleport/Discover/useDiscover';
 
-export function ConnectTeleport() {
+export function ConnectTeleport(props: State) {
   const [currentStep, setCurrentStep] = useState(StepKind.RunConfigureScript);
   const step = steps.find(s => s.kind === currentStep);
 
@@ -127,13 +122,13 @@ export function ConnectTeleport() {
                 >
                   {step.animation === Animation.RunCommand && (
                     <Suspense fallback={<Window title="Terminal" />}>
-                      <TerminalAnimation
+                      <RunConfigureScriptAnimation
                         isCopying={step.kind === StepKind.CopyOutput}
                       />
                     </Suspense>
                   )}
                   {step.animation === Animation.CreateConfig && (
-                    <EditorAnimation />
+                    <CreateTeleportConfigAnimation />
                   )}
                   {step.animation === Animation.StartTeleport && (
                     <StartTeleportTerminalAnimation />
@@ -148,61 +143,50 @@ export function ConnectTeleport() {
   }
 
   return (
-    <JoinTokenProvider timeout={SCRIPT_TIMEOUT}>
-      <PingTeleportProvider timeout={PING_TIMEOUT} interval={PING_INTERVAL}>
-        <StepContainer>
-          <SwitchTransition mode="out-in">
-            <Transition
-              key={currentStep}
-              timeout={250}
-              mountOnEnter
-              unmountOnExit
+    <StepContainer>
+      <SwitchTransition mode="out-in">
+        <Transition
+          key={currentStep}
+          timeout={250}
+          mountOnEnter
+          unmountOnExit
+        >
+          {state => (
+            <div
+              style={{
+                ...defaultStyle,
+                ...verticalTransitionStyles[state],
+              }}
             >
-              {state => (
-                <div
-                  style={{
-                    ...defaultStyle,
-                    ...verticalTransitionStyles[state],
-                  }}
-                >
-                  {currentStep === StepKind.RunConfigureScript && (
-                    <Suspense fallback={<RunConfigureScriptLoading />}>
-                      <RunConfigureScript
-                        onNext={() => setCurrentStep(StepKind.CopyOutput)}
-                      />
-                    </Suspense>
-                  )}
-                  {currentStep === StepKind.CopyOutput && (
-                    <CopyOutput
-                      onNext={() => setCurrentStep(StepKind.CreateConfig)}
-                    />
-                  )}
-                  {currentStep === StepKind.CreateConfig && (
-                    <CreateConfig
-                      onNext={() => setCurrentStep(StepKind.StartTeleport)}
-                    />
-                  )}
-                  {currentStep === StepKind.StartTeleport && (
-                    <StartTeleport
-                      onNext={() => setCurrentStep(StepKind.Finished)}
-                    />
-                  )}
-                  {currentStep === StepKind.Finished && (
-                    <Finished
-                      nextStep={() => null}
-                      agentMeta={null}
-                      updateAgentMeta={null}
-                    />
-                  )}
-                </div>
+              {currentStep === StepKind.RunConfigureScript && (
+                <Suspense fallback={<RunConfigureScriptLoading />}>
+                  <RunConfigureScript
+                    onNext={() => setCurrentStep(StepKind.CopyOutput)}
+                  />
+                </Suspense>
               )}
-            </Transition>
-          </SwitchTransition>
+              {currentStep === StepKind.CopyOutput && (
+                <CopyOutput
+                  onNext={() => setCurrentStep(StepKind.CreateConfig)}
+                />
+              )}
+              {currentStep === StepKind.CreateConfig && (
+                <CreateConfig
+                  onNext={() => setCurrentStep(StepKind.StartTeleport)}
+                />
+              )}
+              {currentStep === StepKind.StartTeleport && (
+                <StartTeleport
+                  onNext={() => props.nextStep()}
+                />
+              )}
+            </div>
+          )}
+        </Transition>
+      </SwitchTransition>
 
-          {animation}
-        </StepContainer>
-      </PingTeleportProvider>
-    </JoinTokenProvider>
+      {animation}
+    </StepContainer>
   );
 }
 

@@ -42,7 +42,7 @@ function StepWrapper(props: StepWrapperProps) {
 export function StartTeleport(
   props: React.PropsWithChildren<StartTeleportProps>
 ) {
-  const { active, found, start, timedOut } = usePingTeleport();
+  const { active, result, start, timedOut } = usePingTeleport();
 
   if (timedOut) {
     return (
@@ -60,7 +60,7 @@ export function StartTeleport(
     );
   }
 
-  if (found) {
+  if (result) {
     return (
       <StepWrapper>
         <StepInstructions>
@@ -79,7 +79,7 @@ export function StartTeleport(
       <StepInstructions>
         <Text mb={4}>Once you've started Teleport, we'll detect it here.</Text>
 
-        <ButtonPrimary disabled={!found} onClick={() => props.onNext()}>
+        <ButtonPrimary disabled={!result} onClick={() => props.onNext()}>
           Next
         </ButtonPrimary>
       </StepInstructions>
