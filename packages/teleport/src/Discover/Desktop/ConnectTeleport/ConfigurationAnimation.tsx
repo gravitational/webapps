@@ -5,7 +5,7 @@ import { SwitchTransition, Transition } from 'react-transition-group';
 
 import * as Icons from 'design/Icon';
 
-import { EditorAnimation } from 'teleport/Discover/Desktop/ConnectTeleport/EditorAnimation';
+import { CreateTeleportConfigAnimation } from 'teleport/Discover/Desktop/ConnectTeleport/CreateTeleportConfigAnimation';
 
 enum AnimationSteps {
   Terminal,
@@ -103,7 +103,7 @@ export function ConfigurationAnimation() {
               {state => (
                 <div style={{ ...defaultStyle, ...transitionStyles[state] }}>
                   {animationStep === AnimationSteps.Editor && (
-                    <EditorAnimation />
+                    <CreateTeleportConfigAnimation />
                   )}
                 </div>
               )}

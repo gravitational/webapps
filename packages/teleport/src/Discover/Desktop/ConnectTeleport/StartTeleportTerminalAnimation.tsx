@@ -1,7 +1,13 @@
 import React, { useEffect, useRef, useState } from 'react';
+import styled from 'styled-components';
 
-import { AnimatedTerminal } from 'shared/components/AnimatedTerminal';
+import {
+  AnimatedTerminal,
+  TerminalColor,
+} from 'shared/components/AnimatedTerminal';
 import { TerminalLine } from 'shared/components/AnimatedTerminal/content';
+
+import { KeywordHighlight } from 'shared/components/AnimatedTerminal/TerminalContent';
 
 import { usePingTeleport } from 'teleport/Discover/Desktop/ConnectTeleport/PingTeleportContext';
 
@@ -29,50 +35,64 @@ const startLines = [
     delay: 30,
   },
   {
-    text: '\n\n',
+    text: '\n',
     isCommand: false,
     delay: 30,
   },
 ];
 
-const keywords = [
-  'sudo',
-  'systemctl',
-  'active',
-  '\\(running\\)',
-  '•',
-  'wait',
-  'logout',
-  '✔',
-];
-
-const errors = ['✖', 'Oh', 'no!'];
-
 const flip = ['_', '_', '_', '-', '`', '`', "'", '´', '-', '_', '_', '_'];
+
+const highlights: KeywordHighlight[] = [
+  {
+    key: 'keyword',
+    color: TerminalColor.Keyword,
+    keywords: [
+      'sudo',
+      'systemctl',
+      'active',
+      '\\(running\\)',
+      '•',
+      'wait',
+      'logout',
+      '✔',
+    ],
+  },
+  {
+    key: 'error',
+    color: TerminalColor.Error,
+    keywords: ['✖', 'Oh', 'no!'],
+  },
+  {
+    key: 'label',
+    color: TerminalColor.Label,
+    keywords: ['Hostname:', 'Address:'],
+  },
+];
 
 export function StartTeleportTerminalAnimation() {
   const [animationFinished, setAnimationFinished] = useState(false);
   const [lines, setLines] = useState<TerminalLine[]>([...startLines]);
 
-  const { active, found, timedOut, timeout } = usePingTeleport();
+  const { active, result, timedOut, timeout } = usePingTeleport();
 
   const savedTimeout = useRef(0);
   useEffect(() => {
-    if (found) {
+    if (result) {
       savedTimeout.current = null;
 
       return;
     }
 
     savedTimeout.current = timeout;
-  }, [timeout, found]);
+  }, [timeout, result]);
 
   const [ranConnectingAnimation, setRanConnectingAnimation] = useState(false);
   const [ranTimedOutAnimation, setRanTimedOutAnimation] = useState(false);
   const [ranConnectedAnimation, setRanConnectedAnimation] = useState(false);
 
   useEffect(() => {
-    if (found && !ranConnectedAnimation) {
+    if (result && !ranConnectedAnimation) {
       setLines(lines => [
         ...lines,
         {
@@ -81,11 +101,19 @@ export function StartTeleportTerminalAnimation() {
         },
         {
           isCommand: false,
-          text: '✔ Connected successfully',
+          text: `✔ Found your Teleport node`,
+        },
+        {
+          isCommand: false,
+          text: `  Hostname: ${result.hostname}`,
+        },
+        {
+          isCommand: false,
+          text: `   Address: ${result.addr}`,
         },
       ]);
 
-      setRanConnectedAnimation(found);
+      setRanConnectedAnimation(true);
 
       return;
     }
@@ -97,10 +125,6 @@ export function StartTeleportTerminalAnimation() {
     if (animationFinished && active && !ranConnectingAnimation) {
       setLines(lines => [
         ...lines,
-        {
-          isCommand: false,
-          text: '',
-        },
         {
           text: 'wait your.teleport.instance',
           isCommand: true,
@@ -153,7 +177,7 @@ export function StartTeleportTerminalAnimation() {
 
     setRanTimedOutAnimation(timedOut);
   }, [
-    found,
+    result,
     timedOut,
     active,
     ranConnectedAnimation,
@@ -163,15 +187,21 @@ export function StartTeleportTerminalAnimation() {
   ]);
 
   return (
-    <AnimatedTerminal
-      lines={lines}
-      startDelay={800}
-      keywords={keywords}
-      errors={errors}
-      onCompleted={() => setAnimationFinished(true)}
-    />
+    <AnimationContainer>
+      <AnimatedTerminal
+        stopped={result !== null}
+        lines={lines}
+        startDelay={800}
+        highlights={highlights}
+        onCompleted={() => setAnimationFinished(true)}
+      />
+    </AnimationContainer>
   );
 }
+
+const AnimationContainer = styled.div`
+  --content-height: 400px;
+`;
 
 function millisecondsToMinutesSeconds(ms: number) {
   if (ms < 0) {

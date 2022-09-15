@@ -26,8 +26,8 @@ import {
   RunConfigureScriptLoading,
 } from 'teleport/Discover/Desktop/ConnectTeleport/RunConfigureScript';
 import { StepContainer } from 'teleport/Discover/Desktop/ConnectTeleport/Step';
-import { TerminalAnimation } from 'teleport/Discover/Desktop/ConnectTeleport/TerminalAnimation';
-import { EditorAnimation } from 'teleport/Discover/Desktop/ConnectTeleport/EditorAnimation';
+import { RunConfigureScriptAnimation } from 'teleport/Discover/Desktop/ConnectTeleport/RunConfigureScriptAnimation';
+import { CreateTeleportConfigAnimation } from 'teleport/Discover/Desktop/ConnectTeleport/CreateTeleportConfigAnimation';
 import { StartTeleportTerminalAnimation } from 'teleport/Discover/Desktop/ConnectTeleport/StartTeleportTerminalAnimation';
 import { CopyOutput } from 'teleport/Discover/Desktop/ConnectTeleport/CopyOutput';
 import { CreateConfig } from 'teleport/Discover/Desktop/ConnectTeleport/CreateConfig';
@@ -127,13 +127,13 @@ function ConnectTeleportSteps() {
                 >
                   {step.animation === Animation.RunCommand && (
                     <Suspense fallback={<Window title="Terminal" />}>
-                      <TerminalAnimation
+                      <RunConfigureScriptAnimation
                         isCopying={step.kind === StepKind.CopyOutput}
                       />
                     </Suspense>
                   )}
                   {step.animation === Animation.CreateConfig && (
-                    <EditorAnimation />
+                    <CreateTeleportConfigAnimation />
                   )}
                   {step.animation === Animation.StartTeleport && (
                     <StartTeleportTerminalAnimation />

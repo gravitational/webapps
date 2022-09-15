@@ -34,7 +34,7 @@ export const WindowTitleBarButton = styled.div`
 
 export const WindowContentContainer = styled.div`
   background: #04162c;
-  height: 425px;
+  height: var(--content-height, 660px);
   overflow-y: auto;
   border-bottom-left-radius: 5px;
   border-bottom-right-radius: 5px;
@@ -45,5 +45,4 @@ export const WindowCode = styled.div`
   font-family: Menlo, DejaVu Sans Mono, Consolas, Lucida Console, monospace;
   line-height: 20px;
   white-space: pre-wrap;
-  margin: 10px 16px;
 `;

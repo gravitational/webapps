@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from 'react';
 
-export function usePoll(
-  callback: (signal: AbortSignal) => Promise<boolean>,
+export function usePoll<T>(
+  callback: (signal: AbortSignal) => Promise<T | null>,
   timeout: number,
   enabled: boolean,
   interval = 1000
@@ -11,13 +11,13 @@ export function usePoll(
 
   const [running, setRunning] = useState(false);
   const [timedOut, setTimedOut] = useState(false);
-  const [result, setResult] = useState(false);
+  const [result, setResult] = useState<T | null>(null);
 
   useEffect(() => {
     if (enabled && !running) {
       savedCallback.current = callback;
       abortController.current = new AbortController();
-      setResult(false);
+      setResult(null);
       setTimedOut(false);
       setRunning(true);
     }
@@ -51,7 +51,7 @@ export function usePoll(
 
           if (result) {
             clearInterval(id);
-            setResult(true);
+            setResult(result);
           }
           // eslint-disable-next-line no-empty
         } catch {}

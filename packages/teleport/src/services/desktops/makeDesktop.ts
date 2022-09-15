@@ -1,6 +1,6 @@
-import { Desktop } from './types';
+import type { Desktop, WindowsDesktopService } from './types';
 
-export default function makeDesktop(json): Desktop {
+export function makeDesktop(json): Desktop {
   const { os, name, addr } = json;
 
   const labels = json.labels || [];
@@ -8,6 +8,18 @@ export default function makeDesktop(json): Desktop {
   return {
     os,
     name,
+    addr,
+    labels,
+  };
+}
+
+export function makeDesktopService(json): WindowsDesktopService {
+  const { hostname, addr } = json;
+
+  const labels = json.labels || [];
+
+  return {
+    hostname,
     addr,
     labels,
   };
