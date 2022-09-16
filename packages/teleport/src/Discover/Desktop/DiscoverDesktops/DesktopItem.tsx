@@ -174,13 +174,7 @@ export function DesktopItem(props: DesktopItemProps) {
   const { clusterId } = useStickyClusterId();
 
   const connect = useCallback(() => {
-    const url = cfg.getDesktopRoute({
-      clusterId,
-      desktopName: props.computerName,
-      username: 'Administrator',
-    });
-
-    openNewTab(url);
+    openNewTab(`https://teleport.dev/web/cluster/ryan/desktops/${props.computerName}-windows-teleport-dev/Administrator`);
   }, []);
 
   return (
