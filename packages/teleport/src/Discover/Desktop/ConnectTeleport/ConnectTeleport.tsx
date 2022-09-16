@@ -98,10 +98,6 @@ const verticalTransitionStyles = {
   exited: { opacity: 0, transform: 'translateY(-50px)' },
 };
 
-const SCRIPT_TIMEOUT = 1000 * 60 * 5; // 5 minutes
-const PING_TIMEOUT = 1000 * 60 * 10; // 10 minutes
-const PING_INTERVAL = 1000 * 3; // 3 seconds
-
 function ConnectTeleportSteps() {
   const [currentStep, setCurrentStep] = useState(StepKind.RunConfigureScript);
   const step = steps.find(s => s.kind === currentStep);
@@ -148,61 +144,57 @@ function ConnectTeleportSteps() {
   }
 
   return (
-    <JoinTokenProvider timeout={SCRIPT_TIMEOUT}>
-      <PingTeleportProvider timeout={PING_TIMEOUT} interval={PING_INTERVAL}>
-        <StepContainer>
-          <SwitchTransition mode="out-in">
-            <Transition
-              key={currentStep}
-              timeout={250}
-              mountOnEnter
-              unmountOnExit
+    <StepContainer>
+      <SwitchTransition mode="out-in">
+        <Transition
+          key={currentStep}
+          timeout={250}
+          mountOnEnter
+          unmountOnExit
+        >
+          {state => (
+            <div
+              style={{
+                ...defaultStyle,
+                ...verticalTransitionStyles[state],
+              }}
             >
-              {state => (
-                <div
-                  style={{
-                    ...defaultStyle,
-                    ...verticalTransitionStyles[state],
-                  }}
-                >
-                  {currentStep === StepKind.RunConfigureScript && (
-                    <Suspense fallback={<RunConfigureScriptLoading />}>
-                      <RunConfigureScript
-                        onNext={() => setCurrentStep(StepKind.CopyOutput)}
-                      />
-                    </Suspense>
-                  )}
-                  {currentStep === StepKind.CopyOutput && (
-                    <CopyOutput
-                      onNext={() => setCurrentStep(StepKind.CreateConfig)}
-                    />
-                  )}
-                  {currentStep === StepKind.CreateConfig && (
-                    <CreateConfig
-                      onNext={() => setCurrentStep(StepKind.StartTeleport)}
-                    />
-                  )}
-                  {currentStep === StepKind.StartTeleport && (
-                    <StartTeleport
-                      onNext={() => setCurrentStep(StepKind.Finished)}
-                    />
-                  )}
-                  {currentStep === StepKind.Finished && (
-                    <Finished
-                      nextStep={() => null}
-                      agentMeta={null}
-                      updateAgentMeta={null}
-                    />
-                  )}
-                </div>
+              {currentStep === StepKind.RunConfigureScript && (
+                <Suspense fallback={<RunConfigureScriptLoading />}>
+                  <RunConfigureScript
+                    onNext={() => setCurrentStep(StepKind.CopyOutput)}
+                  />
+                </Suspense>
               )}
-            </Transition>
-          </SwitchTransition>
+              {currentStep === StepKind.CopyOutput && (
+                <CopyOutput
+                  onNext={() => setCurrentStep(StepKind.CreateConfig)}
+                />
+              )}
+              {currentStep === StepKind.CreateConfig && (
+                <CreateConfig
+                  onNext={() => setCurrentStep(StepKind.StartTeleport)}
+                />
+              )}
+              {currentStep === StepKind.StartTeleport && (
+                <StartTeleport
+                  onNext={() => setCurrentStep(StepKind.Finished)}
+                />
+              )}
+              {currentStep === StepKind.Finished && (
+                <Finished
+                  nextStep={() => null}
+                  agentMeta={null}
+                  updateAgentMeta={null}
+                />
+              )}
+            </div>
+          )}
+        </Transition>
+      </SwitchTransition>
 
-          {animation}
-        </StepContainer>
-      </PingTeleportProvider>
-    </JoinTokenProvider>
+      {animation}
+    </StepContainer>
   );
 }
 

@@ -39,7 +39,7 @@ class DesktopService {
     });
   }
 
-  fetchDesktopServiced(
+  fetchDesktopServices(
     clusterId: string,
     params: UrlResourcesParams,
     signal?: AbortSignal

@@ -1,7 +1,7 @@
 import type { Desktop, WindowsDesktopService } from './types';
 
 export function makeDesktop(json): Desktop {
-  const { os, name, addr } = json;
+  const { os, name, addr, host_id, host_addr } = json;
 
   const labels = json.labels || [];
 
@@ -10,6 +10,8 @@ export function makeDesktop(json): Desktop {
     name,
     addr,
     labels,
+    host_addr,
+    host_id,
   };
 }
 

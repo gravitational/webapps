@@ -31,7 +31,7 @@ export function PingTeleportProvider(props: {
   const { timedOut, result } = usePoll(
     signal =>
       ctx.desktopService
-        .fetchDesktopServiced(
+        .fetchDesktopServices(
           ctx.storeUser.getClusterId(),
           {
             search: `${INTERNAL_RESOURCE_ID_LABEL_KEY} ${joinToken.internalResourceId}`,

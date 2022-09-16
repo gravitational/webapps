@@ -26,6 +26,9 @@ export type Desktop = {
   addr: string;
   // Labels.
   labels: AgentLabel[];
+
+  host_id?: string;
+  host_addr?: string;
 };
 
 export type DesktopsResponse = {
