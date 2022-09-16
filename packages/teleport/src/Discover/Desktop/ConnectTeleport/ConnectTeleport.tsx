@@ -32,9 +32,6 @@ import { StartTeleportTerminalAnimation } from 'teleport/Discover/Desktop/Connec
 import { CopyOutput } from 'teleport/Discover/Desktop/ConnectTeleport/CopyOutput';
 import { CreateConfig } from 'teleport/Discover/Desktop/ConnectTeleport/CreateConfig';
 import { StartTeleport } from 'teleport/Discover/Desktop/ConnectTeleport/StartTeleport';
-import { Finished } from 'teleport/Discover/Shared';
-import { JoinTokenProvider } from 'teleport/Discover/Desktop/ConnectTeleport/JoinTokenContext';
-import { PingTeleportProvider } from 'teleport/Discover/Desktop/ConnectTeleport/PingTeleportContext';
 
 enum StepKind {
   RunConfigureScript,
@@ -98,7 +95,9 @@ const verticalTransitionStyles = {
   exited: { opacity: 0, transform: 'translateY(-50px)' },
 };
 
-function ConnectTeleportSteps() {
+import { State } from 'teleport/Discover/useDiscover';
+
+function ConnectTeleportSteps(props: { nextStep: () => void }) {
   const [currentStep, setCurrentStep] = useState(StepKind.RunConfigureScript);
   const step = steps.find(s => s.kind === currentStep);
 
@@ -178,14 +177,7 @@ function ConnectTeleportSteps() {
               )}
               {currentStep === StepKind.StartTeleport && (
                 <StartTeleport
-                  onNext={() => setCurrentStep(StepKind.Finished)}
-                />
-              )}
-              {currentStep === StepKind.Finished && (
-                <Finished
-                  nextStep={() => null}
-                  agentMeta={null}
-                  updateAgentMeta={null}
+                  onNext={() => props.nextStep()}
                 />
               )}
             </div>
@@ -202,10 +194,10 @@ function LoadingJoinToken() {
   return <div>hello!</div>;
 }
 
-export function ConnectTeleport() {
+export function ConnectTeleport(props: State) {
   return (
     <Suspense fallback={<LoadingJoinToken />}>
-      <ConnectTeleportSteps />
+      <ConnectTeleportSteps nextStep={props.nextStep} />
     </Suspense>
   );
 }
