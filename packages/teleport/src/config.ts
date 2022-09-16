@@ -174,7 +174,7 @@ const cfg = {
     installADDSPath: '/v1/webapi/scripts/desktop-access/install-ad-ds.ps1',
     installADCSPath: '/v1/webapi/scripts/desktop-access/install-ad-cs.ps1',
     configureADPath:
-      '/v1/webapi/scripts/desktop-access/:token/configure-ad.ps1',
+      '/v1/webapi/scripts/desktop-access/configure/:token/configure-ad.ps1',
   },
 
   getAppFqdnUrl(params: UrlAppParams) {
