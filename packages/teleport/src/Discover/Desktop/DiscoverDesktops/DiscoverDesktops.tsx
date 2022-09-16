@@ -30,7 +30,16 @@ const FoundDesktops = styled.div`
 export function DiscoverDesktops(props: State) {
   const ctx = useTeleport();
 
-  const { result: desktopService } = usePingTeleport();
+  const desktopService = {
+    hostname: 'windows-service.teleport.dev',
+    addr: 'remote.windows_desktop.proxy.teleport.cluster.local',
+    labels: [
+      {
+        name: 'teleport.internal/resource-id',
+        value: 'f8e383d9-f9ea-4001-95c2-1c3238066c33',
+      },
+    ],
+  };
 
   const { clusterId } = useStickyClusterId();
   const { result } = usePoll(

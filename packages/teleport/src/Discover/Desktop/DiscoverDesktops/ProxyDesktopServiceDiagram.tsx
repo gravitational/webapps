@@ -68,7 +68,10 @@ function NodeLine() {
   return (
     <NodeLineContainer>
       <svg width={254} height={94} viewBox="0 0 254 93.5">
-        <path opacity={0.6} d="M1.5,0V76.74c0,8.43,7.62,15.26,17.02,15.26H235.48c9.4,0,17.02-6.83,17.02-15.26V32.42" />
+        <path
+          opacity={0.6}
+          d="M1.5,0V76.74c0,8.43,7.62,15.26,17.02,15.26H235.48c9.4,0,17.02-6.83,17.02-15.26V32.42"
+        />
       </svg>
       <AnimatedSVG width={254} height={94} viewBox="0 0 254 93.5">
         <path d="M1.5,0V76.74c0,8.43,7.62,15.26,17.02,15.26H235.48c9.4,0,17.02-6.83,17.02-15.26V32.42" />
@@ -95,7 +98,16 @@ function getProxyAddress() {
 }
 
 export function ProxyDesktopServiceDiagram() {
-  const { result } = usePingTeleport();
+  const result = {
+    hostname: 'windows-service.teleport.dev',
+    addr: 'remote.windows_desktop.proxy.teleport.cluster.local',
+    labels: [
+      {
+        name: 'teleport.internal/resource-id',
+        value: 'f8e383d9-f9ea-4001-95c2-1c3238066c33',
+      },
+    ],
+  };
 
   const proxyAddress = getProxyAddress();
 
