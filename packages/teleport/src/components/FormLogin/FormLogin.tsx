@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React, { useState, useMemo } from 'react';
+import React, { useEffect, useState, useMemo } from 'react';
 import styled from 'styled-components';
 import {
   Card,
@@ -47,6 +47,7 @@ import { StepSlider, StepComponentProps } from 'design/StepSlider';
 import { UserCredentials } from 'teleport/services/auth';
 
 import SSOButtonList from './SsoButtons';
+import { TouchID } from 'teleport/components/FormLogin/Passwordless';
 
 export default function LoginForm(props: Props) {
   const {
@@ -142,36 +143,7 @@ const Passwordless = ({
     ?.toLowerCase()
     .includes('firefox');
   return (
-    <Box px={5} pt={2} data-testid="passwordless" pb={1}>
-      {isFirefox && (
-        <Alerts.Info mt={3}>
-          Firefox may not support passwordless login. Please try Chrome or
-          Safari.
-        </Alerts.Info>
-      )}
-      <StyledPaswordlessBtn
-        mt={3}
-        py={2}
-        px={3}
-        width="100%"
-        onClick={() => onLoginWithWebauthn()}
-        disabled={attempt.isProcessing}
-        autoFocus={autoFocus}
-      >
-        <Flex alignItems="center" justifyContent="space-between">
-          <Flex alignItems="center">
-            <Key mr={3} fontSize={16} />
-            <Box>
-              <Text typography="h6">Passwordless</Text>
-              <Text fontSize={1} color="text.secondary">
-                Follow the prompt from your browser
-              </Text>
-            </Box>
-          </Flex>
-          <ArrowForward fontSize={16} />
-        </Flex>
-      </StyledPaswordlessBtn>
-    </Box>
+    <TouchID onLogin={() => onLoginWithWebauthn()}/>
   );
 };
 
@@ -331,50 +303,34 @@ const LocalForm = ({
 // Primary determines which authentication type to display
 // on initial render of the login form.
 const Primary = ({
-  next,
   refCallback,
-  hasTransitionEnded,
   ...otherProps
 }: Props & StepComponentProps) => {
-  const ssoEnabled = otherProps.authProviders?.length > 0;
-  let otherOptionsAvailable = true;
-  let $primary;
-
-  switch (otherProps.primaryAuthType) {
-    case 'passwordless':
-      $primary = <Passwordless {...otherProps} autoFocus={true} />;
-      break;
-    case 'sso':
-      $primary = <SsoList {...otherProps} autoFocus={true} />;
-      break;
-    case 'local':
-      otherOptionsAvailable = otherProps.isPasswordlessEnabled || ssoEnabled;
-      $primary = (
-        <LocalForm
-          {...otherProps}
-          hasTransitionEnded={hasTransitionEnded}
-          autoFocus={true}
-        />
-      );
-      break;
-  }
-
+  // const ssoEnabled = otherProps.authProviders?.length > 0;
+  // let otherOptionsAvailable = true;
+  // let $primary;
+  //
+  // switch (otherProps.primaryAuthType) {
+  //   case 'passwordless':
+  //     $primary = <Passwordless {...otherProps} autoFocus={true} />;
+  //     break;
+  //   case 'sso':
+  //     $primary = <SsoList {...otherProps} autoFocus={true} />;
+  //     break;
+  //   case 'local':
+  //     otherOptionsAvailable = otherProps.isPasswordlessEnabled || ssoEnabled;
+  //     $primary = (
+  //       <LocalForm
+  //         {...otherProps}
+  //         hasTransitionEnded={hasTransitionEnded}
+  //         autoFocus={true}
+  //       />
+  //     );
+  //     break;
+  // }
   return (
     <Box ref={refCallback}>
-      {$primary}
-      {otherOptionsAvailable && (
-        <Box pt={3} mt={-1} textAlign="center">
-          <ButtonText
-            disabled={otherProps.attempt.isProcessing}
-            onClick={() => {
-              otherProps.clearAttempt();
-              next();
-            }}
-          >
-            Other sign-in options
-          </ButtonText>
-        </Box>
-      )}
+      <Passwordless {...otherProps} autoFocus={true} />
     </Box>
   );
 };
@@ -436,7 +392,7 @@ const Secondary = ({
   }
   return (
     <Box ref={refCallback}>
-      {$secondary}
+      <Passwordless {...otherProps} autoFocus={true} />
       <Box pt={3} textAlign="center">
         <ButtonText
           disabled={otherProps.attempt.isProcessing}
