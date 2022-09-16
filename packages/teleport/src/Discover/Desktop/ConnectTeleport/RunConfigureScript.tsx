@@ -42,40 +42,11 @@ export function RunConfigureScript(
       </StepInstructions>
     );
   } else {
-    const displayText = generateCommand(cfg.getConfigureADUrl(joinToken.id));
-    const command = `version: v3
-teleport:
-  proxy_server: ${window.location.hostname}:${window.location.port || '443'}
-  join_params:
-    method: token
-    token_name: ${joinToken.id}
-
-auth_service:
-  enabled: no
-ssh_service:
-  enabled: no
-proxy_service:
-  enabled: no
-
-windows_desktop_service:
-  enabled: yes
-  ldap:
-    addr:        127.0.0.1:636
-    domain:      TELEPORT
-    username:    example
-    server_name: desktop.teleport.example
-    insecure_skip_verify: false
-    ldap_ca_cert: |
-      -----THIS IS JUST AN EXAMPLE-----
-  discovery:
-    base_dn: '*'
-  labels:
-    teleport.internal/resource-id: ${joinToken.internalResourceId}`;
+    const command = generateCommand(cfg.getConfigureADUrl(joinToken.id));
 
     content = (
       <StepInstructions>
         <TextSelectCopy
-          displayText={displayText}
           text={command}
           mt={2}
           mb={5}

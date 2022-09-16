@@ -22,7 +22,6 @@ import { useTheme } from 'styled-components';
 
 export default function TextSelectCopy({
   text,
-  displayText,
   fontFamily,
   allowMultiline,
   onCopy,
@@ -65,7 +64,7 @@ export default function TextSelectCopy({
     >
       <Flex mr="2" style={boxStyles}>
         {bash && <Box mr="1" style={{ userSelect: 'none' }}>{`$`}</Box>}
-        <div ref={ref}>{displayText || text}</div>
+        <div ref={ref}>{text}</div>
       </Flex>
       <ButtonPrimary
         onClick={onCopyClick}
@@ -85,7 +84,6 @@ export default function TextSelectCopy({
 
 type Props = {
   text: string;
-  displayText?: string;
   bash?: boolean;
   onCopy?: () => void;
   allowMultiline?: boolean;
