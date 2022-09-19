@@ -129,29 +129,32 @@ export class ConnectionTrackerService extends ImmutableStore<ConnectionTrackerSt
       .disconnect();
   }
 
-  removeItem(id: string): void {
+  async removeItem(id: string): Promise<void> {
     const connection = this.state.connections.find(c => c.id === id);
     if (!connection) {
       return;
     }
 
-    this._trackedConnectionOperationsFactory.create(connection).remove?.();
+    await this._trackedConnectionOperationsFactory
+      .create(connection)
+      .remove?.();
 
     this.setState(draft => {
       draft.connections = draft.connections.filter(i => i.id !== id);
     });
-
-    this._statePersistenceService.saveConnectionTrackerState(this.state);
   }
 
-  removeItemsBelongingToRootCluster(clusterUri: string): void {
-    this.setState(draft => {
-      draft.connections = draft.connections.filter(i => {
+  async removeItemsBelongingToRootCluster(clusterUri: string): Promise<void> {
+    await Promise.all(
+      this.getConnections().map(async connection => {
         const { rootClusterUri } =
-          this._trackedConnectionOperationsFactory.create(i);
-        return rootClusterUri !== clusterUri;
-      });
-    });
+          this._trackedConnectionOperationsFactory.create(connection);
+        if (rootClusterUri === clusterUri) {
+          await this.disconnectItem(connection.id);
+          await this.removeItem(connection.id);
+        }
+      })
+    );
   }
 
   dispose(): void {

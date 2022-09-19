@@ -167,7 +167,9 @@ export class TrackedConnectionOperationsFactory {
           });
       },
       remove: () => {
-        this._clustersService.removeKubeConfig(connection.kubeConfigName);
+        return this._clustersService.removeKubeConfig(
+          connection.kubeConfigName
+        );
       },
     };
   }
@@ -203,5 +205,5 @@ interface TrackedConnectionOperations {
 
   disconnect(): Promise<void>;
 
-  remove?(): void;
+  remove?(): Promise<void>;
 }
