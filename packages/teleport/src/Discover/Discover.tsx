@@ -32,7 +32,7 @@ import { FeatureBox } from 'teleport/components/Layout';
 import { BannerList } from 'teleport/components/BannerList';
 import cfg from 'teleport/config';
 
-import { LinkLabel } from 'teleport/services/alerts/alerts';
+import { LINK_LABEL } from 'teleport/services/alerts/alerts';
 
 import { useDiscover, State } from './useDiscover';
 import { SelectResource } from './SelectResource';
@@ -108,7 +108,7 @@ export function Discover({
   const banners: BannerType[] = alerts.map(alert => ({
     message: alert.spec.message,
     severity: mapSeverity(alert.spec.severity),
-    link: alert.metadata.labels[LinkLabel],
+    link: alert.metadata.labels[LINK_LABEL],
     id: alert.metadata.name,
   }));
 

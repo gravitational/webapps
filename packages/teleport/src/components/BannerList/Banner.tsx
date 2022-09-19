@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React, { useMemo } from 'react';
+import React from 'react';
 import styled from 'styled-components';
 
 import { Box, Flex, Link, Text } from 'design';
@@ -43,34 +43,31 @@ export function Banner({
     danger: <Warning mr={3} fontSize="3" role="icon" />,
   }[severity];
 
-  const getLink = useMemo(() => {
-    // link is also validated on the back end, adding extra precautions
+  const isValidTeleportLink = (link: string) => {
     try {
       const url = new URL(link);
-      if (url.hostname != 'goteleport.com') {
-        return <Text bold>{message}</Text>;
-      }
-    } catch (_) {
-      return <Text bold>{message}</Text>;
+      return url.hostname === 'goteleport.com';
+    } catch {
+      return false;
     }
-
-    return (
-      <Link
-        href={link}
-        target="_blank"
-        color="light"
-        style={{ fontWeight: 'bold' }}
-      >
-        {message}
-      </Link>
-    );
-  }, [link]);
+  };
 
   return (
     <Box bg={severity} p={1} pl={2}>
       <Flex alignItems="center">
         {icon}
-        {link != '' ? getLink : <Text bold>{message}</Text>}
+        {isValidTeleportLink(link) ? (
+          <Link
+            href={link}
+            target="_blank"
+            color="light"
+            style={{ fontWeight: 'bold' }}
+          >
+            {message}
+          </Link>
+        ) : (
+          <Text bold>{message}</Text>
+        )}
         <CloseButton
           onClick={() => {
             onClose(id);

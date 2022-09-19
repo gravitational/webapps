@@ -88,6 +88,7 @@ describe('components/BannerList/Banner', () => {
     expect(onClose).toHaveBeenCalledTimes(1);
     expect(onClose).toHaveBeenCalledWith(id);
   });
+
   describe('with link', () => {
     it('renders valid URLs as links', () => {
       const message = 'some-message-with-valid-URL';
@@ -101,7 +102,7 @@ describe('components/BannerList/Banner', () => {
         />
       );
       expect(screen.getByText(message)).toBeInTheDocument();
-      expect(screen.getByText(message).closest('a')).toHaveAttribute(
+      expect(screen.getByRole('link', { name: message })).toHaveAttribute(
         'href',
         'https://goteleport.com/docs'
       );
@@ -119,7 +120,9 @@ describe('components/BannerList/Banner', () => {
         />
       );
       expect(screen.getByText(message)).toBeInTheDocument();
-      expect(screen.queryByText(message).closest('a')).not.toBeInTheDocument();
+      expect(
+        screen.queryByRole('link', { name: message })
+      ).not.toBeInTheDocument();
     });
 
     it('renders non-teleport URL as text', () => {
@@ -134,7 +137,9 @@ describe('components/BannerList/Banner', () => {
         />
       );
       expect(screen.getByText(message)).toBeInTheDocument();
-      expect(screen.queryByText(message).closest('a')).not.toBeInTheDocument();
+      expect(
+        screen.queryByRole('link', { name: message })
+      ).not.toBeInTheDocument();
     });
   });
 });
