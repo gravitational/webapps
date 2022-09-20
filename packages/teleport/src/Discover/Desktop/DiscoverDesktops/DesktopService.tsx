@@ -12,16 +12,6 @@ const ripple = keyframes`
   }
 `;
 
-const scale = keyframes`
-  50% {
-    transform: scale(1.15);
-  }
-  0%,
-  100% {
-    transform: scale(1);
-  }
-`;
-
 const Container = styled.div`
   display: flex;
   flex-direction: column;
@@ -86,34 +76,6 @@ const blink = keyframes`
   }
 `;
 
-const blink2 = keyframes`
-  27% {
-    opacity: 1;
-  }
-
-  30% {
-    opacity: 0;
-  }
-
-  33% {
-    opacity: 1;
-  }
-`;
-
-const blink3 = keyframes`
-  68% {
-    opacity: 1;
-  }
-
-  70% {
-    opacity: 0;
-  }
-
-  72% {
-    opacity: 1;
-  }
-`;
-
 const DesktopServiceItemLight = styled.div`
   width: 6px;
   height: 6px;
@@ -123,18 +85,7 @@ const DesktopServiceItemLight = styled.div`
 
 const DesktopServiceItemLightGreen = styled(DesktopServiceItemLight)`
   background: #31c842;
-`;
-
-const DesktopServiceItemLightGreen1 = styled(DesktopServiceItemLightGreen)`
   animation: ${blink} 8s step-start 0s infinite;
-`;
-
-const DesktopServiceItemLightGreen2 = styled(DesktopServiceItemLightGreen)`
-  animation: ${blink2} 10s step-start 0s infinite;
-`;
-
-const DesktopServiceItemLightGreen3 = styled(DesktopServiceItemLightGreen)`
-  animation: ${blink3} 12s step-start 0s infinite;
 `;
 
 const DesktopServiceItemLines = styled.div`
@@ -164,7 +115,7 @@ export function DesktopService() {
       <Ripple />
       <DesktopServiceItem>
         <DesktopServiceItemLights>
-          <DesktopServiceItemLightGreen1 />
+          <DesktopServiceItemLightGreen />
         </DesktopServiceItemLights>
         <DesktopServiceItemLines>
           <DesktopServiceItemLinesTop>

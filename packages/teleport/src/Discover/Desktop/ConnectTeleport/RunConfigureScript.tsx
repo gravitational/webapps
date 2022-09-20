@@ -36,7 +36,7 @@ export function RunConfigureScript(
       <StepInstructions>
         <Text>That script expired.</Text>
 
-        <ButtonPrimary onClick={reloadJoinToken}>
+        <ButtonPrimary onClick={reloadJoinToken} mt={4}>
           Generate another
         </ButtonPrimary>
       </StepInstructions>
@@ -46,13 +46,7 @@ export function RunConfigureScript(
 
     content = (
       <StepInstructions>
-        <TextSelectCopy
-          text={command}
-          mt={2}
-          mb={5}
-          bash
-          allowMultiline
-        />
+        <TextSelectCopy text={command} mt={2} mb={5} bash allowMultiline />
 
         <ButtonPrimary onClick={() => props.onNext()}>
           I've ran it

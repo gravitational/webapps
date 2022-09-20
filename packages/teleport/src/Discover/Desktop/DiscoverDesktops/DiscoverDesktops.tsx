@@ -10,7 +10,7 @@ import { ProxyDesktopServiceDiagram } from 'teleport/Discover/Desktop/DiscoverDe
 import { usePoll } from 'teleport/Discover/Desktop/ConnectTeleport/usePoll';
 import { useTeleport } from 'teleport';
 import useStickyClusterId from 'teleport/useStickyClusterId';
-import { usePingTeleport } from 'teleport/Discover/Desktop/ConnectTeleport/PingTeleportContext';
+import { usePingTeleport, usePingTeleportResult } from 'teleport/Discover/Desktop/ConnectTeleport/PingTeleportContext';
 import cfg from 'teleport/config';
 import { NavLink } from 'teleport/components/Router';
 
@@ -32,7 +32,6 @@ const FoundDesktops = styled.div`
 const MAX_COUNT = 12;
 const POLL_TIMEOUT = 1000 * 60 * 10; // 10 minutes
 const POLL_INTERVAL = 1000 * 3; // 3 seconds
-
 
 const fadeIn = keyframes`
   from {
@@ -83,7 +82,7 @@ const TimedOutTitle = styled.div`
 export function DiscoverDesktops(props: State) {
   const ctx = useTeleport();
 
-  const { result: desktopService } = usePingTeleport();
+  const desktopService = usePingTeleportResult();
 
   const [enabled, setEnabled] = useState(true);
   const { clusterId } = useStickyClusterId();
@@ -103,14 +102,19 @@ export function DiscoverDesktops(props: State) {
 
   const desktops = [];
   if (result && result.agents) {
-    const foundDesktops = result.agents
-      .filter((desktop) => desktop.host_addr === desktopService.name);
+    const foundDesktops = result.agents.filter(
+      desktop => desktop.host_addr === desktopService.name
+    );
 
     const numberOfFoundDesktops = foundDesktops.length;
     if (foundDesktops.length) {
       for (const [index, desktop] of foundDesktops.entries()) {
-        const os = desktop.labels.find((label) => label.name === 'teleport.dev/os').value;
-        const osVersion = desktop.labels.find((label) => label.name === 'teleport.dev/os_version').value;
+        const os = desktop.labels.find(
+          label => label.name === 'teleport.dev/os'
+        ).value;
+        const osVersion = desktop.labels.find(
+          label => label.name === 'teleport.dev/os_version'
+        ).value;
 
         desktops.push(
           <DesktopItem
@@ -137,7 +141,10 @@ export function DiscoverDesktops(props: State) {
 
           desktops.push(
             <ContentBox key="view-more">
-              We've found {amount} more {word}. <ViewLink to={cfg.getDesktopsRoute(clusterId)}>View them all here</ViewLink>
+              We've found {amount} more {word}.{' '}
+              <ViewLink to={cfg.getDesktopsRoute(clusterId)}>
+                View them all here
+              </ViewLink>
             </ContentBox>
           );
         }
@@ -147,7 +154,13 @@ export function DiscoverDesktops(props: State) {
 
   let content;
   if (timedOut) {
-    content = (<ContentBox><TimedOutTitle>Oh no!</TimedOutTitle> We could not find any Desktops. Connect Desktops to your Active Directory for Teleport to automatically discover them.</ContentBox>)
+    content = (
+      <ContentBox>
+        <TimedOutTitle>Oh no!</TimedOutTitle> We could not find any Desktops.
+        Connect Desktops to your Active Directory for Teleport to automatically
+        discover them.
+      </ContentBox>
+    );
   } else {
     content = desktops;
   }
@@ -163,9 +176,7 @@ export function DiscoverDesktops(props: State) {
       <Desktops>
         <ProxyDesktopServiceDiagram />
 
-        <FoundDesktops>
-          {content}
-        </FoundDesktops>
+        <FoundDesktops>{content}</FoundDesktops>
       </Desktops>
 
       <Buttons>
@@ -176,4 +187,3 @@ export function DiscoverDesktops(props: State) {
     </Box>
   );
 }
-

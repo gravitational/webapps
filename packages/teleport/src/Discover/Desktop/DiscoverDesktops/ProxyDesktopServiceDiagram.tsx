@@ -1,9 +1,11 @@
 import React from 'react';
 import styled, { keyframes } from 'styled-components';
 
-import { Server } from './Server';
 import { DesktopService } from 'teleport/Discover/Desktop/DiscoverDesktops/DesktopService';
+
 import { usePingTeleport } from 'teleport/Discover/Desktop/ConnectTeleport/PingTeleportContext';
+
+import { Server } from './Server';
 
 const NodeHostname = styled.div`
   font-family: Menlo, DejaVu Sans Mono, Consolas, Lucida Console, monospace;
@@ -48,7 +50,7 @@ const NodeLineContainer = styled.div`
 
   svg {
     position: absolute;
-    
+
     path {
       stroke: #31c842;
       stroke-width: 4;
@@ -60,7 +62,7 @@ const NodeLineContainer = styled.div`
 const AnimatedSVG = styled.svg`
   stroke-dasharray: 5, 20;
   stroke-dashoffset: 0;
-  
+
   animation: ${line} 5s cubic-bezier(0.3, 0, 0.2, 1) alternate infinite 0.6s;
 `;
 
@@ -98,16 +100,7 @@ function getProxyAddress() {
 }
 
 export function ProxyDesktopServiceDiagram() {
-  const result = {
-    hostname: 'windows-service.teleport.dev',
-    addr: 'remote.windows_desktop.proxy.teleport.cluster.local',
-    labels: [
-      {
-        name: 'teleport.internal/resource-id',
-        value: 'f8e383d9-f9ea-4001-95c2-1c3238066c33',
-      },
-    ],
-  };
+  const { result } = usePingTeleport();
 
   const proxyAddress = getProxyAddress();
 

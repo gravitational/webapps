@@ -120,10 +120,10 @@ export function Server() {
         </ServerItemLights>
         <ServerItemLines>
           <ServerItemLinesTop>
-            <ServerItemLine style={{ width: 5 }}/>
-            <ServerItemLine style={{ width: 30 }}/>
+            <ServerItemLine style={{ width: 5 }} />
+            <ServerItemLine style={{ width: 30 }} />
           </ServerItemLinesTop>
-          <ServerItemLine style={{ width: 20 }}/>
+          <ServerItemLine style={{ width: 20 }} />
         </ServerItemLines>
       </ServerItem>
       <ServerItem>
@@ -132,10 +132,10 @@ export function Server() {
         </ServerItemLights>
         <ServerItemLines>
           <ServerItemLinesTop>
-            <ServerItemLine style={{ width: 5 }}/>
-            <ServerItemLine style={{ width: 30 }}/>
+            <ServerItemLine style={{ width: 5 }} />
+            <ServerItemLine style={{ width: 30 }} />
           </ServerItemLinesTop>
-          <ServerItemLine style={{ width: 20 }}/>
+          <ServerItemLine style={{ width: 20 }} />
         </ServerItemLines>
       </ServerItem>
       <ServerItem>
@@ -144,10 +144,10 @@ export function Server() {
         </ServerItemLights>
         <ServerItemLines>
           <ServerItemLinesTop>
-            <ServerItemLine style={{ width: 5 }}/>
-            <ServerItemLine style={{ width: 30 }}/>
+            <ServerItemLine style={{ width: 5 }} />
+            <ServerItemLine style={{ width: 30 }} />
           </ServerItemLinesTop>
-          <ServerItemLine style={{ width: 20 }}/>
+          <ServerItemLine style={{ width: 20 }} />
         </ServerItemLines>
       </ServerItem>
     </Container>

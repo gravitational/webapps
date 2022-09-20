@@ -3,10 +3,11 @@ import styled from 'styled-components';
 export const StepContainer = styled.div`
   width: 100%;
   display: flex;
-  overflow-x: hidden;
   padding-bottom: 50px;
   margin-top: -24px;
   padding-top: 24px;
+  justify-content: space-between;
+  flex-wrap: wrap;
 `;
 
 export const StepTitle = styled.div`

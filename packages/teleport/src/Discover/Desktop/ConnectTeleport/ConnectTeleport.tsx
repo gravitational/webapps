@@ -144,46 +144,46 @@ function ConnectTeleportSteps(props: { nextStep: () => void }) {
 
   return (
     <StepContainer>
-      <SwitchTransition mode="out-in">
-        <Transition
-          key={currentStep}
-          timeout={250}
-          mountOnEnter
-          unmountOnExit
-        >
-          {state => (
-            <div
-              style={{
-                ...defaultStyle,
-                ...verticalTransitionStyles[state],
-              }}
-            >
-              {currentStep === StepKind.RunConfigureScript && (
-                <Suspense fallback={<RunConfigureScriptLoading />}>
-                  <RunConfigureScript
-                    onNext={() => setCurrentStep(StepKind.CopyOutput)}
+      <Instructions>
+        <SwitchTransition mode="out-in">
+          <Transition
+            key={currentStep}
+            timeout={250}
+            mountOnEnter
+            unmountOnExit
+          >
+            {state => (
+              <div
+                style={{
+                  ...defaultStyle,
+                  ...verticalTransitionStyles[state],
+                }}
+              >
+                {currentStep === StepKind.RunConfigureScript && (
+                  <Suspense fallback={<RunConfigureScriptLoading />}>
+                    <RunConfigureScript
+                      onNext={() => setCurrentStep(StepKind.CopyOutput)}
+                    />
+                  </Suspense>
+                )}
+                {currentStep === StepKind.CopyOutput && (
+                  <CopyOutput
+                    onNext={() => setCurrentStep(StepKind.CreateConfig)}
                   />
-                </Suspense>
-              )}
-              {currentStep === StepKind.CopyOutput && (
-                <CopyOutput
-                  onNext={() => setCurrentStep(StepKind.CreateConfig)}
-                />
-              )}
-              {currentStep === StepKind.CreateConfig && (
-                <CreateConfig
-                  onNext={() => setCurrentStep(StepKind.StartTeleport)}
-                />
-              )}
-              {currentStep === StepKind.StartTeleport && (
-                <StartTeleport
-                  onNext={() => props.nextStep()}
-                />
-              )}
-            </div>
-          )}
-        </Transition>
-      </SwitchTransition>
+                )}
+                {currentStep === StepKind.CreateConfig && (
+                  <CreateConfig
+                    onNext={() => setCurrentStep(StepKind.StartTeleport)}
+                  />
+                )}
+                {currentStep === StepKind.StartTeleport && (
+                  <StartTeleport onNext={() => props.nextStep()} />
+                )}
+              </div>
+            )}
+          </Transition>
+        </SwitchTransition>
+      </Instructions>
 
       {animation}
     </StepContainer>
@@ -203,21 +203,23 @@ export function ConnectTeleport(props: State) {
 }
 
 const AnimationContainer = styled.div`
-  width: 650px;
   display: flex;
   flex-direction: column;
-  max-width: 875px;
-  flex: 1 0 850px;
   align-items: flex-end;
-  margin-left: -101px;
   position: relative;
   z-index: 1;
   padding-right: 20px;
 `;
 
 const ContentContainer = styled.div`
-  position: relative;
-  width: calc(100% - 100px);
-  padding: 20px 100px;
-  left: 100px;
+  min-width: 670px;
+  max-width: 900px;
+  flex: 1 1 670px;
+`;
+
+const Instructions = styled.div`
+  min-width: 450px;
+  flex: 1 0 380px;
+  margin-right: 30px;
+  margin-bottom: 30px;
 `;

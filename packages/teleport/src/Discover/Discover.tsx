@@ -35,14 +35,17 @@ import { Sidebar } from 'teleport/Discover/Sidebar/Sidebar';
 
 import { SelectResource } from 'teleport/Discover/SelectResource';
 
+import { PingTeleportProvider } from 'teleport/Discover/Desktop/ConnectTeleport/PingTeleportContext';
+
+import { JoinTokenProvider } from 'teleport/Discover/Desktop/ConnectTeleport/JoinTokenContext';
+
+import { ResourceKind } from 'teleport/Discover/Shared';
+
 import { findViewAtIndex } from './flow';
 
 import { useDiscover } from './useDiscover';
 
 import type { BannerType } from 'teleport/components/BannerList/BannerList';
-import { PingTeleportProvider } from 'teleport/Discover/Desktop/ConnectTeleport/PingTeleportContext';
-import { JoinTokenProvider } from 'teleport/Discover/Desktop/ConnectTeleport/JoinTokenContext';
-import { ResourceKind } from 'teleport/Discover/Shared';
 
 const SCRIPT_TIMEOUT = 1000 * 60 * 5; // 5 minutes
 const PING_TIMEOUT = 1000 * 60 * 10; // 10 minutes
@@ -153,7 +156,7 @@ export function Discover() {
                     username={username}
                   />
                 </TopBarContainer>
-                <FeatureBox pt={4} maxWidth="1450px">
+                <FeatureBox pt={4} maxWidth="1800px">
                   {content}
                 </FeatureBox>
               </main.ContentMinWidth>

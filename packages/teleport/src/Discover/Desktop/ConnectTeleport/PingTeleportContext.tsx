@@ -78,6 +78,12 @@ export function PingTeleportProvider(props: {
   );
 }
 
+export function usePingTeleportResult() {
+  const pingContext = useContext(pingTeleportContext);
+
+  return pingContext.result;
+}
+
 export function usePingTeleport() {
   const ctx = useContext(pingTeleportContext);
 

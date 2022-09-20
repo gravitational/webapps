@@ -1,11 +1,13 @@
 import React, { useCallback } from 'react';
 import styled, { keyframes } from 'styled-components';
 
-import windowsIcon from './windows.svg';
 import { Flex } from 'design';
-import cfg from 'teleport/config';
+
 import { openNewTab } from 'teleport/lib/util';
 import useStickyClusterId from 'teleport/useStickyClusterId';
+
+import windowsIcon from './windows.svg';
+import cfg from 'teleport/config';
 
 interface DesktopItemProps {
   computerName: string;
@@ -174,7 +176,13 @@ export function DesktopItem(props: DesktopItemProps) {
   const { clusterId } = useStickyClusterId();
 
   const connect = useCallback(() => {
-    openNewTab(`https://teleport.dev/web/cluster/ryan/desktops/${props.computerName}-windows-teleport-dev/Administrator`);
+    const url = cfg.getDesktopRoute({
+      clusterId,
+      desktopName: props.computerName,
+      username: 'AdministratorZ',
+    });
+
+    openNewTab(url);
   }, []);
 
   return (
