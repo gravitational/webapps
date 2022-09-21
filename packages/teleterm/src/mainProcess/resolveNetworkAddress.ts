@@ -5,6 +5,11 @@ const TCP_PORT_MATCH = /\{CONNECT_GRPC_PORT:\s(\d+)}/;
 // transport method.
 const UDS_MATCH = /\{CONNECT_GRPC_PORT:/;
 
+/**
+ * Waits for the process to start a gRPC server and log the address used by the gRPC server.
+ *
+ * @return {Promise<string>} The address used by the gRPC server started from the process.
+ */
 export async function resolveNetworkAddress(
   requestedAddress: string,
   process: ChildProcess,
