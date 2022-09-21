@@ -58,12 +58,12 @@ class Tty extends EventEmitterWebAuthnSender {
   }
 
   connect(w: number, h: number) {
-    const connStr = this._addressResolver.getConnStr(w, h);
-    this.socket = new WebSocket(connStr);
-    this.socket.binaryType = 'arraybuffer';
-    this.socket.onopen = this._onOpenConnection;
-    this.socket.onmessage = this._onMessage;
-    this.socket.onclose = this._onCloseConnection;
+      const connStr = this._addressResolver.getConnStr(w, h);
+      this.socket = new WebSocket(connStr);
+      this.socket.binaryType = 'arraybuffer';
+      this.socket.onopen = this._onOpenConnection;
+      this.socket.onmessage = this._onMessage;
+      this.socket.onclose = this._onCloseConnection;
   }
 
   send(data) {

@@ -20,12 +20,22 @@ import { useAttempt } from 'shared/hooks';
 import { Session } from 'teleport/services/session';
 import Ctx from 'teleport/teleportContext';
 
+import opentelemetry from '@opentelemetry/api';
+
+const tracer = opentelemetry.trace.getTracer('userSessions'); 
+
 export default function useSessions(ctx: Ctx, clusterId: string) {
   const [sessions, setSessions] = useState<Session[]>([]);
   const [attempt, attemptActions] = useAttempt({ isProcessing: true });
 
   function onRefresh() {
-    return ctx.sshService.fetchSessions(clusterId).then(setSessions);
+    return tracer.startActiveSpan('onRefresh', undefined, opentelemetry.context.active(), span => {
+      return ctx.sshService.fetchSessions(clusterId).then((resp) => {
+        setSessions(resp);
+        span.end(); 
+        return resp
+      });
+    });
   }
 
   useEffect(() => {
