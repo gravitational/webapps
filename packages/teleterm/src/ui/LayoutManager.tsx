@@ -20,6 +20,7 @@ import { Flex } from 'design';
 import { TabHostContainer } from 'teleterm/ui/TabHost';
 import { TopBar } from 'teleterm/ui/TopBar';
 import { StatusBar } from 'teleterm/ui/StatusBar';
+import AccessRequestCheckout from 'teleterm/ui/DocumentAccessRequests/AccessRequestCheckout/AccessRequestCheckout';
 
 export function LayoutManager() {
   return (
@@ -28,6 +29,7 @@ export function LayoutManager() {
       <Flex flex="1" minHeight={0} style={{ position: 'relative' }}>
         <TabHostContainer />
       </Flex>
+      <AccessRequestCheckout />
       <StatusBar />
     </Flex>
   );

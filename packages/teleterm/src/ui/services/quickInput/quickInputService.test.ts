@@ -1,6 +1,7 @@
 import { CommandLauncher } from 'teleterm/ui/commandLauncher';
 import { ClustersService } from 'teleterm/ui/services/clusters';
 import { WorkspacesService } from 'teleterm/ui/services/workspacesService';
+import { getEmptyPendingAccessRequest } from '../workspacesService/accessRequestsService/accessRequestsService';
 
 import { QuickInputService } from './quickInputService';
 import * as pickers from './quickPickers';
@@ -187,6 +188,9 @@ test('getAutocompleteResult returns correct result for a database name suggestio
   jest
     .spyOn(WorkspacesServiceMock.prototype, 'getActiveWorkspace')
     .mockImplementation(() => ({
+      assumed: {},
+      isAccessRequestsBarCollapsed: false,
+      pendingAccessRequest: getEmptyPendingAccessRequest(),
       localClusterUri: 'test_uri',
       documents: [],
       location: '',
@@ -350,7 +354,10 @@ test('getAutocompleteResult returns correct result for an SSH host suggestion ri
   jest
     .spyOn(WorkspacesServiceMock.prototype, 'getActiveWorkspace')
     .mockImplementation(() => ({
+      assumed: {},
+      isAccessRequestsBarCollapsed: false,
       localClusterUri: 'test_uri',
+      pendingAccessRequest: getEmptyPendingAccessRequest(),
       documents: [],
       location: '',
     }));
@@ -409,7 +416,10 @@ test('getAutocompleteResult returns correct result for a partial match on an SSH
   jest
     .spyOn(WorkspacesServiceMock.prototype, 'getActiveWorkspace')
     .mockImplementation(() => ({
+      assumed: {},
+      isAccessRequestsBarCollapsed: false,
       localClusterUri: 'test_uri',
+      pendingAccessRequest: getEmptyPendingAccessRequest(),
       documents: [],
       location: '',
     }));

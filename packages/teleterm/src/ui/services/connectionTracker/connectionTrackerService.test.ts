@@ -6,6 +6,7 @@ import { StatePersistenceService } from '../statePersistence';
 
 import { ConnectionTrackerService } from './connectionTrackerService';
 import { TrackedConnection, TrackedGatewayConnection } from './types';
+import { getEmptyPendingAccessRequest } from '../workspacesService/accessRequestsService/accessRequestsService';
 
 jest.mock('../clusters');
 jest.mock('../statePersistence');
@@ -131,6 +132,9 @@ it('updates the port of a gateway connection when the underlying doc gets update
   // Insert the document.
   workspacesService.setState(draftState => {
     draftState.workspaces['/clusters/localhost'] = {
+      assumed: {},
+      isAccessRequestsBarCollapsed: false,
+      pendingAccessRequest: getEmptyPendingAccessRequest(),
       localClusterUri: '',
       location: '',
       documents: [document],

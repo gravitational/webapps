@@ -10,7 +10,21 @@ import { NotificationsService } from 'teleterm/ui/services/notifications';
 import { routing } from 'teleterm/ui/uri';
 
 import { Document, DocumentsService } from './documentsService';
-
+import {
+  AccessRequestsService,
+  getEmptyPendingAccessRequest,
+} from './accessRequestsService/accessRequestsService';
+import {
+  AccessRequest,
+  LoggedInUser,
+  ResourceId,
+} from 'teleterm/services/tshd/types';
+// adding requests to assumed adds already 'made' requests that fit our tables
+import { AccessRequest as UiAccessRequest } from 'e-teleport/services/workflow';
+import {
+  ResourceKind,
+  ResourceMap,
+} from 'e-teleport/Workflow/NewRequest/useNewRequest';
 export interface WorkspacesState {
   rootClusterUri?: string;
   workspaces: Record<string, Workspace>;
@@ -18,9 +32,13 @@ export interface WorkspacesState {
 
 export interface Workspace {
   localClusterUri: string;
+  isAccessRequestsBarCollapsed: boolean;
+  pendingAccessRequest: PendingAccessRequest;
+  assumed: Record<string, UiAccessRequest>;
   documents: Document[];
   location: string;
   previous?: {
+    assumed: {};
     documents: Document[];
     location: string;
   };
@@ -28,6 +46,10 @@ export interface Workspace {
 
 export class WorkspacesService extends ImmutableStore<WorkspacesState> {
   private documentsServicesCache = new Map<string, DocumentsService>();
+  private accessRequestsServicesCache = new Map<
+    string,
+    AccessRequestsService
+  >();
   state: WorkspacesState = {
     rootClusterUri: undefined,
     workspaces: {},
@@ -54,7 +76,7 @@ export class WorkspacesService extends ImmutableStore<WorkspacesState> {
     return this.state.workspaces;
   }
 
-  getWorkspace(clusterUri): Workspace {
+  getWorkspace(clusterUri: string): Workspace {
     return this.state.workspaces[clusterUri];
   }
 
@@ -63,6 +85,13 @@ export class WorkspacesService extends ImmutableStore<WorkspacesState> {
       return;
     }
     return this.getWorkspaceDocumentService(this.state.rootClusterUri);
+  }
+
+  getActiveWorkspaceAccessRequestsService(): AccessRequestsService | undefined {
+    if (!this.state.rootClusterUri) {
+      return;
+    }
+    return this.getWorkspaceAccessRequestsService(this.state.rootClusterUri);
   }
 
   getWorkspacesDocumentsServices(): Array<{
@@ -103,6 +132,26 @@ export class WorkspacesService extends ImmutableStore<WorkspacesState> {
     }
 
     return this.documentsServicesCache.get(clusterUri);
+  }
+
+  getWorkspaceAccessRequestsService(
+    clusterUri: string
+  ): AccessRequestsService | undefined {
+    if (!this.accessRequestsServicesCache.has(clusterUri)) {
+      this.accessRequestsServicesCache.set(
+        clusterUri,
+        new AccessRequestsService(
+          () => {
+            return this.state.workspaces[clusterUri];
+          },
+          newState =>
+            this.setState(draftState => {
+              newState(draftState.workspaces[clusterUri]);
+            })
+        )
+      );
+    }
+    return this.accessRequestsServicesCache.get(clusterUri);
   }
 
   isDocumentActive(documentUri: string): boolean {
@@ -212,6 +261,10 @@ export class WorkspacesService extends ImmutableStore<WorkspacesState> {
 
         workspaces[cluster.uri] = {
           ...workspaceDefaultState,
+          assumed: this.removeExpiredAssumedRoles(
+            persistedWorkspace.assumed,
+            cluster.loggedInUser
+          ),
           previous: this.canReopenPreviousDocuments({
             previousDocuments: persistedWorkspaceDocuments,
             currentDocuments: workspaceDefaultState.documents,
@@ -250,6 +303,21 @@ export class WorkspacesService extends ImmutableStore<WorkspacesState> {
     });
   }
 
+  private removeExpiredAssumedRoles(
+    assumed: Record<string, UiAccessRequest>,
+    user: LoggedInUser
+  ) {
+    const validRequests = {};
+    const requests = Object.keys(assumed).map(id => assumed[id]);
+    requests.forEach(request => {
+      // only add any assumed that still exist on the loggedInUser cert
+      if (user.activeRequestsList.includes(request.id)) {
+        validRequests[request.id] = request;
+      }
+    });
+    return validRequests;
+  }
+
   private canReopenPreviousDocuments({
     previousDocuments,
     currentDocuments,
@@ -276,8 +344,11 @@ export class WorkspacesService extends ImmutableStore<WorkspacesState> {
     ).createClusterDocument({ clusterUri: localClusterUri });
     return {
       localClusterUri,
+      assumed: {},
+      pendingAccessRequest: getEmptyPendingAccessRequest(),
       location: defaultDocument.uri,
       documents: [defaultDocument],
+      isAccessRequestsBarCollapsed: false,
     };
   }
 
@@ -289,6 +360,9 @@ export class WorkspacesService extends ImmutableStore<WorkspacesState> {
     for (let w in this.state.workspaces) {
       const workspace = this.state.workspaces[w];
       stateToSave.workspaces[w] = {
+        isAccessRequestsBarCollapsed: false,
+        assumed: workspace.previous?.assumed || workspace.assumed,
+        pendingAccessRequest: getEmptyPendingAccessRequest(),
         localClusterUri: workspace.localClusterUri,
         location: workspace.previous?.location || workspace.location,
         documents: workspace.previous?.documents || workspace.documents,
@@ -297,3 +371,7 @@ export class WorkspacesService extends ImmutableStore<WorkspacesState> {
     this.statePersistenceService.saveWorkspacesState(stateToSave);
   }
 }
+
+export type PendingAccessRequest = {
+  [k in ResourceKind]: Record<string, string>;
+};

@@ -2,6 +2,7 @@ import {
   Application,
   AuthSettings,
   Cluster,
+  CreateAccessRequestParams,
   CreateGatewayParams,
   Database,
   Gateway,
@@ -9,20 +10,46 @@ import {
   LoginLocalParams,
   LoginPasswordlessParams,
   LoginSsoParams,
+  ReviewAccessRequestParams,
   Server,
+  GetServersResponse,
+  GetDatabasesResponse,
   TshAbortController,
   TshAbortSignal,
   TshClient,
+  ServerSideParams,
 } from '../types';
+import { AccessRequest } from '../v1/access_request_pb';
 
 export class MockTshClient implements TshClient {
   listRootClusters: () => Promise<Cluster[]>;
   listLeafClusters: (clusterUri: string) => Promise<Cluster[]>;
   listApps: (clusterUri: string) => Promise<Application[]>;
   listKubes: (clusterUri: string) => Promise<Kube[]>;
-  listDatabases: (clusterUri: string) => Promise<Database[]>;
+  getAllDatabases: (clusterUri: string) => Promise<Database[]>;
+  getDatabases: (params: ServerSideParams) => Promise<GetDatabasesResponse>;
   listDatabaseUsers: (dbUri: string) => Promise<string[]>;
   getAllServers: (clusterUri: string) => Promise<Server[]>;
+  getRequestableRoles: (clusterUri: string) => Promise<string[]>;
+  getServers: (params: ServerSideParams) => Promise<GetServersResponse>;
+  assumeRole: (
+    clusterUri: string,
+    requestIds: string[],
+    dropIds: string[]
+  ) => Promise<{}>;
+  deleteAccessRequest: (clusterUri: string, requestId: string) => Promise<{}>;
+  getAccessRequests: (clusterUri: string) => Promise<AccessRequest.AsObject[]>;
+  getAccessRequest: (
+    clusterUri: string,
+    requestId: string
+  ) => Promise<AccessRequest.AsObject>;
+  reviewAccessRequest: (
+    clusterUri: string,
+    params: ReviewAccessRequestParams
+  ) => Promise<AccessRequest.AsObject>;
+  createAccessRequest: (
+    params: CreateAccessRequestParams
+  ) => Promise<AccessRequest.AsObject>;
   createAbortController: () => TshAbortController;
   addRootCluster: (addr: string) => Promise<Cluster>;
 

@@ -17,6 +17,7 @@ limitations under the License.
 import React from 'react';
 import { matchPath } from 'react-router';
 import { useStore, Store } from 'shared/libs/stores';
+import { ServerSideParams } from 'teleterm/services/tshd/types';
 
 import { tsh } from 'teleterm/ui/services/clusters/types';
 import { IAppContext } from 'teleterm/ui/types';

@@ -74,6 +74,8 @@ export class WindowsManager {
       }
     );
 
+    window.webContents.openDevTools();
+
     this.window = window;
   }
 

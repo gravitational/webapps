@@ -3,6 +3,7 @@ import { Flex, Text } from 'design';
 
 import { useActiveDocumentClusterBreadcrumbs } from './useActiveDocumentClusterBreadcrumbs';
 import { ShareFeedback } from './ShareFeedback';
+import { AccessRequestCheckoutButton } from './AccessRequestCheckoutButton';
 
 export function StatusBar() {
   const clusterBreadcrumbs = useActiveDocumentClusterBreadcrumbs();
@@ -29,7 +30,10 @@ export function StatusBar() {
       >
         {clusterBreadcrumbs}
       </Text>
-      <ShareFeedback />
+      <Flex gap={2} alignItems="center">
+        <AccessRequestCheckoutButton />
+        <ShareFeedback />
+      </Flex>
     </Flex>
   );
 }

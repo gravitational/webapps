@@ -62,6 +62,7 @@ export default function Container(props: DocumentProps) {
 }
 
 export function Cluster() {
+  const appCtx = useAppContext();
   const clusterCtx = useClusterContext();
   const state = clusterCtx.useState();
 

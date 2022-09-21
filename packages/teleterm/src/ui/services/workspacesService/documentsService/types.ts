@@ -18,6 +18,7 @@ export type Kind =
   | 'doc.cluster'
   | 'doc.blank'
   | 'doc.gateway'
+  | 'doc.access_requests'
   | 'doc.terminal_shell'
   | 'doc.terminal_tsh_node'
   | 'doc.terminal_tsh_kube';
@@ -66,6 +67,12 @@ export interface DocumentCluster extends DocumentBase {
   clusterUri: string;
 }
 
+export interface DocumentAccessRequests extends DocumentBase {
+  kind: 'doc.access_requests';
+  clusterUri: string;
+  state: AccessRequestDocumentState;
+}
+
 export interface DocumentPtySession extends DocumentBase {
   kind: 'doc.terminal_shell';
   cwd?: string;
@@ -81,6 +88,7 @@ export type DocumentTerminal =
 
 export type Document =
   | DocumentBlank
+  | DocumentAccessRequests
   | DocumentGateway
   | DocumentCluster
   | DocumentTerminal;
@@ -98,6 +106,14 @@ export type CreateGatewayDocumentOpts = {
 export type CreateClusterDocumentOpts = {
   clusterUri: string;
 };
+
+export type CreateAccessRequestDocumentOpts = {
+  clusterUri: string;
+  state: AccessRequestDocumentState;
+  title?: string;
+};
+
+export type AccessRequestDocumentState = 'browsing' | 'creating' | 'reviewing';
 
 export type CreateNewTerminalOpts = {
   initCommand?: string;
