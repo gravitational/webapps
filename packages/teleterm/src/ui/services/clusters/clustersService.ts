@@ -598,11 +598,6 @@ export class ClustersService extends ImmutableStore<ClustersServiceState> {
     const {
       params: { rootClusterId },
     } = routing.parseClusterUri(clusterUri);
-    if (!rootClusterId) {
-      throw new Error(
-        'Could not remove kube configs, `rootClusterId` is missing.'
-      );
-    }
     return this.mainProcessClient.removeKubeConfig({
       relativePath: rootClusterId,
       isDirectory: true,
