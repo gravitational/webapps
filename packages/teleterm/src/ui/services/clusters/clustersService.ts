@@ -604,9 +604,9 @@ export class ClustersService extends ImmutableStore<ClustersServiceState> {
     });
   }
 
-  async removeKubeConfig(kubeConfigName: string): Promise<void> {
+  async removeKubeConfig(kubeConfigRelativePath: string): Promise<void> {
     return this.mainProcessClient.removeKubeConfig({
-      relativePath: kubeConfigName,
+      relativePath: kubeConfigRelativePath,
     });
   }
 

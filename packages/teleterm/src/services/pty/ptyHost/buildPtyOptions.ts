@@ -134,5 +134,5 @@ function getKubeConfigFilePath(
   command: TshKubeLoginCommand,
   settings: RuntimeSettings
 ): string {
-  return path.join(settings.kubeConfigsDir, command.kubeConfigName);
+  return path.join(settings.kubeConfigsDir, command.kubeConfigRelativePath);
 }

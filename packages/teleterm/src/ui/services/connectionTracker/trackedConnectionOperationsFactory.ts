@@ -153,7 +153,7 @@ export class TrackedConnectionOperationsFactory {
         if (!kubeConn) {
           kubeConn = documentsService.createTshKubeDocument({
             kubeUri: connection.kubeUri,
-            kubeConfigName: connection.kubeConfigName,
+            kubeConfigRelativePath: connection.kubeConfigRelativePath,
           });
 
           documentsService.add(kubeConn);
@@ -170,7 +170,7 @@ export class TrackedConnectionOperationsFactory {
       },
       remove: () => {
         return this._clustersService.removeKubeConfig(
-          connection.kubeConfigName
+          connection.kubeConfigRelativePath
         );
       },
     };
