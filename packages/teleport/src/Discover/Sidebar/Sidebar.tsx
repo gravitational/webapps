@@ -22,17 +22,15 @@ import * as Icons from 'design/Icon';
 
 import styled from 'styled-components';
 
-import { ResourceKind } from 'teleport/Discover/Shared';
 import * as sideNav from 'teleport/SideNav';
 
-import { View } from '../flow';
-import { resources } from '../resources';
+import { Resource, View } from '../flow';
 
 import { StepList } from './StepList';
 
 interface SidebarProps {
   currentStep: number;
-  selectedResourceKind: ResourceKind;
+  selectedResource: Resource;
   views: View[];
 }
 
@@ -46,8 +44,6 @@ const StyledNavContent = styled(sideNav.Content)`
 `;
 
 export function Sidebar(props: SidebarProps) {
-  const resource = resources.find(r => r.kind === props.selectedResourceKind);
-
   let content;
   if (props.views) {
     content = <StepList views={props.views} currentStep={props.currentStep} />;
@@ -73,7 +69,7 @@ export function Sidebar(props: SidebarProps) {
               width="30px"
               mr={2}
             >
-              {resource ? resource.icon : <Icons.Server />}
+              {props.selectedResource ? props.selectedResource.icon : <Icons.Server />}
             </Flex>
             <Text bold>Add New Resource</Text>
           </Flex>

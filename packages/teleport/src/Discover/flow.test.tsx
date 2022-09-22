@@ -27,16 +27,27 @@
    {
      kind: ResourceKind.Name,
      icon: <SomeIcon />,
+     shouldPrompt(currentStep) {
+       return true;
+     },
      views: [],
    }
  ];
 
- All of the different views the resource can have go into the `views` property.
+ `shouldPrompt` allows for the resource type to decide when to prompt the user
+ if they try and navigate away. It receives `currentStep: number` which points
+ to the active view in the `views` array. It should return a `boolean`, where
+ `true` would prompt the user if they navigated away, and `false` would not.
+
+ All the different views the resource can have go into the `views` property.
 
  const resources: Resource[] = [
    {
      kind: ResourceKind.Name,
      icon: <SomeIcon />,
+     shouldPrompt(currentStep) {
+       return true;
+     },
      views: [
        {
          title: 'Select Resource Type',
@@ -55,6 +66,9 @@
  const resources: Resource[] = [
    {
      kind: ResourceKind.Name,
+     shouldPrompt(currentStep) {
+       return true;
+     },
      icon: <SomeIcon />,
      views: [
        {
@@ -138,6 +152,7 @@ describe('discover flow', () => {
       const resource: Resource = {
         kind: ResourceKind.Server,
         icon: null,
+        shouldPrompt: () => null,
         views: [
           {
             title: 'Select Resource Type',

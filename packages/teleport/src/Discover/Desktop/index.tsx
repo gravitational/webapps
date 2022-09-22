@@ -26,9 +26,23 @@ import { InstallActiveDirectory } from 'teleport/Discover/Desktop/InstallActiveD
 
 import { Resource } from 'teleport/Discover/flow';
 
+import { DesktopWrapper } from 'teleport/Discover/Desktop/DesktopWrapper';
+
 export const DesktopResource: Resource = {
   kind: ResourceKind.Desktop,
   icon: <Desktop />,
+  wrapper: (component: React.ReactNode) => (
+    <DesktopWrapper>{component}</DesktopWrapper>
+  ),
+  shouldPrompt(currentStep) {
+    // do not prompt on exit if they're selecting a resource
+    if (currentStep === 0) {
+      return false;
+    }
+
+    // prompt them up if they try exiting before having finished the ConnectTeleport step
+    return currentStep < 3;
+  },
   views: [
     {
       title: 'Select Resource',

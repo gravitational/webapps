@@ -25,6 +25,10 @@ import { InstallActiveDirectory } from 'teleport/Discover/Desktop/InstallActiveD
 export const DatabaseResource: Resource = {
   kind: ResourceKind.Database,
   icon: <Database />,
+  shouldPrompt(currentStep) {
+    // do not prompt on exit if they're selecting a resource
+    return currentStep !== 0;
+  },
   views: [
     {
       title: 'Select Resource',

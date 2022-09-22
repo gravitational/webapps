@@ -27,6 +27,10 @@ import { ResourceKind, Finished } from 'teleport/Discover/Shared';
 export const ServerResource: Resource = {
   kind: ResourceKind.Server,
   icon: <Server />,
+  shouldPrompt(currentStep) {
+    // do not prompt on exit if they're selecting a resource
+    return currentStep !== 0;
+  },
   views: [
     {
       title: 'Select Resource',

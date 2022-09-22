@@ -24,6 +24,10 @@ import { Resource } from 'teleport/Discover/flow';
 export const ApplicationResource: Resource = {
   kind: ResourceKind.Application,
   icon: <AppInstalled />,
+  shouldPrompt(currentStep) {
+    // do not prompt on exit if they're selecting a resource
+    return currentStep !== 0;
+  },
   views: [
     {
       title: 'Select Resource',

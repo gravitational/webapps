@@ -23,6 +23,8 @@ export interface Resource {
   kind: ResourceKind;
   views: View[];
   icon: React.ReactElement;
+  wrapper?: (component: React.ReactNode) => React.ReactNode;
+  shouldPrompt: (currentStep: number) => boolean;
 }
 
 export interface View {

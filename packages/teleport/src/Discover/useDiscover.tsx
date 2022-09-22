@@ -54,10 +54,10 @@ export function useDiscover(config: UseMainConfig) {
     useState<ResourceKind>(getKindFromString(location?.state?.entity));
   const [agentMeta, setAgentMeta] = useState<AgentMeta>();
 
-  const resource = resources.find(r => r.kind === selectedResourceKind);
+  const selectedResource = resources.find(r => r.kind === selectedResourceKind);
   const views = useMemo<View[]>(
-    () => addIndexToViews(resource.views),
-    [resource.views]
+    () => addIndexToViews(selectedResource.views),
+    [selectedResource.views]
   );
 
   function onSelectResource(kind: ResourceKind) {
@@ -90,7 +90,7 @@ export function useDiscover(config: UseMainConfig) {
     logout,
     nextStep,
     onSelectResource,
-    selectedResourceKind,
+    selectedResource,
     updateAgentMeta,
     views,
   };

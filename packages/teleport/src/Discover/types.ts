@@ -14,6 +14,8 @@
  * limitations under the License.
  */
 
+import { ResourceKind } from 'teleport/Discover/Shared';
+
 import { State } from './useDiscover';
 
 export type AgentStepProps = {
@@ -24,7 +26,8 @@ export type AgentStepProps = {
   updateAgentMeta?: State['updateAgentMeta'];
   // nextStep increments the `currentStep` to go to the next step.
   nextStep?: State['nextStep'];
-  selectedResourceKind?: State['selectedResourceKind'];
+  selectedResource?: State['selectedResource'];
+  selectedResourceKind?: ResourceKind;
   onSelectResource?: State['onSelectResource'];
 };
 
