@@ -17,8 +17,8 @@ export function useClusterLogout({ clusterUri, onClose, clusterTitle }: Props) {
         await ctx.workspacesService.setActiveWorkspace(null);
       }
     }
-    ctx.connectionTracker.removeItemsBelongingToRootCluster(clusterUri);
     ctx.workspacesService.removeWorkspace(clusterUri);
+    ctx.connectionTracker.removeItemsBelongingToRootCluster(clusterUri);
   });
 
   useEffect(() => {
