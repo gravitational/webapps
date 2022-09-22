@@ -38,10 +38,11 @@ export type DesktopsResponse = {
 };
 // DesktopService is a Windows Desktop Service.
 export type WindowsDesktopService = {
+  // Name is name (uuid) of the windows desktop service.
   name: string;
-  // Name is name (uuid) of the windows desktop.
+  // Hostname is the hostname of the windows desktop service.
   hostname: string;
-  // Addr is the network address the desktop can be reached at.
+  // Addr is the network address the desktop service can be reached at.
   addr: string;
   // Labels.
   labels: AgentLabel[];
