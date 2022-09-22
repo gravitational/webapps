@@ -106,12 +106,8 @@ export function hasActiveChildren(views: View[], currentStep: number) {
       return true;
     }
 
-    if (view.views) {
-      const result = hasActiveChildren(view.views, currentStep);
-
-      if (result) {
-        return true;
-      }
+    if (view.views && hasActiveChildren(view.views, currentStep)) {
+      return true;
     }
   }
 
