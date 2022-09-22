@@ -69,7 +69,11 @@ export function Sidebar(props: SidebarProps) {
               width="30px"
               mr={2}
             >
-              {props.selectedResource ? props.selectedResource.icon : <Icons.Server />}
+              {props.selectedResource ? (
+                props.selectedResource.icon
+              ) : (
+                <Icons.Server />
+              )}
             </Flex>
             <Text bold>Add New Resource</Text>
           </Flex>

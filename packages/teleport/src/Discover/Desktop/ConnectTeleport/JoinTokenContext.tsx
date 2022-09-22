@@ -68,7 +68,12 @@ export function useJoinTokenValue() {
   return tokenContext.joinToken;
 }
 
-export function useJoinToken(): { joinToken: JoinToken, reloadJoinToken: () => void, timedOut: boolean, timeout: number } {
+export function useJoinToken(): {
+  joinToken: JoinToken;
+  reloadJoinToken: () => void;
+  timedOut: boolean;
+  timeout: number;
+} {
   const ctx = useTeleport();
   const tokenContext = useContext(joinTokenContext);
 

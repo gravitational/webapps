@@ -39,7 +39,6 @@ import { findViewAtIndex } from './flow';
 import { useDiscover } from './useDiscover';
 
 import type { BannerType } from 'teleport/components/BannerList/BannerList';
-import { ResourceKind } from 'teleport/Discover/Shared';
 
 interface DiscoverProps {
   initialAlerts?: ClusterAlert[];

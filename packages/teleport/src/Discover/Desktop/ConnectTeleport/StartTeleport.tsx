@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
 
 import logoSrc from 'design/assets/images/teleport-medallion.svg';
@@ -77,7 +77,9 @@ export function StartTeleport(
   return (
     <StepWrapper>
       <StepInstructions>
-        <Text mb={4}>Once you've started Teleport, we'll detect it here.</Text>
+        <Text mb={4}>
+          Once o you've started Teleport, we'll detect it here.
+        </Text>
 
         <ButtonPrimary disabled={!result} onClick={() => props.onNext()}>
           Next

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import styled, { keyframes } from 'styled-components';
 
 import { Box, ButtonPrimary, Text } from 'design';
@@ -25,14 +25,14 @@ const Buttons = styled.div`
 `;
 
 const FoundDesktops = styled.div`
-  margin-left: 75px;
+  position: relative;
+  margin-left: 175px;
   margin-top: -30px;
 `;
 
-const MAX_COUNT = 12;
+const MAX_COUNT = 14;
 const POLL_TIMEOUT = 1000 * 60 * 10; // 10 minutes
 const POLL_INTERVAL = 1000 * 3; // 3 seconds
-
 
 const fadeIn = keyframes`
   from {
@@ -85,7 +85,7 @@ export function DiscoverDesktops(props: State) {
 
   const { result: desktopService } = usePingTeleport();
 
-  const [enabled, setEnabled] = useState(true);
+  const [enabled, setEnabled] = useState(false);
   const { clusterId } = useStickyClusterId();
   const { timedOut, result } = usePoll(
     signal =>
@@ -95,61 +95,104 @@ export function DiscoverDesktops(props: State) {
     POLL_INTERVAL
   );
 
+  const desktopServiceRef = useRef<HTMLDivElement>(null);
+
   useEffect(() => {
     if (enabled && result && result.agents.length === MAX_COUNT) {
       setEnabled(false);
     }
   }, [enabled, result]);
 
+  const ref = useRef<HTMLDivElement>();
+
   const desktops = [];
+
   if (result && result.agents) {
-    const foundDesktops = result.agents
-      .filter((desktop) => desktop.host_addr === desktopService.name);
+    const foundDesktops = result.agents.filter(
+      desktop => desktop.host_addr === desktopService.name
+    );
 
-    const numberOfFoundDesktops = foundDesktops.length;
     if (foundDesktops.length) {
-      for (const [index, desktop] of foundDesktops.entries()) {
-        const os = desktop.labels.find((label) => label.name === 'teleport.dev/os').value;
-        const osVersion = desktop.labels.find((label) => label.name === 'teleport.dev/os_version').value;
+      for (const desktop of foundDesktops.values()) {
+        const os = desktop.labels.find(
+          label => label.name === 'teleport.dev/os'
+        ).value;
+        const osVersion = desktop.labels.find(
+          label => label.name === 'teleport.dev/os_version'
+        ).value;
 
-        desktops.push(
-          <DesktopItem
-            key={index}
-            os={os}
-            osVersion={osVersion}
-            computerName={desktop.name}
-            address={desktop.addr}
-          />
-        );
-
-        if (numberOfFoundDesktops > 1) {
-          let amount;
-          let word = 'Desktops';
-          if (numberOfFoundDesktops === 1) {
-            word = 'Desktop';
-          }
-
-          if (numberOfFoundDesktops > 11) {
-            amount = '10+';
-          } else {
-            amount = `${numberOfFoundDesktops - 1}`;
-          }
-
-          desktops.push(
-            <ContentBox key="view-more">
-              We've found {amount} more {word}. <ViewLink to={cfg.getDesktopsRoute(clusterId)}>View them all here</ViewLink>
-            </ContentBox>
-          );
-        }
+        desktops.push({
+          os,
+          osVersion,
+          computerName: desktop.name,
+          address: desktop.addr,
+        });
       }
     }
   }
 
   let content;
   if (timedOut) {
-    content = (<ContentBox><TimedOutTitle>Oh no!</TimedOutTitle> We could not find any Desktops. Connect Desktops to your Active Directory for Teleport to automatically discover them.</ContentBox>)
+    content = (
+      <ContentBox>
+        <TimedOutTitle>Oh no!</TimedOutTitle> We could not find any Desktops.
+        Connect Desktops to your Active Directory for Teleport to automatically
+        discover them.
+      </ContentBox>
+    );
   } else {
-    content = desktops;
+    const items = desktops
+      .slice(0, 3)
+      .map((desktop, index) => (
+        <DesktopItem
+          key={index}
+          index={index}
+          os={desktop.os}
+          osVersion={desktop.osVersion}
+          computerName={desktop.computerName}
+          address={desktop.address}
+          desktopServiceElement={desktopServiceRef.current}
+          containerElement={ref.current}
+        />
+      ));
+
+    // We show 3 desktops maximum, and fetch 14 in order to be able to
+    // display the message "We've found 10+ more desktops".
+    //
+    // This gives the user a better idea that a lot of desktops have been
+    // discovered, without us having to fetch all of them to get an actual count.
+    const extraDesktopCount = desktops.length - 3;
+
+    let viewMore;
+    if (extraDesktopCount > 0) {
+      let amount = '1';
+      let word = 'Desktops';
+      if (extraDesktopCount === 1) {
+        word = 'Desktop';
+      } else {
+        if (extraDesktopCount > 11) {
+          amount = '10+';
+        } else {
+          amount = `${extraDesktopCount}`;
+        }
+      }
+
+      viewMore = (
+        <ContentBox key="view-more">
+          We've found {amount} more {word}.{' '}
+          <ViewLink to={cfg.getDesktopsRoute(clusterId)}>
+            View them all here
+          </ViewLink>
+        </ContentBox>
+      );
+    }
+
+    content = (
+      <>
+        {items}
+        {viewMore}
+      </>
+    );
   }
 
   return (
@@ -160,12 +203,13 @@ export function DiscoverDesktops(props: State) {
         Directory.
       </Text>
 
-      <Desktops>
-        <ProxyDesktopServiceDiagram />
+      <Desktops ref={ref}>
+        <ProxyDesktopServiceDiagram
+          result={desktopService}
+          desktopServiceRef={desktopServiceRef}
+        />
 
-        <FoundDesktops>
-          {content}
-        </FoundDesktops>
+        <FoundDesktops>{content}</FoundDesktops>
       </Desktops>
 
       <Buttons>
@@ -176,4 +220,3 @@ export function DiscoverDesktops(props: State) {
     </Box>
   );
 }
-

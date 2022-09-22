@@ -1,9 +1,15 @@
 import React from 'react';
-import styled, { keyframes } from 'styled-components';
+import styled from 'styled-components';
 
-import { Server } from './Server';
 import { DesktopService } from 'teleport/Discover/Desktop/DiscoverDesktops/DesktopService';
-import { usePingTeleport } from 'teleport/Discover/Desktop/ConnectTeleport/PingTeleportContext';
+import { WindowsDesktopService } from 'teleport/services/desktops';
+
+import {
+  AnimatedStyledSVG,
+  StyledSVG,
+} from 'teleport/Discover/Desktop/DiscoverDesktops/NodeLine';
+
+import { ProxyServerIcon } from './Server';
 
 const NodeHostname = styled.div`
   font-family: Menlo, DejaVu Sans Mono, Consolas, Lucida Console, monospace;
@@ -25,16 +31,6 @@ const Nodes = styled.div`
   position: relative;
 `;
 
-const line = keyframes`
-  0% {
-    stroke-dashoffset: 0;
-  }
-
-  100% {
-    stroke-dashoffset: -361;
-  }
-`;
-
 const NodeLineContainer = styled.div`
   position: absolute;
   height: 94px;
@@ -45,37 +41,20 @@ const NodeLineContainer = styled.div`
   border-bottom-left-radius: 5px;
   border-bottom-right-radius: 5px;
   overflow: hidden;
-
-  svg {
-    position: absolute;
-    
-    path {
-      stroke: #31c842;
-      stroke-width: 4;
-      fill: none;
-    }
-  }
-`;
-
-const AnimatedSVG = styled.svg`
-  stroke-dasharray: 5, 20;
-  stroke-dashoffset: 0;
-  
-  animation: ${line} 5s cubic-bezier(0.3, 0, 0.2, 1) alternate infinite 0.6s;
 `;
 
 function NodeLine() {
   return (
     <NodeLineContainer>
-      <svg width={254} height={94} viewBox="0 0 254 93.5">
+      <StyledSVG width={254} height={94} viewBox="0 0 254 93.5">
         <path
           opacity={0.6}
           d="M1.5,0V76.74c0,8.43,7.62,15.26,17.02,15.26H235.48c9.4,0,17.02-6.83,17.02-15.26V32.42"
         />
-      </svg>
-      <AnimatedSVG width={254} height={94} viewBox="0 0 254 93.5">
+      </StyledSVG>
+      <AnimatedStyledSVG width={254} height={94} viewBox="0 0 254 93.5">
         <path d="M1.5,0V76.74c0,8.43,7.62,15.26,17.02,15.26H235.48c9.4,0,17.02-6.83,17.02-15.26V32.42" />
-      </AnimatedSVG>
+      </AnimatedStyledSVG>
     </NodeLineContainer>
   );
 }
@@ -97,18 +76,14 @@ function getProxyAddress() {
   return `${hostname}:${port}`;
 }
 
-export function ProxyDesktopServiceDiagram() {
-  const result = {
-    hostname: 'windows-service.teleport.dev',
-    addr: 'remote.windows_desktop.proxy.teleport.cluster.local',
-    labels: [
-      {
-        name: 'teleport.internal/resource-id',
-        value: 'f8e383d9-f9ea-4001-95c2-1c3238066c33',
-      },
-    ],
-  };
+interface ProxyDesktopServiceDiagramProps {
+  result: WindowsDesktopService;
+  desktopServiceRef: React.Ref<HTMLDivElement>;
+}
 
+export function ProxyDesktopServiceDiagram(
+  props: ProxyDesktopServiceDiagramProps
+) {
   const proxyAddress = getProxyAddress();
 
   return (
@@ -117,7 +92,7 @@ export function ProxyDesktopServiceDiagram() {
         <NodeLine />
         <Node>
           <NodeIcon>
-            <Server />
+            <ProxyServerIcon />
           </NodeIcon>
 
           <NodeTitle>Teleport Proxy</NodeTitle>
@@ -126,11 +101,11 @@ export function ProxyDesktopServiceDiagram() {
 
         <Node>
           <NodeIcon>
-            <DesktopService />
+            <DesktopService desktopServiceRef={props.desktopServiceRef} />
           </NodeIcon>
 
           <NodeTitle>Desktop Service</NodeTitle>
-          <NodeHostname>{result.hostname}</NodeHostname>
+          <NodeHostname>{props.result && props.result.hostname}</NodeHostname>
         </Node>
       </Nodes>
     </div>

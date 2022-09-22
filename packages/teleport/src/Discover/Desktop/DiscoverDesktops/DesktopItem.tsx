@@ -1,17 +1,26 @@
-import React, { useCallback } from 'react';
+import React, { useCallback, useLayoutEffect, useRef, useState } from 'react';
 import styled, { keyframes } from 'styled-components';
 
-import windowsIcon from './windows.svg';
 import { Flex } from 'design';
-import cfg from 'teleport/config';
+
 import { openNewTab } from 'teleport/lib/util';
 import useStickyClusterId from 'teleport/useStickyClusterId';
+import { NodeLine } from 'teleport/Discover/Desktop/DiscoverDesktops/NodeLine';
+import {
+  createLine,
+  Line,
+} from 'teleport/Discover/Desktop/DiscoverDesktops/utils';
+
+import windowsIcon from './windows.svg';
 
 interface DesktopItemProps {
   computerName: string;
   os: string;
   osVersion: string;
   address: string;
+  desktopServiceElement: HTMLDivElement;
+  containerElement: HTMLDivElement;
+  index: number;
 }
 
 const fadeIn = keyframes`
@@ -24,7 +33,7 @@ const fadeIn = keyframes`
 `;
 
 const Container = styled.div`
-  position: relative;
+  margin-bottom: 30px;
 `;
 
 const Content = styled.div`
@@ -95,55 +104,6 @@ const Online = styled.div`
   text-transform: uppercase;
 `;
 
-const appear = keyframes`
-  from {
-    width: 0;
-  }
-  to {
-    width: 160px;
-  }
-`;
-
-const NodeLineContainer = styled.div`
-  position: absolute;
-  height: 3px;
-  width: 160px;
-  top: 50%;
-  transform: translate(0, -50%);
-  left: -160px;
-  border-bottom-left-radius: 5px;
-  border-bottom-right-radius: 5px;
-  overflow: hidden;
-  animation: ${appear} 1s ease-in forwards;
-
-  svg {
-    position: absolute;
-
-    path {
-      stroke: #31c842;
-      stroke-width: 4;
-      fill: none;
-    }
-  }
-`;
-
-const line = keyframes`
-  0% {
-    stroke-dashoffset: -25;
-  }
-
-  100% {
-    stroke-dashoffset: 0;
-  }
-`;
-
-const AnimatedSVG = styled.svg`
-  stroke-dasharray: 5, 20;
-  stroke-dashoffset: 0;
-
-  animation: ${line} 1s linear infinite 0.6s;
-`;
-
 const Connect = styled.div`
   background: #0091ea;
   color: white;
@@ -157,29 +117,43 @@ const Connect = styled.div`
   }
 `;
 
-function NodeLine() {
-  return (
-    <NodeLineContainer>
-      <svg width={160} height={3} viewBox="0 0 160 3">
-        <path opacity={0.6} d="M0,1.5H160" />
-      </svg>
-      <AnimatedSVG width={160} height={3} viewBox="0 0 160 3">
-        <path d="M0,1.5H160" />
-      </AnimatedSVG>
-    </NodeLineContainer>
-  );
-}
-
 export function DesktopItem(props: DesktopItemProps) {
   const { clusterId } = useStickyClusterId();
 
+  const ref = useRef<HTMLDivElement>();
+
   const connect = useCallback(() => {
-    openNewTab(`https://teleport.dev/web/cluster/ryan/desktops/${props.computerName}-windows-teleport-dev/Administrator`);
+    openNewTab(
+      `https://teleport.dev/web/cluster/${clusterId}/desktops/${props.computerName}/Administrator`
+    );
   }, []);
 
+  const [line, setLine] = useState<Line>(null);
+
+  useLayoutEffect(() => {
+    if (props.desktopServiceElement && ref.current && props.containerElement) {
+      setLine(
+        createLine(
+          props.desktopServiceElement,
+          ref.current,
+          props.containerElement
+        )
+      );
+    }
+  }, [props.desktopServiceElement && ref.current && props.containerElement]);
+
+  let path;
+  if (line) {
+    path = (
+      <NodeLine width={line.width} height={line.height}>
+        <path d={line.path} />
+      </NodeLine>
+    );
+  }
+
   return (
-    <Container>
-      <NodeLine />
+    <Container ref={ref}>
+      {path}
       <Content>
         <Flex>
           <ComputerInfo>

@@ -145,12 +145,7 @@ export function ConnectTeleport(props: State) {
   return (
     <StepContainer>
       <SwitchTransition mode="out-in">
-        <Transition
-          key={currentStep}
-          timeout={250}
-          mountOnEnter
-          unmountOnExit
-        >
+        <Transition key={currentStep} timeout={250} mountOnEnter unmountOnExit>
           {state => (
             <div
               style={{
@@ -176,9 +171,7 @@ export function ConnectTeleport(props: State) {
                 />
               )}
               {currentStep === StepKind.StartTeleport && (
-                <StartTeleport
-                  onNext={() => props.nextStep()}
-                />
+                <StartTeleport onNext={() => props.nextStep()} />
               )}
             </div>
           )}
