@@ -74,7 +74,9 @@ export class DocumentsService {
       leafClusterId: params.leafClusterId,
       kubeId: params.kubeId,
       kubeUri: options.kubeUri,
-      kubeConfigName: options.kubeConfigName || `${params.kubeId}-${unique(5)}`,
+      kubeConfigName:
+        options.kubeConfigName ||
+        `${params.rootClusterId}/${params.kubeId}-${unique(5)}`,
       title: params.kubeId,
     };
   }

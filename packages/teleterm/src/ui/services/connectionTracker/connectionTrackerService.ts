@@ -142,17 +142,14 @@ export class ConnectionTrackerService extends ImmutableStore<ConnectionTrackerSt
     });
   }
 
-  async removeItemsBelongingToRootCluster(clusterUri: string): Promise<void> {
-    await Promise.all(
-      this.getConnections().map(async connection => {
+  removeItemsBelongingToRootCluster(clusterUri: string): void {
+    this.setState(draft => {
+      draft.connections = draft.connections.filter(i => {
         const { rootClusterUri } =
-          this._trackedConnectionOperationsFactory.create(connection);
-        if (rootClusterUri === clusterUri) {
-          await this.disconnectItem(connection.id);
-          await this.removeItem(connection.id);
-        }
-      })
-    );
+          this._trackedConnectionOperationsFactory.create(i);
+        return rootClusterUri !== clusterUri;
+      });
+    });
   }
 
   dispose(): void {
