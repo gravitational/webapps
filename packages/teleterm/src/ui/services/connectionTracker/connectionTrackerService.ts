@@ -135,9 +135,7 @@ export class ConnectionTrackerService extends ImmutableStore<ConnectionTrackerSt
       return;
     }
 
-    await this._trackedConnectionOperationsFactory
-      .create(connection)
-      .remove?.();
+    await this._trackedConnectionOperationsFactory.create(connection).remove();
 
     this.setState(draft => {
       draft.connections = draft.connections.filter(i => i.id !== id);

@@ -71,6 +71,7 @@ export class TrackedConnectionOperationsFactory {
             documentsService.close(document.uri);
           });
       },
+      remove: async () => {},
     };
   }
 
@@ -123,6 +124,7 @@ export class TrackedConnectionOperationsFactory {
               });
           });
       },
+      remove: async () => {},
     };
   }
 
@@ -205,5 +207,5 @@ interface TrackedConnectionOperations {
 
   disconnect(): Promise<void>;
 
-  remove?(): Promise<void>;
+  remove(): Promise<void>;
 }
