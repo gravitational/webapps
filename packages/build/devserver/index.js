@@ -42,7 +42,7 @@ if (!urlObj.host) {
 
 const PROXY_TARGET = urlObj.host;
 const ROOT = '/web';
-const PORT = process.env.PORT || 8080;
+const PORT = 8080;
 
 // init webpack compiler
 const compiler = initCompiler({ webpackConfig });
