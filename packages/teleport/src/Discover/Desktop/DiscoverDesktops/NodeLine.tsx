@@ -33,7 +33,7 @@ const NodeLineContainer = styled.div`
 
 const line = keyframes`
   0% {
-    stroke-dashoffset: -25;
+    stroke-dashoffset: -250;
   }
 
   100% {
@@ -56,7 +56,7 @@ export const AnimatedStyledSVG = styled(StyledSVG)`
   stroke-dasharray: 5, 20;
   stroke-dashoffset: 0;
   z-index: 2;
-  animation: ${line} 1s linear infinite 0.6s;
+  animation: ${line} 5s cubic-bezier(.78,.11,.27,.94) alternate infinite 0.6s;
 
   path {
     stroke: #32c842;
