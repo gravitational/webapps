@@ -1,5 +1,5 @@
 import React from 'react';
-import styled from 'styled-components';
+import styled, { keyframes } from 'styled-components';
 
 import { DesktopService } from 'teleport/Discover/Desktop/DiscoverDesktops/DesktopService';
 import { WindowsDesktopService } from 'teleport/services/desktops';
@@ -31,6 +31,20 @@ const Nodes = styled.div`
   position: relative;
 `;
 
+const line = keyframes`
+  0% {
+    stroke-dashoffset: 0;
+  }
+
+  100% {
+    stroke-dashoffset: -361;
+  }
+`;
+
+const AnimatedSVG = styled(AnimatedStyledSVG)`
+  animation: ${line} 5s cubic-bezier(0.3, 0, 0.2, 1) alternate infinite 0.6s;
+`;
+
 const NodeLineContainer = styled.div`
   position: absolute;
   height: 94px;
@@ -48,13 +62,12 @@ function NodeLine() {
     <NodeLineContainer>
       <StyledSVG width={254} height={94} viewBox="0 0 254 93.5">
         <path
-          opacity={0.6}
           d="M1.5,0V76.74c0,8.43,7.62,15.26,17.02,15.26H235.48c9.4,0,17.02-6.83,17.02-15.26V32.42"
         />
       </StyledSVG>
-      <AnimatedStyledSVG width={254} height={94} viewBox="0 0 254 93.5">
+      <AnimatedSVG width={254} height={94} viewBox="0 0 254 93.5">
         <path d="M1.5,0V76.74c0,8.43,7.62,15.26,17.02,15.26H235.48c9.4,0,17.02-6.83,17.02-15.26V32.42" />
-      </AnimatedStyledSVG>
+      </AnimatedSVG>
     </NodeLineContainer>
   );
 }
