@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import styled from 'styled-components';
 
 import logoSrc from 'design/assets/images/teleport-medallion.svg';
