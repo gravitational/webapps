@@ -115,21 +115,6 @@ export function makeWebauthnAssertionResponse(res) {
 
   const clientExtentions = res.getClientExtensionResults();
 
-  console.log('hello!', {
-    id: res.id,
-    type: res.type,
-    extensions: {
-      appid: Boolean(clientExtentions?.appid),
-    },
-    rawId: bufferToBase64url(res.rawId),
-    response: {
-      authenticatorData: bufferToBase64url(res.response?.authenticatorData),
-      clientDataJSON: bufferToBase64url(res.response?.clientDataJSON),
-      signature: bufferToBase64url(res.response?.signature),
-      userHandle: bufferToBase64url(res.response?.userHandle),
-    },
-  });
-
   return {
     id: res.id,
     type: res.type,
