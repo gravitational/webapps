@@ -17,12 +17,34 @@ export function AssumeRolesBar({
 }: AssumedRolesBarState) {
   const durationTxt = getDurationText(time.hours, time.minutes, time.seconds);
   const ref = useRef<HTMLButtonElement>(null);
+  const roles = assumedRoles.join(', ');
+  const roleText = pluralize(assumedRoles.length, 'role');
   return (
     <Box px={3} py={2} bg="accent" border={1} borderColor="primary.dark">
       <Flex justifyContent="space-between" alignItems="center">
-        <Text typography="body" color="light" bold>
-          {assumedRoles} assumed, expires in {durationTxt}
-        </Text>
+        <Flex alignItems="center">
+          <Box
+            borderRadius="20px"
+            py={1}
+            px={3}
+            mr={2}
+            color="secondary.main"
+            bg="light"
+            style={{
+              fontWeight: '500',
+              overflow: 'hidden',
+              textOverflow: 'ellipsis',
+              maxWidth: '200px',
+              whiteSpace: 'nowrap',
+            }}
+            title={roles}
+          >
+            {roles}
+          </Box>
+          <Text typography="body" color="light" bold>
+            {roleText}, expires in {durationTxt}
+          </Text>
+        </Flex>
         <ButtonPrimary setRef={ref} onClick={switchBack}>
           Switch Back
         </ButtonPrimary>

@@ -8,6 +8,8 @@ import { makeUiAccessRequest } from './useAccessRequests';
 
 export default function useReviewAccessRequest({ requestId, goBack }) {
   const ctx = useAppContext();
+  ctx.workspacesService.useState();
+
   const clusterUri = ctx.workspacesService.getRootClusterUri();
   const accessRequestService =
     ctx.workspacesService.getActiveWorkspaceAccessRequestsService();
@@ -20,6 +22,7 @@ export default function useReviewAccessRequest({ requestId, goBack }) {
   const { attempt: assumeRoleAttempt, run: runAssumeRole } = useAttempt('');
   const [flags, setFlags] = useState<Flags>(null);
   const [deleteDialogOpen, setDeleteDialogOpen] = useState(false);
+  const assumed = accessRequestService.getAssumed();
 
   useEffect(() => {
     runGetRequest(() =>
@@ -30,12 +33,24 @@ export default function useReviewAccessRequest({ requestId, goBack }) {
           getRequestFlags(
             req,
             identity?.activeRootCluster?.loggedInUser,
-            accessRequestService?.getAssumed()
+            assumed
           )
         );
       })
     );
   }, []);
+
+  useEffect(() => {
+    // if workspace assumed object is updated, we update the flags of the current request
+    updateFlags();
+  }, [assumed]);
+
+  function updateFlags() {
+    const user = identity?.activeRootCluster?.loggedInUser;
+    if (request && user) {
+      setFlags(getRequestFlags(request, user, assumed));
+    }
+  }
 
   async function submitReview(state: RequestState, reason: string) {
     const req = {
@@ -48,13 +63,6 @@ export default function useReviewAccessRequest({ requestId, goBack }) {
       ctx.clustersService.reviewAccessRequest(clusterUri, req).then(r => {
         const req = makeUiAccessRequest(r);
         setRequest(req);
-        setFlags(
-          getRequestFlags(
-            req,
-            identity?.activeRootCluster?.loggedInUser,
-            accessRequestService.getAssumed()
-          )
-        );
       })
     );
   }

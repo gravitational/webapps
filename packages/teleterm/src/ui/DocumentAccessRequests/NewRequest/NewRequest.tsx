@@ -8,6 +8,7 @@ import { space, width } from 'design/system';
 import { CircleArrowLeft, CircleArrowRight } from 'design/Icon';
 import { SearchPanel } from 'e-teleport/Workflow/NewRequest/SearchPanel';
 import { ResourceList } from 'e-teleport/Workflow/NewRequest/ResourceList';
+import ChangeResourceDialog from './ChangeResourceDialog';
 
 export default function Container() {
   const state = useNewRequest();
@@ -33,6 +34,9 @@ function NewRequest({
   updateSearch,
   selectedResource,
   customSort,
+  handleConfirmChangeResource,
+  toResource,
+  setToResource,
   attempt,
   fetchStatus,
   onAgentLabelClick,
@@ -52,12 +56,13 @@ function NewRequest({
     Object.keys(addedResources.windows_desktop).length;
 
   const numAddedRoles = Object.keys(addedResources.role).length;
+
   function handleUpdateSelectedResource(kind: ResourceKind) {
     if (
       (kind === 'role' && numAddedAgents > 0) ||
       (kind !== 'role' && numAddedRoles > 0)
     ) {
-      console.log('CANT DO IT');
+      setToResource(kind);
     } else {
       updateResourceKind(kind);
     }
@@ -65,6 +70,11 @@ function NewRequest({
 
   return (
     <Layout mx="auto" px={5} pt={3} height="100%" flexDirection="column">
+      <ChangeResourceDialog
+        toResource={toResource}
+        onClose={() => setToResource(null)}
+        onConfirm={handleConfirmChangeResource}
+      />
       <StyledMain>
         <StyledNav mt={3} mb={3}>
           {agentOptions.map(agent => (

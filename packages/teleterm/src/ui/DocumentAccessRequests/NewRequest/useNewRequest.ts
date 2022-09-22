@@ -9,8 +9,6 @@ import type {
   AgentIdKind,
 } from 'teleport/services/agents';
 import { useAppContext } from 'teleterm/ui/appContextProvider';
-import AppContext from 'teleterm/ui/appContext';
-import { Server } from 'teleterm/services/tshd/types';
 import { makeDatabase, makeServer } from 'teleterm/ui/services/clusters';
 
 const pageSize = 10;
@@ -41,6 +39,8 @@ export default function useNewRequest() {
   const addedResources = workspaceAccessRequest.getPendingAccessRequest();
 
   const [page, setPage] = useState<Page>({ keys: [], index: 0 });
+
+  const [toResource, setToResource] = useState<string | null>(null);
 
   function makeAgent(source) {
     switch (selectedResource) {
@@ -102,6 +102,12 @@ export default function useNewRequest() {
       query: '',
     });
     setAttempt({ status: 'processing' });
+  }
+
+  function handleConfirmChangeResource(kind: ResourceKind) {
+    workspaceAccessRequest.clearPendingAccessRequest();
+    updateResourceKind(kind);
+    setToResource(null);
   }
 
   function addOrRemoveResource(
@@ -244,6 +250,9 @@ export default function useNewRequest() {
     fetchStatus,
     updateQuery,
     updateSearch,
+    toResource,
+    handleConfirmChangeResource,
+    setToResource,
     onAgentLabelClick,
     selectedResource,
     updateResourceKind,

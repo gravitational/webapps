@@ -34,6 +34,7 @@ export function ReviewAccessRequest({
     }
   }, [deleteRequestAttempt]);
 
+  console.log('fALGS!!!!!', flags);
   return (
     <Layout mx="auto" px={5} pt={3} height="100%">
       <FeatureHeaderTitle mb={3}>

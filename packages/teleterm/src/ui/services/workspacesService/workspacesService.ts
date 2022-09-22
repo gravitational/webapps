@@ -1,6 +1,7 @@
 import { useStore } from 'shared/libs/stores';
 
 import { isEqual } from 'lodash';
+import isPast from 'date-fns/isPast';
 
 import { ModalsService } from 'teleterm/ui/services/modals';
 import { ClustersService } from 'teleterm/ui/services/clusters';
@@ -310,8 +311,9 @@ export class WorkspacesService extends ImmutableStore<WorkspacesState> {
     const validRequests = {};
     const requests = Object.keys(assumed).map(id => assumed[id]);
     requests.forEach(request => {
+      const expired = isPast(new Date(request.expires));
       // only add any assumed that still exist on the loggedInUser cert
-      if (user.activeRequestsList.includes(request.id)) {
+      if (user.activeRequestsList.includes(request.id) && !expired) {
         validRequests[request.id] = request;
       }
     });

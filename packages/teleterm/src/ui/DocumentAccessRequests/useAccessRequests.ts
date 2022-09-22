@@ -12,6 +12,7 @@ import { useIdentity } from '../TopBar/Identity/useIdentity';
 
 export default function useAccessRequests(doc: types.DocumentAccessRequests) {
   const ctx = useAppContext();
+  ctx.workspacesService.useState();
   const docState = doc.state;
   const clusterUri = ctx.workspacesService.getRootClusterUri();
   const documentService =
@@ -75,18 +76,6 @@ export default function useAccessRequests(doc: types.DocumentAccessRequests) {
       ctx.clustersService.assumeRole(clusterUri, [request.id], []).then(() => {
         ctx.clustersService.syncCluster(clusterUri);
         accessRequestService.addToAssumed(request);
-        // update the access request in the table
-        setAccessRequests(
-          accessRequests.map(r => {
-            if (r.id === request.id) {
-              return {
-                ...r,
-                isAssumed: true,
-              };
-            }
-            return r;
-          })
-        );
       })
     );
   }
@@ -97,6 +86,17 @@ export default function useAccessRequests(doc: types.DocumentAccessRequests) {
       getRequests();
     }
   }, [reviewing]);
+
+  useEffect(() => {
+    // if assumed object changes, we update which roles have been assumed in the table
+    // this is mostly for using "Switchback" since that state is held outside this component
+    setAccessRequests(
+      accessRequests?.map(r => ({
+        ...r,
+        isAssumed: assumed[r.id],
+      }))
+    );
+  }, [assumed]);
 
   return {
     ctx,
