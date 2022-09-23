@@ -56,7 +56,8 @@ export const AnimatedStyledSVG = styled(StyledSVG)`
   stroke-dasharray: 5, 20;
   stroke-dashoffset: 0;
   z-index: 2;
-  animation: ${line} 5s cubic-bezier(.78,.11,.27,.94) alternate infinite 0.6s;
+  animation: ${line} 5s cubic-bezier(0.78, 0.11, 0.27, 0.94) alternate infinite
+    0.6s;
 
   path {
     stroke: #32c842;

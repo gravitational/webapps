@@ -1,10 +1,8 @@
-import React, { useCallback, useLayoutEffect, useRef, useState } from 'react';
+import React, { useLayoutEffect, useRef, useState } from 'react';
 import styled, { keyframes } from 'styled-components';
 
 import { Flex } from 'design';
 
-import { openNewTab } from 'teleport/lib/util';
-import useStickyClusterId from 'teleport/useStickyClusterId';
 import { NodeLine } from 'teleport/Discover/Desktop/DiscoverDesktops/NodeLine';
 import {
   createLine,
@@ -104,29 +102,29 @@ const Online = styled.div`
   text-transform: uppercase;
 `;
 
-const Connect = styled.div`
-  background: #0091ea;
-  color: white;
-  border-radius: 5px;
-  display: inline-flex;
-  padding: 3px 10px;
-  cursor: pointer;
-
-  &:hover {
-    background: #4db2f0;
-  }
-`;
+// TODO: add connect button back in
+// const Connect = styled.div`
+//   background: #0091ea;
+//   color: white;
+//   border-radius: 5px;
+//   display: inline-flex;
+//   padding: 3px 10px;
+//   cursor: pointer;
+//
+//   &:hover {
+//     background: #4db2f0;
+//   }
+// `;
 
 export function DesktopItem(props: DesktopItemProps) {
-  const { clusterId } = useStickyClusterId();
-
   const ref = useRef<HTMLDivElement>();
 
-  const connect = useCallback(() => {
-    openNewTab(
-      `https://teleport.dev/web/cluster/${clusterId}/desktops/${props.computerName}/Administrator`
-    );
-  }, []);
+  // TODO: add connect button back in
+  // const connect = useCallback(() => {
+  //   openNewTab(
+  //     `https://teleport.dev/web/cluster/${clusterId}/desktops/${props.computerName}/Administrator`
+  //   );
+  // }, []);
 
   const [line, setLine] = useState<Line>(null);
 
@@ -168,7 +166,10 @@ export function DesktopItem(props: DesktopItemProps) {
         </Flex>
         <Flex justifyContent="space-between" alignItems="center">
           <Online>Online</Online>
-          <Connect onClick={() => connect()}>Connect</Connect>
+          {/*
+            TODO: add this back in
+            <Connect onClick={() => connect()}>Connect</Connect>
+          */}
         </Flex>
       </Content>
     </Container>

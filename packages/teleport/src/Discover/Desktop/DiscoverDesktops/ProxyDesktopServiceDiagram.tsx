@@ -47,9 +47,7 @@ function NodeLine() {
   return (
     <NodeLineContainer>
       <StyledSVG width={254} height={94} viewBox="0 0 254 93.5">
-        <path
-          d="M1.5,0V76.74c0,8.43,7.62,15.26,17.02,15.26H235.48c9.4,0,17.02-6.83,17.02-15.26V32.42"
-        />
+        <path d="M1.5,0V76.74c0,8.43,7.62,15.26,17.02,15.26H235.48c9.4,0,17.02-6.83,17.02-15.26V32.42" />
       </StyledSVG>
       <AnimatedStyledSVG width={254} height={94} viewBox="0 0 254 93.5">
         <path d="M1.5,0V76.74c0,8.43,7.62,15.26,17.02,15.26H235.48c9.4,0,17.02-6.83,17.02-15.26V32.42" />
@@ -68,7 +66,7 @@ const Node = styled.div`
 function getProxyAddress() {
   const { hostname, port } = window.location;
 
-  if (port === '443') {
+  if (port === '443' || !port) {
     return hostname;
   }
 
