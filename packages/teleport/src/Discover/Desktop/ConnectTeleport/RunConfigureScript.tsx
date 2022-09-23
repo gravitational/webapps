@@ -48,9 +48,7 @@ export function RunConfigureScript(
       <StepInstructions>
         <TextSelectCopy text={command} mt={2} mb={5} bash allowMultiline />
 
-        <ButtonPrimary onClick={() => props.onNext()}>
-          I've ran it
-        </ButtonPrimary>
+        <ButtonPrimary onClick={() => props.onNext()}>Next</ButtonPrimary>
 
         <Timeout timeout={timeout} />
       </StepInstructions>

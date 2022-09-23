@@ -30,9 +30,7 @@ export function CreateConfig(props: React.PropsWithChildren<EditConfigProps>) {
           Paste the output you just copied into /etc/teleport.yaml.
         </Text>
 
-        <ButtonPrimary onClick={() => props.onNext()}>
-          I've created it
-        </ButtonPrimary>
+        <ButtonPrimary onClick={() => props.onNext()}>Next</ButtonPrimary>
       </StepInstructions>
     </StepContent>
   );

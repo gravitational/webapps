@@ -28,9 +28,7 @@ export function CopyOutput(props: React.PropsWithChildren<CopyOutputProps>) {
       <StepInstructions>
         <Text mb={4}>You'll need this in the next step.</Text>
 
-        <ButtonPrimary onClick={() => props.onNext()}>
-          I've copied it
-        </ButtonPrimary>
+        <ButtonPrimary onClick={() => props.onNext()}>Next</ButtonPrimary>
       </StepInstructions>
     </StepContent>
   );
