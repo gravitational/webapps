@@ -18,6 +18,7 @@ import {
 import { ClustersService } from 'teleterm/ui/services/clusters';
 import AppContext from 'teleterm/ui/appContext';
 import { Config } from 'teleterm/services/config';
+
 import { getEmptyPendingAccessRequest } from '../services/workspacesService/accessRequestsService';
 
 function getMockDocuments(): Document[] {

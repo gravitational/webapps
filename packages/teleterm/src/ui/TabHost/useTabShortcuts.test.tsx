@@ -15,6 +15,7 @@ import {
 import AppContextProvider from 'teleterm/ui/appContextProvider';
 import { WorkspacesService } from 'teleterm/ui/services/workspacesService';
 import AppContext from 'teleterm/ui/appContext';
+
 import { getEmptyPendingAccessRequest } from '../services/workspacesService/accessRequestsService';
 
 function getMockDocuments(): Document[] {

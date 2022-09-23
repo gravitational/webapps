@@ -6,10 +6,7 @@ import isPast from 'date-fns/isPast';
 // adding requests to assumed adds already 'made' requests that fit our tables
 import { AccessRequest as UiAccessRequest } from 'e-teleport/services/workflow';
 
-import {
-  ResourceKind,
-  ResourceMap,
-} from 'e-teleport/Workflow/NewRequest/useNewRequest';
+import { ResourceKind } from 'e-teleport/Workflow/NewRequest/useNewRequest';
 
 import { ModalsService } from 'teleterm/ui/services/modals';
 import { ClustersService } from 'teleterm/ui/services/clusters';
@@ -17,11 +14,7 @@ import { StatePersistenceService } from 'teleterm/ui/services/statePersistence';
 import { ImmutableStore } from 'teleterm/ui/services/immutableStore';
 import { NotificationsService } from 'teleterm/ui/services/notifications';
 import { routing } from 'teleterm/ui/uri';
-import {
-  AccessRequest,
-  LoggedInUser,
-  ResourceId,
-} from 'teleterm/services/tshd/types';
+import { LoggedInUser } from 'teleterm/services/tshd/types';
 
 import {
   AccessRequestsService,
