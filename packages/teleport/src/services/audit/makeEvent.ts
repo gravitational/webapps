@@ -680,17 +680,20 @@ export const formatters: Formatters = {
   [eventCodes.KUBE_CREATED]: {
     type: 'kube.create',
     desc: 'Kubernetes Created',
-    format: ({ user, name }) => `User [${user}] created kubernetes cluster [${name}]`,
+    format: ({ user, name }) =>
+      `User [${user}] created kubernetes cluster [${name}]`,
   },
   [eventCodes.KUBE_UPDATED]: {
     type: 'kube.update',
     desc: 'Kubernetes Updated',
-    format: ({ user, name }) => `User [${user}] updated kubernetes cluster [${name}]`,
+    format: ({ user, name }) =>
+      `User [${user}] updated kubernetes cluster [${name}]`,
   },
   [eventCodes.KUBE_DELETED]: {
     type: 'kube.delete',
     desc: 'Kubernetes Deleted',
-    format: ({ user, name }) => `User [${user}] deleted kubernetes cluster [${name}]`,
+    format: ({ user, name }) =>
+      `User [${user}] deleted kubernetes cluster [${name}]`,
   },
   [eventCodes.DATABASE_SESSION_STARTED]: {
     type: 'db.session.start',
