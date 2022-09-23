@@ -48,6 +48,8 @@ const TeleportAppIcon = styled.div`
   background: url(${teleportAppIcon}) no-repeat;
   width: 15px;
   height: 13px;
+  position: relative;
+  top: 1px;
   background-size: contain;
 `;
 
