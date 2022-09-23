@@ -63,7 +63,7 @@ export function CreateTeleportConfigAnimation() {
 
     const id = window.setTimeout(
       () => setEditorState(EditorState.Pasted),
-      3000
+      1500
     );
 
     return () => clearTimeout(id);
