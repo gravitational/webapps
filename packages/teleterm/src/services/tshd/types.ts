@@ -1,16 +1,29 @@
+import { ResourceKind } from 'e-teleterm/ui/DocumentAccessRequests/NewRequest/useNewRequest';
+
+import { SortType } from 'design/DataTable/types';
+
 import apiCluster from './v1/cluster_pb';
 import apiDb from './v1/database_pb';
 import apigateway from './v1/gateway_pb';
 import apiServer from './v1/server_pb';
 import apiKube from './v1/kube_pb';
 import apiApp from './v1/app_pb';
-import apiService from './v1/service_pb';
+import apiService, {
+  AssumeRoleResponse,
+  DeleteAccessRequestResponse,
+} from './v1/service_pb';
 import apiAuthSettings from './v1/auth_settings_pb';
+import apiAccessRequest from './v1/access_request_pb';
 
 export type Application = apiApp.App.AsObject;
 export type Kube = apiKube.Kube.AsObject;
 export type Server = apiServer.Server.AsObject;
 export type Gateway = apigateway.Gateway.AsObject;
+export type AccessRequest = apiAccessRequest.AccessRequest.AsObject;
+export type ResourceId = apiAccessRequest.ResourceID.AsObject;
+export type AccessRequestReview = apiAccessRequest.AccessRequestReview.AsObject;
+export type GetServersResponse = apiService.GetServersResponse.AsObject;
+export type GetDatabasesResponse = apiService.GetDatabasesResponse.AsObject;
 // Available types are listed here:
 // https://github.com/gravitational/teleport/blob/v9.0.3/lib/defaults/defaults.go#L513-L530
 //
@@ -53,9 +66,33 @@ export type TshClient = {
   listLeafClusters: (clusterUri: string) => Promise<Cluster[]>;
   listApps: (clusterUri: string) => Promise<Application[]>;
   listKubes: (clusterUri: string) => Promise<Kube[]>;
-  listDatabases: (clusterUri: string) => Promise<Database[]>;
+  getAllDatabases: (clusterUri: string) => Promise<Database[]>;
+  getDatabases: (params: ServerSideParams) => Promise<GetDatabasesResponse>;
   listDatabaseUsers: (dbUri: string) => Promise<string[]>;
-  listServers: (clusterUri: string) => Promise<Server[]>;
+  getAllServers: (clusterUri: string) => Promise<Server[]>;
+  assumeRole: (
+    clusterUri: string,
+    requestIds: string[],
+    dropIds: string[]
+  ) => Promise<AssumeRoleResponse>;
+  getRequestableRoles: (clusterUri: string) => Promise<string[]>;
+  getServers: (params: ServerSideParams) => Promise<GetServersResponse>;
+  getAccessRequests: (clusterUri: string) => Promise<AccessRequest[]>;
+  getAccessRequest: (
+    clusterUri: string,
+    requestId: string
+  ) => Promise<AccessRequest>;
+  reviewAccessRequest: (
+    clusterUri: string,
+    params: ReviewAccessRequestParams
+  ) => Promise<AccessRequest>;
+  createAccessRequest: (
+    params: CreateAccessRequestParams
+  ) => Promise<AccessRequest>;
+  deleteAccessRequest: (
+    clusterUri: string,
+    requestId: string
+  ) => Promise<DeleteAccessRequestResponse>;
   createAbortController: () => TshAbortController;
   addRootCluster: (addr: string) => Promise<Cluster>;
 
@@ -124,4 +161,29 @@ export type CreateGatewayParams = {
   port?: string;
   user: string;
   subresource_name?: string;
+};
+
+export type ServerSideParams = {
+  clusterUri: string;
+  search?: string;
+  searchAsRoles?: string;
+  sort?: SortType;
+  startKey?: string;
+  limit?: number;
+  query?: string;
+};
+
+export type ReviewAccessRequestParams = {
+  state: string;
+  reason: string;
+  roles: [string];
+  id: string;
+};
+
+export type CreateAccessRequestParams = {
+  clusterUri: string;
+  reason: string;
+  roles: string[];
+  suggestedReviewers: string[];
+  resourceIds: { kind: ResourceKind; name: string; id: string }[];
 };

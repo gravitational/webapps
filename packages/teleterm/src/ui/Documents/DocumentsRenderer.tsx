@@ -2,12 +2,15 @@ import React from 'react';
 
 import styled from 'styled-components';
 
+import DocumentAccessRequests from 'e-teleterm/ui/DocumentAccessRequests/DocumentAccessRequests';
+
 import { useAppContext } from 'teleterm/ui/appContextProvider';
 import * as types from 'teleterm/ui/services/workspacesService';
 import { DocumentsService } from 'teleterm/ui/services/workspacesService';
 import DocumentCluster from 'teleterm/ui/DocumentCluster';
 import DocumentGateway from 'teleterm/ui/DocumentGateway';
 import DocumentTerminal from 'teleterm/ui/DocumentTerminal';
+
 import Document from 'teleterm/ui/Document';
 
 import { WorkspaceDocumentsServiceProvider } from './workspaceDocumentsServiceContext';
@@ -63,6 +66,8 @@ function MemoizedDocument(props: { doc: types.Document; visible: boolean }) {
       case 'doc.terminal_tsh_node':
       case 'doc.terminal_tsh_kube':
         return <DocumentTerminal doc={doc} visible={visible} />;
+      case 'doc.access_requests':
+        return <DocumentAccessRequests doc={doc} visible={visible} />;
       default:
         return (
           <Document visible={visible}>

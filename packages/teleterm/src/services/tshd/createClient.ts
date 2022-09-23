@@ -1,5 +1,7 @@
 import { ChannelCredentials, ClientDuplexStream } from '@grpc/grpc-js';
 
+import { ResourceKind } from 'e-teleport/Workflow/NewRequest/useNewRequest';
+
 import { TerminalServiceClient } from 'teleterm/services/tshd/v1/service_grpc_pb';
 import * as api from 'teleterm/services/tshd/v1/service_pb';
 import * as types from 'teleterm/services/tshd/types';
@@ -7,6 +9,7 @@ import Logger from 'teleterm/logger';
 
 import middleware, { withLogging } from './middleware';
 import createAbortController from './createAbortController';
+import { AccessRequest, ResourceID } from './v1/access_request_pb';
 
 export default function createClient(
   addr: string,
@@ -99,14 +102,42 @@ export default function createClient(
       });
     },
 
-    async listDatabases(clusterUri: string) {
-      const req = new api.ListDatabasesRequest().setClusterUri(clusterUri);
+    async getAllDatabases(clusterUri: string) {
+      const req = new api.GetAllDatabasesRequest().setClusterUri(clusterUri);
       return new Promise<types.Database[]>((resolve, reject) => {
-        tshd.listDatabases(req, (err, response) => {
+        tshd.getAllDatabases(req, (err, response) => {
           if (err) {
             reject(err);
           } else {
             resolve(response.toObject().databasesList);
+          }
+        });
+      });
+    },
+
+    async getDatabases({
+      clusterUri,
+      search,
+      sort,
+      query,
+      searchAsRoles,
+      startKey,
+      limit,
+    }: types.ServerSideParams) {
+      const req = new api.GetDatabasesRequest()
+        .setClusterUri(clusterUri)
+        .setSearchAsRoles(searchAsRoles)
+        .setStartKey(startKey)
+        .setSortBy(`${sort.fieldName}:${sort.dir.toLowerCase()}`)
+        .setSearch(search)
+        .setQuery(query)
+        .setLimit(limit);
+      return new Promise<types.GetDatabasesResponse>((resolve, reject) => {
+        tshd.getDatabases(req, (err, response) => {
+          if (err) {
+            reject(err);
+          } else {
+            resolve(response.toObject());
           }
         });
       });
@@ -125,14 +156,161 @@ export default function createClient(
       });
     },
 
-    async listServers(clusterUri: string) {
-      const req = new api.ListServersRequest().setClusterUri(clusterUri);
+    async getAllServers(clusterUri: string) {
+      const req = new api.GetAllServersRequest().setClusterUri(clusterUri);
       return new Promise<types.Server[]>((resolve, reject) => {
-        tshd.listServers(req, (err, response) => {
+        tshd.getAllServers(req, (err, response) => {
           if (err) {
             reject(err);
           } else {
             resolve(response.toObject().serversList);
+          }
+        });
+      });
+    },
+
+    async getAccessRequest(clusterUri: string, requestId: string) {
+      const req = new api.GetAccessRequestsRequest()
+        .setClusterUri(clusterUri)
+        .setId(requestId);
+      return new Promise<types.AccessRequest>((resolve, reject) => {
+        tshd.getAccessRequest(req, (err, response) => {
+          if (err) {
+            reject(err);
+          } else {
+            resolve(response.toObject().request);
+          }
+        });
+      });
+    },
+
+    async getAccessRequests(clusterUri: string) {
+      const req = new api.GetAccessRequestsRequest().setClusterUri(clusterUri);
+      return new Promise<types.AccessRequest[]>((resolve, reject) => {
+        tshd.getAccessRequests(req, (err, response) => {
+          if (err) {
+            reject(err);
+          } else {
+            resolve(response.toObject().requestsList);
+          }
+        });
+      });
+    },
+
+    async getServers({
+      clusterUri,
+      search,
+      query,
+      sort,
+      searchAsRoles,
+      startKey,
+      limit,
+    }: types.ServerSideParams) {
+      const req = new api.GetServersRequest()
+        .setClusterUri(clusterUri)
+        .setSearchAsRoles(searchAsRoles)
+        .setStartKey(startKey)
+        .setSortBy(`${sort.fieldName}:${sort.dir.toLowerCase()}`)
+        .setSearch(search)
+        .setQuery(query)
+        .setLimit(limit);
+      return new Promise<types.GetServersResponse>((resolve, reject) => {
+        tshd.getServers(req, (err, response) => {
+          if (err) {
+            reject(err);
+          } else {
+            resolve(response.toObject());
+          }
+        });
+      });
+    },
+
+    async createAccessRequest(params: types.CreateAccessRequestParams) {
+      console.log('params', params);
+      const req = new api.CreateAccessRequestRequest()
+        .setClusterUri(params.clusterUri)
+        .setSuggestedReviewersList(params.suggestedReviewers)
+        .setRolesList(params.roles)
+        .setResourceIdsList(params.resourceIds.map(makeResourceID))
+        .setReason(params.reason);
+      return new Promise<AccessRequest.AsObject>((resolve, reject) => {
+        tshd.createAccessRequest(req, (err, response) => {
+          if (err) {
+            console.log('err', err);
+            reject(err);
+          } else {
+            resolve(response.toObject().request);
+          }
+        });
+      });
+    },
+
+    async deleteAccessRequest(clusterUri: string, requestId: string) {
+      const req = new api.DeleteAccessRequestRequest()
+        .setClusterUri(clusterUri)
+        .setRequestId(requestId);
+      return new Promise((resolve, reject) => {
+        tshd.deleteAccessRequest(req, (err, response) => {
+          if (err) {
+            reject(err);
+          } else {
+            resolve(response.toObject());
+          }
+        });
+      });
+    },
+
+    async assumeRole(
+      clusterUri: string,
+      requestIds: string[],
+      dropIds: string[]
+    ) {
+      const req = new api.AssumeRoleRequest()
+        .setClusterUri(clusterUri)
+        .setAccessRequestIdsList(requestIds)
+        .setDropRequestIdsList(dropIds);
+      return new Promise((resolve, reject) => {
+        tshd.assumeRole(req, (err, response) => {
+          if (err) {
+            reject(err);
+          } else {
+            resolve(response.toObject());
+          }
+        });
+      });
+    },
+
+    async reviewAccessRequest(
+      clusterUri: string,
+      params: types.ReviewAccessRequestParams
+    ) {
+      const req = new api.ReviewAccessRequestRequest()
+        .setClusterUri(clusterUri)
+        .setRequestId(params.id)
+        .setState(params.state)
+        .setReason(params.reason)
+        .setRolesList(params.roles);
+      return new Promise<types.AccessRequest>((resolve, reject) => {
+        tshd.reviewAccessRequest(req, (err, response) => {
+          if (err) {
+            reject(err);
+          } else {
+            resolve(response.toObject().request);
+          }
+        });
+      });
+    },
+
+    async getRequestableRoles(clusterUri: string) {
+      const req = new api.GetRequestableRolesRequest().setClusterUri(
+        clusterUri
+      );
+      return new Promise<string[]>((resolve, reject) => {
+        tshd.getRequestableRoles(req, (err, response) => {
+          if (err) {
+            reject(err);
+          } else {
+            resolve(response.toObject().rolesList);
           }
         });
       });
@@ -441,4 +619,20 @@ async function withAbort<T>(
   return cb(ref).finally(() => {
     sig?.removeEventListener(abort);
   });
+}
+
+export function makeResourceID({
+  kind,
+  name,
+  id,
+}: {
+  kind: ResourceKind;
+  name: string;
+  id: string;
+}) {
+  const resourceId = new ResourceID();
+  resourceId.setName(id);
+  resourceId.setClusterName(name);
+  resourceId.setKind(kind);
+  return resourceId;
 }

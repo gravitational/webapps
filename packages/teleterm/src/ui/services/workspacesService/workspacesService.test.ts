@@ -1,5 +1,6 @@
 import { ClustersService } from '../clusters';
 import { StatePersistenceService } from '../statePersistence';
+import { getEmptyPendingAccessRequest } from './accessRequestsService';
 
 import { Workspace, WorkspacesService } from './workspacesService';
 
@@ -29,6 +30,7 @@ describe('restoring workspace', () => {
           leaf: false,
           proxyHost: 'test:3030',
           loggedInUser: {
+            activeRequestsList: [],
             name: 'Alice',
             rolesList: [],
             sshLoginsList: [],
@@ -65,6 +67,9 @@ describe('restoring workspace', () => {
   it('restores the workspace if it there is a persisted state for given clusterUri', () => {
     const testClusterUri = '/clusters/test-uri';
     const testWorkspace: Workspace = {
+      assumed: {},
+      isAccessRequestsBarCollapsed: false,
+      pendingAccessRequest: getEmptyPendingAccessRequest(),
       localClusterUri: testClusterUri,
       documents: [
         {

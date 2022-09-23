@@ -1,4 +1,3 @@
-import { SortAsc, SortDesc } from 'design/Icon';
 import React, { forwardRef } from 'react';
 import { Box } from 'design';
 import styled from 'styled-components';
@@ -23,7 +22,6 @@ export const IdentitySelector = forwardRef<
 >((props, ref) => {
   const isSelected = props.userName && props.clusterName;
   const selectorText = isSelected && getUserWithClusterName(props);
-  const Icon = props.isOpened ? SortAsc : SortDesc;
   const title = props.makeTitle(selectorText);
 
   return (
@@ -35,14 +33,13 @@ export const IdentitySelector = forwardRef<
     >
       {isSelected ? (
         <>
-          <Box mr={2}>
+          <Box>
             <UserIcon letter={props.userName[0]} />
           </Box>
         </>
       ) : (
         <PamIcon />
       )}
-      <Icon ml={2} />
     </Container>
   );
 });
@@ -55,7 +52,6 @@ const Container = styled.button`
   align-items: center;
   color: ${props => props.theme.colors.text.primary};
   flex-direction: row;
-  padding: 0 12px;
   height: 100%;
   border-radius: 4px;
   border-width: 1px;

@@ -4,6 +4,7 @@ import { DocumentGateway, WorkspacesService } from '../workspacesService';
 import { ClustersService } from '../clusters';
 import { StatePersistenceService } from '../statePersistence';
 
+import { getEmptyPendingAccessRequest } from '../workspacesService/accessRequestsService';
 import { ConnectionTrackerService } from './connectionTrackerService';
 import { TrackedConnection, TrackedGatewayConnection } from './types';
 
@@ -131,6 +132,9 @@ it('updates the port of a gateway connection when the underlying doc gets update
   // Insert the document.
   workspacesService.setState(draftState => {
     draftState.workspaces['/clusters/localhost'] = {
+      isAccessRequestsBarCollapsed: false,
+      assumed: {},
+      pendingAccessRequest: getEmptyPendingAccessRequest(),
       localClusterUri: '',
       location: '',
       documents: [document],
