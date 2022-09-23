@@ -6,6 +6,8 @@ import {
   CreateGatewayParams,
   Database,
   Gateway,
+  AssumeRoleResponse,
+  DeleteAccessRequestResponse,
   GetDatabasesResponse,
   GetServersResponse,
   Kube,
@@ -20,10 +22,6 @@ import {
   TshClient,
 } from '../types';
 import { AccessRequest } from '../v1/access_request_pb';
-import {
-  AssumeRoleResponse,
-  DeleteAccessRequestResponse,
-} from '../v1/service_pb';
 
 export class MockTshClient implements TshClient {
   listRootClusters: () => Promise<Cluster[]>;

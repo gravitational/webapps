@@ -8,10 +8,7 @@ import apigateway from './v1/gateway_pb';
 import apiServer from './v1/server_pb';
 import apiKube from './v1/kube_pb';
 import apiApp from './v1/app_pb';
-import apiService, {
-  AssumeRoleResponse,
-  DeleteAccessRequestResponse,
-} from './v1/service_pb';
+import apiService from './v1/service_pb';
 import apiAuthSettings from './v1/auth_settings_pb';
 import apiAccessRequest from './v1/access_request_pb';
 
@@ -24,6 +21,9 @@ export type ResourceId = apiAccessRequest.ResourceID.AsObject;
 export type AccessRequestReview = apiAccessRequest.AccessRequestReview.AsObject;
 export type GetServersResponse = apiService.GetServersResponse.AsObject;
 export type GetDatabasesResponse = apiService.GetDatabasesResponse.AsObject;
+export type AssumeRoleResponse = apiService.AssumeRoleResponse.AsObject;
+export type DeleteAccessRequestResponse =
+  apiService.DeleteAccessRequestResponse.AsObject;
 // Available types are listed here:
 // https://github.com/gravitational/teleport/blob/v9.0.3/lib/defaults/defaults.go#L513-L530
 //

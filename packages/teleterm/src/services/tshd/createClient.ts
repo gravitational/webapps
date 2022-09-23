@@ -249,15 +249,17 @@ export default function createClient(
       const req = new api.DeleteAccessRequestRequest()
         .setClusterUri(clusterUri)
         .setRequestId(requestId);
-      return new Promise((resolve, reject) => {
-        tshd.deleteAccessRequest(req, (err, response) => {
-          if (err) {
-            reject(err);
-          } else {
-            resolve(response.toObject());
-          }
-        });
-      });
+      return new Promise<types.DeleteAccessRequestResponse>(
+        (resolve, reject) => {
+          tshd.deleteAccessRequest(req, (err, response) => {
+            if (err) {
+              reject(err);
+            } else {
+              resolve(response.toObject());
+            }
+          });
+        }
+      );
     },
 
     async assumeRole(
@@ -269,7 +271,7 @@ export default function createClient(
         .setClusterUri(clusterUri)
         .setAccessRequestIdsList(requestIds)
         .setDropRequestIdsList(dropIds);
-      return new Promise((resolve, reject) => {
+      return new Promise<types.AssumeRoleResponse>((resolve, reject) => {
         tshd.assumeRole(req, (err, response) => {
           if (err) {
             reject(err);
