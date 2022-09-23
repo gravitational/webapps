@@ -109,7 +109,7 @@ export function DiscoverDesktops(props: State) {
 
   if (result && result.agents) {
     const foundDesktops = result.agents.filter(
-      desktop => desktop.host_addr === desktopService.name
+      desktop => desktop.host_id === desktopService.name
     );
 
     if (foundDesktops.length) {
