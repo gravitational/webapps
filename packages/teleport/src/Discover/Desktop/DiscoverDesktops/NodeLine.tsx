@@ -18,7 +18,7 @@ const appear = keyframes`
 
 const NodeLineContainer = styled.div`
   position: absolute;
-  top: 30px;
+  top: 43px;
   border-bottom-left-radius: 5px;
   border-bottom-right-radius: 5px;
   overflow: hidden;

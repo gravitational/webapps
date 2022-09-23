@@ -40,9 +40,7 @@ export function usePoll<T>(
 
       const id = window.setInterval(async () => {
         try {
-          const result = await callback(
-            abortController.current.signal
-          );
+          const result = await callback(abortController.current.signal);
 
           if (result) {
             clearInterval(id);

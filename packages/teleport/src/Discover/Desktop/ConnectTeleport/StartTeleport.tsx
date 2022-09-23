@@ -77,9 +77,7 @@ export function StartTeleport(
   return (
     <StepWrapper>
       <StepInstructions>
-        <Text mb={4}>
-          Once you've started Teleport, we'll detect it here.
-        </Text>
+        <Text mb={4}>Once you've started Teleport, we'll detect it here.</Text>
 
         <ButtonPrimary disabled={!result} onClick={() => props.onNext()}>
           Next

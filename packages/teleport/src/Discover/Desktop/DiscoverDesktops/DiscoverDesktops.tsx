@@ -26,8 +26,8 @@ const Buttons = styled.div`
 
 const FoundDesktops = styled.div`
   position: relative;
-  margin-left: 175px;
-  margin-top: -30px;
+  margin-left: 125px;
+  margin-top: -43px;
 `;
 
 const MAX_COUNT = 14;
