@@ -260,7 +260,7 @@ export class WorkspacesService extends ImmutableStore<WorkspacesState> {
         workspaces[cluster.uri] = {
           ...workspaceDefaultState,
           assumed: this.removeExpiredAssumedRoles(
-            persistedWorkspace.assumed,
+            persistedWorkspace?.assumed || {},
             cluster.loggedInUser
           ),
           previous: this.canReopenPreviousDocuments({
