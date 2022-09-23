@@ -15,12 +15,10 @@ const startLines = [
   {
     text: 'sudo systemctl start teleport',
     isCommand: true,
-    delay: 5,
   },
   {
     text: 'sudo systemctl status teleport',
     isCommand: true,
-    delay: 5,
   },
   {
     text: `• teleport.service - Teleport SSH Service
@@ -32,7 +30,6 @@ const startLines = [
   {
     text: "logout # We'll take it from here",
     isCommand: true,
-    delay: 5,
   },
   {
     text: '\n',
@@ -128,7 +125,6 @@ export function StartTeleportTerminalAnimation() {
         {
           text: 'wait your.teleport.instance',
           isCommand: true,
-          delay: 5,
         },
         {
           isCommand: false,
