@@ -7,12 +7,9 @@ import { useJoinTokenValue } from 'teleport/Discover/Desktop/ConnectTeleport/Joi
 
 import type { JoinToken } from 'teleport/services/joinToken';
 
-const pastedLines = (joinToken: JoinToken) => `version: v3
-teleport:
-  proxy_server: ${window.location.hostname}:${window.location.port || '443'}
-  join_params:
-    method: token
-    token_name: ${joinToken.id}
+const pastedLines = (joinToken: JoinToken) => `teleport:
+  auth_token: ${joinToken.id}
+  auth_servers: [ ${window.location.hostname}:${window.location.port || '443'} ]
 
 auth_service:
   enabled: no
