@@ -226,7 +226,6 @@ export default function createClient(
     },
 
     async createAccessRequest(params: types.CreateAccessRequestParams) {
-      console.log('params', params);
       const req = new api.CreateAccessRequestRequest()
         .setClusterUri(params.clusterUri)
         .setSuggestedReviewersList(params.suggestedReviewers)
@@ -236,7 +235,6 @@ export default function createClient(
       return new Promise<AccessRequest.AsObject>((resolve, reject) => {
         tshd.createAccessRequest(req, (err, response) => {
           if (err) {
-            console.log('err', err);
             reject(err);
           } else {
             resolve(response.toObject().request);
