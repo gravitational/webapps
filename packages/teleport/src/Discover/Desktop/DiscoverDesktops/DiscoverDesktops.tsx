@@ -85,7 +85,7 @@ export function DiscoverDesktops(props: State) {
 
   const { result: desktopService } = usePingTeleport();
 
-  const [enabled, setEnabled] = useState(false);
+  const [enabled, setEnabled] = useState(true);
   const { clusterId } = useStickyClusterId();
   const { timedOut, result } = usePoll(
     signal =>
