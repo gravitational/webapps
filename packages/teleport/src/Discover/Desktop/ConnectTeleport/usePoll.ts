@@ -6,7 +6,6 @@ export function usePoll<T>(
   enabled: boolean,
   interval = 1000
 ) {
-  const savedCallback = useRef(callback);
   const abortController = useRef(new AbortController());
 
   const [running, setRunning] = useState(false);
@@ -15,8 +14,6 @@ export function usePoll<T>(
 
   useEffect(() => {
     if (enabled && !running) {
-      savedCallback.current = callback;
-      abortController.current = new AbortController();
       setResult(null);
       setTimedOut(false);
       setRunning(true);
@@ -39,9 +36,11 @@ export function usePoll<T>(
 
   useEffect(() => {
     if (running) {
+      abortController.current = new AbortController();
+
       const id = window.setInterval(async () => {
         try {
-          const result = await savedCallback.current(
+          const result = await callback(
             abortController.current.signal
           );
 
@@ -58,7 +57,7 @@ export function usePoll<T>(
         abortController.current.abort();
       };
     }
-  }, [running, timedOut, interval]);
+  }, [running, timedOut, interval, callback]);
 
   return { timedOut, result };
 }
