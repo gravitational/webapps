@@ -46,7 +46,7 @@ export class AccessRequestsService {
   }
 
   getPendingAccessRequest() {
-    return this.getState().pendingAccessRequest;
+    return this.getState()?.pendingAccessRequest;
   }
 
   getAssumed() {
