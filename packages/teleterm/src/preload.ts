@@ -20,6 +20,8 @@ const loggerService = createLoggerService({
 
 PreloadLogger.init(loggerService);
 
+contextBridge.exposeInMainWorld('loggerService', loggerService);
+
 contextBridge.exposeInMainWorld('electron', getElectronGlobals());
 
 async function getElectronGlobals(): Promise<ElectronGlobals> {
@@ -38,6 +40,5 @@ async function getElectronGlobals(): Promise<ElectronGlobals> {
     mainProcessClient,
     tshClient,
     ptyServiceClient,
-    loggerService,
   };
 }
