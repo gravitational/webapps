@@ -77,7 +77,7 @@ cache from the last time it was running.
 If you want to change the location of the cache, you can set `WEBPACK_CACHE_DIRECTORY` to an 
 absolute file path of the folder where you want to store Webpack's cache.
 
-If you wish to disable the cache, you can set `WEBPACK_DISABLE_CACHE` to `yes`.
+If you wish to disable the cache, you can set `WEBPACK_CACHE_DISABLED` to `yes`.
 
 #### Source Maps
 
