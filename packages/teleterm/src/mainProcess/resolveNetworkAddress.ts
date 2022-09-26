@@ -13,7 +13,7 @@ const UDS_MATCH = /\{CONNECT_GRPC_PORT:/;
 export async function resolveNetworkAddress(
   requestedAddress: string,
   process: ChildProcess,
-  timeoutMs = 10_000 // 10s
+  timeoutMs = 15_000 // 15s; needs to be larger than other timeouts in the processes.
 ): Promise<string> {
   const protocol = new URL(requestedAddress).protocol;
 
