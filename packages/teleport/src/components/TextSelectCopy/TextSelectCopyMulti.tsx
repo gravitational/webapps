@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-import React, { useState, useCallback, useRef } from 'react';
+import React, { useRef } from 'react';
 import styled from 'styled-components';
 import copyToClipboard from 'design/utils/copyToClipboard';
 import selectElementContent from 'design/utils/selectElementContent';
@@ -24,25 +24,12 @@ import { Copy, Check } from 'design/Icon';
 const ONE_SECOND_IN_MS = 1000;
 
 export function TextSelectCopyMulti({ lines, bash = true }: Props) {
-  const btnRefs = useRef<HTMLElement[]>([]);
-  const [lineEls, setLineEls] = useState<HTMLElement[]>([]);
-
-  const linesRef = useCallback((node: HTMLElement) => {
-    // Grab the mounted line childrens to be able to calculate spacers
-    // for button placements.
-    if (node) {
-      const childElements: HTMLElement[] = Array(node.children.length);
-      for (var i = 0; i < node.children.length; i++) {
-        childElements[i] = node.children[i] as HTMLElement;
-      }
-      setLineEls(childElements);
-    }
-  }, []);
+  const refs = useRef<HTMLElement[]>([]);
 
   function onCopyClick(index) {
     copyToClipboard(lines[index].text).then(() => {
       const targetEl =
-        btnRefs.current[index].getElementsByClassName('icon-container')[0];
+        refs.current[index].getElementsByClassName('icon-container')[0];
       targetEl.classList.toggle('copied');
 
       setTimeout(() => {
@@ -50,7 +37,8 @@ export function TextSelectCopyMulti({ lines, bash = true }: Props) {
       }, ONE_SECOND_IN_MS);
     });
 
-    const targetEl = lineEls[index].getElementsByClassName('text-to-copy')[0];
+    const targetEl =
+      refs.current[index].getElementsByClassName('text-to-copy')[0];
     selectElementContent(targetEl as HTMLElement);
   }
 
@@ -59,68 +47,55 @@ export function TextSelectCopyMulti({ lines, bash = true }: Props) {
     .includes('firefox');
 
   return (
-    <Flex
+    <Box
       bg="bgTerminal"
-      px={3}
+      pl={3}
       pt={2}
+      pr={7}
+      borderRadius={2}
       // Firefox does not add space for visible scrollbars
       // like it does for chrome and safari.
       pb={isFirefox ? 3 : 2}
-      alignItems="flex-start"
-      justifyContent="space-between"
-      borderRadius={2}
       css={{
-        // Make it visible to user only when we have buttons to render
-        // to avoid possible flashing between renders.
-        visibility: lineEls.length > 0 ? 'none' : 'hidden',
+        position: 'relative',
       }}
     >
-      <Lines mr={1} ref={linesRef}>
+      <Lines mr={1}>
         {lines.map((line, index) => {
           const isLastText = index === lines.length - 1;
           return (
-            <Box pt={2} pb={isLastText ? 0 : 2} key={index}>
+            <Box
+              pt={2}
+              pb={isLastText ? 0 : 2}
+              key={index}
+              ref={s => (refs.current[index] = s)}
+            >
               {line.comment && <Comment>{line.comment}</Comment>}
-              <Flex key={index}>
-                {bash && <Box mr="1">{`$`}</Box>}
-                <div className="text-to-copy">{line.text}</div>
+              <Flex>
+                <Flex>
+                  {bash && <Box mr="1">{`$`}</Box>}
+                  <div className="text-to-copy">{line.text}</div>
+                </Flex>
+                <Box
+                  pr={3}
+                  css={`
+                    position: absolute;
+                    right: 0px;
+                  `}
+                >
+                  <ButtonCopyCheck onClick={() => onCopyClick(index)}>
+                    <Icon className="icon-container">
+                      <Copy data-testid="btn-copy" />
+                      <Check data-testid="btn-check" />
+                    </Icon>
+                  </ButtonCopyCheck>
+                </Box>
               </Flex>
             </Box>
           );
         })}
       </Lines>
-      <Box>
-        {lineEls.map((el, index) => {
-          const isLastText = index === lines.length - 1;
-          let spacer;
-          if (lines[index].comment) {
-            spacer = (
-              <Box
-                height={(el.firstElementChild as HTMLElement).offsetHeight}
-                mt={isLastText ? 0 : 1}
-              />
-            );
-          }
-
-          return (
-            <Box
-              height={el.offsetHeight}
-              key={index}
-              pt={1}
-              ref={s => (btnRefs.current[index] = s)}
-            >
-              {spacer}
-              <ButtonCopyCheck onClick={() => onCopyClick(index)}>
-                <Icon className="icon-container">
-                  <Copy data-testid="btn-copy" />
-                  <Check data-testid="btn-check" />
-                </Icon>
-              </ButtonCopyCheck>
-            </Box>
-          );
-        })}
-      </Box>
-    </Flex>
+    </Box>
   );
 }
 
@@ -152,6 +127,7 @@ const ButtonCopyCheck = styled(ButtonSecondary)`
   border-radius: 20px;
   min-height: auto;
   padding: 0;
+  margin-top: -4px;
 `;
 
 const Lines = styled(Box)`
