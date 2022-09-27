@@ -16,11 +16,9 @@
 
 import React from 'react';
 
-import { render, screen, fireEvent, waitFor } from 'design/utils/testing';
+import { render, screen, fireEvent } from 'design/utils/testing';
 
 import { TextSelectCopyMulti } from './TextSelectCopyMulti';
-
-const originalNavigator = window.navigator;
 
 beforeEach(() => {
   jest.useFakeTimers();
@@ -33,7 +31,6 @@ beforeEach(() => {
 
 afterEach(() => {
   jest.resetAllMocks();
-  Object.assign(window.navigator, originalNavigator);
 });
 
 test('changing of icon when button is clicked', async () => {
@@ -45,7 +42,7 @@ test('changing of icon when button is clicked', async () => {
 
   // Clicking copy button should change the button icon to "check".
   fireEvent.click(screen.getByTestId('btn-copy'));
-  await waitFor(() => expect(screen.getByTestId('btn-check')).toBeVisible());
+  await expect(screen.findByTestId('btn-check')).resolves.toBeVisible();
   expect(screen.queryByTestId('btn-copy')).not.toBeVisible();
   expect(window.navigator.clipboard.writeText).toHaveBeenCalledWith(
     'some text to copy'
