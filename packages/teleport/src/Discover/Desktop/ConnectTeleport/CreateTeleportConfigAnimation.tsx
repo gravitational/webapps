@@ -9,10 +9,8 @@ import type { JoinToken } from 'teleport/services/joinToken';
 
 const pastedLines = (joinToken: JoinToken) => `version: v3
 teleport:
+  auth_token: ${joinToken.id}
   proxy_server: ${window.location.hostname}:${window.location.port || '443'}
-  join_params:
-    method: token
-    token_name: ${joinToken.id}
 
 auth_service:
   enabled: no
