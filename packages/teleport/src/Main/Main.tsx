@@ -42,7 +42,7 @@ import type { BannerType } from 'teleport/components/BannerList/BannerList';
 interface MainProps {
   initialAlerts?: ClusterAlert[];
   customBanners?: React.ReactNode[];
-  features: Feature[];
+  features: Feature[]; // TODO(ryan): move this into a context so we can use `useFeatures()` here
 }
 
 export function Main(props: MainProps) {
