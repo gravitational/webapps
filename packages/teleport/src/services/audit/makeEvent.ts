@@ -884,15 +884,15 @@ export const formatters: Formatters = {
       `User [${user}] has sent command [${subcommand}] to [${db_service}]`,
   },
   [eventCodes.SQLSERVER_RPC_REQUEST]: {
-    type: 'db.session.sqlserver.rpc_request""',
+    type: 'db.session.sqlserver.rpc_request',
     desc: 'SQLServer RPC Request',
     format: ({ user, db_service, db_name, proc_name }) =>
       `User [${user}] has send RPC Request [${proc_name}] in database [${db_name}] on [${db_service}]`,
   },
   [eventCodes.ELASTICSEARCH_REQUEST]: {
-    type: 'db.session.elasticsearch.request""',
+    type: 'db.session.elasticsearch.request',
     desc: 'Elasticsearch Request',
-    format: ({ user, db_service, db_name, category, target, query, path }) => {
+    format: ({ user, db_service, category, target, query, path }) => {
       // local redefinition of enum ElasticsearchCategory from events.proto
       enum ElasticsearchCategory {
         GENERAL = 0,
@@ -916,7 +916,18 @@ export const formatters: Formatters = {
           categoryString = 'SQL';
           break;
       }
-      return `User [${user}] has ran a query [${query}] in category [${categoryString}] against [${target}] on [${db_service}], request path: [${path}]`;
+
+      let message = `User [${user}] has ran a [${categoryString}] query in [${db_service}], request path: [${path}]`;
+
+      if (query != '') {
+        message = message + `, query string: [${truncateStr(query, 80)}]`;
+      }
+
+      if (target != '') {
+        message = message + `, target: [${target}]`;
+      }
+
+      return message;
     },
   },
   [eventCodes.MFA_DEVICE_ADD]: {
