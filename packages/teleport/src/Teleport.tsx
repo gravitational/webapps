@@ -17,13 +17,15 @@ limitations under the License.
 import React from 'react';
 import ThemeProvider from 'design/ThemeProvider';
 
-import { getEnterpriseFeatures } from 'e-teleport/features';
-
 import { Router, Route, Switch } from 'teleport/components/Router';
 import CatchError from 'teleport/components/CatchError';
 import Authenticated from 'teleport/components/Authenticated';
 
 import { FeaturesContextProvider } from 'teleport/FeaturesContext';
+
+import { getOSSFeatures } from 'teleport/features';
+
+import { Feature } from 'teleport/types';
 
 import { Main } from './Main';
 import Welcome from './Welcome';
@@ -44,6 +46,8 @@ const Teleport: React.FC<Props> = props => {
   const publicRoutes = props.renderPublicRoutes || renderPublicRoutes;
   const privateRoutes = props.renderPrivateRoutes || renderPrivateRoutes;
 
+  const features = props.features || getOSSFeatures();
+
   return (
     <CatchError>
       <ThemeProvider>
@@ -53,7 +57,7 @@ const Teleport: React.FC<Props> = props => {
             <Route path={cfg.routes.root}>
               <Authenticated>
                 <TeleportContextProvider ctx={ctx}>
-                  <FeaturesContextProvider value={getEnterpriseFeatures()}>
+                  <FeaturesContextProvider value={features}>
                     <Switch>
                       <Route
                         path={cfg.routes.appLauncher}
@@ -128,6 +132,7 @@ export function renderPrivateRoutes(
 export default Teleport;
 
 export type Props = {
+  features: Feature[];
   ctx: TeleportContext;
   history: History;
   renderPublicRoutes?(children?: JSX.Element[]): JSX.Element[];
