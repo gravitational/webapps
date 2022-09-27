@@ -31,8 +31,6 @@ import history from 'teleport/services/history';
 
 import { ClusterAlert, LINK_LABEL } from 'teleport/services/alerts/alerts';
 
-import { Feature } from 'teleport/types';
-
 import { MainContainer } from './MainContainer';
 import { OnboardDiscover } from './OnboardDiscover';
 import useMain from './useMain';
@@ -42,13 +40,11 @@ import type { BannerType } from 'teleport/components/BannerList/BannerList';
 interface MainProps {
   initialAlerts?: ClusterAlert[];
   customBanners?: React.ReactNode[];
-  features: Feature[]; // TODO(ryan): move this into a context so we can use `useFeatures()` here
 }
 
 export function Main(props: MainProps) {
   const { alerts, ctx, customBanners, dismissAlert, status, statusText } =
     useMain({
-      features: props.features,
       initialAlerts: props.initialAlerts,
       customBanners: props.customBanners,
     });

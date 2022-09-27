@@ -17,9 +17,13 @@ limitations under the License.
 import React from 'react';
 import ThemeProvider from 'design/ThemeProvider';
 
+import { getEnterpriseFeatures } from 'e-teleport/features';
+
 import { Router, Route, Switch } from 'teleport/components/Router';
 import CatchError from 'teleport/components/CatchError';
 import Authenticated from 'teleport/components/Authenticated';
+
+import { FeaturesContextProvider } from 'teleport/FeaturesContext';
 
 import { Main } from './Main';
 import Welcome from './Welcome';
@@ -49,13 +53,15 @@ const Teleport: React.FC<Props> = props => {
             <Route path={cfg.routes.root}>
               <Authenticated>
                 <TeleportContextProvider ctx={ctx}>
-                  <Switch>
-                    <Route
-                      path={cfg.routes.appLauncher}
-                      component={AppLauncher}
-                    />
-                    <Route>{privateRoutes()}</Route>
-                  </Switch>
+                  <FeaturesContextProvider value={getEnterpriseFeatures()}>
+                    <Switch>
+                      <Route
+                        path={cfg.routes.appLauncher}
+                        component={AppLauncher}
+                      />
+                      <Route>{privateRoutes()}</Route>
+                    </Switch>
+                  </FeaturesContextProvider>
                 </TeleportContextProvider>
               </Authenticated>
             </Route>
