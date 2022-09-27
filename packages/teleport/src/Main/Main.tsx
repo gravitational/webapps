@@ -15,7 +15,7 @@ limitations under the License.
 */
 
 import * as RouterDOM from 'react-router-dom';
-import React, { Suspense, useState } from 'react';
+import React, { Suspense } from 'react';
 import styled from 'styled-components';
 import { Indicator } from 'design';
 import { Failed } from 'design/CardError';
@@ -26,11 +26,12 @@ import cfg from 'teleport/config';
 import SideNav from 'teleport/SideNav';
 import TopBar from 'teleport/TopBar';
 import { BannerList } from 'teleport/components/BannerList';
-import getFeatures from 'teleport/features';
 import localStorage from 'teleport/services/localStorage';
 import history from 'teleport/services/history';
 
 import { ClusterAlert, LINK_LABEL } from 'teleport/services/alerts/alerts';
+
+import { Feature } from 'teleport/types';
 
 import { MainContainer } from './MainContainer';
 import { OnboardDiscover } from './OnboardDiscover';
@@ -41,14 +42,13 @@ import type { BannerType } from 'teleport/components/BannerList/BannerList';
 interface MainProps {
   initialAlerts?: ClusterAlert[];
   customBanners?: React.ReactNode[];
+  features: Feature[];
 }
 
 export function Main(props: MainProps) {
-  const [features] = useState(() => getFeatures());
-
   const { alerts, ctx, customBanners, dismissAlert, status, statusText } =
     useMain({
-      features,
+      features: props.features,
       initialAlerts: props.initialAlerts,
       customBanners: props.customBanners,
     });

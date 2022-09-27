@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React from 'react';
+import React, { useState } from 'react';
 import { createMemoryHistory } from 'history';
 import { Router } from 'react-router';
 import { Flex } from 'design';
@@ -63,11 +63,13 @@ export function OSS() {
   });
   const ctx = createTeleportContext();
 
+  const [features] = useState(() => getFeatures());
+
   return (
     <Flex my={-3} mx={-4}>
       <ContextProvider ctx={ctx}>
         <Router history={history}>
-          <Main customBanners={[]} />
+          <Main features={features} customBanners={[]} />
         </Router>
       </ContextProvider>
     </Flex>
