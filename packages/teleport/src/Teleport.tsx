@@ -132,7 +132,7 @@ export function renderPrivateRoutes(
 export default Teleport;
 
 export type Props = {
-  features: Feature[];
+  features?: Feature[];
   ctx: TeleportContext;
   history: History;
   renderPublicRoutes?(children?: JSX.Element[]): JSX.Element[];
