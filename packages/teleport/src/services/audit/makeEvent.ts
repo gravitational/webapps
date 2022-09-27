@@ -889,6 +889,36 @@ export const formatters: Formatters = {
     format: ({ user, db_service, db_name, proc_name }) =>
       `User [${user}] has send RPC Request [${proc_name}] in database [${db_name}] on [${db_service}]`,
   },
+  [eventCodes.ELASTICSEARCH_REQUEST]: {
+    type: 'db.session.elasticsearch.request""',
+    desc: 'Elasticsearch Request',
+    format: ({ user, db_service, db_name, category, target, query, path }) => {
+      // local redefinition of enum ElasticsearchCategory from events.proto
+      enum ElasticsearchCategory {
+        GENERAL = 0,
+        SECURITY = 1,
+        SEARCH = 2,
+        SQL = 3,
+      }
+
+      let categoryString = 'UNKNOWN';
+      switch (category) {
+        case ElasticsearchCategory.GENERAL:
+          categoryString = 'GENERAL';
+          break;
+        case ElasticsearchCategory.SEARCH:
+          categoryString = 'SEARCH';
+          break;
+        case ElasticsearchCategory.SECURITY:
+          categoryString = 'SECURITY';
+          break;
+        case ElasticsearchCategory.SQL:
+          categoryString = 'SQL';
+          break;
+      }
+      return `User [${user}] has ran a query [${query}] in category [${categoryString}] against [${target}] on [${db_service}], request path: [${path}]`;
+    },
+  },
   [eventCodes.MFA_DEVICE_ADD]: {
     type: 'mfa.add',
     desc: 'MFA Device Added',
