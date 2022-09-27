@@ -920,11 +920,11 @@ export const formatters: Formatters = {
       let message = `User [${user}] has ran a [${categoryString}] query in [${db_service}], request path: [${path}]`;
 
       if (query != '') {
-        message = message + `, query string: [${truncateStr(query, 80)}]`;
+        message += `, query string: [${truncateStr(query, 80)}]`;
       }
 
       if (target != '') {
-        message = message + `, target: [${target}]`;
+        message += `, target: [${target}]`;
       }
 
       return message;
