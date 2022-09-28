@@ -752,6 +752,21 @@ export const formatters: Formatters = {
     desc: 'Database Deleted',
     format: ({ user, name }) => `User [${user}] deleted database [${name}]`,
   },
+  [eventCodes.APP_CREATED]: {
+    type: 'app.create',
+    desc: 'Application Created',
+    format: ({ user, name }) => `User [${user}] created application [${name}]`,
+  },
+  [eventCodes.APP_UPDATED]: {
+    type: 'app.update',
+    desc: 'Application Updated',
+    format: ({ user, name }) => `User [${user}] updated application [${name}]`,
+  },
+  [eventCodes.APP_DELETED]: {
+    type: 'app.delete',
+    desc: 'Application Deleted',
+    format: ({ user, name }) => `User [${user}] deleted application [${name}]`,
+  },
   [eventCodes.POSTGRES_PARSE]: {
     type: 'db.session.postgres.statements.parse',
     desc: 'PostgreSQL Statement Parse',
@@ -884,10 +899,51 @@ export const formatters: Formatters = {
       `User [${user}] has sent command [${subcommand}] to [${db_service}]`,
   },
   [eventCodes.SQLSERVER_RPC_REQUEST]: {
-    type: 'db.session.sqlserver.rpc_request""',
+    type: 'db.session.sqlserver.rpc_request',
     desc: 'SQLServer RPC Request',
     format: ({ user, db_service, db_name, proc_name }) =>
       `User [${user}] has send RPC Request [${proc_name}] in database [${db_name}] on [${db_service}]`,
+  },
+  [eventCodes.ELASTICSEARCH_REQUEST]: {
+    type: 'db.session.elasticsearch.request',
+    desc: 'Elasticsearch Request',
+    format: ({ user, db_service, category, target, query, path }) => {
+      // local redefinition of enum ElasticsearchCategory from events.proto
+      enum ElasticsearchCategory {
+        GENERAL = 0,
+        SECURITY = 1,
+        SEARCH = 2,
+        SQL = 3,
+      }
+
+      let categoryString = 'UNKNOWN';
+      switch (category) {
+        case ElasticsearchCategory.GENERAL:
+          categoryString = 'GENERAL';
+          break;
+        case ElasticsearchCategory.SEARCH:
+          categoryString = 'SEARCH';
+          break;
+        case ElasticsearchCategory.SECURITY:
+          categoryString = 'SECURITY';
+          break;
+        case ElasticsearchCategory.SQL:
+          categoryString = 'SQL';
+          break;
+      }
+
+      let message = `User [${user}] has ran a [${categoryString}] query in [${db_service}], request path: [${path}]`;
+
+      if (query) {
+        message += `, query string: [${truncateStr(query, 80)}]`;
+      }
+
+      if (target) {
+        message += `, target: [${target}]`;
+      }
+
+      return message;
+    },
   },
   [eventCodes.MFA_DEVICE_ADD]: {
     type: 'mfa.add',

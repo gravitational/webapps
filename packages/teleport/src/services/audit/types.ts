@@ -49,6 +49,9 @@ export const eventCodes = {
   APP_SESSION_CHUNK: 'T2008I',
   APP_SESSION_START: 'T2007I',
   APP_SESSION_END: 'T2011I',
+  APP_CREATED: 'TAP03I',
+  APP_UPDATED: 'TAP04I',
+  APP_DELETED: 'TAP05I',
   AUTH_ATTEMPT_FAILURE: 'T3007W',
   BILLING_INFORMATION_UPDATE: 'TBL03I',
   BILLING_CARD_CREATE: 'TBL00I',
@@ -84,6 +87,7 @@ export const eventCodes = {
   MYSQL_DEBUG: 'TMY12I',
   MYSQL_REFRESH: 'TMY13I',
   SQLSERVER_RPC_REQUEST: 'TMS00I',
+  ELASTICSEARCH_REQUEST: 'TES00I',
   DESKTOP_SESSION_STARTED: 'TDP00I',
   DESKTOP_SESSION_STARTED_FAILED: 'TDP00W',
   DESKTOP_SESSION_ENDED: 'TDP01I',
@@ -213,6 +217,24 @@ export type RawEvents = {
   >;
   [eventCodes.AUTH_ATTEMPT_FAILURE]: RawEventAuthFailure<
     typeof eventCodes.AUTH_ATTEMPT_FAILURE
+  >;
+  [eventCodes.APP_CREATED]: RawEvent<
+    typeof eventCodes.APP_CREATED,
+    {
+      name: string;
+    }
+  >;
+  [eventCodes.APP_UPDATED]: RawEvent<
+    typeof eventCodes.APP_UPDATED,
+    {
+      name: string;
+    }
+  >;
+  [eventCodes.APP_DELETED]: RawEvent<
+    typeof eventCodes.APP_DELETED,
+    {
+      name: string;
+    }
   >;
   [eventCodes.CLIENT_DISCONNECT]: RawEvent<
     typeof eventCodes.CLIENT_DISCONNECT,
@@ -773,6 +795,18 @@ export type RawEvents = {
       db_service: string;
       db_name: string;
       proc_name: string;
+    }
+  >;
+  [eventCodes.ELASTICSEARCH_REQUEST]: RawEvent<
+    typeof eventCodes.ELASTICSEARCH_REQUEST,
+    {
+      name: string;
+      db_service: string;
+      db_name: string;
+      category: number;
+      target: string;
+      query: string;
+      path: string;
     }
   >;
   [eventCodes.MFA_DEVICE_ADD]: RawEvent<
