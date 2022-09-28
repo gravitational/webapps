@@ -1,1 +1,1 @@
-export { NavigationMenuContainer as NavigationMenu } from './NavigationMenu';
+export { NavigationMenu } from './NavigationMenu';

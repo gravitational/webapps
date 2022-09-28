@@ -4,31 +4,17 @@ import styled from 'styled-components';
 import { Box, Text, Flex } from 'design';
 
 import { AccessRequestDocumentState } from 'teleterm/ui/services/workspacesService';
-import { useAppContext } from 'teleterm/ui/appContextProvider';
 
-export function NavigationItem({
-  Icon,
-  title,
-  state,
-  closeMenu,
-  clusterUri,
-}: NavigationItemProps) {
-  const ctx = useAppContext();
-  const docService = ctx.workspacesService.getActiveWorkspaceDocumentService();
-
-  const onClick = () => {
-    if (!docService) {
-      return;
-    }
-    const doc = docService.createAccessRequestDocument({ clusterUri, state });
-    docService.add(doc);
-    docService.open(doc.uri);
+export function NavigationItem({ item, closeMenu }: NavigationItemProps) {
+  const handleClick = () => {
+    item.onNavigate();
     closeMenu();
   };
+
   return (
-    <ListItem p={2} pl={0} gap={2} onClick={onClick}>
-      <IconBox p={2}>{Icon}</IconBox>
-      <Text>{title}</Text>
+    <ListItem p={2} pl={0} gap={2} onClick={handleClick}>
+      <IconBox p={2}>{item.Icon}</IconBox>
+      <Text>{item.title}</Text>
     </ListItem>
   );
 }
@@ -51,9 +37,10 @@ const IconBox = styled(Box)`
 `;
 
 type NavigationItemProps = {
-  state: AccessRequestDocumentState;
-  title: string;
-  Icon: JSX.Element;
+  item: {
+    title: string;
+    Icon: JSX.Element;
+    onNavigate: () => void;
+  };
   closeMenu: () => void;
-  clusterUri: string;
 };

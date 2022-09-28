@@ -5,46 +5,63 @@ import Popover from 'design/Popover';
 import { MoreVert, OpenBox, Add } from 'design/Icon';
 import { Box, Text, Flex } from 'design';
 
-import { AccessRequestDocumentState } from 'teleterm/ui/services/workspacesService';
+import { DocumentsService } from 'teleterm/ui/services/workspacesService';
 
 import { useIdentity } from '../Identity/useIdentity';
 
 import { NavigationItem } from './NavigationItem';
+import { useAppContext } from 'teleterm/ui/appContextProvider';
 
-export function NavigationMenuContainer() {
-  const { activeRootCluster } = useIdentity();
-  return (
-    <NavigationMenu
-      clusterName={activeRootCluster?.name}
-      clusterUri={activeRootCluster?.uri}
-    />
-  );
-}
-
-const navigationItems: {
+function getNavigationItems(
+  documentsService: DocumentsService,
+  clusterUri: string
+): {
   title: string;
   Icon: JSX.Element;
-  state: AccessRequestDocumentState;
-}[] = [
-  {
-    title: 'New Access Request',
-    Icon: <Add fontSize={2} />,
-    state: 'creating',
-  },
-  {
-    title: 'Review Access Requests',
-    Icon: <OpenBox fontSize={2} />,
-    state: 'reviewing',
-  },
-];
+  onNavigate: () => void;
+}[] {
+  return [
+    {
+      title: 'New Access Request',
+      Icon: <Add fontSize={2} />,
+      onNavigate: () => {
+        const doc = documentsService.createAccessRequestDocument({
+          clusterUri,
+          state: 'creating',
+          title: 'New Access Request',
+        });
+        documentsService.add(doc);
+        documentsService.open(doc.uri);
+      },
+    },
+    {
+      title: 'Review Access Requests',
+      Icon: <OpenBox fontSize={2} />,
+      onNavigate: () => {
+        const doc = documentsService.createAccessRequestDocument({
+          clusterUri,
+          state: 'browsing',
+        });
+        documentsService.add(doc);
+        documentsService.open(doc.uri);
+      },
+    },
+  ];
+}
 
-function NavigationMenu({ clusterName, clusterUri }) {
+export function NavigationMenu() {
+  const ctx = useAppContext();
+  const documentsService =
+    ctx.workspacesService.getActiveWorkspaceDocumentService();
+  const { activeRootCluster } = useIdentity();
+
   const [isPopoverOpened, setIsPopoverOpened] = useState(false);
   const selectorRef = useRef<HTMLButtonElement>();
 
-  if (!clusterName) {
+  if (!activeRootCluster) {
     return <></>;
   }
+
   return (
     <>
       <Container
@@ -66,16 +83,16 @@ function NavigationMenu({ clusterName, clusterUri }) {
           <Box minWidth="280px">
             <Text fontWeight={700}>Go To</Text>
             <Flex flexDirection="column">
-              {navigationItems.map((item, index) => (
-                <NavigationItem
-                  key={index}
-                  Icon={item.Icon}
-                  state={item.state}
-                  title={item.title}
-                  closeMenu={() => setIsPopoverOpened(false)}
-                  clusterUri={clusterUri}
-                />
-              ))}
+              {getNavigationItems(documentsService, activeRootCluster.uri).map(
+                (item, index) => (
+                  <NavigationItem
+                    key={index}
+                    item={item}
+                    // Icon={item.Icon}
+                    closeMenu={() => setIsPopoverOpened(false)}
+                  />
+                )
+              )}
             </Flex>
           </Box>
         </MenuContainer>
