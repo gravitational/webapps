@@ -11,6 +11,7 @@ import apiApp from './v1/app_pb';
 import apiService from './v1/service_pb';
 import apiAuthSettings from './v1/auth_settings_pb';
 import apiAccessRequest from './v1/access_request_pb';
+import { RequestState } from 'e-teleport/services/workflow';
 
 export type Application = apiApp.App.AsObject;
 export type Kube = apiKube.Kube.AsObject;
@@ -174,9 +175,9 @@ export type ServerSideParams = {
 };
 
 export type ReviewAccessRequestParams = {
-  state: string;
+  state: RequestState;
   reason: string;
-  roles: [string];
+  roles: string[];
   id: string;
 };
 

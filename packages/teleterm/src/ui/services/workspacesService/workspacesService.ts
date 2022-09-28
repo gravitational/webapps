@@ -3,8 +3,7 @@ import { useStore } from 'shared/libs/stores';
 import { isEqual } from 'lodash';
 import isPast from 'date-fns/isPast';
 
-// adding requests to assumed adds already 'made' requests that fit our tables
-import { AccessRequest as UiAccessRequest } from 'e-teleport/services/workflow';
+import { AccessRequest } from 'e-teleport/services/workflow';
 
 import { ResourceKind } from 'e-teleport/Workflow/NewRequest/useNewRequest';
 
@@ -34,9 +33,9 @@ export interface Workspace {
   location: string;
   isAccessRequestsBarCollapsed: boolean;
   pendingAccessRequest: PendingAccessRequest;
-  assumed: Record<string, UiAccessRequest>;
+  assumed: Record<string, AccessRequest>;
   previous?: {
-    assumed: Record<string, UiAccessRequest>;
+    assumed: Record<string, AccessRequest>;
     documents: Document[];
     location: string;
   };
@@ -286,7 +285,7 @@ export class WorkspacesService extends ImmutableStore<WorkspacesState> {
   }
 
   private removeExpiredAssumedRoles(
-    assumed: Record<string, UiAccessRequest>,
+    assumed: Record<string, AccessRequest>,
     user: LoggedInUser
   ) {
     const validRequests = {};

@@ -230,7 +230,15 @@ export default function createClient(
         .setClusterUri(params.clusterUri)
         .setSuggestedReviewersList(params.suggestedReviewers)
         .setRolesList(params.roles)
-        .setResourceIdsList(params.resourceIds.map(makeResourceID))
+        .setResourceIdsList(
+          params.resourceIds.map(({ id, name, kind }) => {
+            const resourceId = new ResourceID();
+            resourceId.setName(id);
+            resourceId.setClusterName(name);
+            resourceId.setKind(kind);
+            return resourceId;
+          })
+        )
         .setReason(params.reason);
       return new Promise<AccessRequest.AsObject>((resolve, reject) => {
         tshd.createAccessRequest(req, (err, response) => {
@@ -619,20 +627,4 @@ async function withAbort<T>(
   return cb(ref).finally(() => {
     sig?.removeEventListener(abort);
   });
-}
-
-export function makeResourceID({
-  kind,
-  name,
-  id,
-}: {
-  kind: ResourceKind;
-  name: string;
-  id: string;
-}) {
-  const resourceId = new ResourceID();
-  resourceId.setName(id);
-  resourceId.setClusterName(name);
-  resourceId.setKind(kind);
-  return resourceId;
 }

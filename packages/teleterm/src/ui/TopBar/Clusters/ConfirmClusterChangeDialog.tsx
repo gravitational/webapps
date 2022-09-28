@@ -11,7 +11,7 @@ import { Close } from 'design/Icon';
 const changeSelectedClusterWarning =
   'Resources from different clusters cannot be combined in an access request. Current items selected will be cleared. Are you sure you want to continue?';
 
-export default function ChangeResourceDialog({
+export default function ConfirmClusterChangeDialog({
   confirmChangeTo,
   onClose,
   onConfirm,

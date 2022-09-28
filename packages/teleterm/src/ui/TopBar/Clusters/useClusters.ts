@@ -17,7 +17,7 @@ export function useClusters() {
   function hasPendingAccessRequest() {
     const rootClusterUri = workspacesService.getRootClusterUri();
     const accessRequestsService =
-      workspacesService.getWorkspaceAccessRequestsService(rootClusterUri);
+      workspacesService.getActiveWorkspaceAccessRequestsService();
     if (!accessRequestsService) {
       return false;
     }
@@ -29,19 +29,14 @@ export function useClusters() {
       return false;
     }
 
-    const count =
-      Object.keys(pendingAccessRequest.node).length +
-      Object.keys(pendingAccessRequest.db).length +
-      Object.keys(pendingAccessRequest.app).length +
-      Object.keys(pendingAccessRequest.kube_cluster).length +
-      Object.keys(pendingAccessRequest.windows_desktop).length;
+    const count = accessRequestsService.getAddedResourceCount();
     return count > 0;
   }
 
   function clearPendingAccessRequest() {
     const rootClusterUri = workspacesService.getRootClusterUri();
     const accessRequestsService =
-      workspacesService.getWorkspaceAccessRequestsService(rootClusterUri);
+      workspacesService.getActiveWorkspaceAccessRequestsService();
     if (!accessRequestsService) {
       return false;
     }

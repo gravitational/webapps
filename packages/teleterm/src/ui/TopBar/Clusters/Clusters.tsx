@@ -10,7 +10,7 @@ import { KeyboardArrowsNavigation } from 'teleterm/ui/components/KeyboardArrowsN
 import { useClusters } from './useClusters';
 import { ClusterSelector } from './ClusterSelector/ClusterSelector';
 import { ClustersFilterableList } from './ClustersFilterableList/ClustersFilterableList';
-import ConfirmChangeDialog from './ConfirmClusterChangeDialog';
+import ConfirmClusterChangeDialog from './ConfirmClusterChangeDialog';
 
 export function Clusters() {
   const iconRef = useRef();
@@ -74,7 +74,7 @@ export function Clusters() {
           </KeyboardArrowsNavigation>
         </Container>
       </Popover>
-      <ConfirmChangeDialog
+      <ConfirmClusterChangeDialog
         onClose={() => setConfirmChangeTo(null)}
         onConfirm={onConfirmChange}
         confirmChangeTo={confirmChangeTo}

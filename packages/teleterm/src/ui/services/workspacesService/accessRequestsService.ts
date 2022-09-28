@@ -41,7 +41,7 @@ export class AccessRequestsService {
   toggleBar() {
     this.setState(draftState => {
       draftState.isAccessRequestsBarCollapsed =
-        !this.getState().isAccessRequestsBarCollapsed;
+        !draftState.isAccessRequestsBarCollapsed;
     });
   }
 
@@ -89,17 +89,27 @@ export class AccessRequestsService {
     });
   }
 
+  getAddedResourceCount() {
+    const pendingAccessRequest = this.getState()?.pendingAccessRequest;
+    return (
+      Object.keys(pendingAccessRequest.node).length +
+      Object.keys(pendingAccessRequest.db).length +
+      Object.keys(pendingAccessRequest.app).length +
+      Object.keys(pendingAccessRequest.kube_cluster).length +
+      Object.keys(pendingAccessRequest.windows_desktop).length
+    );
+  }
+
   addOrRemoveResource(kind: ResourceKind, name: string, resourceName: string) {
-    let kindIds = { ...this.getState().pendingAccessRequest[kind] };
-    if (kindIds[name]) {
-      delete kindIds[name];
-    } else {
-      kindIds[name] = resourceName ? resourceName : name;
-    }
     this.setState(draftState => {
-      const pending = this.getState().pendingAccessRequest;
+      let kindIds = { ...draftState.pendingAccessRequest[kind] };
+      if (kindIds[name]) {
+        delete kindIds[name];
+      } else {
+        kindIds[name] = resourceName ? resourceName : name;
+      }
       draftState.pendingAccessRequest = {
-        ...pending,
+        ...draftState.pendingAccessRequest,
         [kind]: kindIds,
       };
     });

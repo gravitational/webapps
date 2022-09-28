@@ -26,13 +26,7 @@ export function useAccessRequestsButton() {
       return 0;
     }
     const resourceIds = workspaceAccessRequest.getPendingAccessRequest();
-    return (
-      Object.keys(resourceIds.node).length +
-      Object.keys(resourceIds.db).length +
-      Object.keys(resourceIds.app).length +
-      Object.keys(resourceIds.kube_cluster).length +
-      Object.keys(resourceIds.windows_desktop).length
-    );
+    return workspaceAccessRequest.getAddedResourceCount();
   }
 
   return {
