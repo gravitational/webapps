@@ -231,10 +231,10 @@ export default function createClient(
         .setSuggestedReviewersList(params.suggestedReviewers)
         .setRolesList(params.roles)
         .setResourceIdsList(
-          params.resourceIds.map(({ id, name, kind }) => {
+          params.resourceIds.map(({ id, clusterName, kind }) => {
             const resourceId = new ResourceID();
             resourceId.setName(id);
-            resourceId.setClusterName(name);
+            resourceId.setClusterName(clusterName);
             resourceId.setKind(kind);
             return resourceId;
           })

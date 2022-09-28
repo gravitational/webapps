@@ -186,5 +186,5 @@ export type CreateAccessRequestParams = {
   reason: string;
   roles: string[];
   suggestedReviewers: string[];
-  resourceIds: { kind: ResourceKind; name: string; id: string }[];
+  resourceIds: { kind: ResourceKind; clusterName: string; id: string }[];
 };
