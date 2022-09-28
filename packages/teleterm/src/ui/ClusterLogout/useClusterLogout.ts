@@ -40,8 +40,8 @@ export function useClusterLogout({ clusterUri, onClose, clusterTitle }: Props) {
 }
 
 export type Props = {
-  onClose(): void;
-  clusterTitle: string;
+  onClose?(): void;
+  clusterTitle?: string;
   clusterUri: string;
 };
 
