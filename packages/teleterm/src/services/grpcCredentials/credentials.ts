@@ -54,4 +54,3 @@ export function shouldEncryptConnection(
     new URL(runtimeSettings.tshd.requestedNetworkAddress).protocol !== 'unix:'
   );
 }
-
