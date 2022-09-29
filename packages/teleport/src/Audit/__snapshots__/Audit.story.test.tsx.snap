@@ -358,12 +358,12 @@ exports[`list of all events 1`] = `
           </strong>
            - 
           <strong>
-            132
+            134
           </strong>
            of
            
           <strong>
-            132
+            134
           </strong>
         </div>
         <button
@@ -668,13 +668,13 @@ exports[`list of all events 1`] = `
               color="light"
               font-size="3"
             />
-            SSM Execution ended in failure
+            SSM Command Execution Failed
           </div>
         </td>
         <td
           style="word-break: break-word;"
         >
-          SSM Command with ID [c2936d68-fc0c-4c16-a860-916a97f57644] failed during exection on EC2 Instance [i-057d0ffe877128673] on AWS Account [278576220453] in [eu-central-1]
+          SSM Command with ID [c2936d68-fc0c-4c16-a860-916a97f57644] failed during execution on EC2 Instance [i-057d0ffe877128673] on AWS Account [278576220453] in [eu-central-1]
         </td>
         <td
           style="min-width: 120px;"
@@ -705,7 +705,7 @@ exports[`list of all events 1`] = `
               color="light"
               font-size="3"
             />
-            SSM Execution ended in success
+            SSM Command Executed
           </div>
         </td>
         <td
