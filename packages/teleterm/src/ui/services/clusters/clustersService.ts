@@ -393,22 +393,6 @@ export class ClustersService extends ImmutableStore<ClustersServiceState> {
     }
   }
 
-  async fetchServers(params: ServerSideParams) {
-    const cluster = this.state.clusters.get(params.clusterUri);
-    if (!cluster.connected) {
-      return;
-    }
-    return this.client.getServers(params);
-  }
-
-  async fetchDatabases(params: ServerSideParams) {
-    const cluster = this.state.clusters.get(params.clusterUri);
-    if (!cluster.connected) {
-      return;
-    }
-    return this.client.getDatabases(params);
-  }
-
   getFetchCallback(clusterUri: string, resourceKind: ResourceKind) {
     const cluster = this.state.clusters.get(clusterUri);
     if (!cluster.connected) {
