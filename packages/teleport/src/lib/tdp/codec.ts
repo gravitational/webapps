@@ -827,6 +827,7 @@ export default class Codec {
     const image = new Image();
     let offset = 0;
     offset += byteLength; // eat message type
+    offset += uint32Length; // eat png_length
     const left = dv.getUint32(offset);
     offset += uint32Length; // eat left
     const top = dv.getUint32(offset);
