@@ -1087,16 +1087,16 @@ export const formatters: Formatters = {
   },
   [eventCodes.SSMRUN_SUCCESS]: {
     type: 'ssm.run',
-    desc: 'SSM Execution ended in success',
+    desc: 'SSM Command Executed',
     format: ({ account_id, instance_id, region, command_id }) => {
       return `SSM Command with ID [${command_id}] was successfully executed on EC2 Instance [${instance_id}] on AWS Account [${account_id}] in [${region}]`;
     },
   },
   [eventCodes.SSMRUN_FAIL]: {
     type: 'ssm.run',
-    desc: 'SSM Execution ended in failure',
+    desc: 'SSM Command Execution Failed',
     format: ({ account_id, instance_id, region, command_id }) => {
-      return `SSM Command with ID [${command_id}] failed during exection on EC2 Instance [${instance_id}] on AWS Account [${account_id}] in [${region}]`;
+      return `SSM Command with ID [${command_id}] failed during execution on EC2 Instance [${instance_id}] on AWS Account [${account_id}] in [${region}]`;
     },
   },
   [eventCodes.UNKNOWN]: {
