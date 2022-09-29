@@ -14,246 +14,143 @@
  * limitations under the License.
  */
 
-import React, { useState } from 'react';
+import React from 'react';
 import styled from 'styled-components';
-import { Flex, Text, Box, Indicator } from 'design';
+
+import { Indicator, Text } from 'design';
 import { Danger } from 'design/Alert';
-import * as Icons from 'design/Icon';
 
 import { Prompt } from 'react-router-dom';
 
-import useTeleport from 'teleport/useTeleport';
-import getFeatures from 'teleport/features';
-import { UserMenuNav } from 'teleport/components/UserMenuNav';
 import * as main from 'teleport/Main';
-import * as sideNav from 'teleport/SideNav';
 import { TopBarContainer } from 'teleport/TopBar';
 import { FeatureBox } from 'teleport/components/Layout';
+import { BannerList } from 'teleport/components/BannerList';
 import cfg from 'teleport/config';
 
-import { useDiscover, State } from './useDiscover';
-import { SelectResource } from './SelectResource';
-import { DownloadScript } from './DownloadScript';
-import { LoginTrait } from './LoginTrait';
-import { TestConnection } from './TestConnection';
-import { Finished } from './Finished';
+import { ClusterAlert, LINK_LABEL } from 'teleport/services/alerts/alerts';
+import { Sidebar } from 'teleport/Discover/Sidebar/Sidebar';
+import { SelectResource } from 'teleport/Discover/SelectResource';
+import { DiscoverUserMenuNav } from 'teleport/Discover/DiscoverUserMenuNav';
 
-import type { AgentKind } from './useDiscover';
-import type { AgentStepComponent } from './types';
+import { findViewAtIndex } from './flow';
 
-export const agentViews: Record<AgentKind, AgentStepComponent[]> = {
-  application: [SelectResource],
-  database: [SelectResource],
-  desktop: [SelectResource],
-  kubernetes: [SelectResource],
-  server: [
-    SelectResource,
-    DownloadScript,
-    LoginTrait,
-    TestConnection,
-    Finished,
-  ],
-};
+import { useDiscover } from './useDiscover';
 
-const agentStepTitles: string[] = [
-  'Select Resource Type',
-  'Configure Resource',
-  'Set Up Access',
-  'Test Connection',
-  '',
-];
+import type { BannerType } from 'teleport/components/BannerList/BannerList';
 
-export default function Container() {
-  const [features] = useState(() => getFeatures());
-  const ctx = useTeleport();
-  const state = useDiscover(ctx, features);
-
-  return <Discover {...state} />;
+interface DiscoverProps {
+  initialAlerts?: ClusterAlert[];
+  customBanners?: React.ReactNode[];
 }
 
-export function Discover({
-  initAttempt,
-  userMenuItems,
-  username,
-  currentStep,
-  logout,
-  // onSelectResource,
-  ...agentProps
-}: State) {
-  const selectedAgentKind = agentProps.selectedAgentKind;
-  let AgentComponent;
-  if (selectedAgentKind) {
-    AgentComponent = agentViews[selectedAgentKind][currentStep];
-  }
+export function Discover(props: DiscoverProps) {
+  const {
+    alerts,
+    initAttempt,
+    customBanners,
+    dismissAlert,
+    currentStep,
+    selectedResource,
+    onSelectResource,
+    logout,
+    views,
+    ...agentProps
+  } = useDiscover({
+    initialAlerts: props.initialAlerts,
+    customBanners: props.customBanners,
+  });
 
-  return (
-    <MainContainer>
-      <Prompt
-        message={nextLocation => {
-          if (nextLocation.pathname === cfg.routes.discover) return true;
-          return 'Are you sure you want to exit the “Add New Resource” workflow? You’ll have to start from the beginning next time.';
-        }}
-        when={currentStep > 0}
+  let content;
+  // we reserve step 0 for "Select Resource Type", that is present in all resource configs
+  if (currentStep > 0) {
+    const view = findViewAtIndex(views, currentStep);
+
+    const Component = view.component;
+
+    content = <Component {...agentProps} />;
+
+    if (selectedResource.wrapper) {
+      content = selectedResource.wrapper(content);
+    }
+  } else {
+    content = (
+      <SelectResource
+        selectedResourceKind={selectedResource.kind}
+        onSelect={kind => onSelectResource(kind)}
+        onNext={() => agentProps.nextStep()}
       />
-      {initAttempt.status === 'processing' && (
-        <main.StyledIndicator>
-          <Indicator />
-        </main.StyledIndicator>
-      )}
-      {initAttempt.status === 'failed' && (
-        <Danger>{initAttempt.statusText}</Danger>
-      )}
-      {initAttempt.status === 'success' && (
-        <>
-          <SideNavAgentConnect
-            currentStep={currentStep}
-            // TODO: hack to not show titles for unfinished flows.
-            stepTitles={
-              agentViews[selectedAgentKind].length > 1 ? agentStepTitles : []
-            }
-          />
-          <main.HorizontalSplit>
-            <TopBarContainer>
-              <Text typography="h5" bold>
-                Manage Access
-              </Text>
-              <UserMenuNav
-                navItems={userMenuItems}
-                logout={logout}
-                username={username}
-              />
-            </TopBarContainer>
-            <FeatureBox pt={4}>
-              {AgentComponent && <AgentComponent {...agentProps} />}
-            </FeatureBox>
-          </main.HorizontalSplit>
-        </>
-      )}
-    </MainContainer>
-  );
-}
+    );
+  }
 
-function SideNavAgentConnect({
-  currentStep,
-  stepTitles,
-}: {
-  currentStep: number;
-  stepTitles: string[];
-}) {
+  // The backend defines the severity as an integer value with the current
+  // pre-defined values: LOW: 0; MEDIUM: 5; HIGH: 10
+  const mapSeverity = (severity: number) => {
+    if (severity < 5) {
+      return 'info';
+    }
+    if (severity < 10) {
+      return 'warning';
+    }
+    return 'danger';
+  };
+
+  const banners: BannerType[] = alerts.map(alert => ({
+    message: alert.spec.message,
+    severity: mapSeverity(alert.spec.severity),
+    link: alert.metadata.labels[LINK_LABEL],
+    id: alert.metadata.name,
+  }));
+
   return (
-    <StyledNav>
-      <sideNav.Logo />
-      <StyledNavContent>
-        <Box
-          border="1px solid rgba(255,255,255,0.1);"
-          borderRadius="8px"
-          css={{ backgroundColor: 'rgba(255,255,255,0.02);' }}
-          p={4}
-        >
-          <Flex alignItems="center">
-            <Flex
-              borderRadius={5}
-              alignItems="center"
-              justifyContent="center"
-              bg="secondary.main"
-              height="30px"
-              width="30px"
-              mr={2}
-            >
-              <Icons.Database />
-            </Flex>
-            <Text bold>Add New Resource</Text>
-          </Flex>
-          {stepTitles.length > 0 && (
-            <Box ml={4} mt={4}>
-              {stepTitles.map((stepTitle, index) => {
-                let className = '';
-                if (currentStep > index) {
-                  className = 'checked';
-                } else if (currentStep === index) {
-                  className = 'active';
-                }
-
-                // All flows will have a finished step that
-                // does not have a title.
-                if (!stepTitle) {
-                  return null;
-                }
-
-                return (
-                  <StepsContainer className={className} key={stepTitle}>
-                    <Bullet />
-                    {stepTitle}
-                  </StepsContainer>
-                );
-              })}
-            </Box>
-          )}
-        </Box>
-      </StyledNavContent>
-    </StyledNav>
+    <BannerList
+      banners={banners}
+      customBanners={customBanners}
+      onBannerDismiss={dismissAlert}
+    >
+      <MainContainer>
+        <Prompt
+          message={nextLocation => {
+            if (nextLocation.pathname === cfg.routes.discover) return true;
+            return 'Are you sure you want to exit the “Add New Resource” workflow? You’ll have to start from the beginning next time.';
+          }}
+          when={selectedResource.shouldPrompt(currentStep)}
+        />
+        {initAttempt.status === 'processing' && (
+          <main.StyledIndicator>
+            <Indicator />
+          </main.StyledIndicator>
+        )}
+        {initAttempt.status === 'failed' && (
+          <Danger>{initAttempt.statusText}</Danger>
+        )}
+        {initAttempt.status === 'success' && (
+          <>
+            <Sidebar
+              views={views}
+              currentStep={currentStep}
+              selectedResource={selectedResource}
+            />
+            <main.HorizontalSplit>
+              <main.ContentMinWidth>
+                <TopBarContainer>
+                  <Text typography="h5" bold>
+                    Manage Access
+                  </Text>
+                  <DiscoverUserMenuNav logout={logout} />
+                </TopBarContainer>
+                <FeatureBox pt={4} maxWidth="1450px">
+                  {content}
+                </FeatureBox>
+              </main.ContentMinWidth>
+            </main.HorizontalSplit>
+          </>
+        )}
+      </MainContainer>
+    </BannerList>
   );
 }
 
-const Bullet = styled.span`
-  height: 14px;
-  width: 14px;
-  border: 1px solid #9b9b9b;
-  border-radius: 50%;
-  margin-right: 8px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-`;
-
-const StepsContainer = styled(Text)`
-  display: flex;
-  align-items: center;
-  color: ${props => props.theme.colors.text.secondary};
-  margin-bottom: 8px;
-
-  &.active,
-  &.checked {
-    color: inherit;
-  }
-
-  &.active ${Bullet}, &.checked ${Bullet} {
-    border-color: ${props => props.theme.colors.secondary.main};
-    background: ${props => props.theme.colors.secondary.main};
-  }
-
-  &.active ${Bullet} {
-    :before {
-      content: '';
-      height: 8px;
-      width: 8px;
-      border-radius: 50%;
-      border: 2px solid ${props => props.theme.colors.primary.main};
-    }
-  }
-
-  &.checked ${Bullet} {
-    :before {
-      content: '✓';
-    }
-  }
-`;
-
-const StyledNav = styled(sideNav.Nav)`
-  min-width: 350px;
-  width: 350px;
-`;
-
-const StyledNavContent = styled(sideNav.Content)`
-  padding: 20px 32px 32px 32px;
-`;
-
-// TODO (lisa) we should look into reducing this width.
-// Any smaller than this will produce a double stacked horizontal scrollbar
-// making navigation harder.
-//
-// Our SelectResource component is the widest and can use some space
-// tightening. Also look into shrinking the side nav if possible.
 const MainContainer = styled(main.MainContainer)`
-  min-width: 1460px;
+  --sidebar-width: 280px;
 `;
