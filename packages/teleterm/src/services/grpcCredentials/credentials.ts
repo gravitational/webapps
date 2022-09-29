@@ -44,7 +44,7 @@ export function createInsecureServerCredentials(): ServerCredentials {
 /**
  * Checks if the gRPC connection should be encrypted.
  * The only source of truth is the type of tshd protocol.
- * Any other protocol than `unix` should be encrypted.
+ * Any protocol other than `unix` should be encrypted.
  * The same check is performed on the tshd side.
  */
 export function shouldEncryptConnection(
