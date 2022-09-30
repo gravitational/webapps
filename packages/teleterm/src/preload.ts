@@ -25,10 +25,14 @@ const loggerService = createLoggerService({
 });
 
 Logger.init(loggerService);
+const logger = new Logger('preload');
 
 contextBridge.exposeInMainWorld('loggerService', loggerService);
 
-contextBridge.exposeInMainWorld('electron', getElectronGlobals());
+contextBridge.exposeInMainWorld(
+  'electron',
+  withErrorLogging(getElectronGlobals())
+);
 
 async function getElectronGlobals(): Promise<ElectronGlobals> {
   const [addresses, credentials] = await Promise.all([
@@ -80,4 +84,18 @@ async function createGrpcCredentials(
     tshd: createClientCredentials(rendererKeyPair, tshdCert),
     shared: createClientCredentials(rendererKeyPair, sharedCert),
   };
+}
+
+// withErrorLogging logs the error if the promise returns a rejected value. Electron's contextBridge
+// loses the stack trace, so we want to log the error with its stack before it crosses the
+// contextBridge.
+async function withErrorLogging<ReturnValue>(
+  promise: Promise<ReturnValue>
+): Promise<ReturnValue> {
+  try {
+    return await promise;
+  } catch (e) {
+    logger.error(e);
+    throw e;
+  }
 }
