@@ -16,24 +16,14 @@
 
 import React from 'react';
 
-import { render, screen, fireEvent } from 'design/utils/testing';
+import { render, screen, userEvent } from 'design/utils/testing';
 
 import { TextSelectCopyMulti } from './TextSelectCopyMulti';
 
-beforeEach(() => {
-  jest.useFakeTimers();
-  Object.assign(window.navigator, {
-    clipboard: {
-      writeText: jest.fn().mockImplementation(() => Promise.resolve()),
-    },
-  });
-});
-
-afterEach(() => {
-  jest.resetAllMocks();
-});
+jest.useFakeTimers();
 
 test('changing of icon when button is clicked', async () => {
+  const user = userEvent.setup({ delay: null });
   render(<TextSelectCopyMulti lines={[{ text: 'some text to copy' }]} />);
 
   // Init button states.
@@ -41,12 +31,12 @@ test('changing of icon when button is clicked', async () => {
   expect(screen.queryByTestId('btn-check')).not.toBeVisible();
 
   // Clicking copy button should change the button icon to "check".
-  fireEvent.click(screen.getByTestId('btn-copy'));
-  await expect(screen.findByTestId('btn-check')).resolves.toBeVisible();
-  expect(screen.queryByTestId('btn-copy')).not.toBeVisible();
-  expect(window.navigator.clipboard.writeText).toHaveBeenCalledWith(
-    'some text to copy'
-  );
+  await user.click(screen.getByTestId('btn-copy'));
+  expect(screen.getByTestId('btn-check')).toBeVisible();
+  expect(screen.getByTestId('btn-copy')).not.toBeVisible();
+
+  const clipboardText = await navigator.clipboard.readText();
+  expect(clipboardText).toBe('some text to copy');
 
   // After set time out, the buttons should return to its initial state.
   jest.runAllTimers();
@@ -55,6 +45,7 @@ test('changing of icon when button is clicked', async () => {
 });
 
 test('correct copying of texts', async () => {
+  const user = userEvent.setup({ delay: null });
   render(
     <TextSelectCopyMulti
       lines={[
@@ -68,13 +59,11 @@ test('correct copying of texts', async () => {
   const btns = screen.queryAllByRole('button');
   expect(btns).toHaveLength(2);
 
-  fireEvent.click(btns[1]);
-  expect(window.navigator.clipboard.writeText).toHaveBeenCalledWith(
-    'text to copy2'
-  );
+  await user.click(btns[1]);
+  let clipboardText = await navigator.clipboard.readText();
+  expect(clipboardText).toBe('text to copy2');
 
-  fireEvent.click(btns[0]);
-  expect(window.navigator.clipboard.writeText).toHaveBeenCalledWith(
-    'text to copy1'
-  );
+  await user.click(btns[0]);
+  clipboardText = await navigator.clipboard.readText();
+  expect(clipboardText).toBe('text to copy1');
 });
