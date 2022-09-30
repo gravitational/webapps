@@ -59,6 +59,7 @@ export class DocumentsService {
     return {
       uri,
       clusterUri: opts.clusterUri,
+      requestId: opts.requestId,
       title: opts.title || 'Access Requests',
       kind: 'doc.access_requests',
       state: opts.state,

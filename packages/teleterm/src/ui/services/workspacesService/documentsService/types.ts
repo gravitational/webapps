@@ -72,6 +72,7 @@ export interface DocumentAccessRequests extends DocumentBase {
   kind: 'doc.access_requests';
   clusterUri: string;
   state: AccessRequestDocumentState;
+  requestId: string;
 }
 
 export interface DocumentPtySession extends DocumentBase {
@@ -117,6 +118,7 @@ export type CreateAccessRequestDocumentOpts = {
   clusterUri: string;
   state: AccessRequestDocumentState;
   title?: string;
+  requestId?: string;
 };
 
 export type AccessRequestDocumentState = 'browsing' | 'creating' | 'reviewing';
