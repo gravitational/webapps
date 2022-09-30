@@ -1,5 +1,7 @@
 import { ChannelCredentials, ClientDuplexStream } from '@grpc/grpc-js';
 
+import { FileTransferListeners } from 'shared/components/FileTransfer';
+
 import { TerminalServiceClient } from 'teleterm/services/tshd/v1/service_grpc_pb';
 import * as api from 'teleterm/services/tshd/v1/service_pb';
 import * as types from 'teleterm/services/tshd/types';
@@ -413,8 +415,37 @@ export default function createClient(
         });
       });
     },
-  };
 
+    transferFile(
+      options: api.FileTransferRequest.AsObject,
+      listeners: FileTransferListeners,
+      abortSignal?: types.TshAbortSignal
+    ): void {
+      const req = new api.FileTransferRequest()
+        .setLogin(options.login)
+        .setSource(options.source)
+        .setDestination(options.destination)
+        .setServerId(options.serverId)
+        .setClusterId(options.clusterId)
+        .setServerUri(options.serverUri)
+        .setDirection(options.direction);
+
+      const call = tshd.transferFile(req);
+      abortSignal.addEventListener(() => call.cancel());
+
+      call.on('data', (data: api.FileTransferProgress) =>
+        listeners.onProgress(data.getPercentage())
+      );
+      call.on('end', () => {
+        listeners.onComplete();
+        call.removeAllListeners();
+      });
+      call.on('error', error => {
+        listeners.onError(error);
+        call.removeAllListeners();
+      });
+    },
+  };
   return client;
 }
 
