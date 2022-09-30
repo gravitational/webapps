@@ -16,11 +16,19 @@ limitations under the License.
 
 import React from 'react';
 
-import Document from 'teleterm/ui/Document';
+import {
+  FileTransferActionBar,
+  FileTransfer,
+  FileTransferContextProvider,
+} from 'shared/components/FileTransfer';
 
-import useDocTerminal, { Props } from './useDocumentTerminal';
+import Document from 'teleterm/ui/Document';
+import { useAppContext } from 'teleterm/ui/appContextProvider';
+
 import Terminal from './Terminal';
 import DocumentReconnect from './DocumentReconnect';
+import useDocTerminal, { Props } from './useDocumentTerminal';
+import { getTshFileTransferHandlers } from './tshFileTransferHandlers';
 
 export default function DocumentTerminalContainer({ doc, visible }: Props) {
   if (doc.kind === 'doc.terminal_tsh_node' && doc.status === 'disconnected') {
@@ -31,9 +39,11 @@ export default function DocumentTerminalContainer({ doc, visible }: Props) {
 }
 
 export function DocumentTerminal(props: Props & { visible: boolean }) {
+  const ctx = useAppContext();
   const { visible, doc } = props;
   const state = useDocTerminal(doc);
   const ptyProcess = state.data?.ptyProcess;
+  const clusterId = doc.leafClusterId || doc.rootClusterId;
 
   return (
     <Document
@@ -44,11 +54,72 @@ export function DocumentTerminal(props: Props & { visible: boolean }) {
       autoFocusDisabled={true}
     >
       {ptyProcess && (
-        <Terminal
-          ptyProcess={ptyProcess}
-          visible={props.visible}
-          onEnterKey={state.data.refreshTitle}
-        />
+        <>
+          {doc.kind === 'doc.terminal_tsh_node' && (
+            <>
+              <FileTransferContextProvider>
+                <FileTransferActionBar
+                  isConnected={doc.status === 'connected'}
+                />
+                <FileTransfer
+                  beforeClose={() =>
+                    // TODO (gzdunek): replace with a native dialog
+                    window.confirm(
+                      'Are you sure you want to cancel file transfers?'
+                    )
+                  }
+                  transferHandlers={{
+                    getDownloader: async sourcePath => {
+                      const fileDialog =
+                        await ctx.mainProcessClient.showFileSaveDialog(
+                          sourcePath
+                        );
+                      if (fileDialog.canceled) {
+                        return;
+                      }
+                      return (fileTransferListeners, abortController) => {
+                        getTshFileTransferHandlers(
+                          ctx.fileTransferClient
+                        ).download(
+                          {
+                            source: sourcePath,
+                            clusterId,
+                            serverId: doc.serverId,
+                            login: doc.login,
+                            destination: fileDialog.filePath,
+                          },
+                          fileTransferListeners,
+                          abortController
+                        );
+                      };
+                    },
+                    getUploader:
+                      async (destinationPath, file) =>
+                      (fileTransferListeners, abortController) =>
+                        getTshFileTransferHandlers(
+                          ctx.fileTransferClient
+                        ).upload(
+                          {
+                            destination: destinationPath,
+                            clusterId,
+                            serverId: doc.serverId,
+                            login: doc.login,
+                            source: file.path,
+                          },
+                          fileTransferListeners,
+                          abortController
+                        ),
+                  }}
+                />
+              </FileTransferContextProvider>
+            </>
+          )}
+          <Terminal
+            ptyProcess={ptyProcess}
+            visible={props.visible}
+            onEnterKey={state.data.refreshTitle}
+          />
+        </>
       )}
     </Document>
   );
