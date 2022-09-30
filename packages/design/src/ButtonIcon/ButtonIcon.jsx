@@ -50,6 +50,7 @@ const fromProps = props => {
   return {
     '&:disabled': {
       color: theme.colors.action.disabled,
+      pointerEvents: 'none',
     },
     '&:hover, &:focus': {
       background: theme.colors.action.hover,
