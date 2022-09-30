@@ -67,9 +67,11 @@ describe('restoring workspace', () => {
   it('restores the workspace if it there is a persisted state for given clusterUri', () => {
     const testClusterUri = '/clusters/test-uri';
     const testWorkspace: Workspace = {
-      assumed: {},
-      isAccessRequestsBarCollapsed: true,
-      pendingAccessRequest: getEmptyPendingAccessRequest(),
+      accessRequests: {
+        assumed: {},
+        isAccessRequestsBarCollapsed: true,
+        pendingAccessRequest: getEmptyPendingAccessRequest(),
+      },
       localClusterUri: testClusterUri,
       documents: [
         {

@@ -188,9 +188,11 @@ test('getAutocompleteResult returns correct result for a database name suggestio
   jest
     .spyOn(WorkspacesServiceMock.prototype, 'getActiveWorkspace')
     .mockImplementation(() => ({
-      assumed: {},
-      isAccessRequestsBarCollapsed: false,
-      pendingAccessRequest: getEmptyPendingAccessRequest(),
+      accessRequests: {
+        assumed: {},
+        isAccessRequestsBarCollapsed: false,
+        pendingAccessRequest: getEmptyPendingAccessRequest(),
+      },
       localClusterUri: 'test_uri',
       documents: [],
       location: '',
@@ -354,9 +356,11 @@ test('getAutocompleteResult returns correct result for an SSH host suggestion ri
   jest
     .spyOn(WorkspacesServiceMock.prototype, 'getActiveWorkspace')
     .mockImplementation(() => ({
-      assumed: {},
-      isAccessRequestsBarCollapsed: false,
-      pendingAccessRequest: getEmptyPendingAccessRequest(),
+      accessRequests: {
+        assumed: {},
+        isAccessRequestsBarCollapsed: false,
+        pendingAccessRequest: getEmptyPendingAccessRequest(),
+      },
       localClusterUri: 'test_uri',
       documents: [],
       location: '',
@@ -416,9 +420,11 @@ test('getAutocompleteResult returns correct result for a partial match on an SSH
   jest
     .spyOn(WorkspacesServiceMock.prototype, 'getActiveWorkspace')
     .mockImplementation(() => ({
-      assumed: {},
-      isAccessRequestsBarCollapsed: false,
-      pendingAccessRequest: getEmptyPendingAccessRequest(),
+      accessRequests: {
+        assumed: {},
+        isAccessRequestsBarCollapsed: false,
+        pendingAccessRequest: getEmptyPendingAccessRequest(),
+      },
       localClusterUri: 'test_uri',
       documents: [],
       location: '',

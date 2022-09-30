@@ -54,15 +54,13 @@ export class AccessRequestsService {
   }
 
   getAssumedRoles() {
-    const assumed = this.getState().assumed;
-    let roles = [];
-    Object.keys(assumed).forEach(key => {
-      const request = assumed[key];
-      const newRoles = request.roles.filter(r => !roles.includes(r));
-      roles = [...roles, ...newRoles];
-    });
-
-    return roles;
+    // return only unique roles from the flatMap of all roles
+    // assumed in each request
+    return [
+      ...new Set(
+        Object.values(this.getAssumed()).flatMap(request => request.roles)
+      ),
+    ];
   }
 
   addToAssumed(request: AccessRequest) {
@@ -102,16 +100,12 @@ export class AccessRequestsService {
 
   addOrRemoveResource(kind: ResourceKind, name: string, resourceName: string) {
     this.setState(draftState => {
-      let kindIds = { ...draftState.pendingAccessRequest[kind] };
+      const kindIds = draftState.pendingAccessRequest[kind];
       if (kindIds[name]) {
         delete kindIds[name];
       } else {
-        kindIds[name] = resourceName ? resourceName : name;
+        kindIds[name] = resourceName ?? name;
       }
-      draftState.pendingAccessRequest = {
-        ...draftState.pendingAccessRequest,
-        [kind]: kindIds,
-      };
     });
   }
 }

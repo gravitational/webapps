@@ -102,9 +102,11 @@ function getTestSetup({ documents }: { documents: Document[] }) {
     },
     getActiveWorkspace() {
       return {
-        assumed: {},
-        isAccessRequestsBarCollapsed: false,
-        pendingAccessRequest: getEmptyPendingAccessRequest(),
+        accessRequests: {
+          assumed: {},
+          isAccessRequestsBarCollapsed: false,
+          pendingAccessRequest: getEmptyPendingAccessRequest(),
+        },
         documents,
         location: undefined,
         localClusterUri: 'test_uri',

@@ -31,9 +31,11 @@ export interface Workspace {
   localClusterUri: string;
   documents: Document[];
   location: string;
-  isAccessRequestsBarCollapsed: boolean;
-  pendingAccessRequest: PendingAccessRequest;
-  assumed: Record<string, AccessRequest>;
+  accessRequests: {
+    isAccessRequestsBarCollapsed: boolean;
+    pendingAccessRequest: PendingAccessRequest;
+    assumed: Record<string, AccessRequest>;
+  };
   previous?: {
     assumed: Record<string, AccessRequest>;
     documents: Document[];
@@ -139,11 +141,11 @@ export class WorkspacesService extends ImmutableStore<WorkspacesState> {
         clusterUri,
         new AccessRequestsService(
           () => {
-            return this.state.workspaces[clusterUri];
+            return this.state.workspaces[clusterUri].accessRequests;
           },
           newState =>
             this.setState(draftState => {
-              newState(draftState.workspaces[clusterUri]);
+              newState(draftState.workspaces[clusterUri].accessRequests);
             })
         )
       );
@@ -258,10 +260,13 @@ export class WorkspacesService extends ImmutableStore<WorkspacesState> {
 
         workspaces[cluster.uri] = {
           ...workspaceDefaultState,
-          assumed: this.removeExpiredAssumedRoles(
-            persistedWorkspace?.assumed || {},
-            cluster.loggedInUser
-          ),
+          accessRequests: {
+            ...workspaceDefaultState.accessRequests,
+            assumed: this.removeExpiredAssumedRoles(
+              persistedWorkspace?.accessRequests?.assumed || {},
+              cluster.loggedInUser
+            ),
+          },
           previous: this.canReopenPreviousDocuments({
             previousDocuments: persistedWorkspaceDocuments,
             currentDocuments: workspaceDefaultState.documents,
@@ -289,7 +294,7 @@ export class WorkspacesService extends ImmutableStore<WorkspacesState> {
     user: LoggedInUser
   ) {
     const validRequests = {};
-    const requests = Object.keys(assumed).map(id => assumed[id]);
+    const requests = Object.values(assumed);
     requests.forEach(request => {
       const expired = isPast(new Date(request.expires));
       // only add any assumed that still exist on the loggedInUser cert
@@ -356,12 +361,14 @@ export class WorkspacesService extends ImmutableStore<WorkspacesState> {
       rootClusterUri
     ).createClusterDocument({ clusterUri: localClusterUri });
     return {
-      assumed: {},
-      pendingAccessRequest: getEmptyPendingAccessRequest(),
+      accessRequests: {
+        assumed: {},
+        pendingAccessRequest: getEmptyPendingAccessRequest(),
+        isAccessRequestsBarCollapsed: false,
+      },
       localClusterUri,
       location: defaultDocument.uri,
       documents: [defaultDocument],
-      isAccessRequestsBarCollapsed: false,
     };
   }
 
@@ -373,9 +380,12 @@ export class WorkspacesService extends ImmutableStore<WorkspacesState> {
     for (let w in this.state.workspaces) {
       const workspace = this.state.workspaces[w];
       stateToSave.workspaces[w] = {
-        isAccessRequestsBarCollapsed: false,
-        assumed: workspace.previous?.assumed || workspace.assumed,
-        pendingAccessRequest: getEmptyPendingAccessRequest(),
+        accessRequests: {
+          isAccessRequestsBarCollapsed: false,
+          assumed:
+            workspace.previous?.assumed || workspace.accessRequests?.assumed,
+          pendingAccessRequest: getEmptyPendingAccessRequest(),
+        },
         localClusterUri: workspace.localClusterUri,
         location: workspace.previous?.location || workspace.location,
         documents: workspace.previous?.documents || workspace.documents,
