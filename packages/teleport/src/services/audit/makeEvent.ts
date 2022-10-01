@@ -714,8 +714,8 @@ export const formatters: Formatters = {
     desc: 'Database Session Ended',
     format: ({ user, db_service, db_name }) =>
       `User [${user}] has disconnected ${
-          db_name ? 'from database [' + db_name + '] ' : ''
-        }on [${db_service}]`,
+        db_name ? 'from database [' + db_name + '] ' : ''
+      }on [${db_service}]`,
   },
   [eventCodes.DATABASE_SESSION_QUERY]: {
     type: 'db.session.query',
