@@ -700,7 +700,7 @@ export const formatters: Formatters = {
     desc: 'Database Session Started',
     format: ({ user, db_service, db_name, db_user }) =>
       `User [${user}] has connected ${
-        db_name ? 'to database [' + db_name + '] ' : ''
+        db_name ? `to database [${db_name}] ` : ''
       }as [${db_user}] on [${db_service}]`,
   },
   [eventCodes.DATABASE_SESSION_STARTED_FAILURE]: {
