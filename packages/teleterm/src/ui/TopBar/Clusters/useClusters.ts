@@ -15,7 +15,6 @@ export function useClusters() {
   }
 
   function hasPendingAccessRequest() {
-    const rootClusterUri = workspacesService.getRootClusterUri();
     const accessRequestsService =
       workspacesService.getActiveWorkspaceAccessRequestsService();
     if (!accessRequestsService) {
@@ -34,14 +33,10 @@ export function useClusters() {
   }
 
   function clearPendingAccessRequest() {
-    const rootClusterUri = workspacesService.getRootClusterUri();
     const accessRequestsService =
       workspacesService.getActiveWorkspaceAccessRequestsService();
-    if (!accessRequestsService) {
-      return false;
-    }
 
-    accessRequestsService.clearPendingAccessRequest();
+    accessRequestsService?.clearPendingAccessRequest();
   }
 
   const rootClusterUri = workspacesService.getRootClusterUri();

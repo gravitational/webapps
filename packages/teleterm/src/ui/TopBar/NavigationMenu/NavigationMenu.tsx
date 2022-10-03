@@ -6,6 +6,7 @@ import { MoreVert, OpenBox, Add } from 'design/Icon';
 import { Box, Text, Flex } from 'design';
 
 import { DocumentsService } from 'teleterm/ui/services/workspacesService';
+import { TopBarButton } from 'teleterm/ui/TopBar/';
 
 import { useIdentity } from '../Identity/useIdentity';
 
@@ -64,13 +65,13 @@ export function NavigationMenu() {
 
   return (
     <>
-      <Container
+      <TopBarButton
         ref={selectorRef}
         isOpened={isPopoverOpened}
         onClick={() => setIsPopoverOpened(true)}
       >
         <MoreVert fontSize={6} />
-      </Container>
+      </TopBarButton>
       <Popover
         open={isPopoverOpened}
         anchorEl={selectorRef.current}
@@ -88,7 +89,6 @@ export function NavigationMenu() {
                   <NavigationItem
                     key={index}
                     item={item}
-                    // Icon={item.Icon}
                     closeMenu={() => setIsPopoverOpened(false)}
                   />
                 )
@@ -100,28 +100,6 @@ export function NavigationMenu() {
     </>
   );
 }
-
-const Container = styled.button`
-  display: flex;
-  font-family: inherit;
-  background: inherit;
-  cursor: pointer;
-  align-items: center;
-  color: ${props => props.theme.colors.text.primary};
-  flex-direction: row;
-  height: 100%;
-  border-radius: 4px;
-  border-width: 1px;
-  border-style: solid;
-  border-color: ${props =>
-    props.isOpened
-      ? props.theme.colors.action.disabledBackground
-      : 'transparent'};
-
-  &:hover {
-    background: ${props => props.theme.colors.primary.light};
-  }
-`;
 
 const MenuContainer = styled(Box)`
   background: ${props => props.theme.colors.primary.light};

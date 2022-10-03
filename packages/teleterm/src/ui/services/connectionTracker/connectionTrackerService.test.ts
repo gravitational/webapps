@@ -134,8 +134,8 @@ it('updates the port of a gateway connection when the underlying doc gets update
     draftState.workspaces['/clusters/localhost'] = {
       accessRequests: {
         assumed: {},
-        pendingAccessRequest: getEmptyPendingAccessRequest(),
-        isAccessRequestsBarCollapsed: false,
+        pending: getEmptyPendingAccessRequest(),
+        isBarCollapsed: false,
       },
       localClusterUri: '',
       location: '',

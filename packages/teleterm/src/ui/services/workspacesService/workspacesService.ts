@@ -32,8 +32,8 @@ export interface Workspace {
   documents: Document[];
   location: string;
   accessRequests: {
-    isAccessRequestsBarCollapsed: boolean;
-    pendingAccessRequest: PendingAccessRequest;
+    isBarCollapsed: boolean;
+    pending: PendingAccessRequest;
     assumed: Record<string, AccessRequest>;
   };
   previous?: {
@@ -363,8 +363,8 @@ export class WorkspacesService extends ImmutableStore<WorkspacesState> {
     return {
       accessRequests: {
         assumed: {},
-        pendingAccessRequest: getEmptyPendingAccessRequest(),
-        isAccessRequestsBarCollapsed: false,
+        pending: getEmptyPendingAccessRequest(),
+        isBarCollapsed: false,
       },
       localClusterUri,
       location: defaultDocument.uri,
@@ -381,10 +381,10 @@ export class WorkspacesService extends ImmutableStore<WorkspacesState> {
       const workspace = this.state.workspaces[w];
       stateToSave.workspaces[w] = {
         accessRequests: {
-          isAccessRequestsBarCollapsed: false,
+          isBarCollapsed: false,
           assumed:
             workspace.previous?.assumed || workspace.accessRequests?.assumed,
-          pendingAccessRequest: getEmptyPendingAccessRequest(),
+          pending: getEmptyPendingAccessRequest(),
         },
         localClusterUri: workspace.localClusterUri,
         location: workspace.previous?.location || workspace.location,

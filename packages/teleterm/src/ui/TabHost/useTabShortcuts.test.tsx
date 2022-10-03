@@ -117,8 +117,8 @@ function getTestSetup({ documents }: { documents: Document[] }) {
       return {
         accessRequests: {
           assumed: {},
-          isAccessRequestsBarCollapsed: false,
-          pendingAccessRequest: getEmptyPendingAccessRequest(),
+          isBarCollapsed: false,
+          pending: getEmptyPendingAccessRequest(),
         },
         localClusterUri: 'test_uri',
         documents: [],

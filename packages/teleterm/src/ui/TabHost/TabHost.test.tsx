@@ -104,8 +104,8 @@ function getTestSetup({ documents }: { documents: Document[] }) {
       return {
         accessRequests: {
           assumed: {},
-          isAccessRequestsBarCollapsed: false,
-          pendingAccessRequest: getEmptyPendingAccessRequest(),
+          isBarCollapsed: false,
+          pending: getEmptyPendingAccessRequest(),
         },
         documents,
         location: undefined,

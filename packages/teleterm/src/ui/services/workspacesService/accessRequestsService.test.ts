@@ -50,17 +50,17 @@ function getMockAccessRequest(): AccessRequest {
 }
 
 function createService(
-  pendingAccessRequest: PendingAccessRequest,
+  pending: PendingAccessRequest,
   assumed: Record<string, AccessRequest>
 ): AccessRequestsService {
   const store = new ImmutableStore<{
-    isAccessRequestsBarCollapsed: boolean;
-    pendingAccessRequest: PendingAccessRequest;
+    isBarCollapsed: boolean;
+    pending: PendingAccessRequest;
     assumed: Record<string, AccessRequest>;
   }>();
   store.state = {
-    isAccessRequestsBarCollapsed: false,
-    pendingAccessRequest,
+    isBarCollapsed: false,
+    pending,
     assumed,
   };
   const service = new AccessRequestsService(

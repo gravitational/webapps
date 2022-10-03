@@ -393,23 +393,6 @@ export class ClustersService extends ImmutableStore<ClustersServiceState> {
     }
   }
 
-  getFetchCallback(clusterUri: string, resourceKind: ResourceKind) {
-    const cluster = this.state.clusters.get(clusterUri);
-    if (!cluster.connected) {
-      return;
-    }
-
-    switch (resourceKind) {
-      case 'node':
-        return this.client.getServers;
-      case 'db':
-        return this.client.getDatabases;
-      default: {
-        throw new Error(`Fetch not implemented for: ${resourceKind}`);
-      }
-    }
-  }
-
   async getAccessRequests(clusterUri: string) {
     const cluster = this.state.clusters.get(clusterUri);
     if (!cluster.connected) {

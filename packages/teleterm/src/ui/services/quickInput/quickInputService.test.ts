@@ -190,8 +190,8 @@ test('getAutocompleteResult returns correct result for a database name suggestio
     .mockImplementation(() => ({
       accessRequests: {
         assumed: {},
-        isAccessRequestsBarCollapsed: false,
-        pendingAccessRequest: getEmptyPendingAccessRequest(),
+        isBarCollapsed: false,
+        pending: getEmptyPendingAccessRequest(),
       },
       localClusterUri: 'test_uri',
       documents: [],
@@ -358,8 +358,8 @@ test('getAutocompleteResult returns correct result for an SSH host suggestion ri
     .mockImplementation(() => ({
       accessRequests: {
         assumed: {},
-        isAccessRequestsBarCollapsed: false,
-        pendingAccessRequest: getEmptyPendingAccessRequest(),
+        isBarCollapsed: false,
+        pending: getEmptyPendingAccessRequest(),
       },
       localClusterUri: 'test_uri',
       documents: [],
@@ -422,8 +422,8 @@ test('getAutocompleteResult returns correct result for a partial match on an SSH
     .mockImplementation(() => ({
       accessRequests: {
         assumed: {},
-        isAccessRequestsBarCollapsed: false,
-        pendingAccessRequest: getEmptyPendingAccessRequest(),
+        isBarCollapsed: false,
+        pending: getEmptyPendingAccessRequest(),
       },
       localClusterUri: 'test_uri',
       documents: [],

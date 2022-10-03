@@ -69,8 +69,8 @@ describe('restoring workspace', () => {
     const testWorkspace: Workspace = {
       accessRequests: {
         assumed: {},
-        isAccessRequestsBarCollapsed: true,
-        pendingAccessRequest: getEmptyPendingAccessRequest(),
+        isBarCollapsed: true,
+        pending: getEmptyPendingAccessRequest(),
       },
       localClusterUri: testClusterUri,
       documents: [
@@ -92,7 +92,7 @@ describe('restoring workspace', () => {
     expect(workspacesService.getWorkspaces()).toStrictEqual({
       [testClusterUri]: {
         assumed: {},
-        pendingAccessRequest: {
+        pending: {
           app: {},
           db: {},
           kube_cluster: {},
@@ -100,7 +100,7 @@ describe('restoring workspace', () => {
           role: {},
           windows_desktop: {},
         },
-        isAccessRequestsBarCollapsed: false,
+        isBarCollapsed: false,
         localClusterUri: testWorkspace.localClusterUri,
         documents: [clusterDocument],
         location: clusterDocument.uri,
@@ -123,7 +123,7 @@ describe('restoring workspace', () => {
     expect(workspacesService.getWorkspaces()).toStrictEqual({
       [testClusterUri]: {
         assumed: {},
-        pendingAccessRequest: {
+        pending: {
           app: {},
           db: {},
           kube_cluster: {},
@@ -131,7 +131,7 @@ describe('restoring workspace', () => {
           role: {},
           windows_desktop: {},
         },
-        isAccessRequestsBarCollapsed: false,
+        isBarCollapsed: false,
         localClusterUri: testClusterUri,
         documents: [clusterDocument],
         location: clusterDocument.uri,

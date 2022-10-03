@@ -1,5 +1,5 @@
 /*
-Copyright 2019 Gravitational, Inc.
+Copyright 2022 Gravitational, Inc.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -21,32 +21,31 @@ import { PendingAccessRequest } from '../workspacesService';
 export class AccessRequestsService {
   constructor(
     private getState: () => {
-      isAccessRequestsBarCollapsed: boolean;
-      pendingAccessRequest: PendingAccessRequest;
+      isBarCollapsed: boolean;
+      pending: PendingAccessRequest;
       assumed: Record<string, AccessRequest>;
     },
     private setState: (
       draftState: (draft: {
-        isAccessRequestsBarCollapsed: boolean;
-        pendingAccessRequest: PendingAccessRequest;
+        isBarCollapsed: boolean;
+        pending: PendingAccessRequest;
         assumed: Record<string, AccessRequest>;
       }) => void
     ) => void
   ) {}
 
   getCollapsed() {
-    return this.getState().isAccessRequestsBarCollapsed;
+    return this.getState().isBarCollapsed;
   }
 
   toggleBar() {
     this.setState(draftState => {
-      draftState.isAccessRequestsBarCollapsed =
-        !draftState.isAccessRequestsBarCollapsed;
+      draftState.isBarCollapsed = !draftState.isBarCollapsed;
     });
   }
 
   getPendingAccessRequest() {
-    return this.getState()?.pendingAccessRequest;
+    return this.getState().pending;
   }
 
   getAssumed() {
@@ -83,12 +82,12 @@ export class AccessRequestsService {
 
   clearPendingAccessRequest() {
     this.setState(draftState => {
-      draftState.pendingAccessRequest = getEmptyPendingAccessRequest();
+      draftState.pending = getEmptyPendingAccessRequest();
     });
   }
 
   getAddedResourceCount() {
-    const pendingAccessRequest = this.getState()?.pendingAccessRequest;
+    const pendingAccessRequest = this.getState().pending;
     return (
       Object.keys(pendingAccessRequest.node).length +
       Object.keys(pendingAccessRequest.db).length +
@@ -100,7 +99,7 @@ export class AccessRequestsService {
 
   addOrRemoveResource(kind: ResourceKind, name: string, resourceName: string) {
     this.setState(draftState => {
-      const kindIds = draftState.pendingAccessRequest[kind];
+      const kindIds = draftState.pending[kind];
       if (kindIds[name]) {
         delete kindIds[name];
       } else {
