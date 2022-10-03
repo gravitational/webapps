@@ -156,7 +156,7 @@ export const useFilesStore = () => {
 
   const files = useMemo(
     () => state.ids.map(id => state.filesById[id]),
-    [state.filesById]
+    [state.ids, state.filesById]
   );
 
   const isAnyTransferInProgress = useCallback(
