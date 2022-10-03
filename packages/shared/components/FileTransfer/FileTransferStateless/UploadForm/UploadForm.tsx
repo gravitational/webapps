@@ -31,15 +31,7 @@ export function UploadForm(props: UploadFormProps) {
   const [destinationPath, setDestinationPath] = useState('~/');
 
   function onFileSelected(e: React.ChangeEvent<HTMLInputElement>): void {
-    upload(extractFilesFromFileList(e.target.files));
-  }
-
-  function extractFilesFromFileList(fileList: FileList): File[] {
-    const filesAsArray: File[] = [];
-    for (let i = 0; i < fileList.length; i++) {
-      filesAsArray.push(fileList[i]);
-    }
-    return filesAsArray;
+    upload(Array.from(e.target.files));
   }
 
   function upload(files: File[]): void {
@@ -60,7 +52,7 @@ export function UploadForm(props: UploadFormProps) {
     const { files } = e.dataTransfer;
     e.preventDefault();
     e.stopPropagation();
-    upload(extractFilesFromFileList(files));
+    upload(Array.from(files));
   }
 
   function handleKeyDown(event: React.KeyboardEvent): void {
