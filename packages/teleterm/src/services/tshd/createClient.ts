@@ -170,9 +170,8 @@ export default function createClient(
     },
 
     async getAccessRequest(clusterUri: string, requestId: string) {
-      const req = new api.GetAccessRequestsRequest()
-        .setClusterUri(clusterUri)
-        .setId(requestId);
+      const req = new api.GetAccessRequestsRequest().setClusterUri(clusterUri);
+      // .setId(requestId);
       return new Promise<types.AccessRequest>((resolve, reject) => {
         tshd.getAccessRequest(req, (err, response) => {
           if (err) {
@@ -227,7 +226,7 @@ export default function createClient(
 
     async createAccessRequest(params: types.CreateAccessRequestParams) {
       const req = new api.CreateAccessRequestRequest()
-        .setClusterUri(params.clusterUri)
+        .setRootClusterUri(params.clusterUri)
         .setSuggestedReviewersList(params.suggestedReviewers)
         .setRolesList(params.roles)
         .setResourceIdsList(
@@ -253,19 +252,17 @@ export default function createClient(
 
     async deleteAccessRequest(clusterUri: string, requestId: string) {
       const req = new api.DeleteAccessRequestRequest()
-        .setClusterUri(clusterUri)
+        .setRootClusterUri(clusterUri)
         .setRequestId(requestId);
-      return new Promise<types.DeleteAccessRequestResponse>(
-        (resolve, reject) => {
-          tshd.deleteAccessRequest(req, (err, response) => {
-            if (err) {
-              reject(err);
-            } else {
-              resolve(response.toObject());
-            }
-          });
-        }
-      );
+      return new Promise<void>((resolve, reject) => {
+        tshd.deleteAccessRequest(req, err => {
+          if (err) {
+            reject(err);
+          } else {
+            resolve();
+          }
+        });
+      });
     },
 
     async assumeRole(
@@ -274,15 +271,15 @@ export default function createClient(
       dropIds: string[]
     ) {
       const req = new api.AssumeRoleRequest()
-        .setClusterUri(clusterUri)
+        .setRootClusterUri(clusterUri)
         .setAccessRequestIdsList(requestIds)
         .setDropRequestIdsList(dropIds);
-      return new Promise<types.AssumeRoleResponse>((resolve, reject) => {
-        tshd.assumeRole(req, (err, response) => {
+      return new Promise<void>((resolve, reject) => {
+        tshd.assumeRole(req, err => {
           if (err) {
             reject(err);
           } else {
-            resolve(response.toObject());
+            resolve();
           }
         });
       });
@@ -293,7 +290,7 @@ export default function createClient(
       params: types.ReviewAccessRequestParams
     ) {
       const req = new api.ReviewAccessRequestRequest()
-        .setClusterUri(clusterUri)
+        .setRootClusterUri(clusterUri)
         .setRequestId(params.id)
         .setState(params.state)
         .setReason(params.reason)

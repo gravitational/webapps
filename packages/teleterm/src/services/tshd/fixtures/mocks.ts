@@ -6,8 +6,6 @@ import {
   CreateGatewayParams,
   Database,
   Gateway,
-  AssumeRoleResponse,
-  DeleteAccessRequestResponse,
   GetDatabasesResponse,
   GetServersResponse,
   Kube,
@@ -38,11 +36,8 @@ export class MockTshClient implements TshClient {
     clusterUri: string,
     requestIds: string[],
     dropIds: string[]
-  ) => Promise<AssumeRoleResponse>;
-  deleteAccessRequest: (
-    clusterUri: string,
-    requestId: string
-  ) => Promise<DeleteAccessRequestResponse>;
+  ) => Promise<void>;
+  deleteAccessRequest: (clusterUri: string, requestId: string) => Promise<void>;
   getAccessRequests: (clusterUri: string) => Promise<AccessRequest.AsObject[]>;
   getAccessRequest: (
     clusterUri: string,

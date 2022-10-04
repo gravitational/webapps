@@ -22,9 +22,6 @@ export type ResourceId = apiAccessRequest.ResourceID.AsObject;
 export type AccessRequestReview = apiAccessRequest.AccessRequestReview.AsObject;
 export type GetServersResponse = apiService.GetServersResponse.AsObject;
 export type GetDatabasesResponse = apiService.GetDatabasesResponse.AsObject;
-export type AssumeRoleResponse = apiService.AssumeRoleResponse.AsObject;
-export type DeleteAccessRequestResponse =
-  apiService.DeleteAccessRequestResponse.AsObject;
 // Available types are listed here:
 // https://github.com/gravitational/teleport/blob/v9.0.3/lib/defaults/defaults.go#L513-L530
 //
@@ -75,7 +72,7 @@ export type TshClient = {
     clusterUri: string,
     requestIds: string[],
     dropIds: string[]
-  ) => Promise<AssumeRoleResponse>;
+  ) => Promise<void>;
   getRequestableRoles: (clusterUri: string) => Promise<string[]>;
   getServers: (params: ServerSideParams) => Promise<GetServersResponse>;
   getAccessRequests: (clusterUri: string) => Promise<AccessRequest[]>;
@@ -90,10 +87,7 @@ export type TshClient = {
   createAccessRequest: (
     params: CreateAccessRequestParams
   ) => Promise<AccessRequest>;
-  deleteAccessRequest: (
-    clusterUri: string,
-    requestId: string
-  ) => Promise<DeleteAccessRequestResponse>;
+  deleteAccessRequest: (clusterUri: string, requestId: string) => Promise<void>;
   createAbortController: () => TshAbortController;
   addRootCluster: (addr: string) => Promise<Cluster>;
 
