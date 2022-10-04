@@ -170,8 +170,9 @@ export default function createClient(
     },
 
     async getAccessRequest(clusterUri: string, requestId: string) {
-      const req = new api.GetAccessRequestsRequest().setClusterUri(clusterUri);
-      // .setId(requestId);
+      const req = new api.GetAccessRequestRequest()
+        .setClusterUri(clusterUri)
+        .setId(requestId);
       return new Promise<types.AccessRequest>((resolve, reject) => {
         tshd.getAccessRequest(req, (err, response) => {
           if (err) {

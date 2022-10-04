@@ -91,16 +91,18 @@ describe('restoring workspace', () => {
     workspacesService.restorePersistedState();
     expect(workspacesService.getWorkspaces()).toStrictEqual({
       [testClusterUri]: {
-        assumed: {},
-        pending: {
-          app: {},
-          db: {},
-          kube_cluster: {},
-          node: {},
-          role: {},
-          windows_desktop: {},
+        accessRequests: {
+          assumed: {},
+          pending: {
+            app: {},
+            db: {},
+            kube_cluster: {},
+            node: {},
+            role: {},
+            windows_desktop: {},
+          },
+          isBarCollapsed: false,
         },
-        isBarCollapsed: false,
         localClusterUri: testWorkspace.localClusterUri,
         documents: [clusterDocument],
         location: clusterDocument.uri,
@@ -122,16 +124,18 @@ describe('restoring workspace', () => {
     workspacesService.restorePersistedState();
     expect(workspacesService.getWorkspaces()).toStrictEqual({
       [testClusterUri]: {
-        assumed: {},
-        pending: {
-          app: {},
-          db: {},
-          kube_cluster: {},
-          node: {},
-          role: {},
-          windows_desktop: {},
+        accessRequests: {
+          isBarCollapsed: false,
+          assumed: {},
+          pending: {
+            app: {},
+            db: {},
+            kube_cluster: {},
+            node: {},
+            role: {},
+            windows_desktop: {},
+          },
         },
-        isBarCollapsed: false,
         localClusterUri: testClusterUri,
         documents: [clusterDocument],
         location: clusterDocument.uri,
