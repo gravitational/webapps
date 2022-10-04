@@ -43,7 +43,6 @@ export default class Client extends EventEmitterWebAuthnSender {
   protected codec: Codec;
   protected socket: WebSocket | undefined;
   private socketAddr: string;
-  sharedDirectory: FileSystemDirectoryHandle | undefined;
 
   private logger = Logger.create('TDPClient');
 
@@ -91,6 +90,9 @@ export default class Client extends EventEmitterWebAuthnSender {
         case MessageType.PNG_FRAME:
           this.handlePngFrame(buffer);
           break;
+        case MessageType.PNG2_FRAME:
+          this.handlePng2Frame(buffer);
+          break;
         case MessageType.CLIENT_SCREEN_SPEC:
           this.handleClientScreenSpec(buffer);
           break;
@@ -108,12 +110,6 @@ export default class Client extends EventEmitterWebAuthnSender {
           break;
         case MessageType.MFA_JSON:
           this.handleMfaChallenge(buffer);
-          break;
-        case MessageType.SHARED_DIRECTORY_ACKNOWLEDGE:
-          this.handleSharedDirectoryAcknowledge(buffer);
-          break;
-        case MessageType.SHARED_DIRECTORY_INFO_REQUEST:
-          this.handleSharedDirectoryInfoRequest(buffer);
           break;
         default:
           this.logger.warn(`received unsupported message type ${messageType}`);
@@ -162,6 +158,12 @@ export default class Client extends EventEmitterWebAuthnSender {
     );
   }
 
+  handlePng2Frame(buffer: ArrayBuffer) {
+    this.codec.decodePng2Frame(buffer, (pngFrame: PngFrame) =>
+      this.emit(TdpClientEvent.TDP_PNG_FRAME, pngFrame)
+    );
+  }
+
   // TODO(isaiah): neither of the TdpClientEvent.TDP_ERROR are accurate, they should
   // instead be associated with a new event TdpClientEvent.CLIENT_ERROR.
   // https://github.com/gravitational/webapps/issues/615
@@ -195,25 +197,6 @@ export default class Client extends EventEmitterWebAuthnSender {
       new Error(`Encountered shared directory error: ${errCode}`)
     );
     return false;
-  }
-
-  handleSharedDirectoryAcknowledge(buffer: ArrayBuffer) {
-    const ack = this.codec.decodeSharedDirectoryAcknowledge(buffer);
-
-    if (!this.wasSuccessful(ack.errCode)) {
-      return;
-    }
-
-    this.logger.info('Started sharing directory: ' + this.sharedDirectory.name);
-  }
-
-  handleSharedDirectoryInfoRequest(buffer: ArrayBuffer) {
-    const req = this.codec.decodeSharedDirectoryInfoRequest(buffer);
-    // TODO(isaiah): remove debug once message is handled.
-    this.logger.debug(
-      'Received SharedDirectoryInfoRequest: ' + JSON.stringify(req)
-    );
-    // TODO(isaiah): here's where we'll respond with SharedDirectoryInfoResponse
   }
 
   protected send(
@@ -259,32 +242,6 @@ export default class Client extends EventEmitterWebAuthnSender {
       jsonString: JSON.stringify(data),
     });
     this.send(msg);
-  }
-
-  private sharedDirectoryReady() {
-    if (!this.sharedDirectory) {
-      this.handleError(
-        new Error(
-          'attempted to use a shared directory before one was initialized'
-        )
-      );
-      return false;
-    }
-
-    return true;
-  }
-
-  sendSharedDirectoryAnnounce() {
-    if (!this.sharedDirectoryReady()) return;
-    this.socket.send(
-      this.codec.encodeSharedDirectoryAnnounce({
-        completionId: 0, // This is always the first request.
-        // Hardcode directoryId for now since we only support sharing 1 directory.
-        // We're using 2 because the smartcard device is hardcoded to 1 in the backend.
-        directoryId: 2,
-        name: this.sharedDirectory.name,
-      })
-    );
   }
 
   resize(spec: ClientScreenSpec) {

@@ -21,9 +21,7 @@ export enum MessageType {
   MOUSE_WHEEL_SCROLL = 8,
   ERROR = 9,
   MFA_JSON = 10,
-  SHARED_DIRECTORY_ANNOUNCE = 11,
-  SHARED_DIRECTORY_ACKNOWLEDGE = 12,
-  SHARED_DIRECTORY_INFO_REQUEST = 13,
+  PNG2_FRAME = 27,
   __LAST, // utility value
 }
 
@@ -416,31 +414,6 @@ export default class Codec {
     return buffer;
   }
 
-  // | message type (11) | completion_id uint32 | directory_id uint32 | name_length uint32 | name []byte |
-  encodeSharedDirectoryAnnounce(
-    sharedDirAnnounce: SharedDirectoryAnnounce
-  ): Message {
-    const dataUtf8array = this.encoder.encode(sharedDirAnnounce.name);
-
-    const bufLen = byteLength + 3 * uint32Length + dataUtf8array.length;
-    const buffer = new ArrayBuffer(bufLen);
-    const view = new DataView(buffer);
-    let offset = 0;
-
-    view.setUint8(offset++, MessageType.SHARED_DIRECTORY_ANNOUNCE);
-    view.setUint32(offset, sharedDirAnnounce.completionId);
-    offset += uint32Length;
-    view.setUint32(offset, sharedDirAnnounce.directoryId);
-    offset += uint32Length;
-    view.setUint32(offset, dataUtf8array.length);
-    offset += uint32Length;
-    dataUtf8array.forEach(byte => {
-      view.setUint8(offset++, byte);
-    });
-
-    return buffer;
-  }
-
   // decodeClipboardData decodes clipboard data
   decodeClipboardData(buffer: ArrayBuffer): ClipboardData {
     return {
@@ -517,7 +490,33 @@ export default class Codec {
     return pngFrame;
   }
 
-  // | message type (12) | errCode error | directory_id uint32 |
+  // decodePng2Frame decodes a raw tdp PNG frame message and returns it as a PngFrame
+  // | message type (27) | png_length uint32 | left uint32 | top uint32 | right uint32 | bottom uint32 | data []byte |
+  decodePng2Frame(
+    buffer: ArrayBuffer,
+    onload: (pngFrame: PngFrame) => any
+  ): PngFrame {
+    const dv = new DataView(buffer);
+    const image = new Image();
+    let offset = 0;
+    offset += byteLength; // eat message type
+    offset += uint32Length; // eat png_length
+    const left = dv.getUint32(offset);
+    offset += uint32Length; // eat left
+    const top = dv.getUint32(offset);
+    offset += uint32Length; // eat top
+    const right = dv.getUint32(offset);
+    offset += uint32Length; // eat right
+    const bottom = dv.getUint32(offset);
+    offset += uint32Length; // eat bottom
+    const pngFrame = { left, top, right, bottom, data: image };
+    pngFrame.data.onload = onload(pngFrame);
+    pngFrame.data.src = this.asBase64Url(buffer, offset);
+
+    return pngFrame;
+  }
+
+  // | message type (12) | err_code error | directory_id uint32 |
   decodeSharedDirectoryAcknowledge(
     buffer: ArrayBuffer
   ): SharedDirectoryAcknowledge {
