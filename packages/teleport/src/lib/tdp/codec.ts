@@ -70,45 +70,6 @@ export type MfaJson = {
   jsonString: string;
 };
 
-// | message type (11) | completion_id uint32 | directory_id uint32 | name_length uint32 | name []byte |
-export type SharedDirectoryAnnounce = {
-  completionId: number;
-  directoryId: number;
-  name: string;
-};
-
-// | message type (12) | errCode error | directory_id uint32 |
-export type SharedDirectoryAcknowledge = {
-  errCode: SharedDirectoryErrCode;
-  directoryId: number;
-};
-
-// | message type (13) | completion_id uint32 | directory_id uint32 | path_length uint32 | path []byte |
-export type SharedDirectoryInfoRequest = {
-  completionId: number;
-  directoryId: number;
-  path: string;
-};
-
-export enum SharedDirectoryErrCode {
-  // nil (no error, operation succeeded)
-  Nil = 0,
-  // operation failed
-  Failed = 1,
-  // resource does not exist
-  DoesNotExist = 2,
-  // resource already exists
-  AlreadyExists = 3,
-}
-
-function toSharedDirectoryErrCode(errCode: number): SharedDirectoryErrCode {
-  if (!(errCode in SharedDirectoryErrCode)) {
-    throw new Error(`attempted to convert invalid error code ${errCode}`);
-  }
-
-  return errCode as SharedDirectoryErrCode;
-}
-
 // TdaCodec provides an api for encoding and decoding teleport desktop access protocol messages [1]
 // Buffers in TdaCodec are manipulated as DataView's [2] in order to give us low level control
 // of endianness (defaults to big endian, which is what we want), as opposed to using *Array
@@ -514,44 +475,6 @@ export default class Codec {
     pngFrame.data.src = this.asBase64Url(buffer, offset);
 
     return pngFrame;
-  }
-
-  // | message type (12) | err_code error | directory_id uint32 |
-  decodeSharedDirectoryAcknowledge(
-    buffer: ArrayBuffer
-  ): SharedDirectoryAcknowledge {
-    const dv = new DataView(buffer);
-    let offset = 0;
-    offset += byteLength; // eat message type
-    const errCode = toSharedDirectoryErrCode(dv.getUint32(offset));
-    offset += uint32Length; // eat errCode
-    const directoryId = dv.getUint32(5);
-
-    return {
-      errCode,
-      directoryId,
-    };
-  }
-
-  // | message type (13) | completion_id uint32 | directory_id uint32 | path_length uint32 | path []byte |
-  decodeSharedDirectoryInfoRequest(
-    buffer: ArrayBuffer
-  ): SharedDirectoryInfoRequest {
-    const dv = new DataView(buffer);
-    let offset = 0;
-    offset += byteLength; // eat message type
-    const completionId = dv.getUint32(offset);
-    offset += uint32Length; // eat completion_id
-    const directoryId = dv.getUint32(offset);
-    offset += uint32Length; // eat directory_id
-    offset += uint32Length; // eat path_length
-    const path = this.decoder.decode(new Uint8Array(buffer.slice(offset)));
-
-    return {
-      completionId,
-      directoryId,
-      path,
-    };
   }
 
   // asBase64Url creates a data:image uri from the png data part of a PNG_FRAME tdp message.

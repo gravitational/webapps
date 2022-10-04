@@ -23,7 +23,6 @@ import Codec, {
   ClientScreenSpec,
   PngFrame,
   ClipboardData,
-  SharedDirectoryErrCode,
 } from './codec';
 
 export enum TdpClientEvent {
@@ -186,17 +185,6 @@ export default class Client extends EventEmitterWebAuthnSender {
     } catch (err) {
       this.handleError(err);
     }
-  }
-
-  private wasSuccessful(errCode: SharedDirectoryErrCode) {
-    if (errCode === SharedDirectoryErrCode.Nil) {
-      return true;
-    }
-
-    this.handleError(
-      new Error(`Encountered shared directory error: ${errCode}`)
-    );
-    return false;
   }
 
   protected send(

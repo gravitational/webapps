@@ -43,11 +43,6 @@ export default function makeAcl(json): Acl {
     json.desktopSessionRecording !== undefined
       ? json.desktopSessionRecording
       : true;
-  // Behaves like clipboardSharingEnabled, see
-  // https://github.com/gravitational/teleport/pull/12684#issue-1237830087
-  const directorySharingEnabled =
-    (json.directorySharing !== undefined ? json.directorySharing : true) &&
-    cfg.enableDirectorySharing;
 
   const nodes = json.nodes || defaultAccess;
 
@@ -69,7 +64,6 @@ export default function makeAcl(json): Acl {
     clipboardSharingEnabled,
     desktopSessionRecordingEnabled,
     nodes,
-    directorySharingEnabled,
   };
 }
 

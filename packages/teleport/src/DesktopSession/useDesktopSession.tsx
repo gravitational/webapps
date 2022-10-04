@@ -43,9 +43,6 @@ export default function useDesktopSession() {
   // disconnected tracks whether the user intentionally disconnected the client
   const [disconnected, setDisconnected] = useState(false);
 
-  const [canShareDirectory, setCanShareDirectory] = useState(false);
-  const [isSharingDirectory, setIsSharingDirectory] = useState(false);
-
   const { username, desktopName, clusterId } = useParams<UrlDesktopParams>();
 
   const [hostname, setHostname] = useState<string>('');
@@ -124,7 +121,6 @@ export default function useDesktopSession() {
           .then(desktop => setHostname(desktop.name)),
         userService.fetchUserContext().then(user => {
           setHasClipboardSharingEnabled(user.acl.clipboardSharingEnabled);
-          setCanShareDirectory(user.acl.directorySharingEnabled);
         }),
       ])
     );
@@ -137,7 +133,6 @@ export default function useDesktopSession() {
     setTdpConnection,
     setWsConnection,
     setClipboardState,
-    setIsSharingDirectory,
     enableClipboardSharing:
       clipboardState.enabled &&
       clipboardState.permission.state === 'granted' &&
@@ -151,9 +146,6 @@ export default function useDesktopSession() {
     username,
     clipboardState,
     setClipboardState,
-    canShareDirectory,
-    isSharingDirectory,
-    setIsSharingDirectory,
     fetchAttempt,
     tdpConnection,
     wsConnection,

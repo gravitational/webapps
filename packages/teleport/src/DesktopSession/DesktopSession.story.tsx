@@ -54,9 +54,6 @@ const props: State = {
   disconnected: false,
   setDisconnected: () => {},
   setClipboardState: () => {},
-  canShareDirectory: true,
-  isSharingDirectory: false,
-  setIsSharingDirectory: () => {},
   onPngFrame: () => {},
   onTdpError: () => {},
   onKeyDown: () => {},
@@ -137,7 +134,6 @@ export const ConnectedSettingsTrue = () => {
         permission: { state: 'granted' },
         errorText: '',
       }}
-      isSharingDirectory={true}
       onPngFrame={(ctx: CanvasRenderingContext2D) => {
         fillGray(ctx.canvas);
       }}
