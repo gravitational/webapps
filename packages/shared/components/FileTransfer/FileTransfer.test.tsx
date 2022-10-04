@@ -96,7 +96,7 @@ test('onAbort is called when user cancels upload', async () => {
   expect(abortControllerMock.signal.aborted).toBeTruthy();
 });
 
-test('file is not added when  transferHandler does not return anything', async () => {
+test('file is not added when transferHandler does not return anything', async () => {
   const handler: TransferHandlers = {
     getDownloader: async () => undefined,
     getUploader: async () => undefined,
@@ -117,7 +117,7 @@ test('file is not added when  transferHandler does not return anything', async (
   expect(screen.queryByText('/Users/g/file.txt')).not.toBeInTheDocument();
 });
 
-describe('*close callbacks are called when dialog is closed while transferring', () => {
+describe('handleAfterClose', () => {
   const getSetup = async () => {
     const handleBeforeClose = jest.fn();
     const handleAfterClose = jest.fn();
@@ -148,7 +148,7 @@ describe('*close callbacks are called when dialog is closed while transferring',
     return { handleBeforeClose, handleAfterClose };
   };
 
-  test('handleAfterClose is not called when close is cancelled', async () => {
+  test('is not called when closing the dialog has been aborted (by returning false from handleBeforeClose)', async () => {
     const { handleBeforeClose, handleAfterClose } = await getSetup();
     handleBeforeClose.mockReturnValue(Promise.resolve(false));
     fireEvent.click(screen.getByTitle('Close'));
@@ -156,7 +156,7 @@ describe('*close callbacks are called when dialog is closed while transferring',
     expect(handleAfterClose).not.toHaveBeenCalled();
   });
 
-  test('handleAfterClose is called when close is confirmed', async () => {
+  test('is called when closing the dialog has been confirmed (by returning true from handleBeforeClose)', async () => {
     const { handleBeforeClose, handleAfterClose } = await getSetup();
     handleBeforeClose.mockReturnValue(Promise.resolve(true));
     fireEvent.click(screen.getByTitle('Close'));
