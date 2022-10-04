@@ -21,9 +21,7 @@ export enum MessageType {
   MOUSE_WHEEL_SCROLL = 8,
   ERROR = 9,
   MFA_JSON = 10,
-  SHARED_DIRECTORY_ANNOUNCE = 11,
-  SHARED_DIRECTORY_ACKNOWLEDGE = 12,
-  SHARED_DIRECTORY_INFO_REQUEST = 13,
+  PNG2_FRAME = 27,
   __LAST, // utility value
 }
 
@@ -71,45 +69,6 @@ export type MfaJson = {
   mfaType: 'u' | 'n';
   jsonString: string;
 };
-
-// | message type (11) | completion_id uint32 | directory_id uint32 | name_length uint32 | name []byte |
-export type SharedDirectoryAnnounce = {
-  completionId: number;
-  directoryId: number;
-  name: string;
-};
-
-// | message type (12) | errCode error | directory_id uint32 |
-export type SharedDirectoryAcknowledge = {
-  errCode: SharedDirectoryErrCode;
-  directoryId: number;
-};
-
-// | message type (13) | completion_id uint32 | directory_id uint32 | path_length uint32 | path []byte |
-export type SharedDirectoryInfoRequest = {
-  completionId: number;
-  directoryId: number;
-  path: string;
-};
-
-export enum SharedDirectoryErrCode {
-  // nil (no error, operation succeeded)
-  Nil = 0,
-  // operation failed
-  Failed = 1,
-  // resource does not exist
-  DoesNotExist = 2,
-  // resource already exists
-  AlreadyExists = 3,
-}
-
-function toSharedDirectoryErrCode(errCode: number): SharedDirectoryErrCode {
-  if (!(errCode in SharedDirectoryErrCode)) {
-    throw new Error(`attempted to convert invalid error code ${errCode}`);
-  }
-
-  return errCode as SharedDirectoryErrCode;
-}
 
 // TdaCodec provides an api for encoding and decoding teleport desktop access protocol messages [1]
 // Buffers in TdaCodec are manipulated as DataView's [2] in order to give us low level control
@@ -416,31 +375,6 @@ export default class Codec {
     return buffer;
   }
 
-  // | message type (11) | completion_id uint32 | directory_id uint32 | name_length uint32 | name []byte |
-  encodeSharedDirectoryAnnounce(
-    sharedDirAnnounce: SharedDirectoryAnnounce
-  ): Message {
-    const dataUtf8array = this.encoder.encode(sharedDirAnnounce.name);
-
-    const bufLen = byteLength + 3 * uint32Length + dataUtf8array.length;
-    const buffer = new ArrayBuffer(bufLen);
-    const view = new DataView(buffer);
-    let offset = 0;
-
-    view.setUint8(offset++, MessageType.SHARED_DIRECTORY_ANNOUNCE);
-    view.setUint32(offset, sharedDirAnnounce.completionId);
-    offset += uint32Length;
-    view.setUint32(offset, sharedDirAnnounce.directoryId);
-    offset += uint32Length;
-    view.setUint32(offset, dataUtf8array.length);
-    offset += uint32Length;
-    dataUtf8array.forEach(byte => {
-      view.setUint8(offset++, byte);
-    });
-
-    return buffer;
-  }
-
   // decodeClipboardData decodes clipboard data
   decodeClipboardData(buffer: ArrayBuffer): ClipboardData {
     return {
@@ -517,42 +451,30 @@ export default class Codec {
     return pngFrame;
   }
 
-  // | message type (12) | errCode error | directory_id uint32 |
-  decodeSharedDirectoryAcknowledge(
-    buffer: ArrayBuffer
-  ): SharedDirectoryAcknowledge {
+  // decodePng2Frame decodes a raw tdp PNG frame message and returns it as a PngFrame
+  // | message type (27) | png_length uint32 | left uint32 | top uint32 | right uint32 | bottom uint32 | data []byte |
+  decodePng2Frame(
+    buffer: ArrayBuffer,
+    onload: (pngFrame: PngFrame) => any
+  ): PngFrame {
     const dv = new DataView(buffer);
+    const image = new Image();
     let offset = 0;
     offset += byteLength; // eat message type
-    const errCode = toSharedDirectoryErrCode(dv.getUint32(offset));
-    offset += uint32Length; // eat errCode
-    const directoryId = dv.getUint32(5);
+    offset += uint32Length; // eat png_length
+    const left = dv.getUint32(offset);
+    offset += uint32Length; // eat left
+    const top = dv.getUint32(offset);
+    offset += uint32Length; // eat top
+    const right = dv.getUint32(offset);
+    offset += uint32Length; // eat right
+    const bottom = dv.getUint32(offset);
+    offset += uint32Length; // eat bottom
+    const pngFrame = { left, top, right, bottom, data: image };
+    pngFrame.data.onload = onload(pngFrame);
+    pngFrame.data.src = this.asBase64Url(buffer, offset);
 
-    return {
-      errCode,
-      directoryId,
-    };
-  }
-
-  // | message type (13) | completion_id uint32 | directory_id uint32 | path_length uint32 | path []byte |
-  decodeSharedDirectoryInfoRequest(
-    buffer: ArrayBuffer
-  ): SharedDirectoryInfoRequest {
-    const dv = new DataView(buffer);
-    let offset = 0;
-    offset += byteLength; // eat message type
-    const completionId = dv.getUint32(offset);
-    offset += uint32Length; // eat completion_id
-    const directoryId = dv.getUint32(offset);
-    offset += uint32Length; // eat directory_id
-    offset += uint32Length; // eat path_length
-    const path = this.decoder.decode(new Uint8Array(buffer.slice(offset)));
-
-    return {
-      completionId,
-      directoryId,
-      path,
-    };
+    return pngFrame;
   }
 
   // asBase64Url creates a data:image uri from the png data part of a PNG_FRAME tdp message.

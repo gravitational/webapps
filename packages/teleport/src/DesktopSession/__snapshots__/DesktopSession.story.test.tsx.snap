@@ -8,13 +8,13 @@ exports[`clipboard error 1`] = `
   color: #FFFFFF;
 }
 
-.c10 {
+.c9 {
   display: inline-block;
   transition: color .3s;
   color: #FFFFFF;
 }
 
-.c9 {
+.c8 {
   align-items: center;
   border: none;
   cursor: pointer;
@@ -36,20 +36,20 @@ exports[`clipboard error 1`] = `
   color: rgba(255,255,255,0.56);
 }
 
-.c9 .c5 {
+.c8 .c5 {
   color: inherit;
 }
 
-.c9:disabled {
+.c8:disabled {
   color: rgba(255,255,255,0.3);
 }
 
-.c9:disabled {
+.c8:disabled {
   color: rgba(255,255,255,0.3);
 }
 
-.c9:hover,
-.c9:focus {
+.c8:hover,
+.c8:focus {
   background: rgba(255,255,255,0.1);
 }
 
@@ -90,19 +90,13 @@ exports[`clipboard error 1`] = `
   align-items: center;
 }
 
-.c8 {
+.c7 {
   font-weight: 600;
   font-size: 18px;
   align-self: 'center';
 }
 
-.c7 {
-  font-weight: 600;
-  font-size: 22px;
-  align-self: 'center';
-}
-
-.c11 {
+.c10 {
   display: flex;
   align-items: center;
   justify-content: center;
@@ -125,7 +119,7 @@ exports[`clipboard error 1`] = `
   min-width: 450px;
 }
 
-.c11 a {
+.c10 a {
   color: #FFFFFF;
 }
 
@@ -151,13 +145,7 @@ exports[`clipboard error 1`] = `
           class="c4"
         >
           <span
-            class="c5 c6 icon icon-folder-shared c7"
-            color="light"
-            style="color: rgba(255, 255, 255, 0.56);"
-            title="Directory Sharing Disabled"
-          />
-          <span
-            class="c5 c6 icon icon-clipboard-text c8"
+            class="c5 c6 icon icon-clipboard-text c7"
             color="light"
             style="color: rgba(255, 255, 255, 0.56);"
             title="Clipboard Sharing Disabled"
@@ -167,13 +155,13 @@ exports[`clipboard error 1`] = `
           class="c4"
         >
           <button
-            class="c9"
+            class="c8"
             color="text.secondary"
             data-testid="button"
             style="font-size: 20px;"
           >
             <span
-              class="c5 c10 icon icon-ellipsis "
+              class="c5 c9 icon icon-ellipsis "
               color="light"
             />
           </button>
@@ -181,7 +169,7 @@ exports[`clipboard error 1`] = `
       </div>
     </nav>
     <div
-      class="c11"
+      class="c10"
       kind="danger"
     >
       clipboard error
@@ -201,13 +189,13 @@ exports[`connected settings false 1`] = `
   color: #FFFFFF;
 }
 
-.c10 {
+.c9 {
   display: inline-block;
   transition: color .3s;
   color: #FFFFFF;
 }
 
-.c9 {
+.c8 {
   align-items: center;
   border: none;
   cursor: pointer;
@@ -229,20 +217,20 @@ exports[`connected settings false 1`] = `
   color: rgba(255,255,255,0.56);
 }
 
-.c9 .c5 {
+.c8 .c5 {
   color: inherit;
 }
 
-.c9:disabled {
+.c8:disabled {
   color: rgba(255,255,255,0.3);
 }
 
-.c9:disabled {
+.c8:disabled {
   color: rgba(255,255,255,0.3);
 }
 
-.c9:hover,
-.c9:focus {
+.c8:hover,
+.c8:focus {
   background: rgba(255,255,255,0.1);
 }
 
@@ -283,15 +271,9 @@ exports[`connected settings false 1`] = `
   align-items: center;
 }
 
-.c8 {
-  font-weight: 600;
-  font-size: 18px;
-  align-self: 'center';
-}
-
 .c7 {
   font-weight: 600;
-  font-size: 22px;
+  font-size: 18px;
   align-self: 'center';
 }
 
@@ -317,13 +299,7 @@ exports[`connected settings false 1`] = `
           class="c4"
         >
           <span
-            class="c5 c6 icon icon-folder-shared c7"
-            color="light"
-            style="color: rgba(255, 255, 255, 0.56);"
-            title="Directory Sharing Disabled"
-          />
-          <span
-            class="c5 c6 icon icon-clipboard-text c8"
+            class="c5 c6 icon icon-clipboard-text c7"
             color="light"
             style="color: rgba(255, 255, 255, 0.56);"
             title="Clipboard Sharing Disabled"
@@ -333,13 +309,13 @@ exports[`connected settings false 1`] = `
           class="c4"
         >
           <button
-            class="c9"
+            class="c8"
             color="text.secondary"
             data-testid="button"
             style="font-size: 20px;"
           >
             <span
-              class="c5 c10 icon icon-ellipsis "
+              class="c5 c9 icon icon-ellipsis "
               color="light"
             />
           </button>
@@ -361,13 +337,13 @@ exports[`connected settings true 1`] = `
   color: #FFFFFF;
 }
 
-.c10 {
+.c9 {
   display: inline-block;
   transition: color .3s;
   color: #FFFFFF;
 }
 
-.c9 {
+.c8 {
   align-items: center;
   border: none;
   cursor: pointer;
@@ -389,20 +365,20 @@ exports[`connected settings true 1`] = `
   color: rgba(255,255,255,0.56);
 }
 
-.c9 .c5 {
+.c8 .c5 {
   color: inherit;
 }
 
-.c9:disabled {
+.c8:disabled {
   color: rgba(255,255,255,0.3);
 }
 
-.c9:disabled {
+.c8:disabled {
   color: rgba(255,255,255,0.3);
 }
 
-.c9:hover,
-.c9:focus {
+.c8:hover,
+.c8:focus {
   background: rgba(255,255,255,0.1);
 }
 
@@ -443,15 +419,9 @@ exports[`connected settings true 1`] = `
   align-items: center;
 }
 
-.c8 {
-  font-weight: 600;
-  font-size: 18px;
-  align-self: 'center';
-}
-
 .c7 {
   font-weight: 600;
-  font-size: 22px;
+  font-size: 18px;
   align-self: 'center';
 }
 
@@ -477,13 +447,7 @@ exports[`connected settings true 1`] = `
           class="c4"
         >
           <span
-            class="c5 c6 icon icon-folder-shared c7"
-            color="light"
-            style="color: rgba(255, 255, 255, 0.87);"
-            title="Directory Sharing Enabled"
-          />
-          <span
-            class="c5 c6 icon icon-clipboard-text c8"
+            class="c5 c6 icon icon-clipboard-text c7"
             color="light"
             style="color: rgba(255, 255, 255, 0.87);"
             title="Clipboard Sharing Enabled"
@@ -493,13 +457,13 @@ exports[`connected settings true 1`] = `
           class="c4"
         >
           <button
-            class="c9"
+            class="c8"
             color="text.secondary"
             data-testid="button"
             style="font-size: 20px;"
           >
             <span
-              class="c5 c10 icon icon-ellipsis "
+              class="c5 c9 icon icon-ellipsis "
               color="light"
             />
           </button>
@@ -521,13 +485,13 @@ exports[`connection error 1`] = `
   color: #FFFFFF;
 }
 
-.c10 {
+.c9 {
   display: inline-block;
   transition: color .3s;
   color: #FFFFFF;
 }
 
-.c9 {
+.c8 {
   align-items: center;
   border: none;
   cursor: pointer;
@@ -549,20 +513,20 @@ exports[`connection error 1`] = `
   color: rgba(255,255,255,0.56);
 }
 
-.c9 .c5 {
+.c8 .c5 {
   color: inherit;
 }
 
-.c9:disabled {
+.c8:disabled {
   color: rgba(255,255,255,0.3);
 }
 
-.c9:disabled {
+.c8:disabled {
   color: rgba(255,255,255,0.3);
 }
 
-.c9:hover,
-.c9:focus {
+.c8:hover,
+.c8:focus {
   background: rgba(255,255,255,0.1);
 }
 
@@ -603,19 +567,13 @@ exports[`connection error 1`] = `
   align-items: center;
 }
 
-.c8 {
+.c7 {
   font-weight: 600;
   font-size: 18px;
   align-self: 'center';
 }
 
-.c7 {
-  font-weight: 600;
-  font-size: 22px;
-  align-self: 'center';
-}
-
-.c11 {
+.c10 {
   display: flex;
   align-items: center;
   justify-content: center;
@@ -638,7 +596,7 @@ exports[`connection error 1`] = `
   min-width: 450px;
 }
 
-.c11 a {
+.c10 a {
   color: #FFFFFF;
 }
 
@@ -664,13 +622,7 @@ exports[`connection error 1`] = `
           class="c4"
         >
           <span
-            class="c5 c6 icon icon-folder-shared c7"
-            color="light"
-            style="color: rgba(255, 255, 255, 0.56);"
-            title="Directory Sharing Disabled"
-          />
-          <span
-            class="c5 c6 icon icon-clipboard-text c8"
+            class="c5 c6 icon icon-clipboard-text c7"
             color="light"
             style="color: rgba(255, 255, 255, 0.56);"
             title="Clipboard Sharing Disabled"
@@ -680,13 +632,13 @@ exports[`connection error 1`] = `
           class="c4"
         >
           <button
-            class="c9"
+            class="c8"
             color="text.secondary"
             data-testid="button"
             style="font-size: 20px;"
           >
             <span
-              class="c5 c10 icon icon-ellipsis "
+              class="c5 c9 icon icon-ellipsis "
               color="light"
             />
           </button>
@@ -694,7 +646,7 @@ exports[`connection error 1`] = `
       </div>
     </nav>
     <div
-      class="c11"
+      class="c10"
       kind="danger"
     >
       some connection error
@@ -707,7 +659,7 @@ exports[`connection error 1`] = `
 `;
 
 exports[`disconnected 1`] = `
-.c11 {
+.c10 {
   box-sizing: border-box;
   margin: 72px;
   text-align: center;
@@ -720,13 +672,13 @@ exports[`disconnected 1`] = `
   color: #FFFFFF;
 }
 
-.c10 {
+.c9 {
   display: inline-block;
   transition: color .3s;
   color: #FFFFFF;
 }
 
-.c9 {
+.c8 {
   align-items: center;
   border: none;
   cursor: pointer;
@@ -748,20 +700,20 @@ exports[`disconnected 1`] = `
   color: rgba(255,255,255,0.56);
 }
 
-.c9 .c5 {
+.c8 .c5 {
   color: inherit;
 }
 
-.c9:disabled {
+.c8:disabled {
   color: rgba(255,255,255,0.3);
 }
 
-.c9:disabled {
+.c8:disabled {
   color: rgba(255,255,255,0.3);
 }
 
-.c9:hover,
-.c9:focus {
+.c8:hover,
+.c8:focus {
   background: rgba(255,255,255,0.1);
 }
 
@@ -773,7 +725,7 @@ exports[`disconnected 1`] = `
   padding-right: 16px;
 }
 
-.c12 {
+.c11 {
   overflow: hidden;
   text-overflow: ellipsis;
   margin: 0px;
@@ -808,15 +760,9 @@ exports[`disconnected 1`] = `
   align-items: center;
 }
 
-.c8 {
-  font-weight: 600;
-  font-size: 18px;
-  align-self: 'center';
-}
-
 .c7 {
   font-weight: 600;
-  font-size: 22px;
+  font-size: 18px;
   align-self: 'center';
 }
 
@@ -842,13 +788,7 @@ exports[`disconnected 1`] = `
           class="c4"
         >
           <span
-            class="c5 c6 icon icon-folder-shared c7"
-            color="light"
-            style="color: rgba(255, 255, 255, 0.56);"
-            title="Directory Sharing Disabled"
-          />
-          <span
-            class="c5 c6 icon icon-clipboard-text c8"
+            class="c5 c6 icon icon-clipboard-text c7"
             color="light"
             style="color: rgba(255, 255, 255, 0.56);"
             title="Clipboard Sharing Disabled"
@@ -858,13 +798,13 @@ exports[`disconnected 1`] = `
           class="c4"
         >
           <button
-            class="c9"
+            class="c8"
             color="text.secondary"
             data-testid="button"
             style="font-size: 20px;"
           >
             <span
-              class="c5 c10 icon icon-ellipsis "
+              class="c5 c9 icon icon-ellipsis "
               color="light"
             />
           </button>
@@ -872,10 +812,10 @@ exports[`disconnected 1`] = `
       </div>
     </nav>
     <div
-      class="c11"
+      class="c10"
     >
       <div
-        class="c12"
+        class="c11"
       >
         Session successfully disconnected
       </div>
@@ -895,13 +835,13 @@ exports[`fetch error 1`] = `
   color: #FFFFFF;
 }
 
-.c10 {
+.c9 {
   display: inline-block;
   transition: color .3s;
   color: #FFFFFF;
 }
 
-.c9 {
+.c8 {
   align-items: center;
   border: none;
   cursor: pointer;
@@ -923,20 +863,20 @@ exports[`fetch error 1`] = `
   color: rgba(255,255,255,0.56);
 }
 
-.c9 .c5 {
+.c8 .c5 {
   color: inherit;
 }
 
-.c9:disabled {
+.c8:disabled {
   color: rgba(255,255,255,0.3);
 }
 
-.c9:disabled {
+.c8:disabled {
   color: rgba(255,255,255,0.3);
 }
 
-.c9:hover,
-.c9:focus {
+.c8:hover,
+.c8:focus {
   background: rgba(255,255,255,0.1);
 }
 
@@ -977,19 +917,13 @@ exports[`fetch error 1`] = `
   align-items: center;
 }
 
-.c8 {
+.c7 {
   font-weight: 600;
   font-size: 18px;
   align-self: 'center';
 }
 
-.c7 {
-  font-weight: 600;
-  font-size: 22px;
-  align-self: 'center';
-}
-
-.c11 {
+.c10 {
   display: flex;
   align-items: center;
   justify-content: center;
@@ -1012,7 +946,7 @@ exports[`fetch error 1`] = `
   min-width: 450px;
 }
 
-.c11 a {
+.c10 a {
   color: #FFFFFF;
 }
 
@@ -1038,13 +972,7 @@ exports[`fetch error 1`] = `
           class="c4"
         >
           <span
-            class="c5 c6 icon icon-folder-shared c7"
-            color="light"
-            style="color: rgba(255, 255, 255, 0.56);"
-            title="Directory Sharing Disabled"
-          />
-          <span
-            class="c5 c6 icon icon-clipboard-text c8"
+            class="c5 c6 icon icon-clipboard-text c7"
             color="light"
             style="color: rgba(255, 255, 255, 0.56);"
             title="Clipboard Sharing Disabled"
@@ -1054,13 +982,13 @@ exports[`fetch error 1`] = `
           class="c4"
         >
           <button
-            class="c9"
+            class="c8"
             color="text.secondary"
             data-testid="button"
             style="font-size: 20px;"
           >
             <span
-              class="c5 c10 icon icon-ellipsis "
+              class="c5 c9 icon icon-ellipsis "
               color="light"
             />
           </button>
@@ -1068,7 +996,7 @@ exports[`fetch error 1`] = `
       </div>
     </nav>
     <div
-      class="c11"
+      class="c10"
       kind="danger"
     >
       some fetch  error
@@ -1088,13 +1016,13 @@ exports[`unintended disconnect 1`] = `
   color: #FFFFFF;
 }
 
-.c10 {
+.c9 {
   display: inline-block;
   transition: color .3s;
   color: #FFFFFF;
 }
 
-.c9 {
+.c8 {
   align-items: center;
   border: none;
   cursor: pointer;
@@ -1116,20 +1044,20 @@ exports[`unintended disconnect 1`] = `
   color: rgba(255,255,255,0.56);
 }
 
-.c9 .c5 {
+.c8 .c5 {
   color: inherit;
 }
 
-.c9:disabled {
+.c8:disabled {
   color: rgba(255,255,255,0.3);
 }
 
-.c9:disabled {
+.c8:disabled {
   color: rgba(255,255,255,0.3);
 }
 
-.c9:hover,
-.c9:focus {
+.c8:hover,
+.c8:focus {
   background: rgba(255,255,255,0.1);
 }
 
@@ -1170,19 +1098,13 @@ exports[`unintended disconnect 1`] = `
   align-items: center;
 }
 
-.c8 {
+.c7 {
   font-weight: 600;
   font-size: 18px;
   align-self: 'center';
 }
 
-.c7 {
-  font-weight: 600;
-  font-size: 22px;
-  align-self: 'center';
-}
-
-.c11 {
+.c10 {
   display: flex;
   align-items: center;
   justify-content: center;
@@ -1205,7 +1127,7 @@ exports[`unintended disconnect 1`] = `
   min-width: 450px;
 }
 
-.c11 a {
+.c10 a {
   color: #FFFFFF;
 }
 
@@ -1231,13 +1153,7 @@ exports[`unintended disconnect 1`] = `
           class="c4"
         >
           <span
-            class="c5 c6 icon icon-folder-shared c7"
-            color="light"
-            style="color: rgba(255, 255, 255, 0.56);"
-            title="Directory Sharing Disabled"
-          />
-          <span
-            class="c5 c6 icon icon-clipboard-text c8"
+            class="c5 c6 icon icon-clipboard-text c7"
             color="light"
             style="color: rgba(255, 255, 255, 0.56);"
             title="Clipboard Sharing Disabled"
@@ -1247,13 +1163,13 @@ exports[`unintended disconnect 1`] = `
           class="c4"
         >
           <button
-            class="c9"
+            class="c8"
             color="text.secondary"
             data-testid="button"
             style="font-size: 20px;"
           >
             <span
-              class="c5 c10 icon icon-ellipsis "
+              class="c5 c9 icon icon-ellipsis "
               color="light"
             />
           </button>
@@ -1261,7 +1177,7 @@ exports[`unintended disconnect 1`] = `
       </div>
     </nav>
     <div
-      class="c11"
+      class="c10"
       kind="danger"
     >
       Session disconnected for an unknown reason
@@ -1274,7 +1190,7 @@ exports[`unintended disconnect 1`] = `
 `;
 
 exports[`webauthn prompt 1`] = `
-.c11 {
+.c10 {
   box-sizing: border-box;
   margin: 72px;
   text-align: center;
@@ -1287,13 +1203,13 @@ exports[`webauthn prompt 1`] = `
   color: #FFFFFF;
 }
 
-.c10 {
+.c9 {
   display: inline-block;
   transition: color .3s;
   color: #FFFFFF;
 }
 
-.c9 {
+.c8 {
   align-items: center;
   border: none;
   cursor: pointer;
@@ -1315,20 +1231,20 @@ exports[`webauthn prompt 1`] = `
   color: rgba(255,255,255,0.56);
 }
 
-.c9 .c5 {
+.c8 .c5 {
   color: inherit;
 }
 
-.c9:disabled {
+.c8:disabled {
   color: rgba(255,255,255,0.3);
 }
 
-.c9:disabled {
+.c8:disabled {
   color: rgba(255,255,255,0.3);
 }
 
-.c9:hover,
-.c9:focus {
+.c8:hover,
+.c8:focus {
   background: rgba(255,255,255,0.1);
 }
 
@@ -1369,15 +1285,9 @@ exports[`webauthn prompt 1`] = `
   align-items: center;
 }
 
-.c8 {
-  font-weight: 600;
-  font-size: 18px;
-  align-self: 'center';
-}
-
 .c7 {
   font-weight: 600;
-  font-size: 22px;
+  font-size: 18px;
   align-self: 'center';
 }
 
@@ -1403,13 +1313,7 @@ exports[`webauthn prompt 1`] = `
           class="c4"
         >
           <span
-            class="c5 c6 icon icon-folder-shared c7"
-            color="light"
-            style="color: rgba(255, 255, 255, 0.56);"
-            title="Directory Sharing Disabled"
-          />
-          <span
-            class="c5 c6 icon icon-clipboard-text c8"
+            class="c5 c6 icon icon-clipboard-text c7"
             color="light"
             style="color: rgba(255, 255, 255, 0.56);"
             title="Clipboard Sharing Disabled"
@@ -1419,13 +1323,13 @@ exports[`webauthn prompt 1`] = `
           class="c4"
         >
           <button
-            class="c9"
+            class="c8"
             color="text.secondary"
             data-testid="button"
             style="font-size: 20px;"
           >
             <span
-              class="c5 c10 icon icon-ellipsis "
+              class="c5 c9 icon icon-ellipsis "
               color="light"
             />
           </button>
@@ -1433,7 +1337,7 @@ exports[`webauthn prompt 1`] = `
       </div>
     </nav>
     <div
-      class="c11"
+      class="c10"
     />
     <canvas
       style="display: none; flex: 1;"
