@@ -15,6 +15,7 @@
  */
 
 import { useCallback, useMemo, useReducer, useRef } from 'react';
+import { unique } from 'teleterm/ui/utils';
 
 import {
   RunFileTransfer,
@@ -67,13 +68,16 @@ function reducer(
       };
     }
     case 'updateTransferState': {
-      const getTransferState = (): TransferState => {
+      const getNextTransferState = (): TransferState => {
         if (action.payload.transferState.type === 'error') {
-          const { transferState } = state.filesById[action.payload.id];
+          const { transferState: currentTransferState } =
+            state.filesById[action.payload.id];
           return {
             ...action.payload.transferState,
             progress:
-              transferState.type === 'processing' ? transferState.progress : 0,
+              currentTransferState.type === 'processing'
+                ? currentTransferState.progress
+                : 0,
           };
         }
         return action.payload.transferState;
@@ -85,13 +89,13 @@ function reducer(
           ...state.filesById,
           [action.payload.id]: {
             ...state.filesById[action.payload.id],
-            transferState: getTransferState(),
+            transferState: getNextTransferState(),
           },
         },
       };
     }
     default:
-      throw new Error();
+      throw new Error('Unhandled action', action);
   }
 }
 
@@ -105,7 +109,7 @@ export const useFilesStore = () => {
   );
 
   const add = (file: Omit<NewTransferredFile, 'id'>) => {
-    const id = new Date().getTime() + file.name;
+    const id = unique();
 
     dispatch({ type: 'add', payload: { id, name: file.name } });
     fileTransferControllers.current.set(id, {
@@ -118,7 +122,7 @@ export const useFilesStore = () => {
     (id: string, transferState: TransferState) => {
       dispatch({ type: 'updateTransferState', payload: { id, transferState } });
     },
-    [dispatch]
+    []
   );
 
   const start = useCallback(
