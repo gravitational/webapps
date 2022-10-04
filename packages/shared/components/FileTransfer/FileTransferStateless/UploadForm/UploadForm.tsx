@@ -40,7 +40,7 @@ export function UploadForm(props: UploadFormProps) {
     });
   }
 
-  function handleOpenFilePicker(): void {
+  function openFilePicker(): void {
     // reset all selected files
     fileSelectorRef.current.value = '';
     fileSelectorRef.current.click();
@@ -59,7 +59,7 @@ export function UploadForm(props: UploadFormProps) {
     if (event.key === 'Enter') {
       event.preventDefault();
       event.stopPropagation();
-      handleOpenFilePicker();
+      openFilePicker();
     }
   }
 
@@ -98,14 +98,15 @@ export function UploadForm(props: UploadFormProps) {
         disabled={isUploadDisabled}
         ref={dropzoneRef}
         onDragOver={e => {
-          addDropzoneStyle(e);
           e.preventDefault();
+          addDropzoneStyle(e);
         }}
-        onDragLeave={e => {
-          removeDropzoneStyle(e);
-        }}
+        onDragLeave={removeDropzoneStyle}
         onDrop={handleDrop}
-        onClick={handleOpenFilePicker}
+        onClick={e => {
+          e.preventDefault();
+          openFilePicker();
+        }}
       >
         <NoteAdded fontSize={10} mb={2} />
         <Text typography="h6">Drag your files here</Text>
@@ -117,11 +118,13 @@ export function UploadForm(props: UploadFormProps) {
   );
 }
 
-const Dropzone = styled.div`
+const Dropzone = styled.button`
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
+  width: 100%;
+  color: inherit;
   background-color: rgba(255, 255, 255, 0.05);
   margin-top: ${props => props.theme.space[3]}px;
   border: 1px dashed rgba(255, 255, 255, 0.1);
@@ -131,4 +134,8 @@ const Dropzone = styled.div`
   opacity: ${props => (props.disabled ? 0.7 : 1)};
   pointer-events: ${props => (props.disabled ? 'none' : 'unset')};
   border-radius: ${props => props.theme.radii[2]}px;
+
+  :focus {
+    border-color: ${props => props.theme.colors.action.selected};
+  }
 `;
