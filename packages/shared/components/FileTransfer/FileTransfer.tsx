@@ -57,12 +57,12 @@ export function FileTransfer(props: FileTransferProps) {
       props.afterClose?.();
     };
 
-    if (!isAnyTransferInProgress) {
+    if (!isAnyTransferInProgress || !props.beforeClose) {
       runCloseCallbacks();
       return;
     }
 
-    if (props.beforeClose ? await props.beforeClose() : true) {
+    if (await props.beforeClose()) {
       runCloseCallbacks();
     }
   }
