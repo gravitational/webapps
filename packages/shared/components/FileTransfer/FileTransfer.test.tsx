@@ -15,7 +15,13 @@
  */
 
 import React from 'react';
-import { act, fireEvent, render, screen, waitFor } from 'design/utils/testing';
+import {
+  act,
+  fireEvent,
+  render,
+  screen,
+  waitForElementToBeRemoved,
+} from 'design/utils/testing';
 
 import { FileTransfer, TransferHandlers } from './FileTransfer';
 import { FileTransferContextProvider } from './FileTransferContextProvider';
@@ -163,11 +169,9 @@ describe('handleAfterClose', () => {
     expect(handleBeforeClose).toHaveBeenCalled();
 
     // wait for dialog to close
-    await waitFor(() => {
-      expect(
-        screen.queryByTestId('file-transfer-container')
-      ).not.toBeInTheDocument();
-    });
+    await waitForElementToBeRemoved(() =>
+      screen.queryByTestId('file-transfer-container')
+    );
     expect(handleAfterClose).toHaveBeenCalled();
   });
 });
