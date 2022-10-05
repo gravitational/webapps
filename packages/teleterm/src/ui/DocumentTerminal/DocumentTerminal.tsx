@@ -28,7 +28,7 @@ import { useAppContext } from 'teleterm/ui/appContextProvider';
 import Terminal from './Terminal';
 import DocumentReconnect from './DocumentReconnect';
 import useDocTerminal, { Props } from './useDocumentTerminal';
-import { getTshFileTransferHandlers } from './tshFileTransferHandlers';
+import { useTshFileTransferHandlers } from './useTshFileTransferHandlers';
 
 export default function DocumentTerminalContainer({ doc, visible }: Props) {
   if (doc.kind === 'doc.terminal_tsh_node' && doc.status === 'disconnected') {
@@ -44,6 +44,9 @@ export function DocumentTerminal(props: Props & { visible: boolean }) {
   const state = useDocTerminal(doc);
   const ptyProcess = state.data?.ptyProcess;
   const clusterId = doc.leafClusterId || doc.rootClusterId;
+  const { upload, download } = useTshFileTransferHandlers({
+    originatingDocumentUri: doc.uri,
+  });
 
   return (
     <Document
@@ -78,9 +81,7 @@ export function DocumentTerminal(props: Props & { visible: boolean }) {
                         return;
                       }
                       return (fileTransferListeners, abortController) => {
-                        getTshFileTransferHandlers(
-                          ctx.fileTransferClient
-                        ).download(
+                        download(
                           {
                             source: sourcePath,
                             clusterId,
@@ -96,9 +97,7 @@ export function DocumentTerminal(props: Props & { visible: boolean }) {
                     getUploader:
                       async (destinationPath, file) =>
                       (fileTransferListeners, abortController) =>
-                        getTshFileTransferHandlers(
-                          ctx.fileTransferClient
-                        ).upload(
+                        upload(
                           {
                             destination: destinationPath,
                             clusterId,
