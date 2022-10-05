@@ -15,7 +15,6 @@
  */
 
 import { useCallback, useMemo, useReducer, useRef } from 'react';
-import { unique } from 'teleterm/ui/utils';
 
 import {
   RunFileTransfer,
@@ -109,7 +108,7 @@ export const useFilesStore = () => {
   );
 
   const add = (file: Omit<NewTransferredFile, 'id'>) => {
-    const id = unique();
+    const id = new Date().getTime() + file.name;
 
     dispatch({ type: 'add', payload: { id, name: file.name } });
     fileTransferControllers.current.set(id, {
