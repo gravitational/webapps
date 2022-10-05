@@ -425,9 +425,8 @@ export default function createClient(
         .setLogin(options.login)
         .setSource(options.source)
         .setDestination(options.destination)
-        .setServerId(options.serverId)
-        .setClusterId(options.clusterId)
-        .setServerUri(options.serverUri)
+        .setHostname(options.hostname)
+        .setClusterUri(options.clusterUri)
         .setDirection(options.direction);
 
       const call = tshd.transferFile(req);

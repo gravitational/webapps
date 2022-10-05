@@ -43,7 +43,6 @@ export function DocumentTerminal(props: Props & { visible: boolean }) {
   const { visible, doc } = props;
   const state = useDocTerminal(doc);
   const ptyProcess = state.data?.ptyProcess;
-  const clusterId = doc.leafClusterId || doc.rootClusterId;
   const { upload, download } = useTshFileTransferHandlers({
     originatingDocumentUri: doc.uri,
   });
@@ -83,10 +82,9 @@ export function DocumentTerminal(props: Props & { visible: boolean }) {
                       return (fileTransferListeners, abortController) => {
                         download(
                           {
-                            source: sourcePath,
-                            clusterId,
-                            serverId: doc.serverId,
+                            serverUri: doc.serverUri,
                             login: doc.login,
+                            source: sourcePath,
                             destination: fileDialog.filePath,
                           },
                           fileTransferListeners,
@@ -99,11 +97,10 @@ export function DocumentTerminal(props: Props & { visible: boolean }) {
                       (fileTransferListeners, abortController) =>
                         upload(
                           {
-                            destination: destinationPath,
-                            clusterId,
-                            serverId: doc.serverId,
+                            serverUri: doc.serverUri,
                             login: doc.login,
                             source: file.path,
+                            destination: destinationPath,
                           },
                           fileTransferListeners,
                           abortController

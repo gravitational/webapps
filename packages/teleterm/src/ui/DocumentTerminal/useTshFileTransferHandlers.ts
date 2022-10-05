@@ -51,10 +51,7 @@ function transferFile(
   abortController: AbortController,
   direction: FileTransferDirection
 ): void {
-  const serverUri = routing.getServerUri({
-    rootClusterId: file.clusterId,
-    serverId: file.serverId,
-  });
+  const server = appContext.clustersService.getServer(file.serverUri);
   const getFileTransferActionAsPromise = () =>
     new Promise((resolve, reject) => {
       appContext.fileTransferClient.transferFile(
@@ -62,9 +59,8 @@ function transferFile(
           source: file.source,
           destination: file.destination,
           login: file.login,
-          serverUri,
-          serverId: file.serverId,
-          clusterId: file.clusterId,
+          clusterUri: routing.ensureClusterUri(file.serverUri),
+          hostname: server.hostname,
           direction,
         },
         {
@@ -85,7 +81,7 @@ function transferFile(
   retryWithRelogin(
     appContext,
     originatingDocumentUri,
-    serverUri,
+    file.serverUri,
     getFileTransferActionAsPromise
   )
     .then(fileTransferListeners.onComplete)
@@ -96,6 +92,5 @@ type FileTransferRequestObject = {
   source: string;
   destination: string;
   login: string;
-  clusterId: string;
-  serverId: string;
+  serverUri: string;
 };
