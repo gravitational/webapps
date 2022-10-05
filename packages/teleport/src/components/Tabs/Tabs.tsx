@@ -77,7 +77,7 @@ type Tab = {
   // title is the tab title.
   title: string;
   // content is the component to render as children in
-  // tabs container.
+  // the tabs container.
   content: JSX.Element;
 };
 
