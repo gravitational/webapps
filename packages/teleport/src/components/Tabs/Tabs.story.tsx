@@ -27,10 +27,10 @@ export default {
 export const Plain = () => {
   return (
     <Tabs
-      contents={[
+      tabs={[
         {
           title: `One`,
-          component: (
+          content: (
             <div>
               Lorem Ipsum is simply dummy text of the printing and typesetting
               industry.
@@ -39,7 +39,7 @@ export const Plain = () => {
         },
         {
           title: `Two`,
-          component: (
+          content: (
             <div>
               Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
               eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut
@@ -58,10 +58,10 @@ export const Plain = () => {
 export const PlainOneTab = () => {
   return (
     <Tabs
-      contents={[
+      tabs={[
         {
           title: `One`,
-          component: (
+          content: (
             <div>
               Lorem Ipsum is simply dummy text of the printing and typesetting
               industry.
@@ -76,10 +76,10 @@ export const PlainOneTab = () => {
 export const TerminalCommands = () => {
   return (
     <Tabs
-      contents={[
+      tabs={[
         {
           title: `Debian/Ubuntu (DEB)`,
-          component: (
+          content: (
             <TextSelectCopyMulti
               lines={[
                 {
@@ -92,7 +92,7 @@ export const TerminalCommands = () => {
         },
         {
           title: 'Tarball',
-          component: (
+          content: (
             <TextSelectCopyMulti
               lines={[
                 {
@@ -108,7 +108,7 @@ export const TerminalCommands = () => {
         },
         {
           title: 'Debian/Ubuntu Legacy (DEB)',
-          component: (
+          content: (
             <TextSelectCopyMulti
               lines={[
                 {
@@ -123,7 +123,7 @@ export const TerminalCommands = () => {
         },
         {
           title: 'Amazon Linux 2/RHEL Legacy (RPM)',
-          component: (
+          content: (
             <TextSelectCopyMulti
               lines={[
                 {

@@ -17,7 +17,7 @@
 import React, { useState } from 'react';
 import { Box, Flex } from 'design';
 
-export function Tabs({ contents }: Props) {
+export function Tabs({ tabs }: Props) {
   const [currContentIndex, setCurrContentIndex] = useState(0);
   return (
     <Box>
@@ -33,10 +33,11 @@ export function Tabs({ contents }: Props) {
           }
         `}
       >
-        {contents.map((content, index) => {
+        {tabs.map((tab, index) => {
           const isActive = index === currContentIndex;
           return (
             <Box
+              as="button"
               key={index}
               onClick={() => setCurrContentIndex(index)}
               py={3}
@@ -46,12 +47,16 @@ export function Tabs({ contents }: Props) {
               bg={isActive ? 'rgba(255, 255, 255, 0.05)' : 'transparent'}
               css={`
                 opacity: ${isActive ? 1 : 0.6};
-                :hover {
+                color: inherit;
+                border: none;
+                :hover,
+                :focus {
                   cursor: pointer;
+                  opacity: 1;
                 }
               `}
             >
-              {content.title}
+              {tab.title}
             </Box>
           );
         })}
@@ -62,20 +67,20 @@ export function Tabs({ contents }: Props) {
         borderBottomRightRadius={2}
         bg="rgba(255, 255, 255, 0.05)"
       >
-        {contents[currContentIndex].component}
+        {tabs[currContentIndex].content}
       </Box>
     </Box>
   );
 }
 
-type Content = {
+type Tab = {
   // title is the tab title.
   title: string;
-  // component is the component to render as children in
+  // content is the component to render as children in
   // tabs container.
-  component: JSX.Element;
+  content: JSX.Element;
 };
 
 export type Props = {
-  contents: Content[];
+  tabs: Tab[];
 };

@@ -34,10 +34,14 @@ exports[`clicking on other tabs renders correct content and style 1`] = `
   border-top-left-radius: 4px;
   border-top-right-radius: 4px;
   opacity: 1;
+  color: inherit;
+  border: none;
 }
 
-.c3:hover {
+.c3:hover,
+.c3:focus {
   cursor: pointer;
+  opacity: 1;
 }
 
 .c2 {
@@ -50,10 +54,14 @@ exports[`clicking on other tabs renders correct content and style 1`] = `
   border-top-left-radius: 4px;
   border-top-right-radius: 4px;
   opacity: 0.6;
+  color: inherit;
+  border: none;
 }
 
-.c2:hover {
+.c2:hover,
+.c2:focus {
   cursor: pointer;
+  opacity: 1;
 }
 
 <div>
@@ -63,16 +71,16 @@ exports[`clicking on other tabs renders correct content and style 1`] = `
     <div
       class="c1"
     >
-      <div
+      <button
         class="c2"
       >
         tab one
-      </div>
-      <div
+      </button>
+      <button
         class="c3"
       >
         tab two
-      </div>
+      </button>
     </div>
     <div
       class="c4"
@@ -119,10 +127,14 @@ exports[`init tab highlight and content 1`] = `
   border-top-left-radius: 4px;
   border-top-right-radius: 4px;
   opacity: 1;
+  color: inherit;
+  border: none;
 }
 
-.c2:hover {
+.c2:hover,
+.c2:focus {
   cursor: pointer;
+  opacity: 1;
 }
 
 .c3 {
@@ -135,10 +147,14 @@ exports[`init tab highlight and content 1`] = `
   border-top-left-radius: 4px;
   border-top-right-radius: 4px;
   opacity: 0.6;
+  color: inherit;
+  border: none;
 }
 
-.c3:hover {
+.c3:hover,
+.c3:focus {
   cursor: pointer;
+  opacity: 1;
 }
 
 <div>
@@ -148,16 +164,16 @@ exports[`init tab highlight and content 1`] = `
     <div
       class="c1"
     >
-      <div
+      <button
         class="c2"
       >
         tab one
-      </div>
-      <div
+      </button>
+      <button
         class="c3"
       >
         tab two
-      </div>
+      </button>
     </div>
     <div
       class="c4"

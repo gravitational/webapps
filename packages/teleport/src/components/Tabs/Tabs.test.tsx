@@ -33,14 +33,14 @@ test('clicking on other tabs renders correct content and style', async () => {
 
 const TestTabs = () => (
   <Tabs
-    contents={[
+    tabs={[
       {
         title: `tab one`,
-        component: <div>content 1</div>,
+        content: <div>content 1</div>,
       },
       {
         title: `tab two`,
-        component: <div>content 2</div>,
+        content: <div>content 2</div>,
       },
     ]}
   />
