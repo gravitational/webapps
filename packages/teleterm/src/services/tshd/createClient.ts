@@ -172,7 +172,7 @@ export default function createClient(
     async getAccessRequest(clusterUri: string, requestId: string) {
       const req = new api.GetAccessRequestRequest()
         .setClusterUri(clusterUri)
-        .setId(requestId);
+        .setAccessRequestId(requestId);
       return new Promise<types.AccessRequest>((resolve, reject) => {
         tshd.getAccessRequest(req, (err, response) => {
           if (err) {
@@ -254,7 +254,7 @@ export default function createClient(
     async deleteAccessRequest(clusterUri: string, requestId: string) {
       const req = new api.DeleteAccessRequestRequest()
         .setRootClusterUri(clusterUri)
-        .setRequestId(requestId);
+        .setAccessRequestId(requestId);
       return new Promise<void>((resolve, reject) => {
         tshd.deleteAccessRequest(req, err => {
           if (err) {
@@ -292,7 +292,7 @@ export default function createClient(
     ) {
       const req = new api.ReviewAccessRequestRequest()
         .setRootClusterUri(clusterUri)
-        .setRequestId(params.id)
+        .setAccessRequestId(params.id)
         .setState(params.state)
         .setReason(params.reason)
         .setRolesList(params.roles);
