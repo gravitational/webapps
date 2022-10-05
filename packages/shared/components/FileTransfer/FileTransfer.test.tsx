@@ -154,7 +154,7 @@ describe('handleAfterClose', () => {
     return { handleBeforeClose, handleAfterClose };
   };
 
-  test('is not called when closing the dialog has been aborted (by returning false from handleBeforeClose)', async () => {
+  test('is not called when closing the dialog has been aborted', async () => {
     const { handleBeforeClose, handleAfterClose } = await getSetup();
     handleBeforeClose.mockReturnValue(Promise.resolve(false));
     fireEvent.click(screen.getByTitle('Close'));
@@ -162,7 +162,7 @@ describe('handleAfterClose', () => {
     expect(handleAfterClose).not.toHaveBeenCalled();
   });
 
-  test('is called when closing the dialog has been confirmed (by returning true from handleBeforeClose)', async () => {
+  test('is called when closing the dialog has been confirmed', async () => {
     const { handleBeforeClose, handleAfterClose } = await getSetup();
     handleBeforeClose.mockReturnValue(Promise.resolve(true));
     fireEvent.click(screen.getByTitle('Close'));

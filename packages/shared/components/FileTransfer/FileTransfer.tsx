@@ -38,6 +38,10 @@ interface FileTransferProps {
   afterClose?(): void;
 }
 
+/**
+ * Both `getDownloader` and `getUploader` can return a promise containing `RunFileTransfer` function or nothing.
+ * In the latter case, the file will not be added to the list and the download will not start.
+ */
 export interface TransferHandlers {
   getDownloader: (sourcePath: string) => Promise<RunFileTransfer | undefined>;
   getUploader: (
