@@ -6,7 +6,7 @@ import { MoreVert, OpenBox, Add } from 'design/Icon';
 import { Box, Text, Flex } from 'design';
 
 import { DocumentsService } from 'teleterm/ui/services/workspacesService';
-import { TopBarButton } from 'teleterm/ui/TopBar/';
+import { TopBarButton } from 'teleterm/ui/TopBar/TopBarButton';
 
 import { useIdentity } from '../Identity/useIdentity';
 

@@ -40,10 +40,10 @@ export function Clusters() {
     }
   }
 
-  function onConfirmChange(id: string): void {
+  function onConfirmChange(): void {
+    clusters.selectItem(confirmChangeTo);
     setConfirmChangeTo(null);
     clusters.clearPendingAccessRequest();
-    clusters.selectItem(id);
   }
 
   if (!clusters.hasLeaves) {

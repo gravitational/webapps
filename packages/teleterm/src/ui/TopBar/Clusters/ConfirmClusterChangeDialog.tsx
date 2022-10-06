@@ -15,7 +15,7 @@ export default function ConfirmClusterChangeDialog({
   confirmChangeTo,
   onClose,
   onConfirm,
-}) {
+}: Props) {
   return (
     <DialogConfirmation
       open={!!confirmChangeTo}
@@ -39,14 +39,16 @@ export default function ConfirmClusterChangeDialog({
         </Text>
       </DialogContent>
       <DialogFooter>
-        <ButtonWarning
-          size="large"
-          block={true}
-          onClick={() => onConfirm(confirmChangeTo)}
-        >
+        <ButtonWarning size="large" block={true} onClick={() => onConfirm()}>
           Confirm
         </ButtonWarning>
       </DialogFooter>
     </DialogConfirmation>
   );
 }
+
+type Props = {
+  confirmChangeTo: string;
+  onClose: () => void;
+  onConfirm: () => void;
+};

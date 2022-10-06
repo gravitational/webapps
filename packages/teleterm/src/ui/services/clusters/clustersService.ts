@@ -13,6 +13,7 @@ import { NotificationsService } from 'teleterm/ui/services/notifications';
 import {
   Cluster,
   CreateAccessRequestParams,
+  ReviewAccessRequestParams,
   ServerSideParams,
 } from 'teleterm/services/tshd/types';
 import { MainProcessClient } from 'teleterm/mainProcess/types';
@@ -431,7 +432,10 @@ export class ClustersService extends ImmutableStore<ClustersServiceState> {
     return this.client.getAccessRequest(clusterUri, requestId);
   }
 
-  async reviewAccessRequest(clusterUri: string, params: any) {
+  async reviewAccessRequest(
+    clusterUri: string,
+    params: ReviewAccessRequestParams
+  ) {
     const cluster = this.state.clusters.get(clusterUri);
     if (!cluster.connected) {
       return;

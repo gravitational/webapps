@@ -71,19 +71,19 @@ function createService(
   return service;
 }
 
-test('should return the bar collapse state', () => {
+test('getCollapsed() returns the bar collapse state', () => {
   let service = createService(getMockPendingAccessRequest(), getMockAssumed());
   expect(service.getCollapsed()).toStrictEqual(false);
 });
 
-test('should toggle bar collapse state', () => {
+test('toggleBar() changes the collapse state', () => {
   let service = createService(getMockPendingAccessRequest(), getMockAssumed());
   expect(service.getCollapsed()).toStrictEqual(false);
   service.toggleBar();
   expect(service.getCollapsed()).toStrictEqual(true);
 });
 
-test('should add request to assumed', () => {
+test('addToAssumed() adds request to assumed', () => {
   let service = createService(
     getMockPendingAccessRequest(),
     getMockAssumed({})
@@ -96,7 +96,7 @@ test('should add request to assumed', () => {
   });
 });
 
-test('should return assumed roles', () => {
+test('getAssumedRoles() returns assumed roles', () => {
   const request = getMockAccessRequest();
   let service = createService(
     getMockPendingAccessRequest(),
@@ -105,7 +105,7 @@ test('should return assumed roles', () => {
   expect(service.getAssumedRoles()).toStrictEqual(request.roles);
 });
 
-test('should return assumed map', () => {
+test('getAssumed() returns assumed map', () => {
   const request = getMockAccessRequest();
   let service = createService(
     getMockPendingAccessRequest(),
@@ -116,7 +116,7 @@ test('should return assumed map', () => {
   });
 });
 
-test('should clear assumed map', () => {
+test('clearAssumed() clears assumed map', () => {
   const request = getMockAccessRequest();
   let service = createService(
     getMockPendingAccessRequest(),
@@ -126,7 +126,7 @@ test('should clear assumed map', () => {
   expect(service.getAssumed()).toStrictEqual({});
 });
 
-test('should clear pending access reuqest', () => {
+test('clearPendingAccessRequest() clears pending access reuqest', () => {
   let service = createService(
     getMockPendingAccessRequest(),
     getMockAssumed({})
@@ -137,7 +137,7 @@ test('should clear pending access reuqest', () => {
   );
 });
 
-test('should return added resource count for pending request', () => {
+test('getAddedResourceCount() returns added resource count for pending request', () => {
   let service = createService(
     getMockPendingAccessRequest(),
     getMockAssumed({})
@@ -147,7 +147,7 @@ test('should return added resource count for pending request', () => {
   expect(service.getAddedResourceCount()).toStrictEqual(0);
 });
 
-test('should add resource to pending request', () => {
+test('addOrRemoveResource() adds resource to pending request', () => {
   let service = createService(
     getMockPendingAccessRequest(),
     getMockAssumed({})
@@ -157,7 +157,7 @@ test('should add resource to pending request', () => {
   expect(pendingAccessRequest['node']).toHaveProperty('456');
 });
 
-test('should remove resource if it already exists on pending request', () => {
+test('addOrRemoveResource() removes resource if it already exists on pending request', () => {
   let service = createService(
     getMockPendingAccessRequest(),
     getMockAssumed({})
