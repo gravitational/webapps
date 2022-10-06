@@ -43,13 +43,17 @@ export default function useGateway(doc: types.DocumentGateway) {
   const cluster = ctx.clustersService.findClusterByResource(doc.targetUri);
 
   const [connectAttempt, createGateway] = useAsync(async (port: string) => {
-    const gw = await retryWithRelogin(ctx, doc.uri, doc.targetUri, () =>
-      ctx.clustersService.createGateway({
-        targetUri: doc.targetUri,
-        port: port,
-        user: doc.targetUser,
-        subresource_name: doc.targetSubresourceName,
-      })
+    const gw = await retryWithRelogin(
+      ctx,
+      doc.targetUri,
+      retryWithRelogin.isDocumentActive(doc.uri),
+      () =>
+        ctx.clustersService.createGateway({
+          targetUri: doc.targetUri,
+          port: port,
+          user: doc.targetUser,
+          subresource_name: doc.targetSubresourceName,
+        })
     );
 
     workspaceDocumentsService.update(doc.uri, {

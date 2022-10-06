@@ -133,8 +133,11 @@ async function getDatabaseUsers(
   dbUri: string
 ) {
   try {
-    const dbUsers = await retryWithRelogin(appContext, documentUri, dbUri, () =>
-      appContext.clustersService.getDbUsers(dbUri)
+    const dbUsers = await retryWithRelogin(
+      appContext,
+      dbUri,
+      retryWithRelogin.isDocumentActive(documentUri),
+      () => appContext.clustersService.getDbUsers(dbUri)
     );
     return dbUsers.map(user => ({ login: user, url: '' }));
   } catch (e) {

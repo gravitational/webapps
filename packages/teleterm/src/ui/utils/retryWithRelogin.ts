@@ -9,8 +9,9 @@ const logger = new Logger('retryWithRelogin');
  * error can be resolved by the user logging in, according to metadata returned from the tshd
  * client.
  *
- * If that's the case, it checks if the user is still looking at the relevant UI and if so, it shows
- * a login modal. After the user successfully logs in, it calls `actionToRetry` again.
+ * If that's the case, it checks if the user is still looking at the relevant UI (the `isUiActive`
+ * argument) and if so, it shows a login modal. After the user successfully logs in, it calls
+ * `actionToRetry` again.
  *
  * Each place using `retryWithRelogin` must be able to show the error to the user in case the
  * relogin attempt fails. Each place should also offer the user a way to manually retry the action
@@ -25,8 +26,8 @@ const logger = new Logger('retryWithRelogin');
  */
 export async function retryWithRelogin<T>(
   appContext: AppContext,
-  originatingDocumentUri: string,
   resourceUri: string,
+  isUiActive: (appContext: AppContext) => boolean,
   actionToRetry: () => Promise<T>
 ): Promise<T> {
   let retryableErrorFromActionToRetry: Error;
@@ -47,11 +48,7 @@ export async function retryWithRelogin<T>(
     }
   }
 
-  const isDocumentStillActive = appContext.workspacesService.isDocumentActive(
-    originatingDocumentUri
-  );
-
-  if (!isDocumentStillActive) {
+  if (!isUiActive(appContext)) {
     // The error is retryable, but the user is no longer looking at the relevant UI, for example
     // they switched to a different document or a different workspace completely.
     //
@@ -82,3 +79,14 @@ function login(appContext: AppContext, rootClusterUri: string): Promise<void> {
     });
   });
 }
+
+/**
+ * isDocumentActive is a helper function meant to be passed as the isUiActive argument of
+ * retryWithRelogin for places where UI being active is equal to the document being the currently
+ * viewed document.
+ */
+retryWithRelogin.isDocumentActive = (documentUri: string) => {
+  return function (appContext: AppContext) {
+    return appContext.workspacesService.isDocumentActive(documentUri);
+  };
+};

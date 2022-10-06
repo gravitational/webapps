@@ -80,8 +80,8 @@ class ClusterContext extends Store<State> {
     try {
       await retryWithRelogin(
         this.appCtx,
-        this.documentUri,
         this.clusterUri,
+        retryWithRelogin.isDocumentActive(this.documentUri),
         () => this.appCtx.clustersService.syncCluster(this.clusterUri)
       );
     } catch (e) {

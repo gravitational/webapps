@@ -78,8 +78,8 @@ function transferFile(
 
   retryWithRelogin(
     appContext,
-    originatingDocumentUri,
     file.serverUri,
+    retryWithRelogin.isDocumentActive(originatingDocumentUri),
     getFileTransferActionAsPromise
   )
     .then(eventsEmitter.emitComplete)
