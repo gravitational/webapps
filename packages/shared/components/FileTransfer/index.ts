@@ -21,3 +21,4 @@ export {
 } from './FileTransferContextProvider';
 export type { FileTransferListeners } from './FileTransferStateless/types';
 export { FileTransferActionBar } from './FileTransferActionBar';
+export * from './createFileTransferEventsEmitter';

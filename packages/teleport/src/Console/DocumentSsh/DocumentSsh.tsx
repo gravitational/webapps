@@ -87,34 +87,29 @@ export default function DocumentSsh({ doc, visible }: PropTypes) {
           afterClose={handleCloseFileTransfer}
           backgroundColor={colors.terminalDark}
           transferHandlers={{
-            getDownloader:
-              async location => (fileTransferListeners, abortController) =>
-                getHttpFileTransferHandlers().download(
-                  cfg.getScpUrl({
-                    location,
-                    clusterId: doc.clusterId,
-                    serverId: doc.serverId,
-                    login: doc.login,
-                    filename: location,
-                  }),
-                  fileTransferListeners,
-                  abortController
-                ),
-            getUploader:
-              async (location, file) =>
-              (fileTransferListeners, abortController) =>
-                getHttpFileTransferHandlers().upload(
-                  cfg.getScpUrl({
-                    location,
-                    clusterId: doc.clusterId,
-                    serverId: doc.serverId,
-                    login: doc.login,
-                    filename: file.name,
-                  }),
-                  file,
-                  fileTransferListeners,
-                  abortController
-                ),
+            getDownloader: async (location, abortController) =>
+              getHttpFileTransferHandlers().download(
+                cfg.getScpUrl({
+                  location,
+                  clusterId: doc.clusterId,
+                  serverId: doc.serverId,
+                  login: doc.login,
+                  filename: location,
+                }),
+                abortController
+              ),
+            getUploader: async (location, file, abortController) =>
+              getHttpFileTransferHandlers().upload(
+                cfg.getScpUrl({
+                  location,
+                  clusterId: doc.clusterId,
+                  serverId: doc.serverId,
+                  login: doc.login,
+                  filename: file.name,
+                }),
+                file,
+                abortController
+              ),
           }}
         />
       </FileTransferContextProvider>

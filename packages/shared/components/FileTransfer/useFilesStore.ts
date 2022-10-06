@@ -17,7 +17,7 @@
 import { useCallback, useMemo, useReducer, useRef } from 'react';
 
 import {
-  RunFileTransfer,
+  FileTransferListeners,
   TransferredFile,
   TransferState,
 } from './FileTransferStateless';
@@ -25,10 +25,6 @@ import {
 type FilesStoreState = {
   ids: string[];
   filesById: Record<string, TransferredFile>;
-};
-
-type NewTransferredFile = Omit<TransferredFile, 'transferState'> & {
-  runFileTransfer: RunFileTransfer;
 };
 
 type FilesStoreActions =
@@ -100,20 +96,43 @@ function reducer(
 
 export const useFilesStore = () => {
   const [state, dispatch] = useReducer(reducer, initialState);
-  const fileTransferControllers = useRef(
-    new Map<
-      string,
-      { runFileTransfer: RunFileTransfer; abortController: AbortController }
-    >()
-  );
+  const abortControllers = useRef(new Map<string, AbortController>());
 
-  const add = (file: Omit<NewTransferredFile, 'id'>) => {
-    const id = new Date().getTime() + file.name;
+  const start = async (options: {
+    name: string;
+    runFileTransfer(
+      abortController: AbortController
+    ): Promise<FileTransferListeners>;
+  }) => {
+    const abortController = new AbortController();
+    const fileTransfer = await options.runFileTransfer(abortController);
 
-    dispatch({ type: 'add', payload: { id, name: file.name } });
-    fileTransferControllers.current.set(id, {
-      runFileTransfer: file.runFileTransfer,
-      abortController: new AbortController(),
+    if (!fileTransfer) {
+      return;
+    }
+
+    const id = new Date().getTime() + options.name;
+
+    dispatch({ type: 'add', payload: { id, name: options.name } });
+    abortControllers.current.set(id, abortController);
+
+    fileTransfer.onProgress(progress => {
+      updateTransferState(id, {
+        type: 'processing',
+        progress,
+      });
+    });
+    fileTransfer.onError(error => {
+      updateTransferState(id, {
+        type: 'error',
+        progress: undefined,
+        error,
+      });
+    });
+    fileTransfer.onComplete(() => {
+      updateTransferState(id, {
+        type: 'completed',
+      });
     });
   };
 
@@ -124,37 +143,8 @@ export const useFilesStore = () => {
     []
   );
 
-  const start = useCallback(
-    (id: string) => {
-      const { runFileTransfer, abortController } =
-        fileTransferControllers.current.get(id);
-
-      runFileTransfer(
-        {
-          onComplete: () =>
-            updateTransferState(id, {
-              type: 'completed',
-            }),
-          onError: error =>
-            updateTransferState(id, {
-              type: 'error',
-              progress: undefined,
-              error,
-            }),
-          onProgress: progress =>
-            updateTransferState(id, {
-              type: 'processing',
-              progress,
-            }),
-        },
-        abortController
-      );
-    },
-    [updateTransferState]
-  );
-
   const cancel = useCallback((id: string) => {
-    fileTransferControllers.current?.get(id).abortController.abort();
+    abortControllers.current?.get(id).abort();
   }, []);
 
   const files = useMemo(
@@ -171,7 +161,6 @@ export const useFilesStore = () => {
     files,
     start,
     cancel,
-    add,
     isAnyTransferInProgress,
   };
 };

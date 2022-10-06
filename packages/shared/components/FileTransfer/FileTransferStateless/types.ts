@@ -25,15 +25,10 @@ export type TransferredFile = {
   transferState: TransferState;
 };
 
-export type RunFileTransfer = (
-  fileTransferListeners: FileTransferListeners,
-  abortController?: AbortController
-) => void;
-
 export type FileTransferListeners = {
-  onProgress(percentage: number): void;
-  onError(error: Error): void;
-  onComplete(): void;
+  onProgress(callback: (percentage: number) => void): void;
+  onError(callback: (error: Error) => void): void;
+  onComplete(callback: () => void): void;
 };
 
 export enum FileTransferDialogDirection {

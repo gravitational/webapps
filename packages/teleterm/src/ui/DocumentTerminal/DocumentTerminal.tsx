@@ -71,7 +71,7 @@ export function DocumentTerminal(props: Props & { visible: boolean }) {
                     )
                   }
                   transferHandlers={{
-                    getDownloader: async sourcePath => {
+                    getDownloader: async (sourcePath, abortController) => {
                       const fileDialog =
                         await ctx.mainProcessClient.showFileSaveDialog(
                           sourcePath
@@ -79,32 +79,30 @@ export function DocumentTerminal(props: Props & { visible: boolean }) {
                       if (fileDialog.canceled) {
                         return;
                       }
-                      return (fileTransferListeners, abortController) => {
-                        download(
-                          {
-                            serverUri: doc.serverUri,
-                            login: doc.login,
-                            source: sourcePath,
-                            destination: fileDialog.filePath,
-                          },
-                          fileTransferListeners,
-                          abortController
-                        );
-                      };
+                      return download(
+                        {
+                          serverUri: doc.serverUri,
+                          login: doc.login,
+                          source: sourcePath,
+                          destination: fileDialog.filePath,
+                        },
+                        abortController
+                      );
                     },
-                    getUploader:
-                      async (destinationPath, file) =>
-                      (fileTransferListeners, abortController) =>
-                        upload(
-                          {
-                            serverUri: doc.serverUri,
-                            login: doc.login,
-                            source: file.path,
-                            destination: destinationPath,
-                          },
-                          fileTransferListeners,
-                          abortController
-                        ),
+                    getUploader: async (
+                      destinationPath,
+                      file,
+                      abortController
+                    ) =>
+                      upload(
+                        {
+                          serverUri: doc.serverUri,
+                          login: doc.login,
+                          source: file.path,
+                          destination: destinationPath,
+                        },
+                        abortController
+                      ),
                   }}
                 />
               </FileTransferContextProvider>

@@ -20,8 +20,8 @@ import { useFileTransferContext } from './FileTransferContextProvider';
 import { useFilesStore } from './useFilesStore';
 import {
   FileTransferDialogDirection,
+  FileTransferListeners,
   FileTransferStateless,
-  RunFileTransfer,
 } from './FileTransferStateless';
 
 interface FileTransferProps {
@@ -39,15 +39,19 @@ interface FileTransferProps {
 }
 
 /**
- * Both `getDownloader` and `getUploader` can return a promise containing `RunFileTransfer` function or nothing.
+ * Both `getDownloader` and `getUploader` can return a promise containing `FileTransferListeners` function or nothing.
  * In the latter case, the file will not be added to the list and the download will not start.
  */
 export interface TransferHandlers {
-  getDownloader: (sourcePath: string) => Promise<RunFileTransfer | undefined>;
+  getDownloader: (
+    sourcePath: string,
+    abortController: AbortController
+  ) => Promise<FileTransferListeners | undefined>;
   getUploader: (
     destinationPath: string,
-    file: File
-  ) => Promise<RunFileTransfer | undefined>;
+    file: File,
+    abortController: AbortController
+  ) => Promise<FileTransferListeners | undefined>;
 }
 
 export function FileTransfer(props: FileTransferProps) {
@@ -93,32 +97,24 @@ export function FileTransferDialog(
 ) {
   const filesStore = useFilesStore();
 
-  async function handleAddDownload(sourcePath: string): Promise<void> {
-    const runFileTransfer = await props.transferHandlers.getDownloader(
-      sourcePath
-    );
-    if (runFileTransfer) {
-      filesStore.add({
-        name: sourcePath,
-        runFileTransfer,
-      });
-    }
+  function handleAddDownload(sourcePath: string): void {
+    filesStore.start({
+      name: sourcePath,
+      runFileTransfer: abortController =>
+        props.transferHandlers.getDownloader(sourcePath, abortController),
+    });
   }
 
-  async function handleAddUpload(
-    destinationPath: string,
-    file: File
-  ): Promise<void> {
-    const runFileTransfer = await props.transferHandlers.getUploader(
-      destinationPath,
-      file
-    );
-    if (runFileTransfer) {
-      filesStore.add({
-        name: file.name,
-        runFileTransfer,
-      });
-    }
+  function handleAddUpload(destinationPath: string, file: File): void {
+    filesStore.start({
+      name: file.name,
+      runFileTransfer: abortController =>
+        props.transferHandlers.getUploader(
+          destinationPath,
+          file,
+          abortController
+        ),
+    });
   }
 
   function handleClose(): void {
@@ -129,7 +125,6 @@ export function FileTransferDialog(
     <FileTransferStateless
       openedDialog={props.openedDialog}
       files={filesStore.files}
-      onStart={filesStore.start}
       onCancel={filesStore.cancel}
       backgroundColor={props.backgroundColor}
       onClose={handleClose}

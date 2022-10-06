@@ -1,4 +1,7 @@
-import { FileTransferListeners } from 'shared/components/FileTransfer';
+import {
+  FileTransferListeners,
+  createFileTransferEventsEmitter,
+} from 'shared/components/FileTransfer';
 
 import { routing } from 'teleterm/ui/uri';
 import { FileTransferDirection } from 'teleterm/services/tshd/v1/service_pb';
@@ -14,28 +17,24 @@ export function useTshFileTransferHandlers(options: {
   return {
     upload(
       file: FileTransferRequestObject,
-      fileTransferListeners: FileTransferListeners,
       abortController: AbortController
-    ): void {
-      transferFile(
+    ): FileTransferListeners {
+      return transferFile(
         appContext,
         options.originatingDocumentUri,
         file,
-        fileTransferListeners,
         abortController,
         FileTransferDirection.FILE_TRANSFER_DIRECTION_UPLOAD
       );
     },
     download(
       file: FileTransferRequestObject,
-      fileTransferListeners: FileTransferListeners,
       abortController: AbortController
-    ): void {
-      transferFile(
+    ): FileTransferListeners {
+      return transferFile(
         appContext,
         options.originatingDocumentUri,
         file,
-        fileTransferListeners,
         abortController,
         FileTransferDirection.FILE_TRANSFER_DIRECTION_DOWNLOAD
       );
@@ -47,14 +46,14 @@ function transferFile(
   appContext: IAppContext,
   originatingDocumentUri: string,
   file: FileTransferRequestObject,
-  fileTransferListeners: FileTransferListeners,
   abortController: AbortController,
   direction: FileTransferDirection
-): void {
+): FileTransferListeners {
   const server = appContext.clustersService.getServer(file.serverUri);
+  const eventsEmitter = createFileTransferEventsEmitter();
   const getFileTransferActionAsPromise = () =>
     new Promise((resolve, reject) => {
-      appContext.fileTransferClient.transferFile(
+      const callbacks = appContext.fileTransferClient.transferFile(
         {
           source: file.source,
           destination: file.destination,
@@ -63,19 +62,18 @@ function transferFile(
           hostname: server.hostname,
           direction,
         },
-        {
-          onProgress: (percentage: number) => {
-            fileTransferListeners.onProgress(percentage);
-          },
-          onError: (error: Error) => {
-            reject(error);
-          },
-          onComplete: () => {
-            resolve(undefined);
-          },
-        },
         abortController
       );
+
+      callbacks.onProgress((percentage: number) => {
+        eventsEmitter.emitProgress(percentage);
+      });
+      callbacks.onError((error: Error) => {
+        reject(error);
+      });
+      callbacks.onComplete(() => {
+        resolve(undefined);
+      });
     });
 
   retryWithRelogin(
@@ -84,8 +82,10 @@ function transferFile(
     file.serverUri,
     getFileTransferActionAsPromise
   )
-    .then(fileTransferListeners.onComplete)
-    .catch(fileTransferListeners.onError);
+    .then(eventsEmitter.emitComplete)
+    .catch(eventsEmitter.emitError);
+
+  return eventsEmitter;
 }
 
 type FileTransferRequestObject = {

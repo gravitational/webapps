@@ -55,7 +55,6 @@ function GetFileTransfer(
       onClose={() => undefined}
       onAddDownload={() => undefined}
       onAddUpload={() => undefined}
-      onStart={() => undefined}
       onCancel={() => undefined}
     />
   );

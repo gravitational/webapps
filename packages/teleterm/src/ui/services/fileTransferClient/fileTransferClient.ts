@@ -8,9 +8,8 @@ export class FileTransferClient {
 
   transferFile(
     options: FileTransferRequest.AsObject,
-    listeners: FileTransferListeners,
     abortController: AbortController
-  ) {
+  ): FileTransferListeners {
     const abortSignal = {
       addEventListener: (cb: (...args: any[]) => void) => {
         abortController.signal.addEventListener('abort', cb);
@@ -19,7 +18,6 @@ export class FileTransferClient {
         abortController.signal.removeEventListener('abort', cb);
       },
     };
-
-    return this.tshClient.transferFile(options, listeners, abortSignal);
+    return this.tshClient.transferFile(options, abortSignal);
   }
 }

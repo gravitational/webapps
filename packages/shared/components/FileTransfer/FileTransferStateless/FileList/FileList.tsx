@@ -24,8 +24,6 @@ import { FileListItem } from './FileListItem';
 interface FileListProps {
   files: TransferredFile[];
 
-  onStart(id: string): void;
-
   onCancel(id: string): void;
 }
 
@@ -37,12 +35,7 @@ export function FileList(props: FileListProps) {
   return (
     <Ul>
       {props.files.map(file => (
-        <FileListItem
-          key={file.id}
-          file={file}
-          onStart={props.onStart}
-          onCancel={props.onCancel}
-        />
+        <FileListItem key={file.id} file={file} onCancel={props.onCancel} />
       ))}
     </Ul>
   );

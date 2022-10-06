@@ -23,7 +23,6 @@ import { TransferredFile } from '../types';
 
 type FileListItemProps = {
   file: TransferredFile;
-  onStart(id: string): void;
   onCancel(id: string): void;
 };
 
@@ -31,10 +30,8 @@ export function FileListItem(props: FileListItemProps) {
   const { name, transferState, id } = props.file;
 
   useEffect(() => {
-    props.onStart(id);
-
     return () => props.onCancel(id);
-  }, [props.onStart, props.onCancel]);
+  }, [props.onCancel]);
 
   return (
     <Li>

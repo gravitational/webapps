@@ -35,8 +35,6 @@ export interface FileTransferStatelessProps {
 
   onAddUpload(destinationPath: string, file: File): void;
 
-  onStart(id: string): void;
-
   onCancel(id: string): void;
 }
 
@@ -73,11 +71,7 @@ export function FileTransferStateless(props: FileTransferStatelessProps) {
         <ButtonClose onClick={props.onClose} />
       </Flex>
       {items.Form}
-      <FileList
-        files={props.files}
-        onStart={props.onStart}
-        onCancel={props.onCancel}
-      />
+      <FileList files={props.files} onCancel={props.onCancel} />
     </Container>
   );
 }

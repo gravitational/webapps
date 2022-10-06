@@ -35,37 +35,24 @@ const files: TransferredFile[] = [
 ];
 
 test('list items are rendered', () => {
-  render(<FileList files={files} onStart={jest.fn()} onCancel={jest.fn()} />);
+  render(<FileList files={files} onCancel={jest.fn()} />);
   const [listItem] = screen.getAllByRole('listitem');
   expect(listItem).toHaveTextContent('~/mona-lisa.jpg');
   expect(listItem).toHaveTextContent('0%');
 });
 
-test('transfer is started when component mounts and is cancelled when unmounts', () => {
-  const handleStart = jest.fn();
+test('transfer is cancelled when component unmounts', () => {
   const handleCancel = jest.fn();
   const { unmount } = render(
-    <FileList
-      files={[files[0]]}
-      onStart={handleStart}
-      onCancel={handleCancel}
-    />
+    <FileList files={[files[0]]} onCancel={handleCancel} />
   );
-  expect(handleStart).toHaveBeenCalledTimes(1);
   unmount();
   expect(handleCancel).toHaveBeenCalledTimes(1);
 });
 
 test('transfer is cancelled when user clicks Cancel button', () => {
-  const handleStart = jest.fn();
   const handleCancel = jest.fn();
-  render(
-    <FileList
-      files={[files[0]]}
-      onStart={handleStart}
-      onCancel={handleCancel}
-    />
-  );
+  render(<FileList files={[files[0]]} onCancel={handleCancel} />);
   fireEvent.click(screen.getByTitle('Cancel'));
   expect(handleCancel).toHaveBeenCalledTimes(1);
 });

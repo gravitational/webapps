@@ -92,9 +92,8 @@ export type TshClient = {
   logout: (clusterUri: string) => Promise<void>;
   transferFile: (
     options: apiService.FileTransferRequest.AsObject,
-    listeners: FileTransferListeners,
     abortSignal?: TshAbortSignal
-  ) => void;
+  ) => FileTransferListeners;
 };
 
 export type TshAbortController = {

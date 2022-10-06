@@ -1,13 +1,12 @@
 import { ChannelCredentials, ClientDuplexStream } from '@grpc/grpc-js';
 
-import { FileTransferListeners } from 'shared/components/FileTransfer';
-
-import { TerminalServiceClient } from 'teleterm/services/tshd/v1/service_grpc_pb';
-import * as api from 'teleterm/services/tshd/v1/service_pb';
-import * as types from 'teleterm/services/tshd/types';
 import Logger from 'teleterm/logger';
 
+import * as api from './v1/service_pb';
+import { TerminalServiceClient } from './v1/service_grpc_pb';
+import { createFileTransferStream } from './createFileTransferStream';
 import middleware, { withLogging } from './middleware';
+import * as types from './types';
 import createAbortController from './createAbortController';
 
 export default function createClient(
@@ -418,9 +417,8 @@ export default function createClient(
 
     transferFile(
       options: api.FileTransferRequest.AsObject,
-      listeners: FileTransferListeners,
-      abortSignal?: types.TshAbortSignal
-    ): void {
+      abortSignal: types.TshAbortSignal
+    ) {
       const req = new api.FileTransferRequest()
         .setLogin(options.login)
         .setSource(options.source)
@@ -429,20 +427,7 @@ export default function createClient(
         .setClusterUri(options.clusterUri)
         .setDirection(options.direction);
 
-      const call = tshd.transferFile(req);
-      abortSignal.addEventListener(() => call.cancel());
-
-      call.on('data', (data: api.FileTransferProgress) =>
-        listeners.onProgress(data.getPercentage())
-      );
-      call.on('end', () => {
-        listeners.onComplete();
-        call.removeAllListeners();
-      });
-      call.on('error', error => {
-        listeners.onError(error);
-        call.removeAllListeners();
-      });
+      return createFileTransferStream(tshd.transferFile(req), abortSignal);
     },
   };
   return client;

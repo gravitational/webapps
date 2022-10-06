@@ -25,10 +25,8 @@ import {
 
 import { FileTransfer, TransferHandlers } from './FileTransfer';
 import { FileTransferContextProvider } from './FileTransferContextProvider';
-import {
-  FileTransferDialogDirection,
-  FileTransferListeners,
-} from './FileTransferStateless';
+import { FileTransferDialogDirection } from './FileTransferStateless';
+import { createFileTransferEventsEmitter } from './createFileTransferEventsEmitter';
 
 test('click opens correct dialog', () => {
   render(
@@ -42,16 +40,10 @@ test('click opens correct dialog', () => {
 });
 
 test('downloads component changes when file transfer callbacks are called', async () => {
-  let listenersMock: FileTransferListeners = {
-    onComplete(): void {},
-    onError(): void {},
-    onProgress(): void {},
-  };
+  const fileTransferEvents = createFileTransferEventsEmitter();
 
   const handler: TransferHandlers = {
-    getDownloader: async () => fileTransferListeners => {
-      listenersMock = fileTransferListeners;
-    },
+    getDownloader: async () => fileTransferEvents,
     getUploader: async () => undefined,
   };
   render(
@@ -68,13 +60,13 @@ test('downloads component changes when file transfer callbacks are called', asyn
   const listItem = await screen.findByRole('listitem');
   expect(listItem).toHaveTextContent('/Users/g/file.txt');
 
-  act(() => listenersMock.onProgress(50));
+  act(() => fileTransferEvents.emitProgress(50));
   expect(listItem).toHaveTextContent('50%');
 
-  act(() => listenersMock.onComplete());
+  act(() => fileTransferEvents.emitComplete());
   expect(listItem).toContainElement(screen.getByTitle('Transfer completed'));
 
-  act(() => listenersMock.onError(new Error('Network error')));
+  act(() => fileTransferEvents.emitError(new Error('Network error')));
   expect(listItem).toHaveTextContent('Network error');
 });
 
@@ -82,8 +74,9 @@ test('onAbort is called when user cancels upload', async () => {
   let abortControllerMock: AbortController;
 
   const handler: TransferHandlers = {
-    getDownloader: async () => (fileTransferListeners, abortController) => {
+    getDownloader: async (_, abortController) => {
       abortControllerMock = abortController;
+      return createFileTransferEventsEmitter();
     },
     getUploader: async () => undefined,
   };
@@ -128,7 +121,7 @@ describe('handleAfterClose', () => {
     const handleBeforeClose = jest.fn();
     const handleAfterClose = jest.fn();
     const handler: TransferHandlers = {
-      getDownloader: async () => () => {},
+      getDownloader: async () => createFileTransferEventsEmitter(),
       getUploader: async () => undefined,
     };
 

@@ -1,6 +1,8 @@
-import { EventEmitter } from 'events';
-
-import { FileTransferListeners } from 'shared/components/FileTransfer';
+import {
+  FileTransferEventsEmitter,
+  FileTransferListeners,
+  createFileTransferEventsEmitter,
+} from 'shared/components/FileTransfer';
 
 import { getAuthHeaders, getNoCacheHeaders } from 'teleport/services/api';
 
@@ -9,36 +11,33 @@ export function getHttpFileTransferHandlers() {
     upload(
       url: string,
       file: File,
-      fileTransferListeners: FileTransferListeners,
       abortController?: AbortController
-    ) {
-      const eventEmitter = new EventEmitter();
+    ): FileTransferListeners {
+      const eventEmitter = createFileTransferEventsEmitter();
       const xhr = getBaseXhrRequest({
         method: 'post',
         url,
         eventEmitter,
         abortController,
-        fileTransferListeners: fileTransferListeners,
         transformFailedResponse: () => getErrorText(xhr.response),
       });
 
       xhr.upload.addEventListener('progress', e => {
-        eventEmitter.emit('progress', calculateProgress(e));
+        eventEmitter.emitProgress(calculateProgress(e));
       });
       xhr.send(file);
+      return eventEmitter;
     },
     download(
       url: string,
-      fileTransferListeners: FileTransferListeners,
       abortController?: AbortController
-    ) {
-      const eventEmitter = new EventEmitter();
+    ): FileTransferListeners {
+      const eventEmitter = createFileTransferEventsEmitter();
       const xhr = getBaseXhrRequest({
         method: 'get',
         url,
         eventEmitter,
         abortController,
-        fileTransferListeners: fileTransferListeners,
         transformSuccessfulResponse: () => {
           const fileName = getDispositionFileName(xhr);
           if (!fileName) {
@@ -52,11 +51,12 @@ export function getHttpFileTransferHandlers() {
 
       xhr.onprogress = e => {
         if (xhr.status === 200) {
-          eventEmitter.emit('progress', calculateProgress(e));
+          eventEmitter.emitProgress(calculateProgress(e));
         }
       };
       xhr.responseType = 'blob';
       xhr.send();
+      return eventEmitter;
     },
   };
 }
@@ -66,18 +66,16 @@ function getBaseXhrRequest({
   url,
   abortController,
   eventEmitter,
-  fileTransferListeners,
   transformSuccessfulResponse,
   transformFailedResponse,
 }: {
   method: string;
   url: string;
-  eventEmitter: EventEmitter;
+  eventEmitter: FileTransferEventsEmitter;
   abortController: AbortController;
-  fileTransferListeners: FileTransferListeners;
   transformSuccessfulResponse?(): void;
   transformFailedResponse?(): Promise<string> | string;
-}) {
+}): XMLHttpRequest {
   function setHeaders(): void {
     const headers = {
       ...getAuthHeaders(),
@@ -98,27 +96,28 @@ function getBaseXhrRequest({
 
     xhr.onload = async () => {
       if (xhr.status !== 200) {
-        eventEmitter.emit('error', new Error(await transformFailedResponse()));
+        eventEmitter.emitError(new Error(await transformFailedResponse()));
         return;
       }
 
       try {
-        eventEmitter.emit('completed', transformSuccessfulResponse?.());
+        transformSuccessfulResponse?.();
+        eventEmitter.emitComplete();
       } catch (error) {
-        eventEmitter.emit('error', error);
+        eventEmitter.emitError(error);
       }
     };
 
     xhr.onerror = async () => {
-      eventEmitter.emit('error', new Error(await transformFailedResponse()));
+      eventEmitter.emitError(new Error(await transformFailedResponse()));
     };
 
     xhr.ontimeout = () => {
-      eventEmitter.emit('error', new Error('Request timed out.'));
+      eventEmitter.emitError(new Error('Request timed out.'));
     };
 
     xhr.onabort = () => {
-      eventEmitter.emit('error', new DOMException('Aborted', 'AbortError'));
+      eventEmitter.emitError(new DOMException('Aborted', 'AbortError'));
     };
   }
 
@@ -127,9 +126,6 @@ function getBaseXhrRequest({
   setHeaders();
   attachHandlers();
 
-  eventEmitter.on('progress', fileTransferListeners.onProgress);
-  eventEmitter.on('completed', fileTransferListeners.onComplete);
-  eventEmitter.on('error', fileTransferListeners.onError);
   return xhr;
 }
 
