@@ -1,1 +1,1 @@
-export * from './fileTransferClient';
+export * from './fileTransferService';

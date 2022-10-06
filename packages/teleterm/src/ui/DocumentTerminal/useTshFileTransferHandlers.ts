@@ -53,7 +53,7 @@ function transferFile(
   const eventsEmitter = createFileTransferEventsEmitter();
   const getFileTransferActionAsPromise = () =>
     new Promise((resolve, reject) => {
-      const callbacks = appContext.fileTransferClient.transferFile(
+      const callbacks = appContext.fileTransferService.transferFile(
         {
           source: file.source,
           destination: file.destination,

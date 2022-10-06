@@ -2,7 +2,7 @@ import { FileTransferListeners } from 'shared/components/FileTransfer';
 
 import { TshClient, FileTransferRequest } from 'teleterm/services/tshd/types';
 
-export class FileTransferClient {
+export class FileTransferService {
   constructor(private tshClient: TshClient) {}
 
   transferFile(
