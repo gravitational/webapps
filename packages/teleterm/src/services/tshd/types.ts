@@ -30,6 +30,8 @@ export type LoggedInUser = apiCluster.LoggedInUser.AsObject;
 export type AuthProvider = apiAuthSettings.AuthProvider.AsObject;
 export type AuthSettings = apiAuthSettings.AuthSettings.AsObject;
 
+export type FileTransferRequest = apiService.FileTransferRequest.AsObject;
+
 export type WebauthnCredentialInfo = apiService.CredentialInfo.AsObject;
 export type WebauthnLoginPrompt =
   | WebauthnLoginTapPrompt
@@ -91,7 +93,7 @@ export type TshClient = {
   ) => Promise<void>;
   logout: (clusterUri: string) => Promise<void>;
   transferFile: (
-    options: apiService.FileTransferRequest.AsObject,
+    options: FileTransferRequest,
     abortSignal?: TshAbortSignal
   ) => FileTransferListeners;
 };

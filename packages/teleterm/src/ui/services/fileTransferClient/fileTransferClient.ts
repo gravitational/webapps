@@ -1,13 +1,12 @@
 import { FileTransferListeners } from 'shared/components/FileTransfer';
 
-import { TshClient } from 'teleterm/services/tshd/types';
-import { FileTransferRequest } from 'teleterm/services/tshd/v1/service_pb';
+import { TshClient, FileTransferRequest } from 'teleterm/services/tshd/types';
 
 export class FileTransferClient {
   constructor(private tshClient: TshClient) {}
 
   transferFile(
-    options: FileTransferRequest.AsObject,
+    options: FileTransferRequest,
     abortController: AbortController
   ): FileTransferListeners {
     const abortSignal = {

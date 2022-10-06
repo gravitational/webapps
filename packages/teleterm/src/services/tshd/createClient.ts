@@ -416,7 +416,7 @@ export default function createClient(
     },
 
     transferFile(
-      options: api.FileTransferRequest.AsObject,
+      options: types.FileTransferRequest,
       abortSignal: types.TshAbortSignal
     ) {
       const req = new api.FileTransferRequest()
