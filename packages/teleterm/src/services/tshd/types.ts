@@ -2,6 +2,8 @@ import { ResourceKind } from 'e-teleterm/ui/DocumentAccessRequests/NewRequest/us
 
 import { SortType } from 'design/DataTable/types';
 
+import { RequestState } from 'e-teleport/services/workflow';
+
 import apiCluster from './v1/cluster_pb';
 import apiDb from './v1/database_pb';
 import apigateway from './v1/gateway_pb';
@@ -11,7 +13,6 @@ import apiApp from './v1/app_pb';
 import apiService from './v1/service_pb';
 import apiAuthSettings from './v1/auth_settings_pb';
 import apiAccessRequest from './v1/access_request_pb';
-import { RequestState } from 'e-teleport/services/workflow';
 
 export type Application = apiApp.App.AsObject;
 export type Kube = apiKube.Kube.AsObject;
@@ -22,6 +23,7 @@ export type ResourceId = apiAccessRequest.ResourceID.AsObject;
 export type AccessRequestReview = apiAccessRequest.AccessRequestReview.AsObject;
 export type GetServersResponse = apiService.GetServersResponse.AsObject;
 export type GetDatabasesResponse = apiService.GetDatabasesResponse.AsObject;
+export type GetKubesResponse = apiService.GetKubesResponse.AsObject;
 // Available types are listed here:
 // https://github.com/gravitational/teleport/blob/v9.0.3/lib/defaults/defaults.go#L513-L530
 //
@@ -63,7 +65,8 @@ export type TshClient = {
   listRootClusters: () => Promise<Cluster[]>;
   listLeafClusters: (clusterUri: string) => Promise<Cluster[]>;
   listApps: (clusterUri: string) => Promise<Application[]>;
-  listKubes: (clusterUri: string) => Promise<Kube[]>;
+  getAllKubes: (clusterUri: string) => Promise<Kube[]>;
+  getKubes: (params: ServerSideParams) => Promise<GetKubesResponse>;
   getAllDatabases: (clusterUri: string) => Promise<Database[]>;
   getDatabases: (params: ServerSideParams) => Promise<GetDatabasesResponse>;
   listDatabaseUsers: (dbUri: string) => Promise<string[]>;

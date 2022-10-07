@@ -7,6 +7,7 @@ import {
   Database,
   Gateway,
   GetDatabasesResponse,
+  GetKubesResponse,
   GetServersResponse,
   Kube,
   LoginLocalParams,
@@ -25,7 +26,8 @@ export class MockTshClient implements TshClient {
   listRootClusters: () => Promise<Cluster[]>;
   listLeafClusters: (clusterUri: string) => Promise<Cluster[]>;
   listApps: (clusterUri: string) => Promise<Application[]>;
-  listKubes: (clusterUri: string) => Promise<Kube[]>;
+  getAllKubes: (clusterUri: string) => Promise<Kube[]>;
+  getKubes: (params: ServerSideParams) => Promise<GetKubesResponse>;
   getAllDatabases: (clusterUri: string) => Promise<Database[]>;
   getDatabases: (params: ServerSideParams) => Promise<GetDatabasesResponse>;
   listDatabaseUsers: (dbUri: string) => Promise<string[]>;

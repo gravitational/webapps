@@ -1,7 +1,5 @@
 import { ChannelCredentials, ClientDuplexStream } from '@grpc/grpc-js';
 
-import { ResourceKind } from 'e-teleport/Workflow/NewRequest/useNewRequest';
-
 import { TerminalServiceClient } from 'teleterm/services/tshd/v1/service_grpc_pb';
 import * as api from 'teleterm/services/tshd/v1/service_pb';
 import * as types from 'teleterm/services/tshd/types';
@@ -50,14 +48,43 @@ export default function createClient(
       });
     },
 
-    async listKubes(clusterUri: string) {
-      const req = new api.ListKubesRequest().setClusterUri(clusterUri);
+    async getAllKubes(clusterUri: string) {
+      const req = new api.GetAllKubesRequest().setClusterUri(clusterUri);
       return new Promise<types.Kube[]>((resolve, reject) => {
-        tshd.listKubes(req, (err, response) => {
+        tshd.getAllKubes(req, (err, response) => {
           if (err) {
             reject(err);
           } else {
             resolve(response.toObject().kubesList);
+          }
+        });
+      });
+    },
+
+    async getKubes({
+      clusterUri,
+      search,
+      sort,
+      query,
+      searchAsRoles,
+      startKey,
+      limit,
+    }: types.ServerSideParams) {
+      const req = new api.GetKubesRequest()
+        .setClusterUri(clusterUri)
+        .setSearchAsRoles(searchAsRoles)
+        .setStartKey(startKey)
+        .setSortBy(`${sort.fieldName}:${sort.dir.toLowerCase()}`)
+        .setSearch(search)
+        .setQuery(query)
+        .setLimit(limit);
+      return new Promise<types.GetKubesResponse>((resolve, reject) => {
+        tshd.getKubes(req, (err, response) => {
+          if (err) {
+            reject(err);
+          } else {
+            console.log('response', response.toObject());
+            resolve(response.toObject());
           }
         });
       });

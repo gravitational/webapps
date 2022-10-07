@@ -28,6 +28,7 @@ import {
   Server,
   SyncStatus,
   tsh,
+  Kube,
 } from './types';
 
 export function createClusterServiceState(): ClustersServiceState {
@@ -254,7 +255,7 @@ export class ClustersService extends ImmutableStore<ClustersServiceState> {
     });
 
     try {
-      const received = await this.client.listKubes(clusterUri);
+      const received = await this.client.getAllKubes(clusterUri);
       this.setState(draft => {
         draft.kubesSyncStatus.set(clusterUri, { status: 'ready' });
         helpers.updateMap(clusterUri, draft.kubes, received);
@@ -655,8 +656,13 @@ export class ClustersService extends ImmutableStore<ClustersServiceState> {
     };
   }
 
+  // TODO (avatus) Remove after Advanced Search is merged
   getServers() {
     return [...this.state.servers.values()];
+  }
+
+  async fetchKubes(params) {
+    return await this.client.getKubes(params);
   }
 
   getDbs() {
@@ -856,6 +862,13 @@ export function makeDatabase(source: Database) {
       source.protocol as DbProtocol
     ).title,
     protocol: source.protocol,
+    labels: source.labelsList,
+  };
+}
+
+export function makeKube(source: Kube) {
+  return {
+    name: source.name,
     labels: source.labelsList,
   };
 }
