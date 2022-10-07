@@ -20,14 +20,17 @@ import Logger from 'shared/libs/logger';
 
 const logger = Logger.create('components/CatchError');
 
-export default class CatchError extends React.Component {
+export class CatchError extends React.PureComponent<Props, State> {
+  state: State = { error: null };
+
+  private retry = () => {
+    this.setState({ error: null });
+    this.props.onRetry();
+  };
+
   static getDerivedStateFromError(error) {
     return { error };
   }
-
-  state = {
-    error: null,
-  };
 
   componentDidCatch(err) {
     logger.error('render', err);
@@ -35,6 +38,17 @@ export default class CatchError extends React.Component {
 
   render() {
     if (this.state.error) {
+      if (
+        this.props.fallbackFn &&
+        typeof this.props.fallbackFn === 'function'
+      ) {
+        return this.props.fallbackFn({
+          error: this.state.error,
+          retry: this.retry,
+        });
+      }
+
+      // Default fallback UI.
       return (
         <Failed alignSelf={'baseline'} message={this.state.error.message} />
       );
@@ -43,3 +57,18 @@ export default class CatchError extends React.Component {
     return this.props.children;
   }
 }
+
+type FallbackFnProp = {
+  error: Error;
+  retry(): void;
+};
+
+type State = {
+  error: Error;
+};
+
+type Props = {
+  children: React.ReactNode;
+  onRetry?(): void;
+  fallbackFn?(props: FallbackFnProp): React.ReactNode;
+};
