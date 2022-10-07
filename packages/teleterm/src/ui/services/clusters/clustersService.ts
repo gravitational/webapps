@@ -6,15 +6,12 @@ import { Label } from 'teleport/types';
 import { formatDatabaseInfo } from 'teleport/services/databases/makeDatabase';
 import { DbProtocol, DbType } from 'teleport/services/databases';
 
-import { ResourceKind } from 'e-teleterm/ui/DocumentAccessRequests/NewRequest/useNewRequest';
-
 import { routing } from 'teleterm/ui/uri';
 import { NotificationsService } from 'teleterm/ui/services/notifications';
 import {
   Cluster,
   CreateAccessRequestParams,
   ReviewAccessRequestParams,
-  ServerSideParams,
 } from 'teleterm/services/tshd/types';
 import { MainProcessClient } from 'teleterm/mainProcess/types';
 
@@ -392,6 +389,15 @@ export class ClustersService extends ImmutableStore<ClustersServiceState> {
         });
       });
     }
+  }
+
+  async getRequestableRoles(clusterUri: string) {
+    const cluster = this.state.clusters.get(clusterUri);
+    if (!cluster.connected) {
+      return;
+    }
+
+    return this.client.getRequestableRoles(clusterUri);
   }
 
   async getAccessRequests(clusterUri: string) {
