@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 
 import styled from 'styled-components';
 
@@ -13,7 +13,7 @@ import DocumentTerminal from 'teleterm/ui/DocumentTerminal';
 
 import Document from 'teleterm/ui/Document';
 
-import { WorkspaceDocumentsServiceProvider } from './workspaceDocumentsServiceContext';
+import { WorkspaceContextProvider } from './workspaceContext';
 import { KeyboardShortcutsPanel } from './KeyboardShortcutsPanel';
 
 export function DocumentsRenderer() {
@@ -26,26 +26,39 @@ export function DocumentsRenderer() {
     });
   }
 
+  const workspaces = useMemo(
+    () =>
+      Object.entries(workspacesService.getWorkspaces()).map(
+        ([clusterUri, workspace]) => ({
+          rootClusterUri: clusterUri,
+          localClusterUri: workspace.localClusterUri,
+          documentsService:
+            workspacesService.getWorkspaceDocumentService(clusterUri),
+          accessRequestsService:
+            workspacesService.getWorkspaceAccessRequestsService(clusterUri),
+        })
+      ),
+    [workspacesService.getWorkspaces()]
+  );
+
   return (
     <>
-      {workspacesService
-        .getWorkspacesDocumentsServices()
-        .map(({ clusterUri, workspaceDocumentsService }) => (
-          <DocumentsContainer
-            isVisible={clusterUri === workspacesService.getRootClusterUri()}
-            key={clusterUri}
-          >
-            <WorkspaceDocumentsServiceProvider
-              value={workspaceDocumentsService}
-            >
-              {workspaceDocumentsService.getDocuments().length ? (
-                renderDocuments(workspaceDocumentsService)
-              ) : (
-                <KeyboardShortcutsPanel />
-              )}
-            </WorkspaceDocumentsServiceProvider>
-          </DocumentsContainer>
-        ))}
+      {workspaces.map(workspace => (
+        <DocumentsContainer
+          isVisible={
+            workspace.rootClusterUri === workspacesService.getRootClusterUri()
+          }
+          key={workspace.rootClusterUri}
+        >
+          <WorkspaceContextProvider value={workspace}>
+            {workspace.documentsService.getDocuments().length ? (
+              renderDocuments(workspace.documentsService)
+            ) : (
+              <KeyboardShortcutsPanel />
+            )}
+          </WorkspaceContextProvider>
+        </DocumentsContainer>
+      ))}
     </>
   );
 }
