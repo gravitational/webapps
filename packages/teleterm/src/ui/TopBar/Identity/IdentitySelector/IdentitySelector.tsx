@@ -4,6 +4,7 @@ import { Box } from 'design';
 import { getUserWithClusterName } from 'teleterm/ui/utils';
 
 import { TopBarButton } from 'teleterm/ui/TopBar/TopBarButton';
+
 import { UserIcon } from './UserIcon';
 import { PamIcon } from './PamIcon';
 

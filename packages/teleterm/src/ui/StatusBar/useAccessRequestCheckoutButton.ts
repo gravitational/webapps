@@ -25,7 +25,6 @@ export function useAccessRequestsButton() {
     if (!workspaceAccessRequest) {
       return 0;
     }
-    const resourceIds = workspaceAccessRequest.getPendingAccessRequest();
     return workspaceAccessRequest.getAddedResourceCount();
   }
 

@@ -3,8 +3,6 @@ import styled from 'styled-components';
 
 import { Box, Text, Flex } from 'design';
 
-import { AccessRequestDocumentState } from 'teleterm/ui/services/workspacesService';
-
 export function NavigationItem({ item, closeMenu }: NavigationItemProps) {
   const handleClick = () => {
     item.onNavigate();

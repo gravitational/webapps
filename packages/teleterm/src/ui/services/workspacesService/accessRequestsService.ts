@@ -62,7 +62,7 @@ export class AccessRequestsService {
     ];
   }
 
-  addToAssumed({ id, expires, roles, ...rest }: AccessRequest) {
+  addToAssumed({ id, expires, roles }: AccessRequest) {
     this.setState(draftState => {
       draftState.assumed[id] = {
         id,

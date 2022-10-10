@@ -1,4 +1,3 @@
-import { useState } from 'react';
 import { useAppContext } from 'teleterm/ui/appContextProvider';
 
 export function useClusters() {

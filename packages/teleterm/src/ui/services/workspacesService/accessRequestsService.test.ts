@@ -1,6 +1,6 @@
-import { ImmutableStore } from 'teleterm/ui/services/immutableStore';
-
 import { AccessRequest } from 'e-teleport/services/workflow';
+
+import { ImmutableStore } from 'teleterm/ui/services/immutableStore';
 
 import {
   AccessRequestsService,
@@ -73,14 +73,14 @@ function createService(
 
 test('getCollapsed() returns the bar collapse state', () => {
   let service = createService(getMockPendingAccessRequest(), getMockAssumed());
-  expect(service.getCollapsed()).toStrictEqual(false);
+  expect(service.getCollapsed()).toBe(false);
 });
 
 test('toggleBar() changes the collapse state', () => {
   let service = createService(getMockPendingAccessRequest(), getMockAssumed());
-  expect(service.getCollapsed()).toStrictEqual(false);
+  expect(service.getCollapsed()).toBe(false);
   service.toggleBar();
-  expect(service.getCollapsed()).toStrictEqual(true);
+  expect(service.getCollapsed()).toBe(true);
 });
 
 test('addToAssumed() adds request to assumed', () => {
@@ -146,9 +146,9 @@ test('getAddedResourceCount() returns added resource count for pending request',
     getMockPendingAccessRequest(),
     getMockAssumed({})
   );
-  expect(service.getAddedResourceCount()).toStrictEqual(3);
+  expect(service.getAddedResourceCount()).toBe(3);
   service.clearPendingAccessRequest();
-  expect(service.getAddedResourceCount()).toStrictEqual(0);
+  expect(service.getAddedResourceCount()).toBe(0);
 });
 
 test('addOrRemoveResource() adds resource to pending request', () => {

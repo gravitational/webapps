@@ -5,13 +5,13 @@ import Popover from 'design/Popover';
 import { MoreVert, OpenBox, Add } from 'design/Icon';
 import { Box, Text, Flex } from 'design';
 
+import { useAppContext } from 'teleterm/ui/appContextProvider';
 import { DocumentsService } from 'teleterm/ui/services/workspacesService';
 import { TopBarButton } from 'teleterm/ui/TopBar/TopBarButton';
 
 import { useIdentity } from '../Identity/useIdentity';
 
 import { NavigationItem } from './NavigationItem';
-import { useAppContext } from 'teleterm/ui/appContextProvider';
 
 function getNavigationItems(
   documentsService: DocumentsService,

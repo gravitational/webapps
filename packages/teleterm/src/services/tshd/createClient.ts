@@ -84,7 +84,6 @@ export default function createClient(
           if (err) {
             reject(err);
           } else {
-            console.log('response', response.toObject());
             resolve(response.toObject());
           }
         });
