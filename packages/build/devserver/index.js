@@ -80,7 +80,6 @@ function getWebpackDevServerConfig() {
 
           // proxy requests to /v1/*
           if (/^\/v1\//.test(pathname)) {
-            console.log('v1 url, proxying');
             return true;
           }
 
