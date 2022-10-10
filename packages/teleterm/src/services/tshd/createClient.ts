@@ -1,11 +1,12 @@
 import { ChannelCredentials, ClientDuplexStream } from '@grpc/grpc-js';
 
-import { TerminalServiceClient } from 'teleterm/services/tshd/v1/service_grpc_pb';
-import * as api from 'teleterm/services/tshd/v1/service_pb';
-import * as types from 'teleterm/services/tshd/types';
 import Logger from 'teleterm/logger';
 
+import * as api from './v1/service_pb';
+import { TerminalServiceClient } from './v1/service_grpc_pb';
+import { createFileTransferStream } from './createFileTransferStream';
 import middleware, { withLogging } from './middleware';
+import * as types from './types';
 import createAbortController from './createAbortController';
 import { AccessRequest, ResourceID } from './v1/access_request_pb';
 
@@ -624,8 +625,22 @@ export default function createClient(
         });
       });
     },
-  };
 
+    transferFile(
+      options: types.FileTransferRequest,
+      abortSignal: types.TshAbortSignal
+    ) {
+      const req = new api.FileTransferRequest()
+        .setLogin(options.login)
+        .setSource(options.source)
+        .setDestination(options.destination)
+        .setHostname(options.hostname)
+        .setClusterUri(options.clusterUri)
+        .setDirection(options.direction);
+
+      return createFileTransferStream(tshd.transferFile(req), abortSignal);
+    },
+  };
   return client;
 }
 
