@@ -38,16 +38,8 @@ export const PathInput = forwardRef<
   return (
     <Validation>
       {({ validator }) => (
-        <FieldInput
+        <StyledFieldInput
           {...props}
-          inputCss={`
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            background: transparent;
-            color: white;
-            box-shadow: none;
-            font-size: 14px;
-            height: 32px;
-          `}
           onFocus={moveCaretAtEnd}
           ref={ref}
           spellCheck={false}
@@ -61,3 +53,14 @@ export const PathInput = forwardRef<
     </Validation>
   );
 });
+
+const StyledFieldInput = styled(FieldInput)`
+  input {
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    background: transparent;
+    color: white;
+    box-shadow: none;
+    font-size: 14px;
+    height: 32px;
+  }
+`;
