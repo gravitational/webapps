@@ -58,6 +58,7 @@ export const ListOfIcons = () => (
     <IconBox IconCmpt={Icon.CarrotUp} text="CarrotUp" />
     <IconBox IconCmpt={Icon.Cash} text="Cash" />
     <IconBox IconCmpt={Icon.ChatBubble} text="ChatBubble" />
+    <IconBox IconCmpt={Icon.Check} text="Check" />
     <IconBox IconCmpt={Icon.ChevronCircleDown} text="ChevronCircleDown" />
     <IconBox IconCmpt={Icon.ChevronCircleLeft} text="ChevronCircleLeft" />
     <IconBox IconCmpt={Icon.ChevronCircleRight} text="ChevronCircleRight" />
@@ -73,6 +74,7 @@ export const ListOfIcons = () => (
     <IconBox IconCmpt={Icon.Clipboard} text="Clipboard" />
     <IconBox IconCmpt={Icon.Question} text="Question" />
     <IconBox IconCmpt={Icon.Info} text="Info" />
+    <IconBox IconCmpt={Icon.InfoFilled} text="InfoFilled" />
     <IconBox IconCmpt={Icon.ClipboardUser} text="ClipboardUser" />
     <IconBox IconCmpt={Icon.Clock} text="Clock" />
     <IconBox IconCmpt={Icon.Close} text="Close" />
@@ -86,6 +88,7 @@ export const ListOfIcons = () => (
     <IconBox IconCmpt={Icon.Cog} text="Cog" />
     <IconBox IconCmpt={Icon.Config} text="Config" />
     <IconBox IconCmpt={Icon.Contract} text="Contract" />
+    <IconBox IconCmpt={Icon.Copy} text="Copy" />
     <IconBox IconCmpt={Icon.CreditCard} text="CreditCard" />
     <IconBox IconCmpt={Icon.CreditCardAlt} text="CreditCardAlt" />
     <IconBox IconCmpt={Icon.CreditCardAlt2} text="CreditCardAlt2" />

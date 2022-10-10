@@ -49,6 +49,9 @@ export const eventCodes = {
   APP_SESSION_CHUNK: 'T2008I',
   APP_SESSION_START: 'T2007I',
   APP_SESSION_END: 'T2011I',
+  APP_CREATED: 'TAP03I',
+  APP_UPDATED: 'TAP04I',
+  APP_DELETED: 'TAP05I',
   AUTH_ATTEMPT_FAILURE: 'T3007W',
   BILLING_INFORMATION_UPDATE: 'TBL03I',
   BILLING_CARD_CREATE: 'TBL00I',
@@ -84,6 +87,11 @@ export const eventCodes = {
   MYSQL_DEBUG: 'TMY12I',
   MYSQL_REFRESH: 'TMY13I',
   SQLSERVER_RPC_REQUEST: 'TMS00I',
+  CASSANDRA_BATCH_EVENT: 'TCA01I',
+  CASSANDRA_PREPARE_EVENT: 'TCA02I',
+  CASSANDRA_EXECUTE_EVENT: 'TCA03I',
+  CASSANDRA_REGISTER_EVENT: 'TCA04I',
+  ELASTICSEARCH_REQUEST: 'TES00I',
   DESKTOP_SESSION_STARTED: 'TDP00I',
   DESKTOP_SESSION_STARTED_FAILED: 'TDP00W',
   DESKTOP_SESSION_ENDED: 'TDP01I',
@@ -94,6 +102,9 @@ export const eventCodes = {
   GITHUB_CONNECTOR_CREATED: 'T8000I',
   GITHUB_CONNECTOR_DELETED: 'T8001I',
   KUBE_REQUEST: 'T3009I',
+  KUBE_CREATED: 'T3010I',
+  KUBE_UPDATED: 'T3011I',
+  KUBE_DELETED: 'T3012I',
   LOCK_CREATED: 'TLK00I',
   LOCK_DELETED: 'TLK01I',
   MFA_DEVICE_ADD: 'T1006I',
@@ -165,6 +176,8 @@ export const eventCodes = {
   SESSION_UPLOAD: 'T2005I',
   SESSION_CONNECT: 'T2010I',
   SESSION_RECORDING_ACCESS: 'T2012I',
+  SSMRUN_FAIL: 'TDS00W',
+  SSMRUN_SUCCESS: 'TDS00I',
   SUBSYSTEM_FAILURE: 'T3001E',
   SUBSYSTEM: 'T3001I',
   TERMINAL_RESIZE: 'T2002I',
@@ -210,6 +223,24 @@ export type RawEvents = {
   >;
   [eventCodes.AUTH_ATTEMPT_FAILURE]: RawEventAuthFailure<
     typeof eventCodes.AUTH_ATTEMPT_FAILURE
+  >;
+  [eventCodes.APP_CREATED]: RawEvent<
+    typeof eventCodes.APP_CREATED,
+    {
+      name: string;
+    }
+  >;
+  [eventCodes.APP_UPDATED]: RawEvent<
+    typeof eventCodes.APP_UPDATED,
+    {
+      name: string;
+    }
+  >;
+  [eventCodes.APP_DELETED]: RawEvent<
+    typeof eventCodes.APP_DELETED,
+    {
+      name: string;
+    }
   >;
   [eventCodes.CLIENT_DISCONNECT]: RawEvent<
     typeof eventCodes.CLIENT_DISCONNECT,
@@ -523,6 +554,24 @@ export type RawEvents = {
       kubernetes_cluster: string;
     }
   >;
+  [eventCodes.KUBE_CREATED]: RawEvent<
+    typeof eventCodes.KUBE_CREATED,
+    {
+      name: string;
+    }
+  >;
+  [eventCodes.KUBE_UPDATED]: RawEvent<
+    typeof eventCodes.KUBE_UPDATED,
+    {
+      name: string;
+    }
+  >;
+  [eventCodes.KUBE_DELETED]: RawEvent<
+    typeof eventCodes.KUBE_DELETED,
+    {
+      name: string;
+    }
+  >;
   [eventCodes.DATABASE_SESSION_STARTED]: RawEvent<
     typeof eventCodes.DATABASE_SESSION_STARTED,
     {
@@ -754,6 +803,55 @@ export type RawEvents = {
       proc_name: string;
     }
   >;
+  [eventCodes.CASSANDRA_BATCH_EVENT]: RawEvent<
+    typeof eventCodes.CASSANDRA_BATCH_EVENT,
+    {
+      name: string;
+      db_service: string;
+      db_name: string;
+      db_user: string;
+    }
+  >;
+  [eventCodes.CASSANDRA_PREPARE_EVENT]: RawEvent<
+    typeof eventCodes.CASSANDRA_PREPARE_EVENT,
+    {
+      name: string;
+      query: string;
+      db_service: string;
+      db_name: string;
+      db_user: string;
+    }
+  >;
+  [eventCodes.CASSANDRA_EXECUTE_EVENT]: RawEvent<
+    typeof eventCodes.CASSANDRA_EXECUTE_EVENT,
+    {
+      name: string;
+      db_service: string;
+      db_name: string;
+      db_user: string;
+    }
+  >;
+  [eventCodes.CASSANDRA_REGISTER_EVENT]: RawEvent<
+    typeof eventCodes.CASSANDRA_REGISTER_EVENT,
+    {
+      name: string;
+      db_service: string;
+      db_name: string;
+      db_user: string;
+    }
+  >;
+  [eventCodes.ELASTICSEARCH_REQUEST]: RawEvent<
+    typeof eventCodes.ELASTICSEARCH_REQUEST,
+    {
+      name: string;
+      db_service: string;
+      db_name: string;
+      category: number;
+      target: string;
+      query: string;
+      path: string;
+    }
+  >;
   [eventCodes.MFA_DEVICE_ADD]: RawEvent<
     typeof eventCodes.MFA_DEVICE_ADD,
     {
@@ -867,6 +965,28 @@ export type RawEvents = {
     {
       sid: string;
       user: string;
+    }
+  >;
+  [eventCodes.SSMRUN_SUCCESS]: RawEvent<
+    typeof eventCodes.SSMRUN_SUCCESS,
+    {
+      account_id: string;
+      instance_id: string;
+      command_id: string;
+      region: string;
+      status: string;
+      exit_code: number;
+    }
+  >;
+  [eventCodes.SSMRUN_FAIL]: RawEvent<
+    typeof eventCodes.SSMRUN_FAIL,
+    {
+      account_id: string;
+      instance_id: string;
+      command_id: string;
+      region: string;
+      status: string;
+      exit_code: number;
     }
   >;
 };

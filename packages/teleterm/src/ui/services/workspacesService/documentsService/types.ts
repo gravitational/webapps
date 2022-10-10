@@ -48,7 +48,7 @@ export interface DocumentTshKube extends DocumentBase {
   status: 'connecting' | 'connected' | 'disconnected';
   kubeId: string;
   kubeUri: string;
-  kubeConfigName: string;
+  kubeConfigRelativePath: string;
   rootClusterId: string;
   leafClusterId?: string;
 }
@@ -111,7 +111,7 @@ export type CreateClusterDocumentOpts = {
 
 export type CreateTshKubeDocumentOptions = {
   kubeUri: string;
-  kubeConfigName?: string;
+  kubeConfigRelativePath?: string;
 };
 
 export type CreateAccessRequestDocumentOpts = {

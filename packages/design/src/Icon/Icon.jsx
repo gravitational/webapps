@@ -77,6 +77,7 @@ export const ChatBubble = makeFontIcon(
   'ChatBubble',
   'icon-chat_bubble_outline'
 );
+export const Check = makeFontIcon('Check', 'icon-check');
 export const ChevronCircleDown = makeFontIcon(
   'ChevronCircleDown',
   'icon-chevron-down-circle'
@@ -124,6 +125,7 @@ export const Code = makeFontIcon('Code', 'icon-code');
 export const Cog = makeFontIcon('Cog', 'icon-cog');
 export const Config = makeFontIcon('Config', 'icon-config');
 export const Contract = makeFontIcon('Contract', 'icon-frame-contract');
+export const Copy = makeFontIcon('Copy', 'icon-copy');
 export const CreditCard = makeFontIcon('CreditCard', 'icon-credit-card1');
 export const CreditCardAlt = makeFontIcon(
   'CreditCardAlt',
@@ -164,6 +166,7 @@ export const Google = makeFontIcon('Google', 'icon-google-plus');
 export const Graph = makeFontIcon('Graph', 'icon-graph');
 export const Home = makeFontIcon('Home', 'icon-home3');
 export const Info = makeFontIcon('Info', 'icon-info_outline');
+export const InfoFilled = makeFontIcon('Info', 'icon-info');
 export const Key = makeFontIcon('Key', 'icon-key');
 export const Keypair = makeFontIcon('Keypair', 'icon-keypair');
 export const Kubernetes = makeFontIcon('Kubernetes', 'icon-kubernetes');

@@ -204,7 +204,7 @@ export const formatters: Formatters = {
     type: 'scp',
     desc: 'SCP Upload',
     format: ({ user, path, ...rest }) =>
-      `User [${user}] uploaded a file [${path}] to node [${
+      `User [${user}] uploaded a file to [${path}] on node [${
         rest['server_hostname'] || rest['addr.local']
       }]`,
   },
@@ -677,11 +677,31 @@ export const formatters: Formatters = {
     format: ({ user, kubernetes_cluster }) =>
       `User [${user}] made a request to kubernetes cluster [${kubernetes_cluster}]`,
   },
+  [eventCodes.KUBE_CREATED]: {
+    type: 'kube.create',
+    desc: 'Kubernetes Created',
+    format: ({ user, name }) =>
+      `User [${user}] created kubernetes cluster [${name}]`,
+  },
+  [eventCodes.KUBE_UPDATED]: {
+    type: 'kube.update',
+    desc: 'Kubernetes Updated',
+    format: ({ user, name }) =>
+      `User [${user}] updated kubernetes cluster [${name}]`,
+  },
+  [eventCodes.KUBE_DELETED]: {
+    type: 'kube.delete',
+    desc: 'Kubernetes Deleted',
+    format: ({ user, name }) =>
+      `User [${user}] deleted kubernetes cluster [${name}]`,
+  },
   [eventCodes.DATABASE_SESSION_STARTED]: {
     type: 'db.session.start',
     desc: 'Database Session Started',
     format: ({ user, db_service, db_name, db_user }) =>
-      `User [${user}] has connected to database [${db_name}] as [${db_user}] on [${db_service}]`,
+      `User [${user}] has connected ${
+        db_name ? `to database [${db_name}] ` : ''
+      }as [${db_user}] on [${db_service}]`,
   },
   [eventCodes.DATABASE_SESSION_STARTED_FAILURE]: {
     type: 'db.session.start',
@@ -693,7 +713,9 @@ export const formatters: Formatters = {
     type: 'db.session.end',
     desc: 'Database Session Ended',
     format: ({ user, db_service, db_name }) =>
-      `User [${user}] has disconnected from database [${db_name}] on [${db_service}]`,
+      `User [${user}] has disconnected ${
+        db_name ? `from database [${db_name}] ` : ''
+      }on [${db_service}]`,
   },
   [eventCodes.DATABASE_SESSION_QUERY]: {
     type: 'db.session.query',
@@ -733,6 +755,21 @@ export const formatters: Formatters = {
     type: 'db.delete',
     desc: 'Database Deleted',
     format: ({ user, name }) => `User [${user}] deleted database [${name}]`,
+  },
+  [eventCodes.APP_CREATED]: {
+    type: 'app.create',
+    desc: 'Application Created',
+    format: ({ user, name }) => `User [${user}] created application [${name}]`,
+  },
+  [eventCodes.APP_UPDATED]: {
+    type: 'app.update',
+    desc: 'Application Updated',
+    format: ({ user, name }) => `User [${user}] updated application [${name}]`,
+  },
+  [eventCodes.APP_DELETED]: {
+    type: 'app.delete',
+    desc: 'Application Deleted',
+    format: ({ user, name }) => `User [${user}] deleted application [${name}]`,
   },
   [eventCodes.POSTGRES_PARSE]: {
     type: 'db.session.postgres.statements.parse',
@@ -866,10 +903,78 @@ export const formatters: Formatters = {
       `User [${user}] has sent command [${subcommand}] to [${db_service}]`,
   },
   [eventCodes.SQLSERVER_RPC_REQUEST]: {
-    type: 'db.session.sqlserver.rpc_request""',
+    type: 'db.session.sqlserver.rpc_request',
     desc: 'SQLServer RPC Request',
     format: ({ user, db_service, db_name, proc_name }) =>
-      `User [${user}] has send RPC Request [${proc_name}] in database [${db_name}] on [${db_service}]`,
+      `User [${user}] has sent RPC Request [${proc_name}] in database [${db_name}] on [${db_service}]`,
+  },
+  [eventCodes.CASSANDRA_BATCH_EVENT]: {
+    type: 'db.session.cassandra.batch',
+    desc: 'Cassandra Batch',
+    format: ({ user, db_service }) =>
+      `User [${user}] has sent Cassandra Batch to [${db_service}]`,
+  },
+  [eventCodes.CASSANDRA_PREPARE_EVENT]: {
+    type: 'db.session.cassandra.prepare',
+    desc: 'Cassandra Prepare Event',
+    format: ({ user, db_service, query }) =>
+      `User [${user}] has sent Cassandra Prepare [${truncateStr(
+        query,
+        80
+      )} to [${db_service}]`,
+  },
+  [eventCodes.CASSANDRA_EXECUTE_EVENT]: {
+    type: 'db.session.cassandra.execute',
+    desc: 'Cassandra Execute',
+    format: ({ user, db_service }) =>
+      `User [${user}] has sent Cassandra Execute to ${db_service}`,
+  },
+  [eventCodes.CASSANDRA_REGISTER_EVENT]: {
+    type: 'db.session.cassandra.register',
+    desc: 'Cassandra Register',
+    format: ({ user, db_service }) =>
+      `User [${user}] has sent Cassandra Register to [${db_service}]`,
+  },
+  [eventCodes.ELASTICSEARCH_REQUEST]: {
+    type: 'db.session.elasticsearch.request',
+    desc: 'Elasticsearch Request',
+    format: ({ user, db_service, category, target, query, path }) => {
+      // local redefinition of enum ElasticsearchCategory from events.proto
+      enum ElasticsearchCategory {
+        GENERAL = 0,
+        SECURITY = 1,
+        SEARCH = 2,
+        SQL = 3,
+      }
+
+      let categoryString = 'UNKNOWN';
+      switch (category) {
+        case ElasticsearchCategory.GENERAL:
+          categoryString = 'GENERAL';
+          break;
+        case ElasticsearchCategory.SEARCH:
+          categoryString = 'SEARCH';
+          break;
+        case ElasticsearchCategory.SECURITY:
+          categoryString = 'SECURITY';
+          break;
+        case ElasticsearchCategory.SQL:
+          categoryString = 'SQL';
+          break;
+      }
+
+      let message = `User [${user}] has ran a [${categoryString}] query in [${db_service}], request path: [${path}]`;
+
+      if (query) {
+        message += `, query string: [${truncateStr(query, 80)}]`;
+      }
+
+      if (target) {
+        message += `, target: [${target}]`;
+      }
+
+      return message;
+    },
   },
   [eventCodes.MFA_DEVICE_ADD]: {
     type: 'mfa.add',
@@ -1009,6 +1114,20 @@ export const formatters: Formatters = {
     desc: 'Session Recording Accessed',
     format: ({ sid, user }) => {
       return `User [${user}] accessed a session recording [${sid}]`;
+    },
+  },
+  [eventCodes.SSMRUN_SUCCESS]: {
+    type: 'ssm.run',
+    desc: 'SSM Command Executed',
+    format: ({ account_id, instance_id, region, command_id }) => {
+      return `SSM Command with ID [${command_id}] was successfully executed on EC2 Instance [${instance_id}] on AWS Account [${account_id}] in [${region}]`;
+    },
+  },
+  [eventCodes.SSMRUN_FAIL]: {
+    type: 'ssm.run',
+    desc: 'SSM Command Execution Failed',
+    format: ({ account_id, instance_id, region, command_id }) => {
+      return `SSM Command with ID [${command_id}] failed during execution on EC2 Instance [${instance_id}] on AWS Account [${account_id}] in [${region}]`;
     },
   },
   [eventCodes.UNKNOWN]: {
