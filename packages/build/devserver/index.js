@@ -70,7 +70,8 @@ function getWebpackDevServerConfig() {
       {
         ...getTargetOptions(),
         context: function (pathname, req) {
-          const proxyHost = new URL('https://' + PROXY_TARGET).hostname;
+          const requestHostname = new URL('https://' + req.headers.host).hostname;
+          const proxyHostname = new URL('https://' + PROXY_TARGET).hostname;
 
           // proxy requests to /web/config*
           if (/^\/web\/config/.test(pathname)) {
@@ -89,7 +90,7 @@ function getWebpackDevServerConfig() {
           //   those requests.
           // - When handling requests for https://dumper.go.teleport, we want to proxy
           //   all requests through Webpack to that application
-          return req.headers.host !== proxyHost;
+          return requestHostname !== proxyHostname;
         },
       },
     ],
