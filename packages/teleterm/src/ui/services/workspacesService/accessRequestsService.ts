@@ -29,7 +29,7 @@ export class AccessRequestsService {
       draftState: (draft: {
         isBarCollapsed: boolean;
         pending: PendingAccessRequest;
-        assumed: Record<string, AccessRequest>;
+        assumed: Record<string, AssumedAccessRequest>;
       }) => void
     ) => void
   ) {}
@@ -62,9 +62,13 @@ export class AccessRequestsService {
     ];
   }
 
-  addToAssumed(request: AccessRequest) {
+  addToAssumed({ id, expires, roles, ...rest }: AccessRequest) {
     this.setState(draftState => {
-      draftState.assumed[request.id] = request;
+      draftState.assumed[id] = {
+        id,
+        expires,
+        roles,
+      };
     });
   }
 
@@ -119,3 +123,8 @@ export function getEmptyPendingAccessRequest() {
     windows_desktop: {},
   };
 }
+
+export type AssumedAccessRequest = Pick<
+  AccessRequest,
+  'id' | 'expires' | 'roles'
+>;

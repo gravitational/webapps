@@ -92,7 +92,11 @@ test('addToAssumed() adds request to assumed', () => {
   const request = getMockAccessRequest();
   service.addToAssumed(request);
   expect(service.getAssumed()).toStrictEqual({
-    [request.id]: request,
+    [request.id]: {
+      id: request.id,
+      expires: request.expires,
+      roles: request.roles,
+    },
   });
 });
 
