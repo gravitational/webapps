@@ -100,6 +100,9 @@ function getTestSetup({ documents }: { documents: Document[] }) {
     getRootClusterUri() {
       return 'test_uri';
     },
+    getWorkspaces() {
+      return {};
+    },
     getActiveWorkspace() {
       return {
         accessRequests: {
