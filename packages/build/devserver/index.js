@@ -16,7 +16,6 @@ limitations under the License.
 
 /* eslint-disable no-console */
 
-const uri = require('url');
 const WebpackDevServer = require('webpack-dev-server');
 const httpProxy = require('http-proxy');
 const optimist = require('optimist');
@@ -32,7 +31,7 @@ const argv = optimist
 const target = argv.target.startsWith('https')
   ? argv.target
   : `https://${argv.target}`;
-const urlObj = uri.parse(target);
+const urlObj = new URL(target);
 const webpackConfig = require(argv.config);
 
 if (!urlObj.host) {
@@ -70,13 +69,6 @@ function getWebpackDevServerConfig() {
       {
         ...getTargetOptions(),
         context: function (pathname, req) {
-          const { hostname: requestHostname } = new URL(
-            'https://' + req.headers.host
-          );
-          const { hostname: proxyHostname } = new URL(
-            'https://' + PROXY_TARGET
-          );
-
           // proxy requests to /web/config*
           if (/^\/web\/config/.test(pathname)) {
             return true;
@@ -93,7 +85,9 @@ function getWebpackDevServerConfig() {
           //   those requests.
           // - When handling requests for https://dumper.go.teleport, we want to proxy
           //   all requests through Webpack to that application
-          return requestHostname !== proxyHostname;
+          const { hostname } = new URL('https://' + req.headers.host);
+
+          return hostname !== urlObj.hostname;
         },
       },
     ],
