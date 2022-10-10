@@ -45,7 +45,7 @@ function getMockAccessRequest(): AccessRequest {
     reviews: [],
     reviewers: [],
     thresholdNames: ['Default'],
-    resourceIds: [],
+    resources: [],
   };
 }
 
