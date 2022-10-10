@@ -70,8 +70,12 @@ function getWebpackDevServerConfig() {
       {
         ...getTargetOptions(),
         context: function (pathname, req) {
-          const requestHostname = new URL('https://' + req.headers.host).hostname;
-          const proxyHostname = new URL('https://' + PROXY_TARGET).hostname;
+          const { hostname: requestHostname } = new URL(
+            'https://' + req.headers.host
+          );
+          const { hostname: proxyHostname } = new URL(
+            'https://' + PROXY_TARGET
+          );
 
           // proxy requests to /web/config*
           if (/^\/web\/config/.test(pathname)) {
