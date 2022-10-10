@@ -137,11 +137,17 @@ export default function useTdpClientCanvas(props: Props) {
     e.preventDefault();
     if (handleCapsLock(cli, e)) return;
     cli.sendKeyboardInput(e.code, ButtonState.DOWN);
+
+    // Opportunistically sync local clipboard to remote while
+    // transient user activation is in effect.
+    // https://developer.mozilla.org/en-US/docs/Web/API/Clipboard/readText#security
+    sendLocalClipboardToRemote(cli);
   };
 
   const onKeyUp = (cli: TdpClient, e: KeyboardEvent) => {
     e.preventDefault();
     if (handleCapsLock(cli, e)) return;
+
     cli.sendKeyboardInput(e.code, ButtonState.UP);
   };
 
@@ -160,6 +166,11 @@ export default function useTdpClientCanvas(props: Props) {
     if (e.button === 0 || e.button === 1 || e.button === 2) {
       cli.sendMouseButton(e.button, ButtonState.DOWN);
     }
+
+    // Opportunistically sync local clipboard to remote while
+    // transient user activation is in effect.
+    // https://developer.mozilla.org/en-US/docs/Web/API/Clipboard/readText#security
+    sendLocalClipboardToRemote(cli);
   };
 
   const onMouseUp = (cli: TdpClient, e: MouseEvent) => {
@@ -199,20 +210,6 @@ export default function useTdpClientCanvas(props: Props) {
     }
   };
 
-  // Syncs the browser-side's clipboard. See the note about mouseenter in the relevant RFD for why this makes sense:
-  // https://github.com/gravitational/teleport/blob/master/rfd/0049-desktop-clipboard.md#local-copy-remote-paste
-  const onMouseEnter = (cli: TdpClient, e: MouseEvent) => {
-    e.preventDefault();
-    sendLocalClipboardToRemote(cli);
-  };
-
-  // onMouseEnter does not fire in certain situations, so ensure we cover all of our bases by adding a window level
-  // onfocus handler. See https://github.com/gravitational/webapps/issues/626 for further details.
-  const windowOnFocus = (cli: TdpClient, e: FocusEvent) => {
-    e.preventDefault();
-    sendLocalClipboardToRemote(cli);
-  };
-
   return {
     tdpClient,
     onPngFrame,
@@ -227,8 +224,6 @@ export default function useTdpClientCanvas(props: Props) {
     onMouseUp,
     onMouseWheelScroll,
     onContextMenu,
-    onMouseEnter,
-    windowOnFocus,
   };
 }
 

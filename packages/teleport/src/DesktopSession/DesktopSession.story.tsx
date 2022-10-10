@@ -72,10 +72,8 @@ const props: State = {
   onMouseUp: () => {},
   onMouseWheelScroll: () => {},
   onContextMenu: () => false,
-  onMouseEnter: () => {},
   onClipboardData: () => {},
   setTdpConnection: () => {},
-  windowOnFocus: () => {},
   webauthn: {
     errorText: '',
     requested: false,
