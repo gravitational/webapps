@@ -21,7 +21,7 @@ export function PingTeleportProvider(props: {
   timeout: number;
   interval?: number;
   children?: React.ReactNode;
-  serviceKind: ResourceKind;
+  resourceKind: ResourceKind;
 }) {
   const ctx = useTeleport();
 
@@ -50,7 +50,7 @@ export function PingTeleportProvider(props: {
       search: `${INTERNAL_RESOURCE_ID_LABEL_KEY} ${joinToken.internalResourceId}`,
       limit: 1,
     };
-    switch (props.serviceKind) {
+    switch (props.resourceKind) {
       case ResourceKind.Server:
         return ctx.nodeService.fetchNodes(clusterId, request, signal);
       case ResourceKind.Desktop:

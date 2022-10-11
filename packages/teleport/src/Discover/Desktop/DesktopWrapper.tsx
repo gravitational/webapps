@@ -8,6 +8,8 @@ import {
   SCRIPT_TIMEOUT,
 } from 'teleport/Discover/Desktop/config';
 
+import { ResourceKind } from '../Shared';
+
 interface DesktopWrapperProps {
   children: React.ReactNode;
 }
@@ -18,7 +20,7 @@ export function DesktopWrapper(props: DesktopWrapperProps) {
       <PingTeleportProvider
         timeout={PING_TIMEOUT}
         interval={PING_INTERVAL}
-        serviceKind="windows_desktop"
+        resourceKind={ResourceKind.Desktop}
       >
         {props.children}
       </PingTeleportProvider>

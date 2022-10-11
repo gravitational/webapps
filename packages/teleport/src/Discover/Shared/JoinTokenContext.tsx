@@ -2,11 +2,12 @@ import React, { useCallback, useContext, useEffect, useState } from 'react';
 
 import { useTeleport } from 'teleport';
 
-import type {
-  JoinRole,
-  JoinToken,
-  JoinMethod,
-} from 'teleport/services/joinToken';
+import {
+  ResourceKind,
+  resourceKindToJoinRole,
+} from 'teleport/Discover/Shared/ResourceKind';
+
+import type { JoinToken, JoinMethod } from 'teleport/services/joinToken';
 
 interface JoinTokenContextState {
   joinToken: JoinToken;
@@ -77,7 +78,7 @@ export function useJoinTokenValue() {
 }
 
 export function useJoinToken(
-  joinRole: JoinRole,
+  resourceKind: ResourceKind,
   joinMethod: JoinMethod = 'token'
 ): {
   joinToken: JoinToken;
@@ -93,7 +94,12 @@ export function useJoinToken(
 
     cachedJoinTokenResult = {
       promise: ctx.joinTokenService
-        .fetchJoinToken([joinRole], joinMethod, [], abortController.signal)
+        .fetchJoinToken(
+          [resourceKindToJoinRole(resourceKind)],
+          joinMethod,
+          [],
+          abortController.signal
+        )
         .then(token => {
           // Probably will never happen, but just in case, otherwise
           // querying for the resource can return a false positive.
