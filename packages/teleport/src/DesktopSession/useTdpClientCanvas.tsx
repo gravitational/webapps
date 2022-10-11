@@ -45,6 +45,7 @@ export default function useTdpClientCanvas(props: Props) {
   } = props;
   const [tdpClient, setTdpClient] = useState<TdpClient | null>(null);
   const initialTdpConnectionSucceeded = useRef(false);
+  const latestClipboardText = useRef('');
 
   useEffect(() => {
     const { width, height } = getDisplaySize();
@@ -83,6 +84,7 @@ export default function useTdpClientCanvas(props: Props) {
   const onClipboardData = (clipboardData: ClipboardData) => {
     if (clipboardSharingEnabled && document.hasFocus() && clipboardData.data) {
       navigator.clipboard.writeText(clipboardData.data);
+      latestClipboardText.current = clipboardData.data;
     }
   };
 
@@ -208,10 +210,11 @@ export default function useTdpClientCanvas(props: Props) {
     // We must check that the DOM is focused or navigator.clipboard.readText throws an error.
     if (clipboardSharingEnabled && document.hasFocus()) {
       navigator.clipboard.readText().then(text => {
-        if (text) {
+        if (text && text !== latestClipboardText.current) {
           cli.sendClipboardData({
             data: text,
           });
+          latestClipboardText.current = text;
         }
       });
     }
