@@ -4,7 +4,7 @@ import styled from 'styled-components';
 import * as Icons from 'design/Icon';
 
 import { ButtonPrimary } from 'design/Button';
-import { Text } from 'design';
+import { Text, Box } from 'design';
 
 import {
   StepContent,
@@ -50,8 +50,9 @@ export function RunConfigureScript(
         <TextSelectCopy text={command} mt={2} mb={5} bash allowMultiline />
 
         <ButtonPrimary onClick={() => props.onNext()}>Next</ButtonPrimary>
-
-        <Timeout timeout={timeout} mt={20} />
+        <Box mt={4}>
+          <Timeout timeout={timeout} />
+        </Box>
       </StepInstructions>
     );
   }

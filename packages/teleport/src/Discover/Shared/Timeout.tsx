@@ -3,11 +3,9 @@ import React, { useEffect, useState } from 'react';
 interface TimeoutProps {
   timeout: number; // ms
   message?: string;
-  // mt is to specify margin top in pixels.
-  mt?: number;
 }
 
-export function Timeout({ timeout, message, mt = 0 }: TimeoutProps) {
+export function Timeout({ timeout, message }: TimeoutProps) {
   const [, setCount] = useState(0);
 
   useEffect(() => {
@@ -27,11 +25,11 @@ export function Timeout({ timeout, message, mt = 0 }: TimeoutProps) {
   );
 
   return (
-    <div css={{ marginTop: `${mt}px` }}>
+    <span>
       {message
         ? `${message} ${minutes}:${seconds}`
         : `This script is valid for another ${minutes}:${seconds}`}
-    </div>
+    </span>
   );
 }
 

@@ -5,7 +5,7 @@ import { usePoll } from 'teleport/Discover/Shared/usePoll';
 import { INTERNAL_RESOURCE_ID_LABEL_KEY } from 'teleport/services/joinToken';
 import { useJoinTokenValue } from 'teleport/Discover/Shared/JoinTokenContext';
 import { WindowsDesktopService } from 'teleport/services/desktops';
-import { AgentIdKind } from 'teleport/services/agents';
+import { ResourceKind } from 'teleport/Discover/Shared/ResourceKind';
 
 interface PingTeleportContextState {
   active: boolean;
@@ -21,7 +21,7 @@ export function PingTeleportProvider(props: {
   timeout: number;
   interval?: number;
   children?: React.ReactNode;
-  serviceKind: AgentIdKind;
+  serviceKind: ResourceKind;
 }) {
   const ctx = useTeleport();
 
@@ -51,9 +51,9 @@ export function PingTeleportProvider(props: {
       limit: 1,
     };
     switch (props.serviceKind) {
-      case 'node':
+      case ResourceKind.Server:
         return ctx.nodeService.fetchNodes(clusterId, request, signal);
-      case 'windows_desktop':
+      case ResourceKind.Desktop:
         return ctx.desktopService.fetchDesktopServices(
           clusterId,
           request,
