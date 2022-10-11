@@ -15,11 +15,21 @@ limitations under the License.
 */
 
 import React from 'react';
+import { setupWorker, rest } from 'msw';
 import { addDecorator, addParameters } from '@storybook/react';
 import theme from './../packages/design/src/theme';
 import DefaultThemeProvider from './../packages/design/src/ThemeProvider';
 import Box from './../packages/design/src/Box';
 import TeletermThemeProvider from './../packages/teleterm/src/ui/ThemeProvider';
+
+// Checks we are running non-node environment (browser)
+if (typeof global.process === 'undefined') {
+  const worker = setupWorker();
+  worker.start();
+
+  // So it can be accessed in stories more easily.
+  window.msw = { worker, rest };
+}
 
 // wrap each story with theme provider
 const ThemeDecorator = (storyFn, meta) => {
