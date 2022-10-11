@@ -18,6 +18,7 @@ import { generateCommand } from 'teleport/Discover/Shared/generateCommand';
 import cfg from 'teleport/config';
 import { Timeout } from 'teleport/Discover/Shared/Timeout';
 import { useJoinToken } from 'teleport/Discover/Shared/JoinTokenContext';
+import { ResourceKind } from 'teleport/Discover/Shared';
 
 import loading from './run-configure-script-loading.svg';
 
@@ -28,8 +29,9 @@ interface RunConfigureScriptProps {
 export function RunConfigureScript(
   props: React.PropsWithChildren<RunConfigureScriptProps>
 ) {
-  const { joinToken, reloadJoinToken, timeout, timedOut } =
-    useJoinToken('WindowsDesktop');
+  const { joinToken, reloadJoinToken, timeout, timedOut } = useJoinToken(
+    ResourceKind.Desktop
+  );
 
   let content;
   if (timedOut) {
