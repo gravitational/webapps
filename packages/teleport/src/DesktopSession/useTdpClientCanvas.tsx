@@ -23,6 +23,7 @@ import { TdpClient, ButtonState, ScrollAxis } from 'teleport/lib/tdp';
 import { ClipboardData, PngFrame } from 'teleport/lib/tdp/codec';
 import { getAccessToken, getHostName } from 'teleport/services/api';
 import cfg from 'teleport/config';
+import { Sha256Digest } from 'teleport/lib/util';
 
 import { TopBarHeight } from './TopBar';
 
@@ -45,7 +46,8 @@ export default function useTdpClientCanvas(props: Props) {
   } = props;
   const [tdpClient, setTdpClient] = useState<TdpClient | null>(null);
   const initialTdpConnectionSucceeded = useRef(false);
-  const latestClipboardText = useRef('');
+  const encoder = useRef(new TextEncoder());
+  const latestClipboardDigest = useRef('');
 
   useEffect(() => {
     const { width, height } = getDisplaySize();
@@ -81,10 +83,11 @@ export default function useTdpClientCanvas(props: Props) {
   };
 
   // Default TdpClientEvent.TDP_CLIPBOARD_DATA handler.
-  const onClipboardData = (clipboardData: ClipboardData) => {
+  const onClipboardData = async (clipboardData: ClipboardData) => {
     if (clipboardSharingEnabled && document.hasFocus() && clipboardData.data) {
       navigator.clipboard.writeText(clipboardData.data);
-      latestClipboardText.current = clipboardData.data;
+      let digest = await Sha256Digest(clipboardData.data, encoder.current);
+      latestClipboardDigest.current = digest;
     }
   };
 
@@ -210,12 +213,14 @@ export default function useTdpClientCanvas(props: Props) {
     // We must check that the DOM is focused or navigator.clipboard.readText throws an error.
     if (clipboardSharingEnabled && document.hasFocus()) {
       navigator.clipboard.readText().then(text => {
-        if (text && text !== latestClipboardText.current) {
-          cli.sendClipboardData({
-            data: text,
-          });
-          latestClipboardText.current = text;
-        }
+        Sha256Digest(text, encoder.current).then(digest => {
+          if (text && digest !== latestClipboardDigest.current) {
+            cli.sendClipboardData({
+              data: text,
+            });
+            latestClipboardDigest.current = digest;
+          }
+        });
       });
     }
   };
