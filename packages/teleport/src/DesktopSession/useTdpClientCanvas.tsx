@@ -25,7 +25,6 @@ import { getAccessToken, getHostName } from 'teleport/services/api';
 import cfg from 'teleport/config';
 
 import { TopBarHeight } from './TopBar';
-import { ClipboardPermissionStatus } from './useClipboard';
 
 declare global {
   interface Navigator {
@@ -40,9 +39,9 @@ export default function useTdpClientCanvas(props: Props) {
     clusterId,
     setTdpConnection,
     setWsConnection,
-    setClipboardState,
+    setClipboardSharingEnabled,
     setDirectorySharingState,
-    enableClipboardSharing,
+    clipboardSharingEnabled,
   } = props;
   const [tdpClient, setTdpClient] = useState<TdpClient | null>(null);
   const initialTdpConnectionSucceeded = useRef(false);
@@ -82,7 +81,7 @@ export default function useTdpClientCanvas(props: Props) {
 
   // Default TdpClientEvent.TDP_CLIPBOARD_DATA handler.
   const onClipboardData = (clipboardData: ClipboardData) => {
-    if (enableClipboardSharing && document.hasFocus() && clipboardData.data) {
+    if (clipboardSharingEnabled && document.hasFocus() && clipboardData.data) {
       navigator.clipboard.writeText(clipboardData.data);
     }
   };
@@ -94,10 +93,7 @@ export default function useTdpClientCanvas(props: Props) {
       ...prevState,
       isSharing: false,
     }));
-    setClipboardState(prevState => ({
-      ...prevState,
-      enabled: false,
-    }));
+    setClipboardSharingEnabled(false);
     setTdpConnection({
       status: isFatal ? 'failed' : '',
       statusText: err.message,
@@ -138,10 +134,21 @@ export default function useTdpClientCanvas(props: Props) {
     if (handleCapsLock(cli, e)) return;
     cli.sendKeyboardInput(e.code, ButtonState.DOWN);
 
-    // Opportunistically sync local clipboard to remote while
-    // transient user activation is in effect.
-    // https://developer.mozilla.org/en-US/docs/Web/API/Clipboard/readText#security
-    sendLocalClipboardToRemote(cli);
+    // The key codes in the if clause below are those that have been empirically determined not
+    // to count as transient activation events. According to the documentation, a keydown for
+    // the Esc key and any "shortcut key reserved by the user agent"don't count as activation
+    // events: https://developer.mozilla.org/en-US/docs/Web/Security/User_activation.
+    if (
+      e.code !== 'MetaRight' &&
+      e.code !== 'MetaLeft' &&
+      e.code !== 'AltRight' &&
+      e.code !== 'AltLeft'
+    ) {
+      // Opportunistically sync local clipboard to remote while
+      // transient user activation is in effect.
+      // https://developer.mozilla.org/en-US/docs/Web/API/Clipboard/readText#security
+      sendLocalClipboardToRemote(cli);
+    }
   };
 
   const onKeyUp = (cli: TdpClient, e: KeyboardEvent) => {
@@ -199,7 +206,7 @@ export default function useTdpClientCanvas(props: Props) {
 
   const sendLocalClipboardToRemote = (cli: TdpClient) => {
     // We must check that the DOM is focused or navigator.clipboard.readText throws an error.
-    if (enableClipboardSharing && document.hasFocus()) {
+    if (clipboardSharingEnabled && document.hasFocus()) {
       navigator.clipboard.readText().then(text => {
         if (text) {
           cli.sendClipboardData({
@@ -243,13 +250,7 @@ type Props = {
   clusterId: string;
   setTdpConnection: Dispatch<SetStateAction<Attempt>>;
   setWsConnection: Dispatch<SetStateAction<'open' | 'closed'>>;
-  setClipboardState: Dispatch<
-    SetStateAction<{
-      enabled: boolean;
-      permission: ClipboardPermissionStatus;
-      errorText: string;
-    }>
-  >;
+  setClipboardSharingEnabled: Dispatch<SetStateAction<boolean>>;
   setDirectorySharingState: Dispatch<
     SetStateAction<{
       canShare: boolean;
@@ -257,5 +258,5 @@ type Props = {
       browserError: boolean;
     }>
   >;
-  enableClipboardSharing: boolean;
+  clipboardSharingEnabled: boolean;
 };
