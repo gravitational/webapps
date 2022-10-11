@@ -136,7 +136,7 @@ export default function useTdpClientCanvas(props: Props) {
 
     // The key codes in the if clause below are those that have been empirically determined not
     // to count as transient activation events. According to the documentation, a keydown for
-    // the Esc key and any "shortcut key reserved by the user agent"don't count as activation
+    // the Esc key and any "shortcut key reserved by the user agent" don't count as activation
     // events: https://developer.mozilla.org/en-US/docs/Web/Security/User_activation.
     if (
       e.code !== 'MetaRight' &&
