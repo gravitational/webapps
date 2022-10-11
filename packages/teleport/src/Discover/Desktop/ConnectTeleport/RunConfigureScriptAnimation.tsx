@@ -10,7 +10,7 @@ import { KeywordHighlight } from 'shared/components/AnimatedTerminal/TerminalCon
 import cfg from 'teleport/config';
 
 import { generateCommand } from 'teleport/Discover/Shared/generateCommand';
-import { useJoinToken } from 'teleport/Discover/Desktop/ConnectTeleport/JoinTokenContext';
+import { useJoinToken } from 'teleport/Discover/Shared/JoinTokenContext';
 import { JoinToken } from 'teleport/services/joinToken';
 
 const lines = (joinToken: JoinToken) => [
@@ -91,7 +91,7 @@ interface RunConfigureScriptAnimationProps {
 export function RunConfigureScriptAnimation(
   props: RunConfigureScriptAnimationProps
 ) {
-  const { joinToken } = useJoinToken();
+  const { joinToken } = useJoinToken('WindowsDesktop');
 
   return (
     <AnimatedTerminal

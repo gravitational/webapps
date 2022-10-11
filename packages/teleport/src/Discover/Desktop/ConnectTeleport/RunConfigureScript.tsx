@@ -16,8 +16,8 @@ import TextSelectCopy from 'teleport/components/TextSelectCopy';
 import { generateCommand } from 'teleport/Discover/Shared/generateCommand';
 
 import cfg from 'teleport/config';
-import { Timeout } from 'teleport/Discover/Desktop/ConnectTeleport/Timeout';
-import { useJoinToken } from 'teleport/Discover/Desktop/ConnectTeleport/JoinTokenContext';
+import { Timeout } from 'teleport/Discover/Shared/Timeout';
+import { useJoinToken } from 'teleport/Discover/Shared/JoinTokenContext';
 
 import loading from './run-configure-script-loading.svg';
 
@@ -28,7 +28,8 @@ interface RunConfigureScriptProps {
 export function RunConfigureScript(
   props: React.PropsWithChildren<RunConfigureScriptProps>
 ) {
-  const { joinToken, reloadJoinToken, timeout, timedOut } = useJoinToken();
+  const { joinToken, reloadJoinToken, timeout, timedOut } =
+    useJoinToken('WindowsDesktop');
 
   let content;
   if (timedOut) {
@@ -50,7 +51,7 @@ export function RunConfigureScript(
 
         <ButtonPrimary onClick={() => props.onNext()}>Next</ButtonPrimary>
 
-        <Timeout timeout={timeout} />
+        <Timeout timeout={timeout} mt={20} />
       </StepInstructions>
     );
   }

@@ -1,20 +1,18 @@
 import React, { useEffect, useState } from 'react';
-import styled from 'styled-components';
 
 interface TimeoutProps {
   timeout: number; // ms
+  message?: string;
+  // mt is to specify margin top in pixels.
+  mt?: number;
 }
 
-const Container = styled.div`
-  margin-top: 20px;
-`;
-
-export function Timeout(props: TimeoutProps) {
+export function Timeout({ timeout, message, mt = 0 }: TimeoutProps) {
   const [, setCount] = useState(0);
 
   useEffect(() => {
     const interval = window.setInterval(() => {
-      if (Date.now() >= props.timeout) {
+      if (Date.now() >= timeout) {
         clearInterval(interval);
       }
 
@@ -22,16 +20,18 @@ export function Timeout(props: TimeoutProps) {
     }, 1000);
 
     return () => clearInterval(interval);
-  }, [props.timeout]);
+  }, [timeout]);
 
   const { minutes, seconds } = millisecondsToMinutesSeconds(
-    props.timeout - Date.now()
+    timeout - Date.now()
   );
 
   return (
-    <Container>
-      This script is valid for another {minutes}:{seconds}.
-    </Container>
+    <div css={{ marginTop: `${mt}px` }}>
+      {message
+        ? `${message} ${minutes}:${seconds}`
+        : `This script is valid for another ${minutes}:${seconds}`}
+    </div>
   );
 }
 

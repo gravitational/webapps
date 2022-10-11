@@ -1,7 +1,12 @@
 import React, { useCallback, useContext, useEffect, useState } from 'react';
 
-import { JoinToken } from 'teleport/services/joinToken';
 import { useTeleport } from 'teleport';
+
+import type {
+  JoinRole,
+  JoinToken,
+  JoinMethod,
+} from 'teleport/services/joinToken';
 
 interface JoinTokenContextState {
   joinToken: JoinToken;
@@ -15,11 +20,10 @@ interface JoinTokenContextState {
 const joinTokenContext = React.createContext<JoinTokenContextState>(null);
 
 export function JoinTokenProvider(props: {
-  timeout: number;
+  timeout?: number;
   children?: React.ReactNode;
 }) {
   const [joinToken, setJoinToken] = useState<JoinToken>(null);
-
   const [timedOut, setTimedOut] = useState(false);
   const [timeout, setTokenTimeout] = useState<number>(null);
 
@@ -60,7 +64,11 @@ interface PromiseResult {
 }
 
 let abortController: AbortController;
-let result: PromiseResult;
+let cachedJoinTokenResult: PromiseResult;
+
+export function clearCachedJoinTokenResult() {
+  cachedJoinTokenResult = null;
+}
 
 export function useJoinTokenValue() {
   const tokenContext = useContext(joinTokenContext);
@@ -68,7 +76,10 @@ export function useJoinTokenValue() {
   return tokenContext.joinToken;
 }
 
-export function useJoinToken(): {
+export function useJoinToken(
+  joinRole: JoinRole,
+  joinMethod: JoinMethod = 'token'
+): {
   joinToken: JoinToken;
   reloadJoinToken: () => void;
   timedOut: boolean;
@@ -80,9 +91,9 @@ export function useJoinToken(): {
   function run() {
     abortController = new AbortController();
 
-    result = {
+    cachedJoinTokenResult = {
       promise: ctx.joinTokenService
-        .fetchJoinToken(['WindowsDesktop'], 'token', [], abortController.signal)
+        .fetchJoinToken([joinRole], joinMethod, [], abortController.signal)
         .then(token => {
           // Probably will never happen, but just in case, otherwise
           // querying for the resource can return a false positive.
@@ -91,40 +102,42 @@ export function useJoinToken(): {
               'internal resource ID is required to discover the newly added resource, but none was provided'
             );
           }
-
-          return token;
-        })
-        .then(response => {
-          result.response = response;
-
-          tokenContext.setJoinToken(response);
+          cachedJoinTokenResult.response = token;
+          tokenContext.setJoinToken(token);
           tokenContext.startTimer();
         })
-        .catch(error => (result.error = error)),
+        .catch(error => {
+          cachedJoinTokenResult.error = error;
+        }),
     };
 
-    return result;
+    return cachedJoinTokenResult;
   }
 
   useEffect(() => {
-    return () => abortController.abort();
+    return () => {
+      abortController.abort();
+      // result will be stored in memory which can refer to
+      // previously used or expired join tokens.
+      clearCachedJoinTokenResult();
+    };
   }, []);
 
-  if (result) {
-    if (result.error) {
-      throw result.error;
+  if (cachedJoinTokenResult) {
+    if (cachedJoinTokenResult.error) {
+      throw cachedJoinTokenResult.error;
     }
 
-    if (result.response) {
+    if (cachedJoinTokenResult.response) {
       return {
-        joinToken: result.response,
+        joinToken: cachedJoinTokenResult.response,
         reloadJoinToken: run,
         timedOut: tokenContext.timedOut,
         timeout: tokenContext.timeout,
       };
     }
 
-    throw result.promise;
+    throw cachedJoinTokenResult.promise;
   }
 
   throw run().promise;
