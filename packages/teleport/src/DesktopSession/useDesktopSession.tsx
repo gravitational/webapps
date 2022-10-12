@@ -56,7 +56,7 @@ export default function useDesktopSession() {
 
   const isUsingChrome = navigator.userAgent.includes('Chrome');
 
-  // Becomes user.acl.clipboardSharingEnabled && isUsingChrome
+  // Set by result of `user.acl.clipboardSharingEnabled && isUsingChrome` below.
   const [clipboardSharingEnabled, setClipboardSharingEnabled] = useState(false);
 
   document.title = useMemo(
