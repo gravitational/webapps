@@ -83,53 +83,6 @@ test('toggleBar() changes the collapse state', () => {
   expect(service.getCollapsed()).toBe(true);
 });
 
-test('addToAssumed() adds request to assumed', () => {
-  let service = createService(
-    getMockPendingAccessRequest(),
-    getMockAssumed({})
-  );
-  expect(service.getAssumed()).toStrictEqual({});
-  const request = getMockAccessRequest();
-  service.addToAssumed(request);
-  expect(service.getAssumed()).toStrictEqual({
-    [request.id]: {
-      id: request.id,
-      expires: request.expires,
-      roles: request.roles,
-    },
-  });
-});
-
-test('getAssumedRoles() returns assumed roles', () => {
-  const request = getMockAccessRequest();
-  let service = createService(
-    getMockPendingAccessRequest(),
-    getMockAssumed({ [request.id]: request })
-  );
-  expect(service.getAssumedRoles()).toStrictEqual(request.roles);
-});
-
-test('getAssumed() returns assumed map', () => {
-  const request = getMockAccessRequest();
-  let service = createService(
-    getMockPendingAccessRequest(),
-    getMockAssumed({ [request.id]: request })
-  );
-  expect(service.getAssumed()).toStrictEqual({
-    [request.id]: request,
-  });
-});
-
-test('clearAssumed() clears assumed map', () => {
-  const request = getMockAccessRequest();
-  let service = createService(
-    getMockPendingAccessRequest(),
-    getMockAssumed({ [request.id]: request })
-  );
-  service.clearAssumed();
-  expect(service.getAssumed()).toStrictEqual({});
-});
-
 test('clearPendingAccessRequest() clears pending access reuqest', () => {
   let service = createService(
     getMockPendingAccessRequest(),

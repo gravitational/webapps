@@ -38,8 +38,12 @@ export type GatewayProtocol =
   | 'redis'
   | 'sqlserver';
 export type Database = apiDb.Database.AsObject;
-export type Cluster = apiCluster.Cluster.AsObject;
-export type LoggedInUser = apiCluster.LoggedInUser.AsObject;
+export type Cluster = Omit<apiCluster.Cluster.AsObject, 'loggedInUser'> & {
+  loggedInUser?: LoggedInUser;
+};
+export type LoggedInUser = apiCluster.LoggedInUser.AsObject & {
+  assumedRolesRequests?: Record<string, AssumedRolesRequest>;
+};
 export type AuthProvider = apiAuthSettings.AuthProvider.AsObject;
 export type AuthSettings = apiAuthSettings.AuthSettings.AsObject;
 
@@ -192,4 +196,10 @@ export type CreateAccessRequestParams = {
   roles: string[];
   suggestedReviewers: string[];
   resourceIds: { kind: ResourceKind; clusterName: string; id: string }[];
+};
+
+export type AssumedRolesRequest = {
+  id: string;
+  expires: Date;
+  roles: string[];
 };
