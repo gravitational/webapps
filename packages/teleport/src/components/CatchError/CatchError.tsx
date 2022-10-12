@@ -38,10 +38,7 @@ export class CatchError extends React.PureComponent<Props, State> {
 
   render() {
     if (this.state.error) {
-      if (
-        this.props.fallbackFn &&
-        typeof this.props.fallbackFn === 'function'
-      ) {
+      if (this.props.fallbackFn) {
         return this.props.fallbackFn({
           error: this.state.error,
           retry: this.retry,
