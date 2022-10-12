@@ -68,7 +68,7 @@ const props: State = {
   onMouseUp: () => {},
   onMouseWheelScroll: () => {},
   onContextMenu: () => false,
-  onClipboardData: () => {},
+  onClipboardData: async () => {},
   setTdpConnection: () => {},
   webauthn: {
     errorText: '',
