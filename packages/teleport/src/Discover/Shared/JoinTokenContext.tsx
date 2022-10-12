@@ -21,7 +21,7 @@ interface JoinTokenContextState {
 const joinTokenContext = React.createContext<JoinTokenContextState>(null);
 
 export function JoinTokenProvider(props: {
-  timeout?: number;
+  timeout: number;
   children?: React.ReactNode;
 }) {
   const [joinToken, setJoinToken] = useState<JoinToken>(null);
