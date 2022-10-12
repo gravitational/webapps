@@ -25,7 +25,9 @@ export class CatchError extends React.PureComponent<Props, State> {
 
   private retry = () => {
     this.setState({ error: null });
-    this.props.onRetry();
+    if (this.props.onRetry) {
+      this.props.onRetry();
+    }
   };
 
   static getDerivedStateFromError(error) {
