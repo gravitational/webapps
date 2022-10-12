@@ -156,6 +156,7 @@ const EventIconMap: Record<EventCode, React.FC> = {
   [eventCodes.DESKTOP_SESSION_ENDED]: Icons.Desktop,
   [eventCodes.DESKTOP_CLIPBOARD_SEND]: Icons.Clipboard,
   [eventCodes.DESKTOP_CLIPBOARD_RECEIVE]: Icons.Clipboard,
+  [eventCodes.DESKTOP_SHARED_DIRECTORY_START]: Icons.FolderShared,
   [eventCodes.MFA_DEVICE_ADD]: Icons.Info,
   [eventCodes.MFA_DEVICE_DELETE]: Icons.Info,
   [eventCodes.BILLING_CARD_CREATE]: Icons.CreditCardAlt2,
