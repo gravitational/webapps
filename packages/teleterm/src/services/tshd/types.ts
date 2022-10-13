@@ -42,7 +42,7 @@ export type Cluster = Omit<apiCluster.Cluster.AsObject, 'loggedInUser'> & {
   loggedInUser?: LoggedInUser;
 };
 export type LoggedInUser = apiCluster.LoggedInUser.AsObject & {
-  assumedRolesRequests?: Record<string, AssumedRolesRequest>;
+  assumedRequests?: Record<string, AssumedRolesRequest>;
 };
 export type AuthProvider = apiAuthSettings.AuthProvider.AsObject;
 export type AuthSettings = apiAuthSettings.AuthSettings.AsObject;

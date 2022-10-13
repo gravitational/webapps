@@ -404,13 +404,13 @@ export class ClustersService extends ImmutableStore<ClustersServiceState> {
     return this.client.getRequestableRoles(clusterUri);
   }
 
-  getAssumedRolesRequests(clusterUri: string) {
+  getAssumedRequests(clusterUri: string) {
     const cluster = this.state.clusters.get(clusterUri);
     if (!cluster?.connected) {
       return {};
     }
 
-    return cluster.loggedInUser?.assumedRolesRequests || {};
+    return cluster.loggedInUser?.assumedRequests || {};
   }
 
   async getAccessRequests(clusterUri: string) {
@@ -709,8 +709,8 @@ export class ClustersService extends ImmutableStore<ClustersServiceState> {
   // with a retryable error in case the certs have expired.
   private async syncClusterInfo(clusterUri: string) {
     const cluster = await this.client.getCluster(clusterUri);
-    const assumedRolesRequests = cluster.loggedInUser
-      ? await this.fetchClusterAssumedRolesRequests(
+    const assumedRequests = cluster.loggedInUser
+      ? await this.fetchClusterAssumedRequests(
           cluster.loggedInUser.activeRequestsList,
           clusterUri
         )
@@ -721,14 +721,14 @@ export class ClustersService extends ImmutableStore<ClustersServiceState> {
         loggedInUser: cluster.loggedInUser
           ? {
               ...cluster.loggedInUser,
-              assumedRolesRequests,
+              assumedRequests,
             }
           : undefined,
       });
     });
   }
 
-  private async fetchClusterAssumedRolesRequests(
+  private async fetchClusterAssumedRequests(
     activeRequestsList: string[],
     clusterUri: string
   ) {

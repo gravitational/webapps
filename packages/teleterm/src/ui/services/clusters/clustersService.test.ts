@@ -15,7 +15,7 @@ const clusterMock: tsh.Cluster = {
   proxyHost: 'localhost:3080',
   loggedInUser: {
     activeRequestsList: [],
-    assumedRolesRequests: {},
+    assumedRequests: {},
     name: 'admin',
     acl: {},
     sshLoginsList: [],
