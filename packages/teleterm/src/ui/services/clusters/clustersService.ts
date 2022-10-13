@@ -3,10 +3,16 @@ import { useStore } from 'shared/libs/stores';
 import isMatch from 'design/utils/match';
 import { makeLabelTag } from 'teleport/components/formatters';
 import { Label } from 'teleport/types';
+import { formatDatabaseInfo } from 'teleport/services/databases/makeDatabase';
+import { DbProtocol, DbType } from 'teleport/services/databases';
 
 import { routing } from 'teleterm/ui/uri';
 import { NotificationsService } from 'teleterm/ui/services/notifications';
-import { Cluster } from 'teleterm/services/tshd/types';
+import {
+  Cluster,
+  CreateAccessRequestParams,
+  ReviewAccessRequestParams,
+} from 'teleterm/services/tshd/types';
 import { MainProcessClient } from 'teleterm/mainProcess/types';
 
 import { ImmutableStore } from '../immutableStore';
@@ -14,12 +20,15 @@ import { ImmutableStore } from '../immutableStore';
 import {
   AuthSettings,
   ClustersServiceState,
+  Database,
   CreateGatewayParams,
   LoginLocalParams,
   LoginSsoParams,
   LoginPasswordlessParams,
+  Server,
   SyncStatus,
   tsh,
+  Kube,
 } from './types';
 
 export function createClusterServiceState(): ClustersServiceState {
@@ -249,7 +258,7 @@ export class ClustersService extends ImmutableStore<ClustersServiceState> {
     });
 
     try {
-      const received = await this.client.listKubes(clusterUri);
+      const received = await this.client.getAllKubes(clusterUri);
       this.setState(draft => {
         draft.kubesSyncStatus.set(clusterUri, { status: 'ready' });
         helpers.updateMap(clusterUri, draft.kubes, received);
@@ -315,7 +324,7 @@ export class ClustersService extends ImmutableStore<ClustersServiceState> {
     });
 
     try {
-      const received = await this.client.listDatabases(clusterUri);
+      const received = await this.client.getAllDatabases(clusterUri);
       this.setState(draft => {
         draft.dbsSyncStatus.set(clusterUri, { status: 'ready' });
         helpers.updateMap(clusterUri, draft.dbs, received);
@@ -371,7 +380,7 @@ export class ClustersService extends ImmutableStore<ClustersServiceState> {
     });
 
     try {
-      const received = await this.client.listServers(clusterUri);
+      const received = await this.client.getAllServers(clusterUri);
       this.setState(draft => {
         draft.serversSyncStatus.set(clusterUri, { status: 'ready' });
         helpers.updateMap(clusterUri, draft.servers, received);
@@ -384,6 +393,83 @@ export class ClustersService extends ImmutableStore<ClustersServiceState> {
         });
       });
     }
+  }
+
+  async getRequestableRoles(clusterUri: string) {
+    const cluster = this.state.clusters.get(clusterUri);
+    if (!cluster.connected) {
+      return;
+    }
+
+    return this.client.getRequestableRoles(clusterUri);
+  }
+
+  getAssumedRequests(clusterUri: string) {
+    const cluster = this.state.clusters.get(clusterUri);
+    if (!cluster?.connected) {
+      return {};
+    }
+
+    return cluster.loggedInUser?.assumedRequests || {};
+  }
+
+  async getAccessRequests(clusterUri: string) {
+    const cluster = this.state.clusters.get(clusterUri);
+    if (!cluster.connected) {
+      return;
+    }
+
+    return this.client.getAccessRequests(clusterUri);
+  }
+
+  async deleteAccessRequest(clusterUri: string, requestId: string) {
+    const cluster = this.state.clusters.get(clusterUri);
+    if (!cluster.connected) {
+      return;
+    }
+    return this.client.deleteAccessRequest(clusterUri, requestId);
+  }
+
+  async assumeRole(
+    clusterUri: string,
+    requestIds: string[],
+    dropIds: string[]
+  ) {
+    const cluster = this.state.clusters.get(clusterUri);
+    if (!cluster.connected) {
+      return;
+    }
+    return this.client.assumeRole(clusterUri, requestIds, dropIds);
+  }
+
+  async getAccessRequest(clusterUri: string, requestId: string) {
+    const cluster = this.state.clusters.get(clusterUri);
+    if (!cluster.connected) {
+      return;
+    }
+
+    return this.client.getAccessRequest(clusterUri, requestId);
+  }
+
+  async reviewAccessRequest(
+    clusterUri: string,
+    params: ReviewAccessRequestParams
+  ) {
+    const cluster = this.state.clusters.get(clusterUri);
+    if (!cluster.connected) {
+      return;
+    }
+
+    return this.client.reviewAccessRequest(clusterUri, params);
+  }
+
+  async createAccessRequest(params: CreateAccessRequestParams) {
+    const cluster = this.state.clusters.get(params.clusterUri);
+    if (!cluster.connected) {
+      return;
+    }
+
+    return this.client.createAccessRequest(params);
   }
 
   /**
@@ -582,8 +668,13 @@ export class ClustersService extends ImmutableStore<ClustersServiceState> {
     };
   }
 
+  // TODO (avatus) Remove after Advanced Search is merged
   getServers() {
     return [...this.state.servers.values()];
+  }
+
+  async fetchKubes(params) {
+    return await this.client.getKubes(params);
   }
 
   getDbs() {
@@ -618,12 +709,43 @@ export class ClustersService extends ImmutableStore<ClustersServiceState> {
   // with a retryable error in case the certs have expired.
   private async syncClusterInfo(clusterUri: string) {
     const cluster = await this.client.getCluster(clusterUri);
+    const assumedRequests = cluster.loggedInUser
+      ? await this.fetchClusterAssumedRequests(
+          cluster.loggedInUser.activeRequestsList,
+          clusterUri
+        )
+      : undefined;
     this.setState(draft => {
-      draft.clusters.set(
-        clusterUri,
-        this.removeInternalLoginsFromCluster(cluster)
-      );
+      draft.clusters.set(clusterUri, {
+        ...this.removeInternalLoginsFromCluster(cluster),
+        loggedInUser: cluster.loggedInUser
+          ? {
+              ...cluster.loggedInUser,
+              assumedRequests,
+            }
+          : undefined,
+      });
     });
+  }
+
+  private async fetchClusterAssumedRequests(
+    activeRequestsList: string[],
+    clusterUri: string
+  ) {
+    return (
+      await Promise.all(
+        activeRequestsList.map(requestId =>
+          this.getAccessRequest(clusterUri, requestId)
+        )
+      )
+    ).reduce((requestsMap, request) => {
+      requestsMap[request.id] = {
+        id: request.id,
+        expires: new Date(request.expires.seconds * 1000),
+        roles: request.rolesList,
+      };
+      return requestsMap;
+    }, {});
   }
 
   private removeResources(clusterUri: string) {
@@ -773,3 +895,35 @@ const helpers = {
     received.forEach(s => map.set(s.uri, s));
   },
 };
+
+export function makeServer(source: Server) {
+  return {
+    id: source.name,
+    clusterId: source.name,
+    hostname: source.hostname,
+    labels: source.labelsList,
+    addr: source.addr,
+    tunnel: source.tunnel,
+    sshLogins: [],
+  };
+}
+
+export function makeDatabase(source: Database) {
+  return {
+    name: source.name,
+    description: source.desc,
+    type: formatDatabaseInfo(
+      source.type as DbType,
+      source.protocol as DbProtocol
+    ).title,
+    protocol: source.protocol,
+    labels: source.labelsList,
+  };
+}
+
+export function makeKube(source: Kube) {
+  return {
+    name: source.name,
+    labels: source.labelsList,
+  };
+}

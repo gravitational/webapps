@@ -2,12 +2,22 @@ import { useStore } from 'shared/libs/stores';
 
 import { isEqual } from 'lodash';
 
+import { ResourceKind } from 'e-teleport/Workflow/NewRequest/useNewRequest';
+
 import { ModalsService } from 'teleterm/ui/services/modals';
 import { ClustersService } from 'teleterm/ui/services/clusters';
-import { StatePersistenceService } from 'teleterm/ui/services/statePersistence';
+import {
+  StatePersistenceService,
+  WorkspacesPersistedState,
+} from 'teleterm/ui/services/statePersistence';
 import { ImmutableStore } from 'teleterm/ui/services/immutableStore';
 import { NotificationsService } from 'teleterm/ui/services/notifications';
 import { routing } from 'teleterm/ui/uri';
+
+import {
+  AccessRequestsService,
+  getEmptyPendingAccessRequest,
+} from './accessRequestsService';
 
 import { Document, DocumentsService } from './documentsService';
 
@@ -20,6 +30,10 @@ export interface Workspace {
   localClusterUri: string;
   documents: Document[];
   location: string;
+  accessRequests: {
+    isBarCollapsed: boolean;
+    pending: PendingAccessRequest;
+  };
   previous?: {
     documents: Document[];
     location: string;
@@ -28,6 +42,10 @@ export interface Workspace {
 
 export class WorkspacesService extends ImmutableStore<WorkspacesState> {
   private documentsServicesCache = new Map<string, DocumentsService>();
+  private accessRequestsServicesCache = new Map<
+    string,
+    AccessRequestsService
+  >();
   state: WorkspacesState = {
     rootClusterUri: undefined,
     workspaces: {},
@@ -54,7 +72,7 @@ export class WorkspacesService extends ImmutableStore<WorkspacesState> {
     return this.state.workspaces;
   }
 
-  getWorkspace(clusterUri): Workspace {
+  getWorkspace(clusterUri: string): Workspace {
     return this.state.workspaces[clusterUri];
   }
 
@@ -63,6 +81,13 @@ export class WorkspacesService extends ImmutableStore<WorkspacesState> {
       return;
     }
     return this.getWorkspaceDocumentService(this.state.rootClusterUri);
+  }
+
+  getActiveWorkspaceAccessRequestsService(): AccessRequestsService | undefined {
+    if (!this.state.rootClusterUri) {
+      return;
+    }
+    return this.getWorkspaceAccessRequestsService(this.state.rootClusterUri);
   }
 
   getWorkspacesDocumentsServices(): Array<{
@@ -103,6 +128,26 @@ export class WorkspacesService extends ImmutableStore<WorkspacesState> {
     }
 
     return this.documentsServicesCache.get(clusterUri);
+  }
+
+  getWorkspaceAccessRequestsService(
+    clusterUri: string
+  ): AccessRequestsService | undefined {
+    if (!this.accessRequestsServicesCache.has(clusterUri)) {
+      this.accessRequestsServicesCache.set(
+        clusterUri,
+        new AccessRequestsService(
+          () => {
+            return this.state.workspaces[clusterUri].accessRequests;
+          },
+          newState =>
+            this.setState(draftState => {
+              newState(draftState.workspaces[clusterUri].accessRequests);
+            })
+        )
+      );
+    }
+    return this.accessRequestsServicesCache.get(clusterUri);
   }
 
   isDocumentActive(documentUri: string): boolean {
@@ -290,6 +335,10 @@ export class WorkspacesService extends ImmutableStore<WorkspacesState> {
       rootClusterUri
     ).createClusterDocument({ clusterUri: localClusterUri });
     return {
+      accessRequests: {
+        pending: getEmptyPendingAccessRequest(),
+        isBarCollapsed: false,
+      },
       localClusterUri,
       location: defaultDocument.uri,
       documents: [defaultDocument],
@@ -297,7 +346,7 @@ export class WorkspacesService extends ImmutableStore<WorkspacesState> {
   }
 
   private persistState(): void {
-    const stateToSave: WorkspacesState = {
+    const stateToSave: WorkspacesPersistedState = {
       rootClusterUri: this.state.rootClusterUri,
       workspaces: {},
     };
@@ -312,3 +361,7 @@ export class WorkspacesService extends ImmutableStore<WorkspacesState> {
     this.statePersistenceService.saveWorkspacesState(stateToSave);
   }
 }
+
+export type PendingAccessRequest = {
+  [k in ResourceKind]: Record<string, string>;
+};
