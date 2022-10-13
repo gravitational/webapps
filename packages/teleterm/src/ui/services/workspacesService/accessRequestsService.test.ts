@@ -30,25 +30,6 @@ function getMockAssumed(assumed = {}): Record<string, AccessRequest> {
   return assumed;
 }
 
-function getMockAccessRequest(): AccessRequest {
-  return {
-    id: '72de9b90-04fd-5621-a55d-432d9fe56ef2',
-    state: 'APPROVED',
-    user: 'Sam',
-    expires: undefined,
-    expiresDuration: '',
-    created: undefined,
-    createdDuration: '',
-    roles: ['dev', 'admin'],
-    resolveReason: 'resolve reason',
-    requestReason: 'request reason',
-    reviews: [],
-    reviewers: [],
-    thresholdNames: ['Default'],
-    resources: [],
-  };
-}
-
 function createService(
   pending: PendingAccessRequest,
   assumed: Record<string, AccessRequest>
@@ -63,12 +44,10 @@ function createService(
     pending,
     assumed,
   };
-  const service = new AccessRequestsService(
+  return new AccessRequestsService(
     () => store.state,
     draftState => store.setState(draftState)
   );
-
-  return service;
 }
 
 test('getCollapsed() returns the bar collapse state', () => {
