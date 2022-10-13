@@ -48,7 +48,6 @@ export interface Access {
 }
 
 export interface Acl {
-  directorySharingEnabled: boolean;
   desktopSessionRecordingEnabled: boolean;
   clipboardSharingEnabled: boolean;
   windowsLogins: string[];

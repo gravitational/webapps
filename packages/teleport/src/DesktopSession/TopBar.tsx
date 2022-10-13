@@ -21,14 +21,7 @@ import { colors } from 'teleport/Console/colors';
 import ActionMenu from './ActionMenu';
 
 export default function TopBar(props: Props) {
-  const {
-    userHost,
-    clipboardSharingEnabled,
-    onDisconnect,
-    canShareDirectory,
-    isSharingDirectory,
-    onShareDirectory,
-  } = props;
+  const { userHost, clipboardSharingEnabled, onDisconnect } = props;
   const theme = useTheme();
 
   const primaryOnTrue = (b: boolean): any => {
@@ -51,15 +44,6 @@ export default function TopBar(props: Props) {
 
       <Flex px={3}>
         <Flex alignItems="center">
-          <StyledFolderShared
-            style={primaryOnTrue(isSharingDirectory)}
-            pr={3}
-            title={
-              isSharingDirectory
-                ? 'Directory Sharing Enabled'
-                : 'Directory Sharing Disabled'
-            }
-          />
           <StyledClipboard
             style={primaryOnTrue(clipboardSharingEnabled)}
             pr={3}
@@ -70,11 +54,7 @@ export default function TopBar(props: Props) {
             }
           />
         </Flex>
-        <ActionMenu
-          onDisconnect={onDisconnect}
-          showShareDirectory={canShareDirectory && !isSharingDirectory}
-          onShareDirectory={onShareDirectory}
-        />
+        <ActionMenu onDisconnect={onDisconnect} />
       </Flex>
     </TopNav>
   );
@@ -88,17 +68,8 @@ const StyledClipboard = styled(Clipboard)`
   align-self: 'center';
 `;
 
-const StyledFolderShared = styled(FolderShared)`
-  font-weight: ${({ theme }) => theme.fontWeights.bold};
-  font-size: ${({ theme }) => theme.fontSizes[6] + 'px'};
-  align-self: 'center';
-`;
-
 type Props = {
   userHost: string;
   clipboardSharingEnabled: boolean;
-  canShareDirectory: boolean;
-  isSharingDirectory: boolean;
   onDisconnect: VoidFunction;
-  onShareDirectory: VoidFunction;
 };
