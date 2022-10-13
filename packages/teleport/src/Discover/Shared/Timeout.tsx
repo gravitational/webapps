@@ -5,7 +5,10 @@ interface TimeoutProps {
   message?: string;
 }
 
-export function Timeout({ timeout, message }: TimeoutProps) {
+export function Timeout({
+  timeout,
+  message = 'This script is valid for another',
+}: TimeoutProps) {
   const [, setCount] = useState(0);
 
   useEffect(() => {
@@ -26,9 +29,7 @@ export function Timeout({ timeout, message }: TimeoutProps) {
 
   return (
     <span>
-      {message
-        ? `${message} ${minutes}:${seconds}`
-        : `This script is valid for another ${minutes}:${seconds}`}
+      {message} {minutes}:{seconds}
     </span>
   );
 }
