@@ -42,7 +42,7 @@ export type Cluster = Omit<apiCluster.Cluster.AsObject, 'loggedInUser'> & {
   loggedInUser?: LoggedInUser;
 };
 export type LoggedInUser = apiCluster.LoggedInUser.AsObject & {
-  assumedRequests?: Record<string, AssumedRolesRequest>;
+  assumedRequests?: Record<string, AssumedRequest>;
 };
 export type AuthProvider = apiAuthSettings.AuthProvider.AsObject;
 export type AuthSettings = apiAuthSettings.AuthSettings.AsObject;
@@ -198,7 +198,7 @@ export type CreateAccessRequestParams = {
   resourceIds: { kind: ResourceKind; clusterName: string; id: string }[];
 };
 
-export type AssumedRolesRequest = {
+export type AssumedRequest = {
   id: string;
   expires: Date;
   roles: string[];
