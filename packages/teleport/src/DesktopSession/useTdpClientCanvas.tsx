@@ -16,12 +16,14 @@ limitations under the License.
 
 import { useState, useEffect, useRef, Dispatch, SetStateAction } from 'react';
 import { Attempt } from 'shared/hooks/useAttemptNext';
+
 import { TdpClient, ButtonState, ScrollAxis } from 'teleport/lib/tdp';
 import { ClipboardData, PngFrame } from 'teleport/lib/tdp/codec';
 import { getAccessToken, getHostName } from 'teleport/services/api';
 import cfg from 'teleport/config';
+import { Sha256Digest } from 'teleport/lib/util';
+
 import { TopBarHeight } from './TopBar';
-import { ClipboardPermissionStatus } from './useClipboard';
 
 export default function useTdpClientCanvas(props: Props) {
   const {
@@ -30,11 +32,13 @@ export default function useTdpClientCanvas(props: Props) {
     clusterId,
     setTdpConnection,
     setWsConnection,
-    setClipboardState,
-    enableClipboardSharing,
+    setClipboardSharingEnabled,
+    clipboardSharingEnabled,
   } = props;
   const [tdpClient, setTdpClient] = useState<TdpClient | null>(null);
   const initialTdpConnectionSucceeded = useRef(false);
+  const encoder = useRef(new TextEncoder());
+  const latestClipboardDigest = useRef('');
 
   useEffect(() => {
     const { width, height } = getDisplaySize();
@@ -70,18 +74,17 @@ export default function useTdpClientCanvas(props: Props) {
   };
 
   // Default TdpClientEvent.TDP_CLIPBOARD_DATA handler.
-  const onClipboardData = (clipboardData: ClipboardData) => {
-    if (enableClipboardSharing && document.hasFocus() && clipboardData.data) {
+  const onClipboardData = async (clipboardData: ClipboardData) => {
+    if (clipboardSharingEnabled && document.hasFocus() && clipboardData.data) {
       navigator.clipboard.writeText(clipboardData.data);
+      let digest = await Sha256Digest(clipboardData.data, encoder.current);
+      latestClipboardDigest.current = digest;
     }
   };
 
-  // Default TdpClientEvent.TDP_ERROR handler
+  // Default TdpClientEvent.TDP_ERROR and TdpClientEvent.CLIENT_ERROR handler
   const onTdpError = (err: Error) => {
-    setClipboardState(prevState => ({
-      ...prevState,
-      enabled: false,
-    }));
+    setClipboardSharingEnabled(false);
     setTdpConnection({ status: 'failed', statusText: err.message });
   };
 
@@ -96,6 +99,22 @@ export default function useTdpClientCanvas(props: Props) {
   const onKeyDown = (cli: TdpClient, e: KeyboardEvent) => {
     e.preventDefault();
     cli.sendKeyboardInput(e.code, ButtonState.DOWN);
+
+    // The key codes in the if clause below are those that have been empirically determined not
+    // to count as transient activation events. According to the documentation, a keydown for
+    // the Esc key and any "shortcut key reserved by the user agent" don't count as activation
+    // events: https://developer.mozilla.org/en-US/docs/Web/Security/User_activation.
+    if (
+      e.code !== 'MetaRight' &&
+      e.code !== 'MetaLeft' &&
+      e.code !== 'AltRight' &&
+      e.code !== 'AltLeft'
+    ) {
+      // Opportunistically sync local clipboard to remote while
+      // transient user activation is in effect.
+      // https://developer.mozilla.org/en-US/docs/Web/API/Clipboard/readText#security
+      sendLocalClipboardToRemote(cli);
+    }
   };
 
   const onKeyUp = (cli: TdpClient, e: KeyboardEvent) => {
@@ -118,6 +137,11 @@ export default function useTdpClientCanvas(props: Props) {
     if (e.button === 0 || e.button === 1 || e.button === 2) {
       cli.sendMouseButton(e.button, ButtonState.DOWN);
     }
+
+    // Opportunistically sync local clipboard to remote while
+    // transient user activation is in effect.
+    // https://developer.mozilla.org/en-US/docs/Web/API/Clipboard/readText#security
+    sendLocalClipboardToRemote(cli);
   };
 
   const onMouseUp = (cli: TdpClient, e: MouseEvent) => {
@@ -146,29 +170,18 @@ export default function useTdpClientCanvas(props: Props) {
 
   const sendLocalClipboardToRemote = (cli: TdpClient) => {
     // We must check that the DOM is focused or navigator.clipboard.readText throws an error.
-    if (enableClipboardSharing && document.hasFocus()) {
+    if (clipboardSharingEnabled && document.hasFocus()) {
       navigator.clipboard.readText().then(text => {
-        if (text) {
-          cli.sendClipboardData({
-            data: text,
-          });
-        }
+        Sha256Digest(text, encoder.current).then(digest => {
+          if (text && digest !== latestClipboardDigest.current) {
+            cli.sendClipboardData({
+              data: text,
+            });
+            latestClipboardDigest.current = digest;
+          }
+        });
       });
     }
-  };
-
-  // Syncs the browser-side's clipboard. See the note about mouseenter in the relevant RFD for why this makes sense:
-  // https://github.com/gravitational/teleport/blob/master/rfd/0049-desktop-clipboard.md#local-copy-remote-paste
-  const onMouseEnter = (cli: TdpClient, e: MouseEvent) => {
-    e.preventDefault();
-    sendLocalClipboardToRemote(cli);
-  };
-
-  // onMouseEnter does not fire in certain situations, so ensure we cover all of our bases by adding a window level
-  // onfocus handler. See https://github.com/gravitational/webapps/issues/626 for further details.
-  const windowOnFocus = (cli: TdpClient, e: FocusEvent) => {
-    e.preventDefault();
-    sendLocalClipboardToRemote(cli);
   };
 
   return {
@@ -185,8 +198,6 @@ export default function useTdpClientCanvas(props: Props) {
     onMouseUp,
     onMouseWheelScroll,
     onContextMenu,
-    onMouseEnter,
-    windowOnFocus,
   };
 }
 
@@ -206,12 +217,6 @@ type Props = {
   clusterId: string;
   setTdpConnection: Dispatch<SetStateAction<Attempt>>;
   setWsConnection: Dispatch<SetStateAction<'open' | 'closed'>>;
-  setClipboardState: Dispatch<
-    SetStateAction<{
-      enabled: boolean;
-      permission: ClipboardPermissionStatus;
-      errorText: string;
-    }>
-  >;
-  enableClipboardSharing: boolean;
+  setClipboardSharingEnabled: Dispatch<SetStateAction<boolean>>;
+  clipboardSharingEnabled: boolean;
 };
