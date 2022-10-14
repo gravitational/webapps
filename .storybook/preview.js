@@ -21,10 +21,11 @@ import theme from './../packages/design/src/theme';
 import DefaultThemeProvider from './../packages/design/src/ThemeProvider';
 import Box from './../packages/design/src/Box';
 import TeletermThemeProvider from './../packages/teleterm/src/ui/ThemeProvider';
+import { handlersTeleport } from './../packages/teleport/src/mocks/handlers';
 
 // Checks we are running non-node environment (browser)
 if (typeof global.process === 'undefined') {
-  const worker = setupWorker();
+  const worker = setupWorker(...handlersTeleport);
   worker.start();
 
   // So it can be accessed in stories more easily.

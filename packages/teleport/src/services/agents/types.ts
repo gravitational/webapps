@@ -96,5 +96,6 @@ export type ConnectionDiagnosticTrace = {
 export type ConnectionDiagnosticRequest = {
   resourceKind: AgentIdKind; //`json:"resource_kind"`
   resourceName: string; //`json:"resource_name"`
-  sshPrincipal: string; //`json:"ssh_principal"`
+  sshPrincipal?: string; //`json:"ssh_principal"`
+  kubeNamespace?: string; // `json:"kubernetes_namespace"`
 };

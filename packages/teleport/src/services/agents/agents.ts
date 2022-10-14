@@ -33,6 +33,7 @@ export const agentService = {
         resource_kind: req.resourceKind,
         resource_name: req.resourceName,
         ssh_principal: req.sshPrincipal,
+        kubernetes_namespace: req.kubeNamespace,
       })
       .then(makeConnectionDiagnostic);
   },
