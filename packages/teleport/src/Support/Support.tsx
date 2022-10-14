@@ -53,7 +53,7 @@ export const Support = ({
             {isEnterprise && (
               <SupportLink
                 title="Create a Support Ticket"
-                url="https://gravitational.zendesk.com/hc/en-us/requests/new"
+                url="https://support.goteleport.com"
               />
             )}
             <SupportLink
