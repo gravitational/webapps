@@ -45,6 +45,7 @@ function KubeList(props: Props) {
     pathname,
     replaceHistory,
     onLabelClick,
+    accessRequestId,
   } = props;
 
   const [kubeConnectName, setKubeConnectName] = useState('');
@@ -103,6 +104,7 @@ function KubeList(props: Props) {
           authType={authType}
           kubeConnectName={kubeConnectName}
           clusterId={clusterId}
+          accessRequestId={accessRequestId}
         />
       )}
     </>
@@ -141,6 +143,7 @@ type Props = {
   pathname: string;
   replaceHistory: (path: string) => void;
   onLabelClick: (label: AgentLabel) => void;
+  accessRequestId?: string;
 };
 
 export default KubeList;
