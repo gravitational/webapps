@@ -32,7 +32,14 @@ import { AuthType } from 'teleport/services/user';
 import ConnectDialog from '../ConnectDialog';
 
 function KubeList(props: Props) {
-  const { kubes = [], pageSize = 100, username, authType, searchValue } = props;
+  const {
+    kubes = [],
+    pageSize = 100,
+    username,
+    authType,
+    searchValue,
+    accessRequestId,
+  } = props;
 
   const [sortDir, setSortDir] = useState<Record<string, string>>({
     name: SortTypes.DESC,
@@ -93,6 +100,7 @@ function KubeList(props: Props) {
           username={username}
           authType={authType}
           kubeConnectName={kubeConnectName}
+          accessRequestId={accessRequestId}
         />
       )}
     </>
@@ -148,6 +156,7 @@ type Props = {
   username: string;
   authType: AuthType;
   searchValue: string;
+  accessRequestId?: string;
 };
 
 export default KubeList;
