@@ -31,6 +31,7 @@ export default function ConnectDialog({
   dbName,
   onClose,
   authType,
+  accessRequestId,
 }: Props) {
   const { hostname, port } = window.document.location;
   const host = `${hostname}:${port || '443'}`;
@@ -39,6 +40,10 @@ export default function ConnectDialog({
     authType === 'sso'
       ? `tsh login --proxy=${host}`
       : `tsh login --proxy=${host} --auth=local --user=${username}`;
+
+  const requestIdFlag = accessRequestId
+    ? ` --request-id=${accessRequestId}`
+    : '';
 
   return (
     <Dialog
@@ -59,14 +64,17 @@ export default function ConnectDialog({
             Step 1
           </Text>
           {' - Login to Teleport'}
-          <TextSelectCopy mt="2" text={connectCmd} />
+          <TextSelectCopy mt="2" text={`${connectCmd}${requestIdFlag}`} />
         </Box>
         <Box mb={4}>
           <Text bold as="span">
             Step 2
           </Text>
           {' - Retrieve credentials for the database'}
-          <TextSelectCopy mt="2" text={`tsh db login [--db-user=<user>] [--db-name=<name>] ${dbName}`} />
+          <TextSelectCopy
+            mt="2"
+            text={`tsh db login [--db-user=<user>] [--db-name=<name>] ${dbName}`}
+          />
         </Box>
         <Box mb={4}>
           <Text bold as="span">
@@ -105,4 +113,5 @@ export type Props = {
   username: string;
   clusterId: string;
   authType: AuthType;
+  accessRequestId?: string;
 };

@@ -34,6 +34,7 @@ export default function useKubes(ctx: TeleportContext) {
   const { search, pathname } = useLocation();
   const [startKeys, setStartKeys] = useState<string[]>([]);
   const canCreate = ctx.storeUser.getTokenAccess().create;
+  const accessRequestId = ctx.storeUser.getAccessRequestId();
   const { attempt, setAttempt } = useAttempt('processing');
   const [fetchStatus, setFetchStatus] = useState<FetchStatus>('');
   const [params, setParams] = useState<ResourceUrlQueryParams>({
@@ -155,6 +156,7 @@ export default function useKubes(ctx: TeleportContext) {
     fetchStatus,
     isSearchEmpty,
     onLabelClick,
+    accessRequestId,
   };
 }
 
