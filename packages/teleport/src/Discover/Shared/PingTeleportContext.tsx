@@ -4,15 +4,17 @@ import { useTeleport } from 'teleport';
 import { usePoll } from 'teleport/Discover/Shared/usePoll';
 import { INTERNAL_RESOURCE_ID_LABEL_KEY } from 'teleport/services/joinToken';
 import { useJoinTokenValue } from 'teleport/Discover/Shared/JoinTokenContext';
-import { WindowsDesktopService } from 'teleport/services/desktops';
 import { ResourceKind } from 'teleport/Discover/Shared/ResourceKind';
+
+import type { WindowsDesktopService } from 'teleport/services/desktops';
+import type { Kube } from 'teleport/services/kube';
 
 interface PingTeleportContextState {
   active: boolean;
   start: () => void;
   timeout: number;
   timedOut: boolean;
-  result: WindowsDesktopService | null;
+  result: WindowsDesktopService | Kube | null;
 }
 
 const pingTeleportContext = React.createContext<PingTeleportContextState>(null);
@@ -59,11 +61,12 @@ export function PingTeleportProvider(props: {
           request,
           signal
         );
+      case ResourceKind.Kubernetes:
+        return ctx.kubeService.fetchKubernetes(clusterId, request, signal);
       // TODO (when we start implementing them)
       // the fetch XXX needs a param defined for abort signal
       // case 'app':
       // case 'db':
-      // case 'kube_cluster':
     }
   }
 
