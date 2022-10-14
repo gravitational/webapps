@@ -24,6 +24,7 @@ export default function useKubes(ctx: TeleportContext) {
   const { clusterId, isLeafCluster } = useStickyClusterId();
   const { username, authType } = ctx.storeUser.state;
   const canCreate = ctx.storeUser.getTokenAccess().create;
+  const accessRequestId = ctx.storeUser.getAccessRequestId();
   const { run, attempt } = useAttempt('processing');
   const [kubes, setKubes] = useState([] as Kube[]);
   const [searchValue, setSearchValue] = useState('');
@@ -42,6 +43,7 @@ export default function useKubes(ctx: TeleportContext) {
     canCreate,
     searchValue,
     setSearchValue,
+    accessRequestId,
   };
 }
 

@@ -49,6 +49,7 @@ export function Kubes(props: State) {
     canCreate,
     searchValue,
     setSearchValue,
+    accessRequestId,
   } = props;
 
   const isEmpty = attempt.status === 'success' && kubes.length === 0;
@@ -83,6 +84,7 @@ export function Kubes(props: State) {
             username={username}
             authType={authType}
             searchValue={searchValue}
+            accessRequestId={accessRequestId}
           />
         </>
       )}

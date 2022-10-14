@@ -52,6 +52,7 @@ export function Databases(props: State) {
     authType,
     searchValue,
     setSearchValue,
+    accessRequestId,
   } = props;
 
   const isEmpty = attempt.status === 'success' && databases.length === 0;
@@ -89,6 +90,7 @@ export function Databases(props: State) {
             clusterId={clusterId}
             authType={authType}
             searchValue={searchValue}
+            accessRequestId={accessRequestId}
           />
         </>
       )}

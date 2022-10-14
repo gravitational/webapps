@@ -45,7 +45,7 @@ export const Failed = () => (
 
 const props: State = {
   attempt: { status: 'success' },
-  kubes: kubes,
+  kubes,
   username: 'sam',
   authType: 'local' as AuthType,
   clusterId: 'im-a-cluster',
@@ -53,4 +53,5 @@ const props: State = {
   canCreate: true,
   searchValue: '',
   setSearchValue: () => null,
+  accessRequestId: null,
 };

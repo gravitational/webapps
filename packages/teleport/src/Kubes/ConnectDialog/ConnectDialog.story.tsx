@@ -32,6 +32,18 @@ export const Local = () => {
   );
 };
 
+export const LocalWithRequestId = () => {
+  return (
+    <Component
+      onClose={() => null}
+      username={'sam'}
+      authType={'local'}
+      kubeConnectName={'tele.logicoma.dev-prod'}
+      accessRequestId={'8289cdb1-385c-5b02-85f1-fa2a934b749f'}
+    />
+  );
+};
+
 export const SSO = () => {
   return (
     <Component
