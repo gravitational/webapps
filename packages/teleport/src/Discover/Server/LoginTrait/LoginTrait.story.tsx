@@ -22,7 +22,7 @@ import { LoginTrait } from './LoginTrait';
 import { State } from './useLoginTrait';
 
 export default {
-  title: 'Teleport/Discover/LoginTrait',
+  title: 'Teleport/Discover/Server/LoginTrait',
 };
 
 export const NoLoginsAndPerm = () => (

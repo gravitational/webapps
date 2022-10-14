@@ -14,4 +14,5 @@
  * limitations under the License.
  */
 
-export { SelectCreatable, Option } from './SelectCreatable';
+export { SelectCreatable } from './SelectCreatable';
+export type { Option } from './SelectCreatable';

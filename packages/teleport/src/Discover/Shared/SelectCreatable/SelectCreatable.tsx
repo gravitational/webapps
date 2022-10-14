@@ -15,13 +15,8 @@
  */
 
 import React from 'react';
-import { components } from 'react-select';
 import ReactSelectCreatable from 'react-select/creatable';
 import theme from 'design/theme';
-
-const components = {
-  DropdownIndicator: null,
-};
 
 const styles = {
   multiValue: (base, state) => {
@@ -76,7 +71,9 @@ export const SelectCreatable = ({
 }: SelectCreatableProps) => (
   <ReactSelectCreatable
     className="react-select"
-    components={components}
+    components={{
+      DropdownIndicator: null,
+    }}
     styles={styles}
     {...rest}
     isMulti={isMulti}
