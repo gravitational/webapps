@@ -39,7 +39,7 @@ export default function UserTokenLink({
 
   return (
     <Dialog
-      dialogCss={() => ({ maxWidth: '500px', width: '100%' })}
+      dialogCss={() => ({ maxWidth: '550px', width: '100%' })}
       disableEscapeKeyDown={false}
       onClose={close}
       open={true}
