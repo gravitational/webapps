@@ -6,20 +6,18 @@ import { INTERNAL_RESOURCE_ID_LABEL_KEY } from 'teleport/services/joinToken';
 import { useJoinTokenValue } from 'teleport/Discover/Shared/JoinTokenContext';
 import { ResourceKind } from 'teleport/Discover/Shared/ResourceKind';
 
-import type { WindowsDesktopService } from 'teleport/services/desktops';
-import type { Kube } from 'teleport/services/kube';
-
-interface PingTeleportContextState {
+interface PingTeleportContextState<T> {
   active: boolean;
   start: () => void;
   timeout: number;
   timedOut: boolean;
-  result: WindowsDesktopService | Kube | null;
+  result: T | null;
 }
 
-const pingTeleportContext = React.createContext<PingTeleportContextState>(null);
+const pingTeleportContext =
+  React.createContext<PingTeleportContextState<any>>(null);
 
-export function PingTeleportProvider(props: {
+export function PingTeleportProvider<T>(props: {
   timeout: number;
   interval?: number;
   children?: React.ReactNode;
@@ -32,7 +30,7 @@ export function PingTeleportProvider(props: {
 
   const joinToken = useJoinTokenValue();
 
-  const { timedOut, result } = usePoll(
+  const { timedOut, result } = usePoll<T>(
     signal =>
       servicesFetchFn(signal).then(res => {
         if (res.agents.length) {
@@ -97,8 +95,8 @@ export function PingTeleportProvider(props: {
   );
 }
 
-export function usePingTeleport() {
-  const ctx = useContext(pingTeleportContext);
+export function usePingTeleport<T>() {
+  const ctx = useContext<PingTeleportContextState<T>>(pingTeleportContext);
 
   useEffect(() => {
     if (!ctx.active) {
