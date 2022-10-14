@@ -28,18 +28,7 @@ export default function Container() {
 }
 
 export function DesktopSession(props: State) {
-  const {
-    clipboardState,
-    fetchAttempt,
-    tdpConnection,
-    wsConnection,
-    disconnected,
-  } = props;
-
-  const clipboardError = clipboardState.enabled && clipboardState.errorText;
-
-  const clipboardProcessing =
-    clipboardState.enabled && clipboardState.permission.state === 'prompt';
+  const { fetchAttempt, tdpConnection, wsConnection, disconnected } = props;
 
   // Websocket is closed but we haven't
   // closed it on purpose or registered a tdp error.
@@ -50,16 +39,13 @@ export function DesktopSession(props: State) {
 
   const processing =
     fetchAttempt.status === 'processing' ||
-    tdpConnection.status === 'processing' ||
-    clipboardProcessing;
+    tdpConnection.status === 'processing';
 
   let alertText: string;
   if (fetchAttempt.status === 'failed') {
     alertText = fetchAttempt.statusText || 'fetch attempt failed';
   } else if (tdpConnection.status === 'failed') {
     alertText = tdpConnection.statusText || 'tdp connection failed';
-  } else if (clipboardError) {
-    alertText = clipboardState.errorText || 'clipboard sharing failed';
   } else if (unknownConnectionError) {
     alertText = 'Session disconnected for an unknown reason';
   }
@@ -106,8 +92,8 @@ function Session(props: PropsWithChildren<State>) {
     tdpClient,
     username,
     hostname,
-    clipboardState,
-    setClipboardState,
+    clipboardSharingEnabled: clipboardState,
+    setClipboardSharingEnabled: setClipboardState,
     onPngFrame,
     onClipboardData,
     onTdpError,
@@ -120,34 +106,22 @@ function Session(props: PropsWithChildren<State>) {
     onMouseUp,
     onMouseWheelScroll,
     onContextMenu,
-    onMouseEnter,
-    windowOnFocus,
   } = props;
 
-  const clipboardSharingActive =
-    clipboardState.enabled && clipboardState.permission.state === 'granted';
-  const clipboardSuccess =
-    !clipboardState.enabled ||
-    (clipboardState.enabled &&
-      clipboardState.permission.state === 'granted' &&
-      clipboardState.errorText === '');
+  const clipboardSharingActive = clipboardState;
 
   const showCanvas =
     fetchAttempt.status === 'success' &&
     tdpConnection.status === 'success' &&
     wsConnection === 'open' &&
-    !disconnected &&
-    clipboardSuccess;
+    !disconnected;
 
   return (
     <Flex flexDirection="column">
       <TopBar
         onDisconnect={() => {
           setDisconnected(true);
-          setClipboardState(prevState => ({
-            ...prevState,
-            enabled: false,
-          }));
+          setClipboardState(false);
           tdpClient.nuke();
         }}
         userHost={`${username}@${hostname}`}
@@ -194,8 +168,6 @@ function Session(props: PropsWithChildren<State>) {
         onMouseUp={onMouseUp}
         onMouseWheelScroll={onMouseWheelScroll}
         onContextMenu={onContextMenu}
-        onMouseEnter={onMouseEnter}
-        windowOnFocus={windowOnFocus}
       />
     </Flex>
   );

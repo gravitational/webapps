@@ -7,7 +7,6 @@ import {
   Disconnected,
   FetchError,
   ConnectionError,
-  ClipboardError,
   UnintendedDisconnect,
   WebAuthnPrompt,
 } from './DesktopSession.story';
@@ -34,11 +33,6 @@ test('fetch error', () => {
 
 test('connection error', () => {
   const { container } = render(<ConnectionError />);
-  expect(container).toMatchSnapshot();
-});
-
-test('clipboard error', () => {
-  const { container } = render(<ClipboardError />);
   expect(container).toMatchSnapshot();
 });
 
