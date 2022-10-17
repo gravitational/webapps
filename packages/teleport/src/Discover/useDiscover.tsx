@@ -118,8 +118,6 @@ type AppMeta = BaseMeta & {
 // when connecting a app.
 export type KubeMeta = BaseMeta & {
   kube: Kube;
-  users: string[];
-  groups: string[];
 };
 
 export type AgentMeta = AppMeta | NodeMeta | KubeMeta;

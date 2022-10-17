@@ -21,12 +21,12 @@ import TeleportContext from 'teleport/teleportContext';
 
 import type { User } from 'teleport/services/user';
 import type { AgentStepProps } from '../../types';
+import type { KubeMeta } from 'teleport/Discover/useDiscover';
 
 export function useLoginTrait({ ctx, props }: Props) {
   const [user, setUser] = useState<User>();
   const { attempt, run, setAttempt, handleError } = useAttempt('processing');
 
-  const [dynamicTraits, setDynamicTraits] = useState<Traits>();
   const [staticTraits, setStaticTraits] = useState<Traits>();
 
   const isSsoUser = ctx.storeUser.state.authType === 'sso';
@@ -41,25 +41,22 @@ export function useLoginTrait({ ctx, props }: Props) {
       ctx.userService.fetchUser(ctx.storeUser.getUsername()).then(user => {
         setUser(user);
 
-        // Filter out dynamic users and groups from the kube resource
-        // which contain both dynamic and static users and groups.
+        // Filter out dynamic traits from the kube resource
+        // which contain both dynamic and static traits.
         const userDefinedKubeUsers = user.traits.kubeUsers;
         const userDefinedKubeGroups = user.traits.kubeGroups;
 
-        // // TODO apply logic for kubes after this issue gets resolved:
-        // // https://github.com/gravitational/teleport/issues/17382
-        // const meta = props.agentMeta as KubeMeta;
-        // const filteredStaticUsers = meta.kube.users.filter(
-        //   user => !userDefinedKubeUsers.includes(user)
-        // );
-        // const filteredStaticGroups = meta.kube.groups.filter(
-        //   groups => !userDefinedKubeGroups.includes(groups)
-        // );
+        const meta = props.agentMeta as KubeMeta;
+        const filteredStaticUsers = meta.kube.users.filter(
+          user => !userDefinedKubeUsers.includes(user)
+        );
+        const filteredStaticGroups = meta.kube.groups.filter(
+          groups => !userDefinedKubeGroups.includes(groups)
+        );
 
-        setStaticTraits({ users: [], groups: [] }); // TODO update it with computed value above
-        setDynamicTraits({
-          users: userDefinedKubeUsers,
-          groups: userDefinedKubeGroups,
+        setStaticTraits({
+          users: filteredStaticUsers,
+          groups: filteredStaticGroups,
         });
       })
     );
@@ -71,7 +68,7 @@ export function useLoginTrait({ ctx, props }: Props) {
       return;
     }
 
-    // Update the dynamic users and groups for the user in backend.
+    // Update the dynamic traits for the user in backend.
     setAttempt({ status: 'processing' });
     try {
       await ctx.userService.updateUser({
@@ -82,8 +79,6 @@ export function useLoginTrait({ ctx, props }: Props) {
           kubeGroups,
         },
       });
-
-      await ctx.userService.applyUserTraits();
       props.nextStep();
     } catch (err) {
       handleError(err);
@@ -93,7 +88,10 @@ export function useLoginTrait({ ctx, props }: Props) {
   return {
     attempt,
     nextStep,
-    dynamicTraits,
+    dynamicTraits: {
+      users: user?.traits.kubeUsers,
+      groups: user?.traits.kubeGroups,
+    },
     staticTraits,
     fetchLoginTraits,
     isSsoUser,

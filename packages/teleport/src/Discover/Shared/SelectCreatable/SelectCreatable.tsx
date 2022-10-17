@@ -60,7 +60,7 @@ export type SelectCreatableProps = {
   options: Option[];
   onChange(value, action): void;
   onInputChange?(i: string): void;
-  onKeyDown?(e: EventTarget): void;
+  onKeyDown?(e: React.KeyboardEvent): void;
 };
 
 export const SelectCreatable = ({

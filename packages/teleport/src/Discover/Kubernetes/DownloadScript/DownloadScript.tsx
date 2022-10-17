@@ -331,7 +331,7 @@ const InstallHelmChart = ({
 
   const version = ctx.storeUser.state.cluster.authVersion;
   const { hostname, port } = window.document.location;
-  const host = `${hostname}:${port || '44s3'}`;
+  const host = `${hostname}:${port || '443'}`;
 
   // Starts resource querying interval.
   const { timedOut: pollingTimedOut, result } = usePingTeleport<Kube>();

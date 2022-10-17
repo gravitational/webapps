@@ -110,7 +110,7 @@ export function LoginTrait({
     nextStep([...newDynamicUsers], [...newDynamicGroups]);
   }
 
-  function handleGroupKeyDown(event) {
+  function handleGroupKeyDown(event: React.KeyboardEvent) {
     if (!groupInputValue) return;
     switch (event.key) {
       case 'Enter':
@@ -124,7 +124,7 @@ export function LoginTrait({
     }
   }
 
-  function handleUserKeyDown(event) {
+  function handleUserKeyDown(event: React.KeyboardEvent) {
     if (!userInputValue) return;
     switch (event.key) {
       case 'Enter':
