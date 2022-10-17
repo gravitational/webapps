@@ -72,7 +72,6 @@ export class ClustersService extends ImmutableStore<ClustersServiceState> {
   async logout(clusterUri: string) {
     // TODO(gzdunek): logout and removeCluster should be combined into a single acton in tshd
     await this.client.logout(clusterUri);
-    await this.syncClusterInfo(clusterUri);
     this.removeResources(clusterUri);
     await this.removeCluster(clusterUri);
     await this.removeClusterKubeConfigs(clusterUri);
