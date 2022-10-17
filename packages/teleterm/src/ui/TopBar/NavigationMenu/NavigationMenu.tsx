@@ -59,7 +59,10 @@ export function NavigationMenu() {
   const [isPopoverOpened, setIsPopoverOpened] = useState(false);
   const selectorRef = useRef<HTMLButtonElement>();
 
-  if (!activeRootCluster) {
+  if (
+    !activeRootCluster ||
+    !activeRootCluster.features.advancedAccessWorkflows
+  ) {
     return <></>;
   }
 
