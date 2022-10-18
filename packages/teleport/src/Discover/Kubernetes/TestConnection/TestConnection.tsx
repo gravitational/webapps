@@ -14,13 +14,15 @@
  * limitations under the License.
  */
 
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import styled from 'styled-components';
-import { ButtonSecondary, Text, Box, Flex } from 'design';
+import { ButtonSecondary, Text, Box, Flex, ButtonText } from 'design';
 import * as Icons from 'design/Icon';
 import Validation, { Validator } from 'shared/components/Validation';
 import FieldInput from 'shared/components/FieldInput';
 import { requiredField } from 'shared/components/Validation/rules';
+import FieldSelect from 'shared/components/FieldSelect';
+import { Option } from 'shared/components/Select';
 
 import TextSelectCopy from 'teleport/components/TextSelectCopy';
 import useTeleport from 'teleport/useTeleport';
@@ -52,12 +54,24 @@ export function TestConnection({
   diagnosis,
   nextStep,
   canTestConnection,
-  kubeName,
+  kube,
   authType,
   username,
   clusterId,
 }: State) {
+  const userOpts = kube.users.map(l => ({ value: l, label: l }));
+  const groupOpts = kube.groups.map(l => ({ value: l, label: l }));
+
+  const errorRefs = useRef<HTMLDivElement[]>([]);
+
   const [namespace, setNamespace] = useState('default');
+  const [selectedGroups, setSelectedGroups] = useState(groupOpts);
+
+  // Always default it to either teleport username or from one of users defined
+  // from previous step.
+  const [selectedUser, setSelectedUser] = useState(() =>
+    userOpts.length > 0 ? userOpts[0] : { value: username, label: username }
+  );
 
   const { hostname, port } = window.document.location;
   const host = `${hostname}:${port || '443'}`;
@@ -96,7 +110,23 @@ export function TestConnection({
       return;
     }
 
-    runConnectionDiagnostic(namespace);
+    runConnectionDiagnostic({
+      namespace,
+      user: selectedUser.value,
+      groups: selectedGroups.map(g => g.value),
+    });
+  }
+
+  const errBtnTxt = 'Click for extra details';
+  function toggleTraceErrorStates(index: number) {
+    const el = errorRefs.current[index];
+
+    const textEl = el.lastElementChild as HTMLElement;
+    textEl.style.display = textEl.style.display === 'none' ? 'block' : 'none';
+
+    const btnEl = el.firstElementChild as HTMLElement;
+    btnEl.textContent =
+      btnEl.textContent === errBtnTxt ? 'Hide details' : errBtnTxt;
   }
 
   return (
@@ -111,9 +141,9 @@ export function TestConnection({
           <StyledBox mb={5}>
             <Text bold>Step 1</Text>
             <Text typography="subtitle1" mb={3}>
-              Add the namespace to test
+              Define the namespace to test.
             </Text>
-            <Box width="320px">
+            <Box width="500px">
               <FieldInput
                 label="Namespace"
                 rule={requiredField('Namespace is required')}
@@ -126,6 +156,49 @@ export function TestConnection({
           </StyledBox>
           <StyledBox mb={5}>
             <Text bold>Step 2</Text>
+            <Text typography="subtitle1" mb={3}>
+              Select groups and a user to test.
+            </Text>
+            <Box width="500px">
+              <FieldSelect
+                label="Kubernetes groups"
+                placeholder={
+                  groupOpts.length === 0
+                    ? 'No groups defined'
+                    : 'Click to select groups'
+                }
+                isSearchable
+                isMulti
+                isClearable={false}
+                value={selectedGroups}
+                onChange={values => setSelectedGroups(values as Option[])}
+                options={groupOpts}
+                isDisabled={
+                  attempt.status === 'processing' || groupOpts.length === 0
+                }
+              />
+            </Box>
+            <Box width="500px">
+              <FieldSelect
+                label={'Kubernetes user'}
+                labelTip={
+                  userOpts.length === 0
+                    ? 'Defaulted to your teleport username'
+                    : ''
+                }
+                isSearchable
+                isClearable={false}
+                value={selectedUser}
+                onChange={(o: Option) => setSelectedUser(o)}
+                options={userOpts}
+                isDisabled={
+                  attempt.status === 'processing' || userOpts.length === 0
+                }
+              />
+            </Box>
+          </StyledBox>
+          <StyledBox mb={5}>
+            <Text bold>Step 3</Text>
             <Text typography="subtitle1" mb={3}>
               Verify that the kubernetes is accessible
             </Text>
@@ -164,19 +237,33 @@ export function TestConnection({
                     {diagnosis.traces.map((trace, index) => {
                       if (trace.status === 'failed') {
                         return (
-                          <>
-                            <TextIcon alignItems="baseline">
-                              <Icons.CircleCross mr={1} color="danger" />
-                              {trace.details}
-                              <br />
-                              {trace.error}
-                            </TextIcon>
-                          </>
+                          <TextIcon
+                            css={{ alignItems: 'baseline' }}
+                            key={index}
+                          >
+                            <Icons.CircleCross mr={1} color="danger" />
+                            <div>
+                              <div>{trace.details}</div>
+                              <div ref={el => (errorRefs.current[index] = el)}>
+                                <ButtonShowMore
+                                  onClick={() => toggleTraceErrorStates(index)}
+                                >
+                                  {errBtnTxt}
+                                </ButtonShowMore>
+                                <div style={{ display: 'none' }}>
+                                  {trace.error}
+                                </div>
+                              </div>
+                            </div>
+                          </TextIcon>
                         );
                       }
                       if (trace.status === 'success') {
                         return (
-                          <TextIcon key={index}>
+                          <TextIcon
+                            key={index}
+                            css={{ alignItems: 'baseline' }}
+                          >
                             <Icons.CircleCheck mr={1} color="success" />
                             {trace.details}
                           </TextIcon>
@@ -207,7 +294,7 @@ export function TestConnection({
             </Box>
             <Box mb={2}>
               Log into your Kubernetes cluster
-              <TextSelectCopy mt="1" text={`tsh kube login ${kubeName}`} />
+              <TextSelectCopy mt="1" text={`tsh kube login ${kube.name}`} />
             </Box>
             <Box>
               Use kubectl
@@ -226,4 +313,11 @@ const StyledBox = styled(Box)`
   background-color: rgba(255, 255, 255, 0.05);
   border-radius: 8px;
   padding: 20px;
+`;
+
+const ButtonShowMore = styled(ButtonText)`
+  min-height: auto;
+  padding: 0;
+  font-weight: inherit;
+  text-decoration: underline;
 `;

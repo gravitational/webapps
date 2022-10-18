@@ -21,7 +21,10 @@ import TeleportContext from 'teleport/teleportContext';
 
 import { KubeMeta } from '../../useDiscover';
 
-import type { ConnectionDiagnostic } from 'teleport/services/agents';
+import type {
+  ConnectionDiagnostic,
+  KubeImpersonation,
+} from 'teleport/services/agents';
 import type { AgentStepProps } from '../../types';
 
 export function useTestConnection({ ctx, props }: Props) {
@@ -31,7 +34,7 @@ export function useTestConnection({ ctx, props }: Props) {
   const access = ctx.storeUser.getConnectionDiagnosticAccess();
   const canTestConnection = access.create && access.edit && access.read;
 
-  function runConnectionDiagnostic(namespace: string) {
+  function runConnectionDiagnostic(impersonate: KubeImpersonation) {
     const meta = props.agentMeta as KubeMeta;
     setDiagnosis(null);
     run(() =>
@@ -39,7 +42,7 @@ export function useTestConnection({ ctx, props }: Props) {
         .createConnectionDiagnostic({
           resourceKind: 'kube_cluster',
           resourceName: meta.kube.name,
-          kubeNamespace: namespace,
+          kubeImpersonation: impersonate,
         })
         .then(setDiagnosis)
     );
@@ -53,7 +56,7 @@ export function useTestConnection({ ctx, props }: Props) {
     diagnosis,
     nextStep: props.nextStep,
     canTestConnection,
-    kubeName: (props.agentMeta as KubeMeta).kube.name,
+    kube: (props.agentMeta as KubeMeta).kube,
     username,
     authType,
     clusterId: cluster.clusterId,

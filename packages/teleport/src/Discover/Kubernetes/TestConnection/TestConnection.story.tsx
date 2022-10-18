@@ -38,6 +38,48 @@ export const LoadedInitWithSso = () => (
   </MemoryRouter>
 );
 
+export const WithKubeUsers = () => (
+  <MemoryRouter>
+    <TestConnection
+      {...props}
+      kube={{
+        name: 'some-kube-name',
+        labels: [],
+        users: ['user1', 'user2'],
+        groups: [],
+      }}
+    />
+  </MemoryRouter>
+);
+
+export const WithKubeGroups = () => (
+  <MemoryRouter>
+    <TestConnection
+      {...props}
+      kube={{
+        name: 'some-kube-name',
+        labels: [],
+        users: [],
+        groups: ['group1', 'group2'],
+      }}
+    />
+  </MemoryRouter>
+);
+
+export const WithKubeUsersAndGroups = () => (
+  <MemoryRouter>
+    <TestConnection
+      {...props}
+      kube={{
+        name: 'some-kube-name',
+        labels: [],
+        users: ['user1', 'user2'],
+        groups: ['group1', 'group2'],
+      }}
+    />
+  </MemoryRouter>
+);
+
 export const Processing = () => (
   <MemoryRouter>
     <TestConnection {...props} attempt={{ status: 'processing' }} />
@@ -144,7 +186,12 @@ const props: State = {
   nextStep: () => null,
   diagnosis: null,
   canTestConnection: true,
-  kubeName: 'some-kube-name',
+  kube: {
+    name: 'some-kube-name',
+    labels: [],
+    users: [],
+    groups: [],
+  },
   username: 'teleport-username',
   authType: 'local',
   clusterId: 'some-cluster-id',

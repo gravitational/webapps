@@ -101,13 +101,13 @@ export function LoginTrait({
     });
 
     const newDynamicGroups = new Set<string>();
-    users.forEach(o => {
+    groups.forEach(o => {
       if (!staticTraits.groups.includes(o.value)) {
         newDynamicGroups.add(o.value);
       }
     });
 
-    nextStep([...newDynamicUsers], [...newDynamicGroups]);
+    nextStep({ users: [...newDynamicUsers], groups: [...newDynamicGroups] });
   }
 
   function handleGroupKeyDown(event: React.KeyboardEvent) {
@@ -181,35 +181,6 @@ export function LoginTrait({
           <>
             <StyledBox>
               <Box mb={4}>
-                Kubernetes Users
-                <SelectCreatable
-                  inputValue={userInputValue}
-                  isClearable={users.some(v => !v.isFixed)}
-                  onInputChange={input => setUserInputValue(input)}
-                  onKeyDown={handleUserKeyDown}
-                  placeholder="Start typing users and press enter"
-                  value={users}
-                  isDisabled={!canAddLoginTraits}
-                  onChange={(value, action) => {
-                    if (action.action === 'clear') {
-                      setUsers(
-                        staticTraits.users.map(l => ({
-                          label: l,
-                          value: l,
-                          isFixed: true,
-                        }))
-                      );
-                    } else {
-                      setUsers(value || []);
-                    }
-                  }}
-                  options={dynamicTraits.users.map(l => ({
-                    value: l,
-                    label: l,
-                  }))}
-                />
-              </Box>
-              <Box mb={2}>
                 Kubernetes Groups
                 <SelectCreatable
                   inputValue={groupInputValue}
@@ -233,6 +204,35 @@ export function LoginTrait({
                     }
                   }}
                   options={dynamicTraits.groups.map(l => ({
+                    value: l,
+                    label: l,
+                  }))}
+                />
+              </Box>
+              <Box mb={2}>
+                Kubernetes Users
+                <SelectCreatable
+                  inputValue={userInputValue}
+                  isClearable={users.some(v => !v.isFixed)}
+                  onInputChange={input => setUserInputValue(input)}
+                  onKeyDown={handleUserKeyDown}
+                  placeholder="Start typing users and press enter"
+                  value={users}
+                  isDisabled={!canAddLoginTraits}
+                  onChange={(value, action) => {
+                    if (action.action === 'clear') {
+                      setUsers(
+                        staticTraits.users.map(l => ({
+                          label: l,
+                          value: l,
+                          isFixed: true,
+                        }))
+                      );
+                    } else {
+                      setUsers(value || []);
+                    }
+                  }}
+                  options={dynamicTraits.users.map(l => ({
                     value: l,
                     label: l,
                   }))}

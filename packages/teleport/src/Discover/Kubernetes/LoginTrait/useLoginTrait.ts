@@ -62,11 +62,26 @@ export function useLoginTrait({ ctx, props }: Props) {
     );
   }
 
-  async function nextStep(kubeUsers: string[], kubeGroups: string[]) {
+  // updateKubeMeta updates the meta with updated dynamic traits.
+  function updateKubeMeta(dynamicTraits: Traits) {
+    const meta = props.agentMeta as KubeMeta;
+    props.updateAgentMeta({
+      ...meta,
+      kube: {
+        ...meta.kube,
+        users: [...staticTraits.users, ...dynamicTraits.users],
+        groups: [...staticTraits.groups, ...dynamicTraits.groups],
+      },
+    });
+  }
+
+  async function nextStep(dynamicTraits: Traits) {
     if (isSsoUser || !canEditUser) {
       props.nextStep();
       return;
     }
+
+    updateKubeMeta(dynamicTraits);
 
     // Update the dynamic traits for the user in backend.
     setAttempt({ status: 'processing' });
@@ -75,8 +90,8 @@ export function useLoginTrait({ ctx, props }: Props) {
         ...user,
         traits: {
           ...user.traits,
-          kubeUsers,
-          kubeGroups,
+          kubeUsers: dynamicTraits.users,
+          kubeGroups: dynamicTraits.groups,
         },
       });
       props.nextStep();

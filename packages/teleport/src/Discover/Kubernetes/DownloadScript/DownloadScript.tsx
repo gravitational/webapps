@@ -239,7 +239,7 @@ const StepTwo = ({
     <StyledBox mb={5}>
       <Text bold>Step 2</Text>
       <Text typography="subtitle1" mb={3}>
-        Define teleport-service namespace and kubernetes cluster name.
+        Define teleport-service namespace and Kubernetes cluster name.
       </Text>
       <Validation>
         {({ validator }) => (
@@ -346,6 +346,7 @@ const InstallHelmChart = ({
   function handleOnProceed() {
     updateAgentMeta({
       kube: result,
+      resourceName: result.name,
     } as KubeMeta);
 
     nextStep();

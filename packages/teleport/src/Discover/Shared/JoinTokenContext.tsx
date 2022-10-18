@@ -123,9 +123,8 @@ export function useJoinToken(
 
   useEffect(() => {
     return () => {
-      if (abortController) {
-        abortController.abort();
-      }
+      abortController?.abort();
+
       // result will be stored in memory which can refer to
       // previously used or expired join tokens.
       clearCachedJoinTokenResult();
