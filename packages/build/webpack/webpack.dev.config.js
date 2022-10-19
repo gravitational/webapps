@@ -38,6 +38,7 @@ function getCacheConfig() {
 const plugins = [
   configFactory.plugins.tsChecker(),
   configFactory.plugins.reactRefresh(),
+  configFactory.plugins.lodash(),
 ];
 
 if (process.env.WEBPACK_ANALYZE_BUNDLE === 'true') {

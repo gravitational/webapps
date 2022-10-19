@@ -19,7 +19,9 @@ const configFactory = require('./webpack.base');
 process.env.BABEL_ENV = 'production';
 process.env.NODE_ENV = 'production';
 
-const plugins = [];
+const plugins = [
+  configFactory.plugins.lodash(),
+];
 
 if (process.env.WEBPACK_ANALYZE_BUNDLE === 'true') {
   plugins.push(configFactory.plugins.bundleAnalyzer());

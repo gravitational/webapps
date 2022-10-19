@@ -18,6 +18,7 @@ const path = require('path');
 
 const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer');
 const HtmlWebPackPlugin = require('html-webpack-plugin');
+const LodashModuleReplacementPlugin = require('lodash-webpack-plugin');
 const ForkTsCheckerWebpackPlugin = require('fork-ts-checker-webpack-plugin');
 const ReactRefreshPlugin = require('@pmmmwh/react-refresh-webpack-plugin');
 
@@ -49,6 +50,9 @@ const configFactory = {
         template: path.join(__dirname, '/../index.ejs'),
         ...options,
       });
+    },
+    lodash() {
+      return new LodashModuleReplacementPlugin();
     },
     bundleAnalyzer(options) {
       return new BundleAnalyzerPlugin({ analyzerHost: '0.0.0.0', ...options });

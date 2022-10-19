@@ -58,5 +58,6 @@ module.exports = {
   plugins: [
     ...plugins,
     ['babel-plugin-styled-components', { displayName: false, ssr: false }],
+    'babel-plugin-lodash',
   ],
 };
