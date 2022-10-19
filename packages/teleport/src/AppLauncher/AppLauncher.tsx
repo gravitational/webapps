@@ -47,7 +47,7 @@ export function AppLauncher() {
         method: 'POST',
         credentials: 'include',
         headers: {
-          'X-Cookie-Name': session.cookieName,
+          'X-Cookie-Value': session.cookieValue,
         },
       });
 

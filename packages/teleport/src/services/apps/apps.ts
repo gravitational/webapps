@@ -50,7 +50,7 @@ const service = {
         fqdn: json.fqdn as string,
         value: json.value as string,
         subject: json.subject as string,
-        cookieName: json.cookie_name as string,
+        cookieValue: json.cookie_value as string,
       }));
   },
 
