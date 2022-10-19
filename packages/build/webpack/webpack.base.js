@@ -68,11 +68,6 @@ const configFactory = {
         generator: {
           filename: 'assets/fonts/[name][ext]',
         },
-        parser: {
-          dataUrlCondition: {
-            maxSize: 102400, // 100kb
-          },
-        },
       };
     },
     svg() {
