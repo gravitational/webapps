@@ -35,7 +35,9 @@ import cfg from './config';
 
 import type { History } from 'history';
 
-const AppLauncher = React.lazy(() => import('./AppLauncher'));
+const AppLauncher = React.lazy(
+  () => import(/* webpackChunkName: "app-launcher" */ './AppLauncher')
+);
 
 const Teleport: React.FC<Props> = props => {
   const { ctx, history } = props;
@@ -72,10 +74,18 @@ const Teleport: React.FC<Props> = props => {
   );
 };
 
-const LoginFailed = React.lazy(() => import('./Login/LoginFailed'));
-const LoginSuccess = React.lazy(() => import('./Login/LoginSuccess'));
-const Login = React.lazy(() => import('./Login'));
-const Welcome = React.lazy(() => import('./Welcome'));
+const LoginFailed = React.lazy(
+  () => import(/* webpackChunkName: "login-failed" */ './Login/LoginFailed')
+);
+const LoginSuccess = React.lazy(
+  () => import(/* webpackChunkName: "login-success" */ './Login/LoginSuccess')
+);
+const Login = React.lazy(
+  () => import(/* webpackChunkName: "login" */ './Login')
+);
+const Welcome = React.lazy(
+  () => import(/* webpackChunkName: "welcome" */ './Welcome')
+);
 
 export function renderPublicRoutes(children = []) {
   return [
@@ -114,10 +124,18 @@ export function renderPublicRoutes(children = []) {
   ];
 }
 
-const Console = React.lazy(() => import('./Console'));
-const Player = React.lazy(() => import('./Player'));
-const DesktopSession = React.lazy(() => import('./DesktopSession'));
-const Discover = React.lazy(() => import('./Discover'));
+const Console = React.lazy(
+  () => import(/* webpackChunkName: "console" */ './Console')
+);
+const Player = React.lazy(
+  () => import(/* webpackChunkName: "player" */ './Player')
+);
+const DesktopSession = React.lazy(
+  () => import(/* webpackChunkName: "desktop-session" */ './DesktopSession')
+);
+const Discover = React.lazy(
+  () => import(/* webpackChunkName: "discover" */ './Discover')
+);
 
 // TODO: make it lazy loadable
 export function renderPrivateRoutes(

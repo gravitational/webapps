@@ -23,21 +23,51 @@ import cfg from 'teleport/config';
 
 import { Feature } from './types';
 
-const Audit = React.lazy(() => import('./Audit'));
-const Nodes = React.lazy(() => import('./Nodes'));
-const Sessions = React.lazy(() => import('./Sessions'));
-const Account = React.lazy(() => import('./Account'));
-const Applications = React.lazy(() => import('./Apps'));
-const Kubes = React.lazy(() => import('./Kubes'));
-const Support = React.lazy(() => import('./Support'));
-const Clusters = React.lazy(() => import('./Clusters'));
-const Trust = React.lazy(() => import('./TrustedClusters'));
-const Users = React.lazy(() => import('./Users'));
-const Roles = React.lazy(() => import('./Roles'));
-const Recordings = React.lazy(() => import('./Recordings'));
-const AuthConnectors = React.lazy(() => import('./AuthConnectors'));
-const Databases = React.lazy(() => import('./Databases'));
-const Desktops = React.lazy(() => import('./Desktops'));
+const Audit = React.lazy(
+  () => import(/* webpackChunkName: "audit" */ './Audit')
+);
+const Nodes = React.lazy(
+  () => import(/* webpackChunkName: "nodes" */ './Nodes')
+);
+const Sessions = React.lazy(
+  () => import(/* webpackChunkName: "sessions" */ './Sessions')
+);
+const Account = React.lazy(
+  () => import(/* webpackChunkName: "account" */ './Account')
+);
+const Applications = React.lazy(
+  () => import(/* webpackChunkName: "apps" */ './Apps')
+);
+const Kubes = React.lazy(
+  () => import(/* webpackChunkName: "kubes" */ './Kubes')
+);
+const Support = React.lazy(
+  () => import(/* webpackChunkName: "support" */ './Support')
+);
+const Clusters = React.lazy(
+  () => import(/* webpackChunkName: "clusters" */ './Clusters')
+);
+const Trust = React.lazy(
+  () => import(/* webpackChunkName: "trusted-clusters" */ './TrustedClusters')
+);
+const Users = React.lazy(
+  () => import(/* webpackChunkName: "users" */ './Users')
+);
+const Roles = React.lazy(
+  () => import(/* webpackChunkName: "roles" */ './Roles')
+);
+const Recordings = React.lazy(
+  () => import(/* webpackChunkName: "recordings" */ './Recordings')
+);
+const AuthConnectors = React.lazy(
+  () => import(/* webpackChunkName: "auth-connectors" */ './AuthConnectors')
+);
+const Databases = React.lazy(
+  () => import(/* webpackChunkName: "databases" */ './Databases')
+);
+const Desktops = React.lazy(
+  () => import(/* webpackChunkName: "desktop" */ './Desktops')
+);
 
 export class FeatureClusters extends Feature {
   topNavTitle = 'Clusters';
