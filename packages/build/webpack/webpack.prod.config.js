@@ -19,6 +19,12 @@ const configFactory = require('./webpack.base');
 process.env.BABEL_ENV = 'production';
 process.env.NODE_ENV = 'production';
 
+const plugins = [];
+
+if (process.env.WEBPACK_ANALYZE_BUNDLE === 'true') {
+  plugins.push(configFactory.plugins.bundleAnalyzer());
+}
+
 /**
  * @type { import('webpack').webpack.Configuration }
  */
@@ -40,5 +46,5 @@ module.exports = {
       configFactory.rules.css(),
     ],
   },
-  plugins: [],
+  plugins,
 };
