@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React from 'react';
+import React, { Suspense } from 'react';
 import ThemeProvider from 'design/ThemeProvider';
 
 import { Router, Route, Switch } from 'teleport/components/Router';
@@ -28,18 +28,14 @@ import { getOSSFeatures } from 'teleport/features';
 import { Feature } from 'teleport/types';
 
 import { Main } from './Main';
-import Welcome from './Welcome';
-import Login, { LoginSuccess, LoginFailed } from './Login';
-import AppLauncher from './AppLauncher';
-import Console from './Console';
-import DesktopSession from './DesktopSession';
-import { Discover } from './Discover';
-import Player from './Player';
+
 import TeleportContextProvider from './TeleportContextProvider';
 import TeleportContext from './teleportContext';
 import cfg from './config';
 
 import type { History } from 'history';
+
+const AppLauncher = React.lazy(() => import('./AppLauncher'));
 
 const Teleport: React.FC<Props> = props => {
   const { ctx, history } = props;
@@ -75,6 +71,11 @@ const Teleport: React.FC<Props> = props => {
     </CatchError>
   );
 };
+
+const LoginFailed = React.lazy(() => import('./Login/LoginFailed'));
+const LoginSuccess = React.lazy(() => import('./Login/LoginSuccess'));
+const Login = React.lazy(() => import('./Login'));
+const Welcome = React.lazy(() => import('./Welcome'));
 
 export function renderPublicRoutes(children = []) {
   return [
@@ -113,19 +114,26 @@ export function renderPublicRoutes(children = []) {
   ];
 }
 
+const Console = React.lazy(() => import('./Console'));
+const Player = React.lazy(() => import('./Player'));
+const DesktopSession = React.lazy(() => import('./DesktopSession'));
+const Discover = React.lazy(() => import('./Discover'));
+
 // TODO: make it lazy loadable
 export function renderPrivateRoutes(
   CustomMain = Main,
   CustomDiscover = Discover
 ) {
   return (
-    <Switch>
-      <Route path={cfg.routes.discover} component={CustomDiscover} />
-      <Route path={cfg.routes.desktop} component={DesktopSession} />
-      <Route path={cfg.routes.console} component={Console} />
-      <Route path={cfg.routes.player} component={Player} />
-      <Route path={cfg.routes.root} component={CustomMain} />
-    </Switch>
+    <Suspense fallback={null}>
+      <Switch>
+        <Route path={cfg.routes.discover} component={CustomDiscover} />
+        <Route path={cfg.routes.desktop} component={DesktopSession} />
+        <Route path={cfg.routes.console} component={Console} />
+        <Route path={cfg.routes.player} component={Player} />
+        <Route path={cfg.routes.root} component={CustomMain} />
+      </Switch>
+    </Suspense>
   );
 }
 
