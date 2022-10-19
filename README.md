@@ -4,9 +4,10 @@ This mono-repository contains the source code for:
 
 - the web UIs served by the `teleport` server
   - [`packages/teleport`](packages/teleport) for the OSS version
-  - `packages/webapps.e` for the enterprise version
+  - `packages/webapps.e/teleport` for the enterprise version
 - the Electron app of [Teleport Connect](https://goteleport.com/connect/)
   - [`packages/teleterm`](packages/teleterm)
+  - `packages/webapps.e/teleterm` for the enterprise version
 
 The code is organized in terms of independent yarn packages which reside in
 the [packages directory](https://github.com/gravitational/webapps/tree/master/packages).
@@ -89,6 +90,15 @@ To turn them off, set `WEBPACK_SOURCE_MAP` to `none` -
 
 ```
 $ WEBPACK_SOURCE_MAP=none yarn start-teleport --target=https://example.com:3080/web
+```
+
+#### Changing the port Webpack runs on
+
+To make Webpack listen on a different port, you can set the `WEBPACK_PORT` environment variable
+to whatever port you need.
+
+```
+$ WEBPACK_PORT=6060 yarn start-teleport --target=https://example.com:3080/web
 ```
 
 #### Custom HTTPS configuration

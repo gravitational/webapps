@@ -358,12 +358,12 @@ exports[`list of all events 1`] = `
           </strong>
            - 
           <strong>
-            135
+            141
           </strong>
            of
            
           <strong>
-            135
+            141
           </strong>
         </div>
         <button
@@ -666,6 +666,80 @@ exports[`list of all events 1`] = `
             class="c14"
           >
             <span
+              class="c10 c15 icon icon-info_outline c10 c15"
+              color="light"
+              font-size="3"
+            />
+            SSM Command Execution Failed
+          </div>
+        </td>
+        <td
+          style="word-break: break-word;"
+        >
+          SSM Command with ID [c2936d68-fc0c-4c16-a860-916a97f57644] failed during execution on EC2 Instance [i-057d0ffe877128673] on AWS Account [278576220453] in [eu-central-1]
+        </td>
+        <td
+          style="min-width: 120px;"
+        >
+          2022-09-14T14:45:38.122Z
+        </td>
+        <td
+          align="right"
+        >
+          <button
+            class="c16"
+            kind="border"
+            width="87px"
+          >
+            Details
+          </button>
+        </td>
+      </tr>
+      <tr>
+        <td
+          style="vertical-align: inherit;"
+        >
+          <div
+            class="c14"
+          >
+            <span
+              class="c10 c15 icon icon-info_outline c10 c15"
+              color="light"
+              font-size="3"
+            />
+            SSM Command Executed
+          </div>
+        </td>
+        <td
+          style="word-break: break-word;"
+        >
+          SSM Command with ID [e8a5f3ba-e9e5-4cbd-979b-18fd1e7ad00f] was successfully executed on EC2 Instance [i-057d0ffe877128673] on AWS Account [278576220453] in [eu-central-1]
+        </td>
+        <td
+          style="min-width: 120px;"
+        >
+          2022-09-14T14:45:38.122Z
+        </td>
+        <td
+          align="right"
+        >
+          <button
+            class="c16"
+            kind="border"
+            width="87px"
+          >
+            Details
+          </button>
+        </td>
+      </tr>
+      <tr>
+        <td
+          style="vertical-align: inherit;"
+        >
+          <div
+            class="c14"
+          >
+            <span
               class="c10 c15 icon icon-kubernetes c10 c15"
               color="light"
               font-size="3"
@@ -892,13 +966,161 @@ exports[`list of all events 1`] = `
               color="light"
               font-size="3"
             />
+            Cassandra Register
+          </div>
+        </td>
+        <td
+          style="word-break: break-word;"
+        >
+          User [alice] has sent Cassandra Register to [cassandra]
+        </td>
+        <td
+          style="min-width: 120px;"
+        >
+          2022-06-02T08:46:33.825Z
+        </td>
+        <td
+          align="right"
+        >
+          <button
+            class="c16"
+            kind="border"
+            width="87px"
+          >
+            Details
+          </button>
+        </td>
+      </tr>
+      <tr>
+        <td
+          style="vertical-align: inherit;"
+        >
+          <div
+            class="c14"
+          >
+            <span
+              class="c10 c15 icon icon-database c10 c15"
+              color="light"
+              font-size="3"
+            />
+            Cassandra Batch
+          </div>
+        </td>
+        <td
+          style="word-break: break-word;"
+        >
+          User [alice] has sent Cassandra Batch to [cassandra]
+        </td>
+        <td
+          style="min-width: 120px;"
+        >
+          2022-06-02T08:46:33.825Z
+        </td>
+        <td
+          align="right"
+        >
+          <button
+            class="c16"
+            kind="border"
+            width="87px"
+          >
+            Details
+          </button>
+        </td>
+      </tr>
+      <tr>
+        <td
+          style="vertical-align: inherit;"
+        >
+          <div
+            class="c14"
+          >
+            <span
+              class="c10 c15 icon icon-database c10 c15"
+              color="light"
+              font-size="3"
+            />
+            Cassandra Execute
+          </div>
+        </td>
+        <td
+          style="word-break: break-word;"
+        >
+          User [alice] has sent Cassandra Execute to [cassandra]
+        </td>
+        <td
+          style="min-width: 120px;"
+        >
+          2022-06-02T08:46:33.825Z
+        </td>
+        <td
+          align="right"
+        >
+          <button
+            class="c16"
+            kind="border"
+            width="87px"
+          >
+            Details
+          </button>
+        </td>
+      </tr>
+      <tr>
+        <td
+          style="vertical-align: inherit;"
+        >
+          <div
+            class="c14"
+          >
+            <span
+              class="c10 c15 icon icon-database c10 c15"
+              color="light"
+              font-size="3"
+            />
+            Cassandra Prepare Event
+          </div>
+        </td>
+        <td
+          style="word-break: break-word;"
+        >
+          User [alice] has sent Cassandra Prepare [SELECT * FROM system_schema.keyspaces] to [cassandra]
+        </td>
+        <td
+          style="min-width: 120px;"
+        >
+          2022-06-02T08:46:33.825Z
+        </td>
+        <td
+          align="right"
+        >
+          <button
+            class="c16"
+            kind="border"
+            width="87px"
+          >
+            Details
+          </button>
+        </td>
+      </tr>
+      <tr>
+        <td
+          style="vertical-align: inherit;"
+        >
+          <div
+            class="c14"
+          >
+            <span
+              class="c10 c15 icon icon-database c10 c15"
+              color="light"
+              font-size="3"
+            />
             Database Malformed Packet
           </div>
         </td>
         <td
           style="word-break: break-word;"
         >
-          Recived malformed packet from [alice] in [master] on database [sqlserver02]
+          Received malformed packet from [alice] in [master] on database [sqlserver02]
         </td>
         <td
           style="min-width: 120px;"
@@ -935,7 +1157,7 @@ exports[`list of all events 1`] = `
         <td
           style="word-break: break-word;"
         >
-          User [alice] has send RPC Request [undefined] in database [master] on [sqlserver02]
+          User [alice] has sent RPC Request [Sp_ExecuteSql] in database [master] on [sqlserver02]
         </td>
         <td
           style="min-width: 120px;"
@@ -2489,7 +2711,7 @@ exports[`list of all events 1`] = `
         <td
           style="word-break: break-word;"
         >
-          User [alice@example.com] has disconnected from database [] on [mongo-primary]
+          User [alice@example.com] has disconnected on [mongo-primary]
         </td>
         <td
           style="min-width: 120px;"
@@ -2600,7 +2822,7 @@ exports[`list of all events 1`] = `
         <td
           style="word-break: break-word;"
         >
-          User [alice@example.com] has connected to database [] as [alice] on [mongo-primary]
+          User [alice@example.com] has connected as [alice] on [mongo-primary]
         </td>
         <td
           style="min-width: 120px;"
@@ -5049,7 +5271,7 @@ exports[`list of all events 1`] = `
         <td
           style="word-break: break-word;"
         >
-          User [root] uploaded a file [~/] to node [192.168.0.105:3022]
+          User [root] uploaded a file to [~/] on node [192.168.0.105:3022]
         </td>
         <td
           style="min-width: 120px;"

@@ -3,13 +3,14 @@ import styled from 'styled-components';
 
 import { Editor, File, Language } from 'shared/components/Editor';
 
-import { useJoinTokenValue } from 'teleport/Discover/Desktop/ConnectTeleport/JoinTokenContext';
+import { useJoinTokenValue } from 'teleport/Discover/Shared/JoinTokenContext';
 
 import type { JoinToken } from 'teleport/services/joinToken';
 
-const pastedLines = (joinToken: JoinToken) => `teleport:
+const pastedLines = (joinToken: JoinToken) => `version: v3
+teleport:
   auth_token: ${joinToken.id}
-  auth_servers: [ ${window.location.hostname}:${window.location.port || '443'} ]
+  proxy_server: ${window.location.hostname}:${window.location.port || '443'}
 
 auth_service:
   enabled: no

@@ -146,6 +146,10 @@ const EventIconMap: Record<EventCode, React.FC> = {
   [eventCodes.MYSQL_DEBUG]: Icons.Database,
   [eventCodes.MYSQL_REFRESH]: Icons.Database,
   [eventCodes.SQLSERVER_RPC_REQUEST]: Icons.Database,
+  [eventCodes.CASSANDRA_BATCH_EVENT]: Icons.Database,
+  [eventCodes.CASSANDRA_EXECUTE_EVENT]: Icons.Database,
+  [eventCodes.CASSANDRA_PREPARE_EVENT]: Icons.Database,
+  [eventCodes.CASSANDRA_REGISTER_EVENT]: Icons.Database,
   [eventCodes.ELASTICSEARCH_REQUEST]: Icons.Database,
   [eventCodes.DESKTOP_SESSION_STARTED]: Icons.Desktop,
   [eventCodes.DESKTOP_SESSION_STARTED_FAILED]: Icons.Desktop,
@@ -175,6 +179,8 @@ const EventIconMap: Record<EventCode, React.FC> = {
   [eventCodes.CERTIFICATE_CREATED]: Icons.Keypair,
   [eventCodes.UPGRADE_WINDOW_UPDATED]: Icons.Info,
   [eventCodes.SESSION_RECORDING_ACCESS]: Icons.Info,
+  [eventCodes.SSMRUN_SUCCESS]: Icons.Info,
+  [eventCodes.SSMRUN_FAIL]: Icons.Info,
   [eventCodes.UNKNOWN]: Icons.Question,
 };
 
