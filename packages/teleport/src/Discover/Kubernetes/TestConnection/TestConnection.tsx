@@ -110,8 +110,8 @@ export function TestConnection({
 
     runConnectionDiagnostic({
       namespace,
-      user: selectedUser.value,
-      groups: selectedGroups.map(g => g.value),
+      user: selectedUser?.value,
+      groups: selectedGroups?.map(g => g.value),
     });
   }
 
@@ -122,7 +122,7 @@ export function TestConnection({
           <Header>Test Connection</Header>
           <HeaderSubtitle>
             Optionally verify that you can successfully connect to the
-            kubernetes you just added.
+            Kubernetes cluster you just added.
           </HeaderSubtitle>
           <StyledBox mb={5}>
             <Text bold>Step 1</Text>
@@ -173,7 +173,8 @@ export function TestConnection({
                     : ''
                 }
                 isSearchable
-                isClearable={false}
+                isClearable={true}
+                placeholder="Select a user"
                 value={selectedUser}
                 onChange={(o: Option) => setSelectedUser(o)}
                 options={userOpts}
@@ -186,7 +187,7 @@ export function TestConnection({
           <StyledBox mb={5}>
             <Text bold>Step 3</Text>
             <Text typography="subtitle1" mb={3}>
-              Verify that the kubernetes is accessible
+              Verify that the Kubernetes is accessible
             </Text>
             <Flex alignItems="center" mt={3}>
               {canTestConnection ? (
@@ -258,7 +259,7 @@ export function TestConnection({
           </StyledBox>
           <StyledBox>
             <Text bold mb={3}>
-              To Access your Kubernetes Cluster
+              To Access your Kubernetes cluster
             </Text>
             <Box mb={2}>
               Log into your Teleport cluster

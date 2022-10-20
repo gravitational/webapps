@@ -37,6 +37,7 @@ import {
   ActionButtons,
   Header,
   HeaderSubtitle,
+  Mark,
   ResourceKind,
   TextIcon,
 } from '../../Shared';
@@ -239,7 +240,8 @@ const StepTwo = ({
     <StyledBox mb={5}>
       <Text bold>Step 2</Text>
       <Text typography="subtitle1" mb={3}>
-        Define teleport-service namespace and Kubernetes cluster name.
+        Generate a command to automatically configure and install the
+        teleport-agent namespace
       </Text>
       <Validation>
         {({ validator }) => (
@@ -355,7 +357,12 @@ const InstallHelmChart = ({
   return (
     <>
       <PollBox mt={4} p={3} borderRadius={3} pollState={pollState}>
-        <Text bold>Command</Text>
+        <Text bold>Step 3</Text>
+        <Text typography="subtitle1" mb={3}>
+          Run the command below on the server running your Kubernetes cluster.
+          May take up to a minute for the Teleport Service to join after running
+          the command.
+        </Text>
         <Box mt={2} mb={1}>
           <TextSelectCopyMulti
             lines={[
@@ -381,28 +388,53 @@ const InstallHelmChart = ({
             <Icons.Restore fontSize={4} />
             <Timeout
               timeout={pollingTimeout}
-              message="Waiting for command execution  |  "
+              message="Waiting for Teleport Service  |  "
             />
           </TextIcon>
         )}
         {pollState === 'success' && (
           <TextIcon>
             <Icons.CircleCheck ml={1} color="success" />
-            Successfully executed.
+            The Teleport Service successfully join this Teleport cluster
           </TextIcon>
         )}
-        {pollState === 'error' && (
-          <TextIcon>
-            <Icons.Warning ml={1} color="danger" />
-            Execution Failed. Regenerate command and try again.
-          </TextIcon>
-        )}
+        {pollState === 'error' && <TimeoutError namespace={namespace} />}
       </PollBox>
       <ActionButtons
         onProceed={handleOnProceed}
         disableProceed={pollState !== 'success'}
       />
     </>
+  );
+};
+
+const TimeoutError = ({ namespace }: { namespace: string }) => {
+  return (
+    <Box>
+      <TextIcon>
+        <Icons.Warning ml={1} color="danger" />
+        We could not detect the Teleport Service you were trying to add
+      </TextIcon>
+      <Text bold mt={4}>
+        Possible reasons
+      </Text>
+      <ul
+        css={`
+          margin-top: 6px;
+          margin-bottom: 0;
+        `}
+      >
+        <li>
+          The command was not run on the server you were trying to add,
+          regenerate command and try again.
+        </li>
+        <li>
+          The Teleport Service could not join this Teleport cluster. Check the
+          logs for errors by running <br />
+          <Mark>kubectl logs -l app=teleport-agent -n {namespace}</Mark>
+        </li>
+      </ul>
+    </Box>
   );
 };
 
