@@ -2,6 +2,7 @@ import { contextBridge } from 'electron';
 import { ChannelCredentials, ServerCredentials } from '@grpc/grpc-js';
 
 import createTshClient from 'teleterm/services/tshd/createClient';
+import { createStartupClient } from 'teleterm/services/tshd/createStartupClient';
 import createMainProcessClient from 'teleterm/mainProcess/mainProcessClient';
 import createLoggerService from 'teleterm/services/logger';
 import Logger from 'teleterm/logger';
@@ -9,13 +10,15 @@ import { createPtyService } from 'teleterm/services/pty/ptyService';
 import {
   GrpcCertName,
   createClientCredentials,
+  createServerCredentials,
   createInsecureClientCredentials,
+  createInsecureServerCredentials,
   generateAndSaveGrpcCert,
   readGrpcCert,
   shouldEncryptConnection,
 } from 'teleterm/services/grpcCredentials';
 import { ElectronGlobals, RuntimeSettings } from 'teleterm/types';
-import { createTshdEventsServer } from 'teleterm/services/tshdEvents/createTshdEventsServer';
+import { createTshdEventsServer } from 'teleterm/services/tshdEvents';
 
 const mainProcessClient = createMainProcessClient();
 const runtimeSettings = mainProcessClient.getRuntimeSettings();
@@ -41,6 +44,7 @@ async function getElectronGlobals(): Promise<ElectronGlobals> {
     createGrpcCredentials(runtimeSettings),
   ]);
   const tshClient = createTshClient(addresses.tsh, credentials.tshd);
+  const startupClient = createStartupClient(addresses.tsh, credentials.tshd);
   const ptyServiceClient = createPtyService(
     addresses.shared,
     credentials.shared,
@@ -51,6 +55,24 @@ async function getElectronGlobals(): Promise<ElectronGlobals> {
       runtimeSettings.tshdEvents.requestedNetworkAddress,
       credentials.tshdEvents
     );
+
+  // Here we send to tshd the address of the tshd events server that we just created. Then we send
+  // another request that is going to resolve once tshd prepares a client for that server and
+  // injects it into daemon.Service.
+  //
+  // All uses of tshClient must wait before waitForTshdEventsClient finishes. Otherwise we run into
+  // a risk of causing panics in tshd due to a missing tshd events client.
+  try {
+    await startupClient.resolveTshdEventsServerAddress(tshdEventsServerAddress);
+    await startupClient.waitForTshdEventsClient({ timeoutMs: 5_000 });
+  } catch (e) {
+    logger.error(e);
+    // Make sure the UI shows an understandable error and not just something like
+    // "DEADLINE_EXCEEDED: Deadline exceeded".
+    throw new Error(
+      `Ran into a problem while setting up the tshd events client: ${e.message}`
+    );
+  }
 
   return {
     mainProcessClient,
