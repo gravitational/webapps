@@ -1,5 +1,5 @@
 import { contextBridge } from 'electron';
-import { ChannelCredentials } from '@grpc/grpc-js';
+import { ChannelCredentials, ServerCredentials } from '@grpc/grpc-js';
 
 import createTshClient from 'teleterm/services/tshd/createClient';
 import createMainProcessClient from 'teleterm/mainProcess/mainProcessClient';
@@ -15,6 +15,7 @@ import {
   shouldEncryptConnection,
 } from 'teleterm/services/grpcCredentials';
 import { ElectronGlobals, RuntimeSettings } from 'teleterm/types';
+import { createTshdEventsServer } from 'teleterm/services/tshdEvents/createTshdEventsServer';
 
 const mainProcessClient = createMainProcessClient();
 const runtimeSettings = mainProcessClient.getRuntimeSettings();
@@ -45,6 +46,11 @@ async function getElectronGlobals(): Promise<ElectronGlobals> {
     credentials.shared,
     runtimeSettings
   );
+  const { resolvedAddress: tshdEventsServerAddress } =
+    await createTshdEventsServer(
+      runtimeSettings.tshdEvents.requestedNetworkAddress,
+      credentials.tshdEvents
+    );
 
   return {
     mainProcessClient,
@@ -65,11 +71,14 @@ async function createGrpcCredentials(
   tshd: ChannelCredentials;
   // Credentials for talking to the shared process.
   shared: ChannelCredentials;
+  // Credentials for the tshd events server running in the renderer process.
+  tshdEvents: ServerCredentials;
 }> {
   if (!shouldEncryptConnection(runtimeSettings)) {
     return {
       tshd: createInsecureClientCredentials(),
       shared: createInsecureClientCredentials(),
+      tshdEvents: createInsecureServerCredentials(),
     };
   }
 
@@ -83,6 +92,7 @@ async function createGrpcCredentials(
   return {
     tshd: createClientCredentials(rendererKeyPair, tshdCert),
     shared: createClientCredentials(rendererKeyPair, sharedCert),
+    tshdEvents: createServerCredentials(rendererKeyPair, tshdCert),
   };
 }
 
