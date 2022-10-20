@@ -20,6 +20,10 @@ async function boot(): Promise<void> {
       logger.error(event.error.stack);
     });
 
+    globals.subscribeToTshdEvent('test', payload => {
+      logger.info('Test request received!', payload);
+    });
+
     window.addEventListener('unhandledrejection', event => {
       logger.error(event.reason.stack);
     });

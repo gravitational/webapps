@@ -2,6 +2,7 @@ import { EventEmitter } from 'node:events';
 
 import * as grpc from '@grpc/grpc-js';
 
+import * as api from 'teleterm/services/tshd/v1/tshd_events_service_pb';
 import * as apiService from 'teleterm/services/tshd/v1/tshd_events_service_grpc_pb';
 import Logger from 'teleterm/logger';
 import { SubscribeToTshdEvent } from 'teleterm/types';
@@ -66,7 +67,13 @@ export function createTshdEventsService(): {
     emitter.on(eventName, listener);
   };
 
-  const service: apiService.ITshdEventsServiceServer = {};
+  const service: apiService.ITshdEventsServiceServer = {
+    // TODO(ravicious): Remove this once we add an actual RPC to tshd events service.
+    test: (call, callback) => {
+      emitter.emit('test', call.request.toObject());
+      callback(null, new api.TestResponse());
+    },
+  };
 
   return { service, subscribeToEvent };
 }
