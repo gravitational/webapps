@@ -9,9 +9,7 @@ import { createPtyService } from 'teleterm/services/pty/ptyService';
 import {
   GrpcCertName,
   createClientCredentials,
-  createServerCredentials,
   createInsecureClientCredentials,
-  createInsecureServerCredentials,
   generateAndSaveGrpcCert,
   readGrpcCert,
   shouldEncryptConnection,
