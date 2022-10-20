@@ -1,6 +1,10 @@
-import { Server, ServerCredentials } from '@grpc/grpc-js';
+import { EventEmitter } from 'node:events';
 
+import * as grpc from '@grpc/grpc-js';
+
+import * as apiService from 'teleterm/services/tshd/v1/tshd_events_service_grpc_pb';
 import Logger from 'teleterm/logger';
+import { SubscribeToTshdEvent } from 'teleterm/types';
 
 /**
  * Starts tshd events server.
@@ -8,10 +12,10 @@ import Logger from 'teleterm/logger';
  */
 export async function createTshdEventsServer(
   requestedAddress: string,
-  credentials: ServerCredentials
-): Promise<{ server: Server; resolvedAddress: string }> {
+  credentials: grpc.ServerCredentials
+): Promise<{ server: grpc.Server; resolvedAddress: string }> {
   const logger = new Logger('tshd events');
-  const server = new Server();
+  const server = new grpc.Server();
 
   // grpc-js requires us to pass localhost:port for TCP connections,
   const grpcServerAddress = requestedAddress.replace('tcp://', '');
@@ -38,4 +42,31 @@ export async function createTshdEventsServer(
       reject(e);
     }
   });
+}
+
+// createTshdEventsService creates a service that can be added to tshd events server. It also
+// returns a function which lets UI code subscribe to events which are emitted when a client calls
+// this service.
+//
+// Why do we need to use an event emitter? The gRPC server is created in the preload script but we
+// need the UI to react to the events. We cannot create the service in the UI code because this
+// would mean that the service would need to cross the contextBridge. This is simply impossible
+// because the service is fed custom gRPC classes which can't be passed through the contextBridge.
+//
+// Instead, we create an event emitter and expose subscribeToEvent through the contextBridge.
+// subscribeToEvent lets UI code register a callback for a specific event. That callback receives
+// a simple JS object which can freely pass the contextBridge.
+export function createTshdEventsService(): {
+  service: apiService.ITshdEventsServiceServer;
+  subscribeToEvent: SubscribeToTshdEvent;
+} {
+  const emitter = new EventEmitter();
+
+  const subscribeToEvent: SubscribeToTshdEvent = (eventName, listener) => {
+    emitter.on(eventName, listener);
+  };
+
+  const service: apiService.ITshdEventsServiceServer = {};
+
+  return { service, subscribeToEvent };
 }
