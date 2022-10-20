@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-import React, { useState, useRef } from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
 import { ButtonSecondary, Text, Box, Flex, ButtonText } from 'design';
 import * as Icons from 'design/Icon';
@@ -62,15 +62,13 @@ export function TestConnection({
   const userOpts = kube.users.map(l => ({ value: l, label: l }));
   const groupOpts = kube.groups.map(l => ({ value: l, label: l }));
 
-  const errorRefs = useRef<HTMLDivElement[]>([]);
-
   const [namespace, setNamespace] = useState('default');
   const [selectedGroups, setSelectedGroups] = useState(groupOpts);
 
   // Always default it to either teleport username or from one of users defined
   // from previous step.
-  const [selectedUser, setSelectedUser] = useState(() =>
-    userOpts.length > 0 ? userOpts[0] : { value: username, label: username }
+  const [selectedUser, setSelectedUser] = useState(
+    () => userOpts[0] || { value: username, label: username }
   );
 
   const { hostname, port } = window.document.location;
@@ -115,18 +113,6 @@ export function TestConnection({
       user: selectedUser.value,
       groups: selectedGroups.map(g => g.value),
     });
-  }
-
-  const errBtnTxt = 'Click for extra details';
-  function toggleTraceErrorStates(index: number) {
-    const el = errorRefs.current[index];
-
-    const textEl = el.lastElementChild as HTMLElement;
-    textEl.style.display = textEl.style.display === 'none' ? 'block' : 'none';
-
-    const btnEl = el.firstElementChild as HTMLElement;
-    btnEl.textContent =
-      btnEl.textContent === errBtnTxt ? 'Hide details' : errBtnTxt;
   }
 
   return (
@@ -237,25 +223,11 @@ export function TestConnection({
                     {diagnosis.traces.map((trace, index) => {
                       if (trace.status === 'failed') {
                         return (
-                          <TextIcon
-                            css={{ alignItems: 'baseline' }}
+                          <ErrorWithDetails
+                            error={trace.error}
+                            details={trace.details}
                             key={index}
-                          >
-                            <Icons.CircleCross mr={1} color="danger" />
-                            <div>
-                              <div>{trace.details}</div>
-                              <div ref={el => (errorRefs.current[index] = el)}>
-                                <ButtonShowMore
-                                  onClick={() => toggleTraceErrorStates(index)}
-                                >
-                                  {errBtnTxt}
-                                </ButtonShowMore>
-                                <div style={{ display: 'none' }}>
-                                  {trace.error}
-                                </div>
-                              </div>
-                            </div>
-                          </TextIcon>
+                          />
                         );
                       }
                       if (trace.status === 'success') {
@@ -307,6 +279,30 @@ export function TestConnection({
     </Validation>
   );
 }
+
+const ErrorWithDetails = ({
+  details,
+  error,
+}: {
+  details: string;
+  error: string;
+}) => {
+  const [showMore, setShowMore] = useState(false);
+  return (
+    <TextIcon css={{ alignItems: 'baseline' }}>
+      <Icons.CircleCross mr={1} color="danger" />
+      <div>
+        <div>{details}</div>
+        <div>
+          <ButtonShowMore onClick={() => setShowMore(p => !p)}>
+            {showMore ? 'Hide' : 'Click for extra'} details
+          </ButtonShowMore>
+          {showMore && <div>{error}</div>}
+        </div>
+      </div>
+    </TextIcon>
+  );
+};
 
 const StyledBox = styled(Box)`
   max-width: 800px;

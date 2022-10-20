@@ -27,10 +27,21 @@ export function useLoginTrait({ ctx, props }: Props) {
   const [user, setUser] = useState<User>();
   const { attempt, run, setAttempt, handleError } = useAttempt('processing');
 
-  const [staticTraits, setStaticTraits] = useState<Traits>();
-
   const isSsoUser = ctx.storeUser.state.authType === 'sso';
   const canEditUser = ctx.storeUser.getUserAccess().edit;
+
+  const dynamicTraits = {
+    users: user?.traits.kubeUsers || [],
+    groups: user?.traits.kubeGroups || [],
+  };
+
+  // Filter out static traits from the kube resource
+  // which contain both dynamic and static traits.
+  const meta = props.agentMeta as KubeMeta;
+  const staticTraits = {
+    users: meta.kube.users.filter(u => !dynamicTraits.users.includes(u)),
+    groups: meta.kube.groups.filter(g => !dynamicTraits.groups.includes(g)),
+  };
 
   useEffect(() => {
     fetchLoginTraits();
@@ -38,33 +49,12 @@ export function useLoginTrait({ ctx, props }: Props) {
 
   function fetchLoginTraits() {
     run(() =>
-      ctx.userService.fetchUser(ctx.storeUser.getUsername()).then(user => {
-        setUser(user);
-
-        // Filter out dynamic traits from the kube resource
-        // which contain both dynamic and static traits.
-        const userDefinedKubeUsers = user.traits.kubeUsers;
-        const userDefinedKubeGroups = user.traits.kubeGroups;
-
-        const meta = props.agentMeta as KubeMeta;
-        const filteredStaticUsers = meta.kube.users.filter(
-          user => !userDefinedKubeUsers.includes(user)
-        );
-        const filteredStaticGroups = meta.kube.groups.filter(
-          groups => !userDefinedKubeGroups.includes(groups)
-        );
-
-        setStaticTraits({
-          users: filteredStaticUsers,
-          groups: filteredStaticGroups,
-        });
-      })
+      ctx.userService.fetchUser(ctx.storeUser.getUsername()).then(setUser)
     );
   }
 
   // updateKubeMeta updates the meta with updated dynamic traits.
   function updateKubeMeta(dynamicTraits: Traits) {
-    const meta = props.agentMeta as KubeMeta;
     props.updateAgentMeta({
       ...meta,
       kube: {
@@ -103,10 +93,7 @@ export function useLoginTrait({ ctx, props }: Props) {
   return {
     attempt,
     nextStep,
-    dynamicTraits: {
-      users: user?.traits.kubeUsers,
-      groups: user?.traits.kubeGroups,
-    },
+    dynamicTraits,
     staticTraits,
     fetchLoginTraits,
     isSsoUser,
