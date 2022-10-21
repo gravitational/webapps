@@ -1105,6 +1105,12 @@ export const formatters: Formatters = {
     format: ({ user, desktop_addr, directory_name, file_path, length }) =>
       `User [${user}] wrote [${length}] bytes to file [${file_path}] in shared directory [${directory_name}] on desktop [${desktop_addr}]`,
   },
+  [eventCodes.DESKTOP_SHARED_DIRECTORY_WRITE_FAILURE]: {
+    type: 'desktop.directory.write',
+    desc: 'Directory Sharing Write Failed',
+    format: ({ user, desktop_addr, directory_name, file_path, length }) =>
+      `User [${user}] failed to write [${length}] bytes to file [${file_path}] in shared directory [${directory_name}] on desktop [${desktop_addr}]`,
+  },
   [eventCodes.X11_FORWARD]: {
     type: 'x11-forward',
     desc: 'X11 Forwarding Requested',
