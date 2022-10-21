@@ -1081,6 +1081,12 @@ export const formatters: Formatters = {
     format: ({ user, desktop_addr, directory_name }) =>
       `User [${user}] started sharing directory [${directory_name}] to desktop [${desktop_addr}]`,
   },
+  [eventCodes.DESKTOP_SHARED_DIRECTORY_START_FAILURE]: {
+    type: 'desktop.directory.start',
+    desc: 'Directory Sharing Start Failed',
+    format: ({ user, desktop_addr, directory_name }) =>
+      `User [${user}] failed to start sharing directory [${directory_name}] to desktop [${desktop_addr}]`,
+  },
   [eventCodes.X11_FORWARD]: {
     type: 'x11-forward',
     desc: 'X11 Forwarding Requested',

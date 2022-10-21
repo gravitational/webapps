@@ -98,6 +98,7 @@ export const eventCodes = {
   DESKTOP_CLIPBOARD_SEND: 'TDP02I',
   DESKTOP_CLIPBOARD_RECEIVE: 'TDP03I',
   DESKTOP_SHARED_DIRECTORY_START: 'TDP04I',
+  DESKTOP_SHARED_DIRECTORY_START_FAILURE: 'TDP04W',
   EXEC_FAILURE: 'T3002E',
   EXEC: 'T3002I',
   GITHUB_CONNECTOR_CREATED: 'T8000I',
@@ -934,6 +935,14 @@ export type RawEvents = {
   >;
   [eventCodes.DESKTOP_SHARED_DIRECTORY_START]: RawEvent<
     typeof eventCodes.DESKTOP_SHARED_DIRECTORY_START,
+    {
+      desktop_addr: string;
+      directory_name: string;
+      windows_domain: string;
+    }
+  >;
+  [eventCodes.DESKTOP_SHARED_DIRECTORY_START_FAILURE]: RawEvent<
+    typeof eventCodes.DESKTOP_SHARED_DIRECTORY_START_FAILURE,
     {
       desktop_addr: string;
       directory_name: string;
