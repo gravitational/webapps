@@ -160,6 +160,7 @@ const EventIconMap: Record<EventCode, React.FC> = {
   [eventCodes.DESKTOP_SHARED_DIRECTORY_START_FAILURE]: Icons.FolderShared,
   [eventCodes.DESKTOP_SHARED_DIRECTORY_READ]: Icons.FolderShared,
   [eventCodes.DESKTOP_SHARED_DIRECTORY_READ_FAILURE]: Icons.FolderShared,
+  [eventCodes.DESKTOP_SHARED_DIRECTORY_WRITE]: Icons.FolderShared,
   [eventCodes.MFA_DEVICE_ADD]: Icons.Info,
   [eventCodes.MFA_DEVICE_DELETE]: Icons.Info,
   [eventCodes.BILLING_CARD_CREATE]: Icons.CreditCardAlt2,

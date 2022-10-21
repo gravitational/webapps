@@ -101,6 +101,7 @@ export const eventCodes = {
   DESKTOP_SHARED_DIRECTORY_START_FAILURE: 'TDP04W',
   DESKTOP_SHARED_DIRECTORY_READ: 'TDP05I',
   DESKTOP_SHARED_DIRECTORY_READ_FAILURE: 'TDP05W',
+  DESKTOP_SHARED_DIRECTORY_WRITE: 'TDP06I',
   EXEC_FAILURE: 'T3002E',
   EXEC: 'T3002I',
   GITHUB_CONNECTOR_CREATED: 'T8000I',
@@ -963,6 +964,16 @@ export type RawEvents = {
   >;
   [eventCodes.DESKTOP_SHARED_DIRECTORY_READ_FAILURE]: RawEvent<
     typeof eventCodes.DESKTOP_SHARED_DIRECTORY_READ_FAILURE,
+    {
+      desktop_addr: string;
+      directory_name: string;
+      windows_domain: string;
+      file_path: string;
+      length: number;
+    }
+  >;
+  [eventCodes.DESKTOP_SHARED_DIRECTORY_WRITE]: RawEvent<
+    typeof eventCodes.DESKTOP_SHARED_DIRECTORY_WRITE,
     {
       desktop_addr: string;
       directory_name: string;
