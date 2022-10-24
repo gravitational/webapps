@@ -8,8 +8,9 @@ export class MockMainProcessClient implements MainProcessClient {
       platform: 'darwin',
       dev: true,
       userDataDir: '',
-      binDir: undefined,
-      certsDir: undefined,
+      binDir: '',
+      certsDir: '',
+      kubeConfigsDir: '',
       defaultShell: '',
       tshd: {
         insecure: true,
@@ -33,6 +34,10 @@ export class MockMainProcessClient implements MainProcessClient {
 
   openTabContextMenu() {}
 
+  showFileSaveDialog() {
+    return Promise.resolve({ canceled: false, filePath: '' });
+  }
+
   configService = {
     get: () => ({
       keyboardShortcuts: {},
@@ -44,4 +49,8 @@ export class MockMainProcessClient implements MainProcessClient {
   } as unknown as ConfigService;
 
   fileStorage = createMockFileStorage();
+
+  removeKubeConfig(): Promise<void> {
+    return Promise.resolve(undefined);
+  }
 }

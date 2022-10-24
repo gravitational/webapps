@@ -14,44 +14,63 @@
  * limitations under the License.
  */
 
-import { useState } from 'react';
-import useAttempt from 'shared/hooks/useAttemptNext';
+import { useMemo, useState } from 'react';
 
-import TeleportContext from 'teleport/teleportContext';
+import { useLocation } from 'react-router';
+
 import session from 'teleport/services/websession';
-import useMain from 'teleport/Main/useMain';
+import useMain, { UseMainConfig } from 'teleport/Main/useMain';
+
+import { ResourceKind } from 'teleport/Discover/Shared';
+
+import { addIndexToViews, findViewAtIndex, View } from './flow';
+
+import { resources } from './resources';
 
 import type { Node } from 'teleport/services/nodes';
+import type { Kube } from 'teleport/services/kube';
 
-import type {
-  JoinMethod,
-  JoinRole,
-  JoinToken,
-  JoinRule,
-} from 'teleport/services/joinToken';
-import type { Feature } from 'teleport/types';
+export function getKindFromString(value: string) {
+  switch (value) {
+    case 'application':
+      return ResourceKind.Application;
+    case 'database':
+      return ResourceKind.Database;
+    case 'desktop':
+      return ResourceKind.Desktop;
+    case 'kubernetes':
+      return ResourceKind.Kubernetes;
+    default:
+    case 'server':
+      return ResourceKind.Server;
+  }
+}
 
-export function useDiscover(ctx: TeleportContext, features: Feature[]) {
-  const initState = useMain(features);
-  const { attempt, run } = useAttempt('');
+export function useDiscover(config: UseMainConfig) {
+  const initState = useMain(config);
+  const location = useLocation<{ entity: string }>();
 
-  const [joinToken, setJoinToken] = useState<JoinToken>();
   const [currentStep, setCurrentStep] = useState(0);
-  const [selectedAgentKind, setSelectedAgentKind] = useState<AgentKind>();
+  const [selectedResourceKind, setSelectedResourceKind] =
+    useState<ResourceKind>(getKindFromString(location?.state?.entity));
   const [agentMeta, setAgentMeta] = useState<AgentMeta>();
 
-  function onSelectResource(kind: AgentKind = 'node') {
-    // TODO: hard coded for now for sake of testing the flow.
-    setSelectedAgentKind(kind);
-    nextStep();
+  const selectedResource = resources.find(r => r.kind === selectedResourceKind);
+  const views = useMemo<View[]>(
+    () => addIndexToViews(selectedResource.views),
+    [selectedResource.views]
+  );
+
+  function onSelectResource(kind: ResourceKind) {
+    setSelectedResourceKind(kind);
   }
 
   function nextStep() {
-    setCurrentStep(currentStep + 1);
-  }
+    const nextView = findViewAtIndex(views, currentStep + 1);
 
-  function prevStep() {
-    setCurrentStep(currentStep - 1);
+    if (nextView) {
+      setCurrentStep(currentStep + 1);
+    }
   }
 
   function updateAgentMeta(meta: AgentMeta) {
@@ -62,52 +81,19 @@ export function useDiscover(ctx: TeleportContext, features: Feature[]) {
     session.logout();
   }
 
-  function createJoinToken(method: JoinMethod = 'token', rules?: JoinRule[]) {
-    let systemRole: JoinRole;
-    switch (selectedAgentKind) {
-      case 'app':
-        systemRole = 'App';
-        break;
-      case 'db':
-        systemRole = 'Db';
-        break;
-      case 'desktop':
-        systemRole = 'WindowsDesktop';
-        break;
-      case 'kube':
-        systemRole = 'Kube';
-        break;
-      case 'node':
-        systemRole = 'Node';
-        break;
-      default:
-        console;
-    }
-
-    run(() =>
-      ctx.joinTokenService
-        .fetchJoinToken([systemRole], method, rules)
-        .then(setJoinToken)
-    );
-  }
-
   return {
-    initAttempt: { status: initState.status, statusText: initState.statusText },
-    userMenuItems: ctx.storeNav.getTopMenuItems(),
-    username: ctx.storeUser.getUsername(),
-    currentStep,
-    selectedAgentKind,
-    logout,
-    onSelectResource,
-    // Rest of the exported fields are used to prop drill
-    // to Step 2+ components.
-    attempt,
-    joinToken,
     agentMeta,
-    updateAgentMeta,
+    alerts: initState.alerts,
+    currentStep,
+    customBanners: initState.customBanners,
+    dismissAlert: initState.dismissAlert,
+    initAttempt: { status: initState.status, statusText: initState.statusText },
+    logout,
     nextStep,
-    prevStep,
-    createJoinToken,
+    onSelectResource,
+    selectedResource,
+    updateAgentMeta,
+    views,
   };
 }
 
@@ -128,8 +114,12 @@ type AppMeta = BaseMeta & {
   publicAddr: string;
 };
 
-export type AgentMeta = AppMeta | NodeMeta;
+// KubeMeta describes the fields that may be provided or required by user
+// when connecting a app.
+export type KubeMeta = BaseMeta & {
+  kube: Kube;
+};
 
-export type AgentKind = 'app' | 'db' | 'desktop' | 'kube' | 'node';
+export type AgentMeta = AppMeta | NodeMeta | KubeMeta;
 
 export type State = ReturnType<typeof useDiscover>;

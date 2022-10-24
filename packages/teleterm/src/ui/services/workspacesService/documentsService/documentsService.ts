@@ -19,10 +19,13 @@ import { unique } from 'teleterm/ui/utils/uid';
 import { paths, routing } from 'teleterm/ui/uri';
 
 import {
+  CreateAccessRequestDocumentOpts,
   CreateClusterDocumentOpts,
   CreateGatewayDocumentOpts,
   CreateNewTerminalOpts,
+  CreateTshKubeDocumentOptions,
   Document,
+  DocumentAccessRequests,
   DocumentCluster,
   DocumentGateway,
   DocumentTshKube,
@@ -49,6 +52,20 @@ export class DocumentsService {
     this.setLocation(docUri);
   }
 
+  createAccessRequestDocument(
+    opts: CreateAccessRequestDocumentOpts
+  ): DocumentAccessRequests {
+    const uri = routing.getDocUri({ docId: unique() });
+    return {
+      uri,
+      clusterUri: opts.clusterUri,
+      requestId: opts.requestId,
+      title: opts.title || 'Access Requests',
+      kind: 'doc.access_requests',
+      state: opts.state,
+    };
+  }
+
   createClusterDocument(opts: CreateClusterDocumentOpts): DocumentCluster {
     const uri = routing.getDocUri({ docId: unique() });
     const clusterName = routing.parseClusterName(opts.clusterUri);
@@ -60,8 +77,10 @@ export class DocumentsService {
     };
   }
 
-  createTshKubeDocument(kubeUri: string): DocumentTshKube {
-    const { params } = routing.parseKubeUri(kubeUri);
+  createTshKubeDocument(
+    options: CreateTshKubeDocumentOptions
+  ): DocumentTshKube {
+    const { params } = routing.parseKubeUri(options.kubeUri);
     const uri = routing.getDocUri({ docId: unique() });
     return {
       uri,
@@ -70,7 +89,13 @@ export class DocumentsService {
       rootClusterId: params.rootClusterId,
       leafClusterId: params.leafClusterId,
       kubeId: params.kubeId,
-      kubeUri,
+      kubeUri: options.kubeUri,
+      kubeConfigRelativePath:
+        options.kubeConfigRelativePath ||
+        // We prepend the name with `rootClusterId/` to create a kube config
+        // inside this directory. When the user logs out of the cluster,
+        // the entire directory is deleted.
+        `${params.rootClusterId}/${params.kubeId}-${unique(5)}`,
       title: params.kubeId,
     };
   }

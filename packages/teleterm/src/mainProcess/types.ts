@@ -9,6 +9,7 @@ export type RuntimeSettings = {
   // Points to a directory that should be prepended to PATH. Only present in the packaged version.
   binDir: string | undefined;
   certsDir: string;
+  kubeConfigsDir: string;
   defaultShell: string;
   platform: Platform;
   tshd: {
@@ -28,8 +29,15 @@ export type MainProcessClient = {
   getResolvedChildProcessAddresses(): Promise<ChildProcessAddresses>;
   openTerminalContextMenu(): void;
   openTabContextMenu(options: TabContextMenuOptions): void;
+  showFileSaveDialog(
+    filePath: string
+  ): Promise<{ canceled: boolean; filePath: string | undefined }>;
   configService: ConfigService;
   fileStorage: FileStorage;
+  removeKubeConfig(options: {
+    relativePath: string;
+    isDirectory?: boolean;
+  }): Promise<void>;
 };
 
 export type ChildProcessAddresses = {
@@ -41,17 +49,25 @@ export type Platform = NodeJS.Platform;
 
 export interface ClusterContextMenuOptions {
   isClusterConnected: boolean;
+
   onRefresh(): void;
+
   onLogin(): void;
+
   onLogout(): void;
+
   onRemove(): void;
 }
 
 export interface TabContextMenuOptions {
   documentKind: Kind;
+
   onClose(): void;
+
   onCloseOthers(): void;
+
   onCloseToRight(): void;
+
   onDuplicatePty(): void;
 }
 

@@ -1,10 +1,13 @@
 import { ChildProcess, fork, spawn } from 'child_process';
 import path from 'path';
 
+import fs from 'fs/promises';
+
 import {
   app,
   ipcMain,
   shell,
+  dialog,
   Menu,
   MenuItemConstructorOptions,
 } from 'electron';
@@ -143,6 +146,39 @@ export default class MainProcess {
     ipcMain.handle('main-process-get-resolved-child-process-addresses', () => {
       return this.resolvedChildProcessAddresses;
     });
+
+    // the handler can remove a single kube config file or entire directory for given cluster
+    ipcMain.handle(
+      'main-process-remove-kube-config',
+      (
+        _,
+        options: {
+          relativePath: string;
+          isDirectory?: boolean;
+        }
+      ) => {
+        const { kubeConfigsDir } = this.settings;
+        const filePath = path.join(kubeConfigsDir, options.relativePath);
+        const isOutOfRoot = filePath.indexOf(kubeConfigsDir) !== 0;
+
+        if (isOutOfRoot) {
+          return Promise.reject('Invalid path');
+        }
+        return fs
+          .rm(filePath, { recursive: !!options.isDirectory })
+          .catch(error => {
+            if (error.code !== 'ENOENT') {
+              throw error;
+            }
+          });
+      }
+    );
+
+    ipcMain.handle('main-process-show-file-save-dialog', (_, filePath) =>
+      dialog.showSaveDialog({
+        defaultPath: path.basename(filePath),
+      })
+    );
 
     subscribeToTerminalContextMenuEvent();
     subscribeToTabContextMenuEvent();

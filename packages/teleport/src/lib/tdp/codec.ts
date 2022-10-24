@@ -53,6 +53,7 @@ export enum MessageType {
   SHARED_DIRECTORY_MOVE_RESPONSE = 24,
   SHARED_DIRECTORY_LIST_REQUEST = 25,
   SHARED_DIRECTORY_LIST_RESPONSE = 26,
+  PNG2_FRAME = 27,
   __LAST, // utility value
 }
 
@@ -221,11 +222,12 @@ export type SharedDirectoryListResponse = {
   fsoList: FileSystemObject[];
 };
 
-// | last_modified uint64 | size uint64 | file_type uint32 | path_length uint32 | path byte[] |
+// | last_modified uint64 | size uint64 | file_type uint32 | is_empty bool | path_length uint32 | path byte[] |
 export type FileSystemObject = {
   lastModified: bigint;
   size: bigint;
   fileType: FileType;
+  isEmpty: boolean;
   path: string;
 };
 
@@ -739,11 +741,12 @@ export default class Codec {
     return withFsoList.buffer;
   }
 
-  // | last_modified uint64 | size uint64 | file_type uint32 | path_length uint32 | path byte[] |
+  // | last_modified uint64 | size uint64 | file_type uint32 | is_empty bool | path_length uint32 | path byte[] |
   encodeFileSystemObject(fso: FileSystemObject): Message {
     const dataUtf8array = this.encoder.encode(fso.path);
 
-    const bufLen = 2 * uint64Length + 2 * uint32Length + dataUtf8array.length;
+    const bufLen =
+      byteLength + 2 * uint64Length + 2 * uint32Length + dataUtf8array.length;
     const buffer = new ArrayBuffer(bufLen);
     const view = new DataView(buffer);
     let offset = 0;
@@ -753,6 +756,8 @@ export default class Codec {
     offset += uint64Length;
     view.setUint32(offset, fso.fileType);
     offset += uint32Length;
+    view.setUint8(offset, fso.isEmpty ? 1 : 0);
+    offset += byteLength;
     view.setUint32(offset, dataUtf8array.length);
     offset += uint32Length;
     dataUtf8array.forEach(byte => {
@@ -823,6 +828,32 @@ export default class Codec {
     const image = new Image();
     let offset = 0;
     offset += byteLength; // eat message type
+    const left = dv.getUint32(offset);
+    offset += uint32Length; // eat left
+    const top = dv.getUint32(offset);
+    offset += uint32Length; // eat top
+    const right = dv.getUint32(offset);
+    offset += uint32Length; // eat right
+    const bottom = dv.getUint32(offset);
+    offset += uint32Length; // eat bottom
+    const pngFrame = { left, top, right, bottom, data: image };
+    pngFrame.data.onload = onload(pngFrame);
+    pngFrame.data.src = this.asBase64Url(buffer, offset);
+
+    return pngFrame;
+  }
+
+  // decodePng2Frame decodes a raw tdp PNG frame message and returns it as a PngFrame
+  // | message type (27) | png_length uint32 | left uint32 | top uint32 | right uint32 | bottom uint32 | data []byte |
+  decodePng2Frame(
+    buffer: ArrayBuffer,
+    onload: (pngFrame: PngFrame) => any
+  ): PngFrame {
+    const dv = new DataView(buffer);
+    const image = new Image();
+    let offset = 0;
+    offset += byteLength; // eat message type
+    offset += uint32Length; // eat png_length
     const left = dv.getUint32(offset);
     offset += uint32Length; // eat left
     const top = dv.getUint32(offset);

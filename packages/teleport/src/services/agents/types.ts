@@ -18,9 +18,15 @@ import { App } from 'teleport/services/apps';
 import { Database } from 'teleport/services/databases';
 import { Node } from 'teleport/services/nodes';
 import { Kube } from 'teleport/services/kube';
-import { Desktop } from 'teleport/services/desktops';
+import { Desktop, WindowsDesktopService } from 'teleport/services/desktops';
 
-export type AgentKind = App | Database | Node | Kube | Desktop;
+export type AgentKind =
+  | App
+  | Database
+  | Node
+  | Kube
+  | Desktop
+  | WindowsDesktopService;
 
 export type AgentResponse<T extends AgentKind> = {
   agents: T[];
@@ -67,8 +73,6 @@ export type AgentIdKind =
 export type ConnectionDiagnostic = {
   // id is the identifier of the connection diagnostic.
   id: string;
-  // labels is a map of static and dynamic labels associated with the connection diagnostic.
-  labels: AgentLabel[];
   // success is whether the connection was successful
   success: boolean;
   // message is the diagnostic summary
@@ -79,7 +83,6 @@ export type ConnectionDiagnostic = {
 
 // ConnectionDiagnosticTrace describes a trace of a connection diagnostic
 export type ConnectionDiagnosticTrace = {
-  id: string;
   traceType: string;
   status: 'success' | 'failed';
   details: string;
@@ -93,5 +96,19 @@ export type ConnectionDiagnosticTrace = {
 export type ConnectionDiagnosticRequest = {
   resourceKind: AgentIdKind; //`json:"resource_kind"`
   resourceName: string; //`json:"resource_name"`
-  sshPrincipal: string; //`json:"ssh_principal"`
+  sshPrincipal?: string; //`json:"ssh_principal"`
+  kubeImpersonation?: KubeImpersonation; // `json:"kubernetes_impersonation`
+};
+
+export type KubeImpersonation = {
+  namespace: string; // `json:"kubernetes_namespace"`
+  // KubernetesUser is the Kubernetes user to impersonate for this request.
+  // Optional - If multiple values are configured the user must select one
+  // otherwise the request will return an error.
+  user?: string; // `json:"kubernetes_impersonation.kubernetes_user"`
+  // KubernetesGroups are the Kubernetes groups to impersonate for this request.
+  // Optional - If not specified it use all configured groups.
+  // When KubernetesGroups is specified, KubernetesUser must be provided
+  // as well.
+  groups?: string[]; // `json:"kubernetes_impersonation.kubernetes_groups"
 };

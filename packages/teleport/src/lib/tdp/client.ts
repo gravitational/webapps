@@ -113,6 +113,9 @@ export default class Client extends EventEmitterWebAuthnSender {
         case MessageType.PNG_FRAME:
           this.handlePngFrame(buffer);
           break;
+        case MessageType.PNG2_FRAME:
+          this.handlePng2Frame(buffer);
+          break;
         case MessageType.CLIENT_SCREEN_SPEC:
           this.handleClientScreenSpec(buffer);
           break;
@@ -210,6 +213,12 @@ export default class Client extends EventEmitterWebAuthnSender {
     );
   }
 
+  handlePng2Frame(buffer: ArrayBuffer) {
+    this.codec.decodePng2Frame(buffer, (pngFrame: PngFrame) =>
+      this.emit(TdpClientEvent.TDP_PNG_FRAME, pngFrame)
+    );
+  }
+
   handleMfaChallenge(buffer: ArrayBuffer) {
     try {
       const mfaJson = this.codec.decodeMfaJson(buffer);
@@ -278,6 +287,7 @@ export default class Client extends EventEmitterWebAuthnSender {
             lastModified: BigInt(0),
             fileType: FileType.File,
             size: BigInt(0),
+            isEmpty: true,
             path: path,
           },
         });
@@ -306,6 +316,7 @@ export default class Client extends EventEmitterWebAuthnSender {
           lastModified: BigInt(0),
           fileType: FileType.File,
           size: BigInt(0),
+          isEmpty: true,
           path: req.path,
         },
       });
@@ -411,6 +422,7 @@ export default class Client extends EventEmitterWebAuthnSender {
       lastModified: BigInt(info.lastModified),
       fileType: info.kind === 'file' ? FileType.File : FileType.Directory,
       size: BigInt(info.size),
+      isEmpty: info.isEmpty,
       path: info.path,
     };
   }

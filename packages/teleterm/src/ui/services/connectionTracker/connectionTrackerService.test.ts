@@ -4,6 +4,8 @@ import { DocumentGateway, WorkspacesService } from '../workspacesService';
 import { ClustersService } from '../clusters';
 import { StatePersistenceService } from '../statePersistence';
 
+import { getEmptyPendingAccessRequest } from '../workspacesService/accessRequestsService';
+
 import { ConnectionTrackerService } from './connectionTrackerService';
 import { TrackedConnection, TrackedGatewayConnection } from './types';
 
@@ -30,7 +32,7 @@ function getTestSetup({ connections }: { connections: TrackedConnection[] }) {
   return new ConnectionTrackerService(
     new StatePersistenceService(undefined),
     new WorkspacesService(undefined, undefined, undefined, undefined),
-    new ClustersService(undefined, undefined)
+    new ClustersService(undefined, undefined, undefined)
   );
 }
 
@@ -113,7 +115,7 @@ it('updates the port of a gateway connection when the underlying doc gets update
   const connectionTrackerService = new ConnectionTrackerService(
     mockedStatePersistenceService,
     workspacesService,
-    new ClustersServiceMock(undefined, undefined)
+    new ClustersServiceMock(undefined, undefined, undefined)
   );
 
   const document: DocumentGateway = {
@@ -131,6 +133,10 @@ it('updates the port of a gateway connection when the underlying doc gets update
   // Insert the document.
   workspacesService.setState(draftState => {
     draftState.workspaces['/clusters/localhost'] = {
+      accessRequests: {
+        pending: getEmptyPendingAccessRequest(),
+        isBarCollapsed: false,
+      },
       localClusterUri: '',
       location: '',
       documents: [document],

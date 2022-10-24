@@ -16,7 +16,6 @@ limitations under the License.
 
 /* eslint-disable no-console */
 
-const uri = require('url');
 const WebpackDevServer = require('webpack-dev-server');
 const httpProxy = require('http-proxy');
 const optimist = require('optimist');
@@ -32,7 +31,7 @@ const argv = optimist
 const target = argv.target.startsWith('https')
   ? argv.target
   : `https://${argv.target}`;
-const urlObj = uri.parse(target);
+const urlObj = new URL(target);
 const webpackConfig = require(argv.config);
 
 if (!urlObj.host) {
@@ -42,7 +41,7 @@ if (!urlObj.host) {
 
 const PROXY_TARGET = urlObj.host;
 const ROOT = '/web';
-const PORT = 8080;
+const PORT = process.env.WEBPACK_PORT || 8080;
 
 // init webpack compiler
 const compiler = initCompiler({ webpackConfig });
@@ -66,11 +65,32 @@ function getTargetOptions() {
 
 function getWebpackDevServerConfig() {
   const config = {
-    proxy: {
-      // teleport APIs
-      '/web/config.*': getTargetOptions(),
-      '/v1/*': getTargetOptions(),
-    },
+    proxy: [
+      {
+        ...getTargetOptions(),
+        context: function (pathname, req) {
+          // proxy requests to /web/config*
+          if (/^\/web\/config/.test(pathname)) {
+            return true;
+          }
+
+          // proxy requests to /v1/*
+          if (/^\/v1\//.test(pathname)) {
+            return true;
+          }
+
+          // Proxy requests to any hostname that does not match the proxy hostname
+          // This is to make application access work:
+          // - When proxying to https://go.teleport, we want to serve Webpack for
+          //   those requests.
+          // - When handling requests for https://dumper.go.teleport, we want to proxy
+          //   all requests through Webpack to that application
+          const { hostname } = new URL('https://' + req.headers.host);
+
+          return hostname !== urlObj.hostname;
+        },
+      },
+    ],
     static: {
       serveIndex: false,
       publicPath: ROOT + '/app',
@@ -83,7 +103,9 @@ function getWebpackDevServerConfig() {
     allowedHosts: 'all',
     client: {
       overlay: false,
+      webSocketURL: 'auto://0.0.0.0:0/ws',
     },
+    webSocketServer: 'ws',
     devMiddleware: {
       stats: 'minimal',
     },

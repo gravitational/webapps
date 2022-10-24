@@ -18,9 +18,15 @@ export default function createMainProcessClient(): MainProcessClient {
         'main-process-get-resolved-child-process-addresses'
       );
     },
+    showFileSaveDialog(filePath: string) {
+      return ipcRenderer.invoke('main-process-show-file-save-dialog', filePath);
+    },
     openTerminalContextMenu,
     openTabContextMenu,
     configService: createConfigServiceClient(),
     fileStorage: createFileStorageClient(),
+    removeKubeConfig(options) {
+      return ipcRenderer.invoke('main-process-remove-kube-config', options);
+    },
   };
 }

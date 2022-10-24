@@ -18,10 +18,16 @@ import React from 'react';
 import ThemeProvider from 'design/ThemeProvider';
 
 import { Router, Route, Switch } from 'teleport/components/Router';
-import CatchError from 'teleport/components/CatchError';
+import { CatchError } from 'teleport/components/CatchError';
 import Authenticated from 'teleport/components/Authenticated';
 
-import Main from './Main';
+import { FeaturesContextProvider } from 'teleport/FeaturesContext';
+
+import { getOSSFeatures } from 'teleport/features';
+
+import { Feature } from 'teleport/types';
+
+import { Main } from './Main';
 import Welcome from './Welcome';
 import Login, { LoginSuccess, LoginFailed } from './Login';
 import AppLauncher from './AppLauncher';
@@ -40,6 +46,8 @@ const Teleport: React.FC<Props> = props => {
   const publicRoutes = props.renderPublicRoutes || renderPublicRoutes;
   const privateRoutes = props.renderPrivateRoutes || renderPrivateRoutes;
 
+  const features = props.features || getOSSFeatures();
+
   return (
     <CatchError>
       <ThemeProvider>
@@ -49,13 +57,15 @@ const Teleport: React.FC<Props> = props => {
             <Route path={cfg.routes.root}>
               <Authenticated>
                 <TeleportContextProvider ctx={ctx}>
-                  <Switch>
-                    <Route
-                      path={cfg.routes.appLauncher}
-                      component={AppLauncher}
-                    />
-                    <Route>{privateRoutes()}</Route>
-                  </Switch>
+                  <FeaturesContextProvider value={features}>
+                    <Switch>
+                      <Route
+                        path={cfg.routes.appLauncher}
+                        component={AppLauncher}
+                      />
+                      <Route>{privateRoutes()}</Route>
+                    </Switch>
+                  </FeaturesContextProvider>
                 </TeleportContextProvider>
               </Authenticated>
             </Route>
@@ -122,6 +132,7 @@ export function renderPrivateRoutes(
 export default Teleport;
 
 export type Props = {
+  features?: Feature[];
   ctx: TeleportContext;
   history: History;
   renderPublicRoutes?(children?: JSX.Element[]): JSX.Element[];

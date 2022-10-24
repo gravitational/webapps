@@ -4,9 +4,10 @@ This mono-repository contains the source code for:
 
 - the web UIs served by the `teleport` server
   - [`packages/teleport`](packages/teleport) for the OSS version
-  - `packages/webapps.e` for the enterprise version
+  - `packages/webapps.e/teleport` for the enterprise version
 - the Electron app of [Teleport Connect](https://goteleport.com/connect/)
   - [`packages/teleterm`](packages/teleterm)
+  - `packages/webapps.e/teleterm` for the enterprise version
 
 The code is organized in terms of independent yarn packages which reside in
 the [packages directory](https://github.com/gravitational/webapps/tree/master/packages).
@@ -68,6 +69,17 @@ requests to the given target.
 > Keep in mind that you have to use a local user because social
 > logins (google/github) are not supported by development server.
 
+#### Caching
+
+By default, Webpack will store a cache in `node_modules/.cache/webpack` during development. This
+makes starting `webpack-dev-server` really quick after having ran it once, as it will re-use the
+cache from the last time it was running.
+
+If you want to change the location of the cache, you can set `WEBPACK_CACHE_DIRECTORY` to an 
+absolute file path of the folder where you want to store Webpack's cache.
+
+If you wish to disable the cache, you can set `WEBPACK_CACHE_DISABLED` to `yes`.
+
 #### Source Maps
 
 During development, Webpack will default to generating source maps using `eval-source-map`.
@@ -78,6 +90,15 @@ To turn them off, set `WEBPACK_SOURCE_MAP` to `none` -
 
 ```
 $ WEBPACK_SOURCE_MAP=none yarn start-teleport --target=https://example.com:3080/web
+```
+
+#### Changing the port Webpack runs on
+
+To make Webpack listen on a different port, you can set the `WEBPACK_PORT` environment variable
+to whatever port you need.
+
+```
+$ WEBPACK_PORT=6060 yarn start-teleport --target=https://example.com:3080/web
 ```
 
 #### Custom HTTPS configuration
