@@ -2,7 +2,6 @@ import { contextBridge } from 'electron';
 import { ChannelCredentials, ServerCredentials } from '@grpc/grpc-js';
 
 import createTshClient from 'teleterm/services/tshd/createClient';
-import { createStartupClient } from 'teleterm/services/tshd/createStartupClient';
 import createMainProcessClient from 'teleterm/mainProcess/mainProcessClient';
 import createLoggerService from 'teleterm/services/logger';
 import Logger from 'teleterm/logger';
@@ -48,7 +47,6 @@ async function getElectronGlobals(): Promise<ElectronGlobals> {
     createGrpcCredentials(runtimeSettings),
   ]);
   const tshClient = createTshClient(addresses.tsh, credentials.tshd);
-  const startupClient = createStartupClient(addresses.tsh, credentials.tshd);
   const ptyServiceClient = createPtyService(
     addresses.shared,
     credentials.shared,
@@ -80,8 +78,7 @@ async function getElectronGlobals(): Promise<ElectronGlobals> {
   // All uses of tshClient must wait before waitForTshdEventsClient finishes. Otherwise we run into
   // a risk of causing panics in tshd due to a missing tshd events client.
   try {
-    await startupClient.resolveTshdEventsServerAddress(tshdEventsServerAddress);
-    await startupClient.waitForTshdEventsClient({ timeoutMs: 5_000 });
+    await tshClient.updateTshdEventsServerAddress(tshdEventsServerAddress);
   } catch (e) {
     logger.error(e);
     // Make sure the UI shows an understandable error and not just something like
