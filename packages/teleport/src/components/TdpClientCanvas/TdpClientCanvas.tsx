@@ -38,7 +38,6 @@ export default function TdpClientCanvas(props: Props) {
     onMouseUp,
     onMouseWheelScroll,
     onContextMenu,
-    isActive,
     style,
   } = props;
 
@@ -54,23 +53,12 @@ export default function TdpClientCanvas(props: Props) {
   }
 
   useEffect(() => {
-    isActive.then(active => {
-      if (active) {
-        const cont = confirm(
-          'This desktop has open session, connecting to it may close the other session. Do you want to continue?'
-        );
-        if (!cont) {
-          window.close();
-        }
-      }
-
-      if (tdpCli) {
-        tdpCli.init();
-        return () => {
-          tdpCli.nuke();
-        };
-      }
-    });
+    if (tdpCli) {
+      tdpCli.init();
+      return () => {
+        tdpCli.nuke();
+      };
+    }
   }, [tdpCli]);
 
   useEffect(() => {
@@ -291,6 +279,5 @@ export type Props = {
   onMouseUp?: (cli: TdpClient, e: MouseEvent) => void;
   onMouseWheelScroll?: (cli: TdpClient, e: WheelEvent) => void;
   onContextMenu?: () => boolean;
-  isActive: Promise<boolean>;
   style?: CSSProperties;
 };

@@ -137,7 +137,8 @@ const cfg = {
     desktopPlaybackWsAddr:
       'wss://:fqdn/v1/webapi/sites/:clusterId/desktopplayback/:sid?access_token=:token',
     siteSessionPath: '/v1/webapi/sites/:siteId/sessions',
-    desktopIsActive: '/v1/webapi/sites/:clusterId/desktop_is_active/:desktopName',
+    desktopIsActive:
+      '/v1/webapi/sites/:clusterId/desktop_is_active/:desktopName',
     ttyWsAddr:
       'wss://:fqdn/v1/webapi/sites/:clusterId/connect?access_token=:token&params=:params',
     terminalSessionPath: '/v1/webapi/sites/:clusterId/sessions/:sid?',

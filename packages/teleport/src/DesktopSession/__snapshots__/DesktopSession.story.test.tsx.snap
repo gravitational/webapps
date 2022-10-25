@@ -1,5 +1,207 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[`another session active 1`] = `
+.c7 {
+  line-height: 1.5;
+  margin: 0;
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  box-sizing: border-box;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-family: inherit;
+  font-weight: 600;
+  outline: none;
+  position: relative;
+  text-align: center;
+  text-decoration: none;
+  text-transform: uppercase;
+  transition: all 0.3s;
+  -webkit-font-smoothing: antialiased;
+  background: #512FC9;
+  color: rgba(255,255,255,0.87);
+  min-height: 32px;
+  font-size: 12px;
+  padding: 0px 24px;
+  margin-right: 16px;
+}
+
+.c7:active {
+  opacity: 0.56;
+}
+
+.c7:hover,
+.c7:focus {
+  background: #651FFF;
+}
+
+.c7:active {
+  background: #354AA4;
+}
+
+.c7:disabled {
+  background: rgba(255,255,255,0.12);
+  color: rgba(255,255,255,0.3);
+}
+
+.c8 {
+  line-height: 1.5;
+  margin: 0;
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  box-sizing: border-box;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-family: inherit;
+  font-weight: 600;
+  outline: none;
+  position: relative;
+  text-align: center;
+  text-decoration: none;
+  text-transform: uppercase;
+  transition: all 0.3s;
+  -webkit-font-smoothing: antialiased;
+  background: #222C59;
+  color: rgba(255,255,255,0.87);
+  min-height: 32px;
+  font-size: 12px;
+  padding: 0px 24px;
+}
+
+.c8:active {
+  opacity: 0.56;
+}
+
+.c8:hover,
+.c8:focus {
+  background: #2C3A73;
+}
+
+.c8:disabled {
+  background: rgba(255,255,255,0.12);
+  color: rgba(255,255,255,0.3);
+}
+
+.c1 {
+  z-index: -1;
+  position: fixed;
+  right: 0;
+  bottom: 0;
+  top: 0;
+  left: 0;
+  background-color: rgba(0,0,0,0.5);
+  opacity: 1;
+  touch-action: none;
+}
+
+.c0 {
+  position: fixed;
+  z-index: 1200;
+  right: 0;
+  bottom: 0;
+  top: 0;
+  left: 0;
+}
+
+.c2 {
+  height: 100%;
+  outline: none;
+  color: black;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 1;
+  will-change: opacity;
+  transition: opacity 225ms cubic-bezier(0.4,0,0.2,1) 0ms;
+}
+
+.c3 {
+  padding: 32px;
+  padding-top: 24px;
+  background: #1C254D;
+  color: rgba(255,255,255,0.87);
+  border-radius: 8px;
+  box-shadow: 0 8px 32px rgba(0,0,0,0.24);
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  overflow-y: auto;
+  max-height: calc(100% - 96px);
+  width: 484px;
+}
+
+.c4 {
+  box-sizing: border-box;
+  margin-bottom: 16px;
+  min-height: 32px;
+  display: flex;
+  align-items: center;
+}
+
+.c5 {
+  box-sizing: border-box;
+  margin-bottom: 32px;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.c6 {
+  box-sizing: border-box;
+}
+
+<div
+  class="c0"
+  data-testid="Modal"
+>
+  <div
+    aria-hidden="true"
+    class="c1"
+    data-testid="backdrop"
+  />
+  <div
+    class="c2"
+  >
+    <div
+      class="c3"
+      data-testid="dialogbox"
+    >
+      <div
+        class="c4"
+        style="flex-direction: column;"
+      >
+        Another Session Is Active
+      </div>
+      <div
+        class="c5"
+      >
+        This desktop has an active session, connecting to it may close the other session. Do you wish to continue?
+      </div>
+      <div
+        class="c6"
+      >
+        <button
+          class="c7"
+          kind="primary"
+        >
+          Abort
+        </button>
+        <button
+          class="c8"
+          kind="secondary"
+        >
+          Continue
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+`;
+
 exports[`connected settings false 1`] = `
 .c6 {
   display: inline-block;

@@ -11,6 +11,7 @@ import {
   UnintendedDisconnect,
   WebAuthnPrompt,
   DismissibleError,
+  AnotherSessionActive,
 } from './DesktopSession.story';
 
 test('connected settings false', () => {
@@ -50,5 +51,10 @@ test('dismissible error', () => {
 
 test('webauthn prompt', () => {
   render(<WebAuthnPrompt />);
+  expect(screen.getByTestId('Modal')).toMatchSnapshot();
+});
+
+test('another session active', () => {
+  render(<AnotherSessionActive />);
   expect(screen.getByTestId('Modal')).toMatchSnapshot();
 });

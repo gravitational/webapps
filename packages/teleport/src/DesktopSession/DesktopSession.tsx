@@ -15,7 +15,14 @@ limitations under the License.
 */
 
 import React, { PropsWithChildren } from 'react';
-import { Indicator, Box, Text, Flex, ButtonSecondary } from 'design';
+import {
+  Indicator,
+  Box,
+  Text,
+  Flex,
+  ButtonSecondary,
+  ButtonPrimary,
+} from 'design';
 import { Danger, Warning } from 'design/Alert';
 import Dialog, {
   DialogHeader,
@@ -50,6 +57,8 @@ export function DesktopSession(props: State) {
     disconnected,
     wsConnection,
     setTdpConnection,
+    showAnotherSessionActiveDialog,
+    setShowAnotherSessionActiveDialog,
   } = props;
 
   const processing =
@@ -162,6 +171,43 @@ export function DesktopSession(props: State) {
     );
   }
 
+  if (showAnotherSessionActiveDialog) {
+    return (
+      <Session {...props}>
+        <Dialog
+          dialogCss={() => ({ width: '484px' })}
+          onClose={() => {}}
+          open={true}
+        >
+          <DialogHeader style={{ flexDirection: 'column' }}>
+            Another Session Is Active
+          </DialogHeader>
+          <DialogContent>
+            This desktop has an active session, connecting to it may close the
+            other session. Do you wish to continue?
+          </DialogContent>
+          <DialogFooter>
+            <ButtonPrimary
+              mr={3}
+              onClick={() => {
+                window.close();
+              }}
+            >
+              Abort
+            </ButtonPrimary>
+            <ButtonSecondary
+              onClick={() => {
+                setShowAnotherSessionActiveDialog(false);
+              }}
+            >
+              Continue
+            </ButtonSecondary>
+          </DialogFooter>
+        </Dialog>
+      </Session>
+    );
+  }
+
   if (disconnected) {
     return (
       <Session {...props}>
@@ -212,7 +258,7 @@ function Session(props: PropsWithChildren<State>) {
     onMouseUp,
     onMouseWheelScroll,
     onContextMenu,
-    isActive,
+    showAnotherSessionActiveDialog,
   } = props;
 
   const clipboardSharingActive = clipboardState;
@@ -286,30 +332,39 @@ function Session(props: PropsWithChildren<State>) {
         />
       )}
 
-      {/* TdpClientCanvas should always be present in the DOM so that it calls
-          tdpClient.init() and initializes the required tdpClient event listeners,
-          both of which are needed for this component's state to properly respond to
-          initialization events. */}
-      <TdpClientCanvas
-        style={{
-          display: showCanvas ? 'flex' : 'none',
-          flex: 1, // ensures the canvas fills available screen space
-        }}
-        tdpCli={tdpClient}
-        tdpCliOnPngFrame={onPngFrame}
-        tdpCliOnClipboardData={onClipboardData}
-        tdpCliOnTdpError={onTdpError}
-        tdpCliOnWsClose={onWsClose}
-        tdpCliOnWsOpen={onWsOpen}
-        onKeyDown={onKeyDown}
-        onKeyUp={onKeyUp}
-        onMouseMove={onMouseMove}
-        onMouseDown={onMouseDown}
-        onMouseUp={onMouseUp}
-        onMouseWheelScroll={onMouseWheelScroll}
-        onContextMenu={onContextMenu}
-        isActive={isActive}
-      />
+      {!showAnotherSessionActiveDialog && (
+        /**
+         * In most cases TdpClientCanvas should be present in the DOM so that it calls
+         * tdpClient.init() and initializes the required tdpClient event listeners,
+         * both of which are needed for this component's state to properly respond to
+         * initialization events.
+         *
+         * In the special case of showAnotherSessionActiveDialog, we don't want tdpClient.init()
+         * to be called until the user confirms they're comfortable with potentially killing another
+         * user's session.
+         *
+         * TODO(isaiah): The above indicates the component's design is wrong. Figure out a better way.
+         */
+        <TdpClientCanvas
+          style={{
+            display: showCanvas ? 'flex' : 'none',
+            flex: 1, // ensures the canvas fills available screen space
+          }}
+          tdpCli={tdpClient}
+          tdpCliOnPngFrame={onPngFrame}
+          tdpCliOnClipboardData={onClipboardData}
+          tdpCliOnTdpError={onTdpError}
+          tdpCliOnWsClose={onWsClose}
+          tdpCliOnWsOpen={onWsOpen}
+          onKeyDown={onKeyDown}
+          onKeyUp={onKeyUp}
+          onMouseMove={onMouseMove}
+          onMouseDown={onMouseDown}
+          onMouseUp={onMouseUp}
+          onMouseWheelScroll={onMouseWheelScroll}
+          onContextMenu={onContextMenu}
+        />
+      )}
     </Flex>
   );
 }
