@@ -71,22 +71,13 @@ async function getElectronGlobals(): Promise<ElectronGlobals> {
     tshdEventsService
   );
 
-  // Here we send to tshd the address of the tshd events server that we just created. Then we send
-  // another request that is going to resolve once tshd prepares a client for that server and
-  // injects it into daemon.Service.
+  // Here we send to tshd the address of the tshd events server that we just created. This makes
+  // tshd prepare a client for that server.
   //
-  // All uses of tshClient must wait before waitForTshdEventsClient finishes. Otherwise we run into
-  // a risk of causing panics in tshd due to a missing tshd events client.
-  try {
-    await tshClient.updateTshdEventsServerAddress(tshdEventsServerAddress);
-  } catch (e) {
-    logger.error(e);
-    // Make sure the UI shows an understandable error and not just something like
-    // "DEADLINE_EXCEEDED: Deadline exceeded".
-    throw new Error(
-      `Ran into a problem while setting up the tshd events client: ${e.message}`
-    );
-  }
+  // All uses of tshClient must wait before updateTshdEventsServerAddress finishes to ensure that
+  // the client is ready. Otherwise we run into a risk of causing panics in tshd due to a missing
+  // tshd events client.
+  await tshClient.updateTshdEventsServerAddress(tshdEventsServerAddress);
 
   return {
     mainProcessClient,
