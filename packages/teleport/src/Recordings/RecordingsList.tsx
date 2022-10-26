@@ -18,7 +18,6 @@ import React from 'react';
 import { ButtonBorder } from 'design';
 import Table, { Cell, TextCell } from 'design/DataTable';
 import { dateTimeMatcher } from 'design/utils/match';
-import { displayDateTime } from 'shared/services/loc';
 
 import Icon, * as Icons from 'design/Icon/Icon';
 
