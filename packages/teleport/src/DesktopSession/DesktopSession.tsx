@@ -180,7 +180,7 @@ export function DesktopSession(props: State) {
           open={true}
         >
           <DialogHeader style={{ flexDirection: 'column' }}>
-            Another Session Is Active
+            <DialogTitle>Another Session Is Active</DialogTitle>
           </DialogHeader>
           <DialogContent>
             This desktop has an active session, connecting to it may close the
