@@ -123,13 +123,15 @@ export function DesktopSession(props: State) {
   const errorDialog = computeErrorDialog();
 
   if (errorDialog.open) {
-    // Keep the TDP connection on non-fatal error, kill it on fatal.
-    const keepTdpConnection = !errorDialog.fatal;
+    // A non-fatal error should only occur when a session is active, so we set initTdpCli and displayCanvas
+    // to true in so that the TdpClientCanvas state doesn't change, and the user can continue the session
+    // after dismissing the dialog.
+    const initAndDisplay = !errorDialog.fatal;
 
     return (
       <Session
-        canvasInDOM={keepTdpConnection}
-        displayCanvas={keepTdpConnection}
+        initTdpCli={initAndDisplay}
+        displayCanvas={initAndDisplay}
         {...props}
       >
         <Dialog
@@ -181,14 +183,10 @@ export function DesktopSession(props: State) {
   if (showAnotherSessionActiveDialog) {
     // Don't start the TDP connection until the user confirms they're ok
     // with potentially killing another user's connection.
-    const startTdpConnection = false;
+    const initTdpCli = false;
 
     return (
-      <Session
-        canvasInDOM={startTdpConnection}
-        displayCanvas={false}
-        {...props}
-      >
+      <Session initTdpCli={initTdpCli} displayCanvas={false} {...props}>
         <Dialog
           dialogCss={() => ({ width: '484px' })}
           onClose={() => {}}
@@ -225,7 +223,7 @@ export function DesktopSession(props: State) {
 
   if (disconnected) {
     return (
-      <Session canvasInDOM={false} displayCanvas={false} {...props}>
+      <Session initTdpCli={false} displayCanvas={false} {...props}>
         <Box textAlign="center" m={10}>
           <Text>Session successfully disconnected</Text>
         </Box>
@@ -237,14 +235,10 @@ export function DesktopSession(props: State) {
     // We don't know whether another session for this desktop is active while the
     // fetchAttempt is still processing, so hold off on starting a TDP connection
     // until that information is available.
-    const startTdpConnection = !(fetchAttempt.status === 'processing');
+    const initTdpCli = !(fetchAttempt.status === 'processing');
 
     return (
-      <Session
-        canvasInDOM={startTdpConnection}
-        displayCanvas={false}
-        {...props}
-      >
+      <Session initTdpCli={initTdpCli} displayCanvas={false} {...props}>
         <Box textAlign="center" m={10}>
           <Indicator />
         </Box>
@@ -252,7 +246,7 @@ export function DesktopSession(props: State) {
     );
   }
 
-  return <Session canvasInDOM={true} displayCanvas={true} {...props}></Session>;
+  return <Session initTdpCli={true} displayCanvas={true} {...props}></Session>;
 }
 
 function Session(props: PropsWithChildren<Props>) {
@@ -278,7 +272,7 @@ function Session(props: PropsWithChildren<Props>) {
     onMouseUp,
     onMouseWheelScroll,
     onContextMenu,
-    canvasInDOM,
+    initTdpCli,
     displayCanvas,
   } = props;
 
@@ -347,39 +341,33 @@ function Session(props: PropsWithChildren<Props>) {
         />
       )}
 
-      {canvasInDOM && (
-        <TdpClientCanvas
-          style={{
-            display: displayCanvas ? 'flex' : 'none',
-            flex: 1, // ensures the canvas fills available screen space
-          }}
-          tdpCli={tdpClient}
-          tdpCliOnPngFrame={onPngFrame}
-          tdpCliOnClipboardData={onClipboardData}
-          tdpCliOnTdpError={onTdpError}
-          tdpCliOnWsClose={onWsClose}
-          tdpCliOnWsOpen={onWsOpen}
-          onKeyDown={onKeyDown}
-          onKeyUp={onKeyUp}
-          onMouseMove={onMouseMove}
-          onMouseDown={onMouseDown}
-          onMouseUp={onMouseUp}
-          onMouseWheelScroll={onMouseWheelScroll}
-          onContextMenu={onContextMenu}
-        />
-      )}
+      <TdpClientCanvas
+        style={{
+          display: displayCanvas ? 'flex' : 'none',
+          flex: 1, // ensures the canvas fills available screen space
+        }}
+        tdpCli={tdpClient}
+        tdpCliInit={initTdpCli}
+        tdpCliOnPngFrame={onPngFrame}
+        tdpCliOnClipboardData={onClipboardData}
+        tdpCliOnTdpError={onTdpError}
+        tdpCliOnWsClose={onWsClose}
+        tdpCliOnWsOpen={onWsOpen}
+        onKeyDown={onKeyDown}
+        onKeyUp={onKeyUp}
+        onMouseMove={onMouseMove}
+        onMouseDown={onMouseDown}
+        onMouseUp={onMouseUp}
+        onMouseWheelScroll={onMouseWheelScroll}
+        onContextMenu={onContextMenu}
+      />
     </Flex>
   );
 }
 
 type Props = State & {
-  // Determines whether the TdpClientCanvas is placed in the DOM, which in turn
-  // determines whether we will start or keep the TDP connection over the websocket.
-  //
-  // The underlying mechanism at work is that TdpClientCanvas calls tdpClient.init()
-  // on mount and tdpClient.close() on cleanup.
-  canvasInDOM: boolean;
-  // Only relevant when startOrKeepTdpConnection is true. Determines whether the canvas will
-  // have display: 'flex' or display: 'none'
+  // Determines whether the tdp client that's passed to the TdpClientCanvas
+  // should be initialized.
+  initTdpCli: boolean;
   displayCanvas: boolean;
 };

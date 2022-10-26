@@ -25,6 +25,7 @@ import {
 export default function TdpClientCanvas(props: Props) {
   const {
     tdpCli,
+    tdpCliInit,
     tdpCliOnPngFrame,
     tdpCliOnClipboardData,
     tdpCliOnTdpError,
@@ -53,13 +54,13 @@ export default function TdpClientCanvas(props: Props) {
   }
 
   useEffect(() => {
-    if (tdpCli) {
+    if (tdpCli && tdpCliInit) {
       tdpCli.init();
       return () => {
-        tdpCli.close();
+        tdpCli.nuke();
       };
     }
-  }, [tdpCli]);
+  }, [tdpCli, tdpCliInit]);
 
   useEffect(() => {
     if (tdpCli && tdpCliOnPngFrame) {
@@ -258,6 +259,7 @@ export default function TdpClientCanvas(props: Props) {
 
 export type Props = {
   tdpCli?: TdpClient;
+  tdpCliInit?: boolean;
   tdpCliOnPngFrame?: (
     ctx: CanvasRenderingContext2D,
     pngFrame: PngFrame

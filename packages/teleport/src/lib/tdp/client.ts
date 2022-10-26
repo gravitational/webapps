@@ -56,8 +56,8 @@ export enum TdpClientEvent {
 
 // Client is the TDP client. It is responsible for connecting to a websocket serving the tdp server,
 // sending client commands, and recieving and processing server messages. Its creator is responsible for
-// ensuring the websocket gets closed (Client.close()) and all of its event listeners cleaned up when it
-// is no longer in use. For convenience, this can be done in one fell swoop by calling Client.nuke().
+// ensuring the websocket gets closed and all of its event listeners cleaned up when it is no longer in use.
+// For convenience, this can be done in one fell swoop by calling Client.nuke().
 export default class Client extends EventEmitterWebAuthnSender {
   protected codec: Codec;
   protected socket: WebSocket | undefined;
@@ -548,10 +548,6 @@ export default class Client extends EventEmitterWebAuthnSender {
     if (isFatal) this.socket?.close();
   }
 
-  close() {
-    this.socket?.close();
-  }
-
   // Ensures full cleanup of this object.
   // Note that it removes all listeners first and then cleans up the socket,
   // so don't call this if your calling object is relying on listeners.
@@ -559,6 +555,6 @@ export default class Client extends EventEmitterWebAuthnSender {
   // will simply do nothing.
   nuke() {
     this.removeAllListeners();
-    this.close();
+    this.socket?.close();
   }
 }
