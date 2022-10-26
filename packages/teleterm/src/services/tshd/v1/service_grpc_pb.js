@@ -602,6 +602,18 @@ function deserialize_teleport_terminal_v1_SetGatewayTargetSubresourceNameRequest
 
 // TerminalService describes Teleterm service
 var TerminalServiceService = exports.TerminalServiceService = {
+  // Foo
+foo: {
+    path: '/teleport.terminal.v1.TerminalService/Foo',
+    requestStream: false,
+    responseStream: false,
+    requestType: v1_service_pb.ListClustersRequest,
+    responseType: v1_service_pb.ListClustersResponse,
+    requestSerialize: serialize_teleport_terminal_v1_ListClustersRequest,
+    requestDeserialize: deserialize_teleport_terminal_v1_ListClustersRequest,
+    responseSerialize: serialize_teleport_terminal_v1_ListClustersResponse,
+    responseDeserialize: deserialize_teleport_terminal_v1_ListClustersResponse,
+  },
   // ListRootClusters lists root clusters
 // Does not include detailed cluster information that would require a network request.
 listRootClusters: {
@@ -922,7 +934,8 @@ getAuthSettings: {
     responseSerialize: serialize_teleport_terminal_v1_AuthSettings,
     responseDeserialize: deserialize_teleport_terminal_v1_AuthSettings,
   },
-  // GetCluster returns a cluster
+  // GetCluster returns cluster. Makes a network request and includes detailed
+// information about enterprise features availabed on the connected auth server
 getCluster: {
     path: '/teleport.terminal.v1.TerminalService/GetCluster',
     requestStream: false,

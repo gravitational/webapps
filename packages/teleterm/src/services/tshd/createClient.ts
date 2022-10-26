@@ -129,6 +129,19 @@ export default function createClient(
       });
     },
 
+    async foo() {
+      const req = new api.ListClustersRequest();
+      return new Promise<types.Cluster[]>((resolve, reject) => {
+        tshd.foo(req, (err, response) => {
+          if (err) {
+            reject(err);
+          } else {
+            resolve(response.toObject().clustersList);
+          }
+        });
+      });
+    },
+
     async getAllDatabases(clusterUri: string) {
       const req = new api.GetAllDatabasesRequest().setClusterUri(clusterUri);
       return new Promise<types.Database[]>((resolve, reject) => {
