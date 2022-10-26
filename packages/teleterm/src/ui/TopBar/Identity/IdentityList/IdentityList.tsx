@@ -33,11 +33,11 @@ export function IdentityList(props: IdentityListProps) {
             <Box>
               <Text bold>{props.loggedInUser.name}</Text>
               <Text typography="body2" color="text.secondary">
-                {props.loggedInUser.rolesList.map(role =>
+                {props.loggedInUser.rolesList.map(role => (
                   <Label mb="1" mr="1" key={role} kind="secondary">
                     {role}
                   </Label>
-                )}
+                ))}
               </Text>
             </Box>
           </Flex>
