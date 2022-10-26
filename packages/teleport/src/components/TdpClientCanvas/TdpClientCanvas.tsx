@@ -127,9 +127,11 @@ export default function TdpClientCanvas(props: Props) {
   useEffect(() => {
     if (tdpCli && tdpCliOnTdpError) {
       tdpCli.on(TdpClientEvent.TDP_ERROR, tdpCliOnTdpError);
+      tdpCli.on(TdpClientEvent.CLIENT_ERROR, tdpCliOnTdpError);
 
       return () => {
         tdpCli.removeListener(TdpClientEvent.TDP_ERROR, tdpCliOnTdpError);
+        tdpCli.removeListener(TdpClientEvent.CLIENT_ERROR, tdpCliOnTdpError);
       };
     }
   }, [tdpCli, tdpCliOnTdpError]);
