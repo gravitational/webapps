@@ -1,6 +1,15 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`empty state for enterprise, can create 1`] = `
+.c4 {
+  box-sizing: border-box;
+  margin-left: auto;
+  margin-right: auto;
+  padding: 56px;
+  padding-top: 32px;
+  width: 100%;
+}
+
 .c5 {
   box-sizing: border-box;
   max-width: 600px;
@@ -124,18 +133,6 @@ exports[`empty state for enterprise, can create 1`] = `
   color: #FFFFFF;
 }
 
-.c4 {
-  box-sizing: border-box;
-  margin-left: auto;
-  margin-right: auto;
-  padding: 56px;
-  padding-top: 32px;
-  width: 100%;
-  background-color: #222C59;
-  box-shadow: 0 4px 16px rgba(0,0,0,0.24);
-  border-radius: 8px;
-}
-
 .c7 {
   display: block;
   outline: none;
@@ -172,7 +169,6 @@ exports[`empty state for enterprise, can create 1`] = `
   padding: 56px;
   padding-top: 32px;
   width: 100%;
-  background-color: #222C59;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -208,7 +204,6 @@ exports[`empty state for enterprise, can create 1`] = `
   padding-left: 40px;
   padding-right: 40px;
   display: flex;
-  overflow: auto;
   width: 100%;
   height: 100%;
   flex-direction: column;
@@ -266,14 +261,19 @@ exports[`empty state for enterprise, can create 1`] = `
         <div
           class="c10"
         >
-          <button
-            class="c11"
-            kind="primary"
-            width="224px"
+          <a
+            href="/web/discover"
+            style="text-decoration: none;"
           >
-            Add 
-            application
-          </button>
+            <button
+              class="c11"
+              kind="primary"
+              width="224px"
+            >
+              Add 
+              application
+            </button>
+          </a>
           <a
             class="c12"
             href="https://goteleport.com/docs/application-access/getting-started/"
@@ -533,7 +533,6 @@ exports[`failed state 1`] = `
   padding-left: 40px;
   padding-right: 40px;
   display: flex;
-  overflow: auto;
   width: 100%;
   height: 100%;
   flex-direction: column;
@@ -918,6 +917,7 @@ exports[`failed state 1`] = `
               <span
                 class="c17 c18 icon icon-chevron-up "
                 color="light"
+                title="sort items asc"
               />
             </a>
           </th>
@@ -927,6 +927,7 @@ exports[`failed state 1`] = `
               <span
                 class="c17 c18 icon icon-chevrons-expand-vertical "
                 color="light"
+                title="sort items"
               />
             </a>
           </th>
@@ -1486,7 +1487,6 @@ exports[`loaded state 1`] = `
   padding-left: 40px;
   padding-right: 40px;
   display: flex;
-  overflow: auto;
   width: 100%;
   height: 100%;
   flex-direction: column;
@@ -1765,15 +1765,20 @@ exports[`loaded state 1`] = `
       >
         Applications
       </div>
-      <button
-        class="c3"
-        kind="primary"
-        title=""
-        width="240px"
+      <a
+        href="/web/discover"
+        style="text-decoration: none;"
       >
-        Add 
-        application
-      </button>
+        <button
+          class="c3"
+          kind="primary"
+          title=""
+          width="240px"
+        >
+          Add 
+          application
+        </button>
+      </a>
     </div>
     <form
       class="c4"
@@ -1872,6 +1877,7 @@ exports[`loaded state 1`] = `
               <span
                 class="c17 c18 icon icon-chevron-up "
                 color="light"
+                title="sort items asc"
               />
             </a>
           </th>
@@ -1881,6 +1887,7 @@ exports[`loaded state 1`] = `
               <span
                 class="c17 c18 icon icon-chevrons-expand-vertical "
                 color="light"
+                title="sort items"
               />
             </a>
           </th>
@@ -2183,7 +2190,6 @@ exports[`readonly empty state 1`] = `
   margin-right: auto;
   padding: 56px;
   color: rgba(255,255,255,0.87);
-  background-color: #222C59;
   text-align: center;
   border-radius: 12px;
 }
@@ -2241,7 +2247,6 @@ exports[`readonly empty state 1`] = `
   padding-left: 40px;
   padding-right: 40px;
   display: flex;
-  overflow: auto;
   width: 100%;
   height: 100%;
   flex-direction: column;

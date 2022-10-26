@@ -47,7 +47,11 @@ module.exports = {
     {
       files: ['**/*.test.{ts,tsx,js,jsx}'],
       plugins: ['jest'],
-      extends: ['plugin:jest/all'],
+      extends: [
+        'plugin:jest/all',
+        'plugin:testing-library/react',
+        'plugin:jest-dom/recommended',
+      ],
       rules: {
         'jest/prefer-called-with': 0,
         'jest/prefer-expect-assertions': 0,
@@ -79,6 +83,8 @@ module.exports = {
         'newlines-between': 'always-and-inside-groups',
       },
     ],
+    'no-unused-vars': 'off', // disabled to allow the typescript one to take over and avoid errors in reporting
+    '@typescript-eslint/no-unused-vars': ['error'],
     // <TODO> Enable these rules after fixing all existing issues
     '@typescript-eslint/no-use-before-define': 0,
     '@typescript-eslint/indent': 0,

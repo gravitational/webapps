@@ -1,4 +1,4 @@
-import { fireEvent, render } from 'design/utils/testing';
+import { fireEvent, render, screen } from 'design/utils/testing';
 import React from 'react';
 
 import { TabHost } from 'teleterm/ui/TabHost/TabHost';
@@ -18,6 +18,8 @@ import {
 import { ClustersService } from 'teleterm/ui/services/clusters';
 import AppContext from 'teleterm/ui/appContext';
 import { Config } from 'teleterm/services/config';
+
+import { getEmptyPendingAccessRequest } from '../services/workspacesService/accessRequestsService';
 
 function getMockDocuments(): Document[] {
   return [
@@ -92,11 +94,22 @@ function getTestSetup({ documents }: { documents: Document[] }) {
         { clusterUri: 'test_uri', workspaceDocumentsService: docsService },
       ];
     },
+    isDocumentActive(documentUri: string) {
+      return documentUri === documents[0].uri;
+    },
     getRootClusterUri() {
       return 'test_uri';
     },
+    getWorkspaces() {
+      return {};
+    },
     getActiveWorkspace() {
       return {
+        accessRequests: {
+          assumed: {},
+          isBarCollapsed: false,
+          pending: getEmptyPendingAccessRequest(),
+        },
         documents,
         location: undefined,
         localClusterUri: 'test_uri',
@@ -138,13 +151,13 @@ function getTestSetup({ documents }: { documents: Document[] }) {
 }
 
 test('render documents', () => {
-  const { queryByTitle, docsService } = getTestSetup({
+  const { docsService } = getTestSetup({
     documents: getMockDocuments(),
   });
   const documents = docsService.getDocuments();
 
-  expect(queryByTitle(documents[0].title)).toBeInTheDocument();
-  expect(queryByTitle(documents[1].title)).toBeInTheDocument();
+  expect(screen.getByTitle(documents[0].title)).toBeInTheDocument();
+  expect(screen.getByTitle(documents[1].title)).toBeInTheDocument();
 });
 
 test('open tab on click', () => {

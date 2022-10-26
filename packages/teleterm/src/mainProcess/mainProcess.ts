@@ -1,10 +1,13 @@
 import { ChildProcess, fork, spawn } from 'child_process';
 import path from 'path';
 
+import fs from 'fs/promises';
+
 import {
   app,
   ipcMain,
   shell,
+  dialog,
   Menu,
   MenuItemConstructorOptions,
 } from 'electron';
@@ -13,6 +16,7 @@ import { FileStorage, Logger, RuntimeSettings } from 'teleterm/types';
 import { subscribeToFileStorageEvents } from 'teleterm/services/fileStorage';
 import createLoggerService from 'teleterm/services/logger';
 import { ChildProcessAddresses } from 'teleterm/mainProcess/types';
+import { getAssetPath } from 'teleterm/mainProcess/runtimeSettings';
 
 import {
   ConfigService,
@@ -58,6 +62,7 @@ export default class MainProcess {
   }
 
   private _init() {
+    this.updateAboutPanelIfNeeded();
     this._setAppMenu();
     try {
       this._initTshd();
@@ -72,6 +77,8 @@ export default class MainProcess {
 
   private _initTshd() {
     const { binaryPath, flags, homeDir } = this.settings.tshd;
+    this.logger.info(`Starting tsh daemon from ${binaryPath}`);
+
     this.tshdProcess = spawn(binaryPath, flags, {
       stdio: 'pipe',
       windowsHide: true,
@@ -150,6 +157,39 @@ export default class MainProcess {
       return this.resolvedChildProcessAddresses;
     });
 
+    // the handler can remove a single kube config file or entire directory for given cluster
+    ipcMain.handle(
+      'main-process-remove-kube-config',
+      (
+        _,
+        options: {
+          relativePath: string;
+          isDirectory?: boolean;
+        }
+      ) => {
+        const { kubeConfigsDir } = this.settings;
+        const filePath = path.join(kubeConfigsDir, options.relativePath);
+        const isOutOfRoot = filePath.indexOf(kubeConfigsDir) !== 0;
+
+        if (isOutOfRoot) {
+          return Promise.reject('Invalid path');
+        }
+        return fs
+          .rm(filePath, { recursive: !!options.isDirectory })
+          .catch(error => {
+            if (error.code !== 'ENOENT') {
+              throw error;
+            }
+          });
+      }
+    );
+
+    ipcMain.handle('main-process-show-file-save-dialog', (_, filePath) =>
+      dialog.showSaveDialog({
+        defaultPath: path.basename(filePath),
+      })
+    );
+
     subscribeToTerminalContextMenuEvent();
     subscribeToTabContextMenuEvent();
     subscribeToConfigServiceEvents(this.configService);
@@ -182,13 +222,32 @@ export default class MainProcess {
         role: 'help',
         submenu: [
           { label: 'Learn More', click: openDocsUrl },
-          { label: 'About Teleport Connect', role: 'about' },
+          {
+            label: 'About Teleport Connect',
+            click: app.showAboutPanel,
+          },
         ],
       },
     ];
 
     const menu = Menu.buildFromTemplate(isMac ? macTemplate : otherTemplate);
     Menu.setApplicationMenu(menu);
+  }
+
+  private updateAboutPanelIfNeeded(): void {
+    // There is no about menu for Linux. See https://github.com/electron/electron/issues/18918
+    // On Windows default menu does not show copyrights.
+    if (
+      this.settings.platform === 'linux' ||
+      this.settings.platform === 'win32'
+    ) {
+      app.setAboutPanelOptions({
+        applicationName: app.getName(),
+        applicationVersion: app.getVersion(),
+        iconPath: getAssetPath('icon-linux/512x512.png'), //.ico is not supported
+        copyright: `Copyright © ${new Date().getFullYear()} Gravitational, Inc.`,
+      });
+    }
   }
 }
 

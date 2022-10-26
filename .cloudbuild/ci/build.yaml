@@ -21,6 +21,8 @@ steps:
     id: install-deps
     args:
       - build
+      - '--build-arg'
+      - YARN_FROZEN_LOCKFILE=true
       - .
 
   - name: gcr.io/cloud-builders/docker
@@ -30,6 +32,8 @@ steps:
       - build
       - '--build-arg'
       - NPM_SCRIPT=lint
+      - '--build-arg'
+      - YARN_FROZEN_LOCKFILE=true
       - .
 
   - name: gcr.io/cloud-builders/docker
@@ -39,6 +43,8 @@ steps:
       - build
       - '--build-arg'
       - NPM_SCRIPT=build-teleport
+      - '--build-arg'
+      - YARN_FROZEN_LOCKFILE=true
       - .
 
   - name: gcr.io/cloud-builders/docker
@@ -47,5 +53,10 @@ steps:
     args:
       - build
       - '--build-arg'
-      - NPM_SCRIPT=build-and-package-term
+      - NPM_SCRIPT=build-and-package-term-ci
+      - '--build-arg'
+      - YARN_FROZEN_LOCKFILE=true
+      - '--build-arg'
+      # Explicitly skip copying tsh binary (since we don't have access to it here).
+      - CONNECT_TSH_BIN_PATH=
       - .

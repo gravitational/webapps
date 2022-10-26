@@ -41,13 +41,19 @@ export enum MessageType {
   SHARED_DIRECTORY_ACKNOWLEDGE = 12,
   SHARED_DIRECTORY_INFO_REQUEST = 13,
   SHARED_DIRECTORY_INFO_RESPONSE = 14,
+  SHARED_DIRECTORY_CREATE_REQUEST = 15,
+  SHARED_DIRECTORY_CREATE_RESPONSE = 16,
+  SHARED_DIRECTORY_DELETE_REQUEST = 17,
+  SHARED_DIRECTORY_DELETE_RESPONSE = 18,
   SHARED_DIRECTORY_READ_REQUEST = 19,
   SHARED_DIRECTORY_READ_RESPONSE = 20,
   SHARED_DIRECTORY_WRITE_REQUEST = 21,
   SHARED_DIRECTORY_WRITE_RESPONSE = 22,
   SHARED_DIRECTORY_MOVE_REQUEST = 23,
+  SHARED_DIRECTORY_MOVE_RESPONSE = 24,
   SHARED_DIRECTORY_LIST_REQUEST = 25,
   SHARED_DIRECTORY_LIST_RESPONSE = 26,
+  PNG2_FRAME = 27,
   __LAST, // utility value
 }
 
@@ -123,6 +129,34 @@ export type SharedDirectoryInfoResponse = {
   fso: FileSystemObject;
 };
 
+// | message type (15) | completion_id uint32 | directory_id uint32 | file_type uint32 | path_length uint32 | path []byte |
+export type SharedDirectoryCreateRequest = {
+  completionId: number;
+  directoryId: number;
+  fileType: FileType;
+  path: string;
+};
+
+// | message type (16) | completion_id uint32 | err_code uint32 | file_system_object fso |
+export type SharedDirectoryCreateResponse = {
+  completionId: number;
+  errCode: SharedDirectoryErrCode;
+  fso: FileSystemObject;
+};
+
+// | message type (17) | completion_id uint32 | directory_id uint32 | path_length uint32 | path []byte |
+export type SharedDirectoryDeleteRequest = {
+  completionId: number;
+  directoryId: number;
+  path: string;
+};
+
+// | message type (18) | completion_id uint32 | err_code uint32 |
+export type SharedDirectoryDeleteResponse = {
+  completionId: number;
+  errCode: SharedDirectoryErrCode;
+};
+
 // | message type (19) | completion_id uint32 | directory_id uint32 | path_length uint32 | path []byte | offset uint64 | length uint32 |
 export type SharedDirectoryReadRequest = {
   completionId: number;
@@ -168,6 +202,12 @@ export type SharedDirectoryMoveRequest = {
   newPath: string;
 };
 
+// | message type (24) | completion_id uint32 | err_code uint32 |
+export type SharedDirectoryMoveResponse = {
+  completionId: number;
+  errCode: SharedDirectoryErrCode;
+};
+
 // | message type (25) | completion_id uint32 | directory_id uint32 | path_length uint32 | path []byte |
 export type SharedDirectoryListRequest = {
   completionId: number;
@@ -182,11 +222,12 @@ export type SharedDirectoryListResponse = {
   fsoList: FileSystemObject[];
 };
 
-// | last_modified uint64 | size uint64 | file_type uint32 | path_length uint32 | path byte[] |
+// | last_modified uint64 | size uint64 | file_type uint32 | is_empty bool | path_length uint32 | path byte[] |
 export type FileSystemObject = {
   lastModified: bigint;
   size: bigint;
   fileType: FileType;
+  isEmpty: boolean;
   path: string;
 };
 
@@ -566,6 +607,50 @@ export default class Codec {
     ]).buffer;
   }
 
+  // | message type (16) | completion_id uint32 | err_code uint32 | file_system_object fso |
+  encodeSharedDirectoryCreateResponse(
+    res: SharedDirectoryCreateResponse
+  ): Message {
+    const bufLenSansFso = byteLength + 2 * uint32Length;
+    const bufferSansFso = new ArrayBuffer(bufLenSansFso);
+    const view = new DataView(bufferSansFso);
+    let offset = 0;
+
+    view.setUint8(offset, MessageType.SHARED_DIRECTORY_CREATE_RESPONSE);
+    offset += byteLength;
+    view.setUint32(offset, res.completionId);
+    offset += uint32Length;
+    view.setUint32(offset, res.errCode);
+    offset += uint32Length;
+
+    const fsoBuffer = this.encodeFileSystemObject(res.fso);
+
+    // https://gist.github.com/72lions/4528834?permalink_comment_id=2395442#gistcomment-2395442
+    return new Uint8Array([
+      ...new Uint8Array(bufferSansFso),
+      ...new Uint8Array(fsoBuffer),
+    ]).buffer;
+  }
+
+  // | message type (18) | completion_id uint32 | err_code uint32 |
+  encodeSharedDirectoryDeleteResponse(
+    res: SharedDirectoryDeleteResponse
+  ): Message {
+    const bufLen = byteLength + 2 * uint32Length;
+    const buffer = new ArrayBuffer(bufLen);
+    const view = new DataView(buffer);
+    let offset = 0;
+
+    view.setUint8(offset, MessageType.SHARED_DIRECTORY_DELETE_RESPONSE);
+    offset += byteLength;
+    view.setUint32(offset, res.completionId);
+    offset += uint32Length;
+    view.setUint32(offset, res.errCode);
+    offset += uint32Length;
+
+    return buffer;
+  }
+
   // | message type (20) | completion_id uint32 | err_code uint32 | read_data_length uint32 | read_data []byte |
   encodeSharedDirectoryReadResponse(res: SharedDirectoryReadResponse): Message {
     const bufLen =
@@ -589,6 +674,7 @@ export default class Codec {
     return buffer;
   }
 
+  // | message type (22) | completion_id uint32 | err_code uint32 | bytes_written uint32 |
   encodeSharedDirectoryWriteResponse(
     res: SharedDirectoryWriteResponse
   ): Message {
@@ -604,6 +690,23 @@ export default class Codec {
     view.setUint32(offset, res.errCode);
     offset += uint32Length;
     view.setUint32(offset, res.bytesWritten);
+    offset += uint32Length;
+
+    return buffer;
+  }
+
+  // | message type (24) | completion_id uint32 | err_code uint32 |
+  encodeSharedDirectoryMoveResponse(res: SharedDirectoryMoveResponse): Message {
+    const bufLen = byteLength + 2 * uint32Length;
+    const buffer = new ArrayBuffer(bufLen);
+    const view = new DataView(buffer);
+    let offset = 0;
+
+    view.setUint8(offset, MessageType.SHARED_DIRECTORY_MOVE_RESPONSE);
+    offset += byteLength;
+    view.setUint32(offset, res.completionId);
+    offset += uint32Length;
+    view.setUint32(offset, res.errCode);
     offset += uint32Length;
 
     return buffer;
@@ -638,11 +741,12 @@ export default class Codec {
     return withFsoList.buffer;
   }
 
-  // | last_modified uint64 | size uint64 | file_type uint32 | path_length uint32 | path byte[] |
+  // | last_modified uint64 | size uint64 | file_type uint32 | is_empty bool | path_length uint32 | path byte[] |
   encodeFileSystemObject(fso: FileSystemObject): Message {
     const dataUtf8array = this.encoder.encode(fso.path);
 
-    const bufLen = 2 * uint64Length + 2 * uint32Length + dataUtf8array.length;
+    const bufLen =
+      byteLength + 2 * uint64Length + 2 * uint32Length + dataUtf8array.length;
     const buffer = new ArrayBuffer(bufLen);
     const view = new DataView(buffer);
     let offset = 0;
@@ -652,6 +756,8 @@ export default class Codec {
     offset += uint64Length;
     view.setUint32(offset, fso.fileType);
     offset += uint32Length;
+    view.setUint8(offset, fso.isEmpty ? 1 : 0);
+    offset += byteLength;
     view.setUint32(offset, dataUtf8array.length);
     offset += uint32Length;
     dataUtf8array.forEach(byte => {
@@ -737,6 +843,32 @@ export default class Codec {
     return pngFrame;
   }
 
+  // decodePng2Frame decodes a raw tdp PNG frame message and returns it as a PngFrame
+  // | message type (27) | png_length uint32 | left uint32 | top uint32 | right uint32 | bottom uint32 | data []byte |
+  decodePng2Frame(
+    buffer: ArrayBuffer,
+    onload: (pngFrame: PngFrame) => any
+  ): PngFrame {
+    const dv = new DataView(buffer);
+    const image = new Image();
+    let offset = 0;
+    offset += byteLength; // eat message type
+    offset += uint32Length; // eat png_length
+    const left = dv.getUint32(offset);
+    offset += uint32Length; // eat left
+    const top = dv.getUint32(offset);
+    offset += uint32Length; // eat top
+    const right = dv.getUint32(offset);
+    offset += uint32Length; // eat right
+    const bottom = dv.getUint32(offset);
+    offset += uint32Length; // eat bottom
+    const pngFrame = { left, top, right, bottom, data: image };
+    pngFrame.data.onload = onload(pngFrame);
+    pngFrame.data.src = this.asBase64Url(buffer, offset);
+
+    return pngFrame;
+  }
+
   // | message type (12) | err_code error | directory_id uint32 |
   decodeSharedDirectoryAcknowledge(
     buffer: ArrayBuffer
@@ -758,6 +890,51 @@ export default class Codec {
   decodeSharedDirectoryInfoRequest(
     buffer: ArrayBuffer
   ): SharedDirectoryInfoRequest {
+    const dv = new DataView(buffer);
+    let offset = 0;
+    offset += byteLength; // eat message type
+    const completionId = dv.getUint32(offset);
+    offset += uint32Length; // eat completion_id
+    const directoryId = dv.getUint32(offset);
+    offset += uint32Length; // eat directory_id
+    offset += uint32Length; // eat path_length
+    const path = this.decoder.decode(new Uint8Array(buffer.slice(offset)));
+
+    return {
+      completionId,
+      directoryId,
+      path,
+    };
+  }
+
+  // | message type (15) | completion_id uint32 | directory_id uint32 | file_type uint32 | path_length uint32 | path []byte |
+  decodeSharedDirectoryCreateRequest(
+    buffer: ArrayBuffer
+  ): SharedDirectoryCreateRequest {
+    const dv = new DataView(buffer);
+    let offset = 0;
+    offset += byteLength; // eat message type
+    const completionId = dv.getUint32(offset);
+    offset += uint32Length; // eat completion_id
+    const directoryId = dv.getUint32(offset);
+    offset += uint32Length; // eat directory_id
+    const fileType = dv.getUint32(offset);
+    offset += uint32Length; // eat directory_id
+    offset += uint32Length; // eat path_length
+    const path = this.decoder.decode(new Uint8Array(buffer.slice(offset)));
+
+    return {
+      completionId,
+      directoryId,
+      fileType,
+      path,
+    };
+  }
+
+  // | message type (17) | completion_id uint32 | directory_id uint32 | path_length uint32 | path []byte |
+  decodeSharedDirectoryDeleteRequest(
+    buffer: ArrayBuffer
+  ): SharedDirectoryDeleteRequest {
     const dv = new DataView(buffer);
     let offset = 0;
     offset += byteLength; // eat message type

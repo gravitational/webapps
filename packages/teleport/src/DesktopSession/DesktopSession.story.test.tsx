@@ -1,6 +1,6 @@
 import React from 'react';
 import 'jest-canvas-mock';
-import { render } from 'design/utils/testing';
+import { render, screen } from 'design/utils/testing';
 
 import {
   ConnectedSettingsFalse,
@@ -8,9 +8,9 @@ import {
   Disconnected,
   FetchError,
   ConnectionError,
-  ClipboardError,
   UnintendedDisconnect,
   WebAuthnPrompt,
+  DismissibleError,
 } from './DesktopSession.story';
 
 test('connected settings false', () => {
@@ -29,26 +29,26 @@ test('disconnected', () => {
 });
 
 test('fetch error', () => {
-  const { container } = render(<FetchError />);
-  expect(container).toMatchSnapshot();
+  render(<FetchError />);
+  expect(screen.getByTestId('Modal')).toMatchSnapshot();
 });
 
 test('connection error', () => {
-  const { container } = render(<ConnectionError />);
-  expect(container).toMatchSnapshot();
-});
-
-test('clipboard error', () => {
-  const { container } = render(<ClipboardError />);
-  expect(container).toMatchSnapshot();
+  render(<ConnectionError />);
+  expect(screen.getByTestId('Modal')).toMatchSnapshot();
 });
 
 test('unintended disconnect', () => {
-  const { container } = render(<UnintendedDisconnect />);
-  expect(container).toMatchSnapshot();
+  render(<UnintendedDisconnect />);
+  expect(screen.getByTestId('Modal')).toMatchSnapshot();
+});
+
+test('dismissible error', () => {
+  render(<DismissibleError />);
+  expect(screen.getByTestId('Modal')).toMatchSnapshot();
 });
 
 test('webauthn prompt', () => {
-  const { container } = render(<WebAuthnPrompt />);
-  expect(container).toMatchSnapshot();
+  render(<WebAuthnPrompt />);
+  expect(screen.getByTestId('Modal')).toMatchSnapshot();
 });

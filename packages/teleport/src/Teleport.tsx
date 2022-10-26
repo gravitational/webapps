@@ -18,16 +18,22 @@ import React from 'react';
 import ThemeProvider from 'design/ThemeProvider';
 
 import { Router, Route, Switch } from 'teleport/components/Router';
-import CatchError from 'teleport/components/CatchError';
+import { CatchError } from 'teleport/components/CatchError';
 import Authenticated from 'teleport/components/Authenticated';
 
-import Main from './Main';
+import { FeaturesContextProvider } from 'teleport/FeaturesContext';
+
+import { getOSSFeatures } from 'teleport/features';
+
+import { Feature } from 'teleport/types';
+
+import { Main } from './Main';
 import Welcome from './Welcome';
 import Login, { LoginSuccess, LoginFailed } from './Login';
 import AppLauncher from './AppLauncher';
 import Console from './Console';
 import DesktopSession from './DesktopSession';
-import Discover from './Discover';
+import { Discover } from './Discover';
 import Player from './Player';
 import TeleportContextProvider from './TeleportContextProvider';
 import TeleportContext from './teleportContext';
@@ -40,6 +46,8 @@ const Teleport: React.FC<Props> = props => {
   const publicRoutes = props.renderPublicRoutes || renderPublicRoutes;
   const privateRoutes = props.renderPrivateRoutes || renderPrivateRoutes;
 
+  const features = props.features || getOSSFeatures();
+
   return (
     <CatchError>
       <ThemeProvider>
@@ -49,13 +57,15 @@ const Teleport: React.FC<Props> = props => {
             <Route path={cfg.routes.root}>
               <Authenticated>
                 <TeleportContextProvider ctx={ctx}>
-                  <Switch>
-                    <Route
-                      path={cfg.routes.appLauncher}
-                      component={AppLauncher}
-                    />
-                    <Route>{privateRoutes()}</Route>
-                  </Switch>
+                  <FeaturesContextProvider value={features}>
+                    <Switch>
+                      <Route
+                        path={cfg.routes.appLauncher}
+                        component={AppLauncher}
+                      />
+                      <Route>{privateRoutes()}</Route>
+                    </Switch>
+                  </FeaturesContextProvider>
                 </TeleportContextProvider>
               </Authenticated>
             </Route>
@@ -104,12 +114,13 @@ export function renderPublicRoutes(children = []) {
 }
 
 // TODO: make it lazy loadable
-export function renderPrivateRoutes(CustomMain = Main) {
+export function renderPrivateRoutes(
+  CustomMain = Main,
+  CustomDiscover = Discover
+) {
   return (
     <Switch>
-      {cfg.enabledDiscoverWizard && (
-        <Route path={cfg.routes.discover} component={Discover} />
-      )}
+      <Route path={cfg.routes.discover} component={CustomDiscover} />
       <Route path={cfg.routes.desktop} component={DesktopSession} />
       <Route path={cfg.routes.console} component={Console} />
       <Route path={cfg.routes.player} component={Player} />
@@ -121,6 +132,7 @@ export function renderPrivateRoutes(CustomMain = Main) {
 export default Teleport;
 
 export type Props = {
+  features?: Feature[];
   ctx: TeleportContext;
   history: History;
   renderPublicRoutes?(children?: JSX.Element[]): JSX.Element[];

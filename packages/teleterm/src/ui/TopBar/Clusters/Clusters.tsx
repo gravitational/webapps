@@ -7,15 +7,15 @@ import { useKeyboardShortcuts } from 'teleterm/ui/services/keyboardShortcuts';
 
 import { KeyboardArrowsNavigation } from 'teleterm/ui/components/KeyboardArrowsNavigation';
 
-import { getClusterName } from 'teleterm/ui/utils';
-
 import { useClusters } from './useClusters';
 import { ClusterSelector } from './ClusterSelector/ClusterSelector';
 import { ClustersFilterableList } from './ClustersFilterableList/ClustersFilterableList';
+import ConfirmClusterChangeDialog from './ConfirmClusterChangeDialog';
 
 export function Clusters() {
   const iconRef = useRef();
   const [isPopoverOpened, setIsPopoverOpened] = useState(false);
+  const [confirmChangeTo, setConfirmChangeTo] = useState<string | null>(null);
   const clusters = useClusters();
 
   const togglePopover = useCallback(() => {
@@ -33,7 +33,17 @@ export function Clusters() {
 
   function selectItem(id: string): void {
     setIsPopoverOpened(false);
-    clusters.selectItem(id);
+    if (clusters.hasPendingAccessRequest) {
+      setConfirmChangeTo(id);
+    } else {
+      clusters.selectItem(id);
+    }
+  }
+
+  function onConfirmChange(): void {
+    clusters.selectItem(confirmChangeTo);
+    setConfirmChangeTo(null);
+    clusters.clearPendingAccessRequest();
   }
 
   if (!clusters.hasLeaves) {
@@ -43,7 +53,7 @@ export function Clusters() {
   return (
     <>
       <ClusterSelector
-        clusterName={getClusterName(clusters.selectedItem)}
+        clusterName={clusters.selectedItem?.name}
         onClick={togglePopover}
         isOpened={isPopoverOpened}
         ref={iconRef}
@@ -64,6 +74,11 @@ export function Clusters() {
           </KeyboardArrowsNavigation>
         </Container>
       </Popover>
+      <ConfirmClusterChangeDialog
+        onClose={() => setConfirmChangeTo(null)}
+        onConfirm={onConfirmChange}
+        confirmChangeTo={confirmChangeTo}
+      />
     </>
   );
 }

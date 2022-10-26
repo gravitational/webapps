@@ -18,14 +18,15 @@ import localStorage from './../localStorage';
 import parseError, { ApiError } from './parseError';
 
 const api = {
-  get(url) {
-    return api.fetchJson(url);
+  get(url, abortSignal) {
+    return api.fetchJson(url, { signal: abortSignal });
   },
 
-  post(url, data) {
+  post(url, data, abortSignal) {
     return api.fetchJson(url, {
       body: JSON.stringify(data),
       method: 'POST',
+      signal: abortSignal,
     });
   },
 

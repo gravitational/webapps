@@ -21,22 +21,35 @@ import { Indicator } from 'design';
 import { Failed } from 'design/CardError';
 
 import { Redirect, Switch, Route } from 'teleport/components/Router';
-import CatchError from 'teleport/components/CatchError';
+import { CatchError } from 'teleport/components/CatchError';
 import cfg from 'teleport/config';
 import SideNav from 'teleport/SideNav';
 import TopBar from 'teleport/TopBar';
-import getFeatures from 'teleport/features';
+import { BannerList } from 'teleport/components/BannerList';
+import localStorage from 'teleport/services/localStorage';
+import history from 'teleport/services/history';
 
-import useMain, { State } from './useMain';
+import { ClusterAlert, LINK_LABEL } from 'teleport/services/alerts/alerts';
 
-export default function Container() {
-  const [features] = React.useState(() => getFeatures());
-  const state = useMain(features);
-  return <Main {...state} />;
+import { MainContainer } from './MainContainer';
+import { OnboardDiscover } from './OnboardDiscover';
+import useMain from './useMain';
+
+import type { BannerType } from 'teleport/components/BannerList/BannerList';
+
+interface MainProps {
+  initialAlerts?: ClusterAlert[];
+  customBanners?: React.ReactNode[];
 }
 
-export function Main(props: State) {
-  const { status, statusText, ctx } = props;
+export function Main(props: MainProps) {
+  const { alerts, ctx, customBanners, dismissAlert, status, statusText } =
+    useMain({
+      initialAlerts: props.initialAlerts,
+      customBanners: props.customBanners,
+    });
+
+  const [showOnboardDiscover, setShowOnboardDiscover] = React.useState(true);
 
   if (status === 'failed') {
     return <Failed message={statusText} />;
@@ -48,6 +61,21 @@ export function Main(props: State) {
         <Indicator />
       </StyledIndicator>
     );
+  }
+
+  function handleOnboard() {
+    updateOnboardDiscover();
+    history.push(cfg.routes.discover);
+  }
+
+  function handleOnClose() {
+    updateOnboardDiscover();
+    setShowOnboardDiscover(false);
+  }
+
+  function updateOnboardDiscover() {
+    const discover = localStorage.getOnboardDiscover();
+    localStorage.setOnboardDiscover({ ...discover, notified: true });
   }
 
   // render feature routes
@@ -70,42 +98,68 @@ export function Main(props: State) {
     ctx.storeNav.getSideItems()[0]?.getLink(cfg.proxyCluster) ||
     cfg.routes.support;
 
+  // The backend defines the severity as an integer value with the current
+  // pre-defined values: LOW: 0; MEDIUM: 5; HIGH: 10
+  const mapSeverity = (severity: number) => {
+    if (severity < 5) {
+      return 'info';
+    }
+    if (severity < 10) {
+      return 'warning';
+    }
+    return 'danger';
+  };
+
+  const banners: BannerType[] = alerts.map(alert => ({
+    message: alert.spec.message,
+    severity: mapSeverity(alert.spec.severity),
+    link: alert.metadata.labels[LINK_LABEL],
+    id: alert.metadata.name,
+  }));
+
+  const onboard = localStorage.getOnboardDiscover();
+  const requiresOnboarding =
+    onboard && !onboard.hasResource && !onboard.notified;
+
   return (
     <>
       <RouterDOM.Switch>
         <Redirect exact={true} from={cfg.routes.root} to={indexRoute} />
       </RouterDOM.Switch>
-      <StyledMain>
-        <SideNav />
-        <HorizontalSplit>
-          <TopBar />
-          <Switch>{$features}</Switch>
-        </HorizontalSplit>
-      </StyledMain>
+      <BannerList
+        banners={banners}
+        customBanners={customBanners}
+        onBannerDismiss={dismissAlert}
+      >
+        <MainContainer>
+          <SideNav />
+          <HorizontalSplit>
+            <ContentMinWidth>
+              <TopBar />
+              <Switch>{$features}</Switch>
+            </ContentMinWidth>
+          </HorizontalSplit>
+        </MainContainer>
+      </BannerList>
+      {requiresOnboarding && showOnboardDiscover && (
+        <OnboardDiscover onClose={handleOnClose} onOnboard={handleOnboard} />
+      )}
     </>
   );
 }
 
-export const StyledMain = styled.div`
-  width: 100%;
-  height: 100%;
-  display: flex;
-  flex: 1;
-  position: absolute;
-  min-width: 1000px;
+export const ContentMinWidth = styled.div`
+  min-width: calc(1250px - var(--sidebar-width));
 `;
 
-const HorizontalSplit = styled.div`
+export const HorizontalSplit = styled.div`
   display: flex;
   flex-direction: column;
-  width: 100%;
-  height: 100%;
-
-  // Allows shrinking beyond content size on flexed childrens.
-  min-width: 0;
+  flex: 1;
+  overflow-x: auto;
 `;
 
-const StyledIndicator = styled(HorizontalSplit)`
+export const StyledIndicator = styled(HorizontalSplit)`
   align-items: center;
   justify-content: center;
 `;

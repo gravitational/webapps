@@ -23,7 +23,11 @@ export default class StoreUserContext extends Store<UserContext> {
   }
 
   getUsername() {
-    return this.state.username;
+    return this.state?.username;
+  }
+
+  getClusterId() {
+    return this.state.cluster.clusterId;
   }
 
   getEventAccess() {
@@ -48,6 +52,10 @@ export default class StoreUserContext extends Store<UserContext> {
 
   getUserAccess() {
     return this.state.acl.users;
+  }
+
+  getConnectionDiagnosticAccess() {
+    return this.state.acl.connectionDiagnostic;
   }
 
   getAppServerAccess() {
@@ -104,5 +112,33 @@ export default class StoreUserContext extends Store<UserContext> {
 
   getNodeAccess() {
     return this.state.acl.nodes;
+  }
+
+  getAccessRequestId() {
+    return this.state.accessRequestId;
+  }
+
+  // hasPrereqAccessToAddAgents checks if user meets the prerequisite
+  // access to add an agent:
+  //  - user should be able to create provisioning tokens
+  hasPrereqAccessToAddAgents() {
+    const { tokens } = this.state.acl;
+    return tokens.create;
+  }
+
+  // hasAccessToAgentQuery checks for at least one valid query permission.
+  // Nodes require only a 'list' access while the rest of the agents
+  // require 'list + read'.
+  hasAccessToQueryAgent() {
+    const { nodes, appServers, dbServers, kubeServers, desktops } =
+      this.state.acl;
+
+    return (
+      nodes.list ||
+      (appServers.read && appServers.list) ||
+      (dbServers.read && dbServers.list) ||
+      (kubeServers.read && kubeServers.list) ||
+      (desktops.read && desktops.list)
+    );
   }
 }

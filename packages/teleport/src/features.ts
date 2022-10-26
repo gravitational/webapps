@@ -166,7 +166,7 @@ export class FeatureAccount extends Feature {
   register(ctx: Ctx) {
     ctx.storeNav.addTopMenuItem({
       title: 'Account Settings',
-      Icon: Icons.User,
+      Icon: Icons.Cog,
       getLink() {
         return cfg.routes.account;
       },
@@ -459,7 +459,7 @@ export class FeatureDesktops extends Feature {
   }
 }
 
-export default function getFeatures(): Feature[] {
+export function getOSSFeatures(): Feature[] {
   return [
     new FeatureNodes(),
     new FeatureApps(),

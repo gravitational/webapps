@@ -15,6 +15,7 @@ limitations under the License.
 */
 
 export type Kind =
+  | 'doc.access_requests'
   | 'doc.cluster'
   | 'doc.blank'
   | 'doc.gateway'
@@ -47,6 +48,7 @@ export interface DocumentTshKube extends DocumentBase {
   status: 'connecting' | 'connected' | 'disconnected';
   kubeId: string;
   kubeUri: string;
+  kubeConfigRelativePath: string;
   rootClusterId: string;
   leafClusterId?: string;
 }
@@ -66,6 +68,13 @@ export interface DocumentCluster extends DocumentBase {
   clusterUri: string;
 }
 
+export interface DocumentAccessRequests extends DocumentBase {
+  kind: 'doc.access_requests';
+  clusterUri: string;
+  state: AccessRequestDocumentState;
+  requestId: string;
+}
+
 export interface DocumentPtySession extends DocumentBase {
   kind: 'doc.terminal_shell';
   cwd?: string;
@@ -80,6 +89,7 @@ export type DocumentTerminal =
   | DocumentTshKube;
 
 export type Document =
+  | DocumentAccessRequests
   | DocumentBlank
   | DocumentGateway
   | DocumentCluster
@@ -98,6 +108,20 @@ export type CreateGatewayDocumentOpts = {
 export type CreateClusterDocumentOpts = {
   clusterUri: string;
 };
+
+export type CreateTshKubeDocumentOptions = {
+  kubeUri: string;
+  kubeConfigRelativePath?: string;
+};
+
+export type CreateAccessRequestDocumentOpts = {
+  clusterUri: string;
+  state: AccessRequestDocumentState;
+  title?: string;
+  requestId?: string;
+};
+
+export type AccessRequestDocumentState = 'browsing' | 'creating' | 'reviewing';
 
 export type CreateNewTerminalOpts = {
   initCommand?: string;

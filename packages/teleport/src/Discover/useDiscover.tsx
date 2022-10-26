@@ -14,41 +14,63 @@
  * limitations under the License.
  */
 
-import { useState, useEffect } from 'react';
-import useAttempt from 'shared/hooks/useAttemptNext';
+import { useMemo, useState } from 'react';
 
-import { DiscoverContext } from './discoverContext';
+import { useLocation } from 'react-router';
 
-import type {
-  JoinMethod,
-  JoinRole,
-  JoinToken,
-  JoinRule,
-} from 'teleport/services/joinToken';
+import session from 'teleport/services/websession';
+import useMain, { UseMainConfig } from 'teleport/Main/useMain';
 
-export function useDiscover(ctx: DiscoverContext) {
-  const { attempt, run } = useAttempt('');
-  const { attempt: initAttempt, run: initRun } = useAttempt('processing');
+import { ResourceKind } from 'teleport/Discover/Shared';
 
-  const [joinToken, setJoinToken] = useState<JoinToken>();
-  const [currentStep, setCurrentStep] = useState<AgentStep>(0);
-  const [selectedAgentKind, setSelectedAgentKind] = useState<AgentKind>();
+import { addIndexToViews, findViewAtIndex, View } from './flow';
+
+import { resources } from './resources';
+
+import type { Node } from 'teleport/services/nodes';
+import type { Kube } from 'teleport/services/kube';
+
+export function getKindFromString(value: string) {
+  switch (value) {
+    case 'application':
+      return ResourceKind.Application;
+    case 'database':
+      return ResourceKind.Database;
+    case 'desktop':
+      return ResourceKind.Desktop;
+    case 'kubernetes':
+      return ResourceKind.Kubernetes;
+    default:
+    case 'server':
+      return ResourceKind.Server;
+  }
+}
+
+export function useDiscover(config: UseMainConfig) {
+  const initState = useMain(config);
+  const location = useLocation<{ entity: string }>();
+
+  const [currentStep, setCurrentStep] = useState(0);
+  const [selectedResourceKind, setSelectedResourceKind] =
+    useState<ResourceKind>(getKindFromString(location?.state?.entity));
   const [agentMeta, setAgentMeta] = useState<AgentMeta>();
 
-  useEffect(() => {
-    initRun(() => ctx.init());
-  }, []);
+  const selectedResource = resources.find(r => r.kind === selectedResourceKind);
+  const views = useMemo<View[]>(
+    () => addIndexToViews(selectedResource.views),
+    [selectedResource.views]
+  );
 
-  function onSelectResource(kind: AgentKind) {
-    setSelectedAgentKind(kind);
+  function onSelectResource(kind: ResourceKind) {
+    setSelectedResourceKind(kind);
   }
 
   function nextStep() {
-    setCurrentStep(currentStep + 1);
-  }
+    const nextView = findViewAtIndex(views, currentStep + 1);
 
-  function prevStep() {
-    setCurrentStep(currentStep - 1);
+    if (nextView) {
+      setCurrentStep(currentStep + 1);
+    }
   }
 
   function updateAgentMeta(meta: AgentMeta) {
@@ -56,86 +78,48 @@ export function useDiscover(ctx: DiscoverContext) {
   }
 
   function logout() {
-    ctx.logout();
-  }
-
-  function createJoinToken(method: JoinMethod = 'token', rules?: JoinRule[]) {
-    let systemRole: JoinRole;
-    switch (selectedAgentKind) {
-      case 'app':
-        systemRole = 'App';
-        break;
-      case 'db':
-        systemRole = 'Db';
-        break;
-      case 'desktop':
-        systemRole = 'WindowsDesktop';
-        break;
-      case 'kube':
-        systemRole = 'Kube';
-        break;
-      case 'node':
-        systemRole = 'Node';
-        break;
-      default:
-        console;
-    }
-
-    run(() =>
-      ctx.joinTokenService
-        .fetchJoinToken([systemRole], method, rules)
-        .then(setJoinToken)
-    );
+    session.logout();
   }
 
   return {
-    initAttempt,
-    username: ctx.username,
-    currentStep,
-    selectedAgentKind,
-    logout,
-    onSelectResource,
-    // Rest of the exported fields are used to prop drill
-    // to Step 2+ components.
-    attempt,
-    joinToken,
     agentMeta,
-    updateAgentMeta,
+    alerts: initState.alerts,
+    currentStep,
+    customBanners: initState.customBanners,
+    dismissAlert: initState.dismissAlert,
+    initAttempt: { status: initState.status, statusText: initState.statusText },
+    logout,
     nextStep,
-    prevStep,
-    createJoinToken,
+    onSelectResource,
+    selectedResource,
+    updateAgentMeta,
+    views,
   };
 }
 
-// AgentStep defines the order of steps in `connecting a agent (resource)`
-// that all agent kinds should share.
-//
-// The numerical enum value is used to determine which step the user is currently in,
-// which is also used as the `index value` to access array's values
-// for `agentStepTitles` and `agentViews`.
-export enum AgentStep {
-  Select = 0,
-  Setup,
-  RoleConfig,
-  TestConnection,
-}
+type BaseMeta = {
+  resourceName: string;
+};
 
-// NodeMeta describes the fields that may be provided or required by user
-// when connecting a node.
-type NodeMeta = {
-  awsAccountId?: string;
-  awsArn?: string;
+// NodeMeta describes the fields for node resource
+// that needs to be preserved throughout the flow.
+export type NodeMeta = BaseMeta & {
+  node: Node;
 };
 
 // AppMeta describes the fields that may be provided or required by user
 // when connecting a app.
-type AppMeta = {
+type AppMeta = BaseMeta & {
   name: string;
   publicAddr: string;
 };
 
-export type AgentMeta = AppMeta | NodeMeta;
+// KubeMeta describes the fields that may be provided or required by user
+// when connecting a app.
+export type KubeMeta = BaseMeta & {
+  kube: Kube;
+};
 
-export type AgentKind = 'app' | 'db' | 'desktop' | 'kube' | 'node';
+export type AgentMeta = AppMeta | NodeMeta | KubeMeta;
 
 export type State = ReturnType<typeof useDiscover>;

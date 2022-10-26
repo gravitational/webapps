@@ -11,6 +11,7 @@
 // WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 // See the License for the specific language governing permissions and
 // limitations under the License.
+import { FileType } from './codec';
 
 // SharedDirectoryManager manages a FileSystemDirectoryHandle for use
 // by the TDP client. Most of its methods can potentially throw errors
@@ -48,10 +49,27 @@ export class SharedDirectoryManager {
 
     const fileOrDir = await this.walkPath(path);
 
+    let isEmpty = true;
     if (fileOrDir.kind === 'directory') {
+      let dir = fileOrDir;
+      // If dir contains any files or directories, it will
+      // enter the loop below and we can register it as not
+      // empty. If it doesn't, it will skip over the loop.
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
+      for await (const _ of dir.keys()) {
+        isEmpty = false;
+        break;
+      }
+
       // Magic numbers are the values for directories where the true
       // value is unavailable, according to the TDP spec.
-      return { size: 4096, lastModified: 0, kind: fileOrDir.kind, path };
+      return {
+        size: 4096,
+        lastModified: 0,
+        kind: fileOrDir.kind,
+        isEmpty,
+        path,
+      };
     }
 
     let file = await fileOrDir.getFile();
@@ -59,6 +77,7 @@ export class SharedDirectoryManager {
       size: file.size,
       lastModified: file.lastModified,
       kind: fileOrDir.kind,
+      isEmpty,
       path,
     };
   }
@@ -144,6 +163,53 @@ export class SharedDirectoryManager {
   }
 
   /**
+   * Creates a new file or directory (determined by fileType) at path.
+   * If the path already exists for the given fileType, this operation is effectively ignored.
+   * @throws {DomException} If the path already exists but not for the given fileType.
+   * @throws Anything potentially thrown by getFileHandle/getDirectoryHandle.
+   * @throws {PathDoesNotExistError} if the path isn't a valid path to a directory.
+   */
+  async create(path: string, fileType: FileType): Promise<void> {
+    let splitPath = path.split('/');
+    const fileOrDirName = splitPath.pop();
+    const dirPath = splitPath.join('/');
+
+    const dirHandle = await this.walkPath(dirPath);
+    if (dirHandle.kind !== 'directory') {
+      throw new PathDoesNotExistError(
+        'destination was a file, not a directory'
+      );
+    }
+
+    if (fileType === FileType.File) {
+      await dirHandle.getFileHandle(fileOrDirName, { create: true });
+    } else {
+      await dirHandle.getDirectoryHandle(fileOrDirName, { create: true });
+    }
+  }
+
+  /**
+   * Deletes a file or directory at path.
+   * If the path doesn't exist, this operation is effectively ignored.
+   * @throws Anything potentially thrown by getFileHandle/getDirectoryHandle.
+   * @throws {PathDoesNotExistError} if the path isn't a valid path to a directory.
+   */
+  async delete(path: string): Promise<void> {
+    let splitPath = path.split('/');
+    const fileOrDirName = splitPath.pop();
+    const dirPath = splitPath.join('/');
+
+    const dirHandle = await this.walkPath(dirPath);
+    if (dirHandle.kind !== 'directory') {
+      throw new PathDoesNotExistError(
+        'destination was a file, not a directory'
+      );
+    }
+
+    await dirHandle.removeEntry(fileOrDirName, { recursive: true });
+  }
+
+  /**
    * walkPath walks a pathstr (assumed to be in the qualified Unix format specified
    * in the TDP spec), returning the FileSystemDirectoryHandle | FileSystemFileHandle
    * it finds at its end.
@@ -212,5 +278,6 @@ export type FileOrDirInfo = {
   size: number; // bytes
   lastModified: number; // ms since unix epoch
   kind: 'file' | 'directory';
+  isEmpty: boolean;
   path: string;
 };

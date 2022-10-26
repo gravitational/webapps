@@ -124,14 +124,18 @@ export const formatters: Formatters = {
         return `User [${user}] executed a command on kubernetes cluster [${kubernetes_cluster}]`;
       }
 
-      return `User [${user}] executed a command on node ${event['addr.local']}`;
+      return `User [${user}] executed a command on node ${
+        event['server_hostname'] || event['addr.local']
+      }`;
     },
   },
   [eventCodes.EXEC_FAILURE]: {
     type: 'exec',
     desc: 'Command Execution Failed',
     format: ({ user, exitError, ...rest }) =>
-      `User [${user}] command execution on node ${rest['addr.local']} failed [${exitError}]`,
+      `User [${user}] command execution on node ${
+        rest['server_hostname'] || rest['addr.local']
+      } failed [${exitError}]`,
   },
   [eventCodes.GITHUB_CONNECTOR_CREATED]: {
     type: 'github.created',
@@ -184,241 +188,321 @@ export const formatters: Formatters = {
     type: 'scp',
     desc: 'SCP Download',
     format: ({ user, path, ...rest }) =>
-      `User [${user}] downloaded a file [${path}] from node [${rest['addr.local']}]`,
+      `User [${user}] downloaded a file [${path}] from node [${
+        rest['server_hostname'] || rest['addr.local']
+      }]`,
   },
   [eventCodes.SCP_DOWNLOAD_FAILURE]: {
     type: 'scp',
     desc: 'SCP Download Failed',
     format: ({ exitError, ...rest }) =>
-      `File download from node [${rest['addr.local']}] failed [${exitError}]`,
+      `File download from node [${
+        rest['server_hostname'] || rest['addr.local']
+      }] failed [${exitError}]`,
   },
   [eventCodes.SCP_UPLOAD]: {
     type: 'scp',
     desc: 'SCP Upload',
     format: ({ user, path, ...rest }) =>
-      `User [${user}] uploaded a file [${path}] to node [${rest['addr.local']}]`,
+      `User [${user}] uploaded a file to [${path}] on node [${
+        rest['server_hostname'] || rest['addr.local']
+      }]`,
   },
   [eventCodes.SCP_UPLOAD_FAILURE]: {
     type: 'scp',
     desc: 'SCP Upload Failed',
     format: ({ exitError, ...rest }) =>
-      `File upload to node [${rest['addr.local']}] failed [${exitError}]`,
+      `File upload to node [${
+        rest['server_hostname'] || rest['addr.local']
+      }] failed [${exitError}]`,
   },
   [eventCodes.SFTP_OPEN]: {
     type: 'sftp',
     desc: 'SFTP Open',
     format: ({ user, path, ...rest }) =>
-      `User [${user}] opened file [${path}] on node [${rest['addr.local']}]`,
+      `User [${user}] opened file [${path}] on node [${
+        rest['server_hostname'] || rest['addr.local']
+      }]`,
   },
   [eventCodes.SFTP_OPEN_FAILURE]: {
     type: 'sftp',
     desc: 'SFTP Open Failed',
     format: ({ user, path, error, ...rest }) =>
-      `User [${user}] failed to open file [${path}] on node [${rest['addr.local']}]: [${error}]`,
+      `User [${user}] failed to open file [${path}] on node [${
+        rest['server_hostname'] || rest['addr.local']
+      }]: [${error}]`,
   },
   [eventCodes.SFTP_CLOSE]: {
     type: 'sftp',
     desc: 'SFTP Close',
     format: ({ user, path, ...rest }) =>
-      `User [${user}] closed file [${path}] on node [${rest['addr.local']}]`,
+      `User [${user}] closed file [${path}] on node [${
+        rest['server_hostname'] || rest['addr.local']
+      }]`,
   },
   [eventCodes.SFTP_CLOSE_FAILURE]: {
     type: 'sftp',
     desc: 'SFTP Close Failed',
     format: ({ user, path, error, ...rest }) =>
-      `User [${user}] failed to close file [${path}] on node [${rest['addr.local']}]: [${error}]`,
+      `User [${user}] failed to close file [${path}] on node [${
+        rest['server_hostname'] || rest['addr.local']
+      }]: [${error}]`,
   },
   [eventCodes.SFTP_READ]: {
     type: 'sftp',
     desc: 'SFTP Read',
     format: ({ user, path, ...rest }) =>
-      `User [${user}] read from file [${path}] on node [${rest['addr.local']}]`,
+      `User [${user}] read from file [${path}] on node [${
+        rest['server_hostname'] || rest['addr.local']
+      }]`,
   },
   [eventCodes.SFTP_READ_FAILURE]: {
     type: 'sftp',
     desc: 'SFTP Read Failed',
     format: ({ user, path, error, ...rest }) =>
-      `User [${user}] failed to read from file [${path}] on node [${rest['addr.local']}]: [${error}]`,
+      `User [${user}] failed to read from file [${path}] on node [${
+        rest['server_hostname'] || rest['addr.local']
+      }]: [${error}]`,
   },
   [eventCodes.SFTP_WRITE]: {
     type: 'sftp',
     desc: 'SFTP Write',
     format: ({ user, path, ...rest }) =>
-      `User [${user}] wrote to file [${path}] on node [${rest['addr.local']}]`,
+      `User [${user}] wrote to file [${path}] on node [${
+        rest['server_hostname'] || rest['addr.local']
+      }]`,
   },
   [eventCodes.SFTP_WRITE_FAILURE]: {
     type: 'sftp',
     desc: 'SFTP Write Failed',
     format: ({ user, path, error, ...rest }) =>
-      `User [${user}] failed to write to file [${path}] on node [${rest['addr.local']}]: [${error}]`,
+      `User [${user}] failed to write to file [${path}] on node [${
+        rest['server_hostname'] || rest['addr.local']
+      }]: [${error}]`,
   },
   [eventCodes.SFTP_LSTAT]: {
     type: 'sftp',
     desc: 'SFTP Lstat',
     format: ({ user, path, ...rest }) =>
-      `User [${user}] queried attributes of file [${path}] on node [${rest['addr.local']}]`,
+      `User [${user}] queried attributes of file [${path}] on node [${
+        rest['server_hostname'] || rest['addr.local']
+      }]`,
   },
   [eventCodes.SFTP_LSTAT_FAILURE]: {
     type: 'sftp',
     desc: 'SFTP Lstat Failed',
     format: ({ user, path, error, ...rest }) =>
-      `User [${user}] failed to query attributes of file [${path}] on node [${rest['addr.local']}]: [${error}]`,
+      `User [${user}] failed to query attributes of file [${path}] on node [${
+        rest['server_hostname'] || rest['addr.local']
+      }]: [${error}]`,
   },
   [eventCodes.SFTP_FSTAT]: {
     type: 'sftp',
     desc: 'SFTP Fstat',
     format: ({ user, path, ...rest }) =>
-      `User [${user}] queried attributes of file [${path}] on node [${rest['addr.local']}]`,
+      `User [${user}] queried attributes of file [${path}] on node [${
+        rest['server_hostname'] || rest['addr.local']
+      }]`,
   },
   [eventCodes.SFTP_FSTAT_FAILURE]: {
     type: 'sftp',
     desc: 'SFTP Fstat Failed',
     format: ({ user, path, error, ...rest }) =>
-      `User [${user}] failed to query attributes of file [${path}] on node [${rest['addr.local']}]: [${error}]`,
+      `User [${user}] failed to query attributes of file [${path}] on node [${
+        rest['server_hostname'] || rest['addr.local']
+      }]: [${error}]`,
   },
   [eventCodes.SFTP_SETSTAT]: {
     type: 'sftp',
     desc: 'SFTP Setstat',
     format: ({ user, path, ...rest }) =>
-      `User [${user}] changed attributes of file [${path}] on node [${rest['addr.local']}]`,
+      `User [${user}] changed attributes of file [${path}] on node [${
+        rest['server_hostname'] || rest['addr.local']
+      }]`,
   },
   [eventCodes.SFTP_SETSTAT_FAILURE]: {
     type: 'sftp',
     desc: 'SFTP Setstat Failed',
     format: ({ user, path, error, ...rest }) =>
-      `User [${user}] failed to change attributes of file [${path}] on node [${rest['addr.local']}]: [${error}]`,
+      `User [${user}] failed to change attributes of file [${path}] on node [${
+        rest['server_hostname'] || rest['addr.local']
+      }]: [${error}]`,
   },
   [eventCodes.SFTP_FSETSTAT]: {
     type: 'sftp',
     desc: 'SFTP Fsetstat',
     format: ({ user, path, ...rest }) =>
-      `User [${user}] changed attributes of file [${path}] on node [${rest['addr.local']}]`,
+      `User [${user}] changed attributes of file [${path}] on node [${
+        rest['server_hostname'] || rest['addr.local']
+      }]`,
   },
   [eventCodes.SFTP_FSETSTAT_FAILURE]: {
     type: 'sftp',
     desc: 'SFTP Fsetstat Failed',
     format: ({ user, path, error, ...rest }) =>
-      `User [${user}] failed to change attributes of file [${path}] on node [${rest['addr.local']}]: [${error}]`,
+      `User [${user}] failed to change attributes of file [${path}] on node [${
+        rest['server_hostname'] || rest['addr.local']
+      }]: [${error}]`,
   },
   [eventCodes.SFTP_OPENDIR]: {
     type: 'sftp',
     desc: 'SFTP Opendir',
     format: ({ user, path, ...rest }) =>
-      `User [${user}] opened directory [${path}] on node [${rest['addr.local']}]`,
+      `User [${user}] opened directory [${path}] on node [${
+        rest['server_hostname'] || rest['addr.local']
+      }]`,
   },
   [eventCodes.SFTP_OPENDIR_FAILURE]: {
     type: 'sftp',
     desc: 'SFTP Opendir Failed',
     format: ({ user, path, error, ...rest }) =>
-      `User [${user}] failed to open directory [${path}] on node [${rest['addr.local']}]: [${error}]`,
+      `User [${user}] failed to open directory [${path}] on node [${
+        rest['server_hostname'] || rest['addr.local']
+      }]: [${error}]`,
   },
   [eventCodes.SFTP_READDIR]: {
     type: 'sftp',
     desc: 'SFTP Readdir',
     format: ({ user, path, ...rest }) =>
-      `User [${user}] read directory [${path}] on node [${rest['addr.local']}]`,
+      `User [${user}] read directory [${path}] on node [${
+        rest['server_hostname'] || rest['addr.local']
+      }]`,
   },
   [eventCodes.SFTP_READDIR_FAILURE]: {
     type: 'sftp',
     desc: 'SFTP Readdir Failed',
     format: ({ user, path, error, ...rest }) =>
-      `User [${user}] failed to read directory [${path}] on node [${rest['addr.local']}]: [${error}]`,
+      `User [${user}] failed to read directory [${path}] on node [${
+        rest['server_hostname'] || rest['addr.local']
+      }]: [${error}]`,
   },
   [eventCodes.SFTP_REMOVE]: {
     type: 'sftp',
     desc: 'SFTP Remove',
     format: ({ user, path, ...rest }) =>
-      `User [${user}] removed file [${path}] on node [${rest['addr.local']}]`,
+      `User [${user}] removed file [${path}] on node [${
+        rest['server_hostname'] || rest['addr.local']
+      }]`,
   },
   [eventCodes.SFTP_REMOVE_FAILURE]: {
     type: 'sftp',
     desc: 'SFTP Remove Failed',
     format: ({ user, path, error, ...rest }) =>
-      `User [${user}] failed to remove file [${path}] on node [${rest['addr.local']}]: [${error}]`,
+      `User [${user}] failed to remove file [${path}] on node [${
+        rest['server_hostname'] || rest['addr.local']
+      }]: [${error}]`,
   },
   [eventCodes.SFTP_MKDIR]: {
     type: 'sftp',
     desc: 'SFTP Mkdir',
     format: ({ user, path, ...rest }) =>
-      `User [${user}] created directory [${path}] on node [${rest['addr.local']}]`,
+      `User [${user}] created directory [${path}] on node [${
+        rest['server_hostname'] || rest['addr.local']
+      }]`,
   },
   [eventCodes.SFTP_MKDIR_FAILURE]: {
     type: 'sftp',
     desc: 'SFTP Mkdir Failed',
     format: ({ user, path, error, ...rest }) =>
-      `User [${user}] failed to create directory [${path}] on node [${rest['addr.local']}]: [${error}]`,
+      `User [${user}] failed to create directory [${path}] on node [${
+        rest['server_hostname'] || rest['addr.local']
+      }]: [${error}]`,
   },
   [eventCodes.SFTP_RMDIR]: {
     type: 'sftp',
     desc: 'SFTP Rmdir',
     format: ({ user, path, ...rest }) =>
-      `User [${user}] removed directory [${path}] on node [${rest['addr.local']}]`,
+      `User [${user}] removed directory [${path}] on node [${
+        rest['server_hostname'] || rest['addr.local']
+      }]`,
   },
   [eventCodes.SFTP_RMDIR_FAILURE]: {
     type: 'sftp',
     desc: 'SFTP Rmdir Failed',
     format: ({ user, path, error, ...rest }) =>
-      `User [${user}] failed to remove directory [${path}] on node [${rest['addr.local']}]: [${error}]`,
+      `User [${user}] failed to remove directory [${path}] on node [${
+        rest['server_hostname'] || rest['addr.local']
+      }]: [${error}]`,
   },
   [eventCodes.SFTP_REALPATH]: {
     type: 'sftp',
     desc: 'SFTP Realpath',
     format: ({ user, path, ...rest }) =>
-      `User [${user}] queried absolute path of file [${path}] on node [${rest['addr.local']}]`,
+      `User [${user}] queried absolute path of file [${path}] on node [${
+        rest['server_hostname'] || rest['addr.local']
+      }]`,
   },
   [eventCodes.SFTP_REALPATH_FAILURE]: {
     type: 'sftp',
     desc: 'SFTP Realpath Failed',
     format: ({ user, path, error, ...rest }) =>
-      `User [${user}] failed to query absolute path of file [${path}] on node [${rest['addr.local']}]: [${error}]`,
+      `User [${user}] failed to query absolute path of file [${path}] on node [${
+        rest['server_hostname'] || rest['addr.local']
+      }]: [${error}]`,
   },
   [eventCodes.SFTP_STAT]: {
     type: 'sftp',
     desc: 'SFTP Stat',
     format: ({ user, path, ...rest }) =>
-      `User [${user}] queried attributes of file [${path}] on node [${rest['addr.local']}]`,
+      `User [${user}] queried attributes of file [${path}] on node [${
+        rest['server_hostname'] || rest['addr.local']
+      }]`,
   },
   [eventCodes.SFTP_STAT_FAILURE]: {
     type: 'sftp',
     desc: 'SFTP Stat Failed',
     format: ({ user, path, error, ...rest }) =>
-      `User [${user}] failed to query attributes of file [${path}] on node [${rest['addr.local']}]: [${error}]`,
+      `User [${user}] failed to query attributes of file [${path}] on node [${
+        rest['server_hostname'] || rest['addr.local']
+      }]: [${error}]`,
   },
   [eventCodes.SFTP_RENAME]: {
     type: 'sftp',
     desc: 'SFTP Rename',
     format: ({ user, path, ...rest }) =>
-      `User [${user}] renamed file [${path}] on node [${rest['addr.local']}]`,
+      `User [${user}] renamed file [${path}] on node [${
+        rest['server_hostname'] || rest['addr.local']
+      }]`,
   },
   [eventCodes.SFTP_RENAME_FAILURE]: {
     type: 'sftp',
     desc: 'SFTP Rename Failed',
     format: ({ user, path, error, ...rest }) =>
-      `User [${user}] failed to rename file [${path}] on node [${rest['addr.local']}]: [${error}]`,
+      `User [${user}] failed to rename file [${path}] on node [${
+        rest['server_hostname'] || rest['addr.local']
+      }]: [${error}]`,
   },
   [eventCodes.SFTP_READLINK]: {
     type: 'sftp',
     desc: 'SFTP Readlink',
     format: ({ user, path, ...rest }) =>
-      `User [${user}] read symbolic link [${path}] on node [${rest['addr.local']}]`,
+      `User [${user}] read symbolic link [${path}] on node [${
+        rest['server_hostname'] || rest['addr.local']
+      }]`,
   },
   [eventCodes.SFTP_READLINK_FAILURE]: {
     type: 'sftp',
     desc: 'SFTP Readlink Failed',
     format: ({ user, path, error, ...rest }) =>
-      `User [${user}] failed to read symbolic link [${path}] on node [${rest['addr.local']}]: [${error}]`,
+      `User [${user}] failed to read symbolic link [${path}] on node [${
+        rest['server_hostname'] || rest['addr.local']
+      }]: [${error}]`,
   },
   [eventCodes.SFTP_SYMLINK]: {
     type: 'sftp',
     desc: 'SFTP Symlink',
     format: ({ user, path, ...rest }) =>
-      `User [${user}] created symbolic link [${path}] on node [${rest['addr.local']}]`,
+      `User [${user}] created symbolic link [${path}] on node [${
+        rest['server_hostname'] || rest['addr.local']
+      }]`,
   },
   [eventCodes.SFTP_SYMLINK_FAILURE]: {
     type: 'sftp',
     desc: 'SFTP Symlink Failed',
     format: ({ user, path, error, ...rest }) =>
-      `User [${user}] failed to create symbolic link [${path}] on node [${rest['addr.local']}]: [${error}]`,
+      `User [${user}] failed to create symbolic link [${path}] on node [${
+        rest['server_hostname'] || rest['addr.local']
+      }]: [${error}]`,
   },
   [eventCodes.SESSION_JOIN]: {
     type: 'session.join',
@@ -478,13 +562,29 @@ export const formatters: Formatters = {
   [eventCodes.APP_SESSION_START]: {
     type: 'app.session.start',
     desc: 'App Session Started',
-    format: ({ user, sid }) =>
-      `User [${user}] has started an app session [${sid}]`,
+    format: event => {
+      const { user, app_name, aws_role_arn } = event;
+      if (aws_role_arn) {
+        return `User [${user}] has connected to AWS console [${app_name}]`;
+      }
+      return `User [${user}] has connected to application [${app_name}]`;
+    },
+  },
+  [eventCodes.APP_SESSION_END]: {
+    type: 'app.session.end',
+    desc: 'App Session Ended',
+    format: event => {
+      const { user, app_name } = event;
+      return `User [${user}] has disconnected from application [${app_name}]`;
+    },
   },
   [eventCodes.APP_SESSION_CHUNK]: {
     type: 'app.session.chunk',
     desc: 'App Session Data',
-    format: ({ sid }) => `New app session data created [${sid}]`,
+    format: event => {
+      const { user, app_name } = event;
+      return `New session data chunk created for application [${app_name}] accessed by user [${user}]`;
+    },
   },
   [eventCodes.SUBSYSTEM]: {
     type: 'subsystem',
@@ -577,11 +677,31 @@ export const formatters: Formatters = {
     format: ({ user, kubernetes_cluster }) =>
       `User [${user}] made a request to kubernetes cluster [${kubernetes_cluster}]`,
   },
+  [eventCodes.KUBE_CREATED]: {
+    type: 'kube.create',
+    desc: 'Kubernetes Created',
+    format: ({ user, name }) =>
+      `User [${user}] created kubernetes cluster [${name}]`,
+  },
+  [eventCodes.KUBE_UPDATED]: {
+    type: 'kube.update',
+    desc: 'Kubernetes Updated',
+    format: ({ user, name }) =>
+      `User [${user}] updated kubernetes cluster [${name}]`,
+  },
+  [eventCodes.KUBE_DELETED]: {
+    type: 'kube.delete',
+    desc: 'Kubernetes Deleted',
+    format: ({ user, name }) =>
+      `User [${user}] deleted kubernetes cluster [${name}]`,
+  },
   [eventCodes.DATABASE_SESSION_STARTED]: {
     type: 'db.session.start',
     desc: 'Database Session Started',
     format: ({ user, db_service, db_name, db_user }) =>
-      `User [${user}] has connected to database [${db_name}] as [${db_user}] on [${db_service}]`,
+      `User [${user}] has connected ${
+        db_name ? `to database [${db_name}] ` : ''
+      }as [${db_user}] on [${db_service}]`,
   },
   [eventCodes.DATABASE_SESSION_STARTED_FAILURE]: {
     type: 'db.session.start',
@@ -593,7 +713,9 @@ export const formatters: Formatters = {
     type: 'db.session.end',
     desc: 'Database Session Ended',
     format: ({ user, db_service, db_name }) =>
-      `User [${user}] has disconnected from database [${db_name}] on [${db_service}]`,
+      `User [${user}] has disconnected ${
+        db_name ? `from database [${db_name}] ` : ''
+      }on [${db_service}]`,
   },
   [eventCodes.DATABASE_SESSION_QUERY]: {
     type: 'db.session.query',
@@ -617,7 +739,7 @@ export const formatters: Formatters = {
     type: 'db.session.malformed_packet"',
     desc: 'Database Malformed Packet',
     format: ({ user, db_service, db_name }) =>
-      `Recived malformed packet from [${user}] in [${db_name}] on database [${db_service}]`,
+      `Received malformed packet from [${user}] in [${db_name}] on database [${db_service}]`,
   },
   [eventCodes.DATABASE_CREATED]: {
     type: 'db.create',
@@ -633,6 +755,21 @@ export const formatters: Formatters = {
     type: 'db.delete',
     desc: 'Database Deleted',
     format: ({ user, name }) => `User [${user}] deleted database [${name}]`,
+  },
+  [eventCodes.APP_CREATED]: {
+    type: 'app.create',
+    desc: 'Application Created',
+    format: ({ user, name }) => `User [${user}] created application [${name}]`,
+  },
+  [eventCodes.APP_UPDATED]: {
+    type: 'app.update',
+    desc: 'Application Updated',
+    format: ({ user, name }) => `User [${user}] updated application [${name}]`,
+  },
+  [eventCodes.APP_DELETED]: {
+    type: 'app.delete',
+    desc: 'Application Deleted',
+    format: ({ user, name }) => `User [${user}] deleted application [${name}]`,
   },
   [eventCodes.POSTGRES_PARSE]: {
     type: 'db.session.postgres.statements.parse',
@@ -766,10 +903,78 @@ export const formatters: Formatters = {
       `User [${user}] has sent command [${subcommand}] to [${db_service}]`,
   },
   [eventCodes.SQLSERVER_RPC_REQUEST]: {
-    type: 'db.session.sqlserver.rpc_request""',
+    type: 'db.session.sqlserver.rpc_request',
     desc: 'SQLServer RPC Request',
     format: ({ user, db_service, db_name, proc_name }) =>
-      `User [${user}] has send RPC Request [${proc_name}] in database [${db_name}] on [${db_service}]`,
+      `User [${user}] has sent RPC Request [${proc_name}] in database [${db_name}] on [${db_service}]`,
+  },
+  [eventCodes.CASSANDRA_BATCH_EVENT]: {
+    type: 'db.session.cassandra.batch',
+    desc: 'Cassandra Batch',
+    format: ({ user, db_service }) =>
+      `User [${user}] has sent Cassandra Batch to [${db_service}]`,
+  },
+  [eventCodes.CASSANDRA_PREPARE_EVENT]: {
+    type: 'db.session.cassandra.prepare',
+    desc: 'Cassandra Prepare Event',
+    format: ({ user, db_service, query }) =>
+      `User [${user}] has sent Cassandra Prepare [${truncateStr(
+        query,
+        80
+      )}] to [${db_service}]`,
+  },
+  [eventCodes.CASSANDRA_EXECUTE_EVENT]: {
+    type: 'db.session.cassandra.execute',
+    desc: 'Cassandra Execute',
+    format: ({ user, db_service }) =>
+      `User [${user}] has sent Cassandra Execute to [${db_service}]`,
+  },
+  [eventCodes.CASSANDRA_REGISTER_EVENT]: {
+    type: 'db.session.cassandra.register',
+    desc: 'Cassandra Register',
+    format: ({ user, db_service }) =>
+      `User [${user}] has sent Cassandra Register to [${db_service}]`,
+  },
+  [eventCodes.ELASTICSEARCH_REQUEST]: {
+    type: 'db.session.elasticsearch.request',
+    desc: 'Elasticsearch Request',
+    format: ({ user, db_service, category, target, query, path }) => {
+      // local redefinition of enum ElasticsearchCategory from events.proto
+      enum ElasticsearchCategory {
+        GENERAL = 0,
+        SECURITY = 1,
+        SEARCH = 2,
+        SQL = 3,
+      }
+
+      let categoryString = 'UNKNOWN';
+      switch (category) {
+        case ElasticsearchCategory.GENERAL:
+          categoryString = 'GENERAL';
+          break;
+        case ElasticsearchCategory.SEARCH:
+          categoryString = 'SEARCH';
+          break;
+        case ElasticsearchCategory.SECURITY:
+          categoryString = 'SECURITY';
+          break;
+        case ElasticsearchCategory.SQL:
+          categoryString = 'SQL';
+          break;
+      }
+
+      let message = `User [${user}] has ran a [${categoryString}] query in [${db_service}], request path: [${path}]`;
+
+      if (query) {
+        message += `, query string: [${truncateStr(query, 80)}]`;
+      }
+
+      if (target) {
+        message += `, target: [${target}]`;
+      }
+
+      return message;
+    },
   },
   [eventCodes.MFA_DEVICE_ADD]: {
     type: 'mfa.add',
@@ -902,6 +1107,27 @@ export const formatters: Formatters = {
     desc: 'Upgrade Window Start Updated',
     format: ({ user, upgrade_window_start }) => {
       return `Upgrade Window Start updated to [${upgrade_window_start}] by user [${user}]`;
+    },
+  },
+  [eventCodes.SESSION_RECORDING_ACCESS]: {
+    type: 'session.recording.access',
+    desc: 'Session Recording Accessed',
+    format: ({ sid, user }) => {
+      return `User [${user}] accessed a session recording [${sid}]`;
+    },
+  },
+  [eventCodes.SSMRUN_SUCCESS]: {
+    type: 'ssm.run',
+    desc: 'SSM Command Executed',
+    format: ({ account_id, instance_id, region, command_id }) => {
+      return `SSM Command with ID [${command_id}] was successfully executed on EC2 Instance [${instance_id}] on AWS Account [${account_id}] in [${region}]`;
+    },
+  },
+  [eventCodes.SSMRUN_FAIL]: {
+    type: 'ssm.run',
+    desc: 'SSM Command Execution Failed',
+    format: ({ account_id, instance_id, region, command_id }) => {
+      return `SSM Command with ID [${command_id}] failed during execution on EC2 Instance [${instance_id}] on AWS Account [${account_id}] in [${region}]`;
     },
   },
   [eventCodes.UNKNOWN]: {

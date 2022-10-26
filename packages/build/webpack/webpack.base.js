@@ -35,6 +35,9 @@ const configFactory = {
         typescript: {
           configFile: tsconfigPath,
         },
+        issue: {
+          exclude: [{ file: '**/*.story.tsx' }],
+        },
       });
     },
     indexHtml(options) {
@@ -170,6 +173,7 @@ function createDefaultConfig() {
         teleterm: path.join(__dirname, '/../../teleterm/src'),
         teleport: path.join(__dirname, '/../../teleport/src'),
         'e-teleport': path.join(__dirname, '/../../webapps.e/teleport/src'),
+        'e-teleterm': path.join(__dirname, '/../../webapps.e/teleterm/src'),
         design: path.join(__dirname, '/../../design/src'),
         shared: path.join(__dirname, '/../../shared'),
       },

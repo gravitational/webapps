@@ -23,8 +23,6 @@ import {
 } from 'teleterm/ui/services/workspacesService';
 import { StatePersistenceService } from 'teleterm/ui/services/statePersistence';
 
-import { getClusterName } from 'teleterm/ui/utils';
-
 import { routing } from 'teleterm/ui/uri';
 
 import { ImmutableStore } from '../immutableStore';
@@ -32,8 +30,10 @@ import { ImmutableStore } from '../immutableStore';
 import { TrackedConnectionOperationsFactory } from './trackedConnectionOperationsFactory';
 import {
   createGatewayConnection,
+  createKubeConnection,
   createServerConnection,
   getGatewayConnectionByDocument,
+  getKubeConnectionByDocument,
   getServerConnectionByDocument,
 } from './trackedConnectionUtils';
 import {
@@ -75,7 +75,7 @@ export class ConnectionTrackerService extends ImmutableStore<ConnectionTrackerSt
         this._trackedConnectionOperationsFactory.create(connection);
       const clusterUri = leafClusterUri || rootClusterUri;
       const clusterName =
-        getClusterName(this._clusterService.findCluster(clusterUri)) ||
+        this._clusterService.findCluster(clusterUri)?.name ||
         routing.parseClusterName(clusterUri);
       return { ...connection, clusterName };
     });
@@ -98,6 +98,10 @@ export class ConnectionTrackerService extends ImmutableStore<ConnectionTrackerSt
         return this.state.connections.find(
           getServerConnectionByDocument(document)
         );
+      case 'doc.terminal_tsh_kube':
+        return this.state.connections.find(
+          getKubeConnectionByDocument(document)
+        );
       case 'doc.gateway':
         return this.state.connections.find(
           getGatewayConnectionByDocument(document)
@@ -116,17 +120,26 @@ export class ConnectionTrackerService extends ImmutableStore<ConnectionTrackerSt
 
   async disconnectItem(id: string): Promise<void> {
     const connection = this.state.connections.find(c => c.id === id);
-    const { disconnect } =
-      this._trackedConnectionOperationsFactory.create(connection);
-    return disconnect();
+    if (!connection) {
+      return;
+    }
+
+    return this._trackedConnectionOperationsFactory
+      .create(connection)
+      .disconnect();
   }
 
-  removeItem(id: string): void {
+  async removeItem(id: string): Promise<void> {
+    const connection = this.state.connections.find(c => c.id === id);
+    if (!connection) {
+      return;
+    }
+
+    await this._trackedConnectionOperationsFactory.create(connection).remove();
+
     this.setState(draft => {
       draft.connections = draft.connections.filter(i => i.id !== id);
     });
-
-    this._statePersistenceService.saveConnectionTrackerState(this.state);
   }
 
   removeItemsBelongingToRootCluster(clusterUri: string): void {
@@ -165,7 +178,10 @@ export class ConnectionTrackerService extends ImmutableStore<ConnectionTrackerSt
         })
         .filter(Boolean)
         .filter(
-          d => d.kind === 'doc.gateway' || d.kind === 'doc.terminal_tsh_node'
+          d =>
+            d.kind === 'doc.gateway' ||
+            d.kind === 'doc.terminal_tsh_node' ||
+            d.kind === 'doc.terminal_tsh_kube'
         );
 
       if (!docs) {
@@ -177,7 +193,7 @@ export class ConnectionTrackerService extends ImmutableStore<ConnectionTrackerSt
 
         switch (doc.kind) {
           // process gateway connections
-          case 'doc.gateway':
+          case 'doc.gateway': {
             if (!doc.port) {
               break;
             }
@@ -196,10 +212,10 @@ export class ConnectionTrackerService extends ImmutableStore<ConnectionTrackerSt
                 doc.gatewayUri
               );
             }
-
             break;
+          }
           // process tsh connections
-          case 'doc.terminal_tsh_node':
+          case 'doc.terminal_tsh_node': {
             const tshConn = draft.connections.find(
               getServerConnectionByDocument(doc)
             );
@@ -211,6 +227,21 @@ export class ConnectionTrackerService extends ImmutableStore<ConnectionTrackerSt
               draft.connections.push(newItem);
             }
             break;
+          }
+          // process kube connections
+          case 'doc.terminal_tsh_kube': {
+            const kubeConn = draft.connections.find(
+              getKubeConnectionByDocument(doc)
+            );
+
+            if (kubeConn) {
+              kubeConn.connected = doc.status === 'connected';
+            } else {
+              const newItem = createKubeConnection(doc);
+              draft.connections.push(newItem);
+            }
+            break;
+          }
         }
       }
     });

@@ -19,6 +19,8 @@ import React from 'react';
 import AppContextProvider from 'teleterm/ui/appContextProvider';
 import { MockAppContext } from 'teleterm/ui/fixtures/mocks';
 
+import { getEmptyPendingAccessRequest } from '../services/workspacesService/accessRequestsService';
+
 import QuickInput from './QuickInput';
 
 export default {
@@ -34,6 +36,10 @@ export const Story = () => {
         documents: [],
         location: '',
         localClusterUri: '/clusters/localhost',
+        accessRequests: {
+          pending: getEmptyPendingAccessRequest(),
+          isBarCollapsed: true,
+        },
       },
     },
     rootClusterUri: '/clusters/localhost',
@@ -46,9 +52,9 @@ export const Story = () => {
         name: 'Test',
         leaf: false,
         connected: true,
-        actualName: 'Test',
         proxyHost: 'localhost:3080',
         loggedInUser: {
+          activeRequestsList: [],
           name: 'admin',
           acl: {},
           sshLoginsList: [],

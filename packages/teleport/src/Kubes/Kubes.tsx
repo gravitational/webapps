@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React, { useState } from 'react';
+import React from 'react';
 import { Box, Indicator } from 'design';
 
 import KubeList from 'teleport/Kubes/KubeList';
@@ -30,7 +30,6 @@ import useTeleport from 'teleport/useTeleport';
 import AgentButtonAdd from 'teleport/components/AgentButtonAdd';
 
 import useKubes, { State } from './useKubes';
-import AddKube from './AddKube';
 
 export default function Container() {
   const ctx = useTeleport();
@@ -63,9 +62,8 @@ export function Kubes(props: State) {
     fetchStatus,
     isSearchEmpty,
     onLabelClick,
+    accessRequestId,
   } = props;
-
-  const [showAddKube, setShowAddKube] = useState(false);
 
   const hasNoKubes = results.kubes.length === 0 && isSearchEmpty;
 
@@ -75,7 +73,6 @@ export function Kubes(props: State) {
         <FeatureHeaderTitle>Kubernetes</FeatureHeaderTitle>
         {attempt.status === 'success' && !hasNoKubes && (
           <AgentButtonAdd
-            onClick={() => setShowAddKube(true)}
             agent="kubernetes"
             beginsWithVowel={false}
             isLeafCluster={isLeafCluster}
@@ -112,6 +109,7 @@ export function Kubes(props: State) {
             pathname={pathname}
             replaceHistory={replaceHistory}
             onLabelClick={onLabelClick}
+            accessRequestId={accessRequestId}
           />
         </>
       )}
@@ -119,11 +117,9 @@ export function Kubes(props: State) {
         <Empty
           clusterId={clusterId}
           canCreate={canCreate && !isLeafCluster}
-          onClick={() => setShowAddKube(true)}
           emptyStateInfo={emptyStateInfo}
         />
       )}
-      {showAddKube && <AddKube onClose={() => setShowAddKube(false)} />}
     </FeatureBox>
   );
 }
@@ -131,7 +127,7 @@ export function Kubes(props: State) {
 const emptyStateInfo: EmptyStateInfo = {
   title: 'Add your first Kubernetes cluster to Teleport',
   byline:
-    'Teleport Kubenetes Access provides secure access to Kubernetes clusters.',
+    'Teleport Kubernetes Access provides secure access to Kubernetes clusters.',
   docsURL: DOC_URL,
   resourceType: 'kubernetes',
   readOnly: {

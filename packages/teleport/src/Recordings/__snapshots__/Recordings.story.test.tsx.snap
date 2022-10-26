@@ -376,7 +376,6 @@ exports[`rendering of Session Recordings 1`] = `
   padding-left: 40px;
   padding-right: 40px;
   display: flex;
-  overflow: auto;
   width: 100%;
   height: 100%;
   flex-direction: column;
@@ -702,6 +701,7 @@ exports[`rendering of Session Recordings 1`] = `
               <span
                 class="c14 c17 icon icon-chevrons-expand-vertical "
                 color="light"
+                title="sort items"
               />
             </a>
           </th>
@@ -711,6 +711,7 @@ exports[`rendering of Session Recordings 1`] = `
               <span
                 class="c14 c17 icon icon-chevrons-expand-vertical "
                 color="light"
+                title="sort items"
               />
             </a>
           </th>
@@ -720,6 +721,7 @@ exports[`rendering of Session Recordings 1`] = `
               <span
                 class="c14 c17 icon icon-chevrons-expand-vertical "
                 color="light"
+                title="sort items"
               />
             </a>
           </th>
@@ -729,6 +731,7 @@ exports[`rendering of Session Recordings 1`] = `
               <span
                 class="c14 c17 icon icon-chevrons-expand-vertical "
                 color="light"
+                title="sort items"
               />
             </a>
           </th>
@@ -738,6 +741,7 @@ exports[`rendering of Session Recordings 1`] = `
               <span
                 class="c14 c17 icon icon-chevron-down "
                 color="light"
+                title="sort items desc"
               />
             </a>
           </th>

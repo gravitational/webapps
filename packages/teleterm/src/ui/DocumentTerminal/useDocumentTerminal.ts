@@ -18,28 +18,35 @@ import { useEffect } from 'react';
 
 import { useAsync } from 'shared/hooks/useAsync';
 
+import { once } from 'lodash';
+
 import { useAppContext } from 'teleterm/ui/appContextProvider';
 import { IAppContext } from 'teleterm/ui/types';
 import * as types from 'teleterm/ui/services/workspacesService';
 import { DocumentsService } from 'teleterm/ui/services/workspacesService';
 import { IPtyProcess } from 'teleterm/sharedProcess/ptyHost';
-import { useWorkspaceDocumentsService } from 'teleterm/ui/Documents';
+import { useWorkspaceContext } from 'teleterm/ui/Documents';
 import { routing } from 'teleterm/ui/uri';
 import { PtyCommand, PtyProcessCreationStatus } from 'teleterm/services/pty';
 
 export default function useDocumentTerminal(doc: Doc) {
   const ctx = useAppContext();
-  const workspaceDocumentsService = useWorkspaceDocumentsService();
+  const { documentsService: workspaceDocumentsService } = useWorkspaceContext();
   const [state, init] = useAsync(async () =>
     initState(ctx, workspaceDocumentsService, doc)
   );
 
   useEffect(() => {
-    init();
+    if (state.status === '') {
+      init();
+    }
+
     return () => {
-      state.data?.ptyProcess.dispose();
+      if (state.status === 'success') {
+        state.data.ptyProcess.dispose();
+      }
     };
-  }, []);
+  }, [state]);
 
   useEffect(() => {
     if (state.status === 'error') {
@@ -58,16 +65,16 @@ async function initState(
   docsService: DocumentsService,
   doc: Doc
 ) {
-  const getClusterActualName = () => {
+  const getClusterName = () => {
     const cluster = ctx.clustersService.findCluster(clusterUri);
     if (cluster) {
-      return cluster.actualName;
+      return cluster.name;
     }
 
     /*
      When restoring the documents, we do not always have the leaf clusters already fetched.
      In that case we can fall back to `clusterId` from a leaf cluster URI
-     (for a leaf cluster `clusterId` === `actualName`)
+     (for a leaf cluster `clusterId` === `name`)
     */
     const parsed = routing.parseClusterUri(clusterUri);
 
@@ -79,9 +86,12 @@ async function initState(
     return parsed.params.leafClusterId;
   };
 
-  const clusterUri = routing.getClusterUri(doc);
+  const clusterUri = routing.getClusterUri({
+    rootClusterId: doc.rootClusterId,
+    leafClusterId: doc.leafClusterId,
+  });
   const rootCluster = ctx.clustersService.findRootClusterByResource(clusterUri);
-  const cmd = createCmd(doc, rootCluster.proxyHost, getClusterActualName());
+  const cmd = createCmd(doc, rootCluster.proxyHost, getClusterName());
   const ptyProcess = await createPtyProcess(ctx, cmd);
   if (!ptyProcess) {
     return;
@@ -97,7 +107,7 @@ async function initState(
     const cwd = await ptyProcess.getCwd();
     docsService.update(doc.uri, {
       cwd,
-      title: `${cwd || 'Terminal'} · ${getClusterActualName()}`,
+      title: `${cwd || 'Terminal'} · ${getClusterName()}`,
     });
   };
 
@@ -111,10 +121,16 @@ async function initState(
   };
 
   ptyProcess.onOpen(() => {
-    docsService.update(doc.uri, { status: 'connected' });
     refreshTitle();
     removeInitCommand();
   });
+
+  const markDocumentAsConnectedOnce = once(() => {
+    docsService.update(doc.uri, { status: 'connected' });
+  });
+
+  // mark document as connected when first data arrives
+  ptyProcess.onData(() => markDocumentAsConnectedOnce());
 
   ptyProcess.onExit(event => {
     // Not closing the tab on non-zero exit code lets us show the error to the user if, for example,
@@ -163,13 +179,13 @@ async function createPtyProcess(
 function createCmd(
   doc: Doc,
   proxyHost: string,
-  actualClusterName: string
+  clusterName: string
 ): PtyCommand {
   if (doc.kind === 'doc.terminal_tsh_node') {
     return {
       ...doc,
       proxyHost,
-      actualClusterName,
+      clusterName,
       kind: 'pty.tsh-login',
     };
   }
@@ -178,7 +194,7 @@ function createCmd(
     return {
       ...doc,
       proxyHost,
-      actualClusterName,
+      clusterName,
       kind: 'pty.tsh-kube-login',
     };
   }
@@ -187,7 +203,7 @@ function createCmd(
     ...doc,
     kind: 'pty.shell',
     proxyHost,
-    actualClusterName,
+    clusterName,
     cwd: doc.cwd,
     initCommand: doc.initCommand,
   };
