@@ -56,7 +56,7 @@ export default function TdpClientCanvas(props: Props) {
     if (tdpCli) {
       tdpCli.init();
       return () => {
-        tdpCli.nuke();
+        tdpCli.close();
       };
     }
   }, [tdpCli]);
