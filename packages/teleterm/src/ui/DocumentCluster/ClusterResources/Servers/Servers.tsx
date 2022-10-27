@@ -16,15 +16,16 @@ limitations under the License.
 
 import React from 'react';
 
-import Table, { Cell } from 'design/DataTable';
+import Table, { Cell, ClickableLabelCell } from 'design/DataTable';
 
 import { MenuLogin } from 'shared/components/MenuLogin';
 
 import { Danger } from 'design/Alert';
 
-import * as types from 'teleterm/ui/services/clusters/types';
+import { SearchPanel } from 'shared/components/Search';
+import { SearchPagination } from 'shared/components/Search/SearchPagination';
 
-import { renderLabelCell } from '../renderLabelCell';
+import * as types from 'teleterm/ui/services/clusters/types';
 
 import { MenuLoginTheme } from '../MenuLoginTheme';
 
@@ -36,13 +37,38 @@ export default function Container() {
 }
 
 function ServerList(props: State) {
-  const { servers = [], getSshLogins, connect, syncStatus } = props;
+  const {
+    servers = [],
+    getSshLogins,
+    connect,
+    fetchAttempt,
+    agentFilter,
+    pageCount,
+    customSort,
+    prevPage,
+    nextPage,
+    updateQuery,
+    onAgentLabelClick,
+    disabledRows,
+    updateSearch,
+  } = props;
   return (
     <>
-      {syncStatus.status === 'failed' && (
-        <Danger>{syncStatus.statusText}</Danger>
+      {fetchAttempt.status === 'error' && (
+        <Danger>{fetchAttempt.statusText}</Danger>
       )}
+      <SearchPanel
+        updateQuery={updateQuery}
+        updateSearch={updateSearch}
+        pageCount={pageCount}
+        filter={agentFilter}
+        showSearchBar={true}
+        disableSearch={disabledRows}
+      />
       <Table
+        fetching={{
+          fetchStatus: fetchAttempt.status === 'processing' ? 'loading' : '',
+        }}
         columns={[
           {
             key: 'hostname',
@@ -58,7 +84,12 @@ function ServerList(props: State) {
           {
             key: 'labelsList',
             headerText: 'Labels',
-            render: renderLabelCell,
+            render: ({ labelsList }) => (
+              <ClickableLabelCell
+                labels={labelsList}
+                onClick={onAgentLabelClick}
+              />
+            ),
           },
           {
             altKey: 'connect-btn',
@@ -69,10 +100,11 @@ function ServerList(props: State) {
               ),
           },
         ]}
+        customSort={customSort}
         emptyText="No Nodes Found"
         data={servers}
-        pagination={{ pageSize: 15, pagerPosition: 'bottom' }}
       />
+      <SearchPagination prevPage={prevPage} nextPage={nextPage} />
     </>
   );
 }
