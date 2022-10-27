@@ -17,13 +17,13 @@ export async function createTshdEventsServer(
   credentials: grpc.ServerCredentials
 ): Promise<{
   resolvedAddress: string;
-  subscribeToEvent: SubscribeToTshdEvent;
+  subscribeToTshdEvent: SubscribeToTshdEvent;
 }> {
   const { server, resolvedAddress } = await createServer(
     requestedAddress,
     credentials
   );
-  const { service, subscribeToEvent } = createService();
+  const { service, subscribeToTshdEvent } = createService();
 
   server.addService(
     apiService.TshdEventsServiceService,
@@ -37,7 +37,7 @@ export async function createTshdEventsServer(
     service
   );
 
-  return { resolvedAddress, subscribeToEvent };
+  return { resolvedAddress, subscribeToTshdEvent };
 }
 
 async function createServer(
@@ -88,11 +88,11 @@ async function createServer(
 // a simple JS object which can freely pass the contextBridge.
 function createService(): {
   service: apiService.ITshdEventsServiceServer;
-  subscribeToEvent: SubscribeToTshdEvent;
+  subscribeToTshdEvent: SubscribeToTshdEvent;
 } {
   const emitter = new EventEmitter();
 
-  const subscribeToEvent: SubscribeToTshdEvent = (eventName, listener) => {
+  const subscribeToTshdEvent: SubscribeToTshdEvent = (eventName, listener) => {
     emitter.on(eventName, listener);
   };
 
@@ -104,5 +104,5 @@ function createService(): {
     },
   };
 
-  return { service, subscribeToEvent };
+  return { service, subscribeToTshdEvent };
 }
