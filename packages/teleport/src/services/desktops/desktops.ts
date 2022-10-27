@@ -63,8 +63,13 @@ class DesktopService {
       .then(json => makeDesktop(json));
   }
 
-  checkDesktopIsActive(clusterId: string, desktopName: string): Promise<boolean> {
-    return api.get(cfg.getDesktopIsActiveUrl(clusterId, desktopName)).then(json => json.active);
+  checkDesktopIsActive(
+    clusterId: string,
+    desktopName: string
+  ): Promise<boolean> {
+    return api
+      .get(cfg.getDesktopIsActiveUrl(clusterId, desktopName))
+      .then(json => json.active);
   }
 }
 
