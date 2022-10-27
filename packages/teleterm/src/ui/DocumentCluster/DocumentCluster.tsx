@@ -29,7 +29,6 @@ import ClusterCtx, {
   useClusterContext,
 } from './clusterContext';
 import ClusterResources from './ClusterResources';
-import ClusterSearch from './ClusterResources/ClusterSearch';
 
 export default function Container(props: DocumentProps) {
   const { clusterUri } = props.doc;
@@ -92,7 +91,6 @@ export function Cluster() {
           </Text>
         </Text>
         <Flex alignItems="center">
-          <ClusterSearch onChange={clusterCtx.changeSearchValue} />
           <ButtonPrimary ml={2} size="small" onClick={clusterCtx.sync}>
             Sync
           </ButtonPrimary>
