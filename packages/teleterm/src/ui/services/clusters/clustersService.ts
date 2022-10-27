@@ -13,6 +13,7 @@ import {
   Cluster,
   CreateAccessRequestParams,
   ReviewAccessRequestParams,
+  ServerSideParams,
 } from 'teleterm/services/tshd/types';
 import { MainProcessClient } from 'teleterm/mainProcess/types';
 
@@ -669,12 +670,15 @@ export class ClustersService extends ImmutableStore<ClustersServiceState> {
     };
   }
 
-  // TODO (avatus) Remove after Advanced Search is merged
   getServers() {
     return [...this.state.servers.values()];
   }
 
-  async fetchKubes(params) {
+  async fetchServers(params: ServerSideParams) {
+    return await this.client.getServers(params);
+  }
+
+  async fetchKubes(params: ServerSideParams) {
     return await this.client.getKubes(params);
   }
 
