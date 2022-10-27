@@ -28,8 +28,8 @@ test('tdp processing', () => {
 });
 
 test('invalid processing', () => {
-  const { container } = render(<InvalidProcessingState />);
-  expect(container).toMatchSnapshot();
+  render(<InvalidProcessingState />);
+  expect(screen.getByTestId('Modal')).toMatchSnapshot();
 });
 
 test('connected settings false', () => {
