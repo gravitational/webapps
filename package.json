@@ -32,7 +32,6 @@
   "private": true,
   "resolutions": {
     "**/minimist": "^1.2.5",
-    "**/node-gyp": "9.3.0",
     "**/@types/react": "^16.8.19"
   },
   "workspaces": {
