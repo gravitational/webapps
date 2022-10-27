@@ -9,9 +9,38 @@ import { SubscribeToTshdEvent } from 'teleterm/types';
 
 /**
  * Starts tshd events server.
- * @return {Promise} Object containing an instance of the server and the address it's listening on.
+ * @return {Promise} Object containing the address the server is listening on and subscribeToEvent
+ * function which lets UI code subscribe to events which are emitted when a client calls the server.
  */
 export async function createTshdEventsServer(
+  requestedAddress: string,
+  credentials: grpc.ServerCredentials
+): Promise<{
+  resolvedAddress: string;
+  subscribeToEvent: SubscribeToTshdEvent;
+}> {
+  const { server, resolvedAddress } = await createServer(
+    requestedAddress,
+    credentials
+  );
+  const { service, subscribeToEvent } = createService();
+
+  server.addService(
+    apiService.TshdEventsServiceService,
+    // Whatever we use for generating protobufs generated wrong types. The types say that
+    // server.addService expects an UntypedServiceImplementation as the second argument.
+    // ITshdEventsServiceService does implement UntypedServiceImplementation.
+    //
+    // However, what we actually need to pass as the second argument needs to have the shape of
+    // ITshdEventsServiceServer. That's why we ignore the error below.
+    // @ts-expect-error The generated protobuf types seem to be wrong.
+    service
+  );
+
+  return { resolvedAddress, subscribeToEvent };
+}
+
+async function createServer(
   requestedAddress: string,
   credentials: grpc.ServerCredentials
 ): Promise<{ server: grpc.Server; resolvedAddress: string }> {
@@ -45,7 +74,7 @@ export async function createTshdEventsServer(
   });
 }
 
-// createTshdEventsService creates a service that can be added to tshd events server. It also
+// createService creates a service that can be added to tshd events server. It also
 // returns a function which lets UI code subscribe to events which are emitted when a client calls
 // this service.
 //
@@ -57,7 +86,7 @@ export async function createTshdEventsServer(
 // Instead, we create an event emitter and expose subscribeToEvent through the contextBridge.
 // subscribeToEvent lets UI code register a callback for a specific event. That callback receives
 // a simple JS object which can freely pass the contextBridge.
-export function createTshdEventsService(): {
+function createService(): {
   service: apiService.ITshdEventsServiceServer;
   subscribeToEvent: SubscribeToTshdEvent;
 } {

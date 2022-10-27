@@ -16,12 +16,8 @@ import {
   readGrpcCert,
   shouldEncryptConnection,
 } from 'teleterm/services/grpcCredentials';
-import * as apiService from 'teleterm/services/tshd/v1/tshd_events_service_grpc_pb';
 import { ElectronGlobals, RuntimeSettings } from 'teleterm/types';
-import {
-  createTshdEventsServer,
-  createTshdEventsService,
-} from 'teleterm/services/tshdEvents';
+import { createTshdEventsServer } from 'teleterm/services/tshdEvents';
 
 const mainProcessClient = createMainProcessClient();
 const runtimeSettings = mainProcessClient.getRuntimeSettings();
@@ -52,27 +48,16 @@ async function getElectronGlobals(): Promise<ElectronGlobals> {
     credentials.shared,
     runtimeSettings
   );
-  const { server: tshdEventsServer, resolvedAddress: tshdEventsServerAddress } =
-    await createTshdEventsServer(
-      runtimeSettings.tshdEvents.requestedNetworkAddress,
-      credentials.tshdEvents
-    );
-  const { service: tshdEventsService, subscribeToEvent: subscribeToTshdEvent } =
-    createTshdEventsService();
-
-  tshdEventsServer.addService(
-    apiService.TshdEventsServiceService,
-    // Whatever we use for generating protobufs generated wrong types.
-    // The types say that tshdEventsServer.addService expects an UntypedServiceImplementation as the
-    // second argument. ITshdEventsServiceService does implement UntypedServiceImplementation.
-    // However, what we actually need to pass as the second argument needs to have the shape of
-    // ITshdEventsServiceServer. That's why we ignore the error below.
-    // @ts-expect-error The generated protobuf types seem to be wrong.
-    tshdEventsService
+  const {
+    resolvedAddress: tshdEventsServerAddress,
+    subscribeToEvent: subscribeToTshdEvent,
+  } = await createTshdEventsServer(
+    runtimeSettings.tshdEvents.requestedNetworkAddress,
+    credentials.tshdEvents
   );
 
   // Here we send to tshd the address of the tshd events server that we just created. This makes
-  // tshd prepare a client for that server.
+  // tshd prepare a client for the server.
   //
   // All uses of tshClient must wait before updateTshdEventsServerAddress finishes to ensure that
   // the client is ready. Otherwise we run into a risk of causing panics in tshd due to a missing
