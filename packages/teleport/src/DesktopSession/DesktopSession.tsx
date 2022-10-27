@@ -111,6 +111,14 @@ export function DesktopSession(props: State) {
       based browsers like Google Chrome or Microsoft Edge. Brave users can \
       use the feature by navigating to brave://flags/#file-system-access-api \
       and selecting "Enable". Please switch to a supported browser.';
+    } else if (
+      fetchAttempt.status === 'processing' &&
+      tdpConnection.status === 'success'
+    ) {
+      errorText =
+        'The application has detected an invalid internal application state. \
+        Please file a bug report for this issue at \
+        https://github.com/gravitational/teleport/issues/new?assignees=&labels=bug&template=bug_report.md';
     }
     const open = errorText !== '';
     const fatal = !(
@@ -235,7 +243,7 @@ export function DesktopSession(props: State) {
     // We don't know whether another session for this desktop is active while the
     // fetchAttempt is still processing, so hold off on starting a TDP connection
     // until that information is available.
-    const initTdpCli = !(fetchAttempt.status === 'processing');
+    const initTdpCli = fetchAttempt.status !== 'processing';
 
     return (
       <Session initTdpCli={initTdpCli} displayCanvas={false} {...props}>

@@ -89,6 +89,28 @@ export const Processing = () => (
   />
 );
 
+export const TdpProcessing = () => (
+  <DesktopSession
+    {...props}
+    fetchAttempt={{ status: 'success' }}
+    tdpConnection={{ status: 'processing' }}
+    clipboardSharingEnabled={true}
+    wsConnection={'open'}
+    disconnected={false}
+  />
+);
+
+export const InvalidProcessingState = () => (
+  <DesktopSession
+    {...props}
+    fetchAttempt={{ status: 'processing' }}
+    tdpConnection={{ status: 'success' }}
+    clipboardSharingEnabled={true}
+    wsConnection={'open'}
+    disconnected={false}
+  />
+);
+
 export const ConnectedSettingsFalse = () => {
   const client = fakeClient();
   client.init = () => {

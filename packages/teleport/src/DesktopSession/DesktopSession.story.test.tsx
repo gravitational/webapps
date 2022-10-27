@@ -3,6 +3,9 @@ import 'jest-canvas-mock';
 import { render, screen } from 'design/utils/testing';
 
 import {
+  Processing,
+  TdpProcessing,
+  InvalidProcessingState,
   ConnectedSettingsFalse,
   ConnectedSettingsTrue,
   Disconnected,
@@ -13,6 +16,21 @@ import {
   DismissibleError,
   AnotherSessionActive,
 } from './DesktopSession.story';
+
+test('processing', () => {
+  const { container } = render(<Processing />);
+  expect(container).toMatchSnapshot();
+});
+
+test('tdp processing', () => {
+  const { container } = render(<TdpProcessing />);
+  expect(container).toMatchSnapshot();
+});
+
+test('invalid processing', () => {
+  const { container } = render(<InvalidProcessingState />);
+  expect(container).toMatchSnapshot();
+});
 
 test('connected settings false', () => {
   const { container } = render(<ConnectedSettingsFalse />);

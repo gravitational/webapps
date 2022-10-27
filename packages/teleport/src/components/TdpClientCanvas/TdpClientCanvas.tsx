@@ -25,7 +25,7 @@ import {
 export default function TdpClientCanvas(props: Props) {
   const {
     tdpCli,
-    tdpCliInit,
+    tdpCliInit = false,
     tdpCliOnPngFrame,
     tdpCliOnClipboardData,
     tdpCliOnTdpError,
@@ -52,15 +52,6 @@ export default function TdpClientCanvas(props: Props) {
     canvasRef.current.style.outline = 'none';
     canvasRef.current.focus();
   }
-
-  useEffect(() => {
-    if (tdpCli && tdpCliInit) {
-      tdpCli.init();
-      return () => {
-        tdpCli.nuke();
-      };
-    }
-  }, [tdpCli, tdpCliInit]);
 
   useEffect(() => {
     if (tdpCli && tdpCliOnPngFrame) {
@@ -253,6 +244,16 @@ export default function TdpClientCanvas(props: Props) {
       if (onKeyUp) canvas.removeEventListener('keyup', _onkeyup);
     };
   }, [onKeyUp]);
+
+  // Call init after all listeners have been registered
+  useEffect(() => {
+    if (tdpCli && tdpCliInit) {
+      tdpCli.init();
+      return () => {
+        tdpCli.nuke();
+      };
+    }
+  }, [tdpCli, tdpCliInit]);
 
   return <canvas style={{ ...style }} ref={canvasRef} />;
 }

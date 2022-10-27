@@ -63,9 +63,9 @@ export default function useWebAuthn(emitterSender: EventEmitterWebAuthnSender) {
       });
   }
 
-  const onChallenge = challenge => {
-    const json = JSON.parse(challenge);
-    const publicKey = makeMfaAuthenticateChallenge(json).webauthnPublicKey;
+  const onChallenge = challengeJson => {
+    const challenge = JSON.parse(challengeJson);
+    const publicKey = makeMfaAuthenticateChallenge(challenge).webauthnPublicKey;
 
     setState({
       ...state,
