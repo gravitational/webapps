@@ -138,9 +138,9 @@ export function DesktopSession(props: State) {
 
     return (
       <Session
+        {...props}
         initTdpCli={initAndDisplay}
         displayCanvas={initAndDisplay}
-        {...props}
       >
         <Dialog
           dialogCss={() => ({ width: '484px' })}
@@ -194,7 +194,7 @@ export function DesktopSession(props: State) {
     const initTdpCli = false;
 
     return (
-      <Session initTdpCli={initTdpCli} displayCanvas={false} {...props}>
+      <Session {...props} initTdpCli={initTdpCli} displayCanvas={false}>
         <Dialog
           dialogCss={() => ({ width: '484px' })}
           onClose={() => {}}
@@ -231,7 +231,7 @@ export function DesktopSession(props: State) {
 
   if (disconnected) {
     return (
-      <Session initTdpCli={false} displayCanvas={false} {...props}>
+      <Session {...props} initTdpCli={false} displayCanvas={false}>
         <Box textAlign="center" m={10}>
           <Text>Session successfully disconnected</Text>
         </Box>
@@ -246,7 +246,7 @@ export function DesktopSession(props: State) {
     const initTdpCli = fetchAttempt.status !== 'processing';
 
     return (
-      <Session initTdpCli={initTdpCli} displayCanvas={false} {...props}>
+      <Session {...props} initTdpCli={initTdpCli} displayCanvas={false}>
         <Box textAlign="center" m={10}>
           <Indicator />
         </Box>
@@ -254,7 +254,7 @@ export function DesktopSession(props: State) {
     );
   }
 
-  return <Session initTdpCli={true} displayCanvas={true} {...props}></Session>;
+  return <Session {...props} initTdpCli={true} displayCanvas={true} />;
 }
 
 function Session(props: PropsWithChildren<Props>) {
