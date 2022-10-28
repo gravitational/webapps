@@ -16,7 +16,11 @@ limitations under the License.
 
 import React from 'react';
 
+import styled from 'styled-components';
+
 import Table, { Cell, ClickableLabelCell } from 'design/DataTable';
+
+import { Box } from 'design';
 
 import { MenuLogin } from 'shared/components/MenuLogin';
 
@@ -65,46 +69,45 @@ function ServerList(props: State) {
         showSearchBar={true}
         disableSearch={disabledRows}
       />
-      <Table
-        fetching={{
-          fetchStatus: fetchAttempt.status === 'processing' ? 'loading' : '',
-        }}
-        columns={[
-          {
-            key: 'hostname',
-            headerText: 'Hostname',
-            isSortable: true,
-          },
-          {
-            key: 'addr',
-            headerText: 'Address',
-            isSortable: true,
-            render: renderAddressCell,
-          },
-          {
-            key: 'labelsList',
-            headerText: 'Labels',
-            render: ({ labelsList }) => (
-              <ClickableLabelCell
-                labels={labelsList}
-                onClick={onAgentLabelClick}
-              />
-            ),
-          },
-          {
-            altKey: 'connect-btn',
-            render: server =>
-              renderConnectCell(
-                () => getSshLogins(server.uri),
-                login => connect(server.uri, login)
+      <Wrapper className={disabledRows ? 'disabled' : ''}>
+        <Table
+          columns={[
+            {
+              key: 'hostname',
+              headerText: 'Hostname',
+              isSortable: true,
+            },
+            {
+              key: 'addr',
+              headerText: 'Address',
+              isSortable: true,
+              render: renderAddressCell,
+            },
+            {
+              key: 'labelsList',
+              headerText: 'Labels',
+              render: ({ labelsList }) => (
+                <ClickableLabelCell
+                  labels={labelsList}
+                  onClick={onAgentLabelClick}
+                />
               ),
-          },
-        ]}
-        customSort={customSort}
-        emptyText="No Nodes Found"
-        data={servers}
-      />
-      <SearchPagination prevPage={prevPage} nextPage={nextPage} />
+            },
+            {
+              altKey: 'connect-btn',
+              render: server =>
+                renderConnectCell(
+                  () => getSshLogins(server.uri),
+                  login => connect(server.uri, login)
+                ),
+            },
+          ]}
+          customSort={customSort}
+          emptyText="No Nodes Found"
+          data={servers}
+        />
+        <SearchPagination prevPage={prevPage} nextPage={nextPage} />
+      </Wrapper>
     </>
   );
 }
@@ -146,3 +149,10 @@ const renderAddressCell = ({ addr, tunnel }: types.Server) => (
     {!tunnel && addr}
   </Cell>
 );
+
+const Wrapper = styled(Box)`
+  &.disabled {
+    pointer-events: none;
+    opacity: 0.5;
+  }
+`;
