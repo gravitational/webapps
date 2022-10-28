@@ -14,16 +14,20 @@
  * limitations under the License.
  */
 
-import logins from './logins.yaml?raw';
-import loginsAndRuleUsers from './loginsAndRuleUsers.yaml?raw';
-import ruleConnectionDiagnostic from './ruleConnectionDiagnostic.yaml?raw';
+import nodeAccessRO from './nodeAccessRO.yaml?raw';
+import nodeAccessRW from './nodeAccessRW.yaml?raw';
+import connDiagRW from './connDiagRW.yaml?raw';
 import kubeAccessRW from './kubeAccessRW.yaml?raw';
 import kubeAccessRO from './kubeAccessRO.yaml?raw';
+import dbAccessRW from './dbAccessRW.yaml?raw';
+import dbAccessRO from './dbAccessRO.yaml?raw';
 
 export {
-  logins,
-  loginsAndRuleUsers,
-  ruleConnectionDiagnostic,
+  nodeAccessRO,
+  nodeAccessRW,
+  connDiagRW,
   kubeAccessRW,
   kubeAccessRO,
+  dbAccessRO,
+  dbAccessRW,
 };
