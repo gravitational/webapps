@@ -28,8 +28,8 @@ test('tdp processing', () => {
 });
 
 test('invalid processing', () => {
-  render(<InvalidProcessingState />);
-  expect(screen.getByTestId('Modal')).toMatchSnapshot();
+  const { getByTestId } = render(<InvalidProcessingState />);
+  expect(getByTestId('Modal')).toMatchSnapshot();
 });
 
 test('connected settings false', () => {
@@ -73,6 +73,6 @@ test('webauthn prompt', () => {
 });
 
 test('another session active', () => {
-  render(<AnotherSessionActive />);
-  expect(screen.getByTestId('Modal')).toMatchSnapshot();
+  const { getByTestId } = render(<AnotherSessionActive />);
+  expect(getByTestId('Modal')).toMatchSnapshot();
 });

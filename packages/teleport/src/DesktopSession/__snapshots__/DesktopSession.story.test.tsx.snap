@@ -1556,11 +1556,10 @@ exports[`processing 1`] = `
 
 .c9:disabled {
   color: rgba(255,255,255,0.3);
-  cursor: default;
 }
 
-.c9:hover:enabled,
-.c9:focus:enabled {
+.c9:hover,
+.c9:focus {
   background: rgba(255,255,255,0.1);
 }
 
@@ -1726,11 +1725,10 @@ exports[`tdp processing 1`] = `
 
 .c9:disabled {
   color: rgba(255,255,255,0.3);
-  cursor: default;
 }
 
-.c9:hover:enabled,
-.c9:focus:enabled {
+.c9:hover,
+.c9:focus {
   background: rgba(255,255,255,0.1);
 }
 
