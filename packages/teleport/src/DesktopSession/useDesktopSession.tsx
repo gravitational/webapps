@@ -54,6 +54,9 @@ export default function useDesktopSession() {
   // Set by result of `user.acl.clipboardSharingEnabled && isUsingChrome` below.
   const [clipboardSharingEnabled, setClipboardSharingEnabled] = useState(false);
 
+  const [showAnotherSessionActiveDialog, setShowAnotherSessionActiveDialog] =
+    useState(false);
+
   document.title = useMemo(
     () => `${clusterId} • ${username}@${hostname}`,
     [hostname]
@@ -70,6 +73,11 @@ export default function useDesktopSession() {
             user.acl.clipboardSharingEnabled && isUsingChrome
           );
         }),
+        desktopService
+          .checkDesktopIsActive(clusterId, desktopName)
+          .then(isActive => {
+            setShowAnotherSessionActiveDialog(isActive);
+          }),
       ])
     );
   }, [clusterId, desktopName]);
@@ -98,6 +106,9 @@ export default function useDesktopSession() {
     disconnected,
     setDisconnected,
     webauthn,
+    setTdpConnection,
+    showAnotherSessionActiveDialog,
+    setShowAnotherSessionActiveDialog,
     ...clientCanvasProps,
   };
 }

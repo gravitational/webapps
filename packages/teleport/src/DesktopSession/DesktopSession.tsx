@@ -16,7 +16,23 @@ limitations under the License.
 
 import React, { PropsWithChildren } from 'react';
 import styled from 'styled-components';
-import { Indicator, Box, Alert, Text, Flex } from 'design';
+
+import {
+  Indicator,
+  Box,
+  Alert,
+  Text,
+  Flex,
+  ButtonSecondary,
+  ButtonPrimary,
+} from 'design';
+import Dialog, {
+  DialogHeader,
+  DialogTitle,
+  DialogContent,
+  DialogFooter,
+} from 'design/Dialog';
+
 import TdpClientCanvas from 'teleport/components/TdpClientCanvas';
 import AuthnDialog from 'teleport/components/AuthnDialog';
 import useDesktopSession, { State } from './useDesktopSession';
@@ -28,7 +44,14 @@ export default function Container() {
 }
 
 export function DesktopSession(props: State) {
-  const { fetchAttempt, tdpConnection, wsConnection, disconnected } = props;
+  const {
+    fetchAttempt,
+    tdpConnection,
+    wsConnection,
+    disconnected,
+    showAnotherSessionActiveDialog,
+    setShowAnotherSessionActiveDialog,
+  } = props;
 
   // Websocket is closed but we haven't
   // closed it on purpose or registered a tdp error.
@@ -52,15 +75,56 @@ export function DesktopSession(props: State) {
 
   if (alertText) {
     return (
-      <Session {...props}>
+      <Session {...props} initTdpCli={false} displayCanvas={false}>
         <DesktopSessionAlert my={2} mx={10} children={alertText} />
+      </Session>
+    );
+  }
+
+  if (showAnotherSessionActiveDialog) {
+    // Don't start the TDP connection until the user confirms they're ok
+    // with potentially killing another user's connection.
+    const initTdpCli = false;
+
+    return (
+      <Session {...props} initTdpCli={initTdpCli} displayCanvas={false}>
+        <Dialog
+          dialogCss={() => ({ width: '484px' })}
+          onClose={() => {}}
+          open={true}
+        >
+          <DialogHeader style={{ flexDirection: 'column' }}>
+            <DialogTitle>Another Session Is Active</DialogTitle>
+          </DialogHeader>
+          <DialogContent>
+            This desktop has an active session, connecting to it may close the
+            other session. Do you wish to continue?
+          </DialogContent>
+          <DialogFooter>
+            <ButtonPrimary
+              mr={3}
+              onClick={() => {
+                window.close();
+              }}
+            >
+              Abort
+            </ButtonPrimary>
+            <ButtonSecondary
+              onClick={() => {
+                setShowAnotherSessionActiveDialog(false);
+              }}
+            >
+              Continue
+            </ButtonSecondary>
+          </DialogFooter>
+        </Dialog>
       </Session>
     );
   }
 
   if (disconnected) {
     return (
-      <Session {...props}>
+      <Session {...props} initTdpCli={false} displayCanvas={false}>
         <Box textAlign="center" m={10}>
           <Text>Session successfully disconnected</Text>
         </Box>
@@ -69,8 +133,13 @@ export function DesktopSession(props: State) {
   }
 
   if (processing) {
+    // We don't know whether another session for this desktop is active while the
+    // fetchAttempt is still processing, so hold off on starting a TDP connection
+    // until that information is available.
+    const initTdpCli = fetchAttempt.status !== 'processing';
+
     return (
-      <Session {...props}>
+      <Session {...props} initTdpCli={initTdpCli} displayCanvas={false}>
         <Box textAlign="center" m={10}>
           <Indicator />
         </Box>
@@ -78,15 +147,11 @@ export function DesktopSession(props: State) {
     );
   }
 
-  return <Session {...props}></Session>;
+  return <Session {...props} initTdpCli={true} displayCanvas={true} />;
 }
 
-function Session(props: PropsWithChildren<State>) {
+function Session(props: PropsWithChildren<Props>) {
   const {
-    fetchAttempt,
-    tdpConnection,
-    wsConnection,
-    disconnected,
     setDisconnected,
     webauthn,
     tdpClient,
@@ -106,15 +171,11 @@ function Session(props: PropsWithChildren<State>) {
     onMouseUp,
     onMouseWheelScroll,
     onContextMenu,
+    initTdpCli,
+    displayCanvas,
   } = props;
 
   const clipboardSharingActive = clipboardState;
-
-  const showCanvas =
-    fetchAttempt.status === 'success' &&
-    tdpConnection.status === 'success' &&
-    wsConnection === 'open' &&
-    !disconnected;
 
   return (
     <Flex flexDirection="column">
@@ -146,16 +207,13 @@ function Session(props: PropsWithChildren<State>) {
         />
       )}
 
-      {/* TdpClientCanvas should always be present in the DOM so that it calls
-          tdpClient.init() and initializes the required tdpClient event listeners,
-          both of which are needed for this component's state to properly respond to
-          initialization events. */}
       <TdpClientCanvas
         style={{
-          display: showCanvas ? 'flex' : 'none',
+          display: displayCanvas ? 'flex' : 'none',
           flex: 1, // ensures the canvas fills available screen space
         }}
         tdpCli={tdpClient}
+        tdpCliInit={initTdpCli}
         tdpCliOnPngFrame={onPngFrame}
         tdpCliOnClipboardData={onClipboardData}
         tdpCliOnTdpError={onTdpError}
@@ -177,3 +235,10 @@ const DesktopSessionAlert = styled(Alert)`
   align-self: center;
   min-width: 450px;
 `;
+
+type Props = State & {
+  // Determines whether the tdp client that's passed to the TdpClientCanvas
+  // should be initialized.
+  initTdpCli: boolean;
+  displayCanvas: boolean;
+};
