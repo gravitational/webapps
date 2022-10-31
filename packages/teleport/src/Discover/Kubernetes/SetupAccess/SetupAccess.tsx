@@ -53,7 +53,7 @@ export function SetupAccess(props: State) {
       setSelectedGroups(initSelectedOptions('kubeGroups'));
       setSelectedUsers(initSelectedOptions('kubeUsers'));
     }
-  }, [props.attempt]);
+  }, [props.attempt.status, initSelectedOptions]);
 
   function handleGroupKeyDown(event: React.KeyboardEvent) {
     if (!groupInputValue) return;
@@ -127,7 +127,7 @@ export function SetupAccess(props: State) {
         <SelectCreatable
           inputValue={userInputValue}
           isClearable={selectedUsers.some(v => !v.isFixed)}
-          onInputChange={input => setUserInputValue(input)}
+          onInputChange={setUserInputValue}
           onKeyDown={handleUserKeyDown}
           placeholder="Start typing users and press enter"
           value={selectedUsers}

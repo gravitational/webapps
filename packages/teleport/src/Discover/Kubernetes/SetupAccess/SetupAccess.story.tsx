@@ -63,12 +63,12 @@ const props: State = {
   getFixedOptions: () => [],
   getSelectableOptions: () => [],
   initSelectedOptions: trait =>
-    initSelectedOptionsHelper(trait, mockStaticTraits, mockDynamicTraits),
+    initSelectedOptionsHelper({ trait, staticTraits, dynamicTraits }),
   dynamicTraits: {} as any,
   staticTraits: {} as any,
 };
 
-const mockStaticTraits = {
+const staticTraits = {
   kubeUsers: ['staticUser1', 'staticUser2'],
   kubeGroups: ['staticGroup1', 'staticGroup2'],
   logins: [],
@@ -78,7 +78,7 @@ const mockStaticTraits = {
   awsRoleArns: [],
 };
 
-const mockDynamicTraits = {
+const dynamicTraits = {
   kubeUsers: ['dynamicUser1', 'dynamicUser2'],
   kubeGroups: ['dynamicGroup1', 'dynamicGroup2'],
   logins: [],

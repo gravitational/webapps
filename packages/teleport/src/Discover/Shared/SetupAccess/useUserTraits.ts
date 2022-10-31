@@ -17,6 +17,7 @@
 import { useState, useEffect } from 'react';
 import useAttempt from 'shared/hooks/useAttemptNext';
 
+import { arrayStrDiff } from 'teleport/lib/util';
 import useTeleport from 'teleport/useTeleport';
 import { Option } from 'teleport/Discover/Shared/SelectCreatable';
 
@@ -51,28 +52,30 @@ export function useUserTraits(props: AgentStepProps) {
   switch (props.selectedResourceKind) {
     case ResourceKind.Kubernetes:
       const kube = (meta as KubeMeta).kube;
-      staticTraits.kubeUsers = kube.users.filter(
-        v => !dynamicTraits.kubeUsers.includes(v)
+      staticTraits.kubeUsers = arrayStrDiff(
+        kube.users,
+        dynamicTraits.kubeUsers
       );
-      staticTraits.kubeGroups = kube.groups.filter(
-        v => !dynamicTraits.kubeGroups.includes(v)
+      staticTraits.kubeGroups = arrayStrDiff(
+        kube.groups,
+        dynamicTraits.kubeGroups
       );
       break;
 
     case ResourceKind.Server:
       const node = (meta as NodeMeta).node;
-      staticTraits.logins = node.sshLogins.filter(
-        login => !dynamicTraits.logins.includes(login)
-      );
+      staticTraits.logins = arrayStrDiff(node.sshLogins, dynamicTraits.logins);
       break;
 
     case ResourceKind.Database:
       const db = (meta as DbMeta).db;
-      staticTraits.databaseUsers = db.users.filter(
-        v => !dynamicTraits.databaseUsers.includes(v)
+      staticTraits.databaseUsers = arrayStrDiff(
+        db.users,
+        dynamicTraits.databaseUsers
       );
-      staticTraits.databaseNames = db.names.filter(
-        v => !dynamicTraits.databaseNames.includes(v)
+      staticTraits.databaseNames = arrayStrDiff(
+        db.names,
+        dynamicTraits.databaseNames
       );
       break;
 
@@ -94,7 +97,7 @@ export function useUserTraits(props: AgentStepProps) {
 
   // onProceed deduplicates and removes static traits from the list of traits
   // before updating user in the backend.
-  function onProceed(traitOpts: Partial<Record<Traits, Option[]>>) {
+  function onProceed(traitOpts: Partial<Record<Trait, Option[]>>) {
     switch (props.selectedResourceKind) {
       case ResourceKind.Kubernetes:
         const newDynamicKubeUsers = new Set<string>();
@@ -239,46 +242,16 @@ export function useUserTraits(props: AgentStepProps) {
     }
   }
 
-  function getSelectableOptions(trait: Traits): Option[] {
-    switch (trait) {
-      case 'logins':
-        return dynamicTraits.logins.map(v => makeOpt(v));
-      case 'kubeGroups':
-        return dynamicTraits.kubeGroups.map(v => makeOpt(v));
-      case 'kubeUsers':
-        return dynamicTraits.kubeUsers.map(v => makeOpt(v));
-      case 'databaseNames':
-        return dynamicTraits.databaseNames.map(v => makeOpt(v));
-      case 'databaseUsers':
-        return dynamicTraits.databaseUsers.map(v => makeOpt(v));
-      default:
-        throw new Error(
-          `useUserTraits.ts:getSelectableOptions: trait kind ${trait} is not handled`
-        );
-    }
+  const getSelectableOptions = (trait: Trait) => {
+    return initSelectedOptionsHelper({ trait, dynamicTraits });
+  };
+
+  function getFixedOptions(trait: Trait): Option[] {
+    return initSelectedOptionsHelper({ trait, staticTraits });
   }
 
-  function getFixedOptions(trait: Traits): Option[] {
-    switch (trait) {
-      case 'logins':
-        return staticTraits.logins.map(v => makeOpt(v, true /*fixed*/));
-      case 'kubeGroups':
-        return staticTraits.kubeGroups.map(v => makeOpt(v, true /*fixed*/));
-      case 'kubeUsers':
-        return staticTraits.kubeUsers.map(v => makeOpt(v, true /*fixed*/));
-      case 'databaseNames':
-        return staticTraits.databaseNames.map(v => makeOpt(v, true /*fixed*/));
-      case 'databaseUsers':
-        return staticTraits.databaseUsers.map(v => makeOpt(v, true /*fixed*/));
-      default:
-        throw new Error(
-          `useUserTraits.ts:getFixedOptions: trait kind ${trait} is not handled`
-        );
-    }
-  }
-
-  function initSelectedOptions(trait: Traits): Option[] {
-    return initSelectedOptionsHelper(trait, staticTraits, dynamicTraits);
+  function initSelectedOptions(trait: Trait): Option[] {
+    return initSelectedOptionsHelper({ trait, staticTraits, dynamicTraits });
   }
 
   return {
@@ -307,55 +280,35 @@ function initUserTraits(user?: User): UserTraits {
   };
 }
 
-function makeOpt(value: string, isFixed = false): Option {
-  return {
-    value,
-    label: value,
-    isFixed,
-  };
-}
-
-export function initSelectedOptionsHelper(
-  trait: Traits,
-  staticTraits: UserTraits,
-  dynamicTraits: UserTraits
-): Option[] {
-  switch (trait) {
-    case 'logins':
-      const fixedLogins = staticTraits.logins.map(l => makeOpt(l, true));
-      const logins = dynamicTraits.logins.map(l => makeOpt(l));
-      return [...fixedLogins, ...logins];
-
-    case 'kubeGroups':
-      const fixedGroups = staticTraits.kubeGroups.map(l => makeOpt(l, true));
-      const groups = dynamicTraits.kubeGroups.map(l => makeOpt(l));
-      return [...fixedGroups, ...groups];
-
-    case 'kubeUsers':
-      const fixedUsers = staticTraits.kubeUsers.map(l => makeOpt(l, true));
-      const users = dynamicTraits.kubeUsers.map(l => makeOpt(l));
-      return [...fixedUsers, ...users];
-
-    case 'databaseNames':
-      const fixedDbNames = staticTraits.databaseNames.map(l =>
-        makeOpt(l, true)
-      );
-      const names = dynamicTraits.databaseNames.map(l => makeOpt(l));
-      return [...fixedDbNames, ...names];
-
-    case 'databaseUsers':
-      const fixedDbUsers = staticTraits.databaseUsers.map(l =>
-        makeOpt(l, true)
-      );
-      const dbUsers = dynamicTraits.databaseUsers.map(l => makeOpt(l));
-      return [...fixedDbUsers, ...dbUsers];
-
-    default:
-      throw new Error(
-        `useUserTrait.ts:initSelectedOptionsHelper: trait '${trait}' is not handled`
-      );
+export function initSelectedOptionsHelper({
+  trait,
+  staticTraits,
+  dynamicTraits,
+}: {
+  trait: Trait;
+  staticTraits?: UserTraits;
+  dynamicTraits?: UserTraits;
+}): Option[] {
+  let fixedOptions = [];
+  if (staticTraits) {
+    fixedOptions = staticTraits[trait].map(l => ({
+      value: l,
+      label: l,
+      isFixed: true,
+    }));
   }
+
+  let options = [];
+  if (dynamicTraits) {
+    options = dynamicTraits[trait].map(l => ({
+      value: l,
+      label: l,
+      isFixed: false,
+    }));
+  }
+
+  return [...fixedOptions, ...options];
 }
 
-type Traits = keyof UserTraits;
+type Trait = keyof UserTraits;
 export type State = ReturnType<typeof useUserTraits>;

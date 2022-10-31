@@ -63,12 +63,12 @@ const props: State = {
   getFixedOptions: () => [],
   getSelectableOptions: () => [],
   initSelectedOptions: trait =>
-    initSelectedOptionsHelper(trait, mockStaticTraits, mockDynamicTraits),
+    initSelectedOptionsHelper({ trait, staticTraits, dynamicTraits }),
   dynamicTraits: {} as any,
   staticTraits: {} as any,
 };
 
-const mockStaticTraits = {
+const staticTraits = {
   databaseUsers: ['staticUser1', 'staticUser2'],
   databaseNames: ['staticName1', 'staticName2'],
   logins: [],
@@ -78,7 +78,7 @@ const mockStaticTraits = {
   awsRoleArns: [],
 };
 
-const mockDynamicTraits = {
+const dynamicTraits = {
   databaseUsers: ['dynamicUser1', 'dynamicUser2'],
   databaseNames: ['dynamicName1', 'dynamicName2'],
   logins: [],

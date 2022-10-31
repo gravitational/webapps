@@ -49,7 +49,7 @@ export function SetupAccess(props: State) {
     if (props.attempt.status === 'success') {
       setSelectedLogins(initSelectedOptions('logins'));
     }
-  }, [props.attempt]);
+  }, [props.attempt.status, initSelectedOptions]);
 
   function handleOnProceed() {
     onProceed({ logins: selectedLogins });
@@ -88,7 +88,7 @@ export function SetupAccess(props: State) {
         <SelectCreatable
           inputValue={loginInputValue}
           isClearable={selectedLogins.some(v => !v.isFixed)}
-          onInputChange={input => setLoginInputValue(input)}
+          onInputChange={setLoginInputValue}
           onKeyDown={handleLoginKeyDown}
           placeholder="Start typing OS users and press enter"
           value={selectedLogins}

@@ -131,17 +131,15 @@ export function SetupAccessWrapper({
       <Header>Set Up Access</Header>
       <HeaderSubtitle>{headerSubtitle}</HeaderSubtitle>
       {infoContent}
-      <>
-        <Box mb={3}>{$content}</Box>
-        <ActionButtons
-          onProceed={onProceed}
-          disableProceed={
-            attempt.status === 'failed' ||
-            attempt.status === 'processing' ||
-            !hasTraits
-          }
-        />
-      </>
+      <Box mb={3}>{$content}</Box>
+      <ActionButtons
+        onProceed={onProceed}
+        disableProceed={
+          attempt.status === 'failed' ||
+          attempt.status === 'processing' ||
+          !hasTraits
+        }
+      />
     </Box>
   );
 }

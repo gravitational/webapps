@@ -53,7 +53,7 @@ export function SetupAccess(props: State) {
       setSelectedNames(initSelectedOptions('databaseNames'));
       setSelectedUsers(initSelectedOptions('databaseUsers'));
     }
-  }, [props.attempt]);
+  }, [props.attempt.status, initSelectedOptions]);
 
   function handleNameKeyDown(event: React.KeyboardEvent) {
     if (!nameInputValue) return;
@@ -106,7 +106,7 @@ export function SetupAccess(props: State) {
         <SelectCreatable
           inputValue={userInputValue}
           isClearable={selectedUsers.some(v => !v.isFixed)}
-          onInputChange={input => setUserInputValue(input)}
+          onInputChange={setUserInputValue}
           onKeyDown={handleUserKeyDown}
           placeholder="Start typing database users and press enter"
           value={selectedUsers}
@@ -127,7 +127,7 @@ export function SetupAccess(props: State) {
         <SelectCreatable
           inputValue={nameInputValue}
           isClearable={selectedNames.some(v => !v.isFixed)}
-          onInputChange={input => setNameInputValue(input)}
+          onInputChange={setNameInputValue}
           onKeyDown={handleNameKeyDown}
           placeholder="Start typing database names and press enter"
           value={selectedNames}
