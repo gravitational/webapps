@@ -103,7 +103,11 @@ function ServerList(props: State) {
             },
           ]}
           customSort={customSort}
-          emptyText="No Nodes Found"
+          emptyText={
+            fetchAttempt.status === 'processing'
+              ? 'Searching...'
+              : 'No servers found'
+          }
           data={servers}
         />
         <SearchPagination prevPage={prevPage} nextPage={nextPage} />
