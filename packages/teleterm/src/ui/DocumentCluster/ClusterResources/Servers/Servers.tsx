@@ -98,7 +98,7 @@ function ServerList(props: State) {
               render: server =>
                 renderConnectCell(
                   () => getSshLogins(server.uri),
-                  login => connect(server.uri, login)
+                  login => connect(server, login)
                 ),
             },
           ]}

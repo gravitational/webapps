@@ -9,7 +9,13 @@ import { AgentFilter, AgentLabel } from 'teleport/services/agents';
 import { addAgentLabelToQuery } from 'shared/utils/addAgentLabelToQuery';
 import { ResourceKind } from 'teleport/Discover/Shared';
 
-export function useServerSideResources(resource: ResourceKind) {
+export function useServerSideResources<Agent>(
+  fetchFunction: (params: ServerSideParams) => Promise<{
+    agentsList: Array<Agent>;
+    totalCount: number;
+    startKey: string;
+  }>
+) {
   const ctx = useAppContext();
   const { clusterUri, documentUri } = useClusterContext();
   const [pageIndex, setPageIndex] = useState(0);
@@ -25,28 +31,18 @@ export function useServerSideResources(resource: ResourceKind) {
 
   const limit = 15;
 
-  function getFetchCallback(params: ServerSideParams) {
-    switch (resource) {
-      case ResourceKind.Server:
-        return retryWithRelogin(ctx, documentUri, clusterUri, () =>
-          ctx.clustersService.fetchServers(params)
-        );
-      default: {
-        throw new Error(`Fetch not implemented for: ${resource}`);
-      }
-    }
-  }
-
   // startKey is used here as a way to paginate through agents returned from
   // their respective rpcs.
-  const [fetchAttempt, fetch] = useAsync(async (startKey: string) => {
-    return getFetchCallback({
-      ...agentFilter,
-      limit,
-      clusterUri,
-      startKey,
-    });
-  });
+  const [fetchAttempt, fetch] = useAsync(async (startKey: string) =>
+    retryWithRelogin(ctx, documentUri, clusterUri, () =>
+      fetchFunction({
+        ...agentFilter,
+        limit,
+        clusterUri,
+        startKey,
+      })
+    )
+  );
 
   // If there is no startKey at the current page's index, there is no more data to get
   function nextPage() {
