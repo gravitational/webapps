@@ -2,6 +2,8 @@ import React from 'react';
 import 'jest-canvas-mock';
 import { render } from 'design/utils/testing';
 import {
+  Processing,
+  TdpProcessing,
   ConnectedSettingsFalse,
   ConnectedSettingsTrue,
   Disconnected,
@@ -9,7 +11,18 @@ import {
   ConnectionError,
   UnintendedDisconnect,
   WebAuthnPrompt,
+  AnotherSessionActive,
 } from './DesktopSession.story';
+
+test('processing', () => {
+  const { container } = render(<Processing />);
+  expect(container).toMatchSnapshot();
+});
+
+test('tdp processing', () => {
+  const { container } = render(<TdpProcessing />);
+  expect(container).toMatchSnapshot();
+});
 
 test('connected settings false', () => {
   const { container } = render(<ConnectedSettingsFalse />);
@@ -44,4 +57,9 @@ test('unintended disconnect', () => {
 test('webauthn prompt', () => {
   const { container } = render(<WebAuthnPrompt />);
   expect(container).toMatchSnapshot();
+});
+
+test('another session active', () => {
+  const { getByTestId } = render(<AnotherSessionActive />);
+  expect(getByTestId('Modal')).toMatchSnapshot();
 });
