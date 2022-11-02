@@ -85,7 +85,7 @@ export function useUserTraits(props: AgentStepProps) {
       );
   }
 
-  useEffect(() => {
+  useEffect(function fetchUserTraits() {
     fetchUserTraits();
   }, []);
 
