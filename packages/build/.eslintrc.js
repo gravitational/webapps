@@ -144,11 +144,8 @@ module.exports = {
     // https://github.com/jsx-eslint/eslint-plugin-react/blob/f83b38869c7fc2c6a84ef8c2639ac190b8fef74f/docs/rules/jsx-no-useless-fragment.md#allowexpressions
     'react/jsx-no-useless-fragment': [2, { allowExpressions: true }],
 
-    // TODO: remove checking for production env after all warnings are fixed.
-    // But meanwhile, warn dev's to aid with new/touched files.
-    'react-hooks/rules-of-hooks': process.env.NODE_ENV === 'production' ? 0 : 1,
-    'react-hooks/exhaustive-deps':
-      process.env.NODE_ENV === 'production' ? 0 : 1,
+    'react-hooks/rules-of-hooks': 1,
+    'react-hooks/exhaustive-deps': 1,
   },
   settings: {
     react: {
