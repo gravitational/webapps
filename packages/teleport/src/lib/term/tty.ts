@@ -159,7 +159,13 @@ class Tty extends EventEmitterWebAuthnSender {
           throw Error(`unknown message type: ${msg.type}`);
       }
     } catch (err) {
-      logger.error('failed to parse incoming message.', err);
+      try {
+        // The first message we recieve may be JSON session data.
+        const data = JSON.parse(ev.data);
+        this.emit('new-session', data.session);
+      } catch (err) {
+        logger.error('failed to parse incoming message.', err);
+      }
     }
   }
 

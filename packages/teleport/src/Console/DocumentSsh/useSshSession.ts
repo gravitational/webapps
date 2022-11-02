@@ -39,7 +39,7 @@ export default function useSshSession(doc: DocumentSsh) {
 
   React.useEffect(() => {
     // initializes tty instances
-    function initTty(session: Session) {
+    function initTty(session) {
       const tty = ctx.createTty(session);
 
       // subscribe to tty events to handle connect/disconnects events
@@ -49,7 +49,9 @@ export default function useSshSession(doc: DocumentSsh) {
         ctx.updateSshDocument(doc.id, { status: 'disconnected' })
       );
 
-      tty.on('open', () => handleTtyConnect(ctx, session, doc.id));
+      // tty.on('open', () => handleTtyConnect(ctx, session, doc.id));
+
+      tty.on('new-session', data => handleTtyConnect(ctx, data, doc.id));
 
       // assign tty reference so it can be passed down to xterm
       ttyRef.current = tty;
@@ -62,25 +64,12 @@ export default function useSshSession(doc: DocumentSsh) {
       ttyRef.current && ttyRef.current.removeAllListeners();
     }
 
-    if (sid) {
-      // join existing session
-      ctx
-        .fetchSshSession(clusterId, sid)
-        .then(initTty)
-        .catch(err => {
-          setStatus('notfound');
-          setStatusText(err.message);
-        });
-    } else {
-      // create new ssh session
-      ctx
-        .createSshSession(clusterId, serverId, login)
-        .then(initTty)
-        .catch(err => {
-          setStatus('error');
-          setStatusText(err.message);
-        });
-    }
+    initTty({
+      login,
+      serverId,
+      clusterId,
+      sid,
+    });
 
     return cleanup;
   }, []);
@@ -94,12 +83,15 @@ export default function useSshSession(doc: DocumentSsh) {
   };
 }
 
-function handleTtyConnect(
-  ctx: ConsoleContext,
-  session: Session,
-  docId: number
-) {
-  const { resourceName, login, sid, clusterId, serverId, created } = session;
+function handleTtyConnect(ctx: ConsoleContext, session: any, docId: number) {
+  const {
+    resourceName,
+    login,
+    id: sid,
+    cluster_name: clusterId,
+    serverId,
+    created,
+  } = session;
   const url = cfg.getSshSessionRoute({ sid, clusterId });
   ctx.updateSshDocument(docId, {
     title: `${login}@${resourceName}`,
