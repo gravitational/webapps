@@ -34,8 +34,8 @@ export const IdentitySelector = forwardRef<
     >
       {isSelected ? (
         <Box>
-            <UserIcon letter={props.userName[0]} />
-          </Box>
+          <UserIcon letter={props.userName[0]} />
+        </Box>
       ) : (
         <PamIcon />
       )}

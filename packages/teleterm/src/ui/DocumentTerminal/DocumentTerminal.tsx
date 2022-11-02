@@ -59,52 +59,46 @@ export function DocumentTerminal(props: Props & { visible: boolean }) {
         <>
           {doc.kind === 'doc.terminal_tsh_node' && (
             <FileTransferContextProvider>
-                <FileTransferActionBar
-                  isConnected={doc.status === 'connected'}
-                />
-                <FileTransfer
-                  beforeClose={() =>
-                    // TODO (gzdunek): replace with a native dialog
-                    window.confirm(
-                      'Are you sure you want to cancel file transfers?'
-                    )
-                  }
-                  transferHandlers={{
-                    getDownloader: async (sourcePath, abortController) => {
-                      const fileDialog =
-                        await ctx.mainProcessClient.showFileSaveDialog(
-                          sourcePath
-                        );
-                      if (fileDialog.canceled) {
-                        return;
-                      }
-                      return download(
-                        {
-                          serverUri: doc.serverUri,
-                          login: doc.login,
-                          source: sourcePath,
-                          destination: fileDialog.filePath,
-                        },
-                        abortController
+              <FileTransferActionBar isConnected={doc.status === 'connected'} />
+              <FileTransfer
+                beforeClose={() =>
+                  // TODO (gzdunek): replace with a native dialog
+                  window.confirm(
+                    'Are you sure you want to cancel file transfers?'
+                  )
+                }
+                transferHandlers={{
+                  getDownloader: async (sourcePath, abortController) => {
+                    const fileDialog =
+                      await ctx.mainProcessClient.showFileSaveDialog(
+                        sourcePath
                       );
-                    },
-                    getUploader: async (
-                      destinationPath,
-                      file,
+                    if (fileDialog.canceled) {
+                      return;
+                    }
+                    return download(
+                      {
+                        serverUri: doc.serverUri,
+                        login: doc.login,
+                        source: sourcePath,
+                        destination: fileDialog.filePath,
+                      },
                       abortController
-                    ) =>
-                      upload(
-                        {
-                          serverUri: doc.serverUri,
-                          login: doc.login,
-                          source: file.path,
-                          destination: destinationPath,
-                        },
-                        abortController
-                      ),
-                  }}
-                />
-              </FileTransferContextProvider>
+                    );
+                  },
+                  getUploader: async (destinationPath, file, abortController) =>
+                    upload(
+                      {
+                        serverUri: doc.serverUri,
+                        login: doc.login,
+                        source: file.path,
+                        destination: destinationPath,
+                      },
+                      abortController
+                    ),
+                }}
+              />
+            </FileTransferContextProvider>
           )}
           <Terminal
             ptyProcess={ptyProcess}

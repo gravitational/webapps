@@ -90,26 +90,26 @@ export function Kubes(props: State) {
       )}
       {attempt.status !== 'processing' && !hasNoKubes && (
         <KubeList
-            kubes={results.kubes}
-            username={username}
-            authType={authType}
-            clusterId={clusterId}
-            fetchNext={fetchNext}
-            fetchPrev={fetchPrev}
-            fetchStatus={fetchStatus}
-            from={from}
-            to={to}
-            totalCount={results.totalCount}
-            pageSize={pageSize}
-            params={params}
-            setParams={setParams}
-            startKeys={startKeys}
-            setSort={setSort}
-            pathname={pathname}
-            replaceHistory={replaceHistory}
-            onLabelClick={onLabelClick}
-            accessRequestId={accessRequestId}
-          />
+          kubes={results.kubes}
+          username={username}
+          authType={authType}
+          clusterId={clusterId}
+          fetchNext={fetchNext}
+          fetchPrev={fetchPrev}
+          fetchStatus={fetchStatus}
+          from={from}
+          to={to}
+          totalCount={results.totalCount}
+          pageSize={pageSize}
+          params={params}
+          setParams={setParams}
+          startKeys={startKeys}
+          setSort={setSort}
+          pathname={pathname}
+          replaceHistory={replaceHistory}
+          onLabelClick={onLabelClick}
+          accessRequestId={accessRequestId}
+        />
       )}
       {attempt.status === 'success' && hasNoKubes && (
         <Empty

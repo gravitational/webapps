@@ -150,11 +150,11 @@ export function TestConnection({
                   if (trace.status === 'failed') {
                     return (
                       <TextIcon alignItems="baseline">
-                          <Icons.CircleCross mr={1} color="danger" />
-                          {trace.details}
-                          <br />
-                          {trace.error}
-                        </TextIcon>
+                        <Icons.CircleCross mr={1} color="danger" />
+                        {trace.details}
+                        <br />
+                        {trace.error}
+                      </TextIcon>
                     );
                   }
                   if (trace.status === 'success') {
