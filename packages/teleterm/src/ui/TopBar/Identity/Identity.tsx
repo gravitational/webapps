@@ -49,8 +49,7 @@ export function IdentityContainer() {
     );
 
   return (
-    <>
-      <Identity
+    <Identity
         ref={presenterRef}
         activeRootCluster={activeRootCluster}
         rootClusters={rootClusters}
@@ -59,7 +58,6 @@ export function IdentityContainer() {
         addCluster={addCluster}
         makeTitle={makeTitle}
       />
-    </>
   );
 }
 

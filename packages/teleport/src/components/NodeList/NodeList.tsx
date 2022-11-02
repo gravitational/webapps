@@ -46,8 +46,7 @@ function NodeList(props: Props) {
   } = props;
 
   return (
-    <>
-      <Table
+    <Table
         columns={[
           {
             key: 'hostname',
@@ -99,7 +98,6 @@ function NodeList(props: Props) {
           ),
         }}
       />
-    </>
   );
 }
 

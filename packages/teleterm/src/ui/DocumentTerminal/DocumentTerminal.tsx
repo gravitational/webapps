@@ -58,8 +58,7 @@ export function DocumentTerminal(props: Props & { visible: boolean }) {
       {ptyProcess && (
         <>
           {doc.kind === 'doc.terminal_tsh_node' && (
-            <>
-              <FileTransferContextProvider>
+            <FileTransferContextProvider>
                 <FileTransferActionBar
                   isConnected={doc.status === 'connected'}
                 />
@@ -106,7 +105,6 @@ export function DocumentTerminal(props: Props & { visible: boolean }) {
                   }}
                 />
               </FileTransferContextProvider>
-            </>
           )}
           <Terminal
             ptyProcess={ptyProcess}

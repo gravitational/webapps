@@ -89,8 +89,7 @@ export function Kubes(props: State) {
         </Box>
       )}
       {attempt.status !== 'processing' && !hasNoKubes && (
-        <>
-          <KubeList
+        <KubeList
             kubes={results.kubes}
             username={username}
             authType={authType}
@@ -111,7 +110,6 @@ export function Kubes(props: State) {
             onLabelClick={onLabelClick}
             accessRequestId={accessRequestId}
           />
-        </>
       )}
       {attempt.status === 'success' && hasNoKubes && (
         <Empty

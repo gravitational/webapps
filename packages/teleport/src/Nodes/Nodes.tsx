@@ -101,8 +101,7 @@ export function Nodes(props: State) {
         </Box>
       )}
       {attempt.status !== 'processing' && !hasNoNodes && (
-        <>
-          <NodeList
+        <NodeList
             nodes={results.nodes}
             totalCount={results.totalCount}
             onLoginMenuOpen={getNodeLoginOptions}
@@ -121,7 +120,6 @@ export function Nodes(props: State) {
             replaceHistory={replaceHistory}
             onLabelClick={onLabelClick}
           />
-        </>
       )}
       {attempt.status === 'success' && hasNoNodes && (
         <Empty

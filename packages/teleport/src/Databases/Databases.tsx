@@ -87,8 +87,7 @@ export function Databases(props: State) {
         <ErrorMessage message={attempt.statusText} />
       )}
       {attempt.status !== 'processing' && !hasNoDatabases && (
-        <>
-          <DatabaseList
+        <DatabaseList
             databases={results.databases}
             username={username}
             clusterId={clusterId}
@@ -109,7 +108,6 @@ export function Databases(props: State) {
             onLabelClick={onLabelClick}
             accessRequestId={accessRequestId}
           />
-        </>
       )}
       {attempt.status === 'success' && hasNoDatabases && (
         <Empty
