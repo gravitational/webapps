@@ -27,10 +27,8 @@ export default function makeDatabase(json): Database {
     type: formatDatabaseInfo(type, protocol).title,
     protocol,
     labels,
-    // TODO (lisa or ryan): after backend includes these fields.
-    // the JSON field names depend on the backend implementation.
-    names: [],
-    users: [],
+    names: json.database_names || [],
+    users: json.database_users || [],
   };
 }
 

@@ -85,9 +85,14 @@ export function useUserTraits(props: AgentStepProps) {
       );
   }
 
-  useEffect(function fetchUserTraits() {
-    fetchUserTraits();
-  }, []);
+  useEffect(
+    function initFetchUserTraits() {
+      run(() =>
+        ctx.userService.fetchUser(ctx.storeUser.getUsername()).then(setUser)
+      );
+    },
+    [ctx.storeUser, ctx.userService, run]
+  );
 
   function fetchUserTraits() {
     run(() =>
