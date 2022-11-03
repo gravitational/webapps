@@ -138,7 +138,7 @@ const cfg = {
       'wss://:fqdn/v1/webapi/sites/:clusterId/desktopplayback/:sid?access_token=:token',
     siteSessionPath: '/v1/webapi/sites/:siteId/sessions',
     ttyWsAddr:
-      'wss://:fqdn/v1/webapi/sites/:clusterId/connect?access_token=:token&params=:params',
+      'wss://:fqdn/v1/webapi/sites/:clusterId/connect?access_token=:token&params=:params&traceparent=:traceparent',
     terminalSessionPath: '/v1/webapi/sites/:clusterId/sessions/:sid?',
     kubernetesPath:
       '/v1/webapi/sites/:clusterId/kubernetes?searchAsRoles=:searchAsRoles?&limit=:limit?&startKey=:startKey?&query=:query?&search=:search?&sort=:sort?',

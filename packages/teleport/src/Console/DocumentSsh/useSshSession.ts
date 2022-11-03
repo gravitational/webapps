@@ -16,6 +16,8 @@ limitations under the License.
 
 import React from 'react';
 
+import { context, trace } from '@opentelemetry/api';
+
 import cfg from 'teleport/config';
 import { Session } from 'teleport/services/session';
 import { TermEventEnum } from 'teleport/lib/term/enums';
@@ -23,6 +25,8 @@ import Tty from 'teleport/lib/term/tty';
 import ConsoleContext from 'teleport/Console/consoleContext';
 import { useConsoleContext } from 'teleport/Console/consoleContextProvider';
 import { DocumentSsh } from 'teleport/Console/stores';
+
+const tracer = trace.getTracer('TTY');
 
 export default function useSshSession(doc: DocumentSsh) {
   const { clusterId, sid, serverId, login } = doc;
@@ -40,23 +44,26 @@ export default function useSshSession(doc: DocumentSsh) {
   React.useEffect(() => {
     // initializes tty instances
     function initTty(session) {
-      const tty = ctx.createTty(session);
+      tracer.startActiveSpan('initTTY', undefined, context.active(), span => {
+        const tty = ctx.createTty(session);
 
-      // subscribe to tty events to handle connect/disconnects events
-      tty.on(TermEventEnum.CLOSE, () => ctx.closeTab(doc));
+        // subscribe to tty events to handle connect/disconnects events
+        tty.on(TermEventEnum.CLOSE, () => ctx.closeTab(doc));
 
-      tty.on(TermEventEnum.CONN_CLOSE, () =>
-        ctx.updateSshDocument(doc.id, { status: 'disconnected' })
-      );
+        tty.on(TermEventEnum.CONN_CLOSE, () =>
+          ctx.updateSshDocument(doc.id, { status: 'disconnected' })
+        );
 
-      // tty.on('open', () => handleTtyConnect(ctx, session, doc.id));
+        // tty.on('open', () => handleTtyConnect(ctx, session, doc.id));
 
-      tty.on('new-session', data => handleTtyConnect(ctx, data, doc.id));
+        tty.on('new-session', data => handleTtyConnect(ctx, data, doc.id));
 
-      // assign tty reference so it can be passed down to xterm
-      ttyRef.current = tty;
-      setSession(session);
-      setStatus('initialized');
+        // assign tty reference so it can be passed down to xterm
+        ttyRef.current = tty;
+        setSession(session);
+        setStatus('initialized');
+        span.end();
+      });
     }
 
     // cleanup by unsubscribing from tty
