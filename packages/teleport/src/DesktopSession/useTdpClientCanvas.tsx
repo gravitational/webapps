@@ -94,11 +94,14 @@ export default function useTdpClientCanvas(props: Props) {
   // Default TdpClientEvent.TDP_ERROR and TdpClientEvent.CLIENT_ERROR handler
   const onTdpError = (error: { err: Error; isFatal: boolean }) => {
     const { err, isFatal } = error;
-    setDirectorySharingState(prevState => ({
-      ...prevState,
-      isSharing: false,
-    }));
-    setClipboardSharingEnabled(false);
+    if (isFatal) {
+      setDirectorySharingState(prevState => ({
+        ...prevState,
+        isSharing: false,
+      }));
+      setClipboardSharingEnabled(false);
+    }
+
     setTdpConnection({
       status: isFatal ? 'failed' : '',
       statusText: err.message,

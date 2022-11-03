@@ -129,9 +129,11 @@ export default class Client extends EventEmitterWebAuthnSender {
           this.handleClipboardData(buffer);
           break;
         case MessageType.ERROR:
+          const msg = this.codec.decodeErrorMessage(buffer);
           this.handleError(
-            new Error(this.codec.decodeErrorMessage(buffer)),
-            TdpClientEvent.TDP_ERROR
+            new Error(msg),
+            TdpClientEvent.TDP_ERROR,
+            msg !== clipDataMaxLenErr
           );
           break;
         case MessageType.MFA_JSON:
@@ -558,3 +560,6 @@ export default class Client extends EventEmitterWebAuthnSender {
     this.socket?.close();
   }
 }
+
+// This value MUST have the same value as the variable by the same name in webapps
+const clipDataMaxLenErr = 'clipboard data exceeds maximum length';
