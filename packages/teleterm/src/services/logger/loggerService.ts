@@ -44,8 +44,8 @@ export function createFileLoggerService(
         const text = stringifier(message as unknown as unknown[]);
         const contextAndLevel = opts.passThroughMode
           ? ''
-          : ` [${context}] ${level}`;
-        return `[${timestamp}]${contextAndLevel}: ${text}`;
+          : ` [${context}] ${level}:`;
+        return `[${timestamp}]${contextAndLevel} ${text}`;
       })
     ),
     transports: [
