@@ -26,14 +26,15 @@ import { Option } from 'shared/components/Select';
 
 import TextSelectCopy from 'teleport/components/TextSelectCopy';
 import useTeleport from 'teleport/useTeleport';
+import { generateTshLoginCommand } from 'teleport/lib/util';
 
 import {
-  Header,
   ActionButtons,
   TextIcon,
   HeaderSubtitle,
   Mark,
   ReadOnlyYamlEditor,
+  HeaderWithBackBtn,
 } from '../../Shared';
 import { ruleConnectionDiagnostic } from '../../templates';
 
@@ -53,6 +54,7 @@ export function TestConnection({
   runConnectionDiagnostic,
   diagnosis,
   nextStep,
+  prevStep,
   canTestConnection,
   kube,
   authType,
@@ -70,12 +72,6 @@ export function TestConnection({
   const [selectedUser, setSelectedUser] = useState(
     () => userOpts[0] || { value: username, label: username }
   );
-
-  const { hostname, port } = window.document.location;
-  const host = `${hostname}:${port || '443'}`;
-  const authSpec =
-    authType === 'local' ? `--auth=${authType} --user=${username} ` : '';
-  const tshLoginCmd = `tsh login --proxy=${host} ${authSpec}${clusterId}`;
 
   let $diagnosisStateComponent;
   if (attempt.status === 'processing') {
@@ -119,7 +115,9 @@ export function TestConnection({
     <Validation>
       {({ validator }) => (
         <Box>
-          <Header>Test Connection</Header>
+          <HeaderWithBackBtn onPrev={prevStep}>
+            Test Connection
+          </HeaderWithBackBtn>
           <HeaderSubtitle>
             Optionally verify that you can successfully connect to the
             Kubernetes cluster you just added.
@@ -263,7 +261,14 @@ export function TestConnection({
             </Text>
             <Box mb={2}>
               Log into your Teleport cluster
-              <TextSelectCopy mt="1" text={tshLoginCmd} />
+              <TextSelectCopy
+                mt="1"
+                text={generateTshLoginCommand({
+                  authType,
+                  username,
+                  clusterId,
+                })}
+              />
             </Box>
             <Box mb={2}>
               Log into your Kubernetes cluster

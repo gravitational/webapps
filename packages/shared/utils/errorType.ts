@@ -14,12 +14,8 @@
  * limitations under the License.
  */
 
-export { ActionButtons } from './ActionButtons';
-export { ButtonBlueText } from './ButtonBlueText';
-export { Header, HeaderSubtitle, HeaderWithBackBtn } from './Header';
-export { Finished } from './Finished';
-export { Mark } from './Mark';
-export { ReadOnlyYamlEditor } from './YAML';
-export { ResourceKind } from './ResourceKind';
-export { Step, StepContainer } from './Step';
-export { TextBox, TextIcon } from './Text';
+import { privateKeyEnablingPolicies } from 'shared/services';
+
+export function isPrivateKeyRequiredError(err: Error) {
+  return privateKeyEnablingPolicies.some(p => err.message.includes(p));
+}
