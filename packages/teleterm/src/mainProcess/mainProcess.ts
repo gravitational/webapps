@@ -14,7 +14,7 @@ import {
 
 import { FileStorage, Logger, RuntimeSettings } from 'teleterm/types';
 import { subscribeToFileStorageEvents } from 'teleterm/services/fileStorage';
-import createLoggerService from 'teleterm/services/logger';
+import { createFileLoggerService } from 'teleterm/services/logger';
 import { ChildProcessAddresses } from 'teleterm/mainProcess/types';
 import { getAssetPath } from 'teleterm/mainProcess/runtimeSettings';
 
@@ -88,15 +88,16 @@ export default class MainProcess {
       },
     });
 
-    const tshdLogger = createLoggerService({
+    const tshdPassThroughLogger = createFileLoggerService({
       dev: this.settings.dev,
       dir: this.settings.userDataDir,
       name: 'tshd',
+      loggerNamePrintCode: '46',
       passThroughMode: true,
     });
 
-    tshdLogger.pipeProcessOutputIntoLogger(this.tshdProcess.stdout);
-    tshdLogger.pipeProcessOutputIntoLogger(this.tshdProcess.stderr);
+    tshdPassThroughLogger.pipeProcessOutputIntoLogger(this.tshdProcess.stdout);
+    tshdPassThroughLogger.pipeProcessOutputIntoLogger(this.tshdProcess.stderr);
 
     this.tshdProcess.on('error', error => {
       this.logger.error('tshd failed to start', error);
@@ -115,16 +116,20 @@ export default class MainProcess {
         stdio: 'pipe',
       }
     );
-
-    const sharedProcessLogger = createLoggerService({
+    const sharedProcessPassThroughLogger = createFileLoggerService({
       dev: this.settings.dev,
       dir: this.settings.userDataDir,
       name: 'shared',
+      loggerNamePrintCode: '43',
       passThroughMode: true,
     });
 
-    sharedProcessLogger.pipeProcessOutputIntoLogger(this.sharedProcess.stdout);
-    sharedProcessLogger.pipeProcessOutputIntoLogger(this.sharedProcess.stderr);
+    sharedProcessPassThroughLogger.pipeProcessOutputIntoLogger(
+      this.sharedProcess.stdout
+    );
+    sharedProcessPassThroughLogger.pipeProcessOutputIntoLogger(
+      this.sharedProcess.stderr
+    );
 
     this.sharedProcess.on('error', error => {
       this.logger.error('shared process failed to start', error);
