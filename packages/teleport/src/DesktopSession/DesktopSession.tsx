@@ -149,9 +149,7 @@ export function DesktopSession(props: State) {
         >
           <DialogHeader style={{ flexDirection: 'column' }}>
             {errorDialog.fatal && <DialogTitle>Fatal Error</DialogTitle>}
-            {!errorDialog.fatal && (
-              <DialogTitle>Unsupported Action</DialogTitle>
-            )}
+            {!errorDialog.fatal && <DialogTitle>Warning</DialogTitle>}
           </DialogHeader>
           <DialogContent>
             {errorDialog.fatal && (

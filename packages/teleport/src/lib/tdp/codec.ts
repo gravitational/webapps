@@ -95,6 +95,12 @@ export type ClipboardData = {
   data: string;
 };
 
+// | message type (9) | message_length uint32 | message []byte | fatal bool
+export type TdpError = {
+  message: string;
+  fatal: boolean;
+};
+
 // | message type (10) | mfa_type byte | message_length uint32 | json []byte
 export type MfaJson = {
   // TODO(isaiah) make this a type that ensures it's the same as MessageTypeEnum.U2F_CHALLENGE and MessageTypeEnum.WEBAUTHN_CHALLENGE
@@ -786,9 +792,20 @@ export default class Codec {
   }
 
   // decodeError decodes a raw tdp ERROR message and returns it as a string
-  // | message type (9) | message_length uint32 | message []byte
-  decodeErrorMessage(buffer: ArrayBuffer): string {
-    return this.decodeStringMessage(buffer);
+  // | message type (9) | message_length uint32 | message []byte | fatal bool
+  decodeErrorMessage(buffer: ArrayBuffer): TdpError {
+    const dv = new DataView(buffer);
+    let offset = 0;
+    offset += byteLength; // eat message type
+    const messageLength = dv.getUint32(offset);
+    offset += uint32Length; // eat messageLength
+    const message = this.decodeStringMessage(buffer);
+    offset += messageLength; // eat message
+    const fatal = dv.getUint8(offset);
+    return {
+      message,
+      fatal: fatal === 1,
+    };
   }
 
   // decodeMfaChallenge decodes a raw tdp MFA challenge message and returns it as a string (of a json).
@@ -812,8 +829,7 @@ export default class Codec {
   // decodeStringMessage decodes a tdp message of the form
   // | message type (N) | message_length uint32 | message []byte
   private decodeStringMessage(buffer: ArrayBuffer): string {
-    // slice(5) ensures we skip the message type and message_length
-    const offset = 0 + byteLength + uint32Length; // eat message type and message_length
+    const offset = byteLength + uint32Length; // eat message type and message_length
     return this.decoder.decode(new Uint8Array(buffer.slice(offset)));
   }
 
