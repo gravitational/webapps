@@ -9,6 +9,12 @@ import split2 from 'split2';
 
 import { Logger, LoggerService, NodeLoggerService } from './types';
 
+/**
+ * stdout logger should be used in child processes.
+ * It sends logs directly to stdout, so the parent logger can process that output
+ * (e.g. show it in the terminal and save to a file).
+ * It also allows parent to log errors emitted by the child process.
+ */
 export function createStdoutLoggerService(): LoggerService {
   const instance = createWinston({
     level: 'info',
@@ -30,6 +36,10 @@ export function createStdoutLoggerService(): LoggerService {
   };
 }
 
+/**
+ * File logger saves logs directly to the file and shows them in the terminal in dev mode.
+ * Can be used as a parent logger and process logs from child processes.
+ */
 export function createFileLoggerService(
   opts: FileLoggerOptions
 ): NodeLoggerService {
