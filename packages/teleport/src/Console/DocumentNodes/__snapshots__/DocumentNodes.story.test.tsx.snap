@@ -208,7 +208,7 @@ exports[`render DocumentNodes 1`] = `
 }
 
 .c28 > tbody > tr > td {
-  vertical-align: baseline;
+  vertical-align: middle;
 }
 
 .c28 > thead > tr > th {

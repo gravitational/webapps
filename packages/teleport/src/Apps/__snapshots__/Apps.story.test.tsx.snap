@@ -581,7 +581,7 @@ exports[`failed state 1`] = `
 }
 
 .c21 > tbody > tr > td {
-  vertical-align: baseline;
+  vertical-align: middle;
 }
 
 .c21 > thead > tr > th {
@@ -1535,7 +1535,7 @@ exports[`loaded state 1`] = `
 }
 
 .c21 > tbody > tr > td {
-  vertical-align: baseline;
+  vertical-align: middle;
 }
 
 .c21 > thead > tr > th {

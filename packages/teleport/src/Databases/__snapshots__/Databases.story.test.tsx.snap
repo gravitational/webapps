@@ -512,7 +512,7 @@ exports[`failed 1`] = `
 }
 
 .c21 > tbody > tr > td {
-  vertical-align: baseline;
+  vertical-align: middle;
 }
 
 .c21 > thead > tr > th {
@@ -1267,7 +1267,7 @@ exports[`open source loaded 1`] = `
 }
 
 .c21 > tbody > tr > td {
-  vertical-align: baseline;
+  vertical-align: middle;
 }
 
 .c21 > thead > tr > th {

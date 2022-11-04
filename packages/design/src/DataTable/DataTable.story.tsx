@@ -87,6 +87,40 @@ export const DataTablePaged = () => {
   );
 };
 
+export function DataTableISODateStrings() {
+  return (
+    <Table<DummyDataISOStringType>
+      columns={[
+        { key: 'name', headerText: 'Name', isSortable: true },
+        { key: 'desc', headerText: 'Description' },
+        { key: 'amount', headerText: 'Amount', isSortable: true },
+        {
+          key: 'createdDate',
+          headerText: 'Created Date',
+          isSortable: true,
+        },
+        {
+          key: 'removedDate',
+          headerText: 'Removed Date',
+          isSortable: true,
+        },
+        {
+          key: 'tags',
+          headerText: 'Labels',
+          render: row => <LabelCell data={row.tags} />,
+          isSortable: true,
+          onSort: sortTagsByLength,
+        },
+        { key: 'bool', headerText: 'Boolean', isSortable: true },
+      ]}
+      initialSort={{ key: 'createdDate', dir: 'DESC' }}
+      data={isoDateStringData}
+      emptyText={'No Dummy Data Found'}
+      isSearchable
+    />
+  );
+}
+
 function sortTagsByLength(a: DummyDataType['tags'], b: DummyDataType['tags']) {
   return a.length - b.length;
 }
@@ -187,6 +221,27 @@ const extraData: DummyDataType[] = [
   },
 ];
 
+const isoDateStringData: DummyDataISOStringType[] = [
+  {
+    name: 'i-test',
+    desc: 'yet another item',
+    amount: -50,
+    createdDate: new Date(1635364176).toISOString(),
+    removedDate: new Date(1635322403).toISOString(),
+    tags: ['test12: test12'],
+    bool: false,
+  },
+  {
+    name: 'j-test',
+    desc: 'and another',
+    amount: -20,
+    createdDate: new Date(1635364173).toISOString(),
+    removedDate: new Date(1635322403).toISOString(),
+    tags: ['test13: test13'],
+    bool: false,
+  },
+];
+
 type DummyDataType = {
   name: string;
   desc: string;
@@ -195,4 +250,12 @@ type DummyDataType = {
   removedDate: Date;
   tags: string[];
   bool: boolean;
+};
+
+type DummyDataISOStringType = Omit<
+  DummyDataType,
+  'createdDate' | 'removedDate'
+> & {
+  createdDate: string;
+  removedDate: string;
 };
