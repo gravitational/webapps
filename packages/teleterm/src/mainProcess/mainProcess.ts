@@ -14,7 +14,7 @@ import {
 
 import { FileStorage, Logger, RuntimeSettings } from 'teleterm/types';
 import { subscribeToFileStorageEvents } from 'teleterm/services/fileStorage';
-import { createFileLoggerService } from 'teleterm/services/logger';
+import { LoggerColor, createFileLoggerService } from 'teleterm/services/logger';
 import { ChildProcessAddresses } from 'teleterm/mainProcess/types';
 import { getAssetPath } from 'teleterm/mainProcess/runtimeSettings';
 
@@ -92,7 +92,7 @@ export default class MainProcess {
       dev: this.settings.dev,
       dir: this.settings.userDataDir,
       name: 'tshd',
-      loggerNamePrintCode: '46',
+      loggerNameColor: LoggerColor.Cyan,
       passThroughMode: true,
     });
 
@@ -120,7 +120,7 @@ export default class MainProcess {
       dev: this.settings.dev,
       dir: this.settings.userDataDir,
       name: 'shared',
-      loggerNamePrintCode: '43',
+      loggerNameColor: LoggerColor.Yellow,
       passThroughMode: true,
     });
 

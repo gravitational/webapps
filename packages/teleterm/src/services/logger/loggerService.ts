@@ -63,10 +63,8 @@ export function createFileLoggerService(
       new transports.Console({
         format: format.printf(({ level, message, context }) => {
           const loggerName =
-            opts.loggerNamePrintCode &&
-            `\x1b[${
-              opts.loggerNamePrintCode
-            }m${opts.name.toUpperCase()}\x1b[0m`;
+            opts.loggerNameColor &&
+            `\x1b[${opts.loggerNameColor}m${opts.name.toUpperCase()}\x1b[0m`;
 
           const text = stringifier(message as unknown as unknown[]);
           const logMessage = opts.passThroughMode
@@ -90,6 +88,13 @@ export function createFileLoggerService(
       return createLoggerFromWinston(logger);
     },
   };
+}
+
+// maps color names to ANSI colors
+export enum LoggerColor {
+  Magenta = '45',
+  Cyan = '46',
+  Yellow = '43',
 }
 
 function createLoggerFromWinston(logger: winston.Logger): Logger {
@@ -124,11 +129,11 @@ type FileLoggerOptions = {
   dir: string;
   name: string;
   /**
-   * ANSI display attribute (SGR parameter) for the logger name e.g. 104 for Bright Blue background color.
+   * Specifies color for the logger name e.g. SHARED, TSHD.
    * Logger name is printed in the terminal, only in dev mode.
    * If not specified, the logger name will not be printed.
    */
-  loggerNamePrintCode?: string;
+  loggerNameColor?: LoggerColor;
   dev?: boolean;
   /**
    * Mode for logger handling logs from other sources. Log level and context are not included in the log message.
