@@ -5,11 +5,11 @@ import fs from 'fs/promises';
 
 import {
   app,
-  ipcMain,
-  shell,
   dialog,
+  ipcMain,
   Menu,
   MenuItemConstructorOptions,
+  shell,
 } from 'electron';
 
 import { FileStorage, Logger, RuntimeSettings } from 'teleterm/types';
@@ -80,7 +80,7 @@ export default class MainProcess {
     this.logger.info(`Starting tsh daemon from ${binaryPath}`);
 
     this.tshdProcess = spawn(binaryPath, flags, {
-      stdio: 'pipe',
+      stdio: 'pipe', // stdio must be set to `pipe` as the gRPC server address is read from stdout
       windowsHide: true,
       env: {
         ...process.env,
@@ -113,7 +113,7 @@ export default class MainProcess {
       path.join(__dirname, 'sharedProcess.js'),
       [`--runtimeSettingsJson=${JSON.stringify(this.settings)}`],
       {
-        stdio: 'pipe',
+        stdio: 'pipe', // stdio must be set to `pipe` as the gRPC server address is read from stdout
       }
     );
     const sharedProcessPassThroughLogger = createFileLoggerService({
