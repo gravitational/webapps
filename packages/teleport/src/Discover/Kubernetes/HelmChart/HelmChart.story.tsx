@@ -27,10 +27,10 @@ import {
 import { PingTeleportProvider } from 'teleport/Discover/Shared/PingTeleportContext';
 import { userContext } from 'teleport/mocks/contexts';
 
-import DownloadScript from './DownloadScript';
+import HelmChart from './HelmChart';
 
 export default {
-  title: 'Teleport/Discover/Kube/DownloadScripts',
+  title: 'Teleport/Discover/Kube/HelmChart',
   decorators: [
     Story => {
       // Reset request handlers added in individual stories.
@@ -39,6 +39,14 @@ export default {
       return <Story />;
     },
   ],
+};
+
+export const Init = () => {
+  return (
+    <Provider>
+      <HelmChart />
+    </Provider>
+  );
 };
 
 export const Polling = () => {
@@ -51,8 +59,8 @@ export const Polling = () => {
     })
   );
   return (
-    <Provider interval={100000}>
-      <DownloadScript runJoinTokenPromise={true} />
+    <Provider>
+      <HelmChart runJoinTokenPromise={true} />
     </Provider>
   );
 };
@@ -67,8 +75,8 @@ export const PollingSuccess = () => {
     })
   );
   return (
-    <Provider>
-      <DownloadScript runJoinTokenPromise={true} />
+    <Provider interval={5}>
+      <HelmChart runJoinTokenPromise={true} />
     </Provider>
   );
 };
@@ -83,8 +91,8 @@ export const PollingError = () => {
     })
   );
   return (
-    <Provider timeout={20} interval={100000}>
-      <DownloadScript runJoinTokenPromise={true} />
+    <Provider timeout={20}>
+      <HelmChart runJoinTokenPromise={true} />
     </Provider>
   );
 };
@@ -96,8 +104,8 @@ export const Processing = () => {
     })
   );
   return (
-    <Provider>
-      <DownloadScript runJoinTokenPromise={true} />
+    <Provider interval={5}>
+      <HelmChart runJoinTokenPromise={true} />
     </Provider>
   );
 };
@@ -111,7 +119,7 @@ export const Failed = () => {
   );
   return (
     <Provider>
-      <DownloadScript runJoinTokenPromise={true} />
+      <HelmChart runJoinTokenPromise={true} />
     </Provider>
   );
 };
@@ -125,7 +133,7 @@ const Provider = props => {
         <JoinTokenProvider timeout={props.timeout || 100000}>
           <PingTeleportProvider
             timeout={props.timeout || 100000}
-            interval={props.interval || 5}
+            interval={props.interval || 100000}
             resourceKind={ResourceKind.Kubernetes}
           >
             {props.children}

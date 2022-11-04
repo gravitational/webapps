@@ -14,6 +14,6 @@
  * limitations under the License.
  */
 
-import DownloadScript from './DownloadScript';
+import HelmChart from './HelmChart';
 
-export { DownloadScript };
+export { HelmChart };
