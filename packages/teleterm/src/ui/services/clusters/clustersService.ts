@@ -413,6 +413,10 @@ export class ClustersService extends ImmutableStore<ClustersServiceState> {
     return cluster.loggedInUser?.assumedRequests || {};
   }
 
+  getAssumedRequest(clusterUri: string, requestId: string) {
+    return this.getAssumedRequests(clusterUri)[requestId];
+  }
+
   async getAccessRequests(clusterUri: string) {
     const cluster = this.state.clusters.get(clusterUri);
     if (!cluster.connected) {
