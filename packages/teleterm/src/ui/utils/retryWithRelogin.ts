@@ -22,12 +22,11 @@ const logger = new Logger('retryWithRelogin');
  * place that has access to the tshd client.
  *
  * @param resourceUri - The URI used to extract the root cluster URI. That's how we determine the
- * cluster the login modal should use.
+ * cluster the login modal should use and whether the workspace of that resource is still active.
  */
 export async function retryWithRelogin<T>(
   appContext: AppContext,
   resourceUri: string,
-  isUiActive: (appContext: AppContext) => boolean,
   actionToRetry: () => Promise<T>
 ): Promise<T> {
   let retryableErrorFromActionToRetry: Error;
@@ -48,12 +47,14 @@ export async function retryWithRelogin<T>(
     }
   }
 
-  if (!isUiActive(appContext)) {
-    // The error is retryable, but the user is no longer looking at the relevant UI, for example
-    // they switched to a different document or a different workspace completely.
+  const { workspacesService } = appContext;
+
+  if (!workspacesService.doesResourceBelongToActiveWorkspace(resourceUri)) {
+    // The error is retryable, but by the time the request has finished, the user has switched to
+    // another workspace so they're no longer looking at the relevant UI.
     //
     // Since it might take a few seconds before the execution gets to this point, the user might no
-    // longer remember what their intent was, thus showing them a login modal can be disorienting.
+    // longer remember what their intent was, thus showing them a login modal could be disorienting.
     //
     // In that situation, let's just not attempt to relogin and instead let's surface the original
     // error.
@@ -79,14 +80,3 @@ function login(appContext: AppContext, rootClusterUri: string): Promise<void> {
     });
   });
 }
-
-/**
- * isDocumentActive is a helper function meant to be passed as the isUiActive argument of
- * retryWithRelogin for places where UI being active is equal to the document being the currently
- * viewed document.
- */
-retryWithRelogin.isDocumentActive = (documentUri: string) => {
-  return function (appContext: AppContext) {
-    return appContext.workspacesService.isDocumentActive(documentUri);
-  };
-};
