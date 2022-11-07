@@ -54,6 +54,7 @@ export enum MessageType {
   SHARED_DIRECTORY_LIST_REQUEST = 25,
   SHARED_DIRECTORY_LIST_RESPONSE = 26,
   PNG2_FRAME = 27,
+  ERROR2 = 28,
   __LAST, // utility value
 }
 
@@ -95,8 +96,13 @@ export type ClipboardData = {
   data: string;
 };
 
-// | message type (9) | message_length uint32 | message []byte | fatal bool
+// | message type (9) | message_length uint32 | message []byte |
 export type TdpError = {
+  message: string;
+};
+
+// | message type (28) | message_length uint32 | message []byte |
+export type TdpError2 = {
   message: string;
   fatal: boolean;
 };
@@ -791,9 +797,15 @@ export default class Codec {
     return messageType;
   }
 
-  // decodeError decodes a raw tdp ERROR message and returns it as a string
-  // | message type (9) | message_length uint32 | message []byte | fatal bool
-  decodeErrorMessage(buffer: ArrayBuffer): TdpError {
+  // decodeErrorMessage decodes a raw tdp Error message and returns it as a string
+  // | message type (9) | message_length uint32 | message []byte
+  decodeErrorMessage(buffer: ArrayBuffer): string {
+    return this.decodeStringMessage(buffer);
+  }
+
+  // decodeErrorMessage2 decodes a raw tdp Error2 message
+  // | message type (28) | message_length uint32 | message []byte | fatal bool
+  decodeErrorMessage2(buffer: ArrayBuffer): TdpError2 {
     const dv = new DataView(buffer);
     let offset = 0;
     offset += byteLength; // eat message type

@@ -129,7 +129,13 @@ export default class Client extends EventEmitterWebAuthnSender {
           this.handleClipboardData(buffer);
           break;
         case MessageType.ERROR:
-          this.handleTdpError(buffer);
+          this.handleError(
+            new Error(this.codec.decodeErrorMessage(buffer)),
+            TdpClientEvent.TDP_ERROR
+          );
+          break;
+        case MessageType.ERROR2:
+          this.handleTdpError2(buffer);
           break;
         case MessageType.MFA_JSON:
           this.handleMfaChallenge(buffer);
@@ -202,8 +208,8 @@ export default class Client extends EventEmitterWebAuthnSender {
     );
   }
 
-  handleTdpError(buffer: ArrayBuffer) {
-    const tdpErr = this.codec.decodeErrorMessage(buffer);
+  handleTdpError2(buffer: ArrayBuffer) {
+    const tdpErr = this.codec.decodeErrorMessage2(buffer);
     this.handleError(
       new Error(tdpErr.message),
       TdpClientEvent.TDP_ERROR,
