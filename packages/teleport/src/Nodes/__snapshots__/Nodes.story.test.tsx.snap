@@ -595,7 +595,6 @@ exports[`failed 1`] = `
   padding: 0 8px;
   background-color: #111B48;
   color: rgba(255,255,255,0.87);
-  margin-bottom: 4px;
   margin-right: 4px;
   cursor: pointer;
 }
@@ -1574,7 +1573,6 @@ exports[`loaded 1`] = `
   padding: 0 8px;
   background-color: #111B48;
   color: rgba(255,255,255,0.87);
-  margin-bottom: 4px;
   margin-right: 4px;
   cursor: pointer;
 }

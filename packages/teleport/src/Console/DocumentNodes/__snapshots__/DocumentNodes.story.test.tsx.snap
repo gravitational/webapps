@@ -281,7 +281,6 @@ exports[`render DocumentNodes 1`] = `
   padding: 0 8px;
   background-color: #01172C;
   color: rgba(255,255,255,0.87);
-  margin-bottom: 4px;
   margin-right: 4px;
   cursor: pointer;
 }

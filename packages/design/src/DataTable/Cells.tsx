@@ -82,12 +82,16 @@ export const DateCell = ({ data }: { data: Date }) => (
 
 const renderLabelCell = (labels: string[] = []) => {
   const $labels = labels.map(label => (
-    <Label mb="1" mr="1" key={label} kind="secondary">
+    <Label mr="1" key={label} kind="secondary">
       {label}
     </Label>
   ));
 
-  return <Cell>{$labels}</Cell>;
+  return (
+    <Cell>
+      <div style={{ lineHeight: '20px' }}>{$labels}</div>
+    </Cell>
+  );
 };
 
 export const ClickableLabelCell = ({
@@ -102,7 +106,6 @@ export const ClickableLabelCell = ({
       onClick={() => onClick(label)}
       key={`${label.name}:${label.value}`}
       mr="1"
-      mb="1"
       kind="secondary"
       css={`
         cursor: pointer;
