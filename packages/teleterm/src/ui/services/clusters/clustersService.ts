@@ -404,8 +404,8 @@ export class ClustersService extends ImmutableStore<ClustersServiceState> {
     return this.client.getRequestableRoles(clusterUri);
   }
 
-  getAssumedRequests(clusterUri: string) {
-    const cluster = this.state.clusters.get(clusterUri);
+  getAssumedRequests(rootClusterUri: string) {
+    const cluster = this.state.clusters.get(rootClusterUri);
     if (!cluster?.connected) {
       return {};
     }
@@ -413,8 +413,8 @@ export class ClustersService extends ImmutableStore<ClustersServiceState> {
     return cluster.loggedInUser?.assumedRequests || {};
   }
 
-  getAssumedRequest(clusterUri: string, requestId: string) {
-    return this.getAssumedRequests(clusterUri)[requestId];
+  getAssumedRequest(rootClusterUri: string, requestId: string) {
+    return this.getAssumedRequests(rootClusterUri)[requestId];
   }
 
   async getAccessRequests(clusterUri: string) {
