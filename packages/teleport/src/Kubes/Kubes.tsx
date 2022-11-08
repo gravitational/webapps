@@ -112,6 +112,7 @@ export function Kubes(props: State) {
             replaceHistory={replaceHistory}
             onLabelClick={onLabelClick}
             accessRequestId={accessRequestId}
+            paginationUnsupported={results.paginationUnsupported}
           />
         </>
       )}

@@ -27,6 +27,13 @@ export default {
 
 export const Loaded = () => <Kubes {...props} />;
 
+export const PaginationUnsupported = () => (
+  <Kubes
+    {...props}
+    results={{ ...props.results, paginationUnsupported: true }}
+  />
+);
+
 export const Empty = () => (
   <Kubes {...props} results={{ kubes: [] }} isSearchEmpty={true} />
 );
