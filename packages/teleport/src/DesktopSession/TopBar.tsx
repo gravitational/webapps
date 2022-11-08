@@ -15,7 +15,7 @@ limitations under the License.
 */
 import React from 'react';
 import styled, { useTheme } from 'styled-components';
-import { Text, TopNav, Flex } from 'design';
+import { Text, TopNav, Flex, Button } from 'design';
 import { Clipboard, FolderShared } from 'design/Icon';
 
 import { colors } from 'teleport/Console/colors';
@@ -71,6 +71,7 @@ export default function TopBar(props: Props) {
                 : 'Clipboard Sharing Disabled'
             }
           />
+          <StyledButton>ok?</StyledButton>
         </Flex>
         <ActionMenu
           onDisconnect={onDisconnect}
@@ -94,6 +95,11 @@ const StyledFolderShared = styled(FolderShared)`
   font-weight: ${({ theme }) => theme.fontWeights.bold};
   font-size: ${({ theme }) => theme.fontSizes[6] + 'px'};
   align-self: 'center';
+`;
+
+const StyledButton = styled(Button)`
+  min-height: 0;
+  height: ${({ theme }) => theme.fontSizes[7] + 'px'};
 `;
 
 type Props = {

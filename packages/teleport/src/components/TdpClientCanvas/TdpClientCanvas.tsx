@@ -29,6 +29,7 @@ export default function TdpClientCanvas(props: Props) {
     tdpCliOnPngFrame,
     tdpCliOnClipboardData,
     tdpCliOnTdpError,
+    tdpCliOnTdpWarning,
     tdpCliOnWsClose,
     tdpCliOnWsOpen,
     tdpCliOnClientScreenSpec,
@@ -127,6 +128,21 @@ export default function TdpClientCanvas(props: Props) {
       };
     }
   }, [tdpCli, tdpCliOnTdpError]);
+
+  useEffect(() => {
+    if (tdpCli && tdpCliOnTdpWarning) {
+      tdpCli.on(TdpClientEvent.TDP_WARNING, tdpCliOnTdpWarning);
+      tdpCli.on(TdpClientEvent.CLIENT_WARNING, tdpCliOnTdpWarning);
+
+      return () => {
+        tdpCli.removeListener(TdpClientEvent.TDP_WARNING, tdpCliOnTdpWarning);
+        tdpCli.removeListener(
+          TdpClientEvent.CLIENT_WARNING,
+          tdpCliOnTdpWarning
+        );
+      };
+    }
+  }, [tdpCli, tdpCliOnTdpWarning]);
 
   useEffect(() => {
     if (tdpCli && tdpCliOnWsClose) {
@@ -266,7 +282,8 @@ export type Props = {
     pngFrame: PngFrame
   ) => void;
   tdpCliOnClipboardData?: (clipboardData: ClipboardData) => void;
-  tdpCliOnTdpError?: (error: { err: Error; isFatal: boolean }) => void;
+  tdpCliOnTdpError?: (error: Error) => void;
+  tdpCliOnTdpWarning?: (warning: string) => void;
   tdpCliOnWsClose?: () => void;
   tdpCliOnWsOpen?: () => void;
   tdpCliOnClientScreenSpec?: (

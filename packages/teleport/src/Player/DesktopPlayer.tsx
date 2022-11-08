@@ -172,11 +172,10 @@ const useDesktopPlayer = ({
     });
   };
 
-  const tdpCliOnTdpError = (error: { err: Error; isFatal: boolean }) => {
-    const { err } = error;
+  const tdpCliOnTdpError = (error: Error) => {
     setAttempt({
       status: 'failed',
-      statusText: err.message,
+      statusText: error.message,
     });
   };
 
