@@ -111,6 +111,7 @@ export function Desktops(props: State) {
           pathname={pathname}
           replaceHistory={replaceHistory}
           onLabelClick={onLabelClick}
+          paginationUnsupported={results.paginationUnsupported}
         />
       )}
       {hasNoDesktops && (
