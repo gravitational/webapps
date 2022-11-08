@@ -1076,13 +1076,13 @@ export const formatters: Formatters = {
       `User [${user}] sent ${length} bytes of clipboard data to desktop [${desktop_addr}]`,
   },
   [eventCodes.DESKTOP_SHARED_DIRECTORY_START]: {
-    type: 'desktop.directory.start',
+    type: 'desktop.directory.share',
     desc: 'Directory Sharing Started',
     format: ({ user, desktop_addr, directory_name }) =>
       `User [${user}] started sharing directory [${directory_name}] to desktop [${desktop_addr}]`,
   },
   [eventCodes.DESKTOP_SHARED_DIRECTORY_START_FAILURE]: {
-    type: 'desktop.directory.start',
+    type: 'desktop.directory.share',
     desc: 'Directory Sharing Start Failed',
     format: ({ user, desktop_addr, directory_name }) =>
       `User [${user}] failed to start sharing directory [${directory_name}] to desktop [${desktop_addr}]`,
