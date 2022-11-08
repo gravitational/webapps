@@ -1,9 +1,11 @@
 import React, { useState } from 'react';
 import { ButtonPrimary, Flex } from 'design';
 
+import { NotificationItem } from '@gravitational/shared/components/Notification';
+
 import { unique } from 'teleterm/ui/utils/uid';
 
-import { NotificationItem, Notifications } from '.';
+import { Notifications } from '.';
 
 export default {
   title: 'Teleterm/components/Notifications',

@@ -2,8 +2,10 @@ import React from 'react';
 
 import styled from 'styled-components';
 
-import { NotificationItem } from './types';
-import { Notification } from './Notification';
+import {
+  Notification,
+  NotificationItem,
+} from '@gravitational/shared/components/Notification';
 
 interface NotificationsProps {
   items: NotificationItem[];
