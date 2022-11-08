@@ -54,7 +54,7 @@ export enum MessageType {
   SHARED_DIRECTORY_LIST_REQUEST = 25,
   SHARED_DIRECTORY_LIST_RESPONSE = 26,
   PNG2_FRAME = 27,
-  ERROR2 = 28,
+  NOTIFICATION = 28,
   __LAST, // utility value
 }
 
@@ -96,15 +96,15 @@ export type ClipboardData = {
   data: string;
 };
 
-// | message type (9) | message_length uint32 | message []byte |
-export type TdpError = {
-  message: string;
-};
+export enum Severity {
+  Error = 0,
+  Warning = 1,
+}
 
-// | message type (28) | message_length uint32 | message []byte |
-export type TdpError2 = {
+// | message type (28) | message_length uint32 | message []byte | severity byte
+export type Notification = {
   message: string;
-  fatal: boolean;
+  severity: Severity;
 };
 
 // | message type (10) | mfa_type byte | message_length uint32 | json []byte
@@ -803,9 +803,9 @@ export default class Codec {
     return this.decodeStringMessage(buffer);
   }
 
-  // decodeErrorMessage2 decodes a raw tdp Error2 message
-  // | message type (28) | message_length uint32 | message []byte | fatal bool
-  decodeErrorMessage2(buffer: ArrayBuffer): TdpError2 {
+  // decodeNotification decodes a raw tdp Notification message
+  // | message type (28) | message_length uint32 | message []byte | severity byte
+  decodeNotification(buffer: ArrayBuffer): Notification {
     const dv = new DataView(buffer);
     let offset = 0;
     offset += byteLength; // eat message type
@@ -813,10 +813,10 @@ export default class Codec {
     offset += uint32Length; // eat messageLength
     const message = this.decodeStringMessage(buffer);
     offset += messageLength; // eat message
-    const fatal = dv.getUint8(offset);
+    const severity = dv.getUint8(offset);
     return {
       message,
-      fatal: fatal === 1,
+      severity: severity === 0 ? Severity.Error : Severity.Warning,
     };
   }
 

@@ -35,6 +35,7 @@ import Codec, {
   SharedDirectoryCreateResponse,
   SharedDirectoryDeleteResponse,
   FileSystemObject,
+  Severity,
 } from './codec';
 import {
   PathDoesNotExistError,
@@ -134,8 +135,8 @@ export default class Client extends EventEmitterWebAuthnSender {
             TdpClientEvent.TDP_ERROR
           );
           break;
-        case MessageType.ERROR2:
-          this.handleTdpError2(buffer);
+        case MessageType.NOTIFICATION:
+          this.handleTdpNotification(buffer);
           break;
         case MessageType.MFA_JSON:
           this.handleMfaChallenge(buffer);
@@ -208,12 +209,12 @@ export default class Client extends EventEmitterWebAuthnSender {
     );
   }
 
-  handleTdpError2(buffer: ArrayBuffer) {
-    const tdpErr = this.codec.decodeErrorMessage2(buffer);
+  handleTdpNotification(buffer: ArrayBuffer) {
+    const notification = this.codec.decodeNotification(buffer);
     this.handleError(
-      new Error(tdpErr.message),
+      new Error(notification.message),
       TdpClientEvent.TDP_ERROR,
-      tdpErr.fatal
+      notification.severity === Severity.Error
     );
   }
 
