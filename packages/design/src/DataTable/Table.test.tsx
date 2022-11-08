@@ -320,24 +320,23 @@ describe('sorting by field defined in key and altSortKey', () => {
   });
 });
 
-
-describe("sorting by iso date string", () => {
+describe('sorting by iso date string', () => {
   const sample = [
     {
-      created: new Date(12004).toISOString(),
+      created: '2022-09-09T19:08:17.27Z',
       text: 'a2',
     },
     {
-      created: new Date(12002).toISOString(),
+      created: '2022-09-09T19:08:17.261Z',
       text: 'a3',
     },
     {
-      created: new Date(101012004).toISOString(),
+      created: new Date('2023-09-09T19:08:17.261Z').toISOString(),
       text: 'a1',
     },
   ];
-  
-  test("sort by iso date string", () => {
+
+  test('sort by iso date string', () => {
     render(
       <Table
         data={sample}

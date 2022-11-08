@@ -236,7 +236,7 @@ function isISODate(value: any): boolean {
 
   const date = new Date(value);
 
-  return !isNaN(date.getTime()) && date.toISOString() === value;
+  return !isNaN(date.getTime());
 }
 
 export type State<T> = Omit<
