@@ -110,15 +110,7 @@ export const ClickableLabelCell = ({
 
 export const UnclickableLabelCell = ({ labels }: { labels: AgentLabel[] }) => {
   const $labels = labels.map(label => (
-    <Label
-      key={`${label.name}:${label.value}`}
-      mr="1"
-      mb="1"
-      kind="secondary"
-      css={`
-        cursor: pointer;
-      `}
-    >
+    <Label key={`${label.name}:${label.value}`} mr="1" mb="1" kind="secondary">
       {`${label.name}: ${label.value}`}
     </Label>
   ));

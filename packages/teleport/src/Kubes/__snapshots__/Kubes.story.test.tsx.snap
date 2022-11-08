@@ -1828,6 +1828,23 @@ exports[`pagination unsupported 1`] = `
   color: #FFFFFF;
 }
 
+.c17 {
+  box-sizing: border-box;
+  border-radius: 100px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 16px;
+  line-height: 1.4;
+  font-size: 10px;
+  font-weight: 500;
+  padding: 0 8px;
+  background-color: #111B48;
+  color: rgba(255,255,255,0.87);
+  margin-bottom: 4px;
+  margin-right: 4px;
+}
+
 .c10 {
   overflow: hidden;
   text-overflow: ellipsis;
@@ -1946,24 +1963,6 @@ exports[`pagination unsupported 1`] = `
   background: #222C59;
   border-top-left-radius: 8px;
   border-top-right-radius: 8px;
-}
-
-.c17 {
-  box-sizing: border-box;
-  border-radius: 100px;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  min-height: 16px;
-  line-height: 1.4;
-  font-size: 10px;
-  font-weight: 500;
-  padding: 0 8px;
-  background-color: #111B48;
-  color: rgba(255,255,255,0.87);
-  margin-bottom: 4px;
-  margin-right: 4px;
-  cursor: pointer;
 }
 
 .c12 {
