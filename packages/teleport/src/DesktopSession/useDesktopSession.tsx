@@ -16,7 +16,9 @@ limitations under the License.
 
 import { useEffect, useState, useMemo } from 'react';
 import { useParams } from 'react-router';
+
 import useAttempt from 'shared/hooks/useAttemptNext';
+import { NotificationItem } from 'shared/components/Notification';
 
 import useWebAuthn from 'teleport/lib/useWebAuthn';
 import { UrlDesktopParams } from 'teleport/config';
@@ -32,7 +34,6 @@ export default function useDesktopSession() {
   // - 'processing' at first
   // - 'success' once the first TdpClientEvent.IMAGE_FRAGMENT is seen
   // - 'failed' if a fatal error is encountered
-  // - '' if a non-fatal error is encountered
   const { attempt: tdpConnection, setAttempt: setTdpConnection } =
     useAttempt('processing');
 
@@ -91,6 +92,8 @@ export default function useDesktopSession() {
     );
   }, [clusterId, desktopName]);
 
+  const [warnings, setWarnings] = useState<NotificationItem[]>([]);
+
   const clientCanvasProps = useTdpClientCanvas({
     username,
     desktopName,
@@ -100,6 +103,7 @@ export default function useDesktopSession() {
     setClipboardSharingEnabled,
     setDirectorySharingState,
     clipboardSharingEnabled,
+    setWarnings,
   });
 
   const webauthn = useWebAuthn(clientCanvasProps.tdpClient);
@@ -121,6 +125,7 @@ export default function useDesktopSession() {
     setTdpConnection,
     showAnotherSessionActiveDialog,
     setShowAnotherSessionActiveDialog,
+    warnings,
     ...clientCanvasProps,
   };
 }

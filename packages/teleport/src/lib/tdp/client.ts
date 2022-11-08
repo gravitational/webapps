@@ -46,10 +46,14 @@ export enum TdpClientEvent {
   TDP_CLIENT_SCREEN_SPEC = 'tdp client screen spec',
   TDP_PNG_FRAME = 'tdp png frame',
   TDP_CLIPBOARD_DATA = 'tdp clipboard data',
-  // TDP_ERROR corresponds with https://github.com/gravitational/teleport/blob/86e824fc7879538e4de400eb1518e4f88930c109/rfd/0037-desktop-access-protocol.md?plain=1#L200-L206
+  // TDP_ERROR corresponds with the TDP error message
   TDP_ERROR = 'tdp error',
   // CLIENT_ERROR represents an error event in the client that isn't a TDP_ERROR
   CLIENT_ERROR = 'client error',
+  // TDP_WARNING corresponds the TDP warning message
+  TDP_WARNING = 'tdp warning',
+  // CLIENT_WARNING represents a warning event that isn't a TDP_WARNING
+  CLIENT_WARNING = 'client warning',
   WS_OPEN = 'ws open',
   WS_CLOSE = 'ws close',
 }
@@ -320,7 +324,7 @@ export default class Client extends EventEmitterWebAuthnSender {
           path: req.path,
         },
       });
-      this.handleError(e, TdpClientEvent.CLIENT_ERROR, false);
+      this.handleWarning(e.message, TdpClientEvent.CLIENT_WARNING);
     }
   }
 
@@ -338,7 +342,7 @@ export default class Client extends EventEmitterWebAuthnSender {
         completionId: req.completionId,
         errCode: SharedDirectoryErrCode.Failed,
       });
-      this.handleError(e, TdpClientEvent.CLIENT_ERROR, false);
+      this.handleWarning(e.message, TdpClientEvent.CLIENT_WARNING);
     }
   }
 
@@ -387,13 +391,10 @@ export default class Client extends EventEmitterWebAuthnSender {
       completionId: req.completionId,
       errCode: SharedDirectoryErrCode.Failed,
     });
-    this.handleError(
-      new Error(
-        'Moving files and directories within a shared \
-        directory is not supported.'
-      ),
-      TdpClientEvent.CLIENT_ERROR,
-      false
+    this.handleWarning(
+      'Moving files and directories within a shared \
+        directory is not supported.',
+      TdpClientEvent.CLIENT_WARNING
     );
   }
 
@@ -540,12 +541,20 @@ export default class Client extends EventEmitterWebAuthnSender {
   // Emits an errType event, closing the socket if the error was fatal.
   private handleError(
     err: Error,
-    errType: TdpClientEvent.TDP_ERROR | TdpClientEvent.CLIENT_ERROR,
-    isFatal = true
+    errType: TdpClientEvent.TDP_ERROR | TdpClientEvent.CLIENT_ERROR
   ) {
     this.logger.error(err);
-    this.emit(errType, { err, isFatal });
-    if (isFatal) this.socket?.close();
+    this.emit(errType, err);
+    this.socket?.close();
+  }
+
+  // Emits an warnType event
+  private handleWarning(
+    warning: string,
+    warnType: TdpClientEvent.TDP_WARNING | TdpClientEvent.CLIENT_WARNING
+  ) {
+    this.logger.warn(warning);
+    this.emit(warnType, warning);
   }
 
   // Ensures full cleanup of this object.

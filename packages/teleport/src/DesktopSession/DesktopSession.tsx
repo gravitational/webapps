@@ -59,6 +59,7 @@ export function DesktopSession(props: State) {
     setTdpConnection,
     showAnotherSessionActiveDialog,
     setShowAnotherSessionActiveDialog,
+    warnings,
   } = props;
 
   const processing =
@@ -86,6 +87,9 @@ export function DesktopSession(props: State) {
       browserError: false,
     }));
   };
+
+  console.log('warnings = ');
+  console.log(warnings);
 
   const computeErrorDialog = () => {
     // Websocket is closed but we haven't
@@ -271,6 +275,7 @@ function Session(props: PropsWithChildren<Props>) {
     onPngFrame,
     onClipboardData,
     onTdpError,
+    onTdpWarning,
     onWsClose,
     onWsOpen,
     onKeyDown,
@@ -359,6 +364,7 @@ function Session(props: PropsWithChildren<Props>) {
         tdpCliOnPngFrame={onPngFrame}
         tdpCliOnClipboardData={onClipboardData}
         tdpCliOnTdpError={onTdpError}
+        tdpCliOnTdpWarning={onTdpWarning}
         tdpCliOnWsClose={onWsClose}
         tdpCliOnWsOpen={onWsOpen}
         onKeyDown={onKeyDown}
