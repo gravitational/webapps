@@ -23,7 +23,7 @@ import type { ConnectionDiagnosticTrace } from 'teleport/services/agents';
 import type { State } from './useTestConnection';
 
 export default {
-  title: 'Teleport/Discover/TestConnection',
+  title: 'Teleport/Discover/Server/TestConnection',
 };
 
 export const LoadedInit = () => (
@@ -137,6 +137,7 @@ const props: State = {
   startSshSession: () => null,
   runConnectionDiagnostic: () => null,
   nextStep: () => null,
+  prevStep: () => null,
   diagnosis: null,
   canTestConnection: true,
 };

@@ -17,5 +17,13 @@
 import logins from './logins.yaml?raw';
 import loginsAndRuleUsers from './loginsAndRuleUsers.yaml?raw';
 import ruleConnectionDiagnostic from './ruleConnectionDiagnostic.yaml?raw';
+import kubeAccessRW from './kubeAccessRW.yaml?raw';
+import kubeAccessRO from './kubeAccessRO.yaml?raw';
 
-export { logins, loginsAndRuleUsers, ruleConnectionDiagnostic };
+export {
+  logins,
+  loginsAndRuleUsers,
+  ruleConnectionDiagnostic,
+  kubeAccessRW,
+  kubeAccessRO,
+};
