@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-import { AgentLabel } from 'teleport/services/resources';
+import { AgentLabel, AgentQueryMeta } from 'teleport/services/resources';
 
 export interface App {
   id: string;
@@ -30,10 +30,8 @@ export interface App {
   awsConsole: boolean;
 }
 
-export type AppsResponse = {
+export type AppsResponse = AgentQueryMeta & {
   apps: App[];
-  startKey?: string;
-  totalCount?: number;
 };
 
 export type AwsRole = {

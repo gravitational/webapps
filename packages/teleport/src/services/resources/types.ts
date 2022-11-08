@@ -27,6 +27,12 @@ export type AgentLabel = {
   value: string;
 };
 
+export type AgentQueryMeta = {
+  startKey?: string;
+  totalCount?: number;
+  paginationUnsupported?: boolean;
+};
+
 export type KindRole = 'role';
 export type KindTrustedCluster = 'trusted_cluster';
 export type KindAuthConnectors = 'github' | 'saml' | 'oidc';

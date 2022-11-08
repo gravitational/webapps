@@ -31,6 +31,8 @@ class DatabaseService {
         databases: items.map(makeDatabase),
         startKey: json?.startKey,
         totalCount: json?.totalCount,
+        paginationUnsupported:
+          json?.startKey === null && json?.totalCount === null,
       };
     });
   }
