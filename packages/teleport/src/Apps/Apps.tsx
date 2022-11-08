@@ -103,6 +103,7 @@ export function Apps(props: State) {
           pathname={pathname}
           replaceHistory={replaceHistory}
           onLabelClick={onLabelClick}
+          paginationUnsupported={results.paginationUnsupported}
         />
       )}
       {hasNoApps && (

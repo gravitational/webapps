@@ -26,6 +26,13 @@ export default {
 
 export const Loaded = () => <Apps {...props} />;
 
+export const PaginationUnsupported = () => (
+  <Apps
+    {...props}
+    results={{ ...props.results, paginationUnsupported: true }}
+  />
+);
+
 export const Empty = () => (
   <Apps {...props} results={{ apps: [] }} isSearchEmpty={true} />
 );
