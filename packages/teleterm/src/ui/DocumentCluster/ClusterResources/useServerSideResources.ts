@@ -76,19 +76,25 @@ export function useServerSideResources<Agent>(
   }
 
   useEffect(() => {
-    fetch(keys[pageIndex - 1]);
-  }, [agentFilter, pageIndex]);
+    const fetchAndUpdateKeys = async () => {
+      const [response, err] = await fetch(keys[pageIndex - 1]);
+      // the error will be handled via the fetchAttempt outside
+      // return early here as there are no keys to update
+      if (err) {
+        return;
+      }
 
-  // when we receive data from fetch, we store the startKey (or lack of) according to the current
-  // page index. think of this as "this page's nextKey".
-  // "why don't we just name it nextKey then?"
-  // Mostly because it's called startKey almost everywhere else in the UI, and also because we'd have the same issue
-  // for prevPage if we swapped named, and this comment would be explaining "this page's startKey".
-  useEffect(() => {
-    const newKeys = [...keys];
-    newKeys[pageIndex] = fetchAttempt.data?.startKey;
-    setKeys(newKeys);
-  }, [fetchAttempt.data]);
+      // when we receive data from fetch, we store the startKey (or lack of) according to the current
+      // page index. think of this as "this page's nextKey".
+      // "why don't we just name it nextKey then?"
+      // Mostly because it's called startKey almost everywhere else in the UI, and also because we'd have the same issue
+      // for prevPage if we swapped named, and this comment would be explaining "this page's startKey".
+      const newKeys = [...keys];
+      newKeys[pageIndex] = response.startKey;
+      setKeys(newKeys);
+    };
+    fetchAndUpdateKeys();
+  }, [agentFilter, pageIndex]);
 
   function updateAgentFilter(filter: AgentFilter) {
     setPageIndex(0);
