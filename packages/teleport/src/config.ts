@@ -33,6 +33,7 @@ import type { RecordingType } from 'teleport/services/recordings';
 const cfg = {
   isEnterprise: false,
   isCloud: false,
+  isDashboard: false,
   tunnelPublicAddress: '',
 
   configDir: '$HOME/.config',

@@ -57,6 +57,8 @@ class TeleportContext implements types.Context {
   desktopService = desktopService;
   mfaService = new MfaService();
   isEnterprise = cfg.isEnterprise;
+  isDashboard = cfg.isDashboard
+
 
   agentService = agentService;
 
