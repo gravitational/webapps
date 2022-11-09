@@ -674,10 +674,6 @@ export class ClustersService extends ImmutableStore<ClustersServiceState> {
     return [...this.state.servers.values()];
   }
 
-  async fetchServers(params: ServerSideParams) {
-    return await this.client.getServers(params);
-  }
-
   async fetchKubes(params: ServerSideParams) {
     return await this.client.getKubes(params);
   }
