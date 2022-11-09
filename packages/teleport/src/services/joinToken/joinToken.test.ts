@@ -21,7 +21,7 @@ import JoinTokenService from './joinToken';
 
 import type { JoinTokenRequest } from './types';
 
-test('fetchJoinToken request', () => {
+test('fetchJoinToken with an empty request properly sets defaults', () => {
   const svc = new JoinTokenService();
   jest.spyOn(api, 'post').mockResolvedValue(null);
 
@@ -37,8 +37,12 @@ test('fetchJoinToken request', () => {
     },
     null
   );
+});
 
-  // Test all fields gets set as requested.
+test('fetchJoinToken request fields are set as requested', () => {
+  const svc = new JoinTokenService();
+  jest.spyOn(api, 'post').mockResolvedValue(null);
+
   const mock: JoinTokenRequest = {
     roles: ['Node'],
     rules: [{ awsAccountId: '1234', awsArn: 'xxxx' }],
