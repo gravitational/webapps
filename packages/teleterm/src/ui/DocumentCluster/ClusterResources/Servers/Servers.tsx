@@ -104,9 +104,9 @@ function ServerList(props: State) {
           ]}
           customSort={customSort}
           emptyText={
-            fetchAttempt.status === 'processing'
-              ? 'Searching...'
-              : 'No servers found'
+            fetchAttempt.status === 'success'
+              ? 'No servers found'
+              : 'Searching…'
           }
           data={servers}
         />
@@ -155,8 +155,12 @@ const renderAddressCell = ({ addr, tunnel }: types.Server) => (
 );
 
 const Wrapper = styled(Box)`
+  // The timing functions of transitions have been chosen so that the element loses opacity slowly
+  // when entering the disabled state but gains it quickly when going out of the disabled state.
+  transition: opacity 150ms ease-out;
   &.disabled {
     pointer-events: none;
-    opacity: 0.5;
+    opacity: 0.7;
+    transition: opacity 150ms ease-in;
   }
 `;

@@ -7,7 +7,7 @@ import InputSearch from 'design/DataTable/InputSearch';
 import { AgentFilter } from 'teleport/services/agents';
 import Toggle from 'teleport/components/Toggle';
 import Tooltip from 'teleport/components/ServersideSearchPanel/Tooltip';
-import { PredicateDoc } from 'teleport/components/ServersideSearchPanel/ServersideSearchPanel';
+import { PredicateDoc } from './PredicateDoc';
 
 export function SearchPanel({
   updateQuery,
@@ -98,8 +98,12 @@ const ToggleWrapper = styled.div`
 `;
 
 const StyledFlex = styled(Flex)`
+  // The timing functions of transitions have been chosen so that the element loses opacity slowly
+  // when entering the disabled state but gains it quickly when going out of the disabled state.
+  transition: opacity 150ms ease-out;
   &.disabled {
     pointer-events: none;
-    opacity: 0.5;
+    opacity: 0.7;
+    transition: opacity 150ms ease-in;
   }
 `;
