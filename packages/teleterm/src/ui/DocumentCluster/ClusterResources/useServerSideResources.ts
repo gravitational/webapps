@@ -27,7 +27,7 @@ export function addAgentLabelToQuery(filter: AgentFilter, label: AgentLabel) {
   return queryParts.join(' && ');
 }
 
-const limit = 5;
+const limit = 15;
 
 export function useServerSideResources<Agent>(
   fetchFunction: (params: ServerSideParams) => Promise<FetchResponse<Agent>>
