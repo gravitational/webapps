@@ -69,7 +69,7 @@ function ServerList(props: State) {
         showSearchBar={true}
         disableSearch={disabledRows}
       />
-      <Wrapper className={disabledRows ? 'disabled' : ''}>
+      <DarkenWhileDisabled className={disabledRows ? 'disabled' : ''}>
         <Table
           columns={[
             {
@@ -111,7 +111,7 @@ function ServerList(props: State) {
           data={servers}
         />
         <SearchPagination prevPage={prevPage} nextPage={nextPage} />
-      </Wrapper>
+      </DarkenWhileDisabled>
     </>
   );
 }
@@ -154,7 +154,7 @@ const renderAddressCell = ({ addr, tunnel }: types.Server) => (
   </Cell>
 );
 
-const Wrapper = styled(Box)`
+const DarkenWhileDisabled = styled(Box)`
   // The timing functions of transitions have been chosen so that the element loses opacity slowly
   // when entering the disabled state but gains it quickly when going out of the disabled state.
   transition: opacity 150ms ease-out;
