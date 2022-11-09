@@ -42,65 +42,6 @@ export const DataTable = () => {
   );
 };
 
-export const DataTableWrappedLabels = () => {
-  const dataWithLabels = [
-    {
-      name: 'looong name with something',
-      desc: 'looong description with something important in it and stuff......',
-      amount: 1,
-      createdDate: new Date(1636467176000),
-      removedDate: new Date(1636423403000),
-      tags: [
-        'test3: test3',
-        'mama: papa',
-        'test4: test4',
-        'test5: test5',
-        'test6: test6',
-        'test7: longer text than normal',
-        'test8: test8',
-        'test9: test9',
-        'test10: test10',
-        'test11: test11',
-      ],
-      bool: true,
-    },
-    ...data,
-  ];
-
-  return (
-    <Table<DummyDataType>
-      columns={[
-        { key: 'name', headerText: 'Name', isSortable: true },
-        { key: 'desc', headerText: 'Description' },
-        { key: 'amount', headerText: 'Amount', isSortable: true },
-        {
-          key: 'createdDate',
-          headerText: 'Created Date',
-          isSortable: true,
-          render: row => <DateCell data={row.createdDate} />,
-        },
-        {
-          key: 'removedDate',
-          headerText: 'Removed Date',
-          isSortable: true,
-          render: row => <DateCell data={row.removedDate} />,
-        },
-        {
-          key: 'tags',
-          headerText: 'Labels',
-          render: row => <LabelCell data={row.tags} />,
-          isSortable: true,
-          onSort: sortTagsByLength,
-        },
-        { key: 'bool', headerText: 'Boolean', isSortable: true },
-      ]}
-      data={dataWithLabels}
-      emptyText={'No Dummy Data Found'}
-      isSearchable
-    />
-  );
-};
-
 export const DataTablePaged = () => {
   const [allData, setAllData] = useState(data);
 
@@ -228,6 +169,57 @@ const data: DummyDataType[] = [
     createdDate: new Date(1635364176),
     removedDate: new Date(1635322403),
     tags: ['test8: test8'],
+    bool: true,
+  },
+  {
+    name: 'looong name with something',
+    desc: 'looong description with something important in it and stuff......',
+    amount: 1,
+    createdDate: new Date(1636467176000),
+    removedDate: new Date(1636423403000),
+    tags: [
+      'test3: test3',
+      'mama: papa',
+      'test4: test4',
+      'test5: test5',
+      'test6: test6',
+      'test7: longer text than normal',
+      'test8: test8',
+      'test9: test9',
+      'test10: test10',
+      'test11: test11',
+      `some relly long text about something or whatever......
+       some relly long text about something or whatever......
+       some relly long text about something or whatever......
+       some relly long text about something or whatever......
+       some relly long text about something or whatever......
+       some relly long text about something or whatever......
+       some relly long text about something or whatever......
+       some relly long text about something or whatever......
+       some relly long text about something or whatever......
+       some relly long text about something or whatever......
+       some relly long text about something or whatever......
+       some relly long text about something or whatever......
+       some relly long text about something or whatever......
+       some relly long text about something or whatever......
+       some relly long text about something or whatever......
+       some relly long text about something or whatever......
+       some relly long text about something or whatever......
+       some relly long text about something or whatever......
+       some relly long text about something or whatever......
+       some relly long text about something or whatever......
+       some relly long text about something or whatever......
+       some relly long text about something or whatever......
+       some relly long text about something or whatever......
+       some relly long text about something or whatever......
+       some relly long text about something or whatever......
+       some relly long text about something or whatever......
+       some relly long text about something or whatever......
+       some relly long text about something or whatever......
+       some relly long text about something or whatever......
+       some relly long text about something or whatever......
+       some relly long text about something or whatever......`,
+    ],
     bool: true,
   },
 ];

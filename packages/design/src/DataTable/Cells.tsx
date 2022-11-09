@@ -89,7 +89,7 @@ const renderLabelCell = (labels: string[] = []) => {
 
   return (
     <Cell>
-      <div style={{ lineHeight: '20px' }}>{$labels}</div>
+      <div css={{ lineHeight: '20px' }}>{$labels}</div>
     </Cell>
   );
 };
@@ -111,7 +111,7 @@ export const ClickableLabelCell = ({
         cursor: pointer;
       `}
     >
-      {`${label.name}: ${label.value}`}
+      <div css={{ lineHeight: '20px' }}>{`${label.name}: ${label.value}`}</div>
     </Label>
   ));
 
